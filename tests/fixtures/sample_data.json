@@ -1,0 +1,35 @@
+{
+  "@context": "https://project-open-data.cio.gov/v1.1/schema/catalog.jsonld",
+  "conformsTo": "https://project-open-data.cio.gov/v1.1/schema",
+  "dataset": [
+    {
+      "title": "Resident Population Estimates",
+      "identifier": "https://example.gov/d/pop-estimates",
+      "modified": "2026-01-15",
+      "distribution": [
+        {
+          "mediaType": "text/csv",
+          "downloadURL": "https://example.gov/files/pop-estimates.csv"
+        },
+        {
+          "mediaType": "application/json",
+          "accessURL": "https://api.example.gov/pop-estimates"
+        }
+      ]
+    },
+    {
+      "title": "Economic Indicators (HTML only)",
+      "identifier": "https://example.gov/d/econ",
+      "modified": "2025-11-01",
+      "distribution": [
+        {
+          "mediaType": "text/html",
+          "accessURL": "https://example.gov/econ.html"
+        }
+      ]
+    },
+    {
+      "title": "Dataset with no distribution"
+    }
+  ]
+}

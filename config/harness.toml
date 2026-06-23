@@ -1,0 +1,50 @@
+# FSS AI Data Readiness harness — configuration.
+# Per Engineering Standards §2: no tunable value is buried in source code.
+# This file is read by harness/config.py via stdlib tomllib (read-only, zero deps).
+
+[http]
+# Polite, identifiable user agent. Public endpoints only; no API keys, no auth.
+user_agent = "FSS-AI-Readiness-Probe/0.1 (+https://github.com/brock/ai-readiness-fss; public-data diagnostic)"
+timeout_seconds = 20
+max_retries = 2
+# Seconds between requests to the same host — be a good citizen of public infra.
+politeness_delay_seconds = 1.0
+# In-memory read cap (bytes). A backstop against unbounded responses; must stay
+# large enough that real federal DCAT catalogs (often several MB) are retained
+# WHOLE so they parse. 50 MB by default.
+max_body_bytes = 52428800
+
+[evidence]
+# Raw artifacts are written here, beside each score, so a reviewer can verify any
+# score from emitted evidence WITHOUT re-running the harness.
+root_dir = "evidence"
+# Per-file cap (bytes) for written evidence. Independent of max_body_bytes: the
+# harness may hold a 50 MB catalog in memory to parse it, but writes at most this
+# much to each evidence file (with a truncation marker) to keep bundles browsable.
+max_evidence_bytes = 524288
+
+# --- Track definitions (the core-vs-frontier firewall, traceable to icsp_notebook
+# task 51fe4574 flagship term "AI-ready data": Part A = core, Part B = frontier) ---
+
+[tracks.core]
+# Part A: readiness of data a consuming system can ALREADY REACH. Established
+# mechanisms (OPEN Government Data Act, Project Open Data, FCSM 25-03 / 20-04).
+# Core probes aggregate into the headline composite.
+label = "core"
+as_of_date = ""          # core is not dated; it is the grounded, adoptable definition
+in_core_composite = true
+
+[tracks.frontier_near]
+# Part B, readily-achievable forward-lean: llms.txt — a low-effort, already-
+# circulating convention achievable today. Reported, never in the core composite.
+label = "frontier_near"
+as_of_date = "2024-09"   # llms.txt convention first circulated
+in_core_composite = false
+
+[tracks.frontier_deep]
+# Part B, visionary forward-lean: MCP / WebMCP — WebMCP standardized ~2026-Q1,
+# roughly three months before this assessment. Absence is explicitly NOT core
+# unreadiness. Reported, never in the core composite.
+label = "frontier_deep"
+as_of_date = "2026-01"   # WebMCP standardization
+in_core_composite = false
