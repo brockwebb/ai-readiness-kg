@@ -1,0 +1,172 @@
+# ai-readiness-kg extraction schema v0.1
+# Transcribed from docs/schema_v0.1.md sections 2-4. Source of truth is that doc.
+# Transcription only — no invention. Bump this version via the proposed_relationships
+# review process (schema_v0.1.md section 6), never by silent edit.
+schema_version: "0.1"
+
+# --- Section 2: Node types -------------------------------------------------
+# Each node type lists the "Key properties" column verbatim. Parenthetical
+# enumerations from the doc are carried as a `values:` list on that property.
+node_types:
+  Document:
+    what: A manifest entry. Primary source only.
+    properties:
+      - doc_id
+      - title
+      - authors
+      - pub_date
+      - source_type      # federal / academic / industry / standard
+      - primary_url
+      - content_hash
+      - manifest_event_id
+    property_values:
+      source_type: [federal, academic, industry, standard]
+
+  Definition:
+    what: A verbatim definition of a term as given by one source.
+    properties:
+      - term
+      - verbatim_text
+      - grounding_span
+      - normative_status  # statute / policy / standard / academic / industry
+      - as_of_date
+    property_values:
+      normative_status: [statute, policy, standard, academic, industry]
+
+  Concept:
+    what: Any substantive idea a document uses. Exhaustive layer, extracted first-class from event one.
+    properties:
+      - name
+      - aliases
+      - description
+      - grounding_span
+
+  Construct:
+    what: A measurable readiness dimension (e.g. discoverability, provenance completeness). A Concept promoted to measurability.
+    properties:
+      - name
+      - description
+      - measurement_notes
+
+  Instrument:
+    what: An existing assessment, survey, index, or benchmark.
+    properties:
+      - name
+      - owner
+      - year
+      - method
+
+  Measure:
+    what: An individual item or metric inside an Instrument.
+    properties:
+      - text
+      - response_type
+      - grounding_span
+
+  Claim:
+    what: A falsifiable assertion a document makes (X improves Y, A requires B).
+    properties:
+      - claim_text
+      - grounding_span
+      - claim_type        # empirical / normative / speculative
+    property_values:
+      claim_type: [empirical, normative, speculative]
+
+  Standard:
+    what: A technical spec (DCAT, ISO 19115, schema.org, llms.txt, MCP).
+    properties:
+      - name
+      - version
+      - steward
+      - as_of_date
+
+  Framework:
+    what: A conceptual structure (NIST AI RMF, FAIR, Data Readiness Levels).
+    properties:
+      - name
+      - owner
+      - year
+
+# --- Section 3: Edge types -------------------------------------------------
+# from/to/meaning transcribed from the "From -> To" and "Meaning" columns.
+# Where the doc lists more than one valid (from, to) pair, `from` and `to` are
+# index-paired lists (pair i = from[i] -> to[i]); the doc's exact phrase is kept
+# in a comment. `symmetric: true` marks the doc's bidirectional arrow (<->).
+# Constraint enforcement is type-validity only: an edge type not listed here
+# cannot be written to the graph (schema_v0.1.md section 3).
+edge_types:
+  defines:
+    from: Document
+    to: Definition
+    meaning: Source gives this definition
+
+  mentions:
+    from: Document
+    to: Concept
+    meaning: Concept appears substantively (not keyword match)
+
+  asserts:
+    from: Document
+    to: Claim
+    meaning: Source makes this claim
+
+  about:
+    from: Claim
+    to: Concept
+    meaning: What the claim concerns
+
+  operationalizes:
+    from: Instrument
+    to: Construct
+    meaning: Instrument measures this dimension
+
+  measures:
+    from: Measure
+    to: Construct
+    meaning: Item-level mapping
+
+  grounds:
+    from: Construct
+    to: Definition
+    meaning: Construct's authority traces to this definition
+
+  extends:
+    # doc: "Definition -> Definition, Framework -> Framework"
+    from: [Definition, Framework]
+    to: [Definition, Framework]
+    meaning: Builds on, adds to
+
+  conflicts_with:
+    # doc: "Definition <-> Definition, Claim <-> Claim"
+    from: [Definition, Claim]
+    to: [Definition, Claim]
+    symmetric: true
+    meaning: Incompatible. The "no shared definition" evidence layer
+
+  cites:
+    from: Document
+    to: Document
+    meaning: Citation within the corpus
+
+  builds_on:
+    # doc: "Standard/Framework -> Standard/Framework" (either type on either end)
+    from: [Standard, Framework]
+    to: [Standard, Framework]
+    meaning: e.g. FCSM 25-03 builds_on OPEN Gov Data Act
+
+  implements:
+    from: Standard
+    to: Concept
+    meaning: Spec realizes a concept
+
+# --- Section 4: Universal provenance properties ----------------------------
+# Every node and edge extracted from a document carries these. No grounding
+# span, no write. Curated nodes (Construct promotions, the North Star artifact)
+# carry a rationale and operator id instead (see doc section 4).
+provenance_required:
+  - grounding_span      # verbatim quote from the source
+  - location            # section heading or page as available
+  - extraction_event_id
+  - model_id
+  - schema_version
+  - timestamp

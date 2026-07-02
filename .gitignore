@@ -1,0 +1,58 @@
+# === ai-readiness-kg ===
+
+# ── Secrets / environments ────────────────────────────────────────────────
+.env
+.venv
+env/
+venv/
+ENV/
+
+# ── Seldon / Claude Code working directories ──────────────────────────────
+.claude/
+.seldon/
+handoffs/
+.worktrees/
+tmp/
+# cc_tasks/ is intentionally TRACKED: task files are the work spec and travel
+# with the repo (see icsp_notebook lineage).
+
+# ── Corpus staging (harvester finds, pre-manifest; DD-003) ────────────────
+# Documents are inert until an explicit manifest_add event. Staging never ships.
+corpus/staging/
+
+# ── Python ────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+build/
+dist/
+*.egg-info/
+*.egg
+
+# ── Test / coverage ───────────────────────────────────────────────────────
+.pytest_cache/
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+.hypothesis/
+
+# ── Linters / type checkers ───────────────────────────────────────────────
+.mypy_cache/
+.ruff_cache/
+.pyre/
+.pytype/
+
+# ── Logs / backups ────────────────────────────────────────────────────────
+logs/
+*.log
+*.bak-*
+
+# ── OS / IDE ──────────────────────────────────────────────────────────────
+**/.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
