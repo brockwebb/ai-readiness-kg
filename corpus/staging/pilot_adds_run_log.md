@@ -54,3 +54,22 @@ Per-document TEVV:
 - **MLMU-25 identity check corrected mid-run.** The first pass rejected the (correct) document because the identity token `mlmu-25` — an administrative RFS topic code from the attachment filename — does not appear in the document body. Identity was re-validated on the actual title text ("Measuring Large Language Model Understanding of…"), which matches the register entry. This was a fix to an over-strict check, not a silent correction of a genuine mismatch: the fetched PDF is the right document.
 - The manifest module was extended with an optional `acquisition` evidence block (backward compatible; absent when not supplied) so TEVV lives in the event, not just this log. Covered by two new tests in `tests/test_manifest.py`.
 - Acquired binaries are gitignored for this public repo (2 of 4 are arXiv author-copyright); provenance is fully reconstructable from the committed manifest entries.
+
+
+---
+
+## Cisco inbox add v2 — 2026-07-03 (task: cisco_inbox_add_v2)
+
+Outcome: 3/3 added.
+
+- **ADDED** `cisco-ai-readiness-index-2025` — pages=27 canon_hash_match=True
+- **ADDED** `cisco-ai-readiness-index-methodology` — pages=5
+- **ADDED** `cisco-ai-readiness-assessment-instrument` — pages=25 from 6 components
+
+**A. Cisco AI Readiness Index 2025 (pilot #4)** — replaces the 2024 STOP. Identity: "Realizing the Value of AI", Cisco AI Readiness Index 2025, third edition. Operator manual_browser acquisition; canonical dam URL re-fetched here (HTTP 200) and sha256 **matches** operator file (`a1b3858c2d85e66b`) — provenance confirmed against the primary source. → corpus/pilot/ (gitignored).
+
+**B. Methodology capture** — source URL recovered from the PDF's embedded Log-in link referer (`methodology.html`); browser footer truncated it to `/methodo...`, so extracted from the link annotation, not guessed. sha256 `6215271551770bc5`. → corpus/cisco/ (gitignored).
+
+**C. Assessment instrument** — 6 pillar printouts merged (order: unnumbered/Strategy, then pages 2-6) into one 25-page PDF, merged sha256 `c5025910ec2f69d9`. Component sha256s recorded in the event's acquisition block. Source URL `assessment-tool.html` recovered from embedded link annotation. Register tagged [instrument, ai-readiness-fss]. Components preserved (not destroyed) in corpus/cisco/assessment_components/ (gitignored).
+
+Register: 2024 Cisco entry corrected to 2025 (title/year/URL + triage_note); 2 new operator entries (B, C).
