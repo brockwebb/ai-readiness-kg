@@ -27,6 +27,7 @@ def compute(doc_id: str, source_text: str, result) -> dict:
     tokens = estimate_tokens(source_text)
     n_concepts = sum(1 for n in result.nodes if n["type"] == "Concept")
     n_definitions = sum(1 for n in result.nodes if n["type"] == "Definition")
+    n_claims = sum(1 for n in result.nodes if n["type"] == "Claim")
     total_items = len(result.nodes) + len(result.edges) + len(result.quarantined)
     return {
         "doc_id": doc_id,
@@ -34,6 +35,7 @@ def compute(doc_id: str, source_text: str, result) -> dict:
         "concepts": n_concepts,
         "concepts_per_1k_tokens": round(n_concepts / (tokens / 1000), 4),
         "definitions_count": n_definitions,
+        "claims_count": n_claims,
         "nodes": len(result.nodes),
         "edges": len(result.edges),
         "quarantined": len(result.quarantined),

@@ -16,9 +16,13 @@ from . import metrics as metrics_mod
 from . import model_stub, parser, schema_loader, staging, state
 
 
-def extract_document(doc_id: str, source_text: str, output: dict | None = None) -> dict:
+def extract_document(doc_id: str, source_text: str, output: dict | None = None,
+                     model_meta: dict | None = None) -> dict:
     """Run the extraction pipeline for one document. Returns a summary dict with the
     ExtractionResult, computed metrics, and the extraction_event_id.
+
+    ``output`` is the parsed extraction envelope; ``model_meta`` (from model_stub.invoke)
+    carries the reported model_id + usage. If ``output`` is None the model is invoked here.
 
     Preconditions (fail loud, §7): the document must have reached ``manifest_added`` — a
     document with no manifest_add event cannot be extracted."""
@@ -28,11 +32,12 @@ def extract_document(doc_id: str, source_text: str, output: dict | None = None) 
     extraction_event_id = state.new_extraction_event_id()
 
     if output is None:
-        # No LLM calls in this task; the stub raises. The pilot task supplies a real output.
-        output = model_stub.invoke(doc_id=doc_id, source_text=source_text)
+        model_meta = model_stub.invoke(doc_id, source_text)
+        output = model_meta["output"]
 
     result = parser.parse_extraction(output, source_text, schema)
-    provenance = model_stub.provenance_stamp(extraction_event_id)
+    reported_model = (model_meta or {}).get("model_id")
+    provenance = model_stub.provenance_stamp(extraction_event_id, model_id=reported_model)
 
     # extracted: emit one §4-stamped assertion event per surviving node/edge.
     state.transition(doc_id, "extracted")
@@ -50,10 +55,21 @@ def extract_document(doc_id: str, source_text: str, output: dict | None = None) 
         batch=state.EXTRACTION_BATCH,
     )
 
+    # model call accounting -> event (§ usage accounting), when a real invocation happened.
+    if model_meta:
+        eventlog.append(
+            {"event_type": "model_call", "doc_id": doc_id,
+             "extraction_event_id": extraction_event_id,
+             "model_id": model_meta.get("model_id"), "usage": model_meta.get("usage"),
+             "cost_usd": model_meta.get("cost_usd"), "duration_ms": model_meta.get("duration_ms")},
+            batch=state.EXTRACTION_BATCH,
+        )
+
     # proposed_relationships -> review staging (never the graph, §6).
     staging.stage(doc_id, result.proposed_relationships)
 
     # Grounding was validated during parse; advance to validated.
     state.transition(doc_id, "validated")
 
-    return {"extraction_event_id": extraction_event_id, "result": result, "metrics": metrics}
+    return {"extraction_event_id": extraction_event_id, "result": result,
+            "metrics": metrics, "model_meta": model_meta}
