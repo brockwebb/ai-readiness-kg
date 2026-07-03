@@ -43,26 +43,34 @@ def provenance_required(schema: dict) -> list[str]:
     return list(schema["provenance_required"])
 
 
-def _as_set(v) -> set[str]:
-    """A schema from/to field is a scalar type or a list of types; normalize to a set."""
-    return set(v) if isinstance(v, list) else {v}
-
-
 def is_known_edge(schema: dict, etype: str) -> bool:
     """True iff the edge type is in the whitelist (schema §3). Unknown types are never
     written — they route to proposed_relationships."""
     return etype in schema["edge_types"]
 
 
-def is_valid_endpoint(schema: dict, etype: str, from_type: str, to_type: str) -> bool:
-    """Type-validity check for an edge's endpoints (schema §3 "type-validity only").
+def legal_pairs(schema: dict, etype: str) -> list[tuple[str, str]]:
+    """The edge type's authoritative (from_type, to_type) endpoint pairs (schema `pairs`).
+    Fail loud if the edge lacks explicit pairs — the parser must not fall back to a looser
+    gate silently (standard 4)."""
+    spec = schema["edge_types"][etype]
+    if "pairs" not in spec:
+        raise ValueError(f"edge type '{etype}' has no 'pairs' metadata in schema.yaml")
+    return [tuple(p) for p in spec["pairs"]]
 
-    from_type must be in the edge's allowed from-set and to_type in its to-set. For
-    multi-pair edges (extends, conflicts_with, builds_on) the from/to are sets, so this is
-    set-membership, not index pairing — a deliberately loose type gate. conflicts_with is
-    symmetric, which set-membership already covers (its from-set == to-set).
-    """
+
+def is_valid_endpoint(schema: dict, etype: str, from_type: str, to_type: str) -> bool:
+    """Strict index-pairing endpoint check (schema §3). (from_type, to_type) must be one of
+    the edge's legal `pairs` — NOT the from x to cross product. A whitelisted edge that fails
+    this is a schema-expressiveness signal (routed to proposed_relationships), not graph data.
+
+    Symmetric edges (conflicts_with) also accept the reversed pair, though their pairs are
+    same-type so this is a no-op in practice."""
     if etype not in schema["edge_types"]:
         return False
-    spec = schema["edge_types"][etype]
-    return from_type in _as_set(spec["from"]) and to_type in _as_set(spec["to"])
+    pairs = legal_pairs(schema, etype)
+    if (from_type, to_type) in pairs:
+        return True
+    if schema["edge_types"][etype].get("symmetric") and (to_type, from_type) in pairs:
+        return True
+    return False

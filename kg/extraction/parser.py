@@ -115,12 +115,22 @@ def parse_extraction(output: dict, source_text: str, schema: dict | None = None)
         if from_type is None or to_type is None:
             _quarantine(result, "edge", "unresolved endpoint id (missing or quarantined node)", edge)
             continue
-        if not schema_loader.is_valid_endpoint(schema, etype, from_type, to_type):
-            _quarantine(result, "edge",
-                        f"endpoint type mismatch: {from_type}->{to_type} not allowed for '{etype}'", edge)
-            continue
         if not grounding.is_grounded(span, source_text):
             _quarantine(result, "edge", "grounding_span not found in source text", edge)
+            continue
+        # Grounded + resolvable but not a legal endpoint pair: the relationship is real but
+        # the schema can't express it in this form. Route to proposed_relationships (§9
+        # expressiveness signal), never quarantine and never write it to the graph.
+        if not schema_loader.is_valid_endpoint(schema, etype, from_type, to_type):
+            result.proposed_relationships.append({
+                "source": "auto_routed_invalid_pair",
+                "suggested_edge": etype,
+                "from_id": from_id, "to_id": to_id,
+                "from_type": from_type, "to_type": to_type,
+                "grounding_span": span, "location": edge.get("location"),
+                "note": f"whitelisted edge '{etype}' with illegal endpoint pair "
+                        f"{from_type}->{to_type} (not in schema pairs)",
+            })
             continue
         result.edges.append({"type": etype, "from_id": from_id, "to_id": to_id,
                              "from_type": from_type, "to_type": to_type, "item": edge})

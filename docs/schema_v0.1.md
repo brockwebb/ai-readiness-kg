@@ -5,6 +5,7 @@
 
 **Changelog (draft, unlocked):**
 - 2026-07-03 (task `2026-07-03_extraction_module`, rider R1): added `intergovernmental` to Document `source_type` for policy bodies (OECD, UNESCO, UNDP, IADB, PARIS21, EU JRC, UN). Standards bodies / SDOs (ITU, ISO) stay `standard`.
+- 2026-07-03 (task `2026-07-03_pilot_extraction_run`, precondition rider): schema.yaml edge types now carry explicit `pairs` (legal endpoint pairs); the parser enforces strict index-pairing. A whitelisted edge with an illegal endpoint pair routes to `proposed_relationships` (§9 expressiveness signal), not the graph.
 
 ---
 

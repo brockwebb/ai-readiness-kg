@@ -70,14 +70,55 @@ def test_missing_grounding_span_quarantined():
     assert len(q) == 1 and "grounding_span" in q[0]["reason"]
 
 
-def test_endpoint_type_mismatch_quarantined():
+def test_invalid_pair_routed_to_proposed_not_quarantined():
     out = _base_output()
-    # defines requires Document->Definition; c1 (Concept) -> d1 is invalid
+    # defines legal pair is Document->Definition; c1(Concept)->d1(Definition) is illegal.
+    # Grounded + resolvable => expressiveness signal, not quarantine, not graph.
     out["edges"].append({"type": "defines", "from_id": "c1", "to_id": "d1",
                          "grounding_span": "The FCSM defines data quality"})
     r = parser.parse_extraction(out, SOURCE, SCHEMA)
-    mism = [x for x in r.quarantined if "endpoint type mismatch" in x["reason"]]
-    assert len(mism) == 1
+    assert not any(e["type"] == "defines" and e["from_id"] == "c1" for e in r.edges)
+    assert not any(x["kind"] == "edge" and "mismatch" in x["reason"] for x in r.quarantined)
+    routed = [p for p in r.proposed_relationships if p["source"] == "auto_routed_invalid_pair"]
+    assert len(routed) == 1 and routed[0]["suggested_edge"] == "defines"
+
+
+def test_cross_pair_on_multipair_edge_routed_to_proposed():
+    # extends is index-paired: Definition->Definition and Framework->Framework only.
+    # Definition->Framework is a cross pair -> proposed_relationships, not a valid edge.
+    out = _base_output()
+    out["frameworks"] = [{"id": "f1", "name": "FAIR",
+                          "grounding_span": "Discoverability of records matters"}]
+    out["edges"].append({"type": "extends", "from_id": "d1", "to_id": "f1",
+                         "grounding_span": "AI readiness is a construct"})
+    r = parser.parse_extraction(out, SOURCE, SCHEMA)
+    assert not any(e["type"] == "extends" for e in r.edges)
+    routed = [p for p in r.proposed_relationships
+              if p["suggested_edge"] == "extends" and p["source"] == "auto_routed_invalid_pair"]
+    assert len(routed) == 1
+
+
+def test_valid_multipair_edge_accepted():
+    # Framework->Framework IS a legal extends pair.
+    out = _base_output()
+    out["frameworks"] = [
+        {"id": "f1", "name": "FAIR", "grounding_span": "AI readiness is a construct"},
+        {"id": "f2", "name": "DRL", "grounding_span": "Discoverability of records matters"},
+    ]
+    out["edges"].append({"type": "extends", "from_id": "f1", "to_id": "f2",
+                         "grounding_span": "The FCSM defines data quality"})
+    r = parser.parse_extraction(out, SOURCE, SCHEMA)
+    assert any(e["type"] == "extends" for e in r.edges)
+
+
+def test_invalid_pair_but_ungrounded_still_quarantined():
+    # grounding is checked before pairing: an illegal pair with a bad span quarantines.
+    out = _base_output()
+    out["edges"].append({"type": "defines", "from_id": "c1", "to_id": "d1",
+                         "grounding_span": "text that is absent from the source"})
+    r = parser.parse_extraction(out, SOURCE, SCHEMA)
+    assert any(x["kind"] == "edge" and "not found in source" in x["reason"]
+               for x in r.quarantined)
 
 
 def test_grounding_miss_quarantined():

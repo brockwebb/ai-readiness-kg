@@ -95,74 +95,93 @@ node_types:
 
 # --- Section 3: Edge types -------------------------------------------------
 # from/to/meaning transcribed from the "From -> To" and "Meaning" columns.
-# Where the doc lists more than one valid (from, to) pair, `from` and `to` are
-# index-paired lists (pair i = from[i] -> to[i]); the doc's exact phrase is kept
-# in a comment. `symmetric: true` marks the doc's bidirectional arrow (<->).
-# Constraint enforcement is type-validity only: an edge type not listed here
-# cannot be written to the graph (schema_v0.1.md section 3).
+# `pairs` is the AUTHORITATIVE, machine-enforced list of legal (from_type, to_type)
+# endpoint pairs for each edge type (strict index-pairing, not the from x to cross
+# product). from/to are kept for human readability. `symmetric: true` marks the doc's
+# bidirectional arrow (<->). Constraint enforcement is type-validity only (schema
+# section 3): an edge type not listed cannot be written; a whitelisted edge whose
+# endpoints are not a legal pair is a schema-expressiveness signal, not graph data —
+# the parser routes it to proposed_relationships (§9 measurement), never the graph.
+#
+# Changelog:
+#   2026-07-03 (task 2026-07-03_pilot_extraction_run, precondition rider): added
+#     explicit `pairs` to every edge type; parser now enforces strict index-pairing.
+#     Cross-pair edges on a whitelisted type route to proposed_relationships.
 edge_types:
   defines:
     from: Document
     to: Definition
+    pairs: [[Document, Definition]]
     meaning: Source gives this definition
 
   mentions:
     from: Document
     to: Concept
+    pairs: [[Document, Concept]]
     meaning: Concept appears substantively (not keyword match)
 
   asserts:
     from: Document
     to: Claim
+    pairs: [[Document, Claim]]
     meaning: Source makes this claim
 
   about:
     from: Claim
     to: Concept
+    pairs: [[Claim, Concept]]
     meaning: What the claim concerns
 
   operationalizes:
     from: Instrument
     to: Construct
+    pairs: [[Instrument, Construct]]
     meaning: Instrument measures this dimension
 
   measures:
     from: Measure
     to: Construct
+    pairs: [[Measure, Construct]]
     meaning: Item-level mapping
 
   grounds:
     from: Construct
     to: Definition
+    pairs: [[Construct, Definition]]
     meaning: Construct's authority traces to this definition
 
   extends:
-    # doc: "Definition -> Definition, Framework -> Framework"
+    # doc: "Definition -> Definition, Framework -> Framework" (index-paired, NOT cross)
     from: [Definition, Framework]
     to: [Definition, Framework]
+    pairs: [[Definition, Definition], [Framework, Framework]]
     meaning: Builds on, adds to
 
   conflicts_with:
     # doc: "Definition <-> Definition, Claim <-> Claim"
     from: [Definition, Claim]
     to: [Definition, Claim]
+    pairs: [[Definition, Definition], [Claim, Claim]]
     symmetric: true
     meaning: Incompatible. The "no shared definition" evidence layer
 
   cites:
     from: Document
     to: Document
+    pairs: [[Document, Document]]
     meaning: Citation within the corpus
 
   builds_on:
-    # doc: "Standard/Framework -> Standard/Framework" (either type on either end)
+    # doc: "Standard/Framework -> Standard/Framework" (either type on either end = cross product)
     from: [Standard, Framework]
     to: [Standard, Framework]
+    pairs: [[Standard, Standard], [Standard, Framework], [Framework, Standard], [Framework, Framework]]
     meaning: e.g. FCSM 25-03 builds_on OPEN Gov Data Act
 
   implements:
     from: Standard
     to: Concept
+    pairs: [[Standard, Concept]]
     meaning: Spec realizes a concept
 
 # --- Section 4: Universal provenance properties ----------------------------
