@@ -53,6 +53,21 @@ def _good_fields(**overrides):
 
 # --- happy path -----------------------------------------------------------------------
 
+def test_acquisition_evidence_rides_in_event_when_supplied(repo):
+    f = _write_corpus_file(repo, "doc.txt", "content")
+    tevv = {"final_url": "https://x/y.pdf", "http_status": 200, "page_count": 12}
+    manifest.add(str(f), **_good_fields(), acquisition=tevv)
+    entry = list(eventlog.replay())[0]["payload"]
+    assert entry["acquisition"] == tevv
+
+
+def test_acquisition_absent_when_not_supplied(repo):
+    f = _write_corpus_file(repo, "doc.txt", "content")
+    manifest.add(str(f), **_good_fields())
+    entry = list(eventlog.replay())[0]["payload"]
+    assert "acquisition" not in entry
+
+
 def test_add_writes_event_updates_manifest_and_hashes(repo):
     f = _write_corpus_file(repo, "fcsm.txt", "the content")
     doc_id = manifest.add(str(f), **_good_fields())

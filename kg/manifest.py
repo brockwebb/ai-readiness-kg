@@ -111,6 +111,9 @@ def add(filepath, **fields) -> str:
 
     On pass: emits a ``manifest_add`` event (event_type + full entry as payload) via
     eventlog.append, then rebuilds manifest.json from replay.
+
+    Optional keyword ``acquisition`` (a dict of TEVV/acquisition evidence) is stored
+    verbatim under the entry's ``acquisition`` key when supplied.
     """
     # 1. Required fields present and non-empty.
     missing = []
@@ -178,6 +181,11 @@ def add(filepath, **fields) -> str:
         "discovered_via": fields.get("discovered_via"),
         "status": "active",
     }
+    # Optional acquisition/TEVV evidence (fetch provenance, identity check, page count,
+    # re-hash confirmation). Carried in the event so the audit trail is self-contained;
+    # omitted entirely when not supplied so pre-existing entries stay unchanged.
+    if fields.get("acquisition") is not None:
+        entry["acquisition"] = fields["acquisition"]
     eventlog.append({"event_type": _MANIFEST_ADD, "payload": entry}, batch=_MANIFEST_BATCH)
     rebuild()
     return doc_id

@@ -17,8 +17,18 @@ tmp/
 # with the repo (see icsp_notebook lineage).
 
 # ── Corpus staging (harvester finds, pre-manifest; DD-003) ────────────────
-# Documents are inert until an explicit manifest_add event. Staging never ships.
-corpus/staging/
+# Documents are inert until an explicit manifest_add event. Staging never ships —
+# except the committed run logs, which are provenance records, not staged content.
+# (Ignore staging *contents*, not the dir node, so a specific file can be re-included.)
+corpus/staging/*
+!corpus/staging/pilot_adds_run_log.md
+
+# ── Acquired corpus binaries (primary-source PDFs) ─────────────────────────
+# Kept local, NOT committed to this public repo: some are third-party (arXiv author
+# copyright). The provenance chain survives via each manifest entry's primary_url +
+# content_hash + local_path (re-fetch + re-hash reproduces the file). Mirrors the
+# icsp_notebook pattern for large/external source files.
+corpus/pilot/
 
 # ── Python ────────────────────────────────────────────────────────────────
 __pycache__/
