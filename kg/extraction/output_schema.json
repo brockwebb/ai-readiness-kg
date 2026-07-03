@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ai-readiness-kg extraction output (schema_v0.1.md §5)",
+  "description": "Declarative envelope contract. Type validity (node types, edge whitelist, endpoint pairs) is enforced by parser.py against kg/schema.yaml, the single source of truth; this file documents the envelope shape and the universal grounding requirement (§4).",
+  "type": "object",
+  "required": ["document_id", "extract_plan", "concepts"],
+  "additionalProperties": true,
+  "properties": {
+    "document_id": {"type": "string"},
+    "extract_plan": {
+      "type": "object",
+      "properties": {
+        "section_map": {
+          "type": "array",
+          "items": {"type": "object", "properties": {"heading": {"type": "string"}, "location": {"type": "string"}}}
+        },
+        "concept_inventory": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "concepts": {"type": "array", "items": {"$ref": "#/$defs/groundedNode"}},
+    "definitions": {"type": "array", "items": {"$ref": "#/$defs/groundedNode"}},
+    "claims": {"type": "array", "items": {"$ref": "#/$defs/groundedNode"}},
+    "instruments": {"type": "array", "items": {"$ref": "#/$defs/groundedNode"}},
+    "measures": {"type": "array", "items": {"$ref": "#/$defs/groundedNode"}},
+    "standards": {"type": "array", "items": {"$ref": "#/$defs/groundedNode"}},
+    "frameworks": {"type": "array", "items": {"$ref": "#/$defs/groundedNode"}},
+    "edges": {"type": "array", "items": {"$ref": "#/$defs/groundedEdge"}},
+    "cites": {"type": "array", "items": {"$ref": "#/$defs/groundedEdge"}},
+    "proposed_relationships": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["suggested_edge", "grounding_span"],
+        "properties": {
+          "suggested_edge": {"type": "string"},
+          "from_id": {"type": "string"},
+          "to_id": {"type": "string"},
+          "grounding_span": {"type": "string"},
+          "location": {"type": "string"},
+          "note": {"type": "string"}
+        }
+      }
+    }
+  },
+  "$defs": {
+    "groundedNode": {
+      "type": "object",
+      "required": ["id", "grounding_span"],
+      "properties": {
+        "id": {"type": "string"},
+        "grounding_span": {"type": "string", "description": "verbatim quote from the source (§4)"},
+        "location": {"type": "string"}
+      },
+      "additionalProperties": true
+    },
+    "groundedEdge": {
+      "type": "object",
+      "required": ["type", "from_id", "to_id", "grounding_span"],
+      "properties": {
+        "type": {"type": "string"},
+        "from_id": {"type": "string"},
+        "to_id": {"type": "string"},
+        "grounding_span": {"type": "string"},
+        "location": {"type": "string"}
+      },
+      "additionalProperties": true
+    }
+  }
+}

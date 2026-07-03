@@ -2,6 +2,12 @@
 # Transcribed from docs/schema_v0.1.md sections 2-4. Source of truth is that doc.
 # Transcription only — no invention. Bump this version via the proposed_relationships
 # review process (schema_v0.1.md section 6), never by silent edit.
+#
+# Changelog:
+#   2026-07-03 (task 2026-07-03_extraction_module, rider R1): added `intergovernmental`
+#     to Document.source_type for policy bodies (OECD, UNESCO, UNDP, IADB, PARIS21,
+#     EU JRC, UN). Standards bodies / SDOs (ITU, ISO) remain `standard`. Schema still
+#     draft/unlocked, so the value is added directly rather than via version bump.
 schema_version: "0.1"
 
 # --- Section 2: Node types -------------------------------------------------
@@ -15,12 +21,12 @@ node_types:
       - title
       - authors
       - pub_date
-      - source_type      # federal / academic / industry / standard
+      - source_type      # federal / academic / industry / standard / intergovernmental
       - primary_url
       - content_hash
       - manifest_event_id
     property_values:
-      source_type: [federal, academic, industry, standard]
+      source_type: [federal, academic, industry, standard, intergovernmental]
 
   Definition:
     what: A verbatim definition of a term as given by one source.

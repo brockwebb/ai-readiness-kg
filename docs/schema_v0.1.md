@@ -3,6 +3,9 @@
 **Status:** Draft for review. Nothing extracts until this is locked and piloted.
 **Pattern lineage:** forks fss-policy-kg (manifest ingestion, JSONL event sourcing, verbatim grounding, FastMCP verbs). Schema is new: claims-and-constructs, not obligations.
 
+**Changelog (draft, unlocked):**
+- 2026-07-03 (task `2026-07-03_extraction_module`, rider R1): added `intergovernmental` to Document `source_type` for policy bodies (OECD, UNESCO, UNDP, IADB, PARIS21, EU JRC, UN). Standards bodies / SDOs (ITU, ISO) stay `standard`.
+
 ---
 
 ## 1. Purpose
@@ -17,7 +20,7 @@ The graph is the validity layer under the FSS AI readiness survey and the defini
 
 | Type | What it is | Key properties |
 |---|---|---|
-| Document | A manifest entry. Primary source only. | doc_id, title, authors, pub_date, source_type (federal / academic / industry / standard), primary_url, content_hash, manifest_event_id |
+| Document | A manifest entry. Primary source only. | doc_id, title, authors, pub_date, source_type (federal / academic / industry / standard / intergovernmental), primary_url, content_hash, manifest_event_id |
 | Definition | A verbatim definition of a term as given by one source. | term, verbatim_text, grounding_span, normative_status (statute / policy / standard / academic / industry), as_of_date |
 | Concept | Any substantive idea a document uses. Exhaustive layer, extracted first-class from event one. | name, aliases, description, grounding_span |
 | Construct | A measurable readiness dimension (e.g. discoverability, provenance completeness). A Concept promoted to measurability. | name, description, measurement_notes |

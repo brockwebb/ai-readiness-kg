@@ -1,0 +1,5 @@
+# Model invocation config. Switchable without code changes (standard 2: no hardcoded
+# model names). Read by model_stub.py.
+model_id: claude-fable-5        # Fable, whole-document extraction (schema_v0.1.md §5)
+provider: claude_max_oauth      # Claude Max OAuth only; never ANTHROPIC_API_KEY (DD-007)
+effort: high                    # Fable: thinking always on; depth via effort
