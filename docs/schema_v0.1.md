@@ -6,6 +6,7 @@
 **Changelog (draft, unlocked):**
 - 2026-07-03 (task `2026-07-03_extraction_module`, rider R1): added `intergovernmental` to Document `source_type` for policy bodies (OECD, UNESCO, UNDP, IADB, PARIS21, EU JRC, UN). Standards bodies / SDOs (ITU, ISO) stay `standard`.
 - 2026-07-03 (task `2026-07-03_pilot_extraction_run`, precondition rider): schema.yaml edge types now carry explicit `pairs` (legal endpoint pairs); the parser enforces strict index-pairing. A whitelisted edge with an illegal endpoint pair routes to `proposed_relationships` (§9 expressiveness signal), not the graph.
+- 2026-07-03 (task `2026-07-03_pilot_extraction_run_v4/v5`, §5 rider): §5 made model-agnostic — the whole-document protocol lives here; the extraction model is pinned in `kg/extraction/model_config.yaml` and stamped per item (§4), not named in the schema.
 
 ---
 
@@ -64,7 +65,12 @@ Every node and edge extracted from a document carries:
 
 No grounding span, no write. Curated nodes (Construct promotions, the North Star definition artifact) carry a rationale and operator id instead.
 
-## 5. Extraction protocol (Fable, whole-document)
+## 5. Extraction protocol (whole-document, model-agnostic)
+
+The protocol below is model-agnostic. The extraction model is **not** fixed in this schema — it
+is pinned in `kg/extraction/model_config.yaml` and stamped on every extracted item per §4
+(model_id read from the response envelope, not the model's text). A model change is a config
+change plus a preflight identity check, never a schema change.
 
 For documents under a size threshold (set at pilot; expect nearly all of this corpus):
 

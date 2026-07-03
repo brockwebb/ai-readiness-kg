@@ -28,8 +28,8 @@ SOURCE = (
 
 
 def _output(doc_id="doc-1"):
+    # A real model output does NOT carry document_id — the harness injects it (v3 contract).
     return {
-        "document_id": doc_id,
         "extract_plan": {"section_map": [], "concept_inventory": []},
         "concepts": [{"id": "c1", "name": "AI readiness",
                       "grounding_span": "AI readiness is a construct", "location": "p1"}],
@@ -91,10 +91,35 @@ def test_proposed_relationships_staged_not_emitted(ext_iso):
     assert staged.is_file() and "presupposes" in staged.read_text()
 
 
+def test_document_id_injected_when_model_omits_it(ext_iso):
+    seed_manifest_add("doc-1")
+    out = _output("doc-1")
+    assert "document_id" not in out  # model didn't emit it
+    summary = pipeline.extract_document("doc-1", SOURCE, output=out)  # succeeds via injection
+    assert state.current_state("doc-1") == "validated"
+    assert summary["result"].document_id == "doc-1"
+
+
+def test_model_emitted_document_id_stripped_and_never_reaches_event(ext_iso, recwarn):
+    seed_manifest_add("doc-1")
+    out = _output("doc-1")
+    out["document_id"] = "WRONG-ID-FROM-MODEL"          # model tries to own a harness field
+    out["model_id"] = "not-the-real-model"              # another harness-owned field
+    pipeline.extract_document("doc-1", SOURCE, output=out)
+    # warned about the harness-owned emission
+    assert any("harness-owned" in str(w.message) for w in recwarn.list)
+    # the model's forged id never reaches any event
+    for e in eventlog.replay():
+        assert "WRONG-ID-FROM-MODEL" not in str(e)
+        if e.get("event_type", "").endswith("_asserted"):
+            assert e["doc_id"] == "doc-1"
+
+
 # --- metrics --------------------------------------------------------------------------
 
 def test_metrics_computed_on_fixture():
-    result = parser.parse_extraction(_output(), SOURCE, SCHEMA)
+    # calling the parser directly (not via pipeline) so supply the harness-owned document_id
+    result = parser.parse_extraction({**_output(), "document_id": "doc-1"}, SOURCE, SCHEMA)
     m = metrics_mod.compute("doc-1", SOURCE, result)
     assert m["concepts"] == 1
     assert m["definitions_count"] == 1
@@ -108,8 +133,8 @@ def test_metrics_computed_on_fixture():
 
 
 def test_metrics_quarantine_rate():
-    out = _output()
-    out["concepts"].append({"id": "cbad", "name": "x", "grounding_span": "absent from source"})
+    out = {**_output(), "document_id": "doc-1"}
+    out["concepts"] = out["concepts"] + [{"id": "cbad", "name": "x", "grounding_span": "absent from source"}]
     result = parser.parse_extraction(out, SOURCE, SCHEMA)
     m = metrics_mod.compute("doc-1", SOURCE, result)
     # 2 nodes + 1 edge + 1 quarantined = 4 items; 1 quarantined

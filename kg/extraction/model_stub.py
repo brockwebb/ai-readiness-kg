@@ -113,6 +113,17 @@ class ModelInvocationError(RuntimeError):
     """A transport/CLI failure or an unusable envelope — the run driver may retry once."""
 
 
+class ModelSubstitutionError(ModelConfigError):
+    """The envelope reports a model other than the pinned one (e.g. a classifier reroute).
+    Load-bearing gate: the driver records the substitution as an event and STOPs — the
+    document's output is discarded unparsed, never substituted."""
+
+    def __init__(self, expected: str, observed: list):
+        self.expected = expected
+        self.observed = observed
+        super().__init__(f"expected {expected} but envelope reports models {observed}")
+
+
 def invoke(doc_id: str, source_text: str, prompt: str | None = None,
            timeout: int = 1800, config: dict | None = None) -> dict:
     """Extract one document via ``claude -p`` on the subscription OAuth (no API key).
@@ -145,10 +156,10 @@ def invoke(doc_id: str, source_text: str, prompt: str | None = None,
         raise ModelInvocationError(f"claude -p reported error for {doc_id}: {envelope}")
 
     model_usage = envelope.get("modelUsage", {})
-    if model_id not in model_usage:
-        # A different model served the call (fallback) — record and STOP, never substitute.
-        raise ModelConfigError(
-            f"expected {model_id} but envelope reports models {list(model_usage)} for {doc_id}")
+    if model_id not in model_usage or len(model_usage) != 1:
+        # A different/extra model served the call (classifier reroute / fallback). Raise the
+        # substitution gate so the driver records it as an event and STOPs — never substitute.
+        raise ModelSubstitutionError(expected=model_id, observed=list(model_usage))
 
     output = _extract_json(envelope.get("result", ""))
     return {

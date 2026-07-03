@@ -3,10 +3,10 @@
   "title": "ai-readiness-kg extraction output (schema_v0.1.md §5)",
   "description": "Declarative envelope contract. Type validity (node types, edge whitelist, endpoint pairs) is enforced by parser.py against kg/schema.yaml, the single source of truth; this file documents the envelope shape and the universal grounding requirement (§4).",
   "type": "object",
-  "required": ["document_id", "extract_plan", "concepts"],
+  "required": ["extract_plan", "concepts"],
   "additionalProperties": true,
   "properties": {
-    "document_id": {"type": "string"},
+    "document_id": {"type": "string", "description": "HARNESS-OWNED — injected by the pipeline, not emitted by the model. If the model emits it, it is stripped and warned (v3 provenance-ownership contract)."},
     "extract_plan": {
       "type": "object",
       "properties": {

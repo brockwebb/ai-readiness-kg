@@ -11,6 +11,10 @@ You extract a knowledge graph from ONE primary-source document, in a single pass
 carry a `grounding_span`: a **verbatim quote** copied from the document that supports it. If
 you cannot quote the document for an item, do not emit it. No grounding span, no write.
 
+Do NOT emit `document_id`, `model_id`, `schema_version`, `extraction_event_id`, or any
+timestamp/event id — the harness owns those and injects them. Emit only the content you
+extract: the extract plan, nodes, edges, and proposed_relationships below.
+
 ## Emission order (produce these keys in this order)
 
 1. `extract_plan` — a `section_map` (list of `{heading, location}`) and a `concept_inventory`

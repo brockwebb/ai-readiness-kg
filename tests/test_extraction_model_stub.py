@@ -39,6 +39,13 @@ def test_build_prompt_substitutes(monkeypatch):
     assert "{{document_text}}" not in prompt and "{{document_id}}" not in prompt
 
 
+def test_model_substitution_error_carries_observed():
+    err = model_stub.ModelSubstitutionError(expected="claude-fable-5", observed=["claude-opus-4-8"])
+    assert err.expected == "claude-fable-5"
+    assert err.observed == ["claude-opus-4-8"]
+    assert isinstance(err, model_stub.ModelConfigError)
+
+
 def test_extract_json_tolerates_fences():
     assert model_stub._extract_json('```json\n{"a": 1}\n```') == {"a": 1}
     assert model_stub._extract_json('preamble {"b": 2} trailing') == {"b": 2}

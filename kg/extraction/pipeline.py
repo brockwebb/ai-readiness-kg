@@ -10,10 +10,33 @@ extraction ``output`` (from a fixture, or later from the operator-gated model ru
 """
 from __future__ import annotations
 
+import warnings
+
 from kg import eventlog
 
 from . import metrics as metrics_mod
 from . import model_stub, parser, schema_loader, staging, state
+
+# Harness-owned provenance fields (v3 provenance-ownership contract): the harness injects
+# these and never trusts them from the model. document_id is the doc being extracted;
+# extraction_event_id/model_id/schema_version/timestamp are stamped per item at event-write
+# (§4). If the model emits any of them, they are stripped and warned — never trusted.
+HARNESS_OWNED_FIELDS = (
+    "document_id", "extraction_event_id", "model_id", "schema_version", "timestamp",
+)
+
+
+def _apply_provenance_ownership(output: dict, doc_id: str) -> dict:
+    """Strip any harness-owned fields the model emitted (discard + warn), then inject the
+    authoritative document_id. Model-owned content (nodes, edges, spans) is untouched."""
+    emitted = [k for k in HARNESS_OWNED_FIELDS if k in output]
+    if emitted:
+        warnings.warn(
+            f"model emitted harness-owned field(s) {emitted} for '{doc_id}'; discarding "
+            f"(harness owns provenance)", stacklevel=2)
+    cleaned = {k: v for k, v in output.items() if k not in HARNESS_OWNED_FIELDS}
+    cleaned["document_id"] = doc_id  # authoritative; the model's value never reaches an event
+    return cleaned
 
 
 def extract_document(doc_id: str, source_text: str, output: dict | None = None,
@@ -35,6 +58,7 @@ def extract_document(doc_id: str, source_text: str, output: dict | None = None,
         model_meta = model_stub.invoke(doc_id, source_text)
         output = model_meta["output"]
 
+    output = _apply_provenance_ownership(output, doc_id)
     result = parser.parse_extraction(output, source_text, schema)
     reported_model = (model_meta or {}).get("model_id")
     provenance = model_stub.provenance_stamp(extraction_event_id, model_id=reported_model)
