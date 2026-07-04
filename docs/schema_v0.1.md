@@ -1,12 +1,15 @@
-# ai-readiness-kg — Extraction Schema v0.1
+# ai-readiness-kg — Extraction Schema v0.2
 
-**Status:** Draft for review. Nothing extracts until this is locked and piloted.
+*(File path retained as `schema_v0.1.md` for reference stability; the authoritative version is `schema_version` in `kg/schema.yaml` and this changelog.)*
+
+**Status:** Draft, unlocked. v0.2 promoted from the Fable pilot §9 audit (2026-07-03).
 **Pattern lineage:** forks fss-policy-kg (manifest ingestion, JSONL event sourcing, verbatim grounding, FastMCP verbs). Schema is new: claims-and-constructs, not obligations.
 
 **Changelog (draft, unlocked):**
 - 2026-07-03 (task `2026-07-03_extraction_module`, rider R1): added `intergovernmental` to Document `source_type` for policy bodies (OECD, UNESCO, UNDP, IADB, PARIS21, EU JRC, UN). Standards bodies / SDOs (ITU, ISO) stay `standard`.
 - 2026-07-03 (task `2026-07-03_pilot_extraction_run`, precondition rider): schema.yaml edge types now carry explicit `pairs` (legal endpoint pairs); the parser enforces strict index-pairing. A whitelisted edge with an illegal endpoint pair routes to `proposed_relationships` (§9 expressiveness signal), not the graph.
 - 2026-07-03 (task `2026-07-03_pilot_extraction_run_v4/v5`, §5 rider): §5 made model-agnostic — the whole-document protocol lives here; the extraction model is pinned in `kg/extraction/model_config.yaml` and stamped per item (§4), not named in the schema.
+- 2026-07-03 (task `2026-07-03_schema_v02_promotion_rebaseline`, §9 pilot audit → **v0.2**): append-only edge additions — `uses_measure`, `measures` (extended to Concept endpoints), `has_component`, `subtype_of`, `precedes` — each with an `external_alignment` URI (schema.yaml). **No new node types:** `Organization` and `Project` were proposed in the pilot but REJECTED (document scope is a property, not a node forest; external ontologies are referenced via §8, never imported as node forests). Prompt template bumped to require character-exact grounding spans (v0.2.0), stamped in extraction events.
 
 ---
 
@@ -45,15 +48,19 @@ Notes:
 | asserts | Document → Claim | Source makes this claim |
 | about | Claim → Concept | What the claim concerns |
 | operationalizes | Instrument → Construct | Instrument measures this dimension |
-| measures | Measure → Construct | Item-level mapping |
+| measures | Measure → Construct; Measure → Concept; Instrument → Concept | Item/instrument mapping to the construct or concept it measures (v0.2 extended endpoints) |
 | grounds | Construct → Definition | Construct's authority traces to this definition |
 | extends | Definition → Definition, Framework → Framework | Builds on, adds to |
 | conflicts_with | Definition ↔ Definition, Claim ↔ Claim | Incompatible. The "no shared definition" evidence layer |
 | cites | Document → Document | Citation within the corpus |
 | builds_on | Standard/Framework → Standard/Framework | e.g. FCSM 25-03 builds_on OPEN Gov Data Act |
 | implements | Standard → Concept | Spec realizes a concept |
+| uses_measure | Instrument → Measure | Instrument uses this measure/item (v0.2) |
+| has_component | Framework → Concept; Concept → Concept | Part-whole component, **never** is-a (v0.2) |
+| subtype_of | Concept → Concept | Is-a / subclass, **never** part-whole (v0.2) |
+| precedes | Concept → Concept | Ordinal/temporal precedence (v0.2) |
 
-Cardinality is open everywhere. Constraint enforcement is type-validity only: an edge type not in this table cannot be written to the graph.
+Cardinality is open everywhere. Constraint enforcement is type-validity only: an edge type not in this table cannot be written to the graph. Each v0.2 edge carries an `external_alignment` URI in `kg/schema.yaml` (SOSA / BFO / RDFS) — a reference anchor, not an imported ontology (§8).
 
 ## 4. Universal provenance properties
 

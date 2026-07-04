@@ -8,7 +8,13 @@
 #     to Document.source_type for policy bodies (OECD, UNESCO, UNDP, IADB, PARIS21,
 #     EU JRC, UN). Standards bodies / SDOs (ITU, ISO) remain `standard`. Schema still
 #     draft/unlocked, so the value is added directly rather than via version bump.
-schema_version: "0.1"
+#   2026-07-03 (task 2026-07-03_schema_v02_promotion_rebaseline, §9 pilot audit): v0.2.
+#     Append-only edge additions from the Fable pilot's proposed_relationships inventory:
+#     uses_measure, measures (extended to Concept endpoints), has_component, subtype_of,
+#     precedes. Each carries an external_alignment URI. No new node types — Organization
+#     and Project were proposed but REJECTED in the audit (document scope is a property,
+#     not a node forest; external ontologies are referenced, never imported).
+schema_version: "0.2"
 
 # --- Section 2: Node types -------------------------------------------------
 # Each node type lists the "Key properties" column verbatim. Parenthetical
@@ -139,10 +145,13 @@ edge_types:
     meaning: Instrument measures this dimension
 
   measures:
-    from: Measure
-    to: Construct
-    pairs: [[Measure, Construct]]
-    meaning: Item-level mapping
+    # v0.2: extended from Measure->Construct (v0.1) to also allow Concept endpoints, per
+    # the pilot audit (proposed measures/measures_concept/evaluates/assesses/operationalizes).
+    from: [Measure, Instrument]
+    to: [Construct, Concept]
+    pairs: [[Measure, Construct], [Measure, Concept], [Instrument, Concept]]
+    external_alignment: http://www.w3.org/ns/sosa/observes
+    meaning: Item- or instrument-level mapping to the construct/concept it measures
 
   grounds:
     from: Construct
@@ -183,6 +192,37 @@ edge_types:
     to: Concept
     pairs: [[Standard, Concept]]
     meaning: Spec realizes a concept
+
+  # --- v0.2 additions (2026-07-03 §9 pilot audit; append-only) ---------------
+  uses_measure:
+    from: Instrument
+    to: Measure
+    pairs: [[Instrument, Measure]]
+    external_alignment: https://www.w3.org/ns/sosa/   # madeBySensor / implements pattern
+    meaning: Instrument uses this measure/item
+
+  has_component:
+    # part-whole ONLY, never is-a (use subtype_of for is-a). BFO has_part.
+    from: [Framework, Concept]
+    to: [Concept, Concept]
+    pairs: [[Framework, Concept], [Concept, Concept]]
+    external_alignment: http://purl.obolibrary.org/obo/BFO_0000051
+    meaning: Framework/Concept has this component part (part-whole, not subclass)
+
+  subtype_of:
+    # is-a ONLY, never part-whole (use has_component for part-whole). rdfs:subClassOf.
+    from: Concept
+    to: Concept
+    pairs: [[Concept, Concept]]
+    external_alignment: http://www.w3.org/2000/01/rdf-schema#subClassOf
+    meaning: Concept is a subtype (subclass) of another concept
+
+  precedes:
+    from: Concept
+    to: Concept
+    pairs: [[Concept, Concept]]
+    external_alignment: http://purl.obolibrary.org/obo/BFO_0000063
+    meaning: Concept precedes another (ordinal/temporal precedence)
 
 # --- Section 4: Universal provenance properties ----------------------------
 # Every node and edge extracted from a document carries these. No grounding

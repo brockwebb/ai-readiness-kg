@@ -72,11 +72,15 @@ def test_full_run_advances_state_and_emits_events(ext_iso):
     assert len(by_type.get("edge_asserted", [])) == 1   # mentions
     assert len(by_type.get("build_metrics", [])) == 1
 
-    # every extracted item carries the §4 provenance stamp
+    # every extracted item carries the §4 provenance stamp. model_id defaults to the config
+    # pin when no envelope override is supplied (operator-tunable — Fable pilot, Opus bulk).
+    from kg.extraction import model_stub
+    pinned = model_stub.load_model_config()["model_id"]
     for e in by_type.get("node_asserted", []) + by_type.get("edge_asserted", []):
         prov = e["provenance"]
-        assert prov["model_id"] == "claude-fable-5"
-        assert prov["schema_version"] == "0.1"
+        assert prov["model_id"] == pinned
+        assert prov["schema_version"] == "0.1"  # ext_iso patches a tmp schema at 0.1
+        assert prov["prompt_version"] == "0.2.0"
         assert prov["extraction_event_id"] == summary["extraction_event_id"]
         assert prov["timestamp"]
 

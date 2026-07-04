@@ -71,6 +71,16 @@ def guard_no_api_key(env: dict | None = None) -> None:
             )
 
 
+def prompt_version() -> str:
+    """The extraction prompt template version (from its `prompt_version:` header line),
+    stamped in extraction events per §4 so a re-run under a hardened prompt is traceable."""
+    for line in _PROMPT_PATH.read_text(encoding="utf-8").splitlines():
+        m = re.match(r"\s*prompt_version:\s*(\S+)", line)
+        if m:
+            return m.group(1)
+    raise ModelConfigError(f"no prompt_version header in {_PROMPT_PATH}")
+
+
 def provenance_stamp(extraction_event_id: str, config: dict | None = None,
                      model_id: str | None = None) -> dict:
     """The universal provenance every extracted node/edge carries (§4). ``model_id`` overrides
@@ -79,6 +89,7 @@ def provenance_stamp(extraction_event_id: str, config: dict | None = None,
     return {
         "model_id": model_id or config["model_id"],
         "schema_version": eventlog.schema_version(),
+        "prompt_version": prompt_version(),
         "extraction_event_id": extraction_event_id,
         "timestamp": datetime.datetime.now(datetime.timezone.utc).isoformat(),
     }

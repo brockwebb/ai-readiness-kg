@@ -1,6 +1,10 @@
 # Model invocation config. Switchable without code changes (standard 2: no hardcoded
-# model names). Read by model_stub.py.
-model_id: claude-fable-5        # Fable, whole-document extraction (schema_v0.1.md §5)
+# model names). Read by model_stub.py. The model-identity gate pins whatever is set here:
+# any per-call envelope reporting a different model_id is discarded unparsed and the run STOPs.
+# History: Fable (claude-fable-5) ran the 5-doc pilot; operator pinned Opus 4.8 for bulk
+# (task 2026-07-03_schema_v02_promotion_v2: pilot/bulk model continuity, no July-7 billing
+# cliff, no classifier-reroute heterogeneity).
+model_id: claude-opus-4-8       # whole-document extraction (schema §5, model-agnostic)
 provider: claude_max_oauth      # subscription OAuth via `claude -p`; never ANTHROPIC_API_KEY/AUTH_TOKEN (DD-007)
 cli: claude                     # headless invocation path: `claude -p` (Agent SDK credit, no key)
-effort: high                    # Fable: thinking always on; depth via effort
+effort: high                    # thinking depth via effort

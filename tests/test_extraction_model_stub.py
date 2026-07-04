@@ -4,9 +4,10 @@ import pytest
 from kg.extraction import model_stub
 
 
-def test_config_is_fable_oauth():
+def test_config_is_oauth_with_a_model_pin():
+    # model_id is operator-tunable (Fable pilot, Opus re-baseline); provider is fixed OAuth.
     cfg = model_stub.load_model_config()
-    assert cfg["model_id"] == "claude-fable-5"
+    assert cfg["model_id"]  # a model is pinned
     assert cfg["provider"] == "claude_max_oauth"
 
 
@@ -24,11 +25,15 @@ def test_guard_passes_without_credentials():
     model_stub.guard_no_api_key(env={})  # no raise
 
 
+def test_prompt_version_is_v020():
+    assert model_stub.prompt_version() == "0.2.0"
+
+
 def test_provenance_stamp_shape_and_override():
     stamp = model_stub.provenance_stamp("evt123")
-    assert stamp["model_id"] == "claude-fable-5"
     assert stamp["extraction_event_id"] == "evt123"
     assert stamp["schema_version"] and stamp["timestamp"]
+    assert stamp["prompt_version"] == "0.2.0"  # §4: prompt version stamped per item
     # envelope-reported model overrides the config default
     assert model_stub.provenance_stamp("e", model_id="claude-fable-5-x")["model_id"] == "claude-fable-5-x"
 

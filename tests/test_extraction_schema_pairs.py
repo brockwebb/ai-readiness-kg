@@ -36,3 +36,37 @@ def test_unknown_edge_has_no_valid_endpoint():
 def test_every_edge_has_pairs_metadata():
     for etype in schema_loader.edge_types(SCHEMA):
         assert schema_loader.legal_pairs(SCHEMA, etype), f"{etype} missing pairs"
+
+
+# --- v0.2 edges ----------------------------------------------------------------------
+
+def test_v02_uses_measure():
+    assert schema_loader.is_valid_endpoint(SCHEMA, "uses_measure", "Instrument", "Measure")
+    assert not schema_loader.is_valid_endpoint(SCHEMA, "uses_measure", "Measure", "Instrument")
+
+
+def test_v02_measures_extended_endpoints():
+    for a, b in [("Measure", "Construct"), ("Measure", "Concept"), ("Instrument", "Concept")]:
+        assert schema_loader.is_valid_endpoint(SCHEMA, "measures", a, b)
+    assert not schema_loader.is_valid_endpoint(SCHEMA, "measures", "Instrument", "Construct")
+
+
+def test_v02_has_component_part_whole():
+    assert schema_loader.is_valid_endpoint(SCHEMA, "has_component", "Framework", "Concept")
+    assert schema_loader.is_valid_endpoint(SCHEMA, "has_component", "Concept", "Concept")
+    assert not schema_loader.is_valid_endpoint(SCHEMA, "has_component", "Concept", "Framework")
+
+
+def test_v02_subtype_and_precedes():
+    assert schema_loader.is_valid_endpoint(SCHEMA, "subtype_of", "Concept", "Concept")
+    assert schema_loader.is_valid_endpoint(SCHEMA, "precedes", "Concept", "Concept")
+    assert not schema_loader.is_valid_endpoint(SCHEMA, "subtype_of", "Framework", "Concept")
+
+
+def test_schema_version_is_v02():
+    assert SCHEMA["schema_version"] == "0.2"
+
+
+def test_v02_edges_carry_external_alignment():
+    for etype in ("uses_measure", "measures", "has_component", "subtype_of", "precedes"):
+        assert SCHEMA["edge_types"][etype].get("external_alignment"), f"{etype} missing alignment"

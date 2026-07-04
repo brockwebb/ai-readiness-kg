@@ -2,14 +2,18 @@
 Versioned extraction prompt template (schema_v0.1.md §5, whole-document protocol).
 This file IS the prompt — it is loaded and rendered, never pasted inline into code strings.
 Rendering substitutes {{schema_version}}, {{document_id}}, and {{document_text}}.
-prompt_version: 0.1.0
+prompt_version: 0.2.0
 -->
 # Whole-document extraction — ai-readiness-kg schema {{schema_version}}
 
 You extract a knowledge graph from ONE primary-source document, in a single pass. Output
 **strict JSON** only — no prose, no markdown fences. Every node and every edge you emit MUST
-carry a `grounding_span`: a **verbatim quote** copied from the document that supports it. If
-you cannot quote the document for an item, do not emit it. No grounding span, no write.
+carry a `grounding_span`: a quote copied from the document that supports it.
+
+**The grounding_span must be CHARACTER-EXACT.** Copy an exact, contiguous substring from the
+document text — do not paraphrase, summarize, reword, fix typos, expand abbreviations, merge
+sentences, or normalize punctuation/spacing. If you cannot copy an exact substring that
+supports the item, do not emit the item. No grounding span, no write.
 
 Do NOT emit `document_id`, `model_id`, `schema_version`, `extraction_event_id`, or any
 timestamp/event id — the harness owns those and injects them. Emit only the content you
@@ -49,10 +53,14 @@ Every node object also needs: `id` (unique within this output), `grounding_span`
 ## Allowed edge types (type-validity is enforced; anything else is rejected)
 
 `defines` (Document→Definition), `mentions` (Document→Concept), `asserts` (Document→Claim),
-`about` (Claim→Concept), `operationalizes` (Instrument→Construct), `measures` (Measure→Construct),
+`about` (Claim→Concept), `operationalizes` (Instrument→Construct),
+`measures` (Measure→Construct, Measure→Concept, Instrument→Concept),
 `grounds` (Construct→Definition), `extends` (Definition→Definition, Framework→Framework),
 `conflicts_with` (Definition↔Definition, Claim↔Claim), `cites` (Document→Document),
-`builds_on` (Standard/Framework→Standard/Framework), `implements` (Standard→Concept).
+`builds_on` (Standard/Framework→Standard/Framework), `implements` (Standard→Concept),
+`uses_measure` (Instrument→Measure), `has_component` (Framework→Concept or Concept→Concept;
+part-whole only, never is-a), `subtype_of` (Concept→Concept; is-a only, never part-whole),
+`precedes` (Concept→Concept).
 
 Each edge object: `type`, `from_id`, `to_id`, `grounding_span`, `location`. The document node's
 id is `{{document_id}}`.
