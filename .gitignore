@@ -22,6 +22,9 @@ tmp/
 # (Ignore staging *contents*, not the dir node, so a specific file can be re-included.)
 corpus/staging/*
 !corpus/staging/pilot_adds_run_log.md
+# candidate_register.jsonl is the COMMITTED corpus screening log (PRISMA-style in/out
+# decisions; metadata only, no document content) — task bulk_acquisition_v2, Part 0.
+!corpus/staging/candidate_register.jsonl
 
 # ── Acquired corpus binaries (primary-source PDFs) ─────────────────────────
 # Kept local, NOT committed to this public repo: some are third-party (arXiv author
@@ -32,6 +35,9 @@ corpus/pilot/
 # Non-pilot acquired captures (Cisco methodology/instrument web printouts + merge
 # components). Same rationale: third-party captures kept local; provenance in manifest.
 corpus/cisco/
+# Bulk-acquired corpus PDFs (candidate register). Same rationale: kept local, provenance
+# (primary_url + content_hash) travels in the manifest.
+corpus/bulk/
 
 # ── Python ────────────────────────────────────────────────────────────────
 __pycache__/

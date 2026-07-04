@@ -40,7 +40,8 @@ _MANIFEST_PATH = _CORPUS_DIR / "manifest.json"
 _MANIFEST_BATCH = 1
 
 _MANIFEST_ADD = "manifest_add"
-_SOURCE_TYPES = ("federal", "academic", "industry", "standard")
+# Kept in sync with schema.yaml Document.source_type (intergovernmental added 2026-07-03, R1).
+_SOURCE_TYPES = ("federal", "academic", "industry", "standard", "intergovernmental")
 _DOC_ID_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 
 # Fields the caller must supply (non-empty). local_path and content_hash are computed;

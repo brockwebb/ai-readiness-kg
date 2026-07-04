@@ -106,6 +106,14 @@ def test_manifest_sorted_by_doc_id(repo):
 
 # --- the five rejection paths ---------------------------------------------------------
 
+def test_accepts_intergovernmental_source_type(repo):
+    f = _write_corpus_file(repo, "oecd.txt", "oecd content")
+    doc_id = manifest.add(str(f), **_good_fields(
+        doc_id="oecd-ai-index", source_type="intergovernmental",
+        primary_url="https://oecd.ai/en/"))
+    assert doc_id == "oecd-ai-index"
+
+
 def test_reject_missing_field(repo):
     f = _write_corpus_file(repo, "x.txt")
     fields = _good_fields()
