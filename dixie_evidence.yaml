@@ -1,0 +1,128 @@
+# dixie.evidence config instance — ai-readiness-kg
+# Written by task 2026-07-04_dixie_b0_evidence_layer (Stage 3 acceptance run).
+# The package is schema-neutral; everything project-specific lives here.
+
+project: ai-readiness-kg
+corpus_root: corpus
+evidence_dir: corpus/evidence
+quarantine_dir: corpus/quarantine
+inbox_dir: corpus/inbox
+promote_dir: corpus/bulk          # verified inbox fulfillments land here
+document_dirs: [bulk, bulk_md, pilot, cisco]
+manifest_out: corpus/manifest.json  # v2 projection; v1 preserved at corpus/manifest.v1.json
+
+integrity:
+  min_bytes:
+    # observed garbage: HTML stubs 468-1817 B, Cloudflare cluster 5.5-6 KB.
+    # smallest legitimate PDF in corpus is >25 KB; 8000 clears the cluster
+    # without endangering small real documents. magic + smoke do the rest.
+    pdf: 8000
+    markdown: 256
+    text: 256
+  pdf_min_chars: 200
+  pdf_smoke_max_pages: 10
+  text_min_chars: 200
+
+# Prior screening artifacts — imported once, preserved verbatim in the event
+# log. Order matters: manifest v1 first (its doc_ids are the join key to the
+# pilot's assertion events), then the candidate register (PRISMA-style
+# screening decisions), which merges by normalized source URL.
+imports:
+  - source_id: manifest_v1
+    path: corpus/manifest.v1.json
+    format: json
+    records_path: documents
+    doc_id_from: null
+    map:
+      doc_id: doc_id
+      title: title
+      authors_or_org: authors
+      pub_year: pub_date
+      doc_type: source_type
+      source_url: primary_url
+      local_path: local_path
+      expected_sha256: content_hash
+      rationale: inclusion_rationale
+      status: status
+      acquisition_method: acquisition.acquisition_method
+      acquired_by: discovered_via
+    status_map:
+      active: included
+  - source_id: candidate_register
+    path: corpus/staging/candidate_register.jsonl
+    format: jsonl
+    doc_id_from: title_slug
+    map:
+      title: title
+      source_url: primary_url
+      authors_or_org: authors
+      pub_year: year
+      doc_type: source_type
+      rationale: decision_reason
+      status: status
+      decided_by: decided_by
+      decided_at: decided_at
+      notes: notes
+    status_map:
+      manifested: included
+      needs_source: pending_refetch
+      excluded: excluded
+
+channel_hints:
+  - {url_contains: arxiv.org, channel: "arxiv API (harvester connector exists)"}
+  - {url_contains: govinfo.gov, channel: "govinfo direct PDF pattern"}
+  - {url_contains: federalregister.gov, channel: "Federal Register API"}
+  - {url_contains: nist.gov, channel: "nist.gov direct PDF"}
+
+# R4 — pre-registered baseline gate. DEFINITION ONLY; execution is
+# post-extraction and not implemented in this component. Check definitions
+# ported from what fss-policy-kg actually ran (sources cited per check).
+# TO_BE_SET values are operator decisions — dixie never invents thresholds.
+baseline_gate:
+  preregistered: true
+  min_verified_included: TO_BE_SET   # operator sets before extraction fires
+  post_extraction_checks:
+    - check_id: grounding_rate
+      definition: >-
+        Fraction of extracted items whose verbatim span passes the grounding
+        verifier (normalized exact-substring against source text).
+      comparator: gte
+      threshold: TO_BE_SET
+      source: "fss kg/e3_extract.py::grounding_violations + e3_report runbook gate"
+    - check_id: quarantine_rate
+      definition: >-
+        Fraction of extracted items quarantined by parser gates, per doc.
+        The pilot pre-registered 10% STOP in task prose; declared here so the
+        gate is enforceable config, not prose.
+      comparator: lte
+      threshold: TO_BE_SET
+      source: "ai-readiness pilot v5 task protocol (prose -> config)"
+    - check_id: edge_endpoint_validation
+      definition: >-
+        Every asserted edge resolves both endpoints to existing nodes and its
+        (from,to) pair is allowed by the schema. Count of violations.
+      comparator: eq
+      threshold: TO_BE_SET
+      source: "fss kg/loader.py per-label constraints + e3_validators provision_unlinked"
+    - check_id: orphan_rate
+      definition: >-
+        Fraction of non-Document nodes with zero relationships after
+        projection build.
+      comparator: lte
+      threshold: TO_BE_SET
+      source: "fss kg/loader.py::stats() / obligation report practice"
+    - check_id: projection_drift
+      definition: >-
+        Replay the event log into a scratch database and diff against live:
+        node/rel counts and per-document property fingerprints. Zero
+        divergence is definitional (ported check exits nonzero on ANY diff),
+        not an operator dial.
+      comparator: eq
+      threshold: 0
+      source: "fss kg/drift_check.py"
+    - check_id: empty_extraction_rate
+      definition: >-
+        Fraction of included docs yielding zero extracted items.
+      comparator: lte
+      threshold: TO_BE_SET
+      source: "fss e3_empty event tracking"

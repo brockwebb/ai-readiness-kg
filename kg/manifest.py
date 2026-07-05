@@ -33,6 +33,11 @@ from kg import eventlog
 _REPO_ROOT = Path(__file__).resolve().parent.parent
 _CORPUS_DIR = _REPO_ROOT / "corpus"
 _MANIFEST_PATH = _CORPUS_DIR / "manifest.json"
+# Stage-0 rewire (task 2026-07-05_airkg_bulk_extraction_v1): manifest.json is the
+# projection of the DIXIE EVIDENCE LEDGER, configured here. The manifest_add event
+# stream (batch 1) remains the extraction-admission gate; the evidence ledger is the
+# corpus ledger. rebuild() projects from the ledger — never from manifest_add events.
+_DIXIE_CONFIG_PATH = _REPO_ROOT / "dixie_evidence.yaml"
 
 # manifest_add events all land in one ingest shard. Sharding (DD-008) is by ingest batch;
 # the manifest is a single logical stream, so a fixed shard keeps it self-contained and
@@ -188,20 +193,48 @@ def add(filepath, **fields) -> str:
     if fields.get("acquisition") is not None:
         entry["acquisition"] = fields["acquisition"]
     eventlog.append({"event_type": _MANIFEST_ADD, "payload": entry}, batch=_MANIFEST_BATCH)
-    rebuild()
+    # Stage-0 rewire: add() no longer auto-rebuilds manifest.json. The file is the
+    # evidence-ledger projection; refreshing it here would overwrite v2 with state the
+    # ledger hasn't recorded yet. After an add, run the Dixie sweep
+    # (`dixie-evidence verify --config dixie_evidence.yaml`) to ledger the file, then
+    # `python -m kg.manifest rebuild` (or the sweep itself) to refresh the projection.
     return doc_id
 
 
 def rebuild() -> dict:
-    """Replay the event log, project the manifest_add events into manifest.json (sorted by
-    doc_id), write it, and return the projection. Idempotent: same events -> same file."""
-    entries = sorted(_load_entries(), key=lambda e: e["doc_id"])
-    manifest = {"schema_version": eventlog.schema_version(), "documents": entries}
-    _MANIFEST_PATH.parent.mkdir(parents=True, exist_ok=True)
-    with _MANIFEST_PATH.open("w", encoding="utf-8") as fh:
-        json.dump(manifest, fh, ensure_ascii=False, indent=2, sort_keys=False)
-        fh.write("\n")
-    return manifest
+    """Regenerate corpus/manifest.json (v2) FROM THE DIXIE EVIDENCE DECISIONS LOG.
+
+    Stage-0 rewire (task 2026-07-05_airkg_bulk_extraction_v1): the decisions log at
+    corpus/evidence/decisions.jsonl is truth; this file is its projection. Byte-stable
+    on unchanged input (the projection stamps the last event's timestamp, never
+    wall-clock). Raises ManifestError — loudly, never a silent no-op — if the dixie
+    package or the config instance is missing."""
+    try:
+        from dixie.evidence.config import load_config as _dixie_load_config
+        from dixie.evidence.eventlog import EventLog as _DixieEventLog
+        from dixie.evidence.manifest import (
+            build_manifest as _dixie_build_manifest,
+            last_event_ts as _dixie_last_event_ts,
+            write_manifest_json as _dixie_write_manifest_json,
+        )
+    except ImportError as exc:
+        raise ManifestError(
+            "corpus/manifest.json is the projection of the Dixie evidence ledger; "
+            "rebuilding it requires the 'dixie' package (pip install -e ~/GitHub/dixie). "
+            "See cc_tasks/2026-07-05_airkg_bulk_extraction_v1.md Stage 0."
+        ) from exc
+    if not _DIXIE_CONFIG_PATH.is_file():
+        raise ManifestError(
+            f"dixie config instance not found: {_DIXIE_CONFIG_PATH} — manifest.json is "
+            "the evidence-ledger projection and cannot be rebuilt without it. "
+            "See cc_tasks/2026-07-05_airkg_bulk_extraction_v1.md Stage 0."
+        )
+    cfg = _dixie_load_config(_DIXIE_CONFIG_PATH)
+    log = _DixieEventLog(cfg["evidence_dir_abs"] / "decisions.jsonl")
+    entries = _dixie_build_manifest(log)
+    _dixie_write_manifest_json(entries, _MANIFEST_PATH, cfg["project"],
+                               generated_at=_dixie_last_event_ts(log))
+    return {"manifest_version": 2, "entries": len(entries)}
 
 
 def verify() -> list[dict]:
@@ -282,7 +315,8 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.command == "rebuild":
         manifest = rebuild()
-        print(f"rebuilt {_MANIFEST_PATH} with {len(manifest['documents'])} document(s)")
+        print(f"rebuilt {_MANIFEST_PATH} (v{manifest['manifest_version']} evidence-ledger "
+              f"projection) with {manifest['entries']} entrie(s)")
         return 0
 
     if args.command == "verify":

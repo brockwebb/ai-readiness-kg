@@ -68,7 +68,10 @@ def test_acquisition_absent_when_not_supplied(repo):
     assert "acquisition" not in entry
 
 
-def test_add_writes_event_updates_manifest_and_hashes(repo):
+def test_add_writes_event_and_hashes(repo):
+    """Stage-0 rewire (2026-07-05): add() writes the admission event but no longer
+    auto-rebuilds manifest.json — the file is the Dixie evidence-ledger projection
+    and refreshing it here would clobber v2 with unledgered state."""
     f = _write_corpus_file(repo, "fcsm.txt", "the content")
     doc_id = manifest.add(str(f), **_good_fields())
     assert doc_id == "fcsm-25-03"
@@ -78,13 +81,8 @@ def test_add_writes_event_updates_manifest_and_hashes(repo):
     assert len(events) == 1
     ev = events[0]
     assert ev["event_type"] == "manifest_add"
-    assert ev["payload"]["doc_id"] == "fcsm-25-03"
-
-    # manifest.json projection updated
-    manifest_json = json.loads((repo / "corpus" / "manifest.json").read_text())
-    assert manifest_json["schema_version"] == "0.1"
-    assert len(manifest_json["documents"]) == 1
-    entry = manifest_json["documents"][0]
+    entry = ev["payload"]
+    assert entry["doc_id"] == "fcsm-25-03"
 
     # hash is the real sha256 of the file, local_path is corpus-relative
     import hashlib
@@ -94,14 +92,17 @@ def test_add_writes_event_updates_manifest_and_hashes(repo):
     assert entry["status"] == "active"
     assert entry["discovered_via"] == "manual"
 
+    # and the projection was NOT touched by add()
+    assert not (repo / "corpus" / "manifest.json").exists()
 
-def test_manifest_sorted_by_doc_id(repo):
+
+def test_admission_state_replayed_not_projected(repo):
     manifest.add(str(_write_corpus_file(repo, "b.txt", "bbb")), **_good_fields(
         doc_id="zeta-01", primary_url="https://example.gov/z"))
     manifest.add(str(_write_corpus_file(repo, "a.txt", "aaa")), **_good_fields(
         doc_id="alpha-01", primary_url="https://example.gov/a"))
-    docs = json.loads((repo / "corpus" / "manifest.json").read_text())["documents"]
-    assert [d["doc_id"] for d in docs] == ["alpha-01", "zeta-01"]
+    ids = sorted(e["payload"]["doc_id"] for e in eventlog.replay())
+    assert ids == ["alpha-01", "zeta-01"]
 
 
 # --- the five rejection paths ---------------------------------------------------------
@@ -157,24 +158,48 @@ def test_reject_duplicate_primary_url(repo):
 
 
 # --- rebuild + verify -----------------------------------------------------------------
+# Stage-0 rewire (2026-07-05): rebuild() projects from the Dixie evidence decisions
+# log, not from manifest_add events. Tests seed a real dixie ledger in tmp_path.
 
-def test_rebuild_is_idempotent_and_pure_from_events(repo):
-    manifest.add(str(_write_corpus_file(repo, "one.txt", "one")), **_good_fields(
-        doc_id="doc-one", primary_url="https://example.gov/one"))
-    manifest.add(str(_write_corpus_file(repo, "two.txt", "two")), **_good_fields(
-        doc_id="doc-two", primary_url="https://example.gov/two"))
+def _seed_dixie(repo, monkeypatch):
+    import yaml
+    from dixie.evidence.eventlog import EventLog as DixieEventLog
 
+    cfg_path = repo / "dixie_evidence.yaml"
+    cfg_path.write_text(yaml.safe_dump({
+        "project": "test", "corpus_root": "corpus",
+        "evidence_dir": "corpus/evidence", "quarantine_dir": "corpus/quarantine",
+        "inbox_dir": "corpus/inbox", "document_dirs": ["docs"],
+    }))
+    monkeypatch.setattr(manifest, "_DIXIE_CONFIG_PATH", cfg_path)
+    log = DixieEventLog(repo / "corpus" / "evidence" / "decisions.jsonl")
+    log.append("screening_decided", {
+        "doc_id": "ledgered-doc", "decision": "included",
+        "rationale": "seed", "decided_by": "test"})
+    return log
+
+
+def test_rebuild_projects_dixie_ledger_and_is_byte_stable(repo, monkeypatch):
+    _seed_dixie(repo, monkeypatch)
     manifest_path = repo / "corpus" / "manifest.json"
+
+    out = manifest.rebuild()
+    assert out == {"manifest_version": 2, "entries": 1}
     first = manifest_path.read_text()
+    doc = json.loads(first)
+    assert doc["manifest_version"] == 2
+    assert "ledgered-doc" in doc["entries"]
+    assert doc["note"].startswith("PROJECTION")
 
-    # delete the projection, rebuild purely from the event log -> byte-identical
-    manifest_path.unlink()
+    # byte-stable: rebuild twice on unchanged input -> identical bytes
     manifest.rebuild()
     assert manifest_path.read_text() == first
 
-    # a second rebuild changes nothing
-    manifest.rebuild()
-    assert manifest_path.read_text() == first
+
+def test_rebuild_fails_loud_without_dixie_config(repo, monkeypatch):
+    monkeypatch.setattr(manifest, "_DIXIE_CONFIG_PATH", repo / "nope.yaml")
+    with pytest.raises(manifest.ManifestError, match="Dixie evidence ledger|dixie config"):
+        manifest.rebuild()
 
 
 def test_verify_clean_then_catches_tamper(repo):
