@@ -60,9 +60,14 @@ def new_extraction_event_id() -> str:
     return uuid.uuid4().hex
 
 
-def transition(doc_id: str, to_state: str, *, batch: int = EXTRACTION_BATCH) -> str:
+def transition(doc_id: str, to_state: str, *, batch: int | None = None) -> str:
     """Emit a ``doc_state`` transition event and return its event_id. The from_state is read
-    live so the log records the actual prior state."""
+    live so the log records the actual prior state.
+
+    ``batch`` resolves EXTRACTION_BATCH at call time (not def time) so a run driver may
+    retarget the shard for its run (bulk v1 uses batch 4) by setting the module attribute."""
+    if batch is None:
+        batch = EXTRACTION_BATCH
     if to_state not in _ORDER:
         raise ValueError(f"unknown state {to_state!r}; must be one of {STATES}")
     from_state = current_state(doc_id)
@@ -74,9 +79,11 @@ def transition(doc_id: str, to_state: str, *, batch: int = EXTRACTION_BATCH) -> 
 
 
 def assert_item(doc_id: str, kind: str, extraction_event_id: str, provenance: dict,
-                item: dict, *, batch: int = EXTRACTION_BATCH) -> str:
+                item: dict, *, batch: int | None = None) -> str:
     """Emit one node/edge assertion event carrying its provenance stamp (§4). ``kind`` is
     'node_asserted' or 'edge_asserted'."""
+    if batch is None:
+        batch = EXTRACTION_BATCH
     return eventlog.append(
         {"event_type": kind, "doc_id": doc_id,
          "extraction_event_id": extraction_event_id,

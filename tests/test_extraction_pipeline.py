@@ -170,3 +170,33 @@ def test_manifest_add_in_batch1_extraction_in_batch2(ext_iso):
     pipeline.extract_document("doc-1", SOURCE, output=_output())  # batch 2
     assert (ext_iso / "events" / "batch-001.jsonl").is_file()
     assert (ext_iso / "events" / "batch-002.jsonl").is_file()
+
+
+# --- bulk v1 run-driver seams (task 2026-07-05_airkg_bulk_extraction_v1) ---------------
+
+def test_extraction_batch_resolves_at_call_time(ext_iso):
+    seed_manifest_add("doc-1")
+    old = state.EXTRACTION_BATCH
+    state.EXTRACTION_BATCH = 4
+    try:
+        pipeline.extract_document("doc-1", SOURCE, output=_output())
+    finally:
+        state.EXTRACTION_BATCH = old
+    assert (ext_iso / "events" / "batch-004.jsonl").is_file()
+    assert not (ext_iso / "events" / "batch-002.jsonl").exists()
+
+
+def test_extra_provenance_stamped_and_protected(ext_iso):
+    seed_manifest_add("doc-1")
+    pipeline.extract_document(
+        "doc-1", SOURCE, output=_output(),
+        extra_provenance={"corpus_epoch": "v1", "source_sha256": "ab" * 32})
+    stamped = [e for e in eventlog.replay() if e["event_type"] == "node_asserted"]
+    assert stamped and all(
+        e["provenance"]["corpus_epoch"] == "v1"
+        and e["provenance"]["source_sha256"] == "ab" * 32 for e in stamped)
+
+    import pytest as _pytest
+    with _pytest.raises(ValueError, match="may not override"):
+        pipeline.extract_document("doc-1", SOURCE, output=_output(),
+                                  extra_provenance={"model_id": "spoof"})

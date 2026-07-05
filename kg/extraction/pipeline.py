@@ -40,12 +40,15 @@ def _apply_provenance_ownership(output: dict, doc_id: str) -> dict:
 
 
 def extract_document(doc_id: str, source_text: str, output: dict | None = None,
-                     model_meta: dict | None = None) -> dict:
+                     model_meta: dict | None = None,
+                     extra_provenance: dict | None = None) -> dict:
     """Run the extraction pipeline for one document. Returns a summary dict with the
     ExtractionResult, computed metrics, and the extraction_event_id.
 
     ``output`` is the parsed extraction envelope; ``model_meta`` (from model_stub.invoke)
     carries the reported model_id + usage. If ``output`` is None the model is invoked here.
+    ``extra_provenance`` (harness-owned, e.g. corpus_epoch + source doc sha256 for the bulk
+    run) is merged into every item's §4 stamp — it may not override stamp-owned keys.
 
     Preconditions (fail loud, §7): the document must have reached ``manifest_added`` — a
     document with no manifest_add event cannot be extracted."""
@@ -62,6 +65,11 @@ def extract_document(doc_id: str, source_text: str, output: dict | None = None,
     result = parser.parse_extraction(output, source_text, schema)
     reported_model = (model_meta or {}).get("model_id")
     provenance = model_stub.provenance_stamp(extraction_event_id, model_id=reported_model)
+    if extra_provenance:
+        collisions = set(extra_provenance) & set(provenance)
+        if collisions:
+            raise ValueError(f"extra_provenance may not override stamp keys: {sorted(collisions)}")
+        provenance = {**provenance, **extra_provenance}
 
     # extracted: emit one §4-stamped assertion event per surviving node/edge.
     state.transition(doc_id, "extracted")
