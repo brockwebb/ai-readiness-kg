@@ -110,4 +110,47 @@ envelope tokens. Resume = batch-004 build_metrics replay. Oversize docs
 STOP discipline: per-doc quarantine >10% or model substitution → STOP file
 (`events/bulk_v1_STOP.json`); runner refuses to fire until the operator removes it.
 
+## Stage 5 — Machinery built + shakedown (final gate report runs post-burn)
+
+**What was built (the S1 finding made good):** this repo had ZERO projection code —
+the KG existed only as events. Now:
+- `scripts/build_projection.py` — minimal reset-and-replay events→Neo4j projection
+  into **`seldon-ai-readiness-kg`** (the hive's declared KG database per
+  seldon.yaml/federation registry; Seldon's :Artifact graph coexists untouched under
+  disjoint labels — deletes are scoped to the 9 schema labels only). Rel types come
+  exclusively from the schema.yaml edge whitelist (no payload text ever reaches
+  Cypher composition).
+- `scripts/run_baseline_gates.py` — computes the six pre-registered checks from
+  events + the projection; writes `docs/research/bulk_v1_gate_report.md`. No
+  retuning path exists.
+
+**First projection build (2026-07-05):** 357 nodes + 588 edges (519 pilot assertions
++ 69 curated promotions — exactly the declared baseline numbers) + 71 Documents.
+
+**Shakedown gate run against PILOT-era data** (machinery verification — the v1 gate
+report regenerates after the burn):
+
+| check | value | threshold | verdict |
+|---|---|---|---|
+| min_verified_included | 71 | 71 | PASS |
+| grounding_zero_ungrounded | 0 (0 v1 items yet) | 0 | PASS |
+| quarantine_rate | 0.0 | 0.0152 | PASS |
+| edge_endpoint_validation | **67** | 0 | **FAIL — finding** |
+| orphan_rate | **0.0483** | 0.0034 | **FAIL — finding** |
+| projection_drift | 0 | 0 | PASS |
+| empty_extraction_rate | 0.0 | 0.1196 | PASS |
+
+**The two failures are pilot-data findings, recorded not retuned:** the 67 edge
+violations are dominated by pilot `cites` edges whose targets are UNMANIFESTED cited
+works (external references — i.e. refetch-candidate surface, plus at least one
+id-mismatch: `doc-fcsm-framework-for-data-quality` vs the held `fcsm-20-04`). The
+orphan rate is pilot nodes with no surviving edges. Both match the pre-registration
+comment's prediction that a heterogeneous corpus fails edge/orphan gates — they
+trigger investigation post-burn.
+
+**To produce the final Stage-5 report after the burn completes:**
+`python3 scripts/build_projection.py && python3 scripts/run_baseline_gates.py`
+
+---
+
 <!-- Per-window progress sections are appended below by the runner. -->
