@@ -81,48 +81,73 @@ channel_hints:
 baseline_gate:
   preregistered: true
   min_verified_included: 71   # corpus epoch v1 freeze — event 0ba4e3f764e64cb8ba1a7155fd6eee3f, task 2026-07-05_airkg_bulk_extraction_v1 Stage 1
+  # v1 PRE-REGISTERED thresholds (Stage 2, task 2026-07-05_airkg_bulk_extraction_v1):
+  # ported from fss-policy-kg's REALIZED values, read 2026-07-05 from its run
+  # artifacts (cited per check). One doctrine override: grounding is
+  # ZERO-UNGROUNDED ABSOLUTE, not a rate.
+  # EXPECTATION: this heterogeneous corpus (academic PDFs, web-md captures,
+  # statutes, industry decks) may FAIL the edge/orphan/empty gates that a
+  # single-genre statutory corpus passed. A failed gate triggers
+  # INVESTIGATION, never retuning to pass. Pre-registered values stand for v1.
   post_extraction_checks:
-    - check_id: grounding_rate
+    - check_id: grounding_zero_ungrounded
       definition: >-
-        Fraction of extracted items whose verbatim span passes the grounding
-        verifier (normalized exact-substring against source text).
-      comparator: gte
-      threshold: TO_BE_SET
-      source: "fss kg/e3_extract.py::grounding_violations + e3_report runbook gate"
+        Count of ADMITTED items whose grounding span fails the verifier.
+        Absolute zero: an ungrounded item is rejected/quarantined at parse,
+        never admitted — rejections are recorded, not silently dropped.
+      comparator: eq
+      threshold: 0
+      source: >-
+        fss realized: 0 ungrounded admitted across 6,237 extraction events
+        (e3_full_drain_report.md §1); 6,481/6,481 grounded=true in live graph
+        (kg_intrinsic_quality_report.md §4). Doctrine override per task:
+        absolute, not a rate.
     - check_id: quarantine_rate
       definition: >-
-        Fraction of extracted items quarantined by parser gates, per doc.
-        The pilot pre-registered 10% STOP in task prose; declared here so the
-        gate is enforceable config, not prose.
+        Fraction of parsed items rejected by parser gates (grounding miss,
+        schema violation) across the run. Per-doc 10% STOP discipline is
+        enforced in-run by the driver (ai-r pilot v5 protocol).
       comparator: lte
-      threshold: TO_BE_SET
-      source: "ai-readiness pilot v5 task protocol (prose -> config)"
+      threshold: 0.0152
+      scope: run
+      source: >-
+        fss realized: 123 failed segments / 8,078 eligible = 1.52%
+        (e3_full_drain_report.md §2-3; failures dominated by the grounding
+        guard honestly rejecting OCR-corrupted source).
     - check_id: edge_endpoint_validation
       definition: >-
         Every asserted edge resolves both endpoints to existing nodes and its
-        (from,to) pair is allowed by the schema. Count of violations.
+        (from,to) pair is allowed by schema.yaml. Count of violations.
       comparator: eq
-      threshold: TO_BE_SET
-      source: "fss kg/loader.py per-label constraints + e3_validators provision_unlinked"
+      threshold: 0
+      source: >-
+        fss realized: 0 out-of-vocabulary force values, 0 obligations missing
+        source-doc provenance (kg_intrinsic_quality_report.md §2, §4).
     - check_id: orphan_rate
       definition: >-
         Fraction of non-Document nodes with zero relationships after
         projection build.
       comparator: lte
-      threshold: TO_BE_SET
-      source: "fss kg/loader.py::stats() / obligation report practice"
+      threshold: 0.0034
+      source: >-
+        fss realized: 22/6,481 obligations lacking their STATES segment link =
+        0.34% — the graph's structural-orphan analog
+        (kg_intrinsic_quality_report.md §2 orphan/dangling checks).
     - check_id: projection_drift
       definition: >-
         Replay the event log into a scratch database and diff against live:
-        node/rel counts and per-document property fingerprints. Zero
-        divergence is definitional (ported check exits nonzero on ANY diff),
-        not an operator dial.
+        node/rel counts and per-document fingerprints. Zero divergence is
+        definitional (ported check exits nonzero on ANY diff), not an
+        operator dial.
       comparator: eq
       threshold: 0
-      source: "fss kg/drift_check.py"
+      source: "fss kg/drift_check.py + drift_check_report.md (realized: clean)"
     - check_id: empty_extraction_rate
       definition: >-
         Fraction of included docs yielding zero extracted items.
       comparator: lte
-      threshold: TO_BE_SET
-      source: "fss e3_empty event tracking"
+      threshold: 0.1196
+      source: >-
+        fss realized: 11/92 documents with zero obligations = 11.96%, of which
+        5 documented leave-empties + 4 genuinely narrative
+        (kg_intrinsic_quality_report.md §1 population completeness).
