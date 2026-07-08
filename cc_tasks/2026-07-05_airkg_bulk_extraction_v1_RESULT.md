@@ -154,3 +154,36 @@ trigger investigation post-burn.
 ---
 
 <!-- Per-window progress sections are appended below by the runner. -->
+
+### Burn progress — 2026-07-06 01:57 EDT
+
+- advancing-american-ai-act-ndaa-fy2023-div-g: deferred oversize (5,560,088 chars)
+- ai-data-readiness-checklist-digital-government-hub: 48 nodes, 64 edges, quarantined 0 (rate 0.000), 55,727 tokens
+- ai-governance-ethics-and-leadership-substack-harvey-lab-lega: 48 nodes, 72 edges, quarantined 0 (rate 0.000), 69,025 tokens
+- ai-in-government-act-of-2020: deferred oversize (6,687,124 chars)
+- ai-readiness-building-the-bridge-from-higher-education-to-wo: 86 nodes, 138 edges, quarantined 2 (rate 0.009), 172,551 tokens
+- ai-readiness-for-official-data-and-statistics-un-statistical: 44 nodes, 65 edges, quarantined 10 (rate 0.084), 64,124 tokens
+- ai-readiness-in-healthcare-through-storytelling-xai: 58 nodes, 40 edges, quarantined 0 (rate 0.000), 95,054 tokens
+- cap exhausted after 5 docs this window
+- window total: 5 docs extracted; 5/71 complete; tokens left in band: 0
+
+### Burn progress — 2026-07-07 02:35 EDT
+
+- advancing-american-ai-act-ndaa-fy2023-div-g: deferred oversize (5,560,088 chars)
+- ai-in-government-act-of-2020: deferred oversize (6,687,124 chars)
+- ai-real-toolkit-ai-readiness-assessment-guide: 129 nodes, 185 edges, quarantined 0 (rate 0.000), 248,246 tokens
+- ai-watch-revisiting-technology-readiness-levels-for-relevant: deferred oversize (329,578 chars)
+- aidrin-2-0-a-framework-to-assess-data-readiness-for-ai: 66 nodes, 70 edges, quarantined 0 (rate 0.000), 76,825 tokens
+- aidrin-hiniduma-2024: 93 nodes, 147 edges, quarantined 20 (rate 0.077), 127,268 tokens
+- cap exhausted after 3 docs this window
+- window total: 3 docs extracted; 8/71 complete; tokens left in band: 0
+
+### Burn progress — 2026-07-08 00:26 EDT
+
+- advancing-american-ai-act-ndaa-fy2023-div-g: deferred oversize (5,560,088 chars)
+- ai-in-government-act-of-2020: deferred oversize (6,687,124 chars)
+- ai-watch-revisiting-technology-readiness-levels-for-relevant: 87 nodes, 80 edges, quarantined 2 (rate 0.012), 312,762 tokens
+- arm-ai-readiness-index: deferred oversize (250,746 chars)
+- artificial-intelligence-domain-ai-readiness-and-firm-product: 62 nodes, 91 edges, quarantined 14 (rate 0.084), 150,738 tokens
+- cap exhausted after 2 docs this window
+- window total: 2 docs extracted; 10/71 complete; tokens left in band: 0

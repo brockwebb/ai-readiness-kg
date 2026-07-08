@@ -231,7 +231,9 @@ def rebuild() -> dict:
         )
     cfg = _dixie_load_config(_DIXIE_CONFIG_PATH)
     log = _DixieEventLog(cfg["evidence_dir_abs"] / "decisions.jsonl")
-    entries = _dixie_build_manifest(log)
+    # identity gate (source-access tactical Stage 1): a record whose signals fail the
+    # declared thresholds cannot project as `included`. None-safe (pre-gate corpora).
+    entries = _dixie_build_manifest(log, gate_cfg=cfg.get("identity_gate"))
     _dixie_write_manifest_json(entries, _MANIFEST_PATH, cfg["project"],
                                generated_at=_dixie_last_event_ts(log))
     return {"manifest_version": 2, "entries": len(entries)}

@@ -23,6 +23,19 @@ integrity:
   pdf_smoke_max_pages: 10
   text_min_chars: 200
 
+# Identity admission gate (source-access tactical Stage 1). A record whose
+# connector-supplied signals fail these DECLARED thresholds cannot reach `included`
+# — it is forced to pending_refetch. Belt-and-suspenders: title match AND extent
+# sanity. require_signals_for_included stays False so the 71 pre-gate v1 docs (admitted
+# before signals existed) are grandfathered; every connector/inbox admission carries
+# signals and is gated.
+identity_gate:
+  title_token_overlap_floor: 0.3
+  require_signals_for_included: false
+  extent_sanity:
+    BILLS: {max_bytes: 2000000, max_pages: 150}
+    PLAW: {max_bytes: 3000000, max_pages: 500}
+
 # Prior screening artifacts — imported once, preserved verbatim in the event
 # log. Order matters: manifest v1 first (its doc_ids are the join key to the
 # pilot's assertion events), then the candidate register (PRISMA-style
