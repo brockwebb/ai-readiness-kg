@@ -52,6 +52,14 @@ JOB = "airkg-extraction-burn"
 PRIORITY_CLASS = "deadline"
 QUARANTINE_STOP_RATE = 0.10        # pilot v5 pre-registered per-doc STOP
 MAX_DOC_CHARS = 250_000            # oversize docs are DEFERRED with reason, never truncated
+# Per-doc oversize clearances (operator-authorized, ledgered). A named allowlist —
+# NOT a raised cap — so genuinely-unfit docs (e.g. mis-acquired enclosing statutes
+# that exceed context) keep deferring. Each entry is a single full-context call;
+# truncation is still forbidden. Cleared 2026-07-07 by operator: the TRL report is a
+# 329k-char JRC technical report (~82k tok), fits one Opus call with grounding intact.
+OVERSIZE_ALLOW = {
+    "ai-watch-revisiting-technology-readiness-levels-for-relevant",
+}
 PER_DOC_TIMEOUT_S = 1800
 MAX_DOC_ATTEMPTS = 2               # transport retry discipline: verbatim retry once
 
@@ -218,7 +226,7 @@ def run(max_docs: int | None = None, dry_run: bool = False) -> int:
                                 batch=BULK_BATCH)
                 progress.append(f"- {doc_id}: text extraction failed ({exc})")
                 continue
-            if len(text) > MAX_DOC_CHARS:
+            if len(text) > MAX_DOC_CHARS and doc_id not in OVERSIZE_ALLOW:
                 eventlog.append({"event_type": "bulk_doc_skipped_oversize",
                                  "doc_id": doc_id, "chars": len(text),
                                  "limit": MAX_DOC_CHARS,
@@ -227,6 +235,14 @@ def run(max_docs: int | None = None, dry_run: bool = False) -> int:
                 print(f"  {doc_id}: OVERSIZE ({len(text)} chars) — deferred with event")
                 progress.append(f"- {doc_id}: deferred oversize ({len(text):,} chars)")
                 continue
+            if len(text) > MAX_DOC_CHARS and doc_id in OVERSIZE_ALLOW:
+                eventlog.append({"event_type": "bulk_doc_oversize_cleared",
+                                 "doc_id": doc_id, "chars": len(text),
+                                 "limit": MAX_DOC_CHARS,
+                                 "note": "operator-cleared 2026-07-07; single full-context "
+                                         "call, not truncated"},
+                                batch=BULK_BATCH)
+                print(f"  {doc_id}: OVERSIZE ({len(text)} chars) — operator-cleared, extracting")
 
             print(f"  extracting {doc_id} ({len(text):,} chars) …", flush=True)
             try:
