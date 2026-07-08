@@ -126,6 +126,18 @@ def main() -> int:
 
         # write the correct-extent standalone bill as the new canonical
         canonical.write_bytes(content)
+        # evidence bookkeeping: the quarantine nulled canonical_path, so the new file
+        # must be OBSERVED + integrity-CHECKED or the manifest shows no verified file
+        # (which broke the burn's frozen-baseline guard the first time). run_checks +
+        # emit before the screening decision so the projection re-establishes canonical.
+        from dixie.evidence import integrity as _integrity
+        rel = str(canonical.relative_to(REPO))
+        chk = _integrity.run_checks(canonical, cfg["integrity"])
+        log.append("file_observed", {"path": rel, "sha256": chk["sha256"],
+                                     "size": chk["size"], "claimed_type": chk["claimed_type"],
+                                     "detected_type": chk["detected_type"]})
+        log.append("integrity_checked", {"path": rel, "verdict": chk["verdict"],
+                                         "checks": chk["checks"]})
         # admit as a refetch fulfillment: same doc_id, new content_hash, provenance
         log.append("screening_decided", {
             "doc_id": doc_id, "decision": "included", "signals": signals,
