@@ -11,6 +11,9 @@ LOG_DIR="$REPO/logs"
 mkdir -p "$LOG_DIR"
 # DD-007: subscription OAuth only — refuse inherited API credentials.
 unset ANTHROPIC_API_KEY ANTHROPIC_AUTH_TOKEN
+# 2026-07-08 boost: knock out the big docs first while the window is wide. Remove
+# this line to return to alphabetical order.
+export BURN_ORDER=size_desc
 
 {
   echo "=== $(date -u +%Y-%m-%dT%H:%M:%SZ) | airkg-extraction-burn fire"

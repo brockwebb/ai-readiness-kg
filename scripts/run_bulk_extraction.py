@@ -29,6 +29,7 @@ import argparse
 import datetime
 import hashlib
 import json
+import os
 import sys
 from pathlib import Path
 
@@ -182,7 +183,14 @@ def run(max_docs: int | None = None, dry_run: bool = False) -> int:
 
     members = corpus_v1_members()
     done, fails = resume_state()
-    todo = [d for d in sorted(members) if d not in done
+    # BURN_ORDER: "size_desc" knocks out the big docs first (boost mode — uses a wide
+    # window on the expensive docs); default alphabetical. Resume is done-set based, so
+    # reordering is safe (order affects only which undone doc goes next, not correctness).
+    if os.environ.get("BURN_ORDER") == "size_desc":
+        ordered = sorted(members, key=lambda d: members[d].stat().st_size, reverse=True)
+    else:
+        ordered = sorted(members)
+    todo = [d for d in ordered if d not in done
             and fails.get(d, 0) < MAX_DOC_ATTEMPTS]
     print(f"corpus v1: {len(members)} docs | done: {len(done)} | "
           f"skipped(failed x{MAX_DOC_ATTEMPTS}): "
