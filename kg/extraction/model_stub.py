@@ -17,7 +17,22 @@ import json
 import os
 import re
 import subprocess
+import tempfile
 from pathlib import Path
+
+# Extraction runs from a neutral empty directory so `claude -p` loads NO project context
+# (CLAUDE.md / .claude settings). With the repo cwd, the model reads the project context and
+# turns conversational — narrating and wrapping the JSON in prose ("I'll perform the
+# extraction…" + a trailing "Note:…"), which broke parsing (root cause found 2026-07-09). A
+# hermetic cwd makes it emit clean JSON. Created once, reused across calls.
+_HERMETIC_CWD: str | None = None
+
+
+def _hermetic_cwd() -> str:
+    global _HERMETIC_CWD
+    if _HERMETIC_CWD is None or not os.path.isdir(_HERMETIC_CWD):
+        _HERMETIC_CWD = tempfile.mkdtemp(prefix="airkg-extract-hermetic-")
+    return _HERMETIC_CWD
 
 try:
     import yaml
@@ -105,28 +120,59 @@ def build_prompt(doc_id: str, source_text: str, config: dict | None = None) -> s
             .replace("{{document_text}}", source_text))
 
 
-def _extract_json(result_text: str) -> dict:
-    """Parse the extraction JSON object from the model's response text. Tolerates a leading
-    ```json fence or surrounding prose by taking the outermost balanced object.
+def _balanced_object(text: str) -> str | None:
+    """Return the first complete brace-balanced ``{...}`` object in ``text``, honoring JSON
+    string literals so a ``}`` inside a quoted value doesn't close the object early. Robust to
+    prose before AND after the object (the model frequently narrates around the extraction)."""
+    depth = 0
+    start = None
+    in_str = esc = False
+    for i, ch in enumerate(text):
+        if in_str:
+            if esc:
+                esc = False
+            elif ch == "\\":
+                esc = True
+            elif ch == '"':
+                in_str = False
+            continue
+        if ch == '"':
+            in_str = True
+        elif ch == "{":
+            if depth == 0:
+                start = i
+            depth += 1
+        elif ch == "}" and depth > 0:
+            depth -= 1
+            if depth == 0 and start is not None:
+                return text[start:i + 1]
+    return None
 
-    Unusable model OUTPUT (empty / no JSON object / unparseable substring) is a per-document
-    invocation failure — raise ModelInvocationError so the run driver retries once then skips
-    the doc. It is NOT a ModelConfigError: a garbled response for one document must not fail
-    loud and halt the whole run (that classification is reserved for config/credential faults
-    that are fatal for every document)."""
+
+def _extract_json(result_text: str) -> dict:
+    """Parse the extraction JSON object from the model's response, tolerant of the model
+    wrapping it in conversational prose and/or a ```json code fence (observed 2026-07-09:
+    ``I'll perform the extraction…`` + fenced JSON + a trailing ``Note:…`` paragraph).
+
+    Tries, in order: (1) a fenced ```json {…}``` block anywhere in the text, (2) the whole
+    stripped text, (3) the first brace-balanced object. Only if ALL fail is it a per-document
+    invocation failure (ModelInvocationError → driver retries/skips) — NOT a ModelConfigError,
+    which is reserved for config/credential faults fatal to every document."""
     text = result_text.strip()
-    text = re.sub(r"^```(?:json)?\s*", "", text)
-    text = re.sub(r"\s*```$", "", text).strip()
-    try:
-        return json.loads(text)
-    except json.JSONDecodeError:
-        start, end = text.find("{"), text.rfind("}")
-        if start == -1 or end <= start:
-            raise ModelInvocationError("model response contains no JSON object")
+    candidates: list[str] = []
+    fence = re.search(r"```(?:json)?\s*(\{.*?\})\s*```", text, re.DOTALL)
+    if fence:
+        candidates.append(fence.group(1))
+    candidates.append(re.sub(r"\s*```$", "", re.sub(r"^```(?:json)?\s*", "", text)).strip())
+    balanced = _balanced_object(text)
+    if balanced:
+        candidates.append(balanced)
+    for cand in candidates:
         try:
-            return json.loads(text[start:end + 1])
-        except json.JSONDecodeError as exc:
-            raise ModelInvocationError(f"model response JSON unparseable: {exc}")
+            return json.loads(cand)
+        except json.JSONDecodeError:
+            continue
+    raise ModelInvocationError("model response contains no parseable JSON object")
 
 
 class ModelInvocationError(RuntimeError):
@@ -161,7 +207,8 @@ def invoke(doc_id: str, source_text: str, prompt: str | None = None,
     cmd = [config.get("cli", "claude"), "-p", "--model", model_id,
            "--output-format", _OUTPUT_FORMAT, "--allowed-tools", _EMPTY_ALLOWLIST]
     try:
-        proc = subprocess.run(cmd, input=prompt, capture_output=True, text=True, timeout=timeout)
+        proc = subprocess.run(cmd, input=prompt, capture_output=True, text=True,
+                              timeout=timeout, cwd=_hermetic_cwd())
     except subprocess.TimeoutExpired as exc:
         raise ModelInvocationError(f"claude -p timed out after {timeout}s for {doc_id}") from exc
     if proc.returncode != 0:
