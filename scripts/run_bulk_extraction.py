@@ -30,6 +30,7 @@ import datetime
 import hashlib
 import json
 import os
+import subprocess
 import sys
 from pathlib import Path
 
@@ -73,6 +74,11 @@ OVERSIZE_ALLOW = {
     # pending refetch).
     "arm-ai-readiness-index",          # ~250k chars / ~62k tok — ARM AI readiness index
     "nist-ai-rmf-playbook",            # ~339k chars / ~85k tok — NIST AI RMF Playbook
+    # 2026-07-09 boost v3: three legit large reports just over the conservative 250k-char
+    # guard but comfortably one Opus call (~67-72k tok); grounding intact, not truncated.
+    "building-an-ai-ready-public-workforce",        # 266,932 chars / ~67k tok
+    "fcsm-20-04-a-framework-for-data-quality",      # 269,719 chars / ~67k tok
+    "introducing-the-oecd-ai-capability-indicators",# 287,110 chars / ~72k tok
 }
 PER_DOC_TIMEOUT_S = 1800
 MAX_DOC_ATTEMPTS = 2               # transport retry discipline: verbatim retry once
@@ -188,7 +194,8 @@ def usage_tokens(meta: dict) -> int:
     return total or cp.estimate_tokens("", meta.get("raw_result") or "")
 
 
-def run(max_docs: int | None = None, dry_run: bool = False) -> int:
+def run(max_docs: int | None = None, dry_run: bool = False,
+        shard: tuple[int, int] | None = None, retry_failed: bool = False) -> int:
     if STOP_FILE.exists():
         print(f"STOP file present ({STOP_FILE}) — operator review required. Exiting.")
         return 2
@@ -203,11 +210,24 @@ def run(max_docs: int | None = None, dry_run: bool = False) -> int:
         ordered = sorted(members, key=lambda d: members[d].stat().st_size, reverse=True)
     else:
         ordered = sorted(members)
+    # retry_failed re-opens docs that hit the fail ceiling (e.g. no-JSON responses during a
+    # throttled window) for another pass — genuinely-bad docs simply re-fail and re-skip.
     todo = [d for d in ordered if d not in done
-            and fails.get(d, 0) < MAX_DOC_ATTEMPTS]
+            and (retry_failed or fails.get(d, 0) < MAX_DOC_ATTEMPTS)]
+    # Parallel workers: hash-partition the queue into N disjoint shards so no two workers
+    # ever touch the same doc_id. Partition is stable (sha1 of doc_id), so a re-fire of the
+    # same shard resumes the same slice. Events append atomically per-line and files are
+    # keyed by doc_id, so disjoint shards write the shared batch/eventlog safely.
+    shard_label = ""
+    if shard is not None:
+        si, sn = shard
+        todo = [d for d in todo
+                if int(hashlib.sha1(d.encode()).hexdigest(), 16) % sn == si]
+        shard_label = f" | shard {si}/{sn}"
     print(f"corpus v1: {len(members)} docs | done: {len(done)} | "
           f"skipped(failed x{MAX_DOC_ATTEMPTS}): "
-          f"{sum(1 for d in members if fails.get(d, 0) >= MAX_DOC_ATTEMPTS)} | todo: {len(todo)}")
+          f"{sum(1 for d in members if fails.get(d, 0) >= MAX_DOC_ATTEMPTS)} | "
+          f"todo: {len(todo)}{shard_label}")
     if not todo:
         print("nothing to do — burn complete (or all remainders failed; see events).")
         return 0
@@ -217,9 +237,17 @@ def run(max_docs: int | None = None, dry_run: bool = False) -> int:
         print(f"budget now: {tokens_left()} tokens")
         return 0
 
-    if not cp.acquire_burn_lease(PROJECT, JOB):
-        print("burn lease held elsewhere — exiting cleanly.")
-        return 0
+    # The global burn lease (F5) is a single machine-wide mutex. A standalone run holds it.
+    # In a --fleet, the COORDINATOR holds the one lease for the whole fleet and each --shard
+    # worker skips it (workers are coordinated by disjoint partitions, not the lease) — so
+    # they don't starve each other on a single lock, while an overlapping launchd fire still
+    # sees the lease held and no-ops (fleet single-flight preserved).
+    acquired_lease = False
+    if shard is None:
+        if not cp.acquire_burn_lease(PROJECT, JOB):
+            print("burn lease held elsewhere — exiting cleanly.")
+            return 0
+        acquired_lease = True
     processed, progress = 0, []
     q_over_streak = 0  # consecutive docs over the quarantine threshold (systemic mode)
     try:
@@ -337,7 +365,8 @@ def run(max_docs: int | None = None, dry_run: bool = False) -> int:
                                 f"{m['quarantine_rate']:.3f} > {QUARANTINE_STOP_RATE}")
                 return 2
     finally:
-        cp.release_burn_lease()
+        if acquired_lease:
+            cp.release_burn_lease()
         # only windows that did work (or hit a STOP) earn a RESULT section —
         # hourly cap-exhausted no-ops log to the wrapper log, not the report
         if processed or any(line.startswith("- STOP") for line in progress):
@@ -349,12 +378,57 @@ def run(max_docs: int | None = None, dry_run: bool = False) -> int:
     return 0
 
 
+def _parse_shard(spec: str) -> tuple[int, int]:
+    i, n = (int(x) for x in spec.split("/"))
+    if not (n >= 1 and 0 <= i < n):
+        raise argparse.ArgumentTypeError(f"--shard must be I/N with 0 <= I < N; got {spec!r}")
+    return (i, n)
+
+
+def run_fleet(n: int, max_docs: int | None, retry_failed: bool = False) -> int:
+    """Coordinator: hold the single global burn lease for the whole fleet, then run N shard
+    workers in parallel (each a subprocess of this script with --shard i/N, lease-skipped).
+    N-way parallelism inside one lease — an overlapping launchd fire no-ops on the held lease."""
+    if STOP_FILE.exists():
+        print(f"STOP file present ({STOP_FILE}) — operator review required. Exiting.")
+        return 2
+    if not cp.acquire_burn_lease(PROJECT, f"{JOB}#fleet{n}"):
+        print("burn lease held elsewhere — fleet exiting cleanly.")
+        return 0
+    print(f"fleet: launching {n} parallel shard workers")
+    try:
+        base = [sys.executable, str(Path(__file__).resolve())]
+        if max_docs is not None:
+            base += ["--max-docs", str(max_docs)]
+        if retry_failed:
+            base += ["--retry-failed"]
+        procs = [subprocess.Popen(base + ["--shard", f"{i}/{n}"]) for i in range(n)]
+        rcs = [p.wait() for p in procs]
+    finally:
+        cp.release_burn_lease()
+    print(f"fleet: workers exited rc={rcs}")
+    return max(rcs) if rcs else 0
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--max-docs", type=int, default=None)
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--fleet", type=int, default=None,
+                    help="run N parallel shard workers under one lease (coordinator)")
+    ap.add_argument("--shard", type=_parse_shard, default=None,
+                    help="I/N — process only hash-partition I of N (one parallel worker)")
+    ap.add_argument("--retry-failed", action="store_true",
+                    help="re-open docs that hit the fail ceiling (e.g. throttled no-JSON) for another pass")
     args = ap.parse_args()
-    return run(max_docs=args.max_docs, dry_run=args.dry_run)
+    if args.fleet is not None:
+        if args.fleet < 1:
+            ap.error("--fleet N requires N >= 1")
+        if args.shard is not None:
+            ap.error("--fleet and --shard are mutually exclusive")
+        return run_fleet(args.fleet, args.max_docs, retry_failed=args.retry_failed)
+    return run(max_docs=args.max_docs, dry_run=args.dry_run, shard=args.shard,
+               retry_failed=args.retry_failed)
 
 
 if __name__ == "__main__":
