@@ -67,6 +67,12 @@ MAX_DOC_CHARS = 250_000            # oversize docs are DEFERRED with reason, nev
 # 329k-char JRC technical report (~82k tok), fits one Opus call with grounding intact.
 OVERSIZE_ALLOW = {
     "ai-watch-revisiting-technology-readiness-levels-for-relevant",
+    # 2026-07-08 boost: two legitimate large reports (fit one Opus call; grounding
+    # intact). NOT information-quality-act (2.1M chars = a provision inside a whole
+    # statute, almost certainly mis-acquired like the megastatutes — stays deferred
+    # pending refetch).
+    "arm-ai-readiness-index",          # ~250k chars / ~62k tok — ARM AI readiness index
+    "nist-ai-rmf-playbook",            # ~339k chars / ~85k tok — NIST AI RMF Playbook
 }
 PER_DOC_TIMEOUT_S = 1800
 MAX_DOC_ATTEMPTS = 2               # transport retry discipline: verbatim retry once
