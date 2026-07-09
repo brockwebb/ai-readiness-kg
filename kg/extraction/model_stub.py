@@ -107,7 +107,13 @@ def build_prompt(doc_id: str, source_text: str, config: dict | None = None) -> s
 
 def _extract_json(result_text: str) -> dict:
     """Parse the extraction JSON object from the model's response text. Tolerates a leading
-    ```json fence or surrounding prose by taking the outermost balanced object."""
+    ```json fence or surrounding prose by taking the outermost balanced object.
+
+    Unusable model OUTPUT (empty / no JSON object / unparseable substring) is a per-document
+    invocation failure — raise ModelInvocationError so the run driver retries once then skips
+    the doc. It is NOT a ModelConfigError: a garbled response for one document must not fail
+    loud and halt the whole run (that classification is reserved for config/credential faults
+    that are fatal for every document)."""
     text = result_text.strip()
     text = re.sub(r"^```(?:json)?\s*", "", text)
     text = re.sub(r"\s*```$", "", text).strip()
@@ -116,8 +122,11 @@ def _extract_json(result_text: str) -> dict:
     except json.JSONDecodeError:
         start, end = text.find("{"), text.rfind("}")
         if start == -1 or end <= start:
-            raise ModelConfigError("model response contains no JSON object")
-        return json.loads(text[start:end + 1])
+            raise ModelInvocationError("model response contains no JSON object")
+        try:
+            return json.loads(text[start:end + 1])
+        except json.JSONDecodeError as exc:
+            raise ModelInvocationError(f"model response JSON unparseable: {exc}")
 
 
 class ModelInvocationError(RuntimeError):
