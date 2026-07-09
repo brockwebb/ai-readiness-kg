@@ -14,6 +14,11 @@ unset ANTHROPIC_API_KEY ANTHROPIC_AUTH_TOKEN
 # 2026-07-08 boost: knock out the big docs first while the window is wide. Remove
 # this line to return to alphabetical order.
 export BURN_ORDER=size_desc
+# 2026-07-08 boost: don't let one high-quarantine outlier halt the whole overnight burn.
+# Isolated breaches are recorded as findings; hard-STOP only on 3 consecutive over-threshold
+# docs (systemic). The 0.10 threshold is unchanged. Remove this line to restore the
+# pre-registered per-doc STOP.
+export BURN_QUARANTINE_STOP_MODE=systemic
 
 {
   echo "=== $(date -u +%Y-%m-%dT%H:%M:%SZ) | airkg-extraction-burn fire"

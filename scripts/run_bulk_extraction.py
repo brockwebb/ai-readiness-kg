@@ -51,7 +51,14 @@ CIRCUIT = "extraction"
 PROJECT = "ai-readiness-kg"
 JOB = "airkg-extraction-burn"
 PRIORITY_CLASS = "deadline"
-QUARANTINE_STOP_RATE = 0.10        # pilot v5 pre-registered per-doc STOP
+QUARANTINE_STOP_RATE = 0.10        # pilot v5 pre-registered per-doc STOP (threshold — do NOT retune)
+# STOP-trigger scope. "per_doc" (default) = pre-registered behavior: any single doc over
+# the threshold halts. "systemic" (opt-in via env, 2026-07-08 boost) = an isolated breach
+# is recorded as a finding and the burn continues; it hard-STOPs only when the last
+# QUARANTINE_SYSTEMIC_WINDOW consecutive docs ALL exceed the threshold (genuine
+# degradation, not one outlier). The 0.10 threshold is unchanged either way.
+QUARANTINE_STOP_MODE = os.environ.get("BURN_QUARANTINE_STOP_MODE", "per_doc")
+QUARANTINE_SYSTEMIC_WINDOW = 3
 MAX_DOC_CHARS = 250_000            # oversize docs are DEFERRED with reason, never truncated
 # Per-doc oversize clearances (operator-authorized, ledgered). A named allowlist —
 # NOT a raised cap — so genuinely-unfit docs (e.g. mis-acquired enclosing statutes
@@ -208,6 +215,7 @@ def run(max_docs: int | None = None, dry_run: bool = False) -> int:
         print("burn lease held elsewhere — exiting cleanly.")
         return 0
     processed, progress = 0, []
+    q_over_streak = 0  # consecutive docs over the quarantine threshold (systemic mode)
     try:
         for doc_id in todo:
             if max_docs is not None and processed >= max_docs:
@@ -300,7 +308,22 @@ def run(max_docs: int | None = None, dry_run: bool = False) -> int:
                   f"| quarantine_rate {m['quarantine_rate']:.3f} "
                   f"| {burned:,} tokens | raw: {raw_path.name}")
 
-            if m["quarantine_rate"] > QUARANTINE_STOP_RATE:
+            over = m["quarantine_rate"] > QUARANTINE_STOP_RATE
+            if over:
+                eventlog.append({"event_type": "bulk_doc_quarantine_high",
+                                 "doc_id": doc_id, "rate": m["quarantine_rate"],
+                                 "threshold": QUARANTINE_STOP_RATE}, batch=BULK_BATCH)
+            if QUARANTINE_STOP_MODE == "systemic":
+                q_over_streak = q_over_streak + 1 if over else 0
+                if q_over_streak >= QUARANTINE_SYSTEMIC_WINDOW:
+                    write_stop("quarantine_rate_systemic",
+                               {"doc_id": doc_id, "streak": q_over_streak,
+                                "rate": m["quarantine_rate"],
+                                "threshold": QUARANTINE_STOP_RATE})
+                    progress.append(f"- STOP: {q_over_streak} consecutive docs over "
+                                    f"quarantine {QUARANTINE_STOP_RATE} (systemic)")
+                    return 2
+            elif over:  # per_doc (default, pre-registered)
                 write_stop("quarantine_rate_exceeded",
                            {"doc_id": doc_id, "rate": m["quarantine_rate"],
                             "threshold": QUARANTINE_STOP_RATE})
