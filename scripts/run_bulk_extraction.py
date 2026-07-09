@@ -82,6 +82,11 @@ OVERSIZE_ALLOW = {
 }
 PER_DOC_TIMEOUT_S = 1800
 MAX_DOC_ATTEMPTS = 2               # transport retry discipline: verbatim retry once
+# HARD operator ceiling on fleet parallelism (2026-07-09). More than 2 concurrent claude -p
+# streams provokes 529 "overloaded" throttling from the service and wastes the burn on
+# retries — the operator set 2 as the absolute max. --fleet N is clamped to this; raising it
+# is a deliberate config edit here, not a launch-time flag.
+MAX_FLEET_WORKERS = int(os.environ.get("BURN_MAX_FLEET_WORKERS", "2"))
 
 RAW_DIR = REPO / "events" / "raw" / "bulk_v1"
 STOP_FILE = REPO / "events" / "bulk_v1_STOP.json"
@@ -426,7 +431,11 @@ def main() -> int:
             ap.error("--fleet N requires N >= 1")
         if args.shard is not None:
             ap.error("--fleet and --shard are mutually exclusive")
-        return run_fleet(args.fleet, args.max_docs, retry_failed=args.retry_failed)
+        n = min(args.fleet, MAX_FLEET_WORKERS)
+        if n < args.fleet:
+            print(f"--fleet {args.fleet} clamped to hard ceiling MAX_FLEET_WORKERS={n} "
+                  f"(>2 concurrent streams invites 529 overload).")
+        return run_fleet(n, args.max_docs, retry_failed=args.retry_failed)
     return run(max_docs=args.max_docs, dry_run=args.dry_run, shard=args.shard,
                retry_failed=args.retry_failed)
 
