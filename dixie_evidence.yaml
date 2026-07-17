@@ -14,9 +14,15 @@ manifest_out: corpus/manifest.json  # v2 projection; v1 preserved at corpus/mani
 integrity:
   min_bytes:
     # observed garbage: HTML stubs 468-1817 B, Cloudflare cluster 5.5-6 KB.
-    # smallest legitimate PDF in corpus is >25 KB; 8000 clears the cluster
-    # without endangering small real documents. magic + smoke do the rest.
-    pdf: 8000
+    # 7000 sits just below the smallest legitimate PDF now in corpus — the
+    # standalone §515 Data Quality Act excerpt (1-page statute, 7,577 B,
+    # operator-verified 2026-07-17) — while still clearing the ≤6 KB garbage
+    # cluster with margin. magic (Cloudflare/HTML pages sniff as html → fail)
+    # + smoke (pdf_min_chars) are the real gates; the floor is coarse
+    # belt-and-suspenders and must not reject genuine small statutory excerpts.
+    # Lowered 8000→7000 on 2026-07-17 (false-positive on §515) — see task
+    # cc_tasks/2026-07-16_finish_bulk_extraction_v1_remaining8.
+    pdf: 7000
     markdown: 256
     text: 256
   pdf_min_chars: 200

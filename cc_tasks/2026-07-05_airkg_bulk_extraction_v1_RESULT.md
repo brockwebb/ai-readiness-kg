@@ -349,3 +349,8 @@ trigger investigation post-burn.
 - information-quality-act-data-quality-act-sec-515-of-p-l-106: deferred oversize (2,117,624 chars)
 - fcsm-19-01-transparent-reporting-for-integrated-data-quality: 0 nodes, 67 edges, quarantined 0 (rate 0.000), 749,214 tokens
 - window total: 1 docs extracted; 70/71 complete; tokens left in band: 27,137,394
+
+### Burn progress — 2026-07-17 09:52 EDT
+
+- information-quality-act-data-quality-act-sec-515-of-p-l-106: 33 nodes, 37 edges, quarantined 5 (rate 0.067), 46,037 tokens
+- window total: 1 docs extracted; 71/71 complete; tokens left in band: 30,963,966

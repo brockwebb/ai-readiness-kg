@@ -1,6 +1,6 @@
 # Bulk v1 — Pre-registered Gate Report
 
-Generated: 2026-07-17T03:49:11.914152+00:00
+Generated: 2026-07-17T13:59:31.984083+00:00
 
 Failed gates are FINDINGS, not blockers. No retuning (task hard stop).
 
@@ -8,11 +8,11 @@ Failed gates are FINDINGS, not blockers. No retuning (task hard stop).
 |---|---|---|---|
 | min_verified_included | 71 | 71 | PASS |
 | grounding_zero_ungrounded | 0 | 0 | PASS |
-| quarantine_rate | 0.034 | 0.0152 | **FAIL** |
+| quarantine_rate | 0.0342 | 0.0152 | **FAIL** |
 | edge_endpoint_validation | 750 | 0 | **FAIL** |
-| orphan_rate | 0.0964 | 0.0034 | **FAIL** |
+| orphan_rate | 0.0969 | 0.0034 | **FAIL** |
 | projection_drift | 0 | 0 | PASS |
-| empty_extraction_rate | 0.0143 | 0.1196 | PASS |
+| empty_extraction_rate | 0.0141 | 0.1196 | PASS |
 
 ## Detail
 
@@ -29,17 +29,17 @@ Failed gates are FINDINGS, not blockers. No retuning (task hard stop).
   "value": 0,
   "threshold": 0,
   "passed": true,
-  "checked_items": 10907,
+  "checked_items": 10977,
   "legacy_items_not_rechecked": 876,
   "failures": []
  },
  {
   "check_id": "quarantine_rate",
-  "value": 0.034,
+  "value": 0.0342,
   "threshold": 0.0152,
   "passed": false,
-  "quarantined": 384,
-  "total_items": 11291
+  "quarantined": 389,
+  "total_items": 11366
  },
  {
   "check_id": "edge_endpoint_validation",
@@ -191,11 +191,11 @@ Failed gates are FINDINGS, not blockers. No retuning (task hard stop).
  },
  {
   "check_id": "orphan_rate",
-  "value": 0.0964,
+  "value": 0.0969,
   "threshold": 0.0034,
   "passed": false,
-  "orphans": 387,
-  "total_non_document_nodes": 4016
+  "orphans": 392,
+  "total_non_document_nodes": 4044
  },
  {
   "check_id": "projection_drift",
@@ -206,38 +206,38 @@ Failed gates are FINDINGS, not blockers. No retuning (task hard stop).
   "fingerprint": {
    "n:Document": 71,
    "n:Definition": 385,
-   "n:Concept": 2162,
+   "n:Concept": 2182,
    "n:Construct": 0,
    "n:Instrument": 123,
    "n:Measure": 299,
-   "n:Claim": 753,
-   "n:Standard": 125,
+   "n:Claim": 759,
+   "n:Standard": 127,
    "n:Framework": 169,
-   "r:ABOUT": 885,
-   "r:ASSERTS": 885,
-   "r:BUILDS_ON": 50,
+   "r:ABOUT": 895,
+   "r:ASSERTS": 891,
+   "r:BUILDS_ON": 51,
    "r:CITES": 744,
    "r:CONFLICTS_WITH": 4,
    "r:DEFINES": 462,
    "r:EXTENDS": 16,
-   "r:HAS_COMPONENT": 796,
-   "r:IMPLEMENTS": 53,
+   "r:HAS_COMPONENT": 803,
+   "r:IMPLEMENTS": 55,
    "r:MEASURES": 424,
-   "r:MENTIONS": 2304,
-   "r:PRECEDES": 99,
-   "r:SUBTYPE_OF": 185,
+   "r:MENTIONS": 2313,
+   "r:PRECEDES": 100,
+   "r:SUBTYPE_OF": 186,
    "r:USES_MEASURE": 295
   }
  },
  {
   "check_id": "empty_extraction_rate",
-  "value": 0.0143,
+  "value": 0.0141,
   "threshold": 0.1196,
   "passed": true,
   "empty_docs": [
    "itu-ai-ready-analysis-towards-a-standardized-readiness-frame"
   ],
-  "docs_extracted": 70,
+  "docs_extracted": 71,
   "corpus_size": 71
  }
 ]
