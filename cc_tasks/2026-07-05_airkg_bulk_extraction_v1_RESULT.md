@@ -187,3 +187,159 @@ trigger investigation post-burn.
 - artificial-intelligence-domain-ai-readiness-and-firm-product: 62 nodes, 91 edges, quarantined 14 (rate 0.084), 150,738 tokens
 - cap exhausted after 2 docs this window
 - window total: 2 docs extracted; 10/71 complete; tokens left in band: 0
+
+### Burn progress — 2026-07-08 17:53 EDT
+
+- cisco-ai-readiness-index-2025: 123 nodes, 157 edges, quarantined 11 (rate 0.038), 127,168 tokens
+- arm-ai-readiness-index: deferred oversize (250,746 chars)
+- m-19-23-phase-1-implementation-of-the-evidence-act: 66 nodes, 106 edges, quarantined 0 (rate 0.000), 162,786 tokens
+- nist-ai-rmf-playbook: deferred oversize (339,509 chars)
+- information-quality-act-data-quality-act-sec-515-of-p-l-106: deferred oversize (2,117,624 chars)
+- window total: 2 docs extracted; 12/71 complete; tokens left in band: 1,246,546
+
+### Burn progress — 2026-07-08 21:06 EDT
+
+- arm-ai-readiness-index: deferred oversize (250,746 chars)
+- nist-ai-rmf-playbook: deferred oversize (339,509 chars)
+- information-quality-act-data-quality-act-sec-515-of-p-l-106: deferred oversize (2,117,624 chars)
+- nist-ai-risk-management-framework-ai-rmf: 102 nodes, 133 edges, quarantined 12 (rate 0.049), 159,538 tokens
+- gao-ai-accountability-framework-ariga-testimony: 57 nodes, 67 edges, quarantined 18 (rate 0.127), 83,727 tokens
+- STOP: gao-ai-accountability-framework-ariga-testimony quarantine rate 0.127 > 0.1
+- window total: 2 docs extracted; 14/71 complete; tokens left in band: 1,003,281
+
+### Burn progress — 2026-07-08 21:56 EDT
+
+- arm-ai-readiness-index: deferred oversize (250,746 chars)
+- nist-ai-rmf-playbook: deferred oversize (339,509 chars)
+- information-quality-act-data-quality-act-sec-515-of-p-l-106: deferred oversize (2,117,624 chars)
+- fcsm-19-01-transparent-reporting-for-integrated-data-quality: text extraction failed (Unable to find 'endstream' marker for obj starting at 811018.)
+- from-school-ai-readiness-to-student-ai-literacy: 70 nodes, 110 edges, quarantined 1 (rate 0.005), 190,707 tokens
+- mitre-ai-maturity-model: 93 nodes, 145 edges, quarantined 29 (rate 0.109), 166,220 tokens
+- STOP: mitre-ai-maturity-model quarantine rate 0.109 > 0.1
+- window total: 2 docs extracted; 16/71 complete; tokens left in band: 646,354
+
+### Burn progress — 2026-07-09 04:06 EDT
+
+- arm-ai-readiness-index: 159 nodes, 90 edges, quarantined 4 (rate 0.016), 254,184 tokens
+- window total: 1 docs extracted; 17/71 complete; tokens left in band: 1,745,816
+
+### Burn progress — 2026-07-09 05:12 EDT
+
+- nist-ai-rmf-playbook: 134 nodes, 64 edges, quarantined 2 (rate 0.010), 313,126 tokens
+- information-quality-act-data-quality-act-sec-515-of-p-l-106: deferred oversize (2,117,624 chars)
+- fcsm-19-01-transparent-reporting-for-integrated-data-quality: text extraction failed (Unable to find 'endstream' marker for obj starting at 811018.)
+- window total: 1 docs extracted; 18/71 complete; tokens left in band: 1,432,690
+
+### Burn progress — 2026-07-09 07:59 EDT
+
+- information-quality-act-data-quality-act-sec-515-of-p-l-106: deferred oversize (2,117,624 chars)
+- nist-generative-ai-profile-ai-600-1: 88 nodes, 130 edges, quarantined 3 (rate 0.014), 211,571 tokens
+- technology-readiness-levels-for-machine-learning-systems-mlt: 79 nodes, 100 edges, quarantined 1 (rate 0.006), 172,440 tokens
+- fcsm-20-04-a-framework-for-data-quality: deferred oversize (269,719 chars)
+- why-ai-readiness-is-an-organizational-learning-problem-not-a: 68 nodes, 114 edges, quarantined 0 (rate 0.000), 95,235 tokens
+- from-accuracy-to-readiness-metrics-and-benchmarks-for-human: 86 nodes, 115 edges, quarantined 3 (rate 0.015), 118,221 tokens
+- data-readiness-for-ai-a-360-degree-survey: 102 nodes, 63 edges, quarantined 3 (rate 0.018), 182,991 tokens
+- bangladesh-s-ai-readiness-perspectives: 79 nodes, 119 edges, quarantined 7 (rate 0.034), 445,945 tokens
+- window total: 6 docs extracted; 24/71 complete; tokens left in band: 206,287
+
+### Burn progress — 2026-07-09 12:52 EDT
+
+- information-quality-act-data-quality-act-sec-515-of-p-l-106: deferred oversize (2,117,624 chars)
+- fcsm-20-04-a-framework-for-data-quality: deferred oversize (269,719 chars)
+- fcsm-23-02-a-framework-for-data-quality-case-studies: invocation failed (attempt 1/2): model response contains no JSON object
+- cisco-ai-readiness-assessment-instrument: invocation failed (attempt 1/2): model response contains no JSON object
+- technology-readiness-levels-for-ai-ml-trl4ml: 61 nodes, 87 edges, quarantined 12 (rate 0.075), 91,131 tokens
+- m-24-10-advancing-governance-innovation-and-risk-management: 67 nodes, 98 edges, quarantined 2 (rate 0.012), 144,392 tokens
+- data-readiness-for-scientific-ai-at-scale: 86 nodes, 102 edges, quarantined 0 (rate 0.000), 103,241 tokens
+- winning-the-race-america-s-ai-action-plan: invocation failed (attempt 1/2): model response contains no JSON object
+- m-24-18-advancing-the-responsible-acquisition-of-ai-in-gover: 83 nodes, 110 edges, quarantined 1 (rate 0.005), 162,651 tokens
+- m-25-05-phase-2-implementation-of-the-evidence-act-open-gove: 67 nodes, 88 edges, quarantined 0 (rate 0.000), 137,451 tokens
+- executive-order-14110-safe-secure-and-trustworthy-developmen: 81 nodes, 93 edges, quarantined 8 (rate 0.044), 182,450 tokens
+- statistical-policy-working-paper-46-data-quality-assessment: 75 nodes, 100 edges, quarantined 0 (rate 0.000), 118,352 tokens
+- unesco-ai-readiness-assessment-methodology-ram: 32 nodes, 49 edges, quarantined 0 (rate 0.000), 58,568 tokens
+- advancing-american-ai-act-ndaa-fy2023-div-g: 54 nodes, 84 edges, quarantined 6 (rate 0.042), 111,748 tokens
+- introducing-the-oecd-ai-capability-indicators: deferred oversize (287,110 chars)
+- nist-ai-100-3-the-language-of-trustworthy-ai-an-in-depth-glo: invocation failed (attempt 1/2): model response contains no JSON object
+- foundations-for-evidence-based-policymaking-act-of-2018-evid: 72 nodes, 74 edges, quarantined 21 (rate 0.126), 156,696 tokens
+- building-an-ai-ready-public-workforce: deferred oversize (266,932 chars)
+- m-26-04-increasing-public-trust-in-ai-through-unbiased-ai-pr: 44 nodes, 76 edges, quarantined 8 (rate 0.062), 79,496 tokens
+- beyond-model-readiness-institutional-readiness-for-ai-deploy: 44 nodes, 67 edges, quarantined 21 (rate 0.159), 95,443 tokens
+- fcsm-25-03: 59 nodes, 90 edges, quarantined 11 (rate 0.069), 77,577 tokens
+- cisco-ai-readiness-index-methodology: 35 nodes, 54 edges, quarantined 0 (rate 0.000), 57,055 tokens
+- ai-in-government-act-of-2020: 36 nodes, 51 edges, quarantined 1 (rate 0.011), 60,952 tokens
+- datahub-mlmu-25: invocation failed (attempt 1/2): model response contains no JSON object
+- executive-order-14319-preventing-woke-ai-in-the-federal-gove: 29 nodes, 42 edges, quarantined 7 (rate 0.090), 60,627 tokens
+- executive-order-13859-maintaining-american-leadership-in-ai: invocation failed (attempt 1/2): model response contains no JSON object
+- executive-order-13960-promoting-the-use-of-trustworthy-ai-in: 43 nodes, 50 edges, quarantined 8 (rate 0.079), 83,146 tokens
+- executive-order-14179-removing-barriers-to-american-leadersh: invocation failed (attempt 1/2): model response JSON unparseable: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)
+- webb-fcsm-nist-crosswalk: 92 nodes, 99 edges, quarantined 9 (rate 0.045), 159,982 tokens
+- rethinking-technological-readiness-in-the-era-of-ai-uncertai: 65 nodes, 71 edges, quarantined 42 (rate 0.236), 124,782 tokens
+- gsa-ai-guide-for-government-ai-capability-maturity-model-ai: 107 nodes, 156 edges, quarantined 0 (rate 0.000), 174,375 tokens
+- lawrence-data-readiness-levels-2017: 37 nodes, 56 edges, quarantined 0 (rate 0.000), 83,926 tokens
+- making-agentic-ai-work-for-government-a-readiness-framework: invocation failed (attempt 1/2): model response contains no JSON object
+- why-ai-projects-fail-the-63-human-factor-problem: 86 nodes, 120 edges, quarantined 2 (rate 0.010), 150,754 tokens
+- organizational-ai-readiness-prosci-adkar: 47 nodes, 48 edges, quarantined 0 (rate 0.000), 103,650 tokens
+- six-areas-for-assessing-ai-readiness-in-government: invocation failed (attempt 1/2): model response contains no JSON object
+- government-ai-readiness-index-2025: 58 nodes, 81 edges, quarantined 0 (rate 0.000), 96,781 tokens
+- census-bureau-statistical-quality-standards-standard-f1-rele: 51 nodes, 76 edges, quarantined 8 (rate 0.059), 96,546 tokens
+- census-bureau-statistical-quality-standards-standard-d3-prod: 54 nodes, 79 edges, quarantined 6 (rate 0.043), 96,977 tokens
+- census-bureau-statistical-quality-standards-standard-f2-prov: 51 nodes, 64 edges, quarantined 0 (rate 0.000), 82,196 tokens
+- government-ai-landscape-assessment-code-for-america: 74 nodes, 93 edges, quarantined 0 (rate 0.000), 86,086 tokens
+- health-ai-readiness-assessment-dime: 76 nodes, 90 edges, quarantined 0 (rate 0.000), 81,784 tokens
+- undp-artificial-intelligence-readiness-assessment-aira: 18 nodes, 32 edges, quarantined 0 (rate 0.000), 62,623 tokens
+- the-nation-s-data-at-risk-first-annual-report-on-the-federal: 13 nodes, 17 edges, quarantined 0 (rate 0.000), 61,417 tokens
+- the-oecd-ai-index: 21 nodes, 31 edges, quarantined 0 (rate 0.000), 53,025 tokens
+- itu-ai-ready-analysis-towards-a-standardized-readiness-frame: 0 nodes, 0 edges, quarantined 0 (rate 0.000), 42,665 tokens
+- window total: 33 docs extracted; 57/71 complete; tokens left in band: 4,867,742
+
+### Burn progress — 2026-07-09 13:16 EDT
+
+- information-quality-act-data-quality-act-sec-515-of-p-l-106: deferred oversize (2,117,624 chars)
+- fcsm-20-04-a-framework-for-data-quality: deferred oversize (269,719 chars)
+- fcsm-23-02-a-framework-for-data-quality-case-studies: invocation failed (attempt 2/2): model response contains no JSON object
+- cisco-ai-readiness-assessment-instrument: 90 nodes, 136 edges, quarantined 36 (rate 0.137), 98,006 tokens
+- winning-the-race-america-s-ai-action-plan: invocation failed (attempt 2/2): model response contains no JSON object
+- introducing-the-oecd-ai-capability-indicators: deferred oversize (287,110 chars)
+- nist-ai-100-3-the-language-of-trustworthy-ai-an-in-depth-glo: invocation failed (attempt 2/2): model response contains no JSON object
+- building-an-ai-ready-public-workforce: deferred oversize (266,932 chars)
+- datahub-mlmu-25: 43 nodes, 58 edges, quarantined 0 (rate 0.000), 70,361 tokens
+- executive-order-13859-maintaining-american-leadership-in-ai: 33 nodes, 44 edges, quarantined 6 (rate 0.072), 69,933 tokens
+- executive-order-14179-removing-barriers-to-american-leadersh: invocation failed (attempt 2/2): model response contains no JSON object
+- making-agentic-ai-work-for-government-a-readiness-framework: invocation failed (attempt 2/2): model response contains no JSON object
+- six-areas-for-assessing-ai-readiness-in-government: invocation failed (attempt 2/2): model response contains no JSON object
+- window total: 3 docs extracted; 60/71 complete; tokens left in band: 4,629,442
+
+### Burn progress — 2026-07-09 15:13 EDT
+
+- fcsm-19-01-transparent-reporting-for-integrated-data-quality: text extraction failed (Unable to find 'endstream' marker for obj starting at 811018.)
+- fcsm-23-02-a-framework-for-data-quality-case-studies: invocation failed (attempt 3/2): model response contains no JSON object
+- introducing-the-oecd-ai-capability-indicators: invocation failed (attempt 1/2): model response contains no JSON object
+- nist-ai-100-3-the-language-of-trustworthy-ai-an-in-depth-glo: 30 nodes, 33 edges, quarantined 0 (rate 0.000), 65,153 tokens
+- window total: 1 docs extracted; 61/71 complete; tokens left in band: 34,564,289
+
+### Burn progress — 2026-07-09 15:13 EDT
+
+- building-an-ai-ready-public-workforce: invocation failed (attempt 1/2): model response contains no JSON object
+- making-agentic-ai-work-for-government-a-readiness-framework: invocation failed (attempt 3/2): model response contains no JSON object
+- six-areas-for-assessing-ai-readiness-in-government: 37 nodes, 54 edges, quarantined 0 (rate 0.000), 100,115 tokens
+- window total: 1 docs extracted; 62/71 complete; tokens left in band: 34,464,174
+
+### Burn progress — 2026-07-09 15:21 EDT
+
+- information-quality-act-data-quality-act-sec-515-of-p-l-106: deferred oversize (2,117,624 chars)
+- fcsm-20-04-a-framework-for-data-quality: invocation failed (attempt 2/2): model response contains no JSON object
+- introducing-the-oecd-ai-capability-indicators: invocation failed (attempt 2/2): model response contains no JSON object
+- building-an-ai-ready-public-workforce: 48 nodes, 49 edges, quarantined 0 (rate 0.000), 311,271 tokens
+- window total: 1 docs extracted; 63/71 complete; tokens left in band: 34,152,903
+
+### Burn progress — 2026-07-16 21:41 EDT
+
+- information-quality-act-data-quality-act-sec-515-of-p-l-106: deferred oversize (2,117,624 chars)
+- fcsm-19-01-transparent-reporting-for-integrated-data-quality: text extraction failed (Unable to find 'endstream' marker for obj starting at 811018.)
+- fcsm-20-04-a-framework-for-data-quality: 140 nodes, 150 edges, quarantined 16 (rate 0.052), 265,652 tokens
+- fcsm-23-02-a-framework-for-data-quality-case-studies: 176 nodes, 278 edges, quarantined 2 (rate 0.004), 183,019 tokens
+- winning-the-race-america-s-ai-action-plan: 113 nodes, 181 edges, quarantined 1 (rate 0.003), 127,010 tokens
+- introducing-the-oecd-ai-capability-indicators: 99 nodes, 137 edges, quarantined 7 (rate 0.029), 338,165 tokens
+- executive-order-14179-removing-barriers-to-american-leadersh: 35 nodes, 64 edges, quarantined 1 (rate 0.010), 50,818 tokens
+- making-agentic-ai-work-for-government-a-readiness-framework: 26 nodes, 48 edges, quarantined 0 (rate 0.000), 116,200 tokens
+- window total: 6 docs extracted; 69/71 complete; tokens left in band: 29,542,428

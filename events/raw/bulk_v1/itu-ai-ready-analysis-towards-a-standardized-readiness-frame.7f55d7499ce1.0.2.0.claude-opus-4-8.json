@@ -1,0 +1,24 @@
+{
+ "doc_id": "itu-ai-ready-analysis-towards-a-standardized-readiness-frame",
+ "doc_sha256": "7f55d7499ce1c2ae036f0a073e19cb264d149024d8be624e4a90f14f7aba5a25",
+ "prompt_version": "0.2.0",
+ "schema_version": "0.2",
+ "corpus_epoch": "v1",
+ "model_id": "claude-opus-4-8",
+ "usage": {
+  "inputTokens": 12566,
+  "outputTokens": 3108,
+  "cacheReadInputTokens": 18405,
+  "cacheCreationInputTokens": 8586,
+  "webSearchRequests": 0,
+  "costUSD": 0.23559249999999998,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000
+ },
+ "cost_usd": 0.23559249999999998,
+ "duration_ms": 51042,
+ "session_id": "dc4b3b90-8d50-47b8-8e33-759728fd2df4",
+ "ts": "2026-07-09T16:52:26.061068+00:00",
+ "error": null,
+ "raw_result": "This isn't an extractable document — the capture failed, and running the extraction on it would produce zero groundable nodes.\n\n## What the capture actually contains\n\nThe `itu-ai-ready-analysis-towards-a-standardized-readiness-frame` document body is nothing but the page chrome of a JavaScript-rendered site that crawl4ai grabbed **before the content loaded**:\n\n- `ALERT-DEFAULT-KEY`, `NAVBAR-ITU-ABOUT`, `LOGIN-BUTTON-TITLE`, `FOOTER-COPYRIGHT` — these are **i18n placeholder keys**, not rendered text. The page's JS never substituted real strings.\n- A literal `Loading...` marker where the publication body should be.\n- Four navbar links and three footer links. That's the entire payload.\n\nThere is **no abstract, no framework description, no readiness dimensions, no definitions, no claims** — none of the actual ITU \"AI Ready\" content. The `/epublications/zh/` path (note: `zh` = Chinese locale) is a SPA shell.\n\n## Why extraction should refuse it\n\nThe prompt's own contract is *\"No grounding span, no write.\"* Every substantive node would need a character-exact quote from the body, and the body has none. The only honest output is empty arrays:\n\n```json\n{\"extract_plan\":{\"section_map\":[],\"concept_inventory\":[]},\"concepts\":[],\"definitions\":[],\"claims\":[],\"instruments\":[],\"measures\":[],\"standards\":[],\"frameworks\":[],\"edges\":[],\"cites\":[],\"proposed_relationships\":[]}\n```\n\nEmitting that would register a \"successfully extracted, zero nodes\" result — which is a **silent data-quality landmine** (CLAUDE.md §4). A downstream consumer can't distinguish \"document genuinely has no KG content\" from \"capture failed.\" This is the second case, and it should be surfaced, not swallowed.\n\n## Recommendation\n\nThis belongs in **re-acquisition**, not extraction:\n\n1. The ITU e-publications page needs a **JS-rendering fetch** (headless browser / crawl4ai with wait-for-content), or better, the **source PDF** if ITU publishes one — standards bodies usually do.\n2. Until re-fetched, this doc should be **quarantined/skipped**, consistent with your recent burn-mode work (`ea91f5f` systemic quarantine-STOP, `3794fdd` no-JSON = per-doc skip). A \"content is empty boilerplate\" skip is the same class of outlier.\n\nWant me to:\n- **(a)** check how the burn pipeline currently detects/handles empty-body captures (and whether this one already got flagged), or\n- **(b)** look at whether the acquisition layer has a JS-render path or a PDF fallback for ITU-style SPA sources?\n\nI'd need you to point me at the extraction/acquisition code — I haven't read it yet this session, so I'm not going to assert what the pipeline does without looking."
+}
