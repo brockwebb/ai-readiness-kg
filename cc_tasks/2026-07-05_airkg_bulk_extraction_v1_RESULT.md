@@ -343,3 +343,9 @@ trigger investigation post-burn.
 - executive-order-14179-removing-barriers-to-american-leadersh: 35 nodes, 64 edges, quarantined 1 (rate 0.010), 50,818 tokens
 - making-agentic-ai-work-for-government-a-readiness-framework: 26 nodes, 48 edges, quarantined 0 (rate 0.000), 116,200 tokens
 - window total: 6 docs extracted; 69/71 complete; tokens left in band: 29,542,428
+
+### Burn progress — 2026-07-16 23:41 EDT
+
+- information-quality-act-data-quality-act-sec-515-of-p-l-106: deferred oversize (2,117,624 chars)
+- fcsm-19-01-transparent-reporting-for-integrated-data-quality: 0 nodes, 67 edges, quarantined 0 (rate 0.000), 749,214 tokens
+- window total: 1 docs extracted; 70/71 complete; tokens left in band: 27,137,394

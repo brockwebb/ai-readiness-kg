@@ -1,6 +1,6 @@
 # Bulk v1 — Pre-registered Gate Report
 
-Generated: 2026-07-17T01:49:50.785290+00:00
+Generated: 2026-07-17T03:49:11.914152+00:00
 
 Failed gates are FINDINGS, not blockers. No retuning (task hard stop).
 
@@ -8,11 +8,11 @@ Failed gates are FINDINGS, not blockers. No retuning (task hard stop).
 |---|---|---|---|
 | min_verified_included | 71 | 71 | PASS |
 | grounding_zero_ungrounded | 0 | 0 | PASS |
-| quarantine_rate | 0.0342 | 0.0152 | **FAIL** |
-| edge_endpoint_validation | 683 | 0 | **FAIL** |
+| quarantine_rate | 0.034 | 0.0152 | **FAIL** |
+| edge_endpoint_validation | 750 | 0 | **FAIL** |
 | orphan_rate | 0.0964 | 0.0034 | **FAIL** |
 | projection_drift | 0 | 0 | PASS |
-| empty_extraction_rate | 0.0145 | 0.1196 | PASS |
+| empty_extraction_rate | 0.0143 | 0.1196 | PASS |
 
 ## Detail
 
@@ -29,21 +29,21 @@ Failed gates are FINDINGS, not blockers. No retuning (task hard stop).
   "value": 0,
   "threshold": 0,
   "passed": true,
-  "checked_items": 10840,
+  "checked_items": 10907,
   "legacy_items_not_rechecked": 876,
   "failures": []
  },
  {
   "check_id": "quarantine_rate",
-  "value": 0.0342,
+  "value": 0.034,
   "threshold": 0.0152,
   "passed": false,
   "quarantined": 384,
-  "total_items": 11224
+  "total_items": 11291
  },
  {
   "check_id": "edge_endpoint_validation",
-  "value": 683,
+  "value": 750,
   "threshold": 0,
   "passed": false,
   "violations": [
@@ -216,7 +216,7 @@ Failed gates are FINDINGS, not blockers. No retuning (task hard stop).
    "r:ABOUT": 885,
    "r:ASSERTS": 885,
    "r:BUILDS_ON": 50,
-   "r:CITES": 677,
+   "r:CITES": 744,
    "r:CONFLICTS_WITH": 4,
    "r:DEFINES": 462,
    "r:EXTENDS": 16,
@@ -231,13 +231,13 @@ Failed gates are FINDINGS, not blockers. No retuning (task hard stop).
  },
  {
   "check_id": "empty_extraction_rate",
-  "value": 0.0145,
+  "value": 0.0143,
   "threshold": 0.1196,
   "passed": true,
   "empty_docs": [
    "itu-ai-ready-analysis-towards-a-standardized-readiness-frame"
   ],
-  "docs_extracted": 69,
+  "docs_extracted": 70,
   "corpus_size": 71
  }
 ]

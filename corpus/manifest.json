@@ -1,7 +1,7 @@
 {
  "manifest_version": 2,
  "project": "ai-readiness-kg",
- "generated_at": "2026-07-08T11:47:41.963930+00:00",
+ "generated_at": "2026-07-17T03:24:50.398466+00:00",
  "generator": "dixie.evidence",
  "note": "PROJECTION — rebuilt from the evidence decisions log; do not hand-edit. The log is truth.",
  "counts_by_decision": {
@@ -13,8 +13,8 @@
   "advancing-american-ai-act-ndaa-fy2023-div-g": {
    "doc_id": "advancing-american-ai-act-ndaa-fy2023-div-g",
    "identity": {
-    "sha256": null,
-    "canonical_path": null,
+    "sha256": "b0d6bd47384d205ba2cf5306c201f22749425b57fc70f130275aaa2fe7c76b3f",
+    "canonical_path": "corpus/bulk/advancing-american-ai-act-ndaa-fy2023-div-g.pdf",
     "title": "Advancing American AI Act (NDAA FY2023, Div. G)",
     "authors_or_org": [
      "(unspecified)"
@@ -39,9 +39,25 @@
     "acquired_by": "fss-policy-kg-manifest"
    },
    "integrity": {
-    "status": "failed",
-    "checks": null,
-    "checked_at": "2026-07-08T11:47:41.635813+00:00"
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed pdf, detected pdf",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "324198 bytes vs floor 8000",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "36 pages, extractable text present",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-07-08T21:19:32.533140+00:00"
    },
    "screening": {
     "decision": "included",
@@ -67,19 +83,10 @@
       "decided_by": "accept_two_acts",
       "decided_at": "2026-07-08T11:46:31.455704+00:00"
      }
-    ],
-    "identity_gate": {
-     "passed": true,
-     "failures": [],
-     "checked": [
-      "title_token_overlap",
-      "size_bytes",
-      "page_count"
-     ]
-    }
+    ]
    },
    "lifecycle": {
-    "stage": "quarantined"
+    "stage": "verified"
    },
    "files": {
     "alternates": [],
@@ -101,8 +108,8 @@
    "extra": {
     "observed_files": {
      "corpus/bulk/advancing-american-ai-act-ndaa-fy2023-div-g.pdf": {
-      "sha256": "9e5d37dfa7d1282073c16f3dde21978078f62f58f9db36f4828e270e02de933f",
-      "size": 4646080,
+      "sha256": "b0d6bd47384d205ba2cf5306c201f22749425b57fc70f130275aaa2fe7c76b3f",
+      "size": 324198,
       "claimed_type": "pdf",
       "detected_type": "pdf"
      }
@@ -119,16 +126,16 @@
        },
        {
         "check": "size_sanity",
-        "detail": "4646080 bytes vs floor 8000",
+        "detail": "324198 bytes vs floor 8000",
         "outcome": "pass"
        },
        {
         "check": "content_smoke",
-        "detail": "1772 pages, extractable text present",
+        "detail": "36 pages, extractable text present",
         "outcome": "pass"
        }
       ],
-      "checked_at": "2026-07-05T08:05:40.355182+00:00"
+      "checked_at": "2026-07-08T21:19:32.533140+00:00"
      }
     },
     "added_in": "v1"
@@ -186,12 +193,7 @@
       "decided_by": "manifest_v1",
       "decided_at": "2026-07-05T08:05:40.196409+00:00"
      }
-    ],
-    "identity_gate": {
-     "passed": true,
-     "checked": [],
-     "failures": []
-    }
+    ]
    },
    "lifecycle": {
     "stage": "verified"
@@ -295,12 +297,7 @@
       "decided_by": "manifest_v1",
       "decided_at": "2026-07-05T08:05:40.196543+00:00"
      }
-    ],
-    "identity_gate": {
-     "passed": true,
-     "checked": [],
-     "failures": []
-    }
+    ]
    },
    "lifecycle": {
     "stage": "verified"
@@ -392,8 +389,8 @@
   "ai-in-government-act-of-2020": {
    "doc_id": "ai-in-government-act-of-2020",
    "identity": {
-    "sha256": null,
-    "canonical_path": null,
+    "sha256": "b5bb3a22ac12499f81011dd0c84d89d7b54cdbf22fcdeb7f394be347580de6b7",
+    "canonical_path": "corpus/bulk/ai-in-government-act-of-2020.pdf",
     "title": "AI in Government Act of 2020",
     "authors_or_org": [
      "(unspecified)"
@@ -418,9 +415,25 @@
     "acquired_by": "fss-policy-kg-manifest"
    },
    "integrity": {
-    "status": "failed",
-    "checks": null,
-    "checked_at": "2026-07-08T11:47:41.962924+00:00"
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed pdf, detected pdf",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "204941 bytes vs floor 8000",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "10 pages, extractable text present",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-07-08T21:19:32.541559+00:00"
    },
    "screening": {
     "decision": "included",
@@ -446,19 +459,10 @@
       "decided_by": "accept_two_acts",
       "decided_at": "2026-07-08T11:46:31.806881+00:00"
      }
-    ],
-    "identity_gate": {
-     "passed": true,
-     "failures": [],
-     "checked": [
-      "title_token_overlap",
-      "size_bytes",
-      "page_count"
-     ]
-    }
+    ]
    },
    "lifecycle": {
-    "stage": "quarantined"
+    "stage": "verified"
    },
    "files": {
     "alternates": [],
@@ -480,8 +484,8 @@
    "extra": {
     "observed_files": {
      "corpus/bulk/ai-in-government-act-of-2020.pdf": {
-      "sha256": "32285d91badb98bb2df445ab0e56a3b4ce60225350f694fc03a0e1678cfef1f5",
-      "size": 5627865,
+      "sha256": "b5bb3a22ac12499f81011dd0c84d89d7b54cdbf22fcdeb7f394be347580de6b7",
+      "size": 204941,
       "claimed_type": "pdf",
       "detected_type": "pdf"
      }
@@ -498,16 +502,16 @@
        },
        {
         "check": "size_sanity",
-        "detail": "5627865 bytes vs floor 8000",
+        "detail": "204941 bytes vs floor 8000",
         "outcome": "pass"
        },
        {
         "check": "content_smoke",
-        "detail": "2126 pages, extractable text present",
+        "detail": "10 pages, extractable text present",
         "outcome": "pass"
        }
       ],
-      "checked_at": "2026-07-05T08:05:40.542947+00:00"
+      "checked_at": "2026-07-08T21:19:32.541559+00:00"
      }
     },
     "added_in": "v1"
@@ -566,12 +570,7 @@
       "decided_by": "manifest_v1",
       "decided_at": "2026-07-05T08:05:40.196724+00:00"
      }
-    ],
-    "identity_gate": {
-     "passed": true,
-     "checked": [],
-     "failures": []
-    }
+    ]
    },
    "lifecycle": {
     "stage": "verified"
@@ -672,12 +671,7 @@
       "decided_by": "manifest_v1",
       "decided_at": "2026-07-05T08:05:40.196797+00:00"
      }
-    ],
-    "identity_gate": {
-     "passed": true,
-     "checked": [],
-     "failures": []
-    }
+    ]
    },
    "lifecycle": {
     "stage": "verified"
@@ -781,12 +775,7 @@
       "decided_by": "manifest_v1",
       "decided_at": "2026-07-05T08:05:40.196896+00:00"
      }
-    ],
-    "identity_gate": {
-     "passed": true,
-     "checked": [],
-     "failures": []
-    }
+    ]
    },
    "lifecycle": {
     "stage": "verified"
@@ -1157,12 +1146,7 @@
       "decided_by": "manifest_v1",
       "decided_at": "2026-07-05T08:05:40.196965+00:00"
      }
-    ],
-    "identity_gate": {
-     "passed": true,
-     "checked": [],
-     "failures": []
-    }
+    ]
    },
    "lifecycle": {
     "stage": "verified"
@@ -1266,12 +1250,7 @@
       "decided_by": "manifest_v1",
       "decided_at": "2026-07-05T08:05:40.197053+00:00"
      }
-    ],
-    "identity_gate": {
-     "passed": true,
-     "checked": [],
-     "failures": []
-    }
+    ]
    },
    "lifecycle": {
     "stage": "verified"
@@ -1375,12 +1354,7 @@
       "decided_by": "manifest_v1",
       "decided_at": "2026-07-05T08:05:40.197138+00:00"
      }
-    ],
-    "identity_gate": {
-     "passed": true,
-     "checked": [],
-     "failures": []
-    }
+    ]
    },
    "lifecycle": {
     "stage": "verified"
@@ -1484,12 +1458,7 @@
       "decided_by": "manifest_v1",
       "decided_at": "2026-07-05T08:05:40.197200+00:00"
      }
-    ],
-    "identity_gate": {
-     "passed": true,
-     "checked": [],
-     "failures": []
-    }
+    ]
    },
    "lifecycle": {
     "stage": "verified"
@@ -1682,12 +1651,7 @@
       "decided_by": "manifest_v1",
       "decided_at": "2026-07-05T08:05:40.197285+00:00"
      }
-    ],
-    "identity_gate": {
-     "passed": true,
-     "checked": [],
-     "failures": []
-    }
+    ]
    },
    "lifecycle": {
     "stage": "verified"
@@ -1788,12 +1752,7 @@
       "decided_by": "manifest_v1",
       "decided_at": "2026-07-05T08:05:40.197346+00:00"
      }
-    ],
-    "identity_gate": {
-     "passed": true,
-     "checked": [],
-     "failures": []
-    }
+    ]
    },
    "lifecycle": {
     "stage": "verified"
@@ -1897,12 +1856,7 @@
       "decided_by": "manifest_v1",
       "decided_at": "2026-07-05T08:05:40.197421+00:00"
      }
-    ],
-    "identity_gate": {
-     "passed": true,
-     "checked": [],
-     "failures": []
-    }
+    ]
    },
    "lifecycle": {
     "stage": "verified"
@@ -2008,12 +1962,7 @@
       "decided_by": "manifest_v1",
       "decided_at": "2026-07-05T08:05:40.197481+00:00"
      }
-    ],
-    "identity_gate": {
-     "passed": true,
-     "checked": [],
-     "failures": []
-    }
+    ]
    },
    "lifecycle": {
     "stage": "verified"
@@ -2117,12 +2066,7 @@
       "decided_by": "manifest_v1",
       "decided_at": "2026-07-05T08:05:40.197563+00:00"
      }
-    ],
-    "identity_gate": {
-     "passed": true,
-     "checked": [],
-     "failures": []
-    }
+    ]
    },
    "lifecycle": {
     "stage": "verified"
@@ -2264,12 +2208,7 @@
       "decided_by": "manifest_v1",
       "decided_at": "2026-07-05T08:05:40.197619+00:00"
      }
-    ],
-    "identity_gate": {
-     "passed": true,
-     "checked": [],
-     "failures": []
-    }
+    ]
    },
    "lifecycle": {
     "stage": "verified"
@@ -2407,12 +2346,7 @@
       "decided_by": "manifest_v1",
       "decided_at": "2026-07-05T08:05:40.197693+00:00"
      }
-    ],
-    "identity_gate": {
-     "passed": true,
-     "checked": [],
-     "failures": []
-    }
+    ]
    },
    "lifecycle": {
     "stage": "verified"
@@ -2550,12 +2484,7 @@
       "decided_by": "manifest_v1",
       "decided_at": "2026-07-05T08:05:40.197758+00:00"
      }
-    ],
-    "identity_gate": {
-     "passed": true,
-     "checked": [],
-     "failures": []
-    }
+    ]
    },
    "lifecycle": {
     "stage": "verified"
@@ -3263,12 +3192,7 @@
       "decided_by": "manifest_v1",
       "decided_at": "2026-07-05T08:05:40.197837+00:00"
      }
-    ],
-    "identity_gate": {
-     "passed": true,
-     "checked": [],
-     "failures": []
-    }
+    ]
    },
    "lifecycle": {
     "stage": "verified"
@@ -3372,12 +3296,7 @@
       "decided_by": "manifest_v1",
       "decided_at": "2026-07-05T08:05:40.197925+00:00"
      }
-    ],
-    "identity_gate": {
-     "passed": true,
-     "checked": [],
-     "failures": []
-    }
+    ]
    },
    "lifecycle": {
     "stage": "verified"
@@ -3481,12 +3400,7 @@
       "decided_by": "manifest_v1",
       "decided_at": "2026-07-05T08:05:40.197991+00:00"
      }
-    ],
-    "identity_gate": {
-     "passed": true,
-     "checked": [],
-     "failures": []
-    }
+    ]
    },
    "lifecycle": {
     "stage": "verified"
@@ -3764,12 +3678,7 @@
       "decided_by": "manifest_v1",
       "decided_at": "2026-07-05T08:05:40.198075+00:00"
      }
-    ],
-    "identity_gate": {
-     "passed": true,
-     "checked": [],
-     "failures": []
-    }
+    ]
    },
    "lifecycle": {
     "stage": "verified"
@@ -3873,12 +3782,7 @@
       "decided_by": "manifest_v1",
       "decided_at": "2026-07-05T08:05:40.198131+00:00"
      }
-    ],
-    "identity_gate": {
-     "passed": true,
-     "checked": [],
-     "failures": []
-    }
+    ]
    },
    "lifecycle": {
     "stage": "verified"
@@ -3982,12 +3886,7 @@
       "decided_by": "manifest_v1",
       "decided_at": "2026-07-05T08:05:40.198208+00:00"
      }
-    ],
-    "identity_gate": {
-     "passed": true,
-     "checked": [],
-     "failures": []
-    }
+    ]
    },
    "lifecycle": {
     "stage": "verified"
@@ -4091,12 +3990,7 @@
       "decided_by": "manifest_v1",
       "decided_at": "2026-07-05T08:05:40.198268+00:00"
      }
-    ],
-    "identity_gate": {
-     "passed": true,
-     "checked": [],
-     "failures": []
-    }
+    ]
    },
    "lifecycle": {
     "stage": "verified"
@@ -4197,12 +4091,7 @@
       "decided_by": "manifest_v1",
       "decided_at": "2026-07-05T08:05:40.198346+00:00"
      }
-    ],
-    "identity_gate": {
-     "passed": true,
-     "checked": [],
-     "failures": []
-    }
+    ]
    },
    "lifecycle": {
     "stage": "verified"
@@ -4303,12 +4192,7 @@
       "decided_by": "manifest_v1",
       "decided_at": "2026-07-05T08:05:40.198408+00:00"
      }
-    ],
-    "identity_gate": {
-     "passed": true,
-     "checked": [],
-     "failures": []
-    }
+    ]
    },
    "lifecycle": {
     "stage": "verified"
@@ -4409,12 +4293,7 @@
       "decided_by": "manifest_v1",
       "decided_at": "2026-07-05T08:05:40.198488+00:00"
      }
-    ],
-    "identity_gate": {
-     "passed": true,
-     "checked": [],
-     "failures": []
-    }
+    ]
    },
    "lifecycle": {
     "stage": "verified"
@@ -4515,12 +4394,7 @@
       "decided_by": "manifest_v1",
       "decided_at": "2026-07-05T08:05:40.198570+00:00"
      }
-    ],
-    "identity_gate": {
-     "passed": true,
-     "checked": [],
-     "failures": []
-    }
+    ]
    },
    "lifecycle": {
     "stage": "verified"
@@ -4572,7 +4446,7 @@
   "fcsm-19-01-transparent-reporting-for-integrated-data-quality": {
    "doc_id": "fcsm-19-01-transparent-reporting-for-integrated-data-quality",
    "identity": {
-    "sha256": "0a1cfc211362b0d5008075c6444b8067de6360e882f54e6d9de26ce6b32077c5",
+    "sha256": "b646efbbd55aa606bfc033f223f76cd26c12f07e9b216d2ce2dd105a150c83b4",
     "canonical_path": "corpus/bulk/fcsm-19-01-transparent-reporting-for-integrated-data-quality.pdf",
     "title": "FCSM 19-01: Transparent Reporting for Integrated Data Quality",
     "authors_or_org": [
@@ -4598,35 +4472,36 @@
      },
      {
       "check": "size_sanity",
-      "detail": "1465088 bytes vs floor 8000",
+      "detail": "1731776 bytes vs floor 8000",
       "outcome": "pass"
      },
      {
       "check": "content_smoke",
-      "detail": "99 pages, extractable text present",
+      "detail": "143 pages, extractable text present",
       "outcome": "pass"
      }
     ],
-    "checked_at": "2026-07-05T08:05:43.297104+00:00"
+    "checked_at": "2026-07-17T03:24:50.398241+00:00"
    },
    "screening": {
     "decision": "included",
-    "rationale": "bulk fetch + manifest-add (fcsm-19-01-transparent-reporting-for-integrated-data-quality)",
+    "rationale": "re-acquisition supersedes corrupt bulk copy (sha 0a1cfc21…, 'no endstream marker for obj @811018'); clean NCES PDF, 143pp, parses full-text, identity verified (title 'Transparent Reporting for Integrated Data Quality', FCSM-19-01)",
     "decided_by": "cc",
-    "decided_at": "2026-07-03",
+    "decided_at": "2026-07-17T03:24:50.398329+00:00",
     "history": [
      {
       "decision": "included",
       "rationale": "Bulk acquisition from register (discovered_via fss-policy-kg-manifest).",
       "decided_by": "manifest_v1",
       "decided_at": "2026-07-05T08:05:40.198626+00:00"
+     },
+     {
+      "decision": "included",
+      "rationale": "bulk fetch + manifest-add (fcsm-19-01-transparent-reporting-for-integrated-data-quality)",
+      "decided_by": "cc",
+      "decided_at": "2026-07-03"
      }
-    ],
-    "identity_gate": {
-     "passed": true,
-     "checked": [],
-     "failures": []
-    }
+    ]
    },
    "lifecycle": {
     "stage": "verified"
@@ -4642,8 +4517,8 @@
    "extra": {
     "observed_files": {
      "corpus/bulk/fcsm-19-01-transparent-reporting-for-integrated-data-quality.pdf": {
-      "sha256": "0a1cfc211362b0d5008075c6444b8067de6360e882f54e6d9de26ce6b32077c5",
-      "size": 1465088,
+      "sha256": "b646efbbd55aa606bfc033f223f76cd26c12f07e9b216d2ce2dd105a150c83b4",
+      "size": 1731776,
       "claimed_type": "pdf",
       "detected_type": "pdf"
      }
@@ -4660,16 +4535,16 @@
        },
        {
         "check": "size_sanity",
-        "detail": "1465088 bytes vs floor 8000",
+        "detail": "1731776 bytes vs floor 8000",
         "outcome": "pass"
        },
        {
         "check": "content_smoke",
-        "detail": "99 pages, extractable text present",
+        "detail": "143 pages, extractable text present",
         "outcome": "pass"
        }
       ],
-      "checked_at": "2026-07-05T08:05:43.297104+00:00"
+      "checked_at": "2026-07-17T03:24:50.398241+00:00"
      }
     },
     "added_in": "v1"
@@ -4727,12 +4602,7 @@
       "decided_by": "manifest_v1",
       "decided_at": "2026-07-05T08:05:40.198701+00:00"
      }
-    ],
-    "identity_gate": {
-     "passed": true,
-     "checked": [],
-     "failures": []
-    }
+    ]
    },
    "lifecycle": {
     "stage": "verified"
@@ -4833,12 +4703,7 @@
       "decided_by": "manifest_v1",
       "decided_at": "2026-07-05T08:05:40.198795+00:00"
      }
-    ],
-    "identity_gate": {
-     "passed": true,
-     "checked": [],
-     "failures": []
-    }
+    ]
    },
    "lifecycle": {
     "stage": "verified"
@@ -4939,12 +4804,7 @@
       "decided_by": "manifest_v1",
       "decided_at": "2026-07-05T08:05:40.198860+00:00"
      }
-    ],
-    "identity_gate": {
-     "passed": true,
-     "checked": [],
-     "failures": []
-    }
+    ]
    },
    "lifecycle": {
     "stage": "verified"
@@ -5136,12 +4996,7 @@
       "decided_by": "manifest_v1",
       "decided_at": "2026-07-05T08:05:40.198943+00:00"
      }
-    ],
-    "identity_gate": {
-     "passed": true,
-     "checked": [],
-     "failures": []
-    }
+    ]
    },
    "lifecycle": {
     "stage": "verified"
@@ -5256,12 +5111,7 @@
       "decided_by": "manifest_v1",
       "decided_at": "2026-07-05T08:05:40.199009+00:00"
      }
-    ],
-    "identity_gate": {
-     "passed": true,
-     "checked": [],
-     "failures": []
-    }
+    ]
    },
    "lifecycle": {
     "stage": "verified"
@@ -5450,12 +5300,7 @@
       "decided_by": "manifest_v1",
       "decided_at": "2026-07-05T08:05:40.199101+00:00"
      }
-    ],
-    "identity_gate": {
-     "passed": true,
-     "checked": [],
-     "failures": []
-    }
+    ]
    },
    "lifecycle": {
     "stage": "verified"
@@ -5559,12 +5404,7 @@
       "decided_by": "manifest_v1",
       "decided_at": "2026-07-05T08:05:40.199158+00:00"
      }
-    ],
-    "identity_gate": {
-     "passed": true,
-     "checked": [],
-     "failures": []
-    }
+    ]
    },
    "lifecycle": {
     "stage": "verified"
@@ -5858,12 +5698,7 @@
       "decided_by": "manifest_v1",
       "decided_at": "2026-07-05T08:05:40.199235+00:00"
      }
-    ],
-    "identity_gate": {
-     "passed": true,
-     "checked": [],
-     "failures": []
-    }
+    ]
    },
    "lifecycle": {
     "stage": "verified"
@@ -6002,12 +5837,7 @@
       "decided_by": "manifest_v1",
       "decided_at": "2026-07-05T08:05:40.199291+00:00"
      }
-    ],
-    "identity_gate": {
-     "passed": true,
-     "checked": [],
-     "failures": []
-    }
+    ]
    },
    "lifecycle": {
     "stage": "verified"
@@ -6148,12 +5978,7 @@
       "decided_by": "manifest_v1",
       "decided_at": "2026-07-05T08:05:40.199367+00:00"
      }
-    ],
-    "identity_gate": {
-     "passed": true,
-     "checked": [],
-     "failures": []
-    }
+    ]
    },
    "lifecycle": {
     "stage": "verified"
@@ -6305,12 +6130,7 @@
       "decided_by": "manifest_v1",
       "decided_at": "2026-07-05T08:05:40.199425+00:00"
      }
-    ],
-    "identity_gate": {
-     "passed": true,
-     "checked": [],
-     "failures": []
-    }
+    ]
    },
    "lifecycle": {
     "stage": "verified"
@@ -6451,12 +6271,7 @@
       "decided_by": "manifest_v1",
       "decided_at": "2026-07-05T08:05:40.199514+00:00"
      }
-    ],
-    "identity_gate": {
-     "passed": true,
-     "checked": [],
-     "failures": []
-    }
+    ]
    },
    "lifecycle": {
     "stage": "verified"
@@ -6560,12 +6375,7 @@
       "decided_by": "manifest_v1",
       "decided_at": "2026-07-05T08:05:40.199577+00:00"
      }
-    ],
-    "identity_gate": {
-     "passed": true,
-     "checked": [],
-     "failures": []
-    }
+    ]
    },
    "lifecycle": {
     "stage": "verified"
@@ -6707,12 +6517,7 @@
       "decided_by": "manifest_v1",
       "decided_at": "2026-07-05T08:05:40.199656+00:00"
      }
-    ],
-    "identity_gate": {
-     "passed": true,
-     "checked": [],
-     "failures": []
-    }
+    ]
    },
    "lifecycle": {
     "stage": "verified"
@@ -6853,12 +6658,7 @@
       "decided_by": "manifest_v1",
       "decided_at": "2026-07-05T08:05:40.199717+00:00"
      }
-    ],
-    "identity_gate": {
-     "passed": true,
-     "checked": [],
-     "failures": []
-    }
+    ]
    },
    "lifecycle": {
     "stage": "verified"
@@ -6962,12 +6762,7 @@
       "decided_by": "manifest_v1",
       "decided_at": "2026-07-05T08:05:40.199796+00:00"
      }
-    ],
-    "identity_gate": {
-     "passed": true,
-     "checked": [],
-     "failures": []
-    }
+    ]
    },
    "lifecycle": {
     "stage": "verified"
@@ -7071,12 +6866,7 @@
       "decided_by": "manifest_v1",
       "decided_at": "2026-07-05T08:05:40.199854+00:00"
      }
-    ],
-    "identity_gate": {
-     "passed": true,
-     "checked": [],
-     "failures": []
-    }
+    ]
    },
    "lifecycle": {
     "stage": "verified"
@@ -7177,12 +6967,7 @@
       "decided_by": "manifest_v1",
       "decided_at": "2026-07-05T08:05:40.199949+00:00"
      }
-    ],
-    "identity_gate": {
-     "passed": true,
-     "checked": [],
-     "failures": []
-    }
+    ]
    },
    "lifecycle": {
     "stage": "verified"
@@ -7283,12 +7068,7 @@
       "decided_by": "manifest_v1",
       "decided_at": "2026-07-05T08:05:40.200028+00:00"
      }
-    ],
-    "identity_gate": {
-     "passed": true,
-     "checked": [],
-     "failures": []
-    }
+    ]
    },
    "lifecycle": {
     "stage": "verified"
@@ -7482,12 +7262,7 @@
       "decided_by": "manifest_v1",
       "decided_at": "2026-07-05T08:05:40.200093+00:00"
      }
-    ],
-    "identity_gate": {
-     "passed": true,
-     "checked": [],
-     "failures": []
-    }
+    ]
    },
    "lifecycle": {
     "stage": "verified"
@@ -7588,12 +7363,7 @@
       "decided_by": "manifest_v1",
       "decided_at": "2026-07-05T08:05:40.200178+00:00"
      }
-    ],
-    "identity_gate": {
-     "passed": true,
-     "checked": [],
-     "failures": []
-    }
+    ]
    },
    "lifecycle": {
     "stage": "verified"
@@ -7913,12 +7683,7 @@
       "decided_by": "manifest_v1",
       "decided_at": "2026-07-05T08:05:40.200254+00:00"
      }
-    ],
-    "identity_gate": {
-     "passed": true,
-     "checked": [],
-     "failures": []
-    }
+    ]
    },
    "lifecycle": {
     "stage": "verified"
@@ -8069,12 +7834,7 @@
       "decided_by": "manifest_v1",
       "decided_at": "2026-07-05T08:05:40.200319+00:00"
      }
-    ],
-    "identity_gate": {
-     "passed": true,
-     "checked": [],
-     "failures": []
-    }
+    ]
    },
    "lifecycle": {
     "stage": "verified"
@@ -8175,12 +7935,7 @@
       "decided_by": "manifest_v1",
       "decided_at": "2026-07-05T08:05:40.200404+00:00"
      }
-    ],
-    "identity_gate": {
-     "passed": true,
-     "checked": [],
-     "failures": []
-    }
+    ]
    },
    "lifecycle": {
     "stage": "verified"
@@ -8295,12 +8050,7 @@
       "decided_by": "manifest_v1",
       "decided_at": "2026-07-05T08:05:40.200464+00:00"
      }
-    ],
-    "identity_gate": {
-     "passed": true,
-     "checked": [],
-     "failures": []
-    }
+    ]
    },
    "lifecycle": {
     "stage": "verified"
@@ -8401,12 +8151,7 @@
       "decided_by": "manifest_v1",
       "decided_at": "2026-07-05T08:05:40.200546+00:00"
      }
-    ],
-    "identity_gate": {
-     "passed": true,
-     "checked": [],
-     "failures": []
-    }
+    ]
    },
    "lifecycle": {
     "stage": "verified"
@@ -8507,12 +8252,7 @@
       "decided_by": "manifest_v1",
       "decided_at": "2026-07-05T08:05:40.200606+00:00"
      }
-    ],
-    "identity_gate": {
-     "passed": true,
-     "checked": [],
-     "failures": []
-    }
+    ]
    },
    "lifecycle": {
     "stage": "verified"
@@ -8730,12 +8470,7 @@
       "decided_by": "manifest_v1",
       "decided_at": "2026-07-05T08:05:40.200686+00:00"
      }
-    ],
-    "identity_gate": {
-     "passed": true,
-     "checked": [],
-     "failures": []
-    }
+    ]
    },
    "lifecycle": {
     "stage": "verified"
@@ -8836,12 +8571,7 @@
       "decided_by": "manifest_v1",
       "decided_at": "2026-07-05T08:05:40.200743+00:00"
      }
-    ],
-    "identity_gate": {
-     "passed": true,
-     "checked": [],
-     "failures": []
-    }
+    ]
    },
    "lifecycle": {
     "stage": "verified"
@@ -8980,12 +8710,7 @@
       "decided_by": "manifest_v1",
       "decided_at": "2026-07-05T08:05:40.200820+00:00"
      }
-    ],
-    "identity_gate": {
-     "passed": true,
-     "checked": [],
-     "failures": []
-    }
+    ]
    },
    "lifecycle": {
     "stage": "verified"
@@ -9172,12 +8897,7 @@
       "decided_by": "manifest_v1",
       "decided_at": "2026-07-05T08:05:40.200878+00:00"
      }
-    ],
-    "identity_gate": {
-     "passed": true,
-     "checked": [],
-     "failures": []
-    }
+    ]
    },
    "lifecycle": {
     "stage": "verified"
@@ -9278,12 +8998,7 @@
       "decided_by": "manifest_v1",
       "decided_at": "2026-07-05T08:05:40.200955+00:00"
      }
-    ],
-    "identity_gate": {
-     "passed": true,
-     "checked": [],
-     "failures": []
-    }
+    ]
    },
    "lifecycle": {
     "stage": "verified"
@@ -9387,12 +9102,7 @@
       "decided_by": "manifest_v1",
       "decided_at": "2026-07-05T08:05:40.201014+00:00"
      }
-    ],
-    "identity_gate": {
-     "passed": true,
-     "checked": [],
-     "failures": []
-    }
+    ]
    },
    "lifecycle": {
     "stage": "verified"
@@ -9534,12 +9244,7 @@
       "decided_by": "manifest_v1",
       "decided_at": "2026-07-05T08:05:40.201097+00:00"
      }
-    ],
-    "identity_gate": {
-     "passed": true,
-     "checked": [],
-     "failures": []
-    }
+    ]
    },
    "lifecycle": {
     "stage": "verified"
@@ -9769,12 +9474,7 @@
       "decided_by": "manifest_v1",
       "decided_at": "2026-07-05T08:05:40.201158+00:00"
      }
-    ],
-    "identity_gate": {
-     "passed": true,
-     "checked": [],
-     "failures": []
-    }
+    ]
    },
    "lifecycle": {
     "stage": "verified"
@@ -9916,12 +9616,7 @@
       "decided_by": "manifest_v1",
       "decided_at": "2026-07-05T08:05:40.201239+00:00"
      }
-    ],
-    "identity_gate": {
-     "passed": true,
-     "checked": [],
-     "failures": []
-    }
+    ]
    },
    "lifecycle": {
     "stage": "verified"
@@ -10025,12 +9720,7 @@
       "decided_by": "manifest_v1",
       "decided_at": "2026-07-05T08:05:40.201301+00:00"
      }
-    ],
-    "identity_gate": {
-     "passed": true,
-     "checked": [],
-     "failures": []
-    }
+    ]
    },
    "lifecycle": {
     "stage": "verified"
@@ -10222,12 +9912,7 @@
       "decided_by": "manifest_v1",
       "decided_at": "2026-07-05T08:05:40.201385+00:00"
      }
-    ],
-    "identity_gate": {
-     "passed": true,
-     "checked": [],
-     "failures": []
-    }
+    ]
    },
    "lifecycle": {
     "stage": "verified"
@@ -10369,12 +10054,7 @@
       "decided_by": "manifest_v1",
       "decided_at": "2026-07-05T08:05:40.201694+00:00"
      }
-    ],
-    "identity_gate": {
-     "passed": true,
-     "checked": [],
-     "failures": []
-    }
+    ]
    },
    "lifecycle": {
     "stage": "verified"
@@ -10478,12 +10158,7 @@
       "decided_by": "manifest_v1",
       "decided_at": "2026-07-05T08:05:40.201843+00:00"
      }
-    ],
-    "identity_gate": {
-     "passed": true,
-     "checked": [],
-     "failures": []
-    }
+    ]
    },
    "lifecycle": {
     "stage": "verified"

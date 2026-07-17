@@ -79,6 +79,11 @@ OVERSIZE_ALLOW = {
     "building-an-ai-ready-public-workforce",        # 266,932 chars / ~67k tok
     "fcsm-20-04-a-framework-for-data-quality",      # 269,719 chars / ~67k tok
     "introducing-the-oecd-ai-capability-indicators",# 287,110 chars / ~72k tok
+    # 2026-07-16 operator clearance: standing directive "I don't care how big any
+    # doc is, just clear them" (ledgered). Clean NCES re-acquisition superseded the
+    # corrupt bulk copy (sha 0a1cfc21… 'no endstream marker'); 361,161 chars / ~90k
+    # tok — single full-context Opus call, grounding intact, NOT truncated.
+    "fcsm-19-01-transparent-reporting-for-integrated-data-quality",  # 361,161 chars / ~90k tok
 }
 PER_DOC_TIMEOUT_S = 1800
 MAX_DOC_ATTEMPTS = 2               # transport retry discipline: verbatim retry once
