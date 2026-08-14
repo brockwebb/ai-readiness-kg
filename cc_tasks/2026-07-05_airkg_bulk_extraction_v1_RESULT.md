@@ -354,3 +354,8 @@ trigger investigation post-burn.
 
 - information-quality-act-data-quality-act-sec-515-of-p-l-106: 33 nodes, 37 edges, quarantined 5 (rate 0.067), 46,037 tokens
 - window total: 1 docs extracted; 71/71 complete; tokens left in band: 30,963,966
+
+### Burn progress — 2026-08-14 17:02 EDT
+
+- introducing-the-oecd-ai-capability-indicators: 83 nodes, 139 edges, quarantined 7 (rate 0.031), 185,398 tokens
+- window total: 1 docs extracted; 71/71 complete; tokens left in band: 54,814,602

@@ -47,8 +47,59 @@ def check_min_corpus(gate, members) -> dict:
             "threshold": threshold, "passed": n >= threshold}
 
 
+def read_overlays(events) -> tuple[set, dict]:
+    """The two append-only overlays from the 2026-08-14 closeout. Shared by every
+    check, because applying them to one check and not its sibling is exactly the
+    defect this helper exists to prevent: check_edges honoured the supersession
+    while check_grounding did not, so the replaced extraction's spans were
+    re-verified against the REPLACEMENT source and 96 items reported ungrounded.
+    """
+    superseded, aliases = set(), {}
+    for ev in events:
+        et = ev.get("event_type")
+        if et == "extraction_superseded":
+            superseded.add((ev["doc_id"], ev["superseded_source_sha256"]))
+        elif et == "edge_endpoint_alias":
+            aliases[ev["alias_id"]] = ev["canonical_id"]
+    return superseded, aliases
+
+
+def live_events(events) -> list:
+    """`events` minus the assertions of superseded extractions. The prior extraction
+    stays in the log (never deleted); it is simply no longer part of the graph the
+    gates measure, which is the same graph build_projection.py builds."""
+    superseded, _ = read_overlays(events)
+    if not superseded:
+        return events
+
+    # build_metrics carries no source sha, only an extraction_event_id. Map that id
+    # to a sha via the assertions it produced, so the replaced run's metrics drop
+    # precisely rather than by "keep the newest timestamp" guesswork. Without this,
+    # a superseded doc contributes its metrics TWICE to quarantine_rate.
+    sha_of_extraction: dict[str, str] = {}
+    for ev in events:
+        if ev.get("event_type") in ("node_asserted", "edge_asserted"):
+            prov = ev.get("provenance") or {}
+            eid, sha = prov.get("extraction_event_id"), prov.get("source_sha256")
+            if eid and sha:
+                sha_of_extraction[eid] = sha
+
+    def keep(ev) -> bool:
+        et = ev.get("event_type")
+        if et in ("node_asserted", "edge_asserted"):
+            return (ev.get("doc_id"),
+                    (ev.get("provenance") or {}).get("source_sha256")) not in superseded
+        if et == "build_metrics":
+            sha = sha_of_extraction.get(ev.get("extraction_event_id"))
+            return sha is None or (ev.get("doc_id"), sha) not in superseded
+        return True
+
+    return [ev for ev in events if keep(ev)]
+
+
 def check_grounding(events, members) -> dict:
     """Re-verify every ADMITTED batch-004 item's span against its source text."""
+    events = live_events(events)
     texts: dict[str, str] = {}
     failures, checked, legacy = [], 0, 0
     for ev in events:
@@ -76,6 +127,7 @@ def check_grounding(events, members) -> dict:
 
 
 def check_quarantine(events) -> dict:
+    events = live_events(events)
     tot_items = tot_q = 0
     for ev in events:
         if ev.get("event_type") == "build_metrics" and \
@@ -107,7 +159,16 @@ def _shard_of(ev) -> int:
 
 
 def check_edges(events, schema) -> dict:
-    """Every edge's endpoints exist among asserted/manifested ids; pair allowed."""
+    """Every edge's endpoints exist among asserted/manifested ids; pair allowed.
+
+    Reads the same two append-only overlays the projection reads (2026-08-14 closeout),
+    so the gate measures the graph that was actually built rather than the raw log:
+    superseded extractions are excluded, and aliased citation endpoints resolve to
+    their canonical doc_id. THRESHOLD IS UNCHANGED (0) -- this corrects what is counted,
+    it does not retune what passes.
+    """
+    _, aliases = read_overlays(events)
+    events = live_events(events)
     known: set[str] = set()
     pairs = {name: {tuple(p) for p in spec.get("pairs", [[spec["from"], spec["to"]]])}
              for name, spec in schema["edge_types"].items()}
@@ -129,7 +190,8 @@ def check_edges(events, schema) -> dict:
         elif (p.get("from_type"), p.get("to_type")) not in pairs[rel]:
             problems.append(f"pair ({p.get('from_type')},{p.get('to_type')}) "
                             f"not allowed for {rel}")
-        for endpoint in (p.get("from_id"), p.get("to_id")):
+        for endpoint in (aliases.get(p.get("from_id"), p.get("from_id")),
+                         aliases.get(p.get("to_id"), p.get("to_id"))):
             if endpoint not in known:
                 problems.append(f"endpoint {endpoint!r} never asserted/manifested")
         if problems:
@@ -171,6 +233,7 @@ def check_orphans_and_drift(kg_labels, edge_whitelist) -> tuple[dict, dict]:
 
 
 def check_empty(events, members) -> dict:
+    events = live_events(events)
     extracted_docs, empty_docs = set(), set()
     for ev in events:
         if ev.get("event_type") == "build_metrics" and _shard_of(ev) == BULK_BATCH:

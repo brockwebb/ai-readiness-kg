@@ -1,6 +1,6 @@
 # Bulk v1 — Pre-registered Gate Report
 
-Generated: 2026-07-17T13:59:31.984083+00:00
+Generated: 2026-08-14T22:47:57.835787+00:00
 
 Failed gates are FINDINGS, not blockers. No retuning (task hard stop).
 
@@ -8,9 +8,9 @@ Failed gates are FINDINGS, not blockers. No retuning (task hard stop).
 |---|---|---|---|
 | min_verified_included | 71 | 71 | PASS |
 | grounding_zero_ungrounded | 0 | 0 | PASS |
-| quarantine_rate | 0.0342 | 0.0152 | **FAIL** |
-| edge_endpoint_validation | 750 | 0 | **FAIL** |
-| orphan_rate | 0.0969 | 0.0034 | **FAIL** |
+| quarantine_rate | 0.0343 | 0.0152 | **FAIL** |
+| edge_endpoint_validation | 747 | 0 | **FAIL** |
+| orphan_rate | 0.098 | 0.0034 | **FAIL** |
 | projection_drift | 0 | 0 | PASS |
 | empty_extraction_rate | 0.0141 | 0.1196 | PASS |
 
@@ -29,21 +29,21 @@ Failed gates are FINDINGS, not blockers. No retuning (task hard stop).
   "value": 0,
   "threshold": 0,
   "passed": true,
-  "checked_items": 10977,
+  "checked_items": 10963,
   "legacy_items_not_rechecked": 876,
   "failures": []
  },
  {
   "check_id": "quarantine_rate",
-  "value": 0.0342,
+  "value": 0.0343,
   "threshold": 0.0152,
   "passed": false,
   "quarantined": 389,
-  "total_items": 11366
+  "total_items": 11352
  },
  {
   "check_id": "edge_endpoint_validation",
-  "value": 750,
+  "value": 747,
   "threshold": 0,
   "passed": false,
   "violations": [
@@ -80,13 +80,6 @@ Failed gates are FINDINGS, not blockers. No retuning (task hard stop).
     "edge": "cites",
     "problems": [
      "endpoint 'nanotechnology-community-data-readiness-levels-2013' never asserted/manifested"
-    ]
-   },
-   {
-    "event_id": "acac0af1261641518b02e0dc0ac1a7c1",
-    "edge": "cites",
-    "problems": [
-     "endpoint 'doc-fcsm-framework-for-data-quality' never asserted/manifested"
     ]
    },
    {
@@ -186,16 +179,23 @@ Failed gates are FINDINGS, not blockers. No retuning (task hard stop).
     "problems": [
      "endpoint 'breunig-2000-lof' never asserted/manifested"
     ]
+   },
+   {
+    "event_id": "0f51f9bcae9145e6873b348560d8d6ad",
+    "edge": "cites",
+    "problems": [
+     "endpoint 'pokrajac-2007-ilof' never asserted/manifested"
+    ]
    }
   ]
  },
  {
   "check_id": "orphan_rate",
-  "value": 0.0969,
+  "value": 0.098,
   "threshold": 0.0034,
   "passed": false,
-  "orphans": 392,
-  "total_non_document_nodes": 4044
+  "orphans": 388,
+  "total_non_document_nodes": 3958
  },
  {
   "check_id": "projection_drift",
@@ -205,28 +205,28 @@ Failed gates are FINDINGS, not blockers. No retuning (task hard stop).
   "delta": {},
   "fingerprint": {
    "n:Document": 71,
-   "n:Definition": 385,
-   "n:Concept": 2182,
+   "n:Definition": 377,
+   "n:Concept": 2138,
    "n:Construct": 0,
-   "n:Instrument": 123,
+   "n:Instrument": 116,
    "n:Measure": 299,
-   "n:Claim": 759,
-   "n:Standard": 127,
-   "n:Framework": 169,
-   "r:ABOUT": 895,
-   "r:ASSERTS": 891,
-   "r:BUILDS_ON": 51,
-   "r:CITES": 744,
-   "r:CONFLICTS_WITH": 4,
-   "r:DEFINES": 462,
-   "r:EXTENDS": 16,
-   "r:HAS_COMPONENT": 803,
-   "r:IMPLEMENTS": 55,
-   "r:MEASURES": 424,
-   "r:MENTIONS": 2313,
-   "r:PRECEDES": 100,
-   "r:SUBTYPE_OF": 186,
-   "r:USES_MEASURE": 295
+   "n:Claim": 735,
+   "n:Standard": 126,
+   "n:Framework": 167,
+   "r:ABOUT": 905,
+   "r:ASSERTS": 883,
+   "r:BUILDS_ON": 52,
+   "r:CITES": 756,
+   "r:CONFLICTS_WITH": 3,
+   "r:DEFINES": 464,
+   "r:EXTENDS": 15,
+   "r:HAS_COMPONENT": 810,
+   "r:IMPLEMENTS": 54,
+   "r:MEASURES": 432,
+   "r:MENTIONS": 2332,
+   "r:PRECEDES": 102,
+   "r:SUBTYPE_OF": 198,
+   "r:USES_MEASURE": 296
   }
  },
  {

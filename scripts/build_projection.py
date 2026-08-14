@@ -77,15 +77,49 @@ def _scalar_props(item: dict) -> dict:
     return out
 
 
+def read_overlays() -> tuple[set[tuple[str, str]], dict[str, str]]:
+    """Two append-only overlays introduced by the 2026-08-14 bulk-v1 closeout.
+
+    Neither mutates a prior event; both are resolved at READ time, so the log stays
+    the truth and the projection stays its function.
+
+      extraction_superseded  -> drop the node/edge events of a replaced extraction.
+        Keyed on (doc_id, source_sha256), NOT doc_id alone: a doc_id-only rule would
+        also drop the replacement, since both extractions carry the same doc_id.
+
+      edge_endpoint_alias    -> rewrite a citation endpoint onto its canonical doc_id.
+        Written only where the alias is a token-prefix of the canonical id (or differs
+        by stopwords) AND every numeric identifier agrees. Similarity matching was
+        rejected during the closeout: it mapped executive-order-14110 onto 13960,
+        nist-cybersecurity-framework onto nist-ai-rmf, and cisco-2024 onto cisco-2025.
+    """
+    superseded: set[tuple[str, str]] = set()
+    aliases: dict[str, str] = {}
+    for ev in eventlog.replay():
+        et = ev.get("event_type")
+        if et == "extraction_superseded":
+            superseded.add((ev["doc_id"], ev["superseded_source_sha256"]))
+        elif et == "edge_endpoint_alias":
+            aliases[ev["alias_id"]] = ev["canonical_id"]
+    return superseded, aliases
+
+
 def build(session, kg_labels: list[str], edge_whitelist: set[str]) -> dict:
     counts = {"nodes": 0, "edges": 0, "documents": 0,
-              "skipped_unknown_edge_type": 0}
+              "skipped_unknown_edge_type": 0,
+              "skipped_superseded_extraction": 0, "aliased_endpoints": 0}
+    superseded, aliases = read_overlays()
     # reset ONLY KG labels
     label_pred = " OR ".join(f"n:{lbl}" for lbl in kg_labels)
     session.run(f"MATCH (n) WHERE {label_pred} DETACH DELETE n")
 
     for ev in eventlog.replay():
         et = ev.get("event_type")
+        if et in ("node_asserted", "edge_asserted"):
+            src_sha = (ev.get("provenance") or {}).get("source_sha256")
+            if (ev.get("doc_id"), src_sha) in superseded:
+                counts["skipped_superseded_extraction"] += 1
+                continue
         if et == "manifest_add":
             p = ev["payload"]
             session.run(
@@ -123,12 +157,19 @@ def build(session, kg_labels: list[str], edge_whitelist: set[str]) -> dict:
                 counts["skipped_unknown_edge_type"] += 1
                 continue
             prov = (p.get("provenance") or ev.get("provenance") or {})
+            from_id, to_id = p["from_id"], p["to_id"]
+            for _orig, _resolved in (("from_id", aliases.get(from_id)),
+                                     ("to_id", aliases.get(to_id))):
+                if _resolved:
+                    counts["aliased_endpoints"] += 1
+            from_id = aliases.get(from_id, from_id)
+            to_id = aliases.get(to_id, to_id)
             session.run(
                 f"MERGE (a {{id: $from_id}}) MERGE (b {{id: $to_id}}) "
                 f"MERGE (a)-[r:{rel.upper()}]->(b) "
                 "SET r.prov_method = $method, r.prov_doc = $doc, "
                 "r.grounding_span = $span",
-                from_id=p["from_id"], to_id=p["to_id"],
+                from_id=from_id, to_id=to_id,
                 method=prov.get("method") or prov.get("model_id") or "asserted",
                 doc=ev.get("doc_id"), span=(p.get("item") or {}).get(
                     "grounding_span") or p.get("grounding_span"))

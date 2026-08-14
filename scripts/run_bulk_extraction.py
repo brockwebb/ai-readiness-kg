@@ -205,7 +205,8 @@ def usage_tokens(meta: dict) -> int:
 
 
 def run(max_docs: int | None = None, dry_run: bool = False,
-        shard: tuple[int, int] | None = None, retry_failed: bool = False) -> int:
+        shard: tuple[int, int] | None = None, retry_failed: bool = False,
+        only: str | None = None) -> int:
     if STOP_FILE.exists():
         print(f"STOP file present ({STOP_FILE}) — operator review required. Exiting.")
         return 2
@@ -224,6 +225,14 @@ def run(max_docs: int | None = None, dry_run: bool = False,
     # throttled window) for another pass — genuinely-bad docs simply re-fail and re-skip.
     todo = [d for d in ordered if d not in done
             and (retry_failed or fails.get(d, 0) < MAX_DOC_ATTEMPTS)]
+    if only is not None:
+        # Supersession re-extract: resume is keyed on doc_id, so a doc whose SOURCE
+        # changed under the same doc_id is permanently "done". --only re-opens exactly
+        # that one doc. It bypasses the resume set and nothing else -- the oversize
+        # guard, quarantine STOP, cap, gate and lease all still apply below.
+        if only not in members:
+            raise SystemExit(f"--only {only!r} is not a corpus v1 member")
+        todo = [only]
     # Parallel workers: hash-partition the queue into N disjoint shards so no two workers
     # ever touch the same doc_id. Partition is stable (sha1 of doc_id), so a re-fire of the
     # same shard resumes the same slice. Events append atomically per-line and files are
@@ -428,6 +437,12 @@ def main() -> int:
                     help="run N parallel shard workers under one lease (coordinator)")
     ap.add_argument("--shard", type=_parse_shard, default=None,
                     help="I/N — process only hash-partition I of N (one parallel worker)")
+    ap.add_argument("--only", default=None, metavar="DOC_ID",
+                    help="Extract exactly this doc_id, even if it already has "
+                         "build_metrics. Needed because resume is keyed on doc_id "
+                         "alone, so a SUPERSEDED doc (new source sha, same doc_id) "
+                         "would otherwise be skipped forever. Selection only — no "
+                         "config, threshold, model or prompt is changed.")
     ap.add_argument("--retry-failed", action="store_true",
                     help="re-open docs that hit the fail ceiling (e.g. throttled no-JSON) for another pass")
     args = ap.parse_args()
@@ -442,7 +457,7 @@ def main() -> int:
                   f"(>2 concurrent streams invites 529 overload).")
         return run_fleet(n, args.max_docs, retry_failed=args.retry_failed)
     return run(max_docs=args.max_docs, dry_run=args.dry_run, shard=args.shard,
-               retry_failed=args.retry_failed)
+               retry_failed=args.retry_failed, only=args.only)
 
 
 if __name__ == "__main__":
