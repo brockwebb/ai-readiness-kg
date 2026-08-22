@@ -182,3 +182,77 @@ quality_monitors:
   evidence_grade_missing_stop_fraction: 0.10   # task Phase 4 STOP: missing on >10% of Claims
   evidence_grade_required_from_schema: "0.3"   # Claims stamped at/after this schema version must carry a grade
   metrics_dir: corpus/staging/metrics
+  # Per-type test-retest stability monitor (task 2026-08-22_kernel_tevv Phase 5; DD-013).
+  # Floors = the pre-registered tevv_gates stability threshold (kappa) and the same value
+  # applied to positive specific agreement, the kappa-paradox-free companion statistic.
+  stability_artifact: corpus/staging/metrics/tevv_stability.json
+  stability_kappa_floor: 0.61
+  stability_pa_floor: 0.61
+
+# TEVV gates — PRE-REGISTERED 2026-08-22 before data, source cc_tasks/2026-08-22_kernel_tevv.md
+# ("Pre-registered thresholds"). Thresholds are never changed after data; `realized` values
+# are appended by the task's Phase 5 next to them and a FAIL is a finding. Evaluated by
+# scripts/run_baseline_gates.py when the retest shard (events/batch-008_tevv_retest.jsonl)
+# exists; judge output in corpus/staging/metrics/tevv_faithfulness_judgments.jsonl.
+tevv_gates:
+  preregistered: true
+  source: cc_tasks/2026-08-22_kernel_tevv.md
+  retest_shard_tag: tevv_retest
+  checks:
+    - check_id: stability_kappa_pooled
+      definition: >-
+        Cohen's kappa on item presence, pooled over node types and the 8 retest documents.
+        Item identity = type + NFKC-normalized primary text; edge identity = type + endpoint
+        identities. Universe = union of items across the two runs (no both-absent cell —
+        recorded as a known property of the statistic here).
+      comparator: gte
+      threshold: 0.61
+      source: "Landis & Koch 1977, 'substantial' band lower bound"
+    - check_id: stability_kappa_per_type_min
+      definition: Minimum per-node-type pooled kappa across the retest documents.
+      comparator: gte
+      threshold: 0.61
+      source: "Landis & Koch 1977"
+    - check_id: stability_jaccard_pooled
+      definition: Mean over the 8 documents of the Jaccard index of grounded-span sets (NFKC + whitespace-normalized spans).
+      comparator: gte
+      threshold: 0.70
+      source: cc_tasks/2026-08-22_kernel_tevv.md
+    - check_id: faithfulness_precision_pooled
+      definition: Fraction of the 200 sampled items the judge scores entailed by their grounding span.
+      comparator: gte
+      threshold: 0.90
+      source: "task rationale: validity floor no looser than the admission floor (1 - 0.15 quarantine ceiling = 0.85; pooled tightened to 0.90)"
+    - check_id: faithfulness_precision_stratum_min
+      definition: Minimum judge-scored entailment precision over the sample strata.
+      comparator: gte
+      threshold: 0.85
+      source: cc_tasks/2026-08-22_kernel_tevv.md
+    - check_id: grade_platform_official_precision
+      definition: Among kernel Claims graded platform_official, fraction whose document has is_platform_operator = true.
+      comparator: gte
+      threshold: 0.90
+      source: cc_tasks/2026-08-22_kernel_tevv.md
+      phase_stop_below: 0.70     # Phase 4 STOP: below this, no gate is written for it; finding + follow-on recommended
+    - check_id: grade_peer_reviewed_precision
+      definition: >-
+        Among kernel Claims graded peer_reviewed_experiment, fraction whose document
+        source_type is `academic` (schema.yaml enum; there is no `preprint` value — task text
+        names one, the enum does not; recorded as a discrepancy).
+      comparator: gte
+      threshold: 0.90
+      source: cc_tasks/2026-08-22_kernel_tevv.md
+
+  # REALIZED 2026-08-22 (task Phase 5) — values recorded, thresholds untouched. Companion
+  # paradox-free statistic for stability: positive specific agreement (Dice) all items
+  # 0.4092, nodes 0.4788, edges 0.3583 (see docs/research/2026-08-22_tevv_stability.md).
+  realized:
+    recorded_at: '2026-08-22'
+    faithfulness_status: uncalibrated_pending_human
+    stability_kappa_pooled: -0.5904
+    stability_kappa_per_type_min: -0.7891
+    stability_jaccard_pooled: 0.2848
+    faithfulness_precision_pooled: 0.5350
+    faithfulness_precision_stratum_min: 0.0000
+    grade_platform_official_precision: 0.8310
+    grade_peer_reviewed_precision: 1.0000

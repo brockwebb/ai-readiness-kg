@@ -63,8 +63,9 @@ def test_v02_subtype_and_precedes():
     assert not schema_loader.is_valid_endpoint(SCHEMA, "subtype_of", "Framework", "Concept")
 
 
-def test_schema_version_is_v03():
-    assert SCHEMA["schema_version"] == "0.3"
+def test_schema_version_is_v03_line():
+    # v0.3.x: patch releases (v0.3.1 added Document.is_platform_operator) keep the v0.3 catalogue
+    assert SCHEMA["schema_version"].startswith("0.3")
 
 
 def test_v02_edges_carry_external_alignment():

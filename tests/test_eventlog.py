@@ -94,3 +94,23 @@ def test_replay_fails_loud_on_corrupt_line(isolated_log):
         fh.write("{not json\n")
     with pytest.raises(ValueError, match="corrupt event"):
         list(eventlog.replay())
+
+
+# --- tagged shards (task 2026-08-22_kernel_tevv) ----------------------------------------
+
+def test_tagged_shard_is_excluded_from_default_replay(tmp_path, monkeypatch):
+    schema = tmp_path / "schema.yaml"; schema.write_text('schema_version: "0.1"\n', encoding="utf-8")
+    monkeypatch.setattr(eventlog, "_EVENTS_DIR", tmp_path / "events")
+    monkeypatch.setattr(eventlog, "_SCHEMA_PATH", schema)
+    eventlog.append({"event_type": "graph"}, batch=1)
+    eventlog.append({"event_type": "retest", "purpose": "tevv_retest"}, batch=8, tag="tevv_retest")
+    assert (tmp_path / "events" / "batch-008_tevv_retest.jsonl").is_file()
+    assert [e["event_type"] for e in eventlog.replay()] == ["graph"]
+    assert [e["event_type"] for e in eventlog.replay(tag="tevv_retest")] == ["retest"]
+
+
+def test_tag_must_be_a_safe_slug(tmp_path, monkeypatch):
+    monkeypatch.setattr(eventlog, "_EVENTS_DIR", tmp_path / "events")
+    import pytest
+    with pytest.raises(ValueError):
+        eventlog._shard_path(8, tag="../evil")

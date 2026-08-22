@@ -221,6 +221,26 @@ def _limit_monitor(name: str, key: str, metrics: dict, limits: dict,
             "limits": lim, "hard_ceiling": hard_ceiling, "docs": hits}
 
 
+def monitor_stability(stability: dict | None, kappa_floor: float, pa_floor: float) -> dict:
+    """Per-node-type test-retest stability (task 2026-08-22_kernel_tevv Phase 5). Fires when
+    any type's pooled kappa < kappa_floor OR positive agreement < pa_floor. Reads the
+    artifact scripts/tevv_stability.py writes; None -> not evaluated (never a silent pass)."""
+    if not stability:
+        return {"monitor": "stability_per_type", "fired": False, "evaluated": False, "types": []}
+    hits = []
+    for typ, v in (stability.get("pooled") or {}).get("per_type", {}).items():
+        k, pa = v.get("kappa"), v.get("positive_agreement")
+        reasons = []
+        if k is not None and k < kappa_floor:
+            reasons.append(f"kappa {k:.3f} < {kappa_floor}")
+        if pa is not None and pa < pa_floor:
+            reasons.append(f"positive_agreement {pa:.3f} < {pa_floor}")
+        if reasons:
+            hits.append({"type": typ, "kappa": k, "positive_agreement": pa, "reasons": reasons})
+    return {"monitor": "stability_per_type", "fired": bool(hits), "evaluated": True,
+            "kappa_floor": kappa_floor, "pa_floor": pa_floor, "types": hits}
+
+
 def run_monitors(profiles: list[str], cfg: dict, events_dir: Path | None = None) -> dict:
     if events_dir is not None:
         eventlog._EVENTS_DIR = events_dir   # module global, read at call time (tests do the same)
@@ -251,6 +271,10 @@ def run_monitors(profiles: list[str], cfg: dict, events_dir: Path | None = None)
                        hard_ceiling=float(cfg["quarantine_stop_rate"]), two_sided=False),
         _limit_monitor("proposed_rate", "proposed_rate", scoped, limits, two_sided=False),
     ]
+    stab_path = REPO / cfg.get("stability_artifact", "corpus/staging/metrics/tevv_stability.json")
+    stab = json.loads(stab_path.read_text()) if stab_path.is_file() else None
+    monitors.append(monitor_stability(stab, float(cfg["stability_kappa_floor"]),
+                                      float(cfg["stability_pa_floor"])))
     return {"generated_at": datetime.datetime.now(datetime.timezone.utc).isoformat(),
             "profiles": profiles, "epochs": sorted(epochs), "baseline_epoch": base_epoch,
             "control_limits": limits, "monitors": monitors, "per_doc": scoped}
@@ -301,12 +325,28 @@ def mutation_test(profiles: list[str], cfg: dict, scratch_root: Path) -> dict:
     seed = seed_known_bad(scratch, doc_id, rbe.CORPUS_EPOCH, rbe.BULK_BATCH)
     res = run_monitors(profiles, cfg, events_dir=scratch)
     eventlog._EVENTS_DIR = REPO / "events"   # restore
+    # stability positive control: a synthetic retest of the seeded doc sharing NOTHING with
+    # the original -> every per-type kappa/PA collapses -> the monitor must fire.
+    import tevv_stability as ts
+    orig = [ev for ev in eventlog.replay() if ev.get("doc_id") == doc_id]
+    fake_retest = [{"event_type": "node_asserted", "doc_id": doc_id,
+                    "payload": {"id": f"mut{i}", "type": ev["payload"]["type"],
+                                "item": {ts.PRIMARY_TEXT.get(ev["payload"]["type"], "name"): f"MUTATION-{i}",
+                                         "grounding_span": "ZZZ"}}}
+                   for i, ev in enumerate(e for e in orig if e.get("event_type") == "node_asserted")]
+    stab = {"pooled": ts.pooled_from_events(orig, fake_retest, [doc_id])}
+    # the live-artifact stability monitor is not part of the positive control; replace it
+    res["monitors"] = [m for m in res["monitors"] if m["monitor"] != "stability_per_type"]
+    res["monitors"].append(monitor_stability(stab, float(cfg["stability_kappa_floor"]),
+                                             float(cfg["stability_pa_floor"])))
     verdicts = []
     for m in res["monitors"]:
         fired_on_seed = False
         if m["monitor"] == "grounding":
             fired_on_seed = any(f.get("doc_id") == doc_id and "ZZZ" in (f.get("span") or "")
                                 for f in m["failures"])
+        elif m["monitor"] == "stability_per_type":
+            fired_on_seed = bool(m["types"])      # computed on the seeded retest only
         else:
             fired_on_seed = any(d["doc_id"] == doc_id for d in m["docs"])
         verdicts.append({"monitor": m["monitor"], "fired": m["fired"],
@@ -350,7 +390,7 @@ def main() -> int:
     for k, v in res["control_limits"]["metrics"].items():
         print(f"  {k:24s} mean={v['mean']:.4f} sd={v['sd']:.4f} lcl={v['lcl']:.4f} ucl={v['ucl']:.4f}")
     for m in res["monitors"]:
-        n = m.get("failure_count", len(m.get("docs", [])))
+        n = m.get("failure_count", len(m.get("docs", m.get("types", []))))
         print(f"  {m['monitor']:16s} fired={m['fired']!s:5s} hits={n}")
     print("written:", out_dir / "quality_monitors.json")
     return 0

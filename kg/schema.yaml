@@ -22,7 +22,13 @@
 #     Measure.tier (optional, enum-enforced when present), Document.source_type += practitioner.
 #     Edge types added: recommends, supported_by, implemented_by, consumes, applies_to,
 #     targets, supersedes. Nothing existing renamed or removed.
-schema_version: "0.3"
+#   2026-08-22 (task 2026-08-22_kernel_tevv, Phase 0): v0.3.1. Append-only property:
+#     Document.is_platform_operator (boolean, nullable) — true when the issuing organization
+#     operates a search engine, crawler, CDN/bot-control product, or LLM retrieval system.
+#     Populated by rule via `document_annotation` events (events/batch-007.jsonl), never by the
+#     extractor. Exists because the kernel RESULT's grading-confusion signal conflated
+#     "platform-official" with harvest clause b (DD-014).
+schema_version: "0.3.1"
 
 # --- Section 2: Node types -------------------------------------------------
 # Each node type lists the "Key properties" column verbatim. Parenthetical
@@ -39,6 +45,7 @@ node_types:
       - primary_url
       - content_hash
       - manifest_event_id
+      - is_platform_operator   # v0.3.1: boolean, nullable; set by document_annotation events, not extraction
     property_values:
       # v0.3: practitioner = SME-authored or industry-practitioner guidance that is not a
       # vendor product page. `industry` is unchanged.

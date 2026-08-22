@@ -1,0 +1,30 @@
+{
+ "event_id": "e0eca503068646b18cc50e36ad7123db",
+ "item_id": "cl-subj",
+ "kind": "node",
+ "type": "Claim",
+ "stratum": "Claim:peer_reviewed_experiment",
+ "doc_id": "aggarwal-2024-geo-generative-engine-optimization",
+ "judge_version": "1.0.0",
+ "model_id": "claude-opus-4-8",
+ "ts": "2026-08-22T13:10:49.586018+00:00",
+ "entailed": false,
+ "reason": "The span states only \"15-30% on the Subjective Impression metric\" and supports neither that \"top-performing methods\" achieved it nor that the figure is a \"relative improvement,\" so the claim's core assertions are added facts absent from the passage.",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 1152,
+  "cacheReadInputTokens": 17945,
+  "cacheCreationInputTokens": 17098,
+  "webSearchRequests": 0,
+  "costUSD": 0.2087625,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "canonicalModel": "claude-opus-4-8",
+  "provider": "firstParty"
+ },
+ "cost_usd": 0.2087625,
+ "duration_ms": 17130,
+ "wall_s": 19.6,
+ "error": null,
+ "raw_result": "This is a faithfulness-judge prompt rendered with one item to evaluate. Acting as the judge:\n\n`{\"entailed\": false, \"reason\": \"The span states only \\\"15-30% on the Subjective Impression metric\\\" and supports neither that \\\"top-performing methods\\\" achieved it nor that the figure is a \\\"relative improvement,\\\" so the claim's core assertions are added facts absent from the passage.\"}`\n\nThe span carries the number and the metric name but none of the claim's actual assertions — the agent (\"top-performing methods\") and the nature of the measurement (\"relative improvement\") are unsupported. Under the rule that a grounding span merely mentioning the topic without supporting the stated content is not entailment, this fails."
+}

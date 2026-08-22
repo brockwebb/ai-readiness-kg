@@ -1,0 +1,59 @@
+# Document.is_platform_operator rule lexicon (task 2026-08-22_kernel_tevv Phase 0; DD-014).
+# A document is is_platform_operator=true when its issuing organization (manifest `authors`)
+# operates a search engine, crawler, CDN / bot-control product, or LLM retrieval system.
+# Matching is case-insensitive substring on the author strings. Every entry names what the
+# organization operates, so the annotation is auditable without re-deriving it. The seed for
+# this list is the `operator` property of the Platform nodes the extractor asserted
+# (Google 34, Microsoft 12, OpenAI 10, Anthropic 5, Perplexity 7, Cloudflare 2, Akamai 2,
+# You.com 3, GSA/data.gov 5, Meta/Facebook 2, AWS 1) plus the task's explicit GSA ruling.
+operators:
+  - match: google
+    operates: "Google Search, Googlebot, Google Dataset Search, AI Overviews"
+  - match: microsoft
+    operates: "Bing search engine, bingbot, Copilot retrieval"
+  - match: "bing"
+    operates: "Bing search engine / bingbot (IndexNow steward)"
+  - match: cloudflare
+    operates: "CDN and bot control (AI Crawl Control, WAF)"
+  - match: akamai
+    operates: "CDN and Bot Manager"
+  - match: openai
+    operates: "GPTBot / OAI-SearchBot crawlers, ChatGPT retrieval"
+  - match: anthropic
+    operates: "ClaudeBot crawler, Claude retrieval"
+  - match: perplexity
+    operates: "PerplexityBot crawler, Perplexity answer engine"
+  - match: "general services administration"
+    operates: "Search.gov (search engine), data.gov harvester (crawler), Site Scanning engine, DAP"
+    note: "Task rule: ambiguous GSA cases resolve TRUE."
+  - match: "gsa "
+    operates: "as above (GSA Technology Transformation Services / digital.gov)"
+    note: "Task rule: ambiguous GSA cases resolve TRUE."
+  - match: data.gov
+    operates: "data.gov harvester (crawler) — GSA"
+  - match: aws
+    operates: "Amazonbot crawler; Kendra / Bedrock retrieval (Amazon)"
+    note: "Literal org-level rule; the document itself (Pearson/AWS, higher-ed) is not about those systems."
+  - match: sitemaps.org
+    operates: "Joint protocol site of Google, Microsoft Bing and Yahoo — the search engines themselves"
+    note: "Consortium of operators; resolved TRUE."
+  - match: indexnow
+    operates: "IndexNow is stewarded by Microsoft Bing and Yandex (search engines)"
+
+# Organizations considered and deliberately NOT in the lexicon (false), with the reason, so
+# the negative decisions are as auditable as the positive ones:
+excluded:
+  - org: "U.S. Census Bureau"
+    reason: "operates a data API, not a search engine / crawler / CDN / LLM retrieval system"
+  - org: "Schema.org Community Group"
+    reason: "vocabulary steward (W3C CG); founded by search engines but does not operate one"
+  - org: "IETF (RFC 9309)"
+    reason: "issuing org is the IETF; three authors are Google employees but the standard is the IETF's"
+  - org: "Zyte / Scrapy project"
+    reason: "sells crawling tooling; not a platform that consumes publisher content on its own behalf"
+  - org: "W3C working groups, SDMX, MLCommons, OpenAPI Initiative, Answer.AI (llms.txt)"
+    reason: "standards / proposal stewards"
+  - org: "NIST, OMB, GAO, FCSM, Congress, EOs, OECD, UNESCO, UNDP, ITU, EU JRC"
+    reason: "policy bodies"
+  - org: "Cisco, MITRE, Arm, Deloitte, Oxford Insights, Prosci, WEF, DiMe, Code for America, Pearson, Stoplight, RDFLib, LinkChecker, GoAccess"
+    reason: "vendors, consultancies, tool projects without a platform role"

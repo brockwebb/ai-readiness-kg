@@ -106,3 +106,27 @@ def test_every_live_edge_has_pairs_and_known_endpoints():
         assert pairs, f"{etype} has no pairs"
         for a, b in pairs:
             assert a in live_nodes and b in live_nodes, f"{etype} pair {a}->{b} names unknown type"
+
+
+# --- v0.3 catalogue frozen 2026-08-22 (task 2026-08-22_kernel_tevv, Phase 0) ------------
+# v0.3.1 adds Document.is_platform_operator and nothing else may disappear.
+V03_NODE_TYPES = set(V02_NODE_PROPERTIES) | {"Practice", "Tool", "Platform"}
+V03_EDGE_TYPES = set(V02_EDGE_PAIRS) | {"recommends", "supported_by", "implemented_by",
+                                         "consumes", "applies_to", "targets", "supersedes"}
+V03_CLAIM_GRADES = ["peer_reviewed_experiment", "platform_official", "measured_practitioner",
+                    "practitioner_assertion", "inference"]
+
+
+def test_version_at_least_v031():
+    major, minor, patch = (int(x) for x in (SCHEMA["schema_version"].split(".") + ["0"])[:3])
+    assert (major, minor, patch) >= (0, 3, 1)
+
+
+def test_v03_catalogue_preserved_in_v031():
+    assert V03_NODE_TYPES <= schema_loader.node_types(SCHEMA)
+    assert V03_EDGE_TYPES <= set(schema_loader.edge_types(SCHEMA))
+    assert schema_loader.property_values(SCHEMA, "Claim")["evidence_grade"] == V03_CLAIM_GRADES
+
+
+def test_v031_document_is_platform_operator_present():
+    assert "is_platform_operator" in SCHEMA["node_types"]["Document"]["properties"]

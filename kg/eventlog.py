@@ -37,11 +37,20 @@ def _events_dir() -> Path:
     return _EVENTS_DIR
 
 
-def _shard_path(batch: int) -> Path:
-    """events/batch-{NNN}.jsonl, NNN zero-padded to 3 digits."""
+# Tagged shards (task 2026-08-22_kernel_tevv): `batch-NNN_<tag>.jsonl` holds events that are
+# NOT part of the graph (e.g. TEVV re-extractions). replay() skips them unless asked, so the
+# projection, gates and monitors never see them by accident; tevv scripts read them by tag.
+_TAG_RE = re.compile(r"^[a-z][a-z0-9_]{0,31}$")
+
+
+def _shard_path(batch: int, tag: str | None = None) -> Path:
+    """events/batch-{NNN}.jsonl (NNN zero-padded), or batch-{NNN}_{tag}.jsonl when tagged."""
     if not isinstance(batch, int) or isinstance(batch, bool) or batch < 0:
         raise ValueError(f"batch must be a non-negative int, got {batch!r}")
-    return _events_dir() / f"batch-{batch:03d}.jsonl"
+    if tag is not None and not _TAG_RE.match(tag):
+        raise ValueError(f"tag must match {_TAG_RE.pattern}, got {tag!r}")
+    suffix = f"_{tag}" if tag else ""
+    return _events_dir() / f"batch-{batch:03d}{suffix}.jsonl"
 
 
 def _now_iso() -> str:
@@ -63,7 +72,7 @@ def schema_version() -> str:
     raise ValueError(f"no top-level 'schema_version' key in {_SCHEMA_PATH}")
 
 
-def append(event: dict, batch: int) -> str:
+def append(event: dict, batch: int, tag: str | None = None) -> str:
     """Append one event as a JSON line to ``events/batch-{batch:03d}.jsonl`` and return its
     ``event_id``.
 
@@ -81,7 +90,7 @@ def append(event: dict, batch: int) -> str:
         "schema_version": schema_version(),
     }
     line = json.dumps(record, ensure_ascii=False)
-    with _shard_path(batch).open("a", encoding="utf-8") as fh:
+    with _shard_path(batch, tag).open("a", encoding="utf-8") as fh:
         fh.write(line + "\n")
         fh.flush()
     return event_id
@@ -99,16 +108,20 @@ def current_batch() -> int:
     return highest
 
 
-def replay() -> Iterator[dict]:
+def replay(tag: str | None = None) -> Iterator[dict]:
     """Yield every event across all shards, in batch order then line order.
+
+    ``tag=None`` (default) replays only the untagged graph shards. ``tag="x"`` replays only
+    the shards named ``batch-NNN_x.jsonl`` — tagged shards never mix into the graph replay.
 
     Fail loud on a corrupt line — a silently skipped event is a silently wrong projection
     (standard 4)."""
     if not _EVENTS_DIR.is_dir():
         return
+    pattern = re.compile(r"batch-(\d+)" + (re.escape("_" + tag) if tag else ""))
     shards = sorted(
-        (p for p in _EVENTS_DIR.glob("batch-*.jsonl") if re.fullmatch(r"batch-(\d+)", p.stem)),
-        key=lambda p: int(p.stem.split("-", 1)[1]),
+        (p for p in _EVENTS_DIR.glob("batch-*.jsonl") if pattern.fullmatch(p.stem)),
+        key=lambda p: int(pattern.fullmatch(p.stem).group(1)),
     )
     for shard in shards:
         with shard.open(encoding="utf-8") as fh:

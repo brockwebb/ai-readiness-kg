@@ -104,10 +104,39 @@ def read_overlays() -> tuple[set[tuple[str, str]], dict[str, str]]:
     return superseded, aliases
 
 
+# Events that are NOT part of the graph. TEVV re-extractions (task 2026-08-22_kernel_tevv
+# Phase 2) are flagged `purpose: tevv_retest` on every event and live in a tagged shard;
+# they measure stability and must never be projected — a retest that leaked into the
+# graph would double every node of the retested docs.
+NON_GRAPH_PURPOSES = {"tevv_retest"}
+
+
+def is_projectable(ev: dict) -> bool:
+    """False for events flagged with a non-graph purpose (e.g. TEVV retests)."""
+    return ev.get("purpose") not in NON_GRAPH_PURPOSES
+
+
+# Document annotations (schema v0.3.1, task 2026-08-22_kernel_tevv): harness-set document
+# properties written as `document_annotation` events. Only whitelisted properties project,
+# so an arbitrary payload key can never become a Cypher property name.
+ANNOTATABLE_DOCUMENT_PROPERTIES = {"is_platform_operator"}
+
+
+def annotation_update(ev: dict) -> tuple[str, str, object] | None:
+    """(doc_id, property, value) for a projectable document_annotation, else None."""
+    if ev.get("event_type") != "document_annotation":
+        return None
+    prop = ev.get("property")
+    if prop not in ANNOTATABLE_DOCUMENT_PROPERTIES or not ev.get("doc_id"):
+        return None
+    return ev["doc_id"], prop, ev.get("value")
+
+
 def build(session, kg_labels: list[str], edge_whitelist: set[str]) -> dict:
-    counts = {"nodes": 0, "edges": 0, "documents": 0,
+    counts = {"nodes": 0, "edges": 0, "documents": 0, "annotations": 0,
               "skipped_unknown_edge_type": 0,
-              "skipped_superseded_extraction": 0, "aliased_endpoints": 0}
+              "skipped_superseded_extraction": 0, "skipped_non_graph_purpose": 0,
+              "aliased_endpoints": 0}
     superseded, aliases = read_overlays()
     # reset ONLY KG labels
     label_pred = " OR ".join(f"n:{lbl}" for lbl in kg_labels)
@@ -115,6 +144,16 @@ def build(session, kg_labels: list[str], edge_whitelist: set[str]) -> dict:
 
     for ev in eventlog.replay():
         et = ev.get("event_type")
+        if not is_projectable(ev):
+            counts["skipped_non_graph_purpose"] += 1
+            continue
+        ann = annotation_update(ev)
+        if ann is not None:
+            doc_id, prop, value = ann
+            session.run(f"MATCH (d:Document {{id: $id}}) SET d.{prop} = $value",
+                        id=doc_id, value=value)
+            counts["annotations"] += 1
+            continue
         if et in ("node_asserted", "edge_asserted"):
             src_sha = (ev.get("provenance") or {}).get("source_sha256")
             if (ev.get("doc_id"), src_sha) in superseded:

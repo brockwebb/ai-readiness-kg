@@ -1,0 +1,353 @@
+# ai-readiness-kg extraction schema v0.1
+# Transcribed from docs/schema_v0.1.md sections 2-4. Source of truth is that doc.
+# Transcription only — no invention. Bump this version via the proposed_relationships
+# review process (schema_v0.1.md section 6), never by silent edit.
+#
+# Changelog:
+#   2026-07-03 (task 2026-07-03_extraction_module, rider R1): added `intergovernmental`
+#     to Document.source_type for policy bodies (OECD, UNESCO, UNDP, IADB, PARIS21,
+#     EU JRC, UN). Standards bodies / SDOs (ITU, ISO) remain `standard`. Schema still
+#     draft/unlocked, so the value is added directly rather than via version bump.
+#   2026-07-03 (task 2026-07-03_schema_v02_promotion_rebaseline, §9 pilot audit): v0.2.
+#     Append-only edge additions from the Fable pilot's proposed_relationships inventory:
+#     uses_measure, measures (extended to Concept endpoints), has_component, subtype_of,
+#     precedes. Each carries an external_alignment URI. No new node types — Organization
+#     and Project were proposed but REJECTED in the audit (document scope is a property,
+#     not a node forest; external ontologies are referenced, never imported).
+#   2026-08-21 (task 2026-08-21_v03_visibility_kernel, AUTH-1 / DD-009): v0.3.
+#     Append-only. The machine-visibility / machine-actionability literature (SEO, GEO/AIO,
+#     web standards, platform crawler behavior, federal digital guidance) joins THIS graph
+#     (one graph, DD-009). Node types added: Practice, Tool, Platform. Properties added:
+#     Claim.evidence_grade (REQUIRED on every Claim under 0.3 — absent = quarantine, DD-010),
+#     Measure.tier (optional, enum-enforced when present), Document.source_type += practitioner.
+#     Edge types added: recommends, supported_by, implemented_by, consumes, applies_to,
+#     targets, supersedes. Nothing existing renamed or removed.
+schema_version: "0.3"
+
+# --- Section 2: Node types -------------------------------------------------
+# Each node type lists the "Key properties" column verbatim. Parenthetical
+# enumerations from the doc are carried as a `values:` list on that property.
+node_types:
+  Document:
+    what: A manifest entry. Primary source only.
+    properties:
+      - doc_id
+      - title
+      - authors
+      - pub_date
+      - source_type      # federal / academic / industry / standard / intergovernmental / practitioner
+      - primary_url
+      - content_hash
+      - manifest_event_id
+    property_values:
+      # v0.3: practitioner = SME-authored or industry-practitioner guidance that is not a
+      # vendor product page. `industry` is unchanged.
+      source_type: [federal, academic, industry, standard, intergovernmental, practitioner]
+
+  Definition:
+    what: A verbatim definition of a term as given by one source.
+    properties:
+      - term
+      - verbatim_text
+      - grounding_span
+      - normative_status  # statute / policy / standard / academic / industry
+      - as_of_date
+    property_values:
+      normative_status: [statute, policy, standard, academic, industry]
+
+  Concept:
+    what: Any substantive idea a document uses. Exhaustive layer, extracted first-class from event one.
+    properties:
+      - name
+      - aliases
+      - description
+      - grounding_span
+
+  Construct:
+    what: A measurable readiness dimension (e.g. discoverability, provenance completeness). A Concept promoted to measurability.
+    properties:
+      - name
+      - description
+      - measurement_notes
+
+  Instrument:
+    what: An existing assessment, survey, index, or benchmark.
+    properties:
+      - name
+      - owner
+      - year
+      - method
+
+  Measure:
+    what: An individual item or metric inside an Instrument.
+    properties:
+      - text
+      - response_type
+      - grounding_span
+      - tier              # v0.3, OPTIONAL: public / agency_instrumented / paid
+    property_values:
+      # v0.3: who can run the measure. public = runnable by anyone from outside;
+      # agency_instrumented = needs agency-side analytics, scripts, or logs; paid = commercial
+      # product. Optional (present when the source states or implies it); enum-enforced by
+      # the parser when present.
+      tier: [public, agency_instrumented, paid]
+
+  Claim:
+    what: A falsifiable assertion a document makes (X improves Y, A requires B).
+    properties:
+      - claim_text
+      - grounding_span
+      - claim_type        # empirical / normative / speculative
+      - evidence_grade    # v0.3, REQUIRED: see property_values (descending strength)
+    property_values:
+      claim_type: [empirical, normative, speculative]
+      # v0.3 (DD-010): strength of the evidence behind the claim, in DESCENDING order.
+      # REQUIRED on every Claim extracted under 0.3; a Claim without it is quarantined.
+      #   peer_reviewed_experiment - published, reviewed experimental result
+      #   platform_official        - the platform operator's own documentation/statement
+      #   measured_practitioner    - practitioner result with disclosed method and data
+      #   practitioner_assertion   - practitioner statement with no disclosed method
+      #   inference                - reasoned from other evidence, not observed
+      evidence_grade: [peer_reviewed_experiment, platform_official, measured_practitioner,
+                       practitioner_assertion, inference]
+    # v0.3: properties the parser REQUIRES on every extracted node of this type (absent =>
+    # quarantine). Enum properties listed in property_values are enforced only when present
+    # unless also listed here. Read by parser.py — never duplicated in code.
+    required_properties: [evidence_grade]
+
+  Standard:
+    what: A technical spec (DCAT, ISO 19115, schema.org, llms.txt, MCP).
+    properties:
+      - name
+      - version
+      - steward
+      - as_of_date
+
+  Framework:
+    what: A conceptual structure (NIST AI RMF, FAIR, Data Readiness Levels).
+    properties:
+      - name
+      - owner
+      - year
+
+  # --- v0.3 additions (2026-08-21, AUTH-1 / DD-009; append-only) --------------
+  Practice:
+    what: A normative recommendation a source makes about how to publish, structure, expose, or maintain data or content for machine consumers.
+    properties:
+      - text
+      - grounding_span
+      - as_of_date
+      - scope             # dataset / api / bulk_file / tool / content / advisory / site / any
+    property_values:
+      # the asset class the recommendation is about; enum-enforced by the parser when present
+      scope: [dataset, api, bulk_file, tool, content, advisory, site, any]
+
+  Tool:
+    what: Software that implements one or more Measures (Lighthouse, Scrapy, pySHACL, LinkChecker, GoAccess, Spectral, extruct, GSA Site Scanning engine, DAP).
+    properties:
+      - name
+      - steward
+      - license
+      - url
+      - as_of_date
+      - grounding_span    # §4 universal provenance (every extracted node carries it)
+
+  Platform:
+    what: A machine consumer whose behavior is targeted or described (Google Search, Bing, a named crawler, an LLM vendor's retrieval system, Cloudflare/Akamai bot controls).
+    properties:
+      - name
+      - operator
+      - as_of_date
+      - grounding_span    # §4 universal provenance (every extracted node carries it)
+
+# --- Section 3: Edge types -------------------------------------------------
+# from/to/meaning transcribed from the "From -> To" and "Meaning" columns.
+# `pairs` is the AUTHORITATIVE, machine-enforced list of legal (from_type, to_type)
+# endpoint pairs for each edge type (strict index-pairing, not the from x to cross
+# product). from/to are kept for human readability. `symmetric: true` marks the doc's
+# bidirectional arrow (<->). Constraint enforcement is type-validity only (schema
+# section 3): an edge type not listed cannot be written; a whitelisted edge whose
+# endpoints are not a legal pair is a schema-expressiveness signal, not graph data —
+# the parser routes it to proposed_relationships (§9 measurement), never the graph.
+#
+# Changelog:
+#   2026-07-03 (task 2026-07-03_pilot_extraction_run, precondition rider): added
+#     explicit `pairs` to every edge type; parser now enforces strict index-pairing.
+#     Cross-pair edges on a whitelisted type route to proposed_relationships.
+edge_types:
+  defines:
+    from: Document
+    to: Definition
+    pairs: [[Document, Definition]]
+    meaning: Source gives this definition
+
+  mentions:
+    from: Document
+    to: Concept
+    pairs: [[Document, Concept]]
+    meaning: Concept appears substantively (not keyword match)
+
+  asserts:
+    from: Document
+    to: Claim
+    pairs: [[Document, Claim]]
+    meaning: Source makes this claim
+
+  about:
+    from: Claim
+    to: Concept
+    pairs: [[Claim, Concept]]
+    meaning: What the claim concerns
+
+  operationalizes:
+    from: Instrument
+    to: Construct
+    pairs: [[Instrument, Construct]]
+    meaning: Instrument measures this dimension
+
+  measures:
+    # v0.2: extended from Measure->Construct (v0.1) to also allow Concept endpoints, per
+    # the pilot audit (proposed measures/measures_concept/evaluates/assesses/operationalizes).
+    from: [Measure, Instrument]
+    to: [Construct, Concept]
+    pairs: [[Measure, Construct], [Measure, Concept], [Instrument, Concept]]
+    external_alignment: http://www.w3.org/ns/sosa/observes
+    meaning: Item- or instrument-level mapping to the construct/concept it measures
+
+  grounds:
+    from: Construct
+    to: Definition
+    pairs: [[Construct, Definition]]
+    meaning: Construct's authority traces to this definition
+
+  extends:
+    # doc: "Definition -> Definition, Framework -> Framework" (index-paired, NOT cross)
+    from: [Definition, Framework]
+    to: [Definition, Framework]
+    pairs: [[Definition, Definition], [Framework, Framework]]
+    meaning: Builds on, adds to
+
+  conflicts_with:
+    # doc: "Definition <-> Definition, Claim <-> Claim"
+    from: [Definition, Claim]
+    to: [Definition, Claim]
+    pairs: [[Definition, Definition], [Claim, Claim]]
+    symmetric: true
+    meaning: Incompatible. The "no shared definition" evidence layer
+
+  cites:
+    from: Document
+    to: Document
+    pairs: [[Document, Document]]
+    meaning: Citation within the corpus
+
+  builds_on:
+    # doc: "Standard/Framework -> Standard/Framework" (either type on either end = cross product)
+    from: [Standard, Framework]
+    to: [Standard, Framework]
+    pairs: [[Standard, Standard], [Standard, Framework], [Framework, Standard], [Framework, Framework]]
+    meaning: e.g. FCSM 25-03 builds_on OPEN Gov Data Act
+
+  implements:
+    from: Standard
+    to: Concept
+    pairs: [[Standard, Concept]]
+    meaning: Spec realizes a concept
+
+  # --- v0.2 additions (2026-07-03 §9 pilot audit; append-only) ---------------
+  uses_measure:
+    from: Instrument
+    to: Measure
+    pairs: [[Instrument, Measure]]
+    external_alignment: https://www.w3.org/ns/sosa/   # madeBySensor / implements pattern
+    meaning: Instrument uses this measure/item
+
+  has_component:
+    # part-whole ONLY, never is-a (use subtype_of for is-a). BFO has_part.
+    from: [Framework, Concept]
+    to: [Concept, Concept]
+    pairs: [[Framework, Concept], [Concept, Concept]]
+    external_alignment: http://purl.obolibrary.org/obo/BFO_0000051
+    meaning: Framework/Concept has this component part (part-whole, not subclass)
+
+  subtype_of:
+    # is-a ONLY, never part-whole (use has_component for part-whole). rdfs:subClassOf.
+    from: Concept
+    to: Concept
+    pairs: [[Concept, Concept]]
+    external_alignment: http://www.w3.org/2000/01/rdf-schema#subClassOf
+    meaning: Concept is a subtype (subclass) of another concept
+
+  precedes:
+    from: Concept
+    to: Concept
+    pairs: [[Concept, Concept]]
+    external_alignment: http://purl.obolibrary.org/obo/BFO_0000063
+    meaning: Concept precedes another (ordinal/temporal precedence)
+
+  # --- v0.3 additions (2026-08-21, AUTH-1 / DD-009; append-only) --------------
+  recommends:
+    from: Document
+    to: Practice
+    pairs: [[Document, Practice]]
+    external_alignment: http://www.w3.org/ns/prov#wasAttributedTo   # the Practice is attributed to the recommending Document (inverse direction)
+    meaning: Source makes this normative recommendation
+
+  supported_by:
+    from: Practice
+    to: Claim
+    pairs: [[Practice, Claim]]
+    external_alignment: http://www.w3.org/ns/prov#wasDerivedFrom
+    meaning: The practice rests on this claim (the claim's evidence_grade is the strength behind the recommendation, DD-010)
+
+  implemented_by:
+    from: Measure
+    to: Tool
+    pairs: [[Measure, Tool]]
+    external_alignment: https://www.w3.org/ns/sosa/madeBySensor
+    meaning: This software computes / runs the measure
+
+  consumes:
+    from: Platform
+    to: Standard
+    pairs: [[Platform, Standard]]
+    external_alignment: http://purl.org/dc/terms/conformsTo
+    meaning: Platform reads / honors this spec
+
+  applies_to:
+    # The asset class or concept the practice/measure targets. Asset classes live as Concepts
+    # anchored via §8 to DCAT 3 / schema.org terms (Dataset, Distribution, DataService,
+    # DataCatalog, WebApplication, Report, DefinedTerm).
+    from: [Practice, Measure]
+    to: [Concept, Concept]
+    pairs: [[Practice, Concept], [Measure, Concept]]
+    external_alignment: http://purl.org/dc/terms/subject
+    meaning: Practice/Measure targets this asset class or concept
+
+  targets:
+    from: Practice
+    to: Platform
+    pairs: [[Practice, Platform]]
+    external_alignment: https://schema.org/audience
+    meaning: Practice is aimed at this machine consumer
+
+  supersedes:
+    # Document-level replacement (newer platform/guidance doc replaces an earlier version).
+    # Distinct from the `extraction_superseded` overlay event, which is about extraction runs.
+    from: Document
+    to: Document
+    pairs: [[Document, Document]]
+    external_alignment: http://purl.org/dc/terms/replaces
+    meaning: Newer document replaces an earlier version
+
+# --- Section 4: Universal provenance properties ----------------------------
+# Every node and edge extracted from a document carries these. No grounding
+# span, no write. Curated nodes (Construct promotions, the North Star artifact)
+# carry a rationale and operator id instead (see doc section 4).
+provenance_required:
+  - grounding_span      # verbatim quote from the source
+  - location            # section heading or page as available
+  - extraction_event_id
+  - model_id
+  - schema_version
+  - timestamp

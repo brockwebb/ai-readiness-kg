@@ -115,3 +115,13 @@ def test_seed_known_bad_appends_two_events_to_scratch_shard(tmp_path):
     assert "evidence_grade" not in lines[0]["payload"]["item"]
     assert lines[1]["metrics"]["quarantine_rate"] > 0.15
     assert seed["extraction_event_id"] == lines[0]["extraction_event_id"]
+
+
+def test_stability_monitor_fires_below_floor_and_not_evaluated_without_artifact():
+    r = qm.monitor_stability(None, 0.61, 0.61)
+    assert r["fired"] is False and r["evaluated"] is False
+    stab = {"pooled": {"per_type": {"Concept": {"kappa": 0.9, "positive_agreement": 0.95},
+                                    "Claim": {"kappa": -0.7, "positive_agreement": 0.3}}}}
+    r = qm.monitor_stability(stab, 0.61, 0.61)
+    assert r["fired"] and [t["type"] for t in r["types"]] == ["Claim"]
+    assert len(r["types"][0]["reasons"]) == 2

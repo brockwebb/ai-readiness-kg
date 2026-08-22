@@ -1,0 +1,30 @@
+{
+ "event_id": "1674677f97f341c0933296e71f5d0142",
+ "item_id": "cl16",
+ "kind": "node",
+ "type": "Claim",
+ "stratum": "Claim:peer_reviewed_experiment",
+ "doc_id": "miroyan-2025-search-arena",
+ "judge_version": "1.0.0",
+ "model_id": "claude-opus-4-8",
+ "ts": "2026-08-22T13:08:59.027769+00:00",
+ "entailed": false,
+ "reason": "The span states only that unspecified 'queries account for only 19.3% of user prompts' and does not identify them as factual lookup queries, so the item's specific claim type is not supported.",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 455,
+  "cacheReadInputTokens": 17945,
+  "cacheCreationInputTokens": 17053,
+  "webSearchRequests": 0,
+  "costUSD": 0.1908875,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "canonicalModel": "claude-opus-4-8",
+  "provider": "firstParty"
+ },
+ "cost_usd": 0.1908875,
+ "duration_ms": 7144,
+ "wall_s": 10.0,
+ "error": null,
+ "raw_result": "This is a faithfulness-judgment prompt: I'm to decide whether the extracted Claim is entailed by its grounding span, and output strict JSON only.\n\n{\"entailed\": false, \"reason\": \"The span states only that unspecified 'queries account for only 19.3% of user prompts' and does not identify them as factual lookup queries, so the item's specific claim type is not supported.\"}"
+}

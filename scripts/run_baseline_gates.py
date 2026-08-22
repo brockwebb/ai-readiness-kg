@@ -13,6 +13,7 @@ would manufacture false failures, so they are reported separately as legacy.
 from __future__ import annotations
 
 import json
+import re
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -171,7 +172,10 @@ def _shard_of(ev) -> int:
     """Which batch shard an event lives in (by event_id scan, cached)."""
     if not _SHARD_CACHE:
         for shard in sorted((REPO / "events").glob("batch-*.jsonl")):
-            n = int(shard.stem.split("-")[1])
+            m = re.fullmatch(r"batch-(\d+)", shard.stem)
+            if not m:          # tagged (non-graph) shards, e.g. batch-008_tevv_retest
+                continue
+            n = int(m.group(1))
             with shard.open(encoding="utf-8") as fh:
                 for line in fh:
                     _SHARD_CACHE[json.loads(line)["event_id"]] = n
@@ -268,6 +272,77 @@ def check_empty(events, members) -> dict:
             "docs_extracted": len(extracted_docs), "corpus_size": len(members)}
 
 
+# --- TEVV gates (task 2026-08-22_kernel_tevv, Phase 5) ---------------------------------
+# Pre-registered in dixie_evidence.yaml::tevv_gates. Evaluated only when the retest shard
+# exists; realized values come from the three TEVV artifacts. Pure function (testable).
+
+TEVV_STABILITY = REPO / "corpus/staging/metrics/tevv_stability.json"
+TEVV_JUDGMENTS = REPO / "corpus/staging/metrics/tevv_faithfulness_judgments.jsonl"
+TEVV_CALIBRATION = REPO / "corpus/staging/metrics/tevv_grade_calibration.json"
+
+
+def faithfulness_precision(judgments: list[dict]) -> dict:
+    """Pooled and per-stratum entailment precision over judged (non-error) items."""
+    scored = [j for j in judgments if j.get("entailed") is not None]
+    by = {}
+    for j in scored:
+        s = by.setdefault(j["stratum"], {"n": 0, "entailed": 0})
+        s["n"] += 1; s["entailed"] += int(bool(j["entailed"]))
+    per = {k: (v["entailed"] / v["n"] if v["n"] else None) for k, v in by.items()}
+    pooled = (sum(int(bool(j["entailed"])) for j in scored) / len(scored)) if scored else None
+    return {"pooled": pooled, "per_stratum": per, "counts": by,
+            "judged": len(scored), "errors": len(judgments) - len(scored)}
+
+
+def evaluate_tevv_gates(cfg: dict, stability: dict | None, judgments: list[dict] | None,
+                        calibration: dict | None) -> list[dict]:
+    """Realized value per pre-registered check. Missing inputs -> value None, passed None
+    (not evaluated), never a silent PASS."""
+    checks = cfg["checks"]
+    pool = (stability or {}).get("pooled") or {}
+    faith = faithfulness_precision(judgments) if judgments else None
+    cal = calibration or {}
+    values = {
+        "stability_kappa_pooled": pool.get("kappa_all_items_pooled"),
+        "stability_kappa_per_type_min": (min(v["kappa"] for v in pool["per_type"].values() if v["kappa"] is not None)
+                                         if pool.get("per_type") else None),
+        "stability_jaccard_pooled": pool.get("jaccard_spans_mean"),
+        "faithfulness_precision_pooled": faith["pooled"] if faith else None,
+        "faithfulness_precision_stratum_min": (min(v for v in faith["per_stratum"].values() if v is not None)
+                                               if faith and faith["per_stratum"] else None),
+        "grade_platform_official_precision": (cal.get("platform_official") or {}).get("precision"),
+        "grade_peer_reviewed_precision": (cal.get("peer_reviewed_experiment") or {}).get("precision"),
+    }
+    out = []
+    for c in checks:
+        v = values.get(c["check_id"])
+        thr = c["threshold"]
+        if v is None:
+            passed = None
+        elif c["comparator"] == "gte":
+            passed = v >= thr
+        elif c["comparator"] == "lte":
+            passed = v <= thr
+        elif c["comparator"] == "eq":
+            passed = v == thr
+        else:
+            raise ValueError(f"unknown comparator {c['comparator']!r}")
+        rec = {"check_id": c["check_id"], "value": (round(v, 4) if isinstance(v, float) else v),
+               "threshold": thr, "passed": passed}
+        if c.get("phase_stop_below") is not None and v is not None:
+            rec["phase_stop_triggered"] = v < c["phase_stop_below"]
+        out.append(rec)
+    return out
+
+
+def tevv_inputs() -> tuple[dict | None, list[dict] | None, dict | None]:
+    stab = json.loads(TEVV_STABILITY.read_text()) if TEVV_STABILITY.is_file() else None
+    judg = ([json.loads(l) for l in TEVV_JUDGMENTS.read_text().splitlines() if l.strip()]
+            if TEVV_JUDGMENTS.is_file() else None)
+    cal = json.loads(TEVV_CALIBRATION.read_text()) if TEVV_CALIBRATION.is_file() else None
+    return stab, judg, cal
+
+
 def main() -> int:
     import argparse
     ap = argparse.ArgumentParser()
@@ -295,6 +370,14 @@ def main() -> int:
     orphan, drift = check_orphans_and_drift(kg_labels, edge_whitelist)
     results += [orphan, drift, check_empty(events, members)]
 
+    # TEVV gates: only when the retest shard exists (task 2026-08-22_kernel_tevv Phase 5)
+    tevv_cfg = yaml.safe_load((REPO / "dixie_evidence.yaml").read_text(encoding="utf-8")).get("tevv_gates")
+    tevv_results = []
+    if tevv_cfg and any(True for _ in eventlog.replay(tag=tevv_cfg["retest_shard_tag"])):
+        if tevv_cfg.get("preregistered") is not True:
+            raise SystemExit("tevv_gates are not pre-registered — refusing")
+        tevv_results = evaluate_tevv_gates(tevv_cfg, *tevv_inputs())
+
     now = datetime.now(timezone.utc).isoformat()
     lines = [f"# {args.title} — Pre-registered Gate Report", "",
              f"Scope: profiles={args.profiles} epochs={sorted(EPOCHS)} shards={sorted(SHARDS)}", "",
@@ -304,6 +387,13 @@ def main() -> int:
     for r in results:
         lines.append(f"| {r['check_id']} | {r['value']} | {r['threshold']} | "
                      f"{'PASS' if r['passed'] else '**FAIL**'} |")
+    if tevv_results:
+        lines += ["", "## TEVV gates (pre-registered 2026-08-22; fails are findings)", "",
+                  "| check | realized | threshold | verdict |", "|---|---|---|---|"]
+        for r in tevv_results:
+            verdict = "not evaluated" if r["passed"] is None else ("PASS" if r["passed"] else "**FAIL**")
+            lines.append(f"| {r['check_id']} | {r['value']} | {r['threshold']} | {verdict} |")
+        results = results + tevv_results
     lines += ["", "## Detail", "", "```json",
               json.dumps(results, indent=1, default=str), "```", ""]
     report.parent.mkdir(parents=True, exist_ok=True)
