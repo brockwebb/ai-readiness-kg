@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "ai-readiness-kg extraction output (schema_v0.1.md §5)",
-  "description": "Declarative envelope contract. Type validity (node types, edge whitelist, endpoint pairs) is enforced by parser.py against kg/schema.yaml, the single source of truth; this file documents the envelope shape and the universal grounding requirement (§4).",
+  "description": "Declarative envelope contract. Type validity (node types, edge whitelist, endpoint pairs) is enforced by parser.py against kg/schema.yaml, the single source of truth; this file documents the envelope shape and the universal grounding requirement (§4). v0.3 (DD-009/DD-010) adds the practices/tools/platforms layers; Claim items must carry evidence_grade (enum in schema.yaml), enforced by parser.py.",
   "type": "object",
   "required": ["extract_plan", "concepts"],
   "additionalProperties": true,
@@ -24,6 +24,9 @@
     "measures": {"type": "array", "items": {"$ref": "#/$defs/groundedNode"}},
     "standards": {"type": "array", "items": {"$ref": "#/$defs/groundedNode"}},
     "frameworks": {"type": "array", "items": {"$ref": "#/$defs/groundedNode"}},
+    "practices": {"type": "array", "items": {"$ref": "#/$defs/groundedNode"}, "description": "v0.3 layer -> Practice nodes (DD-009)"},
+    "tools": {"type": "array", "items": {"$ref": "#/$defs/groundedNode"}, "description": "v0.3 layer -> Tool nodes (DD-009)"},
+    "platforms": {"type": "array", "items": {"$ref": "#/$defs/groundedNode"}, "description": "v0.3 layer -> Platform nodes (DD-009)"},
     "edges": {"type": "array", "items": {"$ref": "#/$defs/groundedEdge"}},
     "cites": {"type": "array", "items": {"$ref": "#/$defs/groundedEdge"}},
     "proposed_relationships": {

@@ -43,6 +43,19 @@ def provenance_required(schema: dict) -> list[str]:
     return list(schema["provenance_required"])
 
 
+def property_values(schema: dict, node_type: str) -> dict[str, list[str]]:
+    """Enumerated property values for a node type (schema ``property_values``), e.g.
+    ``{"evidence_grade": [...]}`` for Claim. Empty dict when the type declares none. This is
+    the single source of truth for enum enforcement — the parser never duplicates the lists."""
+    return dict(schema["node_types"][node_type].get("property_values") or {})
+
+
+def required_properties(schema: dict, node_type: str) -> list[str]:
+    """Properties the parser requires on every extracted node of this type (schema
+    ``required_properties``; v0.3: Claim.evidence_grade). Absent => quarantine."""
+    return list(schema["node_types"][node_type].get("required_properties") or [])
+
+
 def is_known_edge(schema: dict, etype: str) -> bool:
     """True iff the edge type is in the whitelist (schema §3). Unknown types are never
     written — they route to proposed_relationships."""

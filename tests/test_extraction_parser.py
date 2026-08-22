@@ -182,3 +182,182 @@ def test_model_proposed_relationships_passthrough():
     r = parser.parse_extraction(out, SOURCE, SCHEMA)
     model_pr = [p for p in r.proposed_relationships if p["source"] == "model"]
     assert len(model_pr) == 1 and model_pr[0]["suggested_edge"] == "presupposes"
+
+
+# --- v0.3: property enums + required evidence_grade (DD-010) ------------------------------
+
+def _claim(**over):
+    c = {"id": "k1", "claim_text": "discoverability matters", "claim_type": "empirical",
+         "evidence_grade": "inference",
+         "grounding_span": "Discoverability of records matters", "location": "p1"}
+    c.update(over)
+    return c
+
+
+def test_claim_with_valid_evidence_grade_accepted():
+    out = _base_output()
+    out["claims"] = [_claim()]
+    r = parser.parse_extraction(out, SOURCE, SCHEMA)
+    assert "k1" in {n["id"] for n in r.nodes}
+    assert r.quarantined == []
+
+
+def test_claim_missing_evidence_grade_quarantined_with_reason():
+    out = _base_output()
+    c = _claim(); del c["evidence_grade"]
+    out["claims"] = [c]
+    r = parser.parse_extraction(out, SOURCE, SCHEMA)
+    assert "k1" not in {n["id"] for n in r.nodes}
+    q = [x for x in r.quarantined if x["item"].get("id") == "k1"]
+    assert len(q) == 1 and q[0]["kind"] == "claims"
+    assert "evidence_grade" in q[0]["reason"] and "required" in q[0]["reason"]
+
+
+def test_claim_empty_evidence_grade_quarantined():
+    out = _base_output()
+    out["claims"] = [_claim(evidence_grade="  ")]
+    r = parser.parse_extraction(out, SOURCE, SCHEMA)
+    assert any(x["item"].get("id") == "k1" and "evidence_grade" in x["reason"]
+               for x in r.quarantined)
+
+
+def test_claim_evidence_grade_outside_enum_quarantined():
+    out = _base_output()
+    out["claims"] = [_claim(evidence_grade="vibes")]
+    r = parser.parse_extraction(out, SOURCE, SCHEMA)
+    assert "k1" not in {n["id"] for n in r.nodes}
+    q = [x for x in r.quarantined if x["item"].get("id") == "k1"]
+    assert len(q) == 1 and "evidence_grade" in q[0]["reason"] and "'vibes'" in q[0]["reason"]
+
+
+def test_claim_grounding_miss_reason_wins_over_missing_grade():
+    # grounding gate runs first; an ungrounded claim keeps the grounding reason.
+    out = _base_output()
+    c = _claim(grounding_span="absent from source"); del c["evidence_grade"]
+    out["claims"] = [c]
+    r = parser.parse_extraction(out, SOURCE, SCHEMA)
+    q = [x for x in r.quarantined if x["item"].get("id") == "k1"]
+    assert len(q) == 1 and "not found in source" in q[0]["reason"]
+
+
+def test_edge_to_claim_quarantined_for_missing_grade_is_unresolved():
+    out = _base_output()
+    c = _claim(); del c["evidence_grade"]
+    out["claims"] = [c]
+    out["edges"].append({"type": "asserts", "from_id": "doc-1", "to_id": "k1",
+                         "grounding_span": "AI readiness is a construct"})
+    r = parser.parse_extraction(out, SOURCE, SCHEMA)
+    assert not any(e["type"] == "asserts" for e in r.edges)
+    assert any("unresolved endpoint" in x["reason"] for x in r.quarantined)
+
+
+def test_measure_tier_optional_absent_ok():
+    out = _base_output()
+    out["measures"] = [{"id": "m1", "text": "x", "grounding_span": "AI readiness is a construct"}]
+    r = parser.parse_extraction(out, SOURCE, SCHEMA)
+    assert "m1" in {n["id"] for n in r.nodes}
+
+
+def test_measure_tier_valid_accepted():
+    out = _base_output()
+    out["measures"] = [{"id": "m1", "text": "x", "tier": "agency_instrumented",
+                        "grounding_span": "AI readiness is a construct"}]
+    r = parser.parse_extraction(out, SOURCE, SCHEMA)
+    assert "m1" in {n["id"] for n in r.nodes}
+
+
+def test_measure_tier_outside_enum_quarantined():
+    out = _base_output()
+    out["measures"] = [{"id": "m1", "text": "x", "tier": "freemium",
+                        "grounding_span": "AI readiness is a construct"}]
+    r = parser.parse_extraction(out, SOURCE, SCHEMA)
+    assert "m1" not in {n["id"] for n in r.nodes}
+    q = [x for x in r.quarantined if x["item"].get("id") == "m1"]
+    assert len(q) == 1 and "Measure.tier" in q[0]["reason"]
+
+
+def test_practice_scope_enforced():
+    out = _base_output()
+    out["practices"] = [
+        {"id": "p1", "text": "publish DCAT", "scope": "dataset",
+         "grounding_span": "AI readiness is a construct"},
+        {"id": "p2", "text": "bad scope", "scope": "galaxy",
+         "grounding_span": "Discoverability of records matters"},
+    ]
+    r = parser.parse_extraction(out, SOURCE, SCHEMA)
+    ids = {n["id"] for n in r.nodes}
+    assert "p1" in ids and "p2" not in ids
+    assert next(n for n in r.nodes if n["id"] == "p1")["type"] == "Practice"
+    q = [x for x in r.quarantined if x["item"].get("id") == "p2"]
+    assert len(q) == 1 and "Practice.scope" in q[0]["reason"]
+
+
+def test_v03_layers_parsed_with_grounding_gate():
+    # Tool/Platform carry grounding_span like every other node (§4 universal provenance).
+    out = _base_output()
+    out["tools"] = [
+        {"id": "t1", "name": "Lighthouse", "grounding_span": "AI readiness is a construct"},
+        {"id": "t2", "name": "ungrounded"},
+    ]
+    out["platforms"] = [
+        {"id": "pl1", "name": "Google Search", "grounding_span": "The FCSM defines data quality"},
+        {"id": "pl2", "name": "Bing", "grounding_span": "never in the source"},
+    ]
+    r = parser.parse_extraction(out, SOURCE, SCHEMA)
+    types = {n["id"]: n["type"] for n in r.nodes}
+    assert types.get("t1") == "Tool" and types.get("pl1") == "Platform"
+    assert "t2" not in types and "pl2" not in types
+    assert any(x["kind"] == "tools" and "missing grounding_span" in x["reason"] for x in r.quarantined)
+    assert any(x["kind"] == "platforms" and "not found in source" in x["reason"] for x in r.quarantined)
+
+
+def test_v03_edges_legal_and_illegal_routing():
+    out = _base_output()
+    out["claims"] = [_claim()]
+    out["practices"] = [{"id": "p1", "text": "t", "scope": "site",
+                         "grounding_span": "AI readiness is a construct"}]
+    out["tools"] = [{"id": "t1", "name": "Lighthouse", "grounding_span": "AI readiness is a construct"}]
+    out["platforms"] = [{"id": "pl1", "name": "Google", "grounding_span": "AI readiness is a construct"}]
+    out["measures"] = [{"id": "m1", "text": "x", "grounding_span": "AI readiness is a construct"}]
+    out["standards"] = [{"id": "s1", "name": "DCAT", "grounding_span": "AI readiness is a construct"}]
+    g = "Discoverability of records matters"
+    out["edges"] += [
+        {"type": "recommends", "from_id": "doc-1", "to_id": "p1", "grounding_span": g},
+        {"type": "supported_by", "from_id": "p1", "to_id": "k1", "grounding_span": g},
+        {"type": "implemented_by", "from_id": "m1", "to_id": "t1", "grounding_span": g},
+        {"type": "consumes", "from_id": "pl1", "to_id": "s1", "grounding_span": g},
+        {"type": "applies_to", "from_id": "p1", "to_id": "c1", "grounding_span": g},
+        {"type": "applies_to", "from_id": "m1", "to_id": "c2", "grounding_span": g},
+        {"type": "targets", "from_id": "p1", "to_id": "pl1", "grounding_span": g},
+        # illegal pairs: grounded + resolvable => proposed_relationships, never graph
+        {"type": "targets", "from_id": "m1", "to_id": "pl1", "grounding_span": g},
+        {"type": "consumes", "from_id": "t1", "to_id": "s1", "grounding_span": g},
+    ]
+    r = parser.parse_extraction(out, SOURCE, SCHEMA)
+    assert r.quarantined == []
+    accepted = sorted((e["type"], e["from_id"], e["to_id"]) for e in r.edges
+                      if e["type"] not in ("mentions", "defines"))
+    assert accepted == sorted([
+        ("recommends", "doc-1", "p1"), ("supported_by", "p1", "k1"),
+        ("implemented_by", "m1", "t1"), ("consumes", "pl1", "s1"),
+        ("applies_to", "p1", "c1"), ("applies_to", "m1", "c2"), ("targets", "p1", "pl1")])
+    routed = sorted((p["suggested_edge"], p["from_type"], p["to_type"])
+                    for p in r.proposed_relationships if p["source"] == "auto_routed_invalid_pair")
+    assert routed == [("consumes", "Tool", "Standard"), ("targets", "Measure", "Platform")]
+
+
+def test_v03_supersedes_document_to_document():
+    # Both endpoints must resolve; this document + an in-output node can't be a Document, so
+    # the only resolvable Document id is doc-1 itself (self-edge is type-legal).
+    out = _base_output()
+    out["edges"].append({"type": "supersedes", "from_id": "doc-1", "to_id": "doc-1",
+                         "grounding_span": "AI readiness is a construct"})
+    r = parser.parse_extraction(out, SOURCE, SCHEMA)
+    assert any(e["type"] == "supersedes" for e in r.edges)
+    out2 = _base_output()
+    out2["edges"].append({"type": "supersedes", "from_id": "doc-1", "to_id": "c1",
+                          "grounding_span": "AI readiness is a construct"})
+    r2 = parser.parse_extraction(out2, SOURCE, SCHEMA)
+    assert not any(e["type"] == "supersedes" for e in r2.edges)
+    assert any(p["suggested_edge"] == "supersedes" and p["source"] == "auto_routed_invalid_pair"
+               for p in r2.proposed_relationships)

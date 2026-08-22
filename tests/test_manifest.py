@@ -221,3 +221,18 @@ def test_verify_catches_missing_file(repo):
     problems = manifest.verify()
     assert len(problems) == 1
     assert problems[0]["issue"] == "missing"
+
+
+def test_accepts_practitioner_source_type(repo):
+    # schema v0.3 (DD-009): SME / industry-practitioner guidance that is not a product page.
+    f = _write_corpus_file(repo, "sme.txt", "visibility diagnostic framework")
+    doc_id = manifest.add(str(f), **_good_fields(
+        doc_id="sme-visibility-diagnostic", source_type="practitioner",
+        primary_url="https://example.org/visibility"))
+    assert doc_id == "sme-visibility-diagnostic"
+
+
+def test_source_types_in_sync_with_schema():
+    from kg.extraction import schema_loader
+    schema = schema_loader.load_schema()
+    assert list(manifest._SOURCE_TYPES) == schema_loader.property_values(schema, "Document")["source_type"]

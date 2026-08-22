@@ -25,10 +25,30 @@ from kg import eventlog  # noqa: E402
 from kg.extraction.grounding import is_grounded  # noqa: E402
 
 sys.path.insert(0, str(Path(__file__).parent))
-from run_bulk_extraction import corpus_v1_members, doc_text, BULK_BATCH  # noqa: E402
+import run_bulk_extraction as rbe  # noqa: E402
+from run_bulk_extraction import doc_text  # noqa: E402
 import build_projection as proj  # noqa: E402
 
 REPORT = REPO / "docs" / "research" / "bulk_v1_gate_report.md"
+
+# Run scope (task 2026-08-21_v03_visibility_kernel Phase 6): the gates measure the union of
+# the selected run profiles — each profile contributes its corpus epoch (members +
+# grounding scope) and its event shard (quarantine / empty-extraction scope). Default is
+# the v1 profile alone, so the existing report is reproduced byte-for-byte in meaning.
+EPOCHS: set[str] = set()
+SHARDS: set[int] = set()
+
+
+def scope_profiles(names: list[str]) -> dict:
+    """Resolve profiles -> (members union, EPOCHS, SHARDS). Fail loud on an unknown name."""
+    global EPOCHS, SHARDS
+    members: dict = {}
+    for n in names:
+        rbe.apply_profile(n)
+        EPOCHS.add(rbe.CORPUS_EPOCH)
+        SHARDS.add(rbe.BULK_BATCH)
+        members.update(rbe.corpus_members())
+    return members
 
 
 def _gate_config() -> dict:
@@ -105,8 +125,8 @@ def check_grounding(events, members) -> dict:
     for ev in events:
         if ev.get("event_type") not in ("node_asserted", "edge_asserted"):
             continue
-        batch4 = ev.get("provenance", {}).get("corpus_epoch") == "v1"
-        if not batch4:
+        in_scope = ev.get("provenance", {}).get("corpus_epoch") in EPOCHS
+        if not in_scope:
             legacy += 1
             continue
         doc_id = ev["doc_id"]
@@ -133,8 +153,8 @@ def check_quarantine(events) -> dict:
         if ev.get("event_type") == "build_metrics" and \
                 ev.get("metrics", {}).get("doc_id"):
             m = ev["metrics"]
-            # scope: this run's shard only — pilot metrics live in batch-002
-            if _shard_of(ev) != BULK_BATCH:
+            # scope: the selected run shards only — pilot metrics live in batch-002
+            if _shard_of(ev) not in SHARDS:
                 continue
             tot_items += m["nodes"] + m["edges"] + m["quarantined"]
             tot_q += m["quarantined"]
@@ -236,7 +256,7 @@ def check_empty(events, members) -> dict:
     events = live_events(events)
     extracted_docs, empty_docs = set(), set()
     for ev in events:
-        if ev.get("event_type") == "build_metrics" and _shard_of(ev) == BULK_BATCH:
+        if ev.get("event_type") == "build_metrics" and _shard_of(ev) in SHARDS:
             m = ev["metrics"]
             extracted_docs.add(m["doc_id"])
             if m["nodes"] + m["edges"] == 0:
@@ -249,13 +269,23 @@ def check_empty(events, members) -> dict:
 
 
 def main() -> int:
+    import argparse
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--profiles", default="v1",
+                    help="comma-separated run profiles from scripts/run_profiles.yaml (default v1)")
+    ap.add_argument("--report", default=None, help="report path (default docs/research/bulk_v1_gate_report.md)")
+    ap.add_argument("--title", default="Bulk v1")
+    args = ap.parse_args()
+    report = Path(args.report) if args.report else REPORT
+    if not report.is_absolute():
+        report = REPO / report
     gate = _gate_config()
     if gate.get("preregistered") is not True:
         raise SystemExit("gate config is not pre-registered — refusing")
     schema = proj._load_schema()
     kg_labels = list(schema["node_types"])
     edge_whitelist = set(schema["edge_types"])
-    members = corpus_v1_members()
+    members = scope_profiles([n.strip() for n in args.profiles.split(",") if n.strip()])
     events = _events()
 
     results = [check_min_corpus(gate, members),
@@ -266,7 +296,8 @@ def main() -> int:
     results += [orphan, drift, check_empty(events, members)]
 
     now = datetime.now(timezone.utc).isoformat()
-    lines = [f"# Bulk v1 — Pre-registered Gate Report", "",
+    lines = [f"# {args.title} — Pre-registered Gate Report", "",
+             f"Scope: profiles={args.profiles} epochs={sorted(EPOCHS)} shards={sorted(SHARDS)}", "",
              f"Generated: {now}", "",
              "Failed gates are FINDINGS, not blockers. No retuning (task hard stop).",
              "", "| check | value | threshold | verdict |", "|---|---|---|---|"]
@@ -275,10 +306,10 @@ def main() -> int:
                      f"{'PASS' if r['passed'] else '**FAIL**'} |")
     lines += ["", "## Detail", "", "```json",
               json.dumps(results, indent=1, default=str), "```", ""]
-    REPORT.parent.mkdir(parents=True, exist_ok=True)
-    REPORT.write_text("\n".join(lines), encoding="utf-8")
-    print("\n".join(lines[:12]))
-    print(f"\nreport: {REPORT}")
+    report.parent.mkdir(parents=True, exist_ok=True)
+    report.write_text("\n".join(lines), encoding="utf-8")
+    print("\n".join(lines[:14]))
+    print(f"\nreport: {report}")
     return 0
 
 

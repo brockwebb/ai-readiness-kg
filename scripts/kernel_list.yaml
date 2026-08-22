@@ -1,0 +1,626 @@
+# Kernel list for cc_tasks/2026-08-21_v03_visibility_kernel.md Phase 2.
+# Transcribed from the task's "Kernel list" section. Consumed by scripts/harvest_kernel.py.
+#
+# Per entry:
+#   doc_id          slug (lowercase-hyphen); becomes the staging filename stem
+#   title           as the steward/publisher names it (not paraphrased)
+#   primary_url     URL of record (the page the citation points at)
+#   pdf_url         optional; when set, the PDF is fetched instead of the HTML page
+#   source_type     standard | federal | academic | industry | practitioner
+#                   (task categories map: standards+stewards -> standard; platform-official -> industry;
+#                    research -> academic; federal -> federal; tool docs -> industry; SME -> practitioner)
+#   clause          a-e of the inclusion rule (docs/research/2026-08-21_kernel_inclusion_rule.md)
+#   authors_or_org  steward / publisher / author list
+#   crwl_params     optional crawl4ai CrawlerRunConfig params passed to `crwl -c` (e.g. render waits for JS-only pages)
+#   fetcher         optional override: crwl (default for HTML) | httpx_dom (httpx + DOM->markdown; needed when
+#                   the page challenges headless browsers, or when an `extent` trim is configured) | raw (text/plain)
+#   extent          optional AUTH-4 extent trim (only for httpx_dom): drop_h2 = list of regexes matched against
+#                   h2 headings; the whole h2 section is dropped. extent_note is recorded verbatim in the register.
+#   extent_note     human-readable statement of the extent decision
+#   task_note       discrepancies between the task's wording and what is live (reported in the sub-RESULT)
+#   task_item       the task-list bullet this entry transcribes
+#
+# Entries with `already_manifested: true` are registered excluded_by_rule / already_manifested and never fetched.
+
+settings:
+  user_agent: "WintermuteAcceptance/0.1 (research; brockwebb45@gmail.com)"
+  discovered_via: "kernel-list-2026-08-21"
+  max_doc_chars: 250000        # AUTH-4 MAX_DOC_CHARS
+  min_content_chars: 200       # min-content guard (task step 3)
+  timeout_seconds: 60
+  retries: 1
+  spacing_seconds: 1.0
+  crwl_timeout_seconds: 180
+  # crawl4ai content filter used for fit_markdown (boilerplate stripping done by crwl, not by hand)
+  crwl_filter: {type: pruning, query: null, threshold: 0.48}
+  # if fit_markdown is shorter than this fraction of raw_markdown, keep raw_markdown (pruning over-stripped).
+  # 0.05 chosen after inspection: Google Search Central and Intercom help pages carry 80-95% navigation by
+  # character count, and their fit_markdown at 0.06-0.22 of raw was the complete article in every case checked.
+  fit_min_fraction_of_raw: 0.05
+  # markers that identify an anti-bot challenge interstitial rather than the page
+  challenge_markers: ["Performing security verification", "Ray ID:", "Just a moment...", "Verifying you are human"]
+
+entries:
+# ---------------------------------------------------------------- Standards and stewards (clause a)
+- doc_id: schema-org-dataset
+  title: "schema.org: Dataset"
+  primary_url: https://schema.org/Dataset
+  source_type: standard
+  clause: a
+  authors_or_org: ["Schema.org Community Group"]
+  task_item: "schema.org type pages"
+- doc_id: schema-org-datacatalog
+  title: "schema.org: DataCatalog"
+  primary_url: https://schema.org/DataCatalog
+  source_type: standard
+  clause: a
+  authors_or_org: ["Schema.org Community Group"]
+  task_item: "schema.org type pages"
+- doc_id: schema-org-datadownload
+  title: "schema.org: DataDownload"
+  primary_url: https://schema.org/DataDownload
+  source_type: standard
+  clause: a
+  authors_or_org: ["Schema.org Community Group"]
+  task_item: "schema.org type pages"
+- doc_id: schema-org-datafeed
+  title: "schema.org: DataFeed"
+  primary_url: https://schema.org/DataFeed
+  source_type: standard
+  clause: a
+  authors_or_org: ["Schema.org Community Group"]
+  task_item: "schema.org type pages"
+- doc_id: schema-org-webapi
+  title: "schema.org: WebAPI"
+  primary_url: https://schema.org/WebAPI
+  source_type: standard
+  clause: a
+  authors_or_org: ["Schema.org Community Group"]
+  task_item: "schema.org type pages"
+- doc_id: schema-org-softwareapplication
+  title: "schema.org: SoftwareApplication"
+  primary_url: https://schema.org/SoftwareApplication
+  source_type: standard
+  clause: a
+  authors_or_org: ["Schema.org Community Group"]
+  task_item: "schema.org type pages"
+- doc_id: schema-org-definedterm
+  title: "schema.org: DefinedTerm"
+  primary_url: https://schema.org/DefinedTerm
+  source_type: standard
+  clause: a
+  authors_or_org: ["Schema.org Community Group"]
+  task_item: "schema.org type pages"
+
+- doc_id: w3c-dcat-3
+  title: "Data Catalog Vocabulary (DCAT) - Version 3 (W3C Recommendation)"
+  primary_url: https://www.w3.org/TR/vocab-dcat-3/
+  source_type: standard
+  clause: a
+  authors_or_org: ["W3C Dataset Exchange Working Group"]
+  fetcher: httpx_dom
+  extent:
+    drop_h2: ["^Table of Contents", "^C\\. Examples", "^D\\. Change history", "^[E-J]\\. Changes since", "^K\\. References"]
+  extent_note: "Manifested at normative core per AUTH-4: sections 1-18 plus A (Acknowledgments) and B (Alignment with Schema.org). Excluded: Table of Contents, C. Examples, D. Change history, E-J. change logs, K. References."
+  task_item: "W3C DCAT 3 Recommendation (extent: normative sections; skip examples appendices if oversize)"
+  task_note: "www.w3.org serves a Cloudflare challenge to the headless browser; fetched with httpx (plain GET returns 200)."
+
+- doc_id: dcat-us-3-overview
+  title: "DCAT-US 3.0 Overview (resources.data.gov)"
+  primary_url: https://resources.data.gov/resources/dcat-us3/
+  source_type: standard
+  clause: a
+  authors_or_org: ["U.S. General Services Administration / Data.gov"]
+  task_item: "DCAT-US 3.0 (resources.data.gov)"
+- doc_id: dcat-us-3-dataset-schema
+  title: "DCAT-US 3.0 Schema: Dataset (resources.data.gov)"
+  primary_url: https://resources.data.gov/standards/catalog/dcat-us-3/dataset/
+  source_type: standard
+  clause: a
+  authors_or_org: ["U.S. General Services Administration / Data.gov"]
+  task_item: "DCAT-US 3.0 (resources.data.gov)"
+  task_note: "DCAT-US 3.0 on resources.data.gov is an overview page plus per-class schema pages; the Dataset class page is taken as the normative core."
+
+- doc_id: w3c-dwbp-2017
+  title: "Data on the Web Best Practices (W3C Recommendation, 31 January 2017)"
+  primary_url: https://www.w3.org/TR/dwbp/
+  source_type: standard
+  clause: a
+  authors_or_org: ["W3C Data on the Web Best Practices Working Group"]
+  fetcher: httpx_dom
+  extent:
+    drop_h2: ["^Table of Contents"]
+  extent_note: "Whole Recommendation (under MAX_DOC_CHARS); only the Table of Contents navigation block is dropped."
+  task_item: "W3C Data on the Web Best Practices (DWBP, 2017)"
+
+- doc_id: w3c-rdf-data-cube
+  title: "The RDF Data Cube Vocabulary (W3C Recommendation, 16 January 2014)"
+  primary_url: https://www.w3.org/TR/vocab-data-cube/
+  source_type: standard
+  clause: a
+  authors_or_org: ["W3C Government Linked Data Working Group"]
+  fetcher: httpx_dom
+  extent:
+    drop_h2: ["^Table of Contents"]
+  extent_note: "Whole Recommendation (under MAX_DOC_CHARS, so the primer fallback was not needed); only the Table of Contents block is dropped."
+  task_item: "W3C RDF Data Cube vocabulary (primer if the Rec is oversize)"
+
+- doc_id: sdmx-standards-overview
+  title: "SDMX Standards (sdmx.org standards page)"
+  primary_url: https://sdmx.org/standards-2/
+  source_type: standard
+  clause: a
+  authors_or_org: ["SDMX Sponsors (BIS, ECB, Eurostat, IMF, OECD, UN, World Bank)"]
+  task_item: "SDMX technical standard primer (sdmx.org)"
+- doc_id: sdmx-3-0-section-1-framework
+  title: "SDMX 3.0 Technical Specifications, Section 1: Framework for SDMX Technical Standards"
+  primary_url: https://sdmx.org/wp-content/uploads/SDMX_3-0-0_SECTION_1_FINAL-1_0.pdf
+  pdf_url: https://sdmx.org/wp-content/uploads/SDMX_3-0-0_SECTION_1_FINAL-1_0.pdf
+  source_type: standard
+  clause: a
+  authors_or_org: ["SDMX Technical Working Group"]
+  task_item: "SDMX technical standard primer (sdmx.org)"
+  task_note: "sdmx.org publishes no document titled 'primer'; Section 1 (Framework) is the steward's own overview of the technical standard."
+
+- doc_id: mlcommons-croissant-spec
+  title: "Croissant Format Specification (MLCommons)"
+  primary_url: https://docs.mlcommons.org/croissant/docs/croissant-spec.html
+  source_type: standard
+  clause: a
+  authors_or_org: ["MLCommons Croissant Working Group"]
+  task_item: "MLCommons Croissant specification"
+
+- doc_id: sitemaps-protocol
+  title: "Sitemaps XML format (sitemaps.org protocol)"
+  primary_url: https://www.sitemaps.org/protocol.html
+  source_type: standard
+  clause: a
+  authors_or_org: ["sitemaps.org"]
+  task_item: "sitemaps.org protocol"
+
+- doc_id: rfc-9309-robots-exclusion-protocol
+  title: "RFC 9309: Robots Exclusion Protocol"
+  primary_url: https://www.rfc-editor.org/rfc/rfc9309
+  pdf_url: null
+  source_type: standard
+  clause: a
+  authors_or_org: ["M. Koster", "G. Illyes", "H. Zeller", "L. Sassman", "IETF"]
+  fetcher: raw
+  raw_url: https://www.rfc-editor.org/rfc/rfc9309.txt
+  task_item: "RFC 9309 Robots Exclusion Protocol"
+
+- doc_id: llmstxt-proposal
+  title: "The /llms.txt file (llmstxt.org)"
+  primary_url: https://llmstxt.org/
+  source_type: standard
+  clause: a
+  authors_or_org: ["Jeremy Howard / Answer.AI"]
+  task_item: "llms.txt proposal (llmstxt.org)"
+
+- doc_id: indexnow-documentation
+  title: "IndexNow Documentation"
+  primary_url: https://www.indexnow.org/documentation
+  source_type: standard
+  clause: a
+  authors_or_org: ["IndexNow (Microsoft Bing, Yandex, et al.)"]
+  task_item: "IndexNow protocol documentation"
+
+- doc_id: w3c-json-ld-1-1-core
+  title: "JSON-LD 1.1: A JSON-based Serialization for Linked Data (W3C Recommendation, 16 July 2020)"
+  primary_url: https://www.w3.org/TR/json-ld11/
+  source_type: standard
+  clause: a
+  authors_or_org: ["W3C JSON-LD Working Group"]
+  fetcher: httpx_dom
+  extent:
+    drop_h2: ["^Table of Contents", "^4\\. Advanced Concepts", "^5\\. Forms of JSON-LD", "^6\\. Modifying Behavior", "^7\\. Embedding JSON-LD", "^9\\. JSON-LD Grammar", "^10\\. Relationship to RDF", "^1[1-3]\\. ", "^[A-J]\\. "]
+  extent_note: "No steward-published JSON-LD 1.1 primer exists (json-ld.org/primer is an abandoned incomplete 1.0-era draft that says 'should not be relied upon'). Per AUTH-4 the Recommendation is manifested at a primer-equivalent stated extent: 1. Introduction, 2. Conformance, 3. Basic Concepts, 8. Data Model. Excluded: 4. Advanced Concepts, 5-7, 9-13, appendices A-J."
+  task_item: "JSON-LD 1.1 primer (not the full Rec)"
+  task_note: "Task names a 'JSON-LD 1.1 primer'; none is published. See extent_note."
+
+- doc_id: openapi-specification-core
+  title: "OpenAPI Specification (latest, spec.openapis.org)"
+  primary_url: https://spec.openapis.org/oas/latest.html
+  source_type: standard
+  clause: a
+  authors_or_org: ["OpenAPI Initiative"]
+  fetcher: httpx_dom
+  extent:
+    drop_h2: ["^Table of Contents", "^[A-G]\\. Appendix", "^H\\. References"]
+  extent_note: "Manifested at core sections per AUTH-4: front matter plus sections 1-6 (Specification, Introduction, Format, Objects and Fields, Specification Extensions, Security Considerations). Excluded: Table of Contents, Appendices A-G, References."
+  task_item: "OpenAPI Specification (latest; extent: core sections)"
+
+# ---------------------------------------------------------------- Platform-official (clause b)
+- doc_id: google-structured-data-intro
+  title: "Google Search Central: Introduction to structured data markup in Google Search"
+  primary_url: https://developers.google.com/search/docs/appearance/structured-data/intro-structured-data
+  source_type: industry
+  clause: b
+  authors_or_org: ["Google Search Central"]
+  task_item: "Google Search Central: structured data intro"
+- doc_id: google-dataset-structured-data
+  title: "Google Search Central: Dataset (Dataset, DataCatalog, DataDownload) structured data"
+  primary_url: https://developers.google.com/search/docs/appearance/structured-data/dataset
+  source_type: industry
+  clause: b
+  authors_or_org: ["Google Search Central"]
+  task_item: "Google Search Central: Dataset structured data"
+- doc_id: google-crawling-indexing-overview
+  title: "Google Search Central: Crawling and indexing overview"
+  primary_url: https://developers.google.com/search/docs/crawling-indexing
+  source_type: industry
+  clause: b
+  authors_or_org: ["Google Search Central"]
+  task_item: "Google Search Central: crawling/indexing overview"
+- doc_id: google-robots-txt-intro
+  title: "Google Search Central: Introduction to robots.txt"
+  primary_url: https://developers.google.com/search/docs/crawling-indexing/robots/intro
+  source_type: industry
+  clause: b
+  authors_or_org: ["Google Search Central"]
+  task_item: "Google Search Central: robots.txt docs"
+- doc_id: google-ai-features-and-your-website
+  title: "Google Search Central: AI features and your website"
+  primary_url: https://developers.google.com/search/docs/appearance/ai-features
+  source_type: industry
+  clause: b
+  authors_or_org: ["Google Search Central"]
+  task_item: "Google Search Central: 'AI features and your website' (or current equivalent)"
+- doc_id: google-search-console-start
+  title: "Google Search Central: Get started with Search Console"
+  primary_url: https://developers.google.com/search/docs/monitor-debug/search-console-start
+  source_type: industry
+  clause: b
+  authors_or_org: ["Google Search Central"]
+  task_item: "Google Search Central: Search Console guide"
+
+- doc_id: bing-ai-performance-public-preview-2026
+  title: "Introducing AI Performance in Bing Webmaster Tools Public Preview (Bing Webmaster Blog)"
+  primary_url: https://blogs.bing.com/webmaster/February-2026/Introducing-AI-Performance-in-Bing-Webmaster-Tools-Public-Preview
+  source_type: industry
+  clause: b
+  authors_or_org: ["Microsoft Bing Webmaster Tools team"]
+  task_item: "Bing Webmaster: AI Performance announcement (2026)"
+  task_note: "Located via the Bing Webmaster Blog index (JS-rendered; resolved with crwl). Post dated February 2026."
+- doc_id: bing-webmaster-guidelines
+  title: "Bing Webmaster Guidelines"
+  primary_url: https://www.bing.com/webmasters/help/webmaster-guidelines-30fba23a
+  source_type: industry
+  clause: b
+  authors_or_org: ["Microsoft Bing"]
+  crwl_params: "wait_until=networkidle,delay_before_return_html=4"
+  task_item: "Bing Webmaster: Webmaster guidelines"
+  task_note: "Help center is a JS-rendered SPA; without a render wait the capture is a 199-char shell."
+- doc_id: bing-webmaster-api-docs
+  title: "Bing Webmaster Tools API documentation (Microsoft Learn)"
+  primary_url: https://learn.microsoft.com/en-us/bingwebmaster/
+  source_type: industry
+  clause: b
+  authors_or_org: ["Microsoft Bing"]
+  task_item: "Bing Webmaster: Webmaster APIs"
+  task_note: "The former bing.com/webmasters/help 'Webmaster API' help page returns 404; the API reference now lives on learn.microsoft.com/en-us/bingwebmaster/."
+
+- doc_id: cloudflare-ai-crawl-control
+  title: "Cloudflare AI Crawl Control (developer docs overview)"
+  primary_url: https://developers.cloudflare.com/ai-crawl-control/
+  source_type: industry
+  clause: b
+  authors_or_org: ["Cloudflare"]
+  task_item: "Cloudflare: AI Crawl Control docs"
+- doc_id: cloudflare-ai-crawl-control-manage-crawlers
+  title: "Cloudflare AI Crawl Control: Manage AI crawlers"
+  primary_url: https://developers.cloudflare.com/ai-crawl-control/features/manage-ai-crawlers/
+  source_type: industry
+  clause: b
+  authors_or_org: ["Cloudflare"]
+  task_item: "Cloudflare: AI Crawl Control docs"
+- doc_id: cloudflare-content-signals-policy
+  title: "Content Signals Policy (contentsignals.org, Cloudflare)"
+  primary_url: https://contentsignals.org/
+  source_type: industry
+  clause: b
+  authors_or_org: ["Cloudflare"]
+  task_item: "Cloudflare: Content Signals Policy (or current equivalent)"
+  task_note: "Policy is published at contentsignals.org (JS-rendered; plain GET returns a 2 KB shell). www.cloudflare.com/content-signals-policy/ returns 404."
+
+- doc_id: akamai-datastream-2-docs
+  title: "Akamai DataStream 2 (TechDocs)"
+  primary_url: https://techdocs.akamai.com/datastream2/docs/welcome-datastream2
+  source_type: industry
+  clause: b
+  authors_or_org: ["Akamai Technologies"]
+  task_item: "Akamai: DataStream 2 docs"
+- doc_id: akamai-datastream-2-data-set-parameters
+  title: "Akamai DataStream 2: Data set parameters (log fields)"
+  primary_url: https://techdocs.akamai.com/datastream2/docs/data-set-parameters
+  source_type: industry
+  clause: b
+  authors_or_org: ["Akamai Technologies"]
+  fetcher: raw
+  raw_url: https://techdocs.akamai.com/datastream2/docs/data-set-parameters.md
+  task_item: "Akamai: DataStream 2 docs"
+  task_note: "The DataStream 2 'welcome' page is a thin landing hub; the data-set-parameters page is the substantive log-field reference. Akamai TechDocs serves its own markdown at <page>.md, used here."
+- doc_id: akamai-bot-manager-bot-reports
+  title: "Akamai Bot Manager: bot reports (TechDocs)"
+  primary_url: https://techdocs.akamai.com/bot-manager/docs
+  source_type: industry
+  clause: b
+  authors_or_org: ["Akamai Technologies"]
+  alt_urls: ["https://techdocs.akamai.com/bot-manager/docs/bot-reports", "https://techdocs.akamai.com/bot-manager/docs/welcome-bot-manager", "https://techdocs.akamai.com/bot-manager/reference/api"]
+  task_item: "Akamai: Bot Manager bot reports docs"
+  task_note: "All Bot Manager TechDocs URLs 302 to control.akamai.com SAML login (auth-gated); expected fetch_failed."
+
+- doc_id: openai-crawlers-bots
+  title: "OpenAI: Overview of OpenAI crawlers (developers.openai.com/api/docs/bots)"
+  primary_url: https://platform.openai.com/docs/bots
+  source_type: industry
+  clause: b
+  authors_or_org: ["OpenAI"]
+  task_item: "OpenAI published crawler documentation"
+- doc_id: anthropic-crawler-support-article
+  title: "Does Anthropic crawl data from the web, and how can site owners block the crawler? (Anthropic support)"
+  primary_url: https://support.anthropic.com/en/articles/8896518-does-anthropic-crawl-data-from-the-web-and-how-can-site-owners-block-the-crawler
+  source_type: industry
+  clause: b
+  authors_or_org: ["Anthropic"]
+  task_item: "Anthropic published crawler documentation"
+- doc_id: perplexity-crawlers
+  title: "Perplexity crawlers (docs.perplexity.ai)"
+  primary_url: https://docs.perplexity.ai/guides/bots
+  source_type: industry
+  clause: b
+  authors_or_org: ["Perplexity AI"]
+  task_item: "Perplexity published crawler documentation"
+
+# ---------------------------------------------------------------- Research (clause c)
+- doc_id: aggarwal-2024-geo-generative-engine-optimization
+  title: "GEO: Generative Engine Optimization"
+  primary_url: https://arxiv.org/abs/2311.09735
+  pdf_url: https://arxiv.org/pdf/2311.09735
+  source_type: academic
+  clause: c
+  authors_or_org: ["Pranjal Aggarwal", "Vishvak Murahari", "Tanmay Rajpurohit", "Ashwin Kalyan", "Karthik Narasimhan", "Ameet Deshpande"]
+  year: "2024"
+  task_item: "Aggarwal et al., GEO, KDD 2024 (arXiv 2311.09735)"
+- doc_id: wilkinson-2016-fair-guiding-principles
+  title: "The FAIR Guiding Principles for scientific data management and stewardship"
+  primary_url: https://www.nature.com/articles/sdata201618
+  pdf_url: https://www.nature.com/articles/sdata201618.pdf
+  source_type: academic
+  clause: c
+  authors_or_org: ["Mark D. Wilkinson", "et al."]
+  year: "2016"
+  task_item: "Wilkinson et al. 2016, FAIR Guiding Principles (Scientific Data)"
+- doc_id: jacobsen-2020-fair-principles-interpretations
+  title: "FAIR Principles: Interpretations and Implementation Considerations"
+  primary_url: https://doi.org/10.1162/dint_r_00024
+  pdf_url: https://www.mitpressjournals.org/doi/pdf/10.1162/dint_r_00024
+  alt_urls: ["https://direct.mit.edu/dint/article-pdf/2/1-2/10/1893405/dint_r_00024.pdf"]
+  source_type: academic
+  clause: c
+  authors_or_org: ["Annika Jacobsen", "et al."]
+  year: "2020"
+  task_item: "Jacobsen et al. 2020, FAIR Principles: Interpretations and Implementation Considerations"
+  task_note: "direct.mit.edu returns 403 to httpx and a Cloudflare challenge to the headless browser; doi.org refused the connection. The publisher's legacy open-access PDF URL (mitpressjournals.org, listed as openAccessPdf by Semantic Scholar for DOI 10.1162/dint_r_00024) serves the PDF via silverchair."
+
+# Selected 2025-2026 LLM retrieval/citation papers (cap 5). Selection rule and the full candidate table are in the
+# Phase 2 sub-RESULT (docs/research/2026-08-21_v03_phase2_harvest.md).
+- doc_id: chen-2025-geo-how-to-dominate-ai-search
+  title: "Generative Engine Optimization: How to Dominate AI Search"
+  primary_url: https://arxiv.org/abs/2509.08919
+  pdf_url: https://arxiv.org/pdf/2509.08919
+  source_type: academic
+  clause: c
+  authors_or_org: ["Mahe Chen", "Xiaoxuan Wang", "Kaiwen Chen", "et al."]
+  year: "2025"
+  task_item: "2025-2026 LLM retrieval/citation work (selected, rank 1 by citations)"
+- doc_id: miroyan-2025-search-arena
+  title: "Search Arena: Analyzing Search-Augmented LLMs"
+  primary_url: https://arxiv.org/abs/2506.05334
+  pdf_url: https://arxiv.org/pdf/2506.05334
+  source_type: academic
+  clause: c
+  authors_or_org: ["Mihran Miroyan", "Tsung-Han Wu", "Logan King", "et al."]
+  year: "2025"
+  task_item: "2025-2026 LLM retrieval/citation work (selected, rank 2)"
+- doc_id: wu-2025-what-generative-search-engines-like
+  title: "What Generative Search Engines Like and How to Optimize Web Content Cooperatively"
+  primary_url: https://arxiv.org/abs/2510.11438
+  pdf_url: https://arxiv.org/pdf/2510.11438
+  source_type: academic
+  clause: c
+  authors_or_org: ["Yujiang Wu", "Shanshan Zhong", "Yubin Kim", "et al."]
+  year: "2025"
+  task_item: "2025-2026 LLM retrieval/citation work (selected, rank 3)"
+- doc_id: venkit-2025-deeptrace
+  title: "DeepTRACE: Auditing Deep Research AI Systems for Tracking Reliability Across Citations and Evidence"
+  primary_url: https://arxiv.org/abs/2509.04499
+  pdf_url: https://arxiv.org/pdf/2509.04499
+  source_type: academic
+  clause: c
+  authors_or_org: ["Pranav Narayanan Venkit", "Philippe Laban", "Yilun Zhou", "et al."]
+  year: "2025"
+  task_item: "2025-2026 LLM retrieval/citation work (selected, rank 4)"
+- doc_id: hu-2025-auditing-google-ai-overviews
+  title: "Auditing Google's AI Overviews and Featured Snippets: A Case Study on Baby Care and Pregnancy"
+  primary_url: https://arxiv.org/abs/2511.12920
+  pdf_url: https://arxiv.org/pdf/2511.12920
+  source_type: academic
+  clause: c
+  authors_or_org: ["Desheng Hu", "Joachim Baumann", "Aleksandra Urman", "et al."]
+  year: "2025"
+  task_item: "2025-2026 LLM retrieval/citation work (selected, rank 5; ICWSM venue tie-break)"
+
+# ---------------------------------------------------------------- Federal (clause d)
+- doc_id: pl-115-336-21st-century-idea-act
+  title: "21st Century Integrated Digital Experience Act (P.L. 115-336)"
+  primary_url: https://www.govinfo.gov/app/details/PLAW-115publ336
+  pdf_url: https://www.govinfo.gov/content/pkg/PLAW-115publ336/pdf/PLAW-115publ336.pdf
+  source_type: federal
+  clause: d
+  authors_or_org: ["115th Congress"]
+  year: "2018"
+  task_item: "21st Century IDEA Act (P.L. 115-336)"
+- doc_id: omb-m-23-22-digital-first-public-experience
+  title: "OMB M-23-22: Delivering a Digital-First Public Experience"
+  primary_url: https://www.whitehouse.gov/wp-content/uploads/2023/09/M-23-22-Delivering-a-Digital-First-Public-Experience.pdf
+  pdf_url: https://www.whitehouse.gov/wp-content/uploads/2023/09/M-23-22-Delivering-a-Digital-First-Public-Experience.pdf
+  source_type: federal
+  clause: d
+  authors_or_org: ["Office of Management and Budget"]
+  year: "2023"
+  task_item: "OMB M-23-22"
+- doc_id: digital-gov-dap-guide
+  title: "digital.gov: Guide to the Digital Analytics Program (DAP)"
+  primary_url: https://digital.gov/guides/dap/
+  source_type: federal
+  clause: d
+  authors_or_org: ["GSA Technology Transformation Services / digital.gov"]
+  task_item: "digital.gov: DAP guide"
+- doc_id: digital-gov-search-gov-guide
+  title: "digital.gov: Search.gov guide"
+  primary_url: https://digital.gov/guides/search/
+  source_type: federal
+  clause: d
+  authors_or_org: ["GSA Technology Transformation Services / digital.gov"]
+  task_item: "digital.gov: Search.gov guide"
+- doc_id: digital-gov-website-standards
+  title: "Website Standards (standards.digital.gov)"
+  primary_url: https://standards.digital.gov/
+  source_type: federal
+  clause: d
+  authors_or_org: ["GSA Technology Transformation Services / digital.gov"]
+  task_item: "digital.gov: website standards guidance"
+- doc_id: gsa-site-scanning-engine-readme
+  title: "GSA Site Scanning Engine (README)"
+  primary_url: https://github.com/GSA/site-scanning-engine
+  source_type: federal
+  clause: d
+  authors_or_org: ["U.S. General Services Administration"]
+  fetcher: raw
+  raw_url: https://raw.githubusercontent.com/GSA/site-scanning-engine/main/README.md
+  task_item: "GSA Site Scanning README/engine documentation (GitHub)"
+- doc_id: dcat-us-1-1-schema
+  title: "DCAT-US Schema v1.1 (Project Open Data Metadata Schema) - resources.data.gov"
+  primary_url: https://resources.data.gov/resources/dcat-us/
+  source_type: federal
+  clause: d
+  authors_or_org: ["U.S. General Services Administration / Data.gov"]
+  task_item: "data.gov / resources.data.gov metadata requirements (DCAT-US schema page)"
+- doc_id: census-api-user-guide
+  title: "Census Data API User Guide"
+  primary_url: https://www.census.gov/data/developers/guidance/api-user-guide.html
+  source_type: federal
+  clause: d
+  authors_or_org: ["U.S. Census Bureau"]
+  task_item: "Census Bureau API user guide"
+- doc_id: census-developers-landing
+  title: "Census Bureau: Developers (landing)"
+  primary_url: https://www.census.gov/data/developers.html
+  source_type: federal
+  clause: d
+  authors_or_org: ["U.S. Census Bureau"]
+  task_item: "Census Bureau developers documentation landing"
+- doc_id: census-quality-standard-d3
+  title: "Census Bureau Statistical Quality Standards - Standard D3"
+  primary_url: https://www.census.gov/about/policies/quality/standards/standardd3.html
+  source_type: federal
+  clause: d
+  authors_or_org: ["U.S. Census Bureau"]
+  already_manifested: true
+  task_item: "already-held Census quality standards D3/F1/F2 are in corpus; do not refetch"
+- doc_id: census-quality-standard-f1
+  title: "Census Bureau Statistical Quality Standards - Standard F1"
+  primary_url: https://www.census.gov/about/policies/quality/standards/standardf1.html
+  source_type: federal
+  clause: d
+  authors_or_org: ["U.S. Census Bureau"]
+  already_manifested: true
+  task_item: "already-held Census quality standards D3/F1/F2 are in corpus; do not refetch"
+- doc_id: census-quality-standard-f2
+  title: "Census Bureau Statistical Quality Standards - Standard F2"
+  primary_url: https://www.census.gov/about/policies/quality/standards/standardf2.html
+  source_type: federal
+  clause: d
+  authors_or_org: ["U.S. Census Bureau"]
+  already_manifested: true
+  task_item: "already-held Census quality standards D3/F1/F2 are in corpus; do not refetch"
+
+# ---------------------------------------------------------------- Practitioner / SME (clause e)
+- doc_id: sme-visibility-diagnostic-framework
+  title: "AI Visibility Diagnostic Technical Framework (SME; anticipated in inbox)"
+  primary_url: null
+  source_type: practitioner
+  clause: e
+  authors_or_org: ["(SME, unnamed in task)"]
+  inbox_glob: "corpus/staging/inbox/*Visibility*Diagnostic*"
+  task_item: "Any 'Visibility Diagnostic' framework file found in inbox (Phase 0)"
+  task_note: "Phase 0 sub-RESULT records that no such file is present in corpus/staging/inbox/."
+
+# ---------------------------------------------------------------- Tool documentation (clause b, industry)
+- doc_id: lighthouse-docs-overview
+  title: "Lighthouse overview (Chrome for Developers)"
+  primary_url: https://developer.chrome.com/docs/lighthouse/overview
+  source_type: industry
+  clause: b
+  authors_or_org: ["Google Chrome Developers"]
+  task_item: "Lighthouse docs"
+- doc_id: scrapy-docs-landing
+  title: "Scrapy documentation (landing)"
+  primary_url: https://docs.scrapy.org/en/latest/
+  source_type: industry
+  clause: b
+  authors_or_org: ["Scrapy project / Zyte"]
+  task_item: "Scrapy docs landing"
+- doc_id: playwright-docs-intro
+  title: "Playwright: Installation / Introduction"
+  primary_url: https://playwright.dev/docs/intro
+  source_type: industry
+  clause: b
+  authors_or_org: ["Microsoft / Playwright project"]
+  task_item: "Playwright docs landing"
+- doc_id: extruct-readme
+  title: "extruct README"
+  primary_url: https://github.com/scrapinghub/extruct
+  source_type: industry
+  clause: b
+  authors_or_org: ["Zyte (scrapinghub)"]
+  fetcher: raw
+  raw_url: https://raw.githubusercontent.com/scrapinghub/extruct/master/README.rst
+  task_item: "extruct README"
+- doc_id: spectral-readme
+  title: "Spectral README"
+  primary_url: https://github.com/stoplightio/spectral
+  source_type: industry
+  clause: b
+  authors_or_org: ["Stoplight"]
+  fetcher: raw
+  raw_url: https://raw.githubusercontent.com/stoplightio/spectral/develop/README.md
+  task_item: "Spectral README"
+- doc_id: pyshacl-readme
+  title: "pySHACL README"
+  primary_url: https://github.com/RDFLib/pySHACL
+  source_type: industry
+  clause: b
+  authors_or_org: ["RDFLib"]
+  fetcher: raw
+  raw_url: https://raw.githubusercontent.com/RDFLib/pySHACL/master/README.md
+  task_item: "pySHACL README"
+- doc_id: linkchecker-readme
+  title: "LinkChecker README"
+  primary_url: https://github.com/linkchecker/linkchecker
+  source_type: industry
+  clause: b
+  authors_or_org: ["LinkChecker project"]
+  fetcher: raw
+  raw_url: https://raw.githubusercontent.com/linkchecker/linkchecker/master/README.rst
+  task_item: "LinkChecker README"
+- doc_id: goaccess-readme
+  title: "GoAccess README"
+  primary_url: https://github.com/allinurl/goaccess
+  source_type: industry
+  clause: b
+  authors_or_org: ["Gerardo Orellana (allinurl)"]
+  fetcher: raw
+  raw_url: https://raw.githubusercontent.com/allinurl/goaccess/master/README.md
+  task_item: "GoAccess README"

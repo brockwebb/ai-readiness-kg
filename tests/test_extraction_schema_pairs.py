@@ -63,10 +63,81 @@ def test_v02_subtype_and_precedes():
     assert not schema_loader.is_valid_endpoint(SCHEMA, "subtype_of", "Framework", "Concept")
 
 
-def test_schema_version_is_v02():
-    assert SCHEMA["schema_version"] == "0.2"
+def test_schema_version_is_v03():
+    assert SCHEMA["schema_version"] == "0.3"
 
 
 def test_v02_edges_carry_external_alignment():
     for etype in ("uses_measure", "measures", "has_component", "subtype_of", "precedes"):
         assert SCHEMA["edge_types"][etype].get("external_alignment"), f"{etype} missing alignment"
+
+
+# --- v0.3 edges (2026-08-21, AUTH-1 / DD-009) -----------------------------------------
+
+def test_v03_recommends():
+    assert schema_loader.is_valid_endpoint(SCHEMA, "recommends", "Document", "Practice")
+    assert not schema_loader.is_valid_endpoint(SCHEMA, "recommends", "Practice", "Document")
+    assert not schema_loader.is_valid_endpoint(SCHEMA, "recommends", "Document", "Claim")
+
+
+def test_v03_supported_by():
+    assert schema_loader.is_valid_endpoint(SCHEMA, "supported_by", "Practice", "Claim")
+    assert not schema_loader.is_valid_endpoint(SCHEMA, "supported_by", "Claim", "Practice")
+    assert not schema_loader.is_valid_endpoint(SCHEMA, "supported_by", "Document", "Claim")
+
+
+def test_v03_implemented_by():
+    assert schema_loader.is_valid_endpoint(SCHEMA, "implemented_by", "Measure", "Tool")
+    assert not schema_loader.is_valid_endpoint(SCHEMA, "implemented_by", "Tool", "Measure")
+    assert not schema_loader.is_valid_endpoint(SCHEMA, "implemented_by", "Instrument", "Tool")
+
+
+def test_v03_consumes():
+    assert schema_loader.is_valid_endpoint(SCHEMA, "consumes", "Platform", "Standard")
+    assert not schema_loader.is_valid_endpoint(SCHEMA, "consumes", "Standard", "Platform")
+    assert not schema_loader.is_valid_endpoint(SCHEMA, "consumes", "Platform", "Framework")
+
+
+def test_v03_applies_to_index_paired():
+    assert schema_loader.is_valid_endpoint(SCHEMA, "applies_to", "Practice", "Concept")
+    assert schema_loader.is_valid_endpoint(SCHEMA, "applies_to", "Measure", "Concept")
+    assert not schema_loader.is_valid_endpoint(SCHEMA, "applies_to", "Concept", "Practice")
+    assert not schema_loader.is_valid_endpoint(SCHEMA, "applies_to", "Practice", "Construct")
+    assert not schema_loader.is_valid_endpoint(SCHEMA, "applies_to", "Tool", "Concept")
+
+
+def test_v03_targets():
+    assert schema_loader.is_valid_endpoint(SCHEMA, "targets", "Practice", "Platform")
+    assert not schema_loader.is_valid_endpoint(SCHEMA, "targets", "Platform", "Practice")
+    assert not schema_loader.is_valid_endpoint(SCHEMA, "targets", "Measure", "Platform")
+
+
+def test_v03_supersedes():
+    assert schema_loader.is_valid_endpoint(SCHEMA, "supersedes", "Document", "Document")
+    assert not schema_loader.is_valid_endpoint(SCHEMA, "supersedes", "Document", "Standard")
+    assert not schema_loader.is_valid_endpoint(SCHEMA, "supersedes", "Standard", "Standard")
+
+
+def test_v03_edges_carry_external_alignment_or_explicit_none():
+    # Task rule: a URI where reasonable, else literally `external_alignment: none`. Silent
+    # omission is not allowed.
+    for etype in ("recommends", "supported_by", "implemented_by", "consumes",
+                  "applies_to", "targets", "supersedes"):
+        assert "external_alignment" in SCHEMA["edge_types"][etype], f"{etype} missing alignment key"
+
+
+def test_v03_node_types_present():
+    assert {"Practice", "Tool", "Platform"} <= schema_loader.node_types(SCHEMA)
+
+
+def test_v03_enums_read_from_schema():
+    assert schema_loader.property_values(SCHEMA, "Claim")["evidence_grade"] == [
+        "peer_reviewed_experiment", "platform_official", "measured_practitioner",
+        "practitioner_assertion", "inference"]
+    assert schema_loader.property_values(SCHEMA, "Measure")["tier"] == [
+        "public", "agency_instrumented", "paid"]
+    assert schema_loader.property_values(SCHEMA, "Practice")["scope"] == [
+        "dataset", "api", "bulk_file", "tool", "content", "advisory", "site", "any"]
+    assert "practitioner" in schema_loader.property_values(SCHEMA, "Document")["source_type"]
+    assert schema_loader.required_properties(SCHEMA, "Claim") == ["evidence_grade"]
+    assert schema_loader.required_properties(SCHEMA, "Measure") == []

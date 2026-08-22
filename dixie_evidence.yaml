@@ -8,7 +8,7 @@ evidence_dir: corpus/evidence
 quarantine_dir: corpus/quarantine
 inbox_dir: corpus/inbox
 promote_dir: corpus/bulk          # verified inbox fulfillments land here
-document_dirs: [bulk, bulk_md, pilot, cisco]
+document_dirs: [bulk, bulk_md, pilot, cisco, kernel]   # kernel: task 2026-08-21_v03_visibility_kernel Phase 3
 manifest_out: corpus/manifest.json  # v2 projection; v1 preserved at corpus/manifest.v1.json
 
 integrity:
@@ -170,3 +170,15 @@ baseline_gate:
         fss realized: 11/92 documents with zero obligations = 11.96%, of which
         5 documented leave-empties + 4 genuinely narrative
         (kg_intrinsic_quality_report.md §1 population completeness).
+
+# Quality monitors (task 2026-08-21_v03_visibility_kernel Phase 6; DD-005 promotion-gate
+# metrics). Per-document control metrics with Shewhart individuals-chart limits
+# (mean ± sigma·SD over the baseline epoch). Thresholds here are task-declared STOP values
+# (Phase 4/5), not tunables; scripts/quality_monitors.py reads them and never adjusts them.
+quality_monitors:
+  baseline_profile: v1                 # v0.2 corpus: the epoch whose docs define the control limits
+  sigma: 3
+  quarantine_stop_rate: 0.15           # task Phase 4/5 per-doc STOP / flag threshold
+  evidence_grade_missing_stop_fraction: 0.10   # task Phase 4 STOP: missing on >10% of Claims
+  evidence_grade_required_from_schema: "0.3"   # Claims stamped at/after this schema version must carry a grade
+  metrics_dir: corpus/staging/metrics

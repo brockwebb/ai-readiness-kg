@@ -1,0 +1,328 @@
+{
+ "docs": {
+  "google-dataset-structured-data": {
+   "status": "extracted",
+   "clause": "b",
+   "source_type": "industry",
+   "chars": 34516,
+   "nodes": 74,
+   "edges": 96,
+   "quarantined": 6,
+   "quarantine_rate": 0.0341,
+   "quarantine_reasons": {
+    "unresolved endpoint id (missing or quarantined node)": 6
+   },
+   "concepts_per_1k_tokens": 2.5495,
+   "density_z_vs_v02": -0.341,
+   "proposed_relationships_count": 5,
+   "proposed_names": [
+    "belongs_to_catalog",
+    "has_format",
+    "has_required_property",
+    "has_subdataset",
+    "serializable_as"
+   ],
+   "claims": 9,
+   "evidence_grade_distribution": {
+    "platform_official": 8,
+    "practitioner_assertion": 1
+   },
+   "grade_missing_fraction": 0.0,
+   "platform_official_from_nonplatform": 0,
+   "stop_quarantine": false,
+   "stop_grade_missing": false
+  },
+  "w3c-dwbp-2017": {
+   "status": "extracted",
+   "clause": "a",
+   "source_type": "standard",
+   "chars": 177270,
+   "nodes": 153,
+   "edges": 231,
+   "quarantined": 1,
+   "quarantine_rate": 0.0026,
+   "quarantine_reasons": {
+    "unresolved endpoint id (missing or quarantined node)": 1
+   },
+   "concepts_per_1k_tokens": 1.5118,
+   "density_z_vs_v02": -0.422,
+   "proposed_relationships_count": 5,
+   "proposed_names": [
+    "complemented_by",
+    "consumed_by_user_agent",
+    "has_evidence_requirement",
+    "implemented_via",
+    "provides_benefit"
+   ],
+   "claims": 13,
+   "evidence_grade_distribution": {
+    "inference": 11,
+    "practitioner_assertion": 2
+   },
+   "grade_missing_fraction": 0.0,
+   "platform_official_from_nonplatform": 0,
+   "stop_quarantine": false,
+   "stop_grade_missing": false
+  },
+  "aggarwal-2024-geo-generative-engine-optimization": {
+   "status": "extracted",
+   "clause": "c",
+   "source_type": "academic",
+   "chars": 69803,
+   "nodes": 84,
+   "edges": 129,
+   "quarantined": 1,
+   "quarantine_rate": 0.0047,
+   "quarantine_reasons": {
+    "grounding_span not found in source text": 1
+   },
+   "concepts_per_1k_tokens": 2.0629,
+   "density_z_vs_v02": -0.379,
+   "proposed_relationships_count": 4,
+   "proposed_names": [
+    "combines_with",
+    "distinct_from",
+    "effect_varies_by_ranking_tier",
+    "most_effective_in_domain"
+   ],
+   "claims": 16,
+   "evidence_grade_distribution": {
+    "peer_reviewed_experiment": 13,
+    "inference": 3
+   },
+   "grade_missing_fraction": 0.0,
+   "platform_official_from_nonplatform": 0,
+   "stop_quarantine": false,
+   "stop_grade_missing": false
+  },
+  "digital-gov-dap-guide": {
+   "status": "extracted",
+   "clause": "d",
+   "source_type": "federal",
+   "chars": 3826,
+   "nodes": 23,
+   "edges": 37,
+   "quarantined": 0,
+   "quarantine_rate": 0.0,
+   "quarantine_reasons": {},
+   "concepts_per_1k_tokens": 11.5063,
+   "density_z_vs_v02": 0.361,
+   "proposed_relationships_count": 4,
+   "proposed_names": [
+    "enterprise_version_of",
+    "mandates_use_of",
+    "provided_by_org_GSA",
+    "uses"
+   ],
+   "claims": 6,
+   "evidence_grade_distribution": {
+    "platform_official": 5,
+    "practitioner_assertion": 1
+   },
+   "grade_missing_fraction": 0.0,
+   "platform_official_from_nonplatform": 5,
+   "stop_quarantine": false,
+   "stop_grade_missing": false
+  },
+  "cloudflare-ai-crawl-control": {
+   "status": "extracted",
+   "clause": "b",
+   "source_type": "industry",
+   "chars": 3501,
+   "nodes": 25,
+   "edges": 41,
+   "quarantined": 0,
+   "quarantine_rate": 0.0,
+   "quarantine_reasons": {},
+   "concepts_per_1k_tokens": 12.5714,
+   "density_z_vs_v02": 0.444,
+   "proposed_relationships_count": 3,
+   "proposed_names": [
+    "has_release_status",
+    "related_product",
+    "renamed_from"
+   ],
+   "claims": 4,
+   "evidence_grade_distribution": {
+    "practitioner_assertion": 1,
+    "platform_official": 3
+   },
+   "grade_missing_fraction": 0.0,
+   "platform_official_from_nonplatform": 0,
+   "stop_quarantine": false,
+   "stop_grade_missing": false
+  }
+ },
+ "extracted": 5,
+ "v02_density_baseline": {
+  "mean": 6.899042253521126,
+  "sd": 12.773385909546032,
+  "lcl": 0.0,
+  "ucl": 45.21919998215922
+ },
+ "pilot_density_mean": 6.040380000000001,
+ "pilot_quarantine_rate_pooled": 0.008879023307436182,
+ "evidence_grade_distribution_all": {
+  "platform_official": 16,
+  "practitioner_assertion": 5,
+  "inference": 14,
+  "peer_reviewed_experiment": 13
+ },
+ "platform_official_from_nonplatform_total": 5,
+ "claims_total": 48,
+ "proposed_relationship_names": {
+  "belongs_to_catalog": {
+   "n": 1,
+   "docs": [
+    "google-dataset-structured-data"
+   ],
+   "grounded": 1
+  },
+  "has_subdataset": {
+   "n": 1,
+   "docs": [
+    "google-dataset-structured-data"
+   ],
+   "grounded": 1
+  },
+  "has_format": {
+   "n": 1,
+   "docs": [
+    "google-dataset-structured-data"
+   ],
+   "grounded": 1
+  },
+  "has_required_property": {
+   "n": 1,
+   "docs": [
+    "google-dataset-structured-data"
+   ],
+   "grounded": 1
+  },
+  "serializable_as": {
+   "n": 1,
+   "docs": [
+    "google-dataset-structured-data"
+   ],
+   "grounded": 1
+  },
+  "provides_benefit": {
+   "n": 1,
+   "docs": [
+    "w3c-dwbp-2017"
+   ],
+   "grounded": 1
+  },
+  "has_evidence_requirement": {
+   "n": 1,
+   "docs": [
+    "w3c-dwbp-2017"
+   ],
+   "grounded": 1
+  },
+  "implemented_via": {
+   "n": 1,
+   "docs": [
+    "w3c-dwbp-2017"
+   ],
+   "grounded": 1
+  },
+  "complemented_by": {
+   "n": 1,
+   "docs": [
+    "w3c-dwbp-2017"
+   ],
+   "grounded": 1
+  },
+  "consumed_by_user_agent": {
+   "n": 1,
+   "docs": [
+    "w3c-dwbp-2017"
+   ],
+   "grounded": 1
+  },
+  "most_effective_in_domain": {
+   "n": 1,
+   "docs": [
+    "aggarwal-2024-geo-generative-engine-optimization"
+   ],
+   "grounded": 1
+  },
+  "combines_with": {
+   "n": 1,
+   "docs": [
+    "aggarwal-2024-geo-generative-engine-optimization"
+   ],
+   "grounded": 1
+  },
+  "effect_varies_by_ranking_tier": {
+   "n": 1,
+   "docs": [
+    "aggarwal-2024-geo-generative-engine-optimization"
+   ],
+   "grounded": 1
+  },
+  "distinct_from": {
+   "n": 1,
+   "docs": [
+    "aggarwal-2024-geo-generative-engine-optimization"
+   ],
+   "grounded": 1
+  },
+  "uses": {
+   "n": 1,
+   "docs": [
+    "digital-gov-dap-guide"
+   ],
+   "grounded": 1
+  },
+  "enterprise_version_of": {
+   "n": 1,
+   "docs": [
+    "digital-gov-dap-guide"
+   ],
+   "grounded": 1
+  },
+  "provided_by_org_GSA": {
+   "n": 1,
+   "docs": [
+    "digital-gov-dap-guide"
+   ],
+   "grounded": 1
+  },
+  "mandates_use_of": {
+   "n": 1,
+   "docs": [
+    "digital-gov-dap-guide"
+   ],
+   "grounded": 1
+  },
+  "renamed_from": {
+   "n": 1,
+   "docs": [
+    "cloudflare-ai-crawl-control"
+   ],
+   "grounded": 1
+  },
+  "has_release_status": {
+   "n": 1,
+   "docs": [
+    "cloudflare-ai-crawl-control"
+   ],
+   "grounded": 1
+  },
+  "related_product": {
+   "n": 1,
+   "docs": [
+    "cloudflare-ai-crawl-control"
+   ],
+   "grounded": 1
+  }
+ },
+ "schema_patch_rule": {
+  "min_occurrences": 3,
+  "min_docs": 2,
+  "candidates_v031": []
+ },
+ "stop_triggered": false
+}

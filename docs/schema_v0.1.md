@@ -1,8 +1,8 @@
-# ai-readiness-kg — Extraction Schema v0.2
+# ai-readiness-kg — Extraction Schema v0.3
 
 *(File path retained as `schema_v0.1.md` for reference stability; the authoritative version is `schema_version` in `kg/schema.yaml` and this changelog.)*
 
-**Status:** Draft, unlocked. v0.2 promoted from the Fable pilot §9 audit (2026-07-03).
+**Status:** Draft, unlocked. v0.2 promoted from the Fable pilot §9 audit (2026-07-03); v0.3 (2026-08-21) adds the machine-visibility kernel types, append-only.
 **Pattern lineage:** forks fss-policy-kg (manifest ingestion, JSONL event sourcing, verbatim grounding, FastMCP verbs). Schema is new: claims-and-constructs, not obligations.
 
 **Changelog (draft, unlocked):**
@@ -10,6 +10,7 @@
 - 2026-07-03 (task `2026-07-03_pilot_extraction_run`, precondition rider): schema.yaml edge types now carry explicit `pairs` (legal endpoint pairs); the parser enforces strict index-pairing. A whitelisted edge with an illegal endpoint pair routes to `proposed_relationships` (§9 expressiveness signal), not the graph.
 - 2026-07-03 (task `2026-07-03_pilot_extraction_run_v4/v5`, §5 rider): §5 made model-agnostic — the whole-document protocol lives here; the extraction model is pinned in `kg/extraction/model_config.yaml` and stamped per item (§4), not named in the schema.
 - 2026-07-03 (task `2026-07-03_schema_v02_promotion_rebaseline`, §9 pilot audit → **v0.2**): append-only edge additions — `uses_measure`, `measures` (extended to Concept endpoints), `has_component`, `subtype_of`, `precedes` — each with an `external_alignment` URI (schema.yaml). **No new node types:** `Organization` and `Project` were proposed in the pilot but REJECTED (document scope is a property, not a node forest; external ontologies are referenced via §8, never imported as node forests). Prompt template bumped to require character-exact grounding spans (v0.2.0), stamped in extraction events.
+- 2026-08-21 (task `2026-08-21_v03_visibility_kernel`, Phase 1, AUTH-1 → **v0.3**, DD-009/DD-010): append-only. The machine-visibility / machine-actionability literature joins this graph (one graph, DD-009). **Node types added:** `Practice`, `Tool`, `Platform`. **Properties added:** `Claim.evidence_grade` (REQUIRED on every Claim extracted under v0.3; absent or outside the enum ⇒ quarantine — DD-010), `Measure.tier` (optional; enum-enforced when present), `Document.source_type` gains `practitioner`. **Edge types added:** `recommends`, `supported_by`, `implemented_by`, `consumes`, `applies_to`, `targets`, `supersedes` — each with `pairs`, `meaning`, and an `external_alignment` (PROV / DCTERMS / SOSA / schema.org) in `kg/schema.yaml`. Enum lists and the required-property rule live in `kg/schema.yaml` (`property_values`, `required_properties`) and are read by the parser, never duplicated in code. Prompt template bumped to v0.3.0 (describes the new types/edges, requires `evidence_grade`), stamped in extraction events as before. Nothing existing renamed or removed (`tests/test_schema_append_only.py` freezes the v0.2 catalogue as the reference).
 
 ---
 
@@ -25,19 +26,23 @@ The graph is the validity layer under the FSS AI readiness survey and the defini
 
 | Type | What it is | Key properties |
 |---|---|---|
-| Document | A manifest entry. Primary source only. | doc_id, title, authors, pub_date, source_type (federal / academic / industry / standard / intergovernmental), primary_url, content_hash, manifest_event_id |
+| Document | A manifest entry. Primary source only. | doc_id, title, authors, pub_date, source_type (federal / academic / industry / standard / intergovernmental / practitioner — v0.3), primary_url, content_hash, manifest_event_id |
 | Definition | A verbatim definition of a term as given by one source. | term, verbatim_text, grounding_span, normative_status (statute / policy / standard / academic / industry), as_of_date |
 | Concept | Any substantive idea a document uses. Exhaustive layer, extracted first-class from event one. | name, aliases, description, grounding_span |
 | Construct | A measurable readiness dimension (e.g. discoverability, provenance completeness). A Concept promoted to measurability. | name, description, measurement_notes |
 | Instrument | An existing assessment, survey, index, or benchmark. | name, owner, year, method |
-| Measure | An individual item or metric inside an Instrument. | text, response_type, grounding_span |
-| Claim | A falsifiable assertion a document makes (X improves Y, A requires B). | claim_text, grounding_span, claim_type (empirical / normative / speculative) |
+| Measure | An individual item or metric inside an Instrument. | text, response_type, grounding_span, tier (optional, v0.3: public / agency_instrumented / paid) |
+| Claim | A falsifiable assertion a document makes (X improves Y, A requires B). | claim_text, grounding_span, claim_type (empirical / normative / speculative), evidence_grade (REQUIRED, v0.3: peer_reviewed_experiment / platform_official / measured_practitioner / practitioner_assertion / inference — descending strength, DD-010) |
 | Standard | A technical spec (DCAT, ISO 19115, schema.org, llms.txt, MCP). | name, version, steward, as_of_date |
 | Framework | A conceptual structure (NIST AI RMF, FAIR, Data Readiness Levels). | name, owner, year |
+| Practice | A normative recommendation a source makes about how to publish, structure, expose, or maintain data or content for machine consumers. (v0.3) | text, grounding_span, as_of_date, scope (dataset / api / bulk_file / tool / content / advisory / site / any) |
+| Tool | Software that implements one or more Measures (Lighthouse, Scrapy, pySHACL, LinkChecker, GoAccess, Spectral, extruct, GSA Site Scanning engine, DAP). (v0.3) | name, steward, license, url, as_of_date, grounding_span |
+| Platform | A machine consumer whose behavior is targeted or described: Google Search, Bing, a named crawler, an LLM vendor's retrieval system, Cloudflare/Akamai bot controls. (v0.3) | name, operator, as_of_date, grounding_span |
 
 Notes:
 - Concept vs Construct: every Construct is a Concept, promoted only when someone has measured it or plausibly could. Promotion is an explicit event, not an extraction decision.
 - Document scope is a property, not a partition. One graph, whole problem space.
+- v0.3 property semantics: `Claim.evidence_grade` is the strength of the evidence behind the claim, in descending order — `peer_reviewed_experiment` (published, reviewed experiment), `platform_official` (the platform operator's own statement about its own behavior), `measured_practitioner` (disclosed method and data), `practitioner_assertion` (no method), `inference` (reasoned, not observed). Required on every Claim extracted under v0.3; a Claim without it is quarantined (DD-010). `Measure.tier` says who can run the measure — `public` (anyone, from outside), `agency_instrumented` (needs agency-side analytics, scripts, logs), `paid` (commercial product); optional, present when the source states or implies it. `Practice.scope` is the asset class the recommendation is about. `Tool` and `Platform` carry `grounding_span` because §4 applies to every extracted node; the task listed only their domain properties.
 
 ## 3. Edge types
 
@@ -59,8 +64,15 @@ Notes:
 | has_component | Framework → Concept; Concept → Concept | Part-whole component, **never** is-a (v0.2) |
 | subtype_of | Concept → Concept | Is-a / subclass, **never** part-whole (v0.2) |
 | precedes | Concept → Concept | Ordinal/temporal precedence (v0.2) |
+| recommends | Document → Practice | Source makes this normative recommendation (v0.3) |
+| supported_by | Practice → Claim | The practice rests on this claim; the claim's `evidence_grade` is the strength behind the recommendation (v0.3) |
+| implemented_by | Measure → Tool | This software computes / runs the measure (v0.3) |
+| consumes | Platform → Standard | Platform reads / honors this spec (v0.3) |
+| applies_to | Practice → Concept; Measure → Concept | The asset class or concept the practice/measure targets; asset classes live as Concepts anchored via §8 to DCAT 3 / schema.org terms (Dataset, Distribution, DataService, DataCatalog, WebApplication, Report, DefinedTerm) (v0.3) |
+| targets | Practice → Platform | Practice is aimed at this machine consumer (v0.3) |
+| supersedes | Document → Document | Newer platform/guidance document replaces an earlier version. Distinct from the `extraction_superseded` overlay event, which is about extraction runs, not documents (v0.3) |
 
-Cardinality is open everywhere. Constraint enforcement is type-validity only: an edge type not in this table cannot be written to the graph. Each v0.2 edge carries an `external_alignment` URI in `kg/schema.yaml` (SOSA / BFO / RDFS) — a reference anchor, not an imported ontology (§8).
+Cardinality is open everywhere. Constraint enforcement is type-validity only: an edge type not in this table cannot be written to the graph. Each v0.2 edge carries an `external_alignment` URI in `kg/schema.yaml` (SOSA / BFO / RDFS) — a reference anchor, not an imported ontology (§8). Each v0.3 edge likewise carries one (PROV `wasAttributedTo` / `wasDerivedFrom`, SOSA `madeBySensor`, DCTERMS `conformsTo` / `subject` / `replaces`, schema.org `audience`); where no reasonable anchor exists the key is written literally as `external_alignment: none`, never omitted.
 
 ## 4. Universal provenance properties
 

@@ -25,15 +25,15 @@ def test_guard_passes_without_credentials():
     model_stub.guard_no_api_key(env={})  # no raise
 
 
-def test_prompt_version_is_v020():
-    assert model_stub.prompt_version() == "0.2.0"
+def test_prompt_version_is_v030():
+    assert model_stub.prompt_version() == "0.3.0"
 
 
 def test_provenance_stamp_shape_and_override():
     stamp = model_stub.provenance_stamp("evt123")
     assert stamp["extraction_event_id"] == "evt123"
     assert stamp["schema_version"] and stamp["timestamp"]
-    assert stamp["prompt_version"] == "0.2.0"  # §4: prompt version stamped per item
+    assert stamp["prompt_version"] == "0.3.0"  # §4: prompt version stamped per item
     # envelope-reported model overrides the config default
     assert model_stub.provenance_stamp("e", model_id="claude-fable-5-x")["model_id"] == "claude-fable-5-x"
 
@@ -54,5 +54,7 @@ def test_model_substitution_error_carries_observed():
 def test_extract_json_tolerates_fences():
     assert model_stub._extract_json('```json\n{"a": 1}\n```') == {"a": 1}
     assert model_stub._extract_json('preamble {"b": 2} trailing') == {"b": 2}
-    with pytest.raises(model_stub.ModelConfigError):
+    # No parseable JSON is a per-document invocation failure (driver retries/skips), NOT a
+    # config fault fatal to every document — see _extract_json docstring (2026-07-09 fix).
+    with pytest.raises(model_stub.ModelInvocationError):
         model_stub._extract_json("no json here")

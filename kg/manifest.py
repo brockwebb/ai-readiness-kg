@@ -45,8 +45,10 @@ _DIXIE_CONFIG_PATH = _REPO_ROOT / "dixie_evidence.yaml"
 _MANIFEST_BATCH = 1
 
 _MANIFEST_ADD = "manifest_add"
-# Kept in sync with schema.yaml Document.source_type (intergovernmental added 2026-07-03, R1).
-_SOURCE_TYPES = ("federal", "academic", "industry", "standard", "intergovernmental")
+# Kept in sync with schema.yaml Document.source_type (intergovernmental added 2026-07-03, R1;
+# practitioner added 2026-08-21, schema v0.3 / DD-009 — SME or industry-practitioner guidance
+# that is not a vendor product page).
+_SOURCE_TYPES = ("federal", "academic", "industry", "standard", "intergovernmental", "practitioner")
 _DOC_ID_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 
 # Fields the caller must supply (non-empty). local_path and content_hash are computed;

@@ -9,6 +9,10 @@ Enforced here, in code (not by convention):
   and routed to proposed_relationships — it never reaches the valid-edge set.
 - **Endpoint type-validity (§3):** a known edge whose (from_type -> to_type) is not allowed
   is quarantined.
+- **Property enums and required properties (v0.3, DD-010):** a node whose enumerated property
+  (schema ``property_values``) holds a value outside the enum is quarantined; a node missing a
+  property the schema lists under ``required_properties`` (Claim.evidence_grade) is quarantined
+  with a clear reason. Both lists are read from schema.yaml, never duplicated here.
 
 proposed_relationships (model-supplied plus auto-routed unknown edges) are staged for
 operator batch review (§6); this parser never writes them to the graph.
@@ -32,6 +36,10 @@ LAYER_TYPES = {
     "standards": "Standard",
     "frameworks": "Framework",
     "constructs": "Construct",
+    # v0.3 (DD-009): machine-visibility node types.
+    "practices": "Practice",
+    "tools": "Tool",
+    "platforms": "Platform",
 }
 
 
@@ -54,6 +62,22 @@ class ExtractionResult:
 
 def _quarantine(result, kind, reason, item):
     result.quarantined.append({"kind": kind, "reason": reason, "item": item})
+
+
+def _property_violation(schema: dict, node_type: str, item: dict) -> str | None:
+    """Reason string if ``item`` violates the node type's property contract, else None.
+    Required properties (schema ``required_properties``) must be present and non-empty;
+    enumerated properties (schema ``property_values``) must hold a listed value when present.
+    Checked AFTER the grounding gate so a grounding miss keeps its own, more specific reason."""
+    for prop in schema_loader.required_properties(schema, node_type):
+        val = item.get(prop)
+        if val is None or (isinstance(val, str) and not val.strip()):
+            return f"{node_type} missing required property '{prop}' (schema v0.3; absent => quarantine)"
+    for prop, allowed in schema_loader.property_values(schema, node_type).items():
+        if prop in item and item[prop] is not None and item[prop] not in allowed:
+            return (f"{node_type}.{prop} value {item[prop]!r} not in schema enum "
+                    f"{list(allowed)}")
+    return None
 
 
 def parse_extraction(output: dict, source_text: str, schema: dict | None = None) -> ExtractionResult:
@@ -88,6 +112,10 @@ def parse_extraction(output: dict, source_text: str, schema: dict | None = None)
                 continue
             if not grounding.is_grounded(span, source_text):
                 _quarantine(result, layer, "grounding_span not found in source text", item)
+                continue
+            violation = _property_violation(schema, node_type, item)
+            if violation:
+                _quarantine(result, layer, violation, item)
                 continue
             id_types[nid] = node_type
             result.nodes.append({"id": nid, "type": node_type, "item": item})

@@ -15,13 +15,17 @@ Per-document loop:
   -> per-doc STOP discipline: quarantine_rate > 10% or model substitution
      -> STOP file written; run halts until the operator removes it.
 
-Chunk-resumable: completed docs are detected from batch-004 build_metrics
+Run identity (corpus epoch, event shard, raw dir, STOP file, oversize clearances)
+comes from scripts/run_profiles.yaml via --profile; the default profile is v1 so the
+launchd wrapper's behavior is unchanged (task 2026-08-21_v03_visibility_kernel).
+
+Chunk-resumable: completed docs are detected from the profile shard's build_metrics
 events; an interrupted run re-fires without re-burning. Cap exhaustion is a
 CLEAN NO-OP (exit 0) — the next window resumes automatically (panel day-roll
 clears tripped:daily).
 
 Raw-response path convention (alongside events, keyed by doc sha256 + prompt
-epoch + model_id): events/raw/bulk_v1/<doc_id>.<sha12>.<prompt_epoch>.<model_id>.json
+epoch + model_id): <raw_dir>/<doc_id>.<sha12>.<prompt_epoch>.<model_id>.json
 """
 from __future__ import annotations
 
@@ -34,6 +38,8 @@ import subprocess
 import sys
 from pathlib import Path
 
+import yaml
+
 REPO = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO))
 sys.path.insert(0, str(Path.home() / ".wintermute" / "scripts" / "lib"))
@@ -45,12 +51,19 @@ from dixie.evidence.config import load_config as dixie_config      # noqa: E402
 from dixie.evidence.eventlog import EventLog as DixieLog           # noqa: E402
 from dixie.evidence.manifest import build_manifest                 # noqa: E402
 
-# --- run constants (task-declared, not tunables) --------------------------------
-CORPUS_EPOCH = "v1"
-BULK_BATCH = 4                     # events/batch-004.jsonl — this run's shard
+# --- run constants -----------------------------------------------------------------
+# Per-run identity (corpus epoch, shard, raw dir, STOP file, oversize clearances) comes
+# from scripts/run_profiles.yaml, selected by --profile (task 2026-08-21_v03_visibility_kernel:
+# the kernel run needs its own epoch/shard without touching v1 behavior). The module-level
+# names below are resolved at call time by every function, so apply_profile() sets them
+# once in main() — same pattern as state.EXTRACTION_BATCH.
+PROFILES_PATH = Path(__file__).resolve().parent / "run_profiles.yaml"
+PROFILE_NAME: str | None = None
+CORPUS_EPOCH: str = ""
+BULK_BATCH: int = 0
 CIRCUIT = "extraction"
 PROJECT = "ai-readiness-kg"
-JOB = "airkg-extraction-burn"
+JOB: str = ""
 PRIORITY_CLASS = "deadline"
 QUARANTINE_STOP_RATE = 0.10        # pilot v5 pre-registered per-doc STOP (threshold — do NOT retune)
 # STOP-trigger scope. "per_doc" (default) = pre-registered behavior: any single doc over
@@ -61,30 +74,46 @@ QUARANTINE_STOP_RATE = 0.10        # pilot v5 pre-registered per-doc STOP (thres
 QUARANTINE_STOP_MODE = os.environ.get("BURN_QUARANTINE_STOP_MODE", "per_doc")
 QUARANTINE_SYSTEMIC_WINDOW = 3
 MAX_DOC_CHARS = 250_000            # oversize docs are DEFERRED with reason, never truncated
-# Per-doc oversize clearances (operator-authorized, ledgered). A named allowlist —
-# NOT a raised cap — so genuinely-unfit docs (e.g. mis-acquired enclosing statutes
-# that exceed context) keep deferring. Each entry is a single full-context call;
-# truncation is still forbidden. Cleared 2026-07-07 by operator: the TRL report is a
-# 329k-char JRC technical report (~82k tok), fits one Opus call with grounding intact.
-OVERSIZE_ALLOW = {
-    "ai-watch-revisiting-technology-readiness-levels-for-relevant",
-    # 2026-07-08 boost: two legitimate large reports (fit one Opus call; grounding
-    # intact). NOT information-quality-act (2.1M chars = a provision inside a whole
-    # statute, almost certainly mis-acquired like the megastatutes — stays deferred
-    # pending refetch).
-    "arm-ai-readiness-index",          # ~250k chars / ~62k tok — ARM AI readiness index
-    "nist-ai-rmf-playbook",            # ~339k chars / ~85k tok — NIST AI RMF Playbook
-    # 2026-07-09 boost v3: three legit large reports just over the conservative 250k-char
-    # guard but comfortably one Opus call (~67-72k tok); grounding intact, not truncated.
-    "building-an-ai-ready-public-workforce",        # 266,932 chars / ~67k tok
-    "fcsm-20-04-a-framework-for-data-quality",      # 269,719 chars / ~67k tok
-    "introducing-the-oecd-ai-capability-indicators",# 287,110 chars / ~72k tok
-    # 2026-07-16 operator clearance: standing directive "I don't care how big any
-    # doc is, just clear them" (ledgered). Clean NCES re-acquisition superseded the
-    # corrupt bulk copy (sha 0a1cfc21… 'no endstream marker'); 361,161 chars / ~90k
-    # tok — single full-context Opus call, grounding intact, NOT truncated.
-    "fcsm-19-01-transparent-reporting-for-integrated-data-quality",  # 361,161 chars / ~90k tok
-}
+# Per-doc oversize clearances (operator-authorized, ledgered) — a named allowlist from the
+# profile, NOT a raised cap — so genuinely-unfit docs keep deferring. Each entry is a
+# single full-context call; truncation is still forbidden.
+OVERSIZE_ALLOW: set[str] = set()
+ORDER: str = "alphabetical"
+RAW_DIR: Path = REPO / "events" / "raw" / "_unset"
+STOP_FILE: Path = REPO / "events" / "_unset_STOP.json"
+RESULT_FILE: Path = REPO / "_unset_RESULT.md"
+
+
+def apply_profile(name: str | None) -> str:
+    """Resolve a run profile from run_profiles.yaml into the module-level run constants.
+    Fail loud on a missing file/profile/key (standard 4) — a silently-defaulted epoch or
+    shard would write events into the wrong run."""
+    global PROFILE_NAME, CORPUS_EPOCH, BULK_BATCH, JOB, OVERSIZE_ALLOW, ORDER
+    global RAW_DIR, STOP_FILE, RESULT_FILE
+    if not PROFILES_PATH.is_file():
+        raise SystemExit(f"FATAL: run profiles not found: {PROFILES_PATH}")
+    doc = yaml.safe_load(PROFILES_PATH.read_text(encoding="utf-8"))
+    name = name or doc.get("default")
+    prof = (doc.get("profiles") or {}).get(name)
+    if not prof:
+        raise SystemExit(f"FATAL: no profile {name!r} in {PROFILES_PATH}; "
+                         f"known: {sorted((doc.get('profiles') or {}))}")
+    for key in ("corpus_epoch", "batch", "raw_dir", "stop_file", "result_file", "job",
+                "order", "oversize_allow"):
+        if key not in prof:
+            raise SystemExit(f"FATAL: profile {name!r} missing key {key!r}")
+    PROFILE_NAME = name
+    CORPUS_EPOCH = str(prof["corpus_epoch"])
+    BULK_BATCH = int(prof["batch"])
+    JOB = str(prof["job"])
+    OVERSIZE_ALLOW = set(prof["oversize_allow"] or [])
+    ORDER = str(prof["order"])
+    RAW_DIR = REPO / prof["raw_dir"]
+    STOP_FILE = REPO / prof["stop_file"]
+    RESULT_FILE = REPO / prof["result_file"]
+    return name
+
+
 PER_DOC_TIMEOUT_S = 1800
 MAX_DOC_ATTEMPTS = 2               # transport retry discipline: verbatim retry once
 # HARD operator ceiling on fleet parallelism (2026-07-09). More than 2 concurrent claude -p
@@ -93,17 +122,14 @@ MAX_DOC_ATTEMPTS = 2               # transport retry discipline: verbatim retry 
 # is a deliberate config edit here, not a launch-time flag.
 MAX_FLEET_WORKERS = int(os.environ.get("BURN_MAX_FLEET_WORKERS", "2"))
 
-RAW_DIR = REPO / "events" / "raw" / "bulk_v1"
-STOP_FILE = REPO / "events" / "bulk_v1_STOP.json"
-RESULT_FILE = REPO / "cc_tasks" / "2026-07-05_airkg_bulk_extraction_v1_RESULT.md"
 
 
 def _now() -> str:
     return datetime.datetime.now(datetime.timezone.utc).isoformat()
 
 
-def corpus_v1_members() -> dict[str, Path]:
-    """doc_id -> absolute source path for every v1 member, from the dixie ledger."""
+def corpus_members() -> dict[str, Path]:
+    """doc_id -> absolute source path for every member of CORPUS_EPOCH, from the dixie ledger."""
     cfg = dixie_config(REPO / "dixie_evidence.yaml")
     log = DixieLog(cfg["evidence_dir_abs"] / "decisions.jsonl")
     members: list[str] | None = None
@@ -119,8 +145,8 @@ def corpus_v1_members() -> dict[str, Path]:
         e = entries.get(doc_id)
         path = e and e["identity"].get("canonical_path")
         if not path or not (REPO / path).is_file():
-            raise SystemExit(f"FATAL: v1 member {doc_id!r} has no verified file on disk "
-                             f"({path}) — the frozen baseline is damaged; refusing to run")
+            raise SystemExit(f"FATAL: {CORPUS_EPOCH} member {doc_id!r} has no verified file on disk "
+                             f"({path}) — the frozen epoch is damaged; refusing to run")
         out[doc_id] = REPO / path
     return out
 
@@ -139,6 +165,21 @@ def resume_state() -> tuple[set[str], dict[str, int]]:
                 elif ev.get("event_type") == "bulk_doc_failed":
                     fails[ev["doc_id"]] = fails.get(ev["doc_id"], 0) + 1
     return done, fails
+
+
+def manifest_clauses(members: dict[str, Path]) -> dict[str, str]:
+    """doc_id -> inclusion-rule clause (a..e) from the latest manifest_add event per doc
+    (payload.acquisition.clause). Docs without a clause sort last."""
+    out: dict[str, str] = {}
+    for ev in eventlog.replay():
+        if ev.get("event_type") != "manifest_add":
+            continue
+        p = ev.get("payload") or {}
+        if p.get("doc_id") in members:
+            c = (p.get("acquisition") or {}).get("clause")
+            if c:
+                out[p["doc_id"]] = str(c)
+    return out
 
 
 def tokens_left() -> int:
@@ -212,15 +253,24 @@ def run(max_docs: int | None = None, dry_run: bool = False,
         return 2
     state.EXTRACTION_BATCH = BULK_BATCH  # this run's shard (resolved at call time)
 
-    members = corpus_v1_members()
+    members = corpus_members()
     done, fails = resume_state()
     # BURN_ORDER: "size_desc" knocks out the big docs first (boost mode — uses a wide
     # window on the expensive docs); default alphabetical. Resume is done-set based, so
     # reordering is safe (order affects only which undone doc goes next, not correctness).
     if os.environ.get("BURN_ORDER") == "size_desc":
         ordered = sorted(members, key=lambda d: members[d].stat().st_size, reverse=True)
-    else:
+    elif ORDER == "clause_then_size_asc":
+        # Rate-gated ordering (task 2026-08-21 Phase 5 / AUTH-5): inclusion-rule clause
+        # priority a..e, then char count ascending, so a spent window leaves the
+        # highest-priority, cheapest docs done. Clause from each doc's manifest_add event.
+        clause = manifest_clauses(members)
+        ordered = sorted(members, key=lambda d: (clause.get(d, "z"),
+                                                 members[d].stat().st_size, d))
+    elif ORDER == "alphabetical":
         ordered = sorted(members)
+    else:
+        raise SystemExit(f"FATAL: unknown order {ORDER!r} in profile {PROFILE_NAME!r}")
     # retry_failed re-opens docs that hit the fail ceiling (e.g. no-JSON responses during a
     # throttled window) for another pass — genuinely-bad docs simply re-fail and re-skip.
     todo = [d for d in ordered if d not in done
@@ -231,7 +281,7 @@ def run(max_docs: int | None = None, dry_run: bool = False,
         # that one doc. It bypasses the resume set and nothing else -- the oversize
         # guard, quarantine STOP, cap, gate and lease all still apply below.
         if only not in members:
-            raise SystemExit(f"--only {only!r} is not a corpus v1 member")
+            raise SystemExit(f"--only {only!r} is not a corpus {CORPUS_EPOCH} member")
         todo = [only]
     # Parallel workers: hash-partition the queue into N disjoint shards so no two workers
     # ever touch the same doc_id. Partition is stable (sha1 of doc_id), so a re-fire of the
@@ -243,7 +293,7 @@ def run(max_docs: int | None = None, dry_run: bool = False,
         todo = [d for d in todo
                 if int(hashlib.sha1(d.encode()).hexdigest(), 16) % sn == si]
         shard_label = f" | shard {si}/{sn}"
-    print(f"corpus v1: {len(members)} docs | done: {len(done)} | "
+    print(f"corpus {CORPUS_EPOCH} [{PROFILE_NAME}]: {len(members)} docs | done: {len(done)} | "
           f"skipped(failed x{MAX_DOC_ATTEMPTS}): "
           f"{sum(1 for d in members if fails.get(d, 0) >= MAX_DOC_ATTEMPTS)} | "
           f"todo: {len(todo)}{shard_label}")
@@ -308,8 +358,8 @@ def run(max_docs: int | None = None, dry_run: bool = False,
                 eventlog.append({"event_type": "bulk_doc_oversize_cleared",
                                  "doc_id": doc_id, "chars": len(text),
                                  "limit": MAX_DOC_CHARS,
-                                 "note": "operator-cleared 2026-07-07; single full-context "
-                                         "call, not truncated"},
+                                 "note": f"operator-cleared per run profile {PROFILE_NAME}; single "
+                                         "full-context call, not truncated"},
                                 batch=BULK_BATCH)
                 print(f"  {doc_id}: OVERSIZE ({len(text)} chars) — operator-cleared, extracting")
 
@@ -416,7 +466,7 @@ def run_fleet(n: int, max_docs: int | None, retry_failed: bool = False) -> int:
         return 0
     print(f"fleet: launching {n} parallel shard workers")
     try:
-        base = [sys.executable, str(Path(__file__).resolve())]
+        base = [sys.executable, str(Path(__file__).resolve()), "--profile", str(PROFILE_NAME)]
         if max_docs is not None:
             base += ["--max-docs", str(max_docs)]
         if retry_failed:
@@ -431,6 +481,8 @@ def run_fleet(n: int, max_docs: int | None, retry_failed: bool = False) -> int:
 
 def main() -> int:
     ap = argparse.ArgumentParser()
+    ap.add_argument("--profile", default=None,
+                    help="run profile from scripts/run_profiles.yaml (default: the file's `default`)")
     ap.add_argument("--max-docs", type=int, default=None)
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--fleet", type=int, default=None,
@@ -446,6 +498,7 @@ def main() -> int:
     ap.add_argument("--retry-failed", action="store_true",
                     help="re-open docs that hit the fail ceiling (e.g. throttled no-JSON) for another pass")
     args = ap.parse_args()
+    apply_profile(args.profile)
     if args.fleet is not None:
         if args.fleet < 1:
             ap.error("--fleet N requires N >= 1")

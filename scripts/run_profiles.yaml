@@ -1,0 +1,39 @@
+# Bulk-extraction run profiles (task 2026-08-21_v03_visibility_kernel, Phase 4/5).
+# Each profile is one corpus epoch + one event shard + one raw-response dir + one STOP file.
+# The runner selects a profile with --profile; `default` names the profile used when the
+# flag is absent so existing launchd fires keep their v1 behavior byte-for-byte.
+# Per-doc oversize clearances are ledgered operator decisions and live here as data, not
+# in code (standard 2). The kernel profile deliberately has NO allowlist (AUTH-4: oversize
+# specs are manifested at stated extent or registered oversize_needs_clearance, never
+# cleared whole).
+default: v1
+
+profiles:
+  v1:
+    corpus_epoch: v1
+    batch: 4                                   # events/batch-004.jsonl
+    raw_dir: events/raw/bulk_v1
+    stop_file: events/bulk_v1_STOP.json
+    result_file: cc_tasks/2026-07-05_airkg_bulk_extraction_v1_RESULT.md
+    job: airkg-extraction-burn
+    order: alphabetical                        # BURN_ORDER=size_desc still overrides
+    oversize_allow:
+      - ai-watch-revisiting-technology-readiness-levels-for-relevant   # cleared 2026-07-07
+      - arm-ai-readiness-index                                         # 2026-07-08 boost
+      - nist-ai-rmf-playbook                                           # 2026-07-08 boost
+      - building-an-ai-ready-public-workforce                          # 2026-07-09 boost v3
+      - fcsm-20-04-a-framework-for-data-quality                        # 2026-07-09 boost v3
+      - introducing-the-oecd-ai-capability-indicators                  # 2026-07-09 boost v3
+      - fcsm-19-01-transparent-reporting-for-integrated-data-quality   # 2026-07-16 operator clearance
+
+  kernel_v03:
+    corpus_epoch: kernel-v03
+    batch: 6                                   # events/batch-006.jsonl — kernel manifest + extraction shard
+    raw_dir: events/raw/kernel_v03
+    stop_file: events/kernel_v03_STOP.json
+    result_file: docs/research/2026-08-21_v03_burn_progress.md
+    job: airkg-kernel-burn
+    # Phase 5 rate-gated ordering: inclusion-rule clause priority (a..e), then char count
+    # ascending. Clause is read from each doc's manifest_add event (acquisition.clause).
+    order: clause_then_size_asc
+    oversize_allow: []
