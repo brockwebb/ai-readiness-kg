@@ -94,6 +94,9 @@ before `611d5dda…3684` → task `2e259690…148f` (extract on, 20/day) → aft
 3. Re-pre-register stability on positive agreement / a canonicalized identity after concept dedup.
 4. Operator fills `tevv_human_subset.jsonl` (40 items) → judge–human κ → faithfulness status re-stamped.
 
+## Commits
+`ai-readiness-kg@ed44907` → `origin/main`. dixie: no changes this task.
+
 ## Files
 **New:** `scripts/{annotate_platform_operator.py, platform_operators.yaml, tevv_retest.py, tevv_judge.py, tevv_stability.py, tevv_grade_calibration.py, tevv_pins/}`, `kg/extraction/judge_template.md`, `events/batch-007.jsonl`, `events/batch-008_tevv_retest.jsonl`, `events/raw/{tevv_retest, tevv_judge}/`, `corpus/staging/metrics/tevv_*`, `tests/{test_build_projection_filters, test_tevv_stability, test_tevv_gates}.py`, `docs/research/2026-08-22_tevv_*`.
 **Modified:** `kg/{eventlog.py, schema.yaml}`, `scripts/{build_projection.py, run_baseline_gates.py, quality_monitors.py}`, `dixie_evidence.yaml` (tevv_gates + realized; stability monitor floors), `docs/{schema_v0.1.md, design_decisions.md}`, tests ×3.
