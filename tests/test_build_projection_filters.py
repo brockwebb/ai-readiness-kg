@@ -27,3 +27,12 @@ def test_annotation_update_whitelists_property():
 
 def test_probe_judge_label_events_are_not_projectable():
     assert not bp.is_projectable({"event_type": "judge_label", "purpose": "probe"})
+
+
+def test_historical_overlays_are_not_quarantine_events():
+    # Enforcement is extraction-time only (repair Phase 5): overlays and the unrepairable
+    # annotation are ordinary graph events that project; nothing about them is filtered.
+    for et in ("grounding_relocated", "span_unrepairable", "attribute_nulled"):
+        assert bp.is_projectable({"event_type": et})
+    # and the overlay whitelist keeps payload-driven property names out of Cypher
+    assert "description" in bp.NULLABLE_ATTRIBUTES and "id" not in bp.NULLABLE_ATTRIBUTES

@@ -23,9 +23,18 @@ sys.path.insert(0, str(REPO))
 
 from kg.extraction import model_stub, schema_loader  # noqa: E402
 
+PREFIX = "probe"      # --prefix: reuse the protocol on another sample (e.g. repair success measure)
 SAMPLE = REPO / "corpus/staging/metrics/probe_sample.jsonl"
 OUT = REPO / "corpus/staging/metrics/probe_facts.jsonl"
 RAW_DIR = REPO / "events/raw/probe_decompose"
+
+
+def set_prefix(prefix: str) -> None:
+    global PREFIX, SAMPLE, OUT, RAW_DIR
+    PREFIX = prefix
+    SAMPLE = REPO / f"corpus/staging/metrics/{prefix}_sample.jsonl"
+    OUT = REPO / f"corpus/staging/metrics/{prefix}_facts.jsonl"
+    RAW_DIR = REPO / f"events/raw/{prefix}_decompose"
 TEMPLATE = REPO / "kg/extraction/decompose_template.md"
 FREE_TEXT = {"claim_text", "verbatim_text", "text", "description", "method", "measurement_notes"}
 BATCH = 8
@@ -64,7 +73,8 @@ def deterministic_facts(item: dict, se: dict) -> tuple[list[dict], list[tuple[st
 
 
 def main() -> int:
-    ap = argparse.ArgumentParser(); ap.add_argument("--dry-run", action="store_true"); a = ap.parse_args()
+    ap = argparse.ArgumentParser(); ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--prefix", default="probe"); a = ap.parse_args(); set_prefix(a.prefix)
     model_stub.guard_no_api_key()
     schema = schema_loader.load_schema(); dv = decompose_version(); cfg = model_stub.load_model_config()
     items = [json.loads(l) for l in SAMPLE.read_text(encoding="utf-8").splitlines() if l.strip()]

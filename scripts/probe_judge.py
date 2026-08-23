@@ -31,6 +31,14 @@ FACTS = REPO / "corpus/staging/metrics/probe_facts.jsonl"
 SAMPLE = REPO / "corpus/staging/metrics/probe_sample.jsonl"
 TEMPLATE = REPO / "kg/extraction/probe_judge_template.md"
 RAW_DIR = REPO / "events/raw/probe_judge"
+
+
+def set_prefix(prefix: str) -> None:
+    """Reuse the protocol on another sample; labels stay in the probe_judge shard, keyed by run."""
+    global FACTS, SAMPLE, RAW_DIR
+    FACTS = REPO / f"corpus/staging/metrics/{prefix}_facts.jsonl"
+    SAMPLE = REPO / f"corpus/staging/metrics/{prefix}_sample.jsonl"
+    RAW_DIR = REPO / f"events/raw/{prefix}_judge"
 TAG, BATCH_NO, PURPOSE = "probe_judge", 9, "probe"
 CLASSES = {"doc_level_attribute", "span_truncated", "subject_dropped", "filled_attribute",
            "fabrication", "grade_misassigned"}
@@ -119,7 +127,8 @@ def main() -> int:
     ap.add_argument("--fact-ids-file", default=None, help="JSON list of fact_ids to judge (default all)")
     ap.add_argument("--seed", type=int, default=20260822)
     ap.add_argument("--limit", type=int, default=None)
-    a = ap.parse_args()
+    ap.add_argument("--prefix", default="probe")
+    a = ap.parse_args(); set_prefix(a.prefix)
     model_stub.guard_no_api_key()
     cfg = model_stub.load_model_config()
     if a.model:

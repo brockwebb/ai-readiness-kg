@@ -1,0 +1,906 @@
+@prefix airkg: <https://brockwebb.github.io/ai-readiness-kg/schema#> .
+@prefix airkgsh: <https://brockwebb.github.io/ai-readiness-kg/shapes#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+airkgsh:ClaimShape a sh:NodeShape ;
+    rdfs:comment "Shape for airkg:Claim generated from kg/schema.yaml v0.3.2" ;
+    sh:property [ sh:maxCount 0 ;
+            sh:message "uses_measure is not a legal edge out of Claim (schema.yaml pairs)" ;
+            sh:path airkg:uses_measure ],
+        [ sh:maxCount 0 ;
+            sh:message "recommends is not a legal edge out of Claim (schema.yaml pairs)" ;
+            sh:path airkg:recommends ],
+        [ sh:maxCount 0 ;
+            sh:message "implemented_by is not a legal edge out of Claim (schema.yaml pairs)" ;
+            sh:path airkg:implemented_by ],
+        [ sh:maxCount 0 ;
+            sh:message "operationalizes is not a legal edge out of Claim (schema.yaml pairs)" ;
+            sh:path airkg:operationalizes ],
+        [ sh:class airkg:Claim ;
+            sh:message "Claim -conflicts_with-> must target Claim" ;
+            sh:path airkg:conflicts_with ],
+        [ sh:maxCount 0 ;
+            sh:message "cites is not a legal edge out of Claim (schema.yaml pairs)" ;
+            sh:path airkg:cites ],
+        [ sh:maxCount 0 ;
+            sh:message "builds_on is not a legal edge out of Claim (schema.yaml pairs)" ;
+            sh:path airkg:builds_on ],
+        [ sh:maxCount 0 ;
+            sh:message "measures is not a legal edge out of Claim (schema.yaml pairs)" ;
+            sh:path airkg:measures ],
+        [ sh:maxCount 0 ;
+            sh:message "consumes is not a legal edge out of Claim (schema.yaml pairs)" ;
+            sh:path airkg:consumes ],
+        [ sh:maxCount 0 ;
+            sh:message "has_component is not a legal edge out of Claim (schema.yaml pairs)" ;
+            sh:path airkg:has_component ],
+        [ sh:maxCount 0 ;
+            sh:message "extends is not a legal edge out of Claim (schema.yaml pairs)" ;
+            sh:path airkg:extends ],
+        [ sh:maxCount 0 ;
+            sh:message "applies_to is not a legal edge out of Claim (schema.yaml pairs)" ;
+            sh:path airkg:applies_to ],
+        [ sh:maxCount 0 ;
+            sh:message "grounds is not a legal edge out of Claim (schema.yaml pairs)" ;
+            sh:path airkg:grounds ],
+        [ sh:message "Claim.evidence_grade is required (schema.yaml required_properties)" ;
+            sh:minCount 1 ;
+            sh:path airkg:evidence_grade ],
+        [ sh:maxCount 0 ;
+            sh:message "targets is not a legal edge out of Claim (schema.yaml pairs)" ;
+            sh:path airkg:targets ],
+        [ sh:maxCount 0 ;
+            sh:message "implements is not a legal edge out of Claim (schema.yaml pairs)" ;
+            sh:path airkg:implements ],
+        [ sh:in ( "peer_reviewed_experiment" "platform_official" "measured_practitioner" "practitioner_assertion" "inference" ) ;
+            sh:message "Claim.evidence_grade must be one of the schema enum values" ;
+            sh:path airkg:evidence_grade ],
+        [ sh:maxCount 0 ;
+            sh:message "asserts is not a legal edge out of Claim (schema.yaml pairs)" ;
+            sh:path airkg:asserts ],
+        [ sh:maxCount 0 ;
+            sh:message "mentions is not a legal edge out of Claim (schema.yaml pairs)" ;
+            sh:path airkg:mentions ],
+        [ sh:maxCount 0 ;
+            sh:message "defines is not a legal edge out of Claim (schema.yaml pairs)" ;
+            sh:path airkg:defines ],
+        [ sh:class airkg:Concept ;
+            sh:message "Claim -about-> must target Concept" ;
+            sh:path airkg:about ],
+        [ sh:maxCount 0 ;
+            sh:message "subtype_of is not a legal edge out of Claim (schema.yaml pairs)" ;
+            sh:path airkg:subtype_of ],
+        [ sh:maxCount 0 ;
+            sh:message "supersedes is not a legal edge out of Claim (schema.yaml pairs)" ;
+            sh:path airkg:supersedes ],
+        [ sh:maxCount 0 ;
+            sh:message "precedes is not a legal edge out of Claim (schema.yaml pairs)" ;
+            sh:path airkg:precedes ],
+        [ sh:in ( "empirical" "normative" "speculative" ) ;
+            sh:message "Claim.claim_type must be one of the schema enum values" ;
+            sh:path airkg:claim_type ],
+        [ sh:maxCount 0 ;
+            sh:message "supported_by is not a legal edge out of Claim (schema.yaml pairs)" ;
+            sh:path airkg:supported_by ] ;
+    sh:targetClass airkg:Claim .
+
+airkgsh:ConceptShape a sh:NodeShape ;
+    rdfs:comment "Shape for airkg:Concept generated from kg/schema.yaml v0.3.2" ;
+    sh:property [ sh:maxCount 0 ;
+            sh:message "mentions is not a legal edge out of Concept (schema.yaml pairs)" ;
+            sh:path airkg:mentions ],
+        [ sh:maxCount 0 ;
+            sh:message "operationalizes is not a legal edge out of Concept (schema.yaml pairs)" ;
+            sh:path airkg:operationalizes ],
+        [ sh:maxCount 0 ;
+            sh:message "supersedes is not a legal edge out of Concept (schema.yaml pairs)" ;
+            sh:path airkg:supersedes ],
+        [ sh:maxCount 0 ;
+            sh:message "supported_by is not a legal edge out of Concept (schema.yaml pairs)" ;
+            sh:path airkg:supported_by ],
+        [ sh:class airkg:Concept ;
+            sh:message "Concept -subtype_of-> must target Concept" ;
+            sh:path airkg:subtype_of ],
+        [ sh:maxCount 0 ;
+            sh:message "recommends is not a legal edge out of Concept (schema.yaml pairs)" ;
+            sh:path airkg:recommends ],
+        [ sh:maxCount 0 ;
+            sh:message "applies_to is not a legal edge out of Concept (schema.yaml pairs)" ;
+            sh:path airkg:applies_to ],
+        [ sh:maxCount 0 ;
+            sh:message "targets is not a legal edge out of Concept (schema.yaml pairs)" ;
+            sh:path airkg:targets ],
+        [ sh:class airkg:Concept ;
+            sh:message "Concept -has_component-> must target Concept" ;
+            sh:path airkg:has_component ],
+        [ sh:maxCount 0 ;
+            sh:message "implements is not a legal edge out of Concept (schema.yaml pairs)" ;
+            sh:path airkg:implements ],
+        [ sh:maxCount 0 ;
+            sh:message "about is not a legal edge out of Concept (schema.yaml pairs)" ;
+            sh:path airkg:about ],
+        [ sh:maxCount 0 ;
+            sh:message "uses_measure is not a legal edge out of Concept (schema.yaml pairs)" ;
+            sh:path airkg:uses_measure ],
+        [ sh:maxCount 0 ;
+            sh:message "consumes is not a legal edge out of Concept (schema.yaml pairs)" ;
+            sh:path airkg:consumes ],
+        [ sh:maxCount 0 ;
+            sh:message "conflicts_with is not a legal edge out of Concept (schema.yaml pairs)" ;
+            sh:path airkg:conflicts_with ],
+        [ sh:maxCount 0 ;
+            sh:message "grounds is not a legal edge out of Concept (schema.yaml pairs)" ;
+            sh:path airkg:grounds ],
+        [ sh:maxCount 0 ;
+            sh:message "builds_on is not a legal edge out of Concept (schema.yaml pairs)" ;
+            sh:path airkg:builds_on ],
+        [ sh:maxCount 0 ;
+            sh:message "asserts is not a legal edge out of Concept (schema.yaml pairs)" ;
+            sh:path airkg:asserts ],
+        [ sh:maxCount 0 ;
+            sh:message "cites is not a legal edge out of Concept (schema.yaml pairs)" ;
+            sh:path airkg:cites ],
+        [ sh:maxCount 0 ;
+            sh:message "defines is not a legal edge out of Concept (schema.yaml pairs)" ;
+            sh:path airkg:defines ],
+        [ sh:maxCount 0 ;
+            sh:message "extends is not a legal edge out of Concept (schema.yaml pairs)" ;
+            sh:path airkg:extends ],
+        [ sh:maxCount 0 ;
+            sh:message "implemented_by is not a legal edge out of Concept (schema.yaml pairs)" ;
+            sh:path airkg:implemented_by ],
+        [ sh:maxCount 0 ;
+            sh:message "measures is not a legal edge out of Concept (schema.yaml pairs)" ;
+            sh:path airkg:measures ],
+        [ sh:class airkg:Concept ;
+            sh:message "Concept -precedes-> must target Concept" ;
+            sh:path airkg:precedes ] ;
+    sh:targetClass airkg:Concept .
+
+airkgsh:ConstructShape a sh:NodeShape ;
+    rdfs:comment "Shape for airkg:Construct generated from kg/schema.yaml v0.3.2" ;
+    sh:property [ sh:maxCount 0 ;
+            sh:message "subtype_of is not a legal edge out of Construct (schema.yaml pairs)" ;
+            sh:path airkg:subtype_of ],
+        [ sh:class airkg:Definition ;
+            sh:message "Construct -grounds-> must target Definition" ;
+            sh:path airkg:grounds ],
+        [ sh:maxCount 0 ;
+            sh:message "precedes is not a legal edge out of Construct (schema.yaml pairs)" ;
+            sh:path airkg:precedes ],
+        [ sh:maxCount 0 ;
+            sh:message "about is not a legal edge out of Construct (schema.yaml pairs)" ;
+            sh:path airkg:about ],
+        [ sh:maxCount 0 ;
+            sh:message "implements is not a legal edge out of Construct (schema.yaml pairs)" ;
+            sh:path airkg:implements ],
+        [ sh:maxCount 0 ;
+            sh:message "supersedes is not a legal edge out of Construct (schema.yaml pairs)" ;
+            sh:path airkg:supersedes ],
+        [ sh:maxCount 0 ;
+            sh:message "measures is not a legal edge out of Construct (schema.yaml pairs)" ;
+            sh:path airkg:measures ],
+        [ sh:maxCount 0 ;
+            sh:message "uses_measure is not a legal edge out of Construct (schema.yaml pairs)" ;
+            sh:path airkg:uses_measure ],
+        [ sh:maxCount 0 ;
+            sh:message "operationalizes is not a legal edge out of Construct (schema.yaml pairs)" ;
+            sh:path airkg:operationalizes ],
+        [ sh:maxCount 0 ;
+            sh:message "applies_to is not a legal edge out of Construct (schema.yaml pairs)" ;
+            sh:path airkg:applies_to ],
+        [ sh:maxCount 0 ;
+            sh:message "consumes is not a legal edge out of Construct (schema.yaml pairs)" ;
+            sh:path airkg:consumes ],
+        [ sh:maxCount 0 ;
+            sh:message "extends is not a legal edge out of Construct (schema.yaml pairs)" ;
+            sh:path airkg:extends ],
+        [ sh:maxCount 0 ;
+            sh:message "has_component is not a legal edge out of Construct (schema.yaml pairs)" ;
+            sh:path airkg:has_component ],
+        [ sh:maxCount 0 ;
+            sh:message "implemented_by is not a legal edge out of Construct (schema.yaml pairs)" ;
+            sh:path airkg:implemented_by ],
+        [ sh:maxCount 0 ;
+            sh:message "builds_on is not a legal edge out of Construct (schema.yaml pairs)" ;
+            sh:path airkg:builds_on ],
+        [ sh:maxCount 0 ;
+            sh:message "targets is not a legal edge out of Construct (schema.yaml pairs)" ;
+            sh:path airkg:targets ],
+        [ sh:maxCount 0 ;
+            sh:message "supported_by is not a legal edge out of Construct (schema.yaml pairs)" ;
+            sh:path airkg:supported_by ],
+        [ sh:maxCount 0 ;
+            sh:message "defines is not a legal edge out of Construct (schema.yaml pairs)" ;
+            sh:path airkg:defines ],
+        [ sh:maxCount 0 ;
+            sh:message "asserts is not a legal edge out of Construct (schema.yaml pairs)" ;
+            sh:path airkg:asserts ],
+        [ sh:maxCount 0 ;
+            sh:message "conflicts_with is not a legal edge out of Construct (schema.yaml pairs)" ;
+            sh:path airkg:conflicts_with ],
+        [ sh:maxCount 0 ;
+            sh:message "mentions is not a legal edge out of Construct (schema.yaml pairs)" ;
+            sh:path airkg:mentions ],
+        [ sh:maxCount 0 ;
+            sh:message "recommends is not a legal edge out of Construct (schema.yaml pairs)" ;
+            sh:path airkg:recommends ],
+        [ sh:maxCount 0 ;
+            sh:message "cites is not a legal edge out of Construct (schema.yaml pairs)" ;
+            sh:path airkg:cites ] ;
+    sh:targetClass airkg:Construct .
+
+airkgsh:DefinitionShape a sh:NodeShape ;
+    rdfs:comment "Shape for airkg:Definition generated from kg/schema.yaml v0.3.2" ;
+    sh:property [ sh:maxCount 0 ;
+            sh:message "supported_by is not a legal edge out of Definition (schema.yaml pairs)" ;
+            sh:path airkg:supported_by ],
+        [ sh:maxCount 0 ;
+            sh:message "supersedes is not a legal edge out of Definition (schema.yaml pairs)" ;
+            sh:path airkg:supersedes ],
+        [ sh:maxCount 0 ;
+            sh:message "has_component is not a legal edge out of Definition (schema.yaml pairs)" ;
+            sh:path airkg:has_component ],
+        [ sh:maxCount 0 ;
+            sh:message "measures is not a legal edge out of Definition (schema.yaml pairs)" ;
+            sh:path airkg:measures ],
+        [ sh:maxCount 0 ;
+            sh:message "precedes is not a legal edge out of Definition (schema.yaml pairs)" ;
+            sh:path airkg:precedes ],
+        [ sh:class airkg:Definition ;
+            sh:message "Definition -conflicts_with-> must target Definition" ;
+            sh:path airkg:conflicts_with ],
+        [ sh:maxCount 0 ;
+            sh:message "cites is not a legal edge out of Definition (schema.yaml pairs)" ;
+            sh:path airkg:cites ],
+        [ sh:maxCount 0 ;
+            sh:message "targets is not a legal edge out of Definition (schema.yaml pairs)" ;
+            sh:path airkg:targets ],
+        [ sh:maxCount 0 ;
+            sh:message "defines is not a legal edge out of Definition (schema.yaml pairs)" ;
+            sh:path airkg:defines ],
+        [ sh:maxCount 0 ;
+            sh:message "implements is not a legal edge out of Definition (schema.yaml pairs)" ;
+            sh:path airkg:implements ],
+        [ sh:maxCount 0 ;
+            sh:message "builds_on is not a legal edge out of Definition (schema.yaml pairs)" ;
+            sh:path airkg:builds_on ],
+        [ sh:maxCount 0 ;
+            sh:message "consumes is not a legal edge out of Definition (schema.yaml pairs)" ;
+            sh:path airkg:consumes ],
+        [ sh:maxCount 0 ;
+            sh:message "subtype_of is not a legal edge out of Definition (schema.yaml pairs)" ;
+            sh:path airkg:subtype_of ],
+        [ sh:in ( "statute" "policy" "standard" "academic" "industry" ) ;
+            sh:message "Definition.normative_status must be one of the schema enum values" ;
+            sh:path airkg:normative_status ],
+        [ sh:maxCount 0 ;
+            sh:message "mentions is not a legal edge out of Definition (schema.yaml pairs)" ;
+            sh:path airkg:mentions ],
+        [ sh:maxCount 0 ;
+            sh:message "uses_measure is not a legal edge out of Definition (schema.yaml pairs)" ;
+            sh:path airkg:uses_measure ],
+        [ sh:maxCount 0 ;
+            sh:message "grounds is not a legal edge out of Definition (schema.yaml pairs)" ;
+            sh:path airkg:grounds ],
+        [ sh:maxCount 0 ;
+            sh:message "operationalizes is not a legal edge out of Definition (schema.yaml pairs)" ;
+            sh:path airkg:operationalizes ],
+        [ sh:maxCount 0 ;
+            sh:message "implemented_by is not a legal edge out of Definition (schema.yaml pairs)" ;
+            sh:path airkg:implemented_by ],
+        [ sh:maxCount 0 ;
+            sh:message "recommends is not a legal edge out of Definition (schema.yaml pairs)" ;
+            sh:path airkg:recommends ],
+        [ sh:maxCount 0 ;
+            sh:message "about is not a legal edge out of Definition (schema.yaml pairs)" ;
+            sh:path airkg:about ],
+        [ sh:maxCount 0 ;
+            sh:message "applies_to is not a legal edge out of Definition (schema.yaml pairs)" ;
+            sh:path airkg:applies_to ],
+        [ sh:class airkg:Definition ;
+            sh:message "Definition -extends-> must target Definition" ;
+            sh:path airkg:extends ],
+        [ sh:maxCount 0 ;
+            sh:message "asserts is not a legal edge out of Definition (schema.yaml pairs)" ;
+            sh:path airkg:asserts ] ;
+    sh:targetClass airkg:Definition .
+
+airkgsh:DocumentShape a sh:NodeShape ;
+    rdfs:comment "Shape for airkg:Document generated from kg/schema.yaml v0.3.2" ;
+    sh:property [ sh:maxCount 0 ;
+            sh:message "grounds is not a legal edge out of Document (schema.yaml pairs)" ;
+            sh:path airkg:grounds ],
+        [ sh:maxCount 0 ;
+            sh:message "supported_by is not a legal edge out of Document (schema.yaml pairs)" ;
+            sh:path airkg:supported_by ],
+        [ sh:maxCount 0 ;
+            sh:message "about is not a legal edge out of Document (schema.yaml pairs)" ;
+            sh:path airkg:about ],
+        [ sh:class airkg:Practice ;
+            sh:message "Document -recommends-> must target Practice" ;
+            sh:path airkg:recommends ],
+        [ sh:maxCount 0 ;
+            sh:message "operationalizes is not a legal edge out of Document (schema.yaml pairs)" ;
+            sh:path airkg:operationalizes ],
+        [ sh:maxCount 0 ;
+            sh:message "subtype_of is not a legal edge out of Document (schema.yaml pairs)" ;
+            sh:path airkg:subtype_of ],
+        [ sh:class airkg:Concept ;
+            sh:message "Document -mentions-> must target Concept" ;
+            sh:path airkg:mentions ],
+        [ sh:maxCount 0 ;
+            sh:message "implemented_by is not a legal edge out of Document (schema.yaml pairs)" ;
+            sh:path airkg:implemented_by ],
+        [ sh:in ( "federal" "academic" "industry" "standard" "intergovernmental" "practitioner" ) ;
+            sh:message "Document.source_type must be one of the schema enum values" ;
+            sh:path airkg:source_type ],
+        [ sh:maxCount 0 ;
+            sh:message "has_component is not a legal edge out of Document (schema.yaml pairs)" ;
+            sh:path airkg:has_component ],
+        [ sh:maxCount 0 ;
+            sh:message "measures is not a legal edge out of Document (schema.yaml pairs)" ;
+            sh:path airkg:measures ],
+        [ sh:maxCount 0 ;
+            sh:message "applies_to is not a legal edge out of Document (schema.yaml pairs)" ;
+            sh:path airkg:applies_to ],
+        [ sh:maxCount 0 ;
+            sh:message "consumes is not a legal edge out of Document (schema.yaml pairs)" ;
+            sh:path airkg:consumes ],
+        [ sh:maxCount 0 ;
+            sh:message "precedes is not a legal edge out of Document (schema.yaml pairs)" ;
+            sh:path airkg:precedes ],
+        [ sh:class airkg:Document ;
+            sh:message "Document -supersedes-> must target Document" ;
+            sh:path airkg:supersedes ],
+        [ sh:class airkg:Document ;
+            sh:message "Document -cites-> must target Document" ;
+            sh:path airkg:cites ],
+        [ sh:maxCount 0 ;
+            sh:message "conflicts_with is not a legal edge out of Document (schema.yaml pairs)" ;
+            sh:path airkg:conflicts_with ],
+        [ sh:class airkg:Definition ;
+            sh:message "Document -defines-> must target Definition" ;
+            sh:path airkg:defines ],
+        [ sh:maxCount 0 ;
+            sh:message "implements is not a legal edge out of Document (schema.yaml pairs)" ;
+            sh:path airkg:implements ],
+        [ sh:maxCount 0 ;
+            sh:message "builds_on is not a legal edge out of Document (schema.yaml pairs)" ;
+            sh:path airkg:builds_on ],
+        [ sh:maxCount 0 ;
+            sh:message "targets is not a legal edge out of Document (schema.yaml pairs)" ;
+            sh:path airkg:targets ],
+        [ sh:class airkg:Claim ;
+            sh:message "Document -asserts-> must target Claim" ;
+            sh:path airkg:asserts ],
+        [ sh:datatype xsd:boolean ;
+            sh:path airkg:is_platform_operator ],
+        [ sh:maxCount 0 ;
+            sh:message "uses_measure is not a legal edge out of Document (schema.yaml pairs)" ;
+            sh:path airkg:uses_measure ],
+        [ sh:maxCount 0 ;
+            sh:message "extends is not a legal edge out of Document (schema.yaml pairs)" ;
+            sh:path airkg:extends ] ;
+    sh:targetClass airkg:Document .
+
+airkgsh:FrameworkShape a sh:NodeShape ;
+    rdfs:comment "Shape for airkg:Framework generated from kg/schema.yaml v0.3.2" ;
+    sh:property [ sh:maxCount 0 ;
+            sh:message "subtype_of is not a legal edge out of Framework (schema.yaml pairs)" ;
+            sh:path airkg:subtype_of ],
+        [ sh:maxCount 0 ;
+            sh:message "asserts is not a legal edge out of Framework (schema.yaml pairs)" ;
+            sh:path airkg:asserts ],
+        [ sh:maxCount 0 ;
+            sh:message "consumes is not a legal edge out of Framework (schema.yaml pairs)" ;
+            sh:path airkg:consumes ],
+        [ sh:maxCount 0 ;
+            sh:message "supersedes is not a legal edge out of Framework (schema.yaml pairs)" ;
+            sh:path airkg:supersedes ],
+        [ sh:maxCount 0 ;
+            sh:message "supported_by is not a legal edge out of Framework (schema.yaml pairs)" ;
+            sh:path airkg:supported_by ],
+        [ sh:maxCount 0 ;
+            sh:message "recommends is not a legal edge out of Framework (schema.yaml pairs)" ;
+            sh:path airkg:recommends ],
+        [ sh:maxCount 0 ;
+            sh:message "measures is not a legal edge out of Framework (schema.yaml pairs)" ;
+            sh:path airkg:measures ],
+        [ sh:message "Framework -builds_on-> must target one of Standard, Framework" ;
+            sh:or ( [ sh:class airkg:Standard ] [ sh:class airkg:Framework ] ) ;
+            sh:path airkg:builds_on ],
+        [ sh:maxCount 0 ;
+            sh:message "cites is not a legal edge out of Framework (schema.yaml pairs)" ;
+            sh:path airkg:cites ],
+        [ sh:maxCount 0 ;
+            sh:message "about is not a legal edge out of Framework (schema.yaml pairs)" ;
+            sh:path airkg:about ],
+        [ sh:maxCount 0 ;
+            sh:message "uses_measure is not a legal edge out of Framework (schema.yaml pairs)" ;
+            sh:path airkg:uses_measure ],
+        [ sh:class airkg:Concept ;
+            sh:message "Framework -has_component-> must target Concept" ;
+            sh:path airkg:has_component ],
+        [ sh:maxCount 0 ;
+            sh:message "grounds is not a legal edge out of Framework (schema.yaml pairs)" ;
+            sh:path airkg:grounds ],
+        [ sh:maxCount 0 ;
+            sh:message "implemented_by is not a legal edge out of Framework (schema.yaml pairs)" ;
+            sh:path airkg:implemented_by ],
+        [ sh:maxCount 0 ;
+            sh:message "mentions is not a legal edge out of Framework (schema.yaml pairs)" ;
+            sh:path airkg:mentions ],
+        [ sh:class airkg:Framework ;
+            sh:message "Framework -extends-> must target Framework" ;
+            sh:path airkg:extends ],
+        [ sh:maxCount 0 ;
+            sh:message "precedes is not a legal edge out of Framework (schema.yaml pairs)" ;
+            sh:path airkg:precedes ],
+        [ sh:maxCount 0 ;
+            sh:message "implements is not a legal edge out of Framework (schema.yaml pairs)" ;
+            sh:path airkg:implements ],
+        [ sh:maxCount 0 ;
+            sh:message "operationalizes is not a legal edge out of Framework (schema.yaml pairs)" ;
+            sh:path airkg:operationalizes ],
+        [ sh:maxCount 0 ;
+            sh:message "defines is not a legal edge out of Framework (schema.yaml pairs)" ;
+            sh:path airkg:defines ],
+        [ sh:maxCount 0 ;
+            sh:message "targets is not a legal edge out of Framework (schema.yaml pairs)" ;
+            sh:path airkg:targets ],
+        [ sh:maxCount 0 ;
+            sh:message "applies_to is not a legal edge out of Framework (schema.yaml pairs)" ;
+            sh:path airkg:applies_to ],
+        [ sh:maxCount 0 ;
+            sh:message "conflicts_with is not a legal edge out of Framework (schema.yaml pairs)" ;
+            sh:path airkg:conflicts_with ] ;
+    sh:targetClass airkg:Framework .
+
+airkgsh:InstrumentShape a sh:NodeShape ;
+    rdfs:comment "Shape for airkg:Instrument generated from kg/schema.yaml v0.3.2" ;
+    sh:property [ sh:maxCount 0 ;
+            sh:message "subtype_of is not a legal edge out of Instrument (schema.yaml pairs)" ;
+            sh:path airkg:subtype_of ],
+        [ sh:maxCount 0 ;
+            sh:message "conflicts_with is not a legal edge out of Instrument (schema.yaml pairs)" ;
+            sh:path airkg:conflicts_with ],
+        [ sh:class airkg:Concept ;
+            sh:message "Instrument -measures-> must target Concept" ;
+            sh:path airkg:measures ],
+        [ sh:maxCount 0 ;
+            sh:message "implements is not a legal edge out of Instrument (schema.yaml pairs)" ;
+            sh:path airkg:implements ],
+        [ sh:maxCount 0 ;
+            sh:message "applies_to is not a legal edge out of Instrument (schema.yaml pairs)" ;
+            sh:path airkg:applies_to ],
+        [ sh:maxCount 0 ;
+            sh:message "asserts is not a legal edge out of Instrument (schema.yaml pairs)" ;
+            sh:path airkg:asserts ],
+        [ sh:maxCount 0 ;
+            sh:message "supersedes is not a legal edge out of Instrument (schema.yaml pairs)" ;
+            sh:path airkg:supersedes ],
+        [ sh:maxCount 0 ;
+            sh:message "precedes is not a legal edge out of Instrument (schema.yaml pairs)" ;
+            sh:path airkg:precedes ],
+        [ sh:maxCount 0 ;
+            sh:message "supported_by is not a legal edge out of Instrument (schema.yaml pairs)" ;
+            sh:path airkg:supported_by ],
+        [ sh:maxCount 0 ;
+            sh:message "targets is not a legal edge out of Instrument (schema.yaml pairs)" ;
+            sh:path airkg:targets ],
+        [ sh:maxCount 0 ;
+            sh:message "builds_on is not a legal edge out of Instrument (schema.yaml pairs)" ;
+            sh:path airkg:builds_on ],
+        [ sh:class airkg:Measure ;
+            sh:message "Instrument -uses_measure-> must target Measure" ;
+            sh:path airkg:uses_measure ],
+        [ sh:maxCount 0 ;
+            sh:message "implemented_by is not a legal edge out of Instrument (schema.yaml pairs)" ;
+            sh:path airkg:implemented_by ],
+        [ sh:maxCount 0 ;
+            sh:message "defines is not a legal edge out of Instrument (schema.yaml pairs)" ;
+            sh:path airkg:defines ],
+        [ sh:maxCount 0 ;
+            sh:message "about is not a legal edge out of Instrument (schema.yaml pairs)" ;
+            sh:path airkg:about ],
+        [ sh:maxCount 0 ;
+            sh:message "cites is not a legal edge out of Instrument (schema.yaml pairs)" ;
+            sh:path airkg:cites ],
+        [ sh:maxCount 0 ;
+            sh:message "recommends is not a legal edge out of Instrument (schema.yaml pairs)" ;
+            sh:path airkg:recommends ],
+        [ sh:maxCount 0 ;
+            sh:message "consumes is not a legal edge out of Instrument (schema.yaml pairs)" ;
+            sh:path airkg:consumes ],
+        [ sh:maxCount 0 ;
+            sh:message "has_component is not a legal edge out of Instrument (schema.yaml pairs)" ;
+            sh:path airkg:has_component ],
+        [ sh:maxCount 0 ;
+            sh:message "grounds is not a legal edge out of Instrument (schema.yaml pairs)" ;
+            sh:path airkg:grounds ],
+        [ sh:maxCount 0 ;
+            sh:message "mentions is not a legal edge out of Instrument (schema.yaml pairs)" ;
+            sh:path airkg:mentions ],
+        [ sh:maxCount 0 ;
+            sh:message "extends is not a legal edge out of Instrument (schema.yaml pairs)" ;
+            sh:path airkg:extends ],
+        [ sh:class airkg:Construct ;
+            sh:message "Instrument -operationalizes-> must target Construct" ;
+            sh:path airkg:operationalizes ] ;
+    sh:targetClass airkg:Instrument .
+
+airkgsh:MeasureShape a sh:NodeShape ;
+    rdfs:comment "Shape for airkg:Measure generated from kg/schema.yaml v0.3.2" ;
+    sh:property [ sh:maxCount 0 ;
+            sh:message "operationalizes is not a legal edge out of Measure (schema.yaml pairs)" ;
+            sh:path airkg:operationalizes ],
+        [ sh:in ( "public" "agency_instrumented" "paid" ) ;
+            sh:message "Measure.tier must be one of the schema enum values" ;
+            sh:path airkg:tier ],
+        [ sh:maxCount 0 ;
+            sh:message "asserts is not a legal edge out of Measure (schema.yaml pairs)" ;
+            sh:path airkg:asserts ],
+        [ sh:maxCount 0 ;
+            sh:message "builds_on is not a legal edge out of Measure (schema.yaml pairs)" ;
+            sh:path airkg:builds_on ],
+        [ sh:maxCount 0 ;
+            sh:message "defines is not a legal edge out of Measure (schema.yaml pairs)" ;
+            sh:path airkg:defines ],
+        [ sh:maxCount 0 ;
+            sh:message "cites is not a legal edge out of Measure (schema.yaml pairs)" ;
+            sh:path airkg:cites ],
+        [ sh:maxCount 0 ;
+            sh:message "supersedes is not a legal edge out of Measure (schema.yaml pairs)" ;
+            sh:path airkg:supersedes ],
+        [ sh:maxCount 0 ;
+            sh:message "has_component is not a legal edge out of Measure (schema.yaml pairs)" ;
+            sh:path airkg:has_component ],
+        [ sh:maxCount 0 ;
+            sh:message "mentions is not a legal edge out of Measure (schema.yaml pairs)" ;
+            sh:path airkg:mentions ],
+        [ sh:maxCount 0 ;
+            sh:message "supported_by is not a legal edge out of Measure (schema.yaml pairs)" ;
+            sh:path airkg:supported_by ],
+        [ sh:maxCount 0 ;
+            sh:message "targets is not a legal edge out of Measure (schema.yaml pairs)" ;
+            sh:path airkg:targets ],
+        [ sh:class airkg:Tool ;
+            sh:message "Measure -implemented_by-> must target Tool" ;
+            sh:path airkg:implemented_by ],
+        [ sh:message "Measure -measures-> must target one of Construct, Concept" ;
+            sh:or ( [ sh:class airkg:Construct ] [ sh:class airkg:Concept ] ) ;
+            sh:path airkg:measures ],
+        [ sh:maxCount 0 ;
+            sh:message "consumes is not a legal edge out of Measure (schema.yaml pairs)" ;
+            sh:path airkg:consumes ],
+        [ sh:maxCount 0 ;
+            sh:message "extends is not a legal edge out of Measure (schema.yaml pairs)" ;
+            sh:path airkg:extends ],
+        [ sh:maxCount 0 ;
+            sh:message "uses_measure is not a legal edge out of Measure (schema.yaml pairs)" ;
+            sh:path airkg:uses_measure ],
+        [ sh:maxCount 0 ;
+            sh:message "recommends is not a legal edge out of Measure (schema.yaml pairs)" ;
+            sh:path airkg:recommends ],
+        [ sh:maxCount 0 ;
+            sh:message "grounds is not a legal edge out of Measure (schema.yaml pairs)" ;
+            sh:path airkg:grounds ],
+        [ sh:maxCount 0 ;
+            sh:message "subtype_of is not a legal edge out of Measure (schema.yaml pairs)" ;
+            sh:path airkg:subtype_of ],
+        [ sh:maxCount 0 ;
+            sh:message "implements is not a legal edge out of Measure (schema.yaml pairs)" ;
+            sh:path airkg:implements ],
+        [ sh:maxCount 0 ;
+            sh:message "precedes is not a legal edge out of Measure (schema.yaml pairs)" ;
+            sh:path airkg:precedes ],
+        [ sh:class airkg:Concept ;
+            sh:message "Measure -applies_to-> must target Concept" ;
+            sh:path airkg:applies_to ],
+        [ sh:maxCount 0 ;
+            sh:message "about is not a legal edge out of Measure (schema.yaml pairs)" ;
+            sh:path airkg:about ],
+        [ sh:maxCount 0 ;
+            sh:message "conflicts_with is not a legal edge out of Measure (schema.yaml pairs)" ;
+            sh:path airkg:conflicts_with ] ;
+    sh:targetClass airkg:Measure .
+
+airkgsh:PlatformShape a sh:NodeShape ;
+    rdfs:comment "Shape for airkg:Platform generated from kg/schema.yaml v0.3.2" ;
+    sh:property [ sh:maxCount 0 ;
+            sh:message "targets is not a legal edge out of Platform (schema.yaml pairs)" ;
+            sh:path airkg:targets ],
+        [ sh:maxCount 0 ;
+            sh:message "applies_to is not a legal edge out of Platform (schema.yaml pairs)" ;
+            sh:path airkg:applies_to ],
+        [ sh:maxCount 0 ;
+            sh:message "grounds is not a legal edge out of Platform (schema.yaml pairs)" ;
+            sh:path airkg:grounds ],
+        [ sh:maxCount 0 ;
+            sh:message "recommends is not a legal edge out of Platform (schema.yaml pairs)" ;
+            sh:path airkg:recommends ],
+        [ sh:maxCount 0 ;
+            sh:message "operationalizes is not a legal edge out of Platform (schema.yaml pairs)" ;
+            sh:path airkg:operationalizes ],
+        [ sh:maxCount 0 ;
+            sh:message "precedes is not a legal edge out of Platform (schema.yaml pairs)" ;
+            sh:path airkg:precedes ],
+        [ sh:class airkg:Standard ;
+            sh:message "Platform -consumes-> must target Standard" ;
+            sh:path airkg:consumes ],
+        [ sh:maxCount 0 ;
+            sh:message "builds_on is not a legal edge out of Platform (schema.yaml pairs)" ;
+            sh:path airkg:builds_on ],
+        [ sh:maxCount 0 ;
+            sh:message "cites is not a legal edge out of Platform (schema.yaml pairs)" ;
+            sh:path airkg:cites ],
+        [ sh:maxCount 0 ;
+            sh:message "supersedes is not a legal edge out of Platform (schema.yaml pairs)" ;
+            sh:path airkg:supersedes ],
+        [ sh:maxCount 0 ;
+            sh:message "mentions is not a legal edge out of Platform (schema.yaml pairs)" ;
+            sh:path airkg:mentions ],
+        [ sh:maxCount 0 ;
+            sh:message "implemented_by is not a legal edge out of Platform (schema.yaml pairs)" ;
+            sh:path airkg:implemented_by ],
+        [ sh:maxCount 0 ;
+            sh:message "asserts is not a legal edge out of Platform (schema.yaml pairs)" ;
+            sh:path airkg:asserts ],
+        [ sh:maxCount 0 ;
+            sh:message "subtype_of is not a legal edge out of Platform (schema.yaml pairs)" ;
+            sh:path airkg:subtype_of ],
+        [ sh:maxCount 0 ;
+            sh:message "uses_measure is not a legal edge out of Platform (schema.yaml pairs)" ;
+            sh:path airkg:uses_measure ],
+        [ sh:maxCount 0 ;
+            sh:message "implements is not a legal edge out of Platform (schema.yaml pairs)" ;
+            sh:path airkg:implements ],
+        [ sh:maxCount 0 ;
+            sh:message "supported_by is not a legal edge out of Platform (schema.yaml pairs)" ;
+            sh:path airkg:supported_by ],
+        [ sh:maxCount 0 ;
+            sh:message "defines is not a legal edge out of Platform (schema.yaml pairs)" ;
+            sh:path airkg:defines ],
+        [ sh:maxCount 0 ;
+            sh:message "conflicts_with is not a legal edge out of Platform (schema.yaml pairs)" ;
+            sh:path airkg:conflicts_with ],
+        [ sh:maxCount 0 ;
+            sh:message "measures is not a legal edge out of Platform (schema.yaml pairs)" ;
+            sh:path airkg:measures ],
+        [ sh:maxCount 0 ;
+            sh:message "extends is not a legal edge out of Platform (schema.yaml pairs)" ;
+            sh:path airkg:extends ],
+        [ sh:maxCount 0 ;
+            sh:message "about is not a legal edge out of Platform (schema.yaml pairs)" ;
+            sh:path airkg:about ],
+        [ sh:maxCount 0 ;
+            sh:message "has_component is not a legal edge out of Platform (schema.yaml pairs)" ;
+            sh:path airkg:has_component ] ;
+    sh:targetClass airkg:Platform .
+
+airkgsh:PracticeShape a sh:NodeShape ;
+    rdfs:comment "Shape for airkg:Practice generated from kg/schema.yaml v0.3.2" ;
+    sh:property [ sh:maxCount 0 ;
+            sh:message "builds_on is not a legal edge out of Practice (schema.yaml pairs)" ;
+            sh:path airkg:builds_on ],
+        [ sh:maxCount 0 ;
+            sh:message "has_component is not a legal edge out of Practice (schema.yaml pairs)" ;
+            sh:path airkg:has_component ],
+        [ sh:maxCount 0 ;
+            sh:message "implements is not a legal edge out of Practice (schema.yaml pairs)" ;
+            sh:path airkg:implements ],
+        [ sh:maxCount 0 ;
+            sh:message "extends is not a legal edge out of Practice (schema.yaml pairs)" ;
+            sh:path airkg:extends ],
+        [ sh:maxCount 0 ;
+            sh:message "cites is not a legal edge out of Practice (schema.yaml pairs)" ;
+            sh:path airkg:cites ],
+        [ sh:maxCount 0 ;
+            sh:message "conflicts_with is not a legal edge out of Practice (schema.yaml pairs)" ;
+            sh:path airkg:conflicts_with ],
+        [ sh:maxCount 0 ;
+            sh:message "grounds is not a legal edge out of Practice (schema.yaml pairs)" ;
+            sh:path airkg:grounds ],
+        [ sh:class airkg:Claim ;
+            sh:message "Practice -supported_by-> must target Claim" ;
+            sh:path airkg:supported_by ],
+        [ sh:maxCount 0 ;
+            sh:message "defines is not a legal edge out of Practice (schema.yaml pairs)" ;
+            sh:path airkg:defines ],
+        [ sh:maxCount 0 ;
+            sh:message "measures is not a legal edge out of Practice (schema.yaml pairs)" ;
+            sh:path airkg:measures ],
+        [ sh:maxCount 0 ;
+            sh:message "precedes is not a legal edge out of Practice (schema.yaml pairs)" ;
+            sh:path airkg:precedes ],
+        [ sh:maxCount 0 ;
+            sh:message "about is not a legal edge out of Practice (schema.yaml pairs)" ;
+            sh:path airkg:about ],
+        [ sh:maxCount 0 ;
+            sh:message "asserts is not a legal edge out of Practice (schema.yaml pairs)" ;
+            sh:path airkg:asserts ],
+        [ sh:maxCount 0 ;
+            sh:message "consumes is not a legal edge out of Practice (schema.yaml pairs)" ;
+            sh:path airkg:consumes ],
+        [ sh:maxCount 0 ;
+            sh:message "implemented_by is not a legal edge out of Practice (schema.yaml pairs)" ;
+            sh:path airkg:implemented_by ],
+        [ sh:class airkg:Platform ;
+            sh:message "Practice -targets-> must target Platform" ;
+            sh:path airkg:targets ],
+        [ sh:maxCount 0 ;
+            sh:message "supersedes is not a legal edge out of Practice (schema.yaml pairs)" ;
+            sh:path airkg:supersedes ],
+        [ sh:maxCount 0 ;
+            sh:message "mentions is not a legal edge out of Practice (schema.yaml pairs)" ;
+            sh:path airkg:mentions ],
+        [ sh:maxCount 0 ;
+            sh:message "operationalizes is not a legal edge out of Practice (schema.yaml pairs)" ;
+            sh:path airkg:operationalizes ],
+        [ sh:maxCount 0 ;
+            sh:message "recommends is not a legal edge out of Practice (schema.yaml pairs)" ;
+            sh:path airkg:recommends ],
+        [ sh:maxCount 0 ;
+            sh:message "subtype_of is not a legal edge out of Practice (schema.yaml pairs)" ;
+            sh:path airkg:subtype_of ],
+        [ sh:class airkg:Concept ;
+            sh:message "Practice -applies_to-> must target Concept" ;
+            sh:path airkg:applies_to ],
+        [ sh:maxCount 0 ;
+            sh:message "uses_measure is not a legal edge out of Practice (schema.yaml pairs)" ;
+            sh:path airkg:uses_measure ],
+        [ sh:in ( "dataset" "api" "bulk_file" "tool" "content" "advisory" "site" "any" ) ;
+            sh:message "Practice.scope must be one of the schema enum values" ;
+            sh:path airkg:scope ] ;
+    sh:targetClass airkg:Practice .
+
+airkgsh:StandardShape a sh:NodeShape ;
+    rdfs:comment "Shape for airkg:Standard generated from kg/schema.yaml v0.3.2" ;
+    sh:property [ sh:maxCount 0 ;
+            sh:message "conflicts_with is not a legal edge out of Standard (schema.yaml pairs)" ;
+            sh:path airkg:conflicts_with ],
+        [ sh:maxCount 0 ;
+            sh:message "precedes is not a legal edge out of Standard (schema.yaml pairs)" ;
+            sh:path airkg:precedes ],
+        [ sh:maxCount 0 ;
+            sh:message "has_component is not a legal edge out of Standard (schema.yaml pairs)" ;
+            sh:path airkg:has_component ],
+        [ sh:maxCount 0 ;
+            sh:message "asserts is not a legal edge out of Standard (schema.yaml pairs)" ;
+            sh:path airkg:asserts ],
+        [ sh:maxCount 0 ;
+            sh:message "consumes is not a legal edge out of Standard (schema.yaml pairs)" ;
+            sh:path airkg:consumes ],
+        [ sh:maxCount 0 ;
+            sh:message "about is not a legal edge out of Standard (schema.yaml pairs)" ;
+            sh:path airkg:about ],
+        [ sh:message "Standard -builds_on-> must target one of Standard, Framework" ;
+            sh:or ( [ sh:class airkg:Standard ] [ sh:class airkg:Framework ] ) ;
+            sh:path airkg:builds_on ],
+        [ sh:maxCount 0 ;
+            sh:message "grounds is not a legal edge out of Standard (schema.yaml pairs)" ;
+            sh:path airkg:grounds ],
+        [ sh:maxCount 0 ;
+            sh:message "applies_to is not a legal edge out of Standard (schema.yaml pairs)" ;
+            sh:path airkg:applies_to ],
+        [ sh:maxCount 0 ;
+            sh:message "uses_measure is not a legal edge out of Standard (schema.yaml pairs)" ;
+            sh:path airkg:uses_measure ],
+        [ sh:maxCount 0 ;
+            sh:message "measures is not a legal edge out of Standard (schema.yaml pairs)" ;
+            sh:path airkg:measures ],
+        [ sh:maxCount 0 ;
+            sh:message "extends is not a legal edge out of Standard (schema.yaml pairs)" ;
+            sh:path airkg:extends ],
+        [ sh:maxCount 0 ;
+            sh:message "recommends is not a legal edge out of Standard (schema.yaml pairs)" ;
+            sh:path airkg:recommends ],
+        [ sh:maxCount 0 ;
+            sh:message "supported_by is not a legal edge out of Standard (schema.yaml pairs)" ;
+            sh:path airkg:supported_by ],
+        [ sh:maxCount 0 ;
+            sh:message "targets is not a legal edge out of Standard (schema.yaml pairs)" ;
+            sh:path airkg:targets ],
+        [ sh:class airkg:Concept ;
+            sh:message "Standard -implements-> must target Concept" ;
+            sh:path airkg:implements ],
+        [ sh:maxCount 0 ;
+            sh:message "subtype_of is not a legal edge out of Standard (schema.yaml pairs)" ;
+            sh:path airkg:subtype_of ],
+        [ sh:maxCount 0 ;
+            sh:message "supersedes is not a legal edge out of Standard (schema.yaml pairs)" ;
+            sh:path airkg:supersedes ],
+        [ sh:maxCount 0 ;
+            sh:message "operationalizes is not a legal edge out of Standard (schema.yaml pairs)" ;
+            sh:path airkg:operationalizes ],
+        [ sh:maxCount 0 ;
+            sh:message "cites is not a legal edge out of Standard (schema.yaml pairs)" ;
+            sh:path airkg:cites ],
+        [ sh:maxCount 0 ;
+            sh:message "mentions is not a legal edge out of Standard (schema.yaml pairs)" ;
+            sh:path airkg:mentions ],
+        [ sh:maxCount 0 ;
+            sh:message "defines is not a legal edge out of Standard (schema.yaml pairs)" ;
+            sh:path airkg:defines ],
+        [ sh:maxCount 0 ;
+            sh:message "implemented_by is not a legal edge out of Standard (schema.yaml pairs)" ;
+            sh:path airkg:implemented_by ] ;
+    sh:targetClass airkg:Standard .
+
+airkgsh:ToolShape a sh:NodeShape ;
+    rdfs:comment "Shape for airkg:Tool generated from kg/schema.yaml v0.3.2" ;
+    sh:property [ sh:maxCount 0 ;
+            sh:message "implemented_by is not a legal edge out of Tool (schema.yaml pairs)" ;
+            sh:path airkg:implemented_by ],
+        [ sh:maxCount 0 ;
+            sh:message "uses_measure is not a legal edge out of Tool (schema.yaml pairs)" ;
+            sh:path airkg:uses_measure ],
+        [ sh:maxCount 0 ;
+            sh:message "targets is not a legal edge out of Tool (schema.yaml pairs)" ;
+            sh:path airkg:targets ],
+        [ sh:maxCount 0 ;
+            sh:message "applies_to is not a legal edge out of Tool (schema.yaml pairs)" ;
+            sh:path airkg:applies_to ],
+        [ sh:maxCount 0 ;
+            sh:message "subtype_of is not a legal edge out of Tool (schema.yaml pairs)" ;
+            sh:path airkg:subtype_of ],
+        [ sh:maxCount 0 ;
+            sh:message "operationalizes is not a legal edge out of Tool (schema.yaml pairs)" ;
+            sh:path airkg:operationalizes ],
+        [ sh:maxCount 0 ;
+            sh:message "measures is not a legal edge out of Tool (schema.yaml pairs)" ;
+            sh:path airkg:measures ],
+        [ sh:maxCount 0 ;
+            sh:message "supported_by is not a legal edge out of Tool (schema.yaml pairs)" ;
+            sh:path airkg:supported_by ],
+        [ sh:maxCount 0 ;
+            sh:message "mentions is not a legal edge out of Tool (schema.yaml pairs)" ;
+            sh:path airkg:mentions ],
+        [ sh:maxCount 0 ;
+            sh:message "supersedes is not a legal edge out of Tool (schema.yaml pairs)" ;
+            sh:path airkg:supersedes ],
+        [ sh:maxCount 0 ;
+            sh:message "grounds is not a legal edge out of Tool (schema.yaml pairs)" ;
+            sh:path airkg:grounds ],
+        [ sh:maxCount 0 ;
+            sh:message "precedes is not a legal edge out of Tool (schema.yaml pairs)" ;
+            sh:path airkg:precedes ],
+        [ sh:maxCount 0 ;
+            sh:message "builds_on is not a legal edge out of Tool (schema.yaml pairs)" ;
+            sh:path airkg:builds_on ],
+        [ sh:maxCount 0 ;
+            sh:message "cites is not a legal edge out of Tool (schema.yaml pairs)" ;
+            sh:path airkg:cites ],
+        [ sh:maxCount 0 ;
+            sh:message "defines is not a legal edge out of Tool (schema.yaml pairs)" ;
+            sh:path airkg:defines ],
+        [ sh:maxCount 0 ;
+            sh:message "recommends is not a legal edge out of Tool (schema.yaml pairs)" ;
+            sh:path airkg:recommends ],
+        [ sh:maxCount 0 ;
+            sh:message "implements is not a legal edge out of Tool (schema.yaml pairs)" ;
+            sh:path airkg:implements ],
+        [ sh:maxCount 0 ;
+            sh:message "about is not a legal edge out of Tool (schema.yaml pairs)" ;
+            sh:path airkg:about ],
+        [ sh:maxCount 0 ;
+            sh:message "asserts is not a legal edge out of Tool (schema.yaml pairs)" ;
+            sh:path airkg:asserts ],
+        [ sh:maxCount 0 ;
+            sh:message "consumes is not a legal edge out of Tool (schema.yaml pairs)" ;
+            sh:path airkg:consumes ],
+        [ sh:maxCount 0 ;
+            sh:message "extends is not a legal edge out of Tool (schema.yaml pairs)" ;
+            sh:path airkg:extends ],
+        [ sh:maxCount 0 ;
+            sh:message "conflicts_with is not a legal edge out of Tool (schema.yaml pairs)" ;
+            sh:path airkg:conflicts_with ],
+        [ sh:maxCount 0 ;
+            sh:message "has_component is not a legal edge out of Tool (schema.yaml pairs)" ;
+            sh:path airkg:has_component ] ;
+    sh:targetClass airkg:Tool .
+

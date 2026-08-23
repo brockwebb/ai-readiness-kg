@@ -1,0 +1,402 @@
+@prefix airkg: <https://brockwebb.github.io/ai-readiness-kg/schema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix sosa: <http://www.w3.org/ns/sosa/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://brockwebb.github.io/ai-readiness-kg/schema> a owl:Ontology ;
+    rdfs:comment "Generated from kg/schema.yaml by benchmarks/trustgraph/schema_to_owl.py. Domain/range are unions over the schema's `pairs`; exact index-pairing is enforced by airkg_shapes.ttl (SHACL), not here." ;
+    owl:versionInfo "0.3.2" .
+
+airkg:about a owl:ObjectProperty ;
+    rdfs:label "about" ;
+    rdfs:comment "What the claim concerns" ;
+    rdfs:domain airkg:Claim ;
+    rdfs:range airkg:Concept .
+
+airkg:aliases a owl:DatatypeProperty ;
+    rdfs:label "aliases" ;
+    rdfs:domain airkg:Concept ;
+    rdfs:range xsd:string .
+
+airkg:applies_to a owl:ObjectProperty ;
+    rdfs:label "applies_to" ;
+    rdfs:comment "Practice/Measure targets this asset class or concept" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( airkg:Practice airkg:Measure ) ] ;
+    rdfs:range airkg:Concept ;
+    rdfs:seeAlso dcterms:subject .
+
+airkg:as_of_date a owl:DatatypeProperty ;
+    rdfs:label "as_of_date" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( airkg:Definition airkg:Standard airkg:Practice airkg:Tool airkg:Platform ) ] ;
+    rdfs:range xsd:string .
+
+airkg:asserts a owl:ObjectProperty ;
+    rdfs:label "asserts" ;
+    rdfs:comment "Source makes this claim" ;
+    rdfs:domain airkg:Document ;
+    rdfs:range airkg:Claim .
+
+airkg:authors a owl:DatatypeProperty ;
+    rdfs:label "authors" ;
+    rdfs:domain airkg:Document ;
+    rdfs:range xsd:string .
+
+airkg:builds_on a owl:ObjectProperty ;
+    rdfs:label "builds_on" ;
+    rdfs:comment "e.g. FCSM 25-03 builds_on OPEN Gov Data Act" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( airkg:Standard airkg:Framework ) ] ;
+    rdfs:range [ a owl:Class ;
+            owl:unionOf ( airkg:Standard airkg:Framework ) ] .
+
+airkg:cites a owl:ObjectProperty ;
+    rdfs:label "cites" ;
+    rdfs:comment "Citation within the corpus" ;
+    rdfs:domain airkg:Document ;
+    rdfs:range airkg:Document .
+
+airkg:claim_text a owl:DatatypeProperty ;
+    rdfs:label "claim_text" ;
+    rdfs:domain airkg:Claim ;
+    rdfs:range xsd:string .
+
+airkg:claim_type a owl:DatatypeProperty ;
+    rdfs:label "claim_type" ;
+    rdfs:comment "Enumerated values -- Claim: empirical, normative, speculative" ;
+    rdfs:domain airkg:Claim ;
+    rdfs:range xsd:string .
+
+airkg:conflicts_with a owl:ObjectProperty,
+        owl:SymmetricProperty ;
+    rdfs:label "conflicts_with" ;
+    rdfs:comment "Incompatible. The \"no shared definition\" evidence layer" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( airkg:Definition airkg:Claim ) ] ;
+    rdfs:range [ a owl:Class ;
+            owl:unionOf ( airkg:Definition airkg:Claim ) ] .
+
+airkg:consumes a owl:ObjectProperty ;
+    rdfs:label "consumes" ;
+    rdfs:comment "Platform reads / honors this spec" ;
+    rdfs:domain airkg:Platform ;
+    rdfs:range airkg:Standard ;
+    rdfs:seeAlso dcterms:conformsTo .
+
+airkg:content_hash a owl:DatatypeProperty ;
+    rdfs:label "content_hash" ;
+    rdfs:domain airkg:Document ;
+    rdfs:range xsd:string .
+
+airkg:defines a owl:ObjectProperty ;
+    rdfs:label "defines" ;
+    rdfs:comment "Source gives this definition" ;
+    rdfs:domain airkg:Document ;
+    rdfs:range airkg:Definition .
+
+airkg:description a owl:DatatypeProperty ;
+    rdfs:label "description" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( airkg:Concept airkg:Construct ) ] ;
+    rdfs:range xsd:string .
+
+airkg:doc_id a owl:DatatypeProperty ;
+    rdfs:label "doc_id" ;
+    rdfs:domain airkg:Document ;
+    rdfs:range xsd:string .
+
+airkg:evidence_grade a owl:DatatypeProperty ;
+    rdfs:label "evidence_grade" ;
+    rdfs:comment "Enumerated values -- Claim: peer_reviewed_experiment, platform_official, measured_practitioner, practitioner_assertion, inference" ;
+    rdfs:domain airkg:Claim ;
+    rdfs:range xsd:string .
+
+airkg:extends a owl:ObjectProperty ;
+    rdfs:label "extends" ;
+    rdfs:comment "Builds on, adds to" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( airkg:Definition airkg:Framework ) ] ;
+    rdfs:range [ a owl:Class ;
+            owl:unionOf ( airkg:Definition airkg:Framework ) ] .
+
+airkg:grounding_span a owl:DatatypeProperty ;
+    rdfs:label "grounding_span" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( airkg:Definition airkg:Concept airkg:Measure airkg:Claim airkg:Practice airkg:Tool airkg:Platform ) ] ;
+    rdfs:range xsd:string .
+
+airkg:grounds a owl:ObjectProperty ;
+    rdfs:label "grounds" ;
+    rdfs:comment "Construct's authority traces to this definition" ;
+    rdfs:domain airkg:Construct ;
+    rdfs:range airkg:Definition .
+
+airkg:has_component a owl:ObjectProperty ;
+    rdfs:label "has_component" ;
+    rdfs:comment "Framework/Concept has this component part (part-whole, not subclass)" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( airkg:Framework airkg:Concept ) ] ;
+    rdfs:range airkg:Concept ;
+    rdfs:seeAlso <http://purl.obolibrary.org/obo/BFO_0000051> .
+
+airkg:implemented_by a owl:ObjectProperty ;
+    rdfs:label "implemented_by" ;
+    rdfs:comment "This software computes / runs the measure" ;
+    rdfs:domain airkg:Measure ;
+    rdfs:range airkg:Tool ;
+    rdfs:seeAlso <https://www.w3.org/ns/sosa/madeBySensor> .
+
+airkg:implements a owl:ObjectProperty ;
+    rdfs:label "implements" ;
+    rdfs:comment "Spec realizes a concept" ;
+    rdfs:domain airkg:Standard ;
+    rdfs:range airkg:Concept .
+
+airkg:is_platform_operator a owl:DatatypeProperty ;
+    rdfs:label "is_platform_operator" ;
+    rdfs:domain airkg:Document ;
+    rdfs:range xsd:boolean .
+
+airkg:license a owl:DatatypeProperty ;
+    rdfs:label "license" ;
+    rdfs:domain airkg:Tool ;
+    rdfs:range xsd:string .
+
+airkg:manifest_event_id a owl:DatatypeProperty ;
+    rdfs:label "manifest_event_id" ;
+    rdfs:domain airkg:Document ;
+    rdfs:range xsd:string .
+
+airkg:measurement_notes a owl:DatatypeProperty ;
+    rdfs:label "measurement_notes" ;
+    rdfs:domain airkg:Construct ;
+    rdfs:range xsd:string .
+
+airkg:measures a owl:ObjectProperty ;
+    rdfs:label "measures" ;
+    rdfs:comment "Item- or instrument-level mapping to the construct/concept it measures" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( airkg:Measure airkg:Instrument ) ] ;
+    rdfs:range [ a owl:Class ;
+            owl:unionOf ( airkg:Construct airkg:Concept ) ] ;
+    rdfs:seeAlso sosa:observes .
+
+airkg:mentions a owl:ObjectProperty ;
+    rdfs:label "mentions" ;
+    rdfs:comment "Concept appears substantively (not keyword match)" ;
+    rdfs:domain airkg:Document ;
+    rdfs:range airkg:Concept .
+
+airkg:method a owl:DatatypeProperty ;
+    rdfs:label "method" ;
+    rdfs:domain airkg:Instrument ;
+    rdfs:range xsd:string .
+
+airkg:name a owl:DatatypeProperty ;
+    rdfs:label "name" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( airkg:Concept airkg:Construct airkg:Instrument airkg:Standard airkg:Framework airkg:Tool airkg:Platform ) ] ;
+    rdfs:range xsd:string .
+
+airkg:normative_status a owl:DatatypeProperty ;
+    rdfs:label "normative_status" ;
+    rdfs:comment "Enumerated values -- Definition: statute, policy, standard, academic, industry" ;
+    rdfs:domain airkg:Definition ;
+    rdfs:range xsd:string .
+
+airkg:operationalizes a owl:ObjectProperty ;
+    rdfs:label "operationalizes" ;
+    rdfs:comment "Instrument measures this dimension" ;
+    rdfs:domain airkg:Instrument ;
+    rdfs:range airkg:Construct .
+
+airkg:operator a owl:DatatypeProperty ;
+    rdfs:label "operator" ;
+    rdfs:domain airkg:Platform ;
+    rdfs:range xsd:string .
+
+airkg:owner a owl:DatatypeProperty ;
+    rdfs:label "owner" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( airkg:Instrument airkg:Framework ) ] ;
+    rdfs:range xsd:string .
+
+airkg:precedes a owl:ObjectProperty ;
+    rdfs:label "precedes" ;
+    rdfs:comment "Concept precedes another (ordinal/temporal precedence)" ;
+    rdfs:domain airkg:Concept ;
+    rdfs:range airkg:Concept ;
+    rdfs:seeAlso <http://purl.obolibrary.org/obo/BFO_0000063> .
+
+airkg:primary_url a owl:DatatypeProperty ;
+    rdfs:label "primary_url" ;
+    rdfs:domain airkg:Document ;
+    rdfs:range xsd:string .
+
+airkg:pub_date a owl:DatatypeProperty ;
+    rdfs:label "pub_date" ;
+    rdfs:domain airkg:Document ;
+    rdfs:range xsd:string .
+
+airkg:recommends a owl:ObjectProperty ;
+    rdfs:label "recommends" ;
+    rdfs:comment "Source makes this normative recommendation" ;
+    rdfs:domain airkg:Document ;
+    rdfs:range airkg:Practice ;
+    rdfs:seeAlso prov:wasAttributedTo .
+
+airkg:response_type a owl:DatatypeProperty ;
+    rdfs:label "response_type" ;
+    rdfs:domain airkg:Measure ;
+    rdfs:range xsd:string .
+
+airkg:scope a owl:DatatypeProperty ;
+    rdfs:label "scope" ;
+    rdfs:comment "Enumerated values -- Practice: dataset, api, bulk_file, tool, content, advisory, site, any" ;
+    rdfs:domain airkg:Practice ;
+    rdfs:range xsd:string .
+
+airkg:source_type a owl:DatatypeProperty ;
+    rdfs:label "source_type" ;
+    rdfs:comment "Enumerated values -- Document: federal, academic, industry, standard, intergovernmental, practitioner" ;
+    rdfs:domain airkg:Document ;
+    rdfs:range xsd:string .
+
+airkg:steward a owl:DatatypeProperty ;
+    rdfs:label "steward" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( airkg:Standard airkg:Tool ) ] ;
+    rdfs:range xsd:string .
+
+airkg:subtype_of a owl:ObjectProperty ;
+    rdfs:label "subtype_of" ;
+    rdfs:comment "Concept is a subtype (subclass) of another concept" ;
+    rdfs:domain airkg:Concept ;
+    rdfs:range airkg:Concept ;
+    rdfs:seeAlso rdfs:subClassOf .
+
+airkg:supersedes a owl:ObjectProperty ;
+    rdfs:label "supersedes" ;
+    rdfs:comment "Newer document replaces an earlier version" ;
+    rdfs:domain airkg:Document ;
+    rdfs:range airkg:Document ;
+    rdfs:seeAlso dcterms:replaces .
+
+airkg:supported_by a owl:ObjectProperty ;
+    rdfs:label "supported_by" ;
+    rdfs:comment "The practice rests on this claim (the claim's evidence_grade is the strength behind the recommendation, DD-010)" ;
+    rdfs:domain airkg:Practice ;
+    rdfs:range airkg:Claim ;
+    rdfs:seeAlso prov:wasDerivedFrom .
+
+airkg:targets a owl:ObjectProperty ;
+    rdfs:label "targets" ;
+    rdfs:comment "Practice is aimed at this machine consumer" ;
+    rdfs:domain airkg:Practice ;
+    rdfs:range airkg:Platform ;
+    rdfs:seeAlso schema:audience .
+
+airkg:term a owl:DatatypeProperty ;
+    rdfs:label "term" ;
+    rdfs:domain airkg:Definition ;
+    rdfs:range xsd:string .
+
+airkg:text a owl:DatatypeProperty ;
+    rdfs:label "text" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( airkg:Measure airkg:Practice ) ] ;
+    rdfs:range xsd:string .
+
+airkg:tier a owl:DatatypeProperty ;
+    rdfs:label "tier" ;
+    rdfs:comment "Enumerated values -- Measure: public, agency_instrumented, paid" ;
+    rdfs:domain airkg:Measure ;
+    rdfs:range xsd:string .
+
+airkg:title a owl:DatatypeProperty ;
+    rdfs:label "title" ;
+    rdfs:domain airkg:Document ;
+    rdfs:range xsd:string .
+
+airkg:url a owl:DatatypeProperty ;
+    rdfs:label "url" ;
+    rdfs:domain airkg:Tool ;
+    rdfs:range xsd:string .
+
+airkg:uses_measure a owl:ObjectProperty ;
+    rdfs:label "uses_measure" ;
+    rdfs:comment "Instrument uses this measure/item" ;
+    rdfs:domain airkg:Instrument ;
+    rdfs:range airkg:Measure ;
+    rdfs:seeAlso <https://www.w3.org/ns/sosa/> .
+
+airkg:verbatim_text a owl:DatatypeProperty ;
+    rdfs:label "verbatim_text" ;
+    rdfs:domain airkg:Definition ;
+    rdfs:range xsd:string .
+
+airkg:version a owl:DatatypeProperty ;
+    rdfs:label "version" ;
+    rdfs:domain airkg:Standard ;
+    rdfs:range xsd:string .
+
+airkg:year a owl:DatatypeProperty ;
+    rdfs:label "year" ;
+    rdfs:domain [ a owl:Class ;
+            owl:unionOf ( airkg:Instrument airkg:Framework ) ] ;
+    rdfs:range xsd:string .
+
+airkg:Construct a owl:Class ;
+    rdfs:label "Construct" ;
+    rdfs:comment "A measurable readiness dimension (e.g. discoverability, provenance completeness). A Concept promoted to measurability." .
+
+airkg:Platform a owl:Class ;
+    rdfs:label "Platform" ;
+    rdfs:comment "A machine consumer whose behavior is targeted or described (Google Search, Bing, a named crawler, an LLM vendor's retrieval system, Cloudflare/Akamai bot controls)." .
+
+airkg:Instrument a owl:Class ;
+    rdfs:label "Instrument" ;
+    rdfs:comment "An existing assessment, survey, index, or benchmark." .
+
+airkg:Tool a owl:Class ;
+    rdfs:label "Tool" ;
+    rdfs:comment "Software that implements one or more Measures (Lighthouse, Scrapy, pySHACL, LinkChecker, GoAccess, Spectral, extruct, GSA Site Scanning engine, DAP)." .
+
+airkg:Framework a owl:Class ;
+    rdfs:label "Framework" ;
+    rdfs:comment "A conceptual structure (NIST AI RMF, FAIR, Data Readiness Levels)." .
+
+airkg:Measure a owl:Class ;
+    rdfs:label "Measure" ;
+    rdfs:comment "An individual item or metric inside an Instrument." .
+
+airkg:Practice a owl:Class ;
+    rdfs:label "Practice" ;
+    rdfs:comment "A normative recommendation a source makes about how to publish, structure, expose, or maintain data or content for machine consumers." .
+
+airkg:Standard a owl:Class ;
+    rdfs:label "Standard" ;
+    rdfs:comment "A technical spec (DCAT, ISO 19115, schema.org, llms.txt, MCP)." .
+
+airkg:Claim a owl:Class ;
+    rdfs:label "Claim" ;
+    rdfs:comment "A falsifiable assertion a document makes (X improves Y, A requires B)." .
+
+airkg:Definition a owl:Class ;
+    rdfs:label "Definition" ;
+    rdfs:comment "A verbatim definition of a term as given by one source." .
+
+airkg:Concept a owl:Class ;
+    rdfs:label "Concept" ;
+    rdfs:comment "Any substantive idea a document uses. Exhaustive layer, extracted first-class from event one." .
+
+airkg:Document a owl:Class ;
+    rdfs:label "Document" ;
+    rdfs:comment "A manifest entry. Primary source only." .
+

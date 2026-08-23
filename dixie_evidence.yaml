@@ -177,7 +177,11 @@ baseline_gate:
 # (tests/test_extraction_grounding.py); OFF until the whole-graph follow-on sized from the
 # probe's repair-success rate turns it on — the probe applies repairs to its items only.
 extraction_gates:
-  enforce_span_coverage: false
+  # FLIPPED ON 2026-08-23 (task 2026-08-23_whole_graph_repair Phase 5) for FUTURE extraction
+  # runs only: the parser quarantines a node whose span does not cover its text attribute.
+  # Not retroactive — historical items are repaired by overlay (grounding_relocated /
+  # attribute_nulled) or annotated span_unrepairable, never quarantined by projection.
+  enforce_span_coverage: true
 
 # Quality monitors (task 2026-08-21_v03_visibility_kernel Phase 6; DD-005 promotion-gate
 # metrics). Per-document control metrics with Shewhart individuals-chart limits
@@ -264,3 +268,27 @@ tevv_gates:
     faithfulness_precision_stratum_min: 0.0000
     grade_platform_official_precision: 0.8310
     grade_peer_reviewed_precision: 1.0000
+
+# SHACL conformance gate CANDIDATE (task 2026-08-23_trustgraph_benchmark Phase 6; DD-018).
+# Off by default. scripts/run_shacl_gate.py exports the event log to RDF without Neo4j
+# (benchmarks/trustgraph/export_projection_rdf.py), validates against the shapes generated
+# from kg/schema.yaml, and counts violations OUTSIDE the known classes below. Known classes
+# are matched by predicate in the script (shape + constraint + focus/value property), never by
+# count. Mutation-tested 2026-08-23: one seeded Concept-defines->Concept edge fires the gate
+# (docs/research/2026-08-23_tgbench_shacl_report.md). Threshold is an operator decision.
+shacl_gate:
+  enabled: false
+  shapes: benchmarks/trustgraph/airkg_shapes.ttl
+  threshold_unknown_violations: 0
+  known_violation_classes:
+    - name: dangling_cites_endpoint_untyped
+      definition: >-
+        sh:class violation on airkg:cites whose object carries no rdf:type: a citation to a
+        Document never admitted by manifest_add. Same population the bulk-v1 closeout's
+        edge_endpoint_validation gate records as a FAIL finding (~1,200 edges).
+    - name: required_property_predates_schema
+      definition: >-
+        sh:minCount violation on airkg:evidence_grade for a Claim whose prov_schema_version
+        predates 0.3, the version that made the attribute required (DD-010).
+      schema_versions_exempt: ["0.1", "0.2"]
+  # realized 2026-08-23 (task Phase 6): total 2127, known 2127, unknown 0; positive control fired.

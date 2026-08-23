@@ -27,6 +27,17 @@ FACTS = REPO / "corpus/staging/metrics/probe_facts.jsonl"
 SIDECAR = REPO / "corpus/staging/metrics/tevv_human_subset_labels.jsonl"
 CROSS = REPO / "corpus/staging/inbox/probe_crossfamily"
 OUT = REPO / "corpus/staging/metrics/probe_aggregate.json"
+RUN = "main"
+
+
+def set_prefix(prefix: str, run: str) -> None:
+    global SAMPLE, FACTS, OUT, RUN, SIDECAR, CROSS
+    SAMPLE = REPO / f"corpus/staging/metrics/{prefix}_sample.jsonl"
+    FACTS = REPO / f"corpus/staging/metrics/{prefix}_facts.jsonl"
+    OUT = REPO / f"corpus/staging/metrics/{prefix}_aggregate.json"
+    RUN = run
+    if prefix != "probe":     # sidecar / cross-family raters belong to the probe sample only
+        SIDECAR = REPO / "nonexistent"; CROSS = REPO / "nonexistent"
 EXCLUDED_FROM_F = {"doc_level_attribute", "grade_misassigned"}
 Z = 1.959964
 
@@ -44,7 +55,7 @@ def load_labels() -> tuple[list[dict], dict[str, str]]:
     """Fact-level labels from all raters: [{fact_id, rater, label, class, confidence}]."""
     rows, rater_kind = [], {}
     for ev in eventlog.replay(tag="probe_judge"):
-        if ev.get("event_type") != "judge_label" or ev.get("run") != "main":
+        if ev.get("event_type") != "judge_label" or ev.get("run") != RUN:
             continue
         r = ev["agent"]["id"]; rater_kind[r] = ev["agent"]["type"]
         rows.append({"fact_id": ev["fact_id"], "rater": r, "label": ev["label"],
@@ -157,6 +168,9 @@ def doc_check_reclassify(per_fact: dict, facts: dict, items: dict) -> dict:
 
 
 def main() -> int:
+    import argparse
+    ap = argparse.ArgumentParser(); ap.add_argument("--prefix", default="probe"); ap.add_argument("--run", default="main")
+    a = ap.parse_args(); set_prefix(a.prefix, a.run)
     rows, rater_kind = load_labels()
     if not rows:
         raise SystemExit("FATAL: no judge labels found")

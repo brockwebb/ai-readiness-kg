@@ -8,6 +8,14 @@ from kg.extraction.schema_loader import load_schema
 
 SCHEMA = load_schema()
 
+
+@pytest.fixture(autouse=True)
+def _coverage_off_by_default(monkeypatch):
+    """The span-coverage gate is ON in config since 2026-08-23 (repair Phase 5). The parser
+    tests for OTHER gates use pointer spans as fixtures; isolate them from coverage so each
+    test checks one rule. The enforcement tests at the bottom enable it explicitly."""
+    monkeypatch.setattr(parser, "_span_coverage_default", lambda: False)
+
 SOURCE = (
     "AI readiness is a construct describing organizational preparedness. "
     "The FCSM defines data quality as fitness for use. "
@@ -378,4 +386,23 @@ def test_span_partial_quarantined_only_when_enforced():
     assert len(off.nodes) == 1 and not off.quarantined
     on = P.parse_extraction(out, src, enforce_span_coverage=True)
     assert not on.nodes and on.quarantined[0]["reason"].startswith("span_partial")
-    assert P._span_coverage_default() is False     # config default stays off for this task
+    import yaml
+    cfg = yaml.safe_load(open(P._DIXIE_CFG))
+    assert cfg["extraction_gates"]["enforce_span_coverage"] is True   # flipped 2026-08-23 (repair Phase 5)
+
+
+def test_enforcement_default_quarantines_partial_span_at_extraction_time():
+    # Phase 5 regression: with the config default (now True) a partial span is quarantined
+    from kg.extraction import parser as P
+    src = "The methodology is internally consistent with other CPI methodologies."
+    out = {"document_id": "d", "concepts": [], "definitions": [],
+           "claims": [{"id": "c1", "claim_text": "The methodology is internally consistent with other CPI methodologies",
+                       "claim_type": "empirical", "evidence_grade": "inference",
+                       "grounding_span": "The methodology is internally"}],
+           "instruments": [], "measures": [], "standards": [], "frameworks": [], "constructs": [],
+           "practices": [], "tools": [], "platforms": [], "edges": [], "proposed_relationships": []}
+    import yaml
+    live_default = bool(yaml.safe_load(open(P._DIXIE_CFG))["extraction_gates"]["enforce_span_coverage"])
+    res = P.parse_extraction(out, src, enforce_span_coverage=live_default)
+    assert live_default is True
+    assert not res.nodes and res.quarantined[0]["reason"].startswith("span_partial")

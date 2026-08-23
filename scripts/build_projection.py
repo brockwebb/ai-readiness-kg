@@ -123,7 +123,8 @@ ANNOTATABLE_DOCUMENT_PROPERTIES = {"is_platform_operator"}
 # attribute_nulled overlays may clear only these (schema attributes the probe can class as
 # filled_attribute); the property name is never taken from the payload unchecked.
 NULLABLE_ATTRIBUTES = {"description", "steward", "owner", "year", "version", "operator",
-                       "license", "url", "response_type", "method", "measurement_notes", "aliases"}
+                       "license", "url", "response_type", "method", "measurement_notes", "aliases",
+                       "term"}   # term: Definition's span_entailable attribute (repair 2026-08-23)
 
 
 def annotation_update(ev: dict) -> tuple[str, str, object] | None:

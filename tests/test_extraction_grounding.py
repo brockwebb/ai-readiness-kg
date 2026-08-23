@@ -61,3 +61,12 @@ def test_partial_span_reason_mutation_positive_control():
             "grounding_span": "Q3. Is the methodology internally consistent?"}
     assert partial_span_reason(good) is None
     assert partial_span_reason({"grounding_span": "anything", "description": "not a covered attr"}) is None
+
+
+def test_locate_loose_returns_document_slice_despite_pdf_spacing():
+    sys_path = __import__("sys").path; sys_path.insert(0, str(__import__("pathlib").Path(__file__).resolve().parent.parent / "scripts"))
+    import repair_relocate as rr
+    doc = "intro. very s cant atten- tion is paid to these obstacles. end"
+    hit = rr.locate_loose("very scant attention is paid to these obstacles", doc)
+    assert hit == "very s cant atten- tion is paid to these obstacles"
+    assert rr.locate_loose("not in the document at all", doc) is None

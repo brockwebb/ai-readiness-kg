@@ -12,3 +12,6 @@ effort: high                    # thinking depth via effort
 # same family, Max OAuth. Recorded as same-family in DD-016; cross-family is the operator
 # chat-export lane.
 secondary_judge_model_id: claude-sonnet-5
+# Cleanup-class model (DD-006: cheap models for cleanup/validation, never primary extraction).
+# Used by the whole-graph repair's model-assisted span relocation (task 2026-08-23).
+cleanup_model_id: claude-haiku-4-5-20251001
