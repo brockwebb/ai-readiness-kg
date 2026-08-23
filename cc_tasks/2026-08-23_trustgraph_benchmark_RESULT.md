@@ -59,3 +59,6 @@ New: `benchmarks/trustgraph/{schema_to_owl.py, schema_to_shacl.py, export_projec
 ## Seldon
 
 Results registered (state `proposed`): `b6c489e1-9e4c-4382-948c-643797bae4ed` = 2127 count (SHACL violations), `badaa580-2229-43da-b924-98543e4fe19d` = 0 count (unknown-class violations), both `--script-path scripts/run_shacl_gate.py`.
+
+## Commits
+`ai-readiness-kg@7c88e87` → `origin/main` (joint commit for both 2026-08-23 tasks).

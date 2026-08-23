@@ -52,4 +52,4 @@
 | Seldon "relocated counts by method, nulled, unrepairable, post-repair entailment" | 5 registered; script links show "no" (scripts not registered as artifacts in this graph). |
 
 ## Commits
-See the joint commit below (both 2026-08-23 tasks).
+`ai-readiness-kg@7c88e87` → `origin/main` (joint commit for both 2026-08-23 tasks).
