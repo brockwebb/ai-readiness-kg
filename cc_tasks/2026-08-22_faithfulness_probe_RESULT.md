@@ -98,7 +98,7 @@ before `611d5dda…3684` → task `1e1654c6…0a74` (`extract: on`, `extract_dai
 | Seldon results "F pooled with CI, per-class proportions, per-rater accuracy, batch-vs-single κ" | 11 registered (adds self-consistency κ); `--script-path` links show "no" (script artifacts not registered in this project's graph). |
 
 ## Commits
-{COMMITS}
+`ai-readiness-kg@74955f2` → `origin/main` (RESULT hash line added in the follow-up commit). dixie: no changes.
 
 ## Files
 **New:** `scripts/{probe_decompose, probe_judge, probe_aggregate, probe_hard_items, probe_repair, probe_crossfamily_export}.py`, `kg/extraction/{decompose_template, probe_judge_template}.md`, `events/batch-009_probe_judge.jsonl`, `events/batch-010.jsonl`, `events/raw/{probe_decompose, probe_judge}/`, `corpus/staging/metrics/probe_*`, `corpus/staging/metrics/probe_crossfamily_batches/` (94), `corpus/staging/inbox/probe_crossfamily/README.md`, `tests/test_probe_aggregate.py`, `docs/research/2026-08-22_probe_*`.
