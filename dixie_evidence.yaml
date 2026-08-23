@@ -171,6 +171,14 @@ baseline_gate:
         5 documented leave-empties + 4 genuinely narrative
         (kg_intrinsic_quality_report.md §1 population completeness).
 
+# Extraction-time gates added by the faithfulness probe (task 2026-08-22_faithfulness_probe
+# Phase 7; DD-015). enforce_span_coverage: when true the parser quarantines a node whose
+# grounding_span does not cover its text attribute (reason `span_partial`). Mutation-tested
+# (tests/test_extraction_grounding.py); OFF until the whole-graph follow-on sized from the
+# probe's repair-success rate turns it on — the probe applies repairs to its items only.
+extraction_gates:
+  enforce_span_coverage: false
+
 # Quality monitors (task 2026-08-21_v03_visibility_kernel Phase 6; DD-005 promotion-gate
 # metrics). Per-document control metrics with Shewhart individuals-chart limits
 # (mean ± sigma·SD over the baseline epoch). Thresholds here are task-declared STOP values

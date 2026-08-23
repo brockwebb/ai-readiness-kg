@@ -1,0 +1,22 @@
+{
+ "batch_id": "main.claude-sonnet-5.ceacef802d",
+ "run": "main",
+ "model_id": "claude-sonnet-5",
+ "usage": {
+  "inputTokens": 8,
+  "outputTokens": 7841,
+  "cacheReadInputTokens": 210686,
+  "cacheCreationInputTokens": 33917,
+  "webSearchRequests": 0,
+  "costUSD": 0.25623119999999994,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "canonicalModel": "claude-sonnet-5",
+  "provider": "firstParty"
+ },
+ "cost_usd": 0.25623119999999994,
+ "duration_ms": 81791,
+ "wall_s": 84.1,
+ "session_id": "32b97532-27d4-4bf8-a83b-a74106e47a99",
+ "raw_result": "I couldn't read the canonical rubric files (`/Users/brock/.wintermute/skills/adversarial-review/...`) — this session is sandboxed to the working directory and blocked that path. Since the probe prompt embedded in your message is fully self-contained and already stamps its own `probe_judge_version: 1.0.0`, I judged directly against its instructions rather than blocking on the cross-check.\n\n```json\n{\"judgments\": [\n  {\"fact_id\": \"f_dd4a7ff8df28\", \"label\": \"not_entailed\", \"class\": \"fabrication\", \"confidence\": 0.95},\n  {\"fact_id\": \"f_399e1059ce35\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.75},\n  {\"fact_id\": \"f_31c76e748c9b\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.97},\n  {\"fact_id\": \"f_2774159eb6c8\", \"label\": \"not_entailed\", \"class\": \"doc_level_attribute\", \"confidence\": 0.55},\n  {\"fact_id\": \"f_98409c3cb101\", \"label\": \"not_entailed\", \"class\": \"filled_attribute\", \"confidence\": 0.65},\n  {\"fact_id\": \"f_5366fd5d254c\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.95},\n  {\"fact_id\": \"f_f4733d4044a7\", \"label\": \"not_entailed\", \"class\": \"filled_attribute\", \"confidence\": 0.6},\n  {\"fact_id\": \"f_e74ec1276ecf\", \"label\": \"not_entailed\", \"class\": \"fabrication\", \"confidence\": 0.55},\n  {\"fact_id\": \"f_af26cd063e0c\", \"label\": \"not_entailed\", \"class\": \"span_truncated\", \"confidence\": 0.6}\n]}\n```\n\nNotes on the closer calls, since confidence alone doesn't convey reasoning:\n- `f_2774159eb6c8` and `f_98409c3cb101` are genuinely ambiguous — the first because the \"fact\" is really a graph edge (`about`) rather than natural-language content, the second because \"response_type\" reads like a schema field imposed on a question fragment, not text the span/window states.\n- `f_e74ec1276ecf`: the descriptive half (\"notifying Google of new or updated pages\") is a near-verbatim match to the span, but \"Sitemaps\" as a name doesn't appear anywhere in span or window — flagged fabrication for that added term even though it's plausibly the correct real-world name."
+}

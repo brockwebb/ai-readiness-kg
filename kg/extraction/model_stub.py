@@ -211,6 +211,11 @@ def invoke(doc_id: str, source_text: str, prompt: str | None = None,
                               timeout=timeout, cwd=_hermetic_cwd())
     except subprocess.TimeoutExpired as exc:
         raise ModelInvocationError(f"claude -p timed out after {timeout}s for {doc_id}") from exc
+    except OSError as exc:
+        # The Claude Code CLI auto-updates in place; for a few seconds the `claude` symlink
+        # does not resolve (observed 2026-08-22 twice, killing two judging streams). That is a
+        # transient per-call failure the driver should retry, not a crash.
+        raise ModelInvocationError(f"claude CLI unavailable for {doc_id}: {exc}") from exc
     if proc.returncode != 0:
         raise ModelInvocationError(
             f"claude -p exited {proc.returncode} for {doc_id}: {proc.stderr.strip()[:300]}")

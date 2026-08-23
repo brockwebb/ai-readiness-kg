@@ -361,3 +361,21 @@ def test_v03_supersedes_document_to_document():
     assert not any(e["type"] == "supersedes" for e in r2.edges)
     assert any(p["suggested_edge"] == "supersedes" and p["source"] == "auto_routed_invalid_pair"
                for p in r2.proposed_relationships)
+
+
+# --- span-coverage invariant in the parser (task 2026-08-22_faithfulness_probe, Phase 7) ---
+
+def test_span_partial_quarantined_only_when_enforced():
+    from kg.extraction import parser as P
+    src = "The methodology is internally consistent with other CPI methodologies. Fin."
+    out = {"document_id": "d", "concepts": [], "definitions": [],
+           "claims": [{"id": "c1", "claim_text": "The methodology is internally consistent with other CPI methodologies",
+                       "claim_type": "empirical", "evidence_grade": "inference",
+                       "grounding_span": "The methodology is internally"}],
+           "instruments": [], "measures": [], "standards": [], "frameworks": [], "constructs": [],
+           "practices": [], "tools": [], "platforms": [], "edges": [], "proposed_relationships": []}
+    off = P.parse_extraction(out, src, enforce_span_coverage=False)
+    assert len(off.nodes) == 1 and not off.quarantined
+    on = P.parse_extraction(out, src, enforce_span_coverage=True)
+    assert not on.nodes and on.quarantined[0]["reason"].startswith("span_partial")
+    assert P._span_coverage_default() is False     # config default stays off for this task

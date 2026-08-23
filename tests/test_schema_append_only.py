@@ -130,3 +130,25 @@ def test_v03_catalogue_preserved_in_v031():
 
 def test_v031_document_is_platform_operator_present():
     assert "is_platform_operator" in SCHEMA["node_types"]["Document"]["properties"]
+
+
+# --- v0.3.2 (task 2026-08-22_faithfulness_probe): span_entailable map -------------------
+
+def test_version_at_least_v032():
+    parts = [int(x) for x in (SCHEMA["schema_version"].split(".") + ["0"])[:3]]
+    assert tuple(parts) >= (0, 3, 2)
+
+
+def test_span_entailable_covers_every_property_on_every_node_type():
+    for ntype, spec in SCHEMA["node_types"].items():
+        se = schema_loader.span_entailable(SCHEMA, ntype)
+        assert set(se) == set(spec["properties"]), f"{ntype}: span_entailable must map every property"
+        assert all(isinstance(v, bool) for v in se.values())
+
+
+def test_span_entailable_rule_assignments():
+    assert schema_loader.span_entailable(SCHEMA, "Claim") == {
+        "claim_text": True, "grounding_span": False, "claim_type": False, "evidence_grade": False}
+    assert schema_loader.span_entailable(SCHEMA, "Standard")["as_of_date"] is False
+    assert schema_loader.span_entailable(SCHEMA, "Standard")["steward"] is True
+    assert not any(schema_loader.span_entailable(SCHEMA, "Document").values())

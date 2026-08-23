@@ -1,0 +1,22 @@
+{
+ "batch_id": "calib_single.claude-opus-4-8.cbfb0f32b2",
+ "run": "calib_single",
+ "model_id": "claude-opus-4-8",
+ "usage": {
+  "inputTokens": 6,
+  "outputTokens": 2062,
+  "cacheReadInputTokens": 91855,
+  "cacheCreationInputTokens": 20809,
+  "webSearchRequests": 0,
+  "costUSD": 0.3055975,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "canonicalModel": "claude-opus-4-8",
+  "provider": "firstParty"
+ },
+ "cost_usd": 0.3055975,
+ "duration_ms": 29536,
+ "wall_s": 31.9,
+ "session_id": "1b58f88c-e99d-421a-9ccf-460fa3a2f3b5",
+ "raw_result": "Permission to read the baseline was declined, but the instrument I need to execute is fully specified in the embedded prompt itself (`probe_judge_version: 1.0.0`) — it's self-contained. Executing it directly.\n\n**Reasoning (one fact):** The fact asserts `owner: Gupta et al.` for the Instrument (the toolkit). The grounding span — `\"[25] designed a toolkit to provide automated explanations across\"` — carries the predicate (*designed a toolkit*) and the citation `[25]`, but the owning agent **\"Gupta et al.\"** is not in the span. The window supplies it unambiguously: *\"Gupta et al. [25] designed a toolkit…\"*. Predicate in span, subject/agent from surrounding context, window supports → `subject_dropped` (not `filled_attribute`, since the window *does* clearly supply the owner).\n\n```json\n{\"judgments\": [{\"fact_id\": \"f_eb3fde662768\", \"label\": \"not_entailed\", \"class\": \"subject_dropped\", \"confidence\": 0.85}]}\n```"
+}

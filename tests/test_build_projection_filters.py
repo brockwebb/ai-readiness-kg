@@ -23,3 +23,7 @@ def test_annotation_update_whitelists_property():
     bad = dict(ev, property="title; DETACH DELETE n")
     assert bp.annotation_update(bad) is None
     assert bp.annotation_update({"event_type": "node_asserted"}) is None
+
+
+def test_probe_judge_label_events_are_not_projectable():
+    assert not bp.is_projectable({"event_type": "judge_label", "purpose": "probe"})

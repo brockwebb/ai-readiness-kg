@@ -1,0 +1,22 @@
+{
+ "batch_id": "main.claude-sonnet-5.77a24e3d43",
+ "run": "main",
+ "model_id": "claude-sonnet-5",
+ "usage": {
+  "inputTokens": 6,
+  "outputTokens": 5443,
+  "cacheReadInputTokens": 145070,
+  "cacheCreationInputTokens": 31053,
+  "webSearchRequests": 0,
+  "costUSD": 0.207668,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "canonicalModel": "claude-sonnet-5",
+  "provider": "firstParty"
+ },
+ "cost_usd": 0.207668,
+ "duration_ms": 59151,
+ "wall_s": 61.6,
+ "session_id": "0d3a03ad-11e9-4e30-bbdb-d3e06c4acbd8",
+ "raw_result": "I'll proceed using the fully-specified rubric embedded in the task prompt itself (labels, classes, and exact output schema) since it's self-contained and versioned (probe_judge_version 1.0.0). Reading the general adversarial-review baseline isn't necessary here — the task's own instructions supersede it.\n\n```json\n{\"judgments\": [\n{\"fact_id\": \"f_0a944f05da80\", \"label\": \"not_entailed\", \"class\": \"span_truncated\", \"confidence\": 0.75},\n{\"fact_id\": \"f_0dd5bd9fcba4\", \"label\": \"not_entailed\", \"class\": \"span_truncated\", \"confidence\": 0.85},\n{\"fact_id\": \"f_6e99d887ff23\", \"label\": \"not_entailed\", \"class\": \"doc_level_attribute\", \"confidence\": 0.55},\n{\"fact_id\": \"f_1e5cafd245e8\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.95},\n{\"fact_id\": \"f_66f75117654f\", \"label\": \"not_entailed\", \"class\": \"subject_dropped\", \"confidence\": 0.85},\n{\"fact_id\": \"f_a7abd2d8aa26\", \"label\": \"not_entailed\", \"class\": \"filled_attribute\", \"confidence\": 0.9},\n{\"fact_id\": \"f_42be7235bcca\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.98},\n{\"fact_id\": \"f_b9ee54a09b28\", \"label\": \"not_entailed\", \"class\": \"span_truncated\", \"confidence\": 0.65},\n{\"fact_id\": \"f_5a148a278e3d\", \"label\": \"not_entailed\", \"class\": \"doc_level_attribute\", \"confidence\": 0.85},\n{\"fact_id\": \"f_2eb68620bafc\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.97}\n]}\n```\n\nNotes on the borderline calls (outside the JSON, for your review):\n- `f_6e99d887ff23` and `f_b9ee54a09b28` share the same truncated span (\"We designed an automated pipeline to au…\"). The pipeline's name/method details (Selenium, audit target) live further into the window, not in the completion of that cut sentence — I leaned `doc_level_attribute` for the name (title-like, pulled from the nearby \"3.2 Auditing Pipeline\" header rather than span text) and `span_truncated` for the method (Selenium is stated later in the same paragraph). Lowest-confidence pair in the batch — worth a second pass if you're calibrating class boundaries for truncated/adjacent-header cases."
+}

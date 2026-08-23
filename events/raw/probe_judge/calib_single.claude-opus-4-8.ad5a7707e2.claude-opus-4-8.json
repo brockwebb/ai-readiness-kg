@@ -1,0 +1,22 @@
+{
+ "batch_id": "calib_single.claude-opus-4-8.ad5a7707e2",
+ "run": "calib_single",
+ "model_id": "claude-opus-4-8",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 1955,
+  "cacheReadInputTokens": 17940,
+  "cacheCreationInputTokens": 17644,
+  "webSearchRequests": 0,
+  "costUSD": 0.23429499999999998,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "canonicalModel": "claude-opus-4-8",
+  "provider": "firstParty"
+ },
+ "cost_usd": 0.23429499999999998,
+ "duration_ms": 26210,
+ "wall_s": 28.4,
+ "session_id": "c75e80f0-8847-41bb-ae27-6314de178f4c",
+ "raw_result": "Looking at this as the atomic-fact judge.\n\n**Fact:** \"Agencies must not embed static, unchanging third-party web assets hosted on services not under the agency's control.\"\n\n**Span:** \"Agencies must not embed static, unchanging \\nweb assets\" — cuts off mid-sentence.\n\nThe fact's distinguishing qualifiers — *third-party* and *hosted on services not under the agency's control* — are absent from the span but present in the cut continuation shown in the window (\"...such as a specific version of a common and widely used code library... hosted on third-party services not under the control of the agency\"). The span is a truncated fragment of the item's own sentence, and the fact's content lies in the cut portion. This is `span_truncated`, not `fabrication` (the window clearly supports it).\n\n```json\n{\"judgments\": [{\"fact_id\": \"f_63e8eccc1ada\", \"label\": \"not_entailed\", \"class\": \"span_truncated\", \"confidence\": 0.82}]}\n```"
+}

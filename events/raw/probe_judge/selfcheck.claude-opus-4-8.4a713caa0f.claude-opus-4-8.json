@@ -1,0 +1,22 @@
+{
+ "batch_id": "selfcheck.claude-opus-4-8.4a713caa0f",
+ "run": "selfcheck",
+ "model_id": "claude-opus-4-8",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 3346,
+  "cacheReadInputTokens": 17943,
+  "cacheCreationInputTokens": 24780,
+  "webSearchRequests": 0,
+  "costUSD": 0.3404315,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "canonicalModel": "claude-opus-4-8",
+  "provider": "firstParty"
+ },
+ "cost_usd": 0.3404315,
+ "duration_ms": 42119,
+ "wall_s": 44.4,
+ "session_id": "f520f634-bdf6-40cc-a0e3-a29fe3bea6de",
+ "raw_result": "Looking at this as an execution of the versioned atomic-fact judge instrument (probe_judge_version 1.0.0). I'll evaluate each fact against its grounding span, using the window only to distinguish truncation/dropped-subject from fabrication.\n\n{\"judgments\": [{\"fact_id\": \"f_b04d496d0b6f\", \"label\": \"not_entailed\", \"class\": \"span_truncated\", \"confidence\": 0.88}, {\"fact_id\": \"f_9f167860b571\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.97}, {\"fact_id\": \"f_fb90c32a6e12\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.95}, {\"fact_id\": \"f_3ceeee9a22f2\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.97}, {\"fact_id\": \"f_dd4a7ff8df28\", \"label\": \"not_entailed\", \"class\": \"fabrication\", \"confidence\": 0.9}, {\"fact_id\": \"f_63b53fcaade5\", \"label\": \"not_entailed\", \"class\": \"span_truncated\", \"confidence\": 0.6}, {\"fact_id\": \"f_2679011b3ba6\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.9}, {\"fact_id\": \"f_5971f44bd11f\", \"label\": \"not_entailed\", \"class\": \"filled_attribute\", \"confidence\": 0.85}, {\"fact_id\": \"f_35e1e98cfa34\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.88}, {\"fact_id\": \"f_d090e9a134ff\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.97}]}"
+}

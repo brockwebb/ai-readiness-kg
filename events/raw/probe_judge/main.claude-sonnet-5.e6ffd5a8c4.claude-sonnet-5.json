@@ -1,0 +1,22 @@
+{
+ "batch_id": "main.claude-sonnet-5.e6ffd5a8c4",
+ "run": "main",
+ "model_id": "claude-sonnet-5",
+ "usage": {
+  "inputTokens": 4,
+  "outputTokens": 6222,
+  "cacheReadInputTokens": 86063,
+  "cacheCreationInputTokens": 31391,
+  "webSearchRequests": 0,
+  "costUSD": 0.20500459999999998,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "canonicalModel": "claude-sonnet-5",
+  "provider": "firstParty"
+ },
+ "cost_usd": 0.20500459999999998,
+ "duration_ms": 66983,
+ "wall_s": 69.4,
+ "session_id": "7aaced17-84fc-405b-ac08-ed090663d90f",
+ "raw_result": "This is a batch atomic-fact faithfulness judgment task under the versioned probe prompt — no coding/skill work involved, just applying the rubric to each fact against its grounding span (with window used only to classify, never to entail).\n\n```json\n{\"judgments\": [\n  {\"fact_id\": \"f_d28829cbd040\", \"label\": \"not_entailed\", \"class\": \"fabrication\", \"confidence\": 0.9},\n  {\"fact_id\": \"f_1fa8e96c3cfd\", \"label\": \"not_entailed\", \"class\": \"doc_level_attribute\", \"confidence\": 0.75},\n  {\"fact_id\": \"f_e01b7fb2cd0f\", \"label\": \"not_entailed\", \"class\": \"fabrication\", \"confidence\": 0.55},\n  {\"fact_id\": \"f_8ae15ee01935\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.98},\n  {\"fact_id\": \"f_92b0e8e9c6e3\", \"label\": \"not_entailed\", \"class\": \"subject_dropped\", \"confidence\": 0.55},\n  {\"fact_id\": \"f_1a977e8678cd\", \"label\": \"not_entailed\", \"class\": \"doc_level_attribute\", \"confidence\": 0.7},\n  {\"fact_id\": \"f_7a4d50f52d94\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.98},\n  {\"fact_id\": \"f_df82f9e3ceb4\", \"label\": \"not_entailed\", \"class\": \"subject_dropped\", \"confidence\": 0.6},\n  {\"fact_id\": \"f_6ea12e59dfe1\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.85}\n]}\n```\n\nNotes on the closer calls: `f_1fa8e96c3cfd` (operator: Google) is the textbook \"operator inferable from the name\" case — Chrome/Lighthouse implies Google, but the span never says it. `f_e01b7fb2cd0f` vs `f_df82f9e3ceb4` share the same span (\"This is usually RSS or Atom\") but diverge in the fact's claim: \"aliases: RSS\" mischaracterizes a format example as a naming relation (fabrication), while \"The feed is usually RSS or Atom\" is a faithful paraphrase modulo the pronoun \"This\" resolving to \"feed\" via the window (subject_dropped). `f_92b0e8e9c6e3` is the weakest fit to the taxonomy — the span defines patterned fields as the implementation of extension properties, but \"extend the specification\" as the object comes from the window's preceding sentence, not the span itself; I mapped it to `subject_dropped` as the closest available class but flag lower confidence there."
+}

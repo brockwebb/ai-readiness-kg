@@ -40,3 +40,24 @@ def test_empty_span_not_grounded():
 def test_normalize_is_idempotent():
     once = grounding.normalize(SOURCE)
     assert grounding.normalize(once) == once
+
+
+# --- span-coverage invariant (task 2026-08-22_faithfulness_probe, Phase 7) ----------------
+from kg.extraction.grounding import covers, partial_span_reason  # noqa: E402
+
+
+def test_covers_requires_item_text_inside_span():
+    assert covers("Data must be published in a machine-readable format.", "published in a machine-readable format")
+    assert not covers("published in a machine-", "published in a machine-readable format")   # truncated
+    assert not covers("", "x") and not covers("x", "")
+
+
+def test_partial_span_reason_mutation_positive_control():
+    # seeded known-partial span: the Claim's text runs past the span
+    bad = {"claim_text": "Is the methodology internally consistent with other CPI methodologies",
+           "grounding_span": "Is the methodology internally"}
+    assert partial_span_reason(bad) == "span_partial: grounding_span does not cover 'claim_text'"
+    good = {"claim_text": "Is the methodology internally consistent",
+            "grounding_span": "Q3. Is the methodology internally consistent?"}
+    assert partial_span_reason(good) is None
+    assert partial_span_reason({"grounding_span": "anything", "description": "not a covered attr"}) is None

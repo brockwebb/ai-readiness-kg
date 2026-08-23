@@ -23,6 +23,7 @@ schema.yaml (the single source of truth), so the two never drift.
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from pathlib import Path
 
 from . import grounding, schema_loader
 
@@ -80,12 +81,33 @@ def _property_violation(schema: dict, node_type: str, item: dict) -> str | None:
     return None
 
 
-def parse_extraction(output: dict, source_text: str, schema: dict | None = None) -> ExtractionResult:
+_DIXIE_CFG = Path(__file__).resolve().parent.parent.parent / "dixie_evidence.yaml"
+
+
+def _span_coverage_default() -> bool:
+    """extraction_gates.enforce_span_coverage from dixie_evidence.yaml; absent -> False."""
+    if not _DIXIE_CFG.is_file():
+        return False
+    import yaml
+    cfg = yaml.safe_load(_DIXIE_CFG.read_text(encoding="utf-8")) or {}
+    return bool((cfg.get("extraction_gates") or {}).get("enforce_span_coverage", False))
+
+
+def parse_extraction(output: dict, source_text: str, schema: dict | None = None,
+                     enforce_span_coverage: bool | None = None) -> ExtractionResult:
     """Validate ``output`` against ``schema`` and ``source_text``. Returns an ExtractionResult
     partitioning every item into valid nodes/edges, quarantine, or proposed_relationships.
 
     Raises ValueError on a structurally invalid envelope (not a dict, or no document_id) —
-    a malformed envelope is an upstream bug, not a per-item quarantine."""
+    a malformed envelope is an upstream bug, not a per-item quarantine.
+
+    ``enforce_span_coverage`` (task 2026-08-22_faithfulness_probe Phase 7): when True, a node
+    whose grounding_span does not COVER its text attribute (grounding.COVERAGE_ATTRIBUTES)
+    is quarantined with reason ``span_partial``. None -> read
+    dixie_evidence.yaml::extraction_gates.enforce_span_coverage (default False until the
+    whole-graph follow-on sized from the probe turns it on)."""
+    if enforce_span_coverage is None:
+        enforce_span_coverage = _span_coverage_default()
     if schema is None:
         schema = schema_loader.load_schema()
     if not isinstance(output, dict):
@@ -117,6 +139,11 @@ def parse_extraction(output: dict, source_text: str, schema: dict | None = None)
             if violation:
                 _quarantine(result, layer, violation, item)
                 continue
+            if enforce_span_coverage:
+                partial = grounding.partial_span_reason(item)
+                if partial:
+                    _quarantine(result, layer, partial, item)
+                    continue
             id_types[nid] = node_type
             result.nodes.append({"id": nid, "type": node_type, "item": item})
 

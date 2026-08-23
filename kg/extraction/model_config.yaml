@@ -8,3 +8,7 @@ model_id: claude-opus-4-8       # whole-document extraction (schema §5, model-a
 provider: claude_max_oauth      # subscription OAuth via `claude -p`; never ANTHROPIC_API_KEY/AUTH_TOKEN (DD-007)
 cli: claude                     # headless invocation path: `claude -p` (Agent SDK credit, no key)
 effort: high                    # thinking depth via effort
+# Probe second rater (task 2026-08-22_faithfulness_probe Phase 4): a different member of the
+# same family, Max OAuth. Recorded as same-family in DD-016; cross-family is the operator
+# chat-export lane.
+secondary_judge_model_id: claude-sonnet-5

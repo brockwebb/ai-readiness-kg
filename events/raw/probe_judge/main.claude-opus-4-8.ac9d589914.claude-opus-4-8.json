@@ -1,0 +1,22 @@
+{
+ "batch_id": "main.claude-opus-4-8.ac9d589914",
+ "run": "main",
+ "model_id": "claude-opus-4-8",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 5153,
+  "cacheReadInputTokens": 17937,
+  "cacheCreationInputTokens": 25622,
+  "webSearchRequests": 0,
+  "costUSD": 0.39402349999999997,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "canonicalModel": "claude-opus-4-8",
+  "provider": "firstParty"
+ },
+ "cost_usd": 0.39402349999999997,
+ "duration_ms": 64318,
+ "wall_s": 66.7,
+ "session_id": "0b344702-76f9-4790-acf5-e78ad5d5e972",
+ "raw_result": "Looking at this, I'm being asked to execute the versioned atomic-fact faithfulness judge instrument (probe_judge_version 1.0.0) that's fully specified inline. The instrument is complete, so I'll apply it directly to each fact.\n\nReasoning per fact (span-alone entailment; window only to distinguish truncation/subject-drop from fabrication):\n\n- **f_a37fe99f7489** — span is the definition body of \"Harvest Job\"; the term header is cut off (window shows \"* Harvest Job\" right before) → `span_truncated`.\n- **f_cd4ecd3fc4ef** — the method statement is verbatim in the span → `entailed`.\n- **f_3b97fc05db95** — \"Crawlers are automated clients\" carries the term → `entailed`.\n- **f_6d9cc285ddeb** — year 2025 nowhere in span (nor window); a publication date a span wouldn't carry → `doc_level_attribute`.\n- **f_6d7f8e768faa** — span names MSE/PSNR only; \"comparing the maximum signal power with the average squared error\" is a later sentence of the item's text, in the window not the span → `span_truncated`.\n- **f_cfcc2b6c7a8c** — span lists \"Dublin Core…\"; \"owner: DCMI\" not supported by span and DCMI not in window → `filled_attribute`.\n- **f_43ae6c3a340e** — span is only the term \"AI Incident Reporting\"; the descriptive predicate is truncated (window supplies it) → `span_truncated`.\n- **f_e5dbe733cfb2** — \"Ingest Service\" name is in the span → `entailed`.\n- **f_9d1957caf34e** — span directly describes the snippet controls and what they apply to (limiting search snippets); the self-relation edge holds → `entailed`.\n- **f_676eeefc38ea** — span only says \"agency\" has a given meaning; \"the unit subject to the Act's requirements\" is an interpretive description absent from span and not clearly supplied by window → `filled_attribute`.\n\n{\"judgments\": [{\"fact_id\": \"f_a37fe99f7489\", \"label\": \"not_entailed\", \"class\": \"span_truncated\", \"confidence\": 0.85}, {\"fact_id\": \"f_cd4ecd3fc4ef\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.97}, {\"fact_id\": \"f_3b97fc05db95\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.9}, {\"fact_id\": \"f_6d9cc285ddeb\", \"label\": \"not_entailed\", \"class\": \"doc_level_attribute\", \"confidence\": 0.9}, {\"fact_id\": \"f_6d7f8e768faa\", \"label\": \"not_entailed\", \"class\": \"span_truncated\", \"confidence\": 0.8}, {\"fact_id\": \"f_cfcc2b6c7a8c\", \"label\": \"not_entailed\", \"class\": \"filled_attribute\", \"confidence\": 0.82}, {\"fact_id\": \"f_43ae6c3a340e\", \"label\": \"not_entailed\", \"class\": \"span_truncated\", \"confidence\": 0.72}, {\"fact_id\": \"f_e5dbe733cfb2\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.95}, {\"fact_id\": \"f_9d1957caf34e\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.6}, {\"fact_id\": \"f_676eeefc38ea\", \"label\": \"not_entailed\", \"class\": \"filled_attribute\", \"confidence\": 0.7}]}"
+}

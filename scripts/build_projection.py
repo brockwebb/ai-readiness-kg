@@ -108,7 +108,7 @@ def read_overlays() -> tuple[set[tuple[str, str]], dict[str, str]]:
 # Phase 2) are flagged `purpose: tevv_retest` on every event and live in a tagged shard;
 # they measure stability and must never be projected — a retest that leaked into the
 # graph would double every node of the retested docs.
-NON_GRAPH_PURPOSES = {"tevv_retest"}
+NON_GRAPH_PURPOSES = {"tevv_retest", "probe"}   # probe = judge_label events (task 2026-08-22_faithfulness_probe)
 
 
 def is_projectable(ev: dict) -> bool:
@@ -120,6 +120,10 @@ def is_projectable(ev: dict) -> bool:
 # properties written as `document_annotation` events. Only whitelisted properties project,
 # so an arbitrary payload key can never become a Cypher property name.
 ANNOTATABLE_DOCUMENT_PROPERTIES = {"is_platform_operator"}
+# attribute_nulled overlays may clear only these (schema attributes the probe can class as
+# filled_attribute); the property name is never taken from the payload unchecked.
+NULLABLE_ATTRIBUTES = {"description", "steward", "owner", "year", "version", "operator",
+                       "license", "url", "response_type", "method", "measurement_notes", "aliases"}
 
 
 def annotation_update(ev: dict) -> tuple[str, str, object] | None:
@@ -134,6 +138,7 @@ def annotation_update(ev: dict) -> tuple[str, str, object] | None:
 
 def build(session, kg_labels: list[str], edge_whitelist: set[str]) -> dict:
     counts = {"nodes": 0, "edges": 0, "documents": 0, "annotations": 0,
+              "overlays_relocated": 0, "overlays_nulled": 0,
               "skipped_unknown_edge_type": 0,
               "skipped_superseded_extraction": 0, "skipped_non_graph_purpose": 0,
               "aliased_endpoints": 0}
@@ -213,6 +218,24 @@ def build(session, kg_labels: list[str], edge_whitelist: set[str]) -> dict:
                 doc=ev.get("doc_id"), span=(p.get("item") or {}).get(
                     "grounding_span") or p.get("grounding_span"))
             counts["edges"] += 1
+    # Repair overlays (task 2026-08-22_faithfulness_probe Phase 7) are applied LAST so they
+    # win over the original assertion regardless of shard order. Never mutate the log.
+    for ev in eventlog.replay():
+        et = ev.get("event_type")
+        if et == "grounding_relocated":
+            session.run("MATCH (n {id: $id}) WHERE n.prov_wasDerivedFrom = $doc "
+                        "SET n.grounding_span = $span, n.grounding_relocated_from = $old, "
+                        "n.grounding_relocation_method = $m",
+                        id=ev["item_id"], doc=ev["doc_id"], span=ev["new_span"], old=ev["old_span"], m=ev["method"])
+            counts["overlays_relocated"] += 1
+        elif et == "attribute_nulled":
+            attr = ev["attribute"]
+            if attr not in NULLABLE_ATTRIBUTES:
+                continue
+            session.run(f"MATCH (n {{id: $id}}) WHERE n.prov_wasDerivedFrom = $doc "
+                        f"SET n.{attr} = null, n.nulled_attributes = coalesce(n.nulled_attributes, []) + $attr",
+                        id=ev["item_id"], doc=ev["doc_id"], attr=attr)
+            counts["overlays_nulled"] += 1
     return counts
 
 

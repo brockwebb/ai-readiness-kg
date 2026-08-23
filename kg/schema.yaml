@@ -28,7 +28,13 @@
 #     Populated by rule via `document_annotation` events (events/batch-007.jsonl), never by the
 #     extractor. Exists because the kernel RESULT's grading-confusion signal conflated
 #     "platform-official" with harvest clause b (DD-014).
-schema_version: "0.3.1"
+#   2026-08-22 (task 2026-08-22_faithfulness_probe, Phase 0): v0.3.2. Append-only per-attribute
+#     `span_entailable` map on every node type: true = a grounding span is expected to entail
+#     the attribute's value (text, names, stewards, years, ...); false = document-derived or
+#     classification fields (as_of_date, enums, ids) that a span cannot be expected to carry.
+#     Read by the faithfulness probe's decomposer (facts only for true attributes) and by the
+#     scoring rule (`doc_level_attribute` class excluded from F). DD-015.
+schema_version: "0.3.2"
 
 # --- Section 2: Node types -------------------------------------------------
 # Each node type lists the "Key properties" column verbatim. Parenthetical
@@ -46,6 +52,16 @@ node_types:
       - content_hash
       - manifest_event_id
       - is_platform_operator   # v0.3.1: boolean, nullable; set by document_annotation events, not extraction
+    span_entailable:   # v0.3.2: which attributes a grounding span is expected to entail (DD-015)
+      doc_id: false
+      title: false
+      authors: false
+      pub_date: false
+      source_type: false
+      primary_url: false
+      content_hash: false
+      manifest_event_id: false
+      is_platform_operator: false
     property_values:
       # v0.3: practitioner = SME-authored or industry-practitioner guidance that is not a
       # vendor product page. `industry` is unchanged.
@@ -59,6 +75,12 @@ node_types:
       - grounding_span
       - normative_status  # statute / policy / standard / academic / industry
       - as_of_date
+    span_entailable:   # v0.3.2: which attributes a grounding span is expected to entail (DD-015)
+      term: true
+      verbatim_text: true
+      grounding_span: false
+      normative_status: false
+      as_of_date: false
     property_values:
       normative_status: [statute, policy, standard, academic, industry]
 
@@ -69,6 +91,11 @@ node_types:
       - aliases
       - description
       - grounding_span
+    span_entailable:   # v0.3.2: which attributes a grounding span is expected to entail (DD-015)
+      name: true
+      aliases: true
+      description: true
+      grounding_span: false
 
   Construct:
     what: A measurable readiness dimension (e.g. discoverability, provenance completeness). A Concept promoted to measurability.
@@ -76,6 +103,10 @@ node_types:
       - name
       - description
       - measurement_notes
+    span_entailable:   # v0.3.2: which attributes a grounding span is expected to entail (DD-015)
+      name: true
+      description: true
+      measurement_notes: true
 
   Instrument:
     what: An existing assessment, survey, index, or benchmark.
@@ -84,6 +115,11 @@ node_types:
       - owner
       - year
       - method
+    span_entailable:   # v0.3.2: which attributes a grounding span is expected to entail (DD-015)
+      name: true
+      owner: true
+      year: true
+      method: true
 
   Measure:
     what: An individual item or metric inside an Instrument.
@@ -92,6 +128,11 @@ node_types:
       - response_type
       - grounding_span
       - tier              # v0.3, OPTIONAL: public / agency_instrumented / paid
+    span_entailable:   # v0.3.2: which attributes a grounding span is expected to entail (DD-015)
+      text: true
+      response_type: true
+      grounding_span: false
+      tier: false
     property_values:
       # v0.3: who can run the measure. public = runnable by anyone from outside;
       # agency_instrumented = needs agency-side analytics, scripts, or logs; paid = commercial
@@ -106,6 +147,11 @@ node_types:
       - grounding_span
       - claim_type        # empirical / normative / speculative
       - evidence_grade    # v0.3, REQUIRED: see property_values (descending strength)
+    span_entailable:   # v0.3.2: which attributes a grounding span is expected to entail (DD-015)
+      claim_text: true
+      grounding_span: false
+      claim_type: false
+      evidence_grade: false
     property_values:
       claim_type: [empirical, normative, speculative]
       # v0.3 (DD-010): strength of the evidence behind the claim, in DESCENDING order.
@@ -129,6 +175,11 @@ node_types:
       - version
       - steward
       - as_of_date
+    span_entailable:   # v0.3.2: which attributes a grounding span is expected to entail (DD-015)
+      name: true
+      version: true
+      steward: true
+      as_of_date: false
 
   Framework:
     what: A conceptual structure (NIST AI RMF, FAIR, Data Readiness Levels).
@@ -136,6 +187,10 @@ node_types:
       - name
       - owner
       - year
+    span_entailable:   # v0.3.2: which attributes a grounding span is expected to entail (DD-015)
+      name: true
+      owner: true
+      year: true
 
   # --- v0.3 additions (2026-08-21, AUTH-1 / DD-009; append-only) --------------
   Practice:
@@ -145,6 +200,11 @@ node_types:
       - grounding_span
       - as_of_date
       - scope             # dataset / api / bulk_file / tool / content / advisory / site / any
+    span_entailable:   # v0.3.2: which attributes a grounding span is expected to entail (DD-015)
+      text: true
+      grounding_span: false
+      as_of_date: false
+      scope: false
     property_values:
       # the asset class the recommendation is about; enum-enforced by the parser when present
       scope: [dataset, api, bulk_file, tool, content, advisory, site, any]
@@ -158,6 +218,13 @@ node_types:
       - url
       - as_of_date
       - grounding_span    # §4 universal provenance (every extracted node carries it)
+    span_entailable:   # v0.3.2: which attributes a grounding span is expected to entail (DD-015)
+      name: true
+      steward: true
+      license: true
+      url: true
+      as_of_date: false
+      grounding_span: false
 
   Platform:
     what: A machine consumer whose behavior is targeted or described (Google Search, Bing, a named crawler, an LLM vendor's retrieval system, Cloudflare/Akamai bot controls).
@@ -166,6 +233,11 @@ node_types:
       - operator
       - as_of_date
       - grounding_span    # §4 universal provenance (every extracted node carries it)
+    span_entailable:   # v0.3.2: which attributes a grounding span is expected to entail (DD-015)
+      name: true
+      operator: true
+      as_of_date: false
+      grounding_span: false
 
 # --- Section 3: Edge types -------------------------------------------------
 # from/to/meaning transcribed from the "From -> To" and "Meaning" columns.

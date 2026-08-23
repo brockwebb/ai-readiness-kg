@@ -1,0 +1,22 @@
+{
+ "batch_id": "main.claude-opus-4-8.56e645fcb6",
+ "run": "main",
+ "model_id": "claude-opus-4-8",
+ "usage": {
+  "inputTokens": 4,
+  "outputTokens": 5137,
+  "cacheReadInputTokens": 61290,
+  "cacheCreationInputTokens": 29669,
+  "webSearchRequests": 0,
+  "costUSD": 0.45578,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "canonicalModel": "claude-opus-4-8",
+  "provider": "firstParty"
+ },
+ "cost_usd": 0.45578,
+ "duration_ms": 70041,
+ "wall_s": 72.3,
+ "session_id": "a9cd4635-3612-43d4-9945-c9502f92ddca",
+ "raw_result": "Reasoning per fact:\n\n- **f_264a91848ec5** — span is about a questionnaire; neither span nor window mentions expert panel, cognitive testing, or field testing → **fabrication**.\n- **f_9581aa3fef5c** — span explicitly lists \"flawed training data\" → **entailed**.\n- **f_71cc56bf1ed4** — span is only the term \"epistemic cultures\"; the description isn't carried by the span, and the window only loosely touches it → **filled_attribute**.\n- **f_24945749ee25** — name appears verbatim in span → **entailed**.\n- **f_e46037f7bd66** — span states the definition verbatim → **entailed**.\n- **f_66c8dfff0087** — span contains \"Chrome\" and \"agentic browsing\" → **entailed**.\n- **f_8b275d28325c** — span carries the predicate (\"shows any issues…\"); subject \"Manual Actions report\" comes from the window → **subject_dropped**.\n- **f_6e30bd2da75a** — span contains \"breadcrumbs data about the HTTP request-response cycle for improved visibility\" → **entailed**.\n- **f_8f49ec7843c1** — span is just the title; window supports \"1,000 prompts\" but \"US/Canada\" and \"three verticals\" appear nowhere (window says 10 categories, generic regions) → **fabrication**.\n- **f_c9f050752050** — span contains \"machine-readability\"; mentions edge holds → **entailed**.\n\n{\"judgments\": [{\"fact_id\": \"f_264a91848ec5\", \"label\": \"not_entailed\", \"class\": \"fabrication\", \"confidence\": 0.9}, {\"fact_id\": \"f_9581aa3fef5c\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.98}, {\"fact_id\": \"f_71cc56bf1ed4\", \"label\": \"not_entailed\", \"class\": \"filled_attribute\", \"confidence\": 0.55}, {\"fact_id\": \"f_24945749ee25\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.97}, {\"fact_id\": \"f_e46037f7bd66\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.98}, {\"fact_id\": \"f_66c8dfff0087\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.75}, {\"fact_id\": \"f_8b275d28325c\", \"label\": \"not_entailed\", \"class\": \"subject_dropped\", \"confidence\": 0.8}, {\"fact_id\": \"f_6e30bd2da75a\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.85}, {\"fact_id\": \"f_8f49ec7843c1\", \"label\": \"not_entailed\", \"class\": \"fabrication\", \"confidence\": 0.7}, {\"fact_id\": \"f_c9f050752050\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.92}]}"
+}

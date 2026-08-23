@@ -1,0 +1,22 @@
+{
+ "batch_id": "calib_single.claude-opus-4-8.9220885fc1",
+ "run": "calib_single",
+ "model_id": "claude-opus-4-8",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 722,
+  "cacheReadInputTokens": 17940,
+  "cacheCreationInputTokens": 17742,
+  "webSearchRequests": 0,
+  "costUSD": 0.20445000000000002,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "canonicalModel": "claude-opus-4-8",
+  "provider": "firstParty"
+ },
+ "cost_usd": 0.20445000000000002,
+ "duration_ms": 10245,
+ "wall_s": 12.7,
+ "session_id": "3d477616-5763-4b02-92d2-0c6d8eca5cf4",
+ "raw_result": "{\"judgments\": [{\"fact_id\": \"f_c050ba78e8dc\", \"label\": \"not_entailed\", \"class\": \"span_truncated\", \"confidence\": 0.95}]}\n\nThe span ends at `Talent (15%);` and does not contain Culture at all, so it cannot entail the fact on its own. The window shows the full sentence continues `...and Culture (10%)`, confirming the fact lies in the truncated portion of the item's own text — hence `span_truncated`, not `fabrication`."
+}

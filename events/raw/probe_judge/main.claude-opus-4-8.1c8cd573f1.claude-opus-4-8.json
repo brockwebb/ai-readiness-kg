@@ -1,0 +1,22 @@
+{
+ "batch_id": "main.claude-opus-4-8.1c8cd573f1",
+ "run": "main",
+ "model_id": "claude-opus-4-8",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 5993,
+  "cacheReadInputTokens": 17937,
+  "cacheCreationInputTokens": 24942,
+  "webSearchRequests": 0,
+  "costUSD": 0.40822349999999996,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "canonicalModel": "claude-opus-4-8",
+  "provider": "firstParty"
+ },
+ "cost_usd": 0.40822349999999996,
+ "duration_ms": 77260,
+ "wall_s": 79.7,
+ "session_id": "b8a5504b-7389-40c7-8098-914432c21fd4",
+ "raw_result": "Looking at this task, it's a versioned atomic-fact faithfulness judgment. Per the repo's doctrine (one versioned instrument), I'll apply the labeling rubric exactly as specified and emit strict JSON.\n\nLet me reason through each fact against its **grounding span alone**, using the window only to distinguish \"supported-but-dropped\" from \"fabricated\":\n\n- **f_399e1059ce35** — span \"FAIR-aware data stewards\" → \"FAIR-aware practitioners.\" Data stewards are practitioners; paraphrase entailment. **entailed**\n- **f_728f18654fc0** — alias \"T&E\"; the surface form \"T&E\" appears verbatim in the span. **entailed**\n- **f_1fdfed3461fe** — span is just the row \"Timeliness/Punctuality…\"; the \"FCSM Utility dimension\" classification comes from the table header (window), not the span. **subject_dropped**\n- **f_f81af3552e8a** — fact is a verbatim prefix of the span. **entailed**\n- **f_c207af5b22bf** — span is the *description* cell; the name \"Media encryption (mediaEncryption)\" lives in other cells (window shows them). **span_truncated**\n- **f_a91e1ec569b0** — name \"Reference metadata\" vs span \"reference metadata\"; same surface form. **entailed**\n- **f_60a79bea3062** — span names the component bullet only; the parent framework (fw-drai-cats/AIDRIN) comes from surrounding structure. **subject_dropped**\n- **f_f342e56bee06** — alias \"theme\"; \"themes\" appears in the span. **entailed**\n- **f_5971f44bd11f** — owner \"Carnegie Mellon University\" appears nowhere in span or window; owner-value class. **filled_attribute**\n- **f_60266a370756** — owner \"Chen, Wang, Chen, Koudas\" absent from span and window; owner-value class. **filled_attribute**\n\n{\"judgments\": [{\"fact_id\": \"f_399e1059ce35\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.72}, {\"fact_id\": \"f_728f18654fc0\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.6}, {\"fact_id\": \"f_1fdfed3461fe\", \"label\": \"not_entailed\", \"class\": \"subject_dropped\", \"confidence\": 0.78}, {\"fact_id\": \"f_f81af3552e8a\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.96}, {\"fact_id\": \"f_c207af5b22bf\", \"label\": \"not_entailed\", \"class\": \"span_truncated\", \"confidence\": 0.62}, {\"fact_id\": \"f_a91e1ec569b0\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.9}, {\"fact_id\": \"f_60a79bea3062\", \"label\": \"not_entailed\", \"class\": \"subject_dropped\", \"confidence\": 0.55}, {\"fact_id\": \"f_f342e56bee06\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.55}, {\"fact_id\": \"f_5971f44bd11f\", \"label\": \"not_entailed\", \"class\": \"filled_attribute\", \"confidence\": 0.66}, {\"fact_id\": \"f_60266a370756\", \"label\": \"not_entailed\", \"class\": \"filled_attribute\", \"confidence\": 0.68}]}"
+}

@@ -1,0 +1,22 @@
+{
+ "batch_id": "main.claude-sonnet-5.8610843876",
+ "run": "main",
+ "model_id": "claude-sonnet-5",
+ "usage": {
+  "inputTokens": 10,
+  "outputTokens": 5514,
+  "cacheReadInputTokens": 269276,
+  "cacheCreationInputTokens": 32101,
+  "webSearchRequests": 0,
+  "costUSD": 0.2374192,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "canonicalModel": "claude-sonnet-5",
+  "provider": "firstParty"
+ },
+ "cost_usd": 0.2374192,
+ "duration_ms": 63279,
+ "wall_s": 65.5,
+ "session_id": "bf75bf37-aab4-4b15-924e-3d25f5b6f42d",
+ "raw_result": "```json\n{\"judgments\": [\n{\"fact_id\": \"f_ac5946890070\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.92},\n{\"fact_id\": \"f_0c3e8f7dd43d\", \"label\": \"not_entailed\", \"class\": \"subject_dropped\", \"confidence\": 0.75},\n{\"fact_id\": \"f_cee436e16219\", \"label\": \"not_entailed\", \"class\": \"span_truncated\", \"confidence\": 0.85},\n{\"fact_id\": \"f_489e0717d1ec\", \"label\": \"not_entailed\", \"class\": \"subject_dropped\", \"confidence\": 0.7},\n{\"fact_id\": \"f_69d096b845e1\", \"label\": \"not_entailed\", \"class\": \"span_truncated\", \"confidence\": 0.8},\n{\"fact_id\": \"f_3333d10d9fa9\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.9},\n{\"fact_id\": \"f_e9a40352ff53\", \"label\": \"not_entailed\", \"class\": \"span_truncated\", \"confidence\": 0.85},\n{\"fact_id\": \"f_2cfe1d2dcc21\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.8},\n{\"fact_id\": \"f_e21fb2f18a5c\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.97},\n{\"fact_id\": \"f_d84a1dc7bebb\", \"label\": \"not_entailed\", \"class\": \"span_truncated\", \"confidence\": 0.85}\n]}\n```\n\nNotes on the borderline calls:\n- **f_0c3e8f7dd43d / f_489e0717d1ec**: span carries the predicate/description but the subject (\"Public Access Level\" as concept name; \"engagement\" as the measure) sits outside the span in the window — window supports both, hence `subject_dropped` rather than `fabrication`.\n- **f_2cfe1d2dcc21**: treated as `entailed` since the span *is* the claim text verbatim; the doc→claim `asserts` edge is structural, not something the span itself needs to carry (consistent with how `doc_level_attribute` facts are exempted from span-carrying, though here the content match is direct enough to call it entailed rather than that class).\n- Four facts (`f_cee436e16219`, `f_69d096b845e1`, `f_e9a40352ff53`, `f_d84a1dc7bebb`) are classic truncation cases — the span is a literal cut fragment of a longer sentence, and the missing clause is visible immediately adjacent in the window."
+}

@@ -58,3 +58,11 @@ def test_extract_json_tolerates_fences():
     # config fault fatal to every document — see _extract_json docstring (2026-07-09 fix).
     with pytest.raises(model_stub.ModelInvocationError):
         model_stub._extract_json("no json here")
+
+
+def test_missing_cli_is_a_transient_invocation_error(monkeypatch):
+    # CLI auto-update window (2026-08-22): `claude` briefly unresolvable -> ModelInvocationError
+    monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
+    cfg = {"model_id": "m", "cli": "/nonexistent/claude-binary"}
+    with pytest.raises(model_stub.ModelInvocationError):
+        model_stub.invoke("d", "text", prompt="p", config=cfg)

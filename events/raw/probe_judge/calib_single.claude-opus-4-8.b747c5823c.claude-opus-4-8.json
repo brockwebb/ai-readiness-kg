@@ -1,0 +1,22 @@
+{
+ "batch_id": "calib_single.claude-opus-4-8.b747c5823c",
+ "run": "calib_single",
+ "model_id": "claude-opus-4-8",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 1426,
+  "cacheReadInputTokens": 17940,
+  "cacheCreationInputTokens": 17684,
+  "webSearchRequests": 0,
+  "costUSD": 0.22147,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "canonicalModel": "claude-opus-4-8",
+  "provider": "firstParty"
+ },
+ "cost_usd": 0.22147,
+ "duration_ms": 18585,
+ "wall_s": 20.8,
+ "session_id": "565d3be8-c32d-4272-ba24-4340c9e6e7ab",
+ "raw_result": "{\"judgments\": [{\"fact_id\": \"f_e61a921a3d50\", \"label\": \"not_entailed\", \"class\": \"subject_dropped\", \"confidence\": 0.78}]}\n\nThe span carries the predicate (\"measure whether ... leads to ... reduced developer time\") but the subject is the pronoun \"this\"; the fact resolves it to \"MCP-mediated querying,\" a referent that only the surrounding window supplies (\"an AI agent ... uses the MCP to query the data – measure whether this leads to...\"). Per the instrument, the span alone does not entail the named subject, and the window supports the referent, so this is `subject_dropped` rather than `fabrication`."
+}

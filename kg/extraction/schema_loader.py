@@ -87,3 +87,9 @@ def is_valid_endpoint(schema: dict, etype: str, from_type: str, to_type: str) ->
     if schema["edge_types"][etype].get("symmetric") and (to_type, from_type) in pairs:
         return True
     return False
+
+
+def span_entailable(schema: dict, node_type: str) -> dict[str, bool]:
+    """v0.3.2: attribute -> whether a grounding span is expected to entail its value.
+    Missing map (pre-0.3.2 schema) -> empty dict; callers treat absent as false."""
+    return dict(schema["node_types"][node_type].get("span_entailable") or {})

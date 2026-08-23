@@ -37,3 +37,32 @@ def is_grounded(span: str, source_text: str) -> bool:
     if not span or not span.strip():
         return False
     return normalize(span) in normalize(source_text)
+
+
+# --- Span-coverage invariant (task 2026-08-22_faithfulness_probe Phase 7; DD-015) ---------
+# The TEVV probe found that a span which merely *locates* an item (its name, a fragment of
+# its sentence) passes is_grounded() while entailing nothing about the item's content. For
+# the text-bearing attributes below, the span must COVER the attribute's full value: the
+# item text, normalized, must occur inside the normalized span. A miss is quarantined by the
+# parser with reason `span_partial`. Attribute list is data here so the parser and the probe
+# read one definition.
+COVERAGE_ATTRIBUTES = ("verbatim_text", "text", "claim_text", "name", "term")
+
+
+def covers(span: str, value: str) -> bool:
+    """True iff ``value`` (the item's own text) occurs inside ``span`` under tolerant
+    normalization — i.e. the span carries the whole statement, not a pointer to it."""
+    if not span or not span.strip() or not value or not value.strip():
+        return False
+    return normalize(value) in normalize(span)
+
+
+def partial_span_reason(item: dict, attributes: tuple[str, ...] = COVERAGE_ATTRIBUTES) -> str | None:
+    """The first text attribute the span fails to cover, as a quarantine reason; None when
+    the invariant holds (or no covered attribute is present)."""
+    span = item.get("grounding_span") or ""
+    for attr in attributes:
+        val = item.get(attr)
+        if isinstance(val, str) and val.strip() and not covers(span, val):
+            return f"span_partial: grounding_span does not cover '{attr}'"
+    return None

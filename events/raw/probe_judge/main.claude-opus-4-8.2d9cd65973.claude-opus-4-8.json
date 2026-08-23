@@ -1,0 +1,22 @@
+{
+ "batch_id": "main.claude-opus-4-8.2d9cd65973",
+ "run": "main",
+ "model_id": "claude-opus-4-8",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 6221,
+  "cacheReadInputTokens": 17937,
+  "cacheCreationInputTokens": 25676,
+  "webSearchRequests": 0,
+  "costUSD": 0.4212635,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "canonicalModel": "claude-opus-4-8",
+  "provider": "firstParty"
+ },
+ "cost_usd": 0.4212635,
+ "duration_ms": 77208,
+ "wall_s": 79.6,
+ "session_id": "b0f4bbb5-4447-4d8f-9528-7faff629aa09",
+ "raw_result": "Looking at this as an atomic-fact faithfulness judgment task — the prompt is a self-contained, versioned instrument (probe_judge_version 1.0.0) and I'm invoked as the judge. I'll apply the rubric span-by-span.\n\nReasoning per fact:\n\n- **f_13bb642a0f17** — Span carries `combined rates` (c_combined) but the `has_component` edge to c_nonsampling isn't in the span; the window's threshold list (nonresponse/coverage errors) supplies the parent. → subject_dropped.\n- **f_5466e6deff6d** — Span is cut at \"which is a generative\"; \"AI model\" lies in the cut portion the window completes. → span_truncated.\n- **f_9a215eea9180** — Possessive \"National Institute of Standards and Technology's AI Standards\" assigns NIST stewardship of the extracted standard directly in the span. → entailed (Commerce is a minor accurate gloss).\n- **f_eb7e47d9ffa6** — \"measure data quality\" contains the concept name. → entailed.\n- **f_98b6a493df43** — Steward derives from the harvest URL (resources.data.gov = OMB/GSA); a harvest-time field a heading span wouldn't carry. → doc_level_attribute.\n- **f_616c1086e8ca** — Span contains \"curriculum design\". → entailed.\n- **f_868f1fc01ef4** — Span contains \"Swagger UI\". → entailed.\n- **f_c869b50def4f** — \"Citation and factual-support matrices\" method absent from span and window (window has metrics/decomposition, not matrices). → fabrication (lower confidence; plausibly elsewhere in doc).\n- **f_88b068320e0d** — Span is the definiens; the term \"artificial intelligence\" is the subject supplied by the window's \"The term ''artificial intelligence''…\". → subject_dropped.\n- **f_00faa54f5b8f** — \"The IP address of the DNS resolver\" entails response_type ip_address. → entailed.\n\n{\"judgments\": [{\"fact_id\": \"f_13bb642a0f17\", \"label\": \"not_entailed\", \"class\": \"subject_dropped\", \"confidence\": 0.6}, {\"fact_id\": \"f_5466e6deff6d\", \"label\": \"not_entailed\", \"class\": \"span_truncated\", \"confidence\": 0.72}, {\"fact_id\": \"f_9a215eea9180\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.58}, {\"fact_id\": \"f_eb7e47d9ffa6\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.95}, {\"fact_id\": \"f_98b6a493df43\", \"label\": \"not_entailed\", \"class\": \"doc_level_attribute\", \"confidence\": 0.8}, {\"fact_id\": \"f_616c1086e8ca\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.96}, {\"fact_id\": \"f_868f1fc01ef4\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.97}, {\"fact_id\": \"f_c869b50def4f\", \"label\": \"not_entailed\", \"class\": \"fabrication\", \"confidence\": 0.55}, {\"fact_id\": \"f_88b068320e0d\", \"label\": \"not_entailed\", \"class\": \"subject_dropped\", \"confidence\": 0.9}, {\"fact_id\": \"f_00faa54f5b8f\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.85}]}"
+}
