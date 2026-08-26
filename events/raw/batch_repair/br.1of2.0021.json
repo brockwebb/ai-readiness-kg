@@ -1,0 +1,23 @@
+{
+ "batch_id": "br.1of2.0021",
+ "doc_id": "sdmx-3-0-section-1-framework",
+ "n_items": 8,
+ "n_decoys": 1,
+ "model_id": "claude-haiku-4-5-20251001",
+ "template_version": "1.0.0",
+ "usage": {
+  "inputTokens": 10,
+  "outputTokens": 1947,
+  "cacheReadInputTokens": 79244,
+  "cacheCreationInputTokens": 10105,
+  "webSearchRequests": 0,
+  "costUSD": 0.0378794,
+  "contextWindow": 200000,
+  "maxOutputTokens": 32000,
+  "canonicalModel": "claude-haiku-4-5",
+  "provider": "firstParty"
+ },
+ "cost_usd": 0.0378794,
+ "session_id": "91baa312-6a99-4793-b7c8-4042871565b6",
+ "raw_result": "```json\n[\n  {\"id\": \"a::sdmx-3-0-section-1-framework::c_key::description\", \"verdict\": \"supported\", \"passage\": \"A \\\"series\\\" key consists of the values for all dimensions specified by the key family except time\"},\n  {\"id\": \"a::sdmx-3-0-section-1-framework::c_observation::description\", \"verdict\": \"supported\", \"passage\": \"one or more \\\"observations\\\", which typically combine the time of the observation, and the value of the observation (e.g., measurement).\"},\n  {\"id\": \"a::sdmx-3-0-section-1-framework::c_dataprovisioning::description\", \"verdict\": \"supported\", \"passage\": \"The SDMX Information Model provides for a set of metadata concerned with \\\"data provisioning\\\" – metadata which are useful to those who need to understand the content and form of a data provider's output. Each data provider can describe in standard fashion the content of and dependencies within the data and metadata sets which they produce, and supply information about the scheduling and mechanism by which their data and metadata are provided.\"},\n  {\"id\": \"a::sdmx-3-0-section-1-framework::c_attribute::description\", \"verdict\": \"supported\", \"passage\": \"Additionally, metadata may be attached at any level of this structure as descriptive \\\"attributes\\\".\"},\n  {\"id\": \"a::sdmx-3-0-section-1-framework::c_backcompat::description\", \"verdict\": \"supported\", \"passage\": \"Version 2.0 of this standard is backward-compatible with version 1.0, so that existing implementations can be easily migrated to conformance with version 2.0.\"},\n  {\"id\": \"a::sdmx-3-0-section-1-framework::c_conceptrole::description\", \"verdict\": \"supported\", \"passage\": \"A concept role gives a particular context to a concept for easy and systematic interpretation by machine processing and visualization tools.\"},\n  {\"id\": \"a::sdmx-3-0-section-1-framework::c_timeseries::description\", \"verdict\": \"supported\", \"passage\": \"SDMX time series can be understood as \\\"slices\\\" of the cube. Such a slice is identified by its key. A \\\"series\\\" key consists of the values for all dimensions specified by the key family except time\"},\n  {\"id\": \"decoy_none::sdmx-3-0-section-1-framework::760400560\", \"verdict\": \"NONE\", \"passage\": null},\n  {\"id\": \"a::sdmx-3-0-section-1-framework::c_classification::description\", \"verdict\": \"supported\", \"passage\": \"SDMX also recognizes the importance of classification schemes in organizing and managing the exchange and dissemination of data and metadata.\"}\n]\n```"
+}

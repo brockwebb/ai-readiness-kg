@@ -1,0 +1,22 @@
+{
+ "batch_id": "resume_accept.claude-opus-4-8.18afa78835",
+ "run": "resume_accept",
+ "model_id": "claude-opus-4-8",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 4131,
+  "cacheReadInputTokens": 17945,
+  "cacheCreationInputTokens": 19598,
+  "webSearchRequests": 0,
+  "costUSD": 0.3082375,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "canonicalModel": "claude-opus-4-8",
+  "provider": "firstParty"
+ },
+ "cost_usd": 0.3082375,
+ "duration_ms": 52925,
+ "wall_s": 55.2,
+ "session_id": "552c883d-f978-4c12-9faf-3b7b70bd629d",
+ "raw_result": "Looking at this, the user turn is a rendered atomic-fact faithfulness judge prompt (probe_judge_version 1.0.0) asking me to execute the judgment and emit strict JSON. I'll apply the instrument's own labeling rules — the grounding span alone must entail the fact; every `window` here is null, so anything not in the span and requiring outside context is `not_entailed`.\n\n{\"judgments\": [{\"fact_id\": \"fa_679bc3508ea6\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.72}, {\"fact_id\": \"fa_af85bb385804\", \"label\": \"not_entailed\", \"class\": \"filled_attribute\", \"confidence\": 0.72}, {\"fact_id\": \"fa_a68fbddfc1f9\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.71}, {\"fact_id\": \"fa_026a6034caf6\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.82}, {\"fact_id\": \"fa_8a9cc5324f54\", \"label\": \"not_entailed\", \"class\": \"filled_attribute\", \"confidence\": 0.55}, {\"fact_id\": \"fa_839d266eff80\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.9}, {\"fact_id\": \"fa_c339c5ace664\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.8}, {\"fact_id\": \"fa_2446beb92114\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.92}, {\"fact_id\": \"fa_94da32f7b2ff\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.8}, {\"fact_id\": \"fa_314d8c305b93\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.95}]}\n\nTwo `not_entailed` calls worth flagging, since both hinge on an unsupported clause rather than a contradiction:\n\n- **fa_af85bb385804** — span is only \"Augmented Backus-Naur Form (ABNF) description.\" ABNF being *the notation used to define robots.txt syntax* is absent from the span, and `window` is null, so I can't rescue it as `subject_dropped`. Classed `filled_attribute`.\n- **fa_8a9cc5324f54** — span supports \"defining ML progress metrics quantitatively,\" but the mechanism clause \"**via achieving levels in a given period**\" isn't in the span. Low confidence (0.55) — if a window were provided showing the TRL-level context, this could flip to `entailed`/`span_truncated`.\n\nThe rest are clean paraphrases of their spans. If you want the full-batch version run through the `adversarial-review` instrument for cross-check consistency, say the word."
+}

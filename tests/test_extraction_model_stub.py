@@ -1,4 +1,6 @@
 """Model stub: Fable model id, OAuth-only config, API-key guard, and no-call behavior."""
+import json
+
 import pytest
 
 from kg.extraction import model_stub
@@ -66,3 +68,26 @@ def test_missing_cli_is_a_transient_invocation_error(monkeypatch):
     cfg = {"model_id": "m", "cli": "/nonexistent/claude-binary"}
     with pytest.raises(model_stub.ModelInvocationError):
         model_stub.invoke("d", "text", prompt="p", config=cfg)
+
+
+def test_resume_session_id_adds_resume_flag(monkeypatch):
+    captured = {}
+    def fake_run(cmd, **kw):
+        captured["cmd"] = cmd
+        class R: returncode = 0; stdout = json.dumps({"result": '{"ok": 1}', "modelUsage": {"m": {}}}); stderr = ""
+        return R()
+    monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
+    monkeypatch.setattr(model_stub.subprocess, "run", fake_run)
+    model_stub.invoke("d", "", prompt="p", config={"model_id": "m", "cli": "claude"}, resume_session_id="sess-1")
+    assert "--resume" in captured["cmd"] and "sess-1" in captured["cmd"]
+    model_stub.invoke("d", "", prompt="p", config={"model_id": "m", "cli": "claude"})
+    assert "--resume" not in captured["cmd"]
+
+
+def test_extract_json_recovers_toplevel_arrays():
+    arr = '[{"id": "a", "verdict": "NONE"}, {"id": "b", "verdict": "supported"}]'
+    assert model_stub._extract_json(arr) == json.loads(arr)
+    assert model_stub._extract_json(f"Here are the results:\n```json\n{arr}\n```") == json.loads(arr)
+    assert model_stub._extract_json(f"preamble {arr} trailing note") == json.loads(arr)
+    # objects still win when the payload is an object
+    assert model_stub._extract_json('{"facts": [1, 2]}') == {"facts": [1, 2]}

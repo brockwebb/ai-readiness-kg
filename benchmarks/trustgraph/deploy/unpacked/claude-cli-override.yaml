@@ -1,0 +1,18 @@
+# Override for the claude-cli-completion host-side backend (tgbench2 Phase 1).
+# - text-completion container disabled via compose profile: the host process
+#   (text-completion-claude-cli from /Users/brock/GitHub/trustgraph-fork, branch
+#   claude-cli-backend) subscribes to the same Pulsar topics instead. Running
+#   both would split the shared subscription between consumers.
+# - pulsar 6650 published for the host process (broker already advertises a
+#   'localhost' listener; the host process passes --pulsar-listener localhost).
+# - api-gateway 8088 published for the smoke test / tg CLI.
+name: trustgraph
+services:
+  text-completion:
+    profiles: ["disabled-replaced-by-host-claude-cli"]
+  pulsar:
+    ports:
+      - "6650:6650"
+  api-gateway:
+    ports:
+      - "8088:8088"

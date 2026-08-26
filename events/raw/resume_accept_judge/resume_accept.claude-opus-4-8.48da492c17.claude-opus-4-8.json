@@ -1,0 +1,22 @@
+{
+ "batch_id": "resume_accept.claude-opus-4-8.48da492c17",
+ "run": "resume_accept",
+ "model_id": "claude-opus-4-8",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 6625,
+  "cacheReadInputTokens": 17945,
+  "cacheCreationInputTokens": 19430,
+  "webSearchRequests": 0,
+  "costUSD": 0.3689075,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "canonicalModel": "claude-opus-4-8",
+  "provider": "firstParty"
+ },
+ "cost_usd": 0.3689075,
+ "duration_ms": 88473,
+ "wall_s": 91.2,
+ "session_id": "1bc0f13f-afff-4775-bf52-28416f87d42e",
+ "raw_result": "Looking at this rendered judge prompt, I'll evaluate whether each grounding span **alone** entails its fact. All windows are `null`, so I cannot rescue any fact via surrounding context — unsupported description/attribute content that the doc might support elsewhere falls to `filled_attribute`, and content absent from span with no window falls toward `fabrication` per the rubric.\n\n{\"judgments\": [{\"fact_id\": \"fa_acc45e2f1d32\", \"label\": \"not_entailed\", \"class\": \"filled_attribute\", \"confidence\": 0.82}, {\"fact_id\": \"fa_90c8bdeb7c6c\", \"label\": \"not_entailed\", \"class\": \"filled_attribute\", \"confidence\": 0.58}, {\"fact_id\": \"fa_d65691e9136c\", \"label\": \"not_entailed\", \"class\": \"filled_attribute\", \"confidence\": 0.6}, {\"fact_id\": \"fa_3c96e254cf74\", \"label\": \"not_entailed\", \"class\": \"fabrication\", \"confidence\": 0.78}, {\"fact_id\": \"fa_f49399124e5f\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.58}, {\"fact_id\": \"fa_f25cee544cc4\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.68}, {\"fact_id\": \"fa_4af0531f1cfe\", \"label\": \"not_entailed\", \"class\": \"filled_attribute\", \"confidence\": 0.5}, {\"fact_id\": \"fa_25b5193b3ff0\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.6}, {\"fact_id\": \"fa_d54b28496792\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.85}, {\"fact_id\": \"fa_a538a5c66f48\", \"label\": \"not_entailed\", \"class\": \"filled_attribute\", \"confidence\": 0.62}]}"
+}

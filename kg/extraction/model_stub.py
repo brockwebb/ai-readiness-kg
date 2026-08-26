@@ -167,6 +167,25 @@ def _extract_json(result_text: str) -> dict:
     balanced = _balanced_object(text)
     if balanced:
         candidates.append(balanced)
+    # Top-level JSON ARRAY responses (batched contracts, 2026-08-23): a balanced-object scan
+    # would return only the first row; recover the whole array. The array candidate outranks
+    # the balanced object only when the array opens before any object does (a bare-array
+    # reply with prose around it); an array nested inside an object never wins.
+    arr_start = text.find("[")
+    obj_start = text.find("{")
+    if arr_start >= 0:
+        depth = 0
+        for i in range(arr_start, len(text)):
+            if text[i] == "[": depth += 1
+            elif text[i] == "]":
+                depth -= 1
+                if depth == 0:
+                    cand = text[arr_start:i + 1]
+                    if obj_start < 0 or arr_start < obj_start:
+                        candidates.insert(max(0, len(candidates) - 1) if balanced else len(candidates), cand)
+                    else:
+                        candidates.append(cand)
+                    break
     for cand in candidates:
         try:
             return json.loads(cand)
@@ -191,7 +210,8 @@ class ModelSubstitutionError(ModelConfigError):
 
 
 def invoke(doc_id: str, source_text: str, prompt: str | None = None,
-           timeout: int = 1800, config: dict | None = None) -> dict:
+           timeout: int = 1800, config: dict | None = None,
+           resume_session_id: str | None = None) -> dict:
     """Extract one document via ``claude -p`` on the subscription OAuth (no API key).
 
     Returns ``{output, model_id, usage, cost_usd, duration_ms, raw_result}`` where ``output``
@@ -206,6 +226,11 @@ def invoke(doc_id: str, source_text: str, prompt: str | None = None,
 
     cmd = [config.get("cli", "claude"), "-p", "--model", model_id,
            "--output-format", _OUTPUT_FORMAT, "--allowed-tools", _EMPTY_ALLOWLIST]
+    if resume_session_id:
+        # Continue an existing headless session (task 2026-08-23_batched_repair_resume,
+        # DD-019): prior turns — e.g. a document sent once per doc — become cached prefix,
+        # which separate -p invocations cannot share (measured: 3 calls, 0 prefix reuse).
+        cmd += ["--resume", resume_session_id]
     try:
         proc = subprocess.run(cmd, input=prompt, capture_output=True, text=True,
                               timeout=timeout, cwd=_hermetic_cwd())

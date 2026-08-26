@@ -1,0 +1,23 @@
+{
+ "batch_id": "br.1of2.0081",
+ "doc_id": "gsa-site-scanning-engine-readme",
+ "n_items": 18,
+ "n_decoys": 1,
+ "model_id": "claude-haiku-4-5-20251001",
+ "template_version": "1.0.0",
+ "usage": {
+  "inputTokens": 10,
+  "outputTokens": 3959,
+  "cacheReadInputTokens": 39527,
+  "cacheCreationInputTokens": 12990,
+  "webSearchRequests": 0,
+  "costUSD": 0.049737699999999996,
+  "contextWindow": 200000,
+  "maxOutputTokens": 32000,
+  "canonicalModel": "claude-haiku-4-5",
+  "provider": "firstParty"
+ },
+ "cost_usd": 0.049737699999999996,
+ "session_id": "457934d0-9a52-4890-bf62-6c7df86e2b69",
+ "raw_result": "```json\n[\n  {\"id\": \"a::gsa-site-scanning-engine-readme::t_engine::steward\", \"verdict\": \"supported\", \"passage\": \"GSA/site-scanning-engine\"},\n  {\"id\": \"a::gsa-site-scanning-engine-readme::c_github_actions::description\", \"verdict\": \"supported\", \"passage\": \"Deployments to Cloud.gov are handled by GitHub Actions, not a local script.\"},\n  {\"id\": \"a::gsa-site-scanning-engine-readme::c_scan::description\", \"verdict\": \"supported\", \"passage\": \"runs the scans and generates data\"},\n  {\"id\": \"a::gsa-site-scanning-engine-readme::c_ts_build::description\", \"verdict\": \"supported\", \"passage\": \"compiles from Typescript to Javascript, doing any minification and optimization in the process\"},\n  {\"id\": \"a::gsa-site-scanning-engine-readme::t_engine::url\", \"verdict\": \"supported\", \"passage\": \"https://github.com/GSA/site-scanning-engine/\"},\n  {\"id\": \"decoy_none::gsa-site-scanning-engine-readme::413341472\", \"verdict\": \"NONE\", \"passage\": null},\n  {\"id\": \"a::gsa-site-scanning-engine-readme::c_docker_compose::description\", \"verdict\": \"supported\", \"passage\": \"This will build `(--build)` all of the Docker containers and network interfaces listed in the [docker-compose.yml](docker-compose.yml) file and start them running in the background\"},\n  {\"id\": \"a::gsa-site-scanning-engine-readme::c_object_storage::aliases\", \"verdict\": \"supported\", \"passage\": \"Minio Config -- Minio is an S3 api compliant storage and S3_BUCKET_NAME=site-scanning-snapshot\"},\n  {\"id\": \"a::gsa-site-scanning-engine-readme::c_docker::description\", \"verdict\": \"supported\", \"passage\": \"all of the Docker containers and network interfaces\"},\n  {\"id\": \"a::gsa-site-scanning-engine-readme::c_postgres::description\", \"verdict\": \"supported\", \"passage\": \"# postgres configuration DATABASE_HOST=localhost DATABASE_PORT=5432 POSTGRES_USER=postgres POSTGRES_PASSWORD\"},\n  {\"id\": \"a::gsa-site-scanning-engine-readme::c_node::aliases\", \"verdict\": \"supported\", \"passage\": \"nvm (see [.nvmrc](./.nvmrc) for current `node` version\"},\n  {\"id\": \"a::gsa-site-scanning-engine-readme::c_spaces::description\", \"verdict\": \"supported\", \"passage\": \"The [`Deploy`](.github/workflows/deploy.yml) workflow pushes to the `prod` space and The [`Dev deployment`](.github/workflows/dev.yml) workflow pushes to the `dev` space\"},\n  {\"id\": \"a::gsa-site-scanning-engine-readme::c_redis::description\", \"verdict\": \"supported\", \"passage\": \"# redis configuration QUEUE_HOST=localhost QUEUE_PORT=6379\"},\n  {\"id\": \"a::gsa-site-scanning-engine-readme::c_object_storage::description\", \"verdict\": \"supported\", \"passage\": \"Minio is an S3 api compliant storage and S3_BUCKET_NAME=site-scanning-snapshot\"},\n  {\"id\": \"a::gsa-site-scanning-engine-readme::c_enqueue::description\", \"verdict\": \"supported\", \"passage\": \"To enqueue for scan all sites in the website table\"},\n  {\"id\": \"a::gsa-site-scanning-engine-readme::c_enqueue::aliases\", \"verdict\": \"supported\", \"passage\": \"enqueue-scans\"},\n  {\"id\": \"a::gsa-site-scanning-engine-readme::c_node::description\", \"verdict\": \"supported\", \"passage\": \"This will install the correct Node version for the project.\"},\n  {\"id\": \"a::gsa-site-scanning-engine-readme::c_dist::description\", \"verdict\": \"supported\", \"passage\": \"All of the app artifacts end up in the `/dist` directory. This is ultimately what gets pushed to Cloud Foundry.\"},\n  {\"id\": \"a::gsa-site-scanning-engine-readme::s_s3::steward\", \"verdict\": \"supported\", \"passage\": \"AWS_ACCESS_KEY_ID=<add_a_key_here> AWS_SECRET_ACCESS_KEY=<add_a_key_here>\"}\n]\n```"
+}

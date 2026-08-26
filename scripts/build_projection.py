@@ -137,6 +137,27 @@ def annotation_update(ev: dict) -> tuple[str, str, object] | None:
     return ev["doc_id"], prop, ev.get("value")
 
 
+# --- Node keying (task 2026-08-23_batched_repair_resume Phase 1; DD-020) -----------------
+# 600 of 6,988 item ids recur across documents; keying nodes by bare item id FUSED them.
+# Every non-Document node is keyed by the composite (document_id, item_id) — graph key
+# `doc::item` with both parts kept as properties. Documents keep their doc_id as the key.
+# Cross-document identity is dedup's job, never the loader's.
+
+def node_key(doc_id: str, item_id: str) -> str:
+    return f"{doc_id}::{item_id}"
+
+
+def resolve_endpoint(doc_id: str, endpoint_id: str, document_ids: set[str],
+                     aliases: dict[str, str]) -> str:
+    """Graph key for an edge endpoint asserted by `doc_id`. A manifested document id (or an
+    alias onto one) stays document-scoped; everything else — including dangling doc-like ids
+    never manifested — is scoped to the asserting document."""
+    eid = aliases.get(endpoint_id, endpoint_id)
+    if eid in document_ids:
+        return eid
+    return node_key(doc_id, eid)
+
+
 def build(session, kg_labels: list[str], edge_whitelist: set[str]) -> dict:
     counts = {"nodes": 0, "edges": 0, "documents": 0, "annotations": 0,
               "overlays_relocated": 0, "overlays_nulled": 0,
@@ -144,6 +165,8 @@ def build(session, kg_labels: list[str], edge_whitelist: set[str]) -> dict:
               "skipped_superseded_extraction": 0, "skipped_non_graph_purpose": 0,
               "aliased_endpoints": 0}
     superseded, aliases = read_overlays()
+    document_ids = {ev["payload"]["doc_id"] for ev in eventlog.replay()
+                    if ev.get("event_type") == "manifest_add"}
     # reset ONLY KG labels
     label_pred = " OR ".join(f"n:{lbl}" for lbl in kg_labels)
     session.run(f"MATCH (n) WHERE {label_pred} DETACH DELETE n")
@@ -168,7 +191,7 @@ def build(session, kg_labels: list[str], edge_whitelist: set[str]) -> dict:
         if et == "manifest_add":
             p = ev["payload"]
             session.run(
-                "MERGE (d:Document {id: $id}) SET d.doc_id = $id, d.title = $title, "
+                "MERGE (d:Document {id: $id}) SET d.key = $id, d.doc_id = $id, d.title = $title, "
                 "d.source_type = $st, d.pub_date = $pd, d.primary_url = $url, "
                 "d.content_hash = $ch, d.prov_manifest_event = $ev",
                 id=p["doc_id"], title=p.get("title"), st=p.get("source_type"),
@@ -191,9 +214,10 @@ def build(session, kg_labels: list[str], edge_whitelist: set[str]) -> dict:
                 "prov_extraction_event_id": prov.get("extraction_event_id"),
                 "prov_wasDerivedFrom": ev.get("doc_id"),
             })
+            props.update({"id": p["id"], "doc_id": ev.get("doc_id")})
             session.run(
-                f"MERGE (n:{label} {{id: $id}}) SET n += $props",
-                id=p["id"], props=props)
+                f"MERGE (n:{label} {{key: $key}}) SET n += $props",
+                key=node_key(ev.get("doc_id"), p["id"]), props=props)
             counts["nodes"] += 1
         elif et in ("edge_asserted", "curated_promotion"):
             p = ev["payload"] if et == "edge_asserted" else ev
@@ -207,14 +231,14 @@ def build(session, kg_labels: list[str], edge_whitelist: set[str]) -> dict:
                                      ("to_id", aliases.get(to_id))):
                 if _resolved:
                     counts["aliased_endpoints"] += 1
-            from_id = aliases.get(from_id, from_id)
-            to_id = aliases.get(to_id, to_id)
+            from_key = resolve_endpoint(ev.get("doc_id"), from_id, document_ids, aliases)
+            to_key = resolve_endpoint(ev.get("doc_id"), to_id, document_ids, aliases)
             session.run(
-                f"MERGE (a {{id: $from_id}}) MERGE (b {{id: $to_id}}) "
+                f"MERGE (a {{key: $from_id}}) MERGE (b {{key: $to_id}}) "
                 f"MERGE (a)-[r:{rel.upper()}]->(b) "
                 "SET r.prov_method = $method, r.prov_doc = $doc, "
                 "r.grounding_span = $span",
-                from_id=from_id, to_id=to_id,
+                from_id=from_key, to_id=to_key,
                 method=prov.get("method") or prov.get("model_id") or "asserted",
                 doc=ev.get("doc_id"), span=(p.get("item") or {}).get(
                     "grounding_span") or p.get("grounding_span"))
@@ -224,18 +248,18 @@ def build(session, kg_labels: list[str], edge_whitelist: set[str]) -> dict:
     for ev in eventlog.replay():
         et = ev.get("event_type")
         if et == "grounding_relocated":
-            session.run("MATCH (n {id: $id}) WHERE n.prov_wasDerivedFrom = $doc "
+            session.run("MATCH (n {key: $key}) "
                         "SET n.grounding_span = $span, n.grounding_relocated_from = $old, "
                         "n.grounding_relocation_method = $m",
-                        id=ev["item_id"], doc=ev["doc_id"], span=ev["new_span"], old=ev["old_span"], m=ev["method"])
+                        key=node_key(ev["doc_id"], ev["item_id"]), span=ev["new_span"], old=ev["old_span"], m=ev["method"])
             counts["overlays_relocated"] += 1
         elif et == "attribute_nulled":
             attr = ev["attribute"]
             if attr not in NULLABLE_ATTRIBUTES:
                 continue
-            session.run(f"MATCH (n {{id: $id}}) WHERE n.prov_wasDerivedFrom = $doc "
+            session.run(f"MATCH (n {{key: $key}}) "
                         f"SET n.{attr} = null, n.nulled_attributes = coalesce(n.nulled_attributes, []) + $attr",
-                        id=ev["item_id"], doc=ev["doc_id"], attr=attr)
+                        key=node_key(ev["doc_id"], ev["item_id"]), attr=attr)
             counts["overlays_nulled"] += 1
     return counts
 

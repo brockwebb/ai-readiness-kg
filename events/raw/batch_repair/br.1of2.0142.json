@@ -1,0 +1,23 @@
+{
+ "batch_id": "br.1of2.0142",
+ "doc_id": "rfc-9309-robots-exclusion-protocol",
+ "n_items": 9,
+ "n_decoys": 1,
+ "model_id": "claude-haiku-4-5-20251001",
+ "template_version": "1.0.0",
+ "usage": {
+  "inputTokens": 9,
+  "outputTokens": 3535,
+  "cacheReadInputTokens": 22303,
+  "cacheCreationInputTokens": 21013,
+  "webSearchRequests": 0,
+  "costUSD": 0.061940300000000004,
+  "contextWindow": 200000,
+  "maxOutputTokens": 32000,
+  "canonicalModel": "claude-haiku-4-5",
+  "provider": "firstParty"
+ },
+ "cost_usd": 0.061940300000000004,
+ "session_id": "b10e693b-0e21-462f-a922-0289facd521d",
+ "raw_result": "```json\n[\n  {\n    \"id\": \"a::rfc-9309-robots-exclusion-protocol::c-percent-encoding::aliases\",\n    \"verdict\": \"supported\",\n    \"passage\": \"If crawlers match special characters verbatim in the URI, crawlers SHOULD use \\\"%\\\" encoding.\"\n  },\n  {\n    \"id\": \"decoy_none::rfc-9309-robots-exclusion-protocol::808547372\",\n    \"verdict\": \"NONE\",\n    \"passage\": null\n  },\n  {\n    \"id\": \"a::rfc-9309-robots-exclusion-protocol::c-rep::aliases\",\n    \"verdict\": \"stays_null\",\n    \"passage\": null\n  },\n  {\n    \"id\": \"r::119c9d250cb34fca81979e2c536f3784\",\n    \"verdict\": \"NONE\",\n    \"passage\": null\n  },\n  {\n    \"id\": \"a::rfc-9309-robots-exclusion-protocol::c-allow-rule::aliases\",\n    \"verdict\": \"supported\",\n    \"passage\": \"2.2.2. The \\\"Allow\\\" and \\\"Disallow\\\" Lines\"\n  },\n  {\n    \"id\": \"a::rfc-9309-robots-exclusion-protocol::c-sitemaps::description\",\n    \"verdict\": \"supported\",\n    \"passage\": \"Crawlers MAY interpret other records that are not part of the robots.txt protocol -- for example, \\\"Sitemaps\\\" [SITEMAPS]. Crawlers MAY be lenient when interpreting other records. For example, crawlers may accept common misspellings of the record. Parsing of other records MUST NOT interfere with the parsing of explicitly defined records in Section 2. For example, a \\\"Sitemaps\\\" record MUST NOT terminate a group.\"\n  },\n  {\n    \"id\": \"a::rfc-9309-robots-exclusion-protocol::c-service-owner::aliases\",\n    \"verdict\": \"stays_null\",\n    \"passage\": null\n  },\n  {\n    \"id\": \"a::rfc-9309-robots-exclusion-protocol::c-special-characters::aliases\",\n    \"verdict\": \"supported\",\n    \"passage\": \"Crawlers MUST support the following special characters: +===========+===================+==============================+ | Character | Description | Example | +===========+===================+==============================+ | # | Designates a line | allow: / # comment in line | | | comment. | | | | | # comment on its own line | +-----------+-------------------+------------------------------+ | $ | Designates the | allow: /this/path/exactly$ | | | end of the match | | | | pattern. | | +-----------+-------------------+------------------------------+ | * | Designates 0 or | allow: /this/*/exactly | | | more instances of | | | | any character. | |\"\n  },\n  {\n    \"id\": \"a::rfc-9309-robots-exclusion-protocol::c-crawler::aliases\",\n    \"verdict\": \"stays_null\",\n    \"passage\": null\n  },\n  {\n    \"id\": \"a::rfc-9309-robots-exclusion-protocol::plat-crawler::operator\",\n    \"verdict\": \"stays_null\",\n    \"passage\": null\n  }\n]\n```"
+}

@@ -1,0 +1,23 @@
+{
+ "batch_id": "br.1of2.0087",
+ "doc_id": "extruct-readme",
+ "n_items": 11,
+ "n_decoys": 1,
+ "model_id": "claude-haiku-4-5-20251001",
+ "template_version": "1.0.0",
+ "usage": {
+  "inputTokens": 10,
+  "outputTokens": 2176,
+  "cacheReadInputTokens": 53985,
+  "cacheCreationInputTokens": 6211,
+  "webSearchRequests": 0,
+  "costUSD": 0.0287105,
+  "contextWindow": 200000,
+  "maxOutputTokens": 32000,
+  "canonicalModel": "claude-haiku-4-5",
+  "provider": "firstParty"
+ },
+ "cost_usd": 0.0287105,
+ "session_id": "709b553b-ec32-4453-83af-c8d8f5aca785",
+ "raw_result": "```json\n[\n  {\"id\": \"a::extruct-readme::c-uniform-output::description\", \"verdict\": \"supported\", \"passage\": \"Another option is to uniform the output of microformat, opengraph, microdata, dublincore and json-ld syntaxes to the following structure: :: {'@context': 'http://example.com', '@type': 'example_type'\"},\n  {\"id\": \"a::extruct-readme::c-all-in-one::description\", \"verdict\": \"supported\", \"passage\": \"If no list is passed all syntaxes will be extracted and returned\"},\n  {\"id\": \"a::extruct-readme::c-syntax-selection::aliases\", \"verdict\": \"supported\", \"passage\": \"collected in a list through 'syntaxes' argument\"},\n  {\"id\": \"a::extruct-readme::c-syntax-selection::description\", \"verdict\": \"supported\", \"passage\": \"It is possible to select which syntaxes to extract by passing a list with the desired ones to extract.\"},\n  {\"id\": \"a::extruct-readme::c-html-node-ref::aliases\", \"verdict\": \"supported\", \"passage\": \"set the ``return_html_node`` option of ``extract`` method to ``True``. As the result, an additional key \\\"nodeHtml\\\" will be included\"},\n  {\"id\": \"a::extruct-readme::c-single-extractors::aliases\", \"verdict\": \"stays_null\", \"passage\": null},\n  {\"id\": \"a::extruct-readme::c-all-in-one::aliases\", \"verdict\": \"supported\", \"passage\": \"``extruct.extract(htmlstring, base_url=base_url)``\"},\n  {\"id\": \"a::extruct-readme::c-html-node-ref::description\", \"verdict\": \"supported\", \"passage\": \"get references to HTML node for every extracted metadata item\"},\n  {\"id\": \"a::extruct-readme::c-uniform-output::aliases\", \"verdict\": \"supported\", \"passage\": \"``uniform=True``\"},\n  {\"id\": \"a::extruct-readme::c-single-extractors::description\", \"verdict\": \"supported\", \"passage\": \"You can also use each extractor individually.\"},\n  {\"id\": \"decoy_none::extruct-readme::993360608\", \"verdict\": \"NONE\", \"passage\": null},\n  {\"id\": \"a::extruct-readme::c-structured-data-syntaxes::description\", \"verdict\": \"supported\", \"passage\": \"Valid values: 'microdata', 'json-ld', 'opengraph', 'microformat', 'rdfa' and 'dublincore'.\"}\n]\n```"
+}

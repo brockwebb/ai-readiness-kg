@@ -1,0 +1,23 @@
+{
+ "batch_id": "br.1of2.0136",
+ "doc_id": "openapi-specification-core",
+ "n_items": 19,
+ "n_decoys": 1,
+ "model_id": "claude-haiku-4-5-20251001",
+ "template_version": "1.0.0",
+ "usage": {
+  "inputTokens": 9,
+  "outputTokens": 3757,
+  "cacheReadInputTokens": 22303,
+  "cacheCreationInputTokens": 117900,
+  "webSearchRequests": 0,
+  "costUSD": 0.2568243,
+  "contextWindow": 200000,
+  "maxOutputTokens": 32000,
+  "canonicalModel": "claude-haiku-4-5",
+  "provider": "firstParty"
+ },
+ "cost_usd": 0.2568243,
+ "session_id": "71264d40-00fe-4db4-9cfa-78dee28f513b",
+ "raw_result": "```json\n[\n  {\"id\": \"a::openapi-specification-core::s2::steward\", \"verdict\": \"stays_null\", \"passage\": null},\n  {\"id\": \"a::openapi-specification-core::c22::aliases\", \"verdict\": \"stays_null\", \"passage\": null},\n  {\"id\": \"a::openapi-specification-core::c28::aliases\", \"verdict\": \"stays_null\", \"passage\": null},\n  {\"id\": \"a::openapi-specification-core::c36::aliases\", \"verdict\": \"stays_null\", \"passage\": null},\n  {\"id\": \"a::openapi-specification-core::c54::description\", \"verdict\": \"supported\", \"passage\": \"Implementations *SHOULD* support defining generic or template data structures using JSON Schema's dynamic referencing feature\"},\n  {\"id\": \"r::747f5ecce5884972ba4894c3f95a2a47\", \"verdict\": \"NONE\", \"passage\": null},\n  {\"id\": \"a::openapi-specification-core::c55::description\", \"verdict\": \"supported\", \"passage\": \"Implementations *MAY* support recognizing a `oneOf` or `anyOf` where each subschema in the keyword's array consists of a `const` keyword and annotations such as `title` or `description` as an enumerated type with additional information.\"},\n  {\"id\": \"a::openapi-specification-core::c22::description\", \"verdict\": \"supported\", \"passage\": \"An object representing a Server Variable for server URL template substitution.\"},\n  {\"id\": \"a::openapi-specification-core::c46::aliases\", \"verdict\": \"stays_null\", \"passage\": null},\n  {\"id\": \"a::openapi-specification-core::c52::aliases\", \"verdict\": \"stays_null\", \"passage\": null},\n  {\"id\": \"a::openapi-specification-core::c10::aliases\", \"verdict\": \"stays_null\", \"passage\": null},\n  {\"id\": \"a::openapi-specification-core::c3::description\", \"verdict\": \"supported\", \"passage\": \"In a multi-document OAD, the document containing the OpenAPI Object where parsing begins is known as that OAD's **entry document**.\"},\n  {\"id\": \"a::openapi-specification-core::s4::steward\", \"verdict\": \"stays_null\", \"passage\": null},\n  {\"id\": \"a::openapi-specification-core::c57::aliases\", \"verdict\": \"stays_null\", \"passage\": null},\n  {\"id\": \"a::openapi-specification-core::c54::aliases\", \"verdict\": \"stays_null\", \"passage\": null},\n  {\"id\": \"a::openapi-specification-core::c49::description\", \"verdict\": \"supported\", \"passage\": \"Data types in the OAS are based on the types defined by the JSON Schema Validation Specification Draft 2020-12: \\\"null\\\", \\\"boolean\\\", \\\"object\\\", \\\"array\\\", \\\"number\\\", \\\"string\\\", or \\\"integer\\\".\"},\n  {\"id\": \"r::5c00b39e6def4b619c05d7bdd1bb676d\", \"verdict\": \"NONE\", \"passage\": null},\n  {\"id\": \"decoy_none::openapi-specification-core::94572865\", \"verdict\": \"NONE\", \"passage\": null},\n  {\"id\": \"a::openapi-specification-core::c26::aliases\", \"verdict\": \"stays_null\", \"passage\": null},\n  {\"id\": \"r::f02d0a9b04784de8bf528ad0e7ba81bb\", \"verdict\": \"passage\", \"passage\": \"To ensure interoperability, references *MUST* use the target document's `$self` URI if the `$self` field is present.\"}\n]\n```"
+}
