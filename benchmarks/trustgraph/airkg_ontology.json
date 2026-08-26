@@ -1,0 +1,830 @@
+{
+  "classes": {
+    "Claim": {
+      "rdfs:comment": "A falsifiable assertion a document makes (X improves Y, A requires B).",
+      "rdfs:label": [
+        {
+          "lang": "en",
+          "value": "Claim"
+        }
+      ],
+      "type": "owl:Class",
+      "uri": "https://brockwebb.github.io/ai-readiness-kg/schema#Claim"
+    },
+    "Concept": {
+      "rdfs:comment": "Any substantive idea a document uses. Exhaustive layer, extracted first-class from event one.",
+      "rdfs:label": [
+        {
+          "lang": "en",
+          "value": "Concept"
+        }
+      ],
+      "type": "owl:Class",
+      "uri": "https://brockwebb.github.io/ai-readiness-kg/schema#Concept"
+    },
+    "Construct": {
+      "rdfs:comment": "A measurable readiness dimension (e.g. discoverability, provenance completeness). A Concept promoted to measurability.",
+      "rdfs:label": [
+        {
+          "lang": "en",
+          "value": "Construct"
+        }
+      ],
+      "type": "owl:Class",
+      "uri": "https://brockwebb.github.io/ai-readiness-kg/schema#Construct"
+    },
+    "Definition": {
+      "rdfs:comment": "A verbatim definition of a term as given by one source.",
+      "rdfs:label": [
+        {
+          "lang": "en",
+          "value": "Definition"
+        }
+      ],
+      "type": "owl:Class",
+      "uri": "https://brockwebb.github.io/ai-readiness-kg/schema#Definition"
+    },
+    "Document": {
+      "rdfs:comment": "A manifest entry. Primary source only.",
+      "rdfs:label": [
+        {
+          "lang": "en",
+          "value": "Document"
+        }
+      ],
+      "type": "owl:Class",
+      "uri": "https://brockwebb.github.io/ai-readiness-kg/schema#Document"
+    },
+    "Framework": {
+      "rdfs:comment": "A conceptual structure (NIST AI RMF, FAIR, Data Readiness Levels).",
+      "rdfs:label": [
+        {
+          "lang": "en",
+          "value": "Framework"
+        }
+      ],
+      "type": "owl:Class",
+      "uri": "https://brockwebb.github.io/ai-readiness-kg/schema#Framework"
+    },
+    "Instrument": {
+      "rdfs:comment": "An existing assessment, survey, index, or benchmark.",
+      "rdfs:label": [
+        {
+          "lang": "en",
+          "value": "Instrument"
+        }
+      ],
+      "type": "owl:Class",
+      "uri": "https://brockwebb.github.io/ai-readiness-kg/schema#Instrument"
+    },
+    "Measure": {
+      "rdfs:comment": "An individual item or metric inside an Instrument.",
+      "rdfs:label": [
+        {
+          "lang": "en",
+          "value": "Measure"
+        }
+      ],
+      "type": "owl:Class",
+      "uri": "https://brockwebb.github.io/ai-readiness-kg/schema#Measure"
+    },
+    "Platform": {
+      "rdfs:comment": "A machine consumer whose behavior is targeted or described (Google Search, Bing, a named crawler, an LLM vendor's retrieval system, Cloudflare/Akamai bot controls).",
+      "rdfs:label": [
+        {
+          "lang": "en",
+          "value": "Platform"
+        }
+      ],
+      "type": "owl:Class",
+      "uri": "https://brockwebb.github.io/ai-readiness-kg/schema#Platform"
+    },
+    "Practice": {
+      "rdfs:comment": "A normative recommendation a source makes about how to publish, structure, expose, or maintain data or content for machine consumers.",
+      "rdfs:label": [
+        {
+          "lang": "en",
+          "value": "Practice"
+        }
+      ],
+      "type": "owl:Class",
+      "uri": "https://brockwebb.github.io/ai-readiness-kg/schema#Practice"
+    },
+    "Standard": {
+      "rdfs:comment": "A technical spec (DCAT, ISO 19115, schema.org, llms.txt, MCP).",
+      "rdfs:label": [
+        {
+          "lang": "en",
+          "value": "Standard"
+        }
+      ],
+      "type": "owl:Class",
+      "uri": "https://brockwebb.github.io/ai-readiness-kg/schema#Standard"
+    },
+    "Tool": {
+      "rdfs:comment": "Software that implements one or more Measures (Lighthouse, Scrapy, pySHACL, LinkChecker, GoAccess, Spectral, extruct, GSA Site Scanning engine, DAP).",
+      "rdfs:label": [
+        {
+          "lang": "en",
+          "value": "Tool"
+        }
+      ],
+      "type": "owl:Class",
+      "uri": "https://brockwebb.github.io/ai-readiness-kg/schema#Tool"
+    }
+  },
+  "datatypeProperties": {
+    "aliases": {
+      "rdfs:domain": "Concept",
+      "rdfs:label": [
+        {
+          "lang": "en",
+          "value": "aliases"
+        }
+      ],
+      "rdfs:range": "xsd:string",
+      "type": "owl:DatatypeProperty",
+      "uri": "https://brockwebb.github.io/ai-readiness-kg/schema#aliases"
+    },
+    "as_of_date": {
+      "rdfs:label": [
+        {
+          "lang": "en",
+          "value": "as_of_date"
+        }
+      ],
+      "rdfs:range": "xsd:string",
+      "type": "owl:DatatypeProperty",
+      "uri": "https://brockwebb.github.io/ai-readiness-kg/schema#as_of_date"
+    },
+    "authors": {
+      "rdfs:domain": "Document",
+      "rdfs:label": [
+        {
+          "lang": "en",
+          "value": "authors"
+        }
+      ],
+      "rdfs:range": "xsd:string",
+      "type": "owl:DatatypeProperty",
+      "uri": "https://brockwebb.github.io/ai-readiness-kg/schema#authors"
+    },
+    "claim_text": {
+      "rdfs:domain": "Claim",
+      "rdfs:label": [
+        {
+          "lang": "en",
+          "value": "claim_text"
+        }
+      ],
+      "rdfs:range": "xsd:string",
+      "type": "owl:DatatypeProperty",
+      "uri": "https://brockwebb.github.io/ai-readiness-kg/schema#claim_text"
+    },
+    "claim_type": {
+      "rdfs:comment": "Enumerated values -- Claim: empirical, normative, speculative",
+      "rdfs:domain": "Claim",
+      "rdfs:label": [
+        {
+          "lang": "en",
+          "value": "claim_type"
+        }
+      ],
+      "rdfs:range": "xsd:string",
+      "type": "owl:DatatypeProperty",
+      "uri": "https://brockwebb.github.io/ai-readiness-kg/schema#claim_type"
+    },
+    "content_hash": {
+      "rdfs:domain": "Document",
+      "rdfs:label": [
+        {
+          "lang": "en",
+          "value": "content_hash"
+        }
+      ],
+      "rdfs:range": "xsd:string",
+      "type": "owl:DatatypeProperty",
+      "uri": "https://brockwebb.github.io/ai-readiness-kg/schema#content_hash"
+    },
+    "description": {
+      "rdfs:label": [
+        {
+          "lang": "en",
+          "value": "description"
+        }
+      ],
+      "rdfs:range": "xsd:string",
+      "type": "owl:DatatypeProperty",
+      "uri": "https://brockwebb.github.io/ai-readiness-kg/schema#description"
+    },
+    "doc_id": {
+      "rdfs:domain": "Document",
+      "rdfs:label": [
+        {
+          "lang": "en",
+          "value": "doc_id"
+        }
+      ],
+      "rdfs:range": "xsd:string",
+      "type": "owl:DatatypeProperty",
+      "uri": "https://brockwebb.github.io/ai-readiness-kg/schema#doc_id"
+    },
+    "evidence_grade": {
+      "rdfs:comment": "Enumerated values -- Claim: peer_reviewed_experiment, platform_official, measured_practitioner, practitioner_assertion, inference",
+      "rdfs:domain": "Claim",
+      "rdfs:label": [
+        {
+          "lang": "en",
+          "value": "evidence_grade"
+        }
+      ],
+      "rdfs:range": "xsd:string",
+      "type": "owl:DatatypeProperty",
+      "uri": "https://brockwebb.github.io/ai-readiness-kg/schema#evidence_grade"
+    },
+    "grounding_span": {
+      "rdfs:label": [
+        {
+          "lang": "en",
+          "value": "grounding_span"
+        }
+      ],
+      "rdfs:range": "xsd:string",
+      "type": "owl:DatatypeProperty",
+      "uri": "https://brockwebb.github.io/ai-readiness-kg/schema#grounding_span"
+    },
+    "is_platform_operator": {
+      "rdfs:domain": "Document",
+      "rdfs:label": [
+        {
+          "lang": "en",
+          "value": "is_platform_operator"
+        }
+      ],
+      "rdfs:range": "xsd:boolean",
+      "type": "owl:DatatypeProperty",
+      "uri": "https://brockwebb.github.io/ai-readiness-kg/schema#is_platform_operator"
+    },
+    "license": {
+      "rdfs:domain": "Tool",
+      "rdfs:label": [
+        {
+          "lang": "en",
+          "value": "license"
+        }
+      ],
+      "rdfs:range": "xsd:string",
+      "type": "owl:DatatypeProperty",
+      "uri": "https://brockwebb.github.io/ai-readiness-kg/schema#license"
+    },
+    "manifest_event_id": {
+      "rdfs:domain": "Document",
+      "rdfs:label": [
+        {
+          "lang": "en",
+          "value": "manifest_event_id"
+        }
+      ],
+      "rdfs:range": "xsd:string",
+      "type": "owl:DatatypeProperty",
+      "uri": "https://brockwebb.github.io/ai-readiness-kg/schema#manifest_event_id"
+    },
+    "measurement_notes": {
+      "rdfs:domain": "Construct",
+      "rdfs:label": [
+        {
+          "lang": "en",
+          "value": "measurement_notes"
+        }
+      ],
+      "rdfs:range": "xsd:string",
+      "type": "owl:DatatypeProperty",
+      "uri": "https://brockwebb.github.io/ai-readiness-kg/schema#measurement_notes"
+    },
+    "method": {
+      "rdfs:domain": "Instrument",
+      "rdfs:label": [
+        {
+          "lang": "en",
+          "value": "method"
+        }
+      ],
+      "rdfs:range": "xsd:string",
+      "type": "owl:DatatypeProperty",
+      "uri": "https://brockwebb.github.io/ai-readiness-kg/schema#method"
+    },
+    "name": {
+      "rdfs:label": [
+        {
+          "lang": "en",
+          "value": "name"
+        }
+      ],
+      "rdfs:range": "xsd:string",
+      "type": "owl:DatatypeProperty",
+      "uri": "https://brockwebb.github.io/ai-readiness-kg/schema#name"
+    },
+    "normative_status": {
+      "rdfs:comment": "Enumerated values -- Definition: statute, policy, standard, academic, industry",
+      "rdfs:domain": "Definition",
+      "rdfs:label": [
+        {
+          "lang": "en",
+          "value": "normative_status"
+        }
+      ],
+      "rdfs:range": "xsd:string",
+      "type": "owl:DatatypeProperty",
+      "uri": "https://brockwebb.github.io/ai-readiness-kg/schema#normative_status"
+    },
+    "operator": {
+      "rdfs:domain": "Platform",
+      "rdfs:label": [
+        {
+          "lang": "en",
+          "value": "operator"
+        }
+      ],
+      "rdfs:range": "xsd:string",
+      "type": "owl:DatatypeProperty",
+      "uri": "https://brockwebb.github.io/ai-readiness-kg/schema#operator"
+    },
+    "owner": {
+      "rdfs:label": [
+        {
+          "lang": "en",
+          "value": "owner"
+        }
+      ],
+      "rdfs:range": "xsd:string",
+      "type": "owl:DatatypeProperty",
+      "uri": "https://brockwebb.github.io/ai-readiness-kg/schema#owner"
+    },
+    "primary_url": {
+      "rdfs:domain": "Document",
+      "rdfs:label": [
+        {
+          "lang": "en",
+          "value": "primary_url"
+        }
+      ],
+      "rdfs:range": "xsd:string",
+      "type": "owl:DatatypeProperty",
+      "uri": "https://brockwebb.github.io/ai-readiness-kg/schema#primary_url"
+    },
+    "pub_date": {
+      "rdfs:domain": "Document",
+      "rdfs:label": [
+        {
+          "lang": "en",
+          "value": "pub_date"
+        }
+      ],
+      "rdfs:range": "xsd:string",
+      "type": "owl:DatatypeProperty",
+      "uri": "https://brockwebb.github.io/ai-readiness-kg/schema#pub_date"
+    },
+    "response_type": {
+      "rdfs:domain": "Measure",
+      "rdfs:label": [
+        {
+          "lang": "en",
+          "value": "response_type"
+        }
+      ],
+      "rdfs:range": "xsd:string",
+      "type": "owl:DatatypeProperty",
+      "uri": "https://brockwebb.github.io/ai-readiness-kg/schema#response_type"
+    },
+    "scope": {
+      "rdfs:comment": "Enumerated values -- Practice: dataset, api, bulk_file, tool, content, advisory, site, any",
+      "rdfs:domain": "Practice",
+      "rdfs:label": [
+        {
+          "lang": "en",
+          "value": "scope"
+        }
+      ],
+      "rdfs:range": "xsd:string",
+      "type": "owl:DatatypeProperty",
+      "uri": "https://brockwebb.github.io/ai-readiness-kg/schema#scope"
+    },
+    "source_type": {
+      "rdfs:comment": "Enumerated values -- Document: federal, academic, industry, standard, intergovernmental, practitioner",
+      "rdfs:domain": "Document",
+      "rdfs:label": [
+        {
+          "lang": "en",
+          "value": "source_type"
+        }
+      ],
+      "rdfs:range": "xsd:string",
+      "type": "owl:DatatypeProperty",
+      "uri": "https://brockwebb.github.io/ai-readiness-kg/schema#source_type"
+    },
+    "steward": {
+      "rdfs:label": [
+        {
+          "lang": "en",
+          "value": "steward"
+        }
+      ],
+      "rdfs:range": "xsd:string",
+      "type": "owl:DatatypeProperty",
+      "uri": "https://brockwebb.github.io/ai-readiness-kg/schema#steward"
+    },
+    "term": {
+      "rdfs:domain": "Definition",
+      "rdfs:label": [
+        {
+          "lang": "en",
+          "value": "term"
+        }
+      ],
+      "rdfs:range": "xsd:string",
+      "type": "owl:DatatypeProperty",
+      "uri": "https://brockwebb.github.io/ai-readiness-kg/schema#term"
+    },
+    "text": {
+      "rdfs:label": [
+        {
+          "lang": "en",
+          "value": "text"
+        }
+      ],
+      "rdfs:range": "xsd:string",
+      "type": "owl:DatatypeProperty",
+      "uri": "https://brockwebb.github.io/ai-readiness-kg/schema#text"
+    },
+    "tier": {
+      "rdfs:comment": "Enumerated values -- Measure: public, agency_instrumented, paid",
+      "rdfs:domain": "Measure",
+      "rdfs:label": [
+        {
+          "lang": "en",
+          "value": "tier"
+        }
+      ],
+      "rdfs:range": "xsd:string",
+      "type": "owl:DatatypeProperty",
+      "uri": "https://brockwebb.github.io/ai-readiness-kg/schema#tier"
+    },
+    "title": {
+      "rdfs:domain": "Document",
+      "rdfs:label": [
+        {
+          "lang": "en",
+          "value": "title"
+        }
+      ],
+      "rdfs:range": "xsd:string",
+      "type": "owl:DatatypeProperty",
+      "uri": "https://brockwebb.github.io/ai-readiness-kg/schema#title"
+    },
+    "url": {
+      "rdfs:domain": "Tool",
+      "rdfs:label": [
+        {
+          "lang": "en",
+          "value": "url"
+        }
+      ],
+      "rdfs:range": "xsd:string",
+      "type": "owl:DatatypeProperty",
+      "uri": "https://brockwebb.github.io/ai-readiness-kg/schema#url"
+    },
+    "verbatim_text": {
+      "rdfs:domain": "Definition",
+      "rdfs:label": [
+        {
+          "lang": "en",
+          "value": "verbatim_text"
+        }
+      ],
+      "rdfs:range": "xsd:string",
+      "type": "owl:DatatypeProperty",
+      "uri": "https://brockwebb.github.io/ai-readiness-kg/schema#verbatim_text"
+    },
+    "version": {
+      "rdfs:domain": "Standard",
+      "rdfs:label": [
+        {
+          "lang": "en",
+          "value": "version"
+        }
+      ],
+      "rdfs:range": "xsd:string",
+      "type": "owl:DatatypeProperty",
+      "uri": "https://brockwebb.github.io/ai-readiness-kg/schema#version"
+    },
+    "year": {
+      "rdfs:label": [
+        {
+          "lang": "en",
+          "value": "year"
+        }
+      ],
+      "rdfs:range": "xsd:string",
+      "type": "owl:DatatypeProperty",
+      "uri": "https://brockwebb.github.io/ai-readiness-kg/schema#year"
+    }
+  },
+  "metadata": {
+    "description": "Schema-derived ontology from kg/schema.yaml v0.3.2 via schema_to_owl.py + owl_to_tg_ontology.py",
+    "id": "airkg",
+    "name": "AI-readiness KG schema",
+    "uri": "https://brockwebb.github.io/ai-readiness-kg/schema",
+    "version": "0.3.2"
+  },
+  "objectProperties": {
+    "about": {
+      "rdfs:comment": "What the claim concerns",
+      "rdfs:domain": "Claim",
+      "rdfs:label": [
+        {
+          "lang": "en",
+          "value": "about"
+        }
+      ],
+      "rdfs:range": "Concept",
+      "type": "owl:ObjectProperty",
+      "uri": "https://brockwebb.github.io/ai-readiness-kg/schema#about"
+    },
+    "applies_to": {
+      "rdfs:comment": "Practice/Measure targets this asset class or concept",
+      "rdfs:label": [
+        {
+          "lang": "en",
+          "value": "applies_to"
+        }
+      ],
+      "rdfs:range": "Concept",
+      "type": "owl:ObjectProperty",
+      "uri": "https://brockwebb.github.io/ai-readiness-kg/schema#applies_to"
+    },
+    "asserts": {
+      "rdfs:comment": "Source makes this claim",
+      "rdfs:domain": "Document",
+      "rdfs:label": [
+        {
+          "lang": "en",
+          "value": "asserts"
+        }
+      ],
+      "rdfs:range": "Claim",
+      "type": "owl:ObjectProperty",
+      "uri": "https://brockwebb.github.io/ai-readiness-kg/schema#asserts"
+    },
+    "builds_on": {
+      "rdfs:comment": "e.g. FCSM 25-03 builds_on OPEN Gov Data Act",
+      "rdfs:label": [
+        {
+          "lang": "en",
+          "value": "builds_on"
+        }
+      ],
+      "type": "owl:ObjectProperty",
+      "uri": "https://brockwebb.github.io/ai-readiness-kg/schema#builds_on"
+    },
+    "cites": {
+      "rdfs:comment": "Citation within the corpus",
+      "rdfs:domain": "Document",
+      "rdfs:label": [
+        {
+          "lang": "en",
+          "value": "cites"
+        }
+      ],
+      "rdfs:range": "Document",
+      "type": "owl:ObjectProperty",
+      "uri": "https://brockwebb.github.io/ai-readiness-kg/schema#cites"
+    },
+    "conflicts_with": {
+      "rdfs:comment": "Incompatible. The \"no shared definition\" evidence layer",
+      "rdfs:label": [
+        {
+          "lang": "en",
+          "value": "conflicts_with"
+        }
+      ],
+      "type": "owl:ObjectProperty",
+      "uri": "https://brockwebb.github.io/ai-readiness-kg/schema#conflicts_with"
+    },
+    "consumes": {
+      "rdfs:comment": "Platform reads / honors this spec",
+      "rdfs:domain": "Platform",
+      "rdfs:label": [
+        {
+          "lang": "en",
+          "value": "consumes"
+        }
+      ],
+      "rdfs:range": "Standard",
+      "type": "owl:ObjectProperty",
+      "uri": "https://brockwebb.github.io/ai-readiness-kg/schema#consumes"
+    },
+    "defines": {
+      "rdfs:comment": "Source gives this definition",
+      "rdfs:domain": "Document",
+      "rdfs:label": [
+        {
+          "lang": "en",
+          "value": "defines"
+        }
+      ],
+      "rdfs:range": "Definition",
+      "type": "owl:ObjectProperty",
+      "uri": "https://brockwebb.github.io/ai-readiness-kg/schema#defines"
+    },
+    "extends": {
+      "rdfs:comment": "Builds on, adds to",
+      "rdfs:label": [
+        {
+          "lang": "en",
+          "value": "extends"
+        }
+      ],
+      "type": "owl:ObjectProperty",
+      "uri": "https://brockwebb.github.io/ai-readiness-kg/schema#extends"
+    },
+    "grounds": {
+      "rdfs:comment": "Construct's authority traces to this definition",
+      "rdfs:domain": "Construct",
+      "rdfs:label": [
+        {
+          "lang": "en",
+          "value": "grounds"
+        }
+      ],
+      "rdfs:range": "Definition",
+      "type": "owl:ObjectProperty",
+      "uri": "https://brockwebb.github.io/ai-readiness-kg/schema#grounds"
+    },
+    "has_component": {
+      "rdfs:comment": "Framework/Concept has this component part (part-whole, not subclass)",
+      "rdfs:label": [
+        {
+          "lang": "en",
+          "value": "has_component"
+        }
+      ],
+      "rdfs:range": "Concept",
+      "type": "owl:ObjectProperty",
+      "uri": "https://brockwebb.github.io/ai-readiness-kg/schema#has_component"
+    },
+    "implemented_by": {
+      "rdfs:comment": "This software computes / runs the measure",
+      "rdfs:domain": "Measure",
+      "rdfs:label": [
+        {
+          "lang": "en",
+          "value": "implemented_by"
+        }
+      ],
+      "rdfs:range": "Tool",
+      "type": "owl:ObjectProperty",
+      "uri": "https://brockwebb.github.io/ai-readiness-kg/schema#implemented_by"
+    },
+    "implements": {
+      "rdfs:comment": "Spec realizes a concept",
+      "rdfs:domain": "Standard",
+      "rdfs:label": [
+        {
+          "lang": "en",
+          "value": "implements"
+        }
+      ],
+      "rdfs:range": "Concept",
+      "type": "owl:ObjectProperty",
+      "uri": "https://brockwebb.github.io/ai-readiness-kg/schema#implements"
+    },
+    "measures": {
+      "rdfs:comment": "Item- or instrument-level mapping to the construct/concept it measures",
+      "rdfs:label": [
+        {
+          "lang": "en",
+          "value": "measures"
+        }
+      ],
+      "type": "owl:ObjectProperty",
+      "uri": "https://brockwebb.github.io/ai-readiness-kg/schema#measures"
+    },
+    "mentions": {
+      "rdfs:comment": "Concept appears substantively (not keyword match)",
+      "rdfs:domain": "Document",
+      "rdfs:label": [
+        {
+          "lang": "en",
+          "value": "mentions"
+        }
+      ],
+      "rdfs:range": "Concept",
+      "type": "owl:ObjectProperty",
+      "uri": "https://brockwebb.github.io/ai-readiness-kg/schema#mentions"
+    },
+    "operationalizes": {
+      "rdfs:comment": "Instrument measures this dimension",
+      "rdfs:domain": "Instrument",
+      "rdfs:label": [
+        {
+          "lang": "en",
+          "value": "operationalizes"
+        }
+      ],
+      "rdfs:range": "Construct",
+      "type": "owl:ObjectProperty",
+      "uri": "https://brockwebb.github.io/ai-readiness-kg/schema#operationalizes"
+    },
+    "precedes": {
+      "rdfs:comment": "Concept precedes another (ordinal/temporal precedence)",
+      "rdfs:domain": "Concept",
+      "rdfs:label": [
+        {
+          "lang": "en",
+          "value": "precedes"
+        }
+      ],
+      "rdfs:range": "Concept",
+      "type": "owl:ObjectProperty",
+      "uri": "https://brockwebb.github.io/ai-readiness-kg/schema#precedes"
+    },
+    "recommends": {
+      "rdfs:comment": "Source makes this normative recommendation",
+      "rdfs:domain": "Document",
+      "rdfs:label": [
+        {
+          "lang": "en",
+          "value": "recommends"
+        }
+      ],
+      "rdfs:range": "Practice",
+      "type": "owl:ObjectProperty",
+      "uri": "https://brockwebb.github.io/ai-readiness-kg/schema#recommends"
+    },
+    "subtype_of": {
+      "rdfs:comment": "Concept is a subtype (subclass) of another concept",
+      "rdfs:domain": "Concept",
+      "rdfs:label": [
+        {
+          "lang": "en",
+          "value": "subtype_of"
+        }
+      ],
+      "rdfs:range": "Concept",
+      "type": "owl:ObjectProperty",
+      "uri": "https://brockwebb.github.io/ai-readiness-kg/schema#subtype_of"
+    },
+    "supersedes": {
+      "rdfs:comment": "Newer document replaces an earlier version",
+      "rdfs:domain": "Document",
+      "rdfs:label": [
+        {
+          "lang": "en",
+          "value": "supersedes"
+        }
+      ],
+      "rdfs:range": "Document",
+      "type": "owl:ObjectProperty",
+      "uri": "https://brockwebb.github.io/ai-readiness-kg/schema#supersedes"
+    },
+    "supported_by": {
+      "rdfs:comment": "The practice rests on this claim (the claim's evidence_grade is the strength behind the recommendation, DD-010)",
+      "rdfs:domain": "Practice",
+      "rdfs:label": [
+        {
+          "lang": "en",
+          "value": "supported_by"
+        }
+      ],
+      "rdfs:range": "Claim",
+      "type": "owl:ObjectProperty",
+      "uri": "https://brockwebb.github.io/ai-readiness-kg/schema#supported_by"
+    },
+    "targets": {
+      "rdfs:comment": "Practice is aimed at this machine consumer",
+      "rdfs:domain": "Practice",
+      "rdfs:label": [
+        {
+          "lang": "en",
+          "value": "targets"
+        }
+      ],
+      "rdfs:range": "Platform",
+      "type": "owl:ObjectProperty",
+      "uri": "https://brockwebb.github.io/ai-readiness-kg/schema#targets"
+    },
+    "uses_measure": {
+      "rdfs:comment": "Instrument uses this measure/item",
+      "rdfs:domain": "Instrument",
+      "rdfs:label": [
+        {
+          "lang": "en",
+          "value": "uses_measure"
+        }
+      ],
+      "rdfs:range": "Measure",
+      "type": "owl:ObjectProperty",
+      "uri": "https://brockwebb.github.io/ai-readiness-kg/schema#uses_measure"
+    }
+  }
+}
