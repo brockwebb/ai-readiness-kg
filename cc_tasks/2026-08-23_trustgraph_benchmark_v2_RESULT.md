@@ -31,4 +31,4 @@ TG extraction 6,738,175 + ours 575,106 + judging 793,468 = **8,106,749 — consu
 4. Their evidence chunks accepted as the span-equivalent per the task, with the chunk verbatim-vs-source rate (0.98) reported as its own metric.
 
 ## Commits
-{COMMIT}
+`ai-readiness-kg@f351c97` → `origin/main`. Fork: `claude-cli-backend` @ `9aef0ef0` (local only).
