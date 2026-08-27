@@ -22,24 +22,30 @@
  },
  "driver": {
   "state": "exited",
-  "ts": "2026-08-27T08:45:00.079162+00:00",
+  "ts": "2026-08-27T11:32:01.992027+00:00",
   "ceiling": 55000000,
-  "wall_stop": "2026-08-27T08:45:00+00:00",
-  "pid": 25659,
-  "reason": "Lane 1 FAIL/STOP \u2014 pre-registered rule"
+  "wall_stop": "2026-08-27T23:59:00+00:00",
+  "pid": 58676,
+  "reason": "Lane 1 FAIL/STOP \u2014 pre-registered rule",
+  "lanes": [
+   "1"
+  ],
+  "lane1_pass": false
  },
  "lane1_pilot": {
   "state": "FAIL",
-  "ts": "2026-08-27T03:26:50.986943+00:00",
+  "ts": "2026-08-27T11:32:01.991746+00:00",
   "pilot_docs": [
    "data-readiness-for-ai-a-360-degree-survey",
    "aidrin-hiniduma-2024",
    "fcsm-23-02-a-framework-for-data-quality-case-studies"
   ],
   "doc": "fcsm-23-02-a-framework-for-data-quality-case-studies",
-  "instruments": 0,
+  "instruments": 1,
   "semantic_edges": 0,
-  "reason": "zero items in both strata"
+  "reason": "precondition 1/3 docs with both strata",
+  "span_lacks_name": 4,
+  "emission": "single_pass"
  },
  "lane3_triage": {
   "state": "skipped",
