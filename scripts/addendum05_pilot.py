@@ -166,8 +166,23 @@ def window_for(norm: str, span: str) -> str | None:
 
 
 def write_sample(prefix: str, recs: list[dict]) -> None:
-    (REPO / f"corpus/staging/metrics/{prefix}_sample.jsonl").write_text(
-        "".join(json.dumps(r, ensure_ascii=False) + "\n" for r in recs), encoding="utf-8")
+    """Write the sample — but keep an existing one whose item set is identical.
+
+    `event_id` is a fresh uuid per record and `fact_id` is a hash over it, so rewriting an
+    unchanged sample renames every fact and orphans the judge labels already paid for
+    (probe_judge resumes on (fact_id, agent, run)). Reuse keeps a relaunch cheap.
+    """
+    path = REPO / f"corpus/staging/metrics/{prefix}_sample.jsonl"
+    if path.exists():
+        prior = [json.loads(l) for l in path.read_text(encoding="utf-8").splitlines() if l.strip()]
+        key = lambda rs: sorted((r.get("doc_id"), r.get("item_id"), r.get("text"),
+                                 r.get("grounding_span")) for r in rs)
+        if key(prior) == key(recs):
+            print(f"sample {prefix}: reusing {len(prior)} existing records (labels resume)",
+                  flush=True)
+            return
+    path.write_text("".join(json.dumps(r, ensure_ascii=False) + "\n" for r in recs),
+                    encoding="utf-8")
 
 
 def run_protocol(prefix: str, run: str, run_id: str, raters: list[str],

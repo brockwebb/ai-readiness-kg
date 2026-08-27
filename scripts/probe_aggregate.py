@@ -176,6 +176,16 @@ def main() -> int:
         raise SystemExit("FATAL: no judge labels found")
     facts = {f["fact_id"]: f for f in (json.loads(l) for l in FACTS.read_text().splitlines() if l.strip())}
     items = {it["event_id"]: it for it in (json.loads(l) for l in SAMPLE.read_text().splitlines() if l.strip())}
+    # Labels are append-only and keyed by (fact_id, agent, run); a fact set that was rebuilt
+    # under the same run label leaves labels pointing at fact_ids no longer in FACTS. Drop
+    # them loudly rather than KeyError'ing (or silently counting them).
+    orphans = {r["fact_id"] for r in rows if r["fact_id"] not in facts}
+    if orphans:
+        print(f"WARNING: dropping {len(orphans)} labelled fact_ids absent from "
+              f"{FACTS.name} (stale fact set for run {a.run})", file=sys.stderr)
+        rows = [r for r in rows if r["fact_id"] in facts]
+        if not rows:
+            raise SystemExit("FATAL: every label was orphaned by a fact-set rebuild")
     post, conf, method = dawid_skene(rows)
     by_fact = defaultdict(list)
     for r in rows: by_fact[r["fact_id"]].append(r)

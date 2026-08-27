@@ -80,13 +80,18 @@ def main() -> int:
     items = [json.loads(l) for l in SAMPLE.read_text(encoding="utf-8").splitlines() if l.strip()]
     done = set()
     if OUT.exists():
-        done = {json.loads(l)["item_id"] for l in OUT.read_text(encoding="utf-8").splitlines() if l.strip()}
+        # (item_id, event_id) pairs: an item is done only if THIS sample's event_id already
+        # has facts. Was a set of item_ids alone, which made the `event_id in done` half of
+        # the resume test always false — a relaunch re-decomposed every item and appended a
+        # second copy of the fact set (2026-08-27, pilot_instrB).
+        done = {(r["item_id"], r["event_id"]) for r in
+                (json.loads(l) for l in OUT.read_text(encoding="utf-8").splitlines() if l.strip())}
     RAW_DIR.mkdir(parents=True, exist_ok=True)
     n_det = n_model = 0
     out = OUT.open("a", encoding="utf-8")
     model_queue: list[tuple[dict, str, str]] = []
     for it in items:
-        if it["item_id"] in done and it["event_id"] in done:
+        if (it["item_id"], it["event_id"]) in done:
             continue
         se = schema_loader.span_entailable(schema, it["type"]) if it["kind"] == "node" else {}
         facts, pending = deterministic_facts(it, se)
