@@ -37,3 +37,41 @@ Not a fabrication measurement: the corrected prompt **over-corrected**. (1) Firs
 - [x] Lane 1 verdict on disk (FAIL, with diagnosis and re-run trigger)
 - [x] RESULT (this file, state running) + `seldon cc complete`
 - [ ] SUMMARY — written by the driver at exit (Lane 4 totals, gate verdicts, reconcile codes)
+
+---
+
+## ADDENDUM-01 execution — 2026-08-27 morning (appended section)
+
+**Dispatched** ~06:47 ET with two stale premises, both reported: (1) "Lane 4 is already
+running" — false at dispatch: the first driver hit its 04:45 ET wall stop at 08:45Z and
+exited; Lane 4's stage 2 was killed mid-run by the wall cap (5,554 stage-1 proposals,
+1,240 stage-2 judgments on the tagged shard; relocation shards and the acceptance gate
+never ran — class stays unprojected, untouched per instruction). (2) The addendum's "same
+04:45 ET stop" for a PASS-branch launch was already past; today's invocations ran with
+wall stop 23:59Z, logged here — spend remained bounded by the ledger (run ceilings + 55M
+daily band) throughout. Night ledger: 30.1M committed in the 08-27 UTC band before this
+addendum ran.
+
+**Lane 0′ — done, committed.** Prompt **v0.3.5** implements the three diagnosed patterns
+verbatim (positive Instrument criterion with the AIDRIN example; name-in-span as the first
+grounding rule; truncation-is-a-status). v0.3.4 template frozen as
+`prompt_template_v0_3_4.md` (profile repointed, sha unchanged). Parser gains the
+`span_lacks_name` precheck counter; `truncation_suspect_tokens: 40000` in model_config;
+`invoke_with_layer_fallback` (three resumed turns, merged output, `emission_mode:
+per_layer`) wired into the bulk runner and driver, with unit tests (a stubbed truncated
+envelope triggers the fallback and the merged event carries all three layer groups).
+Profile `reextract_v035` sha-pinned. Suite **194 green** before Lane 1′.
+
+**Lane 1′ — verdict on disk: `FAIL:harness_or_prompt`**
+(`docs/research/2026-08-26_pilot_reextract_v035_verdict.md`). Precondition 1/3 docs with
+both strata (needs ≥2/3); the judge was correctly not run (run `pilot_v035` spent ~0.9M of
+its 3M ceiling on extraction only). The verdict's diagnosis records: instrument
+over-demotion **fixed** (0→9 nodes, AIDRIN back), name-in-span **fixed** (precheck 38→17
+total), truncation fallback **fired and worked** — and that the remaining zero is
+substantially the per-doc *conjunction* in the precondition against instrument-heavy docs
+that lack semantic-relation sentences (the model now self-routes those to
+`proposed_relationships`, 14 staged). Follow-on options (stratum-matched pilot docs, or a
+pooled per-stratum precondition) are recorded for the operator; ADDENDUM-01 forbids a
+second revision tonight.
+
+**Lanes 2/3: closed** per the addendum's FAIL branch. Lane 4: untouched.
