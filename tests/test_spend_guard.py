@@ -234,3 +234,22 @@ def test_regression_replay_of_the_22m_incident_shape(guard):
     # the at-most-one-in-flight overshoot bound — NOT 22M
     assert settled <= 12_000_000 + FLOOR, f"shared ceiling breached: {settled:,}"
     assert settled >= 12_000_000 - FLOOR   # and the ceiling was actually used, not undershot
+
+
+# 9 (ADDENDUM-05) --------------------------------------------------------------------
+def test_operator_redeclare_raises_ceiling_and_keeps_refusal_history(guard):
+    ledger, _ = guard
+    ledger.declare("r9", 2 * FLOOR, declared_by="test", call_class="cleanup")
+    r1 = ledger.reserve("r9"); ledger.settle(r1, FLOOR)
+    r2 = ledger.reserve("r9"); ledger.settle(r2, FLOOR)
+    assert isinstance(ledger.reserve("r9"), spend.Refusal)       # old ceiling binds
+    with pytest.raises(spend.SpendConfigError):                  # silent conflict still refused
+        ledger.declare("r9", 10 * FLOOR, declared_by="test", call_class="cleanup")
+    ledger.declare("r9", 10 * FLOOR, declared_by="ADDENDUM-05 test", call_class="cleanup",
+                   supersede=True)
+    nxt = ledger.reserve("r9")                                   # new ceiling operative
+    assert isinstance(nxt, spend.Reservation)
+    records = _records(ledger)
+    assert sum(1 for r in records if r["record"] == "refuse") == 1   # history retained
+    declares = [r for r in records if r["record"] == "declare" and r["run_id"] == "r9"]
+    assert declares[-1]["supersedes_prior_ceiling"] == 2 * FLOOR

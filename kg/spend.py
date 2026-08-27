@@ -190,10 +190,15 @@ class SpendLedger:
 
     @staticmethod
     def _declare_of(records: list[dict], run_id: str) -> dict | None:
+        """The run's OPERATIVE declare: the last one appended. A ceiling re-declare
+        (ADDENDUM-05 pattern) appends a superseding declare rather than editing history —
+        the refusal events under the old ceiling stay on the ledger as correct guard
+        events, and the audit trail shows both numbers."""
+        found = None
         for r in records:
             if r.get("record") == "declare" and r.get("run_id") == run_id:
-                return r
-        return None
+                found = r
+        return found
 
     def _estimate(self, records: list[dict], run_id: str, call_class: str) -> int:
         """max(call-class floor, mean of the last N measured settles in this run).
@@ -212,9 +217,12 @@ class SpendLedger:
 
     # ---------------------------------------------------------------- operations
     def declare(self, run_id: str, ceiling_tokens: int, declared_by: str,
-                call_class: str) -> None:
+                call_class: str, supersede: bool = False) -> None:
         """Idempotent for an identical re-declare (fleet workers re-declaring the shared
-        run); a conflicting re-declare is a config fault and raises."""
+        run); a conflicting re-declare is a config fault and raises — unless
+        ``supersede=True``, which appends a superseding declare (last one wins). Supersede
+        is for an OPERATOR-authorized ceiling correction (name the authority in
+        ``declared_by``); code paths must never pass it to get past a refusal."""
         with self._open_locked() as fh:
             records = self._read_all(fh)
             prior = self._declare_of(records, run_id)
@@ -222,13 +230,16 @@ class SpendLedger:
                 if (int(prior["ceiling_tokens"]) == int(ceiling_tokens)
                         and prior["call_class"] == call_class):
                     return
-                raise SpendConfigError(
-                    f"run {run_id!r} already declared with ceiling "
-                    f"{prior['ceiling_tokens']:,}/{prior['call_class']}; refusing "
-                    f"conflicting re-declare {ceiling_tokens:,}/{call_class}")
+                if not supersede:
+                    raise SpendConfigError(
+                        f"run {run_id!r} already declared with ceiling "
+                        f"{prior['ceiling_tokens']:,}/{prior['call_class']}; refusing "
+                        f"conflicting re-declare {ceiling_tokens:,}/{call_class}")
             self._append(fh, {"record": "declare", "run_id": run_id,
                               "ceiling_tokens": int(ceiling_tokens),
-                              "declared_by": declared_by, "call_class": call_class})
+                              "declared_by": declared_by, "call_class": call_class,
+                              **({"supersedes_prior_ceiling": int(prior["ceiling_tokens"])}
+                                 if (prior is not None and supersede) else {})})
 
     def reserve(self, run_id: str | None, estimate_tokens: int | None = None):
         """Reservation | Refusal. Refuse iff committed(run)+estimate > ceiling(run) or

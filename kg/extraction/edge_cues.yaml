@@ -1,0 +1,26 @@
+# Semantic-edge predicate cues (ADDENDUM-05 §3a; sha-pinned by the triage report).
+# Used ONLY by the mechanical suppression triage (scripts/addendum05_triage.py) to ask:
+# does the document carry a predicate cue for this relation near both endpoint surface
+# forms? Cues are lowercase substrings matched on normalized text. Deliberately generous —
+# 3a measures locatability; entailment is 3b's judge, not this list.
+edge_cues_version: "2026-08-27.1"
+cues:
+  has_component:
+    [" component", " comprises", " comprising", " consists of", " consisting of",
+     " includes", " including", " include ", " part of", " composed of", " contains",
+     " contain ", " made up of", " subcomponent", " element of", " dimensions", " pillar"]
+  subtype_of:
+    [" type of", " types of", " kind of", " kinds of", " subtype", " is a ", " are a ",
+     " form of", " forms of", " category", " categories", " class of", " classes of",
+     " variant of", " special case", " example of", " such as"]
+  consumes:
+    [" consumes", " consume ", " reads", " read ", " honors", " honour", " ingests",
+     " ingest ", " parses", " parse ", " supports", " support ", " processes",
+     " process ", " uses ", " use ", " accepts", " relies on", " based on"]
+  extends:
+    [" extends", " extend ", " extension of", " builds on", " building on", " expands",
+     " expanding", " adds to", " based on", " derived from", " elaborat", " augments"]
+  implements:
+    [" implements", " implement ", " implementation of", " realizes", " realises",
+     " conforms to", " conformance", " encodes", " expressed in", " operationalizes",
+     " embodies", " adopts"]
