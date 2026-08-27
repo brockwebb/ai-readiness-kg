@@ -26,6 +26,12 @@ Per-rater agreement:
 
 **Consequence (per §2):** Instrument stratum stays closed; Lanes 2/3 closed.
 
+**Correction to the header line's cost/doc.** `settled ÷ 5` conflates extraction with this
+run's decompose and judge calls. Measured extraction only, summed from the persisted raw
+usage in `events/raw/reextract_v035b_pilot/`: 3,925,860 tokens for 5 docs = **785,172/doc**
+(per-layer docs 866K–1,331K; single-pass docs 399K–426K). That is the number Lane 2/3 sizing
+should use.
+
 ## Diagnosis (recorded finding; no threshold moved, no prompt written tonight)
 
 Both pre-registered checks fail, and they fail for different reasons. Detail added after the

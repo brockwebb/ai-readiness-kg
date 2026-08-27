@@ -16,10 +16,10 @@ spend:
   # circuit (~/.wintermute control_plane declared_caps, read 2026-08-27:
   # daily_tokens 55,000,000 / weekly 880,000,000). Recorded in the task RESULT.
   #
-  # TEMPORARY RAISE 55M -> 75M, operator decision 2026-08-27 (touchpoint #1, spend above
-  # band) scoped to task cc_tasks/2026-08-27_pilot_finish.md §1. Reverted to 55,000,000 at
-  # that task's close; this is not a new standing band.
-  daily_tokens: 75_000_000
+  # 2026-08-27: temporarily raised to 75,000,000 for task cc_tasks/2026-08-27_pilot_finish.md
+  # (operator decision, §1) and reverted here at that task's close. The raise was scoped to
+  # the task; the standing band is unchanged.
+  daily_tokens: 55_000_000
   call_class_floors:
     cleanup: 36000        # DD-019 measurement, Haiku one-item
     extraction: 111000    # 2026-08-21 pilot-era floor
