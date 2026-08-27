@@ -176,11 +176,14 @@ def corpus_paths() -> dict[str, Path]:
 
 def extract_doc(doc_id: str, path: Path, rstate: dict, timeout: int = 1800):
     """Full extraction under the pinned v0.3.4 prompt; returns (parse_result, meta, sha)."""
+    from kg.extraction import pipeline as _pipeline
     text = rbe.doc_text(path)
     sha = hashlib.sha256(path.read_bytes()).hexdigest()
     meta = invoke_backoff(rstate, doc_id, text, timeout=timeout)
-    result = parser.parse_extraction(meta["output"], text,
-                                     enforce_span_coverage=True)
+    # harness owns document_id/provenance (v3 contract) — same ownership step the bulk
+    # pipeline applies before parsing (first launch missed this; lane1 error 02:56Z)
+    output = _pipeline._apply_provenance_ownership(meta["output"], doc_id)
+    result = parser.parse_extraction(output, text, enforce_span_coverage=True)
     return result, meta, sha, text
 
 
@@ -322,7 +325,8 @@ def lane1() -> bool:
             status(lane, "rate_limited", detail=str(exc)[:200]); return False
         except spend.SpendRefusalStop as exc:
             status(lane, "STOP", reason=f"spend guard: {exc}"); return False
-        except (model_stub.ModelInvocationError, model_stub.ModelSubstitutionError) as exc:
+        except (model_stub.ModelInvocationError, model_stub.ModelSubstitutionError,
+                ValueError) as exc:
             status(lane, "STOP", reason=f"{d}: {str(exc)[:200]}"); return False
         doc_texts[d] = text
         (raw_dir / f"{d}.{sha[:12]}.{model_stub.prompt_version()}.json").write_text(
@@ -468,7 +472,8 @@ def lane2() -> None:
             status(lane, "rate_limited", detail=str(exc)[:200]); break
         except spend.SpendRefusalStop as exc:
             status(lane, "ceiling_stop", reason=str(exc)[:200]); break
-        except (model_stub.ModelInvocationError, model_stub.ModelSubstitutionError) as exc:
+        except (model_stub.ModelInvocationError, model_stub.ModelSubstitutionError,
+                ValueError) as exc:
             status(lane, "doc_error", doc=d, err=str(exc)[:160]); continue
         doc_texts[d] = text
         (raw_dir / f"{d}.{sha[:12]}.{model_stub.prompt_version()}.json").write_text(

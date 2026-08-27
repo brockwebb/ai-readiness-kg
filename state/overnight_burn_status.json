@@ -1,0 +1,53 @@
+{
+ "driver_run1": {
+  "note": "first launch aborted 02:56Z \u2014 lane1 parse ownership bug, fixed",
+  "driver": {
+   "state": "lanes_2_3_skipped",
+   "ts": "2026-08-27T02:56:09.645636+00:00",
+   "ceiling": 55000000,
+   "wall_stop": "2026-08-27T08:45:00+00:00",
+   "pid": 24838,
+   "reason": "Lane 1 FAIL/STOP \u2014 pre-registered rule"
+  },
+  "lane1_pilot": {
+   "state": "error",
+   "ts": "2026-08-27T02:56:09.645250+00:00",
+   "pilot_docs": [
+    "data-readiness-for-ai-a-360-degree-survey",
+    "aidrin-hiniduma-2024",
+    "fcsm-23-02-a-framework-for-data-quality-case-studies"
+   ],
+   "detail": "extraction output missing 'document_id'"
+  }
+ },
+ "driver": {
+  "state": "lanes_2_3_skipped",
+  "ts": "2026-08-27T03:26:50.987321+00:00",
+  "ceiling": 55000000,
+  "wall_stop": "2026-08-27T08:45:00+00:00",
+  "pid": 25659,
+  "reason": "Lane 1 FAIL/STOP \u2014 pre-registered rule"
+ },
+ "lane1_pilot": {
+  "state": "FAIL",
+  "ts": "2026-08-27T03:26:50.986943+00:00",
+  "pilot_docs": [
+   "data-readiness-for-ai-a-360-degree-survey",
+   "aidrin-hiniduma-2024",
+   "fcsm-23-02-a-framework-for-data-quality-case-studies"
+  ],
+  "doc": "fcsm-23-02-a-framework-for-data-quality-case-studies",
+  "instruments": 0,
+  "semantic_edges": 0,
+  "reason": "zero items in both strata"
+ },
+ "lane3_triage": {
+  "state": "skipped",
+  "ts": "2026-08-27T03:26:50.987469+00:00",
+  "reason": "Lane 3 depends on Lane 1 PASS (extraction under the corrected prompt)"
+ },
+ "lane4_repair": {
+  "state": "running",
+  "ts": "2026-08-27T03:26:50.987605+00:00"
+ }
+}

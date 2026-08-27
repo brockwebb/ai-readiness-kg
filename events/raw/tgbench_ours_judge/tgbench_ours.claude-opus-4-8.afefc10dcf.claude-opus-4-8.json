@@ -1,0 +1,23 @@
+{
+ "batch_id": "tgbench_ours.claude-opus-4-8.afefc10dcf",
+ "run": "tgbench_ours",
+ "model_id": "claude-opus-4-8",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 4699,
+  "cacheReadInputTokens": 17941,
+  "cacheCreationInputTokens": 18254,
+  "webSearchRequests": 0,
+  "costUSD": 0.3089955,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "canonicalModel": "claude-opus-4-8",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3089955,
+ "duration_ms": 60472,
+ "wall_s": 63.4,
+ "session_id": "293a2c1f-e937-4c06-8d90-9e6f2fdd3113",
+ "raw_result": "Looking at this, I've been handed a rendered instance of the versioned atomic-fact faithfulness judge (probe_judge_version 1.0.0). The task is mechanical: judge each fact against its grounding span and emit strict JSON. This is exactly what the instrument is designed to do — no novelty, no escalation. I'll run it.\n\nNote: every `window` is `null`, so `subject_dropped`/`span_truncated` cannot be confirmed via window evidence — I judge span-entailment directly and fall to `fabrication`/`filled_attribute` where the span itself doesn't carry the value.\n\nReasoning per fact:\n- **tb_69ab93fb7fc6** (version 1.1): span's \"1.1\" attaches to *RDFa*, not the Standard; misattributed → `filled_attribute`.\n- **tb_a5fb1c2ab090 / tb_a3e0e1042c79 / tb_85aa9f902d29** (response_type boolean): \"Check if/that …\" phrasing denotes a yes/no test → boolean supported → `entailed`.\n- **tb_e18440b5396c** (cites json-ld): span is a formatted bibliography entry = a citation by the document → `entailed`.\n- **tb_2044b9343437** (Concept: Data enrichment): span defines it verbatim → `entailed`.\n- **tb_43fe39ba0b91** (Measure text): span is identical → `entailed`.\n- **tb_9200eeba8cb4** (operator: Google): span names \"Google Search\" → operator supported → `entailed`.\n- **tb_8d582c1b2d6b** (recommends BP4): span states \"Best Practice 4: …\" — a DWBP recommendation → `entailed`.\n- **tb_1b33a862a496** (aliases ['consumer','user agent']): span supports \"consumer\" but \"user agent\" appears nowhere → whole list not entailed → `filled_attribute`.\n\n{\"judgments\": [{\"fact_id\": \"tb_69ab93fb7fc6\", \"label\": \"not_entailed\", \"class\": \"filled_attribute\", \"confidence\": 0.82}, {\"fact_id\": \"tb_a5fb1c2ab090\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.74}, {\"fact_id\": \"tb_e18440b5396c\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.7}, {\"fact_id\": \"tb_2044b9343437\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.97}, {\"fact_id\": \"tb_a3e0e1042c79\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.74}, {\"fact_id\": \"tb_85aa9f902d29\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.74}, {\"fact_id\": \"tb_43fe39ba0b91\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.97}, {\"fact_id\": \"tb_9200eeba8cb4\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.7}, {\"fact_id\": \"tb_8d582c1b2d6b\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.72}, {\"fact_id\": \"tb_1b33a862a496\", \"label\": \"not_entailed\", \"class\": \"filled_attribute\", \"confidence\": 0.78}]}"
+}
