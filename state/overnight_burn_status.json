@@ -22,15 +22,16 @@
  },
  "driver": {
   "state": "exited",
-  "ts": "2026-08-27T11:32:01.992027+00:00",
+  "ts": "2026-08-27T17:30:42.753127+00:00",
   "ceiling": 55000000,
-  "wall_stop": "2026-08-27T23:59:00+00:00",
-  "pid": 58676,
+  "wall_stop": "2026-08-28T03:30:00+00:00",
+  "pid": 70582,
   "reason": "Lane 1 FAIL/STOP \u2014 pre-registered rule",
   "lanes": [
-   "1"
+   "1b"
   ],
-  "lane1_pass": false
+  "lane1_pass": false,
+  "lane1b_pass": false
  },
  "lane1_pilot": {
   "state": "FAIL",
@@ -53,10 +54,33 @@
   "reason": "Lane 3 depends on Lane 1 PASS (extraction under the corrected prompt)"
  },
  "lane4_repair": {
-  "state": "error",
-  "ts": "2026-08-27T08:44:59.442039+00:00",
+  "state": "running",
+  "ts": "2026-08-27T15:59:34.178206+00:00",
   "stage": "1",
   "rc": 0,
-  "detail": "Command '['/opt/anaconda3/bin/python3', 'scripts/restoration_v2.py', '--stage', '2', '--ceiling-tokens', '55000000', '--run-id', 'restoration_v2_s2']' timed out after 3898 seconds"
+  "detail": "Command '['/opt/anaconda3/bin/python3', 'scripts/restoration_v2.py', '--stage', '2', '--ceiling-tokens', '55000000', '--run-id', 'restoration_v2_s2']' timed out after 3898 seconds",
+  "mode": "resume"
+ },
+ "lane1b_pilot": {
+  "state": "STOP",
+  "ts": "2026-08-27T17:30:42.752202+00:00",
+  "docs": [
+   "data-readiness-for-ai-a-360-degree-survey",
+   "aidrin-hiniduma-2024",
+   "fcsm-23-02-a-framework-for-data-quality-case-studies",
+   "from-accuracy-to-readiness-metrics-and-benchmarks-for-human",
+   "mitre-ai-maturity-model"
+  ],
+  "semantic_doc_prior_counts": {
+   "from-accuracy-to-readiness-metrics-and-benchmarks-for-human": 38,
+   "mitre-ai-maturity-model": 32
+  },
+  "doc": "from-accuracy-to-readiness-metrics-and-benchmarks-for-human",
+  "instruments": 1,
+  "semantic_edges": 0,
+  "span_lacks_name": 1,
+  "emission": "per_layer",
+  "output_tokens": 119626,
+  "reason": "spend guard: spend guard refused dispatch (over_ceiling, scope=run): committed 3,907,767 + estimate 257,708 vs ceiling 4,000,000 [run pilot_v035b_opus5]"
  }
 }
