@@ -1,9 +1,30 @@
 """Model stub: Fable model id, OAuth-only config, API-key guard, and no-call behavior."""
 import json
+import textwrap
 
 import pytest
 
+from kg import spend
 from kg.extraction import model_stub
+
+
+@pytest.fixture
+def declared_run(tmp_path, monkeypatch):
+    """A declared spend-ledger run on tmp_path (DD-022): invoke() refuses undeclared runs
+    by design, so every test that reaches dispatch needs one."""
+    controls = tmp_path / "controls.yaml"
+    controls.write_text(textwrap.dedent("""\
+        schema_version: "0.2"
+        spend:
+          daily_tokens: 1000000000
+          call_class_floors: {cleanup: 36000, extraction: 111000, judge: 36000}
+        """), encoding="utf-8")
+    monkeypatch.setattr(spend, "_LEDGER_PATH", tmp_path / "spend_ledger.jsonl")
+    monkeypatch.setattr(spend, "_CONTROLS_PATH", controls)
+    spend.SpendLedger().declare("stub-test-run", 100_000_000,
+                                declared_by="tests", call_class="extraction")
+    monkeypatch.setenv(spend.RUN_ENV, "stub-test-run")
+    return "stub-test-run"
 
 
 def test_config_is_oauth_with_a_model_pin():
@@ -62,15 +83,20 @@ def test_extract_json_tolerates_fences():
         model_stub._extract_json("no json here")
 
 
-def test_missing_cli_is_a_transient_invocation_error(monkeypatch):
+def test_missing_cli_is_a_transient_invocation_error(monkeypatch, declared_run):
     # CLI auto-update window (2026-08-22): `claude` briefly unresolvable -> ModelInvocationError
     monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
     cfg = {"model_id": "m", "cli": "/nonexistent/claude-binary"}
     with pytest.raises(model_stub.ModelInvocationError):
         model_stub.invoke("d", "text", prompt="p", config=cfg)
+    # never-dispatched call released its reservation (DD-022): capacity fully restored
+    ledger = spend.SpendLedger()
+    assert ledger.committed(declared_run) == 0
+    records = [json.loads(l) for l in ledger.path.read_text().splitlines()]
+    assert any(r.get("record") == "release" for r in records)
 
 
-def test_resume_session_id_adds_resume_flag(monkeypatch):
+def test_resume_session_id_adds_resume_flag(monkeypatch, declared_run):
     captured = {}
     def fake_run(cmd, **kw):
         captured["cmd"] = cmd

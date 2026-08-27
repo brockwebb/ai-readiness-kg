@@ -44,7 +44,7 @@ REPO = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO))
 sys.path.insert(0, str(Path.home() / ".wintermute" / "scripts" / "lib"))
 
-from kg import eventlog                              # noqa: E402
+from kg import eventlog, spend                       # noqa: E402
 from kg.extraction import model_stub, pipeline, state  # noqa: E402
 import control_plane as cp                           # noqa: E402
 from dixie.evidence.config import load_config as dixie_config      # noqa: E402
@@ -323,12 +323,9 @@ def run(max_docs: int | None = None, dry_run: bool = False,
         for doc_id in todo:
             if max_docs is not None and processed >= max_docs:
                 break
-            left = tokens_left()
-            if left <= 0:
-                print(f"declared cap exhausted (0 tokens left) — clean no-op; "
-                      f"resumes next window.")
-                progress.append(f"- cap exhausted after {processed} docs this window")
-                break
+            # Spend admission is PREEMPTIVE at the model-stub choke point (reserve before
+            # dispatch, DD-022) — the old reactive `tokens_left() <= 0` poll here was the
+            # DD-019 §5 defect shape and is gone. The band stays visible as telemetry only.
             ok, reason = cp.gate(CIRCUIT, project=PROJECT, priority_class=PRIORITY_CLASS)
             if not ok:  # observe never denies below master; this catches master-off
                 print(f"admission denied: {reason} — exiting cleanly.")
@@ -366,6 +363,13 @@ def run(max_docs: int | None = None, dry_run: bool = False,
             print(f"  extracting {doc_id} ({len(text):,} chars) …", flush=True)
             try:
                 meta = model_stub.invoke(doc_id, text, timeout=PER_DOC_TIMEOUT_S)
+            except spend.SpendRefusalStop as exc:
+                # Ceiling/daily band would be crossed by the NEXT call — clean stop before
+                # dispatch, same contract as the STOP file and cap exhaustion (exit 0).
+                print(f"spend guard: {exc} — clean stop; resumes when capacity exists.")
+                progress.append(f"- spend guard refusal after {processed} docs: {exc.refusal.reason} "
+                                f"(scope {exc.refusal.scope})")
+                break
             except model_stub.ModelSubstitutionError as exc:
                 persist_raw(doc_id, doc_sha, {"raw_result": None}, error=str(exc))
                 write_stop("model_substitution", {"doc_id": doc_id,
@@ -443,6 +447,14 @@ def run(max_docs: int | None = None, dry_run: bool = False,
             progress.append(f"- window total: {processed} docs extracted; "
                             f"{len(done_after)}/{len(members)} complete; "
                             f"tokens left in band: {tokens_left():,}")
+            # Ledger settles vs model_call events for this run — before the RESULT (task §4).
+            run_id = spend.current_run_id()
+            if run_id:
+                report = spend.default_ledger().reconcile(run_id)
+                progress.append(f"- spend reconcile [{run_id}]: "
+                                + ("OK" if report["ok"] else "MISMATCH")
+                                + f" settled {report['settled_total']:,} vs "
+                                  f"model_call {report['model_call_total']:,}")
             append_progress(progress)
     return 0
 
@@ -454,10 +466,14 @@ def _parse_shard(spec: str) -> tuple[int, int]:
     return (i, n)
 
 
-def run_fleet(n: int, max_docs: int | None, retry_failed: bool = False) -> int:
+def run_fleet(n: int, max_docs: int | None, retry_failed: bool = False,
+              ceiling_tokens: int | None = None, run_id: str | None = None) -> int:
     """Coordinator: hold the single global burn lease for the whole fleet, then run N shard
     workers in parallel (each a subprocess of this script with --shard i/N, lease-skipped).
-    N-way parallelism inside one lease — an overlapping launchd fire no-ops on the held lease."""
+    N-way parallelism inside one lease — an overlapping launchd fire no-ops on the held lease.
+    The ONE run id and ceiling are forwarded to every worker; workers re-declare the same
+    run idempotently, so the whole fleet draws down a single shared ledger ceiling (DD-022 —
+    the 22M incident was per-worker ceilings)."""
     if STOP_FILE.exists():
         print(f"STOP file present ({STOP_FILE}) — operator review required. Exiting.")
         return 2
@@ -466,7 +482,8 @@ def run_fleet(n: int, max_docs: int | None, retry_failed: bool = False) -> int:
         return 0
     print(f"fleet: launching {n} parallel shard workers")
     try:
-        base = [sys.executable, str(Path(__file__).resolve()), "--profile", str(PROFILE_NAME)]
+        base = [sys.executable, str(Path(__file__).resolve()), "--profile", str(PROFILE_NAME),
+                "--ceiling-tokens", str(ceiling_tokens), "--run-id", str(run_id)]
         if max_docs is not None:
             base += ["--max-docs", str(max_docs)]
         if retry_failed:
@@ -497,8 +514,20 @@ def main() -> int:
                          "config, threshold, model or prompt is changed.")
     ap.add_argument("--retry-failed", action="store_true",
                     help="re-open docs that hit the fail ceiling (e.g. throttled no-JSON) for another pass")
+    # Preemptive shared spend guard (DD-022): the ceiling comes from the dispatching task
+    # file's stated number — REQUIRED, no default. Declared on state/spend_ledger.jsonl so
+    # the ceiling and the spend that hit it are in one auditable place.
+    ap.add_argument("--ceiling-tokens", type=int, required=True,
+                    help="per-run token ceiling from the task file (required; no default)")
+    ap.add_argument("--run-id", default=None,
+                    help="shared spend-ledger run id (default: <job>-<UTC timestamp>)")
     args = ap.parse_args()
     apply_profile(args.profile)
+    run_id = args.run_id or spend.default_run_id(JOB)
+    spend.default_ledger().declare(run_id, args.ceiling_tokens,
+                                   declared_by=f"scripts/run_bulk_extraction.py [{PROFILE_NAME}]",
+                                   call_class="extraction")
+    spend.set_current_run(run_id)
     if args.fleet is not None:
         if args.fleet < 1:
             ap.error("--fleet N requires N >= 1")
@@ -508,7 +537,8 @@ def main() -> int:
         if n < args.fleet:
             print(f"--fleet {args.fleet} clamped to hard ceiling MAX_FLEET_WORKERS={n} "
                   f"(>2 concurrent streams invites 529 overload).")
-        return run_fleet(n, args.max_docs, retry_failed=args.retry_failed)
+        return run_fleet(n, args.max_docs, retry_failed=args.retry_failed,
+                         ceiling_tokens=args.ceiling_tokens, run_id=run_id)
     return run(max_docs=args.max_docs, dry_run=args.dry_run, shard=args.shard,
                retry_failed=args.retry_failed, only=args.only)
 

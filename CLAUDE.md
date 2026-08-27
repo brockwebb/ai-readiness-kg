@@ -22,7 +22,8 @@ python -m kg.manifest add <file> --doc-id ... --title ... --authors ... \
 python -m kg.manifest rebuild                    # regenerate corpus/manifest.json (projects from dixie ledger)
 python -m kg.manifest verify
 
-python scripts/run_bulk_extraction.py --dry-run  # runner; --profile v1|kernel_v03 (scripts/run_profiles.yaml), --only DOC_ID, --max-docs, --retry-failed, --fleet, --shard
+python scripts/run_bulk_extraction.py --dry-run --ceiling-tokens N  # runner; --ceiling-tokens REQUIRED (per-run ceiling from the task file, DD-022), --run-id, --profile v1|kernel_v03 (scripts/run_profiles.yaml), --only DOC_ID, --max-docs, --retry-failed, --fleet, --shard
+python -m kg.spend status|reconcile              # shared preemptive spend ledger (state/spend_ledger.jsonl, DD-022)
 python scripts/build_projection.py               # reset-and-replay events → Neo4j (db: seldon-ai-readiness-kg)
 python scripts/run_baseline_gates.py [--profiles v1,kernel_v03 --report PATH]  # pre-registered checks
 ```
@@ -52,7 +53,7 @@ Transcribed from `docs/schema_v0.1.md` (the doc is authoritative; currently v0.2
 
 ## Operational controls
 
-- `controls.yaml` — `forage`/`extract` on-off and daily budgets; the *entire* interface for Wintermute's circuit-breaker panel (DD-004). Budget caps are bound in the runner, not negotiated.
+- `controls.yaml` — `forage`/`extract` on-off and daily budgets; the *entire* interface for Wintermute's circuit-breaker panel (DD-004). Budget caps are bound in the runner, not negotiated. The `spend:` block (DD-022) holds the daily token cap and per-call-class estimate floors for the preemptive spend guard; per-run ceilings are declared on `state/spend_ledger.jsonl` by each runner (`--ceiling-tokens`, required), enforced reserve-before-dispatch at the `model_stub.invoke` choke point — an undeclared run is refused.
 - `dixie_evidence.yaml` — corpus integrity floors, identity-admission gate, and the **pre-registered** `baseline_gate` thresholds (ported from fss-policy-kg realized values, with sources cited per check). Thresholds are operator decisions; code reads them, never adjusts them.
 - Runner env knobs: `BURN_ORDER=size_desc`, `BURN_QUARANTINE_STOP_MODE=per_doc|systemic`, `BURN_MAX_FLEET_WORKERS`. A STOP file halts the run until the operator removes it; cap exhaustion is a clean exit 0.
 

@@ -37,7 +37,7 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO)); sys.path.insert(0, str(REPO / "scripts"))
 
-from kg import eventlog                                    # noqa: E402
+from kg import eventlog, spend                             # noqa: E402
 from kg.extraction import model_stub                       # noqa: E402
 from kg.extraction.grounding import normalize              # noqa: E402
 import run_bulk_extraction as rbe                          # noqa: E402
@@ -53,7 +53,10 @@ BATCH_EVENTS = 12
 TASK = "cc_tasks/2026-08-23_batched_repair_resume.md"
 BATCH_TARGET, BATCH_FLOOR, BATCH_CEIL = 40, 25, 50
 DECOY_RATE = 0.02
-TOKEN_CEILING = 12_000_000
+# The process-local TOKEN_CEILING that used to live here is the DD-019 §5 defect (two shard
+# workers each honored their own 12M and jointly spent 22.03M). The ceiling is now declared
+# on the shared ledger (--ceiling-tokens, kg/spend.py) and enforced preemptively at the
+# model-stub choke point. Deleted, not disabled — two mechanisms is how the 22M happened.
 SEED = 20260823
 
 
@@ -159,7 +162,17 @@ def main() -> int:
     ap.add_argument("--redo-unrepairable", action="store_true")
     ap.add_argument("--max-batches", type=int, default=None)
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--ceiling-tokens", type=int, required=True,
+                    help="per-run token ceiling from the dispatching task file (required; no default)")
+    ap.add_argument("--run-id", default=None,
+                    help="shared spend-ledger run id (default: batch-repair-<UTC ts>); "
+                         "shard workers of one run MUST pass the same id")
     a = ap.parse_args()
+    run_id = a.run_id or spend.default_run_id("batch-repair")
+    ledger = spend.default_ledger()
+    ledger.declare(run_id, a.ceiling_tokens, declared_by="scripts/batch_repair.py",
+                   call_class="cleanup")
+    spend.set_current_run(run_id)
     model_stub.guard_no_api_key()
     cfg = model_stub.load_model_config()
     cfg = {**cfg, "model_id": cfg["cleanup_model_id"]}
@@ -186,18 +199,16 @@ def main() -> int:
             known[ev["doc_id"]].append({"text": ev["new_span"], "span": ev["new_span"]})
     rng = random.Random(f"{SEED}:{a.shard}")
     RAW_DIR.mkdir(parents=True, exist_ok=True)
-    counts = Counter(); tokens_spent = 0; call_no = 0
+    counts = Counter(); call_no = 0
     decoy_window = deque(maxlen=200); halted = False
     ratio_log = []
     for doc_id in sorted(by_doc, key=lambda d: len(by_doc[d]), reverse=True):
-        if halted or tokens_spent >= TOKEN_CEILING: break
+        if halted: break
         doc_tasks = by_doc[doc_id]
         raw_text = rbe.doc_text(members[doc_id]); doc_norm = normalize(raw_text)
         doc_session = None       # one session per document; batches resume it (DD-019)
         for b in range(0, len(doc_tasks), BATCH_TARGET):
             if halted: break
-            if tokens_spent >= TOKEN_CEILING:
-                counts["ceiling_stop"] = 1; print(f"token ceiling {TOKEN_CEILING:,} reached — stop", flush=True); break
             if a.max_batches is not None and call_no >= a.max_batches:
                 halted = True; counts["max_batches_stop"] = 1; break
             batch = doc_tasks[b:b + BATCH_TARGET]
@@ -219,13 +230,18 @@ def main() -> int:
             try:
                 meta = model_stub.invoke(f"batchrepair:{bid}", "", prompt=prompt, timeout=900,
                                          config=cfg, resume_session_id=doc_session)
+            except spend.SpendRefusalStop as exc:
+                # Preemptive shared ceiling (DD-022): refused BEFORE dispatch — clean stop.
+                counts["ceiling_stop"] = 1
+                print(f"spend guard: {exc} — clean stop", flush=True)
+                halted = True; break
             except (model_stub.ModelInvocationError, model_stub.ModelSubstitutionError) as exc:
                 counts["call_error"] += 1; print(f"  {bid}: ERROR {str(exc)[:100]}", flush=True)
                 doc_session = None      # dead session: next batch re-establishes with the doc
                 continue
             doc_session = meta.get("session_id") or doc_session
             u = meta.get("usage") or {}
-            tok = rbe.usage_tokens(meta); tokens_spent += tok
+            tok = rbe.usage_tokens(meta)
             cp.record_usage("extraction", tok, job="airkg-batch-repair", project="ai-readiness-kg")
             cr, cw, inp = (int(u.get(k, 0) or 0) for k in ("cacheReadInputTokens", "cacheCreationInputTokens", "inputTokens"))
             ratio_log.append({"call": call_no, "cache_read": cr, "cache_write": cw, "input": inp})
@@ -271,10 +287,14 @@ def main() -> int:
                     try:
                         m2 = model_stub.invoke(f"batchrepair:{bid}.split", "", prompt=hp, timeout=900,
                                                config=cfg, resume_session_id=doc_session)
+                    except spend.SpendRefusalStop as exc:
+                        counts["ceiling_stop"] = 1
+                        print(f"spend guard: {exc} — clean stop", flush=True)
+                        halted = True; break
                     except (model_stub.ModelInvocationError, model_stub.ModelSubstitutionError):
                         continue
                     doc_session = m2.get("session_id") or doc_session
-                    t2 = rbe.usage_tokens(m2); tokens_spent += t2
+                    t2 = rbe.usage_tokens(m2)
                     cp.record_usage("extraction", t2, job="airkg-batch-repair", project="ai-readiness-kg")
                     o2 = m2["output"]; r2 = o2 if isinstance(o2, list) else (o2.get("results") or [])
                     got.update({r.get("id"): r for r in r2 if isinstance(r, dict)})
@@ -323,12 +343,24 @@ def main() -> int:
                     else:
                         counts["stays_null"] += 1
             if call_no % 10 == 0:
-                print(f"  {call_no} calls | {tokens_spent:,} tok | {dict(counts)}", flush=True)
-    counts["tokens"] = tokens_spent; counts["calls"] = call_no
+                print(f"  {call_no} calls | run committed {ledger.committed(run_id):,} tok "
+                      f"| {dict(counts)}", flush=True)
+    # `tokens` = the SHARED run's committed total (all shards), not a process-local sum —
+    # the per-process number is exactly what mislaid the 22M (DD-019 §5).
+    counts["tokens"] = ledger.committed(run_id); counts["calls"] = call_no
+    reconcile = ledger.reconcile(run_id)   # settles vs model_call events, before any RESULT
+    print(f"spend reconcile [{run_id}]: {'OK' if reconcile['ok'] else 'MISMATCH'} "
+          f"settled {reconcile['settled_total']:,} vs model_call {reconcile['model_call_total']:,}")
     prev = json.loads(OUT.read_text()) if OUT.exists() else {}
-    prev[f"shard_{a.shard.replace('/','of')}"] = {**counts, "cache_first3": ratio_log[:3]}
+    prev[f"shard_{a.shard.replace('/','of')}"] = {**counts, "cache_first3": ratio_log[:3],
+                                                  "run_id": run_id}
     OUT.write_text(json.dumps(prev, indent=1) + "\n")
     print(dict(counts))
+    # Spend-guard refusal is a CLEAN stop (exit 0, resume when capacity exists) — the same
+    # contract as the STOP file; exit 3 stays reserved for diagnostic halts (decoy miss,
+    # cache-ratio stop) that need operator review before resuming.
+    if counts.get("ceiling_stop"):
+        return 0
     return 0 if not halted else 3
 
 

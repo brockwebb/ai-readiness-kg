@@ -22,6 +22,10 @@ export BURN_QUARANTINE_STOP_MODE=systemic
 
 {
   echo "=== $(date -u +%Y-%m-%dT%H:%M:%SZ) | airkg-extraction-burn fire"
+  # DD-022: the runner now REQUIRES --ceiling-tokens (from the dispatching task file) and
+  # takes --run-id. This wrapper belongs to the completed bulk-v1 burn; re-enabling it for
+  # a new burn means adding that burn task's declared ceiling here — a bare invocation
+  # fails loud on argparse, by design (no default ceiling).
   cd "$REPO" && /opt/anaconda3/bin/python3 scripts/run_bulk_extraction.py
   rc=$?
   echo "=== rc=$rc"

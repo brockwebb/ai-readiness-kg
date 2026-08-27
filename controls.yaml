@@ -1,8 +1,22 @@
 # Operational switches. External systems (Wintermute control panel)
 # flip these by writing this file. This file is the entire interface.
-schema_version: "0.1"
+schema_version: "0.2"   # 0.2 (2026-08-26, task preemptive_spend_guard): append-only `spend:` block
 forage: off
 extract: off
 budgets:
   forage_daily_docs: 25
   extract_daily_docs: 10
+
+# Preemptive shared spend guard (kg/spend.py, DD-022). Read at call time, never cached.
+# Per-run ceilings are NOT here — they are declared on state/spend_ledger.jsonl by the
+# runner from the task file's stated ceiling, so the ceiling and the spend that hit it
+# sit in one auditable place.
+spend:
+  # Standing Max daily band: the control plane's declared cap on the `extraction`
+  # circuit (~/.wintermute control_plane declared_caps, read 2026-08-27:
+  # daily_tokens 55,000,000 / weekly 880,000,000). Recorded in the task RESULT.
+  daily_tokens: 55_000_000
+  call_class_floors:
+    cleanup: 36000        # DD-019 measurement, Haiku one-item
+    extraction: 111000    # 2026-08-21 pilot-era floor
+    judge: 36000

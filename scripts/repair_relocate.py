@@ -124,6 +124,13 @@ def main() -> int:
                     help="phase 3: re-attempt items whose span_unrepairable came from the defective "
                          "verifier (2026-08-23 rate run); a later grounding_relocated supersedes it")
     ap.add_argument("--shard", default=None, help="I/N hash partition for parallel workers")
+    # DD-022 (phase 3 only — phase 2 is zero-spend): shared preemptive ceiling, declared
+    # from the dispatching task file. Required for phase 3; no default.
+    ap.add_argument("--ceiling-tokens", type=int, default=None,
+                    help="phase 3: per-run token ceiling from the task file (required; no default)")
+    ap.add_argument("--run-id", default=None,
+                    help="phase 3: shared spend-ledger run id (default: repair-relocate-<UTC ts>); "
+                         "shard workers of one run MUST pass the same id")
     a = ap.parse_args()
     work = [json.loads(l) for l in WORK.read_text(encoding="utf-8").splitlines() if l.strip()]
     skip_types = ("grounding_relocated",) if a.redo_unrepairable else ("grounding_relocated", "span_unrepairable")
@@ -167,23 +174,38 @@ def main() -> int:
             si, sn = (int(x) for x in a.shard.split("/"))
             wl = [w for w in wl if int(hashlib.sha1(w["event_id"].encode()).hexdigest(), 16) % sn == si]
         import control_plane as cp
-        n = 0; t_all = time.time(); tokens = 0; walls = []
+        from kg import spend
+        if a.ceiling_tokens is None:
+            raise SystemExit("FATAL: phase 3 requires --ceiling-tokens (from the dispatching "
+                             "task file; no default) — DD-022 shared spend guard")
+        run_id = a.run_id or spend.default_run_id("repair-relocate")
+        ledger = spend.default_ledger()
+        ledger.declare(run_id, a.ceiling_tokens, declared_by="scripts/repair_relocate.py",
+                       call_class="cleanup")
+        spend.set_current_run(run_id)
+        # The old reactive `rbe.tokens_left() <= 0` poll here (DD-017 said "enforces via the
+        # control plane") checked the DAILY band between calls, after usage was booked — the
+        # DD-019 §5 defect shape. Admission is now preemptive at the model-stub choke point;
+        # the band survives inside the guard as the ledger's daily scope.
+        n = 0; t_all = time.time(); walls = []
         for w in wl:
             key = (w["doc_id"], w["item_id"])
             if key in already: counts["already"] += 1; continue
             if a.limit is not None and n >= a.limit: break
-            if rbe.tokens_left() <= 0:        # declared control-plane cap: clean stop, resume next window
-                counts["cap_exhausted_stop"] = 1; print("declared cap exhausted — clean stop", flush=True); break
             n += 1
             _, nd = doc_text(w["doc_id"])
             t0 = time.time()
             try:
                 span, info = model_relocate(w, nd, cfg, tpl)
+            except spend.SpendRefusalStop as exc:
+                counts["ceiling_stop"] = 1
+                print(f"spend guard: {exc} — clean stop, resume when capacity exists", flush=True)
+                break
             except model_stub.ModelInvocationError as exc:
                 counts["invocation_error"] += 1; print(f"  {w['item_id']}: ERROR {str(exc)[:100]}", flush=True); continue
             wall = round(time.time() - t0, 1); walls.append(wall)
             meta = info.get("meta") or {}
-            tok = rbe.usage_tokens(meta) if meta.get("usage") else 0; tokens += tok
+            tok = rbe.usage_tokens(meta) if meta.get("usage") else 0
             if tok: cp.record_usage("extraction", tok, job="airkg-repair-relocate", project="ai-readiness-kg")
             (RAW_DIR / f"{w['event_id']}.{cfg['model_id']}.json").write_text(json.dumps(
                 {"event_id": w["event_id"], "item_id": w["item_id"], "doc_id": w["doc_id"], "model_id": cfg["model_id"],
@@ -205,10 +227,18 @@ def main() -> int:
                                      "model_id": cfg["model_id"], "call_id": meta.get("session_id"), "task": TASK}, batch=BATCH)
             if n == 20:
                 rate = (time.time() - t_all) / 20
-                print(f"RATE: 20 calls, mean wall {rate:.1f}s, tokens {tokens:,} -> projected {len(wl)} calls: "
-                      f"{rate * len(wl) / 3600:.2f} h, {tokens / 20 * len(wl):,.0f} tokens", flush=True)
+                committed = ledger.committed(run_id)
+                print(f"RATE: 20 calls, mean wall {rate:.1f}s, run committed {committed:,} -> "
+                      f"projected {len(wl)} calls: {rate * len(wl) / 3600:.2f} h, "
+                      f"{committed / 20 * len(wl):,.0f} tokens", flush=True)
             if n % 25 == 0: print(f"  {n}/{len(wl)} {dict(counts)}", flush=True)
-        counts["tokens"] = tokens; counts["mean_wall_s"] = (sum(walls) / len(walls)) if walls else None
+        # shared run total (all shards), not a process-local sum (DD-019 §5)
+        counts["tokens"] = ledger.committed(run_id)
+        counts["run_id"] = run_id
+        counts["mean_wall_s"] = (sum(walls) / len(walls)) if walls else None
+        reconcile = ledger.reconcile(run_id)   # settles vs model_call events, before any RESULT
+        print(f"spend reconcile [{run_id}]: {'OK' if reconcile['ok'] else 'MISMATCH'} "
+              f"settled {reconcile['settled_total']:,} vs model_call {reconcile['model_call_total']:,}")
     prev = json.loads(OUT.read_text()) if OUT.exists() else {}
     prev[f"phase{a.phase}"] = dict(counts); prev["ts"] = _now()
     OUT.write_text(json.dumps(prev, indent=1) + "\n")

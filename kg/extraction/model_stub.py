@@ -40,6 +40,7 @@ except ImportError:  # fail loud (standard 4)
     raise SystemExit("FATAL: 'pyyaml' is required to load model_config.yaml (pip install pyyaml)")
 
 from kg import eventlog
+from kg import spend  # preemptive shared spend guard (DD-022) — lives beside the DD-007 gate
 
 _CONFIG_PATH = Path(__file__).resolve().parent / "model_config.yaml"
 _PROMPT_PATH = Path(__file__).resolve().parent / "prompt_template.md"
@@ -221,6 +222,17 @@ def invoke(doc_id: str, source_text: str, prompt: str | None = None,
     """
     config = config or load_model_config()
     guard_no_api_key()
+
+    # Preemptive shared spend guard (DD-022) — the second gate at this choke point, beside
+    # the DD-007 API-key gate above. Reserve BEFORE dispatch against the flock-guarded
+    # ledger; no reservation, no subprocess. An undeclared run refuses too — there is no
+    # unmetered path. Callers treat SpendRefusalStop as a clean stop (exit 0), the same
+    # contract as the STOP file and cap exhaustion.
+    ledger = spend.default_ledger()
+    granted = ledger.reserve(spend.current_run_id())
+    if isinstance(granted, spend.Refusal):
+        raise spend.SpendRefusalStop(granted)
+
     model_id = config["model_id"]
     prompt = prompt if prompt is not None else build_prompt(doc_id, source_text, config)
 
@@ -235,20 +247,44 @@ def invoke(doc_id: str, source_text: str, prompt: str | None = None,
         proc = subprocess.run(cmd, input=prompt, capture_output=True, text=True,
                               timeout=timeout, cwd=_hermetic_cwd())
     except subprocess.TimeoutExpired as exc:
+        # The CLI DID dispatch; tokens may have been consumed server-side with no envelope
+        # to measure them. Settle at the estimate (conservative: capacity stays consumed;
+        # never a content-derived guess) rather than release.
+        ledger.settle(granted, granted.estimate_tokens, settled_as_estimate=True)
         raise ModelInvocationError(f"claude -p timed out after {timeout}s for {doc_id}") from exc
     except OSError as exc:
         # The Claude Code CLI auto-updates in place; for a few seconds the `claude` symlink
         # does not resolve (observed 2026-08-22 twice, killing two judging streams). That is a
-        # transient per-call failure the driver should retry, not a crash.
+        # transient per-call failure the driver should retry, not a crash. The CLI never ran,
+        # so the reservation is released — capacity restored.
+        ledger.release(granted, reason=f"cli_unavailable: {exc}")
         raise ModelInvocationError(f"claude CLI unavailable for {doc_id}: {exc}") from exc
     if proc.returncode != 0:
+        ledger.settle(granted, granted.estimate_tokens, settled_as_estimate=True)
         raise ModelInvocationError(
             f"claude -p exited {proc.returncode} for {doc_id}: {proc.stderr.strip()[:300]}")
 
     try:
         envelope = json.loads(proc.stdout)
     except json.JSONDecodeError as exc:
+        ledger.settle(granted, granted.estimate_tokens, settled_as_estimate=True)
         raise ModelInvocationError(f"unparseable claude -p envelope for {doc_id}: {exc}") from exc
+
+    # Settle at the envelope's measured token count the moment it is parseable, before any
+    # content gate can raise — a substituted or error envelope still spent real tokens.
+    usage = ((envelope.get("modelUsage") or {}).get(model_id)
+             or next(iter((envelope.get("modelUsage") or {}).values()), {}))
+    actual = sum(int(usage.get(k, 0) or 0) for k in
+                 ("inputTokens", "outputTokens", "cacheCreationInputTokens",
+                  "cacheReadInputTokens"))
+    if actual:
+        ledger.settle(granted, actual)
+    else:
+        # Envelope lacks the fields the stub records as tokens: settle at the estimate and
+        # flag it — never estimate from content (task rule), never book zero for a real call.
+        ledger.settle(granted, granted.estimate_tokens,
+                      settled_as_estimate=True, usage_fields_missing=True)
+
     if envelope.get("is_error"):
         raise ModelInvocationError(f"claude -p reported error for {doc_id}: {envelope}")
 
@@ -267,4 +303,6 @@ def invoke(doc_id: str, source_text: str, prompt: str | None = None,
         "duration_ms": envelope.get("duration_ms"),
         "session_id": envelope.get("session_id"),
         "raw_result": envelope.get("result", ""),
+        "spend_run_id": granted.run_id,
+        "spend_reservation_id": granted.reservation_id,
     }

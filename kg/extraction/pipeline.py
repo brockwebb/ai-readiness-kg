@@ -93,7 +93,12 @@ def extract_document(doc_id: str, source_text: str, output: dict | None = None,
             {"event_type": "model_call", "doc_id": doc_id,
              "extraction_event_id": extraction_event_id,
              "model_id": model_meta.get("model_id"), "usage": model_meta.get("usage"),
-             "cost_usd": model_meta.get("cost_usd"), "duration_ms": model_meta.get("duration_ms")},
+             "cost_usd": model_meta.get("cost_usd"), "duration_ms": model_meta.get("duration_ms"),
+             # Spend-guard correlation (DD-022): the event points at the ledger reservation
+             # (the settle happened at the choke point, before this event id existed);
+             # `python -m kg.spend reconcile` joins the two by run_id.
+             "run_id": model_meta.get("spend_run_id"),
+             "spend_reservation_id": model_meta.get("spend_reservation_id")},
             batch=state.EXTRACTION_BATCH,
         )
 
