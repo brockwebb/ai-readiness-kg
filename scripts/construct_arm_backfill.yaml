@@ -1,0 +1,110 @@
+# Document.construct_arm backfill rule — task 2026-08-24_source_triage, Phase 0 (schema v0.3.3).
+# Read by scripts/annotate_construct_arm.py, which writes one `document_annotation` event per
+# included document to events/batch-014.jsonl. Rule per the task file:
+#   - kernel-v03 epoch members -> publication_actionability unless obviously otherwise
+#     (overrides listed below, each with its reason)
+#   - v1 epoch members -> tagged per document by title/abstract rule; every v1 doc_id is
+#     listed under exactly one arm below (the listing IS the log; the annotate script
+#     refuses to run if any included v1 doc is missing or double-listed)
+# The operator reviews the decision table (docs/research/2026-08-24_triage_backfill_report.md)
+# and overrides by a follow-up annotation event, never by editing history.
+
+rule_version: "2026-08-24.1"
+task: cc_tasks/2026-08-24_source_triage.md
+
+kernel_default: publication_actionability
+kernel_default_rationale: >-
+  kernel-v03 is the machine-visibility / machine-actionability corpus (DD-009): SEO/GEO,
+  crawler and platform behavior, web/metadata standards, federal digital guidance — all
+  about making published data and content discoverable, retrievable, and interpretable
+  by machine consumers.
+
+# No kernel overrides after review of all 63 member titles: every kernel-v03 member is
+# machine-visibility / publication-side. (The one candidate, `what-is-ai-ready-data`
+# [IBM, definitional], is NOT an included document — it sits in the ledger as
+# pending/excluded — so it takes no backfill annotation.)
+kernel_overrides: {}
+
+# v1 epoch (71 docs). Classing rule applied by title/abstract:
+#   publication_actionability — the document's primary subject is the quality, documentation,
+#     dissemination, or machine consumption of PUBLISHED (mostly federal/official) data.
+#   training_data_readiness — the document defines, measures, or frames data-readiness
+#     constructs for data as AI input (DRL lineage, AIDRIN, readiness surveys).
+#   org_maturity — organizational/institutional AI-readiness instruments, indexes, maturity
+#     models, definitional governance statements (incl. federal AI governance statutes,
+#     EOs and OMB AI memos: they govern institutional adoption, not data publication).
+v1_assignments:
+  publication_actionability:
+    - ai-data-readiness-checklist-digital-government-hub      # checklist for making published gov data AI-ready
+    - ai-readiness-for-official-data-and-statistics-un-statistical  # official-statistics dissemination to AI users
+    - census-bureau-statistical-quality-standards-standard-d3-prod  # dissemination/documentation standard
+    - census-bureau-statistical-quality-standards-standard-f1-rele  # release standard
+    - census-bureau-statistical-quality-standards-standard-f2-prov  # provenance/documentation standard
+    - datahub-mlmu-25                                         # measuring LLM understanding of published federal statistics
+    - fcsm-19-01-transparent-reporting-for-integrated-data-quality  # communicating quality of published data
+    - fcsm-20-04-a-framework-for-data-quality                 # federal data quality framework for published data
+    - fcsm-23-02-a-framework-for-data-quality-case-studies    # ditto, case studies
+    - fcsm-25-03                                              # AI-ready federal statistical data (dissemination)
+    - foundations-for-evidence-based-policymaking-act-of-2018-evid  # open-data access statute
+    - information-quality-act-data-quality-act-sec-515-of-p-l-106   # quality of disseminated information
+    - m-19-23-phase-1-implementation-of-the-evidence-act      # evidence act implementation (data access)
+    - m-25-05-phase-2-implementation-of-the-evidence-act-open-gove  # open government data access guidance
+    - statistical-policy-working-paper-46-data-quality-assessment   # quality reporting for published statistics
+    - the-nation-s-data-at-risk-first-annual-report-on-the-federal  # availability/quality of published federal data
+    - webb-fcsm-nist-crosswalk                                # statistical data quality <-> trustworthy-AI crosswalk
+  training_data_readiness:
+    - aidrin-2-0-a-framework-to-assess-data-readiness-for-ai
+    - aidrin-hiniduma-2024
+    - data-readiness-for-ai-a-360-degree-survey
+    - data-readiness-for-scientific-ai-at-scale
+    - lawrence-data-readiness-levels-2017
+  org_maturity:
+    - advancing-american-ai-act-ndaa-fy2023-div-g             # institutional AI adoption governance
+    - ai-governance-ethics-and-leadership-substack-harvey-lab-lega
+    - ai-in-government-act-of-2020
+    - ai-readiness-building-the-bridge-from-higher-education-to-wo
+    - ai-readiness-in-healthcare-through-storytelling-xai
+    - ai-real-toolkit-ai-readiness-assessment-guide
+    - ai-watch-revisiting-technology-readiness-levels-for-relevant
+    - arm-ai-readiness-index
+    - artificial-intelligence-domain-ai-readiness-and-firm-product
+    - bangladesh-s-ai-readiness-perspectives
+    - beyond-model-readiness-institutional-readiness-for-ai-deploy
+    - building-an-ai-ready-public-workforce
+    - cisco-ai-readiness-assessment-instrument
+    - cisco-ai-readiness-index-2025
+    - cisco-ai-readiness-index-methodology
+    - executive-order-13859-maintaining-american-leadership-in-ai
+    - executive-order-13960-promoting-the-use-of-trustworthy-ai-in
+    - executive-order-14110-safe-secure-and-trustworthy-developmen
+    - executive-order-14179-removing-barriers-to-american-leadersh
+    - executive-order-14319-preventing-woke-ai-in-the-federal-gove
+    - from-accuracy-to-readiness-metrics-and-benchmarks-for-human
+    - from-school-ai-readiness-to-student-ai-literacy
+    - gao-ai-accountability-framework-ariga-testimony
+    - government-ai-landscape-assessment-code-for-america
+    - government-ai-readiness-index-2025
+    - gsa-ai-guide-for-government-ai-capability-maturity-model-ai
+    - health-ai-readiness-assessment-dime
+    - introducing-the-oecd-ai-capability-indicators
+    - itu-ai-ready-analysis-towards-a-standardized-readiness-frame
+    - m-24-10-advancing-governance-innovation-and-risk-management
+    - m-24-18-advancing-the-responsible-acquisition-of-ai-in-gover
+    - m-26-04-increasing-public-trust-in-ai-through-unbiased-ai-pr
+    - making-agentic-ai-work-for-government-a-readiness-framework
+    - mitre-ai-maturity-model
+    - nist-ai-100-3-the-language-of-trustworthy-ai-an-in-depth-glo
+    - nist-ai-risk-management-framework-ai-rmf
+    - nist-ai-rmf-playbook
+    - nist-generative-ai-profile-ai-600-1
+    - organizational-ai-readiness-prosci-adkar
+    - rethinking-technological-readiness-in-the-era-of-ai-uncertai
+    - six-areas-for-assessing-ai-readiness-in-government
+    - technology-readiness-levels-for-ai-ml-trl4ml
+    - technology-readiness-levels-for-machine-learning-systems-mlt
+    - the-oecd-ai-index
+    - undp-artificial-intelligence-readiness-assessment-aira
+    - unesco-ai-readiness-assessment-methodology-ram
+    - why-ai-projects-fail-the-63-human-factor-problem
+    - why-ai-readiness-is-an-organizational-learning-problem-not-a
+    - winning-the-race-america-s-ai-action-plan

@@ -152,3 +152,33 @@ def test_span_entailable_rule_assignments():
     assert schema_loader.span_entailable(SCHEMA, "Standard")["as_of_date"] is False
     assert schema_loader.span_entailable(SCHEMA, "Standard")["steward"] is True
     assert not any(schema_loader.span_entailable(SCHEMA, "Document").values())
+
+
+# --- v0.3.3 additions (2026-08-24, task 2026-08-24_source_triage Phase 0) --------------
+# Frozen here so a later edit cannot drop or reorder them. Same pattern as the v0.2
+# baseline above: the reference is hardcoded, never read from the file under test.
+
+V033_CONSTRUCT_ARM = ["publication_actionability", "training_data_readiness", "org_maturity"]
+V033_GROUNDING_SURFACE = ["document", "transcript", "slides"]
+
+
+def test_v033_document_properties_present():
+    props = SCHEMA["node_types"]["Document"]["properties"]
+    assert "construct_arm" in props, "Document lost v0.3.3 property construct_arm"
+    assert "grounding_surface" in props, "Document lost v0.3.3 property grounding_surface"
+
+
+def test_v033_construct_arm_enum_frozen():
+    live = schema_loader.property_values(SCHEMA, "Document")["construct_arm"]
+    assert live[: len(V033_CONSTRUCT_ARM)] == V033_CONSTRUCT_ARM
+
+
+def test_v033_grounding_surface_enum_frozen():
+    live = schema_loader.property_values(SCHEMA, "Document")["grounding_surface"]
+    assert live[: len(V033_GROUNDING_SURFACE)] == V033_GROUNDING_SURFACE
+
+
+def test_v033_new_properties_not_span_entailable():
+    se = SCHEMA["node_types"]["Document"]["span_entailable"]
+    assert se["construct_arm"] is False
+    assert se["grounding_surface"] is False

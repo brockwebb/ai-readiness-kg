@@ -119,7 +119,8 @@ def is_projectable(ev: dict) -> bool:
 # Document annotations (schema v0.3.1, task 2026-08-22_kernel_tevv): harness-set document
 # properties written as `document_annotation` events. Only whitelisted properties project,
 # so an arbitrary payload key can never become a Cypher property name.
-ANNOTATABLE_DOCUMENT_PROPERTIES = {"is_platform_operator"}
+ANNOTATABLE_DOCUMENT_PROPERTIES = {"is_platform_operator",
+                                   "construct_arm"}   # v0.3.3 backfill (task 2026-08-24_source_triage)
 # attribute_nulled overlays may clear only these (schema attributes the probe can class as
 # filled_attribute); the property name is never taken from the payload unchecked.
 NULLABLE_ATTRIBUTES = {"description", "steward", "owner", "year", "version", "operator",
@@ -193,10 +194,14 @@ def build(session, kg_labels: list[str], edge_whitelist: set[str]) -> dict:
             session.run(
                 "MERGE (d:Document {id: $id}) SET d.key = $id, d.doc_id = $id, d.title = $title, "
                 "d.source_type = $st, d.pub_date = $pd, d.primary_url = $url, "
-                "d.content_hash = $ch, d.prov_manifest_event = $ev",
+                "d.content_hash = $ch, d.prov_manifest_event = $ev, "
+                # v0.3.3 (task 2026-08-24_source_triage): null-safe on pre-v0.3.3 events
+                "d.construct_arm = coalesce($arm, d.construct_arm), "
+                "d.grounding_surface = coalesce($surface, d.grounding_surface)",
                 id=p["doc_id"], title=p.get("title"), st=p.get("source_type"),
                 pd=p.get("pub_date"), url=p.get("primary_url"),
-                ch=p.get("content_hash"), ev=ev.get("event_id"))
+                ch=p.get("content_hash"), ev=ev.get("event_id"),
+                arm=p.get("construct_arm"), surface=p.get("grounding_surface"))
             counts["documents"] += 1
         elif et == "node_asserted":
             p = ev["payload"]

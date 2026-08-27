@@ -236,3 +236,46 @@ def test_source_types_in_sync_with_schema():
     from kg.extraction import schema_loader
     schema = schema_loader.load_schema()
     assert list(manifest._SOURCE_TYPES) == schema_loader.property_values(schema, "Document")["source_type"]
+
+
+# --- v0.3.3 optional Document fields (task 2026-08-24_source_triage Phase 0) ----------
+
+def test_construct_arm_and_grounding_surface_ride_in_event_when_supplied(repo):
+    f = _write_corpus_file(repo, "doc.txt", "content")
+    manifest.add(str(f), **_good_fields(), construct_arm="publication_actionability",
+                 grounding_surface="slides")
+    entry = list(eventlog.replay())[0]["payload"]
+    assert entry["construct_arm"] == "publication_actionability"
+    assert entry["grounding_surface"] == "slides"
+
+
+def test_v033_fields_absent_when_not_supplied(repo):
+    f = _write_corpus_file(repo, "doc.txt", "content")
+    manifest.add(str(f), **_good_fields())
+    entry = list(eventlog.replay())[0]["payload"]
+    assert "construct_arm" not in entry
+    assert "grounding_surface" not in entry
+
+
+def test_reject_invalid_construct_arm(repo):
+    f = _write_corpus_file(repo, "doc.txt", "content")
+    with pytest.raises(manifest.ManifestError, match="construct_arm"):
+        manifest.add(str(f), **_good_fields(), construct_arm="marketing")
+    assert list(eventlog.replay()) == []
+
+
+def test_reject_invalid_grounding_surface(repo):
+    f = _write_corpus_file(repo, "doc.txt", "content")
+    with pytest.raises(manifest.ManifestError, match="grounding_surface"):
+        manifest.add(str(f), **_good_fields(), grounding_surface="hologram")
+    assert list(eventlog.replay()) == []
+
+
+def test_construct_arms_in_sync_with_schema():
+    import yaml
+    from pathlib import Path
+    schema = yaml.safe_load(
+        (Path(manifest.__file__).parent / "schema.yaml").read_text(encoding="utf-8"))
+    vals = schema["node_types"]["Document"]["property_values"]
+    assert tuple(vals["construct_arm"]) == manifest._CONSTRUCT_ARMS
+    assert tuple(vals["grounding_surface"]) == manifest._GROUNDING_SURFACES

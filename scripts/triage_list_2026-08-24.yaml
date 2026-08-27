@@ -1,0 +1,1077 @@
+# Triage list — task 2026-08-24_source_triage (Seldon 7456614d), Phases 1–3.
+# One entry per input-1 row of docs/research/2026-08-24_sme_source_list.tsv
+# (sha256 e735faaea6ce…, 72 data rows) plus the Phase 3 SEO/AIO-lineage gap items.
+# Every verdict names the inclusion-rule clause it matched (task file, "Inclusion rules").
+# Read by scripts/harvest_triage.py. URL resolutions recorded in `notes` were probed
+# 2026-08-26/27 without model spend; fetch outcomes land in the fetch register, not here.
+#
+# verdict values:
+#   fetch           — include; attempt acquisition now (R1/R2/R3 pass)
+#   operator_drop   — include; max.gov credentialed deck -> awaiting_operator_drop (Phase 2)
+#   youtube         — include; transcript acquisition via yt-dlp (Phase 2)
+#   no_media        — include-class row whose only URL has no fetchable media/transcript
+#                     (ADDENDUM-01 lakefs routing) -> fetch_failed, reason logged
+#   already_held    — R5 dedupe hit; never re-fetch (held_doc_id names the holding)
+#   excluded        — excluded_by_rule (clause says which rule text)
+#   off_construct   — R4 flag; not fetched, not manifested, surfaced for operator
+
+settings:
+  user_agent: "WintermuteAcceptance/0.1 (research; brockwebb45@gmail.com)"
+  # Some hosts 403 the identifying UA but serve a browser UA (probed: paris21.org,
+  # al-kindipublisher.com). Entries opt in with `browser_ua: true`; the fetch register
+  # records which UA was used. The identifying UA stays the default.
+  browser_user_agent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36"
+  discovered_via: "fss-research-group-2026-08"
+  discovered_via_gap: "seo-aio-gap-2026-08-24"
+  max_doc_chars: 250000
+  min_content_chars: 200
+  timeout_seconds: 60
+  retries: 1
+  spacing_seconds: 1.0
+  crwl_timeout_seconds: 180
+  fit_min_fraction_of_raw: 0.35
+  challenge_markers: ["Just a moment...", "Enable JavaScript and cookies", "Attention Required!", "Access Denied", "verify you are a human"]
+  crwl_filter:
+    type: pruning
+    threshold: 0.45
+    min_word_threshold: 3
+  # access_blocked (paywall/login) is recorded when a fetch fails AND the blocking host
+  # matches this list (task Phase 1: "SSRN, Wiley, ResearchGate, Gartner likely").
+  paywall_domains: [papers.ssrn.com, ssrn.com, onlinelibrary.wiley.com, researchgate.net,
+                    gartner.com, worldscientific.com, sciencedirect.com,
+                    regulations.gov, downloads.regulations.gov]
+  vetting_input1:
+    source: fss_research_group_2026-08
+    expertise: generalist_federal_statistics
+    weight: signal_not_verdict
+
+entries:
+  # ---------------------------------------------------------------- input 1 (72 rows)
+  - row: 1
+    doc_id: census-ces-wp-26-25-ai-diffusion
+    title: "The Microstructure of AI Diffusion: Evidence from Firms, Business Functions, and Worker Tasks"
+    authors_or_org: ["Census Bureau (CES-WP-26-25)"]
+    year: "2026"
+    source_type: federal
+    primary_url: https://www.census.gov/library/working-papers/2026/adrm/CES-WP-26-25.html
+    verdict: off_construct
+    clause: R4
+    notes: "AI adoption/diffusion economics — named in R4. Not fetched, not manifested; listed for operator confirmation. Row inserted per ADDENDUM-02 (bare link above the table)."
+
+  - row: 2
+    doc_id: esip-data-readiness-checklist
+    title: "Data Readiness Checklist"
+    authors_or_org: ["Earth Science Information Partners (ESIP)"]
+    year: "2023"
+    source_type: practitioner
+    primary_url: https://github.com/ESIPFed/data-readiness
+    raw_url: https://raw.githubusercontent.com/ESIPFed/data-readiness/main/README.md
+    fetcher: raw
+    verdict: fetch
+    clause: R2
+    construct_arm: training_data_readiness
+    grounding_surface: document
+    notes: "General AI-data-readiness checklist (framework, not domain pipeline). README of the checklist repo is the primary text."
+
+  - row: 3
+    doc_id: doc-rfi-ai-open-gov-data-2024
+    title: "AI and Open Government Data Assets Request for Information (RFI)"
+    authors_or_org: ["Department of Commerce"]
+    year: "2024"
+    source_type: federal
+    primary_url: https://www.federalregister.gov/documents/2024/04/17/2024-08168/ai-and-open-government-data-assets-request-for-information
+    pdf_url: https://www.govinfo.gov/content/pkg/FR-2024-04-17/pdf/2024-08168.pdf
+    verdict: fetch
+    clause: R3
+    construct_arm: org_maturity
+    grounding_surface: document
+    notes: "R3 names the DOC RFI itself. Canonical FR PDF via govinfo."
+
+  - row: 4
+    doc_id: doc-rfi-comments-docket-listing
+    title: "Comments on AI and Open Government Data Assets Request for Information"
+    authors_or_org: ["Various"]
+    year: "2024"
+    source_type: federal
+    primary_url: https://www.regulations.gov/document/DOC-2024-0007-0001/comment
+    verdict: excluded
+    clause: R3_listing_page
+    notes: "The docket's comment LISTING page, not a document. R3's evidence objects are the individual comment letters (rows 36–41); a listing page carries no groundable primary text."
+
+  - row: 5
+    doc_id: fcsm-25-03-sme-row
+    title: "AI-Ready Federal Statistical Data: An Extension of Communicating Data Quality"
+    authors_or_org: ["FCSM"]
+    year: "2025"
+    source_type: federal
+    primary_url: https://statspolicy.gov/assets/fcsm/files/docs/FCSM.25.03_AI-Ready-Extension-Data-Quality.pdf
+    verdict: already_held
+    clause: R5
+    held_doc_id: fcsm-25-03
+    notes: "Exact primary_url match (task-expected hit)."
+
+  - row: 6
+    doc_id: genai-open-data-guidelines-sme-row
+    title: "Generative Artificial Intelligence and Open Data: Guidelines and Best Practices"
+    authors_or_org: ["Department of Commerce"]
+    year: "2025"
+    source_type: federal
+    primary_url: https://www.commerce.gov/sites/default/files/2025-01/GenerativeAI-Open-Data.pdf
+    verdict: already_held
+    clause: R5
+    held_doc_id: generative-ai-and-open-data-guidelines-and-best-practices-de
+    notes: "Normalized-title match; held copy was captured from the commerce.gov blog announcement URL, SME row points at the PDF of the same document."
+
+  # ---- rows 7–15: community-dc.max.gov decks (Phase 2, awaiting_operator_drop) ----
+  - row: 7
+    doc_id: maxgov-2026-c2-1-webb-genai-open-data
+    title: "Generative Artificial Intelligence and Open Data: Guidelines and Best Practices (FCSM 2026 presentation)"
+    authors_or_org: ["Brock Webb (Census Bureau)"]
+    year: "2026"
+    source_type: federal
+    primary_url: https://community-dc.max.gov/download/attachments/2770209239/2026-C2.1_Webb.pdf
+    verdict: operator_drop
+    clause: R1
+    construct_arm: publication_actionability
+    grounding_surface: slides
+  - row: 8
+    doc_id: maxgov-2026-c2-2-hoppe-ai-ready-extension
+    title: "Making Federal Data AI Ready: An Extension of Communicating Data Quality (FCSM 2026 presentation)"
+    authors_or_org: ["Travis Hoppe (CDC)"]
+    year: "2026"
+    source_type: federal
+    primary_url: https://community-dc.max.gov/download/attachments/2770209239/2026-C2.2_Hoppe.pdf
+    verdict: operator_drop
+    clause: R1
+    construct_arm: publication_actionability
+    grounding_surface: slides
+  - row: 9
+    doc_id: maxgov-2026-c2-4-belyaeva-machine-understandable
+    title: "From Statistical Data to Machine-Understandable Knowledge: Methodological Advances (FCSM 2026 presentation)"
+    authors_or_org: ["Irina Belyaeva (Census Bureau)"]
+    year: "2026"
+    source_type: federal
+    primary_url: https://community-dc.max.gov/download/attachments/2770209239/2026-C2.4_Belyaeva.pdf
+    verdict: operator_drop
+    clause: R1
+    construct_arm: publication_actionability
+    grounding_surface: slides
+  - row: 10
+    doc_id: maxgov-2026-c2-5-vanwart-nass-quick-stats
+    title: "Modernizing Access to NASS Quick Stats (FCSM 2026 presentation)"
+    authors_or_org: ["Justin Van Wart (NASS)"]
+    year: "2026"
+    source_type: federal
+    primary_url: https://community-dc.max.gov/download/attachments/2770209239/2026-C2.5_VanWart.pdf
+    verdict: operator_drop
+    clause: R1
+    construct_arm: publication_actionability
+    grounding_surface: slides
+  - row: 11
+    doc_id: maxgov-2026-fcsm-ai-ready-data-wg-kopp
+    title: "FCSM AI-Ready Data Working Group (FCSM 2026 presentation)"
+    authors_or_org: ["Brandon Kopp (FCSM)"]
+    year: "2026"
+    source_type: federal
+    primary_url: "https://community-dc.max.gov/download/attachments/2770209239/2026-FCSM%20AI-Ready%20Data%20WG.pdf"
+    verdict: operator_drop
+    clause: R1
+    construct_arm: publication_actionability
+    grounding_surface: slides
+  - row: 12
+    doc_id: maxgov-2024-d1-1-harper-cdgb-best-practices
+    title: "Building AI-Ready Best Practices: The Work of the Commerce Data Governance Board (FCSM 2024 presentation)"
+    authors_or_org: ["Ryan Harper (Census Bureau)"]
+    year: "2024"
+    source_type: federal
+    primary_url: https://community-dc.max.gov/download/attachments/2770209239/2024-D1.1_Harper.pdf
+    verdict: operator_drop
+    clause: R1
+    construct_arm: publication_actionability
+    grounding_surface: slides
+  - row: 13
+    doc_id: maxgov-2024-d1-2-christensen-noaa-ai-readiness
+    title: "Unleashing the Power of Open Data — NOAA's AI Readiness Journey (FCSM 2024 presentation)"
+    authors_or_org: ["Tyler Christensen (NOAA)"]
+    year: "2024"
+    source_type: federal
+    primary_url: https://community-dc.max.gov/download/attachments/2770209239/2024-D1.2_Christensen.pdf
+    verdict: operator_drop
+    clause: R1
+    construct_arm: publication_actionability
+    grounding_surface: slides
+  - row: 14
+    doc_id: maxgov-2024-d1-3-haase-census-machine-understandable
+    title: "AI-Ready Data: The Census Track to Machine Understandable Data (FCSM 2024 presentation)"
+    authors_or_org: ["Kenneth Haase (Census Bureau)"]
+    year: "2024"
+    source_type: federal
+    primary_url: https://community-dc.max.gov/download/attachments/2770209239/2024-D1.3_Haase.pdf
+    verdict: operator_drop
+    clause: R1
+    construct_arm: publication_actionability
+    grounding_surface: slides
+  - row: 15
+    doc_id: maxgov-2024-d1-4-iwugo-bea-genai-data-capture
+    title: "Look Before You Leap: Exploring BEA Data Capture by Generative AI Technologies (FCSM 2024 presentation)"
+    authors_or_org: ["Paul Iwugo (BEA)"]
+    year: "2024"
+    source_type: federal
+    primary_url: https://community-dc.max.gov/download/attachments/2770209239/2024-D1.4_Iwugo.pdf
+    verdict: operator_drop
+    clause: R1
+    construct_arm: publication_actionability
+    grounding_surface: slides
+
+  - row: 16
+    doc_id: usdc-mcp-federal-open-data-pilot-2026
+    title: "Improving LLM Access to Federal Open Data: A Pilot Study of Model Context Protocol"
+    authors_or_org: ["Bella Mendoza", "Mark Aronson", "Haley Johns (U.S. Digital Corps)"]
+    year: "2026"
+    source_type: federal
+    primary_url: https://www.ncbi.nlm.nih.gov/books/NBK623584/pdf/Bookshelf_NBK623584.pdf
+    pdf_url: https://www.ncbi.nlm.nih.gov/books/NBK623584/pdf/Bookshelf_NBK623584.pdf
+    verdict: fetch
+    clause: R1
+    construct_arm: publication_actionability
+    grounding_surface: document
+
+  - row: 17
+    doc_id: nstc-desirable-characteristics-data-repositories-2022
+    title: "Desirable Characteristics of Data Repositories for Federally Funded Research"
+    authors_or_org: ["Subcommittee on Open Science, National Science and Technology Council (OSTP)"]
+    year: "2022"
+    source_type: federal
+    primary_url: https://bidenwhitehouse.archives.gov/wp-content/uploads/2022/05/05-2022-Desirable-Characteristics-of-Data-Repositories.pdf
+    pdf_url: https://bidenwhitehouse.archives.gov/wp-content/uploads/2022/05/05-2022-Desirable-Characteristics-of-Data-Repositories.pdf
+    verdict: fetch
+    clause: R1
+    construct_arm: publication_actionability
+    grounding_surface: document
+
+  - row: 18
+    doc_id: doe-data-cards-standardized-metadata-2026
+    title: "Data Cards for Standardized Metadata Across DOE-Aligned Data Initiatives"
+    authors_or_org: ["Department of Energy"]
+    year: "2026"
+    source_type: federal
+    primary_url: https://www.osti.gov/biblio/3377514
+    pdf_url: https://www.osti.gov/servlets/purl/3377514
+    verdict: fetch
+    clause: R1
+    construct_arm: publication_actionability
+    grounding_surface: document
+
+  - row: 19
+    doc_id: m-25-05-sme-row
+    title: "Phase 2 Implementation of the Foundations for Evidence-Based Policymaking Act of 2018 (M-25-05)"
+    authors_or_org: ["OMB"]
+    year: "2025"
+    source_type: federal
+    primary_url: https://bidenwhitehouse.archives.gov/wp-content/uploads/2025/01/M-25-05-Phase-2-Implementation-of-the-Foundations-for-Evidence-Based-Policymaking-Act-of-2018-Open-Government-Data-Access-and-Management-Guidance.pdf
+    verdict: already_held
+    clause: R5
+    held_doc_id: m-25-05-phase-2-implementation-of-the-evidence-act-open-gove
+    notes: "Exact primary_url match (task-expected hit class: M-25-05 adjacent OMB items)."
+
+  - row: 20
+    doc_id: croissant-akhtar-2024-paper
+    title: "Croissant: A Metadata Format for ML-Ready Datasets"
+    authors_or_org: ["Akhtar et al."]
+    year: "2024"
+    source_type: academic
+    primary_url: https://arxiv.org/abs/2403.19546
+    pdf_url: https://arxiv.org/pdf/2403.19546
+    verdict: fetch
+    clause: R1
+    construct_arm: publication_actionability
+    grounding_surface: document
+    notes: "R5 check ran NEGATIVE: the corpus holds the MLCommons Croissant SPEC (mlcommons-croissant-spec, docs.mlcommons.org), not the Akhtar et al. paper — distinct primary sources. Task-expected dedupe hit did not materialize; recorded as a discrepancy."
+
+  - row: 21
+    doc_id: unece-dupriez-2025-ai-readiness-data-metadata
+    title: "AI-Readiness of Data and Metadata for Official Statistics"
+    authors_or_org: ["Olivier Dupriez (World Bank)"]
+    year: "2025"
+    source_type: intergovernmental
+    primary_url: https://unece.org/sites/default/files/2025-05/GenAI2025_S1_WorldBank_Dupriez_P.pdf
+    pdf_url: https://unece.org/sites/default/files/2025-05/GenAI2025_S1_WorldBank_Dupriez_P.pdf
+    browser_ua: true
+    verdict: fetch
+    clause: R1
+    construct_arm: publication_actionability
+    grounding_surface: slides
+    notes: "unece.org returned 403 to both identifying and browser UAs in probing; expected fetch_failed — operator can drop the PDF through the inbox."
+
+  - row: 22
+    doc_id: unsc-2026-koh-reaching-users-official-statistics
+    title: "Challenges and opportunities in effectively reaching users of official data and statistics"
+    authors_or_org: ["Dr. Koh Eng Chuan (Singapore Department of Statistics)"]
+    year: "2026"
+    source_type: intergovernmental
+    primary_url: https://unstats.un.org/UNSDWebsite/statcom/session_57/side-events/un57sc-Friday-seminar-27Feb2026/UNSC2026_FridaySeminar_Keynote1_Dr_Koh.pdf
+    pdf_url: https://unstats.un.org/UNSDWebsite/statcom/session_57/side-events/un57sc-Friday-seminar-27Feb2026/UNSC2026_FridaySeminar_Keynote1_Dr_Koh.pdf
+    verdict: fetch
+    clause: R1
+    construct_arm: publication_actionability
+    grounding_surface: slides
+    notes: "UN statcom side-event venue -> source_type intergovernmental even though the presenter is a national statistical office."
+
+  - row: 23
+    doc_id: unsc-2026-stoyanovich-open-data-responsible-reuse
+    title: "From Open Data to Responsible Reuse: Hallmarks of Data Stewardship in the Age of AI"
+    authors_or_org: ["Dr. Julia Stoyanovich (NYU Center for Responsible AI)"]
+    year: "2026"
+    source_type: intergovernmental
+    primary_url: https://unstats.un.org/UNSDWebsite/statcom/session_57/side-events/un57sc-Friday-seminar-27Feb2026/UNSC2026_FridaySeminar_Keynote2_Dr_Stoyanovich.pdf
+    pdf_url: https://unstats.un.org/UNSDWebsite/statcom/session_57/side-events/un57sc-Friday-seminar-27Feb2026/UNSC2026_FridaySeminar_Keynote2_Dr_Stoyanovich.pdf
+    verdict: fetch
+    clause: R1
+    construct_arm: publication_actionability
+    grounding_surface: slides
+
+  - row: 24
+    doc_id: ccsa-2026-ai-ready-official-statistics
+    title: "AI-Ready Official Statistics: Opportunities, Challenges, and Recommendations"
+    authors_or_org: ["CCSA / World Bank"]
+    year: "2026"
+    source_type: intergovernmental
+    primary_url: https://unstats.un.org/UNSDWebsite/statcom/session_57/documents/BG-5h-CCSA_AI_Readiness_Official_Statistics_v2-E.pdf
+    pdf_url: https://unstats.un.org/UNSDWebsite/statcom/session_57/documents/BG-5h-CCSA_AI_Readiness_Official_Statistics_v2-E.pdf
+    verdict: fetch
+    clause: R1
+    construct_arm: publication_actionability
+    grounding_surface: document
+
+  - row: 25
+    doc_id: worldbank-fostering-ai-readiness-official-statistics
+    title: "Fostering AI-Readiness and Responsible Redistribution of Official Statistics"
+    authors_or_org: ["World Bank"]
+    year: "2026"
+    source_type: intergovernmental
+    primary_url: https://unstats.un.org/UNSDWebsite/statcom/session_56/documents/Room_Document-WorldBank-E.pdf
+    pdf_url: https://unstats.un.org/UNSDWebsite/statcom/session_56/documents/Room_Document-WorldBank-E.pdf
+    verdict: fetch
+    clause: R1
+    construct_arm: publication_actionability
+    grounding_surface: document
+
+  - row: 26
+    doc_id: paris21-nso-framework-sme-row
+    title: "Towards AI-Ready National Statistical Offices — A Framework for Strengthening NSOs"
+    authors_or_org: ["PARIS21"]
+    year: "2025"
+    source_type: intergovernmental
+    primary_url: https://www.paris21.org/sites/default/files/media/document/2025-12/ai-readiness-nso-framework.pdf
+    verdict: already_held
+    clause: R5
+    held_doc_id: towards-ai-ready-national-statistical-offices-paris21-framew
+    notes: "Exact primary_url match."
+
+  - row: 27
+    doc_id: paris21-ttai-self-assessment-2026
+    title: "A Practical Guide for NSOs: The AI Readiness Self-Assessment"
+    authors_or_org: ["PARIS21"]
+    year: "2026"
+    source_type: intergovernmental
+    primary_url: https://www.paris21.org/sites/default/files/media/document/2026-04/ttai-self-assessment-methodology-report.pdf
+    pdf_url: https://www.paris21.org/sites/default/files/media/document/2026-04/ttai-self-assessment-methodology-report.pdf
+    browser_ua: true
+    verdict: fetch
+    clause: R3
+    construct_arm: org_maturity
+    grounding_surface: document
+    notes: "Self-assessment instrument (R3). paris21.org 403s the identifying UA; browser UA probed OK."
+
+  - row: 28
+    doc_id: uk-building-ai-ready-datasets-2026
+    title: "Guidelines and best practices for making government datasets ready for AI"
+    authors_or_org: ["UK Government (DSIT)"]
+    year: "2026"
+    source_type: federal
+    primary_url: https://assets.publishing.service.gov.uk/media/696e43965a37ab534a9e23ac/Building_AI-Ready_Datasets_for_the_UK.pdf
+    pdf_url: https://assets.publishing.service.gov.uk/media/696e43965a37ab534a9e23ac/Building_AI-Ready_Datasets_for_the_UK.pdf
+    verdict: fetch
+    clause: R1
+    construct_arm: publication_actionability
+    grounding_surface: document
+    notes: "source_type federal = national government (UK); the schema enum has no separate national-government value and intergovernmental would be wrong."
+
+  - row: 29
+    doc_id: odi-framework-for-ai-ready-data-2025
+    title: "A framework for AI-ready data"
+    authors_or_org: ["The Open Data Institute (ODI)"]
+    year: "2025"
+    source_type: practitioner
+    primary_url: https://theodi.hacdn.io/media/documents/A_framework_for_AI-ready_data.pdf
+    pdf_url: https://theodi.hacdn.io/media/documents/A_framework_for_AI-ready_data.pdf
+    verdict: fetch
+    clause: R2
+    construct_arm: training_data_readiness
+    grounding_surface: document
+    notes: "Definitional framework for AI-ready data (R2 include class)."
+
+  - row: 30
+    doc_id: uk-ai-ready-data-action-plan-2026
+    title: "AI-ready data action plan"
+    authors_or_org: ["UK Government (DSIT)"]
+    year: "2026"
+    source_type: federal
+    primary_url: "https://www.gov.uk/government/publications/making-government-datasets-ready-for-ai/guidelines-and-best-practices-for-making-government-datasets-ready-for-ai"
+    fetcher: httpx_dom
+    verdict: fetch
+    clause: R1
+    construct_arm: publication_actionability
+    grounding_surface: document
+    notes: "HTML publication page (the SME row's #ai-ready-data-action-plan fragment); companion to row 28's PDF — different document extent (page includes the action plan section)."
+
+  - row: 31
+    doc_id: worldbank-blog-open-data-to-ai-ready-2025
+    title: "From open data to AI-ready data: Building the foundations for responsible AI"
+    authors_or_org: ["World Bank"]
+    year: "2025"
+    source_type: intergovernmental
+    primary_url: "https://blogs.worldbank.org/en/opendata/from-open-data-to-ai-ready-data--building-the-foundations-for-re"
+    fetcher: httpx_dom
+    browser_ua: true
+    verdict: fetch
+    clause: R1
+    construct_arm: publication_actionability
+    grounding_surface: document
+    notes: "SME cell's URL is truncated mid-slug (transcription artifact); canonical slug recovered from the blogs.worldbank.org sitemap (ends '-for-re'; the SME cell stopped at '-the-foun')."
+
+  - row: 32
+    doc_id: google-okf-blog-2026
+    title: "Introducing the Open Knowledge Format"
+    authors_or_org: ["Sam McVeety", "Amir Hormati (Google Data Analytics)"]
+    year: "2026"
+    source_type: industry
+    primary_url: "https://cloud.google.com/blog/products/data-analytics/how-the-open-knowledge-format-can-improve-data-sharing/"
+    verdict: fetch
+    clause: R1
+    construct_arm: publication_actionability
+    grounding_surface: document
+    notes: "The OKF SPEC.md itself is a separate Phase 3 entry (row g5)."
+
+  - row: 33
+    doc_id: lakefs-summit-orr-ai-ready-data-demystified
+    title: "AI-Ready Data Demistified"
+    authors_or_org: ["Einat Orr (lakeFS)"]
+    year: "2026"
+    source_type: industry
+    primary_url: https://lakefs.io/ai-ready-data-summit/
+    verdict: no_media
+    clause: R2
+    construct_arm: training_data_readiness
+    grounding_surface: transcript
+    notes: "ADDENDUM-01 routing: summit page probed 2026-08-26 — no transcript, slides, or direct media URL (sessions gated behind registration); fetch_failed."
+
+  - row: 34
+    doc_id: lakefs-summit-ai-trenches-panel
+    title: "From the AI Trenches: Lessons Learned Building Infrastructure for AI-Ready Data"
+    authors_or_org: ["Paul Dix", "Shirshanka Das", "Guy Korland"]
+    year: "2026"
+    source_type: industry
+    primary_url: https://lakefs.io/ai-ready-data-summit/
+    verdict: excluded
+    clause: R2_domain_application
+    notes: "Vendor-practitioner infrastructure panel (lakeFS/DataHub/InfluxDB war stories), no general readiness framework stated as a contribution — R2's vendor-article exclusion class. Moot for fetch either way: same gated summit page as row 33."
+
+  - row: 35
+    doc_id: cisco-ai-readiness-index-sme-row
+    title: "Realizing the Value of AI: Cisco AI Readiness Index 2025"
+    authors_or_org: ["Cisco Systems"]
+    year: "2025"
+    source_type: industry
+    primary_url: https://www.cisco.com/c/m/en_us/solutions/ai/readiness-index.html
+    verdict: already_held
+    clause: R5
+    held_doc_id: cisco-ai-readiness-index-2025
+    notes: "Task-expected hit; corpus holds the 2025 index report, instrument, and methodology (plus assessment pages)."
+
+  # ---- rows 36–41: DOC RFI comment letters (R3 — primary evidence of definitional contest)
+  - row: 36
+    doc_id: rfi-comment-deloitte-2024
+    title: "Comment of Deloitte Consulting LLP on the DOC AI and Open Government Data Assets RFI"
+    authors_or_org: ["Deloitte Consulting LLP"]
+    year: "2024"
+    source_type: industry
+    primary_url: https://www.regulations.gov/comment/DOC-2024-0007-0018
+    pdf_url: https://downloads.regulations.gov/DOC-2024-0007-0018/attachment_1.pdf
+    verdict: fetch
+    clause: R3
+    construct_arm: org_maturity
+    grounding_surface: document
+    notes: "downloads.regulations.gov 403s scripted fetch (Akamai) — probed; expected access_blocked; letters are public in a browser, operator can drop PDFs."
+  - row: 37
+    doc_id: rfi-comment-leidos-2024
+    title: "Comment of Leidos on the DOC AI and Open Government Data Assets RFI"
+    authors_or_org: ["Leidos"]
+    year: "2024"
+    source_type: industry
+    primary_url: https://www.regulations.gov/comment/DOC-2024-0007-0013
+    pdf_url: https://downloads.regulations.gov/DOC-2024-0007-0013/attachment_1.pdf
+    verdict: fetch
+    clause: R3
+    construct_arm: org_maturity
+    grounding_surface: document
+  - row: 38
+    doc_id: rfi-comment-microsoft-2024
+    title: "Comment of Microsoft on the DOC AI and Open Government Data Assets RFI"
+    authors_or_org: ["Microsoft"]
+    year: "2024"
+    source_type: industry
+    primary_url: https://www.regulations.gov/comment/DOC-2024-0007-0006
+    pdf_url: https://downloads.regulations.gov/DOC-2024-0007-0006/attachment_1.pdf
+    verdict: fetch
+    clause: R3
+    construct_arm: org_maturity
+    grounding_surface: document
+  - row: 39
+    doc_id: rfi-comment-openai-2024
+    title: "Comment of OpenAI on the DOC AI and Open Government Data Assets RFI"
+    authors_or_org: ["OpenAI"]
+    year: "2024"
+    source_type: industry
+    primary_url: https://www.regulations.gov/comment/DOC-2024-0007-0011
+    pdf_url: https://downloads.regulations.gov/DOC-2024-0007-0011/attachment_1.pdf
+    verdict: fetch
+    clause: R3
+    construct_arm: org_maturity
+    grounding_surface: document
+  - row: 40
+    doc_id: rfi-comment-protesero-2024
+    title: "Comment of Protesero on the DOC AI and Open Government Data Assets RFI"
+    authors_or_org: ["Protesero"]
+    year: "2024"
+    source_type: industry
+    primary_url: https://www.regulations.gov/comment/DOC-2024-0007-0009
+    pdf_url: https://downloads.regulations.gov/DOC-2024-0007-0009/attachment_1.pdf
+    verdict: fetch
+    clause: R3
+    construct_arm: org_maturity
+    grounding_surface: document
+    notes: "Organization name transcribed as in the SME list ('Protesero')."
+  - row: 41
+    doc_id: rfi-comment-sas-2024
+    title: "SAS Response to AI and Open Government Data Assets RFI"
+    authors_or_org: ["SAS Institute"]
+    year: "2024"
+    source_type: industry
+    primary_url: https://www.regulations.gov/comment/DOC-2024-0007-0024
+    pdf_url: https://downloads.regulations.gov/DOC-2024-0007-0024/attachment_1.pdf
+    verdict: fetch
+    clause: R3
+    construct_arm: org_maturity
+    grounding_surface: document
+
+  - row: 42
+    doc_id: gartner-ai-ready-data-essentials-2024
+    title: "AI-Ready Data Essentials: How to Govern, Qualify, and Align Data to Deliver Value"
+    authors_or_org: ["Gartner"]
+    year: "2024"
+    source_type: industry
+    primary_url: https://www.gartner.com/en/articles/ai-ready-data
+    verdict: fetch
+    clause: R3
+    construct_arm: org_maturity
+    grounding_surface: document
+    notes: "Task Phase 1 lists Gartner as access_blocked-likely; crwl attempt recorded either way."
+
+  - row: 43
+    doc_id: informatica-cdo-insights-2026
+    title: "CDO Insights 2026: Data Governance and the Trust Paradox of Data and AI Literacy"
+    authors_or_org: ["Informatica", "Salesforce"]
+    year: "2026"
+    source_type: industry
+    primary_url: "https://www.informatica.com/about-us/news/news-releases/2026/01/20260127-new-global-cdo-report-reveals-data-governance-and-ai-literacy-as-key-accelerators-in-ai-adoption.html"
+    verdict: excluded
+    clause: R3_press_release_only
+    notes: "R3's own conditional, applied: press page probed 2026-08-26 — no direct report link; the underlying CDO Insights 2026 report sits behind a lead-capture form (not fetchable). 'Exclude if only the press release exists, logged either way.'"
+
+  - row: 44
+    doc_id: data-unchained-gasper-sequeda-ai-readiness-2026
+    title: "Understanding AI Readiness Before Implementation with Tim Gasper and Juan Sequeda"
+    authors_or_org: ["Molly Presley (Data Unchained podcast)", "Tim Gasper", "Juan Sequeda"]
+    year: "2026"
+    source_type: practitioner
+    primary_url: "https://www.youtube.com/watch?v=2Uqjm1T62nU"
+    verdict: youtube
+    clause: R3
+    construct_arm: org_maturity
+    grounding_surface: transcript
+    notes: "Definitional discussion of organizational AI readiness (R3 definitional-statement class). Auto-captions confirmed available."
+
+  - row: 45
+    doc_id: sequeda-missing-layer-semantics-kg-2025
+    title: "The Missing Layer: Why Semantics and Knowledge Graphs Are Essential for AI-Ready Data"
+    authors_or_org: ["Juan Sequeda"]
+    year: "2025"
+    source_type: practitioner
+    primary_url: "https://www.youtube.com/watch?v=-udYsiECe3o"
+    verdict: youtube
+    clause: R1
+    construct_arm: publication_actionability
+    grounding_surface: transcript
+    notes: "Primary subject = making data interpretable by machine consumers via semantic layer — R1's text. Auto-captions confirmed available."
+
+  - row: 46
+    doc_id: aidrin-sme-row
+    title: "AI Data Readiness Inspector (AIDRIN) for Quantitative Assessment of Data Readiness"
+    authors_or_org: ["Kaveen Hiniduma", "Suren Byna", "Jean Luca Bez"]
+    year: "2024"
+    source_type: academic
+    primary_url: "https://doi.org/10.1145/3676288.3676296"
+    verdict: already_held
+    clause: R5
+    held_doc_id: aidrin-hiniduma-2024
+    notes: "Same work as the held arXiv 2406.19256 (normalized-title match; the DOI is the published version). AIDRIN 2.0 is also held separately."
+
+  - row: 47
+    doc_id: li-2026-rag-building-sector
+    title: "A RAG data pipeline transforming heterogeneous data into AI-ready format"
+    authors_or_org: ["Han Li et al."]
+    year: "2026"
+    source_type: academic
+    primary_url: "https://doi.org/10.1016/j.adapen.2025.100261"
+    verdict: excluded
+    clause: R2_domain_application
+    notes: "Building-sector RAG pipeline — named exclusion example in R2."
+
+  - row: 48
+    doc_id: brewer-scientific-ai-at-scale-sme-row
+    title: "Data Readiness for Scientific AI at Scale"
+    authors_or_org: ["Wesley Brewer", "Patrick Widener", "Valentine Anantharaj"]
+    year: "2025"
+    source_type: academic
+    primary_url: "https://doi.org/10.1145/3750720.3757282"
+    verdict: already_held
+    clause: R5
+    held_doc_id: data-readiness-for-scientific-ai-at-scale
+    notes: "Normalized-title match against the held arXiv 2507.23018 version."
+
+  - row: 49
+    doc_id: thomas-2024-nutrition-obesity-big-data
+    title: "Transforming Big Data into AI-ready data for nutrition and obesity research"
+    authors_or_org: ["Diana M. Thomas et al."]
+    year: "2024"
+    source_type: academic
+    primary_url: "https://doi.org/10.1002/oby.23989"
+    verdict: excluded
+    clause: R2_domain_application
+    notes: "Domain preprocessing review (microbiome/metabolomics/accelerometry for one research field); no general readiness framework stated as contribution."
+
+  - row: 50
+    doc_id: wood-charlson-2026-fair-to-cope
+    title: "Advancing FAIR data towards comparable, organized, predictive AI-ready data"
+    authors_or_org: ["Elisha M. Wood-Charlson et al."]
+    year: "2026"
+    source_type: academic
+    primary_url: "https://doi.org/10.1038/s42003-026-10694-y"
+    pdf_url: "https://www.nature.com/articles/s42003-026-10694-y.pdf"
+    verdict: fetch
+    clause: R2
+    construct_arm: training_data_readiness
+    grounding_surface: document
+    notes: "States a general readiness framework (COPE extension of FAIR) as its contribution — R2's exception clause."
+
+  - row: 51
+    doc_id: poduval-2022-space-science-ai-ready
+    title: "AI-ready Data in Solar Physics and Space Science: Concerns, Mitigation and Recommendations"
+    authors_or_org: ["Bala Poduval et al."]
+    year: "2022"
+    source_type: academic
+    primary_url: "http://spacescience.org/workshops/mlconference2021.php"
+    verdict: excluded
+    clause: R2_domain_application
+    notes: "Domain (heliophysics/space science) readiness recommendations; same class as the task's space-life-sciences exclusion example. SME URL is a workshop page, not the paper."
+
+  - row: 52
+    doc_id: mangala-2024-fabric-lakehouse
+    title: "Leveraging Microsoft Fabric Lakehouse as an AI-Ready Data Platform for Enterprises"
+    authors_or_org: ["Narendra Mangala"]
+    year: "2024"
+    source_type: academic
+    primary_url: "https://www.jisem-journal.com/"
+    verdict: excluded
+    clause: R2_domain_application
+    notes: "Vendor-lakehouse article — named exclusion class in R2. SME URL is the journal landing page only."
+
+  - row: 53
+    doc_id: verhulst-2025-fair-r
+    title: "Moving Toward the FAIR-R principles: Advancing AI-Ready Data"
+    authors_or_org: ["Stefaan Verhulst", "Andrew Zahuranec", "Hannah Chafetz"]
+    year: "2025"
+    source_type: academic
+    primary_url: "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5164337"
+    pdf_url: "https://papers.ssrn.com/sol3/Delivery.cfm?abstractid=5164337"
+    verdict: fetch
+    clause: R2
+    construct_arm: training_data_readiness
+    grounding_surface: document
+    notes: "FAIR-R — named R2 include example. SSRN is a task-named access_blocked-likely domain."
+
+  - row: 54
+    doc_id: kidwai-khan-2024-clinical-ai-roadmap
+    title: "A roadmap to artificial intelligence (AI): Methods for designing and building AI-ready data"
+    authors_or_org: ["Farah Kidwai-Khan et al."]
+    year: "2024"
+    source_type: academic
+    primary_url: "https://doi.org/10.1016/j.jbi.2024.104654"
+    verdict: excluded
+    clause: R2_domain_application
+    notes: "Clinical-informatics preparation pipeline for a specific application domain."
+
+  - row: 55
+    doc_id: mons-2026-fair-squared-scientific-production
+    title: "The Impact of Data and AI on Scientific Production"
+    authors_or_org: ["Barend Mons", "Arie Baak", "Koen Jonkers"]
+    year: "2026"
+    source_type: academic
+    primary_url: "https://policylabs.frontiersin.org/content/the-impact-of-data-and-ai-on-scientific-production"
+    verdict: fetch
+    clause: R2
+    construct_arm: training_data_readiness
+    grounding_surface: document
+    notes: "FAIR² — named R2 include example. SME row pointed at a figshare record probed to hold ZERO files (metadata-only); its description links this Frontiers Policy Labs article, used as primary_url. Resolution logged."
+
+  - row: 56
+    doc_id: wang-2025-sccompass
+    title: "scCompass: An Integrated Multi-Species scRNA-seq Database for AI-Ready Data"
+    authors_or_org: ["Pengfei Wang et al."]
+    year: "2025"
+    source_type: academic
+    primary_url: "https://advanced.onlinelibrary.wiley.com/doi/epdf/10.1002/advs.202500870"
+    verdict: excluded
+    clause: R2_domain_application
+    notes: "Single-cell RNA — named exclusion example in R2."
+
+  - row: 57
+    doc_id: ali-2025-zero-etl-review
+    title: "AI-Ready Data Infrastructure: A Review of Zero-ETL, Declarative Pipelines, and Data Contracts"
+    authors_or_org: ["Zain Ali"]
+    year: "2025"
+    source_type: academic
+    primary_url: "https://www.researchgate.net/publication/395100809_AI-Ready_Data_Infrastructure_A_Review_of_Zero-ETL_Declarative_Pipelines_and_Data_Contracts_in_Modern_Data_Engineering"
+    verdict: excluded
+    clause: R2_domain_application
+    notes: "Data-engineering infrastructure review (ETL architectures); frames no readiness construct — same class as the vendor lakehouse exclusions. (Also ResearchGate-hosted, an access_blocked-likely domain; verdict is on content class, not access.)"
+
+  - row: 58
+    doc_id: aggarwal-2025-lakehouse-strategy
+    title: "Building an AI-Ready Data Strategy Using Lakehouse Technology"
+    authors_or_org: ["Jyoti Aggarwal"]
+    year: "2025"
+    source_type: academic
+    primary_url: "https://al-kindipublisher.com/index.php/jcsts/article/view/9422"
+    verdict: excluded
+    clause: R2_domain_application
+    notes: "Vendor-lakehouse article class — named exclusion in R2."
+
+  - row: 59
+    doc_id: greenberg-2026-metadata-ecosystem-ai
+    title: "The metadata ecosystem and AI: Enabling FAIR and AI-ready data"
+    authors_or_org: ["Jane Greenberg", "Joel Pepper", "Xintong Zhao"]
+    year: "2026"
+    source_type: academic
+    primary_url: "https://onlinelibrary.wiley.com/doi/10.1002/aaai.70060"
+    pdf_url: "https://onlinelibrary.wiley.com/doi/pdf/10.1002/aaai.70060"
+    verdict: fetch
+    clause: R2
+    construct_arm: training_data_readiness
+    grounding_surface: document
+    notes: "Metadata-ecosystem review — named R2 include class. Wiley probed 403; expected access_blocked."
+
+  - row: 60
+    doc_id: bandi-2025-metadata-ai-ready
+    title: "The Role of Metadata in Making Data AI-Ready: Enhancing Data Discoverability"
+    authors_or_org: ["Praveen Kumar Reddy Bandi"]
+    year: "2025"
+    source_type: academic
+    primary_url: "https://al-kindipublisher.com/index.php/jcsts/article/view/9919"
+    pdf_url: "https://al-kindipublisher.com/index.php/jcsts/article/download/9919/8602"
+    browser_ua: true
+    verdict: fetch
+    clause: R2
+    construct_arm: training_data_readiness
+    grounding_surface: document
+    notes: "Frames metadata readiness generally (R2). OJS download id resolved by probe."
+
+  - row: 61
+    doc_id: odi-ai-ready-national-data-library-2025
+    title: "How an AI-ready National Data Library would help UK science"
+    authors_or_org: ["Albert Meroño-Peñuela", "Joe Massey", "et al. (ODI)"]
+    year: "2025"
+    source_type: practitioner
+    primary_url: "https://theodi.org/insights/reports/how-an-ai-ready-national-data-library-would-help-uk-science/"
+    verdict: fetch
+    clause: R1
+    construct_arm: publication_actionability
+    grounding_surface: document
+    notes: "Architectural blueprint for making public datasets discoverable/reusable — R1. HTML report page (no PDF link found on probe)."
+
+  - row: 62
+    doc_id: sansone-2023-fair-making-data-ai-ready
+    title: "FAIR: Making Data AI-Ready"
+    authors_or_org: ["Susanna-Assunta Sansone", "Philippe Rocca-Serra"]
+    year: "2023"
+    source_type: academic
+    primary_url: "https://doi.org/10.1142/9789811265679_0033"
+    pdf_url: "https://www.worldscientific.com/doi/pdf/10.1142/9789811265679_0033"
+    verdict: fetch
+    clause: R2
+    construct_arm: training_data_readiness
+    grounding_surface: document
+    notes: "Definitional FAIR->AI-ready chapter (R2). World Scientific expected paywalled -> access_blocked."
+
+  - row: 63
+    doc_id: redi-2026-automated-data-readiness
+    title: "Automated Data Readiness for Scientific AI (REDI)"
+    authors_or_org: ["Sean R. Wilkinson", "Valentine G. Anantharaj", "et al."]
+    year: "2026"
+    source_type: academic
+    primary_url: "https://doi.org/10.11578/dc.20260702.1"
+    fetcher: httpx_dom
+    browser_ua: true
+    verdict: fetch
+    clause: R2
+    construct_arm: training_data_readiness
+    grounding_surface: document
+    notes: "General readiness framework/engine (REDI). 10.11578/dc is a DOE CODE record DOI — landing page captured; if it proves to be a software record with thin text the min-content guard records that."
+
+  - row: 64
+    doc_id: nikolov-2024-medical-imaging-ai-ready
+    title: "Toward AI-Ready Medical Imaging Data"
+    authors_or_org: ["Milen Nikolov", "Edilberto Amorim", "et al."]
+    year: "2024"
+    source_type: academic
+    primary_url: "https://arxiv.org/pdf/2512.03541"
+    verdict: excluded
+    clause: R2_domain_application
+    notes: "Medical-imaging (DICOM) domain standardization — same class as the cancer-wearables exclusion example."
+
+  - row: 65
+    doc_id: brewer-2026-pipeline-patterns
+    title: "Data readiness pipeline patterns for scientific AI at scale: Insights from climate"
+    authors_or_org: ["Wesley Brewer", "Patrick Widener", "Valentine Anantharaj"]
+    year: "2026"
+    source_type: academic
+    primary_url: "https://doi.org/10.1002/aaai.70056"
+    pdf_url: "https://onlinelibrary.wiley.com/doi/pdf/10.1002/aaai.70056"
+    verdict: fetch
+    clause: R2
+    construct_arm: training_data_readiness
+    grounding_surface: document
+    notes: "States a general two-dimensional DRAI framework as contribution (R2 exception clause). Wiley probed 403; expected access_blocked. Companion to held data-readiness-for-scientific-ai-at-scale."
+
+  - row: 66
+    doc_id: scihorizon-qin-2025
+    title: "SciHorizon: Benchmarking AI-for-Science Readiness from Scientific Data to Large Language Models"
+    authors_or_org: ["Chuan Qin", "Xin Chen", "Chengrui Wang", "et al."]
+    year: "2025"
+    source_type: academic
+    primary_url: "https://arxiv.org/abs/2503.13503"
+    pdf_url: "https://arxiv.org/pdf/2503.13503"
+    verdict: fetch
+    clause: R2
+    construct_arm: training_data_readiness
+    grounding_surface: document
+    notes: "SciHorizon — named R2 include example. SME row cites the KDD DOI (10.1145/3711896.3737403, ACM DL paywalled); the held artifact is the arXiv version, so primary_url is the arXiv abs page and the DOI rides in this note."
+
+  - row: 67
+    doc_id: srivastava-2026-database-selection-framework
+    title: "Architectural Evolution and Selection Framework for Database Systems in AI-Ready Data Platforms"
+    authors_or_org: ["Mohit Srivastava"]
+    year: "2026"
+    source_type: academic
+    primary_url: "https://arxiv.org/pdf/2606.08317"
+    verdict: excluded
+    clause: R2_domain_application
+    notes: "Database-architecture selection engineering; frames no readiness construct."
+
+  - row: 68
+    doc_id: ortiz-2024-cancer-wearables-preprocessing
+    title: "Data Preprocessing Techniques for AI and Machine Learning Readiness: Scoping Review"
+    authors_or_org: ["Bengie L. Ortiz", "Vibhuti Gupta", "et al."]
+    year: "2024"
+    source_type: academic
+    primary_url: "https://mhealth.jmir.org/2024/1/e59587"
+    verdict: excluded
+    clause: R2_domain_application
+    notes: "Cancer-wearables preprocessing — named exclusion example in R2."
+
+  - row: 69
+    doc_id: santoro-2026-eo-ai-ready-datasets
+    title: "From Raw EO Data to AI-Ready Datasets: Lowering the Barrier to Geospatial Foundation Models"
+    authors_or_org: ["Mattia Santoro", "Enrico Boldrini", "Stefano Nativi"]
+    year: "2026"
+    source_type: academic
+    primary_url: "https://doi.org/10.3390/rs18132152"
+    verdict: excluded
+    clause: R2_domain_application
+    notes: "EO fine-tuning — named exclusion example in R2."
+
+  - row: 70
+    doc_id: costes-2026-space-life-sciences-ai-ready
+    title: "Building AI-Ready Data Systems for Space Life Sciences, Aerospace Medicine"
+    authors_or_org: ["Sylvain V. Costes et al."]
+    year: "2026"
+    source_type: academic
+    primary_url: "https://arxiv.org/pdf/2606.28856"
+    verdict: excluded
+    clause: R2_domain_application
+    notes: "Space life sciences — named exclusion example in R2."
+
+  - row: 71
+    doc_id: nalla-2025-data-readiness-cornerstone
+    title: "Laying the Foundation: Why Data Readiness is the Cornerstone of Successful AI Implementation"
+    authors_or_org: ["Sai Madhav Reddy Nalla"]
+    year: "2025"
+    source_type: academic
+    primary_url: "https://al-kindipublisher.com/index.php/jcsts/article/view/10198"
+    pdf_url: "https://al-kindipublisher.com/index.php/jcsts/article/download/10198/8909"
+    browser_ua: true
+    verdict: fetch
+    clause: R2
+    construct_arm: training_data_readiness
+    grounding_surface: document
+    notes: "Enterprise data-readiness framing (general, R2). SME cell carried only the bare journal URL (www.al-kindipublisher.com/index.php/jcsts); article resolved by OJS title search — resolution logged."
+
+  - row: 72
+    doc_id: tiger-2024-visual-analysis-data-readiness
+    title: "Exploratory Visual Analysis for Increasing Data Readiness in Artificial Intelligence"
+    authors_or_org: ["Mattias Tiger", "Daniel Jakobsson", "Anders Ynnerman", "Fredrik Heintz"]
+    year: "2024"
+    source_type: academic
+    primary_url: "https://arxiv.org/abs/2409.03805"
+    pdf_url: "https://arxiv.org/pdf/2409.03805"
+    verdict: fetch
+    clause: R2
+    construct_arm: training_data_readiness
+    grounding_surface: document
+    notes: "Extends the Lawrence-lineage readiness frameworks with a general assessment method (R2)."
+
+  # ------------------------------------------------ Phase 3: SEO/AIO-lineage gap items
+  # Reconciled against the kernel register/manifest first. Already-held entries are listed
+  # so the decision log carries the full reconciliation, per the task ("Each entry logged
+  # with whether it was already-held or newly fetched").
+  - row: g1
+    doc_id: ietf-web-bot-auth-architecture-draft
+    title: "Web Bot Auth: HTTP Message Signatures for automated traffic Architecture (draft-meunier-web-bot-auth-architecture-04)"
+    authors_or_org: ["T. Meunier (Cloudflare)", "IETF"]
+    year: "2026"
+    source_type: standard
+    primary_url: "https://datatracker.ietf.org/doc/draft-meunier-web-bot-auth-architecture/"
+    raw_url: "https://www.ietf.org/archive/id/draft-meunier-web-bot-auth-architecture-04.txt"
+    fetcher: raw
+    gap: true
+    verdict: fetch
+    clause: R1
+    construct_arm: publication_actionability
+    grounding_surface: document
+    notes: "Task Phase 3: 'Web Bot Auth drafts if missed' — not in kernel. -04 is the current revision at fetch time."
+  - row: g2
+    doc_id: mcp-specification-2025-06-18-overview
+    title: "Model Context Protocol Specification (2025-06-18) — overview"
+    authors_or_org: ["Model Context Protocol project (Anthropic)"]
+    year: "2025"
+    source_type: standard
+    primary_url: "https://modelcontextprotocol.io/specification/2025-06-18"
+    fetcher: httpx_dom
+    gap: true
+    verdict: fetch
+    clause: R1
+    construct_arm: publication_actionability
+    grounding_surface: document
+    extent_note: "Versioned specification overview page only; sub-pages (architecture, base protocol, server/client features) not fetched — AUTH-4-style stated extent."
+    notes: "Task Phase 3: MCP specification — not in kernel."
+  - row: g3
+    doc_id: nlweb-readme
+    title: "NLWeb — Natural Language Web (project README)"
+    authors_or_org: ["Microsoft / NLWeb project"]
+    year: "2026"
+    source_type: industry
+    primary_url: "https://github.com/nlweb-ai/NLWeb"
+    raw_url: "https://raw.githubusercontent.com/nlweb-ai/NLWeb/main/README.md"
+    fetcher: raw
+    gap: true
+    verdict: fetch
+    clause: R1
+    construct_arm: publication_actionability
+    grounding_surface: document
+    notes: "Task Phase 3: NLWeb — not in kernel. Repo now stewarded under the nlweb-ai org (originally microsoft/NLWeb, which still serves the same README)."
+  - row: g4
+    doc_id: webmcp-readme
+    title: "WebMCP (W3C Web Machine Learning CG proposal README)"
+    authors_or_org: ["W3C Web Machine Learning Community Group"]
+    year: "2026"
+    source_type: standard
+    primary_url: "https://github.com/webmachinelearning/webmcp"
+    raw_url: "https://raw.githubusercontent.com/webmachinelearning/webmcp/main/README.md"
+    fetcher: raw
+    gap: true
+    verdict: fetch
+    clause: R1
+    construct_arm: publication_actionability
+    grounding_surface: document
+    notes: "Task Phase 3: WebMCP — not in kernel."
+  - row: g5
+    doc_id: google-okf-spec
+    title: "Open Knowledge Format (OKF) Specification (SPEC.md)"
+    authors_or_org: ["Google Cloud (knowledge-catalog project)"]
+    year: "2026"
+    source_type: industry
+    primary_url: "https://github.com/GoogleCloudPlatform/knowledge-catalog/blob/main/okf/SPEC.md"
+    raw_url: "https://raw.githubusercontent.com/GoogleCloudPlatform/knowledge-catalog/main/okf/SPEC.md"
+    fetcher: raw
+    gap: true
+    verdict: fetch
+    clause: R1
+    construct_arm: publication_actionability
+    grounding_surface: document
+    notes: "Task Phase 3 + SME row 32's summary names this SPEC.md explicitly; the blog announcement is row 32."
+  - row: g6
+    doc_id: datacommons-docs-landing
+    title: "Data Commons Documentation (docs.datacommons.org landing)"
+    authors_or_org: ["Google Data Commons"]
+    year: "2026"
+    source_type: industry
+    primary_url: "https://docs.datacommons.org/"
+    fetcher: httpx_dom
+    gap: true
+    verdict: fetch
+    clause: R1
+    construct_arm: publication_actionability
+    grounding_surface: document
+    extent_note: "Documentation landing/overview page only; the full docs tree is not fetched."
+    notes: "Task Phase 3: Data Commons documentation — not in kernel."
+  - row: g7
+    doc_id: imf-statgpt-readme
+    title: "StatGPT (project README — EPAM / IMF collaboration)"
+    authors_or_org: ["EPAM Systems", "IMF (StatGPT)"]
+    year: "2026"
+    source_type: industry
+    primary_url: "https://github.com/epam/StatGPT"
+    raw_url: "https://raw.githubusercontent.com/epam/StatGPT/main/README.md"
+    fetcher: raw
+    gap: true
+    verdict: fetch
+    clause: R1
+    construct_arm: publication_actionability
+    grounding_surface: document
+    notes: "Task Phase 3: 'IMF StatGPT public documentation if it exists as a fetchable primary source' — the public repo README is the fetchable primary."
+
+  # Phase 3 reconciliation — already held from kernel-v03 (no fetch, logged):
+  - {row: g8,  doc_id: gap-google-structured-data-intro,   verdict: already_held, clause: R5, held_doc_id: google-structured-data-intro,   gap: true, title: "Google Search Central: structured data intro", primary_url: "https://developers.google.com/search/docs/appearance/structured-data/intro-structured-data", source_type: industry, year: "2025", authors_or_org: ["Google"]}
+  - {row: g9,  doc_id: gap-google-dataset-structured-data, verdict: already_held, clause: R5, held_doc_id: google-dataset-structured-data, gap: true, title: "Google Search Central: dataset structured data", primary_url: "https://developers.google.com/search/docs/appearance/structured-data/dataset", source_type: industry, year: "2025", authors_or_org: ["Google"]}
+  - {row: g10, doc_id: gap-google-crawling-indexing,       verdict: already_held, clause: R5, held_doc_id: google-crawling-indexing-overview, gap: true, title: "Google Search Central: crawling and indexing overview", primary_url: "https://developers.google.com/search/docs/crawling-indexing", source_type: industry, year: "2025", authors_or_org: ["Google"]}
+  - {row: g11, doc_id: gap-google-robots-txt-intro,        verdict: already_held, clause: R5, held_doc_id: google-robots-txt-intro,        gap: true, title: "Google Search Central: robots.txt intro", primary_url: "https://developers.google.com/search/docs/crawling-indexing/robots/intro", source_type: industry, year: "2025", authors_or_org: ["Google"]}
+  - {row: g12, doc_id: gap-google-ai-features,             verdict: already_held, clause: R5, held_doc_id: google-ai-features-and-your-website, gap: true, title: "Google Search Central: AI features and your website", primary_url: "https://developers.google.com/search/docs/appearance/ai-features", source_type: industry, year: "2026", authors_or_org: ["Google"]}
+  - {row: g13, doc_id: gap-google-search-console-start,    verdict: already_held, clause: R5, held_doc_id: google-search-console-start,    gap: true, title: "Google Search Console: getting started", primary_url: "https://developers.google.com/search/docs/monitor-debug/search-console-start", source_type: industry, year: "2025", authors_or_org: ["Google"]}
+  - {row: g14, doc_id: gap-indexnow-documentation,         verdict: already_held, clause: R5, held_doc_id: indexnow-documentation,         gap: true, title: "IndexNow documentation", primary_url: "https://www.indexnow.org/documentation", source_type: industry, year: "2025", authors_or_org: ["Microsoft Bing / Yandex"]}
+  - {row: g15, doc_id: gap-bing-ai-performance,            verdict: already_held, clause: R5, held_doc_id: bing-ai-performance-public-preview-2026, gap: true, title: "Bing Webmaster Tools AI performance (public preview)", primary_url: "https://blogs.bing.com/webmaster/2026", source_type: industry, year: "2026", authors_or_org: ["Microsoft Bing"]}
+  - {row: g16, doc_id: gap-bing-webmaster-guidelines,      verdict: already_held, clause: R5, held_doc_id: bing-webmaster-guidelines,      gap: true, title: "Bing Webmaster Guidelines", primary_url: "https://www.bing.com/webmasters/help/webmaster-guidelines-30fba23a", source_type: industry, year: "2025", authors_or_org: ["Microsoft Bing"]}
+  - {row: g17, doc_id: gap-bing-webmaster-api-docs,        verdict: already_held, clause: R5, held_doc_id: bing-webmaster-api-docs,        gap: true, title: "Bing Webmaster API docs", primary_url: "https://learn.microsoft.com/en-us/bingwebmaster/", source_type: industry, year: "2025", authors_or_org: ["Microsoft Bing"]}
+  - {row: g18, doc_id: gap-sitemaps-protocol,              verdict: already_held, clause: R5, held_doc_id: sitemaps-protocol,              gap: true, title: "Sitemaps protocol", primary_url: "https://www.sitemaps.org/protocol.html", source_type: standard, year: "2008", authors_or_org: ["sitemaps.org"]}
+  - {row: g19, doc_id: gap-rfc-9309-robots,                verdict: already_held, clause: R5, held_doc_id: rfc-9309-robots-exclusion-protocol, gap: true, title: "RFC 9309 Robots Exclusion Protocol", primary_url: "https://www.rfc-editor.org/rfc/rfc9309", source_type: standard, year: "2022", authors_or_org: ["IETF"]}
+  - {row: g20, doc_id: gap-llmstxt-proposal,               verdict: already_held, clause: R5, held_doc_id: llmstxt-proposal,               gap: true, title: "llms.txt proposal", primary_url: "https://llmstxt.org/", source_type: practitioner, year: "2024", authors_or_org: ["Jeremy Howard"]}

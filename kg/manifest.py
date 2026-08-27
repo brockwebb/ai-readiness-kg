@@ -49,6 +49,12 @@ _MANIFEST_ADD = "manifest_add"
 # practitioner added 2026-08-21, schema v0.3 / DD-009 — SME or industry-practitioner guidance
 # that is not a vendor product page).
 _SOURCE_TYPES = ("federal", "academic", "industry", "standard", "intergovernmental", "practitioner")
+# Kept in sync with schema.yaml Document.construct_arm / Document.grounding_surface
+# (both added 2026-08-24, schema v0.3.3, task 2026-08-24_source_triage). Optional on add():
+# construct_arm is required BY that task's rule on its own adds, not by the gate — older
+# entries are backfilled via document_annotation events, never re-manifested.
+_CONSTRUCT_ARMS = ("publication_actionability", "training_data_readiness", "org_maturity")
+_GROUNDING_SURFACES = ("document", "transcript", "slides")
 _DOC_ID_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 
 # Fields the caller must supply (non-empty). local_path and content_hash are computed;
@@ -148,6 +154,19 @@ def add(filepath, **fields) -> str:
             f"invalid doc_id {doc_id!r}; must be lowercase, hyphenated slug (e.g. fcsm-25-03)"
         )
 
+    # v0.3.3 optional Document fields — validated against the schema enums when supplied.
+    construct_arm = fields.get("construct_arm")
+    if construct_arm is not None and construct_arm not in _CONSTRUCT_ARMS:
+        raise ManifestError(
+            f"invalid construct_arm {construct_arm!r}; must be one of {', '.join(_CONSTRUCT_ARMS)}"
+        )
+    grounding_surface = fields.get("grounding_surface")
+    if grounding_surface is not None and grounding_surface not in _GROUNDING_SURFACES:
+        raise ManifestError(
+            f"invalid grounding_surface {grounding_surface!r}; must be one of "
+            f"{', '.join(_GROUNDING_SURFACES)}"
+        )
+
     # 2. File must exist and live under corpus/.
     path = Path(filepath).resolve()
     corpus = _CORPUS_DIR.resolve()
@@ -189,6 +208,12 @@ def add(filepath, **fields) -> str:
         "discovered_via": fields.get("discovered_via"),
         "status": "active",
     }
+    # v0.3.3 Document fields — carried in the event only when supplied, so pre-existing
+    # entries (and their replays) stay byte-identical.
+    if construct_arm is not None:
+        entry["construct_arm"] = construct_arm
+    if grounding_surface is not None:
+        entry["grounding_surface"] = grounding_surface
     # Optional acquisition/TEVV evidence (fetch provenance, identity check, page count,
     # re-hash confirmation). Carried in the event so the audit trail is self-contained;
     # omitted entirely when not supplied so pre-existing entries stay unchanged.

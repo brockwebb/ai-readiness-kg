@@ -28,13 +28,23 @@
 #     Populated by rule via `document_annotation` events (events/batch-007.jsonl), never by the
 #     extractor. Exists because the kernel RESULT's grading-confusion signal conflated
 #     "platform-official" with harvest clause b (DD-014).
+#   2026-08-24 (task 2026-08-24_source_triage, Phase 0): v0.3.3. Append-only properties on
+#     Document: `construct_arm` (enum: publication_actionability / training_data_readiness /
+#     org_maturity) — which of the three survey construct arms the document primarily serves;
+#     REQUIRED on manifest adds from that task onward, backfilled for the existing corpus by
+#     rule via `document_annotation` events (batch-014, rule file
+#     scripts/construct_arm_backfill.yaml). `grounding_surface` (enum: document / transcript /
+#     slides, default document) — the surface class the grounding spans will come from; slides
+#     and transcripts are admissible but flagged so their extraction quality gets its own
+#     stratum in any future TEVV run. Both span_entailable: false (harness/rule-set fields,
+#     never extracted).
 #   2026-08-22 (task 2026-08-22_faithfulness_probe, Phase 0): v0.3.2. Append-only per-attribute
 #     `span_entailable` map on every node type: true = a grounding span is expected to entail
 #     the attribute's value (text, names, stewards, years, ...); false = document-derived or
 #     classification fields (as_of_date, enums, ids) that a span cannot be expected to carry.
 #     Read by the faithfulness probe's decomposer (facts only for true attributes) and by the
 #     scoring rule (`doc_level_attribute` class excluded from F). DD-015.
-schema_version: "0.3.2"
+schema_version: "0.3.3"
 
 # --- Section 2: Node types -------------------------------------------------
 # Each node type lists the "Key properties" column verbatim. Parenthetical
@@ -52,6 +62,8 @@ node_types:
       - content_hash
       - manifest_event_id
       - is_platform_operator   # v0.3.1: boolean, nullable; set by document_annotation events, not extraction
+      - construct_arm      # v0.3.3: survey construct arm; manifest-add field / document_annotation backfill
+      - grounding_surface  # v0.3.3: surface class of the grounding text (default document)
     span_entailable:   # v0.3.2: which attributes a grounding span is expected to entail (DD-015)
       doc_id: false
       title: false
@@ -62,10 +74,21 @@ node_types:
       content_hash: false
       manifest_event_id: false
       is_platform_operator: false
+      construct_arm: false      # v0.3.3: rule-set classification, never extracted
+      grounding_surface: false  # v0.3.3: acquisition-time fact, never extracted
     property_values:
       # v0.3: practitioner = SME-authored or industry-practitioner guidance that is not a
       # vendor product page. `industry` is unchanged.
       source_type: [federal, academic, industry, standard, intergovernmental, practitioner]
+      # v0.3.3 (task 2026-08-24_source_triage): the three construct arms of the FSS survey
+      # validity layer. publication_actionability = making published data/content
+      # discoverable, retrievable, interpretable by machine consumers (the graph's target
+      # construct); training_data_readiness = readiness of data as model/AI input;
+      # org_maturity = organizational AI-readiness instruments and definitional statements.
+      construct_arm: [publication_actionability, training_data_readiness, org_maturity]
+      # v0.3.3: slides and transcripts are admissible but flagged — their extraction quality
+      # gets its own stratum in any future TEVV run.
+      grounding_surface: [document, transcript, slides]
 
   Definition:
     what: A verbatim definition of a term as given by one source.
