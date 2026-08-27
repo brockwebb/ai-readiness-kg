@@ -2,7 +2,7 @@
 
 Cue list: `kg/extraction/edge_cues.yaml` sha256 `8f8216d12b13e9fd…` (version 2026-08-27.1). Window: ≤ 3 sentences and ≤ 800 chars. Candidates: `corpus/staging/metrics/edge_suppression_candidates.jsonl`.
 
-### p1_proposed_v035b (n=28)
+### p1_proposed_v035b (n=39)
 
 | doc | single_span | evidence_set | unlocatable |
 |---|---|---|---|
@@ -10,8 +10,8 @@ Cue list: `kg/extraction/edge_cues.yaml` sha256 `8f8216d12b13e9fd…` (version 2
 | `aidrin-hiniduma-2024` | 2 | 1 | 4 |
 | `fcsm-23-02-a-framework-for-data-quality-case-studies` | 9 | 3 | 1 |
 | `from-accuracy-to-readiness-metrics-and-benchmarks-for-human` | 0 | 0 | 6 |
-| `mitre-ai-maturity-model` | 0 | 0 | 0 |
-| **pooled** | **11** | **5** | **12** |
+| `mitre-ai-maturity-model` | 5 | 2 | 4 |
+| **pooled** | **16** | **7** | **16** |
 
 ### p2_live_kernel_era (n=145)
 
@@ -24,4 +24,4 @@ Cue list: `kg/extraction/edge_cues.yaml` sha256 `8f8216d12b13e9fd…` (version 2
 | `mitre-ai-maturity-model` | 17 | 11 | 4 |
 | **pooled** | **36** | **30** | **79** |
 
-**Pooled locatable (single_span + evidence_set): 82** (3b proceeds iff ≥ 20; single_span pooled = 47 would indicate model over-diversion under the current rule).
+**Pooled locatable (single_span + evidence_set): 89** (3b proceeds iff ≥ 20; single_span pooled = 52 would indicate model over-diversion under the current rule).
