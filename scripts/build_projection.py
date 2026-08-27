@@ -86,6 +86,12 @@ def read_overlays() -> tuple[set[tuple[str, str]], dict[str, str]]:
       extraction_superseded  -> drop the node/edge events of a replaced extraction.
         Keyed on (doc_id, source_sha256), NOT doc_id alone: a doc_id-only rule would
         also drop the replacement, since both extractions carry the same doc_id.
+        v0.3.4 (task 2026-08-26_overnight_burn Lane 2): an event carrying
+        `superseded_strata: ["instrument", "semantic_edges"]` drops ONLY that scope —
+        Instrument nodes, semantic edges (parser.SEMANTIC_EDGE_TYPES), and instrument-
+        anchored edges (uses_measure/operationalizes/measures whose from_id was an
+        Instrument in the same extraction); every other stratum of the old extraction
+        stays live. `superseded_strata` absent/None keeps the old whole-extraction drop.
 
       edge_endpoint_alias    -> rewrite a citation endpoint onto its canonical doc_id.
         Written only where the alias is a token-prefix of the canonical id (or differs
@@ -93,15 +99,39 @@ def read_overlays() -> tuple[set[tuple[str, str]], dict[str, str]]:
         rejected during the closeout: it mapped executive-order-14110 onto 13960,
         nist-cybersecurity-framework onto nist-ai-rmf, and cisco-2024 onto cisco-2025.
     """
-    superseded: set[tuple[str, str]] = set()
+    superseded: dict[tuple[str, str], list | None] = {}
     aliases: dict[str, str] = {}
     for ev in eventlog.replay():
         et = ev.get("event_type")
         if et == "extraction_superseded":
-            superseded.add((ev["doc_id"], ev["superseded_source_sha256"]))
+            key = (ev["doc_id"], ev["superseded_source_sha256"])
+            strata = ev.get("superseded_strata")
+            # a whole-extraction supersede (None) always wins over a stratum-scoped one
+            if key not in superseded or strata is None:
+                superseded[key] = strata
         elif et == "edge_endpoint_alias":
             aliases[ev["alias_id"]] = ev["canonical_id"]
     return superseded, aliases
+
+
+# v0.3.4 stratum scoping (Lane 2). Edge types whose FROM endpoint being an Instrument makes
+# them instrument-anchored; the semantic set is read from the parser so there is one list.
+from kg.extraction.parser import SEMANTIC_EDGE_TYPES  # noqa: E402
+INSTRUMENT_ANCHORED_EDGES = {"uses_measure", "operationalizes", "measures"}
+
+
+def stratum_superseded(ev: dict, strata: list, old_instrument_ids: set[str]) -> bool:
+    """True iff this node/edge event falls in a superseded stratum of its extraction."""
+    et = ev.get("event_type")
+    p = ev.get("payload") or {}
+    if et == "node_asserted":
+        return "instrument" in strata and p.get("type") == "Instrument"
+    if et == "edge_asserted":
+        if "semantic_edges" in strata and p.get("type") in SEMANTIC_EDGE_TYPES:
+            return True
+        return ("instrument" in strata and p.get("type") in INSTRUMENT_ANCHORED_EDGES
+                and p.get("from_id") in old_instrument_ids)
+    return False
 
 
 # Events that are NOT part of the graph. TEVV re-extractions (task 2026-08-22_kernel_tevv
@@ -161,11 +191,13 @@ def resolve_endpoint(doc_id: str, endpoint_id: str, document_ids: set[str],
 
 def build(session, kg_labels: list[str], edge_whitelist: set[str]) -> dict:
     counts = {"nodes": 0, "edges": 0, "documents": 0, "annotations": 0,
-              "overlays_relocated": 0, "overlays_nulled": 0,
+              "overlays_relocated": 0, "overlays_nulled": 0, "overlays_restored": 0,
               "skipped_unknown_edge_type": 0,
-              "skipped_superseded_extraction": 0, "skipped_non_graph_purpose": 0,
+              "skipped_superseded_extraction": 0, "skipped_superseded_stratum": 0,
+              "skipped_non_graph_purpose": 0,
               "aliased_endpoints": 0}
     superseded, aliases = read_overlays()
+    _old_instr: dict[tuple, set] = {}   # (doc_id, sha) -> old Instrument item ids (Lane 2)
     document_ids = {ev["payload"]["doc_id"] for ev in eventlog.replay()
                     if ev.get("event_type") == "manifest_add"}
     # reset ONLY KG labels
@@ -186,9 +218,20 @@ def build(session, kg_labels: list[str], edge_whitelist: set[str]) -> dict:
             continue
         if et in ("node_asserted", "edge_asserted"):
             src_sha = (ev.get("provenance") or {}).get("source_sha256")
-            if (ev.get("doc_id"), src_sha) in superseded:
-                counts["skipped_superseded_extraction"] += 1
-                continue
+            skey = (ev.get("doc_id"), src_sha)
+            if skey in superseded:
+                strata = superseded[skey]
+                if strata is None:                      # whole-extraction supersede
+                    counts["skipped_superseded_extraction"] += 1
+                    continue
+                # stratum-scoped (v0.3.4, Lane 2): node events precede their edges in a
+                # shard, so the per-extraction instrument-id set is complete before any
+                # instrument-anchored edge of the same extraction is examined.
+                if et == "node_asserted" and (ev.get("payload") or {}).get("type") == "Instrument":
+                    _old_instr.setdefault(skey, set()).add((ev.get("payload") or {}).get("id"))
+                if stratum_superseded(ev, strata, _old_instr.get(skey, set())):
+                    counts["skipped_superseded_stratum"] += 1
+                    continue
         if et == "manifest_add":
             p = ev["payload"]
             session.run(
@@ -266,6 +309,27 @@ def build(session, kg_labels: list[str], edge_whitelist: set[str]) -> dict:
                         f"SET n.{attr} = null, n.nulled_attributes = coalesce(n.nulled_attributes, []) + $attr",
                         key=node_key(ev["doc_id"], ev["item_id"]), attr=attr)
             counts["overlays_nulled"] += 1
+
+    # Restoration v2 — GATE BEFORE WIRE (task 2026-08-26_overnight_burn Lane 4).
+    # attribute_restored events accumulate in the TAGGED shard batch-014_restoration_v2
+    # (never replayed into the graph by default). They project ONLY when the untagged log
+    # carries a `restoration_class_accepted` event for the class (the ≥0.90 fact-level
+    # acceptance gate) — applied after the null overlays so an accepted restoration wins.
+    accepted_classes = {ev.get("restoration_class") for ev in eventlog.replay()
+                        if ev.get("event_type") == "restoration_class_accepted"}
+    if "restoration_v2" in accepted_classes:
+        for ev in eventlog.replay(tag="restoration_v2"):
+            if ev.get("event_type") != "attribute_restored":
+                continue
+            attr = ev["attribute"]
+            if attr not in NULLABLE_ATTRIBUTES:
+                continue
+            session.run(f"MATCH (n {{key: $key}}) "
+                        f"SET n.{attr} = $value, "
+                        f"n.restored_attributes = coalesce(n.restored_attributes, []) + $attr",
+                        key=node_key(ev["doc_id"], ev["item_id"]), value=ev.get("value"),
+                        attr=attr)
+            counts["overlays_restored"] += 1
     return counts
 
 

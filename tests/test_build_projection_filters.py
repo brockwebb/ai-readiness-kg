@@ -59,11 +59,20 @@ def test_resolve_endpoint_document_scope_vs_item_scope():
     assert bp.resolve_endpoint("w3c-dcat-3", "doc-omb-m-25-05", docs, {}) == "w3c-dcat-3::doc-omb-m-25-05"
 
 
-def test_attribute_restored_is_never_projected():
-    # The 2026-08-23 acceptance measure FAILED (0.78 < 0.90): restorations are reversed by
-    # rule. attribute_restored must have no projection handler — nulls stand.
+def test_attribute_restored_projects_only_behind_the_acceptance_gate():
+    # The 2026-08-23 acceptance measure FAILED (0.78 < 0.90): v1 restorations are reversed
+    # by rule and attribute_restored is NOT an annotation. v0.3.4 (overnight burn Lane 4,
+    # gate-before-wire): restorations live in the TAGGED shard batch-014_restoration_v2 and
+    # the sole projection path is the block guarded by a `restoration_class_accepted` event
+    # — untagged attribute_restored events (the reversed v1 ones) still never project.
     import inspect
     src = inspect.getsource(bp)
-    assert src.count('"attribute_restored"') == 0
     assert bp.annotation_update({"event_type": "attribute_restored", "doc_id": "d",
                                  "property": "description", "value": "x"}) is None
+    # exactly one handler, and it sits inside the acceptance-gated restoration_v2 block
+    assert src.count('"attribute_restored"') == 1
+    gated = src.split('restoration_class_accepted', 1)
+    assert len(gated) == 2 and '"attribute_restored"' in gated[1], \
+        "attribute_restored handling must be behind the restoration_class_accepted gate"
+    assert 'replay(tag="restoration_v2")' in gated[1], \
+        "accepted restorations must come from the tagged shard, never the untagged log"

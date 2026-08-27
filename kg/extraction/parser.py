@@ -65,6 +65,63 @@ def _quarantine(result, kind, reason, item):
     result.quarantined.append({"kind": kind, "reason": reason, "item": item})
 
 
+# --- v0.3.4 (task 2026-08-26_overnight_burn Lane 0; 2026-08-22_probe_decision.md) ---------
+# Instrument attributes that require a covering per-attribute span in `grounding_spans`.
+# A filled attribute without one is NULLED at parse (never a quarantine of the node) — the
+# probe found `method` fabricated from world knowledge (F 0.25/0.17).
+INSTRUMENT_SPAN_REQUIRED = ("owner", "year", "method")
+# Edge types asserting a semantic relation: their span must contain both endpoint names —
+# heading/list-structure inference routes to proposed_relationships (F 0.26 on kernel-v03).
+SEMANTIC_EDGE_TYPES = frozenset({"has_component", "subtype_of", "consumes",
+                                 "extends", "implements"})
+# The attribute that names a node, per type, for the semantic-edge endpoint check.
+_NAME_ATTR = {"Concept": "name", "Framework": "name", "Standard": "name", "Platform": "name",
+              "Tool": "name", "Instrument": "name", "Definition": "term", "Construct": "name"}
+
+
+def _null_uncovered_instrument_attrs(item: dict, source_text: str) -> dict:
+    """Return a copy of the Instrument item with owner/year/method nulled unless
+    grounding_spans[attr] exists, is grounded in the document, and covers the value.
+    Nulled attribute names are recorded on the item as `nulled_at_parse`."""
+    spans = item.get("grounding_spans") or {}
+    if not isinstance(spans, dict):
+        spans = {}
+    out = dict(item)
+    nulled = []
+    for attr in INSTRUMENT_SPAN_REQUIRED:
+        val = out.get(attr)
+        if val in (None, "", [], {}):
+            continue
+        span = spans.get(attr)
+        ok = (isinstance(span, str) and span.strip()
+              and grounding.is_grounded(span, source_text)
+              and grounding.covers(span, str(val)))
+        if not ok:
+            out[attr] = None
+            nulled.append(attr)
+    if nulled:
+        out["nulled_at_parse"] = nulled
+    return out
+
+
+def _semantic_span_violation(edge: dict, from_item: dict | None, to_item: dict | None,
+                             from_type: str, to_type: str) -> str | None:
+    """Reason the edge fails the v0.3.4 semantic-span rule, else None. Mechanical check:
+    the span must contain both endpoints' NAMES (the prompt additionally allows unambiguous
+    referents, which no mechanical check can verify — such edges route to
+    proposed_relationships for review rather than being written or lost)."""
+    span = edge.get("grounding_span") or ""
+    for endpoint, item, ntype in (("from", from_item, from_type), ("to", to_item, to_type)):
+        attr = _NAME_ATTR.get(ntype)
+        name = (item or {}).get(attr) if attr else None
+        if not isinstance(name, str) or not name.strip():
+            return f"semantic edge {endpoint}-endpoint ({ntype}) has no name to verify in span"
+        if not grounding.covers(span, name):
+            return (f"semantic edge span does not contain the {endpoint}-endpoint name "
+                    f"{name!r} (v0.3.4: span must state the relation, not page structure)")
+    return None
+
+
 def _property_violation(schema: dict, node_type: str, item: dict) -> str | None:
     """Reason string if ``item`` violates the node type's property contract, else None.
     Required properties (schema ``required_properties``) must be present and non-empty;
@@ -120,6 +177,7 @@ def parse_extraction(output: dict, source_text: str, schema: dict | None = None,
     # id -> node type, built from VALID nodes only (+ the document itself). Edges may only
     # reference nodes that survived the grounding gate.
     id_types: dict[str, str] = {doc_id: "Document"}
+    id_items: dict[str, dict] = {}   # v0.3.4: valid nodes' items, for the semantic-span check
 
     # --- node layers (§5 emission order) --------------------------------------------------
     for layer, node_type in LAYER_TYPES.items():
@@ -144,7 +202,12 @@ def parse_extraction(output: dict, source_text: str, schema: dict | None = None,
                 if partial:
                     _quarantine(result, layer, partial, item)
                     continue
+            if node_type == "Instrument":
+                # v0.3.4: per-attribute span map — uncovered owner/year/method are nulled
+                # here (attribute-level), the node itself stays admitted.
+                item = _null_uncovered_instrument_attrs(item, source_text)
             id_types[nid] = node_type
+            id_items[nid] = item
             result.nodes.append({"id": nid, "type": node_type, "item": item})
 
     # --- edges ----------------------------------------------------------------------------
@@ -187,6 +250,20 @@ def parse_extraction(output: dict, source_text: str, schema: dict | None = None,
                         f"{from_type}->{to_type} (not in schema pairs)",
             })
             continue
+        if etype in SEMANTIC_EDGE_TYPES:
+            # v0.3.4: the span must state the relation — both endpoint names inside it.
+            violation = _semantic_span_violation(edge, id_items.get(from_id),
+                                                 id_items.get(to_id), from_type, to_type)
+            if violation:
+                result.proposed_relationships.append({
+                    "source": "auto_routed_semantic_span",
+                    "suggested_edge": etype,
+                    "from_id": from_id, "to_id": to_id,
+                    "from_type": from_type, "to_type": to_type,
+                    "grounding_span": span, "location": edge.get("location"),
+                    "note": violation,
+                })
+                continue
         result.edges.append({"type": etype, "from_id": from_id, "to_id": to_id,
                              "from_type": from_type, "to_type": to_type, "item": edge})
 

@@ -80,7 +80,7 @@ def test_full_run_advances_state_and_emits_events(ext_iso):
         prov = e["provenance"]
         assert prov["model_id"] == pinned
         assert prov["schema_version"] == "0.1"  # ext_iso patches a tmp schema at 0.1
-        assert prov["prompt_version"] == "0.3.0"
+        assert prov["prompt_version"] == "0.3.4"
         assert prov["extraction_event_id"] == summary["extraction_event_id"]
         assert prov["timestamp"]
 

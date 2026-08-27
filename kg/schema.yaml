@@ -28,6 +28,16 @@
 #     Populated by rule via `document_annotation` events (events/batch-007.jsonl), never by the
 #     extractor. Exists because the kernel RESULT's grading-confusion signal conflated
 #     "platform-official" with harvest clause b (DD-014).
+#   2026-08-26 (task 2026-08-26_overnight_burn, Lane 0): v0.3.4. Append-only property on
+#     Instrument: `grounding_spans` — a per-attribute map {attr: verbatim span} for
+#     owner/year/method, required by prompt v0.3.4 whenever the attribute is filled. The
+#     parser validates each span with grounding.is_grounded + grounding.covers(value);
+#     a filled attribute without a covering span is NULLED AT PARSE (recorded on the item
+#     as nulled_at_parse), never a quarantine of the node. Semantic edges (has_component /
+#     subtype_of / consumes / extends / implements) whose span does not contain both
+#     endpoint names route to proposed_relationships. Fixes the probe's reextract_required
+#     strata (2026-08-22_probe_decision.md: Instrument method fabricated from world
+#     knowledge F 0.25/0.17; semantic edges from page structure F 0.26).
 #   2026-08-24 (task 2026-08-24_source_triage, Phase 0): v0.3.3. Append-only properties on
 #     Document: `construct_arm` (enum: publication_actionability / training_data_readiness /
 #     org_maturity) — which of the three survey construct arms the document primarily serves;
@@ -44,7 +54,7 @@
 #     classification fields (as_of_date, enums, ids) that a span cannot be expected to carry.
 #     Read by the faithfulness probe's decomposer (facts only for true attributes) and by the
 #     scoring rule (`doc_level_attribute` class excluded from F). DD-015.
-schema_version: "0.3.3"
+schema_version: "0.3.4"
 
 # --- Section 2: Node types -------------------------------------------------
 # Each node type lists the "Key properties" column verbatim. Parenthetical
@@ -138,11 +148,13 @@ node_types:
       - owner
       - year
       - method
+      - grounding_spans   # v0.3.4: per-attribute {attr: span} map for owner/year/method; parser nulls uncovered attributes
     span_entailable:   # v0.3.2: which attributes a grounding span is expected to entail (DD-015)
       name: true
       owner: true
       year: true
       method: true
+      grounding_spans: false   # v0.3.4: it IS spans (harness-validated), never itself entailed
 
   Measure:
     what: An individual item or metric inside an Instrument.

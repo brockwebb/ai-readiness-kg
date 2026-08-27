@@ -37,3 +37,19 @@ profiles:
     # ascending. Clause is read from each doc's manifest_add event (acquisition.clause).
     order: clause_then_size_asc
     oversize_allow: []
+
+  # Overnight burn 2026-08-26 (Lane 3): triage-epoch extraction under the corrected
+  # v0.3.4 prompt. The template sha is PINNED (Lane 0 rule): apply_profile refuses to run
+  # if kg/extraction/prompt_template.md no longer hashes to this value, so the profile can
+  # never silently run under a drifted prompt. Lanes 1/2 read the same pin via this profile.
+  reextract_v034:
+    corpus_epoch: triage-2026-08-24
+    batch: 15                                  # events/batch-015.jsonl — triage extraction shard
+    raw_dir: events/raw/triage_extract
+    stop_file: events/triage_extract_STOP.json
+    result_file: docs/research/2026-08-27_triage_extract_progress.md
+    job: airkg-triage-burn
+    order: clause_then_size_asc
+    oversize_allow: []
+    prompt_template: kg/extraction/prompt_template.md
+    template_sha256: 08ffe96416f061201fedb2fb9f520d1315a3e555f285f1f0b7f8f90e6e7165b4

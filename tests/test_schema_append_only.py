@@ -182,3 +182,11 @@ def test_v033_new_properties_not_span_entailable():
     se = SCHEMA["node_types"]["Document"]["span_entailable"]
     assert se["construct_arm"] is False
     assert se["grounding_surface"] is False
+
+
+# --- v0.3.4 additions (2026-08-26, task 2026-08-26_overnight_burn Lane 0) --------------
+
+def test_v034_instrument_grounding_spans_property():
+    props = SCHEMA["node_types"]["Instrument"]["properties"]
+    assert "grounding_spans" in props, "Instrument lost v0.3.4 property grounding_spans"
+    assert SCHEMA["node_types"]["Instrument"]["span_entailable"]["grounding_spans"] is False

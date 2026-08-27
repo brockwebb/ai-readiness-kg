@@ -19,7 +19,9 @@ def _coverage_off_by_default(monkeypatch):
 SOURCE = (
     "AI readiness is a construct describing organizational preparedness. "
     "The FCSM defines data quality as fitness for use. "
-    "Discoverability of records matters for AI-mediated access."
+    "Discoverability of records matters for AI-mediated access. "
+    "The DRL framework extends the FAIR framework for readiness assessment. "
+    "Google consumes the DCAT specification when crawling catalogs."
 )
 
 
@@ -113,8 +115,9 @@ def test_valid_multipair_edge_accepted():
         {"id": "f1", "name": "FAIR", "grounding_span": "AI readiness is a construct"},
         {"id": "f2", "name": "DRL", "grounding_span": "Discoverability of records matters"},
     ]
-    out["edges"].append({"type": "extends", "from_id": "f1", "to_id": "f2",
-                         "grounding_span": "The FCSM defines data quality"})
+    # v0.3.4: a semantic edge's span must contain both endpoint names
+    out["edges"].append({"type": "extends", "from_id": "f2", "to_id": "f1",
+                         "grounding_span": "The DRL framework extends the FAIR framework"})
     r = parser.parse_extraction(out, SOURCE, SCHEMA)
     assert any(e["type"] == "extends" for e in r.edges)
 
@@ -333,7 +336,9 @@ def test_v03_edges_legal_and_illegal_routing():
         {"type": "recommends", "from_id": "doc-1", "to_id": "p1", "grounding_span": g},
         {"type": "supported_by", "from_id": "p1", "to_id": "k1", "grounding_span": g},
         {"type": "implemented_by", "from_id": "m1", "to_id": "t1", "grounding_span": g},
-        {"type": "consumes", "from_id": "pl1", "to_id": "s1", "grounding_span": g},
+        # consumes is semantic (v0.3.4): its span must contain both endpoint names
+        {"type": "consumes", "from_id": "pl1", "to_id": "s1",
+         "grounding_span": "Google consumes the DCAT specification"},
         {"type": "applies_to", "from_id": "p1", "to_id": "c1", "grounding_span": g},
         {"type": "applies_to", "from_id": "m1", "to_id": "c2", "grounding_span": g},
         {"type": "targets", "from_id": "p1", "to_id": "pl1", "grounding_span": g},

@@ -88,7 +88,7 @@ def build_worklist(redo_unrepairable: bool) -> list[dict]:
         if key in unrep and not redo_unrepairable: continue
         tasks.append({"kind": "relocate", "id": f"r::{w['event_id']}", "doc_id": w["doc_id"],
                       "item_id": w["item_id"], "event_id": w["event_id"], "attribute": w["attribute"],
-                      "item_text": w["item_text"], "old_span": w["span"]})
+                      "item_text": w["item_text"], "old_span": w["span"], "type": w.get("type")})
     # attribute re-adjudication: all nulls not yet restored + deferred entries
     seen = set()
     for (d, i, a), old in nulled.items():
@@ -102,7 +102,8 @@ def build_worklist(redo_unrepairable: bool) -> list[dict]:
         if k3 in seen or k3 in restored or k3 in {(d, i, a) for (d, i, a) in nulled}: continue
         seen.add(k3)
         tasks.append({"kind": "attribute", "id": f"a::{w['doc_id']}::{w['item_id']}::{w['attribute']}",
-                      "doc_id": w["doc_id"], "item_id": w["item_id"], "attribute": w["attribute"], "value": w["value"]})
+                      "doc_id": w["doc_id"], "item_id": w["item_id"], "attribute": w["attribute"],
+                      "value": w["value"], "type": w.get("type")})
     return tasks
 
 
@@ -162,6 +163,13 @@ def main() -> int:
     ap.add_argument("--redo-unrepairable", action="store_true")
     ap.add_argument("--max-batches", type=int, default=None)
     ap.add_argument("--dry-run", action="store_true")
+    # Overnight burn 2026-08-26 Lane 4: restoration went two-stage (scripts/restoration_v2.py),
+    # so the single-call attribute path here is selectable off; the reextract_required strata
+    # are excluded rather than repaired (Lane 2 replaces them — repairing them is wasted spend).
+    ap.add_argument("--kinds", choices=["relocate", "attribute", "both"], default="both",
+                    help="which worklist kinds to dispatch (default both — pre-Lane-4 behavior)")
+    ap.add_argument("--exclude-types", default=None,
+                    help="comma-separated node types to drop from the worklist (e.g. Instrument)")
     ap.add_argument("--ceiling-tokens", type=int, required=True,
                     help="per-run token ceiling from the dispatching task file (required; no default)")
     ap.add_argument("--run-id", default=None,
@@ -178,6 +186,13 @@ def main() -> int:
     cfg = {**cfg, "model_id": cfg["cleanup_model_id"]}
     tv = template_version(); tpl = TEMPLATE.read_text(encoding="utf-8")
     tasks = build_worklist(a.redo_unrepairable)
+    if a.kinds != "both":
+        tasks = [t_ for t_ in tasks if t_["kind"] == a.kinds]
+    if a.exclude_types:
+        drop = {x.strip() for x in a.exclude_types.split(",") if x.strip()}
+        before = len(tasks)
+        tasks = [t_ for t_ in tasks if t_.get("type") not in drop]
+        print(f"excluded types {sorted(drop)}: {before - len(tasks)} tasks dropped", flush=True)
     si, sn = (int(x) for x in a.shard.split("/"))
     by_doc = defaultdict(list)
     for t in tasks:

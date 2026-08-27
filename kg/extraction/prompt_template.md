@@ -2,7 +2,7 @@
 Versioned extraction prompt template (schema_v0.1.md §5, whole-document protocol).
 This file IS the prompt — it is loaded and rendered, never pasted inline into code strings.
 Rendering substitutes {{schema_version}}, {{document_id}}, and {{document_text}}.
-prompt_version: 0.3.0
+prompt_version: 0.3.4
 -->
 # Whole-document extraction — ai-readiness-kg schema {{schema_version}}
 
@@ -45,7 +45,7 @@ extract: the extract plan, nodes, edges, and proposed_relationships below.
 - **Definition**: term, verbatim_text, normative_status (statute/policy/standard/academic/industry), as_of_date
 - **Claim**: claim_text, claim_type (empirical/normative/speculative), **evidence_grade (REQUIRED,
   see below)**
-- **Instrument**: name, owner, year, method
+- **Instrument**: name, owner, year, method, **grounding_spans (REQUIRED map, see below)**
 - **Measure**: text, response_type, tier (optional: public/agency_instrumented/paid — see below)
 - **Standard**: name, version, steward, as_of_date
 - **Framework**: name, owner, year
@@ -59,6 +59,32 @@ extract: the extract plan, nodes, edges, and proposed_relationships below.
 - **Platform**: name, operator, as_of_date — a machine consumer whose behavior is targeted or
   described (Google Search, Bing, a named crawler, an LLM vendor's retrieval system,
   Cloudflare/Akamai bot controls).
+
+### Instrument attributes — per-attribute spans, no background knowledge (v0.3.4)
+
+**You must NOT complete any attribute from background or world knowledge.** This rule exists
+because a prior run fabricated Instrument `method` values ("fielded every 2 years",
+"household health survey") that the document never stated. For every Instrument:
+
+- Emit a `grounding_spans` map: `{"owner": "<exact quote>", "year": "<exact quote>",
+  "method": "<exact quote>"}` — one CHARACTER-EXACT document quote per attribute you fill.
+  Each quote must **contain the attribute's value verbatim**. `method` in particular must be
+  copied from a document sentence that states how the instrument works — if the document
+  only names the instrument, `method` is null. No covering quote ⇒ set that attribute null.
+  (`name` is covered by the node's own `grounding_span`, as for every node.)
+- An instrument the document merely **cites or names without describing** is NOT an
+  Instrument node: emit it as a Concept and connect it with `mentions`. Reserve Instrument
+  nodes for assessments the document itself specifies, applies, or documents.
+
+### Semantic edges — the span must state the relation (v0.3.4)
+
+For the edge types `has_component`, `subtype_of`, `consumes`, `extends`, `implements`:
+the edge's `grounding_span` must be a quote that contains **both endpoints' names (or their
+unambiguous in-sentence referents) AND the relation predicate** — a sentence that actually
+states the relationship. Page structure is not a relation: a heading, a list nesting, a
+table row, or a navigation grouping never grounds a semantic edge. If you infer a
+relationship from headings or list structure, put it in `proposed_relationships` with the
+structural evidence as its span — never emit it as an edge.
 
 ### `evidence_grade` — REQUIRED on every Claim
 

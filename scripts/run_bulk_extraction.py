@@ -102,6 +102,18 @@ def apply_profile(name: str | None) -> str:
                 "order", "oversize_allow"):
         if key not in prof:
             raise SystemExit(f"FATAL: profile {name!r} missing key {key!r}")
+    # v0.3.4 template pin (task 2026-08-26_overnight_burn Lane 0): a profile that names a
+    # prompt_template also pins its sha256; refuse to run under a drifted prompt.
+    if prof.get("prompt_template"):
+        tpl = REPO / prof["prompt_template"]
+        want = prof.get("template_sha256")
+        if not want:
+            raise SystemExit(f"FATAL: profile {name!r} names prompt_template without template_sha256")
+        got = hashlib.sha256(tpl.read_bytes()).hexdigest()
+        if got != want:
+            raise SystemExit(f"FATAL: profile {name!r} template sha mismatch: "
+                             f"{got[:12]} != pinned {want[:12]} — prompt drifted since the pin")
+        model_stub._PROMPT_PATH = tpl
     PROFILE_NAME = name
     CORPUS_EPOCH = str(prof["corpus_epoch"])
     BULK_BATCH = int(prof["batch"])

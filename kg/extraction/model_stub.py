@@ -199,6 +199,24 @@ class ModelInvocationError(RuntimeError):
     """A transport/CLI failure or an unusable envelope — the run driver may retry once."""
 
 
+class ModelRateLimitError(ModelInvocationError):
+    """The CLI reported a rate-limit / overload / usage-cap rejection (task 2026-08-26
+    overnight-burn rule): the reservation was RELEASED, the driver should sleep and retry;
+    after 6 consecutive occurrences a lane STOPs with `rate_limited`, not `failed`."""
+
+
+# Markers observed in CLI rate-limit / overload / subscription-cap rejections. Matched
+# case-insensitively against stderr+stdout of a non-zero exit only.
+_RATE_LIMIT_MARKERS = ("rate limit", "rate_limit", "rate-limit", "overloaded", "529",
+                       "usage limit", "hit your limit", "out of extended usage",
+                       "too many requests")
+
+
+def _looks_rate_limited(text: str) -> bool:
+    low = (text or "").lower()
+    return any(m in low for m in _RATE_LIMIT_MARKERS)
+
+
 class ModelSubstitutionError(ModelConfigError):
     """The envelope reports a model other than the pinned one (e.g. a classifier reroute).
     Load-bearing gate: the driver records the substitution as an event and STOPs — the
@@ -260,6 +278,14 @@ def invoke(doc_id: str, source_text: str, prompt: str | None = None,
         ledger.release(granted, reason=f"cli_unavailable: {exc}")
         raise ModelInvocationError(f"claude CLI unavailable for {doc_id}: {exc}") from exc
     if proc.returncode != 0:
+        err_text = (proc.stderr or "") + (proc.stdout or "")[:2000]
+        if _looks_rate_limited(err_text):
+            # Overnight-burn rule (task 2026-08-26): a rate-limit/overload rejection consumed
+            # no meaningful tokens — RELEASE the reservation (capacity restored) and raise a
+            # typed error so drivers back off instead of counting a failure.
+            ledger.release(granted, reason="rate_limited")
+            raise ModelRateLimitError(
+                f"claude -p rate-limited/overloaded for {doc_id}: {proc.stderr.strip()[:200]}")
         ledger.settle(granted, granted.estimate_tokens, settled_as_estimate=True)
         raise ModelInvocationError(
             f"claude -p exited {proc.returncode} for {doc_id}: {proc.stderr.strip()[:300]}")
