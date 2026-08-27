@@ -42,8 +42,8 @@ WALL_STOP_UTC = os.environ.get("OVERNIGHT_WALL_STOP", "2026-08-27T08:45:00+00:00
 STATUS = REPO / "state" / "overnight_burn_status.json"
 STOP_FILE = REPO / "state" / "overnight_burn_STOP"
 SUMMARY_MD = REPO / "docs" / "research" / "2026-08-27_overnight_burn_SUMMARY.md"
-VERDICT_MD = REPO / "docs" / "research" / "2026-08-26_pilot_reextract_v034_verdict.md"
-PILOT_SHARD_NO, PILOT_TAG = 13, "reextract_v034"
+VERDICT_MD = REPO / "docs" / "research" / "2026-08-26_pilot_reextract_v035_verdict.md"
+PILOT_SHARD_NO, PILOT_TAG = 13, "reextract_v035"   # ADDENDUM-01: v0.3.5 pilot shard tag
 LANE2_SHARD = 16                                            # events/batch-016.jsonl (untagged)
 RESTORE_TAG = "restoration_v2"
 SEMANTIC = parser.SEMANTIC_EDGE_TYPES
@@ -117,7 +117,7 @@ def invoke_backoff(state: dict, *args, **kw) -> dict:
     rate-limit rejection; 6 consecutive -> RateLimitStop (lane ends `rate_limited`)."""
     while True:
         try:
-            meta = model_stub.invoke(*args, **kw)
+            meta = model_stub.invoke_with_layer_fallback(*args, **kw)
             state["consec"] = 0
             return meta
         except model_stub.ModelRateLimitError as exc:
@@ -165,7 +165,7 @@ def live_items():
 
 def corpus_paths() -> dict[str, Path]:
     members = {}
-    for prof in ("v1", "kernel_v03", "reextract_v034"):
+    for prof in ("v1", "kernel_v03", "reextract_v035"):
         try:
             rbe.apply_profile(prof)
             members.update(rbe.corpus_members())
@@ -302,7 +302,7 @@ def top_instrument_docs(n: int = 3) -> list[str]:
 def lane1() -> bool:
     lane = "lane1_pilot"
     status(lane, "running")
-    run_id = "pilot_instr_sem"
+    run_id = "pilot_v035"   # ADDENDUM-01 Lane 1′
     declare(run_id, 3_000_000, "extraction")
     spend.set_current_run(run_id)
     members = corpus_paths()
@@ -311,9 +311,10 @@ def lane1() -> bool:
         status(lane, "STOP", reason=f"only {len(docs)} instrument-bearing docs with files")
         return False
     status(lane, "running", pilot_docs=docs)
-    raw_dir = REPO / "events/raw/reextract_v034_pilot"
+    raw_dir = REPO / "events/raw/reextract_v035_pilot"
     raw_dir.mkdir(parents=True, exist_ok=True)
     fresh, doc_texts = [], {}
+    per_doc: dict = {}
     rstate: dict = {}
     for d in docs:
         if halted() or not wall_ok():
@@ -333,7 +334,7 @@ def lane1() -> bool:
             json.dumps({"doc_id": d, "usage": meta["usage"], "cost_usd": meta["cost_usd"],
                         "raw_result": meta["raw_result"]}, ensure_ascii=False, indent=1) + "\n")
         ex_id = uuid.uuid4().hex
-        prov = stamp(ex_id, meta["model_id"], sha, "reextract-v034-pilot")
+        prov = stamp(ex_id, meta["model_id"], sha, "reextract-v035-pilot")
         kept_n = kept_e = 0
         for nrec in result.nodes:
             if nrec["type"] != "Instrument":
@@ -360,25 +361,41 @@ def lane1() -> bool:
         eventlog.append({"event_type": "reextract_pilot_metrics", "purpose": "reextract",
                          "doc_id": d, "counts": result.counts(),
                          "instruments": kept_n, "semantic_edges": kept_e,
+                         "span_lacks_name_precheck": result.precheck_span_lacks_name,
+                         "emission_mode": meta.get("emission_mode") or "single_pass",
                          "proposed": len(result.proposed_relationships), "task": TASK},
                         batch=PILOT_SHARD_NO, tag=PILOT_TAG)
-        status(lane, "running", doc=d, instruments=kept_n, semantic_edges=kept_e)
+        per_doc[d] = (kept_n, kept_e, result.precheck_span_lacks_name,
+                      meta.get("emission_mode") or "single_pass")
+        status(lane, "running", doc=d, instruments=kept_n, semantic_edges=kept_e,
+               span_lacks_name=result.precheck_span_lacks_name,
+               emission=per_doc[d][3])
 
     n_instr = sum(1 for f in fresh if f["kind"] == "node")
     n_sem = sum(1 for f in fresh if f["kind"] == "edge")
-    if n_instr + n_sem == 0:
+    # ADDENDUM-01 precondition: admitted items > 0 in BOTH strata for >= 2 of the 3 docs,
+    # else FAIL:harness_or_prompt and the judge is NOT run (no spend judging nothing).
+    docs_with_both = sum(1 for d in docs if per_doc.get(d, (0, 0))[0] > 0
+                         and per_doc.get(d, (0, 0))[1] > 0)
+    if docs_with_both < 2:
+        rows = "\n".join(f"| `{d}` | {per_doc.get(d, (0,0,0,'—'))[0]} | "
+                          f"{per_doc.get(d, (0,0,0,'—'))[1]} | "
+                          f"{per_doc.get(d, (0,0,0,'—'))[2]} | "
+                          f"{per_doc.get(d, (0,0,0,'—'))[3]} |" for d in docs)
         VERDICT_MD.write_text(
-            "# Pilot re-extract v0.3.4 — verdict: FAIL (no items)\n\n"
-            f"Docs {docs}: the corrected prompt produced 0 Instrument items and 0 semantic "
-            "edges. Over-correction is a finding for the morning, not a bulk go.\n")
-        status(lane, "FAIL", reason="zero items in both strata")
+            "# Pilot re-extract v0.3.5 — verdict: FAIL:harness_or_prompt\n\n"
+            f"Precondition not met: items > 0 in BOTH strata for >= 2/3 docs "
+            f"(got {docs_with_both}/3). Judge not run (ADDENDUM-01).\n\n"
+            "| doc | instruments | semantic edges | span_lacks_name precheck | emission |\n"
+            "|---|---|---|---|---|\n" + rows + "\n")
+        status(lane, "FAIL", reason=f"precondition {docs_with_both}/3 docs with both strata")
         return False
     recs = sample_records(fresh, doc_texts,
                           lambda it: "Instrument:pilot" if it["kind"] == "node"
                           else "edge:semantic:pilot")
-    write_sample("pilot_v034", recs)
+    write_sample("pilot_v035", recs)
     cfg = model_stub.load_model_config()
-    agg = run_probe_protocol("pilot_v034", "pilot_v034", run_id,
+    agg = run_probe_protocol("pilot_v035", "pilot_v035", run_id,
                              raters=[None, cfg["secondary_judge_model_id"]])
     if not agg:
         status(lane, "STOP", reason="probe protocol failed")
@@ -402,11 +419,13 @@ def lane1() -> bool:
                 facts_file.read_text().splitlines() if l.strip()}
         fab_notes = [f"- `{fmap[f]['attribute']}`: {fmap[f]['fact_text'][:140]}"
                      for f in fab[:3] if f in fmap]
-    lines = [f"# Pilot re-extract v0.3.4 — verdict: {'PASS' if ok else 'FAIL'}", "",
+    lines = [f"# Pilot re-extract v0.3.5 — verdict: {'PASS' if ok else 'FAIL'}", "",
              f"Task: `{TASK}` Lane 1 (Seldon id in RESULT). Run `{run_id}` (ceiling 3M).",
              f"Pilot docs: {', '.join(f'`{d}`' for d in docs)}",
              f"Items: {n_instr} Instrument, {n_sem} semantic edges; "
-             f"facts {agg.get('n_facts')}; raters 2 (Dawid-Skene: {agg.get('method')}).", "",
+             f"facts {agg.get('n_facts')}; raters 2 (Dawid-Skene: {agg.get('method')}).",
+             "Per-doc (instruments / semantic edges / span_lacks_name precheck / emission): "
+             + "; ".join(f"`{d}` {per_doc.get(d)}" for d in docs), "",
              "| stratum | F | F_upper | n | pass (< 0.10) |", "|---|---|---|---|---|"]
     for s, c in checks.items():
         lines.append(f"| {s} | {c['F'] if c['F'] is not None else '—'} | "
@@ -479,6 +498,13 @@ def lane2() -> None:
         (raw_dir / f"{d}.{sha[:12]}.{model_stub.prompt_version()}.json").write_text(
             json.dumps({"doc_id": d, "usage": meta["usage"], "cost_usd": meta["cost_usd"],
                         "raw_result": meta["raw_result"]}, ensure_ascii=False, indent=1) + "\n")
+        if processed < 3:
+            u = meta.get("usage") or {}
+            status(lane, "running", cache_check_call=processed + 1,
+                   cache_read=int(u.get("cacheReadInputTokens", 0) or 0),
+                   cache_write=int(u.get("cacheCreationInputTokens", 0) or 0),
+                   fresh_input=int(u.get("inputTokens", 0) or 0),
+                   note="whole-doc single-pass: no shared prefix expected; logged per ADDENDUM-01, not gated")
         c = result.counts()
         rate = c["quarantined"] / max(1, c["nodes"] + c["edges"] + c["quarantined"])
         over = rate > rbe.QUARANTINE_STOP_RATE
@@ -769,7 +795,32 @@ def write_summary() -> None:
 
 
 def main() -> int:
-    status("driver", "started", ceiling=CEILING, wall_stop=WALL_STOP_UTC, pid=os.getpid())
+    lanes = set((os.environ.get("OVERNIGHT_LANES") or "all").split(","))
+    status("driver", "started", ceiling=CEILING, wall_stop=WALL_STOP_UTC, pid=os.getpid(),
+           lanes=sorted(lanes))
+    if lanes == {"1"}:
+        ok1 = False
+        try:
+            ok1 = lane1()
+        except Exception as exc:
+            status("lane1_pilot", "error", detail=str(exc)[:300])
+        status("driver", "exited", lane1_pass=ok1)
+        commit_push("overnight burn ADDENDUM-01: Lane 1' pilot v0.3.5 "
+                    + ("PASS" if ok1 else "FAIL"))
+        return 0
+    if lanes == {"2", "3"}:
+        import threading
+        t3 = threading.Thread(target=lane3, daemon=False)
+        t3.start()
+        try:
+            lane2()
+        except Exception as exc:
+            status("lane2_reextract", "error", detail=str(exc)[:300])
+        t3.join()
+        write_summary()
+        status("driver", "exited")
+        commit_push("overnight burn ADDENDUM-01: lanes 2||3 window complete — SUMMARY")
+        return 0
     ok1 = False
     try:
         ok1 = lane1()

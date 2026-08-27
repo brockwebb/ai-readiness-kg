@@ -43,6 +43,8 @@ profiles:
   # if kg/extraction/prompt_template.md no longer hashes to this value, so the profile can
   # never silently run under a drifted prompt. Lanes 1/2 read the same pin via this profile.
   reextract_v034:
+    # HISTORY (ADDENDUM-01): pinned to the frozen v0.3.4 template copy; superseded by
+    # reextract_v035 below after the 2026-08-27 pilot FAIL diagnosis.
     corpus_epoch: triage-2026-08-24
     batch: 15                                  # events/batch-015.jsonl — triage extraction shard
     raw_dir: events/raw/triage_extract
@@ -51,5 +53,20 @@ profiles:
     job: airkg-triage-burn
     order: clause_then_size_asc
     oversize_allow: []
-    prompt_template: kg/extraction/prompt_template.md
+    prompt_template: kg/extraction/prompt_template_v0_3_4.md
     template_sha256: 08ffe96416f061201fedb2fb9f520d1315a3e555f285f1f0b7f8f90e6e7165b4
+
+  # ADDENDUM-01 (2026-08-27): v0.3.5 prompt — positive Instrument criterion, first
+  # grounding rule (node span contains name), truncation fallback. Same triage epoch,
+  # shard, and dirs as v034; this is the operative extraction profile.
+  reextract_v035:
+    corpus_epoch: triage-2026-08-24
+    batch: 15
+    raw_dir: events/raw/triage_extract
+    stop_file: events/triage_extract_STOP.json
+    result_file: docs/research/2026-08-27_triage_extract_progress.md
+    job: airkg-triage-burn
+    order: clause_then_size_asc
+    oversize_allow: []
+    prompt_template: kg/extraction/prompt_template.md
+    template_sha256: 77acbee6feda897c3abd93a4af3ac086a68df8de7a2cec4dfa0678d78d3ed78e

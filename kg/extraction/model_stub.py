@@ -199,6 +199,16 @@ class ModelInvocationError(RuntimeError):
     """A transport/CLI failure or an unusable envelope — the run driver may retry once."""
 
 
+class ModelParseError(ModelInvocationError):
+    """The envelope arrived but its result yielded no parseable JSON. Carries the call's
+    usage and session id so the truncation fallback (ADDENDUM-01 §3) can decide and resume."""
+
+    def __init__(self, msg: str, usage: dict | None = None, session_id: str | None = None):
+        self.usage = usage or {}
+        self.session_id = session_id
+        super().__init__(msg)
+
+
 class ModelRateLimitError(ModelInvocationError):
     """The CLI reported a rate-limit / overload / usage-cap rejection (task 2026-08-26
     overnight-burn rule): the reservation was RELEASED, the driver should sleep and retry;
@@ -320,7 +330,12 @@ def invoke(doc_id: str, source_text: str, prompt: str | None = None,
         # substitution gate so the driver records it as an event and STOPs — never substitute.
         raise ModelSubstitutionError(expected=model_id, observed=list(model_usage))
 
-    output = _extract_json(envelope.get("result", ""))
+    try:
+        output = _extract_json(envelope.get("result", ""))
+    except ModelInvocationError as exc:
+        # carry usage + session so the truncation fallback can decide and resume (§3)
+        raise ModelParseError(str(exc), usage=model_usage.get(model_id, {}),
+                              session_id=envelope.get("session_id")) from exc
     return {
         "output": output,
         "model_id": model_id,
@@ -331,4 +346,97 @@ def invoke(doc_id: str, source_text: str, prompt: str | None = None,
         "raw_result": envelope.get("result", ""),
         "spend_run_id": granted.run_id,
         "spend_reservation_id": granted.reservation_id,
+    }
+
+
+# --- Truncation fallback: per-layer emission (overnight burn ADDENDUM-01 §3) -------------
+# A dense document can blow the single-pass output budget: observed 2026-08-27, 67,057
+# output tokens with no recoverable envelope layers (aidrin pilot). Truncation is a STATUS,
+# never a silent zero: the wrapper below detects it (no extraction layers + outputTokens
+# above model_config `truncation_suspect_tokens`) and retries ONCE in per-layer emission
+# mode — same headless session (the document is already cached prefix, DD-019 §3), three
+# resumed turns, each parsed independently, merged into one output with
+# `emission_mode: per_layer`. Single-pass stays the default; per-layer is fallback only.
+
+_EXTRACTION_LAYERS = ("concepts", "definitions", "claims", "instruments", "measures",
+                      "standards", "frameworks", "practices", "tools", "platforms",
+                      "edges", "cites", "proposed_relationships")
+_LAYER_TURNS = (
+    ("nodes_general", ("concepts", "definitions", "claims", "standards", "frameworks",
+                       "practices", "tools", "platforms")),
+    ("instruments_measures", ("instruments", "measures")),
+    ("edges", ("edges", "cites", "proposed_relationships")),
+)
+
+
+def has_extraction_layers(output) -> bool:
+    return isinstance(output, dict) and any(
+        isinstance(output.get(k), list) and output.get(k) for k in _EXTRACTION_LAYERS)
+
+
+def _out_tokens(usage: dict | None) -> int:
+    return int((usage or {}).get("outputTokens", 0) or 0)
+
+
+def _layer_turn_prompt(turn_name: str, layers: tuple, prior_note: str) -> str:
+    keys = ", ".join(f'"{k}": [...]' for k in layers)
+    return (
+        "Your previous single-pass output could not be parsed (it appears truncated). "
+        "Re-emit your extraction for the SAME document in parts, same rules and same "
+        f"format as before. THIS turn, emit ONLY these layers as one strict JSON object "
+        f"{{{keys}}} — no prose, no fences, nothing else.{prior_note}")
+
+
+def invoke_with_layer_fallback(doc_id: str, source_text: str, timeout: int = 1800,
+                               config: dict | None = None) -> dict:
+    """``invoke`` plus the ADDENDUM-01 truncation fallback. Returns the usual meta dict;
+    when the fallback ran, ``emission_mode`` is ``per_layer``, ``parse_failed_truncated``
+    is True, ``usage`` sums all calls, and ``raw_result`` concatenates the turns."""
+    config = config or load_model_config()
+    suspect_floor = int(config.get("truncation_suspect_tokens", 40000))
+    try:
+        meta = invoke(doc_id, source_text, timeout=timeout, config=config)
+        if has_extraction_layers(meta["output"]):
+            return meta
+        truncated = _out_tokens(meta.get("usage")) > suspect_floor
+        session_id, base_usage = meta.get("session_id"), dict(meta.get("usage") or {})
+        base_raw = meta.get("raw_result") or ""
+        if not truncated:
+            return meta          # small-but-empty output is a real (bad) extraction, not truncation
+    except ModelParseError as exc:
+        if _out_tokens(exc.usage) <= suspect_floor or not exc.session_id:
+            raise
+        session_id, base_usage, base_raw = exc.session_id, dict(exc.usage), ""
+    # per-layer retry: three resumed turns against the cached document prefix
+    merged: dict = {}
+    usages = [base_usage]
+    raws = [base_raw]
+    for turn_name, layers in _LAYER_TURNS:
+        prior_note = ""
+        if turn_name == "edges":
+            prior_note = (" Edges may only reference node ids you emitted in the previous "
+                          "two turns (plus the document id).")
+        meta_t = invoke(f"{doc_id}#layer:{turn_name}", "",
+                        prompt=_layer_turn_prompt(turn_name, layers, prior_note),
+                        timeout=timeout, config=config, resume_session_id=session_id)
+        session_id = meta_t.get("session_id") or session_id
+        usages.append(meta_t.get("usage") or {})
+        raws.append(meta_t.get("raw_result") or "")
+        out_t = meta_t["output"] if isinstance(meta_t["output"], dict) else {}
+        for k in layers:
+            if isinstance(out_t.get(k), list):
+                merged[k] = out_t[k]
+    total_usage = {}
+    for k in ("inputTokens", "outputTokens", "cacheCreationInputTokens", "cacheReadInputTokens"):
+        total_usage[k] = sum(int((u or {}).get(k, 0) or 0) for u in usages)
+    return {
+        "output": merged,
+        "model_id": config["model_id"],
+        "usage": total_usage,
+        "cost_usd": None,
+        "duration_ms": None,
+        "session_id": session_id,
+        "raw_result": "\n\n---PER_LAYER_TURN---\n\n".join(r for r in raws if r),
+        "emission_mode": "per_layer",
+        "parse_failed_truncated": True,
     }

@@ -2,21 +2,13 @@
 Versioned extraction prompt template (schema_v0.1.md §5, whole-document protocol).
 This file IS the prompt — it is loaded and rendered, never pasted inline into code strings.
 Rendering substitutes {{schema_version}}, {{document_id}}, and {{document_text}}.
-prompt_version: 0.3.5
+prompt_version: 0.3.4
 -->
 # Whole-document extraction — ai-readiness-kg schema {{schema_version}}
 
 You extract a knowledge graph from ONE primary-source document, in a single pass. Output
 **strict JSON** only — no prose, no markdown fences. Every node and every edge you emit MUST
 carry a `grounding_span`: a quote copied from the document that supports it.
-
-**FIRST GROUNDING RULE — the node's own span must contain the node's name.** Every node's
-`grounding_span` must contain that node's `name` (or `term`/`text`) **verbatim** — the exact
-surface form the document uses. If the document uses a different surface form than your
-chosen `name`, use the document's surface form as the name (record your preferred form in
-`aliases`). Per-attribute `grounding_spans` (Instrument, below) are *in addition to* the
-node's own span, never a substitute for it. A node whose own span does not contain its name
-is rejected.
 
 **The grounding_span must be CHARACTER-EXACT.** Copy an exact, contiguous substring from the
 document text — do not paraphrase, summarize, reword, fix typos, expand abbreviations, merge
@@ -80,20 +72,9 @@ because a prior run fabricated Instrument `method` values ("fielded every 2 year
   copied from a document sentence that states how the instrument works — if the document
   only names the instrument, `method` is null. No covering quote ⇒ set that attribute null.
   (`name` is covered by the node's own `grounding_span`, as for every node.)
-- **Positive criterion — when TO emit an Instrument (v0.3.5).** Emit an Instrument node
-  whenever the document *specifies, applies, evaluates, or documents* the instrument —
-  that is, the document's own text carries at least one attribute-bearing description
-  (its method, owner, year, inputs, or outputs) that a span can cover. A **surveyed**
-  instrument in a survey/review paper meets this criterion: the survey documents it —
-  emit it as an Instrument with whatever attributes the survey's text covers. The paper's
-  OWN instrument always meets it (e.g. AIDRIN in the AIDRIN paper is an Instrument node,
-  never a mere Concept).
-- An instrument the document merely **names without any attribute-bearing text** — e.g.
-  named once in a related-work sentence ("unlike DQAF, we…") — is NOT an Instrument node:
-  emit it as a Concept and connect it with `mentions`.
-- This criterion decides the *node type*; the per-attribute span rule above decides the
-  *attributes*. An Instrument that meets the criterion but whose `method` has no covering
-  quote gets `method: null` — it is still an Instrument.
+- An instrument the document merely **cites or names without describing** is NOT an
+  Instrument node: emit it as a Concept and connect it with `mentions`. Reserve Instrument
+  nodes for assessments the document itself specifies, applies, or documents.
 
 ### Semantic edges — the span must state the relation (v0.3.4)
 

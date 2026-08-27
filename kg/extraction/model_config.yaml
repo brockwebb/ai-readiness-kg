@@ -15,3 +15,8 @@ secondary_judge_model_id: claude-sonnet-5
 # Cleanup-class model (DD-006: cheap models for cleanup/validation, never primary extraction).
 # Used by the whole-graph repair's model-assisted span relocation (task 2026-08-23).
 cleanup_model_id: claude-haiku-4-5-20251001
+# Truncation suspicion floor (overnight burn ADDENDUM-01 §3): an envelope whose result
+# yields no extraction layers with outputTokens above this is `parse_failed_truncated`
+# and retried once in per-layer emission mode. Set from the 67,057-token observation
+# on aidrin-hiniduma-2024 (2026-08-27 pilot).
+truncation_suspect_tokens: 40000

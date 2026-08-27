@@ -374,7 +374,7 @@ def run(max_docs: int | None = None, dry_run: bool = False,
 
             print(f"  extracting {doc_id} ({len(text):,} chars) …", flush=True)
             try:
-                meta = model_stub.invoke(doc_id, text, timeout=PER_DOC_TIMEOUT_S)
+                meta = model_stub.invoke_with_layer_fallback(doc_id, text, timeout=PER_DOC_TIMEOUT_S)
             except spend.SpendRefusalStop as exc:
                 # Ceiling/daily band would be crossed by the NEXT call — clean stop before
                 # dispatch, same contract as the STOP file and cap exhaustion (exit 0).

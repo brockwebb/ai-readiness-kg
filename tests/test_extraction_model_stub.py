@@ -48,15 +48,15 @@ def test_guard_passes_without_credentials():
     model_stub.guard_no_api_key(env={})  # no raise
 
 
-def test_prompt_version_is_v034():
-    assert model_stub.prompt_version() == "0.3.4"
+def test_prompt_version_is_v035():
+    assert model_stub.prompt_version() == "0.3.5"
 
 
 def test_provenance_stamp_shape_and_override():
     stamp = model_stub.provenance_stamp("evt123")
     assert stamp["extraction_event_id"] == "evt123"
     assert stamp["schema_version"] and stamp["timestamp"]
-    assert stamp["prompt_version"] == "0.3.4"  # §4: prompt version stamped per item
+    assert stamp["prompt_version"] == "0.3.5"  # §4: prompt version stamped per item
     # envelope-reported model overrides the config default
     assert model_stub.provenance_stamp("e", model_id="claude-fable-5-x")["model_id"] == "claude-fable-5-x"
 

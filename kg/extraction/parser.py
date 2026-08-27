@@ -51,6 +51,9 @@ class ExtractionResult:
     edges: list = field(default_factory=list)          # {type, from_id, to_id, from_type, to_type, item}
     quarantined: list = field(default_factory=list)    # {kind, reason, item}
     proposed_relationships: list = field(default_factory=list)  # staged, never written
+    # v0.3.5 precheck (ADDENDUM-01 §2): nodes whose own span lacks their name, counted
+    # BEFORE any quarantine decision so a pilot verdict reports it as a number.
+    precheck_span_lacks_name: int = 0
 
     def counts(self) -> dict:
         return {
@@ -187,6 +190,12 @@ def parse_extraction(output: dict, source_text: str, schema: dict | None = None,
                 _quarantine(result, layer, "node missing 'id'", item)
                 continue
             span = item.get("grounding_span")
+            # v0.3.5 precheck: does the node's own span contain its name-class attribute?
+            # Counted for every node regardless of the coverage gate, before any quarantine.
+            name_val = item.get("name") or item.get("term") or item.get("text")
+            if isinstance(name_val, str) and name_val.strip() and \
+                    not grounding.covers(str(span or ""), name_val):
+                result.precheck_span_lacks_name += 1
             if not span or not str(span).strip():
                 _quarantine(result, layer, "missing grounding_span (§4: no span, no write)", item)
                 continue
