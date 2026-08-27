@@ -64,8 +64,8 @@ Profile `reextract_v035` sha-pinned. Suite **194 green** before Lane 1′.
 
 **Lane 1′ — verdict on disk: `FAIL:harness_or_prompt`**
 (`docs/research/2026-08-26_pilot_reextract_v035_verdict.md`). Precondition 1/3 docs with
-both strata (needs ≥2/3); the judge was correctly not run (run `pilot_v035` spent ~0.9M of
-its 3M ceiling on extraction only). The verdict's diagnosis records: instrument
+both strata (needs ≥2/3); the judge was correctly not run (run `pilot_v035` settled 1.53M of
+its 3M ceiling, extraction only — the per-layer fallback's extra turns included). The verdict's diagnosis records: instrument
 over-demotion **fixed** (0→9 nodes, AIDRIN back), name-in-span **fixed** (precheck 38→17
 total), truncation fallback **fired and worked** — and that the remaining zero is
 substantially the per-doc *conjunction* in the precondition against instrument-heavy docs
