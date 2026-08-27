@@ -75,3 +75,34 @@ pooled per-stratum precondition) are recorded for the operator; ADDENDUM-01 forb
 second revision tonight.
 
 **Lanes 2/3: closed** per the addendum's FAIL branch. Lane 4: untouched.
+
+---
+
+## ADDENDUM-02 + ADDENDUM-04 execution — 2026-08-27 midday (appended section)
+
+**ADDENDUM-03 superseded by -04, not executed.** Model pin `claude-opus-5` applied to
+`model_config.yaml` (prior 4.8 pin recorded in the comment; raters unchanged at
+opus-4-8 + sonnet-5 — extractor/rater separation noted for DD). **Preflight 3/3
+`claude-opus-5`.**
+
+**Lane 1″ (`pilot_v035b_opus5`, ceiling 4M): STOP:run_ceiling — operationally FAIL,
+Lanes 2/3 closed.** The guard refused doc 5's reservation at 3.91M committed (zero
+overshoot; the first run-scope refusal in DD-022's production life). Verdict with the
+full per-doc table and three measured findings:
+`docs/research/2026-08-27_pilot_reextract_v035b_verdict.md`. Headlines: instrument
+criterion holds under Opus 5 (pooled 23 ≥ 20); semantic edges 3/20 with the
+38-prior-edge doc admitting 0; Opus 5 truncates single-pass at 108–158K output tokens on
+3/4 docs with the per-layer fallback recovering all three; cost ~977K/doc → the
+ADDENDUM-02 protocol needs ~7M, and the machine does not raise its own declared ceiling
+— re-entry is a one-line operator re-declare.
+
+**Lane 4 resumed** per ADDENDUM-02 (run `restoration_v2_resume`, ceiling 55M): stage 2
+continuing from judgment 1,241 — 3,050/5,554 judged and 10.3M settled at this writing;
+then acceptance gate → relocation shards → 50-item re-judge, with the new
+sleep-to-00:05Z daily-band retry (the band will run out before the 20:00 ET roll on
+current trajectory; the retry mechanism is the designed path). The stage-2 first-3
+cache-read check prints when the driver flushes the stage's output at completion
+(subprocess output is buffered); it lands in `logs/overnight_burn_2026-08-26.log`.
+
+**Wall stop for all of today's invocations: 2026-08-28T03:30Z** (ADDENDUM-02's absolute
+timestamp). SUMMARY at the final driver's exit closes out the whole task from the ledger.
