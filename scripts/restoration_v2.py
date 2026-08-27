@@ -265,6 +265,14 @@ def stage2(a, cfg, ledger, run_id) -> int:
             counts["call_error"] += 1
             print(f"  batch@{b}: ERROR {str(exc)[:100]}", flush=True)
             continue
+        if b < 3 * STAGE2_BATCH:
+            u = meta.get("usage") or {}
+            print(f"CACHE stage2 call {b // STAGE2_BATCH + 1}: "
+                  f"read {int(u.get('cacheReadInputTokens', 0) or 0):,} "
+                  f"write {int(u.get('cacheCreationInputTokens', 0) or 0):,} "
+                  f"input {int(u.get('inputTokens', 0) or 0):,} "
+                  f"(fresh judge batches: no shared prefix expected — logged per ADDENDUM-02, not gated)",
+                  flush=True)
         rows = meta["output"] if isinstance(meta["output"], list) else \
             (meta["output"].get("results") or meta["output"].get("judgments") or [])
         got = {r.get("id"): r for r in rows if isinstance(r, dict)}

@@ -4,13 +4,20 @@
 # History: Fable (claude-fable-5) ran the 5-doc pilot; operator pinned Opus 4.8 for bulk
 # (task 2026-07-03_schema_v02_promotion_v2: pilot/bulk model continuity, no July-7 billing
 # cliff, no classifier-reroute heterogeneity).
-model_id: claude-opus-4-8       # whole-document extraction (schema §5, model-agnostic)
+# Operator decision 2026-08-27 (overnight burn ADDENDUM-04; verified against
+# platform.claude.com/docs/en/models/opus-5/overview): Claude Opus 5 is the extraction
+# model — 1M context, 128K max output, effort defaults high. Supersedes the 2026-07-03
+# claude-opus-4-8 pin (task 2026-07-03_schema_v02_promotion_v2, pilot/bulk continuity);
+# 4.8 remains the PRIMARY JUDGE RATER below, so extractor and rater no longer share a
+# model. A model change is a new extraction instrument: events carry model_id per §4 and
+# the probe stratifies by epoch, so 4.8-era and opus5-era items are never pooled.
+model_id: claude-opus-5         # whole-document extraction (schema §5, model-agnostic)
 provider: claude_max_oauth      # subscription OAuth via `claude -p`; never ANTHROPIC_API_KEY/AUTH_TOKEN (DD-007)
 cli: claude                     # headless invocation path: `claude -p` (Agent SDK credit, no key)
 effort: high                    # thinking depth via effort
-# Probe second rater (task 2026-08-22_faithfulness_probe Phase 4): a different member of the
-# same family, Max OAuth. Recorded as same-family in DD-016; cross-family is the operator
-# chat-export lane.
+# Probe raters (unchanged by ADDENDUM-04): primary claude-opus-4-8, secondary
+# claude-sonnet-5 — neither shares a model with the opus-5 extractor.
+primary_judge_model_id: claude-opus-4-8
 secondary_judge_model_id: claude-sonnet-5
 # Cleanup-class model (DD-006: cheap models for cleanup/validation, never primary extraction).
 # Used by the whole-graph repair's model-assisted span relocation (task 2026-08-23).

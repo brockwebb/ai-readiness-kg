@@ -129,6 +129,45 @@ def invoke_backoff(state: dict, *args, **kw) -> dict:
             time.sleep(RATE_SLEEP_S)
 
 
+def _next_daily_roll() -> datetime.datetime:
+    """The next 00:05Z after now — the UTC band rolls at midnight UTC (20:00 ET)."""
+    now = now_utc()
+    roll = now.replace(hour=0, minute=5, second=0, microsecond=0)
+    if roll <= now:
+        roll += datetime.timedelta(days=1)
+    return roll
+
+
+def sleep_until_daily_roll(lane: str) -> bool:
+    """ADDENDUM-02: on a scope=daily refusal before the wall stop, sleep to 00:05Z and
+    retry. Returns False when the wall stop lands first (caller stops instead)."""
+    roll = _next_daily_roll()
+    stop = datetime.datetime.fromisoformat(WALL_STOP_UTC)
+    if roll >= stop:
+        status(lane, "stopped", reason="daily band exhausted and wall stop precedes the roll")
+        return False
+    secs = (roll - now_utc()).total_seconds()
+    status(lane, "daily_band_sleep", until=roll.isoformat(), seconds=int(secs))
+    while now_utc() < roll:
+        if halted():
+            return False
+        time.sleep(min(60, max(1, (roll - now_utc()).total_seconds())))
+    return True
+
+
+def last_refusal_scope(run_id: str, since_iso: str) -> str | None:
+    """Scope of the newest `refuse` record for run_id after since_iso, from the ledger."""
+    scope = None
+    ledger_path = spend.default_ledger().path
+    for line in ledger_path.read_text(encoding="utf-8").splitlines():
+        if not line.strip():
+            continue
+        r = json.loads(line)
+        if r.get("record") == "refuse" and r.get("run_id") == run_id                 and r.get("ts", "") >= since_iso:
+            scope = r.get("scope")
+    return scope
+
+
 def declare(run_id: str, ceiling: int, call_class: str) -> None:
     spend.default_ledger().declare(run_id, ceiling, declared_by=TASK, call_class=call_class)
 
@@ -490,6 +529,9 @@ def lane2() -> None:
         except RateLimitStop as exc:
             status(lane, "rate_limited", detail=str(exc)[:200]); break
         except spend.SpendRefusalStop as exc:
+            if exc.refusal.scope == "daily" and wall_ok():
+                if sleep_until_daily_roll(lane):
+                    continue
             status(lane, "ceiling_stop", reason=str(exc)[:200]); break
         except (model_stub.ModelInvocationError, model_stub.ModelSubstitutionError,
                 ValueError) as exc:
@@ -513,7 +555,7 @@ def lane2() -> None:
             status(lane, "quarantine_STOP", doc=d, rate=round(rate, 3), streak=q_streak)
             break
         ex_id = uuid.uuid4().hex
-        prov = stamp(ex_id, meta["model_id"], sha, "reextract-v034")
+        prov = stamp(ex_id, meta["model_id"], sha, "reextract-v035")
         new_ids = set()
         kept_n = kept_e = routed = 0
         for nrec in result.nodes:
@@ -626,37 +668,59 @@ def lane3() -> None:
         return
     if halted() or not wall_ok():
         status(lane, "stopped", reason="wall clock / STOP file"); return
-    try:
-        r = subprocess.run(base, cwd=REPO, env=env, capture_output=True, text=True,
-                           timeout=min(6 * 3600, wall_remaining_s()))
-        print(r.stdout[-1500:], r.stderr[-500:], flush=True)
-        rc = r.returncode
-    except subprocess.TimeoutExpired:
-        status(lane, "stopped", reason="wall-clock cap killed the main run (resume-safe shards)")
-        rc = -9
+    rc = 0
+    while True:
+        t0 = now_utc().isoformat()
+        try:
+            r = subprocess.run(base, cwd=REPO, env=env, capture_output=True, text=True,
+                               timeout=min(6 * 3600, wall_remaining_s()))
+            print(r.stdout[-1500:], r.stderr[-500:], flush=True)
+            rc = r.returncode
+        except subprocess.TimeoutExpired:
+            status(lane, "stopped", reason="wall-clock cap killed the main run (resume-safe shards)")
+            rc = -9
+            break
+        if last_refusal_scope(run_id, t0) == "daily" and wall_ok():
+            if sleep_until_daily_roll(lane):
+                continue
+        break
     rep = spend.default_ledger().reconcile(run_id)
     status(lane, "done", rc=rc, reconcile_ok=rep["ok"], settled=rep["settled_total"])
     commit_push("overnight burn Lane 3: triage-epoch extraction window complete")
 
 
 # ------------------------------------------------------------------ Lane 4
-def lane4() -> None:
+def lane4(resume: bool = False) -> None:
     lane = "lane4_repair"
-    status(lane, "running")
-    # a) restoration v2 stage 1 + 2
-    for stage, rid in (("1", "restoration_v2_s1"), ("2", "restoration_v2_s2")):
-        if halted() or not wall_ok():
-            status(lane, "stopped", reason="wall clock / STOP file"); return
-        env = run_env(rid)
-        r = subprocess.run([PY, "scripts/restoration_v2.py", "--stage", stage,
-                            "--ceiling-tokens", str(CEILING), "--run-id", rid],
-                           cwd=REPO, env=env, capture_output=True, text=True,
-                           timeout=min(5 * 3600, wall_remaining_s()))
-        print(r.stdout[-1500:], r.stderr[-500:], flush=True)
-        status(lane, "running", stage=stage, rc=r.returncode)
-        if r.returncode == 3:
-            status(lane, "stopped", reason=f"restoration stage {stage} diagnostic halt (rc 3)")
-            return
+    status(lane, "running", mode="resume" if resume else "full")
+    # a) restoration v2 — full: stage 1 + 2; resume (ADDENDUM-02): stage 2 only, from the
+    # first unjudged proposal (restoration_v2.py stage 2 is idempotent on judged keys)
+    stages = ((("2", "restoration_v2_resume"),) if resume
+              else (("1", "restoration_v2_s1"), ("2", "restoration_v2_s2")))
+    for stage, rid in stages:
+        while True:
+            if halted() or not wall_ok():
+                status(lane, "stopped", reason="wall clock / STOP file"); return
+            env = run_env(rid)
+            t0 = now_utc().isoformat()
+            try:
+                r = subprocess.run([PY, "scripts/restoration_v2.py", "--stage", stage,
+                                    "--ceiling-tokens", str(CEILING), "--run-id", rid],
+                                   cwd=REPO, env=env, capture_output=True, text=True,
+                                   timeout=min(8 * 3600, wall_remaining_s()))
+            except subprocess.TimeoutExpired:
+                status(lane, "stopped", reason=f"wall cap killed stage {stage} (resume-safe)")
+                return
+            print(r.stdout[-1500:], r.stderr[-500:], flush=True)
+            status(lane, "running", stage=stage, rc=r.returncode)
+            if r.returncode == 3:
+                status(lane, "stopped", reason=f"restoration stage {stage} diagnostic halt (rc 3)")
+                return
+            if last_refusal_scope(rid, t0) == "daily" and wall_ok():
+                if sleep_until_daily_roll(lane):
+                    continue
+                return
+            break
     # b) acceptance sample: 100 accepted restorations, full probe protocol, 2 raters
     accepted = [ev for ev in eventlog.replay(tag=RESTORE_TAG)
                 if ev.get("event_type") == "attribute_restored"]
@@ -705,19 +769,30 @@ def lane4() -> None:
     # c) relocation resume, two shards sequential (concurrency budget), decoys+cache on
     declare("repair_resume", CEILING, "cleanup")
     for shard in ("0/2", "1/2"):
-        if halted() or not wall_ok():
-            status(lane, "stopped", reason="wall clock / STOP file"); return
-        env = run_env("repair_resume")
-        r = subprocess.run([PY, "scripts/batch_repair.py", "--shard", shard,
-                            "--redo-unrepairable", "--kinds", "relocate",
-                            "--exclude-types", "Instrument",
-                            "--ceiling-tokens", str(CEILING), "--run-id", "repair_resume"],
-                           cwd=REPO, env=env, capture_output=True, text=True,
-                           timeout=min(5 * 3600, wall_remaining_s()))
-        print(r.stdout[-1500:], r.stderr[-500:], flush=True)
-        status(lane, "running", relocation_shard=shard, rc=r.returncode)
-        if r.returncode == 3:
-            status(lane, "stopped", reason=f"relocation shard {shard} diagnostic halt")
+        while True:
+            if halted() or not wall_ok():
+                status(lane, "stopped", reason="wall clock / STOP file"); return
+            env = run_env("repair_resume")
+            t0 = now_utc().isoformat()
+            try:
+                r = subprocess.run([PY, "scripts/batch_repair.py", "--shard", shard,
+                                    "--redo-unrepairable", "--kinds", "relocate",
+                                    "--exclude-types", "Instrument",
+                                    "--ceiling-tokens", str(CEILING), "--run-id", "repair_resume"],
+                                   cwd=REPO, env=env, capture_output=True, text=True,
+                                   timeout=min(5 * 3600, wall_remaining_s()))
+            except subprocess.TimeoutExpired:
+                status(lane, "stopped", reason=f"wall cap killed relocation shard {shard}")
+                return
+            print(r.stdout[-1500:], r.stderr[-500:], flush=True)
+            status(lane, "running", relocation_shard=shard, rc=r.returncode)
+            if r.returncode == 3:
+                status(lane, "stopped", reason=f"relocation shard {shard} diagnostic halt")
+                return
+            if last_refusal_scope("repair_resume", t0) == "daily" and wall_ok():
+                if sleep_until_daily_roll(lane):
+                    continue
+                return
             break
     # d) re-judge of prior model_assisted_batch relocations (50 items, reported number)
     prior = [ev for ev in eventlog.replay()
@@ -759,6 +834,201 @@ def lane4() -> None:
     commit_push("overnight burn Lane 4: restoration v2 + relocation resume window complete")
 
 
+
+# ------------------------------------------------------------------ Lane 1'' (ADDENDUM-02/04)
+PRIOR_PILOTS = ["data-readiness-for-ai-a-360-degree-survey", "aidrin-hiniduma-2024",
+                "fcsm-23-02-a-framework-for-data-quality-case-studies"]
+VERDICT_V035B = REPO / "docs" / "research" / "2026-08-27_pilot_reextract_v035b_verdict.md"
+PILOT_B_TAG = "reextract_v035b"
+
+
+def top_semantic_docs(n: int, exclude: set) -> list[tuple[str, int]]:
+    _, edges = live_items()
+    counts = Counter()
+    for d, evs in edges.items():
+        if d in exclude:
+            continue
+        counts[d] = sum(1 for e in evs if (e.get("payload") or {}).get("type") in SEMANTIC)
+    return [(d, c) for d, c in counts.most_common(n) if c > 0]
+
+
+def lane1b() -> bool:
+    """ADDENDUM-02 Lane 1'' under ADDENDUM-04's opus-5 pin: 5 stratum-matched docs, all
+    extracted fresh; pooled precondition (Instruments >= 20 AND semantic edges >= 20);
+    judge capped at 120 facts/stratum; raters opus-4-8 + sonnet-5 (per config)."""
+    import random as _rnd
+    lane = "lane1b_pilot"
+    run_id = "pilot_v035b_opus5"
+    declare(run_id, 4_000_000, "extraction")
+    spend.set_current_run(run_id)
+    members = corpus_paths()
+    top2 = top_semantic_docs(4, set(PRIOR_PILOTS))
+    top2 = [(d, c) for d, c in top2 if d in members][:2]
+    docs = PRIOR_PILOTS + [d for d, _ in top2]
+    status(lane, "running", docs=docs,
+           semantic_doc_prior_counts={d: c for d, c in top2})
+    raw_dir = REPO / "events/raw/reextract_v035b_pilot"
+    raw_dir.mkdir(parents=True, exist_ok=True)
+    fresh, doc_texts, per_doc = [], {}, {}
+    rstate: dict = {}
+    for d in docs:
+        if halted() or not wall_ok():
+            status(lane, "STOP", reason="wall clock / STOP file"); return False
+        try:
+            result, meta, sha, text = extract_doc(d, members[d], rstate)
+        except RateLimitStop as exc:
+            status(lane, "rate_limited", detail=str(exc)[:200]); return False
+        except spend.SpendRefusalStop as exc:
+            if exc.refusal.scope == "daily" and wall_ok() and sleep_until_daily_roll(lane):
+                try:
+                    result, meta, sha, text = extract_doc(d, members[d], rstate)
+                except Exception as exc2:
+                    status(lane, "STOP", reason=f"{d}: {str(exc2)[:200]}"); return False
+            else:
+                status(lane, "STOP", reason=f"spend guard: {exc}"); return False
+        except (model_stub.ModelInvocationError, model_stub.ModelSubstitutionError,
+                ValueError) as exc:
+            status(lane, "STOP", reason=f"{d}: {str(exc)[:200]}"); return False
+        doc_texts[d] = text
+        (raw_dir / f"{d}.{sha[:12]}.{model_stub.prompt_version()}.{meta['model_id']}.json").write_text(
+            json.dumps({"doc_id": d, "usage": meta["usage"], "cost_usd": meta.get("cost_usd"),
+                        "emission_mode": meta.get("emission_mode") or "single_pass",
+                        "raw_result": meta["raw_result"]}, ensure_ascii=False, indent=1) + "\n")
+        ex_id = uuid.uuid4().hex
+        prov = stamp(ex_id, meta["model_id"], sha, "reextract-v035-pilot")
+        kept_n = kept_e = 0
+        for nrec in result.nodes:
+            if nrec["type"] != "Instrument":
+                continue
+            eventlog.append({"event_type": "node_asserted", "purpose": "reextract",
+                             "doc_id": d, "provenance": prov,
+                             "payload": {"id": nrec["id"], "type": "Instrument",
+                                         "item": nrec["item"]}},
+                            batch=PILOT_SHARD_NO, tag=PILOT_B_TAG)
+            fresh.append({"doc_id": d, "kind": "node", "type": "Instrument", "item": nrec["item"]})
+            kept_n += 1
+        for erec in result.edges:
+            if erec["type"] not in SEMANTIC:
+                continue
+            eventlog.append({"event_type": "edge_asserted", "purpose": "reextract",
+                             "doc_id": d, "provenance": prov,
+                             "payload": {"type": erec["type"], "from_id": erec["from_id"],
+                                         "to_id": erec["to_id"], "item": erec["item"]}},
+                            batch=PILOT_SHARD_NO, tag=PILOT_B_TAG)
+            fresh.append({"doc_id": d, "kind": "edge", "type": erec["type"], "item": erec["item"]})
+            kept_e += 1
+        out_tokens = int((meta.get("usage") or {}).get("outputTokens", 0) or 0)
+        per_doc[d] = {"instruments": kept_n, "semantic_edges": kept_e,
+                      "span_lacks_name": result.precheck_span_lacks_name,
+                      "emission": meta.get("emission_mode") or "single_pass",
+                      "output_tokens": out_tokens}
+        eventlog.append({"event_type": "reextract_pilot_metrics", "purpose": "reextract",
+                         "doc_id": d, "counts": result.counts(), **per_doc[d], "task": TASK},
+                        batch=PILOT_SHARD_NO, tag=PILOT_B_TAG)
+        status(lane, "running", doc=d, **per_doc[d])
+    n_instr = sum(v["instruments"] for v in per_doc.values())
+    n_sem = sum(v["semantic_edges"] for v in per_doc.values())
+    settled = spend.default_ledger().status(run_id)["runs"][run_id]["settled"]
+    cost_per_doc = settled // max(1, len(docs))
+
+    def doc_table() -> str:
+        rows = "\n".join(
+            f"| `{d}` | {v['instruments']} | {v['semantic_edges']} | {v['span_lacks_name']} "
+            f"| {v['emission']} | {v['output_tokens']:,} |" for d, v in per_doc.items())
+        return ("| doc | instruments | semantic edges | span_lacks_name | emission | max output tokens |\n"
+                "|---|---|---|---|---|---|\n" + rows)
+
+    if not (n_instr >= 20 and n_sem >= 20):
+        VERDICT_V035B.write_text(
+            "# Pilot re-extract v0.3.5b (opus-5) — verdict: FAIL:harness_or_prompt\n\n"
+            f"Pooled precondition not met: Instruments {n_instr} (need >= 20), semantic edges "
+            f"{n_sem} (need >= 20) across 5 docs. Judge not run (ADDENDUM-02).\n\n"
+            + doc_table() + "\n\n"
+            f"Run `{run_id}`: settled {settled:,} tokens; cost/doc ~{cost_per_doc:,} (informational).\n")
+        status(lane, "FAIL", reason=f"pooled precondition I={n_instr} E={n_sem}")
+        return False
+    status(lane, "precondition_met", instruments=n_instr, semantic_edges=n_sem)
+    recs = sample_records(fresh, doc_texts,
+                          lambda it: "Instrument:pilot" if it["kind"] == "node"
+                          else "edge:semantic:pilot")
+    write_sample("pilot_v035b", recs)
+    cfg = model_stub.load_model_config()
+    env = run_env(run_id)
+    r = subprocess.run([PY, "scripts/probe_decompose.py", "--prefix", "pilot_v035b"],
+                       cwd=REPO, env=env, capture_output=True, text=True,
+                       timeout=min(3600, wall_remaining_s()))
+    print(r.stdout[-800:], r.stderr[-400:], flush=True)
+    if r.returncode != 0:
+        status(lane, "STOP", reason="decompose failed"); return False
+    # per-stratum random cap of 120 facts (ADDENDUM-02)
+    sample_by_ev = {rec["event_id"]: rec for rec in recs}
+    facts = [json.loads(l) for l in
+             (REPO / "corpus/staging/metrics/pilot_v035b_facts.jsonl").read_text().splitlines()
+             if l.strip()]
+    by_stratum = defaultdict(list)
+    for f_ in facts:
+        by_stratum[sample_by_ev[f_["event_id"]]["stratum"]].append(f_["fact_id"])
+    rng = _rnd.Random("pilot_v035b")
+    sel = []
+    for s, fids in by_stratum.items():
+        sel += fids if len(fids) <= 120 else rng.sample(fids, 120)
+    sel_file = REPO / "corpus/staging/metrics/pilot_v035b_fact_sel.json"
+    sel_file.write_text(json.dumps(sel))
+    status(lane, "judging", facts_selected=len(sel),
+           per_stratum={s: min(len(v), 120) for s, v in by_stratum.items()})
+    for model in (cfg["primary_judge_model_id"], cfg["secondary_judge_model_id"]):
+        r = subprocess.run([PY, "scripts/probe_judge.py", "--prefix", "pilot_v035b",
+                            "--run", "pilot_v035b", "--batch", "10", "--model", model,
+                            "--fact-ids-file", str(sel_file)],
+                           cwd=REPO, env=env, capture_output=True, text=True,
+                           timeout=min(7200, wall_remaining_s()))
+        print(r.stdout[-800:], r.stderr[-400:], flush=True)
+        if r.returncode != 0:
+            status(lane, "STOP", reason=f"judge {model} failed"); return False
+    r = subprocess.run([PY, "scripts/probe_aggregate.py", "--prefix", "pilot_v035b",
+                        "--run", "pilot_v035b"], cwd=REPO, env=env,
+                       capture_output=True, text=True, timeout=600)
+    print(r.stdout[-1200:], r.stderr[-400:], flush=True)
+    agg_path = REPO / "corpus/staging/metrics/pilot_v035b_aggregate.json"
+    if r.returncode != 0 or not agg_path.exists():
+        status(lane, "STOP", reason="aggregate failed"); return False
+    agg = json.loads(agg_path.read_text())
+    per = agg.get("per_stratum") or {}
+    faithful = (agg.get("items") or {}).get("faithful_rate")
+    checks = {}
+    for s in ("Instrument:pilot", "edge:semantic:pilot"):
+        rr = per.get(s)
+        checks[s] = {"F": rr and rr.get("F"), "F_hi": rr and rr.get("F_hi"),
+                     "n": rr and rr.get("n_in_F_denominator"),
+                     "pass": bool(rr) and rr.get("F_hi") is not None and rr["F_hi"] < F_STOP}
+    ok = all(c["pass"] for c in checks.values()) and (faithful or 0) >= PILOT_ITEM_FAITHFUL
+    settled = spend.default_ledger().status(run_id)["runs"][run_id]["settled"]
+    lines = [f"# Pilot re-extract v0.3.5b (opus-5) — verdict: {'PASS' if ok else 'FAIL'}", "",
+             f"Task `{TASK}` ADDENDUM-02 protocol under the ADDENDUM-04 model pin "
+             f"(`claude-opus-5`; preflight 3/3). Run `{run_id}` (ceiling 4M): settled "
+             f"{settled:,} tokens; cost/doc ~{settled // len(docs):,} (informational).",
+             f"Raters: {cfg['primary_judge_model_id']} + {cfg['secondary_judge_model_id']} "
+             f"(neither shares a model with the extractor).", "",
+             doc_table(), "",
+             f"Pooled precondition: Instruments {n_instr} >= 20, semantic edges {n_sem} >= 20 — met.",
+             f"Facts judged: {len(sel)} (cap 120/stratum); Dawid-Skene: {agg.get('method')}.", "",
+             "| stratum | F | F_upper | n | pass (< 0.10) |", "|---|---|---|---|---|"]
+    for s, c in checks.items():
+        lines.append(f"| {s} | {c['F'] if c['F'] is not None else '—'} | "
+                     f"{c['F_hi'] if c['F_hi'] is not None else '—'} | {c['n'] or 0} | "
+                     f"{'PASS' if c['pass'] else 'FAIL'} |")
+    lines += ["", (f"Item-level faithful: {faithful:.3f} (pre-registered >= {PILOT_ITEM_FAITHFUL})"
+                   if faithful is not None else "Item-level faithful: —"),
+              "", "Per-rater agreement (bias visibility, ADDENDUM-03 note carried forward):",
+              "```json", json.dumps(agg.get("raters"), indent=1), "```",
+              "", f"**Lanes 2 and 3 are {'GO' if ok else 'NO-GO'}** per the pre-registered rule."]
+    VERDICT_V035B.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    status(lane, "PASS" if ok else "FAIL", faithful=faithful,
+           checks={k: v["pass"] for k, v in checks.items()})
+    commit_push(f"overnight burn ADDENDUM-02/04: pilot v0.3.5b opus-5 {'PASS' if ok else 'FAIL'}")
+    return ok
+
+
 # ------------------------------------------------------------------ summary / main
 def write_summary() -> None:
     led = spend.default_ledger()
@@ -798,6 +1068,34 @@ def main() -> int:
     lanes = set((os.environ.get("OVERNIGHT_LANES") or "all").split(","))
     status("driver", "started", ceiling=CEILING, wall_stop=WALL_STOP_UTC, pid=os.getpid(),
            lanes=sorted(lanes))
+    if lanes == {"1b"}:
+        ok1 = False
+        try:
+            ok1 = lane1b()
+        except Exception as exc:
+            status("lane1b_pilot", "error", detail=str(exc)[:300])
+        if ok1:
+            # ADDENDUM-02: on PASS, Lanes 2 || 3 as a second detached invocation
+            env2 = dict(os.environ)
+            env2["OVERNIGHT_LANES"] = "2,3"
+            log = (REPO / "logs" / "overnight_burn_2026-08-26.log").open("a")
+            subprocess.Popen([PY, str(REPO / "scripts" / "overnight_burn.py")],
+                             cwd=REPO, env=env2, stdout=log, stderr=log,
+                             start_new_session=True)
+            status("driver", "lanes_2_3_launched_detached")
+        status("driver", "exited", lane1b_pass=ok1)
+        commit_push("overnight burn ADDENDUM-02/04: Lane 1'' pilot opus-5 "
+                    + ("PASS -> lanes 2||3 launched" if ok1 else "FAIL"))
+        return 0
+    if lanes == {"4resume"}:
+        try:
+            lane4(resume=True)
+        except Exception as exc:
+            status("lane4_repair", "error", detail=str(exc)[:300])
+        write_summary()
+        status("driver", "exited")
+        commit_push("overnight burn ADDENDUM-02: Lane 4 resume complete — SUMMARY")
+        return 0
     if lanes == {"1"}:
         ok1 = False
         try:
