@@ -136,3 +136,84 @@ rows below (superseded for comparison, not retracted).
 Neither the pre-registered thresholds (F_upper < 0.10, item-faithful ≥ 0.70, pooled ≥ 20 per
 stratum) nor the class definitions were touched.
 
+
+---
+
+# ⏸ PAUSED — operator stop, 2026-08-28T01:37Z
+
+**Operator instruction (verbatim intent):** "full pause until I say go again. We will run out of
+limit before this job finishes."
+
+Nothing is running. Extraction was stopped mid-pass, everything already paid for was ingested at
+zero further spend, and the run is resume-safe: `--phase extract` skips any chunk with a
+persisted raw, `--phase ingest` skips any chunk already on the shard.
+
+## State at pause
+
+| doc | chunks | extracted | remaining |
+|---|---|---|---|
+| data-readiness-for-ai-a-360-degree-survey | 30 | **30** | 0 |
+| aidrin-hiniduma-2024 | 18 | 14 | 4 |
+| fcsm-23-02-a-framework-for-data-quality-case-studies | 27 | 0 | 27 |
+| from-accuracy-to-readiness-metrics-and-benchmarks-for-human | 18 | 0 | 18 |
+| mitre-ai-maturity-model | 35 | 0 | 35 |
+| **total** | **128** | **44** | **84** |
+
+- Spend: run `pilot_chunked_v035` **settled 2,851,499** of a declared 13,000,000 ceiling;
+  `committed_today` 11.4M of the 55M band. Reconcile `ok: true`.
+- 44 chunk raws persisted under `events/raw/chunked_v035/`; all 44 ingested to the tagged shard
+  `events/batch-016_chunked_v035.jsonl` — 746 node events, 1,244 edge events, 379 mention stubs,
+  281 diverted relations.
+- Judging (`--phase judge`) has **not** run. No judge tokens spent. The whole-document arm has
+  not been re-judged under the new protocol versions either.
+
+## What the 44 chunks already show (partial, 2 of 5 docs)
+
+These are observations on an incomplete arm and are **not** a verdict; the pre-registered gate is
+not evaluated until both arms are judged.
+
+1. **Chunking costs more here, not less.** 44 calls settled 2,851,499 → **64,807 tokens/chunk** →
+   ~8.3M projected for the five documents, against the whole-document arm's measured **3,925,860**
+   — about **2.1× more expensive**. The driver is visible in the raws: the prompt asks for an
+   exhaustive concept inventory and the model produces one *per chunk* (33–46K output tokens for
+   a 1,500-token chunk; median call duration 334 s). This answers the lab note's first open
+   question ("does per-doc cost land at or below the single-pass figure?") in the negative,
+   independent of what the faithfulness judge later says.
+2. **Node yield is much higher.** 746 admitted nodes over 2 documents (432 Concept, **101
+   Instrument**, 96 Claim, 65 Definition, 33 Measure) against the whole-document arm's 24
+   Instruments over all five. Consistent in direction with Edge et al. 2024 and with Wintermute's
+   own 2026-08-13 measurement (§1).
+3. **The quarantine rate is high and must be reported with the yield.** 75.5 % of items
+   (666 of 882 over the first 10 chunks) were quarantined, nearly all `span_partial` — the
+   model's quote does not contain the node's own name verbatim. Some of this is pypdf damage:
+   the model quoted `Heterogeneous Euclidean-Overlap Metri (HEOM)` because the extracted text
+   is missing the "c". The same gate ran on both arms, so the comparison stays like-for-like.
+4. **The semantic stratum is nearly empty at chunk scope.** 20 semantic edges of 1,244
+   (19 `subtype_of`, **1 `has_component`**). Relations keep failing endpoint typing because the
+   same metric is a Concept in one chunk and an Instrument in another. On this trajectory the
+   chunked arm may not reach §5's pooled ≥ 20 precondition for `semantic_edge` across all five
+   documents — which would itself be the finding.
+5. **ADDENDUM-06's closed `diversion_reason` list is not honored by the model.** It emitted 34
+   distinct values over the first 10 chunks, most of them whole sentences. Report-side
+   normalization was added (`normalize_reason`, raw string untouched on the shard):
+   281 diversions → `other 108, unstated 94, cross_chunk 47, structural_inference 20,
+   other:schema_cannot_express 12`. **cross_chunk is 47/281 = 16.7 %** so far.
+
+## To resume (no decisions pending, no state to reconstruct)
+
+```bash
+python scripts/chunked_pilot.py --phase extract --ceiling-tokens 13000000 --workers 8
+python scripts/chunked_pilot.py --phase resolve
+python scripts/chunked_pilot.py --phase judge --fact-cap 120 --judge-ceiling 6000000
+python scripts/chunked_pilot.py --phase register
+```
+`extract` runs `ingest` itself on completion. Remaining estimated spend: ~5.4M extraction
+(84 chunks × 64,807) + ~4M judging.
+
+## Ledger note
+
+Three kill/relaunch cycles (a chunk-boundary fix, a truncation-detector fix, and this pause) left
+reservations outstanding for in-flight calls. Those calls **had dispatched**, so their tokens were
+probably consumed server-side; the reservations are deliberately left committed rather than
+released, because releasing them would under-count real spend. `reconcile` reports `ok: true`.
+

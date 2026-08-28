@@ -31,6 +31,7 @@ import hashlib
 import json
 import os
 import random
+import re
 import subprocess
 import sys
 import time
@@ -598,12 +599,41 @@ def per_doc_settled_chunked() -> dict[str, int]:
     return dict(out)
 
 
+#: ADDENDUM-06's closed list, plus the two the harness itself produces.
+DIVERSION_REASONS = ("cross_chunk", "structural_inference", "endpoint_not_located",
+                     "predicate_not_located", "distance_exceeded", "unstated")
+
+
+def normalize_reason(raw: str) -> str:
+    """Map a recorded `diversion_reason` onto the closed list.
+
+    MEASURED: the model does not honor the closed list. Over the first 10 chunks it emitted 34
+    distinct values, most of them whole sentences ("structural_evidence_only — Table 2 groups
+    Lexical Diversity under the Textual Data row..."). Counting raw strings makes the histogram
+    §5 asks for unreadable, so the leading token before ':' or an em/en dash is taken and
+    matched against the list; a near-miss synonym maps to its closed-list member and anything
+    else becomes `other`. The raw string stays on the shard — this normalizes the REPORT, never
+    the record.
+    """
+    head = re.split(r"[:\u2014\u2013]", str(raw or "unstated"), 1)[0].strip().lower()
+    head = head.replace(" ", "_")
+    if head in DIVERSION_REASONS:
+        return head
+    synonyms = {"structural_only": "structural_inference",
+                "structural_evidence_only": "structural_inference",
+                "schema_cannot_express": "other:schema_cannot_express",
+                "unsupported_edge_type": "other:schema_cannot_express",
+                "auto_routed_unknown_edge": "other:schema_cannot_express"}
+    return synonyms.get(head, "other")
+
+
 def diversion_histogram() -> tuple[dict, int, int]:
-    """(histogram, cross_chunk, total) over the chunked arm's diverted relations."""
+    """(normalized histogram, cross_chunk, total) over the chunked arm's diverted relations."""
     hist = Counter()
     for ev in eventlog.replay(tag=TAG):
         if ev.get("event_type") == "chunk_metrics" and _key(ev) not in superseded():
-            hist.update(ev.get("diversion_histogram") or {})
+            for raw, n in (ev.get("diversion_histogram") or {}).items():
+                hist[normalize_reason(raw)] += n
     total = sum(hist.values())
     return dict(hist), hist.get("cross_chunk", 0), total
 
