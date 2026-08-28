@@ -1,7 +1,10 @@
 <!--
 Versioned atomic-fact judge prompt (task 2026-08-22_faithfulness_probe, Phases 3-4; DD-015/16).
 Rendering substitutes {{facts_json}} (a list; batch of 1..N in randomized order).
-probe_judge_version: 1.0.0
+probe_judge_version: 1.1.0
+1.1.0 (2026-08-27, task 2026-08-27_chunked_pilot §5): the span presented for a fact about an
+  attribute that carries its own `grounding_spans` entry is THAT span, not the node's own.
+  See scripts/probe_judge.py::span_for. The prompt text below is unchanged.
 -->
 # Atomic-fact faithfulness judgment
 

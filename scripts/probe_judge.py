@@ -57,6 +57,24 @@ def template_sha() -> str:
     return hashlib.sha256(TEMPLATE.read_bytes()).hexdigest()
 
 
+def span_for(item: dict, attribute: str | None) -> tuple[str, str]:
+    """The span a fact is actually judged against, and where it came from.
+
+    probe_judge_version 1.1.0 (task 2026-08-27_chunked_pilot §5): when the extraction carries
+    a per-attribute span — `grounding_spans: {"method": "...", ...}`, required of every
+    Instrument since prompt v0.3.4 — the attribute's OWN span is the evidence for that
+    attribute's facts. Judging a `method` fact against the node's name-bearing span measured
+    whether one span entailed a different span's content; 26 of the 27 `span_truncated` labels
+    in 2026-08-27_pilot_instrument_verdict.md were `method` facts judged that way. The node's
+    own span remains the evidence for facts with no per-attribute span (and for every edge).
+    """
+    spans = ((item.get("extra") or {}).get("grounding_spans") or {}) if attribute else {}
+    val = spans.get(attribute) if isinstance(spans, dict) else None
+    if isinstance(val, str) and val.strip():
+        return val, f"attribute:{attribute}"
+    return item["grounding_span"], "node"
+
+
 def load_facts(fact_ids: set[str] | None = None) -> list[dict]:
     items = {}
     for l in SAMPLE.read_text(encoding="utf-8").splitlines():
@@ -70,8 +88,10 @@ def load_facts(fact_ids: set[str] | None = None) -> list[dict]:
         if fact_ids is not None and f["fact_id"] not in fact_ids:
             continue
         it = items[f["event_id"]]
-        facts.append({**f, "grounding_span": it["grounding_span"], "window": it.get("window"),
-                      "stratum": it["stratum"], "doc_id": it["doc_id"], "kind": it["kind"], "type": it["type"]})
+        span, source = span_for(it, f.get("attribute"))
+        facts.append({**f, "grounding_span": span, "span_source": source,
+                      "window": it.get("window"), "stratum": it["stratum"],
+                      "doc_id": it["doc_id"], "kind": it["kind"], "type": it["type"]})
     return facts
 
 

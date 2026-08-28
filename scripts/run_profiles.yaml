@@ -70,3 +70,21 @@ profiles:
     oversize_allow: []
     prompt_template: kg/extraction/prompt_template.md
     template_sha256: 77acbee6feda897c3abd93a4af3ac086a68df8de7a2cec4dfa0678d78d3ed78e
+
+  # Chunked-extraction pilot (task 2026-08-27_chunked_pilot §3). The ONLY variable under test
+  # is the unit the model sees: same model (claude-opus-5, effort unchanged), same schema,
+  # same rules — chunked_template.md is prompt_template.md v0.3.5 with the framing swapped and
+  # nothing else. The template sha is pinned exactly as the v034/v035 profiles pin theirs, so
+  # the arm can never silently run under a drifted prompt.
+  chunked_v035:
+    corpus_epoch: chunked-2026-08-27
+    batch: 16                                  # events/batch-016_chunked_v035.jsonl (TAGGED —
+    shard_tag: chunked_v035                    # an experiment arm, never replayed into the graph)
+    raw_dir: events/raw/chunked_v035
+    stop_file: events/chunked_v035_STOP.json
+    result_file: cc_tasks/2026-08-27_chunked_pilot_RESULT.md
+    job: airkg-chunked-pilot
+    order: alphabetical
+    oversize_allow: []
+    prompt_template: kg/extraction/chunked_template.md
+    template_sha256: 64421ec2a615a4cf05a4f19033ab5e8eae95826320bbbb3c4c044c0c11d8528b

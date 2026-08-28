@@ -24,3 +24,11 @@ spend:
     cleanup: 36000        # DD-019 measurement, Haiku one-item
     extraction: 111000    # 2026-08-21 pilot-era floor
     judge: 36000
+    # Chunked extraction (task 2026-08-27_chunked_pilot §5). One call carries ONE chunk, not
+    # a whole document, so the whole-document floor over-reserves by ~8x and would refuse a
+    # correctly-sized run. Arithmetic: prompt template 2,448 tok + chunk cap 1,500 + overlap
+    # cap 100 = 4,048 input; cache-creation is of the same order on a non-resumed call; the
+    # whole-document arm returned ~8x its input in output, so 4,048 x 2 + 8,000 output rounds
+    # to 20,000. The floor governs only the first calls of a run — `_estimate` switches to
+    # the run's own measured mean as soon as there are settles.
+    extraction_chunk: 20000

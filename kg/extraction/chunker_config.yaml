@@ -1,0 +1,39 @@
+# Chunker tunables (task 2026-08-27_chunked_pilot §2). Values are DATA, not code: the
+# pilot's pre-registered configuration lives here so a sweep is a config diff, not a patch.
+# Every value below is cited to the rule or measurement that set it.
+schema_version: "0.1"
+
+# §2.3 — content budget per chunk, counted with the real tokenizer.
+max_tokens: 1500
+
+# §2.4 — overlap is the previous chunk's last paragraph, bounded. Edge et al. 2024
+# (GraphRAG) used 100-token overlap at 600-token chunks; the task pins the same bound.
+overlap_max_tokens: 100
+
+# §2.1 — a heading level is "the level that produces sections" when at least this many
+# headings occur at it. Task heuristic, stated verbatim: ">= 3 headings at that level".
+min_headings_for_level: 3
+
+# Plain-text (pypdf) heading detection. The corpus source for the five pilot documents is
+# PDF, not markdown: pypdf output carries no ATX headings and no blank lines, so the
+# markdown rule in §2.1 has nothing to bind to and these heuristics stand in for it.
+# Pattern family follows ~/.wintermute/scripts/stage_book.py (numbered headings, ALLCAPS
+# standalone headings) — the internal precedent named in §1.
+heading_max_chars: 80          # a heading is a short standalone line
+allcaps_min_chars: 3
+# A line whose exact text repeats more than this many times is a running page header or
+# footer, not a heading. Measured on mitre-ai-maturity-model: the footer "AUGUST  2022"
+# was detected 41 times and forced 41 spurious section boundaries (91 chunks, median 201
+# tokens); with the filter the document keeps its 46 real headings.
+max_heading_repeats: 2
+
+# Paragraph reconstruction for hard-wrapped PDF text. A line whose length falls below
+# `short_line_ratio` x the document's typical full-measure line width ends a paragraph.
+# The width is the `width_percentile`-th percentile of line lengths, so a document with a
+# few long lines is not mis-measured.
+short_line_ratio: 0.85
+width_percentile: 95
+
+# Tokenizer. model_stub reports no tokenizer (it reads usage off the `claude -p` envelope
+# after the fact), so §2.3's stated fallback applies and is recorded on every chunk set.
+tokenizer: tiktoken:cl100k_base

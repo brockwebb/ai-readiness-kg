@@ -303,6 +303,10 @@ def parse_extraction(output: dict, source_text: str, schema: dict | None = None,
             "from_id": pr.get("from_id"), "to_id": pr.get("to_id"),
             "grounding_span": pr.get("grounding_span"), "location": pr.get("location"),
             "note": pr.get("note"),
+            # ADDENDUM-06 closed list (structural_inference | endpoint_not_located |
+            # predicate_not_located | distance_exceeded | cross_chunk | other:<text>). Carried
+            # verbatim; the diversion histogram is computed from it, never from free prose.
+            "diversion_reason": pr.get("diversion_reason"),
         })
 
     return result
