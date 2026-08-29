@@ -124,3 +124,56 @@ def test_url_to_doi_derivations_are_deterministic():
     assert t0.identifiers("https://aclanthology.org/2023.findings-emnlp.722/")[0] == \
         "10.18653/v1/2023.findings-emnlp.722"
     assert t0.identifiers("https://example.gov/some-report.pdf")[0] is None
+
+
+# --- ADDENDUM-02 compliance: the four clauses that were under-delivered on the first pass --
+from kg import biblio  # noqa: E402
+
+
+def test_coverage_reports_blocked_separately_from_unresolved(monkeypatch):
+    """§1: a blocked ACQUISITION and an unresolved bibliographic lookup are different
+    failures. Folding them into one number reads as 'we could not find metadata' when the
+    truth is 'we could not get the document'."""
+    monkeypatch.setattr(biblio, "blocked_docs", lambda: ["some-blocked-doc"])
+    cov = biblio.coverage()
+    for k in ("resolved", "retryable", "partial_finding", "blocked"):
+        assert k in cov, f"coverage table is missing {k!r}"
+    assert cov["blocked"] == 1 and cov["blocked_docs"] == ["some-blocked-doc"]
+    assert "retryable_by_provider" in cov, "no per-provider breakdown of the retryable pile"
+
+
+def test_biblio_method_distinguishes_absence_from_unavailability():
+    """§4: the method is recorded per document, and an unresolved record says WHY."""
+    assert biblio.biblio_method({"resolution": "harvest_error"}) == \
+        "unresolved:provider_unavailable"
+    assert biblio.biblio_method({"resolution": "bibliographic_partial"}) == \
+        "unresolved:no_record_at_source"
+    assert biblio.biblio_method({"resolution": "doi", "metadata_source": "crossref"}) == \
+        "doi@crossref"
+
+
+def test_t2_priority_rows_carry_biblio_method():
+    rows = biblio.t2_priority()
+    assert rows and all("biblio_method" in r for r in rows)
+
+
+def test_manifest_table_and_pickup_are_one_projection():
+    """§2: two views of the same corpus, regenerated together or they disagree."""
+    import t1_build_index as t1x
+    assert "project" in t1x.PHASES
+    src = Path(t1x.__file__).read_text()
+    body = src[src.index("def phase_project"):src.index("def phase_pickup")]
+    assert "phase_table" in body and "phase_pickup" in body
+
+
+def test_reindex_requires_a_doc_id_and_refuses_an_unadmitted_one(capsys):
+    """§3: a per-document path that silently fell through to the whole corpus would be worse
+    than not having one."""
+    import argparse
+    import t1_build_index as t1x
+    a = argparse.Namespace(doc_id=None, reason=None, no_embed=True, refresh=False, limit=0)
+    assert t1x.phase_reindex(a) == 2
+    assert "doc-id is required" in capsys.readouterr().out
+    a.doc_id = "not-an-admitted-document"
+    assert t1x.phase_reindex(a) == 2
+    assert "not an admitted document" in capsys.readouterr().out

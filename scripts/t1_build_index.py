@@ -343,6 +343,16 @@ def phase_table(a) -> int:
     return 0
 
 
+def phase_project(a) -> int:
+    """ADDENDUM-02 §2: `manifest_table.md` and `operator_pickup.md` are ONE projection.
+
+    They read the same db and the same t2_priority ordering, so regenerating one without the
+    other publishes two views of the corpus that disagree. Kept as a single phase for that
+    reason; `table` and `pickup` remain as aliases for running half of it deliberately."""
+    rc = phase_table(a)
+    return rc or phase_pickup(a)
+
+
 def phase_pickup(a) -> int:
     """ADDENDUM-02 §2 — the 'on me to get' queue, PROJECTED not hand-written.
 
@@ -408,8 +418,102 @@ def phase_pickup(a) -> int:
     return 0
 
 
+def phase_reindex(a) -> int:
+    """ADDENDUM-02 §3 — one document, end to end, after a clean copy supersedes a degraded one.
+
+    The sequence the addendum specifies is: normal supersession (`kg.manifest.content_update`,
+    which this does NOT do for you — superseding bytes is an admission decision and belongs to
+    the manifest gate), then re-convert and re-index THAT DOCUMENT ONLY, marking its prior
+    derivations stale. Re-indexing the whole corpus to pick up one replaced file is how a
+    cheap correction becomes an expensive one, and it silently re-dates every other row.
+
+    Staleness is recorded, not just overwritten: the superseded chunk ids are written to the
+    `stale_derivations` table with the content hash they were derived from, so anything built
+    on them downstream can be found rather than guessed at.
+    """
+    if not a.doc_id:
+        print("FATAL: --doc-id is required for reindex"); return 2
+    doc_id = a.doc_id
+    docs = manifest_docs()
+    if doc_id not in docs:
+        print(f"FATAL: {doc_id!r} is not an admitted document"); return 2
+    if not DB.exists():
+        print("FATAL: no index; run --phase index first"); return 2
+
+    con = _connect(DB)
+    con.executescript("""
+        CREATE TABLE IF NOT EXISTS stale_derivations (
+          chunk_id TEXT, doc_id TEXT, derived_from_hash TEXT, superseded_at TEXT,
+          reason TEXT);""")
+    prior = con.execute("SELECT content_hash FROM documents WHERE doc_id=?",
+                        (doc_id,)).fetchone()
+    prior_hash = prior[0] if prior else None
+    old_chunks = [r[0] for r in con.execute("SELECT chunk_id FROM chunks WHERE doc_id=?",
+                                            (doc_id,))]
+    now = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+    con.executemany("INSERT INTO stale_derivations VALUES (?,?,?,?,?)",
+                    [(c, doc_id, prior_hash, now, a.reason or "document re-acquired")
+                     for c in old_chunks])
+    for tbl, col in (("chunks", "doc_id"), ("chunks_fts", "doc_id")):
+        con.execute(f"DELETE FROM {tbl} WHERE {col}=?", (doc_id,))
+    if old_chunks:
+        con.executemany("DELETE FROM embeddings WHERE chunk_id=?", [(c,) for c in old_chunks])
+    con.commit()
+
+    # re-convert this document only
+    a.refresh, a.limit = True, 0
+    md = MD_DIR / f"{doc_id}.md"
+    if md.exists():
+        md.unlink()
+    saved = manifest_docs
+    try:
+        globals()["manifest_docs"] = lambda: {doc_id: docs[doc_id]}
+        rc = phase_convert(a)
+    finally:
+        globals()["manifest_docs"] = saved
+    if rc:
+        print(f"conversion failed for {doc_id}; index left with the document removed and "
+              f"{len(old_chunks)} derivations marked stale")
+        con.close(); return rc
+
+    # re-chunk + re-embed this document only
+    meta = json.loads((MD_DIR / f"{doc_id}.meta.json").read_text())
+    text = (MD_DIR / f"{doc_id}.md").read_text("utf-8", "ignore")
+    try:
+        cs = chunker.chunk_document(doc_id, text)
+    except chunker.ChunkerError:
+        cs = []
+    fidelity = meta.get("fidelity", "layout_aware")
+    idn = docs[doc_id]["identity"]
+    con.execute("INSERT OR REPLACE INTO documents VALUES (?,?,?,?,?,?,?,?,?,?,?,?)",
+                (doc_id, idn.get("title"), str(idn.get("pub_year") or ""), idn.get("doc_type"),
+                 idn.get("source_url"), idn.get("sha256"), meta["source"],
+                 meta["converted_by"], meta["md_chars"], len(cs), "structural", fidelity))
+    rows, fts, texts, ids = [], [], [], []
+    for ch in cs:
+        rows.append((ch.chunk_id, doc_id, ch.index, ch.start, ch.end, ch.n_tokens,
+                     " > ".join(ch.heading_path), int(ch.oversize), ch.text, "structural",
+                     fidelity))
+        fts.append((ch.chunk_id, doc_id, ch.text)); texts.append(ch.text); ids.append(ch.chunk_id)
+    con.executemany("INSERT OR REPLACE INTO chunks VALUES (?,?,?,?,?,?,?,?,?,?,?)", rows)
+    con.executemany("INSERT INTO chunks_fts VALUES (?,?,?)", fts)
+    if texts and not a.no_embed:
+        from sentence_transformers import SentenceTransformer
+        vecs = SentenceTransformer(EMBED_MODEL).encode(
+            texts, batch_size=64, show_progress_bar=False, normalize_embeddings=True)
+        con.executemany("INSERT OR REPLACE INTO embeddings VALUES (?,?,?,?)",
+                        [(i, EMBED_MODEL, int(v.shape[0]), v.astype("float32").tobytes())
+                         for i, v in zip(ids, vecs)])
+    con.commit()
+    print(f"reindexed {doc_id}: {len(old_chunks)} prior chunks marked stale, "
+          f"{len(rows)} new chunks, fidelity={fidelity}")
+    con.close()
+    return 0
+
+
 PHASES = {"convert": phase_convert, "index": phase_index, "rebuild": phase_rebuild,
-          "table": phase_table, "pickup": phase_pickup}
+          "project": phase_project, "table": phase_table, "pickup": phase_pickup,
+          "reindex": phase_reindex}
 
 
 def main() -> int:
@@ -418,6 +522,8 @@ def main() -> int:
     ap.add_argument("--limit", type=int, default=0)
     ap.add_argument("--refresh", action="store_true")
     ap.add_argument("--no-embed", action="store_true")
+    ap.add_argument("--doc-id", default=None, help="reindex: the single document")
+    ap.add_argument("--reason", default=None, help="reindex: why it was re-acquired")
     a = ap.parse_args()
     return PHASES[a.phase](a)
 

@@ -42,18 +42,52 @@ def records() -> list[dict]:
     return [json.loads(f.read_text()) for f in sorted(CACHE.glob("*.json"))]
 
 
+def blocked_docs() -> list[str]:
+    """Documents whose ACQUISITION is blocked — a different failure from a bibliographic
+    miss, and ADDENDUM-02 §1 requires it in the same coverage table so the two are not read
+    as one number. Sourced from the event log, where the block was recorded."""
+    from kg import eventlog
+    out = {}
+    for ev in eventlog.replay():
+        if ev.get("event_type") == "acquisition_blocked":
+            out[ev.get("doc_id")] = ev.get("primary_url")
+    return sorted(out)
+
+
+def biblio_method(rec: dict) -> str:
+    """ADDENDUM-02 §4 — the method that produced (or failed to produce) this record, as one
+    field. GROBID is deliberately absent from the ladder in this environment; naming the
+    method per document is what makes that visible in the data instead of only in a RESULT."""
+    res = rec.get("resolution")
+    if res in RETRYABLE:
+        return "unresolved:provider_unavailable"
+    if res == FINDING:
+        return "unresolved:no_record_at_source"
+    return f"{res}@{rec.get('metadata_source') or 'unknown'}"
+
+
 def coverage() -> dict:
     recs = records()
     by_res = Counter(r.get("resolution") for r in recs)
     by_provider = Counter(r.get("metadata_source") for r in recs if r.get("metadata_source"))
     resolved = [r for r in recs if r.get("resolution") not in RETRYABLE | {FINDING}]
+    blocked = blocked_docs()
+    # Provider breakdown of the retryable pile: which provider is holding each one up.
+    retry_by_provider = Counter()
+    for r in recs:
+        if r.get("resolution") in RETRYABLE:
+            for e in (r.get("provider_errors") or []) or ["(none recorded)"]:
+                retry_by_provider[e.split(":")[0]] += 1
     return {
         "total": len(recs),
         "resolved": len(resolved),
         "retryable": sum(v for k, v in by_res.items() if k in RETRYABLE),
         "partial_finding": by_res.get(FINDING, 0),
+        "blocked": len(blocked),
+        "blocked_docs": blocked,
         "by_resolution": dict(by_res),
         "by_provider": dict(by_provider),
+        "retryable_by_provider": dict(retry_by_provider),
         "referenced_dois": sum(len((r.get("work") or {}).get("referenced_dois") or [])
                                for r in recs),
         "docs_with_references": sum(
@@ -112,7 +146,7 @@ def t2_priority() -> list[dict]:
         res = r.get("resolution")
         out.append({"doc_id": d, "crosswalk_demand": demand.get(d, 0),
                     "t0_centrality": internal.get(d, 0),
-                    "t0_state": res,
+                    "t0_state": res, "biblio_method": biblio_method(r),
                     "centrality_measurable": res not in RETRYABLE})
     out.sort(key=lambda x: (-x["crosswalk_demand"], -x["t0_centrality"], x["doc_id"]))
     return out
