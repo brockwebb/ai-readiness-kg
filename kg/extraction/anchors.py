@@ -37,7 +37,9 @@ MAX_ANCHOR_TOKENS = 10
 NOT_LOCATED = "anchor_not_located"
 
 #: A sentence ends at .!? followed by whitespace, or at a line break — SUBJECT to the
-#: exemptions below, which is where the real work is.
+#: exemptions below, which is where the real work is. Note that a sentence-ending period
+#: followed by a newline is matched by the FIRST alternative (`\s+` consumes the newline),
+#: so the second alternative only ever sees a newline that no punctuation preceded.
 _SENT_END = re.compile(r"(?<=[.!?])\s+|\n")
 
 #: Markdown lines that are structural units rather than prose. Docling emits all three
@@ -97,10 +99,15 @@ def _is_sentence_boundary(text: str, m: re.Match) -> bool:
     imagining what might go wrong."""
     if _is_hyphen_linebreak(text, m):
         return False
-    if "\n" in m.group():
-        return True                        # a real line break always ends the unit
-    dot = m.start() - 1                     # the [.!?] the lookbehind matched
-    if dot < 0 or text[dot] != ".":
+    dot = m.start() - 1                     # the [.!?] the lookbehind matched, if any
+    prev = text[dot] if dot >= 0 else ""
+    if prev not in ".!?":
+        # A BARE line break — no sentence punctuation preceded it. Word wrap, unless it is a
+        # paragraph break or bounds a structural line. (A period followed by a newline is
+        # matched by the FIRST alternative, so it lands on the punctuation logic below and is
+        # NOT routed here; getting that wrong swallowed real sentence ends.)
+        return _newline_ends_the_unit(text, m)
+    if prev != ".":
         return True                         # '!' and '?' are unambiguous
     before = text[:dot + 1]
     tok = _preceding_token(text, dot)
@@ -114,6 +121,48 @@ def _is_sentence_boundary(text: str, m: re.Match) -> bool:
     if prev_ch.isdigit() and next_ch.isdigit():
         return False
     return True
+
+
+def _newline_ends_the_unit(source_text: str, m: re.Match) -> bool:
+    """Does this line break end a unit, or is it just word wrap?
+
+    MEASURED on the first Arm A chunk (2026-08-29), which is why this rule exists: Docling
+    hard-wraps prose at ~110 characters, so `This survey aims to propose a taxonomy of data\n
+    readiness for AI (DRAI) metrics` carries a newline in the MIDDLE of a sentence. Treating
+    every newline as a sentence end cut spans like
+    `Poor quality data produces inaccurate and ineffective AI models that` — truncated at the
+    wrap, still verbatim-present in the source, and therefore still passing `is_grounded`.
+    That is the same dangerous shape as the table-row bug, one layer down: 9 of 11
+    `span_partial` quarantines on that chunk were wrap truncation, not paraphrase.
+
+    A newline ends the unit when it is a PARAGRAPH break (a blank line, i.e. the run of
+    newlines is longer than one) or when a markdown structural line sits on either side of
+    it — a heading, table row or list item is bounded by its own line by definition. Inside
+    a wrapped paragraph it is not a boundary at all.
+
+    The asymmetry is deliberate. Over-extending a span joins two sentences, which still
+    yields text cut verbatim from the source around the anchor; under-extending it produces
+    a fragment that reads as a claim the document never made. Only one of those is a
+    fabrication risk."""
+    i = m.start() - 1
+    while i >= 0 and source_text[i] in " \t":
+        i -= 1
+    if i >= 0 and source_text[i] == "\n":
+        return True                        # a blank line: this is a paragraph break
+    # NOTE: a symmetric lookahead ("is the NEXT newline-separated line empty") was written
+    # first and removed — a mutation deleting it killed no test, because a blank line is two
+    # newlines and the second one always satisfies the check above. Whichever of the two the
+    # scan lands on, `containing_sentence` strips the trailing newline and returns the same
+    # span. Dead code that cannot fire, exactly like the `_MULTIWORD_ABBREV` table before it.
+    left, _ = _line_bounds(source_text, m.start(), m.start())
+    before = source_text[left:m.start()]
+    right_end = source_text.find("\n", m.end())
+    after = source_text[m.end(): len(source_text) if right_end == -1 else right_end]
+    return _is_structural_line(before) or _is_structural_line(after)
+
+
+def _is_structural_line(line: str) -> bool:
+    return bool(_TABLE_ROW.match(line) or _HEADING.match(line) or _LIST_ITEM.match(line))
 
 
 def _normalize_with_map(text: str) -> tuple[str, list[int]]:
@@ -231,7 +280,7 @@ def structural_line(source_text: str, start: int, end: int) -> str | None:
     still copied from the source, one that passes every grounding check downstream."""
     left, right = _line_bounds(source_text, start, end)
     line = source_text[left:right]
-    if _TABLE_ROW.match(line) or _HEADING.match(line) or _LIST_ITEM.match(line):
+    if _is_structural_line(line):
         return line.strip()
     return None
 

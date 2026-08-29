@@ -285,6 +285,37 @@ def raw_path(doc_id: str, chunk: chunker.Chunk, sha: str, model_id: str) -> Path
                       f"{model_stub.prompt_version()}.{model_id}.json")
 
 
+class TruncatedChunk(RuntimeError):
+    """A chunk response that must not be accepted as a status. Raised instead of SystemExit
+    so the pass's OTHER calls — already paid for — still ingest before the run stops. A
+    SystemExit from a worker thread is a BaseException, so it bypasses the executor's
+    `except Exception` handler and killed the pass before `phase_ingest` ran (observed
+    2026-08-29 on data-readiness#c0029: 20 paid-for raws left un-ingested)."""
+
+
+#: Every key the v0.3.7 contract declares as output. PRESENCE of these keys is the truncation
+#: signal; their CONTENTS are not.
+CONTRACT_KEYS = frozenset(anchors.anchored_layers()) | {"extract_plan", "gleaned"}
+
+
+def envelope_complete(output) -> bool:
+    """Did this response arrive whole?
+
+    `model_stub.has_extraction_layers` requires a NON-EMPTY node/edge layer, which was a
+    sound truncation test under the exhaustive-inventory contract where an empty extraction
+    was essentially impossible. Under SALIENCE it is not: a references section legitimately
+    yields no typed node at all, and MEASURED on data-readiness#c0029 the model returned
+    complete, valid JSON — every layer `[]`, 23 bibliography entries in `mentions` — and the
+    old test called it truncated and stopped the run.
+
+    Truncation is detected here by what actually indicates it: the response failed to parse
+    as JSON (raised upstream in `model_stub._extract_json`, so we never get here), it hit the
+    model's own output ceiling (checked separately), or the parsed envelope carries none of
+    the keys the contract declares. An empty-but-well-formed extraction is a legitimate
+    answer and is reported as such rather than treated as a failure."""
+    return isinstance(output, dict) and bool(CONTRACT_KEYS & set(output))
+
+
 def _extract_one(d: str, c: chunker.Chunk, sha: str, title: str, cfg: dict, suspect: int) -> str:
     rp = raw_path(d, c, sha, cfg["model_id"])
     if rp.exists():
@@ -311,12 +342,13 @@ def _extract_one(d: str, c: chunker.Chunk, sha: str, title: str, cfg: dict, susp
     # not parse into an envelope carrying extraction layers. Both STOP.
     max_out = int((meta.get("usage") or {}).get("maxOutputTokens", 0) or 0)
     if max_out and out_tok >= 0.95 * max_out:
-        raise SystemExit(f"FATAL: {c.chunk_id} returned {out_tok:,} of the model's "
-                         f"{max_out:,} output-token ceiling — truncated, not complete.")
-    if not model_stub.has_extraction_layers(meta.get("output")):
-        raise SystemExit(f"FATAL: {c.chunk_id} returned no extraction layers "
-                         f"({out_tok:,} output tokens) — a truncated or empty envelope.")
-    print(f"  {c.chunk_id} tok_in~{c.n_tokens} out={out_tok}", flush=True)
+        raise TruncatedChunk(f"{c.chunk_id} returned {out_tok:,} of the model's "
+                             f"{max_out:,} output-token ceiling — truncated, not complete.")
+    if not envelope_complete(meta.get("output")):
+        raise TruncatedChunk(f"{c.chunk_id} returned an envelope carrying none of the "
+                             f"contract's output keys ({out_tok:,} output tokens).")
+    empty = "" if model_stub.has_extraction_layers(meta.get("output")) else "  [empty layers]"
+    print(f"  {c.chunk_id} tok_in~{c.n_tokens} out={out_tok}{empty}", flush=True)
     return "ok"
 
 
@@ -328,7 +360,12 @@ def phase_extract(a) -> int:
     spend.set_current_run(RUN_ID)
     suspect = int(cfg.get("truncation_suspect_tokens", 40000))   # reported only; see _extract_one
     todo = []
-    for d in PILOT_DOCS:
+    docs = PILOT_DOCS
+    if a.only:
+        docs = [d for d in PILOT_DOCS if d in set(a.only.split(","))]
+        if not docs:
+            raise SystemExit(f"FATAL: --only {a.only!r} matches none of the pilot documents")
+    for d in docs:
         text = rbe.doc_text(m[d])
         sha = hashlib.sha256(m[d].read_bytes()).hexdigest()
         cs = chunker.chunk_document(d, text)
@@ -340,7 +377,7 @@ def phase_extract(a) -> int:
     if a.limit:
         todo = todo[:a.limit]
     print(f"dispatching {len(todo)} chunk calls, {a.workers} workers", flush=True)
-    done, failures = 0, []
+    done, failures, truncated = 0, [], []
     # The spend guard is the concurrency-safe boundary (flock on the ledger), so workers only
     # need to be few enough not to trip rate limits. A single failed chunk must not discard a
     # pass whose other calls are already paid for: it is recorded and the pass continues, but
@@ -361,6 +398,8 @@ def phase_extract(a) -> int:
                 raise
             except Exception as exc:                       # noqa: BLE001 — recorded, not swallowed
                 failures.append((cid, f"{type(exc).__name__}: {exc}"))
+                if isinstance(exc, TruncatedChunk):
+                    truncated.append(cid)
                 streak += 1
                 print(f"  FAILED {cid}: {type(exc).__name__}: {str(exc)[:200]}", flush=True)
     print(f"\nextraction calls this pass: {done}; failures: {len(failures)}")
@@ -369,7 +408,14 @@ def phase_extract(a) -> int:
     if streak >= STOP_AFTER_FAILURES:
         raise SystemExit(f"FATAL: {STOP_AFTER_FAILURES} consecutive chunk failures — systemic, "
                          f"pass stopped (raws already written are resume-safe)")
-    return phase_ingest(a)
+    rc = phase_ingest(a)
+    if truncated:
+        # STOP semantics are kept — a truncated response is never accepted as a status — but
+        # the stop happens AFTER the pass's other calls are ingested, so paid-for work is not
+        # discarded by one bad response.
+        raise SystemExit(f"FATAL: {len(truncated)} truncated chunk response(s): "
+                         f"{', '.join(truncated)} — run stopped after ingesting the rest.")
+    return rc
 
 
 #: Quarantine reason -> stable class, for the by-reason rate ADDENDUM-03 §3 requires. Reasons
@@ -440,12 +486,51 @@ def _key(ev: dict) -> tuple:
     return (ev.get("chunk_id"), prov.get("chunk_start"), prov.get("chunk_end"))
 
 
+#: Events written before generations existed (batch-016) are generation 1 by definition.
+FIRST_GENERATION = 1
+
+
+def _generation(ev: dict) -> int:
+    prov = ev.get("provenance") or {}
+    return int(ev.get("ingest_generation") or prov.get("ingest_generation")
+               or FIRST_GENERATION)
+
+
+def live_generations(tag: str | None = None) -> dict[str, int]:
+    """{chunk_id: highest ingest generation} for one arm's shard.
+
+    A shard is append-only, so a chunk re-parsed under a corrected harness cannot have its
+    old events removed — and `chunk_superseded` does not fit, because that mechanism keys on
+    (chunk_id, start, end) and would retire the NEW events too whenever the chunk boundaries
+    are unchanged. It exists for a chunker change; this is a PARSER change at identical
+    boundaries. So each ingest pass stamps a generation and every reader keeps only the
+    highest one per chunk: the superseded events stay on the shard as the record of what was
+    believed, and nothing downstream reads them."""
+    gens: dict[str, int] = {}
+    for ev in eventlog.replay(tag=tag or TAG):
+        if ev.get("event_type") == "chunk_metrics":
+            cid = ev.get("chunk_id")
+            gens[cid] = max(gens.get(cid, 0), _generation(ev))
+    return gens
+
+
+def is_live(ev: dict, gens: dict[str, int], dead: set[tuple]) -> bool:
+    """Does this event belong to the current view of its chunk?"""
+    if _key(ev) in dead or (ev.get("chunk_id"), ev.get("chunk_start"),
+                            ev.get("chunk_end")) in dead:
+        return False
+    cid = ev.get("chunk_id")
+    return cid not in gens or _generation(ev) == gens[cid]
+
+
 def phase_ingest(a) -> int:
     """Parse every persisted chunk response into the tagged shard. Idempotent: a chunk whose
     events are already on the shard is skipped."""
     dead = superseded()
     cfg = model_cfg()
     m = members()
+    force = bool(getattr(a, "reingest", False))
+    gens = live_generations()
     on_shard = {ev.get("chunk_id") for ev in eventlog.replay(tag=TAG)
                 if ev.get("event_type") == "chunk_metrics"
                 and (ev["chunk_id"], ev.get("chunk_start"), ev.get("chunk_end")) not in dead}
@@ -456,15 +541,17 @@ def phase_ingest(a) -> int:
         cs = chunker.chunk_document(d, text)
         for c in cs:
             rp = raw_path(d, c, sha, cfg["model_id"])
-            if not rp.exists() or c.chunk_id in on_shard:
+            if not rp.exists() or (c.chunk_id in on_shard and not force):
                 continue
+            generation = gens.get(c.chunk_id, 0) + 1
             raw = json.loads(rp.read_text())
             chunk_text = c.grounding_text()
             result, mentions, divs = parse_chunk_raw(d, raw, text, chunk_text)
             ex_id = uuid.uuid4().hex
             prov = {**model_stub.provenance_stamp(ex_id, model_id=raw["model_id"]),
                     "corpus_epoch": CORPUS_EPOCH, "source_sha256": sha,
-                    "chunk_id": c.chunk_id, "chunk_start": c.start, "chunk_end": c.end}
+                    "chunk_id": c.chunk_id, "chunk_start": c.start, "chunk_end": c.end,
+                    "ingest_generation": generation}
             # Locate-at-birth is unchanged: the parser validated every span against the chunk;
             # re-validate against the whole document so a span can never be chunk-local only.
             kept_n = kept_e = 0
@@ -502,6 +589,7 @@ def phase_ingest(a) -> int:
             eventlog.append({"event_type": "chunk_metrics", "purpose": "chunked_pilot",
                              "doc_id": d, "chunk_id": c.chunk_id,
                              "chunk_start": c.start, "chunk_end": c.end,
+                             "ingest_generation": generation,
                              "chunk_tokens": c.n_tokens, "oversize": c.oversize,
                              "heading_path": list(c.heading_path),
                              "counts": result.counts(), "nodes_kept": kept_n,
@@ -525,9 +613,9 @@ def norm_form(s: str) -> str:
 def shard_items() -> tuple[dict, dict, dict]:
     """(nodes, edges, stubs) per doc from the tagged shard."""
     nodes, edges, stubs = defaultdict(list), defaultdict(list), defaultdict(list)
-    dead = superseded()
+    dead, gens = superseded(), live_generations()
     for ev in eventlog.replay(tag=TAG):
-        if _key(ev) in dead:
+        if not is_live(ev, gens, dead):
             continue
         et = ev.get("event_type")
         if et == "node_asserted":
@@ -870,8 +958,9 @@ from kg.extraction.parser import (                                     # noqa: E
 def diversion_histogram() -> tuple[dict, int, int]:
     """(normalized histogram, cross_chunk, total) over the chunked arm's diverted relations."""
     hist = Counter()
+    dead, gens = superseded(), live_generations()
     for ev in eventlog.replay(tag=TAG):
-        if ev.get("event_type") == "chunk_metrics" and _key(ev) not in superseded():
+        if ev.get("event_type") == "chunk_metrics" and is_live(ev, gens, dead):
             for raw, n in (ev.get("diversion_histogram") or {}).items():
                 hist[normalize_reason(raw)] += n
     total = sum(hist.values())
@@ -1141,12 +1230,10 @@ YIELD_FLOOR_RATIO = 0.60
 def chunk_yield(tag: str) -> dict[str, dict]:
     """{chunk_id: {admitted, nodes, edges, quarantined, reasons, output_tokens, doc_id}} for
     one arm's live chunk_metrics events."""
-    dead = superseded(tag)
+    dead, gens = superseded(tag), live_generations(tag)
     out = {}
     for ev in eventlog.replay(tag=tag):
-        if ev.get("event_type") != "chunk_metrics":
-            continue
-        if (ev["chunk_id"], ev.get("chunk_start"), ev.get("chunk_end")) in dead:
+        if ev.get("event_type") != "chunk_metrics" or not is_live(ev, gens, dead):
             continue
         counts = ev.get("counts") or {}
         out[ev["chunk_id"]] = {
@@ -1379,6 +1466,14 @@ def main() -> int:
     ap.add_argument("--fact-cap", type=int, default=240)
     ap.add_argument("--workers", type=int, default=3)
     ap.add_argument("--limit", type=int, help="extract at most N chunks this pass (smoke test)")
+    ap.add_argument("--reingest", action="store_true",
+                    help="re-parse chunks already on the shard under the CURRENT harness. "
+                         "Appends a new ingest generation; readers keep the highest one and "
+                         "the superseded events stay on the shard as the record.")
+    ap.add_argument("--only", default=None,
+                    help="comma-separated pilot doc ids to extract this pass (mirrors "
+                         "run_bulk_extraction.py --only). Filters the dispatch list only; "
+                         "every other phase still reads the whole arm.")
     ap.add_argument("--judge-ceiling", type=int, default=4_000_000)
     ap.add_argument("--instrument-item-cap", type=int, default=0,
                     help="judge at most N Instrument items per arm (0 = all). Spend bound "

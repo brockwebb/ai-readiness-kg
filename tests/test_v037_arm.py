@@ -232,3 +232,187 @@ def test_yield_is_compared_only_on_chunks_BOTH_arms_cover(cp, monkeypatch):
     y = cp.yield_comparison()
     assert y["shared_chunks"] == 2 and y["ratio"] == 1.0 and y["under_extraction"] is False
     assert y["arm_density_all_chunks"] == 50.0     # reported, but not the comparator
+
+
+def test_only_filters_the_dispatch_list_and_refuses_a_name_that_matches_nothing(cp,
+                                                                                monkeypatch):
+    """A typo in --only must stop the pass, not quietly extract zero chunks and report
+    success — a silent no-op is the failure mode standard 4 forbids."""
+    cp.apply_arm("v0_3_7", None, "pilot_v037_arm_a_haiku")
+    monkeypatch.setattr(cp.model_stub, "load_model_config",
+                        lambda *a, **k: {"model_id": "m", "truncation_suspect_tokens": 1})
+    monkeypatch.setattr(cp, "members", lambda: {d: Path(__file__) for d in cp.PILOT_DOCS})
+    args = type("A", (), {"only": "no-such-document", "limit": None, "workers": 1})()
+    with pytest.raises(SystemExit) as exc:
+        cp.phase_extract(args)
+    assert "matches none of the pilot documents" in str(exc.value)
+
+
+# ------------------------------------------------------------- 5. truncation vs empty
+
+def test_an_empty_but_well_formed_extraction_is_not_truncation(cp):
+    """MEASURED on data-readiness#c0029: a references section returned complete valid JSON,
+    every typed layer `[]`, 23 entries in `mentions`. Under the exhaustive contract an empty
+    extraction was near-impossible, so `has_extraction_layers` was a sound truncation test;
+    under SALIENCE it is not, and it stopped the run on a correct answer."""
+    bibliography = {"extract_plan": {"chunk_summary": "bibliography"}, "concepts": [],
+                    "claims": [], "edges": [], "mentions": [{"name": "a paper"}],
+                    "gleaned": []}
+    assert cp.envelope_complete(bibliography) is True
+    from kg.extraction import model_stub
+    assert model_stub.has_extraction_layers(bibliography) is False   # the old test's verdict
+
+
+def test_an_envelope_with_none_of_the_contract_s_keys_is_still_truncation(cp):
+    """CONTROL: the guard must still bite. Loosening it into "anything that parses" would
+    accept a fragment as a status, which is what the STOP rule exists to prevent."""
+    assert cp.envelope_complete({"some": "other object"}) is False
+    assert cp.envelope_complete("a bare string") is False
+    assert cp.envelope_complete(None) is False
+
+
+def test_a_truncated_chunk_stops_the_run_but_only_after_the_paid_for_rest_is_ingested(
+        cp, monkeypatch, tmp_path):
+    """A SystemExit raised inside a worker is a BaseException, so it bypassed the executor's
+    `except Exception` and killed the pass before `phase_ingest` ran — 20 already-paid-for
+    raws were left off the shard. STOP is kept; losing the pass is not."""
+    cp.apply_arm("v0_3_7", None, "pilot_v037_arm_a_haiku")
+    assert issubclass(cp.TruncatedChunk, Exception)      # NOT BaseException-only
+    ingested = []
+    monkeypatch.setattr(cp, "phase_ingest", lambda a: ingested.append(True) or 0)
+    monkeypatch.setattr(cp.model_stub, "load_model_config",
+                        lambda *a, **k: {"model_id": "m", "truncation_suspect_tokens": 1})
+    src = tmp_path / "doc.md"
+    src.write_text("text", encoding="utf-8")
+    monkeypatch.setattr(cp, "members", lambda: {d: src for d in cp.PILOT_DOCS})
+    monkeypatch.setattr(cp.rbe, "doc_text", lambda p: "text")
+    class FakeSet(list):
+        structure_source, heading_level = "test", 1
+    monkeypatch.setattr(cp.chunker, "chunk_document",
+                        lambda d, t: FakeSet([type("C", (), {"chunk_id": f"{d}#c1",
+                                                             "n_tokens": 1})()]))
+    monkeypatch.setattr(cp, "raw_path", lambda *a, **k: tmp_path / "absent.json")
+    monkeypatch.setattr(cp, "_extract_one",
+                        lambda *a, **k: (_ for _ in ()).throw(cp.TruncatedChunk("cut short")))
+    args = type("A", (), {"only": cp.PILOT_DOCS[0], "limit": None, "workers": 1})()
+    with pytest.raises(SystemExit) as exc:
+        cp.phase_extract(args)
+    assert "truncated chunk response" in str(exc.value)
+    assert ingested == [True], "the pass's other calls must be ingested before the stop"
+
+
+def test_extract_one_ENTERS_the_truncation_guard(cp, monkeypatch, tmp_path):
+    """M2 CONTROL. The tests above call `envelope_complete` directly, which proves the
+    predicate and NOT that the extraction path consults it. This one drives `_extract_one`
+    with a stubbed model and asserts the guard fires from there."""
+    cp.apply_arm("v0_3_7", None, "pilot_v037_arm_a_haiku")
+    monkeypatch.setattr(cp, "RAW_DIR", tmp_path)
+    monkeypatch.setattr(cp, "build_prompt", lambda *a, **k: "prompt")
+    monkeypatch.setattr(cp.model_stub, "invoke", lambda *a, **k: {
+        "model_id": "m", "usage": {"outputTokens": 10, "maxOutputTokens": 32000},
+        "output": {"nothing": "the contract declares"}, "raw_result": "{}"})
+    chunk = type("C", (), {"chunk_id": "d#c0001", "index": 1, "start": 0, "end": 1,
+                           "n_tokens": 1, "heading_path": (), "oversize": False})()
+    with pytest.raises(cp.TruncatedChunk):
+        cp._extract_one("d", chunk, "sha", "title", {"model_id": "m"}, 40000)
+    # ... and a legitimately empty bibliography chunk passes through the SAME entrypoint.
+    monkeypatch.setattr(cp.model_stub, "invoke", lambda *a, **k: {
+        "model_id": "m", "usage": {"outputTokens": 10, "maxOutputTokens": 32000},
+        "output": {"concepts": [], "gleaned": []}, "raw_result": "{}"})
+    chunk2 = type("C", (), {"chunk_id": "d#c0002", "index": 2, "start": 0, "end": 1,
+                            "n_tokens": 1, "heading_path": (), "oversize": False})()
+    assert cp._extract_one("d", chunk2, "sha", "title", {"model_id": "m"}, 40000) == "ok"
+
+
+# ------------------------------------------------------- 6. wrapped prose is not a sentence
+
+#: Verbatim from corpus/bulk_md/data-readiness-for-ai-a-360-degree-survey — Docling hard-wraps
+#: prose at ~110 characters, so these newlines sit INSIDE sentences.
+WRAPPED = ("Evaluation of data readiness is a crucial step in improving the quality and "
+           "appropriateness of data\nusage for AI. R&D efforts have been spent on improving "
+           "data quality. However, standardized metrics for evaluating data readiness for\n"
+           "use in AI training are still evolving.\n\nIn this study, we perform a "
+           "comprehensive survey of metrics used to verify data readiness for\nAI training.")
+
+
+def test_a_line_wrap_inside_a_sentence_is_not_a_sentence_end():
+    """MEASURED on the first Arm A chunks: treating every newline as a boundary cut spans
+    like `...ineffective AI models that` — truncated at the wrap, still verbatim-present in
+    the source, and therefore still passing every grounding check. Same dangerous shape as
+    the table-row bug, one layer down."""
+    span, reason = anchors.derive_span("crucial step", WRAPPED)
+    assert reason is None
+    assert span == ("Evaluation of data readiness is a crucial step in improving the quality "
+                    "and appropriateness of data\nusage for AI.")
+    assert span.endswith("usage for AI."), "the span must cross the wrap to its real end"
+
+
+def test_a_blank_line_still_ends_the_unit():
+    """CONTROL for the test above: relaxing the newline rule must not run spans together
+    across paragraphs. A paragraph break is a real boundary and the only thing separating
+    these two sentences — neither carries a structural marker."""
+    span, reason = anchors.derive_span("standardized metrics", WRAPPED)
+    assert reason is None
+    assert span.endswith("are still evolving.")
+    assert "In this study" not in span
+
+
+def test_a_sentence_ending_period_before_a_newline_is_still_a_boundary():
+    """The narrower failure the first fix caused: routing every match containing a newline
+    to the wrap rule swallowed real sentence ends, because `(?<=[.!?])\\s+` consumes the
+    newline too."""
+    span, _ = anchors.derive_span("R&D efforts", WRAPPED)
+    assert span == "R&D efforts have been spent on improving data quality."
+
+
+#: Shape taken verbatim from corpus/bulk_md/fcsm-23-02-a-framework-for-data-quality-case-studies,
+#: which carries 86 blank-line breaks after a line with NO terminal punctuation (Docling writes
+#: them as newline-space-newline). The two documents Arm A ran on contain none at all, so this
+#: rule is invisible on those and would ship untested without a fixture from a document that
+#: has it.
+FCSM = "Table 1 \n \nA Framework for Data Quality: Case Studies \nOctober 2023"
+
+
+def test_a_blank_line_ends_the_unit_forward_with_no_punctuation_to_help():
+    """Nothing here ends in `.!?`, so only the paragraph break can stop the span. Without it,
+    a table caption swallows the title beneath it."""
+    span, reason = anchors.derive_span("Table 1", FCSM)
+    assert reason is None and span == "Table 1"
+
+
+def test_a_blank_line_ends_the_unit_backward_with_no_punctuation_to_help():
+    """The same rule scanning left, same fixture, same absence of punctuation."""
+    span, reason = anchors.derive_span("Framework for Data", FCSM)
+    assert reason is None
+    assert span.startswith("A Framework for Data Quality: Case Studies")
+    assert "Table 1" not in span
+
+
+# ------------------------------------------------- 7. append-only re-ingest generations
+
+def test_readers_keep_only_the_highest_ingest_generation(cp):
+    """A parser fix at IDENTICAL chunk boundaries cannot be corrected by `chunk_superseded`:
+    that mechanism keys on (chunk_id, start, end), so it would retire the corrected events
+    along with the stale ones. Generations correct forward instead — nothing is edited or
+    deleted, and every reader sees exactly one view of each chunk."""
+    gens = {"d#c1": 2}
+    stale = {"chunk_id": "d#c1", "provenance": {"ingest_generation": 1}}
+    fresh = {"chunk_id": "d#c1", "provenance": {"ingest_generation": 2}}
+    assert cp.is_live(stale, gens, set()) is False
+    assert cp.is_live(fresh, gens, set()) is True
+
+
+def test_events_written_before_generations_existed_are_generation_one(cp):
+    """The banked v0.3.5 shard carries no generation field. Treating its events as
+    generation 0 — or as unknown — would silently drop the entire comparator."""
+    banked = {"chunk_id": "d#c1", "provenance": {}}
+    assert cp._generation(banked) == cp.FIRST_GENERATION
+    assert cp.is_live(banked, {"d#c1": 1}, set()) is True
+
+
+def test_a_superseded_chunk_is_still_dead_whatever_its_generation(cp):
+    """CONTROL: generations must not resurrect a chunk retired by a boundary change."""
+    dead = {("d#c1", 0, 10)}
+    ev = {"chunk_id": "d#c1", "chunk_start": 0, "chunk_end": 10,
+          "provenance": {"chunk_start": 0, "chunk_end": 10, "ingest_generation": 9}}
+    assert cp.is_live(ev, {"d#c1": 9}, dead) is False
