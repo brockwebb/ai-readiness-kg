@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!-- ai-readiness-kg — nightly T0 bibliographic resume + corpus projection.
+     Task: cc_tasks/2026-08-29_biblio_cron.md. Rendered from this template by
+     scripts/launchd/install.py; DO NOT hand-edit the copy in ~/Library/LaunchAgents.
+
+     WHY THE TEMPLATE IS COMMITTED (prior art, this machine, 2026-08-01):
+     com.arnold.sync-daily ran for 190 consecutive days and then died at a reboot, because
+     its plist existed ONLY as an untracked file in ~/Library/LaunchAgents. A loaded launchd
+     session was the sole place the job existed; the reboot erased it and ten days of data
+     were lost silently, with no copy on disk to restore from. That plist now lives in its
+     repo. This one starts there. Operational state outside version control is invisible to
+     every repo-based sweep and survives exactly until the next reboot.
+
+     SPEND: none, by construction. Both legs are metadata/projection work; the entrypoint
+     fails nonzero if the shared spend ledger changes under it, and no ceiling is declared
+     in this unit because none is permitted to be needed. A job that spends would carry its
+     operator-declared ceiling here, in the unit itself.
+
+     Schedule (@HOUR@:@MINUTE@ local) comes from controls.yaml jobs.biblio_resume; change it
+     there and re-run the installer, never by editing the loaded plist.
+
+     Install:   python3 scripts/launchd/install.py --install
+     Verify:    python3 scripts/launchd/install.py --status
+     Trigger:   launchctl kickstart -k gui/$(id -u)/@LABEL@
+     Uninstall: python3 scripts/launchd/install.py --uninstall
+-->
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>@LABEL@</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>@PYTHON@</string>
+        <string>@REPO@/scripts/jobs/biblio_resume_job.py</string>
+    </array>
+
+    <key>WorkingDirectory</key>
+    <string>@REPO@</string>
+
+    <key>StartCalendarInterval</key>
+    <dict>
+        <key>Hour</key>
+        <integer>@HOUR@</integer>
+        <key>Minute</key>
+        <integer>@MINUTE@</integer>
+    </dict>
+
+    <!-- RunAtLoad false: the harvest is quota-bound, not latency-bound, and an
+         opportunistic run at every login spends quota the 02:30 window wants. A missed
+         window costs one night of a queue that is explicitly not an exit criterion
+         (ADDENDUM-02 §1 to the T0/T1 task: availability is a queue, not a gate). -->
+    <key>RunAtLoad</key>
+    <false/>
+
+    <!-- Bootstrap log only. The job writes its own dated, size-guarded log to
+         state/logs/biblio_resume/<date>.log; this file catches what happens BEFORE the
+         interpreter is running — a moved python, a bad path — which would otherwise
+         produce no evidence anywhere at all. -->
+    <key>StandardOutPath</key>
+    <string>@REPO@/state/logs/biblio_resume/launchd.log</string>
+    <key>StandardErrorPath</key>
+    <string>@REPO@/state/logs/biblio_resume/launchd.log</string>
+
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PATH</key>
+        <string>@PYTHON_DIR@:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+    </dict>
+</dict>
+</plist>

@@ -177,3 +177,94 @@ def test_reindex_requires_a_doc_id_and_refuses_an_unadmitted_one(capsys):
     a.doc_id = "not-an-admitted-document"
     assert t1x.phase_reindex(a) == 2
     assert "not an admitted document" in capsys.readouterr().out
+
+
+# ---------------------------------------------------------------------------------------
+# 2026-08-29, task 2026-08-29_biblio_cron. Scheduling the harvest nightly is what makes a
+# doomed sweep expensive: once a provider answers "retry in 6.7h", the remaining requests
+# are known-doomed, and unscheduled that is one wasted burst while scheduled it is one
+# every night against a polite-pool API. Observed live: 149 consecutive 429s carrying
+# Retry-After 24138s, all issued after the first response had already said so.
+
+QUOTA = f"api.openalex.org: HTTP 429: rate limit with Retry-After 24138s (6.7h) — {t0.QUOTA_NOTE}"
+
+
+def test_quota_detector_requires_every_provider_to_have_hit_the_quota():
+    """`all`, not `any`. A document whose Crossref lookup returned a real 'no record' has
+    learned something about the world, and must not count toward a stop that means
+    'the network is telling us to come back tomorrow'."""
+    assert t0.is_quota_exhausted({"resolution": "harvest_error", "provider_errors": [QUOTA]})
+    assert not t0.is_quota_exhausted(
+        {"resolution": "harvest_error",
+         "provider_errors": [QUOTA, "api.crossref.org: no record for title"]})
+    assert not t0.is_quota_exhausted({"resolution": "harvest_error", "provider_errors": []})
+    assert not t0.is_quota_exhausted({"resolution": "doi", "provider_errors": [QUOTA]})
+
+
+def test_quota_detector_falls_back_to_match_note():
+    """`harvest_guarded`'s except branch writes no provider_errors — the note is all there
+    is, and the live records that motivated this were exactly that shape."""
+    assert t0.is_quota_exhausted({"resolution": "harvest_error", "match_note": QUOTA})
+    assert not t0.is_quota_exhausted({"resolution": "harvest_error", "match_note": "HTTP 500"})
+
+
+def test_sweep_stops_after_three_consecutive_quota_failures(tmp_path, monkeypatch, capsys):
+    """Positive control for the stop: without it the sweep asks all 20 anyway."""
+    entries = {f"doc-{i:02d}": {"screening": {"decision": "included"},
+                                "identity": {"title": f"T{i}", "pub_year": "2024",
+                                             "source_url": "https://x/"}}
+               for i in range(20)}
+    man = tmp_path / "manifest.json"
+    man.write_text(json.dumps({"entries": entries}), encoding="utf-8")
+    monkeypatch.setattr(t0, "MANIFEST", man)
+    monkeypatch.setattr(t0, "CACHE", tmp_path / "cache")
+    asked = []
+
+    def all_quota(doc_id, entry):
+        asked.append(doc_id)
+        return {"doc_id": doc_id, "evidence_class": "bibliographic", "manifest_title": "T",
+                "manifest_year": "2024", "primary_url": "https://x/",
+                "resolution": "harvest_error", "metadata_source": None,
+                "match_note": QUOTA, "provider_errors": [QUOTA], "work": None}
+
+    monkeypatch.setattr(t0, "harvest_guarded", all_quota)
+    monkeypatch.setattr(sys, "argv", ["t0_biblio_harvest.py"])
+    assert t0.main() == 0
+    assert len(asked) == t0.CONSECUTIVE_QUOTA_STOP, \
+        f"kept asking a provider that said come back tomorrow: {len(asked)} requests"
+    out = capsys.readouterr().out
+    assert "STOP: 3 consecutive documents failed on daily quota" in out
+    assert '"stopped_on_quota": 17' in out
+
+
+def test_a_resolvable_document_between_quota_failures_resets_the_streak(tmp_path,
+                                                                       monkeypatch, capsys):
+    """The streak must be CONSECUTIVE. A run that is merely sprinkled with quota errors —
+    OpenAlex dead, Crossref answering — has to keep going, or the ladder's whole point
+    (degrade, don't abort) is undone by the thing meant to protect it."""
+    entries = {f"doc-{i:02d}": {"screening": {"decision": "included"},
+                                "identity": {"title": f"T{i}", "pub_year": "2024",
+                                             "source_url": "https://x/"}}
+               for i in range(9)}
+    man = tmp_path / "manifest.json"
+    man.write_text(json.dumps({"entries": entries}), encoding="utf-8")
+    monkeypatch.setattr(t0, "MANIFEST", man)
+    monkeypatch.setattr(t0, "CACHE", tmp_path / "cache")
+    asked = []
+
+    def alternating(doc_id, entry):
+        asked.append(doc_id)
+        n = int(doc_id.split("-")[1])
+        base = {"doc_id": doc_id, "evidence_class": "bibliographic", "manifest_title": "T",
+                "manifest_year": "2024", "primary_url": "https://x/", "work": None,
+                "metadata_source": None}
+        if n % 3 == 2:                       # every third resolves via the crossref rung
+            return {**base, "resolution": "crossref_title_search", "match_note": None}
+        return {**base, "resolution": "harvest_error", "match_note": QUOTA,
+                "provider_errors": [QUOTA]}
+
+    monkeypatch.setattr(t0, "harvest_guarded", alternating)
+    monkeypatch.setattr(sys, "argv", ["t0_biblio_harvest.py"])
+    assert t0.main() == 0
+    assert len(asked) == 9, "streak was not reset by a document that resolved"
+    assert "STOP:" not in capsys.readouterr().out

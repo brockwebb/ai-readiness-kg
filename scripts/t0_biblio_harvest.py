@@ -52,6 +52,20 @@ CROSSREF = "https://api.crossref.org/works"
 SLEEP = 0.12                              # polite-pool courtesy
 MAX_BACKOFF_S = 90                        # beyond this a Retry-After is a daily quota
 
+#: The exact phrase the quota branch writes, and the one `is_quota_exhausted` looks for. One
+#: constant, used at both ends, so the detector cannot silently drift away from the message.
+QUOTA_NOTE = "daily quota exhausted, retry after reset"
+
+#: Consecutive documents that may fail on quota ALONE before the sweep gives up for the night.
+#: Once a provider answers "retry in 6.7h", every remaining request is known-doomed, and this
+#: harvest is now scheduled nightly (task 2026-08-29_biblio_cron) — so without a stop, one
+#: exhausted night is 149 pointless requests against a polite-pool API, every night. 3 matches
+#: the repo's existing systemic-failure idiom (BURN_QUARANTINE_STOP_MODE=systemic halts on 3
+#: consecutive over-threshold documents): one failure is an incident, three is a condition.
+#: It is deliberately not 1 — the provider ladder can still resolve a document through
+#: Crossref while OpenAlex is quota-dead, and stopping on the first would forfeit those.
+CONSECUTIVE_QUOTA_STOP = 3
+
 
 def norm_title(s: str) -> str:
     s = unicodedata.normalize("NFKC", str(s or "")).casefold()
@@ -120,7 +134,7 @@ def get(url: str, params: dict | None = None, *, tries: int = 5) -> dict | None:
             if wait > MAX_BACKOFF_S:
                 raise HarvestError(
                     f"HTTP {r.status_code}: rate limit with Retry-After {wait:.0f}s "
-                    f"({wait / 3600:.1f}h) — daily quota exhausted, retry after reset")
+                    f"({wait / 3600:.1f}h) — {QUOTA_NOTE}")
             if attempt == tries:
                 raise HarvestError(f"HTTP {r.status_code} after {tries} attempts")
             print(f"    . HTTP {r.status_code}, backing off {wait:.0f}s "
@@ -345,6 +359,18 @@ def harvest_guarded(doc_id: str, entry: dict) -> dict:
                 "match_note": str(exc), "work": None}
 
 
+def is_quota_exhausted(rec: dict) -> bool:
+    """True when a record failed and EVERY provider that spoke reported a daily quota.
+
+    `all`, not `any`: a document whose OpenAlex lookup hit the quota but whose Crossref
+    lookup returned a genuine "no record" has learned something, and must not be counted
+    toward a stop that means "the network is telling us to come back tomorrow"."""
+    if rec.get("resolution") != "harvest_error":
+        return False
+    errs = rec.get("provider_errors") or ([rec["match_note"]] if rec.get("match_note") else [])
+    return bool(errs) and all(QUOTA_NOTE in e for e in errs)
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--limit", type=int, default=0)
@@ -359,6 +385,7 @@ def main() -> int:
     todo = sorted(inc)[: a.limit or None]
     stats = {"cached": 0, "doi": 0, "arxiv_then_title": 0, "title_search": 0,
              "bibliographic_partial": 0}
+    quota_streak = 0
     for i, doc_id in enumerate(todo, 1):
         out = CACHE / f"{doc_id}.json"
         stale = False
@@ -375,6 +402,14 @@ def main() -> int:
         stats[rec["resolution"]] = stats.get(rec["resolution"], 0) + 1
         print(f"[{i}/{len(todo)}] {doc_id[:56]:<58} {rec['resolution']:<22} "
               f"{(rec['match_note'] or '')[:52]}")
+        quota_streak = quota_streak + 1 if is_quota_exhausted(rec) else 0
+        if quota_streak >= CONSECUTIVE_QUOTA_STOP:
+            left = len(todo) - i
+            stats["stopped_on_quota"] = left
+            print(f"\nSTOP: {quota_streak} consecutive documents failed on daily quota alone. "
+                  f"Every further request tonight is known-doomed, so the sweep ends here. "
+                  f"{left} document(s) untouched, still retryable; the next run picks them up.")
+            break
     print("\nT0 harvest:", json.dumps(stats, indent=1))
     return 0
 

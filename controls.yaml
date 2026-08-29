@@ -1,6 +1,7 @@
 # Operational switches. External systems (Wintermute control panel)
 # flip these by writing this file. This file is the entire interface.
-schema_version: "0.2"   # 0.2 (2026-08-26, task preemptive_spend_guard): append-only `spend:` block
+schema_version: "0.3"   # 0.2 (2026-08-26, task preemptive_spend_guard): append-only `spend:` block
+                        # 0.3 (2026-08-29, task biblio_cron): append-only `jobs:` block
 forage: off
 extract: off
 budgets:
@@ -38,3 +39,29 @@ spend:
   # is never in reap range on age; the PID-liveness test is the binding condition either
   # way — age alone never qualifies a reservation.
   orphan_reservation_age_seconds: 600
+
+# Scheduled metadata jobs (task 2026-08-29_biblio_cron). NOTHING here may spend against the
+# model budget: the units below are timers over metadata/projection work only, and
+# scripts/jobs/biblio_resume_job.py fails nonzero if the spend ledger changes under it. A
+# model-spending job would need an operator-declared ceiling in its own unit; none exists.
+jobs:
+  biblio_resume:
+    # 02:30 local, which is 06:30 UTC on EDT. Chosen to sit well clear of the OpenAlex
+    # daily-quota reset, and the reset time is MEASURED, not assumed: on 2026-08-29 at
+    # 17:20 UTC the provider answered 429 with Retry-After 24138s, i.e. a reset at ~00:02
+    # UTC — a UTC midnight boundary. 06:30 UTC is ~6.5h past it, so a run that was refused
+    # last night meets a fresh quota rather than the tail of the old one.
+    # Recorded here because the plist's numeric fields cannot carry the reason.
+    hour: 2
+    minute: 30
+    # Log-bomb guard. 2000 matches MAX_ERR_CHARS in scripts/t1_build_index.py — the bound
+    # already set on this project after one Docling exception embedded a whole PDF page
+    # dict and wrote ~230,000 lines. Same threat, same number; a second, different figure
+    # for the same hazard would be a drift source.
+    log_max_line_chars: 2000
+    # Per-run byte cap. A normal run is ~400 lines x ~120 chars ~= 50 KB, so 2 MiB is ~40x
+    # headroom for an unusually chatty night while still bounding a runaway to a file a
+    # human can open. The line cap does not imply this one: a flood of ordinary lines is
+    # the other half of the same denial of service.
+    log_max_run_bytes: 2097152
+    log_retention_days: 30
