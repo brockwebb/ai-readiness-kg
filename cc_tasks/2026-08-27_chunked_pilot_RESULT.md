@@ -816,3 +816,85 @@ under the cap** — no operator approval required (doctrine: under the cap, run 
 §3 Arm A / Arm B. No extraction dispatched, no `model_stub` call, nothing reserved against
 either ceiling. `seldon cc complete` deliberately not run — ADDENDUM-03 reserves it for the
 end of §3.
+
+---
+
+# §3 PRE-REGISTRATION (operator, 2026-08-29) — written and committed before Arm A ran
+
+Two additions to the pre-registered §3 gate, requested by the operator before any Arm A chunk
+was dispatched. They close the same loophole from opposite sides. The v0.3.7 contract
+deliberately drops the exhaustive-inventory instruction; an extractor that responds by
+emitting almost nothing would post an excellent faithfulness score on a handful of easy items.
+**Faithfulness alone cannot distinguish "accurate" from "silent."**
+
+## (a) Faithfulness is reported conditioned on item density
+
+Every faithfulness figure is published beside the **admitted items per chunk** that produced
+it, and a PASS is stated as the triple **(F_upper, item-faithful, density)** — never as a
+faithfulness number alone. A faithfulness figure quoted without its density is not comparable
+across arms and is not to be reported that way.
+
+## (b) Admitted-yield floor: 60% of v0.3.5
+
+An arm admitting **fewer than 0.60x the v0.3.5 arm's admitted items per chunk** reports
+**UNDER-EXTRACTION** rather than PASS — even if it clears `F_upper < 0.10` and
+`item-faithful >= 0.70`. Both thresholds still apply; the floor can only *withhold* a PASS,
+never grant one. Encoded as `YIELD_FLOOR_RATIO = 0.60` in `scripts/chunked_pilot.py`, read by
+`yield_comparison()`, and it is not re-read from any result.
+
+### Discrepancy reported, not reconciled: there is no "same 128 chunks" for v0.3.5
+
+The operator's instruction says "60% of v0.3.5 **on the same 128 chunks**." **That comparator
+does not exist.** The banked v0.3.5 chunked arm covers **44 of the 128 chunks**, across **2 of
+the 5 documents** (`data-readiness-for-ai-a-360-degree-survey` 30/30, `aidrin-hiniduma-2024`
+14/18); the run was stopped by operator decision once the cost question was settled at 65,637
+settled tokens per chunk. The other three documents have no v0.3.5 chunked extraction at all.
+
+The intent is unambiguous, so it is implemented against a comparator that exists:
+
+> **admitted items per chunk, computed on the chunks BOTH arms actually cover.**
+
+Dividing Arm A's items over 128 chunks by v0.3.5's items over 44 would compare two different
+denominators and manufacture a verdict from the mismatch. A test (`test_yield_is_compared_
+only_on_chunks_BOTH_arms_cover`) fails if the intersection is ever widened to a union.
+
+### The baseline, measured now so it cannot move later
+
+From `events/batch-016_chunked_v035.jsonl`, live `chunk_metrics` only (the one
+`chunk_superseded` triple excluded):
+
+| quantity | value |
+|---|---|
+| chunks with events | 44 |
+| admitted nodes | 746 |
+| admitted edges | 1,244 |
+| **admitted items** | **1,990** |
+| **admitted per chunk** | **45.23** |
+| quarantined (same chunks) | 2,388 of 4,378 emitted (54.5%) |
+
+**Pre-registered floor: `0.60 x 45.23 = 27.14` admitted items per chunk**, on whichever of
+those 44 chunks Arm A also covers. Below it, Arm A reports UNDER-EXTRACTION regardless of its
+gate numbers.
+
+Note what the baseline row also says: the v0.3.5 arm **quarantined more items than it
+admitted**. That is the number the anchor contract is meant to move, and it is recorded here
+before Arm A produces a competing one.
+
+## Ledger erratum (self-executing, grounding on its face)
+
+The §2 declarations for `pilot_v037_arm_a_haiku` and `pilot_v037_arm_b_sonnet` recorded
+`call_class: extraction` (reserve floor 111,000) while the ceiling arithmetic reported in §2
+used the `extraction_chunk` floor (20,000 x 128 = 2,560,000). `extraction_chunk` is the class
+`controls.yaml` defines for exactly this shape of call ("One call carries ONE chunk, not a
+whole document"), so the declaration was wrong and the arithmetic was right.
+
+Corrected by a superseding declare on the append-only ledger, **ceiling unchanged at
+3,840,000**, both runs at 0 committed so nothing already billed is disturbed. The grounding is
+on the record's face in `declared_by`.
+
+## Issue filed
+
+`1f298b4c-9134-4cd5-9b28-9e071fd062a5` (structural_flow, DO SOON) —
+`scripts/run_bulk_extraction.py --dry-run` calls `spend.declare()` **before** branching on the
+dry-run flag, so pricing a run requires committing to a fabricated ceiling on an append-only
+ledger. This is the §2 discrepancy promoted from a paragraph in a RESULT to a tracked artifact.

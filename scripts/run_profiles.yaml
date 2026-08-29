@@ -102,7 +102,7 @@ profiles:
   # indifferent to which produced the candidates (DD-023). The runner supplies the model.
   v0_3_7:
     corpus_epoch: chunked-2026-08-27
-    batch: 17                                  # events/batch-017_v037.jsonl (TAGGED — an
+    batch: 17                                  # events/batch-017_v0_3_7.jsonl (TAGGED — an
     shard_tag: v0_3_7                          # experiment arm, never replayed into the graph)
     raw_dir: events/raw/v0_3_7
     stop_file: events/v0_3_7_STOP.json
@@ -112,6 +112,11 @@ profiles:
     oversize_allow: []
     prompt_template: kg/extraction/prompt_template_v0_3_7.md
     template_sha256: 9a410fc35e684cc5d9f0aefd4652164ef9209044d8e63454e070eb636cb5e840
+    # The EMISSION CONTRACT this profile runs under, read by scripts/chunked_pilot.py.
+    # `anchor` = the model emits a pointer and the harness cuts the grounding span from the
+    # source; `verbatim` (the default, and every profile above) = the model types the span.
+    # It lives here rather than in code so an arm is selected by naming a profile.
+    emission_contract: anchor
     # The chunker this contract depends on, pinned alongside the prompt: a chunk-local
     # contract read against a differently-cut chunk is a different experiment.
     chunker_config: kg/extraction/chunker_config.yaml

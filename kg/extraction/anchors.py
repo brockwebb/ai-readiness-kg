@@ -301,3 +301,63 @@ def apply_anchor_contract(item: dict, source_text: str) -> tuple[dict, str | Non
         return out, reason
     out["grounding_span"] = span
     return out, None
+
+
+#: Layers whose items carry an anchor of their own. The node layers come from the parser's
+#: own catalogue so a new node type cannot be added there and silently skipped here.
+_ANCHORED_NON_NODE_LAYERS = ("edges", "cites", "proposed_relationships", "mentions")
+
+#: Instrument per-attribute anchors -> the per-attribute span map the parser already reads
+#: (`_null_uncovered_instrument_attrs`). Same mechanism as the node anchor, one level down.
+ATTRIBUTE_ANCHORS_KEY = "attribute_anchors"
+ATTRIBUTE_SPANS_KEY = "grounding_spans"
+
+
+def anchored_layers() -> tuple[str, ...]:
+    from .parser import LAYER_TYPES
+    return tuple(LAYER_TYPES) + _ANCHORED_NON_NODE_LAYERS
+
+
+def apply_to_output(output: dict, source_text: str) -> tuple[dict, list[dict]]:
+    """Derive every item's `grounding_span` from its `anchor`, across the whole envelope.
+
+    Returns `(rewritten output, dropped)` where `dropped` is a parser-shaped quarantine list
+    `{kind, reason, item}`. An item whose anchor cannot be located is DROPPED here rather
+    than passed on with no span: the parser would quarantine it one step later as "missing
+    grounding_span", which is a true statement that names the wrong cause. `anchor_not_located`
+    is its own quarantine class precisely so ADDENDUM-03 §3 can report it apart from
+    `span_partial` — the erratum split those causes and the report must keep them split.
+
+    `gleaned` is untouched: the contract defines it as names only, with no anchor, so it is
+    not an anchored layer and never reaches the parser.
+    """
+    out = dict(output)
+    dropped: list[dict] = []
+    for layer in anchored_layers():
+        items = out.get(layer)
+        if not isinstance(items, list):
+            continue
+        kept = []
+        for item in items:
+            if not isinstance(item, dict):
+                dropped.append({"kind": layer, "reason": f"{NOT_LOCATED}: item is not an object",
+                                "item": item})
+                continue
+            new_item, reason = apply_anchor_contract(item, source_text)
+            if reason:
+                dropped.append({"kind": layer, "reason": reason, "item": item})
+                continue
+            attr_anchors = new_item.get(ATTRIBUTE_ANCHORS_KEY)
+            if isinstance(attr_anchors, dict):
+                spans = {}
+                for attr, anchor in attr_anchors.items():
+                    span, _ = derive_span(anchor, source_text)
+                    if span:
+                        spans[attr] = span
+                # An attribute whose anchor did not locate gets NO span, which the parser
+                # then nulls at attribute level. Dropping the whole Instrument for one bad
+                # attribute anchor would be a harsher rule than the contract states.
+                new_item[ATTRIBUTE_SPANS_KEY] = spans
+            kept.append(new_item)
+        out[layer] = kept
+    return out, dropped

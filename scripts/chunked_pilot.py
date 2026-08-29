@@ -46,19 +46,83 @@ REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO)); sys.path.insert(0, str(REPO / "scripts"))
 
 from kg import eventlog, spend                                   # noqa: E402
-from kg.extraction import chunker, grounding, model_stub, parser, span_checks  # noqa: E402
+from kg.extraction import (anchors, chunker, grounding, merge, model_stub, parser,  # noqa: E402
+                           span_checks)
 from kg.extraction.pipeline import _apply_provenance_ownership   # noqa: E402
 import run_bulk_extraction as rbe                                # noqa: E402
 
 TASK = "cc_tasks/2026-08-27_chunked_pilot.md"
 PY = sys.executable
+METRICS = REPO / "corpus/staging/metrics"
+VERDICT = REPO / "docs/research/2026-08-27_chunked_vs_wholedoc_verdict.md"
+
+# ---------------------------------------------------------------- arm-scoped run state
+# ADDENDUM-03 §3 runs a SECOND arm (v0.3.7 emission contract, a cheaper extractor) over the
+# same five documents. Everything that distinguishes one arm from another — event shard, raw
+# dir, corpus epoch, emission contract — already lives in `scripts/run_profiles.yaml`, so the
+# arm is selected by naming a profile rather than by editing constants here (standard 2).
+# These stay module GLOBALS, rebound once by `apply_arm`, because every function below reads
+# them at call time; that is the same convention `_EVENTS_DIR` and friends follow so tests can
+# repoint them (CLAUDE.md, "Conventions specific to this repo").
 PROFILE = "chunked_v035"
 RUN_ID = "pilot_chunked_v035"
 JUDGE_RUN_ID = "chunked_pilot_judge"
 SHARD_NO, TAG = 16, "chunked_v035"
 RAW_DIR = REPO / "events/raw/chunked_v035"
-METRICS = REPO / "corpus/staging/metrics"
-VERDICT = REPO / "docs/research/2026-08-27_chunked_vs_wholedoc_verdict.md"
+CORPUS_EPOCH = "chunked-2026-08-27"
+#: "verbatim" = the model types the grounding span (v0.3.5). "anchor" = the model emits a
+#: pointer and the HARNESS cuts the span from the source (v0.3.7). Read from the profile.
+EMISSION = "verbatim"
+#: Extractor model for this arm, overriding `model_config.yaml`. None = the pinned model.
+ARM_MODEL = None
+
+
+def profile_block(profile: str) -> dict:
+    import yaml
+    doc = yaml.safe_load((REPO / "scripts/run_profiles.yaml").read_text(encoding="utf-8"))
+    prof = (doc.get("profiles") or {}).get(profile)
+    if not prof:
+        raise SystemExit(f"FATAL: unknown profile {profile!r} in scripts/run_profiles.yaml")
+    return prof
+
+
+def apply_arm(profile: str | None = None, model: str | None = None,
+              run_id: str | None = None) -> dict:
+    """Bind every arm-scoped global from the named profile. Loud on a missing key: a shard
+    number or raw dir silently defaulting to another arm's would cross-contaminate two
+    experiments on an append-only log, which no later correction can fully undo."""
+    global PROFILE, RUN_ID, SHARD_NO, TAG, RAW_DIR, CORPUS_EPOCH, EMISSION, ARM_MODEL
+    if profile:
+        PROFILE = profile
+    prof = profile_block(PROFILE)
+    for key in ("batch", "raw_dir", "corpus_epoch"):
+        if not prof.get(key):
+            raise SystemExit(f"FATAL: profile {PROFILE!r} has no {key!r}")
+    SHARD_NO = int(prof["batch"])
+    TAG = prof.get("shard_tag") or PROFILE
+    RAW_DIR = REPO / prof["raw_dir"]
+    CORPUS_EPOCH = prof["corpus_epoch"]
+    EMISSION = prof.get("emission_contract", "verbatim")
+    if EMISSION not in ("verbatim", "anchor"):
+        raise SystemExit(f"FATAL: profile {PROFILE!r} declares unknown emission_contract "
+                         f"{EMISSION!r}; known: verbatim, anchor")
+    ARM_MODEL = model
+    if run_id:
+        RUN_ID = run_id
+        JUDGE_RUN_ID_ = f"{run_id}_judge"
+        globals()["JUDGE_RUN_ID"] = JUDGE_RUN_ID_
+    return prof
+
+
+def model_cfg() -> dict:
+    """The extraction model config for THIS arm. The identity gate in `model_stub.invoke`
+    still applies unchanged: an envelope reporting any other model is a hard stop."""
+    cfg = model_stub.load_model_config()
+    return {**cfg, "model_id": ARM_MODEL} if ARM_MODEL else cfg
+
+
+def arm_prefix() -> str:
+    return f"arm_{RUN_ID}"
 
 # The banked whole-document arm.
 WD_RAW_DIR = REPO / "events/raw/reextract_v035b_pilot"
@@ -258,7 +322,7 @@ def _extract_one(d: str, c: chunker.Chunk, sha: str, title: str, cfg: dict, susp
 
 def phase_extract(a) -> int:
     from concurrent.futures import ThreadPoolExecutor
-    cfg = model_stub.load_model_config()
+    cfg = model_cfg()
     m = members()
     RAW_DIR.mkdir(parents=True, exist_ok=True)
     spend.set_current_run(RUN_ID)
@@ -308,25 +372,67 @@ def phase_extract(a) -> int:
     return phase_ingest(a)
 
 
+#: Quarantine reason -> stable class, for the by-reason rate ADDENDUM-03 §3 requires. Reasons
+#: are free-form diagnostic sentences from the parser and from `anchors`; a report needs a
+#: closed set. Matching is on a distinctive PREFIX/substring of each literal the parser emits,
+#: and anything unmatched is reported as `other:<verbatim head>` rather than swept into a
+#: catch-all bucket — an unrecognised failure mode must be visible as unrecognised.
+QUARANTINE_CLASSES = (
+    (anchors.NOT_LOCATED, "anchor_not_located"),
+    ("span_partial", "span_partial"),
+    ("missing grounding_span", "missing_span"),
+    ("grounding_span not found", "span_not_in_source"),
+    ("missing 'id'", "missing_id"),
+    ("unresolved endpoint id", "unresolved_endpoint"),
+    ("missing required property", "missing_required_property"),
+    ("has no name to verify in span", "semantic_endpoint_unnamed"),
+    ("cites from_id is not this document", "cites_wrong_from"),
+    ("cites missing to_id", "cites_missing_to"),
+    ("not in schema enum", "property_value_invalid"),
+    ("span must state the relation", "semantic_span_structural"),
+)
+
+
+def reason_class(reason: str | None) -> str:
+    r = str(reason or "")
+    for needle, cls in QUARANTINE_CLASSES:
+        if needle in r:
+            return cls
+    return f"other:{r[:40]}" if r else "other:unstated"
+
+
 def parse_chunk_raw(doc_id: str, raw: dict, full_text: str, chunk_text: str) -> tuple:
-    """(result, mentions, diversions) for one chunk's persisted response."""
+    """(result, mentions, diversions) for one chunk's persisted response.
+
+    Under the ANCHOR emission contract the harness derives every grounding span from the
+    chunk source BEFORE the parser runs, so what the parser validates is a span cut from the
+    document rather than one the model typed. Items whose anchor cannot be located are
+    dropped there and carried into `result.quarantined` under `anchor_not_located`, which
+    keeps that cause reportable apart from `span_partial` (ADDENDUM-03 §3)."""
     out = model_stub._extract_json(raw.get("raw_result") or "")
     out = _apply_provenance_ownership(out, doc_id)
+    anchor_dropped: list[dict] = []
+    if EMISSION == "anchor":
+        out, anchor_dropped = anchors.apply_to_output(out, chunk_text)
     result = parser.parse_extraction(out, chunk_text, enforce_span_coverage=True)
+    # Extend BEFORE any caller reads counts(): an anchor drop is a quarantine, and a
+    # quarantine rate that omitted them would understate the contract's own cost.
+    result.quarantined.extend(anchor_dropped)
     mentions = [x for x in (out.get("mentions") or [])
                 if isinstance(x, dict) and x.get("name")
                 and grounding.is_grounded(str(x.get("grounding_span") or ""), chunk_text)]
     return result, mentions, list(result.proposed_relationships)
 
 
-def superseded() -> set[tuple]:
+def superseded(tag: str | None = None) -> set[tuple]:
     """(chunk_id, start, end) triples retired by a `chunk_superseded` event.
 
     The shard is append-only, so a chunker change that moves a boundary is corrected forward:
     the stale chunk's events stay on the shard and every reader filters them out by this set.
     """
     return {(ev["chunk_id"], ev["chunk_start"], ev["chunk_end"])
-            for ev in eventlog.replay(tag=TAG) if ev.get("event_type") == "chunk_superseded"}
+            for ev in eventlog.replay(tag=tag or TAG)
+            if ev.get("event_type") == "chunk_superseded"}
 
 
 def _key(ev: dict) -> tuple:
@@ -338,7 +444,7 @@ def phase_ingest(a) -> int:
     """Parse every persisted chunk response into the tagged shard. Idempotent: a chunk whose
     events are already on the shard is skipped."""
     dead = superseded()
-    cfg = model_stub.load_model_config()
+    cfg = model_cfg()
     m = members()
     on_shard = {ev.get("chunk_id") for ev in eventlog.replay(tag=TAG)
                 if ev.get("event_type") == "chunk_metrics"
@@ -357,7 +463,7 @@ def phase_ingest(a) -> int:
             result, mentions, divs = parse_chunk_raw(d, raw, text, chunk_text)
             ex_id = uuid.uuid4().hex
             prov = {**model_stub.provenance_stamp(ex_id, model_id=raw["model_id"]),
-                    "corpus_epoch": "chunked-2026-08-27", "source_sha256": sha,
+                    "corpus_epoch": CORPUS_EPOCH, "source_sha256": sha,
                     "chunk_id": c.chunk_id, "chunk_start": c.start, "chunk_end": c.end}
             # Locate-at-birth is unchanged: the parser validated every span against the chunk;
             # re-validate against the whole document so a span can never be chunk-local only.
@@ -388,6 +494,11 @@ def phase_ingest(a) -> int:
                                              "grounding_span": x.get("grounding_span")}},
                                 batch=SHARD_NO, tag=TAG)
             hist = Counter((p.get("diversion_reason") or "unstated") for p in divs)
+            # Quarantine BY REASON, not just a total: ADDENDUM-03 §3 requires `span_partial`
+            # and `anchor_not_located` reported separately, and a bare count cannot be split
+            # after the fact. `reason_class` collapses the per-item diagnosis that follows
+            # the colon, which is detail, not a class.
+            qhist = Counter(reason_class(q.get("reason")) for q in result.quarantined)
             eventlog.append({"event_type": "chunk_metrics", "purpose": "chunked_pilot",
                              "doc_id": d, "chunk_id": c.chunk_id,
                              "chunk_start": c.start, "chunk_end": c.end,
@@ -396,6 +507,7 @@ def phase_ingest(a) -> int:
                              "counts": result.counts(), "nodes_kept": kept_n,
                              "edges_kept": kept_e, "mentions": len(mentions),
                              "diversion_histogram": dict(hist),
+                             "quarantine_reasons": dict(qhist),
                              "span_lacks_name": result.precheck_span_lacks_name,
                              "output_tokens": int((raw.get("usage") or {}).get("outputTokens", 0) or 0),
                              "task": TASK}, batch=SHARD_NO, tag=TAG)
@@ -454,8 +566,87 @@ def phase_resolve(a) -> int:
     eventlog.append({"event_type": "entity_resolution", "purpose": "chunked_pilot",
                      "method": "deterministic:nfkc_casefold_ws + aliases (task §4)",
                      "per_doc": report, "task": TASK}, batch=SHARD_NO, tag=TAG)
-    (METRICS / "chunked_resolution.json").write_text(json.dumps(report, indent=1))
+    (METRICS / f"{TAG}_resolution.json").write_text(json.dumps(report, indent=1))
+    if TAG == "chunked_v035":                      # the banked arm's historical filename
+        (METRICS / "chunked_resolution.json").write_text(json.dumps(report, indent=1))
+
+    # v0.3.7 §1.4: cross-chunk type reconciliation, deterministic and logged per entity.
+    # Run only for the anchor arm — the banked v0.3.5 arm was judged before this step
+    # existed, and retro-fitting it would change a banked comparator after the fact.
+    if EMISSION == "anchor":
+        rec = reconcile_types(nodes)
+        type_decision_path().write_text(json.dumps(rec, indent=1))
+        tally = Counter()
+        for d, v in rec.items():
+            for dec in v["decisions"].values():
+                tally[dec["rule"]] += 1
+        print("type reconciliation:", dict(tally),
+              f"-> {tally[merge.TYPE_CONFLICT]} conflicts excluded from pooling")
+        eventlog.append({"event_type": "type_reconciliation", "purpose": "chunked_pilot",
+                         "method": f"deterministic:{merge.PRIVILEGED_TYPE}_evidence > majority "
+                                   f"> {merge.TYPE_CONFLICT} (ADDENDUM-01 §2.4)",
+                         "rules": dict(tally),
+                         "per_doc": {d: v["log"] for d, v in rec.items()},
+                         "task": TASK}, batch=SHARD_NO, tag=TAG)
     return 0
+
+
+# ------------------------------------------------------------------ §1.4 type reconciliation
+#: Where the per-arm type reconciliation log is written. Keyed by TAG so two arms never
+#: overwrite each other's decisions.
+def type_decision_path() -> Path:
+    return METRICS / f"{TAG}_type_reconciliation.json"
+
+
+def instrument_evidence(item: dict) -> bool:
+    """Is this Instrument observation EVIDENCE, or the default a chunk falls back to?
+
+    Evidence = the chunk's own text carried at least one attribute-bearing description that
+    survived the per-attribute span rule (`owner`/`year`/`method` still non-null after
+    `_null_uncovered_instrument_attrs`). That is exactly the prompt's positive criterion for
+    emitting an Instrument at all, so the merge rule reads the same signal the extraction
+    rule does rather than inventing a second one."""
+    return any(item.get(attr) for attr in parser.INSTRUMENT_SPAN_REQUIRED)
+
+
+def reconcile_types(nodes: dict) -> dict[str, dict]:
+    """{doc_id: {merge_key: decision}} over the arm's node events (merge.py rules 1-3)."""
+    out = {}
+    for d in PILOT_DOCS:
+        obs = []
+        for ev in nodes[d]:
+            item = ev["payload"]["item"]
+            ntype = ev["payload"]["type"]
+            obs.append({"name": item.get("name") or item.get("term") or item.get("text") or "",
+                        "type": ntype, "chunk_id": ev["chunk_id"],
+                        "instrument_evidence": (ntype == merge.PRIVILEGED_TYPE
+                                                and instrument_evidence(item))})
+        decisions, log = merge.reconcile_document(obs)
+        out[d] = {"decisions": decisions, "log": log}
+    return out
+
+
+def type_decisions() -> dict[str, dict]:
+    """{doc_id: {merge_key: decision}} from disk, or {} when this arm has none (the v0.3.5
+    arm predates reconciliation and is read exactly as it was banked)."""
+    path = type_decision_path()
+    if not path.is_file():
+        return {}
+    raw = json.loads(path.read_text())
+    return {d: v["decisions"] for d, v in raw.items()}
+
+
+def resolved_type(decisions: dict, doc_id: str, name: str, fallback: str) -> str | None:
+    """The entity's type after cross-chunk reconciliation. None = `type_conflict`, which
+    `merge.poolable` excludes from every stratum: pooling an entity whose type is unresolved
+    would put the conflict into the denominator of a pre-registered gate."""
+    per_doc = decisions.get(doc_id)
+    if not per_doc:
+        return fallback
+    dec = per_doc.get(merge.normalized_key(name))
+    if dec is None:
+        return fallback
+    return dec.get("type") if merge.poolable(dec) else None
 
 
 # ------------------------------------------------------------------ judging (both arms)
@@ -511,6 +702,7 @@ def chunked_records(texts: dict[str, str]) -> list[dict]:
     Instrument surface form (the first event carrying it is the representative) and one per
     semantic edge event."""
     nodes, edges, _ = shard_items()
+    decisions = type_decisions()
     recs = []
     for d in PILOT_DOCS:
         norm = grounding.normalize(texts[d])
@@ -521,7 +713,12 @@ def chunked_records(texts: dict[str, str]) -> list[dict]:
                 or ev["payload"]["item"].get("text") or ev["payload"]["id"])
         seen = set()
         for ev in nodes[d]:
-            if ev["payload"]["type"] != "Instrument":
+            # v0.3.7: stratum membership follows the CROSS-CHUNK reconciled type, not the
+            # one chunk-local view. `resolved_type` returns None for a `type_conflict`,
+            # which is excluded from pooling entirely (merge.py rule 3).
+            nm = (ev["payload"]["item"].get("name") or ev["payload"]["item"].get("term")
+                  or ev["payload"]["item"].get("text") or "")
+            if resolved_type(decisions, d, nm, ev["payload"]["type"]) != "Instrument":
                 continue
             item = ev["payload"]["item"]
             form = norm_form(item.get("name") or "")
@@ -924,6 +1121,185 @@ def write_verdict(results: dict, cfg: dict, a, admission: dict | None = None,
     print("verdict written:", VERDICT)
 
 
+# ------------------------------------------------------------------ §3 arm yield and gate
+# PRE-REGISTERED by the operator on 2026-08-29, before any Arm A chunk was dispatched, and
+# recorded in the RESULT under "§3 pre-registration". Both items below exist to close the
+# same loophole: the v0.3.7 contract drops the exhaustive-inventory instruction, and an
+# extractor that responds by emitting almost nothing would score a HIGH faithfulness on a
+# handful of easy items. Faithfulness alone cannot distinguish "accurate" from "silent".
+#
+#: 1. ADMITTED-YIELD FLOOR. An arm admitting fewer than this fraction of the v0.3.5 arm's
+#:    admitted items per chunk, measured on the chunks BOTH arms actually cover, reports
+#:    UNDER-EXTRACTION rather than PASS — even if it clears F_upper and item-faithful.
+YIELD_FLOOR_RATIO = 0.60
+#: 2. Faithfulness is reported CONDITIONED ON ITEM DENSITY: every faithfulness figure is
+#:    published beside the admitted items/chunk that produced it, and a PASS is stated as the
+#:    triple (F_upper, item-faithful, density). A faithfulness number quoted without its
+#:    density is not comparable across arms and is not to be reported alone.
+
+
+def chunk_yield(tag: str) -> dict[str, dict]:
+    """{chunk_id: {admitted, nodes, edges, quarantined, reasons, output_tokens, doc_id}} for
+    one arm's live chunk_metrics events."""
+    dead = superseded(tag)
+    out = {}
+    for ev in eventlog.replay(tag=tag):
+        if ev.get("event_type") != "chunk_metrics":
+            continue
+        if (ev["chunk_id"], ev.get("chunk_start"), ev.get("chunk_end")) in dead:
+            continue
+        counts = ev.get("counts") or {}
+        out[ev["chunk_id"]] = {
+            "doc_id": ev["doc_id"], "nodes": ev.get("nodes_kept", 0),
+            "edges": ev.get("edges_kept", 0),
+            "admitted": ev.get("nodes_kept", 0) + ev.get("edges_kept", 0),
+            "quarantined": counts.get("quarantined", 0),
+            "reasons": ev.get("quarantine_reasons") or {},
+            "output_tokens": ev.get("output_tokens", 0)}
+    return out
+
+
+def yield_comparison() -> dict:
+    """Arm-vs-v0.3.5 admitted yield on the chunks BOTH arms cover, plus the pre-registered
+    UNDER-EXTRACTION verdict. Zero model spend — read from the two shards."""
+    arm = chunk_yield(TAG)
+    base = chunk_yield("chunked_v035")
+    shared = sorted(set(arm) & set(base))
+    a_items = sum(arm[c]["admitted"] for c in shared)
+    b_items = sum(base[c]["admitted"] for c in shared)
+    a_dens = a_items / len(shared) if shared else 0.0
+    b_dens = b_items / len(shared) if shared else 0.0
+    ratio = (a_dens / b_dens) if b_dens else None
+    return {"shared_chunks": len(shared), "arm_chunks": len(arm), "baseline_chunks": len(base),
+            "arm_admitted_shared": a_items, "baseline_admitted_shared": b_items,
+            "arm_density": round(a_dens, 3), "baseline_density": round(b_dens, 3),
+            "ratio": None if ratio is None else round(ratio, 4),
+            "floor": YIELD_FLOOR_RATIO,
+            "under_extraction": (ratio is not None and ratio < YIELD_FLOOR_RATIO),
+            "arm_density_all_chunks": round(
+                sum(v["admitted"] for v in arm.values()) / len(arm), 3) if arm else 0.0,
+            "shared_chunk_ids": shared}
+
+
+def quarantine_by_reason(tag: str) -> tuple[dict, int, int]:
+    """(reason histogram, quarantined, emitted) for one arm."""
+    hist, quar, emitted = Counter(), 0, 0
+    for v in chunk_yield(tag).values():
+        for r, n in (v["reasons"] or {}).items():
+            hist[r] += n
+        quar += v["quarantined"]
+        emitted += v["admitted"] + v["quarantined"]
+    return dict(hist), quar, emitted
+
+
+def semantic_edge_count() -> int:
+    """§0(a): reported, never judged — five pilot documents cannot reach DD-026's n=35."""
+    _, edges, _ = shard_items()
+    return sum(1 for d in PILOT_DOCS for ev in edges[d]
+               if ev["payload"]["type"] in SEMANTIC)
+
+
+def phase_yield(a) -> int:
+    """Structural report for one arm. ZERO model spend; run before any judging is bought."""
+    y = yield_comparison()
+    hist, quar, emitted = quarantine_by_reason(TAG)
+    base_hist, base_quar, base_emitted = quarantine_by_reason("chunked_v035")
+    per_doc = per_doc_settled_chunked()
+    print(f"\n=== arm {RUN_ID} (profile {PROFILE}, emission {EMISSION}, "
+          f"model {ARM_MODEL or model_cfg()['model_id']}) ===")
+    print(f"chunks with events: {y['arm_chunks']} (baseline v0.3.5: {y['baseline_chunks']}; "
+          f"shared: {y['shared_chunks']})")
+    print(f"admitted/chunk on shared chunks: arm {y['arm_density']} vs "
+          f"v0.3.5 {y['baseline_density']}  ratio {y['ratio']}  floor {y['floor']}")
+    print(f"PRE-REGISTERED YIELD CHECK: "
+          f"{'UNDER-EXTRACTION' if y['under_extraction'] else 'yield floor met'}")
+    print(f"admitted/chunk over ALL this arm's chunks: {y['arm_density_all_chunks']}")
+    print(f"quarantine: {quar}/{emitted} emitted "
+          f"({quar / emitted:.1%})" if emitted else "quarantine: no items")
+    for r, n in sorted(hist.items(), key=lambda kv: -kv[1]):
+        print(f"   {r:<30} {n:>6}")
+    print(f"baseline v0.3.5 quarantine: {base_quar}/{base_emitted} "
+          f"({base_quar / base_emitted:.1%})" if base_emitted else "")
+    print(f"semantic edges (UNJUDGED per §0(a)): {semantic_edge_count()}")
+    print(f"settled extraction tokens per document: {per_doc}")
+    print(f"total settled: {sum(per_doc.values()):,}")
+    (METRICS / f"{TAG}_yield.json").write_text(json.dumps(
+        {"arm": RUN_ID, "profile": PROFILE, "emission": EMISSION,
+         "model": ARM_MODEL or model_cfg()["model_id"], "yield": y,
+         "quarantine": {"histogram": hist, "quarantined": quar, "emitted": emitted},
+         "baseline_quarantine": {"histogram": base_hist, "quarantined": base_quar,
+                                 "emitted": base_emitted},
+         "semantic_edges_unjudged": semantic_edge_count(),
+         "settled_per_doc": per_doc}, indent=1))
+    return 0
+
+
+def phase_arm_judge(a) -> int:
+    """Judge ONE arm's Instrument stratum against the pre-registered gate (§3, §0(a)).
+
+    The two-arm `judge` phase compares chunked v0.3.5 with whole-document and is untouched;
+    this judges a single arm through the SAME protocol at the same versions, so the numbers
+    are comparable to that verdict's rows rather than to a second protocol."""
+    cfg = model_cfg()
+    m = members()
+    texts = {d: rbe.doc_text(m[d]) for d in PILOT_DOCS}
+    base = model_stub.load_model_config()
+    raters = [base["primary_judge_model_id"], base["secondary_judge_model_id"]]
+    recs = [r for r in chunked_records(texts) if r["stratum"] == "Instrument"]
+    min_facts = min_facts_for_gate()
+    n = len(recs)
+    y = yield_comparison()
+
+    print(f"\n=== arm {RUN_ID}: {n} admitted Instrument items, "
+          f"{semantic_edge_count()} semantic edges (UNJUDGED, §0(a))", flush=True)
+    print(f"    density {y['arm_density']} admitted/chunk on shared chunks vs v0.3.5 "
+          f"{y['baseline_density']} (ratio {y['ratio']}, floor {y['floor']})", flush=True)
+    ok, why = stratum_admission("Instrument", n, min_facts)
+    print(f"    Instrument: {why}", flush=True)
+    if not ok:
+        print("FATAL: the Instrument stratum is not judgeable; nothing to spend on.")
+        return 2
+
+    spend.default_ledger().declare(JUDGE_RUN_ID, a.judge_ceiling, declared_by=TASK,
+                                   call_class="judge")
+    spend.set_current_run(JUDGE_RUN_ID)
+    if a.instrument_item_cap and n > a.instrument_item_cap:
+        rng = random.Random(f"{arm_prefix()}:{a.instrument_item_cap}")
+        recs = sorted(rng.sample(recs, a.instrument_item_cap),
+                      key=lambda r: (r["doc_id"], r["item_id"]))
+        print(f"    judging {len(recs)} of {n} (seeded spend bound; a smaller sample widens "
+              f"the Wilson interval, which makes PASS harder, never easier)", flush=True)
+    prefix = arm_prefix()
+    write_sample(prefix, recs)
+    agg = run_protocol(prefix, prefix, JUDGE_RUN_ID, raters, a.fact_cap)
+    if not agg:
+        print(f"FATAL: probe protocol failed for arm {RUN_ID}")
+        return 2
+    checks = span_check_sidecar(prefix, texts)
+    st = (agg.get("per_stratum") or {}).get("Instrument") or {}
+    faith = item_faithful_by_stratum(agg).get("Instrument")
+    ff = (faith[0] / faith[1]) if faith and faith[1] else 0.0
+    gate_ok = (st.get("F_hi") is not None and st["F_hi"] < F_STOP and ff >= ITEM_FAITHFUL)
+    verdict = ("UNDER-EXTRACTION" if y["under_extraction"] else
+               ("PASS" if gate_ok else "FAIL"))
+    print(f"\n=== arm {RUN_ID} Instrument: F {st.get('F')} "
+          f"[{st.get('F_lo')}, {st.get('F_hi')}], item-faithful {ff:.3f}, "
+          f"density {y['arm_density']} -> {verdict}", flush=True)
+    (METRICS / f"{TAG}_gate.json").write_text(json.dumps(
+        {"arm": RUN_ID, "model": cfg["model_id"], "admitted_instrument": n,
+         "judged": len(recs), "per_stratum": st,
+         "item_faithful": {"n_faithful": faith[0] if faith else 0,
+                           "n_items": faith[1] if faith else 0, "rate": ff},
+         "density": y, "span_checks_mid_phrase": sum(1 for v in checks.values()
+                                                     if v["span_mid_phrase"]),
+         "span_checks_total": len(checks),
+         "semantic_edges_unjudged": semantic_edge_count(),
+         "gate": {"F_stop": F_STOP, "item_faithful": ITEM_FAITHFUL,
+                  "yield_floor_ratio": YIELD_FLOOR_RATIO},
+         "verdict": verdict}, indent=1))
+    return 0
+
+
 # ------------------------------------------------------------------ Results registration
 def _register(value: float, units: str, description: str, data: str) -> None:
     r = subprocess.run(["seldon", "result", "register", "--value", str(value), "--units", units,
@@ -990,8 +1366,8 @@ def phase_register(a) -> int:
 
 
 PHASES = {"dry_run": phase_dry_run, "extract": phase_extract, "ingest": phase_ingest,
-          "resolve": phase_resolve, "judge": phase_judge,
-          "register": phase_register}
+          "resolve": phase_resolve, "judge": phase_judge, "yield": phase_yield,
+          "arm_judge": phase_arm_judge, "register": phase_register}
 
 
 def main() -> int:
@@ -1007,10 +1383,24 @@ def main() -> int:
     ap.add_argument("--instrument-item-cap", type=int, default=0,
                     help="judge at most N Instrument items per arm (0 = all). Spend bound "
                          "declared before labels are bought; seeded and reported.")
+    ap.add_argument("--model", default=None,
+                    help="extractor model for this arm, overriding model_config.yaml. The "
+                         "identity gate still applies: an envelope reporting any other "
+                         "model is a hard stop.")
+    ap.add_argument("--run-id", default=None,
+                    help="spend-ledger run id for this arm (must already be declared, or be "
+                         "declared here with --ceiling-tokens)")
     a = ap.parse_args()
     model_stub.guard_no_api_key()
     if a.phase not in PHASES:
         raise SystemExit(f"unknown phase {a.phase!r}; known: {sorted(PHASES)}")
+    apply_arm(a.profile, a.model, a.run_id)
+    # A second arm on a second shard MUST NOT be dispatched under the first arm's run id:
+    # the ledger would bill it to the wrong ceiling and the RESULT would report a cost that
+    # belongs to another experiment. Refuse rather than default.
+    if a.phase == "extract" and PROFILE != "chunked_v035" and not a.run_id:
+        raise SystemExit(f"FATAL: --run-id is required to extract under profile {PROFILE!r} "
+                         f"(refusing to bill a second arm to {RUN_ID!r})")
     if a.phase == "extract":
         if not a.ceiling_tokens:
             raise SystemExit("FATAL: --ceiling-tokens is required for `extract` (DD-022)")
