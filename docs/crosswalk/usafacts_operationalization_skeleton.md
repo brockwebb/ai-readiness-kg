@@ -1,6 +1,8 @@
 # USAFacts AI-Ready Data Framework — Operationalization Crosswalk (Skeleton)
 
-**Status:** v0.1 skeleton, 2026-08-28. Desktop-drafted; cells fill by demand-pull adjudication against the corpus (DD-024 discipline: every filled cell carries a doc_id + grounding span captured at adjudication).
+**Status:** v0.2, 2026-08-29. Evidence cells resolved against the manifest, tiers assigned, references added (task `cc_tasks/2026-08-29_crosswalk_operationalization.md`, §1–§3). Cells fill by demand-pull adjudication against the corpus (DD-024 discipline: every filled cell carries a doc_id + grounding span captured at adjudication).
+
+**What v0.2 changed.** Every `*corpus: ...*` prose pointer is now either a **`doc_id`** that exists in `corpus/manifest.json` or an explicit **gap**. 45 indicators: **25 resolved to at least one admitted doc_id, 20 are gaps.** A gap is a demand-pull target, not a to-do that was skipped — no gap cell was filled with a new claim to make the table look complete. Every indicator now carries a **Tier** (`public` / `agency_instrumented` / `paid`, the schema's `Measure.tier` enum per §6b.1), assigned mechanically by the §6b rules; the rule applied to each is logged in the task RESULT. Nothing was extracted: these documents are admitted to the corpus but not yet extracted into the graph, which waits on the v0.3.7 contract (DD-023).
 **Deliverable target:** January — an assessment instrument federal statistical agencies can run against a data product, scored, with every indicator citable to primary literature through this KG.
 **Frame:** USAFacts' four criteria (accessible, understandable, accurate, open) as the top-level structure; FCSM's quality framework as the bridge into statistical-agency language; GEO/machine-visibility literature as the measurable surface layer.
 
@@ -21,70 +23,82 @@ Scoring rubric, weighting, and pilot-product selection are §6–§7 and deliber
 
 ---
 
+## 1b. Design stance — the machine is the first-class user (operator feedback delivered to USAFacts)
+
+The instrument's normative stance, stated once so every indicator inherits it: design the data product for machine consumption first; the human surface is *derived from* the machine surface, not the other way around. This is the FAIR principles' original thesis (Wilkinson et al. 2016 — machine-actionability as primary design target), a decade old and unimplemented in most of government; the 2026 instantiation is M2M protocol surfaces (MCP/A2A endpoints, llms.txt, API-first) with generative UI closing the human last mile. Existence proof in production: fss-policy-kg — a federal policy corpus whose primary interface is an MCP server. Boundary: Section 508 keeps the human surface mandatory; the stance is derivation order, not GUI abolition.
+
+Added indicator:
+
+| # | Construct | Candidate indicator | Type | Evidence | Tier | Status |
+|---|---|---|---|---|---|---|
+| A9 | M2M agent surface | Product exposes a machine-first entry point (documented API plus MCP/A2A-class endpoint or equivalent agent protocol); human pages derivable from it | AUTO | `wilkinson-2016-fair-guiding-principles`; internal existence proof: fss-policy-kg (MCP server) | `public` | draft |
+
 ## 2. Criterion A — ACCESSIBLE
 
 *USAFacts anchor: machine-readable access matters most. FCSM bridge: Utility → accessibility, timeliness.*
 
-| # | Construct | Candidate indicator | Type | Evidence (doc_id) | Status |
-|---|---|---|---|---|---|
-| A1 | Machine-readable formats | Product available as structured data (CSV/JSON/parquet), not PDF-only | AUTO | *corpus: Commerce GenAI-Open-Data guidance — confirm slug* | draft |
-| A2 | Programmatic access | Documented public API; auth model; rate limits stated | AUTO/DOC | gap | draft |
-| A3 | Bulk access | Full-product bulk download exists and is linked from product page | AUTO | gap | draft |
-| A4 | Crawler/agent access | robots.txt + AI-crawler policy permit retrieval; no soft-blocks on data paths | AUTO | *corpus: machine-visibility kernel docs (v0.3 arm)* | draft |
-| A5 | Discoverability surface | llms.txt (or equivalent) present; sitemap covers data products | AUTO | *corpus: llms.txt Standard node* | draft |
-| A6 | Structured markup | schema.org/Dataset (or DCAT/Croissant) markup valid on product pages | AUTO | *corpus: Standard nodes — DCAT, schema.org; Croissant = candidate acquisition* | draft |
-| A7 | Stable identifiers | Persistent URLs/DOIs for products and vintages | DOC | gap | draft |
-| A8 | Timeliness of surface | Release date machine-readable; latest-vintage pointer resolvable | AUTO | gap | draft |
+| # | Construct | Candidate indicator | Type | Evidence (doc_id) | Tier | Status |
+|---|---|---|---|---|---|---|
+| A1 | Machine-readable formats | Product available as structured data (CSV/JSON/parquet), not PDF-only | AUTO | **gap** — named source (Commerce GenAI-Open-Data guidance) is `acquisition_blocked`, batch-017 | `public` | draft |
+| A2 | Programmatic access | Documented public API; auth model; rate limits stated | AUTO/DOC | **gap** | `public` | draft |
+| A3 | Bulk access | Full-product bulk download exists and is linked from product page | AUTO | **gap** | `public` | draft |
+| A4 | Crawler/agent access | robots.txt + AI-crawler policy permit retrieval; no soft-blocks on data paths | AUTO | `rfc-9309-robots-exclusion-protocol`; `google-robots-txt-intro`; `openai-crawlers-bots`; `anthropic-crawler-support-article`; `perplexity-crawlers`; `cloudflare-ai-crawl-control-manage-crawlers` | `public` | draft |
+| A5 | Discoverability surface | llms.txt (or equivalent) present; sitemap covers data products | AUTO | `llmstxt-proposal`; `sitemaps-protocol` | `public` | draft |
+| A6 | Structured markup | schema.org/Dataset (or DCAT/Croissant) markup valid on product pages | AUTO | `schema-org-dataset`; `w3c-dcat-3`; `mlcommons-croissant-spec`; `croissant-akhtar-2024-paper` | `public` | draft |
+| A7 | Stable identifiers | Persistent URLs/DOIs for products and vintages | DOC | **gap** | `agency_instrumented` | draft |
+| A8 | Timeliness of surface | Release date machine-readable; latest-vintage pointer resolvable | AUTO | **gap** | `public` | draft |
 
 ## 3. Criterion B — UNDERSTANDABLE (machine-understandable, per FCSM extension)
 
 *FCSM bridge: Utility → relevance; the FCSM.25.03 argument: machine-readable → machine-understandable, no semantic loss.*
 
-| # | Construct | Candidate indicator | Type | Evidence | Status |
-|---|---|---|---|---|---|
-| B1 | Variable-level semantics | Comprehensive variable-level metadata (labels, definitions, units, universes) | DOC | *corpus: Commerce guidance; FCSM.25.03 = candidate acquisition if not admitted* | draft |
-| B2 | Definitions surface | Concept/term definitions published, versioned, linked from variables | DOC | *KG Definition layer is the reference implementation* | draft |
-| B3 | Methodology legibility | Methodology docs in structured text (not PDF-only); summarizable by retrieval | AUTO/DOC | gap | draft |
-| B4 | Quality metadata | Data-quality attributes (error measures, suppression rules, revisions policy) published as metadata, not prose | DOC | *corpus: fcsm-23-02-a-framework-for-data-quality-case-studies* | draft |
-| B5 | Semantic consistency | Same concept ⇒ same identifier across products/vintages | DOC | gap | draft |
-| B6 | NL affordances | Plain-language product summary present and current (the retrieval target) | DOC | gap | draft |
+| # | Construct | Candidate indicator | Type | Evidence | Tier | Status |
+|---|---|---|---|---|---|---|
+| B1 | Variable-level semantics | Comprehensive variable-level metadata (labels, definitions, units, universes) | DOC | `fcsm-25-03` | `agency_instrumented` | draft |
+| B2 | Definitions surface | Concept/term definitions published, versioned, linked from variables | DOC | `schema-org-definedterm`; `w3c-dcat-3`; internal: this KG's Definition layer | `agency_instrumented` | draft |
+| B3 | Methodology legibility | Methodology docs in structured text (not PDF-only); summarizable by retrieval | AUTO/DOC | **gap** | `public` | draft |
+| B4 | Quality metadata | Data-quality attributes (error measures, suppression rules, revisions policy) published as metadata, not prose | DOC | `fcsm-23-02-a-framework-for-data-quality-case-studies`; `fcsm-20-04-a-framework-for-data-quality` | `agency_instrumented` | draft |
+| B5 | Semantic consistency | Same concept ⇒ same identifier across products/vintages | DOC | **gap** | `agency_instrumented` | draft |
+| B6 | NL affordances | Plain-language product summary present and current (the retrieval target) | DOC | **gap** | `agency_instrumented` | draft |
 
 ## 4. Criterion C — ACCURATE (as consumed by AI systems)
 
 *USAFacts anchor: hold retrieval-paired systems to accuracy evaluations. FCSM bridge: Objectivity → accuracy, reliability. This is the EVAL-heavy criterion and the probe machinery's second life.*
 
-| # | Construct | Candidate indicator | Type | Evidence | Status |
-|---|---|---|---|---|---|
-| C1 | Retrieval-grounded QA accuracy | Benchmark question set per product; answer accuracy of a retrieval-paired model vs published values | EVAL | *corpus: from-accuracy-to-readiness-metrics-and-benchmarks-for-human* | draft |
-| C2 | Faithfulness of AI restatement | Entailment-judged: do model statements about the product entail from product text? (probe protocol, re-aimed) | EVAL | *methodology §4 — the instrument exists and is calibrated* | draft |
-| C3 | Value-drift resistance | Version/vintage disambiguation: does retrieval return the vintage asked for? | EVAL | gap | draft |
-| C4 | Citation quality | Generative engines citing the product cite the authoritative page (not aggregators) | EVAL/AUTO | *GEO literature (Aggarwal et al. 2024) = candidate acquisition* | draft |
-| C5 | Readiness metrics baseline | Product scored against published AI-data-readiness metrics | DOC | *corpus: aidrin-hiniduma-2024; data-readiness-for-ai-a-360-degree-survey* | draft |
+| # | Construct | Candidate indicator | Type | Evidence | Tier | Status |
+|---|---|---|---|---|---|---|
+| C1 | Retrieval-grounded QA accuracy | Benchmark question set per product; answer accuracy of a retrieval-paired model vs published values | EVAL | `from-accuracy-to-readiness-metrics-and-benchmarks-for-human` | `paid` | draft |
+| C2 | Faithfulness of AI restatement | Entailment-judged: do model statements about the product entail from product text? (probe protocol, re-aimed) | EVAL | internal: probe protocol, `2026-08-27_chunked_vs_wholedoc_verdict.md` | `paid` | draft |
+| C3 | Value-drift resistance | Version/vintage disambiguation: does retrieval return the vintage asked for? | EVAL | **gap** | `paid` | draft |
+| C4 | Citation quality | Generative engines citing the product cite the authoritative page (not aggregators) | EVAL/AUTO | `aggarwal-2024-geo-generative-engine-optimization`; `chen-2025-geo-how-to-dominate-ai-search` | `public` | draft |
+| C5 | Readiness metrics baseline | Product scored against published AI-data-readiness metrics | DOC | `aidrin-hiniduma-2024`; `data-readiness-for-ai-a-360-degree-survey`; `aidrin-2-0-a-framework-to-assess-data-readiness-for-ai` | `agency_instrumented` | draft |
 
 ## 5. Criterion D — OPEN
 
 *FCSM bridge: Integrity; OPEN Government Data Act baseline ("machine-readable, no semantic meaning lost").*
 
-| # | Construct | Candidate indicator | Type | Evidence | Status |
-|---|---|---|---|---|---|
-| D1 | License clarity | Explicit machine-readable license/terms on product and API | AUTO | gap | draft |
-| D2 | Reuse permissions for AI | Terms address model training/retrieval use explicitly | DOC | gap | draft |
-| D3 | Provenance completeness | Source lineage published (collection → processing → product) | DOC | *corpus: PROV-aligned standards nodes* | draft |
-| D4 | No dark data | Statutory products enumerable from a public inventory (data.gov/agency inventory current) | AUTO | gap | draft |
+| # | Construct | Candidate indicator | Type | Evidence | Tier | Status |
+|---|---|---|---|---|---|---|
+| D1 | License clarity | Explicit machine-readable license/terms on product and API | AUTO | **gap** | `public` | draft |
+| D2 | Reuse permissions for AI | Terms address model training/retrieval use explicitly | DOC | **gap** | `agency_instrumented` | draft |
+| D3 | Provenance completeness | Source lineage published (collection → processing → product) | DOC | **gap** — no PROV-O/W3C-PROV document is admitted; the skeleton's "PROV-aligned standards nodes" did not resolve | `agency_instrumented` | draft |
+| D4 | No dark data | Statutory products enumerable from a public inventory (data.gov/agency inventory current) | AUTO | **gap** | `public` | draft |
 
 ## 5b. Cross-cutting — the TEVV loop (the framework's structural gap; operator feedback already delivered to USAFacts)
 
 Their ACCURATE criterion is open-loop: provide eval sets → test → notify developers. TEVV (NIST AI RMF MEASURE/MANAGE framing) closes it. Indicators added to the instrument, applying across criteria:
 
-| # | Construct | Candidate indicator | Type | Evidence | Status |
-|---|---|---|---|---|---|
-| E1 | Verification vs validation split | Product spec conformance (AUTO/DOC set) reported separately from fit-for-use evals (EVAL set); a product cannot pass validation while failing verification | DOC | *this instrument's own A/B/D vs C split is the implementation* | draft |
-| E2 | Acceptance thresholds | Published pass/fail thresholds per eval, pre-registered before results; threshold changes are versioned events | DOC | *methodology §3 pattern* | draft |
-| E3 | Instrument versioning | Eval sets and rubrics carry versions; results never pooled across versions | DOC | *methodology §4; "version the instrument or history is noise"* | draft |
-| E4 | Contamination policy | Public eval sets have a held-out rotation; publication schedule assumes training-set leakage within one model generation | DOC | *benchmark-contamination literature = candidate acquisition* | draft |
-| E5 | Positive controls | Seeded known-bad items (canaries/decoys) in every continuous-eval cycle; a cycle with zero fired controls is INVALID, not passing | AUTO | *DD-019 decoy discipline — caught 3 real defects 2026-08-25* | draft |
-| E6 | Failure attribution | Discrepancy taxonomy localizing failures to retrieval / vintage / metadata / model; each stage instrumented | EVAL | gap | draft |
-| E7 | Corrective-action closure | Documented path from failed eval back into the data product (metadata fix, vintage pointer, dictionary entry) with re-test; mean-time-to-closure tracked | DOC | gap | draft |
+| # | Construct | Candidate indicator | Type | Evidence | Tier | Status |
+|---|---|---|---|---|---|---|
+| E1 | Verification vs validation split | Product spec conformance (AUTO/DOC set) reported separately from fit-for-use evals (EVAL set); a product cannot pass validation while failing verification | DOC | `nist-ai-risk-management-framework-ai-rmf`; internal: this instrument's A/B/D vs C split | `agency_instrumented` | draft |
+| E2 | Acceptance thresholds | Published pass/fail thresholds per eval, pre-registered before results; threshold changes are versioned events | DOC | internal: methodology §3; `nist-ai-rmf-playbook` | `agency_instrumented` | draft |
+| E3 | Instrument versioning | Eval sets and rubrics carry versions; results never pooled across versions | DOC | internal: methodology §4 and §7.6 (instrument-version citation rule) | `agency_instrumented` | draft |
+| E4 | Contamination policy | Public eval sets have a held-out rotation; publication schedule assumes training-set leakage within one model generation | DOC | `sainz-2023-llm-data-contamination` | `agency_instrumented` | draft |
+| E5 | Positive controls | Seeded known-bad items (canaries/decoys) in every continuous-eval cycle; a cycle with zero fired controls is INVALID, not passing | AUTO | internal: DD-019 decoy discipline; methodology §7.5 | `public` | draft |
+| E6 | Failure attribution | Discrepancy taxonomy localizing failures to retrieval / vintage / metadata / model; each stage instrumented | EVAL | **gap** | `paid` | draft |
+| E7 | Corrective-action closure | Documented path from failed eval back into the data product (metadata fix, vintage pointer, dictionary entry) with re-test; mean-time-to-closure tracked | DOC | **gap** | `agency_instrumented` | draft |
+| E8 | Drift sentinels (golden questions) | Versioned golden question/answer sets re-run on schedule against the product surface; baseline deltas alarmed; state fidelity across product versions measured, not assumed | AUTO/EVAL | `webb-2026-state-fidelity-validity` | `paid` | draft |
+| E9 | Adversarial evaluation (red team) | Standing adversarial bank: vintage traps, confusable series, unit traps, DP-noise misreads, suppression probes; plus surface red team — misparse and injection resistance of pages/markup/llms.txt. Reported as break modes, not just pass rates | EVAL | `nist-generative-ai-profile-ai-600-1`; `nist-ai-risk-management-framework-ai-rmf` | `paid` | draft |
 
 Additional standards critique for the feedback letter: the guide recommends NIEM for cross-agency exchange and omits SDMX, DDI, and DCAT — the actual statistical-metadata standards; and "Crossaint" is Croissant (MLCommons).
 
@@ -92,26 +106,27 @@ Additional standards critique for the feedback letter: the guide recommends NIEM
 
 TEVV (§5b) evaluates the product as AI systems consume it; this layer gates the *release cycle* — the delivered feedback: publication is a deploy, and deploys get pre-release tests, regression suites, and feedback loops so a new vintage or page can't silently break consumers. Prior art: CI/CD and shift-left testing; data contracts; expectation-suite testing (Great Expectations/dbt-class); schema-registry compatibility checks; supply-chain attestation (SLSA/in-toto/SBOM — the likely software-security inspiration behind their guide, worth confirming with them).
 
-| # | Construct | Candidate indicator | Type | Evidence | Status |
-|---|---|---|---|---|---|
-| F1 | Pre-release gates | New releases pass a published expectation suite (schema validity, row/total sanity, identifier persistence) before going live | DOC | *data-contract / expectation-suite literature = candidate acquisition* | draft |
-| F2 | Contract stability | API/schema changes are versioned; breaking changes announced with deprecation windows; compatibility checked mechanically | AUTO/DOC | gap | draft |
-| F3 | Regression on vintage transition | Time-series identifiers, geography codes, and endpoints survive a new vintage or a crosswalk is published; tested per release | AUTO | gap | draft |
-| F4 | Change legibility | Machine-readable changelog per release (what changed, why, revision class); webhooks/push for high-frequency products | AUTO | *USAFacts guide (webhooks) — doc_id pending admission* | draft |
-| F5 | Staged rollout | Canary/staging surface for major product changes; AI-consumer regression run before promotion | DOC | gap | draft |
-| F6 | Release authenticity | Signed releases / provenance attestations so downstream copies are traceable to the authoritative artifact (SLSA-class, adapted) | AUTO | *supply-chain attestation specs = candidate acquisition* | `paid`-tier candidate |
+| # | Construct | Candidate indicator | Type | Evidence | Tier | Status |
+|---|---|---|---|---|---|---|
+| F1 | Pre-release gates | New releases pass a published expectation suite (schema validity, row/total sanity, identifier persistence) before going live | DOC | `odcs-open-data-contract-standard` | `agency_instrumented` | draft |
+| F2 | Contract stability | API/schema changes are versioned; breaking changes announced with deprecation windows; compatibility checked mechanically | AUTO/DOC | `odcs-open-data-contract-standard` | `public` | draft |
+| F3 | Regression on vintage transition | Time-series identifiers, geography codes, and endpoints survive a new vintage or a crosswalk is published; tested per release | AUTO | **gap** | `public` | draft |
+| F4 | Change legibility | Machine-readable changelog per release (what changed, why, revision class); webhooks/push for high-frequency products | AUTO | `usafacts-ai-ready-data-guide` | `public` | draft |
+| F5 | Staged rollout | Canary/staging surface for major product changes; AI-consumer regression run before promotion | DOC | **gap** | `agency_instrumented` | draft |
+| F6 | Release authenticity | Signed releases / provenance attestations so downstream copies are traceable to the authoritative artifact (SLSA-class, adapted) | AUTO | `slsa-specification-v1-0` | `paid` | `paid`-tier candidate |
 
 ## 5d. FSS-derived constructs — generalizable beyond the statistical system
 
 Starting from the federal statistical system without overfitting to it: each of these is FSS-motivated but stated so any government data holds.
 
-| # | Construct | Candidate indicator | Type | Evidence | Status |
-|---|---|---|---|---|---|
-| G1 | Uncertainty legibility | Error measures (MOEs, CVs, DP noise parameters) published as structured fields beside estimates — not footnotes; EVAL: do AI restatements carry the uncertainty? | DOC + EVAL | *fcsm-23-02 quality dimensions; DP documentation = candidate acquisition* | draft |
-| G2 | Revision semantics | Revision status machine-readable per value (preliminary/revised/final/benchmark), with scheduled-revision dates; EVAL: vintage disambiguation (ties C3) | DOC + EVAL | gap | draft |
-| G3 | Classification/vintage identity | Stable series IDs; machine-readable crosswalks when classifications or geographies change (industry codes, boundary revisions) | AUTO/DOC | gap | draft |
-| G4 | Authority metadata | Issuing authority, statutory mandate, and statistical-vs-administrative provenance carried as structured metadata — the trust signal AI rankers need to prefer authoritative sources over aggregators | DOC | *statspolicy.gov / SPD-class docs = candidate acquisition* | draft |
-| G5 | Disclosure semantics | Suppression and disclosure-avoidance documented machine-readably with unique identifiers (strengthens the guide's own bullet from prose to spec) | DOC | *USAFacts guide — doc_id pending admission* | draft |
+| # | Construct | Candidate indicator | Type | Evidence | Tier | Status |
+|---|---|---|---|---|---|---|
+| G1 | Uncertainty legibility | Error measures (MOEs, CVs, DP noise parameters) published as structured fields beside estimates — not footnotes; EVAL: do AI restatements carry the uncertainty? | DOC + EVAL | `fcsm-23-02-a-framework-for-data-quality-case-studies`; DP documentation **gap** | `agency_instrumented` | draft |
+| G2 | Revision semantics | Revision status machine-readable per value (preliminary/revised/final/benchmark), with scheduled-revision dates; EVAL: vintage disambiguation (ties C3) | DOC + EVAL | **gap** | `agency_instrumented` | draft |
+| G3 | Classification/vintage identity | Stable series IDs; machine-readable crosswalks when classifications or geographies change (industry codes, boundary revisions) | AUTO/DOC | **gap** | `public` | draft |
+| G4 | Authority metadata | Issuing authority, statutory mandate, and statistical-vs-administrative provenance carried as structured metadata — the trust signal AI rankers need to prefer authoritative sources over aggregators | DOC | `statistical-policy-working-paper-46-data-quality-assessment`; `fcsm-19-01-transparent-reporting-for-integrated-data-quality` | `agency_instrumented` | draft |
+| G5 | Disclosure semantics | Suppression and disclosure-avoidance documented machine-readably with unique identifiers (strengthens the guide's own bullet from prose to spec) | DOC | `usafacts-ai-ready-data-guide` | `agency_instrumented` | draft |
+| G6 | Measurement-protocol provenance | Collection instrument/protocol carried as a versioned epoch on the series; changes annotated machine-readably with reason and inter-epoch crosswalk (SDMX break-in-series class metadata). The consumer-side test: an AI system asked to compare values across a break must surface the break | DOC + EVAL | `sdmx-3-0-section-1-framework`; `sdmx-standards-overview`; `odcs-open-data-contract-standard` | `agency_instrumented` | draft |
 
 G1 is the sharpest gap in every framework reviewed so far: uncertainty communication is the statistical system's core differentiator and no AI-readiness guidance addresses whether AI systems preserve it. Candidate flagship indicator for the January instrument.
 
@@ -146,12 +161,80 @@ The product-level instrument above is the core. An organizational maturity overl
 6. **Statistical-standards correction** — SDMX/DDI/DCAT where the guide says NIEM.
 7. **Publication is a deploy (§5c)** — the CI/CD feedback operationalized: pre-release gates, contract stability, vintage regression, staged rollout, signed releases.
 8. **Uncertainty legibility (§5d G1)** — the statistical system's differentiator, absent from their guide and every adjacent framework: structured error measures plus an eval for whether AI systems preserve them.
+9. **Machine as first-class user (§1b)** — delivered feedback, grounded in FAIR rather than prediction: machine-actionability as primary design target, human surface derived; A9 makes it auditable.
+10. **Protocol as contract (§5d G6)** — delivered feedback: measurement-protocol epochs with machine-readable breaks and reasons; SDMX + ODCS give it standards footing.
+11. **Red teaming (§5b E9)** — delivered feedback: the framework tests what works; it must also enumerate how products break, with a standing adversarial bank.
 
 ## 9. Gaps registered by this skeleton (acquisition / adjudication queue)
 
-- FCSM.25.03 AI-Ready extension paper; Commerce GenerativeAI-Open-Data guidance (Jan 2025); USAFacts AIReadinessForGovernment PDF (read 2026-08-28, admitted? — verify); USAFacts/Partnership Federal Data Excellence standards (2026); GEO paper (Aggarwal et al., KDD 2024); MLCommons Croissant spec (the guide's "Crossaint"); NIST AI RMF (MEASURE/MANAGE); SDMX / DDI / DCAT specs; benchmark-contamination literature — **verify against manifest before acquiring; some may already be admitted.**
+- FCSM.25.03 AI-Ready extension paper; Commerce GenerativeAI-Open-Data guidance (Jan 2025); USAFacts AIReadinessForGovernment PDF (read 2026-08-28, admitted? — verify); USAFacts/Partnership Federal Data Excellence standards (2026); GEO paper (Aggarwal et al., KDD 2024); MLCommons Croissant spec (the guide's "Crossaint"); NIST AI RMF (MEASURE/MANAGE) + GenAI profile; SDMX / DDI / DCAT specs; benchmark-contamination literature; FAIR principles (Wilkinson et al. 2016); Open Data Contract Standard (ODCS); SFV paper (operator's own, doi:10.5281/zenodo.22111334) — **verify against manifest before acquiring; some may already be admitted.**
+- Tool evaluations (queue, not adoptions): Databricks DQX (quality rules in-pipeline, quarantine patterns, MCP-exposed tools, ODCS rule generation — the likely "Databricks QA tool" from the USAFacts meeting); Databricks Data Quality Monitoring (freshness/completeness anomaly detection). Evaluate as reference implementations for E-layer and F1 indicators, and as evidence that the E/F indicator classes are commercially instantiable.
 - Every `gap` cell above is a demand-pull target: find the corpus document that grounds the indicator, or admit one, or mark the indicator as this instrument's original contribution (which is allowed — but labeled, never silently).
 
 ---
 
 *Discipline note: this file is the proposal spine, not the evidence. Cells marked "corpus:" name documents believed admitted — CC verifies each against the manifest and replaces with doc_id + span at adjudication. Anything unverified stays marked draft.*
+
+---
+
+## 10. References
+
+Author-date. Every entry carries the strongest identifier available, in the order DOI > arXiv ID > stable URL. Three classes, per the task's §3 citation discipline; every claim in this document traces to exactly one of them.
+
+### (a) Admitted corpus documents
+
+In `corpus/manifest.json`; cited by `doc_id` and content hash so a stranger can verify the exact bytes this instrument read. Admission is not extraction — none of these is in the graph yet (DD-023: extraction waits on the v0.3.7 contract).
+
+- **Pranjal Aggarwal, Vishvak Murahari, Tanmay Rajpurohit et al.** (2024). *GEO: Generative Engine Optimization*. arXiv:2311.09735 — `aggarwal-2024-geo-generative-engine-optimization` · sha256 `beb95332fcbc`
+- **Hiniduma et al.** (2025). *AIDRIN 2.0: A Framework to Assess Data Readiness for AI*. arXiv:2505.18213 — `aidrin-2-0-a-framework-to-assess-data-readiness-for-ai` · sha256 `5a4b54a1871f`
+- **Hiniduma et al.** (2024). *AIDRIN: AI Data Readiness Inspector (Hiniduma et al., 2024)*. arXiv:2406.19256 — `aidrin-hiniduma-2024` · sha256 `790a524c6bfc`
+- **Anthropic** (n.d.). *Does Anthropic crawl data from the web, and how can site owners block the crawler? (Anthropic support)*. https://support.anthropic.com/en/articles/8896518-does-anthropic-crawl-data-from-the-web-and-how-can-site-owners-block-the-crawler — `anthropic-crawler-support-article` · sha256 `21b26d793875`
+- **Mahe Chen, Xiaoxuan Wang, Kaiwen Chen et al.** (2025). *Generative Engine Optimization: How to Dominate AI Search*. arXiv:2509.08919 — `chen-2025-geo-how-to-dominate-ai-search` · sha256 `d68922e12759`
+- **Cloudflare** (n.d.). *Cloudflare AI Crawl Control: Manage AI crawlers*. https://developers.cloudflare.com/ai-crawl-control/features/manage-ai-crawlers/ — `cloudflare-ai-crawl-control-manage-crawlers` · sha256 `a501cf050513`
+- **Akhtar et al.** (2024). *Croissant: A Metadata Format for ML-Ready Datasets*. arXiv:2403.19546 — `croissant-akhtar-2024-paper` · sha256 `462f157c2338`
+- **Hiniduma et al.** (2024). *Data Readiness for AI: A 360-Degree Survey*. arXiv:2404.05779 — `data-readiness-for-ai-a-360-degree-survey` · sha256 `80696c90ad2c`
+- **(unspecified)** (n.d.). *FCSM 19-01: Transparent Reporting for Integrated Data Quality*. https://statspolicy.gov/assets/fcsm/files/docs/Transparent_Reporting_FCSM_19_01_092719.pdf — `fcsm-19-01-transparent-reporting-for-integrated-data-quality` · sha256 `b646efbbd55a`
+- **(unspecified)** (n.d.). *FCSM 20-04: A Framework for Data Quality*. https://statspolicy.gov/assets/fcsm/files/docs/FCSM.20.04_A_Framework_for_Data_Quality.pdf — `fcsm-20-04-a-framework-for-data-quality` · sha256 `aa75fa223354`
+- **(unspecified)** (n.d.). *FCSM 23-02: A Framework for Data Quality: Case Studies*. https://statspolicy.gov/assets/fcsm/files/docs/FCSM.23.02_DQ_case_studies_FINAL.pdf — `fcsm-23-02-a-framework-for-data-quality-case-studies` · sha256 `8e8abe1cda4b`
+- **Federal Committee on Statistical Methodology (FCSM)** (2025). *FCSM 25-03: AI-Ready Federal Statistical Data — An Extension of Communicating Data Quality*. https://statspolicy.gov/assets/fcsm/files/docs/FCSM.25.03_AI-Ready-Extension-Data-Quality.pdf — `fcsm-25-03` · sha256 `ba8901ed2dac`
+- **Lee** (2026). *From Accuracy to Readiness: Metrics and Benchmarks for Human-AI Decision-Making*. arXiv:2603.18895 — `from-accuracy-to-readiness-metrics-and-benchmarks-for-human` · sha256 `d8dfd4e5249f`
+- **Google Search Central** (2025). *Google Search Central: Introduction to robots.txt*. https://developers.google.com/search/docs/crawling-indexing/robots/intro — `google-robots-txt-intro` · sha256 `73a5386012cd`
+- **Jeremy Howard / Answer.AI** (2026). *The /llms.txt file (llmstxt.org)*. https://llmstxt.org/ — `llmstxt-proposal` · sha256 `04c6d4c860a3`
+- **MLCommons Croissant Working Group** (2026). *Croissant Format Specification (MLCommons)*. https://docs.mlcommons.org/croissant/docs/croissant-spec.html — `mlcommons-croissant-spec` · sha256 `56411897c563`
+- **NIST** (n.d.). *NIST AI Risk Management Framework (AI RMF)*. DOI 10.6028/NIST.AI.100-1 — `nist-ai-risk-management-framework-ai-rmf` · sha256 `7576edb531d9`
+- **(unspecified)** (n.d.). *NIST AI RMF Playbook*. https://airc.nist.gov/AI_RMF_Knowledge_Base/Playbook — `nist-ai-rmf-playbook` · sha256 `65d6101d8065`
+- **(unspecified)** (n.d.). *NIST Generative AI Profile (AI 600-1)*. DOI 10.6028/NIST.AI.600-1 — `nist-generative-ai-profile-ai-600-1` · sha256 `6e73620ab6b6`
+- **Bitol (Linux Foundation AI & Data)** (2026). *Open Data Contract Standard (ODCS) — Definition*. https://bitol-io.github.io/open-data-contract-standard/latest/ — `odcs-open-data-contract-standard` · sha256 `8a140f031b7b`
+- **OpenAI** (n.d.). *OpenAI: Overview of OpenAI crawlers (developers.openai.com/api/docs/bots)*. https://platform.openai.com/docs/bots — `openai-crawlers-bots` · sha256 `91bfb8234592`
+- **Perplexity AI** (n.d.). *Perplexity crawlers (docs.perplexity.ai)*. https://docs.perplexity.ai/guides/bots — `perplexity-crawlers` · sha256 `9e1bb529e33d`
+- **M. Koster, G. Illyes, H. Zeller et al.** (n.d.). *RFC 9309: Robots Exclusion Protocol*. https://www.rfc-editor.org/rfc/rfc9309 — `rfc-9309-robots-exclusion-protocol` · sha256 `aea78e3b6eec`
+- **Sainz, O., Campos, J.A., García-Ferrero, I. et al.** (2023). *NLP Evaluation in trouble: On the Need to Measure LLM Data Contamination for each Benchmark*. https://aclanthology.org/2023.findings-emnlp.722/ — `sainz-2023-llm-data-contamination` · sha256 `54ec9661a921`
+- **Schema.org Community Group** (n.d.). *schema.org: Dataset*. https://schema.org/Dataset — `schema-org-dataset` · sha256 `7155f56214c5`
+- **Schema.org Community Group** (n.d.). *schema.org: DefinedTerm*. https://schema.org/DefinedTerm — `schema-org-definedterm` · sha256 `5d166c7e09c1`
+- **SDMX Technical Working Group** (2021). *SDMX 3.0 Technical Specifications, Section 1: Framework for SDMX Technical Standards*. https://sdmx.org/wp-content/uploads/SDMX_3-0-0_SECTION_1_FINAL-1_0.pdf — `sdmx-3-0-section-1-framework` · sha256 `d18ca164fa07`
+- **SDMX Sponsors (BIS, ECB, Eurostat, IMF, OECD, UN, World Bank)** (n.d.). *SDMX Standards (sdmx.org standards page)*. https://sdmx.org/standards-2/ — `sdmx-standards-overview` · sha256 `cc86447d3a58`
+- **sitemaps.org** (2022). *Sitemaps XML format (sitemaps.org protocol)*. https://www.sitemaps.org/protocol.html — `sitemaps-protocol` · sha256 `8e9d1f33dfbf`
+- **OpenSSF SLSA project** (2023). *SLSA Specification v1.0 (Supply-chain Levels for Software Artifacts)*. https://slsa.dev/spec/v1.0/ — `slsa-specification-v1-0` · sha256 `94a6630c0ec4`
+- **(unspecified)** (n.d.). *Statistical Policy Working Paper 46: Data Quality Assessment Tool for Administrative Data*. https://statspolicy.gov/assets/fcsm/files/docs/DataQualityAssessmentTool.pdf — `statistical-policy-working-paper-46-data-quality-assessment` · sha256 `1b1f030dbb7e`
+- **USAFacts** (2026). *AI-Ready Data: Ensuring Public Data Meets the Needs of AI and the American Public — The USAFacts Guide to AI-Ready Data for Government Agencies*. https://media.usafacts.org/m/634ac133d72ded81/original/USAFacts_AIReadinessForGovernment.pdf — `usafacts-ai-ready-data-guide` · sha256 `02ceecd47c8f`
+- **W3C Dataset Exchange Working Group** (2024). *Data Catalog Vocabulary (DCAT) - Version 3 (W3C Recommendation)*. https://www.w3.org/TR/vocab-dcat-3/ — `w3c-dcat-3` · sha256 `c3ed530b3806`
+- **Webb, B.** (2026). *State Fidelity Validity for Reproducible AI Systems and Workflows*. DOI 10.5281/zenodo.22111334 — `webb-2026-state-fidelity-validity` · sha256 `849d45f705fa`
+- **Mark D. Wilkinson, et al.** (2019). *The FAIR Guiding Principles for scientific data management and stewardship*. https://www.nature.com/articles/sdata201618 — `wilkinson-2016-fair-guiding-principles` · sha256 `cdddd9f4808f`
+
+
+### (b) External sources not admitted
+
+- **U.S. Department of Commerce** (2025). *Generative Artificial Intelligence and Open Data: Guidelines and Best Practices*. https://www.commerce.gov/news/blog/2025/01/generative-artificial-intelligence-and-open-data-guidelines-and-best-practices — **`acquisition_blocked` 2026-08-29**: commerce.gov returns HTTP 403 to every client tried (curl with browser UA, the `sites/default/files` PDF path, `data.commerce.gov`, and WebFetch); the body returned is a Cloudflare interstitial, not the document. Bot protection, not a paywall or withdrawal. **No secondary source is substituted for it**, and the cells that named it (A1, B1) are recorded as gaps rather than resolved to a stand-in.
+- **Databricks** (n.d.). *DQX* (in-pipeline quality rules, quarantine patterns, ODCS rule generation) and *Data Quality Monitoring*. Queued in §9 as **tool evaluations, not adoptions**; not acquired by this pass and not cited as evidence anywhere above.
+
+### (c) Internal artifacts
+
+Cited by task id, filename, or DOI. These are this project's own record, and are marked as such wherever an indicator rests on them rather than on external literature.
+
+- **Webb, B.** (2026). *State Fidelity Validity for Reproducible AI Systems and Workflows*. DOI 10.5281/zenodo.22111334 — also admitted as `webb-2026-state-fidelity-validity` (class a). Grounds E8.
+- `docs/research/kg_construction_methodology.md` — §3 (pre-registration pattern, E2), §4 (instrument versioning, E3; the probe protocol, C2), §7.5 (positive controls, E5), §7.6 (instrument-version citation rule, E3).
+- `docs/design_decisions.md` — DD-019 (decoy discipline, E5); DD-023 + its 2026-08-29 erratum (extraction unit and emission contract; why nothing here is extracted yet); DD-024 (demand-pull semantic edges — the discipline this crosswalk's evidence cells follow); DD-026 (a precondition must be derived from the threshold it gates, E2).
+- `docs/research/2026-08-27_chunked_vs_wholedoc_verdict.md` — the faithfulness numbers behind C2. Instrument versions on their face: decompose 1.1.0, probe_judge 1.1.0, span_checks 1.0.0.
+- `cc_tasks/2026-08-29_crosswalk_operationalization.md` and its RESULT — this pass: the admission table, the evidence-resolution table, the tier log, and the plagiarism check.
+- `events/batch-017.jsonl` — the `manifest_add` events for the eight documents admitted 2026-08-29, the `acquisition_blocked` event for the Commerce guidance, and the `corpus_epoch_declared` for epoch `crosswalk-2026-08-29`.
+- **fss-policy-kg** — sibling project; a federal policy corpus whose primary interface is an MCP server. Cited in §1b as an existence proof for the machine-first stance, and nowhere as evidence for an indicator.

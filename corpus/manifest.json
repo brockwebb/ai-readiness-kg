@@ -1,11 +1,11 @@
 {
  "manifest_version": 2,
  "project": "ai-readiness-kg",
- "generated_at": "2026-08-27T01:43:56.867306+00:00",
+ "generated_at": "2026-08-29T12:08:24.345187+00:00",
  "generator": "dixie.evidence",
  "note": "PROJECTION — rebuilt from the evidence decisions log; do not hand-edit. The log is truth.",
  "counts_by_decision": {
-  "included": 168,
+  "included": 176,
   "excluded": 26,
   "pending_refetch": 39
  },
@@ -7420,6 +7420,106 @@
      }
     },
     "added_in": "kernel-v03"
+   }
+  },
+  "ddi-codebook-specification": {
+   "doc_id": "ddi-codebook-specification",
+   "identity": {
+    "sha256": "97fa0a19fad72d2e5a2fe1b11fc831b85495b7c6b6291935844997a25c0b3c21",
+    "canonical_path": "corpus/crosswalk/ddi-codebook-specification.html",
+    "title": "DDI-Codebook (DDI-C) — DDI Alliance product specification page",
+    "authors_or_org": [
+     "DDI Alliance"
+    ],
+    "pub_year": "2026",
+    "doc_type": "standard",
+    "source_url": "https://ddialliance.org/ddi-codebook",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "scripted_fetch",
+    "acquired_at": null,
+    "acquired_by": "scripts/manifest_crosswalk.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed html, detected html",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "111130 bytes vs floor 64",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "skipped: format mismatch already failed or type unhandled",
+      "outcome": "skip"
+     }
+    ],
+    "checked_at": "2026-08-29T12:08:24.165958+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "task §0 acquisition queue (§9 item), construct_arm=publication_actionability: §9 'DDI'. Grounds the SDMX/DDI/DCAT standards correction (§8.6) against the guide's NIEM recommendation. NOTE: ddialliance.org/Specification 404s; the product page is the live primary.",
+    "decided_by": "cc",
+    "decided_at": "2026-08-29T12:08:23.231271+00:00",
+    "history": [],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "crosswalk_queue_2026-08-29"
+   ],
+   "extra": {
+    "notes": [
+     "§9 'DDI'. Grounds the SDMX/DDI/DCAT standards correction (§8.6) against the guide's NIEM recommendation. NOTE: ddialliance.org/Specification 404s; the product page is the live primary."
+    ],
+    "observed_files": {
+     "corpus/crosswalk/ddi-codebook-specification.html": {
+      "sha256": "97fa0a19fad72d2e5a2fe1b11fc831b85495b7c6b6291935844997a25c0b3c21",
+      "size": 111130,
+      "claimed_type": "html",
+      "detected_type": "html"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/crosswalk/ddi-codebook-specification.html": {
+      "path": "corpus/crosswalk/ddi-codebook-specification.html",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed html, detected html",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "111130 bytes vs floor 64",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "skipped: format mismatch already failed or type unhandled",
+        "outcome": "skip"
+       }
+      ],
+      "checked_at": "2026-08-29T12:08:24.165958+00:00"
+     }
+    }
    }
   },
   "digital-gov-dap-guide": {
@@ -15920,6 +16020,106 @@
     "added_in": "triage-2026-08-24"
    }
   },
+  "odcs-open-data-contract-standard": {
+   "doc_id": "odcs-open-data-contract-standard",
+   "identity": {
+    "sha256": "8a140f031b7bcbd371ddbdbbf0aa78b624deca7bf0ec656f86ad886beada7081",
+    "canonical_path": "corpus/crosswalk/odcs-open-data-contract-standard.html",
+    "title": "Open Data Contract Standard (ODCS) — Definition",
+    "authors_or_org": [
+     "Bitol (Linux Foundation AI & Data)"
+    ],
+    "pub_year": "2026",
+    "doc_type": "standard",
+    "source_url": "https://bitol-io.github.io/open-data-contract-standard/latest/",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "scripted_fetch",
+    "acquired_at": null,
+    "acquired_by": "scripts/manifest_crosswalk.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed html, detected html",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "48417 bytes vs floor 64",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "skipped: format mismatch already failed or type unhandled",
+      "outcome": "skip"
+     }
+    ],
+    "checked_at": "2026-08-29T12:08:24.166371+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "task §0 acquisition queue (§9 item), construct_arm=publication_actionability: §9 ODCS. Grounds F1 (pre-release gates) and G6 (protocol-epoch contracts).",
+    "decided_by": "cc",
+    "decided_at": "2026-08-29T12:08:23.382166+00:00",
+    "history": [],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "crosswalk_queue_2026-08-29"
+   ],
+   "extra": {
+    "notes": [
+     "§9 ODCS. Grounds F1 (pre-release gates) and G6 (protocol-epoch contracts)."
+    ],
+    "observed_files": {
+     "corpus/crosswalk/odcs-open-data-contract-standard.html": {
+      "sha256": "8a140f031b7bcbd371ddbdbbf0aa78b624deca7bf0ec656f86ad886beada7081",
+      "size": 48417,
+      "claimed_type": "html",
+      "detected_type": "html"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/crosswalk/odcs-open-data-contract-standard.html": {
+      "path": "corpus/crosswalk/odcs-open-data-contract-standard.html",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed html, detected html",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "48417 bytes vs floor 64",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "skipped: format mismatch already failed or type unhandled",
+        "outcome": "skip"
+       }
+      ],
+      "checked_at": "2026-08-29T12:08:24.166371+00:00"
+     }
+    }
+   }
+  },
   "odi-ai-ready-national-data-library-2025": {
    "doc_id": "odi-ai-ready-national-data-library-2025",
    "identity": {
@@ -17564,6 +17764,111 @@
      }
     },
     "added_in": "kernel-v03"
+   }
+  },
+  "sainz-2023-llm-data-contamination": {
+   "doc_id": "sainz-2023-llm-data-contamination",
+   "identity": {
+    "sha256": "54ec9661a92131622dfc212302c3b244c445a101bdcf6d744a1c85515cd179b7",
+    "canonical_path": "corpus/crosswalk/sainz-2023-llm-data-contamination.pdf",
+    "title": "NLP Evaluation in trouble: On the Need to Measure LLM Data Contamination for each Benchmark",
+    "authors_or_org": [
+     "Sainz, O.",
+     "Campos, J.A.",
+     "García-Ferrero, I.",
+     "Etxaniz, J.",
+     "Lopez de Lacalle, O.",
+     "Agirre, E."
+    ],
+    "pub_year": "2023",
+    "doc_type": "academic",
+    "source_url": "https://aclanthology.org/2023.findings-emnlp.722/",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "scripted_fetch",
+    "acquired_at": null,
+    "acquired_by": "scripts/manifest_crosswalk.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed pdf, detected pdf",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "203040 bytes vs floor 7000",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "12 pages, extractable text present",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-08-29T12:08:24.260752+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "task §0 acquisition queue (§9 item), construct_arm=training_data_readiness: §9 'one benchmark-contamination survey (pick the most-cited; record the selection rationale)'. SELECTION RATIONALE: most-cited of the five candidates checked against OpenAlex on 2026-08-29 — 62 citations vs 28 for the runner-up (Deng 2024, NAACL), 7 for the two dedicated surveys, 2 for Magar & Schwartz 2022. DEVIATION: it is a position paper, not a survey; recorded because the indicator it grounds (E4, contamination policy) is a policy claim the position paper states directly, and picking the most-cited *survey* would have meant a 7-citation paper over a 62-citation one.",
+    "decided_by": "cc",
+    "decided_at": "2026-08-29T12:08:23.684768+00:00",
+    "history": [],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "crosswalk_queue_2026-08-29"
+   ],
+   "extra": {
+    "notes": [
+     "§9 'one benchmark-contamination survey (pick the most-cited; record the selection rationale)'. SELECTION RATIONALE: most-cited of the five candidates checked against OpenAlex on 2026-08-29 — 62 citations vs 28 for the runner-up (Deng 2024, NAACL), 7 for the two dedicated surveys, 2 for Magar & Schwartz 2022. DEVIATION: it is a position paper, not a survey; recorded because the indicator it grounds (E4, contamination policy) is a policy claim the position paper states directly, and picking the most-cited *survey* would have meant a 7-citation paper over a 62-citation one."
+    ],
+    "observed_files": {
+     "corpus/crosswalk/sainz-2023-llm-data-contamination.pdf": {
+      "sha256": "54ec9661a92131622dfc212302c3b244c445a101bdcf6d744a1c85515cd179b7",
+      "size": 203040,
+      "claimed_type": "pdf",
+      "detected_type": "pdf"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/crosswalk/sainz-2023-llm-data-contamination.pdf": {
+      "path": "corpus/crosswalk/sainz-2023-llm-data-contamination.pdf",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed pdf, detected pdf",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "203040 bytes vs floor 7000",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "12 pages, extractable text present",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-08-29T12:08:24.260752+00:00"
+     }
+    }
    }
   },
   "sas-response-to-ai-and-open-government-data-assets-rfi": {
@@ -19218,6 +19523,106 @@
      }
     },
     "added_in": "v1"
+   }
+  },
+  "slsa-specification-v1-0": {
+   "doc_id": "slsa-specification-v1-0",
+   "identity": {
+    "sha256": "94a6630c0ec4310ad583a35c0d4576a35100a027e1e6dbdd6ba0c9484e593247",
+    "canonical_path": "corpus/crosswalk/slsa-specification-v1-0.html",
+    "title": "SLSA Specification v1.0 (Supply-chain Levels for Software Artifacts)",
+    "authors_or_org": [
+     "OpenSSF SLSA project"
+    ],
+    "pub_year": "2023",
+    "doc_type": "standard",
+    "source_url": "https://slsa.dev/spec/v1.0/",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "scripted_fetch",
+    "acquired_at": null,
+    "acquired_by": "scripts/manifest_crosswalk.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed html, detected html",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "16566 bytes vs floor 64",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "skipped: format mismatch already failed or type unhandled",
+      "outcome": "skip"
+     }
+    ],
+    "checked_at": "2026-08-29T12:08:24.261344+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "task §0 acquisition queue (§9 item), construct_arm=publication_actionability: §9 'supply-chain attestation'. Grounds F6 (release authenticity), the `paid`-tier candidate.",
+    "decided_by": "cc",
+    "decided_at": "2026-08-29T12:08:23.531176+00:00",
+    "history": [],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "crosswalk_queue_2026-08-29"
+   ],
+   "extra": {
+    "notes": [
+     "§9 'supply-chain attestation'. Grounds F6 (release authenticity), the `paid`-tier candidate."
+    ],
+    "observed_files": {
+     "corpus/crosswalk/slsa-specification-v1-0.html": {
+      "sha256": "94a6630c0ec4310ad583a35c0d4576a35100a027e1e6dbdd6ba0c9484e593247",
+      "size": 16566,
+      "claimed_type": "html",
+      "detected_type": "html"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/crosswalk/slsa-specification-v1-0.html": {
+      "path": "corpus/crosswalk/slsa-specification-v1-0.html",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed html, detected html",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "16566 bytes vs floor 64",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "skipped: format mismatch already failed or type unhandled",
+        "outcome": "skip"
+       }
+      ],
+      "checked_at": "2026-08-29T12:08:24.261344+00:00"
+     }
+    }
    }
   },
   "spectral-readme": {
@@ -21154,6 +21559,308 @@
     "added_in": "triage-2026-08-24"
    }
   },
+  "usafacts-ai-ready-data-guide": {
+   "doc_id": "usafacts-ai-ready-data-guide",
+   "identity": {
+    "sha256": "02ceecd47c8f4d377f2bc3177ce584c46a16d29243a609956321b025dbc2980e",
+    "canonical_path": "corpus/crosswalk/usafacts-ai-ready-data-guide.pdf",
+    "title": "AI-Ready Data: Ensuring Public Data Meets the Needs of AI and the American Public — The USAFacts Guide to AI-Ready Data for Government Agencies",
+    "authors_or_org": [
+     "USAFacts"
+    ],
+    "pub_year": "2026",
+    "doc_type": "practitioner",
+    "source_url": "https://media.usafacts.org/m/634ac133d72ded81/original/USAFacts_AIReadinessForGovernment.pdf",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "scripted_fetch",
+    "acquired_at": null,
+    "acquired_by": "scripts/manifest_crosswalk.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed pdf, detected pdf",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "129229 bytes vs floor 7000",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "6 pages, extractable text present",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-08-29T12:08:24.276990+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "task §0 acquisition queue (§9 item), construct_arm=publication_actionability: The document this crosswalk operationalizes and critiques. §9 queue item; the brief's feedback items all target passages in it, so it must be citable.",
+    "decided_by": "cc",
+    "decided_at": "2026-08-29T12:08:22.760280+00:00",
+    "history": [],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "crosswalk_queue_2026-08-29"
+   ],
+   "extra": {
+    "notes": [
+     "The document this crosswalk operationalizes and critiques. §9 queue item; the brief's feedback items all target passages in it, so it must be citable."
+    ],
+    "observed_files": {
+     "corpus/crosswalk/usafacts-ai-ready-data-guide.pdf": {
+      "sha256": "02ceecd47c8f4d377f2bc3177ce584c46a16d29243a609956321b025dbc2980e",
+      "size": 129229,
+      "claimed_type": "pdf",
+      "detected_type": "pdf"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/crosswalk/usafacts-ai-ready-data-guide.pdf": {
+      "path": "corpus/crosswalk/usafacts-ai-ready-data-guide.pdf",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed pdf, detected pdf",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "129229 bytes vs floor 7000",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "6 pages, extractable text present",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-08-29T12:08:24.276990+00:00"
+     }
+    }
+   }
+  },
+  "usafacts-fde-standards-detailed": {
+   "doc_id": "usafacts-fde-standards-detailed",
+   "identity": {
+    "sha256": "98a092ac6f196b00d58472054d1eed89a1a13b4196a0e4eaa6119666bfbb479d",
+    "canonical_path": "corpus/crosswalk/usafacts-fde-standards-detailed.pdf",
+    "title": "Standards for Excellent Data Products — Detailed User Guide (Federal Data Excellence)",
+    "authors_or_org": [
+     "USAFacts",
+     "Partnership for Public Service"
+    ],
+    "pub_year": "2026",
+    "doc_type": "practitioner",
+    "source_url": "https://media.usafacts.org/m/260cbbd653fb33ec/original/Detailed-User-Guide-Federal-Data-Excellence-Standards.pdf",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "scripted_fetch",
+    "acquired_at": null,
+    "acquired_by": "scripts/manifest_crosswalk.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed pdf, detected pdf",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "13231280 bytes vs floor 7000",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "31 pages, extractable text present",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-08-29T12:08:24.319107+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "task §0 acquisition queue (§9 item), construct_arm=publication_actionability: §9 'USAFacts/Partnership Federal Data Excellence standards'. The detailed guide is the normative artifact; the quick reference below is its scoring surface.",
+    "decided_by": "cc",
+    "decided_at": "2026-08-29T12:08:22.922402+00:00",
+    "history": [],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "crosswalk_queue_2026-08-29"
+   ],
+   "extra": {
+    "notes": [
+     "§9 'USAFacts/Partnership Federal Data Excellence standards'. The detailed guide is the normative artifact; the quick reference below is its scoring surface."
+    ],
+    "observed_files": {
+     "corpus/crosswalk/usafacts-fde-standards-detailed.pdf": {
+      "sha256": "98a092ac6f196b00d58472054d1eed89a1a13b4196a0e4eaa6119666bfbb479d",
+      "size": 13231280,
+      "claimed_type": "pdf",
+      "detected_type": "pdf"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/crosswalk/usafacts-fde-standards-detailed.pdf": {
+      "path": "corpus/crosswalk/usafacts-fde-standards-detailed.pdf",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed pdf, detected pdf",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "13231280 bytes vs floor 7000",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "31 pages, extractable text present",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-08-29T12:08:24.319107+00:00"
+     }
+    }
+   }
+  },
+  "usafacts-fde-standards-quick-reference": {
+   "doc_id": "usafacts-fde-standards-quick-reference",
+   "identity": {
+    "sha256": "f0bfaf7e80d8917edd821993f0a83440aa564fffd0d49815201a259ab500566a",
+    "canonical_path": "corpus/crosswalk/usafacts-fde-standards-quick-reference.pdf",
+    "title": "Data Product Grading Rubric — Quick Reference Guide (Federal Data Excellence Standards)",
+    "authors_or_org": [
+     "USAFacts",
+     "Partnership for Public Service"
+    ],
+    "pub_year": "2026",
+    "doc_type": "practitioner",
+    "source_url": "https://media.usafacts.org/m/61974edc198bc7f8/original/Quick-Reference-Federal-Data-Excellence-Standards.pdf",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "scripted_fetch",
+    "acquired_at": null,
+    "acquired_by": "scripts/manifest_crosswalk.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed pdf, detected pdf",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "118337 bytes vs floor 7000",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "1 pages, extractable text present",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-08-29T12:08:24.330872+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "task §0 acquisition queue (§9 item), construct_arm=publication_actionability: The existing scored rubric closest in kind to this instrument — prior art for the January deliverable, admitted so the crosswalk can cite what it extends.",
+    "decided_by": "cc",
+    "decided_at": "2026-08-29T12:08:23.080144+00:00",
+    "history": [],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "crosswalk_queue_2026-08-29"
+   ],
+   "extra": {
+    "notes": [
+     "The existing scored rubric closest in kind to this instrument — prior art for the January deliverable, admitted so the crosswalk can cite what it extends."
+    ],
+    "observed_files": {
+     "corpus/crosswalk/usafacts-fde-standards-quick-reference.pdf": {
+      "sha256": "f0bfaf7e80d8917edd821993f0a83440aa564fffd0d49815201a259ab500566a",
+      "size": 118337,
+      "claimed_type": "pdf",
+      "detected_type": "pdf"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/crosswalk/usafacts-fde-standards-quick-reference.pdf": {
+      "path": "corpus/crosswalk/usafacts-fde-standards-quick-reference.pdf",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed pdf, detected pdf",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "118337 bytes vs floor 7000",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "1 pages, extractable text present",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-08-29T12:08:24.330872+00:00"
+     }
+    }
+   }
+  },
   "usdc-mcp-federal-open-data-pilot-2026": {
    "doc_id": "usdc-mcp-federal-open-data-pilot-2026",
    "identity": {
@@ -21812,6 +22519,106 @@
      }
     },
     "added_in": "kernel-v03"
+   }
+  },
+  "webb-2026-state-fidelity-validity": {
+   "doc_id": "webb-2026-state-fidelity-validity",
+   "identity": {
+    "sha256": "849d45f705fa907d2dad88ae559138dc8eeec4502842716be4e0a44c63e88ad6",
+    "canonical_path": "corpus/crosswalk/webb-2026-state-fidelity-validity.pdf",
+    "title": "State Fidelity Validity for Reproducible AI Systems and Workflows",
+    "authors_or_org": [
+     "Webb, B."
+    ],
+    "pub_year": "2026",
+    "doc_type": "academic",
+    "source_url": "https://doi.org/10.5281/zenodo.22111334",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "scripted_fetch",
+    "acquired_at": null,
+    "acquired_by": "scripts/manifest_crosswalk.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed pdf, detected pdf",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "351304 bytes vs floor 7000",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "38 pages, extractable text present",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-08-29T12:08:24.345187+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "task §0 acquisition queue (§9 item), construct_arm=training_data_readiness: §9 SFV paper (operator's own). Grounds E8 (drift sentinels / state fidelity across product versions). Cited as an internal artifact by DOI per §3(c).",
+    "decided_by": "cc",
+    "decided_at": "2026-08-29T12:08:23.836370+00:00",
+    "history": [],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "crosswalk_queue_2026-08-29"
+   ],
+   "extra": {
+    "notes": [
+     "§9 SFV paper (operator's own). Grounds E8 (drift sentinels / state fidelity across product versions). Cited as an internal artifact by DOI per §3(c)."
+    ],
+    "observed_files": {
+     "corpus/crosswalk/webb-2026-state-fidelity-validity.pdf": {
+      "sha256": "849d45f705fa907d2dad88ae559138dc8eeec4502842716be4e0a44c63e88ad6",
+      "size": 351304,
+      "claimed_type": "pdf",
+      "detected_type": "pdf"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/crosswalk/webb-2026-state-fidelity-validity.pdf": {
+      "path": "corpus/crosswalk/webb-2026-state-fidelity-validity.pdf",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed pdf, detected pdf",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "351304 bytes vs floor 7000",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "38 pages, extractable text present",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-08-29T12:08:24.345187+00:00"
+     }
+    }
    }
   },
   "webb-fcsm-nist-crosswalk": {
