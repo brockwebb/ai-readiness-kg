@@ -670,3 +670,149 @@ tripped. That third one is the M2 pattern in miniature: a word, not a rule.
 
 §2 dry run and ceiling declaration; §3 Arm A / Arm B. No `--ceiling-tokens` declared, no
 `release-orphans` run — those belong to §2, which begins only on the next instruction.
+
+---
+
+# ADDENDUM-03 §2 — dry run and declared ceilings (2026-08-29)
+
+**Zero model spend.** Chunking, tokenizing and ledger declaration only. **STOPPING HERE per
+§2's exit — §3 (the two arms) is not started.**
+
+## Pre-checks the operator asked for, before the dry run
+
+### (a) Boundary rule vs Docling structures — it was NOT tested, and the claim was FALSE
+
+`_SENT_END`'s docstring asserted "a table row or list item is a unit". Nothing tested it, and
+it was wrong. Measured against real converted documents:
+
+| case | derived span | |
+|---|---|---|
+| table row | `\| No Optimization \| 19 .` | Docling writes decimals **spaced** (`19 . 5`) |
+| `et al.` | `2024 showed, AIDRIN scores six dimensions.` | subject dropped |
+| `e.g.` / `U.S.` | `metadata and lineage.` | starts mid-sentence |
+
+**Every one of these is still verbatim-present in the source**, so it passes `is_grounded` and
+looks correct in the graph. That is the dangerous shape of this bug — and it would have run
+straight into §3, where these spans become the judged material.
+
+Prevalence, measured over **306 unique anchors across 40 real documents: 14.7%** of derived
+spans change once the rules below are added.
+
+**Prior art, evaluated rather than assumed.** Sentence boundary disambiguation is long solved
+(Grefenstette & Tapanainen 1994; Kiss & Strunk 2006 for Punkt; pysbd's Golden Rules).
+`nltk` and `spacy` are both importable in this environment. Neither adopted, in order of
+weight: (1) the dominant failure is **markdown line structure**, which no prose segmenter
+models — Punkt splits a table row exactly as the naive rule did, because a table row is not a
+sentence; (2) this needs boundaries **around one known offset**, not document segmentation;
+(3) `grounding.py`, whose normalization must not be forked, is stdlib-only and the repo
+declares one runtime dependency. **The field's decomposition is adopted; its packaging is
+rejected** (~/GitHub/CLAUDE.md §7, §8).
+
+Rules added: structural lines (table row / heading / list item) are units; periods after
+abbreviations, initials, and inside numbers are not boundaries. Span length after the fix:
+median 142 chars, p90 295, max 3,692 — the long tail is prose, not tables (structural spans
+max at 999), so the rule does not over-extend.
+
+### (b) The normalize consistency check is RUNTIME, not test-only
+
+`_verify` is called in `locate_all` (`anchors.py:119`), on the production path
+`apply_anchor_contract → derive_span → locate_all`, **for every anchor of every item**. The
+test only monkeypatches it to prove the fail-closed branch fires. Confirmed by reading the
+call chain, not by inference.
+
+### Mutation matrix 9/9 — but six SURVIVED first
+
+M35–M38 initially survived: the heading and list fixtures had **no interior sentence
+punctuation**, so the trailing newline bounded them and the structural rule was never
+exercised. M42 survived because the structural rule and the decimal exemption were **masking
+each other** on the same fixture. Rebuilt from real corpus lines that carry interior
+boundaries — `## SEC. 3. AI CENTER OF EXCELLENCE. 20`, and a table cell containing
+`Query: Should robots replace humans? Source: …` (an interior `?`, which no numeric rule
+exempts) — plus separate tests isolating each mechanism. `_MULTIWORD_ABBREV` was **deleted as
+dead code** after a mutation removing it killed nothing: `et al.` is already caught by the
+single-token check on `al`.
+
+**This is the fourth time in four tasks a guard test measured the guard's neighbour.**
+
+## §2 — the dry run
+
+**Discrepancy reported, not reconciled.** §2 specifies
+`scripts/run_bulk_extraction.py --dry-run --profile v0_3_7`. That runner **has no chunker** —
+its dry run prints whole documents ("would extract: <doc>") and cannot produce the per-document
+chunk counts §2 asks for. It also calls `spend.declare()` **before** the dry-run branch, so a
+placeholder ceiling would write a fabricated declaration into an append-only ledger. Used
+`scripts/chunked_pilot.py --phase dry_run --profile v0_3_7` instead — the repo's own tool for
+exactly this step, whose docstring reads "chunk the five documents, count chunks and prompt
+tokens, print the ceiling". `build_prompt` is now profile-driven (resolving to
+`chunked_template.md` for `chunked_v035`, byte-identical, so the banked arm is untouched).
+
+Orphan reaper first, as §2 requires: **0 orphans, 0 tokens** — nothing to release, so no
+`--commit`.
+
+| document | chunks | src tok | chunk tok | input tok | oversize |
+|---|---|---|---|---|---|
+| data-readiness-for-ai-a-360-degree-survey | 30 | 35,931 | 35,920 | 144,720 | 0 |
+| aidrin-hiniduma-2024 | 18 | 15,530 | 15,524 | 80,574 | 0 |
+| fcsm-23-02-a-framework-for-data-quality-case-studies | 27 | 27,663 | 27,661 | 125,998 | 0 |
+| from-accuracy-to-readiness-metrics-and-benchmarks-for-human | 18 | 13,143 | 13,140 | 78,342 | 0 |
+| mitre-ai-maturity-model | 35 | 23,597 | 23,581 | 150,103 | 0 |
+| **total** | **128** | | | **579,737** | **0** |
+
+Prompt overhead 3,597 tok/call; input 4,529/call.
+
+### Output projection — and why it is not the addendum's ~1–2K
+
+§2 expects ~1–2K output per chunk. **This projects 5,092/chunk**, and the difference is a real
+disagreement worth stating rather than smoothing over.
+
+The whole-doc output/input ratio (0.55) prices the **retired** exhaustive-verbatim contract and
+would be pricing the very thing v0.3.7 replaces, so it is not used here. Instead:
+
+- **measured item density**: median **134 items/chunk** over the 32 parsable banked chunks
+- **computed per-item cost under the anchor contract**: **38 tokens** (real tokenizer, on a
+  representative node and edge) — against **225 tok/item measured** under v0.3.5, a **5.9×
+  per-item reduction**, which is the anchor contract's whole cost argument, confirmed
+- 134 × 38 = **5,092/chunk × 128 = 651,776**
+
+The gap to ~1–2K is the **salience** effect: the addendum's figure presumes dropping the
+exhaustive-inventory instruction also cuts the item *count*. It probably does — but **by how
+much is unmeasured until §3 runs**, so the projection deliberately assumes **no salience
+reduction**. A ceiling built on the optimistic assumption refuses a legitimate run. If §3
+measures a lower density, the anchor contract will have beaten this projection.
+
+### Ceiling arithmetic and declaration
+
+```
+input          579,737
+cache_creation 579,737   (non-resumed calls re-send the prefix)
+output         651,776
+estimate     1,811,250
+floor x calls  20,000 x 128 = 2,560,000   (the guard's first-calls reserve)
+CEILING = max(estimate, floor x calls) x 1.5 = 3,840,000 per arm
+```
+
+The reserve-time floor dominates the estimate, so it sets the ceiling; the running mean
+replaces it after the first settles.
+
+**Declared on `state/spend_ledger.jsonl`:**
+
+| run_id | ceiling | committed | call_class |
+|---|---|---|---|
+| `pilot_v037_arm_a_haiku` | 3,840,000 | 0 | extraction |
+| `pilot_v037_arm_b_sonnet` | 3,840,000 | 0 | extraction |
+
+Both arms declared now because the projection is identical (same 128 chunks, same contract;
+only the model differs). Arm B runs **only if Arm A falls short** — an unused declaration with
+0 committed is inert. **If Arm A's measured mean exceeds this projection, Arm B's ceiling must
+be re-derived from A's actuals rather than reused.**
+
+Daily band 55,000,000; committed today 2,023,212. Worst case both arms = 9,703,212, **well
+under the cap** — no operator approval required (doctrine: under the cap, run it).
+
+## Tests: 337 → 359 passed
+
+## Not done (the hard stop)
+
+§3 Arm A / Arm B. No extraction dispatched, no `model_stub` call, nothing reserved against
+either ceiling. `seldon cc complete` deliberately not run — ADDENDUM-03 reserves it for the
+end of §3.
