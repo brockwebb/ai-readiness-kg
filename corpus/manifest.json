@@ -1,11 +1,11 @@
 {
  "manifest_version": 2,
  "project": "ai-readiness-kg",
- "generated_at": "2026-08-29T12:08:24.345187+00:00",
+ "generated_at": "2026-08-29T13:06:43.201879+00:00",
  "generator": "dixie.evidence",
  "note": "PROJECTION — rebuilt from the evidence decisions log; do not hand-edit. The log is truth.",
  "counts_by_decision": {
-  "included": 176,
+  "included": 178,
   "excluded": 26,
   "pending_refetch": 39
  },
@@ -22409,6 +22409,206 @@
      }
     },
     "added_in": "kernel-v03"
+   }
+  },
+  "w3c-prov-dm-data-model": {
+   "doc_id": "w3c-prov-dm-data-model",
+   "identity": {
+    "sha256": "5c925c21bc96c285b25017c3b90d82cf74251d07713b71fcb81ca60f873c9e88",
+    "canonical_path": "corpus/crosswalk/w3c-prov-dm-data-model.html",
+    "title": "PROV-DM: The PROV Data Model (W3C Recommendation, 30 April 2013)",
+    "authors_or_org": [
+     "W3C"
+    ],
+    "pub_year": "2013",
+    "doc_type": "standard",
+    "source_url": "https://www.w3.org/TR/prov-dm/",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "scripted_fetch",
+    "acquired_at": null,
+    "acquired_by": "scripts/manifest_crosswalk.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed html, detected html",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "271572 bytes vs floor 64",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "skipped: format mismatch already failed or type unhandled",
+      "outcome": "skip"
+     }
+    ],
+    "checked_at": "2026-08-29T13:06:43.201051+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "task §0 acquisition queue (§9 item), construct_arm=publication_actionability: The conceptual model PROV-O encodes: entities, activities, agents, and derivation. Cited with PROV-O because D3 is about the model, not the syntax.",
+    "decided_by": "cc",
+    "decided_at": "2026-08-29T13:06:42.869799+00:00",
+    "history": [],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "crosswalk_queue_2026-08-29"
+   ],
+   "extra": {
+    "notes": [
+     "The conceptual model PROV-O encodes: entities, activities, agents, and derivation. Cited with PROV-O because D3 is about the model, not the syntax."
+    ],
+    "observed_files": {
+     "corpus/crosswalk/w3c-prov-dm-data-model.html": {
+      "sha256": "5c925c21bc96c285b25017c3b90d82cf74251d07713b71fcb81ca60f873c9e88",
+      "size": 271572,
+      "claimed_type": "html",
+      "detected_type": "html"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/crosswalk/w3c-prov-dm-data-model.html": {
+      "path": "corpus/crosswalk/w3c-prov-dm-data-model.html",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed html, detected html",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "271572 bytes vs floor 64",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "skipped: format mismatch already failed or type unhandled",
+        "outcome": "skip"
+       }
+      ],
+      "checked_at": "2026-08-29T13:06:43.201051+00:00"
+     }
+    }
+   }
+  },
+  "w3c-prov-o-ontology": {
+   "doc_id": "w3c-prov-o-ontology",
+   "identity": {
+    "sha256": "6b96671ab84faf12ce3f041aca12c3f93a6df2ed242348810743179a68e69555",
+    "canonical_path": "corpus/crosswalk/w3c-prov-o-ontology.html",
+    "title": "PROV-O: The PROV Ontology (W3C Recommendation, 30 April 2013)",
+    "authors_or_org": [
+     "W3C"
+    ],
+    "pub_year": "2013",
+    "doc_type": "standard",
+    "source_url": "https://www.w3.org/TR/prov-o/",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "scripted_fetch",
+    "acquired_at": null,
+    "acquired_by": "scripts/manifest_crosswalk.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed html, detected html",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "464179 bytes vs floor 64",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "skipped: format mismatch already failed or type unhandled",
+      "outcome": "skip"
+     }
+    ],
+    "checked_at": "2026-08-29T13:06:43.201879+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "task §0 acquisition queue (§9 item), construct_arm=publication_actionability: Resolves the crosswalk's D3 gap (provenance completeness). The OWL2 encoding of the PROV data model — the vocabulary an agency would publish lineage in.",
+    "decided_by": "cc",
+    "decided_at": "2026-08-29T13:06:42.718920+00:00",
+    "history": [],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "crosswalk_queue_2026-08-29"
+   ],
+   "extra": {
+    "notes": [
+     "Resolves the crosswalk's D3 gap (provenance completeness). The OWL2 encoding of the PROV data model — the vocabulary an agency would publish lineage in."
+    ],
+    "observed_files": {
+     "corpus/crosswalk/w3c-prov-o-ontology.html": {
+      "sha256": "6b96671ab84faf12ce3f041aca12c3f93a6df2ed242348810743179a68e69555",
+      "size": 464179,
+      "claimed_type": "html",
+      "detected_type": "html"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/crosswalk/w3c-prov-o-ontology.html": {
+      "path": "corpus/crosswalk/w3c-prov-o-ontology.html",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed html, detected html",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "464179 bytes vs floor 64",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "skipped: format mismatch already failed or type unhandled",
+        "outcome": "skip"
+       }
+      ],
+      "checked_at": "2026-08-29T13:06:43.201879+00:00"
+     }
+    }
    }
   },
   "w3c-rdf-data-cube": {

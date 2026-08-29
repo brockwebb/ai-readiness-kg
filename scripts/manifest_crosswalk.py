@@ -35,6 +35,7 @@ from dixie.evidence.eventlog import EventLog as DixieLog            # noqa: E402
 from dixie.evidence.sweep import Sweep                              # noqa: E402
 
 INBOX = REPO / "corpus" / "staging" / "inbox" / "crosswalk_2026-08-29"
+INBOX_T0 = REPO / "corpus" / "staging" / "inbox" / "t0t1_2026-08-29"
 DEST_DIR = REPO / "corpus" / "crosswalk"
 BATCH = 17
 EPOCH = "crosswalk-2026-08-29"
@@ -114,6 +115,27 @@ DOCS = [
              "across product versions). Cited as an internal artifact by DOI per §3(c)."),
 ]
 
+#: ADDENDUM-01 §2 of task 2026-08-29_corpus_t0_t1_substrate: the actual provenance
+#: vocabulary. 3d86f16d found the crosswalk's D3 pointer ("PROV-aligned standards nodes")
+#: was a false lexical match — the only manifest hit contained the letters "prov" inside a
+#: Census standard's code and is not a provenance vocabulary at all.
+DOCS += [
+    dict(slug="prov-o", doc_id="w3c-prov-o-ontology", ext="html",
+         title="PROV-O: The PROV Ontology (W3C Recommendation, 30 April 2013)",
+         authors=["W3C"], year="2013", source_type="standard",
+         construct_arm="publication_actionability",
+         url="https://www.w3.org/TR/prov-o/",
+         why="Resolves the crosswalk's D3 gap (provenance completeness). The OWL2 encoding "
+             "of the PROV data model — the vocabulary an agency would publish lineage in."),
+    dict(slug="prov-dm", doc_id="w3c-prov-dm-data-model", ext="html",
+         title="PROV-DM: The PROV Data Model (W3C Recommendation, 30 April 2013)",
+         authors=["W3C"], year="2013", source_type="standard",
+         construct_arm="publication_actionability",
+         url="https://www.w3.org/TR/prov-dm/",
+         why="The conceptual model PROV-O encodes: entities, activities, agents, and "
+             "derivation. Cited with PROV-O because D3 is about the model, not the syntax."),
+]
+
 #: Fetched, verified unfetchable, NOT admitted and NOT substituted (task §0).
 BLOCKED = [
     dict(doc_id="commerce-generative-ai-open-data-guidelines", 
@@ -170,13 +192,19 @@ def run(dry_run: bool) -> int:
 
     added, skipped, deferred = [], [], []
     for rec in DOCS:
-        doc_id, src = rec["doc_id"], INBOX / f"{rec['slug']}.tmp"
+        doc_id = rec["doc_id"]
+        src = next((d / f"{rec['slug']}.tmp" for d in (INBOX, INBOX_T0)
+                    if (d / f"{rec['slug']}.tmp").exists()),
+                   INBOX / f"{rec['slug']}.tmp")
+        # Already-admitted wins over a missing inbox file: on a re-run the fetch scratch is
+        # gone, and reporting a DEFER for a document that is safely in the corpus reads as a
+        # failure when it is the opposite.
+        if doc_id in ids:
+            skipped.append((doc_id, "doc_id already admitted")); continue
         if not src.exists():
             deferred.append((doc_id, f"artifact not in inbox: {src}")); continue
         sha = _sha256(src)
         norm_url = rec["url"].rstrip("/").lower()
-        if doc_id in ids:
-            skipped.append((doc_id, "doc_id already admitted")); continue
         if sha in shas:
             skipped.append((doc_id, f"content_hash already admitted ({sha[:12]})")); continue
         if norm_url in urls:

@@ -290,3 +290,39 @@ gated were recorded GATE UNREACHABLE and not judged, which is what ADDENDUM-01 �
 required of a sub-minimum sample. The rule binds the NEXT registration, including the v0.3.7
 pilot's semantic stratum, whose reopen trigger in DD-024 ("clears F_upper < 0.10 / faithful >=
 0.70 at pooled >= 20") **must be read as pooled >= 35** to be satisfiable at one fact per edge.
+
+## DD-023 ERRATUM 2 (2026-08-29): re-conversion does not repair the `span_partial` class it was prescribed for
+
+**Date:** 2026-08-29. Task `2026-08-29_corpus_t0_t1_substrate` §1.1. Evidence:
+`state/t1_fidelity_diff.json`, `scripts/t1_fidelity_diff.py` (`named_instance_check`).
+
+DD-023 measurement (2) attributed the chunked pilot's **75.5% `span_partial` quarantine rate**
+to "pypdf source damage — dropped characters", and ADDENDUM-01 §2.5 prescribed re-converting
+the corpus with a layout-aware parser as the fix. The whole corpus has now been re-converted
+with Docling and the named instance re-tested as a positive control.
+
+**Result: both converters extract the identical truncated token from the same bytes.**
+`Heterogeneous Euclidean-Overlap Metri` — the missing `c` that DD-023 cites by name — appears
+in pypdf's output *and* in Docling's. The character is absent from the PDF's own text layer.
+Re-conversion cannot repair this class, and no converter choice will.
+
+**What still stands.** Docling earns its place on other grounds and remains the T1 converter:
+on the 5-document fidelity sample it recovers 4–24% more text than pypdf (169,576 vs 163,016
+chars on the 360-degree survey; 127,424 vs 102,301 on the MITRE model) because it reconstructs
+tables, headings and reading order that pypdf flattens or drops. That is a real gain in
+retrievable structure. It is not the gain DD-023 claimed.
+
+**What does not stand.** Any expectation that the v0.3.7 pilot's quarantine rate will fall
+because the source was re-converted. The `span_partial` diagnosis needs re-deriving from the
+quarantine records themselves, separating (a) genuine PDF text-layer loss, which no pipeline
+step can fix and which must be handled by admitting a better copy — the operator pickup list
+exists for exactly this — from (b) the model quoting a fragment cut mid-noun-phrase, which the
+v0.3.7 anchor contract does address. Those two were merged under one cause and are now known
+to be different problems. **Nothing in DD-023's decision changes**: the emission contract, not
+the converter, was always the cost argument, and ADDENDUM-01 §1 already showed the
+faithfulness argument was an instrument artifact (ERRATUM 1). This erratum removes the third
+leg — the fidelity remedy — from the same decision, which now rests on cost alone and on
+nothing else.
+
+Generalized as methodology §7.8: before naming a component as the cause of a defect, run both
+candidates on the same bytes.

@@ -87,3 +87,14 @@ Thumbs.db
 *.swo
 # crawl4ai web-page markdown captures (cited by URL; content local, provenance in manifest)
 corpus/bulk_md/
+
+# T0/T1 substrate (task 2026-08-29_corpus_t0_t1_substrate). All three are REBUILDABLE
+# projections, never sources of truth: the db is proven rebuildable by
+# `t1_build_index.py --phase rebuild`, the markdown by --phase convert from the admitted
+# bytes, and the biblio cache by `python -m kg.biblio resume`. Provenance rides in the
+# events and the manifest, not in these files.
+state/corpus_index.db
+state/corpus_index.rebuild.db
+state/docling_md/
+state/biblio_cache/
+state/convert_errors/
