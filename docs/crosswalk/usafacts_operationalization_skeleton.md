@@ -86,7 +86,7 @@ Added indicator:
 
 ## 5b. Cross-cutting — the TEVV loop (the framework's structural gap; operator feedback already delivered to USAFacts)
 
-Their ACCURATE criterion is open-loop: provide eval sets → test → notify developers. TEVV (NIST AI RMF MEASURE/MANAGE framing) closes it. Indicators added to the instrument, applying across criteria:
+Their ACCURATE criterion has real machinery — internal review, audit trails, developer notification — but the loop does not close: nothing routes a failed evaluation back into the data product, and nothing attributes a failure to its stage. TEVV (NIST AI RMF MEASURE/MANAGE framing) supplies the missing half. Indicators added to the instrument, applying across criteria:
 
 | # | Construct | Candidate indicator | Type | Evidence | Tier | Status |
 |---|---|---|---|---|---|---|
@@ -128,7 +128,7 @@ Starting from the federal statistical system without overfitting to it: each of 
 | G5 | Disclosure semantics | Suppression and disclosure-avoidance documented machine-readably with unique identifiers (strengthens the guide's own bullet from prose to spec) | DOC | `usafacts-ai-ready-data-guide` | `agency_instrumented` | draft |
 | G6 | Measurement-protocol provenance | Collection instrument/protocol carried as a versioned epoch on the series; changes annotated machine-readably with reason and inter-epoch crosswalk (SDMX break-in-series class metadata). The consumer-side test: an AI system asked to compare values across a break must surface the break | DOC + EVAL | `sdmx-3-0-section-1-framework`; `sdmx-standards-overview`; `odcs-open-data-contract-standard` | `agency_instrumented` | draft |
 
-G1 is the sharpest gap in every framework reviewed so far: uncertainty communication is the statistical system's core differentiator and no AI-readiness guidance addresses whether AI systems preserve it. Candidate flagship indicator for the January instrument.
+G1 is the sharpest gap in every framework reviewed so far: where uncertainty appears at all it is framed as a privacy safeguard, and no AI-readiness guidance asks whether AI systems *preserve* uncertainty when restating values — the statistical system's core differentiator. Candidate flagship indicator for the January instrument.
 
 ## 6. Maturity overlay (org-level, optional second axis)
 
@@ -160,7 +160,7 @@ The product-level instrument above is the core. An organizational maturity overl
 5. **ACCURATE becomes a closed TEVV loop (§5b)** — verification/validation split, pre-registered thresholds, versioned instruments, contamination policy, positive controls, failure attribution, corrective-action closure. This is the operator's delivered feedback, now with an indicator set and NIST AI RMF framing behind it.
 6. **Statistical-standards correction** — SDMX/DDI/DCAT where the guide says NIEM.
 7. **Publication is a deploy (§5c)** — the CI/CD feedback operationalized: pre-release gates, contract stability, vintage regression, staged rollout, signed releases.
-8. **Uncertainty legibility (§5d G1)** — the statistical system's differentiator, absent from their guide and every adjacent framework: structured error measures plus an eval for whether AI systems preserve them.
+8. **Uncertainty legibility (§5d G1)** — in their guide, error and noise appear only as privacy safeguards (DP, suppression); no framework treats uncertainty as something the AI consumer must *preserve*. G1 supplies that: structured error measures plus an eval for whether AI restatements keep them.
 9. **Machine as first-class user (§1b)** — delivered feedback, grounded in FAIR rather than prediction: machine-actionability as primary design target, human surface derived; A9 makes it auditable.
 10. **Protocol as contract (§5d G6)** — delivered feedback: measurement-protocol epochs with machine-readable breaks and reasons; SDMX + ODCS give it standards footing.
 11. **Red teaming (§5b E9)** — delivered feedback: the framework tests what works; it must also enumerate how products break, with a standing adversarial bank.

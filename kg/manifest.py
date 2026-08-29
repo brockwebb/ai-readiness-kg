@@ -45,6 +45,16 @@ _DIXIE_CONFIG_PATH = _REPO_ROOT / "dixie_evidence.yaml"
 _MANIFEST_BATCH = 1
 
 _MANIFEST_ADD = "manifest_add"
+_CONTENT_UPDATE = "content_update"
+#: Why a document's bytes were legitimately replaced after admission. Closed, because an
+#: open reason field is how "the file changed" becomes an explanation instead of a finding.
+#: `extent_corrected` — the admitted copy was the wrong extent (a whole statute standing in
+#: for one section); `corrupt_source_replaced` — the admitted bytes would not parse;
+#: `source_revised` — the publisher silently reissued the document at the same URL;
+#: `source_unavailable_disk_adopted` — the primary URL is dead and the disk copy is adopted
+#: as the record of what was read, with provenance degraded.
+_CONTENT_UPDATE_REASONS = ("extent_corrected", "corrupt_source_replaced", "source_revised",
+                           "source_unavailable_disk_adopted")
 # Kept in sync with schema.yaml Document.source_type (intergovernmental added 2026-07-03, R1;
 # practitioner added 2026-08-21, schema v0.3 / DD-009 — SME or industry-practitioner guidance
 # that is not a vendor product page).
@@ -101,12 +111,34 @@ def _normalize_url(url: str) -> str:
 
 def _load_entries() -> list[dict]:
     """Current manifest entries, reconstructed from event replay (never read from the JSON
-    projection — the log is the truth)."""
+    projection — the log is the truth).
+
+    `content_update` events are replayed OVER the admission entry. A document can be
+    legitimately re-acquired after admission — wrong extent corrected, corrupt PDF replaced
+    — and the corrected bytes then differ from the hash `manifest_add` recorded. That is not
+    drift, and the fix is never an edit to the admission event (invariant 1): the entry's
+    current hash is the admission hash with each supersession applied in log order.
+    """
     entries: dict[str, dict] = {}
     for ev in eventlog.replay():
-        if ev.get("event_type") == _MANIFEST_ADD:
-            entry = ev["payload"]
+        et = ev.get("event_type")
+        if et == _MANIFEST_ADD:
+            entry = dict(ev["payload"])
             entries[entry["doc_id"]] = entry
+        elif et == _CONTENT_UPDATE:
+            p = ev["payload"]
+            base = entries.get(p["doc_id"])
+            if base is None:
+                # A supersession with no admission is a corrupt log, not a recoverable
+                # state: the entry it claims to correct was never admitted.
+                raise ManifestError(
+                    f"content_update for {p['doc_id']!r} which has no manifest_add event")
+            base["content_hash"] = p["content_hash"]
+            if p.get("local_path"):
+                base["local_path"] = p["local_path"]
+            base.setdefault("supersessions", []).append(
+                {k: p.get(k) for k in ("superseded_content_hash", "content_hash",
+                                       "reason", "evidence", "task")})
     return list(entries.values())
 
 
@@ -264,6 +296,55 @@ def rebuild() -> dict:
     _dixie_write_manifest_json(entries, _MANIFEST_PATH, cfg["project"],
                                generated_at=_dixie_last_event_ts(log))
     return {"manifest_version": 2, "entries": len(entries)}
+
+
+def content_update(doc_id: str, *, reason: str, superseded_content_hash: str,
+                   evidence: dict, local_path: str | None = None,
+                   task: str | None = None) -> str:
+    """Record that an admitted document's bytes were legitimately replaced. Returns the new
+    content hash.
+
+    This is the ONLY sanctioned way for an entry's hash to change. The admission event is
+    never edited (invariant 1): a `content_update` event is appended and replayed over it.
+
+    Loud refusals, all checked before anything is written:
+      - `doc_id` was never admitted
+      - `reason` outside the closed list
+      - `superseded_content_hash` is not the entry's CURRENT hash — the caller must name
+        what it believes it is replacing and be right, because blind chaining is how a
+        supersession silently adopts whatever happens to be on disk
+      - the file is missing
+    """
+    entries = {e["doc_id"]: e for e in _load_entries()}
+    entry = entries.get(doc_id)
+    if entry is None:
+        raise ManifestError(f"content_update: {doc_id!r} is not admitted")
+    if reason not in _CONTENT_UPDATE_REASONS:
+        raise ManifestError(
+            f"content_update: unknown reason {reason!r}; must be one of "
+            f"{', '.join(_CONTENT_UPDATE_REASONS)}")
+    if superseded_content_hash != entry["content_hash"]:
+        raise ManifestError(
+            f"content_update: superseded_content_hash {superseded_content_hash[:12]}... does "
+            f"not match the current hash {entry['content_hash'][:12]}... for {doc_id!r}")
+    rel = local_path or entry["local_path"]
+    path = _REPO_ROOT.resolve() / rel
+    if not path.is_file():
+        raise ManifestError(f"content_update: file not found: {rel}")
+    new_hash = _sha256(path)
+    if new_hash == superseded_content_hash:
+        raise ManifestError(
+            f"content_update: {doc_id!r} bytes are unchanged; nothing to supersede")
+    # Same envelope shape as manifest_add: the entry state lives under `payload`, so one
+    # replay rule reads both event types.
+    eventlog.append({"event_type": _CONTENT_UPDATE,
+                     "payload": {"doc_id": doc_id, "content_hash": new_hash,
+                                 "superseded_content_hash": superseded_content_hash,
+                                 "local_path": rel, "reason": reason,
+                                 "evidence": evidence,
+                                 **({"task": task} if task else {})}},
+                    batch=_MANIFEST_BATCH)
+    return new_hash
 
 
 def verify() -> list[dict]:

@@ -279,3 +279,92 @@ def test_construct_arms_in_sync_with_schema():
     vals = schema["node_types"]["Document"]["property_values"]
     assert tuple(vals["construct_arm"]) == manifest._CONSTRUCT_ARMS
     assert tuple(vals["grounding_surface"]) == manifest._GROUNDING_SURFACES
+
+
+# --- content supersession (task 2026-08-29_corpus_t0_t1_substrate ADDENDUM-01 §-0.5) ----
+# A document can be legitimately re-acquired after admission: wrong extent corrected, a
+# corrupt PDF replaced. Four such corrections were made in July 2026 and recorded in the
+# dixie evidence ledger with `superseded_sha256`, but never mirrored into the KG event log,
+# so `verify()` reported four hash_mismatches that were not drift at all. The fix is a
+# `content_update` event replayed over the admission entry — never an edit to the original
+# `manifest_add`, which stays exactly as written (invariant 1).
+
+def _admit(repo, name="doc.txt", content="original bytes", **over):
+    f = _write_corpus_file(repo, name, content)
+    manifest.add(str(f), **_good_fields(**over))
+    return f
+
+
+def test_content_update_supersedes_the_admission_hash(repo):
+    """The re-acquired bytes become the entry's content_hash, so verify() is clean."""
+    f = _admit(repo)
+    old = list(eventlog.replay())[0]["payload"]["content_hash"]
+    f.write_text("corrected bytes", encoding="utf-8")
+    assert manifest.verify(), "precondition: the changed file must mismatch before the update"
+
+    new = manifest.content_update(
+        "fcsm-25-03", reason="extent_corrected",
+        superseded_content_hash=old, evidence={"dixie_record": "note@447"})
+
+    assert manifest.verify() == [], "content_update did not clear the mismatch"
+    entry = {e["doc_id"]: e for e in manifest._load_entries()}["fcsm-25-03"]
+    assert entry["content_hash"] == new != old
+    # the admission event is untouched
+    adds = [e for e in eventlog.replay() if e["event_type"] == "manifest_add"]
+    assert len(adds) == 1 and adds[0]["payload"]["content_hash"] == old
+
+
+def test_content_update_records_both_hashes_and_the_reason(repo):
+    f = _admit(repo)
+    old = list(eventlog.replay())[0]["payload"]["content_hash"]
+    f.write_text("corrected bytes", encoding="utf-8")
+    new = manifest.content_update("fcsm-25-03", reason="corrupt_source_replaced",
+                                  superseded_content_hash=old,
+                                  evidence={"dixie_record": "note@443"})
+    ev = [e for e in eventlog.replay() if e["event_type"] == "content_update"][-1]
+    p = ev["payload"]
+    assert p["superseded_content_hash"] == old and p["content_hash"] == new
+    assert p["reason"] == "corrupt_source_replaced"
+    assert p["evidence"] == {"dixie_record": "note@443"}
+
+
+def test_content_update_on_unknown_doc_is_loud(repo):
+    _admit(repo)
+    with pytest.raises(manifest.ManifestError, match="not admitted"):
+        manifest.content_update("never-admitted", reason="extent_corrected",
+                                superseded_content_hash="0" * 64, evidence={})
+
+
+def test_content_update_refuses_a_stale_superseded_hash(repo):
+    """Blind chaining is how a supersession event silently adopts whatever is on disk. The
+    caller must name the hash it believes it is replacing, and be right."""
+    f = _admit(repo)
+    f.write_text("corrected bytes", encoding="utf-8")
+    with pytest.raises(manifest.ManifestError, match="superseded_content_hash"):
+        manifest.content_update("fcsm-25-03", reason="extent_corrected",
+                                superseded_content_hash="f" * 64, evidence={})
+
+
+def test_content_update_requires_a_known_reason(repo):
+    f = _admit(repo)
+    old = list(eventlog.replay())[0]["payload"]["content_hash"]
+    f.write_text("corrected bytes", encoding="utf-8")
+    with pytest.raises(manifest.ManifestError, match="reason"):
+        manifest.content_update("fcsm-25-03", reason="because_i_said_so",
+                                superseded_content_hash=old, evidence={})
+
+
+def test_superseded_hash_does_not_block_a_later_admission(repo):
+    """The dedup gate keys on the CURRENT hash set. A superseded hash is retired: another
+    document may legitimately arrive carrying the bytes this one used to have (the
+    quarantined original, re-admitted under its own doc_id)."""
+    f = _admit(repo)
+    old = list(eventlog.replay())[0]["payload"]["content_hash"]
+    f.write_text("corrected bytes", encoding="utf-8")
+    manifest.content_update("fcsm-25-03", reason="extent_corrected",
+                            superseded_content_hash=old, evidence={})
+    other = _write_corpus_file(repo, "other.txt", "original bytes")   # the retired hash
+    manifest.add(str(other), **_good_fields(doc_id="fcsm-25-03-megastatute",
+                                            primary_url="https://example.gov/old"))
+    assert {e["doc_id"] for e in manifest._load_entries()} == {"fcsm-25-03",
+                                                               "fcsm-25-03-megastatute"}
