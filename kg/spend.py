@@ -27,6 +27,7 @@ stop (exit 0) contract as the STOP file and cap exhaustion.
 CLI:
     python -m kg.spend status [--run-id R]
     python -m kg.spend reconcile --run-id R
+    python -m kg.spend release-orphans [--run-id R] [--commit]
 """
 from __future__ import annotations
 
@@ -106,6 +107,13 @@ def _now() -> str:
     return datetime.datetime.now(datetime.timezone.utc).isoformat()
 
 
+def _pid() -> int:
+    """Seam beside ``_now`` so a test can stamp a reservation with a foreign owner PID
+    (repo convention: the things a test must control are module-level and read at call
+    time). Production has exactly one implementation."""
+    return os.getpid()
+
+
 def _utc_day(ts: str) -> str:
     return ts[:10]
 
@@ -120,6 +128,70 @@ def _spend_config() -> dict:
         if key not in spend:
             raise SpendConfigError(f"controls.yaml spend block missing {key!r}")
     return spend
+
+
+# ------------------------------------------------------------------ orphan reservations
+# A reservation whose owning process died between reserve() and settle()/release() holds
+# capacity forever: `_tally` counts it as outstanding against both the run ceiling and the
+# daily band. Four such holds (1,326,274 tokens) were found by ADDENDUM-01 §0.
+#
+# Prior art (named, not invented here): this is *lease expiry* — Gray & Cheriton 1989,
+# "Leases: An Efficient Fault-Tolerant Mechanism for Distributed File Cache Consistency" —
+# and the in-doubt-transaction resolution of presumed-abort two-phase commit (Mohan,
+# Lindsay & Obermarck 1986). The liveness probe itself is the Unix stale-pidfile idiom
+# (`kill(pid, 0)`). Internal precedent search (repo + Wintermute decision logs, 2026-08-28):
+# no prior reaper here; every existing `orphan` in this repo is the graph-structural
+# `orphan_rate` gate, an unrelated sense of the word.
+#
+# The literature prefers a *renewed lease* to a *post-hoc liveness probe*, because a probe
+# races with PID recycling. We use the probe because the reservations already on disk carry
+# no lease field, and because the race is safe in one direction only (below). A renewable
+# lease is the right shape if this ever needs to reap while a run is live.
+
+
+def _pid_alive(pid: int) -> bool:
+    """Signal-0 liveness. PermissionError means the process EXISTS under another uid —
+    alive. Only ProcessLookupError is proof of death."""
+    try:
+        os.kill(pid, 0)
+    except ProcessLookupError:
+        return False
+    except PermissionError:
+        return True
+    return True
+
+
+def _liveness_of(record: dict, host: str) -> tuple[str, str]:
+    """(liveness, evidence) for a reservation record.
+
+    PID recycling can only make a dead owner look *alive* (some unrelated process now holds
+    the number), which under-releases — the safe direction. The unsafe direction, calling a
+    live owner dead, is impossible on the host that owns the PID, so the host guard is
+    load-bearing, not decoration: a PID absent *here* says nothing about a process on
+    another machine, and such a reservation is never reaped."""
+    rec_host = record.get("host")
+    if rec_host is not None and rec_host != host:
+        return "unknown_other_host", f"reserved on {rec_host!r}, probing from {host!r}"
+    pid = record.get("pid")
+    if pid is None:
+        return "pid_absent", "no pid recorded on the reservation"
+    alive = _pid_alive(int(pid))
+    return ("alive" if alive else "dead",
+            f"os.kill({int(pid)}, 0) -> {'no error' if alive else 'ProcessLookupError'}")
+
+
+def _outstanding_reservations(records: list[dict],
+                              run_id: str | None = None) -> list[dict]:
+    """Reservation records with no matching settle or release, in ledger order."""
+    reserves: dict[str, dict] = {}
+    for r in records:
+        kind = r.get("record")
+        if kind == "reserve":
+            reserves[r["reservation_id"]] = r
+        elif kind in ("settle", "release"):
+            reserves.pop(r.get("reservation_id"), None)
+    return [r for r in reserves.values()
+            if run_id is None or r.get("run_id") == run_id]
 
 
 class SpendLedger:
@@ -159,7 +231,7 @@ class SpendLedger:
 
     @staticmethod
     def _append(fh, record: dict) -> None:
-        record = {**record, "ts": _now(), "pid": os.getpid(), "host": socket.gethostname()}
+        record = {**record, "ts": _now(), "pid": _pid(), "host": socket.gethostname()}
         fh.seek(0, os.SEEK_END)
         fh.write(json.dumps(record, ensure_ascii=False) + "\n")
         fh.flush()
@@ -305,6 +377,68 @@ class SpendLedger:
                               "reservation_id": reservation.reservation_id,
                               "reason": reason})
 
+    def release_orphans(self, commit: bool = False, run_id: str | None = None,
+                        max_age_seconds: int | None = None) -> dict:
+        """Find — and with ``commit=True`` release — reservations whose owning process died.
+
+        Orphan requires ALL THREE (task ADDENDUM-02 §1): outstanding (no settle, no
+        release), older than the configured age, and owning PID provably not alive on this
+        host. Age alone never qualifies: a long-running call is not an orphan, and the
+        chunked pilot measured a 334 s median call duration, so a short age would reap live
+        work. The whole read -> probe -> append runs under the exclusive lock, so a reserve()
+        racing the reaper either lands before the read (and is probed, and is alive) or
+        after the append (and is untouched).
+
+        Dry run by default; ``commit`` is what writes."""
+        spend_cfg = _spend_config()
+        if max_age_seconds is None:
+            if "orphan_reservation_age_seconds" not in spend_cfg:
+                raise SpendConfigError(
+                    f"controls.yaml spend block missing 'orphan_reservation_age_seconds'; "
+                    f"refusing to reap reservations against an implicit threshold")
+            max_age_seconds = int(spend_cfg["orphan_reservation_age_seconds"])
+        host = socket.gethostname()
+        with self._open_locked() as fh:
+            records = self._read_all(fh)
+            now = datetime.datetime.fromisoformat(_now())
+            orphans, retained = [], []
+            for r in _outstanding_reservations(records, run_id=run_id):
+                liveness, evidence = _liveness_of(r, host)
+                age = (now - datetime.datetime.fromisoformat(r["ts"])).total_seconds()
+                row = {"run_id": r.get("run_id"),
+                       "reservation_id": r["reservation_id"],
+                       "estimate_tokens": int(r["estimate_tokens"]),
+                       "reserved_at": r["ts"], "age_seconds": int(age),
+                       "pid": r.get("pid"), "host": r.get("host"),
+                       "liveness": liveness, "liveness_evidence": evidence}
+                if age > max_age_seconds and liveness in ("dead", "pid_absent"):
+                    orphans.append(row)
+                else:
+                    row["retained_because"] = ("owner alive" if liveness == "alive" else
+                                               "not old enough" if liveness in ("dead", "pid_absent")
+                                               else "liveness not checkable from this host")
+                    retained.append(row)
+            if commit:
+                for row in orphans:
+                    self._append(fh, {"record": "release", "run_id": row["run_id"],
+                                      "reservation_id": row["reservation_id"],
+                                      "reason": "orphan_pid_dead",
+                                      "released_by": "kg.spend release-orphans",
+                                      "estimate_tokens_returned": row["estimate_tokens"],
+                                      "orphan_evidence": {
+                                          "reserved_at": row["reserved_at"],
+                                          "age_seconds": row["age_seconds"],
+                                          "max_age_seconds": int(max_age_seconds),
+                                          "owner_pid": row["pid"],
+                                          "owner_host": row["host"],
+                                          "probe_host": host,
+                                          "liveness": row["liveness"],
+                                          "evidence": row["liveness_evidence"]}})
+        return {"committed": bool(commit), "max_age_seconds": int(max_age_seconds),
+                "probe_host": host,
+                "orphans": orphans, "retained": retained,
+                "tokens_returned": sum(o["estimate_tokens"] for o in orphans)}
+
     # ---------------------------------------------------------------- readouts
     def committed(self, run_id: str) -> int:
         with self._open_locked() as fh:
@@ -330,10 +464,16 @@ class SpendLedger:
             committed, settled, outstanding = self._tally(records, run_id=rid)
             refusals = sum(1 for r in records
                            if r.get("record") == "refuse" and r.get("run_id") == rid)
+            # Released reservations leave the tally entirely, so the invariant stays
+            # `committed = settled + outstanding`; `released` is reported for audit — how
+            # much capacity a reap handed back, not a term in the capacity arithmetic.
+            released = sum(int(r.get("estimate_tokens_returned", 0) or 0) for r in records
+                           if r.get("record") == "release" and r.get("run_id") == rid)
             runs[rid] = {
                 "ceiling_tokens": declared and int(declared["ceiling_tokens"]),
                 "call_class": declared and declared["call_class"],
                 "committed": committed, "settled": settled, "outstanding": outstanding,
+                "released": released,
                 "remaining": (max(0, int(declared["ceiling_tokens"]) - committed)
                               if declared else None),
                 "refusals": refusals,
@@ -391,6 +531,29 @@ def default_ledger() -> SpendLedger:
 
 
 # ------------------------------------------------------------------------------- CLI
+def _print_orphan_report(report: dict) -> None:
+    head = f"{'run_id':<24} {'reservation_id':<34} {'age':>10} {'amount':>12} {'pid':>8}  liveness"
+    verb = "RELEASED" if report["committed"] else "would release (dry run)"
+    print(f"orphan threshold: age > {report['max_age_seconds']}s and owner PID not alive "
+          f"on {report['probe_host']}")
+    print(f"\n{verb}: {len(report['orphans'])} reservation(s), "
+          f"{report['tokens_returned']:,} tokens")
+    if report["orphans"]:
+        print(head)
+        for o in report["orphans"]:
+            print(f"{o['run_id']:<24} {o['reservation_id']:<34} {o['age_seconds']:>9,}s "
+                  f"{o['estimate_tokens']:>12,} {str(o['pid']):>8}  {o['liveness']}")
+    print(f"\nretained: {len(report['retained'])} outstanding reservation(s)")
+    if report["retained"]:
+        print(head)
+        for o in report["retained"]:
+            print(f"{o['run_id']:<24} {o['reservation_id']:<34} {o['age_seconds']:>9,}s "
+                  f"{o['estimate_tokens']:>12,} {str(o['pid']):>8}  {o['liveness']} "
+                  f"({o['retained_because']})")
+    if not report["committed"] and report["orphans"]:
+        print("\nDry run. Re-run with --commit to write the releases.")
+
+
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(prog="python -m kg.spend",
                                  description="Shared preemptive spend guard (DD-022).")
@@ -400,6 +563,12 @@ def main(argv: list[str] | None = None) -> int:
     p_rec = sub.add_parser("reconcile",
                            help="Ledger settles vs model_call events for one run.")
     p_rec.add_argument("--run-id", required=True)
+    p_orph = sub.add_parser("release-orphans",
+                            help="Release reservations whose owning process died "
+                                 "(dry run unless --commit).")
+    p_orph.add_argument("--run-id", default=None)
+    p_orph.add_argument("--commit", action="store_true",
+                        help="Write the releases. Without it this only lists candidates.")
     args = ap.parse_args(argv)
     ledger = default_ledger()
     if args.command == "status":
@@ -409,6 +578,10 @@ def main(argv: list[str] | None = None) -> int:
         report = ledger.reconcile(args.run_id)
         print(json.dumps(report, indent=1))
         return 0 if report["ok"] else 1
+    if args.command == "release-orphans":
+        report = ledger.release_orphans(commit=args.commit, run_id=args.run_id)
+        _print_orphan_report(report)
+        return 0
     return 2
 
 

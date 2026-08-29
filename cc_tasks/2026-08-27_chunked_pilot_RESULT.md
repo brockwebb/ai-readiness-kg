@@ -217,3 +217,141 @@ reservations outstanding for in-flight calls. Those calls **had dispatched**, so
 probably consumed server-side; the reservations are deliberately left committed rather than
 released, because releasing them would under-count real spend. `reconcile` reports `ok: true`.
 
+
+---
+
+# ADDENDUM-02 RESULT — orphaned-reservation release path
+
+**Date:** 2026-08-29 (UTC). Zero model spend: code, tests, and one ledger write.
+**Exit criteria:** suite green (233 passed) · 22 releases on the ledger · `outstanding` zeroed
+for all four runs · dry-run table below · committed and pushed.
+
+## Prior art (methodology §7.1 / DD-025)
+
+Named, not invented here. This is **lease expiry**: Gray & Cheriton 1989, *Leases: An Efficient
+Fault-Tolerant Mechanism for Distributed File Cache Consistency* — the canonical answer to "the
+holder died, reclaim the resource" — and the in-doubt-transaction resolution of presumed-abort
+two-phase commit (Mohan, Lindsay & Obermarck 1986). The liveness probe itself is the Unix
+stale-pidfile idiom (`kill(pid, 0)`). **Internal precedent search** across this repo and the
+Wintermute/Seldon decision logs (grep `orphan|stale lock|lease|os.kill|liveness|reap`, 2026-08-29):
+no prior reaper — every existing `orphan` in this repo is the graph-structural `orphan_rate` gate,
+an unrelated sense of the word.
+
+**Where the literature disagrees with the spec, recorded:** the field prefers a *renewable lease*
+to a *post-hoc liveness probe*, because a probe races with PID recycling. The probe was implemented
+anyway, for two reasons on the face of it: the reservations already on disk carry no lease field
+(a lease cannot reap holds written before it existed), and the race is safe in one direction only —
+PID recycling can make a dead owner look *alive*, which under-releases, but cannot make a live owner
+look dead on the host that owns the PID. A renewable lease is the right shape if this ever needs to
+reap while a run is live; it is not needed to reap holds whose owners are already gone.
+
+## What was built
+
+`python -m kg.spend release-orphans [--run-id R] [--commit]` (`kg/spend.py`).
+
+- **Orphan requires all three** (§1): outstanding (no settle, no release), age > threshold, owner
+  PID provably not alive **on this host**. Any one alone spares the hold.
+- **The host guard is an addition to the spec, and it is load-bearing.** A PID absent *here* says
+  nothing about a process on another machine; without it, a multi-host ledger would release live
+  calls. Reservations from another host report `liveness: unknown_other_host` and are never reaped.
+  Mutation-proven (M3 below). The live ledger is single-host (1,991/1,991 records `HexagonMBP.local`),
+  so this bought nothing today and costs nothing tomorrow.
+- **Threshold in config, not code** (standard §2): `controls.yaml` → `spend.orphan_reservation_age_seconds: 600`.
+  600 s is 1.8× the chunked pilot's *measured* 334 s median call duration, so a live call is never in
+  reap range on age. A missing key is a **loud refusal**, not a default — `release_orphans` raises
+  `SpendConfigError` rather than reap against an implicit threshold (M6).
+- **Dry run is the default**; `--commit` is the only thing that writes.
+- **Ledger stays append-only.** No prior record is touched; releases are new lines carrying the
+  reservation id, run, amount returned, `reason: orphan_pid_dead`, and the full liveness evidence
+  (owner pid/host, probe host, age, threshold, and the literal probe result).
+
+### Deviation from §2, with reason
+
+The spec names the event `reservation_released`. It is written as **`record: "release"` with
+`reason: "orphan_pid_dead"`** — the record kind the ledger already has and that `_tally` already
+honours. A second record kind meaning the same thing to the capacity math is a latent trap: any
+future code path that checks `kind == "release"` would silently miss it, which is precisely the
+two-mechanisms failure that produced the 22M incident (DD-022). The audit distinction the spec asked
+for lives in `reason` + `released_by` + `orphan_evidence`, which is strictly more evidence than the
+name would have carried.
+
+### Deviation from §4, with reason
+
+§4 states `committed − settled − released = outstanding`. The implemented invariant is
+**`committed = settled + outstanding`**, unchanged from DD-022: a released reservation leaves the
+tally entirely rather than becoming a negative term. `released` is reported by `status` as an audit
+column — how much capacity a reap handed back — not as a term in the capacity arithmetic. The
+invariant is asserted per run in the test suite.
+
+## Tests (8 new, `tests/test_spend_guard.py` #10–#17)
+
+Positive-control discipline (methodology §7.5): no monitor is trusted until a seeded known-bad fires
+it. **#13 is that control and it runs in-suite**, so it cannot rot — with `_pid_alive` stubbed dead,
+the aged live-owner hold that #12 spares is reaped.
+
+**Mutation matrix — every condition killed at least one test:**
+
+| # | Mutation of the shipped code | Tests that failed |
+|---|---|---|
+| M1 | liveness probe always reports dead | #11 live-fresh, #12 aged-live |
+| M2 | `age >` conjunct dropped | #17 dead-pid-inside-window |
+| M3 | host guard removed | #14 other-host |
+| M4 | `--commit` gate removed (dry run writes) | #10 seeded-orphan |
+| M5 | `release` no longer clears a reservation | #10 (double-reap) |
+| M6 | missing-config check replaced by a default | #15 loud-config-error |
+
+**M2 initially killed nothing** — the age condition was mandated by §1 but untested, so it could
+have been deleted silently. #17 was written to close that gap and now fails under M2 as shown.
+
+**Method note, recorded because it invalidated a first pass.** The first mutation run was executed
+against **stale `.pyc` bytecode**: `cp`-ing the clean file back gave a source whose (mtime, size)
+pair matched the cached bytecode of the mutated version, so pytest kept running mutated code after
+the restore — which is how a passing test appeared to fail after a clean restore. The matrix above
+was re-run under `PYTHONDONTWRITEBYTECODE=1` with `__pycache__` cleared. **Any future mutation
+testing in this repo must disable bytecode caching**; a mutation harness that silently tests the
+wrong bytes is worse than no harness.
+
+Full suite: **233 passed** (was 225; +8).
+
+## First real run
+
+Dry run, 2026-08-29T02:42Z. **22 reservations across 4 runs, 1,326,274 tokens** — every owner PID
+dead, every hold ~1 day old, **0 retained** (nothing was running).
+
+| run_id | reservations | tokens | owner PIDs | oldest |
+|---|---:|---:|---|---:|
+| `pilot_chunked_v035` | 19 | 1,113,669 | 12567, 13470, 15846 (fleet workers) | 92,291 s |
+| `pilot_v035b_opus5` | 1 | 111,000 | 96564 | 105,222 s |
+| `restoration_v2_s2` | 1 | 65,605 | 46662 | 151,077 s |
+| `restoration_v2_s1` | 1 | 36,000 | 25559 | 172,005 s |
+| **total** | **22** | **1,326,274** | all `liveness: dead` | |
+
+**Premise discrepancy, reported not reconciled:** §6 expects "the four known orphans released". The
+§0 report named four *runs* holding capacity; the underlying holds are **22 reservations**. The
+token total is unchanged and matches §0 exactly (1,326,274). The 19 holds on `pilot_chunked_v035`
+across three PIDs are the three fleet workers killed mid-flight by the operator stop — one hold per
+worker in flight, plus the per-worker backlog, exactly the shape the reaper is for.
+
+Committed with `--commit`. Verification after the write:
+
+- Ledger grew by exactly 22 lines; `head -1991` is byte-identical to the pre-reap file — **no prior
+  record mutated**.
+- All 22 appended records are `release` / `orphan_pid_dead`, summing to 1,326,274.
+- `outstanding` is **0 for all 11 runs**; `committed == settled + outstanding` asserted and holds
+  for every run.
+- `reconcile` still `ok: true` for all four reaped runs, settled totals unchanged
+  (2,851,499 / 5,517,758 / 21,514,241 / 7,458,511) — reaping returns *reserved* capacity and does
+  not touch *settled* spend, which is the point.
+- `committed_today` reads 0, but **not because of the reap** — the UTC day rolled to 2026-08-29
+  between the §0 report and this run. The reap returned reserved capacity dated 08-27/08-28.
+
+Recovered against ceilings: `pilot_chunked_v035` remaining 9,034,832 → **10,148,501**;
+`pilot_v035b_opus5` 3,371,242 → **3,482,242**; `restoration_v2_s1` 33,449,759 → **33,485,759**;
+`restoration_v2_s2` 47,475,884 → **47,541,489**.
+
+## Not done
+
+`release-orphans` is **not** wired into any runner as an automatic pre-flight. A reaper that runs
+itself is a second mechanism operating on the ledger without an operator in the loop, and the
+capacity it returns is exactly the capacity a stuck run would otherwise be refused for — which is
+information, not noise. It stays a hand-run verb until there is a reason for it not to be.

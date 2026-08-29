@@ -32,3 +32,9 @@ spend:
     # to 20,000. The floor governs only the first calls of a run — `_estimate` switches to
     # the run's own measured mean as soon as there are settles.
     extraction_chunk: 20000
+  # Reservation age past which a reserve with a dead owner PID is reapable
+  # (`python -m kg.spend release-orphans`, task 2026-08-27_chunked_pilot ADDENDUM-02).
+  # 600s = 1.8x the chunked pilot's MEASURED median call duration of 334s, so a live call
+  # is never in reap range on age; the PID-liveness test is the binding condition either
+  # way — age alone never qualifies a reservation.
+  orphan_reservation_age_seconds: 600
