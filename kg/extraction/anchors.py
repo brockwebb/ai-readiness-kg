@@ -36,10 +36,84 @@ MAX_ANCHOR_TOKENS = 10
 #: detail after the colon is diagnosis, not a second class.
 NOT_LOCATED = "anchor_not_located"
 
-#: A sentence ends at .!? followed by whitespace, or at a line break. Markdown line structure
-#: matters here: a table row or list item is a unit, and running a span across `|` rows
-#: produces a "sentence" no human would call one.
+#: A sentence ends at .!? followed by whitespace, or at a line break — SUBJECT to the
+#: exemptions below, which is where the real work is.
 _SENT_END = re.compile(r"(?<=[.!?])\s+|\n")
+
+#: Markdown lines that are structural units rather than prose. Docling emits all three
+#: throughout this corpus, and a period inside one of them is never a sentence end.
+#: MEASURED before this rule existed: an anchor on a table row returned
+#: `| No Optimization | 19 .` — Docling writes decimals spaced (`19 . 5`), so the row split
+#: at the decimal point. The truncated span is still verbatim-present in the source, so it
+#: passes `is_grounded` and looks correct. That is the dangerous shape of this bug.
+_TABLE_ROW = re.compile(r"^\s*\|")
+_HEADING = re.compile(r"^\s*#{1,6}\s")
+_LIST_ITEM = re.compile(r"^\s*(?:[-*+]\s|\d+[.)]\s)")
+
+#: PRIOR ART, and why this is a rule set and not a library.
+#: Sentence boundary disambiguation is a named, long-solved problem; the decomposition below
+#: is the standard one (Grefenstette & Tapanainen 1994; Kiss & Strunk 2006 for unsupervised
+#: Punkt; pysbd's "Golden Rules" for the modern rule-based statement): a period is NOT a
+#: boundary when it follows a known abbreviation, an initial, or sits inside a number.
+#: `nltk` (Punkt) and `spacy` are both importable in this environment and were evaluated.
+#: Neither is adopted, for three reasons, in order of weight:
+#:   1. The DOMINANT failure here is markdown line structure, which no prose segmenter
+#:      models. Punkt would split `| No Optimization | 19 . 5 |` exactly as the naive rule
+#:      did, because a table row is not a sentence and Punkt has no notion of one.
+#:   2. This module needs boundaries AROUND ONE KNOWN OFFSET, not segmentation of a whole
+#:      document — a much narrower problem than either library solves.
+#:   3. `grounding.py`, whose normalization this file must not fork, is documented stdlib-only,
+#:      and the repo declares exactly one runtime dependency (pyyaml). Adding a model download
+#:      (Punkt data / a spaCy model) to the extraction path is a liability out of proportion
+#:      to a bounded list of abbreviations (~/GitHub/CLAUDE.md §7, §8).
+#: What IS adopted is the field's decomposition; what is rejected is its packaging.
+_ABBREVIATIONS = frozenset("""
+e.g i.e cf vs viz etc al esp approx ca ibid
+fig figs tbl tab eq eqn no nos pp p vol vols ch chap sec secs art
+dr mr mrs ms prof jr sr st rev hon
+inc ltd co corp dept univ natl govt admin assn
+u.s u.k u.n e.u d.c a.m p.m
+jan feb mar apr jun jul aug sep sept oct nov dec
+""".split())
+
+#: NOTE: no multi-word abbreviation table. "et al." is already caught by the single-token
+#: check, because the token ending at the period is "al." and `al` is in the set above. A
+#: separate _MULTIWORD_ABBREV tuple was written first and then removed: a mutation deleting
+#: it killed no test, which is the definition of code that cannot fire.
+
+
+def _preceding_token(text: str, dot_index: int) -> str:
+    """The word ending at `dot_index` (the index of the '.'), lower-cased, dot included."""
+    j = dot_index
+    while j > 0 and not text[j - 1].isspace():
+        j -= 1
+    return text[j:dot_index + 1].strip().lower()
+
+
+def _is_sentence_boundary(text: str, m: re.Match) -> bool:
+    """Is this regex hit a real sentence end?
+
+    Every exemption below was produced by a MEASURED wrong span on this corpus, not by
+    imagining what might go wrong."""
+    if _is_hyphen_linebreak(text, m):
+        return False
+    if "\n" in m.group():
+        return True                        # a real line break always ends the unit
+    dot = m.start() - 1                     # the [.!?] the lookbehind matched
+    if dot < 0 or text[dot] != ".":
+        return True                         # '!' and '?' are unambiguous
+    before = text[:dot + 1]
+    tok = _preceding_token(text, dot)
+    if tok[:-1] in _ABBREVIATIONS:          # strip the trailing '.'
+        return False
+    if len(tok) == 2 and tok[0].isalpha():  # an initial: "J. Smith"
+        return False
+    # A number split across the period, including Docling's spaced decimals ("19 . 5").
+    prev_ch = before[:-1].rstrip()[-1:] if before[:-1].rstrip() else ""
+    next_ch = text[m.end():m.end() + 1]
+    if prev_ch.isdigit() and next_ch.isdigit():
+        return False
+    return True
 
 
 def _normalize_with_map(text: str) -> tuple[str, list[int]]:
@@ -143,15 +217,39 @@ def _is_hyphen_linebreak(source_text: str, m: re.Match) -> bool:
     return before.endswith("-")
 
 
+def _line_bounds(source_text: str, start: int, end: int) -> tuple[int, int]:
+    left = source_text.rfind("\n", 0, start) + 1
+    right = source_text.find("\n", max(end - 1, start))
+    return left, (len(source_text) if right == -1 else right)
+
+
+def structural_line(source_text: str, start: int, end: int) -> str | None:
+    """The whole line, when [start, end) sits on a markdown structural line; else None.
+
+    A table row, a heading, and a list item are UNITS. Splitting one at an interior period
+    produces a fragment that no reader would call a sentence — and, because the fragment is
+    still copied from the source, one that passes every grounding check downstream."""
+    left, right = _line_bounds(source_text, start, end)
+    line = source_text[left:right]
+    if _TABLE_ROW.match(line) or _HEADING.match(line) or _LIST_ITEM.match(line):
+        return line.strip()
+    return None
+
+
 def containing_sentence(source_text: str, start: int, end: int) -> str:
-    """The sentence of `source_text` containing [start, end), verbatim from the source."""
+    """The sentence of `source_text` containing [start, end), verbatim from the source.
+
+    Markdown structure outranks prose sentence rules: see `structural_line`."""
+    line = structural_line(source_text, start, end)
+    if line is not None:
+        return line
     left = 0
     for m in _SENT_END.finditer(source_text, 0, start):
-        if not _is_hyphen_linebreak(source_text, m):
+        if _is_sentence_boundary(source_text, m):
             left = m.end()
     m = None
     for cand in _SENT_END.finditer(source_text, max(end - 1, start)):
-        if not _is_hyphen_linebreak(source_text, cand):
+        if _is_sentence_boundary(source_text, cand):
             m = cand
             break
     right = m.start() + 1 if m and m.group().startswith((".", "!", "?")) else (

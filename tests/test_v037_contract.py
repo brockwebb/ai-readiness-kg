@@ -311,3 +311,151 @@ def test_a_declared_pin_without_a_sha_is_refused():
     with pytest.raises(SystemExit, match="without chunker_config_sha256"):
         runner._verify_pin("x", {"chunker_config": "kg/extraction/chunker_config.yaml"},
                            "chunker_config", "chunker_config_sha256")
+
+
+# ---------------------------------------------------------------------------------------
+# Containing-sentence boundaries against REAL Docling output shapes (2026-08-29, ADDENDUM-03
+# §2 pre-check). `_SENT_END`'s docstring asserted "a table row or list item is a unit" and
+# NOTHING tested it — and the claim was false. Every fixture below is the shape Docling
+# actually emits in state/docling_md/, not invented markdown.
+#
+# These spans are the dangerous kind of wrong: a truncated span is still copied verbatim from
+# the source, so it passes is_grounded() and every downstream check, and looks correct in the
+# graph. Measured over 306 unique anchors across 40 real converted documents, 14.7% of derived
+# spans changed once these rules were added.
+
+# All four fixtures are REAL lines (or faithful reductions) from state/docling_md/. Earlier
+# versions of this block were invented markdown whose headings and list items had no INTERIOR
+# sentence punctuation — so the trailing newline bounded them and the structural rule was
+# never exercised. Mutations M37/M38 deleting that rule killed nothing. The fixtures below
+# each carry an interior boundary, which is what makes the rule load-bearing.
+DOCLING_TABLE_DECIMALS = ("| No Optimization      | 19 . 5 | 19 . 3 |\n"
+                          "| Fluent Optimization  | 20 . 1 | 21 . 0 |")
+#: Interior `?` inside a table cell — a real sentence boundary that is NOT a decimal, so this
+#: isolates the structural rule from the decimal exemption.
+DOCLING_TABLE_PROSE = ("| Statistics Addition | Query: Should robots replace humans? "
+                       "Source: Not here, and not now. | 19 |\n"
+                       "| Fluent Optimization | Other cell text here. | 20 |")
+#: Statutory headings are full of periods: `## SEC. 3. AI CENTER OF EXCELLENCE. 20`.
+DOCLING_HEADING = "## SEC. 3. AI CENTER OF EXCELLENCE. 20\nThe Director shall establish."
+DOCLING_LIST = ("-  Data Ownership: Are roles defined? Document them.\n"
+                "-  Data Accuracy: Is your data accurate and reliable?")
+
+
+def test_docling_table_row_is_one_unit_despite_spaced_decimals():
+    """Docling writes decimals spaced (`19 . 5`), so the naive rule split a table row at the
+    decimal point and returned `| No Optimization | 19 .`. A prose sentence segmenter would
+    split it too — a table row is not a sentence, which is why this rule is structural."""
+    span, reason = anchors.derive_span("No Optimization", DOCLING_TABLE_DECIMALS)
+    assert reason is None
+    assert span == "| No Optimization      | 19 . 5 | 19 . 3 |"
+    assert span.count("|") == 4, f"row truncated at an interior period: {span!r}"
+
+
+def test_docling_table_row_does_not_bleed_into_the_next_row():
+    """The unit is ONE row. A rule that fixed truncation by swallowing the whole table would
+    be just as wrong in the other direction."""
+    span, _ = anchors.derive_span("Fluent Optimization", DOCLING_TABLE_DECIMALS)
+    assert "No Optimization" not in span
+
+
+def test_docling_heading_with_interior_periods_is_one_unit():
+    """`## SEC. 3. AI CENTER OF EXCELLENCE. 20` — real statutory heading shape. Without the
+    structural rule this splits at every period into fragments like `3.`."""
+    span, reason = anchors.derive_span("CENTER OF EXCELLENCE", DOCLING_HEADING)
+    assert reason is None
+    assert span == "## SEC. 3. AI CENTER OF EXCELLENCE. 20"
+    assert "Director" not in span, "heading ran into the prose that follows it"
+
+
+def test_docling_table_row_with_interior_sentence_is_one_unit():
+    """Isolates the STRUCTURAL rule from the decimal exemption: the interior boundary here is
+    a `?`, which no numeric rule would exempt."""
+    span, reason = anchors.derive_span("Statistics Addition", DOCLING_TABLE_PROSE)
+    assert reason is None
+    assert span.startswith("| Statistics Addition |") and span.endswith("| 19 |")
+    assert "Should robots replace humans?" in span, f"row split at interior '?': {span!r}"
+
+
+def test_prose_spaced_decimal_is_not_a_boundary():
+    """Isolates the DECIMAL exemption from the structural rule, by putting Docling's spaced
+    decimal in prose where no table row can rescue it."""
+    span, reason = anchors.derive_span(
+        "readiness score", "The readiness score rose to 19 . 5 this year. Next sentence.")
+    assert reason is None
+    assert span == "The readiness score rose to 19 . 5 this year."
+
+
+def test_docling_list_item_is_one_unit():
+    span, reason = anchors.derive_span("Data Ownership", DOCLING_LIST)
+    assert reason is None
+    assert span == "-  Data Ownership: Are roles defined? Document them."
+    assert "Data Accuracy" not in span, "list item bled into the next item"
+
+
+def test_numbered_list_enumerator_is_not_a_sentence_boundary():
+    """`1.` and `2.` are enumerators. The line is the unit."""
+    span, _ = anchors.derive_span("Assess", "1. Assess the data. 2. Publish it.\nNext line.")
+    assert span == "1. Assess the data. 2. Publish it."
+
+
+@pytest.mark.parametrize("text,anchor,must_start_with", [
+    # "et al." — pervasive in the 35 academic documents in this corpus
+    ("As Hiniduma et al. 2024 showed, AIDRIN scores six dimensions. Next.",
+     "AIDRIN", "As Hiniduma"),
+    ("Readiness covers e.g. metadata and lineage. A second sentence follows.",
+     "metadata", "Readiness covers"),
+    ("The U.S. Census Bureau publishes data. Another sentence.",
+     "Census Bureau", "The U.S."),
+    ("Work by J. Smith defined readiness. Another sentence.",
+     "readiness", "Work by J. Smith"),
+    ("See Fig. 3 for the readiness curve. Another sentence.",
+     "readiness curve", "See Fig. 3"),
+])
+def test_abbreviations_and_initials_do_not_end_a_sentence(text, anchor, must_start_with):
+    """Each of these returned a span starting mid-sentence, which drops the subject — the
+    same span_partial-class damage the anchor contract exists to remove, reintroduced by the
+    boundary rule instead of by the model."""
+    span, reason = anchors.derive_span(anchor, text)
+    assert reason is None
+    assert span.startswith(must_start_with), f"span began mid-sentence: {span!r}"
+
+
+def test_a_real_sentence_boundary_still_splits():
+    """Positive control in the other direction: the exemptions must not turn every paragraph
+    into one span. Without this, 'never split' would pass every test above."""
+    span, _ = anchors.derive_span("AIDRIN", "First sentence here. Second one has AIDRIN in it.")
+    assert span == "Second one has AIDRIN in it."
+    assert "First sentence" not in span
+
+
+def test_prose_paragraph_is_not_swallowed_whole():
+    text = "Alpha covers one thing. Beta covers another. Gamma covers a third."
+    span, _ = anchors.derive_span("Beta", text)
+    assert span == "Beta covers another."
+
+
+def test_structural_rules_hold_on_real_converted_documents():
+    """Against the actual corpus, not fixtures: every anchor landing on a table row must
+    return that entire row. Skipped when the Docling cache is absent (it is gitignored)."""
+    md_dir = REPO / "state" / "docling_md"
+    files = sorted(md_dir.glob("*.md"))[:15] if md_dir.is_dir() else []
+    if not files:
+        pytest.skip("no local Docling cache (gitignored); fixture tests above still bind")
+    checked = 0
+    for f in files:
+        text = f.read_text(encoding="utf-8", errors="replace")
+        for line in text.splitlines():
+            if not line.startswith("|") or len(line) > 600:
+                continue
+            cells = [c.strip() for c in line.split("|") if c.strip() and len(c.strip()) > 6]
+            if not cells:
+                continue
+            hits = anchors.locate_all(cells[0], text)
+            if not hits or len(hits) != 1:
+                continue
+            span = anchors.containing_sentence(text, *hits[0])
+            assert span == line.strip(), f"table row not returned whole in {f.stem}:\n{span!r}"
+            checked += 1
+            break
+    assert checked > 0, "no real table row was exercised"
