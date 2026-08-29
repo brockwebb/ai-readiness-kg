@@ -33,9 +33,15 @@ CANDIDATES = _REPO / "docs" / "corpus" / "acquisition_candidates.md"
 PRIORITY = _REPO / "state" / "t2_priority.json"
 
 #: States that assert nothing about the world and may be retried.
-RETRYABLE = {"harvest_error", None}
+#: States that assert nothing about the world and may be retried. All three are provider
+#: failures; they differ in what would fix them (a key / the UTC reset / a retry now), which
+#: is why they are separate states rather than one bucket (task 2026-08-29_openalex §2.3).
+RETRYABLE = {"harvest_error", "provider_auth_error", "provider_quota_exhausted", None}
 #: A finding: every provider answered and none had a record.
 FINDING = "bibliographic_partial"
+#: Terminal and NOT pending: this document is not the kind of thing a scholarly index holds.
+#: Excluded from the retryable count and from any denominator that implies it is waiting.
+OUT_OF_SCOPE = "bibliographic_out_of_scope"
 
 
 def records() -> list[dict]:
@@ -59,6 +65,8 @@ def biblio_method(rec: dict) -> str:
     field. GROBID is deliberately absent from the ladder in this environment; naming the
     method per document is what makes that visible in the data instead of only in a RESULT."""
     res = rec.get("resolution")
+    if res == OUT_OF_SCOPE:
+        return "unresolved:out_of_scope"
     if res in RETRYABLE:
         return "unresolved:provider_unavailable"
     if res == FINDING:
@@ -70,7 +78,13 @@ def coverage() -> dict:
     recs = records()
     by_res = Counter(r.get("resolution") for r in recs)
     by_provider = Counter(r.get("metadata_source") for r in recs if r.get("metadata_source"))
-    resolved = [r for r in recs if r.get("resolution") not in RETRYABLE | {FINDING}]
+    resolved = [r for r in recs
+                if r.get("resolution") not in RETRYABLE | {FINDING, OUT_OF_SCOPE}]
+    out_of_scope = [r for r in recs if r.get("resolution") == OUT_OF_SCOPE]
+    # The honest denominator. A document that cannot be in a scholarly index is not
+    # "pending"; counting it as such is what made T0 read as a blocker rather than a
+    # category error (task 2026-08-29_openalex §3).
+    eligible = len(recs) - len(out_of_scope)
     blocked = blocked_docs()
     # Provider breakdown of the retryable pile: which provider is holding each one up.
     retry_by_provider = Counter()
@@ -80,8 +94,14 @@ def coverage() -> dict:
                 retry_by_provider[e.split(":")[0]] += 1
     return {
         "total": len(recs),
+        "eligible": eligible,
+        "out_of_scope": len(out_of_scope),
         "resolved": len(resolved),
+        "resolved_of_eligible": f"{len(resolved)}/{eligible}",
         "retryable": sum(v for k, v in by_res.items() if k in RETRYABLE),
+        "auth_error": by_res.get("provider_auth_error", 0),
+        "quota_exhausted": by_res.get("provider_quota_exhausted", 0),
+        "transient_error": by_res.get("harvest_error", 0),
         "partial_finding": by_res.get(FINDING, 0),
         "blocked": len(blocked),
         "blocked_docs": blocked,
@@ -161,13 +181,22 @@ def recompute(verbose: bool = True) -> dict:
     PRIORITY.parent.mkdir(parents=True, exist_ok=True)
     PRIORITY.write_text(json.dumps(
         {"coverage": cov, "t2_priority": prio,
-         "provisional": cov["resolved"] < cov["total"],
-         "label": f"provisional (T0 coverage {cov['resolved']}/{cov['total']})"}, indent=1))
+         # Provisional means "this number can still move", i.e. the harvest has work left.
+         # It previously meant resolved < total, which counts the 134 documents no scholarly
+         # index will ever hold — so the label was permanently "provisional" for a harvest
+         # that had in fact finished.
+         "provisional": cov["retryable"] > 0,
+         "label": (f"provisional (T0 {cov['resolved_of_eligible']} eligible)"
+                   if cov["retryable"] else
+                   f"final (T0 {cov['resolved_of_eligible']} eligible; "
+                   f"{cov['out_of_scope']} out of scope)")}, indent=1))
     _write_candidates(cands, cov)
     if verbose:
         print(json.dumps(cov, indent=1))
+        state = "provisional" if cov["retryable"] else "final"
         print(f"\nt2_priority written to {PRIORITY.relative_to(_REPO)} "
-              f"(provisional: T0 coverage {cov['resolved']}/{cov['total']})")
+              f"({state}: T0 {cov['resolved_of_eligible']} eligible, "
+              f"{cov['out_of_scope']} out of scope)")
     return {"coverage": cov, "n_candidates": len(cands)}
 
 
@@ -175,7 +204,9 @@ def _write_candidates(cands: list[dict], cov: dict) -> None:
     CANDIDATES.parent.mkdir(parents=True, exist_ok=True)
     strong = [c for c in cands if c["n_corpus_citers"] >= 3]
     L = ["# Acquisition candidates (T0 coupling expansion)", "",
-         f"**PROVISIONAL — T0 coverage {cov['resolved']}/{cov['total']} documents.** "
+         f"**{'PROVISIONAL' if cov['retryable'] else 'FINAL'} — T0 "
+         f"{cov['resolved_of_eligible']} eligible documents "
+         f"({cov['out_of_scope']} out of scope).** "
          f"Generated by `python -m kg.biblio resume`; regenerated automatically whenever the "
          f"harvest advances. Do not hand-edit.", "",
          f"Non-corpus works ranked by how many corpus members cite them (bibliographic "

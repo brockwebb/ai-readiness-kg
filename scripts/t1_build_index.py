@@ -233,20 +233,7 @@ def build_index(path: Path, *, embed: bool = True, quiet: bool = False) -> dict:
         if not quiet:
             print(f"  {doc_id[:56]:<58} {len(rows):>4} chunks", flush=True)
 
-    # T0 projection into the same db (bibliographic class, kept in its own tables)
-    doi_to_doc = {}
-    for f in sorted(BIBLIO.glob("*.json")):
-        r = json.loads(f.read_text())
-        w = r.get("work") or {}
-        doi = (w.get("doi") or r.get("doi") or "")
-        doi = doi.replace("https://doi.org/", "").lower() or None
-        refs = w.get("referenced_dois") or w.get("referenced_works") or []
-        con.execute("INSERT OR REPLACE INTO biblio VALUES (?,?,?,?,?,?,?,?,?)",
-                    (r["doc_id"], r.get("resolution"), r.get("metadata_source"), doi,
-                     w.get("id"), w.get("host_venue"), w.get("cited_by_count"),
-                     len(refs), "bibliographic"))
-        if doi:
-            doi_to_doc[doi] = r["doc_id"]
+    doi_to_doc = sync_biblio(con)
     # corpus-internal citation edges: both endpoints admitted (task §0.3)
     refs_by_doc: dict[str, set] = {}
     for f in sorted(BIBLIO.glob("*.json")):
@@ -280,6 +267,43 @@ def build_index(path: Path, *, embed: bool = True, quiet: bool = False) -> dict:
     return counts
 
 
+def _sync_biblio_if_possible() -> None:
+    """Refresh T0 in the index before publishing a view of it. A missing index is not an
+    error here — `--phase table` reports that itself."""
+    if not DB.exists():
+        return
+    con = sqlite3.connect(DB)
+    try:
+        sync_biblio(con)
+    finally:
+        con.close()
+
+
+def sync_biblio(con) -> dict[str, str]:
+    """Refresh the T0 tables from the harvest cache. Returns doi -> doc_id.
+
+    Split out of the full index build so `--phase project` can call it. T0 advances nightly
+    while T1 chunks do not, and the biblio table was only ever written by `--phase index`,
+    which re-embeds the whole corpus — so the nightly projection republished a T0 column that
+    could never move. It read 29 while `kg.biblio coverage` read 38. Cheap by construction:
+    178 small JSON reads and upserts, no embedding."""
+    doi_to_doc: dict[str, str] = {}
+    for f in sorted(BIBLIO.glob("*.json")):
+        r = json.loads(f.read_text())
+        w = r.get("work") or {}
+        doi = (w.get("doi") or r.get("doi") or "")
+        doi = doi.replace("https://doi.org/", "").lower() or None
+        refs = w.get("referenced_dois") or w.get("referenced_works") or []
+        con.execute("INSERT OR REPLACE INTO biblio VALUES (?,?,?,?,?,?,?,?,?)",
+                    (r["doc_id"], r.get("resolution"), r.get("metadata_source"), doi,
+                     w.get("id"), w.get("host_venue"), w.get("cited_by_count"),
+                     len(refs), "bibliographic"))
+        if doi:
+            doi_to_doc[doi] = r["doc_id"]
+    con.commit()
+    return doi_to_doc
+
+
 def phase_index(a) -> int:
     DB.parent.mkdir(parents=True, exist_ok=True)
     counts = build_index(DB, embed=not a.no_embed)
@@ -309,6 +333,7 @@ def phase_rebuild(a) -> int:
 
 # ------------------------------------------------------------------ manifest table
 def phase_table(a) -> int:
+    _sync_biblio_if_possible()
     TABLE_OUT.parent.mkdir(parents=True, exist_ok=True)
     con = _connect(DB)
     rows = con.execute("""
@@ -316,7 +341,14 @@ def phase_table(a) -> int:
                b.resolution, b.doi, b.cited_by_count
         FROM documents d LEFT JOIN biblio b ON b.doc_id = d.doc_id
         ORDER BY d.doc_id""").fetchall()
-    n_t0 = sum(1 for r in rows if r[6] not in (None, "bibliographic_partial", "harvest_error"))
+    # One definition of "resolved", imported rather than restated. This line previously
+    # hardcoded its own exclusion list and drifted: after the failure classes were split
+    # (task 2026-08-29_openalex) it still reported 29 while `kg.biblio coverage` reported 38,
+    # so the two published views of the same corpus disagreed — the exact thing `--phase
+    # project` exists to prevent.
+    from kg.biblio import RETRYABLE, FINDING, OUT_OF_SCOPE
+    _unresolved = RETRYABLE | {FINDING, OUT_OF_SCOPE}
+    n_t0 = sum(1 for r in rows if r[6] not in _unresolved)
     L = [
         "# Corpus manifest table",
         "",
@@ -332,7 +364,7 @@ def phase_table(a) -> int:
         "|---|---|---|---|---|---|---|---|---|",
     ]
     for doc_id, title, year, dtype, url, nch, res, doi, cited in rows:
-        t0 = "—" if res in (None, "bibliographic_partial", "harvest_error") else "✓"
+        t0 = "—" if res in _unresolved else "✓"
         t1 = str(nch) if nch else "—"
         t = (title or "")[:58].replace("|", "/")
         L.append(f"| `{doc_id}` | {t} | {(year or '')[:4]} | {dtype or ''} | {t0} | {t1} "

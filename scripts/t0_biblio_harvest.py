@@ -31,6 +31,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import re
 import sys
 import time
@@ -45,16 +46,53 @@ import requests                                                     # noqa: E402
 
 CACHE = REPO / "state" / "biblio_cache"
 MANIFEST = REPO / "corpus" / "manifest.json"
-MAILTO = "brockwebb45@gmail.com"          # OpenAlex polite pool (task §0.4)
+#: Crossref still runs a polite pool and still honours `mailto`. OpenAlex does NOT: it retired
+#: the polite pool and the `mailto` parameter and made an API key mandatory on 2026-02-13.
+#: Measured 2026-08-29 against the live API, not taken on faith — see the RESULT for the probe:
+#:   mailto, no key -> HTTP 429 "Insufficient budget ... you only have $0 remaining"
+#:   no key at all  -> HTTP 429, identical (so `mailto` now buys exactly nothing)
+#:   invalid key    -> HTTP 401 "Invalid or missing API key"
+#:   valid key      -> HTTP 200, X-RateLimit-Limit: 10000
+MAILTO = "brockwebb45@gmail.com"          # Crossref polite pool ONLY
 UA = f"ai-readiness-kg/1.0 (mailto:{MAILTO})"
 OPENALEX = "https://api.openalex.org/works"
 CROSSREF = "https://api.crossref.org/works"
-SLEEP = 0.12                              # polite-pool courtesy
-MAX_BACKOFF_S = 90                        # beyond this a Retry-After is a daily quota
+SLEEP = 0.12                              # courtesy
+MAX_BACKOFF_S = 90                        # beyond this a Retry-After is a budget exhaustion
 
-#: The exact phrase the quota branch writes, and the one `is_quota_exhausted` looks for. One
-#: constant, used at both ends, so the detector cannot silently drift away from the message.
+#: One constant per failure class, used at BOTH the write end (the message) and the detect end
+#: (the classifier), so a detector can never drift away from the text it is looking for.
+#: These are three different states and only one of them is a reason to stop for the night:
+#:   AUTH    — the key is missing or rejected. Waiting does not fix it. A hard exit.
+#:   QUOTA   — the day's credits are spent. Waiting until the UTC reset DOES fix it.
+#:   (transient) — 5xx/network. Retry now.
+#: Conflating the first two is what the previous version did, and it turned "you have no key"
+#: into "come back tomorrow", which is a claim about the world that was simply untrue.
+AUTH_NOTE = "OpenAlex API key missing or rejected — a key fixes this, waiting does not"
 QUOTA_NOTE = "daily quota exhausted, retry after reset"
+
+#: Resolution states for the three, distinct in the record and in `retryable_by_provider`.
+AUTH_ERROR = "provider_auth_error"
+QUOTA_ERROR = "provider_quota_exhausted"
+TRANSIENT_ERROR = "harvest_error"
+
+#: States `--retry-unresolved` re-harvests. Named so the three failure classes cannot drift
+#: out of the resume set — a state that is retryable in `kg/biblio.py` but absent here would
+#: be permanently stuck: reported as pending, never actually retried.
+#: `bibliographic_partial` is included because the guard that produced it has been revised
+#: more than once; OUT_OF_SCOPE is deliberately absent, being terminal.
+RETRY_STATES = frozenset({"bibliographic_partial", "harvest_error",
+                          "provider_auth_error", "provider_quota_exhausted", None})
+
+#: Terminal, NOT retryable: this document is not the kind of thing a scholarly index holds,
+#: so no number of retries will ever find it. Distinct from `bibliographic_partial`, which is
+#: the stronger claim that every provider was asked and none had a record.
+OUT_OF_SCOPE = "bibliographic_out_of_scope"
+
+#: doc_type values whose documents plausibly carry a scholarly index record. The manifest
+#: field is `doc_type` (178/178 populated); the task specifies `source_type`, which does not
+#: exist on any entry — reported as a discrepancy, implemented against the real field.
+ACADEMIC_DOC_TYPES = frozenset({"academic", "preprint"})
 
 #: Consecutive documents that may fail on quota ALONE before the sweep gives up for the night.
 #: Once a provider answers "retry in 6.7h", every remaining request is known-doomed, and this
@@ -65,6 +103,44 @@ QUOTA_NOTE = "daily quota exhausted, retry after reset"
 #: It is deliberately not 1 — the provider ladder can still resolve a document through
 #: Crossref while OpenAlex is quota-dead, and stopping on the first would forfeit those.
 CONSECUTIVE_QUOTA_STOP = 3
+
+
+def openalex_key() -> str | None:
+    """`OPENALEX_API_KEY` from the environment, else from ~/.wintermute/.env.
+
+    Same idiom as `build_projection._neo4j_creds` (env first, dotenv fallback, value never
+    printed) so there is one way credentials enter this repo, not two."""
+    key = os.environ.get("OPENALEX_API_KEY")
+    if key:
+        return key.strip() or None
+    wm_env = Path.home() / ".wintermute" / ".env"
+    if wm_env.is_file():
+        for line in wm_env.read_text(encoding="utf-8").splitlines():
+            line = line.strip()
+            if line and not line.startswith("#") and "=" in line:
+                k, _, v = line.partition("=")
+                if k.strip() == "OPENALEX_API_KEY":
+                    return v.strip().strip('"').strip("'") or None
+    return None
+
+
+def preflight() -> str:
+    """Refuse to run without a key, naming the fix. Exits non-zero; issues no request.
+
+    A missing key does NOT announce itself as an auth error at the API: measured 2026-08-29,
+    an absent key returns HTTP 429 with a budget message, indistinguishable at the status
+    line from a genuine daily exhaustion. So the only place the distinction can be made
+    reliably is here, before the first request. Falling through to an unauthenticated attempt
+    is precisely how "no key" got written down as "daily quota exhausted" across 149
+    documents."""
+    key = openalex_key()
+    if not key:
+        raise SystemExit(
+            "FATAL: OPENALEX_API_KEY missing; set it in the environment or "
+            "~/.wintermute/.env. OpenAlex retired the polite pool and made the key "
+            "mandatory on 2026-02-13, so an unauthenticated run cannot resolve anything "
+            "and would misreport itself as a quota exhaustion.")
+    return key
 
 
 def norm_title(s: str) -> str:
@@ -96,7 +172,11 @@ def identifiers(url: str) -> tuple[str | None, str | None]:
 
 
 class HarvestError(RuntimeError):
-    """A transient failure (rate limit, 5xx, network). NOT the same as 'no such work'.
+    """A provider failure. NOT the same as 'no such work'.
+
+    `kind` is one of "auth" | "quota" | "transient". It travels with the exception so the
+    classification is decided once, where the HTTP status is actually in hand, rather than
+    re-derived later by matching on message text.
 
     The first run of this harvest conflated the two: `get` returned None on HTTP 429 and the
     caller recorded `bibliographic_partial`, so a rate limit became a permanent statement
@@ -104,10 +184,37 @@ class HarvestError(RuntimeError):
     way and the number could not be trusted. A transient condition must never be written
     down as a finding (standard 4: no silent failures)."""
 
+    def __init__(self, message: str, kind: str = "transient"):
+        super().__init__(message)
+        self.kind = kind
+
+
+#: Credits left at OpenAlex, as last reported by its own headers. A real exhaustion is then
+#: EVIDENCED by the provider rather than inferred from the shape of a Retry-After.
+CREDITS: dict[str, str | None] = {"remaining": None, "limit": None, "reset_s": None}
+
+#: Malformed requests this run made. A bug in the harness, never a fact about a document.
+REQUEST_ERRORS: list[str] = []
+
+
+def _auth_params(url: str) -> dict:
+    """Per-provider authentication. OpenAlex takes `api_key`; Crossref keeps `mailto`.
+
+    Sending `mailto` to OpenAlex is not merely useless now, it is misleading: it reads like
+    authentication in the code while buying nothing at the server."""
+    if "openalex.org" in url:
+        key = openalex_key()
+        return {"api_key": key} if key else {}
+    return {"mailto": MAILTO}
+
 
 def get(url: str, params: dict | None = None, *, tries: int = 5) -> dict | None:
-    """Parsed JSON, or None for a genuine 404. Raises HarvestError on transient failure."""
-    params = {**(params or {}), "mailto": MAILTO}
+    """Parsed JSON, or None for a genuine 404. Raises HarvestError on provider failure."""
+    params = {**(params or {}), **_auth_params(url)}
+    if "openalex.org" in url:
+        # A caller may still pass mailto from the pre-2026-02-13 era; drop it rather than
+        # send a parameter the server no longer honours.
+        params.pop("mailto", None)
     delay = 1.0
     for attempt in range(1, tries + 1):
         try:
@@ -116,6 +223,17 @@ def get(url: str, params: dict | None = None, *, tries: int = 5) -> dict | None:
             if attempt == tries:
                 raise HarvestError(f"network: {exc}") from exc
             time.sleep(delay); delay *= 2; continue
+        if "openalex.org" in url:                # record credits whatever the status
+            for hdr, slot in (("X-RateLimit-Remaining", "remaining"),
+                              ("X-RateLimit-Limit", "limit"),
+                              ("X-RateLimit-Reset", "reset_s")):
+                if r.headers.get(hdr) is not None:
+                    CREDITS[slot] = r.headers.get(hdr)
+        if r.status_code in (401, 403, 409):
+            # Measured: an INVALID key returns 401 "Invalid or missing API key". Waiting
+            # cannot fix this, so it must never carry the quota message and must never feed
+            # the nightly quota stop.
+            raise HarvestError(f"HTTP {r.status_code}: {AUTH_NOTE}", kind="auth")
         if r.status_code == 200:
             time.sleep(SLEEP)
             try:
@@ -132,14 +250,24 @@ def get(url: str, params: dict | None = None, *, tries: int = 5) -> dict | None:
             # Sleeping that out inside a task run is not waiting, it is hanging — so the
             # quota is surfaced as a retryable error carrying its own reset time.
             if wait > MAX_BACKOFF_S:
+                left = CREDITS.get("remaining")
+                evidence = f", credits remaining {left}" if left is not None else ""
                 raise HarvestError(
                     f"HTTP {r.status_code}: rate limit with Retry-After {wait:.0f}s "
-                    f"({wait / 3600:.1f}h) — {QUOTA_NOTE}")
+                    f"({wait / 3600:.1f}h){evidence} — {QUOTA_NOTE}", kind="quota")
             if attempt == tries:
                 raise HarvestError(f"HTTP {r.status_code} after {tries} attempts")
             print(f"    . HTTP {r.status_code}, backing off {wait:.0f}s "
                   f"(attempt {attempt}/{tries})", flush=True)
             time.sleep(wait); delay = min(delay * 2, MAX_BACKOFF_S); continue
+        if r.status_code in (400, 422):
+            # OUR query is wrong, not the provider's day. Still unresolved for this document,
+            # so still retryable — but counted and surfaced in the run summary, because the
+            # previous version filed this as ordinary provider flakiness and 7 documents sat
+            # in a permanently-failing retry loop with nothing on the surface to show it.
+            REQUEST_ERRORS.append(f"HTTP {r.status_code} {r.url[:120]}")
+            raise HarvestError(f"HTTP {r.status_code} (malformed query) {r.url[:80]}",
+                               kind="transient")
         raise HarvestError(f"HTTP {r.status_code} {r.url[:80]}")
     raise HarvestError("exhausted retries")
 
@@ -206,8 +334,57 @@ def _classify_unresolved(provider_errors: list[str]) -> str:
     """The ONLY code path permitted to return `bibliographic_partial`.
 
     Centralized so the rule is checkable in one place and testable in one place: absence is
-    a finding, failure is a state, and an error handler may never mint the former."""
-    return "harvest_error" if provider_errors else "bibliographic_partial"
+    a finding, failure is a state, and an error handler may never mint the former.
+
+    Failure states are ranked by how much they explain. Auth outranks quota: with no valid
+    key every request returns a budget message, so a run without a key would otherwise
+    report 149 "quota exhausted" documents — which is what happened, and is a claim about
+    the world that was false. Quota outranks transient for the same reason."""
+    if not provider_errors:
+        return "bibliographic_partial"
+    if any(AUTH_NOTE in e for e in provider_errors):
+        return AUTH_ERROR
+    if any(QUOTA_NOTE in e for e in provider_errors):
+        return QUOTA_ERROR
+    return TRANSIENT_ERROR
+
+
+def eligibility(entry: dict, cached_resolution: str | None = None) -> tuple[bool, str]:
+    """(eligible, reason) — may this document plausibly hold a scholarly index record?
+
+    Evaluated BEFORE any OpenAlex call. The corpus is majority gray literature (statutes,
+    OMB memos, vendor blog posts, W3C specs); queueing those as retryable forever is what
+    made T0 look like a blocker when it was really a category error.
+
+    The `cached_resolution` clause is not a loophole, it is a correctness requirement: a
+    document we already hold an index record for is PROVEN eligible, and writing
+    `bibliographic_out_of_scope` over it would assert something the evidence in hand
+    contradicts. Measured on this corpus, 9 already-resolved documents are outside the
+    academic doc_types and carry no DOI in their URL — they were found by title search — so
+    without this clause the gate would have demoted nine real findings."""
+    if cached_resolution not in (None, "", TRANSIENT_ERROR, AUTH_ERROR, QUOTA_ERROR,
+                                 OUT_OF_SCOPE):
+        return True, f"already resolved ({cached_resolution}) — eligibility proven by record"
+    idn = entry.get("identity") or {}
+    doi, arxiv = identifiers(idn.get("source_url") or "")
+    if doi:
+        return True, f"DOI in or derivable from primary_url ({doi})"
+    if arxiv:
+        return True, f"arXiv id in primary_url ({arxiv})"
+    dt = (idn.get("doc_type") or "").strip().lower()
+    if dt in ACADEMIC_DOC_TYPES:
+        return True, f"doc_type={dt}"
+    return False, (f"doc_type={dt or 'unset'} with no DOI or arXiv id in primary_url — "
+                   f"not the kind of document a scholarly index holds")
+
+
+def out_of_scope_record(doc_id: str, entry: dict, why: str) -> dict:
+    idn = entry.get("identity") or {}
+    return {"doc_id": doc_id, "evidence_class": "bibliographic",
+            "manifest_title": idn.get("title"), "manifest_year": idn.get("pub_year"),
+            "primary_url": idn.get("source_url"), "doi": None, "arxiv_id": None,
+            "resolution": OUT_OF_SCOPE, "metadata_source": None,
+            "match_note": why, "provider_errors": [], "work": None}
 
 
 def soft_get(errors: list[str], url: str, params: dict | None = None) -> dict | None:
@@ -265,24 +442,36 @@ def harvest_one(doc_id: str, entry: dict) -> dict:
             rec.update(resolution="doi", metadata_source="openalex",
                        match_note=f"resolved by DOI {doi}")
     if work is None and arxiv:
-        d = soft_get(errors, OPENALEX, {"filter": f"ids.openalex:null,doi:null" if False else
-                           f"locations.landing_page_url.search:{arxiv}", "per-page": 5,
-                           "mailto": MAILTO})
+        # arXiv assigns every submission the DOI 10.48550/arXiv.<id>. That is a documented,
+        # mechanical derivation — the same class as the nature.com and aclanthology.org rules
+        # in `identifiers` — so this is an EXACT identifier lookup, not a search, and it gets
+        # no title guard for the same reason the plain-DOI branch above has none. A wrong
+        # derivation returns nothing rather than someone else's paper.
+        #
+        # It replaces `filter=locations.landing_page_url.search:<id>`, which OpenAlex answers
+        # HTTP 400 "not a valid field": a malformed query, permanently. That returned a
+        # retryable state, so 7 documents were queued to be retried forever against a request
+        # that could never succeed — the same "pending forever" pathology this task fixes,
+        # one layer down. Measured 2026-08-29; 5 of the 7 resolve by this route.
+        arxiv_doi = f"10.48550/arXiv.{arxiv}"
+        d = soft_get(errors, OPENALEX,
+                     {"filter": f"doi:{arxiv_doi}", "per-page": 1})
         cands = (d or {}).get("results") or []
-        if not cands:
-            d = soft_get(errors, OPENALEX, {"search": title, "per-page": 5})
-            cands = (d or {}).get("results") or []
-        for c in cands:
-            ok, why = title_match_ok(title, c.get("title") or c.get("display_name"),
-                                     year, c.get("publication_year"))
-            if ok:
-                work, _ = c, None
-                rec.update(resolution="arxiv_then_title", metadata_source="openalex",
-                           match_note=f"arXiv {arxiv}; {why}")
-                break
+        if cands:
+            work = cands[0]
+            rec.update(resolution="arxiv_doi", metadata_source="openalex",
+                       match_note=f"arXiv {arxiv} -> DOI {arxiv_doi} (exact identifier)")
         else:
-            if cands:
-                rec["match_note"] = f"arXiv {arxiv}: candidates rejected by guard"
+            # Not in OpenAlex under its arXiv DOI. Fall through to the guarded title search.
+            d = soft_get(errors, OPENALEX, {"search": title, "per-page": 5})
+            for c in (d or {}).get("results") or []:
+                ok, why = title_match_ok(title, c.get("title") or c.get("display_name"),
+                                         year, c.get("publication_year"))
+                if ok:
+                    work = c
+                    rec.update(resolution="arxiv_then_title", metadata_source="openalex",
+                               match_note=f"arXiv {arxiv}; {why}")
+                    break
     if work is None and title:
         d = soft_get(errors, OPENALEX, {"search": title, "per-page": 5})
         for c in (d or {}).get("results") or []:
@@ -351,21 +540,27 @@ def harvest_guarded(doc_id: str, entry: dict) -> dict:
     try:
         return harvest_one(doc_id, entry)
     except HarvestError as exc:
+        kind = {"auth": AUTH_ERROR, "quota": QUOTA_ERROR}.get(
+            getattr(exc, "kind", "transient"), TRANSIENT_ERROR)
         return {"doc_id": doc_id, "evidence_class": "bibliographic",
                 "manifest_title": entry["identity"].get("title"),
                 "manifest_year": entry["identity"].get("pub_year"),
                 "primary_url": entry["identity"].get("source_url"),
-                "resolution": "harvest_error", "metadata_source": None,
-                "match_note": str(exc), "work": None}
+                "resolution": kind, "metadata_source": None,
+                "match_note": str(exc), "provider_errors": [str(exc)], "work": None}
 
 
 def is_quota_exhausted(rec: dict) -> bool:
-    """True when a record failed and EVERY provider that spoke reported a daily quota.
+    """True when a record failed and EVERY provider that spoke reported a spent daily budget.
 
     `all`, not `any`: a document whose OpenAlex lookup hit the quota but whose Crossref
     lookup returned a genuine "no record" has learned something, and must not be counted
-    toward a stop that means "the network is telling us to come back tomorrow"."""
-    if rec.get("resolution") != "harvest_error":
+    toward a stop that means "the network is telling us to come back tomorrow".
+
+    Keyed on the QUOTA class only. An auth failure must never reach here: it is not fixed by
+    waiting, so letting it trip the nightly stop would produce a job that exits 0 every night
+    for a reason that will never change on its own — which is exactly what it did."""
+    if rec.get("resolution") != QUOTA_ERROR:
         return False
     errs = rec.get("provider_errors") or ([rec["match_note"]] if rec.get("match_note") else [])
     return bool(errs) and all(QUOTA_NOTE in e for e in errs)
@@ -379,6 +574,7 @@ def main() -> int:
                     help="re-harvest cached bibliographic_partial and harvest_error entries "
                          "(used after the 429 defect and the guard correction)")
     a = ap.parse_args()
+    preflight()                       # refuses, non-zero, before any request is issued
     CACHE.mkdir(parents=True, exist_ok=True)
     entries = json.loads(MANIFEST.read_text())["entries"]
     inc = {k: v for k, v in entries.items() if v["screening"]["decision"] == "included"}
@@ -390,18 +586,32 @@ def main() -> int:
         out = CACHE / f"{doc_id}.json"
         stale = False
         if out.exists() and a.retry_unresolved:
-            stale = json.loads(out.read_text()).get("resolution") in (
-                "bibliographic_partial", "harvest_error", None)
+            stale = json.loads(out.read_text()).get("resolution") in RETRY_STATES
         if out.exists() and not a.refresh and not stale:
             stats["cached"] += 1
             stats[json.loads(out.read_text()).get("resolution") or "bibliographic_partial"] = \
                 stats.get(json.loads(out.read_text()).get("resolution") or "bibliographic_partial", 0) + 1
             continue
+        prior = json.loads(out.read_text()).get("resolution") if out.exists() else None
+        ok, why = eligibility(inc[doc_id], prior)
+        if not ok:
+            rec = out_of_scope_record(doc_id, inc[doc_id], why)
+            out.write_text(json.dumps(rec, ensure_ascii=False, indent=1), encoding="utf-8")
+            stats[OUT_OF_SCOPE] = stats.get(OUT_OF_SCOPE, 0) + 1
+            print(f"[{i}/{len(todo)}] {doc_id[:56]:<58} {OUT_OF_SCOPE:<26} {why[:44]}")
+            quota_streak = 0          # a skipped document is no evidence about the provider
+            continue
         rec = harvest_guarded(doc_id, inc[doc_id])
         out.write_text(json.dumps(rec, ensure_ascii=False, indent=1), encoding="utf-8")
         stats[rec["resolution"]] = stats.get(rec["resolution"], 0) + 1
-        print(f"[{i}/{len(todo)}] {doc_id[:56]:<58} {rec['resolution']:<22} "
-              f"{(rec['match_note'] or '')[:52]}")
+        print(f"[{i}/{len(todo)}] {doc_id[:56]:<58} {rec['resolution']:<26} "
+              f"{(rec['match_note'] or '')[:48]}")
+        if rec["resolution"] == AUTH_ERROR:
+            # Not a nightly no-op: no number of retries supplies a key.
+            print(f"\nFATAL: {AUTH_NOTE}. Stopping — this is not a condition that clears "
+                  f"on its own, and continuing would write it across every document.")
+            print("\nT0 harvest:", json.dumps(stats, indent=1))
+            return 2
         quota_streak = quota_streak + 1 if is_quota_exhausted(rec) else 0
         if quota_streak >= CONSECUTIVE_QUOTA_STOP:
             left = len(todo) - i
@@ -410,6 +620,14 @@ def main() -> int:
                   f"Every further request tonight is known-doomed, so the sweep ends here. "
                   f"{left} document(s) untouched, still retryable; the next run picks them up.")
             break
+    if REQUEST_ERRORS:
+        stats["malformed_requests"] = len(REQUEST_ERRORS)
+        print(f"\nWARNING: {len(REQUEST_ERRORS)} malformed request(s) — a harness bug, not a "
+              f"provider condition. These documents will retry forever until the query is "
+              f"fixed. First: {REQUEST_ERRORS[0][:160]}")
+    if CREDITS["remaining"] is not None:
+        stats["openalex_credits_remaining"] = CREDITS["remaining"]
+        stats["openalex_credits_limit"] = CREDITS["limit"]
     print("\nT0 harvest:", json.dumps(stats, indent=1))
     return 0
 
