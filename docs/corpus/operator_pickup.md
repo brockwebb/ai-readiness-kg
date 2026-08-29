@@ -2,7 +2,7 @@
 
 Things only a human can get. **Projected by `scripts/t1_build_index.py --phase pickup` — do not hand-edit.** Regenerated alongside `manifest_table.md`.
 
-Ordered by `t2_priority` (crosswalk demand, then T0 centrality). That ordering is **provisional — T0 coverage 38/178**; the demand component is coverage-independent and already final, the centrality component is not. `python -m kg.biblio resume` refreshes both.
+Ordered by `t2_priority` (crosswalk demand, then T0 centrality). That ordering is **provisional — T0 coverage 40/178**; the demand component is coverage-independent and already final, the centrality component is not. `python -m kg.biblio resume` refreshes both.
 
 | doc / candidate | state | why | best-known URL | demand | centrality | detail |
 |---|---|---|---|---|---|---|

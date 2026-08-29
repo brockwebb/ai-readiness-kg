@@ -76,6 +76,9 @@ AUTH_ERROR = "provider_auth_error"
 QUOTA_ERROR = "provider_quota_exhausted"
 TRANSIENT_ERROR = "harvest_error"
 
+#: A clean miss: every provider answered and none had a record.
+FINDING_STATES = frozenset({"bibliographic_partial"})
+
 #: States `--retry-unresolved` re-harvests. Named so the three failure classes cannot drift
 #: out of the resume set — a state that is retryable in `kg/biblio.py` but absent here would
 #: be permanently stuck: reported as pending, never actually retried.
@@ -197,6 +200,28 @@ CREDITS: dict[str, str | None] = {"remaining": None, "limit": None, "reset_s": N
 REQUEST_ERRORS: list[str] = []
 
 
+#: OpenAlex reads `?` and `*` in `search` as WILDCARD metacharacters and rejects a query that
+#: uses one without exact/no-stem mode: HTTP 400 "Wildcards (* or ?) require exact (no-stem)
+#: search". A title that merely ENDS in a question mark therefore fails permanently — measured
+#: on `anthropic-crawler-support-article` ("Does Anthropic crawl data from the web, and how can
+#: site owners block the crawler?"). Only 1 of 178 titles in this corpus carries one today, but
+#: interrogative titles are ordinary in this literature, so this is a landmine for every future
+#: acquisition rather than a one-document fix. They carry no meaning in a stemmed search, so
+#: they are dropped from the query text rather than escaped.
+_SEARCH_WILDCARDS = str.maketrans({"?": " ", "*": " "})
+
+#: Parameters whose value is free-text sent to a provider's search index.
+_SEARCH_PARAMS = ("search", "query.bibliographic")
+
+
+def _sanitize_search(params: dict) -> dict:
+    out = dict(params)
+    for key in _SEARCH_PARAMS:
+        if isinstance(out.get(key), str):
+            out[key] = " ".join(out[key].translate(_SEARCH_WILDCARDS).split())
+    return out
+
+
 def _auth_params(url: str) -> dict:
     """Per-provider authentication. OpenAlex takes `api_key`; Crossref keeps `mailto`.
 
@@ -211,6 +236,7 @@ def _auth_params(url: str) -> dict:
 def get(url: str, params: dict | None = None, *, tries: int = 5) -> dict | None:
     """Parsed JSON, or None for a genuine 404. Raises HarvestError on provider failure."""
     params = {**(params or {}), **_auth_params(url)}
+    params = _sanitize_search(params)
     if "openalex.org" in url:
         # A caller may still pass mailto from the pre-2026-02-13 era; drop it rather than
         # send a parameter the server no longer honours.
@@ -376,6 +402,35 @@ def eligibility(entry: dict, cached_resolution: str | None = None) -> tuple[bool
         return True, f"doc_type={dt}"
     return False, (f"doc_type={dt or 'unset'} with no DOI or arXiv id in primary_url — "
                    f"not the kind of document a scholarly index holds")
+
+
+def _record_measurement(rec: dict, doc_id: str, entry: dict, predicted_why: str) -> dict:
+    """Fold a measurement of a PREDICTED-ineligible document back into its record.
+
+    Three outcomes, and only one of them changes the document's state:
+      * resolved            -> keep it. The prediction was WRONG and a record proves it.
+      * clean miss          -> stays `bibliographic_out_of_scope`, now carrying evidence that
+                               every provider was actually asked. The prediction is CONFIRMED,
+                               and confirming it must not silently promote the document into
+                               a coverage denominator as though it were still pending.
+      * provider failure    -> stays out of scope, unmeasured; the attempt is recorded so a
+                               later run can retry it without re-deriving which ones failed.
+    """
+    resolution = rec.get("resolution")
+    measured = {"eligibility_prediction": "ineligible",
+                "eligibility_predicted_why": predicted_why,
+                "eligibility_measured": True,
+                "eligibility_measured_result": resolution}
+    if resolution not in (FINDING_STATES | {AUTH_ERROR, QUOTA_ERROR, TRANSIENT_ERROR}):
+        return {**rec, **measured, "eligibility_prediction_correct": False}
+    if resolution in (AUTH_ERROR, QUOTA_ERROR, TRANSIENT_ERROR):
+        base = out_of_scope_record(doc_id, entry, predicted_why)
+        return {**base, **measured, "eligibility_measured": False,
+                "eligibility_prediction_correct": None}
+    base = out_of_scope_record(doc_id, entry, predicted_why)
+    return {**base, **measured, "eligibility_prediction_correct": True,
+            "match_note": f"{predicted_why} — CONFIRMED by measurement: every provider "
+                          f"answered and none held a record"}
 
 
 def out_of_scope_record(doc_id: str, entry: dict, why: str) -> dict:
@@ -570,6 +625,12 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--limit", type=int, default=0)
     ap.add_argument("--refresh", action="store_true", help="ignore cache")
+    ap.add_argument("--measure-ineligible", action="store_true",
+                    help="ask the providers about documents the eligibility gate PREDICTED "
+                         "are not in any scholarly index, converting that prediction into a "
+                         "measurement. Resolved documents are upgraded (a record proves "
+                         "eligibility); confirmed misses keep their terminal state but gain "
+                         "evidence that they were actually asked.")
     ap.add_argument("--retry-unresolved", action="store_true",
                     help="re-harvest cached bibliographic_partial and harvest_error entries "
                          "(used after the 429 defect and the guard correction)")
@@ -585,8 +646,15 @@ def main() -> int:
     for i, doc_id in enumerate(todo, 1):
         out = CACHE / f"{doc_id}.json"
         stale = False
-        if out.exists() and a.retry_unresolved:
-            stale = json.loads(out.read_text()).get("resolution") in RETRY_STATES
+        if out.exists():
+            cached_res = json.loads(out.read_text()).get("resolution")
+            if a.retry_unresolved:
+                stale = cached_res in RETRY_STATES
+            # OUT_OF_SCOPE is deliberately absent from RETRY_STATES — it is terminal, so a
+            # normal resume must never re-ask. --measure-ineligible is the ONE path that
+            # reopens it, and only to test the prediction that put it there.
+            if a.measure_ineligible and cached_res == OUT_OF_SCOPE:
+                stale = True
         if out.exists() and not a.refresh and not stale:
             stats["cached"] += 1
             stats[json.loads(out.read_text()).get("resolution") or "bibliographic_partial"] = \
@@ -594,6 +662,14 @@ def main() -> int:
             continue
         prior = json.loads(out.read_text()).get("resolution") if out.exists() else None
         ok, why = eligibility(inc[doc_id], prior)
+        # --measure-ineligible turns the gate's PREDICTION into a measurement for exactly the
+        # documents it excluded. The gate is a prediction about the world ("no scholarly index
+        # holds this"), and a prediction that is never tested is indistinguishable from an
+        # assumption. Cheap now that requests are authenticated: ~10 credits per title search
+        # against a 10,000/day budget.
+        measuring = a.measure_ineligible and not ok
+        if measuring:
+            ok = True
         if not ok:
             rec = out_of_scope_record(doc_id, inc[doc_id], why)
             out.write_text(json.dumps(rec, ensure_ascii=False, indent=1), encoding="utf-8")
@@ -602,6 +678,8 @@ def main() -> int:
             quota_streak = 0          # a skipped document is no evidence about the provider
             continue
         rec = harvest_guarded(doc_id, inc[doc_id])
+        if measuring:
+            rec = _record_measurement(rec, doc_id, inc[doc_id], why)
         out.write_text(json.dumps(rec, ensure_ascii=False, indent=1), encoding="utf-8")
         stats[rec["resolution"]] = stats.get(rec["resolution"], 0) + 1
         print(f"[{i}/{len(todo)}] {doc_id[:56]:<58} {rec['resolution']:<26} "

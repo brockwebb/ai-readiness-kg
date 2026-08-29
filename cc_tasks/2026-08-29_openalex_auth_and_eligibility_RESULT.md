@@ -165,3 +165,77 @@ and absent from the other would be permanently stuck — counted as pending, nev
 GROBID; Semantic Scholar / DataCite / CORE / GovInfo rungs; reference-section parsing;
 anything touching `model_stub` or T2. The 134 ineligible documents remain predictions rather
 than measurements (see §3 for the cost of changing that).
+
+---
+
+## ADDENDUM (2026-08-29, operator request): the eligibility prediction, measured
+
+The RESULT above said the 134 gated documents were **predictions, not measurements**, and
+offered to convert them for ~1,340 credits. Operator asked for it. Done.
+
+**Correction first: I described this as "one flag" when no such flag existed.** It does now
+(`--measure-ineligible`); the earlier sentence described capability I had not built.
+
+### Result — the gate is 98.5% accurate
+
+| outcome | n |
+|---|---|
+| **CONFIRMED** — every provider asked, none held a record | **132** |
+| **OVERTURNED** — a record was found | **2** |
+| unmeasured (provider failure) | 0 |
+
+Prediction accuracy **132/134 = 98.5%**. Cost: **1,504 + 1,370 credits** across two runs of a
+10,000/day budget. The two overturned:
+
+- `w3c-prov-o-ontology` — predicted ineligible (`doc_type=standard`, no DOI); OpenAlex holds it
+  under an exact title match.
+- `winning-the-race-america-s-ai-action-plan` — predicted ineligible (`doc_type=federal`);
+  exact title match.
+
+Both are the same shape as the 9 documents that motivated the "an existing resolution proves
+eligibility" clause: **`doc_type` is a decent proxy and not a rule.** A W3C ontology and a
+federal AI action plan are exactly the gray literature the gate is meant to exclude, and the
+scholarly index holds them anyway.
+
+**Design vindicated in one specific way:** confirmed misses keep their terminal
+`bibliographic_out_of_scope` state rather than becoming `bibliographic_partial`. Promoting
+them would have moved 132 documents into a denominator implying they are pending — the exact
+accounting error the gate exists to fix. What changed is only the *evidence*: each record now
+carries `eligibility_measured: true` and the outcome, so the claim is measured rather than
+predicted.
+
+Coverage moves **38/44 → 40/46 eligible**, `out_of_scope` 134 → 132, `retryable` still **0**.
+
+### A third defect, found by my own guard
+
+The measurement run tripped the `malformed_requests` warning added earlier today — one
+document, HTTP 400. **OpenAlex reads `?` and `*` in `search` as wildcard metacharacters**, so a
+title that merely *ends in a question mark* fails permanently:
+
+```
+"Wildcards (* or ?) require exact (no-stem) search"
+```
+
+`anthropic-crawler-support-article` ("Does Anthropic crawl data from the web, and how can site
+owners block the crawler?") would have retried forever. Only 1 of 178 current titles carries
+one, but **interrogative titles are ordinary in this literature**, so this was a landmine for
+every future acquisition rather than a one-document fix. Wildcards carry no meaning in a
+stemmed search, so they are stripped from query text at the single `get()` choke point. On
+re-run the document measured cleanly and the warning is gone.
+
+That warning existed only because the earlier session made malformed queries visible instead
+of filing them as provider flakiness. It paid for itself the same day.
+
+### Tests: 352 → 359. Mutations 4/4 killed
+
+| mutation | result |
+|---|---|
+| M45 sanitizer not called on the request path | KILLED |
+| M46 `--measure-ineligible` no longer reopens terminal records | KILLED |
+| M47 confirmed miss promoted out of its terminal state | KILLED |
+| M48 provider failure counted as a confirmation | KILLED |
+
+**A live bug the first run exposed:** the flag reported all 178 as `cached` and asked nothing,
+because `OUT_OF_SCOPE` is correctly absent from `RETRY_STATES` and the cache-skip fires before
+the gate. The flag is now the one path allowed to reopen a terminal record, with a test
+asserting a plain `--retry-unresolved` resume still leaves it alone.

@@ -38,6 +38,8 @@ import time
 import unicodedata
 import uuid
 from collections import Counter, defaultdict
+import pathlib
+import statistics
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
@@ -93,8 +95,19 @@ def chunk_sets() -> dict[str, tuple[str, chunker.ChunkSet]]:
     return out
 
 
-def build_prompt(doc_id: str, chunk: chunker.Chunk, title: str) -> str:
-    tpl = (REPO / "kg/extraction/chunked_template.md").read_text(encoding="utf-8")
+def profile_template(profile: str = None) -> pathlib.Path:
+    """The prompt template the named profile pins. Reading it from the profile rather than
+    hardcoding it is what lets §2 price v0_3_7 without touching the banked v035 arm: for
+    chunked_v035 this resolves to chunked_template.md, byte-identical to the old constant."""
+    import yaml
+    doc = yaml.safe_load((REPO / "scripts/run_profiles.yaml").read_text(encoding="utf-8"))
+    prof = (doc.get("profiles") or {}).get(profile or PROFILE) or {}
+    rel = prof.get("prompt_template") or "kg/extraction/chunked_template.md"
+    return REPO / rel
+
+
+def build_prompt(doc_id: str, chunk: chunker.Chunk, title: str, profile: str = None) -> str:
+    tpl = profile_template(profile).read_text(encoding="utf-8")
     return (tpl.replace("{{schema_version}}", eventlog.schema_version())
                .replace("{{document_id}}", doc_id)
                .replace("{{chunk_id}}", chunk.chunk_id)
@@ -102,11 +115,46 @@ def build_prompt(doc_id: str, chunk: chunker.Chunk, title: str) -> str:
 
 
 # ------------------------------------------------------------------ dry run
+#: Per-item output cost under the ANCHOR contract, from the real tokenizer on a representative
+#: node and edge: `{"id","name","type","anchor","location"}` and
+#: `{"type","from_id","to_id","anchor","location"}`. ~38 tokens. The v0.3.5 exhaustive-verbatim
+#: contract MEASURED 225 tokens/item over the banked arm, so the anchor change alone is a
+#: ~5.9x per-item reduction. Computed rather than assumed; see `phase_dry_run`.
+ANCHOR_TOKENS_PER_ITEM = 38
+
+
+def banked_items_per_chunk() -> tuple[float, int]:
+    """(median items/chunk, n chunks parsed) from the banked chunked_v035 raws.
+
+    This is the only measurement of item DENSITY on these documents that exists. v0.3.7 also
+    drops the exhaustive-inventory instruction, which should lower it — but by how much is
+    unmeasured until §3 runs, so the ceiling below deliberately assumes NO salience reduction.
+    A ceiling built on the optimistic assumption refuses a legitimate run."""
+    keys = ("concepts", "definitions", "claims", "instruments", "measures", "standards",
+            "frameworks", "practices", "tools", "platforms", "edges", "cites", "mentions",
+            "proposed_relationships")
+    counts = []
+    for f in sorted((REPO / "events/raw/chunked_v035").glob("*.json")):
+        raw = (json.loads(f.read_text()).get("raw_result") or "").strip()
+        if not raw.startswith("{"):
+            continue
+        try:
+            obj = json.loads(raw)
+        except json.JSONDecodeError:
+            continue
+        counts.append(sum(len(obj.get(k) or []) for k in keys))
+    if not counts:
+        raise SystemExit("FATAL: no parsable banked chunk output to size the projection from")
+    return statistics.median(counts), len(counts)
+
+
 def phase_dry_run(a) -> int:
     cfg = model_stub.load_model_config()
+    profile = getattr(a, "profile", None) or PROFILE
     sets = chunk_sets()
-    tpl_tokens = chunker.count_tokens(build_prompt("d", list(sets.values())[0][1][0], "t")) \
-        - list(sets.values())[0][1][0].n_tokens
+    first = list(sets.values())[0][1][0]
+    tpl_tokens = chunker.count_tokens(build_prompt("d", first, "t", profile)) - first.n_tokens
+    print(f"profile: {profile}   template: {profile_template(profile).name}")
     print(f"prompt overhead (template + breadcrumb, excl. chunk body): ~{tpl_tokens:,} tokens\n")
     print(f"{'doc':52s} {'chunks':>7} {'src_tok':>9} {'chunk_tok':>10} {'input_tok':>10} {'over':>5}")
     tot_chunks = tot_input = tot_body = 0
@@ -119,14 +167,29 @@ def phase_dry_run(a) -> int:
         tot_chunks += len(cs); tot_input += inp; tot_body += body
     floors = spend._spend_config()["call_class_floors"]
     floor = floors["extraction_chunk"]
-    # Ceiling arithmetic, stated as §5 requires. Output is modelled from the banked
-    # whole-document arm's measured output/input ratio, which is the only measurement of this
-    # model on these documents that exists.
     wd = whole_doc_usage()
     wd_out = sum(u.get("outputTokens", 0) for u in wd.values())
     wd_in = sum(u.get("inputTokens", 0) + u.get("cacheCreationInputTokens", 0) for u in wd.values())
     ratio = wd_out / wd_in if wd_in else 1.0
-    est_out = int(tot_input * ratio)
+    if profile == "v0_3_7":
+        # The whole-doc output/input ratio prices the RETIRED exhaustive-verbatim contract and
+        # would badly overestimate this arm — using it here would be pricing the thing v0.3.7
+        # replaced. Output is instead built from measured item density x computed per-item cost.
+        med_items, n_parsed = banked_items_per_chunk()
+        est_out = int(tot_chunks * med_items * ANCHOR_TOKENS_PER_ITEM)
+        print(f"\noutput model (anchor contract, NOT the whole-doc ratio):")
+        print(f"  measured item density: median {med_items:.0f} items/chunk "
+              f"over {n_parsed} banked chunks")
+        print(f"  computed per-item cost: {ANCHOR_TOKENS_PER_ITEM} tokens "
+              f"(v0.3.5 measured 225/item -> {225 / ANCHOR_TOKENS_PER_ITEM:.1f}x reduction)")
+        print(f"  projected output: {med_items:.0f} x {ANCHOR_TOKENS_PER_ITEM} = "
+              f"{med_items * ANCHOR_TOKENS_PER_ITEM:,.0f}/chunk x {tot_chunks} = {est_out:,}")
+        print(f"  ASSUMES NO SALIENCE REDUCTION in item count — unmeasured until §3, so the "
+              f"ceiling is deliberately conservative. ADDENDUM-03 §2 expects ~1-2K/chunk, "
+              f"which presumes salience also cuts the count; this projects "
+              f"{med_items * ANCHOR_TOKENS_PER_ITEM:,.0f}/chunk without that.")
+    else:
+        est_out = int(tot_input * ratio)
     est_cache = tot_input          # non-resumed calls re-send the prefix; cacheCreation ~ input
     est_total = tot_input + est_cache + est_out
     print(f"\nTOTAL chunks {tot_chunks}, input {tot_input:,} tokens "
@@ -934,6 +997,8 @@ PHASES = {"dry_run": phase_dry_run, "extract": phase_extract, "ingest": phase_in
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--phase", required=True)
+    ap.add_argument("--profile", default=None,
+                    help="run profile to price/run (default: the module's PROFILE)")
     ap.add_argument("--ceiling-tokens", type=int)
     ap.add_argument("--fact-cap", type=int, default=240)
     ap.add_argument("--workers", type=int, default=3)

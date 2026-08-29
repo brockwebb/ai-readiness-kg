@@ -500,3 +500,120 @@ def test_resolved_is_defined_once_not_restated_per_view():
     assert 'r[6] not in _unresolved' in src
     assert src.count('"bibliographic_partial", "harvest_error"') == 0, \
         "a hand-rolled unresolved list is back in t1_build_index"
+
+
+# ---------------------------------------------------------------------------------------
+# --measure-ineligible (2026-08-29). The eligibility gate is a PREDICTION about the world
+# ("no scholarly index holds this"), and a prediction that is never tested is indistinguishable
+# from an assumption. This flag tests it for exactly the documents the gate excluded.
+
+def test_measured_miss_confirms_the_prediction_without_promoting_the_document():
+    """A confirmed miss must NOT quietly become `bibliographic_partial`: that would move 134
+    documents into a coverage denominator that implies they are pending, which is the exact
+    accounting error the gate was added to fix."""
+    rec = {"doc_id": "d", "resolution": "bibliographic_partial", "provider_errors": []}
+    out = t0._record_measurement(rec, "d", _entry("industry", "https://x/"), "predicted why")
+    assert out["resolution"] == t0.OUT_OF_SCOPE
+    assert out["eligibility_prediction_correct"] is True
+    assert out["eligibility_measured"] is True
+    assert "CONFIRMED by measurement" in out["match_note"]
+
+
+def test_measured_resolution_overturns_the_prediction_and_is_kept():
+    """The prediction was wrong and a record proves it. Discarding that would be discarding
+    evidence in hand to preserve a guess."""
+    rec = {"doc_id": "d", "resolution": "crossref_title_search",
+           "metadata_source": "crossref", "work": {"title": "T"}}
+    out = t0._record_measurement(rec, "d", _entry("industry", "https://x/"), "predicted why")
+    assert out["resolution"] == "crossref_title_search"
+    assert out["eligibility_prediction_correct"] is False
+    assert out["work"] == {"title": "T"}
+
+
+def test_provider_failure_leaves_the_prediction_unmeasured():
+    """A 429 teaches nothing about whether the document is in an index. Recording it as a
+    confirmation would manufacture a finding out of a transient failure."""
+    for failed in (t0.AUTH_ERROR, t0.QUOTA_ERROR, t0.TRANSIENT_ERROR):
+        rec = {"doc_id": "d", "resolution": failed, "provider_errors": ["x"]}
+        out = t0._record_measurement(rec, "d", _entry("industry", "https://x/"), "why")
+        assert out["resolution"] == t0.OUT_OF_SCOPE
+        assert out["eligibility_measured"] is False
+        assert out["eligibility_prediction_correct"] is None
+
+
+def test_measure_ineligible_actually_queries_a_gated_document(tmp_path, monkeypatch):
+    """Positive control: without the flag the document is never asked (proved earlier); with
+    it, the provider IS called."""
+    entries = {"gov": {**_entry("federal", "https://www.govinfo.gov/app/details/PLAW-117"),
+                       "screening": {"decision": "included"}}}
+    man = tmp_path / "manifest.json"
+    man.write_text(json.dumps({"entries": entries}), encoding="utf-8")
+    monkeypatch.setattr(t0, "MANIFEST", man)
+    monkeypatch.setattr(t0, "CACHE", tmp_path / "cache")
+    asked = []
+    monkeypatch.setattr(t0, "harvest_guarded", lambda d, e: (
+        asked.append(d) or {"doc_id": d, "resolution": "bibliographic_partial",
+                            "provider_errors": []}))
+    monkeypatch.setattr(sys, "argv", ["t0_biblio_harvest.py", "--measure-ineligible"])
+    assert t0.main() == 0
+    assert asked == ["gov"], "the gated document was still not queried under the flag"
+    rec = json.loads((tmp_path / "cache" / "gov.json").read_text())
+    assert rec["resolution"] == t0.OUT_OF_SCOPE and rec["eligibility_measured"] is True
+
+
+def test_measure_ineligible_reopens_a_terminal_record_but_resume_does_not(tmp_path, monkeypatch):
+    """Found live: the first run of the flag reported all 178 as `cached` and asked nothing,
+    because OUT_OF_SCOPE is correctly absent from RETRY_STATES and the cache-skip fires before
+    the gate. The flag is the one path allowed to reopen a terminal record; a normal
+    `--retry-unresolved` resume must still leave it alone."""
+    entries = {"gov": {**_entry("federal", "https://www.govinfo.gov/x"),
+                       "screening": {"decision": "included"}}}
+    man = tmp_path / "manifest.json"
+    man.write_text(json.dumps({"entries": entries}), encoding="utf-8")
+    cache = tmp_path / "cache"; cache.mkdir()
+    (cache / "gov.json").write_text(json.dumps(
+        {"doc_id": "gov", "resolution": t0.OUT_OF_SCOPE}), encoding="utf-8")
+    monkeypatch.setattr(t0, "MANIFEST", man)
+    monkeypatch.setattr(t0, "CACHE", cache)
+
+    asked = []
+    monkeypatch.setattr(t0, "harvest_guarded", lambda d, e: (
+        asked.append(d) or {"doc_id": d, "resolution": "bibliographic_partial",
+                            "provider_errors": []}))
+
+    monkeypatch.setattr(sys, "argv", ["t0_biblio_harvest.py", "--retry-unresolved"])
+    assert t0.main() == 0
+    assert asked == [], "a plain resume re-asked a terminal out-of-scope record"
+
+    monkeypatch.setattr(sys, "argv", ["t0_biblio_harvest.py", "--measure-ineligible"])
+    assert t0.main() == 0
+    assert asked == ["gov"], "the flag did not reopen the terminal record"
+
+
+def test_wildcard_metacharacters_are_stripped_from_search_queries():
+    """OpenAlex reads `?` and `*` in `search` as wildcards and 400s on a title that merely
+    ends in a question mark. Measured live on `anthropic-crawler-support-article`; the failure
+    is permanent, so it presents as a document that retries forever."""
+    out = t0._sanitize_search({"search": "Does Anthropic crawl the web, and how? *", "x": 1})
+    assert out["search"] == "Does Anthropic crawl the web, and how"
+    assert out["x"] == 1
+    assert t0._sanitize_search({"query.bibliographic": "Is it ready?"})[
+        "query.bibliographic"] == "Is it ready"
+
+
+def test_sanitizer_runs_on_the_real_request_path(monkeypatch):
+    """Positive control against the M2 pattern: assert the sanitizer is reached by `get`,
+    not merely that the helper works when called directly."""
+    seen = {}
+
+    class _R:
+        status_code, headers, url = 200, {}, "https://api.openalex.org/works"
+        def json(self): return {"results": []}
+
+    def fake(url, params=None, headers=None, timeout=None):
+        seen.update(params or {})
+        return _R()
+
+    monkeypatch.setattr(t0.requests, "get", fake)
+    t0.get("https://api.openalex.org/works", {"search": "Ready for AI?"})
+    assert seen["search"] == "Ready for AI", f"wildcard reached the provider: {seen}"
