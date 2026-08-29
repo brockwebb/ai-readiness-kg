@@ -229,3 +229,64 @@ Every judgment is an event (`judge_label`, non-graph shard `events/batch-009_pro
 **Date:** 2026-08-27. Defect: the whole-document unit (schema §5) was written as a design rule with no prior-art search; the field's chunk-size measurements (2024), the RE-degradation mechanism (Gajo 2026), and this operator's own Wintermute G4 kill and "RE fails at 2× entity rate" finding all existed and none were cited. Cost of the miss: ~one week and on the order of 60M tokens across extraction, fallback turns, and repair of a layer that measured 0.61.
 
 **The rule (methodology §7.1, binding on registration).** A CC task that registers a pilot — any pre-registered gate run — must carry a `prior_art` block with (a) external literature for the design's central choice and (b) an internal-precedent search across Wintermute and Seldon decision logs, with hits cited or the failed search described. A task without the block is refused at registration. "No prior art" is a claim requiring the search that failed, never a default. First task carrying the block: `2026-08-27_chunked_pilot.md`.
+
+## DD-023 ERRATUM (2026-08-29): measurement (3), the faithfulness FAIL, is superseded — the decision stands on cost alone
+
+**Date:** 2026-08-29. Task `2026-08-27_chunked_pilot` ADDENDUM-01 §1. Verdict:
+`docs/research/2026-08-27_chunked_vs_wholedoc_verdict.md`.
+
+DD-023 cited four measurements. **Measurement (3) — "Pilot gate FAIL both strata under the
+whole-doc arm (Instrument F_upper 0.158 / faithful 0.292)" — is withdrawn.** Re-judged through
+the fixed probe (decompose 1.1.0, probe_judge 1.1.0) on the **same banked extraction, with no
+re-extraction, the same two raters and the same pre-registered thresholds**, the whole-document
+Instrument stratum measures **F = 0.0000 [0.0000, 0.0487], item-faithful 22/24 = 0.917 —
+PASS**. The chunked arm measures F = 0.0000 [0.0000, 0.0458], item-faithful 30/30 = 1.000 —
+PASS. The earlier FAIL was an artifact of how the probe cut the spans it judged (methodology
+§6.3: 26/34 non-entailments were truncated `method` spans), not a property of the extraction.
+
+**What this does and does not change.** Measurements (1) and (2) — 108–158K-token outputs, the
+per-layer fallback, 785K/doc extraction-only mean, and 65,637 settled/chunk under the same
+contract chunked — are untouched; they measure cost, not faithfulness, and they carry the
+decision on their own. **DD-023 therefore stands, on cost.** It may no longer be cited as
+resting on a faithfulness failure of whole-document extraction: on the evidence now in hand,
+whole-document extraction is faithful at the Instrument stratum. The magnitude in (2) is also
+sharpened by §1: on the one document with a complete chunked pass the ratio is **1.52x**, not
+the 2.1x projected from a partial arm.
+
+**Why this is an erratum and not a reopening.** The retirement was decided on the emission
+contract's cost pathology, which §1 does not touch. Nothing here bears on it. The correction is
+filed because a decision that cites a withdrawn measurement will be re-derived wrongly by
+whoever reads it next.
+
+**The generalizable defect.** A validity instrument mis-measured its own subject and produced a
+FAIL that stood for two days and propagated into a design decision. `2026-08-27_pilot_instrument_verdict.md`
+and the ADDENDUM-05 §2 verdict are superseded for comparison purposes, not retracted. Standing
+consequence: **a gate verdict may not be cited in a design decision until the instrument that
+produced it has been mutation-checked against a known-good sample** — the same positive-control
+discipline already required of monitors (methodology §7.5), extended to the judge.
+
+## DD-026: A pre-registered precondition must be consistent with the threshold it gates
+
+**Date:** 2026-08-29. Task `2026-08-27_chunked_pilot` ADDENDUM-01 §1.
+
+**Measurement.** The pilot pre-registered `F_upper < 0.10` with a precondition of `pooled >= 20`
+items per stratum. For `semantic_edge`, `probe_decompose` emits exactly one fact per edge, so
+n_facts = n_items. Under the aggregator's Wilson 95% interval a **perfect result — zero
+fabrications — returns F_upper = 0.1611 at n = 20** and 0.1546 at n = 21. The minimum n at
+which the threshold is attainable at all is **35**. Both arms' semantic strata landed at exactly
+20 and 21: precondition satisfied, gate unreachable. A stratum sampled at exactly the
+pre-registered minimum could only ever FAIL.
+
+**The rule, binding on registration.** A pre-registered gate must declare a precondition that is
+**derived from** its threshold and its interval method, not chosen independently of them. For a
+one-sided upper bound the derivation is the binomial bound with zero events (Louis 1981; Hanley
+& Lippman-Hand 1983 — the rule of three, of which Wilson is the exact form); it is arithmetic,
+and a task that states a threshold already implies its own minimum n. A registration whose
+precondition is below that minimum is **refused at registration**, because it can only produce
+uninformative FAILs and the spend that buys them.
+
+**Applied, not retrofitted.** The 20 in this pilot is not raised after the fact — the strata it
+gated were recorded GATE UNREACHABLE and not judged, which is what ADDENDUM-01 §1 already
+required of a sub-minimum sample. The rule binds the NEXT registration, including the v0.3.7
+pilot's semantic stratum, whose reopen trigger in DD-024 ("clears F_upper < 0.10 / faithful >=
+0.70 at pooled >= 20") **must be read as pooled >= 35** to be satisfiable at one fact per edge.

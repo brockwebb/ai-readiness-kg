@@ -78,34 +78,57 @@ def main() -> int:
     model_stub.guard_no_api_key()
     schema = schema_loader.load_schema(); dv = decompose_version(); cfg = model_stub.load_model_config()
     items = [json.loads(l) for l in SAMPLE.read_text(encoding="utf-8").splitlines() if l.strip()]
-    done = set()
+    # Resume state, per (item_id, event_id) of THIS sample: which halves of the decomposition
+    # are already on disk. Keyed on the pair because `fact_id` hashes the event_id, so facts
+    # from a rebuilt sample belong to different items (2026-08-27, pilot_instrB: a set of
+    # item_ids alone made the event_id conjunct always false and every relaunch appended a
+    # second copy of the fact set).
+    #
+    # `have_model` is tracked SEPARATELY from `done` because an item is complete only when
+    # both halves exist. Marking an item done on the presence of any fact silently drops the
+    # model half of every item whose deterministic facts were written but whose free-text
+    # fields never reached a batch — a dry run, or a decompose killed mid-flight. The lost
+    # fields are `method`/`description`, which is where the pilot's non-entailments live
+    # (methodology §6.3), so the loss lands exactly on the measurement (2026-08-29).
+    done, have_model = set(), set()
     if OUT.exists():
-        # (item_id, event_id) pairs: an item is done only if THIS sample's event_id already
-        # has facts. Was a set of item_ids alone, which made the `event_id in done` half of
-        # the resume test always false — a relaunch re-decomposed every item and appended a
-        # second copy of the fact set (2026-08-27, pilot_instrB).
-        done = {(r["item_id"], r["event_id"]) for r in
-                (json.loads(l) for l in OUT.read_text(encoding="utf-8").splitlines() if l.strip())}
-    RAW_DIR.mkdir(parents=True, exist_ok=True)
-    n_det = n_model = 0
-    out = OUT.open("a", encoding="utf-8")
+        for r in (json.loads(l) for l in OUT.read_text(encoding="utf-8").splitlines()
+                  if l.strip()):
+            key = (r["item_id"], r["event_id"])
+            done.add(key)
+            if r.get("source") == "model":
+                have_model.add(key)
+    n_det = 0
+    pending_writes: list[dict] = []
     model_queue: list[tuple[dict, str, str]] = []
     for it in items:
-        if (it["item_id"], it["event_id"]) in done:
-            continue
+        key = (it["item_id"], it["event_id"])
         se = schema_loader.span_entailable(schema, it["type"]) if it["kind"] == "node" else {}
         facts, pending = deterministic_facts(it, se)
-        for f in facts:
-            rec = {"fact_id": fact_id(it["event_id"], f["attribute"] or "", f["fact_text"]),
-                   "item_id": it["item_id"], "event_id": it["event_id"], "attribute": f["attribute"],
-                   "fact_text": f["fact_text"], "source": "deterministic", "decompose_version": dv}
-            out.write(json.dumps(rec, ensure_ascii=False) + "\n"); n_det += 1
-        for attr, val in pending:
-            model_queue.append((it, attr, val))
-    out.flush()
+        if key not in done:
+            for f in facts:
+                pending_writes.append(
+                    {"fact_id": fact_id(it["event_id"], f["attribute"] or "", f["fact_text"]),
+                     "item_id": it["item_id"], "event_id": it["event_id"],
+                     "attribute": f["attribute"], "fact_text": f["fact_text"],
+                     "source": "deterministic", "decompose_version": dv})
+                n_det += 1
+        # The model half is owed whenever the item has free-text fields and no model fact yet,
+        # independently of whether its deterministic half was already written.
+        if key not in have_model:
+            for attr, val in pending:
+                model_queue.append((it, attr, val))
     print(f"deterministic facts: {n_det}; free-text fields for the model: {len(model_queue)}")
     if a.dry_run:
+        # A dry run is a READ. Writing the deterministic half here would mark every item done
+        # and suppress the model half of the very run being estimated (2026-08-29).
         return 0
+    RAW_DIR.mkdir(parents=True, exist_ok=True)
+    n_model = 0
+    out = OUT.open("a", encoding="utf-8")
+    for rec in pending_writes:
+        out.write(json.dumps(rec, ensure_ascii=False) + "\n")
+    out.flush()
     tpl = TEMPLATE.read_text(encoding="utf-8")
     for b in range(0, len(model_queue), BATCH):
         batch = model_queue[b:b + BATCH]

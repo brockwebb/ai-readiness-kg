@@ -355,3 +355,176 @@ Recovered against ceilings: `pilot_chunked_v035` remaining 9,034,832 → **10,14
 itself is a second mechanism operating on the ledger without an operator in the loop, and the
 capacity it returns is exactly the capacity a stuck run would otherwise be refused for — which is
 information, not noise. It stays a hand-run verb until there is a reason for it not to be.
+
+---
+
+# ADDENDUM-01 §1 RESULT — the banked 44 chunks, judged
+
+**Date:** 2026-08-29 (UTC). **Both Instrument strata PASS the pre-registered gate.** This
+**reverses** the whole-document arm's banked FAIL, and the reversal is an instrument change,
+not an extraction change — see "What actually moved" below.
+
+## 1. Pre-judge census (§1: count first, report before judging)
+
+| arm | Instrument | semantic_edge | documents covered |
+|---|---:|---:|---|
+| chunked (44/128 partial) | **92** | **20** | 2 of 5 |
+| wholedoc (banked) | **24** | **21** | 5 of 5 |
+
+**Premise discrepancy, reported not reconciled.** §1 states "530 admitted nodes / 841 edges
+across 34 ingested chunks". Live state is **746 nodes / 1,244 edges across 44 chunks** — the
+addendum was drafted while ingest was still catching up. Nothing was reconciled; the larger
+figure is what the shard holds and what was judged from.
+
+## 2. The semantic stratum: not judged, on stronger grounds than §1 anticipated
+
+§1 predicted the semantic stratum would land under 20 and fail the precondition. It landed at
+**20 (chunked) and 21 (wholedoc)** — the precondition *passes*. It is still not judgeable, for
+a reason §1 did not have in view:
+
+`probe_decompose.deterministic_facts` emits **exactly one fact per edge**, so for this stratum
+n_facts = n_items. Under the aggregator's own Wilson 95% interval, `F_upper < 0.10` is
+attainable only at **n >= 35**. At n = 20 a **perfect result — zero fabrications — still returns
+F_upper = 0.1611**; at n = 21, 0.1546. The gate cannot be cleared at that sample size however
+good the extraction is.
+
+**This is a defect in the pre-registration itself, recorded and not repaired here.** The
+precondition (pooled >= 20) and the threshold (F_upper < 0.10) are mutually inconsistent at the
+boundary: a stratum sampled at exactly the pre-registered minimum can only ever FAIL. The
+minimum count consistent with the threshold is 35, not 20. This is arithmetic from the task's
+own F_STOP and the aggregator's own interval method — no threshold was moved, and the finding
+applies identically to both arms. Prior art for the calculation, named not invented: the
+one-sided binomial bound with zero events (Louis 1981; Hanley & Lippman-Hand 1983, "If nothing
+goes wrong, is everything all right?" — the rule of three, of which Wilson is the exact form).
+
+Judging it anyway would have bought a foregone FAIL at roughly 470K tokens. ADDENDUM-01 §1
+forbids judging a sub-minimum sample; this is that case, reached by the stronger route. Both
+rows are recorded **GATE UNREACHABLE** with the counts, per §1's instruction to record rather
+than judge.
+
+## 3. Verdict
+
+| arm | stratum | admitted | judged items | facts | F [Wilson 95%] | item-faithful | gate |
+|---|---|---:|---:|---:|---|---|---|
+| chunked | Instrument | 92 | 30 | 80 | **0.0000 [0.0000, 0.0458]** | **30/30 = 1.000** | **PASS** |
+| chunked | semantic_edge | 20 | 0 | — | — | — | GATE UNREACHABLE |
+| wholedoc | Instrument | 24 | 24 | 75 | **0.0000 [0.0000, 0.0487]** | **22/24 = 0.917** | **PASS** |
+| wholedoc | semantic_edge | 21 | 0 | — | — | — | GATE UNREACHABLE |
+
+Zero fabrications in either arm. Non-entailments: chunked none; wholedoc 2 of 75
+(1 `span_truncated`, 1 `subject_dropped`) — neither is a fabrication class.
+
+Rater agreement with the aggregated label: chunked `claude-opus-4-8` 1.000 / `claude-sonnet-5`
+1.000; wholedoc 1.000 / 0.947. Same two raters as every prior probe run, unchanged.
+
+Mid-noun-phrase span sidecar (recorded, never subtracted from a denominator): chunked 9/80,
+wholedoc 12/75.
+
+## 4. What actually moved — the prior FAIL was an instrument artifact
+
+The whole-document arm's banked verdict was **F_upper 0.158 / item-faithful 0.292 (FAIL)**. The
+same arm, same banked extraction, same raters, same thresholds now measures **F_upper 0.0487 /
+item-faithful 0.917 (PASS)**. **No extraction was re-run.** The only change is the probe:
+decompose 1.0.0 -> 1.1.0 and probe_judge 1.0.0 -> 1.1.0, i.e. the two attribute-quoting fixes
+diagnosed in methodology §6.3 (26/34 non-entailments were truncated `method` spans; 14 a
+probe-protocol artifact, 13 a mid-noun-phrase quote).
+
+So methodology §6.3's diagnosis is confirmed at the strongest available level: **the Instrument
+stratum was never failing on extraction faithfulness. It was failing on how the probe cut the
+spans it judged.** A validity instrument that mis-measures its own subject produced a FAIL
+verdict that stood for two days and is now withdrawn.
+
+**Consequence for DD-023, recorded as an erratum on that decision, not a reversal of it:**
+DD-023 retired whole-document extraction on four measurements. Measurement (3) — "Pilot gate
+FAIL both strata under the whole-doc arm (Instrument F_upper 0.158 / faithful 0.292)" — is
+**superseded**: that arm now PASSES. Measurements (1) and (2), the cost pathology, are
+untouched and are measurements of a different thing. **DD-023's decision therefore stands on
+cost, and no longer on faithfulness.** The erratum is filed in `docs/design_decisions.md`; the
+decision is not re-opened here, because nothing in §1 bears on the cost argument that carries it.
+
+## 5. Cost — like-for-like, on the documents the chunked arm actually covers
+
+The headline "2.1x" in the pause record projected all five documents from a partial. On the two
+documents with any chunked extraction:
+
+| doc | chunked settled | whole-doc settled | ratio | chunked completeness |
+|---|---:|---:|---:|---|
+| data-readiness-for-ai-a-360-degree-survey | 2,021,101 | 1,330,683 | **1.52x** | 30/30 complete |
+| aidrin-hiniduma-2024 | 795,582 | 903,365 | 0.88x | 14/18 partial (~78%) |
+| both | 2,816,683 | 2,234,048 | 1.26x | mixed |
+
+**The only honest single-document number is 1.52x** — the one complete chunked pass. The 0.88x
+on `aidrin` is an artifact of its arm being 4 chunks short and must not be quoted as a chunking
+saving. Direction is unchanged from DD-023 (chunking under the exhaustive-verbatim contract
+costs more, not less); the magnitude is **1.52x on complete evidence, not 2.1x**.
+
+## 6. Spend against the §1 ceiling
+
+Declared 2,000,000 (the top of §1's stated ~1-2M). **Settled 2,023,212 — 23,212 over.** This is
+the guard's designed at-most-one-in-flight overshoot, not a breach: a reservation is taken at an
+estimate and settled at the measured cost, so the final call can land above the estimate that
+admitted it; the door then closes (`tests/test_spend_guard.py` #3). Refusals: 0. The run
+completed; nothing was truncated by the guard.
+
+**§1's ceiling estimate was low, and why.** §1 sized ~1-2M "from per-class mean". The realized
+judge-class mean here is **52,230/call over 16 settles** (median ~40K, one 207,591 outlier)
+against the ~40K the estimate implied. Two arms x two raters x 155 facts at batch 10, plus
+decompose, is 39 calls. Sized on the realized mean the section was always a ~2.0M job.
+
+Spend was held down by two decisions taken before any label was bought, both reported here
+because they bound what the numbers can support:
+- **Instrument item cap 30/arm**, seeded (`arm_<arm>:30`) and reproducible. The chunked arm
+  judged 30 of its 92 admitted Instruments; the whole-doc arm's 24 were all judged. A smaller
+  sample widens the Wilson interval and so makes PASS *harder*, never easier — it is a spend
+  bound, not a threshold move.
+- **Semantic stratum not judged** (§2 above), saving roughly 470K.
+
+## 7. Two defects found and fixed mid-run (`scripts/probe_decompose.py`)
+
+Both were found live while sizing this section; the first cost one judge call (78,898 tokens)
+on a fact set that was missing every free-text proposition.
+
+1. **Resume marked an item done on the presence of ANY fact.** An item whose deterministic
+   facts were written but whose free-text fields never reached a model batch was skipped
+   forever. The lost fields are `method`/`description` — precisely where this stratum's
+   non-entailments live (§6.3) — so the silent loss landed exactly on the measurement. Fixed by
+   tracking `have_model` separately from `done`: the model half is owed whenever an item has
+   free-text fields and no model-sourced fact yet, independently of its deterministic half.
+   Effect on this run: arm_chunked went from **47 facts to 80** after the fix.
+2. **`--dry-run` wrote the deterministic facts.** A dry run mutated the resume state of the run
+   it was estimating for, which is how (1) was triggered: my own sizing dry-run poisoned it.
+   Fixed — a dry run is now a read.
+
+Tests written **before** the fixes, both failing first, both mutation-verified after
+(`tests/test_probe_resume.py`, +2). Suite **233 -> 235 passed**.
+
+An existing test (`test_decompose_still_decomposes_an_item_whose_sample_was_rebuilt`) had used
+`--dry-run` as a shortcut to avoid a model call and therefore **asserted the write-on-dry-run
+behaviour that is now a proven defect**. It is amended, with the reason recorded in its
+docstring — a test that pins buggy behaviour is not evidence, and was silently protecting this
+defect.
+
+**Method note.** A `{min_facts}` placeholder in `write_verdict` shipped uninterpolated into the
+first written verdict (a `str.replace` whose anchor did not match, applied without an assert).
+Corrected in source and in the artifact. Every other patch in this task asserts its anchor
+before replacing; that one did not, and that is the whole reason it failed silently.
+
+## 8. What §1 does and does not establish
+
+**Establishes:** the Instrument stratum is faithful under BOTH extraction units — zero
+fabrications, F_upper 0.046 (chunked) and 0.049 (wholedoc), item-faithful 1.000 and 0.917. The
+pre-registered question "does chunk-local extraction move faithfulness?" answers: **on this
+evidence it does not move it, because there was nothing to move — both units already pass.**
+The instrument, not the unit, was the problem.
+
+**Does not establish**, and must not be read as establishing:
+- Anything about the semantic stratum in either arm (gate unreachable at the available n).
+- A like-for-like document comparison. The chunked arm covers 2 of 5 documents, and 27 of its
+  30 judged Instruments come from a single document (`data-readiness-for-ai-a-360-degree-survey`).
+  The whole-doc arm spans all five. **The arms do not run on the same document mix.**
+- Any ranking of the two arms on faithfulness. Both pass; the intervals overlap almost
+  completely; the item-faithful difference (1.000 vs 0.917) is 2 non-entailed items out of 24
+  and is not a detectable difference at these sample sizes.
+- Recall. Nothing in this protocol measures it, in either arm.
+
+Per §4 of the addendum, §2 and §3 do not start on this result; this section is a hard stop.

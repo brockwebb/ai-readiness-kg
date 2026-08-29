@@ -638,6 +638,47 @@ def diversion_histogram() -> tuple[dict, int, int]:
     return dict(hist), hist.get("cross_chunk", 0), total
 
 
+def min_facts_for_gate() -> int:
+    """Smallest fact count at which the pre-registered `F_upper < F_STOP` gate is ATTAINABLE,
+    i.e. the Wilson 95% upper bound on a PERFECT result (0 fabrications) still clears it.
+
+    This is arithmetic, not a threshold: it is derived from the task's own F_STOP and the
+    aggregator's own interval method, and it moves only if one of those moves. Below it a
+    stratum cannot pass however good the extraction is, so judging it buys a foregone FAIL.
+    Prior art: the one-sided binomial upper bound with zero events — Louis 1981; Hanley &
+    Lippman-Hand 1983, "If nothing goes wrong, is everything all right?" (the rule of three,
+    3/n, of which this is the exact Wilson form)."""
+    from probe_aggregate import wilson
+    n = 1
+    while n < 10_000:
+        hi = wilson(0, n)[2]
+        if hi is not None and hi < F_STOP:
+            return n
+        n += 1
+    raise RuntimeError("no attainable n for the gate")
+
+
+def stratum_admission(stratum: str, n_items: int, min_facts: int) -> tuple[bool, str]:
+    """(judge?, reason). Two conditions, both from the task, neither invented here.
+
+    1. The pre-registered precondition: pooled >= STRATUM_PRECONDITION admitted items.
+    2. Gate reachability: for a stratum whose facts are 1:1 with its items — `semantic_edge`,
+       where `probe_decompose.deterministic_facts` emits exactly one fact per edge — the fact
+       count IS the item count, so a stratum below `min_facts` cannot clear F_upper even on a
+       perfect result. Node strata decompose to MORE facts than items, so item count does not
+       bound them and this condition does not apply.
+
+    ADDENDUM-01 §1 says not to judge a sub-minimum sample. It anticipated the sample being
+    sub-minimum on condition 1; where it is sub-minimum on condition 2 instead, the reason to
+    skip is strictly stronger — a foregone FAIL, paid for."""
+    if n_items < STRATUM_PRECONDITION:
+        return False, (f"PRECONDITION NOT MET: {n_items} admitted < {STRATUM_PRECONDITION} pooled")
+    if stratum == "semantic_edge" and n_items < min_facts:
+        return False, (f"GATE UNREACHABLE: {n_items} facts (1 per edge); a perfect result "
+                       f"(0 fabrications) gives F_upper > {F_STOP}; >= {min_facts} facts needed")
+    return True, f"judged ({n_items} admitted)"
+
+
 def phase_judge(a) -> int:
     cfg = model_stub.load_model_config()
     m = members()
@@ -648,29 +689,71 @@ def phase_judge(a) -> int:
     spend.set_current_run(JUDGE_RUN_ID)
 
     arms = {"chunked": chunked_records(texts), "wholedoc": wholedoc_records(texts)}
+    min_facts = min_facts_for_gate()
+
+    # ADDENDUM-01 §1: count first, report the number BEFORE judging. The census is over the
+    # FULL admitted set of each arm and is what the verdict reports as `admitted`; any cap
+    # below applies to what is JUDGED, never to what is counted.
+    census = {arm: Counter(r["stratum"] for r in recs) for arm, recs in arms.items()}
+    admission = {}
+    print(f"\n=== pre-judge census (gate F_upper < {F_STOP} is attainable at "
+          f">= {min_facts} facts) ===", flush=True)
+    for arm, counts in census.items():
+        by_doc = defaultdict(Counter)
+        for r in arms[arm]:
+            by_doc[r["stratum"]][r["doc_id"]] += 1
+        print(f"  arm {arm}: {len(arms[arm])} admitted items", flush=True)
+        for stratum in ("Instrument", "semantic_edge"):
+            n = counts.get(stratum, 0)
+            ok, why = stratum_admission(stratum, n, min_facts)
+            admission[(arm, stratum)] = (ok, why)
+            print(f"    {stratum:<14} {n:>4}  {why}", flush=True)
+            print(f"      doc mix: {dict(by_doc[stratum])}", flush=True)
+
+    judged_strata = sorted({s for (_, s), (ok, _) in admission.items() if ok})
+    if not judged_strata:
+        print("FATAL: no stratum is judgeable; nothing to spend on.")
+        return 2
+
     results = {}
     for arm, recs in arms.items():
         prefix = f"arm_{arm}"
+        recs = [r for r in recs if admission[(arm, r["stratum"])][0]]
+        # Spend-bounded item sample. NOT a threshold: the pre-registered gate is untouched
+        # and a smaller sample only widens the interval, which makes PASS harder, never
+        # easier. Seeded and reported so the draw is reproducible.
+        if a.instrument_item_cap:
+            rng = random.Random(f"{prefix}:{a.instrument_item_cap}")
+            keep, capped = [], defaultdict(list)
+            for r in recs:
+                (capped[r["stratum"]] if r["stratum"] == "Instrument" else keep).append(r)
+            for s, rs in capped.items():
+                keep += rs if len(rs) <= a.instrument_item_cap else rng.sample(
+                    rs, a.instrument_item_cap)
+            recs = sorted(keep, key=lambda r: (r["doc_id"], r["item_id"]))
         counts = Counter(r["stratum"] for r in recs)
-        print(f"\n=== arm {arm}: {len(recs)} items {dict(counts)}", flush=True)
+        print(f"\n=== arm {arm}: judging {len(recs)} items {dict(counts)} "
+              f"(admitted {dict(census[arm])})", flush=True)
         write_sample(prefix, recs)
         agg = run_protocol(prefix, prefix, JUDGE_RUN_ID, raters, a.fact_cap)
         if not agg:
             print(f"FATAL: probe protocol failed for arm {arm}")
             return 2
         checks = span_check_sidecar(prefix, texts)
-        results[arm] = {"agg": agg, "admitted": dict(counts), "span_checks": checks,
+        results[arm] = {"agg": agg, "admitted": dict(census[arm]),
+                        "judged": dict(counts), "span_checks": checks,
                         "n_items": len(recs)}
-    write_verdict(results, cfg, a)
+    write_verdict(results, cfg, a, admission=admission, min_facts=min_facts)
     return 0
 
 
-def _stratum_row(arm: str, stratum: str, r: dict) -> str:
+def _stratum_row(arm: str, stratum: str, r: dict, why: str | None = None) -> str:
     agg = r["agg"]
     st = (agg.get("per_stratum") or {}).get(stratum)
     faith = item_faithful_by_stratum(agg).get(stratum)
     if not st:
-        return f"| {arm} | {stratum} | {r['admitted'].get(stratum, 0)} | — | — | — | — | not judged |"
+        return (f"| {arm} | {stratum} | {r['admitted'].get(stratum, 0)} | — | — | — | — | "
+                f"{why or 'not judged'} |")
     fh = st["F_hi"]
     ff = (faith[0] / faith[1]) if faith and faith[1] else 0.0
     pre = r["admitted"].get(stratum, 0) >= STRATUM_PRECONDITION
@@ -681,7 +764,8 @@ def _stratum_row(arm: str, stratum: str, r: dict) -> str:
             f"| {'Y' if pre else 'N (< 20)'} | {'PASS' if ok else 'FAIL'} |")
 
 
-def write_verdict(results: dict, cfg: dict, a) -> None:
+def write_verdict(results: dict, cfg: dict, a, admission: dict | None = None,
+                  min_facts: int | None = None) -> None:
     ledger = spend.default_ledger()
     ex = ledger.status(RUN_ID)["runs"].get(RUN_ID, {})
     ju = ledger.status(JUDGE_RUN_ID)["runs"].get(JUDGE_RUN_ID, {})
@@ -691,6 +775,7 @@ def write_verdict(results: dict, cfg: dict, a) -> None:
     resolution = json.loads((METRICS / "chunked_resolution.json").read_text())
     sets = {d: chunker.chunk_document(d, rbe.doc_text(members()[d])) for d in PILOT_DOCS}
 
+    min_facts = min_facts if min_facts is not None else min_facts_for_gate()
     L = ["# Chunked vs whole-document extraction — pre-registered verdict", "",
          f"Task `{TASK}`. Same five documents, same model (`{cfg['model_id']}`, effort "
          "unchanged), same schema, same rules — `kg/extraction/chunked_template.md` is "
@@ -699,18 +784,55 @@ def write_verdict(results: dict, cfg: dict, a) -> None:
          "Thresholds are the task's, unchanged and not re-read from any result: "
          f"F_upper < {F_STOP}, item-faithful >= {ITEM_FAITHFUL}, precondition "
          f"pooled >= {STRATUM_PRECONDITION} per stratum.", "",
+         f"**Gate reachability.** Under the aggregator's Wilson 95% interval, `F_upper < "
+         f"{F_STOP}` is attainable only at **>= {min_facts} facts**: below that, a PERFECT "
+         f"result (0 fabrications) still yields an upper bound above the threshold. This is "
+         f"arithmetic from the task's own F_STOP and the aggregator's own interval method, "
+         f"not a new threshold. A stratum whose facts are 1:1 with its items (`semantic_edge` "
+         f"— one fact per edge) and which sits below that count cannot pass however good the "
+         f"extraction is, and is recorded as GATE UNREACHABLE rather than judged: ADDENDUM-01 "
+         f"§1 forbids judging a sub-minimum sample, and paying for a foregone FAIL is the "
+         f"case it forbids.", "",
          "Both arms were judged through ONE protocol at one set of versions — decompose "
          f"{probe_versions()[0]}, probe_judge {probe_versions()[1]}, span_checks "
          f"{span_checks.CHECK_VERSION} — so the comparison is like-for-like. The "
          "whole-document arm's banked numbers in `2026-08-27_pilot_instrument_verdict.md` "
          "were produced under decompose 1.0.0 / probe_judge 1.0.0 and are NOT comparable to "
          "the rows below; they are superseded for comparison purposes, not retracted.", "",
+         "## Caveat — the chunked arm is a 44/128 partial (ADDENDUM-01 §1)", "",
+         "The chunked arm was stopped by the operator at 44 of 128 chunks. It covers **2 of "
+         "the 5 pilot documents** (`data-readiness-for-ai-a-360-degree-survey` 30/30, "
+         "`aidrin-hiniduma-2024` 14/18); `fcsm-23-02`, `from-accuracy-to-readiness` and "
+         "`mitre-ai-maturity-model` have **no chunked extraction at all**. The whole-document "
+         "arm spans all five. **The two arms therefore do not run on the same document mix**, "
+         "and the per-document mixes are reported with every count below. Remaining chunks "
+         "were not extracted by decision, not by failure: the cost question the arm existed "
+         "to answer was settled at 65,637 settled/chunk (DD-023), and the faithfulness "
+         "question is answerable from banked material.", "",
          "## Verdict", "",
          "| arm | stratum | admitted | facts in F-denominator | F [Wilson 95%] | item-faithful "
          "| precondition | pre-registered |", "|---|---|---|---|---|---|---|---|"]
     for arm in ("chunked", "wholedoc"):
         for stratum in ("Instrument", "semantic_edge"):
-            L.append(_stratum_row(arm, stratum, results[arm]))
+            ok, why = (admission or {}).get((arm, stratum), (True, None))
+            L.append(_stratum_row(arm, stratum, results[arm], None if ok else why))
+    L += ["", "### What was counted, and what was judged", "",
+          "`admitted` above is the FULL admitted set of each arm. Where fewer items were "
+          "judged, the cap is a spend bound declared before any label was bought, not a "
+          "threshold: a smaller sample widens the Wilson interval, which makes PASS harder "
+          "and never easier.", "",
+          "| arm | stratum | admitted | judged | doc mix (judged) |", "|---|---|---|---|---|"]
+    for arm in ("chunked", "wholedoc"):
+        mix = defaultdict(Counter)
+        for line in (METRICS / f"arm_{arm}_sample.jsonl").read_text(
+                encoding="utf-8").splitlines():
+            if line.strip():
+                r = json.loads(line)
+                mix[r["stratum"]][r["doc_id"]] += 1
+        for stratum in ("Instrument", "semantic_edge"):
+            L.append(f"| {arm} | {stratum} | {results[arm]['admitted'].get(stratum, 0)} "
+                     f"| {results[arm].get('judged', {}).get(stratum, 0)} "
+                     f"| {dict(mix[stratum]) or '—'} |")
     L += ["", "## Yield and cost", "",
           "| doc | chunks | chunk tokens (med/max) | chunked settled | whole-doc settled |",
           "|---|---|---|---|---|"]
@@ -749,7 +871,8 @@ def write_verdict(results: dict, cfg: dict, a) -> None:
     passed = []
     for arm in ("chunked", "wholedoc"):
         for stratum in ("Instrument", "semantic_edge"):
-            if _stratum_row(arm, stratum, results[arm]).endswith("| PASS |"):
+            ok, why = (admission or {}).get((arm, stratum), (True, None))
+            if ok and _stratum_row(arm, stratum, results[arm]).endswith("| PASS |"):
                 passed.append(f"{arm}:{stratum}")
     L.append(f"Strata meeting the pre-registered gate: **{passed or 'none'}**.")
     L.append("Lane 2/3 eligibility is recorded here and nowhere acted on: this task launches "
@@ -836,6 +959,9 @@ def main() -> int:
     ap.add_argument("--workers", type=int, default=3)
     ap.add_argument("--limit", type=int, help="extract at most N chunks this pass (smoke test)")
     ap.add_argument("--judge-ceiling", type=int, default=4_000_000)
+    ap.add_argument("--instrument-item-cap", type=int, default=0,
+                    help="judge at most N Instrument items per arm (0 = all). Spend bound "
+                         "declared before labels are bought; seeded and reported.")
     a = ap.parse_args()
     model_stub.guard_no_api_key()
     if a.phase not in PHASES:
