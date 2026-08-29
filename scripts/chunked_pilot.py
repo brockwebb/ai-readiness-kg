@@ -599,32 +599,12 @@ def per_doc_settled_chunked() -> dict[str, int]:
     return dict(out)
 
 
-#: ADDENDUM-06's closed list, plus the two the harness itself produces.
-DIVERSION_REASONS = ("cross_chunk", "structural_inference", "endpoint_not_located",
-                     "predicate_not_located", "distance_exceeded", "unstated")
-
-
-def normalize_reason(raw: str) -> str:
-    """Map a recorded `diversion_reason` onto the closed list.
-
-    MEASURED: the model does not honor the closed list. Over the first 10 chunks it emitted 34
-    distinct values, most of them whole sentences ("structural_evidence_only — Table 2 groups
-    Lexical Diversity under the Textual Data row..."). Counting raw strings makes the histogram
-    §5 asks for unreadable, so the leading token before ':' or an em/en dash is taken and
-    matched against the list; a near-miss synonym maps to its closed-list member and anything
-    else becomes `other`. The raw string stays on the shard — this normalizes the REPORT, never
-    the record.
-    """
-    head = re.split(r"[:\u2014\u2013]", str(raw or "unstated"), 1)[0].strip().lower()
-    head = head.replace(" ", "_")
-    if head in DIVERSION_REASONS:
-        return head
-    synonyms = {"structural_only": "structural_inference",
-                "structural_evidence_only": "structural_inference",
-                "schema_cannot_express": "other:schema_cannot_express",
-                "unsupported_edge_type": "other:schema_cannot_express",
-                "auto_routed_unknown_edge": "other:schema_cannot_express"}
-    return synonyms.get(head, "other")
+#: Closed list and normalization now live in the PARSER (v0.3.7, ADDENDUM-03 §1.3) — a model
+#: cannot be bound by an instruction, only by a parser. Re-exported here so this script keeps
+#: one name for it and there is exactly one definition in the repo; a second copy is how the
+#: "resolved" definition drifted across three call sites earlier today.
+from kg.extraction.parser import (                                     # noqa: E402
+    DIVERSION_REASONS, normalize_diversion_reason as normalize_reason)
 
 
 def diversion_histogram() -> tuple[dict, int, int]:

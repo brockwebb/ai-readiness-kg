@@ -22,6 +22,7 @@ schema.yaml (the single source of truth), so the two never drift.
 """
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass, field
 from pathlib import Path
 
@@ -62,6 +63,36 @@ class ExtractionResult:
             "quarantined": len(self.quarantined),
             "proposed_relationships": len(self.proposed_relationships),
         }
+
+
+#: ADDENDUM-06's closed list, plus the two the harness itself produces (`cross_chunk` from
+#: chunk-local extraction, `unstated` for an omitted field).
+DIVERSION_REASONS = ("cross_chunk", "structural_inference", "endpoint_not_located",
+                     "predicate_not_located", "distance_exceeded", "unstated")
+
+#: Observed model phrasings that mean a listed reason. Data, not code (standard 2).
+_DIVERSION_SYNONYMS = {
+    "structural_only": "structural_inference",
+    "structural_evidence_only": "structural_inference",
+    "schema_cannot_express": "other:schema_cannot_express",
+    "unsupported_edge_type": "other:schema_cannot_express",
+    "auto_routed_unknown_edge": "other:schema_cannot_express",
+}
+
+
+def normalize_diversion_reason(raw) -> str:
+    """Map a model-supplied `diversion_reason` onto the closed list.
+
+    The leading token before ':' or an em/en dash is taken, because the observed failure is a
+    listed reason followed by prose ("structural_evidence_only — Table 2 groups Lexical
+    Diversity under..."), not a wholly invented one. A near-miss synonym maps to its member;
+    anything else becomes `other`. Promoted verbatim in behaviour from
+    `scripts/chunked_pilot.py`, whose report-side version this replaces."""
+    head = re.split(r"[:\u2014\u2013]", str(raw if raw is not None else "unstated"), 1)[0]
+    head = head.strip().lower().replace(" ", "_")
+    if head in DIVERSION_REASONS:
+        return head
+    return _DIVERSION_SYNONYMS.get(head, "other")
 
 
 def _quarantine(result, kind, reason, item):
@@ -297,16 +328,23 @@ def parse_extraction(output: dict, source_text: str, schema: dict | None = None,
 
     # --- model-supplied proposed_relationships (staged, never written) --------------------
     for pr in output.get("proposed_relationships", []) or []:
+        raw_reason = pr.get("diversion_reason")
         result.proposed_relationships.append({
             "source": "model",
             "suggested_edge": pr.get("suggested_edge") or pr.get("type"),
             "from_id": pr.get("from_id"), "to_id": pr.get("to_id"),
             "grounding_span": pr.get("grounding_span"), "location": pr.get("location"),
             "note": pr.get("note"),
-            # ADDENDUM-06 closed list (structural_inference | endpoint_not_located |
-            # predicate_not_located | distance_exceeded | cross_chunk | other:<text>). Carried
-            # verbatim; the diversion histogram is computed from it, never from free prose.
-            "diversion_reason": pr.get("diversion_reason"),
+            # ADDENDUM-06 closed list, ENFORCED HERE (v0.3.7, ADDENDUM-03 §1.3) rather than
+            # left to the report. Measured on the chunked pilot: over the first 10 chunks the
+            # model emitted 34 distinct values for this field, most of them whole sentences.
+            # A model cannot be bound by an instruction; it can be bound by a parser. The
+            # normalization moved out of scripts/chunked_pilot.py so that every consumer of
+            # the shard sees one closed vocabulary instead of each re-deriving its own.
+            "diversion_reason": normalize_diversion_reason(raw_reason),
+            # The raw value is PRESERVED on the shard: normalization is for the vocabulary,
+            # not a licence to discard what the model actually said.
+            "diversion_reason_raw": raw_reason,
         })
 
     return result

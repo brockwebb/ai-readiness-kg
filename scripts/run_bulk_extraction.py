@@ -84,6 +84,26 @@ STOP_FILE: Path = REPO / "events" / "_unset_STOP.json"
 RESULT_FILE: Path = REPO / "_unset_RESULT.md"
 
 
+def _verify_pin(name: str, prof: dict, path_key: str, sha_key: str) -> None:
+    """Refuse to run under a drifted pinned file. No-op when the profile names no such file.
+
+    Generalized from the v0.3.4 prompt pin (task 2026-08-26_overnight_burn Lane 0) so a second
+    pinned artefact cannot be declared-but-unenforced — a pin that is written down and never
+    checked reads like a guarantee and is not one."""
+    if not prof.get(path_key):
+        return
+    want = prof.get(sha_key)
+    if not want:
+        raise SystemExit(f"FATAL: profile {name!r} names {path_key} without {sha_key}")
+    path = REPO / prof[path_key]
+    if not path.is_file():
+        raise SystemExit(f"FATAL: profile {name!r} {path_key} not found: {path}")
+    got = hashlib.sha256(path.read_bytes()).hexdigest()
+    if got != want:
+        raise SystemExit(f"FATAL: profile {name!r} {path_key} sha mismatch: {got[:12]} != "
+                         f"pinned {want[:12]} — {prof[path_key]} drifted since the pin")
+
+
 def apply_profile(name: str | None) -> str:
     """Resolve a run profile from run_profiles.yaml into the module-level run constants.
     Fail loud on a missing file/profile/key (standard 4) — a silently-defaulted epoch or
@@ -104,16 +124,13 @@ def apply_profile(name: str | None) -> str:
             raise SystemExit(f"FATAL: profile {name!r} missing key {key!r}")
     # v0.3.4 template pin (task 2026-08-26_overnight_burn Lane 0): a profile that names a
     # prompt_template also pins its sha256; refuse to run under a drifted prompt.
+    _verify_pin(name, prof, "prompt_template", "template_sha256")
     if prof.get("prompt_template"):
-        tpl = REPO / prof["prompt_template"]
-        want = prof.get("template_sha256")
-        if not want:
-            raise SystemExit(f"FATAL: profile {name!r} names prompt_template without template_sha256")
-        got = hashlib.sha256(tpl.read_bytes()).hexdigest()
-        if got != want:
-            raise SystemExit(f"FATAL: profile {name!r} template sha mismatch: "
-                             f"{got[:12]} != pinned {want[:12]} — prompt drifted since the pin")
-        model_stub._PROMPT_PATH = tpl
+        model_stub._PROMPT_PATH = REPO / prof["prompt_template"]
+    # v0.3.7 pins the CHUNKER config alongside the prompt: a chunk-local contract read against
+    # a differently-cut chunk is a different experiment, so an unpinned chunker would let the
+    # run drift in a way the prompt pin cannot see.
+    _verify_pin(name, prof, "chunker_config", "chunker_config_sha256")
     PROFILE_NAME = name
     CORPUS_EPOCH = str(prof["corpus_epoch"])
     BULK_BATCH = int(prof["batch"])

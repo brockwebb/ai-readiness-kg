@@ -528,3 +528,145 @@ The instrument, not the unit, was the problem.
 - Recall. Nothing in this protocol measures it, in either arm.
 
 Per §4 of the addendum, §2 and §3 do not start on this result; this section is a hard stop.
+
+---
+
+# ADDENDUM-03 §1 — v0.3.7 emission contract built (2026-08-29)
+
+**Zero model spend, verified**, not merely intended: the spend ledger's last entries belong to
+the overnight `chunked_pilot_judge` run and nothing in §1 dispatched a call. `committed_today`
+2,023,212 is entirely that prior judge. Nothing here imports `model_stub`.
+
+**Suite 303 → 337 passed. Mutation matrix 13/13 killed.** Committed and pushed.
+**STOPPING HERE per §1's exit and the user's instruction — §2 (dry run and ceilings) and §3
+(the two extractor arms) are not started.**
+
+## §0 corrections acknowledged as pre-registered
+
+Both of the addendum's corrections are recorded as binding before any §3 data exists:
+**(a)** §3 gates the Instrument stratum only; the semantic count is reported, not judged.
+**(b)** ADDENDUM-01 §2.5 is superseded by DD-023 ERRATUM 2 — no re-conversion was performed,
+the existing Docling output is used, and no quarantine improvement is attributed to the
+converter. Any §3 improvement credits the anchor contract, as pre-registered.
+
+## 1. Anchor contract — `kg/extraction/anchors.py` (new)
+
+Model emits `name`, `type`, `anchor` (≤ 10 tokens, shortest *unique* substring). The harness
+locates it and **cuts the grounding span from the source text** as the containing sentence.
+
+**The locate-at-birth guarantee is not merely preserved, it is strengthened**: the span in the
+graph is document-derived, so it cannot drift from the source by construction. A model-supplied
+`grounding_span` is deliberately **discarded** — honouring one would reopen the `span_partial`
+drift the contract exists to close, and there is a test asserting exactly that.
+
+`grounding.py`'s normalization is **reused, not forked**, as §1.1 requires. But locating needs
+*offsets* and `normalize()` returns a string, so the module rebuilds the same transformation
+while tracking each output character to its source index — and then **verifies the rebuild
+against `grounding.normalize` itself**. On mismatch it reports `anchor_not_located` rather than
+cut a span from coordinates it cannot vouch for. **Failing closed is the design point: a wrong
+span is worse than a missing one, because a wrong one still looks grounded.**
+
+Quarantine reason is `anchor_not_located` for every failure (missing / not found / ambiguous /
+over-length / unverifiable offsets), with the detail after the colon as diagnosis — the
+addendum names one reason and this keeps it one class.
+
+**A real defect the module's own smoke test caught before it shipped:** the newline inside a
+hyphenated line break (`read-\nability`) was being read as a sentence boundary, so the derived
+span was cut mid-word — `"ability of the file is high."`, a string that genuinely occurs in the
+source and is still wrong. De-hyphenation joins that word, so that newline is not a boundary.
+Fixed, and pinned by M26.
+
+## 2. Salience — `kg/extraction/prompt_template_v0_3_7.md` (new)
+
+Derived from `chunked_template.md` **by substitution**, the same discipline that file used on
+v0.3.5: the schema, the Instrument positive criterion, the semantic-edge relation rule,
+`evidence_grade`, `Measure.tier` and the edge whitelist are carried over unchanged. Only the
+emission contract moved. Dropped: `concept_inventory`, "the exhaustive Concept layer", "Be
+thorough". Added: the anchor contract up front, one `gleaned` pass (names only), and the closed
+`diversion_reason` list restated so the prompt and the parser name one vocabulary.
+
+Instrument attributes use the same mechanism per attribute (`attribute_anchors`), so no anchor
+⇒ that attribute is null — the v0.3.4 no-background-knowledge rule survives intact.
+
+## 3. Closed list enforced at parse — `kg/extraction/parser.py`
+
+`normalize_diversion_reason` promoted out of `scripts/chunked_pilot.py` into the parser.
+Behaviour is unchanged; the enforcement point is not. **A model cannot be bound by an
+instruction; it can be bound by a parser** — measured basis: over the first 10 chunks the model
+emitted 34 distinct values for this field, mostly whole sentences.
+
+The **raw value is preserved** on the shard as `diversion_reason_raw`: normalization governs
+the vocabulary, not a licence to discard what the model said. `chunked_pilot.py` now
+re-exports the parser's function rather than keeping a second copy — two copies of a
+vocabulary is precisely how the "resolved" definition drifted across three call sites in
+today's T0 work, and one test asserts the identity.
+
+## 4. Type reconciliation at merge — `kg/extraction/merge.py` (new)
+
+Rule, mechanical and logged per entity: **instrument evidence wins → majority → `type_conflict`**.
+
+The first rule is asymmetric on purpose, and the reason is worth stating because it is not
+symmetric voting: typing something an Instrument *with grounded evidence* is a **positive
+observation**, while `Concept` is the default a chunk falls back to when it says nothing more.
+Presence of evidence outranks absence of it, so a majority of uninformative views must not
+outvote one informative view. An Instrument claim **without** evidence gets no privilege and
+falls through to the count (M28).
+
+A tie is **flagged, never broken by ordering** — a coin flip would put an arbitrary type into
+the graph and leave no trace it was arbitrary. Conflicted entities are excluded from strata
+pooling (`poolable`), because pooling an entity whose type is unresolved puts the conflict into
+a gate's denominator. Tested with the observation order reversed, so the outcome cannot depend
+on it.
+
+## 5. Profile `v0_3_7` — registered and sha-pinned
+
+`scripts/run_profiles.yaml`. Pins **both** the prompt template and the chunker config: a
+chunk-local contract read against a differently-cut chunk is a different experiment, and the
+prompt pin alone cannot see that. The extractor model is deliberately **not** pinned — §3 runs
+two arms and DD-023 makes the gate indifferent to which model produced the candidates.
+
+**The comparison profiles are retained** (`v1`, `reextract_v035`, `chunked_v035`), per §1.5,
+with a test asserting they are still there: deleting the arm you measured against destroys the
+measurement.
+
+**A gap found while wiring this:** `apply_profile` enforced the *prompt* pin but would have
+accepted `chunker_config_sha256` as decoration. A pin that is declared and never checked reads
+like a guarantee and is not one. Generalized into `_verify_pin` and applied to both.
+
+## 6. Mutation matrix — 13/13 killed
+
+| mutation | result |
+|---|---|
+| M22 model-typed span honoured instead of derived | KILLED |
+| M23 ambiguity check removed (first hit wins) | KILLED |
+| M24 anchor length bound removed | KILLED |
+| M25 fail-closed on unverified offsets removed | KILLED |
+| M26 hyphen-linebreak boundary exemption removed | KILLED |
+| M27 instrument evidence no longer privileged | KILLED |
+| M28 evidence flag ignored (any Instrument claim wins) | KILLED |
+| M29 tie broken by ordering instead of flagged | KILLED |
+| M30 conflicted entity allowed into pooling | KILLED |
+| M31 diversion normalization removed at parse | KILLED |
+| M32 raw diversion value discarded | KILLED |
+| M33 pin check made permissive | KILLED |
+| M34 exhaustive-inventory instruction restored | KILLED |
+
+§1.6 names the M2 failure mode as the specific thing to avoid, so five of these target the
+*test* rather than the code: M28 and M29 exist because "instrument evidence wins" and "a tie is
+flagged" are each two claims that a single happy-path test would conflate, and M34 rewrites the
+banned instruction back into the prompt to prove the salience test reads the rule and not a
+word. Three tests were themselves corrected during authoring after they failed for the wrong
+reason: one asserted an anchor was ambiguous when the fixture made it unique, one broke on
+where the prompt happened to hard-wrap, and one banned the bare phrase "exhaustive list" —
+which the new template's own sentence saying an exhaustive list is *not* wanted would have
+tripped. That third one is the M2 pattern in miniature: a word, not a rule.
+
+## Discrepancies
+
+**None between the addendum and live state.** `run_profiles.yaml`, `parser.py`,
+`grounding.py`, `chunked_template.md` and `chunker_config.yaml` were all as described.
+
+## Not done (the hard stop)
+
+§2 dry run and ceiling declaration; §3 Arm A / Arm B. No `--ceiling-tokens` declared, no
+`release-orphans` run — those belong to §2, which begins only on the next instruction.
