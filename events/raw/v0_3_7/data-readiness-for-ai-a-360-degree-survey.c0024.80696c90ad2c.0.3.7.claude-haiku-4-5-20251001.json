@@ -1,0 +1,32 @@
+{
+ "doc_id": "data-readiness-for-ai-a-360-degree-survey",
+ "chunk_id": "data-readiness-for-ai-a-360-degree-survey#c0024",
+ "chunk_index": 24,
+ "chunk_start": 133907,
+ "chunk_end": 138560,
+ "chunk_tokens": 1461,
+ "heading_path": [
+  "REFERENCES"
+ ],
+ "oversize": false,
+ "doc_sha256": "80696c90ad2c53070409da61e634424fd90d630b584c8a61a2e04bf21ccf35ba",
+ "prompt_version": "0.3.7",
+ "model_id": "claude-haiku-4-5-20251001",
+ "usage": {
+  "inputTokens": 9,
+  "outputTokens": 6052,
+  "cacheReadInputTokens": 17778,
+  "cacheCreationInputTokens": 14571,
+  "webSearchRequests": 0,
+  "costUSD": 0.0611888,
+  "contextWindow": 200000,
+  "maxOutputTokens": 32000,
+  "canonicalModel": "claude-haiku-4-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.0611888,
+ "duration_ms": 55458,
+ "session_id": "8fbefa6f-60af-4ab7-9350-219584e726c0",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"References section listing standards, tools, and academic works on data quality, AI readiness, and metrics; asserts data readiness as ongoing commitment.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"concept_1\",\n      \"name\": \"data readiness\",\n      \"anchor\": \"data readiness is not\",\n      \"location\": 1,\n      \"description\": \"An ongoing commitment, not merely a preliminary step\"\n    },\n    {\n      \"id\": \"concept_2\",\n      \"name\": \"data quality\",\n      \"anchor\": \"Data Quality: Concepts\",\n      \"location\": 17\n    },\n    {\n      \"id\": \"concept_3\",\n      \"name\": \"data bias\",\n      \"anchor\": \"Discover Data Bias\",\n      \"location\": 15\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"claim_1\",\n      \"claim_text\": \"Data readiness is not just a preliminary step but an ongoing commitment\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"data readiness is not\",\n      \"location\": 1\n    }\n  ],\n  \"instruments\": [\n    {\n      \"id\": \"instrument_1\",\n      \"name\": \"PEVQ\",\n      \"year\": \"2008\",\n      \"owner\": null,\n      \"method\": \"Perceptual Evaluation of Video Quality\",\n      \"anchor\": \"PEVQ – the Standard\",\n      \"location\": 1,\n      \"attribute_anchors\": {\n        \"year\": \"2008\",\n        \"method\": \"Perceptual Evaluation\"\n      }\n    },\n    {\n      \"id\": \"instrument_2\",\n      \"name\": \"BS.1387\",\n      \"year\": null,\n      \"owner\": null,\n      \"method\": \"Objective Measurements of Perceived Audio Quality\",\n      \"anchor\": \"BS.1387 : Method\",\n      \"location\": 4,\n      \"attribute_anchors\": {\n        \"method\": \"Objective Measurements\"\n      }\n    }\n  ],\n  \"measures\": [],\n  \"standards\": [\n    {\n      \"id\": \"standard_1\",\n      \"name\": \"FAIR Principles\",\n      \"version\": null,\n      \"steward\": null,\n      \"as_of_date\": \"2024\",\n      \"anchor\": \"FAIR Principles\",\n      \"location\": 2\n    }\n  ],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [\n    {\n      \"id\": \"tool_1\",\n      \"name\": \"JNDmetrix Technology\",\n      \"steward\": \"Sarnoff\",\n      \"license\": null,\n      \"url\": \"http://www.sarnoff.com/products_services/video_vision/jndmetrix/\",\n      \"as_of_date\": null,\n      \"anchor\": \"[6] n.d.. JNDmetrix\",\n      \"location\": 6\n    }\n  ],\n  \"platforms\": [\n    {\n      \"id\": \"platform_1\",\n      \"name\": \"Kaggle\",\n      \"operator\": null,\n      \"as_of_date\": \"2023\",\n      \"anchor\": \"Kaggle\",\n      \"location\": 7\n    }\n  ],\n  \"edges\": [\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"data-readiness-for-ai-a-360-degree-survey\",\n      \"to_id\": \"claim_1\",\n      \"anchor\": \"data readiness is not\",\n      \"location\": 1\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"claim_1\",\n      \"to_id\": \"concept_1\",\n      \"anchor\": \"data readiness is not\",\n      \"location\": 1\n    }\n  ],\n  \"cites\": [\n    {\n      \"from_id\": \"data-readiness-for-ai-a-360-degree-survey\",\n      \"to_id\": \"[1]\",\n      \"anchor\": \"PEVQ – the Standard\",\n      \"location\": 1\n    },\n    {\n      \"from_id\": \"data-readiness-for-ai-a-360-degree-survey\",\n      \"to_id\": \"[2]\",\n      \"anchor\": \"FAIR Principles\",\n      \"location\": 2\n    },\n    {\n      \"from_id\": \"data-readiness-for-ai-a-360-degree-survey\",\n      \"to_id\": \"[10]\",\n      \"anchor\": \"Data Readiness Report\",\n      \"location\": 10\n    }\n  ],\n  \"mentions\": [\n    {\n      \"name\": \"The Gunning Fog Index\",\n      \"anchor\": \"The Gunning Fog Index\"\n    },\n    {\n      \"name\": \"PSNR\",\n      \"anchor\": \"PSNR\"\n    },\n    {\n      \"name\": \"Latent Dirichlet Allocation\",\n      \"anchor\": \"Latent Dirichlet Allocation\"\n    },\n    {\n      \"name\": \"cross-validation\",\n      \"anchor\": \"cross-validation\"\n    },\n    {\n      \"name\": \"imbalanced data\",\n      \"anchor\": \"Learning from Imbalanced Data\"\n    },\n    {\n      \"name\": \"Materials Data Facility\",\n      \"anchor\": \"Materials Data Facility\"\n    },\n    {\n      \"name\": \"LOF\",\n      \"anchor\": \"LOF: Identifying density\"\n    }\n  ],\n  \"proposed_relationships\": [],\n  \"gleaned\": [\n    {\n      \"name\": \"privacy evaluation\",\n      \"type\": \"Concept\"\n    },\n    {\n      \"name\": \"machine learning training\",\n      \"type\": \"Practice\"\n    },\n    {\n      \"name\": \"data anonymity\",\n      \"type\": \"Concept\"\n    }\n  ]\n}\n```"
+}

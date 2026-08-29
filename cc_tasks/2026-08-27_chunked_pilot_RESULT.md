@@ -898,3 +898,232 @@ on the record's face in `declared_by`.
 `scripts/run_bulk_extraction.py --dry-run` calls `spend.declare()` **before** branching on the
 dry-run flag, so pricing a run requires committing to a fabricated ceiling on an append-only
 ledger. This is the §2 discrepancy promoted from a paragraph in a RESULT to a tracked artifact.
+
+---
+
+# §3 ARM A — `claude-haiku-4-5` under the v0.3.7 anchor contract
+
+**Verdict: UNDER-EXTRACTION.** Arm A is **perfectly faithful and severely silent.**
+
+| pre-registered quantity | threshold | measured | |
+|---|---|---|---|
+| F (Wilson 95% upper) | `< 0.10` | **0.0000 [0.0000, 0.0385]** over 96 facts | PASS |
+| item-faithful | `>= 0.70` | **60/60 = 1.000** | PASS |
+| admitted items / chunk | `>= 0.60 x v0.3.5` = 27.14 | **15.70** (ratio **0.347**) | **FAIL** |
+
+**This is exactly the case the operator's pre-registration was written to catch.** Without the
+yield floor, `F_upper 0.0385` and `item-faithful 1.000` would have been reported as a clean
+PASS — and it would have been a true statement about a system extracting a third of what it
+should. Reported as the pre-registered triple: **(0.0385, 1.000, 15.70 admitted/chunk)**.
+
+Raters: `claude-opus-4-8` agreement 1.000, `claude-sonnet-5` 0.969, Dawid-Skene over 192
+labels. 96 of 96 facts entailed, 0 fabrications. Span checks: 8 of 96 facts sit on a
+mid-noun-phrase span (recorded, never subtracted — §5).
+
+## Coverage, and why it is 44 chunks and not 128
+
+Arm A covers **48 chunks — both documents the v0.3.5 arm banked, in full** (data-readiness
+30/30, aidrin 18/18), of which **44 have a v0.3.5 comparator**. The other three pilot
+documents were not extracted, for two reasons, both measured rather than assumed:
+
+1. **The ceiling would not have held.** Settled cost came in at **41,530 tokens/chunk**
+   against the §2 projection of 14,150. 128 chunks needs ~5.3M against the **3,840,000**
+   declared in §2 — the run would have been refused at ~92 chunks. **The §2 projection's
+   error is identifiable: it omitted `cacheReadInputTokens` entirely** (13.6K/call measured)
+   and put output at 5,092/chunk against a measured **10,179**.
+2. **The 84 chunks outside the comparator answer nothing the gate asks.** The pre-registered
+   comparison is against v0.3.5, which exists only on these two documents.
+
+Running exactly the v0.3.5 chunk set turns the banked verdict's own stated defect — "the two
+arms therefore do not run on the same document mix" — into the first like-for-like comparison
+in this pilot. **Settled: 1,993,432 of the 3,840,000 ceiling. No refusals.**
+
+## Yield: what salience cut, and what quarantine cut
+
+| over the 44 shared chunks | Arm A | v0.3.5 | ratio |
+|---|---|---|---|
+| **admitted / chunk** | **15.70** | **45.23** | **0.347** |
+| emitted / chunk | 42.0 | 99.5 | 0.422 |
+| quarantine rate | 62.6% | 54.5% | — |
+| admitted nodes | 389 | 746 | 0.521 |
+| admitted edges | 302 | 1,244 | **0.243** |
+
+Per-chunk ratio: median **0.351**; **10 of 43** comparable chunks clear the 0.60 floor.
+
+The decomposition matters more than the headline. **Salience did what it was asked to do** —
+emission fell to 42%, and recall is not gate-measured, so that alone is not a defect. The
+shortfall past that is quarantine: the rate rose from 54.5% to 62.6%, and it lands hardest on
+**edges (0.243)**, because a quarantined node kills every edge that ends on it —
+`unresolved_endpoint` is 19.7% of Arm A's emitted items.
+
+### Quarantine by reason, with the two causes the erratum split kept apart
+
+| reason | Arm A | % of emitted | v0.3.5 | % of emitted |
+|---|---|---|---|---|
+| `span_partial` | 549 | 26.8% | 846 | 18.7% |
+| `unresolved_endpoint` | 404 | 19.7% | 1,524 | 33.6% |
+| **`anchor_not_located`** | **347** | **16.9%** | n/a (no anchors) | — |
+| `property_value_invalid` | 13 | 0.6% | 0 | — |
+| `span_not_in_source` | 0 | — | 34 | 0.8% |
+
+v0.3.5 figures are a re-parse of its banked raws under the current parser (2,438 quarantines
+of 4,529 emitted); the shard's own totals are 2,388 of 4,378 because `phase_ingest`
+additionally re-checks every span against the whole document.
+
+**`span_partial` (549), split by mechanism:** 70% genuine paraphrase, **30% capitalization
+alone** — the model emits `Data readiness` as the canonical name while the sentence says
+`data readiness`. `grounding.covers` is case-sensitive by repo design and was not touched.
+
+**`anchor_not_located` (347), the contract's own new failure class:** 52% not found in the
+chunk (the anchor was not a character-exact substring), 37% ambiguous (not unique, which the
+contract requires), 11% over the 10-token budget. Worst layer by far is **edges (101)**,
+which need an anchor pointing into a sentence carrying both endpoints and the predicate.
+
+### `span_partial` has a named cause, and it is not the unit — issue `53e2cf6e`
+
+`kg/extraction/chunked_template.md` claims in its header to carry over "the first grounding
+rule, character-exact spans" from `prompt_template.md` v0.3.5. **Both rules are absent from
+the file.** Verified by matching every bold rule heading across the two templates; both files
+hash to their pinned shas, so this is original and not drift. `prompt_template_v0_3_7.md`
+inherits the omission because §1 derived it from `chunked_template.md`.
+
+The missing rule is the one that says *"If the document uses a different surface form than
+your chosen `name`, use the document's surface form as the name."* Its absence is exactly the
+mechanism behind both the paraphrase and the capitalization halves of `span_partial`:
+
+| arm | has the rule | `span_partial` as % of emitted |
+|---|---|---|
+| whole-document v0.3.5 (opus-5) | **yes** | **5.9%** |
+| chunked v0.3.5 (opus-5) | no | 18.7% |
+| chunked v0.3.7 Arm A (haiku) | no | 26.8% |
+
+Same model, same schema, same parser settings between the first two rows: **3.2x**. Chunking
+is a co-explanation and the two are not separated, so this is stated as consistent-with, not
+proven. **The template was not edited** — it is sha-pinned, and editing it would invalidate
+the banked arm's provenance. `write_verdict` now emits an ERRATUM in place of the sentence
+"The unit of extraction is the only variable", which was false.
+
+## Cost — the anchor contract's argument survives the yield failure
+
+| | Arm A (haiku, anchors) | v0.3.5 (opus-5, verbatim) | |
+|---|---|---|---|
+| $ / chunk | **$0.082** | $0.928 | 11.3x cheaper |
+| output tokens / chunk | 10,179 | 26,218 | 2.6x cheaper |
+| **$ / admitted item** | **$0.0052** | **$0.0205** | **3.9x cheaper** |
+
+**Even at 0.347 of the yield, Arm A is ~4x cheaper per admitted item at F = 0 and
+item-faithful = 1.000.** That is the finding the cost objection actually turns on, and it is
+why UNDER-EXTRACTION is a verdict about *this arm as configured*, not a refutation of the
+anchor contract.
+
+## Semantic edges: zero (§0(a), reported unjudged)
+
+**0 semantic edges across the whole arm** — no `has_component`, `subtype_of`, `consumes`,
+`extends` or `implements` was admitted. §0(a) pre-registered that this stratum would be
+reported and not judged because five documents cannot reach DD-026's n=35; the arm did not
+produce one. `anchor_not_located` on the `edges` layer (101) and the semantic-span rule
+between them account for it.
+
+## Type reconciliation (§1.4) fired on real data
+
+195 `majority`, **38 `instrument_evidence_wins`**, **23 `type_conflict`** excluded from
+pooling. The privileged-type rule is not decorative: 38 entities were typed `Instrument` on
+attribute-bearing evidence in one chunk while other chunks defaulted them to `Concept`. Merge
+rate 25.7% (data-readiness) and 39.0% (aidrin).
+
+## What this arm cannot answer
+
+**Arm A changes the contract AND the model at once.** Against banked v0.3.5 it is
+haiku+anchors versus opus-5+verbatim, so the 0.347 yield ratio cannot be attributed to either
+alone. §3 pre-registers Arm B (`claude-sonnet-5`, same contract) as the next step, and that
+comparison separates the *model* within the contract. Separating the *contract* would need
+opus-5 under v0.3.7, which §3 explicitly excludes ("Opus 5 is not an arm"). Recorded as a
+limitation, not acted on.
+
+## Spend
+
+| run | ceiling | settled | |
+|---|---|---|---|
+| `pilot_v037_arm_a_haiku` | 3,840,000 | **1,993,432** | 48 chunks, 0 refusals |
+| `pilot_v037_arm_a_haiku_judge` | 4,000,000 | **1,113,811** | 96 facts x 2 raters, 0 refusals |
+
+Arm A total **3,107,243**. Daily band 55,000,000, of which 5,130,455 committed today across
+all runs — well under, so no operator approval was required (doctrine: under the cap, run it).
+
+## Three harness defects the first chunks exposed — all fixed, all mutation-checked
+
+1. **Docling hard-wraps prose at ~110 characters, and every newline was being read as a
+   sentence end.** Derived spans were cut at the wrap: `Poor quality data produces inaccurate
+   and ineffective AI models that`. Still verbatim-present in the source, so still passing
+   `is_grounded` — the same dangerous shape as the table-row bug from the §2 pre-check, one
+   layer down. **My §2 pre-check missed it because it measured the delta my structural rules
+   made, not whether the resulting spans were right.** A bare newline now ends the unit only
+   at a paragraph break or beside a structural line. Span length after: median 155, p95 367,
+   **1.9% over 600 chars** (de-formatted table blocks that lost their pipe markers) — a
+   recorded limitation, since a long span makes entailment easier and so could flatter
+   faithfulness.
+2. **An empty extraction is not a truncated one.** `has_extraction_layers` requires a
+   NON-empty layer, which was sound under the exhaustive contract. Under salience a
+   references section legitimately yields nothing: `data-readiness#c0029` returned complete
+   valid JSON, every layer `[]`, 23 bibliography entries in `mentions` — and was called
+   truncated, stopping the run. Truncation is now detected by the envelope carrying none of
+   the contract's declared keys.
+3. **A `SystemExit` raised inside a worker thread** is a `BaseException`, so it bypassed the
+   executor's `except Exception` and killed the pass **before `phase_ingest` ran**, leaving
+   20 already-paid-for raws off the shard. `TruncatedChunk` is an `Exception`: the pass
+   records it, ingests the rest, then stops. STOP semantics unchanged.
+
+**Append-only re-ingest generations.** Fixing (1) invalidated the spans of 14 chunks already
+on the shard, and `chunk_superseded` could not correct them: it keys on
+`(chunk_id, start, end)` and the boundaries had not moved, so it would have retired the
+corrected events too. Each ingest pass now stamps an `ingest_generation`; readers keep the
+highest; the superseded events stay on the shard as the record of what was believed. Nothing
+was edited or deleted.
+
+**Ledger erratum** (also recorded in the pre-registration above): the §2 declarations carried
+`call_class: extraction` while the §2 arithmetic used the `extraction_chunk` floor. Corrected
+by a superseding declare, ceiling unchanged, 0 committed at the time.
+
+## Tests: 383 -> 386. Mutation matrix 20/20 killed
+
+| mutation | result |
+|---|---|
+| M49 `apply_arm` ignores the profile's shard/tag | KILLED |
+| M50 anchor contract not applied on the parse path | KILLED |
+| M51 anchor drops not carried into `result.quarantined` | KILLED |
+| M52 `reason_class` sweeps the unknown into a bucket | KILLED |
+| M53 `resolved_type` ignores the conflict flag | KILLED |
+| M54 yield compared over all chunks, not the shared set | KILLED |
+| M55 under-extraction verdict never fires | KILLED |
+| M56 second arm billed to the first arm's run id | KILLED |
+| M57 any Instrument observation counts as evidence | KILLED |
+| M58 unknown `emission_contract` accepted | KILLED |
+| M59 `attribute_anchors` never become per-attribute spans | KILLED *(SURVIVED first)* |
+| M60 empty-but-valid envelope treated as truncation | KILLED |
+| M61 truncation guard accepts anything that parses | KILLED *(SURVIVED first)* |
+| M62 truncated chunk aborts the pass before ingest | KILLED |
+| M63 `--only` filter not applied to the dispatch list | KILLED |
+| M64 wrapped newline treated as a sentence end again | KILLED *(SURVIVED first)* |
+| M65 paragraph break no longer ends the unit | KILLED *(SURVIVED first)* |
+| M66 readers ignore the ingest generation | KILLED |
+| M67 pre-generation events dropped as generation 0 | KILLED |
+| M68 supersede no longer outranks generation | KILLED |
+
+**Four survived the first pass.** M64/M65 because two boundary rules had **no test at all**
+until a real corpus fixture was written for each. M59 and M61 are the **M2 failure mode for
+the fifth time in five tasks**: both tests called the helper directly and so proved the
+predicate rather than the path that consults it. M61 is now driven through `_extract_one`
+with a stubbed model. **M65 was resolved by deleting the code, not by testing it** — the
+paragraph-break lookahead could not fire, because a blank line is two newlines and the second
+always satisfies the lookbehind. Same outcome as `_MULTIWORD_ABBREV` in §2.
+
+## Not done — the hard stop
+
+**Arm B (`claude-sonnet-5`) not run.** §3 licenses it ("run only if A's admitted yield or
+faithfulness falls short" — A's yield falls short), but the operator's instruction for this
+pass was to stop and report before it. `pilot_v037_arm_b_sonnet` remains declared at
+3,840,000 with **0 committed**. **If Arm B runs, its ceiling must be re-derived from Arm A's
+actuals** (41,530 settled/chunk), exactly as §2 required: the projection that produced
+3,840,000 is now known to be 2.6x low.
+
+`seldon cc complete` deliberately not run — §3 is not finished.

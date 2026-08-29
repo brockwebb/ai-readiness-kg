@@ -4,7 +4,8 @@
 Second arm of the unit-of-extraction comparison. The whole-document arm is banked on
 `events/batch-013_reextract_v035b.jsonl` + `events/raw/reextract_v035b_pilot/`; this script
 adds the chunked arm on the SAME five documents, the SAME model, the SAME schema and rules,
-and the SAME pre-registered gate. The unit is the only variable.
+and the SAME pre-registered gate. The unit was intended to be the only variable;
+it is not (see the ERRATUM `write_verdict` emits, and issue 53e2cf6e).
 
 Phases (each idempotent, each resumable):
 
@@ -1107,9 +1108,22 @@ def write_verdict(results: dict, cfg: dict, a, admission: dict | None = None,
     min_facts = min_facts if min_facts is not None else min_facts_for_gate()
     L = ["# Chunked vs whole-document extraction — pre-registered verdict", "",
          f"Task `{TASK}`. Same five documents, same model (`{cfg['model_id']}`, effort "
-         "unchanged), same schema, same rules — `kg/extraction/chunked_template.md` is "
-         "`prompt_template.md` v0.3.5 with the framing swapped, sha-pinned in the "
-         "`chunked_v035` profile. **The unit of extraction is the only variable.**", "",
+         "unchanged), same schema. `kg/extraction/chunked_template.md` is sha-pinned in the "
+         "`chunked_v035` profile.", "",
+         "**ERRATUM (2026-08-29, issue `53e2cf6e`): the unit of extraction is NOT the only "
+         "variable, and this line previously said it was.** `chunked_template.md` states in "
+         "its header that every rule carried over from `prompt_template.md` v0.3.5 unchanged, "
+         "naming the first grounding rule and character-exact spans among them. **Both are "
+         "absent from the file** — verified by matching every bold rule heading across the "
+         "two templates, with both files hashing to their pinned shas, so the omission is "
+         "original and not drift. The chunked arm therefore also ran without two grounding "
+         "rules the whole-document arm had. Measured by re-parsing both arms' banked raws at "
+         "identical parser settings, `span_partial` is **5.9% of emitted items in the "
+         "whole-document arm** (rule present) against **18.7% in the chunked arm** (rule "
+         "absent). Chunking itself is a co-explanation and the two causes are not separated "
+         "here, so the quarantine and yield rows below must not be read as a pure unit "
+         "effect. The FAITHFULNESS rows are unaffected: a rule about which span is chosen "
+         "does not make an admitted item's facts more or less entailed.", "",
          "Thresholds are the task's, unchanged and not re-read from any result: "
          f"F_upper < {F_STOP}, item-faithful >= {ITEM_FAITHFUL}, precondition "
          f"pooled >= {STRATUM_PRECONDITION} per stratum.", "",
