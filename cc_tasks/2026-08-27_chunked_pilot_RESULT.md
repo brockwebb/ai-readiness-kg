@@ -1127,3 +1127,130 @@ actuals** (41,530 settled/chunk), exactly as §2 required: the projection that p
 3,840,000 is now known to be 2.6x low.
 
 `seldon cc complete` deliberately not run — §3 is not finished.
+
+---
+
+# §3 Arm A — post-hoc decomposition (operator request, 2026-08-29). Zero model spend
+
+Arm B **not run**. Nothing below dispatched a model call: both arms are re-parsed from their
+persisted raws under the current parser at identical settings.
+
+## 1. Quarantine split — `span_partial` and `anchor_not_located` as separate counts
+
+Reported at both scopes, because the arm covers 48 chunks and only 44 have a v0.3.5
+comparator. **The §3 requirement is the separation, and these two never share a bucket.**
+
+| reason | all 48 chunks | 44 shared chunks |
+|---|---|---|
+| **`span_partial`** | **549** | **482** |
+| **`anchor_not_located`** | **347** | **308** |
+| `unresolved_endpoint` | 404 | 356 |
+| `property_value_invalid` | 13 | 12 |
+| **total quarantined** | **1,313** of 2,052 proposed (64.0%) | **1,158** of 1,849 (62.6%) |
+
+Sub-splits, all 48 chunks:
+
+- **`span_partial` (549)** — 70% genuine paraphrase, **30% capitalization alone**.
+- **`anchor_not_located` (347)** — **180 not found in the chunk (52%)**, 128 ambiguous
+  i.e. non-unique (37%), 39 over the 10-token budget (11%). Worst layer: `edges` (101).
+
+## 2. Does the v0.3.7 prompt require the anchor to be a verbatim substring? **Yes — three times**
+
+Verbatim from `kg/extraction/prompt_template_v0_3_7.md`, sha `9a410fc3...` (pinned):
+
+> Every node and every edge you emit MUST carry an **`anchor`**: the **shortest substring of
+> the chunk text that occurs exactly once in it** and points at the item. **At most 10
+> tokens.**
+
+> - The anchor must be **character-exact** as it appears in the chunk, and **unique** in it.
+>   If your first choice appears more than once, lengthen it just enough to disambiguate
+>   (still ≤ 10 tokens).
+
+> - An anchor that cannot be located, or that matches in more than one place, means the item
+>   is **dropped** — so a precise short anchor is worth more to you than a long one.
+
+And for Instrument attributes (line 122): *"each obeying the anchor contract above (unique in
+the chunk, ≤ 10 tokens)"*.
+
+**So the requirement is stated three times, the uniqueness rule twice, and the consequence of
+failing it once.** This settles a diagnosis I had left open, and it splits the two quarantine
+classes into two *different kinds* of finding:
+
+- **`anchor_not_located` (347) is a model COMPLIANCE failure, not a contract gap.** The rule
+  is unambiguous and repeated; 180 anchors were simply not substrings of the chunk and 128
+  were not unique. Nothing in the prompt needs fixing for this. It is a fact about
+  `claude-haiku-4-5` at this task.
+- **`span_partial` (549) IS a contract gap.** Nothing in the file constrains the item's
+  `name`/`claim_text`/`text` to the document's surface form — that is the FIRST GROUNDING
+  RULE, absent from this template and from `chunked_template.md` (issue `53e2cf6e`).
+
+**One qualification, and it cuts against the prompt.** The term *character-exact* appears, but
+the whole-document template's operative definition of it does not: *"Copy an exact, contiguous
+substring from the document text — do not paraphrase, summarize, reword, fix typos, expand
+abbreviations, merge sentences, or normalize punctuation/spacing."* That sentence is in
+`prompt_template.md` and in **neither** chunked template (grep count: 1, 0, 0). So the term is
+used without its definition. That weakens the compliance finding but does not overturn it: the
+plain phrase "shortest substring of the chunk text that occurs exactly once in it" carries the
+requirement on its own.
+
+## 3. Decomposing the 0.347 — proposal, not quarantine, is the binding constraint
+
+Per chunk, over the 44 shared chunks, one method for both arms:
+
+| per chunk | Arm A | v0.3.5 | ratio |
+|---|---|---|---|
+| **proposed** (admitted + quarantined) | **42.02** | **102.93** | **0.408** |
+| — admitted by the parser | 15.70 | 47.52 | 0.330 |
+| — quarantined | 26.32 | 55.41 | 0.475 |
+| dropped at the whole-document re-check | **0.00** | 2.30 | **0.000** |
+| **ADMITTED to the shard** | **15.70** | **45.23** | **0.347** |
+| diverted to `proposed_relationships` | 0.95 | 6.52 | 0.146 |
+
+| quarantined per chunk, by reason | Arm A | v0.3.5 | ratio |
+|---|---|---|---|
+| `unresolved_endpoint` | 8.09 | 34.64 | 0.234 |
+| `span_partial` | 10.95 | 19.23 | 0.570 |
+| **`anchor_not_located`** | **7.00** | **0.00** | new class |
+| `property_value_invalid` | 0.27 | 0.00 | new |
+| `span_not_in_source` | 0.00 | 0.77 | **0.000** |
+| `cites_missing_to` | 0.00 | 0.77 | 0.000 |
+
+### The multiplicative reading
+
+**0.347 = 0.408 (proposal ratio) x 0.851 (admission-rate ratio).**
+
+**About 85% of the shortfall is that Arm A proposes 41% as many items; only ~15% is that it
+admits a smaller fraction of them.** Admission rates: Arm A **0.374**, chunked v0.3.5
+**0.462**, whole-document v0.3.5 **0.788**.
+
+That reframes the fix. Reaching the 27.14/chunk floor from 42.02 proposed requires an
+admission rate of **0.646**:
+
+| scenario | admitted/chunk | ratio | clears 0.60? |
+|---|---|---|---|
+| Arm A as measured (0.374) | 15.70 | 0.347 | no |
+| Arm A at chunked v0.3.5's rate (0.462) | 19.41 | 0.429 | **no** |
+| Arm A at whole-document v0.3.5's rate (0.788) | 33.11 | 0.732 | yes |
+| Arm A at 100% admission (ceiling) | 42.02 | 0.929 | yes |
+
+**Closing every quarantine gap to the level of the other CHUNKED arm still leaves Arm A below
+the floor.** The floor is reachable only at roughly the whole-document arm's admission rate —
+and that is precisely the arm holding the two grounding rules both chunked templates dropped.
+So the omission is the right lever, but it is a *necessary* fix, not a sufficient one: the
+proposal deficit (0.408) is untouched by it and would still need the model or the salience
+instruction to change.
+
+### Two things this decomposition settles that the headline hid
+
+**The anchor contract eliminated a whole failure class.** `span_not_in_source` and the
+whole-document re-check drop — **3.07 items/chunk lost by v0.3.5, 0.00 by Arm A**. A span cut
+from the source by the harness cannot fail to be in the source. That is the locate-at-birth
+guarantee working exactly as ADDENDUM-01 §2.1 argued it would, and it is a clean win
+independent of the yield verdict.
+
+**Arm A is barely attempting relational structure.** Diversions to `proposed_relationships`
+are 0.146 of v0.3.5's, `unresolved_endpoint` is 0.234, admitted edges are 0.243, and semantic
+edges are **0**. `anchor_not_located` on the `edges` layer alone is 101 items — an edge anchor
+must point into a sentence carrying both endpoints and the predicate, which is the hardest
+anchor to satisfy under a ≤ 10-token budget. **The edge deficit is the largest single
+component of the yield gap and it has a specific, mechanical cause.**
