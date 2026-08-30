@@ -1254,3 +1254,159 @@ edges are **0**. `anchor_not_located` on the `edges` layer alone is 101 items �
 must point into a sentence carrying both endpoints and the predicate, which is the hardest
 anchor to satisfy under a ≤ 10-token budget. **The edge deficit is the largest single
 component of the yield gap and it has a specific, mechanical cause.**
+
+---
+
+# §3 Arm A — two further diagnostics (operator request, 2026-08-30). Zero model spend
+
+Arm B **held, not run.** Everything below is read from persisted raws.
+
+## 1. The 549 `span_partial` are Arm A's — and they are not a defect in the span
+
+Confirmed by re-deriving every one of them:
+
+| check | result |
+|---|---|
+| derived span verbatim present in the chunk | **549 / 549** |
+| cases where the surviving span equals what the MODEL typed | **0 / 549** |
+
+**The anchor contract held exactly as §1 specified.** No model-supplied `grounding_span`
+survived; every span in the graph was cut from the source by the harness.
+
+**`span_partial` is not a test of the span.** It is `grounding.partial_span_reason`, which asks
+whether the derived span **covers the item's own typed text attribute**
+(`grounding.COVERAGE_ATTRIBUTES` = `verbatim_text`, `text`, `claim_text`, `name`, `term`). The
+span is source-cut and verbatim; **the paraphrase is on the ATTRIBUTE side** — what the model
+typed as the entity's `name` or the claim's `claim_text`.
+
+| failing attribute | n | | mechanism | n |
+|---|---|---|---|---|
+| `name` | 235 | | not a substring of the span at all | **382** |
+| `claim_text` | 163 | | differs only by capitalization | **167** |
+| `text` | 119 | | | |
+| `term` | 16 | | | |
+| `verbatim_text` | 16 | | | |
+
+So the path is: the anchor locates correctly → the harness cuts the containing sentence → the
+model's *own canonical name for the entity* is not a substring of that sentence. Root cause is
+the absent FIRST GROUNDING RULE (issue `53e2cf6e`), whose text is precisely *"If the document
+uses a different surface form than your chosen `name`, use the document's surface form as the
+name."*
+
+### Two corrections to what I wrote in the previous section
+
+**(a) "70% genuine paraphrase" invited the wrong reading.** It is accurate about the
+mechanism — 382 of 549 typed attributes are not substrings of their span — but phrased so it
+can be read as *the span* being a paraphrase, which the table above shows is impossible on this
+path. The correct statement: **70% of `span_partial` items carry a typed attribute that is not
+a substring of the source sentence the harness cut; 30% differ from it only by case.**
+
+**(b) The three-row `span_partial` comparison put a different measurement in its third row.**
+That table read 5.9% (whole-document v0.3.5) / 18.7% (chunked v0.3.5) / 26.8% (Arm A). The
+first two arms supplied their OWN spans, so the model could choose a span containing the name
+it had already typed. Arm A does not get that choice: the harness picks the sentence, and the
+model's name must appear in **that specific sentence**. **Arm A's 26.8% is therefore measured
+against a strictly harder test and is not comparable to the other two.** The 5.9% vs 18.7%
+comparison stands — both are model-chosen spans, same model, same schema — and it is that pair,
+not Arm A's number, that carries the evidence about the omitted rule.
+
+## 2. Set difference: what v0.3.5 proposed on the 44 shared chunks and Arm A did not
+
+Node entities the model emitted (admitted **or** quarantined), keyed within each chunk.
+
+| | v0.3.5 | Arm A |
+|---|---|---|
+| distinct node entities proposed | **1,582** | **947** |
+| proposed by the other arm and not by this one | 1,215 | 580 |
+| **agreed by both** | **367** | **367** |
+
+**The arms are not nested.** Arm A proposed 580 entities v0.3.5 did not; the two agree on only
+367 — 23% of v0.3.5's set and 39% of Arm A's. Under-extraction is partly *different*
+extraction.
+
+### The key matters, and it is biased by the same defect as §1
+
+Exact normalized-name equality counts a differently-worded name as a miss — and §1 just
+established that Arm A systematically canonicalizes names instead of copying the document's
+surface form. So the strict figure is an upper bound. Recomputed with a containment-tolerant
+key (either name a substring of the other):
+
+| type | missing, exact key | missing, containment key | v0.3.5 total |
+|---|---|---|---|
+| Concept | 692 | **412** | 941 |
+| Claim | 378 | **120** | 407 |
+| Instrument | 65 | **12** | 123 |
+| Measure | 49 | 21 | 61 |
+| Practice | 15 | 12 | 15 |
+| Definition | 8 | 3 | 18 |
+| Framework | 5 | 3 | 10 |
+| Standard | 2 | 2 | 5 |
+| Tool | 1 | 0 | 2 |
+| **total** | **1,215** | **585** | **1,582** |
+
+**630 of the 1,215 "missing" items were a substring relation — the same entity under a
+different name.** The truth is bracketed by these two columns; neither is exact, since
+containment is loose in the other direction.
+
+**Instrument evidence** — typed `Instrument` by v0.3.5 with a non-empty `owner`/`year`/`method`
+(the same positive criterion `merge.instrument_evidence` reads):
+
+| | n | of 116 |
+|---|---|---|
+| v0.3.5 proposals carrying instrument evidence | 116 | — |
+| with no Arm A counterpart, exact key | 60 | 52% |
+| **with no Arm A counterpart, containment key** | **12** | **10%** |
+
+**This is the most consequential number here.** The Instrument stratum is the one the gate
+measures, and on the containment key Arm A misses only ~10% of the instrument-bearing entities
+v0.3.5 found. The yield deficit is concentrated in `Concept` (412) and `Claim` (120) — the
+strata the gate does not read — not in the stratum it does.
+
+### Sample of 20 (seed `arm_a_missing_20`, exact key)
+
+Drawn without stratification, so the mix is proportional: 16 Concept, 4 Claim, 0 Instrument.
+
+| # | type | chunk | name | v0.3.5 source span |
+|---|---|---|---|---|
+| 1 | Claim | aidrin c0011 | Theil's U is asymmetric, so the association between features X and Y may differ… | `Theil's U is also asym-\nmetric, meaning the association between the features X and Y may\ndiffer from that between Y and X.` |
+| 2 | Claim | dr c0004 | Shahbazi et al. [125] provided a survey of techniques focused on identifying… | `et al. [125] provided a survey of techniques focused\non identifying and mitigating representation bias…` |
+| 3 | Claim | dr c0010 | The representation rate and statistical rate provide quantitative fairness evaluation… | `These metrics provide quantitative fairness evaluation, offering flexibility based on specific application requirements.` |
+| 4 | Claim | dr c0017 | Resolution is a critical image quality metric when developing deep learning models… | `Lakhani [78] and Sabottke and Spieler [121] demonstrate that resolution is a critical image quality metric…` |
+| 5 | Concept | aidrin c0002 | Visualizations and reports | `AIDRIN provides visualizations and reports to assist data scientists in further investigating the readiness of data.` |
+| 6 | Concept | aidrin c0002 | Metrics specific to assess data for AI | `AIDRIN uses metrics specific to assess data for AI, such as feature importance, feature correlations, class imbalance…` |
+| 7 | Concept | aidrin c0003 | Quantitative assessment of data readiness for AI | `Quantitative Assessment of Data\nReadiness for AI` |
+| 8 | Concept | aidrin c0006 | user-centric assessment approach | `Additionally, in AIDRIN we offer a user-centric approach in which` |
+| 9 | Concept | aidrin c0008 | Understandability | `Quality, Understandability (using FAIR principle compliance), Value,` |
+| 10 | Concept | aidrin c0009 | Quantitative variable | `the correlation between two quantitative variables.` |
+| 11 | Concept | aidrin c0011 | correlation matrix | `Therefore, the correlation matrices it generates` |
+| 12 | Concept | aidrin c0011 | non-binary sensitive attributes | `to binary-sensitive attributes, leaving non-binary attributes unad-` |
+| 13 | Concept | dr c0001 | AI training | `use in AI training are still evolving.` |
+| 14 | Concept | dr c0002 | unbiased data | `With growing requirements of unbiased data for AI` |
+| 15 | Concept | dr c0006 | Bias Indicator | `Bias Indicator` |
+| 16 | Concept | dr c0006 | Relational database table | `spreadsheets, relational database tables, self-describing file formats, etc., are common forms of structured data.` |
+| 17 | Concept | dr c0008 | Overfitting on duplicated data | `Impact on AI: When training on duplicated data, models may overfit by learning redundant patterns…` |
+| 18 | Concept | dr c0013 | biases or limitations in the data | `biases or limitations in the data.` |
+| 19 | Concept | dr c0019 | MOS-based subjective assessment | `while human evaluators provide MOS-based subjective\nassessments.` |
+| 20 | Concept | dr c0020 | label purity | `explanations of data quality across various dimensions, including completeness, feature relevance, label purity, and data fairness` |
+
+**Read the sample against the salience instruction, which is the pre-registered change.** Items
+7, 9, 13, 15 and 18 are section headings and bare noun phrases; 10 and 16 are generic nouns
+(`Quantitative variable`, `Relational database table`); 12 and 18 are sentence fragments cut
+mid-word (`unad-`) or mid-clause. **v0.3.7 told the model not to inventory every noun, and a
+substantial share of what it stopped proposing is exactly that.** Items 1–4 and 17 are real
+claims and are genuine losses.
+
+### Instrument-evidence misses (8 of the 60, seed `arm_a_missing_ie`, exact key)
+
+These are the ones that would matter to the gate, and they read differently from the Concepts:
+
+`AIDRIN (AI Data Readiness INspector)` · `FAIRassist` · `Gupta et al. toolkit` ·
+`Data Quality Toolkit (DQT)` · `MAD (Median Absolute Deviation)` ·
+`probability-based currency metric (PBCM)` · `robust bias measurement technique` ·
+`GMSD (Gradient Magnitude Similarity Deviation)`
+
+Every one is a named instrument with an attribute-bearing sentence around it. **On the
+containment key only 12 such entities have no Arm A counterpart at all**, so most of these are
+present in Arm A under a different surface form — which is once again the §1 defect, not a
+recall failure. The distinction is not cosmetic: a recall failure needs a better extractor,
+whereas a naming failure needs the one prompt rule that was dropped.
