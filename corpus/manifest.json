@@ -1,12 +1,12 @@
 {
  "manifest_version": 2,
  "project": "ai-readiness-kg",
- "generated_at": "2026-08-29T13:06:43.201879+00:00",
+ "generated_at": "2026-08-30T12:58:38.408901+00:00",
  "generator": "dixie.evidence",
  "note": "PROJECTION — rebuilt from the evidence decisions log; do not hand-edit. The log is truth.",
  "counts_by_decision": {
-  "included": 178,
-  "excluded": 26,
+  "included": 194,
+  "excluded": 50,
   "pending_refetch": 39
  },
  "entries": {
@@ -244,6 +244,53 @@
     "added_in": "v1"
    }
   },
+  "agent2agent-a2a-protocol-specification": {
+   "doc_id": "agent2agent-a2a-protocol-specification",
+   "identity": {
+    "sha256": null,
+    "canonical_path": null,
+    "title": "Agent2Agent (A2A) Protocol Specification",
+    "authors_or_org": [
+     "Linux Foundation / A2A project"
+    ],
+    "pub_year": "2026",
+    "doc_type": "standard",
+    "source_url": "https://a2a-protocol.org/latest/specification/",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "unknown",
+    "acquired_at": null,
+    "acquired_by": null
+   },
+   "integrity": {
+    "status": "unchecked",
+    "checks": null,
+    "checked_at": null
+   },
+   "screening": {
+    "decision": "excluded",
+    "rationale": "Agent-to-agent transport and task delegation. It is not a surface on which published data is exposed to machine consumers, which is what R1 covers; the corpus holds MCP, WebMCP and NLWeb for the data-exposure side. Out of scope, not merely marginal.",
+    "decided_by": "cc",
+    "decided_at": "2026-08-30",
+    "history": []
+   },
+   "lifecycle": {
+    "stage": "cataloged"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "candidate_register"
+   ],
+   "extra": {
+    "notes": [
+     "Agent-to-agent transport and task delegation. It is not a surface on which published data is exposed to machine consumers, which is what R1 covers; the corpus holds MCP, WebMCP and NLWeb for the data-exposure side. Out of scope, not merely marginal."
+    ]
+   }
+  },
   "aggarwal-2024-geo-generative-engine-optimization": {
    "doc_id": "aggarwal-2024-geo-generative-engine-optimization",
    "identity": {
@@ -465,6 +512,56 @@
      }
     },
     "added_in": "v1"
+   }
+  },
+  "ai-fairness-360-an-extensible-toolkit-for-detecting-understa": {
+   "doc_id": "ai-fairness-360-an-extensible-toolkit-for-detecting-understa",
+   "identity": {
+    "sha256": null,
+    "canonical_path": null,
+    "title": "AI Fairness 360: An Extensible Toolkit for Detecting, Understanding, and Mitigating Unwanted Algorithmic Bias",
+    "authors_or_org": [
+     "Rachel K. E. Bellamy",
+     "Kuntal Dey",
+     "Michael Hind",
+     "Samuel C. Hoffman"
+    ],
+    "pub_year": "2018",
+    "doc_type": "academic",
+    "source_url": "https://arxiv.org/abs/1810.01943",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "unknown",
+    "acquired_at": null,
+    "acquired_by": null
+   },
+   "integrity": {
+    "status": "unchecked",
+    "checks": null,
+    "checked_at": null
+   },
+   "screening": {
+    "decision": "excluded",
+    "rationale": "A fairness-mitigation toolkit. Fairness is a property the readiness instruments in the corpus reference, but the toolkit itself defines no readiness construct.",
+    "decided_by": "cc",
+    "decided_at": "2026-08-30",
+    "history": []
+   },
+   "lifecycle": {
+    "stage": "cataloged"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "candidate_register"
+   ],
+   "extra": {
+    "notes": [
+     "A fairness-mitigation toolkit. Fairness is a property the readiness instruments in the corpus reference, but the toolkit itself defines no readiness construct."
+    ]
    }
   },
   "ai-governance-ethics-and-leadership-substack-harvey-lab-lega": {
@@ -2792,6 +2889,56 @@
     "added_in": "v1"
    }
   },
+  "authority-signals-in-ai-cited-health-sources-a-framework-for": {
+   "doc_id": "authority-signals-in-ai-cited-health-sources-a-framework-for",
+   "identity": {
+    "sha256": null,
+    "canonical_path": null,
+    "title": "Authority Signals in AI Cited Health Sources: A Framework for Evaluating Source Credibility in ChatGPT Responses",
+    "authors_or_org": [
+     "Erin Jacques",
+     "Erela Datuowei",
+     "Vincent Jones",
+     "Corey Basch"
+    ],
+    "pub_year": "2026",
+    "doc_type": "academic",
+    "source_url": "https://arxiv.org/abs/2601.17109",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "unknown",
+    "acquired_at": null,
+    "acquired_by": null
+   },
+   "integrity": {
+    "status": "unchecked",
+    "checks": null,
+    "checked_at": null
+   },
+   "screening": {
+    "decision": "excluded",
+    "rationale": "Authority-signal framework instantiated for health information seeking. Domain application; the corpus already holds a health-domain AI-Overviews audit (hu-2025) and needs no second one.",
+    "decided_by": "cc",
+    "decided_at": "2026-08-30",
+    "history": []
+   },
+   "lifecycle": {
+    "stage": "cataloged"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "candidate_register"
+   ],
+   "extra": {
+    "notes": [
+     "Authority-signal framework instantiated for health information seeking. Domain application; the corpus already holds a health-domain AI-Overviews audit (hu-2025) and needs no second one."
+    ]
+   }
+  },
   "bandi-2025-metadata-ai-ready": {
    "doc_id": "bandi-2025-metadata-ai-ready",
    "identity": {
@@ -3119,6 +3266,55 @@
      }
     },
     "added_in": "v1"
+   }
+  },
+  "beyond-seo-a-transformer-based-approach-for-reinventing-web": {
+   "doc_id": "beyond-seo-a-transformer-based-approach-for-reinventing-web",
+   "identity": {
+    "sha256": null,
+    "canonical_path": null,
+    "title": "Beyond SEO: A Transformer-Based Approach for Reinventing Web Content Optimisation",
+    "authors_or_org": [
+     "Florian Luettgenau",
+     "Imar Colic",
+     "Gervasio Ramirez"
+    ],
+    "pub_year": "2025",
+    "doc_type": "academic",
+    "source_url": "https://arxiv.org/abs/2507.03169",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "unknown",
+    "acquired_at": null,
+    "acquired_by": null
+   },
+   "integrity": {
+    "status": "unchecked",
+    "checks": null,
+    "checked_at": null
+   },
+   "screening": {
+    "decision": "excluded",
+    "rationale": "A BART fine-tune on 1,905 travel-website content pairs. Domain-application pipeline, the exact class R2 names for exclusion.",
+    "decided_by": "cc",
+    "decided_at": "2026-08-30",
+    "history": []
+   },
+   "lifecycle": {
+    "stage": "cataloged"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "candidate_register"
+   ],
+   "extra": {
+    "notes": [
+     "A BART fine-tune on 1,905 travel-website content pairs. Domain-application pipeline, the exact class R2 names for exclusion."
+    ]
    }
   },
   "bing-ai-performance-public-preview-2026": {
@@ -4672,6 +4868,118 @@
     "added_in": "kernel-v03"
    }
   },
+  "chu-2026-geo-flag": {
+   "doc_id": "chu-2026-geo-flag",
+   "identity": {
+    "sha256": "9eb0c2153f6a0e3497b93a362ae3d2eb0a53f0fe9e7e04c2115f9d4a36732e69",
+    "canonical_path": "corpus/round2/chu-2026-geo-flag.pdf",
+    "title": "GEO-Flag: Detecting and Measuring GEO-Optimized Web Content",
+    "authors_or_org": [
+     "Junjie Chu",
+     "Ye Leng",
+     "Mingjie Li",
+     "Yun Shen"
+    ],
+    "pub_year": "2026",
+    "doc_type": "academic",
+    "source_url": "https://arxiv.org/abs/2608.16824",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "httpx-pdf",
+    "acquired_at": null,
+    "acquired_by": "scripts/harvest_triage.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed pdf, detected pdf",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "1161995 bytes vs floor 7000",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "23 pages, extractable text present",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-08-30T12:54:47.058013+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "manifest-added by rule (clause R1, construct_arm publication_actionability)",
+    "decided_by": "cc",
+    "decided_at": "2026-08-30",
+    "history": [
+     {
+      "decision": "included",
+      "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: Detection instrument plus a benchmark (GEOFlagBench) for whether a page has been GEO-optimized. The measurement counterpart to row 7's attack, and the most recent in the cluster.",
+      "decided_by": "cc",
+      "decided_at": "2026-08-30T12:54:45.534470+00:00"
+     }
+    ],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "acquisition_round2_2026-08-30",
+    "candidate_register"
+   ],
+   "extra": {
+    "observed_files": {
+     "corpus/round2/chu-2026-geo-flag.pdf": {
+      "sha256": "9eb0c2153f6a0e3497b93a362ae3d2eb0a53f0fe9e7e04c2115f9d4a36732e69",
+      "size": 1161995,
+      "claimed_type": "pdf",
+      "detected_type": "pdf"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/round2/chu-2026-geo-flag.pdf": {
+      "path": "corpus/round2/chu-2026-geo-flag.pdf",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed pdf, detected pdf",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "1161995 bytes vs floor 7000",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "23 pages, extractable text present",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-08-30T12:54:47.058013+00:00"
+     }
+    },
+    "added_in": "acquisition-round2-2026-08-30",
+    "notes": [
+     "Detection instrument plus a benchmark (GEOFlagBench) for whether a page has been GEO-optimized. The measurement counterpart to row 7's attack, and the most recent in the cluster."
+    ]
+   }
+  },
   "cisco-ai-readiness-assessment-cisco": {
    "doc_id": "cisco-ai-readiness-assessment-cisco",
    "identity": {
@@ -5569,6 +5877,56 @@
     "added_in": "v1"
    }
   },
+  "cleanml-a-study-for-evaluating-the-impact-of-data-cleaning-o": {
+   "doc_id": "cleanml-a-study-for-evaluating-the-impact-of-data-cleaning-o",
+   "identity": {
+    "sha256": null,
+    "canonical_path": null,
+    "title": "CleanML: A Study for Evaluating the Impact of Data Cleaning on ML Classification Tasks",
+    "authors_or_org": [
+     "Peng Li",
+     "Xi Rao",
+     "Jennifer Blase",
+     "Yue Liu"
+    ],
+    "pub_year": "2021",
+    "doc_type": "academic",
+    "source_url": "https://arxiv.org/abs/1904.09483",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "unknown",
+    "acquired_at": null,
+    "acquired_by": null
+   },
+   "integrity": {
+    "status": "unchecked",
+    "checks": null,
+    "checked_at": null
+   },
+   "screening": {
+    "decision": "excluded",
+    "rationale": "AMBIGUOUS. Empirical study of how data cleaning changes downstream ML performance — evidence for the readiness-matters premise, but it measures a preprocessing intervention rather than defining or operationalizing a readiness construct. Cut; listed for operator review.",
+    "decided_by": "cc",
+    "decided_at": "2026-08-30",
+    "history": []
+   },
+   "lifecycle": {
+    "stage": "cataloged"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "candidate_register"
+   ],
+   "extra": {
+    "notes": [
+     "AMBIGUOUS. Empirical study of how data cleaning changes downstream ML performance — evidence for the readiness-matters premise, but it measures a preprocessing intervention rather than defining or operationalizing a readiness construct. Cut; listed for operator review."
+    ]
+   }
+  },
   "clinical-ai-readiness-evaluator-lifecycle-care-l": {
    "doc_id": "clinical-ai-readiness-evaluator-lifecycle-care-l",
    "identity": {
@@ -5981,6 +6339,121 @@
      }
     },
     "added_in": "kernel-v03"
+   }
+  },
+  "cloudflare-pay-per-crawl": {
+   "doc_id": "cloudflare-pay-per-crawl",
+   "identity": {
+    "sha256": "c03e2e2155bb822f3339bc83e960b65e9905acb5f7bbb19b77ae986829520a47",
+    "canonical_path": "corpus/round2/cloudflare-pay-per-crawl.md",
+    "title": "Cloudflare AI Crawl Control: Pay per crawl",
+    "authors_or_org": [
+     "Cloudflare"
+    ],
+    "pub_year": "2026",
+    "doc_type": "platform",
+    "source_url": "https://developers.cloudflare.com/ai-crawl-control/features/pay-per-crawl/what-is-pay-per-crawl/",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "httpx-raw",
+    "acquired_at": null,
+    "acquired_by": "scripts/harvest_triage.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed markdown, detected text",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "5895 bytes vs floor 256",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "5887 chars",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-08-30T12:54:47.058566+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "the pending_refetch recorded a MANIFEST-GATE rejection, not a bad artifact: the first pass declared source_type='platform', which is not in the doc_type enum. The file was always sound (integrity verified) and the document was re-admitted as 'industry', the type every other held platform-operator page carries. Re-decided included on the R1 clause (b) the admission was made under; task cc_tasks/2026-08-30_acquisition_round2.md §3.",
+    "decided_by": "cc",
+    "decided_at": "2026-08-30T12:58:30.899972+00:00",
+    "history": [
+     {
+      "decision": "included",
+      "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: Kernel clause (b): platform-official documentation from a CDN operator. Documents the HTTP 402 machine-payable crawl mechanism, a distinct access surface from the held Cloudflare AI Crawl Control overview and Content Sig",
+      "decided_by": "cc",
+      "decided_at": "2026-08-30T12:55:30.745488+00:00"
+     },
+     {
+      "decision": "pending_refetch",
+      "rationale": "fetched but deferred at the manifest gate: manifest gate rejected: invalid source_type 'platform'; must be one of federal, academic, industry, standard, intergovernmental, practitioner",
+      "decided_by": "cc",
+      "decided_at": "2026-08-30"
+     }
+    ],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "acquisition_round2_2026-08-30",
+    "candidate_register"
+   ],
+   "extra": {
+    "observed_files": {
+     "corpus/round2/cloudflare-pay-per-crawl.md": {
+      "sha256": "c03e2e2155bb822f3339bc83e960b65e9905acb5f7bbb19b77ae986829520a47",
+      "size": 5895,
+      "claimed_type": "markdown",
+      "detected_type": "text"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/round2/cloudflare-pay-per-crawl.md": {
+      "path": "corpus/round2/cloudflare-pay-per-crawl.md",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed markdown, detected text",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "5895 bytes vs floor 256",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "5887 chars",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-08-30T12:54:47.058566+00:00"
+     }
+    },
+    "notes": [
+     "Kernel clause (b): platform-official documentation from a CDN operator. Documents the HTTP 402 machine-payable crawl mechanism, a distinct access surface from the held Cloudflare AI Crawl Control overview and Content Signals Policy pages. URL corrected on first fetch: .../pay-per-crawl/ is a navigation hub whose body is a link list (the listing-page class the 2026-08-24 rules already exclude, row "
+    ],
+    "added_in": "acquisition-round2-2026-08-30"
    }
   },
   "comment-of-deloitte-consulting-llp-on-the-doc-ai-and-open-go": {
@@ -6495,6 +6968,105 @@
    "extra": {
     "notes": [
      "Cancer-wearables preprocessing — named exclusion example in R2."
+    ]
+   }
+  },
+  "data-preprocessing-to-mitigate-bias-a-maximum-entropy-based": {
+   "doc_id": "data-preprocessing-to-mitigate-bias-a-maximum-entropy-based",
+   "identity": {
+    "sha256": null,
+    "canonical_path": null,
+    "title": "Data preprocessing to mitigate bias: A maximum entropy based approach",
+    "authors_or_org": [
+     "L. Elisa Celis",
+     "Vijay Keswani",
+     "Nisheeth K. Vishnoi"
+    ],
+    "pub_year": "2019",
+    "doc_type": "academic",
+    "source_url": "https://arxiv.org/abs/1906.02164",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "unknown",
+    "acquired_at": null,
+    "acquired_by": null
+   },
+   "integrity": {
+    "status": "unchecked",
+    "checks": null,
+    "checked_at": null
+   },
+   "screening": {
+    "decision": "excluded",
+    "rationale": "A specific preprocessing method. R2 names method pipelines for exclusion unless they state a general readiness framework; this states none.",
+    "decided_by": "cc",
+    "decided_at": "2026-08-30",
+    "history": []
+   },
+   "lifecycle": {
+    "stage": "cataloged"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "candidate_register"
+   ],
+   "extra": {
+    "notes": [
+     "A specific preprocessing method. R2 names method pipelines for exclusion unless they state a general readiness framework; this states none."
+    ]
+   }
+  },
+  "data-quality-toolkit-automatic-assessment-of-data-quality-an": {
+   "doc_id": "data-quality-toolkit-automatic-assessment-of-data-quality-an",
+   "identity": {
+    "sha256": null,
+    "canonical_path": null,
+    "title": "Data Quality Toolkit: Automatic assessment of data quality and remediation for machine learning datasets",
+    "authors_or_org": [
+     "Nitin Gupta",
+     "Hima Patel",
+     "Shazia Afzal",
+     "Naveen Panwar"
+    ],
+    "pub_year": "2021",
+    "doc_type": "academic",
+    "source_url": "https://arxiv.org/abs/2108.05935",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "unknown",
+    "acquired_at": null,
+    "acquired_by": null
+   },
+   "integrity": {
+    "status": "unchecked",
+    "checks": null,
+    "checked_at": null
+   },
+   "screening": {
+    "decision": "excluded",
+    "rationale": "AMBIGUOUS. A general (non-domain) toolkit that scores data quality for ML, so it is instrument-shaped under R2; but it is a tool paper whose metrics are already represented by AIDRIN and AIDRIN 2.0 in the corpus. Cut per §3's default; listed for operator review.",
+    "decided_by": "cc",
+    "decided_at": "2026-08-30",
+    "history": []
+   },
+   "lifecycle": {
+    "stage": "cataloged"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "candidate_register"
+   ],
+   "extra": {
+    "notes": [
+     "AMBIGUOUS. A general (non-domain) toolkit that scores data quality for ML, so it is instrument-shaped under R2; but it is a tool paper whose metrics are already represented by AIDRIN and AIDRIN 2.0 in the corpus. Cut per §3's default; listed for operator review."
     ]
    }
   },
@@ -7522,6 +8094,103 @@
     }
    }
   },
+  "deepresearcher-scaling-deep-research-via-reinforcement-learn": {
+   "doc_id": "deepresearcher-scaling-deep-research-via-reinforcement-learn",
+   "identity": {
+    "sha256": null,
+    "canonical_path": null,
+    "title": "DeepResearcher: Scaling Deep Research via Reinforcement Learning in Real-world Environments",
+    "authors_or_org": [
+     "Yuxiang Zheng",
+     "Dayuan Fu",
+     "Xiangkun Hu",
+     "Xiaojie Cai"
+    ],
+    "pub_year": "2025",
+    "doc_type": "academic",
+    "source_url": "https://arxiv.org/abs/2504.03160",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "unknown",
+    "acquired_at": null,
+    "acquired_by": null
+   },
+   "integrity": {
+    "status": "unchecked",
+    "checks": null,
+    "checked_at": null
+   },
+   "screening": {
+    "decision": "excluded",
+    "rationale": "An RL training method for research agents. The corpus holds DeepTRACE for auditing such agents' citation behaviour, which is the readiness-relevant half.",
+    "decided_by": "cc",
+    "decided_at": "2026-08-30",
+    "history": []
+   },
+   "lifecycle": {
+    "stage": "cataloged"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "candidate_register"
+   ],
+   "extra": {
+    "notes": [
+     "An RL training method for research agents. The corpus holds DeepTRACE for auditing such agents' citation behaviour, which is the readiness-relevant half."
+    ]
+   }
+  },
+  "developer-experience-with-ai-coding-agents-http-behavioral-s": {
+   "doc_id": "developer-experience-with-ai-coding-agents-http-behavioral-s",
+   "identity": {
+    "sha256": null,
+    "canonical_path": null,
+    "title": "Developer Experience with AI Coding Agents: HTTP Behavioral Signatures in Documentation Portals",
+    "authors_or_org": [
+     "Oleksii Borysenko"
+    ],
+    "pub_year": "2026",
+    "doc_type": "academic",
+    "source_url": "https://arxiv.org/abs/2604.02544",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "unknown",
+    "acquired_at": null,
+    "acquired_by": null
+   },
+   "integrity": {
+    "status": "unchecked",
+    "checks": null,
+    "checked_at": null
+   },
+   "screening": {
+    "decision": "excluded",
+    "rationale": "AMBIGUOUS. Measures how nine coding agents and six assistant services actually fetch a documentation portal, including llms.txt handling — genuinely R1-shaped measured practice. Cut because it is a single-author study of a single live endpoint, so the measurement does not generalize to a publisher's decision. Listed for operator review.",
+    "decided_by": "cc",
+    "decided_at": "2026-08-30",
+    "history": []
+   },
+   "lifecycle": {
+    "stage": "cataloged"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "candidate_register"
+   ],
+   "extra": {
+    "notes": [
+     "AMBIGUOUS. Measures how nine coding agents and six assistant services actually fetch a documentation portal, including llms.txt handling — genuinely R1-shaped measured practice. Cut because it is a single-author study of a single live endpoint, so the measurement does not generalize to a publisher's decision. Listed for operator review."
+    ]
+   }
+  },
   "digital-gov-dap-guide": {
    "doc_id": "digital-gov-dap-guide",
    "identity": {
@@ -8062,6 +8731,165 @@
      }
     },
     "added_in": "triage-2026-08-24"
+   }
+  },
+  "e-fair-db-functional-dependencies-to-discover-data-bias-and": {
+   "doc_id": "e-fair-db-functional-dependencies-to-discover-data-bias-and",
+   "identity": {
+    "sha256": null,
+    "canonical_path": null,
+    "title": "E-FAIR-DB: Functional Dependencies to Discover Data Bias and Enhance Data Equity",
+    "authors_or_org": [
+     "Fabio Azzalini",
+     "Chiara Criscuolo",
+     "Letizia Tanca"
+    ],
+    "pub_year": "2022",
+    "doc_type": "academic",
+    "source_url": "https://doi.org/10.1145/3552433",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "unknown",
+    "acquired_at": null,
+    "acquired_by": null
+   },
+   "integrity": {
+    "status": "unchecked",
+    "checks": null,
+    "checked_at": null
+   },
+   "screening": {
+    "decision": "excluded",
+    "rationale": "A functional-dependency method for finding bias in a database. Method, not construct; closed access.",
+    "decided_by": "cc",
+    "decided_at": "2026-08-30",
+    "history": []
+   },
+   "lifecycle": {
+    "stage": "cataloged"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "candidate_register"
+   ],
+   "extra": {
+    "notes": [
+     "A functional-dependency method for finding bias in a database. Method, not construct; closed access."
+    ]
+   }
+  },
+  "elnaffar-2026-agent-ready-websites": {
+   "doc_id": "elnaffar-2026-agent-ready-websites",
+   "identity": {
+    "sha256": "ccd97b569aabb51f391ab619d43a852b920609b07433008ec3a7c92d59b4619a",
+    "canonical_path": "corpus/round2/elnaffar-2026-agent-ready-websites.pdf",
+    "title": "Designing Agent-Ready Websites for AI Web Agents: A Framework for Machine Readability, Actionability, and Decision Reliability",
+    "authors_or_org": [
+     "Said Elnaffar",
+     "Farzad Rashidi"
+    ],
+    "pub_year": "2026",
+    "doc_type": "academic",
+    "source_url": "https://arxiv.org/abs/2607.12056",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "httpx-pdf",
+    "acquired_at": null,
+    "acquired_by": "scripts/harvest_triage.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed pdf, detected pdf",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "759420 bytes vs floor 7000",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "11 pages, extractable text present",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-08-30T12:54:47.088544+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "manifest-added by rule (clause R1, construct_arm publication_actionability)",
+    "decided_by": "cc",
+    "decided_at": "2026-08-30",
+    "history": [
+     {
+      "decision": "included",
+      "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: A readiness FRAMEWORK for machine consumption of a published surface, with named dimensions (interpretability, actionability, decision reliability) and the explicit claim that SEO and GEO metrics do not assess agent-medi",
+      "decided_by": "cc",
+      "decided_at": "2026-08-30T12:54:45.075770+00:00"
+     }
+    ],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "acquisition_round2_2026-08-30",
+    "candidate_register"
+   ],
+   "extra": {
+    "observed_files": {
+     "corpus/round2/elnaffar-2026-agent-ready-websites.pdf": {
+      "sha256": "ccd97b569aabb51f391ab619d43a852b920609b07433008ec3a7c92d59b4619a",
+      "size": 759420,
+      "claimed_type": "pdf",
+      "detected_type": "pdf"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/round2/elnaffar-2026-agent-ready-websites.pdf": {
+      "path": "corpus/round2/elnaffar-2026-agent-ready-websites.pdf",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed pdf, detected pdf",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "759420 bytes vs floor 7000",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "11 pages, extractable text present",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-08-30T12:54:47.088544+00:00"
+     }
+    },
+    "added_in": "acquisition-round2-2026-08-30",
+    "notes": [
+     "A readiness FRAMEWORK for machine consumption of a published surface, with named dimensions (interpretability, actionability, decision reliability) and the explicit claim that SEO and GEO metrics do not assess agent-mediated interaction. Structurally the same object as the AI-readiness instruments already held, applied to the web surface."
+    ]
    }
   },
   "esip-data-readiness-checklist": {
@@ -10157,6 +10985,118 @@
     ]
    }
   },
+  "gebru-2021-datasheets-for-datasets": {
+   "doc_id": "gebru-2021-datasheets-for-datasets",
+   "identity": {
+    "sha256": "c7f595988ee2c109631d5173fdae37ff1774c68ec17add51bd012f2a6e8792d0",
+    "canonical_path": "corpus/round2/gebru-2021-datasheets-for-datasets.pdf",
+    "title": "Datasheets for Datasets",
+    "authors_or_org": [
+     "Timnit Gebru",
+     "Jamie Morgenstern",
+     "Briana Vecchione",
+     "Jennifer Wortman Vaughan"
+    ],
+    "pub_year": "2021",
+    "doc_type": "academic",
+    "source_url": "https://arxiv.org/abs/1803.09010",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "httpx-pdf",
+    "acquired_at": null,
+    "acquired_by": "scripts/harvest_triage.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed pdf, detected pdf",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "554802 bytes vs floor 7000",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "18 pages, extractable text present",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-08-30T12:54:47.100718+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "manifest-added by rule (clause R1, construct_arm publication_actionability)",
+    "decided_by": "cc",
+    "decided_at": "2026-08-30",
+    "history": [
+     {
+      "decision": "included",
+      "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: The canonical dataset-documentation standard. Held corpus documents cite it as the reference point for what accompanying metadata a dataset must carry, and the crosswalk has no primary source for that claim. arXiv is the",
+      "decided_by": "cc",
+      "decided_at": "2026-08-30T12:54:46.605443+00:00"
+     }
+    ],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "acquisition_round2_2026-08-30",
+    "candidate_register"
+   ],
+   "extra": {
+    "observed_files": {
+     "corpus/round2/gebru-2021-datasheets-for-datasets.pdf": {
+      "sha256": "c7f595988ee2c109631d5173fdae37ff1774c68ec17add51bd012f2a6e8792d0",
+      "size": 554802,
+      "claimed_type": "pdf",
+      "detected_type": "pdf"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/round2/gebru-2021-datasheets-for-datasets.pdf": {
+      "path": "corpus/round2/gebru-2021-datasheets-for-datasets.pdf",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed pdf, detected pdf",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "554802 bytes vs floor 7000",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "18 pages, extractable text present",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-08-30T12:54:47.100718+00:00"
+     }
+    },
+    "added_in": "acquisition-round2-2026-08-30",
+    "notes": [
+     "The canonical dataset-documentation standard. Held corpus documents cite it as the reference point for what accompanying metadata a dataset must carry, and the crosswalk has no primary source for that claim. arXiv is the OA copy of the CACM version (10.1145/3458723)."
+    ]
+   }
+  },
   "generative-ai-and-open-data-guidelines-and-best-practices-de": {
    "doc_id": "generative-ai-and-open-data-guidelines-and-best-practices-de",
    "identity": {
@@ -10283,6 +11223,53 @@
     "candidate_register"
    ],
    "extra": {}
+  },
+  "generative-engine-optimization-at-scale-measuring-brand-visi": {
+   "doc_id": "generative-engine-optimization-at-scale-measuring-brand-visi",
+   "identity": {
+    "sha256": null,
+    "canonical_path": null,
+    "title": "Generative Engine Optimization at Scale: Measuring Brand Visibility Across AI Search Engines",
+    "authors_or_org": [
+     "Pratyush Kumar"
+    ],
+    "pub_year": "2026",
+    "doc_type": "academic",
+    "source_url": "https://arxiv.org/abs/2606.20065",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "unknown",
+    "acquired_at": null,
+    "acquired_by": null
+   },
+   "integrity": {
+    "status": "unchecked",
+    "checks": null,
+    "checked_at": null
+   },
+   "screening": {
+    "decision": "excluded",
+    "rationale": "Brand-visibility measurement across engines. Its construct decomposition is contained in row 2 (citation selection/absorption) and its reliability point in row 3 (repeated measurement). No marginal contribution over rows 2-3.",
+    "decided_by": "cc",
+    "decided_at": "2026-08-30",
+    "history": []
+   },
+   "lifecycle": {
+    "stage": "cataloged"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "candidate_register"
+   ],
+   "extra": {
+    "notes": [
+     "Brand-visibility measurement across engines. Its construct decomposition is contained in row 2 (citation selection/absorption) and its reliability point in row 3 (repeated measurement). No marginal contribution over rows 2-3."
+    ]
+   }
   },
   "global-public-sector-ai-index-2026": {
    "doc_id": "global-public-sector-ai-index-2026",
@@ -11662,6 +12649,118 @@
     "added_in": "v1"
    }
   },
+  "grossman-2026-how-genai-disrupts-search": {
+   "doc_id": "grossman-2026-how-genai-disrupts-search",
+   "identity": {
+    "sha256": "51e250294ddef161c789fd7ed58f74b60cb6f5851d49ee7982040363af3cd800",
+    "canonical_path": "corpus/round2/grossman-2026-how-genai-disrupts-search.pdf",
+    "title": "How Generative AI Disrupts Search: An Empirical Study of Google Search, Gemini, and AI Overviews",
+    "authors_or_org": [
+     "Riley Grossman",
+     "Songjiang Liu",
+     "Michael K. Chen",
+     "Mike Smith"
+    ],
+    "pub_year": "2026",
+    "doc_type": "academic",
+    "source_url": "https://arxiv.org/abs/2604.27790",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "httpx-pdf",
+    "acquired_at": null,
+    "acquired_by": "scripts/harvest_triage.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed pdf, detected pdf",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "2356532 bytes vs floor 7000",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "12 pages, extractable text present",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-08-30T12:54:47.126940+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "manifest-added by rule (clause R1, construct_arm publication_actionability)",
+    "decided_by": "cc",
+    "decided_at": "2026-08-30",
+    "history": [
+     {
+      "decision": "included",
+      "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: Measured practice at scale: an 11,500-query public benchmark comparing Google results, AI Overviews and Gemini, with the AIO trigger rate stated. Primary measurement of what happens to a published page's reachability, wh",
+      "decided_by": "cc",
+      "decided_at": "2026-08-30T12:54:45.687909+00:00"
+     }
+    ],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "acquisition_round2_2026-08-30",
+    "candidate_register"
+   ],
+   "extra": {
+    "observed_files": {
+     "corpus/round2/grossman-2026-how-genai-disrupts-search.pdf": {
+      "sha256": "51e250294ddef161c789fd7ed58f74b60cb6f5851d49ee7982040363af3cd800",
+      "size": 2356532,
+      "claimed_type": "pdf",
+      "detected_type": "pdf"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/round2/grossman-2026-how-genai-disrupts-search.pdf": {
+      "path": "corpus/round2/grossman-2026-how-genai-disrupts-search.pdf",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed pdf, detected pdf",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "2356532 bytes vs floor 7000",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "12 pages, extractable text present",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-08-30T12:54:47.126940+00:00"
+     }
+    },
+    "added_in": "acquisition-round2-2026-08-30",
+    "notes": [
+     "Measured practice at scale: an 11,500-query public benchmark comparing Google results, AI Overviews and Gemini, with the AIO trigger rate stated. Primary measurement of what happens to a published page's reachability, which the held commentary asserts without measuring."
+    ]
+   }
+  },
   "gsa-ai-guide-for-government-ai-capability-maturity-model-ai": {
    "doc_id": "gsa-ai-guide-for-government-ai-capability-maturity-model-ai",
    "identity": {
@@ -11928,6 +13027,55 @@
     "added_in": "kernel-v03"
    }
   },
+  "hallucination-or-confabulation-neuroanatomy-as-metaphor-in-l": {
+   "doc_id": "hallucination-or-confabulation-neuroanatomy-as-metaphor-in-l",
+   "identity": {
+    "sha256": null,
+    "canonical_path": null,
+    "title": "Hallucination or Confabulation? Neuroanatomy as metaphor in Large Language Models",
+    "authors_or_org": [
+     "Rami Hatem",
+     "Brianna Simmons",
+     "Joseph E. Thornton"
+    ],
+    "pub_year": "2023",
+    "doc_type": "academic",
+    "source_url": "https://doi.org/10.1371/journal.pdig.0000388",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "unknown",
+    "acquired_at": null,
+    "acquired_by": null
+   },
+   "integrity": {
+    "status": "unchecked",
+    "checks": null,
+    "checked_at": null
+   },
+   "screening": {
+    "decision": "excluded",
+    "rationale": "A terminology note on LLM error naming. Off-construct: it says nothing about data or publication readiness.",
+    "decided_by": "cc",
+    "decided_at": "2026-08-30",
+    "history": []
+   },
+   "lifecycle": {
+    "stage": "cataloged"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "candidate_register"
+   ],
+   "extra": {
+    "notes": [
+     "A terminology note on LLM error naming. Off-construct: it says nothing about data or publication readiness."
+    ]
+   }
+  },
   "health-ai-readiness-assessment-dime": {
    "doc_id": "health-ai-readiness-assessment-dime",
    "identity": {
@@ -12074,6 +13222,168 @@
     "added_in": "v1"
    }
   },
+  "highly-accurate-protein-structure-prediction-with-alphafold": {
+   "doc_id": "highly-accurate-protein-structure-prediction-with-alphafold",
+   "identity": {
+    "sha256": null,
+    "canonical_path": null,
+    "title": "Highly accurate protein structure prediction with AlphaFold",
+    "authors_or_org": [
+     "John Jumper",
+     "Richard Evans",
+     "Alexander Pritzel",
+     "Tim Green"
+    ],
+    "pub_year": "2021",
+    "doc_type": "academic",
+    "source_url": "https://doi.org/10.1038/s41586-021-03819-2",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "unknown",
+    "acquired_at": null,
+    "acquired_by": null
+   },
+   "integrity": {
+    "status": "unchecked",
+    "checks": null,
+    "checked_at": null
+   },
+   "screening": {
+    "decision": "excluded",
+    "rationale": "A scientific application, cited by two corpus members as an exemplar of AI-for-science. Exemplar citation is not a readiness claim.",
+    "decided_by": "cc",
+    "decided_at": "2026-08-30",
+    "history": []
+   },
+   "lifecycle": {
+    "stage": "cataloged"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "candidate_register"
+   ],
+   "extra": {
+    "notes": [
+     "A scientific application, cited by two corpus members as an exemplar of AI-for-science. Exemplar citation is not a readiness claim."
+    ]
+   }
+  },
+  "holland-2018-dataset-nutrition-label": {
+   "doc_id": "holland-2018-dataset-nutrition-label",
+   "identity": {
+    "sha256": "8be208360982f7b916b3e259b08d8cd3c4f93e5e9a8fae2425a1912c5ff4a331",
+    "canonical_path": "corpus/round2/holland-2018-dataset-nutrition-label.pdf",
+    "title": "The Dataset Nutrition Label: A Framework To Drive Higher Data Quality Standards",
+    "authors_or_org": [
+     "Sarah Holland",
+     "Ahmed Hosny",
+     "Sarah Newman",
+     "Joshua Joseph"
+    ],
+    "pub_year": "2018",
+    "doc_type": "academic",
+    "source_url": "https://arxiv.org/abs/1805.03677",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "httpx-pdf",
+    "acquired_at": null,
+    "acquired_by": "scripts/harvest_triage.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed pdf, detected pdf",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "1642373 bytes vs floor 7000",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "21 pages, extractable text present",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-08-30T12:54:47.187068+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "manifest-added by rule (clause R2, construct_arm training_data_readiness)",
+    "decided_by": "cc",
+    "decided_at": "2026-08-30",
+    "history": [
+     {
+      "decision": "included",
+      "rationale": "triage inclusion rule clause (R2), construct_arm=training_data_readiness: A general, cross-domain diagnostic framework for pre-model data quality — R2's named include class, not a domain pipeline. It is the documentation-instrument lineage the corpus carries for FAIR and Croissant but not for ",
+      "decided_by": "cc",
+      "decided_at": "2026-08-30T12:54:46.451874+00:00"
+     }
+    ],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "acquisition_round2_2026-08-30",
+    "candidate_register"
+   ],
+   "extra": {
+    "observed_files": {
+     "corpus/round2/holland-2018-dataset-nutrition-label.pdf": {
+      "sha256": "8be208360982f7b916b3e259b08d8cd3c4f93e5e9a8fae2425a1912c5ff4a331",
+      "size": 1642373,
+      "claimed_type": "pdf",
+      "detected_type": "pdf"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/round2/holland-2018-dataset-nutrition-label.pdf": {
+      "path": "corpus/round2/holland-2018-dataset-nutrition-label.pdf",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed pdf, detected pdf",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "1642373 bytes vs floor 7000",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "21 pages, extractable text present",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-08-30T12:54:47.187068+00:00"
+     }
+    },
+    "added_in": "acquisition-round2-2026-08-30",
+    "notes": [
+     "A general, cross-domain diagnostic framework for pre-model data quality — R2's named include class, not a domain pipeline. It is the documentation-instrument lineage the corpus carries for FAIR and Croissant but not for dataset labels."
+    ]
+   }
+  },
   "hu-2025-auditing-google-ai-overviews": {
    "doc_id": "hu-2025-auditing-google-ai-overviews",
    "identity": {
@@ -12184,6 +13494,266 @@
      }
     },
     "added_in": "kernel-v03"
+   }
+  },
+  "ietf-aipref-attach-draft": {
+   "doc_id": "ietf-aipref-attach-draft",
+   "identity": {
+    "sha256": "208d77c67094d0478d9ca88f144751c1cde003f112cd7f22cd1225563b536068",
+    "canonical_path": "corpus/round2/ietf-aipref-attach-draft.md",
+    "title": "Associating AI Usage Preferences with Content in HTTP (draft-ietf-aipref-attach-05)",
+    "authors_or_org": [
+     "IETF AI Preferences (AIPREF) Working Group"
+    ],
+    "pub_year": "2026",
+    "doc_type": "standard",
+    "source_url": "https://datatracker.ietf.org/doc/draft-ietf-aipref-attach/",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "httpx-raw",
+    "acquired_at": null,
+    "acquired_by": "scripts/harvest_triage.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed markdown, detected text",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "21008 bytes vs floor 256",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "21005 chars",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-08-30T12:56:56.740779+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "as ietf-aipref-vocab-draft: HTML rendering quarantined, canonical Internet-Draft text refetched (sha 208d77c67094…), integrity verified, hash change recorded as manifest content_update reason=corrupt_source_replaced in events/batch-020.jsonl. Re-decided included on the same R1 clause; task cc_tasks/2026-08-30_acquisition_round2.md §3.",
+    "decided_by": "cc",
+    "decided_at": "2026-08-30T12:58:30.899831+00:00",
+    "history": [
+     {
+      "decision": "included",
+      "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: The attachment half of AIPREF: how the vocabulary binds to a resource over HTTP. Admitted with row 11 because the vocabulary alone does not say where a publisher puts it, and the crosswalk's question is what a publisher ",
+      "decided_by": "cc",
+      "decided_at": "2026-08-30T12:54:46.147406+00:00"
+     },
+     {
+      "decision": "pending_refetch",
+      "rationale": "no verified file remains: magic_bytes: claimed text-family but content is an HTML page",
+      "decided_by": "dixie.evidence",
+      "decided_at": "2026-08-30T12:54:47.450369+00:00"
+     },
+     {
+      "decision": "pending_refetch",
+      "rationale": "fetched but deferred at the manifest gate: post-sweep not verified/included: ('pending_refetch', 'failed')",
+      "decided_by": "cc",
+      "decided_at": "2026-08-30"
+     }
+    ],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": [
+     {
+      "path": "corpus/round2/ietf-aipref-attach-draft.md",
+      "dest": "corpus/quarantine/round2/ietf-aipref-attach-draft.md",
+      "reasons": [
+       "magic_bytes: claimed text-family but content is an HTML page"
+      ],
+      "ts": "2026-08-30T12:54:47.344780+00:00"
+     }
+    ]
+   },
+   "provenance_sources": [
+    "acquisition_round2_2026-08-30",
+    "candidate_register"
+   ],
+   "extra": {
+    "observed_files": {
+     "corpus/round2/ietf-aipref-attach-draft.md": {
+      "sha256": "208d77c67094d0478d9ca88f144751c1cde003f112cd7f22cd1225563b536068",
+      "size": 21008,
+      "claimed_type": "markdown",
+      "detected_type": "text"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/round2/ietf-aipref-attach-draft.md": {
+      "path": "corpus/round2/ietf-aipref-attach-draft.md",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed markdown, detected text",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "21008 bytes vs floor 256",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "21005 chars",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-08-30T12:56:56.740779+00:00"
+     }
+    },
+    "notes": [
+     "The attachment half of AIPREF: how the vocabulary binds to a resource over HTTP. Admitted with row 11 because the vocabulary alone does not say where a publisher puts it, and the crosswalk's question is what a publisher must DO."
+    ],
+    "added_in": "acquisition-round2-2026-08-30"
+   }
+  },
+  "ietf-aipref-vocab-draft": {
+   "doc_id": "ietf-aipref-vocab-draft",
+   "identity": {
+    "sha256": "b870abc116b76824f502249828e809fe2d62ccffa211c09e95fb7bee011ec51c",
+    "canonical_path": "corpus/round2/ietf-aipref-vocab-draft.md",
+    "title": "A Vocabulary For Expressing AI Usage Preferences (draft-ietf-aipref-vocab-07)",
+    "authors_or_org": [
+     "IETF AI Preferences (AIPREF) Working Group"
+    ],
+    "pub_year": "2026",
+    "doc_type": "standard",
+    "source_url": "https://datatracker.ietf.org/doc/draft-ietf-aipref-vocab/",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "httpx-raw",
+    "acquired_at": null,
+    "acquired_by": "scripts/harvest_triage.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed markdown, detected text",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "27652 bytes vs floor 256",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "27649 chars",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-08-30T12:56:56.741194+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "the pending_refetch was correct WHEN MADE: the first capture was the datatracker HTML rendering saved under a .md name and the magic-bytes check quarantined it. The refetch it asked for has happened — corpus/round2/ietf-aipref-vocab-draft.md is now the canonical Internet-Draft plain text (sha b870abc116b7…), integrity verified, and the hash change is recorded as manifest content_update reason=corrupt_source_replaced in events/batch-020.jsonl. Re-decided included on the R1 clause the admission was made under; task cc_tasks/2026-08-30_acquisition_round2.md §3.",
+    "decided_by": "cc",
+    "decided_at": "2026-08-30T12:58:30.899098+00:00",
+    "history": [
+     {
+      "decision": "included",
+      "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: Kernel inclusion rule clause (a): a normative specification. WG-adopted successor vocabulary to ad-hoc robots.txt AI directives; the corpus holds RFC 9309, the Web Bot Auth draft and llms.txt but not the IETF work that s",
+      "decided_by": "cc",
+      "decided_at": "2026-08-30T12:54:45.994853+00:00"
+     },
+     {
+      "decision": "pending_refetch",
+      "rationale": "no verified file remains: magic_bytes: claimed text-family but content is an HTML page",
+      "decided_by": "dixie.evidence",
+      "decided_at": "2026-08-30T12:54:47.450179+00:00"
+     },
+     {
+      "decision": "pending_refetch",
+      "rationale": "fetched but deferred at the manifest gate: post-sweep not verified/included: ('pending_refetch', 'failed')",
+      "decided_by": "cc",
+      "decided_at": "2026-08-30"
+     }
+    ],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": [
+     {
+      "path": "corpus/round2/ietf-aipref-vocab-draft.md",
+      "dest": "corpus/quarantine/round2/ietf-aipref-vocab-draft.md",
+      "reasons": [
+       "magic_bytes: claimed text-family but content is an HTML page"
+      ],
+      "ts": "2026-08-30T12:54:47.350290+00:00"
+     }
+    ]
+   },
+   "provenance_sources": [
+    "acquisition_round2_2026-08-30",
+    "candidate_register"
+   ],
+   "extra": {
+    "observed_files": {
+     "corpus/round2/ietf-aipref-vocab-draft.md": {
+      "sha256": "b870abc116b76824f502249828e809fe2d62ccffa211c09e95fb7bee011ec51c",
+      "size": 27652,
+      "claimed_type": "markdown",
+      "detected_type": "text"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/round2/ietf-aipref-vocab-draft.md": {
+      "path": "corpus/round2/ietf-aipref-vocab-draft.md",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed markdown, detected text",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "27652 bytes vs floor 256",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "27649 chars",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-08-30T12:56:56.741194+00:00"
+     }
+    },
+    "notes": [
+     "Kernel inclusion rule clause (a): a normative specification. WG-adopted successor vocabulary to ad-hoc robots.txt AI directives; the corpus holds RFC 9309, the Web Bot Auth draft and llms.txt but not the IETF work that supersedes their AI-preference semantics."
+    ],
+    "added_in": "acquisition-round2-2026-08-30"
    }
   },
   "ietf-web-bot-auth-architecture-draft": {
@@ -12792,6 +14362,53 @@
     "added_in": "v1"
    }
   },
+  "is-entropy-enough-for-measuring-privacy": {
+   "doc_id": "is-entropy-enough-for-measuring-privacy",
+   "identity": {
+    "sha256": null,
+    "canonical_path": null,
+    "title": "Is Entropy enough for measuring Privacy?",
+    "authors_or_org": [
+     "various"
+    ],
+    "pub_year": "2020",
+    "doc_type": "academic",
+    "source_url": "https://doi.org/10.1109/csci51800.2020.00249",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "unknown",
+    "acquired_at": null,
+    "acquired_by": null
+   },
+   "integrity": {
+    "status": "unchecked",
+    "checks": null,
+    "checked_at": null
+   },
+   "screening": {
+    "decision": "excluded",
+    "rationale": "A privacy-measurement note cited as a score input by AIDRIN-lineage work. Off-construct and closed access.",
+    "decided_by": "cc",
+    "decided_at": "2026-08-30",
+    "history": []
+   },
+   "lifecycle": {
+    "stage": "cataloged"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "candidate_register"
+   ],
+   "extra": {
+    "notes": [
+     "A privacy-measurement note cited as a score input by AIDRIN-lineage work. Off-construct and closed access."
+    ]
+   }
+  },
   "itu-ai-ready-analysis-towards-a-standardized-readiness-frame": {
    "doc_id": "itu-ai-ready-analysis-towards-a-standardized-readiness-frame",
    "identity": {
@@ -13046,6 +14663,116 @@
      }
     },
     "added_in": "kernel-v03"
+   }
+  },
+  "kumar-2024-manipulating-llms-product-visibility": {
+   "doc_id": "kumar-2024-manipulating-llms-product-visibility",
+   "identity": {
+    "sha256": "e4728cb8cfc5b7e4d9f4c25cf4770a8e470da88dee2caeaadbfe0c9a1e81bf1b",
+    "canonical_path": "corpus/round2/kumar-2024-manipulating-llms-product-visibility.pdf",
+    "title": "Manipulating Large Language Models to Increase Product Visibility",
+    "authors_or_org": [
+     "Aounon Kumar",
+     "Himabindu Lakkaraju"
+    ],
+    "pub_year": "2024",
+    "doc_type": "academic",
+    "source_url": "https://arxiv.org/abs/2404.07981",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "httpx-pdf",
+    "acquired_at": null,
+    "acquired_by": "scripts/harvest_triage.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed pdf, detected pdf",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "850147 bytes vs floor 7000",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "13 pages, extractable text present",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-08-30T12:54:47.204220+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "manifest-added by rule (clause R1, construct_arm publication_actionability)",
+    "decided_by": "cc",
+    "decided_at": "2026-08-30",
+    "history": [
+     {
+      "decision": "included",
+      "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: The strategic-text-sequence result both held GEO papers cite. It is the adversarial boundary of publication actionability: the same surface that makes content machine-interpretable makes it manipulable, and the graph nee",
+      "decided_by": "cc",
+      "decided_at": "2026-08-30T12:54:45.382310+00:00"
+     }
+    ],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "acquisition_round2_2026-08-30",
+    "candidate_register"
+   ],
+   "extra": {
+    "observed_files": {
+     "corpus/round2/kumar-2024-manipulating-llms-product-visibility.pdf": {
+      "sha256": "e4728cb8cfc5b7e4d9f4c25cf4770a8e470da88dee2caeaadbfe0c9a1e81bf1b",
+      "size": 850147,
+      "claimed_type": "pdf",
+      "detected_type": "pdf"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/round2/kumar-2024-manipulating-llms-product-visibility.pdf": {
+      "path": "corpus/round2/kumar-2024-manipulating-llms-product-visibility.pdf",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed pdf, detected pdf",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "850147 bytes vs floor 7000",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "13 pages, extractable text present",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-08-30T12:54:47.204220+00:00"
+     }
+    },
+    "added_in": "acquisition-round2-2026-08-30",
+    "notes": [
+     "The strategic-text-sequence result both held GEO papers cite. It is the adversarial boundary of publication actionability: the same surface that makes content machine-interpretable makes it manipulable, and the graph needs that edge stated by its primary source."
+    ]
    }
   },
   "lawrence-data-readiness-levels-2017": {
@@ -13422,6 +15149,117 @@
     "added_in": "kernel-v03"
    }
   },
+  "liu-2023-evaluating-verifiability-generative-search": {
+   "doc_id": "liu-2023-evaluating-verifiability-generative-search",
+   "identity": {
+    "sha256": "8c375529b4349bd5f35971af8c4b8b91cbd5fba195e7d7e19315e2a70950c7e7",
+    "canonical_path": "corpus/round2/liu-2023-evaluating-verifiability-generative-search.pdf",
+    "title": "Evaluating Verifiability in Generative Search Engines",
+    "authors_or_org": [
+     "Nelson F. Liu",
+     "Tianyi Zhang",
+     "Percy Liang"
+    ],
+    "pub_year": "2023",
+    "doc_type": "academic",
+    "source_url": "https://arxiv.org/abs/2304.09848",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "httpx-pdf",
+    "acquired_at": null,
+    "acquired_by": "scripts/harvest_triage.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed pdf, detected pdf",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "1259058 bytes vs floor 7000",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "25 pages, extractable text present",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-08-30T12:54:47.227972+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "manifest-added by rule (clause R1, construct_arm publication_actionability)",
+    "decided_by": "cc",
+    "decided_at": "2026-08-30",
+    "history": [
+     {
+      "decision": "included",
+      "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: Foundational: defines citation recall / citation precision as the verifiability constructs the audits in the corpus (hu-2025, venkit-2025) measure against. Cited by two held documents; admitting it closes a definitional ",
+      "decided_by": "cc",
+      "decided_at": "2026-08-30T12:54:45.229494+00:00"
+     }
+    ],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "acquisition_round2_2026-08-30",
+    "candidate_register"
+   ],
+   "extra": {
+    "observed_files": {
+     "corpus/round2/liu-2023-evaluating-verifiability-generative-search.pdf": {
+      "sha256": "8c375529b4349bd5f35971af8c4b8b91cbd5fba195e7d7e19315e2a70950c7e7",
+      "size": 1259058,
+      "claimed_type": "pdf",
+      "detected_type": "pdf"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/round2/liu-2023-evaluating-verifiability-generative-search.pdf": {
+      "path": "corpus/round2/liu-2023-evaluating-verifiability-generative-search.pdf",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed pdf, detected pdf",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "1259058 bytes vs floor 7000",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "25 pages, extractable text present",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-08-30T12:54:47.227972+00:00"
+     }
+    },
+    "added_in": "acquisition-round2-2026-08-30",
+    "notes": [
+     "Foundational: defines citation recall / citation precision as the verifiability constructs the audits in the corpus (hu-2025, venkit-2025) measure against. Cited by two held documents; admitting it closes a definitional dangling reference rather than widening the graph."
+    ]
+   }
+  },
   "llmstxt-proposal": {
    "doc_id": "llmstxt-proposal",
    "identity": {
@@ -13573,6 +15411,56 @@
     "candidate_register"
    ],
    "extra": {}
+  },
+  "lrid-a-new-metric-of-multi-class-imbalance-degree-based-on-l": {
+   "doc_id": "lrid-a-new-metric-of-multi-class-imbalance-degree-based-on-l",
+   "identity": {
+    "sha256": null,
+    "canonical_path": null,
+    "title": "LRID: A new metric of multi-class imbalance degree based on likelihood-ratio test",
+    "authors_or_org": [
+     "Ruizhi Zhu",
+     "Ziqi Wang",
+     "Zhaoxu Sun",
+     "Jiahong Chen"
+    ],
+    "pub_year": "2018",
+    "doc_type": "academic",
+    "source_url": "https://doi.org/10.1016/j.patrec.2018.09.012",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "unknown",
+    "acquired_at": null,
+    "acquired_by": null
+   },
+   "integrity": {
+    "status": "unchecked",
+    "checks": null,
+    "checked_at": null
+   },
+   "screening": {
+    "decision": "excluded",
+    "rationale": "As above: an imbalance metric cited as a score input, not a readiness definition.",
+    "decided_by": "cc",
+    "decided_at": "2026-08-30",
+    "history": []
+   },
+   "lifecycle": {
+    "stage": "cataloged"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "candidate_register"
+   ],
+   "extra": {
+    "notes": [
+     "As above: an imbalance metric cited as a score input, not a readiness definition."
+    ]
+   }
   },
   "m-19-23-phase-1-implementation-of-the-evidence-act": {
    "doc_id": "m-19-23-phase-1-implementation-of-the-evidence-act",
@@ -14390,6 +16278,115 @@
    ],
    "extra": {}
   },
+  "martinez-2026-geo-critical-survey": {
+   "doc_id": "martinez-2026-geo-critical-survey",
+   "identity": {
+    "sha256": "308c8e8d51ec7c92dd8b6d6b3d99ecd92f7feb7b443be9449fd016ffeb7e937d",
+    "canonical_path": "corpus/round2/martinez-2026-geo-critical-survey.pdf",
+    "title": "Optimizing Visibility in Generative Engines: A Critical Survey of Generative Engine Optimization (2023-2026)",
+    "authors_or_org": [
+     "Olivier Martinez"
+    ],
+    "pub_year": "2026",
+    "doc_type": "academic",
+    "source_url": "https://arxiv.org/abs/2607.14035",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "httpx-pdf",
+    "acquired_at": null,
+    "acquired_by": "scripts/harvest_triage.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed pdf, detected pdf",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "547324 bytes vs floor 7000",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "18 pages, extractable text present",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-08-30T12:54:47.261856+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "manifest-added by rule (clause R1, construct_arm publication_actionability)",
+    "decided_by": "cc",
+    "decided_at": "2026-08-30",
+    "history": [
+     {
+      "decision": "included",
+      "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: The cluster's terminological survey: 45 studies, Nov 2023-Jul 2026, and it states outright that 'terminology, metrics, and evidence standards remain heterogeneous'. That heterogeneity IS this graph's subject matter for t",
+      "decided_by": "cc",
+      "decided_at": "2026-08-30T12:54:44.463100+00:00"
+     }
+    ],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "acquisition_round2_2026-08-30",
+    "candidate_register"
+   ],
+   "extra": {
+    "observed_files": {
+     "corpus/round2/martinez-2026-geo-critical-survey.pdf": {
+      "sha256": "308c8e8d51ec7c92dd8b6d6b3d99ecd92f7feb7b443be9449fd016ffeb7e937d",
+      "size": 547324,
+      "claimed_type": "pdf",
+      "detected_type": "pdf"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/round2/martinez-2026-geo-critical-survey.pdf": {
+      "path": "corpus/round2/martinez-2026-geo-critical-survey.pdf",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed pdf, detected pdf",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "547324 bytes vs floor 7000",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "18 pages, extractable text present",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-08-30T12:54:47.261856+00:00"
+     }
+    },
+    "added_in": "acquisition-round2-2026-08-30",
+    "notes": [
+     "The cluster's terminological survey: 45 studies, Nov 2023-Jul 2026, and it states outright that 'terminology, metrics, and evidence standards remain heterogeneous'. That heterogeneity IS this graph's subject matter for the GEO arm. Highest-value single admit in the cluster."
+    ]
+   }
+  },
   "mckinsey-state-of-ai-2025": {
    "doc_id": "mckinsey-state-of-ai-2025",
    "identity": {
@@ -14545,6 +16542,55 @@
      }
     },
     "added_in": "triage-2026-08-24"
+   }
+  },
+  "measuring-the-class-imbalance-extent-of-multi-class-problems": {
+   "doc_id": "measuring-the-class-imbalance-extent-of-multi-class-problems",
+   "identity": {
+    "sha256": null,
+    "canonical_path": null,
+    "title": "Measuring the class-imbalance extent of multi-class problems",
+    "authors_or_org": [
+     "Jonathan Ortigosa-Hernandez",
+     "Inaki Inza",
+     "Jose A. Lozano"
+    ],
+    "pub_year": "2017",
+    "doc_type": "academic",
+    "source_url": "https://doi.org/10.1016/j.patrec.2017.08.002",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "unknown",
+    "acquired_at": null,
+    "acquired_by": null
+   },
+   "integrity": {
+    "status": "unchecked",
+    "checks": null,
+    "checked_at": null
+   },
+   "screening": {
+    "decision": "excluded",
+    "rationale": "An ML class-imbalance metric. AIDRIN cites it as one input to a readiness score; the metric itself is not a readiness construct. Closed access besides.",
+    "decided_by": "cc",
+    "decided_at": "2026-08-30",
+    "history": []
+   },
+   "lifecycle": {
+    "stage": "cataloged"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "candidate_register"
+   ],
+   "extra": {
+    "notes": [
+     "An ML class-imbalance metric. AIDRIN cites it as one input to a readiness score; the metric itself is not a readiness construct. Closed access besides."
+    ]
    }
   },
   "medical-ai-readiness-scale-for-medical-students-mairse": {
@@ -17240,6 +19286,56 @@
     "added_in": "kernel-v03"
    }
   },
+  "position-generative-engine-optimization-creates-underexamine": {
+   "doc_id": "position-generative-engine-optimization-creates-underexamine",
+   "identity": {
+    "sha256": null,
+    "canonical_path": null,
+    "title": "Position: Generative Engine Optimization Creates Underexamined Risks, Governance Must Target Concentration, Disclosure, and Academic Blind Spots",
+    "authors_or_org": [
+     "Yizhu Wen",
+     "Nan Zhang",
+     "Haohan Yuan",
+     "Xun Chen"
+    ],
+    "pub_year": "2026",
+    "doc_type": "academic",
+    "source_url": "https://arxiv.org/abs/2606.12439",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "unknown",
+    "acquired_at": null,
+    "acquired_by": null
+   },
+   "integrity": {
+    "status": "unchecked",
+    "checks": null,
+    "checked_at": null
+   },
+   "screening": {
+    "decision": "excluded",
+    "rationale": "AMBIGUOUS. It formalizes a general GEO pipeline (which rows 1-2 also do) but its contribution is a governance position, and a position paper is argument rather than definition or measurement. Cut per task §3's default; listed for operator review because the concentration/disclosure risk framing has no counterpart in the corpus.",
+    "decided_by": "cc",
+    "decided_at": "2026-08-30",
+    "history": []
+   },
+   "lifecycle": {
+    "stage": "cataloged"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "candidate_register"
+   ],
+   "extra": {
+    "notes": [
+     "AMBIGUOUS. It formalizes a general GEO pipeline (which rows 1-2 also do) but its contribution is a governance position, and a position paper is argument rather than definition or measurement. Cut per task §3's default; listed for operator review because the concentration/disclosure risk framing has no counterpart in the corpus."
+    ]
+   }
+  },
   "public-service-in-the-age-of-ai-institutional-strategies-for": {
    "doc_id": "public-service-in-the-age-of-ai-institutional-strategies-for",
    "identity": {
@@ -17764,6 +19860,115 @@
      }
     },
     "added_in": "kernel-v03"
+   }
+  },
+  "rsl-1-0-specification": {
+   "doc_id": "rsl-1-0-specification",
+   "identity": {
+    "sha256": "321353c07cca8786f05ef1837579d00033b349eddeadd7f2f72a9817966f936e",
+    "canonical_path": "corpus/round2/rsl-1-0-specification.md",
+    "title": "RSL 1.0 Specification (Really Simple Licensing)",
+    "authors_or_org": [
+     "RSL Collective"
+    ],
+    "pub_year": "2025",
+    "doc_type": "standard",
+    "source_url": "https://rslstandard.org/rsl",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "crwl",
+    "acquired_at": null,
+    "acquired_by": "scripts/harvest_triage.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed markdown, detected text",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "117438 bytes vs floor 256",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "117069 chars",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-08-30T12:54:47.262863+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "manifest-added by rule (clause R1, construct_arm publication_actionability)",
+    "decided_by": "cc",
+    "decided_at": "2026-08-30",
+    "history": [
+     {
+      "decision": "included",
+      "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: Machine-readable licensing terms for AI consumption, with association bindings to robots.txt, HTTP headers, HTML, RSS and media files. Clause (a) normative specification; it is the licensing surface the AIPREF vocabulary",
+      "decided_by": "cc",
+      "decided_at": "2026-08-30T12:54:46.299388+00:00"
+     }
+    ],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "acquisition_round2_2026-08-30",
+    "candidate_register"
+   ],
+   "extra": {
+    "observed_files": {
+     "corpus/round2/rsl-1-0-specification.md": {
+      "sha256": "321353c07cca8786f05ef1837579d00033b349eddeadd7f2f72a9817966f936e",
+      "size": 117438,
+      "claimed_type": "markdown",
+      "detected_type": "text"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/round2/rsl-1-0-specification.md": {
+      "path": "corpus/round2/rsl-1-0-specification.md",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed markdown, detected text",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "117438 bytes vs floor 256",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "117069 chars",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-08-30T12:54:47.262863+00:00"
+     }
+    },
+    "added_in": "acquisition-round2-2026-08-30",
+    "notes": [
+     "Machine-readable licensing terms for AI consumption, with association bindings to robots.txt, HTTP headers, HTML, RSS and media files. Clause (a) normative specification; it is the licensing surface the AIPREF vocabulary deliberately does not cover."
+    ]
    }
   },
   "sainz-2023-llm-data-contamination": {
@@ -18724,6 +20929,117 @@
     "added_in": "kernel-v03"
    }
   },
+  "schulte-2026-dont-measure-once": {
+   "doc_id": "schulte-2026-dont-measure-once",
+   "identity": {
+    "sha256": "d2399010abb98f9cc66937146b56a96b4261b57c65ddc3d6d967f00c11912415",
+    "canonical_path": "corpus/round2/schulte-2026-dont-measure-once.pdf",
+    "title": "Don't Measure Once: Measuring Visibility in AI Search (GEO)",
+    "authors_or_org": [
+     "Julius Schulte",
+     "Malte Bleeker",
+     "Philipp Kaufmann"
+    ],
+    "pub_year": "2026",
+    "doc_type": "academic",
+    "source_url": "https://arxiv.org/abs/2604.07585",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "httpx-pdf",
+    "acquired_at": null,
+    "acquired_by": "scripts/harvest_triage.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed pdf, detected pdf",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "1085910 bytes vs floor 7000",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "19 pages, extractable text present",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-08-30T12:54:47.279357+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "manifest-added by rule (clause R1, construct_arm publication_actionability)",
+    "decided_by": "cc",
+    "decided_at": "2026-08-30",
+    "history": [
+     {
+      "decision": "included",
+      "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: Measurement-validity argument: AI-search visibility is stochastic, so a one-off observation is not an estimate. This is a reliability claim about the cluster's instruments, and the corpus holds no other statement of it.",
+      "decided_by": "cc",
+      "decided_at": "2026-08-30T12:54:44.770873+00:00"
+     }
+    ],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "acquisition_round2_2026-08-30",
+    "candidate_register"
+   ],
+   "extra": {
+    "observed_files": {
+     "corpus/round2/schulte-2026-dont-measure-once.pdf": {
+      "sha256": "d2399010abb98f9cc66937146b56a96b4261b57c65ddc3d6d967f00c11912415",
+      "size": 1085910,
+      "claimed_type": "pdf",
+      "detected_type": "pdf"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/round2/schulte-2026-dont-measure-once.pdf": {
+      "path": "corpus/round2/schulte-2026-dont-measure-once.pdf",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed pdf, detected pdf",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "1085910 bytes vs floor 7000",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "19 pages, extractable text present",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-08-30T12:54:47.279357+00:00"
+     }
+    },
+    "added_in": "acquisition-round2-2026-08-30",
+    "notes": [
+     "Measurement-validity argument: AI-search visibility is stochastic, so a one-off observation is not an estimate. This is a reliability claim about the cluster's instruments, and the corpus holds no other statement of it."
+    ]
+   }
+  },
   "scihorizon-qin-2025": {
    "doc_id": "scihorizon-qin-2025",
    "identity": {
@@ -19269,6 +21585,55 @@
     "added_in": "triage-2026-08-24",
     "notes": [
      "Primary subject = making data interpretable by machine consumers via semantic layer — R1's text. Auto-captions confirmed available."
+    ]
+   }
+  },
+  "shapr-an-efficient-and-versatile-membership-privacy-risk-met": {
+   "doc_id": "shapr-an-efficient-and-versatile-membership-privacy-risk-met",
+   "identity": {
+    "sha256": null,
+    "canonical_path": null,
+    "title": "SHAPr: An Efficient and Versatile Membership Privacy Risk Metric for Machine Learning",
+    "authors_or_org": [
+     "Vasisht Duddu",
+     "Sebastian Szyller",
+     "N. Asokan"
+    ],
+    "pub_year": "2021",
+    "doc_type": "academic",
+    "source_url": "https://arxiv.org/abs/2112.02230",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "unknown",
+    "acquired_at": null,
+    "acquired_by": null
+   },
+   "integrity": {
+    "status": "unchecked",
+    "checks": null,
+    "checked_at": null
+   },
+   "screening": {
+    "decision": "excluded",
+    "rationale": "A membership-inference privacy metric. Privacy risk of a trained model, not readiness of published data.",
+    "decided_by": "cc",
+    "decided_at": "2026-08-30",
+    "history": []
+   },
+   "lifecycle": {
+    "stage": "cataloged"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "candidate_register"
+   ],
+   "extra": {
+    "notes": [
+     "A membership-inference privacy metric. Privacy risk of a trained model, not readiness of published data."
     ]
    }
   },
@@ -19840,6 +22205,56 @@
     "added_in": "v1"
    }
   },
+  "structural-feature-engineering-for-generative-engine-optimiz": {
+   "doc_id": "structural-feature-engineering-for-generative-engine-optimiz",
+   "identity": {
+    "sha256": null,
+    "canonical_path": null,
+    "title": "Structural Feature Engineering for Generative Engine Optimization: How Content Structure Shapes Citation Behavior",
+    "authors_or_org": [
+     "Junwei Yu",
+     "Mufeng Yang",
+     "Yepeng Ding",
+     "Hiroyuki Sato"
+    ],
+    "pub_year": "2026",
+    "doc_type": "academic",
+    "source_url": "https://arxiv.org/abs/2603.29979",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "unknown",
+    "acquired_at": null,
+    "acquired_by": null
+   },
+   "integrity": {
+    "status": "unchecked",
+    "checks": null,
+    "checked_at": null
+   },
+   "screening": {
+    "decision": "excluded",
+    "rationale": "GEO-SFE is an optimization method for improving one's own citation rate. The graph's target is what AI-readiness IS and how it is measured, not the toolbox for raising a score.",
+    "decided_by": "cc",
+    "decided_at": "2026-08-30",
+    "history": []
+   },
+   "lifecycle": {
+    "stage": "cataloged"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "candidate_register"
+   ],
+   "extra": {
+    "notes": [
+     "GEO-SFE is an optimization method for improving one's own citation rate. The graph's target is what AI-readiness IS and how it is measured, not the toolbox for raising a score."
+    ]
+   }
+  },
   "technology-readiness-and-the-organizational-journey-towards": {
    "doc_id": "technology-readiness-and-the-organizational-journey-towards",
    "identity": {
@@ -20139,6 +22554,54 @@
      }
     },
     "added_in": "v1"
+   }
+  },
+  "the-effects-and-interactions-of-data-quality-and-problem-com": {
+   "doc_id": "the-effects-and-interactions-of-data-quality-and-problem-com",
+   "identity": {
+    "sha256": null,
+    "canonical_path": null,
+    "title": "The Effects and Interactions of Data Quality and Problem Complexity on Classification",
+    "authors_or_org": [
+     "Roger Blake",
+     "Paul Mangiameli"
+    ],
+    "pub_year": "2010",
+    "doc_type": "academic",
+    "source_url": "https://doi.org/10.1145/1891879.1891881",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "unknown",
+    "acquired_at": null,
+    "acquired_by": null
+   },
+   "integrity": {
+    "status": "unchecked",
+    "checks": null,
+    "checked_at": null
+   },
+   "screening": {
+    "decision": "excluded",
+    "rationale": "A 2010 empirical study of data quality versus classification performance. Its finding is carried, with fifteen further years of evidence, by the held 360-degree readiness survey. Closed access besides.",
+    "decided_by": "cc",
+    "decided_at": "2026-08-30",
+    "history": []
+   },
+   "lifecycle": {
+    "stage": "cataloged"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "candidate_register"
+   ],
+   "extra": {
+    "notes": [
+     "A 2010 empirical study of data quality versus classification performance. Its finding is carried, with fifteen further years of evidence, by the held 360-degree readiness survey. Closed access besides."
+    ]
    }
   },
   "the-metadata-ecosystem-and-ai-enabling-fair-and-ai-ready-dat": {
@@ -20530,6 +22993,56 @@
     "added_in": "v1"
    }
   },
+  "the-privacy-onion-effect-memorization-is-relative": {
+   "doc_id": "the-privacy-onion-effect-memorization-is-relative",
+   "identity": {
+    "sha256": null,
+    "canonical_path": null,
+    "title": "The Privacy Onion Effect: Memorization is Relative",
+    "authors_or_org": [
+     "Nicholas Carlini",
+     "Matthew Jagielski",
+     "Chiyuan Zhang",
+     "Nicolas Papernot"
+    ],
+    "pub_year": "2022",
+    "doc_type": "academic",
+    "source_url": "https://arxiv.org/abs/2206.10469",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "unknown",
+    "acquired_at": null,
+    "acquired_by": null
+   },
+   "integrity": {
+    "status": "unchecked",
+    "checks": null,
+    "checked_at": null
+   },
+   "screening": {
+    "decision": "excluded",
+    "rationale": "Training-data memorization. Off-construct for a graph about readiness definitions and instruments.",
+    "decided_by": "cc",
+    "decided_at": "2026-08-30",
+    "history": []
+   },
+   "lifecycle": {
+    "stage": "cataloged"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "candidate_register"
+   ],
+   "extra": {
+    "notes": [
+     "Training-data memorization. Off-construct for a graph about readiness definitions and instruments."
+    ]
+   }
+  },
   "tiger-2024-visual-analysis-data-readiness": {
    "doc_id": "tiger-2024-visual-analysis-data-readiness",
    "identity": {
@@ -20777,6 +23290,56 @@
       "checked_at": "2026-07-05T08:05:44.092882+00:00"
      }
     }
+   }
+  },
+  "training-verifiers-to-solve-math-word-problems": {
+   "doc_id": "training-verifiers-to-solve-math-word-problems",
+   "identity": {
+    "sha256": null,
+    "canonical_path": null,
+    "title": "Training Verifiers to Solve Math Word Problems",
+    "authors_or_org": [
+     "Karl Cobbe",
+     "Vineet Kosaraju",
+     "Mohammad Bavarian",
+     "Mark Chen"
+    ],
+    "pub_year": "2021",
+    "doc_type": "academic",
+    "source_url": "https://arxiv.org/abs/2110.14168",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "unknown",
+    "acquired_at": null,
+    "acquired_by": null
+   },
+   "integrity": {
+    "status": "unchecked",
+    "checks": null,
+    "checked_at": null
+   },
+   "screening": {
+    "decision": "excluded",
+    "rationale": "LLM training and the GSM8K benchmark. Cited by a held contamination paper for its benchmark, not for anything about data readiness.",
+    "decided_by": "cc",
+    "decided_at": "2026-08-30",
+    "history": []
+   },
+   "lifecycle": {
+    "stage": "cataloged"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "candidate_register"
+   ],
+   "extra": {
+    "notes": [
+     "LLM training and the GSM8K benchmark. Cited by a held contamination paper for its benchmark, not for anything about data readiness."
+    ]
    }
   },
   "transforming-big-data-into-ai-ready-data-for-nutrition-and-o": {
@@ -22081,6 +24644,118 @@
     "added_in": "kernel-v03"
    }
   },
+  "volpini-2026-structured-linked-data-memory-layer": {
+   "doc_id": "volpini-2026-structured-linked-data-memory-layer",
+   "identity": {
+    "sha256": "3cce88149c6562f5c39e88c1f607aa5da8b2570559a2538b80d1f4a21a04d8ed",
+    "canonical_path": "corpus/round2/volpini-2026-structured-linked-data-memory-layer.pdf",
+    "title": "Structured Linked Data as a Memory Layer for Agent-Orchestrated Retrieval",
+    "authors_or_org": [
+     "Andrea Volpini",
+     "Elie Raad",
+     "Beatrice Gamba",
+     "David Riccitelli"
+    ],
+    "pub_year": "2026",
+    "doc_type": "academic",
+    "source_url": "https://arxiv.org/abs/2603.10700",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "httpx-pdf",
+    "acquired_at": null,
+    "acquired_by": "scripts/harvest_triage.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed pdf, detected pdf",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "908930 bytes vs floor 7000",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "33 pages, extractable text present",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-08-30T12:54:47.298137+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "manifest-added by rule (clause R1, construct_arm publication_actionability)",
+    "decided_by": "cc",
+    "decided_at": "2026-08-30",
+    "history": [
+     {
+      "decision": "included",
+      "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: Controlled experiment on whether schema.org markup and dereferenceable entity pages improve agentic retrieval. The corpus holds seven schema.org type pages as normative surfaces but no measurement of whether publishing t",
+      "decided_by": "cc",
+      "decided_at": "2026-08-30T12:54:45.841970+00:00"
+     }
+    ],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "acquisition_round2_2026-08-30",
+    "candidate_register"
+   ],
+   "extra": {
+    "observed_files": {
+     "corpus/round2/volpini-2026-structured-linked-data-memory-layer.pdf": {
+      "sha256": "3cce88149c6562f5c39e88c1f607aa5da8b2570559a2538b80d1f4a21a04d8ed",
+      "size": 908930,
+      "claimed_type": "pdf",
+      "detected_type": "pdf"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/round2/volpini-2026-structured-linked-data-memory-layer.pdf": {
+      "path": "corpus/round2/volpini-2026-structured-linked-data-memory-layer.pdf",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed pdf, detected pdf",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "908930 bytes vs floor 7000",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "33 pages, extractable text present",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-08-30T12:54:47.298137+00:00"
+     }
+    },
+    "added_in": "acquisition-round2-2026-08-30",
+    "notes": [
+     "Controlled experiment on whether schema.org markup and dereferenceable entity pages improve agentic retrieval. The corpus holds seven schema.org type pages as normative surfaces but no measurement of whether publishing them changes machine consumption; this is that measurement."
+    ]
+   }
+  },
   "w3c-dcat-3": {
    "doc_id": "w3c-dcat-3",
    "identity": {
@@ -22721,6 +25396,116 @@
     "added_in": "kernel-v03"
    }
   },
+  "watanabe-2026-aeo-referral-natural-experiment": {
+   "doc_id": "watanabe-2026-aeo-referral-natural-experiment",
+   "identity": {
+    "sha256": "9602aeedd1ca28e7f4a45b8d1711510a649a630687f9beb07bec5fb419593553",
+    "canonical_path": "corpus/round2/watanabe-2026-aeo-referral-natural-experiment.pdf",
+    "title": "Disentangling Answer Engine Optimization from Platform Growth: A Log-Based Natural Experiment on ChatGPT Referral Traffic",
+    "authors_or_org": [
+     "Keisuke Watanabe",
+     "Kazuki Nakayashiki"
+    ],
+    "pub_year": "2026",
+    "doc_type": "academic",
+    "source_url": "https://arxiv.org/abs/2606.04362",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "httpx-pdf",
+    "acquired_at": null,
+    "acquired_by": "scripts/harvest_triage.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed pdf, detected pdf",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "420486 bytes vs floor 7000",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "9 pages, extractable text present",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-08-30T12:54:47.316671+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "manifest-added by rule (clause R1, construct_arm publication_actionability)",
+    "decided_by": "cc",
+    "decided_at": "2026-08-30",
+    "history": [
+     {
+      "decision": "included",
+      "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: The only AEO-named measurement study located. Explicitly separates the intervention effect from platform growth, i.e. it treats the confound the cluster's practitioner claims ignore. Closes the AEO half of the operator's",
+      "decided_by": "cc",
+      "decided_at": "2026-08-30T12:54:44.923071+00:00"
+     }
+    ],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "acquisition_round2_2026-08-30",
+    "candidate_register"
+   ],
+   "extra": {
+    "observed_files": {
+     "corpus/round2/watanabe-2026-aeo-referral-natural-experiment.pdf": {
+      "sha256": "9602aeedd1ca28e7f4a45b8d1711510a649a630687f9beb07bec5fb419593553",
+      "size": 420486,
+      "claimed_type": "pdf",
+      "detected_type": "pdf"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/round2/watanabe-2026-aeo-referral-natural-experiment.pdf": {
+      "path": "corpus/round2/watanabe-2026-aeo-referral-natural-experiment.pdf",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed pdf, detected pdf",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "420486 bytes vs floor 7000",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "9 pages, extractable text present",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-08-30T12:54:47.316671+00:00"
+     }
+    },
+    "added_in": "acquisition-round2-2026-08-30",
+    "notes": [
+     "The only AEO-named measurement study located. Explicitly separates the intervention effect from platform growth, i.e. it treats the confound the cluster's practitioner claims ignore. Closes the AEO half of the operator's named gap; the corpus previously held GEO only."
+    ]
+   }
+  },
   "webb-2026-state-fidelity-validity": {
    "doc_id": "webb-2026-state-fidelity-validity",
    "identity": {
@@ -22930,6 +25715,56 @@
     "added_in": "v1"
    }
   },
+  "webgpt-browser-assisted-question-answering-with-human-feedba": {
+   "doc_id": "webgpt-browser-assisted-question-answering-with-human-feedba",
+   "identity": {
+    "sha256": null,
+    "canonical_path": null,
+    "title": "WebGPT: Browser-assisted question-answering with human feedback",
+    "authors_or_org": [
+     "Reiichiro Nakano",
+     "Jacob Hilton",
+     "Suchir Balaji",
+     "Jeff Wu"
+    ],
+    "pub_year": "2021",
+    "doc_type": "academic",
+    "source_url": "https://arxiv.org/abs/2112.09332",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "unknown",
+    "acquired_at": null,
+    "acquired_by": null
+   },
+   "integrity": {
+    "status": "unchecked",
+    "checks": null,
+    "checked_at": null
+   },
+   "screening": {
+    "decision": "excluded",
+    "rationale": "A model paper. It is the ancestor of the generative-search systems the GEO cluster audits, but it asserts nothing about how publishers make content machine-consumable.",
+    "decided_by": "cc",
+    "decided_at": "2026-08-30",
+    "history": []
+   },
+   "lifecycle": {
+    "stage": "cataloged"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "candidate_register"
+   ],
+   "extra": {
+    "notes": [
+     "A model paper. It is the ancestor of the generative-search systems the GEO cluster audits, but it asserts nothing about how publishers make content machine-consumable."
+    ]
+   }
+  },
   "webmcp-readme": {
    "doc_id": "webmcp-readme",
    "identity": {
@@ -23036,6 +25871,55 @@
     "added_in": "triage-2026-08-24",
     "notes": [
      "Task Phase 3: WebMCP — not in kernel."
+    ]
+   }
+  },
+  "what-gets-cited-competitive-geo-in-ai-answer-engines": {
+   "doc_id": "what-gets-cited-competitive-geo-in-ai-answer-engines",
+   "identity": {
+    "sha256": null,
+    "canonical_path": null,
+    "title": "What Gets Cited: Competitive GEO in AI Answer Engines",
+    "authors_or_org": [
+     "Rahul Vishwakarma",
+     "Shushant Kumar",
+     "Ratnesh Jamidar"
+    ],
+    "pub_year": "2026",
+    "doc_type": "academic",
+    "source_url": "https://arxiv.org/abs/2605.25517",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "unknown",
+    "acquired_at": null,
+    "acquired_by": null
+   },
+   "integrity": {
+    "status": "unchecked",
+    "checks": null,
+    "checked_at": null
+   },
+   "screening": {
+    "decision": "excluded",
+    "rationale": "A controlled two-document RAG testbed measuring which of two sources is cited first. A mechanism experiment over 18 content factors, not a definition or a field-level instrument; the citation constructs it manipulates come from rows 2 and 6.",
+    "decided_by": "cc",
+    "decided_at": "2026-08-30",
+    "history": []
+   },
+   "lifecycle": {
+    "stage": "cataloged"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "candidate_register"
+   ],
+   "extra": {
+    "notes": [
+     "A controlled two-document RAG testbed measuring which of two sources is cited first. A mechanism experiment over 18 content factors, not a definition or a field-level instrument; the citation constructs it manipulates come from rows 2 and 6."
     ]
    }
   },
@@ -24033,6 +26917,117 @@
      }
     },
     "added_in": "kernel-v03"
+   }
+  },
+  "zhang-2026-citation-selection-absorption": {
+   "doc_id": "zhang-2026-citation-selection-absorption",
+   "identity": {
+    "sha256": "943c6744d36be3537969b13df0ab5c9087f6189b8d5e8aa24f135f9d3cf245cb",
+    "canonical_path": "corpus/round2/zhang-2026-citation-selection-absorption.pdf",
+    "title": "From Citation Selection to Citation Absorption: A Measurement Framework for Generative Engine Optimization Across AI Search Platforms",
+    "authors_or_org": [
+     "Zhang Kai",
+     "He Xinyue",
+     "Yao Jingang"
+    ],
+    "pub_year": "2026",
+    "doc_type": "academic",
+    "source_url": "https://arxiv.org/abs/2604.25707",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "httpx-pdf",
+    "acquired_at": null,
+    "acquired_by": "scripts/harvest_triage.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed pdf, detected pdf",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "1053826 bytes vs floor 7000",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "27 pages, extractable text present",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-08-30T12:54:47.332558+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "manifest-added by rule (clause R1, construct_arm publication_actionability)",
+    "decided_by": "cc",
+    "decided_at": "2026-08-30",
+    "history": [
+     {
+      "decision": "included",
+      "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: Two-stage measurement framework (citation selection vs citation absorption) over 21,143 citations across ChatGPT / AI Overview / Perplexity. An instrument with a construct decomposition, which is what the crosswalk consu",
+      "decided_by": "cc",
+      "decided_at": "2026-08-30T12:54:44.618199+00:00"
+     }
+    ],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "acquisition_round2_2026-08-30",
+    "candidate_register"
+   ],
+   "extra": {
+    "observed_files": {
+     "corpus/round2/zhang-2026-citation-selection-absorption.pdf": {
+      "sha256": "943c6744d36be3537969b13df0ab5c9087f6189b8d5e8aa24f135f9d3cf245cb",
+      "size": 1053826,
+      "claimed_type": "pdf",
+      "detected_type": "pdf"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/round2/zhang-2026-citation-selection-absorption.pdf": {
+      "path": "corpus/round2/zhang-2026-citation-selection-absorption.pdf",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed pdf, detected pdf",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "1053826 bytes vs floor 7000",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "27 pages, extractable text present",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-08-30T12:54:47.332558+00:00"
+     }
+    },
+    "added_in": "acquisition-round2-2026-08-30",
+    "notes": [
+     "Two-stage measurement framework (citation selection vs citation absorption) over 21,143 citations across ChatGPT / AI Overview / Perplexity. An instrument with a construct decomposition, which is what the crosswalk consumes."
+    ]
    }
   }
  }

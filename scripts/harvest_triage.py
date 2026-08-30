@@ -193,7 +193,26 @@ def main() -> int:
     ap.add_argument("--only", nargs="*", default=None)
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--force", action="store_true")
+    # Round 2 (task 2026-08-30_acquisition_round2) reuses this harvester against its own
+    # list and staging dir. The alternative was a second copy of the fetch/route/register
+    # machinery, which would then have to be kept in step with this one — the paywall
+    # reclassification and the resume-on-sha rules are exactly the code you do not want two
+    # versions of.
+    ap.add_argument("--list", default=None,
+                    help="candidate list YAML (default: the 2026-08-24 triage list)")
+    ap.add_argument("--inbox", default=None,
+                    help="staging directory for fetched files and the fetch register")
+    ap.add_argument("--task-ref", default=None, help="task reference stamped on captures")
     args = ap.parse_args()
+
+    global TRIAGE_LIST, INBOX, FETCH_REGISTER, TASK_REF
+    if args.list:
+        TRIAGE_LIST = Path(args.list).resolve()
+    if args.inbox:
+        INBOX = Path(args.inbox).resolve()
+        FETCH_REGISTER = INBOX / "_fetch_register.json"
+    if args.task_ref:
+        TASK_REF = args.task_ref
 
     if os.environ.get("ANTHROPIC_API_KEY"):
         print("ANTHROPIC_API_KEY is set; this task runs with zero model spend and refuses "

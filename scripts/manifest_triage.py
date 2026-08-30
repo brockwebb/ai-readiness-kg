@@ -56,6 +56,11 @@ EPOCH = "triage-2026-08-24"
 SOURCE_INPUT1 = "fss_research_group_2026-08"
 SOURCE_GAP = "seo_aio_gap_2026-08-24"
 TASK = "cc_tasks/2026-08-24_source_triage.md"
+#: Mutable one-element list so `run()` reads the CURRENT doc-dir name (module globals are
+#: read at call time in this repo; a bare str rebound in main() would not be seen through
+#: a `from ... import` in a test).
+DOC_DIR_NAME = ["triage"]
+SUMMARY_OUT = REPO / "docs" / "research" / "2026-08-24_triage_phase4_manifest_summary.json"
 MAX_DOC_CHARS = 250000           # AUTH-4 oversize guard, same value the harvest enforced
 
 # candidate_status -> dixie-legal register status (the import status_map is closed:
@@ -133,8 +138,9 @@ def register_line(rec: dict, status: str, reason: str) -> dict:
 
 def run(dry_run: bool, finalize: bool = False) -> int:
     cfg = dixie_config(REPO / "dixie_evidence.yaml")
-    if "triage" not in cfg["document_dirs"]:
-        raise SystemExit("FATAL: dixie_evidence.yaml document_dirs must include 'triage'")
+    if DOC_DIR_NAME[0] not in cfg["document_dirs"]:
+        raise SystemExit(f"FATAL: dixie_evidence.yaml document_dirs must include "
+                         f"{DOC_DIR_NAME[0]!r}")
     dlog = DixieLog(cfg["evidence_dir_abs"] / "decisions.jsonl")
     records = load_records()
     ids, shas, urls = existing_identity()
@@ -313,7 +319,7 @@ def run(dry_run: bool, finalize: bool = False) -> int:
     summary = {"added": added, "skipped": skipped, "deferred": deferred,
                "epoch": EPOCH, "members": sorted(members), "batch": BATCH,
                "register_lines": lines_written, "ts": _now()}
-    out = REPO / "docs" / "research" / "2026-08-24_triage_phase4_manifest_summary.json"
+    out = SUMMARY_OUT
     out.write_text(json.dumps(summary, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
     print("summary:", out.relative_to(REPO))
     return 0
@@ -325,7 +331,37 @@ def main() -> int:
     ap.add_argument("--finalize", action="store_true",
                     help="skip adds; run sweep + epoch + rebuild + register lines for the "
                          "manifest_add events already in the shard")
+    # Round 2 (task 2026-08-30_acquisition_round2 §3) admits through this same path against
+    # its own register, shard, document dir and epoch. Parameterizing beats copying: the
+    # dedupe-by-doc_id/sha/url gate, the sweep-before-register ordering, and the
+    # no-line-for-already_held rule are exactly the invariants a second copy would drift on.
+    ap.add_argument("--register", help="fetch register JSON (default: the 2026-08-24 one)")
+    ap.add_argument("--doc-dir", help="corpus/<name> document dir; must be in "
+                                      "dixie_evidence.yaml document_dirs")
+    ap.add_argument("--batch", type=int, help="event shard number")
+    ap.add_argument("--epoch", help="corpus epoch to declare")
+    ap.add_argument("--source-id", help="dixie source_id for this run's admissions")
+    ap.add_argument("--task", help="task reference stamped on every record")
+    ap.add_argument("--summary-out", help="path for the run summary JSON")
     a = ap.parse_args()
+
+    global FETCH_REGISTER, TRIAGE_DIR, BATCH, EPOCH, SOURCE_INPUT1, SOURCE_GAP, TASK
+    global SUMMARY_OUT
+    if a.register:
+        FETCH_REGISTER = Path(a.register).resolve()
+    if a.doc_dir:
+        TRIAGE_DIR = REPO / "corpus" / a.doc_dir
+        DOC_DIR_NAME[0] = a.doc_dir
+    if a.batch is not None:
+        BATCH = a.batch
+    if a.epoch:
+        EPOCH = a.epoch
+    if a.source_id:
+        SOURCE_INPUT1 = SOURCE_GAP = a.source_id
+    if a.task:
+        TASK = a.task
+    if a.summary_out:
+        SUMMARY_OUT = Path(a.summary_out).resolve()
     return run(a.dry_run, finalize=a.finalize)
 
 

@@ -49,6 +49,11 @@ corpus/triage/
 # primary_url + content_hash (CLAUDE.md, invariant 2).
 corpus/crosswalk/
 
+# Round-2 acquisition captures (task 2026-08-30_acquisition_round2 §3). Same rule as every
+# other corpus dir: the bytes stay local, provenance survives in events/batch-020.jsonl via
+# primary_url + content_hash (CLAUDE.md, invariant 2).
+corpus/round2/
+
 # ── Python ────────────────────────────────────────────────────────────────
 __pycache__/
 *.py[cod]
@@ -98,3 +103,12 @@ state/corpus_index.rebuild.db
 state/docling_md/
 state/biblio_cache/
 state/convert_errors/
+
+# Round-2 derived layers (task 2026-08-30_acquisition_round2). Same rule: rebuildable
+# projections, never sources of truth. `state/refparse/` regenerates with
+# `python -m kg.refparse` from state/docling_md; `state/candidate_oa.json` is a provider
+# cache that `kg.biblio.enrich_candidates` refills. The DECISIONS they feed are durable —
+# they live in corpus/manifest.json, events/batch-020.jsonl and
+# docs/corpus/acquisition_candidates.md, all of which are tracked.
+state/refparse/
+state/candidate_oa.json

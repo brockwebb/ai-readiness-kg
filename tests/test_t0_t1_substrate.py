@@ -617,3 +617,41 @@ def test_sanitizer_runs_on_the_real_request_path(monkeypatch):
     monkeypatch.setattr(t0.requests, "get", fake)
     t0.get("https://api.openalex.org/works", {"search": "Ready for AI?"})
     assert seen["search"] == "Ready for AI", f"wildcard reached the provider: {seen}"
+
+
+# --- 4. document dirs must come from config, not from a literal in this script -----------
+def test_local_path_reads_document_dirs_from_dixie_config():
+    """Defect found live 2026-08-30 (task acquisition_round2 §4): `local_path` carried a
+    hardcoded tuple of corpus subdirectories. Admitting 16 documents into a NEW dir declared
+    in `dixie_evidence.yaml` made T1 report all 16 as `MISSING` — a silent, wrong diagnosis
+    (the files were there) that would have dropped them from the index."""
+    import yaml
+    cfg = yaml.safe_load((Path(t1.REPO) / "dixie_evidence.yaml").read_text())
+    assert set(t1._document_dirs()) == set(cfg["document_dirs"])
+
+
+def test_local_path_finds_a_document_in_a_newly_declared_dir(tmp_path, monkeypatch):
+    """The mutation check for the test above: point the config at a dir the old literal did
+    not list, and `local_path` must still find the file. If someone re-hardcodes the list,
+    this fails."""
+    repo = tmp_path
+    (repo / "corpus" / "brand-new-dir").mkdir(parents=True)
+    target = repo / "corpus" / "brand-new-dir" / "some-doc.pdf"
+    target.write_bytes(b"%PDF-1.4\n")
+    (repo / "dixie_evidence.yaml").write_text(
+        "document_dirs: [brand-new-dir]\n", encoding="utf-8")
+    monkeypatch.setattr(t1, "REPO", repo)
+    assert t1.local_path("some-doc", {}) == target
+
+
+def test_local_path_prefers_the_manifest_canonical_path(tmp_path, monkeypatch):
+    """When dixie has canonicalized a file, that path is the authority: a scan can pick up a
+    same-named file in another dir, which is how the wrong bytes get indexed under a doc_id."""
+    repo = tmp_path
+    for d in ("a", "b"):
+        (repo / "corpus" / d).mkdir(parents=True)
+        (repo / "corpus" / d / "dup.pdf").write_bytes(b"%PDF-" + d.encode())
+    (repo / "dixie_evidence.yaml").write_text("document_dirs: [a, b]\n", encoding="utf-8")
+    monkeypatch.setattr(t1, "REPO", repo)
+    entry = {"identity": {"canonical_path": "corpus/b/dup.pdf"}}
+    assert t1.local_path("dup", entry) == repo / "corpus" / "b" / "dup.pdf"

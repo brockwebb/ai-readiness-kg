@@ -21,6 +21,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import subprocess
 import sys
 from collections import Counter, defaultdict
@@ -128,20 +129,204 @@ def crosswalk_demand() -> dict[str, int]:
     return dict(Counter(re.findall(r"`([a-z0-9][a-z0-9\-]{6,})`", body)))
 
 
+def norm_title(s: str) -> str:
+    """Same normalization the T0 harvester uses (`t0_biblio_harvest.norm_title`), restated
+    here so this module does not import a script for one helper."""
+    import unicodedata
+    s = unicodedata.normalize("NFKC", str(s or "")).casefold()
+    return " ".join(re.sub(r"[^a-z0-9 ]+", " ", s).split())
+
+
+def corpus_identifiers() -> tuple[set[str], set[str], dict[str, str]]:
+    """(DOIs, arXiv ids, normalized-title -> doc_id) the corpus already holds. A work the
+    corpus HAS is not a candidate to acquire; without this the ranking recommends buying
+    what is on the shelf.
+
+    The title index exists because identifier matching alone does NOT catch the
+    preprint/published pair: `liu-2023-evaluating-verifiability-generative-search` is held
+    as arXiv 2304.09848, and its EMNLP Findings DOI `10.18653/v1/2023.findings-emnlp.467`
+    is a DIFFERENT DOI on a DIFFERENT OpenAlex work — it reached 3 corpus citers and topped
+    the ranking as a candidate to acquire on 2026-08-30, hours after the same paper was
+    admitted. Title matching is how record linkage joins versions (and it is fallible: the
+    FAIR "Faculty Opinions recommendation of ..." wrapper defect is the standing warning),
+    so a title hit MARKS the row `held_title_match` rather than deleting it.
+    """
+    dois, arx, titles = set(), set(), {}
+    for r in records():
+        w = r.get("work") or {}
+        d = (w.get("doi") or "").replace("https://doi.org/", "").lower().strip()
+        if d:
+            dois.add(d)
+        a = (r.get("arxiv_id") or "").lower().strip()
+        if a:
+            arx.add(a)
+        u = (r.get("primary_url") or "")
+        m = re.search(r"arxiv\.org/(?:abs|pdf)/(\d{4}\.\d{4,5})", u, re.I)
+        if m:
+            arx.add(m.group(1).lower())
+        for t in (r.get("manifest_title"), w.get("title")):
+            nt = norm_title(t)
+            if len(nt) >= 20:              # too-short titles collide by accident
+                titles.setdefault(nt, r["doc_id"])
+    return dois, arx, titles
+
+
 def coupling_candidates() -> list[dict]:
     """Non-corpus works cited by >= N corpus members (task §2.2, bibliographic coupling —
-    Kessler 1963). Quality is bounded by T0 coverage and the ranking is labelled with it."""
-    recs = records()
-    have_doi = {(r.get("work") or {}).get("doi", "").replace("https://doi.org/", "").lower()
-                for r in recs if (r.get("work") or {}).get("doi")}
-    cited_by = defaultdict(set)
-    for r in recs:
+    Kessler 1963).
+
+    Two evidence classes feed this and are **never pooled into one count**
+    (2026-08-30_acquisition_round2 §1): `bibliographic` is a third-party index asserting a
+    document's reference list; `bibliographic_derived` is OUR regex reading the document's
+    own printed bibliography out of the Docling markdown. They fail differently — a wrong
+    index record versus a wrong pattern — so every row carries both counts and the total is
+    a union of citing DOCUMENTS, which is the quantity coupling is defined over.
+    """
+    from kg import refparse
+
+    have_doi, have_arx, have_title = corpus_identifiers()
+    enr = load_enrichment()
+    cited: dict[tuple[str, str], dict[str, set]] = defaultdict(
+        lambda: {"bibliographic": set(), "bibliographic_derived": set()})
+    for r in records():
         for d in ((r.get("work") or {}).get("referenced_dois") or []):
             d = d.lower()
             if d and d not in have_doi:
-                cited_by[d].add(r["doc_id"])
-    return sorted(({"doi": d, "n_corpus_citers": len(v), "citers": sorted(v)}
-                   for d, v in cited_by.items()), key=lambda x: -x["n_corpus_citers"])
+                cited[("doi", d)]["bibliographic"].add(r["doc_id"])
+    for r in refparse.records():
+        for d in r.get("referenced_dois") or []:
+            if d and d not in have_doi:
+                cited[("doi", d)]["bibliographic_derived"].add(r["doc_id"])
+        for a in r.get("referenced_arxiv") or []:
+            if a and a not in have_arx:
+                cited[("arxiv", a)]["bibliographic_derived"].add(r["doc_id"])
+    out = []
+    for (kind, ident), v in cited.items():
+        union = v["bibliographic"] | v["bibliographic_derived"]
+        e = enr.get(f"{kind}:{ident}") or {}
+        held = have_title.get(norm_title(e.get("title") or ""))
+        out.append({"id_type": kind, "id": ident,
+                    "held_title_match": held,
+                    # `doi` retained for the pre-existing callers and for arXiv rows it is
+                    # None rather than a fabricated identifier.
+                    "doi": ident if kind == "doi" else None,
+                    "n_corpus_citers": len(union),
+                    "n_citers_bibliographic": len(v["bibliographic"]),
+                    "n_citers_derived": len(v["bibliographic_derived"]),
+                    "citers": sorted(union)})
+    return sorted(out, key=lambda x: (-x["n_corpus_citers"], x["id_type"], x["id"]))
+
+
+#: Coupling rows enriched with open-access metadata are cached here; the enrichment is a
+#: network call per candidate and the ranking is regenerated on every `recompute`.
+#: NOT inside `state/biblio_cache/`: `records()` globs that directory for per-document T0
+#: records, and a sidecar file there is read as a document with no `doc_id`.
+ENRICH = _REPO / "state" / "candidate_oa.json"
+#: Pre-registered coupling bar (task 2026-08-29_corpus_t0_t1_substrate §2.2). It is a
+#: REVIEW gate, not an admission rule: rows at or above it get individually evaluated
+#: against the AUTH-2 inclusion rule; rows below it are cut without review. The bar is not
+#: lowered to manufacture a list.
+COUPLING_BAR = 3
+#: Rows below the bar but at this level are still REPORTED (cut, with the tier named), so a
+#: near-miss is visible to the operator instead of vanishing into a count.
+NEAR_MISS = 2
+
+
+#: Round-2 evaluation decisions (task 2026-08-30_acquisition_round2 §3), keyed by the
+#: identifier the coupling ranking uses, so the candidates file can show every row's
+#: disposition instead of leaving it in limbo.
+ROUND2_LIST = _REPO / "scripts" / "round2_list_2026-08-30.yaml"
+
+
+def evaluation_decisions() -> dict[str, dict]:
+    """{'doi:...'|'arxiv:...' -> {verdict, clause, doc_id}} from the round-2 list."""
+    if not ROUND2_LIST.exists():
+        return {}
+    import yaml
+    out = {}
+    for e in (yaml.safe_load(ROUND2_LIST.read_text(encoding="utf-8")) or {}).get("entries", []):
+        url = e.get("primary_url") or ""
+        keys = []
+        m = re.search(r"arxiv\.org/(?:abs|pdf)/(\d{4}\.\d{4,5})", url, re.I)
+        if m:
+            keys.append("arxiv:" + m.group(1).lower())
+        m = re.search(r"doi\.org/(10\.[^\s?#]+)", url, re.I)
+        if m:
+            keys.append("doi:" + m.group(1).rstrip("/.").lower())
+        for k in keys:
+            out[k] = {"verdict": e["verdict"], "clause": e.get("clause"),
+                      "doc_id": e["doc_id"], "notes": e.get("notes")}
+    return out
+
+
+def load_enrichment() -> dict:
+    if ENRICH.exists():
+        return json.loads(ENRICH.read_text())
+    return {}
+
+
+def enrich_candidates(cands: list[dict], min_citers: int = NEAR_MISS,
+                      verbose: bool = True) -> dict:
+    """Open-access status and fetchability for the candidates a human will actually read.
+
+    Bounded to `min_citers` and above on purpose: the 1-citer tail is hundreds of rows that
+    the coupling bar cuts unreviewed, and spending a network request per row to decorate a
+    decision already made is waste, not diligence.
+    """
+    import sys as _sys
+    _sys.path.insert(0, str(_REPO / "scripts"))
+    import t0_biblio_harvest as t0                                    # noqa: E402
+
+    cache = load_enrichment()
+    todo = [c for c in cands if c["n_corpus_citers"] >= min_citers
+            and f"{c['id_type']}:{c['id']}" not in cache]
+    for c in todo:
+        key = f"{c['id_type']}:{c['id']}"
+        try:
+            if c["id_type"] == "doi":
+                import urllib.parse
+                w = t0.get(f"{t0.OPENALEX}/doi:{urllib.parse.quote(c['id'], safe='')}")
+            else:
+                d = t0.get(t0.OPENALEX, {"filter": f"doi:10.48550/arxiv.{c['id']}"})
+                res = (d or {}).get("results") or []
+                w = res[0] if res else None
+        except Exception as exc:                     # provider failure, not a finding
+            cache[key] = {"resolution": "provider_error", "error": str(exc)[:200]}
+            if verbose:
+                print(f"  ?? {key}: {exc}")
+            continue
+        if not w:
+            # arXiv ids always have a fetchable primary text even when no index holds a
+            # record; a DOI with no record is genuinely unknown.
+            cache[key] = ({"resolution": "no_index_record", "is_oa": True,
+                           "oa_status": "arxiv", "title": None,
+                           "pdf_url": f"https://arxiv.org/pdf/{c['id']}",
+                           "landing_url": f"https://arxiv.org/abs/{c['id']}"}
+                          if c["id_type"] == "arxiv" else
+                          {"resolution": "no_index_record", "is_oa": None,
+                           "oa_status": None, "title": None,
+                           "pdf_url": None, "landing_url": None})
+        else:
+            oa = w.get("open_access") or {}
+            best = w.get("best_oa_location") or {}
+            cache[key] = {
+                "resolution": "resolved", "title": w.get("title"),
+                "year": w.get("publication_year"),
+                "type": w.get("type"),
+                "venue": ((w.get("primary_location") or {}).get("source") or {}
+                          ).get("display_name"),
+                "cited_by_count": w.get("cited_by_count"),
+                "is_oa": oa.get("is_oa"), "oa_status": oa.get("oa_status"),
+                "pdf_url": best.get("pdf_url") or oa.get("oa_url"),
+                "landing_url": best.get("landing_page_url"),
+            }
+        if verbose:
+            e = cache[key]
+            print(f"  ok {key}: oa={e.get('oa_status')} "
+                  f"{(e.get('title') or '')[:60]}")
+    ENRICH.parent.mkdir(parents=True, exist_ok=True)
+    ENRICH.write_text(json.dumps(cache, indent=1))
+    return cache
 
 
 def t2_priority() -> list[dict]:
@@ -201,33 +386,112 @@ def recompute(verbose: bool = True) -> dict:
 
 
 def _write_candidates(cands: list[dict], cov: dict) -> None:
+    """The candidate file is a DECISION record, not a queue (task 2026-08-30 §3): every row
+    carries its disposition, and nothing is left pending at close."""
+    from kg import refparse
+
     CANDIDATES.parent.mkdir(parents=True, exist_ok=True)
-    strong = [c for c in cands if c["n_corpus_citers"] >= 3]
+    enr = load_enrichment()
+    dec = evaluation_decisions()
+    rp = refparse.records()
+    derived_docs = sum(1 for r in rp if r.get("referenced_dois") or r.get("referenced_arxiv"))
+    derived_ids = sum(len(r.get("referenced_dois") or []) + len(r.get("referenced_arxiv") or [])
+                      for r in rp)
+    strong = [c for c in cands if c["n_corpus_citers"] >= COUPLING_BAR]
+    near = [c for c in cands if NEAR_MISS <= c["n_corpus_citers"] < COUPLING_BAR]
+    tail = [c for c in cands if c["n_corpus_citers"] < NEAR_MISS]
+
+    def _oa(c) -> tuple[str, str]:
+        e = enr.get(f"{c['id_type']}:{c['id']}") or {}
+        status = e.get("oa_status") or ("unknown" if e.get("resolution") != "resolved"
+                                        else "unknown")
+        if e.get("pdf_url"):
+            fetch = f"fetchable ([pdf]({e['pdf_url']}))"
+        elif e.get("resolution") == "provider_error":
+            fetch = "unknown (provider error)"
+        else:
+            fetch = "`manual_download_needed`"
+        return status, fetch
+
     L = ["# Acquisition candidates (T0 coupling expansion)", "",
          f"**{'PROVISIONAL' if cov['retryable'] else 'FINAL'} — T0 "
          f"{cov['resolved_of_eligible']} eligible documents "
          f"({cov['out_of_scope']} out of scope).** "
-         f"Generated by `python -m kg.biblio resume`; regenerated automatically whenever the "
-         f"harvest advances. Do not hand-edit.", "",
-         f"Non-corpus works ranked by how many corpus members cite them (bibliographic "
-         f"coupling to the corpus, Kessler 1963). Reference lists were available for "
-         f"**{cov['docs_with_references']} of {cov['total']}** documents "
-         f"({cov['referenced_dois']} referenced DOIs total), so this ranking rests on a "
-         f"small fraction of the corpus and is not yet decision-grade.", "",
-         "**Nothing here is auto-admitted** (task §2.2): candidates are a reviewed list and "
-         "the operator's admission rules still gate entry.", ""]
+         f"Generated by `python -m kg.biblio recompute`; regenerated automatically whenever "
+         f"the harvest or the reference parse advances. Do not hand-edit.", "",
+         "Non-corpus works ranked by how many corpus members cite them (bibliographic "
+         "coupling to the corpus, Kessler 1963).", "",
+         "## Evidence base — two classes, never pooled", "",
+         "| class | what asserts it | documents with a reference list | identifiers |",
+         "|---|---|---|---|",
+         f"| `bibliographic` | a third-party scholarly index | {cov['docs_with_references']} "
+         f"of {cov['total']} | {cov['referenced_dois']} DOIs |",
+         f"| `bibliographic_derived` | our regex over the document's own printed "
+         f"bibliography (`kg.refparse`, `derivation: docling_refparse`) | {derived_docs} "
+         f"of {cov['total']} | {derived_ids} DOIs + arXiv ids |", "",
+         "The two are reported separately because they fail differently: an index record can "
+         "be wrong about a document, a parse can be wrong about a page. The union column "
+         "counts citing DOCUMENTS, which is the quantity coupling is defined over.", "",
+         f"## Disposition — bar is >= {COUPLING_BAR} corpus citers", "",
+         f"- **{len(strong)}** at or above the bar, reviewed individually against the "
+         f"standing R1-R5 rules ({sum(1 for c in strong if c.get('held_title_match'))} of "
+         f"them already held under another identifier).",
+         f"- **{len(near)}** near-miss at {NEAR_MISS} citers. "
+         f"{sum(1 for c in near if dec.get(c['id_type'] + ':' + c['id']))} were reached "
+         f"individually by the round-2 evaluation and carry its clause; the rest are cut "
+         f"`below_coupling_bar` and reopen if reference coverage rises.",
+         f"- **{len(tail)}** at 1 citer — **cut** unreviewed with reason "
+         f"`below_coupling_bar`. Coupling at one citer is not coupling; it is a single "
+         f"document's bibliography.", "",
+         "An ADMITTED work leaves this list: its identifier is then held, so it is no "
+         "longer a non-corpus work. Rows below therefore show cuts and already-held "
+         "duplicates only — the admissions are in `corpus/manifest.json`.", "",
+         "**Nothing here is auto-admitted**: candidates are a reviewed list and the "
+         "operator's admission rules still gate entry.", ""]
     if not strong:
-        L += [f"## No candidate reaches the >= 3 corpus-citer bar", "",
-              f"Highest observed: **{cands[0]['n_corpus_citers'] if cands else 0}** citers. "
-              f"With reference lists for only {cov['docs_with_references']} documents this is "
-              f"the expected result and is a statement about coverage, not about the "
-              f"literature. The bar is not lowered to manufacture a list.", ""]
-    L += ["| rank | DOI | corpus citers | cited by |", "|---|---|---|---|"]
-    for i, c in enumerate(cands[:40], 1):
-        L.append(f"| {i} | `{c['doi']}` | {c['n_corpus_citers']} | "
-                 f"{', '.join(f'`{x}`' for x in c['citers'][:4])} |")
-    if not cands:
-        L.append("| — | *(no referenced-DOI data yet)* | — | — |")
+        top = cands[0]["n_corpus_citers"] if cands else 0
+        L += [f"### No candidate reaches the >= {COUPLING_BAR} corpus-citer bar", "",
+              f"Highest observed: **{top}** citers, over "
+              f"{cov['docs_with_references'] + derived_docs} documents with a reference list "
+              f"of either class. The bar is not lowered to manufacture a list.", ""]
+    def _row(i, c):
+        e = enr.get(f"{c['id_type']}:{c['id']}") or {}
+        status, fetch = _oa(c)
+        ident = (f"`{c['id']}`" if c["id_type"] == "doi" else f"`arXiv:{c['id']}`")
+        d = dec.get(f"{c['id_type']}:{c['id']}")
+        if c.get("held_title_match"):
+            disp = f"**already held** as `{c['held_title_match']}`"
+        elif d and d["verdict"] == "fetch":
+            disp = f"**ADMITTED** as `{d['doc_id']}` ({d['clause']})"
+        elif d:
+            disp = f"cut — `{d['clause']}`"
+        else:
+            disp = "cut — `below_coupling_bar`"
+        return (f"| {i} | {ident} | {(e.get('title') or '—')[:64]} | "
+                f"{c['n_corpus_citers']} ({c['n_citers_bibliographic']} / "
+                f"{c['n_citers_derived']}) | {status} | {fetch} | {disp} | "
+                f"{', '.join(f'`{x}`' for x in c['citers'][:3])} |")
+
+    hdr = ["| rank | candidate | title | citers (biblio / derived) | OA | fetch | "
+           "disposition | cited by |", "|---|---|---|---|---|---|---|---|"]
+    L += [f"## At or above the bar ({COUPLING_BAR}+ citers)", ""] + hdr
+    for i, c in enumerate(strong, 1):
+        L.append(_row(i, c))
+    if not strong:
+        L.append("| — | *(none)* | — | — | — | — | — | — |")
+    L += ["", f"## Near-miss tier ({NEAR_MISS} citers)", "",
+          "Below the review bar. Every row still carries a disposition: rows the round-2 "
+          "evaluation reached individually show the standing-rule clause they were decided "
+          "on; the remainder are cut `below_coupling_bar`.", ""] + hdr
+    for i, c in enumerate(near, 1):
+        L.append(_row(i, c))
+    if not near:
+        L.append("| — | *(none)* | — | — | — | — | — | — |")
+    L += ["", f"## Cut tail (1 citer): {len(tail)} works", "",
+          "Not enumerated: a single citer is one document's bibliography, and the list would "
+          "be a copy of it. The identifiers survive in `state/refparse/*.json` and "
+          "`state/biblio_cache/*.json`, so the tail regenerates if the bar or the coverage "
+          "changes.", ""]
     CANDIDATES.write_text("\n".join(L) + "\n", encoding="utf-8")
 
 

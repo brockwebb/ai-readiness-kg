@@ -99,8 +99,25 @@ def manifest_docs() -> dict[str, dict]:
     return {k: v for k, v in e.items() if v["screening"]["decision"] == "included"}
 
 
+def _document_dirs() -> list[str]:
+    """The corpus document dirs, read from `dixie_evidence.yaml` — the file that already
+    defines them and that the sweep enforces. They were hardcoded here, which meant a new
+    admission dir (round2, task 2026-08-30_acquisition_round2) reported its 16 admitted
+    documents as MISSING with no diagnostic naming the real cause."""
+    import yaml
+    cfg = yaml.safe_load((REPO / "dixie_evidence.yaml").read_text(encoding="utf-8"))
+    return list(cfg["document_dirs"])
+
+
 def local_path(doc_id: str, entry: dict) -> Path | None:
-    for d in ("bulk", "bulk_md", "pilot", "cisco", "kernel", "triage", "crosswalk"):
+    # The manifest's own canonical_path is the authority when dixie has verified one;
+    # the directory scan is the fallback for entries the sweep has not canonicalized.
+    canon = ((entry or {}).get("identity") or {}).get("canonical_path")
+    if canon:
+        p = REPO / canon
+        if p.exists():
+            return p
+    for d in _document_dirs():
         for ext in ("pdf", "md", "html", "htm", "txt"):
             p = REPO / "corpus" / d / f"{doc_id}.{ext}"
             if p.exists():

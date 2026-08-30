@@ -2,7 +2,7 @@
 
 Things only a human can get. **Projected by `scripts/t1_build_index.py --phase pickup` — do not hand-edit.** Regenerated alongside `manifest_table.md`.
 
-Ordered by `t2_priority` (crosswalk demand, then T0 centrality). That ordering is **provisional — T0 coverage 40/178**; the demand component is coverage-independent and already final, the centrality component is not. `python -m kg.biblio resume` refreshes both.
+Ordered by `t2_priority` (crosswalk demand, then T0 centrality). That ordering is **provisional — T0 coverage 52/194**; the demand component is coverage-independent and already final, the centrality component is not. `python -m kg.biblio resume` refreshes both.
 
 | doc / candidate | state | why | best-known URL | demand | centrality | detail |
 |---|---|---|---|---|---|---|
@@ -14,4 +14,4 @@ Ordered by `t2_priority` (crosswalk demand, then T0 centrality). That ordering i
 
 ## Not listed here
 
-Closed-access candidates from the coupling expansion: the candidate list (`acquisition_candidates.md`) currently reaches no work cited by 3+ corpus members, because reference lists exist for only 2 of 178 documents. When `kg.biblio resume` lifts T0 coverage, re-run this phase and the closed-access candidates will appear.
+Closed-access candidates from the coupling expansion: the candidate list (`acquisition_candidates.md`) currently reaches no work cited by 3+ corpus members, because reference lists exist for only 2 of 194 documents. When `kg.biblio resume` lifts T0 coverage, re-run this phase and the closed-access candidates will appear.
