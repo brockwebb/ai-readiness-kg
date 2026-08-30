@@ -338,6 +338,31 @@ genuine acquisition failures carried forward from earlier rounds — thin crawl4
 403, an Elsevier WAF, `awaiting_operator_drop`. That is the number doing its job. It was 39 at
 the start of this task and is 39 at the end; round 2 added none.
 
+**Positive control on the retraction's own detector** (methodology §7.5 — no monitor trusted
+until a seeded known-bad fires it). The first version of this erratum reported `0 phantoms` from
+a detector that had never been shown capable of returning anything else, which is the same
+failure class as the finding it retracts. Seeding a synthetic phantom — a file-less slug entry
+carrying a held document's title — into a copy of the live data:
+
+```
+exact-keyed import keys      194   (non-empty: the detector has a corpus to match against)
+live phantoms                  0
+seeded phantom               DETECTED  (evaluating-verifiability-in-generative-search-engines
+                                        -> liu-2023-evaluating-verifiability-generative-search)
+after mutating held titles     0   (mutation check: the title index is what does the work)
+```
+
+The detector fires on a known-bad and goes quiet when its index is broken, so **the live 0 is a
+measurement, not a blind spot.** Session `ai-readiness-kg-03` reproduced the result
+field-independently — 0 duplicate `source_url`, 0 duplicate `sha256`, 0 duplicate title across
+the 283 entry keys — which is the stronger test, since the question is whether one document is
+held under two keys at all.
+
+One reading correction, immaterial to the result: the 194 `doc_id_exact` keys are counted from
+the **import layer** (`corpus/evidence/decisions.jsonl` `screening_imported` payloads), not from
+the manifest projection, where the field does not appear on any of the 283 entries. That is what
+was intended and it does not bear on the retraction.
+
 No issue artifact was filed, because the defect it would have described does not exist. The
 mechanism worth remembering is the narrower true one: **a slug-keyed import event is not a
 duplicate record, and the projection is what settles that** — the kernel-run-defect-2 caution
