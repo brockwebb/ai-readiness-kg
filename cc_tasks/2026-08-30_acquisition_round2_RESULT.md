@@ -305,6 +305,45 @@ downstream of round 2's admissions. That is how coupling works, and it means the
 
 ---
 
+## 5b. ERRATUM — a finding in this RESULT's first version was wrong
+
+**Retracted:** the claim, relayed to session `ai-readiness-kg-03` and implied by §4's
+description of the register import, that `corpus/staging/candidate_register.jsonl` importing
+under `doc_id_from: title_slug` "mints a second, title-slugged record alongside the doc_id one",
+inflating `pending_refetch`.
+
+**Measured, after the peer suggested filing it as an issue:**
+
+| | |
+|---|---|
+| manifest entries | 283 |
+| import keys with `doc_id_exact` | 194 |
+| import keys slugged from title | 271 |
+| file-less slugged entries | 82 |
+| **of those, twinning an exact-keyed record (a phantom)** | **0** |
+| of those, with no twin (genuine unfetched candidates) | 82 (43 `excluded`, 39 `pending_refetch`) |
+
+The register import does emit a slug-keyed `screening_imported` event — that part was observed
+correctly, and round 2's own three retries produced
+`a-vocabulary-for-expressing-ai-usage-preferences-draft-ietf` and
+`cloudflare-ai-crawl-control-pay-per-crawl` among them. **But dixie's projection merges those
+events into the `doc_id` entry rather than creating a second one**: neither slug exists as a
+manifest entry. I generalized from the presence of the *events* to the existence of duplicate
+*entries* without checking the projection, which is the one place the question is actually
+decided.
+
+**`pending_refetch` at 39 is not inflated and is not a backlog of duplicates.** All 39 have
+`provenance_sources: ['candidate_register']`, none has a canonical file, and their rationales are
+genuine acquisition failures carried forward from earlier rounds — thin crawl4ai content, HTTP
+403, an Elsevier WAF, `awaiting_operator_drop`. That is the number doing its job. It was 39 at
+the start of this task and is 39 at the end; round 2 added none.
+
+No issue artifact was filed, because the defect it would have described does not exist. The
+mechanism worth remembering is the narrower true one: **a slug-keyed import event is not a
+duplicate record, and the projection is what settles that** — the kernel-run-defect-2 caution
+about phantom records applies to a register line whose *URL* differs from the holding entry's,
+which is a different condition and one round 2 did not meet.
+
 ## 6. Files
 
 **New:** `kg/refparse.py`, `tests/test_refparse.py` (22), `scripts/round2_list_2026-08-30.yaml`,
