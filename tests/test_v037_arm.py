@@ -416,3 +416,127 @@ def test_a_superseded_chunk_is_still_dead_whatever_its_generation(cp):
     ev = {"chunk_id": "d#c1", "chunk_start": 0, "chunk_end": 10,
           "provenance": {"chunk_start": 0, "chunk_end": 10, "ingest_generation": 9}}
     assert cp.is_live(ev, {"d#c1": 9}, dead) is False
+
+
+# --------------------------------------------------- 8. Arm A2: the restored grounding rule
+
+def test_v0_3_8_restores_the_first_grounding_rule_and_v0_3_7_is_untouched(cp):
+    """The rule is restored in a NEW file. Editing the pinned one would invalidate Arm A's
+    provenance, and the profile's sha check would refuse to run at all."""
+    import hashlib
+    v7 = REPO / "kg/extraction/prompt_template_v0_3_7.md"
+    v8 = REPO / "kg/extraction/prompt_template_v0_3_8.md"
+    assert hashlib.sha256(v7.read_bytes()).hexdigest() == \
+        "9a410fc35e684cc5d9f0aefd4652164ef9209044d8e63454e070eb636cb5e840"
+    # Assert on what the MODEL SEES, not on the file: the leading <!-- --> block is
+    # provenance for humans and is stripped, so a rule merely NAMED in the header (this
+    # file's header names the elaboration it deliberately leaves out) cannot be mistaken for
+    # a rule the prompt gives. And compare whitespace-COLLAPSED: the templates are
+    # hard-wrapped, so a rule sentence is split across lines and a literal substring test
+    # would silently pass for the wrong reason.
+    import re as _re
+    flat = lambda t: " ".join(_re.sub(r"^<!--.*?-->", "", t, flags=_re.S).split())
+    t7, t8 = flat(v7.read_text(encoding="utf-8")), flat(v8.read_text(encoding="utf-8"))
+    key = "use the document's surface form as the name"
+    assert key not in t7 and key in t8
+    assert "FIRST GROUNDING RULE" not in t7 and "FIRST GROUNDING RULE" in t8
+    # ONE variable: the character-exact elaboration stays absent from BOTH, on purpose.
+    elaboration = "do not paraphrase, summarize, reword, fix typos"
+    assert elaboration not in t7 and elaboration not in t8
+    # and the anchor contract itself is carried over verbatim
+    for clause in ("shortest substring of the chunk text that occurs exactly once in it",
+                   "character-exact** as it appears in the chunk"):
+        assert clause in t7 and clause in t8
+
+
+def test_v0_3_8_profile_pins_the_new_template(cp):
+    import hashlib
+    prof = cp.profile_block("v0_3_8")
+    sha = hashlib.sha256((REPO / prof["prompt_template"]).read_bytes()).hexdigest()
+    assert prof["template_sha256"] == sha
+    assert prof["batch"] == 18 and prof["shard_tag"] == "v0_3_8"
+    assert prof["emission_contract"] == "anchor"
+    assert prof["prompt_template"].endswith("prompt_template_v0_3_8.md")
+    # a different shard from Arm A: two arms must never interleave on one append-only log
+    assert prof["batch"] != cp.profile_block("v0_3_7")["batch"]
+    assert prof["raw_dir"] != cp.profile_block("v0_3_7")["raw_dir"]
+
+
+def test_instrument_recall_uses_containment_and_honours_the_floor(cp, monkeypatch):
+    """Pre-registered floor 0.90. Exact name equality would BEG the question A2 asks — a
+    renamed entity is exactly the defect under test — so containment decides the verdict and
+    the exact figure is reported beside it."""
+    cp.apply_arm("v0_3_8", None, None)
+    inst = lambda n, m: {"_type": "Instrument", "name": n, "method": m}
+    base = {"c1": {"aidrin": inst("AIDRIN", "scores six dimensions"),
+                   "gmsd": inst("GMSD", "gradient magnitudes"),
+                   # typed Instrument but the document gave it NO attribute -> not evidence,
+                   # so it must not enter the denominator (this is the v0.3.5-side definition)
+                   "bare tool": {"_type": "Instrument", "name": "bare tool"},
+                   "plain concept": {"_type": "Concept", "name": "plain concept"}}}
+    # renamed, not missing: containment finds it, an exact key would not
+    arm = {"c1": {"the aidrin tool": {"_type": "Instrument", "name": "the AIDRIN tool"}}}
+    monkeypatch.setattr(cp, "chunk_yield", lambda tag: {"c1": {}})
+    monkeypatch.setattr(cp, "apply_arm", lambda *a, **k: None)
+    calls = iter([arm, base])            # instrument_recall reads the arm, then the baseline
+    monkeypatch.setattr(cp, "_proposed_nodes", lambda shared: next(calls))
+    r = cp.instrument_recall()
+    assert r["baseline_instrument_evidence"] == 2      # the Concept is not counted
+    assert r["matched_exact"] == 0 and r["matched_containment"] == 1
+    assert r["recall_containment"] == 0.5
+    assert r["verdict"] == "genuine_recall_loss"       # 0.5 < 0.90
+
+
+def test_instrument_recall_verdict_flips_at_the_floor(cp, monkeypatch):
+    """CONTROL: the floor must actually bind in both directions."""
+    cp.apply_arm("v0_3_8", None, None)
+    mk = lambda i: {"_type": "Instrument", "name": f"tool {i}", "method": "m"}
+    base = {"c1": {f"tool {i}": mk(i) for i in range(10)}}
+    monkeypatch.setattr(cp, "chunk_yield", lambda tag: {"c1": {}})
+    monkeypatch.setattr(cp, "apply_arm", lambda *a, **k: None)
+    for found, expected in ((9, "naming_defect_confirmed"), (8, "genuine_recall_loss")):
+        arm = {"c1": {f"the tool {i} thing": mk(i) for i in range(found)}}
+        calls = iter([arm, base])
+        monkeypatch.setattr(cp, "_proposed_nodes", lambda shared: next(calls))
+        r = cp.instrument_recall()
+        assert r["recall_containment"] == found / 10
+        assert r["verdict"] == expected, (found, r)
+
+
+def test_shared_with_refuses_a_tag_with_no_coverage(cp, monkeypatch):
+    """An empty restriction set must stop the pass, not silently widen it to every chunk."""
+    cp.apply_arm("v0_3_8", None, "pilot_v038_arm_a2_haiku")
+    monkeypatch.setattr(cp, "chunk_yield", lambda tag: {})
+    args = type("A", (), {"shared_with": "no_such_tag", "only": None, "limit": None,
+                          "workers": 1})()
+    with pytest.raises(SystemExit) as exc:
+        cp.phase_extract(args)
+    assert "no chunk_metrics" in str(exc.value)
+
+
+def test_shared_with_actually_restricts_which_chunks_are_dispatched(cp, monkeypatch, tmp_path):
+    """M2 CONTROL for --shared-with. The refusal test above only proves the empty case; this
+    one proves the filter narrows a NON-empty pass. Without it A2 would run 48 chunks and be
+    measured on 44, which is Arm A's shape, not an identical chunk set."""
+    cp.apply_arm("v0_3_8", None, "pilot_v038_arm_a2_haiku")
+    src = tmp_path / "doc.md"; src.write_text("text", encoding="utf-8")
+    monkeypatch.setattr(cp, "members", lambda: {d: src for d in cp.PILOT_DOCS})
+    monkeypatch.setattr(cp.rbe, "doc_text", lambda p: "text")
+    monkeypatch.setattr(cp.model_stub, "load_model_config",
+                        lambda *a, **k: {"model_id": "m", "truncation_suspect_tokens": 1})
+    monkeypatch.setattr(cp, "raw_path", lambda *a, **k: tmp_path / "absent.json")
+
+    class FakeSet(list):
+        structure_source, heading_level = "test", 1
+    doc = cp.PILOT_DOCS[0]
+    monkeypatch.setattr(cp.chunker, "chunk_document", lambda d, t: FakeSet(
+        [type("C", (), {"chunk_id": f"{d}#c000{i}", "n_tokens": 1})() for i in (1, 2, 3)]))
+    monkeypatch.setattr(cp, "chunk_yield", lambda tag: {f"{doc}#c0002": {}})
+    dispatched = []
+    monkeypatch.setattr(cp, "_extract_one",
+                        lambda d, c, *a, **k: dispatched.append(c.chunk_id) or "ok")
+    monkeypatch.setattr(cp, "phase_ingest", lambda a: 0)
+    args = type("A", (), {"shared_with": "chunked_v035", "only": doc, "limit": None,
+                          "workers": 1})()
+    assert cp.phase_extract(args) == 0
+    assert dispatched == [f"{doc}#c0002"], "only the covered chunk may be dispatched"

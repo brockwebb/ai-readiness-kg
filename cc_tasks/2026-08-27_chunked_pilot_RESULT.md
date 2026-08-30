@@ -1410,3 +1410,95 @@ containment key only 12 such entities have no Arm A counterpart at all**, so mos
 present in Arm A under a different surface form — which is once again the §1 defect, not a
 recall failure. The distinction is not cosmetic: a recall failure needs a better extractor,
 whereas a naming failure needs the one prompt rule that was dropped.
+
+---
+
+# ARM A2 PRE-REGISTRATION (operator, 2026-08-30) — written and committed before A2 ran
+
+Arm B **still held.**
+
+## What A2 changes, and the discipline that it is exactly one thing
+
+`kg/extraction/prompt_template_v0_3_8.md` (new file, sha
+`0c6fee1d8d4a4e42f197744c8c92f2f4d8c8dee6cf75470e63648bb21d0b9410`), profile `v0_3_8`, batch
+18, shard tag `v0_3_8`, raw dir `events/raw/v0_3_8`. **`prompt_template_v0_3_7.md` is NOT
+edited** — it still hashes to `9a410fc3...` and the `v0_3_7` profile still verifies, so Arm A's
+provenance is untouched.
+
+The single addition, restored from `kg/extraction/prompt_template.md` and adapted to the
+anchor contract (the harness owns the span, so the rule now binds the *name*):
+
+> **Use the document's own surface form as the `name`.** … it then checks that the item's
+> `name` (or `term` / `text` / `claim_text` / `verbatim_text`) appears in that sentence
+> **verbatim** — the exact surface form the document uses, capitalization included. **If the
+> document uses a different surface form than the name you would choose, use the document's
+> surface form as the name** and record your preferred form in `aliases`.
+
+**Deliberately NOT restored:** the whole-document template's elaboration of *character-exact*
+("do not paraphrase, summarize, reword, fix typos, expand abbreviations, merge sentences, or
+normalize punctuation/spacing"), which is also missing from both chunked templates. Restoring
+two rules would confound A2. **One rule, one variable.** Everything else — anchor contract,
+salience, schema, Instrument positive criterion, semantic-edge rule, evidence_grade, edge
+whitelist, closed diversion list, emission order — is v0.3.7's text unchanged, and a test
+asserts that on the *rendered* prompt with the header comment stripped.
+
+## Pre-registered reporting for A2
+
+**1. Two figures, both reported, neither substituting for the other.**
+
+- **Raw admitted items per chunk against the standing floor**: `>= 0.60 x 45.23 = 27.14`.
+  Unchanged from Arm A, not re-derived, not renegotiated.
+- **Instrument-with-evidence containment recall against v0.3.5's 116** such entities on the
+  44 shared chunks. "With evidence" = typed `Instrument` by v0.3.5 with a non-empty
+  `owner`/`year`/`method` — the same positive criterion `merge.instrument_evidence` reads,
+  applied to the raw item because a quarantined item never reached the parser's nulling.
+
+**2. Instrument recall floor: `0.90`.**
+
+- **Below 0.90 → genuine recall loss.** The entities are not there under any name, and the
+  missing prompt rule was not the explanation.
+- **At or above 0.90 → naming defect confirmed.** The entities were always there; Arm A's
+  yield deficit in this stratum was a naming failure the restored rule addresses.
+
+Recall is scored on the **containment** key (either name a substring of the other), with the
+exact-equality figure reported beside it. Exact equality would beg the question A2 asks — a
+renamed entity is the very defect under test — and containment is loose in the other
+direction, so both are published and the truth is bracketed. Encoded as
+`INSTRUMENT_RECALL_FLOOR = 0.90` in `scripts/chunked_pilot.py`; four mutations confirm the
+floor binds in both directions and that the denominator excludes non-evidence Instruments.
+
+**3. Gate thresholds unchanged.** `F_upper < 0.10`, `item-faithful >= 0.70`, stratum
+precondition 20 pooled. Read from the task, never written here.
+
+## Ceiling — re-derived from Arm A's actuals, not from the §2 projection
+
+The §2 projection is now known to be 2.6x low (it omitted `cacheReadInputTokens` and halved
+output), so it is discarded rather than reused:
+
+```
+Arm A measured          41,530 settled tokens/chunk (1,993,432 over 48)
+A2 chunk count             44  (--shared-with chunked_v035: the identical comparator set)
+estimate               41,530 x 44 = 1,827,320
+floor x calls          20,000 x 44 =   880,000   (does not bind)
+CEILING = estimate x 1.5 = 2,741,000 for run `pilot_v038_arm_a2_haiku`
+```
+
+A2 runs **only the 44 shared chunks**, not 48: `--shared-with` restricts the dispatch list to
+the chunks the baseline already covers, so the two arms are measured on an identical set and
+no spend goes to material no comparison reads.
+
+## AMENDED ERRATUM — 5.9% vs 18.7% is a co-explanation, not isolated evidence
+
+The erratum recorded for issue `53e2cf6e` compared `span_partial` as a share of emitted items:
+**5.9% whole-document v0.3.5 (rule present) against 18.7% chunked v0.3.5 (rule absent)**, and
+presented it as evidence about the dropped rule. **That comparison is amended here: those two
+arms differ in the rule AND in the extraction unit.** Whole-document extraction sees the entire
+source, so a model naming an entity has the whole document's surface forms in front of it;
+chunk-local extraction sees ~1,500 tokens. Either difference can raise `span_partial`, and the
+5.9/18.7 pair does not separate them.
+
+**It is a co-explanation, not isolated evidence, and it should not have been stated as though
+the rule were the sole cause.** What it does support is that the rule is *worth testing* — which
+is what A2 does, and A2 is the design that isolates it: same unit, same chunker, same model,
+same 44 chunks, one rule changed. `write_verdict` carries the amended wording so the correction
+survives regeneration.

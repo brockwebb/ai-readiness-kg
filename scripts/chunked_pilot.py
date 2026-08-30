@@ -361,6 +361,16 @@ def phase_extract(a) -> int:
     spend.set_current_run(RUN_ID)
     suspect = int(cfg.get("truncation_suspect_tokens", 40000))   # reported only; see _extract_one
     todo = []
+    # Restrict the pass to the chunks another arm already covers. A2 must run the SAME 44
+    # chunks Arm A was measured on, and extracting the 4 chunks outside that set would be
+    # spend on material no comparison reads.
+    limit_to = None
+    if getattr(a, "shared_with", None):
+        limit_to = set(chunk_yield(a.shared_with))
+        if not limit_to:
+            raise SystemExit(f"FATAL: --shared-with {a.shared_with!r} has no chunk_metrics "
+                             f"events; refusing to run an unbounded pass")
+        print(f"restricting to {len(limit_to)} chunks covered by {a.shared_with!r}", flush=True)
     docs = PILOT_DOCS
     if a.only:
         docs = [d for d in PILOT_DOCS if d in set(a.only.split(","))]
@@ -371,7 +381,8 @@ def phase_extract(a) -> int:
         sha = hashlib.sha256(m[d].read_bytes()).hexdigest()
         cs = chunker.chunk_document(d, text)
         title = d.replace("-", " ")
-        pending = [c for c in cs if not raw_path(d, c, sha, cfg["model_id"]).exists()]
+        pending = [c for c in cs if not raw_path(d, c, sha, cfg["model_id"]).exists()
+                   and (limit_to is None or c.chunk_id in limit_to)]
         print(f"=== {d}: {len(cs)} chunks, {len(cs) - len(pending)} already extracted "
               f"[{cs.structure_source}, level {cs.heading_level}]", flush=True)
         todo += [(d, c, sha, title) for c in pending]
@@ -1120,9 +1131,13 @@ def write_verdict(results: dict, cfg: dict, a, admission: dict | None = None,
          "rules the whole-document arm had. Measured by re-parsing both arms' banked raws at "
          "identical parser settings, `span_partial` is **5.9% of emitted items in the "
          "whole-document arm** (rule present) against **18.7% in the chunked arm** (rule "
-         "absent). Chunking itself is a co-explanation and the two causes are not separated "
-         "here, so the quarantine and yield rows below must not be read as a pure unit "
-         "effect. The FAITHFULNESS rows are unaffected: a rule about which span is chosen "
+         "absent). **AMENDED 2026-08-30: that pair differs in the RULE and in the "
+         "EXTRACTION UNIT, so it is a co-explanation and not isolated evidence for either.** "
+         "A whole-document extractor naming an entity has the entire document's surface "
+         "forms in front of it; a chunk-local one sees ~1,500 tokens. Arm A2 (profile "
+         "`v0_3_8`) is the design that isolates the rule: same unit, same chunker, same "
+         "model, same 44 chunks, one rule restored. The quarantine and yield rows below "
+         "must not be read as a pure unit effect either. The FAITHFULNESS rows are unaffected: a rule about which span is chosen "
          "does not make an admitted item's facts more or less entailed.", "",
          "Thresholds are the task's, unchanged and not re-read from any result: "
          f"F_upper < {F_STOP}, item-faithful >= {ITEM_FAITHFUL}, precondition "
@@ -1300,6 +1315,85 @@ def semantic_edge_count() -> int:
                if ev["payload"]["type"] in SEMANTIC)
 
 
+#: Pre-registered for Arm A2 (operator, 2026-08-30, before A2 ran). An arm at or above this
+#: recall of the v0.3.5 arm's instrument-bearing entities has a NAMING defect, not a recall
+#: loss; below it, the loss is genuine and the missing prompt rule is not the explanation.
+INSTRUMENT_RECALL_FLOOR = 0.90
+
+
+def _proposed_nodes(shared: set[str]) -> dict[str, dict]:
+    """{chunk_id: {merge_key: item}} for every NODE this arm's model EMITTED — admitted or
+    quarantined. Read from the raws, so an item the parser rejected still counts as proposed:
+    recall is a question about what the model saw, not about what survived the gate."""
+    m = members()
+    texts = {d: rbe.doc_text(m[d]) for d in PILOT_DOCS}
+    out: dict[str, dict] = defaultdict(dict)
+    for f in sorted(RAW_DIR.glob("*.json")):
+        raw = json.loads(f.read_text())
+        cid = raw.get("chunk_id")
+        if cid not in shared or raw.get("doc_id") not in texts:
+            continue
+        env = model_stub._extract_json(raw.get("raw_result") or "")
+        for layer, ntype in parser.LAYER_TYPES.items():
+            for it in (env.get(layer) or []):
+                if not isinstance(it, dict):
+                    continue
+                nm = (it.get("name") or it.get("term") or it.get("text")
+                      or it.get("claim_text"))
+                key = merge.normalized_key(nm or "")
+                if key:
+                    out[cid].setdefault(key, {**it, "_type": ntype})
+    return out
+
+
+def has_instrument_evidence(item: dict) -> bool:
+    """v0.3.5-side definition, fixed before A2 ran: typed Instrument with a non-empty
+    owner/year/method — the same positive criterion `merge` reads, applied to the raw item
+    because a quarantined item never reached the parser's attribute nulling."""
+    return item.get("_type") == "Instrument" and any(
+        str(item.get(attr) or "").strip() for attr in parser.INSTRUMENT_SPAN_REQUIRED)
+
+
+def instrument_recall(baseline_tag: str = "chunked_v035") -> dict:
+    """Containment recall of the baseline's instrument-bearing entities, arm globals restored.
+
+    EXACT normalized-name equality is the wrong key for this question and would beg it: Arm A
+    was shown to canonicalize names rather than copy the document's, which is the very defect
+    A2 tests, so an exact key scores a renamed entity as missing. Containment (either name a
+    substring of the other) is loose in the other direction, so BOTH are reported and the
+    truth is bracketed."""
+    keep = {k: globals()[k] for k in ("PROFILE", "RUN_ID", "JUDGE_RUN_ID", "SHARD_NO", "TAG",
+                                      "RAW_DIR", "CORPUS_EPOCH", "EMISSION", "ARM_MODEL")}
+    try:
+        shared = set(chunk_yield(TAG)) & set(chunk_yield(baseline_tag))
+        arm = _proposed_nodes(shared)
+        apply_arm(baseline_tag, None, None)
+        base = _proposed_nodes(shared)
+    finally:
+        for k, v in keep.items():
+            globals()[k] = v
+    total = exact = contain = 0
+    for cid in shared:
+        akeys = list(arm.get(cid, {}))
+        for key, item in base.get(cid, {}).items():
+            if not has_instrument_evidence(item):
+                continue
+            total += 1
+            if key in arm.get(cid, {}):
+                exact += 1
+                contain += 1
+            elif any(key in ak or ak in key for ak in akeys):
+                contain += 1
+    return {"shared_chunks": len(shared), "baseline_instrument_evidence": total,
+            "matched_exact": exact, "matched_containment": contain,
+            "recall_exact": round(exact / total, 4) if total else 0.0,
+            "recall_containment": round(contain / total, 4) if total else 0.0,
+            "floor": INSTRUMENT_RECALL_FLOOR,
+            "verdict": ("naming_defect_confirmed"
+                        if total and contain / total >= INSTRUMENT_RECALL_FLOOR
+                        else "genuine_recall_loss")}
+
+
 def phase_yield(a) -> int:
     """Structural report for one arm. ZERO model spend; run before any judging is bought."""
     y = yield_comparison()
@@ -1322,6 +1416,12 @@ def phase_yield(a) -> int:
     print(f"baseline v0.3.5 quarantine: {base_quar}/{base_emitted} "
           f"({base_quar / base_emitted:.1%})" if base_emitted else "")
     print(f"semantic edges (UNJUDGED per §0(a)): {semantic_edge_count()}")
+    if TAG != "chunked_v035":
+        r = instrument_recall()
+        print(f"Instrument-with-evidence recall vs v0.3.5 ({r['baseline_instrument_evidence']} "
+              f"such entities on {r['shared_chunks']} shared chunks): "
+              f"containment {r['recall_containment']:.3f} "
+              f"(exact {r['recall_exact']:.3f}), floor {r['floor']} -> {r['verdict']}")
     print(f"settled extraction tokens per document: {per_doc}")
     print(f"total settled: {sum(per_doc.values()):,}")
     (METRICS / f"{TAG}_yield.json").write_text(json.dumps(
@@ -1331,6 +1431,7 @@ def phase_yield(a) -> int:
          "baseline_quarantine": {"histogram": base_hist, "quarantined": base_quar,
                                  "emitted": base_emitted},
          "semantic_edges_unjudged": semantic_edge_count(),
+         "instrument_recall": instrument_recall() if TAG != "chunked_v035" else None,
          "settled_per_doc": per_doc}, indent=1))
     return 0
 
@@ -1480,6 +1581,9 @@ def main() -> int:
     ap.add_argument("--fact-cap", type=int, default=240)
     ap.add_argument("--workers", type=int, default=3)
     ap.add_argument("--limit", type=int, help="extract at most N chunks this pass (smoke test)")
+    ap.add_argument("--shared-with", default=None,
+                    help="extract only the chunks this other profile's shard_tag already "
+                         "covers, so two arms are measured on an identical chunk set")
     ap.add_argument("--reingest", action="store_true",
                     help="re-parse chunks already on the shard under the CURRENT harness. "
                          "Appends a new ingest generation; readers keep the highest one and "

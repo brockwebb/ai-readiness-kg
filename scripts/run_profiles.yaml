@@ -121,3 +121,30 @@ profiles:
     # contract read against a differently-cut chunk is a different experiment.
     chunker_config: kg/extraction/chunker_config.yaml
     chunker_config_sha256: 8c5492b3a324960802fc58f9ecf36935e9afcb2d904503372a3ef7045eb0259c
+
+  # Arm A2 (chunked_pilot ADDENDUM-03 §3, operator request 2026-08-30). ONE variable against
+  # `v0_3_7` above: the FIRST GROUNDING RULE is restored to the prompt. Same chunker, same
+  # schema, same anchor contract, same salience instruction, same model, same 44 chunks, same
+  # pre-registered gate. `v0_3_7` and its template are NOT edited and stay pinned for Arm A's
+  # provenance; this is a new file with its own pin and its own shard.
+  #
+  # The rule was absent from BOTH chunked templates although chunked_template.md's header
+  # claims it carried over (issue 53e2cf6e). Arm A measured what its absence costs: 549
+  # span_partial quarantines, every one of them a model-typed name that was not a substring
+  # of the source sentence the harness cut, while the derived span itself was verbatim in the
+  # chunk 549/549. A2 tests whether restoring the rule recovers those items.
+  v0_3_8:
+    corpus_epoch: chunked-2026-08-27
+    batch: 18                                  # events/batch-018_v0_3_8.jsonl (TAGGED — an
+    shard_tag: v0_3_8                          # experiment arm, never replayed into the graph)
+    raw_dir: events/raw/v0_3_8
+    stop_file: events/v0_3_8_STOP.json
+    result_file: cc_tasks/2026-08-27_chunked_pilot_RESULT.md
+    job: airkg-v038-pilot
+    order: alphabetical
+    oversize_allow: []
+    prompt_template: kg/extraction/prompt_template_v0_3_8.md
+    template_sha256: 0c6fee1d8d4a4e42f197744c8c92f2f4d8c8dee6cf75470e63648bb21d0b9410
+    emission_contract: anchor
+    chunker_config: kg/extraction/chunker_config.yaml
+    chunker_config_sha256: 8c5492b3a324960802fc58f9ecf36935e9afcb2d904503372a3ef7045eb0259c
