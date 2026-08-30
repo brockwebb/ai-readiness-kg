@@ -1612,3 +1612,97 @@ Type reconciliation on A2: 323 majority, 58 `instrument_evidence_wins`, 30 `type
 excluded from pooling.
 
 `seldon cc complete` not run — §3 is not finished while Arm B is held.
+
+---
+
+# ARM A3 PRE-REGISTRATION (ADDENDUM-04 §2) — written and committed before A3 ran
+
+Arm B **still held.** Zero A3 output exists at the time of writing.
+
+`kg/extraction/prompt_template_v0_3_9.md`, sha
+`5d458029071cccd8cd49a1c9196cc692afdbc10752af699639b39b40113cf2fa`, profile `v0_3_9`, batch 19,
+shard tag `v0_3_9`, raw dir `events/raw/v0_3_9`. **`prompt_template_v0_3_8.md` is NOT edited**
+— it still hashes to `0c6fee1d…` and its profile still verifies.
+
+The single addition, the whole-document template's CHARACTER-EXACT rule, **adapted to bind the
+ANCHOR** (in the original it binds `grounding_span`, which under this contract the model does
+not emit at all):
+
+> **The `anchor` must be CHARACTER-EXACT.** Copy an exact, contiguous substring from the chunk
+> text below — do not paraphrase, summarize, reword, fix typos, expand abbreviations, merge
+> sentences, or normalize punctuation/spacing. Do not reconstruct an anchor from memory of what
+> the passage said: read the characters and copy them. If you cannot copy an exact substring
+> that points at the item, **do not emit the item**. No locatable anchor, no write.
+
+A test asserts A3 differs from A2 by **exactly one** bold rule heading, added and none removed,
+on the rendered prompt with the header comment stripped. **Three arms, one instruction each.**
+
+## Pre-registered predictions
+
+**1. Proposals flat (±10%); movement confined to `anchor_not_located`, in its not-found and
+over-budget subclasses.** Non-unique is expected residual: whether a correctly copied string
+occurs once or twice in the chunk is a property of the chunk text, and no compliance
+instruction reaches it.
+
+Subclass split, both arms, on the 44 shared chunks (measured now, before A3):
+
+| `anchor_not_located` subclass | Arm A | **Arm A2** |
+|---|---|---|
+| not found in the chunk | 164 (53%) | **167 (49%)** |
+| non-unique | 115 (37%) | **153 (45%)** |
+| over the 10-token budget | 29 (9%) | **20 (6%)** |
+| **total** | **308** | **340** |
+
+**A2's rise over A is almost entirely non-unique (115 → 153, +38)**, while not-found was flat
+(164 → 167) and over-budget fell (29 → 20). A3 targets the two that its rule can reach.
+
+**2. Secondary: A2's single unfaithful item was class `filled_attribute`; verbatim discipline
+should suppress that class.** F not worsening at higher yield is the contract's three-arm
+story.
+
+**3. Floor unchanged: `>= 0.60` raw admitted/chunk against 45.23, i.e. 27.14.** Gate thresholds
+unchanged: `F_upper < 0.10`, `item-faithful >= 0.70`.
+
+### Discrepancy in the addendum's headroom arithmetic, reported not reconciled
+
+ADDENDUM-04 §2.3 projects "not-found + over-budget (~63% of 340 ≈ 214 items) … admission ≈
+0.73, yield ≈ 29/chunk — above floor with margin." **The 63% is Arm A's split on 48 chunks
+(52% + 11%), not A2's.** Measured on A2's own 44 chunks the convertible fraction is
+**167 + 20 = 187 items, 55% of 340**, because the non-unique share grew.
+
+Recomputed on A2's actuals, converting every convertible item and ignoring endpoint-cascade
+recovery:
+
+```
+admitted   1,069 + 187 = 1,256      admission 1,256 / 1,766 = 0.711
+yield      1,256 / 44 = 28.5/chunk  ratio 28.5 / 45.23 = 0.631
+```
+
+**Above the floor, but by 5%, not "with margin."** Endpoint cascade recovery (some of A2's 180
+`unresolved_endpoint`) is upside not counted here. The floor is unchanged either way; only the
+addendum's stated headroom is corrected. **A3 has to convert nearly all of a smaller
+convertible pool than the addendum assumed to clear 0.60.**
+
+## Ceiling — from A2 actuals
+
+```
+A2 measured        1,755,070 settled over 44 chunks = 39,888/chunk (output basis 8,030/chunk)
+A3 chunk count            44  (--shared-with chunked_v035, the identical comparator set)
+estimate           39,888 x 44 = 1,755,072
+floor x calls      20,000 x 44 =   880,000   (does not bind)
+CEILING = estimate x 1.5 = 2,633,000 for run `pilot_v039_arm_a3_haiku`
+```
+
+## Closure rule (ADDENDUM-04 §2.4, terminal — no A4)
+
+Recorded here before the result is known, so the branch is not chosen after seeing it:
+
+- **A3 >= 0.60** → §3 closes, chunked v0.3.9 PASSES all pre-registered criteria, Arm B not run
+  and recorded as a decision, bulk extraction unblocked ordered by `state/t2_priority.json`,
+  `seldon cc complete` the parent.
+- **A3 < 0.60** → §3 closes UNDER-EXTRACTION with the diagnosis chain recorded. **The floor's
+  target becomes the suspect**: 45.23/chunk comes from an arm proposing one item per ~34 source
+  tokens that was never validated as correct extraction. Next step is pre-registered as
+  ground-truth annotation (5 chunks, operator rubric — an operator value input, flagged and not
+  designed here), floor re-derived from measured value. **No further arm, Arm B included, runs
+  before that re-derivation.** `seldon cc complete` the parent; the annotation is a new task.

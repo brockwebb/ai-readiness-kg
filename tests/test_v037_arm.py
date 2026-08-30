@@ -540,3 +540,59 @@ def test_shared_with_actually_restricts_which_chunks_are_dispatched(cp, monkeypa
                           "workers": 1})()
     assert cp.phase_extract(args) == 0
     assert dispatched == [f"{doc}#c0002"], "only the covered chunk may be dispatched"
+
+
+# ----------------------------------------------------- 9. Arm A3: the character-exact rule
+
+def _rendered(path):
+    """What the MODEL sees: the leading <!-- --> provenance block stripped, whitespace
+    collapsed. A rule merely NAMED in a header is not a rule the prompt gives."""
+    import re as _re
+    t = (REPO / path).read_text(encoding="utf-8")
+    return " ".join(_re.sub(r"^<!--.*?-->", "", t, flags=_re.S).split())
+
+
+def test_v0_3_9_restores_character_exact_and_keeps_v0_3_8_intact(cp):
+    """Three arms, one instruction each: v0.3.7 -> v0.3.8 adds the FIRST GROUNDING RULE,
+    v0.3.8 -> v0.3.9 adds CHARACTER-EXACT. Each earlier template stays pinned so its arm's
+    provenance survives."""
+    import hashlib
+    assert hashlib.sha256((REPO / "kg/extraction/prompt_template_v0_3_8.md")
+                          .read_bytes()).hexdigest() == \
+        "0c6fee1d8d4a4e42f197744c8c92f2f4d8c8dee6cf75470e63648bb21d0b9410"
+    t7 = _rendered("kg/extraction/prompt_template_v0_3_7.md")
+    t8 = _rendered("kg/extraction/prompt_template_v0_3_8.md")
+    t9 = _rendered("kg/extraction/prompt_template_v0_3_9.md")
+    exact = "do not paraphrase, summarize, reword, fix typos, expand abbreviations"
+    assert exact not in t7 and exact not in t8 and exact in t9
+    naming = "use the document's surface form as the name"
+    assert naming not in t7 and naming in t8 and naming in t9   # A3 keeps A2's rule
+    # adapted: it binds the ANCHOR, not a grounding_span the model no longer emits
+    assert "`anchor` must be CHARACTER-EXACT" in t9
+    assert "grounding_span must be CHARACTER-EXACT" not in t9
+    assert "Do **not** emit `grounding_span` at all" in t9   # the model still emits none
+
+
+def test_v0_3_9_adds_exactly_one_rule_over_v0_3_8(cp):
+    """The chain's discipline: A3 must differ from A2 by ONE instruction. Compare the
+    rendered bold rule headings; anything else changing means the arm is confounded."""
+    import re as _re
+    heads = lambda p: _re.findall(r"\*\*([A-Z][^*]{8,90})\*\*",
+                                  _rendered(f"kg/extraction/prompt_template_{p}.md"))
+    h8, h9 = heads("v0_3_8"), heads("v0_3_9")
+    added = [h for h in h9 if h not in h8]
+    removed = [h for h in h8 if h not in h9]
+    assert removed == [], removed
+    assert len(added) == 1 and "CHARACTER-EXACT" in added[0], added
+
+
+def test_v0_3_9_profile_pins_the_new_template_on_its_own_shard(cp):
+    import hashlib
+    prof = cp.profile_block("v0_3_9")
+    assert prof["template_sha256"] == hashlib.sha256(
+        (REPO / prof["prompt_template"]).read_bytes()).hexdigest()
+    assert prof["batch"] == 19 and prof["shard_tag"] == "v0_3_9"
+    assert prof["emission_contract"] == "anchor"
+    for other in ("v0_3_7", "v0_3_8"):
+        assert prof["batch"] != cp.profile_block(other)["batch"]
+        assert prof["raw_dir"] != cp.profile_block(other)["raw_dir"]

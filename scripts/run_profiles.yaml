@@ -148,3 +148,27 @@ profiles:
     emission_contract: anchor
     chunker_config: kg/extraction/chunker_config.yaml
     chunker_config_sha256: 8c5492b3a324960802fc58f9ecf36935e9afcb2d904503372a3ef7045eb0259c
+
+  # Arm A3 (chunked_pilot ADDENDUM-04 §1). ONE variable against `v0_3_8`: the CHARACTER-EXACT
+  # rule is restored, adapted to bind the ANCHOR (the only text the model still copies under
+  # this contract). `v0_3_8` and its template are NOT edited and stay pinned for A2.
+  #
+  # Target: `anchor_not_located`, A2's largest quarantine class (340 of 1,766 proposed on the
+  # 44 shared chunks) and the one that ROSE against Arm A. Its not-found subclass (167) is a
+  # transcription failure this rule addresses; the non-unique subclass (153) is a property of
+  # the chunk text and is pre-registered as expected residual.
+  v0_3_9:
+    corpus_epoch: chunked-2026-08-27
+    batch: 19                                  # events/batch-019_v0_3_9.jsonl (TAGGED — an
+    shard_tag: v0_3_9                          # experiment arm, never replayed into the graph)
+    raw_dir: events/raw/v0_3_9
+    stop_file: events/v0_3_9_STOP.json
+    result_file: cc_tasks/2026-08-27_chunked_pilot_RESULT.md
+    job: airkg-v039-pilot
+    order: alphabetical
+    oversize_allow: []
+    prompt_template: kg/extraction/prompt_template_v0_3_9.md
+    template_sha256: 5d458029071cccd8cd49a1c9196cc692afdbc10752af699639b39b40113cf2fa
+    emission_contract: anchor
+    chunker_config: kg/extraction/chunker_config.yaml
+    chunker_config_sha256: 8c5492b3a324960802fc58f9ecf36935e9afcb2d904503372a3ef7045eb0259c
