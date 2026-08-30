@@ -1502,3 +1502,113 @@ the rule were the sole cause.** What it does support is that the rule is *worth 
 is what A2 does, and A2 is the design that isolates it: same unit, same chunker, same model,
 same 44 chunks, one rule changed. `write_verdict` carries the amended wording so the correction
 survives regeneration.
+
+---
+
+# ARM A2 RESULT — the restored rule works; the yield floor still is not met
+
+**Verdict: UNDER-EXTRACTION** (0.537 < 0.60), **and the naming-defect diagnosis is confirmed.**
+Arm B **still held.** 44/44 chunks, 0 failures, settled **1,755,070 of 2,741,000**; judge
+**2,075,727 of 4,000,000**; 0 refusals on either.
+
+## The two pre-registered figures, and they split
+
+| pre-registered | threshold | Arm A | **Arm A2** | |
+|---|---|---|---|---|
+| F (Wilson 95% upper) | `< 0.10` | 0.0385 / 96 facts | **0.0243 / 154 facts** | **PASS** |
+| item-faithful | `>= 0.70` | 60/60 = 1.000 | **72/73 = 0.986** | **PASS** |
+| admitted items / chunk | `>= 27.14` | 15.70 (0.347) | **24.30 (0.537)** | **FAIL** |
+| Instrument recall (containment) | `>= 0.90` | 0.897 | **0.905** | **PASS** |
+
+Raters `claude-opus-4-8` 1.000 / `claude-sonnet-5` 0.974, Dawid-Skene over 308 labels. The one
+unfaithful item is class `filled_attribute` — an attribute the document did not state, which is
+exactly the class the per-attribute span rule exists to catch. Span checks: 10 of 154 facts on
+a mid-noun-phrase span.
+
+**F_upper tightened from 0.0385 to 0.0243** purely because there were 60% more facts to judge —
+a larger sample narrows the interval. Faithfulness is materially unchanged at a larger n.
+
+## The isolation worked: one rule, one mechanism, on identical chunks
+
+Same 44 chunks, same chunker, same model, same anchor contract, same salience instruction.
+The only difference is the restored FIRST GROUNDING RULE.
+
+| on the 44 shared chunks | Arm A | Arm A2 | change |
+|---|---|---|---|
+| **proposed** | 1,849 | **1,766** | **0.96x** |
+| **admitted** | 691 | **1,069** | **1.55x** |
+| admission rate | 37.4% | **60.5%** | — |
+| quarantine rate | 62.6% | **39.5%** | v0.3.5 baseline: 54.5% |
+| **`span_partial`** | **482** | **172** | **0.36x** |
+| `unresolved_endpoint` | 356 | 180 | 0.51x |
+| `anchor_not_located` | 308 | 340 | 1.10x |
+| `property_value_invalid` | 12 | 0 | 0.00x |
+| semantic edges | 0 | 8 | — |
+| output tokens / chunk | 10,179 | 8,030 | 0.79x |
+
+**Proposals held flat at 0.96x while admissions rose 1.55x.** That is the whole point of the
+design: a rule about *which words you copy* cannot make a model see more, only name what it
+already saw in the document's own words — and that is precisely what moved. `span_partial` fell
+**64%**, the endpoint cascade that depends on it halved, and **A2's quarantine rate is now
+better than the v0.3.5 baseline's** (39.5% vs 54.5%).
+
+The prediction this tests was made before A2 ran, in the yield decomposition: *"the omission is
+the right lever, but it is a necessary fix, not a sufficient one: the proposal deficit (0.408)
+is untouched by it."* Measured: the proposal ratio moved from 0.408 to 0.390 — untouched, as
+predicted — and the admission rate rose from 0.374 to 0.605 against the 0.646 needed for the
+floor. **A2 lands 4 points of admission rate short of clearing a floor it could only ever have
+reached through admission.**
+
+`anchor_not_located` went the other way (308 → 340, 1.10x) and is now A2's **largest** single
+quarantine class. Nothing in the restored rule addresses it — the rule binds the `name`, not
+the anchor — so this is the untouched half of the problem and the obvious next lever.
+
+## My pre-registered recall floor was a poor instrument, and I should have known
+
+It returned `naming_defect_confirmed` at **0.905 >= 0.90**. But Arm A scores **0.897** on the
+same measure. **The verdict flipped on one entity out of 116** (104 → 105 matched).
+
+That is not a discrimination. The metric was near-saturated in both arms, and **I had Arm A's
+104/116 in hand from the previous day's containment analysis when I set the floor at 0.90** —
+so a floor with essentially no resolving power over the comparison it was meant to decide was
+foreseeable at registration. It is reported because it was pre-registered, and it is not the
+evidence the conclusion rests on.
+
+**The conclusion rests on `span_partial` 0.36x with proposals flat**, which is a clean,
+mechanism-specific isolation and moved by a factor, not by a rounding.
+
+**Exact-name recall FELL, 0.483 → 0.457, and that is not a defect.** Exact recall compares A2's
+chosen names to **v0.3.5's** chosen names — and v0.3.5 lacked the rule too. Making A2 copy the
+*document's* surface form cannot make it agree with another arm's free choices. Exact-name
+agreement with an unruled arm was never a sound instrument for this question; containment was
+the right key and the reason it was pre-registered as the scoring one.
+
+## Cost — A2 is the cheapest arm per admitted item by a factor of seven
+
+44-chunk basis, settled dollars:
+
+| | $ / chunk | output tok / chunk | **$ / admitted item** |
+|---|---|---|---|
+| v0.3.5 chunked (opus-5, verbatim) | $0.9280 | 26,956 | **$0.02052** |
+| Arm A (haiku, anchors) | $0.0820 | 10,179 | $0.00522 |
+| **Arm A2 (haiku, anchors + rule)** | **$0.0706** | **8,030** | **$0.00291** |
+
+**The restored rule made the output smaller (0.79x) and the yield larger (1.55x) at the same
+time.** A2 costs **$3.11 against v0.3.5's $40.83** for the same 44 chunks — 13x cheaper in
+dollars and 7x cheaper per admitted item, at F = 0 and item-faithful 0.986.
+
+## Where this leaves the standing question
+
+The pre-registered floor is a floor, and 0.537 is below it, so **A2 reports UNDER-EXTRACTION**.
+Two facts sit beside that verdict and neither is licence to move the floor:
+
+1. **The diagnosis was right and the fix is real** — 1.55x admitted, quarantine now below the
+   baseline's, one rule, proposals flat.
+2. **The remaining gap is not in the same place.** It is `anchor_not_located` (340, now the
+   largest class, untouched by this rule) and the proposal deficit (0.390, untouched by design
+   — salience is doing what it was told to do, and recall is not gate-measured).
+
+Type reconciliation on A2: 323 majority, 58 `instrument_evidence_wins`, 30 `type_conflict`
+excluded from pooling.
+
+`seldon cc complete` not run — §3 is not finished while Arm B is held.

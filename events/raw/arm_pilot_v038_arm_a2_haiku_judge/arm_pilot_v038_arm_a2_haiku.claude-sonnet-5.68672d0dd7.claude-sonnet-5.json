@@ -1,0 +1,23 @@
+{
+ "batch_id": "arm_pilot_v038_arm_a2_haiku.claude-sonnet-5.68672d0dd7",
+ "run": "arm_pilot_v038_arm_a2_haiku",
+ "model_id": "claude-sonnet-5",
+ "usage": {
+  "inputTokens": 4,
+  "outputTokens": 2957,
+  "cacheReadInputTokens": 75381,
+  "cacheCreationInputTokens": 29509,
+  "webSearchRequests": 0,
+  "costUSD": 0.1626902,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "canonicalModel": "claude-sonnet-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.1626902,
+ "duration_ms": 32377,
+ "wall_s": 34.6,
+ "session_id": "e93e3f8b-a34e-4507-83b7-2222f06b318f",
+ "raw_result": "That tool call was a mistake — this isn't a code review task. The prompt requires a direct strict-JSON judgment output. Here it is:\n\n```json\n{\"judgments\": [\n {\"fact_id\": \"f_ed48230991bf\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.97},\n {\"fact_id\": \"f_3e775f358b8f\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.98},\n {\"fact_id\": \"f_e5a9c3ee0100\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.97},\n {\"fact_id\": \"f_e76c7670c307\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.97},\n {\"fact_id\": \"f_e30f1b3fd4be\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.93},\n {\"fact_id\": \"f_7d9f0f7a02de\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.95},\n {\"fact_id\": \"f_193d476290dd\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.97},\n {\"fact_id\": \"f_2942449385df\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.9},\n {\"fact_id\": \"f_cdbb13eb2912\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.97},\n {\"fact_id\": \"f_84f32d15252c\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.95}\n]}\n```\n\nAll ten facts are directly stated within their own grounding spans (name, owner, and method claims each appear verbatim or near-verbatim in the span), so none required the window to establish support."
+}

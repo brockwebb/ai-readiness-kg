@@ -1,0 +1,23 @@
+{
+ "batch_id": "arm_pilot_v038_arm_a2_haiku.claude-sonnet-5.548c1daf34",
+ "run": "arm_pilot_v038_arm_a2_haiku",
+ "model_id": "claude-sonnet-5",
+ "usage": {
+  "inputTokens": 6,
+  "outputTokens": 4994,
+  "cacheReadInputTokens": 131328,
+  "cacheCreationInputTokens": 33162,
+  "webSearchRequests": 0,
+  "costUSD": 0.20886559999999998,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "canonicalModel": "claude-sonnet-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.20886559999999998,
+ "duration_ms": 55796,
+ "wall_s": 57.9,
+ "session_id": "5528bc75-a999-4f44-9182-2a38060a7186",
+ "raw_result": "That tool didn't fit this task (it's for code-review findings, not judge output) — here's the actual required output per the prompt's schema:\n\n```json\n{\"judgments\": [\n  {\"fact_id\": \"f_deaa517a2450\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.97},\n  {\"fact_id\": \"f_2551e2780857\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.97},\n  {\"fact_id\": \"f_f0899cc7963b\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.9},\n  {\"fact_id\": \"f_d3695b2198c6\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.97},\n  {\"fact_id\": \"f_6e46d26a0cb0\", \"label\": \"not_entailed\", \"class\": \"fabrication\", \"confidence\": 0.65},\n  {\"fact_id\": \"f_c5b674c49987\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.92},\n  {\"fact_id\": \"f_b4d3c6ab939a\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.95},\n  {\"fact_id\": \"f_ed058818b45a\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.97},\n  {\"fact_id\": \"f_b94150bc264d\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.9},\n  {\"fact_id\": \"f_d9a2665ed387\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.95}\n]}\n```\n\nOnly `f_6e46d26a0cb0` is flagged: it's the survey's own self-referential sentence (\"This survey provides...\") mislabeled as a named \"Instrument\" — the demonstrative isn't a proper name, so the span doesn't entail the naming claim."
+}
