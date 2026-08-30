@@ -1844,3 +1844,31 @@ re-derivation, not now.
 
 Type reconciliation on A3: 333 majority, 33 `instrument_evidence_wins`, 41 `type_conflict`
 excluded from pooling.
+
+---
+
+## ERRATUM (2026-08-30) — `source_type` vs `doc_type`, corrected on a peer's evidence
+
+Session `ai-readiness-kg-a9` corrected a claim I made twice. I wrote, in this RESULT and in
+`2026-08-29_openalex_auth_and_eligibility_RESULT.md`, that **"the manifest has no `source_type`
+field; the real field is `doc_type`."** That is true of the *entry projection* and wrong as an
+unqualified statement. Verified in code:
+
+| layer | name | evidence |
+|---|---|---|
+| admission API + `manifest_add` event | **`source_type`** | `kg/manifest.py:77` (required field), `:177-180` (validated against `_SOURCE_TYPES`, error string "invalid source_type"), `:235` (stamped on the event) |
+| projected manifest entry | **`doc_type`** | `scripts/manifest_triage.py:208` — `"doc_type": rec["source_type"]`, a rename at exactly one line |
+
+Measured on the live manifest: **277 of 283 entries carry `identity.doc_type`; 0 carry a
+`source_type` field** (17 mention the string only inside free-text `extra.notes`).
+
+**Both names are live in different layers, which is why this bit twice** — a task author
+writing `source_type` is using a name that exists, just not in the layer being read. The
+correct guidance is not "`source_type` doesn't exist" but **"`source_type` is what you pass in;
+`doc_type` is what you read back out."** The implementations in both tasks were against the
+right field and are unaffected; only the diagnosis wording was wrong.
+
+Also recorded, from the same peer: the pilot's **five documents were untouched by acquisition
+round 2**, so the ground-truth annotation sample mandated by the §3 closure is drawn from a
+stable set and does not need the manifest-snapshot pinning the ADDENDUM-06 confirmation would
+have required. Round 2 moved the manifest to 194 included (commit `750a2b6`).

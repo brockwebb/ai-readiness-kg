@@ -239,3 +239,21 @@ of filing them as provider flakiness. It paid for itself the same day.
 because `OUT_OF_SCOPE` is correctly absent from `RETRY_STATES` and the cache-skip fires before
 the gate. The flag is now the one path allowed to reopen a terminal record, with a test
 asserting a plain `--retry-unresolved` resume still leaves it alone.
+
+---
+
+## ERRATUM (2026-08-30) — the `source_type` discrepancy was stated too broadly
+
+§3 above says "the task specifies `source_type`; no manifest entry has that field. The real
+field is `doc_type`." The second sentence is true of the manifest *entry projection* and wrong
+as an unqualified claim. **`source_type` is the admission-API and `manifest_add` event field**
+(`kg/manifest.py:77`, validated at `:177-180` with the error string "invalid source_type",
+stamped at `:235`); **`doc_type` is the projected entry field**, renamed at one line,
+`scripts/manifest_triage.py:208` — `"doc_type": rec["source_type"]`.
+
+Live manifest: 277 of 283 entries carry `identity.doc_type`, none carries a `source_type`
+field. Both names are live in different layers, which is why the same confusion recurred in
+`2026-08-27_chunked_pilot` (ADDENDUM-06 §1). Correct guidance: **`source_type` is what you pass
+in, `doc_type` is what you read back out.** The eligibility gate was implemented against the
+right field and is unaffected; only the diagnosis wording is corrected. Found by session
+`ai-readiness-kg-a9`, verified here in code.
