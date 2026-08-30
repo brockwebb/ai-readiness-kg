@@ -596,3 +596,22 @@ def test_v0_3_9_profile_pins_the_new_template_on_its_own_shard(cp):
     for other in ("v0_3_7", "v0_3_8"):
         assert prof["batch"] != cp.profile_block(other)["batch"]
         assert prof["raw_dir"] != cp.profile_block(other)["raw_dir"]
+
+
+def test_verdict_retains_the_ss3_closure(cp):
+    """`--phase judge` regenerates the verdict from the two banked arms and would silently
+    delete the appended §3 closure — the document of record for the whole v0.3.7/8/9 chain.
+    A regeneration that drops it must fail loudly here rather than be noticed later."""
+    v = (REPO / "docs/research/2026-08-27_chunked_vs_wholedoc_verdict.md").read_text(
+        encoding="utf-8")
+    assert "# §3 CLOSURE" in v
+    for required in (
+            # ADDENDUM-05 §2's required language, verbatim in substance
+            "tripwire, not a validity criterion",
+            "floor met is not value validated",
+            # ADDENDUM-06 §3's carried requirement
+            "burn-time acceptance sampling",
+            "One-time qualification licenses starting a burn",
+            # the closure's operative consequence
+            "BLOCKED"):
+        assert required in v, f"the §3 closure lost: {required!r}"

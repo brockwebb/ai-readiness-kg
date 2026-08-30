@@ -1,0 +1,23 @@
+{
+ "batch_id": "arm_pilot_v039_arm_a3_haiku.claude-sonnet-5.2d5aacf200",
+ "run": "arm_pilot_v039_arm_a3_haiku",
+ "model_id": "claude-sonnet-5",
+ "usage": {
+  "inputTokens": 4,
+  "outputTokens": 2843,
+  "cacheReadInputTokens": 69173,
+  "cacheCreationInputTokens": 35549,
+  "webSearchRequests": 0,
+  "costUSD": 0.1844686,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "canonicalModel": "claude-sonnet-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.1844686,
+ "duration_ms": 31726,
+ "wall_s": 34.4,
+ "session_id": "f4e4cb8a-d4ed-4852-9e79-7e2890f3545a",
+ "raw_result": "The task already carries its own versioned, self-contained judge prompt (probe_judge_version 1.1.0) with a strict output contract — I'll follow that directly rather than the adversarial-review schema, since the embedded prompt is the calibrated instrument for this exact job.\n\nEvaluating each fact against its grounding span (window used only to distinguish fabrication from truncation, per the rule):\n\n1. **f_6f63ed39d0f0** — span names \"Imbalance Degree (ID)\" verbatim. Entailed.\n2. **f_657f7797dc86** — span names \"FAIR metrics and FAIR rubrics\" verbatim. Entailed.\n3. **f_eab25a533b56** — span: \"Low Variance method measures feature relevance by evaluating variances...\" Entailed.\n4. **f_c258a827f75d** — span states the ratio/vocabulary/tokens definition verbatim. Entailed.\n5. **f_b0514a3f736f** — span: \"Chi-Square Score method, introduced by Liu and Setiono [87]...\" Entailed.\n6. **f_21ff02c46574** — span: \"Correlation-based Feature Selection (CFS) by Hall and Smith...\" Entailed.\n7. **f_98fe43a11378** — span lists \"PSNR, SSIM, VIF, and VSNR\" by name. Entailed.\n8. **f_2f1401573662** — span: \"PEVQ, standardized by ITU...\" Entailed.\n9. **f_f55b7ab0601f** — span: \"...ReliefF algorithm by Robnik-Šikonja and Kononenko [115]...\" Entailed.\n10. **f_24f2f2a3b015** — span: \"CFS by Hall and Smith [55]...\" Entailed.\n\nAll ten spans directly and verbatim support their paired fact; none require the window to fill a gap.\n\n```json\n{\"judgments\": [\n{\"fact_id\": \"f_6f63ed39d0f0\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.98},\n{\"fact_id\": \"f_657f7797dc86\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.97},\n{\"fact_id\": \"f_eab25a533b56\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.98},\n{\"fact_id\": \"f_c258a827f75d\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.98},\n{\"fact_id\": \"f_b0514a3f736f\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.97},\n{\"fact_id\": \"f_21ff02c46574\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.98},\n{\"fact_id\": \"f_98fe43a11378\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.95},\n{\"fact_id\": \"f_2f1401573662\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.97},\n{\"fact_id\": \"f_f55b7ab0601f\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.96},\n{\"fact_id\": \"f_24f2f2a3b015\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.98}\n]}\n```"
+}

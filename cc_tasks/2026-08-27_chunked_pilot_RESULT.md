@@ -1706,3 +1706,141 @@ Recorded here before the result is known, so the branch is not chosen after seei
   ground-truth annotation (5 chunks, operator rubric — an operator value input, flagged and not
   designed here), floor re-derived from measured value. **No further arm, Arm B included, runs
   before that re-derivation.** `seldon cc complete` the parent; the annotation is a new task.
+
+---
+
+# ARM A3 RESULT AND §3 CLOSURE (ADDENDUM-04 §2.4, FAIL branch)
+
+**A3 yield 25.34 admitted/chunk = ratio 0.5603 < 0.60. §3 closes UNDER-EXTRACTION.**
+The ADDENDUM-05/-06 held-out confirmation is a PASS-branch instrument and **was not run.**
+Arm B **not run and now blocked** until ground-truth re-derivation.
+
+## Discrepancy: the dispatch premise "A3 is done" was false
+
+At dispatch the A3 extraction was still in flight (pid 42603, 39 of 44 raws, no
+resolve/yield/judge, no `v0_3_9` metrics on disk). Reported rather than reconciled; the branch
+was selected only after the number existed. One chunk (`data-readiness#c0021`) failed with a
+transient `ModelParseError` (no raw persisted) and was retried to completion, so A3 covers the
+full 44.
+
+**Second discrepancy: ADDENDUM-06 §1 stratifies on manifest `source_type`, which does not
+exist.** The real field is `identity.doc_type` — the same defect recorded on 2026-08-29 in the
+OpenAlex task. Moot on this branch, since the confirmation does not run; recorded so a later
+task that revives it does not rediscover it.
+
+## The gates: faithfulness holds across all three arms, yield never does
+
+| | Arm A | Arm A2 | **Arm A3** | gate |
+|---|---|---|---|---|
+| F (Wilson 95% upper) | 0.0385 / 96 facts | 0.0243 / 154 | **0.0000 [0, 0.0464] / 79** | `< 0.10` PASS |
+| item-faithful | 60/60 = 1.000 | 72/73 = 0.986 | **46/46 = 1.000** | `>= 0.70` PASS |
+| **admitted/chunk** | 15.70 (0.347) | 24.30 (0.537) | **25.34 (0.5603)** | `>= 27.14` **FAIL** |
+| Instrument recall (containment) | 0.897 | 0.905 | **0.888** | `>= 0.90` FAIL |
+
+Raters `claude-opus-4-8` 1.000 / `claude-sonnet-5` 0.962 over 158 labels. Span checks 5 of 79.
+**Faithfulness reported conditioned on density, as pre-registered: (0.0464, 1.000, 25.34).**
+
+**Secondary prediction (ADDENDUM-04 §2.2) — consistent, but the evidence is weak.** A2's one
+unfaithful item was class `filled_attribute`; A3 has none. But A3 judged 46 items to A2's 73,
+and the whole difference is a single item. **0/46 cannot be distinguished from 1/73.** Recorded
+as consistent-with, not as confirmation.
+
+## The chain: three arms, one instruction each, 44 identical chunks
+
+| on the 44 shared chunks | Arm A | Arm A2 | Arm A3 |
+|---|---|---|---|
+| **proposed** | 1,849 | **1,766** | **1,766** |
+| admitted | 691 | 1,069 | **1,115** |
+| quarantined | 1,158 | 697 | **651** |
+| admitted / chunk | 15.70 | 24.30 | **25.34** |
+| ratio vs 45.23 | 0.3472 | 0.5372 | **0.5603** |
+| admission rate | 37.4% | 60.5% | **63.1%** |
+| `span_partial` | 482 | 172 | 162 |
+| `anchor_not_located` | 308 | 340 | 316 |
+| `unresolved_endpoint` | 356 | 180 | 135 |
+| `cites_wrong_from` | 0 | 1 | **24** |
+| `cites_missing_to` | 0 | 4 | **13** |
+| output tokens / chunk | 10,179 | 8,030 | 10,763 |
+| **$ / admitted item** | $0.00522 | **$0.00291** | $0.00335 |
+
+**A2 and A3 proposed the identical 1,766 items.** That is the cleanest available confirmation
+that these two rules move admission and nothing else — the design's whole premise, measured
+rather than assumed.
+
+## The prediction was falsified, and the falsification names the binding constraint
+
+ADDENDUM-04 §2.1 pre-registered: movement confined to `anchor_not_located`'s **not-found and
+over-budget** subclasses, with **non-unique as expected residual** — "a property of the chunk
+text, and no compliance instruction reaches it."
+
+| subclass | Arm A | Arm A2 | **Arm A3** | A2 → A3 |
+|---|---|---|---|---|
+| not found in the chunk | 164 | 167 | **132** | **−35** |
+| non-unique | 115 | 153 | **91** | **−62** |
+| over the 10-token budget | 29 | 20 | **93** | **+73** |
+| total | 308 | 340 | **316** | −24 |
+
+**Both halves are wrong.** Over-budget *rose* by 73 instead of falling. Non-unique — registered
+as unreachable — fell 40%.
+
+One mechanism explains both: **"copy exactly" pushes the model toward longer literal anchors.**
+Longer strings are found more often (−35), are more often unique (−62), and blow the 10-token
+budget (+73). **The two failure modes are in tension and the budget is now the binding
+constraint.** Non-uniqueness is a property of the *chosen string*, not of the chunk text, which
+is exactly why an instruction did reach it — the pre-registered reasoning was wrong about the
+object it was reasoning about.
+
+Net anchor gain of 24 was more than half offset by a **new regression in the `cites` layer**
+(`cites_wrong_from` 1 → 24, `cites_missing_to` 4 → 13, +32). A3's total quarantine fell only
+46 items against A2 while its Instrument recall *fell* (0.905 → 0.888) — the arm admitted more
+items overall but fewer Instruments.
+
+## §3 CLOSURE — the recorded FAIL branch, applied
+
+Per ADDENDUM-04 §2.4, recorded before the number was known:
+
+1. **§3 closes UNDER-EXTRACTION**, diagnosis chain above.
+2. **The floor's target is the suspect.** 45.23 admitted/chunk comes from the banked chunked
+   v0.3.5 arm — one item per ~34 source tokens, **never validated as correct extraction.**
+   Three arms have now been designed against it and the two rule restorations recovered 61% of
+   the gap (0.347 → 0.560) while faithfulness stayed perfect. Continuing to engineer toward an
+   unvalidated target is the failure mode DD-026 exists to prevent.
+3. **Next step, pre-registered:** ground-truth annotation — 5 chunks, operator rubric (an
+   operator **value input**: what counts as correct extraction is measured, not guessed, and
+   the rubric's content is explicitly not designed here), floor re-derived from measured value.
+4. **No further arm runs before that re-derivation — Arm B included.**
+   `pilot_v037_arm_b_sonnet` stays declared at 3,840,000 with **0 committed**, now blocked by
+   this closure rather than merely deferred.
+5. The annotation is a **new task**, not this one.
+
+### ADDENDUM-05 §2 — required verdict language
+
+**The yield floor's target (45.23 admitted/chunk, from an unvalidated arm) is a tripwire, not a
+validity criterion. Floor met is not value validated.** Had A3 cleared 0.60, that would have
+established only that it matched an arm whose own correctness was never measured. Ground-truth
+annotation remains the only path to a value-valid yield target: mandatory on this FAIL branch,
+and it would have been optional and unscheduled had A3 passed.
+
+### ADDENDUM-06 §3 — carried requirement for the bulk task
+
+**Bulk extraction may not be written without burn-time acceptance sampling.** Per document
+batch, a seeded random sample of admitted facts judged under the standing protocol against
+pre-registered accept / continue / stop-and-quarantine-batch rules (sequential plan, parameters
+set in the bulk task before dispatch). A failing batch quarantines that batch's output; it does
+not stop the burn corpus-wide unless consecutive-batch rules fire. **One-time qualification
+licenses starting a burn, never finishing it unmonitored.** Prior art named in -06: Dodge–Romig
+acceptance sampling; Wald's SPRT.
+
+This requirement is carried forward even though the confirmation run did not happen — it binds
+the bulk task whenever bulk is eventually unblocked, which on this branch is *after*
+re-derivation, not now.
+
+## Spend
+
+| run | ceiling | settled | refusals |
+|---|---|---|---|
+| `pilot_v039_arm_a3_haiku` | 2,633,000 | **1,922,950** | 0 |
+| `pilot_v039_arm_a3_haiku_judge` | 4,000,000 | **1,064,614** | 0 |
+
+Type reconciliation on A3: 333 majority, 33 `instrument_evidence_wins`, 41 `type_conflict`
+excluded from pooling.

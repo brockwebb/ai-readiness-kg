@@ -1,0 +1,23 @@
+{
+ "batch_id": "arm_pilot_v039_arm_a3_haiku.claude-sonnet-5.da802a58b5",
+ "run": "arm_pilot_v039_arm_a3_haiku",
+ "model_id": "claude-sonnet-5",
+ "usage": {
+  "inputTokens": 4,
+  "outputTokens": 3150,
+  "cacheReadInputTokens": 74943,
+  "cacheCreationInputTokens": 30942,
+  "webSearchRequests": 0,
+  "costUSD": 0.1702646,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "canonicalModel": "claude-sonnet-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.1702646,
+ "duration_ms": 36911,
+ "wall_s": 39.2,
+ "session_id": "139382c9-7503-4bc8-b05b-61c714bf97ce",
+ "raw_result": "The task already carries its own versioned instrument (probe_judge_version 1.1.0) — that's the rubric to apply, not the generic baseline. Applying it directly to the 10 facts:\n\n```json\n{\"judgments\": [\n  {\"fact_id\": \"f_b4dbaaf71084\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.97},\n  {\"fact_id\": \"f_12febbf7d2b7\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.97},\n  {\"fact_id\": \"f_ad30602b06e3\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.98},\n  {\"fact_id\": \"f_04832ba5873c\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.97},\n  {\"fact_id\": \"f_34a90815d7ea\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.95},\n  {\"fact_id\": \"f_7515b7c3b631\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.98},\n  {\"fact_id\": \"f_3112e218a830\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.95},\n  {\"fact_id\": \"f_309f3c57a7a5\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.93},\n  {\"fact_id\": \"f_a3af44e7dcb8\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.97},\n  {\"fact_id\": \"f_9a12fd378556\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.93}\n]}\n```\n\nAll 10 facts are verbatim (or near-verbatim substring) matches of their own grounding span text — no reliance on the window needed. Two notes on the lower-confidence ones: `f_3112e218a830`'s span is a truncated sentence but the full HVDM name happens to fall entirely within the retained portion, so it's still entailed rather than `span_truncated`; `f_309f3c57a7a5`'s owner attribution (\"Nie et al.\") and `f_9a12fd378556`'s name both come from spans with multiple co-mentioned entities/qualifiers, so confidence is slightly discounted for possible subject mismatch, but the span text itself directly states each claim."
+}

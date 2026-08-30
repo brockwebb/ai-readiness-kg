@@ -163,3 +163,69 @@ Recorded, never subtracted from a denominator — excluding a class from a pre-r
 
 Strata meeting the pre-registered gate: **['chunked:Instrument', 'wholedoc:Instrument']**.
 Lane 2/3 eligibility is recorded here and nowhere acted on: this task launches neither (§6).
+
+---
+
+# §3 CLOSURE — v0.3.7 / v0.3.8 / v0.3.9 arm chain (2026-08-30)
+
+<!-- APPENDED SECTION. `scripts/chunked_pilot.py --phase judge` REGENERATES this file from the
+     two banked arms and would destroy everything below. A test
+     (test_verdict_retains_the_ss3_closure) fails if this section disappears. -->
+
+**Verdict: chunked extraction under v0.3.9 is FAITHFUL and UNDER-EXTRACTING.**
+Task `cc_tasks/2026-08-27_chunked_pilot.md` §3 closes here, on ADDENDUM-04 §2.4's FAIL branch.
+
+| arm | prompt change | F [Wilson 95%] | item-faithful | admitted/chunk | ratio |
+|---|---|---|---|---|---|
+| A (`v0_3_7`) | anchor contract + salience | 0.000 [0, 0.0385] | 60/60 = 1.000 | 15.70 | 0.347 |
+| A2 (`v0_3_8`) | + FIRST GROUNDING RULE | 0.000 [0, 0.0243] | 72/73 = 0.986 | 24.30 | 0.537 |
+| **A3 (`v0_3_9`)** | + CHARACTER-EXACT | **0.000 [0, 0.0464]** | **46/46 = 1.000** | **25.34** | **0.560** |
+
+All three arms: `claude-haiku-4-5`, the same 44 chunks, one instruction changed per step.
+**Every arm passes `F_upper < 0.10` and `item-faithful >= 0.70`. No arm reaches the 0.60 yield
+floor.** A2 and A3 proposed the identical 1,766 items, so the two rule restorations moved
+admission (37.4% → 60.5% → 63.1%) and nothing else.
+
+## The floor is a tripwire, not a validity criterion — floor met is not value validated
+
+The floor's target, **45.23 admitted items per chunk, comes from the banked chunked v0.3.5 arm
+— roughly one item per 34 source tokens, and it was never validated as correct extraction.**
+Three arms have been designed against that number. Had A3 cleared 0.60 it would have
+established only that it matched an arm whose own correctness was never measured.
+
+**Ground-truth annotation is the only path to a value-valid yield target.** It is mandatory on
+this branch and would have been optional and unscheduled had A3 passed. Until it exists, no
+statement in this document should be read as "the extractor recovers the right amount of
+material" — only as "the extractor recovers less material than an unvalidated predecessor, and
+what it does recover is faithful."
+
+## Consequences, recorded
+
+- **Arm B (`claude-sonnet-5`) is not run and is now BLOCKED**, not deferred. No further arm
+  runs before the floor is re-derived from measured value.
+- **Bulk extraction stays blocked** and, when unblocked, **may not be written without
+  burn-time acceptance sampling** (ADDENDUM-06 §3): per document batch, a seeded sample of
+  admitted facts judged under the standing protocol against pre-registered
+  accept / continue / stop-and-quarantine-batch rules; a failing batch quarantines that
+  batch's output. One-time qualification licenses starting a burn, never finishing it
+  unmonitored. Prior art: Dodge–Romig acceptance sampling; Wald's SPRT.
+- **The held-out confirmation (ADDENDUM-05 as superseded by -06) did not run.** It is a
+  PASS-branch instrument. Its rationale stands for whenever a candidate does pass: the 44
+  chunks are functionally a dev set across three adaptive rounds (Dwork et al. 2015 reusable
+  holdout; Recht et al. 2019), and a corpus claim needs held-out chunks from held-out
+  documents stratified by document class.
+
+## What the chain established that the floor did not
+
+1. **The anchor contract holds.** Every derived span is cut from the source; across A's 549
+   `span_partial` items, 549/549 spans were verbatim in the chunk and 0 model-typed spans
+   survived. `span_not_in_source` and the whole-document re-check drop, which cost v0.3.5 3.07
+   items/chunk, are **0.00** under it.
+2. **Two prompt rules dropped from `chunked_template.md` cost most of the yield gap**
+   (issue `53e2cf6e`). Restoring them recovered 61% of the distance to the floor with
+   faithfulness intact.
+3. **The 10-token anchor budget is now the binding constraint.** "Copy exactly" drives longer
+   anchors, which are found more often (−35 not-found) and are more often unique (−62
+   non-unique) but blow the budget (+73 over-budget). The failure modes are in tension.
+4. **Cost is not the constraint it was.** $0.00335/admitted item against v0.3.5's $0.02052,
+   at F = 0 and item-faithful 1.000.
