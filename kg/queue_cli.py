@@ -79,6 +79,12 @@ def cmd_withdraw(a) -> int:
     return 0
 
 
+def cmd_defer(a) -> int:
+    q.defer(a.doc_id, a.reason)
+    print(f"deferred {a.doc_id}: {a.reason}")
+    return 0
+
+
 def cmd_next(a) -> int:
     wl = q.worklist(a.arm)[: a.n]
     rows = q.project()
@@ -195,6 +201,9 @@ def add_parser(sub) -> None:
 
     wd = s.add_parser("withdraw"); wd.set_defaults(func=cmd_withdraw)
     wd.add_argument("doc_id"); wd.add_argument("--reason", required=True)
+
+    df = s.add_parser("defer"); df.set_defaults(func=cmd_defer)
+    df.add_argument("doc_id"); df.add_argument("--reason", required=True)
 
     nx = s.add_parser("next"); nx.set_defaults(func=cmd_next)
     nx.add_argument("--n", type=int, default=5); nx.add_argument("--arm", default=None)

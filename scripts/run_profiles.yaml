@@ -6,7 +6,7 @@
 # in code (standard 2). The kernel profile deliberately has NO allowlist (AUTH-4: oversize
 # specs are manifested at stated extent or registered oversize_needs_clearance, never
 # cleared whole).
-default: v1
+default: bulk_v038
 
 profiles:
   v1:
@@ -169,6 +169,41 @@ profiles:
     oversize_allow: []
     prompt_template: kg/extraction/prompt_template_v0_3_9.md
     template_sha256: 5d458029071cccd8cd49a1c9196cc692afdbc10752af699639b39b40113cf2fa
+    emission_contract: anchor
+    chunker_config: kg/extraction/chunker_config.yaml
+    chunker_config_sha256: 8c5492b3a324960802fc58f9ecf36935e9afcb2d904503372a3ef7045eb0259c
+
+  # PRODUCTION burn profile (task 2026-08-30_bulk_extraction_v038, Phase 0.2). The task says
+  # "pin v0_3_8"; what that binds is the EXTRACTION CONTRACT — template bytes, template sha,
+  # chunker config, anchor emission — and every one of those is copied here byte-identical
+  # from the v0_3_8 arm above. What is NOT copied is the arm's plumbing, for two reasons that
+  # are both invariants rather than preferences:
+  #
+  #   1. `v0_3_8` writes a TAGGED shard (batch-018_v0_3_8). eventlog.replay() skips tagged
+  #      shards, by design, so that an experiment arm can never leak into the graph. Burning
+  #      the corpus under the arm profile would produce a shard the projection never reads —
+  #      the burn would run, cost real money, and change nothing.
+  #   2. Repurposing the arm's shard/epoch in place would retroactively redefine what the
+  #      pilot's banked batch-018 events mean. The pilot RESULT cites them as arm A2.
+  #
+  # `corpus_epoch` is this profile's own name-scoped epoch, which makes profile_for() resolve
+  # it unambiguously (the four chunked arms all share `chunked-2026-08-27` and are therefore
+  # ambiguous by epoch alone). Documents are resolved from the QUEUE and the manifest's
+  # canonical_path, NOT from a corpus_epoch_declared member list: 5 of the 31 burn documents
+  # (the corpus/crosswalk/ lane) belong to no declared epoch at all, and epoch-scoped member
+  # resolution cannot reach them. Recorded as a discrepancy in the RESULT.
+  bulk_v038:
+    corpus_epoch: bulk-v038
+    batch: 23                                  # events/batch-023.jsonl — UNTAGGED: this one
+                                               # is graph history, not an arm.
+    raw_dir: events/raw/bulk_v038
+    stop_file: events/bulk_v038_STOP.json
+    result_file: cc_tasks/2026-08-30_bulk_extraction_v038_RESULT.md
+    job: airkg-bulk-v038
+    order: t2_priority                         # Phase 0.4: worklist order is the queue's
+    oversize_allow: []
+    prompt_template: kg/extraction/prompt_template_v0_3_8.md
+    template_sha256: 0c6fee1d8d4a4e42f197744c8c92f2f4d8c8dee6cf75470e63648bb21d0b9410
     emission_contract: anchor
     chunker_config: kg/extraction/chunker_config.yaml
     chunker_config_sha256: 8c5492b3a324960802fc58f9ecf36935e9afcb2d904503372a3ef7045eb0259c

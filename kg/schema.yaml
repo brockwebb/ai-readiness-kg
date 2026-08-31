@@ -54,7 +54,7 @@
 #     classification fields (as_of_date, enums, ids) that a span cannot be expected to carry.
 #     Read by the faithfulness probe's decomposer (facts only for true attributes) and by the
 #     scoring rule (`doc_level_attribute` class excluded from F). DD-015.
-schema_version: "0.3.5"
+schema_version: "0.3.6"
 
 # --- Section 2: Node types -------------------------------------------------
 # Each node type lists the "Key properties" column verbatim. Parenthetical
@@ -499,4 +499,15 @@ event_types:
     properties:
       document_id: doc_id whose live request is cancelled
       reason: why it was withdrawn
+      ts: UTC ISO-8601
+  extraction_deferred:
+    description: >
+      A deliberate decision NOT to extract an admitted document, with the reason. Distinct
+      from extraction_withdrawn (which cancels a request that was made) and from the absence
+      of any event (which means only that nobody has looked). Refused at emit while a live
+      request stands. A later extraction_request revives the document.
+    required: [document_id, reason, ts]
+    properties:
+      document_id: doc_id of a manifest-included document that will not be extracted
+      reason: why it was declined (e.g. "no consumer")
       ts: UTC ISO-8601

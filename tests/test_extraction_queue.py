@@ -223,3 +223,110 @@ def test_backfill_is_derived_from_epochs_and_is_idempotent(qenv):
         assert queue.backfill_plan() == [], "a document already requested is not re-planned"
     finally:
         queue.BACKFILL = tuple(monkey)
+
+
+# ------------------------------------------------------- deferral (bulk_v038 Phase 0.3)
+def test_a_deferral_is_a_third_thing_not_a_withdrawal_and_not_silence(qenv):
+    """`not_requested` means nobody looked; `deferred` means we looked and declined, and the
+    reason is on the record. Collapsing the two would make the extract/defer cut invisible the
+    moment it was taken — that cut is 159 of 194 documents, i.e. most of the corpus."""
+    queue.defer("doc-a", "no consumer")
+    rows = queue.project()
+    assert rows["doc-a"]["extraction_state"] == "deferred"
+    assert rows["doc-a"]["deferred_reason"] == "no consumer"
+    assert rows["doc-b"]["extraction_state"] == "not_requested"
+    assert rows["doc-b"]["deferred_reason"] is None
+
+
+def test_a_deferral_is_refused_while_a_live_request_stands(qenv):
+    """Two live decisions about one document, disagreeing: the worklist would still run it
+    while the status surface reported it declined."""
+    queue.request("doc-a", 1, "test", "wanted")
+    with pytest.raises(queue.QueueRefusal) as exc:
+        queue.defer("doc-a", "no consumer")
+    assert "live extraction_request" in str(exc.value)
+    assert queue.project()["doc-a"]["extraction_state"] == "queued"
+
+
+def test_a_later_request_revives_a_deferred_document(qenv):
+    """Correct-forward, never a deletion: the deferral stays on the log and the request
+    follows it. A cut taken today must not permanently bar a document whose consumer appears
+    tomorrow."""
+    queue.defer("doc-a", "no consumer")
+    assert queue.project()["doc-a"]["extraction_state"] == "deferred"
+    queue.request("doc-a", 1, "test", "a crosswalk item needs it now")
+    assert queue.project()["doc-a"]["extraction_state"] == "queued"
+
+
+def test_deferring_an_unadmitted_document_is_refused_not_logged(qenv):
+    with pytest.raises(queue.QueueRefusal):
+        queue.defer("doc-out", "no consumer")
+    with pytest.raises(queue.QueueRefusal):
+        queue.defer("ghost", "no consumer")
+    assert not queue.deferrals()
+
+
+def test_a_reasonless_deferral_is_refused(qenv):
+    """An unexplained gap in the corpus is exactly what the queue exists to prevent."""
+    with pytest.raises(queue.QueueRefusal):
+        queue.defer("doc-a", "")
+
+
+def test_a_deferral_does_not_erase_extraction_history(qenv):
+    """Deferral speaks to future work only. A document already extracted under the pin still
+    reads `extracted` after it is deferred — otherwise the cut would hide real graph content
+    and the projection would under-report what is in the KG."""
+    _extraction("doc-a", "epoch-new", "e1")
+    queue.defer("doc-a", "no consumer")
+    assert queue.project()["doc-a"]["extraction_state"] == "extracted"
+
+
+def test_deferred_documents_never_reach_the_worklist(qenv):
+    """The point of the cut: `next` must not hand the burn a document we declined to spend
+    on. This drives the same derivation the driver reads, not a copy of it."""
+    queue.request("doc-b", 1, "test", "wanted")
+    queue.defer("doc-a", "no consumer")
+    assert list(queue.worklist()) == ["doc-b"]
+
+
+def test_the_suite_cannot_write_to_the_real_event_log(qenv):
+    """The autouse guard in conftest, driven rather than assumed. Two tests wrote synthetic
+    `ground_truth_floor` events for documents that do not exist into
+    events/batch-021_ground_truth.jsonl — three of them committed — because nothing stopped
+    them. The no-delete invariant then protects that pollution permanently."""
+    from kg import eventlog
+    real = Path(__file__).resolve().parent.parent / "events"
+    monkey = eventlog._EVENTS_DIR
+    eventlog._EVENTS_DIR = real
+    try:
+        with pytest.raises(AssertionError) as exc:
+            eventlog.append({"event_type": "junk"}, batch=999)
+        assert "REAL event log" in str(exc.value)
+    finally:
+        eventlog._EVENTS_DIR = monkey
+        # A MUTATED guard lets the write through, and this test would then leave its own junk
+        # shard in the real log — which is exactly the failure it exists to prevent. It did,
+        # once, during the mutation matrix. Clean up unconditionally, not on the happy path.
+        (real / "batch-999.jsonl").unlink(missing_ok=True)
+
+
+def test_a_deferral_outranks_stale_because_stale_claims_work_is_owed(qenv):
+    """`stale` means re-extraction is owed under the current pin. A deferral is the decision
+    that it is NOT owed, so it must win — otherwise every previously-extracted document the
+    cut declined keeps advertising work nobody intends to do. Live measurement: 104 of the
+    159 documents the bulk_v038 cut deferred were reading `stale`."""
+    _extraction("doc-a", "epoch-old", "e1")
+    assert queue.project()["doc-a"]["extraction_state"] == "stale"
+    queue.defer("doc-a", "no consumer")
+    row = queue.project()["doc-a"]
+    assert row["extraction_state"] == "deferred"
+    assert row["latest_extraction"]["corpus_epoch"] == "epoch-old"   # history not erased
+
+
+def test_a_superseding_request_beats_stale_so_re_extraction_shows_as_queued(qenv):
+    """A document extracted under an older profile and requested again is work IN THE QUEUE,
+    not a passive `stale` row. Without the superseding flag the bulk_v038 worklist reported
+    6 queued against 35 emitted requests."""
+    _extraction("doc-a", "epoch-old", "e1")
+    queue.request("doc-a", 1, "test", "re-extract under the new pin", superseding=True)
+    assert queue.project()["doc-a"]["extraction_state"] == "queued"

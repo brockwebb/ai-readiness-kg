@@ -38,10 +38,16 @@ QUEUE_BATCH = 22
 
 REQUEST = "extraction_request"
 WITHDRAWN = "extraction_withdrawn"
+#: A deliberate decision NOT to extract an admitted document (task
+#: 2026-08-30_bulk_extraction_v038 Phase 0.3). Distinct from WITHDRAWN, which cancels a
+#: request that was actually made, and distinct from `not_requested`, which means only that
+#: nobody has looked yet. "Admitted, considered, and declined, for this reason" is a third
+#: thing, and the operator surface has to be able to tell it from the other two.
+DEFERRED = "extraction_deferred"
 
 #: Projected states. Order is the reporting order in `kg queue status`.
 STATES = ("extracting", "queued", "stale", "extracted", "failed",
-          "skipped_oversize", "not_requested", "excluded")
+          "skipped_oversize", "deferred", "not_requested", "excluded")
 
 
 class QueueRefusal(RuntimeError):
@@ -149,6 +155,40 @@ def request(document_id: str, priority: int, requested_by: str, reason: str,
         "superseding": bool(superseding), "ts": _now()}, batch=QUEUE_BATCH)
 
 
+def defer(document_id: str, reason: str) -> str:
+    """Emit one `extraction_deferred`. Same admission precondition as `request`.
+
+    Refuses while a live request stands: silently deferring queued work would make the
+    worklist and the status surface disagree about the same document. Withdraw first, then
+    defer — two events, because they are two decisions."""
+    if document_id not in included_documents():
+        raise QueueRefusal(
+            f"{document_id!r} is not manifest-included; there is nothing to defer "
+            f"(refused, not emitted).")
+    if not reason:
+        raise QueueRefusal("a deferral without a reason is an unexplained gap in the corpus")
+    if document_id in live_requests():
+        raise QueueRefusal(
+            f"{document_id!r} has a live extraction_request; withdraw it before deferring")
+    return eventlog.append({"event_type": DEFERRED, "document_id": document_id,
+                            "reason": reason, "ts": _now()}, batch=QUEUE_BATCH)
+
+
+def deferrals() -> dict[str, dict]:
+    """{doc_id: live deferral}. A later request revives the document; ordinary replay."""
+    out: dict[str, dict] = {}
+    for ev in eventlog.replay():
+        t = ev.get("event_type")
+        doc = ev.get("document_id")
+        if not doc:
+            continue
+        if t == DEFERRED:
+            out[doc] = ev
+        elif t == REQUEST:
+            out.pop(doc, None)
+    return out
+
+
 def withdraw(document_id: str, reason: str) -> str:
     return eventlog.append({"event_type": WITHDRAWN, "document_id": document_id,
                             "reason": reason, "ts": _now()}, batch=QUEUE_BATCH)
@@ -254,6 +294,7 @@ def project() -> dict[str, dict]:
     pin = pinned_profile()
     included = included_documents()
     reqs, exts, fails = live_requests(), extractions(), failures()
+    defers = deferrals()
     over, flying = oversize(), in_flight_documents()
     rows: dict[str, dict] = {}
     for doc, entry in included.items():
@@ -268,6 +309,12 @@ def project() -> dict[str, dict]:
             state = "extracted"
         elif under and req and req.get("superseding"):
             state = "queued"
+        elif doc in defers:
+            # A deferral outranks `stale` but never `extracted`. `stale` is a claim that
+            # re-extraction is OWED; a deferral is the decision that it is not. Ranking stale
+            # first hid 104 of the 159 documents the bulk_v038 cut declined, which made the
+            # cut look four times smaller than it was on the status surface.
+            state = "deferred"
         elif under:
             state = "stale"
         elif doc in fails and not req:
@@ -288,6 +335,7 @@ def project() -> dict[str, dict]:
             "requested_profile": (req or {}).get("profile"),
             "superseding": bool((req or {}).get("superseding")),
             "failure": fails.get(doc),
+            "deferred_reason": (defers.get(doc) or {}).get("reason"),
             "pinned_profile": pin,
         }
     return rows

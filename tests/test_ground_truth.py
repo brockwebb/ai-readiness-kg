@@ -310,6 +310,7 @@ def test_precision_and_recall_use_separate_numerators(monkeypatch, tmp_path):
     Arm A3, an impossible value, before this was separated. Recall counts ground-truth items
     FOUND; precision counts arm items JUSTIFIED."""
     monkeypatch.setattr(gt, "OUT_DIR", tmp_path)
+    monkeypatch.setattr(gt.eventlog, "_EVENTS_DIR", tmp_path / "events")
     monkeypatch.setattr(gt, "sample_chunks", lambda: ["d#c1"])
     monkeypatch.setattr(gt, "verify_rubric", lambda: gt.RUBRIC_SHA)
     monkeypatch.setattr(gt.cp, "apply_arm", lambda *a, **k: None)
@@ -335,6 +336,7 @@ def test_the_floor_is_derived_from_MEASURED_ground_truth_not_from_the_old_target
     from the unvalidated 45.23 the pilot chased. A scorer that quietly kept the old target
     would reproduce the closure's own suspect number and look like a re-derivation."""
     monkeypatch.setattr(gt, "OUT_DIR", tmp_path)
+    monkeypatch.setattr(gt.eventlog, "_EVENTS_DIR", tmp_path / "events")
     monkeypatch.setattr(gt, "sample_chunks", lambda: ["d#c1", "d#c2"])
     monkeypatch.setattr(gt, "verify_rubric", lambda: gt.RUBRIC_SHA)
     monkeypatch.setattr(gt.cp, "apply_arm", lambda *a, **k: None)

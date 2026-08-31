@@ -1,0 +1,22 @@
+{
+ "task": "cc_tasks/2026-08-30_bulk_extraction_v038.md",
+ "plan": "Wald SPRT on the batch fabrication rate",
+ "p0": 0.05,
+ "p1": 0.1,
+ "alpha": 0.05,
+ "beta": 0.05,
+ "log_A": 2.9444389791664403,
+ "log_B": -2.9444389791664403,
+ "slope": 0.07235837684317095,
+ "accept_intercept": -3.94055437362336,
+ "reject_intercept": 3.94055437362336,
+ "min_facts_for_accept": 55,
+ "expected_sample_number": {
+  "p=0.05": 158.6,
+  "p=0.07236": 231.3,
+  "p=0.1": 128.3
+ },
+ "sample_budget_rule": "2x ASN at p0; a batch still `continue` at the budget is accept-with-flag and counts toward the consecutive rule",
+ "corpus_stop_rule": "2 consecutive rejects, or 3 rejects/inconclusives in any rolling 5 batches",
+ "derived_at": "2026-08-31T15:00:47.361451+00:00"
+}

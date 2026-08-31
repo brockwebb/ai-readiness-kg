@@ -100,7 +100,11 @@ def apply_arm(profile: str | None = None, model: str | None = None,
         if not prof.get(key):
             raise SystemExit(f"FATAL: profile {PROFILE!r} has no {key!r}")
     SHARD_NO = int(prof["batch"])
-    TAG = prof.get("shard_tag") or PROFILE
+    # `shard_tag` is authoritative and its ABSENCE means untagged. eventlog.replay() skips
+    # tagged shards by design, so defaulting the tag to the profile name — as this did — would
+    # silently route a PRODUCTION profile's events onto a shard the projection never reads.
+    # An arm declares its tag; graph history declares none.
+    TAG = prof.get("shard_tag")
     RAW_DIR = REPO / prof["raw_dir"]
     CORPUS_EPOCH = prof["corpus_epoch"]
     EMISSION = prof.get("emission_contract", "verbatim")
@@ -133,6 +137,21 @@ PILOT_DOCS = ["data-readiness-for-ai-a-360-degree-survey", "aidrin-hiniduma-2024
               "from-accuracy-to-readiness-metrics-and-benchmarks-for-human",
               "mitre-ai-maturity-model"]
 
+# The documents this run covers, and how their source paths are resolved. Both are module
+# globals read at call time (repo convention) so the PRODUCTION driver can point the same
+# extraction path at the burn set without forking it: qualification and burn must be the
+# identical code, or Phase A qualifies a harness the burn does not use. Defaults reproduce
+# the pilot exactly.
+DOCS = list(PILOT_DOCS)
+#: Optional {doc_id: Path} override. None = resolve by corpus epoch, as the pilot did.
+DOC_PATHS = None
+#: `purpose` stamped on every emitted event. The pilot's events sit on a tagged shard that
+#: replay() skips; production events sit on an untagged shard and must carry a purpose the
+#: projection accepts.
+PURPOSE = "chunked_pilot"
+#: Optional set of chunk_ids the run is restricted to. None = every chunk of every doc.
+CHUNK_FILTER = None
+
 # Pre-registered, from the task. Never written here.
 F_STOP, ITEM_FAITHFUL, STRATUM_PRECONDITION = 0.10, 0.70, 20
 SEMANTIC = parser.SEMANTIC_EDGE_TYPES
@@ -143,18 +162,20 @@ def now_utc():
 
 
 def members() -> dict[str, Path]:
+    if DOC_PATHS is not None:
+        return dict(DOC_PATHS)
     out = {}
     for prof in ("v1", "kernel_v03"):
         rbe.apply_profile(prof)
         out.update(rbe.corpus_members())
-    rbe.apply_profile(PROFILE)          # sha-pinned chunked prompt is the active one
+    rbe.apply_profile(PROFILE, chunk_unit_ok=True)   # sha-pinned chunked prompt is active
     return out
 
 
 def chunk_sets() -> dict[str, tuple[str, chunker.ChunkSet]]:
     m = members()
     out = {}
-    for d in PILOT_DOCS:
+    for d in DOCS:
         text = rbe.doc_text(m[d])
         out[d] = (text, chunker.chunk_document(d, text))
     return out
@@ -365,15 +386,24 @@ def phase_extract(a) -> int:
     # chunks Arm A was measured on, and extracting the 4 chunks outside that set would be
     # spend on material no comparison reads.
     limit_to = None
+    # Explicit chunk restriction, set by the production driver from a committed, seeded draw.
+    # Kept separate from --shared-with (which derives its set from another arm's shard) so a
+    # confirmation run can never silently widen to every chunk of a burn-set document.
+    if CHUNK_FILTER is not None:
+        limit_to = set(CHUNK_FILTER)
+        if not limit_to:
+            raise SystemExit("FATAL: CHUNK_FILTER is empty; refusing an unbounded pass")
+        print(f"restricting to {len(limit_to)} chunks from the committed draw", flush=True)
     if getattr(a, "shared_with", None):
-        limit_to = set(chunk_yield(a.shared_with))
+        shared = set(chunk_yield(a.shared_with))
+        limit_to = shared if limit_to is None else (limit_to & shared)
         if not limit_to:
             raise SystemExit(f"FATAL: --shared-with {a.shared_with!r} has no chunk_metrics "
                              f"events; refusing to run an unbounded pass")
         print(f"restricting to {len(limit_to)} chunks covered by {a.shared_with!r}", flush=True)
-    docs = PILOT_DOCS
+    docs = DOCS
     if a.only:
-        docs = [d for d in PILOT_DOCS if d in set(a.only.split(","))]
+        docs = [d for d in DOCS if d in set(a.only.split(","))]
         if not docs:
             raise SystemExit(f"FATAL: --only {a.only!r} matches none of the pilot documents")
     for d in docs:
@@ -547,7 +577,7 @@ def phase_ingest(a) -> int:
                 if ev.get("event_type") == "chunk_metrics"
                 and (ev["chunk_id"], ev.get("chunk_start"), ev.get("chunk_end")) not in dead}
     counts = Counter()
-    for d in PILOT_DOCS:
+    for d in DOCS:
         text = rbe.doc_text(m[d])
         sha = hashlib.sha256(m[d].read_bytes()).hexdigest()
         cs = chunker.chunk_document(d, text)
@@ -571,7 +601,7 @@ def phase_ingest(a) -> int:
                 if not grounding.is_grounded(nrec["item"].get("grounding_span") or "", text):
                     counts["node_not_in_document"] += 1
                     continue
-                eventlog.append({"event_type": "node_asserted", "purpose": "chunked_pilot",
+                eventlog.append({"event_type": "node_asserted", "purpose": PURPOSE,
                                  "doc_id": d, "chunk_id": c.chunk_id, "provenance": prov,
                                  "payload": {"id": nrec["id"], "type": nrec["type"],
                                              "item": nrec["item"]}}, batch=SHARD_NO, tag=TAG)
@@ -580,14 +610,14 @@ def phase_ingest(a) -> int:
                 if not grounding.is_grounded(erec["item"].get("grounding_span") or "", text):
                     counts["edge_not_in_document"] += 1
                     continue
-                eventlog.append({"event_type": "edge_asserted", "purpose": "chunked_pilot",
+                eventlog.append({"event_type": "edge_asserted", "purpose": PURPOSE,
                                  "doc_id": d, "chunk_id": c.chunk_id, "provenance": prov,
                                  "payload": {"type": erec["type"], "from_id": erec["from_id"],
                                              "to_id": erec["to_id"], "item": erec["item"]}},
                                 batch=SHARD_NO, tag=TAG)
                 kept_e += 1
             for x in mentions:
-                eventlog.append({"event_type": "mention_stub", "purpose": "chunked_pilot",
+                eventlog.append({"event_type": "mention_stub", "purpose": PURPOSE,
                                  "doc_id": d, "chunk_id": c.chunk_id, "provenance": prov,
                                  "payload": {"name": x["name"],
                                              "grounding_span": x.get("grounding_span")}},
@@ -598,7 +628,7 @@ def phase_ingest(a) -> int:
             # after the fact. `reason_class` collapses the per-item diagnosis that follows
             # the colon, which is detail, not a class.
             qhist = Counter(reason_class(q.get("reason")) for q in result.quarantined)
-            eventlog.append({"event_type": "chunk_metrics", "purpose": "chunked_pilot",
+            eventlog.append({"event_type": "chunk_metrics", "purpose": PURPOSE,
                              "doc_id": d, "chunk_id": c.chunk_id,
                              "chunk_start": c.start, "chunk_end": c.end,
                              "ingest_generation": generation,
@@ -642,7 +672,7 @@ def shard_items() -> tuple[dict, dict, dict]:
 def phase_resolve(a) -> int:
     nodes, edges, stubs = shard_items()
     report = {}
-    for d in PILOT_DOCS:
+    for d in DOCS:
         by_form: dict[str, list] = defaultdict(list)
         for ev in nodes[d]:
             item = ev["payload"]["item"]
@@ -663,7 +693,7 @@ def phase_resolve(a) -> int:
                      "stubs_unmerged": len(stubs[d]) - stub_hits,
                      "edge_events": len(edges[d])}
         print(d, report[d])
-    eventlog.append({"event_type": "entity_resolution", "purpose": "chunked_pilot",
+    eventlog.append({"event_type": "entity_resolution", "purpose": PURPOSE,
                      "method": "deterministic:nfkc_casefold_ws + aliases (task §4)",
                      "per_doc": report, "task": TASK}, batch=SHARD_NO, tag=TAG)
     (METRICS / f"{TAG}_resolution.json").write_text(json.dumps(report, indent=1))
@@ -682,7 +712,7 @@ def phase_resolve(a) -> int:
                 tally[dec["rule"]] += 1
         print("type reconciliation:", dict(tally),
               f"-> {tally[merge.TYPE_CONFLICT]} conflicts excluded from pooling")
-        eventlog.append({"event_type": "type_reconciliation", "purpose": "chunked_pilot",
+        eventlog.append({"event_type": "type_reconciliation", "purpose": PURPOSE,
                          "method": f"deterministic:{merge.PRIVILEGED_TYPE}_evidence > majority "
                                    f"> {merge.TYPE_CONFLICT} (ADDENDUM-01 §2.4)",
                          "rules": dict(tally),
@@ -712,7 +742,7 @@ def instrument_evidence(item: dict) -> bool:
 def reconcile_types(nodes: dict) -> dict[str, dict]:
     """{doc_id: {merge_key: decision}} over the arm's node events (merge.py rules 1-3)."""
     out = {}
-    for d in PILOT_DOCS:
+    for d in DOCS:
         obs = []
         for ev in nodes[d]:
             item = ev["payload"]["item"]
@@ -761,7 +791,7 @@ def wholedoc_records(texts: dict[str, str]) -> list[dict]:
     derivation `addendum05_pilot.pilot_outputs` used, so the arm is not re-extracted."""
     import addendum05_triage as triage
     recs = []
-    for d in PILOT_DOCS:
+    for d in DOCS:
         raws = sorted(WD_RAW_DIR.glob(f"{d}.*.json"))
         if not raws:
             continue
@@ -804,7 +834,7 @@ def chunked_records(texts: dict[str, str]) -> list[dict]:
     nodes, edges, _ = shard_items()
     decisions = type_decisions()
     recs = []
-    for d in PILOT_DOCS:
+    for d in DOCS:
         norm = grounding.normalize(texts[d])
         names = {}
         for ev in nodes[d]:
@@ -1023,7 +1053,7 @@ def stratum_admission(stratum: str, n_items: int, min_facts: int) -> tuple[bool,
 def phase_judge(a) -> int:
     cfg = model_stub.load_model_config()
     m = members()
-    texts = {d: rbe.doc_text(m[d]) for d in PILOT_DOCS}
+    texts = {d: rbe.doc_text(m[d]) for d in DOCS}
     raters = [cfg["primary_judge_model_id"], cfg["secondary_judge_model_id"]]
     spend.default_ledger().declare(JUDGE_RUN_ID, a.judge_ceiling, declared_by=TASK,
                                    call_class="judge")
@@ -1114,7 +1144,7 @@ def write_verdict(results: dict, cfg: dict, a, admission: dict | None = None,
     wd_usage = whole_doc_usage()
     hist, cross, div_total = diversion_histogram()
     resolution = json.loads((METRICS / "chunked_resolution.json").read_text())
-    sets = {d: chunker.chunk_document(d, rbe.doc_text(members()[d])) for d in PILOT_DOCS}
+    sets = {d: chunker.chunk_document(d, rbe.doc_text(members()[d])) for d in DOCS}
 
     min_facts = min_facts if min_facts is not None else min_facts_for_gate()
     L = ["# Chunked vs whole-document extraction — pre-registered verdict", "",
@@ -1194,7 +1224,7 @@ def write_verdict(results: dict, cfg: dict, a, admission: dict | None = None,
     L += ["", "## Yield and cost", "",
           "| doc | chunks | chunk tokens (med/max) | chunked settled | whole-doc settled |",
           "|---|---|---|---|---|"]
-    for d in PILOT_DOCS:
+    for d in DOCS:
         cs = sets[d]
         toks = sorted(c.n_tokens for c in cs)
         wd = sum(wd_usage.get(d, {}).values())
@@ -1311,7 +1341,7 @@ def quarantine_by_reason(tag: str) -> tuple[dict, int, int]:
 def semantic_edge_count() -> int:
     """§0(a): reported, never judged — five pilot documents cannot reach DD-026's n=35."""
     _, edges, _ = shard_items()
-    return sum(1 for d in PILOT_DOCS for ev in edges[d]
+    return sum(1 for d in DOCS for ev in edges[d]
                if ev["payload"]["type"] in SEMANTIC)
 
 
@@ -1326,7 +1356,7 @@ def _proposed_nodes(shared: set[str]) -> dict[str, dict]:
     quarantined. Read from the raws, so an item the parser rejected still counts as proposed:
     recall is a question about what the model saw, not about what survived the gate."""
     m = members()
-    texts = {d: rbe.doc_text(m[d]) for d in PILOT_DOCS}
+    texts = {d: rbe.doc_text(m[d]) for d in DOCS}
     out: dict[str, dict] = defaultdict(dict)
     for f in sorted(RAW_DIR.glob("*.json")):
         raw = json.loads(f.read_text())
@@ -1444,7 +1474,7 @@ def phase_arm_judge(a) -> int:
     are comparable to that verdict's rows rather than to a second protocol."""
     cfg = model_cfg()
     m = members()
-    texts = {d: rbe.doc_text(m[d]) for d in PILOT_DOCS}
+    texts = {d: rbe.doc_text(m[d]) for d in DOCS}
     base = model_stub.load_model_config()
     raters = [base["primary_judge_model_id"], base["secondary_judge_model_id"]]
     recs = [r for r in chunked_records(texts) if r["stratum"] == "Instrument"]
@@ -1539,7 +1569,7 @@ def phase_register(a) -> int:
                       f"{tag}: atomic facts judged (2 raters, Dawid-Skene)", data)
     # chunked-arm structural numbers
     hist, cross, total = diversion_histogram()
-    sets = {d: chunker.chunk_document(d, rbe.doc_text(members()[d])) for d in PILOT_DOCS}
+    sets = {d: chunker.chunk_document(d, rbe.doc_text(members()[d])) for d in DOCS}
     per_doc = per_doc_settled_chunked()
     _register(sum(len(c) for c in sets.values()), "chunks",
               "chunked arm: total chunks over the five pilot documents at max_tokens 1500",

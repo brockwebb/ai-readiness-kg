@@ -104,7 +104,7 @@ def _verify_pin(name: str, prof: dict, path_key: str, sha_key: str) -> None:
                          f"pinned {want[:12]} — {prof[path_key]} drifted since the pin")
 
 
-def apply_profile(name: str | None) -> str:
+def apply_profile(name: str | None, chunk_unit_ok: bool = False) -> str:
     """Resolve a run profile from run_profiles.yaml into the module-level run constants.
     Fail loud on a missing file/profile/key (standard 4) — a silently-defaulted epoch or
     shard would write events into the wrong run."""
@@ -131,6 +131,18 @@ def apply_profile(name: str | None) -> str:
     # a differently-cut chunk is a different experiment, so an unpinned chunker would let the
     # run drift in a way the prompt pin cannot see.
     _verify_pin(name, prof, "chunker_config", "chunker_config_sha256")
+    # This runner extracts WHOLE DOCUMENTS. A profile declaring the anchor contract is
+    # chunk-unit (DD-023): its prompt asks the model to anchor inside a chunk, and its
+    # grounding is resolved against chunk text. Running it here would send a chunk-local
+    # contract a whole document and quarantine nearly everything — silently, as a yield
+    # collapse rather than an error. Since `default:` now names such a profile, an
+    # unflagged fire of this script must refuse rather than inherit it (standard 4).
+    if prof.get("emission_contract") == "anchor" and not chunk_unit_ok:
+        raise SystemExit(
+            f"FATAL: profile {name!r} declares emission_contract=anchor — it is chunk-unit "
+            f"and this runner is whole-document. Use scripts/run_chunked_bulk.py, or pass "
+            f"--profile with a whole-document profile. Callers that only need this "
+            f"profile's paths and epoch (the chunked driver) pass chunk_unit_ok=True.")
     PROFILE_NAME = name
     CORPUS_EPOCH = str(prof["corpus_epoch"])
     BULK_BATCH = int(prof["batch"])
