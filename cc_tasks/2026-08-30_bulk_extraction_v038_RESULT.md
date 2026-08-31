@@ -659,3 +659,62 @@ chunk-level resume returned its 61 chunks to the plan intact. Two reservations (
 outstanding on the abandoned run — dead PID confirmed, but the orphan reaper requires age
 > 600 s as well, so they clear on their own. The stale 6,695,537 declaration stays on the
 append-only ledger beside the corrected one.
+
+## 14. The SPRT was a fixed-n test wearing sequential constants
+
+Found before batch 1 reached judging, by pricing the plan against what the code would actually
+do.
+
+`judge_batch` judged one fixed sample (`fact_cap × strata` = 160 facts) and applied the
+boundary **once**. Two consequences:
+
+1. **A `continue` at the fixed size was a dangling outcome** — not `accept`, not `reject`, not
+   `sampling_inconclusive`, and `BurnState.should_stop` counts none of those. A persistently
+   ambiguous burn would never have tripped the corpus stop rule, which is the single operator
+   touchpoint in DD-029.
+2. **Every batch would have paid the full budget.** 463 facts ≈ 8M tokens per batch, ≈ 105M
+   across 13 — about twice the extraction cost — where a sequential test is expected to stop
+   at Wald's ASN of **159**. That ASN was already computed and printed in DD-029; the
+   implementation simply did not use it.
+
+Now the boundary is evaluated after each increment of **55 facts** — the arithmetic minimum at
+which `accept` is reachable at all (DD-026 applied to this plan) — and the batch stops at the
+first crossing. `run_protocol` gained a `fact_limit` over a **stable seeded round-robin**, so
+each increment is a superset of the last and `probe_judge` resumes rather than re-paying.
+
+Stability is the whole contract, so it is its own tested function: an unstable order would
+re-judge facts already paid for *and* apply the boundary to a sample that moved underneath it.
+Round-robin across strata, so an early `accept` is a claim about the batch rather than about
+whichever document class happened to sort first.
+
+A `continue` that survives the loop — budget spent or sample exhausted — becomes
+`sampling_inconclusive`, which is accept-with-flag for the batch **and** counts toward the
+corpus stop rule.
+
+Expected judging cost across the burn: **~105M → ~36M tokens.**
+
+## 15. A batch declares its ceiling once
+
+The burn crashed on restart:
+
+```
+SpendConfigError: run 'bulk_v038_b001' already declared with ceiling 3,922,028
+  /extraction_chunk; refusing conflicting re-declare 4,686,194/extraction_chunk
+```
+
+The ledger was right to refuse, and the refusal exposed a design gap rather than a nuisance.
+The running mean moves as the burn proceeds — 49,458/chunk before batch 1, **59,094** once
+batch 1's own 19 settles entered the last-10 window. Recomputing on resume would ratchet a
+batch's bound upward exactly when that batch is running hot, which is when a bound matters.
+
+A per-batch ceiling bounds that batch's **total** spend, so it is declared once and a resume
+runs under it. If the remaining work will not fit, the guard refuses and the burn stops
+cleanly — the bound doing its job. `SpendLedger.declaration(run_id)` is a read-only accessor;
+nothing here passes `supersede`, which the ledger reserves for operator-authorized corrections
+and explicitly forbids code paths from using to get past a refusal.
+
+**Two defects in my own tests, both the shape this project keeps producing.** The first
+version drove the *ledger* rather than the resume decision, and the mutation that recomputes on
+resume survived it — the decision is now its own function the test drives. And I asserted
+`int(1.3 × mean × chunks)` where the code uses `ceil`: a bound rounded **down** is a bound the
+work can exceed. The code was right; my arithmetic was not.
