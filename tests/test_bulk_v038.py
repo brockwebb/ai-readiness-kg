@@ -960,3 +960,64 @@ def test_declaration_is_read_only_and_reports_absence_rather_than_inventing_one(
     ledger = spend.SpendLedger(p)
     assert ledger.declaration("never-declared") is None
     assert p.read_text() == ""            # reading must not write
+
+
+def test_the_profile_declares_a_stop_file_and_the_burn_reads_it(tmp_path, monkeypatch):
+    """`bulk_v038` declared a `stop_file` that nothing read. For a burn measured in days that
+    leaves killing a process mid-call as the only way to halt — which strands paid-for
+    reservations and can cut a batch between ingest and its acceptance verdict."""
+    import yaml
+    d = yaml.safe_load((REPO / "scripts/run_profiles.yaml").read_text())
+    assert d["profiles"][rcb.PROFILE]["stop_file"]
+    assert rcb.stop_file() == REPO / d["profiles"][rcb.PROFILE]["stop_file"]
+    # read at CALL time, so dropping the file mid-burn takes effect
+    monkeypatch.setattr(rcb, "REPO", tmp_path)
+    (tmp_path / "scripts").mkdir()
+    (tmp_path / "scripts" / "run_profiles.yaml").write_text(yaml.safe_dump(
+        {"profiles": {rcb.PROFILE: {"stop_file": "events/X_STOP.json"}}}))
+    assert rcb.stop_file() == tmp_path / "events/X_STOP.json"
+    assert not rcb.stop_file().is_file()
+    rcb.stop_file().parent.mkdir(parents=True)
+    rcb.stop_file().write_text("{}")
+    assert rcb.stop_file().is_file()
+
+
+def test_the_burn_loop_halts_on_the_stop_file_before_declaring_a_ceiling(tmp_path,
+                                                                        monkeypatch):
+    """M2 control for the test above: the path can resolve correctly while the loop ignores
+    it. Drives the real `phase_burn` and asserts NO batch declares, dispatches or judges — the
+    halt has to land on the seam where the previous batch is judged and recorded and the next
+    has not yet reserved anything."""
+    dispatched = []
+    monkeypatch.setattr(rcb, "apply_production_profile", lambda *a, **k: {})
+    monkeypatch.setattr(rcb, "resume_plan",
+                        lambda: (["a", "b"], {"a": 50, "b": 50}, 0))
+    monkeypatch.setattr(rcb, "phase_a_mean_per_chunk", lambda: 50_000.0)
+    monkeypatch.setattr(rcb.model_stub, "load_model_config",
+                        lambda: {"primary_judge_model_id": "p",
+                                 "secondary_judge_model_id": "s"})
+    monkeypatch.setattr(rcb, "declare_batch_ceiling",
+                        lambda *a, **k: dispatched.append("declared") or (1, 1.0, False))
+    monkeypatch.setattr(rcb.cp, "phase_extract",
+                        lambda a: dispatched.append("extracted") or 0)
+    monkeypatch.setattr(rcb, "STATE_DIR", tmp_path)
+    stop = tmp_path / "STOP.json"
+    monkeypatch.setattr(rcb, "stop_file", lambda: stop)
+
+    args = type("A", (), {"plan_only": False, "max_batches": None, "workers": 1,
+                          "judge_ceiling": 1, "fact_cap": 40})()
+    stop.write_text("{}")
+    assert rcb.phase_burn(args) == 0
+    assert dispatched == []                       # nothing declared, nothing dispatched
+
+    # and with the file removed the loop proceeds — otherwise the test would pass on a
+    # `phase_burn` that never runs anything at all
+    stop.unlink()
+    monkeypatch.setattr(rcb.cp, "phase_ingest", lambda a: 0)
+    monkeypatch.setattr(rcb, "batch_items", lambda bid: [])
+    monkeypatch.setattr(rcb.cp, "members", lambda: {"a": tmp_path, "b": tmp_path})
+    monkeypatch.setattr(rcb.rbe, "doc_text", lambda p: "")
+    monkeypatch.setattr(rcb, "yield_by_stratum", lambda: {})
+    monkeypatch.setattr(rcb.spend, "set_current_run", lambda r: None)
+    rcb.phase_burn(args)
+    assert "declared" in dispatched and "extracted" in dispatched

@@ -65,3 +65,22 @@ def restore_the_pinned_prompt_path(monkeypatch):
     this the last undo applied, which is the only ordering that wins."""
     from kg.extraction import model_stub
     monkeypatch.setattr(model_stub, "_PROMPT_PATH", model_stub._PROMPT_PATH)
+
+
+@pytest.fixture(autouse=True)
+def restore_chunked_pilot_run_state(monkeypatch):
+    """`chunked_pilot`'s run state is module globals by design — every function reads them at
+    call time so an arm can be rebound without threading a config object through. That makes
+    them leak between tests: a test that drives `phase_burn` or `apply_arm` and does not put
+    them back points every later test at another arm's shard, documents or purpose.
+
+    Autouse and through monkeypatch, for the ordering reason in the fixture above: registered
+    first, undone last, so a test's own patches unwind before this one."""
+    import sys
+    from pathlib import Path
+    sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "scripts"))
+    import chunked_pilot as cp
+    for name in ("PROFILE", "PROFILE_CLASS", "RUN_ID", "JUDGE_RUN_ID", "SHARD_NO", "TAG",
+                 "RAW_DIR", "CORPUS_EPOCH", "EMISSION", "ARM_MODEL", "DOCS", "DOC_PATHS",
+                 "PURPOSE", "CHUNK_FILTER", "BATCH_ID"):
+        monkeypatch.setattr(cp, name, getattr(cp, name))

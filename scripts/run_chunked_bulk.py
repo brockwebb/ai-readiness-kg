@@ -854,6 +854,17 @@ def declare_batch_ceiling(run_id: str, chunks: int,
     return ceiling, per, False
 
 
+def stop_file() -> pathlib.Path:
+    """The profile's declared STOP file. Read at call time so dropping it mid-burn works."""
+    return REPO / profile_block()["stop_file"]
+
+
+def profile_block() -> dict:
+    import yaml
+    doc = yaml.safe_load((REPO / "scripts/run_profiles.yaml").read_text(encoding="utf-8"))
+    return (doc.get("profiles") or {})[PROFILE]
+
+
 def resume_plan() -> tuple[list[str], dict[str, int], int]:
     """(worklist, chunks REMAINING per document, chunks already extracted).
 
@@ -896,6 +907,17 @@ def phase_burn(a) -> int:
     ledger_rows = []
     for bt in plan[: a.max_batches] if a.max_batches else plan:
         bid = bt["batch_id"]
+        # Operator halt, checked BETWEEN batches. `bulk_v038` declares a `stop_file` and
+        # nothing read it — for a burn measured in days that leaves killing a process
+        # mid-call as the only way to stop, which strands paid-for reservations and can cut a
+        # batch between ingest and its acceptance verdict. Between batches is the safe seam:
+        # the previous batch is judged and recorded, the next has not declared a ceiling.
+        stop = stop_file()
+        if stop.is_file():
+            print(f"\nSTOP file present ({stop}); halting before {bid}. "
+                  f"Remove it to resume — chunk-level resume means nothing is repeated.",
+                  flush=True)
+            break
         # The batch id is already unique and says what it is. Deriving the run id from
         # RUN_ID ("bulk_v038_phase_a") produced `bulk_v038_phase_a_bulk_v038_b001`, which
         # names the burn after the qualification phase it is not part of.
