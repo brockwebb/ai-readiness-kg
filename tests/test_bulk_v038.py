@@ -9,6 +9,7 @@ their own document store rather than asserting against the committed sample file
 from __future__ import annotations
 
 import json
+import math
 import sys
 from pathlib import Path
 
@@ -919,3 +920,43 @@ def test_an_uneven_stratum_does_not_stall_the_order():
     by_stratum = {"big": [f"x{i}" for i in range(10)], "tiny": ["y0"]}
     order = rcb.cp.sequential_fact_order(by_stratum, "seed")
     assert len(order) == 11 and len(set(order)) == 11
+
+
+def test_a_resumed_batch_runs_under_the_ceiling_it_was_declared_with(tmp_path, monkeypatch):
+    """A batch declares ONCE. The running mean moves as the burn proceeds — 49,458/chunk
+    before batch 1, 59,094 once its own settles entered the window — so recomputing the
+    ceiling on resume would ratchet the bound upward exactly when the batch is running hot.
+    The ledger refuses a conflicting re-declare, which is how this was found: the burn crashed
+    on resume rather than silently widening its own bound."""
+    from kg import spend
+    ledger_path = tmp_path / "spend_ledger.jsonl"
+    ledger_path.write_text("")
+    ledger = spend.SpendLedger(ledger_path)
+    monkeypatch.setattr(spend, "default_ledger", lambda: ledger)
+    # isolate the running mean: this test is about the DECLARE-ONCE decision, not about how
+    # the mean is computed (that has its own tests), and the real ledger has live settles.
+    monkeypatch.setattr(rcb, "mean_settled_per_chunk", lambda default: default)
+
+    # first dispatch: declares from the running mean
+    ceiling, per, resumed = rcb.declare_batch_ceiling("bulk_v038_b001", 61, 49_458.0)
+    assert resumed is False and per == 49_458.0
+    # ceil, not int: a bound rounded DOWN is a bound the work can exceed
+    assert ceiling == math.ceil(1.3 * 49_458 * 61)
+
+    # resume AFTER the mean has drifted upward: same ceiling, no re-declare, no crash
+    again, per2, resumed2 = rcb.declare_batch_ceiling("bulk_v038_b001", 61, 59_094.0)
+    assert (again, per2, resumed2) == (ceiling, None, True)
+    assert int(ledger.declaration("bulk_v038_b001")["ceiling_tokens"]) == ceiling
+
+    # a DIFFERENT batch still declares from the current mean
+    other, per3, resumed3 = rcb.declare_batch_ceiling("bulk_v038_b002", 45, 59_094.0)
+    assert resumed3 is False and other == math.ceil(1.3 * 59_094 * 45)
+
+
+def test_declaration_is_read_only_and_reports_absence_rather_than_inventing_one(tmp_path):
+    from kg import spend
+    p = tmp_path / "l.jsonl"
+    p.write_text("")
+    ledger = spend.SpendLedger(p)
+    assert ledger.declaration("never-declared") is None
+    assert p.read_text() == ""            # reading must not write

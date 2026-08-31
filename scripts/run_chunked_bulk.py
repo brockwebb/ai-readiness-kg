@@ -835,6 +835,25 @@ def judge_batch(batch_id: str, items: list[dict], texts: dict[str, str],
             "items_available": len(items), "sprt_trace": trace, "aggregate": agg}
 
 
+def declare_batch_ceiling(run_id: str, chunks: int,
+                          boot: float) -> tuple[int, float | None, bool]:
+    """(ceiling, per-chunk mean or None when resuming, resumed?).
+
+    A batch declares ONCE. On resume it runs under the ceiling it was declared with, never a
+    recomputed one: the ceiling bounds this batch's TOTAL spend, and the running mean moves as
+    the burn proceeds — 49,458/chunk before batch 1, 59,094 once batch 1's own settles entered
+    the window. Recomputing on resume would ratchet the bound upward exactly when the batch is
+    running hot, which is when the bound matters. If the remaining work will not fit, the
+    guard refuses and the burn stops cleanly; that is the bound doing its job, not a fault."""
+    prior = spend.default_ledger().declaration(run_id)
+    if prior:
+        return int(prior["ceiling_tokens"]), None, True
+    ceiling, per = batch_ceiling(chunks, boot)
+    spend.default_ledger().declare(run_id, ceiling, declared_by=TASK,
+                                   call_class="extraction_chunk")
+    return ceiling, per, False
+
+
 def resume_plan() -> tuple[list[str], dict[str, int], int]:
     """(worklist, chunks REMAINING per document, chunks already extracted).
 
@@ -877,15 +896,23 @@ def phase_burn(a) -> int:
     ledger_rows = []
     for bt in plan[: a.max_batches] if a.max_batches else plan:
         bid = bt["batch_id"]
-        ceiling, per = batch_ceiling(bt["chunks"], boot)
         # The batch id is already unique and says what it is. Deriving the run id from
         # RUN_ID ("bulk_v038_phase_a") produced `bulk_v038_phase_a_bulk_v038_b001`, which
         # names the burn after the qualification phase it is not part of.
         run_id = bid
-        print(f"\n=== {bid}: {len(bt['documents'])} docs, {bt['chunks']} chunks, "
-              f"ceiling {ceiling:,} (1.3 x {per:,.0f}/chunk)", flush=True)
-        spend.default_ledger().declare(run_id, ceiling, declared_by=TASK,
-                                       call_class="extraction_chunk")
+        # A batch declares ONCE. On resume it runs under the ceiling it was declared with,
+        # never a recomputed one: the ceiling bounds this batch's TOTAL spend, and the running
+        # mean moves as the burn proceeds (49,458 -> 59,094 once batch 1's own settles entered
+        # the window), so recomputing on every resume would ratchet the bound upward exactly
+        # when the batch is running hot. If the remaining work will not fit, the guard refuses
+        # and the burn stops cleanly — which is the bound doing its job.
+        ceiling, per, resumed = declare_batch_ceiling(run_id, bt["chunks"], boot)
+        if resumed:
+            print(f"\n=== {bid}: {len(bt['documents'])} docs, {bt['chunks']} chunks, "
+                  f"RESUMING under its declared ceiling {ceiling:,}", flush=True)
+        else:
+            print(f"\n=== {bid}: {len(bt['documents'])} docs, {bt['chunks']} chunks, "
+                  f"ceiling {ceiling:,} (1.3 x {per:,.0f}/chunk)", flush=True)
         cp.DOCS = list(bt["documents"])
         # The extractor already skips a chunk whose raw exists; the resume above is what keeps
         # an already-extracted chunk out of the batch SIZE and therefore out of the ceiling.

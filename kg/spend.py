@@ -457,6 +457,15 @@ class SpendLedger:
         with self._open_locked() as fh:
             return self._tally(self._read_all(fh), day=_utc_day(_now()))[0]
 
+    def declaration(self, run_id: str) -> dict | None:
+        """The run's existing `declare` record, or None. Read-only.
+
+        A resumed unit of work must run under the ceiling it was declared with, not a
+        freshly-recomputed one: the ceiling bounds that unit's TOTAL spend, and recomputing it
+        on resume would let it drift upward every time the run was interrupted."""
+        with self._open_locked() as fh:
+            return self._declare_of(self._read_all(fh), run_id)
+
     def status(self, run_id: str | None = None) -> dict:
         with self._open_locked() as fh:
             records = self._read_all(fh)
