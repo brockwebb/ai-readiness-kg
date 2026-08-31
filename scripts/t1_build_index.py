@@ -349,8 +349,50 @@ def phase_rebuild(a) -> int:
 
 
 # ------------------------------------------------------------------ manifest table
+def _sync_queue_if_possible() -> None:
+    """Entry point `phase_table` calls, mirroring the biblio sync. Its own failure is loud but
+    non-fatal: a queue projection defect must not take down the whole index build."""
+    import sqlite3
+    try:
+        con = sqlite3.connect(DB)
+    except sqlite3.Error as exc:
+        print(f"queue sync skipped: {exc}")
+        return
+    try:
+        totals = sync_queue(con)
+        print("extraction queue:", totals)
+    finally:
+        con.close()
+
+
+def sync_queue(con) -> dict[str, int]:
+    """Write the derived extraction state into the SQLite bundle (task
+    2026-08-27_extraction_queue §2). Its own table, not a column on `documents`: the queue is
+    a derivation over the event log, and burying it in a table this script owns would make it
+    look like acquisition-time truth."""
+    import collections
+    from kg import queue as kqueue
+    con.execute("""CREATE TABLE IF NOT EXISTS extraction_queue (
+        doc_id TEXT PRIMARY KEY, extraction_state TEXT, priority INTEGER,
+        pinned_profile TEXT, latest_profile TEXT, latest_model TEXT, latest_ts TEXT,
+        extraction_count INTEGER, requested_profile TEXT, superseding INTEGER)""")
+    rows = kqueue.project()
+    con.execute("DELETE FROM extraction_queue")
+    con.executemany(
+        "INSERT INTO extraction_queue VALUES (?,?,?,?,?,?,?,?,?,?)",
+        [(d, r["extraction_state"], r["priority"], r["pinned_profile"],
+          (r["latest_extraction"] or {}).get("profile"),
+          (r["latest_extraction"] or {}).get("model_id"),
+          (r["latest_extraction"] or {}).get("ts"),
+          len(r["extracted_under"]), r["requested_profile"], int(r["superseding"]))
+         for d, r in rows.items()])
+    con.commit()
+    return dict(collections.Counter(r["extraction_state"] for r in rows.values()))
+
+
 def phase_table(a) -> int:
     _sync_biblio_if_possible()
+    _sync_queue_if_possible()
     TABLE_OUT.parent.mkdir(parents=True, exist_ok=True)
     con = _connect(DB)
     rows = con.execute("""

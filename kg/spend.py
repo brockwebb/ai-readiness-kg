@@ -313,9 +313,17 @@ class SpendLedger:
                               **({"supersedes_prior_ceiling": int(prior["ceiling_tokens"])}
                                  if (prior is not None and supersede) else {})})
 
-    def reserve(self, run_id: str | None, estimate_tokens: int | None = None):
+    def reserve(self, run_id: str | None, estimate_tokens: int | None = None,
+                doc_id: str | None = None):
         """Reservation | Refusal. Refuse iff committed(run)+estimate > ceiling(run) or
-        committed(day)+estimate > daily_tokens. A refusal is recorded on the ledger."""
+        committed(day)+estimate > daily_tokens. A refusal is recorded on the ledger.
+
+        ``doc_id`` is optional provenance ONLY — it never affects capacity arithmetic. It is
+        recorded so the extraction queue can answer "is a call in flight for this document
+        right now" (task 2026-08-27_extraction_queue §2, which specified reading that from
+        this ledger; reservations were per-run and carried no document, so the state was not
+        derivable). Reservations written before this field simply contribute nothing there,
+        which is correct rather than guessed."""
         with self._open_locked() as fh:
             records = self._read_all(fh)
             declared = self._declare_of(records, run_id) if run_id else None
@@ -351,7 +359,8 @@ class SpendLedger:
                                       estimate_tokens=estimate)
             self._append(fh, {"record": "reserve", "run_id": run_id,
                               "reservation_id": reservation.reservation_id,
-                              "estimate_tokens": estimate})
+                              "estimate_tokens": estimate,
+                              **({"doc_id": doc_id} if doc_id else {})})
             return reservation
 
     def settle(self, reservation: Reservation, actual_tokens: int,

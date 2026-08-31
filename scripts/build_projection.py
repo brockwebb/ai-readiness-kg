@@ -347,6 +347,29 @@ def fingerprint(session, kg_labels: list[str]) -> dict:
     return fp
 
 
+def project_extraction_queue(session) -> dict:
+    """Write the derived extraction state onto Document nodes (task
+    2026-08-27_extraction_queue §2).
+
+    DERIVED, never stored as truth: the queue projection is recomputed from the event log and
+    the spend ledger on every replay, and the pinned profile is read at projection time so
+    flipping the pin flips `extracted` -> `stale` with no code change (ADDENDUM-01 §4)."""
+    from kg import queue as _queue
+    rows = _queue.project()
+    for doc, r in rows.items():
+        latest = r["latest_extraction"] or {}
+        session.run(
+            "MATCH (d:Document {id: $id}) SET d.extraction_state = $state, "
+            "d.extraction_priority = $prio, d.extracted_under_profile = $prof, "
+            "d.extracted_under_model = $model, d.extracted_under_ts = $ts, "
+            "d.extracted_under_count = $n, d.queue_pinned_profile = $pin",
+            id=doc, state=r["extraction_state"], prio=r["priority"],
+            prof=latest.get("profile"), model=latest.get("model_id"),
+            ts=latest.get("ts"), n=len(r["extracted_under"]), pin=r["pinned_profile"])
+    import collections as _c
+    return dict(_c.Counter(r["extraction_state"] for r in rows.values()))
+
+
 def main() -> int:
     schema = _load_schema()
     kg_labels = list(schema["node_types"])

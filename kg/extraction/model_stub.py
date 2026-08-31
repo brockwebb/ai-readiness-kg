@@ -257,7 +257,7 @@ def invoke(doc_id: str, source_text: str, prompt: str | None = None,
     # unmetered path. Callers treat SpendRefusalStop as a clean stop (exit 0), the same
     # contract as the STOP file and cap exhaustion.
     ledger = spend.default_ledger()
-    granted = ledger.reserve(spend.current_run_id())
+    granted = ledger.reserve(spend.current_run_id(), doc_id=doc_id)
     if isinstance(granted, spend.Refusal):
         raise spend.SpendRefusalStop(granted)
 

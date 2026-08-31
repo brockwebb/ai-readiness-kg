@@ -276,7 +276,8 @@ def usage_tokens(meta: dict) -> int:
 
 def run(max_docs: int | None = None, dry_run: bool = False,
         shard: tuple[int, int] | None = None, retry_failed: bool = False,
-        only: str | None = None) -> int:
+        only: str | None = None, use_queue: bool = True,
+        docs_override: list[str] | None = None) -> int:
     if STOP_FILE.exists():
         print(f"STOP file present ({STOP_FILE}) — operator review required. Exiting.")
         return 2
@@ -304,6 +305,41 @@ def run(max_docs: int | None = None, dry_run: bool = False,
     # throttled window) for another pass — genuinely-bad docs simply re-fail and re-skip.
     todo = [d for d in ordered if d not in done
             and (retry_failed or fails.get(d, 0) < MAX_DOC_ATTEMPTS)]
+    # Ledger-derived worklist (task 2026-08-27_extraction_queue §3). The queue is the
+    # authority on WHAT runs; this file stays the authority on how it runs. Filtering to the
+    # queue's derivation means nothing extracts that no `extraction_request` justifies — the
+    # base task's rule is "no worklist may be built from an ad-hoc list that isn't on the
+    # ledger". Documents with no request at all are left alone rather than dropped silently:
+    # the count is printed, and `kg queue status` says why each is not requested.
+    if use_queue and only is None:
+        from kg import queue as _queue
+        requested = set(_queue.worklist(PROFILE_NAME))
+        if requested:
+            before = len(todo)
+            queue_order = {d: i for i, d in enumerate(_queue.worklist(PROFILE_NAME))}
+            todo = sorted((d for d in todo if d in requested),
+                          key=lambda d: (queue_order[d], d))
+            print(f"queue derivation [{PROFILE_NAME}]: {before} corpus-epoch candidates -> "
+                  f"{len(todo)} with a live extraction_request")
+        else:
+            print(f"queue derivation [{PROFILE_NAME}]: no live extraction_request matches "
+                  f"this profile; falling back to the corpus-epoch order for this run "
+                  f"(run `python -m kg queue backfill --commit` to put the queue on the "
+                  f"ledger)")
+    if docs_override:
+        # An explicit operator override still leaves its reason on the ledger: each doc gets
+        # an `extraction_request` at priority 0 so `kg queue explain` can answer why it ran.
+        from kg import queue as _queue
+        for d in docs_override:
+            if d not in members:
+                raise SystemExit(f"--docs {d!r} is not a corpus {CORPUS_EPOCH} member")
+            try:
+                _queue.request(d, 0, "cli", f"--docs override on {PROFILE_NAME}",
+                               profile=PROFILE_NAME, superseding=True)
+            except _queue.QueueRefusal as exc:
+                raise SystemExit(f"FATAL: --docs {d!r} refused by the queue: {exc}")
+        todo = list(docs_override)
+        print(f"--docs override: {len(todo)} docs, extraction_request events emitted")
     if only is not None:
         # Supersession re-extract: resume is keyed on doc_id, so a doc whose SOURCE
         # changed under the same doc_id is permanently "done". --only re-opens exactly
@@ -541,6 +577,14 @@ def main() -> int:
                          "alone, so a SUPERSEDED doc (new source sha, same doc_id) "
                          "would otherwise be skipped forever. Selection only — no "
                          "config, threshold, model or prompt is changed.")
+    ap.add_argument("--docs", default=None, metavar="A,B,C",
+                    help="explicit operator override: run exactly these doc_ids. Emits an "
+                         "extraction_request per doc (priority 0, requested_by cli) so the "
+                         "ledger records why they ran — no worklist is ever ad-hoc.")
+    ap.add_argument("--no-queue", action="store_true",
+                    help="bypass the ledger-derived worklist and use corpus-epoch order. "
+                         "Escape hatch for a queue projection defect; the run is still "
+                         "recorded, but nothing justifies its worklist.")
     ap.add_argument("--retry-failed", action="store_true",
                     help="re-open docs that hit the fail ceiling (e.g. throttled no-JSON) for another pass")
     # Preemptive shared spend guard (DD-022): the ceiling comes from the dispatching task
@@ -569,7 +613,10 @@ def main() -> int:
         return run_fleet(n, args.max_docs, retry_failed=args.retry_failed,
                          ceiling_tokens=args.ceiling_tokens, run_id=run_id)
     return run(max_docs=args.max_docs, dry_run=args.dry_run, shard=args.shard,
-               retry_failed=args.retry_failed, only=args.only)
+               retry_failed=args.retry_failed, only=args.only,
+               use_queue=not args.no_queue,
+               docs_override=[d.strip() for d in args.docs.split(",") if d.strip()]
+               if args.docs else None)
 
 
 if __name__ == "__main__":

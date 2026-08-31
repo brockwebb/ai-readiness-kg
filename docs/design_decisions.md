@@ -326,3 +326,48 @@ nothing else.
 
 Generalized as methodology §7.8: before naming a component as the cause of a defect, run both
 candidates on the same bytes.
+
+## DD-027: Admission is not a request — extraction is queued by explicit, prioritized events
+
+**Date:** 2026-08-31. **Task:** `cc_tasks/2026-08-27_extraction_queue.md` + ADDENDUM-01
+(binding; the addendum renumbered this from the base file's DD-023, which was already taken).
+
+**Decision.** A document being in the corpus and a document being *worked on* are two different
+facts, recorded by two different events. `manifest_add` admits; `extraction_request`
+{document_id, priority, requested_by, reason, profile, superseding} asks for work at a
+priority, under a named sha-pinned profile; `extraction_withdrawn` cancels. Both are appended
+to `kg/schema.yaml` as v0.3.5 `event_types` (the file's first event-type block; it previously
+catalogued only nodes and edges).
+
+**Why.** Curation pipelines that work at scale keep the stages apart — Wikidata's
+proposal → review → ingest, UniProt's triage → curate. That separation is what lets spend
+follow priority instead of arrival order. Before this, worklists were built ad hoc in the
+runner and in each burn task's lanes, so "what runs next, and why" had no answer that survived
+the session that decided it.
+
+**Consequences, binding.**
+
+1. **No worklist may be built from a list that is not on the ledger.**
+   `run_bulk_extraction.py` derives its worklist as
+   `included ∧ (queued ∨ (stale ∧ superseding)) ∧ ¬skipped_oversize`, ordered by priority.
+   `--docs` remains as an operator override *and emits the requests it ran on*, so the reason
+   is on the log. `--no-queue` exists as an escape hatch for a projection defect and says on
+   the run that nothing justifies its worklist.
+2. **`extraction_state` is derived, never stored as truth** — recomputed from the event log
+   plus the spend ledger on every projection, into Neo4j `Document` properties and the SQLite
+   bundle's `extraction_queue` table. Delete both and they rebuild.
+3. **The pinned profile is read at projection time, never captured.** Flipping the pin flips
+   `extracted` → `stale` with no code change (ADDENDUM-01 §4). The production profile moved
+   twice while this task was open; a held pin would have kept reporting documents as extracted
+   under something that had stopped being current.
+4. **Preconditions are enforced at emit, and a refusal is a refusal.** A request for a
+   document the manifest has not admitted, or against a profile that is not sha-pinned, raises
+   with the reason and writes no event. Queueing future work against a prompt that can drift
+   is how a burn silently changes instrument mid-flight.
+5. **An extraction's profile is resolved, never guessed.** Legacy events record only
+   `corpus_epoch`, and several profiles can share one. Where `prompt_version` cannot
+   disambiguate, the profile is reported unknown *and flagged ambiguous* — because a guessed
+   profile silently decides `extracted` versus `stale`.
+
+**Scope.** This decides how work is *selected and recorded*, not how it runs. Prompts, gates,
+thresholds and the extraction pipeline are untouched.

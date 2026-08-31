@@ -54,7 +54,7 @@
 #     classification fields (as_of_date, enums, ids) that a span cannot be expected to carry.
 #     Read by the faithfulness probe's decomposer (facts only for true attributes) and by the
 #     scoring rule (`doc_level_attribute` class excluded from F). DD-015.
-schema_version: "0.3.4"
+schema_version: "0.3.5"
 
 # --- Section 2: Node types -------------------------------------------------
 # Each node type lists the "Key properties" column verbatim. Parenthetical
@@ -465,3 +465,38 @@ provenance_required:
   - model_id
   - schema_version
   - timestamp
+
+# --- Section 5: Ledger event types -----------------------------------------
+# v0.3.5 APPEND (task 2026-08-27_extraction_queue, ADDENDUM-01 §1 -> DD-027).
+# Admission is not a request. `manifest_add` says a document is corpus; these say
+# a document is WORK, at a priority, under a named profile. Keeping the two apart
+# is what lets spend follow priority instead of arrival order (Wikidata
+# proposal->review->ingest; UniProt triage->curate).
+#
+# Append-only: types are added here, never removed or repurposed. A consumer that
+# does not know a type ignores it; a type that changes meaning breaks replay.
+event_types:
+  extraction_request:
+    description: >
+      A deliberate request to extract one admitted document, at a priority, under a
+      sha-pinned profile. Refused at emit for a document the manifest has not admitted.
+      Latest request per document wins in projection.
+    required: [document_id, priority, requested_by, reason, profile, ts]
+    optional: [superseding]
+    properties:
+      document_id: doc_id of a manifest-included document
+      priority: int, 1 = first; lower runs earlier
+      requested_by: who or what asked (operator, backfill, cli, burn driver)
+      reason: free text, the sentence that justifies the spend
+      profile: a key of scripts/run_profiles.yaml, sha-pinned
+      superseding: re-extract even though an extraction under an older profile exists
+      ts: UTC ISO-8601
+  extraction_withdrawn:
+    description: >
+      Cancels the live request for a document. Correct-forward, never a deletion:
+      the request stays on the log and the withdrawal follows it.
+    required: [document_id, reason, ts]
+    properties:
+      document_id: doc_id whose live request is cancelled
+      reason: why it was withdrawn
+      ts: UTC ISO-8601
