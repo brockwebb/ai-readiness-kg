@@ -325,26 +325,48 @@ def test_batch_ids_are_stable_and_ordered():
 def test_the_batch_ceiling_follows_the_ledger_not_a_constant(tmp_path, monkeypatch):
     """The task's rule: 1.3 x the running mean settled tokens/chunk over the ledger's last 10
     measured settles. A ceiling pinned to a constant stops tracking the burn it is bounding."""
-    ledger = tmp_path / "spend_ledger.jsonl"
-    rows = [{"record": "settle", "run_id": "bulk_v038_x", "actual_tokens": 1000}] * 5
+    rows = [{"record": "declare", "run_id": "bulk_v038_x",
+             "call_class": "extraction_chunk"}]
+    rows += [{"record": "settle", "run_id": "bulk_v038_x", "actual_tokens": 1000}] * 5
     rows += [{"record": "settle", "run_id": "bulk_v038_x", "actual_tokens": 2000}] * 10
-    ledger.write_text("\n".join(json.dumps(r) for r in rows))
-    monkeypatch.setattr(rcb, "REPO", tmp_path.parent)
+    monkeypatch.setattr(rcb, "REPO", tmp_path)
     monkeypatch.setattr(rcb, "LEDGER_WINDOW", 10)
-    (tmp_path.parent / "state").mkdir(exist_ok=True)
-    (tmp_path.parent / "state" / "spend_ledger.jsonl").write_text(ledger.read_text())
+    (tmp_path / "state").mkdir(exist_ok=True)
+    (tmp_path / "state" / "spend_ledger.jsonl").write_text(
+        "\n".join(json.dumps(r) for r in rows))
     ceiling, per = rcb.batch_ceiling(10, default_per_chunk=99999.0)
     assert per == 2000.0                                    # last 10 only, not all 15
     assert ceiling == int(1.3 * 2000 * 10)
 
 
-def test_the_ceiling_ignores_other_runs_settles(tmp_path, monkeypatch):
+def test_the_ceiling_averages_only_extraction_chunk_settles(tmp_path, monkeypatch):
     """A judge run and a pilot arm settle into the same ledger. Averaging them into an
-    extraction ceiling would size the burn off the wrong call class."""
+    extraction ceiling sizes the burn off the wrong call class.
+
+    The first version of this test picked `pilot_chunked_v035` as the contaminant — a run id
+    that does NOT start with `bulk_v038` — so a prefix filter passed it while the real
+    contaminant, `bulk_v038_phase_a_judge`, sailed through. It put batch 1's ceiling at
+    84,433/chunk against a measured 49,734. The call class is what matters, and it lives on
+    the run's `declare` record, not on the settle."""
     (tmp_path / "state").mkdir()
     (tmp_path / "state" / "spend_ledger.jsonl").write_text("\n".join(json.dumps(r) for r in [
-        {"record": "settle", "run_id": "pilot_chunked_v035", "actual_tokens": 999999},
-        {"record": "settle", "run_id": "bulk_v038_phase_a", "actual_tokens": 1000}]))
+        {"record": "declare", "run_id": "bulk_v038_phase_a", "call_class": "extraction_chunk"},
+        {"record": "declare", "run_id": "bulk_v038_phase_a_judge", "call_class": "judge"},
+        {"record": "declare", "run_id": "pilot_chunked_v035", "call_class": "extraction_chunk"},
+        {"record": "settle", "run_id": "bulk_v038_phase_a", "actual_tokens": 1000},
+        {"record": "settle", "run_id": "bulk_v038_phase_a_judge", "actual_tokens": 999999},
+        {"record": "settle", "run_id": "pilot_chunked_v035", "actual_tokens": 888888}]))
+    monkeypatch.setattr(rcb, "REPO", tmp_path)
+    assert rcb.mean_settled_per_chunk(0.0) == 1000.0        # judge AND arm both excluded
+
+
+def test_a_settle_with_no_declared_class_is_not_averaged_in(tmp_path, monkeypatch):
+    """A settle whose run never declared a class cannot be assumed to be extraction."""
+    (tmp_path / "state").mkdir()
+    (tmp_path / "state" / "spend_ledger.jsonl").write_text("\n".join(json.dumps(r) for r in [
+        {"record": "declare", "run_id": "bulk_v038_a", "call_class": "extraction_chunk"},
+        {"record": "settle", "run_id": "bulk_v038_a", "actual_tokens": 1000},
+        {"record": "settle", "run_id": "bulk_v038_orphan", "actual_tokens": 999999}]))
     monkeypatch.setattr(rcb, "REPO", tmp_path)
     assert rcb.mean_settled_per_chunk(0.0) == 1000.0
 

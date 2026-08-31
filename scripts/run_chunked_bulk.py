@@ -639,6 +639,12 @@ def mean_settled_per_chunk(default: float) -> float:
     path = REPO / "state/spend_ledger.jsonl"
     if not path.is_file():
         return default
+    # A settle record carries only `run_id`; the CALL CLASS lives on the run's `declare`. So
+    # resolve run -> class first and average only `extraction_chunk` settles. Filtering by a
+    # `bulk_v038` run-id PREFIX (the first version) let `bulk_v038_phase_a_judge` into the
+    # mean and put batch 1's ceiling at 84,433/chunk against a measured 49,734 — a bound 70%
+    # looser than the formula specifies, which is a bound that would not catch a runaway.
+    call_class: dict[str, str] = {}
     settles = []
     for line in path.read_text(encoding="utf-8").splitlines():
         if not line.strip():
@@ -647,8 +653,12 @@ def mean_settled_per_chunk(default: float) -> float:
             r = json.loads(line)
         except json.JSONDecodeError:
             continue
-        if r.get("record") == "settle" and str(r.get("run_id", "")).startswith("bulk_v038") \
-                and r.get("actual_tokens"):
+        rid = str(r.get("run_id") or "")
+        if r.get("record") == "declare" and r.get("call_class"):
+            call_class[rid] = r["call_class"]
+        elif (r.get("record") == "settle" and r.get("actual_tokens")
+                and call_class.get(rid) == "extraction_chunk"
+                and rid.startswith(PROFILE)):
             settles.append(int(r["actual_tokens"]))
     if not settles:
         return default
