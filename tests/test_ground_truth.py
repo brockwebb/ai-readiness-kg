@@ -125,7 +125,7 @@ def test_low_interpass_agreement_stops_the_task_without_scoring(monkeypatch, tmp
     rc = gt.phase_reconcile(type("A", (), {})())
     assert rc == 3, "a sub-threshold agreement must be a non-zero, reportable stop"
     rep = json.loads((tmp_path / "ground_truth_reconciled.json").read_text())
-    assert rep["interpass_agreement"]["mean"] == 0.0
+    assert rep["interpass_agreement"]["mean_informative"] == 0.0
     assert not (tmp_path / "ground_truth_scores.json").exists()
 
 
@@ -142,7 +142,7 @@ def test_agreement_above_threshold_proceeds(monkeypatch, tmp_path):
     assert gt.phase_reconcile(type("A", (), {})()) == 0
     rep = json.loads((tmp_path / "ground_truth_reconciled.json").read_text())
     assert rep["chunks"]["d#c1"]["n_ground_truth"] == 1
-    assert rep["interpass_agreement"]["mean"] == 1.0
+    assert rep["interpass_agreement"]["mean_informative"] == 1.0
 
 
 # ---------------------------------------------------------------- 6. reconciliation rules
@@ -253,3 +253,100 @@ def test_the_draw_allocates_proportionally_across_represented_documents(monkeypa
     assert payload["allocation"] == {"doc-a": 3, "doc-b": 2}
     assert sum(payload["allocation"].values()) == gt.N_CHUNKS
     assert len({c.split("#")[0] for c in payload["chunks"]}) == 2
+
+
+def test_two_empty_passes_are_agreement_not_disagreement(monkeypatch, tmp_path):
+    """MEASURED: three of the five sampled chunks are references/boilerplate where the correct
+    answer is zero items, and both annotators independently returned zero. Scoring J(empty,
+    empty) as 0.0 would have fired the §3.4 incident stop on a rubric that was working. J of
+    two empty sets is 1 by convention, and such chunks carry no information about whether the
+    rubric is specified finely enough, so the threshold reads the informative subset."""
+    monkeypatch.setattr(gt, "OUT_DIR", tmp_path)
+    monkeypatch.setattr(gt, "sample_chunks", lambda: ["d#c1", "d#c2"])
+    monkeypatch.setattr(gt, "chunk_text_of", lambda cid: ("doc", "chunk text"))
+    monkeypatch.setattr(gt.model_stub, "load_model_config",
+                        lambda *a, **k: {"model_id": "claude-opus-5"})
+    monkeypatch.setattr(gt.spend, "set_current_run", lambda r: None)
+    empty = '{"items":[]}'
+    good = '{"items":[{"name":"AIDRIN","type":"Instrument","rule":"P1"}]}'
+    monkeypatch.setattr(gt, "_invoke", lambda kind, cid, prompt, model: {
+        "raw_result": empty if cid == "d#c1" else good})
+    assert gt.phase_reconcile(type("A", (), {})()) == 0
+    rep = json.loads((tmp_path / "ground_truth_reconciled.json").read_text())
+    ag = rep["interpass_agreement"]
+    assert ag["n_empty_empty"] == 1 and ag["n_informative"] == 1
+    assert ag["mean_informative"] == 1.0
+    # the empty-empty chunk itself must be scored as AGREEMENT, not as 0.0 — asserting only
+    # the informative mean would leave that untested, since empty chunks are excluded from it
+    assert ag["per_chunk"] == [1.0, 1.0]
+    assert ag["mean_all_chunks"] == 1.0
+    assert rep["chunks"]["d#c1"]["n_ground_truth"] == 0
+
+
+def test_the_stop_still_fires_when_the_INFORMATIVE_chunks_disagree(monkeypatch, tmp_path):
+    """CONTROL: the empty-empty carve-out must not become a way to dilute real disagreement.
+    One empty-empty chunk alongside one disagreeing chunk must still stop."""
+    monkeypatch.setattr(gt, "OUT_DIR", tmp_path)
+    monkeypatch.setattr(gt, "sample_chunks", lambda: ["d#c1", "d#c2"])
+    monkeypatch.setattr(gt, "chunk_text_of", lambda cid: ("doc", "chunk text"))
+    monkeypatch.setattr(gt.model_stub, "load_model_config",
+                        lambda *a, **k: {"model_id": "claude-opus-5"})
+    monkeypatch.setattr(gt.spend, "set_current_run", lambda r: None)
+    def raw(kind, cid, prompt, model):
+        if cid == "d#c1":
+            return {"raw_result": '{"items":[]}'}
+        if kind == "adjudicate":
+            return {"raw_result": '{"decisions":[]}'}
+        name = "alpha" if kind == "checklist" else "omega"
+        return {"raw_result": json.dumps(
+            {"items": [{"name": name, "type": "Concept", "rule": "P6"}]})}
+    monkeypatch.setattr(gt, "_invoke", raw)
+    assert gt.phase_reconcile(type("A", (), {})()) == 3
+
+
+def test_precision_and_recall_use_separate_numerators(monkeypatch, tmp_path):
+    """Containment matching is many-to-one in BOTH directions. Counting matched ground-truth
+    items and dividing by the arm's item count is not a precision — it produced 1.091 for
+    Arm A3, an impossible value, before this was separated. Recall counts ground-truth items
+    FOUND; precision counts arm items JUSTIFIED."""
+    monkeypatch.setattr(gt, "OUT_DIR", tmp_path)
+    monkeypatch.setattr(gt, "sample_chunks", lambda: ["d#c1"])
+    monkeypatch.setattr(gt, "verify_rubric", lambda: gt.RUBRIC_SHA)
+    monkeypatch.setattr(gt.cp, "apply_arm", lambda *a, **k: None)
+    monkeypatch.setattr(gt.cp, "chunk_yield",
+                        lambda tag: {"d#c1": {"nodes": 1, "edges": 0}})
+    # three ground-truth items all contained by ONE arm item
+    (tmp_path / "ground_truth_reconciled.json").write_text(json.dumps({"chunks": {"d#c1": {
+        "ground_truth": [{"name": "aidrin"}, {"name": "aidrin score"},
+                         {"name": "score metric"}]}}}))   # all three ARE substrings
+    monkeypatch.setattr(gt, "arm_items",
+                        lambda tag, chunks: {"d#c1": {"the aidrin score metric bundle": {}}})
+    gt.phase_score(type("A", (), {})())
+    arms = json.loads((tmp_path / "ground_truth_scores.json").read_text())["arms"]
+    r = arms["v0_3_9"]
+    assert r["recall_matched"] == 3 and r["recall"] == 1.0     # all three GT items found
+    assert r["precision_matched"] == 1                          # by ONE arm item
+    assert r["precision_proxy"] == 1.0 and r["precision_proxy"] <= 1.0
+
+
+def test_the_floor_is_derived_from_MEASURED_ground_truth_not_from_the_old_target(monkeypatch,
+                                                                                 tmp_path):
+    """The entire point of this task: the floor must come from what the chunks contain, not
+    from the unvalidated 45.23 the pilot chased. A scorer that quietly kept the old target
+    would reproduce the closure's own suspect number and look like a re-derivation."""
+    monkeypatch.setattr(gt, "OUT_DIR", tmp_path)
+    monkeypatch.setattr(gt, "sample_chunks", lambda: ["d#c1", "d#c2"])
+    monkeypatch.setattr(gt, "verify_rubric", lambda: gt.RUBRIC_SHA)
+    monkeypatch.setattr(gt.cp, "apply_arm", lambda *a, **k: None)
+    monkeypatch.setattr(gt.cp, "chunk_yield", lambda tag: {"d#c1": {"nodes": 0, "edges": 0},
+                                                           "d#c2": {"nodes": 0, "edges": 0}})
+    monkeypatch.setattr(gt, "arm_items", lambda tag, chunks: {})
+    (tmp_path / "ground_truth_reconciled.json").write_text(json.dumps({"chunks": {
+        "d#c1": {"ground_truth": [{"name": f"i{i}"} for i in range(10)]},
+        "d#c2": {"ground_truth": [{"name": f"j{i}"} for i in range(20)]}}}))
+    gt.phase_score(type("A", (), {})())
+    out = json.loads((tmp_path / "ground_truth_scores.json").read_text())
+    assert out["ground_truth_mean"] == 15.0
+    assert out["rederived_floor"] == round(gt.FLOOR_FRACTION * 15.0, 3) == 9.0
+    assert out["rederived_floor"] != round(0.60 * 45.227, 3)
+

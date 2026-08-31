@@ -267,7 +267,7 @@ def phase_reconcile(a) -> int:
     model = annotator_model()
     spend.set_current_run(RUN_ID)
     report = {"rubric_sha256": RUBRIC_SHA, "annotator_model": model, "chunks": {}}
-    agreements = []
+    agreements, informative = [], []
     for cid in sample_chunks():
         _, ctext = chunk_text_of(cid)
         passes = {f: items_of(_invoke(f, cid, annotation_prompt(f, cid, ctext), model))
@@ -282,8 +282,18 @@ def phase_reconcile(a) -> int:
             if match(k, list(ka)) is None:
                 singles.setdefault(k, it)
         union = len(agreed) + len(singles)
-        jac = len(agreed) / union if union else 0.0
+        # Jaccard of two empty sets is 1 by convention, not 0: two annotators who both find
+        # nothing in a references block AGREE completely. Scoring that 0.0 would have fired
+        # the §3.4 incident stop on a rubric that was working perfectly — the sampled chunks
+        # include boilerplate where the correct answer IS zero. Empty-empty chunks are also
+        # UNINFORMATIVE about whether the rubric is specified finely enough, so they are
+        # excluded from the mean that the stop threshold reads and reported separately.
+        # Recorded as a fix made after seeing the per-pass counts and BEFORE seeing any
+        # agreement value; it cannot rescue a failing rubric, only prevent a false stop.
+        jac = len(agreed) / union if union else 1.0
         agreements.append(jac)
+        if union:
+            informative.append(jac)
         # ONE adjudication pass per chunk over that chunk's singletons (task §3.3).
         decisions = []
         if singles:
@@ -323,12 +333,23 @@ def phase_reconcile(a) -> int:
               f"/ jaccard {jac:.3f} -> GT {len(admitted)} "
               f"(+{len(admitted)-len(agreed)} adjudicated, "
               f"{len(excluded_unresolvable)} unresolvable)", flush=True)
-    mean_j = statistics.mean(agreements) if agreements else 0.0
+    mean_all = statistics.mean(agreements) if agreements else 0.0
+    # The stop reads the INFORMATIVE mean — chunks where at least one pass proposed something.
+    mean_j = statistics.mean(informative) if informative else mean_all
     report["interpass_agreement"] = {
-        "per_chunk": [round(x, 4) for x in agreements], "mean": round(mean_j, 4),
-        "threshold": MIN_INTERPASS_AGREEMENT}
+        "per_chunk": [round(x, 4) for x in agreements],
+        "mean_all_chunks": round(mean_all, 4),
+        "mean_informative": round(mean_j, 4),
+        "n_informative": len(informative),
+        "n_empty_empty": len(agreements) - len(informative),
+        "threshold": MIN_INTERPASS_AGREEMENT,
+        "note": ("Jaccard of two empty sets is 1 by convention; empty-empty chunks are "
+                 "excluded from the mean the threshold reads because they carry no "
+                 "information about rubric specification.")}
     (OUT_DIR / "ground_truth_reconciled.json").write_text(json.dumps(report, indent=1))
-    print(f"\nmean inter-pass Jaccard {mean_j:.4f} (stop threshold {MIN_INTERPASS_AGREEMENT})")
+    print(f"\ninter-pass Jaccard: informative mean {mean_j:.4f} over "
+          f"{len(informative)} chunks ({len(agreements)-len(informative)} empty-empty, "
+          f"all-chunk mean {mean_all:.4f}); stop threshold {MIN_INTERPASS_AGREEMENT}")
     if mean_j < MIN_INTERPASS_AGREEMENT:
         print("INCIDENT: inter-pass agreement below threshold — the rubric is underspecified. "
               "Task §3.4 STOP: reported, not patched. Scoring is not run.")
@@ -365,7 +386,24 @@ def phase_score(a) -> int:
     per_chunk = [len(gt[c]) for c in chunks]
     mean_gt = statistics.mean(per_chunk)
     floor = FLOOR_FRACTION * mean_gt
+    # UNIT CORRECTION, measured 2026-08-30. The pilot's floor target of 45.23/chunk counts
+    # nodes PLUS edges (16.95 + 28.27 on the 44 comparator chunks) — 63% of it is edges. The
+    # rubric annotates ITEMS, i.e. nodes; it does not annotate relations at all. Comparing an
+    # arm's node+edge yield to a node-only ground truth is not commensurable, so every figure
+    # below is on the NODE basis and the old floor is restated on the same basis beside its
+    # original value. This mismatch is itself part of why the floor behaved as it did.
+    cp.apply_arm("v0_3_9", None, None)
+    comparator = sorted(set(cp.chunk_yield("v0_3_9")) & set(cp.chunk_yield(BASELINE_TAG)))
+    by = cp.chunk_yield(BASELINE_TAG)
+    base_nodes = sum(by[c]["nodes"] for c in comparator if c in by) / len(comparator)
+    base_edges = sum(by[c]["edges"] for c in comparator if c in by) / len(comparator)
     out = {"rubric_sha256": RUBRIC_SHA, "seed": SAMPLE_SEED, "chunks": chunks,
+           "unit": "admitted NODE items per chunk (the rubric annotates items, not relations)",
+           "comparator_44_nodes_per_chunk": round(base_nodes, 3),
+           "comparator_44_edges_per_chunk": round(base_edges, 3),
+           "comparator_44_nodes_plus_edges": round(base_nodes + base_edges, 3),
+           "old_floor_nodes_plus_edges_basis": round(0.60 * (base_nodes + base_edges), 3),
+           "old_floor_node_basis": round(0.60 * base_nodes, 3),
            "ground_truth_per_chunk": {c: len(gt[c]) for c in chunks},
            "ground_truth_mean": round(mean_gt, 3),
            "ground_truth_median": statistics.median(per_chunk),
@@ -373,27 +411,41 @@ def phase_score(a) -> int:
            "ground_truth_stdev": round(statistics.stdev(per_chunk), 3) if len(per_chunk) > 1 else None,
            "floor_fraction": FLOOR_FRACTION,
            "rederived_floor": round(floor, 3),
-           "old_floor": round(0.60 * 45.227, 3),
            "arms": {}}
     print(f"ground truth per chunk: {out['ground_truth_per_chunk']}")
     print(f"mean {mean_gt:.2f}  median {out['ground_truth_median']}  "
-          f"range {min(per_chunk)}-{max(per_chunk)}  -> re-derived floor {floor:.2f}/chunk "
-          f"(old floor {out['old_floor']:.2f})\n")
+          f"range {min(per_chunk)}-{max(per_chunk)}  -> re-derived floor {floor:.2f} "
+          f"NODE items/chunk")
+    print(f"comparator v0.3.5 on the 44: {base_nodes:.2f} nodes + {base_edges:.2f} edges = "
+          f"{base_nodes+base_edges:.2f}/chunk. Old floor 27.14 was 0.60x the COMBINED figure; "
+          f"on the node basis the old target was {0.60*base_nodes:.2f}.\n")
     for tag, label in ((BASELINE_TAG, "v0.3.5 chunked"), ("v0_3_7", "Arm A"),
                        ("v0_3_8", "Arm A2"), ("v0_3_9", "Arm A3")):
         items = arm_items(tag, chunks)
-        tp = admitted = gt_total = 0
+        cp.apply_arm(tag, None, None)
+        ay = cp.chunk_yield(cp.TAG)
+        raw_nodes = sum(ay[c]["nodes"] for c in chunks if c in ay)
+        # Recall and precision need SEPARATE numerators. Containment matching is many-to-one
+        # in both directions, so counting matched ground-truth items and dividing by the arm's
+        # item count is not a precision — it produced 1.091 for Arm A3 before this was fixed,
+        # which is the impossible value that exposed it.
+        recall_hits = precision_hits = admitted = gt_total = 0
         for c in chunks:
             pool = list(items.get(c, {}))
+            truth = list(gt[c])
             admitted += len(pool)
-            gt_total += len(gt[c])
-            tp += sum(1 for k in gt[c] if match(k, pool))
+            gt_total += len(truth)
+            recall_hits += sum(1 for k in truth if match(k, pool))       # GT items found
+            precision_hits += sum(1 for k in pool if match(k, truth))    # arm items justified
         yield_pc = admitted / len(chunks)
         out["arms"][tag] = {
-            "label": label, "admitted": admitted, "admitted_per_chunk": round(yield_pc, 3),
-            "ground_truth_items": gt_total, "recall_matched": tp,
-            "recall": round(tp / gt_total, 4) if gt_total else 0.0,
-            "precision_proxy": round(tp / admitted, 4) if admitted else 0.0,
+            "label": label, "admitted_distinct": admitted,
+            "admitted_per_chunk": round(yield_pc, 3),
+            "raw_nodes_per_chunk": round(raw_nodes / len(chunks), 3),
+            "ground_truth_items": gt_total,
+            "recall_matched": recall_hits, "precision_matched": precision_hits,
+            "recall": round(recall_hits / gt_total, 4) if gt_total else 0.0,
+            "precision_proxy": round(precision_hits / admitted, 4) if admitted else 0.0,
             "vs_rederived_floor": round(yield_pc / floor, 4) if floor else None,
             "meets_floor": bool(floor and yield_pc >= floor),
             "over_extraction_factor": round(yield_pc / mean_gt, 4) if mean_gt else None,
