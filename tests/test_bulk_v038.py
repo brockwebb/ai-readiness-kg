@@ -718,7 +718,8 @@ def test_the_burn_plan_resumes_at_chunk_level_and_never_repeats_a_chunk(monkeypa
     counts = {"a": 40, "b": 10}
     coverage = {"a": {f"a#c{i:04d}" for i in range(5)}}
     monkeypatch.setattr(rcb, "document_chunk_counts", lambda: counts)
-    monkeypatch.setattr(rcb.queue, "worklist", lambda p=None: ["a", "b"])
+    monkeypatch.setattr(rcb.queue, "live_requests", lambda: {
+        "a": {"priority": 1}, "b": {"priority": 2}})
     monkeypatch.setattr(rcb.queue, "chunk_coverage", lambda p: coverage)
     work, full, remaining, already = rcb.resume_plan()    # the real derivation, not a copy
     assert (work, full, remaining, already) == (
@@ -1177,7 +1178,8 @@ def test_batch_identity_does_not_move_as_chunks_get_extracted(monkeypatch):
     Cutting on the FULL counts makes identity invariant to progress, which is the property."""
     counts = {"a": 40, "b": 30, "c": 30, "d": 45}
     monkeypatch.setattr(rcb, "document_chunk_counts", lambda: counts)
-    monkeypatch.setattr(rcb.queue, "worklist", lambda p=None: ["a", "b", "c", "d"])
+    monkeypatch.setattr(rcb.queue, "live_requests", lambda: {
+        d: {"priority": i} for i, d in enumerate(["a", "b", "c", "d"])})
 
     def plan_with(coverage):
         monkeypatch.setattr(rcb.queue, "chunk_coverage", lambda p: coverage)
@@ -1197,7 +1199,7 @@ def test_a_fully_extracted_batch_is_skipped_not_re_declared(monkeypatch, tmp_pat
     a ceiling or reserve against one. Its verdict, if it has one, already stands."""
     counts = {"a": 45}
     monkeypatch.setattr(rcb, "document_chunk_counts", lambda: counts)
-    monkeypatch.setattr(rcb.queue, "worklist", lambda p=None: ["a"])
+    monkeypatch.setattr(rcb.queue, "live_requests", lambda: {"a": {"priority": 1}})
     monkeypatch.setattr(rcb.queue, "chunk_coverage",
                         lambda p: {"a": {f"a#c{i}" for i in range(45)}})
     work, full, remaining, already = rcb.resume_plan()
@@ -1217,7 +1219,8 @@ def test_the_burn_loop_uses_stable_identity_and_sizes_on_what_is_left(tmp_path, 
     coverage = {"a": {f"a#c{i}" for i in range(45)},          # batch 1: done
                 "b": {f"b#c{i}" for i in range(20)}}          # batch 2: 40 left
     monkeypatch.setattr(rcb, "document_chunk_counts", lambda: counts)
-    monkeypatch.setattr(rcb.queue, "worklist", lambda p=None: ["a", "b"])
+    monkeypatch.setattr(rcb.queue, "live_requests", lambda: {
+        "a": {"priority": 1}, "b": {"priority": 2}})
     monkeypatch.setattr(rcb.queue, "chunk_coverage", lambda p: coverage)
     monkeypatch.setattr(rcb, "apply_production_profile", lambda *a, **k: {})
     monkeypatch.setattr(rcb, "phase_a_mean_per_chunk", lambda: 50_000.0)
@@ -1246,3 +1249,42 @@ def test_the_burn_loop_uses_stable_identity_and_sizes_on_what_is_left(tmp_path, 
     assert [r for r, _ in declared] == ["bulk_v038_b002"]
     # ... and b002's ceiling is sized on the 40 chunks LEFT, not its 60 full chunks
     assert declared[0][1] == 40
+
+
+def test_finishing_a_batch_does_not_renumber_the_batches_after_it(monkeypatch):
+    """The second half of the identity defect, and the one the first fix missed. Cutting on
+    FULL chunk counts is not enough while the document LIST still shrinks: `queue.worklist()`
+    drops a document the moment it is fully extracted, so completing batch 1 renumbered every
+    batch after it. Identity comes from the ledger's live-request set (DD-027), which does not
+    move as work completes; the worklist governs what may RUN, not what a batch IS."""
+    counts = {"a": 45, "b": 45, "c": 45}
+    monkeypatch.setattr(rcb, "document_chunk_counts", lambda: counts)
+    monkeypatch.setattr(rcb.queue, "live_requests",
+                        lambda: {d: {"priority": i} for i, d in enumerate("abc")})
+
+    def ids_with(coverage):
+        monkeypatch.setattr(rcb.queue, "chunk_coverage", lambda p: coverage)
+        work, full, _rem, _done = rcb.resume_plan()
+        return [(b["batch_id"], tuple(b["documents"])) for b in rcb.batches(work, full)]
+
+    fresh = ids_with({})
+    after_b1 = ids_with({"a": {f"a#c{i}" for i in range(45)}})
+    after_b2 = ids_with({"a": {f"a#c{i}" for i in range(45)},
+                         "b": {f"b#c{i}" for i in range(45)}})
+    assert fresh == after_b1 == after_b2
+    assert fresh == [("bulk_v038_b001", ("a",)), ("bulk_v038_b002", ("b",)),
+                     ("bulk_v038_b003", ("c",))]
+
+
+def test_batch_membership_matches_what_provenance_already_records():
+    """The live check the plan-only output makes: `bulk_v038_b001` in the plan must be the same
+    documents that 2,504 already-ingested events stamp with that id. If these ever disagree, a
+    quarantine names one thing and removes another."""
+    from kg import eventlog
+    stamped = {e.get("doc_id") for e in eventlog.replay(tag=None)
+               if (e.get("provenance") or {}).get("batch_id") == "bulk_v038_b001"}
+    if not stamped:
+        pytest.skip("no batch-stamped events yet")
+    work, full, _r, _d = rcb.resume_plan()
+    plan = {b["batch_id"]: set(b["documents"]) for b in rcb.batches(work, full)}
+    assert stamped <= plan["bulk_v038_b001"], (stamped, plan["bulk_v038_b001"])

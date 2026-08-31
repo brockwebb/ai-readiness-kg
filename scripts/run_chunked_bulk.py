@@ -884,7 +884,14 @@ def resume_plan() -> tuple[list[str], dict[str, int], dict[str, int], int]:
     and is what a quarantine names, so a shifting id would quarantine the wrong events. It was
     caught live, mid-dispatch, with 2,504 events already carrying the old meaning."""
     counts = document_chunk_counts()
-    work = [d for d in queue.worklist(PROFILE) if d in counts]
+    # Batch identity is cut over every document with a LIVE REQUEST, in priority order — the
+    # ledger's own request set (DD-027), which does not move as work completes. Using
+    # `queue.worklist()` here still shifted the ids: the worklist drops a document the moment
+    # it is fully extracted, so finishing batch 1 renumbered every batch after it. The
+    # worklist governs what may RUN; it cannot govern what a batch IS.
+    reqs = queue.live_requests()
+    work = [d for d, _ in sorted(reqs.items(), key=lambda kv: (kv[1].get("priority", 10**6), kv[0]))
+            if d in counts]
     done = queue.chunk_coverage(PROFILE)
     full = {d: counts[d] for d in work}
     remaining = {d: max(0, counts[d] - len(done.get(d, ()))) for d in work}
