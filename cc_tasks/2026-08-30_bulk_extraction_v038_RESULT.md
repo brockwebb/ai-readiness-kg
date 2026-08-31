@@ -718,3 +718,124 @@ version drove the *ledger* rather than the resume decision, and the mutation tha
 resume survived it — the decision is now its own function the test drives. And I asserted
 `int(1.3 × mean × chunks)` where the code uses `ceil`: a bound rounded **down** is a bound the
 work can exceed. The code was right; my arithmetic was not.
+
+---
+
+## 16. Batch 1 — TEVV record
+
+**Verdict: ACCEPT.** `bulk_v038_b001` = `fcsm-23-02-a-framework-for-data-quality-case-studies`
++ `nist-ai-risk-management-framework-ai-rmf`, 62 chunks (61 dispatched, 1 banked from Phase A).
+
+### 16.1 The sequential test, as it actually ran
+
+| increment | fabrications | facts | accept line | reject line | decision |
+|---|---:|---:|---:|---:|---|
+| 1 | 2 | 55 | d ≤ 0.0 | d ≥ 7.9 | continue |
+| 2 | **3** | **110** | **d ≤ 4.0** | d ≥ 11.9 | **accept** |
+
+Stopped at **110 facts against a 463 budget** — the ASN saving landing on the first batch.
+A fixed-n test at the same budget would have judged 353 more facts for a verdict it already had.
+
+### 16.2 Faithfulness
+
+| | measured | standing threshold |
+|---|---:|---|
+| pooled F | **0.0273** [0.0093, **0.0771**] | F_upper < 0.10 ✓ |
+| item-faithful | **0.830** (78/94) | ≥ 0.70 ✓ |
+| facts | 110 | ≥ 55 (plan minimum) ✓ |
+
+Classes: 94 entailed, 6 filled_attribute, 6 span_truncated, **3 fabrication**, 1 subject_dropped.
+Rater agreement against the Dawid–Skene consensus: opus-4-8 **0.991**, sonnet-5 **0.909**.
+Document-substring check reclassified **2 of 2** examined fabrications as `filled_attribute`.
+
+Batch 1 is *better* than Phase A on both measures (Phase A: F_upper 0.0715, item-faithful
+0.770). One batch is not a trend, and the SPRT is deliberately indifferent to that comparison —
+it tests this batch against p0/p1, not against Phase A.
+
+### 16.3 Yield vs Phase A envelope — report only, gates nothing
+
+| stratum | batch 1 mean | sd | range | n | Phase A mean | Phase A envelope | flag |
+|---|---:|---:|---|---:|---:|---|---|
+| agency_framework | **17.60** | 8.62 | 0–41 | 62 | 13.86 | 0–36 | **none** |
+
+Both batch-1 documents are `agency_framework`, so this batch exercises one stratum only —
+a consequence of batching in priority order, not of the design. Its mean runs 27% above Phase
+A's and its max (41) exceeds Phase A's observed high (36) while the *mean* stays inside the
+envelope, which is the quantity the convention compares. Recorded, not acted on.
+
+### 16.4 DD-024 refusals — the guard is load-bearing
+
+**30 semantic edges refused in 61 chunks** (27 `has_component`, 3 `subtype_of`; 15 from each
+document).
+
+| | rate | projected over the burn |
+|---|---:|---:|
+| Phase A (guard absent, edges admitted) | 0.167/chunk | ~190 |
+| **Batch 1 (guard active)** | **0.492/chunk** | **~537** |
+
+§5.3's projection of ~190 was **low by 2.8×**. Phase A's stratified 30-chunk draw understated
+the rate because framework-heavy documents propose component relations constantly and few of
+their chunks were sampled. ADDENDUM-01's choice to enforce at admission rather than
+re-qualify a stripped template reads better with this number in hand: refusing at graph entry
+costs nothing per edge, and 537 is well past the scale at which "clean it up later" stays
+tractable.
+
+### 16.5 Ledger
+
+| run | settled | ceiling |
+|---|---:|---:|
+| `bulk_v038_b001` | 3,194,546 | 3,922,028 |
+| `bulk_v038_b001_judge` | 2,221,824 | 3,000,000 |
+| committed today | 10,603,321 | 55,000,000 band |
+
+Extraction came in **19% under** its declared ceiling. Judging cost 2.22M for a verdict at 110
+facts; a fixed-n 463-fact test would have been ~4× that.
+
+**Measurement caveat, recorded.** The verdict was reached twice — once in the run that crashed
+in the yield flags, once in the recovery. `probe_aggregate` aggregates over every labelled
+fact in the run rather than only the increment's selection, so the recovery's *first* increment
+already saw all 110 labels and accepted immediately. On a fresh batch the two are identical
+(labels exist only for selected facts); on a re-judge the increment control is weaker than
+designed. It cost nothing here — the same evidence, the same verdict — and is noted rather
+than fixed, because the forward path never re-judges a settled batch.
+
+## 17. Crosswalk-demand coverage by batch
+
+Zero model spend; derived from `state/t2_priority.json` and the batch plan.
+
+| batch | docs | chunks left/full | demand | cum demand | cum % | cum docs | doc % |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| `b001` | 2 | 0/62 | 4 | 4 | 9.8% | 2 | 5.7% |
+| `b002` | 2 | 45/47 | 4 | 8 | 19.5% | 4 | 11.4% |
+| `b003` | 3 | 76/78 | 3 | 11 | 26.8% | 7 | 20.0% |
+| `b004` | 4 | 50/53 | 4 | 15 | 36.6% | 11 | 31.4% |
+| `b005` | 3 | 225/229 | 3 | 18 | 43.9% | 14 | 40.0% |
+| `b006` | 1 | 46/47 | 1 | 19 | 46.3% | 15 | 42.9% |
+| `b007` | 4 | 39/41 | 4 | 23 | 56.1% | 19 | 54.3% |
+| `b008` | 2 | 223/225 | 2 | 25 | 61.0% | 21 | 60.0% |
+| `b009` | 1 | 145/146 | 1 | 26 | 63.4% | 22 | 62.9% |
+| `b010` | 1 | 64/65 | 1 | 27 | 65.9% | 23 | 65.7% |
+| `b011` | 4 | 35/40 | 4 | 31 | 75.6% | 27 | 77.1% |
+| `b012` | 5 | 59/64 | 5 | 36 | 87.8% | 32 | 91.4% |
+| `b013` | 1 | 23/24 | 1 | 37 | 90.2% | 33 | 94.3% |
+
+Extract set: **35 documents, total crosswalk_demand 41.** Two documents are unconvertible HTML
+carrying 4 demand and are never batched, so the plan tops out at **90.2%**.
+
+**The scope signal, for operator decision.** Coverage is close to linear in document count but
+badly non-linear in *chunks*: `b005`, `b008` and `b009` are **593 of the 1,030 remaining
+chunks — 58% of the work — for 6 of 37 demand (16%)**. Three long specifications
+(nist-ai-rmf-playbook, nist-generative-ai-profile, fcsm-19-01) dominate the cost and carry one
+demand unit each.
+
+Stopping points, as measured:
+
+| stop after | cum demand | cum chunks | share of remaining work |
+|---|---:|---:|---:|
+| b004 | 36.6% | 171 | 17% |
+| b007 | 56.1% | 481 | 47% |
+| b012 | 87.8% | 1,007 | 98% |
+| b013 (all) | 90.2% | 1,030 | 100% |
+
+**No gate changes are proposed and none are implied.** This is a scope question — how far down
+a priority list to spend — which is operator input, not a threshold the machine may move.

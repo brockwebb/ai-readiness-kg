@@ -1,0 +1,1055 @@
+{
+ "task": "cc_tasks/2026-08-30_bulk_extraction_v038.md",
+ "profile": "bulk_v038",
+ "batches": [
+  {
+   "outcome": "accept",
+   "batch_id": "bulk_v038_b001",
+   "facts": 110,
+   "fabrications": 3,
+   "items_sampled": 232,
+   "items_available": 1062,
+   "sprt_trace": [
+    {
+     "limit": 55,
+     "facts": 110,
+     "fabrications": 3,
+     "decision": "accept"
+    }
+   ],
+   "aggregate": {
+    "method": "crowd-kit DawidSkene(n_iter=100)",
+    "n_facts": 110,
+    "n_labels": 220,
+    "raters": {
+     "claude-opus-4-8": {
+      "n": 110,
+      "agreement_with_map": 0.990909090909091,
+      "type": "prov:SoftwareAgent"
+     },
+     "claude-sonnet-5": {
+      "n": 110,
+      "agreement_with_map": 0.9090909090909091,
+      "type": "prov:SoftwareAgent"
+     }
+    },
+    "rater_confusion": {
+     "claude-opus-4-8": {
+      "P(obs=entailed|true=entailed)": 0.9932905682002696,
+      "P(obs=not_entailed|true=entailed)": 0.006709431799730327,
+      "P(obs=entailed|true=not_entailed)": 0.2365797526280438,
+      "P(obs=not_entailed|true=not_entailed)": 0.7634202473719562
+     },
+     "claude-sonnet-5": {
+      "P(obs=entailed|true=entailed)": 0.9425411132105211,
+      "P(obs=not_entailed|true=entailed)": 0.05745888678947893,
+      "P(obs=entailed|true=not_entailed)": 0.026802469504881955,
+      "P(obs=not_entailed|true=not_entailed)": 0.9731975304951181
+     }
+    },
+    "doc_check": {
+     "checked": 2,
+     "reclassified": 2
+    },
+    "pooled": {
+     "n_facts": 110,
+     "n_in_F_denominator": 110,
+     "fabrication": 3,
+     "F": 0.02727272727272727,
+     "F_lo": 0.009317969785407151,
+     "F_hi": 0.07713084225553674,
+     "classes": {
+      "entailed": 94,
+      "filled_attribute": 6,
+      "span_truncated": 6,
+      "fabrication": 3,
+      "subject_dropped": 1
+     },
+     "class_props": {
+      "entailed": {
+       "p": 0.8545454545454545,
+       "lo": 0.7767226103884147,
+       "hi": 0.9084407805808773
+      },
+      "filled_attribute": {
+       "p": 0.05454545454545454,
+       "lo": 0.02523582690344204,
+       "hi": 0.11391786136590892
+      },
+      "span_truncated": {
+       "p": 0.05454545454545454,
+       "lo": 0.02523582690344204,
+       "hi": 0.11391786136590892
+      },
+      "fabrication": {
+       "p": 0.02727272727272727,
+       "lo": 0.009317969785407151,
+       "hi": 0.07713084225553674
+      },
+      "subject_dropped": {
+       "p": 0.00909090909090909,
+       "lo": 0.0016065752865694234,
+       "hi": 0.04970565260210308
+      }
+     }
+    },
+    "per_stratum": {
+     "agency_framework": {
+      "n_facts": 110,
+      "n_in_F_denominator": 110,
+      "fabrication": 3,
+      "F": 0.02727272727272727,
+      "F_lo": 0.009317969785407151,
+      "F_hi": 0.07713084225553674,
+      "classes": {
+       "entailed": 94,
+       "filled_attribute": 6,
+       "span_truncated": 6,
+       "fabrication": 3,
+       "subject_dropped": 1
+      },
+      "class_props": {
+       "entailed": {
+        "p": 0.8545454545454545,
+        "lo": 0.7767226103884147,
+        "hi": 0.9084407805808773
+       },
+       "filled_attribute": {
+        "p": 0.05454545454545454,
+        "lo": 0.02523582690344204,
+        "hi": 0.11391786136590892
+       },
+       "span_truncated": {
+        "p": 0.05454545454545454,
+        "lo": 0.02523582690344204,
+        "hi": 0.11391786136590892
+       },
+       "fabrication": {
+        "p": 0.02727272727272727,
+        "lo": 0.009317969785407151,
+        "hi": 0.07713084225553674
+       },
+       "subject_dropped": {
+        "p": 0.00909090909090909,
+        "lo": 0.0016065752865694234,
+        "hi": 0.04970565260210308
+       }
+      }
+     }
+    },
+    "verdicts": {
+     "agency_framework": "repair_then_rejudge"
+    },
+    "overall": "repair_path for all strata; re-judge after repair decides",
+    "items": {
+     "n": 94,
+     "faithful": 78,
+     "faithful_rate": 0.8297872340425532
+    },
+    "per_fact": {
+     "f_15ae60bd0fdf": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "aae834a58b2a486485a449fe8199997b",
+      "n_raters": 2
+     },
+     "f_cfe6c0ccac20": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "40c730ddd49a40c4bfa9632fadb006ae",
+      "n_raters": 2
+     },
+     "f_1f276b3f7f18": {
+      "p_entailed": 0.002124426281252661,
+      "entailed": false,
+      "class": "filled_attribute",
+      "stratum": "agency_framework",
+      "event_id": "f893c225ef04442583fa78cf1eb7e727",
+      "n_raters": 2,
+      "doc_check": "value_found_in_document"
+     },
+     "f_c9d93cc4ae12": {
+      "p_entailed": 0.5051676488203934,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "1e6a5934d188463fbc23031c280d9094",
+      "n_raters": 2
+     },
+     "f_d069c8bad4ca": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "74ba8b22354d4f7f8b87ce742beabc69",
+      "n_raters": 2
+     },
+     "f_15484ceb39e0": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "1a2839373599450eb77f48147e2e2509",
+      "n_raters": 2
+     },
+     "f_4b04831870ce": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "2919afe7b8934d4d9fdc350c47c2673a",
+      "n_raters": 2
+     },
+     "f_092bae52d92a": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "1f9a326132e945029ca540bf3564c522",
+      "n_raters": 2
+     },
+     "f_eedc3254561d": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "021e52c86916496e9b1dd8a9b187731f",
+      "n_raters": 2
+     },
+     "f_bed6a4cf62bf": {
+      "p_entailed": 0.002124426281252661,
+      "entailed": false,
+      "class": "filled_attribute",
+      "stratum": "agency_framework",
+      "event_id": "960259dda800483aa2beadcae1a97865",
+      "n_raters": 2
+     },
+     "f_a5238083bdf3": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "319a132469f544a9bdc09aaf667dfff4",
+      "n_raters": 2
+     },
+     "f_ec17235061fe": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "50680345e9a442059f36c6eb4d105e53",
+      "n_raters": 2
+     },
+     "f_f923167305ef": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "aec3147c18c5479b891c7e182eaa5c8b",
+      "n_raters": 2
+     },
+     "f_411c4e303620": {
+      "p_entailed": 0.002124426281252661,
+      "entailed": false,
+      "class": "span_truncated",
+      "stratum": "agency_framework",
+      "event_id": "dfdc6d6aa9374052852a1c2befe58089",
+      "n_raters": 2
+     },
+     "f_1c9da2f37aae": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "b5b916c020e2425fa17ac003a1eb0ab3",
+      "n_raters": 2
+     },
+     "f_ae5b3ee45a8a": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "8dc66af6636349708883597a52736fde",
+      "n_raters": 2
+     },
+     "f_853424547340": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "dd5dd68a2c3a419cac451bde230876b3",
+      "n_raters": 2
+     },
+     "f_782e88ac5386": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "9bff273da2d94a4bbc7e282b2c774e77",
+      "n_raters": 2
+     },
+     "f_4686e5f59449": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "fcb27a70ccf545ddafd674c30095ac25",
+      "n_raters": 2
+     },
+     "f_a2769826c4d3": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "96a5b43d112a42f5b053c9a9edc7b741",
+      "n_raters": 2
+     },
+     "f_6ee3be7c6c61": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "6044a187c3134f8586712f00e7f19125",
+      "n_raters": 2
+     },
+     "f_a701419cbc83": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "f56febba865f42f4aae3553f7fed1d5c",
+      "n_raters": 2
+     },
+     "f_2fb6df1b52d8": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "69f6566843304816bbaf6873f05bf276",
+      "n_raters": 2
+     },
+     "f_339311e9e29f": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "7fd83e24a388476ebe6e89333f84427b",
+      "n_raters": 2
+     },
+     "f_5cd21d7f94aa": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "d79cedc964cc44f1a7b6dc34bb9c74d5",
+      "n_raters": 2
+     },
+     "f_bf1014f91d1e": {
+      "p_entailed": 0.002124426281252661,
+      "entailed": false,
+      "class": "fabrication",
+      "stratum": "agency_framework",
+      "event_id": "5ead9a4c2e2446be80ada4d1ee4693eb",
+      "n_raters": 2
+     },
+     "f_e57c35621caa": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "e4ee73ce0b8c481486a2e2b9864db17b",
+      "n_raters": 2
+     },
+     "f_a536857695e0": {
+      "p_entailed": 0.002124426281252661,
+      "entailed": false,
+      "class": "span_truncated",
+      "stratum": "agency_framework",
+      "event_id": "faa496f7b6cd4ccbaf2b9abda84a38d2",
+      "n_raters": 2
+     },
+     "f_760f14cb9a89": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "2d1132346e874e578dc68af1a5417ea8",
+      "n_raters": 2
+     },
+     "f_32655bf1e346": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "7f4fa8d7b4704ae6b7cc3a7aff9d69ab",
+      "n_raters": 2
+     },
+     "f_680dde80c2af": {
+      "p_entailed": 0.5051676488203934,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "3bff64b552d0478584419477f30163e5",
+      "n_raters": 2
+     },
+     "f_ed3dae4de4ae": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "f32889ce044a40c8b2c41ebb7b13a162",
+      "n_raters": 2
+     },
+     "f_5d8b1696192d": {
+      "p_entailed": 0.002124426281252661,
+      "entailed": false,
+      "class": "filled_attribute",
+      "stratum": "agency_framework",
+      "event_id": "3342ffbdb3dd417bbc82a9466911bed6",
+      "n_raters": 2
+     },
+     "f_a85917c59010": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "15555d08a0604d7187383f1440d0e687",
+      "n_raters": 2
+     },
+     "f_700997faec58": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "8d7d393edd32454eb862d1cddd13c2f7",
+      "n_raters": 2
+     },
+     "f_9f79aa79b10b": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "8cc50fe5d3894fe187c0fa4dfcb1f438",
+      "n_raters": 2
+     },
+     "f_324a08b1e899": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "c9e97b88343c4688952c6c72b3f68c67",
+      "n_raters": 2
+     },
+     "f_a7fc58f6a5b5": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "32d69edfacbd49788fdff24d12b746db",
+      "n_raters": 2
+     },
+     "f_f36adbb94a09": {
+      "p_entailed": 0.002124426281252661,
+      "entailed": false,
+      "class": "span_truncated",
+      "stratum": "agency_framework",
+      "event_id": "07db9279cddf45f7a76931f8c2d0830d",
+      "n_raters": 2
+     },
+     "f_395330d0c994": {
+      "p_entailed": 0.002124426281252661,
+      "entailed": false,
+      "class": "subject_dropped",
+      "stratum": "agency_framework",
+      "event_id": "6dc11db6391f4d7ca2553c86eb273c71",
+      "n_raters": 2
+     },
+     "f_bd08ada1c6a5": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "1386d0c969aa4ef0b780dbb20af8e0a7",
+      "n_raters": 2
+     },
+     "f_119e17ca204b": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "483c7728b9d1499f9008ef9fab17c42a",
+      "n_raters": 2
+     },
+     "f_9ae4e0ca92fc": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "35f933c912b24e6a99db5371073e9072",
+      "n_raters": 2
+     },
+     "f_030aa741b240": {
+      "p_entailed": 0.002124426281252661,
+      "entailed": false,
+      "class": "filled_attribute",
+      "stratum": "agency_framework",
+      "event_id": "c0759a58bc404e1da686e7c78500fec0",
+      "n_raters": 2,
+      "doc_check": "value_found_in_document"
+     },
+     "f_6ff436dbee09": {
+      "p_entailed": 0.002124426281252661,
+      "entailed": false,
+      "class": "fabrication",
+      "stratum": "agency_framework",
+      "event_id": "f63407cf43be496f912da4b441cbf355",
+      "n_raters": 2
+     },
+     "f_405144c3ca04": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "884f366b37654b59b376ddc99002e80a",
+      "n_raters": 2
+     },
+     "f_d723d36f2a22": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "f23817fe1caa4fee811b301c8c9b0e96",
+      "n_raters": 2
+     },
+     "f_d428193a43f4": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "460d9963fc9f425f8b20bb141e66cc9e",
+      "n_raters": 2
+     },
+     "f_1b0daf526012": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "74ba8b22354d4f7f8b87ce742beabc69",
+      "n_raters": 2
+     },
+     "f_95eef4d4afb4": {
+      "p_entailed": 0.5051676488203934,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "179f1914e66448beb3fc12967858688a",
+      "n_raters": 2
+     },
+     "f_998cd77a4be4": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "5db28a96baf344d3b8bb21dd8e16c21e",
+      "n_raters": 2
+     },
+     "f_18845189c2ee": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "db2e9414df3f43c3bc93ac1dcf3a27cc",
+      "n_raters": 2
+     },
+     "f_0fabf16d7dff": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "956eb4de5a3047d68d67085fe826409a",
+      "n_raters": 2
+     },
+     "f_131d698eb5d8": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "b5c7742478244fa39492b0e31ed592c1",
+      "n_raters": 2
+     },
+     "f_8dd2b3b177b3": {
+      "p_entailed": 0.5051676488203934,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "c02a8cb268f74ade9721f2008644d0d1",
+      "n_raters": 2
+     },
+     "f_0622627f67c8": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "5bda535e740046cb9d5d78ea0ca3a177",
+      "n_raters": 2
+     },
+     "f_1b667145c4d1": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "71e04838db264d849a3efb46b725cd5d",
+      "n_raters": 2
+     },
+     "f_fc4a4ddd3f2c": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "f9e4e52a31e649b285626341d26ae535",
+      "n_raters": 2
+     },
+     "f_29f5cb173fd7": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "215dd1abc5e74e6eb2fb4312d10d8a85",
+      "n_raters": 2
+     },
+     "f_2f9e98e02908": {
+      "p_entailed": 0.5051676488203934,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "5ead9a4c2e2446be80ada4d1ee4693eb",
+      "n_raters": 2
+     },
+     "f_b8c76f5d75bb": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "07db9279cddf45f7a76931f8c2d0830d",
+      "n_raters": 2
+     },
+     "f_8345d1503843": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "57b476a009624e08a9b5df83e17e2044",
+      "n_raters": 2
+     },
+     "f_e9fc483ad88b": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "aae834a58b2a486485a449fe8199997b",
+      "n_raters": 2
+     },
+     "f_026d0ac83f63": {
+      "p_entailed": 0.002124426281252661,
+      "entailed": false,
+      "class": "filled_attribute",
+      "stratum": "agency_framework",
+      "event_id": "56d15e60046f4b248d1139e09b609178",
+      "n_raters": 2
+     },
+     "f_4b3d6ae66696": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "447f6ae1d5dd4ab0b6d0fe43483c825d",
+      "n_raters": 2
+     },
+     "f_2cf33ca606ac": {
+      "p_entailed": 0.002124426281252661,
+      "entailed": false,
+      "class": "filled_attribute",
+      "stratum": "agency_framework",
+      "event_id": "fd80b84c17394bc8940f4612f13cad78",
+      "n_raters": 2
+     },
+     "f_110320617adb": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "a6c1e76a56a04167bafa86592b73abd8",
+      "n_raters": 2
+     },
+     "f_80b2c481c934": {
+      "p_entailed": 0.002124426281252661,
+      "entailed": false,
+      "class": "fabrication",
+      "stratum": "agency_framework",
+      "event_id": "447f6ae1d5dd4ab0b6d0fe43483c825d",
+      "n_raters": 2
+     },
+     "f_ea521efbd14a": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "dd8b0ec6e37141c691526fc3239627f5",
+      "n_raters": 2
+     },
+     "f_9232c3c50899": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "95e1a78ffcb8453194087d27907ca42c",
+      "n_raters": 2
+     },
+     "f_a15fda6f6737": {
+      "p_entailed": 0.5051676488203934,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "3b58bc4313294b8f82f6863a8e4d41c1",
+      "n_raters": 2
+     },
+     "f_ef8fafcab20a": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "11b8c1458bac447981b8da46d4f99203",
+      "n_raters": 2
+     },
+     "f_166399161879": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "9fcf68ef9f244ea0b1054cb2886cc731",
+      "n_raters": 2
+     },
+     "f_445ddd61b53a": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "9fcf68ef9f244ea0b1054cb2886cc731",
+      "n_raters": 2
+     },
+     "f_8d38a07b1d4d": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "c9e97b88343c4688952c6c72b3f68c67",
+      "n_raters": 2
+     },
+     "f_0ddbd27f7cb3": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "9bc3f4228b524d00bfa8efa53729c9f8",
+      "n_raters": 2
+     },
+     "f_d607d4db8158": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "3b58bc4313294b8f82f6863a8e4d41c1",
+      "n_raters": 2
+     },
+     "f_570e05512734": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "b5b916c020e2425fa17ac003a1eb0ab3",
+      "n_raters": 2
+     },
+     "f_e07aed342e28": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "d73230aad8c1443f92cb861d6409b184",
+      "n_raters": 2
+     },
+     "f_c2e198cadb3a": {
+      "p_entailed": 0.559858797382136,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "7240e683f8da484499134c7a19303a6b",
+      "n_raters": 2
+     },
+     "f_8cfc421af532": {
+      "p_entailed": 0.5051676488203934,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "d73230aad8c1443f92cb861d6409b184",
+      "n_raters": 2
+     },
+     "f_3017572b3eb5": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "ec982d9463694c618293edeb1034a169",
+      "n_raters": 2
+     },
+     "f_194eab153f57": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "cc2791de18c94e9493cdf9e69c85ac0b",
+      "n_raters": 2
+     },
+     "f_0a198e219fe1": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "bb24dc1db20641d7ac9e1f00ea26db4c",
+      "n_raters": 2
+     },
+     "f_4c0f376e6661": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "293d3942dfae4f94b50873e24e40d113",
+      "n_raters": 2
+     },
+     "f_15a7e6a5c114": {
+      "p_entailed": 0.002124426281252661,
+      "entailed": false,
+      "class": "span_truncated",
+      "stratum": "agency_framework",
+      "event_id": "934f393047c4416b9799c156caea1471",
+      "n_raters": 2
+     },
+     "f_9fce7b8b3777": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "114c90b116bf46d6bb80da459f799631",
+      "n_raters": 2
+     },
+     "f_862d9027abe9": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "6d90a1c0725f4ad991a3a3395ffaa547",
+      "n_raters": 2
+     },
+     "f_b1b912738fc3": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "02e709df30dd4cfcad44d7483410dace",
+      "n_raters": 2
+     },
+     "f_81bcbfd79666": {
+      "p_entailed": 0.5051676488203934,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "32d69edfacbd49788fdff24d12b746db",
+      "n_raters": 2
+     },
+     "f_ddccdb6cf934": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "dad7d96b9b9e4b108186aa66f938a66b",
+      "n_raters": 2
+     },
+     "f_adaf75e71173": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "9f58b1f20c7248a4bd241e31043a3ca7",
+      "n_raters": 2
+     },
+     "f_a0172584b2ff": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "13b41e5dca8c42439323f41192199db6",
+      "n_raters": 2
+     },
+     "f_3b82b03ae93d": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "9bc3f4228b524d00bfa8efa53729c9f8",
+      "n_raters": 2
+     },
+     "f_9b60dcf5720e": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "9edae0a007c04c7da3f8ea054d04523b",
+      "n_raters": 2
+     },
+     "f_5db5f54dbd5d": {
+      "p_entailed": 0.5051676488203934,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "3342ffbdb3dd417bbc82a9466911bed6",
+      "n_raters": 2
+     },
+     "f_1fd790206beb": {
+      "p_entailed": 0.5051676488203934,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "3b58bc4313294b8f82f6863a8e4d41c1",
+      "n_raters": 2
+     },
+     "f_c7bcd67e9531": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "15555d08a0604d7187383f1440d0e687",
+      "n_raters": 2
+     },
+     "f_7fdb141ac96f": {
+      "p_entailed": 0.002124426281252661,
+      "entailed": false,
+      "class": "span_truncated",
+      "stratum": "agency_framework",
+      "event_id": "794c66fd949345f5a0597984feb9a2c5",
+      "n_raters": 2
+     },
+     "f_feec62330d71": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "dd69649e4fef4d7b8823311e2d327ed0",
+      "n_raters": 2
+     },
+     "f_77ee37175ac4": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "62e87b4efd2b4521baf07971e9e387fd",
+      "n_raters": 2
+     },
+     "f_f4708d234266": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "884f366b37654b59b376ddc99002e80a",
+      "n_raters": 2
+     },
+     "f_86001f52ed0e": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "636e475ffc8a4d12ad21063bf37ceea3",
+      "n_raters": 2
+     },
+     "f_c993bf9c53b0": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "1f6412d7bdca4afc811dc033abff8cbf",
+      "n_raters": 2
+     },
+     "f_b974d47ffb57": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "2ea5871263184e57bda8e158247b299a",
+      "n_raters": 2
+     },
+     "f_b2d21f4b8a69": {
+      "p_entailed": 0.002124426281252661,
+      "entailed": false,
+      "class": "span_truncated",
+      "stratum": "agency_framework",
+      "event_id": "b1ea91bee109496c9acabe899df071e6",
+      "n_raters": 2
+     },
+     "f_0c592fab383c": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "16c1f4fff7d840a3a453d5534f9069cb",
+      "n_raters": 2
+     },
+     "f_58df37ebc105": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "e6625e16cdcd487096c9e682c1642865",
+      "n_raters": 2
+     },
+     "f_af5af668c2f3": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "7e01e0097f114906b49835c2bb7b30ad",
+      "n_raters": 2
+     },
+     "f_ee3b329f6d98": {
+      "p_entailed": 0.9983632214653279,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "83bb6422b4b54a4cbe95efd634949741",
+      "n_raters": 2
+     }
+    }
+   },
+   "yield_flags": {}
+  }
+ ],
+ "outcomes": [
+  "accept"
+ ],
+ "stopped": null,
+ "sprt": {
+  "p0": 0.05,
+  "p1": 0.1,
+  "alpha": 0.05,
+  "beta": 0.05,
+  "log_A": 2.9444389791664403,
+  "log_B": -2.9444389791664403,
+  "slope": 0.07235837684317095,
+  "accept_intercept": -3.94055437362336,
+  "reject_intercept": 3.94055437362336
+ },
+ "sample_budget": 463,
+ "min_facts_for_accept": 55,
+ "written_at": "2026-08-31T19:15:42.901280+00:00"
+}
