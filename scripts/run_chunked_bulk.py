@@ -869,18 +869,26 @@ def profile_block() -> dict:
     return (doc.get("profiles") or {})[PROFILE]
 
 
-def resume_plan() -> tuple[list[str], dict[str, int], int]:
-    """(worklist, chunks REMAINING per document, chunks already extracted).
+def resume_plan() -> tuple[list[str], dict[str, int], dict[str, int], int]:
+    """(worklist, FULL chunks per document, chunks REMAINING per document, already extracted).
 
-    ADDENDUM-01 §3.1: chunk-level resume. Phase A's 30 chunks are already extracted and in the
-    graph; no chunk runs twice under the same profile. `chunk_coverage` derives what is done
-    from `chunk_metrics` events — the ledger — not from a file and not by counting raws on
-    disk, so a resume cannot be fooled by a stray directory."""
+    Both counts, because they answer different questions and conflating them broke batch
+    identity. Batches are cut on the FULL counts, so a batch's id and membership never move.
+    The REMAINING counts size the dispatch and the ceiling — ADDENDUM-01 §3.1's chunk-level
+    resume, derived from `chunk_coverage` (the `chunk_metrics` events, i.e. the ledger) rather
+    than from a file or the raw directory.
+
+    Cutting batches on the remaining counts — which the first version did — re-cut the plan
+    every run: once batch 1's two documents were extracted they dropped out, and
+    `bulk_v038_b001` came to mean the NEXT two documents. The id is stamped into provenance
+    and is what a quarantine names, so a shifting id would quarantine the wrong events. It was
+    caught live, mid-dispatch, with 2,504 events already carrying the old meaning."""
     counts = document_chunk_counts()
     work = [d for d in queue.worklist(PROFILE) if d in counts]
     done = queue.chunk_coverage(PROFILE)
+    full = {d: counts[d] for d in work}
     remaining = {d: max(0, counts[d] - len(done.get(d, ()))) for d in work}
-    return work, remaining, sum(len(done.get(d, ())) for d in work)
+    return work, full, remaining, sum(len(done.get(d, ())) for d in work)
 
 
 def write_burn_state(rows: list[dict], state: "BurnState", b: dict, budget: int,
@@ -905,15 +913,19 @@ def phase_burn(a) -> int:
     cfg = model_stub.load_model_config()
     raters = [cfg["primary_judge_model_id"], cfg["secondary_judge_model_id"]]
 
-    work, remaining, already = resume_plan()
-    plan = batches(work, remaining)
+    work, full, remaining, already = resume_plan()
+    plan = batches(work, full)                 # identity from the FULL counts: stable
+    for bt in plan:                            # sizing from what is LEFT
+        bt["to_extract"] = sum(remaining.get(d, 0) for d in bt["documents"])
     print(f"burn plan: {len(work)} documents, {sum(remaining.values())} chunks to extract "
           f"({already} already extracted under {PROFILE}, resumed not repeated), "
           f"{len(plan)} batches; sample budget {budget} facts/batch, accept needs "
           f">= {n_min}")
     for bt in plan:
+        done_note = "" if bt["to_extract"] == bt["chunks"] else \
+            f"  ({bt['chunks'] - bt['to_extract']} already extracted)"
         print(f"  {bt['batch_id']}  {len(bt['documents']):>2} docs  "
-              f"{bt['chunks']:>4} chunks")
+              f"{bt['to_extract']:>4}/{bt['chunks']:<4} chunks{done_note}")
     if a.plan_only:
         return 0
 
@@ -946,13 +958,18 @@ def phase_burn(a) -> int:
         # the window), so recomputing on every resume would ratchet the bound upward exactly
         # when the batch is running hot. If the remaining work will not fit, the guard refuses
         # and the burn stops cleanly — which is the bound doing its job.
-        ceiling, per, resumed = declare_batch_ceiling(run_id, bt["chunks"], boot)
+        if bt["to_extract"] == 0:
+            print(f"{bid}: every chunk already extracted; nothing to dispatch", flush=True)
+            continue
+        ceiling, per, resumed = declare_batch_ceiling(run_id, bt["to_extract"], boot)
         if resumed:
-            print(f"\n=== {bid}: {len(bt['documents'])} docs, {bt['chunks']} chunks, "
-                  f"RESUMING under its declared ceiling {ceiling:,}", flush=True)
+            print(f"\n=== {bid}: {len(bt['documents'])} docs, {bt['to_extract']} of "
+                  f"{bt['chunks']} chunks left, RESUMING under its declared ceiling "
+                  f"{ceiling:,}", flush=True)
         else:
-            print(f"\n=== {bid}: {len(bt['documents'])} docs, {bt['chunks']} chunks, "
-                  f"ceiling {ceiling:,} (1.3 x {per:,.0f}/chunk)", flush=True)
+            print(f"\n=== {bid}: {len(bt['documents'])} docs, {bt['to_extract']} of "
+                  f"{bt['chunks']} chunks, ceiling {ceiling:,} "
+                  f"(1.3 x {per:,.0f}/chunk)", flush=True)
         cp.DOCS = list(bt["documents"])
         # The extractor already skips a chunk whose raw exists; the resume above is what keeps
         # an already-extracted chunk out of the batch SIZE and therefore out of the ceiling.

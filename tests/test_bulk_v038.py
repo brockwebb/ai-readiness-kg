@@ -720,8 +720,15 @@ def test_the_burn_plan_resumes_at_chunk_level_and_never_repeats_a_chunk(monkeypa
     monkeypatch.setattr(rcb, "document_chunk_counts", lambda: counts)
     monkeypatch.setattr(rcb.queue, "worklist", lambda p=None: ["a", "b"])
     monkeypatch.setattr(rcb.queue, "chunk_coverage", lambda p: coverage)
-    work, remaining, already = rcb.resume_plan()          # the real derivation, not a copy
-    assert (work, remaining, already) == (["a", "b"], {"a": 35, "b": 10}, 5)
+    work, full, remaining, already = rcb.resume_plan()    # the real derivation, not a copy
+    assert (work, full, remaining, already) == (
+        ["a", "b"], {"a": 40, "b": 10}, {"a": 35, "b": 10}, 5)
+    # THE invariant: batch identity is cut on the FULL counts, so it does not move as
+    # chunks get extracted. Sizing uses what is left.
+    before = rcb.batches(work, full)
+    assert [b["chunks"] for b in before] == [40, 10]
+    assert [(b["batch_id"], tuple(b["documents"])) for b in before] == [
+        ("bulk_v038_b001", ("a",)), ("bulk_v038_b002", ("b",))]
     plan = rcb.batches(work, remaining)
     assert sum(b["chunks"] for b in plan) == 45          # not 50
     assert plan[0]["chunks"] == 45                       # 35 + 10 closes the first batch
@@ -991,7 +998,7 @@ def test_the_burn_loop_halts_on_the_stop_file_before_declaring_a_ceiling(tmp_pat
     dispatched = []
     monkeypatch.setattr(rcb, "apply_production_profile", lambda *a, **k: {})
     monkeypatch.setattr(rcb, "resume_plan",
-                        lambda: (["a", "b"], {"a": 50, "b": 50}, 0))
+                        lambda: (["a", "b"], {"a": 50, "b": 50}, {"a": 50, "b": 50}, 0))
     monkeypatch.setattr(rcb, "phase_a_mean_per_chunk", lambda: 50_000.0)
     monkeypatch.setattr(rcb.model_stub, "load_model_config",
                         lambda: {"primary_judge_model_id": "p",
@@ -1030,7 +1037,7 @@ def test_a_failing_yield_flag_cannot_destroy_a_batch_verdict(tmp_path, monkeypat
     consequential output: the acceptance decision is what determines whether a batch's events
     reach the graph, and a flag that is documented as gating nothing erased it."""
     monkeypatch.setattr(rcb, "apply_production_profile", lambda *a, **k: {})
-    monkeypatch.setattr(rcb, "resume_plan", lambda: (["a"], {"a": 50}, 0))
+    monkeypatch.setattr(rcb, "resume_plan", lambda: (["a"], {"a": 50}, {"a": 50}, 0))
     monkeypatch.setattr(rcb, "phase_a_mean_per_chunk", lambda: 50_000.0)
     monkeypatch.setattr(rcb.model_stub, "load_model_config",
                         lambda: {"primary_judge_model_id": "p", "secondary_judge_model_id": "s"})
@@ -1092,7 +1099,7 @@ def test_an_earlier_batch_s_verdict_survives_a_later_batch_dying(tmp_path, monke
     does NOT reach its end: batch 1 accepts, batch 2 dies, and batch 1's verdict must already
     be on disk. A 13-batch burn interrupted at batch 12 otherwise loses eleven verdicts."""
     monkeypatch.setattr(rcb, "apply_production_profile", lambda *a, **k: {})
-    monkeypatch.setattr(rcb, "resume_plan", lambda: (["a", "b"], {"a": 50, "b": 50}, 0))
+    monkeypatch.setattr(rcb, "resume_plan", lambda: (["a", "b"], {"a": 50, "b": 50}, {"a": 50, "b": 50}, 0))
     monkeypatch.setattr(rcb, "phase_a_mean_per_chunk", lambda: 50_000.0)
     monkeypatch.setattr(rcb.model_stub, "load_model_config",
                         lambda: {"primary_judge_model_id": "p", "secondary_judge_model_id": "s"})
@@ -1133,7 +1140,7 @@ def test_a_verdict_is_on_disk_before_decoration_runs_at_all(tmp_path, monkeypatc
     or a kill lands there like anywhere else, and this burn has been killed repeatedly. So the
     verdict is written BEFORE decoration starts, not merely after it fails safely."""
     monkeypatch.setattr(rcb, "apply_production_profile", lambda *a, **k: {})
-    monkeypatch.setattr(rcb, "resume_plan", lambda: (["a"], {"a": 50}, 0))
+    monkeypatch.setattr(rcb, "resume_plan", lambda: (["a"], {"a": 50}, {"a": 50}, 0))
     monkeypatch.setattr(rcb, "phase_a_mean_per_chunk", lambda: 50_000.0)
     monkeypatch.setattr(rcb.model_stub, "load_model_config",
                         lambda: {"primary_judge_model_id": "p", "secondary_judge_model_id": "s"})
@@ -1159,3 +1166,83 @@ def test_a_verdict_is_on_disk_before_decoration_runs_at_all(tmp_path, monkeypatc
         rcb.phase_burn(args)
     out = json.loads((tmp_path / "bulk_v038_burn.json").read_text())
     assert out["outcomes"] == ["accept"]
+
+
+def test_batch_identity_does_not_move_as_chunks_get_extracted(monkeypatch):
+    """Caught live, mid-dispatch. Batches were cut on the REMAINING counts, so once batch 1's
+    two documents were fully extracted they dropped out of the plan and `bulk_v038_b001` came
+    to mean the NEXT two documents — while 2,504 events already carried the old meaning in
+    provenance. The id is what a quarantine names: a shifting id quarantines the wrong events.
+
+    Cutting on the FULL counts makes identity invariant to progress, which is the property."""
+    counts = {"a": 40, "b": 30, "c": 30, "d": 45}
+    monkeypatch.setattr(rcb, "document_chunk_counts", lambda: counts)
+    monkeypatch.setattr(rcb.queue, "worklist", lambda p=None: ["a", "b", "c", "d"])
+
+    def plan_with(coverage):
+        monkeypatch.setattr(rcb.queue, "chunk_coverage", lambda p: coverage)
+        work, full, remaining, _ = rcb.resume_plan()
+        return [(b["batch_id"], tuple(b["documents"])) for b in rcb.batches(work, full)]
+
+    fresh = plan_with({})
+    partly = plan_with({"a": {f"a#c{i}" for i in range(40)}})          # batch 1 done
+    mostly = plan_with({"a": {f"a#c{i}" for i in range(40)},
+                        "b": {f"b#c{i}" for i in range(30)}})
+    assert fresh == partly == mostly, (fresh, partly, mostly)
+    assert fresh[0] == ("bulk_v038_b001", ("a",))
+
+
+def test_a_fully_extracted_batch_is_skipped_not_re_declared(monkeypatch, tmp_path):
+    """A batch whose chunks are all extracted must dispatch nothing — and must not re-declare
+    a ceiling or reserve against one. Its verdict, if it has one, already stands."""
+    counts = {"a": 45}
+    monkeypatch.setattr(rcb, "document_chunk_counts", lambda: counts)
+    monkeypatch.setattr(rcb.queue, "worklist", lambda p=None: ["a"])
+    monkeypatch.setattr(rcb.queue, "chunk_coverage",
+                        lambda p: {"a": {f"a#c{i}" for i in range(45)}})
+    work, full, remaining, already = rcb.resume_plan()
+    plan = rcb.batches(work, full)
+    for bt in plan:
+        bt["to_extract"] = sum(remaining.get(d, 0) for d in bt["documents"])
+    assert plan[0]["chunks"] == 45 and plan[0]["to_extract"] == 0 and already == 45
+
+
+def test_the_burn_loop_uses_stable_identity_and_sizes_on_what_is_left(tmp_path, monkeypatch):
+    """M2 control for the three tests above, which drive `resume_plan`/`batches` directly and
+    therefore cannot see what the LOOP does with them. Drives `phase_burn` over a plan where
+    batch 1 is fully extracted and batch 2 is half done, and asserts all three properties at
+    once: identity from full counts, no declaration for a finished batch, ceiling sized on the
+    chunks that remain."""
+    counts = {"a": 45, "b": 60}
+    coverage = {"a": {f"a#c{i}" for i in range(45)},          # batch 1: done
+                "b": {f"b#c{i}" for i in range(20)}}          # batch 2: 40 left
+    monkeypatch.setattr(rcb, "document_chunk_counts", lambda: counts)
+    monkeypatch.setattr(rcb.queue, "worklist", lambda p=None: ["a", "b"])
+    monkeypatch.setattr(rcb.queue, "chunk_coverage", lambda p: coverage)
+    monkeypatch.setattr(rcb, "apply_production_profile", lambda *a, **k: {})
+    monkeypatch.setattr(rcb, "phase_a_mean_per_chunk", lambda: 50_000.0)
+    monkeypatch.setattr(rcb.model_stub, "load_model_config",
+                        lambda: {"primary_judge_model_id": "p", "secondary_judge_model_id": "s"})
+    monkeypatch.setattr(rcb.cp, "phase_extract", lambda a: 0)
+    monkeypatch.setattr(rcb.cp, "phase_ingest", lambda a: 0)
+    monkeypatch.setattr(rcb.cp, "members", lambda: {"a": tmp_path, "b": tmp_path})
+    monkeypatch.setattr(rcb.rbe, "doc_text", lambda p: "")
+    monkeypatch.setattr(rcb, "batch_items", lambda bid: [])
+    monkeypatch.setattr(rcb, "yield_by_stratum", lambda: {})
+    monkeypatch.setattr(rcb.spend, "set_current_run", lambda r: None)
+    monkeypatch.setattr(rcb, "stop_file", lambda: tmp_path / "nope.json")
+    monkeypatch.setattr(rcb, "STATE_DIR", tmp_path)
+
+    declared = []
+    monkeypatch.setattr(rcb, "declare_batch_ceiling",
+                        lambda run_id, chunks, boot: declared.append((run_id, chunks))
+                        or (999_999_999, 1.0, False))
+
+    args = type("A", (), {"plan_only": False, "max_batches": None, "workers": 1,
+                          "judge_ceiling": 1, "fact_cap": 40})()
+    rcb.phase_burn(args)
+
+    # b001 is document "a" (identity from FULL counts) and is skipped: nothing declared for it
+    assert [r for r, _ in declared] == ["bulk_v038_b002"]
+    # ... and b002's ceiling is sized on the 40 chunks LEFT, not its 60 full chunks
+    assert declared[0][1] == 40
