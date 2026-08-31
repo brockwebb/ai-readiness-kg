@@ -409,21 +409,37 @@ def corpus_epochs() -> dict[str, list[str]]:
     all, which is why the base task's cohorts could not be derived from `events/` (recorded as
     a discrepancy in the RESULT). `run_bulk_extraction.corpus_members` reads the same source."""
     import json as _json
-    out: dict[str, list[str]] = {}
-    if not _DIXIE_DECISIONS.is_file():
-        return out
-    for line in _DIXIE_DECISIONS.read_text(encoding="utf-8").splitlines():
-        if not line.strip():
-            continue
-        try:
-            ev = _json.loads(line)
-        except _json.JSONDecodeError:
-            continue
-        if ev.get("event_type") == "corpus_epoch_declared":
-            p = ev.get("payload") or {}
-            if p.get("epoch"):
-                out[p["epoch"]] = p.get("member_doc_ids") or p.get("members") or []
-    return out
+    out: dict[str, list[str]] = collections.defaultdict(list)
+
+    def _absorb(ev: dict) -> None:
+        # Two shapes are live. The dixie ledger nests the declaration under `payload` and
+        # names the list `member_doc_ids`; the declaration written onto an event shard by
+        # task 2026-08-29_crosswalk_operationalization puts `epoch` and `members` at the top
+        # level. Both are real declarations by the operator's own convention, so both are
+        # read. Reading only one is why the 5 crosswalk-lane documents appeared to belong to
+        # no epoch — twice, once in the bulk driver and once in probe_aggregate, after it had
+        # already cost a fully paid-for judged run.
+        if ev.get("event_type") != "corpus_epoch_declared":
+            return
+        body = ev.get("payload") or ev
+        epoch = body.get("epoch")
+        if not epoch:
+            return
+        for doc in (body.get("member_doc_ids") or body.get("members") or []):
+            if doc not in out[epoch]:
+                out[epoch].append(doc)
+
+    if _DIXIE_DECISIONS.is_file():
+        for line in _DIXIE_DECISIONS.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            try:
+                _absorb(_json.loads(line))
+            except _json.JSONDecodeError:
+                continue
+    for ev in eventlog.replay():
+        _absorb(ev)
+    return dict(out)
 
 
 #: Backfill cohorts (base task §6, corrected on measurement — see the RESULT).

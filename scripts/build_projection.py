@@ -164,10 +164,33 @@ def quarantined_batches() -> set[str]:
     return out
 
 
-def is_projectable(ev: dict, quarantined: set[str] | None = None) -> bool:
+def bulk_purposes() -> set[str]:
+    """`purpose` values written by profiles whose class is `bulk`, read from run_profiles at
+    call time. A profile's events carry its NAME as `purpose`, so the profile name is the
+    match key."""
+    import yaml
+    path = REPO / "scripts/run_profiles.yaml"
+    if not path.is_file():
+        return set()
+    doc = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+    return {n for n, p in (doc.get("profiles") or {}).items()
+            if (p or {}).get("profile_class") == "bulk"}
+
+
+def is_projectable(ev: dict, quarantined: set[str] | None = None,
+                   bulk: set[str] | None = None) -> bool:
     """False for events flagged with a non-graph purpose (e.g. TEVV retests), and for events
     belonging to an acceptance-sampling batch that failed its sample."""
     if ev.get("purpose") in NON_GRAPH_PURPOSES:
+        return False
+    # Second, independent layer for DD-024 (ADDENDUM-01 §1.2). The admission guard in the
+    # ingest path is the first; §5.1 of the RESULT showed that a SINGLE missing rule let 190
+    # forbidden edges through, so the exclusion is also enforced where the graph is built. An
+    # event that reaches here from a bulk-class profile carrying a semantic edge means the
+    # admission guard was bypassed — it still does not project.
+    if (ev.get("event_type") == "edge_asserted"
+            and (ev.get("payload") or {}).get("type") in SEMANTIC_EDGE_TYPES
+            and ev.get("purpose") in (bulk if bulk is not None else bulk_purposes())):
         return False
     bid = (ev.get("provenance") or {}).get("batch_id")
     # An event with no batch_id predates acceptance sampling — the entire v1 and kernel
@@ -228,6 +251,7 @@ def build(session, kg_labels: list[str], edge_whitelist: set[str]) -> dict:
               "aliased_endpoints": 0}
     superseded, aliases = read_overlays()
     quarantined = quarantined_batches()
+    bulk = bulk_purposes()
     if quarantined:
         print(f"acceptance sampling: {len(quarantined)} batch(es) quarantined out of the "
               f"graph: {sorted(quarantined)}")
@@ -240,7 +264,7 @@ def build(session, kg_labels: list[str], edge_whitelist: set[str]) -> dict:
 
     for ev in eventlog.replay():
         et = ev.get("event_type")
-        if not is_projectable(ev, quarantined):
+        if not is_projectable(ev, quarantined, bulk):
             counts["skipped_non_graph_purpose"] += 1
             continue
         ann = annotation_update(ev)

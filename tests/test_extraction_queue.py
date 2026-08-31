@@ -403,3 +403,30 @@ def test_coverage_is_scoped_to_the_pinned_profile(qenv):
     _chunk("doc-a", "doc-a#c0001", "prof_new")
     _chunk("doc-a", "doc-a#c0002", "some_other_run")
     assert queue.project()["doc-a"]["extraction_state"] == "queued"
+
+
+# ------------------------------------------- epoch declarations exist in two shapes
+def test_epochs_are_read_from_the_event_shards_as_well_as_the_dixie_ledger(qenv, monkeypatch):
+    """Task 2026-08-29_crosswalk_operationalization declared `crosswalk-2026-08-29` ON AN
+    EVENT SHARD, at the top level, with the member list under `members`. The dixie ledger
+    nests the same declaration under `payload` and calls it `member_doc_ids`. Reading only
+    the ledger shape made 5 documents look epoch-less — which cost a driver workaround, and
+    then a fully paid-for judged run when probe_aggregate hit the same gap."""
+    eventlog.append({"event_type": "corpus_epoch_declared", "epoch": "shard-epoch",
+                     "members": ["doc-a"]}, batch=queue.QUEUE_BATCH)
+    (qenv["tmp"] / "decisions.jsonl").write_text(json.dumps({
+        "event_type": "corpus_epoch_declared",
+        "payload": {"epoch": "ledger-epoch", "member_doc_ids": ["doc-b"]}}) + "\n")
+    monkeypatch.setattr(queue, "_DIXIE_DECISIONS", qenv["tmp"] / "decisions.jsonl")
+    epochs = queue.corpus_epochs()
+    assert epochs["shard-epoch"] == ["doc-a"]      # top-level `members`
+    assert epochs["ledger-epoch"] == ["doc-b"]     # nested `member_doc_ids`
+
+
+def test_an_epoch_declared_twice_unions_its_members_without_duplicates(qenv):
+    """The crosswalk epoch was declared in two events, 8 members then 2. Last-wins would have
+    reported 2 of its 10 documents."""
+    for members in (["doc-a", "doc-b"], ["doc-b", "doc-out"]):
+        eventlog.append({"event_type": "corpus_epoch_declared", "epoch": "e",
+                         "members": members}, batch=queue.QUEUE_BATCH)
+    assert queue.corpus_epochs()["e"] == ["doc-a", "doc-b", "doc-out"]

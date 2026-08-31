@@ -93,6 +93,7 @@ def apply_arm(profile: str | None = None, model: str | None = None,
     number or raw dir silently defaulting to another arm's would cross-contaminate two
     experiments on an append-only log, which no later correction can fully undo."""
     global PROFILE, RUN_ID, SHARD_NO, TAG, RAW_DIR, CORPUS_EPOCH, EMISSION, ARM_MODEL
+    global PROFILE_CLASS
     if profile:
         PROFILE = profile
     prof = profile_block(PROFILE)
@@ -107,6 +108,7 @@ def apply_arm(profile: str | None = None, model: str | None = None,
     TAG = prof.get("shard_tag")
     RAW_DIR = REPO / prof["raw_dir"]
     CORPUS_EPOCH = prof["corpus_epoch"]
+    PROFILE_CLASS = prof.get("profile_class")
     EMISSION = prof.get("emission_contract", "verbatim")
     if EMISSION not in ("verbatim", "anchor"):
         raise SystemExit(f"FATAL: profile {PROFILE!r} declares unknown emission_contract "
@@ -156,6 +158,9 @@ DOC_PATHS = None
 PURPOSE = "chunked_pilot"
 #: Optional set of chunk_ids the run is restricted to. None = every chunk of every doc.
 CHUNK_FILTER = None
+#: The profile's class, from `run_profiles.yaml`. `bulk` = a production corpus burn, which
+#: DD-024 closes to semantic-edge extraction.
+PROFILE_CLASS = None
 #: Acceptance-sampling batch this pass belongs to (DD-029). Stamped into provenance so a
 #: batch that fails its sample can be quarantined out of the projection afterwards — the
 #: verdict arrives after ingest, so it cannot be expressed as a `purpose` at ingest time.
@@ -604,6 +609,16 @@ def is_live(ev: dict, gens: dict[str, int], dead: set[tuple]) -> bool:
     return cid not in gens or _generation(ev) == gens[cid]
 
 
+def semantic_edge_refused(edge_type: str) -> bool:
+    """Whether DD-024 refuses this edge at graph entry for the ACTIVE profile.
+
+    DD-024: "No bulk semantic-edge extraction under any profile. Semantic edges ... enter the
+    graph only by demand-pull adjudication." The refusal therefore keys on the emitting
+    profile's class, NOT on the edge type globally — demand-pull adjudication produces exactly
+    these types and is the sanctioned path, so a global ban would close DD-024's own remedy."""
+    return PROFILE_CLASS == "bulk" and edge_type in SEMANTIC
+
+
 def ingest_provenance(ex_id: str, model_id: str, sha: str, c, generation: int) -> dict:
     """The provenance every node/edge/mention from one chunk carries. One function so the
     acceptance-sampling `batch_id` has one place to be added or lost: without it
@@ -657,6 +672,23 @@ def phase_ingest(a) -> int:
                                              "item": nrec["item"]}}, batch=SHARD_NO, tag=TAG)
                 kept_n += 1
             for erec in result.edges:
+                # DD-024 at its own stated boundary: graph entry. A refusal is an EVENT, never
+                # silence — a rule that drops output without saying so is indistinguishable
+                # from an extractor that never produced it, and the difference is the whole
+                # evidence base DD-024 rests on.
+                if semantic_edge_refused(erec["type"]):
+                    eventlog.append({"event_type": "semantic_edge_refused", "purpose": PURPOSE,
+                                     "doc_id": d, "chunk_id": c.chunk_id, "provenance": prov,
+                                     "payload": {"type": erec["type"],
+                                                 "from_id": erec["from_id"],
+                                                 "to_id": erec["to_id"],
+                                                 "grounding_span":
+                                                     erec["item"].get("grounding_span"),
+                                                 "rule": "DD-024: no bulk semantic-edge "
+                                                         "extraction under any profile"}},
+                                    batch=SHARD_NO, tag=TAG)
+                    counts["semantic_edge_refused"] += 1
+                    continue
                 if not grounding.is_grounded(erec["item"].get("grounding_span") or "", text):
                     counts["edge_not_in_document"] += 1
                     continue

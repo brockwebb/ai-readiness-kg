@@ -571,3 +571,118 @@ def test_too_few_facts_is_unreachable_not_a_judged_failure():
     Reporting FAIL there would record a verdict the evidence could not have produced."""
     assert rcb.gate_verdict(0.5, 0.1, 34, 35) == "GATE UNREACHABLE"
     assert rcb.gate_verdict(0.0715, 0.7705, 34, 35) == "GATE UNREACHABLE"
+
+
+# --------------------------------------------- DD-024 at graph entry (ADDENDUM-01 §1)
+def test_a_bulk_profile_refuses_semantic_edges_and_says_so(cp_bulk, monkeypatch, tmp_path):
+    """(a) of ADDENDUM-01 §1's matrix, driven through the REAL ingest entry point rather than
+    a fixture (the M85/M86 class; a seventh instance is not wanted).
+
+    The refusal must EMIT. A rule that drops output silently is indistinguishable from an
+    extractor that never produced it, and that difference is the evidence base DD-024 rests
+    on."""
+    from kg import eventlog
+    cp = cp_bulk
+    src = tmp_path / "d.md"
+    body = "The Quality Framework has a component called Objectivity."
+    src.write_text(f"# H\n\n{body}\n", encoding="utf-8")
+    monkeypatch.setattr(cp, "DOCS", ["d"])
+    monkeypatch.setattr(cp, "DOC_PATHS", {"d": src})
+    monkeypatch.setattr(cp, "superseded", lambda tag=None: set())
+    monkeypatch.setattr(cp, "live_generations", lambda tag=None: {})
+    monkeypatch.setattr(cp, "model_cfg", lambda: {"model_id": "m"})
+    assert cp.PROFILE_CLASS == "bulk"
+
+    class _Result:
+        nodes: list = []
+        quarantined: list = []
+        precheck_span_lacks_name = 0
+        edges = [{"type": "has_component", "from_id": "a", "to_id": "b",
+                  "item": {"grounding_span": body}},
+                 {"type": "cites", "from_id": "a", "to_id": "c",
+                  "item": {"grounding_span": body}}]
+
+        def counts(self):
+            return {}
+
+    monkeypatch.setattr(cp, "parse_chunk_raw",
+                        lambda *a, **k: (_Result(), [], []))
+    chunks = list(cp.chunker.chunk_document("d", src.read_text()))
+    sha = __import__("hashlib").sha256(src.read_bytes()).hexdigest()
+    rp = cp.raw_path("d", chunks[0], sha, "m")
+    rp.parent.mkdir(parents=True, exist_ok=True)
+    rp.write_text(json.dumps({"model_id": "m", "usage": {}, "raw_result": "{}"}))
+    cp.phase_ingest(type("A", (), {"reingest": False})())
+
+    evs = list(eventlog.replay(tag=cp.TAG))
+    admitted = [e for e in evs if e.get("event_type") == "edge_asserted"]
+    refused = [e for e in evs if e.get("event_type") == "semantic_edge_refused"]
+    assert [e["payload"]["type"] for e in admitted] == ["cites"]      # cites is NOT semantic
+    assert [e["payload"]["type"] for e in refused] == ["has_component"]
+    r = refused[0]
+    assert r["doc_id"] == "d" and r["chunk_id"] == chunks[0].chunk_id
+    assert r["payload"]["grounding_span"] == body                     # the span is recorded
+    assert "DD-024" in r["payload"]["rule"]
+
+
+def test_an_experiment_arm_is_not_subject_to_the_bulk_refusal(cp_bulk):
+    """DD-024 closes BULK extraction. The refusal keys on the profile's class, so an arm — and
+    demand-pull adjudication, DD-024's own sanctioned path for these same types — is
+    untouched. A global ban on the edge type would close DD-024's remedy along with the
+    problem."""
+    cp = cp_bulk
+    assert cp.semantic_edge_refused("has_component") is True
+    try:
+        cp.apply_arm("v0_3_8", None, "arm")
+        assert cp.PROFILE_CLASS is None
+        assert cp.semantic_edge_refused("has_component") is False
+    finally:
+        cp.apply_arm("bulk_v038", None, "restore")
+
+
+def test_a_bulk_semantic_edge_that_slips_admission_still_does_not_project():
+    """(b): the second, independent layer. §5.1 of the RESULT showed that ONE missing rule let
+    190 forbidden edges through, which is the argument for not relying on one."""
+    import build_projection as bp
+    bulk = bp.bulk_purposes()
+    assert "bulk_v038" in bulk
+    leaked = {"event_type": "edge_asserted", "purpose": "bulk_v038",
+              "payload": {"type": "has_component"}}
+    assert not bp.is_projectable(leaked, set(), bulk)
+    for kept in ({"event_type": "edge_asserted", "purpose": "bulk_v038",
+                  "payload": {"type": "cites"}},
+                 {"event_type": "edge_asserted", "purpose": "demand_pull_adjudication",
+                  "payload": {"type": "has_component"}},
+                 {"event_type": "node_asserted", "purpose": "bulk_v038",
+                  "payload": {"type": "Concept"}}):
+        assert bp.is_projectable(kept, set(), bulk), kept
+
+
+def test_the_refusal_reads_the_profile_registry_not_a_hardcoded_name():
+    """`bulk_purposes` is config-driven. A hardcoded name would silently stop protecting the
+    next production profile the moment one is registered."""
+    import build_projection as bp
+    import yaml
+    d = yaml.safe_load((REPO / "scripts/run_profiles.yaml").read_text())
+    expected = {n for n, p in d["profiles"].items() if (p or {}).get("profile_class") == "bulk"}
+    assert bp.bulk_purposes() == expected and expected
+
+
+def test_a_second_bulk_profile_is_protected_without_a_code_change(tmp_path, monkeypatch):
+    """M2 control for the test above, which cannot fail while `bulk_v038` is the only bulk
+    profile: comparing a hardcoded set to the registry's one entry passes either way. This
+    registers a SECOND bulk profile and asserts it is protected with no code change — the
+    protection has to survive the next production profile."""
+    import build_projection as bp
+    reg = tmp_path / "scripts"
+    reg.mkdir()
+    (reg / "run_profiles.yaml").write_text(__import__("yaml").safe_dump({
+        "default": "bulk_v038",
+        "profiles": {"bulk_v038": {"profile_class": "bulk"},
+                     "bulk_v040": {"profile_class": "bulk"},
+                     "v0_3_8": {}}}))
+    monkeypatch.setattr(bp, "REPO", tmp_path)
+    assert bp.bulk_purposes() == {"bulk_v038", "bulk_v040"}
+    leaked = {"event_type": "edge_asserted", "purpose": "bulk_v040",
+              "payload": {"type": "subtype_of"}}
+    assert not bp.is_projectable(leaked, set(), bp.bulk_purposes())

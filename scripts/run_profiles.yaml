@@ -207,3 +207,11 @@ profiles:
     emission_contract: anchor
     chunker_config: kg/extraction/chunker_config.yaml
     chunker_config_sha256: 8c5492b3a324960802fc58f9ecf36935e9afcb2d904503372a3ef7045eb0259c
+    # DD-024 closes bulk semantic-edge extraction. The pinned template still ASKS for those
+    # edges — an instruction inherited from v0.3.4, three days older than DD-024 — and editing
+    # it would make it a different artifact from the one Phase A qualified. So the rule is
+    # enforced where DD-024 states it, at graph entry, keyed on this class rather than on the
+    # edge type globally: demand-pull adjudication produces exactly these types and is
+    # DD-024's own sanctioned path, so a global ban would close its remedy.
+    # Config, not code (ADDENDUM-01 §1).
+    profile_class: bulk

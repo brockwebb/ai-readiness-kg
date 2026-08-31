@@ -173,11 +173,12 @@ def corpus_members() -> dict[str, Path]:
     """doc_id -> absolute source path for every member of CORPUS_EPOCH, from the dixie ledger."""
     cfg = dixie_config(REPO / "dixie_evidence.yaml")
     log = DixieLog(cfg["evidence_dir_abs"] / "decisions.jsonl")
-    members: list[str] | None = None
-    for ev in log.replay():
-        if ev["event_type"] == "corpus_epoch_declared" and \
-                ev["payload"].get("epoch") == CORPUS_EPOCH:
-            members = ev["payload"]["member_doc_ids"]
+    # Epoch declarations exist in two shapes: nested under `payload` with `member_doc_ids` in
+    # the dixie ledger, and at the top level with `members` on an event shard. `kg.queue`
+    # reads both, and this must agree with it — a document is either in the epoch or it is
+    # not, and two readers disagreeing is what made the crosswalk lane invisible.
+    from kg.queue import corpus_epochs
+    members: list[str] | None = corpus_epochs().get(CORPUS_EPOCH) or None
     if not members:
         raise SystemExit(f"FATAL: no corpus_epoch_declared {CORPUS_EPOCH} event in the ledger")
     entries = build_manifest(log)

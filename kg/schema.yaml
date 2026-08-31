@@ -54,7 +54,7 @@
 #     classification fields (as_of_date, enums, ids) that a span cannot be expected to carry.
 #     Read by the faithfulness probe's decomposer (facts only for true attributes) and by the
 #     scoring rule (`doc_level_attribute` class excluded from F). DD-015.
-schema_version: "0.3.7"
+schema_version: "0.3.8"
 
 # --- Section 2: Node types -------------------------------------------------
 # Each node type lists the "Key properties" column verbatim. Parenthetical
@@ -500,6 +500,20 @@ event_types:
       document_id: doc_id whose live request is cancelled
       reason: why it was withdrawn
       ts: UTC ISO-8601
+  semantic_edge_refused:
+    description: >
+      A semantic edge the extractor proposed and admission refused under DD-024, which closes
+      bulk semantic-edge extraction. Recorded rather than dropped: a rule that discards output
+      silently is indistinguishable from an extractor that never produced it, and the
+      difference is the evidence base DD-024 rests on. Keyed on the emitting profile's class,
+      so demand-pull adjudication — DD-024's sanctioned path for these same types — is
+      unaffected.
+    required: [doc_id, chunk_id, provenance, payload]
+    properties:
+      doc_id: document the edge was proposed from
+      chunk_id: chunk the edge was proposed from
+      provenance: the same stamp the admitted items of that chunk carry
+      payload: type, from_id, to_id, grounding_span, and the rule that refused it
   document_chunk_census:
     description: >
       How many chunks a document HAS under a chunk-unit profile, recorded by the run that
