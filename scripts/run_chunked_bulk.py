@@ -716,7 +716,11 @@ def yield_flag(stratum_mean: float, band: dict | None) -> str | None:
     and a monitor that cries wolf is worse than no monitor."""
     if not band:
         return None
-    lo, hi = band["envelope_low"], band["envelope_high"]
+    lo, hi = band.get("envelope_low"), band.get("envelope_high")
+    if lo is None or hi is None:
+        # A band recorded under an older schema (Phase A's file predates the switch from
+        # +/-3 sd to the envelope). No band is not an anomaly; it is no information.
+        return None
     if stratum_mean < lo:
         return f"below Phase A envelope ({stratum_mean:.2f} < {lo})"
     if stratum_mean > hi:
@@ -879,6 +883,20 @@ def resume_plan() -> tuple[list[str], dict[str, int], int]:
     return work, remaining, sum(len(done.get(d, ())) for d in work)
 
 
+def write_burn_state(rows: list[dict], state: "BurnState", b: dict, budget: int,
+                     n_min: int) -> None:
+    """Persist the per-batch ledger after EVERY batch, not once at the end.
+
+    A crash after batch 1's verdict left no record of it at all: the burn state file was
+    written only on the loop's normal exit, so a 13-batch burn interrupted at batch 12 would
+    have lost twelve verdicts. Cheap to write, and it is the artifact the RESULT reconciles."""
+    (STATE_DIR / "bulk_v038_burn.json").write_text(json.dumps(
+        {"task": TASK, "profile": PROFILE, "batches": rows, "outcomes": state.outcomes,
+         "stopped": state.should_stop(), "sprt": b, "sample_budget": budget,
+         "min_facts_for_accept": n_min, "written_at": now()}, indent=1) + "\n",
+        encoding="utf-8")
+
+
 def phase_burn(a) -> int:
     apply_production_profile(RUN_ID)
     b = sprt_boundaries()
@@ -961,32 +979,35 @@ def phase_burn(a) -> int:
             spend.default_ledger().declare(judge_run_id(bid), a.judge_ceiling,
                                            declared_by=TASK, call_class="judge")
             verdict = judge_batch(bid, items, texts, budget, raters)
-        # Report-only yield flags against Phase A's envelope (ADDENDUM-01 §3.3). Computed
-        # AFTER the verdict and never fed into it.
-        flags = {}
-        for stratum, r in yield_by_stratum().items():
-            f = yield_flag(r["mean_nodes_per_chunk"], phase_a_bands.get(stratum))
-            if f:
-                flags[stratum] = f
-        if flags:
-            print(f"{bid}: yield flags (report-only, gate nothing): {flags}")
-        verdict["yield_flags"] = flags
+        # The verdict is recorded FIRST. It decides whether this batch's events reach the
+        # graph; everything below it is decoration that gates nothing. A KeyError in the
+        # report-only yield flags destroyed batch 1's ACCEPT once — the least consequential
+        # computation in the loop taking the most consequential output with it.
         state.record(verdict["outcome"])
         if verdict["outcome"] == "reject":
             quarantine_batch(bid, "SPRT reject boundary crossed", verdict)
             print(f"{bid}: REJECT — shard quarantined out of the projection")
         print(f"{bid}: {verdict['outcome']}")
         ledger_rows.append(verdict)
+        write_burn_state(ledger_rows, state, b, budget, n_min)
+
+        # Report-only yield flags against Phase A's envelope (ADDENDUM-01 §3.3). Computed
+        # after the verdict, never fed into it, and never able to fail the batch.
+        try:
+            flags = {s: f for s, r in yield_by_stratum().items()
+                     if (f := yield_flag(r["mean_nodes_per_chunk"], phase_a_bands.get(s)))}
+        except Exception as exc:                      # noqa: BLE001 - decoration only
+            flags, verdict["yield_flag_error"] = {}, repr(exc)
+            print(f"{bid}: yield flags unavailable ({exc!r}); the verdict above stands")
+        if flags:
+            print(f"{bid}: yield flags (report-only, gate nothing): {flags}")
+        verdict["yield_flags"] = flags
+        write_burn_state(ledger_rows, state, b, budget, n_min)
         stop = state.should_stop()
         if stop:
             print(f"\nCORPUS STOP: {stop}. Incident-class report; burn halted.")
             break
-    out = {"task": TASK, "profile": PROFILE, "batches": ledger_rows,
-           "outcomes": state.outcomes, "stopped": state.should_stop(),
-           "sprt": b, "sample_budget": budget, "min_facts_for_accept": n_min,
-           "ran_at": now()}
-    (STATE_DIR / "bulk_v038_burn.json").write_text(json.dumps(out, indent=1) + "\n",
-                                                   encoding="utf-8")
+    write_burn_state(ledger_rows, state, b, budget, n_min)
     return 0
 
 

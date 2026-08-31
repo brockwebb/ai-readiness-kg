@@ -1021,3 +1021,141 @@ def test_the_burn_loop_halts_on_the_stop_file_before_declaring_a_ceiling(tmp_pat
     monkeypatch.setattr(rcb.spend, "set_current_run", lambda r: None)
     rcb.phase_burn(args)
     assert "declared" in dispatched and "extracted" in dispatched
+
+
+def test_a_failing_yield_flag_cannot_destroy_a_batch_verdict(tmp_path, monkeypatch):
+    """This happened. Batch 1 reached ACCEPT — 3 fabrications in 110 facts — and then a
+    KeyError in the report-only yield flags took the process down before the verdict was
+    recorded anywhere. The least consequential computation in the loop destroyed the most
+    consequential output: the acceptance decision is what determines whether a batch's events
+    reach the graph, and a flag that is documented as gating nothing erased it."""
+    monkeypatch.setattr(rcb, "apply_production_profile", lambda *a, **k: {})
+    monkeypatch.setattr(rcb, "resume_plan", lambda: (["a"], {"a": 50}, 0))
+    monkeypatch.setattr(rcb, "phase_a_mean_per_chunk", lambda: 50_000.0)
+    monkeypatch.setattr(rcb.model_stub, "load_model_config",
+                        lambda: {"primary_judge_model_id": "p", "secondary_judge_model_id": "s"})
+    monkeypatch.setattr(rcb, "declare_batch_ceiling", lambda *a, **k: (1, 1.0, False))
+    monkeypatch.setattr(rcb.cp, "phase_extract", lambda a: 0)
+    monkeypatch.setattr(rcb.cp, "phase_ingest", lambda a: 0)
+    monkeypatch.setattr(rcb.cp, "members", lambda: {"a": tmp_path})
+    monkeypatch.setattr(rcb.rbe, "doc_text", lambda p: "")
+    monkeypatch.setattr(rcb, "batch_items", lambda bid: [{"x": 1}] * 999)
+    monkeypatch.setattr(rcb, "judge_batch",
+                        lambda *a, **k: {"outcome": "accept", "batch_id": a[0], "facts": 110,
+                                         "fabrications": 3})
+    monkeypatch.setattr(rcb.spend, "set_current_run", lambda r: None)
+    monkeypatch.setattr(rcb.spend, "default_ledger",
+                        lambda: type("L", (), {"declare": lambda *a, **k: None})())
+    monkeypatch.setattr(rcb, "stop_file", lambda: tmp_path / "nope.json")
+    monkeypatch.setattr(rcb, "STATE_DIR", tmp_path)
+    # the exact failure: yield_by_stratum raises while computing decoration
+    monkeypatch.setattr(rcb, "yield_by_stratum",
+                        lambda: (_ for _ in ()).throw(KeyError("envelope_low")))
+
+    args = type("A", (), {"plan_only": False, "max_batches": 1, "workers": 1,
+                          "judge_ceiling": 1, "fact_cap": 40})()
+    assert rcb.phase_burn(args) == 0                       # the burn does NOT die
+    out = json.loads((tmp_path / "bulk_v038_burn.json").read_text())
+    assert out["outcomes"] == ["accept"]                   # the verdict survived
+    assert out["batches"][0]["fabrications"] == 3
+    assert "envelope_low" in out["batches"][0]["yield_flag_error"]
+
+
+def test_the_burn_ledger_is_written_after_every_batch_not_once_at_the_end(tmp_path,
+                                                                          monkeypatch):
+    """The burn state file was written only on the loop's normal exit, so a 13-batch burn
+    interrupted at batch 12 would have lost twelve verdicts. Batch 1's accept was lost to
+    exactly this."""
+    seen = []
+    monkeypatch.setattr(rcb, "STATE_DIR", tmp_path)
+    st = rcb.BurnState()
+    b = rcb.sprt_boundaries()
+    for outcome in ("accept", "reject"):
+        st.record(outcome)
+        rcb.write_burn_state([{"outcome": o} for o in st.outcomes], st, b, 463, 55)
+        seen.append(json.loads((tmp_path / "bulk_v038_burn.json").read_text())["outcomes"])
+    assert seen == [["accept"], ["accept", "reject"]]
+
+
+def test_a_band_from_an_older_schema_yields_no_flag_rather_than_an_exception():
+    """Phase A's bands were written as +/-3 sd (`band_low`/`band_high`) before ADDENDUM-01
+    §3.3 switched to the envelope. Absence of a band is no information, not an anomaly."""
+    assert rcb.yield_flag(12.0, {"band_low": -30, "band_high": 58}) is None
+    assert rcb.yield_flag(12.0, {"envelope_low": 5}) is None
+    assert rcb.yield_flag(12.0, {"envelope_low": 5, "envelope_high": 20}) is None
+    assert "above" in rcb.yield_flag(99.0, {"envelope_low": 5, "envelope_high": 20})
+
+
+def test_an_earlier_batch_s_verdict_survives_a_later_batch_dying(tmp_path, monkeypatch):
+    """M2 control for the test above, which passes even when the in-loop write is deleted
+    because the loop's final write still runs. The distinction only appears when the loop
+    does NOT reach its end: batch 1 accepts, batch 2 dies, and batch 1's verdict must already
+    be on disk. A 13-batch burn interrupted at batch 12 otherwise loses eleven verdicts."""
+    monkeypatch.setattr(rcb, "apply_production_profile", lambda *a, **k: {})
+    monkeypatch.setattr(rcb, "resume_plan", lambda: (["a", "b"], {"a": 50, "b": 50}, 0))
+    monkeypatch.setattr(rcb, "phase_a_mean_per_chunk", lambda: 50_000.0)
+    monkeypatch.setattr(rcb.model_stub, "load_model_config",
+                        lambda: {"primary_judge_model_id": "p", "secondary_judge_model_id": "s"})
+    monkeypatch.setattr(rcb, "declare_batch_ceiling", lambda *a, **k: (1, 1.0, False))
+    monkeypatch.setattr(rcb.cp, "phase_ingest", lambda a: 0)
+    monkeypatch.setattr(rcb.cp, "members", lambda: {"a": tmp_path, "b": tmp_path})
+    monkeypatch.setattr(rcb.rbe, "doc_text", lambda p: "")
+    monkeypatch.setattr(rcb, "batch_items", lambda bid: [{"x": 1}] * 999)
+    monkeypatch.setattr(rcb, "judge_batch",
+                        lambda *a, **k: {"outcome": "accept", "batch_id": a[0]})
+    monkeypatch.setattr(rcb, "yield_by_stratum", lambda: {})
+    monkeypatch.setattr(rcb.spend, "set_current_run", lambda r: None)
+    monkeypatch.setattr(rcb.spend, "default_ledger",
+                        lambda: type("L", (), {"declare": lambda *a, **k: None})())
+    monkeypatch.setattr(rcb, "stop_file", lambda: tmp_path / "nope.json")
+    monkeypatch.setattr(rcb, "STATE_DIR", tmp_path)
+
+    calls = []
+
+    def extract_then_die(a):
+        calls.append(1)
+        if len(calls) > 1:
+            raise RuntimeError("batch 2 dies mid-extraction")
+        return 0
+
+
+    monkeypatch.setattr(rcb.cp, "phase_extract", extract_then_die)
+    args = type("A", (), {"plan_only": False, "max_batches": None, "workers": 1,
+                          "judge_ceiling": 1, "fact_cap": 40})()
+    with pytest.raises(RuntimeError):
+        rcb.phase_burn(args)
+    out = json.loads((tmp_path / "bulk_v038_burn.json").read_text())
+    assert out["outcomes"] == ["accept"]           # batch 1 is durable despite batch 2's death
+
+
+def test_a_verdict_is_on_disk_before_decoration_runs_at_all(tmp_path, monkeypatch):
+    """The `except Exception` around the yield flags does not catch a BaseException — a Ctrl-C
+    or a kill lands there like anywhere else, and this burn has been killed repeatedly. So the
+    verdict is written BEFORE decoration starts, not merely after it fails safely."""
+    monkeypatch.setattr(rcb, "apply_production_profile", lambda *a, **k: {})
+    monkeypatch.setattr(rcb, "resume_plan", lambda: (["a"], {"a": 50}, 0))
+    monkeypatch.setattr(rcb, "phase_a_mean_per_chunk", lambda: 50_000.0)
+    monkeypatch.setattr(rcb.model_stub, "load_model_config",
+                        lambda: {"primary_judge_model_id": "p", "secondary_judge_model_id": "s"})
+    monkeypatch.setattr(rcb, "declare_batch_ceiling", lambda *a, **k: (1, 1.0, False))
+    monkeypatch.setattr(rcb.cp, "phase_extract", lambda a: 0)
+    monkeypatch.setattr(rcb.cp, "phase_ingest", lambda a: 0)
+    monkeypatch.setattr(rcb.cp, "members", lambda: {"a": tmp_path})
+    monkeypatch.setattr(rcb.rbe, "doc_text", lambda p: "")
+    monkeypatch.setattr(rcb, "batch_items", lambda bid: [{"x": 1}] * 999)
+    monkeypatch.setattr(rcb, "judge_batch",
+                        lambda *a, **k: {"outcome": "accept", "batch_id": a[0]})
+    monkeypatch.setattr(rcb.spend, "set_current_run", lambda r: None)
+    monkeypatch.setattr(rcb.spend, "default_ledger",
+                        lambda: type("L", (), {"declare": lambda *a, **k: None})())
+    monkeypatch.setattr(rcb, "stop_file", lambda: tmp_path / "nope.json")
+    monkeypatch.setattr(rcb, "STATE_DIR", tmp_path)
+    monkeypatch.setattr(rcb, "yield_by_stratum",
+                        lambda: (_ for _ in ()).throw(KeyboardInterrupt()))
+
+    args = type("A", (), {"plan_only": False, "max_batches": 1, "workers": 1,
+                          "judge_ceiling": 1, "fact_cap": 40})()
+    with pytest.raises(KeyboardInterrupt):
+        rcb.phase_burn(args)
+    out = json.loads((tmp_path / "bulk_v038_burn.json").read_text())
+    assert out["outcomes"] == ["accept"]
