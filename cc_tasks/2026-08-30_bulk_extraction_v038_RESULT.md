@@ -350,8 +350,9 @@ taking the run down with it.
 |---|---|
 | suite at task start | 453 |
 | suite at task end | **510** |
-| mutations run | **40** |
-| mutations killed | **40** |
+| mutations run | **43** |
+| mutations killed | **42** |
+| equivalent mutants | **1** (Q3, below) |
 
 Four mutations exposed **defects, not missing tests**, and were fixed rather than tested around:
 
@@ -364,8 +365,8 @@ Four mutations exposed **defects, not missing tests**, and were fixed rather tha
   SPRT never decides, and the acceptance sampling runs while monitoring nothing. Provenance
   construction is now one function, so the field has one place to be lost.
 - **G1.** An unreadable probe aggregate resolved to **FAIL** instead of refusing (§3.6).
-- **Q3, and this one is the fourth of its kind here.** The surviving mutation exposed logic
-  that *cannot change behaviour*: `not n_want or n_have >= n_want` is identical to
+- **Q3 — an equivalent mutant, the fourth of its kind here.** It survived because the logic
+  it changed cannot change behaviour: `not n_want or n_have >= n_want` is identical to
   `n_have >= n_want`, since `n_have >= 0` always holds. Deleted, with the reasoning left in
   place and the mutation retargeted at the comparison that does run. Three earlier surviving
   mutations in this project (M65, M98, and `worklist`'s oversize skip) were the same finding.
@@ -488,8 +489,9 @@ One paid-for artifact was **discarded** rather than used: the mislabeled Phase A
       ledger declared (§1.5)
 - [x] **Phase A** — pooled gate **PASS** (§3.5), per-stratum reported not gated, yield bands
       recorded (§3.3)
-- [x] **Phase B** — SPRT constants and the 55-fact minimum derived (§2); mutation matrix
-      **32/32 killed** before any Phase C call, per the task's own precondition
+- [x] **Phase B** — SPRT constants and the 55-fact minimum derived (§2); the Phase C
+      mutation matrix (C1–C17) ran and was clean **before any Phase C call**, per the
+      task's own precondition
 - [ ] **Phase C** — **NOT STARTED.** Blocked on the DD-024 profile defect (§5). No batch
       dispatched, no batch ceiling declared, no burn events, nothing to quarantine or
       reconcile.
@@ -547,7 +549,7 @@ genuinely completed — the completeness rule of §3.5's sibling fix working in 
 | | |
 |---|---|
 | suite | **510 passed** |
-| mutations run / killed | **40 / 40** |
+| mutations run / killed / equivalent | **43 / 42 / 1** |
 | ledger, this task | 4,288,618 settled (1,492,023 extraction + 2,796,595 judge) |
 | daily band | 55,000,000; committed today 4,827,970 |
 | model spend on Phase C | **0** |
