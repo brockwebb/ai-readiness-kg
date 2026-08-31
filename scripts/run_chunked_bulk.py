@@ -754,7 +754,7 @@ def judge_run_id(batch_id: str) -> str:
     """One judge ledger run PER BATCH. A single shared judge run would put 13 batches' worth
     of judging — ~6,000 facts at two raters — under one ceiling, and the guard would refuse
     batch 2 onwards for having spent batch 1's budget."""
-    return f"{RUN_ID}_{batch_id}_judge"
+    return f"{batch_id}_judge"
 
 
 def judge_batch(batch_id: str, items: list[dict], texts: dict[str, str],
@@ -834,7 +834,10 @@ def phase_burn(a) -> int:
     for bt in plan[: a.max_batches] if a.max_batches else plan:
         bid = bt["batch_id"]
         ceiling, per = batch_ceiling(bt["chunks"], boot)
-        run_id = f"{RUN_ID}_{bid}"
+        # The batch id is already unique and says what it is. Deriving the run id from
+        # RUN_ID ("bulk_v038_phase_a") produced `bulk_v038_phase_a_bulk_v038_b001`, which
+        # names the burn after the qualification phase it is not part of.
+        run_id = bid
         print(f"\n=== {bid}: {len(bt['documents'])} docs, {bt['chunks']} chunks, "
               f"ceiling {ceiling:,} (1.3 x {per:,.0f}/chunk)", flush=True)
         spend.default_ledger().declare(run_id, ceiling, declared_by=TASK,

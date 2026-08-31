@@ -790,4 +790,6 @@ def test_each_batch_judges_under_its_own_ledger_run():
     already hit that ceiling once, correctly, at 1,952,265 + 60,950 vs 2,000,000."""
     ids = {rcb.judge_run_id(f"bulk_v038_b{i:03d}") for i in range(1, 14)}
     assert len(ids) == 13
-    assert all(i.startswith(rcb.RUN_ID) and i.endswith("_judge") for i in ids)
+    assert all(i.startswith("bulk_v038_b") and i.endswith("_judge") for i in ids)
+    # and the burn's ledger runs are named for the BATCH, not for the qualification phase
+    assert rcb.judge_run_id("bulk_v038_b001") == "bulk_v038_b001_judge"
