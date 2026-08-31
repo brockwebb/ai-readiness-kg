@@ -267,7 +267,7 @@ and never a premise. **Zero model spend**; every check below is deterministic.
 | converter choice recorded | `CONVERTER_CHOICE` in `convert.py` | present, with the comparison table |
 | skill symlinked not copied | `ls -la ~/.claude/skills/document-ingest` | symlink → `claude-skills/skills/document-ingest` |
 
-DD-030 is registered at `docs/design_decisions.md:456`.
+DD-030 is registered at `docs/design_decisions.md:456`. `seldon cc complete` on this task file was verified already run (id `43b53e81`), as was the closure of `6c39a235` — both task-file requirements are met.
 
 ## 8.2 Correction 1 — the gate was not wired to admission
 
