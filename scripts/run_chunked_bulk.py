@@ -757,11 +757,33 @@ def judge_run_id(batch_id: str) -> str:
     return f"{batch_id}_judge"
 
 
+#: Facts added per sequential increment. The first increment is the arithmetic minimum at
+#: which ACCEPT is reachable at all (DD-026 applied to this plan), and each further step is
+#: the same size — small enough that a clean batch stops near Wald's ASN, large enough that
+#: the per-increment overhead stays negligible against two rater passes.
+def sprt_increments(b: dict, budget: int) -> list[int]:
+    step = min_facts_for_accept(b)
+    out, n = [], step
+    while n < budget:
+        out.append(n)
+        n += step
+    out.append(budget)
+    return out
+
+
 def judge_batch(batch_id: str, items: list[dict], texts: dict[str, str],
-                budget: int, raters: list[str], fact_cap: int) -> dict:
-    """Draw, decompose, judge, decide. Returns the SPRT verdict and its evidence."""
+                budget: int, raters: list[str]) -> dict:
+    """Judge a batch SEQUENTIALLY and stop at the first boundary crossing.
+
+    This is what "sequential plan" means and what Wald's ASN prices. The first cut of this
+    function judged a fixed sample and applied the boundary once — a fixed-n test wearing the
+    SPRT's constants. Two consequences, both real: a `continue` at the fixed size was a
+    dangling outcome the stop rule never counted, and every batch paid the full budget
+    (463 facts, ~8M tokens) where the sequential test is expected to stop at 159."""
     b = sprt_boundaries()
-    sample = sample_for_batch(batch_id, items, budget)
+    # Items, not facts: decomposition yields ~2.8 facts per item (684/246 in Phase A), so half
+    # the fact budget in items supplies the budget with margin, and bounds decompose cost.
+    sample = sample_for_batch(batch_id, items, math.ceil(budget / 2))
     strata = document_strata()
     recs = []
     for ev in sample:
@@ -777,18 +799,40 @@ def judge_batch(batch_id: str, items: list[dict], texts: dict[str, str],
                      "window": cp.window_for(cp.grounding.normalize(texts[doc_id]), span)})
     prefix = f"burn_{batch_id}"
     cp.write_sample(prefix, recs)
-    agg = cp.run_protocol(prefix, prefix, judge_run_id(batch_id), raters, fact_cap)
-    if not agg:
-        return {"outcome": "protocol_failed", "batch_id": batch_id}
-    pooled = agg.get("pooled") or agg
-    facts = int(pooled.get("facts") or pooled.get("n_facts") or 0)
-    fabrications = int(pooled.get("fabrications") or pooled.get("unfaithful") or 0)
-    decision = sprt_decide(fabrications, facts, b)
-    if decision == "continue" and facts >= budget:
+
+    trace, agg = [], None
+    decision = "continue"
+    for limit in sprt_increments(b, budget):
+        agg = cp.run_protocol(prefix, prefix, judge_run_id(batch_id), raters,
+                              fact_limit=limit)
+        if not agg:
+            return {"outcome": "protocol_failed", "batch_id": batch_id, "trace": trace}
+        pooled = agg.get("pooled") or {}
+        facts = int(pooled.get("n_facts") or 0)
+        fabrications = int(pooled.get("fabrication") or 0)
+        decision = sprt_decide(fabrications, facts, b)
+        trace.append({"limit": limit, "facts": facts, "fabrications": fabrications,
+                      "decision": decision})
+        print(f"  {batch_id} SPRT: {fabrications} fabrications / {facts} facts -> {decision}",
+              flush=True)
+        if decision != "continue":
+            break
+        if facts < limit:
+            # The sample is exhausted before the budget: no more evidence is obtainable, so
+            # this is the budget-spent case whatever the nominal budget was.
+            decision = "sampling_inconclusive"
+            break
+    # Whatever ended the loop — budget spent, or the sample exhausted — a `continue` is not a
+    # verdict. It becomes `sampling_inconclusive`, which is accept-with-flag for the batch AND
+    # counts toward the corpus stop rule. A for/else that set the same value was here too; two
+    # lines doing one job, and a mutation deleting either survived because the other covered
+    # it. One path now.
+    if decision == "continue":
         decision = "sampling_inconclusive"
-    return {"outcome": decision, "batch_id": batch_id, "facts": facts,
-            "fabrications": fabrications, "items_sampled": len(sample),
-            "items_available": len(items), "aggregate": agg}
+    last = trace[-1] if trace else {}
+    return {"outcome": decision, "batch_id": batch_id, "facts": last.get("facts", 0),
+            "fabrications": last.get("fabrications", 0), "items_sampled": len(sample),
+            "items_available": len(items), "sprt_trace": trace, "aggregate": agg}
 
 
 def resume_plan() -> tuple[list[str], dict[str, int], int]:
@@ -867,7 +911,7 @@ def phase_burn(a) -> int:
         else:
             spend.default_ledger().declare(judge_run_id(bid), a.judge_ceiling,
                                            declared_by=TASK, call_class="judge")
-            verdict = judge_batch(bid, items, texts, budget, raters, a.fact_cap)
+            verdict = judge_batch(bid, items, texts, budget, raters)
         # Report-only yield flags against Phase A's envelope (ADDENDUM-01 §3.3). Computed
         # AFTER the verdict and never fed into it.
         flags = {}

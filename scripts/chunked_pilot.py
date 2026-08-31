@@ -1005,7 +1005,37 @@ def span_check_sidecar(prefix: str, texts: dict[str, str]) -> dict:
     return out
 
 
-def run_protocol(prefix: str, run: str, run_id: str, raters: list[str], fact_cap: int) -> dict | None:
+def sequential_fact_order(by_stratum: dict, seed: str) -> list[str]:
+    """A STABLE seeded round-robin over strata: fact ids in the order a sequential test will
+    consume them.
+
+    Stability is the whole contract. Each increment re-derives this order and takes a longer
+    prefix, so an unstable order would re-judge facts already paid for and apply the boundary
+    to a sample that moved underneath it. Seeded from the run prefix, never from global
+    `random` state."""
+    rng = random.Random(seed)
+    pools = {}
+    for stratum, fids in sorted(by_stratum.items()):
+        order = list(fids)
+        rng.shuffle(order)
+        pools[stratum] = order
+    out: list[str] = []
+    while any(pools.values()):
+        for stratum in sorted(pools):
+            if pools[stratum]:
+                out.append(pools[stratum].pop(0))
+    return out
+
+
+def run_protocol(prefix: str, run: str, run_id: str, raters: list[str],
+                 fact_cap: int | None = None, fact_limit: int | None = None) -> dict | None:
+    """Decompose -> judge -> aggregate.
+
+    `fact_cap` caps facts per stratum (the pilot's fixed-n use). `fact_limit` instead takes the
+    first N facts of a STABLE seeded round-robin across strata, which is what a SEQUENTIAL test
+    needs: raising the limit yields a superset, so probe_judge resumes and pays only for the
+    new facts. The order must not move between calls or an increment would re-judge facts
+    already labelled and the boundary would be applied to a shifting sample."""
     env = dict(os.environ); env[spend.RUN_ENV] = run_id
     r = subprocess.run([PY, "scripts/probe_decompose.py", "--prefix", prefix],
                        cwd=REPO, env=env, capture_output=True, text=True, timeout=7200)
@@ -1023,12 +1053,18 @@ def run_protocol(prefix: str, run: str, run_id: str, raters: list[str], fact_cap
         by_stratum[items[f["event_id"]]["stratum"]].append(f["fact_id"])
     rng = random.Random(prefix)                  # seed recorded in the verdict
     sel = []
-    for s, fids in sorted(by_stratum.items()):
-        sel += fids if len(fids) <= fact_cap else rng.sample(fids, fact_cap)
+    if fact_limit is not None:
+        sel = sequential_fact_order(by_stratum, prefix)[:fact_limit]
+    else:
+        if fact_cap is None:
+            raise ValueError("run_protocol needs fact_cap or fact_limit")
+        for s, fids in sorted(by_stratum.items()):
+            sel += fids if len(fids) <= fact_cap else rng.sample(fids, fact_cap)
     sel_path = METRICS / f"{prefix}_fact_sel.json"
     sel_path.write_text(json.dumps(sorted(sel)))
-    print(f"{prefix}: {len(facts)} facts, judging {len(sel)} "
-          f"(cap {fact_cap}/stratum, seed {prefix!r})", flush=True)
+    how = f"cap {fact_cap}/stratum" if fact_limit is None else f"sequential limit {fact_limit}"
+    print(f"{prefix}: {len(facts)} facts, judging {len(sel)} ({how}, seed {prefix!r})",
+          flush=True)
     for model in raters:
         r = subprocess.run([PY, "scripts/probe_judge.py", "--prefix", prefix, "--run", run,
                             "--batch", "10", "--model", model,

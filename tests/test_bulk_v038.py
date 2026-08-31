@@ -793,3 +793,129 @@ def test_each_batch_judges_under_its_own_ledger_run():
     assert all(i.startswith("bulk_v038_b") and i.endswith("_judge") for i in ids)
     # and the burn's ledger runs are named for the BATCH, not for the qualification phase
     assert rcb.judge_run_id("bulk_v038_b001") == "bulk_v038_b001_judge"
+
+
+# --------------------------------------------- the SPRT applied SEQUENTIALLY
+def test_the_increments_start_at_the_arithmetic_minimum_and_end_at_the_budget():
+    """Below `min_facts_for_accept` no evidence can settle a batch, so the first increment
+    is exactly that (DD-026 applied to this plan); the last is the budget, so the plan can
+    spend what it declared and no more."""
+    b = rcb.sprt_boundaries()
+    inc = rcb.sprt_increments(b, 463)
+    assert inc[0] == rcb.min_facts_for_accept(b) == 55
+    assert inc[-1] == 463
+    assert inc == sorted(inc) and len(set(inc)) == len(inc)
+    assert rcb.sprt_decide(0, inc[0], b) == "accept"        # reachable at the first step
+
+
+def test_a_clean_batch_stops_early_instead_of_paying_the_whole_budget():
+    """The point of a SEQUENTIAL test, and what Wald's ASN prices: 159 expected facts at p0
+    against a 463 budget. Judging the full budget every time costs ~8M tokens per batch and
+    ~105M across the burn, for evidence the plan does not need."""
+    b = rcb.sprt_boundaries()
+    inc = rcb.sprt_increments(b, 463)
+    assert rcb.sprt_decide(0, inc[0], b) == "accept"
+    # a dirty batch crosses the other way, also before the budget
+    assert rcb.sprt_decide(20, 110, b) == "reject"
+
+
+def _judge(monkeypatch, per_increment, budget=463):
+    """Drive the real judge_batch with a stubbed protocol returning scripted aggregates."""
+    calls = []
+
+    def fake_protocol(prefix, run, run_id, raters, fact_cap=None, fact_limit=None):
+        calls.append(fact_limit)
+        fab, facts = per_increment[min(len(calls) - 1, len(per_increment) - 1)]
+        return {"pooled": {"n_facts": facts, "fabrication": fab}}
+
+    monkeypatch.setattr(rcb.cp, "run_protocol", fake_protocol)
+    monkeypatch.setattr(rcb.cp, "write_sample", lambda *a, **k: None)
+    monkeypatch.setattr(rcb, "document_strata", lambda: {"d": "academic"})
+    monkeypatch.setattr(rcb.cp, "window_for", lambda *a, **k: "")
+    monkeypatch.setattr(rcb.cp.grounding, "normalize", lambda t: t)
+    items = [{"doc_id": "d", "chunk_id": "d#c1", "event_id": f"e{i}",
+              "payload": {"id": f"n{i}", "type": "Concept", "item": {"name": f"n{i}"}}}
+             for i in range(400)]
+    return rcb.judge_batch("bulk_v038_b001", items, {"d": "text"}, budget, ["r1", "r2"]), calls
+
+
+def test_a_clean_batch_accepts_at_the_first_increment_and_judges_no_further(monkeypatch):
+    v, calls = _judge(monkeypatch, [(0, 55)])
+    assert v["outcome"] == "accept"
+    assert calls == [55]                      # one increment, not nine
+    assert v["sprt_trace"][-1]["facts"] == 55
+
+
+def test_an_ambiguous_batch_escalates_until_a_boundary_or_the_budget(monkeypatch):
+    """8 fabrications in 160 facts sits in the ambiguous band at every early step. It must
+    keep escalating and then be recorded `sampling_inconclusive` — never left as a dangling
+    `continue`, which the corpus stop rule does not count."""
+    v, calls = _judge(monkeypatch, [(5, 55), (10, 110), (16, 165), (22, 220), (28, 275),
+                                    (33, 330), (38, 385), (44, 440), (46, 463)])
+    assert v["outcome"] in ("reject", "sampling_inconclusive")
+    assert len(calls) > 1 and calls[-1] <= 463
+
+
+def test_a_batch_that_never_crosses_a_boundary_is_inconclusive_not_continue(monkeypatch):
+    """The defect this replaced: a fixed-n test returned `continue`, which is not one of
+    accept / reject / sampling_inconclusive and which `BurnState.should_stop` ignores — so a
+    persistently ambiguous burn would never trip the corpus stop rule."""
+    steps = [(int(0.073 * n), n) for n in rcb.sprt_increments(rcb.sprt_boundaries(), 463)]
+    v, _calls = _judge(monkeypatch, steps)
+    assert v["outcome"] == "sampling_inconclusive"
+    assert v["outcome"] in ("accept", "reject", "sampling_inconclusive", "protocol_failed")
+
+
+def test_an_exhausted_sample_is_inconclusive_rather_than_an_endless_escalation(monkeypatch):
+    """A small batch cannot supply the budget. When the protocol returns fewer facts than the
+    limit asked for, no more evidence is obtainable and the batch settles as inconclusive."""
+    v, calls = _judge(monkeypatch, [(3, 55), (5, 70), (5, 70)])
+    assert v["outcome"] == "sampling_inconclusive"
+    assert len(calls) <= 3
+
+
+def test_a_protocol_failure_is_its_own_outcome_not_an_accept(monkeypatch):
+    monkeypatch.setattr(rcb.cp, "run_protocol", lambda *a, **k: None)
+    monkeypatch.setattr(rcb.cp, "write_sample", lambda *a, **k: None)
+    monkeypatch.setattr(rcb, "document_strata", lambda: {"d": "academic"})
+    monkeypatch.setattr(rcb.cp, "window_for", lambda *a, **k: "")
+    monkeypatch.setattr(rcb.cp.grounding, "normalize", lambda t: t)
+    items = [{"doc_id": "d", "chunk_id": "d#c1", "event_id": "e",
+              "payload": {"id": "n", "type": "Concept", "item": {"name": "n"}}}]
+    v = rcb.judge_batch("b", items, {"d": "t"}, 463, ["r1"])
+    assert v["outcome"] == "protocol_failed"
+
+
+def test_each_sequential_increment_is_a_superset_of_the_last(monkeypatch):
+    """The contract that makes a sequential test payable: raising the limit must extend the
+    sample, never reshuffle it. An unstable order re-judges facts already paid for AND applies
+    the boundary to a sample that moved underneath it — the interval would be over a different
+    population at every step."""
+    by_stratum = {"academic": [f"a{i}" for i in range(50)],
+                  "federal": [f"f{i}" for i in range(50)],
+                  "standard": [f"s{i}" for i in range(50)]}
+    order = rcb.cp.sequential_fact_order(by_stratum, "burn_bulk_v038_b001")
+    again = rcb.cp.sequential_fact_order(by_stratum, "burn_bulk_v038_b001")
+    assert order == again                                   # stable across calls
+    for a, b in ((55, 110), (110, 165), (165, len(order))):
+        assert order[:a] == order[:b][:a]                   # every step extends the last
+    assert len(order) == 150 and len(set(order)) == 150     # every fact exactly once
+    other = rcb.cp.sequential_fact_order(by_stratum, "burn_bulk_v038_b002")
+    assert other != order                                   # a different batch draws its own
+
+
+def test_the_sequential_order_spreads_across_strata_before_exhausting_one():
+    """Round-robin, so an early stop is not a verdict about one document class. Taking the
+    first 55 facts from a single stratum would make the batch's accept a claim about that
+    stratum, not the batch."""
+    by_stratum = {"a": [f"a{i}" for i in range(50)], "b": [f"b{i}" for i in range(50)]}
+    first20 = rcb.cp.sequential_fact_order(by_stratum, "seed")[:20]
+    assert sum(1 for f in first20 if f.startswith("a")) == 10
+    assert sum(1 for f in first20 if f.startswith("b")) == 10
+
+
+def test_an_uneven_stratum_does_not_stall_the_order():
+    """A stratum that runs out must not truncate the sequence — the remaining strata carry on."""
+    by_stratum = {"big": [f"x{i}" for i in range(10)], "tiny": ["y0"]}
+    order = rcb.cp.sequential_fact_order(by_stratum, "seed")
+    assert len(order) == 11 and len(set(order)) == 11
