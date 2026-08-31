@@ -1,0 +1,25 @@
+{
+ "task": "cc_tasks/2026-08-30_ground_truth_yield_floor.md",
+ "seed": "ground_truth_yield_floor:2026-08-30",
+ "n": 5,
+ "drawn_from": {
+  "comparator_chunks": 44,
+  "documents": {
+   "aidrin-hiniduma-2024": 14,
+   "data-readiness-for-ai-a-360-degree-survey": 30
+  }
+ },
+ "allocation": {
+  "aidrin-hiniduma-2024": 2,
+  "data-readiness-for-ai-a-360-degree-survey": 3
+ },
+ "chunks": [
+  "aidrin-hiniduma-2024#c0003",
+  "aidrin-hiniduma-2024#c0018",
+  "data-readiness-for-ai-a-360-degree-survey#c0012",
+  "data-readiness-for-ai-a-360-degree-survey#c0021",
+  "data-readiness-for-ai-a-360-degree-survey#c0024"
+ ],
+ "rubric_sha256": "c30924f6e13893de56d17cb66c9c9a9694807749c11dd8972856818fa73dfc1d",
+ "note": "Task \u00a72 says one chunk per document across the pilot's five documents. The 44-chunk comparator set spans only TWO of them, so a per-document quota of five is not constructible; allocation is proportional to comparator coverage instead. Reported as a discrepancy, not reconciled silently."
+}
