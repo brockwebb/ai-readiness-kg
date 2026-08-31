@@ -1053,7 +1053,8 @@ def test_a_failing_yield_flag_cannot_destroy_a_batch_verdict(tmp_path, monkeypat
                                          "fabrications": 3})
     monkeypatch.setattr(rcb.spend, "set_current_run", lambda r: None)
     monkeypatch.setattr(rcb.spend, "default_ledger",
-                        lambda: type("L", (), {"declare": lambda *a, **k: None})())
+                        lambda: type("L", (), {"declare": lambda *a, **k: None,
+                                               "declaration": lambda *a, **k: None})())
     monkeypatch.setattr(rcb, "stop_file", lambda: tmp_path / "nope.json")
     monkeypatch.setattr(rcb, "STATE_DIR", tmp_path)
     # the exact failure: yield_by_stratum raises while computing decoration
@@ -1114,7 +1115,8 @@ def test_an_earlier_batch_s_verdict_survives_a_later_batch_dying(tmp_path, monke
     monkeypatch.setattr(rcb, "yield_by_stratum", lambda: {})
     monkeypatch.setattr(rcb.spend, "set_current_run", lambda r: None)
     monkeypatch.setattr(rcb.spend, "default_ledger",
-                        lambda: type("L", (), {"declare": lambda *a, **k: None})())
+                        lambda: type("L", (), {"declare": lambda *a, **k: None,
+                                               "declaration": lambda *a, **k: None})())
     monkeypatch.setattr(rcb, "stop_file", lambda: tmp_path / "nope.json")
     monkeypatch.setattr(rcb, "STATE_DIR", tmp_path)
 
@@ -1155,7 +1157,8 @@ def test_a_verdict_is_on_disk_before_decoration_runs_at_all(tmp_path, monkeypatc
                         lambda *a, **k: {"outcome": "accept", "batch_id": a[0]})
     monkeypatch.setattr(rcb.spend, "set_current_run", lambda r: None)
     monkeypatch.setattr(rcb.spend, "default_ledger",
-                        lambda: type("L", (), {"declare": lambda *a, **k: None})())
+                        lambda: type("L", (), {"declare": lambda *a, **k: None,
+                                               "declaration": lambda *a, **k: None})())
     monkeypatch.setattr(rcb, "stop_file", lambda: tmp_path / "nope.json")
     monkeypatch.setattr(rcb, "STATE_DIR", tmp_path)
     monkeypatch.setattr(rcb, "yield_by_stratum",
@@ -1288,3 +1291,78 @@ def test_batch_membership_matches_what_provenance_already_records():
     work, full, _r, _d = rcb.resume_plan()
     plan = {b["batch_id"]: set(b["documents"]) for b in rcb.batches(work, full)}
     assert stamped <= plan["bulk_v038_b001"], (stamped, plan["bulk_v038_b001"])
+
+
+def _burn_env(monkeypatch, tmp_path, counts, coverage, judged):
+    monkeypatch.setattr(rcb, "document_chunk_counts", lambda: counts)
+    monkeypatch.setattr(rcb.queue, "live_requests",
+                        lambda: {d: {"priority": i} for i, d in enumerate(sorted(counts))})
+    monkeypatch.setattr(rcb.queue, "chunk_coverage", lambda p: coverage)
+    monkeypatch.setattr(rcb, "apply_production_profile", lambda *a, **k: {})
+    monkeypatch.setattr(rcb, "phase_a_mean_per_chunk", lambda: 50_000.0)
+    monkeypatch.setattr(rcb.model_stub, "load_model_config",
+                        lambda: {"primary_judge_model_id": "p", "secondary_judge_model_id": "s"})
+    monkeypatch.setattr(rcb, "declare_batch_ceiling", lambda *a, **k: (10**9, 1.0, False))
+    monkeypatch.setattr(rcb.cp, "phase_ingest", lambda a: 0)
+    monkeypatch.setattr(rcb.cp, "members", lambda: {d: tmp_path for d in counts})
+    monkeypatch.setattr(rcb.rbe, "doc_text", lambda p: "")
+    monkeypatch.setattr(rcb, "batch_items", lambda bid: [{"x": 1}] * 999)
+    monkeypatch.setattr(rcb, "yield_by_stratum", lambda: {})
+    monkeypatch.setattr(rcb.spend, "set_current_run", lambda r: None)
+    monkeypatch.setattr(rcb, "stop_file", lambda: tmp_path / "nope.json")
+    monkeypatch.setattr(rcb, "STATE_DIR", tmp_path)
+    ledger = rcb.spend.SpendLedger(tmp_path / "spend_ledger.jsonl")
+    (tmp_path / "spend_ledger.jsonl").write_text("")
+    monkeypatch.setattr(rcb.spend, "default_ledger", lambda: ledger)
+    if judged is not None:
+        (tmp_path / "bulk_v038_burn.json").write_text(json.dumps({"batches": judged}))
+    return type("A", (), {"plan_only": False, "max_batches": None, "workers": 1,
+                          "judge_ceiling": 1, "fact_cap": 40})()
+
+
+def test_a_fully_extracted_but_UNJUDGED_batch_is_still_judged(tmp_path, monkeypatch):
+    """Batch 1 reached exactly this state: every chunk extracted, verdict lost to a crash.
+    Skipping it because there is nothing to dispatch would leave its events in the graph with
+    no acceptance decision — the unmonitored burn DD-029 exists to forbid."""
+    judged, extracted = [], []
+    args = _burn_env(monkeypatch, tmp_path, {"a": 45},
+                     {"a": {f"a#c{i}" for i in range(45)}}, judged=None)
+    monkeypatch.setattr(rcb.cp, "phase_extract", lambda a: extracted.append(1) or 0)
+    monkeypatch.setattr(rcb, "judge_batch",
+                        lambda *a, **k: judged.append(a[0]) or {"outcome": "accept",
+                                                                "batch_id": a[0]})
+    rcb.phase_burn(args)
+    assert extracted == []                      # nothing dispatched
+    assert judged == ["bulk_v038_b001"]         # but judged
+    out = json.loads((tmp_path / "bulk_v038_burn.json").read_text())
+    assert out["outcomes"] == ["accept"]
+
+
+def test_a_batch_with_a_recorded_verdict_is_never_re_judged(tmp_path, monkeypatch):
+    """Re-judging costs real money and can only produce a second, possibly different verdict
+    for the same evidence. The recorded one stands, and still counts toward the stop rule."""
+    judged = []
+    args = _burn_env(monkeypatch, tmp_path, {"a": 45},
+                     {"a": {f"a#c{i}" for i in range(45)}},
+                     judged=[{"batch_id": "bulk_v038_b001", "outcome": "accept"}])
+    monkeypatch.setattr(rcb.cp, "phase_extract", lambda a: 0)
+    monkeypatch.setattr(rcb, "judge_batch",
+                        lambda *a, **k: judged.append(a[0]) or {"outcome": "accept",
+                                                                "batch_id": a[0]})
+    rcb.phase_burn(args)
+    assert judged == []
+    out = json.loads((tmp_path / "bulk_v038_burn.json").read_text())
+    assert out["outcomes"] == ["accept"]        # still counted toward the stop rule
+
+
+def test_every_declaration_in_a_resumable_burn_is_declare_once(tmp_path, monkeypatch):
+    """Not just the extraction ceiling. The judge runs hit the identical conflict the moment a
+    batch was re-entered — a resume recomputes what a ceiling should be while the ledger
+    remembers what it IS."""
+    ledger = rcb.spend.SpendLedger(tmp_path / "l.jsonl")
+    (tmp_path / "l.jsonl").write_text("")
+    monkeypatch.setattr(rcb.spend, "default_ledger", lambda: ledger)
+    assert rcb.declare_once("r", 3_000_000, "judge") == 3_000_000
+    assert rcb.declare_once("r", 1, "judge") == 3_000_000        # no conflict, no change
+    assert int(ledger.declaration("r")["ceiling_tokens"]) == 3_000_000
+    assert rcb.declare_once("other", 500, "judge") == 500        # a new run still declares

@@ -853,9 +853,22 @@ def declare_batch_ceiling(run_id: str, chunks: int,
     if prior:
         return int(prior["ceiling_tokens"]), None, True
     ceiling, per = batch_ceiling(chunks, boot)
-    spend.default_ledger().declare(run_id, ceiling, declared_by=TASK,
-                                   call_class="extraction_chunk")
+    declare_once(run_id, ceiling, "extraction_chunk")
     return ceiling, per, False
+
+
+def declare_once(run_id: str, ceiling: int, call_class: str) -> int:
+    """Declare `run_id` if it has no declaration; otherwise return the existing ceiling.
+
+    Every declaration in a resumable burn needs this, not just the extraction one. The judge
+    runs hit the identical conflict the moment a batch was re-entered — `already declared with
+    ceiling 3,000,000, refusing conflicting re-declare` — because a resume recomputes what a
+    ceiling should be while the ledger remembers what it IS."""
+    prior = spend.default_ledger().declaration(run_id)
+    if prior:
+        return int(prior["ceiling_tokens"])
+    spend.default_ledger().declare(run_id, ceiling, declared_by=TASK, call_class=call_class)
+    return ceiling
 
 
 def stop_file() -> pathlib.Path:
@@ -936,6 +949,14 @@ def phase_burn(a) -> int:
     if a.plan_only:
         return 0
 
+    # Batches whose verdict is already on record. A verdict is never re-judged; a batch
+    # WITHOUT one is judged even if every chunk is already extracted.
+    settled_verdicts = {}
+    burn_state = STATE_DIR / "bulk_v038_burn.json"
+    if burn_state.is_file():
+        for row in (json.loads(burn_state.read_text(encoding="utf-8")).get("batches") or []):
+            if row.get("outcome") in ("accept", "reject", "sampling_inconclusive"):
+                settled_verdicts[row["batch_id"]] = row["outcome"]
     boot = phase_a_mean_per_chunk()
     phase_a_bands = json.loads((STATE_DIR / "bulk_v038_phase_a.json").read_text(
         encoding="utf-8")).get("yield_bands", {}) if (
@@ -965,31 +986,40 @@ def phase_burn(a) -> int:
         # the window), so recomputing on every resume would ratchet the bound upward exactly
         # when the batch is running hot. If the remaining work will not fit, the guard refuses
         # and the burn stops cleanly — which is the bound doing its job.
-        if bt["to_extract"] == 0:
-            print(f"{bid}: every chunk already extracted; nothing to dispatch", flush=True)
+        if bid in settled_verdicts:
+            print(f"{bid}: already {settled_verdicts[bid]}; skipping", flush=True)
+            state.record(settled_verdicts[bid])
             continue
-        ceiling, per, resumed = declare_batch_ceiling(run_id, bt["to_extract"], boot)
-        if resumed:
-            print(f"\n=== {bid}: {len(bt['documents'])} docs, {bt['to_extract']} of "
-                  f"{bt['chunks']} chunks left, RESUMING under its declared ceiling "
-                  f"{ceiling:,}", flush=True)
+        if bt["to_extract"] == 0:
+            # Extracted but NOT judged — batch 1 reached this state when a crash lost its
+            # verdict. Skipping it here would leave its events in the graph with no acceptance
+            # decision, which is the unmonitored burn DD-029 exists to forbid. Dispatch
+            # nothing, declare nothing, but still judge.
+            print(f"{bid}: every chunk already extracted; judging without dispatch",
+                  flush=True)
         else:
-            print(f"\n=== {bid}: {len(bt['documents'])} docs, {bt['to_extract']} of "
-                  f"{bt['chunks']} chunks, ceiling {ceiling:,} "
-                  f"(1.3 x {per:,.0f}/chunk)", flush=True)
+            ceiling, per, resumed = declare_batch_ceiling(run_id, bt["to_extract"], boot)
+            if resumed:
+                print(f"\n=== {bid}: {len(bt['documents'])} docs, {bt['to_extract']} of "
+                      f"{bt['chunks']} chunks left, RESUMING under its declared ceiling "
+                      f"{ceiling:,}", flush=True)
+            else:
+                print(f"\n=== {bid}: {len(bt['documents'])} docs, {bt['to_extract']} of "
+                      f"{bt['chunks']} chunks, ceiling {ceiling:,} "
+                      f"(1.3 x {per:,.0f}/chunk)", flush=True)
         cp.DOCS = list(bt["documents"])
         # The extractor already skips a chunk whose raw exists; the resume above is what keeps
         # an already-extracted chunk out of the batch SIZE and therefore out of the ceiling.
         cp.CHUNK_FILTER = None
         cp.BATCH_ID = bid
         cp.RUN_ID = run_id
-        spend.set_current_run(run_id)
-        rc = cp.phase_extract(type("A", (), {"shared_with": None, "only": None,
-                                             "limit": None, "workers": a.workers})())
-        if rc != 0:
-            print(f"{bid}: extraction returned {rc}; stopping the burn.")
-            return rc
-        cp.phase_ingest(type("A", (), {"reingest": False})())
+        if bt["to_extract"]:
+            spend.set_current_run(run_id)
+            rc = cp.phase_extract(type("A", (), {"shared_with": None, "only": None,
+                                                 "limit": None, "workers": a.workers})())
+            if rc != 0:
+                print(f"{bid}: extraction returned {rc}; stopping the burn.")
+                return rc
 
         m = cp.members()
         texts = {d: rbe.doc_text(m[d]) for d in cp.DOCS}
@@ -1000,8 +1030,7 @@ def phase_burn(a) -> int:
                        "why": f"{len(items)} admitted items < {n_min} facts needed for a "
                               f"decision; the plan cannot settle this batch"}
         else:
-            spend.default_ledger().declare(judge_run_id(bid), a.judge_ceiling,
-                                           declared_by=TASK, call_class="judge")
+            declare_once(judge_run_id(bid), a.judge_ceiling, "judge")
             verdict = judge_batch(bid, items, texts, budget, raters)
         # The verdict is recorded FIRST. It decides whether this batch's events reach the
         # graph; everything below it is decoration that gates nothing. A KeyError in the
