@@ -686,3 +686,86 @@ def test_a_second_bulk_profile_is_protected_without_a_code_change(tmp_path, monk
     leaked = {"event_type": "edge_asserted", "purpose": "bulk_v040",
               "payload": {"type": "subtype_of"}}
     assert not bp.is_projectable(leaked, set(), bp.bulk_purposes())
+
+
+def test_the_burn_plan_resumes_at_chunk_level_and_never_repeats_a_chunk(monkeypatch):
+    """ADDENDUM-01 §3.1. Phase A's 30 chunks are already in the graph. A plan that counted
+    them again would size every ceiling too high and re-dispatch paid-for work; the resume
+    reads the ledger-derived coverage, not a file and not the raw directory."""
+    counts = {"a": 40, "b": 10}
+    coverage = {"a": {f"a#c{i:04d}" for i in range(5)}}
+    monkeypatch.setattr(rcb, "document_chunk_counts", lambda: counts)
+    monkeypatch.setattr(rcb.queue, "worklist", lambda p=None: ["a", "b"])
+    monkeypatch.setattr(rcb.queue, "chunk_coverage", lambda p: coverage)
+    work, remaining, already = rcb.resume_plan()          # the real derivation, not a copy
+    assert (work, remaining, already) == (["a", "b"], {"a": 35, "b": 10}, 5)
+    plan = rcb.batches(work, remaining)
+    assert sum(b["chunks"] for b in plan) == 45          # not 50
+    assert plan[0]["chunks"] == 45                       # 35 + 10 closes the first batch
+
+
+def test_a_fully_resumed_document_contributes_no_chunks_to_the_plan(monkeypatch):
+    """The single-chunk document Phase A completed must not reappear as a batch of size 0."""
+    plan = rcb.batches(["done", "todo"], {"done": 0, "todo": 45})
+    assert sum(b["chunks"] for b in plan) == 45
+    assert all(b["chunks"] > 0 for b in plan)
+    # and it is absent from the DOCUMENT list too, not merely contributing zero: a batch that
+    # lists a document it does not extract reports work it did not do.
+    assert [d for b in plan for d in b["documents"]] == ["todo"]
+
+
+# --------------------------------------------- yield monitoring (ADDENDUM-01 §3.3, §3.4)
+def test_the_yield_band_is_the_observed_envelope_not_three_sd(monkeypatch):
+    """+/-3 sd gave `agency_framework` a band of -30 to +58: it cannot flag anything, and a
+    negative floor on a count is not a floor. Every stratum uses the same envelope so flags
+    are comparable across strata."""
+    monkeypatch.setattr(rcb, "document_strata", lambda: {"d": "academic"})
+    monkeypatch.setattr(rcb.cp, "chunk_yield",
+                        lambda tag: {f"d#c{i}": {"nodes": n}
+                                     for i, n in enumerate([0, 5, 36])})
+    band = rcb.yield_by_stratum()["academic"]
+    assert (band["envelope_low"], band["envelope_high"]) == (0, 36)
+    assert "gates nothing" in band["basis"]
+    assert "band_low" not in band and "band_high" not in band
+
+
+def test_a_batch_outside_the_envelope_is_flagged_and_inside_is_not():
+    band = {"envelope_low": 5, "envelope_high": 20}
+    assert rcb.yield_flag(12.0, band) is None
+    assert rcb.yield_flag(5.0, band) is None and rcb.yield_flag(20.0, band) is None
+    assert "below" in rcb.yield_flag(4.9, band)
+    assert "above" in rcb.yield_flag(20.1, band)
+    assert rcb.yield_flag(0.0, None) is None            # no band, no flag
+
+
+def test_a_zero_yield_stratum_is_flagged_only_if_the_envelope_excludes_zero():
+    """ADDENDUM-01 §3.4: a zero-yield CHUNK is healthy and appears in no flag logic — every
+    Phase A stratum contained one. Zero is not special-cased into an anomaly; it is only ever
+    compared to the envelope like any other value."""
+    assert rcb.yield_flag(0.0, {"envelope_low": 0, "envelope_high": 36}) is None
+    assert "below" in rcb.yield_flag(0.0, {"envelope_low": 5, "envelope_high": 20})
+
+
+def test_yield_flags_gate_nothing_the_sprt_is_the_monitor():
+    """The flag is a string for the RESULT, never an input to accept/reject. ADDENDUM-06 §2 is
+    unchanged by ADDENDUM-01 §3.3, so the decision function cannot even SEE a yield: it takes
+    fabrications, facts and the boundaries, and nothing else."""
+    import inspect
+    params = list(inspect.signature(rcb.sprt_decide).parameters)
+    assert params == ["fabrications", "facts", "b"]
+    # and the same evidence decides the same way whatever the yield was
+    b = rcb.sprt_boundaries()
+    assert rcb.sprt_decide(0, 200, b) == "accept"
+    assert rcb.sprt_decide(40, 200, b) == "reject"
+    # the stop rule likewise sees only outcomes
+    st = rcb.BurnState()
+    assert list(inspect.signature(st.record).parameters) == ["outcome"]
+
+
+def test_each_batch_judges_under_its_own_ledger_run():
+    """A single shared judge run would put ~6,000 facts across 13 batches under one ceiling,
+    and the guard would refuse batch 2 onwards for having spent batch 1's budget. Phase A
+    already hit that ceiling once, correctly, at 1,952,265 + 60,950 vs 2,000,000."""
+    ids = {rcb.judge_run_id(f"bulk_v038_b{i:03d}") for i in range(1, 14)}
+    assert len(ids) == 13
+    assert all(i.startswith(rcb.RUN_ID) and i.endswith("_judge") for i in ids)

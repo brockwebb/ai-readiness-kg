@@ -496,10 +496,16 @@ def yield_by_stratum() -> dict[str, dict]:
     for stratum, vals in sorted(per_chunk.items()):
         mean = sum(vals) / len(vals)
         var = sum((v - mean) ** 2 for v in vals) / (len(vals) - 1) if len(vals) > 1 else 0.0
+        # ADDENDUM-01 §3.3: the envelope, NOT +/-3 sd. `agency_framework`'s +/-3 sd band was
+        # -30 to +58 — a band that cannot flag anything, and a negative floor on a count.
+        # Every stratum uses the same convention so the flags are comparable, and the label
+        # says what it is: decoration at n = 7-8, gating nothing. The operative monitor is the
+        # faithfulness SPRT (ADDENDUM-06 §2 unchanged).
         out[stratum] = {"chunks": len(vals), "mean_nodes_per_chunk": round(mean, 3),
                         "sd": round(math.sqrt(var), 3), "min": min(vals), "max": max(vals),
-                        "band_low": round(mean - 3 * math.sqrt(var), 3),
-                        "band_high": round(mean + 3 * math.sqrt(var), 3)}
+                        "envelope_low": min(vals), "envelope_high": max(vals),
+                        "basis": f"observed min-max over {len(vals)} chunks; report-only, "
+                                 f"gates nothing"}
     return out
 
 
@@ -610,7 +616,10 @@ def batches(worklist: list[str], counts: dict[str, int]) -> list[dict]:
     — padding it by reordering would break the priority order Phase 0.4 established."""
     out, cur, n = [], [], 0
     for doc_id in worklist:
-        if doc_id not in counts:
+        # `not counts.get(...)` also drops a document with ZERO chunks left after the resume:
+        # it would otherwise ride along in a batch's document list, be reported as burned, and
+        # contribute nothing — a batch claiming work it did not do.
+        if not counts.get(doc_id):
             continue
         cur.append(doc_id)
         n += counts[doc_id]
@@ -687,6 +696,24 @@ def sample_for_batch(batch_id: str, items: list[dict], budget: int) -> list[dict
     return rng.sample(items, budget)
 
 
+def yield_flag(stratum_mean: float, band: dict | None) -> str | None:
+    """A report-only flag when a batch's per-stratum mean falls outside Phase A's observed
+    envelope. Returns None (no flag) when there is no band, and never for a zero:
+
+    ADDENDUM-01 §3.4 — a zero-yield chunk is HEALTHY. Bibliographies, navigation blocks and
+    front matter legitimately contain nothing extractable, and every Phase A stratum contained
+    at least one. A monitor that treats 0 as an anomaly fires constantly on correct output,
+    and a monitor that cries wolf is worse than no monitor."""
+    if not band:
+        return None
+    lo, hi = band["envelope_low"], band["envelope_high"]
+    if stratum_mean < lo:
+        return f"below Phase A envelope ({stratum_mean:.2f} < {lo})"
+    if stratum_mean > hi:
+        return f"above Phase A envelope ({stratum_mean:.2f} > {hi})"
+    return None
+
+
 class BurnState:
     """Rolling accept/reject history and the corpus stop rule (DD-029)."""
 
@@ -713,6 +740,13 @@ def quarantine_batch(batch_id: str, reason: str, evidence: dict) -> str:
                             "task": TASK, "ts": now()}, batch=cp.SHARD_NO)
 
 
+def judge_run_id(batch_id: str) -> str:
+    """One judge ledger run PER BATCH. A single shared judge run would put 13 batches' worth
+    of judging — ~6,000 facts at two raters — under one ceiling, and the guard would refuse
+    batch 2 onwards for having spent batch 1's budget."""
+    return f"{RUN_ID}_{batch_id}_judge"
+
+
 def judge_batch(batch_id: str, items: list[dict], texts: dict[str, str],
                 budget: int, raters: list[str], fact_cap: int) -> dict:
     """Draw, decompose, judge, decide. Returns the SPRT verdict and its evidence."""
@@ -733,7 +767,7 @@ def judge_batch(batch_id: str, items: list[dict], texts: dict[str, str],
                      "window": cp.window_for(cp.grounding.normalize(texts[doc_id]), span)})
     prefix = f"burn_{batch_id}"
     cp.write_sample(prefix, recs)
-    agg = cp.run_protocol(prefix, prefix, f"{RUN_ID}_burn_judge", raters, fact_cap)
+    agg = cp.run_protocol(prefix, prefix, judge_run_id(batch_id), raters, fact_cap)
     if not agg:
         return {"outcome": "protocol_failed", "batch_id": batch_id}
     pooled = agg.get("pooled") or agg
@@ -747,6 +781,20 @@ def judge_batch(batch_id: str, items: list[dict], texts: dict[str, str],
             "items_available": len(items), "aggregate": agg}
 
 
+def resume_plan() -> tuple[list[str], dict[str, int], int]:
+    """(worklist, chunks REMAINING per document, chunks already extracted).
+
+    ADDENDUM-01 §3.1: chunk-level resume. Phase A's 30 chunks are already extracted and in the
+    graph; no chunk runs twice under the same profile. `chunk_coverage` derives what is done
+    from `chunk_metrics` events — the ledger — not from a file and not by counting raws on
+    disk, so a resume cannot be fooled by a stray directory."""
+    counts = document_chunk_counts()
+    work = [d for d in queue.worklist(PROFILE) if d in counts]
+    done = queue.chunk_coverage(PROFILE)
+    remaining = {d: max(0, counts[d] - len(done.get(d, ()))) for d in work}
+    return work, remaining, sum(len(done.get(d, ())) for d in work)
+
+
 def phase_burn(a) -> int:
     apply_production_profile(RUN_ID)
     b = sprt_boundaries()
@@ -755,10 +803,10 @@ def phase_burn(a) -> int:
     cfg = model_stub.load_model_config()
     raters = [cfg["primary_judge_model_id"], cfg["secondary_judge_model_id"]]
 
-    counts = document_chunk_counts()
-    work = [d for d in queue.worklist(PROFILE) if d in counts]
-    plan = batches(work, counts)
-    print(f"burn plan: {len(work)} documents, {sum(counts[d] for d in work)} chunks, "
+    work, remaining, already = resume_plan()
+    plan = batches(work, remaining)
+    print(f"burn plan: {len(work)} documents, {sum(remaining.values())} chunks to extract "
+          f"({already} already extracted under {PROFILE}, resumed not repeated), "
           f"{len(plan)} batches; sample budget {budget} facts/batch, accept needs "
           f">= {n_min}")
     for bt in plan:
@@ -768,6 +816,9 @@ def phase_burn(a) -> int:
         return 0
 
     boot = phase_a_mean_per_chunk()
+    phase_a_bands = json.loads((STATE_DIR / "bulk_v038_phase_a.json").read_text(
+        encoding="utf-8")).get("yield_bands", {}) if (
+        STATE_DIR / "bulk_v038_phase_a.json").is_file() else {}
     state = BurnState()
     ledger_rows = []
     for bt in plan[: a.max_batches] if a.max_batches else plan:
@@ -779,6 +830,8 @@ def phase_burn(a) -> int:
         spend.default_ledger().declare(run_id, ceiling, declared_by=TASK,
                                        call_class="extraction_chunk")
         cp.DOCS = list(bt["documents"])
+        # The extractor already skips a chunk whose raw exists; the resume above is what keeps
+        # an already-extracted chunk out of the batch SIZE and therefore out of the ceiling.
         cp.CHUNK_FILTER = None
         cp.BATCH_ID = bid
         cp.RUN_ID = run_id
@@ -799,9 +852,19 @@ def phase_burn(a) -> int:
                        "why": f"{len(items)} admitted items < {n_min} facts needed for a "
                               f"decision; the plan cannot settle this batch"}
         else:
-            spend.default_ledger().declare(f"{RUN_ID}_burn_judge", a.judge_ceiling,
+            spend.default_ledger().declare(judge_run_id(bid), a.judge_ceiling,
                                            declared_by=TASK, call_class="judge")
             verdict = judge_batch(bid, items, texts, budget, raters, a.fact_cap)
+        # Report-only yield flags against Phase A's envelope (ADDENDUM-01 §3.3). Computed
+        # AFTER the verdict and never fed into it.
+        flags = {}
+        for stratum, r in yield_by_stratum().items():
+            f = yield_flag(r["mean_nodes_per_chunk"], phase_a_bands.get(stratum))
+            if f:
+                flags[stratum] = f
+        if flags:
+            print(f"{bid}: yield flags (report-only, gate nothing): {flags}")
+        verdict["yield_flags"] = flags
         state.record(verdict["outcome"])
         if verdict["outcome"] == "reject":
             quarantine_batch(bid, "SPRT reject boundary crossed", verdict)
