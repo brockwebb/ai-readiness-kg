@@ -452,3 +452,50 @@ forbid. A failed gate triggers investigation, never retuning (bulk-v1 closeout, 
    defect reports health it never checked.
 3. Semantic edges remain out of bulk entirely (DD-024, unchanged). The `cites` layer runs as
    part of normal emission and is reported by defect count per batch.
+
+## DD-030: Admission requires convertibility, and "converted" is not the same as "usable"
+
+**Date:** 2026-08-31. **Task:** `cc_tasks/2026-08-31_ingestion_conversion.md` (subsumes
+ResearchTask `6c39a235`). **Status:** accepted.
+
+**Rule.** The canonical substrate format is markdown with YAML frontmatter. A document is
+admitted only when (a) it is already markdown, or (b) the converter registry declares its
+format and conversion succeeds *adequately*, or (c) neither holds — in which case admission
+still records the document, and the system emits `conversion_gap` and auto-registers a
+ResearchTask naming the gap. Detection at admission; improvement launched by the system;
+per-item operator review nowhere.
+
+**Why the adequacy clause is the load-bearing half.** The task that installed this rule was
+written from a burn report saying two documents were "HTML with no markdown conversion".
+Measured against the store, that premise was false: T1's Docling pass had already converted
+all five crosswalk HTML documents. What it produced for three of them was a *faithful
+conversion of a navigation page*. `slsa-specification-v1-0.html` is 16,566 bytes of markup
+carrying 2,016 characters of visible text, 30% of it anchor text; the specification lives on
+eight sub-pages the acquired page merely links to. Docling did not fail. There was no error to
+catch. A success/failure signal cannot see this class at all, and that is exactly how a table
+of contents reached an extraction queue and sat there for eight days.
+
+So the gate measures **extent**, not exit status. It uses the two shallow features the
+boilerplate-detection literature settled on — text density and link density (Kohlschütter,
+Fankhauser & Nejdl, *Boilerplate Detection using Shallow Text Features*, WSDM 2010) — and
+invents no third. Thresholds flag for review and never silently drop or admit: a document
+below them is still admitted, still citable, and now carries a task to fix its extent.
+
+**Both features are required, and one document proves it.** `slsa-specification-v1-0` clears
+the visible-text floor by 16 characters (2,016 against 2,000). A length-only gate misses it. A
+link-density-only gate misses the three markdown landing pages the corpus-wide run found
+(`akamai-datastream-2-docs`, `digital-gov-website-standards`,
+`itu-ai-ready-analysis-towards-a-standardized-readiness-frame`), whose link density is low
+because crawl4ai already stripped the anchors. Six of six flags were true positives on
+inspection.
+
+**Consequence for extraction.** A document with an open `conversion_gap` has no substrate, so
+it cannot be queued for extraction by construction rather than by anyone remembering to
+exclude it. The `unconvertible_source` failures recorded at burn time in
+`2026-08-30_bulk_extraction_v038_RESULT.md` §0/§7 are the counterexample this rule exists to
+prevent, and the prevention is structural, not procedural.
+
+**Not decided here.** Which converter wins for a given format is a measurement, re-run when a
+format earns it, not a standing commitment — see the recorded head-to-head in
+`kg/ingest/convert.py CONVERTER_CHOICE`. Re-conversion of the working PDF corpus stays out of
+scope; a working substrate is not a defect.
