@@ -957,3 +957,31 @@ is unchanged.
 Headroom at resume: **10,603,321 committed of 55,000,000** today. Remaining work is ~42–46M
 against 44.4M headroom, so the guard is expected to refuse cleanly mid-plan and the burn
 continues the next day — ADDENDUM-01 §3.2's multi-day schedule, not an incident.
+
+# 19. Phase C batch ledger (ADDENDUM-02 §2.1 scope)
+
+Appended as each batch settles. Verdicts are the sequential SPRT's, at p0=0.05 / p1=0.10 /
+α=β=0.05; the accept line needs ≥ 55 facts and the budget is 463.
+
+| batch | chunks | SPRT trace | verdict | pooled F [95% CI] | item-faithful | extraction settled / ceiling | judge settled |
+|---|---:|---|---|---|---:|---|---:|
+| `b001` | 61 | 2/55 continue → 3/110 accept | **accept** | 0.0273 [0.0093, 0.0771] | 0.830 (78/94) | 3,194,546 / 3,922,028 (81%) | 2,221,824 |
+| `b002` | 45 | 2/55 continue → 3/110 accept | **accept** | 0.0275 [0.0094, 0.0778] | 0.805 (62/77) | 2,435,958 / 2,942,691 (83%) | 2,153,383 |
+
+## 19.1 b002 — usafacts-ai-ready-data-guide, w3c-dcat-3
+
+45 chunks; 858 nodes, 1,078 edges, 297 mentions, 159 diverted. 540 facts written (248
+deterministic, 292 model-generated), 110 judged.
+
+Trace identical to batch 1 — 2 fabrications at 55 facts (accept line d ≤ 0.0, so continue),
+3 at 110 (accept line d ≤ 4.0). Rater agreement 1.000 / 0.936. Doc-check reclassified 2 of 5.
+No yield flags; every stratum mean fell inside Phase A's observed envelope.
+
+**Semantic-edge refusals: 18 in 45 chunks = 0.400/chunk**, against batch 1's 0.492 and Phase
+A's 0.167. Two batches now put the bulk-profile refusal rate at roughly 2.4–3× the Phase A
+estimate, which is enough to call §5.3's ~190-edge projection a stratified-sampling artifact
+rather than noise: Phase A drew few chunks from framework-heavy documents, and those are the
+documents that propose component relations constantly.
+
+The judge ran to 18% of its derived 12,200,000 ceiling — the bound is loose because it bounds
+the *budget* the SPRT may spend, not the sample it needs. Both batches stopped at 110 of 463.
