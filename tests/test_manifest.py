@@ -11,6 +11,19 @@ import pytest
 from kg import eventlog, manifest
 
 
+@pytest.fixture(autouse=True)
+def gate_does_not_mint_research_tasks(monkeypatch):
+    """These tests admit tiny fixture files, and every one of them trips the DD-030 extent
+    gate — correctly: 11 bytes IS thin. They are tests of admission VALIDATION, so they stub
+    the gate's auto-task rather than assert on it; `tests/test_ingest_convert.py` owns the
+    gate's own behaviour. Without the stub the global guard in conftest fails them loudly,
+    which is what it is for."""
+    from kg.ingest import gate
+    monkeypatch.setattr(gate, "register_gap_task",
+                        lambda doc_id, gap_class, detail: "task-stub")
+
+
+
 @pytest.fixture
 def repo(tmp_path, monkeypatch):
     """A throwaway repo tree: corpus/, events/, and a minimal schema, all under tmp_path."""
@@ -76,11 +89,15 @@ def test_add_writes_event_and_hashes(repo):
     doc_id = manifest.add(str(f), **_good_fields())
     assert doc_id == "fcsm-25-03"
 
-    # event written to the log
+    # event written to the log. An admission now emits the DD-030 convertibility verdict
+    # alongside it, so this asserts the ADMISSION event rather than counting the log — the
+    # count was never what the test was about.
     events = list(eventlog.replay())
-    assert len(events) == 1
-    ev = events[0]
-    assert ev["event_type"] == "manifest_add"
+    adds = [e for e in events if e["event_type"] == "manifest_add"]
+    assert len(adds) == 1
+    assert [e["event_type"] for e in events if e["event_type"] != "manifest_add"] \
+        == ["conversion_gap"], "an 11-byte fixture is thin, and the gate says so"
+    ev = adds[0]
     entry = ev["payload"]
     assert entry["doc_id"] == "fcsm-25-03"
 
@@ -101,7 +118,8 @@ def test_admission_state_replayed_not_projected(repo):
         doc_id="zeta-01", primary_url="https://example.gov/z"))
     manifest.add(str(_write_corpus_file(repo, "a.txt", "aaa")), **_good_fields(
         doc_id="alpha-01", primary_url="https://example.gov/a"))
-    ids = sorted(e["payload"]["doc_id"] for e in eventlog.replay())
+    ids = sorted(e["payload"]["doc_id"] for e in eventlog.replay()
+                 if e["event_type"] == "manifest_add")
     assert ids == ["alpha-01", "zeta-01"]
 
 

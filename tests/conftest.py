@@ -84,3 +84,35 @@ def restore_chunked_pilot_run_state(monkeypatch):
                  "RAW_DIR", "CORPUS_EPOCH", "EMISSION", "ARM_MODEL", "DOCS", "DOC_PATHS",
                  "PURPOSE", "CHUNK_FILTER", "BATCH_ID"):
         monkeypatch.setattr(cp, name, getattr(cp, name))
+
+
+@pytest.fixture(autouse=True)
+def no_seldon_artifacts_from_tests(monkeypatch):
+    """The admission gate's auto-task shells out to the real `seldon` CLI, which no guard
+    covered. Wiring `kg.ingest.gate.check` into `kg.manifest.add` made every admission test
+    mint a real ResearchTask in the operator's graph — 22 of them, from fixture doc_ids like
+    `fcsm-25-03` and `doc-one`, before the run finished. The event-log guard above caught
+    nothing because the leak was a subprocess, not an event.
+
+    A test that means to exercise registration monkeypatches `register_gap_task` itself, which
+    overrides this. Anything else reaching the real CLI is the defect, and it fails loudly
+    rather than quietly writing to a graph the test does not own."""
+    from kg.ingest import gate
+
+    def guarded(doc_id, gap_class, detail):
+        raise AssertionError(
+            f"test reached the real `seldon` CLI to register a ResearchTask "
+            f"(doc_id={doc_id!r}, gap_class={gap_class!r}). Monkeypatch "
+            f"`kg.ingest.gate.register_gap_task` in the test that means to exercise it.")
+
+    monkeypatch.setattr(gate, "register_gap_task", guarded)
+
+
+@pytest.fixture(autouse=True)
+def no_writes_to_the_real_substrate_store(monkeypatch, tmp_path_factory):
+    """Same reasoning as the event-log guard, for the other durable store the gate writes.
+    A conversion that SUCCEEDS in a test would otherwise drop a substrate file into
+    `state/substrate_md/`, which is the corpus's real projection."""
+    from kg.ingest import convert
+    monkeypatch.setattr(convert, "_SUBSTRATE_DIR",
+                        tmp_path_factory.mktemp("substrate"))

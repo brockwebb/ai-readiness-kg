@@ -146,6 +146,38 @@ def _load_entries() -> list[dict]:
 # Public API
 # --------------------------------------------------------------------------------------
 
+def _convertibility_gate(doc_id: str, src: Path, entry: dict) -> None:
+    """DD-030 at the admission boundary: detection at admission, not in a batch pass.
+
+    `kg.ingest.gate` was built as a corpus-wide sweep (`python -m kg.ingest.gate`), which
+    finds a gap in a document admitted last week and none at all in one admitted a minute
+    ago. The rule DD-030 installs says *admission* requires convertibility, and this module
+    is the only gate into the corpus (project invariant 2), so the check belongs here — a
+    sweep someone has to remember to run is the same class of defect as the burn-time
+    discovery it replaced.
+
+    Called AFTER the `manifest_add` event and never raising `ManifestError`, because rule (c)
+    says a document that cannot be converted is still ADMITTED: refusing would lose a
+    document the operator deliberately acquired. The `conversion_gap` event and its
+    auto-registered ResearchTask are how the system says the substrate is missing.
+
+    PDFs are delegated to the existing T1 path and are not gapped for a conversion this
+    module was never asked to do. The import is local: `kg.ingest.convert` is only needed on
+    an add, and `kg.manifest` is imported by every projection and CLI path in the repo.
+
+    An unexpected failure inside the gate propagates. The document IS admitted at that point
+    — its event is on the log — and a loud failure naming the document is recoverable by
+    `python -m kg.ingest.gate --doc <id>`. Swallowing it would leave a document that looks
+    admitted-and-converted while no substrate exists, which is the silent admission this
+    whole rule exists to forbid.
+    """
+    from kg.ingest import convert as _convert, gate as _gate
+    if src.suffix.lower() in _convert.DELEGATED:
+        return
+    _gate.check(doc_id, src, {"source_url": entry.get("primary_url"),
+                              "version": entry.get("pub_date")})
+
+
 def add(filepath, **fields) -> str:
     """Validate, hash, dedup, and admit a document to the corpus. Returns its doc_id.
 
@@ -252,6 +284,7 @@ def add(filepath, **fields) -> str:
     if fields.get("acquisition") is not None:
         entry["acquisition"] = fields["acquisition"]
     eventlog.append({"event_type": _MANIFEST_ADD, "payload": entry}, batch=_MANIFEST_BATCH)
+    _convertibility_gate(doc_id, path, entry)
     # Stage-0 rewire: add() no longer auto-rebuilds manifest.json. The file is the
     # evidence-ledger projection; refreshing it here would overwrite v2 with state the
     # ledger hasn't recorded yet. After an add, run the Dixie sweep

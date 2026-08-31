@@ -221,3 +221,102 @@ def test_a_later_conversion_closes_an_earlier_gap(tmp_path, monkeypatch):
     src.write_text(PROSE_HTML)
     G.check("d", src)
     assert "d" not in G.gaps(), "a successful conversion must close the gap by superseding it"
+
+
+# ------------------------------------------------- DD-030 AT THE ADMISSION ENTRY POINT
+# The task's mutation (a) is "seeded unsupported format AT ADMISSION emits conversion_gap and
+# the auto-task appears", and (d) is "drive admission entry points, not fixtures that cannot
+# fail". The gate's own tests drive `gate.check`, which is the gate's entry, not admission's:
+# `kg.manifest.add` is the only gate into the corpus (project invariant 2), and it did not
+# call the gate at all. Every one of those tests passed with the two wholly unconnected.
+# These drive `manifest.add`.
+
+@pytest.fixture
+def admission(tmp_path, monkeypatch):
+    """A throwaway corpus + event log, with the manifest module repointed at it."""
+    from kg import eventlog, manifest
+    corpus = tmp_path / "corpus"
+    corpus.mkdir()
+    schema = tmp_path / "schema.yaml"
+    schema.write_text('schema_version: "0.1"\n', encoding="utf-8")
+    monkeypatch.setattr(eventlog, "_EVENTS_DIR", tmp_path / "events")
+    monkeypatch.setattr(eventlog, "_SCHEMA_PATH", schema)
+    monkeypatch.setattr(manifest, "_REPO_ROOT", tmp_path)
+    monkeypatch.setattr(manifest, "_CORPUS_DIR", corpus)
+    monkeypatch.setattr(manifest, "_MANIFEST_PATH", corpus / "manifest.json")
+    return tmp_path
+
+
+def _admit(repo, name, content, monkeypatch, **over):
+    from kg import manifest
+    from kg.ingest import gate
+    minted = []
+    monkeypatch.setattr(gate, "register_gap_task",
+                        lambda d, c, detail: minted.append((d, c)) or "task-xyz")
+    path = repo / "corpus" / name
+    path.write_bytes(content if isinstance(content, bytes) else content.encode())
+    fields = dict(doc_id="probe-doc", title="T", authors=["A"], pub_date="2026",
+                  source_type="federal", primary_url="https://example.gov/probe",
+                  inclusion_rationale="r", discovered_via="manual")
+    fields.update(over)
+    doc_id = manifest.add(str(path), **fields)
+    from kg import eventlog
+    return doc_id, [e for e in eventlog.replay()], minted
+
+
+def test_an_unsupported_format_gaps_at_admission_not_in_a_later_sweep(admission, monkeypatch):
+    """Mutation (a) at the real boundary. Admission must ADMIT the document (rule (c) — a
+    document the operator deliberately acquired is never lost) and, in the same call, say
+    that no substrate exists and launch the task that fixes it."""
+    doc_id, events, minted = _admit(admission, "book.epub", b"PK\x03\x04 nope", monkeypatch)
+    assert doc_id == "probe-doc"
+    kinds = [e["event_type"] for e in events]
+    assert kinds == ["manifest_add", "conversion_gap"], kinds
+    gap = events[1]
+    assert gap["gap_class"] == "unknown_format"
+    assert gap["research_task_id"] == "task-xyz", "the auto-task IS the improvement launch"
+    assert minted == [("probe-doc", "unknown_format")]
+
+
+def test_a_thin_page_gaps_at_admission_even_though_it_converts(admission, monkeypatch):
+    """The class the whole rule exists for: conversion SUCCEEDS and the result is a table of
+    contents. Exit status cannot see this; the extent gate can."""
+    _, events, minted = _admit(admission, "nav.md", "# Contents\n\n- [a](a)\n", monkeypatch)
+    assert [e["event_type"] for e in events] == ["manifest_add", "conversion_gap"]
+    assert events[1]["gap_class"] == "thin_extent_suspected"
+    assert minted and minted[0][1] == "thin_extent_suspected"
+
+
+def test_a_pdf_is_delegated_at_admission_and_not_gapped_for_it(admission, monkeypatch):
+    """PDFs are owned by the existing T1 path. Gapping every PDF admission would mint a
+    ResearchTask per document for a conversion this module was never asked to do — 99 of them
+    in this corpus."""
+    _, events, minted = _admit(admission, "paper.pdf", b"%PDF-1.7 ...", monkeypatch)
+    assert [e["event_type"] for e in events] == ["manifest_add"]
+    assert minted == []
+
+
+def test_admission_survives_the_gate_and_the_document_is_never_lost(admission, monkeypatch):
+    """Rule (c) is load-bearing and easy to get backwards. A gap must not raise
+    ManifestError: refusing admission would lose the document, which is the failure mode the
+    rule rejects in favour of admitting loudly."""
+    from kg import manifest
+    doc_id, events, _ = _admit(admission, "x.epub", b"junk", monkeypatch)
+    assert doc_id == "probe-doc"
+    assert events[0]["payload"]["doc_id"] == "probe-doc"
+    assert events[0]["payload"]["status"] == "active"
+
+
+def test_the_conftest_guard_fires_when_a_test_forgets_to_stub_the_auto_task(admission):
+    """Positive control for the guard added after this wiring minted 22 real ResearchTasks in
+    the operator's Seldon graph from fixture doc_ids. Without a test that OMITS the stub, the
+    guard could be deleted and the suite would not notice — it only ever runs on the path no
+    passing test takes. This test takes it deliberately."""
+    from kg import manifest
+    path = admission / "corpus" / "thin.epub"
+    path.write_bytes(b"junk")
+    with pytest.raises(AssertionError, match="reached the real `seldon` CLI"):
+        manifest.add(str(path), doc_id="guard-probe", title="T", authors=["A"],
+                     pub_date="2026", source_type="federal",
+                     primary_url="https://example.gov/guard", inclusion_rationale="r",
+                     discovered_via="manual")
