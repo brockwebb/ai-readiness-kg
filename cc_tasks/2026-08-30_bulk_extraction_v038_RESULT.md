@@ -553,3 +553,109 @@ genuinely completed — the completeness rule of §3.5's sibling fix working in 
 | ledger, this task | 4,288,618 settled (1,492,023 extraction + 2,796,595 judge) |
 | daily band | 55,000,000; committed today 4,827,970 |
 | model spend on Phase C | **0** |
+
+---
+
+# ADDENDUM-01 execution — 2026-08-31
+
+**Addenda re-globbed at start:** `cc_tasks/2026-08-30_bulk_extraction_v038_ADDENDUM-01.md`,
+untracked on disk, committed first (`83fa66d`) so the record shows which instructions the run
+was against.
+
+**It rejects §8's handoff line, and its reasoning is the stronger one.** Phase A qualified
+template sha `0c6fee1d…` *as sent*; an edited template is a different artifact, so burning it
+on Phase A's qualification would be DD-028 one layer up — a qualification instrument that
+measured something other than the thing burning. Re-qualifying a stripped template would have
+cost ~4.3M tokens to remove an instruction whose *output* can be refused for free.
+
+## 10. §1 — DD-024 enforced at graph entry, in two layers
+
+The template is untouched and the pin holds.
+
+**Layer 1, admission.** `semantic_edge_refused(edge_type)` refuses the five semantic types for
+profiles carrying `profile_class: bulk`, and the refusal **emits an event**
+(`semantic_edge_refused`, schema **0.3.8**) carrying doc, chunk, type, endpoints, span and the
+rule. A rule that drops output silently is indistinguishable from an extractor that never
+produced it, and that difference is the whole evidence base DD-024 rests on.
+
+The key is the **profile class**, not the edge type: demand-pull adjudication produces exactly
+these five types and is DD-024's own sanctioned path, so a global ban would close its remedy
+along with the problem. `profile_class` lives in `run_profiles.yaml` — config, not code.
+
+**Layer 2, projection.** `build_projection.is_projectable` excludes semantic edges from
+bulk-class purposes independently, reading which profiles are bulk from the registry at call
+time. §5.1 showed one missing rule let 190 edges through; that is the argument against relying
+on one.
+
+**§1.3 — the 5 existing Phase A edges.** `extraction_superseded` overlays naming the
+`semantic_edges` stratum, on the 4 extractions that emitted them. Events stay on the log.
+Verified by scoped read:
+
+```
+semantic edges on batch-023 (log):                     5
+  dropped by the extraction_superseded overlay:        5
+  dropped by the projection exclusion (independently): 5
+SEMANTIC EDGES REACHING THE PROJECTION:                0
+```
+
+## 11. §2 — the crosswalk lane was never epoch-less
+
+`crosswalk-2026-08-29` was declared by `cc_tasks/2026-08-29_crosswalk_operationalization.md`
+and covers **all 5** documents. **No new epoch was declared** — the declaration existed and was
+authoritative. What was wrong were the readers:
+
+| | dixie ledger shape | event-shard shape |
+|---|---|---|
+| location | `corpus/evidence/decisions.jsonl` | `events/batch-017.jsonl` |
+| nesting | under `payload` | top level |
+| member key | `member_doc_ids` | `members` |
+
+`kg.queue.corpus_epochs` now reads both sources and both shapes, and
+`run_bulk_extraction.corpus_members` defers to it so the two cannot disagree about whether a
+document is in an epoch. The epoch is also declared **twice** (8 members, then 2), so
+declarations **union** rather than last-wins — last-wins would have reported 2 of its 10
+documents.
+
+The `canonical_path` fallback stays as defence, per §2, but resolution no longer needs it.
+
+## 12. §3 — burn mechanics
+
+**§3.1 chunk-level resume.** `resume_plan()` derives what is left from `chunk_coverage` — the
+`chunk_metrics` events, i.e. the ledger — not from a file and not by counting raws on disk, so
+a stray directory cannot fool it. Plan: **1,121 → 1,091 chunks over 32 documents**, 29 chunks
+resumed rather than repeated. A document with zero remaining leaves the plan entirely instead
+of riding along in a batch's document list and being reported as burned.
+
+**§3.3 yield bands → observed envelope.** `agency_framework`'s ±3 sd band was −30 to +58: it
+cannot flag anything, and a negative floor on a count is not a floor. All strata use the same
+convention, labelled as decoration at n = 7–8. Flags are computed *after* the verdict; the test
+asserts `sprt_decide` cannot even see a yield — its parameters are `(fabrications, facts, b)`.
+
+**§3.4 zero-yield chunks are healthy.** Every Phase A stratum contained one. Zero is not
+special-cased into an anomaly; it is compared to the envelope like any other value.
+
+## 13. Two ledger defects caught in Phase C's first ninety seconds
+
+**The batch ceiling was 70% too loose.** Batch 1 declared **6,695,537** = 1.3 × 84,433/chunk ×
+61, against Phase A's measured 49,734. The running mean selected settles by a `bulk_v038`
+run-id **prefix**, which admits `bulk_v038_phase_a_judge`; judge tokens inflated an extraction
+ceiling. A ceiling that loose is a bound that would not catch a runaway, which is the only
+thing a ceiling is for. The call class lives on the run's `declare` record, not on the settle,
+so the mean now resolves run → class: **49,458/chunk, batch 1 ceiling 3,922,028**.
+
+The test that was meant to cover this is the better finding. Its docstring named the right
+principle — *"averaging them into an extraction ceiling would size the burn off the wrong call
+class"* — and then chose `pilot_chunked_v035` as the contaminant, a run id that does **not**
+start with `bulk_v038`. The prefix filter passed it while the real contaminant sailed through.
+**A test can assert exactly the right thing and pick a fixture that cannot fail.** That is the
+M85/M86 class arriving through the fixture rather than through the entry point — and the
+running total of that class in this project is now eight.
+
+**Burn runs were named for the wrong phase.** `bulk_v038_phase_a_bulk_v038_b001`. Now the batch
+id, which is already unique and descriptive.
+
+Cost of both: **zero settled tokens.** Batch 1 was stopped before any call settled, and
+chunk-level resume returned its 61 chunks to the plan intact. Two reservations (40,000) remain
+outstanding on the abandoned run — dead PID confirmed, but the orphan reaper requires age
+> 600 s as well, so they clear on their own. The stale 6,695,537 declaration stays on the
+append-only ledger beside the corrected one.
