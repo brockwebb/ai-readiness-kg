@@ -49,3 +49,19 @@ def no_writes_to_the_real_event_log(monkeypatch):
         return real_append(event, batch, tag)
 
     monkeypatch.setattr(eventlog, "append", guarded)
+
+
+@pytest.fixture(autouse=True)
+def restore_the_pinned_prompt_path(monkeypatch):
+    """`apply_arm`/`apply_profile` rebind `model_stub._PROMPT_PATH` as arm-scoped state. A
+    test that binds an arm's template and does not put it back leaves every later test reading
+    `prompt_version` from the wrong prompt — the same class of defect as the one found in
+    production: two reads of what is meant to be one fact, silently disagreeing.
+
+    The restore goes through `monkeypatch`, not a snapshot-and-assign, because ordering bites:
+    the guard fixture above already requests `monkeypatch`, so monkeypatch is set up FIRST and
+    its undo stack unwinds LAST. A yield-based restore here ran before monkeypatch's undo, and
+    monkeypatch then put the polluted value back. Registering the no-op setattr first makes
+    this the last undo applied, which is the only ordering that wins."""
+    from kg.extraction import model_stub
+    monkeypatch.setattr(model_stub, "_PROMPT_PATH", model_stub._PROMPT_PATH)

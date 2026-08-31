@@ -111,6 +111,11 @@ def apply_arm(profile: str | None = None, model: str | None = None,
     if EMISSION not in ("verbatim", "anchor"):
         raise SystemExit(f"FATAL: profile {PROFILE!r} declares unknown emission_contract "
                          f"{EMISSION!r}; known: verbatim, anchor")
+    # The prompt path is arm-scoped like everything else here, and binding it anywhere else
+    # lets `build_prompt` (which reads the profile) and `prompt_version` (which reads
+    # model_stub) disagree about which prompt the run used. `rbe.apply_profile` is what both
+    # binds it and VERIFIES the template/chunker sha pins, so it belongs in exactly one place.
+    rbe.apply_profile(PROFILE, chunk_unit_ok=True)
     ARM_MODEL = model
     if run_id:
         RUN_ID = run_id
@@ -168,8 +173,25 @@ def members() -> dict[str, Path]:
     for prof in ("v1", "kernel_v03"):
         rbe.apply_profile(prof)
         out.update(rbe.corpus_members())
-    rbe.apply_profile(PROFILE, chunk_unit_ok=True)   # sha-pinned chunked prompt is active
+    rbe.apply_profile(PROFILE, chunk_unit_ok=True)   # restore after the epoch walk above
     return out
+
+
+def verify_prompt_binding() -> str:
+    """Refuse to dispatch unless the version being STAMPED comes from the template being SENT.
+
+    `build_prompt` reads the template from the profile; `prompt_version` reads it from
+    `model_stub._PROMPT_PATH`. Those are two different reads of what is meant to be one fact,
+    and when they disagree the run still produces plausible output — with provenance that
+    lies about which prompt made it. Nothing downstream can detect that later."""
+    want = profile_template().resolve()
+    got = pathlib.Path(model_stub._PROMPT_PATH).resolve()
+    if want != got:
+        raise SystemExit(
+            f"FATAL: profile {PROFILE!r} pins {want.name} but prompt_version would be read "
+            f"from {got.name}. Provenance would record the wrong prompt for every item in "
+            f"this pass.")
+    return model_stub.prompt_version()
 
 
 def chunk_sets() -> dict[str, tuple[str, chunker.ChunkSet]]:
@@ -378,6 +400,7 @@ def phase_extract(a) -> int:
     from concurrent.futures import ThreadPoolExecutor
     cfg = model_cfg()
     m = members()
+    print(f"prompt {profile_template().name} v{verify_prompt_binding()}", flush=True)
     RAW_DIR.mkdir(parents=True, exist_ok=True)
     spend.set_current_run(RUN_ID)
     suspect = int(cfg.get("truncation_suspect_tokens", 40000))   # reported only; see _extract_one
@@ -413,7 +436,13 @@ def phase_extract(a) -> int:
         title = d.replace("-", " ")
         pending = [c for c in cs if not raw_path(d, c, sha, cfg["model_id"]).exists()
                    and (limit_to is None or c.chunk_id in limit_to)]
-        print(f"=== {d}: {len(cs)} chunks, {len(cs) - len(pending)} already extracted "
+        # "already extracted" was counting every chunk NOT dispatched, which under a
+        # restriction is mostly chunks that were never in this pass — the line reported
+        # "207 already extracted" for a document with one drawn chunk and no raws at all.
+        banked = sum(1 for c in cs if raw_path(d, c, sha, cfg["model_id"]).exists()
+                     and (limit_to is None or c.chunk_id in limit_to))
+        scope = len(cs) if limit_to is None else sum(1 for c in cs if c.chunk_id in limit_to)
+        print(f"=== {d}: {len(cs)} chunks, {scope} in scope, {banked} already extracted "
               f"[{cs.structure_source}, level {cs.heading_level}]", flush=True)
         todo += [(d, c, sha, title) for c in pending]
     if a.limit:

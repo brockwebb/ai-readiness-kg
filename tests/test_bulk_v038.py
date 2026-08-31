@@ -260,3 +260,23 @@ def test_the_whole_document_runner_refuses_a_chunk_unit_profile():
     finally:
         rbe_mod.apply_profile(saved[0] or "v1")
         model_stub._PROMPT_PATH = saved[1]
+
+
+def test_the_stamped_prompt_version_comes_from_the_prompt_that_was_sent(monkeypatch):
+    """The defect this caught in flight. `build_prompt` reads the template from the PROFILE;
+    `prompt_version` reads it from `model_stub._PROMPT_PATH`. Those are two reads of one fact,
+    and when they disagreed a production pass ran the v0.3.8 prompt while stamping
+    `prompt_version: 0.3.5` on the raw and on every provenance record. Nothing downstream can
+    detect that afterwards — the output is plausible and the provenance simply lies."""
+    from kg.extraction import model_stub
+    monkeypatch.setattr(rcb, "document_paths", lambda: {})
+    rcb.apply_production_profile()
+    assert rcb.cp.profile_template().name == "prompt_template_v0_3_8.md"
+    assert rcb.cp.verify_prompt_binding() == "0.3.8"
+
+    # and it REFUSES rather than proceeding when the two disagree
+    monkeypatch.setattr(model_stub, "_PROMPT_PATH",
+                        REPO / "kg/extraction/prompt_template.md")
+    with pytest.raises(SystemExit) as exc:
+        rcb.cp.verify_prompt_binding()
+    assert "Provenance would record the wrong prompt" in str(exc.value)

@@ -371,3 +371,84 @@ the session that decided it.
 
 **Scope.** This decides how work is *selected and recorded*, not how it runs. Prompts, gates,
 thresholds and the extraction pipeline are untouched.
+
+## DD-028: A gate's unit must be measurable by the instrument that validates it
+
+**Date:** 2026-08-31. **Task:** `cc_tasks/2026-08-30_bulk_extraction_v038.md`.
+**Cites:** `cc_tasks/2026-08-30_ground_truth_yield_floor_RESULT.md` (task 35094dc4); extends
+DD-026 (a precondition must be consistent with the threshold it gates).
+
+**Decision.** Every registered gate states its **unit** and names the **instrument** that
+measures that unit. A gate whose unit its validating instrument cannot measure is refused at
+registration, not discovered on the data.
+
+**Why.** The chunked pilot chased an admitted-yield floor of 45.23 items/chunk for three arms
+across four sessions. The number counted *nodes plus edges*; the ground-truth rubric that was
+supposed to validate it annotates *node items only*. The two are not comparable, so no arm
+could have "met" the floor in the sense anyone intended, and the three-arm chase (0.347 →
+0.537 → 0.560) was measuring a gap the instrument could not see. The re-derivation found the
+real shortfall was in edge volume — v0.3.5 was already at 0.93× ground truth on nodes. Four
+sessions of work, one unit error.
+
+This is the same defect class as DD-026: there, a precondition that its own threshold made
+unreachable; here, a threshold that its own instrument cannot read. Both are caught by
+arithmetic *before* spend, and both were caught only after it.
+
+**Consequences, binding.**
+
+1. **Registration form.** A gate is registered as (threshold, unit, instrument). All three, or
+   it is not a gate. The bulk task's own gates carry theirs: the Phase A faithfulness gate is
+   `F_upper < 0.10` on *atomic facts of admitted node items*, instrument = the standing probe
+   protocol; the Phase C acceptance rule is a fabrication rate on the *same* unit, instrument =
+   the same probe.
+2. **A comparator is part of the unit.** "60% of v0.3.5" is not a unit; "60% of v0.3.5's
+   admitted nodes per chunk on the 44 shared chunks" is. Where a comparator does not exist for
+   the material under test — as it does not off the pilot documents — the correct report is
+   *no verdict*, never a manufactured one (ADDENDUM-06 §2, applied in Phase A).
+3. **Qualification evidence is not a burn-time bar.** The re-derived 5.16 node floor is n=5,
+   reference-heavy, effectively n=2 informative. It licensed starting the burn and appears in
+   no gate in the burn. Promoting qualification evidence to a running threshold is how a
+   tripwire becomes a target.
+
+## DD-029: A one-time qualification licenses starting a burn, never finishing it unmonitored
+
+**Date:** 2026-08-31. **Task:** `cc_tasks/2026-08-30_bulk_extraction_v038.md`.
+**Prior art:** Wald (1945) SPRT; Dodge & Romig (1959) lot acceptance by attributes; Dodge
+(1943) CSP-1 continuous sampling; Shewhart bands for report-only process monitoring.
+**Internal:** Wintermute G4 (bulk extraction without measurement is how a layer dies);
+ADDENDUM-06 §3 of the chunked pilot, which carried this requirement forward as binding.
+
+**Decision.** Corpus-scale extraction runs under **sequential acceptance sampling per batch**,
+with parameters fixed before any qualification data exists, and a corpus stop rule that is the
+single operator touchpoint.
+
+- **Plan.** Wald SPRT on the batch fabrication rate: p0 = 0.05 acceptable, p1 = 0.10
+  rejectable (p1 is the standing faithfulness gate), α = β = 0.05. Accept when
+  d ≤ −3.9406 + 0.07236·n; reject when d ≥ +3.9406 + 0.07236·n, for d fabrications in n judged
+  facts. **55 facts** is the arithmetic minimum before a perfect batch can be accepted at all
+  (DD-026 applied to this plan); expected sample number is 159 at p0 and peaks at 231 at the
+  indifference rate.
+- **Batch outcomes.** Accept → the batch projects. Reject → that batch's shard is quarantined
+  out of projection and the burn continues. Still `continue` at 2× ASN → accept-with-flag,
+  marked `sampling_inconclusive`, counted toward the consecutive rule.
+- **Corpus stop.** 2 consecutive rejects, or 3 rejects/inconclusives in any rolling 5 batches.
+- **What qualification may inform.** Per-stratum expected yields (the report-only Shewhart
+  bands) and the sample size needed to reach the SPRT minimum. **Nothing else.** p0, p1, α and
+  β were fixed in the task file before Phase A ran and do not move on Phase A data.
+
+**Why the parameters are expensive, recorded rather than tuned away.** Discriminating 5% from
+10% at α = β = 0.05 is a small effect size, so it costs ~159 judged facts per batch in
+expectation. That is the price of the pre-registered discrimination, and the alternative —
+widening p1 after seeing the data — is exactly the retuning a pre-registered gate exists to
+forbid. A failed gate triggers investigation, never retuning (bulk-v1 closeout, standing).
+
+**Consequences, binding.**
+
+1. Yield is **monitored, never gated**. Per-stratum admitted/chunk against Phase A bands;
+   outside ±3 SD is flagged for the RESULT. Yield heterogeneity across document classes is a
+   finding (ADDENDUM-06 §2), not a defect.
+2. **Every monitor is mutation-verified before live use.** This project has recorded instances
+   of a test measuring a committed artifact instead of the generator; a monitor with that
+   defect reports health it never checked.
+3. Semantic edges remain out of bulk entirely (DD-024, unchanged). The `cites` layer runs as
+   part of normal emission and is reported by defect count per batch.

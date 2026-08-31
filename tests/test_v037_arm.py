@@ -39,12 +39,16 @@ def cp():
     state by design (so every function reads them at call time) and a leaked binding would
     silently point a later test at another arm's shard."""
     import chunked_pilot as mod
+    from kg.extraction import model_stub
     keep = {k: getattr(mod, k) for k in
             ("PROFILE", "RUN_ID", "JUDGE_RUN_ID", "SHARD_NO", "TAG", "RAW_DIR",
-             "CORPUS_EPOCH", "EMISSION", "ARM_MODEL")}
+             "CORPUS_EPOCH", "EMISSION", "ARM_MODEL", "DOCS", "DOC_PATHS", "PURPOSE",
+             "CHUNK_FILTER")}
+    prompt = model_stub._PROMPT_PATH
     yield mod
     for k, v in keep.items():
         setattr(mod, k, v)
+    model_stub._PROMPT_PATH = prompt
 
 
 # ---------------------------------------------------------------- 1. arm selection
