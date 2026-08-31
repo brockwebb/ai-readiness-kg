@@ -967,6 +967,7 @@ Appended as each batch settles. Verdicts are the sequential SPRT's, at p0=0.05 /
 |---|---:|---|---|---|---:|---|---:|
 | `b001` | 61 | 2/55 continue → 3/110 accept | **accept** | 0.0273 [0.0093, 0.0771] | 0.830 (78/94) | 3,194,546 / 3,922,028 (81%) | 2,221,824 |
 | `b002` | 45 | 2/55 continue → 3/110 accept | **accept** | 0.0275 [0.0094, 0.0778] | 0.805 (62/77) | 2,435,958 / 2,942,691 (83%) | 2,153,383 |
+| `b003` | 76 | 0/55 accept | **accept** | 0.0000 [0.0000, 0.0653] | 0.800 (40/50) | 3,700,666 / 5,010,178 (74%) | 1,450,634 |
 
 ## 19.1 b002 — usafacts-ai-ready-data-guide, w3c-dcat-3
 
@@ -985,3 +986,27 @@ documents that propose component relations constantly.
 
 The judge ran to 18% of its derived 12,200,000 ceiling — the bound is loose because it bounds
 the *budget* the SPRT may spend, not the sample it needs. Both batches stopped at 110 of 463.
+
+## 19.2 b003 — data-readiness-360-survey, wilkinson-2016-FAIR, aggarwal-2024-GEO
+
+76 chunks; 899 nodes, 1,255 edges, 331 mentions, 158 diverted. 545 facts written (241
+deterministic, 304 model), 55 judged.
+
+**The first single-increment accept.** Zero fabrications at 55 facts crosses the accept line
+(d ≤ 0.0) outright, so the test stopped at the arithmetic minimum — 55 facts of a 463 budget,
+and 1,450,634 judge tokens against the ~9.4M a fixed-n test of the full budget would cost.
+Pooled F = 0.0000 [0.0000, 0.0653]; the interval's upper bound alone clears the 0.10 gate.
+Rater agreement 1.000 / 0.964, doc-check reclassified 3 of 3, no yield flags.
+
+**Refusals: 13 in 76 chunks = 0.171/chunk**, against b001's 0.492, b002's 0.400 and Phase A's
+0.167. This is the stratum, not the burn: b003 is the academic stratum (a survey, the FAIR
+principles paper, a GEO paper) while b001 and b002 were frameworks and standards (NIST AI RMF,
+FCSM, DCAT). Academic prose does not propose component relations; specifications do it
+constantly.
+
+That refines §16's finding rather than overturning it. The claim "Phase A underestimated the
+refusal rate" holds — Phase A's stratified draw undersampled framework-heavy documents — but
+the corpus-wide projection is a **stratum-weighted mix**, not a flat multiple of any single
+batch. The ~537-edge figure in §16 extrapolated b001's framework rate across everything and is
+therefore an over-estimate; a weighted figure is deferred until enough batches have landed to
+weight it, rather than re-extrapolated from three.
