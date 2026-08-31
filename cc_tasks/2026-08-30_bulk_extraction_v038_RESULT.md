@@ -222,39 +222,6 @@ bug — state bound in one place, read in another:
   undone last.
 - The `cp` fixture did not restore the globals the production driver added.
 
----
-
-## 4. Tests and mutation matrices
-
-| | |
-|---|---|
-| suite at task start | 453 |
-| suite at task end | **499** |
-| mutations run | **32** |
-| mutations killed | **32** |
-
-Two mutations exposed **defects, not missing tests**, and were fixed rather than tested around:
-
-- **C6.** A malformed `bulk_batch_quarantined` event (no `batch_id`) put `None` in the
-  exclusion set, and a bare membership test then excluded every event *predating* acceptance
-  sampling — the entire v1 and kernel-v03 corpus. The absence of a `batch_id` is now tested
-  where the exclusion happens, not only where the set is built.
-- **C13/C15.** `batch_id` reached neither provenance nor `chunk_metrics` under mutation, and
-  nothing failed. Without it `batch_items` finds nothing, every batch samples zero facts, the
-  SPRT never decides, and the acceptance sampling runs while monitoring nothing. Provenance
-  construction is now one function, so the field has one place to be lost.
-
-**A defect in the event log itself, found and fixed:** two tests drove `phase_score` without
-redirecting the event log and were appending synthetic `ground_truth_floor` events — for
-documents `d#c1`/`d#c2`, which do not exist — into `events/batch-021_ground_truth.jsonl` on
-every `pytest` run. An autouse conftest guard now refuses any test write to the real log; it
-fired on exactly those two tests and nothing else in 453. **Three such events are already
-committed and are left in place** — the no-delete invariant governs, and they sit on a tagged
-shard `replay()` skips, so they reach no projection. Recorded here rather than repaired.
-
-The guard's own test then leaked a `batch-999.jsonl` into the real log during the mutation
-matrix, because a mutated guard lets the write through. It now cleans up unconditionally.
-
 ### 3.3 Phase A extraction
 
 | | |
@@ -377,6 +344,45 @@ taking the run down with it.
 
 ---
 
+## 4. Tests and mutation matrices
+
+| | |
+|---|---|
+| suite at task start | 453 |
+| suite at task end | **510** |
+| mutations run | **40** |
+| mutations killed | **40** |
+
+Four mutations exposed **defects, not missing tests**, and were fixed rather than tested around:
+
+- **C6.** A malformed `bulk_batch_quarantined` event (no `batch_id`) put `None` in the
+  exclusion set, and a bare membership test then excluded every event *predating* acceptance
+  sampling — the entire v1 and kernel-v03 corpus. The absence of a `batch_id` is now tested
+  where the exclusion happens, not only where the set is built.
+- **C13/C15.** `batch_id` reached neither provenance nor `chunk_metrics` under mutation, and
+  nothing failed. Without it `batch_items` finds nothing, every batch samples zero facts, the
+  SPRT never decides, and the acceptance sampling runs while monitoring nothing. Provenance
+  construction is now one function, so the field has one place to be lost.
+- **G1.** An unreadable probe aggregate resolved to **FAIL** instead of refusing (§3.6).
+- **Q3, and this one is the fourth of its kind here.** The surviving mutation exposed logic
+  that *cannot change behaviour*: `not n_want or n_have >= n_want` is identical to
+  `n_have >= n_want`, since `n_have >= 0` always holds. Deleted, with the reasoning left in
+  place and the mutation retargeted at the comparison that does run. Three earlier surviving
+  mutations in this project (M65, M98, and `worklist`'s oversize skip) were the same finding.
+
+**A defect in the event log itself, found and fixed:** two tests drove `phase_score` without
+redirecting the event log and were appending synthetic `ground_truth_floor` events — for
+documents `d#c1`/`d#c2`, which do not exist — into `events/batch-021_ground_truth.jsonl` on
+every `pytest` run. An autouse conftest guard now refuses any test write to the real log; it
+fired on exactly those two tests and nothing else in 453. **Three such events are already
+committed and are left in place** — the no-delete invariant governs, and they sit on a tagged
+shard `replay()` skips, so they reach no projection. Recorded here rather than repaired.
+
+The guard's own test then leaked a `batch-999.jsonl` into the real log during the mutation
+matrix, because a mutated guard lets the write through. It now cleans up unconditionally.
+
+---
+
 ## 5. Phase C — NOT STARTED. A profile defect blocks it.
 
 ### 5.1 The defect
@@ -459,7 +465,7 @@ Two consequences worth stating before anyone schedules it:
 | run | call class | ceiling | settled |
 |---|---|---:|---:|
 | `bulk_v038_phase_a` | `extraction_chunk` | 4,000,000 | 1,492,023 |
-| `bulk_v038_phase_a_judge` | `judge` | 4,000,000 (corrected) | *see §4 verdict* |
+| `bulk_v038_phase_a_judge` | `judge` | 4,000,000 (corrected) | 2,796,595 |
 | Phase C batch runs | — | **none declared** | **0** |
 
 **One ceiling correction, recorded with its authority.** The judge run was first declared at
@@ -473,3 +479,75 @@ and the corrected number is on the append-only ledger beside the original, not i
 
 One paid-for artifact was **discarded** rather than used: the mislabeled Phase A raw (§3.2),
 ~39,190 settled tokens.
+
+---
+
+## 7. Deliverables
+
+- [x] **Phase 0** — pin sha recorded (§1.2), cut 35/159 (§1.3), worklist 35 requests (§1.4),
+      ledger declared (§1.5)
+- [x] **Phase A** — pooled gate **PASS** (§3.5), per-stratum reported not gated, yield bands
+      recorded (§3.3)
+- [x] **Phase B** — SPRT constants and the 55-fact minimum derived (§2); mutation matrix
+      **32/32 killed** before any Phase C call, per the task's own precondition
+- [ ] **Phase C** — **NOT STARTED.** Blocked on the DD-024 profile defect (§5). No batch
+      dispatched, no batch ceiling declared, no burn events, nothing to quarantine or
+      reconcile.
+- [x] **DD-028** — a gate's unit must be measurable by its validating instrument
+- [x] **DD-029** — the acceptance-sampling burn design
+- [x] tests green, suite count reported, commit, push
+- [ ] `seldon cc complete` — see §8
+
+Numbers taken as free at Phase 0: DD-027 was taken by the queue task, so this task took
+**DD-028 and DD-029**, as its deliverable list instructed.
+
+## 8. Status of this task
+
+**Phases 0, A and B are complete. Phase C is stopped on a pre-existing profile defect that
+this task is explicitly forbidden to fix.**
+
+`seldon cc complete` is **not run**. The task's goal is a monitored burn; the burn did not
+happen. Marking it complete would assert work that did not occur — the same reasoning that
+kept the 2026-08-30 gate-check RESULT from claiming completion. What was built is durable and
+committed: the production profile, the chunked burn driver, the acceptance-sampling machinery,
+and a qualified extractor.
+
+**The new task this hands off, in one line:** strip the semantic-edge section from the pinned
+chunked template, re-pin the sha, and restart at Phase C — Phases 0/A/B do not need redoing,
+and Phase A's 30 chunks are already in the graph.
+
+Open, in the order they will bite:
+
+1. **The DD-024 violation (§5).** Blocks Phase C. Affects all four chunked arm templates, not
+   just the production one.
+2. **2 unconvertible burn documents** (`odcs-open-data-contract-standard`,
+   `slsa-specification-v1-0`). HTML with no markdown conversion; requested, recorded
+   `bulk_doc_failed`/`unconvertible_source`, visible on the status surface. Conversion belongs
+   to the T0/T1 substrate, not here.
+3. **5 documents in no corpus epoch** (the `corpus/crosswalk/` lane). Worked around twice in
+   this task — once in the driver, once in `probe_aggregate` after it had already cost a
+   judged run. It will keep costing until an epoch is declared for that lane.
+4. **`agency_framework`'s ±3 sd band is unusable** (−30 to +58). Phase C's monitoring should
+   either split that stratum or use a distribution-free band. A finding for the burn's design,
+   not a defect in this run.
+5. **3 test-written events remain committed** in `events/batch-021_ground_truth.jsonl` (§4).
+   Inert — tagged shard, `replay()` skips it — and left in place under the no-delete invariant.
+
+## 9. Live state at close
+
+```
+python -m kg queue status
+pinned profile: bulk_v038   included: 194   manifest_add events: 194   reconciles: YES
+queued=34  extracted=1  skipped_oversize=3  deferred=156   total=194
+```
+
+`extracted=1` is `anthropic-crawler-support-article`, a single-chunk document that Phase A
+genuinely completed — the completeness rule of §3.5's sibling fix working in both directions.
+
+| | |
+|---|---|
+| suite | **510 passed** |
+| mutations run / killed | **40 / 40** |
+| ledger, this task | 4,288,618 settled (1,492,023 extraction + 2,796,595 judge) |
+| daily band | 55,000,000; committed today 4,827,970 |
+| model spend on Phase C | **0** |
