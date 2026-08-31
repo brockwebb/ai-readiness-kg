@@ -156,6 +156,10 @@ DOC_PATHS = None
 PURPOSE = "chunked_pilot"
 #: Optional set of chunk_ids the run is restricted to. None = every chunk of every doc.
 CHUNK_FILTER = None
+#: Acceptance-sampling batch this pass belongs to (DD-029). Stamped into provenance so a
+#: batch that fails its sample can be quarantined out of the projection afterwards — the
+#: verdict arrives after ingest, so it cannot be expressed as a `purpose` at ingest time.
+BATCH_ID = None
 
 # Pre-registered, from the task. Never written here.
 F_STOP, ITEM_FAITHFUL, STRATUM_PRECONDITION = 0.10, 0.70, 20
@@ -594,6 +598,20 @@ def is_live(ev: dict, gens: dict[str, int], dead: set[tuple]) -> bool:
     return cid not in gens or _generation(ev) == gens[cid]
 
 
+def ingest_provenance(ex_id: str, model_id: str, sha: str, c, generation: int) -> dict:
+    """The provenance every node/edge/mention from one chunk carries. One function so the
+    acceptance-sampling `batch_id` has one place to be added or lost: without it
+    `batch_items` finds nothing, every batch samples zero facts, the SPRT never decides, and
+    the monitoring runs while monitoring nothing."""
+    prov = {**model_stub.provenance_stamp(ex_id, model_id=model_id),
+            "corpus_epoch": CORPUS_EPOCH, "source_sha256": sha,
+            "chunk_id": c.chunk_id, "chunk_start": c.start, "chunk_end": c.end,
+            "ingest_generation": generation}
+    if BATCH_ID:
+        prov["batch_id"] = BATCH_ID
+    return prov
+
+
 def phase_ingest(a) -> int:
     """Parse every persisted chunk response into the tagged shard. Idempotent: a chunk whose
     events are already on the shard is skipped."""
@@ -619,10 +637,7 @@ def phase_ingest(a) -> int:
             chunk_text = c.grounding_text()
             result, mentions, divs = parse_chunk_raw(d, raw, text, chunk_text)
             ex_id = uuid.uuid4().hex
-            prov = {**model_stub.provenance_stamp(ex_id, model_id=raw["model_id"]),
-                    "corpus_epoch": CORPUS_EPOCH, "source_sha256": sha,
-                    "chunk_id": c.chunk_id, "chunk_start": c.start, "chunk_end": c.end,
-                    "ingest_generation": generation}
+            prov = ingest_provenance(ex_id, raw["model_id"], sha, c, generation)
             # Locate-at-birth is unchanged: the parser validated every span against the chunk;
             # re-validate against the whole document so a span can never be chunk-local only.
             kept_n = kept_e = 0
@@ -660,7 +675,7 @@ def phase_ingest(a) -> int:
             eventlog.append({"event_type": "chunk_metrics", "purpose": PURPOSE,
                              "doc_id": d, "chunk_id": c.chunk_id,
                              "chunk_start": c.start, "chunk_end": c.end,
-                             "ingest_generation": generation,
+                             "ingest_generation": generation, "batch_id": BATCH_ID,
                              "chunk_tokens": c.n_tokens, "oversize": c.oversize,
                              "heading_path": list(c.heading_path),
                              "counts": result.counts(), "nodes_kept": kept_n,

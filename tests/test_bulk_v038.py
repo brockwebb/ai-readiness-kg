@@ -21,6 +21,22 @@ sys.path.insert(0, str(REPO / "scripts"))
 import run_chunked_bulk as rcb  # noqa: E402
 
 
+@pytest.fixture
+def cp_bulk(ext_iso, monkeypatch):
+    """The shared extraction module bound to the production profile, over a tmp event log and
+    a tmp raw dir, with every arm-scoped global restored afterwards."""
+    cp = rcb.cp
+    keep = {k: getattr(cp, k) for k in ("DOCS", "DOC_PATHS", "PURPOSE", "CHUNK_FILTER",
+                                        "BATCH_ID", "RAW_DIR", "SHARD_NO", "TAG",
+                                        "CORPUS_EPOCH", "EMISSION", "PROFILE")}
+    monkeypatch.setattr(rcb, "document_paths", lambda: {})
+    rcb.apply_production_profile()
+    monkeypatch.setattr(cp, "RAW_DIR", ext_iso / "raw")
+    yield cp
+    for k, v in keep.items():
+        setattr(cp, k, v)
+
+
 # ---------------------------------------------------------------- Phase B: the SPRT
 def test_the_boundaries_are_a_function_of_the_pre_registered_constants_only():
     """p0/p1/alpha/beta were fixed in the task before Phase A ran, precisely so Phase A data
@@ -280,3 +296,200 @@ def test_the_stamped_prompt_version_comes_from_the_prompt_that_was_sent(monkeypa
     with pytest.raises(SystemExit) as exc:
         rcb.cp.verify_prompt_binding()
     assert "Provenance would record the wrong prompt" in str(exc.value)
+
+
+# ---------------------------------------------------------------- Phase C: the burn
+def test_batches_never_split_a_document():
+    """A rejected batch is quarantined out of the projection wholesale. Half a document in
+    the graph and half quarantined is worse than neither."""
+    counts = {"a": 30, "b": 30, "c": 5}
+    bs = rcb.batches(["a", "b", "c"], counts)
+    seen = [d for b in bs for d in b["documents"]]
+    assert seen == ["a", "b", "c"] and len(seen) == len(set(seen))
+    assert all(b["chunks"] == sum(counts[d] for d in b["documents"]) for b in bs)
+
+
+def test_a_batch_reaches_the_minimum_before_it_closes_and_the_last_may_be_short():
+    """Below the minimum there is not enough output to sample from; padding the final batch
+    by reordering would break the priority order Phase 0.4 established."""
+    bs = rcb.batches(["a", "b", "c"], {"a": 39, "b": 1, "c": 3})
+    assert [b["chunks"] for b in bs] == [40, 3]
+    assert all(b["chunks"] >= rcb.BATCH_MIN_CHUNKS for b in bs[:-1])
+
+
+def test_batch_ids_are_stable_and_ordered():
+    bs = rcb.batches(["a", "b"], {"a": 40, "b": 40})
+    assert [b["batch_id"] for b in bs] == ["bulk_v038_b001", "bulk_v038_b002"]
+
+
+def test_the_batch_ceiling_follows_the_ledger_not_a_constant(tmp_path, monkeypatch):
+    """The task's rule: 1.3 x the running mean settled tokens/chunk over the ledger's last 10
+    measured settles. A ceiling pinned to a constant stops tracking the burn it is bounding."""
+    ledger = tmp_path / "spend_ledger.jsonl"
+    rows = [{"record": "settle", "run_id": "bulk_v038_x", "actual_tokens": 1000}] * 5
+    rows += [{"record": "settle", "run_id": "bulk_v038_x", "actual_tokens": 2000}] * 10
+    ledger.write_text("\n".join(json.dumps(r) for r in rows))
+    monkeypatch.setattr(rcb, "REPO", tmp_path.parent)
+    monkeypatch.setattr(rcb, "LEDGER_WINDOW", 10)
+    (tmp_path.parent / "state").mkdir(exist_ok=True)
+    (tmp_path.parent / "state" / "spend_ledger.jsonl").write_text(ledger.read_text())
+    ceiling, per = rcb.batch_ceiling(10, default_per_chunk=99999.0)
+    assert per == 2000.0                                    # last 10 only, not all 15
+    assert ceiling == int(1.3 * 2000 * 10)
+
+
+def test_the_ceiling_ignores_other_runs_settles(tmp_path, monkeypatch):
+    """A judge run and a pilot arm settle into the same ledger. Averaging them into an
+    extraction ceiling would size the burn off the wrong call class."""
+    (tmp_path / "state").mkdir()
+    (tmp_path / "state" / "spend_ledger.jsonl").write_text("\n".join(json.dumps(r) for r in [
+        {"record": "settle", "run_id": "pilot_chunked_v035", "actual_tokens": 999999},
+        {"record": "settle", "run_id": "bulk_v038_phase_a", "actual_tokens": 1000}]))
+    monkeypatch.setattr(rcb, "REPO", tmp_path)
+    assert rcb.mean_settled_per_chunk(0.0) == 1000.0
+
+
+def test_the_stop_rule_fires_on_two_consecutive_rejects():
+    st = rcb.BurnState()
+    for o in ("accept", "reject", "accept"):
+        st.record(o)
+    assert st.should_stop() is None
+    st.record("reject")
+    assert st.should_stop() is None                          # not consecutive
+    st.record("reject")
+    assert "2 consecutive rejects" in st.should_stop()
+
+
+def test_the_stop_rule_counts_inconclusives_in_the_rolling_window():
+    """`sampling_inconclusive` is accept-with-flag for the batch but still evidence about the
+    process — a run that keeps failing to decide is not a healthy run."""
+    st = rcb.BurnState()
+    for o in ("sampling_inconclusive", "accept", "reject", "accept",
+              "sampling_inconclusive"):
+        st.record(o)
+    assert "3 rejects/inconclusives" in st.should_stop()
+
+
+def test_a_clean_run_never_stops():
+    st = rcb.BurnState()
+    for _ in range(20):
+        st.record("accept")
+    assert st.should_stop() is None
+
+
+def test_the_batch_sampler_reads_the_shard_not_a_committed_file(monkeypatch):
+    """The M85/M86 class, sixth recorded instance: a sampler that reads an artifact reports on
+    the artifact, not on what the burn produced. This drives `sample_for_batch` against items
+    `batch_items` pulled out of the event log, and asserts the draw is seeded and bounded."""
+    items = [{"i": i} for i in range(100)]
+    a = rcb.sample_for_batch("bulk_v038_b001", items, budget=20)
+    b = rcb.sample_for_batch("bulk_v038_b001", items, budget=20)
+    c = rcb.sample_for_batch("bulk_v038_b002", items, budget=20)
+    assert a == b and len(a) == 20                           # seeded on the batch id
+    assert a != c                                            # a different batch draws differently
+    assert all(x in items for x in a)
+    assert rcb.sample_for_batch("b", items[:5], budget=20) == items[:5]   # no upsampling
+
+
+def test_batch_items_selects_by_the_batch_id_stamped_in_provenance(monkeypatch):
+    monkeypatch.setattr(rcb.cp, "shard_items", lambda: (
+        {"d": [{"provenance": {"batch_id": "bulk_v038_b001"}, "payload": {"id": "n1"}},
+               {"provenance": {"batch_id": "bulk_v038_b002"}, "payload": {"id": "n2"}},
+               {"provenance": {}, "payload": {"id": "n3"}}]}, {}, {}))
+    got = rcb.batch_items("bulk_v038_b001")
+    assert [e["payload"]["id"] for e in got] == ["n1"]
+
+
+def test_a_quarantined_batch_leaves_the_projection_and_nothing_else_does(ext_iso):
+    """The consequence a reject is supposed to have. `purpose` cannot express it — the verdict
+    arrives AFTER ingest — so the exclusion is a later event naming the batch, and the
+    projection reads it at call time."""
+    import build_projection as bp
+    from kg import eventlog
+    good = {"event_type": "node_asserted", "purpose": rcb.PROFILE, "doc_id": "d",
+            "provenance": {"batch_id": "bulk_v038_b002"}, "payload": {"id": "keep"}}
+    bad = {"event_type": "node_asserted", "purpose": rcb.PROFILE, "doc_id": "d",
+           "provenance": {"batch_id": "bulk_v038_b001"}, "payload": {"id": "drop"}}
+    eventlog.append(good, batch=23)
+    eventlog.append(bad, batch=23)
+    assert bp.quarantined_batches() == set()
+    assert bp.is_projectable(bad, bp.quarantined_batches())
+
+    eventlog.append({"event_type": "bulk_batch_quarantined", "batch_id": "bulk_v038_b001"},
+                    batch=23)
+    q = bp.quarantined_batches()
+    assert q == {"bulk_v038_b001"}
+    assert not bp.is_projectable(bad, q)
+    assert bp.is_projectable(good, q)          # the accepted batch is untouched
+
+
+def test_a_requalified_batch_comes_back_without_deleting_the_quarantine(ext_iso):
+    """Correct-forward, never a deletion — the invariant the whole log runs on."""
+    import build_projection as bp
+    from kg import eventlog
+    ev = {"event_type": "node_asserted", "provenance": {"batch_id": "b1"},
+          "payload": {"id": "x"}}
+    eventlog.append({"event_type": "bulk_batch_quarantined", "batch_id": "b1"}, batch=23)
+    assert not bp.is_projectable(ev, bp.quarantined_batches())
+    eventlog.append({"event_type": "bulk_batch_requalified", "batch_id": "b1"}, batch=23)
+    assert bp.is_projectable(ev, bp.quarantined_batches())
+
+
+def test_an_event_with_no_batch_id_is_never_quarantined_by_accident(ext_iso):
+    """Every event predating acceptance sampling — the entire v1 and kernel corpus — has no
+    batch_id. A membership test that treated None as a match would empty the graph."""
+    import build_projection as bp
+    from kg import eventlog
+    eventlog.append({"event_type": "bulk_batch_quarantined", "batch_id": "b1"}, batch=23)
+    q = bp.quarantined_batches()
+    assert bp.is_projectable({"event_type": "node_asserted", "payload": {}}, q)
+    assert bp.is_projectable({"event_type": "node_asserted", "provenance": {}}, q)
+
+
+def test_a_quarantine_event_naming_no_batch_cannot_empty_the_graph(ext_iso):
+    """M2 control for the test above. A malformed quarantine event puts `None` in the set;
+    if the exclusion test is a bare membership check, every event that predates acceptance
+    sampling — the whole v1 and kernel corpus — matches `None` and leaves the graph."""
+    import build_projection as bp
+    from kg import eventlog
+    eventlog.append({"event_type": "bulk_batch_quarantined", "reason": "malformed"}, batch=23)
+    q = bp.quarantined_batches()
+    legacy = {"event_type": "node_asserted", "doc_id": "v1-doc", "payload": {"id": "x"}}
+    assert bp.is_projectable(legacy, q)
+    assert bp.is_projectable(legacy, {None})
+    assert bp.is_projectable({"provenance": {"batch_id": None}}, {None})
+
+
+def test_the_batch_id_reaches_provenance_and_the_chunk_record(cp_bulk, monkeypatch,
+                                                              tmp_path):
+    """Both carriers, because they answer different questions. Provenance on each item is what
+    `batch_items` samples; `batch_id` on `chunk_metrics` is what records that a chunk with
+    ZERO admitted items still belonged to the batch — otherwise an empty batch looks like an
+    absent one."""
+    from kg import eventlog
+    cp = cp_bulk
+    src = tmp_path / "d.md"
+    src.write_text("# H\n\nThe readiness index is a scored instrument.\n", encoding="utf-8")
+    monkeypatch.setattr(cp, "DOCS", ["d"])
+    monkeypatch.setattr(cp, "DOC_PATHS", {"d": src})
+    monkeypatch.setattr(cp, "BATCH_ID", "bulk_v038_b007")
+    monkeypatch.setattr(cp, "superseded", lambda tag=None: set())
+    monkeypatch.setattr(cp, "live_generations", lambda tag=None: {})
+    monkeypatch.setattr(cp, "model_cfg", lambda: {"model_id": "m"})
+
+    chunks = list(cp.chunker.chunk_document("d", src.read_text()))
+    prov = cp.ingest_provenance("ex1", "m", "sha", chunks[0], 1)
+    assert prov["batch_id"] == "bulk_v038_b007"
+    monkeypatch.setattr(cp, "BATCH_ID", None)
+    assert "batch_id" not in cp.ingest_provenance("ex1", "m", "sha", chunks[0], 1)
+    monkeypatch.setattr(cp, "BATCH_ID", "bulk_v038_b007")
+
+    sha = __import__("hashlib").sha256(src.read_bytes()).hexdigest()
+    rp = cp.raw_path("d", chunks[0], sha, "m")
+    rp.parent.mkdir(parents=True, exist_ok=True)
+    rp.write_text(json.dumps({"model_id": "m", "usage": {"outputTokens": 10},
+                              "raw_result": "{}"}))
+    cp.phase_ingest(type("A", (), {"reingest": False})())
+    metrics = [ev for ev in eventlog.replay(tag=cp.TAG)
+               if ev.get("event_type") == "chunk_metrics"]
+    assert metrics and all(ev["batch_id"] == "bulk_v038_b007" for ev in metrics)

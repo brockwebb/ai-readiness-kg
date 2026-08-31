@@ -141,9 +141,39 @@ def stratum_superseded(ev: dict, strata: list, old_instrument_ids: set[str]) -> 
 NON_GRAPH_PURPOSES = {"tevv_retest", "probe"}   # probe = judge_label events (task 2026-08-22_faithfulness_probe)
 
 
-def is_projectable(ev: dict) -> bool:
-    """False for events flagged with a non-graph purpose (e.g. TEVV retests)."""
-    return ev.get("purpose") not in NON_GRAPH_PURPOSES
+#: Acceptance-sampling batches whose sample crossed the SPRT reject boundary (DD-029). The
+#: verdict necessarily arrives AFTER ingest, so a rejected batch cannot be excluded by the
+#: `purpose` it was stamped with; it is excluded by a later event naming the batch. Read at
+#: call time, from the log, like everything else here.
+QUARANTINE_EVENT = "bulk_batch_quarantined"
+UNQUARANTINE_EVENT = "bulk_batch_requalified"
+
+
+def quarantined_batches() -> set[str]:
+    """Batch ids currently excluded from the graph. Correct-forward: a requalification event
+    after a quarantine readmits the batch, and both stay on the log."""
+    out: set[str] = set()
+    for ev in eventlog.replay():
+        bid = ev.get("batch_id")
+        if not bid:
+            continue                     # a quarantine naming no batch quarantines nothing
+        if ev.get("event_type") == QUARANTINE_EVENT:
+            out.add(bid)
+        elif ev.get("event_type") == UNQUARANTINE_EVENT:
+            out.discard(bid)
+    return out
+
+
+def is_projectable(ev: dict, quarantined: set[str] | None = None) -> bool:
+    """False for events flagged with a non-graph purpose (e.g. TEVV retests), and for events
+    belonging to an acceptance-sampling batch that failed its sample."""
+    if ev.get("purpose") in NON_GRAPH_PURPOSES:
+        return False
+    bid = (ev.get("provenance") or {}).get("batch_id")
+    # An event with no batch_id predates acceptance sampling — the entire v1 and kernel
+    # corpus. It can never be quarantined, whatever is in the set, so the absence is tested
+    # HERE and not only where the set is built.
+    return not bid or bid not in (quarantined or ())
 
 
 # Document annotations (schema v0.3.1, task 2026-08-22_kernel_tevv): harness-set document
@@ -197,6 +227,10 @@ def build(session, kg_labels: list[str], edge_whitelist: set[str]) -> dict:
               "skipped_non_graph_purpose": 0,
               "aliased_endpoints": 0}
     superseded, aliases = read_overlays()
+    quarantined = quarantined_batches()
+    if quarantined:
+        print(f"acceptance sampling: {len(quarantined)} batch(es) quarantined out of the "
+              f"graph: {sorted(quarantined)}")
     _old_instr: dict[tuple, set] = {}   # (doc_id, sha) -> old Instrument item ids (Lane 2)
     document_ids = {ev["payload"]["doc_id"] for ev in eventlog.replay()
                     if ev.get("event_type") == "manifest_add"}
@@ -206,7 +240,7 @@ def build(session, kg_labels: list[str], edge_whitelist: set[str]) -> dict:
 
     for ev in eventlog.replay():
         et = ev.get("event_type")
-        if not is_projectable(ev):
+        if not is_projectable(ev, quarantined):
             counts["skipped_non_graph_purpose"] += 1
             continue
         ann = annotation_update(ev)

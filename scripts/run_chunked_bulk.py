@@ -562,6 +562,133 @@ def phase_judge(a) -> int:
     return 0 if verdict == "PASS" else 1
 
 
+# ---------------------------------------------------------------- Phase C — the burn
+BATCH_MIN_CHUNKS = 40          # DD-019 dispatch unit: enough output to sample from
+CEILING_HEADROOM = 1.3         # task: 1.3 x running mean settled tokens/chunk
+LEDGER_WINDOW = 10             # ... over the ledger's last 10 measured settles
+
+
+def document_chunk_counts() -> dict[str, int]:
+    paths = document_paths()
+    out = {}
+    for doc_id in burn_set():
+        path = paths.get(doc_id)
+        if path and readable(path):
+            out[doc_id] = len(chunker.chunk_document(doc_id, rbe.doc_text(path)))
+    return out
+
+
+def batches(worklist: list[str], counts: dict[str, int]) -> list[dict]:
+    """Group the worklist into dispatch batches of >= BATCH_MIN_CHUNKS, in worklist order.
+
+    A document is never split across batches: the acceptance verdict quarantines a batch's
+    events, and half a document in the graph is worse than none. The final batch may be short
+    — padding it by reordering would break the priority order Phase 0.4 established."""
+    out, cur, n = [], [], 0
+    for doc_id in worklist:
+        if doc_id not in counts:
+            continue
+        cur.append(doc_id)
+        n += counts[doc_id]
+        if n >= BATCH_MIN_CHUNKS:
+            out.append({"documents": cur, "chunks": n})
+            cur, n = [], 0
+    if cur:
+        out.append({"documents": cur, "chunks": n})
+    for i, b in enumerate(out, start=1):
+        b["batch_id"] = f"bulk_v038_b{i:03d}"
+    return out
+
+
+def mean_settled_per_chunk(default: float) -> float:
+    """Running mean settled tokens per chunk over the ledger's last LEDGER_WINDOW settles for
+    this profile's runs. Bootstrapped from Phase A's mean when the ledger has none."""
+    path = REPO / "state/spend_ledger.jsonl"
+    if not path.is_file():
+        return default
+    settles = []
+    for line in path.read_text(encoding="utf-8").splitlines():
+        if not line.strip():
+            continue
+        try:
+            r = json.loads(line)
+        except json.JSONDecodeError:
+            continue
+        if r.get("record") == "settle" and str(r.get("run_id", "")).startswith("bulk_v038") \
+                and r.get("actual_tokens"):
+            settles.append(int(r["actual_tokens"]))
+    if not settles:
+        return default
+    window = settles[-LEDGER_WINDOW:]
+    return sum(window) / len(window)
+
+
+def batch_ceiling(chunks: int, default_per_chunk: float) -> tuple[int, float]:
+    per = mean_settled_per_chunk(default_per_chunk)
+    return int(math.ceil(CEILING_HEADROOM * per * chunks)), per
+
+
+def phase_a_mean_per_chunk() -> float:
+    """Phase A's measured settled tokens per chunk — the bootstrap for batch 1's ceiling."""
+    payload = confirmation_sample()
+    per = mean_settled_per_chunk(0.0)
+    if per:
+        return per
+    raise SystemExit("FATAL: no bulk_v038 settles on the ledger; Phase A must run before "
+                     f"a batch ceiling can be derived ({payload['drawn_total']} chunks drawn)")
+
+
+# ---------------------------------------------------------------- acceptance sampling
+def batch_items(batch_id: str) -> list[dict]:
+    """Admitted node items belonging to one batch, from the shard."""
+    nodes, _e, _s = cp.shard_items()
+    out = []
+    for doc_id, evs in nodes.items():
+        for ev in evs:
+            if (ev.get("provenance") or {}).get("batch_id") == batch_id:
+                out.append(ev)
+    return out
+
+
+def sample_for_batch(batch_id: str, items: list[dict], budget: int) -> list[dict]:
+    """Seeded random sample of admitted items, drawn from the LIVE shard, never from a file.
+
+    Seeded on the batch id so the draw is reproducible and stated; drawn from `items` — which
+    `batch_items` reads out of the event log — because a sampler that reads a committed
+    artifact reports on the artifact, not on what the burn actually produced. That defect has
+    six recorded instances in this project."""
+    rng = random.Random(f"bulk_v038_sample:{batch_id}")
+    if len(items) <= budget:
+        return list(items)
+    return rng.sample(items, budget)
+
+
+class BurnState:
+    """Rolling accept/reject history and the corpus stop rule (DD-029)."""
+
+    def __init__(self):
+        self.outcomes: list[str] = []
+
+    def record(self, outcome: str) -> None:
+        self.outcomes.append(outcome)
+
+    def should_stop(self) -> str | None:
+        bad = {"reject", "sampling_inconclusive"}
+        if len(self.outcomes) >= 2 and self.outcomes[-1] == "reject" \
+                and self.outcomes[-2] == "reject":
+            return "2 consecutive rejects"
+        window = self.outcomes[-5:]
+        if sum(1 for o in window if o in bad) >= 3:
+            return f"3 rejects/inconclusives in the last {len(window)} batches"
+        return None
+
+
+def quarantine_batch(batch_id: str, reason: str, evidence: dict) -> str:
+    return eventlog.append({"event_type": "bulk_batch_quarantined", "purpose": PROFILE,
+                            "batch_id": batch_id, "reason": reason, "evidence": evidence,
+                            "task": TASK, "ts": now()}, batch=cp.SHARD_NO)
+
+
 PHASES = {"cut": phase_cut, "sprt": phase_sprt, "sample": phase_sample,
           "extract": phase_extract, "ingest": phase_ingest, "judge": phase_judge}
 
