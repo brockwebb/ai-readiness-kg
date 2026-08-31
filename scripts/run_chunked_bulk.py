@@ -689,8 +689,117 @@ def quarantine_batch(batch_id: str, reason: str, evidence: dict) -> str:
                             "task": TASK, "ts": now()}, batch=cp.SHARD_NO)
 
 
+def judge_batch(batch_id: str, items: list[dict], texts: dict[str, str],
+                budget: int, raters: list[str], fact_cap: int) -> dict:
+    """Draw, decompose, judge, decide. Returns the SPRT verdict and its evidence."""
+    b = sprt_boundaries()
+    sample = sample_for_batch(batch_id, items, budget)
+    strata = document_strata()
+    recs = []
+    for ev in sample:
+        item = ev["payload"]["item"]
+        name = item.get("name") or item.get("term") or item.get("text") or ""
+        span = item.get("grounding_span") or ""
+        doc_id = ev["doc_id"]
+        recs.append({"item_id": f"{ev['chunk_id']}:{ev['payload']['id']}",
+                     "event_id": ev["event_id"], "kind": "node",
+                     "type": ev["payload"]["type"],
+                     "stratum": strata.get(doc_id, "unstratified"), "doc_id": doc_id,
+                     "text": name, "grounding_span": span, "extra": item,
+                     "window": cp.window_for(cp.grounding.normalize(texts[doc_id]), span)})
+    prefix = f"burn_{batch_id}"
+    cp.write_sample(prefix, recs)
+    agg = cp.run_protocol(prefix, prefix, f"{RUN_ID}_burn_judge", raters, fact_cap)
+    if not agg:
+        return {"outcome": "protocol_failed", "batch_id": batch_id}
+    pooled = agg.get("pooled") or agg
+    facts = int(pooled.get("facts") or pooled.get("n_facts") or 0)
+    fabrications = int(pooled.get("fabrications") or pooled.get("unfaithful") or 0)
+    decision = sprt_decide(fabrications, facts, b)
+    if decision == "continue" and facts >= budget:
+        decision = "sampling_inconclusive"
+    return {"outcome": decision, "batch_id": batch_id, "facts": facts,
+            "fabrications": fabrications, "items_sampled": len(sample),
+            "items_available": len(items), "aggregate": agg}
+
+
+def phase_burn(a) -> int:
+    apply_production_profile(RUN_ID)
+    b = sprt_boundaries()
+    n_min = min_facts_for_accept(b)
+    budget = int(math.ceil(2 * expected_sample_number(b, b["slope"])))
+    cfg = model_stub.load_model_config()
+    raters = [cfg["primary_judge_model_id"], cfg["secondary_judge_model_id"]]
+
+    counts = document_chunk_counts()
+    work = [d for d in queue.worklist(PROFILE) if d in counts]
+    plan = batches(work, counts)
+    print(f"burn plan: {len(work)} documents, {sum(counts[d] for d in work)} chunks, "
+          f"{len(plan)} batches; sample budget {budget} facts/batch, accept needs "
+          f">= {n_min}")
+    for bt in plan:
+        print(f"  {bt['batch_id']}  {len(bt['documents']):>2} docs  "
+              f"{bt['chunks']:>4} chunks")
+    if a.plan_only:
+        return 0
+
+    boot = phase_a_mean_per_chunk()
+    state = BurnState()
+    ledger_rows = []
+    for bt in plan[: a.max_batches] if a.max_batches else plan:
+        bid = bt["batch_id"]
+        ceiling, per = batch_ceiling(bt["chunks"], boot)
+        run_id = f"{RUN_ID}_{bid}"
+        print(f"\n=== {bid}: {len(bt['documents'])} docs, {bt['chunks']} chunks, "
+              f"ceiling {ceiling:,} (1.3 x {per:,.0f}/chunk)", flush=True)
+        spend.default_ledger().declare(run_id, ceiling, declared_by=TASK,
+                                       call_class="extraction_chunk")
+        cp.DOCS = list(bt["documents"])
+        cp.CHUNK_FILTER = None
+        cp.BATCH_ID = bid
+        cp.RUN_ID = run_id
+        spend.set_current_run(run_id)
+        rc = cp.phase_extract(type("A", (), {"shared_with": None, "only": None,
+                                             "limit": None, "workers": a.workers})())
+        if rc != 0:
+            print(f"{bid}: extraction returned {rc}; stopping the burn.")
+            return rc
+        cp.phase_ingest(type("A", (), {"reingest": False})())
+
+        m = cp.members()
+        texts = {d: rbe.doc_text(m[d]) for d in cp.DOCS}
+        items = batch_items(bid)
+        if len(items) < n_min:
+            verdict = {"outcome": "sampling_inconclusive", "batch_id": bid,
+                       "items_available": len(items),
+                       "why": f"{len(items)} admitted items < {n_min} facts needed for a "
+                              f"decision; the plan cannot settle this batch"}
+        else:
+            spend.default_ledger().declare(f"{RUN_ID}_burn_judge", a.judge_ceiling,
+                                           declared_by=TASK, call_class="judge")
+            verdict = judge_batch(bid, items, texts, budget, raters, a.fact_cap)
+        state.record(verdict["outcome"])
+        if verdict["outcome"] == "reject":
+            quarantine_batch(bid, "SPRT reject boundary crossed", verdict)
+            print(f"{bid}: REJECT — shard quarantined out of the projection")
+        print(f"{bid}: {verdict['outcome']}")
+        ledger_rows.append(verdict)
+        stop = state.should_stop()
+        if stop:
+            print(f"\nCORPUS STOP: {stop}. Incident-class report; burn halted.")
+            break
+    out = {"task": TASK, "profile": PROFILE, "batches": ledger_rows,
+           "outcomes": state.outcomes, "stopped": state.should_stop(),
+           "sprt": b, "sample_budget": budget, "min_facts_for_accept": n_min,
+           "ran_at": now()}
+    (STATE_DIR / "bulk_v038_burn.json").write_text(json.dumps(out, indent=1) + "\n",
+                                                   encoding="utf-8")
+    return 0
+
+
 PHASES = {"cut": phase_cut, "sprt": phase_sprt, "sample": phase_sample,
-          "extract": phase_extract, "ingest": phase_ingest, "judge": phase_judge}
+          "extract": phase_extract, "ingest": phase_ingest, "judge": phase_judge,
+          "burn": phase_burn}
 
 
 def main() -> int:
@@ -701,6 +810,10 @@ def main() -> int:
     ap.add_argument("--ceiling-tokens", type=int, default=None)
     ap.add_argument("--workers", type=int, default=2)
     ap.add_argument("--reingest", action="store_true")
+    ap.add_argument("--plan-only", action="store_true",
+                    help="burn: print the batch plan and stop, no spend")
+    ap.add_argument("--max-batches", type=int, default=None)
+    ap.add_argument("--judge-ceiling", type=int, default=2_000_000)
     ap.add_argument("--fact-cap", type=int, default=40,
                     help="max facts judged per stratum; a cap widens the interval, which "
                          "makes PASS harder, never easier")
