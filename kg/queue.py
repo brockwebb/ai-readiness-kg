@@ -210,6 +210,22 @@ def live_requests() -> dict[str, dict]:
     return out
 
 
+def requests_ever() -> dict[str, dict]:
+    """{doc_id: latest `extraction_request`}, whether or not it still stands.
+
+    `live_requests` answers "what may run now"; this answers "what was ever put in scope".
+    The two differ the moment a document is deferred, because `defer` requires the request to
+    be withdrawn first — so a document priced out of a burn vanishes from `live_requests`, and
+    any batch plan cut over that set renumbers itself around the hole. Batch ids are stamped
+    into provenance and are what a quarantine names, so renumbering quarantines the wrong
+    events. Scope decisions belong to dispatch, not to identity."""
+    out: dict[str, dict] = {}
+    for ev in eventlog.replay():
+        if ev.get("event_type") == REQUEST and ev.get("document_id"):
+            out[ev["document_id"]] = ev
+    return out
+
+
 # ---------------------------------------------------------------- extraction history
 def extractions() -> dict[str, list[dict]]:
     """{doc_id: [{profile, corpus_epoch, model_id, prompt_version, ts, extraction_event_id}]}.

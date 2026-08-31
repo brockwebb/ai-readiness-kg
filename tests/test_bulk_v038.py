@@ -1366,3 +1366,143 @@ def test_every_declaration_in_a_resumable_burn_is_declare_once(tmp_path, monkeyp
     assert rcb.declare_once("r", 1, "judge") == 3_000_000        # no conflict, no change
     assert int(ledger.declaration("r")["ceiling_tokens"]) == 3_000_000
     assert rcb.declare_once("other", 500, "judge") == 500        # a new run still declares
+
+
+# ---------------------------------------------------------------- ADDENDUM-02: burn scope
+def test_deferring_documents_does_not_renumber_the_batches_after_them(monkeypatch):
+    """ADDENDUM-02 §3.1, and the third arrival of the batch-identity defect. `defer` requires
+    the request to be withdrawn first, so pricing b005/b008/b009 out of scope removes six
+    documents from `live_requests` — and a plan cut over that set closes the holes and slides
+    every later batch up. The addendum names its batches by id, and provenance on 2,504
+    already-written events names them too, so a renumbering here means the RESULT and the
+    graph disagree about what `bulk_v038_b006` is."""
+    counts = {"a": 40, "b": 40, "c": 40, "d": 40}
+    monkeypatch.setattr(rcb, "document_chunk_counts", lambda: counts)
+    monkeypatch.setattr(rcb.queue, "chunk_coverage", lambda p: {})
+    reqs = {d: {"priority": i} for i, d in enumerate(["a", "b", "c", "d"])}
+    monkeypatch.setattr(rcb.queue, "requests_ever", lambda: dict(reqs))
+
+    def plan_with(deferred):
+        live = {d: r for d, r in reqs.items() if d not in deferred}
+        monkeypatch.setattr(rcb.queue, "live_requests", lambda: live)
+        monkeypatch.setattr(rcb, "deferred_documents", lambda: set(deferred))
+        work, full, remaining, _ = rcb.resume_plan()
+        return ([(b["batch_id"], tuple(b["documents"])) for b in rcb.batches(work, full)],
+                remaining)
+
+    before, _ = plan_with(())
+    after, remaining = plan_with(("b",))                 # the middle batch is priced out
+    assert before == after, (before, after)
+    assert after[1] == ("bulk_v038_b002", ("b",))        # b002 still MEANS b
+    assert remaining["b"] == 0                           # ... and dispatches nothing
+
+
+def test_a_deferral_of_a_never_requested_document_cannot_insert_itself(monkeypatch):
+    """The mirror failure of the test above: if identity took every deferral, deferring a
+    document nobody ever requested would ADD a batch and shift the ids downward. Only a
+    document the ledger actually put in scope keeps a place in the cut."""
+    counts = {"a": 40, "z": 40, "b": 40}
+    monkeypatch.setattr(rcb, "document_chunk_counts", lambda: counts)
+    monkeypatch.setattr(rcb.queue, "chunk_coverage", lambda p: {})
+    monkeypatch.setattr(rcb.queue, "live_requests",
+                        lambda: {"a": {"priority": 0}, "b": {"priority": 2}})
+    monkeypatch.setattr(rcb.queue, "requests_ever",
+                        lambda: {"a": {"priority": 0}, "b": {"priority": 2}})
+    monkeypatch.setattr(rcb, "deferred_documents", lambda: {"z"})   # never requested
+    work, full, _, _ = rcb.resume_plan()
+    assert work == ["a", "b"]
+    assert [b["batch_id"] for b in rcb.batches(work, full)] == ["bulk_v038_b001",
+                                                                "bulk_v038_b002"]
+
+
+def test_requests_ever_survives_the_withdrawal_that_a_deferral_requires(ext_iso):
+    """`requests_ever` is what makes identity survive the scope cut, so it must not be a
+    synonym for `live_requests`. Drives the real queue over a real log: request, withdraw,
+    defer — the exact three-event sequence ADDENDUM-02 §2.2 emits."""
+    from kg import queue as q
+    monkeypatch_included = {"d1": {}, "d2": {}}
+    import unittest.mock as mock
+    with mock.patch.object(q, "included_documents", lambda: monkeypatch_included):
+        q.request("d1", 1, requested_by="t", reason="r", profile="bulk_v038")
+        q.request("d2", 2, requested_by="t", reason="r", profile="bulk_v038")
+        q.withdraw("d2", "priced out of bulk scope")
+        q.defer("d2", "below_burn_scope")
+        assert set(q.live_requests()) == {"d1"}
+        assert set(q.requests_ever()) == {"d1", "d2"}
+        assert q.deferrals()["d2"]["reason"] == "below_burn_scope"
+
+
+def test_the_burn_loop_skips_a_deferred_batch_without_declaring_or_judging(tmp_path,
+                                                                           monkeypatch):
+    """M2 control for the two plan tests above, which cannot see what the LOOP does. A
+    deferred batch must dispatch nothing, declare no ceiling, and record NO verdict — an
+    acceptance decision on a batch that never ran is a lie in the burn ledger — while the
+    batches on either side of it run normally under their own ids."""
+    counts = {"a": 50, "b": 50, "c": 50}
+    monkeypatch.setattr(rcb, "document_chunk_counts", lambda: counts)
+    monkeypatch.setattr(rcb.queue, "chunk_coverage", lambda p: {})
+    monkeypatch.setattr(rcb.queue, "live_requests",
+                        lambda: {"a": {"priority": 0}, "c": {"priority": 2}})
+    monkeypatch.setattr(rcb.queue, "requests_ever",
+                        lambda: {d: {"priority": i} for i, d in enumerate("abc")})
+    monkeypatch.setattr(rcb, "deferred_documents", lambda: {"b"})
+    monkeypatch.setattr(rcb, "apply_production_profile", lambda *a, **k: {})
+    monkeypatch.setattr(rcb, "phase_a_mean_per_chunk", lambda: 50_000.0)
+    monkeypatch.setattr(rcb.model_stub, "load_model_config",
+                        lambda: {"primary_judge_model_id": "p", "secondary_judge_model_id": "s"})
+    monkeypatch.setattr(rcb.cp, "members", lambda: {d: tmp_path for d in "abc"})
+    monkeypatch.setattr(rcb.rbe, "doc_text", lambda p: "")
+    monkeypatch.setattr(rcb, "batch_items", lambda bid: [])
+    monkeypatch.setattr(rcb, "yield_by_stratum", lambda: {})
+    monkeypatch.setattr(rcb.spend, "set_current_run", lambda r: None)
+    monkeypatch.setattr(rcb, "stop_file", lambda: tmp_path / "nope.json")
+    monkeypatch.setattr(rcb, "STATE_DIR", tmp_path)
+    declared, sent = [], []
+    monkeypatch.setattr(rcb, "declare_batch_ceiling",
+                        lambda run_id, chunks, boot: declared.append(run_id)
+                        or (999_999_999, 1.0, False))
+    monkeypatch.setattr(rcb.cp, "phase_extract", lambda a: sent.append(list(rcb.cp.DOCS)) or 0)
+
+    args = type("A", (), {"plan_only": False, "max_batches": None, "workers": 1,
+                          "judge_ceiling": 1, "fact_cap": 40})()
+    rcb.phase_burn(args)
+
+    assert declared == ["bulk_v038_b001", "bulk_v038_b003"]      # b002 declared nothing
+    assert sent == [["a"], ["c"]]                                # ... and dispatched nothing
+    rows = json.loads((tmp_path / "bulk_v038_burn.json").read_text())
+    assert [r["batch_id"] for r in rows["batches"]] == ["bulk_v038_b001", "bulk_v038_b003"]
+
+
+def test_a_partly_deferred_batch_runs_its_live_documents_and_only_those(tmp_path,
+                                                                        monkeypatch):
+    """A deferral is per document, not per batch (DD-023's unit is finer still). If a batch
+    straddles the cut, the live documents must still run under the batch's own id."""
+    counts = {"a": 30, "b": 30}
+    monkeypatch.setattr(rcb, "document_chunk_counts", lambda: counts)
+    monkeypatch.setattr(rcb.queue, "chunk_coverage", lambda p: {})
+    monkeypatch.setattr(rcb.queue, "live_requests", lambda: {"a": {"priority": 0}})
+    monkeypatch.setattr(rcb.queue, "requests_ever",
+                        lambda: {"a": {"priority": 0}, "b": {"priority": 1}})
+    monkeypatch.setattr(rcb, "deferred_documents", lambda: {"b"})
+    monkeypatch.setattr(rcb, "apply_production_profile", lambda *a, **k: {})
+    monkeypatch.setattr(rcb, "phase_a_mean_per_chunk", lambda: 50_000.0)
+    monkeypatch.setattr(rcb.model_stub, "load_model_config",
+                        lambda: {"primary_judge_model_id": "p", "secondary_judge_model_id": "s"})
+    monkeypatch.setattr(rcb.cp, "members", lambda: {"a": tmp_path, "b": tmp_path})
+    monkeypatch.setattr(rcb.rbe, "doc_text", lambda p: "")
+    monkeypatch.setattr(rcb, "batch_items", lambda bid: [])
+    monkeypatch.setattr(rcb, "yield_by_stratum", lambda: {})
+    monkeypatch.setattr(rcb.spend, "set_current_run", lambda r: None)
+    monkeypatch.setattr(rcb, "stop_file", lambda: tmp_path / "nope.json")
+    monkeypatch.setattr(rcb, "STATE_DIR", tmp_path)
+    sized, sent = [], []
+    monkeypatch.setattr(rcb, "declare_batch_ceiling",
+                        lambda run_id, chunks, boot: sized.append((run_id, chunks))
+                        or (999_999_999, 1.0, False))
+    monkeypatch.setattr(rcb.cp, "phase_extract", lambda a: sent.append(list(rcb.cp.DOCS)) or 0)
+
+    args = type("A", (), {"plan_only": False, "max_batches": None, "workers": 1,
+                          "judge_ceiling": 1, "fact_cap": 40})()
+    rcb.phase_burn(args)
+    assert sent == [["a"]]                       # b never dispatched
+    assert sized == [("bulk_v038_b001", 30)]     # ... and never paid for

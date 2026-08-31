@@ -882,6 +882,12 @@ def profile_block() -> dict:
     return (doc.get("profiles") or {})[PROFILE]
 
 
+def deferred_documents() -> set[str]:
+    """Documents priced out of this burn's dispatch. They keep their place in the batch cut
+    (see `resume_plan`) and contribute zero chunks to it."""
+    return set(queue.deferrals())
+
+
 def resume_plan() -> tuple[list[str], dict[str, int], dict[str, int], int]:
     """(worklist, FULL chunks per document, chunks REMAINING per document, already extracted).
 
@@ -903,11 +909,26 @@ def resume_plan() -> tuple[list[str], dict[str, int], dict[str, int], int]:
     # it is fully extracted, so finishing batch 1 renumbered every batch after it. The
     # worklist governs what may RUN; it cannot govern what a batch IS.
     reqs = queue.live_requests()
-    work = [d for d, _ in sorted(reqs.items(), key=lambda kv: (kv[1].get("priority", 10**6), kv[0]))
+    # A DEFERRAL is a scope decision, not an identity decision (ADDENDUM-02 §2.2). `defer`
+    # requires the request to be withdrawn first, so deferring b005/b008/b009 would have
+    # dropped six documents out of `live_requests` and renumbered every batch after b004 —
+    # the same defect, arriving through a legitimate scope cut instead of through progress.
+    # A document the ledger ever requested keeps its place in the cut; only dispatch drops it.
+    # Restricting to `requests_ever` matters: a deferral of a never-requested document must
+    # not be able to INSERT itself into the numbering either.
+    ever = queue.requests_ever()
+    ident = dict(reqs)
+    for doc in deferred_documents():
+        if doc in ever:
+            ident.setdefault(doc, ever[doc])
+    work = [d for d, _ in sorted(ident.items(),
+                                 key=lambda kv: (kv[1].get("priority", 10**6), kv[0]))
             if d in counts]
     done = queue.chunk_coverage(PROFILE)
     full = {d: counts[d] for d in work}
-    remaining = {d: max(0, counts[d] - len(done.get(d, ()))) for d in work}
+    dropped = deferred_documents()
+    remaining = {d: 0 if d in dropped else max(0, counts[d] - len(done.get(d, ())))
+                 for d in work}
     return work, full, remaining, sum(len(done.get(d, ())) for d in work)
 
 
@@ -935,16 +956,23 @@ def phase_burn(a) -> int:
 
     work, full, remaining, already = resume_plan()
     plan = batches(work, full)                 # identity from the FULL counts: stable
+    dropped = deferred_documents()
     for bt in plan:                            # sizing from what is LEFT
         bt["to_extract"] = sum(remaining.get(d, 0) for d in bt["documents"])
+        # Deferred documents stay in `documents` — that IS the batch — but never dispatch.
+        bt["dispatch"] = [d for d in bt["documents"] if d not in dropped]
     print(f"burn plan: {len(work)} documents, {sum(remaining.values())} chunks to extract "
           f"({already} already extracted under {PROFILE}, resumed not repeated), "
           f"{len(plan)} batches; sample budget {budget} facts/batch, accept needs "
           f">= {n_min}")
     for bt in plan:
+        if not bt["dispatch"]:
+            print(f"  {bt['batch_id']}  {len(bt['documents']):>2} docs  "
+                  f"{bt['chunks']:>4} chunks  DEFERRED (below_burn_scope)")
+            continue
         done_note = "" if bt["to_extract"] == bt["chunks"] else \
             f"  ({bt['chunks'] - bt['to_extract']} already extracted)"
-        print(f"  {bt['batch_id']}  {len(bt['documents']):>2} docs  "
+        print(f"  {bt['batch_id']}  {len(bt['dispatch']):>2} docs  "
               f"{bt['to_extract']:>4}/{bt['chunks']:<4} chunks{done_note}")
     if a.plan_only:
         return 0
@@ -980,6 +1008,14 @@ def phase_burn(a) -> int:
         # RUN_ID ("bulk_v038_phase_a") produced `bulk_v038_phase_a_bulk_v038_b001`, which
         # names the burn after the qualification phase it is not part of.
         run_id = bid
+        # Out of scope by ADDENDUM-02 §2: dispatch nothing, declare nothing, JUDGE nothing.
+        # A deferred batch has no verdict because it has no admitted work — recording one
+        # would put an acceptance decision on a batch that never ran. It keeps its id so the
+        # batches after it keep theirs.
+        if not bt["dispatch"]:
+            print(f"{bid}: all {len(bt['documents'])} documents deferred "
+                  f"(below_burn_scope); not dispatched, not judged", flush=True)
+            continue
         # A batch declares ONCE. On resume it runs under the ceiling it was declared with,
         # never a recomputed one: the ceiling bounds this batch's TOTAL spend, and the running
         # mean moves as the burn proceeds (49,458 -> 59,094 once batch 1's own settles entered
@@ -1007,7 +1043,7 @@ def phase_burn(a) -> int:
                 print(f"\n=== {bid}: {len(bt['documents'])} docs, {bt['to_extract']} of "
                       f"{bt['chunks']} chunks, ceiling {ceiling:,} "
                       f"(1.3 x {per:,.0f}/chunk)", flush=True)
-        cp.DOCS = list(bt["documents"])
+        cp.DOCS = list(bt["dispatch"])
         # The extractor already skips a chunk whose raw exists; the resume above is what keeps
         # an already-extracted chunk out of the batch SIZE and therefore out of the ceiling.
         cp.CHUNK_FILTER = None
