@@ -54,7 +54,7 @@
 #     classification fields (as_of_date, enums, ids) that a span cannot be expected to carry.
 #     Read by the faithfulness probe's decomposer (facts only for true attributes) and by the
 #     scoring rule (`doc_level_attribute` class excluded from F). DD-015.
-schema_version: "0.3.6"
+schema_version: "0.3.7"
 
 # --- Section 2: Node types -------------------------------------------------
 # Each node type lists the "Key properties" column verbatim. Parenthetical
@@ -500,6 +500,19 @@ event_types:
       document_id: doc_id whose live request is cancelled
       reason: why it was withdrawn
       ts: UTC ISO-8601
+  document_chunk_census:
+    description: >
+      How many chunks a document HAS under a chunk-unit profile, recorded by the run that
+      chunked it. Without it a projection cannot tell a fully-extracted document from one
+      where a single chunk was sampled: one extraction event under the pin reads as
+      "extracted", and the document silently leaves the worklist.
+    required: [document_id, profile, n_chunks, source_sha256]
+    properties:
+      document_id: doc_id the census is for
+      profile: the run profile whose chunker produced the count
+      n_chunks: int, total chunks the document yields under that chunker
+      source_sha256: hash of the source the count was taken from; a different source is a
+        different census
   extraction_deferred:
     description: >
       A deliberate decision NOT to extract an admitted document, with the reason. Distinct

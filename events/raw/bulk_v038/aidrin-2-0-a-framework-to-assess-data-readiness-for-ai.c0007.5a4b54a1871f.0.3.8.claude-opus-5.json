@@ -1,0 +1,32 @@
+{
+ "doc_id": "aidrin-2-0-a-framework-to-assess-data-readiness-for-ai",
+ "chunk_id": "aidrin-2-0-a-framework-to-assess-data-readiness-for-ai#c0007",
+ "chunk_index": 7,
+ "chunk_start": 13699,
+ "chunk_end": 14214,
+ "chunk_tokens": 202,
+ "heading_path": [
+  "5 Conclusion"
+ ],
+ "oversize": false,
+ "doc_sha256": "5a4b54a1871fc48cf8eb6c81717b9569d73c7f982a19d1030a7e651a93ad171c",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 4195,
+  "cacheReadInputTokens": 10121,
+  "cacheCreationInputTokens": 25705,
+  "webSearchRequests": 0,
+  "costUSD": 0.3669955,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3669955,
+ "duration_ms": 45749,
+ "session_id": "bb644df8-f7a2-4840-998f-fc2f9bd02a66",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Poster figure content: a Data Readiness Report table reporting Class Imbalance, Data Range, Data Shape and Data Mean for four clients, a Combined PCA Plot, and a funding acknowledgement; almost no prose assertions.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_data_readiness_report\",\n      \"name\": \"Data Readiness Report\",\n      \"aliases\": [\"data readiness report output\"],\n      \"description\": \"The per-client report shown in the poster, tabulating class imbalance, data range, data shape and data mean for four clients.\",\n      \"anchor\": \"Data Readiness Report\",\n      \"location\": \"aidrin-2-0-a-framework-to-assess-data-readiness-for-ai#c0007\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [\n    {\n      \"id\": \"m_class_imbalance\",\n      \"text\": \"Class Imbalance\",\n      \"response_type\": \"numeric score\",\n      \"anchor\": \"Class Imbalance\",\n      \"location\": \"aidrin-2-0-a-framework-to-assess-data-readiness-for-ai#c0007\"\n    },\n    {\n      \"id\": \"m_data_range\",\n      \"text\": \"Data Range\",\n      \"response_type\": \"numeric interval\",\n      \"anchor\": \"Data Range\",\n      \"location\": \"aidrin-2-0-a-framework-to-assess-data-readiness-for-ai#c0007\"\n    },\n    {\n      \"id\": \"m_data_shape\",\n      \"text\": \"Data Shape\",\n      \"response_type\": \"tuple of dimensions\",\n      \"anchor\": \"Data Shape\",\n      \"location\": \"aidrin-2-0-a-framework-to-assess-data-readiness-for-ai#c0007\"\n    },\n    {\n      \"id\": \"m_data_mean\",\n      \"text\": \"Data Mean\",\n      \"response_type\": \"numeric value\",\n      \"anchor\": \"Data Mean\",\n      \"location\": \"aidrin-2-0-a-framework-to-assess-data-readiness-for-ai#c0007\"\n    }\n  ],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"Combined PCA Plot\",\n      \"anchor\": \"Combined PCA Plot\"\n    },\n    {\n      \"name\": \"Client IDs\",\n      \"anchor\": \"Client IDs\"\n    },\n    {\n      \"name\": \"U.S. Department of Energy\",\n      \"anchor\": \"U.S. Department of Energy\"\n    },\n    {\n      \"name\": \"Office of Science\",\n      \"anchor\": \"Office of Science\"\n    },\n    {\n      \"name\": \"OSU\",\n      \"anchor\": \"at OSU\"\n    },\n    {\n      \"name\": \"SSDBM ’25\",\n      \"anchor\": \"SSDBM ’25\"\n    },\n    {\n      \"name\": \"Demo video\",\n      \"anchor\": \"Demo video\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"suggested_edge\": \"has_component\",\n      \"from_id\": \"c_data_readiness_report\",\n      \"to_id\": \"m_class_imbalance\",\n      \"anchor\": \"Data Readiness ReportClient IDsClass Imbalance\",\n      \"location\": \"aidrin-2-0-a-framework-to-assess-data-readiness-for-ai#c0007\",\n      \"diversion_reason\": \"structural_inference\"\n    },\n    {\n      \"suggested_edge\": \"has_component\",\n      \"from_id\": \"c_data_readiness_report\",\n      \"to_id\": \"m_data_range\",\n      \"anchor\": \"Class ImbalanceData Range\",\n      \"location\": \"aidrin-2-0-a-framework-to-assess-data-readiness-for-ai#c0007\",\n      \"diversion_reason\": \"structural_inference\"\n    },\n    {\n      \"suggested_edge\": \"has_component\",\n      \"from_id\": \"c_data_readiness_report\",\n      \"to_id\": \"m_data_shape\",\n      \"anchor\": \"Data RangeData Shape\",\n      \"location\": \"aidrin-2-0-a-framework-to-assess-data-readiness-for-ai#c0007\",\n      \"diversion_reason\": \"structural_inference\"\n    },\n    {\n      \"suggested_edge\": \"has_component\",\n      \"from_id\": \"c_data_readiness_report\",\n      \"to_id\": \"m_data_mean\",\n      \"anchor\": \"Data ShapeData Mean\",\n      \"location\": \"aidrin-2-0-a-framework-to-assess-data-readiness-for-ai#c0007\",\n      \"diversion_reason\": \"structural_inference\"\n    },\n    {\n      \"suggested_edge\": \"uses_measure\",\n      \"from_id\": \"aidrin-instrument\",\n      \"to_id\": \"m_class_imbalance\",\n      \"anchor\": \"Data Readiness Report\",\n      \"location\": \"aidrin-2-0-a-framework-to-assess-data-readiness-for-ai#c0007\",\n      \"diversion_reason\": \"cross_chunk\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"federal funding support for this work\", \"type\": \"Claim\"},\n    {\"name\": \"Principal Component Analysis\", \"type\": \"Concept\"},\n    {\"name\": \"federated clients\", \"type\": \"Concept\"},\n    {\"name\": \"SSDBM ’25 poster\", \"type\": \"Document\"}\n  ]\n}"
+}

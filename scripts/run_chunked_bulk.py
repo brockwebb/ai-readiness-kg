@@ -503,6 +503,36 @@ def yield_by_stratum() -> dict[str, dict]:
     return out
 
 
+class GateUnreadable(RuntimeError):
+    """The aggregate does not carry a number the gate needs."""
+
+
+def gate_inputs(agg: dict) -> tuple[float, float, int]:
+    """(F_upper, item-faithful, facts) out of a probe aggregate, or refuse.
+
+    Refusing is the point. The first version of this read `pooled["F_upper"]` and
+    `pooled["item_faithful"]`, which are not the aggregator's key names; both came back None,
+    the comparison `None < 0.10` was skipped, and the gate reported **FAIL** on a run whose
+    real numbers PASS. A verdict function that cannot read its instrument must say so, not
+    resolve to the conservative-looking answer — that is DD-028's defect wearing a safe face."""
+    pooled = agg.get("pooled") or {}
+    items = agg.get("items") or {}
+    missing = [k for k, src in (("pooled.F_hi", pooled.get("F_hi")),
+                                ("items.faithful_rate", items.get("faithful_rate")),
+                                ("pooled.n_facts", pooled.get("n_facts"))) if src is None]
+    if missing:
+        raise GateUnreadable(
+            f"probe aggregate is missing {missing}; the gate cannot be read from it. "
+            f"Present keys: pooled={sorted(pooled)}, items={sorted(items)}")
+    return float(pooled["F_hi"]), float(items["faithful_rate"]), int(pooled["n_facts"])
+
+
+def gate_verdict(f_upper: float, item_faithful: float, n_facts: int, min_facts: int) -> str:
+    if n_facts < min_facts:
+        return "GATE UNREACHABLE"
+    return "PASS" if (f_upper < cp.F_STOP and item_faithful >= cp.ITEM_FAITHFUL) else "FAIL"
+
+
 def phase_judge(a) -> int:
     payload = bind_confirmation_run()
     cfg = model_stub.load_model_config()
@@ -539,14 +569,8 @@ def phase_judge(a) -> int:
         print("FATAL: probe protocol failed")
         return 2
 
-    pooled = agg.get("pooled") or agg
-    f_upper = pooled.get("F_upper")
-    item_faithful = pooled.get("item_faithful")
-    n_facts = pooled.get("facts") or pooled.get("n_facts") or 0
-    verdict = "GATE UNREACHABLE" if n_facts < min_facts else (
-        "PASS" if (f_upper is not None and f_upper < cp.F_STOP
-                   and item_faithful is not None and item_faithful >= cp.ITEM_FAITHFUL)
-        else "FAIL")
+    f_upper, item_faithful, n_facts = gate_inputs(agg)
+    verdict = gate_verdict(f_upper, item_faithful, n_facts, min_facts)
     out = {"task": TASK, "profile": PROFILE, "seed": payload["seed"],
            "chunks": payload["drawn_total"], "documents": len(cp.DOCS),
            "admitted_node_items": len(recs), "by_stratum": dict(by_stratum),

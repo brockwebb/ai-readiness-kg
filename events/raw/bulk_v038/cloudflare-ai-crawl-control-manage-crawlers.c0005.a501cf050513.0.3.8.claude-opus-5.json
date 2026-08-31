@@ -1,0 +1,33 @@
+{
+ "doc_id": "cloudflare-ai-crawl-control-manage-crawlers",
+ "chunk_id": "cloudflare-ai-crawl-control-manage-crawlers#c0005",
+ "chunk_index": 5,
+ "chunk_start": 5309,
+ "chunk_end": 5749,
+ "chunk_tokens": 97,
+ "heading_path": [
+  "Manage AI crawlers",
+  "WAF rule management"
+ ],
+ "oversize": false,
+ "doc_sha256": "a501cf0505135b3aea4750ec0c115be9add0c800202f48eff75f034e0e07a357",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 6492,
+  "cacheReadInputTokens": 13014,
+  "cacheCreationInputTokens": 21558,
+  "webSearchRequests": 0,
+  "costUSD": 0.384397,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.384397,
+ "duration_ms": 69139,
+ "session_id": "01911b67-af81-46e6-b35b-16681d39dc3c",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Cloudflare's own docs state that blocking a crawler in AI Crawl Control creates or updates a WAF custom rule on the zone, and that the rule can be extended directly in WAF for path-based exceptions or extra user agents.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_waf_custom_rule\",\n      \"name\": \"WAF custom rule\",\n      \"aliases\": [\"WAF rule\", \"custom WAF rule\"],\n      \"description\": \"A rule on a Cloudflare zone that the AI Crawl Control system creates or updates to enforce a crawler block, and which can be extended directly in WAF.\",\n      \"anchor\": \"WAF custom rule\",\n      \"location\": \"cloudflare-ai-crawl-control-manage-crawlers#c0005\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"cl_block_creates_waf_rule\",\n      \"claim_text\": \"When you block a crawler in AI Crawl Control, the system creates or updates a WAF custom rule on your zone to enforce that block.\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"platform_official\",\n      \"anchor\": \"creates or updates a WAF custom rule\",\n      \"location\": \"cloudflare-ai-crawl-control-manage-crawlers#c0005\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [\n    {\n      \"id\": \"p_extend_rule_in_waf\",\n      \"text\": \"you can extend this rule directly in WAF\",\n      \"as_of_date\": null,\n      \"scope\": \"site\",\n      \"anchor\": \"extend this rule directly\",\n      \"location\": \"cloudflare-ai-crawl-control-manage-crawlers#c0005\"\n    }\n  ],\n  \"tools\": [],\n  \"platforms\": [\n    {\n      \"id\": \"pl_ai_crawl_control\",\n      \"name\": \"AI Crawl Control\",\n      \"operator\": null,\n      \"as_of_date\": null,\n      \"anchor\": \"in AI Crawl Control\",\n      \"location\": \"cloudflare-ai-crawl-control-manage-crawlers#c0005\"\n    }\n  ],\n  \"edges\": [\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"cloudflare-ai-crawl-control-manage-crawlers\",\n      \"to_id\": \"cl_block_creates_waf_rule\",\n      \"anchor\": \"creates or updates a WAF custom rule\",\n      \"location\": \"cloudflare-ai-crawl-control-manage-crawlers#c0005\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_block_creates_waf_rule\",\n      \"to_id\": \"c_waf_custom_rule\",\n      \"anchor\": \"WAF custom rule\",\n      \"location\": \"cloudflare-ai-crawl-control-manage-crawlers#c0005\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"cloudflare-ai-crawl-control-manage-crawlers\",\n      \"to_id\": \"c_waf_custom_rule\",\n      \"anchor\": \"WAF custom rule\",\n      \"location\": \"cloudflare-ai-crawl-control-manage-crawlers#c0005\"\n    },\n    {\n      \"type\": \"recommends\",\n      \"from_id\": \"cloudflare-ai-crawl-control-manage-crawlers\",\n      \"to_id\": \"p_extend_rule_in_waf\",\n      \"anchor\": \"extend this rule directly\",\n      \"location\": \"cloudflare-ai-crawl-control-manage-crawlers#c0005\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"p_extend_rule_in_waf\",\n      \"to_id\": \"c_waf_custom_rule\",\n      \"anchor\": \"extend this rule directly in WAF\",\n      \"location\": \"cloudflare-ai-crawl-control-manage-crawlers#c0005\"\n    }\n  ],\n  \"cites\": [\n    {\n      \"from_id\": \"cloudflare-ai-crawl-control-manage-crawlers\",\n      \"to_id\": \"cloudflare-ai-crawl-control-with-waf\",\n      \"title\": \"AI Crawl Control with Cloudflare WAF\",\n      \"url\": \"https://developers.cloudflare.com/ai-crawl-control/configuration/ai-crawl-control-with-waf/\",\n      \"anchor\": \"AI Crawl Control with Cloudflare WAF\",\n      \"location\": \"cloudflare-ai-crawl-control-manage-crawlers#c0005\"\n    }\n  ],\n  \"mentions\": [\n    { \"name\": \"crawler\", \"anchor\": \"block a crawler\" },\n    { \"name\": \"zone\", \"anchor\": \"your zone\" },\n    { \"name\": \"path-based exceptions\", \"anchor\": \"path-based exceptions\" },\n    { \"name\": \"user agents\", \"anchor\": \"extra user agents\" },\n    { \"name\": \"Cloudflare WAF\", \"anchor\": \"Cloudflare WAF\" }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"from_id\": \"pl_ai_crawl_control\",\n      \"to_id\": \"c_waf_custom_rule\",\n      \"suggested_edge\": \"creates_or_updates\",\n      \"diversion_reason\": \"other:no_edge_type\",\n      \"anchor\": \"the system creates or updates\",\n      \"location\": \"cloudflare-ai-crawl-control-manage-crawlers#c0005\"\n    }\n  ],\n  \"gleaned\": [\n    { \"name\": \"crawler blocking\", \"type\": \"Concept\" },\n    { \"name\": \"user agent\", \"type\": \"Concept\" },\n    { \"name\": \"zone\", \"type\": \"Concept\" }\n  ]\n}\n```"
+}

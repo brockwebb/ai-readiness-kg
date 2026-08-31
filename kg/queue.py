@@ -233,6 +233,34 @@ def extractions() -> dict[str, list[dict]]:
     return {d: sorted(v.values(), key=lambda r: r["ts"] or "") for d, v in seen.items()}
 
 
+CENSUS = "document_chunk_census"
+
+
+def chunk_unit_profile(name: str) -> bool:
+    """A profile whose extraction unit is the chunk, not the document (DD-023)."""
+    return (profiles().get(name) or {}).get("emission_contract") == "anchor"
+
+
+def chunk_census(profile: str) -> dict[str, int]:
+    """{doc_id: chunks the document HAS} as recorded by the run that extracted it."""
+    out: dict[str, int] = {}
+    for ev in eventlog.replay():
+        if ev.get("event_type") == CENSUS and ev.get("profile") == profile:
+            if ev.get("document_id") and ev.get("n_chunks"):
+                out[ev["document_id"]] = int(ev["n_chunks"])
+    return out
+
+
+def chunk_coverage(profile: str) -> dict[str, set]:
+    """{doc_id: distinct chunk_ids ingested} under `profile`."""
+    out: dict[str, set] = collections.defaultdict(set)
+    for ev in eventlog.replay():
+        if ev.get("event_type") == "chunk_metrics" and ev.get("purpose") == profile:
+            if ev.get("doc_id") and ev.get("chunk_id"):
+                out[ev["doc_id"]].add(ev["chunk_id"])
+    return out
+
+
 def failures() -> dict[str, dict]:
     """{doc_id: {status, count, last}} from the burn driver's own failure events."""
     out: dict[str, dict] = {}
@@ -295,12 +323,28 @@ def project() -> dict[str, dict]:
     included = included_documents()
     reqs, exts, fails = live_requests(), extractions(), failures()
     defers = deferrals()
+    # Under a CHUNK-UNIT profile, one extraction event does not mean the document is done.
+    # Phase A of the bulk task sampled a single chunk from 25 documents; every one of them
+    # then read `extracted`, and the worklist those 25 should have led fell from 33 documents
+    # to 10. Completeness is coverage against the census the extracting run recorded.
+    chunked = chunk_unit_profile(pin)
+    census = chunk_census(pin) if chunked else {}
+    coverage = chunk_coverage(pin) if chunked else {}
     over, flying = oversize(), in_flight_documents()
     rows: dict[str, dict] = {}
     for doc, entry in included.items():
         under = exts.get(doc, [])
         req = reqs.get(doc)
         matches_pin = [e for e in under if e["profile"] == pin]
+        n_have, n_want = len(coverage.get(doc, ())), census.get(doc, 0)
+        # No census recorded => n_want is 0 => `n_have >= 0` is already True, so a legacy
+        # chunked run with no census is never called incomplete. An explicit `not n_want`
+        # clause was here and could not change the outcome; a mutation deleting it killed no
+        # test, which is the definition of code that cannot run. The behaviour it was meant
+        # to protect is real and tested — it just falls out of the comparison.
+        complete = (not chunked) or n_have >= n_want
+        if matches_pin and not complete:
+            matches_pin = []
         if doc in flying:
             state = "extracting"
         elif doc in over:
@@ -336,6 +380,8 @@ def project() -> dict[str, dict]:
             "superseding": bool((req or {}).get("superseding")),
             "failure": fails.get(doc),
             "deferred_reason": (defers.get(doc) or {}).get("reason"),
+            "chunks_extracted": n_have if chunked else None,
+            "chunks_total": n_want or None if chunked else None,
             "pinned_profile": pin,
         }
     return rows

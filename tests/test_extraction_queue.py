@@ -330,3 +330,76 @@ def test_a_superseding_request_beats_stale_so_re_extraction_shows_as_queued(qenv
     _extraction("doc-a", "epoch-old", "e1")
     queue.request("doc-a", 1, "test", "re-extract under the new pin", superseding=True)
     assert queue.project()["doc-a"]["extraction_state"] == "queued"
+
+
+# ------------------------------------------- chunk-unit completeness (bulk_v038 Phase A)
+def _census(doc, profile, n, purpose=None):
+    eventlog.append({"event_type": queue.CENSUS, "document_id": doc, "profile": profile,
+                     "n_chunks": n, "source_sha256": "s"}, batch=queue.QUEUE_BATCH)
+
+
+def _chunk(doc, chunk_id, purpose):
+    eventlog.append({"event_type": "chunk_metrics", "purpose": purpose, "doc_id": doc,
+                     "chunk_id": chunk_id, "counts": {}}, batch=queue.QUEUE_BATCH)
+
+
+def _make_pin_chunk_unit(qenv):
+    """Make the pinned profile chunk-unit, the way `bulk_v038` is."""
+    doc = yaml.safe_load(qenv["profiles"].read_text())
+    doc["profiles"]["prof_new"]["emission_contract"] = "anchor"
+    qenv["profiles"].write_text(yaml.safe_dump(doc))
+
+
+def test_one_chunk_of_forty_does_not_make_a_document_extracted(qenv):
+    """Measured live: Phase A sampled a single chunk from 25 documents, every one of them read
+    `extracted` under the pin, and the burn worklist those documents should have led fell from
+    33 to 10. A chunk-unit profile's completeness is coverage against the census."""
+    _make_pin_chunk_unit(qenv)
+    _extraction("doc-a", "epoch-new", "e1")
+    queue.request("doc-a", 1, "test", "burn it", superseding=True)
+    _census("doc-a", "prof_new", 40)
+    _chunk("doc-a", "doc-a#c0001", "prof_new")
+    row = queue.project()["doc-a"]
+    assert row["extraction_state"] == "queued"
+    assert (row["chunks_extracted"], row["chunks_total"]) == (1, 40)
+    assert queue.worklist() == ["doc-a"]
+
+
+def test_full_coverage_does_make_it_extracted(qenv):
+    """The other direction, or the test above would pass on a projection that never says
+    `extracted` at all. A single-chunk document extracted once IS done — that is the live
+    case for anthropic-crawler-support-article."""
+    _make_pin_chunk_unit(qenv)
+    _extraction("doc-a", "epoch-new", "e1")
+    _census("doc-a", "prof_new", 2)
+    _chunk("doc-a", "doc-a#c0001", "prof_new")
+    _chunk("doc-a", "doc-a#c0002", "prof_new")
+    assert queue.project()["doc-a"]["extraction_state"] == "extracted"
+    assert queue.worklist() == []
+
+
+def test_a_whole_document_profile_is_unaffected_by_the_census(qenv):
+    """v1 and kernel-v03 are whole-document. Applying chunk completeness to them would mark
+    the entire extracted corpus incomplete, because none of it has a census."""
+    _extraction("doc-a", "epoch-new", "e1")
+    assert not queue.chunk_unit_profile("prof_new")
+    assert queue.project()["doc-a"]["extraction_state"] == "extracted"
+
+
+def test_a_chunk_unit_extraction_with_no_census_is_not_called_incomplete(qenv):
+    """Legacy chunked runs predate the census event. Absence of evidence must not become
+    evidence of incompleteness — that would re-queue paid-for work."""
+    _make_pin_chunk_unit(qenv)
+    _extraction("doc-a", "epoch-new", "e1")
+    assert queue.project()["doc-a"]["extraction_state"] == "extracted"
+
+
+def test_coverage_is_scoped_to_the_pinned_profile(qenv):
+    """Chunks ingested by another run must not count toward this profile's completeness."""
+    _make_pin_chunk_unit(qenv)
+    _extraction("doc-a", "epoch-new", "e1")
+    queue.request("doc-a", 1, "test", "burn it", superseding=True)
+    _census("doc-a", "prof_new", 2)
+    _chunk("doc-a", "doc-a#c0001", "prof_new")
+    _chunk("doc-a", "doc-a#c0002", "some_other_run")
+    assert queue.project()["doc-a"]["extraction_state"] == "queued"

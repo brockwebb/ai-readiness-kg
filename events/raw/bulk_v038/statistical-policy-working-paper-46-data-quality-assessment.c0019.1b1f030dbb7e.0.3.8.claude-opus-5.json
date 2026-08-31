@@ -1,0 +1,32 @@
+{
+ "doc_id": "statistical-policy-working-paper-46-data-quality-assessment",
+ "chunk_id": "statistical-policy-working-paper-46-data-quality-assessment#c0019",
+ "chunk_index": 19,
+ "chunk_start": 46421,
+ "chunk_end": 46556,
+ "chunk_tokens": 37,
+ "heading_path": [
+  "1 - 999999 Sequential number assigned to each"
+ ],
+ "oversize": false,
+ "doc_sha256": "1b1f030dbb7eb9c46e4e8e03c0411ffab6f715d7332dafe7f92aead92c4ed936",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 3278,
+  "cacheReadInputTokens": 13014,
+  "cacheCreationInputTokens": 22437,
+  "webSearchRequests": 0,
+  "costUSD": 0.312837,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.312837,
+ "duration_ms": 36960,
+ "session_id": "79b5a09f-8421-4e2d-8cd4-468735c666c1",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"A fragment of a data-dictionary field layout table (header row plus the `case` and `yrmo` field rows), giving each field's description, type, length, format, valid values and key designation.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_primary_key\",\n      \"name\": \"Primary Key\",\n      \"aliases\": [\"primary key\"],\n      \"description\": \"The field designated in the data dictionary as the record's unique key; here the case identifier is marked as such.\",\n      \"anchor\": \"Primary Key\",\n      \"location\": \"statistical-policy-working-paper-46-data-quality-assessment#c0019\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d_case\",\n      \"term\": \"case\",\n      \"verbatim_text\": \"Case ID\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"case Case ID\",\n      \"location\": \"statistical-policy-working-paper-46-data-quality-assessment#c0019\"\n    },\n    {\n      \"id\": \"d_yrmo\",\n      \"term\": \"yrmo\",\n      \"verbatim_text\": \"First benefit month case\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"yrmo\",\n      \"location\": \"statistical-policy-working-paper-46-data-quality-assessment#c0019\"\n    }\n  ],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"statistical-policy-working-paper-46-data-quality-assessment\",\n      \"to_id\": \"d_case\",\n      \"anchor\": \"case Case ID\",\n      \"location\": \"statistical-policy-working-paper-46-data-quality-assessment#c0019\"\n    },\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"statistical-policy-working-paper-46-data-quality-assessment\",\n      \"to_id\": \"d_yrmo\",\n      \"anchor\": \"yrmo\",\n      \"location\": \"statistical-policy-working-paper-46-data-quality-assessment#c0019\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"statistical-policy-working-paper-46-data-quality-assessment\",\n      \"to_id\": \"c_primary_key\",\n      \"anchor\": \"Primary Key\",\n      \"location\": \"statistical-policy-working-paper-46-data-quality-assessment#c0019\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\"name\": \"Field Name\", \"anchor\": \"Field Name\"},\n    {\"name\": \"Valid Values\", \"anchor\": \"Valid Values\"},\n    {\"name\": \"Definitions\", \"anchor\": \"Definitions Notes\"}\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"case Case ID\",\n      \"suggested_edge\": \"has_component\",\n      \"from_hint\": \"data dictionary field layout\",\n      \"to_hint\": \"case\",\n      \"diversion_reason\": \"structural_inference\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"data dictionary field layout\", \"type\": \"Framework\"},\n    {\"name\": \"Req.\", \"type\": \"Concept\"},\n    {\"name\": \"Type\", \"type\": \"Concept\"},\n    {\"name\": \"Len\", \"type\": \"Concept\"},\n    {\"name\": \"Format\", \"type\": \"Concept\"},\n    {\"name\": \"Units\", \"type\": \"Concept\"},\n    {\"name\": \"yymm\", \"type\": \"Concept\"}\n  ]\n}"
+}

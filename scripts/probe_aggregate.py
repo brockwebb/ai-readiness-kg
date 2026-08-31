@@ -144,9 +144,18 @@ def doc_check_reclassify(per_fact: dict, facts: dict, items: dict) -> dict:
     propositions are not substring-checkable and keep the judge's window-based call."""
     import run_bulk_extraction as rbe
     from kg.extraction.grounding import normalize
+    # Epoch-scoped resolution first (v1 + kernel-v03), then the MANIFEST for everything else.
+    # 5 documents in the crosswalk lane belong to no `corpus_epoch_declared` event at all, so
+    # epoch resolution alone raised KeyError on them and lost a whole judged run at the last
+    # step — after every label was paid for.
     members = {}
     for prof in ("v1", "kernel_v03"):
         rbe.apply_profile(prof); members.update(rbe.corpus_members())
+    from kg import queue as _queue
+    for doc_id, entry in _queue.included_documents().items():
+        path = (entry.get("identity") or {}).get("canonical_path")
+        if doc_id not in members and path:
+            members[doc_id] = rbe.REPO / path
     texts = {}
     stats = {"checked": 0, "reclassified": 0}
     for fid, v in per_fact.items():
@@ -158,7 +167,14 @@ def doc_check_reclassify(per_fact: dict, facts: dict, items: dict) -> dict:
         val = f["fact_text"].split(": ", 1)[1] if ": " in f["fact_text"] else f["fact_text"]
         doc = items[f["event_id"]]["doc_id"]
         if doc not in texts:
-            texts[doc] = normalize(rbe.doc_text(members[doc]))
+            src = members.get(doc)
+            if src is None:
+                # Loud, but not fatal to a run whose labels are all paid for: the check that
+                # can reclassify a fabrication is skipped for this document and said so.
+                stats.setdefault("unresolved_documents", []).append(doc)
+                v["doc_check"] = "document_not_resolvable"
+                continue
+            texts[doc] = normalize(rbe.doc_text(src))
         stats["checked"] += 1
         if normalize(str(val)) and normalize(str(val)) in texts[doc]:
             v["class"] = "filled_attribute"; v["doc_check"] = "value_found_in_document"; stats["reclassified"] += 1

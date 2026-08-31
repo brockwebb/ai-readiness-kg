@@ -1,0 +1,1601 @@
+{
+ "task": "cc_tasks/2026-08-30_bulk_extraction_v038.md",
+ "profile": "bulk_v038",
+ "seed": "bulk_v038_confirmation:2026-08-31",
+ "chunks": 30,
+ "documents": 28,
+ "admitted_node_items": 246,
+ "by_stratum": {
+  "academic": 59,
+  "industry_practitioner": 56,
+  "agency_framework": 69,
+  "normative_standard": 62
+ },
+ "min_facts_for_gate": 35,
+ "facts_judged": 160,
+ "F_upper": 0.07149421400095075,
+ "item_faithful": 0.7704918032786885,
+ "thresholds": {
+  "F_upper<": 0.1,
+  "item_faithful>=": 0.7
+ },
+ "verdict": "PASS",
+ "yield_bands": {
+  "academic": {
+   "chunks": 8,
+   "mean_nodes_per_chunk": 10.75,
+   "sd": 6.964,
+   "min": 0,
+   "max": 18,
+   "band_low": -10.143,
+   "band_high": 31.643
+  },
+  "agency_framework": {
+   "chunks": 7,
+   "mean_nodes_per_chunk": 13.857,
+   "sd": 14.679,
+   "min": 0,
+   "max": 36,
+   "band_low": -30.18,
+   "band_high": 57.894
+  },
+  "industry_practitioner": {
+   "chunks": 7,
+   "mean_nodes_per_chunk": 11.857,
+   "sd": 9.388,
+   "min": 0,
+   "max": 24,
+   "band_low": -16.308,
+   "band_high": 40.022
+  },
+  "normative_standard": {
+   "chunks": 8,
+   "mean_nodes_per_chunk": 10.625,
+   "sd": 6.718,
+   "min": 0,
+   "max": 19,
+   "band_low": -9.528,
+   "band_high": 30.778
+  }
+ },
+ "aggregate": {
+  "method": "crowd-kit DawidSkene(n_iter=100)",
+  "n_facts": 160,
+  "n_labels": 320,
+  "raters": {
+   "claude-opus-4-8": {
+    "n": 160,
+    "agreement_with_map": 0.99375,
+    "type": "prov:SoftwareAgent"
+   },
+   "claude-sonnet-5": {
+    "n": 160,
+    "agreement_with_map": 0.90625,
+    "type": "prov:SoftwareAgent"
+   }
+  },
+  "rater_confusion": {
+   "claude-opus-4-8": {
+    "P(obs=entailed|true=entailed)": 0.9952027025841682,
+    "P(obs=not_entailed|true=entailed)": 0.004797297415831796,
+    "P(obs=entailed|true=not_entailed)": 0.18928303175810912,
+    "P(obs=not_entailed|true=not_entailed)": 0.810716968241891
+   },
+   "claude-sonnet-5": {
+    "P(obs=entailed|true=entailed)": 0.9369121660466435,
+    "P(obs=not_entailed|true=entailed)": 0.06308783395335646,
+    "P(obs=entailed|true=not_entailed)": 0.014138857236509438,
+    "P(obs=not_entailed|true=not_entailed)": 0.9858611427634907
+   }
+  },
+  "doc_check": {
+   "checked": 4,
+   "reclassified": 2
+  },
+  "pooled": {
+   "n_facts": 160,
+   "n_in_F_denominator": 159,
+   "fabrication": 5,
+   "F": 0.031446540880503145,
+   "F_lo": 0.013505386078693535,
+   "F_hi": 0.07149421400095075,
+   "classes": {
+    "entailed": 128,
+    "span_truncated": 16,
+    "filled_attribute": 7,
+    "fabrication": 5,
+    "subject_dropped": 3,
+    "doc_level_attribute": 1
+   },
+   "class_props": {
+    "entailed": {
+     "p": 0.8,
+     "lo": 0.7313149738501821,
+     "hi": 0.8546173088301896
+    },
+    "span_truncated": {
+     "p": 0.1,
+     "lo": 0.06249443560221868,
+     "hi": 0.15626252082395262
+    },
+    "filled_attribute": {
+     "p": 0.04375,
+     "lo": 0.021351611434768145,
+     "hi": 0.08754304198883346
+    },
+    "fabrication": {
+     "p": 0.03125,
+     "lo": 0.01342051660267917,
+     "hi": 0.0710602917092403
+    },
+    "subject_dropped": {
+     "p": 0.01875,
+     "lo": 0.0063968507035285956,
+     "hi": 0.05367011249670871
+    },
+    "doc_level_attribute": {
+     "p": 0.00625,
+     "lo": 0.0011041317571846183,
+     "hi": 0.034548986331370546
+    }
+   }
+  },
+  "per_stratum": {
+   "academic": {
+    "n_facts": 40,
+    "n_in_F_denominator": 40,
+    "fabrication": 2,
+    "F": 0.05,
+    "F_lo": 0.01382066726155863,
+    "F_hi": 0.16503877495105868,
+    "classes": {
+     "entailed": 33,
+     "subject_dropped": 1,
+     "filled_attribute": 2,
+     "fabrication": 2,
+     "span_truncated": 2
+    },
+    "class_props": {
+     "entailed": {
+      "p": 0.825,
+      "lo": 0.6805000953869541,
+      "hi": 0.9125458630150444
+     },
+     "subject_dropped": {
+      "p": 0.025,
+      "lo": 0.004426831453704344,
+      "hi": 0.12881369088183614
+     },
+     "filled_attribute": {
+      "p": 0.05,
+      "lo": 0.01382066726155863,
+      "hi": 0.16503877495105868
+     },
+     "fabrication": {
+      "p": 0.05,
+      "lo": 0.01382066726155863,
+      "hi": 0.16503877495105868
+     },
+     "span_truncated": {
+      "p": 0.05,
+      "lo": 0.01382066726155863,
+      "hi": 0.16503877495105868
+     }
+    }
+   },
+   "agency_framework": {
+    "n_facts": 40,
+    "n_in_F_denominator": 40,
+    "fabrication": 0,
+    "F": 0.0,
+    "F_lo": 0.0,
+    "F_hi": 0.08762160245846368,
+    "classes": {
+     "entailed": 32,
+     "filled_attribute": 3,
+     "span_truncated": 5
+    },
+    "class_props": {
+     "entailed": {
+      "p": 0.8,
+      "lo": 0.6524269352437855,
+      "hi": 0.8950001032811363
+     },
+     "filled_attribute": {
+      "p": 0.075,
+      "lo": 0.025836025573262464,
+      "hi": 0.19864233651643165
+     },
+     "span_truncated": {
+      "p": 0.125,
+      "lo": 0.05459500216399486,
+      "hi": 0.26112119967985287
+     }
+    }
+   },
+   "industry_practitioner": {
+    "n_facts": 40,
+    "n_in_F_denominator": 39,
+    "fabrication": 3,
+    "F": 0.07692307692307693,
+    "F_lo": 0.026507395097205205,
+    "F_hi": 0.20321071297573554,
+    "classes": {
+     "entailed": 32,
+     "fabrication": 3,
+     "span_truncated": 2,
+     "doc_level_attribute": 1,
+     "subject_dropped": 1,
+     "filled_attribute": 1
+    },
+    "class_props": {
+     "entailed": {
+      "p": 0.8,
+      "lo": 0.6524269352437855,
+      "hi": 0.8950001032811363
+     },
+     "fabrication": {
+      "p": 0.075,
+      "lo": 0.025836025573262464,
+      "hi": 0.19864233651643165
+     },
+     "span_truncated": {
+      "p": 0.05,
+      "lo": 0.01382066726155863,
+      "hi": 0.16503877495105868
+     },
+     "doc_level_attribute": {
+      "p": 0.025,
+      "lo": 0.004426831453704344,
+      "hi": 0.12881369088183614
+     },
+     "subject_dropped": {
+      "p": 0.025,
+      "lo": 0.004426831453704344,
+      "hi": 0.12881369088183614
+     },
+     "filled_attribute": {
+      "p": 0.025,
+      "lo": 0.004426831453704344,
+      "hi": 0.12881369088183614
+     }
+    }
+   },
+   "normative_standard": {
+    "n_facts": 40,
+    "n_in_F_denominator": 40,
+    "fabrication": 0,
+    "F": 0.0,
+    "F_lo": 0.0,
+    "F_hi": 0.08762160245846368,
+    "classes": {
+     "entailed": 31,
+     "span_truncated": 7,
+     "subject_dropped": 1,
+     "filled_attribute": 1
+    },
+    "class_props": {
+     "entailed": {
+      "p": 0.775,
+      "lo": 0.6249690312905765,
+      "hi": 0.8768390873572685
+     },
+     "span_truncated": {
+      "p": 0.175,
+      "lo": 0.08745413698495559,
+      "hi": 0.3194999046130458
+     },
+     "subject_dropped": {
+      "p": 0.025,
+      "lo": 0.004426831453704344,
+      "hi": 0.12881369088183614
+     },
+     "filled_attribute": {
+      "p": 0.025,
+      "lo": 0.004426831453704344,
+      "hi": 0.12881369088183614
+     }
+    }
+   }
+  },
+  "verdicts": {
+   "academic": "repair_then_rejudge",
+   "agency_framework": "repair_then_rejudge",
+   "industry_practitioner": "repair_then_rejudge",
+   "normative_standard": "repair_then_rejudge"
+  },
+  "overall": "repair_path for all strata; re-judge after repair decides",
+  "items": {
+   "n": 122,
+   "faithful": 94,
+   "faithful_rate": 0.7704918032786885
+  },
+  "per_fact": {
+   "f_476b5bbd1971": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "academic",
+    "event_id": "90cd37b0ebd4426d88be39deb6a5552d",
+    "n_raters": 2
+   },
+   "f_f33c789775d4": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "normative_standard",
+    "event_id": "dbb30d0bee794da88e05c7d71b4fe98b",
+    "n_raters": 2
+   },
+   "f_35d4a3f6aabe": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "agency_framework",
+    "event_id": "61a63a65431e4016b6ccac9c272ce558",
+    "n_raters": 2
+   },
+   "f_0990bce92611": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "industry_practitioner",
+    "event_id": "483011366add41b88438baf237f3c063",
+    "n_raters": 2
+   },
+   "f_8f1ac8176d56": {
+    "p_entailed": 0.001115744392201804,
+    "entailed": false,
+    "class": "span_truncated",
+    "stratum": "normative_standard",
+    "event_id": "e539f76b4b62495dbf6612d2d08229e6",
+    "n_raters": 2
+   },
+   "f_f3aef171de2c": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "normative_standard",
+    "event_id": "d3d31d32ff9e4a65a4707ffdaf4bb34d",
+    "n_raters": 2
+   },
+   "f_c1431d758b9c": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "industry_practitioner",
+    "event_id": "222c89b8c28f4e3e9132600eef8ee33e",
+    "n_raters": 2
+   },
+   "f_d4559693da31": {
+    "p_entailed": 0.001115744392201804,
+    "entailed": false,
+    "class": "filled_attribute",
+    "stratum": "agency_framework",
+    "event_id": "b20841f4b84f4d88b1276bf8677c3eb7",
+    "n_raters": 2
+   },
+   "f_d4774fb97aef": {
+    "p_entailed": 0.001115744392201804,
+    "entailed": false,
+    "class": "span_truncated",
+    "stratum": "normative_standard",
+    "event_id": "219515df3a8e48e18fa513ef63e4f258",
+    "n_raters": 2
+   },
+   "f_6bdc0aff8610": {
+    "p_entailed": 0.5023451413470322,
+    "entailed": true,
+    "class": null,
+    "stratum": "industry_practitioner",
+    "event_id": "5b4e253be9ea4a10b5a5092f7f13a269",
+    "n_raters": 2
+   },
+   "f_9f308724cfee": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "academic",
+    "event_id": "cca345a8f54f4096adfe6d3b61a3ab4d",
+    "n_raters": 2
+   },
+   "f_e867547ece26": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "academic",
+    "event_id": "54db6b9d2f594edf99c35904bf7329ce",
+    "n_raters": 2
+   },
+   "f_02b34e32fa14": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "normative_standard",
+    "event_id": "2da46d7393e34b44a768a2b38eacafca",
+    "n_raters": 2
+   },
+   "f_50ce5ab9fc86": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "normative_standard",
+    "event_id": "848d05c2a02f40ee830da886d7f20c42",
+    "n_raters": 2
+   },
+   "f_110e30e59049": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "agency_framework",
+    "event_id": "8e76ac3d6f0a41e7b4ee9e2b90cc01e2",
+    "n_raters": 2
+   },
+   "f_f2dcc88c7505": {
+    "p_entailed": 0.001115744392201804,
+    "entailed": false,
+    "class": "fabrication",
+    "stratum": "industry_practitioner",
+    "event_id": "d65efd3726e147c382f7c193f2435e42",
+    "n_raters": 2,
+    "doc_check": "value_absent_from_document"
+   },
+   "f_f79e34cb4fd2": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "normative_standard",
+    "event_id": "2da46d7393e34b44a768a2b38eacafca",
+    "n_raters": 2
+   },
+   "f_7baadadbc595": {
+    "p_entailed": 0.001115744392201804,
+    "entailed": false,
+    "class": "span_truncated",
+    "stratum": "agency_framework",
+    "event_id": "0f2d67af532146de9dad61bee331101a",
+    "n_raters": 2
+   },
+   "f_981aa7a03c21": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "academic",
+    "event_id": "608299789d2541448669efbf2bb999b7",
+    "n_raters": 2
+   },
+   "f_2525ebd45821": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "industry_practitioner",
+    "event_id": "bc6439cd202041bf89073802ae58c085",
+    "n_raters": 2
+   },
+   "f_05de5322f2d8": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "academic",
+    "event_id": "cca345a8f54f4096adfe6d3b61a3ab4d",
+    "n_raters": 2
+   },
+   "f_4da7564fff04": {
+    "p_entailed": 0.5023451413470322,
+    "entailed": true,
+    "class": null,
+    "stratum": "agency_framework",
+    "event_id": "05c6f1c84e1740b2b48c61ad319550ed",
+    "n_raters": 2
+   },
+   "f_f38b1e873b18": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "normative_standard",
+    "event_id": "57abb9a2932742db8ac3c4f8d182034a",
+    "n_raters": 2
+   },
+   "f_37c909216cce": {
+    "p_entailed": 0.001115744392201804,
+    "entailed": false,
+    "class": "subject_dropped",
+    "stratum": "normative_standard",
+    "event_id": "ff4220fa372c4a8ebdcead4e8af383e9",
+    "n_raters": 2
+   },
+   "f_f49c22a636ed": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "normative_standard",
+    "event_id": "b28388719f99432c8e79866b5d5ec8ef",
+    "n_raters": 2
+   },
+   "f_fc2ae106006e": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "industry_practitioner",
+    "event_id": "0426be967fff462a911751e6bbd3e9f6",
+    "n_raters": 2
+   },
+   "f_22e8b7183842": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "normative_standard",
+    "event_id": "353adde46b6248b28a4717e260c6133b",
+    "n_raters": 2
+   },
+   "f_78aca05a4842": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "academic",
+    "event_id": "69a71772863e4e9298a3af7005304050",
+    "n_raters": 2
+   },
+   "f_55dc0cd05ff9": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "academic",
+    "event_id": "16199ea5abd0493f8e3adf019ebf2d59",
+    "n_raters": 2
+   },
+   "f_f9071ea7fdf7": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "industry_practitioner",
+    "event_id": "49f8dea39f704cfd89af86acb7e08586",
+    "n_raters": 2
+   },
+   "f_8266ef5e1e66": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "industry_practitioner",
+    "event_id": "7fbabf10de574009b4132ac52a10cd45",
+    "n_raters": 2
+   },
+   "f_788997e71630": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "industry_practitioner",
+    "event_id": "15e41986f8594611ab97dbb176f3eb9a",
+    "n_raters": 2
+   },
+   "f_c663d2dbb3fd": {
+    "p_entailed": 0.5023451413470322,
+    "entailed": true,
+    "class": null,
+    "stratum": "academic",
+    "event_id": "76b8741381974d3ba86da33454d4bd25",
+    "n_raters": 2
+   },
+   "f_8a7ca01b9cc9": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "normative_standard",
+    "event_id": "4e39071fbaca4c82b71c50f01effb5fa",
+    "n_raters": 2
+   },
+   "f_68d4467ad0e8": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "academic",
+    "event_id": "cb1aa5035616416da610652bc4302d0d",
+    "n_raters": 2
+   },
+   "f_7729b15e3e63": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "agency_framework",
+    "event_id": "7242b78befd14d27befd7eba0ef20ef4",
+    "n_raters": 2
+   },
+   "f_942b3cf0d2e4": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "academic",
+    "event_id": "97624d27e2564489bb053dc187462bac",
+    "n_raters": 2
+   },
+   "f_3d78723ec22e": {
+    "p_entailed": 0.001115744392201804,
+    "entailed": false,
+    "class": "subject_dropped",
+    "stratum": "academic",
+    "event_id": "541c4473371e4adf8c20681d2cf635c7",
+    "n_raters": 2
+   },
+   "f_73c8a8ac5754": {
+    "p_entailed": 0.5399977893591714,
+    "entailed": true,
+    "class": null,
+    "stratum": "academic",
+    "event_id": "78fff6e2b74e4fcea6796144b0c009eb",
+    "n_raters": 2
+   },
+   "f_3bc0347fd816": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "industry_practitioner",
+    "event_id": "f0626e4d0ed44f32a3eed2ee32aaf6a8",
+    "n_raters": 2
+   },
+   "f_bf8e549cdf0a": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "academic",
+    "event_id": "1447af7a765c4878bb27c9626f502f3a",
+    "n_raters": 2
+   },
+   "f_f0ab3d13f8c0": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "industry_practitioner",
+    "event_id": "61517b5bade44eee8fd993a88255d324",
+    "n_raters": 2
+   },
+   "f_d75892927c86": {
+    "p_entailed": 0.001115744392201804,
+    "entailed": false,
+    "class": "filled_attribute",
+    "stratum": "normative_standard",
+    "event_id": "b044fe0d48f446caa758509f60189d78",
+    "n_raters": 2,
+    "doc_check": "value_found_in_document"
+   },
+   "f_11b2e754fb4b": {
+    "p_entailed": 0.001115744392201804,
+    "entailed": false,
+    "class": "fabrication",
+    "stratum": "industry_practitioner",
+    "event_id": "ec100b4c171e49039bf48542344e0b2a",
+    "n_raters": 2
+   },
+   "f_fc81ac193235": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "normative_standard",
+    "event_id": "4f5354e4a3ee4665b349071ced166ab2",
+    "n_raters": 2
+   },
+   "f_814f57ce2cb3": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "industry_practitioner",
+    "event_id": "7671b1865c104ffa844c5bfd8bc2f34a",
+    "n_raters": 2
+   },
+   "f_3b2b6483a41e": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "industry_practitioner",
+    "event_id": "fdf15b23a4f844098b2e17e0b2a0908c",
+    "n_raters": 2
+   },
+   "f_d6897f78e6ac": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "industry_practitioner",
+    "event_id": "803adab07dbe4eeb94e947f39fcef128",
+    "n_raters": 2
+   },
+   "f_7d66e9175b8a": {
+    "p_entailed": 0.001115744392201804,
+    "entailed": false,
+    "class": "span_truncated",
+    "stratum": "agency_framework",
+    "event_id": "9a9e5aff624c4afd903ad5b3bebd8e90",
+    "n_raters": 2
+   },
+   "f_22807d58f240": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "academic",
+    "event_id": "6e22a6ec733044ed8d5017f1cfdd0a7a",
+    "n_raters": 2
+   },
+   "f_a270dd98f389": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "agency_framework",
+    "event_id": "e369e242cc964f15b8a9817499a258d3",
+    "n_raters": 2
+   },
+   "f_ee268c3aab11": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "academic",
+    "event_id": "288a95fecc4c49869cd30d97d333bdd1",
+    "n_raters": 2
+   },
+   "f_9ddef36be8f1": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "industry_practitioner",
+    "event_id": "a4e3b6bccd21412bb9e22fcd0fc08e27",
+    "n_raters": 2
+   },
+   "f_3ff288486253": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "normative_standard",
+    "event_id": "99e1b993eda94740bc067ee569d6d869",
+    "n_raters": 2
+   },
+   "f_7b20352939a7": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "academic",
+    "event_id": "006cfad6bd4d43ad82e9cf4fa2a6aea6",
+    "n_raters": 2
+   },
+   "f_f3abff206790": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "industry_practitioner",
+    "event_id": "d74bfea1cad349d59171e706216f4449",
+    "n_raters": 2
+   },
+   "f_922047e77d1a": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "industry_practitioner",
+    "event_id": "5399658364de4bbb80745209e25237b2",
+    "n_raters": 2
+   },
+   "f_7767715c66a9": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "normative_standard",
+    "event_id": "85fc5451ec4c4e939636fda62bc7a870",
+    "n_raters": 2
+   },
+   "f_7651bd4b9b2b": {
+    "p_entailed": 0.5023451413470322,
+    "entailed": true,
+    "class": null,
+    "stratum": "industry_practitioner",
+    "event_id": "cc580edd105846a392085cb8a5aaf9b9",
+    "n_raters": 2
+   },
+   "f_add737c56e51": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "industry_practitioner",
+    "event_id": "571a293ccb8b47d691a1f3c54c8acab7",
+    "n_raters": 2
+   },
+   "f_0b4a56edbe63": {
+    "p_entailed": 0.001115744392201804,
+    "entailed": false,
+    "class": "filled_attribute",
+    "stratum": "academic",
+    "event_id": "cb1aa5035616416da610652bc4302d0d",
+    "n_raters": 2
+   },
+   "f_abdbd37a7d3e": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "agency_framework",
+    "event_id": "e369e242cc964f15b8a9817499a258d3",
+    "n_raters": 2
+   },
+   "f_36b2aa6d9f59": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "agency_framework",
+    "event_id": "e9c29eccd462401cb11b5397e83993b3",
+    "n_raters": 2
+   },
+   "f_52d33fa4bfa4": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "industry_practitioner",
+    "event_id": "fdf15b23a4f844098b2e17e0b2a0908c",
+    "n_raters": 2
+   },
+   "f_3f0ea0c44657": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "agency_framework",
+    "event_id": "2ca0cebe3fa545d3a47c65f8c6a3347d",
+    "n_raters": 2
+   },
+   "f_db173d3d336f": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "industry_practitioner",
+    "event_id": "5399658364de4bbb80745209e25237b2",
+    "n_raters": 2
+   },
+   "f_c9fd230f37d0": {
+    "p_entailed": 0.001115744392201804,
+    "entailed": false,
+    "class": "fabrication",
+    "stratum": "academic",
+    "event_id": "b6878b7efb81417f939d02ebb0c4d671",
+    "n_raters": 2
+   },
+   "f_c2aaf86c29ce": {
+    "p_entailed": 0.001115744392201804,
+    "entailed": false,
+    "class": "fabrication",
+    "stratum": "industry_practitioner",
+    "event_id": "7634827c28d24b068bdf661316a0950c",
+    "n_raters": 2,
+    "doc_check": "value_absent_from_document"
+   },
+   "f_f6f54c0b2958": {
+    "p_entailed": 0.001115744392201804,
+    "entailed": false,
+    "class": "span_truncated",
+    "stratum": "normative_standard",
+    "event_id": "ff4220fa372c4a8ebdcead4e8af383e9",
+    "n_raters": 2
+   },
+   "f_2d653d403461": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "industry_practitioner",
+    "event_id": "35887a7ccbf54469b8b4a380eff1d839",
+    "n_raters": 2
+   },
+   "f_64f8a8966069": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "academic",
+    "event_id": "a8703195054a4b2b9792247a7b6d8e54",
+    "n_raters": 2
+   },
+   "f_c6de62643c16": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "agency_framework",
+    "event_id": "4107be43e7be4d7b89427b4c046475bb",
+    "n_raters": 2
+   },
+   "f_214c8e80c71a": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "agency_framework",
+    "event_id": "0957639e0785427abec845242d5d8b19",
+    "n_raters": 2
+   },
+   "f_f2fec9df6462": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "agency_framework",
+    "event_id": "a845948bff2c4f0086c85a2b85041738",
+    "n_raters": 2
+   },
+   "f_42496138ebad": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "academic",
+    "event_id": "288a95fecc4c49869cd30d97d333bdd1",
+    "n_raters": 2
+   },
+   "f_acd2d65cc77d": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "agency_framework",
+    "event_id": "a845948bff2c4f0086c85a2b85041738",
+    "n_raters": 2
+   },
+   "f_e903ac9dbe20": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "industry_practitioner",
+    "event_id": "7797aec99cd049c19fbb198641f53feb",
+    "n_raters": 2
+   },
+   "f_1af994cd67f0": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "normative_standard",
+    "event_id": "e6cec083f204461e8f21cbbb3deaa6b3",
+    "n_raters": 2
+   },
+   "f_3e29e93fb6cd": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "normative_standard",
+    "event_id": "a3f00194a1544c718bf9017e578e283b",
+    "n_raters": 2
+   },
+   "f_c054472a5117": {
+    "p_entailed": 0.5023451413470322,
+    "entailed": true,
+    "class": null,
+    "stratum": "academic",
+    "event_id": "5e2ac625fe9748c29007309ab6426386",
+    "n_raters": 2
+   },
+   "f_cd47cd20786a": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "normative_standard",
+    "event_id": "9e16867f6f8346658744cbc41183c823",
+    "n_raters": 2
+   },
+   "f_59cd9c8afe55": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "normative_standard",
+    "event_id": "eea5ba5e0f5d4b3fa6f751d3b15eb6a8",
+    "n_raters": 2
+   },
+   "f_64e437ace8e9": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "normative_standard",
+    "event_id": "8f9798c2383f4afc82721f3ba390ef00",
+    "n_raters": 2
+   },
+   "f_af69cb844f24": {
+    "p_entailed": 0.001115744392201804,
+    "entailed": false,
+    "class": "span_truncated",
+    "stratum": "normative_standard",
+    "event_id": "b044fe0d48f446caa758509f60189d78",
+    "n_raters": 2
+   },
+   "f_c9dd7353c100": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "normative_standard",
+    "event_id": "ac9a81f39e1f4197b27931ce5e7f8b10",
+    "n_raters": 2
+   },
+   "f_9159beec73a2": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "normative_standard",
+    "event_id": "1d7d965f48a047d7bf80b99b07ac6eeb",
+    "n_raters": 2
+   },
+   "f_de903e71cd53": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "normative_standard",
+    "event_id": "2da46d7393e34b44a768a2b38eacafca",
+    "n_raters": 2
+   },
+   "f_e360accaed8e": {
+    "p_entailed": 0.001115744392201804,
+    "entailed": false,
+    "class": "fabrication",
+    "stratum": "academic",
+    "event_id": "f7d234718c4d43568f40828805e00c74",
+    "n_raters": 2
+   },
+   "f_66f804ca90d7": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "industry_practitioner",
+    "event_id": "6ef07ea6e9984a1fa638da193d62f0d0",
+    "n_raters": 2
+   },
+   "f_045ecc82450e": {
+    "p_entailed": 0.001115744392201804,
+    "entailed": false,
+    "class": "filled_attribute",
+    "stratum": "academic",
+    "event_id": "7bba89a97cec4907827e90949f149a18",
+    "n_raters": 2
+   },
+   "f_abc8a7a43998": {
+    "p_entailed": 0.5023451413470322,
+    "entailed": true,
+    "class": null,
+    "stratum": "academic",
+    "event_id": "f507847f76534f718278412798b17a39",
+    "n_raters": 2
+   },
+   "f_707795262b77": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "industry_practitioner",
+    "event_id": "222c89b8c28f4e3e9132600eef8ee33e",
+    "n_raters": 2
+   },
+   "f_3a3d7ba0db39": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "agency_framework",
+    "event_id": "e5c2294cf86b4d98938baaaf83b45474",
+    "n_raters": 2
+   },
+   "f_4b003f9849a3": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "academic",
+    "event_id": "9e2fe8df942a44f6a7bd10eb5929e8b8",
+    "n_raters": 2
+   },
+   "f_0e7a0a546b56": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "industry_practitioner",
+    "event_id": "42bc4b7da687437aa5e9cd674d8c1264",
+    "n_raters": 2
+   },
+   "f_08b789859db2": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "normative_standard",
+    "event_id": "60ea2ea69daf49b88e85cf55bc489017",
+    "n_raters": 2
+   },
+   "f_140e4fd5bf41": {
+    "p_entailed": 0.5023451413470322,
+    "entailed": true,
+    "class": null,
+    "stratum": "agency_framework",
+    "event_id": "ec68816f8c034da9b780590737874dd6",
+    "n_raters": 2
+   },
+   "f_c012bff5ffc4": {
+    "p_entailed": 0.001115744392201804,
+    "entailed": false,
+    "class": "span_truncated",
+    "stratum": "agency_framework",
+    "event_id": "a845948bff2c4f0086c85a2b85041738",
+    "n_raters": 2
+   },
+   "f_ae86ee855b72": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "agency_framework",
+    "event_id": "4107be43e7be4d7b89427b4c046475bb",
+    "n_raters": 2
+   },
+   "f_1ee5fd19f223": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "normative_standard",
+    "event_id": "3a54edece29c440f93ff55cc86e33b3e",
+    "n_raters": 2
+   },
+   "f_37f0260cf4ea": {
+    "p_entailed": 0.001115744392201804,
+    "entailed": false,
+    "class": "filled_attribute",
+    "stratum": "agency_framework",
+    "event_id": "aca9b9843dca4bf4b54adeb35a0e00f3",
+    "n_raters": 2
+   },
+   "f_bcceb33cc45b": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "agency_framework",
+    "event_id": "3190a307b9204316941c713ad1339e75",
+    "n_raters": 2
+   },
+   "f_78903f42b40b": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "agency_framework",
+    "event_id": "87ecf5ed492f4e989a45cf5cfd338c58",
+    "n_raters": 2
+   },
+   "f_876917948f73": {
+    "p_entailed": 0.001115744392201804,
+    "entailed": false,
+    "class": "span_truncated",
+    "stratum": "academic",
+    "event_id": "f507847f76534f718278412798b17a39",
+    "n_raters": 2
+   },
+   "f_00f6db1949af": {
+    "p_entailed": 0.001115744392201804,
+    "entailed": false,
+    "class": "span_truncated",
+    "stratum": "agency_framework",
+    "event_id": "fb7c0b4bc70e4121a6344a441e45e2a5",
+    "n_raters": 2
+   },
+   "f_d3ee186fd631": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "academic",
+    "event_id": "541c4473371e4adf8c20681d2cf635c7",
+    "n_raters": 2
+   },
+   "f_6c2e7acaf049": {
+    "p_entailed": 0.001115744392201804,
+    "entailed": false,
+    "class": "span_truncated",
+    "stratum": "normative_standard",
+    "event_id": "c49f9dcc9d834ca8adc29f3d8707a88c",
+    "n_raters": 2
+   },
+   "f_ff02830454ae": {
+    "p_entailed": 0.5023451413470322,
+    "entailed": true,
+    "class": null,
+    "stratum": "agency_framework",
+    "event_id": "0957639e0785427abec845242d5d8b19",
+    "n_raters": 2
+   },
+   "f_026b9eaf2ca8": {
+    "p_entailed": 0.001115744392201804,
+    "entailed": false,
+    "class": "span_truncated",
+    "stratum": "normative_standard",
+    "event_id": "e44749857002455ab275d4e0505ed110",
+    "n_raters": 2
+   },
+   "f_a071c4b8677f": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "normative_standard",
+    "event_id": "86cab2d660bf4e30ac012877cd226e13",
+    "n_raters": 2
+   },
+   "f_4a5b40447c92": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "academic",
+    "event_id": "6e22a6ec733044ed8d5017f1cfdd0a7a",
+    "n_raters": 2
+   },
+   "f_dff369cf3a44": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "agency_framework",
+    "event_id": "2117d2fe0ff742f788b0f70b1c35ce22",
+    "n_raters": 2
+   },
+   "f_5a86f11e839f": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "agency_framework",
+    "event_id": "e546550e90da4798ba8d0b49065fa082",
+    "n_raters": 2
+   },
+   "f_5bc32da53759": {
+    "p_entailed": 0.001115744392201804,
+    "entailed": false,
+    "class": "span_truncated",
+    "stratum": "academic",
+    "event_id": "8856969c7c1244d48cf3fe6e834fe65d",
+    "n_raters": 2
+   },
+   "f_277023ed7654": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "industry_practitioner",
+    "event_id": "1a68d8c94a5f441e9190ec93271df17f",
+    "n_raters": 2
+   },
+   "f_5c27c49a90fd": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "normative_standard",
+    "event_id": "b7a6864580a7485bb09961b18198e321",
+    "n_raters": 2
+   },
+   "f_ccadef3206cc": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "industry_practitioner",
+    "event_id": "9b4dad428024465d8ed24510ac008fe0",
+    "n_raters": 2
+   },
+   "f_9e67f8f66df1": {
+    "p_entailed": 0.5023451413470322,
+    "entailed": true,
+    "class": null,
+    "stratum": "academic",
+    "event_id": "83f8675988bd492c90eb81f18180c08a",
+    "n_raters": 2
+   },
+   "f_fec1bfce9616": {
+    "p_entailed": 0.5023451413470322,
+    "entailed": true,
+    "class": null,
+    "stratum": "academic",
+    "event_id": "f53a223018e0412e946280f19f17d660",
+    "n_raters": 2
+   },
+   "f_6aca874b9fdf": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "agency_framework",
+    "event_id": "62a406342a6d41639414e9ee67614a0b",
+    "n_raters": 2
+   },
+   "f_4379a14e73f4": {
+    "p_entailed": 0.001115744392201804,
+    "entailed": false,
+    "class": "span_truncated",
+    "stratum": "normative_standard",
+    "event_id": "e423b4bd3c2845238a38be9f6e12d84e",
+    "n_raters": 2
+   },
+   "f_7e562e80b24c": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "industry_practitioner",
+    "event_id": "5e5542048b0c43bca2b0a8209182ee38",
+    "n_raters": 2
+   },
+   "f_216784f5fbd5": {
+    "p_entailed": 0.001115744392201804,
+    "entailed": false,
+    "class": "span_truncated",
+    "stratum": "industry_practitioner",
+    "event_id": "1a68d8c94a5f441e9190ec93271df17f",
+    "n_raters": 2
+   },
+   "f_7db81ee7e5db": {
+    "p_entailed": 0.5023451413470322,
+    "entailed": true,
+    "class": null,
+    "stratum": "industry_practitioner",
+    "event_id": "61517b5bade44eee8fd993a88255d324",
+    "n_raters": 2
+   },
+   "f_7e901ae7d063": {
+    "p_entailed": 0.5023451413470322,
+    "entailed": true,
+    "class": null,
+    "stratum": "academic",
+    "event_id": "cca345a8f54f4096adfe6d3b61a3ab4d",
+    "n_raters": 2
+   },
+   "f_c3d098e8b13c": {
+    "p_entailed": 0.001115744392201804,
+    "entailed": false,
+    "class": "filled_attribute",
+    "stratum": "agency_framework",
+    "event_id": "0f2d67af532146de9dad61bee331101a",
+    "n_raters": 2
+   },
+   "f_67a745272a4a": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "agency_framework",
+    "event_id": "dad233dc81d6434799fc85ffcca4565a",
+    "n_raters": 2
+   },
+   "f_bda4ac47a56e": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "agency_framework",
+    "event_id": "f1be945cc0ee4b80b769a8b1dea529be",
+    "n_raters": 2
+   },
+   "f_3d93e5c881f9": {
+    "p_entailed": 0.001115744392201804,
+    "entailed": false,
+    "class": "doc_level_attribute",
+    "stratum": "industry_practitioner",
+    "event_id": "756bc11345f349319f9ddc0917e612ea",
+    "n_raters": 2
+   },
+   "f_3e38ec623580": {
+    "p_entailed": 0.5023451413470322,
+    "entailed": true,
+    "class": null,
+    "stratum": "normative_standard",
+    "event_id": "c49f9dcc9d834ca8adc29f3d8707a88c",
+    "n_raters": 2
+   },
+   "f_db2c960cdbc8": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "agency_framework",
+    "event_id": "05c6f1c84e1740b2b48c61ad319550ed",
+    "n_raters": 2
+   },
+   "f_bcc510ab85b1": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "academic",
+    "event_id": "c24e623d0b274c07abcd1a1ae12eda02",
+    "n_raters": 2
+   },
+   "f_0131bae77e6b": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "industry_practitioner",
+    "event_id": "fdf15b23a4f844098b2e17e0b2a0908c",
+    "n_raters": 2
+   },
+   "f_56e9db9106d8": {
+    "p_entailed": 0.001115744392201804,
+    "entailed": false,
+    "class": "subject_dropped",
+    "stratum": "industry_practitioner",
+    "event_id": "5e5542048b0c43bca2b0a8209182ee38",
+    "n_raters": 2
+   },
+   "f_302db8d57a32": {
+    "p_entailed": 0.5023451413470322,
+    "entailed": true,
+    "class": null,
+    "stratum": "academic",
+    "event_id": "46dacb8a04104c0c9af34f1a201d6d25",
+    "n_raters": 2
+   },
+   "f_3ac3783c2605": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "academic",
+    "event_id": "69a71772863e4e9298a3af7005304050",
+    "n_raters": 2
+   },
+   "f_65f462368c0f": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "agency_framework",
+    "event_id": "329948d249b24188b173d5270f138fa6",
+    "n_raters": 2
+   },
+   "f_dd7c00e841f4": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "industry_practitioner",
+    "event_id": "6e664ca962c94009b7c67b2ab5bc08da",
+    "n_raters": 2
+   },
+   "f_d7e19a0e420f": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "normative_standard",
+    "event_id": "93c45fbadc80449b81b4d7461a9aeac7",
+    "n_raters": 2
+   },
+   "f_f1b9a29f7d05": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "agency_framework",
+    "event_id": "28559d36b8d440958b49598cc82e61e3",
+    "n_raters": 2
+   },
+   "f_6200d70313a0": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "academic",
+    "event_id": "6eb68247a13e45d2b5f659c0457218b6",
+    "n_raters": 2
+   },
+   "f_6bc3d03479e6": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "agency_framework",
+    "event_id": "9a9e5aff624c4afd903ad5b3bebd8e90",
+    "n_raters": 2
+   },
+   "f_6a9b5f11553c": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "normative_standard",
+    "event_id": "9e16867f6f8346658744cbc41183c823",
+    "n_raters": 2
+   },
+   "f_e255269a786e": {
+    "p_entailed": 0.001115744392201804,
+    "entailed": false,
+    "class": "filled_attribute",
+    "stratum": "industry_practitioner",
+    "event_id": "cc580edd105846a392085cb8a5aaf9b9",
+    "n_raters": 2,
+    "doc_check": "value_found_in_document"
+   },
+   "f_ee53ad2a1f3f": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "normative_standard",
+    "event_id": "4875b82fe5f6426e9c6867a233493358",
+    "n_raters": 2
+   },
+   "f_5e88be6c2ef9": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "agency_framework",
+    "event_id": "7242b78befd14d27befd7eba0ef20ef4",
+    "n_raters": 2
+   },
+   "f_8413eb6acaa4": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "normative_standard",
+    "event_id": "8f9798c2383f4afc82721f3ba390ef00",
+    "n_raters": 2
+   },
+   "f_8ab6e6455015": {
+    "p_entailed": 0.001115744392201804,
+    "entailed": false,
+    "class": "span_truncated",
+    "stratum": "industry_practitioner",
+    "event_id": "d65a295e670d48e8ada0c35b10f10534",
+    "n_raters": 2
+   },
+   "f_5d742faa9254": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "academic",
+    "event_id": "78fff6e2b74e4fcea6796144b0c009eb",
+    "n_raters": 2
+   },
+   "f_f8234071c280": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "industry_practitioner",
+    "event_id": "565757df0f7c4fe2b3540e7be8149f78",
+    "n_raters": 2
+   },
+   "f_79520373d693": {
+    "p_entailed": 0.001115744392201804,
+    "entailed": false,
+    "class": "span_truncated",
+    "stratum": "agency_framework",
+    "event_id": "0c3a5b90f2824b3895d71d2b88bdf109",
+    "n_raters": 2
+   },
+   "f_833312b63bf7": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "agency_framework",
+    "event_id": "f6c6e35344c145098c897f67c4190776",
+    "n_raters": 2
+   },
+   "f_3ce62755ef28": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "agency_framework",
+    "event_id": "9a9e5aff624c4afd903ad5b3bebd8e90",
+    "n_raters": 2
+   },
+   "f_66247337da02": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "academic",
+    "event_id": "7936a9b7f0fa4fe8842b4d7532fd5c4c",
+    "n_raters": 2
+   },
+   "f_26cb8b50cb5c": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "normative_standard",
+    "event_id": "353adde46b6248b28a4717e260c6133b",
+    "n_raters": 2
+   },
+   "f_57d2e90607fc": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "academic",
+    "event_id": "76b8741381974d3ba86da33454d4bd25",
+    "n_raters": 2
+   },
+   "f_11bcbb15ab72": {
+    "p_entailed": 0.5023451413470322,
+    "entailed": true,
+    "class": null,
+    "stratum": "agency_framework",
+    "event_id": "f6c6e35344c145098c897f67c4190776",
+    "n_raters": 2
+   },
+   "f_23fcf8c8b1bd": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "academic",
+    "event_id": "a1de49de9d3846aaace121c9f1bb2ce4",
+    "n_raters": 2
+   },
+   "f_f5644b57a5ed": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "normative_standard",
+    "event_id": "219515df3a8e48e18fa513ef63e4f258",
+    "n_raters": 2
+   },
+   "f_427ccd1769eb": {
+    "p_entailed": 0.9990582528040228,
+    "entailed": true,
+    "class": null,
+    "stratum": "agency_framework",
+    "event_id": "31620edf31994f88a7fcd8abb3abf041",
+    "n_raters": 2
+   }
+  }
+ },
+ "judged_at": "2026-08-31T16:19:24.571131+00:00"
+}

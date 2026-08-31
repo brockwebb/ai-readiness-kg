@@ -276,7 +276,7 @@ def test_an_envelope_with_none_of_the_contract_s_keys_is_still_truncation(cp):
 
 
 def test_a_truncated_chunk_stops_the_run_but_only_after_the_paid_for_rest_is_ingested(
-        cp, monkeypatch, tmp_path):
+        cp, ext_iso, monkeypatch, tmp_path):
     """A SystemExit raised inside a worker is a BaseException, so it bypassed the executor's
     `except Exception` and killed the pass before `phase_ingest` ran — 20 already-paid-for
     raws were left off the shard. STOP is kept; losing the pass is not."""
@@ -518,7 +518,8 @@ def test_shared_with_refuses_a_tag_with_no_coverage(cp, monkeypatch):
     assert "no chunk_metrics" in str(exc.value)
 
 
-def test_shared_with_actually_restricts_which_chunks_are_dispatched(cp, monkeypatch, tmp_path):
+def test_shared_with_actually_restricts_which_chunks_are_dispatched(cp, ext_iso, monkeypatch,
+                                                                    tmp_path):
     """M2 CONTROL for --shared-with. The refusal test above only proves the empty case; this
     one proves the filter narrows a NON-empty pass. Without it A2 would run 48 chunks and be
     measured on 44, which is Arm A's shape, not an identical chunk set."""

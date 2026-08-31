@@ -1,0 +1,23 @@
+{
+ "batch_id": "bulk_v038_phase_a.claude-opus-4-8.3473c150b3",
+ "run": "bulk_v038_phase_a",
+ "model_id": "claude-opus-4-8",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 4313,
+  "cacheReadInputTokens": 12039,
+  "cacheCreationInputTokens": 26548,
+  "webSearchRequests": 0,
+  "costUSD": 0.3793345,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "canonicalModel": "claude-opus-4-8",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3793345,
+ "duration_ms": 54830,
+ "wall_s": 56.9,
+ "session_id": "5ce18550-f04c-42f7-a49e-e07b696f73b1",
+ "raw_result": "Looking at this, the task is a versioned atomic-fact faithfulness judgment (probe_judge_version 1.1.0). I'll evaluate each fact against its grounding span, using the window only to distinguish span-omission classes from fabrication.\n\nReasoning per fact:\n- **f_db2c960cdbc8** — span contains \"Primary Key\" → entailed.\n- **f_bcc510ab85b1** — span contains \"Statistics Addition\" → entailed.\n- **f_0131bae77e6b** — span has \"IP address verification\"; alias \"IP verification\" is a supported surface form → entailed.\n- **f_56e9db9106d8** — span carries the predicate (\"AI model training datasets\") but \"our\"→Anthropic comes only from the window → not_entailed / subject_dropped.\n- **f_302db8d57a32** — span names \"stochastic tax\" and ties it to stochastic components in a pipeline; \"tax\"=cost. Description is a supported paraphrase → entailed (moderate).\n- **f_3ac3783c2605** — span directly states the low BLEU cause → entailed.\n- **f_65f462368c0f** — span states CBRN and/or offensive cyber evaluation together → entailed.\n- **f_dd7c00e841f4** — span contains \"Claude-SearchBot\" → entailed.\n- **f_d7e19a0e420f** — span contains the name → entailed.\n- **f_f1b9a29f7d05** — span contains \"FCSM Framework for Data Quality\" → entailed.\n\n{\"judgments\": [{\"fact_id\": \"f_db2c960cdbc8\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.97}, {\"fact_id\": \"f_bcc510ab85b1\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.97}, {\"fact_id\": \"f_0131bae77e6b\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.72}, {\"fact_id\": \"f_56e9db9106d8\", \"label\": \"not_entailed\", \"class\": \"subject_dropped\", \"confidence\": 0.6}, {\"fact_id\": \"f_302db8d57a32\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.55}, {\"fact_id\": \"f_3ac3783c2605\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.97}, {\"fact_id\": \"f_65f462368c0f\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.95}, {\"fact_id\": \"f_dd7c00e841f4\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.97}, {\"fact_id\": \"f_d7e19a0e420f\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.98}, {\"fact_id\": \"f_f1b9a29f7d05\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.97}]}"
+}

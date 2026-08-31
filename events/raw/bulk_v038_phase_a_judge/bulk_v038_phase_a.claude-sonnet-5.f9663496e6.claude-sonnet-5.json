@@ -1,0 +1,23 @@
+{
+ "batch_id": "bulk_v038_phase_a.claude-sonnet-5.f9663496e6",
+ "run": "bulk_v038_phase_a",
+ "model_id": "claude-sonnet-5",
+ "usage": {
+  "inputTokens": 6,
+  "outputTokens": 6848,
+  "cacheReadInputTokens": 131816,
+  "cacheCreationInputTokens": 33735,
+  "webSearchRequests": 0,
+  "costUSD": 0.22979519999999998,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "canonicalModel": "claude-sonnet-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.22979519999999998,
+ "duration_ms": 74527,
+ "wall_s": 76.8,
+ "session_id": "7275fa86-e16c-44a6-abd4-ec0795fff90b",
+ "raw_result": "The skill file access was denied, but the task's own prompt is fully self-contained (versioned rubric 1.1.0, exact instructions, exact output format), so I'll apply it directly.\n\nApplying the rule: grounding span alone must entail the fact; window only disambiguates `subject_dropped`/`span_truncated` from `fabrication`.\n\n- **f_ee53ad2a1f3f** (schema:DefinedTermSet alias): span repeatedly names \"DefinedTermSet\" with a link to schema.org/DefinedTermSet → entailed.\n- **f_f2dcc88c7505** (robots exclusion file alias): span/window never say \"robots exclusion file\" anywhere → fabrication.\n- **f_7729b15e3e63** (substance and presentation): span's \"accurate, reliable, unbiased\" = substance, \"presented in an accurate, clear, unbiased manner\" = presentation → entailed.\n- **f_ff02830454ae** (end state framing): span/window describe an iterative, repeatable cycle, not a terminal \"end state\" → fabrication (added framing absent from span and window).\n- **f_7e562e80b24c** (name: AI model training datasets): literal phrase present in span → entailed.\n- **f_110e30e59049** (alias: accuracy): \"Accuracy\" literally in span → entailed.\n- **f_5e88be6c2ef9** (alias: objectivity): \"Objectivity\" literally in span → entailed.\n- **f_d4559693da31** (resilience definition): span is just a topic-sentence; window gives only \"return to normal function after an unexpected adverse event,\" not the \"maintain structure / degrade safely\" detail → span_truncated (rest of the item's own definition lies outside the shown window).\n- **f_de903e71cd53** (alias: entity escaping): \"entity-escaped\" literally in span → entailed.\n- **f_302db8d57a32** (stochastic tax description incl. \"verification layer\"): span supports cost-of-stochastic-components-in-pipeline but \"or verification layer\" isn't in span or window → filled_attribute.\n\n```json\n{\"judgments\": [\n  {\"fact_id\": \"f_ee53ad2a1f3f\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.75},\n  {\"fact_id\": \"f_f2dcc88c7505\", \"label\": \"not_entailed\", \"class\": \"fabrication\", \"confidence\": 0.85},\n  {\"fact_id\": \"f_7729b15e3e63\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.85},\n  {\"fact_id\": \"f_ff02830454ae\", \"label\": \"not_entailed\", \"class\": \"fabrication\", \"confidence\": 0.6},\n  {\"fact_id\": \"f_7e562e80b24c\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.9},\n  {\"fact_id\": \"f_110e30e59049\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.9},\n  {\"fact_id\": \"f_5e88be6c2ef9\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.9},\n  {\"fact_id\": \"f_d4559693da31\", \"label\": \"not_entailed\", \"class\": \"span_truncated\", \"confidence\": 0.55},\n  {\"fact_id\": \"f_de903e71cd53\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.9},\n  {\"fact_id\": \"f_302db8d57a32\", \"label\": \"not_entailed\", \"class\": \"filled_attribute\", \"confidence\": 0.55}\n]}\n```"
+}

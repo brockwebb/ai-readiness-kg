@@ -526,3 +526,48 @@ def test_chunk_yield_on_an_untagged_shard_is_scoped_the_same_way(cp_bulk):
                          "edges_kept": 0}, batch=cp.SHARD_NO)
     y = cp.chunk_yield(cp.TAG)
     assert list(y) == ["d#c1"] and y["d#c1"]["nodes"] == 7
+
+
+# ---------------------------------------------------------------- the gate's own reading
+def _agg(f_hi, faithful_rate, n_facts=160):
+    return {"pooled": {"F_hi": f_hi, "n_facts": n_facts},
+            "items": {"faithful_rate": faithful_rate, "n": 122, "faithful": 94}}
+
+
+def test_the_gate_reads_the_aggregator_s_actual_key_names():
+    """This failed live. The first version read `pooled["F_upper"]` and
+    `pooled["item_faithful"]` — neither is a key the aggregator writes. Both came back None,
+    the threshold comparisons were skipped, and the gate reported FAIL on a run whose real
+    numbers PASS (F_upper 0.0715 < 0.10, item-faithful 0.770 >= 0.70)."""
+    f_upper, faithful, n = rcb.gate_inputs(_agg(0.0715, 0.7705))
+    assert (f_upper, faithful, n) == (0.0715, 0.7705, 160)
+    assert rcb.gate_verdict(f_upper, faithful, n, 35) == "PASS"
+
+
+def test_an_unreadable_aggregate_refuses_instead_of_resolving_to_FAIL():
+    """DD-028 wearing a safe face: a verdict function that cannot read its instrument must say
+    so. Silently reporting FAIL looks conservative and is not — it discards a passing run and
+    sends the next task chasing a gate that was never measured."""
+    for bad in ({"pooled": {"F_hi": 0.05}, "items": {}},
+                {"pooled": {}, "items": {"faithful_rate": 0.9}},
+                {}):
+        with pytest.raises(rcb.GateUnreadable) as exc:
+            rcb.gate_inputs(bad)
+        assert "cannot be read" in str(exc.value)
+
+
+def test_each_threshold_can_fail_the_gate_on_its_own():
+    """Both conditions are pre-registered; a gate that only enforced one would pass runs the
+    other rules out."""
+    assert rcb.gate_verdict(0.0715, 0.7705, 160, 35) == "PASS"
+    assert rcb.gate_verdict(0.1001, 0.7705, 160, 35) == "FAIL"     # F_upper alone
+    assert rcb.gate_verdict(0.0715, 0.6999, 160, 35) == "FAIL"     # item-faithful alone
+    assert rcb.gate_verdict(0.10, 0.70, 160, 35) == "FAIL"         # strict <, inclusive >=
+    assert rcb.gate_verdict(0.0999, 0.70, 160, 35) == "PASS"
+
+
+def test_too_few_facts_is_unreachable_not_a_judged_failure():
+    """DD-026: below the minimum the gate cannot be attained however good the extraction is.
+    Reporting FAIL there would record a verdict the evidence could not have produced."""
+    assert rcb.gate_verdict(0.5, 0.1, 34, 35) == "GATE UNREACHABLE"
+    assert rcb.gate_verdict(0.0715, 0.7705, 34, 35) == "GATE UNREACHABLE"

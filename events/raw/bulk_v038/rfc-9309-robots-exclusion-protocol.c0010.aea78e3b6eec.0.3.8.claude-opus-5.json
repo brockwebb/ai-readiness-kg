@@ -1,0 +1,33 @@
+{
+ "doc_id": "rfc-9309-robots-exclusion-protocol",
+ "chunk_id": "rfc-9309-robots-exclusion-protocol#c0010",
+ "chunk_index": 10,
+ "chunk_start": 22016,
+ "chunk_end": 22408,
+ "chunk_tokens": 88,
+ "heading_path": [
+  "EOF",
+  "5.2.  Longest Match"
+ ],
+ "oversize": false,
+ "doc_sha256": "aea78e3b6eeca189a9ec60458e4fa83277ec0e4ef42613923b5e21933bd62e76",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 4446,
+  "cacheReadInputTokens": 13014,
+  "cacheCreationInputTokens": 22479,
+  "webSearchRequests": 0,
+  "costUSD": 0.342457,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.342457,
+ "duration_ms": 49567,
+ "session_id": "4c17b65d-3390-44e7-a2c5-0af3247fe292",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"RFC 9309 §5.2 example: when two rules match a URI, the longest rule wins — Disallow: /example/page/disallowed.gif over Allow: /example/page/ for foobot.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c10-con1\",\n      \"name\": \"matching\",\n      \"aliases\": [\"longest match\", \"rule matching\", \"longest-match rule precedence\"],\n      \"description\": \"Selection of which robots.txt rule applies to a URI; the chunk states the longest of two matching rules is the one used.\",\n      \"anchor\": \"used for matching\",\n      \"location\": \"rfc-9309-robots-exclusion-protocol#c0010\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"c10-cl1\",\n      \"claim_text\": \"longest one is used for matching\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"longest one is used\",\n      \"location\": \"rfc-9309-robots-exclusion-protocol#c0010\"\n    },\n    {\n      \"id\": \"c10-cl2\",\n      \"claim_text\": \"/example/page/disallowed.gif MUST be used for the URI\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"MUST be used for the URI\",\n      \"location\": \"rfc-9309-robots-exclusion-protocol#c0010\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"rfc-9309-robots-exclusion-protocol\",\n      \"to_id\": \"c10-cl1\",\n      \"anchor\": \"longest one is used\",\n      \"location\": \"rfc-9309-robots-exclusion-protocol#c0010\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"rfc-9309-robots-exclusion-protocol\",\n      \"to_id\": \"c10-cl2\",\n      \"anchor\": \"MUST be used for the URI\",\n      \"location\": \"rfc-9309-robots-exclusion-protocol#c0010\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"c10-cl1\",\n      \"to_id\": \"c10-con1\",\n      \"anchor\": \"used for matching\",\n      \"location\": \"rfc-9309-robots-exclusion-protocol#c0010\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\"name\": \"quxbot\", \"anchor\": \"quxbot\"},\n    {\"name\": \"foobot\", \"anchor\": \"foobot\"},\n    {\"name\": \"Allow: /example/page/\", \"anchor\": \"Allow: /example/page/\"},\n    {\"name\": \"Disallow: /example/page/disallowed.gif\", \"anchor\": \"Disallow: /example/page/disallowed.gif\"}\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"case of two rules\",\n      \"suggested_edge\": \"takes_precedence_over\",\n      \"from_hint\": \"Disallow: /example/page/disallowed.gif\",\n      \"to_hint\": \"Allow: /example/page/\",\n      \"diversion_reason\": \"other:no_precedence_edge\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"URI\", \"type\": \"Concept\"},\n    {\"name\": \"Allow\", \"type\": \"Concept\"},\n    {\"name\": \"Disallow\", \"type\": \"Concept\"},\n    {\"name\": \"User-Agent\", \"type\": \"Concept\"}\n  ]\n}"
+}

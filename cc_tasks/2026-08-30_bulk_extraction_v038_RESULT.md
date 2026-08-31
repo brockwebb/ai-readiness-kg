@@ -254,3 +254,222 @@ shard `replay()` skips, so they reach no projection. Recorded here rather than r
 
 The guard's own test then leaked a `batch-999.jsonl` into the real log during the mutation
 matrix, because a mutated guard lets the write through. It now cleans up unconditionally.
+
+### 3.3 Phase A extraction
+
+| | |
+|---|---|
+| chunks dispatched | **30** |
+| failures | **0** |
+| nodes admitted | **351** |
+| edges admitted | 452 |
+| mention stubs | 137 |
+| diverted relations | 81 |
+| settled tokens | **1,492,023** against a 4,000,000 ceiling (37%) |
+| measured cost | **49,734 settled tokens/chunk** |
+
+Prompt binding printed at dispatch, as it now must be:
+`prompt prompt_template_v0_3_8.md v0.3.8`.
+
+**Yield bands — report only, no floor verdict** (ADDENDUM-06 §2; the 45.23 comparator does not
+exist off the pilot documents and the 5.16 ground-truth floor is qualification evidence, not a
+burn-time bar):
+
+| stratum | chunks | mean nodes/chunk | sd | range |
+|---|---:|---:|---:|---|
+| academic | 8 | 10.75 | 6.96 | 0–18 |
+| agency_framework | 7 | 13.86 | 14.68 | 0–36 |
+| industry_practitioner | 7 | 11.86 | 9.39 | 0–24 |
+| normative_standard | 8 | 10.63 | 6.72 | 0–19 |
+
+Two findings in that table, both for Phase C's monitoring design rather than for a gate:
+
+1. **Means are close; spreads are not.** `agency_framework`'s sd is 2.1× the next-widest, and
+   its ±3 sd band spans −30 to +58 — a band so wide it can flag nothing. Its 0–36 range is
+   two document classes wearing one label: dense framework tables and sparse front matter.
+   Recorded as the heterogeneity finding ADDENDUM-06 §2 anticipated.
+2. **Every stratum has a 0-chunk.** Bibliographies, headers and navigation blocks legitimately
+   contain nothing extractable. A yield monitor that treats 0 as an anomaly will fire
+   constantly on healthy output.
+
+### 3.4 A scoping defect found by reading the numbers
+
+The first scoped read of this run reported **4,890 Concepts and 1,388 semantic edges** from 30
+chunks. Both are impossible; ingest had just said 351 and 452.
+
+`shard_items()` and `chunk_yield()` read `eventlog.replay(tag=TAG)`. For an experiment arm that
+isolates the shard, because `TAG` names one. For the production profile `TAG` is `None` **by
+design** — that is precisely what makes its events reach the graph — and `replay(tag=None)`
+reads *every untagged shard*, which is the entire v1 and kernel-v03 corpus. Now scoped by
+`purpose`.
+
+Worth stating plainly: the first thing I did with those numbers was check them against DD-024
+and begin writing up a semantic-edge violation that had not happened. The real violation, §5,
+was found only after the scoping was fixed — and it is a fifth the size the bad numbers
+suggested.
+
+
+### 3.5 Phase A gate — **PASS**
+
+Pre-registered thresholds, unit and instrument stated per DD-028: **atomic facts of admitted
+node items**, measured by the standing probe protocol (decompose 1.1.0, probe_judge 1.1.0, two
+raters, Dawid–Skene, randomized order).
+
+| | measured | threshold | |
+|---|---:|---|---|
+| **F_upper** (Wilson 95% upper) | **0.0715** | < 0.10 | **PASS** |
+| **item-faithful** | **0.7705** (94/122) | ≥ 0.70 | **PASS** |
+| facts judged, pooled | 160 (159 in the F denominator) | ≥ 35 (DD-026 minimum) | reachable |
+
+**Pooled F = 0.0314 [0.0135, 0.0715].** Fact classes: 128 entailed, 16 span_truncated,
+7 filled_attribute, 5 fabrication, 3 subject_dropped, 1 doc_level_attribute.
+
+Per stratum — **reported, never gated**. 40 facts per stratum cannot power a stratum verdict,
+and saying so is the requirement (ADDENDUM-06 §2):
+
+| stratum | F | 95% CI | n |
+|---|---:|---|---:|
+| academic | 0.050 | [0.014, 0.165] | 40 |
+| agency_framework | 0.000 | [0.000, 0.088] | 40 |
+| industry_practitioner | 0.077 | [0.027, 0.203] | 39 |
+| normative_standard | 0.000 | [0.000, 0.088] | 40 |
+
+Every stratum's interval straddles the 0.10 line except the two at zero, which is exactly the
+"cannot power a verdict" the addendum predicted. The pooled figure is the gate; these four are
+inputs to Phase C's monitoring design and nothing else.
+
+Rater agreement against the Dawid–Skene consensus: opus-4-8 **0.994**, sonnet-5 **0.906**. The
+document-substring check reclassified **2 of 4** examined fabrications as `filled_attribute`
+(value present in the document, outside the judged window) — the reclassification is in the
+numbers above.
+
+**What this PASS does and does not license.** It confirms the v0.3.8 contract off the pilot
+documents: 28 documents, four document classes, none of which any arm had seen. It does not
+speak to yield, which carries no verdict here by design, and it does not clear the burn — §5.
+
+### 3.6 The gate reported FAIL on a passing run, for ninety seconds
+
+The first verdict extraction read `pooled["F_upper"]` and `pooled["item_faithful"]`. Neither is
+a key the aggregator writes (they are `pooled["F_hi"]` and `items["faithful_rate"]`). Both came
+back `None`, the threshold comparisons were skipped, and the gate printed **FAIL** on the run
+whose real numbers are in the table above.
+
+This is DD-028's defect wearing a safe face — a gate whose instrument it cannot read — and the
+failure direction is what makes it dangerous rather than merely wrong. `None` resolved to FAIL,
+which *looks* conservative: it discards a passing run and sends the next task to repair
+something that was never broken. `gate_inputs` now raises `GateUnreadable` naming the missing
+keys, and there is a test that a missing field refuses rather than resolving to a verdict.
+
+Found by reading the printed numbers against the protocol's own stdout, which had just said
+`pooled F = 0.0314 [0.0135, 0.0715]` and `items faithful: 94/122 = 0.770` — both passing —
+three lines above a FAIL.
+
+### 3.7 One more epoch-resolution failure, at the last step
+
+`probe_aggregate.doc_check_reclassify` resolves documents through `corpus_members()`, which is
+epoch-scoped, and raised `KeyError: 'usafacts-ai-ready-data-guide'` — one of the five
+crosswalk-lane documents belonging to no declared epoch (§0). It failed **after every label was
+paid for**, and would have discarded the whole judged run.
+
+Resolution now falls back to the manifest's `canonical_path`, and an unresolvable document
+skips the reclassification check loudly (`doc_check: document_not_resolvable`) rather than
+taking the run down with it.
+
+---
+
+## 5. Phase C — NOT STARTED. A profile defect blocks it.
+
+### 5.1 The defect
+
+**The pinned production template emits semantic edges, which DD-024 closes.**
+
+DD-024 (2026-08-27): *"**No bulk semantic-edge extraction under any profile.** Semantic edges
+(`has_component`/`subtype_of`/`consumes`/`extends`/`implements` class) enter the graph only by
+demand-pull adjudication."* This task's binding facts restate it: *"Semantic edges: none, ever,
+under this task (DD-024)."*
+
+`kg/extraction/prompt_template_v0_3_8.md` still carries the v0.3.4 section **"Semantic edges —
+the span must state the relation"**, naming all five types, and `has_component` is in its edge
+whitelist. The rule was inherited from v0.3.7 → v0.3.5 → v0.3.4 and nobody stripped it when
+DD-024 closed the layer three days before the template was cut. All four chunked arms carry it.
+
+Phase A emitted **5 `has_component` edges of 452**:
+
+| document | chunk | span (truncated) |
+|---|---|---|
+| fcsm-20-04-a-framework-for-data-quality | c0015 | "…the objectivity domain comprise…" |
+| fcsm-20-04-a-framework-for-data-quality | c0015 | "…documentation is primarily a contribut…" |
+| schema-org-definedterm | c0001 | `\| [DefinedTermSet](https://schema.org/DefinedTermSet…` |
+| sdmx-3-0-section-1-framework | c0008 | "The SDMX Information Model provides for a set of metadata…" |
+| usafacts-ai-ready-data-guide | c0001 | "…we view an AI system comprised of an LLM and one or more…" |
+
+The third is grounded on a **navigation table row** — which the template's *own* rule forbids
+in the sentence right after the one that asks for these edges: *"a table row, or a navigation
+grouping never grounds a semantic edge."* One instance in five is exactly the failure mode
+DD-024 was decided on (live kernel-era edges 0.61 entailed, 23/35 non-entailed facts outright
+fabrication).
+
+Nothing suppresses them downstream. `build_projection` excludes semantic edges only when an
+explicit `extraction_superseded` overlay names the `semantic_edges` stratum for that
+extraction; there is no blanket rule. **These 5 would project.** At Phase A's rate, the full
+1,121-chunk burn produces on the order of **190 forbidden edges** entering the graph.
+
+### 5.2 The decision, and whose rule it is
+
+The task's own **Out of scope**: *"template or profile edits (a profile defect mid-burn = STOP
++ report, new task)."* This is a profile defect, found before the burn rather than during it,
+which makes the case for stopping stronger, not weaker. So:
+
+- **Phase C is not started.** No batch dispatched, no batch ceiling declared, no burn events.
+- **The template is not edited.** That is the new task's job, and editing a sha-pinned
+  production template inside the run it governs would break the pin this task exists to hold.
+- The 5 Phase A edges are **left on the log** and reported here. They are real extractions with
+  real spans; correcting them is a decision for the task that fixes the template, and the
+  no-delete invariant governs either way.
+
+Phase A's gate is unaffected: its unit is atomic facts of admitted **node** items (DD-028), and
+no semantic edge is a node item or enters the judged sample.
+
+### 5.3 What Phase C would cost, measured rather than estimated
+
+Recorded so the next task starts from numbers, not projections.
+
+| | |
+|---|---|
+| burn set | 33 convertible documents, **1,121 chunks**, 13 batches |
+| extraction, at Phase A's measured 49,734/chunk | **~55.8M tokens** |
+| daily band (`controls.yaml`) | 55,000,000 |
+| wall clock at 2 workers × ~5.5 min/chunk | **~51 hours** |
+| SPRT sample budget | **463 facts per batch** (2 × ASN at the indifference rate) × 13 batches |
+
+Two consequences worth stating before anyone schedules it:
+
+1. **Phase C exceeds one day's cap on extraction alone** — 55.8M against a 55.0M band, before a single fact is judged. It is a multi-day
+   scheduled burn with per-batch declarations, which is what DD-029's design already assumes —
+   but it is not a single dispatch, and no single ceiling covers it.
+2. **The monitoring is a first-order cost, not an overhead.** ~6,000 judged facts across 13
+   batches, at two raters each. That is the price of discriminating a 5% fabrication rate from
+   10% at α = β = 0.05, and the parameters were fixed in the task before Phase A ran precisely
+   so this number could not be negotiated after seeing it. It stands.
+
+---
+
+## 6. Ledger
+
+| run | call class | ceiling | settled |
+|---|---|---:|---:|
+| `bulk_v038_phase_a` | `extraction_chunk` | 4,000,000 | 1,492,023 |
+| `bulk_v038_phase_a_judge` | `judge` | 4,000,000 (corrected) | *see §4 verdict* |
+| Phase C batch runs | — | **none declared** | **0** |
+
+**One ceiling correction, recorded with its authority.** The judge run was first declared at
+2,000,000 — my own estimate, not a task-declared or pre-registered limit; the task declares
+only the Phase A extraction ceiling in Phase 0.5. The guard refused dispatch at
+1,952,265 + 60,950 vs 2,000,000 with rater 1 complete at 160/160 facts and rater 2 at 60/160.
+**The refusal was correct and is the mechanism working**, not an incident. Re-declared at
+4,000,000 with `supersede=True` and the authority named on the record: the control plane's
+daily band of 55,000,000, with 51,016,360 headroom at the time. Under the cap, not over it —
+and the corrected number is on the append-only ledger beside the original, not in place of it.
+
+One paid-for artifact was **discarded** rather than used: the mislabeled Phase A raw (§3.2),
+~39,190 settled tokens.

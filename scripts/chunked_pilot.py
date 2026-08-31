@@ -448,6 +448,12 @@ def phase_extract(a) -> int:
         scope = len(cs) if limit_to is None else sum(1 for c in cs if c.chunk_id in limit_to)
         print(f"=== {d}: {len(cs)} chunks, {scope} in scope, {banked} already extracted "
               f"[{cs.structure_source}, level {cs.heading_level}]", flush=True)
+        # How many chunks this document HAS, so a projection can tell a document that is
+        # fully extracted from one where a single chunk was sampled. Without it the queue
+        # reads "extracted" off the first chunk and drops the document from the worklist.
+        eventlog.append({"event_type": "document_chunk_census", "purpose": PURPOSE,
+                         "document_id": d, "profile": PROFILE, "n_chunks": len(cs),
+                         "source_sha256": sha, "task": TASK}, batch=SHARD_NO, tag=TAG)
         todo += [(d, c, sha, title) for c in pending]
     if a.limit:
         todo = todo[:a.limit]
