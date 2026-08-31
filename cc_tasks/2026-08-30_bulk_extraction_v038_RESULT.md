@@ -839,3 +839,121 @@ Stopping points, as measured:
 
 **No gate changes are proposed and none are implied.** This is a scope question — how far down
 a priority list to spend — which is operator input, not a threshold the machine may move.
+
+---
+
+# 18. ADDENDUM-02 — burn scope executed
+
+Operator scope decision received 2026-08-31 as ADDENDUM-02: burn every planned batch except
+`b005`, `b008`, `b009`; defer their documents with the new reason `below_burn_scope`.
+
+## 18.1 The scope events
+
+Six documents, in two events each. `queue.defer` refuses while a live request stands — by
+design, so the worklist and the status surface cannot disagree about the same document — so
+each deferral is preceded by the withdrawal that cancels its request. Twelve events on the
+untagged queue shard (`events/batch-022.jsonl`):
+
+| document | full chunks | crosswalk_demand | batch |
+|---|---:|---:|---|
+| cloudflare-ai-crawl-control-manage-crawlers | 7 | 1 | b005 |
+| croissant-akhtar-2024-paper | 15 | 1 | b005 |
+| fcsm-19-01-transparent-reporting-for-integrated-data-quality | 207 | 1 | b005 |
+| mlcommons-croissant-spec | 17 | 1 | b008 |
+| nist-ai-rmf-playbook | 208 | 1 | b008 |
+| nist-generative-ai-profile-ai-600-1 | 146 | 1 | b009 |
+
+**Reconciliation of the addendum's wording.** §2.2 says "three long specifications, 6 demand
+total" while naming "the documents of b005, b008, b009" — six documents, not three. The
+document set is what governs and the arithmetic confirms it: 593 deferred chunks leave
+**437 to extract**, which is §2.1's own figure. The "three" names the tomes that drive the
+cost (fcsm-19-01, nist-ai-rmf-playbook, nist-generative-ai-profile, 561 of the 593 chunks);
+the other three ride along in their batches. No discrepancy, recorded for the reader.
+
+**No schema append was owed.** §2.2 conditions one on the reason vocabulary being enumerated.
+It is not — `extraction_deferred.reason` is free text in `kg/schema.yaml`, documented by
+example ("no consumer"). `below_burn_scope` is admitted without a schema change and is
+distinguishable in the status surface, which is what the addendum asks for.
+
+**Phase A chunks stay in the graph.** Each deferred document has 1–2 chunks already extracted
+under `bulk_v038` (7 in total) from the Phase A qualification draw. The deferral prices out
+the *remaining* chunks; it does not retract work already done and already judged in the
+Phase A gate. `kg queue status` shows them as `deferred` with `chunks_extracted` non-zero,
+which is the honest reading: considered, partly measured, declined for the rest.
+
+## 18.2 Batch identity, third arrival
+
+The deferral would have renumbered the burn. `defer` requires the withdrawal, the withdrawal
+removes the document from `queue.live_requests()`, and identity was cut over exactly that set
+— so removing six documents would have closed the holes and slid `b006`→`b005`, `b010`→`b006`,
+and so on. ADDENDUM-02 §2.1 names its batches by id, and provenance on 2,504 already-written
+events names them too. This is the batch-identity defect a third time, arriving through a
+legitimate scope change rather than through progress.
+
+**Fix.** Identity is cut over the documents the ledger has *ever* requested
+(`queue.requests_ever()`), unioned with the live set; dispatch is filtered by the deferrals.
+A deferral moves a document out of dispatch without moving anyone's id. `requests_ever` is
+bounded to actual `extraction_request` events so that a deferral of a never-requested document
+cannot *insert* an id either — the mirror failure, which a "take every deferral" rule would
+have introduced while fixing the first one.
+
+The principle was already written into `resume_plan`'s docstring before this came up: *the
+worklist governs what may RUN; it cannot govern what a batch IS*. A scope decision is a
+dispatch fact, not an identity fact.
+
+**Verification (ADDENDUM-02 §3.1).** Five new tests, three of which drive the real
+`phase_burn` loop rather than its helpers — the M85/M86 class is at six recorded instances in
+this project and a plan-level assertion cannot see what the loop does with the plan. Mutations
+run and caught, 7/7:
+
+| mutation | caught by |
+|---|---|
+| identity ignores deferrals (renumbering restored) | `deferring_documents_does_not_renumber_the_batches_after_them` |
+| any deferral joins identity (insertion) | `a_deferral_of_a_never_requested_document_cannot_insert_itself` |
+| deferred documents still sized for dispatch | plan + loop tests |
+| `dispatch` list unfiltered | loop test |
+| loop does not skip a deferred batch | loop test (ceiling declared for `b002`) |
+| `requests_ever` degraded to `live_requests` | real-log queue test |
+| extraction sent every document, deferred included | loop test (`cp.DOCS`) |
+
+Suite: **557 passed**.
+
+## 18.3 The plan after the cut
+
+```
+burn plan: 33 documents, 437 chunks to extract (91 already extracted), 13 batches
+  bulk_v038_b001   2 docs     0/62   chunks  (62 already extracted)   -> accept, skipped
+  bulk_v038_b002   2 docs    45/47   chunks
+  bulk_v038_b003   3 docs    76/78   chunks
+  bulk_v038_b004   4 docs    50/53   chunks
+  bulk_v038_b005   3 docs   229 chunks  DEFERRED (below_burn_scope)
+  bulk_v038_b006   1 docs    46/47   chunks
+  bulk_v038_b007   4 docs    39/41   chunks
+  bulk_v038_b008   2 docs   225 chunks  DEFERRED (below_burn_scope)
+  bulk_v038_b009   1 docs   146 chunks  DEFERRED (below_burn_scope)
+  bulk_v038_b010   1 docs    64/65   chunks
+  bulk_v038_b011   4 docs    35/40   chunks
+  bulk_v038_b012   5 docs    59/64   chunks
+  bulk_v038_b013   1 docs    23/24   chunks
+```
+
+Ids unchanged from the pre-deferral plan; 437 chunks to extract, matching §2.1 exactly.
+`kg queue status`: `queued` 26, `deferred` 162 (156 `no consumer` + 6 `below_burn_scope`),
+`extracted` 3, `skipped_oversize` 3; 194 included, reconciling with 194 `manifest_add` events.
+
+## 18.4 The judge ceiling, derived
+
+`--judge-ceiling` defaults to 2,000,000, which batch 1 would have breached at 2,221,824. The
+bound a sequential test needs is the cost of the budget it is *allowed* to spend, not the cost
+of the sample it happened to need — a tighter bound would refuse a legitimate escalation, i.e.
+stop the SPRT from doing its job. Batch 1 measured **10,099 tokens/label** over 220 labels; the
+full 463-fact budget at two raters is 926 labels ≈ **9,351,859**; × 1.3, the same factor the
+extraction formula uses, gives **12,157,417**. Declared at **12,200,000** per batch judge run.
+Per-run ceilings do not consume the daily band; the band remains the control plane's gate and
+is unchanged.
+
+## 18.5 Burn ledger
+
+Headroom at resume: **10,603,321 committed of 55,000,000** today. Remaining work is ~42–46M
+against 44.4M headroom, so the guard is expected to refuse cleanly mid-plan and the burn
+continues the next day — ADDENDUM-01 §3.2's multi-day schedule, not an incident.
