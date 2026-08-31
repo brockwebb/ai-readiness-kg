@@ -697,11 +697,17 @@ def norm_form(s: str) -> str:
 
 
 def shard_items() -> tuple[dict, dict, dict]:
-    """(nodes, edges, stubs) per doc from the tagged shard."""
+    """(nodes, edges, stubs) per doc for THIS run.
+
+    Scoped by `purpose`, not by shard. An arm's shard is tagged and `replay(tag=...)` isolates
+    it, but a PRODUCTION run is deliberately untagged so it reaches the graph — and
+    `replay(tag=None)` reads every untagged shard, which is the entire v1 and kernel corpus.
+    Reading that as "this run's items" silently mixed 4,890 historical Concepts into a
+    30-chunk confirmation set and reported semantic edges this task never emitted."""
     nodes, edges, stubs = defaultdict(list), defaultdict(list), defaultdict(list)
     dead, gens = superseded(), live_generations()
     for ev in eventlog.replay(tag=TAG):
-        if not is_live(ev, gens, dead):
+        if ev.get("purpose") != PURPOSE or not is_live(ev, gens, dead):
             continue
         et = ev.get("event_type")
         if et == "node_asserted":
@@ -1338,6 +1344,8 @@ def chunk_yield(tag: str) -> dict[str, dict]:
     for ev in eventlog.replay(tag=tag):
         if ev.get("event_type") != "chunk_metrics" or not is_live(ev, gens, dead):
             continue
+        if tag is None and ev.get("purpose") != PURPOSE:
+            continue                    # untagged shards are shared; see shard_items
         counts = ev.get("counts") or {}
         out[ev["chunk_id"]] = {
             "doc_id": ev["doc_id"], "nodes": ev.get("nodes_kept", 0),

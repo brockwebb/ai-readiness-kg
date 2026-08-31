@@ -493,3 +493,36 @@ def test_the_batch_id_reaches_provenance_and_the_chunk_record(cp_bulk, monkeypat
     metrics = [ev for ev in eventlog.replay(tag=cp.TAG)
                if ev.get("event_type") == "chunk_metrics"]
     assert metrics and all(ev["batch_id"] == "bulk_v038_b007" for ev in metrics)
+
+
+def test_this_run_s_items_are_scoped_by_purpose_not_by_shard(cp_bulk, monkeypatch):
+    """An arm's shard is tagged and `replay(tag=...)` isolates it. A PRODUCTION run is
+    deliberately UNTAGGED so it reaches the graph — and `replay(tag=None)` reads every
+    untagged shard, i.e. the entire v1 and kernel corpus. Reading that as "this run's items"
+    mixed 4,890 historical Concepts into a 30-chunk confirmation set and reported semantic
+    edges this task never emitted."""
+    from kg import eventlog
+    cp = cp_bulk
+    mine = {"event_type": "node_asserted", "purpose": rcb.PROFILE, "doc_id": "d",
+            "chunk_id": "d#c1", "provenance": {}, "payload": {"id": "mine", "type": "Concept",
+                                                              "item": {"name": "mine"}}}
+    legacy = {"event_type": "node_asserted", "purpose": "bulk_v1", "doc_id": "d",
+              "chunk_id": "d#c1", "provenance": {},
+              "payload": {"id": "old", "type": "Concept", "item": {"name": "old"}}}
+    eventlog.append(mine, batch=cp.SHARD_NO)
+    eventlog.append(legacy, batch=cp.SHARD_NO)     # same untagged shard, different run
+    nodes, _e, _s = cp.shard_items()
+    assert [ev["payload"]["id"] for ev in nodes["d"]] == ["mine"]
+
+
+def test_chunk_yield_on_an_untagged_shard_is_scoped_the_same_way(cp_bulk):
+    """The yield bands feed Phase C's monitoring. Bands computed over another run's chunks
+    would monitor against the wrong process."""
+    from kg import eventlog
+    cp = cp_bulk
+    for purpose, chunk, nodes in ((rcb.PROFILE, "d#c1", 7), ("bulk_v1", "d#c2", 99)):
+        eventlog.append({"event_type": "chunk_metrics", "purpose": purpose, "doc_id": "d",
+                         "chunk_id": chunk, "counts": {}, "nodes_kept": nodes,
+                         "edges_kept": 0}, batch=cp.SHARD_NO)
+    y = cp.chunk_yield(cp.TAG)
+    assert list(y) == ["d#c1"] and y["d#c1"]["nodes"] == 7

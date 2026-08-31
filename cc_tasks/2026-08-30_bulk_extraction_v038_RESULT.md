@@ -187,3 +187,70 @@ Seed `bulk_v038_confirmation:2026-08-31`, drawn by a script committed before dis
 **28 distinct documents across 30 chunks** (max 2 from any one document). ADDENDUM-06 §0's
 concern was the pilot's design effect — 44 chunks from 2 documents, effective n nearer the
 document count than the chunk count. Effective n here is ~28 documents, not ~2.
+
+### 3.2 A provenance defect caught mid-flight, and what it cost
+
+Phase A's first chunk came back with `prompt_version: 0.3.5` on it. The prompt actually sent
+was v0.3.8.
+
+`build_prompt` reads the template from the **profile**; `prompt_version` reads it from
+`model_stub._PROMPT_PATH`. Two reads of what is meant to be one fact. They diverged because
+the production driver's document override made `members()` return early — and `members()` is
+where `rbe.apply_profile` was called, which is also **the only thing that verifies the
+template and chunker sha pins**. So the pass ran with the pin unenforced and would have
+stamped a false prompt version on every node and edge it produced.
+
+Severity: nothing downstream can detect this afterwards. The output is plausible, the
+provenance simply lies, and `profile_for()` — which resolves "what was this extracted under" —
+reads `prompt_version` as its disambiguator.
+
+- The run was stopped at 1 chunk. That raw was **discarded**: ~39,190 settled tokens, already
+  paid. Keeping a raw whose recorded provenance is false, in a system whose first invariant is
+  provenance, is not a saving.
+- `apply_arm` now applies the profile where every other arm-scoped global is bound, so the pin
+  check and the prompt binding happen in exactly one place.
+- `verify_prompt_binding()` refuses to dispatch unless the version being stamped comes from
+  the template being sent, and every pass now prints its binding:
+  `prompt prompt_template_v0_3_8.md v0.3.8`.
+
+Two **test-isolation** defects surfaced while fixing it, both the same shape as the production
+bug — state bound in one place, read in another:
+
+- `_PROMPT_PATH` leaked across tests. The first fix, a snapshot-and-restore fixture, *did not
+  work*: it unwound **before** `monkeypatch`'s own undo stack, and monkeypatch then put the
+  polluted value back. The restore goes through monkeypatch now, registered first so it is
+  undone last.
+- The `cp` fixture did not restore the globals the production driver added.
+
+---
+
+## 4. Tests and mutation matrices
+
+| | |
+|---|---|
+| suite at task start | 453 |
+| suite at task end | **499** |
+| mutations run | **32** |
+| mutations killed | **32** |
+
+Two mutations exposed **defects, not missing tests**, and were fixed rather than tested around:
+
+- **C6.** A malformed `bulk_batch_quarantined` event (no `batch_id`) put `None` in the
+  exclusion set, and a bare membership test then excluded every event *predating* acceptance
+  sampling — the entire v1 and kernel-v03 corpus. The absence of a `batch_id` is now tested
+  where the exclusion happens, not only where the set is built.
+- **C13/C15.** `batch_id` reached neither provenance nor `chunk_metrics` under mutation, and
+  nothing failed. Without it `batch_items` finds nothing, every batch samples zero facts, the
+  SPRT never decides, and the acceptance sampling runs while monitoring nothing. Provenance
+  construction is now one function, so the field has one place to be lost.
+
+**A defect in the event log itself, found and fixed:** two tests drove `phase_score` without
+redirecting the event log and were appending synthetic `ground_truth_floor` events — for
+documents `d#c1`/`d#c2`, which do not exist — into `events/batch-021_ground_truth.jsonl` on
+every `pytest` run. An autouse conftest guard now refuses any test write to the real log; it
+fired on exactly those two tests and nothing else in 453. **Three such events are already
+committed and are left in place** — the no-delete invariant governs, and they sit on a tagged
+shard `replay()` skips, so they reach no projection. Recorded here rather than repaired.
+
+The guard's own test then leaked a `batch-999.jsonl` into the real log during the mutation
+matrix, because a mutated guard lets the write through. It now cleans up unconditionally.
