@@ -187,6 +187,55 @@ def _convertibility_gate(doc_id: str, src: Path, entry: dict) -> None:
                               "version": entry.get("pub_date")})
 
 
+def duplicate_adds() -> dict[str, dict]:
+    """Log-integrity audit: doc_ids carrying more than one `manifest_add` event.
+
+    `add()` has always refused a duplicate doc_id, and it still does. What it cannot refuse is
+    an event written straight to a shard without going through it — and that is what happened
+    once, on 2026-08-14, for `introducing-the-oecd-ai-capability-indicators`. That add was an
+    operator-cleared EXTENT CORRECTION (CLEARANCE 2, `cc_tasks/2026-08-14_bulk_v1_closeout.md`):
+    the corpus held a crawl4ai capture of `component-5.html`, one component of a 56-page OECD
+    report, and the full PDF replaced it. The event says so on its face and names the hash it
+    replaces in `acquisition.verification.supersedes_sha256`.
+
+    It was written that way because **`content_update` did not exist until 2026-08-29**, fifteen
+    days later. With no sanctioned supersession event, the only alternatives were editing the
+    admission event (forbidden, invariant 1) or leaving the corpus holding the wrong extent. A
+    second `manifest_add` was the least-bad option available at the time, and it lands the right
+    state: `_load_entries()` replays in shard order, so the later entry wins.
+
+    So this function is not a duplicate *detector* looking for a bug that got past a guard. It
+    is the log-level invariant that `add()`'s per-call check cannot express, and it distinguishes
+    an EXPLAINED duplicate (the later event declares what it supersedes) from an unexplained one,
+    which is a corrupt log. Today the same correction is a `content_update` with
+    `reason="extent_corrected"`, and no new duplicate should ever appear.
+    """
+    by_doc: dict[str, list[dict]] = {}
+    for ev in eventlog.replay():
+        if ev.get("event_type") == _MANIFEST_ADD:
+            by_doc.setdefault(ev["payload"]["doc_id"], []).append(ev)
+    out = {}
+    for doc_id, evs in by_doc.items():
+        if len(evs) < 2:
+            continue
+        later = evs[-1]
+        acq = (later["payload"].get("acquisition") or {})
+        supersedes = (acq.get("verification") or {}).get("supersedes_sha256")
+        rationale = later["payload"].get("inclusion_rationale") or ""
+        explained = bool(supersedes) or "supersede" in rationale.lower()
+        out[doc_id] = {
+            "doc_id": doc_id, "n_adds": len(evs),
+            "event_ids": [e["event_id"] for e in evs],
+            "timestamps": [e["timestamp"] for e in evs],
+            "content_hashes": [e["payload"]["content_hash"] for e in evs],
+            "explained": explained,
+            "supersedes_sha256": supersedes,
+            "rationale": rationale,
+            "effective_entry": later["payload"]["local_path"],
+        }
+    return out
+
+
 def add(filepath, **fields) -> str:
     """Validate, hash, dedup, and admit a document to the corpus. Returns its doc_id.
 

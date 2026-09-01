@@ -386,3 +386,109 @@ def test_superseded_hash_does_not_block_a_later_admission(repo):
                                             primary_url="https://example.gov/old"))
     assert {e["doc_id"] for e in manifest._load_entries()} == {"fcsm-25-03",
                                                                "fcsm-25-03-megastatute"}
+
+
+# --- duplicate manifest_add: the log-level invariant add() cannot express -----------------
+# ResearchTask 95f286e4. The report was "195 raw manifest_add events, 194 distinct doc_ids;
+# kg.manifest is supposed to reject duplicate adds and one got through." It did not get
+# through: `add()` refused duplicate doc_ids then and refuses them now. The 2026-08-14 event
+# for `introducing-the-oecd-ai-capability-indicators` was written straight to shard 005,
+# bypassing add(), because it was an operator-cleared EXTENT CORRECTION (CLEARANCE 2,
+# cc_tasks/2026-08-14_bulk_v1_closeout.md) and `content_update` did not exist until
+# 2026-08-29 — fifteen days later. The guard that was missing is at the LOG level, not the
+# call level, and that is what these tests pin.
+
+def test_mutation_the_doc_id_check_is_what_rejects_a_duplicate_doc_id(repo, monkeypatch):
+    """Positive control on `test_reject_duplicate_doc_id`.
+
+    That test uses a different file and a different URL, so the content_hash and primary_url
+    checks cannot fire — but nothing in it PROVES that. Neuter the doc_id comparison and the
+    add must succeed; if it still raises, the test above is measuring a different guard, which
+    is this repo's recurring M2 failure mode."""
+    manifest.add(str(_write_corpus_file(repo, "one.txt", "one")), **_good_fields(
+        primary_url="https://example.gov/one"))
+
+    real = manifest._load_entries
+    monkeypatch.setattr(manifest, "_load_entries",
+                        lambda: [{**e, "doc_id": "something-else"} for e in real()])
+    manifest.add(str(_write_corpus_file(repo, "two.txt", "two")), **_good_fields(
+        primary_url="https://example.gov/two"))
+    assert len(manifest.duplicate_adds()) == 1, (
+        "with the doc_id check blinded the duplicate must land, proving the check is the "
+        "thing that rejects it")
+
+
+def test_duplicate_adds_finds_a_bypassed_duplicate_and_calls_it_unexplained(repo):
+    """An event written around add() — the actual mechanism — with no supersession claim."""
+    manifest.add(str(_write_corpus_file(repo, "one.txt", "one")), **_good_fields(
+        primary_url="https://example.gov/one"))
+    assert manifest.duplicate_adds() == {}
+
+    eventlog.append({"event_type": "manifest_add", "payload": {
+        **_good_fields(primary_url="https://example.gov/two"),
+        "local_path": "corpus/two.txt", "content_hash": "b" * 64, "status": "active"}},
+        batch=manifest._MANIFEST_BATCH)
+    dup = manifest.duplicate_adds()
+    assert list(dup) == ["fcsm-25-03"] and dup["fcsm-25-03"]["n_adds"] == 2
+    assert dup["fcsm-25-03"]["explained"] is False, (
+        "a bypassed add that claims no supersession is a corrupt log, not a correction")
+
+
+def test_duplicate_adds_recognises_a_declared_supersession(repo):
+    """The historical event's shape: the later add names the hash it replaces."""
+    manifest.add(str(_write_corpus_file(repo, "one.txt", "one")), **_good_fields(
+        primary_url="https://example.gov/one"))
+    first = manifest._load_entries()[0]["content_hash"]
+    eventlog.append({"event_type": "manifest_add", "payload": {
+        **_good_fields(primary_url="https://example.gov/two"),
+        "local_path": "corpus/two.pdf", "content_hash": "c" * 64, "status": "active",
+        "inclusion_rationale": "Full report. Supersedes the partial component capture.",
+        "acquisition": {"verification": {"sha256": "c" * 64,
+                                         "supersedes_sha256": first}}}},
+        batch=manifest._MANIFEST_BATCH)
+    dup = manifest.duplicate_adds()["fcsm-25-03"]
+    assert dup["explained"] is True
+    assert dup["supersedes_sha256"] == first
+    assert dup["effective_entry"] == "corpus/two.pdf", (
+        "shard order decides which entry is effective; the later add must win")
+
+
+def test_the_later_add_is_the_effective_entry(repo):
+    """Why the corpus is not damaged by the historical duplicate: replay takes the later
+    event, so the entry in force is the corrected one."""
+    manifest.add(str(_write_corpus_file(repo, "one.txt", "one")), **_good_fields(
+        primary_url="https://example.gov/one"))
+    eventlog.append({"event_type": "manifest_add", "payload": {
+        **_good_fields(primary_url="https://example.gov/two"),
+        "local_path": "corpus/two.pdf", "content_hash": "d" * 64, "status": "active"}},
+        batch=manifest._MANIFEST_BATCH)
+    entries = {e["doc_id"]: e for e in manifest._load_entries()}
+    assert entries["fcsm-25-03"]["content_hash"] == "d" * 64
+
+
+# --- regression monitor against the REAL log ---------------------------------------------
+#: The one duplicate the log is allowed to carry, pinned by event id. It is historical and
+#: explained; a NEW one is a defect, because `content_update(reason="extent_corrected")` has
+#: existed since 2026-08-29 and is how this correction is expressed now.
+_KNOWN_DUPLICATE = {
+    "introducing-the-oecd-ai-capability-indicators": (
+        "712a7c38694848b2a372ea72fd331190", "d2ad0f8ce2d94312a2d95e0ee3b0ae8b"),
+}
+
+
+def test_live_log_carries_only_the_known_explained_duplicate():
+    """Runs against the real event log, not a fixture. A second duplicate — or this one
+    losing its supersession claim — fails here."""
+    import kg.manifest as real_manifest
+    dup = real_manifest.duplicate_adds()
+    assert set(dup) == set(_KNOWN_DUPLICATE), (
+        f"unexpected duplicate manifest_add doc_ids: "
+        f"{sorted(set(dup) - set(_KNOWN_DUPLICATE))}; use "
+        f"content_update(reason='extent_corrected') for a re-acquisition")
+    for doc_id, event_ids in _KNOWN_DUPLICATE.items():
+        row = dup[doc_id]
+        assert tuple(row["event_ids"]) == event_ids
+        assert row["explained"] is True
+        assert row["supersedes_sha256"] == row["content_hashes"][0], (
+            "the supersession claim must name the hash it actually replaces; if these stop "
+            "matching, the two events are not the pair this allowlist vouches for")
