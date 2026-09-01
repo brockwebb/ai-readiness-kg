@@ -1580,3 +1580,54 @@ def test_the_ledger_window_is_wide_enough_to_estimate_what_it_multiplies(tmp_pat
     assert 45_000 <= per <= 50_000, f"window recovered {per:,.0f}, not the true mean"
     # and the tail alone — what a 10-wide window sees — is nowhere near it
     assert per > 4 * 10_000, "the estimator is reading only the cheap tail again"
+
+
+def test_a_restart_carries_earlier_verdicts_instead_of_dropping_them(tmp_path, monkeypatch):
+    """`write_burn_state` rewrites the file from `ledger_rows`, which starts empty every run,
+    so a batch skipped as already-settled disappeared from the burn ledger. Observed after the
+    b004 crash: the file held b002 and b003 while `outcomes` listed three accepts, and the
+    restart re-judged b001 because the file no longer recorded its verdict.
+
+    The verdict is the artifact the RESULT reconciles and what a quarantine would name. It
+    must survive a restart."""
+    (tmp_path / "bulk_v038_burn.json").write_text(json.dumps(
+        {"batches": [{"batch_id": "bulk_v038_b001", "outcome": "accept", "facts": 110,
+                      "fabrications": 3}], "outcomes": ["accept"]}))
+    counts = {"a": 50, "b": 50}
+    monkeypatch.setattr(rcb, "document_chunk_counts", lambda: counts)
+    monkeypatch.setattr(rcb.queue, "chunk_coverage",
+                        lambda p: {"a": {f"a#c{i}" for i in range(50)}})
+    monkeypatch.setattr(rcb.queue, "live_requests",
+                        lambda: {"a": {"priority": 0}, "b": {"priority": 1}})
+    monkeypatch.setattr(rcb.queue, "requests_ever",
+                        lambda: {"a": {"priority": 0}, "b": {"priority": 1}})
+    monkeypatch.setattr(rcb, "deferred_documents", lambda: set())
+    monkeypatch.setattr(rcb, "apply_production_profile", lambda *a, **k: {})
+    monkeypatch.setattr(rcb, "phase_a_mean_per_chunk", lambda: 50_000.0)
+    monkeypatch.setattr(rcb.model_stub, "load_model_config",
+                        lambda: {"primary_judge_model_id": "p", "secondary_judge_model_id": "s"})
+    monkeypatch.setattr(rcb.cp, "members", lambda: {"a": tmp_path, "b": tmp_path})
+    monkeypatch.setattr(rcb.rbe, "doc_text", lambda p: "")
+    monkeypatch.setattr(rcb, "batch_items", lambda bid: [{"i": i} for i in range(200)])
+    monkeypatch.setattr(rcb, "yield_by_stratum", lambda: {})
+    monkeypatch.setattr(rcb.spend, "set_current_run", lambda r: None)
+    monkeypatch.setattr(rcb, "declare_once", lambda *a, **k: 0)
+    monkeypatch.setattr(rcb, "stop_file", lambda: tmp_path / "nope.json")
+    monkeypatch.setattr(rcb, "STATE_DIR", tmp_path)
+    monkeypatch.setattr(rcb, "declare_batch_ceiling", lambda *a, **k: (10**9, 1.0, False))
+    monkeypatch.setattr(rcb.cp, "phase_extract", lambda a: 0)
+    judged = []
+    monkeypatch.setattr(rcb, "judge_batch",
+                        lambda bid, *a, **k: judged.append(bid) or
+                        {"outcome": "accept", "batch_id": bid})
+
+    args = type("A", (), {"plan_only": False, "max_batches": None, "workers": 1,
+                          "judge_ceiling": 1, "fact_cap": 40})()
+    rcb.phase_burn(args)
+
+    out = json.loads((tmp_path / "bulk_v038_burn.json").read_text())
+    ids = [r["batch_id"] for r in out["batches"]]
+    assert ids == ["bulk_v038_b001", "bulk_v038_b002"], ids
+    assert out["batches"][0]["facts"] == 110, "the carried row keeps its evidence, not a stub"
+    assert judged == ["bulk_v038_b002"], "a settled batch is never re-judged"
+    assert len(out["batches"]) == len(out["outcomes"])

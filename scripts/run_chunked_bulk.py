@@ -996,12 +996,18 @@ def phase_burn(a) -> int:
 
     # Batches whose verdict is already on record. A verdict is never re-judged; a batch
     # WITHOUT one is judged even if every chunk is already extracted.
-    settled_verdicts = {}
+    # Whole ROWS, not just outcomes: `write_burn_state` rewrites the file from `ledger_rows`,
+    # which starts empty each run, so a batch skipped as already-settled used to vanish from
+    # the artifact that reconciles the burn. It happened — after b004 crashed, the file held
+    # b002 and b003 with an `outcomes` list of three, the inconsistency visible on its face,
+    # and the restart re-judged b001 because the file no longer said it had a verdict.
+    settled_rows: dict[str, dict] = {}
     burn_state = STATE_DIR / "bulk_v038_burn.json"
     if burn_state.is_file():
         for row in (json.loads(burn_state.read_text(encoding="utf-8")).get("batches") or []):
             if row.get("outcome") in ("accept", "reject", "sampling_inconclusive"):
-                settled_verdicts[row["batch_id"]] = row["outcome"]
+                settled_rows[row["batch_id"]] = row
+    settled_verdicts = {k: r["outcome"] for k, r in settled_rows.items()}
     boot = phase_a_mean_per_chunk()
     phase_a_bands = json.loads((STATE_DIR / "bulk_v038_phase_a.json").read_text(
         encoding="utf-8")).get("yield_bands", {}) if (
@@ -1042,6 +1048,7 @@ def phase_burn(a) -> int:
         if bid in settled_verdicts:
             print(f"{bid}: already {settled_verdicts[bid]}; skipping", flush=True)
             state.record(settled_verdicts[bid])
+            ledger_rows.append(settled_rows[bid])     # carried, not dropped
             continue
         if bt["to_extract"] == 0:
             # Extracted but NOT judged — batch 1 reached this state when a crash lost its
