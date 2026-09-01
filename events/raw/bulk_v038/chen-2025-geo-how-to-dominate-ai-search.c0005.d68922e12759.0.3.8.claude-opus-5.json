@@ -1,0 +1,33 @@
+{
+ "doc_id": "chen-2025-geo-how-to-dominate-ai-search",
+ "chunk_id": "chen-2025-geo-how-to-dominate-ai-search#c0005",
+ "chunk_index": 5,
+ "chunk_start": 20554,
+ "chunk_end": 20898,
+ "chunk_tokens": 77,
+ "heading_path": [
+  "3 An AI Query Taxonomy",
+  "3.1 Reddit-Derived AI-Query Taxonomy and"
+ ],
+ "oversize": false,
+ "doc_sha256": "d68922e1275913c94198e0b0001f4585f22728aab5b31737839ce234896011dc",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 4388,
+  "cacheReadInputTokens": 13014,
+  "cacheCreationInputTokens": 21628,
+  "webSearchRequests": 0,
+  "costUSD": 0.33249700000000004,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.33249700000000004,
+ "duration_ms": 49848,
+ "session_id": "7acad19e-9ea7-4907-aa80-8a05c6eecdca",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Fragment of a Reddit-derived AI-query taxonomy listing a 'Product quality assessment & reviews analysis' category (rating ingredients, summarizing review sentiment, forming a verdict) with supporting user quotes about purchase decisions.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c1\",\n      \"name\": \"Product quality assessment & reviews analysis\",\n      \"aliases\": [\"product review analysis query category\"],\n      \"description\": \"A category of AI queries covering rating ingredients, summarizing review sentiment, and forming a verdict on a product.\",\n      \"anchor\": \"Product quality assessment\",\n      \"location\": \"chen-2025-geo-how-to-dominate-ai-search#c0005\"\n    },\n    {\n      \"id\": \"c2\",\n      \"name\": \"summarizing review sentiment\",\n      \"aliases\": [\"review sentiment summarization\"],\n      \"description\": \"Condensing the sentiment expressed across product reviews, listed as part of the product quality assessment query category.\",\n      \"anchor\": \"summarizing review sentiment\",\n      \"location\": \"chen-2025-geo-how-to-dominate-ai-search#c0005\"\n    },\n    {\n      \"id\": \"c3\",\n      \"name\": \"purchase decision\",\n      \"aliases\": [\"buying decision\"],\n      \"description\": \"The consumer decision that comparing multiple articles on websites is said to help make.\",\n      \"anchor\": \"make a purchase decision\",\n      \"location\": \"chen-2025-geo-how-to-dominate-ai-search#c0005\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"chen-2025-geo-how-to-dominate-ai-search\",\n      \"to_id\": \"c1\",\n      \"anchor\": \"Product quality assessment\",\n      \"location\": \"chen-2025-geo-how-to-dominate-ai-search#c0005\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"chen-2025-geo-how-to-dominate-ai-search\",\n      \"to_id\": \"c2\",\n      \"anchor\": \"summarizing review sentiment\",\n      \"location\": \"chen-2025-geo-how-to-dominate-ai-search#c0005\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"chen-2025-geo-how-to-dominate-ai-search\",\n      \"to_id\": \"c3\",\n      \"anchor\": \"make a purchase decision\",\n      \"location\": \"chen-2025-geo-how-to-dominate-ai-search#c0005\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"Ebay\",\n      \"anchor\": \"Ebay\"\n    },\n    {\n      \"name\": \"AI\",\n      \"anchor\": \"ask AI\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"summarizing review sentiment\",\n      \"suggested_edge\": \"has_component\",\n      \"diversion_reason\": \"structural_inference\"\n    },\n    {\n      \"anchor\": \"Product quality assessment\",\n      \"suggested_edge\": \"has_component\",\n      \"diversion_reason\": \"cross_chunk\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"Rating ingredients\", \"type\": \"Concept\"},\n    {\"name\": \"no-nonsense verdict\", \"type\": \"Concept\"},\n    {\"name\": \"Comparing multiple articles on websites\", \"type\": \"Concept\"},\n    {\"name\": \"Reddit-Derived AI-Query Taxonomy\", \"type\": \"Framework\"}\n  ]\n}\n```"
+}

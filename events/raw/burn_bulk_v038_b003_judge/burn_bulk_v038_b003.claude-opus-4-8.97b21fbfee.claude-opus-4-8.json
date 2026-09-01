@@ -1,0 +1,23 @@
+{
+ "batch_id": "burn_bulk_v038_b003.claude-opus-4-8.97b21fbfee",
+ "run": "burn_bulk_v038_b003",
+ "model_id": "claude-opus-4-8",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 1865,
+  "cacheReadInputTokens": 12043,
+  "cacheCreationInputTokens": 20624,
+  "webSearchRequests": 0,
+  "costUSD": 0.25889650000000003,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "canonicalModel": "claude-opus-4-8",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.25889650000000003,
+ "duration_ms": 22616,
+ "wall_s": 25.4,
+ "session_id": "4ea2949c-d433-4f66-808c-a9743e387770",
+ "raw_result": "Looking at each fact against its grounding span alone.\n\n**f_bc02e6be41a1** — Span: \"Authoritative significantly improves performance in debate-style questions and queries related to the 'historical' domain.\" The fact restates this exactly (subject Authoritative named in span). → `entailed`.\n\n**f_93e64e55308e** — Span: \"GEO can boost visibility by up to 40%.\" \"It\" = visibility; boosting visibility means visibility is the quantity GEO optimizes. The span supports this. → `entailed` (moderate — mild paraphrase from \"boost\" to \"the quantity it optimizes\").\n\n**f_a03f8971a946** — Name \"black-box optimization method\" appears verbatim in the span. → `entailed`.\n\n**f_ba1e9f91a1b4** — Name \"Completeness\" opens the span. → `entailed`.\n\n**f_8e3b60293db4** — Verbatim definition text is present word-for-word in the span. → `entailed`.\n\n{\"judgments\": [{\"fact_id\": \"f_bc02e6be41a1\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.97}, {\"fact_id\": \"f_93e64e55308e\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.72}, {\"fact_id\": \"f_a03f8971a946\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.95}, {\"fact_id\": \"f_ba1e9f91a1b4\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.98}, {\"fact_id\": \"f_8e3b60293db4\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.98}]}"
+}

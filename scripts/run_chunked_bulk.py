@@ -898,6 +898,71 @@ def profile_block() -> dict:
     return (doc.get("profiles") or {})[PROFILE]
 
 
+PLAN_EVENT = "burn_plan_cut"
+
+
+def frozen_plan(profile: str = PROFILE) -> list[dict]:
+    """The batch plan as CUT, from the log. Empty when no plan has been cut yet.
+
+    Batch identity has now moved three times under three different derivation rules, and each
+    fix made the derivation cleverer instead of making it stop deriving:
+      1. cut on REMAINING chunks -> finishing batch 1 renamed it (caught mid-dispatch, 2,504
+         events already carrying the old meaning);
+      2. cut on `queue.worklist()` -> a fully-extracted document dropped out and renumbered
+         everyone after it;
+      3. cut on `live_requests` -> deferring six documents for scope renumbered everyone
+         after b004;
+      4. cut on `d in counts` -> the extent remediation made five unreadable documents
+         readable, `bulk_v038_b001` came to mean `odcs`, and the plan grew to 14 batches
+         while the burn was running.
+    Every one of these is the same shape: identity derived from state that legitimately
+    moves. A batch id is stamped into provenance and is what a quarantine names, so it is not
+    derivable — it is a FACT, and facts belong on the append-only log. This reads it back.
+
+    Later `burn_plan_cut` events append batches; they never renumber earlier ones."""
+    out: list[dict] = []
+    seen: set[str] = set()
+    for ev in eventlog.replay():
+        if ev.get("event_type") != PLAN_EVENT or ev.get("profile") != profile:
+            continue
+        for b in ev.get("batches") or []:
+            if b["batch_id"] not in seen:
+                seen.add(b["batch_id"])
+                out.append({"batch_id": b["batch_id"], "documents": list(b["documents"])})
+    return out
+
+
+def cut_plan(work: list[str], full: dict[str, int]) -> tuple[list[dict], list[dict]]:
+    """(plan, batches_to_record). Identity from the frozen plan; genuinely new documents are
+    appended as new batches AFTER the highest existing id, never woven into the numbering."""
+    frozen = frozen_plan()
+    if not frozen:
+        fresh = batches(work, full)
+        return fresh, fresh
+    known = {d for b in frozen for d in b["documents"]}
+    extra = [d for d in work if d not in known]
+    plan = [dict(b) for b in frozen]
+    added = []
+    if extra:
+        start = max(int(b["batch_id"].rsplit("b", 1)[1]) for b in frozen)
+        for i, b in enumerate(batches(extra, full), start=start + 1):
+            b["batch_id"] = f"bulk_v038_b{i:03d}"
+            plan.append(b)
+            added.append({"batch_id": b["batch_id"], "documents": list(b["documents"])})
+    for b in plan:
+        b["chunks"] = sum(full.get(d, 0) for d in b["documents"])
+    return plan, added
+
+
+def record_plan(added: list[dict]) -> None:
+    if not added:
+        return
+    eventlog.append({"event_type": PLAN_EVENT, "profile": PROFILE, "task": TASK,
+                     "batches": [{"batch_id": b["batch_id"],
+                                  "documents": list(b["documents"])} for b in added],
+                     "cut_at": now()}, batch=cp.SHARD_NO)
+
+
 def deferred_documents() -> set[str]:
     """Documents priced out of this burn's dispatch. They keep their place in the batch cut
     (see `resume_plan`) and contribute zero chunks to it."""
@@ -972,7 +1037,8 @@ def phase_burn(a) -> int:
     raters = [cfg["primary_judge_model_id"], cfg["secondary_judge_model_id"]]
 
     work, full, remaining, already = resume_plan()
-    plan = batches(work, full)                 # identity from the FULL counts: stable
+    plan, added = cut_plan(work, full)         # identity from the LOG, not from live state
+    record_plan(added)
     dropped = deferred_documents()
     for bt in plan:                            # sizing from what is LEFT
         bt["to_extract"] = sum(remaining.get(d, 0) for d in bt["documents"])

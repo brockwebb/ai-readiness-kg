@@ -1,0 +1,32 @@
+{
+ "doc_id": "w3c-dcat-3",
+ "chunk_id": "w3c-dcat-3#c0025",
+ "chunk_index": 25,
+ "chunk_start": 124425,
+ "chunk_end": 125428,
+ "chunk_tokens": 226,
+ "heading_path": [
+  "other distribution properties..."
+ ],
+ "oversize": false,
+ "doc_sha256": "c3ed530b3806a9a4f0d2fbe7254cac46c1c05555f256e7e0033cc227ff00dae6",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 8245,
+  "cacheReadInputTokens": 13014,
+  "cacheCreationInputTokens": 23019,
+  "webSearchRequests": 0,
+  "costUSD": 0.442832,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.442832,
+ "duration_ms": 86320,
+ "session_id": "0d411627-f51a-4a41-a971-a40afd95416a",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"DCAT 3 recommends `odrl:hasPolicy` to link a cataloged resource or distribution to an ODRL policy, and a note defines the Open Digital Rights Language as a policy expression language with an information model, vocabulary, and encoding mechanisms.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c-odrl-policies\",\n      \"name\": \"ODRL policies\",\n      \"aliases\": [\"ODRL policy\"],\n      \"description\": \"Policies expressing rights over a cataloged resource or distribution, linked via odrl:hasPolicy.\",\n      \"anchor\": \"expressed via ODRL policies\",\n      \"location\": \"w3c-dcat-3#c0025\"\n    },\n    {\n      \"id\": \"c-odrl-haspolicy\",\n      \"name\": \"odrl:hasPolicy\",\n      \"aliases\": [\"hasPolicy property\"],\n      \"description\": \"The property recommended as the link from a cataloged resource or distribution description to an ODRL policy.\",\n      \"anchor\": \"`odrl:hasPolicy` property\",\n      \"location\": \"w3c-dcat-3#c0025\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d-odrl\",\n      \"term\": \"Open Digital Rights Language\",\n      \"verbatim_text\": \"The Open Digital Rights Language (ODRL) is a policy expression language that provides a flexible and interoperable information model [ODRL-MODEL], vocabulary [ODRL-VOCAB], and encoding mechanisms for representing statements about usage (i.e., permissions, prohibitions, and obligations) of content and services.\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"policy expression language that provides\",\n      \"location\": \"w3c-dcat-3#c0025\"\n    }\n  ],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [\n    {\n      \"id\": \"s-odrl\",\n      \"name\": \"Open Digital Rights Language\",\n      \"version\": null,\n      \"steward\": null,\n      \"as_of_date\": null,\n      \"anchor\": \"The Open Digital Rights Language (ODRL)\",\n      \"location\": \"w3c-dcat-3#c0025\"\n    }\n  ],\n  \"frameworks\": [],\n  \"practices\": [\n    {\n      \"id\": \"p-haspolicy\",\n      \"text\": \"it is recommended to use the `odrl:hasPolicy` property as the link from the description of the cataloged resource or distribution to the ODRL policy\",\n      \"as_of_date\": null,\n      \"scope\": \"any\",\n      \"anchor\": \"it is recommended to use\",\n      \"location\": \"w3c-dcat-3#c0025\"\n    }\n  ],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"w3c-dcat-3\",\n      \"to_id\": \"d-odrl\",\n      \"anchor\": \"encoding mechanisms\",\n      \"location\": \"w3c-dcat-3#c0025\"\n    },\n    {\n      \"type\": \"recommends\",\n      \"from_id\": \"w3c-dcat-3\",\n      \"to_id\": \"p-haspolicy\",\n      \"anchor\": \"in the particular case when rights\",\n      \"location\": \"w3c-dcat-3#c0025\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"w3c-dcat-3\",\n      \"to_id\": \"c-odrl-policies\",\n      \"anchor\": \"rights are expressed via\",\n      \"location\": \"w3c-dcat-3#c0025\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"w3c-dcat-3\",\n      \"to_id\": \"c-odrl-haspolicy\",\n      \"anchor\": \"property as the link\",\n      \"location\": \"w3c-dcat-3#c0025\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"p-haspolicy\",\n      \"to_id\": \"c-odrl-policies\",\n      \"anchor\": \"as the link from the description\",\n      \"location\": \"w3c-dcat-3#c0025\"\n    }\n  ],\n  \"cites\": [\n    {\n      \"from_id\": \"w3c-dcat-3\",\n      \"to_id\": \"odrl-model\",\n      \"name\": \"[ODRL-MODEL]\",\n      \"anchor\": \"[ODRL-MODEL]\",\n      \"location\": \"w3c-dcat-3#c0025\"\n    },\n    {\n      \"from_id\": \"w3c-dcat-3\",\n      \"to_id\": \"odrl-vocab\",\n      \"name\": \"[ODRL-VOCAB]\",\n      \"anchor\": \"vocabulary [ODRL-VOCAB]\",\n      \"location\": \"w3c-dcat-3#c0025\"\n    }\n  ],\n  \"mentions\": [\n    {\n      \"name\": \"dcat:Distribution\",\n      \"anchor\": \"a dcat:Distribution\"\n    },\n    {\n      \"name\": \"dcterms:license\",\n      \"anchor\": \"dcterms:license\"\n    },\n    {\n      \"name\": \"dcat:Dataset\",\n      \"anchor\": \"a dcat:Dataset\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"suggested_edge\": \"linked_by_property\",\n      \"from_id\": \"c-odrl-policies\",\n      \"to_id\": \"c-odrl-haspolicy\",\n      \"anchor\": \"the link from the description of\",\n      \"diversion_reason\": \"other:property_domain_range\",\n      \"location\": \"w3c-dcat-3#c0025\"\n    },\n    {\n      \"suggested_edge\": \"expresses\",\n      \"from_id\": \"s-odrl\",\n      \"to_id\": \"c-odrl-policies\",\n      \"anchor\": \"representing statements about usage\",\n      \"diversion_reason\": \"predicate_not_located\",\n      \"location\": \"w3c-dcat-3#c0025\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"usage rules\", \"type\": \"Concept\"},\n    {\"name\": \"permissions, prohibitions, and obligations\", \"type\": \"Concept\"},\n    {\"name\": \"non-commercial use restriction\", \"type\": \"Concept\"},\n    {\"name\": \"registration requirement\", \"type\": \"Concept\"},\n    {\"name\": \"Creative Commons Attribution 4.0 license\", \"type\": \"Concept\"}\n  ]\n}"
+}

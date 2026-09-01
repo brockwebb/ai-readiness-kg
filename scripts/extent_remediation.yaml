@@ -1,0 +1,108 @@
+# Source specs for the six thin-extent documents (cc_tasks/2026-08-31_extent_remediation.md).
+#
+# The rule: target the canonical FULLEST source, preferring native markdown/text over
+# rendered HTML over PDF-of-HTML. Every source here was verified live on 2026-08-31; the
+# task says "verify, don't inherit" because sources move.
+#
+# SUBSTRATE SHAPE — merged single file per doc_id, decided once and applied to all:
+#   * The task fixes `doc_id` ("Same doc_id, new acquisition event"), and a doc_id is one
+#     corpus entry with one canonical_path. Per-subpage substrate would need new doc_ids,
+#     which would also split crosswalk_demand across entries that the crosswalk does not
+#     name.
+#   * DD-023 makes the CHUNK the extraction unit, and the chunker is heading-aware (the burn
+#     log reports "[markdown, level 1]" per document). A merged file whose sections are H1s
+#     chunks at exactly the section boundaries a per-page substrate would have produced, so
+#     merging costs nothing in chunk granularity.
+#   * Citation survives because every section carries its own source URL in the body and in
+#     `extent_note`. A grounding span still resolves to one section of one named page.
+# Per-section provenance is therefore carried in-band, not in the filename.
+
+odcs-open-data-contract-standard:
+  lane: crosswalk
+  strategy: github_markdown
+  repo: bitol-io/open-data-contract-standard
+  ref: v3.1.0
+  paths: [docs]
+  version_note: "ODCS v3.1.0, released 2025-12-08 (GitHub release tag)"
+  extent_note: >-
+    Full specification: every markdown source file under docs/ at tag v3.1.0. Deliberately
+    excluded: docs/examples/ (illustrative YAML instances, not normative text) and docs/img/
+    (figures). The superseded capture was the rendered site landing page, 2,630 visible
+    characters of navigation.
+
+slsa-specification-v1-0:
+  lane: crosswalk
+  strategy: github_markdown
+  repo: slsa-framework/slsa
+  ref: v1.0.0
+  paths: [docs/spec/v1.0]
+  version_note: "SLSA v1.0.0 (GitHub tag v1.0.0), the released v1.0 specification"
+  extent_note: >-
+    Full specification: all 16 markdown source files under docs/spec/v1.0 at tag v1.0.0 —
+    the eight sub-pages the ingestion RESULT enumerated plus about, faq, future-directions,
+    index, onepage, principles, use-cases and whats-new. Deliberately excluded: the two
+    .svg figures (build-model, verification-model). The superseded capture was the spec
+    landing page, 2,016 visible characters linking to these pages.
+
+ddi-codebook-specification:
+  lane: crosswalk
+  strategy: github_rst
+  repo: ddialliance/ddi-codebook-docs
+  ref: main
+  paths: [documentation/src]
+  version_note: "DDI Codebook field-level documentation source, ddi-codebook-docs@main"
+  extent_note: >-
+    Field-level specification: the reStructuredText sources for every DDI-Codebook element
+    group — docDscr, stdyDscr, fileDscr, dataDscr, otherMat — plus overview, about and
+    best-practices, converted rst->markdown by pandoc. This is the publisher's native
+    source for the rendered field documentation. The superseded capture was the
+    ddialliance.org landing page, 7,139 visible characters at 37% link density.
+
+akamai-datastream-2-docs:
+  lane: kernel
+  strategy: llms_txt
+  index: https://techdocs.akamai.com/datastream2/llms.txt
+  include_prefixes: ["https://techdocs.akamai.com/datastream2/docs/"]
+  version_note: "TechDocs live pages as of the acquisition date; no version tag published"
+  extent_note: >-
+    Followed the llms.txt index the landing page advertises (the convention exists for
+    exactly this), using the publisher's own ".md" suffix for native markdown. Acquired the
+    48 GUIDES pages (/datastream2/docs/) — what DataStream is, log format, data set
+    parameters, integration types, delivery and troubleshooting. Deliberately excluded, and
+    measured before deciding: /reference/ (58 pages, 4,243,618 chars — 88% of everything the
+    index lists, and all of it request/response endpoint schemas), /recipes/ (20 pages,
+    209,018 chars of code cookbook) and /changelog/ (10 pages, 8,978 chars). "Within reason"
+    is the task's word and this is the reason: the corpus admitted this document for platform
+    logging and data-standards content, and an endpoint reference contributes no definition,
+    construct or instrument. It would also have been ~1,000 chunks at zero crosswalk demand,
+    two hours after three 200-chunk documents were deferred `below_burn_scope` on exactly
+    that cost-per-demand ground (ADDENDUM-02 §2) — including it would contradict a live
+    scope decision. The superseded capture was the "Welcome to DataStream 2.1" page alone,
+    1,790 visible characters.
+
+digital-gov-website-standards:
+  lane: kernel
+  strategy: sitemap_html
+  sitemap: https://standards.digital.gov/sitemap.xml
+  include_prefixes: ["https://standards.digital.gov/standards/", "https://standards.digital.gov/about/"]
+  exclude: ["https://standards.digital.gov/404.html", "https://standards.digital.gov/search/"]
+  version_note: "standards.digital.gov live pages as of the acquisition date"
+  extent_note: >-
+    The nine individual website standards plus the about page, from the site's own sitemap,
+    each converted by docling (the DD-030 registry's HTML tool, reused rather than
+    reimplemented). Deliberately excluded: 404, search, contact and get-involved — site
+    furniture, not standards content. The superseded capture was the hero page, 1,962
+    visible characters.
+
+itu-ai-ready-analysis-towards-a-standardized-readiness-frame:
+  lane: bulk_md
+  strategy: unreachable
+  version_note: "n/a"
+  extent_note: >-
+    CUT WITH REASON, not remediated. The publication is served only through ITU's
+    JavaScript e-publications reader; the page carries no PDF or download link, and the
+    static API that serves its cover image (…/api/static/<slug>/en/image/…) returns 404 for
+    every content path probed (content.json, toc.json, index.html, document.pdf, main.pdf,
+    en, and the /api/publication/<slug> and /api/epub/<slug> forms). Carries zero crosswalk
+    demand. The task's own instruction governs: "if any proves unreachable or paywalled,
+    cut-with-reason is the correct outcome, not heroics."

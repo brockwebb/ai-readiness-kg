@@ -71,14 +71,20 @@ def test_real_prose_document_passes_the_same_gate(tmp_path):
     assert report["link_density"] < C.MAX_LINK_DENSITY
 
 
+FIXTURES = REPO / "tests" / "fixtures" / "extent"
+
+
 def test_link_density_is_what_catches_slsa_not_the_text_floor():
-    """Measured on the live file: slsa's visible text is 2,016 chars against a 2,000 floor —
-    it clears the length test by 16 characters. A single-feature gate would have missed it.
-    This pins WHY both Kohlschütter features are present, not just that they are."""
-    live = REPO / "corpus" / "crosswalk" / "slsa-specification-v1-0.html"
-    if not live.is_file():
-        pytest.skip("live corpus file not present")
-    markup = live.read_text("utf-8", "ignore")
+    """Measured on the real capture: slsa's visible text is 2,016 chars against a 2,000 floor
+    — it clears the length test by 16 characters. A single-feature gate would have missed it.
+    This pins WHY both Kohlschütter features are present, not just that they are.
+
+    Reads the VENDORED capture, not the live corpus file. It used to read
+    `corpus/crosswalk/slsa-specification-v1-0.html` behind a `pytest.skip`, and the extent
+    remediation quarantined exactly that file — so the control silently stopped running at
+    the moment its subject was replaced. `corpus/` is gitignored, so a live-file control can
+    never be durable; the captures are kept as fixtures precisely so they can go on failing."""
+    markup = (FIXTURES / "slsa-toc.html").read_text("utf-8", "ignore")
     text = C.visible_text(markup)
     assert len(text) >= C.MIN_VISIBLE_CHARS, (
         f"slsa clears the text floor ({len(text)} >= {C.MIN_VISIBLE_CHARS}); if it no longer "
@@ -320,3 +326,43 @@ def test_the_conftest_guard_fires_when_a_test_forgets_to_stub_the_auto_task(admi
                      pub_date="2026", source_type="federal",
                      primary_url="https://example.gov/guard", inclusion_rationale="r",
                      discovered_via="manual")
+
+
+# ------------------------------------------------- extent remediation (2026-08-31_extent_remediation)
+def test_every_superseded_capture_still_fails_the_gate():
+    """The task's requirement, kept as a standing control: the six documents were replaced
+    because their captures were navigation, and those captures must go on failing. If a
+    threshold ever moves far enough to admit one of these, this test says so."""
+    for name, why in (("slsa-toc.html", "link density"),
+                      ("odcs-toc.html", "link density"),
+                      ("digital-gov-hero.md", "text floor")):
+        src = FIXTURES / name
+        with pytest.raises(C.ConversionGap) as exc:
+            C.convert(src.stem, src, write=False)
+        assert exc.value.gap_class == "thin_extent_suspected", (name, why)
+
+
+def test_a_reacquired_specification_passes_the_same_gate():
+    """The positive control the negative one needs. A gate that rejects everything passes a
+    suite of rejections, so this drives real bytes from a re-acquired document — an excerpt
+    of the ODCS v3.1.0 markdown that replaced the 2,630-character site rendering — through
+    the same `convert` path and requires it through."""
+    src = FIXTURES / "odcs-reacquired-excerpt.md"
+    _dest, report = C.convert("odcs-excerpt", src, write=False)
+    assert report["adequate"], report.get("why")
+    assert report["visible_chars"] > C.MIN_VISIBLE_CHARS
+    assert report["link_density"] < C.MAX_LINK_DENSITY
+
+
+def test_the_two_features_split_the_superseded_captures_between_them():
+    """Both Kohlschütter features are load-bearing and the remediation set proves it with
+    real documents: slsa/odcs are HTML nav pages caught by LINK DENSITY (slsa clears the text
+    floor by 16 chars), digital-gov is a markdown hero page whose anchors crawl4ai already
+    stripped, so its link density is low and only the TEXT FLOOR catches it. Neither feature
+    alone catches all three."""
+    slsa = (FIXTURES / "slsa-toc.html").read_text("utf-8", "ignore")
+    hero = (FIXTURES / "digital-gov-hero.md").read_text("utf-8", "ignore")
+    assert len(C.visible_text(slsa)) >= C.MIN_VISIBLE_CHARS      # text floor MISSES slsa
+    assert C.link_density(slsa) > C.MAX_LINK_DENSITY             # density catches it
+    assert len(C.visible_text(hero)) < C.MIN_VISIBLE_CHARS       # text floor catches hero
+    assert C.link_density(hero) <= C.MAX_LINK_DENSITY            # density MISSES it

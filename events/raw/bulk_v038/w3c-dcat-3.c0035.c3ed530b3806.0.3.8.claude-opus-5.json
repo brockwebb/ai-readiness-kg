@@ -1,0 +1,32 @@
+{
+ "doc_id": "w3c-dcat-3",
+ "chunk_id": "w3c-dcat-3#c0035",
+ "chunk_index": 35,
+ "chunk_start": 165743,
+ "chunk_end": 166072,
+ "chunk_tokens": 76,
+ "heading_path": [
+  "ex:myQualityChecker is a service computing some quality metrics"
+ ],
+ "oversize": false,
+ "doc_sha256": "c3ed530b3806a9a4f0d2fbe7254cac46c1c05555f256e7e0033cc227ff00dae6",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 7825,
+  "cacheReadInputTokens": 13014,
+  "cacheCreationInputTokens": 22593,
+  "webSearchRequests": 0,
+  "costUSD": 0.428072,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.428072,
+ "duration_ms": 88646,
+ "session_id": "e42a4f2f-a81e-453e-b6a9-41d663e04dcc",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Turtle example fragment declaring ex:myQualityChecker as a prov:SoftwareAgent labelled a quality assessment service, plus a code comment suggesting DUV, Dublin Core or ADMS.SW for further description of quality software.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c1\",\n      \"name\": \"quality assessment service\",\n      \"aliases\": [\"quality service/software\"],\n      \"description\": \"A software service that computes quality metrics about a dataset or distribution.\",\n      \"anchor\": \"\\\"A quality assessment service\\\"@en\",\n      \"location\": \"w3c-dcat-3#c0035\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [\n    {\n      \"id\": \"s1\",\n      \"name\": \"Dataset Usage Vocabulary\",\n      \"version\": null,\n      \"steward\": null,\n      \"as_of_date\": null,\n      \"anchor\": \"Dataset Usage Vocabulary (DUV)\",\n      \"location\": \"w3c-dcat-3#c0035\"\n    },\n    {\n      \"id\": \"s2\",\n      \"name\": \"Dublin Core\",\n      \"version\": null,\n      \"steward\": null,\n      \"as_of_date\": null,\n      \"anchor\": \"Dublin Core\",\n      \"location\": \"w3c-dcat-3#c0035\"\n    },\n    {\n      \"id\": \"s3\",\n      \"name\": \"ADMS.SW\",\n      \"version\": null,\n      \"steward\": null,\n      \"as_of_date\": null,\n      \"anchor\": \"ADMS.SW\",\n      \"location\": \"w3c-dcat-3#c0035\"\n    }\n  ],\n  \"frameworks\": [],\n  \"practices\": [\n    {\n      \"id\": \"p1\",\n      \"text\": \"deploying  vocabularies such as Dataset Usage Vocabulary (DUV), Dublin Core or ADMS.SW\",\n      \"as_of_date\": null,\n      \"scope\": \"tool\",\n      \"anchor\": \"such as Dataset Usage Vocabulary\",\n      \"location\": \"w3c-dcat-3#c0035\"\n    }\n  ],\n  \"tools\": [\n    {\n      \"id\": \"t1\",\n      \"name\": \"ex:myQualityChecker\",\n      \"steward\": null,\n      \"license\": null,\n      \"url\": null,\n      \"as_of_date\": null,\n      \"anchor\": \"ex:myQualityChecker a\",\n      \"location\": \"w3c-dcat-3#c0035\"\n    }\n  ],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"recommends\",\n      \"from_id\": \"w3c-dcat-3\",\n      \"to_id\": \"p1\",\n      \"anchor\": \"Further details about quality\",\n      \"location\": \"w3c-dcat-3#c0035\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"p1\",\n      \"to_id\": \"c1\",\n      \"anchor\": \"about quality service/software\",\n      \"location\": \"w3c-dcat-3#c0035\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"prov:SoftwareAgent\",\n      \"anchor\": \"prov:SoftwareAgent\"\n    },\n    {\n      \"name\": \"ldqd:completeness\",\n      \"anchor\": \"ldqd:completeness\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"dqv:inDimension ldqd:completeness\",\n      \"suggested_edge\": \"measures\",\n      \"diversion_reason\": \"cross_chunk\"\n    },\n    {\n      \"anchor\": \"a prov:SoftwareAgent\",\n      \"suggested_edge\": \"instance_of\",\n      \"diversion_reason\": \"other:no_edge_type\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"prov:SoftwareAgent\", \"type\": \"Concept\"},\n    {\"name\": \"ldqd:completeness\", \"type\": \"Concept\"},\n    {\"name\": \"dqv:inDimension\", \"type\": \"Concept\"},\n    {\"name\": \"rdfs:label\", \"type\": \"Concept\"}\n  ]\n}"
+}

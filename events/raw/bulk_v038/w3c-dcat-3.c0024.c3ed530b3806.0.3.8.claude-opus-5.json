@@ -1,0 +1,32 @@
+{
+ "doc_id": "w3c-dcat-3",
+ "chunk_id": "w3c-dcat-3#c0024",
+ "chunk_index": 24,
+ "chunk_start": 124161,
+ "chunk_end": 124424,
+ "chunk_tokens": 78,
+ "heading_path": [
+  "other dataset properties..."
+ ],
+ "oversize": false,
+ "doc_sha256": "c3ed530b3806a9a4f0d2fbe7254cac46c1c05555f256e7e0033cc227ff00dae6",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 3956,
+  "cacheReadInputTokens": 13014,
+  "cacheCreationInputTokens": 21438,
+  "webSearchRequests": 0,
+  "costUSD": 0.319797,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.319797,
+ "duration_ms": 42809,
+ "session_id": "2d2c46f1-b70a-4da4-b8d7-85e7cce3c3bb",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Turtle example fragment showing a dcat:Dataset carrying dcterms:accessRights (EU PUBLIC authority value), a dcterms:rights blank node typed dcterms:RightsStatement with an rdfs:label copyright string, and the opening of a dcat:distribution block.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"n1\",\n      \"name\": \"dcat:Dataset\",\n      \"aliases\": [\"Dataset\"],\n      \"description\": \"The class of the example resource ex:ds7890 in this Turtle snippet, on which rights and access-rights properties are shown.\",\n      \"anchor\": \"a dcat:Dataset\",\n      \"location\": \"w3c-dcat-3#c0024\"\n    },\n    {\n      \"id\": \"n2\",\n      \"name\": \"dcterms:accessRights\",\n      \"aliases\": [\"access rights\"],\n      \"description\": \"Property used in the example to point at an EU Publications Office access-right authority value (PUBLIC).\",\n      \"anchor\": \"dcterms:accessRights\",\n      \"location\": \"w3c-dcat-3#c0024\"\n    },\n    {\n      \"id\": \"n3\",\n      \"name\": \"dcterms:rights\",\n      \"aliases\": [\"rights\"],\n      \"description\": \"Property used in the example to attach a rights statement node to the dataset.\",\n      \"anchor\": \"dcterms:rights\",\n      \"location\": \"w3c-dcat-3#c0024\"\n    },\n    {\n      \"id\": \"n4\",\n      \"name\": \"dcterms:RightsStatement\",\n      \"aliases\": [\"rights statement\"],\n      \"description\": \"Class of the blank node given as the value of dcterms:rights, labelled with a copyright string.\",\n      \"anchor\": \"dcterms:RightsStatement\",\n      \"location\": \"w3c-dcat-3#c0024\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"w3c-dcat-3\",\n      \"to_id\": \"n1\",\n      \"anchor\": \"a dcat:Dataset\",\n      \"location\": \"w3c-dcat-3#c0024\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"w3c-dcat-3\",\n      \"to_id\": \"n2\",\n      \"anchor\": \"dcterms:accessRights\",\n      \"location\": \"w3c-dcat-3#c0024\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"w3c-dcat-3\",\n      \"to_id\": \"n3\",\n      \"anchor\": \"dcterms:rights\",\n      \"location\": \"w3c-dcat-3#c0024\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"w3c-dcat-3\",\n      \"to_id\": \"n4\",\n      \"anchor\": \"dcterms:RightsStatement\",\n      \"location\": \"w3c-dcat-3#c0024\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    { \"name\": \"dcat:distribution\", \"anchor\": \"dcat:distribution\" },\n    { \"name\": \"dcat:Distribution\", \"anchor\": \"dcat:Distribution\" },\n    { \"name\": \"rdfs:label\", \"anchor\": \"rdfs:label\" },\n    { \"name\": \"ex:ds7890\", \"anchor\": \"ex:ds7890\" }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"from_id\": \"n1\",\n      \"to_id\": \"n2\",\n      \"suggested_edge\": \"has_property\",\n      \"anchor\": \"dcterms:accessRights\",\n      \"diversion_reason\": \"structural_inference\"\n    },\n    {\n      \"from_id\": \"n1\",\n      \"to_id\": \"n3\",\n      \"suggested_edge\": \"has_property\",\n      \"anchor\": \"dcterms:rights\",\n      \"diversion_reason\": \"structural_inference\"\n    },\n    {\n      \"from_id\": \"n3\",\n      \"to_id\": \"n4\",\n      \"suggested_edge\": \"has_range\",\n      \"anchor\": \"[ a dcterms:RightsStatement\",\n      \"diversion_reason\": \"structural_inference\"\n    },\n    {\n      \"from_id\": \"n1\",\n      \"to_id\": \"dcat:Distribution\",\n      \"suggested_edge\": \"has_component\",\n      \"anchor\": \"dcat:distribution\",\n      \"diversion_reason\": \"cross_chunk\"\n    }\n  ],\n  \"gleaned\": [\n    { \"name\": \"http://publications.europa.eu/resource/authority/access-right/PUBLIC\", \"type\": \"Concept\" },\n    { \"name\": \"© 2021 ACME Inc.\", \"type\": \"Concept\" }\n  ]\n}"
+}

@@ -1,7 +1,7 @@
 {
  "manifest_version": 2,
  "project": "ai-readiness-kg",
- "generated_at": "2026-08-30T12:58:38.408901+00:00",
+ "generated_at": "2026-09-01T01:26:49.861285+00:00",
  "generator": "dixie.evidence",
  "note": "PROJECTION — rebuilt from the evidence decisions log; do not hand-edit. The log is truth.",
  "counts_by_decision": {
@@ -2323,7 +2323,7 @@
   "akamai-datastream-2-docs": {
    "doc_id": "akamai-datastream-2-docs",
    "identity": {
-    "sha256": "65fa875256e279f46d25ada2324bfa6919abde803c8f2c98d19d08f33cdf6d78",
+    "sha256": "da64d885f3351d743ebd73f61736750d6e4ad4b0d329c866c23aaa92a951625a",
     "canonical_path": "corpus/kernel/akamai-datastream-2-docs.md",
     "title": "Akamai DataStream 2 (TechDocs)",
     "authors_or_org": [
@@ -2349,16 +2349,16 @@
      },
      {
       "check": "size_sanity",
-      "detail": "2128 bytes vs floor 256",
+      "detail": "355828 bytes vs floor 256",
       "outcome": "pass"
      },
      {
       "check": "content_smoke",
-      "detail": "2119 chars",
+      "detail": "354932 chars",
       "outcome": "pass"
      }
     ],
-    "checked_at": "2026-08-21T21:49:15.626665+00:00"
+    "checked_at": "2026-09-01T01:26:38.302824+00:00"
    },
    "screening": {
     "decision": "included",
@@ -2384,7 +2384,16 @@
    },
    "files": {
     "alternates": [],
-    "quarantined": []
+    "quarantined": [
+     {
+      "path": "corpus/kernel/akamai-datastream-2-docs.md",
+      "dest": "corpus/quarantine/akamai-datastream-2-docs.thin-extent.md",
+      "reasons": [
+       "thin_extent_suspected: superseded by corpus/kernel/akamai-datastream-2-docs.md"
+      ],
+      "ts": "2026-09-01T01:26:38.299817+00:00"
+     }
+    ]
    },
    "provenance_sources": [
     "kernel_list_2026-08-21",
@@ -2396,8 +2405,8 @@
     ],
     "observed_files": {
      "corpus/kernel/akamai-datastream-2-docs.md": {
-      "sha256": "65fa875256e279f46d25ada2324bfa6919abde803c8f2c98d19d08f33cdf6d78",
-      "size": 2128,
+      "sha256": "da64d885f3351d743ebd73f61736750d6e4ad4b0d329c866c23aaa92a951625a",
+      "size": 355828,
       "claimed_type": "markdown",
       "detected_type": "text"
      }
@@ -2414,16 +2423,16 @@
        },
        {
         "check": "size_sanity",
-        "detail": "2128 bytes vs floor 256",
+        "detail": "355828 bytes vs floor 256",
         "outcome": "pass"
        },
        {
         "check": "content_smoke",
-        "detail": "2119 chars",
+        "detail": "354932 chars",
         "outcome": "pass"
        }
       ],
-      "checked_at": "2026-08-21T21:49:15.626665+00:00"
+      "checked_at": "2026-09-01T01:26:38.302824+00:00"
      }
     },
     "added_in": "kernel-v03"
@@ -7997,8 +8006,8 @@
   "ddi-codebook-specification": {
    "doc_id": "ddi-codebook-specification",
    "identity": {
-    "sha256": "97fa0a19fad72d2e5a2fe1b11fc831b85495b7c6b6291935844997a25c0b3c21",
-    "canonical_path": "corpus/crosswalk/ddi-codebook-specification.html",
+    "sha256": "c8881503b642e7b6c1f64df3098d77bf6d6668ff1b0d25bbfa7b37cc4de12bf2",
+    "canonical_path": "corpus/crosswalk/ddi-codebook-specification.md",
     "title": "DDI-Codebook (DDI-C) — DDI Alliance product specification page",
     "authors_or_org": [
      "DDI Alliance"
@@ -8018,21 +8027,21 @@
     "checks": [
      {
       "check": "magic_bytes",
-      "detail": "claimed html, detected html",
+      "detail": "claimed markdown, detected text",
       "outcome": "pass"
      },
      {
       "check": "size_sanity",
-      "detail": "111130 bytes vs floor 64",
+      "detail": "41803 bytes vs floor 256",
       "outcome": "pass"
      },
      {
       "check": "content_smoke",
-      "detail": "skipped: format mismatch already failed or type unhandled",
-      "outcome": "skip"
+      "detail": "41790 chars",
+      "outcome": "pass"
      }
     ],
-    "checked_at": "2026-08-29T12:08:24.165958+00:00"
+    "checked_at": "2026-09-01T01:25:19.893040+00:00"
    },
    "screening": {
     "decision": "included",
@@ -8051,7 +8060,16 @@
    },
    "files": {
     "alternates": [],
-    "quarantined": []
+    "quarantined": [
+     {
+      "path": "corpus/crosswalk/ddi-codebook-specification.html",
+      "dest": "corpus/quarantine/ddi-codebook-specification.thin-extent.html",
+      "reasons": [
+       "thin_extent_suspected: superseded by corpus/crosswalk/ddi-codebook-specification.md"
+      ],
+      "ts": "2026-09-01T01:25:19.892512+00:00"
+     }
+    ]
    },
    "provenance_sources": [
     "crosswalk_queue_2026-08-29"
@@ -8066,6 +8084,12 @@
       "size": 111130,
       "claimed_type": "html",
       "detected_type": "html"
+     },
+     "corpus/crosswalk/ddi-codebook-specification.md": {
+      "sha256": "c8881503b642e7b6c1f64df3098d77bf6d6668ff1b0d25bbfa7b37cc4de12bf2",
+      "size": 41803,
+      "claimed_type": "markdown",
+      "detected_type": "text"
      }
     },
     "integrity_by_file": {
@@ -8090,6 +8114,28 @@
        }
       ],
       "checked_at": "2026-08-29T12:08:24.165958+00:00"
+     },
+     "corpus/crosswalk/ddi-codebook-specification.md": {
+      "path": "corpus/crosswalk/ddi-codebook-specification.md",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed markdown, detected text",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "41803 bytes vs floor 256",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "41790 chars",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-09-01T01:25:19.893040+00:00"
      }
     }
    }
@@ -8412,7 +8458,7 @@
   "digital-gov-website-standards": {
    "doc_id": "digital-gov-website-standards",
    "identity": {
-    "sha256": "db70557258010c9c52839bba33943272bb637dc001dd9c0c314cd13a1f067a43",
+    "sha256": "23ff6712eb6850d9c165abfdf6246cecc0e6c3b5abebfc6f95eccd2e09fd8dc4",
     "canonical_path": "corpus/kernel/digital-gov-website-standards.md",
     "title": "Website Standards (standards.digital.gov)",
     "authors_or_org": [
@@ -8438,16 +8484,16 @@
      },
      {
       "check": "size_sanity",
-      "detail": "2215 bytes vs floor 256",
+      "detail": "32712 bytes vs floor 256",
       "outcome": "pass"
      },
      {
       "check": "content_smoke",
-      "detail": "2210 chars",
+      "detail": "32709 chars",
       "outcome": "pass"
      }
     ],
-    "checked_at": "2026-08-21T21:49:15.669511+00:00"
+    "checked_at": "2026-09-01T01:26:49.861285+00:00"
    },
    "screening": {
     "decision": "included",
@@ -8473,7 +8519,16 @@
    },
    "files": {
     "alternates": [],
-    "quarantined": []
+    "quarantined": [
+     {
+      "path": "corpus/kernel/digital-gov-website-standards.md",
+      "dest": "corpus/quarantine/digital-gov-website-standards.thin-extent.md",
+      "reasons": [
+       "thin_extent_suspected: superseded by corpus/kernel/digital-gov-website-standards.md"
+      ],
+      "ts": "2026-09-01T01:26:49.860714+00:00"
+     }
+    ]
    },
    "provenance_sources": [
     "kernel_list_2026-08-21",
@@ -8485,8 +8540,8 @@
     ],
     "observed_files": {
      "corpus/kernel/digital-gov-website-standards.md": {
-      "sha256": "db70557258010c9c52839bba33943272bb637dc001dd9c0c314cd13a1f067a43",
-      "size": 2215,
+      "sha256": "23ff6712eb6850d9c165abfdf6246cecc0e6c3b5abebfc6f95eccd2e09fd8dc4",
+      "size": 32712,
       "claimed_type": "markdown",
       "detected_type": "text"
      }
@@ -8503,16 +8558,16 @@
        },
        {
         "check": "size_sanity",
-        "detail": "2215 bytes vs floor 256",
+        "detail": "32712 bytes vs floor 256",
         "outcome": "pass"
        },
        {
         "check": "content_smoke",
-        "detail": "2210 chars",
+        "detail": "32709 chars",
         "outcome": "pass"
        }
       ],
-      "checked_at": "2026-08-21T21:49:15.669511+00:00"
+      "checked_at": "2026-09-01T01:26:49.861285+00:00"
      }
     },
     "added_in": "kernel-v03"
@@ -18069,8 +18124,8 @@
   "odcs-open-data-contract-standard": {
    "doc_id": "odcs-open-data-contract-standard",
    "identity": {
-    "sha256": "8a140f031b7bcbd371ddbdbbf0aa78b624deca7bf0ec656f86ad886beada7081",
-    "canonical_path": "corpus/crosswalk/odcs-open-data-contract-standard.html",
+    "sha256": "bbe526f3c8c419aa5b38a9c46081d0fd74d29de749774f14f915936eac3f1fdb",
+    "canonical_path": "corpus/crosswalk/odcs-open-data-contract-standard.md",
     "title": "Open Data Contract Standard (ODCS) — Definition",
     "authors_or_org": [
      "Bitol (Linux Foundation AI & Data)"
@@ -18090,21 +18145,21 @@
     "checks": [
      {
       "check": "magic_bytes",
-      "detail": "claimed html, detected html",
+      "detail": "claimed markdown, detected text",
       "outcome": "pass"
      },
      {
       "check": "size_sanity",
-      "detail": "48417 bytes vs floor 64",
+      "detail": "125575 bytes vs floor 256",
       "outcome": "pass"
      },
      {
       "check": "content_smoke",
-      "detail": "skipped: format mismatch already failed or type unhandled",
-      "outcome": "skip"
+      "detail": "125562 chars",
+      "outcome": "pass"
      }
     ],
-    "checked_at": "2026-08-29T12:08:24.166371+00:00"
+    "checked_at": "2026-09-01T01:25:14.061763+00:00"
    },
    "screening": {
     "decision": "included",
@@ -18123,7 +18178,16 @@
    },
    "files": {
     "alternates": [],
-    "quarantined": []
+    "quarantined": [
+     {
+      "path": "corpus/crosswalk/odcs-open-data-contract-standard.html",
+      "dest": "corpus/quarantine/odcs-open-data-contract-standard.thin-extent.html",
+      "reasons": [
+       "thin_extent_suspected: superseded by corpus/crosswalk/odcs-open-data-contract-standard.md"
+      ],
+      "ts": "2026-09-01T01:20:30.451463+00:00"
+     }
+    ]
    },
    "provenance_sources": [
     "crosswalk_queue_2026-08-29"
@@ -18138,6 +18202,12 @@
       "size": 48417,
       "claimed_type": "html",
       "detected_type": "html"
+     },
+     "corpus/crosswalk/odcs-open-data-contract-standard.md": {
+      "sha256": "bbe526f3c8c419aa5b38a9c46081d0fd74d29de749774f14f915936eac3f1fdb",
+      "size": 125575,
+      "claimed_type": "markdown",
+      "detected_type": "text"
      }
     },
     "integrity_by_file": {
@@ -18162,6 +18232,28 @@
        }
       ],
       "checked_at": "2026-08-29T12:08:24.166371+00:00"
+     },
+     "corpus/crosswalk/odcs-open-data-contract-standard.md": {
+      "path": "corpus/crosswalk/odcs-open-data-contract-standard.md",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed markdown, detected text",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "125575 bytes vs floor 256",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "125562 chars",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-09-01T01:25:14.061763+00:00"
      }
     }
    }
@@ -21893,8 +21985,8 @@
   "slsa-specification-v1-0": {
    "doc_id": "slsa-specification-v1-0",
    "identity": {
-    "sha256": "94a6630c0ec4310ad583a35c0d4576a35100a027e1e6dbdd6ba0c9484e593247",
-    "canonical_path": "corpus/crosswalk/slsa-specification-v1-0.html",
+    "sha256": "a5816986ab0da6e3e84601bf467f68ae3e7a5d61fe9c0d5a56e80669ae669f6f",
+    "canonical_path": "corpus/crosswalk/slsa-specification-v1-0.md",
     "title": "SLSA Specification v1.0 (Supply-chain Levels for Software Artifacts)",
     "authors_or_org": [
      "OpenSSF SLSA project"
@@ -21914,21 +22006,21 @@
     "checks": [
      {
       "check": "magic_bytes",
-      "detail": "claimed html, detected html",
+      "detail": "claimed markdown, detected text",
       "outcome": "pass"
      },
      {
       "check": "size_sanity",
-      "detail": "16566 bytes vs floor 64",
+      "detail": "144513 bytes vs floor 256",
       "outcome": "pass"
      },
      {
       "check": "content_smoke",
-      "detail": "skipped: format mismatch already failed or type unhandled",
-      "outcome": "skip"
+      "detail": "144438 chars",
+      "outcome": "pass"
      }
     ],
-    "checked_at": "2026-08-29T12:08:24.261344+00:00"
+    "checked_at": "2026-09-01T01:25:16.085760+00:00"
    },
    "screening": {
     "decision": "included",
@@ -21947,7 +22039,16 @@
    },
    "files": {
     "alternates": [],
-    "quarantined": []
+    "quarantined": [
+     {
+      "path": "corpus/crosswalk/slsa-specification-v1-0.html",
+      "dest": "corpus/quarantine/slsa-specification-v1-0.thin-extent.html",
+      "reasons": [
+       "thin_extent_suspected: superseded by corpus/crosswalk/slsa-specification-v1-0.md"
+      ],
+      "ts": "2026-09-01T01:20:33.725044+00:00"
+     }
+    ]
    },
    "provenance_sources": [
     "crosswalk_queue_2026-08-29"
@@ -21962,6 +22063,12 @@
       "size": 16566,
       "claimed_type": "html",
       "detected_type": "html"
+     },
+     "corpus/crosswalk/slsa-specification-v1-0.md": {
+      "sha256": "a5816986ab0da6e3e84601bf467f68ae3e7a5d61fe9c0d5a56e80669ae669f6f",
+      "size": 144513,
+      "claimed_type": "markdown",
+      "detected_type": "text"
      }
     },
     "integrity_by_file": {
@@ -21986,6 +22093,28 @@
        }
       ],
       "checked_at": "2026-08-29T12:08:24.261344+00:00"
+     },
+     "corpus/crosswalk/slsa-specification-v1-0.md": {
+      "path": "corpus/crosswalk/slsa-specification-v1-0.md",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed markdown, detected text",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "144513 bytes vs floor 256",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "144438 chars",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-09-01T01:25:16.085760+00:00"
      }
     }
    }

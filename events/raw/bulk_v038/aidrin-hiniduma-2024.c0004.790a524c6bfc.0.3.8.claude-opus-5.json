@@ -1,0 +1,32 @@
+{
+ "doc_id": "aidrin-hiniduma-2024",
+ "chunk_id": "aidrin-hiniduma-2024#c0004",
+ "chunk_index": 4,
+ "chunk_start": 2136,
+ "chunk_end": 3036,
+ "chunk_tokens": 203,
+ "heading_path": [
+  "1 INTRODUCTION"
+ ],
+ "oversize": false,
+ "doc_sha256": "790a524c6bfc9941ed61f489229b73ab49f6e370fd5eca18bf98a77d9e12a9bd",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 3980,
+  "cacheReadInputTokens": 13014,
+  "cacheCreationInputTokens": 21927,
+  "webSearchRequests": 0,
+  "costUSD": 0.325287,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.325287,
+ "duration_ms": 47447,
+ "session_id": "ddf25c27-919b-4642-bef8-c178b6c0dba8",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Front matter (ACM citation block, permission/copyright boilerplate) plus the opening sentence of Section 1 INTRODUCTION, truncated mid-sentence, asserting that dataset quality and readiness are critical to AI success.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"concept-decision-making-guided-by-data\",\n      \"name\": \"decision-making guided by data\",\n      \"aliases\": [\"data-driven decision-making\"],\n      \"description\": \"The contemporary setting the paper situates itself in, where decisions are guided by data.\",\n      \"anchor\": \"decision-making guided by data\",\n      \"location\": \"1 INTRODUCTION\"\n    },\n    {\n      \"id\": \"concept-datasets\",\n      \"name\": \"datasets\",\n      \"aliases\": [\"dataset\"],\n      \"description\": \"The data collections whose quality and readiness the paper treats as critical to AI success.\",\n      \"anchor\": \"of datasets are critical\",\n      \"location\": \"1 INTRODUCTION\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"claim-datasets-critical-to-ai-success\",\n      \"claim_text\": \"datasets are critical to achieving success with artificial\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"inference\",\n      \"anchor\": \"critical to achieving success\",\n      \"location\": \"1 INTRODUCTION\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"aidrin-hiniduma-2024\",\n      \"to_id\": \"concept-decision-making-guided-by-data\",\n      \"anchor\": \"In the age of decision-making\",\n      \"location\": \"1 INTRODUCTION\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"aidrin-hiniduma-2024\",\n      \"to_id\": \"concept-datasets\",\n      \"anchor\": \"ness of datasets\",\n      \"location\": \"1 INTRODUCTION\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"aidrin-hiniduma-2024\",\n      \"to_id\": \"claim-datasets-critical-to-ai-success\",\n      \"anchor\": \"are critical to achieving\",\n      \"location\": \"1 INTRODUCTION\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"claim-datasets-critical-to-ai-success\",\n      \"to_id\": \"concept-datasets\",\n      \"anchor\": \"datasets are critical\",\n      \"location\": \"1 INTRODUCTION\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"ACM\",\n      \"anchor\": \"ACM, New York\"\n    },\n    {\n      \"name\": \"SSDBM\",\n      \"anchor\": \"(SSDBM)\"\n    }\n  ],\n  \"proposed_relationships\": [],\n  \"gleaned\": [\n    {\"name\": \"quality of datasets\", \"type\": \"Concept\"},\n    {\"name\": \"readiness of datasets\", \"type\": \"Concept\"},\n    {\"name\": \"artificial intelligence\", \"type\": \"Concept\"}\n  ]\n}"
+}

@@ -1,0 +1,34 @@
+{
+ "doc_id": "chen-2025-geo-how-to-dominate-ai-search",
+ "chunk_id": "chen-2025-geo-how-to-dominate-ai-search#c0018",
+ "chunk_index": 18,
+ "chunk_start": 78935,
+ "chunk_end": 79119,
+ "chunk_tokens": 43,
+ "heading_path": [
+  "5 A Comparison of AI Search Engines",
+  "5.2 Comparative Analysis",
+  "5.2.4 Cross-Model Domain Diversity.This section examines how"
+ ],
+ "oversize": false,
+ "doc_sha256": "d68922e1275913c94198e0b0001f4585f22728aab5b31737839ce234896011dc",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 4584,
+  "cacheReadInputTokens": 13014,
+  "cacheCreationInputTokens": 21540,
+  "webSearchRequests": 0,
+  "costUSD": 0.336517,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.336517,
+ "duration_ms": 48377,
+ "session_id": "14411543-4747-4eea-af5a-d6d729062243",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Methods fragment: the study's experimental pipeline was implemented in Python with structured logging and reproducibility in mind, and queries were submitted to each model via its respective API (Claude/Anthropic, ChatGPT/OpenAI, Perplexity).\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_experimental_pipeline\",\n      \"name\": \"experimental pipeline\",\n      \"aliases\": [\"study pipeline\"],\n      \"description\": \"The study's implemented query-submission pipeline, built in Python with structured logging and reproducibility as design goals.\",\n      \"anchor\": \"experimental pipeline\",\n      \"location\": \"chen-2025-geo-how-to-dominate-ai-search#c0018\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"cl_pipeline_python\",\n      \"claim_text\": \"The experimental pipeline was implemented in Python\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"measured_practitioner\",\n      \"anchor\": \"was implemented in Python\",\n      \"location\": \"chen-2025-geo-how-to-dominate-ai-search#c0018\"\n    },\n    {\n      \"id\": \"cl_queries_api\",\n      \"claim_text\": \"Queries were submitted via its respective API\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"measured_practitioner\",\n      \"anchor\": \"Queries were submitted\",\n      \"location\": \"chen-2025-geo-how-to-dominate-ai-search#c0018\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [\n    {\n      \"id\": \"p_claude\",\n      \"name\": \"Claude\",\n      \"operator\": \"Anthropic\",\n      \"anchor\": \"Claude\",\n      \"location\": \"chen-2025-geo-how-to-dominate-ai-search#c0018\"\n    },\n    {\n      \"id\": \"p_chatgpt\",\n      \"name\": \"ChatGPT\",\n      \"operator\": \"OpenAI\",\n      \"anchor\": \"ChatGPT\",\n      \"location\": \"chen-2025-geo-how-to-dominate-ai-search#c0018\"\n    },\n    {\n      \"id\": \"p_perplexity\",\n      \"name\": \"Perplexity\",\n      \"operator\": null,\n      \"anchor\": \"Perplexity\",\n      \"location\": \"chen-2025-geo-how-to-dominate-ai-search#c0018\"\n    }\n  ],\n  \"edges\": [\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"chen-2025-geo-how-to-dominate-ai-search\",\n      \"to_id\": \"cl_pipeline_python\",\n      \"anchor\": \"was implemented in Python\",\n      \"location\": \"chen-2025-geo-how-to-dominate-ai-search#c0018\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"chen-2025-geo-how-to-dominate-ai-search\",\n      \"to_id\": \"cl_queries_api\",\n      \"anchor\": \"Queries were submitted\",\n      \"location\": \"chen-2025-geo-how-to-dominate-ai-search#c0018\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_pipeline_python\",\n      \"to_id\": \"c_experimental_pipeline\",\n      \"anchor\": \"experimental pipeline\",\n      \"location\": \"chen-2025-geo-how-to-dominate-ai-search#c0018\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"chen-2025-geo-how-to-dominate-ai-search\",\n      \"to_id\": \"c_experimental_pipeline\",\n      \"anchor\": \"The experimental pipeline\",\n      \"location\": \"chen-2025-geo-how-to-dominate-ai-search#c0018\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    { \"name\": \"Python\", \"anchor\": \"Python\" },\n    { \"name\": \"structured logging\", \"anchor\": \"structured logging\" },\n    { \"name\": \"reproducibility\", \"anchor\": \"reproducibility\" },\n    { \"name\": \"API\", \"anchor\": \"respective API\" }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"submitted via its respective API\",\n      \"suggested_edge\": \"study_queries_platform\",\n      \"diversion_reason\": \"other:no_edge_type\",\n      \"note_ids\": [\"c_experimental_pipeline\", \"p_claude\", \"p_chatgpt\", \"p_perplexity\"]\n    },\n    {\n      \"anchor\": \"For each model:\",\n      \"suggested_edge\": \"evaluates\",\n      \"diversion_reason\": \"cross_chunk\"\n    }\n  ],\n  \"gleaned\": [\n    { \"name\": \"Anthropic\", \"type\": \"Platform\" },\n    { \"name\": \"OpenAI\", \"type\": \"Platform\" },\n    { \"name\": \"reproducibility\", \"type\": \"Concept\" },\n    { \"name\": \"structured logging\", \"type\": \"Concept\" }\n  ]\n}\n```"
+}

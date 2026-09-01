@@ -120,25 +120,34 @@ def _load_entries() -> list[dict]:
     current hash is the admission hash with each supersession applied in log order.
     """
     entries: dict[str, dict] = {}
+    #: Applied after the full replay, because SHARD order is not causal order. `replay()`
+    #: yields shards by batch number (DD-008 shards by INGEST batch), so a supersession
+    #: written to shard 1 for a document admitted on shard 17 arrives before its own
+    #: admission. That happened: the crosswalk lane's admissions live on batch-017, and the
+    #: first `content_update` written for one of them made every call to this function raise.
+    #: The guard's intent is "no admission EXISTS", not "none seen yet in shard order", and
+    #: it still raises below for a genuinely orphaned supersession.
+    deferred_updates: list[dict] = []
     for ev in eventlog.replay():
         et = ev.get("event_type")
         if et == _MANIFEST_ADD:
             entry = dict(ev["payload"])
             entries[entry["doc_id"]] = entry
         elif et == _CONTENT_UPDATE:
-            p = ev["payload"]
-            base = entries.get(p["doc_id"])
-            if base is None:
-                # A supersession with no admission is a corrupt log, not a recoverable
-                # state: the entry it claims to correct was never admitted.
-                raise ManifestError(
-                    f"content_update for {p['doc_id']!r} which has no manifest_add event")
-            base["content_hash"] = p["content_hash"]
-            if p.get("local_path"):
-                base["local_path"] = p["local_path"]
-            base.setdefault("supersessions", []).append(
-                {k: p.get(k) for k in ("superseded_content_hash", "content_hash",
-                                       "reason", "evidence", "task")})
+            deferred_updates.append(ev["payload"])
+    for p in deferred_updates:
+        base = entries.get(p["doc_id"])
+        if base is None:
+            # A supersession with no admission ANYWHERE is a corrupt log, not a recoverable
+            # state: the entry it claims to correct was never admitted.
+            raise ManifestError(
+                f"content_update for {p['doc_id']!r} which has no manifest_add event")
+        base["content_hash"] = p["content_hash"]
+        if p.get("local_path"):
+            base["local_path"] = p["local_path"]
+        base.setdefault("supersessions", []).append(
+            {k: p.get(k) for k in ("superseded_content_hash", "content_hash",
+                                   "reason", "evidence", "task")})
     return list(entries.values())
 
 
@@ -331,6 +340,30 @@ def rebuild() -> dict:
     return {"manifest_version": 2, "entries": len(entries)}
 
 
+def _admission_shard(doc_id: str) -> int:
+    """The shard holding this document's `manifest_add`, so a supersession lands beside the
+    admission it corrects rather than always on shard 1.
+
+    DD-008 shards by INGEST batch, so admissions are spread across shards — the crosswalk
+    lane's live on batch-017. `_MANIFEST_BATCH` was written when shard 1 held every
+    admission, and it quietly stopped being true, because no document outside shard 1 had
+    ever been superseded. `_load_entries` is order-tolerant now, so this is coherence rather
+    than correctness: a reader following one document should not have to know its history is
+    split across two shards for no reason."""
+    pat = re.compile(r"batch-(\d+)$")
+    for shard in sorted((q for q in eventlog._EVENTS_DIR.glob("batch-*.jsonl")
+                         if pat.fullmatch(q.stem)),
+                        key=lambda q: int(pat.fullmatch(q.stem).group(1))):
+        for line in shard.read_text(encoding="utf-8").splitlines():
+            if doc_id not in line or _MANIFEST_ADD not in line:
+                continue
+            ev = json.loads(line)
+            if (ev.get("event_type") == _MANIFEST_ADD
+                    and (ev.get("payload") or {}).get("doc_id") == doc_id):
+                return int(pat.fullmatch(shard.stem).group(1))
+    return _MANIFEST_BATCH
+
+
 def content_update(doc_id: str, *, reason: str, superseded_content_hash: str,
                    evidence: dict, local_path: str | None = None,
                    task: str | None = None) -> str:
@@ -376,7 +409,7 @@ def content_update(doc_id: str, *, reason: str, superseded_content_hash: str,
                                  "local_path": rel, "reason": reason,
                                  "evidence": evidence,
                                  **({"task": task} if task else {})}},
-                    batch=_MANIFEST_BATCH)
+                    batch=_admission_shard(doc_id))
     return new_hash
 
 

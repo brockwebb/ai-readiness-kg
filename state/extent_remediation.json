@@ -1,0 +1,73 @@
+{
+ "task": "cc_tasks/2026-08-31_extent_remediation.md",
+ "applied": true,
+ "reports": [
+  {
+   "doc_id": "odcs-open-data-contract-standard",
+   "sections": 12,
+   "chars": 125563,
+   "old_path": "corpus/crosswalk/odcs-open-data-contract-standard.html",
+   "new_path": "corpus/crosswalk/odcs-open-data-contract-standard.md",
+   "old_visible": null,
+   "new_visible": 76744,
+   "new_sha256": "bbe526f3c8c419aa5b38a9c46081d0fd74d29de749774f14f915936eac3f1fdb",
+   "integrity": "pass",
+   "content_update": "already superseded; skipped"
+  },
+  {
+   "doc_id": "slsa-specification-v1-0",
+   "sections": 16,
+   "chars": 144439,
+   "old_path": "corpus/crosswalk/slsa-specification-v1-0.html",
+   "new_path": "corpus/crosswalk/slsa-specification-v1-0.md",
+   "old_visible": null,
+   "new_visible": 131684,
+   "new_sha256": "a5816986ab0da6e3e84601bf467f68ae3e7a5d61fe9c0d5a56e80669ae669f6f",
+   "integrity": "pass"
+  },
+  {
+   "doc_id": "ddi-codebook-specification",
+   "sections": 15,
+   "chars": 41791,
+   "old_path": "corpus/crosswalk/ddi-codebook-specification.html",
+   "new_path": "corpus/crosswalk/ddi-codebook-specification.md",
+   "old_visible": 7139,
+   "new_visible": 34851,
+   "quarantined": "corpus/quarantine/ddi-codebook-specification.thin-extent.html",
+   "old_sha256": "97fa0a19fad72d2e5a2fe1b11fc831b85495b7c6b6291935844997a25c0b3c21",
+   "new_sha256": "c8881503b642e7b6c1f64df3098d77bf6d6668ff1b0d25bbfa7b37cc4de12bf2",
+   "integrity": "pass"
+  },
+  {
+   "doc_id": "akamai-datastream-2-docs",
+   "sections": 48,
+   "chars": 354933,
+   "old_path": "corpus/kernel/akamai-datastream-2-docs.md",
+   "new_path": "corpus/kernel/akamai-datastream-2-docs.md",
+   "old_visible": 1790,
+   "new_visible": 321628,
+   "quarantined": "corpus/quarantine/akamai-datastream-2-docs.thin-extent.md",
+   "old_sha256": "65fa875256e279f46d25ada2324bfa6919abde803c8f2c98d19d08f33cdf6d78",
+   "new_sha256": "da64d885f3351d743ebd73f61736750d6e4ad4b0d329c866c23aaa92a951625a",
+   "integrity": "pass"
+  },
+  {
+   "doc_id": "digital-gov-website-standards",
+   "sections": 11,
+   "chars": 32710,
+   "old_path": "corpus/kernel/digital-gov-website-standards.md",
+   "new_path": "corpus/kernel/digital-gov-website-standards.md",
+   "old_visible": 1962,
+   "new_visible": 31358,
+   "quarantined": "corpus/quarantine/digital-gov-website-standards.thin-extent.md",
+   "old_sha256": "db70557258010c9c52839bba33943272bb637dc001dd9c0c314cd13a1f067a43",
+   "new_sha256": "23ff6712eb6850d9c165abfdf6246cecc0e6c3b5abebfc6f95eccd2e09fd8dc4",
+   "integrity": "pass"
+  },
+  {
+   "doc_id": "itu-ai-ready-analysis-towards-a-standardized-readiness-frame",
+   "outcome": "cut_with_reason",
+   "reason": "CUT WITH REASON, not remediated. The publication is served only through ITU's JavaScript e-publications reader; the page carries no PDF or download link, and the static API that serves its cover image (\u2026/api/static/<slug>/en/image/\u2026) returns 404 for every content path probed (content.json, toc.json, index.html, document.pdf, main.pdf, en, and the /api/publication/<slug> and /api/epub/<slug> forms). Carries zero crosswalk demand. The task's own instruction governs: \"if any proves unreachable or paywalled, cut-with-reason is the correct outcome, not heroics.\""
+  }
+ ]
+}

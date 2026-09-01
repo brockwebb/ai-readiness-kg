@@ -22,6 +22,22 @@ sys.path.insert(0, str(REPO / "scripts"))
 import run_chunked_bulk as rcb  # noqa: E402
 
 
+@pytest.fixture(autouse=True)
+def plan_isolation(request, monkeypatch):
+    """`phase_burn` now reads the frozen plan from the event log and appends to it, so a test
+    driving the loop would otherwise inherit the live 13-batch plan and write to the real
+    shard (the conftest guard catches the write; the read is the subtler problem — synthetic
+    plans would be silently overridden by production identity).
+
+    The rule: a test that owns an isolated event log (`ext_iso`) drives the REAL plan
+    functions, because that is the behaviour it means to test. Every other test gets an empty
+    plan and a no-op recorder, so loop tests keep asserting on the plan they construct."""
+    if "ext_iso" in request.fixturenames or request.node.get_closest_marker("live_plan"):
+        return
+    monkeypatch.setattr(rcb, "frozen_plan", lambda profile=rcb.PROFILE: [])
+    monkeypatch.setattr(rcb, "record_plan", lambda added: None)
+
+
 @pytest.fixture
 def cp_bulk(ext_iso, monkeypatch):
     """The shared extraction module bound to the production profile, over a tmp event log and
@@ -1279,18 +1295,31 @@ def test_finishing_a_batch_does_not_renumber_the_batches_after_it(monkeypatch):
                      ("bulk_v038_b003", ("c",))]
 
 
+@pytest.mark.live_plan
 def test_batch_membership_matches_what_provenance_already_records():
-    """The live check the plan-only output makes: `bulk_v038_b001` in the plan must be the same
-    documents that 2,504 already-ingested events stamp with that id. If these ever disagree, a
-    quarantine names one thing and removes another."""
+    """The live check: every batch id in the plan the burn ACTUALLY USES must be the same
+    documents that already-ingested events stamp with that id. If these disagree, a
+    quarantine names one thing and removes another.
+
+    It asserts on `cut_plan` — the frozen plan — not on `batches`, the raw cut. Reading the
+    raw cut is what let this check pass while identity moved: the extent remediation made
+    five documents readable, the raw cut renumbered every batch, and this test only caught it
+    because the renumbering happened to reach b001. Checking the plan in force catches it
+    wherever it lands."""
     from kg import eventlog
-    stamped = {e.get("doc_id") for e in eventlog.replay(tag=None)
-               if (e.get("provenance") or {}).get("batch_id") == "bulk_v038_b001"}
+    stamped = {}
+    for e in eventlog.replay(tag=None):
+        bid = (e.get("provenance") or {}).get("batch_id") or (
+            e.get("batch_id") if e.get("event_type") == "chunk_metrics" else None)
+        if bid and e.get("doc_id"):
+            stamped.setdefault(bid, set()).add(e["doc_id"])
     if not stamped:
         pytest.skip("no batch-stamped events yet")
     work, full, _r, _d = rcb.resume_plan()
-    plan = {b["batch_id"]: set(b["documents"]) for b in rcb.batches(work, full)}
-    assert stamped <= plan["bulk_v038_b001"], (stamped, plan["bulk_v038_b001"])
+    plan = {b["batch_id"]: set(b["documents"]) for b in rcb.cut_plan(work, full)[0]}
+    for bid, docs in sorted(stamped.items()):
+        assert bid in plan, f"{bid} is stamped on events but absent from the plan"
+        assert docs <= plan[bid], (bid, docs, plan[bid])
 
 
 def _burn_env(monkeypatch, tmp_path, counts, coverage, judged):
@@ -1631,3 +1660,60 @@ def test_a_restart_carries_earlier_verdicts_instead_of_dropping_them(tmp_path, m
     assert out["batches"][0]["facts"] == 110, "the carried row keeps its evidence, not a stub"
     assert judged == ["bulk_v038_b002"], "a settled batch is never re-judged"
     assert len(out["batches"]) == len(out["outcomes"])
+
+
+# ---------------------------------------------------------------- frozen plan (identity #4)
+def test_a_frozen_plan_survives_the_corpus_changing_underneath_it(ext_iso, monkeypatch):
+    """The fourth arrival of the batch-identity defect, and the one that ended the derivation
+    approach. The extent remediation converted five unreadable captures into real markdown,
+    `document_chunk_counts` began returning documents it had always filtered out, and
+    `bulk_v038_b001` came to mean `odcs` while the burn was running with 2,504 events stamped
+    with the old meaning.
+
+    Identity is a FACT stamped into provenance, not a value derived from live state. This
+    drives the real `cut_plan` across exactly that change."""
+    counts = {"a": 40, "b": 40}
+    monkeypatch.setattr(rcb, "document_chunk_counts", lambda: dict(counts))
+    monkeypatch.setattr(rcb.queue, "chunk_coverage", lambda p: {})
+    reqs = {d: {"priority": i} for i, d in enumerate(["a", "b", "newly_readable"])}
+    monkeypatch.setattr(rcb.queue, "live_requests", lambda: dict(reqs))
+    monkeypatch.setattr(rcb.queue, "requests_ever", lambda: dict(reqs))
+    monkeypatch.setattr(rcb, "deferred_documents", lambda: set())
+
+    work, full, _r, _a = rcb.resume_plan()
+    plan, added = rcb.cut_plan(work, full)
+    rcb.record_plan(added)
+    before = [(b["batch_id"], tuple(sorted(b["documents"]))) for b in plan]
+    assert before[0] == ("bulk_v038_b001", ("a",))
+
+    # the remediation: a document that was never readable becomes readable, and sorts FIRST
+    counts["newly_readable"] = 45
+    reqs["newly_readable"] = {"priority": -1}
+    work, full, _r, _a = rcb.resume_plan()
+    plan2, added2 = rcb.cut_plan(work, full)
+    after = [(b["batch_id"], tuple(sorted(b["documents"]))) for b in plan2]
+
+    assert after[:len(before)] == before, "existing ids moved"
+    assert after[-1] == ("bulk_v038_b003", ("newly_readable",)), after
+    assert [b["batch_id"] for b in added2] == ["bulk_v038_b003"]
+
+
+def test_the_frozen_plan_is_read_from_the_log_not_a_file(ext_iso, monkeypatch):
+    """M2 control: `frozen_plan` must reconstruct from replay, so the plan survives deleting
+    every projection — the property that makes it a fact rather than a cache."""
+    rcb.record_plan([{"batch_id": "bulk_v038_b001", "documents": ["x", "y"]}])
+    assert rcb.frozen_plan() == [{"batch_id": "bulk_v038_b001", "documents": ["x", "y"]}]
+    # a later cut APPENDS; it never rewrites what an earlier one said
+    rcb.record_plan([{"batch_id": "bulk_v038_b002", "documents": ["z"]}])
+    got = rcb.frozen_plan()
+    assert [b["batch_id"] for b in got] == ["bulk_v038_b001", "bulk_v038_b002"]
+    assert got[0]["documents"] == ["x", "y"]
+
+
+def test_a_replayed_duplicate_plan_event_does_not_double_the_batches(ext_iso):
+    """Re-recording the same batch (a resumed run, a re-emitted event) must be a no-op for
+    identity, not a second b001."""
+    rcb.record_plan([{"batch_id": "bulk_v038_b001", "documents": ["x"]}])
+    rcb.record_plan([{"batch_id": "bulk_v038_b001", "documents": ["SOMETHING ELSE"]}])
+    got = rcb.frozen_plan()
+    assert got == [{"batch_id": "bulk_v038_b001", "documents": ["x"]}], got

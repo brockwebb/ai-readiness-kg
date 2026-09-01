@@ -1,0 +1,30 @@
+{
+ "doc_id": "aidrin-hiniduma-2024",
+ "chunk_id": "aidrin-hiniduma-2024#c0001",
+ "chunk_index": 1,
+ "chunk_start": 0,
+ "chunk_end": 367,
+ "chunk_tokens": 119,
+ "heading_path": [],
+ "oversize": false,
+ "doc_sha256": "790a524c6bfc9941ed61f489229b73ab49f6e370fd5eca18bf98a77d9e12a9bd",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 3057,
+  "cacheReadInputTokens": 13014,
+  "cacheCreationInputTokens": 21610,
+  "webSearchRequests": 0,
+  "costUSD": 0.29904200000000003,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.29904200000000003,
+ "duration_ms": 35771,
+ "session_id": "e8efb7d9-6f0e-427f-aaea-66ec95b1bf07",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Title block of the AIDRIN paper: names the AI Data Readiness Inspector (AIDRIN) instrument and its purpose — quantitative assessment of data readiness for AI — followed by author names, emails, and affiliations.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_data_readiness_for_ai\",\n      \"name\": \"Data Readiness for AI\",\n      \"aliases\": [\"AI data readiness\", \"data readiness\"],\n      \"description\": \"The readiness of data for use in AI, which the document's title frames as something to be quantitatively assessed.\",\n      \"anchor\": \"Data Readiness for AI\",\n      \"location\": \"aidrin-hiniduma-2024#c0001\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [\n    {\n      \"id\": \"i_aidrin\",\n      \"name\": \"AI Data Readiness Inspector (AIDRIN)\",\n      \"owner\": null,\n      \"year\": null,\n      \"method\": null,\n      \"attribute_anchors\": {},\n      \"anchor\": \"AIDRIN\",\n      \"location\": \"aidrin-hiniduma-2024#c0001\"\n    }\n  ],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"aidrin-hiniduma-2024\",\n      \"to_id\": \"c_data_readiness_for_ai\",\n      \"anchor\": \"Data Readiness for AI\",\n      \"location\": \"aidrin-hiniduma-2024#c0001\"\n    },\n    {\n      \"type\": \"measures\",\n      \"from_id\": \"i_aidrin\",\n      \"to_id\": \"c_data_readiness_for_ai\",\n      \"anchor\": \"Quantitative\",\n      \"location\": \"aidrin-hiniduma-2024#c0001\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"Kaveen Hiniduma\",\n      \"anchor\": \"Kaveen Hiniduma\"\n    },\n    {\n      \"name\": \"Suren Byna\",\n      \"anchor\": \"Suren Byna\"\n    },\n    {\n      \"name\": \"Jean Luca Bez\",\n      \"anchor\": \"Jean Luca Bez\"\n    },\n    {\n      \"name\": \"Ravi Madduri\",\n      \"anchor\": \"Ravi Madduri\"\n    },\n    {\n      \"name\": \"The Ohio State University\",\n      \"anchor\": \"The Ohio State University\"\n    },\n    {\n      \"name\": \"Lawrence Berkeley National\",\n      \"anchor\": \"Lawrence Berkeley National\"\n    },\n    {\n      \"name\": \"Argonne National Laboratory\",\n      \"anchor\": \"Argonne National Laboratory\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"suggested_edge\": \"authored_by\",\n      \"anchor\": \"Kaveen Hiniduma\",\n      \"diversion_reason\": \"other:no_person_or_org_node_type\",\n      \"note\": \"Author/affiliation attribution is not expressible in the schema's node or edge types.\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"Quantitative Assessment\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

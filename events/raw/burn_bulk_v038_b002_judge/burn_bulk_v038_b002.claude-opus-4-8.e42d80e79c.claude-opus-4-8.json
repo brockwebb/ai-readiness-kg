@@ -1,0 +1,23 @@
+{
+ "batch_id": "burn_bulk_v038_b002.claude-opus-4-8.e42d80e79c",
+ "run": "burn_bulk_v038_b002",
+ "model_id": "claude-opus-4-8",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 4122,
+  "cacheReadInputTokens": 12045,
+  "cacheCreationInputTokens": 27115,
+  "webSearchRequests": 0,
+  "costUSD": 0.3802325,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "canonicalModel": "claude-opus-4-8",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3802325,
+ "duration_ms": 51618,
+ "wall_s": 53.8,
+ "session_id": "4ffb154d-edaf-420b-bafa-64ee06b29be6",
+ "raw_result": "Looking at this task, I'm being asked to act as the atomic-fact faithfulness judge. Let me evaluate each fact against its grounding span (using the window only to distinguish truncation/subject-drop from fabrication).\n\nMy analysis:\n\n- **f_550cda5f61ce** `aliases: machine consumers` — span says \"humans and AI/web crawlers\"; the term \"machine consumers\" appears in neither span nor window. Coined label → fabrication.\n- **f_56339b8aff6b** `name: adms:status` — span literally shows `adms:status`. Entailed.\n- **f_205c7e94dfdb** `name: DCTERMS` — span contains `[DCTERMS]`. Entailed.\n- **f_87911241462a** description — span carries \"human-readable and colloquial\"; the \"structured explanatory context\" clause is in the *next* sentence (window), not the span. Truncated.\n- **f_7a7f842571cd** `name: Proxy dereferenceable IRIs` — span opens with that exact phrase. Entailed.\n- **f_c8102ce6c85f** description — span: \"well-known pattern to represent the conformance to a standard\" using `dcterms:conformsTo` and `dcterms:Standard`. Entailed.\n- **f_91f9076cfc22** `name: dcterms:license` — span opens with `dcterms:license`. Entailed.\n- **f_2d809ce2fb02** `aliases: REST API` — span has \"RESTful APIs\"; \"REST API\" is the same term normalized. Entailed.\n- **f_3ad5f38f27d7** `aliases: privacy mechanisms` — span has \"privacy safeguards\"; near-synonym paraphrase, grounded. Entailed (lower confidence).\n- **f_91e89e4393ec** text — fact is a verbatim substring of the span. Entailed.\n\n{\"judgments\": [{\"fact_id\": \"f_550cda5f61ce\", \"label\": \"not_entailed\", \"class\": \"fabrication\", \"confidence\": 0.72}, {\"fact_id\": \"f_56339b8aff6b\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.98}, {\"fact_id\": \"f_205c7e94dfdb\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.95}, {\"fact_id\": \"f_87911241462a\", \"label\": \"not_entailed\", \"class\": \"span_truncated\", \"confidence\": 0.6}, {\"fact_id\": \"f_7a7f842571cd\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.97}, {\"fact_id\": \"f_c8102ce6c85f\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.95}, {\"fact_id\": \"f_91f9076cfc22\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.97}, {\"fact_id\": \"f_2d809ce2fb02\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.75}, {\"fact_id\": \"f_3ad5f38f27d7\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.58}, {\"fact_id\": \"f_91e89e4393ec\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.98}]}"
+}

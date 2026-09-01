@@ -1,0 +1,33 @@
+{
+ "doc_id": "aggarwal-2024-geo-generative-engine-optimization",
+ "chunk_id": "aggarwal-2024-geo-generative-engine-optimization#c0013",
+ "chunk_index": 13,
+ "chunk_start": 29868,
+ "chunk_end": 29971,
+ "chunk_tokens": 19,
+ "heading_path": [
+  "7 different categorizations. Owing to its specially designed high",
+  "3.4 Evaluation Metrics"
+ ],
+ "oversize": false,
+ "doc_sha256": "beb95332fcbc6f32078c98cd37d0b8ea44f91968d11262344cf452beecf41f41",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 2579,
+  "cacheReadInputTokens": 13014,
+  "cacheCreationInputTokens": 21463,
+  "webSearchRequests": 0,
+  "costUSD": 0.285622,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.285622,
+ "duration_ms": 28610,
+ "session_id": "69195074-8ebc-4c36-bfbc-91639a5e3c39",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Fragment of the GEO paper's evaluation-metrics setup: the source s_i chosen for optimization is picked at random but held constant per query across all GEO methods.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_geo_methods\",\n      \"name\": \"GEO methods\",\n      \"aliases\": [\"Generative Engine Optimization methods\"],\n      \"description\": \"The set of optimization methods compared in the paper's evaluation; the randomly selected source for a given query is held constant across all of them.\",\n      \"anchor\": \"all GEO methods\",\n      \"location\": \"aggarwal-2024-geo-generative-engine-optimization#c0013\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"cl_source_random_constant\",\n      \"claim_text\": \"is chosen randomly but remains constant\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"peer_reviewed_experiment\",\n      \"anchor\": \"chosen randomly\",\n      \"location\": \"aggarwal-2024-geo-generative-engine-optimization#c0013\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"aggarwal-2024-geo-generative-engine-optimization\",\n      \"to_id\": \"cl_source_random_constant\",\n      \"anchor\": \"chosen randomly\",\n      \"location\": \"aggarwal-2024-geo-generative-engine-optimization#c0013\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_source_random_constant\",\n      \"to_id\": \"c_geo_methods\",\n      \"anchor\": \"across all GEO methods\",\n      \"location\": \"aggarwal-2024-geo-generative-engine-optimization#c0013\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"aggarwal-2024-geo-generative-engine-optimization\",\n      \"to_id\": \"c_geo_methods\",\n      \"anchor\": \"all GEO methods\",\n      \"location\": \"aggarwal-2024-geo-generative-engine-optimization#c0013\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"The source 𝑠𝑖\",\n      \"anchor\": \"The source 𝑠𝑖 selected\"\n    },\n    {\n      \"name\": \"particular query\",\n      \"anchor\": \"particular query\"\n    }\n  ],\n  \"proposed_relationships\": [],\n  \"gleaned\": [\n    {\"name\": \"source selection for optimization\", \"type\": \"Concept\"},\n    {\"name\": \"query\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}
