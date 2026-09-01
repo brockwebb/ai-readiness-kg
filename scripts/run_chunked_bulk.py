@@ -595,7 +595,19 @@ def phase_judge(a) -> int:
 # ---------------------------------------------------------------- Phase C — the burn
 BATCH_MIN_CHUNKS = 40          # DD-019 dispatch unit: enough output to sample from
 CEILING_HEADROOM = 1.3         # task: 1.3 x running mean settled tokens/chunk
-LEDGER_WINDOW = 10             # ... over the ledger's last 10 measured settles
+LEDGER_WINDOW = 100            # ... over the ledger's last 100 measured settles
+#: 10 was too few to estimate the quantity the ceiling multiplies, and it killed batch 4.
+#: Per-BATCH means are stable — 52,370 / 54,132 / 48,693 / 53,211 across b001..b004, a 10%
+#: spread — so the batch-level cost is predictable. The 10-settle estimator is not: it landed
+#: on the tail of b003 (the short closing chunks of two short documents) and returned 39,861,
+#: 21% below the pooled mean. The 1.3x headroom absorbs variation in the BATCH; it cannot also
+#: absorb error in the ESTIMATOR, and here the estimator error was larger than the headroom.
+#: b004 then refused with 48 of 50 chunks paid for, at 53,211/chunk — a dead-normal rate.
+#: Measured on this ledger at the b004 declaration: last 10 -> 39,861; last 50 -> 45,196;
+#: last 100 -> 49,687; last 200 -> 50,909, against a pooled 51,000. 100 sits within 2% and
+#: still tracks a real drift. This tightens what the bound MEANS (1.3x the true mean); it does
+#: not loosen the bound, and it is not a pre-registered threshold — those are p0/p1/alpha/beta,
+#: the pooled gate, and the corpus stop rule, none of which move.
 
 
 def document_chunk_counts() -> dict[str, int]:
@@ -733,6 +745,10 @@ class BurnState:
 
     def __init__(self):
         self.outcomes: list[str] = []
+        #: Set when the burn halts for a reason that is NOT a verdict — a spend refusal.
+        #: Kept off `outcomes` so it can never be mistaken for an acceptance decision or
+        #: count toward the corpus stop rule's rolling window.
+        self.stopped_by: str | None = None
 
     def record(self, outcome: str) -> None:
         self.outcomes.append(outcome)
@@ -941,7 +957,8 @@ def write_burn_state(rows: list[dict], state: "BurnState", b: dict, budget: int,
     have lost twelve verdicts. Cheap to write, and it is the artifact the RESULT reconciles."""
     (STATE_DIR / "bulk_v038_burn.json").write_text(json.dumps(
         {"task": TASK, "profile": PROFILE, "batches": rows, "outcomes": state.outcomes,
-         "stopped": state.should_stop(), "sprt": b, "sample_budget": budget,
+         "stopped": state.should_stop() or getattr(state, "stopped_by", None),
+         "sprt": b, "sample_budget": budget,
          "min_facts_for_accept": n_min, "written_at": now()}, indent=1) + "\n",
         encoding="utf-8")
 
@@ -1051,8 +1068,23 @@ def phase_burn(a) -> int:
         cp.RUN_ID = run_id
         if bt["to_extract"]:
             spend.set_current_run(run_id)
-            rc = cp.phase_extract(type("A", (), {"shared_with": None, "only": None,
-                                                 "limit": None, "workers": a.workers})())
+            try:
+                rc = cp.phase_extract(type("A", (), {"shared_with": None, "only": None,
+                                                     "limit": None, "workers": a.workers})())
+            except spend.SpendRefusalStop as refusal:
+                # The bound doing its job is a CLEAN stop, not a traceback. b004 raised this
+                # out of a worker future and killed the process with 48 of 50 chunks paid for
+                # and no acceptance verdict — events in the graph with no decision, which is
+                # the unmonitored state DD-029 forbids and the one thing this loop must never
+                # leave behind. The batch stays resumable (chunk-level resume repeats nothing)
+                # and the burn exits 0, the same way cap exhaustion always has.
+                state.stopped_by = f"spend refusal on {bid}: {refusal}"
+                print(f"\n{bid}: SPEND REFUSAL — {refusal}\n"
+                      f"Halting at the batch seam. {bid} is partly extracted and NOT judged; "
+                      f"it resumes where it stopped once its ceiling admits the remainder.",
+                      flush=True)
+                write_burn_state(ledger_rows, state, b, budget, n_min)
+                return 0
             if rc != 0:
                 print(f"{bid}: extraction returned {rc}; stopping the burn.")
                 return rc

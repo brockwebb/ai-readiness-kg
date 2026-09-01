@@ -1506,3 +1506,77 @@ def test_a_partly_deferred_batch_runs_its_live_documents_and_only_those(tmp_path
     rcb.phase_burn(args)
     assert sent == [["a"]]                       # b never dispatched
     assert sized == [("bulk_v038_b001", 30)]     # ... and never paid for
+
+
+def test_a_spend_refusal_stops_the_burn_cleanly_instead_of_killing_it(tmp_path, monkeypatch):
+    """This happened to b004. `SpendRefusalStop` was raised inside a worker future, propagated
+    out of `phase_extract`, and killed the process with 48 of 50 chunks paid for and no
+    acceptance verdict — events in the graph with no decision, the state DD-029 forbids.
+
+    The bound doing its job must be a clean stop: exit 0, no verdict invented for the batch
+    that could not finish, nothing dispatched after it, and the reason on the burn ledger."""
+    counts = {"a": 50, "b": 50}
+    monkeypatch.setattr(rcb, "document_chunk_counts", lambda: counts)
+    monkeypatch.setattr(rcb.queue, "chunk_coverage", lambda p: {})
+    monkeypatch.setattr(rcb.queue, "live_requests",
+                        lambda: {"a": {"priority": 0}, "b": {"priority": 1}})
+    monkeypatch.setattr(rcb.queue, "requests_ever",
+                        lambda: {"a": {"priority": 0}, "b": {"priority": 1}})
+    monkeypatch.setattr(rcb, "deferred_documents", lambda: set())
+    monkeypatch.setattr(rcb, "apply_production_profile", lambda *a, **k: {})
+    monkeypatch.setattr(rcb, "phase_a_mean_per_chunk", lambda: 50_000.0)
+    monkeypatch.setattr(rcb.model_stub, "load_model_config",
+                        lambda: {"primary_judge_model_id": "p", "secondary_judge_model_id": "s"})
+    monkeypatch.setattr(rcb.cp, "members", lambda: {"a": tmp_path, "b": tmp_path})
+    monkeypatch.setattr(rcb.rbe, "doc_text", lambda p: "")
+    monkeypatch.setattr(rcb, "batch_items", lambda bid: [])
+    monkeypatch.setattr(rcb, "yield_by_stratum", lambda: {})
+    monkeypatch.setattr(rcb.spend, "set_current_run", lambda r: None)
+    monkeypatch.setattr(rcb, "stop_file", lambda: tmp_path / "nope.json")
+    monkeypatch.setattr(rcb, "STATE_DIR", tmp_path)
+    monkeypatch.setattr(rcb, "declare_batch_ceiling", lambda *a, **k: (1, 1.0, False))
+    judged = []
+    monkeypatch.setattr(rcb, "judge_batch",
+                        lambda bid, *a, **k: judged.append(bid) or {"outcome": "accept",
+                                                                    "batch_id": bid})
+
+    def refuse(_a):
+        raise rcb.spend.SpendRefusalStop(rcb.spend.Refusal(
+            run_id="bulk_v038_b001", estimate_tokens=56_091, committed_tokens=2_545_186,
+            ceiling_tokens=2_590_992, scope="run", reason="over_ceiling"))
+
+    monkeypatch.setattr(rcb.cp, "phase_extract", refuse)
+
+    args = type("A", (), {"plan_only": False, "max_batches": None, "workers": 1,
+                          "judge_ceiling": 1, "fact_cap": 40})()
+    assert rcb.phase_burn(args) == 0            # a clean stop, not a traceback
+
+    state = json.loads((tmp_path / "bulk_v038_burn.json").read_text())
+    assert state["batches"] == [], "no verdict for a batch that could not finish"
+    assert judged == [], "an unfinished batch is not judged on what happened to land"
+    assert "spend refusal" in (state["stopped"] or ""), state["stopped"]
+
+
+def test_the_ledger_window_is_wide_enough_to_estimate_what_it_multiplies(tmp_path,
+                                                                        monkeypatch):
+    """The b004 root cause, pinned. A window of 10 settles let a run of short closing chunks
+    drag the mean 21% below the pooled value, and the 1.3x headroom — which exists to absorb
+    variation in the BATCH — could not also absorb the estimator's own error.
+
+    Builds a ledger whose true per-chunk mean is 50,000 with a cheap tail, and asserts the
+    window recovers the mean rather than the tail."""
+    rows = [{"record": "declare", "run_id": "bulk_v038_x", "ceiling_tokens": 1,
+             "call_class": "extraction_chunk"}]
+    rows += [{"record": "settle", "run_id": "bulk_v038_x", "actual_tokens": 50_000}
+             for _ in range(200)]
+    rows += [{"record": "settle", "run_id": "bulk_v038_x", "actual_tokens": 10_000}
+             for _ in range(10)]                       # the short closing chunks
+    (tmp_path / "state").mkdir()
+    (tmp_path / "state" / "spend_ledger.jsonl").write_text(
+        "\n".join(json.dumps(r) for r in rows) + "\n")
+    monkeypatch.setattr(rcb, "REPO", tmp_path)
+
+    per = rcb.mean_settled_per_chunk(0.0)
+    assert 45_000 <= per <= 50_000, f"window recovered {per:,.0f}, not the true mean"
+    # and the tail alone — what a 10-wide window sees — is nowhere near it
+    assert per > 4 * 10_000, "the estimator is reading only the cheap tail again"
