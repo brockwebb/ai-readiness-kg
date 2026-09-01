@@ -289,7 +289,7 @@ def test_a_truncated_chunk_stops_the_run_but_only_after_the_paid_for_rest_is_ing
     src = tmp_path / "doc.md"
     src.write_text("text", encoding="utf-8")
     monkeypatch.setattr(cp, "members", lambda: {d: src for d in cp.PILOT_DOCS})
-    monkeypatch.setattr(cp.rbe, "doc_text", lambda p: "text")
+    monkeypatch.setattr(cp.rbe, "doc_text", lambda p, d=None: "text")
     class FakeSet(list):
         structure_source, heading_level = "test", 1
     monkeypatch.setattr(cp.chunker, "chunk_document",
@@ -526,7 +526,7 @@ def test_shared_with_actually_restricts_which_chunks_are_dispatched(cp, ext_iso,
     cp.apply_arm("v0_3_8", None, "pilot_v038_arm_a2_haiku")
     src = tmp_path / "doc.md"; src.write_text("text", encoding="utf-8")
     monkeypatch.setattr(cp, "members", lambda: {d: src for d in cp.PILOT_DOCS})
-    monkeypatch.setattr(cp.rbe, "doc_text", lambda p: "text")
+    monkeypatch.setattr(cp.rbe, "doc_text", lambda p, d=None: "text")
     monkeypatch.setattr(cp.model_stub, "load_model_config",
                         lambda *a, **k: {"model_id": "m", "truncation_suspect_tokens": 1})
     monkeypatch.setattr(cp, "raw_path", lambda *a, **k: tmp_path / "absent.json")

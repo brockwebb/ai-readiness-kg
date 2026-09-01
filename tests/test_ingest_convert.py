@@ -366,3 +366,55 @@ def test_the_two_features_split_the_superseded_captures_between_them():
     assert C.link_density(slsa) > C.MAX_LINK_DENSITY             # density catches it
     assert len(C.visible_text(hero)) < C.MIN_VISIBLE_CHARS       # text floor catches hero
     assert C.link_density(hero) <= C.MAX_LINK_DENSITY            # density MISSES it
+
+
+# ------------------------------------------------- ADDENDUM-03: substrate wiring into doc_text
+def test_a_document_with_substrate_is_read_from_substrate(tmp_path, monkeypatch):
+    """ADDENDUM-03 item 1. The substrate is the canonical form, and for an HTML source it is the
+    ONLY readable form: the suffix dispatch raises on `.html`, which is why five re-acquired
+    standards were unextractable until this lookup existed."""
+    import run_bulk_extraction as rbe
+    from kg.ingest import gate
+    sub = tmp_path / "d.md"
+    sub.write_text('---\ndoc_id: "d"\nconverter: "docling"\n---\nthe real document text\n')
+    monkeypatch.setattr(gate, "substrate_path", lambda doc_id: sub if doc_id == "d" else None)
+    assert rbe.doc_text(tmp_path / "d.html", "d") == "the real document text\n"
+
+
+def test_a_document_without_substrate_reads_exactly_what_it_read_before(tmp_path, monkeypatch):
+    """The other half of ADDENDUM-03's test, and the one that protects the status quo. A PDF has
+    no substrate by design, and a markdown source with no substrate must still read itself."""
+    import run_bulk_extraction as rbe
+    from kg.ingest import gate
+    monkeypatch.setattr(gate, "substrate_path", lambda doc_id: None)
+    src = tmp_path / "d.md"
+    src.write_text("original bytes\n")
+    assert rbe.doc_text(src, "d") == "original bytes\n"
+    assert rbe.doc_text(src) == "original bytes\n"          # and with no doc_id at all
+
+
+def test_the_frontmatter_never_reaches_the_extractor(tmp_path):
+    """Chunk boundaries and grounding anchors are offsets into the text the extractor was given.
+    Twelve lines of YAML at the top would shift every offset in the document and invalidate
+    resume against chunks already ingested, silently."""
+    from kg.ingest import convert as C
+    sub = tmp_path / "d.md"
+    body = "# Title\n\nbody text that the chunker will offset into.\n"
+    sub.write_text('---\ndoc_id: "d"\nsource_sha256: "abc"\n---\n' + body)
+    got = C.substrate_body(sub)
+    assert got == body
+    assert "doc_id" not in got and "source_sha256" not in got
+
+
+def test_a_passthrough_substrate_is_byte_identical_to_its_source(tmp_path, monkeypatch):
+    """The property that makes this wiring safe for the 92 documents already in the graph. A
+    passthrough conversion writes frontmatter plus the source unchanged, so stripping the
+    frontmatter must return the source byte for byte. If it ever does not, every already-ingested
+    chunk_id stops lining up with the text it was cut from."""
+    from kg.ingest import convert as C
+    src = tmp_path / "src.md"
+    # long enough to clear the extent gate: this test is about byte fidelity, not admission
+    src.write_text("line one\n\nline two, with trailing spaces   \n\n\n"
+                   + ("real prose that a specification would contain. " * 60) + "\n")
+    dest, _report = C.convert("d", src, {}, write=True)
+    assert C.substrate_body(dest) == src.read_text()

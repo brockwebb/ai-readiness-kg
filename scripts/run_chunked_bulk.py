@@ -361,7 +361,7 @@ def draw_confirmation() -> dict:
         pool = []                                       # (doc_id, chunk_id) round-robin
         by_doc = {}
         for doc_id in docs:
-            text = rbe.doc_text(paths[doc_id])
+            text = rbe.doc_text(paths[doc_id], doc_id)
             by_doc[doc_id] = [c.chunk_id for c in chunker.chunk_document(doc_id, text)]
         order = docs[:]
         rng.shuffle(order)
@@ -543,7 +543,7 @@ def phase_judge(a) -> int:
     payload = bind_confirmation_run()
     cfg = model_stub.load_model_config()
     m = cp.members()
-    texts = {d: rbe.doc_text(m[d]) for d in cp.DOCS}
+    texts = {d: rbe.doc_text(m[d], d) for d in cp.DOCS}
     recs = bulk_records(texts)
     min_facts = cp.min_facts_for_gate()
 
@@ -616,7 +616,7 @@ def document_chunk_counts() -> dict[str, int]:
     for doc_id in burn_set():
         path = paths.get(doc_id)
         if path and readable(path):
-            out[doc_id] = len(chunker.chunk_document(doc_id, rbe.doc_text(path)))
+            out[doc_id] = len(chunker.chunk_document(doc_id, rbe.doc_text(path, doc_id)))
     return out
 
 
@@ -1163,7 +1163,7 @@ def phase_burn(a) -> int:
                 return rc
 
         m = cp.members()
-        texts = {d: rbe.doc_text(m[d]) for d in cp.DOCS}
+        texts = {d: rbe.doc_text(m[d], d) for d in cp.DOCS}
         items = batch_items(bid)
         if len(items) < n_min:
             verdict = {"outcome": "sampling_inconclusive", "batch_id": bid,

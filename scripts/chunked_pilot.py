@@ -207,7 +207,7 @@ def chunk_sets() -> dict[str, tuple[str, chunker.ChunkSet]]:
     m = members()
     out = {}
     for d in DOCS:
-        text = rbe.doc_text(m[d])
+        text = rbe.doc_text(m[d], d)
         out[d] = (text, chunker.chunk_document(d, text))
     return out
 
@@ -439,7 +439,7 @@ def phase_extract(a) -> int:
         if not docs:
             raise SystemExit(f"FATAL: --only {a.only!r} matches none of the pilot documents")
     for d in docs:
-        text = rbe.doc_text(m[d])
+        text = rbe.doc_text(m[d], d)
         sha = hashlib.sha256(m[d].read_bytes()).hexdigest()
         cs = chunker.chunk_document(d, text)
         title = d.replace("-", " ")
@@ -646,7 +646,7 @@ def phase_ingest(a) -> int:
                 and (ev["chunk_id"], ev.get("chunk_start"), ev.get("chunk_end")) not in dead}
     counts = Counter()
     for d in DOCS:
-        text = rbe.doc_text(m[d])
+        text = rbe.doc_text(m[d], d)
         sha = hashlib.sha256(m[d].read_bytes()).hexdigest()
         cs = chunker.chunk_document(d, text)
         for c in cs:
@@ -1177,7 +1177,7 @@ def stratum_admission(stratum: str, n_items: int, min_facts: int) -> tuple[bool,
 def phase_judge(a) -> int:
     cfg = model_stub.load_model_config()
     m = members()
-    texts = {d: rbe.doc_text(m[d]) for d in DOCS}
+    texts = {d: rbe.doc_text(m[d], d) for d in DOCS}
     raters = [cfg["primary_judge_model_id"], cfg["secondary_judge_model_id"]]
     spend.default_ledger().declare(JUDGE_RUN_ID, a.judge_ceiling, declared_by=TASK,
                                    call_class="judge")
@@ -1268,7 +1268,7 @@ def write_verdict(results: dict, cfg: dict, a, admission: dict | None = None,
     wd_usage = whole_doc_usage()
     hist, cross, div_total = diversion_histogram()
     resolution = json.loads((METRICS / "chunked_resolution.json").read_text())
-    sets = {d: chunker.chunk_document(d, rbe.doc_text(members()[d])) for d in DOCS}
+    sets = {d: chunker.chunk_document(d, rbe.doc_text(members()[d], d)) for d in DOCS}
 
     min_facts = min_facts if min_facts is not None else min_facts_for_gate()
     L = ["# Chunked vs whole-document extraction — pre-registered verdict", "",
@@ -1482,7 +1482,7 @@ def _proposed_nodes(shared: set[str]) -> dict[str, dict]:
     quarantined. Read from the raws, so an item the parser rejected still counts as proposed:
     recall is a question about what the model saw, not about what survived the gate."""
     m = members()
-    texts = {d: rbe.doc_text(m[d]) for d in DOCS}
+    texts = {d: rbe.doc_text(m[d], d) for d in DOCS}
     out: dict[str, dict] = defaultdict(dict)
     for f in sorted(RAW_DIR.glob("*.json")):
         raw = json.loads(f.read_text())
@@ -1600,7 +1600,7 @@ def phase_arm_judge(a) -> int:
     are comparable to that verdict's rows rather than to a second protocol."""
     cfg = model_cfg()
     m = members()
-    texts = {d: rbe.doc_text(m[d]) for d in DOCS}
+    texts = {d: rbe.doc_text(m[d], d) for d in DOCS}
     base = model_stub.load_model_config()
     raters = [base["primary_judge_model_id"], base["secondary_judge_model_id"]]
     recs = [r for r in chunked_records(texts) if r["stratum"] == "Instrument"]
@@ -1695,7 +1695,7 @@ def phase_register(a) -> int:
                       f"{tag}: atomic facts judged (2 raters, Dawid-Skene)", data)
     # chunked-arm structural numbers
     hist, cross, total = diversion_histogram()
-    sets = {d: chunker.chunk_document(d, rbe.doc_text(members()[d])) for d in DOCS}
+    sets = {d: chunker.chunk_document(d, rbe.doc_text(members()[d], d)) for d in DOCS}
     per_doc = per_doc_settled_chunked()
     _register(sum(len(c) for c in sets.values()), "chunks",
               "chunked arm: total chunks over the five pilot documents at max_tokens 1500",

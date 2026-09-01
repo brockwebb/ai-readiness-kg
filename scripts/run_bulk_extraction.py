@@ -233,7 +233,21 @@ def tokens_left() -> int:
     return min(day_left, week_left)
 
 
-def doc_text(path: Path) -> str:
+def doc_text(path: Path, doc_id: str | None = None) -> str:
+    """The text the extractor sees. Prefers the DD-030 substrate when one exists.
+
+    The substrate is the canonical uniform form of the document, and for HTML sources it is
+    the only readable form: the suffix dispatch below raises on `.html`, which is why five
+    re-acquired standards were unextractable until this lookup existed. For a passthrough
+    conversion the substrate body is byte-identical to the source file, so documents already
+    in the graph read exactly what they read before and chunk-level resume still lines up.
+    PDFs have no substrate by design (they are delegated to the reader below), so they fall
+    through unchanged."""
+    if doc_id:
+        from kg.ingest import convert as _convert, gate as _gate
+        sub = _gate.substrate_path(doc_id)
+        if sub is not None:
+            return _convert.substrate_body(sub)
     if path.suffix.lower() in (".md", ".txt"):
         return path.read_text(encoding="utf-8")
     if path.suffix.lower() == ".pdf":
@@ -413,7 +427,7 @@ def run(max_docs: int | None = None, dry_run: bool = False,
             path = members[doc_id]
             doc_sha = hashlib.sha256(path.read_bytes()).hexdigest()
             try:
-                text = doc_text(path)
+                text = doc_text(path, doc_id)
             except Exception as exc:
                 eventlog.append({"event_type": "bulk_doc_failed", "doc_id": doc_id,
                                  "stage": "text_extraction", "error": str(exc)[:400]},

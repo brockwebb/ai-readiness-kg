@@ -248,6 +248,22 @@ def read_frontmatter(path: Path) -> dict:
     return out
 
 
+def substrate_body(path: Path) -> str:
+    """The substrate's document text, with the frontmatter block removed.
+
+    Extraction must never see the frontmatter. Chunk boundaries and grounding anchors are
+    offsets into the text the extractor was given, so twelve lines of YAML at the top would
+    shift every offset in the document and invalidate resume against chunks already ingested.
+    For a passthrough conversion this returns bytes identical to the source file, which is the
+    property that makes wiring substrate into the extraction path safe for the documents
+    already in the graph."""
+    text = path.read_text("utf-8", "ignore")
+    if not text.startswith("---\n"):
+        return text
+    end = text.find("\n---\n", 4)
+    return text if end == -1 else text[end + 5:]
+
+
 def verify_substrate(doc_id: str, substrate: Path | None = None) -> dict:
     """Re-hash the source named in the frontmatter and compare.
 

@@ -1040,7 +1040,7 @@ def test_the_burn_loop_halts_on_the_stop_file_before_declaring_a_ceiling(tmp_pat
     monkeypatch.setattr(rcb.cp, "phase_ingest", lambda a: 0)
     monkeypatch.setattr(rcb, "batch_items", lambda bid: [])
     monkeypatch.setattr(rcb.cp, "members", lambda: {"a": tmp_path, "b": tmp_path})
-    monkeypatch.setattr(rcb.rbe, "doc_text", lambda p: "")
+    monkeypatch.setattr(rcb.rbe, "doc_text", lambda p, d=None: "")
     monkeypatch.setattr(rcb, "yield_by_stratum", lambda: {})
     monkeypatch.setattr(rcb.spend, "set_current_run", lambda r: None)
     rcb.phase_burn(args)
@@ -1062,7 +1062,7 @@ def test_a_failing_yield_flag_cannot_destroy_a_batch_verdict(tmp_path, monkeypat
     monkeypatch.setattr(rcb.cp, "phase_extract", lambda a: 0)
     monkeypatch.setattr(rcb.cp, "phase_ingest", lambda a: 0)
     monkeypatch.setattr(rcb.cp, "members", lambda: {"a": tmp_path})
-    monkeypatch.setattr(rcb.rbe, "doc_text", lambda p: "")
+    monkeypatch.setattr(rcb.rbe, "doc_text", lambda p, d=None: "")
     monkeypatch.setattr(rcb, "batch_items", lambda bid: [{"x": 1}] * 999)
     monkeypatch.setattr(rcb, "judge_batch",
                         lambda *a, **k: {"outcome": "accept", "batch_id": a[0], "facts": 110,
@@ -1124,7 +1124,7 @@ def test_an_earlier_batch_s_verdict_survives_a_later_batch_dying(tmp_path, monke
     monkeypatch.setattr(rcb, "declare_batch_ceiling", lambda *a, **k: (1, 1.0, False))
     monkeypatch.setattr(rcb.cp, "phase_ingest", lambda a: 0)
     monkeypatch.setattr(rcb.cp, "members", lambda: {"a": tmp_path, "b": tmp_path})
-    monkeypatch.setattr(rcb.rbe, "doc_text", lambda p: "")
+    monkeypatch.setattr(rcb.rbe, "doc_text", lambda p, d=None: "")
     monkeypatch.setattr(rcb, "batch_items", lambda bid: [{"x": 1}] * 999)
     monkeypatch.setattr(rcb, "judge_batch",
                         lambda *a, **k: {"outcome": "accept", "batch_id": a[0]})
@@ -1167,7 +1167,7 @@ def test_a_verdict_is_on_disk_before_decoration_runs_at_all(tmp_path, monkeypatc
     monkeypatch.setattr(rcb.cp, "phase_extract", lambda a: 0)
     monkeypatch.setattr(rcb.cp, "phase_ingest", lambda a: 0)
     monkeypatch.setattr(rcb.cp, "members", lambda: {"a": tmp_path})
-    monkeypatch.setattr(rcb.rbe, "doc_text", lambda p: "")
+    monkeypatch.setattr(rcb.rbe, "doc_text", lambda p, d=None: "")
     monkeypatch.setattr(rcb, "batch_items", lambda bid: [{"x": 1}] * 999)
     monkeypatch.setattr(rcb, "judge_batch",
                         lambda *a, **k: {"outcome": "accept", "batch_id": a[0]})
@@ -1248,7 +1248,7 @@ def test_the_burn_loop_uses_stable_identity_and_sizes_on_what_is_left(tmp_path, 
     monkeypatch.setattr(rcb.cp, "phase_extract", lambda a: 0)
     monkeypatch.setattr(rcb.cp, "phase_ingest", lambda a: 0)
     monkeypatch.setattr(rcb.cp, "members", lambda: {"a": tmp_path, "b": tmp_path})
-    monkeypatch.setattr(rcb.rbe, "doc_text", lambda p: "")
+    monkeypatch.setattr(rcb.rbe, "doc_text", lambda p, d=None: "")
     monkeypatch.setattr(rcb, "batch_items", lambda bid: [])
     monkeypatch.setattr(rcb, "yield_by_stratum", lambda: {})
     monkeypatch.setattr(rcb.spend, "set_current_run", lambda r: None)
@@ -1334,7 +1334,7 @@ def _burn_env(monkeypatch, tmp_path, counts, coverage, judged):
     monkeypatch.setattr(rcb, "declare_batch_ceiling", lambda *a, **k: (10**9, 1.0, False))
     monkeypatch.setattr(rcb.cp, "phase_ingest", lambda a: 0)
     monkeypatch.setattr(rcb.cp, "members", lambda: {d: tmp_path for d in counts})
-    monkeypatch.setattr(rcb.rbe, "doc_text", lambda p: "")
+    monkeypatch.setattr(rcb.rbe, "doc_text", lambda p, d=None: "")
     monkeypatch.setattr(rcb, "batch_items", lambda bid: [{"x": 1}] * 999)
     monkeypatch.setattr(rcb, "yield_by_stratum", lambda: {})
     monkeypatch.setattr(rcb.spend, "set_current_run", lambda r: None)
@@ -1480,7 +1480,7 @@ def test_the_burn_loop_skips_a_deferred_batch_without_declaring_or_judging(tmp_p
     monkeypatch.setattr(rcb.model_stub, "load_model_config",
                         lambda: {"primary_judge_model_id": "p", "secondary_judge_model_id": "s"})
     monkeypatch.setattr(rcb.cp, "members", lambda: {d: tmp_path for d in "abc"})
-    monkeypatch.setattr(rcb.rbe, "doc_text", lambda p: "")
+    monkeypatch.setattr(rcb.rbe, "doc_text", lambda p, d=None: "")
     monkeypatch.setattr(rcb, "batch_items", lambda bid: [])
     monkeypatch.setattr(rcb, "yield_by_stratum", lambda: {})
     monkeypatch.setattr(rcb.spend, "set_current_run", lambda r: None)
@@ -1518,7 +1518,7 @@ def test_a_partly_deferred_batch_runs_its_live_documents_and_only_those(tmp_path
     monkeypatch.setattr(rcb.model_stub, "load_model_config",
                         lambda: {"primary_judge_model_id": "p", "secondary_judge_model_id": "s"})
     monkeypatch.setattr(rcb.cp, "members", lambda: {"a": tmp_path, "b": tmp_path})
-    monkeypatch.setattr(rcb.rbe, "doc_text", lambda p: "")
+    monkeypatch.setattr(rcb.rbe, "doc_text", lambda p, d=None: "")
     monkeypatch.setattr(rcb, "batch_items", lambda bid: [])
     monkeypatch.setattr(rcb, "yield_by_stratum", lambda: {})
     monkeypatch.setattr(rcb.spend, "set_current_run", lambda r: None)
@@ -1557,7 +1557,7 @@ def test_a_spend_refusal_stops_the_burn_cleanly_instead_of_killing_it(tmp_path, 
     monkeypatch.setattr(rcb.model_stub, "load_model_config",
                         lambda: {"primary_judge_model_id": "p", "secondary_judge_model_id": "s"})
     monkeypatch.setattr(rcb.cp, "members", lambda: {"a": tmp_path, "b": tmp_path})
-    monkeypatch.setattr(rcb.rbe, "doc_text", lambda p: "")
+    monkeypatch.setattr(rcb.rbe, "doc_text", lambda p, d=None: "")
     monkeypatch.setattr(rcb, "batch_items", lambda bid: [])
     monkeypatch.setattr(rcb, "yield_by_stratum", lambda: {})
     monkeypatch.setattr(rcb.spend, "set_current_run", lambda r: None)
@@ -1636,7 +1636,7 @@ def test_a_restart_carries_earlier_verdicts_instead_of_dropping_them(tmp_path, m
     monkeypatch.setattr(rcb.model_stub, "load_model_config",
                         lambda: {"primary_judge_model_id": "p", "secondary_judge_model_id": "s"})
     monkeypatch.setattr(rcb.cp, "members", lambda: {"a": tmp_path, "b": tmp_path})
-    monkeypatch.setattr(rcb.rbe, "doc_text", lambda p: "")
+    monkeypatch.setattr(rcb.rbe, "doc_text", lambda p, d=None: "")
     monkeypatch.setattr(rcb, "batch_items", lambda bid: [{"i": i} for i in range(200)])
     monkeypatch.setattr(rcb, "yield_by_stratum", lambda: {})
     monkeypatch.setattr(rcb.spend, "set_current_run", lambda r: None)
