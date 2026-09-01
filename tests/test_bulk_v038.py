@@ -1717,3 +1717,51 @@ def test_a_replayed_duplicate_plan_event_does_not_double_the_batches(ext_iso):
     rcb.record_plan([{"batch_id": "bulk_v038_b001", "documents": ["SOMETHING ELSE"]}])
     got = rcb.frozen_plan()
     assert got == [{"batch_id": "bulk_v038_b001", "documents": ["x"]}], got
+
+
+def test_a_spend_refusal_while_JUDGING_also_stops_cleanly(tmp_path, monkeypatch):
+    """The hole in the first version of the clean-stop guard. It wrapped `phase_extract` only,
+    because that is where the refusal was first observed (b004). Judging spends against the
+    same daily band and the same per-run ceilings, and the case most likely to exhaust them is
+    an inconclusive batch riding to the full budget at roughly 4x the cost of an accept.
+
+    A refusal while judging must exit 0 with NO verdict invented for the batch, nothing
+    dispatched after it, and the reason on the burn ledger — the same contract the extraction
+    path already had."""
+    counts = {"a": 50, "b": 50}
+    monkeypatch.setattr(rcb, "document_chunk_counts", lambda: counts)
+    monkeypatch.setattr(rcb.queue, "chunk_coverage", lambda p: {})
+    monkeypatch.setattr(rcb.queue, "live_requests",
+                        lambda: {"a": {"priority": 0}, "b": {"priority": 1}})
+    monkeypatch.setattr(rcb.queue, "requests_ever",
+                        lambda: {"a": {"priority": 0}, "b": {"priority": 1}})
+    monkeypatch.setattr(rcb, "deferred_documents", lambda: set())
+    monkeypatch.setattr(rcb, "apply_production_profile", lambda *a, **k: {})
+    monkeypatch.setattr(rcb, "phase_a_mean_per_chunk", lambda: 50_000.0)
+    monkeypatch.setattr(rcb.model_stub, "load_model_config",
+                        lambda: {"primary_judge_model_id": "p", "secondary_judge_model_id": "s"})
+    monkeypatch.setattr(rcb.cp, "members", lambda: {"a": tmp_path, "b": tmp_path})
+    monkeypatch.setattr(rcb.rbe, "doc_text", lambda p, d=None: "")
+    monkeypatch.setattr(rcb, "batch_items", lambda bid: [{"i": i} for i in range(200)])
+    monkeypatch.setattr(rcb, "yield_by_stratum", lambda: {})
+    monkeypatch.setattr(rcb.spend, "set_current_run", lambda r: None)
+    monkeypatch.setattr(rcb, "declare_once", lambda *a, **k: 0)
+    monkeypatch.setattr(rcb, "stop_file", lambda: tmp_path / "nope.json")
+    monkeypatch.setattr(rcb, "STATE_DIR", tmp_path)
+    monkeypatch.setattr(rcb, "declare_batch_ceiling", lambda *a, **k: (10**9, 1.0, False))
+    monkeypatch.setattr(rcb.cp, "phase_extract", lambda a: 0)
+
+    def refuse(*a, **k):
+        raise rcb.spend.SpendRefusalStop(rcb.spend.Refusal(
+            run_id="bulk_v038_b001_judge", estimate_tokens=90_000,
+            committed_tokens=7_800_000, ceiling_tokens=7_841_057,
+            scope="daily", reason="over_daily"))
+
+    monkeypatch.setattr(rcb, "judge_batch", refuse)
+    args = type("A", (), {"plan_only": False, "max_batches": None, "workers": 1,
+                          "judge_ceiling": 1, "fact_cap": 40})()
+    assert rcb.phase_burn(args) == 0                       # clean stop, not a traceback
+
+    state = json.loads((tmp_path / "bulk_v038_burn.json").read_text())
+    assert state["batches"] == [], "no verdict for a batch whose judging could not finish"
+    assert "judging" in (state["stopped"] or ""), state["stopped"]

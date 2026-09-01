@@ -1172,7 +1172,28 @@ def phase_burn(a) -> int:
                               f"decision; the plan cannot settle this batch"}
         else:
             declare_once(judge_run_id(bid), a.judge_ceiling, "judge")
-            verdict = judge_batch(bid, items, texts, budget, raters)
+            try:
+                verdict = judge_batch(bid, items, texts, budget, raters)
+            except spend.SpendRefusalStop as refusal:
+                # The SAME clean stop the extraction path gets. The first version of this
+                # guard wrapped only `phase_extract`, because that is where the refusal was
+                # first seen (b004). Judging spends against the same daily band and the same
+                # per-run ceilings, so it can refuse for exactly the same reason — and an
+                # inconclusive batch riding to the full 463-fact budget is the case most
+                # likely to hit it, costing roughly 4x an accept. Fixing the instance instead
+                # of the class is how a guard ends up with a hole in it.
+                #
+                # A refusal HERE leaves a batch fully extracted and unjudged, which is a
+                # different state from the extraction case and is said so plainly: judge
+                # labels persist, so a resumed run re-enters the judging-without-dispatch
+                # path and continues from the labels already paid for.
+                state.stopped_by = f"spend refusal judging {bid}: {refusal}"
+                print(f"\n{bid}: SPEND REFUSAL WHILE JUDGING — {refusal}\n"
+                      f"Halting at the batch seam. {bid} is fully extracted and has NO "
+                      f"verdict; its judge labels persist, so a resumed run continues the "
+                      f"same sample rather than restarting it.", flush=True)
+                write_burn_state(ledger_rows, state, b, budget, n_min)
+                return 0
         # The verdict is recorded FIRST. It decides whether this batch's events reach the
         # graph; everything below it is decoration that gates nothing. A KeyError in the
         # report-only yield flags destroyed batch 1's ACCEPT once — the least consequential
