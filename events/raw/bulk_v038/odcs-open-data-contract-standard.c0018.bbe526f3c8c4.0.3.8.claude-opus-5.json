@@ -1,0 +1,32 @@
+{
+ "doc_id": "odcs-open-data-contract-standard",
+ "chunk_id": "odcs-open-data-contract-standard#c0018",
+ "chunk_index": 18,
+ "chunk_start": 62053,
+ "chunk_end": 63787,
+ "chunk_tokens": 197,
+ "heading_path": [
+  "Pricing"
+ ],
+ "oversize": false,
+ "doc_sha256": "bbe526f3c8c419aa5b38a9c46081d0fd74d29de749774f14f915936eac3f1fdb",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 3976,
+  "cacheReadInputTokens": 13012,
+  "cacheCreationInputTokens": 23023,
+  "webSearchRequests": 0,
+  "costUSD": 0.336146,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.336146,
+ "duration_ms": 43405,
+ "session_id": "d7ea92d5-67de-4f37-8a23-b85002a64ac4",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"ODCS Pricing section: states the section covers pricing when billing a customer for a data product, gives a YAML example, and defines the optional `price` object keys priceAmount, priceCurrency, and priceUnit.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_pricing\",\n      \"name\": \"Pricing\",\n      \"aliases\": [\"pricing\", \"price\"],\n      \"description\": \"Billing a customer for use of the data product, expressed in the contract's price object.\",\n      \"anchor\": \"# Pricing\",\n      \"location\": \"odcs-open-data-contract-standard#c0018\"\n    },\n    {\n      \"id\": \"c_unit_of_measure\",\n      \"name\": \"unit of measure\",\n      \"aliases\": [\"priceUnit\", \"Price Unit\"],\n      \"description\": \"The unit against which cost is calculated, e.g. megabyte or gigabyte.\",\n      \"anchor\": \"The unit of measure for calculating\",\n      \"location\": \"odcs-open-data-contract-standard#c0018\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d_priceamount\",\n      \"term\": \"price.priceAmount\",\n      \"verbatim_text\": \"Subscription price per unit of measure in `priceUnit`.\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"Subscription price per unit\",\n      \"location\": \"odcs-open-data-contract-standard#c0018\"\n    },\n    {\n      \"id\": \"d_pricecurrency\",\n      \"term\": \"price.priceCurrency\",\n      \"verbatim_text\": \"Currency of the subscription price in `price.priceAmount`.\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"Currency of the subscription price\",\n      \"location\": \"odcs-open-data-contract-standard#c0018\"\n    },\n    {\n      \"id\": \"d_priceunit\",\n      \"term\": \"price.priceUnit\",\n      \"verbatim_text\": \"The unit of measure for calculating cost. Examples megabyte, gigabyte.\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"for calculating cost\",\n      \"location\": \"odcs-open-data-contract-standard#c0018\"\n    }\n  ],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"odcs-open-data-contract-standard\",\n      \"to_id\": \"c_pricing\",\n      \"anchor\": \"# Pricing\",\n      \"location\": \"odcs-open-data-contract-standard#c0018\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"odcs-open-data-contract-standard\",\n      \"to_id\": \"c_unit_of_measure\",\n      \"anchor\": \"The unit of measure for calculating\",\n      \"location\": \"odcs-open-data-contract-standard#c0018\"\n    },\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"odcs-open-data-contract-standard\",\n      \"to_id\": \"d_priceamount\",\n      \"anchor\": \"Subscription price per unit\",\n      \"location\": \"odcs-open-data-contract-standard#c0018\"\n    },\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"odcs-open-data-contract-standard\",\n      \"to_id\": \"d_pricecurrency\",\n      \"anchor\": \"Currency of the subscription price\",\n      \"location\": \"odcs-open-data-contract-standard#c0018\"\n    },\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"odcs-open-data-contract-standard\",\n      \"to_id\": \"d_priceunit\",\n      \"anchor\": \"for calculating cost\",\n      \"location\": \"odcs-open-data-contract-standard#c0018\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"data product\",\n      \"anchor\": \"using this data product\"\n    },\n    {\n      \"name\": \"megabyte\",\n      \"anchor\": \"Examples megabyte, gigabyte\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"| price               | Price\",\n      \"suggested_edge\": \"has_component\",\n      \"from_hint\": \"price\",\n      \"to_hint\": \"price.priceAmount, price.priceCurrency, price.priceUnit\",\n      \"diversion_reason\": \"structural_inference\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"price\", \"type\": \"Definition\"},\n    {\"name\": \"subscription price\", \"type\": \"Concept\"},\n    {\"name\": \"currency\", \"type\": \"Concept\"},\n    {\"name\": \"gigabyte\", \"type\": \"Concept\"},\n    {\"name\": \"USD\", \"type\": \"Concept\"}\n  ]\n}"
+}

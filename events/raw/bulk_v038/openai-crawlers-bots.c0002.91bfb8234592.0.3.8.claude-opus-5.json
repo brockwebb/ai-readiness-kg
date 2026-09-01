@@ -1,0 +1,32 @@
+{
+ "doc_id": "openai-crawlers-bots",
+ "chunk_id": "openai-crawlers-bots#c0002",
+ "chunk_index": 2,
+ "chunk_start": 445,
+ "chunk_end": 481,
+ "chunk_tokens": 9,
+ "heading_path": [
+  "Search the API docs"
+ ],
+ "oversize": false,
+ "doc_sha256": "91bfb8234592bf0bbd8b970a4d2295284a8493af2eab1ed74806ac6c60c0470b",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 4255,
+  "cacheReadInputTokens": 13011,
+  "cacheCreationInputTokens": 22414,
+  "webSearchRequests": 0,
+  "costUSD": 0.3370305,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3370305,
+ "duration_ms": 48326,
+ "session_id": "6ae5952e-e90e-48d0-887d-f83d3b3adc9e",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Navigation-adjacent front matter of OpenAI's crawlers/bots doc: points machine consumers to llms.txt as the complete documentation index and states that Markdown versions of doc pages are available by appending .md to the page URL; the rest is a search-box heading with no assertable content.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_doc_index\",\n      \"name\": \"documentation index\",\n      \"aliases\": [\"documentation table of contents\"],\n      \"description\": \"The complete index of the developer documentation, published at llms.txt.\",\n      \"anchor\": \"documentation index\",\n      \"location\": \"openai-crawlers-bots#c0002\"\n    },\n    {\n      \"id\": \"c_markdown_versions\",\n      \"name\": \"Markdown versions of documentation pages\",\n      \"aliases\": [\"machine-readable documentation pages\"],\n      \"description\": \"Markdown renderings of documentation pages, retrievable by appending .md to a page URL.\",\n      \"anchor\": \"Markdown versions\",\n      \"location\": \"openai-crawlers-bots#c0002\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"cl_md_suffix\",\n      \"claim_text\": \"Markdown versions of documentation pages are available by appending `.md` to the page URL.\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"platform_official\",\n      \"anchor\": \"appending `.md`\",\n      \"location\": \"openai-crawlers-bots#c0002\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [\n    {\n      \"id\": \"st_llmstxt\",\n      \"name\": \"llms.txt\",\n      \"version\": null,\n      \"steward\": null,\n      \"as_of_date\": null,\n      \"anchor\": \"[llms.txt]\",\n      \"location\": \"openai-crawlers-bots#c0002\"\n    }\n  ],\n  \"frameworks\": [],\n  \"practices\": [\n    {\n      \"id\": \"p_see_llmstxt\",\n      \"text\": \"For the complete documentation index, see [llms.txt](https://developers.openai.com/llms.txt).\",\n      \"as_of_date\": null,\n      \"scope\": \"content\",\n      \"anchor\": \"For the complete\",\n      \"location\": \"openai-crawlers-bots#c0002\"\n    }\n  ],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"openai-crawlers-bots\",\n      \"to_id\": \"cl_md_suffix\",\n      \"anchor\": \"are available by appending\",\n      \"location\": \"openai-crawlers-bots#c0002\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_md_suffix\",\n      \"to_id\": \"c_markdown_versions\",\n      \"anchor\": \"Markdown versions\",\n      \"location\": \"openai-crawlers-bots#c0002\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"openai-crawlers-bots\",\n      \"to_id\": \"c_doc_index\",\n      \"anchor\": \"documentation index\",\n      \"location\": \"openai-crawlers-bots#c0002\"\n    },\n    {\n      \"type\": \"recommends\",\n      \"from_id\": \"openai-crawlers-bots\",\n      \"to_id\": \"p_see_llmstxt\",\n      \"anchor\": \"For the complete\",\n      \"location\": \"openai-crawlers-bots#c0002\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"p_see_llmstxt\",\n      \"to_id\": \"c_doc_index\",\n      \"anchor\": \"complete documentation index, see\",\n      \"location\": \"openai-crawlers-bots#c0002\"\n    }\n  ],\n  \"cites\": [\n    {\n      \"from_id\": \"openai-crawlers-bots\",\n      \"to_id\": \"https://developers.openai.com/llms.txt\",\n      \"anchor\": \"[llms.txt]\",\n      \"location\": \"openai-crawlers-bots#c0002\"\n    }\n  ],\n  \"mentions\": [\n    {\n      \"name\": \"page URL\",\n      \"anchor\": \"the page URL\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"[llms.txt]\",\n      \"suggested_edge\": \"publishes_index_at\",\n      \"diversion_reason\": \"other:no_edge_type_for_document_to_standard_index\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"Search the API docs\", \"type\": \"Concept\"},\n    {\"name\": \"developers.openai.com\", \"type\": \"Platform\"}\n  ]\n}\n```"
+}

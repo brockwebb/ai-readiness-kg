@@ -1,0 +1,33 @@
+{
+ "doc_id": "llmstxt-proposal",
+ "chunk_id": "llmstxt-proposal#c0012",
+ "chunk_index": 12,
+ "chunk_start": 10121,
+ "chunk_end": 10338,
+ "chunk_tokens": 51,
+ "heading_path": [
+  "FastHTML",
+  "Examples"
+ ],
+ "oversize": false,
+ "doc_sha256": "04c6d4c860a36128491ef71f343243edc19ae4f42dc002eda2c345c6c498c8f3",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 4674,
+  "cacheReadInputTokens": 13011,
+  "cacheCreationInputTokens": 21495,
+  "webSearchRequests": 0,
+  "costUSD": 0.3383155,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3383155,
+ "duration_ms": 53075,
+ "session_id": "a08efde2-d6f1-4dc4-850a-dd16a7efe675",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"An example llms.txt link list from the FastHTML docs: one bullet linking the HTMX reference and, under an Examples heading, one bullet linking a Todo list application described as a CRUD app in FastHTML.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c-htmx\",\n      \"name\": \"HTMX\",\n      \"aliases\": [\"htmx\"],\n      \"description\": \"Named in the link list as having attributes, CSS classes, headers, events, extensions, js lib methods, and config options, and as the source of patterns used in the linked example application.\",\n      \"anchor\": \"HTMX attributes\",\n      \"location\": \"llmstxt-proposal#c0012\"\n    },\n    {\n      \"id\": \"c-fasthtml\",\n      \"name\": \"FastHTML\",\n      \"aliases\": [\"fasthtml\"],\n      \"description\": \"Named as what the linked Todo list application example is written in — a complete CRUD app showing idiomatic use of FastHTML and HTMX patterns.\",\n      \"anchor\": \"app in FastHTML showing\",\n      \"location\": \"llmstxt-proposal#c0012\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"cl-todo-idiomatic\",\n      \"claim_text\": \"Detailed walk-thru of a complete CRUD app in FastHTML showing idiomatic use of FastHTML and HTMX patterns\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"Detailed walk-thru\",\n      \"location\": \"llmstxt-proposal#c0012\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"llmstxt-proposal\",\n      \"to_id\": \"c-htmx\",\n      \"anchor\": \"HTMX attributes\",\n      \"location\": \"llmstxt-proposal#c0012\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"llmstxt-proposal\",\n      \"to_id\": \"c-fasthtml\",\n      \"anchor\": \"app in FastHTML showing\",\n      \"location\": \"llmstxt-proposal#c0012\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"llmstxt-proposal\",\n      \"to_id\": \"cl-todo-idiomatic\",\n      \"anchor\": \"Detailed walk-thru\",\n      \"location\": \"llmstxt-proposal#c0012\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl-todo-idiomatic\",\n      \"to_id\": \"c-fasthtml\",\n      \"anchor\": \"idiomatic use\",\n      \"location\": \"llmstxt-proposal#c0012\"\n    }\n  ],\n  \"cites\": [\n    {\n      \"from_id\": \"llmstxt-proposal\",\n      \"to_id\": \"https://github.com/bigskysoftware/htmx/blob/master/www/content/reference.md\",\n      \"anchor\": \"HTMX reference\",\n      \"location\": \"llmstxt-proposal#c0012\"\n    },\n    {\n      \"from_id\": \"llmstxt-proposal\",\n      \"to_id\": \"https://github.com/AnswerDotAI/fasthtml/blob/main/examples/adv_app.py\",\n      \"anchor\": \"Todo list application\",\n      \"location\": \"llmstxt-proposal#c0012\"\n    }\n  ],\n  \"mentions\": [\n    {\n      \"name\": \"CRUD app\",\n      \"anchor\": \"complete CRUD app\"\n    },\n    {\n      \"name\": \"CSS classes\",\n      \"anchor\": \"CSS classes\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"js lib methods\",\n      \"suggested_edge\": \"documented_by\",\n      \"diversion_reason\": \"other:link_list_annotation\",\n      \"note_from\": \"c-htmx\",\n      \"note_to\": \"https://github.com/bigskysoftware/htmx/blob/master/www/content/reference.md\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"config options\", \"type\": \"Concept\"},\n    {\"name\": \"extensions\", \"type\": \"Concept\"},\n    {\"name\": \"headers\", \"type\": \"Concept\"},\n    {\"name\": \"events\", \"type\": \"Concept\"}\n  ]\n}"
+}

@@ -1010,3 +1010,137 @@ the corpus-wide projection is a **stratum-weighted mix**, not a flat multiple of
 batch. The ~537-edge figure in §16 extrapolated b001's framework rate across everything and is
 therefore an over-estimate; a weighted figure is deferred until enough batches have landed to
 weight it, rather than re-extrapolated from three.
+
+---
+
+# 20. ADDENDUM-03 — close-out and full-burn reconciliation
+
+Gate verified before any burn file was touched, as the addendum requires. No bulk process was
+alive; the scoped set had verdicts on disk for every batch; the corpus stop rule had not fired
+(`stopped: null`), so the addendum was live rather than void. Final state file written
+`2026-09-01T12:56:34Z`.
+
+## 20.1 Substrate wiring (item 1)
+
+`run_bulk_extraction.doc_text` now consults `kg.ingest.gate.substrate_path(doc_id)` before the
+suffix dispatch and strips the frontmatter block. The strip is the load-bearing half: chunk
+boundaries and grounding anchors are offsets into the text the extractor was handed, so twelve
+lines of YAML at the top would shift every offset in the document and silently invalidate
+chunk-level resume against everything already ingested.
+
+The addendum's "no behavior change for the 194-doc status quo" was measured, not assumed.
+Across all 194 admitted documents: **92 with substrate read byte-identical text**, 100 have no
+substrate and fall through unchanged (PDFs are delegated by design), and exactly **2 change** —
+`w3c-prov-dm-data-model` and `w3c-prov-o-ontology`, the HTML sources the suffix dispatch used
+to reject outright. Nothing already in the graph moved.
+
+Thirteen call sites across three drivers pass `doc_id`. Eight are in `chunked_pilot`, which is
+the extractor the burn actually runs; missing those would have left the substrate unread on the
+only path that matters while the tests still passed. 4/4 mutations caught.
+
+## 20.2 b014/b015 revival (item 2)
+
+`extraction_request` emitted for both under the pinned profile at their original priorities,
+executing ADDENDUM-02 §2.3 now that their `conversion_gap` is closed. Their frozen identifiers
+survived the revival unchanged, which is the plan-as-logged-fact fix (§18.2, §3.2 of the extent
+RESULT) doing exactly what it exists to do.
+
+## 20.3 Batch ledger, b004 through b015
+
+Continues the §19 table, which stopped at b003. Verdicts are the sequential SPRT's at
+p0 = 0.05, p1 = 0.10, α = β = 0.05; accept needs ≥ 55 facts, budget 463.
+
+| batch | SPRT trace | verdict | pooled F [95% CI] | item-faithful | extraction settled / ceiling | judge |
+|---|---|---|---|---|---|---|
+| `b004` | 0/55 accept | **accept** | 0.0000 [0.0000, 0.0653] | 0.800 (40/50) | 2,637,316 / 3,229,656 (82%) | 1,523,779 |
+| `b006` | 2/55 continue → 5/110 continue → 5/165 accept | **accept** | 0.0303 [0.0130, 0.0690] | 0.754 (92/122) | 2,501,254 / 2,928,491 (85%) | 3,441,176 |
+| `b007` | 0/55 accept | **accept** | 0.0000 [0.0000, 0.0653] | 0.829 (34/41) | 1,788,768 / 2,694,297 (66%) | 1,749,201 |
+| `b010` | — | **sampling_inconclusive** | — | — | 2,353,484 / 4,262,234 (55%) | 0 |
+| `b011` | 2/55 continue → 3/110 accept | **accept** | 0.0283 [0.0097, 0.0799] | 0.872 (75/86) | 1,701,338 / 1,813,675 (94%) | 2,259,811 |
+| `b012` | 3/55 continue → 4/110 accept | **accept** | 0.0364 [0.0142, 0.0898] | 0.779 (67/86) | 2,912,677 / 3,146,616 (93%) | 2,288,961 |
+| `b013` | 0/55 accept | **accept** | 0.0000 [0.0000, 0.0653] | 0.784 (40/51) | 1,300,836 / 1,450,469 (90%) | 1,560,872 |
+| `b014` | 1/55 continue → 2/110 accept | **accept** | 0.0183 [0.0050, 0.0644] | 0.798 (75/94) | 1,930,404 / 3,001,034 (64%) | 2,312,435 |
+| `b015` | 1/55 continue → 3/110 accept | **accept** | 0.0273 [0.0093, 0.0771] | 0.806 (75/93) | 1,687,191 / 1,981,463 (85%) | 2,432,897 |
+
+Batches `b005`, `b008` and `b009` are absent because they are deferred `below_burn_scope`
+(ADDENDUM-02 §2.2). They dispatched nothing, declared nothing and were never judged, which is
+correct: an acceptance decision on a batch that never ran would be a lie in the ledger.
+
+### b010, the one non-accept
+
+`b010` (`openai-crawlers-bots`, 65 chunks) is `sampling_inconclusive`, and the distinction
+matters diagnostically. The base task pre-registered that outcome for a batch that **runs its
+whole 463-fact budget without crossing a boundary**, treated as accept-with-flag and counted
+toward the stop rule. b010's cause is different: it produced **33 admitted items against the
+55-fact minimum**, so the plan could never settle it at all. Same label, same treatment, same
+contribution to the rolling window, but one means the quality is genuinely ambiguous and the
+other means the batch was too small to test. Its judge spend is 0 because no judging run was
+declared.
+
+Its content stands, per the pre-registered accept-with-flag rule. This is recorded as a gap in
+the pre-registration rather than resolved here: retuning a gate after seeing which batch it
+caught is precisely the retuning the design forbids. A minimum-n precondition that a batch can
+simply fail to reach is the same genus as DD-026, and belongs to a task with its own
+measurement.
+
+## 20.4 Full-burn reconciliation
+
+**Acceptance.** 11 batches judged, 10 accept and 1 inconclusive, **0 rejects and 0
+quarantines**. The corpus stop rule never approached firing. Pooled across every judged batch:
+**23 fabrications in 1,039 facts = 0.0221, Wilson 95% [0.0148, 0.0330]**, against a
+pre-registered gate of upper bound below 0.10. Item-faithfulness ran 0.754 to 0.872 against a
+0.70 floor, and no batch trends worse than its predecessors.
+
+**Coverage.** 29 of 35 demand-carrying documents fully extracted, **35 of 41 crosswalk demand
+units = 85.4 percent**, which is exactly the ~85% ADDENDUM-03 anticipated. The residual 6 units
+are the six documents deferred `below_burn_scope`, each holding one or two chunks from the
+Phase A draw and otherwise untouched. Nothing is unstarted. `kg queue status`: extracted 29,
+deferred 162, skipped_oversize 3, **queued 0**.
+
+**Graph.** 35 documents, 605 chunks, 7,889 nodes, 9,582 edges under `corpus_epoch: bulk-v038`.
+Nodes: Concept 3,292, Claim 2,339, Definition 648, Standard 416, Practice 394, Measure 257,
+Instrument 193, Platform 155, Framework 136, Tool 59.
+
+**Spend.** Extraction settled **28,144,438 of 36,382,832 declared (77%)**; judging
+**23,394,973**; Phase A **4,288,618**; programme total **55,828,029**. Per-batch ceilings bound
+without refusing after the LEDGER_WINDOW correction (§19.3), and judging ran at 13–19% of its
+derived ceiling throughout because the sequential test kept stopping early. Worth stating
+against §5's forecast: that section projected ~55.8M tokens for **extraction alone** at Phase
+A's measured rate over the full 13-batch plan. Actual extraction was 28.1M, roughly half,
+because ADDENDUM-02 cut three long specifications out of scope. The programme total landing at
+55.8M is a coincidence of two different quantities and should not be read as the forecast
+verifying.
+
+**DD-024.** 147 semantic edges refused at admission across the burn: `has_component` 109,
+`subtype_of` 32, `consumes` 4, `implements` 2, `extends` 0. Zero reached the projection. The
+per-chunk refusal rate is stratum-driven, not burn-wide (§19.2): frameworks and standards run
+0.40–0.49 per chunk, academic prose 0.17, so §16's ~537-edge corpus projection remains an
+over-estimate built from a single framework-heavy batch.
+
+## 20.5 A finding from b014, and a follow-up registered
+
+b014 rejected 18 nodes and 21 edges as `node_not_in_document` / `edge_not_in_document`, a class
+absent from every prior batch. Diagnosed rather than assumed: `chunker.Chunk.grounding_text()`
+returns `overlap_text + "\n\n" + body`. Each part is a verbatim document substring but their
+concatenation is not, so it reproduces the document only when the real split point was a blank
+line. A model span straddling that junction is chunk-valid and document-invalid, and
+`phase_ingest`'s document-level re-validation rejects it.
+
+Measured on whether each chunk's `grounding_text()` is a document substring: **odcs 25 of 45
+and slsa 17 of 32**, against **fcsm-20-04 2 of 47 and w3c-dcat-3 0 of 42**. Both outliers are
+the documents assembled by `scripts/extent_remediation.py`, which joins sections with `---`, a
+heading and a `Source:` line rather than a bare blank line. The guard is working as designed
+and nothing ungrounded entered the graph; the cost is recall, about 5 percent of proposals on
+that batch.
+
+Not fixed here. Changing `grounding_text` changes chunk boundaries, which invalidates
+chunk-level resume for every batch in the burn. Registered as ResearchTask `1bd304b1` with both
+candidate fixes and a preference for repairing the chunker rather than the one producer.
+
+## 20.6 Operator pause
+
+A STOP file was written at operator request during b015 and remains in place. It had no batch
+left to block, b015 being the last of 15, so the burn completed normally and exited. Resume by
+removing `events/bulk_v038_STOP.json`; chunk-level resume repeats nothing.
+
+**Suite at close: 593 passed.**

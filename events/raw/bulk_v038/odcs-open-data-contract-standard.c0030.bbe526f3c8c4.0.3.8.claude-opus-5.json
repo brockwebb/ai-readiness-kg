@@ -1,0 +1,32 @@
+{
+ "doc_id": "odcs-open-data-contract-standard",
+ "chunk_id": "odcs-open-data-contract-standard#c0030",
+ "chunk_index": 30,
+ "chunk_start": 72655,
+ "chunk_end": 72904,
+ "chunk_tokens": 62,
+ "heading_path": [
+  "INVALID: 'from' specified at property level"
+ ],
+ "oversize": false,
+ "doc_sha256": "bbe526f3c8c419aa5b38a9c46081d0fd74d29de749774f14f915936eac3f1fdb",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 3243,
+  "cacheReadInputTokens": 13012,
+  "cacheCreationInputTokens": 22481,
+  "webSearchRequests": 0,
+  "costUSD": 0.312401,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.312401,
+ "duration_ms": 36845,
+ "session_id": "6d2a58be-42c4-4c50-bf0e-dde2f37da061",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"A YAML counter-example showing that a `relationships` block with `from` declared at the property level is invalid in ODCS; the only assertion is the inline ERROR comment stating 'from' is not allowed at property level.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"n1\",\n      \"name\": \"relationships\",\n      \"aliases\": [\"relationships block\", \"relationship declaration\"],\n      \"description\": \"The ODCS schema key declaring a link from one field to another; shown here declared under a property, which the chunk marks invalid.\",\n      \"anchor\": \"relationships:\",\n      \"location\": \"odcs-open-data-contract-standard#c0030\"\n    },\n    {\n      \"id\": \"n2\",\n      \"name\": \"properties\",\n      \"aliases\": [\"property level\"],\n      \"description\": \"The per-field level of an ODCS schema object; the chunk asserts `from` may not be specified at this level.\",\n      \"anchor\": \"properties:\",\n      \"location\": \"odcs-open-data-contract-standard#c0030\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"n3\",\n      \"claim_text\": \"'from' not allowed at property level\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"platform_official\",\n      \"anchor\": \"not allowed at property level\",\n      \"location\": \"odcs-open-data-contract-standard#c0030\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"odcs-open-data-contract-standard\",\n      \"to_id\": \"n3\",\n      \"anchor\": \"not allowed at property level\",\n      \"location\": \"odcs-open-data-contract-standard#c0030\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"n3\",\n      \"to_id\": \"n2\",\n      \"anchor\": \"not allowed at property level\",\n      \"location\": \"odcs-open-data-contract-standard#c0030\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"n3\",\n      \"to_id\": \"n1\",\n      \"anchor\": \"ERROR: 'from'\",\n      \"location\": \"odcs-open-data-contract-standard#c0030\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"odcs-open-data-contract-standard\",\n      \"to_id\": \"n1\",\n      \"anchor\": \"relationships:\",\n      \"location\": \"odcs-open-data-contract-standard#c0030\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"odcs-open-data-contract-standard\",\n      \"to_id\": \"n2\",\n      \"anchor\": \"properties:\",\n      \"location\": \"odcs-open-data-contract-standard#c0030\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"users\",\n      \"anchor\": \"name: users\"\n    },\n    {\n      \"name\": \"user_id\",\n      \"anchor\": \"name: user_id\"\n    },\n    {\n      \"name\": \"accounts.id\",\n      \"anchor\": \"accounts.id\"\n    }\n  ],\n  \"proposed_relationships\": [],\n  \"gleaned\": [\n    {\"name\": \"schema\", \"type\": \"Concept\"},\n    {\"name\": \"from\", \"type\": \"Concept\"},\n    {\"name\": \"to\", \"type\": \"Concept\"}\n  ]\n}"
+}

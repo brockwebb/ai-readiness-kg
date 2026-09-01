@@ -1,0 +1,23 @@
+{
+ "batch_id": "burn_bulk_v038_b012.claude-opus-4-8.5ecc98e661",
+ "run": "burn_bulk_v038_b012",
+ "model_id": "claude-opus-4-8",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 5169,
+  "cacheReadInputTokens": 12045,
+  "cacheCreationInputTokens": 25327,
+  "webSearchRequests": 0,
+  "costUSD": 0.3885275,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "canonicalModel": "claude-opus-4-8",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3885275,
+ "duration_ms": 68298,
+ "wall_s": 70.5,
+ "session_id": "793cb914-84b4-4c25-9b5f-de12c8aece68",
+ "raw_result": "Looking at this, the task is the self-contained atomic-fact faithfulness judgment defined in the prompt, which requires strict JSON output only. Evaluating each fact against its grounding span (using the window only to distinguish omission from fabrication):\n\n{\"judgments\": [{\"fact_id\": \"f_fe88425ed80d\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.9}, {\"fact_id\": \"f_65b4cc39e509\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.72}, {\"fact_id\": \"f_6f873ebea756\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.75}, {\"fact_id\": \"f_ff1f1744c44f\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.98}, {\"fact_id\": \"f_789baa9f2bf8\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.98}, {\"fact_id\": \"f_2666fced201e\", \"label\": \"not_entailed\", \"class\": \"filled_attribute\", \"confidence\": 0.62}, {\"fact_id\": \"f_db4e1a86f76f\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.97}, {\"fact_id\": \"f_68fbb752a1d5\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.9}, {\"fact_id\": \"f_b40683d11a9c\", \"label\": \"not_entailed\", \"class\": \"filled_attribute\", \"confidence\": 0.58}, {\"fact_id\": \"f_f659dbf77981\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.9}]}"
+}

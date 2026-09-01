@@ -1,0 +1,32 @@
+{
+ "doc_id": "odcs-open-data-contract-standard",
+ "chunk_id": "odcs-open-data-contract-standard#c0031",
+ "chunk_index": 31,
+ "chunk_start": 72905,
+ "chunk_end": 73137,
+ "chunk_tokens": 61,
+ "heading_path": [
+  "INVALID: Mismatched array types"
+ ],
+ "oversize": false,
+ "doc_sha256": "bbe526f3c8c419aa5b38a9c46081d0fd74d29de749774f14f915936eac3f1fdb",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 2671,
+  "cacheReadInputTokens": 13012,
+  "cacheCreationInputTokens": 22473,
+  "webSearchRequests": 0,
+  "costUSD": 0.298021,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.298021,
+ "duration_ms": 31429,
+ "session_id": "396c4789-0697-42be-b1ea-baf050e9f975",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"A short YAML code example labeled INVALID, showing a schema relationship whose 'from' is a scalar string while 'to' is an array, annotated inline as an error.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"concept-relationships\",\n      \"name\": \"relationships\",\n      \"aliases\": [\"schema relationships\", \"ODCS relationships\"],\n      \"description\": \"The schema-level key declaring links between fields of related objects; this example shows a declaration rejected as invalid.\",\n      \"anchor\": \"relationships:\",\n      \"location\": \"odcs-open-data-contract-standard#c0031\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"claim-from-string-to-array\",\n      \"claim_text\": \"'from' is string but 'to' is array\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"'from' is string\",\n      \"location\": \"odcs-open-data-contract-standard#c0031\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"odcs-open-data-contract-standard\",\n      \"to_id\": \"claim-from-string-to-array\",\n      \"anchor\": \"# ERROR: 'from'\",\n      \"location\": \"odcs-open-data-contract-standard#c0031\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"claim-from-string-to-array\",\n      \"to_id\": \"concept-relationships\",\n      \"anchor\": \"but 'to' is array\",\n      \"location\": \"odcs-open-data-contract-standard#c0031\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"odcs-open-data-contract-standard\",\n      \"to_id\": \"concept-relationships\",\n      \"anchor\": \"relationships:\",\n      \"location\": \"odcs-open-data-contract-standard#c0031\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"orders\",\n      \"anchor\": \"name: orders\"\n    },\n    {\n      \"name\": \"orders.id\",\n      \"anchor\": \"from: orders.id\"\n    },\n    {\n      \"name\": \"items.order_id\",\n      \"anchor\": \"items.order_id\"\n    },\n    {\n      \"name\": \"items.line_num\",\n      \"anchor\": \"items.line_num\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"# INVALID: Mismatched\",\n      \"suggested_edge\": \"invalid_example_of\",\n      \"diversion_reason\": \"cross_chunk\",\n      \"note\": \"The rule this example violates (type agreement between 'from' and 'to') is stated outside this chunk.\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"schema\", \"type\": \"Concept\"},\n    {\"name\": \"from\", \"type\": \"Concept\"},\n    {\"name\": \"to\", \"type\": \"Concept\"},\n    {\"name\": \"array type mismatch\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

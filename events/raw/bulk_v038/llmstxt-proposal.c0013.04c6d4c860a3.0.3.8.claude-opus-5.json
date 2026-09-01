@@ -1,0 +1,33 @@
+{
+ "doc_id": "llmstxt-proposal",
+ "chunk_id": "llmstxt-proposal#c0013",
+ "chunk_index": 13,
+ "chunk_start": 10340,
+ "chunk_end": 10939,
+ "chunk_tokens": 159,
+ "heading_path": [
+  "FastHTML",
+  "Optional"
+ ],
+ "oversize": false,
+ "doc_sha256": "04c6d4c860a36128491ef71f343243edc19ae4f42dc002eda2c345c6c498c8f3",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 5402,
+  "cacheReadInputTokens": 13011,
+  "cacheCreationInputTokens": 21986,
+  "webSearchRequests": 0,
+  "costUSD": 0.3614255,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3614255,
+ "duration_ms": 61069,
+ "session_id": "53b03944-2681-455a-a4f4-6c54ac398168",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Tail of the FastHTML llms.txt example (Todo list app link, an Optional section linking Starlette docs), followed by four authoring guidelines for writing effective llms.txt files.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_llmstxt\",\n      \"name\": \"llms.txt\",\n      \"aliases\": [\"llms.txt file\"],\n      \"description\": \"The proposed markdown file format whose authoring guidelines this passage states.\",\n      \"anchor\": \"effective `llms.txt` files\",\n      \"location\": \"llmstxt-proposal#c0013\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [\n    {\n      \"id\": \"p_concise\",\n      \"text\": \"Use concise, clear language.\",\n      \"as_of_date\": null,\n      \"scope\": \"content\",\n      \"anchor\": \"concise, clear language\",\n      \"location\": \"llmstxt-proposal#c0013\"\n    },\n    {\n      \"id\": \"p_link_descriptions\",\n      \"text\": \"When linking to resources, include brief, informative descriptions.\",\n      \"as_of_date\": null,\n      \"scope\": \"content\",\n      \"anchor\": \"brief, informative descriptions\",\n      \"location\": \"llmstxt-proposal#c0013\"\n    },\n    {\n      \"id\": \"p_avoid_jargon\",\n      \"text\": \"Avoid ambiguous terms or unexplained jargon.\",\n      \"as_of_date\": null,\n      \"scope\": \"content\",\n      \"anchor\": \"unexplained jargon\",\n      \"location\": \"llmstxt-proposal#c0013\"\n    },\n    {\n      \"id\": \"p_test_with_agent\",\n      \"text\": \"Test your file by asking an agent questions about your content, giving it only your llms.txt as a starting point.\",\n      \"as_of_date\": null,\n      \"scope\": \"content\",\n      \"anchor\": \"asking an agent questions\",\n      \"location\": \"llmstxt-proposal#c0013\"\n    }\n  ],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"llmstxt-proposal\",\n      \"to_id\": \"c_llmstxt\",\n      \"anchor\": \"create effective\",\n      \"location\": \"llmstxt-proposal#c0013\"\n    },\n    {\n      \"type\": \"recommends\",\n      \"from_id\": \"llmstxt-proposal\",\n      \"to_id\": \"p_concise\",\n      \"anchor\": \"Use concise, clear\",\n      \"location\": \"llmstxt-proposal#c0013\"\n    },\n    {\n      \"type\": \"recommends\",\n      \"from_id\": \"llmstxt-proposal\",\n      \"to_id\": \"p_link_descriptions\",\n      \"anchor\": \"When linking to resources\",\n      \"location\": \"llmstxt-proposal#c0013\"\n    },\n    {\n      \"type\": \"recommends\",\n      \"from_id\": \"llmstxt-proposal\",\n      \"to_id\": \"p_avoid_jargon\",\n      \"anchor\": \"Avoid ambiguous terms\",\n      \"location\": \"llmstxt-proposal#c0013\"\n    },\n    {\n      \"type\": \"recommends\",\n      \"from_id\": \"llmstxt-proposal\",\n      \"to_id\": \"p_test_with_agent\",\n      \"anchor\": \"Test your file\",\n      \"location\": \"llmstxt-proposal#c0013\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"p_concise\",\n      \"to_id\": \"c_llmstxt\",\n      \"anchor\": \"To create effective\",\n      \"location\": \"llmstxt-proposal#c0013\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"p_link_descriptions\",\n      \"to_id\": \"c_llmstxt\",\n      \"anchor\": \"consider these guidelines\",\n      \"location\": \"llmstxt-proposal#c0013\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"p_avoid_jargon\",\n      \"to_id\": \"c_llmstxt\",\n      \"anchor\": \"these guidelines:\",\n      \"location\": \"llmstxt-proposal#c0013\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"p_test_with_agent\",\n      \"to_id\": \"c_llmstxt\",\n      \"anchor\": \"only your llms.txt\",\n      \"location\": \"llmstxt-proposal#c0013\"\n    }\n  ],\n  \"cites\": [\n    {\n      \"from_id\": \"llmstxt-proposal\",\n      \"to_id\": \"https://github.com/AnswerDotAI/fasthtml/blob/main/examples/adv_app.py\",\n      \"anchor\": \"Todo list application\",\n      \"location\": \"llmstxt-proposal#c0013\"\n    },\n    {\n      \"from_id\": \"llmstxt-proposal\",\n      \"to_id\": \"https://gist.githubusercontent.com/jph00/809e4a4808d4510be0e3dc9565e9cbd3/raw/9b717589ca44cedc8aaf00b2b8cacef922964c0f/starlette-sml.md\",\n      \"anchor\": \"Starlette full documentation\",\n      \"location\": \"llmstxt-proposal#c0013\"\n    }\n  ],\n  \"mentions\": [\n    {\n      \"name\": \"FastHTML\",\n      \"anchor\": \"idiomatic use of FastHTML\"\n    },\n    {\n      \"name\": \"HTMX\",\n      \"anchor\": \"HTMX patterns\"\n    },\n    {\n      \"name\": \"Starlette\",\n      \"anchor\": \"Starlette documentation useful\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"## Optional\",\n      \"suggested_edge\": \"has_component\",\n      \"from_hint\": \"llms.txt file structure\",\n      \"to_hint\": \"Optional section\",\n      \"diversion_reason\": \"structural_inference\"\n    },\n    {\n      \"anchor\": \"A subset of the Starlette\",\n      \"suggested_edge\": \"has_component\",\n      \"from_hint\": \"FastHTML llms.txt example (begins in an earlier chunk)\",\n      \"to_hint\": \"Starlette full documentation link entry\",\n      \"diversion_reason\": \"cross_chunk\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"CRUD app\", \"type\": \"Concept\"},\n    {\"name\": \"agent\", \"type\": \"Platform\"},\n    {\"name\": \"Optional section\", \"type\": \"Concept\"},\n    {\"name\": \"documentation subset for LLM consumption\", \"type\": \"Concept\"}\n  ]\n}"
+}

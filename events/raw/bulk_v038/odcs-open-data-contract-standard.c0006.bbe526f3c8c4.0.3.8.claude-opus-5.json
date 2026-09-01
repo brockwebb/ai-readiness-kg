@@ -1,0 +1,32 @@
+{
+ "doc_id": "odcs-open-data-contract-standard",
+ "chunk_id": "odcs-open-data-contract-standard#c0006",
+ "chunk_index": 6,
+ "chunk_start": 9546,
+ "chunk_end": 9759,
+ "chunk_tokens": 50,
+ "heading_path": [
+  "data-quality"
+ ],
+ "oversize": false,
+ "doc_sha256": "bbe526f3c8c419aa5b38a9c46081d0fd74d29de749774f14f915936eac3f1fdb",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 2626,
+  "cacheReadInputTokens": 13012,
+  "cacheCreationInputTokens": 22443,
+  "webSearchRequests": 0,
+  "costUSD": 0.296596,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.296596,
+ "duration_ms": 31695,
+ "session_id": "91e7a73e-cea5-4ddd-9c2d-236e4605bc68",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Section front matter for the ODCS 'data-quality' page: it names Data Quality as the topic and states the section describes data quality rules & parameters; almost no substantive assertions to extract.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"n_data_quality\",\n      \"name\": \"Data Quality\",\n      \"aliases\": [\"data quality\"],\n      \"description\": \"The topic of this section of the Open Data Contract Standard: data quality rules and parameters.\",\n      \"anchor\": \"Data Quality\",\n      \"location\": \"odcs-open-data-contract-standard#c0006\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"n_claim_section_scope\",\n      \"claim_text\": \"his section describes data quality rules & parameters\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"describes data quality rules\",\n      \"location\": \"odcs-open-data-contract-standard#c0006\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"odcs-open-data-contract-standard\",\n      \"to_id\": \"n_data_quality\",\n      \"anchor\": \"Data Quality\",\n      \"location\": \"odcs-open-data-contract-standard#c0006\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"odcs-open-data-contract-standard\",\n      \"to_id\": \"n_claim_section_scope\",\n      \"anchor\": \"describes data quality rules\",\n      \"location\": \"odcs-open-data-contract-standard#c0006\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"n_claim_section_scope\",\n      \"to_id\": \"n_data_quality\",\n      \"anchor\": \"data quality rules & parameters\",\n      \"location\": \"odcs-open-data-contract-standard#c0006\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"open-data-contract-standard/blob/v3.1.0\",\n      \"suggested_edge\": \"part_of_standard\",\n      \"note_endpoints\": \"this data-quality section -> Open Data Contract Standard v3.1.0\",\n      \"diversion_reason\": \"structural_inference\",\n      \"location\": \"odcs-open-data-contract-standard#c0006\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"Open Data Contract Standard\", \"type\": \"Standard\"},\n    {\"name\": \"data quality rules\", \"type\": \"Concept\"},\n    {\"name\": \"parameters\", \"type\": \"Concept\"}\n  ]\n}"
+}

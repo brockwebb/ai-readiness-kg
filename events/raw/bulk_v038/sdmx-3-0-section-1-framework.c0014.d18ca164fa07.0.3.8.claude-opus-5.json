@@ -1,0 +1,32 @@
+{
+ "doc_id": "sdmx-3-0-section-1-framework",
+ "chunk_id": "sdmx-3-0-section-1-framework#c0014",
+ "chunk_index": 14,
+ "chunk_start": 58988,
+ "chunk_end": 59742,
+ "chunk_tokens": 188,
+ "heading_path": [
+  "3. Metadata: For the exchange of reference metadata sets.   764"
+ ],
+ "oversize": false,
+ "doc_sha256": "d18ca164fa077b4d9b3b65b9cbb48da11881fa204a4ef9e1331a99fa649f089f",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 11709,
+  "cacheReadInputTokens": 13011,
+  "cacheCreationInputTokens": 22925,
+  "webSearchRequests": 0,
+  "costUSD": 0.5284905,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.5284905,
+ "duration_ms": 126838,
+ "session_id": "fc4296f2-ebd9-4752-bf92-e6ff1f5adf47",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Section 5.3 introduces SDMX-CSV as the CSV transmission format for data and reference metadata, states its columnar/Excel-readable nature and lossless convertibility to JSON/XML, and begins listing its two message types.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"cn1\",\n      \"name\": \"code IDs and labels\",\n      \"aliases\": [\"code identifiers and labels\"],\n      \"description\": \"The identifiers and human-readable labels that an SDMX-CSV message can carry alongside the data.\",\n      \"anchor\": \"code IDs and labels\",\n      \"location\": \"sdmx-3-0-section-1-framework#c0014\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d1\",\n      \"term\": \"SDMX-CSV\",\n      \"verbatim_text\": \"SDMX-CSV is the CSV transmission format specification\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"transmission format specification\",\n      \"location\": \"sdmx-3-0-section-1-framework#c0014\"\n    }\n  ],\n  \"claims\": [\n    {\n      \"id\": \"c1\",\n      \"claim_text\": \"SDMX-CSV provides a simple columnar format for data and metadata\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"platform_official\",\n      \"anchor\": \"provides a simple columnar\",\n      \"location\": \"sdmx-3-0-section-1-framework#c0014\"\n    },\n    {\n      \"id\": \"c2\",\n      \"claim_text\": \"metadata can still be converted between the CSV and the JSON / XML\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"platform_official\",\n      \"anchor\": \"still be converted\",\n      \"location\": \"sdmx-3-0-section-1-framework#c0014\"\n    },\n    {\n      \"id\": \"c3\",\n      \"claim_text\": \"code IDs and labels which is helpful when using the data to create human readable\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"platform_official\",\n      \"anchor\": \"helpful when using the data\",\n      \"location\": \"sdmx-3-0-section-1-framework#c0014\"\n    },\n    {\n      \"id\": \"c4\",\n      \"claim_text\": \"There are two distinct message types\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"platform_official\",\n      \"anchor\": \"two distinct message types\",\n      \"location\": \"sdmx-3-0-section-1-framework#c0014\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [\n    {\n      \"id\": \"s1\",\n      \"name\": \"SDMX-CSV\",\n      \"version\": null,\n      \"steward\": null,\n      \"as_of_date\": null,\n      \"anchor\": \"SDMX-CSV is the CSV transmission\",\n      \"location\": \"sdmx-3-0-section-1-framework#c0014\"\n    }\n  ],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"sdmx-3-0-section-1-framework\",\n      \"to_id\": \"d1\",\n      \"anchor\": \"CSV transmission format specification\",\n      \"location\": \"sdmx-3-0-section-1-framework#c0014\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"sdmx-3-0-section-1-framework\",\n      \"to_id\": \"c1\",\n      \"anchor\": \"provides a simple columnar format\",\n      \"location\": \"sdmx-3-0-section-1-framework#c0014\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"sdmx-3-0-section-1-framework\",\n      \"to_id\": \"c2\",\n      \"anchor\": \"converted between the CSV\",\n      \"location\": \"sdmx-3-0-section-1-framework#c0014\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"sdmx-3-0-section-1-framework\",\n      \"to_id\": \"c3\",\n      \"anchor\": \"which is helpful\",\n      \"location\": \"sdmx-3-0-section-1-framework#c0014\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"sdmx-3-0-section-1-framework\",\n      \"to_id\": \"c4\",\n      \"anchor\": \"distinct message types\",\n      \"location\": \"sdmx-3-0-section-1-framework#c0014\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"sdmx-3-0-section-1-framework\",\n      \"to_id\": \"cn1\",\n      \"anchor\": \"code IDs and labels\",\n      \"location\": \"sdmx-3-0-section-1-framework#c0014\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"c3\",\n      \"to_id\": \"cn1\",\n      \"anchor\": \"code IDs and labels which is helpful\",\n      \"location\": \"sdmx-3-0-section-1-framework#c0014\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"Microsoft Excel\",\n      \"anchor\": \"Microsoft Excel\"\n    },\n    {\n      \"name\": \"SDMX -JSON\",\n      \"anchor\": \"SDMX -JSON\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"Like SDMX -JSON, SDMX-CSV\",\n      \"suggested_edge\": \"similar_to\",\n      \"diversion_reason\": \"cross_chunk\"\n    },\n    {\n      \"anchor\": \"1. Data: For the exchange\",\n      \"suggested_edge\": \"has_message_type\",\n      \"diversion_reason\": \"structural_inference\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"SDMX-JSON\", \"type\": \"Standard\"},\n    {\"name\": \"reference metadata\", \"type\": \"Concept\"},\n    {\"name\": \"charts and dashboards\", \"type\": \"Concept\"},\n    {\"name\": \"Microsoft Excel\", \"type\": \"Tool\"},\n    {\"name\": \"lossless format conversion\", \"type\": \"Concept\"}\n  ]\n}"
+}

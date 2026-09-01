@@ -1,0 +1,33 @@
+{
+ "doc_id": "llmstxt-proposal",
+ "chunk_id": "llmstxt-proposal#c0011",
+ "chunk_index": 11,
+ "chunk_start": 9760,
+ "chunk_end": 10119,
+ "chunk_tokens": 84,
+ "heading_path": [
+  "FastHTML",
+  "Docs"
+ ],
+ "oversize": false,
+ "doc_sha256": "04c6d4c860a36128491ef71f343243edc19ae4f42dc002eda2c345c6c498c8f3",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 3090,
+  "cacheReadInputTokens": 13011,
+  "cacheCreationInputTokens": 22633,
+  "webSearchRequests": 0,
+  "costUSD": 0.31009549999999997,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.31009549999999997,
+ "duration_ms": 34465,
+ "session_id": "7ba76e04-f63a-497b-8649-0f0e5c43a397",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"A FastHTML compatibility statement (works with JS-native web components and vanilla JS, not with React/Vue/Svelte) followed by a Docs link list to the FastHTML quick start and the HTMX reference.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_fasthtml\",\n      \"name\": \"FastHTML\",\n      \"aliases\": [],\n      \"description\": \"The web framework this section of the llms.txt file documents; the chunk states which JavaScript ecosystems it is and is not compatible with.\",\n      \"anchor\": \"FastHTML is compatible\",\n      \"location\": \"llmstxt-proposal#c0011\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"cl_fasthtml_js_compat\",\n      \"claim_text\": \"FastHTML is compatible with JS-native web components and any vanilla JS library, but not with React, Vue, or Svelte\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"but not with React\",\n      \"location\": \"llmstxt-proposal#c0011\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"llmstxt-proposal\",\n      \"to_id\": \"c_fasthtml\",\n      \"anchor\": \"FastHTML is compatible\",\n      \"location\": \"llmstxt-proposal#c0011\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"llmstxt-proposal\",\n      \"to_id\": \"cl_fasthtml_js_compat\",\n      \"anchor\": \"compatible with JS-native web components\",\n      \"location\": \"llmstxt-proposal#c0011\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_fasthtml_js_compat\",\n      \"to_id\": \"c_fasthtml\",\n      \"anchor\": \"any vanilla JS library\",\n      \"location\": \"llmstxt-proposal#c0011\"\n    }\n  ],\n  \"cites\": [\n    {\n      \"id\": \"cite_fasthtml_quickstart\",\n      \"from_id\": \"llmstxt-proposal\",\n      \"to_id\": \"https://fastht.ml/docs/tutorials/quickstart_for_web_devs.html.md\",\n      \"title\": \"FastHTML quick start\",\n      \"anchor\": \"FastHTML quick start\",\n      \"location\": \"llmstxt-proposal#c0011\"\n    },\n    {\n      \"id\": \"cite_htmx_reference\",\n      \"from_id\": \"llmstxt-proposal\",\n      \"to_id\": \"https://github.com/bigskysoftware/htmx/blob/master/www/content/reference.md\",\n      \"title\": \"HTMX reference\",\n      \"anchor\": \"HTMX reference\",\n      \"location\": \"llmstxt-proposal#c0011\"\n    }\n  ],\n  \"mentions\": [\n    { \"name\": \"JS-native web components\", \"anchor\": \"JS-native web components\" },\n    { \"name\": \"React\", \"anchor\": \"React, Vue\" },\n    { \"name\": \"Vue\", \"anchor\": \"Vue, or Svelte\" },\n    { \"name\": \"Svelte\", \"anchor\": \"or Svelte\" },\n    { \"name\": \"HTMX\", \"anchor\": \"HTMX attributes\" }\n  ],\n  \"proposed_relationships\": [],\n  \"gleaned\": []\n}"
+}

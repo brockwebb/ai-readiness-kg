@@ -1,0 +1,32 @@
+{
+ "doc_id": "odcs-open-data-contract-standard",
+ "chunk_id": "odcs-open-data-contract-standard#c0044",
+ "chunk_index": 44,
+ "chunk_start": 116620,
+ "chunk_end": 116845,
+ "chunk_tokens": 54,
+ "heading_path": [
+  "team"
+ ],
+ "oversize": false,
+ "doc_sha256": "bbe526f3c8c419aa5b38a9c46081d0fd74d29de749774f14f915936eac3f1fdb",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 1617,
+  "cacheReadInputTokens": 13012,
+  "cacheCreationInputTokens": 22429,
+  "webSearchRequests": 0,
+  "costUSD": 0.271231,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.271231,
+ "duration_ms": 18446,
+ "session_id": "92e9601f-4ac0-4cd9-b919-9bd6f3af97da",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Section-front matter for the ODCS 'Team' section: states only that the section lists team members and the history of their relation with the data contract; no definitions, claims, or instruments are asserted.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_team_members\",\n      \"name\": \"team members\",\n      \"aliases\": [\"data contract team\", \"Team\"],\n      \"description\": \"The people listed in a data contract's team section, together with the history of their relation to that contract.\",\n      \"anchor\": \"lists team members\",\n      \"location\": \"odcs-open-data-contract-standard#c0044\"\n    },\n    {\n      \"id\": \"c_data_contract\",\n      \"name\": \"data contract\",\n      \"aliases\": [\"Open Data Contract Standard contract\"],\n      \"description\": \"The artifact whose team section this passage introduces.\",\n      \"anchor\": \"this data contract\",\n      \"location\": \"odcs-open-data-contract-standard#c0044\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"odcs-open-data-contract-standard\",\n      \"to_id\": \"c_team_members\",\n      \"anchor\": \"lists team members\",\n      \"location\": \"odcs-open-data-contract-standard#c0044\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"odcs-open-data-contract-standard\",\n      \"to_id\": \"c_data_contract\",\n      \"anchor\": \"this data contract\",\n      \"location\": \"odcs-open-data-contract-standard#c0044\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"history of their relation\",\n      \"suggested_edge\": \"has_component\",\n      \"diversion_reason\": \"cross_chunk\",\n      \"from_hint\": \"data contract\",\n      \"to_hint\": \"team members\"\n    }\n  ],\n  \"gleaned\": []\n}"
+}

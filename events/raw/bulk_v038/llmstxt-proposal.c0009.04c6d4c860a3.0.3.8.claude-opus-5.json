@@ -1,0 +1,33 @@
+{
+ "doc_id": "llmstxt-proposal",
+ "chunk_id": "llmstxt-proposal#c0009",
+ "chunk_index": 9,
+ "chunk_start": 9098,
+ "chunk_end": 9288,
+ "chunk_tokens": 50,
+ "heading_path": [
+  "Title",
+  "Example"
+ ],
+ "oversize": false,
+ "doc_sha256": "04c6d4c860a36128491ef71f343243edc19ae4f42dc002eda2c345c6c498c8f3",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 3362,
+  "cacheReadInputTokens": 13011,
+  "cacheCreationInputTokens": 22505,
+  "webSearchRequests": 0,
+  "costUSD": 0.3156155,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3156155,
+ "duration_ms": 38034,
+ "session_id": "c5e08fce-5772-47fc-afc7-a247dbe14172",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Closing bullet on why aggregate documentation exceeds an LLM context window and carries unnecessary information, followed by the heading introducing a cut-down FastHTML `llms.txt` example.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_llm_context_window\",\n      \"name\": \"LLM context window\",\n      \"aliases\": [\"context window\"],\n      \"description\": \"The bounded amount of text an LLM can hold at once, which aggregate site documentation is said to exceed.\",\n      \"anchor\": \"LLM context window\",\n      \"location\": \"llmstxt-proposal#c0009\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"cl_aggregate_too_large\",\n      \"claim_text\": \"Will generally cover documents that in aggregate will be too large to fit in an LLM context window, and will include a lot of information that isn’t necessary to understand the site.\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"in aggregate will be too large\",\n      \"location\": \"llmstxt-proposal#c0009\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [\n    {\n      \"id\": \"s_llms_txt\",\n      \"name\": \"llms.txt\",\n      \"version\": null,\n      \"steward\": null,\n      \"as_of_date\": null,\n      \"anchor\": \"example of `llms.txt`\",\n      \"location\": \"llmstxt-proposal#c0009\"\n    }\n  ],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"llmstxt-proposal\",\n      \"to_id\": \"cl_aggregate_too_large\",\n      \"anchor\": \"in aggregate will be too large\",\n      \"location\": \"llmstxt-proposal#c0009\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_aggregate_too_large\",\n      \"to_id\": \"c_llm_context_window\",\n      \"anchor\": \"too large to fit in an LLM context window\",\n      \"location\": \"llmstxt-proposal#c0009\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"llmstxt-proposal\",\n      \"to_id\": \"c_llm_context_window\",\n      \"anchor\": \"fit in an LLM context window\",\n      \"location\": \"llmstxt-proposal#c0009\"\n    }\n  ],\n  \"cites\": [\n    {\n      \"type\": \"cites\",\n      \"from_id\": \"llmstxt-proposal\",\n      \"to_id\": \"https://www.fastht.ml/docs/llms.txt\",\n      \"anchor\": \"full version\",\n      \"location\": \"llmstxt-proposal#c0009\"\n    }\n  ],\n  \"mentions\": [\n    {\n      \"name\": \"FastHTML project\",\n      \"anchor\": \"FastHTML project\"\n    }\n  ],\n  \"proposed_relationships\": [],\n  \"gleaned\": []\n}\n```"
+}

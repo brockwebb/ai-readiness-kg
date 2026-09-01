@@ -1,0 +1,34 @@
+{
+ "doc_id": "schema-org-dataset",
+ "chunk_id": "schema-org-dataset#c0009",
+ "chunk_index": 9,
+ "chunk_start": 47515,
+ "chunk_end": 48670,
+ "chunk_tokens": 400,
+ "heading_path": [
+  "Dataset",
+  "More specific Types",
+  "Examples"
+ ],
+ "oversize": false,
+ "doc_sha256": "7155f56214c566a8b40e319e11f9add680351f2ae53ef5329166ae04803a1ba3",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 5990,
+  "cacheReadInputTokens": 13011,
+  "cacheCreationInputTokens": 23361,
+  "webSearchRequests": 0,
+  "costUSD": 0.3898755,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3898755,
+ "duration_ms": 64590,
+ "session_id": "f92eac2a-5eb9-4553-ad17-89f00a3a8e5c",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Tail of a schema.org Dataset JSON-LD example: creator Person block with an ORCID PropertyValue identifier, provider/publisher Organization block (SDRO), and an isBasedOn link; code example only, no assertions.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c-person\",\n      \"name\": \"Person\",\n      \"aliases\": [\"schema:Person\"],\n      \"description\": \"schema.org type used as the @type of the creator block in the Dataset JSON-LD example.\",\n      \"anchor\": \"Person\",\n      \"location\": \"schema-org-dataset#c0009\"\n    },\n    {\n      \"id\": \"c-propertyvalue\",\n      \"name\": \"PropertyValue\",\n      \"aliases\": [\"schema:PropertyValue\"],\n      \"description\": \"schema.org type used as the @type of the creator's identifier block, carrying propertyID, url and value.\",\n      \"anchor\": \"PropertyValue\",\n      \"location\": \"schema-org-dataset#c0009\"\n    },\n    {\n      \"id\": \"c-organization\",\n      \"name\": \"Organization\",\n      \"aliases\": [\"schema:Organization\"],\n      \"description\": \"schema.org type used as the @type of the provider block in the Dataset JSON-LD example.\",\n      \"anchor\": \"Organization\",\n      \"location\": \"schema-org-dataset#c0009\"\n    },\n    {\n      \"id\": \"c-orcid\",\n      \"name\": \"orcid\",\n      \"aliases\": [\"ORCID\"],\n      \"description\": \"Identifier registry referenced as the propertyID of the creator's identifier PropertyValue, via an identifiers.org registry URI.\",\n      \"anchor\": \"registry/orcid\",\n      \"location\": \"schema-org-dataset#c0009\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"schema-org-dataset\",\n      \"to_id\": \"c-person\",\n      \"anchor\": \"Person\",\n      \"location\": \"schema-org-dataset#c0009\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"schema-org-dataset\",\n      \"to_id\": \"c-propertyvalue\",\n      \"anchor\": \"PropertyValue\",\n      \"location\": \"schema-org-dataset#c0009\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"schema-org-dataset\",\n      \"to_id\": \"c-organization\",\n      \"anchor\": \"Organization\",\n      \"location\": \"schema-org-dataset#c0009\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"schema-org-dataset\",\n      \"to_id\": \"c-orcid\",\n      \"anchor\": \"registry/orcid\",\n      \"location\": \"schema-org-dataset#c0009\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"Dr Mark Brzezinski\",\n      \"anchor\": \"Dr Mark Brzezinski\"\n    },\n    {\n      \"name\": \"Sample Data Repository Office\",\n      \"anchor\": \"Sample Data Repository Office\"\n    },\n    {\n      \"name\": \"SDRO\",\n      \"anchor\": \"SDRO\"\n    },\n    {\n      \"name\": \"re3data.org\",\n      \"anchor\": \"re3data.org\"\n    },\n    {\n      \"name\": \"10.xxxx/Dataset-1\",\n      \"anchor\": \"10.xxxx/Dataset-1\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"suggested_edge\": \"created_by\",\n      \"from_id\": \"schema-org-dataset\",\n      \"to_id\": \"c-person\",\n      \"anchor\": \"\\\"creator\\\"\",\n      \"location\": \"schema-org-dataset#c0009\",\n      \"diversion_reason\": \"cross_chunk\"\n    },\n    {\n      \"suggested_edge\": \"provided_by\",\n      \"from_id\": \"schema-org-dataset\",\n      \"to_id\": \"c-organization\",\n      \"anchor\": \"\\\"provider\\\"\",\n      \"location\": \"schema-org-dataset#c0009\",\n      \"diversion_reason\": \"cross_chunk\"\n    },\n    {\n      \"suggested_edge\": \"published_by\",\n      \"from_id\": \"schema-org-dataset\",\n      \"to_id\": \"c-organization\",\n      \"anchor\": \"\\\"publisher\\\"\",\n      \"location\": \"schema-org-dataset#c0009\",\n      \"diversion_reason\": \"cross_chunk\"\n    },\n    {\n      \"suggested_edge\": \"is_based_on\",\n      \"from_id\": \"schema-org-dataset\",\n      \"to_id\": \"10.xxxx/Dataset-1\",\n      \"anchor\": \"\\\"isBasedOn\\\"\",\n      \"location\": \"schema-org-dataset#c0009\",\n      \"diversion_reason\": \"cross_chunk\"\n    },\n    {\n      \"suggested_edge\": \"has_identifier\",\n      \"from_id\": \"c-person\",\n      \"to_id\": \"c-propertyvalue\",\n      \"anchor\": \"\\\"identifier\\\":{\",\n      \"location\": \"schema-org-dataset#c0009\",\n      \"diversion_reason\": \"structural_inference\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"sameAs\", \"type\": \"Concept\"},\n    {\"name\": \"legalName\", \"type\": \"Concept\"},\n    {\"name\": \"propertyID\", \"type\": \"Concept\"},\n    {\"name\": \"@id\", \"type\": \"Concept\"},\n    {\"name\": \"url\", \"type\": \"Concept\"}\n  ]\n}"
+}

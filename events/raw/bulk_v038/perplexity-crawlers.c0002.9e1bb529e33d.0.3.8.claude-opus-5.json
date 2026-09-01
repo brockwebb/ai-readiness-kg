@@ -1,0 +1,32 @@
+{
+ "doc_id": "perplexity-crawlers",
+ "chunk_id": "perplexity-crawlers#c0002",
+ "chunk_index": 2,
+ "chunk_start": 1871,
+ "chunk_end": 2120,
+ "chunk_tokens": 52,
+ "heading_path": [
+  "WAF Configuration"
+ ],
+ "oversize": false,
+ "doc_sha256": "9e1bb529e33d5fc9058ddf8e41430e6a8239ee748051c374dfbea1986d4f5c77",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 7238,
+  "cacheReadInputTokens": 13011,
+  "cacheCreationInputTokens": 22748,
+  "webSearchRequests": 0,
+  "costUSD": 0.4149455,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.4149455,
+ "duration_ms": 80181,
+ "session_id": "74ec41b3-2f56-415f-bdd1-8685cb082b02",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Describes the Perplexity-User fetcher (user-agent string, published IPs, robots.txt behavior, not used for crawling or foundation-model training) and opens a WAF Configuration section recommending site owners whitelist Perplexity's bots.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_web_crawling\",\n      \"name\": \"web crawling\",\n      \"aliases\": [],\n      \"description\": \"Automated retrieval of web content at scale; the chunk states this fetcher is not used for it.\",\n      \"anchor\": \"web crawling\",\n      \"location\": \"perplexity-crawlers#c0002\"\n    },\n    {\n      \"id\": \"c_robots_txt\",\n      \"name\": \"robots.txt rules\",\n      \"aliases\": [\"robots.txt\"],\n      \"description\": \"Site-published crawler directives; the chunk states this fetcher generally ignores them for user-requested fetches.\",\n      \"anchor\": \"robots.txt rules\",\n      \"location\": \"perplexity-crawlers#c0002\"\n    },\n    {\n      \"id\": \"c_waf\",\n      \"name\": \"Web Application Firewall (WAF)\",\n      \"aliases\": [\"WAF\"],\n      \"description\": \"A firewall used to protect a site, which may block Perplexity's bots unless they are explicitly whitelisted.\",\n      \"anchor\": \"Web Application Firewall\",\n      \"location\": \"perplexity-crawlers#c0002\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"cl_not_crawling\",\n      \"claim_text\": \"It is not used for web crawling or to collect content for training AI foundation models.\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"platform_official\",\n      \"anchor\": \"not used for web crawling\",\n      \"location\": \"perplexity-crawlers#c0002\"\n    },\n    {\n      \"id\": \"cl_ignores_robots\",\n      \"claim_text\": \"Since a user requested the fetch, this fetcher generally ignores robots.txt rules.\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"platform_official\",\n      \"anchor\": \"generally ignores robots.txt\",\n      \"location\": \"perplexity-crawlers#c0002\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [\n    {\n      \"id\": \"p_whitelist\",\n      \"text\": \"you may need to explicitly whitelist Perplexity’s bots to ensure they can access your content\",\n      \"as_of_date\": null,\n      \"scope\": \"site\",\n      \"anchor\": \"explicitly whitelist\",\n      \"location\": \"perplexity-crawlers#c0002\"\n    }\n  ],\n  \"tools\": [],\n  \"platforms\": [\n    {\n      \"id\": \"pf_perplexity_user\",\n      \"name\": \"Perplexity-User\",\n      \"operator\": \"Perplexity\",\n      \"as_of_date\": null,\n      \"anchor\": \"Perplexity-User/1.0\",\n      \"location\": \"perplexity-crawlers#c0002\"\n    }\n  ],\n  \"edges\": [\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"perplexity-crawlers\",\n      \"to_id\": \"cl_not_crawling\",\n      \"anchor\": \"or to collect content\",\n      \"location\": \"perplexity-crawlers#c0002\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"perplexity-crawlers\",\n      \"to_id\": \"cl_ignores_robots\",\n      \"anchor\": \"Since a user requested the fetch\",\n      \"location\": \"perplexity-crawlers#c0002\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_not_crawling\",\n      \"to_id\": \"c_web_crawling\",\n      \"anchor\": \"used for web crawling or\",\n      \"location\": \"perplexity-crawlers#c0002\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_ignores_robots\",\n      \"to_id\": \"c_robots_txt\",\n      \"anchor\": \"ignores robots.txt rules\",\n      \"location\": \"perplexity-crawlers#c0002\"\n    },\n    {\n      \"type\": \"recommends\",\n      \"from_id\": \"perplexity-crawlers\",\n      \"to_id\": \"p_whitelist\",\n      \"anchor\": \"you may need to explicitly whitelist\",\n      \"location\": \"perplexity-crawlers#c0002\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"p_whitelist\",\n      \"to_id\": \"c_waf\",\n      \"anchor\": \"using a Web Application Firewall\",\n      \"location\": \"perplexity-crawlers#c0002\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"AI foundation models\",\n      \"anchor\": \"AI foundation models\"\n    },\n    {\n      \"name\": \"WAF providers\",\n      \"anchor\": \"configuration guidelines for popular\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"suggested_edge\": \"targets\",\n      \"from_id\": \"p_whitelist\",\n      \"to_id\": \"pf_perplexity_user\",\n      \"anchor\": \"explicitly whitelist Perplexity’s bots\",\n      \"diversion_reason\": \"endpoint_not_located\"\n    },\n    {\n      \"suggested_edge\": \"about\",\n      \"from_id\": \"cl_ignores_robots\",\n      \"to_id\": \"pf_perplexity_user\",\n      \"anchor\": \"this fetcher generally ignores\",\n      \"diversion_reason\": \"other:claim_to_platform_not_typed\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"user-agent string\", \"type\": \"Concept\"},\n    {\"name\": \"Published IP addresses\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

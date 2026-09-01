@@ -1,0 +1,18 @@
+{
+ "batch": 104,
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 965,
+  "cacheReadInputTokens": 13014,
+  "cacheCreationInputTokens": 18753,
+  "webSearchRequests": 0,
+  "costUSD": 0.21817199999999998,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.21817199999999998,
+ "raw_result": "{\"facts\": [{\"item_id\": \"7782a00eb40a4e78a827774ad46f8b86::text\", \"attribute\": \"text\", \"fact_text\": \"Verify that the `predicateType` is `https://slsa.dev/provenance/v1`.\"}, {\"item_id\": \"d50178fad5044395a504ea9a0c433fe6::claim_text\", \"attribute\": \"claim_text\", \"fact_text\": \"Attacker used leaked credentials to upload a malicious artifact to a GCS bucket.\"}, {\"item_id\": \"d50178fad5044395a504ea9a0c433fe6::claim_text\", \"attribute\": \"claim_text\", \"fact_text\": \"Users download directly from the GCS bucket.\"}, {\"item_id\": \"833139510fe347a38f1fc1191dff9680::claim_text\", \"attribute\": \"claim_text\", \"fact_text\": \"Some builds cannot easily be made reproducible.\"}, {\"item_id\": \"abd1b7fac110421587d92028b4fc3b84::description\", \"attribute\": \"description\", \"fact_text\": \"Adversary profile able to create and modify controlled builds, run arbitrary code in build environments, and fork and build from the target's source repo.\"}, {\"item_id\": \"1aeb29ac496a45498f178e2cae71f6d0::description\", \"attribute\": \"description\", \"fact_text\": \"The sequence of steps resulting in the creation of an artifact.\"}, {\"item_id\": \"1aeb29ac496a45498f178e2cae71f6d0::description\", \"attribute\": \"description\", \"fact_text\": \"The sequence of steps is represented as a directed acyclic graph of sources, builds, dependencies, and packages.\"}, {\"item_id\": \"e98c6d37a67b466d9358be89d4ab91a9::claim_text\", \"attribute\": \"claim_text\", \"fact_text\": \"Build environments may have either read-only or read-write access to caches.\"}, {\"item_id\": \"1e8de3bde3a345ab9c3a24852e4f49af::description\", \"attribute\": \"description\", \"fact_text\": \"A cache reused across builds.\"}, {\"item_id\": \"1e8de3bde3a345ab9c3a24852e4f49af::description\", \"attribute\": \"description\", \"fact_text\": \"The cache is keyed by source-file hash.\"}, {\"item_id\": \"1e8de3bde3a345ab9c3a24852e4f49af::description\", \"attribute\": \"description\", \"fact_text\": \"A build can read from and write to the cache's entries.\"}, {\"item_id\": \"dbf9a511f85c4c119f8284a5c9eed453::claim_text\", \"attribute\": \"claim_text\", \"fact_text\": \"Consumers can form their own expectations for artifacts.\"}, {\"item_id\": \"dbf9a511f85c4c119f8284a5c9eed453::claim_text\", \"attribute\": \"claim_text\", \"fact_text\": \"Consumers can use the default expectations provided by the package producer and/or package ecosystem.\"}]}"
+}

@@ -1,0 +1,33 @@
+{
+ "doc_id": "sitemaps-protocol",
+ "chunk_id": "sitemaps-protocol#c0009",
+ "chunk_index": 9,
+ "chunk_start": 21772,
+ "chunk_end": 22515,
+ "chunk_tokens": 213,
+ "heading_path": [
+  "Sitemaps XML format",
+  "Extending the Sitemaps protocol"
+ ],
+ "oversize": false,
+ "doc_sha256": "8e9d1f33dfbfc4f4a71c7fa3afeea5d1c29a9fa51cb997dc61cd695735407e6e",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 4468,
+  "cacheReadInputTokens": 13011,
+  "cacheCreationInputTokens": 23004,
+  "webSearchRequests": 0,
+  "costUSD": 0.3482555,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3482555,
+ "duration_ms": 49576,
+ "session_id": "eb295d4e-4e67-40b7-a53c-a8b5deb64e4d",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Section states the Sitemaps protocol can be extended with your own namespace declared in the root element, with an XML example.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c1\",\n      \"name\": \"namespace\",\n      \"aliases\": [\"XML namespace\", \"custom namespace\"],\n      \"description\": \"An XML namespace a publisher declares to add their own elements to a sitemap.\",\n      \"anchor\": \"your own namespace\",\n      \"location\": \"sitemaps-protocol#c0009\"\n    },\n    {\n      \"id\": \"c2\",\n      \"name\": \"root element\",\n      \"aliases\": [\"urlset root element\"],\n      \"description\": \"The top-level element of a sitemap file, where a namespace is specified.\",\n      \"anchor\": \"root element\",\n      \"location\": \"sitemaps-protocol#c0009\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"cl1\",\n      \"claim_text\": \"You can extend the Sitemaps protocol using your own namespace\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"platform_official\",\n      \"anchor\": \"extend the Sitemaps protocol using\",\n      \"location\": \"sitemaps-protocol#c0009\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [\n    {\n      \"id\": \"std1\",\n      \"name\": \"Sitemaps protocol\",\n      \"version\": null,\n      \"steward\": null,\n      \"as_of_date\": null,\n      \"anchor\": \"the Sitemaps protocol using\",\n      \"location\": \"sitemaps-protocol#c0009\"\n    }\n  ],\n  \"frameworks\": [],\n  \"practices\": [\n    {\n      \"id\": \"p1\",\n      \"text\": \"Simply specify this namespace in the root element\",\n      \"as_of_date\": null,\n      \"scope\": \"site\",\n      \"anchor\": \"Simply specify this namespace\",\n      \"location\": \"sitemaps-protocol#c0009\"\n    }\n  ],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"sitemaps-protocol\",\n      \"to_id\": \"cl1\",\n      \"anchor\": \"extend the Sitemaps protocol using\",\n      \"location\": \"sitemaps-protocol#c0009\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl1\",\n      \"to_id\": \"c1\",\n      \"anchor\": \"using your own namespace\",\n      \"location\": \"sitemaps-protocol#c0009\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"sitemaps-protocol\",\n      \"to_id\": \"c1\",\n      \"anchor\": \"own namespace\",\n      \"location\": \"sitemaps-protocol#c0009\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"sitemaps-protocol\",\n      \"to_id\": \"c2\",\n      \"anchor\": \"in the root element\",\n      \"location\": \"sitemaps-protocol#c0009\"\n    },\n    {\n      \"type\": \"recommends\",\n      \"from_id\": \"sitemaps-protocol\",\n      \"to_id\": \"p1\",\n      \"anchor\": \"Simply specify this namespace\",\n      \"location\": \"sitemaps-protocol#c0009\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"p1\",\n      \"to_id\": \"c2\",\n      \"anchor\": \"namespace in the root element\",\n      \"location\": \"sitemaps-protocol#c0009\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"urlset\",\n      \"anchor\": \"<urlset\"\n    },\n    {\n      \"name\": \"example:example_tag\",\n      \"anchor\": \"<example:example_tag>\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"suggested_edge\": \"practice_applies_to_standard\",\n      \"from_id\": \"p1\",\n      \"to_id\": \"std1\",\n      \"anchor\": \"Simply specify this namespace\",\n      \"diversion_reason\": \"other:no_edge_type\"\n    },\n    {\n      \"suggested_edge\": \"extends\",\n      \"from_id\": \"c1\",\n      \"to_id\": \"std1\",\n      \"anchor\": \"namespace extension\",\n      \"diversion_reason\": \"structural_inference\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"sitemap.xsd\", \"type\": \"Standard\"},\n    {\"name\": \"XMLSchema-instance\", \"type\": \"Standard\"},\n    {\"name\": \"xsi:schemaLocation\", \"type\": \"Concept\"},\n    {\"name\": \"namespace extension\", \"type\": \"Concept\"}\n  ]\n}"
+}

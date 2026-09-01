@@ -1,0 +1,23 @@
+{
+ "batch_id": "burn_bulk_v038_b007.claude-sonnet-5.5b1dba705e",
+ "run": "burn_bulk_v038_b007",
+ "model_id": "claude-sonnet-5",
+ "usage": {
+  "inputTokens": 6,
+  "outputTokens": 5947,
+  "cacheReadInputTokens": 134689,
+  "cacheCreationInputTokens": 35037,
+  "webSearchRequests": 0,
+  "costUSD": 0.22656779999999999,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "canonicalModel": "claude-sonnet-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.22656779999999999,
+ "duration_ms": 65958,
+ "wall_s": 68.2,
+ "session_id": "688ca188-5f83-479b-81c3-84b0b96eb08f",
+ "raw_result": "The task already embeds a fully-specified, versioned judging instrument (`probe_judge_version: 1.1.0`) with its own labels, classes, and strict-JSON output contract — that's the applicable rubric here, not the general adversarial-review baseline. Proceeding directly with the judgments per those embedded instructions.\n\n**Reasoning per fact:**\n\n- **f_39e87f9c6116** (\"aliases: user calibration\"): span is a metric-mapping table row about diagnosing *calibration* as a design action; nothing names the concept \"user calibration,\" and the window doesn't supply that phrase either → `filled_attribute`.\n- **f_d32ee2654353**: verbatim in span → `entailed`.\n- **f_ff881c1f4030**: verbatim in span → `entailed`.\n- **f_334b365793ec**: verbatim in span → `entailed`.\n- **f_fa1589aa582f** (\"aliases: machine consumers\"): span describes agents fetching docs but never calls them \"machine consumers\"; window doesn't either → `filled_attribute`.\n- **f_f2a0186e1f97**: verbatim in span → `entailed`.\n- **f_f136f5b7cbef** (\"aliases: llms.txt directories\"): span/window describe directories that list llms.txt files but never name them \"llms.txt directories\" as an alias → `filled_attribute`.\n- **f_9a215d161994**: verbatim in span → `entailed`.\n- **f_34dcab9070ba** (\"Automated clients that fetch site content.\" as description of a crawler Concept): span is about robots.txt limitations/enforcement, not a generic crawler definition; window doesn't supply that definition either → `filled_attribute`.\n- **f_034d43d001a6** (description of directories): direct paraphrase of span text → `entailed`.\n\n```json\n{\"judgments\": [\n  {\"fact_id\": \"f_39e87f9c6116\", \"label\": \"not_entailed\", \"class\": \"filled_attribute\", \"confidence\": 0.7},\n  {\"fact_id\": \"f_d32ee2654353\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.98},\n  {\"fact_id\": \"f_ff881c1f4030\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.97},\n  {\"fact_id\": \"f_334b365793ec\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.97},\n  {\"fact_id\": \"f_fa1589aa582f\", \"label\": \"not_entailed\", \"class\": \"filled_attribute\", \"confidence\": 0.75},\n  {\"fact_id\": \"f_f2a0186e1f97\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.97},\n  {\"fact_id\": \"f_f136f5b7cbef\", \"label\": \"not_entailed\", \"class\": \"filled_attribute\", \"confidence\": 0.6},\n  {\"fact_id\": \"f_9a215d161994\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.97},\n  {\"fact_id\": \"f_34dcab9070ba\", \"label\": \"not_entailed\", \"class\": \"filled_attribute\", \"confidence\": 0.7},\n  {\"fact_id\": \"f_034d43d001a6\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.88}\n]}\n```"
+}

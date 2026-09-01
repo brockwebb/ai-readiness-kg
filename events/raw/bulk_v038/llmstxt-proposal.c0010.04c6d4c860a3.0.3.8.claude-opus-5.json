@@ -1,0 +1,32 @@
+{
+ "doc_id": "llmstxt-proposal",
+ "chunk_id": "llmstxt-proposal#c0010",
+ "chunk_index": 10,
+ "chunk_start": 9289,
+ "chunk_end": 9758,
+ "chunk_tokens": 108,
+ "heading_path": [
+  "FastHTML"
+ ],
+ "oversize": false,
+ "doc_sha256": "04c6d4c860a36128491ef71f343243edc19ae4f42dc002eda2c345c6c498c8f3",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 6624,
+  "cacheReadInputTokens": 13011,
+  "cacheCreationInputTokens": 22598,
+  "webSearchRequests": 0,
+  "costUSD": 0.39809550000000005,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.39809550000000005,
+ "duration_ms": 68527,
+ "session_id": "2d6dfb7d-83bf-42f7-9f42-a3b2710f3069",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"An example llms.txt file for FastHTML: a one-line summary defining it as a python library combining Starlette, Uvicorn, HTMX and fastcore FastTags for server-rendered hypermedia apps, plus two compatibility notes (not FastAPI-compatible/not for API services; works with vanilla JS and web components but not React, Vue, or Svelte).\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c-fasthtml\",\n      \"name\": \"FastHTML\",\n      \"aliases\": [],\n      \"description\": \"A python library for creating server-rendered hypermedia applications, built on Starlette, Uvicorn, HTMX and fastcore's FastTags.\",\n      \"anchor\": \"FastHTML is a python library\",\n      \"location\": \"llmstxt-proposal#c0010\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d-fasthtml\",\n      \"term\": \"FastHTML\",\n      \"verbatim_text\": \"FastHTML is a python library which brings together Starlette, Uvicorn, HTMX, and fastcore's `FT` \\\"FastTags\\\" into a library for creating server-rendered hypermedia applications.\",\n      \"normative_status\": \"industry\",\n      \"as_of_date\": null,\n      \"anchor\": \"FastHTML is a python library\",\n      \"location\": \"llmstxt-proposal#c0010\"\n    }\n  ],\n  \"claims\": [\n    {\n      \"id\": \"cl-not-fastapi\",\n      \"claim_text\": \"it is *not* compatible with FastAPI syntax and is not targeted at creating API services\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"not targeted at creating API services\",\n      \"location\": \"llmstxt-proposal#c0010\"\n    },\n    {\n      \"id\": \"cl-js-compat\",\n      \"claim_text\": \"FastHTML is compatible with JS-native web components and any vanilla JS library, but not with React, Vue, or Svelte.\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"compatible with JS-native web components\",\n      \"location\": \"llmstxt-proposal#c0010\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"llmstxt-proposal\",\n      \"to_id\": \"d-fasthtml\",\n      \"anchor\": \"FastHTML is a python library\",\n      \"location\": \"llmstxt-proposal#c0010\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"llmstxt-proposal\",\n      \"to_id\": \"c-fasthtml\",\n      \"anchor\": \"FastHTML is a python library\",\n      \"location\": \"llmstxt-proposal#c0010\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"llmstxt-proposal\",\n      \"to_id\": \"cl-not-fastapi\",\n      \"anchor\": \"not targeted at creating API services\",\n      \"location\": \"llmstxt-proposal#c0010\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"llmstxt-proposal\",\n      \"to_id\": \"cl-js-compat\",\n      \"anchor\": \"compatible with JS-native web components\",\n      \"location\": \"llmstxt-proposal#c0010\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl-not-fastapi\",\n      \"to_id\": \"c-fasthtml\",\n      \"anchor\": \"inspired by FastAPI\",\n      \"location\": \"llmstxt-proposal#c0010\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl-js-compat\",\n      \"to_id\": \"c-fasthtml\",\n      \"anchor\": \"any vanilla JS library\",\n      \"location\": \"llmstxt-proposal#c0010\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    { \"name\": \"Starlette\", \"anchor\": \"Starlette\" },\n    { \"name\": \"Uvicorn\", \"anchor\": \"Uvicorn\" },\n    { \"name\": \"HTMX\", \"anchor\": \"HTMX\" },\n    { \"name\": \"fastcore\", \"anchor\": \"fastcore's\" },\n    { \"name\": \"FastTags\", \"anchor\": \"FastTags\" },\n    { \"name\": \"FastAPI\", \"anchor\": \"inspired by FastAPI\" },\n    { \"name\": \"React\", \"anchor\": \"React\" },\n    { \"name\": \"Vue\", \"anchor\": \"Vue\" },\n    { \"name\": \"Svelte\", \"anchor\": \"Svelte\" },\n    { \"name\": \"server-rendered hypermedia applications\", \"anchor\": \"server-rendered hypermedia applications\" }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"suggested_edge\": \"has_component\",\n      \"from_id\": \"c-fasthtml\",\n      \"to_name\": \"Starlette, Uvicorn, HTMX, fastcore FastTags\",\n      \"anchor\": \"brings together Starlette\",\n      \"location\": \"llmstxt-proposal#c0010\",\n      \"diversion_reason\": \"endpoint_not_located\"\n    },\n    {\n      \"suggested_edge\": \"incompatible_with\",\n      \"from_id\": \"c-fasthtml\",\n      \"to_name\": \"React, Vue, Svelte\",\n      \"anchor\": \"but not with React\",\n      \"location\": \"llmstxt-proposal#c0010\",\n      \"diversion_reason\": \"other:no_edge_type\"\n    },\n    {\n      \"suggested_edge\": \"inspired_by\",\n      \"from_id\": \"c-fasthtml\",\n      \"to_name\": \"FastAPI\",\n      \"anchor\": \"inspired by FastAPI\",\n      \"location\": \"llmstxt-proposal#c0010\",\n      \"diversion_reason\": \"other:no_edge_type\"\n    }\n  ],\n  \"gleaned\": [\n    { \"name\": \"FastAPI\", \"type\": \"Concept\" },\n    { \"name\": \"Starlette\", \"type\": \"Concept\" },\n    { \"name\": \"HTMX\", \"type\": \"Concept\" },\n    { \"name\": \"FastTags\", \"type\": \"Concept\" },\n    { \"name\": \"server-rendered hypermedia applications\", \"type\": \"Concept\" },\n    { \"name\": \"JS-native web components\", \"type\": \"Concept\" }\n  ]\n}"
+}

@@ -1,0 +1,32 @@
+{
+ "doc_id": "odcs-open-data-contract-standard",
+ "chunk_id": "odcs-open-data-contract-standard#c0036",
+ "chunk_index": 36,
+ "chunk_start": 79902,
+ "chunk_end": 80098,
+ "chunk_tokens": 48,
+ "heading_path": [
+  "schema"
+ ],
+ "oversize": false,
+ "doc_sha256": "bbe526f3c8c419aa5b38a9c46081d0fd74d29de749774f14f915936eac3f1fdb",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 2170,
+  "cacheReadInputTokens": 13012,
+  "cacheCreationInputTokens": 22425,
+  "webSearchRequests": 0,
+  "costUSD": 0.285016,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.285016,
+ "duration_ms": 25817,
+ "session_id": "290dc58a-211a-42c8-896f-1ff58355c894",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Section front-matter for the Schema section; the only assertive text states that this section describes the schema of the data contract.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_schema\",\n      \"name\": \"schema\",\n      \"aliases\": [\"Schema\", \"data contract schema\"],\n      \"description\": \"The schema of a data contract, described by this section of the document.\",\n      \"anchor\": \"describes the schema\",\n      \"location\": \"odcs-open-data-contract-standard#c0036\"\n    },\n    {\n      \"id\": \"c_data_contract\",\n      \"name\": \"data contract\",\n      \"aliases\": [\"Data Contract\"],\n      \"description\": \"The artifact whose schema this section describes.\",\n      \"anchor\": \"of the data contract\",\n      \"location\": \"odcs-open-data-contract-standard#c0036\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"odcs-open-data-contract-standard\",\n      \"to_id\": \"c_schema\",\n      \"anchor\": \"describes the schema\",\n      \"location\": \"odcs-open-data-contract-standard#c0036\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"odcs-open-data-contract-standard\",\n      \"to_id\": \"c_data_contract\",\n      \"anchor\": \"of the data contract\",\n      \"location\": \"odcs-open-data-contract-standard#c0036\"\n    },\n    {\n      \"type\": \"has_component\",\n      \"from_id\": \"c_data_contract\",\n      \"to_id\": \"c_schema\",\n      \"anchor\": \"the schema of the data contract\",\n      \"location\": \"odcs-open-data-contract-standard#c0036\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [],\n  \"proposed_relationships\": [],\n  \"gleaned\": [\n    {\"name\": \"Open Data Contract Standard\", \"type\": \"Standard\"},\n    {\"name\": \"v3.1.0\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

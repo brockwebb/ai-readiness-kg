@@ -1,0 +1,32 @@
+{
+ "doc_id": "statistical-policy-working-paper-46-data-quality-assessment",
+ "chunk_id": "statistical-policy-working-paper-46-data-quality-assessment#c0020",
+ "chunk_index": 20,
+ "chunk_start": 46557,
+ "chunk_end": 51406,
+ "chunk_tokens": 1298,
+ "heading_path": [
+  "01 - 12"
+ ],
+ "oversize": false,
+ "doc_sha256": "1b1f030dbb7eb9c46e4e8e03c0411ffab6f715d7332dafe7f92aead92c4ed936",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 5336,
+  "cacheReadInputTokens": 13011,
+  "cacheCreationInputTokens": 26895,
+  "webSearchRequests": 0,
+  "costUSD": 0.4088655,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.4088655,
+ "duration_ms": 61241,
+ "session_id": "c58b253d-ceb5-4450-ac2b-0a84abf7a8d9",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Tabular example data dictionaries (address fields, then a Benefits_2011.por client benefits file) listing field name, type, length, format and valid-value code lists; the only non-tabular assertions are cross-references to the USPS ZIP code standard (Jan 1, 2005) and the FIPS county standard (Oct 24, 1998).\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_fips_county_code\",\n      \"name\": \"FIPS County code\",\n      \"aliases\": [\"county FIPS code\"],\n      \"description\": \"Numeric county identifier field in the example data dictionary; its valid values and definitions are cross-referenced to the FIPS standard rather than enumerated in the dictionary.\",\n      \"anchor\": \"FIPS County code\",\n      \"location\": \"statistical-policy-working-paper-46-data-quality-assessment#c0020\"\n    },\n    {\n      \"id\": \"c_ssn\",\n      \"name\": \"Social Security Number\",\n      \"aliases\": [\"SSN\"],\n      \"description\": \"Optional 9-digit numeric client field in the example benefits data dictionary, formatted ###-##-#### and defaulting to null.\",\n      \"anchor\": \"Social Security Number\",\n      \"location\": \"statistical-policy-working-paper-46-data-quality-assessment#c0020\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [\n    {\n      \"id\": \"std_usps_zip\",\n      \"name\": \"USPS standard\",\n      \"version\": null,\n      \"steward\": \"USPS\",\n      \"as_of_date\": \"2005-01-01\",\n      \"anchor\": \"contained the USPS standard\",\n      \"location\": \"statistical-policy-working-paper-46-data-quality-assessment#c0020\"\n    },\n    {\n      \"id\": \"std_fips\",\n      \"name\": \"FIPS\",\n      \"version\": null,\n      \"steward\": null,\n      \"as_of_date\": \"1998-10-24\",\n      \"anchor\": \"contained in FIPS\",\n      \"location\": \"statistical-policy-working-paper-46-data-quality-assessment#c0020\"\n    }\n  ],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"statistical-policy-working-paper-46-data-quality-assessment\",\n      \"to_id\": \"c_fips_county_code\",\n      \"anchor\": \"FIPS County code\",\n      \"location\": \"statistical-policy-working-paper-46-data-quality-assessment#c0020\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"statistical-policy-working-paper-46-data-quality-assessment\",\n      \"to_id\": \"c_ssn\",\n      \"anchor\": \"Social Security Number\",\n      \"location\": \"statistical-policy-working-paper-46-data-quality-assessment#c0020\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\"name\": \"Benefits_2011.por\", \"anchor\": \"Benefits_2011.por\"},\n    {\"name\": \"SAS portable dataset\", \"anchor\": \"SAS portable dataset\"},\n    {\"name\": \"Ethnic Group\", \"anchor\": \"Ethnic Group\"},\n    {\"name\": \"Client Education Level\", \"anchor\": \"Client Education Level\"},\n    {\"name\": \"Case status code\", \"anchor\": \"Case status code\"},\n    {\"name\": \"Benefit amount\", \"anchor\": \"Benefit amount\"},\n    {\"name\": \"Finger print status\", \"anchor\": \"Finger print status\"}\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"contained in FIPS\",\n      \"suggested_edge\": \"defined_by_standard(FIPS County code -> FIPS)\",\n      \"diversion_reason\": \"predicate_not_located\"\n    },\n    {\n      \"anchor\": \"5 digit zip code\",\n      \"suggested_edge\": \"defined_by_standard(5 digit zip code -> USPS standard)\",\n      \"diversion_reason\": \"predicate_not_located\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"Example Data Dictionary for Repeated Acquisition Phase\", \"type\": \"Framework\"},\n    {\"name\": \"Repeated Acquisition Phase\", \"type\": \"Concept\"},\n    {\"name\": \"Primary Key\", \"type\": \"Concept\"},\n    {\"name\": \"Residential address\", \"type\": \"Concept\"},\n    {\"name\": \"Mailing address\", \"type\": \"Concept\"},\n    {\"name\": \"Benefit month\", \"type\": \"Concept\"},\n    {\"name\": \"Client ID\", \"type\": \"Concept\"},\n    {\"name\": \"Case ID\", \"type\": \"Concept\"},\n    {\"name\": \"time limited benefits tier level\", \"type\": \"Concept\"},\n    {\"name\": \"Client gender\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

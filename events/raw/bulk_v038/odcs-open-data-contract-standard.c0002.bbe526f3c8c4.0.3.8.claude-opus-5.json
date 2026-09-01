@@ -1,0 +1,32 @@
+{
+ "doc_id": "odcs-open-data-contract-standard",
+ "chunk_id": "odcs-open-data-contract-standard#c0002",
+ "chunk_index": 2,
+ "chunk_start": 498,
+ "chunk_end": 965,
+ "chunk_tokens": 106,
+ "heading_path": [
+  "README"
+ ],
+ "oversize": false,
+ "doc_sha256": "bbe526f3c8c419aa5b38a9c46081d0fd74d29de749774f14f915936eac3f1fdb",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 4534,
+  "cacheReadInputTokens": 10121,
+  "cacheCreationInputTokens": 25550,
+  "webSearchRequests": 0,
+  "costUSD": 0.3739205,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3739205,
+ "duration_ms": 52805,
+ "session_id": "aa4caec4-d274-45d9-aa80-5ef1214d3730",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Front-matter/metadata block for the ODCS README: names the Open Data Contract Standard (ODCS) and lists the areas its documentation covers; no definitional or normative text.\"\n  },\n  \"concepts\": [],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"claim-odcs-scope\",\n      \"claim_text\": \"Includes fundamentals, datasets, schemas, data quality, pricing, stakeholders, roles, service-level agreements and other properties\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"platform_official\",\n      \"anchor\": \"Includes fundamentals\",\n      \"location\": \"odcs-open-data-contract-standard#c0002\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [\n    {\n      \"id\": \"std-odcs\",\n      \"name\": \"Open Data Contract Standard\",\n      \"aliases\": [\"ODCS\"],\n      \"version\": null,\n      \"steward\": null,\n      \"as_of_date\": null,\n      \"anchor\": \"Details of the Open Data Contract Standard\",\n      \"location\": \"odcs-open-data-contract-standard#c0002\"\n    }\n  ],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"odcs-open-data-contract-standard\",\n      \"to_id\": \"claim-odcs-scope\",\n      \"anchor\": \"Includes fundamentals\",\n      \"location\": \"odcs-open-data-contract-standard#c0002\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    { \"name\": \"fundamentals\", \"anchor\": \"fundamentals\" },\n    { \"name\": \"datasets\", \"anchor\": \"datasets\" },\n    { \"name\": \"schemas\", \"anchor\": \"schemas\" },\n    { \"name\": \"data quality\", \"anchor\": \"data quality\" },\n    { \"name\": \"pricing\", \"anchor\": \"pricing\" },\n    { \"name\": \"stakeholders\", \"anchor\": \"stakeholders\" },\n    { \"name\": \"roles\", \"anchor\": \"roles\" },\n    { \"name\": \"service-level agreements\", \"anchor\": \"service-level agreements\" }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"suggested_edge\": \"has_component\",\n      \"from_id\": \"std-odcs\",\n      \"to_name\": \"data quality\",\n      \"anchor\": \"Includes fundamentals\",\n      \"diversion_reason\": \"other:standard_to_concept_not_allowed\",\n      \"location\": \"odcs-open-data-contract-standard#c0002\"\n    },\n    {\n      \"suggested_edge\": \"has_component\",\n      \"from_id\": \"std-odcs\",\n      \"to_name\": \"service-level agreements\",\n      \"anchor\": \"roles, service-level agreements and other properties\",\n      \"diversion_reason\": \"other:standard_to_concept_not_allowed\",\n      \"location\": \"odcs-open-data-contract-standard#c0002\"\n    }\n  ],\n  \"gleaned\": []\n}"
+}

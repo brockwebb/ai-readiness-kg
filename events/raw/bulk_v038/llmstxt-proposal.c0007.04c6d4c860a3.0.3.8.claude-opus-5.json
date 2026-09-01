@@ -1,0 +1,33 @@
+{
+ "doc_id": "llmstxt-proposal",
+ "chunk_id": "llmstxt-proposal#c0007",
+ "chunk_index": 7,
+ "chunk_start": 6698,
+ "chunk_end": 6880,
+ "chunk_tokens": 42,
+ "heading_path": [
+  "Title",
+  "Optional"
+ ],
+ "oversize": false,
+ "doc_sha256": "04c6d4c860a36128491ef71f343243edc19ae4f42dc002eda2c345c6c498c8f3",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 4907,
+  "cacheReadInputTokens": 13011,
+  "cacheCreationInputTokens": 22406,
+  "webSearchRequests": 0,
+  "costUSD": 0.35325049999999997,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.35325049999999997,
+ "duration_ms": 56142,
+ "session_id": "18e77a20-ba1e-4264-ad9f-ccc7ba149ab5",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Tail of an llms.txt format example (link line with optional details, an '## Optional' heading) followed by one prose sentence stating the convention that the \\\"Optional\\\" section holds secondary information an agent may skip for shorter context.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_optional_section\",\n      \"name\": \"“Optional” section\",\n      \"aliases\": [\"Optional section\", \"llms.txt Optional section\"],\n      \"description\": \"The section of an llms.txt file that, by convention, carries secondary information whose links an agent can skip when a shorter context is needed.\",\n      \"anchor\": \"“Optional” section\",\n      \"location\": \"llmstxt-proposal#c0007\"\n    },\n    {\n      \"id\": \"c_secondary_information\",\n      \"name\": \"secondary information\",\n      \"aliases\": [\"skippable content\"],\n      \"description\": \"Information the document treats as non-essential, placed in the Optional section so it can be dropped when context is constrained.\",\n      \"anchor\": \"secondary information\",\n      \"location\": \"llmstxt-proposal#c0007\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d_optional_section\",\n      \"term\": \"“Optional” section\",\n      \"verbatim_text\": \"The “Optional” section is used, by convention, for secondary information: links an agent can skip when a shorter context is needed.\",\n      \"normative_status\": \"industry\",\n      \"as_of_date\": null,\n      \"anchor\": \"by convention\",\n      \"location\": \"llmstxt-proposal#c0007\"\n    }\n  ],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [\n    {\n      \"id\": \"p_optional_section_use\",\n      \"text\": \"The “Optional” section is used, by convention, for secondary information\",\n      \"as_of_date\": null,\n      \"scope\": \"content\",\n      \"anchor\": \"for secondary information\",\n      \"location\": \"llmstxt-proposal#c0007\"\n    }\n  ],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"llmstxt-proposal\",\n      \"to_id\": \"d_optional_section\",\n      \"anchor\": \"by convention\",\n      \"location\": \"llmstxt-proposal#c0007\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"llmstxt-proposal\",\n      \"to_id\": \"c_optional_section\",\n      \"anchor\": \"“Optional” section\",\n      \"location\": \"llmstxt-proposal#c0007\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"llmstxt-proposal\",\n      \"to_id\": \"c_secondary_information\",\n      \"anchor\": \"secondary information\",\n      \"location\": \"llmstxt-proposal#c0007\"\n    },\n    {\n      \"type\": \"recommends\",\n      \"from_id\": \"llmstxt-proposal\",\n      \"to_id\": \"p_optional_section_use\",\n      \"anchor\": \"for secondary information\",\n      \"location\": \"llmstxt-proposal#c0007\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"p_optional_section_use\",\n      \"to_id\": \"c_optional_section\",\n      \"anchor\": \"an agent can skip\",\n      \"location\": \"llmstxt-proposal#c0007\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"Optional link details\",\n      \"anchor\": \"Optional link details\"\n    },\n    {\n      \"name\": \"agent\",\n      \"anchor\": \"an agent can skip\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"## Optional\",\n      \"suggested_edge\": \"has_component\",\n      \"from_id\": \"llmstxt-proposal\",\n      \"to_id\": \"c_optional_section\",\n      \"diversion_reason\": \"structural_inference\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"Link title\", \"type\": \"Concept\"},\n    {\"name\": \"shorter context\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

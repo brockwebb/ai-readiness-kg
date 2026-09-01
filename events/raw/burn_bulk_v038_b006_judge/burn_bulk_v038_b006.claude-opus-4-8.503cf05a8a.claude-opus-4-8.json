@@ -1,0 +1,23 @@
+{
+ "batch_id": "burn_bulk_v038_b006.claude-opus-4-8.503cf05a8a",
+ "run": "burn_bulk_v038_b006",
+ "model_id": "claude-opus-4-8",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 5186,
+  "cacheReadInputTokens": 12041,
+  "cacheCreationInputTokens": 26555,
+  "webSearchRequests": 0,
+  "costUSD": 0.40123050000000005,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "canonicalModel": "claude-opus-4-8",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.40123050000000005,
+ "duration_ms": 64395,
+ "wall_s": 66.6,
+ "session_id": "e2803a12-6fd8-46d3-ab85-5ce5a07b3f26",
+ "raw_result": "Looking at this as the atomic-fact faithfulness judge, I'll evaluate each fact against its grounding span alone, using the window only to distinguish `fabrication` from `span_truncated`/`subject_dropped`.\n\nMy reasoning per fact:\n\n- **f_4cd677a90cd6** — Span defines coherence as \"the ability of the statistical data to maintain common definitions, classification, and methodological processes.\" Fact is a subset. **entailed**.\n- **f_858581ab1bb0** — Span: nonresponse \"can decrease statistical precision through decreased sample sizes.\" Directly supports. **entailed**.\n- **f_7f60f9a77eca** — Description \"Integrity dimension\" for Confidentiality; span defines confidentiality but never mentions integrity, and this window doesn't supply it. **not_entailed / filled_attribute**.\n- **f_da5e1babf9b7** — Span cut at \"Disclosure risks for microdata files increase\"; the \"unique or near-unique records\" content is in the cut continuation shown in window. **not_entailed / span_truncated**.\n- **f_334de0fdbfff / f_7abed27628bb / f_c66f9138abbd** — Name attributes; each name appears verbatim in its span. **entailed**.\n- **f_fefc9fbececa** — Span lists \"Methods for disclosure risk protection and documentation\" as a numbered need, but \"for integrated data\" scope comes only from the surrounding window. **not_entailed / subject_dropped**.\n- **f_04969c9dac0a** — Span describes SAIPE's output; the \"combining administrative records, postcensal estimates, decennial census, ACS\" content is in the following sentence (window), not the span. **not_entailed / span_truncated**.\n- **f_9917dc578e5e** — Span: accuracy/reliability threats \"drawn... from the terminology of the Total Survey Error paradigm... including sampling error, coverage error, measurement error and nonresponse error.\" Supports \"described through the error sources of TSE.\" **entailed**.\n\n{\"judgments\": [{\"fact_id\": \"f_4cd677a90cd6\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.97}, {\"fact_id\": \"f_858581ab1bb0\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.9}, {\"fact_id\": \"f_7f60f9a77eca\", \"label\": \"not_entailed\", \"class\": \"filled_attribute\", \"confidence\": 0.68}, {\"fact_id\": \"f_da5e1babf9b7\", \"label\": \"not_entailed\", \"class\": \"span_truncated\", \"confidence\": 0.9}, {\"fact_id\": \"f_334de0fdbfff\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.97}, {\"fact_id\": \"f_7abed27628bb\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.97}, {\"fact_id\": \"f_c66f9138abbd\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.98}, {\"fact_id\": \"f_fefc9fbececa\", \"label\": \"not_entailed\", \"class\": \"subject_dropped\", \"confidence\": 0.6}, {\"fact_id\": \"f_04969c9dac0a\", \"label\": \"not_entailed\", \"class\": \"span_truncated\", \"confidence\": 0.85}, {\"fact_id\": \"f_9917dc578e5e\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.82}]}"
+}

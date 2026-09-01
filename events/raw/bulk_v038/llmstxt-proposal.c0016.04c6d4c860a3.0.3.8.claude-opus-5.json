@@ -1,0 +1,33 @@
+{
+ "doc_id": "llmstxt-proposal",
+ "chunk_id": "llmstxt-proposal#c0016",
+ "chunk_index": 16,
+ "chunk_start": 13086,
+ "chunk_end": 13514,
+ "chunk_tokens": 99,
+ "heading_path": [
+  "FastHTML",
+  "Next steps"
+ ],
+ "oversize": false,
+ "doc_sha256": "04c6d4c860a36128491ef71f343243edc19ae4f42dc002eda2c345c6c498c8f3",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 6631,
+  "cacheReadInputTokens": 13011,
+  "cacheCreationInputTokens": 22712,
+  "webSearchRequests": 0,
+  "costUSD": 0.3994105,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3994105,
+ "duration_ms": 72843,
+ "session_id": "a38e1ece-64ec-420d-8411-68cc4e406702",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Closing chunk: an MCP server that fetches and searches llms.txt files, then a 'Next steps' section stating the llms.txt specification is open for community input via a GitHub repository and a community discord channel.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c1\",\n      \"name\": \"community input\",\n      \"aliases\": [\"community contribution\"],\n      \"description\": \"Open participation by the wider community in the development of the specification; the document states the specification is open to it.\",\n      \"anchor\": \"community input\",\n      \"location\": \"llmstxt-proposal#c0016\"\n    },\n    {\n      \"id\": \"c2\",\n      \"name\": \"public discussion\",\n      \"aliases\": [\"open discussion\"],\n      \"description\": \"Discussion of the proposal in the open, enabled by hosting the informal overview in a GitHub repository.\",\n      \"anchor\": \"public discussion\",\n      \"location\": \"llmstxt-proposal#c0016\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"cl1\",\n      \"claim_text\": \"The `llms.txt` specification is open for community input\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"open for community input\",\n      \"location\": \"llmstxt-proposal#c0016\"\n    },\n    {\n      \"id\": \"cl2\",\n      \"claim_text\": \"MCP server that lets agents fetch and search llms.txt files\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"lets agents fetch\",\n      \"location\": \"llmstxt-proposal#c0016\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [\n    {\n      \"id\": \"s1\",\n      \"name\": \"llms.txt\",\n      \"version\": null,\n      \"steward\": null,\n      \"as_of_date\": null,\n      \"anchor\": \"`llms.txt` specification\",\n      \"location\": \"llmstxt-proposal#c0016\"\n    }\n  ],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [\n    {\n      \"id\": \"p1\",\n      \"name\": \"server-llm-txt\",\n      \"operator\": null,\n      \"as_of_date\": null,\n      \"anchor\": \"`server-llm-txt`\",\n      \"location\": \"llmstxt-proposal#c0016\"\n    }\n  ],\n  \"edges\": [\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"llmstxt-proposal\",\n      \"to_id\": \"cl1\",\n      \"anchor\": \"specification is open\",\n      \"location\": \"llmstxt-proposal#c0016\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"llmstxt-proposal\",\n      \"to_id\": \"cl2\",\n      \"anchor\": \"MCP server that lets\",\n      \"location\": \"llmstxt-proposal#c0016\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl1\",\n      \"to_id\": \"c1\",\n      \"anchor\": \"for community input\",\n      \"location\": \"llmstxt-proposal#c0016\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"llmstxt-proposal\",\n      \"to_id\": \"c2\",\n      \"anchor\": \"and public discussion\",\n      \"location\": \"llmstxt-proposal#c0016\"\n    },\n    {\n      \"type\": \"consumes\",\n      \"from_id\": \"p1\",\n      \"to_id\": \"s1\",\n      \"anchor\": \"fetch and search llms.txt\",\n      \"location\": \"llmstxt-proposal#c0016\"\n    }\n  ],\n  \"cites\": [\n    {\n      \"from_id\": \"llmstxt-proposal\",\n      \"to_id\": \"https://github.com/AnswerDotAI/llms-txt\",\n      \"anchor\": \"GitHub repository\",\n      \"location\": \"llmstxt-proposal#c0016\"\n    },\n    {\n      \"from_id\": \"llmstxt-proposal\",\n      \"to_id\": \"https://github.com/AnswerDotAI/llms-txt/blob/main/nbs/index.qmd\",\n      \"anchor\": \"informal overview\",\n      \"location\": \"llmstxt-proposal#c0016\"\n    }\n  ],\n  \"mentions\": [\n    {\n      \"name\": \"GitHub repository\",\n      \"anchor\": \"GitHub repository\"\n    },\n    {\n      \"name\": \"community discord channel\",\n      \"anchor\": \"community discord channel\"\n    },\n    {\n      \"name\": \"MCP server\",\n      \"anchor\": \"MCP server\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"from_name\": \"GitHub repository\",\n      \"to_name\": \"informal overview\",\n      \"suggested_edge\": \"hosts\",\n      \"anchor\": \"hosts\",\n      \"diversion_reason\": \"other:untyped_endpoint\",\n      \"location\": \"llmstxt-proposal#c0016\"\n    },\n    {\n      \"from_name\": \"community discord channel\",\n      \"to_name\": \"llms.txt\",\n      \"suggested_edge\": \"supports_community_development_of\",\n      \"anchor\": \"sharing implementation experiences\",\n      \"diversion_reason\": \"other:untyped_endpoint\",\n      \"location\": \"llmstxt-proposal#c0016\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"MCP\", \"type\": \"Standard\"},\n    {\"name\": \"version control\", \"type\": \"Concept\"},\n    {\"name\": \"best practices\", \"type\": \"Concept\"},\n    {\"name\": \"implementation experiences\", \"type\": \"Concept\"},\n    {\"name\": \"agents\", \"type\": \"Concept\"}\n  ]\n}"
+}

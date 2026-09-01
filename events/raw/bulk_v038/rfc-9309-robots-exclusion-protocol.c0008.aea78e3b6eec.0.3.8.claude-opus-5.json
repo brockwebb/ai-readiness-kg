@@ -1,0 +1,32 @@
+{
+ "doc_id": "rfc-9309-robots-exclusion-protocol",
+ "chunk_id": "rfc-9309-robots-exclusion-protocol#c0008",
+ "chunk_index": 8,
+ "chunk_start": 20342,
+ "chunk_end": 20404,
+ "chunk_tokens": 17,
+ "heading_path": [
+  "4.  IANA Considerations"
+ ],
+ "oversize": false,
+ "doc_sha256": "aea78e3b6eeca189a9ec60458e4fa83277ec0e4ef42613923b5e21933bd62e76",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 6495,
+  "cacheReadInputTokens": 13011,
+  "cacheCreationInputTokens": 21352,
+  "webSearchRequests": 0,
+  "costUSD": 0.3824105,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3824105,
+ "duration_ms": 74466,
+ "session_id": "967de627-56c2-4628-ab90-49cf6c19fb16",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Tail of the Security Considerations section pointing HTTP implementors to RFC 9110's security guidance, followed by a Section 4 that declares the document has no IANA actions.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c-http\",\n      \"name\": \"HTTP\",\n      \"aliases\": [\"Hypertext Transfer Protocol\"],\n      \"description\": \"The application-layer protocol whose own Security Considerations the document defers to when the protocol is carried over HTTP.\",\n      \"anchor\": \"context of HTTP\",\n      \"location\": \"rfc-9309-robots-exclusion-protocol#c0008\"\n    },\n    {\n      \"id\": \"c-iana-actions\",\n      \"name\": \"IANA actions\",\n      \"aliases\": [\"IANA Considerations\", \"IANA registry actions\"],\n      \"description\": \"Registry actions a specification may require of IANA; this document declares that it requires none.\",\n      \"anchor\": \"IANA actions\",\n      \"location\": \"rfc-9309-robots-exclusion-protocol#c0008\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"cl-no-iana\",\n      \"claim_text\": \"This document has no IANA actions.\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"no IANA actions\",\n      \"location\": \"rfc-9309-robots-exclusion-protocol#c0008\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [\n    {\n      \"id\": \"std-rfc9110\",\n      \"name\": \"RFC9110\",\n      \"version\": null,\n      \"steward\": null,\n      \"as_of_date\": null,\n      \"anchor\": \"[RFC9110]\",\n      \"location\": \"rfc-9309-robots-exclusion-protocol#c0008\"\n    }\n  ],\n  \"frameworks\": [],\n  \"practices\": [\n    {\n      \"id\": \"p-follow-rfc9110-security\",\n      \"text\": \"implementors should follow the Security\\n      Considerations section of [RFC9110]\",\n      \"scope\": \"any\",\n      \"as_of_date\": null,\n      \"anchor\": \"implementors should follow\",\n      \"location\": \"rfc-9309-robots-exclusion-protocol#c0008\"\n    }\n  ],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"rfc-9309-robots-exclusion-protocol\",\n      \"to_id\": \"cl-no-iana\",\n      \"anchor\": \"no IANA actions\",\n      \"location\": \"rfc-9309-robots-exclusion-protocol#c0008\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl-no-iana\",\n      \"to_id\": \"c-iana-actions\",\n      \"anchor\": \"has no IANA actions\",\n      \"location\": \"rfc-9309-robots-exclusion-protocol#c0008\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"rfc-9309-robots-exclusion-protocol\",\n      \"to_id\": \"c-http\",\n      \"anchor\": \"context of HTTP\",\n      \"location\": \"rfc-9309-robots-exclusion-protocol#c0008\"\n    },\n    {\n      \"type\": \"recommends\",\n      \"from_id\": \"rfc-9309-robots-exclusion-protocol\",\n      \"to_id\": \"p-follow-rfc9110-security\",\n      \"anchor\": \"implementors should follow\",\n      \"location\": \"rfc-9309-robots-exclusion-protocol#c0008\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"p-follow-rfc9110-security\",\n      \"to_id\": \"c-http\",\n      \"anchor\": \"in the\\n      context of HTTP\",\n      \"location\": \"rfc-9309-robots-exclusion-protocol#c0008\"\n    }\n  ],\n  \"cites\": [\n    {\n      \"from_id\": \"rfc-9309-robots-exclusion-protocol\",\n      \"to_id\": \"rfc9110\",\n      \"anchor\": \"[RFC9110]\",\n      \"location\": \"rfc-9309-robots-exclusion-protocol#c0008\"\n    }\n  ],\n  \"mentions\": [\n    {\n      \"name\": \"application layer\",\n      \"anchor\": \"application layer\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"Considerations section of [RFC9110]\",\n      \"suggested_edge\": \"defers_security_considerations_to\",\n      \"from_id\": \"p-follow-rfc9110-security\",\n      \"to_id\": \"std-rfc9110\",\n      \"diversion_reason\": \"other:no_practice_to_standard_edge\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"IANA Considerations\", \"type\": \"Concept\"},\n    {\"name\": \"Security Considerations\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

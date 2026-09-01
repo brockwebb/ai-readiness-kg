@@ -1,0 +1,23 @@
+{
+ "batch_id": "burn_bulk_v038_b015.claude-sonnet-5.631ad2e7b0",
+ "run": "burn_bulk_v038_b015",
+ "model_id": "claude-sonnet-5",
+ "usage": {
+  "inputTokens": 4,
+  "outputTokens": 6988,
+  "cacheReadInputTokens": 68713,
+  "cacheCreationInputTokens": 38568,
+  "webSearchRequests": 0,
+  "costUSD": 0.2379026,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "canonicalModel": "claude-sonnet-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.2379026,
+ "duration_ms": 79234,
+ "wall_s": 81.5,
+ "session_id": "67146de7-21df-46ae-b36b-edfd07f044e2",
+ "raw_result": "Following the versioned probe-judge prompt embedded in the task (probe_judge_version 1.1.0) rather than the generic adversarial-review verdict schema, since this is execution of an already-calibrated instrument, not authoring a new one. Output per the required strict JSON format:\n\n```json\n{\"judgments\": [\n  {\"fact_id\": \"f_fb8a632de5af\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.95},\n  {\"fact_id\": \"f_507ec3f05dc8\", \"label\": \"not_entailed\", \"class\": \"filled_attribute\", \"confidence\": 0.7},\n  {\"fact_id\": \"f_c66ae19aff4b\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.9},\n  {\"fact_id\": \"f_448afb9e860f\", \"label\": \"not_entailed\", \"class\": \"span_truncated\", \"confidence\": 0.85},\n  {\"fact_id\": \"f_2cc858f9cb26\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.75},\n  {\"fact_id\": \"f_3e64767d8a79\", \"label\": \"not_entailed\", \"class\": \"fabrication\", \"confidence\": 0.65},\n  {\"fact_id\": \"f_8d9c8bb2c32b\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.95},\n  {\"fact_id\": \"f_ad67bf13a330\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.95},\n  {\"fact_id\": \"f_58da6e737d96\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.95},\n  {\"fact_id\": \"f_0fde04a54ad9\", \"label\": \"entailed\", \"class\": null, \"confidence\": 0.9}\n]}\n```\n\nNotes on the two lowest-confidence calls, for whoever reviews this batch:\n- `f_507ec3f05dc8` (\"aliases: Hosted build platform\") — the span uses \"a hosted build platform\" as a common-noun requirement description (lowercase, indefinite article), not as a defined name/alias. Contrast with `f_2cc858f9cb26`, where \"package name\" appears as the sentence subject in a definitional sentence — that reads as genuine term usage, so I entailed it.\n- `f_3e64767d8a79` (\"It is integrity threat F\") — SLSA's real threats table does classify each lettered threat as integrity/availability, but neither the presented span nor window contains that word, so per the rule (\"window is evidence only for distinguishing dropped-vs-fabricated, never for entailing on its own strength\") this is fabrication as presented, even though it may be documentably true elsewhere in the source."
+}

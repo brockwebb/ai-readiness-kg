@@ -1,0 +1,32 @@
+{
+ "doc_id": "statistical-policy-working-paper-46-data-quality-assessment",
+ "chunk_id": "statistical-policy-working-paper-46-data-quality-assessment#c0027",
+ "chunk_index": 27,
+ "chunk_start": 61976,
+ "chunk_end": 62347,
+ "chunk_tokens": 94,
+ "heading_path": [
+  "2 - Denied"
+ ],
+ "oversize": false,
+ "doc_sha256": "1b1f030dbb7eb9c46e4e8e03c0411ffab6f715d7332dafe7f92aead92c4ed936",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 5579,
+  "cacheReadInputTokens": 13011,
+  "cacheCreationInputTokens": 22660,
+  "webSearchRequests": 0,
+  "costUSD": 0.3725905,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3725905,
+ "duration_ms": 63256,
+ "session_id": "cc2b634d-07f5-40e9-bacc-1b2e292c9351",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Tail of a data-dictionary template: the Notes field's guidance (key status, indexing, whether valid values follow a recognized standard such as ZIP codes) with example entries Primary Key, Indexed, and USPS ZIP Code Standard.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_primary_key\",\n      \"name\": \"Primary Key\",\n      \"aliases\": [\"primary key\"],\n      \"description\": \"Key status recorded for a data dictionary field.\",\n      \"anchor\": \"Primary Key\",\n      \"location\": \"statistical-policy-working-paper-46-data-quality-assessment#c0027\"\n    },\n    {\n      \"id\": \"c_indexed\",\n      \"name\": \"Indexed\",\n      \"aliases\": [\"indexing\"],\n      \"description\": \"Whether a data dictionary field is indexed.\",\n      \"anchor\": \"Indexed\",\n      \"location\": \"statistical-policy-working-paper-46-data-quality-assessment#c0027\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d_notes\",\n      \"term\": \"Notes\",\n      \"verbatim_text\": \"Note any other items of special consideration.\",\n      \"normative_status\": \"policy\",\n      \"as_of_date\": null,\n      \"anchor\": \"other items of special consideration\",\n      \"location\": \"statistical-policy-working-paper-46-data-quality-assessment#c0027\"\n    }\n  ],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [\n    {\n      \"id\": \"m_key_status\",\n      \"text\": \"Is this field a primary or secondary key?\",\n      \"response_type\": null,\n      \"anchor\": \"primary or secondary key\",\n      \"location\": \"statistical-policy-working-paper-46-data-quality-assessment#c0027\"\n    },\n    {\n      \"id\": \"m_indexed\",\n      \"text\": \"Is this field indexed?\",\n      \"response_type\": null,\n      \"anchor\": \"field indexed\",\n      \"location\": \"statistical-policy-working-paper-46-data-quality-assessment#c0027\"\n    }\n  ],\n  \"standards\": [\n    {\n      \"id\": \"s_usps_zip\",\n      \"name\": \"USPS ZIP Code Standard\",\n      \"version\": null,\n      \"steward\": null,\n      \"as_of_date\": null,\n      \"anchor\": \"USPS ZIP Code Standard\",\n      \"location\": \"statistical-policy-working-paper-46-data-quality-assessment#c0027\"\n    }\n  ],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"statistical-policy-working-paper-46-data-quality-assessment\",\n      \"to_id\": \"d_notes\",\n      \"anchor\": \"other items of special consideration\",\n      \"location\": \"statistical-policy-working-paper-46-data-quality-assessment#c0027\"\n    },\n    {\n      \"type\": \"measures\",\n      \"from_id\": \"m_key_status\",\n      \"to_id\": \"c_primary_key\",\n      \"anchor\": \"primary or secondary key\",\n      \"location\": \"statistical-policy-working-paper-46-data-quality-assessment#c0027\"\n    },\n    {\n      \"type\": \"measures\",\n      \"from_id\": \"m_indexed\",\n      \"to_id\": \"c_indexed\",\n      \"anchor\": \"field indexed\",\n      \"location\": \"statistical-policy-working-paper-46-data-quality-assessment#c0027\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"statistical-policy-working-paper-46-data-quality-assessment\",\n      \"to_id\": \"c_primary_key\",\n      \"anchor\": \"Primary Key\",\n      \"location\": \"statistical-policy-working-paper-46-data-quality-assessment#c0027\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"statistical-policy-working-paper-46-data-quality-assessment\",\n      \"to_id\": \"c_indexed\",\n      \"anchor\": \"Indexed\",\n      \"location\": \"statistical-policy-working-paper-46-data-quality-assessment#c0027\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"ZIP codes\",\n      \"anchor\": \"like ZIP codes\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"USPS ZIP Code Standard\",\n      \"suggested_edge\": \"applies_to\",\n      \"diversion_reason\": \"structural_inference\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"Are the valid values and definitions based on a recognized standard like ZIP codes?\", \"type\": \"Measure\"},\n    {\"name\": \"secondary key\", \"type\": \"Concept\"},\n    {\"name\": \"valid values\", \"type\": \"Concept\"},\n    {\"name\": \"Denied\", \"type\": \"Concept\"},\n    {\"name\": \"Active\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

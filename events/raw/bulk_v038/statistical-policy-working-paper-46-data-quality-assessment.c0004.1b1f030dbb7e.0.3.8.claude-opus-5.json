@@ -1,0 +1,32 @@
+{
+ "doc_id": "statistical-policy-working-paper-46-data-quality-assessment",
+ "chunk_id": "statistical-policy-working-paper-46-data-quality-assessment#c0004",
+ "chunk_index": 4,
+ "chunk_start": 17128,
+ "chunk_end": 17347,
+ "chunk_tokens": 56,
+ "heading_path": [
+  "5. How often are the data collected"
+ ],
+ "oversize": false,
+ "doc_sha256": "1b1f030dbb7eb9c46e4e8e03c0411ffab6f715d7332dafe7f92aead92c4ed936",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 6355,
+  "cacheReadInputTokens": 13011,
+  "cacheCreationInputTokens": 22726,
+  "webSearchRequests": 0,
+  "costUSD": 0.3926505,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3926505,
+ "duration_ms": 78195,
+ "session_id": "042b7263-3cb3-4e07-bbb5-f98ec92460f9",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Discovery-phase checklist material: an example answer about active-data retention and archiving to 1998, followed by checklist question 5 on how often data are collected at the program office.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c1\",\n      \"name\": \"active data\",\n      \"aliases\": [\"current-year data holdings\"],\n      \"description\": \"Data held in the operating system for the calendar year-to-date and the five previous calendar years, before being moved to archive.\",\n      \"anchor\": \"active data for the calendar\",\n      \"location\": \"statistical-policy-working-paper-46-data-quality-assessment#c0004\"\n    },\n    {\n      \"id\": \"c2\",\n      \"name\": \"archive\",\n      \"aliases\": [\"archived data\"],\n      \"description\": \"The store to which the earliest year of active data is moved as each year ends; archived data remain retrievable, though with difficulty.\",\n      \"anchor\": \"moved to archive\",\n      \"location\": \"statistical-policy-working-paper-46-data-quality-assessment#c0004\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [\n    {\n      \"id\": \"m1\",\n      \"text\": \"How often are the data collected\",\n      \"response_type\": \"free_text\",\n      \"anchor\": \"at the program office?\",\n      \"location\": \"statistical-policy-working-paper-46-data-quality-assessment#c0004\"\n    }\n  ],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"statistical-policy-working-paper-46-data-quality-assessment\",\n      \"to_id\": \"c1\",\n      \"anchor\": \"active data for the calendar\",\n      \"location\": \"statistical-policy-working-paper-46-data-quality-assessment#c0004\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"statistical-policy-working-paper-46-data-quality-assessment\",\n      \"to_id\": \"c2\",\n      \"anchor\": \"moved to archive\",\n      \"location\": \"statistical-policy-working-paper-46-data-quality-assessment#c0004\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"program office\",\n      \"anchor\": \"days when program offices\"\n    },\n    {\n      \"name\": \"flow data\",\n      \"anchor\": \"Daily for flow data\"\n    },\n    {\n      \"name\": \"Discovery\",\n      \"anchor\": \"Discovery\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"from_id\": \"m1\",\n      \"to_name\": \"Discovery\",\n      \"suggested_edge\": \"has_component\",\n      \"anchor\": \"Discovery\",\n      \"location\": \"statistical-policy-working-paper-46-data-quality-assessment#c0004\",\n      \"diversion_reason\": \"structural_inference\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"calendar year-to-date\", \"type\": \"Concept\"},\n    {\"name\": \"purged data\", \"type\": \"Concept\"},\n    {\"name\": \"retrievability\", \"type\": \"Concept\"}\n  ]\n}"
+}
