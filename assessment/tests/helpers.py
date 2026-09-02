@@ -10,8 +10,13 @@ class FakeFetcher:
         self.responses = responses
         self.calls = []
 
-    def get(self, url: str, accept=None) -> Fetched:
-        self.calls.append((url, accept))
+    def get(self, url: str, accept=None, user_agent=None) -> Fetched:
+        self.calls.append((url, accept) if user_agent is None
+                          else (url, accept, user_agent))
+        # A per-UA response map lets a test serve a different answer to a
+        # different client identity: responses[(url, user_agent)] wins.
+        if user_agent is not None and (url, user_agent) in self.responses:
+            return self.responses[(url, user_agent)]
         if url in self.responses:
             return self.responses[url]
         return Fetched(

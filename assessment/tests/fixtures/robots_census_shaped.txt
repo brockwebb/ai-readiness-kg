@@ -1,0 +1,14 @@
+# Shaped like census.gov/robots.txt as read 2026-09-01: the wildcard group
+# disallows nothing under /quickfacts/, a named group does, and the Sitemap
+# directive is uppercase and points somewhere other than /sitemap.xml.
+User-agent: *
+Disallow: /cgi-bin/
+Crawl-delay: 0
+
+User-agent: usasearch
+Disallow: /quickfacts/
+
+User-agent: Googlebot
+Crawl-delay: 15
+
+SITEMAP: https://x.gov/sitemapindex/sitemap.xml

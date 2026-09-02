@@ -20,12 +20,22 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import List
 
-from .config import load_agencies, load_harness_config
+from dataclasses import dataclass
+from datetime import date
+from typing import Dict, Optional, Tuple
+
+from .config import HarnessConfig, load_agencies, load_harness_config
+from .crawler_access import (
+    effective_crawler_access,
+    load_enforced_observations,
+    mismatch_warning,
+)
 from .enumerate_sitemap import enumerate_web_surfaces
 from .enumerate_targets import parse_catalog
 from .evidence import EvidenceStore
 from .fetch import HttpFetcher
 from .jsonld import dataset_nodes, dcat_record_from_nodes, has_dataset_markup
+from .probes.base import unpack_verdict
 from .records import (
     SOURCE_CATALOG,
     SOURCE_SITE,
@@ -35,7 +45,8 @@ from .records import (
 
 # --- Probe registry --------------------------------------------------------
 from .probes.d1_robots import RobotsProbe
-from .probes.d1_sitemap import SitemapProbe
+from .probes.d1_robots_directives import RobotsDirectivesProbe
+from .probes.d1_sitemap import SOURCE_ROBOTS, SitemapProbe
 from .probes.d1_catalog import CatalogProbe
 from .probes.frontier_llms_txt import LlmsTxtProbe
 from .probes.frontier_mcp import McpProbe
@@ -54,8 +65,52 @@ from .probes.d2_bulk import BulkAvailabilityProbe
 from .probes.d2_no_barriers import NoBarriersProbe
 from .rollup import rollup_agency
 
-# Site probes fetch a well-known path off base_url (run once per agency).
-SITE_PROBES = [RobotsProbe(), SitemapProbe(), CatalogProbe(), LlmsTxtProbe(), McpProbe()]
+
+@dataclass(frozen=True)
+class ProbeSettings:
+    """The probe tunables a run needs, lifted from harness.toml. Required by
+    `run_agency` so no probe is ever built on a value that lives in source."""
+
+    sitemap_stale_after_days: int
+    robots_directive_meta_names: Tuple[str, ...]
+    robots_blocking_directives: Tuple[str, ...]
+    crawler_declared_user_agents: Tuple[str, ...]
+    crawler_observe_user_agents: Tuple[str, ...]
+    crawler_refusal_statuses: Tuple[int, ...]
+    # The identity the harness sends; it is the token whose declared-vs-observed
+    # comparison needs no extra request.
+    harness_user_agent: str
+
+    @classmethod
+    def from_config(cls, cfg: HarnessConfig) -> "ProbeSettings":
+        return cls(
+            sitemap_stale_after_days=cfg.sitemap_stale_after_days,
+            robots_directive_meta_names=tuple(cfg.robots_directive_meta_names),
+            robots_blocking_directives=tuple(cfg.robots_blocking_directives),
+            crawler_declared_user_agents=tuple(cfg.crawler_declared_user_agents),
+            crawler_observe_user_agents=tuple(cfg.crawler_observe_user_agents),
+            crawler_refusal_statuses=tuple(cfg.crawler_refusal_statuses),
+            harness_user_agent=cfg.user_agent,
+        )
+
+
+# Site probes fetch a well-known path off base_url (run once per agency). Built
+# per run because d1_sitemap carries a config threshold.
+def site_probes(settings: ProbeSettings) -> list:
+    return [RobotsProbe(), SitemapProbe(settings.sitemap_stale_after_days),
+            CatalogProbe(), LlmsTxtProbe(), McpProbe()]
+
+
+# Ids of the site probes, for callers that need the set without a settings object.
+SITE_PROBE_IDS = ("d1_robots", "d1_sitemap", "d1_catalog", "frontier_llms_txt",
+                  "frontier_mcp")
+
+
+# Page-level probes run per web-surface page in addition to DISTRIBUTION_PROBES.
+# Built per run because the directive vocabulary is config.
+def page_probes(settings: ProbeSettings) -> list:
+    return [RobotsDirectivesProbe(settings.robots_directive_meta_names,
+                                  settings.robots_blocking_directives)]
 
 # Metadata probes score a DCAT dataset record (pure; run per dataset).
 METADATA_PROBES = [
@@ -76,7 +131,7 @@ _MACHINE_ACCEPT = "application/json, text/csv, application/xml;q=0.9, */*;q=0.1"
 
 
 def _record(probe, target, score, evidence_text, timestamp, evidence_path,
-            source=SOURCE_CATALOG) -> ProbeResult:
+            source=SOURCE_CATALOG, observations=None) -> ProbeResult:
     return ProbeResult(
         probe_id=probe.probe_id,
         target=target,
@@ -88,49 +143,69 @@ def _record(probe, target, score, evidence_text, timestamp, evidence_path,
         timestamp=timestamp,
         evidence_path=evidence_path,
         source=source,
+        observations=dict(observations or {}),
     )
 
 
-def _fetch_attempts(fetcher, url: str, accept: str, n: int) -> List:
+def _fetch_attempts(fetcher, url: str, accept: str, n: int,
+                    user_agent: Optional[str] = None) -> List:
     """Fetch one target n times. The fetcher enforces the politeness delay between
     calls, so repeated attempts are spaced the same as any other request."""
-    return [fetcher.get(url, accept=accept) for _ in range(max(1, n))]
+    return [fetcher.get(url, accept=accept, user_agent=user_agent)
+            for _ in range(max(1, n))]
 
 
-def _attempts_evidence(attempts: List) -> str:
-    """Every attempt's raw response, so a refusal fraction is verifiable by eye."""
-    if len(attempts) == 1:
+def _attempts_evidence(attempts: List, extra_by_ua: Optional[Dict[str, List]] = None) -> str:
+    """Every attempt's raw response, so a refusal fraction is verifiable by eye.
+    Attempts sent under other identities follow, labelled by identity."""
+    if len(attempts) == 1 and not extra_by_ua:
         return attempts[0].evidence_text()
     parts = []
     for i, a in enumerate(attempts, start=1):
         parts.append(f"===== ATTEMPT {i} of {len(attempts)} =====")
         parts.append(a.evidence_text())
+    for ua, ua_attempts in (extra_by_ua or {}).items():
+        for i, a in enumerate(ua_attempts, start=1):
+            parts.append(f"===== USER-AGENT {ua!r} ATTEMPT {i} of {len(ua_attempts)} =====")
+            parts.append(a.evidence_text())
     return "\n".join(parts)
 
 
 def _score_endpoint(probes, attempts, distribution, agency_id, evidence_store,
-                    timestamp, source, results):
-    """Run the endpoint-fetching probes that apply to `source` over one target."""
+                    timestamp, source, results, access_observations=None,
+                    extra_attempts_by_ua=None):
+    """Run the endpoint-fetching probes that apply to `source` over one target.
+
+    `access_observations` (the crawler-access triad) is attached to the barrier
+    probe's record: that probe owns the attempts the observed leg is read from.
+    """
     url = attempts[0].requested_url
     for probe in probes:
         if not probe.applies_to(source):
             continue
         if probe.multi_attempt:
-            score, ev = probe.evaluate_attempts(attempts, distribution)
-            evidence_text = _attempts_evidence(attempts)
+            score, ev, obs = unpack_verdict(probe.evaluate_attempts(attempts, distribution))
+            evidence_text = _attempts_evidence(attempts, extra_attempts_by_ua)
         else:
-            score, ev = probe.evaluate(attempts[0], distribution)
+            score, ev, obs = unpack_verdict(probe.evaluate(attempts[0], distribution))
             evidence_text = attempts[0].evidence_text()
+        if probe.probe_id == NoBarriersProbe.probe_id and access_observations:
+            obs = {**obs, **access_observations}
+            evidence_text = (
+                f"{evidence_text}\n\nCRAWLER ACCESS (declared / enforced / observed):\n"
+                f"{json.dumps(access_observations, indent=2, default=str)}"
+            )
         path = evidence_store.write(agency_id, probe.probe_id, url, evidence_text)
-        results.append(_record(probe, url, score, ev, timestamp, path, source=source))
+        results.append(_record(probe, url, score, ev, timestamp, path, source=source,
+                               observations=obs))
 
 
 def _normalize_for_match(url: str) -> str:
     """Compare URLs the way a reviewer would: ignore scheme, case, trailing slash.
 
-    Used only for the evidence-only catalog-completeness signal, never for a
-    score, so a loose match errs toward saying a page IS in the catalog, which
-    makes the signal conservative.
+    Used only for the evidence-only catalog-completeness and catalog-coverage
+    facts, never for a score, so a loose match errs toward saying a page IS in
+    the catalog, which makes both facts conservative.
     """
     text = (url or "").strip().lower()
     for prefix in ("https://", "http://"):
@@ -141,41 +216,148 @@ def _normalize_for_match(url: str) -> str:
     return text.rstrip("/")
 
 
+def catalog_reference_urls(datasets: List[dict]) -> set:
+    """Every URL a data.json catalog points at, normalized: each distribution's
+    downloadURL and accessURL, and each dataset's landingPage. The set a machine
+    that trusts the catalog can reach."""
+    urls = set()
+    for ds in datasets or []:
+        if not isinstance(ds, dict):
+            continue
+        landing = ds.get("landingPage")
+        if isinstance(landing, str) and landing.strip():
+            urls.add(_normalize_for_match(landing))
+        for dist in ds.get("distribution", []) or []:
+            if not isinstance(dist, dict):
+                continue
+            for key in ("downloadURL", "accessURL"):
+                value = dist.get(key)
+                if isinstance(value, str) and value.strip():
+                    urls.add(_normalize_for_match(value))
+    return urls
+
+
+def catalog_sitemap_coverage(datasets: List[dict], has_catalog: bool, web) -> dict:
+    """The observed fact behind D0-r2 defect 3: of the URLs the site's own sitemap
+    declares, what fraction does the catalog reference as a distribution or
+    landing page? Numerator and denominator are explicit; per-section counts are
+    kept because the D0-r2 finding was that one whole section (QuickFacts,
+    21.8% of census.gov's universe) is referenced zero times.
+
+    EVIDENCE ONLY. It does not change d1_catalog's score: the rule for scoring
+    coverage is an operator decision (assessment protocol §3) and is registered
+    as an open item. A null fraction means the denominator is zero (no sitemap
+    universe was enumerated), which must read as not measurable, never as 0.0.
+    """
+    universe_by_section = getattr(web, "universe_by_section", {}) if web else {}
+    catalog_urls = catalog_reference_urls(datasets) if has_catalog else set()
+    per_section = {}
+    numerator = 0
+    denominator = 0
+    for section in sorted(universe_by_section):
+        urls = universe_by_section[section]
+        covered = sum(1 for u in urls if _normalize_for_match(u) in catalog_urls)
+        per_section[section] = {
+            "sitemap_urls": len(urls),
+            "in_catalog": covered,
+            "fraction": round(covered / len(urls), 6) if urls else None,
+        }
+        numerator += covered
+        denominator += len(urls)
+    applicable = bool(has_catalog and web is not None and getattr(web, "has_sitemap", False)
+                      and denominator > 0)
+    return {
+        "evidence_only": True,
+        "scored": False,
+        "applicable": applicable,
+        "numerator": "sitemap-declared URLs referenced by the catalog as a "
+                     "distribution downloadURL/accessURL or a dataset landingPage",
+        "numerator_value": numerator,
+        "denominator": "unique URLs declared by the site's sitemap (all parsed sections)",
+        "denominator_value": denominator,
+        "fraction_in_catalog": round(numerator / denominator, 6) if denominator else None,
+        "catalog_reference_urls_compared": len(catalog_urls),
+        "per_section": per_section,
+        "sections_with_zero_coverage": sorted(
+            s for s, v in per_section.items() if v["sitemap_urls"] and v["in_catalog"] == 0),
+        "note": (
+            "Evidence only, never a score. Coverage is measured over the whole "
+            "enumerated sitemap universe, not the probed sample. A null fraction "
+            "means no sitemap universe was enumerated. The scoring rule for coverage "
+            "is an open operator decision (assessment protocol §3)."
+        ),
+    }
+
+
 def run_agency(agency: dict, fetcher, evidence_store: EvidenceStore, timestamp: str,
+               *, settings: ProbeSettings,
                max_datasets: int = 50, max_dists_per_dataset: int = 3,
                no_barriers_attempts: int = 1,
                sitemap_sample_per_section: int = 3, max_sitemap_sections: int = 0,
-               sitemap_sample_seed: int = 0, enumerate_sitemap: bool = True) -> dict:
+               sitemap_sample_seed: int = 0, enumerate_sitemap: bool = True,
+               today: Optional[date] = None) -> dict:
     """Probe one agency end-to-end over BOTH enumeration sources.
 
     Source 1, data.json: catalog datasets and their distributions.
     Source 2, sitemap: a stratified sample of the agency's own web product pages.
 
     Returns results, rollup, and enumeration metadata for both sources. The two
-    surfaces stay separate all the way to the rollup."""
+    surfaces stay separate all the way to the rollup. `today` is injectable so
+    the sitemap staleness rule is testable from fixtures."""
     agency_id = agency["id"]
     base_url = agency["base_url"].rstrip("/")
     catalog_url = agency.get("catalog_url") or f"{base_url}/data.json"
     results: List[ProbeResult] = []
 
+    # The enforced leg of the crawler-access triad, when the operator supplied it.
+    # A configured file that is missing or malformed fails here, loud, before any
+    # request is sent.
+    enforced = load_enforced_observations(agency.get("enforced_observations_file"))
+
     # Fetch the catalog once; reuse it for both the D1 catalog probe and enumeration.
     catalog_fetched = fetcher.get(catalog_url, accept="application/json")
 
+    # robots.txt first: the sitemap probe, the web-surface enumerator and the
+    # declared leg of the crawler-access triad all read it, with no second fetch.
+    robots_fetched = fetcher.get(f"{base_url}/robots.txt")
+    robots_body = robots_fetched.body
+
     # --- Site probes (once per agency) ---
-    robots_body = ""
-    for probe in SITE_PROBES:
+    held_catalog = None  # d1_catalog is recorded after enumeration, with coverage.
+    for probe in site_probes(settings):
         url = probe.url_for(base_url)
-        if probe.probe_id == "d1_catalog" and url == catalog_url:
+        extra_evidence = ""
+        if probe.probe_id == "d1_robots":
+            f = robots_fetched
+            verdict = probe.evaluate(f)
+        elif probe.probe_id == "d1_sitemap":
+            url, sitemap_source = probe.resolve(base_url, robots_body)
+            f = fetcher.get(url)
+            fixed = None
+            fixed_url = probe.url_for(base_url)
+            if (sitemap_source == SOURCE_ROBOTS
+                    and _normalize_for_match(url) != _normalize_for_match(fixed_url)):
+                # The declared sitemap is not the fixed path: read both so the
+                # divergence is evidence rather than an unread assumption.
+                fixed = fetcher.get(fixed_url)
+                extra_evidence = (f"\n\n===== FIXED PATH {fixed_url} (divergence "
+                                  f"comparator, not scored) =====\n{fixed.evidence_text()}")
+            verdict = probe.evaluate(f, sitemap_source=sitemap_source,
+                                     fixed_path_fetched=fixed, today=today)
+        elif probe.probe_id == "d1_catalog" and url == catalog_url:
             f = catalog_fetched
+            verdict = probe.evaluate(f)
         else:
             f = fetcher.get(url)
-        if probe.probe_id == "d1_robots":
-            # Reused below to find the sitemap the site declares, with no second fetch.
-            robots_body = f.body
-        score, ev = probe.evaluate(f)
-        path = evidence_store.write(agency_id, probe.probe_id, url, f.evidence_text())
+            verdict = probe.evaluate(f)
+        score, ev, obs = unpack_verdict(verdict)
+        evidence_text = f.evidence_text() + extra_evidence
+        if probe.probe_id == "d1_catalog":
+            held_catalog = (probe, url, score, ev, obs, evidence_text)
+            continue
+        path = evidence_store.write(agency_id, probe.probe_id, url, evidence_text)
         results.append(_record(probe, url, score, ev, timestamp, path,
-                               source=SOURCE_SITE))
+                               source=SOURCE_SITE, observations=obs))
 
     # --- Enumerate targets from the catalog ---
     enum = parse_catalog(catalog_fetched.body, base_url)
@@ -188,19 +370,46 @@ def run_agency(agency: dict, fetcher, evidence_store: EvidenceStore, timestamp: 
 
     datasets_probed = datasets[:max_datasets]
 
+    def _probe_target(url: str, distribution: dict, source: str, probes: list):
+        """Fetch one target under the harness identity (n attempts), then under
+        any extra identities configured for the observed leg, score it, and
+        attach the crawler-access triad to the barrier record."""
+        attempts = _fetch_attempts(fetcher, url, _MACHINE_ACCEPT, no_barriers_attempts)
+        attempts_by_ua = {settings.harness_user_agent: attempts}
+        extra_by_ua: Dict[str, List] = {}
+        for ua in settings.crawler_observe_user_agents:
+            if ua == settings.harness_user_agent or ua in extra_by_ua:
+                continue
+            extra_by_ua[ua] = _fetch_attempts(fetcher, url, _MACHINE_ACCEPT,
+                                              no_barriers_attempts, user_agent=ua)
+        attempts_by_ua.update(extra_by_ua)
+        access = effective_crawler_access(
+            robots_body, url, attempts_by_ua,
+            settings.crawler_declared_user_agents,
+            settings.crawler_refusal_statuses, enforced)
+        access_obs = {
+            "effective_crawler_access": access,
+            "crawler_policy_mismatch_warning": mismatch_warning(access),
+        }
+        _score_endpoint(probes, attempts, distribution, agency_id, evidence_store,
+                        timestamp, source, results, access_observations=access_obs,
+                        extra_attempts_by_ua=extra_by_ua)
+        return attempts
+
     # --- Per-dataset metadata probes + per-distribution endpoint probes ---
     for ds in datasets_probed:
         if not isinstance(ds, dict):
             continue
         ds_id = ds.get("identifier") or ds.get("title") or "dataset"
         for probe in METADATA_PROBES:
-            score, ev = probe.evaluate(ds)
+            score, ev, obs = unpack_verdict(probe.evaluate(ds))
             evidence_text = (
                 f"DATASET: {ds_id}\nPROBE: {probe.probe_id}\nVERDICT: {ev}\n\n"
                 f"RECORD:\n{json.dumps(ds, indent=2, default=str)}"
             )
             path = evidence_store.write(agency_id, probe.probe_id, str(ds_id), evidence_text)
-            results.append(_record(probe, str(ds_id), score, ev, timestamp, path))
+            results.append(_record(probe, str(ds_id), score, ev, timestamp, path,
+                                   observations=obs))
 
         for dist in (ds.get("distribution", []) or [])[:max_dists_per_dataset]:
             if not isinstance(dist, dict):
@@ -208,10 +417,7 @@ def run_agency(agency: dict, fetcher, evidence_store: EvidenceStore, timestamp: 
             url = dist.get("downloadURL") or dist.get("accessURL")
             if not url:
                 continue
-            attempts = _fetch_attempts(fetcher, url, _MACHINE_ACCEPT,
-                                       no_barriers_attempts)
-            _score_endpoint(DISTRIBUTION_PROBES, attempts, dist, agency_id,
-                            evidence_store, timestamp, SOURCE_CATALOG, results)
+            _probe_target(url, dist, SOURCE_CATALOG, DISTRIBUTION_PROBES)
 
     # --- Source 2: web surfaces sampled from the declared sitemap ---
     web = None
@@ -227,25 +433,21 @@ def run_agency(agency: dict, fetcher, evidence_store: EvidenceStore, timestamp: 
             seed=sitemap_sample_seed,
         )
         pages_with_dataset_markup = []
+        web_probes = DISTRIBUTION_PROBES + page_probes(settings)
         for target in web.targets:
             url = target["url"]
-            attempts = _fetch_attempts(fetcher, url, _MACHINE_ACCEPT,
-                                       no_barriers_attempts)
+            attempts = _probe_target(url, {}, SOURCE_SITEMAP, web_probes)
             page = attempts[0]
             nodes = dataset_nodes(page.body)
             if has_dataset_markup(nodes):
                 pages_with_dataset_markup.append(url)
-
-            # Endpoint probes that declare the sitemap source.
-            _score_endpoint(DISTRIBUTION_PROBES, attempts, {}, agency_id,
-                            evidence_store, timestamp, SOURCE_SITEMAP, results)
 
             # Metadata probes read the page's own JSON-LD instead of a DCAT record.
             record = dcat_record_from_nodes(nodes)
             for probe in METADATA_PROBES:
                 if not probe.applies_to(SOURCE_SITEMAP):
                     continue
-                score, ev = probe.evaluate_page(page, nodes=nodes)
+                score, ev, obs = unpack_verdict(probe.evaluate_page(page, nodes=nodes))
                 evidence_text = (
                     f"PAGE: {url}\nSECTION: {target.get('section', '')}\n"
                     f"PROBE: {probe.probe_id}\nVERDICT: {ev}\n\n"
@@ -257,9 +459,24 @@ def run_agency(agency: dict, fetcher, evidence_store: EvidenceStore, timestamp: 
                 path = evidence_store.write(agency_id, probe.probe_id, url,
                                             evidence_text)
                 results.append(_record(probe, url, score, ev, timestamp, path,
-                                       source=SOURCE_SITEMAP))
+                                       source=SOURCE_SITEMAP, observations=obs))
 
         web_enumeration = _web_enumeration_dict(web, enum, pages_with_dataset_markup)
+
+    # --- d1_catalog, recorded now that the sitemap universe is known ---
+    coverage = catalog_sitemap_coverage(datasets, enum.has_machine_readable_catalog, web)
+    if web_enumeration.get("enumerated"):
+        web_enumeration["catalog_coverage"] = coverage
+    if held_catalog is not None:
+        probe, url, score, ev, obs, evidence_text = held_catalog
+        obs = {**obs, "catalog_sitemap_coverage": coverage}
+        evidence_text = (
+            f"{evidence_text}\n\nCATALOG COVERAGE OF THE SITEMAP UNIVERSE "
+            f"(observed fact, not scored):\n{json.dumps(coverage, indent=2, default=str)}"
+        )
+        path = evidence_store.write(agency_id, probe.probe_id, url, evidence_text)
+        results.append(_record(probe, url, score, ev, timestamp, path,
+                               source=SOURCE_SITE, observations=obs))
 
     rollup = rollup_agency(agency_id, results)
     enumeration = {
@@ -270,6 +487,13 @@ def run_agency(agency: dict, fetcher, evidence_store: EvidenceStore, timestamp: 
         "datasets_probed": len(datasets_probed),
         "candidate_endpoints": len(enum.targets),
         "no_barriers_attempts": no_barriers_attempts,
+        "crawler_access": {
+            "declared_user_agents": list(settings.crawler_declared_user_agents),
+            "observed_user_agents": [settings.harness_user_agent]
+                                    + [ua for ua in settings.crawler_observe_user_agents
+                                       if ua != settings.harness_user_agent],
+            "enforced_observations_file": agency.get("enforced_observations_file"),
+        },
         "web_surface": web_enumeration,
     }
     return {"results": results, "rollup": rollup, "enumeration": enumeration,
@@ -414,9 +638,12 @@ def main(argv=None) -> int:
                     else cfg.sitemap_max_sections)
     seed = args.sitemap_seed if args.sitemap_seed is not None else cfg.sitemap_sample_seed
 
+    settings = ProbeSettings.from_config(cfg)
+
     for agency in agencies:
         print(f"[{agency['id']}] probing {agency['base_url']} ...")
         run = run_agency(agency, fetcher, evidence_store, timestamp,
+                         settings=settings,
                          max_datasets=args.max_datasets,
                          max_dists_per_dataset=args.max_dists_per_dataset,
                          no_barriers_attempts=attempts,

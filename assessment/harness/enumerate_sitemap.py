@@ -63,6 +63,10 @@ class WebSurfaceResult:
     per_section_parsed: Dict[str, int] = field(default_factory=dict)
     # section -> number sampled for probing.
     per_section_sampled: Dict[str, int] = field(default_factory=dict)
+    # section -> every unique URL the section declares (after cross-section
+    # dedup). Held in memory for the catalog-coverage fact (d1_catalog); it is
+    # NOT written to the rollup, whose per-section counts summarize it.
+    universe_by_section: Dict[str, List[str]] = field(default_factory=dict)
     child_failures: List[dict] = field(default_factory=list)
     sections_total: int = 0
     sections_parsed: int = 0
@@ -325,6 +329,7 @@ def _finish(
         deduped[section] = kept
 
     total_parsed = sum(len(v) for v in per_section_entries.values())
+    result.universe_by_section = {s: [loc for loc, _ in kept] for s, kept in deduped.items()}
     result.universe_total = len(first_seen)
     result.duplicate_count = duplicates
     if result.universe_total + duplicates != total_parsed:

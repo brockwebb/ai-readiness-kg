@@ -1,0 +1,33 @@
+{
+  "conformsTo": "https://project-open-data.cio.gov/v1.1/schema",
+  "dataset": [
+    {
+      "title": "Population Estimates API",
+      "description": "Vintage estimates",
+      "identifier": "https://api.x.gov/id/pep",
+      "keyword": ["population"],
+      "modified": "2026-01-01",
+      "publisher": {"name": "Example Bureau"},
+      "accessLevel": "public",
+      "license": "https://x.gov/cc0",
+      "landingPage": "https://x.gov/tables/t01.html",
+      "distribution": [
+        {"mediaType": "application/json", "accessURL": "https://api.x.gov/data/pep"}
+      ]
+    },
+    {
+      "title": "Economic Census API",
+      "description": "Establishments",
+      "identifier": "https://api.x.gov/id/ecn",
+      "keyword": ["economy"],
+      "modified": "2026-01-01",
+      "publisher": {"name": "Example Bureau"},
+      "accessLevel": "public",
+      "license": "https://x.gov/cc0",
+      "distribution": [
+        {"mediaType": "application/json", "accessURL": "https://api.x.gov/data/ecn"},
+        {"mediaType": "text/csv", "downloadURL": "https://api.x.gov/data/ecn.csv"}
+      ]
+    }
+  ]
+}

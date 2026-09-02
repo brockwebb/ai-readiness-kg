@@ -42,7 +42,7 @@ summed, so no code path can fold a frontier score into the headline.
 - `frontier_deep` = `MCP`/`WebMCP` (as_of 2026-01) — visionary; absence is **not** core unreadiness.
 
 ## Dimensions & probes (one module per probe, `harness/probes/`)
-- **D1 Discovery (core):** `d1_robots`, `d1_sitemap`, `d1_catalog`, `d1_stable_urls`
+- **D1 Discovery (core):** `d1_robots`, `d1_robots_directives` (per page), `d1_sitemap`, `d1_catalog`, `d1_stable_urls`
 - **D2 Retrieval (core):** `d2_programmatic`, `d2_content_negotiation`, `d2_bulk`, `d2_no_barriers`
 - **D3 Interpretability (core):** `d3_metadata_standard`, `d3_provenance`, `d3_schema` (also covers semantic-clarity + units/types — all need the retrievable schema), `d3_access_tier`
 - **D4 Trust/freshness (core):** `d4_versioning`, `d4_cadence`, `d4_license`, `d4_integrity`
@@ -116,6 +116,41 @@ An evidence-only **catalog completeness** signal is emitted alongside: the fract
 of sampled pages carrying in-page `Dataset` markup that no `data.json` distribution
 references, with its denominator. It is deliberately not scored, because the rubric scores
 catalog presence, not completeness, and changing that is a rubric decision.
+
+## Observed facts beside the score
+Every record carries `observations`: structured facts kept apart from the score
+and from any warning, so a threshold can change and history can be re-scored.
+Warnings carry a `rule_id` and `rule_version`. Field names follow the SEO Machine
+Diagnostic data dictionary where one exists. Added 2026-09-02 for the four
+D0-r2 probe-design defects (`cc_tasks/2026-09-02_probe_depth_d0r2.md`):
+
+- **Page-level robots directives** (`d1_robots_directives`, web surface only):
+  `robots_meta` (meta name -> directives, including bot-specific names) and
+  `x_robots_tag`. A `noindex` / `nofollow` / `none` (config) on a page scores
+  PARTIAL with the directive as evidence; robots.txt eligibility (`d1_robots`)
+  is unchanged.
+- **The declared sitemap** (`d1_sitemap`): the probe follows the `Sitemap:`
+  robots.txt declares and falls back to `/sitemap.xml` (`sitemap_source:
+  fixed_path_fallback`). When the two differ, both are read and the fixed path
+  is reported as `sitemap_divergence`. Non-stale condition: newest `lastmod`
+  older than `[probes.d1_sitemap] stale_after_days` (default 365) scores
+  PARTIAL (`sitemap_lastmod`, `sitemap_stale_warning`). No `lastmod` at all is
+  recorded null and not scored stale (open rubric item).
+- **Catalog coverage of the sitemap universe** (`d1_catalog`, evidence only):
+  `catalog_sitemap_coverage`, the fraction of every sitemap-declared URL that
+  the catalog references as a distribution or landing page, with numerator,
+  denominator and per-section counts. It never changes the score; the scoring
+  rule is an open operator decision (assessment protocol §3).
+- **Crawler-access triad** (`d2_no_barriers` record, both surfaces):
+  `effective_crawler_access` with `declared` (robots.txt per token,
+  `[probes.crawler_access] declared_user_agents`, zero requests),
+  `observed_public` (what the harness's own requests received, reusing the
+  barrier attempts) and `enforced` (null unless an agency's
+  `enforced_observations_file` supplies edge observations; no vendor reader).
+  `crawler_policy_mismatch_warning` fires when robots.txt allows a client the
+  edge refused. `observe_user_agents` (default empty) lists extra identities
+  the harness may send; presenting a third-party crawler token is an operator
+  decision per run.
 
 ## Barrier intermittency
 `d2_no_barriers` fetches each target n times (`[probes.d2_no_barriers] attempts`,

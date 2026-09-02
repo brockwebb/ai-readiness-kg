@@ -88,3 +88,67 @@ def test_agency_without_a_recorded_sitemap_is_allowed():
     agencies = load_agencies(CONFIG_DIR / "agencies.toml")
     bls = next(a for a in agencies if a["id"] == "bls")
     assert "sitemap_url" not in bls
+
+
+# --- probe-depth tunables (task 2026-09-02_probe_depth_d0r2) --------------------
+def test_probe_depth_tunables_come_from_config():
+    cfg = load_harness_config(CONFIG_DIR / "harness.toml")
+    assert cfg.sitemap_stale_after_days == 365
+    assert "robots" in cfg.robots_directive_meta_names
+    assert {"noindex", "nofollow", "none"} <= set(cfg.robots_blocking_directives)
+    assert "*" in cfg.crawler_declared_user_agents
+    assert cfg.crawler_observe_user_agents == ()
+    assert 403 in cfg.crawler_refusal_statuses and 429 in cfg.crawler_refusal_statuses
+
+
+@pytest.mark.parametrize("old, new, key", [
+    ("stale_after_days = 365", "stale_after_days = 0", "stale_after_days"),
+    ("stale_after_days = 365", 'stale_after_days = "365"', "stale_after_days"),
+    ('discovery_blocking_directives = ["noindex", "nofollow", "none"]',
+     "discovery_blocking_directives = []", "discovery_blocking_directives"),
+    ('observe_user_agents = []', 'observe_user_agents = "GPTBot"', "observe_user_agents"),
+    ("refusal_statuses = [401, 403, 429]", "refusal_statuses = []", "refusal_statuses"),
+    ("refusal_statuses = [401, 403, 429]", 'refusal_statuses = ["403"]', "refusal_statuses"),
+])
+def test_bad_probe_depth_values_fail_loud_naming_the_key(tmp_path, old, new, key):
+    good = (CONFIG_DIR / "harness.toml").read_text()
+    assert old in good
+    bad = tmp_path / "harness.toml"
+    bad.write_text(good.replace(old, new))
+    with pytest.raises(ConfigError) as exc:
+        load_harness_config(bad)
+    assert key in str(exc.value)
+
+
+def test_missing_probe_depth_section_fails_loud(tmp_path):
+    good = (CONFIG_DIR / "harness.toml").read_text()
+    bad = tmp_path / "harness.toml"
+    bad.write_text(good.replace("[probes.crawler_access]", "[probes.crawler_access_renamed]"))
+    with pytest.raises(ConfigError) as exc:
+        load_harness_config(bad)
+    assert "crawler_access" in str(exc.value)
+
+
+def test_enforced_observations_file_is_resolved_relative_to_the_config_dir(tmp_path):
+    (tmp_path / "edge.json").write_text("{}")
+    (tmp_path / "agencies.toml").write_text(
+        '[[agency]]\nid = "a"\nname = "A"\nbase_url = "https://a.gov"\n'
+        'enforced_observations_file = "edge.json"\n')
+    agencies = load_agencies(tmp_path / "agencies.toml")
+    assert agencies[0]["enforced_observations_file"] == str((tmp_path / "edge.json").resolve())
+
+
+def test_blank_enforced_observations_file_fails_loud(tmp_path):
+    (tmp_path / "agencies.toml").write_text(
+        '[[agency]]\nid = "a"\nname = "A"\nbase_url = "https://a.gov"\n'
+        'enforced_observations_file = ""\n')
+    with pytest.raises(ConfigError) as exc:
+        load_agencies(tmp_path / "agencies.toml")
+    assert "enforced_observations_file" in str(exc.value)
+
+
+def test_no_agency_ships_with_an_enforced_file_or_extra_identities():
+    """The public tier sends only its own identity and holds no edge logs until
+    an operator supplies them; the shipped config must say so."""
+    for a in load_agencies(CONFIG_DIR / "agencies.toml"):
+        assert "enforced_observations_file" not in a

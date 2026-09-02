@@ -47,6 +47,54 @@ sample_seed = 20260901
 # distinguish always from sometimes; n fetches record the refusal fraction.
 attempts = 3
 
+[probes.d1_sitemap]
+# Non-stale condition (benchmark_rubric D1 sitemap; census-web-concept-inventory
+# D0-r2 finding: census.gov's fixed-path /sitemap.xml lists 5,408 URLs whose
+# lastmod values all fall in 2013-2015 and scored PASS). A sitemap whose NEWEST
+# lastmod is older than this many days scores PARTIAL, with that lastmod as
+# evidence. A sitemap carrying no lastmod at all is recorded as
+# `sitemap_lastmod: null` and NOT scored stale: absence of the field is an
+# observation, and treating it as staleness is a rubric decision (open item).
+stale_after_days = 365
+
+[probes.d1_robots_directives]
+# Page-level robots directives (D0-r2 finding: 77 of 98 sampled QuickFacts pages
+# carry a nofollow meta robots directive that robots.txt does not show). The
+# probe records `<meta name="robots">` plus any bot-specific meta and the
+# X-Robots-Tag header on every fetched page.
+#
+# Which <meta name="..."> values are read as robots directives. Any name ending
+# in "bot" is read regardless (googlebot, bingbot, gptbot, claudebot, ...);
+# this list covers the crawler tokens whose meta name does not end that way.
+directive_meta_names = ["robots", "slurp", "yandex", "baiduspider", "duckduckbot", "applebot"]
+# Directives that withdraw a page from discovery. `none` is shorthand for
+# `noindex, nofollow` (Google/Bing documented semantics). Any of these on a page
+# intended for discovery scores PARTIAL with the directive as evidence.
+discovery_blocking_directives = ["noindex", "nofollow", "none"]
+
+[probes.crawler_access]
+# The declared / enforced / observed triad (skeleton A11). `declared` is read
+# from robots.txt for every token listed here, zero requests. `observed_public`
+# is what the harness's OWN requests receive, reusing the d2_no_barriers
+# attempts, so by default no request is sent under any identity but the
+# harness's. `enforced` (edge / WAF treatment) needs edge logs the public tier
+# cannot see; it is read from an optional per-agency file (agencies.toml
+# `enforced_observations_file`) and is null otherwise.
+#
+# Crawler tokens whose robots.txt eligibility is evaluated for each target.
+# The harness's own identity is always evaluated in addition to these.
+declared_user_agents = ["*", "Googlebot", "bingbot", "GPTBot", "ClaudeBot", "CCBot", "PerplexityBot", "Google-Extended"]
+# Additional User-Agent strings the harness will SEND, to observe what a named
+# client receives. Empty by default: presenting a third-party crawler token from
+# a residential host is an impersonation the operator decides on per run, and
+# the June task log's politeness stance (no third-party crawler token) holds
+# until then. Each entry costs `attempts` extra requests per target.
+observe_user_agents = []
+# Statuses treated as a refusal of the client in the observed leg. 429 is a
+# rate-limit refusal, not a barrier marker, so it is listed here rather than in
+# d2_no_barriers' REFUSAL_STATUSES (which scores) - this list only observes.
+refusal_statuses = [401, 403, 429]
+
 # --- Track definitions (the core-vs-frontier firewall, traceable to icsp_notebook
 # task 51fe4574 flagship term "AI-ready data": Part A = core, Part B = frontier) ---
 

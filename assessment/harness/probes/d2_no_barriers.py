@@ -50,7 +50,7 @@ class NoBarriersProbe(DistributionProbe):
 
     def evaluate_attempts(self, attempts: List[Fetched], distribution: dict):
         if not attempts:
-            return Score.FAIL, "no fetch attempts were made"
+            return Score.FAIL, "no fetch attempts were made", {"attempts": 0}
 
         n = len(attempts)
         statuses = [a.status for a in attempts]
@@ -64,6 +64,16 @@ class NoBarriersProbe(DistributionProbe):
         unreachable = [a for a in attempts if not a.ok and id(a) not in refused_ids]
         refusal_fraction = len(refused) / n
         trace = f"attempts={n}, statuses={statuses}"
+        # Observed facts, kept apart from the verdict. The runner adds the
+        # crawler-access triad (`effective_crawler_access`,
+        # `crawler_policy_mismatch_warning`) beside these, because that needs
+        # robots.txt and the configured token list, which this probe does not
+        # hold.
+        obs = {
+            "attempts": n,
+            "statuses": statuses,
+            "refusal_fraction": round(refusal_fraction, 4),
+        }
 
         if refused:
             kinds = sorted({
@@ -75,14 +85,14 @@ class NoBarriersProbe(DistributionProbe):
                 f"refused on {len(refused)}/{n} attempts "
                 f"(refusal_fraction={refusal_fraction:.2f}; {', '.join(kinds)}); "
                 f"{trace}"
-            )
+            ), obs
         if unreachable:
             return Score.FAIL, (
                 f"not retrievable on {len(unreachable)}/{n} attempts "
                 f"(refusal_fraction={refusal_fraction:.2f}); {trace}; "
                 f"first error={unreachable[0].error}"
-            )
+            ), obs
         return Score.PASS, (
             f"no anti-machine barriers detected on any of {n} attempts "
             f"(refusal_fraction={refusal_fraction:.2f}); {trace}"
-        )
+        ), obs

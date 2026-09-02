@@ -8,7 +8,7 @@ to) and can confirm the score without re-running anything.
 from __future__ import annotations
 
 import enum
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Optional
 
 # --- Enumeration sources -----------------------------------------------------
@@ -88,6 +88,15 @@ class ProbeResult:
     # Which enumeration produced this target (SOURCE_* above). Defaults to the
     # catalog so every pre-existing caller keeps its meaning.
     source: str = SOURCE_CATALOG
+    # Observed facts, structured, separate from the score and from any warning
+    # (assessment protocol / skeleton §6b.5: raw observations are stored apart
+    # from calculated warnings, and warnings carry a versioned rule id so a
+    # threshold can change and history can be re-scored). Field names follow the
+    # SEO Machine Diagnostic data dictionary where one exists (`robots_meta`,
+    # `x_robots_tag`, `sitemap_lastmod`, `sitemap_source`,
+    # `effective_crawler_access`, `crawler_policy_mismatch_warning`) so a future
+    # item-level crosswalk lines up. Empty for probes that emit none.
+    observations: dict = field(default_factory=dict)
 
     def to_dict(self) -> dict:
         """JSON-serializable record. This is the on-disk audit shape fixed by the
@@ -104,4 +113,5 @@ class ProbeResult:
             "timestamp": self.timestamp,
             "evidence_path": self.evidence_path,
             "source": self.source,
+            "observations": self.observations,
         }

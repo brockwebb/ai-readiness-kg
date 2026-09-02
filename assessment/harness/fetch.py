@@ -128,7 +128,8 @@ def build_fetched(
 
 
 class Fetcher(Protocol):
-    def get(self, url: str, accept: Optional[str] = None) -> Fetched: ...
+    def get(self, url: str, accept: Optional[str] = None,
+            user_agent: Optional[str] = None) -> Fetched: ...
 
 
 class HttpFetcher:
@@ -151,8 +152,14 @@ class HttpFetcher:
             time.sleep(wait)
         self._last_request_at = time.monotonic()
 
-    def get(self, url: str, accept: Optional[str] = None) -> Fetched:
-        headers = {"User-Agent": self.user_agent}
+    def get(self, url: str, accept: Optional[str] = None,
+            user_agent: Optional[str] = None) -> Fetched:
+        # `user_agent` overrides the configured identity for ONE request. It
+        # exists for the observed leg of the crawler-access triad, where the
+        # question is what a named client receives; the runner sends only the
+        # identities listed in [probes.crawler_access] observe_user_agents, so
+        # which tokens the harness ever presents is a recorded operator decision.
+        headers = {"User-Agent": user_agent or self.user_agent}
         if accept:
             headers["Accept"] = accept
         last_error = None

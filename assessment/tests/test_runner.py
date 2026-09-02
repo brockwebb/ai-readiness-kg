@@ -2,11 +2,18 @@
 exercised without the network via FakeFetcher."""
 import json
 
+from harness.config import load_harness_config
 from harness.records import SOURCE_CATALOG, SOURCE_SITE, SOURCE_SITEMAP, Track
 from harness.evidence import EvidenceStore
-from harness.run import run_agency, SITE_PROBES, METADATA_PROBES, DISTRIBUTION_PROBES
+from harness.run import (
+    run_agency, ProbeSettings, SITE_PROBE_IDS, METADATA_PROBES, DISTRIBUTION_PROBES,
+)
 
 from tests.helpers import FakeFetcher, fetched
+
+# Probe tunables come from the real harness.toml, the way main() builds them.
+CONFIG_DIR = __import__("pathlib").Path(__file__).resolve().parent.parent / "config"
+SETTINGS = ProbeSettings.from_config(load_harness_config(CONFIG_DIR / "harness.toml"))
 
 BASE = "https://x.gov"
 CATALOG = {
@@ -51,7 +58,7 @@ def test_run_agency_produces_results_rollup_and_evidence(tmp_path):
     store = EvidenceStore(root=tmp_path)
     fetcher = FakeFetcher(_responses())
 
-    out = run_agency(agency, fetcher, store, timestamp="2026-06-23T00:00:00Z",
+    out = run_agency(agency, fetcher, store, settings=SETTINGS, timestamp="2026-06-23T00:00:00Z",
                      max_datasets=10, max_dists_per_dataset=10)
 
     results = out["results"]
@@ -59,8 +66,8 @@ def test_run_agency_produces_results_rollup_and_evidence(tmp_path):
 
     # Every probe family ran.
     probe_ids = {r.probe_id for r in results}
-    for p in SITE_PROBES:
-        assert p.probe_id in probe_ids
+    for pid in SITE_PROBE_IDS:
+        assert pid in probe_ids
     for p in METADATA_PROBES:
         assert p.probe_id in probe_ids
     for p in DISTRIBUTION_PROBES:
@@ -92,7 +99,7 @@ def test_run_agency_records_missing_catalog_as_d1_finding(tmp_path):
                                         headers={"Content-Type": "text/html"},
                                         body="<html>landing</html>")
     fetcher = FakeFetcher(resp)
-    out = run_agency(agency, fetcher, store, timestamp="2026-06-23T00:00:00Z")
+    out = run_agency(agency, fetcher, store, settings=SETTINGS, timestamp="2026-06-23T00:00:00Z")
     assert out["enumeration"]["has_machine_readable_catalog"] is False
     # The harness keeps going and still reports site probes — it does not crash.
     assert any(r.probe_id == "d1_catalog" for r in out["results"])
@@ -106,7 +113,7 @@ def test_max_datasets_caps_dataset_probing(tmp_path):
         headers={"Content-Type": "application/json"}, body=json.dumps(big))
     store = EvidenceStore(root=tmp_path)
     out = run_agency(agency, FakeFetcher(resp), store,
-                     timestamp="2026-06-23T00:00:00Z", max_datasets=2)
+                     settings=SETTINGS, timestamp="2026-06-23T00:00:00Z", max_datasets=2)
     # Only 2 of 5 datasets probed -> metadata probe instances run 2x each on the
     # CATALOG source. d4_license also runs on web-surface pages (a different
     # source, a different denominator), so the count is scoped to the source the
@@ -160,7 +167,7 @@ def _web_agency():
 def test_web_surface_pages_are_probed_and_kept_out_of_the_catalog_composite(tmp_path):
     store = EvidenceStore(root=tmp_path)
     out = run_agency(_web_agency(), FakeFetcher(_web_responses()), store,
-                     timestamp="2026-09-01T00:00:00Z",
+                     settings=SETTINGS, timestamp="2026-09-01T00:00:00Z",
                      sitemap_sample_per_section=2, sitemap_sample_seed=1)
 
     web_results = [r for r in out["results"] if r.source == SOURCE_SITEMAP]
@@ -168,8 +175,8 @@ def test_web_surface_pages_are_probed_and_kept_out_of_the_catalog_composite(tmp_
                                               f"{BASE}/tables/t01.html"}
     # Only the probes that declare the sitemap source ran on the pages.
     assert {r.probe_id for r in web_results} == {
-        "d1_stable_urls", "d2_no_barriers", "d2_content_negotiation",
-        "d3_metadata_standard", "d4_license"}
+        "d1_stable_urls", "d1_robots_directives", "d2_no_barriers",
+        "d2_content_negotiation", "d3_metadata_standard", "d4_license"}
 
     roll = out["rollup"]
     assert roll["web_surface"]["n_targets"] == 2
@@ -185,7 +192,7 @@ def test_a_refusing_web_surface_diverges_from_a_clean_catalog(tmp_path):
     store = EvidenceStore(root=tmp_path)
     resp = _web_responses(page_status=403, page_body="Forbidden")
     out = run_agency(_web_agency(), FakeFetcher(resp), store,
-                     timestamp="2026-09-01T00:00:00Z",
+                     settings=SETTINGS, timestamp="2026-09-01T00:00:00Z",
                      sitemap_sample_per_section=2, sitemap_sample_seed=1)
     roll = out["rollup"]
     catalog_d2 = roll["core_dimension_vectors"]["D2"]
@@ -201,7 +208,7 @@ def test_a_refusing_web_surface_diverges_from_a_clean_catalog(tmp_path):
 def test_barrier_probe_fetches_n_times_and_evidence_holds_every_attempt(tmp_path):
     store = EvidenceStore(root=tmp_path)
     fetcher = FakeFetcher(_web_responses())
-    out = run_agency(_web_agency(), fetcher, store, timestamp="2026-09-01T00:00:00Z",
+    out = run_agency(_web_agency(), fetcher, store, settings=SETTINGS, timestamp="2026-09-01T00:00:00Z",
                      no_barriers_attempts=3, sitemap_sample_per_section=1,
                      sitemap_sample_seed=1)
     page = [r for r in out["results"]
@@ -220,7 +227,7 @@ def test_catalog_completeness_signal_is_evidence_only_with_its_denominator(tmp_p
     store = EvidenceStore(root=tmp_path)
     resp = _web_responses(page_body=DATASET_PAGE)
     out = run_agency(_web_agency(), FakeFetcher(resp), store,
-                     timestamp="2026-09-01T00:00:00Z",
+                     settings=SETTINGS, timestamp="2026-09-01T00:00:00Z",
                      sitemap_sample_per_section=2, sitemap_sample_seed=1)
     signal = out["enumeration"]["web_surface"]["catalog_completeness"]
     assert signal["evidence_only"] is True and signal["scored"] is False
@@ -237,7 +244,7 @@ def test_completeness_fraction_is_null_when_no_page_carries_dataset_markup(tmp_p
     """A zero denominator must read as not measurable, never as a clean 0.0."""
     store = EvidenceStore(root=tmp_path)
     out = run_agency(_web_agency(), FakeFetcher(_web_responses(page_body=FAQ_PAGE)),
-                     store, timestamp="2026-09-01T00:00:00Z",
+                     store, settings=SETTINGS, timestamp="2026-09-01T00:00:00Z",
                      sitemap_sample_per_section=2, sitemap_sample_seed=1)
     signal = out["enumeration"]["web_surface"]["catalog_completeness"]
     assert signal["denominator_value"] == 0
@@ -252,7 +259,7 @@ def test_a_page_that_is_in_the_catalog_is_not_counted_as_absent(tmp_path):
     resp[f"{BASE}/data.json"] = fetched(f"{BASE}/data.json",
         headers={"Content-Type": "application/json"}, body=json.dumps(catalog))
     out = run_agency(_web_agency(), FakeFetcher(resp), store,
-                     timestamp="2026-09-01T00:00:00Z",
+                     settings=SETTINGS, timestamp="2026-09-01T00:00:00Z",
                      sitemap_sample_per_section=2, sitemap_sample_seed=1)
     signal = out["enumeration"]["web_surface"]["catalog_completeness"]
     assert signal["denominator_value"] == 2
@@ -266,7 +273,7 @@ def test_unreachable_sitemap_section_is_recorded_and_the_run_continues(tmp_path)
     resp[f"{BASE}/sitemapindex/products.xml"] = fetched(
         f"{BASE}/sitemapindex/products.xml", status=403, body="Forbidden")
     out = run_agency(_web_agency(), FakeFetcher(resp), store,
-                     timestamp="2026-09-01T00:00:00Z", sitemap_sample_seed=1)
+                     settings=SETTINGS, timestamp="2026-09-01T00:00:00Z", sitemap_sample_seed=1)
     web = out["enumeration"]["web_surface"]
     assert web["enumerated"] is True
     assert web["sections_parsed"] == 0
@@ -279,7 +286,7 @@ def test_unreachable_sitemap_section_is_recorded_and_the_run_continues(tmp_path)
 def test_sitemap_enumeration_can_be_switched_off(tmp_path):
     store = EvidenceStore(root=tmp_path)
     out = run_agency(_web_agency(), FakeFetcher(_web_responses()), store,
-                     timestamp="2026-09-01T00:00:00Z", enumerate_sitemap=False)
+                     settings=SETTINGS, timestamp="2026-09-01T00:00:00Z", enumerate_sitemap=False)
     assert out["enumeration"]["web_surface"]["enumerated"] is False
     assert not any(r.source == SOURCE_SITEMAP for r in out["results"])
 
@@ -287,7 +294,7 @@ def test_sitemap_enumeration_can_be_switched_off(tmp_path):
 def test_site_probe_results_carry_the_site_source(tmp_path):
     store = EvidenceStore(root=tmp_path)
     out = run_agency(_web_agency(), FakeFetcher(_web_responses()), store,
-                     timestamp="2026-09-01T00:00:00Z", sitemap_sample_seed=1)
+                     settings=SETTINGS, timestamp="2026-09-01T00:00:00Z", sitemap_sample_seed=1)
     robots = next(r for r in out["results"] if r.probe_id == "d1_robots")
     assert robots.source == SOURCE_SITE
 
@@ -296,7 +303,7 @@ def test_sitemap_url_drift_against_the_recorded_expectation_is_reported(tmp_path
     store = EvidenceStore(root=tmp_path)
     agency = dict(_web_agency(), sitemap_url=f"{BASE}/old/sitemap.xml")
     out = run_agency(agency, FakeFetcher(_web_responses()), store,
-                     timestamp="2026-09-01T00:00:00Z", sitemap_sample_seed=1)
+                     settings=SETTINGS, timestamp="2026-09-01T00:00:00Z", sitemap_sample_seed=1)
     web = out["enumeration"]["web_surface"]
     assert web["sitemap_url"] == SITEMAP_INDEX
     assert web["sitemap_url_source"] == "robots.txt"

@@ -45,6 +45,17 @@ class HarnessConfig:
     sitemap_sample_seed: int
     # Fetches per target for d2_no_barriers. > 1 measures refusal intermittency.
     no_barriers_attempts: int
+    # d1_sitemap non-stale condition: newest lastmod older than this is PARTIAL.
+    sitemap_stale_after_days: int
+    # d1_robots_directives: which <meta name> values are robots directives, and
+    # which directives withdraw a page from discovery.
+    robots_directive_meta_names: tuple
+    robots_blocking_directives: tuple
+    # crawler-access triad: tokens whose robots.txt eligibility is evaluated,
+    # extra identities the harness may send, and observed-leg refusal statuses.
+    crawler_declared_user_agents: tuple
+    crawler_observe_user_agents: tuple
+    crawler_refusal_statuses: tuple
     # track label -> as_of_date string
     _track_as_of: dict
 
@@ -58,6 +69,15 @@ def _require(d: dict, key: str, where: str):
     if key not in d:
         raise ConfigError(f"missing required key '{key}' in {where}")
     return d[key]
+
+
+def _string_list(d: dict, key: str, where: str, path) -> List[str]:
+    """A required list-of-strings key (may be empty). Anything else fails loud."""
+    value = _require(d, key, where)
+    if not isinstance(value, list) or any(not isinstance(v, str) for v in value):
+        raise ConfigError(f"{where} {key} must be a list of strings in {path}; "
+                          f"got {value!r}")
+    return value
 
 
 def load_harness_config(path: Path) -> HarnessConfig:
@@ -74,6 +94,36 @@ def load_harness_config(path: Path) -> HarnessConfig:
         raise ConfigError(
             f"[probes.d2_no_barriers] attempts must be an integer >= 1 in {path}; "
             f"got {attempts!r}"
+        )
+    sitemap_probe = _require(probes, "d1_sitemap", "harness.toml [probes]")
+    stale_days = _require(sitemap_probe, "stale_after_days",
+                          "harness.toml [probes.d1_sitemap]")
+    if isinstance(stale_days, bool) or not isinstance(stale_days, int) or stale_days < 1:
+        raise ConfigError(
+            f"[probes.d1_sitemap] stale_after_days must be an integer >= 1 in {path}; "
+            f"got {stale_days!r}"
+        )
+    directives = _require(probes, "d1_robots_directives", "harness.toml [probes]")
+    meta_names = _string_list(directives, "directive_meta_names",
+                              "harness.toml [probes.d1_robots_directives]", path)
+    blocking = _string_list(directives, "discovery_blocking_directives",
+                            "harness.toml [probes.d1_robots_directives]", path)
+    if not blocking:
+        raise ConfigError(
+            f"[probes.d1_robots_directives] discovery_blocking_directives must name "
+            f"at least one directive in {path}"
+        )
+    access = _require(probes, "crawler_access", "harness.toml [probes]")
+    declared_uas = _string_list(access, "declared_user_agents",
+                                "harness.toml [probes.crawler_access]", path)
+    observe_uas = _string_list(access, "observe_user_agents",
+                               "harness.toml [probes.crawler_access]", path)
+    refusal = _require(access, "refusal_statuses", "harness.toml [probes.crawler_access]")
+    if (not isinstance(refusal, list) or not refusal
+            or any(isinstance(s, bool) or not isinstance(s, int) for s in refusal)):
+        raise ConfigError(
+            f"[probes.crawler_access] refusal_statuses must be a non-empty list of "
+            f"integers in {path}; got {refusal!r}"
         )
     per_section = _require(sitemap, "sample_per_section", "harness.toml [sitemap]")
     if not isinstance(per_section, int) or per_section < 1:
@@ -102,6 +152,12 @@ def load_harness_config(path: Path) -> HarnessConfig:
         sitemap_max_sections=_require(sitemap, "max_sections", "harness.toml [sitemap]"),
         sitemap_sample_seed=_require(sitemap, "sample_seed", "harness.toml [sitemap]"),
         no_barriers_attempts=attempts,
+        sitemap_stale_after_days=stale_days,
+        robots_directive_meta_names=tuple(meta_names),
+        robots_blocking_directives=tuple(blocking),
+        crawler_declared_user_agents=tuple(declared_uas),
+        crawler_observe_user_agents=tuple(observe_uas),
+        crawler_refusal_statuses=tuple(refusal),
         _track_as_of=track_as_of,
     )
 
@@ -118,4 +174,15 @@ def load_agencies(path: Path) -> List[dict]:
                 raise ConfigError(
                     f"agency entry missing required key '{key}' in {path}: {a}"
                 )
+        hook = a.get("enforced_observations_file")
+        if hook is not None:
+            if not isinstance(hook, str) or not hook.strip():
+                raise ConfigError(
+                    f"agency {a['id']!r}: enforced_observations_file must be a "
+                    f"non-empty path string in {path}; got {hook!r}"
+                )
+            # Relative to the config directory, so the hook travels with config.
+            a["enforced_observations_file"] = str(
+                (Path(path).parent / hook).resolve()
+            )
     return agencies

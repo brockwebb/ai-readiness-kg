@@ -8,6 +8,9 @@ from harness.probes.frontier_mcp import McpProbe
 
 from tests.helpers import fetched
 
+# The staleness threshold is config; tests build the probe the way main() does.
+STALE_DAYS = 365
+
 
 # --- D1 robots.txt ---------------------------------------------------------
 def test_robots_pass_when_permits_and_declares_sitemap():
@@ -46,17 +49,17 @@ def test_sitemap_pass_when_parses_with_urls():
     body = ('<?xml version="1.0"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
             '<url><loc>https://x.gov/a</loc></url></urlset>')
     f = fetched("https://x.gov/sitemap.xml", body=body)
-    assert SitemapProbe().evaluate(f)[0] == Score.PASS
+    assert SitemapProbe(STALE_DAYS).evaluate(f)[0] == Score.PASS
 
 
 def test_sitemap_partial_when_present_but_unparseable():
     f = fetched("https://x.gov/sitemap.xml", body="not xml at all")
-    assert SitemapProbe().evaluate(f)[0] == Score.PARTIAL
+    assert SitemapProbe(STALE_DAYS).evaluate(f)[0] == Score.PARTIAL
 
 
 def test_sitemap_fail_when_absent():
     f = fetched("https://x.gov/sitemap.xml", status=404, body="")
-    assert SitemapProbe().evaluate(f)[0] == Score.FAIL
+    assert SitemapProbe(STALE_DAYS).evaluate(f)[0] == Score.FAIL
 
 
 # --- D1 structured catalog (data.json) -------------------------------------

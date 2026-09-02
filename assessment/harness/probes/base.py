@@ -17,6 +17,12 @@ Every probe declares `probe_id`, `dimension` (None for frontier), and `track`
 (the core-vs-frontier firewall). `as_of_date` is derived from the track, so a
 frontier probe's record always carries its dating.
 
+`evaluate` returns `(score, evidence)`. A probe that emits structured
+observations returns `(score, evidence, observations)` instead; the runner's
+`unpack_verdict` accepts both, so adding observations to a probe never changes
+its neighbours. Observations are facts kept apart from the score and from any
+warning (skeleton §6b.5) and travel on `ProbeResult.observations`.
+
 Every probe also declares `sources`: which enumeration sources it applies to. The
 runner asks each probe rather than assuming, so a distribution-only probe is never
 forced onto an HTML page. "Bulk availability" and "programmatic access" are
@@ -109,7 +115,17 @@ class DistributionProbe(_Probe):
         return self.evaluate(attempts[0], distribution)
 
 
+def unpack_verdict(verdict):
+    """`(score, evidence)` or `(score, evidence, observations)` -> three values."""
+    if len(verdict) == 3:
+        score, evidence, observations = verdict
+        return score, evidence, dict(observations or {})
+    score, evidence = verdict
+    return score, evidence, {}
+
+
 __all__ = [
+    "unpack_verdict",
     "SiteProbe",
     "MetadataProbe",
     "DistributionProbe",

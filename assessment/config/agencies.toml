@@ -14,6 +14,18 @@
 # when robots.txt declares no Sitemap. Omit it for an agency whose sitemap has
 # not been recorded; robots.txt still supplies one if the site declares it.
 #
+# `enforced_observations_file` (optional) is the hook for the ENFORCED leg of the
+# crawler-access triad (skeleton A11): edge / WAF / bot-management treatment,
+# which only the agency's own edge logs can show. A JSON file, path relative to
+# this config directory, shaped:
+#   {"schema": "enforced_observations/1",
+#    "source": "free text naming the edge product and export",
+#    "as_of": "YYYY-MM-DD",
+#    "observations": {"<url>": {"<user-agent token>": {"action": "allow|block|challenge|rate_limit",
+#                                                      "detail": "free text"}}}}
+# No reader for any vendor's export exists here; producing this file from
+# Cloudflare or another edge is an operator step. Absent file = enforced is null.
+#
 # Start small: a handful of FSS principal statistical agencies. Expand as the target
 # list is validated. These are public, well-known open-data endpoints.
 
