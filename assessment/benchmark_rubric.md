@@ -1,6 +1,8 @@
 # Machine Benchmark Rubric — FSS AI Data Readiness
 *The load-bearing instrument. Test the machine by being the machine.*
 
+**Rubric version: v1.1** (2026-09-02). Convention: the text as it stood before any amendment is v1.0; each amending CC task bumps the minor version and adds a Changelog entry naming the task file. Versioned rules in code (`sitemap_stale` v1, `catalog_zero_coverage` v1, `crawler_policy_mismatch` v1) carry their own versions and are bumped only when their logic changes.
+
 ## Premise
 Public-facing AI data readiness is **directly testable** — point an agent at what an agency exposes and score what comes back. No self-report. The only way to score well is to actually be machine-consumable. This is the part absent from the existing literature (NOAA/ESIP, Virginia, NIH all measure fitness-for-training, not machine-as-consumer).
 
@@ -42,8 +44,8 @@ This preempts the "you're penalizing us for protecting data" attack entirely —
 | Probe | Pass condition |
 |---|---|
 | robots.txt permits agents | Not blanket-blocking; declares sitemap |
-| sitemap.xml | Present, parses, non-stale |
-| Structured catalog | data.json (Project Open Data) / DCAT resolves & validates |
+| sitemap.xml | Present, parses, non-stale. **No-`lastmod` clause (v1.1):** a sitemap with no `lastmod` on any entry is neither stale nor PARTIAL — `lastmod` is optional in the sitemap protocol, and penalizing a protocol-compliant sitemap would score a hypothesis about machine behavior by vintage, which the orientation-first rule forbids. It is recorded as an observed fact (`sitemap_lastmod: null`, `determinable: false`). Freshness-metadata absence is a D4-class observation carried into the evidence record, unscored, pending observed-behavior evidence that crawlers treat lastmod-less sitemaps differently. |
+| Structured catalog | data.json (Project Open Data) / DCAT resolves & validates. **Zero-coverage clause (v1.1):** a section of the enumerated sitemap universe with **zero** catalog references (`catalog_sitemap_coverage.sections_with_zero_coverage` non-empty) scores PARTIAL; evidence is the section name and its denominator (rule `catalog_zero_coverage` v1). This is categorical absence and needs no threshold. A *fractional* coverage threshold is deferred (see Open items). |
 | Stable, semantic URLs | Resources addressable, not session/JS-gated |
 
 *(`llms.txt` was previously listed here; it is an emerging access-axis standard → moved to the Frontier access track, `frontier_near`.)*
@@ -101,3 +103,10 @@ Per agency: core dimension vector `[D1, D2, D3, D4]` + core composite + the two 
 - [x] Frontier maturity tiers + dating convention — RESOLVED (1B): `frontier_near` (llms.txt, as_of 2024-09) vs `frontier_deep` (MCP/WebMCP, as_of 2026-01); per-probe `as_of_date` in emitted record; "llms.txt but not WebMCP" is a distinct state.
 - [ ] Probe implementation: Python harness, one module per probe, evidence capture. (CC task 2026-06-23 Stage 3)
 - [ ] Target list per agency (what URLs/endpoints constitute "their data"). (CC task 2026-06-23 Stage 3 — enumeration)
+- [x] D1 catalog zero-coverage — RESOLVED (v1.1, Decision 1 of `cc_tasks/2026-09-02_rubric_amendments_coverage_lastmod.md`): a sitemap section with zero catalog references scores PARTIAL; categorical, no threshold.
+- [ ] **D1 catalog fractional coverage threshold — DEFERRED.** Whether `catalog_sitemap_coverage.fraction_in_catalog` below some fraction should score PARTIAL is not decided; choosing a fraction now would be a threshold set before data. **Trigger:** the January pilot (3–5 products, `docs/crosswalk/deck_content_2026-09-01.md` slide 18) yields an observed distribution of `catalog_sitemap_coverage`; the threshold is set from that distribution and recorded here with its derivation. Until then the fraction is evidence only.
+- [x] D1 sitemap without `lastmod` — RESOLVED (v1.1, Decision 2 of `cc_tasks/2026-09-02_rubric_amendments_coverage_lastmod.md`): not stale, not PARTIAL; recorded `sitemap_lastmod: null`, `determinable: false`; D4-class observation, unscored, pending observed-behavior evidence.
+
+## Changelog
+- **v1.1 — 2026-09-02** (`cc_tasks/2026-09-02_rubric_amendments_coverage_lastmod.md`): D1 catalog gains the zero-coverage clause (zero-reference sitemap section → PARTIAL; rule `catalog_zero_coverage` v1); fractional coverage threshold registered as a deferred open item with the January-pilot trigger. D1 sitemap gains the no-`lastmod` clause (unscored D4-class observation). Version marker and this changelog introduced; the prior text is v1.0. Grounding: `cc_tasks/2026-09-02_probe_depth_d0r2_RESULT.md` §5 items 1 and 3.
+- **v1.0** — the rubric as it stood before 2026-09-02 (no version marker; decisions recorded inline under Open items).

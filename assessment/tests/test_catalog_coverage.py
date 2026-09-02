@@ -1,8 +1,11 @@
 """D0-r2 defect 3: d1_catalog scored presence and validity, not coverage.
 census.gov/data.json scored PASS with 1,798 distributions all on api.census.gov
 and zero references to QuickFacts, 21.8% of the site's own sitemap universe. The
-coverage of the sitemap universe by the catalog is now an observed fact with a
-numerator and a denominator, per section, and it does not change the score."""
+coverage of the sitemap universe by the catalog is an observed fact with a
+numerator and a denominator, per section. Rubric v1.1 (task
+2026-09-02_rubric_amendments_coverage_lastmod, Decision 1): a section with ZERO
+catalog references scores d1_catalog PARTIAL (rule `catalog_zero_coverage` v1);
+the fraction itself is still unscored pending the January pilot."""
 import json
 from pathlib import Path
 
@@ -10,7 +13,9 @@ from harness.enumerate_sitemap import WebSurfaceResult
 from harness.probes.d1_catalog import CatalogProbe
 from harness.records import Score
 from harness.evidence import EvidenceStore
-from harness.run import catalog_reference_urls, catalog_sitemap_coverage, run_agency
+from harness.run import (COVERAGE_RULE_ID, COVERAGE_RULE_VERSION,
+                         apply_catalog_coverage_rule, catalog_reference_urls,
+                         catalog_sitemap_coverage, run_agency)
 
 from tests.helpers import FakeFetcher, fetched
 from tests.test_runner import SETTINGS, _responses, BASE
@@ -44,7 +49,8 @@ def test_catalog_reference_urls_include_distributions_and_landing_pages():
 
 def test_census_shaped_catalog_covers_one_of_five_and_a_whole_section_is_at_zero():
     fact = catalog_sitemap_coverage(CATALOG["dataset"], True, _web())
-    assert fact["evidence_only"] is True and fact["scored"] is False
+    assert fact["fraction_scored"] is False
+    assert fact["zero_coverage_rule"] == f"{COVERAGE_RULE_ID}/{COVERAGE_RULE_VERSION}"
     assert fact["applicable"] is True
     assert fact["numerator_value"] == 1 and fact["denominator_value"] == 5
     assert fact["fraction_in_catalog"] == 0.2
@@ -74,10 +80,51 @@ def test_no_catalog_means_nothing_is_covered_and_the_fact_says_not_applicable():
     assert fact["fraction_in_catalog"] == 0.0
 
 
-def test_the_probe_score_is_unchanged_by_coverage():
+def test_the_probe_itself_still_scores_presence_and_validity_only():
     f = fetched(f"{BASE}/data.json", body=json.dumps(CATALOG),
                 headers={"Content-Type": "application/json"})
     assert CatalogProbe().evaluate(f)[0] == Score.PASS
+
+
+# --- the zero-coverage rule (rubric v1.1, Decision 1) ------------------------------
+def test_zero_coverage_section_demotes_pass_to_partial_with_section_and_denominator():
+    fact = catalog_sitemap_coverage(CATALOG["dataset"], True, _web())
+    score, ev, warning = apply_catalog_coverage_rule(Score.PASS, "data.json catalog", fact)
+    assert score == Score.PARTIAL
+    assert "PST045217" in ev and "0 of 3" in ev
+    assert warning == {
+        "rule_id": COVERAGE_RULE_ID, "rule_version": COVERAGE_RULE_VERSION,
+        "fired": True, "determinable": True,
+        "sections_with_zero_coverage": [{"section": "PST045217", "sitemap_urls": 3}],
+    }
+
+
+def test_clean_coverage_leaves_pass_unchanged_and_records_the_rule_as_not_fired():
+    web = WebSurfaceResult(has_sitemap=True, universe_by_section={"tables": TABLE_URLS})
+    fact = catalog_sitemap_coverage(CATALOG["dataset"], True, web)
+    assert fact["sections_with_zero_coverage"] == []
+    score, ev, warning = apply_catalog_coverage_rule(Score.PASS, "data.json catalog", fact)
+    assert score == Score.PASS and ev == "data.json catalog"
+    assert warning["fired"] is False and warning["determinable"] is True
+    assert warning["sections_with_zero_coverage"] == []
+
+
+def test_rule_is_not_determinable_without_a_universe_and_never_fires():
+    fact = catalog_sitemap_coverage(CATALOG["dataset"], True, None)
+    score, ev, warning = apply_catalog_coverage_rule(Score.PASS, "ok", fact)
+    assert score == Score.PASS and ev == "ok"
+    assert warning["fired"] is False and warning["determinable"] is False
+
+
+def test_rule_never_raises_a_score_and_does_not_fire_on_a_missing_catalog():
+    # No catalog: the probe already said FAIL; the fact is not applicable.
+    fact = catalog_sitemap_coverage([], False, _web())
+    score, ev, warning = apply_catalog_coverage_rule(Score.FAIL, "absent", fact)
+    assert score == Score.FAIL and ev == "absent" and warning["fired"] is False
+    # Wrong-shape JSON (PARTIAL from the probe) stays PARTIAL, not FAIL.
+    fact = catalog_sitemap_coverage(CATALOG["dataset"], True, _web())
+    score, _, warning = apply_catalog_coverage_rule(Score.PARTIAL, "wrong shape", fact)
+    assert score == Score.PARTIAL and warning["fired"] is True
 
 
 # --- through the runner ---------------------------------------------------------------
@@ -113,7 +160,10 @@ def test_runner_attaches_coverage_to_the_catalog_record_and_the_rollup(tmp_path)
                      timestamp="2026-09-02T00:00:00Z",
                      sitemap_sample_per_section=1, sitemap_sample_seed=1)
     rec = next(r for r in out["results"] if r.probe_id == "d1_catalog")
-    assert rec.score == Score.PASS  # presence and validity, as before
+    # Rubric v1.1 Decision 1: the QuickFacts-shaped section has zero references.
+    assert rec.score == Score.PARTIAL
+    assert "PST045217" in rec.evidence and "0 of 3" in rec.evidence
+    assert rec.observations["catalog_coverage_warning"]["fired"] is True
     fact = rec.observations["catalog_sitemap_coverage"]
     # Coverage is over the whole enumerated universe (5), not the sample (2).
     assert fact["denominator_value"] == 5 and fact["numerator_value"] == 1
@@ -125,10 +175,28 @@ def test_runner_attaches_coverage_to_the_catalog_record_and_the_rollup(tmp_path)
     assert not any("coverage" in r.probe_id for r in out["results"])
 
 
+def test_runner_keeps_pass_when_every_section_has_a_catalog_reference(tmp_path):
+    clean = json.loads(json.dumps(CATALOG))
+    clean["dataset"].append({"title": "QuickFacts", "landingPage": QF_URLS[0],
+                             "distribution": []})
+    resp = _responses_with_universe()
+    resp[f"{BASE}/data.json"] = fetched(f"{BASE}/data.json", body=json.dumps(clean),
+                                        headers={"Content-Type": "application/json"})
+    out = run_agency(_agency(), FakeFetcher(resp), EvidenceStore(root=tmp_path),
+                     settings=SETTINGS, timestamp="2026-09-02T00:00:00Z",
+                     sitemap_sample_per_section=1, sitemap_sample_seed=1)
+    rec = next(r for r in out["results"] if r.probe_id == "d1_catalog")
+    assert rec.score == Score.PASS
+    assert rec.observations["catalog_sitemap_coverage"]["sections_with_zero_coverage"] == []
+    assert rec.observations["catalog_coverage_warning"]["fired"] is False
+
+
 def test_runner_reports_coverage_not_measurable_without_a_universe(tmp_path):
     out = run_agency(_agency(), FakeFetcher(_responses_with_universe()),
                      EvidenceStore(root=tmp_path), settings=SETTINGS,
                      timestamp="2026-09-02T00:00:00Z", enumerate_sitemap=False)
     rec = next(r for r in out["results"] if r.probe_id == "d1_catalog")
+    assert rec.score == Score.PASS  # no universe: the rule is not determinable
     assert rec.observations["catalog_sitemap_coverage"]["fraction_in_catalog"] is None
+    assert rec.observations["catalog_coverage_warning"]["determinable"] is False
     assert "catalog_coverage" not in out["enumeration"]["web_surface"]

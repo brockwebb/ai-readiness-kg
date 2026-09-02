@@ -15,9 +15,10 @@ Staleness. The rubric's non-stale condition is implemented as: the NEWEST
 `lastmod` in the document read is older than `[probes.d1_sitemap]
 stale_after_days` -> PARTIAL, with that lastmod as evidence. The threshold is
 config, not a constant. A document with no `lastmod` at all is recorded as
-`sitemap_lastmod: null` and not scored stale: the field's absence is an
-observation, and reading it as staleness is a rubric decision (registered as an
-open item, not decided here).
+`sitemap_lastmod: null` and not scored stale: `lastmod` is optional in the
+sitemap protocol, and the field's absence is an unscored D4-class observation
+(rubric v1.1, D1 sitemap no-`lastmod` clause, task
+2026-09-02_rubric_amendments_coverage_lastmod).
 
 PASS    retrievable, parses as XML, contains <url>/<sitemap> entries, and the
         newest lastmod (when any is present) is within the threshold.

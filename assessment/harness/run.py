@@ -41,6 +41,7 @@ from .records import (
     SOURCE_SITE,
     SOURCE_SITEMAP,
     ProbeResult,
+    Score,
 )
 
 # --- Probe registry --------------------------------------------------------
@@ -244,10 +245,13 @@ def catalog_sitemap_coverage(datasets: List[dict], has_catalog: bool, web) -> di
     kept because the D0-r2 finding was that one whole section (QuickFacts,
     21.8% of census.gov's universe) is referenced zero times.
 
-    EVIDENCE ONLY. It does not change d1_catalog's score: the rule for scoring
-    coverage is an operator decision (assessment protocol §3) and is registered
-    as an open item. A null fraction means the denominator is zero (no sitemap
-    universe was enumerated), which must read as not measurable, never as 0.0.
+    The FRACTION is evidence only: a fractional threshold is deferred until the
+    January pilot yields an observed distribution (rubric v1.1, open item). The
+    categorical fact -- a section with ZERO catalog references -- is scored by
+    `apply_catalog_coverage_rule` (rule `catalog_zero_coverage` v1, rubric v1.1
+    Decision 1, task 2026-09-02_rubric_amendments_coverage_lastmod). A null
+    fraction means the denominator is zero (no sitemap universe was
+    enumerated), which must read as not measurable, never as 0.0.
     """
     universe_by_section = getattr(web, "universe_by_section", {}) if web else {}
     catalog_urls = catalog_reference_urls(datasets) if has_catalog else set()
@@ -267,8 +271,8 @@ def catalog_sitemap_coverage(datasets: List[dict], has_catalog: bool, web) -> di
     applicable = bool(has_catalog and web is not None and getattr(web, "has_sitemap", False)
                       and denominator > 0)
     return {
-        "evidence_only": True,
-        "scored": False,
+        "fraction_scored": False,
+        "zero_coverage_rule": f"{COVERAGE_RULE_ID}/{COVERAGE_RULE_VERSION}",
         "applicable": applicable,
         "numerator": "sitemap-declared URLs referenced by the catalog as a "
                      "distribution downloadURL/accessURL or a dataset landingPage",
@@ -281,12 +285,54 @@ def catalog_sitemap_coverage(datasets: List[dict], has_catalog: bool, web) -> di
         "sections_with_zero_coverage": sorted(
             s for s, v in per_section.items() if v["sitemap_urls"] and v["in_catalog"] == 0),
         "note": (
-            "Evidence only, never a score. Coverage is measured over the whole "
-            "enumerated sitemap universe, not the probed sample. A null fraction "
-            "means no sitemap universe was enumerated. The scoring rule for coverage "
-            "is an open operator decision (assessment protocol §3)."
+            "Coverage is measured over the whole enumerated sitemap universe, not "
+            "the probed sample. A null fraction means no sitemap universe was "
+            "enumerated. The fraction is not scored (threshold deferred to the "
+            "January pilot, rubric v1.1 open item); a section with zero catalog "
+            "references scores d1_catalog PARTIAL (rule catalog_zero_coverage v1)."
         ),
     }
+
+
+# Rubric v1.1, D1 catalog zero-coverage clause (Decision 1 of task
+# 2026-09-02_rubric_amendments_coverage_lastmod). Versioned like `sitemap_stale`
+# so a re-score can name the rule that produced it.
+COVERAGE_RULE_ID = "catalog_zero_coverage"
+COVERAGE_RULE_VERSION = 1
+
+
+def apply_catalog_coverage_rule(score: Score, evidence: str, coverage: dict):
+    """Categorical coverage rule: a section of the enumerated sitemap universe
+    that the catalog references ZERO times scores d1_catalog PARTIAL, with the
+    section name and its denominator as evidence.
+
+    No threshold is involved -- this is absence, not a fraction -- so the rule
+    needs no config value. It only ever lowers PASS to PARTIAL: a probe verdict
+    of PARTIAL (wrong-shape JSON) or FAIL (no catalog) is left alone, and the
+    rule is not determinable when no sitemap universe was enumerated. Returns
+    `(score, evidence, warning)`; the warning is recorded whether or not it
+    fired so a re-score can see the rule was evaluated.
+    """
+    determinable = bool(coverage.get("applicable"))
+    zero = coverage.get("sections_with_zero_coverage") or []
+    per_section = coverage.get("per_section") or {}
+    sections = [{"section": s, "sitemap_urls": per_section[s]["sitemap_urls"]}
+                for s in zero] if determinable else []
+    fired = determinable and bool(sections)
+    warning = {
+        "rule_id": COVERAGE_RULE_ID,
+        "rule_version": COVERAGE_RULE_VERSION,
+        "fired": fired,
+        "determinable": determinable,
+        "sections_with_zero_coverage": sections,
+    }
+    if fired and score == Score.PASS:
+        detail = "; ".join(f"section {d['section']}: 0 of {d['sitemap_urls']} "
+                           f"sitemap URLs referenced" for d in sections)
+        evidence = (f"{evidence}; catalog covers none of a sitemap section "
+                    f"({detail}; rule {COVERAGE_RULE_ID} v{COVERAGE_RULE_VERSION})")
+        score = Score.PARTIAL
+    return score, evidence, warning
 
 
 def run_agency(agency: dict, fetcher, evidence_store: EvidenceStore, timestamp: str,
@@ -469,10 +515,15 @@ def run_agency(agency: dict, fetcher, evidence_store: EvidenceStore, timestamp: 
         web_enumeration["catalog_coverage"] = coverage
     if held_catalog is not None:
         probe, url, score, ev, obs, evidence_text = held_catalog
-        obs = {**obs, "catalog_sitemap_coverage": coverage}
+        score, ev, warning = apply_catalog_coverage_rule(score, ev, coverage)
+        obs = {**obs, "catalog_sitemap_coverage": coverage,
+               "catalog_coverage_warning": warning}
         evidence_text = (
             f"{evidence_text}\n\nCATALOG COVERAGE OF THE SITEMAP UNIVERSE "
-            f"(observed fact, not scored):\n{json.dumps(coverage, indent=2, default=str)}"
+            f"(fraction observed, not scored; zero-coverage section scored by "
+            f"{COVERAGE_RULE_ID} v{COVERAGE_RULE_VERSION}):\n"
+            f"{json.dumps(coverage, indent=2, default=str)}\n\n"
+            f"ZERO-COVERAGE RULE:\n{json.dumps(warning, indent=2, default=str)}"
         )
         path = evidence_store.write(agency_id, probe.probe_id, url, evidence_text)
         results.append(_record(probe, url, score, ev, timestamp, path,

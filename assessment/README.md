@@ -135,12 +135,16 @@ D0-r2 probe-design defects (`cc_tasks/2026-09-02_probe_depth_d0r2.md`):
   is reported as `sitemap_divergence`. Non-stale condition: newest `lastmod`
   older than `[probes.d1_sitemap] stale_after_days` (default 365) scores
   PARTIAL (`sitemap_lastmod`, `sitemap_stale_warning`). No `lastmod` at all is
-  recorded null and not scored stale (open rubric item).
-- **Catalog coverage of the sitemap universe** (`d1_catalog`, evidence only):
+  recorded null and not scored stale (rubric v1.1, D1 sitemap no-`lastmod`
+  clause: `lastmod` is optional in the protocol; absence is an unscored
+  D4-class observation).
+- **Catalog coverage of the sitemap universe** (`d1_catalog`):
   `catalog_sitemap_coverage`, the fraction of every sitemap-declared URL that
   the catalog references as a distribution or landing page, with numerator,
-  denominator and per-section counts. It never changes the score; the scoring
-  rule is an open operator decision (assessment protocol §3).
+  denominator and per-section counts. The fraction is evidence only (threshold
+  deferred to the January pilot, rubric v1.1 open item). A section with zero
+  catalog references scores PARTIAL (`catalog_coverage_warning`, rule
+  `catalog_zero_coverage` v1, rubric v1.1 Decision 1).
 - **Crawler-access triad** (`d2_no_barriers` record, both surfaces):
   `effective_crawler_access` with `declared` (robots.txt per token,
   `[probes.crawler_access] declared_user_agents`, zero requests),
