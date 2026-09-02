@@ -1,0 +1,24 @@
+[project]
+name = "fss-ai-readiness-harness"
+version = "0.1.0"
+description = "FSS AI Data Readiness — machine probe harness. Test the machine by being the machine."
+requires-python = ">=3.11"
+# Runtime dependencies: NONE by design.
+# The harness uses only the Python standard library (urllib, json, xml, tomllib)
+# so that "anyone with a browser + Python can re-run this" holds without an install
+# step. That reproducibility is the design's source of authority — do not add a
+# runtime dependency that breaks it (CC task 2026-06-23, Stage 3 constraint).
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+
+[project.scripts]
+fss-readiness = "harness.run:main"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-v"
+
+[tool.setuptools.packages.find]
+include = ["harness*"]

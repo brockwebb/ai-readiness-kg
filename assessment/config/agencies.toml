@@ -1,0 +1,42 @@
+# FSS agency catalog roots — the public entry points the enumerator starts from.
+# Per Engineering Standards §2: agency URLs are config, never hardcoded in source.
+#
+# `catalog_url` is the machine-readable catalog (Project Open Data data.json / DCAT)
+# where one is known to exist; `landing_url` is the open-data landing page used as a
+# fallback target. An agency with no machine-readable catalog is itself a D1 finding
+# (the enumerator records it, it does not error out).
+#
+# `sitemap_url` is the RECORDED EXPECTATION for the agency's sitemap index, the
+# entry point for the second enumeration source (the public web surface). It is
+# not what the harness follows: the harness follows whatever the agency's
+# robots.txt declares today and records drift against this value, the discipline
+# ported from census-web-concept-inventory stage 01. It is used directly only
+# when robots.txt declares no Sitemap. Omit it for an agency whose sitemap has
+# not been recorded; robots.txt still supplies one if the site declares it.
+#
+# Start small: a handful of FSS principal statistical agencies. Expand as the target
+# list is validated. These are public, well-known open-data endpoints.
+
+[[agency]]
+id = "census"
+name = "U.S. Census Bureau"
+base_url = "https://www.census.gov"
+catalog_url = "https://www.census.gov/data.json"
+landing_url = "https://www.census.gov/data.html"
+# Recorded from census.gov/robots.txt on 2026-09-01 (census-web-concept-inventory
+# docs/prior-art.md section 1); 14 child sitemaps, 53,943 unique public URLs.
+sitemap_url = "https://www.census.gov/sitemapindex/sitemap.xml"
+
+[[agency]]
+id = "bls"
+name = "Bureau of Labor Statistics"
+base_url = "https://www.bls.gov"
+catalog_url = "https://www.bls.gov/data.json"
+landing_url = "https://www.bls.gov/data/"
+
+[[agency]]
+id = "bea"
+name = "Bureau of Economic Analysis"
+base_url = "https://www.bea.gov"
+catalog_url = "https://www.bea.gov/data.json"
+landing_url = "https://www.bea.gov/data"
