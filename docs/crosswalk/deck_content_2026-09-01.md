@@ -1,8 +1,8 @@
-# Framework Deck — slide content v3
+# Framework Deck — slide content v4
 
-**Date:** 2026-09-01 (v3: orientation-first reframe of slide 5, discovery surfaces on 8, reference implementation on 9, frontier-candidate rule on 13, June work as absorbed prior art on 16 — task `cc_tasks/2026-09-01_assessment_consolidation.md`. v2: added slides 2, 4, 8, 14 — why-now, OV-1, SV-1, knowledge architecture). Desktop-drafted content for the hybrid AI Data Readiness framework deck.
+**Date:** 2026-09-02 (v4: slide 15 floors replaced with measured post-burn counts and the acceptance-sampling sentence corrected — task `cc_tasks/2026-09-02_deck_numbers_post_burn.md`; no other slide changed). 2026-09-01 (v3: orientation-first reframe of slide 5, discovery surfaces on 8, reference implementation on 9, frontier-candidate rule on 13, June work as absorbed prior art on 16 — task `cc_tasks/2026-09-01_assessment_consolidation.md`. v2: added slides 2, 4, 8, 14 — why-now, OV-1, SV-1, knowledge architecture). Desktop-drafted content for the hybrid AI Data Readiness framework deck.
 **Build:** `cc_tasks/2026-09-01_framework_deck_build.md` (python-pptx, plain text, no theme).
-**Numbers:** from `docs/crosswalk/meeting_brief_2026-09-01.md` (floors — burn was in flight at read time). Verify against live graph before any external presentation.
+**Numbers:** measured 2026-09-02 after the v038 burn closed — derivation table in `cc_tasks/2026-09-02_deck_numbers_post_burn_RESULT.md` (live graph, event log, queue, burn state file). Re-run that table before any external presentation.
 **Architecture figures:** slides 4, 8, 14 are text renderings of diagrams; SVG versions exist (2026-09-01 Desktop thread) and can be exported to images for a later polished deck.
 **Editable:** this is a design note, not a tracked artifact. Edit freely; rebuild regenerates the deck.
 
@@ -178,8 +178,8 @@ The crosswalk is the join structure. Nothing floats:
 
 ## Slide 15 — Evidence discipline: the instrument stands on a measured corpus
 
-- Every indicator is citable to primary literature through a knowledge graph: 194 documents admitted with reasons and content hashes; extraction ongoing (31 docs, ~4,800 nodes at last read — a floor, burn in flight).
-- Nothing enters without a verbatim grounding span. Every claim passed a pre-registered faithfulness gate (fabrication 95% upper bound < 0.10) and every batch passed acceptance sampling before entering. Every quality number ships with its interval or its n — the graph practices G1's own discipline.
+- Every indicator is citable to primary literature through a knowledge graph: 194 documents admitted with reasons and content hashes; 35 extracted under the version-pinned v038 profile across 1,198 chunks, putting 10,305 nodes and 11,914 edges into the live graph (18,844 nodes and 22,141 edges across all extraction epochs).
+- Nothing enters without a verbatim grounding span. Every claim passed a pre-registered faithfulness gate (fabrication 95% upper bound < 0.10); pooled over the burn, fabrication is 37 of 1,480 judged facts = 0.025, Wilson 95% [0.018, 0.034]. Of 15 batches judged by sequential acceptance sampling, 14 were accepted and 1 was sampling-inconclusive (33 admitted items, below the 55-fact minimum the plan needs to decide, so it stands under the pre-registered accept-with-flag rule); 0 rejected, 0 quarantined. Every quality number ships with its interval or its n — the graph practices G1's own discipline.
 - The measurement layer finds its own gaps: Group D (openness) names zero evidence documents. License clarity, AI-reuse terms, provenance, inventory completeness — thinnest slice of the corpus AND of the literature. A finding, not a bug: the next acquisition round is targeted by measurement, not intuition.
 
 ---
@@ -214,4 +214,4 @@ Four foundational layers no framework — including this one — has built yet:
 
 ---
 
-*End of content. Slide count: 18. Tone: declarative, no marketing. Numbers carry intervals or are marked as floors. Slides 4, 8, 14 use preformatted text blocks — build task renders them in monospace if the layout survives, otherwise as indented bullets.*
+*End of content. Slide count: 18. Tone: declarative, no marketing. Numbers carry intervals or their n; none are floors. Slides 4, 8, 14 use preformatted text blocks — build task renders them in monospace if the layout survives, otherwise as indented bullets.*

@@ -1,19 +1,20 @@
 # AI-Readiness Knowledge Graph: what it holds, and what it can answer
 
-State as of 2026-09-01T03:00Z. A production extraction run was in progress when these numbers
-were read, so document-level coverage is a floor, not a ceiling. Every number below comes from
-the event log, the spend ledger, or the graph projection.
+State as of 2026-09-01T03:00Z, with the corpus, extraction and quality figures re-measured on
+2026-09-02 after the production extraction run closed (derivations in
+`cc_tasks/2026-09-02_deck_numbers_post_burn_RESULT.md`). Every number below comes from the
+event log, the spend ledger, the burn state file, or the graph projection.
 
 ## What exists
 
 The graph covers the federal AI-readiness gray literature and the adjacent standards it leans
 on. 194 documents are admitted, each with a recorded reason for admission and a content hash. 94
 have been converted to a uniform markdown substrate whose provenance survives conversion, so a
-reader holding only the substrate can say what it derives from and re-verify it. 31 documents
-have been extracted so far under a single version-pinned profile, across 308 chunks, producing
-4,838 nodes and 6,075 edges. The nodes are 2,040 Concepts, 1,476 Claims, 332 Definitions, 243
-Practices, 220 Standards, 173 Instruments, 117 Measures, 116 Platforms, 92 Frameworks and 29
-Tools. Nothing enters the graph without a verbatim grounding span from the source text, and no
+reader holding only the substrate can say what it derives from and re-verify it. 35 documents
+have been extracted under a single version-pinned profile, across 1,198 chunks, placing
+10,305 nodes and 11,914 edges in the live graph. The nodes are 4,211 Concepts, 3,069 Claims,
+708 Definitions, 673 Measures, 645 Practices, 399 Standards, 215 Instruments, 170 Frameworks,
+120 Platforms and 95 Tools. Nothing enters the graph without a verbatim grounding span from the source text, and no
 batch enters without passing an acceptance test described below.
 
 ## Coverage against the operationalization skeleton
@@ -62,9 +63,12 @@ data were seen: a fabrication rate whose 95 percent upper bound must fall below 
 item-level faithfulness rate at or above 0.70. It passed, at a fabrication upper bound of 0.0715
 and item faithfulness of 0.7705, over 160 judged facts drawn from 28 documents. Every production
 batch since is then tested on its own before its content is allowed to stand, using sequential
-acceptance sampling with parameters fixed in advance. Three batches have posted verdicts so far
-and all three were accepted: fabrication upper bounds of 0.077, 0.065 and 0.069 against the 0.10
-line, at 110, 55 and 165 judged facts. A batch that failed would be quarantined out of the graph
+acceptance sampling with parameters fixed in advance. Fifteen batches were judged; fourteen were
+accepted and one was sampling-inconclusive, meaning it yielded 33 admitted items against the
+55-fact minimum the plan needs to reach any decision, so it stands under the pre-registered
+accept-with-flag rule. None was rejected or quarantined. Pooled over the burn, 37 of 1,480
+judged facts were fabrications, a rate of 0.025 with a 95 percent interval of 0.018 to 0.034,
+against the 0.10 line. A batch that failed would be quarantined out of the graph
 automatically rather than reviewed by hand. Separately, a two-layer guard has refused 93
 proposed relations of types that no consumer has yet asked for, at both the admission and the
 projection stage, so the graph does not accumulate relation types nobody has validated. The
