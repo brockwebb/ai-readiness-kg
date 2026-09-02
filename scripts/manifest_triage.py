@@ -61,6 +61,8 @@ TASK = "cc_tasks/2026-08-24_source_triage.md"
 #: a `from ... import` in a test).
 DOC_DIR_NAME = ["triage"]
 SUMMARY_OUT = REPO / "docs" / "research" / "2026-08-24_triage_phase4_manifest_summary.json"
+EPOCH_NOTE = ("2026-08-24 SME source-list triage + SEO/AIO gap harvest; "
+              "rule-based adds per AUTH-2; schema v0.3.3 construct_arm carried")
 MAX_DOC_CHARS = 250000           # AUTH-4 oversize guard, same value the harvest enforced
 
 # candidate_status -> dixie-legal register status (the import status_map is closed:
@@ -73,6 +75,7 @@ REGISTER_STATUS = {
     "oversize_needs_clearance": "needs_source",
     "excluded_by_rule": "excluded",
     "flagged_off_construct": "excluded",
+    "staged_not_admitted": "excluded",      # bytes staged for citation; clause stops admission
 }
 
 
@@ -282,8 +285,7 @@ def run(dry_run: bool, finalize: bool = False) -> int:
         dlog.append("corpus_epoch_declared", {
             "epoch": EPOCH, "member_doc_ids": sorted(members),
             "declared_by": "cc", "task": TASK,
-            "note": "2026-08-24 SME source-list triage + SEO/AIO gap harvest; "
-                    "rule-based adds per AUTH-2; schema v0.3.3 construct_arm carried"})
+            "note": EPOCH_NOTE})
     manifest.rebuild()
 
     # final candidate_register lines (single writer, final statuses; no already_held lines)
@@ -343,10 +345,13 @@ def main() -> int:
     ap.add_argument("--source-id", help="dixie source_id for this run's admissions")
     ap.add_argument("--task", help="task reference stamped on every record")
     ap.add_argument("--summary-out", help="path for the run summary JSON")
+    ap.add_argument("--epoch-note", help="note recorded on the corpus_epoch_declared event")
     a = ap.parse_args()
 
     global FETCH_REGISTER, TRIAGE_DIR, BATCH, EPOCH, SOURCE_INPUT1, SOURCE_GAP, TASK
-    global SUMMARY_OUT
+    global SUMMARY_OUT, EPOCH_NOTE
+    if a.epoch_note:
+        EPOCH_NOTE = a.epoch_note
     if a.register:
         FETCH_REGISTER = Path(a.register).resolve()
     if a.doc_dir:

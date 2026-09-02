@@ -1,0 +1,488 @@
+{
+ "task": "cc_tasks/2026-09-02_g1_eval_prior_art.md",
+ "generated_at_utc": "2026-09-02T21:28:02Z",
+ "families": {
+  "F1_numeric_uncertainty_preservation": [
+   [
+    "numeric uncertainty preservation large language model summarization",
+    "abs:\"uncertainty\" AND abs:\"preserv\" AND (abs:summarization OR abs:paraphrase) AND (abs:LLM OR abs:\"language model\")"
+   ],
+   [
+    "margin of error confidence interval LLM paraphrase restatement",
+    "(abs:\"margin of error\" OR abs:\"confidence interval\") AND (abs:LLM OR abs:\"language model\") AND (abs:summar OR abs:paraphras OR abs:restat OR abs:generat)"
+   ],
+   [
+    "standard error statistical estimate language model summary fidelity",
+    "(abs:\"standard error\" OR abs:\"sampling error\") AND (abs:LLM OR abs:\"large language model\") AND (abs:summar OR abs:report)"
+   ],
+   [
+    "uncertainty interval retrieval-augmented generation numeric answer",
+    "abs:\"retrieval-augmented\" AND (abs:\"confidence interval\" OR abs:\"uncertainty interval\" OR abs:\"margin of error\")"
+   ]
+  ],
+  "F2_quantitative_claim_fidelity": [
+   [
+    "numeric hallucination summarization",
+    "(abs:\"numeric hallucination\" OR abs:\"numerical hallucination\" OR abs:\"quantity hallucination\" OR abs:\"number hallucination\")"
+   ],
+   [
+    "number faithfulness abstractive summarization",
+    "(abs:numer OR abs:quantit OR abs:number) AND abs:faithful AND abs:summarization"
+   ],
+   [
+    "quantitative claim fidelity language model",
+    "(abs:\"numerical claim\" OR abs:\"quantitative claim\" OR abs:\"statistical claim\") AND (abs:LLM OR abs:\"language model\" OR abs:\"fact-check\")"
+   ],
+   [
+    "numerical consistency factual summarization evaluation",
+    "abs:\"factual consistency\" AND abs:summarization AND (abs:numer OR abs:number OR abs:quantit)"
+   ]
+  ],
+  "F3_hedging_epistemic_preservation": [
+   [
+    "hedging preservation summarization language model",
+    "(abs:hedg OR abs:hedges) AND (abs:summar OR abs:generat) AND (abs:LLM OR abs:\"language model\")"
+   ],
+   [
+    "epistemic uncertainty preservation clinical text LLM",
+    "(abs:\"uncertainty preservation\" OR abs:\"preserve uncertainty\" OR abs:\"preserving uncertainty\" OR abs:\"certainty assertion\")"
+   ],
+   [
+    "speculation cue certainty summarization evaluation",
+    "(abs:speculat OR abs:\"epistemic stance\" OR abs:overgeneraliz OR abs:overclaim) AND abs:summar AND (abs:LLM OR abs:\"language model\")"
+   ]
+  ],
+  "F4_uncertainty_communication_statistics": [
+   [
+    "communicating uncertainty statistics margin of error public",
+    "abs:\"communicating uncertainty\" AND (abs:statistic OR abs:\"margin of error\")"
+   ],
+   [
+    "sampling error communication official statistics guidance",
+    "abs:\"official statistics\" AND (abs:uncertainty OR abs:\"sampling error\") AND (abs:communicat OR abs:report OR abs:user)"
+   ],
+   [
+    "communicating statistical uncertainty numeric verbal formats",
+    "abs:uncertainty AND abs:communicat AND (abs:verbal OR abs:numeric OR abs:\"margin of error\") AND abs:public"
+   ]
+  ],
+  "F6_numeric_qualifier_preservation": [
+   [
+    "caveat qualifier preservation LLM summarization decontextualization",
+    "(abs:caveat OR abs:qualifier OR abs:decontextualiz) AND (abs:summar OR abs:compress) AND (abs:LLM OR abs:\"language model\")"
+   ],
+   [
+    "coefficient of variation relative standard error LLM generated text statistics",
+    "(abs:\"coefficient of variation\" OR abs:\"relative standard error\") AND (abs:LLM OR abs:\"language model\" OR abs:chatbot)"
+   ],
+   [
+    "differential privacy noise disclosure LLM answer official statistics",
+    "abs:\"differential privacy\" AND (abs:\"official statistics\" OR abs:census) AND (abs:LLM OR abs:\"language model\" OR abs:chatbot)"
+   ],
+   [
+    "data vintage release date stale statistics LLM answer",
+    "(abs:vintage OR abs:\"as of\" OR abs:stale OR abs:outdated) AND abs:statistic AND (abs:LLM OR abs:\"language model\") AND (abs:answer OR abs:retriev)"
+   ]
+  ],
+  "F5_answer_engines_official_statistics": [
+   [
+    "generative search engine official statistics accuracy audit",
+    "(abs:\"generative search\" OR abs:\"answer engine\" OR abs:\"AI overview\" OR abs:chatbot) AND (abs:\"official statistics\" OR abs:census OR abs:\"statistical agency\")"
+   ],
+   [
+    "AI answer engine citing statistics accuracy margin of error",
+    "(abs:\"generative search\" OR abs:\"answer engine\" OR abs:\"AI assistant\") AND abs:audit AND (abs:accura OR abs:citation)"
+   ],
+   [
+    "LLM chatbot statistical data accuracy evaluation official statistics",
+    "(abs:LLM OR abs:\"language model\") AND abs:\"official statistics\""
+   ]
+  ]
+ },
+ "anchors": {
+  "arxiv_2606_18471": {
+   "arxiv": "2606.18471",
+   "doi": "10.48550/arXiv.2606.18471"
+  },
+  "vanderbles_2019": {
+   "doi": "10.1098/rsos.181870"
+  }
+ },
+ "entries": [
+  {
+   "source": "openalex:title_abstract",
+   "family": "F6_numeric_qualifier_preservation",
+   "query": "caveat qualifier preservation LLM summarization decontextualization",
+   "hit_count": 0,
+   "status": "ok",
+   "top": [],
+   "ts_utc": "2026-09-02T21:27:20Z"
+  },
+  {
+   "source": "arxiv",
+   "family": "F6_numeric_qualifier_preservation",
+   "query": "(abs:caveat OR abs:qualifier OR abs:decontextualiz) AND (abs:summar OR abs:compress) AND (abs:LLM OR abs:\"language model\")",
+   "hit_count": 8,
+   "status": "ok",
+   "top": [
+    {
+     "id": "http://arxiv.org/abs/2606.29251v2",
+     "title": "When Summaries Distort Decisions: Information Fidelity in LLM-Compressed Financial Analysis",
+     "year": "2026",
+     "oa_url": "http://arxiv.org/pdf/2606.29251v2"
+    },
+    {
+     "id": "http://arxiv.org/abs/2303.13988v6",
+     "title": "Machine Psychology",
+     "year": "2023",
+     "oa_url": "http://arxiv.org/pdf/2303.13988v6"
+    },
+    {
+     "id": "http://arxiv.org/abs/2406.15470v2",
+     "title": "Mental Disorder Classification via Temporal Representation of Text",
+     "year": "2024",
+     "oa_url": "http://arxiv.org/pdf/2406.15470v2"
+    },
+    {
+     "id": "http://arxiv.org/abs/2604.23593v1",
+     "title": "When AI reviews science: Can we trust the referee?",
+     "year": "2026",
+     "oa_url": "http://arxiv.org/pdf/2604.23593v1"
+    },
+    {
+     "id": "http://arxiv.org/abs/2608.24569v1",
+     "title": "When \"Must\" Becomes \"Maybe\": Constraint Weakening in LLM Agent Workflows",
+     "year": "2026",
+     "oa_url": "http://arxiv.org/pdf/2608.24569v1"
+    },
+    {
+     "id": "http://arxiv.org/abs/2202.13529v1",
+     "title": "KMIR: A Benchmark for Evaluating Knowledge Memorization, Identification and Reasoning Abilities of Language Models",
+     "year": "2022",
+     "oa_url": "http://arxiv.org/pdf/2202.13529v1"
+    },
+    {
+     "id": "http://arxiv.org/abs/2506.17121v1",
+     "title": "Cache Me If You Can: How Many KVs Do You Need for Effective Long-Context LMs?",
+     "year": "2025",
+     "oa_url": "http://arxiv.org/pdf/2506.17121v1"
+    },
+    {
+     "id": "http://arxiv.org/abs/2603.07365v1",
+     "title": "Scaling Laws in the Tiny Regime: How Small Models Change Their Mistakes",
+     "year": "2026",
+     "oa_url": "http://arxiv.org/pdf/2603.07365v1"
+    }
+   ],
+   "ts_utc": "2026-09-02T21:27:21Z"
+  },
+  {
+   "source": "semantic_scholar",
+   "family": "F6_numeric_qualifier_preservation",
+   "query": "caveat qualifier preservation LLM summarization decontextualization",
+   "hit_count": 1,
+   "status": "ok",
+   "top": [
+    {
+     "id": "f83ab3538202125781e41ebb86c5ef41ed07a08e",
+     "doi": "10.48550/arXiv.2606.29251",
+     "arxiv": "2606.29251",
+     "title": "When Summaries Distort Decisions: Information Fidelity in LLM-Compressed Financial Analysis",
+     "year": 2026,
+     "cited_by": 0,
+     "venue": "arXiv.org",
+     "oa_url": ""
+    }
+   ],
+   "ts_utc": "2026-09-02T21:27:24Z"
+  },
+  {
+   "source": "openalex:title_abstract",
+   "family": "F6_numeric_qualifier_preservation",
+   "query": "coefficient of variation relative standard error LLM generated text statistics",
+   "hit_count": 0,
+   "status": "ok",
+   "top": [],
+   "ts_utc": "2026-09-02T21:27:26Z"
+  },
+  {
+   "source": "arxiv",
+   "family": "F6_numeric_qualifier_preservation",
+   "query": "(abs:\"coefficient of variation\" OR abs:\"relative standard error\") AND (abs:LLM OR abs:\"language model\" OR abs:chatbot)",
+   "hit_count": 20,
+   "status": "ok",
+   "top": [
+    {
+     "id": "http://arxiv.org/abs/2406.13375v3",
+     "title": "ALiiCE: Evaluating Positional Fine-grained Citation Generation",
+     "year": "2024",
+     "oa_url": "http://arxiv.org/pdf/2406.13375v3"
+    },
+    {
+     "id": "http://arxiv.org/abs/2511.08565v3",
+     "title": "Moral Susceptibility and Robustness under Persona Role-Play in Large Language Models",
+     "year": "2025",
+     "oa_url": "http://arxiv.org/pdf/2511.08565v3"
+    },
+    {
+     "id": "http://arxiv.org/abs/2502.10557v2",
+     "title": "Can Large Language Model Agents Balance Energy Systems?",
+     "year": "2025",
+     "oa_url": "http://arxiv.org/pdf/2502.10557v2"
+    },
+    {
+     "id": "http://arxiv.org/abs/2412.20087v1",
+     "title": "On the Validity of Traditional Vulnerability Scoring Systems for Adversarial Attacks against LLMs",
+     "year": "2024",
+     "oa_url": "http://arxiv.org/pdf/2412.20087v1"
+    },
+    {
+     "id": "http://arxiv.org/abs/2608.30295v1",
+     "title": "CateKV: On Sequential Consistency for Long-Context LLM Inference Acceleration",
+     "year": "2026",
+     "oa_url": "http://arxiv.org/pdf/2608.30295v1"
+    },
+    {
+     "id": "http://arxiv.org/abs/2508.08308v1",
+     "title": "First Ask Then Answer: A Framework Design for AI Dialogue Based on Supplementary Questioning with Large Language Models",
+     "year": "2025",
+     "oa_url": "http://arxiv.org/pdf/2508.08308v1"
+    },
+    {
+     "id": "http://arxiv.org/abs/2504.17565v3",
+     "title": "DeepDistill: Enhancing LLM Reasoning Capabilities via Large-Scale Difficulty-Graded Data Training",
+     "year": "2025",
+     "oa_url": "http://arxiv.org/pdf/2504.17565v3"
+    },
+    {
+     "id": "http://arxiv.org/abs/2405.11265v1",
+     "title": "EnviroExam: Benchmarking Environmental Science Knowledge of Large Language Models",
+     "year": "2024",
+     "oa_url": "http://arxiv.org/pdf/2405.11265v1"
+    },
+    {
+     "id": "http://arxiv.org/abs/2512.18256v1",
+     "title": "MSC-180: A Benchmark for Automated Formal Theorem Proving from Mathematical Subject Classification",
+     "year": "2025",
+     "oa_url": "http://arxiv.org/pdf/2512.18256v1"
+    },
+    {
+     "id": "http://arxiv.org/abs/2606.07705v1",
+     "title": "SAW: Stage-Aware Dynamic Weighting for Multi-Objective Reinforcement Learning in Large Language Models",
+     "year": "2026",
+     "oa_url": "http://arxiv.org/pdf/2606.07705v1"
+    },
+    {
+     "id": "http://arxiv.org/abs/2607.23197v1",
+     "title": "Domain-Prior-Regularized Graph Modeling for Anomaly Detection in Cyber-Physical Systems",
+     "year": "2026",
+     "oa_url": "http://arxiv.org/pdf/2607.23197v1"
+    },
+    {
+     "id": "http://arxiv.org/abs/2511.19874v1",
+     "title": "Cross-LLM Generalization of Behavioral Backdoor Detection in AI Agent Supply Chains",
+     "year": "2025",
+     "oa_url": "http://arxiv.org/pdf/2511.19874v1"
+    },
+    {
+     "id": "http://arxiv.org/abs/2607.17653v1",
+     "title": "LFM: Leveraging Foundation Models for Source-Free Universal Domain Adaptation",
+     "year": "2026",
+     "oa_url": "http://arxiv.org/pdf/2607.17653v1"
+    },
+    {
+     "id": "http://arxiv.org/abs/2606.00051v1",
+     "title": "Business Utility of Large Language Models as Exploratory Data Analysis Agents",
+     "year": "2026",
+     "oa_url": "http://arxiv.org/pdf/2606.00051v1"
+    },
+    {
+     "id": "http://arxiv.org/abs/2604.18596v2",
+     "title": "Large language models converge on competitive rationality but diverge on cooperation across providers and generations",
+     "year": "2026",
+     "oa_url": "http://arxiv.org/pdf/2604.18596v2"
+    }
+   ],
+   "ts_utc": "2026-09-02T21:27:34Z"
+  },
+  {
+   "source": "semantic_scholar",
+   "family": "F6_numeric_qualifier_preservation",
+   "query": "coefficient of variation relative standard error LLM generated text statistics",
+   "hit_count": 0,
+   "status": "ok",
+   "top": [],
+   "ts_utc": "2026-09-02T21:27:41Z"
+  },
+  {
+   "source": "openalex:title_abstract",
+   "family": "F6_numeric_qualifier_preservation",
+   "query": "differential privacy noise disclosure LLM answer official statistics",
+   "hit_count": 0,
+   "status": "ok",
+   "top": [],
+   "ts_utc": "2026-09-02T21:27:42Z"
+  },
+  {
+   "source": "arxiv",
+   "family": "F6_numeric_qualifier_preservation",
+   "query": "abs:\"differential privacy\" AND (abs:\"official statistics\" OR abs:census) AND (abs:LLM OR abs:\"language model\" OR abs:chatbot)",
+   "hit_count": 0,
+   "status": "ok",
+   "top": [],
+   "ts_utc": "2026-09-02T21:27:49Z"
+  },
+  {
+   "source": "semantic_scholar",
+   "family": "F6_numeric_qualifier_preservation",
+   "query": "differential privacy noise disclosure LLM answer official statistics",
+   "hit_count": 6,
+   "status": "ok",
+   "top": [
+    {
+     "id": "f05a90f7a308a86fd23af0adfa1df892d142baad",
+     "doi": null,
+     "arxiv": null,
+     "title": "Protecting High-Resolution Poverty Statistics against Disclosure using Differential Privacy",
+     "year": 2023,
+     "cited_by": 0,
+     "venue": "",
+     "oa_url": ""
+    },
+    {
+     "id": "94dac0cf4b21264ef8ee572cdef141e5fb9b8081",
+     "doi": null,
+     "arxiv": "2012.09775",
+     "title": "Differential privacy and noisy confidentiality concepts for European population statistics",
+     "year": 2020,
+     "cited_by": 6,
+     "venue": "arXiv.org",
+     "oa_url": ""
+    },
+    {
+     "id": "121fd8f7723fed8952ae0596eadc3906882932ea",
+     "doi": null,
+     "arxiv": null,
+     "title": "The Potential of Differential Privacy Applied to Detailed Statistical Tables Created Using Microdata from the Japanese Population Census",
+     "year": 2023,
+     "cited_by": 1,
+     "venue": "",
+     "oa_url": ""
+    },
+    {
+     "id": "d6b61d9a799d26c590adce685f5d6a3e81306cc0",
+     "doi": null,
+     "arxiv": "2503.19714",
+     "title": "An Approximate Monte Carlo Simulation Method for Estimating Uncertainty and Constructing Confidence Intervals for 2020 Census Statistics",
+     "year": 2025,
+     "cited_by": 3,
+     "venue": "",
+     "oa_url": ""
+    },
+    {
+     "id": "ed5b2c4aab09d6536b6d8d1d97d9f9d708efe4c2",
+     "doi": "10.2478/popets-2022-0058",
+     "arxiv": "2201.05964",
+     "title": "Visualizing Privacy-Utility Trade-Offs in Differentially Private Data Releases",
+     "year": 2022,
+     "cited_by": 69,
+     "venue": "Proceedings on Privacy Enhancing Technologies",
+     "oa_url": "https://petsymposium.org/popets/2022/popets-2022-0058.pdf"
+    },
+    {
+     "id": "68226f0ae91283d240a9c294b956cda239a56281",
+     "doi": "10.1109/BigData62323.2024.10826053",
+     "arxiv": "2403.05681",
+     "title": "DP-TabICL: In-Context Learning with Differentially Private Tabular Data",
+     "year": 2024,
+     "cited_by": 16,
+     "venue": "BigData Congress [Services Society]",
+     "oa_url": ""
+    }
+   ],
+   "ts_utc": "2026-09-02T21:27:52Z"
+  },
+  {
+   "source": "openalex:title_abstract",
+   "family": "F6_numeric_qualifier_preservation",
+   "query": "data vintage release date stale statistics LLM answer",
+   "hit_count": 0,
+   "status": "ok",
+   "top": [],
+   "ts_utc": "2026-09-02T21:27:54Z"
+  },
+  {
+   "source": "arxiv",
+   "family": "F6_numeric_qualifier_preservation",
+   "query": "(abs:vintage OR abs:\"as of\" OR abs:stale OR abs:outdated) AND abs:statistic AND (abs:LLM OR abs:\"language model\") AND (abs:answer OR abs:retriev)",
+   "hit_count": 9,
+   "status": "ok",
+   "top": [
+    {
+     "id": "http://arxiv.org/abs/2407.15621v3",
+     "title": "RadioRAG: Online Retrieval-augmented Generation for Radiology Question Answering",
+     "year": "2024",
+     "oa_url": "http://arxiv.org/pdf/2407.15621v3"
+    },
+    {
+     "id": "http://arxiv.org/abs/2408.02337v1",
+     "title": "Developing PUGG for Polish: A Modern Approach to KBQA, MRC, and IR Dataset Construction",
+     "year": "2024",
+     "oa_url": "http://arxiv.org/pdf/2408.02337v1"
+    },
+    {
+     "id": "http://arxiv.org/abs/2510.07728v1",
+     "title": "Who Stole Your Data? A Method for Detecting Unauthorized RAG Theft",
+     "year": "2025",
+     "oa_url": "http://arxiv.org/pdf/2510.07728v1"
+    },
+    {
+     "id": "http://arxiv.org/abs/2607.24875v1",
+     "title": "FinAbstain: Uncertainty-Calibrated Multimodal RAG for Selective Financial Forecasting",
+     "year": "2026",
+     "oa_url": "http://arxiv.org/pdf/2607.24875v1"
+    },
+    {
+     "id": "http://arxiv.org/abs/2607.23514v1",
+     "title": "Novel Claim or Déjà Vu? Rethinking \"Contamination-Free'' Dynamic Evaluation for Multimodal Automated Fact-Checking",
+     "year": "2026",
+     "oa_url": "http://arxiv.org/pdf/2607.23514v1"
+    },
+    {
+     "id": "http://arxiv.org/abs/2608.06811v1",
+     "title": "Coupling Planning with Episodic Memory in LLM Agents for Software Issue Resolution",
+     "year": "2026",
+     "oa_url": "http://arxiv.org/pdf/2608.06811v1"
+    },
+    {
+     "id": "http://arxiv.org/abs/2603.09641v1",
+     "title": "PRECEPT: Planning Resilience via Experience, Context Engineering & Probing Trajectories A Unified Framework for Test-Time Adaptation with Compositional Rule Learning and Pareto-Guided Prompt Evolution",
+     "year": "2026",
+     "oa_url": "http://arxiv.org/pdf/2603.09641v1"
+    },
+    {
+     "id": "http://arxiv.org/abs/2606.27472v1",
+     "title": "Supersede: Diagnosing and Training the Memory-Update Gap in LLM Agents",
+     "year": "2026",
+     "oa_url": "http://arxiv.org/pdf/2606.27472v1"
+    },
+    {
+     "id": "http://arxiv.org/abs/2111.01969v1",
+     "title": "PhyloTransformer: A Discriminative Model for Mutation Prediction Based on a Multi-head Self-attention Mechanism",
+     "year": "2021",
+     "oa_url": "http://arxiv.org/pdf/2111.01969v1"
+    }
+   ],
+   "ts_utc": "2026-09-02T21:27:54Z"
+  },
+  {
+   "source": "semantic_scholar",
+   "family": "F6_numeric_qualifier_preservation",
+   "query": "data vintage release date stale statistics LLM answer",
+   "hit_count": 0,
+   "status": "ok",
+   "top": [],
+   "ts_utc": "2026-09-02T21:28:01Z"
+  }
+ ]
+}

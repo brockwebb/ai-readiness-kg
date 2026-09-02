@@ -18,6 +18,8 @@ and routes every entry by its rule verdict:
   operator_drop  -> awaiting_operator_drop (max.gov decks; Phase 2 writes the download list).
   already_held   -> R5 dedupe hit; recorded, never fetched.
   excluded       -> excluded_by_rule with the matched clause.
+  stage_only     -> fetched into staging with provenance, then marked staged_not_admitted
+                    with the clause (a cited-but-not-admitted document; 2026-09-02).
   off_construct  -> flagged_off_construct (R4); recorded, never fetched.
 
 Output: files in corpus/staging/inbox/triage_2026-08-24/ plus the machine-readable
@@ -59,7 +61,7 @@ YT_DLP = "/opt/anaconda3/bin/yt-dlp"
 
 STATUSES = ("fetched", "fetch_failed", "access_blocked", "excluded_by_rule",
             "already_held", "flagged_off_construct", "awaiting_operator_drop",
-            "oversize_needs_clearance")
+            "oversize_needs_clearance", "staged_not_admitted")
 
 
 def _host(url: str | None) -> str:
@@ -258,12 +260,20 @@ def main() -> int:
                     continue
             hk.log(f"{did} [{verdict}]")
 
-            if verdict == "fetch":
+            if verdict in ("fetch", "stage_only"):
                 fx = fx_browser if entry.get("browser_ua") else fx_default
                 rec = hk.fetch_entry(entry, fx, settings, args.dry_run)
                 if entry.get("browser_ua"):
                     rec["user_agent"] = "browser (settings.browser_user_agent)"
                 classify_access_block(rec, entry, settings["paywall_domains"])
+                # stage_only (task 2026-09-02_g1_eval_prior_art §3): the bytes are staged
+                # with full provenance so the memo's citation is reproducible, but the
+                # standing-rule clause on the entry stops admission. manifest_triage never
+                # treats this status as admissible; it registers it as `excluded` with the
+                # clause, which is what "staged-not-admitted" means on the register.
+                if verdict == "stage_only" and rec.get("candidate_status") == "fetched":
+                    rec["candidate_status"] = "staged_not_admitted"
+                    rec["reason"] = f"staged, not admitted: clause {entry['clause']}"
             elif verdict == "youtube":
                 rec = fetch_youtube_transcript(entry, args.dry_run)
             elif verdict in ("no_media", "already_held", "excluded", "off_construct",

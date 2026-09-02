@@ -1,0 +1,583 @@
+# G1 EVAL prior-art acquisition list — task 2026-09-02_g1_eval_prior_art §3.
+#
+# Every document the memo docs/research/2026-09-02_g1_eval_prior_art.md cites is routed
+# through the standing acquisition path (scripts/harvest_triage.py --list ... --inbox ...,
+# then scripts/manifest_triage.py under the AUTH-2 pattern), the 2026-08-24 machinery
+# parameterized exactly as round 2 did it.
+#
+# Verdicts and clauses are the standing rules R1-R5 from cc_tasks/2026-08-24_source_triage.md,
+# applied as round 2 applied them (cc_tasks/2026-08-30_acquisition_round2_RESULT.md §3):
+# admit a work whose primary subject is machine consumption of published content AND that
+# carries a DEFINITION, a SURVEY of the field's constructs, or a MEASUREMENT INSTRUMENT.
+# Works that optimize or attack one technique are method papers and are cut
+# (R1_method_not_construct); evidence that adds no construct beyond a held/admitted
+# definition is cut (R1_no_marginal_contribution); a different construct is cut
+# (R1_out_of_scope). Cuts are terminal absent new evidence; a `manifest_add` reverses one.
+#
+#   fetch       -> admitted by rule (construct_arm, grounding_surface carried)
+#   stage_only  -> fetched into staging with provenance so the citation is reproducible,
+#                  then registered `excluded` with the clause (staged-not-admitted)
+#   excluded    -> not fetched (paywalled evidence-only works; usage surveys)
+#
+# The G1 EVAL tier measures whether a machine consumer's restatement of a published
+# statistic preserves the uncertainty attached to it. That is a fidelity property of
+# machine consumption of published content, so every admit carries
+# construct_arm: publication_actionability.
+
+settings:
+  user_agent: "WintermuteAcceptance/0.1 (research; brockwebb45@gmail.com)"
+  browser_user_agent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36"
+  discovered_via: "g1-eval-prior-art-2026-09-02"
+  discovered_via_gap: "g1-eval-prior-art-2026-09-02"
+  max_doc_chars: 250000
+  min_content_chars: 200
+  timeout_seconds: 60
+  retries: 1
+  spacing_seconds: 1.0
+  crwl_timeout_seconds: 180
+  fit_min_fraction_of_raw: 0.35
+  challenge_markers: ["Just a moment...", "Enable JavaScript and cookies", "Attention Required!", "Access Denied", "verify you are a human"]
+  crwl_filter:
+    type: pruning
+    threshold: 0.45
+    min_word_threshold: 3
+  paywall_domains: [papers.ssrn.com, ssrn.com, onlinelibrary.wiley.com, researchgate.net,
+                    gartner.com, worldscientific.com, sciencedirect.com,
+                    regulations.gov, downloads.regulations.gov, dl.acm.org, ieeexplore.ieee.org]
+  # Candidates come from a logged machine search (OpenAlex / arXiv / Semantic Scholar /
+  # web; docs/research/2026-09-02_g1_eval_prior_art_query_log*.json), not from a human
+  # panel: no vetting provenance is claimed. Every entry marks `gap: true`.
+  vetting_input1:
+    source: machine_search_2026-09-02
+    expertise: none_claimed
+    weight: not_vetting
+
+entries:
+  # =====================================================================================
+  # ADMITS — definitions, taxonomies, instruments the G1 EVAL design will cite.
+  # =====================================================================================
+  - row: 1
+    doc_id: du-2026-possible-or-definite
+    title: "Possible or Definite? A Benchmark for Evaluating Diagnostic Uncertainty Preservation in Clinical Text"
+    authors_or_org: ["Hongbo Du", "Zixin Lu", "Jiaming Qu"]
+    year: "2026"
+    source_type: academic
+    primary_url: https://arxiv.org/abs/2606.18471
+    pdf_url: https://arxiv.org/pdf/2606.18471
+    verdict: fetch
+    clause: R1
+    construct_arm: publication_actionability
+    grounding_surface: document
+    gap: true
+    notes: "The named prior art for uncertainty preservation under AI restatement: 1,200 documents, 9,184 proposition-level annotations on a five-level ordinal scale, indirect assessment via summarization/revision, failure taxonomy (certainty assertion, omission). An instrument with a construct decomposition; the measurement design transfers to numeric uncertainty."
+
+  - row: 2
+    doc_id: van-der-bles-2019-communicating-uncertainty
+    title: "Communicating uncertainty about facts, numbers and science"
+    authors_or_org: ["Anne Marthe van der Bles", "Sander van der Linden", "Alexandra L. J. Freeman", "James Mitchell", "Ana B. Galvao", "Lisa Zaval", "David J. Spiegelhalter"]
+    year: "2019"
+    source_type: academic
+    primary_url: https://doi.org/10.1098/rsos.181870
+    # royalsocietypublishing.org returns 403 to scripted fetches; the article is CC-BY and
+    # Europe PMC holds the publisher PDF (PMC6549952).
+    pdf_url: https://europepmc.org/articles/PMC6549952?pdf=render
+    verdict: fetch
+    clause: R1
+    construct_arm: publication_actionability
+    grounding_surface: document
+    gap: true
+    notes: "The taxonomy of what uncertainty is expressed about (facts, numbers, science), its forms of expression (numeric range, verbal qualifier, visual) and the evidence on reception. This is the definition of what 'preserving numeric uncertainty' means; the G1 preservation levels are drawn from its form-of-expression axis."
+
+  - row: 3
+    doc_id: peters-2025-generalization-bias-llm-summarization
+    title: "Generalization bias in large language model summarization of scientific research"
+    authors_or_org: ["Uwe Peters", "Benjamin Chin-Yee"]
+    year: "2025"
+    source_type: academic
+    primary_url: https://doi.org/10.1098/rsos.241776
+    pdf_url: https://arxiv.org/pdf/2504.00025
+    verdict: fetch
+    clause: R1
+    construct_arm: publication_actionability
+    grounding_surface: document
+    gap: true
+    notes: "4,900 summaries from ten LLMs against their sources: scope-limiting details (quantifiers, qualifiers, tense) dropped so conclusions generalize beyond the source; LLM summaries ~5x more likely than human summaries to overgeneralize (OR 4.85). Defines overgeneralization as a preservation failure class and gives a coding instrument for it — the scope-qualifier analogue of dropping an MOE."
+
+  - row: 4
+    doc_id: manski-2015-communicating-uncertainty-official-economic-statistics
+    title: "Communicating Uncertainty in Official Economic Statistics: An Appraisal Fifty Years after Morgenstern"
+    authors_or_org: ["Charles F. Manski"]
+    year: "2015"
+    source_type: academic
+    primary_url: https://doi.org/10.1257/jel.53.3.631
+    pdf_url: https://www.nber.org/system/files/working_papers/w20098/w20098.pdf
+    verdict: fetch
+    clause: R1
+    construct_arm: publication_actionability
+    grounding_surface: document
+    gap: true
+    notes: "The canonical definitional statement for official statistics: transitory, permanent and conceptual uncertainty in published estimates, and the case that agencies communicate them rather than publish point estimates as if exact. Fixes the classes of uncertainty a G1 probe can ask a machine consumer to preserve. Working-paper copy (NBER w20098) fetched; the JEL version is closed."
+
+  - row: 5
+    doc_id: mazzi-2021-measuring-communicating-uncertainty-official-economic-statistics
+    title: "Measuring and Communicating the Uncertainty in Official Economic Statistics"
+    authors_or_org: ["Gian Luigi Mazzi", "James Mitchell", "Florabela Carausu"]
+    year: "2021"
+    source_type: academic
+    primary_url: https://doi.org/10.2478/jos-2021-0013
+    pdf_url: https://www.sciendo.com/pdf/10.2478/jos-2021-0013
+    verdict: fetch
+    clause: R1
+    construct_arm: publication_actionability
+    grounding_surface: document
+    gap: true
+    notes: "Journal of Official Statistics survey of how NSOs measure and communicate uncertainty (data uncertainty vs sampling uncertainty; revision-based intervals; density forecasts). A survey of the field's constructs on the producer side, complementing Manski's definitional case."
+
+  - row: 6
+    doc_id: zhao-2020-reducing-quantity-hallucinations
+    title: "Reducing Quantity Hallucinations in Abstractive Summarization"
+    authors_or_org: ["Zheng Zhao", "Shay B. Cohen", "Bonnie Webber"]
+    year: "2020"
+    source_type: academic
+    primary_url: https://doi.org/10.18653/v1/2020.findings-emnlp.203
+    pdf_url: https://aclanthology.org/2020.findings-emnlp.203.pdf
+    verdict: fetch
+    clause: R1
+    construct_arm: publication_actionability
+    grounding_surface: document
+    gap: true
+    notes: "Origin of the named construct 'quantity hallucination': quantity entities (dates, numbers, sums) in a summary unsupported by the source. Defines the entity class and the verification unit that later numeric-fidelity work inherits. The Herman re-ranker itself is a method; admitted for the definition."
+
+  - row: 7
+    doc_id: venktesh-2024-quantemp-numerical-claims
+    title: "QuanTemp: A real-world open-domain benchmark for fact-checking numerical claims"
+    authors_or_org: ["Venktesh V", "Abhijit Anand", "Avishek Anand", "Vinay Setty"]
+    year: "2024"
+    source_type: academic
+    primary_url: https://doi.org/10.1145/3626772.3657874
+    pdf_url: https://arxiv.org/pdf/2403.17169
+    verdict: fetch
+    clause: R1
+    construct_arm: publication_actionability
+    grounding_surface: document
+    gap: true
+    notes: "Benchmark of natural numerical claims with a claim taxonomy (temporal, statistical, comparison, interval) and fine-grained veracity labels; the field's instrument for whether a numerical claim is supported. Supplies the claim-type axis a G1 probe family needs (an MOE-bearing estimate is an interval-class claim)."
+
+  - row: 8
+    doc_id: cao-2024-multimodal-long-form-summarization-financial-reports
+    title: "Characterizing Multimodal Long-form Summarization: A Case Study on Financial Reports"
+    authors_or_org: ["Tianyu Cao", "Natraj Raman", "Danial Dervovic", "Chenhao Tan"]
+    year: "2024"
+    source_type: academic
+    primary_url: https://arxiv.org/abs/2404.06162
+    pdf_url: https://arxiv.org/pdf/2404.06162
+    verdict: fetch
+    clause: R1
+    construct_arm: publication_actionability
+    grounding_surface: document
+    gap: true
+    notes: "Offers an explicit taxonomy of numeric hallucination in LLM summaries of number-heavy documents (Claude 2, GPT-4) and a computational framework for characterizing numeric use in summaries. A taxonomy is a construct contribution under R1."
+
+  - row: 9
+    doc_id: lee-2026-when-summaries-distort-decisions
+    title: "When Summaries Distort Decisions: Information Fidelity in LLM-Compressed Financial Analysis"
+    authors_or_org: ["Hoyoung Lee", "Suhwan Park", "Seunghan Lee", "Jun Seo"]
+    year: "2026"
+    source_type: academic
+    primary_url: https://arxiv.org/abs/2606.29251
+    pdf_url: https://arxiv.org/pdf/2606.29251
+    verdict: fetch
+    clause: R1
+    construct_arm: publication_actionability
+    grounding_surface: document
+    gap: true
+    notes: "Defines information fidelity (compression loses fidelity when it changes the decision the source supports) and names 'decontextualization' — evidence retained but separated from the caveats and qualifiers needed to interpret it. That is exactly a point estimate surviving while its MOE does not; the only work found that names the failure class generally."
+
+  - row: 10
+    doc_id: radhakrishnan-2024-knowing-when-to-ask-data-commons
+    title: "Knowing When to Ask - Bridging Large Language Models and Data"
+    authors_or_org: ["Prashanth Radhakrishnan", "Jennifer Chen", "Bo Xu", "Prem Ramaswami", "Google / Data Commons"]
+    year: "2024"
+    source_type: academic
+    primary_url: https://arxiv.org/abs/2409.13741
+    pdf_url: https://arxiv.org/pdf/2409.13741
+    verdict: fetch
+    clause: R1
+    construct_arm: publication_actionability
+    grounding_surface: document
+    gap: true
+    notes: "The DataGemma paper: LLMs answering numerical/statistical questions grounded in Data Commons (UN, CDC, census bureaus) via RIG and RAG, with an evaluation of statistical-fact accuracy. The measured-practice document for machine consumers restating official statistics; the corpus holds the Data Commons docs landing but not the evaluation."
+
+  - row: 11
+    doc_id: zhou-2026-loomsum-table-grounded-faithfulness
+    title: "LOOMSUM: Weaving Quantitative and Narrative Evidence for Faithful Long Text-Table Summarization"
+    authors_or_org: ["Meng Zhou", "Wenhao You", "Wei Yuan"]
+    year: "2026"
+    source_type: academic
+    primary_url: https://arxiv.org/abs/2609.00241
+    pdf_url: https://arxiv.org/pdf/2609.00241
+    verdict: fetch
+    clause: R1
+    construct_arm: publication_actionability
+    grounding_surface: document
+    gap: true
+    notes: "Introduces Table-Grounded Faithfulness, a claim-level metric decomposed into Numeric Grounding, Analysis Support and Relation Consistency — the nearest existing metric to 'is this number attached to the right qualifier'. Admitted for the metric decomposition; the LOOMSUM generator itself is a method."
+
+  - row: 12
+    doc_id: min-2023-factscore
+    title: "FActScore: Fine-grained Atomic Evaluation of Factual Precision in Long Form Text Generation"
+    authors_or_org: ["Sewon Min", "Kalpesh Krishna", "Xinxi Lyu", "Mike Lewis", "Wen-tau Yih", "Pang Wei Koh", "Mohit Iyyer", "Luke Zettlemoyer", "Hannaneh Hajishirzi"]
+    year: "2023"
+    source_type: academic
+    primary_url: https://doi.org/10.18653/v1/2023.emnlp-main.741
+    pdf_url: https://aclanthology.org/2023.emnlp-main.741.pdf
+    verdict: fetch
+    clause: R1
+    construct_arm: publication_actionability
+    grounding_surface: document
+    gap: true
+    notes: "Fixes the atomic-fact unit of analysis that proposition-level preservation benchmarks (Du 2026) and claim-level numeric metrics (LOOMSUM) inherit. Admitted as the unit-of-analysis definition; the other faithfulness metrics (SummaC, QAGS, FEQA, AlignScore, RAGAS, HHEM) are staged as methods and not admitted."
+
+  - row: 13
+    doc_id: ebu-bbc-2025-news-integrity-ai-assistants
+    title: "News Integrity in AI Assistants: An international PSM study"
+    authors_or_org: ["European Broadcasting Union", "BBC"]
+    year: "2025"
+    source_type: practitioner
+    primary_url: https://www.ebu.ch/research/open/report/news-integrity-in-ai-assistants
+    pdf_url: https://www.ebu.ch/files/live/sites/ebu/files/Publications/MIS/open/EBU-MIS-BBC_News_Integrity_in_AI_Assistants_Report_2025.pdf
+    verdict: fetch
+    clause: R1
+    construct_arm: publication_actionability
+    grounding_surface: document
+    gap: true
+    extent_note: "Full report; the instrument (accuracy / sourcing / context / opinion-fact criteria) and the cross-assistant results are the cited sections."
+    notes: "22 public-service media organizations, 18 countries, >3,000 responses from four assistants scored by journalists on accuracy, sourcing, distinguishing opinion from fact, and context: 45% with a significant issue, 31% sourcing problems. The largest audit instrument for machine restatement of published content; no uncertainty criterion, which is the gap the memo records."
+
+  - row: 14
+    doc_id: census-acs-general-handbook-2020
+    title: "Understanding and Using American Community Survey Data: What All Data Users Need to Know"
+    authors_or_org: ["U.S. Census Bureau"]
+    year: "2020"
+    source_type: federal
+    primary_url: https://www.census.gov/programs-surveys/acs/guidance/handbooks/general.html
+    pdf_url: https://www.census.gov/content/dam/Census/library/publications/2020/acs/acs_general_handbook_2020.pdf
+    verdict: fetch
+    clause: R1
+    construct_arm: publication_actionability
+    grounding_surface: document
+    gap: true
+    extent_note: "Full handbook; chapter 3 (MOE at 90% confidence, how to use and combine MOEs) is the cited section."
+    notes: "The Census Bureau's definitional statement of what uncertainty accompanies a published ACS estimate (MOE at the 90 percent level), how users must carry it, and how derived estimates propagate it. The producer-side rule a G1 probe checks for preservation; the corpus holds Census quality standards D3/F1/F2 but not the user-facing MOE guidance."
+
+  - row: 15
+    doc_id: ons-uncertainty-and-how-we-measure-it
+    title: "Uncertainty and how we measure it for our surveys"
+    authors_or_org: ["Office for National Statistics (UK)"]
+    year: "2026"
+    source_type: federal
+    primary_url: https://www.ons.gov.uk/methodology/methodologytopicsandstatisticalconcepts/uncertaintyandhowwemeasureit
+    verdict: fetch
+    clause: R1
+    construct_arm: publication_actionability
+    grounding_surface: document
+    gap: true
+    notes: "ONS methodology page defining sampling error, standard error and confidence intervals as the measures of uncertainty that accompany published survey estimates. The UK producer-side definition, parallel to the ACS handbook; `federal` is the doc_type this corpus already uses for UK government publications."
+
+  - row: 16
+    doc_id: statcan-quality-guidelines-6th-edition
+    title: "Statistics Canada Quality Guidelines, Sixth Edition"
+    authors_or_org: ["Statistics Canada"]
+    year: "2019"
+    source_type: federal
+    primary_url: https://www150.statcan.gc.ca/n1/pub/12-539-x/12-539-x2019001-eng.htm
+    pdf_url: https://www150.statcan.gc.ca/n1/en/pub/12-539-x/12-539-x2019001-eng.pdf
+    verdict: fetch
+    clause: R1
+    construct_arm: publication_actionability
+    grounding_surface: document
+    gap: true
+    extent_note: "Full guidelines; the accuracy/reliability and dissemination sections (coefficient of variation as the published accuracy measure, quality-flag and suppression rules) are the cited sections."
+    notes: "Statistics Canada's quality guidelines: the coefficient of variation as the accuracy measure carried on published estimates, with reliability bands and suppression rules. The third producer-side definition, giving G1 a CV-class qualifier alongside MOE and CI."
+
+  - row: 17
+    doc_id: suleymanli-2025-llms-charts-official-statistics
+    title: "Are LLMs ready to help non-expert users to make charts of official statistics data?"
+    authors_or_org: ["Gadir Suleymanli", "Alexander Rogiers", "Lucas Lageweg", "Jefrey Lijffijt"]
+    year: "2025"
+    source_type: academic
+    primary_url: https://arxiv.org/abs/2510.01197
+    pdf_url: https://arxiv.org/pdf/2510.01197
+    verdict: fetch
+    clause: R1
+    construct_arm: publication_actionability
+    grounding_surface: document
+    gap: true
+    notes: "Structured evaluation of LLMs over Statistics Netherlands open data with a three-dimension framework (data retrieval & pre-processing, code quality, visual representation); finds locating the right table is the dominant failure. An instrument for machine consumption of NSO data, adjacent to G1."
+
+  - row: 18
+    doc_id: unece-2025-genai-official-statistics-chapter
+    title: "Generative AI for Official Statistics: Using, Implementing and Developing (HLG-MOS chapter)"
+    authors_or_org: ["UNECE High-Level Group for the Modernisation of Official Statistics"]
+    year: "2025"
+    source_type: intergovernmental
+    primary_url: "https://unece.org/sites/default/files/2025-03/Gen%20AI%20For%20Official%20Statistics_Using,%20Implementing%20and%20Developing%20Chapter.pdf"
+    pdf_url: "https://unece.org/sites/default/files/2025-03/Gen%20AI%20For%20Official%20Statistics_Using,%20Implementing%20and%20Developing%20Chapter.pdf"
+    verdict: fetch
+    clause: R1
+    construct_arm: publication_actionability
+    grounding_surface: document
+    gap: true
+    extent_note: "Chapter-length HLG-MOS output; the section on GenAI delivering official statistics ('reasonable but incorrect figures') and the StatsChat / IntelliStatCan cases are the cited parts."
+    notes: "HLG-MOS chapter recording NSO experience that GenAI applications 'perform poorly at delivering official statistics: they frequently provide dangerously reasonable but incorrect figures', with the ONS StatsChat and Statistics Canada IntelliStatCan cases. Measured practice from the producers themselves; distinct from the held UNECE AI-readiness working papers."
+
+  # =====================================================================================
+  # STAGED, NOT ADMITTED — cited in the memo's findings table; the clause stops admission.
+  # =====================================================================================
+  - row: 19
+    doc_id: ansari-2026-slop-paradox-radiology-rewriting
+    title: "The Slop Paradox: How Synthetic Standardization Erodes Clinical Uncertainty and Cross-Modal Alignment in AI-Rewritten Radiology Reports"
+    authors_or_org: ["Samar Ansari"]
+    year: "2026"
+    source_type: academic
+    primary_url: https://arxiv.org/abs/2606.17791
+    pdf_url: https://arxiv.org/pdf/2606.17791
+    verdict: stage_only
+    clause: ambiguous_contribution
+    gap: true
+    notes: "Operator review. Measures 'hedging collapse' (43.7% of hedging language lost under EHR summarization of 450 chest X-ray reports) — a named, quantified uncertainty-erosion rate. Cut on the round-2 precedent for one author on one dataset (borysenko-2026); the failure-class name is carried by Du 2026's certainty-assertion mode."
+
+  - row: 20
+    doc_id: van-der-bles-2020-effects-communicating-uncertainty-trust
+    title: "The effects of communicating uncertainty on public trust in facts and numbers"
+    authors_or_org: ["Anne Marthe van der Bles", "Sander van der Linden", "Alexandra L. J. Freeman", "David J. Spiegelhalter"]
+    year: "2020"
+    source_type: academic
+    primary_url: https://doi.org/10.1073/pnas.1913678117
+    # pnas.org returns 403 to scripted fetches; Europe PMC copy (PMC7149229).
+    pdf_url: https://europepmc.org/articles/PMC7149229?pdf=render
+    verdict: stage_only
+    clause: R1_no_marginal_contribution
+    gap: true
+    notes: "Five experiments: numeric ranges barely reduce trust, verbal qualifiers reduce it more. Reception evidence for the forms defined in the 2019 taxonomy; adds no construct beyond it."
+
+  - row: 21
+    doc_id: kerr-2023-communicating-uncertainty-statistics-trust
+    title: "The effects of communicating uncertainty around statistics, on public trust: an international study"
+    authors_or_org: ["John R. Kerr", "Claudia R. Schneider", "Alexandra L. J. Freeman", "Sarah Dryhurst", "David J. Spiegelhalter", "Sander van der Linden"]
+    year: "2023"
+    source_type: academic
+    primary_url: https://doi.org/10.1098/rsos.230604
+    # royalsocietypublishing.org returns 403 to scripted fetches; Europe PMC copy (PMC10663791).
+    pdf_url: https://europepmc.org/articles/PMC10663791?pdf=render
+    verdict: stage_only
+    clause: R1_no_marginal_contribution
+    gap: true
+    notes: "Replication of the 2020 result across countries for uncertainty around statistics specifically. Evidence, not a construct; the taxonomy it tests is the admitted 2019 paper."
+
+  - row: 22
+    doc_id: yang-2025-uncle-uncertainty-expressions
+    title: "UNCLE: Benchmarking Uncertainty Expressions in Long-Form Generation"
+    authors_or_org: ["Ruihan Yang", "Caiqi Zhang", "Zhisong Zhang", "Xinting Huang", "Sen Yang", "Nigel Collier", "Dong Yu", "Deqing Yang"]
+    year: "2025"
+    source_type: academic
+    primary_url: https://arxiv.org/abs/2505.16922
+    pdf_url: https://arxiv.org/pdf/2505.16922
+    verdict: stage_only
+    clause: R1_out_of_scope
+    gap: true
+    notes: "Measures whether a model expresses ITS OWN epistemic uncertainty when it lacks knowledge. A different construct from preserving the SOURCE's stated uncertainty; placed in the memo so the two are not confused."
+
+  - row: 23
+    doc_id: yang-2024-logu-long-form-uncertainty
+    title: "LoGU: Long-form Generation with Uncertainty Expressions"
+    authors_or_org: ["Ruihan Yang", "Caiqi Zhang", "Zhisong Zhang", "Xinting Huang", "Sen Yang", "Dong Yu", "Nigel Collier"]
+    year: "2024"
+    source_type: academic
+    primary_url: https://arxiv.org/abs/2410.14309
+    pdf_url: https://arxiv.org/pdf/2410.14309
+    verdict: stage_only
+    clause: R1_out_of_scope
+    gap: true
+    notes: "Names 'uncertainty suppression' and 'uncertainty misalignment' for a model's own uncertainty in long-form answers. Same out-of-scope construct as UNCLE; the two failure names are useful vocabulary and are recorded in the memo."
+
+  - row: 24
+    doc_id: laban-2022-summac
+    title: "SummaC: Re-Visiting NLI-based Models for Inconsistency Detection in Summarization"
+    authors_or_org: ["Philippe Laban", "Tobias Schnabel", "Paul N. Bennett", "Marti A. Hearst"]
+    year: "2022"
+    source_type: academic
+    primary_url: https://doi.org/10.1162/tacl_a_00453
+    pdf_url: https://arxiv.org/pdf/2111.09525
+    verdict: stage_only
+    clause: R1_method_not_construct
+    gap: true
+    notes: "Sentence-level NLI inconsistency detector. A metric method; the construct (factual consistency of a summary) is not specific to numbers or uncertainty."
+
+  - row: 25
+    doc_id: wang-2020-qags
+    title: "Asking and Answering Questions to Evaluate the Factual Consistency of Summaries"
+    authors_or_org: ["Alex Wang", "Kyunghyun Cho", "Mike Lewis"]
+    year: "2020"
+    source_type: academic
+    primary_url: https://doi.org/10.18653/v1/2020.acl-main.450
+    pdf_url: https://aclanthology.org/2020.acl-main.450.pdf
+    verdict: stage_only
+    clause: R1_method_not_construct
+    gap: true
+    notes: "QA-based consistency metric (QAGS). Method."
+
+  - row: 26
+    doc_id: durmus-2020-feqa
+    title: "FEQA: A Question Answering Evaluation Framework for Faithfulness Assessment in Abstractive Summarization"
+    authors_or_org: ["Esin Durmus", "He He", "Mona Diab"]
+    year: "2020"
+    source_type: academic
+    primary_url: https://doi.org/10.18653/v1/2020.acl-main.454
+    pdf_url: https://aclanthology.org/2020.acl-main.454.pdf
+    verdict: stage_only
+    clause: R1_method_not_construct
+    gap: true
+    notes: "QA-based faithfulness metric. Method."
+
+  - row: 27
+    doc_id: zha-2023-alignscore
+    title: "AlignScore: Evaluating Factual Consistency with a Unified Alignment Function"
+    authors_or_org: ["Yuheng Zha", "Yichi Yang", "Ruichen Li", "Zhiting Hu"]
+    year: "2023"
+    source_type: academic
+    primary_url: https://doi.org/10.18653/v1/2023.acl-long.634
+    pdf_url: https://arxiv.org/pdf/2305.16739
+    verdict: stage_only
+    clause: R1_method_not_construct
+    gap: true
+    notes: "Unified alignment-function consistency metric. Method."
+
+  - row: 28
+    doc_id: es-2024-ragas
+    title: "RAGAs: Automated Evaluation of Retrieval Augmented Generation"
+    authors_or_org: ["Shahul Es", "Jithin James", "Luis Espinosa-Anke", "Steven Schockaert"]
+    year: "2024"
+    source_type: academic
+    primary_url: https://doi.org/10.18653/v1/2024.eacl-demo.16
+    pdf_url: https://arxiv.org/pdf/2309.15217
+    verdict: stage_only
+    clause: R1_method_not_construct
+    gap: true
+    notes: "Reference-free RAG faithfulness / answer relevance / context relevance metrics. Method; its faithfulness score is statement-level and number-blind."
+
+  - row: 29
+    doc_id: vectara-hhem-hallucination-evaluation-model
+    title: "Vectara Hallucination Evaluation Model (HHEM) model card"
+    authors_or_org: ["Vectara"]
+    year: "2024"
+    source_type: industry
+    primary_url: https://huggingface.co/vectara/hallucination_evaluation_model
+    verdict: stage_only
+    clause: R1_method_not_construct
+    gap: true
+    notes: "Cross-encoder hallucination classifier behind the Vectara hallucination leaderboard. Method; binary consistency, no numeric or uncertainty dimension."
+
+  - row: 30
+    doc_id: bao-2025-faithbench
+    title: "FaithBench: A Diverse Hallucination Benchmark for Summarization by Modern LLMs"
+    authors_or_org: ["Forrest Sheng Bao", "Miaoran Li", "Renyi Qu", "Ge Luo", "Erana Wan", "Yujia Tang", "Weisi Fan", "Manveer Singh Tamkin", "Suleyman Olcay Polat", "Ofer Mendelevitch", "Amin Ahmad"]
+    year: "2025"
+    source_type: academic
+    primary_url: https://doi.org/10.18653/v1/2025.naacl-short.38
+    pdf_url: https://arxiv.org/pdf/2410.13210
+    verdict: stage_only
+    clause: R1_no_marginal_contribution
+    gap: true
+    notes: "Human-annotated hallucination benchmark with a benign/questionable/unwanted severity taxonomy over span-level hallucinations. Its numeric cases are a subset; the numeric taxonomy is carried by Cao 2024 and the unit of analysis by FActScore."
+
+  - row: 31
+    doc_id: solatorio-2025-proof-carrying-numbers
+    title: "Proof-Carrying Numbers (PCN): A Protocol for Trustworthy Numeric Answers from LLMs via Claim Verification"
+    authors_or_org: ["Aivin V. Solatorio"]
+    year: "2025"
+    source_type: academic
+    primary_url: https://arxiv.org/abs/2509.06902
+    pdf_url: https://arxiv.org/pdf/2509.06902
+    verdict: stage_only
+    clause: R1_method_not_construct
+    gap: true
+    notes: "Presentation-layer protocol: numeric spans emitted as claim-bound tokens, verified in the renderer under a declared policy (exact, rounding, tolerance-with-qualifiers). Names numeric hallucination and the tolerance-with-qualifier policy class, but is a mechanism; listed so the verification-policy idea is not lost."
+
+  - row: 32
+    doc_id: suzgun-2026-evaluating-commercial-ai-chatbots-news
+    title: "Evaluating Commercial AI Chatbots as News Intermediaries"
+    authors_or_org: ["Mirac Suzgun", "Emily Shen", "Federico Bianchi", "Alexander Spangher", "Dan Jurafsky"]
+    year: "2026"
+    source_type: academic
+    primary_url: https://arxiv.org/abs/2605.22785
+    pdf_url: https://arxiv.org/pdf/2605.22785
+    verdict: stage_only
+    clause: R1_no_marginal_contribution
+    gap: true
+    notes: "2,100 same-day BBC-derived questions to six chatbots over 14 days; free-response accuracy 11-17 points below multiple-choice, >70% of errors retrieval-driven. Audit evidence; its instrument adds nothing beyond the EBU/BBC criteria and the held DeepTRACE."
+
+  - row: 33
+    doc_id: upadhyay-2025-moneyball-sportabset
+    title: "Moneyball with LLMs: Analyzing Tabular Summarization in Sports Narratives"
+    authors_or_org: ["Ritam Upadhyay", "Naman Ahuja", "Rishabh Baral", "Aparna Garimella"]
+    year: "2025"
+    source_type: academic
+    primary_url: https://arxiv.org/abs/2510.18173
+    pdf_url: https://arxiv.org/pdf/2510.18173
+    verdict: stage_only
+    clause: R1_no_marginal_contribution
+    gap: true
+    notes: "Long-context tabular summarization diagnostic (numerical fidelity, hallucination / omission / role confusion). The numeric failure classes are carried by Cao 2024 and LOOMSUM."
+
+  - row: 34
+    doc_id: venktesh-2025-quantemp-plus-plus
+    title: "A Benchmark for Open-Domain Numerical Fact-Checking Enhanced by Claim Decomposition"
+    authors_or_org: ["Venktesh V", "Deepali Prabhu", "Avishek Anand"]
+    year: "2025"
+    source_type: academic
+    primary_url: https://arxiv.org/abs/2510.22055
+    pdf_url: https://arxiv.org/pdf/2510.22055
+    verdict: stage_only
+    clause: R1_no_marginal_contribution
+    gap: true
+    notes: "QuanTemp++: same claim taxonomy with a decomposition-driven evidence corpus. The construct contribution is the admitted QuanTemp's."
+
+  # =====================================================================================
+  # EXCLUDED without fetch — evidence-only works behind paywalls, or usage surveys.
+  # =====================================================================================
+  - row: 35
+    doc_id: bakker-2023-margins-of-error-public-opinion-polls
+    title: "Should we include margins of error in public opinion polls?"
+    authors_or_org: ["(European Journal of Political Research, 2023; doi 10.1111/1475-6765.12633)"]
+    year: "2023"
+    source_type: academic
+    primary_url: https://doi.org/10.1111/1475-6765.12633
+    verdict: excluded
+    clause: R1_no_marginal_contribution
+    gap: true
+    notes: "Survey experiment on reporting MOEs with poll results. Reception evidence within the van der Bles lineage; Wiley paywall (settings.paywall_domains). Not fetched."
+
+  - row: 36
+    doc_id: ieee-2025-numerical-consistency-verification-abstractive-summaries
+    title: "Numerical Consistency Verification and Correction in Abstractive Summaries Using Semantic and Syntactic Features"
+    authors_or_org: ["(ICAICTA 2025; doi 10.1109/icaicta67604.2025.11335110)"]
+    year: "2025"
+    source_type: academic
+    primary_url: https://doi.org/10.1109/icaicta67604.2025.11335110
+    verdict: excluded
+    clause: R1_method_not_construct
+    gap: true
+    notes: "Post-hoc numeric consistency checker for summaries. Method; IEEE Xplore paywall. Not fetched."
+
+  - row: 37
+    doc_id: reuters-institute-2025-generative-ai-and-news-report
+    title: "Generative AI and News Report 2025: How people think about AI's role in journalism and society"
+    authors_or_org: ["Reuters Institute for the Study of Journalism"]
+    year: "2025"
+    source_type: practitioner
+    primary_url: https://reutersinstitute.politics.ox.ac.uk/generative-ai-and-news-report-2025-how-people-think-about-ais-role-journalism-and-society
+    verdict: excluded
+    clause: R1_out_of_scope
+    gap: true
+    notes: "Six-country usage survey (54% saw an AI-generated search answer in the past week). Audience behaviour, not restatement fidelity; surfaced by the family-5 web search and logged. Not fetched."

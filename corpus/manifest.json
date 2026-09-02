@@ -1,11 +1,11 @@
 {
  "manifest_version": 2,
  "project": "ai-readiness-kg",
- "generated_at": "2026-09-01T01:26:49.861285+00:00",
+ "generated_at": "2026-09-02T21:35:41.230442+00:00",
  "generator": "dixie.evidence",
  "note": "PROJECTION — rebuilt from the evidence decisions log; do not hand-edit. The log is truth.",
  "counts_by_decision": {
-  "included": 194,
+  "included": 211,
   "excluded": 50,
   "pending_refetch": 39
  },
@@ -2358,7 +2358,7 @@
       "outcome": "pass"
      }
     ],
-    "checked_at": "2026-09-01T01:26:38.302824+00:00"
+    "checked_at": "2026-09-02T21:35:40.409042+00:00"
    },
    "screening": {
     "decision": "included",
@@ -2432,7 +2432,7 @@
         "outcome": "pass"
        }
       ],
-      "checked_at": "2026-09-01T01:26:38.302824+00:00"
+      "checked_at": "2026-09-02T21:35:40.409042+00:00"
      }
     },
     "added_in": "kernel-v03"
@@ -3937,6 +3937,107 @@
     "added_in": "v1"
    }
   },
+  "cao-2024-multimodal-long-form-summarization-financial-reports": {
+   "doc_id": "cao-2024-multimodal-long-form-summarization-financial-reports",
+   "identity": {
+    "sha256": "bbcf0ef79d228123a31a7490d01494eaceb63f7188d783ac52f0c346e1e980a6",
+    "canonical_path": "corpus/g1eval/cao-2024-multimodal-long-form-summarization-financial-reports.pdf",
+    "title": "Characterizing Multimodal Long-form Summarization: A Case Study on Financial Reports",
+    "authors_or_org": [
+     "Tianyu Cao",
+     "Natraj Raman",
+     "Danial Dervovic",
+     "Chenhao Tan"
+    ],
+    "pub_year": "2024",
+    "doc_type": "academic",
+    "source_url": "https://arxiv.org/abs/2404.06162",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "httpx-pdf",
+    "acquired_at": null,
+    "acquired_by": "scripts/harvest_triage.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed pdf, detected pdf",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "4454495 bytes vs floor 7000",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "17 pages, extractable text present",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-09-02T21:35:40.558274+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: Offers an explicit taxonomy of numeric hallucination in LLM summaries of number-heavy documents (Claude 2, GPT-4) and a computational framework for characterizing numeric use in summaries. A taxonomy is a construct contr",
+    "decided_by": "cc",
+    "decided_at": "2026-09-02T21:35:36.616474+00:00",
+    "history": [],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "g1_eval_prior_art_2026-09-02"
+   ],
+   "extra": {
+    "observed_files": {
+     "corpus/g1eval/cao-2024-multimodal-long-form-summarization-financial-reports.pdf": {
+      "sha256": "bbcf0ef79d228123a31a7490d01494eaceb63f7188d783ac52f0c346e1e980a6",
+      "size": 4454495,
+      "claimed_type": "pdf",
+      "detected_type": "pdf"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/g1eval/cao-2024-multimodal-long-form-summarization-financial-reports.pdf": {
+      "path": "corpus/g1eval/cao-2024-multimodal-long-form-summarization-financial-reports.pdf",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed pdf, detected pdf",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "4454495 bytes vs floor 7000",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "17 pages, extractable text present",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-09-02T21:35:40.558274+00:00"
+     }
+    },
+    "added_in": "g1eval-2026-09-02"
+   }
+  },
   "ccsa-2026-ai-ready-official-statistics": {
    "doc_id": "ccsa-2026-ai-ready-official-statistics",
    "identity": {
@@ -4089,6 +4190,107 @@
     "notes": [
      "R3's own conditional, applied: press page probed 2026-08-26 — no direct report link; the underlying CDO Insights 2026 report sits behind a lead-capture form (not fetchable). 'Exclude if only the press release exists, logged either way.'"
     ]
+   }
+  },
+  "census-acs-general-handbook-2020": {
+   "doc_id": "census-acs-general-handbook-2020",
+   "identity": {
+    "sha256": "d2b7ba1b80826765a12a7be367650315ab7cd4ac8ec02b253c0bb438bbbd40f0",
+    "canonical_path": "corpus/g1eval/census-acs-general-handbook-2020.pdf",
+    "title": "Understanding and Using American Community Survey Data: What All Data Users Need to Know",
+    "authors_or_org": [
+     "U.S. Census Bureau"
+    ],
+    "pub_year": "2020",
+    "doc_type": "federal",
+    "source_url": "https://www.census.gov/programs-surveys/acs/guidance/handbooks/general.html",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "httpx-pdf",
+    "acquired_at": null,
+    "acquired_by": "scripts/harvest_triage.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed pdf, detected pdf",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "7754706 bytes vs floor 7000",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "89 pages, extractable text present",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-09-02T21:35:40.632307+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: The Census Bureau's definitional statement of what uncertainty accompanies a published ACS estimate (MOE at the 90 percent level), how users must carry it, and how derived estimates propagate it. The producer-side rule a",
+    "decided_by": "cc",
+    "decided_at": "2026-09-02T21:35:38.777003+00:00",
+    "history": [],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "g1_eval_prior_art_2026-09-02"
+   ],
+   "extra": {
+    "notes": [
+     "Full handbook; chapter 3 (MOE at 90% confidence, how to use and combine MOEs) is the cited section."
+    ],
+    "observed_files": {
+     "corpus/g1eval/census-acs-general-handbook-2020.pdf": {
+      "sha256": "d2b7ba1b80826765a12a7be367650315ab7cd4ac8ec02b253c0bb438bbbd40f0",
+      "size": 7754706,
+      "claimed_type": "pdf",
+      "detected_type": "pdf"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/g1eval/census-acs-general-handbook-2020.pdf": {
+      "path": "corpus/g1eval/census-acs-general-handbook-2020.pdf",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed pdf, detected pdf",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "7754706 bytes vs floor 7000",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "89 pages, extractable text present",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-09-02T21:35:40.632307+00:00"
+     }
+    },
+    "added_in": "g1eval-2026-09-02"
    }
   },
   "census-api-user-guide": {
@@ -8041,7 +8243,7 @@
       "outcome": "pass"
      }
     ],
-    "checked_at": "2026-09-01T01:25:19.893040+00:00"
+    "checked_at": "2026-09-02T21:35:40.466875+00:00"
    },
    "screening": {
     "decision": "included",
@@ -8135,7 +8337,7 @@
         "outcome": "pass"
        }
       ],
-      "checked_at": "2026-09-01T01:25:19.893040+00:00"
+      "checked_at": "2026-09-02T21:35:40.466875+00:00"
      }
     }
    }
@@ -8493,7 +8695,7 @@
       "outcome": "pass"
      }
     ],
-    "checked_at": "2026-09-01T01:26:49.861285+00:00"
+    "checked_at": "2026-09-02T21:35:40.421728+00:00"
    },
    "screening": {
     "decision": "included",
@@ -8567,7 +8769,7 @@
         "outcome": "pass"
        }
       ],
-      "checked_at": "2026-09-01T01:26:49.861285+00:00"
+      "checked_at": "2026-09-02T21:35:40.421728+00:00"
      }
     },
     "added_in": "kernel-v03"
@@ -8788,6 +8990,106 @@
     "added_in": "triage-2026-08-24"
    }
   },
+  "du-2026-possible-or-definite": {
+   "doc_id": "du-2026-possible-or-definite",
+   "identity": {
+    "sha256": "c33854c1632311020686121923ad6b93e155c77cad1b651d08a8941b9c244d31",
+    "canonical_path": "corpus/g1eval/du-2026-possible-or-definite.pdf",
+    "title": "Possible or Definite? A Benchmark for Evaluating Diagnostic Uncertainty Preservation in Clinical Text",
+    "authors_or_org": [
+     "Hongbo Du",
+     "Zixin Lu",
+     "Jiaming Qu"
+    ],
+    "pub_year": "2026",
+    "doc_type": "academic",
+    "source_url": "https://arxiv.org/abs/2606.18471",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "httpx-pdf",
+    "acquired_at": null,
+    "acquired_by": "scripts/harvest_triage.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed pdf, detected pdf",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "2383805 bytes vs floor 7000",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "22 pages, extractable text present",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-09-02T21:35:40.651224+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: The named prior art for uncertainty preservation under AI restatement: 1,200 documents, 9,184 proposition-level annotations on a five-level ordinal scale, indirect assessment via summarization/revision, failure taxonomy ",
+    "decided_by": "cc",
+    "decided_at": "2026-09-02T21:35:34.119108+00:00",
+    "history": [],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "g1_eval_prior_art_2026-09-02"
+   ],
+   "extra": {
+    "observed_files": {
+     "corpus/g1eval/du-2026-possible-or-definite.pdf": {
+      "sha256": "c33854c1632311020686121923ad6b93e155c77cad1b651d08a8941b9c244d31",
+      "size": 2383805,
+      "claimed_type": "pdf",
+      "detected_type": "pdf"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/g1eval/du-2026-possible-or-definite.pdf": {
+      "path": "corpus/g1eval/du-2026-possible-or-definite.pdf",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed pdf, detected pdf",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "2383805 bytes vs floor 7000",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "22 pages, extractable text present",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-09-02T21:35:40.651224+00:00"
+     }
+    },
+    "added_in": "g1eval-2026-09-02"
+   }
+  },
   "e-fair-db-functional-dependencies-to-discover-data-bias-and": {
    "doc_id": "e-fair-db-functional-dependencies-to-discover-data-bias-and",
    "identity": {
@@ -8835,6 +9137,108 @@
     "notes": [
      "A functional-dependency method for finding bias in a database. Method, not construct; closed access."
     ]
+   }
+  },
+  "ebu-bbc-2025-news-integrity-ai-assistants": {
+   "doc_id": "ebu-bbc-2025-news-integrity-ai-assistants",
+   "identity": {
+    "sha256": "9de4d9aa60641cb8d8cda99f6eadab3c1b44313ec59dcff9db00e77c603a1b8b",
+    "canonical_path": "corpus/g1eval/ebu-bbc-2025-news-integrity-ai-assistants.pdf",
+    "title": "News Integrity in AI Assistants: An international PSM study",
+    "authors_or_org": [
+     "European Broadcasting Union",
+     "BBC"
+    ],
+    "pub_year": "2025",
+    "doc_type": "practitioner",
+    "source_url": "https://www.ebu.ch/research/open/report/news-integrity-in-ai-assistants",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "httpx-pdf",
+    "acquired_at": null,
+    "acquired_by": "scripts/harvest_triage.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed pdf, detected pdf",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "1367229 bytes vs floor 7000",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "69 pages, extractable text present",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-09-02T21:35:40.698324+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: 22 public-service media organizations, 18 countries, >3,000 responses from four assistants scored by journalists on accuracy, sourcing, distinguishing opinion from fact, and context: 45% with a significant issue, 31% sou",
+    "decided_by": "cc",
+    "decided_at": "2026-09-02T21:35:38.410420+00:00",
+    "history": [],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "g1_eval_prior_art_2026-09-02"
+   ],
+   "extra": {
+    "notes": [
+     "Full report; the instrument (accuracy / sourcing / context / opinion-fact criteria) and the cross-assistant results are the cited sections."
+    ],
+    "observed_files": {
+     "corpus/g1eval/ebu-bbc-2025-news-integrity-ai-assistants.pdf": {
+      "sha256": "9de4d9aa60641cb8d8cda99f6eadab3c1b44313ec59dcff9db00e77c603a1b8b",
+      "size": 1367229,
+      "claimed_type": "pdf",
+      "detected_type": "pdf"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/g1eval/ebu-bbc-2025-news-integrity-ai-assistants.pdf": {
+      "path": "corpus/g1eval/ebu-bbc-2025-news-integrity-ai-assistants.pdf",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed pdf, detected pdf",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "1367229 bytes vs floor 7000",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "69 pages, extractable text present",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-09-02T21:35:40.698324+00:00"
+     }
+    },
+    "added_in": "g1eval-2026-09-02"
    }
   },
   "elnaffar-2026-agent-ready-websites": {
@@ -14939,6 +15343,107 @@
     "added_in": "v1"
    }
   },
+  "lee-2026-when-summaries-distort-decisions": {
+   "doc_id": "lee-2026-when-summaries-distort-decisions",
+   "identity": {
+    "sha256": "97de6ed96df4eb0311af628646c61e3c408597de9da7872f3f9c4d2faca05961",
+    "canonical_path": "corpus/g1eval/lee-2026-when-summaries-distort-decisions.pdf",
+    "title": "When Summaries Distort Decisions: Information Fidelity in LLM-Compressed Financial Analysis",
+    "authors_or_org": [
+     "Hoyoung Lee",
+     "Suhwan Park",
+     "Seunghan Lee",
+     "Jun Seo"
+    ],
+    "pub_year": "2026",
+    "doc_type": "academic",
+    "source_url": "https://arxiv.org/abs/2606.29251",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "httpx-pdf",
+    "acquired_at": null,
+    "acquired_by": "scripts/harvest_triage.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed pdf, detected pdf",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "625119 bytes vs floor 7000",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "15 pages, extractable text present",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-09-02T21:35:40.754240+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: Defines information fidelity (compression loses fidelity when it changes the decision the source supports) and names 'decontextualization' — evidence retained but separated from the caveats and qualifiers needed to inter",
+    "decided_by": "cc",
+    "decided_at": "2026-09-02T21:35:36.977657+00:00",
+    "history": [],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "g1_eval_prior_art_2026-09-02"
+   ],
+   "extra": {
+    "observed_files": {
+     "corpus/g1eval/lee-2026-when-summaries-distort-decisions.pdf": {
+      "sha256": "97de6ed96df4eb0311af628646c61e3c408597de9da7872f3f9c4d2faca05961",
+      "size": 625119,
+      "claimed_type": "pdf",
+      "detected_type": "pdf"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/g1eval/lee-2026-when-summaries-distort-decisions.pdf": {
+      "path": "corpus/g1eval/lee-2026-when-summaries-distort-decisions.pdf",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed pdf, detected pdf",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "625119 bytes vs floor 7000",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "15 pages, extractable text present",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-09-02T21:35:40.754240+00:00"
+     }
+    },
+    "added_in": "g1eval-2026-09-02"
+   }
+  },
   "leveraging-microsoft-fabric-lakehouse-as-an-ai-ready-data-pl": {
    "doc_id": "leveraging-microsoft-fabric-lakehouse-as-an-ai-ready-data-pl",
    "identity": {
@@ -16333,6 +16838,104 @@
    ],
    "extra": {}
   },
+  "manski-2015-communicating-uncertainty-official-economic-statistics": {
+   "doc_id": "manski-2015-communicating-uncertainty-official-economic-statistics",
+   "identity": {
+    "sha256": "3ef0ceb9d0dee591124b9297855baee95e44d7bc20fa2a1936ff0b9733069e48",
+    "canonical_path": "corpus/g1eval/manski-2015-communicating-uncertainty-official-economic-statistics.pdf",
+    "title": "Communicating Uncertainty in Official Economic Statistics: An Appraisal Fifty Years after Morgenstern",
+    "authors_or_org": [
+     "Charles F. Manski"
+    ],
+    "pub_year": "2015",
+    "doc_type": "academic",
+    "source_url": "https://doi.org/10.1257/jel.53.3.631",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "httpx-pdf",
+    "acquired_at": null,
+    "acquired_by": "scripts/harvest_triage.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed pdf, detected pdf",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "204483 bytes vs floor 7000",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "24 pages, extractable text present",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-09-02T21:35:40.765322+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: The canonical definitional statement for official statistics: transitory, permanent and conceptual uncertainty in published estimates, and the case that agencies communicate them rather than publish point estimates as if",
+    "decided_by": "cc",
+    "decided_at": "2026-09-02T21:35:35.185841+00:00",
+    "history": [],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "g1_eval_prior_art_2026-09-02"
+   ],
+   "extra": {
+    "observed_files": {
+     "corpus/g1eval/manski-2015-communicating-uncertainty-official-economic-statistics.pdf": {
+      "sha256": "3ef0ceb9d0dee591124b9297855baee95e44d7bc20fa2a1936ff0b9733069e48",
+      "size": 204483,
+      "claimed_type": "pdf",
+      "detected_type": "pdf"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/g1eval/manski-2015-communicating-uncertainty-official-economic-statistics.pdf": {
+      "path": "corpus/g1eval/manski-2015-communicating-uncertainty-official-economic-statistics.pdf",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed pdf, detected pdf",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "204483 bytes vs floor 7000",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "24 pages, extractable text present",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-09-02T21:35:40.765322+00:00"
+     }
+    },
+    "added_in": "g1eval-2026-09-02"
+   }
+  },
   "martinez-2026-geo-critical-survey": {
    "doc_id": "martinez-2026-geo-critical-survey",
    "identity": {
@@ -16440,6 +17043,106 @@
     "notes": [
      "The cluster's terminological survey: 45 studies, Nov 2023-Jul 2026, and it states outright that 'terminology, metrics, and evidence standards remain heterogeneous'. That heterogeneity IS this graph's subject matter for the GEO arm. Highest-value single admit in the cluster."
     ]
+   }
+  },
+  "mazzi-2021-measuring-communicating-uncertainty-official-economic-statistics": {
+   "doc_id": "mazzi-2021-measuring-communicating-uncertainty-official-economic-statistics",
+   "identity": {
+    "sha256": "0ab20542bb71c4c35ba9cbc4414e4fcd79f25c131fe3ca9f879214bb9d5af1f4",
+    "canonical_path": "corpus/g1eval/mazzi-2021-measuring-communicating-uncertainty-official-economic-statistics.pdf",
+    "title": "Measuring and Communicating the Uncertainty in Official Economic Statistics",
+    "authors_or_org": [
+     "Gian Luigi Mazzi",
+     "James Mitchell",
+     "Florabela Carausu"
+    ],
+    "pub_year": "2021",
+    "doc_type": "academic",
+    "source_url": "https://doi.org/10.2478/jos-2021-0013",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "httpx-pdf",
+    "acquired_at": null,
+    "acquired_by": "scripts/harvest_triage.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed pdf, detected pdf",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "747972 bytes vs floor 7000",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "28 pages, extractable text present",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-09-02T21:35:40.779339+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: Journal of Official Statistics survey of how NSOs measure and communicate uncertainty (data uncertainty vs sampling uncertainty; revision-based intervals; density forecasts). A survey of the field's constructs on the pro",
+    "decided_by": "cc",
+    "decided_at": "2026-09-02T21:35:35.537274+00:00",
+    "history": [],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "g1_eval_prior_art_2026-09-02"
+   ],
+   "extra": {
+    "observed_files": {
+     "corpus/g1eval/mazzi-2021-measuring-communicating-uncertainty-official-economic-statistics.pdf": {
+      "sha256": "0ab20542bb71c4c35ba9cbc4414e4fcd79f25c131fe3ca9f879214bb9d5af1f4",
+      "size": 747972,
+      "claimed_type": "pdf",
+      "detected_type": "pdf"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/g1eval/mazzi-2021-measuring-communicating-uncertainty-official-economic-statistics.pdf": {
+      "path": "corpus/g1eval/mazzi-2021-measuring-communicating-uncertainty-official-economic-statistics.pdf",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed pdf, detected pdf",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "747972 bytes vs floor 7000",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "28 pages, extractable text present",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-09-02T21:35:40.779339+00:00"
+     }
+    },
+    "added_in": "g1eval-2026-09-02"
    }
   },
   "mckinsey-state-of-ai-2025": {
@@ -16730,6 +17433,112 @@
       "checked_at": "2026-07-05T08:05:43.822849+00:00"
      }
     }
+   }
+  },
+  "min-2023-factscore": {
+   "doc_id": "min-2023-factscore",
+   "identity": {
+    "sha256": "8486fe22a15aaf3fe2e1d7043d169000600205dde9c601c9fd31c0dd6f7380e9",
+    "canonical_path": "corpus/g1eval/min-2023-factscore.pdf",
+    "title": "FActScore: Fine-grained Atomic Evaluation of Factual Precision in Long Form Text Generation",
+    "authors_or_org": [
+     "Sewon Min",
+     "Kalpesh Krishna",
+     "Xinxi Lyu",
+     "Mike Lewis",
+     "Wen-tau Yih",
+     "Pang Wei Koh",
+     "Mohit Iyyer",
+     "Luke Zettlemoyer",
+     "Hannaneh Hajishirzi"
+    ],
+    "pub_year": "2023",
+    "doc_type": "academic",
+    "source_url": "https://doi.org/10.18653/v1/2023.emnlp-main.741",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "httpx-pdf",
+    "acquired_at": null,
+    "acquired_by": "scripts/harvest_triage.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed pdf, detected pdf",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "2409424 bytes vs floor 7000",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "25 pages, extractable text present",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-09-02T21:35:40.832846+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: Fixes the atomic-fact unit of analysis that proposition-level preservation benchmarks (Du 2026) and claim-level numeric metrics (LOOMSUM) inherit. Admitted as the unit-of-analysis definition; the other faithfulness metri",
+    "decided_by": "cc",
+    "decided_at": "2026-09-02T21:35:38.053173+00:00",
+    "history": [],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "g1_eval_prior_art_2026-09-02"
+   ],
+   "extra": {
+    "observed_files": {
+     "corpus/g1eval/min-2023-factscore.pdf": {
+      "sha256": "8486fe22a15aaf3fe2e1d7043d169000600205dde9c601c9fd31c0dd6f7380e9",
+      "size": 2409424,
+      "claimed_type": "pdf",
+      "detected_type": "pdf"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/g1eval/min-2023-factscore.pdf": {
+      "path": "corpus/g1eval/min-2023-factscore.pdf",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed pdf, detected pdf",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "2409424 bytes vs floor 7000",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "25 pages, extractable text present",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-09-02T21:35:40.832846+00:00"
+     }
+    },
+    "added_in": "g1eval-2026-09-02"
    }
   },
   "miroyan-2025-search-arena": {
@@ -18159,7 +18968,7 @@
       "outcome": "pass"
      }
     ],
-    "checked_at": "2026-09-01T01:25:14.061763+00:00"
+    "checked_at": "2026-09-02T21:35:40.467569+00:00"
    },
    "screening": {
     "decision": "included",
@@ -18253,7 +19062,7 @@
         "outcome": "pass"
        }
       ],
-      "checked_at": "2026-09-01T01:25:14.061763+00:00"
+      "checked_at": "2026-09-02T21:35:40.467569+00:00"
      }
     }
    }
@@ -18585,6 +19394,104 @@
      }
     },
     "added_in": "kernel-v03"
+   }
+  },
+  "ons-uncertainty-and-how-we-measure-it": {
+   "doc_id": "ons-uncertainty-and-how-we-measure-it",
+   "identity": {
+    "sha256": "4ed2f5659e1ed4bb5f05341ab31a9aa3680047395ced9ad17d306f2d07be4740",
+    "canonical_path": "corpus/g1eval/ons-uncertainty-and-how-we-measure-it.md",
+    "title": "Uncertainty and how we measure it for our surveys",
+    "authors_or_org": [
+     "Office for National Statistics (UK)"
+    ],
+    "pub_year": "2026",
+    "doc_type": "federal",
+    "source_url": "https://www.ons.gov.uk/methodology/methodologytopicsandstatisticalconcepts/uncertaintyandhowwemeasureit",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "crwl",
+    "acquired_at": null,
+    "acquired_by": "scripts/harvest_triage.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed markdown, detected text",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "18745 bytes vs floor 256",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "18698 chars",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-09-02T21:35:40.833429+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: ONS methodology page defining sampling error, standard error and confidence intervals as the measures of uncertainty that accompany published survey estimates. The UK producer-side definition, parallel to the ACS handboo",
+    "decided_by": "cc",
+    "decided_at": "2026-09-02T21:35:39.140447+00:00",
+    "history": [],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "g1_eval_prior_art_2026-09-02"
+   ],
+   "extra": {
+    "observed_files": {
+     "corpus/g1eval/ons-uncertainty-and-how-we-measure-it.md": {
+      "sha256": "4ed2f5659e1ed4bb5f05341ab31a9aa3680047395ced9ad17d306f2d07be4740",
+      "size": 18745,
+      "claimed_type": "markdown",
+      "detected_type": "text"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/g1eval/ons-uncertainty-and-how-we-measure-it.md": {
+      "path": "corpus/g1eval/ons-uncertainty-and-how-we-measure-it.md",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed markdown, detected text",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "18745 bytes vs floor 256",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "18698 chars",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-09-02T21:35:40.833429+00:00"
+     }
+    },
+    "added_in": "g1eval-2026-09-02"
    }
   },
   "openai-crawlers-bots": {
@@ -19160,6 +20067,105 @@
     "added_in": "kernel-v03"
    }
   },
+  "peters-2025-generalization-bias-llm-summarization": {
+   "doc_id": "peters-2025-generalization-bias-llm-summarization",
+   "identity": {
+    "sha256": "d265acc80bb98ade203c2b9aba46e9a4149e665a9497ed09e8953a9ee1629c05",
+    "canonical_path": "corpus/g1eval/peters-2025-generalization-bias-llm-summarization.pdf",
+    "title": "Generalization bias in large language model summarization of scientific research",
+    "authors_or_org": [
+     "Uwe Peters",
+     "Benjamin Chin-Yee"
+    ],
+    "pub_year": "2025",
+    "doc_type": "academic",
+    "source_url": "https://doi.org/10.1098/rsos.241776",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "httpx-pdf",
+    "acquired_at": null,
+    "acquired_by": "scripts/harvest_triage.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed pdf, detected pdf",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "1139107 bytes vs floor 7000",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "26 pages, extractable text present",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-09-02T21:35:40.859201+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: 4,900 summaries from ten LLMs against their sources: scope-limiting details (quantifiers, qualifiers, tense) dropped so conclusions generalize beyond the source; LLM summaries ~5x more likely than human summaries to over",
+    "decided_by": "cc",
+    "decided_at": "2026-09-02T21:35:34.833295+00:00",
+    "history": [],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "g1_eval_prior_art_2026-09-02"
+   ],
+   "extra": {
+    "observed_files": {
+     "corpus/g1eval/peters-2025-generalization-bias-llm-summarization.pdf": {
+      "sha256": "d265acc80bb98ade203c2b9aba46e9a4149e665a9497ed09e8953a9ee1629c05",
+      "size": 1139107,
+      "claimed_type": "pdf",
+      "detected_type": "pdf"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/g1eval/peters-2025-generalization-bias-llm-summarization.pdf": {
+      "path": "corpus/g1eval/peters-2025-generalization-bias-llm-summarization.pdf",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed pdf, detected pdf",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "1139107 bytes vs floor 7000",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "26 pages, extractable text present",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-09-02T21:35:40.859201+00:00"
+     }
+    },
+    "added_in": "g1eval-2026-09-02"
+   }
+  },
   "pl-115-336-21st-century-idea-act": {
    "doc_id": "pl-115-336-21st-century-idea-act",
    "identity": {
@@ -19622,6 +20628,108 @@
      }
     },
     "added_in": "kernel-v03"
+   }
+  },
+  "radhakrishnan-2024-knowing-when-to-ask-data-commons": {
+   "doc_id": "radhakrishnan-2024-knowing-when-to-ask-data-commons",
+   "identity": {
+    "sha256": "faf4a4afd242542c0ee9d25d32cc896bf23c3c75b886f0f179a14581baa6649d",
+    "canonical_path": "corpus/g1eval/radhakrishnan-2024-knowing-when-to-ask-data-commons.pdf",
+    "title": "Knowing When to Ask - Bridging Large Language Models and Data",
+    "authors_or_org": [
+     "Prashanth Radhakrishnan",
+     "Jennifer Chen",
+     "Bo Xu",
+     "Prem Ramaswami",
+     "Google / Data Commons"
+    ],
+    "pub_year": "2024",
+    "doc_type": "academic",
+    "source_url": "https://arxiv.org/abs/2409.13741",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "httpx-pdf",
+    "acquired_at": null,
+    "acquired_by": "scripts/harvest_triage.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed pdf, detected pdf",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "2494433 bytes vs floor 7000",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "39 pages, extractable text present",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-09-02T21:35:40.890912+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: The DataGemma paper: LLMs answering numerical/statistical questions grounded in Data Commons (UN, CDC, census bureaus) via RIG and RAG, with an evaluation of statistical-fact accuracy. The measured-practice document for ",
+    "decided_by": "cc",
+    "decided_at": "2026-09-02T21:35:37.337060+00:00",
+    "history": [],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "g1_eval_prior_art_2026-09-02"
+   ],
+   "extra": {
+    "observed_files": {
+     "corpus/g1eval/radhakrishnan-2024-knowing-when-to-ask-data-commons.pdf": {
+      "sha256": "faf4a4afd242542c0ee9d25d32cc896bf23c3c75b886f0f179a14581baa6649d",
+      "size": 2494433,
+      "claimed_type": "pdf",
+      "detected_type": "pdf"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/g1eval/radhakrishnan-2024-knowing-when-to-ask-data-commons.pdf": {
+      "path": "corpus/g1eval/radhakrishnan-2024-knowing-when-to-ask-data-commons.pdf",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed pdf, detected pdf",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "2494433 bytes vs floor 7000",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "39 pages, extractable text present",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-09-02T21:35:40.890912+00:00"
+     }
+    },
+    "added_in": "g1eval-2026-09-02"
    }
   },
   "redi-2026-automated-data-readiness": {
@@ -22020,7 +23128,7 @@
       "outcome": "pass"
      }
     ],
-    "checked_at": "2026-09-01T01:25:16.085760+00:00"
+    "checked_at": "2026-09-02T21:35:40.468561+00:00"
    },
    "screening": {
     "decision": "included",
@@ -22114,7 +23222,7 @@
         "outcome": "pass"
        }
       ],
-      "checked_at": "2026-09-01T01:25:16.085760+00:00"
+      "checked_at": "2026-09-02T21:35:40.468561+00:00"
      }
     }
    }
@@ -22226,6 +23334,107 @@
      }
     },
     "added_in": "kernel-v03"
+   }
+  },
+  "statcan-quality-guidelines-6th-edition": {
+   "doc_id": "statcan-quality-guidelines-6th-edition",
+   "identity": {
+    "sha256": "7eba91525e0860baba37c8b13d4d6d10f64cee8c51e6aeed6cedc2c847f204a0",
+    "canonical_path": "corpus/g1eval/statcan-quality-guidelines-6th-edition.pdf",
+    "title": "Statistics Canada Quality Guidelines, Sixth Edition",
+    "authors_or_org": [
+     "Statistics Canada"
+    ],
+    "pub_year": "2019",
+    "doc_type": "federal",
+    "source_url": "https://www150.statcan.gc.ca/n1/pub/12-539-x/12-539-x2019001-eng.htm",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "httpx-pdf",
+    "acquired_at": null,
+    "acquired_by": "scripts/harvest_triage.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed pdf, detected pdf",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "898049 bytes vs floor 7000",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "49 pages, extractable text present",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-09-02T21:35:40.910273+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: Statistics Canada's quality guidelines: the coefficient of variation as the accuracy measure carried on published estimates, with reliability bands and suppression rules. The third producer-side definition, giving G1 a C",
+    "decided_by": "cc",
+    "decided_at": "2026-09-02T21:35:39.581427+00:00",
+    "history": [],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "g1_eval_prior_art_2026-09-02"
+   ],
+   "extra": {
+    "notes": [
+     "Full guidelines; the accuracy/reliability and dissemination sections (coefficient of variation as the published accuracy measure, quality-flag and suppression rules) are the cited sections."
+    ],
+    "observed_files": {
+     "corpus/g1eval/statcan-quality-guidelines-6th-edition.pdf": {
+      "sha256": "7eba91525e0860baba37c8b13d4d6d10f64cee8c51e6aeed6cedc2c847f204a0",
+      "size": 898049,
+      "claimed_type": "pdf",
+      "detected_type": "pdf"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/g1eval/statcan-quality-guidelines-6th-edition.pdf": {
+      "path": "corpus/g1eval/statcan-quality-guidelines-6th-edition.pdf",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed pdf, detected pdf",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "898049 bytes vs floor 7000",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "49 pages, extractable text present",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-09-02T21:35:40.910273+00:00"
+     }
+    },
+    "added_in": "g1eval-2026-09-02"
    }
   },
   "statistical-policy-working-paper-46-data-quality-assessment": {
@@ -22382,6 +23591,107 @@
     "notes": [
      "GEO-SFE is an optimization method for improving one's own citation rate. The graph's target is what AI-readiness IS and how it is measured, not the toolbox for raising a score."
     ]
+   }
+  },
+  "suleymanli-2025-llms-charts-official-statistics": {
+   "doc_id": "suleymanli-2025-llms-charts-official-statistics",
+   "identity": {
+    "sha256": "2a1fc734d9f6cd143ef549c19badc355014f1abec6db4546b90742efa70cec61",
+    "canonical_path": "corpus/g1eval/suleymanli-2025-llms-charts-official-statistics.pdf",
+    "title": "Are LLMs ready to help non-expert users to make charts of official statistics data?",
+    "authors_or_org": [
+     "Gadir Suleymanli",
+     "Alexander Rogiers",
+     "Lucas Lageweg",
+     "Jefrey Lijffijt"
+    ],
+    "pub_year": "2025",
+    "doc_type": "academic",
+    "source_url": "https://arxiv.org/abs/2510.01197",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "httpx-pdf",
+    "acquired_at": null,
+    "acquired_by": "scripts/harvest_triage.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed pdf, detected pdf",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "3649571 bytes vs floor 7000",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "10 pages, extractable text present",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-09-02T21:35:40.925507+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: Structured evaluation of LLMs over Statistics Netherlands open data with a three-dimension framework (data retrieval & pre-processing, code quality, visual representation); finds locating the right table is the dominant ",
+    "decided_by": "cc",
+    "decided_at": "2026-09-02T21:35:39.933256+00:00",
+    "history": [],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "g1_eval_prior_art_2026-09-02"
+   ],
+   "extra": {
+    "observed_files": {
+     "corpus/g1eval/suleymanli-2025-llms-charts-official-statistics.pdf": {
+      "sha256": "2a1fc734d9f6cd143ef549c19badc355014f1abec6db4546b90742efa70cec61",
+      "size": 3649571,
+      "claimed_type": "pdf",
+      "detected_type": "pdf"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/g1eval/suleymanli-2025-llms-charts-official-statistics.pdf": {
+      "path": "corpus/g1eval/suleymanli-2025-llms-charts-official-statistics.pdf",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed pdf, detected pdf",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "3649571 bytes vs floor 7000",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "10 pages, extractable text present",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-09-02T21:35:40.925507+00:00"
+     }
+    },
+    "added_in": "g1eval-2026-09-02"
    }
   },
   "technology-readiness-and-the-organizational-journey-towards": {
@@ -24661,6 +25971,110 @@
     "added_in": "triage-2026-08-24"
    }
   },
+  "van-der-bles-2019-communicating-uncertainty": {
+   "doc_id": "van-der-bles-2019-communicating-uncertainty",
+   "identity": {
+    "sha256": "881316b3eecfe912efc9db51d32f06bfda8cf46544c755c055ddd15c9c62ba84",
+    "canonical_path": "corpus/g1eval/van-der-bles-2019-communicating-uncertainty.pdf",
+    "title": "Communicating uncertainty about facts, numbers and science",
+    "authors_or_org": [
+     "Anne Marthe van der Bles",
+     "Sander van der Linden",
+     "Alexandra L. J. Freeman",
+     "James Mitchell",
+     "Ana B. Galvao",
+     "Lisa Zaval",
+     "David J. Spiegelhalter"
+    ],
+    "pub_year": "2019",
+    "doc_type": "academic",
+    "source_url": "https://doi.org/10.1098/rsos.181870",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "httpx-pdf",
+    "acquired_at": null,
+    "acquired_by": "scripts/harvest_triage.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed pdf, detected pdf",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "1505902 bytes vs floor 7000",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "42 pages, extractable text present",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-09-02T21:35:40.953281+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: The taxonomy of what uncertainty is expressed about (facts, numbers, science), its forms of expression (numeric range, verbal qualifier, visual) and the evidence on reception. This is the definition of what 'preserving n",
+    "decided_by": "cc",
+    "decided_at": "2026-09-02T21:35:34.478897+00:00",
+    "history": [],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "g1_eval_prior_art_2026-09-02"
+   ],
+   "extra": {
+    "observed_files": {
+     "corpus/g1eval/van-der-bles-2019-communicating-uncertainty.pdf": {
+      "sha256": "881316b3eecfe912efc9db51d32f06bfda8cf46544c755c055ddd15c9c62ba84",
+      "size": 1505902,
+      "claimed_type": "pdf",
+      "detected_type": "pdf"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/g1eval/van-der-bles-2019-communicating-uncertainty.pdf": {
+      "path": "corpus/g1eval/van-der-bles-2019-communicating-uncertainty.pdf",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed pdf, detected pdf",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "1505902 bytes vs floor 7000",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "42 pages, extractable text present",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-09-02T21:35:40.953281+00:00"
+     }
+    },
+    "added_in": "g1eval-2026-09-02"
+   }
+  },
   "venkit-2025-deeptrace": {
    "doc_id": "venkit-2025-deeptrace",
    "identity": {
@@ -24771,6 +26185,107 @@
      }
     },
     "added_in": "kernel-v03"
+   }
+  },
+  "venktesh-2024-quantemp-numerical-claims": {
+   "doc_id": "venktesh-2024-quantemp-numerical-claims",
+   "identity": {
+    "sha256": "e927552b70e20260b26dc9eb1ff4a758e105ca3b3ce931334553f6113d23d37a",
+    "canonical_path": "corpus/g1eval/venktesh-2024-quantemp-numerical-claims.pdf",
+    "title": "QuanTemp: A real-world open-domain benchmark for fact-checking numerical claims",
+    "authors_or_org": [
+     "Venktesh V",
+     "Abhijit Anand",
+     "Avishek Anand",
+     "Vinay Setty"
+    ],
+    "pub_year": "2024",
+    "doc_type": "academic",
+    "source_url": "https://doi.org/10.1145/3626772.3657874",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "httpx-pdf",
+    "acquired_at": null,
+    "acquired_by": "scripts/harvest_triage.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed pdf, detected pdf",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "1066892 bytes vs floor 7000",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "11 pages, extractable text present",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-09-02T21:35:40.977808+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: Benchmark of natural numerical claims with a claim taxonomy (temporal, statistical, comparison, interval) and fine-grained veracity labels; the field's instrument for whether a numerical claim is supported. Supplies the ",
+    "decided_by": "cc",
+    "decided_at": "2026-09-02T21:35:36.254238+00:00",
+    "history": [],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "g1_eval_prior_art_2026-09-02"
+   ],
+   "extra": {
+    "observed_files": {
+     "corpus/g1eval/venktesh-2024-quantemp-numerical-claims.pdf": {
+      "sha256": "e927552b70e20260b26dc9eb1ff4a758e105ca3b3ce931334553f6113d23d37a",
+      "size": 1066892,
+      "claimed_type": "pdf",
+      "detected_type": "pdf"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/g1eval/venktesh-2024-quantemp-numerical-claims.pdf": {
+      "path": "corpus/g1eval/venktesh-2024-quantemp-numerical-claims.pdf",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed pdf, detected pdf",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "1066892 bytes vs floor 7000",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "11 pages, extractable text present",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-09-02T21:35:40.977808+00:00"
+     }
+    },
+    "added_in": "g1eval-2026-09-02"
    }
   },
   "volpini-2026-structured-linked-data-memory-layer": {
@@ -27157,6 +28672,206 @@
     "notes": [
      "Two-stage measurement framework (citation selection vs citation absorption) over 21,143 citations across ChatGPT / AI Overview / Perplexity. An instrument with a construct decomposition, which is what the crosswalk consumes."
     ]
+   }
+  },
+  "zhao-2020-reducing-quantity-hallucinations": {
+   "doc_id": "zhao-2020-reducing-quantity-hallucinations",
+   "identity": {
+    "sha256": "62f5c5d1c7da3f6e74178319517e0ed159cccd3243017921103e52cbac0653c4",
+    "canonical_path": "corpus/g1eval/zhao-2020-reducing-quantity-hallucinations.pdf",
+    "title": "Reducing Quantity Hallucinations in Abstractive Summarization",
+    "authors_or_org": [
+     "Zheng Zhao",
+     "Shay B. Cohen",
+     "Bonnie Webber"
+    ],
+    "pub_year": "2020",
+    "doc_type": "academic",
+    "source_url": "https://doi.org/10.18653/v1/2020.findings-emnlp.203",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "httpx-pdf",
+    "acquired_at": null,
+    "acquired_by": "scripts/harvest_triage.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed pdf, detected pdf",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "414388 bytes vs floor 7000",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "13 pages, extractable text present",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-09-02T21:35:40.995397+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: Origin of the named construct 'quantity hallucination': quantity entities (dates, numbers, sums) in a summary unsupported by the source. Defines the entity class and the verification unit that later numeric-fidelity work",
+    "decided_by": "cc",
+    "decided_at": "2026-09-02T21:35:35.890160+00:00",
+    "history": [],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "g1_eval_prior_art_2026-09-02"
+   ],
+   "extra": {
+    "observed_files": {
+     "corpus/g1eval/zhao-2020-reducing-quantity-hallucinations.pdf": {
+      "sha256": "62f5c5d1c7da3f6e74178319517e0ed159cccd3243017921103e52cbac0653c4",
+      "size": 414388,
+      "claimed_type": "pdf",
+      "detected_type": "pdf"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/g1eval/zhao-2020-reducing-quantity-hallucinations.pdf": {
+      "path": "corpus/g1eval/zhao-2020-reducing-quantity-hallucinations.pdf",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed pdf, detected pdf",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "414388 bytes vs floor 7000",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "13 pages, extractable text present",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-09-02T21:35:40.995397+00:00"
+     }
+    },
+    "added_in": "g1eval-2026-09-02"
+   }
+  },
+  "zhou-2026-loomsum-table-grounded-faithfulness": {
+   "doc_id": "zhou-2026-loomsum-table-grounded-faithfulness",
+   "identity": {
+    "sha256": "d8c0055e63b69dda11cb9523d61ff5fb0be563dc6142055ac5be8853fdfe3074",
+    "canonical_path": "corpus/g1eval/zhou-2026-loomsum-table-grounded-faithfulness.pdf",
+    "title": "LOOMSUM: Weaving Quantitative and Narrative Evidence for Faithful Long Text-Table Summarization",
+    "authors_or_org": [
+     "Meng Zhou",
+     "Wenhao You",
+     "Wei Yuan"
+    ],
+    "pub_year": "2026",
+    "doc_type": "academic",
+    "source_url": "https://arxiv.org/abs/2609.00241",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "httpx-pdf",
+    "acquired_at": null,
+    "acquired_by": "scripts/harvest_triage.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed pdf, detected pdf",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "852648 bytes vs floor 7000",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "19 pages, extractable text present",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-09-02T21:35:41.018460+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: Introduces Table-Grounded Faithfulness, a claim-level metric decomposed into Numeric Grounding, Analysis Support and Relation Consistency — the nearest existing metric to 'is this number attached to the right qualifier'.",
+    "decided_by": "cc",
+    "decided_at": "2026-09-02T21:35:37.689677+00:00",
+    "history": [],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "g1_eval_prior_art_2026-09-02"
+   ],
+   "extra": {
+    "observed_files": {
+     "corpus/g1eval/zhou-2026-loomsum-table-grounded-faithfulness.pdf": {
+      "sha256": "d8c0055e63b69dda11cb9523d61ff5fb0be563dc6142055ac5be8853fdfe3074",
+      "size": 852648,
+      "claimed_type": "pdf",
+      "detected_type": "pdf"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/g1eval/zhou-2026-loomsum-table-grounded-faithfulness.pdf": {
+      "path": "corpus/g1eval/zhou-2026-loomsum-table-grounded-faithfulness.pdf",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed pdf, detected pdf",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "852648 bytes vs floor 7000",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "19 pages, extractable text present",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-09-02T21:35:41.018460+00:00"
+     }
+    },
+    "added_in": "g1eval-2026-09-02"
    }
   }
  }
