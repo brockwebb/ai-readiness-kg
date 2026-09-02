@@ -1,6 +1,6 @@
-# Framework Deck — slide content v2
+# Framework Deck — slide content v3
 
-**Date:** 2026-09-01 (v2: added slides 2, 4, 8, 14 — why-now, OV-1, SV-1, knowledge architecture). Desktop-drafted content for the hybrid AI Data Readiness framework deck.
+**Date:** 2026-09-01 (v3: orientation-first reframe of slide 5, discovery surfaces on 8, reference implementation on 9, frontier-candidate rule on 13, June work as absorbed prior art on 16 — task `cc_tasks/2026-09-01_assessment_consolidation.md`. v2: added slides 2, 4, 8, 14 — why-now, OV-1, SV-1, knowledge architecture). Desktop-drafted content for the hybrid AI Data Readiness framework deck.
 **Build:** `cc_tasks/2026-09-01_framework_deck_build.md` (python-pptx, plain text, no theme).
 **Numbers:** from `docs/crosswalk/meeting_brief_2026-09-01.md` (floors — burn was in flight at read time). Verify against live graph before any external presentation.
 **Architecture figures:** slides 4, 8, 14 are text renderings of diagrams; SVG versions exist (2026-09-01 Desktop thread) and can be exported to images for a later polished deck.
@@ -55,7 +55,7 @@ The flow being served, and the readiness question at every hop:
 ## Slide 5 — Design stance: the machine is the first-class user
 
 - The FAIR principles' original thesis (Wilkinson et al. 2016): machine-actionability as the primary design target. A decade old; largely unimplemented in government.
-- 2026 instantiation: design the machine surface first (APIs, MCP/A2A-class agent endpoints, structured markup, llms.txt); derive the human surface from it. Not GUI abolition — derivation order. Section 508 keeps the human surface mandatory.
+- 2026 instantiation, orientation first: the machine surface is the established discovery stack that already works and is already measured — robots exclusion (RFC 9309), sitemaps, well-known URIs (RFC 8615), schema.org Dataset/DataCatalog, DCAT/data.json, content negotiation, persistent identifiers. An agent arriving cold must be able to establish what exists, what it means, how to get it, and what it may do with it. The human surface derives from that. Not GUI abolition — derivation order. Section 508 keeps the human surface mandatory.
 - A meaningful share of public contact with government data now arrives through AI answer engines and LLM crawlers, alongside search and direct visits. Both channels must be tested.
 - Existence proof in production: a federal policy corpus (99 documents, 6,600+ obligations) whose primary interface is an MCP server consumed by AI agents.
 
@@ -94,7 +94,7 @@ Four layers. Capabilities named by what they provide; technology choices are per
     OPERATIONAL FLOW (slide 4) — served by:
 
     AGENCY CAPABILITIES
-      Publication            | machine-first products, metadata, markup, agent endpoints
+      Publication            | machine-first products, metadata, markup, discovery surfaces
       Access control         | declared policy vs. enforced treatment vs. observed behavior
       Release engineering    | pre-release gates, contracts, attestation
 
@@ -119,6 +119,7 @@ Four layers. Capabilities named by what they provide; technology choices are per
 - FAIR baseline: F-UJI — open-source, automated FAIR scoring from a persistent identifier, hosted or self-deployed, REST API for bulk runs.
 - Parseability: axe-core / pa11y accessibility engines — semantic-structure failures degrade machine parsing, not just 508 compliance.
 - Plain language: readability graders on key explanatory text (Plain Writing Act obligation; lower grade level, less LLM distortion).
+- A working in-house reference implementation already exists: an evidence-emitting probe harness (now `assessment/harness/`, imported with its June 2026 history), run against a live Census product. Every probe returns pass/partial/fail and saves the actual response as evidence.
 - Caveat carried forward: presence of llms.txt signals intent, not readiness; absence is not disqualifying. No single convention is a readiness measure.
 
 ---
@@ -154,6 +155,7 @@ Four layers. Capabilities named by what they provide; technology choices are per
 - The statistical system's core differentiator is that its numbers carry error measures. No AI-readiness framework reviewed asks whether AI systems **preserve** uncertainty when restating values. Where uncertainty appears at all, it is framed as a privacy safeguard.
 - G1: MOEs, CVs, DP noise parameters published as structured fields beside estimates — not footnotes — plus an EVAL: do AI restatements carry the uncertainty?
 - Measurement template borrowed from the sensor layer's access triad: declared uncertainty (structured fields) vs. surfaced uncertainty (what retrieval delivers) vs. observed preservation (what restatements keep).
+- Standing rule for any mechanism, old or new: every mechanism is a hypothesis about how machines actually orient. What admits or retires one is observed machine behavior — crawler and edge logs, probe results, citation telemetry — never vintage. MCP/WebMCP-class endpoints are dated frontier candidates under exactly that rule, reported separately and never scored as core unreadiness.
 
 ---
 
@@ -186,6 +188,7 @@ The crosswalk is the join structure. Nothing floats:
 
 - **F-UJI / FAIR assessment tools:** genuine prior art for automated readiness scoring; adopted as the FAIR baseline, not rebuilt. This instrument's additions: statistical-native constructs (uncertainty, revisions, vintage identity, disclosure semantics), the TEVV loop, and AI-restatement EVALs — none of which FAIR scoring touches.
 - **Commercial AI-visibility platforms** (Profound, Otterly, Rankscale class): the only current instruments for whether content surfaces in AI answers. Built for brand marketing; no validated methodology for government data. Used as directional signals in the paid tier, never as authoritative scores.
+- **The June 2026 FSS assessment work (absorbed, not cited):** probe harness, benchmark rubric, three-stream assessment spec, covariate/peer-cohort schema. Imported into this repo with history as `assessment/`; the merged live design is `docs/crosswalk/assessment_protocol.md`. It is the AUTO-tier reference implementation rather than an external comparator.
 - **Enterprise SEO suites:** commodity crawling is commodity. The specification is tool-neutral; agencies satisfy it with whatever their governance approves.
 
 ---

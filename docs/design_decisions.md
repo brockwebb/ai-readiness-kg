@@ -499,3 +499,48 @@ prevent, and the prevention is structural, not procedural.
 format earns it, not a standing commitment — see the recorded head-to-head in
 `kg/ingest/convert.py CONVERTER_CHOICE`. Re-conversion of the working PDF corpus stays out of
 scope; a working substrate is not a defect.
+
+## DD-031: The assessment layer is consolidated into this repo, the unit of analysis is two-level, and a discovery mechanism is scored on evidence of machine use rather than on vintage
+
+**Date:** 2026-09-01. **Task:** `cc_tasks/2026-09-01_assessment_consolidation.md`.
+
+The June 2026 project at `brock_projects/ai-readiness-fss` (probe harness, benchmark rubric,
+three-stream assessment spec, survey drafts, covariate schema) was not a separate project. It is
+the assessment-instrument layer of this framework, and maintaining it as a sibling repository
+guaranteed divergence between a rubric and the harness implementing it. It is imported under
+`assessment/` by `git subtree` with its four June commits intact, the old location is
+tombstoned, and no divergent copy remains. The imported documents are record and are not
+edited; the merged live design is `docs/crosswalk/assessment_protocol.md`.
+
+Three substantive decisions come with it.
+
+**Two-level unit of analysis.** The data product is the measurement unit and yields a scored
+profile; products aggregate to agency-level dimension vectors; agency vectors are read within
+peer cohorts and never as a naked cross-agency ranking. This reconciles June's agency-level
+design with September's product-level pilot rather than choosing between them: the product is
+where evidence is collected and remediation happens, the agency is where the picture becomes
+actionable.
+
+**Orientation first, replacing mechanism naming.** June's Part B named the access axis by three
+then-current mechanisms (`llms.txt`, MCP, WebMCP), which dates the construct to the month it was
+written. The construct is discoverability and retrievability: an agent arriving cold must be
+able to establish what exists, what it means, how to obtain it, and what may be done with it.
+The established discovery stack (RFC 9309, sitemaps, RFC 8615 well-known URIs, schema.org
+Dataset/DataCatalog, DCAT/data.json, content negotiation, persistent identifiers) is the
+core-scored mechanism set.
+
+**The evidence criterion for admitting a mechanism.** Every mechanism, established or emerging,
+is a hypothesis about how machines actually orient. What admits one to the core set, or retires
+it, is observed machine behavior: crawler and edge logs, D0-class probe results, citation
+telemetry. Vintage and fashion are evidence in neither direction. `llms.txt` and MCP/WebMCP-class
+endpoints are therefore dated frontier candidates, admitted on evidence of agent use, and
+equally liable to retirement if that evidence does not arrive. June's core/frontier firewall with
+per-probe `as_of` dating is the mechanism that keeps a post-corpus standard out of the core score,
+and it is carried forward unchanged.
+
+**Superseded by this decision:** the probe-depth design on the discovery and web surface, shown
+shallow by the census-web-concept-inventory D0-r2 run (meta-robots not read; sitemap read from a
+fixed path rather than the robots-declared one; catalog presence scored where coverage is the
+property; no declared/enforced/observed triad). Those four gaps are open items in
+`assessment_protocol.md` §9, and the FSS Machine Diagnostic stub (A10, A11) is the specification
+they grow toward.

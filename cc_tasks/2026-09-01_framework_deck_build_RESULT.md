@@ -79,3 +79,19 @@ Round-tripped through python-pptx after writing:
 No theme, template, images, charts or speaker notes, per the task. The SVG diagram versions
 the content file mentions are not embedded; slides 4, 8 and 14 remain text renderings, which is
 what a later polished deck would replace.
+
+---
+
+## Addendum — v3 rebuild, 2026-09-01
+
+The deck was rebuilt from v3 content by
+`cc_tasks/2026-09-01_assessment_consolidation.md` step 6, which owns the rebuild when the deck
+already exists. Same procedure, same script, same open-check.
+
+18 sections in, 18 slides out, no splits. One font change: slide 9 moved from 18pt to 17pt to
+absorb the new reference-implementation line. Slide 13 gained a line and stayed at 18pt. Slides
+6 and 8 are unchanged at 17pt and 14pt. Open-check confirms 18 slides against 18 sections, slide
+5 free of MCP/A2A and naming RFC 9309, and slide 9 naming `assessment/harness`.
+
+This task's own Seldon record was completed at 14:48 and is not re-completed; the artifact it
+produced is now regenerated from newer content.
