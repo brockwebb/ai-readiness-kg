@@ -18,6 +18,8 @@ def declared_run(tmp_path, monkeypatch):
         spend:
           daily_tokens: 1000000000
           call_class_floors: {cleanup: 36000, extraction: 111000, judge: 36000}
+          empty_failure_backoff_seconds: [60, 300, 900]
+          empty_failure_max_retries: 3
         """), encoding="utf-8")
     monkeypatch.setattr(spend, "_LEDGER_PATH", tmp_path / "spend_ledger.jsonl")
     monkeypatch.setattr(spend, "_CONTROLS_PATH", controls)

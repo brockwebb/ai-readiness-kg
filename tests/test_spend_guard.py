@@ -38,6 +38,8 @@ def _write_controls(path: Path, daily_tokens: int = 1_000_000_000,
             extraction: 111000
             judge: {FLOOR}
           orphan_reservation_age_seconds: {orphan_age}
+          empty_failure_backoff_seconds: [60, 300, 900]
+          empty_failure_max_retries: 3
         """), encoding="utf-8")
 
 

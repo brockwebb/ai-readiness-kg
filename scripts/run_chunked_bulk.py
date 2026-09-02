@@ -1013,19 +1013,83 @@ def resume_plan() -> tuple[list[str], dict[str, int], dict[str, int], int]:
     return work, full, remaining, sum(len(done.get(d, ())) for d in work)
 
 
+#: Outcomes that are VERDICTS. Once one is on the state file for a batch it is immutable
+#: there: re-verdicting is a new event with provenance (the shard's `bulk_batch_quarantined`
+#: / requalification events), never an in-place edit — the repo's append-only rule.
+SETTLED_VERDICTS = ("accept", "reject", "sampling_inconclusive", "quarantine")
+
+
+def merge_burn_state(path: pathlib.Path, rows: list[dict], header: dict) -> dict:
+    """Read-modify-write MERGE of the burn state file, keyed by batch id. The single writer.
+
+    A run may add or update its own batch rows; it may never drop another batch's row. The
+    file was previously rewritten wholesale from the rows the current run's loop had reached
+    (task 2026-09-02_spend_guard_exit1_and_state_merge, defect 2): the 2026-09-01 tome run
+    (pid 46272) held b001–b005 at its first write (00:14:57Z) and so dropped b006, b007 and
+    b010–b015 from disk; it carried b006/b007 back only when its loop reached them, died at
+    b009 before reaching b010–b015, and the relaunch had to re-walk those from persisted
+    judge labels. Harmless at zero cost that time; ~9M tokens of judging if the labels had
+    not replayed.
+
+    Rules: (1) every row names a `batch_id`, or the write is refused; (2) a row whose
+    on-disk outcome is a verdict (`SETTLED_VERDICTS`) keeps that verdict — an incoming row
+    with a DIFFERENT outcome is refused and logged as `verdict_conflict` in the file and on
+    stderr, and the write goes on without it; (3) the same verdict may be updated in place
+    (`phase_burn` re-writes a row to attach report-only yield flags); (4) a non-verdict row
+    (`protocol_failed`) may be replaced by a verdict; (5) `outcomes` is derived from the
+    merged rows in batch-id order, so `len(batches) == len(outcomes)` on its face; (6) an
+    unreadable existing file is an error, never silently replaced. Written to a temp file and
+    renamed, so a crash mid-write leaves the previous file intact."""
+    existing: dict = {}
+    if path.is_file():
+        try:
+            existing = json.loads(path.read_text(encoding="utf-8"))
+        except json.JSONDecodeError as exc:
+            raise ValueError(f"burn state file {path} is not valid JSON; refusing to "
+                             f"overwrite it: {exc}") from exc
+    merged: dict[str, dict] = {}
+    for row in existing.get("batches") or []:
+        if not row.get("batch_id"):
+            raise ValueError(f"burn state file {path} holds a row without batch_id: {row}")
+        merged[row["batch_id"]] = row
+    conflicts = list(existing.get("verdict_conflicts") or [])
+    for row in rows:
+        bid = row.get("batch_id")
+        if not bid:
+            raise ValueError(f"burn state row without batch_id refused: {row}")
+        prior = merged.get(bid)
+        if prior and prior.get("outcome") in SETTLED_VERDICTS \
+                and row.get("outcome") != prior.get("outcome"):
+            conflict = {"batch_id": bid, "kept": prior.get("outcome"),
+                        "refused": row.get("outcome"), "ts": now(), "pid": os.getpid()}
+            conflicts.append(conflict)
+            print(f"verdict_conflict: {bid} already {prior.get('outcome')!r} on {path}; "
+                  f"refusing {row.get('outcome')!r} — re-verdicting is a new event, not an "
+                  f"edit", file=sys.stderr, flush=True)
+            continue
+        merged[bid] = row
+    ordered = [merged[k] for k in sorted(merged)]
+    doc = {**header, "batches": ordered, "outcomes": [r.get("outcome") for r in ordered],
+           "verdict_conflicts": conflicts, "written_at": now()}
+    tmp = path.with_name(path.name + ".tmp")
+    tmp.write_text(json.dumps(doc, indent=1) + "\n", encoding="utf-8")
+    os.replace(tmp, path)
+    return doc
+
+
 def write_burn_state(rows: list[dict], state: "BurnState", b: dict, budget: int,
                      n_min: int) -> None:
     """Persist the per-batch ledger after EVERY batch, not once at the end.
 
     A crash after batch 1's verdict left no record of it at all: the burn state file was
     written only on the loop's normal exit, so a 13-batch burn interrupted at batch 12 would
-    have lost twelve verdicts. Cheap to write, and it is the artifact the RESULT reconciles."""
-    (STATE_DIR / "bulk_v038_burn.json").write_text(json.dumps(
-        {"task": TASK, "profile": PROFILE, "batches": rows, "outcomes": state.outcomes,
-         "stopped": state.should_stop() or getattr(state, "stopped_by", None),
-         "sprt": b, "sample_budget": budget,
-         "min_facts_for_accept": n_min, "written_at": now()}, indent=1) + "\n",
-        encoding="utf-8")
+    have lost twelve verdicts. Cheap to write, and it is the artifact the RESULT reconciles.
+    Writes go through `merge_burn_state`: this run's rows are merged INTO the file, never
+    written over it."""
+    merge_burn_state(STATE_DIR / "bulk_v038_burn.json", rows,
+                     {"task": TASK, "profile": PROFILE,
+                      "stopped": state.should_stop() or getattr(state, "stopped_by", None),
+                      "sprt": b, "sample_budget": budget, "min_facts_for_accept": n_min})
 
 
 def phase_burn(a) -> int:

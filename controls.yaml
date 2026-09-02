@@ -39,6 +39,17 @@ spend:
   # is never in reap range on age; the PID-liveness test is the binding condition either
   # way — age alone never qualifies a reservation.
   orphan_reservation_age_seconds: 600
+  # Empty-failure back-off (task 2026-09-02_spend_guard_exit1_and_state_merge, defect 1).
+  # A `claude -p` exit != 0 with NOTHING on stdout or stderr (`empty_failure`, classified in
+  # kg/extraction/model_stub.py) has produced no output that could have been billed —
+  # observed 2026-09-02 03:01Z as the Max usage window closed: 7 reservations settled at the
+  # estimate (140,000 tokens) for zero output, and the driver stopped. The stub now RELEASES
+  # the reservation, sleeps the next delay below, and retries; after `max_retries` it settles
+  # at the estimate and fails exactly as before, so the driver's systemic-failure rule still
+  # counts it. The schedule's last delay repeats if the cap exceeds its length. Bound on
+  # being wrong (a server-side charge under-booked): max_retries x the call-class estimate.
+  empty_failure_backoff_seconds: [60, 300, 900]
+  empty_failure_max_retries: 3
 
 # Scheduled metadata jobs (task 2026-08-29_biblio_cron). NOTHING here may spend against the
 # model budget: the units below are timers over metadata/projection work only, and

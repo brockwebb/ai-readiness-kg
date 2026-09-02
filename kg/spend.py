@@ -130,6 +130,26 @@ def _spend_config() -> dict:
     return spend
 
 
+def empty_failure_policy() -> tuple[list[int], int]:
+    """(back-off schedule in seconds, retry cap) for an `empty_failure` CLI outcome, from
+    controls.yaml `spend:` (task 2026-09-02_spend_guard_exit1_and_state_merge). Read at call
+    time. Both keys are REQUIRED: a missing policy is a config defect surfaced before the
+    first dispatch, never a silent default that decides how many times to retry."""
+    cfg = _spend_config()
+    for key in ("empty_failure_backoff_seconds", "empty_failure_max_retries"):
+        if key not in cfg:
+            raise SpendConfigError(f"controls.yaml spend block missing {key!r}")
+    schedule = cfg["empty_failure_backoff_seconds"]
+    if not isinstance(schedule, list) or not schedule or \
+            not all(isinstance(x, int) and x >= 0 for x in schedule):
+        raise SpendConfigError("spend.empty_failure_backoff_seconds must be a non-empty "
+                               "list of non-negative integer seconds")
+    cap = cfg["empty_failure_max_retries"]
+    if not isinstance(cap, int) or cap < 0:
+        raise SpendConfigError("spend.empty_failure_max_retries must be a non-negative int")
+    return list(schedule), cap
+
+
 # ------------------------------------------------------------------ orphan reservations
 # A reservation whose owning process died between reserve() and settle()/release() holds
 # capacity forever: `_tally` counts it as outstanding against both the run ceiling and the
@@ -364,11 +384,18 @@ class SpendLedger:
             return reservation
 
     def settle(self, reservation: Reservation, actual_tokens: int,
-               model_call_event_id: str | None = None, **flags) -> None:
+               model_call_event_id: str | None = None, outcome_class: str | None = None,
+               **flags) -> None:
         """Replace the reservation's estimate with the actual cost. `model_call_event_id`
         is nullable at the choke point (the event does not exist yet when the stub settles);
         runners that write model_call events stamp reservation_id/run_id ON the event, and
-        reconcile joins by run (task §4)."""
+        reconcile joins by run (task §4).
+
+        `outcome_class` names WHY this settle carries the tokens it carries (task
+        2026-09-02_spend_guard_exit1_and_state_merge): `success` for a measured envelope,
+        or the CLI outcome class / failure mode that forced a settle at the estimate. Status
+        and reconcile break the booked tokens down by it. Records written before the field
+        existed report as `unclassified`."""
         with self._open_locked() as fh:
             rec = {"record": "settle", "run_id": reservation.run_id,
                    "reservation_id": reservation.reservation_id,
@@ -377,14 +404,35 @@ class SpendLedger:
             for key in ("settled_as_estimate", "usage_fields_missing"):
                 if flags.get(key):
                     rec[key] = True
+            if outcome_class:
+                rec["outcome_class"] = outcome_class
             self._append(fh, rec)
 
-    def release(self, reservation: Reservation, reason: str) -> None:
-        """For a reserved call that never dispatched (exception before the CLI ran)."""
+    def release(self, reservation: Reservation, reason: str,
+                outcome_class: str | None = None) -> None:
+        """For a reserved call that never dispatched (exception before the CLI ran) or that
+        provably produced nothing billable (`rate_limited`, `empty_failure`)."""
         with self._open_locked() as fh:
-            self._append(fh, {"record": "release", "run_id": reservation.run_id,
-                              "reservation_id": reservation.reservation_id,
-                              "reason": reason})
+            rec = {"record": "release", "run_id": reservation.run_id,
+                   "reservation_id": reservation.reservation_id, "reason": reason}
+            if outcome_class:
+                rec["outcome_class"] = outcome_class
+            self._append(fh, rec)
+
+    @staticmethod
+    def _by_class(records: list[dict], run_id: str) -> tuple[dict, dict]:
+        """(settled tokens by outcome_class, release COUNT by outcome_class) for one run."""
+        settled: dict[str, int] = {}
+        released: dict[str, int] = {}
+        for r in records:
+            if r.get("run_id") != run_id:
+                continue
+            cls = r.get("outcome_class") or "unclassified"
+            if r.get("record") == "settle":
+                settled[cls] = settled.get(cls, 0) + int(r["actual_tokens"])
+            elif r.get("record") == "release":
+                released[cls] = released.get(cls, 0) + 1
+        return settled, released
 
     def release_orphans(self, commit: bool = False, run_id: str | None = None,
                         max_age_seconds: int | None = None) -> dict:
@@ -487,6 +535,7 @@ class SpendLedger:
             # much capacity a reap handed back, not a term in the capacity arithmetic.
             released = sum(int(r.get("estimate_tokens_returned", 0) or 0) for r in records
                            if r.get("record") == "release" and r.get("run_id") == rid)
+            settled_by_class, released_by_class = self._by_class(records, rid)
             runs[rid] = {
                 "ceiling_tokens": declared and int(declared["ceiling_tokens"]),
                 "call_class": declared and declared["call_class"],
@@ -495,6 +544,10 @@ class SpendLedger:
                 "remaining": (max(0, int(declared["ceiling_tokens"]) - committed)
                               if declared else None),
                 "refusals": refusals,
+                # Tokens booked per CLI outcome class (task 2026-09-02_spend_guard_exit1):
+                # how much of `settled` is measured usage vs estimates forced by failures.
+                "settled_by_class": settled_by_class,
+                "released_by_class": released_by_class,
             }
         out["runs"] = runs
         return out
@@ -523,11 +576,13 @@ class SpendLedger:
             records = self._read_all(fh)
             settled = sum(int(r["actual_tokens"]) for r in records
                           if r.get("record") == "settle" and r.get("run_id") == run_id)
+            settled_by_class, _ = self._by_class(records, run_id)
             if tagged == 0:
                 self._append(fh, {"record": "reconcile_note", "run_id": run_id,
                                   "note": "no model_call events tagged with this run",
                                   "settled_total": settled})
                 return {"ok": True, "run_id": run_id, "settled_total": settled,
+                        "settled_by_class": settled_by_class,
                         "model_call_total": 0, "note": "no_tagged_model_call_events"}
             ok = settled == model_call_tokens
             if not ok:
@@ -535,6 +590,7 @@ class SpendLedger:
                                   "settled_total": settled,
                                   "model_call_total": int(model_call_tokens)})
             return {"ok": ok, "run_id": run_id, "settled_total": settled,
+                    "settled_by_class": settled_by_class,
                     "model_call_total": int(model_call_tokens)}
 
     def open_ledger(self) -> None:

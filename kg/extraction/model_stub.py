@@ -18,6 +18,7 @@ import os
 import re
 import subprocess
 import tempfile
+import time
 from pathlib import Path
 
 # Extraction runs from a neutral empty directory so `claude -p` loads NO project context
@@ -227,6 +228,36 @@ def _looks_rate_limited(text: str) -> bool:
     return any(m in low for m in _RATE_LIMIT_MARKERS)
 
 
+# CLI outcome classes (task 2026-09-02_spend_guard_exit1_and_state_merge, defect 1). A
+# `claude -p` result is classified into exactly one of these BEFORE its reservation is
+# settled or released, so the ledger can say what each booked token was booked for.
+CLI_SUCCESS = "success"                      # exit 0
+CLI_RATE_LIMITED = "rate_limited"            # exit != 0, a rate-limit/overload/cap marker
+CLI_EMPTY_FAILURE = "empty_failure"          # exit != 0, NOTHING on stdout or stderr
+CLI_ERROR_WITH_OUTPUT = "error_with_output"  # exit != 0, something on either stream
+
+
+def classify_cli_outcome(returncode: int, stdout: str | None, stderr: str | None) -> str:
+    """Pure classifier of a `claude -p` completion. Rate-limit markers win over the
+    empty/with-output split because a marker IS output. `empty_failure` requires both
+    streams blank (None or whitespace-only): observed 2026-09-02 03:01Z, five consecutive
+    exit-1s with empty stderr and empty stdout as the Max usage window closed, ~3 s each —
+    no envelope, no error text, nothing that could have been billed. Anything else on a
+    non-zero exit is `error_with_output` and keeps the conservative settle-at-estimate rule
+    (a failed CLI that printed something may have consumed tokens server-side)."""
+    if returncode == 0:
+        return CLI_SUCCESS
+    if _looks_rate_limited((stderr or "") + (stdout or "")[:2000]):
+        return CLI_RATE_LIMITED
+    if not (stdout or "").strip() and not (stderr or "").strip():
+        return CLI_EMPTY_FAILURE
+    return CLI_ERROR_WITH_OUTPUT
+
+
+# Module attribute so tests record the back-off instead of serving it.
+_sleep = time.sleep
+
+
 class ModelSubstitutionError(ModelConfigError):
     """The envelope reports a model other than the pinned one (e.g. a classifier reroute).
     Load-bearing gate: the driver records the substitution as an event and STOPs — the
@@ -250,16 +281,10 @@ def invoke(doc_id: str, source_text: str, prompt: str | None = None,
     """
     config = config or load_model_config()
     guard_no_api_key()
-
-    # Preemptive shared spend guard (DD-022) — the second gate at this choke point, beside
-    # the DD-007 API-key gate above. Reserve BEFORE dispatch against the flock-guarded
-    # ledger; no reservation, no subprocess. An undeclared run refuses too — there is no
-    # unmetered path. Callers treat SpendRefusalStop as a clean stop (exit 0), the same
-    # contract as the STOP file and cap exhaustion.
-    ledger = spend.default_ledger()
-    granted = ledger.reserve(spend.current_run_id(), doc_id=doc_id)
-    if isinstance(granted, spend.Refusal):
-        raise spend.SpendRefusalStop(granted)
+    # The empty-failure back-off policy is read BEFORE the first reservation so a missing
+    # or malformed policy is a config error at the first call, not mid-burn at the first
+    # failure (task 2026-09-02_spend_guard_exit1_and_state_merge).
+    backoff, max_retries = spend.empty_failure_policy()
 
     model_id = config["model_id"]
     prompt = prompt if prompt is not None else build_prompt(doc_id, source_text, config)
@@ -271,39 +296,83 @@ def invoke(doc_id: str, source_text: str, prompt: str | None = None,
         # DD-019): prior turns — e.g. a document sent once per doc — become cached prefix,
         # which separate -p invocations cannot share (measured: 3 calls, 0 prefix reuse).
         cmd += ["--resume", resume_session_id]
-    try:
-        proc = subprocess.run(cmd, input=prompt, capture_output=True, text=True,
-                              timeout=timeout, cwd=_hermetic_cwd())
-    except subprocess.TimeoutExpired as exc:
-        # The CLI DID dispatch; tokens may have been consumed server-side with no envelope
-        # to measure them. Settle at the estimate (conservative: capacity stays consumed;
-        # never a content-derived guess) rather than release.
-        ledger.settle(granted, granted.estimate_tokens, settled_as_estimate=True)
-        raise ModelInvocationError(f"claude -p timed out after {timeout}s for {doc_id}") from exc
-    except OSError as exc:
-        # The Claude Code CLI auto-updates in place; for a few seconds the `claude` symlink
-        # does not resolve (observed 2026-08-22 twice, killing two judging streams). That is a
-        # transient per-call failure the driver should retry, not a crash. The CLI never ran,
-        # so the reservation is released — capacity restored.
-        ledger.release(granted, reason=f"cli_unavailable: {exc}")
-        raise ModelInvocationError(f"claude CLI unavailable for {doc_id}: {exc}") from exc
-    if proc.returncode != 0:
-        err_text = (proc.stderr or "") + (proc.stdout or "")[:2000]
-        if _looks_rate_limited(err_text):
-            # Overnight-burn rule (task 2026-08-26): a rate-limit/overload rejection consumed
-            # no meaningful tokens — RELEASE the reservation (capacity restored) and raise a
-            # typed error so drivers back off instead of counting a failure.
-            ledger.release(granted, reason="rate_limited")
-            raise ModelRateLimitError(
-                f"claude -p rate-limited/overloaded for {doc_id}: {proc.stderr.strip()[:200]}")
-        ledger.settle(granted, granted.estimate_tokens, settled_as_estimate=True)
+
+    ledger = spend.default_ledger()
+    attempt = 0
+    while True:
+        # Preemptive shared spend guard (DD-022) — the second gate at this choke point,
+        # beside the DD-007 API-key gate above. Reserve BEFORE dispatch against the
+        # flock-guarded ledger; no reservation, no subprocess. An undeclared run refuses too
+        # — there is no unmetered path. Callers treat SpendRefusalStop as a clean stop
+        # (exit 0), the same contract as the STOP file and cap exhaustion. A retry after an
+        # `empty_failure` reserves afresh, so it is bounded by the same ceilings.
+        granted = ledger.reserve(spend.current_run_id(), doc_id=doc_id)
+        if isinstance(granted, spend.Refusal):
+            raise spend.SpendRefusalStop(granted)
+        try:
+            proc = subprocess.run(cmd, input=prompt, capture_output=True, text=True,
+                                  timeout=timeout, cwd=_hermetic_cwd())
+        except subprocess.TimeoutExpired as exc:
+            # The CLI DID dispatch; tokens may have been consumed server-side with no
+            # envelope to measure them. Settle at the estimate (conservative: capacity stays
+            # consumed; never a content-derived guess) rather than release.
+            ledger.settle(granted, granted.estimate_tokens, settled_as_estimate=True,
+                          outcome_class="timeout")
+            raise ModelInvocationError(
+                f"claude -p timed out after {timeout}s for {doc_id}") from exc
+        except OSError as exc:
+            # The Claude Code CLI auto-updates in place; for a few seconds the `claude`
+            # symlink does not resolve (observed 2026-08-22 twice, killing two judging
+            # streams). That is a transient per-call failure the driver should retry, not a
+            # crash. The CLI never ran, so the reservation is released — capacity restored.
+            ledger.release(granted, reason=f"cli_unavailable: {exc}",
+                           outcome_class="cli_unavailable")
+            raise ModelInvocationError(f"claude CLI unavailable for {doc_id}: {exc}") from exc
+        outcome = classify_cli_outcome(proc.returncode, proc.stdout, proc.stderr)
+        if outcome == CLI_EMPTY_FAILURE and attempt < max_retries:
+            # Nothing on either stream: nothing that could have been billed. RELEASE the
+            # reservation, back off on the configured schedule, and retry under a fresh
+            # reservation. The 2026-09-02 relaunch measured normal per-chunk usage right
+            # after such failures, and a Haiku liveness call succeeded with no change to
+            # the machine — the failure is the session/usage window, not the call.
+            ledger.release(granted, reason="empty_failure", outcome_class=CLI_EMPTY_FAILURE)
+            delay = backoff[min(attempt, len(backoff) - 1)]
+            print(f"  {doc_id}: claude -p exit {proc.returncode} with empty stdout+stderr "
+                  f"(empty_failure {attempt + 1}/{max_retries}); released, sleeping {delay}s",
+                  flush=True)
+            _sleep(delay)
+            attempt += 1
+            continue
+        break
+
+    if outcome == CLI_RATE_LIMITED:
+        # Overnight-burn rule (task 2026-08-26): a rate-limit/overload rejection consumed
+        # no meaningful tokens — RELEASE the reservation (capacity restored) and raise a
+        # typed error so drivers back off instead of counting a failure.
+        ledger.release(granted, reason="rate_limited", outcome_class=CLI_RATE_LIMITED)
+        raise ModelRateLimitError(
+            f"claude -p rate-limited/overloaded for {doc_id}: {proc.stderr.strip()[:200]}")
+    if outcome == CLI_EMPTY_FAILURE:
+        # Retry cap reached: the conservative rule returns. Settle at the estimate, and raise
+        # the plain invocation error so the driver's systemic-failure streak counts it.
+        ledger.settle(granted, granted.estimate_tokens, settled_as_estimate=True,
+                      outcome_class=CLI_EMPTY_FAILURE)
+        raise ModelInvocationError(
+            f"claude -p exited {proc.returncode} for {doc_id} with empty stdout+stderr "
+            f"(empty_failure) {max_retries + 1} times; settled at the estimate")
+    if outcome == CLI_ERROR_WITH_OUTPUT:
+        # A failed CLI that printed something may have consumed tokens server-side: settle
+        # at the estimate (never a content-derived guess). Unchanged by the reclassification.
+        ledger.settle(granted, granted.estimate_tokens, settled_as_estimate=True,
+                      outcome_class=CLI_ERROR_WITH_OUTPUT)
         raise ModelInvocationError(
             f"claude -p exited {proc.returncode} for {doc_id}: {proc.stderr.strip()[:300]}")
 
     try:
         envelope = json.loads(proc.stdout)
     except json.JSONDecodeError as exc:
-        ledger.settle(granted, granted.estimate_tokens, settled_as_estimate=True)
+        ledger.settle(granted, granted.estimate_tokens, settled_as_estimate=True,
+                      outcome_class="unparseable_envelope")
         raise ModelInvocationError(f"unparseable claude -p envelope for {doc_id}: {exc}") from exc
 
     # Settle at the envelope's measured token count the moment it is parseable, before any
@@ -314,12 +383,13 @@ def invoke(doc_id: str, source_text: str, prompt: str | None = None,
                  ("inputTokens", "outputTokens", "cacheCreationInputTokens",
                   "cacheReadInputTokens"))
     if actual:
-        ledger.settle(granted, actual)
+        ledger.settle(granted, actual, outcome_class=CLI_SUCCESS)
     else:
         # Envelope lacks the fields the stub records as tokens: settle at the estimate and
         # flag it — never estimate from content (task rule), never book zero for a real call.
         ledger.settle(granted, granted.estimate_tokens,
-                      settled_as_estimate=True, usage_fields_missing=True)
+                      settled_as_estimate=True, usage_fields_missing=True,
+                      outcome_class="usage_fields_missing")
 
     if envelope.get("is_error"):
         raise ModelInvocationError(f"claude -p reported error for {doc_id}: {envelope}")

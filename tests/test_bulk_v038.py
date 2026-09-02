@@ -1095,9 +1095,10 @@ def test_the_burn_ledger_is_written_after_every_batch_not_once_at_the_end(tmp_pa
     monkeypatch.setattr(rcb, "STATE_DIR", tmp_path)
     st = rcb.BurnState()
     b = rcb.sprt_boundaries()
-    for outcome in ("accept", "reject"):
+    for i, outcome in enumerate(("accept", "reject"), start=1):
         st.record(outcome)
-        rcb.write_burn_state([{"outcome": o} for o in st.outcomes], st, b, 463, 55)
+        rcb.write_burn_state([{"batch_id": f"bulk_v038_b{i:03d}", "outcome": outcome}],
+                             st, b, 463, 55)
         seen.append(json.loads((tmp_path / "bulk_v038_burn.json").read_text())["outcomes"])
     assert seen == [["accept"], ["accept", "reject"]]
 
