@@ -1,0 +1,33 @@
+{
+ "doc_id": "fcsm-19-01-transparent-reporting-for-integrated-data-quality",
+ "chunk_id": "fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0197",
+ "chunk_index": 197,
+ "chunk_start": 353663,
+ "chunk_end": 354082,
+ "chunk_tokens": 113,
+ "heading_path": [
+  "USABILITY (HOW THE DATA IS RECEIVED BY THE CPI)"
+ ],
+ "oversize": false,
+ "doc_sha256": "b646efbbd55aa606bfc033f223f76cd26c12f07e9b216d2ce2dd105a150c83b4",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 5201,
+  "cacheReadInputTokens": 13025,
+  "cacheCreationInputTokens": 23136,
+  "webSearchRequests": 0,
+  "costUSD": 0.36790750000000005,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 2992,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.36790750000000005,
+ "duration_ms": 53576,
+ "session_id": "908cd10c-be77-4a63-838c-d030104af771",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Tail of a disaggregation-method question plus the USABILITY section's checklist items 18-19, asking how/when integrated data are delivered, what system requirements the CPI must meet to receive them, and what timing issues affect monthly production.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_disaggregation_method\",\n      \"name\": \"DISAGGREGATION METHOD\",\n      \"aliases\": [\"disaggregation method\", \"methods of disaggregation\"],\n      \"description\": \"The method by which source data are disaggregated, for which the checklist asks the provider to supply a brief description.\",\n      \"anchor\": \"DISAGGREGATION METHOD.\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0197\"\n    },\n    {\n      \"id\": \"c_system_requirements\",\n      \"name\": \"SYSTEM REQUIREMENTS\",\n      \"aliases\": [\"system requirements\"],\n      \"description\": \"Receiving-side technical requirements that must be accounted for in order to successfully receive delivered data.\",\n      \"anchor\": \"SYSTEM REQUIREMENTS\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0197\"\n    },\n    {\n      \"id\": \"c_monthly_production\",\n      \"name\": \"MONTHLY PRODUCTION\",\n      \"aliases\": [\"monthly production\"],\n      \"description\": \"The recurring monthly production cycle into which delivered data must be incorporated, and against which delivery timing issues are assessed.\",\n      \"anchor\": \"MONTHLY PRODUCTION\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0197\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [\n    {\n      \"id\": \"m_18_delivery_method_format\",\n      \"text\": \"HOW (METHOD AND FILE FORMAT) ARE THE DATA DELIVERED?\",\n      \"response_type\": \"free_text\",\n      \"anchor\": \"(METHOD AND FILE FORMAT)\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0197\"\n    },\n    {\n      \"id\": \"m_19_delivery_timing\",\n      \"text\": \"WHEN ARE THE DATA DELIVERED?\",\n      \"response_type\": \"free_text\",\n      \"anchor\": \"WHEN ARE THE DATA DELIVERED?\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0197\"\n    }\n  ],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality\",\n      \"to_id\": \"c_disaggregation_method\",\n      \"anchor\": \"DISAGGREGATION METHOD.\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0197\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality\",\n      \"to_id\": \"c_system_requirements\",\n      \"anchor\": \"SYSTEM REQUIREMENTS\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0197\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality\",\n      \"to_id\": \"c_monthly_production\",\n      \"anchor\": \"MONTHLY PRODUCTION\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0197\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"m_18_delivery_method_format\",\n      \"to_id\": \"c_system_requirements\",\n      \"anchor\": \"TO ACCOUNT FOR ON OUR SIDE\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0197\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"m_19_delivery_timing\",\n      \"to_id\": \"c_monthly_production\",\n      \"anchor\": \"INCORPORATING THE DATA INTO MONTHLY PRODUCTION\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0197\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"USABILITY (HOW THE DATA IS RECEIVED BY THE CPI) \\n18.\",\n      \"suggested_edge\": \"has_component\",\n      \"diversion_reason\": \"structural_inference\",\n      \"note\": \"Items 18 and 19 sit under the USABILITY heading; heading nesting is page structure, not a stated relation.\"\n    },\n    {\n      \"anchor\": \"UNDERSTAND THE METHODS OF DISAGGREGATION?\",\n      \"suggested_edge\": \"uses_measure\",\n      \"diversion_reason\": \"cross_chunk\",\n      \"note\": \"The checklist instrument that owns these numbered items is named outside this chunk.\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"USABILITY (HOW THE DATA IS RECEIVED BY THE CPI)\", \"type\": \"Concept\"},\n    {\"name\": \"CPI\", \"type\": \"Concept\"},\n    {\"name\": \"TIMING OF DELIVERY\", \"type\": \"Concept\"},\n    {\"name\": \"FILE FORMAT\", \"type\": \"Concept\"},\n    {\"name\": \"PROVIDE A BRIEF DESCRIPTION OF THE DISAGGREGATION METHOD.\", \"type\": \"Measure\"},\n    {\"name\": \"ARE THERE ANY SYSTEM REQUIREMENTS TO ACCOUNT FOR ON OUR SIDE IN ORDER TO SUCCESSFULLY RECEIVE THE DATA?\", \"type\": \"Measure\"},\n    {\"name\": \"CONSIDER AND LIST ANY POSSIBLE ISSUES WITH THE TIMING OF DELIVERY\", \"type\": \"Measure\"}\n  ]\n}\n```"
+}

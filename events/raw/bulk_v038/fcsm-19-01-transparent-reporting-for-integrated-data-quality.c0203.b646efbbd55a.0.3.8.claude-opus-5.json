@@ -1,0 +1,33 @@
+{
+ "doc_id": "fcsm-19-01-transparent-reporting-for-integrated-data-quality",
+ "chunk_id": "fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0203",
+ "chunk_index": 203,
+ "chunk_start": 355418,
+ "chunk_end": 355516,
+ "chunk_tokens": 30,
+ "heading_path": [
+  "INCREASE."
+ ],
+ "oversize": false,
+ "doc_sha256": "b646efbbd55aa606bfc033f223f76cd26c12f07e9b216d2ce2dd105a150c83b4",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 4,
+  "outputTokens": 7403,
+  "cacheReadInputTokens": 26050,
+  "cacheCreationInputTokens": 45392,
+  "webSearchRequests": 0,
+  "costUSD": 0.6520400000000001,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 5386,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.6520400000000001,
+ "duration_ms": 74317,
+ "session_id": "34be45e4-ee50-4946-a87b-5a4b8a011009",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Two numbered checklist questions (25, 26) asking whether alternative data increases sample size and whether it improves overall data quality, each requiring a supporting measure — extract as Measures plus the concepts they target.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_alternative_data\",\n      \"name\": \"ALTERNATIVE DATA\",\n      \"aliases\": [\"alternative data\"],\n      \"description\": \"Non-survey or supplementary data whose use is assessed for its effect on sample size and overall data quality.\",\n      \"anchor\": \"USING THE ALTERNATIVE DATA\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0203\"\n    },\n    {\n      \"id\": \"c_sample_size\",\n      \"name\": \"SAMPLE SIZE\",\n      \"aliases\": [\"sample size\"],\n      \"description\": \"The size of the sample, reported as potentially increased by use of alternative data.\",\n      \"anchor\": \"THE SAMPLE SIZE\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0203\"\n    },\n    {\n      \"id\": \"c_data_quality\",\n      \"name\": \"DATA QUALITY\",\n      \"aliases\": [\"data quality\", \"overall data quality\"],\n      \"description\": \"Overall quality of the data, assessed for improvement resulting from use of alternative data.\",\n      \"anchor\": \"OVERALL DATA QUALITY\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0203\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [\n    {\n      \"id\": \"m_25_sample_size_increase\",\n      \"text\": \"DOES USING THE ALTERNATIVE DATA INCREASE THE SAMPLE SIZE?\",\n      \"response_type\": \"yes_no_with_quantitative_measure\",\n      \"tier\": \"agency_instrumented\",\n      \"anchor\": \"INCREASE THE SAMPLE SIZE\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0203\"\n    },\n    {\n      \"id\": \"m_26_quality_improved\",\n      \"text\": \"IS OVERALL DATA QUALITY IMPROVED BY THE USE OF ALTERNATIVE DATA?\",\n      \"response_type\": \"yes_no_with_narrative\",\n      \"tier\": \"agency_instrumented\",\n      \"anchor\": \"OVERALL DATA QUALITY IMPROVED\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0203\"\n    }\n  ],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality\",\n      \"to_id\": \"c_alternative_data\",\n      \"anchor\": \"USING THE ALTERNATIVE DATA\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0203\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality\",\n      \"to_id\": \"c_sample_size\",\n      \"anchor\": \"THE SAMPLE SIZE\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0203\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality\",\n      \"to_id\": \"c_data_quality\",\n      \"anchor\": \"OVERALL DATA QUALITY\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0203\"\n    },\n    {\n      \"type\": \"measures\",\n      \"from_id\": \"m_25_sample_size_increase\",\n      \"to_id\": \"c_sample_size\",\n      \"anchor\": \"INCREASE THE SAMPLE SIZE\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0203\"\n    },\n    {\n      \"type\": \"measures\",\n      \"from_id\": \"m_26_quality_improved\",\n      \"to_id\": \"c_data_quality\",\n      \"anchor\": \"OVERALL DATA QUALITY IMPROVED\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0203\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"m_25_sample_size_increase\",\n      \"to_id\": \"c_alternative_data\",\n      \"anchor\": \"USING THE ALTERNATIVE DATA\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0203\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"m_26_quality_improved\",\n      \"to_id\": \"c_alternative_data\",\n      \"anchor\": \"USE OF ALTERNATIVE DATA\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0203\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"IS OVERALL DATA QUALITY IMPROVED\",\n      \"suggested_edge\": \"uses_measure\",\n      \"diversion_reason\": \"cross_chunk\",\n      \"note\": \"Numbered items 25-26 belong to a parent checklist instrument named outside this chunk.\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"MEASURE OF THE INCREASE\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

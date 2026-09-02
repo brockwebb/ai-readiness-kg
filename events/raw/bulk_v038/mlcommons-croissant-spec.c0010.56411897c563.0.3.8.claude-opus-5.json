@@ -1,0 +1,35 @@
+{
+ "doc_id": "mlcommons-croissant-spec",
+ "chunk_id": "mlcommons-croissant-spec#c0010",
+ "chunk_index": 10,
+ "chunk_start": 30055,
+ "chunk_end": 31299,
+ "chunk_tokens": 324,
+ "heading_path": [
+  "Croissant Format Specification",
+  "Resources",
+  "FileSet"
+ ],
+ "oversize": false,
+ "doc_sha256": "56411897c563ddb9c480cb4b3ba280d6c7e2c539c20f29ccd6f14790fc28b35f",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 4114,
+  "cacheReadInputTokens": 13025,
+  "cacheCreationInputTokens": 23490,
+  "webSearchRequests": 0,
+  "costUSD": 0.3442725,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 3061,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3442725,
+ "duration_ms": 48426,
+ "session_id": "fdf736cb-b76b-49b4-8a73-846c20733485",
+ "raw_result": "{\"extract_plan\":{\"chunk_summary\":\"A JSON-LD example fragment declaring a tar FileObject for Flores 200, two FileSet resources (dev, devtest) contained in that tar and selected by glob includes, and two TSV metadata FileObjects.\"},\"concepts\":[{\"id\":\"c-fileobject\",\"name\":\"cr:FileObject\",\"aliases\":[\"FileObject\"],\"description\":\"Resource type used in the example for the downloadable tar archive and the TSV metadata files.\",\"anchor\":\"\\\"cr:FileObject\\\",\\\"@id\\\":\\\"flores200_dataset.tar.gz\\\"\",\"location\":\"mlcommons-croissant-spec#c0010\"},{\"id\":\"c-fileset\",\"name\":\"cr:FileSet\",\"aliases\":[\"FileSet\"],\"description\":\"Resource type used in the example for the sets of dev and devtest files inside the tar archive.\",\"anchor\":\"\\\"cr:FileSet\\\",\\\"@id\\\":\\\"files-dev\\\"\",\"location\":\"mlcommons-croissant-spec#c0010\"},{\"id\":\"c-includes\",\"name\":\"includes\",\"aliases\":[\"includes glob\"],\"description\":\"Property giving the glob pattern that selects the files belonging to a FileSet.\",\"anchor\":\"\\\"includes\\\":\\\"flores200_dataset/dev/*.dev\\\"\",\"location\":\"mlcommons-croissant-spec#c0010\"}],\"definitions\":[],\"claims\":[],\"instruments\":[],\"measures\":[],\"standards\":[],\"frameworks\":[],\"practices\":[],\"tools\":[],\"platforms\":[],\"edges\":[{\"type\":\"mentions\",\"from_id\":\"mlcommons-croissant-spec\",\"to_id\":\"c-fileobject\",\"anchor\":\"\\\"cr:FileObject\\\",\\\"@id\\\":\\\"flores200_dataset.tar.gz\\\"\",\"location\":\"mlcommons-croissant-spec#c0010\"},{\"type\":\"mentions\",\"from_id\":\"mlcommons-croissant-spec\",\"to_id\":\"c-fileset\",\"anchor\":\"\\\"cr:FileSet\\\",\\\"@id\\\":\\\"files-dev\\\"\",\"location\":\"mlcommons-croissant-spec#c0010\"},{\"type\":\"mentions\",\"from_id\":\"mlcommons-croissant-spec\",\"to_id\":\"c-includes\",\"anchor\":\"\\\"includes\\\":\\\"flores200_dataset/dev/*.dev\\\"\",\"location\":\"mlcommons-croissant-spec#c0010\"}],\"cites\":[],\"mentions\":[{\"name\":\"Flores 200\",\"anchor\":\"Flores 200 is hosted\"},{\"name\":\"sha256\",\"anchor\":\"\\\"sha256\\\"\"},{\"name\":\"contentSize\",\"anchor\":\"\\\"contentSize\\\"\"}],\"proposed_relationships\":[{\"anchor\":\"dev files are inside the tar\",\"suggested_edge\":\"contained_in\",\"diversion_reason\":\"other:no_matching_edge_type\"}],\"gleaned\":[{\"name\":\"containedIn\",\"type\":\"Concept\"},{\"name\":\"contentUrl\",\"type\":\"Concept\"},{\"name\":\"encodingFormat\",\"type\":\"Concept\"},{\"name\":\"metadata-dev\",\"type\":\"Concept\"},{\"name\":\"files-devtest\",\"type\":\"Concept\"}]}"
+}

@@ -1,0 +1,33 @@
+{
+ "doc_id": "fcsm-19-01-transparent-reporting-for-integrated-data-quality",
+ "chunk_id": "fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0090",
+ "chunk_index": 90,
+ "chunk_start": 324485,
+ "chunk_end": 324998,
+ "chunk_tokens": 287,
+ "heading_path": [
+  "10 A10 A10 access 45 Likert 30 67 3.9 1.18 4.0 3.9 0.883"
+ ],
+ "oversize": false,
+ "doc_sha256": "b646efbbd55aa606bfc033f223f76cd26c12f07e9b216d2ce2dd105a150c83b4",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 2895,
+  "cacheReadInputTokens": 13025,
+  "cacheCreationInputTokens": 23209,
+  "webSearchRequests": 0,
+  "costUSD": 0.31098750000000003,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 1728,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.31098750000000003,
+ "duration_ms": 33419,
+ "session_id": "169fd359-f859-41b3-a9f9-d8e2072b3bd4",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Table fragment listing survey items A3–A10 (relevance, accuracy, reliability, timeliness, punctuality, consistency, comparability, access), each a Likert-scale item with response counts, percentages, means, SDs and subgroup means, under a 'Quality' heading; no prose assertions.\"\n  },\n  \"concepts\": [],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [\n    {\n      \"id\": \"m_a3_relevance\",\n      \"text\": \"relevance\",\n      \"response_type\": \"Likert\",\n      \"anchor\": \"relevance\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0090\"\n    },\n    {\n      \"id\": \"m_a4_accuracy\",\n      \"text\": \"accuracy\",\n      \"response_type\": \"Likert\",\n      \"anchor\": \"accuracy\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0090\"\n    },\n    {\n      \"id\": \"m_a5_reliability\",\n      \"text\": \"reliability\",\n      \"response_type\": \"Likert\",\n      \"anchor\": \"reliability\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0090\"\n    },\n    {\n      \"id\": \"m_a6_timeliness\",\n      \"text\": \"timeliness\",\n      \"response_type\": \"Likert\",\n      \"anchor\": \"timeliness\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0090\"\n    },\n    {\n      \"id\": \"m_a7_punctuality\",\n      \"text\": \"punctuality\",\n      \"response_type\": \"Likert\",\n      \"anchor\": \"punctuality\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0090\"\n    },\n    {\n      \"id\": \"m_a8_consistency\",\n      \"text\": \"consistency\",\n      \"response_type\": \"Likert\",\n      \"anchor\": \"consistency\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0090\"\n    },\n    {\n      \"id\": \"m_a9_comparability\",\n      \"text\": \"comparability\",\n      \"response_type\": \"Likert\",\n      \"anchor\": \"comparability\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0090\"\n    }\n  ],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"Quality\",\n      \"anchor\": \"Quality\"\n    },\n    {\n      \"name\": \"Overall Assessment\",\n      \"anchor\": \"Overall Assessment\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"Quality\",\n      \"suggested_edge\": \"has_component\",\n      \"diversion_reason\": \"structural_inference\"\n    },\n    {\n      \"anchor\": \"comparability\",\n      \"suggested_edge\": \"uses_measure\",\n      \"diversion_reason\": \"cross_chunk\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"access\", \"type\": \"Measure\"},\n    {\"name\": \"Quality\", \"type\": \"Concept\"},\n    {\"name\": \"Overall Assessment\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

@@ -1,0 +1,33 @@
+{
+ "doc_id": "nist-ai-rmf-playbook",
+ "chunk_id": "nist-ai-rmf-playbook#c0092",
+ "chunk_index": 92,
+ "chunk_start": 150253,
+ "chunk_end": 150362,
+ "chunk_tokens": 25,
+ "heading_path": [
+  "MAP 1.3"
+ ],
+ "oversize": false,
+ "doc_sha256": "65d6101d806502875aadb0fd19a75c3a9cc9a5e9461129e9398a39192d8202d2",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 1786,
+  "cacheReadInputTokens": 13025,
+  "cacheCreationInputTokens": 22470,
+  "webSearchRequests": 0,
+  "costUSD": 0.2758725,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 922,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.2758725,
+ "duration_ms": 20503,
+ "session_id": "dcf3f8a2-a7ab-4fe9-bcc9-2f93d49a5376",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Tail of a bibliography entry (ArXiv 2005.07572, Community Based System Dynamics) followed by the NIST AI RMF subcategory MAP 1.3 outcome statement about the organization's mission and goals for the AI technology being understood and documented.\"\n  },\n  \"concepts\": [],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"claim_map_1_3\",\n      \"claim_text\": \"mission and relevant goals for the AI technology are understood\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"relevant goals for the AI technology\",\n      \"location\": \"nist-ai-rmf-playbook#c0092\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"nist-ai-rmf-playbook\",\n      \"to_id\": \"claim_map_1_3\",\n      \"anchor\": \"relevant goals for the AI technology\",\n      \"location\": \"nist-ai-rmf-playbook#c0092\"\n    }\n  ],\n  \"cites\": [\n    {\n      \"id\": \"cite_cbsd_2005_07572\",\n      \"from_id\": \"nist-ai-rmf-playbook\",\n      \"title\": \"Community Based System Dynamics\",\n      \"identifier\": \"ArXiv abs/2005.07572\",\n      \"year\": 2020,\n      \"anchor\": \"Community Based System Dynamics\",\n      \"location\": \"nist-ai-rmf-playbook#c0092\"\n    }\n  ],\n  \"mentions\": [\n    {\n      \"name\": \"AI technology\",\n      \"anchor\": \"the AI technology\"\n    },\n    {\n      \"name\": \"organization\",\n      \"anchor\": \"The organization\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"suggested_edge\": \"has_component\",\n      \"anchor\": \"MAP 1.3\",\n      \"diversion_reason\": \"structural_inference\",\n      \"note\": \"MAP 1.3 is a subcategory of the AI RMF Map function; the framework endpoint is not in this chunk\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"MAP 1.3\", \"type\": \"Concept\"},\n    {\"name\": \"organizational mission\", \"type\": \"Concept\"},\n    {\"name\": \"documentation of AI goals\", \"type\": \"Practice\"}\n  ]\n}\n```"
+}

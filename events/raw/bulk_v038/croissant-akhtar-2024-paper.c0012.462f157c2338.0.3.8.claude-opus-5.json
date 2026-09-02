@@ -1,0 +1,31 @@
+{
+ "doc_id": "croissant-akhtar-2024-paper",
+ "chunk_id": "croissant-akhtar-2024-paper#c0012",
+ "chunk_index": 12,
+ "chunk_start": 59713,
+ "chunk_end": 63561,
+ "chunk_tokens": 1446,
+ "heading_path": [],
+ "oversize": false,
+ "doc_sha256": "462f157c23383e21d50b578ca03d1fad6f7a20208b4e392c7aa6d1dc49127178",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 5507,
+  "cacheReadInputTokens": 13025,
+  "cacheCreationInputTokens": 26128,
+  "webSearchRequests": 0,
+  "costUSD": 0.40547749999999994,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 3745,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.40547749999999994,
+ "duration_ms": 60389,
+ "session_id": "dba7a02d-fb4b-4fb0-820b-0a17b209cadf",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"End of the submission checklist (persistent identifiers for datasets, code repositories, reproducibility framework for benchmarks) followed by the appendix's code examples showing Croissant files loaded via the mlcroissant and TFDS libraries.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c-croissant-files\",\n      \"name\": \"Croissant files\",\n      \"aliases\": [\"Croissant file\", \"Croissant JSON-LD file\"],\n      \"description\": \"The metadata files users work with in ML workflows via the mlcroissant and TFDS libraries.\",\n      \"anchor\": \"with Croissant files\",\n      \"location\": \"croissant-akhtar-2024-paper#c0012\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"cl-best-practice-papers-exempt\",\n      \"claim_text\": \"above supplementary materials are not required\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"materials are not required\",\n      \"location\": \"croissant-akhtar-2024-paper#c0012\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [\n    {\n      \"id\": \"p-persistent-identifier\",\n      \"text\": \"a persistent dereferenceable identifier\",\n      \"scope\": \"dataset\",\n      \"as_of_date\": null,\n      \"anchor\": \"persistent dereferenceable identifier\",\n      \"location\": \"croissant-akhtar-2024-paper#c0012\"\n    },\n    {\n      \"id\": \"p-code-repository\",\n      \"text\": \"a code repository\",\n      \"scope\": \"any\",\n      \"as_of_date\": null,\n      \"anchor\": \"or a code repository\",\n      \"location\": \"croissant-akhtar-2024-paper#c0012\"\n    },\n    {\n      \"id\": \"p-reproducibility-framework\",\n      \"text\": \"use a reproducibility framework\",\n      \"scope\": \"dataset\",\n      \"as_of_date\": null,\n      \"anchor\": \"use a reproducibility framework\",\n      \"location\": \"croissant-akhtar-2024-paper#c0012\"\n    }\n  ],\n  \"tools\": [\n    {\n      \"id\": \"t-mlcroissant\",\n      \"name\": \"mlcroissant\",\n      \"steward\": null,\n      \"license\": null,\n      \"url\": null,\n      \"as_of_date\": null,\n      \"anchor\": \"mlcroissant\",\n      \"location\": \"croissant-akhtar-2024-paper#c0012\"\n    },\n    {\n      \"id\": \"t-tfds\",\n      \"name\": \"TFDS\",\n      \"steward\": null,\n      \"license\": null,\n      \"url\": null,\n      \"as_of_date\": null,\n      \"anchor\": \"and TFDS libraries\",\n      \"location\": \"croissant-akhtar-2024-paper#c0012\"\n    }\n  ],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"recommends\",\n      \"from_id\": \"croissant-akhtar-2024-paper\",\n      \"to_id\": \"p-persistent-identifier\",\n      \"anchor\": \"persistent dereferenceable identifier\",\n      \"location\": \"croissant-akhtar-2024-paper#c0012\"\n    },\n    {\n      \"type\": \"recommends\",\n      \"from_id\": \"croissant-akhtar-2024-paper\",\n      \"to_id\": \"p-code-repository\",\n      \"anchor\": \"or a code repository\",\n      \"location\": \"croissant-akhtar-2024-paper#c0012\"\n    },\n    {\n      \"type\": \"recommends\",\n      \"from_id\": \"croissant-akhtar-2024-paper\",\n      \"to_id\": \"p-reproducibility-framework\",\n      \"anchor\": \"use a reproducibility framework\",\n      \"location\": \"croissant-akhtar-2024-paper#c0012\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"croissant-akhtar-2024-paper\",\n      \"to_id\": \"c-croissant-files\",\n      \"anchor\": \"with Croissant files\",\n      \"location\": \"croissant-akhtar-2024-paper#c0012\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"croissant-akhtar-2024-paper\",\n      \"to_id\": \"cl-best-practice-papers-exempt\",\n      \"anchor\": \"materials are not required\",\n      \"location\": \"croissant-akhtar-2024-paper#c0012\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"identifiers.org\",\n      \"anchor\": \"prefix on identifiers.org\"\n    },\n    {\n      \"name\": \"GitHub\",\n      \"anchor\": \"GitHub, GitLab\"\n    },\n    {\n      \"name\": \"COCO 2014 dataset\",\n      \"anchor\": \"the COCO 2014 dataset which\"\n    }\n  ],\n  \"proposed_relationships\": [],\n  \"gleaned\": [\n    {\"name\": \"ML reproducibility checklist\", \"type\": \"Framework\"},\n    {\"name\": \"CroissantBuilder\", \"type\": \"Tool\"},\n    {\"name\": \"Hugging Face\", \"type\": \"Platform\"},\n    {\"name\": \"DOI\", \"type\": \"Concept\"},\n    {\"name\": \"bounding box annotations\", \"type\": \"Concept\"}\n  ]\n}"
+}

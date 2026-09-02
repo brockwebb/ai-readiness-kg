@@ -1,0 +1,34 @@
+{
+ "doc_id": "mlcommons-croissant-spec",
+ "chunk_id": "mlcommons-croissant-spec#c0017",
+ "chunk_index": 17,
+ "chunk_start": 63088,
+ "chunk_end": 64200,
+ "chunk_tokens": 330,
+ "heading_path": [
+  "Croissant Format Specification",
+  "Appendix 1: JSON-LD context"
+ ],
+ "oversize": false,
+ "doc_sha256": "56411897c563ddb9c480cb4b3ba280d6c7e2c539c20f29ccd6f14790fc28b35f",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 6939,
+  "cacheReadInputTokens": 13025,
+  "cacheCreationInputTokens": 23521,
+  "webSearchRequests": 0,
+  "costUSD": 0.4152075,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 4970,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.4152075,
+ "duration_ms": 77017,
+ "session_id": "5300bee8-0b6c-4c9c-b9e9-dfff85fb1b92",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Tail of the Croissant spec: one bullet stating that sc:ImageObject describes segmentation masks as image overlays with a 0/1 pixel convention, followed by Appendix 1, the verbatim JSON-LD @context block, and a site footer.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_image_object\",\n      \"name\": \"sc:ImageObject\",\n      \"aliases\": [\"ImageObject\", \"schema.org ImageObject\"],\n      \"description\": \"The schema.org type the Croissant spec uses to describe segmentation masks as image overlays.\",\n      \"anchor\": \"sc:ImageObject\",\n      \"location\": \"mlcommons-croissant-spec#c0017\"\n    },\n    {\n      \"id\": \"c_segmentation_masks\",\n      \"name\": \"segmentation masks\",\n      \"aliases\": [\"segmentation mask\"],\n      \"description\": \"Per-pixel masks represented as image overlays, with pixel values marking inside and outside of the mask.\",\n      \"anchor\": \"segmentation masks\",\n      \"location\": \"mlcommons-croissant-spec#c0017\"\n    },\n    {\n      \"id\": \"c_jsonld_context\",\n      \"name\": \"JSON-LD context\",\n      \"aliases\": [\"JSON-LD\", \"@context\"],\n      \"description\": \"The JSON-LD @context given in Appendix 1 that binds the Croissant, schema.org, RAI and Dublin Core terms used by the format.\",\n      \"anchor\": \"## Appendix 1: JSON-LD\",\n      \"location\": \"mlcommons-croissant-spec#c0017\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"cl_overlay\",\n      \"claim_text\": \"describes segmentation masks as image overlays\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"platform_official\",\n      \"anchor\": \"as image overlays\",\n      \"location\": \"mlcommons-croissant-spec#c0017\"\n    },\n    {\n      \"id\": \"cl_pixel_convention\",\n      \"claim_text\": \"with pixel = 0 outside of the mask and pixel = 1 inside the mask\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"platform_official\",\n      \"anchor\": \"pixel = 1 inside\",\n      \"location\": \"mlcommons-croissant-spec#c0017\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"mlcommons-croissant-spec\",\n      \"to_id\": \"c_image_object\",\n      \"anchor\": \"sc:ImageObject\",\n      \"location\": \"mlcommons-croissant-spec#c0017\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"mlcommons-croissant-spec\",\n      \"to_id\": \"c_segmentation_masks\",\n      \"anchor\": \"segmentation masks\",\n      \"location\": \"mlcommons-croissant-spec#c0017\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"mlcommons-croissant-spec\",\n      \"to_id\": \"c_jsonld_context\",\n      \"anchor\": \"## Appendix 1: JSON-LD\",\n      \"location\": \"mlcommons-croissant-spec#c0017\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"mlcommons-croissant-spec\",\n      \"to_id\": \"cl_overlay\",\n      \"anchor\": \"as image overlays\",\n      \"location\": \"mlcommons-croissant-spec#c0017\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"mlcommons-croissant-spec\",\n      \"to_id\": \"cl_pixel_convention\",\n      \"anchor\": \"pixel = 1 inside\",\n      \"location\": \"mlcommons-croissant-spec#c0017\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_overlay\",\n      \"to_id\": \"c_segmentation_masks\",\n      \"anchor\": \"masks as image overlays\",\n      \"location\": \"mlcommons-croissant-spec#c0017\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_pixel_convention\",\n      \"to_id\": \"c_segmentation_masks\",\n      \"anchor\": \"outside of the mask and pixel\",\n      \"location\": \"mlcommons-croissant-spec#c0017\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"schema.org\",\n      \"anchor\": \"\\\"sc\\\":\\\"https://schema.org/\\\"\"\n    },\n    {\n      \"name\": \"http://mlcommons.org/croissant/RAI/\",\n      \"anchor\": \"croissant/RAI/\"\n    },\n    {\n      \"name\": \"http://purl.org/dc/terms/\",\n      \"anchor\": \"purl.org/dc/terms/\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"suggested_edge\": \"builds_on\",\n      \"from_id\": \"c_jsonld_context\",\n      \"to_id\": \"schema.org\",\n      \"anchor\": \"\\\"@vocab\\\":\\\"https://schema.org/\\\"\",\n      \"diversion_reason\": \"structural_inference\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"This site is open source\", \"type\": \"Claim\"},\n    {\"name\": \"cr (Croissant namespace)\", \"type\": \"Concept\"},\n    {\"name\": \"recordSet\", \"type\": \"Concept\"},\n    {\"name\": \"fileObject\", \"type\": \"Concept\"},\n    {\"name\": \"fileSet\", \"type\": \"Concept\"},\n    {\"name\": \"isLiveDataset\", \"type\": \"Concept\"},\n    {\"name\": \"conformsTo\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

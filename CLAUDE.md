@@ -64,6 +64,14 @@ Transcribed from `docs/schema_v0.1.md` (the doc is authoritative; currently v0.2
 - `cc_tasks/*_RESULT.md` — execution records; the newest (`2026-08-14_bulk_v1_closeout_RESULT.md`) is the current state of play. `cc_tasks/` is intentionally tracked; `handoffs/` is not.
 - Seldon is active (`seldon.yaml`, `seldon_events.jsonl`); Neo4j database `seldon-ai-readiness-kg` holds both the KG labels and Seldon's artifact graph under disjoint labels — `build_projection.py` deletes only KG-schema labels.
 
+## CC dispatch protocol (operator-ordered, 2026-09-01)
+
+When a Desktop session registers a cc_task, it must end that turn by giving the operator the exact dispatch line to paste into Claude Code, in this form:
+
+> `Read CLAUDE.md, then execute cc_tasks/<filename>.md. Glob and read all sibling <filename>_ADDENDUM*.md files before starting; an addendum can amend or SUPERSEDE the base task.`
+
+Rules for CC when dispatched this way: read every addendum before any step (a task whose addendum says SUPERSEDED is not executed — stop and report); honor the task's own SEQUENCING line; write the RESULT, run `seldon cc complete`, commit and push. Rules for Desktop: never end a registration turn without the dispatch line; sequencing constraints between queued tasks are stated in the dispatch line, not assumed.
+
 ## Conventions specific to this repo
 
 - Module path globals (`_EVENTS_DIR`, `_METRICS_DIR`, `_REVIEW_DIR`, `_SCHEMA_PATH`) are read at call time so `tests/conftest.py` can monkeypatch them onto `tmp_path`; don't inline them into function bodies.

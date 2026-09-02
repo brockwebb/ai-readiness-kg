@@ -1,0 +1,33 @@
+{
+ "doc_id": "nist-ai-rmf-playbook",
+ "chunk_id": "nist-ai-rmf-playbook#c0139",
+ "chunk_index": 139,
+ "chunk_start": 219913,
+ "chunk_end": 220001,
+ "chunk_tokens": 21,
+ "heading_path": [
+  "93 of 142"
+ ],
+ "oversize": false,
+ "doc_sha256": "65d6101d806502875aadb0fd19a75c3a9cc9a5e9461129e9398a39192d8202d2",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 1697,
+  "cacheReadInputTokens": 13025,
+  "cacheCreationInputTokens": 22496,
+  "webSearchRequests": 0,
+  "costUSD": 0.27390749999999997,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 798,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.27390749999999997,
+ "duration_ms": 17677,
+ "session_id": "830d0417-e9f1-4629-8144-f4d592a47dd4",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Reference-list line citing the PEAT AI & Disability Inclusion Toolkit, followed by the NIST AI RMF MEASURE category heading 'Appropriate methods and metrics are identified and applied.'\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_methods_metrics\",\n      \"name\": \"methods and metrics\",\n      \"aliases\": [\"measurement methods and metrics\"],\n      \"description\": \"The measurement methods and metrics applied to an AI system under the MEASURE function.\",\n      \"anchor\": \"methods and metrics\",\n      \"location\": \"nist-ai-rmf-playbook#c0139\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"cl_measure_methods\",\n      \"claim_text\": \"Appropriate methods and metrics are identified and applied.\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"Appropriate methods and metrics\",\n      \"location\": \"nist-ai-rmf-playbook#c0139\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"nist-ai-rmf-playbook\",\n      \"to_id\": \"cl_measure_methods\",\n      \"anchor\": \"Appropriate methods and metrics\",\n      \"location\": \"nist-ai-rmf-playbook#c0139\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_measure_methods\",\n      \"to_id\": \"c_methods_metrics\",\n      \"anchor\": \"methods and metrics\",\n      \"location\": \"nist-ai-rmf-playbook#c0139\"\n    }\n  ],\n  \"cites\": [\n    {\n      \"from_id\": \"nist-ai-rmf-playbook\",\n      \"to_id\": \"peat-ai-disability-inclusion-toolkit\",\n      \"anchor\": \"PEAT AI & Disability\",\n      \"location\": \"nist-ai-rmf-playbook#c0139\"\n    }\n  ],\n  \"mentions\": [\n    {\n      \"name\": \"Risks of Bias and Discrimination in AI Hiring Tools\",\n      \"anchor\": \"Risks of Bias and Discrimination\"\n    }\n  ],\n  \"proposed_relationships\": [],\n  \"gleaned\": [\n    {\"name\": \"MEASURE\", \"type\": \"Concept\"},\n    {\"name\": \"AI Hiring Tools\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

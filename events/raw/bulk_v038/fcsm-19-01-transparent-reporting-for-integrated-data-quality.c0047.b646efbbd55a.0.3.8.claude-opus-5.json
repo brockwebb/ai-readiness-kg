@@ -1,0 +1,33 @@
+{
+ "doc_id": "fcsm-19-01-transparent-reporting-for-integrated-data-quality",
+ "chunk_id": "fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0047",
+ "chunk_index": 47,
+ "chunk_start": 171401,
+ "chunk_end": 171819,
+ "chunk_tokens": 88,
+ "heading_path": [
+  "1. Accuracy -"
+ ],
+ "oversize": false,
+ "doc_sha256": "b646efbbd55aa606bfc033f223f76cd26c12f07e9b216d2ce2dd105a150c83b4",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 3642,
+  "cacheReadInputTokens": 13025,
+  "cacheCreationInputTokens": 22708,
+  "webSearchRequests": 0,
+  "costUSD": 0.3246525,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 1973,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3246525,
+ "duration_ms": 39908,
+ "session_id": "c8a37c76-2adf-45eb-a6cc-983a719077b5",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Defines Accuracy as the first data quality dimension, giving its definition (degree to which a data value correctly represents real-world attributes) and its assessment criteria (data measure what they are intended to measure; errors minimized to negligibility).\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_accuracy\",\n      \"name\": \"Accuracy\",\n      \"aliases\": [\"data accuracy\"],\n      \"description\": \"A data quality dimension concerning how correctly a data value or set of values represents the attributes of the real-world object or event.\",\n      \"anchor\": \"Accuracy\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0047\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d_accuracy\",\n      \"term\": \"Accuracy\",\n      \"verbatim_text\": \"The degree to which a data value, or set of values, correctly represents the attributes of the real-world object or event.\",\n      \"normative_status\": \"policy\",\n      \"as_of_date\": null,\n      \"anchor\": \"degree to which a data value\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0047\"\n    }\n  ],\n  \"claims\": [\n    {\n      \"id\": \"cl_accurate_data_minimize_errors\",\n      \"claim_text\": \"Accurate data minimize errors (e.g., recording or interviewer bias, transcription error, sampling error) to a point of being negligible.\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"minimize errors\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0047\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality\",\n      \"to_id\": \"d_accuracy\",\n      \"anchor\": \"Definition\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0047\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality\",\n      \"to_id\": \"c_accuracy\",\n      \"anchor\": \"Accuracy\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0047\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality\",\n      \"to_id\": \"cl_accurate_data_minimize_errors\",\n      \"anchor\": \"being negligible\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0047\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_accurate_data_minimize_errors\",\n      \"to_id\": \"c_accuracy\",\n      \"anchor\": \"Accurate data\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0047\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"Data quality dimension\",\n      \"anchor\": \"Data quality dimension\"\n    },\n    {\n      \"name\": \"Assessment criteria\",\n      \"anchor\": \"Assessment criteria\"\n    },\n    {\n      \"name\": \"interviewer bias\",\n      \"anchor\": \"interviewer bias\"\n    },\n    {\n      \"name\": \"transcription error\",\n      \"anchor\": \"transcription error\"\n    },\n    {\n      \"name\": \"sampling error\",\n      \"anchor\": \"sampling error\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"Data quality dimension\",\n      \"suggested_edge\": \"has_component\",\n      \"from_hint\": \"Data quality dimension\",\n      \"to_hint\": \"Accuracy\",\n      \"diversion_reason\": \"structural_inference\"\n    },\n    {\n      \"anchor\": \"Assessment criteria\",\n      \"suggested_edge\": \"measures\",\n      \"from_hint\": \"Assessment criteria for Accuracy\",\n      \"to_hint\": \"Accuracy\",\n      \"diversion_reason\": \"structural_inference\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"Assessment criteria\", \"type\": \"Measure\"},\n    {\"name\": \"Data quality dimension\", \"type\": \"Framework\"},\n    {\"name\": \"recording bias\", \"type\": \"Concept\"},\n    {\"name\": \"interviewer bias\", \"type\": \"Concept\"},\n    {\"name\": \"transcription error\", \"type\": \"Concept\"},\n    {\"name\": \"sampling error\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

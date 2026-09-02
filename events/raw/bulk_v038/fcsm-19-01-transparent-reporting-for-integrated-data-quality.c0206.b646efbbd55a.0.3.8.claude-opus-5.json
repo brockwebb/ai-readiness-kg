@@ -1,0 +1,33 @@
+{
+ "doc_id": "fcsm-19-01-transparent-reporting-for-integrated-data-quality",
+ "chunk_id": "fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0206",
+ "chunk_index": 206,
+ "chunk_start": 356073,
+ "chunk_end": 356521,
+ "chunk_tokens": 101,
+ "heading_path": [
+  "ASSESSMENT SUMMARY"
+ ],
+ "oversize": false,
+ "doc_sha256": "b646efbbd55aa606bfc033f223f76cd26c12f07e9b216d2ce2dd105a150c83b4",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 6029,
+  "cacheReadInputTokens": 13025,
+  "cacheCreationInputTokens": 22924,
+  "webSearchRequests": 0,
+  "costUSD": 0.3864875,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 4059,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3864875,
+ "duration_ms": 68336,
+ "session_id": "5434d7b0-f095-4ae2-9ed6-7152aa4d2b55",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Tail of an alternative-data assessment questionnaire: item 31 asks which existing CPI systems the alternative data must be incorporated into for production, followed by ASSESSMENT SUMMARY instructions to summarize the assessed dataset's merits and flaws and give each element a +/- rating.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"concept-alternative-dataset\",\n      \"name\": \"alternative dataset\",\n      \"aliases\": [\"alternative data\", \"ALTERNATIVE DATA\"],\n      \"description\": \"The candidate non-survey dataset being assessed by the questionnaire; the assessor summarizes its relative merits and flaws.\",\n      \"anchor\": \"assessed alternative dataset\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0206\"\n    },\n    {\n      \"id\": \"concept-cpi-systems\",\n      \"name\": \"CPI SYSTEMS\",\n      \"aliases\": [\"CPI systems\", \"Consumer Price Index systems\"],\n      \"description\": \"Existing production systems that an alternative dataset would need to be incorporated into before it can be used in production.\",\n      \"anchor\": \"EXISTING CPI SYSTEMS\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0206\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"claim-summary-goal\",\n      \"claim_text\": \"The goal is to be able to create a short list of the relative merits and flaws of the dataset.\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"The goal is to be able\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0206\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [\n    {\n      \"id\": \"measure-31-cpi-systems\",\n      \"text\": \"LIST ANY EXISTING CPI SYSTEMS\",\n      \"response_type\": \"free_text\",\n      \"anchor\": \"EXISTING CPI SYSTEMS THAT\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0206\"\n    },\n    {\n      \"id\": \"measure-element-rating\",\n      \"text\": \"Give a positive (+) or negative (-) rating to each element\",\n      \"response_type\": \"categorical\",\n      \"anchor\": \"positive (+) or negative\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0206\"\n    }\n  ],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality\",\n      \"to_id\": \"concept-alternative-dataset\",\n      \"anchor\": \"summarize the assessed\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0206\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality\",\n      \"to_id\": \"concept-cpi-systems\",\n      \"anchor\": \"CPI SYSTEMS THAT THE\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0206\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality\",\n      \"to_id\": \"claim-summary-goal\",\n      \"anchor\": \"short list of the relative\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0206\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"claim-summary-goal\",\n      \"to_id\": \"concept-alternative-dataset\",\n      \"anchor\": \"merits and flaws of the dataset\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0206\"\n    },\n    {\n      \"type\": \"measures\",\n      \"from_id\": \"measure-31-cpi-systems\",\n      \"to_id\": \"concept-cpi-systems\",\n      \"anchor\": \"INCORPORATED INTO FOR USE IN PRODUCTION\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0206\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"measure-element-rating\",\n      \"to_id\": \"concept-alternative-dataset\",\n      \"anchor\": \"overall assessment in the far right column\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0206\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"PRODUCTION\",\n      \"anchor\": \"FOR USE IN PRODUCTION\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"ASSESSMENT SUMMARY\",\n      \"suggested_edge\": \"uses_measure\",\n      \"diversion_reason\": \"cross_chunk\",\n      \"note\": \"The alternative-data assessment questionnaire that owns item 31 and the ASSESSMENT SUMMARY rating grid is named outside this chunk.\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"ASSESSMENT SUMMARY\", \"type\": \"Instrument\"},\n    {\"name\": \"ELEMENT\", \"type\": \"Measure\"},\n    {\"name\": \"SUMMARY\", \"type\": \"Measure\"}\n  ]\n}\n```"
+}

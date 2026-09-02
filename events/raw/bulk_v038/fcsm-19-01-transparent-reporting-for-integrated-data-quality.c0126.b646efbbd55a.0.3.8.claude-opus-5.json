@@ -1,0 +1,33 @@
+{
+ "doc_id": "fcsm-19-01-transparent-reporting-for-integrated-data-quality",
+ "chunk_id": "fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0126",
+ "chunk_index": 126,
+ "chunk_start": 329065,
+ "chunk_end": 329179,
+ "chunk_tokens": 38,
+ "heading_path": [
+  "56 na D8"
+ ],
+ "oversize": false,
+ "doc_sha256": "b646efbbd55aa606bfc033f223f76cd26c12f07e9b216d2ce2dd105a150c83b4",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 1534,
+  "cacheReadInputTokens": 13025,
+  "cacheCreationInputTokens": 22595,
+  "webSearchRequests": 0,
+  "costUSD": 0.2708225,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 999,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.2708225,
+ "duration_ms": 21316,
+ "session_id": "c8b91c4b-323e-4bcf-a362-e14738d0a7ec",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Tail of a survey-results table giving two Likert-scaled respondent items (disclosure; how adjustments affect results) with counts, percentages, means and standard deviations, ending at an 'Agency Contacts' heading.\"\n  },\n  \"concepts\": [],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [\n    {\n      \"id\": \"m_disclosure\",\n      \"text\": \"disclosure\",\n      \"response_type\": \"Likert\",\n      \"anchor\": \"disclosure 28 Likert\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0126\"\n    },\n    {\n      \"id\": \"m_affect_results\",\n      \"text\": \"affect results\",\n      \"response_type\": \"Likert\",\n      \"anchor\": \"affect results 27 Likert\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0126\"\n    }\n  ],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"Agency Contacts\",\n      \"anchor\": \"Agency Contacts\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"how adjustments\",\n      \"suggested_edge\": \"uses_measure\",\n      \"diversion_reason\": \"cross_chunk\"\n    }\n  ],\n  \"gleaned\": []\n}\n```"
+}

@@ -1,0 +1,33 @@
+{
+ "doc_id": "fcsm-19-01-transparent-reporting-for-integrated-data-quality",
+ "chunk_id": "fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0052",
+ "chunk_index": 52,
+ "chunk_start": 173676,
+ "chunk_end": 174034,
+ "chunk_tokens": 81,
+ "heading_path": [
+  "6. Validity -"
+ ],
+ "oversize": false,
+ "doc_sha256": "b646efbbd55aa606bfc033f223f76cd26c12f07e9b216d2ce2dd105a150c83b4",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 5537,
+  "cacheReadInputTokens": 13025,
+  "cacheCreationInputTokens": 22713,
+  "webSearchRequests": 0,
+  "costUSD": 0.37207750000000006,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 4145,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.37207750000000006,
+ "duration_ms": 64417,
+ "session_id": "3f32901d-1ae1-4c1b-915d-d97aa3ae7ff5",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Tail of a prior dimension's assessment criteria (case duplication) followed by the document's numbered entry for Validity: its definition (conformance to defined business rules) and its assessment criteria (types, formats, ranges).\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c-validity\",\n      \"name\": \"Validity\",\n      \"aliases\": [\"data validity\"],\n      \"description\": \"A data quality dimension concerning conformance of data to defined business rules.\",\n      \"anchor\": \"6. Validity -  \",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0052\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d-validity\",\n      \"term\": \"Validity\",\n      \"verbatim_text\": \"The degree to which the data conform to defined business rules.\",\n      \"normative_status\": \"policy\",\n      \"as_of_date\": null,\n      \"anchor\": \"conform to defined business rules\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0052\"\n    }\n  ],\n  \"claims\": [\n    {\n      \"id\": \"cl-valid-conformance\",\n      \"claim_text\": \"Data are valid if they conform to their definition rules\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"Data are valid if they conform\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0052\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [\n    {\n      \"id\": \"m-case-duplication\",\n      \"text\": \"Data set check for case duplication\",\n      \"response_type\": \"check\",\n      \"anchor\": \"case duplication\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0052\"\n    }\n  ],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality\",\n      \"to_id\": \"d-validity\",\n      \"anchor\": \"Definition - The degree to which\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0052\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality\",\n      \"to_id\": \"c-validity\",\n      \"anchor\": \"6. Validity -  \",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0052\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality\",\n      \"to_id\": \"cl-valid-conformance\",\n      \"anchor\": \"Data are valid if they conform\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0052\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"allowable types\",\n      \"anchor\": \"allowable types\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"Data set check for case duplication\",\n      \"suggested_edge\": \"measures\",\n      \"from_id\": \"m-case-duplication\",\n      \"to_id\": null,\n      \"diversion_reason\": \"cross_chunk\"\n    },\n    {\n      \"anchor\": \"6. Validity -  \",\n      \"suggested_edge\": \"has_component\",\n      \"from_id\": null,\n      \"to_id\": \"c-validity\",\n      \"diversion_reason\": \"structural_inference\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"business rules\", \"type\": \"Concept\"},\n    {\"name\": \"data formats\", \"type\": \"Concept\"},\n    {\"name\": \"value ranges\", \"type\": \"Concept\"},\n    {\"name\": \"assessment criteria\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

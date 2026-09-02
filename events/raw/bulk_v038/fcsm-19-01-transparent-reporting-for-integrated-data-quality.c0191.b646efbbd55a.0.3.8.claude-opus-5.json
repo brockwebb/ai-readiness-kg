@@ -1,0 +1,33 @@
+{
+ "doc_id": "fcsm-19-01-transparent-reporting-for-integrated-data-quality",
+ "chunk_id": "fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0191",
+ "chunk_index": 191,
+ "chunk_start": 351168,
+ "chunk_end": 351562,
+ "chunk_tokens": 109,
+ "heading_path": [
+  "BEING ASSESSED:"
+ ],
+ "oversize": false,
+ "doc_sha256": "b646efbbd55aa606bfc033f223f76cd26c12f07e9b216d2ce2dd105a150c83b4",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 4952,
+  "cacheReadInputTokens": 13025,
+  "cacheCreationInputTokens": 23038,
+  "webSearchRequests": 0,
+  "costUSD": 0.3607025,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 2711,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3607025,
+ "duration_ms": 52074,
+ "session_id": "649aa5d9-c945-44f3-8576-2dbf76104fce",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"A fragment of a data-collection reporting form: a fill-in field for the SIZE/IMPACT of ELIS for which ALTERNATIVE DATA is being assessed, and form item 6 asking whether the alternative data will replace all data collection for an ELI or ITEM STRATUM or only for a particular outlet or type of item.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_alternative_data\",\n      \"name\": \"ALTERNATIVE DATA\",\n      \"aliases\": [\"alternative data\"],\n      \"description\": \"Data from a source other than the current collection, assessed as a replacement for or supplement to current data collection.\",\n      \"anchor\": \"ALTERNATIVE DATA IS\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0191\"\n    },\n    {\n      \"id\": \"c_eli\",\n      \"name\": \"ELI\",\n      \"aliases\": [\"ELIS\", \"entry level item\"],\n      \"description\": \"The unit for which alternative data is assessed and for which data collection may be replaced or supplemented.\",\n      \"anchor\": \"PARTICULAR ELI OR\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0191\"\n    },\n    {\n      \"id\": \"c_item_stratum\",\n      \"name\": \"ITEM STRATUM\",\n      \"aliases\": [\"item stratum\"],\n      \"description\": \"An alternative unit, alongside the ELI, at which data collection may be replaced or supplemented by alternative data.\",\n      \"anchor\": \"ITEM STRATUM, OR WILL\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0191\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [\n    {\n      \"id\": \"m_size_impact\",\n      \"text\": \"SIZE/IMPACT – NUMBER OF QUOTES, WEIGHT, AND/OR RELATIVE IMPORTANCE - OF ELIS FOR WHICH ALTERNATIVE DATA IS BEING ASSESSED:\",\n      \"response_type\": \"free_text\",\n      \"anchor\": \"SIZE/IMPACT\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0191\"\n    },\n    {\n      \"id\": \"m_item6\",\n      \"text\": \"IF \\\"REPLACE/SUPPLEMENT CURRENT DATA COLLECTION\\\" WAS CHOSEN IN BOX 4, WILL THE ALTERNATIVE DATA REPLACE ALL DATA COLLECTION FOR A PARTICULAR ELI OR ITEM STRATUM, OR WILL IT ONLY REPLACE/SUPPLEMENT DATA COLLECTION FOR A PARTICULAR OUTLET OR TYPE OF ITEM WITHIN AN ELI OR ITEM STRATUM?\",\n      \"response_type\": \"free_text\",\n      \"anchor\": \"WAS CHOSEN IN BOX 4\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0191\"\n    }\n  ],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality\",\n      \"to_id\": \"c_alternative_data\",\n      \"anchor\": \"WHICH ALTERNATIVE DATA\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0191\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality\",\n      \"to_id\": \"c_eli\",\n      \"anchor\": \"A PARTICULAR ELI\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0191\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality\",\n      \"to_id\": \"c_item_stratum\",\n      \"anchor\": \"OR ITEM STRATUM, OR\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0191\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"m_item6\",\n      \"to_id\": \"c_alternative_data\",\n      \"anchor\": \"WILL THE ALTERNATIVE\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0191\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"m_size_impact\",\n      \"to_id\": \"c_eli\",\n      \"anchor\": \"OF ELIS\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0191\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"CURRENT DATA COLLECTION\",\n      \"anchor\": \"REPLACE/SUPPLEMENT CURRENT DATA COLLECTION\"\n    },\n    {\n      \"name\": \"OUTLET\",\n      \"anchor\": \"PARTICULAR OUTLET OR\"\n    },\n    {\n      \"name\": \"BOX 4\",\n      \"anchor\": \"BOX 4\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"WAS CHOSEN IN BOX 4\",\n      \"suggested_edge\": \"uses_measure\",\n      \"diversion_reason\": \"cross_chunk\"\n    },\n    {\n      \"anchor\": \"OR ITEM STRATUM, OR\",\n      \"suggested_edge\": \"alternative_unit_of\",\n      \"diversion_reason\": \"structural_inference\"\n    }\n  ],\n  \"gleaned\": [\n    { \"name\": \"REPLACE/SUPPLEMENT CURRENT DATA COLLECTION\", \"type\": \"Concept\" },\n    { \"name\": \"TYPE OF ITEM\", \"type\": \"Concept\" },\n    { \"name\": \"NUMBER OF QUOTES\", \"type\": \"Measure\" },\n    { \"name\": \"WEIGHT\", \"type\": \"Measure\" },\n    { \"name\": \"RELATIVE IMPORTANCE\", \"type\": \"Measure\" }\n  ]\n}\n```"
+}

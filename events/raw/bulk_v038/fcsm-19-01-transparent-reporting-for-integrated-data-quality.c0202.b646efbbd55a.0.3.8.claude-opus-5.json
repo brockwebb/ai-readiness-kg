@@ -1,0 +1,33 @@
+{
+ "doc_id": "fcsm-19-01-transparent-reporting-for-integrated-data-quality",
+ "chunk_id": "fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0202",
+ "chunk_index": 202,
+ "chunk_start": 355299,
+ "chunk_end": 355417,
+ "chunk_tokens": 34,
+ "heading_path": [
+  "EXAMPLES IF POSSIBLE."
+ ],
+ "oversize": false,
+ "doc_sha256": "b646efbbd55aa606bfc033f223f76cd26c12f07e9b216d2ce2dd105a150c83b4",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 4746,
+  "cacheReadInputTokens": 13025,
+  "cacheCreationInputTokens": 22732,
+  "webSearchRequests": 0,
+  "costUSD": 0.3524925,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 2671,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3524925,
+ "duration_ms": 48064,
+ "session_id": "f7b35236-55ac-4f71-a090-1c391fbc1be4",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Two consecutive checklist questions (24, 25) from an evaluation questionnaire asking whether alternative data reduces respondent burden and whether it increases sample size; no assertions, only items.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_respondent_burden\",\n      \"name\": \"RESPONDENT BURDEN\",\n      \"aliases\": [\"respondent burden\"],\n      \"description\": \"The burden placed on respondents, which the questionnaire asks whether use of alternative data reduces.\",\n      \"anchor\": \"RESPONDENT BURDEN REDUCED\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0202\"\n    },\n    {\n      \"id\": \"c_alternative_data\",\n      \"name\": \"ALTERNATIVE DATA\",\n      \"aliases\": [\"alternative data\"],\n      \"description\": \"Non-survey or supplementary data whose use the questionnaire evaluates for burden reduction and sample size effects.\",\n      \"anchor\": \"THE USE OF THE ALTERNATIVE DATA\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0202\"\n    },\n    {\n      \"id\": \"c_sample_size\",\n      \"name\": \"SAMPLE SIZE\",\n      \"aliases\": [\"sample size\"],\n      \"description\": \"The size of the sample, which the questionnaire asks whether use of alternative data increases.\",\n      \"anchor\": \"INCREASE THE SAMPLE SIZE\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0202\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [\n    {\n      \"id\": \"m_q24_burden\",\n      \"text\": \"IS RESPONDENT BURDEN REDUCED THROUGH THE USE OF THE ALTERNATIVE DATA?\",\n      \"response_type\": \"yes_no_with_examples\",\n      \"anchor\": \"IS RESPONDENT BURDEN REDUCED\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0202\"\n    },\n    {\n      \"id\": \"m_q25_sample_size\",\n      \"text\": \"DOES USING THE ALTERNATIVE DATA INCREASE THE SAMPLE SIZE?\",\n      \"response_type\": \"yes_no_with_measure\",\n      \"anchor\": \"DOES USING THE ALTERNATIVE DATA\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0202\"\n    }\n  ],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"measures\",\n      \"from_id\": \"m_q24_burden\",\n      \"to_id\": \"c_respondent_burden\",\n      \"anchor\": \"IS RESPONDENT BURDEN REDUCED\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0202\"\n    },\n    {\n      \"type\": \"measures\",\n      \"from_id\": \"m_q25_sample_size\",\n      \"to_id\": \"c_sample_size\",\n      \"anchor\": \"INCREASE THE SAMPLE SIZE\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0202\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"m_q24_burden\",\n      \"to_id\": \"c_alternative_data\",\n      \"anchor\": \"THE USE OF THE ALTERNATIVE DATA\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0202\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"m_q25_sample_size\",\n      \"to_id\": \"c_alternative_data\",\n      \"anchor\": \"DOES USING THE ALTERNATIVE DATA\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0202\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality\",\n      \"to_id\": \"c_respondent_burden\",\n      \"anchor\": \"RESPONDENT BURDEN REDUCED\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0202\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality\",\n      \"to_id\": \"c_alternative_data\",\n      \"anchor\": \"THE USE OF THE ALTERNATIVE DATA\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0202\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality\",\n      \"to_id\": \"c_sample_size\",\n      \"anchor\": \"INCREASE THE SAMPLE SIZE\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0202\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"IS RESPONDENT BURDEN REDUCED\",\n      \"suggested_edge\": \"uses_measure\",\n      \"diversion_reason\": \"cross_chunk\"\n    },\n    {\n      \"anchor\": \"DOES USING THE ALTERNATIVE DATA\",\n      \"suggested_edge\": \"uses_measure\",\n      \"diversion_reason\": \"cross_chunk\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"SPECIFIC EXAMPLES\", \"type\": \"Concept\"},\n    {\"name\": \"MEASURE OF THE\", \"type\": \"Measure\"}\n  ]\n}\n```"
+}

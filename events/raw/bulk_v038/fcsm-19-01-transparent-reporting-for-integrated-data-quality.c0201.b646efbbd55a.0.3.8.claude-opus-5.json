@@ -1,0 +1,33 @@
+{
+ "doc_id": "fcsm-19-01-transparent-reporting-for-integrated-data-quality",
+ "chunk_id": "fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0201",
+ "chunk_index": 201,
+ "chunk_start": 355185,
+ "chunk_end": 355298,
+ "chunk_tokens": 36,
+ "heading_path": [
+  "MEASURE OF SAVINGS."
+ ],
+ "oversize": false,
+ "doc_sha256": "b646efbbd55aa606bfc033f223f76cd26c12f07e9b216d2ce2dd105a150c83b4",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 4614,
+  "cacheReadInputTokens": 13025,
+  "cacheCreationInputTokens": 22716,
+  "webSearchRequests": 0,
+  "costUSD": 0.3490325,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 2346,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3490325,
+ "duration_ms": 47562,
+ "session_id": "ac860d25-1f10-48dd-9c5d-48bc6e09a48a",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Two checklist items (23, 24) asking whether use of alternative data reduces data collection costs and respondent burden, each requiring a supporting measure.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_alternative_data\",\n      \"name\": \"ALTERNATIVE DATA\",\n      \"aliases\": [\"alternative data\"],\n      \"description\": \"Data other than the primary/original collection, whose use is assessed for cost and burden effects.\",\n      \"anchor\": \"COSTS REDUCED BY THE USE OF THE ALTERNATIVE DATA\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0201\"\n    },\n    {\n      \"id\": \"c_data_collection_costs\",\n      \"name\": \"DATA COLLECTION COSTS\",\n      \"aliases\": [\"data collection costs\"],\n      \"description\": \"Costs of collecting data, assessed for reduction through use of alternative data.\",\n      \"anchor\": \"ARE DATA COLLECTION COSTS\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0201\"\n    },\n    {\n      \"id\": \"c_respondent_burden\",\n      \"name\": \"RESPONDENT BURDEN\",\n      \"aliases\": [\"respondent burden\"],\n      \"description\": \"Burden placed on respondents, assessed for reduction through use of alternative data.\",\n      \"anchor\": \"RESPONDENT BURDEN\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0201\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [\n    {\n      \"id\": \"m_23_cost_reduction\",\n      \"text\": \"ARE DATA COLLECTION COSTS REDUCED BY THE USE OF THE ALTERNATIVE DATA?\",\n      \"response_type\": \"yes_no_with_quantitative_followup\",\n      \"tier\": \"agency_instrumented\",\n      \"anchor\": \"DATA COLLECTION COSTS REDUCED\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0201\"\n    },\n    {\n      \"id\": \"m_24_burden_reduction\",\n      \"text\": \"IS RESPONDENT BURDEN REDUCED THROUGH THE USE OF THE ALTERNATIVE DATA?\",\n      \"response_type\": \"yes_no_with_narrative_followup\",\n      \"tier\": \"agency_instrumented\",\n      \"anchor\": \"RESPONDENT BURDEN REDUCED THROUGH\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0201\"\n    }\n  ],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"measures\",\n      \"from_id\": \"m_23_cost_reduction\",\n      \"to_id\": \"c_data_collection_costs\",\n      \"anchor\": \"ARE DATA COLLECTION COSTS\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0201\"\n    },\n    {\n      \"type\": \"measures\",\n      \"from_id\": \"m_24_burden_reduction\",\n      \"to_id\": \"c_respondent_burden\",\n      \"anchor\": \"IS RESPONDENT BURDEN\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0201\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"m_23_cost_reduction\",\n      \"to_id\": \"c_alternative_data\",\n      \"anchor\": \"REDUCED BY THE USE OF THE ALTERNATIVE DATA\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0201\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"m_24_burden_reduction\",\n      \"to_id\": \"c_alternative_data\",\n      \"anchor\": \"THROUGH THE USE OF THE ALTERNATIVE DATA\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0201\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality\",\n      \"to_id\": \"c_alternative_data\",\n      \"anchor\": \"USE OF THE ALTERNATIVE DATA? IF SO\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0201\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality\",\n      \"to_id\": \"c_respondent_burden\",\n      \"anchor\": \"24.  IS RESPONDENT BURDEN\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0201\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality\",\n      \"to_id\": \"c_data_collection_costs\",\n      \"anchor\": \"23.  ARE DATA COLLECTION COSTS\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0201\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"23.  ARE DATA COLLECTION COSTS\",\n      \"suggested_edge\": \"uses_measure\",\n      \"from_hint\": \"the assessment checklist this numbered item belongs to\",\n      \"to_hint\": \"m_23_cost_reduction\",\n      \"diversion_reason\": \"cross_chunk\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0201\"\n    },\n    {\n      \"anchor\": \"24.  IS RESPONDENT BURDEN\",\n      \"suggested_edge\": \"uses_measure\",\n      \"from_hint\": \"the assessment checklist this numbered item belongs to\",\n      \"to_hint\": \"m_24_burden_reduction\",\n      \"diversion_reason\": \"cross_chunk\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0201\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"MEASURE OF SAVINGS\", \"type\": \"Concept\"}\n  ]\n}"
+}

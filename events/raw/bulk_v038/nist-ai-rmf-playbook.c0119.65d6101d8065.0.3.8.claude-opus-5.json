@@ -1,0 +1,33 @@
+{
+ "doc_id": "nist-ai-rmf-playbook",
+ "chunk_id": "nist-ai-rmf-playbook#c0119",
+ "chunk_index": 119,
+ "chunk_start": 191500,
+ "chunk_end": 191650,
+ "chunk_tokens": 33,
+ "heading_path": [
+  "MAP 3.3"
+ ],
+ "oversize": false,
+ "doc_sha256": "65d6101d806502875aadb0fd19a75c3a9cc9a5e9461129e9398a39192d8202d2",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 2425,
+  "cacheReadInputTokens": 13025,
+  "cacheCreationInputTokens": 22556,
+  "webSearchRequests": 0,
+  "costUSD": 0.2927075,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 717,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.2927075,
+ "duration_ms": 25669,
+ "session_id": "a59712b0-0e93-4c68-a7a6-56540d79ce36",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"A trailing citation to the National Academies 2022 report 'Fostering Responsible Computing Research', followed by the NIST AI RMF Playbook subcategory statement MAP 3.3 requiring that targeted application scope be specified and documented based on system capability, established context, and AI system categorization.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_targeted_application_scope\",\n      \"name\": \"Targeted application scope\",\n      \"aliases\": [\"targeted application scope\", \"application scope\"],\n      \"description\": \"The intended scope of application for an AI system, which is to be specified and documented on the basis of system capability, established context, and system categorization.\",\n      \"anchor\": \"Targeted application scope\",\n      \"location\": \"nist-ai-rmf-playbook#c0119\"\n    },\n    {\n      \"id\": \"c_established_context\",\n      \"name\": \"established context\",\n      \"aliases\": [\"context of use\"],\n      \"description\": \"The context established for the AI system, given as one of the bases for specifying targeted application scope.\",\n      \"anchor\": \"established context\",\n      \"location\": \"nist-ai-rmf-playbook#c0119\"\n    },\n    {\n      \"id\": \"c_ai_system_categorization\",\n      \"name\": \"AI system categorization\",\n      \"aliases\": [\"categorization of the AI system\"],\n      \"description\": \"The categorization assigned to an AI system, given as one of the bases for specifying targeted application scope.\",\n      \"anchor\": \"AI system categorization\",\n      \"location\": \"nist-ai-rmf-playbook#c0119\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"cl_map33\",\n      \"claim_text\": \"Targeted application scope is specified and documented based on the system’s capability, established context, and AI system categorization.\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"is specified and documented based\",\n      \"location\": \"nist-ai-rmf-playbook#c0119\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-ai-rmf-playbook\",\n      \"to_id\": \"c_targeted_application_scope\",\n      \"anchor\": \"Targeted application scope\",\n      \"location\": \"nist-ai-rmf-playbook#c0119\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-ai-rmf-playbook\",\n      \"to_id\": \"c_established_context\",\n      \"anchor\": \"established context\",\n      \"location\": \"nist-ai-rmf-playbook#c0119\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-ai-rmf-playbook\",\n      \"to_id\": \"c_ai_system_categorization\",\n      \"anchor\": \"AI system categorization\",\n      \"location\": \"nist-ai-rmf-playbook#c0119\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"nist-ai-rmf-playbook\",\n      \"to_id\": \"cl_map33\",\n      \"anchor\": \"is specified and documented based\",\n      \"location\": \"nist-ai-rmf-playbook#c0119\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_map33\",\n      \"to_id\": \"c_targeted_application_scope\",\n      \"anchor\": \"Targeted application scope is specified\",\n      \"location\": \"nist-ai-rmf-playbook#c0119\"\n    }\n  ],\n  \"cites\": [\n    {\n      \"id\": \"cite_nasem_2022_frcr\",\n      \"from_id\": \"nist-ai-rmf-playbook\",\n      \"to_title\": \"Fostering Responsible Computing Research: Foundations and Practices\",\n      \"to_author\": \"National Academies of Sciences, Engineering, and Medicine\",\n      \"to_year\": 2022,\n      \"to_publisher\": \"The National Academies Press\",\n      \"anchor\": \"Fostering Responsible Computing Research\",\n      \"location\": \"nist-ai-rmf-playbook#c0119\"\n    }\n  ],\n  \"mentions\": [\n    {\n      \"name\": \"National Academies of Sciences, Engineering, and Medicine\",\n      \"anchor\": \"National Academies of Sciences, Engineering\"\n    },\n    {\n      \"name\": \"the system’s capability\",\n      \"anchor\": \"the system’s capability\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"suggested_edge\": \"has_component\",\n      \"from_hint\": \"AI Risk Management Framework MAP function\",\n      \"to_hint\": \"Targeted application scope\",\n      \"anchor\": \"MAP 3.3\",\n      \"diversion_reason\": \"structural_inference\",\n      \"location\": \"nist-ai-rmf-playbook#c0119\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"MAP 3.3\", \"type\": \"Concept\"},\n    {\"name\": \"documentation of application scope\", \"type\": \"Practice\"}\n  ]\n}\n```"
+}

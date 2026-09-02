@@ -1,0 +1,33 @@
+{
+ "doc_id": "fcsm-19-01-transparent-reporting-for-integrated-data-quality",
+ "chunk_id": "fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0204",
+ "chunk_index": 204,
+ "chunk_start": 355517,
+ "chunk_end": 355802,
+ "chunk_tokens": 82,
+ "heading_path": [
+  "CHALLENGES:"
+ ],
+ "oversize": false,
+ "doc_sha256": "b646efbbd55aa606bfc033f223f76cd26c12f07e9b216d2ce2dd105a150c83b4",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 6062,
+  "cacheReadInputTokens": 13025,
+  "cacheCreationInputTokens": 22953,
+  "webSearchRequests": 0,
+  "costUSD": 0.3876025,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 4077,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3876025,
+ "duration_ms": 63278,
+ "session_id": "dd67eeba-57bf-4c30-9a04-3662d8c6309f",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"A continuation of a numbered question list (items 26-28) under a CHALLENGES heading, asking whether alternative data improves overall data quality, provides sufficient detail to define a unique item, and would be delivered reliably and timely enough for production usage.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_alternative_data\",\n      \"name\": \"ALTERNATIVE DATA\",\n      \"aliases\": [\"alternative data\"],\n      \"description\": \"Non-survey/administrative or third-party data considered as an input, whose quality contribution, level of detail, and delivery reliability the question list probes.\",\n      \"anchor\": \"USE OF ALTERNATIVE DATA\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0204\"\n    },\n    {\n      \"id\": \"c_overall_data_quality\",\n      \"name\": \"OVERALL DATA QUALITY\",\n      \"aliases\": [\"overall data quality\"],\n      \"description\": \"The aggregate quality of the resulting data product, asked about as something that may or may not be improved by using alternative data.\",\n      \"anchor\": \"IS OVERALL DATA QUALITY IMPROVED\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0204\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [\n    {\n      \"id\": \"m_quality_improved\",\n      \"text\": \"IS OVERALL DATA QUALITY IMPROVED BY THE USE OF ALTERNATIVE DATA?\",\n      \"response_type\": \"open_text\",\n      \"anchor\": \"IS OVERALL DATA QUALITY IMPROVED\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0204\"\n    },\n    {\n      \"id\": \"m_sufficient_detail\",\n      \"text\": \"DOES THE ALTERNATIVE DATA PROVIDE A SUFFICIENT LEVEL OF DETAIL/DESCRIPTION\",\n      \"response_type\": \"yes_no\",\n      \"anchor\": \"SUFFICIENT LEVEL OF DETAIL\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0204\"\n    },\n    {\n      \"id\": \"m_unique_item\",\n      \"text\": \"IS IT POSSIBLE TO DEFINE A UNIQUE ITEM?\",\n      \"response_type\": \"yes_no\",\n      \"anchor\": \"DEFINE A UNIQUE ITEM\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0204\"\n    },\n    {\n      \"id\": \"m_reliable_timely_delivery\",\n      \"text\": \"WOULD THE ALTERNATIVE DATA BE DELIVERED IN A RELIABLE AND TIMELY FASHION\",\n      \"response_type\": \"yes_no\",\n      \"anchor\": \"RELIABLE AND TIMELY FASHION\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0204\"\n    }\n  ],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality\",\n      \"to_id\": \"c_alternative_data\",\n      \"anchor\": \"USE OF ALTERNATIVE DATA\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0204\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality\",\n      \"to_id\": \"c_overall_data_quality\",\n      \"anchor\": \"IS OVERALL DATA QUALITY IMPROVED\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0204\"\n    },\n    {\n      \"type\": \"measures\",\n      \"from_id\": \"m_quality_improved\",\n      \"to_id\": \"c_overall_data_quality\",\n      \"anchor\": \"IS OVERALL DATA QUALITY IMPROVED\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0204\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"m_sufficient_detail\",\n      \"to_id\": \"c_alternative_data\",\n      \"anchor\": \"SUFFICIENT LEVEL OF DETAIL\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0204\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"m_reliable_timely_delivery\",\n      \"to_id\": \"c_alternative_data\",\n      \"anchor\": \"RELIABLE AND TIMELY FASHION\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0204\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"PRODUCTION USAGE\",\n      \"anchor\": \"PRODUCTION USAGE\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"DEFINE A UNIQUE ITEM\",\n      \"suggested_edge\": \"uses_measure\",\n      \"diversion_reason\": \"cross_chunk\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"CHALLENGES\", \"type\": \"Concept\"},\n    {\"name\": \"TIMELINESS OF DELIVERY\", \"type\": \"Concept\"}\n  ]\n}"
+}

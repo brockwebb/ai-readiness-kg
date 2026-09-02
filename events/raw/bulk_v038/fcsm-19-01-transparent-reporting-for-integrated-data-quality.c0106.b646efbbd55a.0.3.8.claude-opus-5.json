@@ -1,0 +1,33 @@
+{
+ "doc_id": "fcsm-19-01-transparent-reporting-for-integrated-data-quality",
+ "chunk_id": "fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0106",
+ "chunk_index": 106,
+ "chunk_start": 327031,
+ "chunk_end": 327108,
+ "chunk_tokens": 30,
+ "heading_path": [
+  "33 G1 na"
+ ],
+ "oversize": false,
+ "doc_sha256": "b646efbbd55aa606bfc033f223f76cd26c12f07e9b216d2ce2dd105a150c83b4",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 1987,
+  "cacheReadInputTokens": 13025,
+  "cacheCreationInputTokens": 22518,
+  "webSearchRequests": 0,
+  "costUSD": 0.2813775,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 1175,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.2813775,
+ "duration_ms": 23798,
+ "session_id": "d1064e38-1384-40a3-b106-519fa49c84a3",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"A fragment of a data-quality reporting table: a 'Data Integration' section header and one item row ('have information on integration', Binary response, with numeric scores) — no prose assertions, so only the concept and the measure item are typable.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c1\",\n      \"name\": \"Data Integration\",\n      \"aliases\": [\"data integration\"],\n      \"description\": \"Table section grouping items about integration of data sources.\",\n      \"anchor\": \"Data Integration\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0106\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [\n    {\n      \"id\": \"m1\",\n      \"text\": \"have information on\",\n      \"response_type\": \"Binary\",\n      \"anchor\": \"have information on\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0106\"\n    }\n  ],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality\",\n      \"to_id\": \"c1\",\n      \"anchor\": \"Data Integration\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0106\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [],\n  \"proposed_relationships\": [\n    {\n      \"from_id\": \"m1\",\n      \"to_id\": \"c1\",\n      \"suggested_edge\": \"measures\",\n      \"anchor\": \"have information on\",\n      \"diversion_reason\": \"structural_inference\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0106\"\n    },\n    {\n      \"from_id\": \"m1\",\n      \"to_id\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality\",\n      \"suggested_edge\": \"uses_measure\",\n      \"anchor\": \"8 Binary\",\n      \"diversion_reason\": \"cross_chunk\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0106\"\n    }\n  ],\n  \"gleaned\": []\n}"
+}

@@ -1,0 +1,33 @@
+{
+ "doc_id": "fcsm-19-01-transparent-reporting-for-integrated-data-quality",
+ "chunk_id": "fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0196",
+ "chunk_index": 196,
+ "chunk_start": 353271,
+ "chunk_end": 353662,
+ "chunk_tokens": 120,
+ "heading_path": [
+  "SAMPLING (HOW THE DATASET IS COMPILED BY THE SOURCE)"
+ ],
+ "oversize": false,
+ "doc_sha256": "b646efbbd55aa606bfc033f223f76cd26c12f07e9b216d2ce2dd105a150c83b4",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 5769,
+  "cacheReadInputTokens": 13025,
+  "cacheCreationInputTokens": 23112,
+  "webSearchRequests": 0,
+  "costUSD": 0.3818675,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 3809,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3818675,
+ "duration_ms": 59839,
+ "session_id": "c6d0a4ad-43bd-4b8b-ba38-9e1130666a9e",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Checklist items 15-17 of a data-source evaluation questionnaire: monthly/historical data availability, and under the SAMPLING heading, whether the source's sampling method and methods of disaggregation are understood and described.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_sampling_method\",\n      \"name\": \"SAMPLING METHOD\",\n      \"aliases\": [\"sampling method\"],\n      \"description\": \"The method by which the source compiles a sample rather than the universe of records; the checklist asks that it be well understood and briefly described.\",\n      \"anchor\": \"DESCRIPTION OF THE SAMPLING METHOD\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0196\"\n    },\n    {\n      \"id\": \"c_disaggregation\",\n      \"name\": \"METHODS OF DISAGGREGATION\",\n      \"aliases\": [\"methods of disaggregation\", \"disaggregation\"],\n      \"description\": \"The methods behind a dataset being a subset or having filters/thresholds placed on it, which the checklist asks be understood and described.\",\n      \"anchor\": \"METHODS OF DISAGGREGATION\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0196\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [\n    {\n      \"id\": \"m_q15_monthly\",\n      \"text\": \"ARE DATA AVAILABLE ON A MONTHLY BASIS?\",\n      \"response_type\": \"yes_no\",\n      \"anchor\": \"AVAILABLE ON A MONTHLY BASIS\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0196\"\n    },\n    {\n      \"id\": \"m_q15_historical\",\n      \"text\": \"CAN HISTORICAL DATA BE ACCESSED IF NEEDED?\",\n      \"response_type\": \"yes_no\",\n      \"anchor\": \"CAN HISTORICAL DATA BE ACCESSED\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0196\"\n    },\n    {\n      \"id\": \"m_q16_sampling\",\n      \"text\": \"PROVIDE A BRIEF DESCRIPTION OF THE SAMPLING METHOD.\",\n      \"response_type\": \"narrative\",\n      \"anchor\": \"DESCRIPTION OF THE SAMPLING METHOD\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0196\"\n    },\n    {\n      \"id\": \"m_q17_disagg\",\n      \"text\": \"UNDERSTAND THE METHODS OF DISAGGREGATION?\",\n      \"response_type\": \"yes_no\",\n      \"anchor\": \"METHODS OF DISAGGREGATION\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0196\"\n    }\n  ],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"measures\",\n      \"from_id\": \"m_q16_sampling\",\n      \"to_id\": \"c_sampling_method\",\n      \"anchor\": \"DESCRIPTION OF THE SAMPLING METHOD\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0196\"\n    },\n    {\n      \"type\": \"measures\",\n      \"from_id\": \"m_q17_disagg\",\n      \"to_id\": \"c_disaggregation\",\n      \"anchor\": \"METHODS OF DISAGGREGATION\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0196\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality\",\n      \"to_id\": \"c_sampling_method\",\n      \"anchor\": \"DESCRIPTION OF THE SAMPLING METHOD\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0196\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality\",\n      \"to_id\": \"c_disaggregation\",\n      \"anchor\": \"METHODS OF DISAGGREGATION\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0196\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"HISTORICAL DATA\",\n      \"anchor\": \"HISTORICAL DATA\"\n    },\n    {\n      \"name\": \"THE DATASET\",\n      \"anchor\": \"THE DATASET IS A SUBSET\"\n    },\n    {\n      \"name\": \"UNIVERSE OF SALES\",\n      \"anchor\": \"UNIVERSE OF SALES\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"suggested_edge\": \"measure_belongs_to_instrument\",\n      \"anchor\": \"IS A SAMPLE\",\n      \"diversion_reason\": \"cross_chunk\",\n      \"note\": \"Items 15-17 are measures of a data-source evaluation checklist whose Instrument node is not in this chunk.\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"FILTERS/THRESHOLDS\", \"type\": \"Concept\"},\n    {\"name\": \"SUBSET\", \"type\": \"Concept\"},\n    {\"name\": \"DATA AVAILABILITY\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

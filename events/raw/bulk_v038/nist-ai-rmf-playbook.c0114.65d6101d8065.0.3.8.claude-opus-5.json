@@ -1,0 +1,33 @@
+{
+ "doc_id": "nist-ai-rmf-playbook",
+ "chunk_id": "nist-ai-rmf-playbook#c0114",
+ "chunk_index": 114,
+ "chunk_start": 184259,
+ "chunk_end": 184369,
+ "chunk_tokens": 23,
+ "heading_path": [
+  "MAP 3.1"
+ ],
+ "oversize": false,
+ "doc_sha256": "65d6101d806502875aadb0fd19a75c3a9cc9a5e9461129e9398a39192d8202d2",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 3246,
+  "cacheReadInputTokens": 13025,
+  "cacheCreationInputTokens": 22610,
+  "webSearchRequests": 0,
+  "costUSD": 0.3137725,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 1800,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3137725,
+ "duration_ms": 35574,
+ "session_id": "99a11e4c-05d4-494f-a7da-290a355993ae",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"A citation to the NIST Privacy Framework v1.0 followed by AI RMF subcategory MAP 3.1, which directs that potential benefits of intended AI system functionality and performance be examined and documented.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_ai_system_functionality_performance\",\n      \"name\": \"AI system functionality and performance\",\n      \"aliases\": [\"intended AI system functionality\", \"AI system performance\"],\n      \"description\": \"The intended functioning and performance of an AI system, whose potential benefits MAP 3.1 directs be examined and documented.\",\n      \"anchor\": \"AI system functionality\",\n      \"location\": \"nist-ai-rmf-playbook#c0114\"\n    },\n    {\n      \"id\": \"c_potential_benefits\",\n      \"name\": \"Potential benefits\",\n      \"aliases\": [\"benefits of intended AI system functionality\"],\n      \"description\": \"The prospective advantages of an AI system's intended functionality and performance, to be examined and documented under MAP 3.1.\",\n      \"anchor\": \"Potential benefits of intended\",\n      \"location\": \"nist-ai-rmf-playbook#c0114\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [\n    {\n      \"id\": \"f_nist_privacy_framework\",\n      \"name\": \"NIST Privacy Framework\",\n      \"owner\": \"NIST\",\n      \"year\": 2020,\n      \"anchor\": \"NIST Privacy Framework: A Tool\",\n      \"location\": \"nist-ai-rmf-playbook#c0114\"\n    }\n  ],\n  \"practices\": [\n    {\n      \"id\": \"p_map_3_1_examine_benefits\",\n      \"text\": \"Potential benefits of intended AI system functionality and performance\",\n      \"as_of_date\": null,\n      \"scope\": \"any\",\n      \"anchor\": \"benefits of intended AI system\",\n      \"location\": \"nist-ai-rmf-playbook#c0114\"\n    }\n  ],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"recommends\",\n      \"from_id\": \"nist-ai-rmf-playbook\",\n      \"to_id\": \"p_map_3_1_examine_benefits\",\n      \"anchor\": \"are examined and\",\n      \"location\": \"nist-ai-rmf-playbook#c0114\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"p_map_3_1_examine_benefits\",\n      \"to_id\": \"c_ai_system_functionality_performance\",\n      \"anchor\": \"intended AI system functionality\",\n      \"location\": \"nist-ai-rmf-playbook#c0114\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-ai-rmf-playbook\",\n      \"to_id\": \"c_potential_benefits\",\n      \"anchor\": \"Potential benefits\",\n      \"location\": \"nist-ai-rmf-playbook#c0114\"\n    }\n  ],\n  \"cites\": [\n    {\n      \"type\": \"cites\",\n      \"from_id\": \"nist-ai-rmf-playbook\",\n      \"to_id\": \"nist-privacy-framework-v1-0\",\n      \"anchor\": \"Kaitlin R. Boeckl\",\n      \"location\": \"nist-ai-rmf-playbook#c0114\"\n    }\n  ],\n  \"mentions\": [\n    {\n      \"name\": \"MAP 3.1\",\n      \"anchor\": \"MAP 3.1\"\n    },\n    {\n      \"name\": \"Enterprise Risk Management\",\n      \"anchor\": \"Enterprise Risk Management\"\n    },\n    {\n      \"name\": \"National Institute of Standards\",\n      \"anchor\": \"National Institute of Standards\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"MAP 3.1\",\n      \"suggested_edge\": \"has_component\",\n      \"from_hint\": \"NIST AI RMF (MAP function)\",\n      \"to_hint\": \"p_map_3_1_examine_benefits\",\n      \"diversion_reason\": \"structural_inference\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"Privacy risk management\", \"type\": \"Concept\"},\n    {\"name\": \"AI system documentation\", \"type\": \"Practice\"}\n  ]\n}\n```"
+}

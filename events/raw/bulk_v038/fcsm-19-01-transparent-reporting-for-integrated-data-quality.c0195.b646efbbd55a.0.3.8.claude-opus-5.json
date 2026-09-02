@@ -1,0 +1,33 @@
+{
+ "doc_id": "fcsm-19-01-transparent-reporting-for-integrated-data-quality",
+ "chunk_id": "fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0195",
+ "chunk_index": 195,
+ "chunk_start": 352797,
+ "chunk_end": 353270,
+ "chunk_tokens": 133,
+ "heading_path": [
+  "SCOPE (THE LEVEL OF BREADTH REPRESENTED IN THE DATA)"
+ ],
+ "oversize": false,
+ "doc_sha256": "b646efbbd55aa606bfc033f223f76cd26c12f07e9b216d2ce2dd105a150c83b4",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 6197,
+  "cacheReadInputTokens": 13025,
+  "cacheCreationInputTokens": 23186,
+  "webSearchRequests": 0,
+  "costUSD": 0.39330750000000003,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 4057,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.39330750000000003,
+ "duration_ms": 67494,
+ "session_id": "dc06b42e-71ee-430a-8eb9-deee810fcebf",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"A checklist section on SCOPE (the level of breadth represented in the data), items 12-15, asking whether alternative-source data are available for current and new PSUs, for the outlet types the CPI samples, for the full range of items in the listed ELI(s), and on a monthly basis with historical access.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_scope\",\n      \"name\": \"SCOPE (THE LEVEL OF BREADTH REPRESENTED IN THE DATA)\",\n      \"aliases\": [\"scope\", \"breadth of data\"],\n      \"description\": \"The level of breadth represented in the data, assessed by checklist items 12-15 covering geographic units, outlet types, item range, and time coverage.\",\n      \"anchor\": \"SCOPE (THE LEVEL OF BREADTH REPRESENTED IN THE DATA)\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0195\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [\n    {\n      \"id\": \"m12a\",\n      \"text\": \"ARE DATA AVAILABLE FOR THE CURRENT PSUS [PRIMARY SAMPLING UNITS]?\",\n      \"response_type\": \"yes_no\",\n      \"anchor\": \"CURRENT PSUS\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0195\"\n    },\n    {\n      \"id\": \"m12b\",\n      \"text\": \"WHAT ABOUT NEW PSUS COMING ON AS A RESULT OF A GEOGRAPHIC REVISION?\",\n      \"response_type\": \"open_ended\",\n      \"anchor\": \"GEOGRAPHIC REVISION\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0195\"\n    },\n    {\n      \"id\": \"m13\",\n      \"text\": \"ARE DATA AVAILABLE FOR THE TYPES OF OUTLETS THE CPI WOULD TYPICALLY SAMPLE FROM?\",\n      \"response_type\": \"yes_no\",\n      \"anchor\": \"TYPES OF OUTLETS\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0195\"\n    },\n    {\n      \"id\": \"m14\",\n      \"text\": \"ARE DATA AVAILABLE FOR THE COMPLETE RANGE OF ITEMS INCLUDED IN THE ELI(S) LISTED IN BOX 1?\",\n      \"response_type\": \"yes_no\",\n      \"anchor\": \"COMPLETE RANGE\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0195\"\n    },\n    {\n      \"id\": \"m15a\",\n      \"text\": \"ARE DATA AVAILABLE ON A MONTHLY BASIS?\",\n      \"response_type\": \"yes_no\",\n      \"anchor\": \"MONTHLY BASIS\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0195\"\n    },\n    {\n      \"id\": \"m15b\",\n      \"text\": \"CAN HISTORICAL DATA BE ACCESSED IF NEEDED?\",\n      \"response_type\": \"yes_no\",\n      \"anchor\": \"HISTORICAL DATA\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0195\"\n    }\n  ],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"measures\",\n      \"from_id\": \"m12a\",\n      \"to_id\": \"c_scope\",\n      \"anchor\": \"CURRENT PSUS\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0195\"\n    },\n    {\n      \"type\": \"measures\",\n      \"from_id\": \"m13\",\n      \"to_id\": \"c_scope\",\n      \"anchor\": \"TYPES OF OUTLETS\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0195\"\n    },\n    {\n      \"type\": \"measures\",\n      \"from_id\": \"m14\",\n      \"to_id\": \"c_scope\",\n      \"anchor\": \"COMPLETE RANGE\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0195\"\n    },\n    {\n      \"type\": \"measures\",\n      \"from_id\": \"m15a\",\n      \"to_id\": \"c_scope\",\n      \"anchor\": \"MONTHLY BASIS\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0195\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"PRIMARY SAMPLING UNITS\",\n      \"anchor\": \"[PRIMARY SAMPLING UNITS]\"\n    },\n    {\n      \"name\": \"CPI\",\n      \"anchor\": \"THE CPI WOULD\"\n    },\n    {\n      \"name\": \"ELI(S)\",\n      \"anchor\": \"ELI(S) LISTED\"\n    },\n    {\n      \"name\": \"BOX 1\",\n      \"anchor\": \"BOX 1\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"COMPLETE RANGE\",\n      \"suggested_edge\": \"uses_measure\",\n      \"diversion_reason\": \"cross_chunk\",\n      \"note\": \"The checklist instrument that owns items 12-15 is named outside this chunk.\"\n    },\n    {\n      \"anchor\": \"ELI(S) LISTED\",\n      \"suggested_edge\": \"references\",\n      \"diversion_reason\": \"cross_chunk\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"LEVEL(S) IS THE DATA AGGREGATED TO?\", \"type\": \"Measure\"},\n    {\"name\": \"geographic revision\", \"type\": \"Concept\"},\n    {\"name\": \"monthly data availability\", \"type\": \"Concept\"},\n    {\"name\": \"historical data access\", \"type\": \"Concept\"},\n    {\"name\": \"outlet sample\", \"type\": \"Concept\"}\n  ]\n}"
+}

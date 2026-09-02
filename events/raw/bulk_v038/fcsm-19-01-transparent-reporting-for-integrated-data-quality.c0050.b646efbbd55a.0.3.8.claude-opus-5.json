@@ -1,0 +1,33 @@
+{
+ "doc_id": "fcsm-19-01-transparent-reporting-for-integrated-data-quality",
+ "chunk_id": "fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0050",
+ "chunk_index": 50,
+ "chunk_start": 173193,
+ "chunk_end": 173493,
+ "chunk_tokens": 62,
+ "heading_path": [
+  "4. Traceability -"
+ ],
+ "oversize": false,
+ "doc_sha256": "b646efbbd55aa606bfc033f223f76cd26c12f07e9b216d2ce2dd105a150c83b4",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 6481,
+  "cacheReadInputTokens": 13025,
+  "cacheCreationInputTokens": 22747,
+  "webSearchRequests": 0,
+  "costUSD": 0.3960175,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 5047,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3960175,
+ "duration_ms": 72428,
+ "session_id": "65bf1070-f2ed-473e-a887-b56611d8c810",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Tail of a data-quality dimension's assessment criteria (equivalence across redundant/distributed databases against USVETS data dictionary values), then dimension 4, Traceability, with its definition and its assessment criterion.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c-traceability\",\n      \"name\": \"Traceability\",\n      \"aliases\": [\"data traceability\"],\n      \"description\": \"A data quality dimension concerning how well documented, verifiable, and attributable to a source the data are.\",\n      \"anchor\": \"4. Traceability\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0050\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"def-traceability\",\n      \"term\": \"Traceability\",\n      \"verbatim_text\": \"The extent to which data are well documented, verifiable, and easily attributed to a source.\",\n      \"normative_status\": \"policy\",\n      \"as_of_date\": null,\n      \"anchor\": \"The extent to which data are well\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0050\"\n    }\n  ],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [\n    {\n      \"id\": \"m-traceability-criteria\",\n      \"text\": \"Clarity of the description of the source of a data element in documentation including metadata information.\",\n      \"anchor\": \"Clarity of the description\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0050\"\n    },\n    {\n      \"id\": \"m-equivalence-criteria\",\n      \"text\": \"The degree to which a set of data is equivalent in redundant or distributed databases and data element values are in line with the acceptable values defined in the USVETS data dictionary.\",\n      \"anchor\": \"The degree to which a set\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0050\"\n    }\n  ],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality\",\n      \"to_id\": \"def-traceability\",\n      \"anchor\": \"Definition - The extent\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0050\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality\",\n      \"to_id\": \"c-traceability\",\n      \"anchor\": \"4. Traceability\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0050\"\n    },\n    {\n      \"type\": \"measures\",\n      \"from_id\": \"m-traceability-criteria\",\n      \"to_id\": \"c-traceability\",\n      \"anchor\": \"Assessment criteria - Clarity\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0050\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"USVETS\",\n      \"anchor\": \"USVETS\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"suggested_edge\": \"measures\",\n      \"from_id\": \"m-equivalence-criteria\",\n      \"to_id\": null,\n      \"anchor\": \"The degree to which a set\",\n      \"diversion_reason\": \"cross_chunk\"\n    },\n    {\n      \"suggested_edge\": \"applies_to\",\n      \"from_id\": \"m-equivalence-criteria\",\n      \"to_id\": null,\n      \"anchor\": \"acceptable values defined in the\",\n      \"diversion_reason\": \"endpoint_not_located\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"data element\", \"type\": \"Concept\"},\n    {\"name\": \"metadata information\", \"type\": \"Concept\"},\n    {\"name\": \"documentation\", \"type\": \"Concept\"},\n    {\"name\": \"USVETS data dictionary\", \"type\": \"Standard\"},\n    {\"name\": \"redundant or distributed databases\", \"type\": \"Concept\"}\n  ]\n}"
+}

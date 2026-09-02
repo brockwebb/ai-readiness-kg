@@ -1,0 +1,33 @@
+{
+ "doc_id": "fcsm-19-01-transparent-reporting-for-integrated-data-quality",
+ "chunk_id": "fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0118",
+ "chunk_index": 118,
+ "chunk_start": 328011,
+ "chunk_end": 328149,
+ "chunk_tokens": 64,
+ "heading_path": [
+  "46 D4 D12"
+ ],
+ "oversize": false,
+ "doc_sha256": "b646efbbd55aa606bfc033f223f76cd26c12f07e9b216d2ce2dd105a150c83b4",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 1222,
+  "cacheReadInputTokens": 13025,
+  "cacheCreationInputTokens": 22644,
+  "webSearchRequests": 0,
+  "costUSD": 0.2635125,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 700,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.2635125,
+ "duration_ms": 14942,
+ "session_id": "6fdd928c-b9d4-4be6-8d2e-65f10f165d64",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"A fragment of a survey-item results table: three item rows (interpret/use, overall detail, improve doc on how to use) with response types Binary, Likert, and Text plus numeric statistics; no prose assertions.\"\n  },\n  \"concepts\": [],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [\n    {\n      \"id\": \"m_interpret_use\",\n      \"text\": \"interpret/use\",\n      \"response_type\": \"Binary\",\n      \"anchor\": \"interpret/use\",\n      \"location\": \"table row, item 34\"\n    },\n    {\n      \"id\": \"m_overall_detail\",\n      \"text\": \"overall detail\",\n      \"response_type\": \"Likert\",\n      \"anchor\": \"overall detail\",\n      \"location\": \"table row 45 D3 D11, item 35\"\n    },\n    {\n      \"id\": \"m_improve_doc\",\n      \"text\": \"improve doc on how\",\n      \"response_type\": \"Text\",\n      \"anchor\": \"improve doc on how\",\n      \"location\": \"table row 46 D4 D12\"\n    }\n  ],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [],\n  \"cites\": [],\n  \"mentions\": [],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"45 D3 D11\",\n      \"suggested_edge\": \"uses_measure\",\n      \"diversion_reason\": \"cross_chunk\"\n    }\n  ],\n  \"gleaned\": []\n}\n```"
+}

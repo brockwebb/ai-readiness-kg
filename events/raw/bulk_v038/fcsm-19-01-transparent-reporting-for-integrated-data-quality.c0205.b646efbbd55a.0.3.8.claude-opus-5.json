@@ -1,0 +1,33 @@
+{
+ "doc_id": "fcsm-19-01-transparent-reporting-for-integrated-data-quality",
+ "chunk_id": "fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0205",
+ "chunk_index": 205,
+ "chunk_start": 355803,
+ "chunk_end": 356072,
+ "chunk_tokens": 82,
+ "heading_path": [
+  "29.  WHAT ARE THE FINANCIAL COSTS TO ACQUIRING THE DATA?"
+ ],
+ "oversize": false,
+ "doc_sha256": "b646efbbd55aa606bfc033f223f76cd26c12f07e9b216d2ce2dd105a150c83b4",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 5941,
+  "cacheReadInputTokens": 13025,
+  "cacheCreationInputTokens": 22886,
+  "webSearchRequests": 0,
+  "costUSD": 0.3839075,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 4624,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3839075,
+ "duration_ms": 66432,
+ "session_id": "01906b44-96a3-4c31-a713-69f57e453cc0",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"A run of numbered questionnaire items (29–31) from an alternative-data assessment checklist, asking about acquisition costs, required resources/skills, and existing CPI systems the alternative data would relate to; the parent instrument is not named in this chunk.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_alternative_data\",\n      \"name\": \"ALTERNATIVE DATA\",\n      \"aliases\": [\"alternative data\"],\n      \"description\": \"Non-traditional data considered as an input in place of or alongside existing CPI systems.\",\n      \"anchor\": \"THE ALTERNATIVE DATA WOULD\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0205\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [\n    {\n      \"id\": \"m_q29_financial_costs\",\n      \"text\": \"WHAT ARE THE FINANCIAL COSTS TO ACQUIRING THE DATA?\",\n      \"response_type\": \"open_ended\",\n      \"anchor\": \"FINANCIAL COSTS TO ACQUIRING\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0205\"\n    },\n    {\n      \"id\": \"m_q30_resources_skills\",\n      \"text\": \"WHAT RESOURCES AND/OR SKILLS ARE NEEDED TO WORK WITH THE DATA?\",\n      \"response_type\": \"open_ended\",\n      \"anchor\": \"WHAT RESOURCES AND/OR SKILLS ARE NEEDED\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0205\"\n    },\n    {\n      \"id\": \"m_q31_existing_cpi_systems\",\n      \"text\": \"IF KNOWN (AND APPLICABLE), LIST ANY EXISTING CPI SYSTEMS THAT THE ALTERNATIVE DATA WOULD\",\n      \"response_type\": \"open_ended\",\n      \"anchor\": \"EXISTING CPI SYSTEMS\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0205\"\n    }\n  ],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"m_q31_existing_cpi_systems\",\n      \"to_id\": \"c_alternative_data\",\n      \"anchor\": \"THE ALTERNATIVE DATA WOULD\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0205\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"PRODUCTION USAGE\",\n      \"anchor\": \"PRODUCTION USAGE\"\n    },\n    {\n      \"name\": \"CPI SYSTEMS\",\n      \"anchor\": \"ANY EXISTING CPI SYSTEMS\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"29.  WHAT ARE THE FINANCIAL COSTS\",\n      \"suggested_edge\": \"uses_measure\",\n      \"diversion_reason\": \"cross_chunk\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0205\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"FINANCIAL COSTS TO ACQUIRING THE DATA\", \"type\": \"Concept\"},\n    {\"name\": \"RESOURCES AND/OR SKILLS\", \"type\": \"Concept\"},\n    {\"name\": \"CPI SYSTEMS\", \"type\": \"Concept\"}\n  ]\n}"
+}

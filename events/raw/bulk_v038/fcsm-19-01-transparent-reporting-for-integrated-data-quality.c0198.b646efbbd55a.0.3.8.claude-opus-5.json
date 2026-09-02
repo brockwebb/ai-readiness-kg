@@ -1,0 +1,33 @@
+{
+ "doc_id": "fcsm-19-01-transparent-reporting-for-integrated-data-quality",
+ "chunk_id": "fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0198",
+ "chunk_index": 198,
+ "chunk_start": 354083,
+ "chunk_end": 354454,
+ "chunk_tokens": 99,
+ "heading_path": [
+  "USES OF THIS DATA)."
+ ],
+ "oversize": false,
+ "doc_sha256": "b646efbbd55aa606bfc033f223f76cd26c12f07e9b216d2ce2dd105a150c83b4",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 7612,
+  "cacheReadInputTokens": 13025,
+  "cacheCreationInputTokens": 23048,
+  "webSearchRequests": 0,
+  "costUSD": 0.42730250000000003,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 5605,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.42730250000000003,
+ "duration_ms": 79013,
+ "session_id": "c6da0c5f-bb72-491c-aa8b-c8d70537e992",
+ "raw_result": "{\n\"extract_plan\": {\n\"chunk_summary\": \"Checklist items 20-21 of a data-source evaluation questionnaire, asking about the structure of the provided data (flat files vs. relational database), whether processing/transformation is required, and whether the data must be cleaned and/or validated before use.\"\n},\n\"concepts\": [\n{\n\"id\": \"c_structure_of_data_provided\",\n\"name\": \"STRUCTURE OF THE DATA PROVIDED\",\n\"aliases\": [\"data structure\", \"structure of provided data\"],\n\"description\": \"The form in which the data is delivered, e.g. as flat files or as a relational database.\",\n\"anchor\": \"STRUCTURE OF THE DATA PROVIDED\",\n\"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0198\"\n},\n{\n\"id\": \"c_processing_transformation\",\n\"name\": \"PROCESSING/TRANSFORMATION\",\n\"aliases\": [\"data processing\", \"data transformation\"],\n\"description\": \"Work that may be required on the provided data before it can be used.\",\n\"anchor\": \"PROCESSING/TRANSFORMATION\",\n\"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0198\"\n},\n{\n\"id\": \"c_cleaned_validated\",\n\"name\": \"CLEANED AND/OR VALIDATED\",\n\"aliases\": [\"data cleaning\", \"data validation\"],\n\"description\": \"Cleaning and/or validation that the data may need before it can be used.\",\n\"anchor\": \"CLEANED AND/OR VALIDATED\",\n\"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0198\"\n}\n],\n\"definitions\": [],\n\"claims\": [],\n\"instruments\": [],\n\"measures\": [\n{\n\"id\": \"m_q20_structure\",\n\"text\": \"WHAT IS THE STRUCTURE OF THE DATA PROVIDED\",\n\"response_type\": \"open_ended\",\n\"anchor\": \"WHAT IS THE STRUCTURE\",\n\"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0198\"\n},\n{\n\"id\": \"m_q21_cleaning\",\n\"text\": \"DOES THE DATA NEED TO BE CLEANED AND/OR VALIDATED BEFORE IT CAN BE USED?\",\n\"response_type\": \"open_ended\",\n\"anchor\": \"DOES THE DATA NEED TO BE CLEANED\",\n\"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0198\"\n}\n],\n\"standards\": [],\n\"frameworks\": [],\n\"practices\": [],\n\"tools\": [],\n\"platforms\": [],\n\"edges\": [\n{\n\"type\": \"measures\",\n\"from_id\": \"m_q20_structure\",\n\"to_id\": \"c_structure_of_data_provided\",\n\"anchor\": \"IS THE STRUCTURE OF THE DATA PROVIDED\",\n\"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0198\"\n},\n{\n\"type\": \"applies_to\",\n\"from_id\": \"m_q20_structure\",\n\"to_id\": \"c_processing_transformation\",\n\"anchor\": \"REQUIRE PROCESSING/TRANSFORMATION\",\n\"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0198\"\n},\n{\n\"type\": \"measures\",\n\"from_id\": \"m_q21_cleaning\",\n\"to_id\": \"c_cleaned_validated\",\n\"anchor\": \"NEED TO BE CLEANED\",\n\"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0198\"\n},\n{\n\"type\": \"mentions\",\n\"from_id\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality\",\n\"to_id\": \"c_structure_of_data_provided\",\n\"anchor\": \"STRUCTURE OF THE DATA\",\n\"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0198\"\n},\n{\n\"type\": \"mentions\",\n\"from_id\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality\",\n\"to_id\": \"c_processing_transformation\",\n\"anchor\": \"WILL IT REQUIRE PROCESSING/TRANSFORMATION\",\n\"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0198\"\n},\n{\n\"type\": \"mentions\",\n\"from_id\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality\",\n\"to_id\": \"c_cleaned_validated\",\n\"anchor\": \"BE CLEANED AND/OR VALIDATED\",\n\"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0198\"\n}\n],\n\"cites\": [],\n\"mentions\": [\n{\"name\": \"FLAT FILES\", \"anchor\": \"FLAT FILES\"},\n{\"name\": \"RELATIONAL DATABASE\", \"anchor\": \"RELATIONAL DATABASE\"},\n{\"name\": \"MONTHLY PRODUCTION\", \"anchor\": \"MONTHLY PRODUCTION\"}\n],\n\"proposed_relationships\": [\n{\n\"anchor\": \"20. WHAT IS THE STRUCTURE\",\n\"suggested_edge\": \"uses_measure\",\n\"from_id\": null,\n\"to_id\": \"m_q20_structure\",\n\"diversion_reason\": \"cross_chunk\",\n\"note\": \"The numbered questionnaire that owns items 20 and 21 is named outside this chunk.\"\n}\n],\n\"gleaned\": [\n{\"name\": \"ADDITIONAL RESOURCES NEEDED TO ACCOMPLISH THIS\", \"type\": \"Concept\"},\n{\"name\": \"DELIVERY\", \"type\": \"Concept\"},\n{\"name\": \"PROPOSED USES OF THIS DATA\", \"type\": \"Concept\"}\n]\n}"
+}

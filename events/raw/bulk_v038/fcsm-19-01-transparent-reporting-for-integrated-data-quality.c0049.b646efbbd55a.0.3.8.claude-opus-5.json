@@ -1,0 +1,33 @@
+{
+ "doc_id": "fcsm-19-01-transparent-reporting-for-integrated-data-quality",
+ "chunk_id": "fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0049",
+ "chunk_index": 49,
+ "chunk_start": 172737,
+ "chunk_end": 173192,
+ "chunk_tokens": 89,
+ "heading_path": [
+  "3. Consistency -"
+ ],
+ "oversize": false,
+ "doc_sha256": "b646efbbd55aa606bfc033f223f76cd26c12f07e9b216d2ce2dd105a150c83b4",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 4823,
+  "cacheReadInputTokens": 13025,
+  "cacheCreationInputTokens": 22731,
+  "webSearchRequests": 0,
+  "costUSD": 0.3544075,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 3414,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3544075,
+ "duration_ms": 54534,
+ "session_id": "37aef151-9272-4218-89a8-aa31959ffaec",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Defines Consistency as a data quality dimension and states its assessment criterion against acceptable values in the USVETS data dictionary.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_consistency\",\n      \"name\": \"Consistency\",\n      \"aliases\": [\"data consistency\"],\n      \"description\": \"A data quality dimension concerning equivalence of data across redundant or distributed databases and alignment of data elements with documented data types and acceptable values.\",\n      \"anchor\": \"3. Consistency\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0049\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d_consistency\",\n      \"term\": \"Consistency\",\n      \"verbatim_text\": \"The degree to which a set of data is equivalent in redundant or distributed databases and data elements align with documented data types and acceptable values.\",\n      \"normative_status\": \"policy\",\n      \"as_of_date\": null,\n      \"anchor\": \"data elements align with documented\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0049\"\n    }\n  ],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [\n    {\n      \"id\": \"m_consistency_criteria\",\n      \"text\": \"The degree to which a set of data is equivalent in redundant or distributed databases and data element values are in line with the acceptable values defined in the USVETS data dictionary.\",\n      \"response_type\": \"degree\",\n      \"tier\": \"agency_instrumented\",\n      \"anchor\": \"data element values are in line\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0049\"\n    }\n  ],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality\",\n      \"to_id\": \"d_consistency\",\n      \"anchor\": \"Definition - The degree\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0049\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality\",\n      \"to_id\": \"c_consistency\",\n      \"anchor\": \"3. Consistency\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0049\"\n    },\n    {\n      \"type\": \"measures\",\n      \"from_id\": \"m_consistency_criteria\",\n      \"to_id\": \"c_consistency\",\n      \"anchor\": \"Assessment criteria\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0049\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"completeness reports\",\n      \"anchor\": \"completeness reports\"\n    },\n    {\n      \"name\": \"USVETS\",\n      \"anchor\": \"USVETS\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"suggested_edge\": \"has_component\",\n      \"from_id\": \"c_consistency\",\n      \"to_name\": \"data quality dimensions framework\",\n      \"anchor\": \"3. Consistency\",\n      \"diversion_reason\": \"cross_chunk\"\n    },\n    {\n      \"suggested_edge\": \"grounds\",\n      \"from_id\": \"m_consistency_criteria\",\n      \"to_name\": \"USVETS data dictionary\",\n      \"anchor\": \"acceptable values defined in the USVETS\",\n      \"diversion_reason\": \"other:endpoint_type_not_schema_typable\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"completeness\", \"type\": \"Concept\"},\n    {\"name\": \"USVETS data dictionary\", \"type\": \"Standard\"},\n    {\"name\": \"acceptable values\", \"type\": \"Concept\"},\n    {\"name\": \"documented data types\", \"type\": \"Concept\"},\n    {\"name\": \"redundant or distributed databases\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

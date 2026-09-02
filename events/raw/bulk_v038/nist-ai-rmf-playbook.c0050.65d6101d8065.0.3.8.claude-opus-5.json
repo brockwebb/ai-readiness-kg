@@ -1,0 +1,33 @@
+{
+ "doc_id": "nist-ai-rmf-playbook",
+ "chunk_id": "nist-ai-rmf-playbook#c0050",
+ "chunk_index": 50,
+ "chunk_start": 85622,
+ "chunk_end": 85786,
+ "chunk_tokens": 37,
+ "heading_path": [
+  "35 of 142"
+ ],
+ "oversize": false,
+ "doc_sha256": "65d6101d806502875aadb0fd19a75c3a9cc9a5e9461129e9398a39192d8202d2",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 8154,
+  "cacheReadInputTokens": 13025,
+  "cacheCreationInputTokens": 22606,
+  "webSearchRequests": 0,
+  "costUSD": 0.4364325,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 6644,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.4364325,
+ "duration_ms": 95948,
+ "session_id": "5cf6b3c0-a863-4185-86ee-92dfad856b3f",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Tail of a reference list (two 2021 banking-supervision citations) followed by the AI RMF MANAGE function heading and its one-sentence statement that AI risks, based on Map and Measure output, are prioritized, responded to, and managed.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_ai_risks\",\n      \"name\": \"AI risks\",\n      \"aliases\": [\"AI risk\"],\n      \"description\": \"Risks arising from AI that, per this chunk, are prioritized, responded to, and managed on the basis of assessments and other analytical output from the Map and Measure functions.\",\n      \"anchor\": \"AI risks\",\n      \"location\": \"nist-ai-rmf-playbook#c0050\"\n    },\n    {\n      \"id\": \"c_manage\",\n      \"name\": \"Manage\",\n      \"aliases\": [\"MANAGE\", \"Manage function\", \"AI RMF Manage function\"],\n      \"description\": \"The framework function under which AI risks are prioritized, responded to, and managed using assessments and analytical output from the Map and Measure functions.\",\n      \"anchor\": \"Manage\",\n      \"location\": \"nist-ai-rmf-playbook#c0050\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"cl_manage_outcome\",\n      \"claim_text\": \"AI risks based on assessments and other analytical output from the Map and Measure \\nfunctions are prioritized, responded to, and managed.\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"prioritized, responded to\",\n      \"location\": \"nist-ai-rmf-playbook#c0050\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"nist-ai-rmf-playbook\",\n      \"to_id\": \"cl_manage_outcome\",\n      \"anchor\": \"responded to, and managed\",\n      \"location\": \"nist-ai-rmf-playbook#c0050\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_manage_outcome\",\n      \"to_id\": \"c_ai_risks\",\n      \"anchor\": \"AI risks based\",\n      \"location\": \"nist-ai-rmf-playbook#c0050\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-ai-rmf-playbook\",\n      \"to_id\": \"c_manage\",\n      \"anchor\": \"MANAGE\",\n      \"location\": \"nist-ai-rmf-playbook#c0050\"\n    }\n  ],\n  \"cites\": [\n    {\n      \"id\": \"cite_interagency_third_party\",\n      \"from_id\": \"nist-ai-rmf-playbook\",\n      \"to_title\": \"Proposed Interagency Guidance on Third-Party Relationships: Risk Management\",\n      \"year\": \"2021\",\n      \"anchor\": \"Third-Party Relationships: Risk Management\",\n      \"location\": \"nist-ai-rmf-playbook#c0050\"\n    },\n    {\n      \"id\": \"cite_occ_model_risk_handbook\",\n      \"from_id\": \"nist-ai-rmf-playbook\",\n      \"to_title\": \"Comptroller’s Handbook: Model Risk Management\",\n      \"publisher\": \"Off. Comptroller Currency\",\n      \"year\": \"Aug. 2021\",\n      \"anchor\": \"Comptroller’s Handbook: Model Risk Management\",\n      \"location\": \"nist-ai-rmf-playbook#c0050\"\n    }\n  ],\n  \"mentions\": [\n    {\n      \"name\": \"Map and Measure\",\n      \"anchor\": \"Map and Measure\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"output from the Map and Measure\",\n      \"suggested_edge\": \"precedes\",\n      \"from_hint\": \"Map and Measure\",\n      \"to_hint\": \"Manage\",\n      \"diversion_reason\": \"cross_chunk\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"Map\", \"type\": \"Concept\"},\n    {\"name\": \"Measure\", \"type\": \"Concept\"},\n    {\"name\": \"Model risk management\", \"type\": \"Concept\"},\n    {\"name\": \"Third-party relationships\", \"type\": \"Concept\"},\n    {\"name\": \"Office of the Comptroller of the Currency\", \"type\": \"Concept\"}\n  ]\n}"
+}

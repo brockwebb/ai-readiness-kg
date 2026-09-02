@@ -1,0 +1,33 @@
+{
+ "doc_id": "nist-ai-rmf-playbook",
+ "chunk_id": "nist-ai-rmf-playbook#c0070",
+ "chunk_index": 70,
+ "chunk_start": 117029,
+ "chunk_end": 117704,
+ "chunk_tokens": 186,
+ "heading_path": [
+  "49 of 142"
+ ],
+ "oversize": false,
+ "doc_sha256": "65d6101d806502875aadb0fd19a75c3a9cc9a5e9461129e9398a39192d8202d2",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 2592,
+  "cacheReadInputTokens": 13025,
+  "cacheCreationInputTokens": 23049,
+  "webSearchRequests": 0,
+  "costUSD": 0.3018125,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 804,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3018125,
+ "duration_ms": 26907,
+ "session_id": "fc3a9038-5692-40cc-afe8-65f7f5c0a2f8",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"A references/bibliography page (49 of 142) of the NIST AI RMF Playbook listing seven external sources; it asserts nothing beyond the citations themselves, so the extraction is almost entirely `cites` plus mention-only stubs.\"\n  },\n  \"concepts\": [],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [\n    {\n      \"id\": \"fw_csf\",\n      \"name\": \"Cybersecurity Framework\",\n      \"owner\": \"National Institute for Standards and Technology (NIST)\",\n      \"year\": 2022,\n      \"anchor\": \"2022. Cybersecurity Framework\",\n      \"location\": \"nist-ai-rmf-playbook#c0070\"\n    }\n  ],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [],\n  \"cites\": [\n    {\n      \"from_id\": \"nist-ai-rmf-playbook\",\n      \"to_id\": \"gao-21-519sp\",\n      \"title\": \"GAO-21-519SP - Artificial Intelligence: An Accountability Framework for Federal Agencies & Other Entities\",\n      \"anchor\": \"GAO-21-519SP\",\n      \"location\": \"nist-ai-rmf-playbook#c0070\"\n    },\n    {\n      \"from_id\": \"nist-ai-rmf-playbook\",\n      \"to_id\": \"ai-incident-database-2022\",\n      \"title\": \"AI Incident Database\",\n      \"anchor\": \"AI Incident Database. 2022.\",\n      \"location\": \"nist-ai-rmf-playbook#c0070\"\n    },\n    {\n      \"from_id\": \"nist-ai-rmf-playbook\",\n      \"to_id\": \"aiaaic-repository-2022\",\n      \"title\": \"AI, algorithmic and automation incidents collected, dissected, examined, and divulged\",\n      \"anchor\": \"AIAAIC Repository\",\n      \"location\": \"nist-ai-rmf-playbook#c0070\"\n    },\n    {\n      \"from_id\": \"nist-ai-rmf-playbook\",\n      \"to_id\": \"burt-hall-2018-what-to-do-when-ai-fails\",\n      \"title\": \"What to Do When AI Fails\",\n      \"anchor\": \"What to Do When AI Fails\",\n      \"location\": \"nist-ai-rmf-playbook#c0070\"\n    },\n    {\n      \"from_id\": \"nist-ai-rmf-playbook\",\n      \"to_id\": \"nist-cybersecurity-framework-2022\",\n      \"title\": \"Cybersecurity Framework\",\n      \"anchor\": \"2022. Cybersecurity Framework\",\n      \"location\": \"nist-ai-rmf-playbook#c0070\"\n    },\n    {\n      \"from_id\": \"nist-ai-rmf-playbook\",\n      \"to_id\": \"sans-score-security-checklist-2022\",\n      \"title\": \"Security Consensus Operational Readiness Evaluation (SCORE) Security Checklist [or Advanced Persistent Threat (APT) Handling Checklist]\",\n      \"anchor\": \"SANS Institute\",\n      \"location\": \"nist-ai-rmf-playbook#c0070\"\n    },\n    {\n      \"from_id\": \"nist-ai-rmf-playbook\",\n      \"to_id\": \"arxiv-1904-07204\",\n      \"title\": \"Tutorial: Safe and Reliable Machine Learning\",\n      \"anchor\": \"arXiv:1904.07204\",\n      \"location\": \"nist-ai-rmf-playbook#c0070\"\n    }\n  ],\n  \"mentions\": [\n    {\n      \"name\": \"AI Incident Database\",\n      \"anchor\": \"AI Incident Database. 2022.\"\n    },\n    {\n      \"name\": \"AIAAIC Repository\",\n      \"anchor\": \"AIAAIC Repository\"\n    },\n    {\n      \"name\": \"National Institute for Standards and Technology (NIST)\",\n      \"anchor\": \"National Institute for Standards\"\n    },\n    {\n      \"name\": \"SANS Institute\",\n      \"anchor\": \"SANS Institute\"\n    },\n    {\n      \"name\": \"Security Consensus Operational Readiness Evaluation (SCORE) Security Checklist\",\n      \"anchor\": \"Security Consensus Operational Readiness Evaluation\"\n    },\n    {\n      \"name\": \"Advanced Persistent Threat (APT) Handling Checklist\",\n      \"anchor\": \"Advanced Persistent Threat (APT) Handling Checklist\"\n    },\n    {\n      \"name\": \"Safe and Reliable Machine Learning\",\n      \"anchor\": \"Safe and Reliable Machine Learning\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"GAO-21-519SP\",\n      \"suggested_edge\": \"builds_on\",\n      \"diversion_reason\": \"cross_chunk\",\n      \"note\": \"The GAO accountability framework is cited in this reference list but the text asserting any relation to the Playbook's own framework is elsewhere in the document.\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"AI incident\", \"type\": \"Concept\"},\n    {\"name\": \"Advanced Persistent Threat\", \"type\": \"Concept\"},\n    {\"name\": \"GAO Artificial Intelligence Accountability Framework\", \"type\": \"Framework\"}\n  ]\n}\n```"
+}

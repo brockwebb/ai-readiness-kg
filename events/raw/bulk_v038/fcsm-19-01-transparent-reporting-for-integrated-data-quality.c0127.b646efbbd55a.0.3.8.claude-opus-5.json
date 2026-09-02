@@ -1,0 +1,33 @@
+{
+ "doc_id": "fcsm-19-01-transparent-reporting-for-integrated-data-quality",
+ "chunk_id": "fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0127",
+ "chunk_index": 127,
+ "chunk_start": 329180,
+ "chunk_end": 329317,
+ "chunk_tokens": 72,
+ "heading_path": [
+  "58 E2 E2"
+ ],
+ "oversize": false,
+ "doc_sha256": "b646efbbd55aa606bfc033f223f76cd26c12f07e9b216d2ce2dd105a150c83b4",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 1657,
+  "cacheReadInputTokens": 13025,
+  "cacheCreationInputTokens": 22625,
+  "webSearchRequests": 0,
+  "costUSD": 0.2741975,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 1127,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.2741975,
+ "duration_ms": 20392,
+ "session_id": "2f79b94e-7c82-46a2-82de-a6a2a832bb73",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"A fragment of an 'Agency Contacts' table listing two survey items, E1 (binary, 'contact staff') and E2 (Likert, 'staff address questions'), with their counts and statistics.\"\n  },\n  \"concepts\": [],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [\n    {\n      \"id\": \"m-e1-contact-staff\",\n      \"text\": \"contact staff\",\n      \"response_type\": \"Binary\",\n      \"anchor\": \"contact staff 41 Binary\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0127\"\n    },\n    {\n      \"id\": \"m-e2-staff-address\",\n      \"text\": \"staff address\",\n      \"response_type\": \"Likert\",\n      \"anchor\": \"staff address\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0127\"\n    }\n  ],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"Agency Contacts\",\n      \"anchor\": \"Agency Contacts\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"Agency Contacts\",\n      \"suggested_edge\": \"uses_measure\",\n      \"diversion_reason\": \"structural_inference\"\n    }\n  ],\n  \"gleaned\": []\n}\n```"
+}

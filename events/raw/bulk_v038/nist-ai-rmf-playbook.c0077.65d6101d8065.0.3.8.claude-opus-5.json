@@ -1,0 +1,33 @@
+{
+ "doc_id": "nist-ai-rmf-playbook",
+ "chunk_id": "nist-ai-rmf-playbook#c0077",
+ "chunk_index": 77,
+ "chunk_start": 126883,
+ "chunk_end": 127837,
+ "chunk_tokens": 200,
+ "heading_path": [
+  "53 of 142"
+ ],
+ "oversize": false,
+ "doc_sha256": "65d6101d806502875aadb0fd19a75c3a9cc9a5e9461129e9398a39192d8202d2",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 3576,
+  "cacheReadInputTokens": 13025,
+  "cacheCreationInputTokens": 23059,
+  "webSearchRequests": 0,
+  "costUSD": 0.3265125,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 1534,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3265125,
+ "duration_ms": 37372,
+ "session_id": "50287465-3809-43a3-a73f-5e12bd06cee0",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"NIST AI RMF Playbook p.53 Transparency & Documentation block: documentation questions on AI system data provenance, datasheet motivation, data adequacy/relevance, and dataset obsolescence, followed by AI transparency resource citations and one reference.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_data_provenance\",\n      \"name\": \"data provenance\",\n      \"aliases\": [\"AI system data provenance\"],\n      \"description\": \"Documentation of an AI system's data sources, origins, transformations, augmentations, labels, dependencies, constraints, and metadata.\",\n      \"anchor\": \"data provenance, including\",\n      \"location\": \"nist-ai-rmf-playbook#c0077\"\n    },\n    {\n      \"id\": \"c_datasheet\",\n      \"name\": \"datasheet\",\n      \"aliases\": [\"Datasheets for Datasets\"],\n      \"description\": \"A dataset documentation artifact whose first section states the motivation for creating the dataset, against which the collection/processing procedure is checked.\",\n      \"anchor\": \"this datasheet\",\n      \"location\": \"nist-ai-rmf-playbook#c0077\"\n    },\n    {\n      \"id\": \"c_transparency_documentation\",\n      \"name\": \"Transparency & Documentation\",\n      \"aliases\": [\"transparency and documentation\"],\n      \"description\": \"Playbook category grouping the documentation questions organizations can answer about data and AI systems.\",\n      \"anchor\": \"Transparency & Documentation\",\n      \"location\": \"nist-ai-rmf-playbook#c0077\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [\n    {\n      \"id\": \"m_obsolete_communicated\",\n      \"text\": \"If the dataset becomes obsolete how will this be communicated?\",\n      \"response_type\": \"open_ended\",\n      \"anchor\": \"becomes obsolete how\",\n      \"location\": \"nist-ai-rmf-playbook#c0077\"\n    }\n  ],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-ai-rmf-playbook\",\n      \"to_id\": \"c_data_provenance\",\n      \"anchor\": \"data provenance, including\",\n      \"location\": \"nist-ai-rmf-playbook#c0077\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-ai-rmf-playbook\",\n      \"to_id\": \"c_datasheet\",\n      \"anchor\": \"this datasheet\",\n      \"location\": \"nist-ai-rmf-playbook#c0077\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-ai-rmf-playbook\",\n      \"to_id\": \"c_transparency_documentation\",\n      \"anchor\": \"Transparency & Documentation\",\n      \"location\": \"nist-ai-rmf-playbook#c0077\"\n    },\n    {\n      \"type\": \"measures\",\n      \"from_id\": \"m_obsolete_communicated\",\n      \"to_id\": \"c_datasheet\",\n      \"anchor\": \"becomes obsolete how\",\n      \"location\": \"nist-ai-rmf-playbook#c0077\"\n    }\n  ],\n  \"cites\": [\n    {\n      \"id\": \"cite_ic_ethics_framework\",\n      \"from_id\": \"nist-ai-rmf-playbook\",\n      \"to_title\": \"Artificial Intelligence Ethics Framework For The Intelligence Community\",\n      \"anchor\": \"Ethics Framework For The Intelligence Community\",\n      \"location\": \"nist-ai-rmf-playbook#c0077\"\n    },\n    {\n      \"id\": \"cite_wef_companion\",\n      \"from_id\": \"nist-ai-rmf-playbook\",\n      \"to_title\": \"WEF - Companion to the Model AI Governance Framework – Implementation and Self-Assessment Guide for Organizations\",\n      \"anchor\": \"WEF - Companion\",\n      \"location\": \"nist-ai-rmf-playbook#c0077\"\n    },\n    {\n      \"id\": \"cite_datasheets_for_datasets\",\n      \"from_id\": \"nist-ai-rmf-playbook\",\n      \"to_title\": \"Datasheets for Datasets\",\n      \"anchor\": \"Datasheets for Datasets\",\n      \"location\": \"nist-ai-rmf-playbook#c0077\"\n    },\n    {\n      \"id\": \"cite_awesome_mlops\",\n      \"from_id\": \"nist-ai-rmf-playbook\",\n      \"to_title\": \"Awesome MLOps\",\n      \"anchor\": \"Awesome MLOps\",\n      \"location\": \"nist-ai-rmf-playbook#c0077\"\n    }\n  ],\n  \"mentions\": [\n    {\"name\": \"AI system\", \"anchor\": \"AI system’s\"},\n    {\"name\": \"third-party risk tracking\", \"anchor\": \"third-party risk tracking\"},\n    {\"name\": \"metadata\", \"anchor\": \"and \\nmetadata?\"},\n    {\"name\": \"GitHub\", \"anchor\": \"GitHub. Accessed\"}\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"tolerances, and as part\",\n      \"suggested_edge\": \"applies_to\",\n      \"diversion_reason\": \"cross_chunk\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"How has the entity documented the AI system’s data provenance\", \"type\": \"Measure\"},\n    {\"name\": \"Does this dataset collection/processing procedure achieve the motivation for creating the dataset\", \"type\": \"Measure\"},\n    {\"name\": \"How does the entity ensure that the data collected are adequate, relevant, and not excessive\", \"type\": \"Measure\"},\n    {\"name\": \"dataset\", \"type\": \"Concept\"},\n    {\"name\": \"data collection and processing procedure\", \"type\": \"Concept\"},\n    {\"name\": \"Model AI Governance Framework\", \"type\": \"Framework\"},\n    {\"name\": \"Artificial Intelligence Ethics Framework For The Intelligence Community\", \"type\": \"Framework\"}\n  ]\n}\n```"
+}

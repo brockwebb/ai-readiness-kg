@@ -1,0 +1,33 @@
+{
+ "doc_id": "croissant-akhtar-2024-paper",
+ "chunk_id": "croissant-akhtar-2024-paper#c0015",
+ "chunk_index": 15,
+ "chunk_start": 73629,
+ "chunk_end": 73740,
+ "chunk_tokens": 25,
+ "heading_path": [
+  "Fields # Record sets"
+ ],
+ "oversize": false,
+ "doc_sha256": "462f157c23383e21d50b578ca03d1fad6f7a20208b4e392c7aa6d1dc49127178",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 2086,
+  "cacheReadInputTokens": 13025,
+  "cacheCreationInputTokens": 22440,
+  "webSearchRequests": 0,
+  "costUSD": 0.2830725,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 1148,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.2830725,
+ "duration_ms": 23129,
+ "session_id": "bc650a24-ad84-4b4f-9886-f90641ca4905",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Figure 21 caption only: it labels an illustration of the Croissant editor GUI used for filling dataset and Responsible AI (RAI) attributes; no claims, definitions, or instruments are asserted.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_rai\",\n      \"name\": \"Responsible AI (RAI)\",\n      \"aliases\": [\"Responsible AI\", \"RAI\"],\n      \"description\": \"A category of dataset attributes the Croissant editor supports filling, alongside general dataset attributes.\",\n      \"anchor\": \"Responsible AI (RAI)\",\n      \"location\": \"croissant-akhtar-2024-paper#c0015\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [\n    {\n      \"id\": \"t_croissant_editor\",\n      \"name\": \"Croissant editor\",\n      \"steward\": null,\n      \"license\": null,\n      \"url\": null,\n      \"as_of_date\": null,\n      \"anchor\": \"Croissant editor GUI\",\n      \"location\": \"croissant-akhtar-2024-paper#c0015\"\n    }\n  ],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"croissant-akhtar-2024-paper\",\n      \"to_id\": \"c_rai\",\n      \"anchor\": \"filling dataset and Responsible AI\",\n      \"location\": \"croissant-akhtar-2024-paper#c0015\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"dataset\",\n      \"anchor\": \"for filling dataset\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"Illustration of the Croissant editor\",\n      \"suggested_edge\": \"documents (Document->Tool)\",\n      \"from_id\": \"croissant-akhtar-2024-paper\",\n      \"to_id\": \"t_croissant_editor\",\n      \"diversion_reason\": \"other:no_doc_tool_edge\",\n      \"location\": \"croissant-akhtar-2024-paper#c0015\"\n    },\n    {\n      \"anchor\": \"GUI for filling dataset\",\n      \"suggested_edge\": \"applies_to (Tool->Concept)\",\n      \"from_id\": \"t_croissant_editor\",\n      \"to_id\": \"c_rai\",\n      \"diversion_reason\": \"other:no_tool_concept_edge\",\n      \"location\": \"croissant-akhtar-2024-paper#c0015\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"dataset attributes\", \"type\": \"Concept\"},\n    {\"name\": \"GUI\", \"type\": \"Concept\"}\n  ]\n}"
+}

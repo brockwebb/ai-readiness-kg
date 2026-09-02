@@ -1,0 +1,33 @@
+{
+ "doc_id": "nist-ai-rmf-playbook",
+ "chunk_id": "nist-ai-rmf-playbook#c0084",
+ "chunk_index": 84,
+ "chunk_start": 136241,
+ "chunk_end": 136300,
+ "chunk_tokens": 16,
+ "heading_path": [
+  "58 of 142"
+ ],
+ "oversize": false,
+ "doc_sha256": "65d6101d806502875aadb0fd19a75c3a9cc9a5e9461129e9398a39192d8202d2",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 2668,
+  "cacheReadInputTokens": 13025,
+  "cacheCreationInputTokens": 22530,
+  "webSearchRequests": 0,
+  "costUSD": 0.2985225,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 1491,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.2985225,
+ "duration_ms": 31556,
+ "session_id": "ac67553b-cddd-4395-ac94-f579051fa0f8",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"A bibliography line citing Macrae (2022) on failure of autonomous and intelligent systems, followed by the AI RMF MAP function heading and its outcome statement 'Context is established and understood.'\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_map\",\n      \"name\": \"Map\",\n      \"aliases\": [\"MAP function\", \"MAP\"],\n      \"description\": \"The AI RMF core function under which the chunk's outcome statement is filed.\",\n      \"anchor\": \"Map\",\n      \"location\": \"nist-ai-rmf-playbook#c0084\"\n    },\n    {\n      \"id\": \"c_context\",\n      \"name\": \"Context\",\n      \"aliases\": [\"context of the AI system\"],\n      \"description\": \"The situational and use context the MAP function requires to be established and understood.\",\n      \"anchor\": \"Context\",\n      \"location\": \"nist-ai-rmf-playbook#c0084\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"cl_map_outcome\",\n      \"claim_text\": \"Context is established and understood.\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"Context is established\",\n      \"location\": \"nist-ai-rmf-playbook#c0084\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"nist-ai-rmf-playbook\",\n      \"to_id\": \"cl_map_outcome\",\n      \"anchor\": \"established and understood\",\n      \"location\": \"nist-ai-rmf-playbook#c0084\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_map_outcome\",\n      \"to_id\": \"c_context\",\n      \"anchor\": \"is established and\",\n      \"location\": \"nist-ai-rmf-playbook#c0084\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-ai-rmf-playbook\",\n      \"to_id\": \"c_map\",\n      \"anchor\": \"Map\",\n      \"location\": \"nist-ai-rmf-playbook#c0084\"\n    }\n  ],\n  \"cites\": [\n    {\n      \"id\": \"cite_macrae_2022\",\n      \"from_id\": \"nist-ai-rmf-playbook\",\n      \"to_id\": \"macrae-2022-learning-from-failure\",\n      \"title\": \"Learning from the failure of autonomous and intelligent systems: Accidents, safety, and sociotechnical sources of risk\",\n      \"anchor\": \"Macrae, Carl\",\n      \"location\": \"nist-ai-rmf-playbook#c0084\"\n    }\n  ],\n  \"mentions\": [\n    {\n      \"name\": \"Risk analysis\",\n      \"anchor\": \"Risk analysis 42.9\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"Context is established\",\n      \"suggested_edge\": \"has_component\",\n      \"from_hint\": \"Map\",\n      \"to_hint\": \"Context\",\n      \"diversion_reason\": \"structural_inference\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"autonomous and intelligent systems\", \"type\": \"Concept\"},\n    {\"name\": \"sociotechnical sources of risk\", \"type\": \"Concept\"},\n    {\"name\": \"safety\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

@@ -1,0 +1,33 @@
+{
+ "doc_id": "fcsm-19-01-transparent-reporting-for-integrated-data-quality",
+ "chunk_id": "fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0200",
+ "chunk_index": 200,
+ "chunk_start": 354965,
+ "chunk_end": 355184,
+ "chunk_tokens": 68,
+ "heading_path": [
+  "OPPORTUNITIES:"
+ ],
+ "oversize": false,
+ "doc_sha256": "b646efbbd55aa606bfc033f223f76cd26c12f07e9b216d2ce2dd105a150c83b4",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 7062,
+  "cacheReadInputTokens": 13025,
+  "cacheCreationInputTokens": 21655,
+  "webSearchRequests": 0,
+  "costUSD": 0.3996225,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 5044,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3996225,
+ "duration_ms": 78098,
+ "session_id": "0438570a-ba49-4c8e-8d63-6f3020434d17",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Tail of a guidance sentence on estimating a basic measure, then the OPPORTUNITIES section of the checklist: items 22 and 23 asking what processes/methodologies alternative data can improve and whether it reduces data collection costs.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_alternative_data\",\n      \"name\": \"ALTERNATIVE DATA\",\n      \"aliases\": [\"alternative data\"],\n      \"description\": \"Data other than the primary collection, whose use the checklist asks agencies to evaluate for process improvement and cost reduction.\",\n      \"anchor\": \"IMPROVED THROUGH THE USE\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0200\"\n    },\n    {\n      \"id\": \"c_data_collection_costs\",\n      \"name\": \"DATA COLLECTION COSTS\",\n      \"aliases\": [\"data collection costs\"],\n      \"description\": \"Costs of collecting data, which the checklist asks whether use of alternative data reduces.\",\n      \"anchor\": \"DATA COLLECTION COSTS\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0200\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"cl_estimate_basic_measure\",\n      \"claim_text\": \"specific measures are not available, attempt to estimate a basic measure\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"attempt to estimate a basic measure\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0200\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [\n    {\n      \"id\": \"m_q22_processes_improved\",\n      \"text\": \"WHAT PROCESSES/METHODOLOGIES CAN BE EVALUATED AND/OR IMPROVED THROUGH THE USE OF THE ALTERNATIVE DATA?\",\n      \"response_type\": \"open_ended\",\n      \"tier\": \"agency_instrumented\",\n      \"anchor\": \"WHAT PROCESSES/METHODOLOGIES\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0200\"\n    },\n    {\n      \"id\": \"m_q23_costs_reduced\",\n      \"text\": \"ARE DATA COLLECTION COSTS REDUCED BY THE USE OF THE ALTERNATIVE DATA?\",\n      \"response_type\": \"yes_no_with_detail\",\n      \"tier\": \"agency_instrumented\",\n      \"anchor\": \"ARE DATA COLLECTION COSTS\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0200\"\n    }\n  ],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"measures\",\n      \"from_id\": \"m_q22_processes_improved\",\n      \"to_id\": \"c_alternative_data\",\n      \"anchor\": \"THROUGH THE USE OF THE\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0200\"\n    },\n    {\n      \"type\": \"measures\",\n      \"from_id\": \"m_q23_costs_reduced\",\n      \"to_id\": \"c_data_collection_costs\",\n      \"anchor\": \"COSTS REDUCED BY THE USE\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0200\"\n    },\n    {\n      \"type\": \"measures\",\n      \"from_id\": \"m_q23_costs_reduced\",\n      \"to_id\": \"c_alternative_data\",\n      \"anchor\": \"REDUCED BY THE USE OF THE\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0200\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality\",\n      \"to_id\": \"cl_estimate_basic_measure\",\n      \"anchor\": \"estimate a basic measure\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0200\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality\",\n      \"to_id\": \"c_alternative_data\",\n      \"anchor\": \"EVALUATED AND/OR\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0200\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality\",\n      \"to_id\": \"c_data_collection_costs\",\n      \"anchor\": \"REDUCED BY THE USE\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0200\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"PROCESSES/METHODOLOGIES\",\n      \"anchor\": \"CAN BE EVALUATED\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"OPPORTUNITIES:\",\n      \"suggested_edge\": \"uses_measure\",\n      \"from_hint\": \"the checklist instrument this document defines\",\n      \"to_hint\": \"m_q22_processes_improved, m_q23_costs_reduced\",\n      \"diversion_reason\": \"cross_chunk\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"basic measure\", \"type\": \"Concept\"},\n    {\"name\": \"OPPORTUNITIES\", \"type\": \"Concept\"}\n  ]\n}"
+}

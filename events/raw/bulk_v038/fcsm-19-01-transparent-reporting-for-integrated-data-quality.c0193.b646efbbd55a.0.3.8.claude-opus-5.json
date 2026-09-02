@@ -1,0 +1,33 @@
+{
+ "doc_id": "fcsm-19-01-transparent-reporting-for-integrated-data-quality",
+ "chunk_id": "fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0193",
+ "chunk_index": 193,
+ "chunk_start": 351820,
+ "chunk_end": 352339,
+ "chunk_tokens": 98,
+ "heading_path": [
+  "CHARACTERISTICS OF THE ALTERNATIVE DATASET"
+ ],
+ "oversize": false,
+ "doc_sha256": "b646efbbd55aa606bfc033f223f76cd26c12f07e9b216d2ce2dd105a150c83b4",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 5169,
+  "cacheReadInputTokens": 13025,
+  "cacheCreationInputTokens": 22921,
+  "webSearchRequests": 0,
+  "costUSD": 0.36495750000000005,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 3435,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.36495750000000005,
+ "duration_ms": 56609,
+ "session_id": "456be31e-f117-4fa7-bfa0-d30209e0fcb6",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Scorecard item 9 (list similar alternative data projects) plus the introduction to the CHARACTERISTICS OF THE ALTERNATIVE DATASET section, which states what its questions assess and that a sample dataset is needed to complete this portion of the scorecard.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_alt_dataset\",\n      \"name\": \"alternative dataset\",\n      \"aliases\": [\"alternative data set\"],\n      \"description\": \"The dataset under review, whose composition and features the section's questions probe.\",\n      \"anchor\": \"alternative dataset by posing\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0193\"\n    },\n    {\n      \"id\": \"c_alt_data\",\n      \"name\": \"alternative data\",\n      \"aliases\": [\"non-survey data source\"],\n      \"description\": \"Data whose appropriateness and value to the user's work the scorecard questions are meant to assess.\",\n      \"anchor\": \"appropriateness of the alternative data\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0193\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"cl_sample_dataset_required\",\n      \"claim_text\": \"You will need to have access to a sample dataset to complete this portion of the scorecard\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"You will need to have access\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0193\"\n    }\n  ],\n  \"instruments\": [\n    {\n      \"id\": \"i_scorecard\",\n      \"name\": \"scorecard\",\n      \"owner\": null,\n      \"year\": null,\n      \"method\": \"Completed by answering the section's questions about the dataset; requires access to a sample dataset for this portion.\",\n      \"attribute_anchors\": {\n        \"method\": \"a sample dataset to complete\"\n      },\n      \"anchor\": \"portion of the scorecard\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0193\"\n    }\n  ],\n  \"measures\": [\n    {\n      \"id\": \"m_q9_similar_projects\",\n      \"text\": \"LIST ANY KNOWN ALTERNATIVE DATA PROJECTS THAT ARE SIMILAR TO WHAT IS PROPOSED HERE\",\n      \"response_type\": \"open_text\",\n      \"anchor\": \"LIST ANY KNOWN\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0193\"\n    }\n  ],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality\",\n      \"to_id\": \"cl_sample_dataset_required\",\n      \"anchor\": \"complete this portion\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0193\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality\",\n      \"to_id\": \"c_alt_dataset\",\n      \"anchor\": \"characteristics of the alternative dataset\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0193\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality\",\n      \"to_id\": \"c_alt_data\",\n      \"anchor\": \"the alternative data and whether\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0193\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"sample dataset\",\n      \"anchor\": \"a sample dataset\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"suggested_edge\": \"uses_measure\",\n      \"from_id\": \"i_scorecard\",\n      \"to_id\": \"m_q9_similar_projects\",\n      \"anchor\": \"portion of the scorecard\",\n      \"diversion_reason\": \"structural_inference\"\n    },\n    {\n      \"suggested_edge\": \"applies_to\",\n      \"from_id\": \"m_q9_similar_projects\",\n      \"to_id\": \"c_alt_data\",\n      \"anchor\": \"ALTERNATIVE DATA PROJECTS THAT\",\n      \"diversion_reason\": \"predicate_not_located\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"alternative data projects\", \"type\": \"Concept\"},\n    {\"name\": \"composition and features of the dataset\", \"type\": \"Concept\"},\n    {\"name\": \"appropriateness of the alternative data\", \"type\": \"Concept\"},\n    {\"name\": \"data quality assessment questions\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

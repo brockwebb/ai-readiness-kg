@@ -1,0 +1,31 @@
+{
+ "doc_id": "croissant-akhtar-2024-paper",
+ "chunk_id": "croissant-akhtar-2024-paper#c0003",
+ "chunk_index": 3,
+ "chunk_start": 11611,
+ "chunk_end": 14528,
+ "chunk_tokens": 1301,
+ "heading_path": [],
+ "oversize": false,
+ "doc_sha256": "462f157c23383e21d50b578ca03d1fad6f7a20208b4e392c7aa6d1dc49127178",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 7888,
+  "cacheReadInputTokens": 13025,
+  "cacheCreationInputTokens": 25572,
+  "webSearchRequests": 0,
+  "costUSD": 0.4594425,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 6610,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.4594425,
+ "duration_ms": 92990,
+ "session_id": "63d6c0df-3b93-4581-95b6-a7c0a7ee5fb5",
+ "raw_result": "{\"extract_plan\":{\"chunk_summary\":\"Two figure listings (Croissant JSON-LD for the PASS dataset's metadata/distribution and for an images RecordSet) plus their captions and the heading of section 3.2; the only clean prose is the two captions, so extraction is limited to what they assert about RecordSet and the PASS dataset.\"},\"concepts\":[{\"id\":\"c1\",\"name\":\"RecordSet\",\"aliases\":[\"cr:RecordSet\"],\"description\":\"A Croissant structure that joins image files with structured metadata.\",\"anchor\":\"A RecordSet that joins\",\"location\":\"croissant-akhtar-2024-paper#c0003\"},{\"id\":\"c2\",\"name\":\"PASS dataset\",\"aliases\":[\"PASS\"],\"description\":\"The example dataset whose metadata, resources and RecordSet are shown in the figures.\",\"anchor\":\"from the PASS dataset\",\"location\":\"croissant-akhtar-2024-paper#c0003\"}],\"definitions\":[],\"claims\":[{\"id\":\"cl1\",\"claim_text\":\"A RecordSet that joins images and structured metadata from the PASS dataset.\",\"claim_type\":\"empirical\",\"evidence_grade\":\"practitioner_assertion\",\"anchor\":\"A RecordSet that joins\",\"location\":\"croissant-akhtar-2024-paper#c0003\"}],\"instruments\":[],\"measures\":[],\"standards\":[],\"frameworks\":[],\"practices\":[],\"tools\":[],\"platforms\":[],\"edges\":[{\"type\":\"mentions\",\"from_id\":\"croissant-akhtar-2024-paper\",\"to_id\":\"c1\",\"anchor\":\"A RecordSet that joins\",\"location\":\"croissant-akhtar-2024-paper#c0003\"},{\"type\":\"mentions\",\"from_id\":\"croissant-akhtar-2024-paper\",\"to_id\":\"c2\",\"anchor\":\"from the PASS dataset\",\"location\":\"croissant-akhtar-2024-paper#c0003\"},{\"type\":\"asserts\",\"from_id\":\"croissant-akhtar-2024-paper\",\"to_id\":\"cl1\",\"anchor\":\"A RecordSet that joins\",\"location\":\"croissant-akhtar-2024-paper#c0003\"},{\"type\":\"about\",\"from_id\":\"cl1\",\"to_id\":\"c1\",\"anchor\":\"A RecordSet that joins\",\"location\":\"croissant-akhtar-2024-paper#c0003\"}],\"cites\":[],\"mentions\":[{\"name\":\"The Resources Layer\",\"anchor\":\"The Resources Layer\"},{\"name\":\"images/hash\",\"anchor\":\"\\\"images/hash\\\"\"},{\"name\":\"image-files\",\"anchor\":\"\\\"image-files\\\" ,\"},{\"name\":\"PASS\",\"anchor\":\"\\\"PASS\\\"\"}],\"proposed_relationships\":[{\"anchor\":\"that joins images and\",\"suggested_edge\":\"joins\",\"from_hint\":\"RecordSet\",\"to_hint\":\"PASS dataset image files and structured metadata\",\"diversion_reason\":\"other:no_edge_type\",\"location\":\"croissant-akhtar-2024-paper#c0003\"},{\"anchor\":\"\\\"images/hash\\\"\",\"suggested_edge\":\"has_component\",\"from_hint\":\"RecordSet images\",\"to_hint\":\"field images/hash\",\"diversion_reason\":\"structural_inference\",\"location\":\"croissant-akhtar-2024-paper#c0003\"}],\"gleaned\":[{\"name\":\"FileObject\",\"type\":\"Concept\"},{\"name\":\"FileSet\",\"type\":\"Concept\"},{\"name\":\"Field\",\"type\":\"Concept\"},{\"name\":\"GeoCoordinates\",\"type\":\"Concept\"},{\"name\":\"Croissant 1.0\",\"type\":\"Standard\"},{\"name\":\"distribution\",\"type\":\"Concept\"},{\"name\":\"license\",\"type\":\"Concept\"},{\"name\":\"sha256 checksum\",\"type\":\"Concept\"},{\"name\":\"encodingFormat\",\"type\":\"Concept\"},{\"name\":\"subField\",\"type\":\"Concept\"}]}"
+}

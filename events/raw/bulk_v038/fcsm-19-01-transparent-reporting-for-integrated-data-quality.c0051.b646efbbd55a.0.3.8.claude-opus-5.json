@@ -1,0 +1,33 @@
+{
+ "doc_id": "fcsm-19-01-transparent-reporting-for-integrated-data-quality",
+ "chunk_id": "fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0051",
+ "chunk_index": 51,
+ "chunk_start": 173494,
+ "chunk_end": 173675,
+ "chunk_tokens": 44,
+ "heading_path": [
+  "5. Uniqueness -"
+ ],
+ "oversize": false,
+ "doc_sha256": "b646efbbd55aa606bfc033f223f76cd26c12f07e9b216d2ce2dd105a150c83b4",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 6583,
+  "cacheReadInputTokens": 13025,
+  "cacheCreationInputTokens": 22637,
+  "webSearchRequests": 0,
+  "costUSD": 0.39746750000000003,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 5240,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.39746750000000003,
+ "duration_ms": 79087,
+ "session_id": "ae3d8f40-21a1-49e4-9e62-c7ce6682a67d",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Tail of a prior data-quality dimension's assessment criterion (clarity of source description in documentation), then dimension 5, Uniqueness, with its definition and its assessment criterion (data set check for case duplication).\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_uniqueness\",\n      \"name\": \"Uniqueness\",\n      \"aliases\": [\"data uniqueness\", \"uniqueness dimension\"],\n      \"description\": \"A data quality dimension defined by the degree to which no entity exists more than once within a data set.\",\n      \"anchor\": \"5. Uniqueness\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0051\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d_uniqueness\",\n      \"term\": \"Uniqueness\",\n      \"verbatim_text\": \"The degree to which no entity exists more than once within a data set\",\n      \"normative_status\": \"policy\",\n      \"as_of_date\": null,\n      \"anchor\": \"The degree to which no entity\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0051\"\n    }\n  ],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [\n    {\n      \"id\": \"m_source_clarity\",\n      \"text\": \"Clarity of the description of the source of a data element\",\n      \"response_type\": null,\n      \"anchor\": \"Clarity of the description\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0051\"\n    },\n    {\n      \"id\": \"m_case_duplication\",\n      \"text\": \"Data set check for case duplication\",\n      \"response_type\": null,\n      \"anchor\": \"case duplication\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0051\"\n    }\n  ],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality\",\n      \"to_id\": \"d_uniqueness\",\n      \"anchor\": \"Definition - The degree\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0051\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality\",\n      \"to_id\": \"c_uniqueness\",\n      \"anchor\": \"5. Uniqueness\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0051\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"metadata information\",\n      \"anchor\": \"including metadata information\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"suggested_edge\": \"measures\",\n      \"from_id\": \"m_case_duplication\",\n      \"to_id\": \"c_uniqueness\",\n      \"anchor\": \"case duplication\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0051\",\n      \"diversion_reason\": \"structural_inference\"\n    },\n    {\n      \"suggested_edge\": \"measures\",\n      \"from_id\": \"m_source_clarity\",\n      \"to_id\": null,\n      \"anchor\": \"Clarity of the description\",\n      \"location\": \"fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0051\",\n      \"diversion_reason\": \"cross_chunk\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"Assessment criteria\", \"type\": \"Concept\"},\n    {\"name\": \"data set\", \"type\": \"Concept\"},\n    {\"name\": \"data element\", \"type\": \"Concept\"},\n    {\"name\": \"documentation\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}
