@@ -1144,3 +1144,83 @@ left to block, b015 being the last of 15, so the burn completed normally and exi
 removing `events/bulk_v038_STOP.json`; chunk-level resume repeats nothing.
 
 **Suite at close: 593 passed.**
+
+---
+
+# Tome burn — b005, b008, b009 (operator scope reversal 2026-09-01)
+
+Appended 2026-09-02 by the CC session that relaunched b009. Everything below is read from
+the ledger, the shard, `state/bulk_v038_burn.json` and the driver logs, not relayed.
+
+## 21.1 Scope reversal
+
+ADDENDUM-02 §2.2 deferred six documents `below_burn_scope` on cost-per-demand (58% of
+remaining work for 16% of remaining demand). On 2026-09-01 the operator reversed that for
+the three tome batches; `extraction_request` events (priority 43–45, reason "operator scope
+reversal 2026-09-01 … the cost premise changed") revived the documents under the pinned
+`bulk_v038` profile. Batch ids are the ones frozen in `burn_plan_cut`, never renumbered. The
+driver was the same `run_chunked_bulk.py --phase burn --workers 2 --judge-ceiling 12200000`
+as the scoped burn; nothing in the contract, the SPRT constants, or the DD-024 layers changed.
+
+## 21.2 Batch ledger
+
+| batch | docs | chunks | SPRT trace | verdict | pooled F [95% CI] | item-faithful | extraction settled / ceiling | judge |
+|---|---|---|---|---|---|---|---|---|
+| `b005` | cloudflare-ai-crawl-control-manage-crawlers, croissant-akhtar-2024-paper, fcsm-19-01-transparent-reporting | 225 of 229 | 4/55 → 7/110 → 9/165 → 11/220 accept | **accept** | 0.0500 [0.0281, 0.0873] | 0.757 (109/144) | 9,911,812 / 14,386,411 (69%) | 3,870,131 |
+| `b008` | nist-ai-rmf-playbook, mlcommons-croissant-spec | 223 of 225 | 1/55 → 2/105 accept | **accept** | 0.0190 [0.0052, 0.0668] | 0.812 (56/69) | 9,725,111 / 11,207,590 (87%) | 2,954,438 |
+| `b009` | nist-generative-ai-profile-ai-600-1 | 145 of 146 | — | **in flight** (relaunched 2026-09-02 16:10 UTC) | — | — | ceiling 7,951,366 | — |
+
+b005 is the burn's widest SPRT walk: four looks before accept, and its 55-fact F upper bound
+(0.1726) sat above the 0.10 gate until the third look. It accepted on the sequential test's own
+terms, at F = 0.050, the highest point estimate of any accepted batch. Item-faithfulness 0.757
+is above the 0.70 floor but the second-lowest in the burn (b006's 0.754). Read it against
+its composition: `fcsm-19-01` alone is 207 of the 229 chunks, so b005 is effectively one
+long federal report, and §19.2's stratum finding (frameworks and standards run higher refusal
+and lower faithfulness than academic prose) applies.
+
+## 21.3 The b008/b009 stop — a CLI refusal, not an extraction failure
+
+At 2026-09-02 03:01 UTC (23:01 ET on 09-01) every `claude -p` call began exiting 1 with an
+empty stderr. The sequence on disk:
+
+1. b008's last three judge batches (one Opus, two Sonnet) failed all three retries each. The
+   SPRT had 105 facts labelled out of the 110 planned and accepted on those; the aggregate
+   records `facts 105, labels 160`, which is why the second Opus rater shows n=105 and Sonnet
+   n=55 in `state/bulk_v038_burn.json`.
+2. b009 declared its ceiling, censused 146 chunks, dispatched, and lost its first five chunks
+   the same way. The driver's systemic-failure rule fired: `FATAL: 5 consecutive chunk
+   failures — systemic, pass stopped`. Zero extraction calls landed.
+3. The stub's exit-nonzero path settles at the estimate (`settled_as_estimate: true`, no
+   `model_call_event_id`) because a failed CLI may still have consumed tokens server-side.
+   Seven b009 reservations were booked that way: 140,000 tokens of capacity charged against
+   the batch for no output. That is the conservative rule working as written, and it is a
+   measurable cost of the failure, recorded here so the b009 settled/ceiling ratio at close is
+   not misread.
+
+`_looks_rate_limited` did not match, so the reservations were settled rather than released
+and the driver did not back off. Empty stderr on exit 1 is consistent with the Max
+subscription's usage window closing; a Haiku liveness call succeeded at 16:08 UTC with no
+change to the machine, and the relaunch's first chunks settled at measured usage
+(~36–37k tokens each). No code changed between the failure and the relaunch. Whether the
+stub should treat empty-stderr exit 1 as a release-and-back-off case rather than a
+settle-and-fail case is a finding for the spend guard, not fixed here.
+
+## 21.4 Relaunch
+
+Chunk-level resume repeated nothing: the driver skipped b001–b008 as `already accept`, found
+b009 with 145 of 146 chunks left, and resumed under the ceiling declared at 03:01 (a batch
+declares its ceiling once, §15). Log: this session's scratchpad `burn9.log`. b008's artifacts
+were committed first (`34b51cc`) so the relaunch's writes are separable in the history.
+
+The first two chunks came back `[empty layers]` at 443 and 1,061 output tokens. Chunks 1–2 of
+a NIST profile are front matter, so this is expected there; if it persists past the front
+matter it is a yield collapse and the driver's yield flags are the instrument that says so.
+
+## 21.5 Coverage after b005 and b008
+
+`kg queue status`: extracted 34, stale 1 (b009's document, re-extraction owed), deferred 156
+(all `no consumer`), skipped_oversize 3. Crosswalk demand: the six `below_burn_scope` units
+of §20.4 are now down to one (b009's), so demand coverage stands at **40 of 41 units** pending
+b009, against 35 of 41 at the scoped close.
+
+Batch verdict and reconciliation for b009 to follow in this section when it is on disk.
