@@ -1,0 +1,33 @@
+{
+ "doc_id": "nist-generative-ai-profile-ai-600-1",
+ "chunk_id": "nist-generative-ai-profile-ai-600-1#c0121",
+ "chunk_index": 121,
+ "chunk_start": 113709,
+ "chunk_end": 113973,
+ "chunk_tokens": 59,
+ "heading_path": [
+  "MG-3.1-003"
+ ],
+ "oversize": false,
+ "doc_sha256": "6e73620ab6b64e90ef2c04bf0e0d6246185a2f4b1b13cab0df494496cff89b6a",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 3348,
+  "cacheReadInputTokens": 13027,
+  "cacheCreationInputTokens": 22575,
+  "webSearchRequests": 0,
+  "costUSD": 0.3159735,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 1394,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3159735,
+ "duration_ms": 34826,
+ "session_id": "5f8a1871-97f1-4cb3-98ae-8e58e447c0a7",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"NIST GAI Profile action MG-3.1-003 under the Homogenization risk: re-assess model risks after fine-tuning or RAG implementation and for previously unevaluated third-party GAI models; also tagged to Value Chain and Component Integration.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_homogenization\",\n      \"name\": \"Homogenization\",\n      \"aliases\": [\"model homogenization\"],\n      \"description\": \"GAI risk category under which action MG-3.1-003 is listed in this chunk.\",\n      \"anchor\": \"Homogenization\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0121\"\n    },\n    {\n      \"id\": \"c_rag\",\n      \"name\": \"retrieval-augmented generation\",\n      \"aliases\": [\"RAG\"],\n      \"description\": \"Implementation approach after which model risks are to be re-assessed.\",\n      \"anchor\": \"retrieval-augmented generation\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0121\"\n    },\n    {\n      \"id\": \"c_finetuning\",\n      \"name\": \"ﬁne-tuning\",\n      \"aliases\": [\"fine-tuning\"],\n      \"description\": \"Model adaptation step after which model risks are to be re-assessed.\",\n      \"anchor\": \"ﬁne-tuning\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0121\"\n    },\n    {\n      \"id\": \"c_third_party_gai\",\n      \"name\": \"third-party GAI models\",\n      \"aliases\": [\"third-party generative AI models\"],\n      \"description\": \"Externally sourced GAI models deployed for applications and/or use cases not evaluated in initial testing.\",\n      \"anchor\": \"third-party GAI models\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0121\"\n    },\n    {\n      \"id\": \"c_value_chain\",\n      \"name\": \"Value Chain and Component Integration\",\n      \"aliases\": [\"value chain integration\"],\n      \"description\": \"GAI risk category associated with this action in this chunk.\",\n      \"anchor\": \"Value Chain and Component\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0121\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [\n    {\n      \"id\": \"p_mg_3_1_003\",\n      \"text\": \"Re-assess model risks after ﬁne-tuning or retrieval-augmented generation implementation and for any third-party GAI models deployed for applications and/or use cases that were not evaluated in initial testing.\",\n      \"as_of_date\": null,\n      \"scope\": \"any\",\n      \"anchor\": \"Re-assess model risks\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0121\"\n    }\n  ],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"recommends\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"p_mg_3_1_003\",\n      \"anchor\": \"Re-assess model risks\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0121\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"p_mg_3_1_003\",\n      \"to_id\": \"c_third_party_gai\",\n      \"anchor\": \"third-party GAI models\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0121\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"p_mg_3_1_003\",\n      \"to_id\": \"c_rag\",\n      \"anchor\": \"retrieval-augmented generation\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0121\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"p_mg_3_1_003\",\n      \"to_id\": \"c_finetuning\",\n      \"anchor\": \"ﬁne-tuning\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0121\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"c_homogenization\",\n      \"anchor\": \"Homogenization\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0121\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"c_value_chain\",\n      \"anchor\": \"Value Chain and Component\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0121\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"Homogenization\",\n      \"suggested_edge\": \"practice_addresses_risk\",\n      \"from_hint\": \"p_mg_3_1_003\",\n      \"to_hint\": \"c_homogenization\",\n      \"diversion_reason\": \"structural_inference\"\n    },\n    {\n      \"anchor\": \"Value Chain and Component\",\n      \"suggested_edge\": \"practice_addresses_risk\",\n      \"from_hint\": \"p_mg_3_1_003\",\n      \"to_hint\": \"c_value_chain\",\n      \"diversion_reason\": \"structural_inference\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"MG-3.1-003\", \"type\": \"Practice\"},\n    {\"name\": \"initial testing\", \"type\": \"Concept\"},\n    {\"name\": \"model risk re-assessment\", \"type\": \"Concept\"},\n    {\"name\": \"use cases\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

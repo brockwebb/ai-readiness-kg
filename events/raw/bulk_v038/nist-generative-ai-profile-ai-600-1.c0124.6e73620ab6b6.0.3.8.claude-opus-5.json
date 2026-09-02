@@ -1,0 +1,33 @@
+{
+ "doc_id": "nist-generative-ai-profile-ai-600-1",
+ "chunk_id": "nist-generative-ai-profile-ai-600-1#c0124",
+ "chunk_index": 124,
+ "chunk_start": 115207,
+ "chunk_end": 115647,
+ "chunk_tokens": 115,
+ "heading_path": [
+  "MG-3.2-002"
+ ],
+ "oversize": false,
+ "doc_sha256": "6e73620ab6b64e90ef2c04bf0e0d6246185a2f4b1b13cab0df494496cff89b6a",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 3629,
+  "cacheReadInputTokens": 13027,
+  "cacheCreationInputTokens": 22743,
+  "webSearchRequests": 0,
+  "costUSD": 0.3246785,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 1798,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3246785,
+ "duration_ms": 38653,
+ "session_id": "003d2ced-16b3-44b7-8540-93b019b604e7",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"NIST AI 600-1 action MG-3.2-002: document how pre-trained models were adapted for the generative task, and keep access to un-tuned baseline models to support debugging.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"n_pretrained_models\",\n      \"name\": \"pre-trained models\",\n      \"aliases\": [\"foundation models\"],\n      \"description\": \"Models trained in advance and then adapted for a specific generative task.\",\n      \"anchor\": \"pre-trained models\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0124\"\n    },\n    {\n      \"id\": \"n_rag\",\n      \"name\": \"retrieval-augmented generation\",\n      \"aliases\": [\"RAG\"],\n      \"description\": \"An adaptation approach for pre-trained models named alongside fine-tuning.\",\n      \"anchor\": \"retrieval-augmented generation\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0124\"\n    },\n    {\n      \"id\": \"n_untuned_models\",\n      \"name\": \"un-tuned (baseline) models\",\n      \"aliases\": [\"baseline models\"],\n      \"description\": \"Models without task adaptation, access to which supports debugging the influence of pre-trained versus adapted weights.\",\n      \"anchor\": \"un-tuned (baseline) models\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0124\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"n_claim_untuned_debug\",\n      \"claim_text\": \"un-tuned (baseline) models supports debugging the relative in\\ufb02uence\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"inference\",\n      \"anchor\": \"supports debugging\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0124\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [\n    {\n      \"id\": \"n_practice_document_adaptation\",\n      \"text\": \"Document how pre-trained models have been adapted\",\n      \"as_of_date\": null,\n      \"scope\": \"any\",\n      \"anchor\": \"Document how pre-trained models\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0124\"\n    }\n  ],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"recommends\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"n_practice_document_adaptation\",\n      \"anchor\": \"Document how pre-trained models\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0124\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"n_claim_untuned_debug\",\n      \"anchor\": \"supports debugging\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0124\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"n_claim_untuned_debug\",\n      \"to_id\": \"n_untuned_models\",\n      \"anchor\": \"Access to\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0124\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"n_practice_document_adaptation\",\n      \"to_id\": \"n_pretrained_models\",\n      \"anchor\": \"pre-trained models have been adapted\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0124\"\n    },\n    {\n      \"type\": \"supported_by\",\n      \"from_id\": \"n_practice_document_adaptation\",\n      \"to_id\": \"n_claim_untuned_debug\",\n      \"anchor\": \"supports debugging the relative\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0124\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"n_rag\",\n      \"anchor\": \"retrieval-augmented generation\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0124\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\"name\": \"Harmful Bias and Homogenization\", \"anchor\": \"Harmful Bias and Homogenization\"},\n    {\"name\": \"Information Integrity\", \"anchor\": \"Information Integrity\"},\n    {\"name\": \"Data Privacy\", \"anchor\": \"Data Privacy\"},\n    {\"name\": \"data augmentations\", \"anchor\": \"data augmentations\"},\n    {\"name\": \"parameter adjustments\", \"anchor\": \"parameter adjustments\"}\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"Information Integrity; Data Privacy\",\n      \"suggested_edge\": \"action_addresses_risk\",\n      \"diversion_reason\": \"structural_inference\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"fine-tuning\", \"type\": \"Concept\"},\n    {\"name\": \"generative task\", \"type\": \"Concept\"},\n    {\"name\": \"fine-tuned model weights\", \"type\": \"Concept\"},\n    {\"name\": \"system updates\", \"type\": \"Concept\"},\n    {\"name\": \"MG-3.2-002\", \"type\": \"Practice\"}\n  ]\n}\n```"
+}

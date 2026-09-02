@@ -1,0 +1,33 @@
+{
+ "doc_id": "nist-generative-ai-profile-ai-600-1",
+ "chunk_id": "nist-generative-ai-profile-ai-600-1#c0120",
+ "chunk_index": 120,
+ "chunk_start": 113388,
+ "chunk_end": 113708,
+ "chunk_tokens": 69,
+ "heading_path": [
+  "MG-3.1-002"
+ ],
+ "oversize": false,
+ "doc_sha256": "6e73620ab6b64e90ef2c04bf0e0d6246185a2f4b1b13cab0df494496cff89b6a",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 3627,
+  "cacheReadInputTokens": 13027,
+  "cacheCreationInputTokens": 22641,
+  "webSearchRequests": 0,
+  "costUSD": 0.3236085,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 2054,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3236085,
+ "duration_ms": 37260,
+ "session_id": "832b2078-8845-471e-b226-5d92a5631892",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"A NIST AI 600-1 suggested-action table row (MG-3.1-002) recommending that GAI system value chain risks be tested, with an exemplar list of such risks and a trailing risk-category tag column.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c1\",\n      \"name\": \"GAI system value chain risks\",\n      \"aliases\": [\"value chain risk\"],\n      \"description\": \"Risks arising from the GAI system's value chain, exemplified in this chunk by data poisoning, malware, software and hardware vulnerabilities, labor practices, data privacy and localization compliance, and geopolitical alignment.\",\n      \"anchor\": \"value chain risks\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0120\"\n    },\n    {\n      \"id\": \"c2\",\n      \"name\": \"data poisoning\",\n      \"aliases\": [],\n      \"description\": \"Given as an example of a GAI system value chain risk to be tested.\",\n      \"anchor\": \"data poisoning\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0120\"\n    },\n    {\n      \"id\": \"c3\",\n      \"name\": \"geopolitical alignment\",\n      \"aliases\": [],\n      \"description\": \"Given as an example of a GAI system value chain risk to be tested.\",\n      \"anchor\": \"geopolitical alignment\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0120\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [\n    {\n      \"id\": \"p1\",\n      \"text\": \"Test GAI system value chain risks\",\n      \"as_of_date\": null,\n      \"scope\": \"any\",\n      \"anchor\": \"Test GAI system\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0120\"\n    }\n  ],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"recommends\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"p1\",\n      \"anchor\": \"Test GAI system\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0120\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"p1\",\n      \"to_id\": \"c1\",\n      \"anchor\": \"value chain risks\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0120\"\n    },\n    {\n      \"type\": \"has_component\",\n      \"from_id\": \"c1\",\n      \"to_id\": \"c2\",\n      \"anchor\": \"e.g., data poisoning\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0120\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"c3\",\n      \"anchor\": \"geopolitical alignment\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0120\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\"name\": \"malware\", \"anchor\": \"malware\"},\n    {\"name\": \"labor practices\", \"anchor\": \"labor practices\"},\n    {\"name\": \"Data Privacy\", \"anchor\": \"Data Privacy;\"},\n    {\"name\": \"Information Security\", \"anchor\": \"Information Security\"},\n    {\"name\": \"Value Chain and Component Integration\", \"anchor\": \"Value Chain and Component\"},\n    {\"name\": \"Harmful Bias and Homogenization\", \"anchor\": \"Harmful Bias and\"},\n    {\"name\": \"Intellectual Property\", \"anchor\": \"Intellectual Property\"}\n  ],\n  \"proposed_relationships\": [\n    {\n      \"suggested_edge\": \"practice_tagged_with_risk_category\",\n      \"from_id\": \"p1\",\n      \"to_id\": \"Value Chain and Component Integration\",\n      \"anchor\": \"Value Chain and Component\",\n      \"diversion_reason\": \"structural_inference\"\n    },\n    {\n      \"suggested_edge\": \"action_belongs_to_subcategory\",\n      \"from_id\": \"p1\",\n      \"to_id\": \"MG-3.1\",\n      \"anchor\": \"MG-3.1-002\",\n      \"diversion_reason\": \"cross_chunk\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"MG-3.1-002\", \"type\": \"Measure\"},\n    {\"name\": \"hardware vulnerabilities\", \"type\": \"Concept\"},\n    {\"name\": \"data privacy and localization compliance\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

@@ -1,0 +1,33 @@
+{
+ "doc_id": "nist-generative-ai-profile-ai-600-1",
+ "chunk_id": "nist-generative-ai-profile-ai-600-1#c0095",
+ "chunk_index": 95,
+ "chunk_start": 98994,
+ "chunk_end": 99235,
+ "chunk_tokens": 51,
+ "heading_path": [
+  "MS-2.11-003"
+ ],
+ "oversize": false,
+ "doc_sha256": "6e73620ab6b64e90ef2c04bf0e0d6246185a2f4b1b13cab0df494496cff89b6a",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 3183,
+  "cacheReadInputTokens": 13027,
+  "cacheCreationInputTokens": 22551,
+  "webSearchRequests": 0,
+  "costUSD": 0.3116085,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 1412,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3116085,
+ "duration_ms": 33318,
+ "session_id": "7580c2b1-1063-44fe-ba7c-08f189742b1d",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"NIST GAI Profile suggested action MS-2.11-003: identify classes of individuals, groups, or environmental ecosystems that might be impacted by GAI systems via direct engagement with potentially impacted communities; tagged to the Environmental and Harmful Bias and Homogenization risk categories.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_gai_systems\",\n      \"name\": \"GAI systems\",\n      \"aliases\": [\"generative AI systems\"],\n      \"description\": \"Systems whose potential impacts on classes of individuals, groups, or environmental ecosystems are to be identified.\",\n      \"anchor\": \"GAI systems\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0095\"\n    },\n    {\n      \"id\": \"c_impacted_communities\",\n      \"name\": \"impacted communities\",\n      \"aliases\": [\"potentially impacted communities\"],\n      \"description\": \"Communities with whom direct engagement is the means of identifying impacted classes.\",\n      \"anchor\": \"impacted communities\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0095\"\n    },\n    {\n      \"id\": \"c_environmental_ecosystems\",\n      \"name\": \"environmental ecosystems\",\n      \"aliases\": [],\n      \"description\": \"One of the classes of entities that might be impacted by GAI systems.\",\n      \"anchor\": \"environmental ecosystems\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0095\"\n    },\n    {\n      \"id\": \"c_environmental\",\n      \"name\": \"Environmental\",\n      \"aliases\": [\"Environmental risk\"],\n      \"description\": \"GAI risk category to which this suggested action is tagged.\",\n      \"anchor\": \"Environmental;\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0095\"\n    },\n    {\n      \"id\": \"c_harmful_bias\",\n      \"name\": \"Harmful Bias\",\n      \"aliases\": [\"Harmful Bias and Homogenization\"],\n      \"description\": \"GAI risk category to which this suggested action is tagged.\",\n      \"anchor\": \"Harmful Bias\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0095\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [\n    {\n      \"id\": \"p_identify_impacted_classes\",\n      \"text\": \"Identify the classes of individuals, groups, or environmental ecosystems\",\n      \"as_of_date\": null,\n      \"scope\": \"any\",\n      \"anchor\": \"Identify the classes\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0095\"\n    }\n  ],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"recommends\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"p_identify_impacted_classes\",\n      \"anchor\": \"classes of individuals\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0095\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"p_identify_impacted_classes\",\n      \"to_id\": \"c_gai_systems\",\n      \"anchor\": \"impacted by GAI systems\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0095\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"p_identify_impacted_classes\",\n      \"to_id\": \"c_impacted_communities\",\n      \"anchor\": \"engagement with potentially\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0095\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"c_environmental\",\n      \"anchor\": \"Environmental;\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0095\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"c_harmful_bias\",\n      \"anchor\": \"Harmful Bias\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0095\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"MS-2.11-003\",\n      \"anchor\": \"MS-2.11-003 \\nIdentify\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"Environmental; Harmful Bias and\",\n      \"suggested_edge\": \"tagged_with_risk_category\",\n      \"diversion_reason\": \"structural_inference\",\n      \"note\": \"Table cell associates the suggested action with the Environmental and Harmful Bias and Homogenization risk categories; no predicate sentence.\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"MS-2.11-003\", \"type\": \"Measure\"},\n    {\"name\": \"Homogenization\", \"type\": \"Concept\"},\n    {\"name\": \"direct engagement\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

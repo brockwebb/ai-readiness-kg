@@ -1,0 +1,33 @@
+{
+ "doc_id": "nist-generative-ai-profile-ai-600-1",
+ "chunk_id": "nist-generative-ai-profile-ai-600-1#c0098",
+ "chunk_index": 98,
+ "chunk_start": 101204,
+ "chunk_end": 101902,
+ "chunk_tokens": 171,
+ "heading_path": [
+  "MS-2.12-003"
+ ],
+ "oversize": false,
+ "doc_sha256": "6e73620ab6b64e90ef2c04bf0e0d6246185a2f4b1b13cab0df494496cff89b6a",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 4517,
+  "cacheReadInputTokens": 13027,
+  "cacheCreationInputTokens": 22985,
+  "webSearchRequests": 0,
+  "costUSD": 0.3492985,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 2411,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3492985,
+ "duration_ms": 46744,
+ "session_id": "5d72fd31-bfc5-4190-ad91-899f07afcdf4",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"NIST GAI Profile suggested actions MS-2.12-003/004 on measuring environmental impacts of training and deployment and verifying carbon capture/offset programs, plus the MEASURE 2.13 outcome on TEVV metric effectiveness.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_env_impacts\",\n      \"name\": \"environmental impacts\",\n      \"aliases\": [\"environmental impact of AI\"],\n      \"description\": \"Energy and water consumption arising from training, fine tuning, and deploying models.\",\n      \"anchor\": \"estimate environmental impacts\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0098\"\n    },\n    {\n      \"id\": \"c_greenwashing\",\n      \"name\": \"green-washing\",\n      \"aliases\": [\"greenwashing\"],\n      \"description\": \"Concern that carbon capture or offset programs are represented as more effective than they are.\",\n      \"anchor\": \"green-washing concerns\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0098\"\n    },\n    {\n      \"id\": \"c_tevv_metrics\",\n      \"name\": \"TEVV metrics and processes\",\n      \"aliases\": [\"test, evaluation, verification and validation metrics\"],\n      \"description\": \"The metrics and processes employed in the MEASURE function, whose effectiveness is itself evaluated and documented.\",\n      \"anchor\": \"employed TEVV metrics\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0098\"\n    },\n    {\n      \"id\": \"c_measure_function\",\n      \"name\": \"MEASURE function\",\n      \"aliases\": [\"AI RMF MEASURE function\"],\n      \"description\": \"The framework function within which TEVV metrics and processes are employed.\",\n      \"anchor\": \"in the MEASURE function\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0098\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [\n    {\n      \"id\": \"m_ms_2_12_003\",\n      \"text\": \"Measure or estimate environmental impacts\",\n      \"response_type\": \"suggested_action\",\n      \"tier\": \"agency_instrumented\",\n      \"anchor\": \"Measure or estimate environmental impacts\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0098\"\n    },\n    {\n      \"id\": \"m_ms_2_12_004\",\n      \"text\": \"Verify eﬀectiveness of carbon capture or oﬀset programs\",\n      \"response_type\": \"suggested_action\",\n      \"tier\": \"agency_instrumented\",\n      \"anchor\": \"carbon capture or oﬀset programs\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0098\"\n    }\n  ],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"measures\",\n      \"from_id\": \"m_ms_2_12_003\",\n      \"to_id\": \"c_env_impacts\",\n      \"anchor\": \"or estimate environmental impacts (e.g.,\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0098\"\n    },\n    {\n      \"type\": \"measures\",\n      \"from_id\": \"m_ms_2_12_004\",\n      \"to_id\": \"c_greenwashing\",\n      \"anchor\": \"address green-washing\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0098\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"c_env_impacts\",\n      \"anchor\": \"environmental impacts (e.g., energy\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0098\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"c_tevv_metrics\",\n      \"anchor\": \"the employed TEVV metrics\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0098\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"c_measure_function\",\n      \"anchor\": \"the MEASURE function\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0098\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\"name\": \"AI Deployment\", \"anchor\": \"AI Deployment\"},\n    {\"name\": \"AI Impact Assessment\", \"anchor\": \"AI Impact Assessment\"},\n    {\"name\": \"Domain Experts\", \"anchor\": \"Domain Experts\"},\n    {\"name\": \"Operation and Monitoring\", \"anchor\": \"Operation and Monitoring\"},\n    {\"name\": \"TEVV\", \"anchor\": \"Monitoring, TEVV\"},\n    {\"name\": \"GAI\", \"anchor\": \"for GAI training\"}\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"in the MEASURE function\",\n      \"suggested_edge\": \"has_component\",\n      \"from_id\": \"c_measure_function\",\n      \"to_id\": \"c_tevv_metrics\",\n      \"diversion_reason\": \"structural_inference\"\n    },\n    {\n      \"anchor\": \"MEASURE 2.13\",\n      \"suggested_edge\": \"uses_measure\",\n      \"from_id\": \"c_measure_function\",\n      \"to_id\": \"m_ms_2_12_003\",\n      \"diversion_reason\": \"cross_chunk\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"inference time versus training time resource tradeoffs\", \"type\": \"Concept\"},\n    {\"name\": \"carbon capture or offset programs\", \"type\": \"Concept\"},\n    {\"name\": \"energy and water consumption\", \"type\": \"Concept\"},\n    {\"name\": \"Effectiveness of the employed TEVV metrics and processes in the MEASURE function are evaluated and documented\", \"type\": \"Claim\"},\n    {\"name\": \"MEASURE 2.13\", \"type\": \"Framework\"}\n  ]\n}\n```"
+}

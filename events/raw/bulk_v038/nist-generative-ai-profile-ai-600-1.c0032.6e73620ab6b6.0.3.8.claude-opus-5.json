@@ -1,0 +1,33 @@
+{
+ "doc_id": "nist-generative-ai-profile-ai-600-1",
+ "chunk_id": "nist-generative-ai-profile-ai-600-1#c0032",
+ "chunk_index": 32,
+ "chunk_start": 58673,
+ "chunk_end": 58861,
+ "chunk_tokens": 46,
+ "heading_path": [
+  "GV4.3--001"
+ ],
+ "oversize": false,
+ "doc_sha256": "6e73620ab6b64e90ef2c04bf0e0d6246185a2f4b1b13cab0df494496cff89b6a",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 3708,
+  "cacheReadInputTokens": 13027,
+  "cacheCreationInputTokens": 22643,
+  "webSearchRequests": 0,
+  "costUSD": 0.3256535,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 1838,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3256535,
+ "duration_ms": 37456,
+ "session_id": "18e190be-e7e0-4f28-a5a4-30b1af84aa5d",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"NIST GAI Profile GOVERN 4.3 outcome plus suggested action GV4.3--001: establish policies for measuring the effectiveness of employed content provenance methodologies; mapped GAI risk is Information Integrity.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_provenance_methodologies\",\n      \"name\": \"content provenance methodologies\",\n      \"aliases\": [\"content provenance\"],\n      \"description\": \"Methodologies employed to establish and convey the provenance of content, such as cryptography, watermarking, and steganography.\",\n      \"anchor\": \"provenance methodologies\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0032\"\n    },\n    {\n      \"id\": \"c_information_integrity\",\n      \"name\": \"Information Integrity\",\n      \"aliases\": [],\n      \"description\": \"The GAI risk category to which suggested action GV4.3--001 is mapped.\",\n      \"anchor\": \"Information Integrity\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0032\"\n    },\n    {\n      \"id\": \"c_ai_testing\",\n      \"name\": \"AI testing\",\n      \"aliases\": [],\n      \"description\": \"Testing of AI enabled by organizational practices under GOVERN 4.3.\",\n      \"anchor\": \"enable AI testing\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0032\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"cl_govern43\",\n      \"claim_text\": \"Organizational practices are in place to enable AI testing, identiﬁcation of incidents, and information sharing.\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"practices are in place\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0032\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [\n    {\n      \"id\": \"p_gv43_001\",\n      \"text\": \"Establish policies for measuring the eﬀectiveness of employed content provenance methodologies (e.g., cryptography, watermarking, steganography, etc.)\",\n      \"as_of_date\": null,\n      \"scope\": \"content\",\n      \"anchor\": \"Establish policies\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0032\"\n    }\n  ],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"recommends\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"p_gv43_001\",\n      \"anchor\": \"Establish policies for measuring\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0032\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"p_gv43_001\",\n      \"to_id\": \"c_provenance_methodologies\",\n      \"anchor\": \"employed content\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0032\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"cl_govern43\",\n      \"anchor\": \"Organizational practices\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0032\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_govern43\",\n      \"to_id\": \"c_ai_testing\",\n      \"anchor\": \"to enable AI testing\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0032\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"c_information_integrity\",\n      \"anchor\": \"Information Integrity\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0032\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"c_provenance_methodologies\",\n      \"anchor\": \"content \\nprovenance\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0032\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\"name\": \"cryptography\", \"anchor\": \"cryptography\"},\n    {\"name\": \"watermarking\", \"anchor\": \"watermarking\"},\n    {\"name\": \"steganography\", \"anchor\": \"steganography\"}\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"Information Integrity\",\n      \"suggested_edge\": \"risk_mapped_to_action\",\n      \"from_id\": \"p_gv43_001\",\n      \"to_id\": \"c_information_integrity\",\n      \"diversion_reason\": \"structural_inference\"\n    },\n    {\n      \"anchor\": \"(e.g., cryptography, watermarking\",\n      \"suggested_edge\": \"subtype_of\",\n      \"from_id\": \"cryptography/watermarking/steganography\",\n      \"to_id\": \"c_provenance_methodologies\",\n      \"diversion_reason\": \"predicate_not_located\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"information sharing\", \"type\": \"Concept\"},\n    {\"name\": \"identiﬁcation of incidents\", \"type\": \"Concept\"},\n    {\"name\": \"GOVERN 4.3\", \"type\": \"Framework\"}\n  ]\n}\n```"
+}

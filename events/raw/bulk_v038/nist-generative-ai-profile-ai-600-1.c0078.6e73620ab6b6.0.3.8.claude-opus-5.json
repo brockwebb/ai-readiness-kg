@@ -1,0 +1,33 @@
+{
+ "doc_id": "nist-generative-ai-profile-ai-600-1",
+ "chunk_id": "nist-generative-ai-profile-ai-600-1#c0078",
+ "chunk_index": 78,
+ "chunk_start": 89993,
+ "chunk_end": 90244,
+ "chunk_tokens": 55,
+ "heading_path": [
+  "MS-2.6-005"
+ ],
+ "oversize": false,
+ "doc_sha256": "6e73620ab6b64e90ef2c04bf0e0d6246185a2f4b1b13cab0df494496cff89b6a",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 2901,
+  "cacheReadInputTokens": 13027,
+  "cacheCreationInputTokens": 22559,
+  "webSearchRequests": 0,
+  "costUSD": 0.3046385,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 1558,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3046385,
+ "duration_ms": 32913,
+ "session_id": "fbc03ca7-d289-4284-b7f6-e62e45c39ab8",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"NIST GAI Profile suggested action MS-2.6-005 under the Hateful Content section: verify GAI system architecture can monitor outputs/performance and handle, recover from, and repair errors on detected security anomalies; tagged Confabulation, Information Integrity, Information Security.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_gai_system_architecture\",\n      \"name\": \"GAI system architecture\",\n      \"aliases\": [\"generative AI system architecture\"],\n      \"description\": \"The architecture of a GAI system, which is expected to monitor outputs and performance and to handle, recover from, and repair errors when security anomalies, threats and impacts are detected.\",\n      \"anchor\": \"GAI system architecture\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0078\"\n    },\n    {\n      \"id\": \"c_information_security\",\n      \"name\": \"Information Security\",\n      \"aliases\": [],\n      \"description\": \"Risk category associated with this suggested action, alongside Confabulation and Information Integrity.\",\n      \"anchor\": \"Information Security\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0078\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [\n    {\n      \"id\": \"m_ms_2_6_005\",\n      \"text\": \"Verify that GAI system architecture can monitor outputs and performance, and handle, recover from, and repair errors when security anomalies, threats and impacts are detected.\",\n      \"response_type\": \"verification\",\n      \"anchor\": \"MS-2.6-005\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0078\"\n    }\n  ],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"m_ms_2_6_005\",\n      \"to_id\": \"c_gai_system_architecture\",\n      \"anchor\": \"system architecture can monitor outputs\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0078\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"c_gai_system_architecture\",\n      \"anchor\": \"Verify that GAI system\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0078\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"c_information_security\",\n      \"anchor\": \"Information Security\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0078\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"Hateful Content\",\n      \"anchor\": \"Hateful Content\"\n    },\n    {\n      \"name\": \"Confabulation\",\n      \"anchor\": \"Confabulation\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"suggested_edge\": \"applies_to\",\n      \"from_id\": \"m_ms_2_6_005\",\n      \"to_name\": \"Information Integrity\",\n      \"anchor\": \"Integrity;\",\n      \"diversion_reason\": \"endpoint_not_located\"\n    },\n    {\n      \"suggested_edge\": \"measures\",\n      \"from_id\": \"m_ms_2_6_005\",\n      \"to_name\": \"MEASURE 2.6 (parent AI RMF subcategory)\",\n      \"anchor\": \"MS-2.6-005\",\n      \"diversion_reason\": \"cross_chunk\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"security anomalies\", \"type\": \"Concept\"},\n    {\"name\": \"error recovery and repair\", \"type\": \"Concept\"},\n    {\"name\": \"output and performance monitoring\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

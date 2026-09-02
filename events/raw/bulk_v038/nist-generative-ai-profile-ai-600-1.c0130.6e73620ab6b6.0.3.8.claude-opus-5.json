@@ -1,0 +1,33 @@
+{
+ "doc_id": "nist-generative-ai-profile-ai-600-1",
+ "chunk_id": "nist-generative-ai-profile-ai-600-1#c0130",
+ "chunk_index": 130,
+ "chunk_start": 117594,
+ "chunk_end": 118212,
+ "chunk_tokens": 130,
+ "heading_path": [
+  "MG-3.2-009"
+ ],
+ "oversize": false,
+ "doc_sha256": "6e73620ab6b64e90ef2c04bf0e0d6246185a2f4b1b13cab0df494496cff89b6a",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 3898,
+  "cacheReadInputTokens": 13027,
+  "cacheCreationInputTokens": 22869,
+  "webSearchRequests": 0,
+  "costUSD": 0.3326635,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 1744,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3326635,
+ "duration_ms": 39794,
+ "session_id": "c31eb462-605f-4bf5-99e1-b8e4054a47e1",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"NIST GAI Profile action MG-3.2-009 (use organizational risk tolerance to decommission or retrain out-of-limits pre-trained models) plus the MANAGE 4.1 subcategory statement on post-deployment AI system monitoring plans.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_org_risk_tolerance\",\n      \"name\": \"organizational risk tolerance\",\n      \"aliases\": [\"risk tolerance\"],\n      \"description\": \"The tolerance an organization sets, used to evaluate acceptable risks and performance metrics for deployed models.\",\n      \"anchor\": \"organizational risk tolerance\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0130\"\n    },\n    {\n      \"id\": \"c_pretrained_models\",\n      \"name\": \"pre-trained models\",\n      \"aliases\": [\"pretrained model\"],\n      \"description\": \"Models that may be decommissioned or retrained when they perform outside defined limits.\",\n      \"anchor\": \"retrain pre-trained models\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0130\"\n    },\n    {\n      \"id\": \"c_postdeploy_monitoring\",\n      \"name\": \"Post-deployment AI system monitoring plans\",\n      \"aliases\": [\"post-deployment monitoring\"],\n      \"description\": \"Monitoring plans implemented after deployment, covering user input capture and evaluation, appeal and override, decommissioning, incident response, recovery, and change management.\",\n      \"anchor\": \"Post-deployment AI system monitoring plans\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0130\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"cl_manage41\",\n      \"claim_text\": \"Post-deployment AI system monitoring plans are implemented, including mechanisms for capturing and evaluating input from users and other relevant AI Actors, appeal and override, decommissioning, incident response, recovery, and change management.\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"monitoring plans are implemented\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0130\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [\n    {\n      \"id\": \"p_mg32009\",\n      \"text\": \"Use organizational risk tolerance to evaluate acceptable risks and performance metrics and decommission or retrain pre-trained models that perform outside of deﬁned limits.\",\n      \"as_of_date\": null,\n      \"scope\": \"any\",\n      \"anchor\": \"Use organizational risk tolerance\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0130\"\n    }\n  ],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"recommends\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"p_mg32009\",\n      \"anchor\": \"decommission or retrain\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0130\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"p_mg32009\",\n      \"to_id\": \"c_pretrained_models\",\n      \"anchor\": \"models that perform outside\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0130\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"c_org_risk_tolerance\",\n      \"anchor\": \"risk tolerance to evaluate\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0130\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"cl_manage41\",\n      \"anchor\": \"MANAGE 4.1\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0130\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_manage41\",\n      \"to_id\": \"c_postdeploy_monitoring\",\n      \"anchor\": \"including mechanisms for capturing\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0130\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\"name\": \"Human-AI Conﬁguration\", \"anchor\": \"Human-AI Conﬁguration\"},\n    {\"name\": \"CBRN Information or Capabilities\", \"anchor\": \"CBRN Information or Capabilities\"},\n    {\"name\": \"Confabulation\", \"anchor\": \"Confabulation\"},\n    {\"name\": \"MG-3.2-009\", \"anchor\": \"MG-3.2-009\"},\n    {\"name\": \"AI Deployment\", \"anchor\": \"AI Actor Tasks: AI Deployment\"},\n    {\"name\": \"Third-party entities\", \"anchor\": \"Third-party entities\"},\n    {\"name\": \"GAI Risks\", \"anchor\": \"GAI Risks\"}\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"MANAGE 4.1\",\n      \"suggested_edge\": \"has_component\",\n      \"from_hint\": \"AI RMF MANAGE 4.1 subcategory\",\n      \"to_hint\": \"p_mg32009 (MG-3.2-009 suggested action)\",\n      \"diversion_reason\": \"structural_inference\"\n    },\n    {\n      \"anchor\": \"CBRN Information or Capabilities\",\n      \"suggested_edge\": \"addresses_risk\",\n      \"from_hint\": \"p_mg32009\",\n      \"to_hint\": \"CBRN Information or Capabilities; Confabulation\",\n      \"diversion_reason\": \"structural_inference\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"performance metrics\", \"type\": \"Concept\"},\n    {\"name\": \"decommissioning\", \"type\": \"Concept\"},\n    {\"name\": \"incident response\", \"type\": \"Concept\"},\n    {\"name\": \"change management\", \"type\": \"Concept\"},\n    {\"name\": \"appeal and override\", \"type\": \"Concept\"},\n    {\"name\": \"AI Actors\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

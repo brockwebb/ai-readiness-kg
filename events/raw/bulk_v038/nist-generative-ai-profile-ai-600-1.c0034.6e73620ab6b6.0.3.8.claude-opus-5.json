@@ -1,0 +1,33 @@
+{
+ "doc_id": "nist-generative-ai-profile-ai-600-1",
+ "chunk_id": "nist-generative-ai-profile-ai-600-1#c0034",
+ "chunk_index": 34,
+ "chunk_start": 60916,
+ "chunk_end": 61157,
+ "chunk_tokens": 53,
+ "heading_path": [
+  "GV-6.1-003"
+ ],
+ "oversize": false,
+ "doc_sha256": "6e73620ab6b64e90ef2c04bf0e0d6246185a2f4b1b13cab0df494496cff89b6a",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 2392,
+  "cacheReadInputTokens": 13027,
+  "cacheCreationInputTokens": 22541,
+  "webSearchRequests": 0,
+  "costUSD": 0.2917335,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 961,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.2917335,
+ "duration_ms": 25917,
+ "session_id": "fc7b0cd9-916a-46ca-acd0-257f6fc3c757",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"NIST AI 600-1 action GV-6.1-003 recommends developing and validating approaches for measuring the success of content provenance management efforts with third parties, tagged to Information Integrity and Value Chain and Component Integration.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_provenance_mgmt\",\n      \"name\": \"provenance management\",\n      \"aliases\": [\"content provenance management\"],\n      \"description\": \"Management of content provenance, including efforts conducted with third parties.\",\n      \"anchor\": \"provenance management\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0034\"\n    },\n    {\n      \"id\": \"c_info_integrity\",\n      \"name\": \"Information Integrity\",\n      \"aliases\": [],\n      \"description\": \"Risk category to which this governance action is assigned.\",\n      \"anchor\": \"Information Integrity;\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0034\"\n    },\n    {\n      \"id\": \"c_component_integration\",\n      \"name\": \"Component Integration\",\n      \"aliases\": [\"Value Chain and Component Integration\"],\n      \"description\": \"Risk category to which this governance action is assigned, alongside Information Integrity.\",\n      \"anchor\": \"and Component Integration\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0034\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [\n    {\n      \"id\": \"p_gv61003\",\n      \"text\": \"Develop and validate approaches for measuring the success\",\n      \"as_of_date\": null,\n      \"scope\": \"content\",\n      \"anchor\": \"Develop and validate\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0034\"\n    }\n  ],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"recommends\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"p_gv61003\",\n      \"anchor\": \"Develop and validate\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0034\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"p_gv61003\",\n      \"to_id\": \"c_provenance_mgmt\",\n      \"anchor\": \"provenance management\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0034\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"c_info_integrity\",\n      \"anchor\": \"Information Integrity;\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0034\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"c_component_integration\",\n      \"anchor\": \"and Component Integration\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0034\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"Integration\",\n      \"anchor\": \"Integration \\n\\nGV-6.1-003\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"Information Integrity;\",\n      \"suggested_edge\": \"categorized_as\",\n      \"diversion_reason\": \"other:risk-category-tagging\",\n      \"from_id\": \"p_gv61003\",\n      \"to_id\": \"c_info_integrity\"\n    },\n    {\n      \"anchor\": \"and Component Integration\",\n      \"suggested_edge\": \"categorized_as\",\n      \"diversion_reason\": \"other:risk-category-tagging\",\n      \"from_id\": \"p_gv61003\",\n      \"to_id\": \"c_component_integration\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"incidents detected\", \"type\": \"Measure\"},\n    {\"name\": \"response times\", \"type\": \"Measure\"},\n    {\"name\": \"third parties\", \"type\": \"Concept\"},\n    {\"name\": \"GV-6.1-003\", \"type\": \"Framework\"}\n  ]\n}\n```"
+}

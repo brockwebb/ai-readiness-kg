@@ -1224,3 +1224,50 @@ of §20.4 are now down to one (b009's), so demand coverage stands at **40 of 41 
 b009, against 35 of 41 at the scoped close.
 
 Batch verdict and reconciliation for b009 to follow in this section when it is on disk.
+
+## 21.6 b009 verdict and tome-burn reconciliation
+
+The relaunch ran 2026-09-02 16:10–17:38 UTC. b009 dispatched 145 chunk calls with 0
+failures; the two `[empty layers]` chunks were c0001–c0002 (front matter) and nothing after
+them. Ingested: 1,178 nodes, 1,300 edges, 595 mentions, 314 diverted, 21 semantic edges
+refused at admission (DD-024).
+
+| batch | SPRT trace | verdict | pooled F [95% CI] | item-faithful | extraction settled / ceiling | judge |
+|---|---|---|---|---|---|---|
+| `b009` | 1/55 continue → 1/110 accept | **accept** | 0.0092 [0.0016, 0.0501] | 0.915 (86/94) | 6,122,134 / 7,951,366 (77%) | 2,308,725 |
+
+b009 is the burn's cleanest batch on both instruments: lowest F point estimate and highest
+item-faithfulness of any accepted batch. Its extraction settled figure includes the 140,000
+tokens booked as estimates during the 09-01 CLI failure (§21.3); measured usage on the
+relaunch was 5,982,134 over 145 chunks, 41,256 per chunk against the plan's 42,182.
+
+After b009 the driver walked b010–b015 as "every chunk already extracted; judging without
+dispatch", because `state/bulk_v038_burn.json` had been rewritten by the tome runs and no
+longer carried their verdicts. The verdicts it reproduced are identical to §20.3 to the fact,
+and the ledger shows **zero settles for any run other than `bulk_v038_b009` and
+`bulk_v038_b009_judge` since the relaunch**: the judge replayed its persisted labels. The
+state file now carries all fifteen outcomes. Cost of the re-walk: 0 tokens, ~1 minute.
+
+**Tome batches pooled.** 14 fabrications in 435 facts = 0.0322, Wilson 95% [0.0193, 0.0533].
+Extraction settled 25,759,057 of 33,545,367 declared (77%); judging 9,133,294. The tomes
+ran at the same ceiling-utilisation as the scoped burn and their pooled F sits inside the
+scoped burn's interval, so the ADDENDUM-02 deferral was a cost decision, not a quality one,
+and the reversal changed nothing about the acceptance record.
+
+**Full burn, fourteen judged batches.** 37 fabrications in 1,474 facts = **0.0251, Wilson 95%
+[0.0183, 0.0344]**, against the pre-registered upper-bound gate of 0.10. 13 accept, 1
+`sampling_inconclusive` (b010, unsatisfiable minimum-n, §20.3), 0 rejects, 0 quarantines.
+
+**Coverage.** `kg queue status`: extracted 35, deferred 156 (all `no consumer`),
+skipped_oversize 3, queued 0, stale 0. Crosswalk demand **41 of 41 units**. Nothing on the
+v038 profile is left to burn; the 156 deferred documents carry no crosswalk demand and stay
+demand-pull per the standing call.
+
+**Spend, programme total.** Extraction 53,903,495; judging 32,528,267; Phase A 4,288,618;
+**90,720,380 tokens**. Daily band today: 22,268,372 of 55,000,000 committed at close.
+
+**Open from this section.** (1) The stub's handling of empty-stderr exit 1 (§21.3): settle-and-
+fail cost 140k tokens and a driver stop where release-and-back-off would have cost a wait.
+(2) The state-file rewrite that dropped b010–b015's verdicts was harmless here only because
+judge labels persist; a driver that could not replay them would have re-spent ~9M on judging.
+Both belong to a spend-guard task, not to this one.

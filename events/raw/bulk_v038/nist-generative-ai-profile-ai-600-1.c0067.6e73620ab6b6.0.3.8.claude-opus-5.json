@@ -1,0 +1,33 @@
+{
+ "doc_id": "nist-generative-ai-profile-ai-600-1",
+ "chunk_id": "nist-generative-ai-profile-ai-600-1#c0067",
+ "chunk_index": 67,
+ "chunk_start": 82130,
+ "chunk_end": 82442,
+ "chunk_tokens": 84,
+ "heading_path": [
+  "MS-1.1-008"
+ ],
+ "oversize": false,
+ "doc_sha256": "6e73620ab6b64e90ef2c04bf0e0d6246185a2f4b1b13cab0df494496cff89b6a",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 3412,
+  "cacheReadInputTokens": 13027,
+  "cacheCreationInputTokens": 22639,
+  "webSearchRequests": 0,
+  "costUSD": 0.3182135,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 1507,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3182135,
+ "duration_ms": 35679,
+ "session_id": "66df6d55-5afe-4368-a161-3c0e08a2a05b",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"NIST GAI Profile action MS-1.1-008 directs defining use cases, contexts of use, capabilities, and negative impacts where structured human feedback exercises such as GAI red-teaming best serve GAI risk measurement and management; tagged to Information Integrity, Harmful Bias and Homogenization, and CBRN Information or Capabilities.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"concept-structured-human-feedback-exercises\",\n      \"name\": \"structured human feedback exercises\",\n      \"aliases\": [\"structured human feedback\"],\n      \"description\": \"Exercises in which humans provide structured feedback on GAI systems to support risk measurement and management.\",\n      \"anchor\": \"structured human feedback exercises\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0067\"\n    },\n    {\n      \"id\": \"concept-gai-red-teaming\",\n      \"name\": \"GAI red-teaming\",\n      \"aliases\": [\"GAI red teaming\"],\n      \"description\": \"Named example of a structured human feedback exercise for GAI risk measurement and management.\",\n      \"anchor\": \"GAI red-teaming\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0067\"\n    },\n    {\n      \"id\": \"concept-context-of-use\",\n      \"name\": \"context of use\",\n      \"aliases\": [\"contexts of use\"],\n      \"description\": \"The deployment setting that determines where structured human feedback exercises are most beneficial.\",\n      \"anchor\": \"based on the context of use\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0067\"\n    },\n    {\n      \"id\": \"concept-gai-risk-measurement-and-management\",\n      \"name\": \"GAI risk measurement and management\",\n      \"aliases\": [\"GAI risk management\"],\n      \"description\": \"The purpose for which structured human feedback exercises are to be scoped.\",\n      \"anchor\": \"GAI risk measurement and\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0067\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [\n    {\n      \"id\": \"measure-ms-1-1-008\",\n      \"text\": \"Deﬁne use cases, contexts of use, capabilities, and negative impacts where structured human feedback exercises, e.g., GAI red-teaming, would be most beneﬁcial for GAI risk measurement and management based on the context of use.\",\n      \"response_type\": \"action_item\",\n      \"anchor\": \"MS-1.1-008\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0067\"\n    }\n  ],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"subtype_of\",\n      \"from_id\": \"concept-gai-red-teaming\",\n      \"to_id\": \"concept-structured-human-feedback-exercises\",\n      \"anchor\": \"exercises, e.g., GAI red-teaming\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0067\"\n    },\n    {\n      \"type\": \"measures\",\n      \"from_id\": \"measure-ms-1-1-008\",\n      \"to_id\": \"concept-structured-human-feedback-exercises\",\n      \"anchor\": \"where\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0067\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"measure-ms-1-1-008\",\n      \"to_id\": \"concept-gai-risk-measurement-and-management\",\n      \"anchor\": \"for GAI risk measurement\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0067\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"concept-context-of-use\",\n      \"anchor\": \"contexts of use,\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0067\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"Information Integrity\",\n      \"anchor\": \"Information Integrity\"\n    },\n    {\n      \"name\": \"Harmful Bias and\",\n      \"anchor\": \"Harmful Bias and\"\n    },\n    {\n      \"name\": \"CBRN\",\n      \"anchor\": \"CBRN\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"Harmful Bias and\",\n      \"suggested_edge\": \"measure_tagged_with_risk_category\",\n      \"diversion_reason\": \"structural_inference\",\n      \"note\": \"Risk-category labels are attached to MS-1.1-008 by table layout, not by a sentence stating the relation.\"\n    },\n    {\n      \"anchor\": \"MS-1.1-008\",\n      \"suggested_edge\": \"has_component\",\n      \"diversion_reason\": \"cross_chunk\",\n      \"note\": \"MS-1.1-008 belongs to the MEASURE 1.1 subcategory of the AI RMF, which is not in this chunk.\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"use cases\", \"type\": \"Concept\"},\n    {\"name\": \"capabilities\", \"type\": \"Concept\"},\n    {\"name\": \"negative impacts\", \"type\": \"Concept\"},\n    {\"name\": \"Information Integrity\", \"type\": \"Concept\"},\n    {\"name\": \"Harmful Bias and Homogenization\", \"type\": \"Concept\"},\n    {\"name\": \"CBRN Information or Capabilities\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

@@ -8451,12 +8451,5876 @@
     }
    },
    "yield_flags": {}
+  },
+  {
+   "outcome": "accept",
+   "batch_id": "bulk_v038_b009",
+   "facts": 110,
+   "fabrications": 1,
+   "items_sampled": 232,
+   "items_available": 1178,
+   "sprt_trace": [
+    {
+     "limit": 55,
+     "facts": 55,
+     "fabrications": 1,
+     "decision": "continue"
+    },
+    {
+     "limit": 110,
+     "facts": 110,
+     "fabrications": 1,
+     "decision": "accept"
+    }
+   ],
+   "aggregate": {
+    "method": "crowd-kit DawidSkene(n_iter=100)",
+    "n_facts": 110,
+    "n_labels": 220,
+    "raters": {
+     "claude-opus-4-8": {
+      "n": 110,
+      "agreement_with_map": 0.9727272727272728,
+      "type": "prov:SoftwareAgent"
+     },
+     "claude-sonnet-5": {
+      "n": 110,
+      "agreement_with_map": 0.8272727272727273,
+      "type": "prov:SoftwareAgent"
+     }
+    },
+    "rater_confusion": {
+     "claude-opus-4-8": {
+      "P(obs=entailed|true=entailed)": 0.9747329605097997,
+      "P(obs=not_entailed|true=entailed)": 0.025267039490200295,
+      "P(obs=entailed|true=not_entailed)": 0.48406184809861325,
+      "P(obs=not_entailed|true=not_entailed)": 0.5159381519013868
+     },
+     "claude-sonnet-5": {
+      "P(obs=entailed|true=entailed)": 0.8866091906527732,
+      "P(obs=not_entailed|true=entailed)": 0.11339080934722671,
+      "P(obs=entailed|true=not_entailed)": 0.0931815541024564,
+      "P(obs=not_entailed|true=not_entailed)": 0.9068184458975436
+     }
+    },
+    "doc_check": {
+     "checked": 3,
+     "reclassified": 2
+    },
+    "pooled": {
+     "n_facts": 110,
+     "n_in_F_denominator": 109,
+     "fabrication": 1,
+     "F": 0.009174311926605505,
+     "F_lo": 0.0016213312746297531,
+     "F_hi": 0.050145625118950245,
+     "classes": {
+      "entailed": 100,
+      "filled_attribute": 6,
+      "span_truncated": 2,
+      "fabrication": 1,
+      "doc_level_attribute": 1
+     },
+     "class_props": {
+      "entailed": {
+       "p": 0.9090909090909091,
+       "lo": 0.840703472165014,
+       "hi": 0.9498696712610923
+      },
+      "filled_attribute": {
+       "p": 0.05454545454545454,
+       "lo": 0.02523582690344204,
+       "hi": 0.11391786136590892
+      },
+      "span_truncated": {
+       "p": 0.01818181818181818,
+       "lo": 0.005000354830345458,
+       "hi": 0.06388016513446274
+      },
+      "fabrication": {
+       "p": 0.00909090909090909,
+       "lo": 0.0016065752865694234,
+       "hi": 0.04970565260210308
+      },
+      "doc_level_attribute": {
+       "p": 0.00909090909090909,
+       "lo": 0.0016065752865694234,
+       "hi": 0.04970565260210308
+      }
+     }
+    },
+    "per_stratum": {
+     "agency_framework": {
+      "n_facts": 110,
+      "n_in_F_denominator": 109,
+      "fabrication": 1,
+      "F": 0.009174311926605505,
+      "F_lo": 0.0016213312746297531,
+      "F_hi": 0.050145625118950245,
+      "classes": {
+       "entailed": 100,
+       "filled_attribute": 6,
+       "span_truncated": 2,
+       "fabrication": 1,
+       "doc_level_attribute": 1
+      },
+      "class_props": {
+       "entailed": {
+        "p": 0.9090909090909091,
+        "lo": 0.840703472165014,
+        "hi": 0.9498696712610923
+       },
+       "filled_attribute": {
+        "p": 0.05454545454545454,
+        "lo": 0.02523582690344204,
+        "hi": 0.11391786136590892
+       },
+       "span_truncated": {
+        "p": 0.01818181818181818,
+        "lo": 0.005000354830345458,
+        "hi": 0.06388016513446274
+       },
+       "fabrication": {
+        "p": 0.00909090909090909,
+        "lo": 0.0016065752865694234,
+        "hi": 0.04970565260210308
+       },
+       "doc_level_attribute": {
+        "p": 0.00909090909090909,
+        "lo": 0.0016065752865694234,
+        "hi": 0.04970565260210308
+       }
+      }
+     }
+    },
+    "verdicts": {
+     "agency_framework": "repair_then_rejudge"
+    },
+    "overall": "repair_path for all strata; re-judge after repair decides",
+    "items": {
+     "n": 94,
+     "faithful": 86,
+     "faithful_rate": 0.9148936170212766
+    },
+    "per_fact": {
+     "f_b9eca6944c63": {
+      "p_entailed": 0.9879630471156865,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "115b828ca84f4d7c91cdb3fb6394de46",
+      "n_raters": 2
+     },
+     "f_9e5386158185": {
+      "p_entailed": 0.9879630471156865,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "10dd746b46dd4978afc61729bcbb5d2c",
+      "n_raters": 2
+     },
+     "f_29b046f7f8c3": {
+      "p_entailed": 0.9879630471156865,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "a3117c9d36884cca983c5dfad778696d",
+      "n_raters": 2
+     },
+     "f_5dd9d385df76": {
+      "p_entailed": 0.02551439373255255,
+      "entailed": false,
+      "class": "filled_attribute",
+      "stratum": "agency_framework",
+      "event_id": "2744adbd0abd4a81aeeeb1af088ebc12",
+      "n_raters": 2
+     },
+     "f_dcbd790d04b3": {
+      "p_entailed": 0.9879630471156865,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "bde6891f5a3a46628e410b3765debce8",
+      "n_raters": 2
+     },
+     "f_e517f29a59e2": {
+      "p_entailed": 0.9879630471156865,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "05603bf63ebd4c7a82a56ee35dfd8704",
+      "n_raters": 2
+     },
+     "f_d120c95ab28d": {
+      "p_entailed": 0.6659735783118308,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "cab1576f0a454c86a935a61c9a681236",
+      "n_raters": 2
+     },
+     "f_c0fdf09fd1e7": {
+      "p_entailed": 0.9879630471156865,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "3ce0dffc55af4dd0ae5efc7e017b9cba",
+      "n_raters": 2
+     },
+     "f_192305270eeb": {
+      "p_entailed": 0.9879630471156865,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "fd915da9683945229a5c373e99046fed",
+      "n_raters": 2
+     },
+     "f_4bd3353a30ab": {
+      "p_entailed": 0.9879630471156865,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "c58424239c024a8dbb88b4cb9297d10e",
+      "n_raters": 2
+     },
+     "f_f932e81e06c6": {
+      "p_entailed": 0.02551439373255255,
+      "entailed": false,
+      "class": "span_truncated",
+      "stratum": "agency_framework",
+      "event_id": "6532c825a4db4ad4a6eaaca7428f401e",
+      "n_raters": 2
+     },
+     "f_dbd952f50a3a": {
+      "p_entailed": 0.9879630471156865,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "866ecc71427044d2b28e62f13e3538db",
+      "n_raters": 2
+     },
+     "f_c7c890e7cb23": {
+      "p_entailed": 0.5187329959125038,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "7a764bcdfced4744bf22056d58410145",
+      "n_raters": 2
+     },
+     "f_95d59d162d80": {
+      "p_entailed": 0.9879630471156865,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "dc87a2d2d64642288f312f864ada5793",
+      "n_raters": 2
+     },
+     "f_5c3f36e49675": {
+      "p_entailed": 0.02551439373255255,
+      "entailed": false,
+      "class": "filled_attribute",
+      "stratum": "agency_framework",
+      "event_id": "beaffa3eefd64c1f8d2cc9c5f6b8b804",
+      "n_raters": 2
+     },
+     "f_b966f8d3b4fe": {
+      "p_entailed": 0.9879630471156865,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "d89deccca0414f64b2469d96542c319a",
+      "n_raters": 2
+     },
+     "f_78e385fc9652": {
+      "p_entailed": 0.5187329959125038,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "595b71246dc94ab496fd0907589246b2",
+      "n_raters": 2
+     },
+     "f_710468031222": {
+      "p_entailed": 0.9879630471156865,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "d09aba78df834bb58023ccde42a500b6",
+      "n_raters": 2
+     },
+     "f_a53c1f9f1039": {
+      "p_entailed": 0.5187329959125038,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "339de7c9cfb54514adf28488d9caec8f",
+      "n_raters": 2
+     },
+     "f_6c359c6bce36": {
+      "p_entailed": 0.9879630471156865,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "9cade60c75a440c099e9f20b2199b400",
+      "n_raters": 2
+     },
+     "f_1627142b146e": {
+      "p_entailed": 0.9879630471156865,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "53d3bba67e4c47b5ab2ca39d521a75f0",
+      "n_raters": 2
+     },
+     "f_6dcc89c75516": {
+      "p_entailed": 0.9879630471156865,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "b9c32d941fda4d4dacab12228fd75856",
+      "n_raters": 2
+     },
+     "f_efbca0424f2b": {
+      "p_entailed": 0.9879630471156865,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "ef88d307600f46ddb6a569784c3cb6fd",
+      "n_raters": 2
+     },
+     "f_e1d50e15f9cb": {
+      "p_entailed": 0.9879630471156865,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "a64b5999a5884028890a9ae476181c02",
+      "n_raters": 2
+     },
+     "f_11b149c2b1e3": {
+      "p_entailed": 0.9879630471156865,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "90d779536ee7431f8228ec398e37ff85",
+      "n_raters": 2
+     },
+     "f_5c9bbe4b1125": {
+      "p_entailed": 0.9879630471156865,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "2e1ba7299c9a454f99cbafa682f1f73b",
+      "n_raters": 2
+     },
+     "f_dd8b80611ceb": {
+      "p_entailed": 0.9879630471156865,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "c5efc9f5003d42b284527ecc4656dab9",
+      "n_raters": 2
+     },
+     "f_dd905b457079": {
+      "p_entailed": 0.9879630471156865,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "69d5e8a4e9c946519cd8d4ecab93a722",
+      "n_raters": 2
+     },
+     "f_ce269324badf": {
+      "p_entailed": 0.9879630471156865,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "380b73567c4b4c3d91bf66f1f344f835",
+      "n_raters": 2
+     },
+     "f_0bb732dc958c": {
+      "p_entailed": 0.5187329959125038,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "4da909339738410788d29cd795344dbb",
+      "n_raters": 2
+     },
+     "f_991c2007aa97": {
+      "p_entailed": 0.9879630471156865,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "0cb8126914414199a54907115d77ff45",
+      "n_raters": 2
+     },
+     "f_1c486034ee62": {
+      "p_entailed": 0.9879630471156865,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "acc1d26973804b01ba62946d81775257",
+      "n_raters": 2
+     },
+     "f_11582f6d31ec": {
+      "p_entailed": 0.9879630471156865,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "45868942706b441bae54a54b1a49cab1",
+      "n_raters": 2
+     },
+     "f_c2e17493063d": {
+      "p_entailed": 0.9879630471156865,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "dbb517e9eba9489085041e3e11cf5eac",
+      "n_raters": 2
+     },
+     "f_db5f72a3d6bf": {
+      "p_entailed": 0.9879630471156865,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "3bc4ac1701604fd5a5f56cf6b9e60012",
+      "n_raters": 2
+     },
+     "f_ed6dd2ba6b50": {
+      "p_entailed": 0.9879630471156865,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "be30118143d14ab4aeeda37e02c461cf",
+      "n_raters": 2
+     },
+     "f_3adc7c03d541": {
+      "p_entailed": 0.02551439373255255,
+      "entailed": false,
+      "class": "filled_attribute",
+      "stratum": "agency_framework",
+      "event_id": "2744adbd0abd4a81aeeeb1af088ebc12",
+      "n_raters": 2,
+      "doc_check": "value_found_in_document"
+     },
+     "f_9bb743ce0c71": {
+      "p_entailed": 0.02551439373255255,
+      "entailed": false,
+      "class": "filled_attribute",
+      "stratum": "agency_framework",
+      "event_id": "037734b2315045faa2b9dd74ba3a701c",
+      "n_raters": 2,
+      "doc_check": "value_found_in_document"
+     },
+     "f_265749f7d8fa": {
+      "p_entailed": 0.02551439373255255,
+      "entailed": false,
+      "class": "fabrication",
+      "stratum": "agency_framework",
+      "event_id": "cc799ff706504552b2e637f6391ff87d",
+      "n_raters": 2,
+      "doc_check": "value_absent_from_document"
+     },
+     "f_a8d36660c784": {
+      "p_entailed": 0.9879630471156865,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "56530b68852045df9b9a7c8bb65bd527",
+      "n_raters": 2
+     },
+     "f_056a2e37318e": {
+      "p_entailed": 0.9879630471156865,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "85c8bbdbcf464c4c84255af32fe111f5",
+      "n_raters": 2
+     },
+     "f_0706ce918945": {
+      "p_entailed": 0.9879630471156865,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "0ba5e49f5db04e60a66821012c218e36",
+      "n_raters": 2
+     },
+     "f_7c4b9b37144d": {
+      "p_entailed": 0.5187329959125038,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "4c929420d5db42ec8deb7ad5070cb875",
+      "n_raters": 2
+     },
+     "f_cf3195cbb026": {
+      "p_entailed": 0.5187329959125038,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "59ba43fd54764151b112fdbc63e6c3c2",
+      "n_raters": 2
+     },
+     "f_343a763d17a8": {
+      "p_entailed": 0.9879630471156865,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "710083789d4a4a45a7094e08cd71a359",
+      "n_raters": 2
+     },
+     "f_b7b68f3951ae": {
+      "p_entailed": 0.9879630471156865,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "2b60dd6209b34e64be9d1302730e11ad",
+      "n_raters": 2
+     },
+     "f_800491fee2fd": {
+      "p_entailed": 0.9879630471156865,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "f7014cbf46fd425aa4bfc5c1a86bc43e",
+      "n_raters": 2
+     },
+     "f_3f36dbd92a87": {
+      "p_entailed": 0.9879630471156865,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "5c965bd41dbc414fac1e2d2ac5876353",
+      "n_raters": 2
+     },
+     "f_ba35ba345121": {
+      "p_entailed": 0.9879630471156865,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "78cef17b43bd4fb3b135669e8e8c7444",
+      "n_raters": 2
+     },
+     "f_60bc2f5cb2a4": {
+      "p_entailed": 0.9879630471156865,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "37bb06da09204c66827b2a4c2f860f66",
+      "n_raters": 2
+     },
+     "f_06b1a9d12606": {
+      "p_entailed": 0.9879630471156865,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "9c1c1948c13c4fceafc3c4497e63320c",
+      "n_raters": 2
+     },
+     "f_0a911270720c": {
+      "p_entailed": 0.9879630471156865,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "710083789d4a4a45a7094e08cd71a359",
+      "n_raters": 2
+     },
+     "f_2cd6cea0157a": {
+      "p_entailed": 0.5187329959125038,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "9b0de60bd3c544149ccff0f5068dca4f",
+      "n_raters": 2
+     },
+     "f_dfe620272a83": {
+      "p_entailed": 0.5187329959125038,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "1d7656703c24496d8bfe21f721720fbb",
+      "n_raters": 2
+     },
+     "f_6d05f6953737": {
+      "p_entailed": 0.9879630471156865,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "463e459e7b8b41f3b4d87f2341f7560f",
+      "n_raters": 2
+     },
+     "f_ade6a74e09dd": {
+      "p_entailed": 0.9879630471156865,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "be30118143d14ab4aeeda37e02c461cf",
+      "n_raters": 2
+     },
+     "f_fec3782bb3ec": {
+      "p_entailed": 0.9879630471156865,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "21ae461d07fb4ef9966290fa363baf7b",
+      "n_raters": 2
+     },
+     "f_65b9b199a073": {
+      "p_entailed": 0.9879630471156865,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "dce12b57b0bc4bfdb7546c2bb5ca639f",
+      "n_raters": 2
+     },
+     "f_1675dd4dd59a": {
+      "p_entailed": 0.9879630471156865,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "2744adbd0abd4a81aeeeb1af088ebc12",
+      "n_raters": 2
+     },
+     "f_765b01996b35": {
+      "p_entailed": 0.9879630471156865,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "30f9ea0ffa5f459b8897100a4d6b6a3c",
+      "n_raters": 2
+     },
+     "f_29f5791177f3": {
+      "p_entailed": 0.02551439373255255,
+      "entailed": false,
+      "class": "filled_attribute",
+      "stratum": "agency_framework",
+      "event_id": "41269f124a9441f396545f2cae48f233",
+      "n_raters": 2
+     },
+     "f_5b981ccb9fb1": {
+      "p_entailed": 0.5187329959125038,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "4f6c684a2eeb45ed8982dfa3cb770b33",
+      "n_raters": 2
+     },
+     "f_3bc849adb7fc": {
+      "p_entailed": 0.9879630471156865,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "3379988a9a56443abe16a1625facffca",
+      "n_raters": 2
+     },
+     "f_7e8e770c19b8": {
+      "p_entailed": 0.9879630471156865,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "9cade60c75a440c099e9f20b2199b400",
+      "n_raters": 2
+     },
+     "f_258f72391ca0": {
+      "p_entailed": 0.9879630471156865,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "d7468af3b1804da487fa97bf2a8d8a63",
+      "n_raters": 2
+     },
+     "f_05b4e95ac226": {
+      "p_entailed": 0.9879630471156865,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "a1282e9f3e264113b935e37bb0702a7f",
+      "n_raters": 2
+     },
+     "f_28bbd2fc1f83": {
+      "p_entailed": 0.9879630471156865,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "bf00797c521c45c2ba542691cca7e578",
+      "n_raters": 2
+     },
+     "f_46c82fe7f0c6": {
+      "p_entailed": 0.9879630471156865,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "27a2346c83b643f392dff4b5df97bc16",
+      "n_raters": 2
+     },
+     "f_416bc9aafdce": {
+      "p_entailed": 0.9879630471156865,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "8d586cc83b24406c995b375b2316fc95",
+      "n_raters": 2
+     },
+     "f_ddc6b1efc989": {
+      "p_entailed": 0.5187329959125038,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "8c7438de50b84d6f8dbbc7fbf3955209",
+      "n_raters": 2
+     },
+     "f_e5d4f512063f": {
+      "p_entailed": 0.9879630471156865,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "1d7656703c24496d8bfe21f721720fbb",
+      "n_raters": 2
+     },
+     "f_771bf5ad10b5": {
+      "p_entailed": 0.9879630471156865,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "595b71246dc94ab496fd0907589246b2",
+      "n_raters": 2
+     },
+     "f_87575bccae2a": {
+      "p_entailed": 0.9879630471156865,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "37557e6a9299430d97892ecf88873980",
+      "n_raters": 2
+     },
+     "f_da5880706ea8": {
+      "p_entailed": 0.9879630471156865,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "da4d8e725cce4f5b8b5c68eaec8ae446",
+      "n_raters": 2
+     },
+     "f_0285611c072f": {
+      "p_entailed": 0.9879630471156865,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "f3048e0b5cf444cfb53a99a7436e5e2b",
+      "n_raters": 2
+     },
+     "f_b00190de869e": {
+      "p_entailed": 0.9879630471156865,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "372fb37149674eeb9366ab5e096a99e2",
+      "n_raters": 2
+     },
+     "f_5f3fa2ce4071": {
+      "p_entailed": 0.9879630471156865,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "6255ff853f1e4e54865c95888264387f",
+      "n_raters": 2
+     },
+     "f_8f134025eb5c": {
+      "p_entailed": 0.5187329959125038,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "77439bcdcd834143b1a2d9f43d54f1db",
+      "n_raters": 2
+     },
+     "f_54e4b7f768e6": {
+      "p_entailed": 0.5187329959125038,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "2ad2d4c1846045b8b7c505234b6303cd",
+      "n_raters": 2
+     },
+     "f_9024a70c41bb": {
+      "p_entailed": 0.5187329959125038,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "4f6c684a2eeb45ed8982dfa3cb770b33",
+      "n_raters": 2
+     },
+     "f_96f1065cc4c0": {
+      "p_entailed": 0.5187329959125038,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "86090711270e4589a55a8d9c7ce0f77e",
+      "n_raters": 2
+     },
+     "f_a1826fe4cb6a": {
+      "p_entailed": 0.9879630471156865,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "3f85c42593a74d81a8ab70131d91e5b1",
+      "n_raters": 2
+     },
+     "f_328e7435d95a": {
+      "p_entailed": 0.5187329959125038,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "8f32d9f3b7d54c3b9ea99f36a9c7ff16",
+      "n_raters": 2
+     },
+     "f_6424ac121179": {
+      "p_entailed": 0.9879630471156865,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "d7fdfabce3d641b28bf39057fc9cea68",
+      "n_raters": 2
+     },
+     "f_a3535da5142a": {
+      "p_entailed": 0.9879630471156865,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "014ca46e4bb84a0ea3de6c018dfe76a5",
+      "n_raters": 2
+     },
+     "f_53da414a6114": {
+      "p_entailed": 0.5187329959125038,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "1d7656703c24496d8bfe21f721720fbb",
+      "n_raters": 2
+     },
+     "f_4992e6612385": {
+      "p_entailed": 0.9879630471156865,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "530a96af36eb42bbb18656ef8fea98bd",
+      "n_raters": 2
+     },
+     "f_661aff33cae3": {
+      "p_entailed": 0.9879630471156865,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "bddf5e9a03a149ccb12ed59674fc7aa3",
+      "n_raters": 2
+     },
+     "f_1139a561eeea": {
+      "p_entailed": 0.9879630471156865,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "d7468af3b1804da487fa97bf2a8d8a63",
+      "n_raters": 2
+     },
+     "f_df7fb16c7da9": {
+      "p_entailed": 0.9879630471156865,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "0757e2ce594e4d09873adf593fba9901",
+      "n_raters": 2
+     },
+     "f_b847663e4741": {
+      "p_entailed": 0.02551439373255255,
+      "entailed": false,
+      "class": "doc_level_attribute",
+      "stratum": "agency_framework",
+      "event_id": "04c59c187fcc4670af5ac53106201ed9",
+      "n_raters": 2
+     },
+     "f_afd7453dd941": {
+      "p_entailed": 0.02551439373255255,
+      "entailed": false,
+      "class": "filled_attribute",
+      "stratum": "agency_framework",
+      "event_id": "e1d2dc996fff4c3f982cca7cac57c713",
+      "n_raters": 2
+     },
+     "f_6d5351804c7c": {
+      "p_entailed": 0.9879630471156865,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "1fe5a331bca0440ca9ac6e2595a5050b",
+      "n_raters": 2
+     },
+     "f_faf49d5eb513": {
+      "p_entailed": 0.9879630471156865,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "d75d967842484dd181640bd07e50cd0a",
+      "n_raters": 2
+     },
+     "f_d3616778892f": {
+      "p_entailed": 0.9879630471156865,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "0f23499dc6a246b5adb38b702ee45084",
+      "n_raters": 2
+     },
+     "f_c40e8b499cfb": {
+      "p_entailed": 0.5187329959125038,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "8d586cc83b24406c995b375b2316fc95",
+      "n_raters": 2
+     },
+     "f_dfe067106b0c": {
+      "p_entailed": 0.9879630471156865,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "8f32d9f3b7d54c3b9ea99f36a9c7ff16",
+      "n_raters": 2
+     },
+     "f_a6ba617a4964": {
+      "p_entailed": 0.9879630471156865,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "685c015d67014e3abf66a6fa4663bae9",
+      "n_raters": 2
+     },
+     "f_3cc27e3b640f": {
+      "p_entailed": 0.5187329959125038,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "a1c4154d3ed34eeb8e732f84321fd0e1",
+      "n_raters": 2
+     },
+     "f_b81053d916a5": {
+      "p_entailed": 0.5187329959125038,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "baad65b020924780a86c8eceb6e99ff2",
+      "n_raters": 2
+     },
+     "f_30f4e857cfb7": {
+      "p_entailed": 0.9879630471156865,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "037734b2315045faa2b9dd74ba3a701c",
+      "n_raters": 2
+     },
+     "f_d1327265809c": {
+      "p_entailed": 0.9879630471156865,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "bc806bbcbf5d4f209b0ef59c610dac9d",
+      "n_raters": 2
+     },
+     "f_9c88caca4619": {
+      "p_entailed": 0.9879630471156865,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "45868942706b441bae54a54b1a49cab1",
+      "n_raters": 2
+     },
+     "f_2ecbc4c393a8": {
+      "p_entailed": 0.02551439373255255,
+      "entailed": false,
+      "class": "span_truncated",
+      "stratum": "agency_framework",
+      "event_id": "69d5e8a4e9c946519cd8d4ecab93a722",
+      "n_raters": 2
+     },
+     "f_5ddfb75fa5ae": {
+      "p_entailed": 0.9879630471156865,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "8bb4a1f4699647f28cc292f09d22b369",
+      "n_raters": 2
+     },
+     "f_e5cadcb0a492": {
+      "p_entailed": 0.6659735783118308,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "bf00797c521c45c2ba542691cca7e578",
+      "n_raters": 2
+     },
+     "f_b5114148704b": {
+      "p_entailed": 0.9879630471156865,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "a78f89782bdd44a6a3a5ef8330f3a40f",
+      "n_raters": 2
+     },
+     "f_34b52f965e30": {
+      "p_entailed": 0.9879630471156865,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "f647bfccf4884dbdb414081b330776bb",
+      "n_raters": 2
+     },
+     "f_fb2abcffcf63": {
+      "p_entailed": 0.6659735783118308,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "292f3ee9e8204ac8b45cf7ec6f901eab",
+      "n_raters": 2
+     },
+     "f_a1e1d8be7486": {
+      "p_entailed": 0.9879630471156865,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "233f8ccd19894ba9a86e409b82d21a2b",
+      "n_raters": 2
+     }
+    }
+   },
+   "yield_flags": {}
+  },
+  {
+   "outcome": "sampling_inconclusive",
+   "batch_id": "bulk_v038_b010",
+   "items_available": 33,
+   "why": "33 admitted items < 55 facts needed for a decision; the plan cannot settle this batch",
+   "yield_flags": {}
+  },
+  {
+   "outcome": "accept",
+   "batch_id": "bulk_v038_b011",
+   "facts": 110,
+   "fabrications": 3,
+   "items_sampled": 232,
+   "items_available": 362,
+   "sprt_trace": [
+    {
+     "limit": 55,
+     "facts": 110,
+     "fabrications": 3,
+     "decision": "accept"
+    }
+   ],
+   "aggregate": {
+    "method": "crowd-kit DawidSkene(n_iter=100)",
+    "n_facts": 110,
+    "n_labels": 220,
+    "raters": {
+     "claude-opus-4-8": {
+      "n": 110,
+      "agreement_with_map": 0.990909090909091,
+      "type": "prov:SoftwareAgent"
+     },
+     "claude-sonnet-5": {
+      "n": 110,
+      "agreement_with_map": 0.9272727272727272,
+      "type": "prov:SoftwareAgent"
+     }
+    },
+    "rater_confusion": {
+     "claude-opus-4-8": {
+      "P(obs=entailed|true=entailed)": 0.9935786036284026,
+      "P(obs=not_entailed|true=entailed)": 0.006421396371597405,
+      "P(obs=entailed|true=not_entailed)": 0.19850966698852748,
+      "P(obs=not_entailed|true=not_entailed)": 0.8014903330114724
+     },
+     "claude-sonnet-5": {
+      "P(obs=entailed|true=entailed)": 0.9545348034184904,
+      "P(obs=not_entailed|true=entailed)": 0.04546519658150962,
+      "P(obs=entailed|true=not_entailed)": 0.027463115208253973,
+      "P(obs=not_entailed|true=not_entailed)": 0.9725368847917459
+     }
+    },
+    "doc_check": {
+     "checked": 2,
+     "reclassified": 0
+    },
+    "pooled": {
+     "n_facts": 110,
+     "n_in_F_denominator": 106,
+     "fabrication": 3,
+     "F": 0.02830188679245283,
+     "F_lo": 0.00967128379034389,
+     "F_hi": 0.07992565876239037,
+     "classes": {
+      "entailed": 94,
+      "doc_level_attribute": 4,
+      "filled_attribute": 4,
+      "fabrication": 3,
+      "span_truncated": 2,
+      "subject_dropped": 3
+     },
+     "class_props": {
+      "entailed": {
+       "p": 0.8545454545454545,
+       "lo": 0.7767226103884147,
+       "hi": 0.9084407805808773
+      },
+      "doc_level_attribute": {
+       "p": 0.03636363636363636,
+       "lo": 0.014230310727684554,
+       "hi": 0.08978679338939502
+      },
+      "filled_attribute": {
+       "p": 0.03636363636363636,
+       "lo": 0.014230310727684554,
+       "hi": 0.08978679338939502
+      },
+      "fabrication": {
+       "p": 0.02727272727272727,
+       "lo": 0.009317969785407151,
+       "hi": 0.07713084225553674
+      },
+      "span_truncated": {
+       "p": 0.01818181818181818,
+       "lo": 0.005000354830345458,
+       "hi": 0.06388016513446274
+      },
+      "subject_dropped": {
+       "p": 0.02727272727272727,
+       "lo": 0.009317969785407151,
+       "hi": 0.07713084225553674
+      }
+     }
+    },
+    "per_stratum": {
+     "academic": {
+      "n_facts": 37,
+      "n_in_F_denominator": 37,
+      "fabrication": 0,
+      "F": 0.0,
+      "F_lo": 0.0,
+      "F_hi": 0.09405782718146873,
+      "classes": {
+       "entailed": 34,
+       "span_truncated": 2,
+       "filled_attribute": 1
+      },
+      "class_props": {
+       "entailed": {
+        "p": 0.918918918918919,
+        "lo": 0.7869932051629003,
+        "hi": 0.972039426117491
+       },
+       "span_truncated": {
+        "p": 0.05405405405405406,
+        "lo": 0.014950976698341792,
+        "hi": 0.1770465448418871
+       },
+       "filled_attribute": {
+        "p": 0.02702702702702703,
+        "lo": 0.004786974398970301,
+        "hi": 0.13824069996187852
+       }
+      }
+     },
+     "industry_practitioner": {
+      "n_facts": 37,
+      "n_in_F_denominator": 35,
+      "fabrication": 2,
+      "F": 0.05714285714285714,
+      "F_lo": 0.01581316171448853,
+      "F_hi": 0.18607057558951973,
+      "classes": {
+       "entailed": 32,
+       "doc_level_attribute": 2,
+       "fabrication": 2,
+       "subject_dropped": 1
+      },
+      "class_props": {
+       "entailed": {
+        "p": 0.8648648648648649,
+        "lo": 0.7202258808047923,
+        "hi": 0.9408670561168389
+       },
+       "doc_level_attribute": {
+        "p": 0.05405405405405406,
+        "lo": 0.014950976698341792,
+        "hi": 0.1770465448418871
+       },
+       "fabrication": {
+        "p": 0.05405405405405406,
+        "lo": 0.014950976698341792,
+        "hi": 0.1770465448418871
+       },
+       "subject_dropped": {
+        "p": 0.02702702702702703,
+        "lo": 0.004786974398970301,
+        "hi": 0.13824069996187852
+       }
+      }
+     },
+     "normative_standard": {
+      "n_facts": 36,
+      "n_in_F_denominator": 34,
+      "fabrication": 1,
+      "F": 0.029411764705882353,
+      "F_lo": 0.005210906218596753,
+      "F_hi": 0.14915573433878604,
+      "classes": {
+       "entailed": 28,
+       "doc_level_attribute": 2,
+       "filled_attribute": 3,
+       "fabrication": 1,
+       "subject_dropped": 2
+      },
+      "class_props": {
+       "entailed": {
+        "p": 0.7777777777777778,
+        "lo": 0.6191529691785765,
+        "hi": 0.8828366808387128
+       },
+       "doc_level_attribute": {
+        "p": 0.05555555555555555,
+        "lo": 0.015369986525553617,
+        "hi": 0.18144657344678355
+       },
+       "filled_attribute": {
+        "p": 0.08333333333333333,
+        "lo": 0.028748611111890116,
+        "hi": 0.21826691386217598
+       },
+       "fabrication": {
+        "p": 0.027777777777777776,
+        "lo": 0.004920407085360526,
+        "hi": 0.1416971878852477
+       },
+       "subject_dropped": {
+        "p": 0.05555555555555555,
+        "lo": 0.015369986525553617,
+        "hi": 0.18144657344678355
+       }
+      }
+     }
+    },
+    "verdicts": {
+     "academic": "repair_then_rejudge",
+     "industry_practitioner": "repair_then_rejudge",
+     "normative_standard": "repair_then_rejudge"
+    },
+    "overall": "repair_path for all strata; re-judge after repair decides",
+    "items": {
+     "n": 86,
+     "faithful": 75,
+     "faithful_rate": 0.872093023255814
+    },
+    "per_fact": {
+     "f_55313aa7b0b2": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "industry_practitioner",
+      "event_id": "a3dba1c0447e41caa1c816621923007b",
+      "n_raters": 2
+     },
+     "f_ec160e9eb1e6": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "industry_practitioner",
+      "event_id": "43ec48de18e44af994a921895b5bacc0",
+      "n_raters": 2
+     },
+     "f_a7d8641ccc6d": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "industry_practitioner",
+      "event_id": "64514f8ce4954eafb7cb87400fcd9508",
+      "n_raters": 2
+     },
+     "f_5088c283d200": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "89745870c0c342d68325707793992385",
+      "n_raters": 2
+     },
+     "f_e5de1cf182b5": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "academic",
+      "event_id": "e0fe0edf236e4d748bc562e2b10359c3",
+      "n_raters": 2
+     },
+     "f_d40380205736": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "academic",
+      "event_id": "b4612af3bc8649dbb5c5185de44d56c1",
+      "n_raters": 2
+     },
+     "f_1fcb041e88af": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "industry_practitioner",
+      "event_id": "7cb3b42c3fd8457c85f9536b10fcb18a",
+      "n_raters": 2
+     },
+     "f_75b9fc3b5aae": {
+      "p_entailed": 0.0016292629774768055,
+      "entailed": false,
+      "class": "doc_level_attribute",
+      "stratum": "normative_standard",
+      "event_id": "b0df3139f98e46c4915bed02361f9f53",
+      "n_raters": 2
+     },
+     "f_8e07d264ca76": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "9d810b23367e4a63aeb1bbd8ab7f8344",
+      "n_raters": 2
+     },
+     "f_99e34115e1d7": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "academic",
+      "event_id": "e38e353a196947a3bcb37541c8b7ac0e",
+      "n_raters": 2
+     },
+     "f_b9cb6d8bcf15": {
+      "p_entailed": 0.5054210078802245,
+      "entailed": true,
+      "class": null,
+      "stratum": "industry_practitioner",
+      "event_id": "2e4b18e067be4675a867eefacb3760ed",
+      "n_raters": 2
+     },
+     "f_c7b3ae921d1b": {
+      "p_entailed": 0.0016292629774768055,
+      "entailed": false,
+      "class": "filled_attribute",
+      "stratum": "normative_standard",
+      "event_id": "8bb50128c8d9431c81a8b6d1bf7da7f4",
+      "n_raters": 2
+     },
+     "f_d29c92a22922": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "academic",
+      "event_id": "a602a190ccff4ca5843a3f56ad0451d3",
+      "n_raters": 2
+     },
+     "f_667c034b6660": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "academic",
+      "event_id": "1fb5f480750f4542afb3b29355ba13ca",
+      "n_raters": 2
+     },
+     "f_3d8750da14b5": {
+      "p_entailed": 0.0016292629774768055,
+      "entailed": false,
+      "class": "fabrication",
+      "stratum": "normative_standard",
+      "event_id": "46c287fdd6a14997b48db13788ea73f3",
+      "n_raters": 2
+     },
+     "f_968576d96bf6": {
+      "p_entailed": 0.5054210078802245,
+      "entailed": true,
+      "class": null,
+      "stratum": "industry_practitioner",
+      "event_id": "2e4b18e067be4675a867eefacb3760ed",
+      "n_raters": 2
+     },
+     "f_290ca345e144": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "industry_practitioner",
+      "event_id": "5c7283ca8c564e42a6bf7d6a128a823c",
+      "n_raters": 2
+     },
+     "f_87953dca9945": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "2765a05e9b414bc2ab48587104774d3e",
+      "n_raters": 2
+     },
+     "f_908c6ac8d64c": {
+      "p_entailed": 0.5054210078802245,
+      "entailed": true,
+      "class": null,
+      "stratum": "industry_practitioner",
+      "event_id": "e06156a18bd7417e9c3adf6693ff7573",
+      "n_raters": 2
+     },
+     "f_a06356000f7f": {
+      "p_entailed": 0.0016292629774768055,
+      "entailed": false,
+      "class": "doc_level_attribute",
+      "stratum": "industry_practitioner",
+      "event_id": "64514f8ce4954eafb7cb87400fcd9508",
+      "n_raters": 2
+     },
+     "f_837add3e423f": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "6fea408b9a1f47c4b48fd5fe3e990fb2",
+      "n_raters": 2
+     },
+     "f_09caae5dcacc": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "e1288751c4fd410bbedc62ebcb897d6c",
+      "n_raters": 2
+     },
+     "f_cc4d0427ecd8": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "academic",
+      "event_id": "e38e353a196947a3bcb37541c8b7ac0e",
+      "n_raters": 2
+     },
+     "f_c411ef4ab508": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "industry_practitioner",
+      "event_id": "d290771daff34f3e8343b64eea921f34",
+      "n_raters": 2
+     },
+     "f_8aa97c8f8f92": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "industry_practitioner",
+      "event_id": "9c12047d597343ca97b581569393860c",
+      "n_raters": 2
+     },
+     "f_8acf855bc75f": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "eb3c4688c6df48fa9af3f293cd7c1492",
+      "n_raters": 2
+     },
+     "f_293926b32ae2": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "f311b85a559b40dc964443e0f739f65b",
+      "n_raters": 2
+     },
+     "f_b0201d51ec89": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "a2ce9d2bb81e4686bf8ea3dd035d568f",
+      "n_raters": 2
+     },
+     "f_9c8c4101cb19": {
+      "p_entailed": 0.0016292629774768055,
+      "entailed": false,
+      "class": "doc_level_attribute",
+      "stratum": "normative_standard",
+      "event_id": "2f88e2a0032842fdbc45700771fd9a3a",
+      "n_raters": 2
+     },
+     "f_4c9448145235": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "industry_practitioner",
+      "event_id": "e06156a18bd7417e9c3adf6693ff7573",
+      "n_raters": 2
+     },
+     "f_46959483528e": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "academic",
+      "event_id": "4e4247bf70e045ee88f197fc64b793fb",
+      "n_raters": 2
+     },
+     "f_abfb7de06f1a": {
+      "p_entailed": 0.5054210078802245,
+      "entailed": true,
+      "class": null,
+      "stratum": "industry_practitioner",
+      "event_id": "5c7283ca8c564e42a6bf7d6a128a823c",
+      "n_raters": 2
+     },
+     "f_99f1204c40e2": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "academic",
+      "event_id": "e486e6eb61d344b6bd93d9f88c8dc55f",
+      "n_raters": 2
+     },
+     "f_8afa603b8dd7": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "industry_practitioner",
+      "event_id": "179e78a6e30d4e2b921b3543dccf6281",
+      "n_raters": 2
+     },
+     "f_97a9f84f3e7d": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "academic",
+      "event_id": "5e0a33e7769e423d8f4a21abdbc49edc",
+      "n_raters": 2
+     },
+     "f_bc7cab98420e": {
+      "p_entailed": 0.5486893050910664,
+      "entailed": true,
+      "class": null,
+      "stratum": "industry_practitioner",
+      "event_id": "e06156a18bd7417e9c3adf6693ff7573",
+      "n_raters": 2
+     },
+     "f_662d73d778b1": {
+      "p_entailed": 0.0016292629774768055,
+      "entailed": false,
+      "class": "filled_attribute",
+      "stratum": "normative_standard",
+      "event_id": "92cd892785a24278b75f77fd5cfeb48e",
+      "n_raters": 2
+     },
+     "f_74ea1593b685": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "academic",
+      "event_id": "dbfa1b6cf4eb4aa4b9775cbabfe5287b",
+      "n_raters": 2
+     },
+     "f_8f902ef09bc2": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "academic",
+      "event_id": "e982615ca27047db9f2245e646e0c533",
+      "n_raters": 2
+     },
+     "f_5ca1d5913cfe": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "academic",
+      "event_id": "509611f83f8640a185abb9cb90580cef",
+      "n_raters": 2
+     },
+     "f_89fa409d608a": {
+      "p_entailed": 0.0016292629774768055,
+      "entailed": false,
+      "class": "fabrication",
+      "stratum": "industry_practitioner",
+      "event_id": "7b8b0cc490d24b5c803fa44e24c0c541",
+      "n_raters": 2,
+      "doc_check": "value_absent_from_document"
+     },
+     "f_e7d1b69c9609": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "academic",
+      "event_id": "c7d24abd3bb44adc8824e15ef90d10d7",
+      "n_raters": 2
+     },
+     "f_039e3352d41b": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "academic",
+      "event_id": "74887cbfd32c4a03bc649a73e18c37b1",
+      "n_raters": 2
+     },
+     "f_aa95fb9a7a7f": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "45c043cedd484e2a87c4ccb232ed55d8",
+      "n_raters": 2
+     },
+     "f_3e1062f2adf2": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "industry_practitioner",
+      "event_id": "81697d65b54e4f2784adb09307934769",
+      "n_raters": 2
+     },
+     "f_6c2fa8b0865d": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "89745870c0c342d68325707793992385",
+      "n_raters": 2
+     },
+     "f_42b6479c6a03": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "industry_practitioner",
+      "event_id": "5eaa3840d94046d7860c07b005b37ce4",
+      "n_raters": 2
+     },
+     "f_7f19c1d20277": {
+      "p_entailed": 0.0016292629774768055,
+      "entailed": false,
+      "class": "span_truncated",
+      "stratum": "academic",
+      "event_id": "ddc1948b029d43b3ac4d7d84fe99d618",
+      "n_raters": 2
+     },
+     "f_55ad0f545fd7": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "academic",
+      "event_id": "cce63acbd7d34a34b2ae7a1c4bbad978",
+      "n_raters": 2
+     },
+     "f_83cfb955ea16": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "85c4b95b4ff14daeab8195463f08ac8b",
+      "n_raters": 2
+     },
+     "f_0bfcbffafbdf": {
+      "p_entailed": 0.5054210078802245,
+      "entailed": true,
+      "class": null,
+      "stratum": "academic",
+      "event_id": "e486e6eb61d344b6bd93d9f88c8dc55f",
+      "n_raters": 2
+     },
+     "f_78c13add8d0a": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "b0fb62808c2245cca66c03297502e917",
+      "n_raters": 2
+     },
+     "f_052e277dfc68": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "academic",
+      "event_id": "5e0a33e7769e423d8f4a21abdbc49edc",
+      "n_raters": 2
+     },
+     "f_08fa34b0f2d8": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "2442be68a482495fa62ff3681e41b6ec",
+      "n_raters": 2
+     },
+     "f_2f2cd7eb834d": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "academic",
+      "event_id": "87470a52442541fc8723ddb582cfe4a0",
+      "n_raters": 2
+     },
+     "f_8139b38c6de7": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "industry_practitioner",
+      "event_id": "1c81de3b3c5c4cf58dd4178dfd49ee04",
+      "n_raters": 2
+     },
+     "f_9df6b073facf": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "industry_practitioner",
+      "event_id": "43ec48de18e44af994a921895b5bacc0",
+      "n_raters": 2
+     },
+     "f_2aa6938446ec": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "academic",
+      "event_id": "ddc1948b029d43b3ac4d7d84fe99d618",
+      "n_raters": 2
+     },
+     "f_555e1c4e95d4": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "646587ec06a4481aa122188484438d2a",
+      "n_raters": 2
+     },
+     "f_6553e551e63e": {
+      "p_entailed": 0.5054210078802245,
+      "entailed": true,
+      "class": null,
+      "stratum": "academic",
+      "event_id": "5e2cf4329efe4e3bb92e4f16704c4628",
+      "n_raters": 2
+     },
+     "f_a059c551c7bf": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "academic",
+      "event_id": "488b476df11b4f8b8132d46e3a37ee07",
+      "n_raters": 2
+     },
+     "f_a617783f09c9": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "industry_practitioner",
+      "event_id": "7c73a259aa5441b7a595f5b9aa2385ad",
+      "n_raters": 2
+     },
+     "f_5ac54cc7d7a4": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "industry_practitioner",
+      "event_id": "7b8b0cc490d24b5c803fa44e24c0c541",
+      "n_raters": 2
+     },
+     "f_18b174227263": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "academic",
+      "event_id": "a602a190ccff4ca5843a3f56ad0451d3",
+      "n_raters": 2
+     },
+     "f_9a954e5b789e": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "industry_practitioner",
+      "event_id": "32c09d8ba24c43788496896a2aff27f5",
+      "n_raters": 2
+     },
+     "f_ef6699a02c14": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "academic",
+      "event_id": "a995bb011b5349678f1c3c44eb1ffde9",
+      "n_raters": 2
+     },
+     "f_f7da881241fd": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "industry_practitioner",
+      "event_id": "7b8b0cc490d24b5c803fa44e24c0c541",
+      "n_raters": 2
+     },
+     "f_54e23200ba04": {
+      "p_entailed": 0.0016292629774768055,
+      "entailed": false,
+      "class": "subject_dropped",
+      "stratum": "normative_standard",
+      "event_id": "59e6e429eb004c51830bcfc01cf0af8e",
+      "n_raters": 2
+     },
+     "f_8ebed78b7ae4": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "industry_practitioner",
+      "event_id": "c4cccff6d0a64b5c9e42e76478575564",
+      "n_raters": 2
+     },
+     "f_75a903e92494": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "academic",
+      "event_id": "0784bc6d217848b88c0bedac339d3604",
+      "n_raters": 2
+     },
+     "f_59008e57f8a0": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "7b46bc369aa94d219a0495cf14f7eac6",
+      "n_raters": 2
+     },
+     "f_18b69810323e": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "academic",
+      "event_id": "c1469d7e84f340549f1df3e4d98b8731",
+      "n_raters": 2
+     },
+     "f_52935ae99d49": {
+      "p_entailed": 0.0016292629774768055,
+      "entailed": false,
+      "class": "filled_attribute",
+      "stratum": "academic",
+      "event_id": "6a3d6789c0b74ae6963398eee470878e",
+      "n_raters": 2
+     },
+     "f_4ccef2c29721": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "29e05b17b6a145fda954035fa0d907b8",
+      "n_raters": 2
+     },
+     "f_485082a53244": {
+      "p_entailed": 0.0016292629774768055,
+      "entailed": false,
+      "class": "doc_level_attribute",
+      "stratum": "industry_practitioner",
+      "event_id": "2fbed7e4a7ca44768ba91ea401462d0e",
+      "n_raters": 2
+     },
+     "f_8d5cb25e5b1d": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "industry_practitioner",
+      "event_id": "32c09d8ba24c43788496896a2aff27f5",
+      "n_raters": 2
+     },
+     "f_92df07699d54": {
+      "p_entailed": 0.0016292629774768055,
+      "entailed": false,
+      "class": "subject_dropped",
+      "stratum": "normative_standard",
+      "event_id": "46c287fdd6a14997b48db13788ea73f3",
+      "n_raters": 2
+     },
+     "f_1a5720baabe9": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "academic",
+      "event_id": "9669ecdb5a0d4ef79c2ccfac975ab33c",
+      "n_raters": 2
+     },
+     "f_22d50f041c25": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "0dcd8c2a353b4c9c9ca9e522ae5bb783",
+      "n_raters": 2
+     },
+     "f_054ade240e9b": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "industry_practitioner",
+      "event_id": "36cd7e15657f4ba8bd37ac5414cef296",
+      "n_raters": 2
+     },
+     "f_05be6dd03f51": {
+      "p_entailed": 0.0016292629774768055,
+      "entailed": false,
+      "class": "fabrication",
+      "stratum": "industry_practitioner",
+      "event_id": "04cfe33da8f04d2f9ceccf98ba9683ad",
+      "n_raters": 2,
+      "doc_check": "value_absent_from_document"
+     },
+     "f_bd494841783e": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "academic",
+      "event_id": "eb84d50d441240c8878f12436b98bc9b",
+      "n_raters": 2
+     },
+     "f_6fca303c0950": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "academic",
+      "event_id": "a602a190ccff4ca5843a3f56ad0451d3",
+      "n_raters": 2
+     },
+     "f_b741513bb974": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "660fb02134944f9a83758dd3761cffd8",
+      "n_raters": 2
+     },
+     "f_6580474081c6": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "f6d31ace9db14e1ca61376a74b260d49",
+      "n_raters": 2
+     },
+     "f_d4c80ff50eea": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "8f2519b1897b454c940f676c9863c720",
+      "n_raters": 2
+     },
+     "f_a06fb3e624a6": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "industry_practitioner",
+      "event_id": "593c86d52cb247baae2bd13e56cb91e3",
+      "n_raters": 2
+     },
+     "f_df848b9ea66f": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "academic",
+      "event_id": "dd7857350d8e49c49682d3820a09c116",
+      "n_raters": 2
+     },
+     "f_8935b83eb1fa": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "79f837dfaf994e8581c55ff80ee7ac88",
+      "n_raters": 2
+     },
+     "f_2625bbf3aa63": {
+      "p_entailed": 0.0016292629774768055,
+      "entailed": false,
+      "class": "filled_attribute",
+      "stratum": "normative_standard",
+      "event_id": "2442be68a482495fa62ff3681e41b6ec",
+      "n_raters": 2
+     },
+     "f_78e73524f870": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "academic",
+      "event_id": "a136a1ad0f4f4518b99fe8fe55e6106f",
+      "n_raters": 2
+     },
+     "f_a8fcc408f766": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "academic",
+      "event_id": "cff14e2b559e4580b7819a4ea7086377",
+      "n_raters": 2
+     },
+     "f_72fbcf8651b0": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "academic",
+      "event_id": "e38e353a196947a3bcb37541c8b7ac0e",
+      "n_raters": 2
+     },
+     "f_2587cbca82f2": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "industry_practitioner",
+      "event_id": "81697d65b54e4f2784adb09307934769",
+      "n_raters": 2
+     },
+     "f_c76b3a17cba1": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "industry_practitioner",
+      "event_id": "b66cf5081d194a3a92f568b52e336763",
+      "n_raters": 2
+     },
+     "f_25f614994f88": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "industry_practitioner",
+      "event_id": "c2e215d11b8249dd85e07fb03cf4135b",
+      "n_raters": 2
+     },
+     "f_f497449173bb": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "9f0553220ea8408eaded85baf7855e24",
+      "n_raters": 2
+     },
+     "f_20f26b40de77": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "f411fe28d80f486b9fc75a392d362cb2",
+      "n_raters": 2
+     },
+     "f_2f8fb0185235": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "industry_practitioner",
+      "event_id": "5eaa3840d94046d7860c07b005b37ce4",
+      "n_raters": 2
+     },
+     "f_bbb60aab32d3": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "5e474edb76a24a7aaf7b2c8169b22167",
+      "n_raters": 2
+     },
+     "f_2b6b780492e1": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "64f60b3602144ad1bc39554534ee2f1b",
+      "n_raters": 2
+     },
+     "f_f0bcc4f13d25": {
+      "p_entailed": 0.5054210078802245,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "8de854b3669942849d3a93f25ef422e6",
+      "n_raters": 2
+     },
+     "f_91b1da5f1398": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "industry_practitioner",
+      "event_id": "32cfd503ef8a45b09ff1dfb678463368",
+      "n_raters": 2
+     },
+     "f_c3c427738f18": {
+      "p_entailed": 0.0016292629774768055,
+      "entailed": false,
+      "class": "subject_dropped",
+      "stratum": "industry_practitioner",
+      "event_id": "5eaa3840d94046d7860c07b005b37ce4",
+      "n_raters": 2
+     },
+     "f_43f21c5bb536": {
+      "p_entailed": 0.5054210078802245,
+      "entailed": true,
+      "class": null,
+      "stratum": "academic",
+      "event_id": "8f906e99be23458ab47cc8b322965c4d",
+      "n_raters": 2
+     },
+     "f_61608f5242ec": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "9d810b23367e4a63aeb1bbd8ab7f8344",
+      "n_raters": 2
+     },
+     "f_3bc788d72f56": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "3375954331c34bef85640f565518deeb",
+      "n_raters": 2
+     },
+     "f_585b4b2f8d13": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "academic",
+      "event_id": "5f2214fa5fd1472da4e0115d25efaabd",
+      "n_raters": 2
+     },
+     "f_550df6d98ff6": {
+      "p_entailed": 0.0016292629774768055,
+      "entailed": false,
+      "class": "span_truncated",
+      "stratum": "academic",
+      "event_id": "8f906e99be23458ab47cc8b322965c4d",
+      "n_raters": 2
+     },
+     "f_61914b969cc7": {
+      "p_entailed": 0.9986882206821268,
+      "entailed": true,
+      "class": null,
+      "stratum": "industry_practitioner",
+      "event_id": "f01b2c76295840d0bd03406068f64f2c",
+      "n_raters": 2
+     }
+    }
+   },
+   "yield_flags": {}
+  },
+  {
+   "outcome": "accept",
+   "batch_id": "bulk_v038_b012",
+   "facts": 110,
+   "fabrications": 4,
+   "items_sampled": 232,
+   "items_available": 793,
+   "sprt_trace": [
+    {
+     "limit": 55,
+     "facts": 110,
+     "fabrications": 4,
+     "decision": "accept"
+    }
+   ],
+   "aggregate": {
+    "method": "crowd-kit DawidSkene(n_iter=100)",
+    "n_facts": 110,
+    "n_labels": 220,
+    "raters": {
+     "claude-opus-4-8": {
+      "n": 110,
+      "agreement_with_map": 0.9818181818181818,
+      "type": "prov:SoftwareAgent"
+     },
+     "claude-sonnet-5": {
+      "n": 110,
+      "agreement_with_map": 0.8909090909090909,
+      "type": "prov:SoftwareAgent"
+     }
+    },
+    "rater_confusion": {
+     "claude-opus-4-8": {
+      "P(obs=entailed|true=entailed)": 0.9856391010352032,
+      "P(obs=not_entailed|true=entailed)": 0.014360898964796726,
+      "P(obs=entailed|true=not_entailed)": 0.22882387303986934,
+      "P(obs=not_entailed|true=not_entailed)": 0.7711761269601307
+     },
+     "claude-sonnet-5": {
+      "P(obs=entailed|true=entailed)": 0.9255762523991161,
+      "P(obs=not_entailed|true=entailed)": 0.07442374760088391,
+      "P(obs=entailed|true=not_entailed)": 0.04300677463387157,
+      "P(obs=not_entailed|true=not_entailed)": 0.9569932253661284
+     }
+    },
+    "doc_check": {
+     "checked": 1,
+     "reclassified": 0
+    },
+    "pooled": {
+     "n_facts": 110,
+     "n_in_F_denominator": 110,
+     "fabrication": 4,
+     "F": 0.03636363636363636,
+     "F_lo": 0.014230310727684554,
+     "F_hi": 0.08978679338939502,
+     "classes": {
+      "entailed": 90,
+      "filled_attribute": 7,
+      "fabrication": 4,
+      "span_truncated": 6,
+      "subject_dropped": 3
+     },
+     "class_props": {
+      "entailed": {
+       "p": 0.8181818181818182,
+       "lo": 0.7357859463884266,
+       "hi": 0.8791042762763228
+      },
+      "filled_attribute": {
+       "p": 0.06363636363636363,
+       "lo": 0.031164517844200407,
+       "hi": 0.12555746250128624
+      },
+      "fabrication": {
+       "p": 0.03636363636363636,
+       "lo": 0.014230310727684554,
+       "hi": 0.08978679338939502
+      },
+      "span_truncated": {
+       "p": 0.05454545454545454,
+       "lo": 0.02523582690344204,
+       "hi": 0.11391786136590892
+      },
+      "subject_dropped": {
+       "p": 0.02727272727272727,
+       "lo": 0.009317969785407151,
+       "hi": 0.07713084225553674
+      }
+     }
+    },
+    "per_stratum": {
+     "agency_framework": {
+      "n_facts": 55,
+      "n_in_F_denominator": 55,
+      "fabrication": 2,
+      "F": 0.03636363636363636,
+      "F_lo": 0.010029541199001908,
+      "F_hi": 0.1232346407295086,
+      "classes": {
+       "entailed": 41,
+       "filled_attribute": 6,
+       "fabrication": 2,
+       "span_truncated": 3,
+       "subject_dropped": 3
+      },
+      "class_props": {
+       "entailed": {
+        "p": 0.7454545454545455,
+        "lo": 0.6169812861001356,
+        "hi": 0.8418788528788885
+       },
+       "filled_attribute": {
+        "p": 0.10909090909090909,
+        "lo": 0.05096724971003366,
+        "hi": 0.21825549191596536
+       },
+       "fabrication": {
+        "p": 0.03636363636363636,
+        "lo": 0.010029541199001908,
+        "hi": 0.1232346407295086
+       },
+       "span_truncated": {
+        "p": 0.05454545454545454,
+        "lo": 0.018723215408912114,
+        "hi": 0.1485306064439705
+       },
+       "subject_dropped": {
+        "p": 0.05454545454545454,
+        "lo": 0.018723215408912114,
+        "hi": 0.1485306064439705
+       }
+      }
+     },
+     "normative_standard": {
+      "n_facts": 55,
+      "n_in_F_denominator": 55,
+      "fabrication": 2,
+      "F": 0.03636363636363636,
+      "F_lo": 0.010029541199001908,
+      "F_hi": 0.1232346407295086,
+      "classes": {
+       "entailed": 49,
+       "fabrication": 2,
+       "span_truncated": 3,
+       "filled_attribute": 1
+      },
+      "class_props": {
+       "entailed": {
+        "p": 0.8909090909090909,
+        "lo": 0.7817445080840346,
+        "hi": 0.9490327502899663
+       },
+       "fabrication": {
+        "p": 0.03636363636363636,
+        "lo": 0.010029541199001908,
+        "hi": 0.1232346407295086
+       },
+       "span_truncated": {
+        "p": 0.05454545454545454,
+        "lo": 0.018723215408912114,
+        "hi": 0.1485306064439705
+       },
+       "filled_attribute": {
+        "p": 0.01818181818181818,
+        "lo": 0.0032167804192709745,
+        "hi": 0.0960577615848674
+       }
+      }
+     }
+    },
+    "verdicts": {
+     "agency_framework": "repair_then_rejudge",
+     "normative_standard": "repair_then_rejudge"
+    },
+    "overall": "repair_path for all strata; re-judge after repair decides",
+    "items": {
+     "n": 86,
+     "faithful": 67,
+     "faithful_rate": 0.7790697674418605
+    },
+    "per_fact": {
+     "f_8aa1e9b4180b": {
+      "p_entailed": 0.9965214714694881,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "aaccb8112286402981009cffd7a48d3a",
+      "n_raters": 2
+     },
+     "f_b9ed60a76cbc": {
+      "p_entailed": 0.9965214714694881,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "9ae09e5acd094c83b0f65af9e89e4db6",
+      "n_raters": 2
+     },
+     "f_f11b520d83a7": {
+      "p_entailed": 0.9965214714694881,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "ffbc2f642a654254a7e5cc0278ba12d5",
+      "n_raters": 2
+     },
+     "f_a0e9ce26be55": {
+      "p_entailed": 0.9965214714694881,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "d447b2cd40d34600a170e3a5b6068fa5",
+      "n_raters": 2
+     },
+     "f_6ca073231c85": {
+      "p_entailed": 0.9965214714694881,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "51ca266c017748b3a61b086fc29e8ced",
+      "n_raters": 2
+     },
+     "f_2c1bfcf8b4ae": {
+      "p_entailed": 0.5075224034776752,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "c05bb0cb83364d14bc1495109ee76cca",
+      "n_raters": 2
+     },
+     "f_fb7f9416bbda": {
+      "p_entailed": 0.9965214714694881,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "41253a89e8ec43baabd4ea6c621b9ac4",
+      "n_raters": 2
+     },
+     "f_0fc6f86c8b0c": {
+      "p_entailed": 0.0044125214094187645,
+      "entailed": false,
+      "class": "filled_attribute",
+      "stratum": "agency_framework",
+      "event_id": "c05bb0cb83364d14bc1495109ee76cca",
+      "n_raters": 2
+     },
+     "f_ef31b84eedae": {
+      "p_entailed": 0.9965214714694881,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "dd33def7df1f49b8b6011c00032db1e5",
+      "n_raters": 2
+     },
+     "f_0708e7028416": {
+      "p_entailed": 0.5075224034776752,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "0cf0d14cf3a94c6a91c2039318740fc7",
+      "n_raters": 2
+     },
+     "f_2326deb182c4": {
+      "p_entailed": 0.9965214714694881,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "360b7e74e5704cab8c95ff129e518139",
+      "n_raters": 2
+     },
+     "f_ae1e11396c5a": {
+      "p_entailed": 0.9965214714694881,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "9ae09e5acd094c83b0f65af9e89e4db6",
+      "n_raters": 2
+     },
+     "f_074404f15c55": {
+      "p_entailed": 0.0044125214094187645,
+      "entailed": false,
+      "class": "fabrication",
+      "stratum": "agency_framework",
+      "event_id": "7aa6ecd4f1694bfd9fffcf106217c268",
+      "n_raters": 2
+     },
+     "f_b0bf764d99d1": {
+      "p_entailed": 0.9965214714694881,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "4085581672b34edbbda753578af94189",
+      "n_raters": 2
+     },
+     "f_db353518eb9f": {
+      "p_entailed": 0.9965214714694881,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "e997374f90014767b1d6d9f7044658e4",
+      "n_raters": 2
+     },
+     "f_2b5119bc6676": {
+      "p_entailed": 0.9965214714694881,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "0bf98a5cce97400a8d1cd88c5e449681",
+      "n_raters": 2
+     },
+     "f_a79be4c27a40": {
+      "p_entailed": 0.9965214714694881,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "01b0434a6ca9415cacebfd55639ce5d1",
+      "n_raters": 2
+     },
+     "f_ffa656515007": {
+      "p_entailed": 0.5075224034776752,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "56e3d61f7dbf4f169c7a7549e42c4e69",
+      "n_raters": 2
+     },
+     "f_0ff096b27411": {
+      "p_entailed": 0.9965214714694881,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "2529ad633e2b469d871b42d5863d45ba",
+      "n_raters": 2
+     },
+     "f_36b0f87ddcd3": {
+      "p_entailed": 0.0044125214094187645,
+      "entailed": false,
+      "class": "fabrication",
+      "stratum": "normative_standard",
+      "event_id": "0e5e947550774d13bd89d3295df2fcb2",
+      "n_raters": 2
+     },
+     "f_2723f0faedcc": {
+      "p_entailed": 0.9965214714694881,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "e0a391da071f465ca1669188882349fd",
+      "n_raters": 2
+     },
+     "f_45867c8fa102": {
+      "p_entailed": 0.9965214714694881,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "af5041490e5a4514bf564b6b69cb0a1a",
+      "n_raters": 2
+     },
+     "f_42362cdbe8ea": {
+      "p_entailed": 0.0044125214094187645,
+      "entailed": false,
+      "class": "span_truncated",
+      "stratum": "agency_framework",
+      "event_id": "e6556e884ed648d184d99dc9dbb2ff24",
+      "n_raters": 2
+     },
+     "f_02328145cfeb": {
+      "p_entailed": 0.5075224034776752,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "41253a89e8ec43baabd4ea6c621b9ac4",
+      "n_raters": 2
+     },
+     "f_b4faab51e841": {
+      "p_entailed": 0.9965214714694881,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "63964d1a0fb3424d8305c0e7e5b22263",
+      "n_raters": 2
+     },
+     "f_c150aee3f031": {
+      "p_entailed": 0.9965214714694881,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "c74770aeeff94f059b4d7e985d943448",
+      "n_raters": 2
+     },
+     "f_c83fe1d4f66d": {
+      "p_entailed": 0.0044125214094187645,
+      "entailed": false,
+      "class": "span_truncated",
+      "stratum": "normative_standard",
+      "event_id": "aaccb8112286402981009cffd7a48d3a",
+      "n_raters": 2
+     },
+     "f_7e1d92acb1eb": {
+      "p_entailed": 0.9965214714694881,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "92c967ffc8a84403857a4ad29610c80d",
+      "n_raters": 2
+     },
+     "f_6ade4941655d": {
+      "p_entailed": 0.5075224034776752,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "e734c20710b240a7ac1df62753ff385e",
+      "n_raters": 2
+     },
+     "f_75df1dc1b03a": {
+      "p_entailed": 0.9965214714694881,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "cf4d71db80964c849362354121ff195a",
+      "n_raters": 2
+     },
+     "f_985f699ae19a": {
+      "p_entailed": 0.9965214714694881,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "3f4638e4d1bb4f7b96c21538ede07ec2",
+      "n_raters": 2
+     },
+     "f_0b6ad14dcbcb": {
+      "p_entailed": 0.9965214714694881,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "d22b5381d93848b5b19c03c27cad5d6c",
+      "n_raters": 2
+     },
+     "f_91588bc95311": {
+      "p_entailed": 0.9965214714694881,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "360b7e74e5704cab8c95ff129e518139",
+      "n_raters": 2
+     },
+     "f_f89b27f6c528": {
+      "p_entailed": 0.5075224034776752,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "148c2dfbb3ae44e38a7cb3f0713b7707",
+      "n_raters": 2
+     },
+     "f_d08010d93fcb": {
+      "p_entailed": 0.9965214714694881,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "7aa6ecd4f1694bfd9fffcf106217c268",
+      "n_raters": 2
+     },
+     "f_77d3edf58b80": {
+      "p_entailed": 0.5075224034776752,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "0cb9016c7a3e4b6ca9c55ca6b73ad034",
+      "n_raters": 2
+     },
+     "f_9020401fb874": {
+      "p_entailed": 0.0044125214094187645,
+      "entailed": false,
+      "class": "filled_attribute",
+      "stratum": "agency_framework",
+      "event_id": "52cfddedb86f48b4a40ad1395a20e809",
+      "n_raters": 2
+     },
+     "f_93c263b30f4b": {
+      "p_entailed": 0.9965214714694881,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "51d38e48350449c68b3fce421ecb0acb",
+      "n_raters": 2
+     },
+     "f_d6ae55aca72b": {
+      "p_entailed": 0.0044125214094187645,
+      "entailed": false,
+      "class": "filled_attribute",
+      "stratum": "agency_framework",
+      "event_id": "2669a5fc29e94226a67fdf97ecb5d4b4",
+      "n_raters": 2
+     },
+     "f_47929b4832f0": {
+      "p_entailed": 0.9965214714694881,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "2fa89b77cfc648f0a9be42dd190d1ce6",
+      "n_raters": 2
+     },
+     "f_2495ca4030f1": {
+      "p_entailed": 0.9965214714694881,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "7bff909a9532456e808e8477c7ce4174",
+      "n_raters": 2
+     },
+     "f_72bed4282179": {
+      "p_entailed": 0.9965214714694881,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "adebb3ce072a41908566d8f110a7dcbd",
+      "n_raters": 2
+     },
+     "f_0f93af0f2a71": {
+      "p_entailed": 0.0044125214094187645,
+      "entailed": false,
+      "class": "fabrication",
+      "stratum": "agency_framework",
+      "event_id": "d72a2674f61a45ce80c4f0124a3265c8",
+      "n_raters": 2,
+      "doc_check": "value_absent_from_document"
+     },
+     "f_516e4bdd43f4": {
+      "p_entailed": 0.9965214714694881,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "f86489a246fd4029a84d660b43e35f93",
+      "n_raters": 2
+     },
+     "f_554cd8f0e9fe": {
+      "p_entailed": 0.0044125214094187645,
+      "entailed": false,
+      "class": "span_truncated",
+      "stratum": "agency_framework",
+      "event_id": "1094521ec96b4e86b829e493511ffce3",
+      "n_raters": 2
+     },
+     "f_10e747c4de97": {
+      "p_entailed": 0.9965214714694881,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "ccf646ea42174f9392f5bd35d135d8be",
+      "n_raters": 2
+     },
+     "f_1726a8a8589a": {
+      "p_entailed": 0.9965214714694881,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "18ee7e0c23b94e48b7776d0b8be3bfcb",
+      "n_raters": 2
+     },
+     "f_e9f969166070": {
+      "p_entailed": 0.9965214714694881,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "1edf7ff24bfe4520a65493583b128501",
+      "n_raters": 2
+     },
+     "f_4a6b6389279f": {
+      "p_entailed": 0.9965214714694881,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "3f4638e4d1bb4f7b96c21538ede07ec2",
+      "n_raters": 2
+     },
+     "f_8c385c731c40": {
+      "p_entailed": 0.9965214714694881,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "bcb3d09f86f144d1871d3b202fb0b388",
+      "n_raters": 2
+     },
+     "f_27b77bfa2fbe": {
+      "p_entailed": 0.0044125214094187645,
+      "entailed": false,
+      "class": "filled_attribute",
+      "stratum": "normative_standard",
+      "event_id": "0e5e947550774d13bd89d3295df2fcb2",
+      "n_raters": 2
+     },
+     "f_b5542d4a714d": {
+      "p_entailed": 0.9965214714694881,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "a37f917c78e44dc4b10735a1de573690",
+      "n_raters": 2
+     },
+     "f_afc0ca0fda2d": {
+      "p_entailed": 0.9965214714694881,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "09e07d49c3e443309c71ca93398a2724",
+      "n_raters": 2
+     },
+     "f_154d36943638": {
+      "p_entailed": 0.9965214714694881,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "c74770aeeff94f059b4d7e985d943448",
+      "n_raters": 2
+     },
+     "f_9b166528c229": {
+      "p_entailed": 0.9965214714694881,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "8fbfb50fa9cf48c08f45d3258a4b8ee8",
+      "n_raters": 2
+     },
+     "f_706026c21823": {
+      "p_entailed": 0.9965214714694881,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "b1ce1ef43f9e4871bbd87162174e334f",
+      "n_raters": 2
+     },
+     "f_0bf313904d7d": {
+      "p_entailed": 0.9965214714694881,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "dd8bd72c7ade4b8db0bf3b0f2fd92508",
+      "n_raters": 2
+     },
+     "f_32c03757264e": {
+      "p_entailed": 0.9965214714694881,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "3b9245abd80b435d9ade5f9bedb8d2f4",
+      "n_raters": 2
+     },
+     "f_42e57a7b7db7": {
+      "p_entailed": 0.9965214714694881,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "2869aec67e984069992abb40485eb86a",
+      "n_raters": 2
+     },
+     "f_f070eed5db05": {
+      "p_entailed": 0.9965214714694881,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "1d6bd4b3365e4eee907a585270b7ece0",
+      "n_raters": 2
+     },
+     "f_29024e4ce6ce": {
+      "p_entailed": 0.9965214714694881,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "148c2dfbb3ae44e38a7cb3f0713b7707",
+      "n_raters": 2
+     },
+     "f_be0941c8b7b2": {
+      "p_entailed": 0.9965214714694881,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "0e5e947550774d13bd89d3295df2fcb2",
+      "n_raters": 2
+     },
+     "f_58b8bffeb83e": {
+      "p_entailed": 0.0044125214094187645,
+      "entailed": false,
+      "class": "subject_dropped",
+      "stratum": "agency_framework",
+      "event_id": "e0a391da071f465ca1669188882349fd",
+      "n_raters": 2
+     },
+     "f_f0ab8191f3c7": {
+      "p_entailed": 0.0044125214094187645,
+      "entailed": false,
+      "class": "filled_attribute",
+      "stratum": "agency_framework",
+      "event_id": "0d39112df45b4bb58746c1de49a8f51d",
+      "n_raters": 2
+     },
+     "f_974ab0175ef9": {
+      "p_entailed": 0.9965214714694881,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "f217b3817ecb45c791e5baecbff16fad",
+      "n_raters": 2
+     },
+     "f_091c386c2d5c": {
+      "p_entailed": 0.0044125214094187645,
+      "entailed": false,
+      "class": "span_truncated",
+      "stratum": "normative_standard",
+      "event_id": "a37f917c78e44dc4b10735a1de573690",
+      "n_raters": 2
+     },
+     "f_db852a1a095a": {
+      "p_entailed": 0.9965214714694881,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "df1b9b132bbe4a5cb06e4b867b2729df",
+      "n_raters": 2
+     },
+     "f_b917b0cfdf0b": {
+      "p_entailed": 0.0044125214094187645,
+      "entailed": false,
+      "class": "span_truncated",
+      "stratum": "normative_standard",
+      "event_id": "0cb9016c7a3e4b6ca9c55ca6b73ad034",
+      "n_raters": 2
+     },
+     "f_8e82a72d9618": {
+      "p_entailed": 0.9965214714694881,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "562b911a614c424fbe24d2afcbc19c05",
+      "n_raters": 2
+     },
+     "f_9baa339600cb": {
+      "p_entailed": 0.0044125214094187645,
+      "entailed": false,
+      "class": "subject_dropped",
+      "stratum": "agency_framework",
+      "event_id": "0dc218b54a4546f48f47ad7682838f0b",
+      "n_raters": 2
+     },
+     "f_621152700b2e": {
+      "p_entailed": 0.5075224034776752,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "e2fc61767b014cd1b2e921833e6bed7b",
+      "n_raters": 2
+     },
+     "f_576a858e05cd": {
+      "p_entailed": 0.9965214714694881,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "adac78e4edc944ad85dac169a682a038",
+      "n_raters": 2
+     },
+     "f_8945925e5c40": {
+      "p_entailed": 0.9965214714694881,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "f40ea71bc06048c29a4898c632aff19e",
+      "n_raters": 2
+     },
+     "f_fa4d5079ed56": {
+      "p_entailed": 0.9965214714694881,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "bdddaf6ffdd548839fdd50715f420da0",
+      "n_raters": 2
+     },
+     "f_38429a808a86": {
+      "p_entailed": 0.5075224034776752,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "ed4ddbff05e94b12a95294ef4f286191",
+      "n_raters": 2
+     },
+     "f_fe88425ed80d": {
+      "p_entailed": 0.9965214714694881,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "e9a27cdcc55d4075ae594ceb9daaee41",
+      "n_raters": 2
+     },
+     "f_65b4cc39e509": {
+      "p_entailed": 0.9965214714694881,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "f40ea71bc06048c29a4898c632aff19e",
+      "n_raters": 2
+     },
+     "f_6f873ebea756": {
+      "p_entailed": 0.9965214714694881,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "e6556e884ed648d184d99dc9dbb2ff24",
+      "n_raters": 2
+     },
+     "f_ff1f1744c44f": {
+      "p_entailed": 0.9965214714694881,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "d5d7442a734b42939c11b37ba739784e",
+      "n_raters": 2
+     },
+     "f_789baa9f2bf8": {
+      "p_entailed": 0.9965214714694881,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "28246ea318a54c2098e92097c3b2d5d1",
+      "n_raters": 2
+     },
+     "f_2666fced201e": {
+      "p_entailed": 0.0044125214094187645,
+      "entailed": false,
+      "class": "fabrication",
+      "stratum": "normative_standard",
+      "event_id": "977b39cfe0cc40e8bdb5777e5fa6cd5b",
+      "n_raters": 2
+     },
+     "f_db4e1a86f76f": {
+      "p_entailed": 0.9965214714694881,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "b1ce1ef43f9e4871bbd87162174e334f",
+      "n_raters": 2
+     },
+     "f_68fbb752a1d5": {
+      "p_entailed": 0.9965214714694881,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "51ca266c017748b3a61b086fc29e8ced",
+      "n_raters": 2
+     },
+     "f_b40683d11a9c": {
+      "p_entailed": 0.0044125214094187645,
+      "entailed": false,
+      "class": "filled_attribute",
+      "stratum": "agency_framework",
+      "event_id": "28246ea318a54c2098e92097c3b2d5d1",
+      "n_raters": 2
+     },
+     "f_f659dbf77981": {
+      "p_entailed": 0.9965214714694881,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "e809636747c845db973da5268d191ee9",
+      "n_raters": 2
+     },
+     "f_4be43cd86245": {
+      "p_entailed": 0.9965214714694881,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "3fd0159407d049a5aeedd33a6409ec50",
+      "n_raters": 2
+     },
+     "f_237631e7397f": {
+      "p_entailed": 0.0044125214094187645,
+      "entailed": false,
+      "class": "subject_dropped",
+      "stratum": "agency_framework",
+      "event_id": "959341494a44466ab7b2a3c33534099c",
+      "n_raters": 2
+     },
+     "f_49e38f0a7e79": {
+      "p_entailed": 0.5075224034776752,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "a166262795e8446e933f5192a74769a6",
+      "n_raters": 2
+     },
+     "f_cc989c7045cb": {
+      "p_entailed": 0.5075224034776752,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "0e5e947550774d13bd89d3295df2fcb2",
+      "n_raters": 2
+     },
+     "f_3c022705286f": {
+      "p_entailed": 0.9965214714694881,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "a618215630aa4578ab83c03cd235f38b",
+      "n_raters": 2
+     },
+     "f_96405b63782d": {
+      "p_entailed": 0.9965214714694881,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "d8925612945641c598e54f2becab569f",
+      "n_raters": 2
+     },
+     "f_9a6de1ddb717": {
+      "p_entailed": 0.9965214714694881,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "2f76f12c2abf44a590e92ad9686c7302",
+      "n_raters": 2
+     },
+     "f_397441ceb772": {
+      "p_entailed": 0.9965214714694881,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "28c7cf5100674b7592a4481e2fca3ee3",
+      "n_raters": 2
+     },
+     "f_9a061d4f58f2": {
+      "p_entailed": 0.9965214714694881,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "b2b43397e8a048009a56f2590010ec8c",
+      "n_raters": 2
+     },
+     "f_f048c586f861": {
+      "p_entailed": 0.5519821699575381,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "7e787d36782244febdd83812902cf53f",
+      "n_raters": 2
+     },
+     "f_03a6cf9705d8": {
+      "p_entailed": 0.5075224034776752,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "1edf7ff24bfe4520a65493583b128501",
+      "n_raters": 2
+     },
+     "f_7573e7fe15ce": {
+      "p_entailed": 0.9965214714694881,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "82f106ff012847fa82ca09631c14e108",
+      "n_raters": 2
+     },
+     "f_58d6e452525a": {
+      "p_entailed": 0.9965214714694881,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "f48dd72616ef49de874c03a2fda72e0a",
+      "n_raters": 2
+     },
+     "f_99627a8f094c": {
+      "p_entailed": 0.9965214714694881,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "9c64be6009a84cc58fca78898e1a93d9",
+      "n_raters": 2
+     },
+     "f_80e66175d18f": {
+      "p_entailed": 0.9965214714694881,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "23f08de5490e4f1789cd26250773e366",
+      "n_raters": 2
+     },
+     "f_14d3f968bd5b": {
+      "p_entailed": 0.9965214714694881,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "ed8b533e499845ebac8059f3f4546a50",
+      "n_raters": 2
+     },
+     "f_55ea965bf633": {
+      "p_entailed": 0.9965214714694881,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "1ef77eb2b9774eb681fc13cd8c333438",
+      "n_raters": 2
+     },
+     "f_d84514d08633": {
+      "p_entailed": 0.0044125214094187645,
+      "entailed": false,
+      "class": "filled_attribute",
+      "stratum": "agency_framework",
+      "event_id": "080245fe707142a9b9a452832407f8f9",
+      "n_raters": 2
+     },
+     "f_76c4f6145d2d": {
+      "p_entailed": 0.9965214714694881,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "977b39cfe0cc40e8bdb5777e5fa6cd5b",
+      "n_raters": 2
+     },
+     "f_82a65bed7384": {
+      "p_entailed": 0.0044125214094187645,
+      "entailed": false,
+      "class": "span_truncated",
+      "stratum": "agency_framework",
+      "event_id": "0cf0d14cf3a94c6a91c2039318740fc7",
+      "n_raters": 2
+     },
+     "f_68063af752b4": {
+      "p_entailed": 0.9965214714694881,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "ce7724f699a34d409bd11aaeb58d7e74",
+      "n_raters": 2
+     },
+     "f_cdf1c0d3827f": {
+      "p_entailed": 0.9965214714694881,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "977390a01ba543cab7db6c9a7d404c06",
+      "n_raters": 2
+     },
+     "f_c27a345329e2": {
+      "p_entailed": 0.9965214714694881,
+      "entailed": true,
+      "class": null,
+      "stratum": "agency_framework",
+      "event_id": "f86489a246fd4029a84d660b43e35f93",
+      "n_raters": 2
+     },
+     "f_8fbc27de5163": {
+      "p_entailed": 0.5519821699575381,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "f9ce0ce33d734961acfcf604ab99190a",
+      "n_raters": 2
+     },
+     "f_2250ec810fc5": {
+      "p_entailed": 0.9965214714694881,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "025d4833f2f140b189584ee74198ae73",
+      "n_raters": 2
+     }
+    }
+   },
+   "yield_flags": {}
+  },
+  {
+   "outcome": "accept",
+   "batch_id": "bulk_v038_b013",
+   "facts": 55,
+   "fabrications": 0,
+   "items_sampled": 232,
+   "items_available": 538,
+   "sprt_trace": [
+    {
+     "limit": 55,
+     "facts": 55,
+     "fabrications": 0,
+     "decision": "accept"
+    }
+   ],
+   "aggregate": {
+    "method": "crowd-kit DawidSkene(n_iter=100)",
+    "n_facts": 55,
+    "n_labels": 110,
+    "raters": {
+     "claude-opus-4-8": {
+      "n": 55,
+      "agreement_with_map": 1.0,
+      "type": "prov:SoftwareAgent"
+     },
+     "claude-sonnet-5": {
+      "n": 55,
+      "agreement_with_map": 0.9454545454545454,
+      "type": "prov:SoftwareAgent"
+     }
+    },
+    "rater_confusion": {
+     "claude-opus-4-8": {
+      "P(obs=entailed|true=entailed)": 0.999999999997647,
+      "P(obs=not_entailed|true=entailed)": 2.352941176465482e-12,
+      "P(obs=entailed|true=not_entailed)": 0.12000000000058057,
+      "P(obs=not_entailed|true=not_entailed)": 0.8799999999994194
+     },
+     "claude-sonnet-5": {
+      "P(obs=entailed|true=entailed)": 0.9647058823527549,
+      "P(obs=not_entailed|true=entailed)": 0.03529411764724502,
+      "P(obs=entailed|true=not_entailed)": 7.99999999994097e-12,
+      "P(obs=not_entailed|true=not_entailed)": 0.999999999992
+     }
+    },
+    "doc_check": {
+     "checked": 0,
+     "reclassified": 0
+    },
+    "pooled": {
+     "n_facts": 55,
+     "n_in_F_denominator": 55,
+     "fabrication": 0,
+     "F": 0.0,
+     "F_lo": 0.0,
+     "F_hi": 0.06528490207976623,
+     "classes": {
+      "entailed": 44,
+      "filled_attribute": 3,
+      "span_truncated": 7,
+      "subject_dropped": 1
+     },
+     "class_props": {
+      "entailed": {
+       "p": 0.8,
+       "lo": 0.6763512073441295,
+       "hi": 0.884477851408011
+      },
+      "filled_attribute": {
+       "p": 0.05454545454545454,
+       "lo": 0.018723215408912114,
+       "hi": 0.1485306064439705
+      },
+      "span_truncated": {
+       "p": 0.12727272727272726,
+       "lo": 0.06304210393019456,
+       "hi": 0.24017027762017662
+      },
+      "subject_dropped": {
+       "p": 0.01818181818181818,
+       "lo": 0.0032167804192709745,
+       "hi": 0.0960577615848674
+      }
+     }
+    },
+    "per_stratum": {
+     "academic": {
+      "n_facts": 55,
+      "n_in_F_denominator": 55,
+      "fabrication": 0,
+      "F": 0.0,
+      "F_lo": 0.0,
+      "F_hi": 0.06528490207976623,
+      "classes": {
+       "entailed": 44,
+       "filled_attribute": 3,
+       "span_truncated": 7,
+       "subject_dropped": 1
+      },
+      "class_props": {
+       "entailed": {
+        "p": 0.8,
+        "lo": 0.6763512073441295,
+        "hi": 0.884477851408011
+       },
+       "filled_attribute": {
+        "p": 0.05454545454545454,
+        "lo": 0.018723215408912114,
+        "hi": 0.1485306064439705
+       },
+       "span_truncated": {
+        "p": 0.12727272727272726,
+        "lo": 0.06304210393019456,
+        "hi": 0.24017027762017662
+       },
+       "subject_dropped": {
+        "p": 0.01818181818181818,
+        "lo": 0.0032167804192709745,
+        "hi": 0.0960577615848674
+       }
+      }
+     }
+    },
+    "verdicts": {
+     "academic": "repair_then_rejudge"
+    },
+    "overall": "repair_path for all strata; re-judge after repair decides",
+    "items": {
+     "n": 51,
+     "faithful": 40,
+     "faithful_rate": 0.7843137254901961
+    },
+    "per_fact": {
+     "f_32bea065085f": {
+      "p_entailed": 0.9999999999997073,
+      "entailed": true,
+      "class": null,
+      "stratum": "academic",
+      "event_id": "cd950420de5c48b1a5ce6b6e1bfbcf64",
+      "n_raters": 2
+     },
+     "f_9ac55f151fec": {
+      "p_entailed": 0.5000000000014115,
+      "entailed": true,
+      "class": null,
+      "stratum": "academic",
+      "event_id": "aa8dca45054c4e94bfcbf1e775d3bbc8",
+      "n_raters": 2
+     },
+     "f_a566ada6a2c3": {
+      "p_entailed": 0.9999999999997073,
+      "entailed": true,
+      "class": null,
+      "stratum": "academic",
+      "event_id": "445537f3eff440e1ae8bf8b7870a1e54",
+      "n_raters": 2
+     },
+     "f_668c4777fba2": {
+      "p_entailed": 0.9999999999997073,
+      "entailed": true,
+      "class": null,
+      "stratum": "academic",
+      "event_id": "b5efbc9acf59446187aac43d80679940",
+      "n_raters": 2
+     },
+     "f_f7bf947f2702": {
+      "p_entailed": 1e-10,
+      "entailed": false,
+      "class": "filled_attribute",
+      "stratum": "academic",
+      "event_id": "2d514f29fd1846f4805f30cc995782c0",
+      "n_raters": 2
+     },
+     "f_721ce87862eb": {
+      "p_entailed": 0.5000000000014115,
+      "entailed": true,
+      "class": null,
+      "stratum": "academic",
+      "event_id": "65709ef59f1a4995b274cf5b825dad51",
+      "n_raters": 2
+     },
+     "f_f05c0f534510": {
+      "p_entailed": 0.5000000000014115,
+      "entailed": true,
+      "class": null,
+      "stratum": "academic",
+      "event_id": "8d02c5cee33f4748926c0e172885e7be",
+      "n_raters": 2
+     },
+     "f_c3e15a70edc0": {
+      "p_entailed": 0.9999999999997073,
+      "entailed": true,
+      "class": null,
+      "stratum": "academic",
+      "event_id": "e3e057884aac4da3aac1d074d9059587",
+      "n_raters": 2
+     },
+     "f_eddfa2da0247": {
+      "p_entailed": 1e-10,
+      "entailed": false,
+      "class": "span_truncated",
+      "stratum": "academic",
+      "event_id": "67fffb5c34f0463ea803cac415a4bdef",
+      "n_raters": 2
+     },
+     "f_0d46f5bcd1a9": {
+      "p_entailed": 1e-10,
+      "entailed": false,
+      "class": "span_truncated",
+      "stratum": "academic",
+      "event_id": "48239e3ec6cc451e9c82184945ecbc7a",
+      "n_raters": 2
+     },
+     "f_f4c94ba6849d": {
+      "p_entailed": 0.9999999999997073,
+      "entailed": true,
+      "class": null,
+      "stratum": "academic",
+      "event_id": "cd950420de5c48b1a5ce6b6e1bfbcf64",
+      "n_raters": 2
+     },
+     "f_35deac1cfed7": {
+      "p_entailed": 0.9999999999997073,
+      "entailed": true,
+      "class": null,
+      "stratum": "academic",
+      "event_id": "693f9eafa073418caa8604ac840d56fe",
+      "n_raters": 2
+     },
+     "f_d959ac9f5c9d": {
+      "p_entailed": 1e-10,
+      "entailed": false,
+      "class": "filled_attribute",
+      "stratum": "academic",
+      "event_id": "6cfe8fb838d1409484cba2c9f3769cb7",
+      "n_raters": 2
+     },
+     "f_a68979e30460": {
+      "p_entailed": 0.9999999999997073,
+      "entailed": true,
+      "class": null,
+      "stratum": "academic",
+      "event_id": "61f4d63dc05a48f8ab3ef2b6be64da8b",
+      "n_raters": 2
+     },
+     "f_09e7fd9913f5": {
+      "p_entailed": 0.9999999999997073,
+      "entailed": true,
+      "class": null,
+      "stratum": "academic",
+      "event_id": "c9c3c19b1313489a898ca747c38cb95e",
+      "n_raters": 2
+     },
+     "f_62c15b75eeb0": {
+      "p_entailed": 1e-10,
+      "entailed": false,
+      "class": "filled_attribute",
+      "stratum": "academic",
+      "event_id": "dbe01a6b936644a1832f790c812f11f2",
+      "n_raters": 2
+     },
+     "f_525087f433af": {
+      "p_entailed": 0.9999999999997073,
+      "entailed": true,
+      "class": null,
+      "stratum": "academic",
+      "event_id": "a129405ff972462d9d3b7eff91b8e834",
+      "n_raters": 2
+     },
+     "f_d3e23de86da7": {
+      "p_entailed": 0.9999999999997073,
+      "entailed": true,
+      "class": null,
+      "stratum": "academic",
+      "event_id": "94dd5a0675e84bff8a39fc16c5ec6aef",
+      "n_raters": 2
+     },
+     "f_e24c18758081": {
+      "p_entailed": 0.9999999999997073,
+      "entailed": true,
+      "class": null,
+      "stratum": "academic",
+      "event_id": "89e363a49ed44b5190ef0067def66bf4",
+      "n_raters": 2
+     },
+     "f_a220cac70986": {
+      "p_entailed": 0.9999999999997073,
+      "entailed": true,
+      "class": null,
+      "stratum": "academic",
+      "event_id": "c00fbf8e9ba244f09fb06f341fceb40e",
+      "n_raters": 2
+     },
+     "f_837d9e426aed": {
+      "p_entailed": 0.9999999999997073,
+      "entailed": true,
+      "class": null,
+      "stratum": "academic",
+      "event_id": "2358eb18a51e4afcbb1ae0b778bd229d",
+      "n_raters": 2
+     },
+     "f_3228ce8ca723": {
+      "p_entailed": 0.9999999999997073,
+      "entailed": true,
+      "class": null,
+      "stratum": "academic",
+      "event_id": "3b191cf06d0a4be9b79242ea739940f0",
+      "n_raters": 2
+     },
+     "f_21f29ceab80a": {
+      "p_entailed": 0.9999999999997073,
+      "entailed": true,
+      "class": null,
+      "stratum": "academic",
+      "event_id": "71029bfbe2154abea957daa78d23d630",
+      "n_raters": 2
+     },
+     "f_f9c9271ed761": {
+      "p_entailed": 0.9999999999997073,
+      "entailed": true,
+      "class": null,
+      "stratum": "academic",
+      "event_id": "6e0754c7d65a4c70922c6810c2cb9d6b",
+      "n_raters": 2
+     },
+     "f_885d646c7b1a": {
+      "p_entailed": 1e-10,
+      "entailed": false,
+      "class": "subject_dropped",
+      "stratum": "academic",
+      "event_id": "34ef337d849c4eb3aa4e47cda27f5de0",
+      "n_raters": 2
+     },
+     "f_0dacdb811fe6": {
+      "p_entailed": 0.9999999999997073,
+      "entailed": true,
+      "class": null,
+      "stratum": "academic",
+      "event_id": "a14ccfd2b655425798e5bcfc1242dc77",
+      "n_raters": 2
+     },
+     "f_77493898d7a6": {
+      "p_entailed": 0.9999999999997073,
+      "entailed": true,
+      "class": null,
+      "stratum": "academic",
+      "event_id": "03403ff3cf1243218b588c1da4ec1c95",
+      "n_raters": 2
+     },
+     "f_d20fdcbe593d": {
+      "p_entailed": 0.9999999999997073,
+      "entailed": true,
+      "class": null,
+      "stratum": "academic",
+      "event_id": "01f34b436655490c8d812341fc91d165",
+      "n_raters": 2
+     },
+     "f_d9b008546bf5": {
+      "p_entailed": 1e-10,
+      "entailed": false,
+      "class": "span_truncated",
+      "stratum": "academic",
+      "event_id": "08c1fe90dcb641789b0b3f905562f0d2",
+      "n_raters": 2
+     },
+     "f_57a109a0f0b2": {
+      "p_entailed": 0.9999999999997073,
+      "entailed": true,
+      "class": null,
+      "stratum": "academic",
+      "event_id": "b55c127f41584e1cb53a3b93cd0e6d2f",
+      "n_raters": 2
+     },
+     "f_8620a3bea3c2": {
+      "p_entailed": 0.9999999999997073,
+      "entailed": true,
+      "class": null,
+      "stratum": "academic",
+      "event_id": "0fe752eaf63e4475a98f7b8fbb85b9cc",
+      "n_raters": 2
+     },
+     "f_427f5ccf0b04": {
+      "p_entailed": 0.9999999999997073,
+      "entailed": true,
+      "class": null,
+      "stratum": "academic",
+      "event_id": "a79fe3ed19304edb9fb141254fa19a2f",
+      "n_raters": 2
+     },
+     "f_c79914795f61": {
+      "p_entailed": 0.9999999999997073,
+      "entailed": true,
+      "class": null,
+      "stratum": "academic",
+      "event_id": "adaf8e2688bc4baa8361159f5489547f",
+      "n_raters": 2
+     },
+     "f_568f9722022a": {
+      "p_entailed": 0.9999999999997073,
+      "entailed": true,
+      "class": null,
+      "stratum": "academic",
+      "event_id": "ecfbb7e2e9ce429abcbc74fc8aa690f4",
+      "n_raters": 2
+     },
+     "f_343670bc92c8": {
+      "p_entailed": 0.9999999999997073,
+      "entailed": true,
+      "class": null,
+      "stratum": "academic",
+      "event_id": "6c1d6f43d53b41ada2559aaa1de00cd0",
+      "n_raters": 2
+     },
+     "f_b735a8a26198": {
+      "p_entailed": 1e-10,
+      "entailed": false,
+      "class": "span_truncated",
+      "stratum": "academic",
+      "event_id": "79d5ec731b7847bca8ff561cc50bd02b",
+      "n_raters": 2
+     },
+     "f_9a62ec50216d": {
+      "p_entailed": 0.9999999999997073,
+      "entailed": true,
+      "class": null,
+      "stratum": "academic",
+      "event_id": "cc79ed4de7504cc9b22cdab7a8e661a0",
+      "n_raters": 2
+     },
+     "f_f82ed6eddf32": {
+      "p_entailed": 0.9999999999997073,
+      "entailed": true,
+      "class": null,
+      "stratum": "academic",
+      "event_id": "102040122064481dacb8dfc6d1f2666e",
+      "n_raters": 2
+     },
+     "f_d8009be28166": {
+      "p_entailed": 0.9999999999997073,
+      "entailed": true,
+      "class": null,
+      "stratum": "academic",
+      "event_id": "98dfa533155a44d5af720a3748864333",
+      "n_raters": 2
+     },
+     "f_22fd1fde86ca": {
+      "p_entailed": 0.9999999999997073,
+      "entailed": true,
+      "class": null,
+      "stratum": "academic",
+      "event_id": "b77a07ce96524a819cbb9e78c01a3284",
+      "n_raters": 2
+     },
+     "f_2b4f3441a77e": {
+      "p_entailed": 1e-10,
+      "entailed": false,
+      "class": "span_truncated",
+      "stratum": "academic",
+      "event_id": "02deb27b0047409da2a5fde019eb0c41",
+      "n_raters": 2
+     },
+     "f_8d69436ed780": {
+      "p_entailed": 0.9999999999997073,
+      "entailed": true,
+      "class": null,
+      "stratum": "academic",
+      "event_id": "b77a07ce96524a819cbb9e78c01a3284",
+      "n_raters": 2
+     },
+     "f_eb616b65bac7": {
+      "p_entailed": 0.9999999999997073,
+      "entailed": true,
+      "class": null,
+      "stratum": "academic",
+      "event_id": "2114c05690f34d1eb373869346bfec20",
+      "n_raters": 2
+     },
+     "f_668c3a7ef11f": {
+      "p_entailed": 0.9999999999997073,
+      "entailed": true,
+      "class": null,
+      "stratum": "academic",
+      "event_id": "326b815169bd45a6be569e050c9d9252",
+      "n_raters": 2
+     },
+     "f_dc389661e7dd": {
+      "p_entailed": 1e-10,
+      "entailed": false,
+      "class": "span_truncated",
+      "stratum": "academic",
+      "event_id": "01f34b436655490c8d812341fc91d165",
+      "n_raters": 2
+     },
+     "f_c9bd0c3b8036": {
+      "p_entailed": 0.9999999999997073,
+      "entailed": true,
+      "class": null,
+      "stratum": "academic",
+      "event_id": "75ba239879324f489532035cb8f73648",
+      "n_raters": 2
+     },
+     "f_d438e2851010": {
+      "p_entailed": 0.9999999999997073,
+      "entailed": true,
+      "class": null,
+      "stratum": "academic",
+      "event_id": "45bff8a56dec49ef8a01debb75935308",
+      "n_raters": 2
+     },
+     "f_375cfdc6cccc": {
+      "p_entailed": 0.9999999999997073,
+      "entailed": true,
+      "class": null,
+      "stratum": "academic",
+      "event_id": "2d0e1e62dc3b40ef96a5bf0c3c6ec203",
+      "n_raters": 2
+     },
+     "f_53e5096106ea": {
+      "p_entailed": 0.9999999999997073,
+      "entailed": true,
+      "class": null,
+      "stratum": "academic",
+      "event_id": "e6d082b38d744f64821d452339b4178c",
+      "n_raters": 2
+     },
+     "f_1cd3d201bbb5": {
+      "p_entailed": 0.9999999999997073,
+      "entailed": true,
+      "class": null,
+      "stratum": "academic",
+      "event_id": "e83111cc08da4e5d85361c06af862710",
+      "n_raters": 2
+     },
+     "f_c4ef0790c2e9": {
+      "p_entailed": 0.9999999999997073,
+      "entailed": true,
+      "class": null,
+      "stratum": "academic",
+      "event_id": "27fcf355fc0a44e480f1bdc6d1919bcf",
+      "n_raters": 2
+     },
+     "f_953dd4b4cc0b": {
+      "p_entailed": 1e-10,
+      "entailed": false,
+      "class": "span_truncated",
+      "stratum": "academic",
+      "event_id": "5671caf507ca4515bf76fd4a1bfa19dc",
+      "n_raters": 2
+     },
+     "f_d1fa473f4e1c": {
+      "p_entailed": 0.9999999999997073,
+      "entailed": true,
+      "class": null,
+      "stratum": "academic",
+      "event_id": "42fcec3428074b8e9547b50f1de4d61c",
+      "n_raters": 2
+     },
+     "f_6e8c6b1ae54a": {
+      "p_entailed": 0.9999999999997073,
+      "entailed": true,
+      "class": null,
+      "stratum": "academic",
+      "event_id": "5671caf507ca4515bf76fd4a1bfa19dc",
+      "n_raters": 2
+     },
+     "f_5cc8ad66efbb": {
+      "p_entailed": 0.9999999999997073,
+      "entailed": true,
+      "class": null,
+      "stratum": "academic",
+      "event_id": "fcdbd3bd8bf0412298023dff62c85a07",
+      "n_raters": 2
+     }
+    }
+   },
+   "yield_flags": {}
+  },
+  {
+   "outcome": "accept",
+   "batch_id": "bulk_v038_b014",
+   "facts": 110,
+   "fabrications": 2,
+   "items_sampled": 232,
+   "items_available": 316,
+   "sprt_trace": [
+    {
+     "limit": 55,
+     "facts": 110,
+     "fabrications": 2,
+     "decision": "accept"
+    }
+   ],
+   "aggregate": {
+    "method": "crowd-kit DawidSkene(n_iter=100)",
+    "n_facts": 110,
+    "n_labels": 220,
+    "raters": {
+     "claude-opus-4-8": {
+      "n": 110,
+      "agreement_with_map": 0.990909090909091,
+      "type": "prov:SoftwareAgent"
+     },
+     "claude-sonnet-5": {
+      "n": 110,
+      "agreement_with_map": 0.9090909090909091,
+      "type": "prov:SoftwareAgent"
+     }
+    },
+    "rater_confusion": {
+     "claude-opus-4-8": {
+      "P(obs=entailed|true=entailed)": 0.9931065333490564,
+      "P(obs=not_entailed|true=entailed)": 0.0068934666509437165,
+      "P(obs=entailed|true=not_entailed)": 0.19135968489289848,
+      "P(obs=not_entailed|true=not_entailed)": 0.8086403151071015
+     },
+     "claude-sonnet-5": {
+      "P(obs=entailed|true=entailed)": 0.9392754850503517,
+      "P(obs=not_entailed|true=entailed)": 0.060724514949648346,
+      "P(obs=entailed|true=not_entailed)": 0.021330620362382147,
+      "P(obs=not_entailed|true=not_entailed)": 0.9786693796376178
+     }
+    },
+    "doc_check": {
+     "checked": 3,
+     "reclassified": 2
+    },
+    "pooled": {
+     "n_facts": 110,
+     "n_in_F_denominator": 109,
+     "fabrication": 2,
+     "F": 0.01834862385321101,
+     "F_lo": 0.005046362321946482,
+     "F_hi": 0.064444576195118,
+     "classes": {
+      "entailed": 89,
+      "doc_level_attribute": 1,
+      "span_truncated": 11,
+      "filled_attribute": 5,
+      "subject_dropped": 2,
+      "fabrication": 2
+     },
+     "class_props": {
+      "entailed": {
+       "p": 0.8090909090909091,
+       "lo": 0.7257160074776381,
+       "hi": 0.8716059231109756
+      },
+      "doc_level_attribute": {
+       "p": 0.00909090909090909,
+       "lo": 0.0016065752865694234,
+       "hi": 0.04970565260210308
+      },
+      "span_truncated": {
+       "p": 0.1,
+       "lo": 0.05676011988980404,
+       "hi": 0.17023502876022542
+      },
+      "filled_attribute": {
+       "p": 0.045454545454545456,
+       "lo": 0.01956946053535246,
+       "hi": 0.10201593565786282
+      },
+      "subject_dropped": {
+       "p": 0.01818181818181818,
+       "lo": 0.005000354830345458,
+       "hi": 0.06388016513446274
+      },
+      "fabrication": {
+       "p": 0.01818181818181818,
+       "lo": 0.005000354830345458,
+       "hi": 0.06388016513446274
+      }
+     }
+    },
+    "per_stratum": {
+     "normative_standard": {
+      "n_facts": 110,
+      "n_in_F_denominator": 109,
+      "fabrication": 2,
+      "F": 0.01834862385321101,
+      "F_lo": 0.005046362321946482,
+      "F_hi": 0.064444576195118,
+      "classes": {
+       "entailed": 89,
+       "doc_level_attribute": 1,
+       "span_truncated": 11,
+       "filled_attribute": 5,
+       "subject_dropped": 2,
+       "fabrication": 2
+      },
+      "class_props": {
+       "entailed": {
+        "p": 0.8090909090909091,
+        "lo": 0.7257160074776381,
+        "hi": 0.8716059231109756
+       },
+       "doc_level_attribute": {
+        "p": 0.00909090909090909,
+        "lo": 0.0016065752865694234,
+        "hi": 0.04970565260210308
+       },
+       "span_truncated": {
+        "p": 0.1,
+        "lo": 0.05676011988980404,
+        "hi": 0.17023502876022542
+       },
+       "filled_attribute": {
+        "p": 0.045454545454545456,
+        "lo": 0.01956946053535246,
+        "hi": 0.10201593565786282
+       },
+       "subject_dropped": {
+        "p": 0.01818181818181818,
+        "lo": 0.005000354830345458,
+        "hi": 0.06388016513446274
+       },
+       "fabrication": {
+        "p": 0.01818181818181818,
+        "lo": 0.005000354830345458,
+        "hi": 0.06388016513446274
+       }
+      }
+     }
+    },
+    "verdicts": {
+     "normative_standard": "repair_then_rejudge"
+    },
+    "overall": "repair_path for all strata; re-judge after repair decides",
+    "items": {
+     "n": 94,
+     "faithful": 75,
+     "faithful_rate": 0.7978723404255319
+    },
+    "per_fact": {
+     "f_7e40570db213": {
+      "p_entailed": 0.503652564627457,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "a732d958ed654cf5bc675791a00b4350",
+      "n_raters": 2
+     },
+     "f_c6f283b4b1c4": {
+      "p_entailed": 0.9986350530329102,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "ae31afe3261f45e4a13aeedc0376ef8c",
+      "n_raters": 2
+     },
+     "f_f271311af925": {
+      "p_entailed": 0.503652564627457,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "a58cc3e089794081ae7681733a5dafe2",
+      "n_raters": 2
+     },
+     "f_e7973c56ea79": {
+      "p_entailed": 0.503652564627457,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "439ce1de03ec49afa8ff6fc950e3a7bc",
+      "n_raters": 2
+     },
+     "f_bfae8c5ecd0d": {
+      "p_entailed": 0.9986350530329102,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "02ec8ce2d92d45b29e0b432a6ca25136",
+      "n_raters": 2
+     },
+     "f_eb09eda57418": {
+      "p_entailed": 0.9986350530329102,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "ba0669e0be6e463baf7911c73d89d170",
+      "n_raters": 2
+     },
+     "f_5002a87dd5a8": {
+      "p_entailed": 0.9986350530329102,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "c40f05aaaa2b4aeca80028410d961b5b",
+      "n_raters": 2
+     },
+     "f_9cdb4867ad92": {
+      "p_entailed": 0.9986350530329102,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "439ce1de03ec49afa8ff6fc950e3a7bc",
+      "n_raters": 2
+     },
+     "f_dbb04e255915": {
+      "p_entailed": 0.9986350530329102,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "389408a7efe54613ba3aab3e6053726c",
+      "n_raters": 2
+     },
+     "f_761f30d6c684": {
+      "p_entailed": 0.9986350530329102,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "99dca3c27c094d93b5a99f5b89338b07",
+      "n_raters": 2
+     },
+     "f_e009dd22af5a": {
+      "p_entailed": 0.9986350530329102,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "70fc07d6514b44248a2bd13de90f69bf",
+      "n_raters": 2
+     },
+     "f_30d23eae1b94": {
+      "p_entailed": 0.9986350530329102,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "bf861f3dcffa452899253b69400552e9",
+      "n_raters": 2
+     },
+     "f_5156a1414517": {
+      "p_entailed": 0.9986350530329102,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "d8afb29c205a4e139e97fc96b7ec4694",
+      "n_raters": 2
+     },
+     "f_df09185718c6": {
+      "p_entailed": 0.0016341761081720295,
+      "entailed": false,
+      "class": "doc_level_attribute",
+      "stratum": "normative_standard",
+      "event_id": "46ef0559916c4ad6b904d6a5d9eb5000",
+      "n_raters": 2
+     },
+     "f_d06fb99fa2bd": {
+      "p_entailed": 0.9986350530329102,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "ec27dc0bc5924f2cb80d62087332de30",
+      "n_raters": 2
+     },
+     "f_f41a8c5114fc": {
+      "p_entailed": 0.9986350530329102,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "eb79913fc1b5475fbf68872729791143",
+      "n_raters": 2
+     },
+     "f_6701ed394ea5": {
+      "p_entailed": 0.9986350530329102,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "59d8b1b895f14a5788247653a275d312",
+      "n_raters": 2
+     },
+     "f_4c6b4abb9077": {
+      "p_entailed": 0.9986350530329102,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "04e32b1b7f914d0caa33d5468c360ed9",
+      "n_raters": 2
+     },
+     "f_8e3b42cc5f2f": {
+      "p_entailed": 0.9986350530329102,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "b74c1c786e384799a7b8cb64502c03e5",
+      "n_raters": 2
+     },
+     "f_5e8c82a002f0": {
+      "p_entailed": 0.0016341761081720295,
+      "entailed": false,
+      "class": "span_truncated",
+      "stratum": "normative_standard",
+      "event_id": "0c0f6c26a6e342bb9e61fb5aaae37aa0",
+      "n_raters": 2
+     },
+     "f_99bcc47a0f1d": {
+      "p_entailed": 0.0016341761081720295,
+      "entailed": false,
+      "class": "filled_attribute",
+      "stratum": "normative_standard",
+      "event_id": "9fc3f64bb67c4cdcb78a9405b3656a5a",
+      "n_raters": 2
+     },
+     "f_ff5dfd3f4e53": {
+      "p_entailed": 0.9986350530329102,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "504cef73a6fa42638d34a53ed892efa4",
+      "n_raters": 2
+     },
+     "f_798113bf3258": {
+      "p_entailed": 0.9986350530329102,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "98fe35ad66274f0cbd8ac67c55e86d5c",
+      "n_raters": 2
+     },
+     "f_d597f4ff4478": {
+      "p_entailed": 0.9986350530329102,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "8601a5bf77c34cf2aa9711ecbf20a15b",
+      "n_raters": 2
+     },
+     "f_9d53632e4b03": {
+      "p_entailed": 0.0016341761081720295,
+      "entailed": false,
+      "class": "span_truncated",
+      "stratum": "normative_standard",
+      "event_id": "30784ffa4d2345f48a4221c0f9cfa3d2",
+      "n_raters": 2
+     },
+     "f_063d5782bb6c": {
+      "p_entailed": 0.9986350530329102,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "150df94a7c1145afb856cd2742d08434",
+      "n_raters": 2
+     },
+     "f_4b575ecbeaf0": {
+      "p_entailed": 0.9986350530329102,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "c52569ce035148eca9c40fdf650159f4",
+      "n_raters": 2
+     },
+     "f_a88dd83dfafc": {
+      "p_entailed": 0.9986350530329102,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "c79391fc222e4a74aa50d7a1175091a5",
+      "n_raters": 2
+     },
+     "f_839622e02d28": {
+      "p_entailed": 0.503652564627457,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "aaa243329df44779a1d2ed364e27f740",
+      "n_raters": 2
+     },
+     "f_fe5b7d93691d": {
+      "p_entailed": 0.9986350530329102,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "d786b177146348cb9384b2bff379d73c",
+      "n_raters": 2
+     },
+     "f_c011ff8f2811": {
+      "p_entailed": 0.9986350530329102,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "722c8a7892dc4019bc9abc976f517eef",
+      "n_raters": 2
+     },
+     "f_d33ee4ed3650": {
+      "p_entailed": 0.9986350530329102,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "69dff8c89c904ec6aa88187dbdb4018e",
+      "n_raters": 2
+     },
+     "f_3dc4b7b2b638": {
+      "p_entailed": 0.0016341761081720295,
+      "entailed": false,
+      "class": "span_truncated",
+      "stratum": "normative_standard",
+      "event_id": "05d25519b9a04b5e8b15745991db7feb",
+      "n_raters": 2
+     },
+     "f_0748b45ded54": {
+      "p_entailed": 0.503652564627457,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "70fc07d6514b44248a2bd13de90f69bf",
+      "n_raters": 2
+     },
+     "f_1e637bad95a0": {
+      "p_entailed": 0.0016341761081720295,
+      "entailed": false,
+      "class": "subject_dropped",
+      "stratum": "normative_standard",
+      "event_id": "92cdae7c78c74a82a33747811f1c0a54",
+      "n_raters": 2
+     },
+     "f_ec3293fa17c2": {
+      "p_entailed": 0.9986350530329102,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "f7d5d51110df43248461653f8504c912",
+      "n_raters": 2
+     },
+     "f_4bf5e4dec47b": {
+      "p_entailed": 0.9986350530329102,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "191813651f064fcfbcb97770ec1b2faf",
+      "n_raters": 2
+     },
+     "f_4759647b0f3d": {
+      "p_entailed": 0.9986350530329102,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "ba0669e0be6e463baf7911c73d89d170",
+      "n_raters": 2
+     },
+     "f_1b4746050dec": {
+      "p_entailed": 0.9986350530329102,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "8f797399b72949389e2929903665983e",
+      "n_raters": 2
+     },
+     "f_978210073bd0": {
+      "p_entailed": 0.9986350530329102,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "ad5f4b56b33541f3821fb3c6c8d2f28d",
+      "n_raters": 2
+     },
+     "f_3f06a838ad91": {
+      "p_entailed": 0.9986350530329102,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "0e437a34a5494ce7951bfbc4981ca37a",
+      "n_raters": 2
+     },
+     "f_4ad8c0aa3544": {
+      "p_entailed": 0.9986350530329102,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "7fc739dffb3b4036a37d7f5f7c43a08c",
+      "n_raters": 2
+     },
+     "f_e63eed2804e0": {
+      "p_entailed": 0.0016341761081720295,
+      "entailed": false,
+      "class": "span_truncated",
+      "stratum": "normative_standard",
+      "event_id": "281b28c2ece94947b5f9467995024df8",
+      "n_raters": 2
+     },
+     "f_5da6e2189a46": {
+      "p_entailed": 0.9986350530329102,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "57f2e71747d04c078f4b81e19157cfa8",
+      "n_raters": 2
+     },
+     "f_0c5ddd6dcd73": {
+      "p_entailed": 0.0016341761081720295,
+      "entailed": false,
+      "class": "fabrication",
+      "stratum": "normative_standard",
+      "event_id": "f8a4186e64d244c09081896e943b1bd2",
+      "n_raters": 2,
+      "doc_check": "value_absent_from_document"
+     },
+     "f_f695b2789a26": {
+      "p_entailed": 0.9986350530329102,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "e9f5c5d71af84bfb9ba90d3f8c5a3412",
+      "n_raters": 2
+     },
+     "f_27ebd6cbb18f": {
+      "p_entailed": 0.9986350530329102,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "4f0693490655426dae5a132fdffaddb3",
+      "n_raters": 2
+     },
+     "f_b457f057ad23": {
+      "p_entailed": 0.9986350530329102,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "f2456eb69b434fdaa0fa7870385064a5",
+      "n_raters": 2
+     },
+     "f_7c3089ae5d99": {
+      "p_entailed": 0.0016341761081720295,
+      "entailed": false,
+      "class": "filled_attribute",
+      "stratum": "normative_standard",
+      "event_id": "36f7f5cbc6334444848db89bc0d3e871",
+      "n_raters": 2,
+      "doc_check": "value_found_in_document"
+     },
+     "f_c6709a1954c3": {
+      "p_entailed": 0.9986350530329102,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "566ca801fc514302b286950a3c1c7bed",
+      "n_raters": 2
+     },
+     "f_bb18b3391623": {
+      "p_entailed": 0.0016341761081720295,
+      "entailed": false,
+      "class": "span_truncated",
+      "stratum": "normative_standard",
+      "event_id": "ee845ac6e1564f078b90db330de8e5f8",
+      "n_raters": 2
+     },
+     "f_0ab9d302aca7": {
+      "p_entailed": 0.503652564627457,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "69578c1e49094405a19759e486af9ab0",
+      "n_raters": 2
+     },
+     "f_7ccbcf142ce0": {
+      "p_entailed": 0.9986350530329102,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "7ebd5d9bb9fe4038b01743933809a30a",
+      "n_raters": 2
+     },
+     "f_0a141c2b1be2": {
+      "p_entailed": 0.9986350530329102,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "39a8a40952944bde87548ba15da84976",
+      "n_raters": 2
+     },
+     "f_cb54fb03f378": {
+      "p_entailed": 0.0016341761081720295,
+      "entailed": false,
+      "class": "span_truncated",
+      "stratum": "normative_standard",
+      "event_id": "ae84adc2df7f403d8d379d6dc183e2e7",
+      "n_raters": 2
+     },
+     "f_2bde169ed080": {
+      "p_entailed": 0.9986350530329102,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "5b8e7364d63f4a18b7f408b48748f467",
+      "n_raters": 2
+     },
+     "f_2ec3f80ef122": {
+      "p_entailed": 0.9986350530329102,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "b5eb43f63ace4fb7a51cb82d4009631d",
+      "n_raters": 2
+     },
+     "f_b45a07bb3dfb": {
+      "p_entailed": 0.9986350530329102,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "154278c24c064c5e896cc8f86e481abe",
+      "n_raters": 2
+     },
+     "f_911821f84a1c": {
+      "p_entailed": 0.0016341761081720295,
+      "entailed": false,
+      "class": "span_truncated",
+      "stratum": "normative_standard",
+      "event_id": "2947c1c4c490482aa86e175a640c2522",
+      "n_raters": 2
+     },
+     "f_7ab3a970a5ed": {
+      "p_entailed": 0.9986350530329102,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "57fb497d9feb4bf18af7f982860c95d0",
+      "n_raters": 2
+     },
+     "f_248832cb595a": {
+      "p_entailed": 0.0016341761081720295,
+      "entailed": false,
+      "class": "fabrication",
+      "stratum": "normative_standard",
+      "event_id": "36f7f5cbc6334444848db89bc0d3e871",
+      "n_raters": 2
+     },
+     "f_7ec03663d032": {
+      "p_entailed": 0.9986350530329102,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "8424523d5de0452fbd0ec95406d8163d",
+      "n_raters": 2
+     },
+     "f_f878d1da0c74": {
+      "p_entailed": 0.9986350530329102,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "eeff49e7bbba4d8999000fe06fee4885",
+      "n_raters": 2
+     },
+     "f_fc03c132023f": {
+      "p_entailed": 0.9986350530329102,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "0f5403447a0544598b992bfb3a2e276c",
+      "n_raters": 2
+     },
+     "f_d70405b3f8cf": {
+      "p_entailed": 0.9986350530329102,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "11e4b78dfd834f729c28ed592ae1933f",
+      "n_raters": 2
+     },
+     "f_5e9dcd9b5199": {
+      "p_entailed": 0.9986350530329102,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "90c47df1aca744678172fc821b81c8b6",
+      "n_raters": 2
+     },
+     "f_622d8f9a9bc9": {
+      "p_entailed": 0.0016341761081720295,
+      "entailed": false,
+      "class": "span_truncated",
+      "stratum": "normative_standard",
+      "event_id": "6066f332289541f1981ed68034d5c840",
+      "n_raters": 2
+     },
+     "f_397abe645075": {
+      "p_entailed": 0.9986350530329102,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "7e725b0072e34905813f3c3059957df5",
+      "n_raters": 2
+     },
+     "f_b1d3afb2d152": {
+      "p_entailed": 0.9986350530329102,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "14973683dbf74faeb208e6b91ffb291a",
+      "n_raters": 2
+     },
+     "f_33ecf2b56136": {
+      "p_entailed": 0.9986350530329102,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "b4f17b2598c445799743fe6d4ef62b38",
+      "n_raters": 2
+     },
+     "f_3c2fdfb41469": {
+      "p_entailed": 0.9986350530329102,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "ae84adc2df7f403d8d379d6dc183e2e7",
+      "n_raters": 2
+     },
+     "f_cafbe7f25a77": {
+      "p_entailed": 0.9986350530329102,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "d30b62391d994841b6eeaa37150d1186",
+      "n_raters": 2
+     },
+     "f_e82af1f4671b": {
+      "p_entailed": 0.0016341761081720295,
+      "entailed": false,
+      "class": "filled_attribute",
+      "stratum": "normative_standard",
+      "event_id": "b4354232b72a4fc5b831fcc530ca368c",
+      "n_raters": 2,
+      "doc_check": "value_found_in_document"
+     },
+     "f_97470841b01a": {
+      "p_entailed": 0.9986350530329102,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "b5eb43f63ace4fb7a51cb82d4009631d",
+      "n_raters": 2
+     },
+     "f_5895bca896f6": {
+      "p_entailed": 0.0016341761081720295,
+      "entailed": false,
+      "class": "span_truncated",
+      "stratum": "normative_standard",
+      "event_id": "eeff49e7bbba4d8999000fe06fee4885",
+      "n_raters": 2
+     },
+     "f_3cb338f587c5": {
+      "p_entailed": 0.9986350530329102,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "f2102656fbc6437db3b3f487aea9aaf3",
+      "n_raters": 2
+     },
+     "f_c844a928924a": {
+      "p_entailed": 0.9986350530329102,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "5af9ba9e8c55461ead11c55136a474c2",
+      "n_raters": 2
+     },
+     "f_f764b3ee9d3d": {
+      "p_entailed": 0.503652564627457,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "b74c1c786e384799a7b8cb64502c03e5",
+      "n_raters": 2
+     },
+     "f_85aa7c414daa": {
+      "p_entailed": 0.0016341761081720295,
+      "entailed": false,
+      "class": "span_truncated",
+      "stratum": "normative_standard",
+      "event_id": "d579dc1780ce4f48828b2159b3344292",
+      "n_raters": 2
+     },
+     "f_43cf97a3d8d2": {
+      "p_entailed": 0.9986350530329102,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "04b136c113194358b5039138c822fca4",
+      "n_raters": 2
+     },
+     "f_7f4cbd129585": {
+      "p_entailed": 0.9986350530329102,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "eaf496b21e1f488a8fbcaf4c21a64ee8",
+      "n_raters": 2
+     },
+     "f_e824d3511a12": {
+      "p_entailed": 0.9986350530329102,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "46ef0559916c4ad6b904d6a5d9eb5000",
+      "n_raters": 2
+     },
+     "f_c4a0e468cbf3": {
+      "p_entailed": 0.9986350530329102,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "191813651f064fcfbcb97770ec1b2faf",
+      "n_raters": 2
+     },
+     "f_7d3f1276a40e": {
+      "p_entailed": 0.9986350530329102,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "964c6f3c461747c2bbda118c78647681",
+      "n_raters": 2
+     },
+     "f_577fe17a646b": {
+      "p_entailed": 0.9986350530329102,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "c6090d1df407444bbbdae18fb9c3b561",
+      "n_raters": 2
+     },
+     "f_1892fe50d3ee": {
+      "p_entailed": 0.9986350530329102,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "90c4a28f347140b7b55ac0f1eae21723",
+      "n_raters": 2
+     },
+     "f_e5987adeae77": {
+      "p_entailed": 0.9986350530329102,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "52bc60957bc54872aabf5be05814e89f",
+      "n_raters": 2
+     },
+     "f_f142f52ba745": {
+      "p_entailed": 0.9986350530329102,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "8ac7de859ca8450a9633ba0475dbe0b1",
+      "n_raters": 2
+     },
+     "f_b13fadf35c47": {
+      "p_entailed": 0.5413260844209888,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "90c47df1aca744678172fc821b81c8b6",
+      "n_raters": 2
+     },
+     "f_59c00c9fa9f6": {
+      "p_entailed": 0.503652564627457,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "7b03c91440064da182f0ff2c061cd8a6",
+      "n_raters": 2
+     },
+     "f_3dfdc4c8a2fe": {
+      "p_entailed": 0.0016341761081720295,
+      "entailed": false,
+      "class": "span_truncated",
+      "stratum": "normative_standard",
+      "event_id": "0164fb22fab74c0f9335f24cda4c6a69",
+      "n_raters": 2
+     },
+     "f_dd564d03207b": {
+      "p_entailed": 0.9986350530329102,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "07fe73f31f934e5f9400fb5a93cd8a5b",
+      "n_raters": 2
+     },
+     "f_499042d52d08": {
+      "p_entailed": 0.9986350530329102,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "fe6d9b83f6d0486c9e5544872a1d9066",
+      "n_raters": 2
+     },
+     "f_007f922e27ca": {
+      "p_entailed": 0.9986350530329102,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "eb79913fc1b5475fbf68872729791143",
+      "n_raters": 2
+     },
+     "f_fe491afaaf38": {
+      "p_entailed": 0.0016341761081720295,
+      "entailed": false,
+      "class": "filled_attribute",
+      "stratum": "normative_standard",
+      "event_id": "8df36f508bf746c083b7bdff6707ff3c",
+      "n_raters": 2
+     },
+     "f_69d3c524da37": {
+      "p_entailed": 0.9986350530329102,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "b88b4706493a4e6e933aa8b56e565891",
+      "n_raters": 2
+     },
+     "f_c80e237fb6ff": {
+      "p_entailed": 0.9986350530329102,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "bd999512b6e64bf2aad52750d274aa0e",
+      "n_raters": 2
+     },
+     "f_c5ad3d51e0eb": {
+      "p_entailed": 0.503652564627457,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "78946f123aa24378a892002f5843a368",
+      "n_raters": 2
+     },
+     "f_a92ed4565caf": {
+      "p_entailed": 0.9986350530329102,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "4f08fca640f046fb828c1290addf3961",
+      "n_raters": 2
+     },
+     "f_a00d8be46dce": {
+      "p_entailed": 0.9986350530329102,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "0c0f6c26a6e342bb9e61fb5aaae37aa0",
+      "n_raters": 2
+     },
+     "f_95278162f18d": {
+      "p_entailed": 0.503652564627457,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "ad5f4b56b33541f3821fb3c6c8d2f28d",
+      "n_raters": 2
+     },
+     "f_58c4b49ef710": {
+      "p_entailed": 0.9986350530329102,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "5af9ba9e8c55461ead11c55136a474c2",
+      "n_raters": 2
+     },
+     "f_6dba25b699ca": {
+      "p_entailed": 0.9986350530329102,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "ed7a59c8f5d3417293bc79f275ab1479",
+      "n_raters": 2
+     },
+     "f_d0583c735c15": {
+      "p_entailed": 0.0016341761081720295,
+      "entailed": false,
+      "class": "subject_dropped",
+      "stratum": "normative_standard",
+      "event_id": "43093d4da38442a091f4eec4feaad715",
+      "n_raters": 2
+     },
+     "f_b847f36770c5": {
+      "p_entailed": 0.9986350530329102,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "21d64eb7c6fc4e90a44c129d7a73253b",
+      "n_raters": 2
+     },
+     "f_a613a6eb2f14": {
+      "p_entailed": 0.9986350530329102,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "59aceb1e734141428546d6410b09fb71",
+      "n_raters": 2
+     },
+     "f_19838eb6457c": {
+      "p_entailed": 0.9986350530329102,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "a732d958ed654cf5bc675791a00b4350",
+      "n_raters": 2
+     },
+     "f_0ac3e9bc87f6": {
+      "p_entailed": 0.0016341761081720295,
+      "entailed": false,
+      "class": "filled_attribute",
+      "stratum": "normative_standard",
+      "event_id": "b09f354011c447ca9918c46b3f5e099c",
+      "n_raters": 2
+     },
+     "f_18757f098a08": {
+      "p_entailed": 0.9986350530329102,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "ff5ed2dd21ba4009ac882f76b361ff10",
+      "n_raters": 2
+     },
+     "f_6b722e4581c4": {
+      "p_entailed": 0.9986350530329102,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "bc3a0889ab0a46389ee7a09c4048733b",
+      "n_raters": 2
+     }
+    }
+   },
+   "yield_flags": {}
+  },
+  {
+   "outcome": "accept",
+   "batch_id": "bulk_v038_b015",
+   "facts": 110,
+   "fabrications": 3,
+   "items_sampled": 232,
+   "items_available": 596,
+   "sprt_trace": [
+    {
+     "limit": 55,
+     "facts": 110,
+     "fabrications": 3,
+     "decision": "accept"
+    }
+   ],
+   "aggregate": {
+    "method": "crowd-kit DawidSkene(n_iter=100)",
+    "n_facts": 110,
+    "n_labels": 220,
+    "raters": {
+     "claude-opus-4-8": {
+      "n": 110,
+      "agreement_with_map": 0.990909090909091,
+      "type": "prov:SoftwareAgent"
+     },
+     "claude-sonnet-5": {
+      "n": 110,
+      "agreement_with_map": 0.9454545454545454,
+      "type": "prov:SoftwareAgent"
+     }
+    },
+    "rater_confusion": {
+     "claude-opus-4-8": {
+      "P(obs=entailed|true=entailed)": 0.9937806892732941,
+      "P(obs=not_entailed|true=entailed)": 0.006219310726705977,
+      "P(obs=entailed|true=not_entailed)": 0.14175254092282857,
+      "P(obs=not_entailed|true=not_entailed)": 0.8582474590771715
+     },
+     "claude-sonnet-5": {
+      "P(obs=entailed|true=entailed)": 0.9655597298846658,
+      "P(obs=not_entailed|true=entailed)": 0.03444027011533427,
+      "P(obs=entailed|true=not_entailed)": 0.025346606781270375,
+      "P(obs=not_entailed|true=not_entailed)": 0.9746533932187297
+     }
+    },
+    "doc_check": {
+     "checked": 2,
+     "reclassified": 1
+    },
+    "pooled": {
+     "n_facts": 110,
+     "n_in_F_denominator": 110,
+     "fabrication": 3,
+     "F": 0.02727272727272727,
+     "F_lo": 0.009317969785407151,
+     "F_hi": 0.07713084225553674,
+     "classes": {
+      "entailed": 92,
+      "span_truncated": 10,
+      "fabrication": 3,
+      "filled_attribute": 5
+     },
+     "class_props": {
+      "entailed": {
+       "p": 0.8363636363636363,
+       "lo": 0.7561148830259269,
+       "hi": 0.8939119237910936
+      },
+      "span_truncated": {
+       "p": 0.09090909090909091,
+       "lo": 0.05013032873890766,
+       "hi": 0.1592965278349861
+      },
+      "fabrication": {
+       "p": 0.02727272727272727,
+       "lo": 0.009317969785407151,
+       "hi": 0.07713084225553674
+      },
+      "filled_attribute": {
+       "p": 0.045454545454545456,
+       "lo": 0.01956946053535246,
+       "hi": 0.10201593565786282
+      }
+     }
+    },
+    "per_stratum": {
+     "normative_standard": {
+      "n_facts": 110,
+      "n_in_F_denominator": 110,
+      "fabrication": 3,
+      "F": 0.02727272727272727,
+      "F_lo": 0.009317969785407151,
+      "F_hi": 0.07713084225553674,
+      "classes": {
+       "entailed": 92,
+       "span_truncated": 10,
+       "fabrication": 3,
+       "filled_attribute": 5
+      },
+      "class_props": {
+       "entailed": {
+        "p": 0.8363636363636363,
+        "lo": 0.7561148830259269,
+        "hi": 0.8939119237910936
+       },
+       "span_truncated": {
+        "p": 0.09090909090909091,
+        "lo": 0.05013032873890766,
+        "hi": 0.1592965278349861
+       },
+       "fabrication": {
+        "p": 0.02727272727272727,
+        "lo": 0.009317969785407151,
+        "hi": 0.07713084225553674
+       },
+       "filled_attribute": {
+        "p": 0.045454545454545456,
+        "lo": 0.01956946053535246,
+        "hi": 0.10201593565786282
+       }
+      }
+     }
+    },
+    "verdicts": {
+     "normative_standard": "repair_then_rejudge"
+    },
+    "overall": "repair_path for all strata; re-judge after repair decides",
+    "items": {
+     "n": 93,
+     "faithful": 75,
+     "faithful_rate": 0.8064516129032258
+    },
+    "per_fact": {
+     "f_5d48995ba484": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "38d676cff18b4939b46a58672ab47758",
+      "n_raters": 2
+     },
+     "f_d55c0e9fe6fb": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "3b57873940a3477bb9db400ae72a55bd",
+      "n_raters": 2
+     },
+     "f_5c150266be9c": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "2dbba939752d45418a68e4ba58a0bf0e",
+      "n_raters": 2
+     },
+     "f_62b69dd7758d": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "7b170cfc33bf470298904b290f120250",
+      "n_raters": 2
+     },
+     "f_d451323cf00b": {
+      "p_entailed": 0.0010422621516106808,
+      "entailed": false,
+      "class": "span_truncated",
+      "stratum": "normative_standard",
+      "event_id": "f1ce0877d9a54256bdaff059464fcb57",
+      "n_raters": 2
+     },
+     "f_c9aeda535d84": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "8a23ae7ba820404382f64d6d8166df47",
+      "n_raters": 2
+     },
+     "f_07cfa7fcb5c5": {
+      "p_entailed": 0.0010422621516106808,
+      "entailed": false,
+      "class": "span_truncated",
+      "stratum": "normative_standard",
+      "event_id": "1aeb29ac496a45498f178e2cae71f6d0",
+      "n_raters": 2
+     },
+     "f_3685aafbeb7a": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "8b01be42ab0148a69c741551b7ab2590",
+      "n_raters": 2
+     },
+     "f_d6e253cddd9d": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "2f316f82f8a242f88d91b7a4ca9c8810",
+      "n_raters": 2
+     },
+     "f_23010b7c1244": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "bc97db11bf5245a98dd9a02c84f58018",
+      "n_raters": 2
+     },
+     "f_7941b029330b": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "18ee25af5ae34bc2bf34121d789155a1",
+      "n_raters": 2
+     },
+     "f_1f9d2ae632da": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "1e459a54560f4b28908f48b32e6103be",
+      "n_raters": 2
+     },
+     "f_45bee1cad1ce": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "1aae7e0772d74bb7962f5b2affc3db61",
+      "n_raters": 2
+     },
+     "f_41c1682a6732": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "357b1ac2ae034fb0b688f77d8e763465",
+      "n_raters": 2
+     },
+     "f_2e7df2ff9c95": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "f08dd1ec21fa47f7b6a1c603074a18d0",
+      "n_raters": 2
+     },
+     "f_5ed8dad030b1": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "733ee237492a40dfb3f04713759febd4",
+      "n_raters": 2
+     },
+     "f_1ff836e67126": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "bf1316c2b69c4d61a15d0934643410ce",
+      "n_raters": 2
+     },
+     "f_d084908e3a9c": {
+      "p_entailed": 0.0010422621516106808,
+      "entailed": false,
+      "class": "span_truncated",
+      "stratum": "normative_standard",
+      "event_id": "49ad04d11df24439895f4416b0d45003",
+      "n_raters": 2
+     },
+     "f_5e76806ac0df": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "d194645d61124e5086bff95b24983bcc",
+      "n_raters": 2
+     },
+     "f_2f9a9c699612": {
+      "p_entailed": 0.5048855852886819,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "1e8de3bde3a345ab9c3a24852e4f49af",
+      "n_raters": 2
+     },
+     "f_fb8a632de5af": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "1e8de3bde3a345ab9c3a24852e4f49af",
+      "n_raters": 2
+     },
+     "f_c49a7be0ed26": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "f3e76f2455eb4faba42bc7670fd7558f",
+      "n_raters": 2
+     },
+     "f_e60dc207aa4b": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "a5ab92feeedd40b5b8002a83d780a734",
+      "n_raters": 2
+     },
+     "f_485b36eeaa89": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "1342c226de2441aeb8d4232447d7fe6a",
+      "n_raters": 2
+     },
+     "f_ad67bf13a330": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "757de878f71d43609ac2398046eaff19",
+      "n_raters": 2
+     },
+     "f_15728127b75a": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "1aeb29ac496a45498f178e2cae71f6d0",
+      "n_raters": 2
+     },
+     "f_c175fcba6158": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "767038d3c22640429e8f7e28c3b61a94",
+      "n_raters": 2
+     },
+     "f_58da6e737d96": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "d12ae3ddc62a498fb854d7032ac1eac4",
+      "n_raters": 2
+     },
+     "f_8116608e2ddb": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "9d54dd12ff704a4d8bea3c8038a6e8c7",
+      "n_raters": 2
+     },
+     "f_3e64767d8a79": {
+      "p_entailed": 0.0010422621516106808,
+      "entailed": false,
+      "class": "fabrication",
+      "stratum": "normative_standard",
+      "event_id": "d268290b7733456aba3f611aa2be591f",
+      "n_raters": 2
+     },
+     "f_c66ae19aff4b": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "0793e525dae140658abfae2cdc0aa39c",
+      "n_raters": 2
+     },
+     "f_507ec3f05dc8": {
+      "p_entailed": 0.5048855852886819,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "65a7518aea1a4cd69b6ee11c08eb8d4d",
+      "n_raters": 2
+     },
+     "f_072c17ea1b9e": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "8b2af4a0a0e245d6bf17258d113dbeae",
+      "n_raters": 2
+     },
+     "f_dbd1323417e0": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "f75c6501ac9d4e0c95d133e4b1d75851",
+      "n_raters": 2
+     },
+     "f_75dc0f156edb": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "6dea4c9af4464269a0f2efeedc0b7f09",
+      "n_raters": 2
+     },
+     "f_110dd1b1cbe9": {
+      "p_entailed": 0.0010422621516106808,
+      "entailed": false,
+      "class": "filled_attribute",
+      "stratum": "normative_standard",
+      "event_id": "4d0456427967416a9e11920e156aee14",
+      "n_raters": 2
+     },
+     "f_d39afb9c76e6": {
+      "p_entailed": 0.0010422621516106808,
+      "entailed": false,
+      "class": "span_truncated",
+      "stratum": "normative_standard",
+      "event_id": "8258c7a925a94cf5866ef84b5199032f",
+      "n_raters": 2
+     },
+     "f_b1a4f117b3a8": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "9d54dd12ff704a4d8bea3c8038a6e8c7",
+      "n_raters": 2
+     },
+     "f_b71ab8d9485d": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "9baa019d07824e1b90625194e79e9beb",
+      "n_raters": 2
+     },
+     "f_448afb9e860f": {
+      "p_entailed": 0.0010422621516106808,
+      "entailed": false,
+      "class": "span_truncated",
+      "stratum": "normative_standard",
+      "event_id": "8a1337440df24dd5bb3a19aeb4928f00",
+      "n_raters": 2
+     },
+     "f_d79122d28955": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "402b4eaa2d3642f683850ca17fbf38d1",
+      "n_raters": 2
+     },
+     "f_4fa27c1acdb3": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "4e641df474ce4aec911031f6e97749af",
+      "n_raters": 2
+     },
+     "f_dfb4f8b232e5": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "30a9f26ee7b940fcb3eccedeff097ffc",
+      "n_raters": 2
+     },
+     "f_5ef9fb801d0c": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "e3e07c56ab4f41069ae146d1caac8952",
+      "n_raters": 2
+     },
+     "f_64123f98fc1b": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "ee4d48ba648045cb93fb63745a30654c",
+      "n_raters": 2
+     },
+     "f_0fde04a54ad9": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "0e5c7f823953467aacbbda1ffe5476a1",
+      "n_raters": 2
+     },
+     "f_b4c94d424068": {
+      "p_entailed": 0.0010422621516106808,
+      "entailed": false,
+      "class": "span_truncated",
+      "stratum": "normative_standard",
+      "event_id": "1342c226de2441aeb8d4232447d7fe6a",
+      "n_raters": 2
+     },
+     "f_438b78157c58": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "f75c6501ac9d4e0c95d133e4b1d75851",
+      "n_raters": 2
+     },
+     "f_49eca500ddfe": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "ee596f1c194b4a36a517df982a8da8ee",
+      "n_raters": 2
+     },
+     "f_2cc858f9cb26": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "8008b4222c0d428db58574e563668dfa",
+      "n_raters": 2
+     },
+     "f_8d9c8bb2c32b": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "d4ab16be7c584aefafa32ede9bb9863d",
+      "n_raters": 2
+     },
+     "f_2d993ea8453d": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "4d35aba2cb1b4dbcbe844fc4b45c2af0",
+      "n_raters": 2
+     },
+     "f_cf3991886123": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "5fb694caa07f47d3bc0e978508675601",
+      "n_raters": 2
+     },
+     "f_19ea831d6fb4": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "0f5833950b8e41d1be6da14a2cd7c9da",
+      "n_raters": 2
+     },
+     "f_ee6c6c41f9d3": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "b5e1c03913cd47e19482be38777267e2",
+      "n_raters": 2
+     },
+     "f_e48ae4700d51": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "3e5f42321ba34c6eb22ca0157d6d2c58",
+      "n_raters": 2
+     },
+     "f_550ef814d259": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "cd80f21e6d6c4c75becf7d65921575fb",
+      "n_raters": 2
+     },
+     "f_782e16ce0990": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "8008b4222c0d428db58574e563668dfa",
+      "n_raters": 2
+     },
+     "f_fa99f2134923": {
+      "p_entailed": 0.0010422621516106808,
+      "entailed": false,
+      "class": "span_truncated",
+      "stratum": "normative_standard",
+      "event_id": "81d091579f0f49599f6fa890ba3c8f4b",
+      "n_raters": 2
+     },
+     "f_16d6b7849987": {
+      "p_entailed": 0.5048855852886819,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "08e4e4f80eee496fbd276106b4ac608e",
+      "n_raters": 2
+     },
+     "f_d89688b11af7": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "87eb8ea144cd419786d0bb124060de11",
+      "n_raters": 2
+     },
+     "f_441107e87e2d": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "9e04c02be69f4fe293bd4939e9dbb29a",
+      "n_raters": 2
+     },
+     "f_8a827720b07b": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "a9bfb7fde8d94358b82324ee3b1cd65c",
+      "n_raters": 2
+     },
+     "f_fb379015eb10": {
+      "p_entailed": 0.0010422621516106808,
+      "entailed": false,
+      "class": "filled_attribute",
+      "stratum": "normative_standard",
+      "event_id": "a3bd2e8892af4294bbc33783daf634d1",
+      "n_raters": 2
+     },
+     "f_2705af473ec4": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "ee4d48ba648045cb93fb63745a30654c",
+      "n_raters": 2
+     },
+     "f_228dc81d11b0": {
+      "p_entailed": 0.0010422621516106808,
+      "entailed": false,
+      "class": "span_truncated",
+      "stratum": "normative_standard",
+      "event_id": "ca4c4240f6ae4a4e8102a2d4cd43c770",
+      "n_raters": 2
+     },
+     "f_56addb8d726e": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "4dfe6e5cbd7b4cd2aeec6cb46dd15c2b",
+      "n_raters": 2
+     },
+     "f_ef6fd39211bf": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "a4e49482e7ca4bb8b1454064d5352f9f",
+      "n_raters": 2
+     },
+     "f_1970e83a07a6": {
+      "p_entailed": 0.0010422621516106808,
+      "entailed": false,
+      "class": "filled_attribute",
+      "stratum": "normative_standard",
+      "event_id": "6e900e64edf04bca86fb9721ff4b7766",
+      "n_raters": 2,
+      "doc_check": "value_found_in_document"
+     },
+     "f_931f941ac8fb": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "64203d6734584232a46755e994acd0ab",
+      "n_raters": 2
+     },
+     "f_bd7230d0a2fd": {
+      "p_entailed": 0.0010422621516106808,
+      "entailed": false,
+      "class": "fabrication",
+      "stratum": "normative_standard",
+      "event_id": "78fe2681524b4e47b288ddf167c00174",
+      "n_raters": 2,
+      "doc_check": "value_absent_from_document"
+     },
+     "f_0e9b0fc22ac6": {
+      "p_entailed": 0.5316682033967451,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "6e900e64edf04bca86fb9721ff4b7766",
+      "n_raters": 2
+     },
+     "f_c6110e6e61a3": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "a4369e8c37a448e799f8ea8abf1ac377",
+      "n_raters": 2
+     },
+     "f_a21c0602261a": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "77337f50c26046589045983ff7722aa0",
+      "n_raters": 2
+     },
+     "f_2960832cd819": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "ed9d51db5d3b4f31ad2be1425d9eb709",
+      "n_raters": 2
+     },
+     "f_50a644a39055": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "f3e76f2455eb4faba42bc7670fd7558f",
+      "n_raters": 2
+     },
+     "f_ae38d27e0014": {
+      "p_entailed": 0.0010422621516106808,
+      "entailed": false,
+      "class": "span_truncated",
+      "stratum": "normative_standard",
+      "event_id": "1764be5d3b8a4d768c8907d4c2ef637a",
+      "n_raters": 2
+     },
+     "f_183f7685b927": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "bb5daa897b254cc38fbcac6d3abfbc66",
+      "n_raters": 2
+     },
+     "f_fc7ca31a724a": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "900342315ac043569d89164bfe9caf27",
+      "n_raters": 2
+     },
+     "f_986e1aee6838": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "132785f3e50d48f0ab49dfac9863b6d4",
+      "n_raters": 2
+     },
+     "f_4f2b2117d8f3": {
+      "p_entailed": 0.0010422621516106808,
+      "entailed": false,
+      "class": "fabrication",
+      "stratum": "normative_standard",
+      "event_id": "553fc4c0745046e0804fe857cdaddf9a",
+      "n_raters": 2
+     },
+     "f_c691566b5c72": {
+      "p_entailed": 0.5048855852886819,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "28ce86356f6646cbb6b7d1a10b12b260",
+      "n_raters": 2
+     },
+     "f_0e9a34aa4178": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "ee0221c41faa44b9917f005e8f01fef9",
+      "n_raters": 2
+     },
+     "f_3e3ebcb43328": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "7b170cfc33bf470298904b290f120250",
+      "n_raters": 2
+     },
+     "f_d266d3edcd67": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "9eab346e0bc54eaf93aea4389d21b895",
+      "n_raters": 2
+     },
+     "f_a06cd936892f": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "e82f76adf6c847359c33d2ce727d453f",
+      "n_raters": 2
+     },
+     "f_73d7a0952100": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "8258c7a925a94cf5866ef84b5199032f",
+      "n_raters": 2
+     },
+     "f_50aa2643a013": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "c1295e03073a4b00b6f4321940ebd5a3",
+      "n_raters": 2
+     },
+     "f_b98dd502990a": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "fe9134d8277c41ffb0823dfbe0a3e322",
+      "n_raters": 2
+     },
+     "f_7a6fa0763aaf": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "8cb8e955803644bcaeac7e8fb9fb2c77",
+      "n_raters": 2
+     },
+     "f_4c15f538c4a4": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "77337f50c26046589045983ff7722aa0",
+      "n_raters": 2
+     },
+     "f_87b252ea41ec": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "4988b9220867451186c88133efc1d7ff",
+      "n_raters": 2
+     },
+     "f_134639ff3425": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "bf1316c2b69c4d61a15d0934643410ce",
+      "n_raters": 2
+     },
+     "f_a1069cdb0c58": {
+      "p_entailed": 0.5048855852886819,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "cb405b719c3e4c96a27336acfc1b26ee",
+      "n_raters": 2
+     },
+     "f_5954f4a9dce1": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "cd80f21e6d6c4c75becf7d65921575fb",
+      "n_raters": 2
+     },
+     "f_f4d854f769c8": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "fb69357992534284bd576513558d95ed",
+      "n_raters": 2
+     },
+     "f_69dd42d02a0f": {
+      "p_entailed": 0.5048855852886819,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "9e99ce32af4f4d6ea9a3d5bff154b8d1",
+      "n_raters": 2
+     },
+     "f_033a7b3e19bd": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "4e641df474ce4aec911031f6e97749af",
+      "n_raters": 2
+     },
+     "f_a4b24f44d151": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "d268290b7733456aba3f611aa2be591f",
+      "n_raters": 2
+     },
+     "f_900f8bf16d7c": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "ec50dfe2bfd84c768f21a2cc37d96b9d",
+      "n_raters": 2
+     },
+     "f_80d43c1e4dd5": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "a23d61c182c04fbd8bf214f218a5477c",
+      "n_raters": 2
+     },
+     "f_7dc361400048": {
+      "p_entailed": 0.0010422621516106808,
+      "entailed": false,
+      "class": "filled_attribute",
+      "stratum": "normative_standard",
+      "event_id": "1c76a700c99c41d683143e23502a3af7",
+      "n_raters": 2
+     },
+     "f_3bb3f32705ff": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "fad66f68c476432ab31d95929ca5bdcb",
+      "n_raters": 2
+     },
+     "f_56f740177e32": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "8db265ef9c4547e0beff2fc4cf201299",
+      "n_raters": 2
+     },
+     "f_baafff23f0e0": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "19cdc4daa98d4994b77c02b0c518a9be",
+      "n_raters": 2
+     },
+     "f_910bf99008c0": {
+      "p_entailed": 0.0010422621516106808,
+      "entailed": false,
+      "class": "filled_attribute",
+      "stratum": "normative_standard",
+      "event_id": "17893ef64c8440cca32ff368760cb816",
+      "n_raters": 2
+     },
+     "f_d05d0cf732fe": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "7ab80f8d3b344f899c1b48f73231f210",
+      "n_raters": 2
+     },
+     "f_f824016ad47b": {
+      "p_entailed": 0.0010422621516106808,
+      "entailed": false,
+      "class": "span_truncated",
+      "stratum": "normative_standard",
+      "event_id": "4d35aba2cb1b4dbcbe844fc4b45c2af0",
+      "n_raters": 2
+     },
+     "f_076f95eaaccd": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "be8824ac08a94f56adac80b3d13ce5af",
+      "n_raters": 2
+     },
+     "f_8fcdd96e3622": {
+      "p_entailed": 0.999099540536536,
+      "entailed": true,
+      "class": null,
+      "stratum": "normative_standard",
+      "event_id": "fb1a08d0e9244fc7aad2edd3530f1c11",
+      "n_raters": 2
+     }
+    }
+   },
+   "yield_flags": {}
   }
  ],
  "outcomes": [
   "accept",
   "accept",
   "accept",
+  "accept",
+  "accept",
+  "accept",
+  "accept",
+  "accept",
+  "accept",
+  "sampling_inconclusive",
   "accept",
   "accept",
   "accept",
@@ -8477,5 +14341,5 @@
  },
  "sample_budget": 463,
  "min_facts_for_accept": 55,
- "written_at": "2026-09-02T03:01:26.840101+00:00"
+ "written_at": "2026-09-02T17:37:52.667438+00:00"
 }

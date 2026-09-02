@@ -1,0 +1,33 @@
+{
+ "doc_id": "nist-generative-ai-profile-ai-600-1",
+ "chunk_id": "nist-generative-ai-profile-ai-600-1#c0100",
+ "chunk_index": 100,
+ "chunk_start": 103322,
+ "chunk_end": 103637,
+ "chunk_tokens": 69,
+ "heading_path": [
+  "MS-3.3-002"
+ ],
+ "oversize": false,
+ "doc_sha256": "6e73620ab6b64e90ef2c04bf0e0d6246185a2f4b1b13cab0df494496cff89b6a",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 3878,
+  "cacheReadInputTokens": 13027,
+  "cacheCreationInputTokens": 22641,
+  "webSearchRequests": 0,
+  "costUSD": 0.3298835,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 1799,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3298835,
+ "duration_ms": 40810,
+ "session_id": "85054a6c-2f09-4198-8fb5-cf5e476ced0a",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"NIST GAI Profile suggested action MS-3.3-002: conduct end-user studies of how people perceive and act on GAI content and its content provenance, tagged Human-AI Configuration and Information Integrity.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_content_provenance\",\n      \"name\": \"content provenance\",\n      \"aliases\": [\"provenance of AI-generated content\"],\n      \"description\": \"Information accompanying GAI content about its origin, presented to end users within context of use.\",\n      \"anchor\": \"accompanying content provenance\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0100\"\n    },\n    {\n      \"id\": \"c_gai\",\n      \"name\": \"GAI\",\n      \"aliases\": [\"generative AI\", \"GAI content\"],\n      \"description\": \"Generative AI whose output content end users perceive and interact with.\",\n      \"anchor\": \"GAI\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0100\"\n    },\n    {\n      \"id\": \"c_end_users\",\n      \"name\": \"end users\",\n      \"aliases\": [\"users\"],\n      \"description\": \"The people whose perception of and interaction with GAI content the suggested action directs be studied.\",\n      \"anchor\": \"end users perceive\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0100\"\n    },\n    {\n      \"id\": \"c_human_ai_config\",\n      \"name\": \"Human-AI Conﬁguration\",\n      \"aliases\": [\"Human-AI Configuration\"],\n      \"description\": \"GAI risk category to which this suggested action is mapped.\",\n      \"anchor\": \"Human-AI Conﬁguration\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0100\"\n    },\n    {\n      \"id\": \"c_info_integrity\",\n      \"name\": \"Information Integrity\",\n      \"aliases\": [],\n      \"description\": \"GAI risk category to which this suggested action is mapped.\",\n      \"anchor\": \"Information Integrity\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0100\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [\n    {\n      \"id\": \"p_user_perception_studies\",\n      \"text\": \"Conduct studies to understand how end users perceive and interact with GAI\",\n      \"as_of_date\": null,\n      \"scope\": \"content\",\n      \"anchor\": \"Conduct studies to understand\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0100\"\n    }\n  ],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"c_content_provenance\",\n      \"anchor\": \"accompanying content provenance\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0100\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"c_gai\",\n      \"anchor\": \"GAI\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0100\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"c_end_users\",\n      \"anchor\": \"end users perceive\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0100\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"c_human_ai_config\",\n      \"anchor\": \"Human-AI Conﬁguration\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0100\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"c_info_integrity\",\n      \"anchor\": \"Information Integrity\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0100\"\n    },\n    {\n      \"type\": \"recommends\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"p_user_perception_studies\",\n      \"anchor\": \"Conduct studies to understand\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0100\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"p_user_perception_studies\",\n      \"to_id\": \"c_content_provenance\",\n      \"anchor\": \"within context of use\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0100\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"Harmful Bias and Homogenization\",\n      \"anchor\": \"Harmful Bias and Homogenization\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"Human-AI Conﬁguration\",\n      \"suggested_edge\": \"practice_mapped_to_risk_category\",\n      \"diversion_reason\": \"other:no_edge_type_for_risk_category_mapping\",\n      \"note\": \"MS-3.3-002 is mapped to the Human-AI Conﬁguration and Information Integrity GAI risk categories; the schema has no edge type for suggested-action-to-risk-category mapping.\"\n    },\n    {\n      \"anchor\": \"MS-3.3-002 \\nConduct\",\n      \"suggested_edge\": \"has_component\",\n      \"diversion_reason\": \"cross_chunk\",\n      \"note\": \"MS-3.3-002 belongs to the MEASURE function's MS-3.3 subcategory, which is stated outside this chunk.\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"MS-3.3-002\", \"type\": \"Measure\"},\n    {\"name\": \"context of use\", \"type\": \"Concept\"},\n    {\"name\": \"user expectations\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

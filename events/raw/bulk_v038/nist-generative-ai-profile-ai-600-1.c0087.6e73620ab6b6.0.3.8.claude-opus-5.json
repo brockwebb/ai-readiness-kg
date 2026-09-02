@@ -1,0 +1,33 @@
+{
+ "doc_id": "nist-generative-ai-profile-ai-600-1",
+ "chunk_id": "nist-generative-ai-profile-ai-600-1#c0087",
+ "chunk_index": 87,
+ "chunk_start": 94088,
+ "chunk_end": 94476,
+ "chunk_tokens": 86,
+ "heading_path": [
+  "MS-2.8-001"
+ ],
+ "oversize": false,
+ "doc_sha256": "6e73620ab6b64e90ef2c04bf0e0d6246185a2f4b1b13cab0df494496cff89b6a",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 3746,
+  "cacheReadInputTokens": 13027,
+  "cacheCreationInputTokens": 22691,
+  "webSearchRequests": 0,
+  "costUSD": 0.3270835,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 1671,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3270835,
+ "duration_ms": 39051,
+ "session_id": "b6f23767-45f3-4828-9c6b-abd124552498",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Table rows MS-2.8-001 and MS-2.8-002 of the NIST GAI Profile: suggested actions to compile policy-violation/take-down/IP-infringement statistics and to document annotator/red-teamer instructions, each tagged with GAI risks.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_ip\",\n      \"name\": \"Intellectual Property\",\n      \"aliases\": [\"intellectual property infringement\"],\n      \"description\": \"GAI risk category tagged to the action on compiling violation and infringement statistics.\",\n      \"anchor\": \"Intellectual Property;\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0087\"\n    },\n    {\n      \"id\": \"c_bias\",\n      \"name\": \"Harmful Bias\",\n      \"aliases\": [\"Harmful Bias and Homogenization\"],\n      \"description\": \"GAI risk category tagged to the action on analyzing transparency reports across demographic and language groups.\",\n      \"anchor\": \"Harmful Bias\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0087\"\n    },\n    {\n      \"id\": \"c_haic\",\n      \"name\": \"Human-AI Conﬁguration\",\n      \"aliases\": [\"Human-AI Configuration\"],\n      \"description\": \"GAI risk category tagged to the action on documenting instructions given to data annotators or AI red-teamers.\",\n      \"anchor\": \"Human-AI Conﬁguration\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0087\"\n    },\n    {\n      \"id\": \"c_gai_systems\",\n      \"name\": \"GAI systems\",\n      \"aliases\": [\"organizational GAI systems\"],\n      \"description\": \"The organizational generative AI systems for which violation, take-down, and infringement statistics are to be compiled.\",\n      \"anchor\": \"organizational GAI systems\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0087\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [\n    {\n      \"id\": \"p_ms28001\",\n      \"text\": \"Compile statistics on actual policy violations\",\n      \"as_of_date\": null,\n      \"scope\": \"any\",\n      \"anchor\": \"Compile statistics\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0087\"\n    },\n    {\n      \"id\": \"p_ms28002\",\n      \"text\": \"Document the instructions given to data annotators or AI red-teamers.\",\n      \"as_of_date\": null,\n      \"scope\": \"any\",\n      \"anchor\": \"Document the instructions given\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0087\"\n    }\n  ],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"recommends\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"p_ms28001\",\n      \"anchor\": \"Compile statistics\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0087\"\n    },\n    {\n      \"type\": \"recommends\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"p_ms28002\",\n      \"anchor\": \"Document the instructions given\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0087\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"p_ms28001\",\n      \"to_id\": \"c_gai_systems\",\n      \"anchor\": \"for organizational GAI systems\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0087\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"c_ip\",\n      \"anchor\": \"Intellectual Property;\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0087\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"c_bias\",\n      \"anchor\": \"Harmful Bias\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0087\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"c_haic\",\n      \"anchor\": \"Human-AI Conﬁguration\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0087\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\"name\": \"take-down requests\", \"anchor\": \"take-down requests\"},\n    {\"name\": \"data annotators\", \"anchor\": \"data annotators\"},\n    {\"name\": \"AI red-teamers\", \"anchor\": \"AI red-teamers\"},\n    {\"name\": \"transparency\", \"anchor\": \"Analyze transparency\"},\n    {\"name\": \"demographic groups\", \"anchor\": \"demographic groups\"}\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"Intellectual Property;\",\n      \"suggested_edge\": \"practice_addresses_risk\",\n      \"from_id\": \"p_ms28001\",\n      \"to_id\": \"c_ip\",\n      \"diversion_reason\": \"other:no_practice_to_concept_risk_edge\"\n    },\n    {\n      \"anchor\": \"Human-AI Conﬁguration\",\n      \"suggested_edge\": \"practice_addresses_risk\",\n      \"from_id\": \"p_ms28002\",\n      \"to_id\": \"c_haic\",\n      \"diversion_reason\": \"other:no_practice_to_concept_risk_edge\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"policy violations\", \"type\": \"Concept\"},\n    {\"name\": \"languages groups\", \"type\": \"Concept\"},\n    {\"name\": \"MS-2.8\", \"type\": \"Framework\"},\n    {\"name\": \"Homogenization\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

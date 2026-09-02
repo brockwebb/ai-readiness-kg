@@ -1,0 +1,33 @@
+{
+ "doc_id": "nist-generative-ai-profile-ai-600-1",
+ "chunk_id": "nist-generative-ai-profile-ai-600-1#c0083",
+ "chunk_index": 83,
+ "chunk_start": 92055,
+ "chunk_end": 92324,
+ "chunk_tokens": 71,
+ "heading_path": [
+  "MS-2.7-004"
+ ],
+ "oversize": false,
+ "doc_sha256": "6e73620ab6b64e90ef2c04bf0e0d6246185a2f4b1b13cab0df494496cff89b6a",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 3086,
+  "cacheReadInputTokens": 13027,
+  "cacheCreationInputTokens": 22591,
+  "webSearchRequests": 0,
+  "costUSD": 0.3095835,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 1221,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3095835,
+ "duration_ms": 32238,
+ "session_id": "6200705a-31eb-4aa8-a60f-1fcaed7c8fa6",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"NIST GenAI Profile action MS-2.7-004: identify metrics reflecting the effectiveness of security measures (data provenance, unauthorized access attempts, inference, bypass, extraction, penetrations, provenance verification), tagged to Information Integrity and Information Security.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_security_measures\",\n      \"name\": \"security measures\",\n      \"aliases\": [\"AI security controls\"],\n      \"description\": \"Controls whose effectiveness the action asks to be reflected in identified metrics.\",\n      \"anchor\": \"security measures\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0083\"\n    },\n    {\n      \"id\": \"c_unauthorized_access\",\n      \"name\": \"unauthorized access attempts\",\n      \"aliases\": [\"unauthorized access\"],\n      \"description\": \"Counted events offered as an example metric of security-measure effectiveness.\",\n      \"anchor\": \"unauthorized access attempts\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0083\"\n    },\n    {\n      \"id\": \"c_provenance_verification\",\n      \"name\": \"provenance veriﬁcation\",\n      \"aliases\": [\"provenance verification\"],\n      \"description\": \"Example metric of security-measure effectiveness named by the action.\",\n      \"anchor\": \"provenance veriﬁcation\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0083\"\n    },\n    {\n      \"id\": \"c_information_integrity\",\n      \"name\": \"Information Integrity\",\n      \"aliases\": [],\n      \"description\": \"Trustworthy AI characteristic the action is tagged to.\",\n      \"anchor\": \"Information Integrity;\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0083\"\n    },\n    {\n      \"id\": \"c_information_security\",\n      \"name\": \"Information Security\",\n      \"aliases\": [],\n      \"description\": \"Trustworthy AI characteristic the action is tagged to.\",\n      \"anchor\": \"Information Security\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0083\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [\n    {\n      \"id\": \"p_ms_2_7_004\",\n      \"text\": \"Identify metrics that reﬂect the eﬀectiveness of security measures\",\n      \"as_of_date\": null,\n      \"scope\": \"any\",\n      \"anchor\": \"Identify metrics\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0083\"\n    }\n  ],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"recommends\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"p_ms_2_7_004\",\n      \"anchor\": \"Identify metrics\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0083\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"p_ms_2_7_004\",\n      \"to_id\": \"c_security_measures\",\n      \"anchor\": \"eﬀectiveness of security measures\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0083\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"c_information_integrity\",\n      \"anchor\": \"Information Integrity;\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0083\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"c_information_security\",\n      \"anchor\": \"Information Security\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0083\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"c_unauthorized_access\",\n      \"anchor\": \"unauthorized access attempts\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0083\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"c_provenance_verification\",\n      \"anchor\": \"provenance veriﬁcation\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0083\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"penetrations\",\n      \"anchor\": \"penetrations\"\n    },\n    {\n      \"name\": \"bypass\",\n      \"anchor\": \"bypass\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"Information Integrity;\",\n      \"suggested_edge\": \"governs_characteristic\",\n      \"diversion_reason\": \"structural_inference\",\n      \"note\": \"Row-tail tagging of the action to the Information Integrity and Information Security characteristics is table structure, not a stated relation.\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"data provenance\", \"type\": \"Concept\"},\n    {\"name\": \"inference\", \"type\": \"Concept\"},\n    {\"name\": \"extraction\", \"type\": \"Concept\"},\n    {\"name\": \"metrics\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

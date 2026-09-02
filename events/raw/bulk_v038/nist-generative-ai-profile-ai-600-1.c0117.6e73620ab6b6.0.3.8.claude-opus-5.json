@@ -1,0 +1,33 @@
+{
+ "doc_id": "nist-generative-ai-profile-ai-600-1",
+ "chunk_id": "nist-generative-ai-profile-ai-600-1#c0117",
+ "chunk_index": 117,
+ "chunk_start": 111703,
+ "chunk_end": 111987,
+ "chunk_tokens": 64,
+ "heading_path": [
+  "MG-2.4-002"
+ ],
+ "oversize": false,
+ "doc_sha256": "6e73620ab6b64e90ef2c04bf0e0d6246185a2f4b1b13cab0df494496cff89b6a",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 3295,
+  "cacheReadInputTokens": 13027,
+  "cacheCreationInputTokens": 22563,
+  "webSearchRequests": 0,
+  "costUSD": 0.3145285,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 1466,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3145285,
+ "duration_ms": 34442,
+ "session_id": "78514654-80b2-4ebb-8b79-67fd78688be7",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"NIST GAI Profile action MG-2.4-002: establish and maintain procedures for escalating GAI system incidents to the organizational risk management authority when deactivation/disengagement criteria are met; tagged Information Security.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_gai_incidents\",\n      \"name\": \"GAI system incidents\",\n      \"aliases\": [\"generative AI incidents\"],\n      \"description\": \"Incidents arising from a GAI system that may require escalation to the organizational risk management authority.\",\n      \"anchor\": \"escalating GAI system incidents\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0117\"\n    },\n    {\n      \"id\": \"c_risk_mgmt_authority\",\n      \"name\": \"organizational risk management authority\",\n      \"aliases\": [\"risk management authority\"],\n      \"description\": \"The organizational body to which GAI system incidents are escalated.\",\n      \"anchor\": \"organizational risk management authority\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0117\"\n    },\n    {\n      \"id\": \"c_deactivation\",\n      \"name\": \"deactivation\",\n      \"aliases\": [\"deactivation or disengagement\", \"disengagement\"],\n      \"description\": \"Ceasing use of a GAI system for a particular context of use or as a whole, triggered when specific criteria are met.\",\n      \"anchor\": \"for deactivation\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0117\"\n    },\n    {\n      \"id\": \"c_info_sec\",\n      \"name\": \"Information Security\",\n      \"aliases\": [\"InfoSec\"],\n      \"description\": \"The risk category under which this GAI risk management action is classified.\",\n      \"anchor\": \"Information Security\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0117\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [\n    {\n      \"id\": \"p_escalation_procedures\",\n      \"text\": \"Establish and maintain procedures for escalating GAI system incidents to the\",\n      \"as_of_date\": null,\n      \"scope\": \"any\",\n      \"anchor\": \"Establish and maintain\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0117\"\n    }\n  ],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"recommends\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"p_escalation_procedures\",\n      \"anchor\": \"Establish and maintain\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0117\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"p_escalation_procedures\",\n      \"to_id\": \"c_gai_incidents\",\n      \"anchor\": \"escalating GAI system incidents\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0117\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"c_gai_incidents\",\n      \"anchor\": \"escalating GAI system incidents\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0117\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"c_risk_mgmt_authority\",\n      \"anchor\": \"organizational risk management authority\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0117\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"c_deactivation\",\n      \"anchor\": \"for deactivation\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0117\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"c_info_sec\",\n      \"anchor\": \"Information Security\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0117\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"GAI system\",\n      \"anchor\": \"GAI system as a whole\"\n    },\n    {\n      \"name\": \"context of use\",\n      \"anchor\": \"particular context of use\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"Information Security\",\n      \"suggested_edge\": \"categorized_as\",\n      \"from_id\": \"p_escalation_procedures\",\n      \"to_id\": \"c_info_sec\",\n      \"diversion_reason\": \"structural_inference\"\n    },\n    {\n      \"anchor\": \"for deactivation\",\n      \"suggested_edge\": \"triggers\",\n      \"from_id\": \"c_deactivation\",\n      \"to_id\": \"p_escalation_procedures\",\n      \"diversion_reason\": \"predicate_not_located\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"MG-2.4-002\", \"type\": \"Practice\"},\n    {\"name\": \"incident escalation criteria\", \"type\": \"Concept\"},\n    {\"name\": \"risk management\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

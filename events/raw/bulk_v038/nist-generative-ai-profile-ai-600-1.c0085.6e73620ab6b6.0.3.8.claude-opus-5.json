@@ -1,0 +1,33 @@
+{
+ "doc_id": "nist-generative-ai-profile-ai-600-1",
+ "chunk_id": "nist-generative-ai-profile-ai-600-1#c0085",
+ "chunk_index": 85,
+ "chunk_start": 92801,
+ "chunk_end": 93073,
+ "chunk_tokens": 52,
+ "heading_path": [
+  "MS-2.7-006"
+ ],
+ "oversize": false,
+ "doc_sha256": "6e73620ab6b64e90ef2c04bf0e0d6246185a2f4b1b13cab0df494496cff89b6a",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 2724,
+  "cacheReadInputTokens": 13027,
+  "cacheCreationInputTokens": 22563,
+  "webSearchRequests": 0,
+  "costUSD": 0.3002535,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 1141,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3002535,
+ "duration_ms": 28766,
+ "session_id": "edabdac6-a22f-4300-94e7-d956bd55199e",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"NIST AI 600-1 action MS-2.7-006: measure implementation rate of security-check/incident recommendations and assess how quickly the AI system adapts based on lessons learned; tagged Information Integrity and Information Security.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_info_integrity\",\n      \"name\": \"Information Integrity\",\n      \"aliases\": [],\n      \"description\": \"One of the GAI risks this action is associated with.\",\n      \"anchor\": \"Information Integrity; Information\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0085\"\n    },\n    {\n      \"id\": \"c_ai_system\",\n      \"name\": \"AI system\",\n      \"aliases\": [\"AI system adaptability\"],\n      \"description\": \"The system whose speed of adaptation and improvement after security incidents is assessed.\",\n      \"anchor\": \"how quickly the AI system\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0085\"\n    },\n    {\n      \"id\": \"c_lessons_learned\",\n      \"name\": \"lessons learned from security incidents and feedback\",\n      \"aliases\": [\"lessons learned\"],\n      \"description\": \"The basis on which the AI system is expected to adapt and improve.\",\n      \"anchor\": \"lessons learned from security\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0085\"\n    },\n    {\n      \"id\": \"c_security_checks\",\n      \"name\": \"recommendations from security checks and incidents\",\n      \"aliases\": [\"security check recommendations\"],\n      \"description\": \"The recommendations whose implementation rate is measured.\",\n      \"anchor\": \"recommendations from security checks\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0085\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [\n    {\n      \"id\": \"m_ms_2_7_006_a\",\n      \"text\": \"Measure the rate at which recommendations from security checks and incidents are implemented.\",\n      \"response_type\": \"rate\",\n      \"tier\": \"agency_instrumented\",\n      \"anchor\": \"the rate at which recommendations\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0085\"\n    },\n    {\n      \"id\": \"m_ms_2_7_006_b\",\n      \"text\": \"Assess how quickly the AI system can adapt and improve based on lessons learned from security incidents and feedback.\",\n      \"response_type\": \"assessment\",\n      \"tier\": \"agency_instrumented\",\n      \"anchor\": \"Assess how quickly\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0085\"\n    }\n  ],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"measures\",\n      \"from_id\": \"m_ms_2_7_006_a\",\n      \"to_id\": \"c_security_checks\",\n      \"anchor\": \"recommendations from security checks\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0085\"\n    },\n    {\n      \"type\": \"measures\",\n      \"from_id\": \"m_ms_2_7_006_b\",\n      \"to_id\": \"c_ai_system\",\n      \"anchor\": \"quickly the AI system can adapt\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0085\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"m_ms_2_7_006_b\",\n      \"to_id\": \"c_lessons_learned\",\n      \"anchor\": \"based on lessons learned\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0085\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"c_info_integrity\",\n      \"anchor\": \"Information Integrity; Information\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0085\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"Information Security\",\n      \"anchor\": \"Security\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"Information Integrity; Information\",\n      \"suggested_edge\": \"measure_associated_with_gai_risk\",\n      \"diversion_reason\": \"structural_inference\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"MS-2.7-006\", \"type\": \"Measure\"},\n    {\"name\": \"security incidents\", \"type\": \"Concept\"},\n    {\"name\": \"feedback\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

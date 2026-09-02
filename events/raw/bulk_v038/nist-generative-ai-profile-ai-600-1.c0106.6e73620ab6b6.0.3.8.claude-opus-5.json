@@ -1,0 +1,33 @@
+{
+ "doc_id": "nist-generative-ai-profile-ai-600-1",
+ "chunk_id": "nist-generative-ai-profile-ai-600-1#c0106",
+ "chunk_index": 106,
+ "chunk_start": 106049,
+ "chunk_end": 106290,
+ "chunk_tokens": 49,
+ "heading_path": [
+  "MS-4.2-004"
+ ],
+ "oversize": false,
+ "doc_sha256": "6e73620ab6b64e90ef2c04bf0e0d6246185a2f4b1b13cab0df494496cff89b6a",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 2363,
+  "cacheReadInputTokens": 13027,
+  "cacheCreationInputTokens": 22539,
+  "webSearchRequests": 0,
+  "costUSD": 0.2909885,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 851,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.2909885,
+ "duration_ms": 24597,
+ "session_id": "197e1117-14b9-4c22-9804-dadf58ffa3c0",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"NIST GAI Profile action MS-4.2-004: monitor and document overrides of GAI decisions by humans or other systems, and evaluate whether those overrides relate to content provenance; tagged to Information Integrity.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_content_provenance\",\n      \"name\": \"content provenance\",\n      \"aliases\": [\"Content Provenance\"],\n      \"description\": \"The issue area against which override cases are evaluated for linkage.\",\n      \"anchor\": \"content provenance\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0106\"\n    },\n    {\n      \"id\": \"c_information_integrity\",\n      \"name\": \"Information Integrity\",\n      \"aliases\": [],\n      \"description\": \"The GAI risk area this action is associated with.\",\n      \"anchor\": \"Information Integrity\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0106\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [\n    {\n      \"id\": \"p_monitor_overrides\",\n      \"text\": \"Monitor and document instances where human operators or other systems override the GAI's decisions.\",\n      \"as_of_date\": null,\n      \"scope\": \"any\",\n      \"anchor\": \"override the GAI's decisions\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0106\"\n    },\n    {\n      \"id\": \"p_evaluate_override_cases\",\n      \"text\": \"Evaluate these cases to understand if the overrides are linked to issues related to content provenance.\",\n      \"as_of_date\": null,\n      \"scope\": \"any\",\n      \"anchor\": \"Evaluate these cases\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0106\"\n    }\n  ],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"recommends\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"p_monitor_overrides\",\n      \"anchor\": \"Monitor and document instances\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0106\"\n    },\n    {\n      \"type\": \"recommends\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"p_evaluate_override_cases\",\n      \"anchor\": \"Evaluate these cases\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0106\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"p_evaluate_override_cases\",\n      \"to_id\": \"c_content_provenance\",\n      \"anchor\": \"related to content provenance\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0106\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"c_information_integrity\",\n      \"anchor\": \"Information Integrity\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0106\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"c_content_provenance\",\n      \"anchor\": \"issues related to content\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0106\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"Homogenization\",\n      \"anchor\": \"Homogenization\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"Information Integrity\",\n      \"suggested_edge\": \"practice_addresses_risk (MS-4.2-004 -> Information Integrity)\",\n      \"diversion_reason\": \"structural_inference\"\n    },\n    {\n      \"anchor\": \"and Homogenization\",\n      \"suggested_edge\": \"risk_tag_of_preceding_action\",\n      \"diversion_reason\": \"cross_chunk\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"human operators\", \"type\": \"Concept\"},\n    {\"name\": \"GAI's decisions\", \"type\": \"Concept\"},\n    {\"name\": \"MS-4.2-004\", \"type\": \"Measure\"},\n    {\"name\": \"Homogenization\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

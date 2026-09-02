@@ -1,0 +1,33 @@
+{
+ "doc_id": "nist-generative-ai-profile-ai-600-1",
+ "chunk_id": "nist-generative-ai-profile-ai-600-1#c0066",
+ "chunk_index": 66,
+ "chunk_start": 81895,
+ "chunk_end": 82129,
+ "chunk_tokens": 47,
+ "heading_path": [
+  "MS-1.1-007"
+ ],
+ "oversize": false,
+ "doc_sha256": "6e73620ab6b64e90ef2c04bf0e0d6246185a2f4b1b13cab0df494496cff89b6a",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 2852,
+  "cacheReadInputTokens": 13027,
+  "cacheCreationInputTokens": 22559,
+  "webSearchRequests": 0,
+  "costUSD": 0.3034135,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 1224,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3034135,
+ "duration_ms": 31314,
+ "session_id": "696e39ff-acc9-43b0-8ee8-4a0dccdb4da3",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"NIST GenAI Profile suggested action MS-1.1-007 (Harmful Bias and Homogenization / Information Integrity): evaluate training-data quality and integrity and provenance of AI-generated content, e.g. via chaos engineering and stakeholder feedback.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_data_quality_integrity\",\n      \"name\": \"quality and integrity of data used in training\",\n      \"aliases\": [\"training data quality\", \"training data integrity\"],\n      \"description\": \"The quality and integrity of the data used to train an AI system, put forward as an object of evaluation.\",\n      \"anchor\": \"quality and integrity of data\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0066\"\n    },\n    {\n      \"id\": \"c_ai_generated_content\",\n      \"name\": \"AI-generated content\",\n      \"aliases\": [\"synthetic content\"],\n      \"description\": \"Content produced by an AI system, whose provenance the action directs be evaluated.\",\n      \"anchor\": \"AI-generated content\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0066\"\n    },\n    {\n      \"id\": \"c_stakeholder_feedback\",\n      \"name\": \"stakeholder feedback\",\n      \"aliases\": [\"seeking stakeholder feedback\"],\n      \"description\": \"Feedback sought from stakeholders, named as a technique for evaluating data quality and content provenance.\",\n      \"anchor\": \"stakeholder feedback\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0066\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [\n    {\n      \"id\": \"p_ms_1_1_007\",\n      \"text\": \"Evaluate the quality and integrity of data used in training\",\n      \"as_of_date\": null,\n      \"scope\": \"any\",\n      \"anchor\": \"Evaluate the quality\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0066\"\n    }\n  ],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"recommends\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"p_ms_1_1_007\",\n      \"anchor\": \"Evaluate the quality\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0066\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"p_ms_1_1_007\",\n      \"to_id\": \"c_data_quality_integrity\",\n      \"anchor\": \"quality and integrity of data\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0066\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"p_ms_1_1_007\",\n      \"to_id\": \"c_ai_generated_content\",\n      \"anchor\": \"AI-generated content\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0066\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"c_stakeholder_feedback\",\n      \"anchor\": \"stakeholder feedback\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0066\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"Harmful Bias and Homogenization\",\n      \"anchor\": \"Harmful Bias and Homogenization\"\n    },\n    {\n      \"name\": \"Information Integrity\",\n      \"anchor\": \"Information Integrity\"\n    },\n    {\n      \"name\": \"MS-1.1-007\",\n      \"anchor\": \"MS-1.1-007 \\nEvaluate\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"Information Integrity\",\n      \"suggested_edge\": \"practice_addresses_risk\",\n      \"from_id\": \"p_ms_1_1_007\",\n      \"to_name\": \"Information Integrity\",\n      \"diversion_reason\": \"structural_inference\"\n    },\n    {\n      \"anchor\": \"Harmful Bias and Homogenization\",\n      \"suggested_edge\": \"practice_addresses_risk\",\n      \"from_id\": \"p_ms_1_1_007\",\n      \"to_name\": \"Harmful Bias and Homogenization\",\n      \"diversion_reason\": \"structural_inference\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"chaos engineering\", \"type\": \"Concept\"},\n    {\"name\": \"provenance of AI-generated content\", \"type\": \"Concept\"},\n    {\"name\": \"MS-1.1-007\", \"type\": \"Measure\"}\n  ]\n}\n```"
+}

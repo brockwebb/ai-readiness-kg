@@ -1,0 +1,33 @@
+{
+ "doc_id": "nist-generative-ai-profile-ai-600-1",
+ "chunk_id": "nist-generative-ai-profile-ai-600-1#c0133",
+ "chunk_index": 133,
+ "chunk_start": 118770,
+ "chunk_end": 119142,
+ "chunk_tokens": 81,
+ "heading_path": [
+  "MG-4.1-003"
+ ],
+ "oversize": false,
+ "doc_sha256": "6e73620ab6b64e90ef2c04bf0e0d6246185a2f4b1b13cab0df494496cff89b6a",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 3672,
+  "cacheReadInputTokens": 13027,
+  "cacheCreationInputTokens": 22649,
+  "webSearchRequests": 0,
+  "costUSD": 0.3248135,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 1514,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3248135,
+ "duration_ms": 37464,
+ "session_id": "ce06740a-ea30-4c8f-b642-4ff8904efbd7",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Two NIST GAI Profile management actions: MG-4.1-003 (evaluate sentiment analysis of user sentiment on GAI content, with user-research AI Actors) and MG-4.1-004 (active learning to find model failures), tagged to the Security, Human-AI Configuration and Confabulation risk categories.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_sentiment_analysis\",\n      \"name\": \"sentiment analysis\",\n      \"aliases\": [\"Sentiment analysis\"],\n      \"description\": \"Technique the document recommends evaluating for gauging user sentiment about GAI content performance and impact.\",\n      \"anchor\": \"sentiment analysis\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0133\"\n    },\n    {\n      \"id\": \"c_active_learning\",\n      \"name\": \"active learning techniques\",\n      \"aliases\": [\"active learning\"],\n      \"description\": \"Techniques the document recommends implementing to identify instances where the model fails or produces unexpected outputs.\",\n      \"anchor\": \"active learning techniques\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0133\"\n    },\n    {\n      \"id\": \"c_ai_actors\",\n      \"name\": \"AI Actors\",\n      \"aliases\": [\"AI actors\"],\n      \"description\": \"Participants with user research and experience expertise with whom the recommended sentiment evaluation is to be conducted collaboratively.\",\n      \"anchor\": \"AI Actors\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0133\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [\n    {\n      \"id\": \"p_mg_4_1_003\",\n      \"text\": \"Evaluate the use of sentiment analysis to gauge user sentiment regarding GAI\",\n      \"as_of_date\": null,\n      \"scope\": \"content\",\n      \"anchor\": \"Evaluate the use of sentiment analysis\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0133\"\n    },\n    {\n      \"id\": \"p_mg_4_1_004\",\n      \"text\": \"Implement active learning techniques to identify instances where the model fails\",\n      \"as_of_date\": null,\n      \"scope\": \"any\",\n      \"anchor\": \"Implement active learning techniques\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0133\"\n    }\n  ],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"c_sentiment_analysis\",\n      \"anchor\": \"sentiment analysis\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0133\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"c_active_learning\",\n      \"anchor\": \"active learning techniques\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0133\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"c_ai_actors\",\n      \"anchor\": \"AI Actors\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0133\"\n    },\n    {\n      \"type\": \"recommends\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"p_mg_4_1_003\",\n      \"anchor\": \"Evaluate the use of sentiment analysis\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0133\"\n    },\n    {\n      \"type\": \"recommends\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"p_mg_4_1_004\",\n      \"anchor\": \"Implement active learning techniques\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0133\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"p_mg_4_1_003\",\n      \"to_id\": \"c_sentiment_analysis\",\n      \"anchor\": \"use of sentiment analysis to gauge\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0133\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"p_mg_4_1_004\",\n      \"to_id\": \"c_active_learning\",\n      \"anchor\": \"active learning techniques to identify\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0133\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"Security\",\n      \"anchor\": \"Security\"\n    },\n    {\n      \"name\": \"Human-AI Conﬁguration\",\n      \"anchor\": \"Human-AI Conﬁguration\"\n    },\n    {\n      \"name\": \"Confabulation\",\n      \"anchor\": \"Confabulation\"\n    },\n    {\n      \"name\": \"MG-4.1-003\",\n      \"anchor\": \"MG-4.1-003\"\n    },\n    {\n      \"name\": \"MG-4.1-004\",\n      \"anchor\": \"MG-4.1-004\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"Human-AI Conﬁguration\",\n      \"suggested_edge\": \"risk_category_of\",\n      \"from_id\": \"p_mg_4_1_003\",\n      \"to_id\": \"Human-AI Conﬁguration\",\n      \"diversion_reason\": \"structural_inference\"\n    },\n    {\n      \"anchor\": \"unexpected outputs. Confabulation\",\n      \"suggested_edge\": \"risk_category_of\",\n      \"from_id\": \"p_mg_4_1_004\",\n      \"to_id\": \"Confabulation\",\n      \"diversion_reason\": \"structural_inference\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"user sentiment\", \"type\": \"Concept\"},\n    {\"name\": \"GAI content performance and impact\", \"type\": \"Concept\"},\n    {\"name\": \"user research and experience\", \"type\": \"Concept\"},\n    {\"name\": \"unexpected outputs\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

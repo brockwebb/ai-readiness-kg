@@ -1,0 +1,33 @@
+{
+ "doc_id": "nist-generative-ai-profile-ai-600-1",
+ "chunk_id": "nist-generative-ai-profile-ai-600-1#c0054",
+ "chunk_index": 54,
+ "chunk_start": 75158,
+ "chunk_end": 76070,
+ "chunk_tokens": 207,
+ "heading_path": [
+  "MP-4.1-005"
+ ],
+ "oversize": false,
+ "doc_sha256": "6e73620ab6b64e90ef2c04bf0e0d6246185a2f4b1b13cab0df494496cff89b6a",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 4990,
+  "cacheReadInputTokens": 13027,
+  "cacheCreationInputTokens": 23081,
+  "webSearchRequests": 0,
+  "costUSD": 0.3620835,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 2929,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3620835,
+ "duration_ms": 53888,
+ "session_id": "dace8912-2909-49cb-b07c-064595a1eedc",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Table rows MP-4.1-005 through MP-4.1-007 of the NIST GenAI Profile: suggested actions on data collection/retention policies, third-party intellectual property and training data handling, and re-evaluation of models fine-tuned on third-party models, each tagged with GAI risk categories.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_cbrn\",\n      \"name\": \"CBRN Information or Capabilities\",\n      \"aliases\": [\"CBRN information\"],\n      \"description\": \"GAI risk category concerning chemical, biological, radiological, and nuclear information or capabilities.\",\n      \"anchor\": \"CBRN Information or Capabilities\",\n      \"location\": \"risk column for MP-4.1-005\"\n    },\n    {\n      \"id\": \"c_ip\",\n      \"name\": \"Intellectual Property\",\n      \"aliases\": [\"third-party intellectual property\"],\n      \"description\": \"GAI risk category concerning intellectual property, including third-party IP used as training data.\",\n      \"anchor\": \"Intellectual Property; Value Chain\",\n      \"location\": \"risk column for MP-4.1-006\"\n    },\n    {\n      \"id\": \"c_training_data\",\n      \"name\": \"training data\",\n      \"aliases\": [\"Training data\"],\n      \"description\": \"Data used to train models, whose imbalances and third-party provenance the document treats as risk-bearing.\",\n      \"anchor\": \"training data will be used\",\n      \"location\": \"MP-4.1-006\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [\n    {\n      \"id\": \"p_mp41005\",\n      \"text\": \"Establish policies for collection, retention, and minimum quality of data\",\n      \"as_of_date\": null,\n      \"scope\": \"dataset\",\n      \"anchor\": \"Establish policies for collection\",\n      \"location\": \"MP-4.1-005\"\n    },\n    {\n      \"id\": \"p_mp41006\",\n      \"text\": \"Implement policies and practices deﬁning how third-party intellectual property\",\n      \"as_of_date\": null,\n      \"scope\": \"dataset\",\n      \"anchor\": \"Implement policies and practices\",\n      \"location\": \"MP-4.1-006\"\n    },\n    {\n      \"id\": \"p_mp41007\",\n      \"text\": \"Re-evaluate models that were ﬁne-tuned or enhanced on top of third-party\",\n      \"as_of_date\": null,\n      \"scope\": \"any\",\n      \"anchor\": \"Re-evaluate models that were\",\n      \"location\": \"MP-4.1-007\"\n    }\n  ],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"recommends\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"p_mp41005\",\n      \"anchor\": \"Establish policies for collection\",\n      \"location\": \"MP-4.1-005\"\n    },\n    {\n      \"type\": \"recommends\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"p_mp41006\",\n      \"anchor\": \"Implement policies and practices\",\n      \"location\": \"MP-4.1-006\"\n    },\n    {\n      \"type\": \"recommends\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"p_mp41007\",\n      \"anchor\": \"Re-evaluate models that were\",\n      \"location\": \"MP-4.1-007\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"p_mp41005\",\n      \"to_id\": \"c_cbrn\",\n      \"anchor\": \"Disclosure of inappropriate CBRN information\",\n      \"location\": \"MP-4.1-005\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"p_mp41006\",\n      \"to_id\": \"c_training_data\",\n      \"anchor\": \"training data will be used\",\n      \"location\": \"MP-4.1-006\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"p_mp41006\",\n      \"to_id\": \"c_ip\",\n      \"anchor\": \"Intellectual Property; Value Chain\",\n      \"location\": \"risk column for MP-4.1-006\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"c_cbrn\",\n      \"anchor\": \"CBRN Information or Capabilities\",\n      \"location\": \"risk column for MP-4.1-005\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"c_training_data\",\n      \"anchor\": \"Training data imbalances\",\n      \"location\": \"MP-4.1-005\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"Abusive Content\",\n      \"anchor\": \"Abusive Content\"\n    },\n    {\n      \"name\": \"personally identiﬁable\",\n      \"anchor\": \"Leak of personally identiﬁable\"\n    },\n    {\n      \"name\": \"Oﬀensive cyber capabilities\",\n      \"anchor\": \"Oﬀensive cyber capabilities\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"Value Chain and Component\",\n      \"suggested_edge\": \"applies_to\",\n      \"diversion_reason\": \"endpoint_not_located\",\n      \"note\": \"risk category name is broken across lines in the tagging column\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"Information Security\", \"type\": \"Concept\"},\n    {\"name\": \"Harmful Bias and Homogenization\", \"type\": \"Concept\"},\n    {\"name\": \"Dangerous, Violent, or Hateful Content\", \"type\": \"Concept\"},\n    {\"name\": \"Data Privacy\", \"type\": \"Concept\"},\n    {\"name\": \"Value Chain and Component Integration\", \"type\": \"Concept\"},\n    {\"name\": \"third-party models\", \"type\": \"Concept\"},\n    {\"name\": \"facial likenesses of individuals\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

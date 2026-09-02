@@ -1,0 +1,33 @@
+{
+ "doc_id": "nist-generative-ai-profile-ai-600-1",
+ "chunk_id": "nist-generative-ai-profile-ai-600-1#c0040",
+ "chunk_index": 40,
+ "chunk_start": 65192,
+ "chunk_end": 65423,
+ "chunk_tokens": 46,
+ "heading_path": [
+  "GV-6.2-006"
+ ],
+ "oversize": false,
+ "doc_sha256": "6e73620ab6b64e90ef2c04bf0e0d6246185a2f4b1b13cab0df494496cff89b6a",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 3668,
+  "cacheReadInputTokens": 13027,
+  "cacheCreationInputTokens": 22575,
+  "webSearchRequests": 0,
+  "costUSD": 0.3239735,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 1928,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3239735,
+ "duration_ms": 40598,
+ "session_id": "eb2cf933-aa01-4c24-8640-d4c8732b03dc",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"NIST AI 600-1 governance action GV-6.2-006: establish policies and procedures to test and manage risks of rollover and fallback technologies for GAI systems, which may include manual processing; tagged Information Integrity.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_fallback_tech\",\n      \"name\": \"fallback technologies\",\n      \"aliases\": [\"rollover and fallback technologies\"],\n      \"description\": \"Technologies used to roll over or fall back when a GAI system fails or is unavailable; the document requires testing and managing their risks.\",\n      \"anchor\": \"fallback technologies\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0040\"\n    },\n    {\n      \"id\": \"c_manual_processing\",\n      \"name\": \"manual processing\",\n      \"aliases\": [],\n      \"description\": \"Human, non-automated handling that the document acknowledges rollover and fallback may include.\",\n      \"anchor\": \"manual processing\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0040\"\n    },\n    {\n      \"id\": \"c_gai_systems\",\n      \"name\": \"GAI systems\",\n      \"aliases\": [\"generative AI systems\"],\n      \"description\": \"The systems whose rollover and fallback risks are to be tested and managed.\",\n      \"anchor\": \"GAI systems\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0040\"\n    },\n    {\n      \"id\": \"c_information_integrity\",\n      \"name\": \"Information Integrity\",\n      \"aliases\": [],\n      \"description\": \"The GAI risk category the document associates with this governance action.\",\n      \"anchor\": \"Information Integrity\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0040\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [\n    {\n      \"id\": \"p_gv62006\",\n      \"text\": \"Establish policies and procedures to test and manage risks related to\",\n      \"as_of_date\": null,\n      \"scope\": \"any\",\n      \"anchor\": \"Establish policies and procedures\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0040\"\n    }\n  ],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"recommends\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"p_gv62006\",\n      \"anchor\": \"Establish policies and procedures\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0040\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"p_gv62006\",\n      \"to_id\": \"c_fallback_tech\",\n      \"anchor\": \"risks related to\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0040\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"c_gai_systems\",\n      \"anchor\": \"for GAI systems\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0040\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"c_manual_processing\",\n      \"anchor\": \"include manual processing\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0040\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"c_information_integrity\",\n      \"anchor\": \"Information Integrity\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0040\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"model weights\",\n      \"anchor\": \"model weights\"\n    },\n    {\n      \"name\": \"Harmful Bias and Homogenization\",\n      \"anchor\": \"Harmful Bias and Homogenization\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"acknowledging that rollover and\",\n      \"suggested_edge\": \"fallback_may_involve\",\n      \"from_hint\": \"c_fallback_tech\",\n      \"to_hint\": \"c_manual_processing\",\n      \"diversion_reason\": \"other:no_edge_type\"\n    },\n    {\n      \"anchor\": \"model weights and other system artifacts\",\n      \"suggested_edge\": \"about\",\n      \"from_hint\": \"model weights\",\n      \"to_hint\": \"Harmful Bias and Homogenization\",\n      \"diversion_reason\": \"cross_chunk\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"rollover and fallback may include manual processing\", \"type\": \"Claim\"},\n    {\"name\": \"GV-6.2-006\", \"type\": \"Concept\"},\n    {\"name\": \"system artifacts\", \"type\": \"Concept\"},\n    {\"name\": \"risk management policies and procedures\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

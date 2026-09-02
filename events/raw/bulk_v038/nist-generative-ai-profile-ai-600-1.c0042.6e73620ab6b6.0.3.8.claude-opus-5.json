@@ -1,0 +1,33 @@
+{
+ "doc_id": "nist-generative-ai-profile-ai-600-1",
+ "chunk_id": "nist-generative-ai-profile-ai-600-1#c0042",
+ "chunk_index": 42,
+ "chunk_start": 66913,
+ "chunk_end": 67188,
+ "chunk_tokens": 65,
+ "heading_path": [
+  "MP-1.1-001"
+ ],
+ "oversize": false,
+ "doc_sha256": "6e73620ab6b64e90ef2c04bf0e0d6246185a2f4b1b13cab0df494496cff89b6a",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 3436,
+  "cacheReadInputTokens": 13027,
+  "cacheCreationInputTokens": 22628,
+  "webSearchRequests": 0,
+  "costUSD": 0.3187035,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 1430,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3187035,
+ "duration_ms": 36482,
+ "session_id": "707baeb3-778c-4e20-bdcb-37aa16672af0",
+ "raw_result": "{\n\"extract_plan\": {\"chunk_summary\": \"A single NIST AI 600-1 action-table row (MP-1.1-001) recommending that factors such as internal vs. external use, application scope, fine-tuning, and data-source variety be considered when identifying intended purposes; tagged to the Data Privacy and Intellectual Property GAI risks.\"},\n\"concepts\": [\n{\"id\": \"c_intended_purposes\", \"name\": \"intended purposes\", \"aliases\": [\"intended purpose\"], \"description\": \"The uses a GAI system is meant to serve, identified with reference to deployment and data-source factors.\", \"anchor\": \"intended purposes\", \"location\": \"nist-generative-ai-profile-ai-600-1#c0042\"},\n{\"id\": \"c_fine_tuning\", \"name\": \"ﬁne-tuning\", \"aliases\": [\"fine-tuning\"], \"description\": \"A factor to weigh when identifying a GAI system's intended purposes.\", \"anchor\": \"ﬁne-tuning\", \"location\": \"nist-generative-ai-profile-ai-600-1#c0042\"},\n{\"id\": \"c_rag\", \"name\": \"retrieval-augmented generation\", \"aliases\": [\"RAG\"], \"description\": \"Given as an example of a variety of data source bearing on intended purpose.\", \"anchor\": \"retrieval-augmented generation\", \"location\": \"nist-generative-ai-profile-ai-600-1#c0042\"},\n{\"id\": \"c_data_privacy\", \"name\": \"Data Privacy\", \"aliases\": [], \"description\": \"A GAI risk category the document associates with this suggested action.\", \"anchor\": \"Data Privacy\", \"location\": \"nist-generative-ai-profile-ai-600-1#c0042\"},\n{\"id\": \"c_intellectual_property\", \"name\": \"Intellectual Property\", \"aliases\": [], \"description\": \"A GAI risk category the document associates with this suggested action.\", \"anchor\": \"Intellectual \\nProperty\", \"location\": \"nist-generative-ai-profile-ai-600-1#c0042\"}\n],\n\"definitions\": [],\n\"claims\": [\n{\"id\": \"cl_mp11001\", \"claim_text\": \"When identifying intended purposes, consider factors such as internal vs. \\nexternal use, narrow vs. broad application scope, ﬁne-tuning, and varieties of \\ndata sources\", \"claim_type\": \"normative\", \"evidence_grade\": \"practitioner_assertion\", \"anchor\": \"consider factors such as\", \"location\": \"nist-generative-ai-profile-ai-600-1#c0042\"}\n],\n\"instruments\": [],\n\"measures\": [],\n\"standards\": [],\n\"frameworks\": [],\n\"practices\": [],\n\"tools\": [],\n\"platforms\": [],\n\"edges\": [\n{\"type\": \"asserts\", \"from_id\": \"nist-generative-ai-profile-ai-600-1\", \"to_id\": \"cl_mp11001\", \"anchor\": \"consider factors such as\", \"location\": \"nist-generative-ai-profile-ai-600-1#c0042\"},\n{\"type\": \"about\", \"from_id\": \"cl_mp11001\", \"to_id\": \"c_intended_purposes\", \"anchor\": \"identifying intended purposes\", \"location\": \"nist-generative-ai-profile-ai-600-1#c0042\"},\n{\"type\": \"mentions\", \"from_id\": \"nist-generative-ai-profile-ai-600-1\", \"to_id\": \"c_fine_tuning\", \"anchor\": \"ﬁne-tuning\", \"location\": \"nist-generative-ai-profile-ai-600-1#c0042\"},\n{\"type\": \"mentions\", \"from_id\": \"nist-generative-ai-profile-ai-600-1\", \"to_id\": \"c_rag\", \"anchor\": \"retrieval-augmented generation\", \"location\": \"nist-generative-ai-profile-ai-600-1#c0042\"},\n{\"type\": \"mentions\", \"from_id\": \"nist-generative-ai-profile-ai-600-1\", \"to_id\": \"c_data_privacy\", \"anchor\": \"Data Privacy\", \"location\": \"nist-generative-ai-profile-ai-600-1#c0042\"},\n{\"type\": \"mentions\", \"from_id\": \"nist-generative-ai-profile-ai-600-1\", \"to_id\": \"c_intellectual_property\", \"anchor\": \"Intellectual \\nProperty\", \"location\": \"nist-generative-ai-profile-ai-600-1#c0042\"}\n],\n\"cites\": [],\n\"mentions\": [\n{\"name\": \"grounding\", \"anchor\": \"grounding,\"},\n{\"name\": \"internal vs. \", \"anchor\": \"internal vs.\"},\n{\"name\": \"narrow vs. broad application scope\", \"anchor\": \"narrow vs. broad application scope\"},\n{\"name\": \"Suggested Action\", \"anchor\": \"Suggested Action\"},\n{\"name\": \"GAI Risks\", \"anchor\": \"GAI Risks\"}\n],\n\"proposed_relationships\": [\n{\"suggested_edge\": \"action_carries_risk\", \"from_name\": \"MP-1.1-001\", \"to_name\": \"Data Privacy\", \"anchor\": \"Data Privacy; Intellectual\", \"diversion_reason\": \"structural_inference\", \"location\": \"nist-generative-ai-profile-ai-600-1#c0042\"},\n{\"suggested_edge\": \"action_carries_risk\", \"from_name\": \"MP-1.1-001\", \"to_name\": \"Intellectual Property\", \"anchor\": \"Property\", \"diversion_reason\": \"structural_inference\", \"location\": \"nist-generative-ai-profile-ai-600-1#c0042\"},\n{\"suggested_edge\": \"part_of_function\", \"from_name\": \"MP-1.1-001\", \"to_name\": \"MAP function of the AI RMF\", \"anchor\": \"Action ID\", \"diversion_reason\": \"cross_chunk\", \"location\": \"nist-generative-ai-profile-ai-600-1#c0042\"}\n],\n\"gleaned\": [\n{\"name\": \"data sources\", \"type\": \"Concept\"},\n{\"name\": \"application scope\", \"type\": \"Concept\"},\n{\"name\": \"external use\", \"type\": \"Concept\"},\n{\"name\": \"GAI risk\", \"type\": \"Concept\"}\n]\n}"
+}

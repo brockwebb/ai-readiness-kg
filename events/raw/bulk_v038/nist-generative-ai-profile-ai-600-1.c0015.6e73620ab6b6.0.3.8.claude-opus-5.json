@@ -1,0 +1,33 @@
+{
+ "doc_id": "nist-generative-ai-profile-ai-600-1",
+ "chunk_id": "nist-generative-ai-profile-ai-600-1#c0015",
+ "chunk_index": 15,
+ "chunk_start": 46908,
+ "chunk_end": 47275,
+ "chunk_tokens": 84,
+ "heading_path": [
+  "GV-1.3-002"
+ ],
+ "oversize": false,
+ "doc_sha256": "6e73620ab6b64e90ef2c04bf0e0d6246185a2f4b1b13cab0df494496cff89b6a",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 3294,
+  "cacheReadInputTokens": 13027,
+  "cacheCreationInputTokens": 22671,
+  "webSearchRequests": 0,
+  "costUSD": 0.3155835,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 1220,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3155835,
+ "duration_ms": 34122,
+ "session_id": "66f25b45-c9db-4017-b5a8-773dbedc4378",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"NIST AI 600-1 govern action GV-1.3-002: establish minimum performance/assurance thresholds reviewed as part of go/no-go deployment approval, tagged to CBRN, Confabulation, and Dangerous/Violent/Hateful Content risks.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_deployment_approval\",\n      \"name\": \"deployment approval\",\n      \"aliases\": [\"go/no-go decision\"],\n      \"description\": \"The approval decision point governing whether a GAI system may be deployed, gated by reviewed policies, procedures, and processes.\",\n      \"anchor\": \"part of deployment approval\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0015\"\n    },\n    {\n      \"id\": \"c_minimum_thresholds\",\n      \"name\": \"minimum thresholds for performance or assurance criteria\",\n      \"aliases\": [\"assurance thresholds\", \"approval thresholds\"],\n      \"description\": \"Floor values on performance or assurance criteria that a GAI system must meet before deployment approval.\",\n      \"anchor\": \"minimum thresholds for performance\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0015\"\n    },\n    {\n      \"id\": \"c_cbrn\",\n      \"name\": \"CBRN Information or Capabilities\",\n      \"aliases\": [\"CBRN risk\"],\n      \"description\": \"GAI risk category listed as applicable to this governance action.\",\n      \"anchor\": \"CBRN Information or Capabilities\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0015\"\n    },\n    {\n      \"id\": \"c_confabulation\",\n      \"name\": \"Confabulation\",\n      \"aliases\": [\"hallucination\"],\n      \"description\": \"GAI risk category listed as applicable to this governance action.\",\n      \"anchor\": \"Confabulation\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0015\"\n    },\n    {\n      \"id\": \"c_dvhc\",\n      \"name\": \"Dangerous, \\nViolent, or Hateful Content\",\n      \"aliases\": [\"Dangerous, Violent, or Hateful Content\"],\n      \"description\": \"GAI risk category listed as applicable to this governance action.\",\n      \"anchor\": \"Hateful Content\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0015\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [\n    {\n      \"id\": \"p_gv_1_3_002\",\n      \"text\": \"Establish minimum thresholds for performance or assurance criteria and review as \\npart of deployment approval\",\n      \"as_of_date\": null,\n      \"scope\": \"any\",\n      \"anchor\": \"Establish minimum thresholds\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0015\"\n    }\n  ],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"recommends\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"p_gv_1_3_002\",\n      \"anchor\": \"GV-1.3-002\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0015\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"p_gv_1_3_002\",\n      \"to_id\": \"c_deployment_approval\",\n      \"anchor\": \"deployment approval (“go/”no-go”)\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0015\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"p_gv_1_3_002\",\n      \"to_id\": \"c_minimum_thresholds\",\n      \"anchor\": \"assurance criteria\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0015\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"c_cbrn\",\n      \"anchor\": \"CBRN Information\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0015\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"c_confabulation\",\n      \"anchor\": \"Confabulation;\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0015\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"c_dvhc\",\n      \"anchor\": \"Violent, or Hateful\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0015\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"GAI\",\n      \"anchor\": \"GAI\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"GV-1.3-002\",\n      \"suggested_edge\": \"governance_action_of_subcategory\",\n      \"diversion_reason\": \"cross_chunk\",\n      \"note\": \"GV-1.3-002 belongs to NIST AI RMF subcategory GOVERN 1.3, which is not stated in this chunk.\"\n    },\n    {\n      \"anchor\": \"reviewed processes and approval thresholds\",\n      \"suggested_edge\": \"informed_by\",\n      \"diversion_reason\": \"endpoint_not_located\",\n      \"note\": \"Approval thresholds are to reflect measurement of GAI capabilities and risks; the measurement endpoint is not a typed node in this chunk.\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"performance criteria\", \"type\": \"Concept\"},\n    {\"name\": \"assurance criteria\", \"type\": \"Concept\"},\n    {\"name\": \"GAI capabilities and risks\", \"type\": \"Concept\"},\n    {\"name\": \"policies, procedures, and processes\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

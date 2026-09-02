@@ -1,0 +1,33 @@
+{
+ "doc_id": "nist-generative-ai-profile-ai-600-1",
+ "chunk_id": "nist-generative-ai-profile-ai-600-1#c0026",
+ "chunk_index": 26,
+ "chunk_start": 54896,
+ "chunk_end": 55191,
+ "chunk_tokens": 72,
+ "heading_path": [
+  "GV-3.2-001"
+ ],
+ "oversize": false,
+ "doc_sha256": "6e73620ab6b64e90ef2c04bf0e0d6246185a2f4b1b13cab0df494496cff89b6a",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 3280,
+  "cacheReadInputTokens": 13027,
+  "cacheCreationInputTokens": 22623,
+  "webSearchRequests": 0,
+  "costUSD": 0.3147535,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 1731,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3147535,
+ "duration_ms": 33288,
+ "session_id": "23f361c4-fa00-44d4-a881-00f41c2cc0cb",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"NIST GAI Profile action GV-3.2-001: policies bolstering oversight of GAI systems via independent evaluations proportional to identified risks, tagged to CBRN and harmful-bias risks.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_oversight_gai\",\n      \"name\": \"oversight of GAI systems\",\n      \"aliases\": [\"GAI system oversight\"],\n      \"description\": \"Governance oversight of generative AI systems, bolstered by policy.\",\n      \"anchor\": \"bolster oversight\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0026\"\n    },\n    {\n      \"id\": \"c_indep_eval\",\n      \"name\": \"evaluations or assessments of GAI models or systems\",\n      \"aliases\": [\"independent evaluation\", \"third-party assessment\"],\n      \"description\": \"Independent evaluations or assessments of GAI models or systems, scaled to identified risk.\",\n      \"anchor\": \"or assessments\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0026\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"cl_policies_oversight\",\n      \"claim_text\": \"Policies are in place to bolster oversight of GAI systems\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"Policies are in place\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0026\"\n    },\n    {\n      \"id\": \"cl_proportional\",\n      \"claim_text\": \"robustness of evaluations are proportional to the identiﬁed risks\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"proportional\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0026\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"cl_policies_oversight\",\n      \"anchor\": \"Policies are in place\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0026\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"cl_proportional\",\n      \"anchor\": \"proportional\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0026\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_policies_oversight\",\n      \"to_id\": \"c_oversight_gai\",\n      \"anchor\": \"bolster oversight\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0026\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_proportional\",\n      \"to_id\": \"c_indep_eval\",\n      \"anchor\": \"robustness of evaluations\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0026\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"c_indep_eval\",\n      \"anchor\": \"or assessments\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0026\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\"name\": \"CBRN Information or Capabilities\", \"anchor\": \"CBRN\"},\n    {\"name\": \"Harmful Bias and Homogenization\", \"anchor\": \"Homogenization\"}\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"CBRN\",\n      \"suggested_edge\": \"action_addresses_risk\",\n      \"diversion_reason\": \"other:stub_endpoint\"\n    },\n    {\n      \"anchor\": \"Homogenization\",\n      \"suggested_edge\": \"action_addresses_risk\",\n      \"diversion_reason\": \"other:stub_endpoint\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"GV-3.2-001\", \"type\": \"Practice\"},\n    {\"name\": \"Suggested Action\", \"type\": \"Concept\"},\n    {\"name\": \"GAI Risks\", \"type\": \"Concept\"},\n    {\"name\": \"risk proportionality\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

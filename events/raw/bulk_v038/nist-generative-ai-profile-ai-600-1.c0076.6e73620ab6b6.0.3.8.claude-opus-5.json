@@ -1,0 +1,33 @@
+{
+ "doc_id": "nist-generative-ai-profile-ai-600-1",
+ "chunk_id": "nist-generative-ai-profile-ai-600-1#c0076",
+ "chunk_index": 76,
+ "chunk_start": 88824,
+ "chunk_end": 89196,
+ "chunk_tokens": 95,
+ "heading_path": [
+  "MS-2.6-001"
+ ],
+ "oversize": false,
+ "doc_sha256": "6e73620ab6b64e90ef2c04bf0e0d6246185a2f4b1b13cab0df494496cff89b6a",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 4096,
+  "cacheReadInputTokens": 13027,
+  "cacheCreationInputTokens": 22715,
+  "webSearchRequests": 0,
+  "costUSD": 0.33607349999999997,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 2093,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.33607349999999997,
+ "duration_ms": 45022,
+ "session_id": "2d40be9b-2f25-4d2d-a19d-3502f8e9b73a",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"NIST GAI Profile table row MS-2.6-001: a suggested action to assess adverse impacts, including health and wellbeing impacts, on value chain or other AI Actors exposed to sexually explicit, offensive, or violent information during GAI training and maintenance, tagged to four GAI risk categories.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_adverse_impacts\",\n      \"name\": \"adverse impacts\",\n      \"aliases\": [\"adverse impact assessment\"],\n      \"description\": \"Negative effects the suggested action directs organizations to assess in the GAI lifecycle.\",\n      \"anchor\": \"adverse impacts\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0076\"\n    },\n    {\n      \"id\": \"c_health_wellbeing\",\n      \"name\": \"health and wellbeing impacts\",\n      \"aliases\": [\"worker health and wellbeing\"],\n      \"description\": \"A category of adverse impact the action singles out for assessment for exposed AI Actors.\",\n      \"anchor\": \"health and wellbeing impacts\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0076\"\n    },\n    {\n      \"id\": \"c_ai_actors\",\n      \"name\": \"AI Actors\",\n      \"aliases\": [\"value chain actors\"],\n      \"description\": \"The people in the value chain or elsewhere whose exposure to harmful content the action addresses.\",\n      \"anchor\": \"other AI Actors\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0076\"\n    },\n    {\n      \"id\": \"c_gai_training_maintenance\",\n      \"name\": \"GAI training and maintenance\",\n      \"aliases\": [\"generative AI training and maintenance\"],\n      \"description\": \"The lifecycle stages during which the exposure to harmful information occurs.\",\n      \"anchor\": \"during GAI training\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0076\"\n    },\n    {\n      \"id\": \"c_human_ai_config\",\n      \"name\": \"Human-AI Conﬁguration\",\n      \"aliases\": [\"Human-AI Configuration\"],\n      \"description\": \"GAI risk category tagged to this suggested action.\",\n      \"anchor\": \"Human-AI Conﬁguration\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0076\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [\n    {\n      \"id\": \"p_ms_2_6_001\",\n      \"text\": \"Assess adverse impacts, including health and wellbeing impacts\",\n      \"as_of_date\": null,\n      \"scope\": \"any\",\n      \"anchor\": \"Assess adverse impacts\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0076\"\n    }\n  ],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"recommends\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"p_ms_2_6_001\",\n      \"anchor\": \"Assess adverse impacts\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0076\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"p_ms_2_6_001\",\n      \"to_id\": \"c_health_wellbeing\",\n      \"anchor\": \"including health and wellbeing\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0076\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"c_ai_actors\",\n      \"anchor\": \"other AI Actors\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0076\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"c_gai_training_maintenance\",\n      \"anchor\": \"during GAI training\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0076\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"c_human_ai_config\",\n      \"anchor\": \"Human-AI Conﬁguration\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0076\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"c_adverse_impacts\",\n      \"anchor\": \"adverse impacts\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0076\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"MS-2.6-001\",\n      \"anchor\": \"MS-2.6-001\"\n    },\n    {\n      \"name\": \"Suggested Action\",\n      \"anchor\": \"Suggested Action\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"Human-AI Conﬁguration; Obscene,\",\n      \"suggested_edge\": \"risk_tagged_with\",\n      \"diversion_reason\": \"structural_inference\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"Obscene, Degrading, and/or Abusive Content\", \"type\": \"Concept\"},\n    {\"name\": \"Value Chain and Component Integration\", \"type\": \"Concept\"},\n    {\"name\": \"Dangerous, Violent, or Hateful Content\", \"type\": \"Concept\"},\n    {\"name\": \"sexually explicit, offensive, or violent information\", \"type\": \"Concept\"},\n    {\"name\": \"GAI Risks\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

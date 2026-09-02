@@ -1,0 +1,33 @@
+{
+ "doc_id": "nist-generative-ai-profile-ai-600-1",
+ "chunk_id": "nist-generative-ai-profile-ai-600-1#c0063",
+ "chunk_index": 63,
+ "chunk_start": 80763,
+ "chunk_end": 81208,
+ "chunk_tokens": 103,
+ "heading_path": [
+  "MS-1.1-003"
+ ],
+ "oversize": false,
+ "doc_sha256": "6e73620ab6b64e90ef2c04bf0e0d6246185a2f4b1b13cab0df494496cff89b6a",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 3615,
+  "cacheReadInputTokens": 13027,
+  "cacheCreationInputTokens": 22741,
+  "webSearchRequests": 0,
+  "costUSD": 0.3243085,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 1496,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3243085,
+ "duration_ms": 37638,
+ "session_id": "619ec899-9466-4964-a1d7-8af2cdd55dbe",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Two NIST GenAI Profile suggested actions: MS-1.1-003 (disaggregate evaluation metrics by demographic factors to find discrepancies in content provenance mechanisms across populations) and MS-1.1-004 (develop metrics to evaluate structured public feedback exercises), each tagged to risk categories.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"concept_content_provenance_mechanisms\",\n      \"name\": \"content provenance mechanisms\",\n      \"aliases\": [\"content provenance\"],\n      \"description\": \"Mechanisms establishing the provenance of content, whose functioning may differ across diverse populations.\",\n      \"anchor\": \"content provenance mechanisms\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0063\"\n    },\n    {\n      \"id\": \"concept_structured_public_feedback\",\n      \"name\": \"structured public feedback exercises\",\n      \"aliases\": [\"structured public feedback\"],\n      \"description\": \"Organized exercises soliciting public feedback, to be evaluated with a dedicated suite of metrics informed by representative AI Actors.\",\n      \"anchor\": \"structured public feedback exercises\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0063\"\n    },\n    {\n      \"id\": \"concept_demographic_factors\",\n      \"name\": \"demographic factors\",\n      \"aliases\": [\"demographics\"],\n      \"description\": \"Factors by which evaluation metrics are disaggregated to surface discrepancies across populations.\",\n      \"anchor\": \"by demographic factors\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0063\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"claim_ms_1_1_003\",\n      \"claim_text\": \"Disaggregate evaluation metrics by demographic factors\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"Disaggregate evaluation metrics\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0063\"\n    },\n    {\n      \"id\": \"claim_ms_1_1_004\",\n      \"claim_text\": \"Develop a suite of metrics to evaluate structured public feedback exercises\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"Develop a suite of metrics\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0063\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"claim_ms_1_1_003\",\n      \"anchor\": \"Disaggregate evaluation metrics\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0063\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"claim_ms_1_1_004\",\n      \"anchor\": \"Develop a suite of metrics\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0063\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"claim_ms_1_1_003\",\n      \"to_id\": \"concept_content_provenance_mechanisms\",\n      \"anchor\": \"content provenance mechanisms\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0063\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"claim_ms_1_1_003\",\n      \"to_id\": \"concept_demographic_factors\",\n      \"anchor\": \"by demographic factors\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0063\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"claim_ms_1_1_004\",\n      \"to_id\": \"concept_structured_public_feedback\",\n      \"anchor\": \"structured public feedback exercises\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0063\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"concept_content_provenance_mechanisms\",\n      \"anchor\": \"content provenance mechanisms\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0063\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"representative AI Actors\",\n      \"anchor\": \"representative AI Actors\"\n    },\n    {\n      \"name\": \"CBRN\",\n      \"anchor\": \"CBRN\"\n    },\n    {\n      \"name\": \"diverse\",\n      \"anchor\": \"across diverse\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"MS-1.1-003\",\n      \"suggested_edge\": \"uses_measure\",\n      \"diversion_reason\": \"cross_chunk\",\n      \"note\": \"MS-1.1-003 and MS-1.1-004 are suggested-action items of the NIST Generative AI Profile instrument, which is not typed in this chunk.\"\n    },\n    {\n      \"anchor\": \"Information Integrity; Harmful\",\n      \"suggested_edge\": \"applies_to\",\n      \"diversion_reason\": \"structural_inference\",\n      \"note\": \"Risk-category tagging of the action rows is table structure, not a stated relation.\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"MS-1.1-003\", \"type\": \"Measure\"},\n    {\"name\": \"MS-1.1-004\", \"type\": \"Measure\"},\n    {\"name\": \"Information Integrity\", \"type\": \"Concept\"},\n    {\"name\": \"Harmful Bias and Homogenization\", \"type\": \"Concept\"},\n    {\"name\": \"Human-AI Configuration\", \"type\": \"Concept\"},\n    {\"name\": \"CBRN Information or Capabilities\", \"type\": \"Concept\"},\n    {\"name\": \"evaluation metrics\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

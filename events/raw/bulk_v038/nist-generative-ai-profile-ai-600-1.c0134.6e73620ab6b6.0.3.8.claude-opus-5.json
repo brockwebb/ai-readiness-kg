@@ -1,0 +1,33 @@
+{
+ "doc_id": "nist-generative-ai-profile-ai-600-1",
+ "chunk_id": "nist-generative-ai-profile-ai-600-1#c0134",
+ "chunk_index": 134,
+ "chunk_start": 119143,
+ "chunk_end": 119374,
+ "chunk_tokens": 54,
+ "heading_path": [
+  "MG-4.1-005"
+ ],
+ "oversize": false,
+ "doc_sha256": "6e73620ab6b64e90ef2c04bf0e0d6246185a2f4b1b13cab0df494496cff89b6a",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 2986,
+  "cacheReadInputTokens": 13027,
+  "cacheCreationInputTokens": 22639,
+  "webSearchRequests": 0,
+  "costUSD": 0.3075635,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 1696,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3075635,
+ "duration_ms": 33041,
+ "session_id": "27ca5996-2166-4990-81ac-c0beaa5d94b6",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Two NIST GAI Profile MANAGE actions (MG-4.1-004, MG-4.1-005) recommending active learning to find model failures and sharing transparency reports with stakeholders, each tagged to GAI risk categories.\"\n  },\n  \"concepts\": [],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [\n    {\n      \"id\": \"prac-mg-4-1-004\",\n      \"text\": \"Implement active learning techniques to identify instances where the model fails\",\n      \"as_of_date\": null,\n      \"scope\": \"any\",\n      \"anchor\": \"active learning techniques\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0134\"\n    },\n    {\n      \"id\": \"prac-mg-4-1-005\",\n      \"text\": \"Share transparency reports with internal and external stakeholders\",\n      \"as_of_date\": null,\n      \"scope\": \"any\",\n      \"anchor\": \"Share transparency reports\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0134\"\n    }\n  ],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"recommends\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"prac-mg-4-1-004\",\n      \"anchor\": \"active learning techniques\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0134\"\n    },\n    {\n      \"type\": \"recommends\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"prac-mg-4-1-005\",\n      \"anchor\": \"Share transparency reports\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0134\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\"name\": \"Confabulation\", \"anchor\": \"Confabulation\"},\n    {\"name\": \"Human-AI Conﬁguration\", \"anchor\": \"Human-AI Conﬁguration\"},\n    {\"name\": \"Harmful \\nBias and Homogenization\", \"anchor\": \"Bias and Homogenization\"},\n    {\"name\": \"GAI system\", \"anchor\": \"GAI system\"}\n  ],\n  \"proposed_relationships\": [\n    {\n      \"suggested_edge\": \"applies_to\",\n      \"from_id\": \"prac-mg-4-1-004\",\n      \"to_name\": \"Confabulation\",\n      \"anchor\": \"Confabulation\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0134\",\n      \"diversion_reason\": \"structural_inference\"\n    },\n    {\n      \"suggested_edge\": \"applies_to\",\n      \"from_id\": \"prac-mg-4-1-005\",\n      \"to_name\": \"Human-AI Conﬁguration\",\n      \"anchor\": \"Human-AI Conﬁguration\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0134\",\n      \"diversion_reason\": \"structural_inference\"\n    },\n    {\n      \"suggested_edge\": \"applies_to\",\n      \"from_id\": \"prac-mg-4-1-005\",\n      \"to_name\": \"Harmful Bias and Homogenization\",\n      \"anchor\": \"Bias and Homogenization\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0134\",\n      \"diversion_reason\": \"structural_inference\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"active learning\", \"type\": \"Concept\"},\n    {\"name\": \"transparency report\", \"type\": \"Concept\"},\n    {\"name\": \"unexpected outputs\", \"type\": \"Concept\"},\n    {\"name\": \"accountability\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

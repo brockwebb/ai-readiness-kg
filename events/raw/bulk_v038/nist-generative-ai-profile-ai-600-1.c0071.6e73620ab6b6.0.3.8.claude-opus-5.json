@@ -1,0 +1,33 @@
+{
+ "doc_id": "nist-generative-ai-profile-ai-600-1",
+ "chunk_id": "nist-generative-ai-profile-ai-600-1#c0071",
+ "chunk_index": 71,
+ "chunk_start": 84805,
+ "chunk_end": 85466,
+ "chunk_tokens": 159,
+ "heading_path": [
+  "MS-2.2-002"
+ ],
+ "oversize": false,
+ "doc_sha256": "6e73620ab6b64e90ef2c04bf0e0d6246185a2f4b1b13cab0df494496cff89b6a",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 3608,
+  "cacheReadInputTokens": 13027,
+  "cacheCreationInputTokens": 22889,
+  "webSearchRequests": 0,
+  "costUSD": 0.3256135,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 1544,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3256135,
+ "duration_ms": 37389,
+ "session_id": "5a68c2bc-390c-4655-ad8d-f5fc14262bd5",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"NIST AI 600-1 suggested-action table rows MS-2.2-002 (document content provenance tracking and its privacy/security interaction; anonymize, filter, remove PII) and MS-2.2-003 (give human subjects withdrawal/consent-revocation options), under a Homogenization risk heading with GAI risk category labels.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"concept_content_provenance_data\",\n      \"name\": \"content provenance data\",\n      \"aliases\": [\"content provenance\"],\n      \"description\": \"Data recording the origin and history of content, whose tracking and interaction with privacy and security is to be documented.\",\n      \"anchor\": \"content provenance data\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0071\"\n    },\n    {\n      \"id\": \"concept_pii\",\n      \"name\": \"PII\",\n      \"aliases\": [\"personally identifiable information\"],\n      \"description\": \"Personally identifiable information, whose removal is suggested to prevent potential harm or misuse.\",\n      \"anchor\": \"(PII)\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0071\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [\n    {\n      \"id\": \"practice_ms_2_2_002\",\n      \"text\": \"Document how content provenance data is tracked\",\n      \"as_of_date\": null,\n      \"scope\": \"content\",\n      \"anchor\": \"Document how content provenance data is tracked\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0071\"\n    },\n    {\n      \"id\": \"practice_ms_2_2_003\",\n      \"text\": \"Provide human subjects with options to withdraw participation\",\n      \"as_of_date\": null,\n      \"scope\": \"any\",\n      \"anchor\": \"Provide human subjects with options to withdraw\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0071\"\n    }\n  ],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"recommends\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"practice_ms_2_2_002\",\n      \"anchor\": \"Document how content provenance data is tracked\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0071\"\n    },\n    {\n      \"type\": \"recommends\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"practice_ms_2_2_003\",\n      \"anchor\": \"Provide human subjects with options to withdraw\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0071\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"practice_ms_2_2_002\",\n      \"to_id\": \"concept_content_provenance_data\",\n      \"anchor\": \"content provenance data is tracked\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0071\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"practice_ms_2_2_002\",\n      \"to_id\": \"concept_pii\",\n      \"anchor\": \"Removing any personally\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0071\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"concept_content_provenance_data\",\n      \"anchor\": \"content provenance data\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0071\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"concept_pii\",\n      \"anchor\": \"(PII)\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0071\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"Homogenization\",\n      \"anchor\": \"Homogenization\"\n    },\n    {\n      \"name\": \"GAI applications\",\n      \"anchor\": \"GAI applications\"\n    },\n    {\n      \"name\": \"Information Security\",\n      \"anchor\": \"Information Security\"\n    },\n    {\n      \"name\": \"privacy output\",\n      \"anchor\": \"Leveraging privacy output\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"Data Privacy; Human AI\",\n      \"suggested_edge\": \"risk_category_of\",\n      \"from_id\": \"practice_ms_2_2_002\",\n      \"to_id\": \"Data Privacy\",\n      \"diversion_reason\": \"structural_inference\"\n    },\n    {\n      \"anchor\": \"MS-2.2-003 Provide human subjects\",\n      \"suggested_edge\": \"risk_category_of\",\n      \"from_id\": \"practice_ms_2_2_003\",\n      \"to_id\": \"Information Integrity\",\n      \"diversion_reason\": \"structural_inference\"\n    },\n    {\n      \"anchor\": \"Homogenization\",\n      \"suggested_edge\": \"addresses_risk\",\n      \"from_id\": \"practice_ms_2_2_002\",\n      \"to_id\": \"Homogenization\",\n      \"diversion_reason\": \"structural_inference\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"Data Privacy\", \"type\": \"Concept\"},\n    {\"name\": \"Information Integrity\", \"type\": \"Concept\"},\n    {\"name\": \"Information Security\", \"type\": \"Concept\"},\n    {\"name\": \"Human-AI Configuration\", \"type\": \"Concept\"},\n    {\"name\": \"Dangerous, Violent, or Hateful Content\", \"type\": \"Concept\"},\n    {\"name\": \"Homogenization\", \"type\": \"Concept\"},\n    {\"name\": \"anonymization\", \"type\": \"Concept\"},\n    {\"name\": \"privacy output filters\", \"type\": \"Concept\"},\n    {\"name\": \"human subjects\", \"type\": \"Concept\"},\n    {\"name\": \"consent\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

@@ -1,0 +1,33 @@
+{
+ "doc_id": "nist-generative-ai-profile-ai-600-1",
+ "chunk_id": "nist-generative-ai-profile-ai-600-1#c0028",
+ "chunk_index": 28,
+ "chunk_start": 55643,
+ "chunk_end": 56503,
+ "chunk_tokens": 207,
+ "heading_path": [
+  "GV-3.2-003"
+ ],
+ "oversize": false,
+ "doc_sha256": "6e73620ab6b64e90ef2c04bf0e0d6246185a2f4b1b13cab0df494496cff89b6a",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 3834,
+  "cacheReadInputTokens": 13027,
+  "cacheCreationInputTokens": 23069,
+  "webSearchRequests": 0,
+  "costUSD": 0.3330635,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 1659,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3330635,
+ "duration_ms": 38972,
+ "session_id": "58cbaa1c-a365-4f07-b724-b1cf670f452d",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"NIST AI 600-1 GOVERN 3.2 suggested actions GV-3.2-003/004/005 (acceptable use policies, user feedback mechanisms, threat modeling) with their GAI risk tags, plus the GOVERN 4.1 outcome statement.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_threat_modeling\",\n      \"name\": \"threat modeling\",\n      \"aliases\": [\"GAI threat modeling\"],\n      \"description\": \"Anticipating potential risks from GAI systems by modeling threats.\",\n      \"anchor\": \"Engage in threat modeling\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0028\"\n    },\n    {\n      \"id\": \"c_cbrn\",\n      \"name\": \"CBRN Information or Capabilities\",\n      \"aliases\": [\"CBRN risk\"],\n      \"description\": \"GAI risk category tagged to the threat-modeling action.\",\n      \"anchor\": \"CBRN Information or Capabilities\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0028\"\n    },\n    {\n      \"id\": \"c_infosec\",\n      \"name\": \"Information Security\",\n      \"aliases\": [\"InfoSec\"],\n      \"description\": \"GAI risk category tagged to the threat-modeling action.\",\n      \"anchor\": \"Information Security\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0028\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"cl_govern41\",\n      \"claim_text\": \"Organizational policies and practices are in place to foster a critical thinking and safety-ﬁrst mindset\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"GOVERN 4.1:\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0028\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [\n    {\n      \"id\": \"p_aup\",\n      \"text\": \"Deﬁne acceptable use policies for GAI interfaces, modalities, and human-AI\",\n      \"scope\": \"any\",\n      \"as_of_date\": null,\n      \"anchor\": \"acceptable use policies\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0028\"\n    },\n    {\n      \"id\": \"p_feedback\",\n      \"text\": \"Establish policies for user feedback mechanisms for GAI systems\",\n      \"scope\": \"any\",\n      \"as_of_date\": null,\n      \"anchor\": \"user feedback mechanisms\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0028\"\n    },\n    {\n      \"id\": \"p_threat_model\",\n      \"text\": \"Engage in threat modeling to anticipate potential risks from GAI systems.\",\n      \"scope\": \"any\",\n      \"as_of_date\": null,\n      \"anchor\": \"Engage in threat modeling\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0028\"\n    }\n  ],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"recommends\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"p_aup\",\n      \"anchor\": \"acceptable use policies\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0028\"\n    },\n    {\n      \"type\": \"recommends\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"p_feedback\",\n      \"anchor\": \"user feedback mechanisms\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0028\"\n    },\n    {\n      \"type\": \"recommends\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"p_threat_model\",\n      \"anchor\": \"Engage in threat modeling\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0028\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"p_threat_model\",\n      \"to_id\": \"c_threat_modeling\",\n      \"anchor\": \"threat modeling to anticipate\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0028\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"cl_govern41\",\n      \"anchor\": \"GOVERN 4.1:\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0028\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"c_cbrn\",\n      \"anchor\": \"CBRN Information or Capabilities\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0028\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"c_infosec\",\n      \"anchor\": \"Information Security\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0028\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"AI Actors: AI Design\",\n      \"anchor\": \"AI Actors: AI Design\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"CBRN Information or Capabilities\",\n      \"suggested_edge\": \"practice_tagged_with_risk\",\n      \"diversion_reason\": \"other:risk-tag-not-in-schema\"\n    },\n    {\n      \"anchor\": \"GOVERN 4.1:\",\n      \"suggested_edge\": \"has_component\",\n      \"diversion_reason\": \"structural_inference\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"Human-AI Conﬁguration\", \"type\": \"Concept\"},\n    {\"name\": \"acceptable use policies\", \"type\": \"Concept\"},\n    {\"name\": \"GAI applications refusal criteria\", \"type\": \"Concept\"},\n    {\"name\": \"mechanisms for recourse\", \"type\": \"Concept\"},\n    {\"name\": \"GOVERN 4.1\", \"type\": \"Framework\"}\n  ]\n}\n```"
+}

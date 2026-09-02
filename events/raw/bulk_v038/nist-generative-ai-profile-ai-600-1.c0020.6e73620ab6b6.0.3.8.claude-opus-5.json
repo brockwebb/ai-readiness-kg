@@ -1,0 +1,33 @@
+{
+ "doc_id": "nist-generative-ai-profile-ai-600-1",
+ "chunk_id": "nist-generative-ai-profile-ai-600-1#c0020",
+ "chunk_index": 20,
+ "chunk_start": 50500,
+ "chunk_end": 50669,
+ "chunk_tokens": 42,
+ "heading_path": [
+  "GV-1.5-003"
+ ],
+ "oversize": false,
+ "doc_sha256": "6e73620ab6b64e90ef2c04bf0e0d6246185a2f4b1b13cab0df494496cff89b6a",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 2600,
+  "cacheReadInputTokens": 13027,
+  "cacheCreationInputTokens": 22503,
+  "webSearchRequests": 0,
+  "costUSD": 0.29655349999999997,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 1060,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.29655349999999997,
+ "duration_ms": 27467,
+ "session_id": "b036c917-5290-4cff-bfa2-a2a0e603fdad",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"NIST AI 600-1 GOVERN action GV-1.5-003 under Information Security: maintain a document retention policy preserving history for TEVV and digital content transparency methods.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_infosec\",\n      \"name\": \"Information Security\",\n      \"aliases\": [\"InfoSec\"],\n      \"description\": \"The AI risk category under which this governance action is organized.\",\n      \"anchor\": \"Information Security\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0020\"\n    },\n    {\n      \"id\": \"c_retention\",\n      \"name\": \"document retention policy\",\n      \"aliases\": [\"records retention policy\"],\n      \"description\": \"A policy maintained to keep history of TEVV and digital content transparency methods.\",\n      \"anchor\": \"document retention policy\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0020\"\n    },\n    {\n      \"id\": \"c_tevv\",\n      \"name\": \"test, evaluation, validation, and veriﬁcation (TEVV)\",\n      \"aliases\": [\"TEVV\"],\n      \"description\": \"The activity whose history the retention policy is to preserve.\",\n      \"anchor\": \"veriﬁcation (TEVV)\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0020\"\n    },\n    {\n      \"id\": \"c_transparency\",\n      \"name\": \"digital content transparency methods\",\n      \"aliases\": [\"content provenance methods\"],\n      \"description\": \"Methods whose history the retention policy is to preserve alongside TEVV.\",\n      \"anchor\": \"digital content transparency\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0020\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [\n    {\n      \"id\": \"p_retention\",\n      \"text\": \"Maintain a document retention policy to keep history\",\n      \"scope\": \"any\",\n      \"as_of_date\": null,\n      \"anchor\": \"Maintain a document retention\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0020\"\n    }\n  ],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"recommends\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"p_retention\",\n      \"anchor\": \"Maintain a document retention\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0020\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"p_retention\",\n      \"to_id\": \"c_tevv\",\n      \"anchor\": \"keep history for test\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0020\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"p_retention\",\n      \"to_id\": \"c_transparency\",\n      \"anchor\": \"and digital content transparency\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0020\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"c_infosec\",\n      \"anchor\": \"Information Security\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0020\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"c_retention\",\n      \"anchor\": \"a document retention policy\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0020\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"GV-1.5-003\",\n      \"anchor\": \"GV-1.5-003\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"Information Security\",\n      \"suggested_edge\": \"has_component(Information Security -> document retention policy)\",\n      \"diversion_reason\": \"structural_inference\"\n    },\n    {\n      \"anchor\": \"transparency methods for\",\n      \"suggested_edge\": \"applies_to(p_retention -> object of truncated trailing clause)\",\n      \"diversion_reason\": \"cross_chunk\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"history\", \"type\": \"Concept\"},\n    {\"name\": \"GOVERN function action identifier\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

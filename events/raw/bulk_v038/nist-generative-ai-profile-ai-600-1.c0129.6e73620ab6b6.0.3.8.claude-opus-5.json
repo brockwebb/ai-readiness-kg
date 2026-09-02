@@ -1,0 +1,33 @@
+{
+ "doc_id": "nist-generative-ai-profile-ai-600-1",
+ "chunk_id": "nist-generative-ai-profile-ai-600-1#c0129",
+ "chunk_index": 129,
+ "chunk_start": 117268,
+ "chunk_end": 117593,
+ "chunk_tokens": 72,
+ "heading_path": [
+  "MG-3.2-008"
+ ],
+ "oversize": false,
+ "doc_sha256": "6e73620ab6b64e90ef2c04bf0e0d6246185a2f4b1b13cab0df494496cff89b6a",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 3020,
+  "cacheReadInputTokens": 13027,
+  "cacheCreationInputTokens": 22609,
+  "webSearchRequests": 0,
+  "costUSD": 0.30811350000000004,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 1441,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.30811350000000004,
+ "duration_ms": 31766,
+ "session_id": "08bb740b-3aa5-4151-b212-1936b3f552db",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"NIST AI 600-1 action MG-3.2-008 recommends human moderation of generated content per human-AI configuration policies, socio-cultural norms, and poor-performance settings.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_human_moderation_systems\",\n      \"name\": \"human moderation systems\",\n      \"aliases\": [\"human content moderation\"],\n      \"description\": \"Systems in which humans review AI-generated content, applied where appropriate and especially where models perform poorly.\",\n      \"anchor\": \"human moderation systems\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0129\"\n    },\n    {\n      \"id\": \"c_human_ai_configuration\",\n      \"name\": \"human-AI conﬁguration\",\n      \"aliases\": [\"Human-AI Configuration\"],\n      \"description\": \"The NIST AI RMF cross-sectoral profile category whose policies, established in the Govern function, govern how humans and AI systems are arranged in a task.\",\n      \"anchor\": \"human-AI conﬁguration policies\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0129\"\n    },\n    {\n      \"id\": \"c_socio_cultural_norms\",\n      \"name\": \"socio-cultural norms\",\n      \"aliases\": [\"sociocultural norms\"],\n      \"description\": \"Norms of the context of use with which human moderation of generated content is to be aligned.\",\n      \"anchor\": \"socio-cultural norms\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0129\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [\n    {\n      \"id\": \"p_mg_3_2_008\",\n      \"text\": \"Use human moderation systems where appropriate to review generated content\",\n      \"as_of_date\": null,\n      \"scope\": \"content\",\n      \"anchor\": \"Use human moderation systems\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0129\"\n    }\n  ],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"recommends\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"p_mg_3_2_008\",\n      \"anchor\": \"Use human moderation systems\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0129\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"p_mg_3_2_008\",\n      \"to_id\": \"c_human_ai_configuration\",\n      \"anchor\": \"in accordance with human-AI\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0129\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"c_human_moderation_systems\",\n      \"anchor\": \"human moderation systems\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0129\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"c_human_ai_configuration\",\n      \"anchor\": \"human-AI conﬁguration policies\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0129\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"c_socio_cultural_norms\",\n      \"anchor\": \"socio-cultural norms\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0129\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\"name\": \"MG-3.2-008\", \"anchor\": \"MG-3.2-008\"},\n    {\"name\": \"Govern\", \"anchor\": \"established in the Govern\"},\n    {\"name\": \"generated content\", \"anchor\": \"review generated content\"},\n    {\"name\": \"AI models\", \"anchor\": \"AI models are demonstrated\"}\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"policies established in the Govern\",\n      \"suggested_edge\": \"human-AI conﬁguration policies established_in Govern function\",\n      \"diversion_reason\": \"cross_chunk\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"context of use\", \"type\": \"Concept\"},\n    {\"name\": \"AI model performance\", \"type\": \"Concept\"},\n    {\"name\": \"Component Integration\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

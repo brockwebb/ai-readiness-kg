@@ -1,0 +1,33 @@
+{
+ "doc_id": "nist-generative-ai-profile-ai-600-1",
+ "chunk_id": "nist-generative-ai-profile-ai-600-1#c0019",
+ "chunk_index": 19,
+ "chunk_start": 50217,
+ "chunk_end": 50499,
+ "chunk_tokens": 57,
+ "heading_path": [
+  "GV-1.5-002"
+ ],
+ "oversize": false,
+ "doc_sha256": "6e73620ab6b64e90ef2c04bf0e0d6246185a2f4b1b13cab0df494496cff89b6a",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 3210,
+  "cacheReadInputTokens": 13027,
+  "cacheCreationInputTokens": 22599,
+  "webSearchRequests": 0,
+  "costUSD": 0.3127635,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 1168,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3127635,
+ "duration_ms": 32969,
+ "session_id": "9fc150a2-ffe1-4ca6-918c-ee87dcada775",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"NIST GAI Profile action GV-1.5-002: establish policies and procedures for after action reviews of GAI incident response and disclosures to identify gaps, and update those processes as required; tagged to Human-AI Configuration and Information Security risks.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"cn1\",\n      \"name\": \"after action reviews\",\n      \"aliases\": [\"after-action review\"],\n      \"description\": \"Reviews conducted following GAI system incident response and incident disclosures in order to identify gaps.\",\n      \"anchor\": \"after action reviews\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0019\"\n    },\n    {\n      \"id\": \"cn2\",\n      \"name\": \"incident response\",\n      \"aliases\": [\"GAI incident response\"],\n      \"description\": \"The organizational process for responding to GAI system incidents, subject to after action review and update.\",\n      \"anchor\": \"incident response and incident disclosures\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0019\"\n    },\n    {\n      \"id\": \"cn3\",\n      \"name\": \"incident disclosure\",\n      \"aliases\": [\"incident disclosures\"],\n      \"description\": \"The organizational process for disclosing GAI system incidents, reviewed after action and updated as required.\",\n      \"anchor\": \"incident disclosure processes\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0019\"\n    },\n    {\n      \"id\": \"cn4\",\n      \"name\": \"organizational policies and procedures\",\n      \"aliases\": [\"policies and procedures\"],\n      \"description\": \"Policies and procedures an organization establishes to govern after action reviews of GAI incident handling.\",\n      \"anchor\": \"organizational policies and procedures\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0019\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"cl1\",\n      \"claim_text\": \"Establish organizational policies and procedures for after action reviews of GAI system incident response and incident disclosures, to identify gaps\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"Establish organizational policies\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0019\"\n    },\n    {\n      \"id\": \"cl2\",\n      \"claim_text\": \"Update incident response and incident disclosure processes as required.\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"Update incident response\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0019\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"cl1\",\n      \"anchor\": \"Establish organizational policies\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0019\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"cl2\",\n      \"anchor\": \"Update incident response\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0019\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl1\",\n      \"to_id\": \"cn1\",\n      \"anchor\": \"after action reviews\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0019\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl1\",\n      \"to_id\": \"cn4\",\n      \"anchor\": \"organizational policies and procedures\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0019\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl2\",\n      \"to_id\": \"cn2\",\n      \"anchor\": \"incident response and incident disclosures\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0019\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl2\",\n      \"to_id\": \"cn3\",\n      \"anchor\": \"incident disclosure processes\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0019\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"cn1\",\n      \"anchor\": \"after action reviews\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0019\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"GAI systems\",\n      \"anchor\": \"GAI systems\"\n    },\n    {\n      \"name\": \"incident monitoring\",\n      \"anchor\": \"incident monitoring\"\n    },\n    {\n      \"name\": \"Information Integrity\",\n      \"anchor\": \"Information Integrity\"\n    },\n    {\n      \"name\": \"Human-AI Conﬁguration\",\n      \"anchor\": \"Human-AI Conﬁguration\"\n    },\n    {\n      \"name\": \"Information Security\",\n      \"anchor\": \"Information Security\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"Human-AI Conﬁguration\",\n      \"suggested_edge\": \"action_addresses_risk\",\n      \"diversion_reason\": \"structural_inference\"\n    },\n    {\n      \"anchor\": \"GV-1.5-002\",\n      \"suggested_edge\": \"action_under_subcategory\",\n      \"diversion_reason\": \"cross_chunk\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"GV-1.5-002\", \"type\": \"Concept\"},\n    {\"name\": \"gap identification\", \"type\": \"Concept\"},\n    {\"name\": \"GAI system incident\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

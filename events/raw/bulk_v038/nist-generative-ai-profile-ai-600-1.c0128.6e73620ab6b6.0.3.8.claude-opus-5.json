@@ -1,0 +1,33 @@
+{
+ "doc_id": "nist-generative-ai-profile-ai-600-1",
+ "chunk_id": "nist-generative-ai-profile-ai-600-1#c0128",
+ "chunk_index": 128,
+ "chunk_start": 116999,
+ "chunk_end": 117267,
+ "chunk_tokens": 54,
+ "heading_path": [
+  "MG-3.2-007"
+ ],
+ "oversize": false,
+ "doc_sha256": "6e73620ab6b64e90ef2c04bf0e0d6246185a2f4b1b13cab0df494496cff89b6a",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 2797,
+  "cacheReadInputTokens": 13027,
+  "cacheCreationInputTokens": 22547,
+  "webSearchRequests": 0,
+  "costUSD": 0.3019185,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 1231,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3019185,
+ "duration_ms": 29153,
+ "session_id": "14663aba-a47a-4318-8fd3-ce653f754df3",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"NIST AI 600-1 action MG-3.2-007: leverage organizational board/committee feedback on GAI application deployment and content provenance when using third-party pre-trained models; tagged Information Integrity and Value Chain.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_content_provenance\",\n      \"name\": \"content provenance\",\n      \"aliases\": [\"Content Provenance\"],\n      \"description\": \"Provenance of content, considered alongside deployment of GAI applications when third-party pre-trained models are used.\",\n      \"anchor\": \"content provenance\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0128\"\n    },\n    {\n      \"id\": \"c_third_party_models\",\n      \"name\": \"third-party pre-trained models\",\n      \"aliases\": [\"third-party pretrained models\"],\n      \"description\": \"Pre-trained models sourced from third parties, whose use triggers the board/committee feedback recommendation.\",\n      \"anchor\": \"third-party pre-trained models\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0128\"\n    },\n    {\n      \"id\": \"c_gai_applications\",\n      \"name\": \"GAI applications\",\n      \"aliases\": [\"generative AI applications\"],\n      \"description\": \"Generative AI applications whose deployment is the subject of organizational board or committee feedback.\",\n      \"anchor\": \"GAI applications\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0128\"\n    },\n    {\n      \"id\": \"c_info_integrity\",\n      \"name\": \"Information Integrity\",\n      \"aliases\": [],\n      \"description\": \"Risk category tagged to this action.\",\n      \"anchor\": \"Information Integrity\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0128\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [\n    {\n      \"id\": \"p_mg32007\",\n      \"text\": \"Leverage feedback and recommendations from organizational boards or committees related to the deployment of GAI applications and content provenance when using third-party pre-trained models.\",\n      \"as_of_date\": null,\n      \"scope\": \"content\",\n      \"anchor\": \"Leverage feedback and recommendations\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0128\"\n    }\n  ],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"recommends\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"p_mg32007\",\n      \"anchor\": \"Leverage feedback and recommendations\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0128\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"p_mg32007\",\n      \"to_id\": \"c_content_provenance\",\n      \"anchor\": \"content provenance\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0128\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"p_mg32007\",\n      \"to_id\": \"c_gai_applications\",\n      \"anchor\": \"GAI applications\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0128\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"c_third_party_models\",\n      \"anchor\": \"third-party pre-trained models\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0128\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"c_info_integrity\",\n      \"anchor\": \"Information Integrity\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0128\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\"name\": \"MG-3.2-007\", \"anchor\": \"MG-3.2-007\"},\n    {\"name\": \"organizational boards or committees\", \"anchor\": \"organizational boards or\"},\n    {\"name\": \"Value Chain\", \"anchor\": \"Value Chain\"}\n  ],\n  \"proposed_relationships\": [],\n  \"gleaned\": [\n    {\"name\": \"Component Integration\", \"type\": \"Concept\"},\n    {\"name\": \"deployment of GAI applications\", \"type\": \"Concept\"},\n    {\"name\": \"organizational governance committee\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

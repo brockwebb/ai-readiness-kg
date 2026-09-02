@@ -1,0 +1,33 @@
+{
+ "doc_id": "nist-generative-ai-profile-ai-600-1",
+ "chunk_id": "nist-generative-ai-profile-ai-600-1#c0073",
+ "chunk_index": 73,
+ "chunk_start": 86494,
+ "chunk_end": 87256,
+ "chunk_tokens": 180,
+ "heading_path": [
+  "MS-2.3-004"
+ ],
+ "oversize": false,
+ "doc_sha256": "6e73620ab6b64e90ef2c04bf0e0d6246185a2f4b1b13cab0df494496cff89b6a",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 4113,
+  "cacheReadInputTokens": 13027,
+  "cacheCreationInputTokens": 23015,
+  "webSearchRequests": 0,
+  "costUSD": 0.33949850000000004,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 1989,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.33949850000000004,
+ "duration_ms": 41512,
+ "session_id": "b16b061c-d73c-4a84-88ce-39b6affdf664",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"NIST GAI Profile action MS-2.3-004 (use a purpose-built testing environment such as NIST Dioptra to evaluate GAI trustworthy characteristics), the MEASURE 2.5 statement on validity/reliability and documented generalizability limits, and action MS-2.5-001 (avoid extrapolating GAI performance from anecdotal assessments), each with associated risk tags.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_gai_trustworthy_characteristics\",\n      \"name\": \"GAI trustworthy characteristics\",\n      \"aliases\": [\"trustworthy AI characteristics\"],\n      \"description\": \"The trustworthiness properties of generative AI systems that a purpose-built testing environment is used to empirically evaluate.\",\n      \"anchor\": \"GAI trustworthy characteristics\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0073\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"cl_measure_2_5\",\n      \"claim_text\": \"The AI system to be deployed is demonstrated to be valid and reliable.\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"demonstrated to be valid and reliable\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0073\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [\n    {\n      \"id\": \"p_ms_2_3_004\",\n      \"text\": \"Utilize a purpose-built testing environment such as NIST Dioptra\",\n      \"as_of_date\": null,\n      \"scope\": \"any\",\n      \"anchor\": \"Utilize a purpose-built testing\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0073\"\n    },\n    {\n      \"id\": \"p_ms_2_5_001\",\n      \"text\": \"Avoid extrapolating GAI system performance or capabilities\",\n      \"as_of_date\": null,\n      \"scope\": \"any\",\n      \"anchor\": \"Avoid extrapolating\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0073\"\n    }\n  ],\n  \"tools\": [\n    {\n      \"id\": \"t_dioptra\",\n      \"name\": \"NIST Dioptra\",\n      \"steward\": null,\n      \"license\": null,\n      \"url\": null,\n      \"as_of_date\": null,\n      \"anchor\": \"NIST Dioptra\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0073\"\n    }\n  ],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"c_gai_trustworthy_characteristics\",\n      \"anchor\": \"GAI trustworthy characteristics\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0073\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"cl_measure_2_5\",\n      \"anchor\": \"demonstrated to be valid and reliable\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0073\"\n    },\n    {\n      \"type\": \"recommends\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"p_ms_2_3_004\",\n      \"anchor\": \"Utilize a purpose-built testing\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0073\"\n    },\n    {\n      \"type\": \"recommends\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"p_ms_2_5_001\",\n      \"anchor\": \"Avoid extrapolating\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0073\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"p_ms_2_3_004\",\n      \"to_id\": \"c_gai_trustworthy_characteristics\",\n      \"anchor\": \"empirically\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0073\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\"name\": \"CBRN Information or Capabilities\", \"anchor\": \"CBRN Information or Capabilities\"},\n    {\"name\": \"Confabulation\", \"anchor\": \"Data Privacy; Confabulation\"},\n    {\"name\": \"Information Integrity\", \"anchor\": \"Information Integrity\"},\n    {\"name\": \"Harmful Bias and\", \"anchor\": \"Harmful Bias and\"},\n    {\"name\": \"Human-AI Conﬁguration\", \"anchor\": \"Human-AI Conﬁguration\"},\n    {\"name\": \"AI Deployment, TEVV\", \"anchor\": \"AI Deployment, TEVV\"}\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"such as NIST Dioptra\",\n      \"suggested_edge\": \"practice_uses_tool\",\n      \"from_id\": \"p_ms_2_3_004\",\n      \"to_id\": \"t_dioptra\",\n      \"diversion_reason\": \"other:no_practice_to_tool_edge_type\"\n    },\n    {\n      \"anchor\": \"MEASURE 2.5\",\n      \"suggested_edge\": \"action_under_measure\",\n      \"from_id\": \"p_ms_2_5_001\",\n      \"to_id\": \"cl_measure_2_5\",\n      \"diversion_reason\": \"structural_inference\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"Limitations of the generalizability\", \"type\": \"Claim\"},\n    {\"name\": \"Data Privacy\", \"type\": \"Concept\"},\n    {\"name\": \"Information Security\", \"type\": \"Concept\"},\n    {\"name\": \"Dangerous, Violent, or Hateful Content\", \"type\": \"Concept\"},\n    {\"name\": \"Homogenization\", \"type\": \"Concept\"},\n    {\"name\": \"MS-2.3-004\", \"type\": \"Measure\"},\n    {\"name\": \"MS-2.5-001\", \"type\": \"Measure\"}\n  ]\n}\n```"
+}

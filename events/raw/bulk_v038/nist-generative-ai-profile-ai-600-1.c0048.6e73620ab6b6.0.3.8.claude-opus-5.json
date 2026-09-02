@@ -1,0 +1,33 @@
+{
+ "doc_id": "nist-generative-ai-profile-ai-600-1",
+ "chunk_id": "nist-generative-ai-profile-ai-600-1#c0048",
+ "chunk_index": 48,
+ "chunk_start": 70675,
+ "chunk_end": 70918,
+ "chunk_tokens": 52,
+ "heading_path": [
+  "MP-2.2-001"
+ ],
+ "oversize": false,
+ "doc_sha256": "6e73620ab6b64e90ef2c04bf0e0d6246185a2f4b1b13cab0df494496cff89b6a",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 3249,
+  "cacheReadInputTokens": 13027,
+  "cacheCreationInputTokens": 22563,
+  "webSearchRequests": 0,
+  "costUSD": 0.3133785,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 1321,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3133785,
+ "duration_ms": 34009,
+ "session_id": "e77c70c3-d480-4ce5-87e4-d7e7a11d90e5",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"NIST GAI Profile action MP-2.2-001: identify and document the system's reliance on upstream data sources (including content provenance) and whether it is itself an upstream dependency; risks tagged Information Integrity and Value Chain and Component Integration.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_upstream_data_sources\",\n      \"name\": \"upstream data sources\",\n      \"aliases\": [\"upstream data dependencies\"],\n      \"description\": \"Data sources the system relies on, whose identification and documentation the action requires.\",\n      \"anchor\": \"upstream data sources\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0048\"\n    },\n    {\n      \"id\": \"c_content_provenance\",\n      \"name\": \"content provenance\",\n      \"aliases\": [\"provenance of content\"],\n      \"description\": \"Provenance of content, named as one purpose for which the system relies on upstream data sources.\",\n      \"anchor\": \"content provenance\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0048\"\n    },\n    {\n      \"id\": \"c_upstream_dependency\",\n      \"name\": \"upstream dependency\",\n      \"aliases\": [\"upstream dependency for other systems\"],\n      \"description\": \"The system's own role as an upstream dependency for other systems, which the action requires be documented.\",\n      \"anchor\": \"upstream dependency for\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0048\"\n    },\n    {\n      \"id\": \"c_information_integrity\",\n      \"name\": \"Information Integrity\",\n      \"aliases\": [],\n      \"description\": \"GAI risk category associated with this suggested action.\",\n      \"anchor\": \"Information Integrity\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0048\"\n    },\n    {\n      \"id\": \"c_value_chain\",\n      \"name\": \"Value Chain and Component Integration\",\n      \"aliases\": [\"Value Chain / Component Integration\"],\n      \"description\": \"GAI risk category associated with this suggested action.\",\n      \"anchor\": \"and Component Integration\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0048\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [\n    {\n      \"id\": \"p_mp_2_2_001\",\n      \"text\": \"Identify and document how the system relies on upstream data sources, including for content provenance, and if it serves as an upstream dependency for other systems.\",\n      \"as_of_date\": null,\n      \"scope\": \"any\",\n      \"anchor\": \"Identify and document how the system relies\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0048\"\n    }\n  ],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"recommends\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"p_mp_2_2_001\",\n      \"anchor\": \"Suggested Action\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0048\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"p_mp_2_2_001\",\n      \"to_id\": \"c_upstream_data_sources\",\n      \"anchor\": \"relies on upstream data sources\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0048\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"p_mp_2_2_001\",\n      \"to_id\": \"c_content_provenance\",\n      \"anchor\": \"including for content provenance\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0048\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"p_mp_2_2_001\",\n      \"to_id\": \"c_upstream_dependency\",\n      \"anchor\": \"serves as an upstream dependency\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0048\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"c_information_integrity\",\n      \"anchor\": \"Information Integrity;\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0048\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"c_value_chain\",\n      \"anchor\": \"Value Chain\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0048\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"GAI Risks\",\n      \"anchor\": \"GAI Risks\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"MP-2.2-001 \\nIdentify and document\",\n      \"suggested_edge\": \"has_action_id\",\n      \"diversion_reason\": \"structural_inference\",\n      \"note\": \"Table row associates action identifier MP-2.2-001 with the suggested action text.\"\n    },\n    {\n      \"anchor\": \"Information Integrity; Value Chain\",\n      \"suggested_edge\": \"mitigates_risk\",\n      \"diversion_reason\": \"structural_inference\",\n      \"note\": \"Practice-to-risk-category association is carried by the table column, not by a stated predicate.\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"Action ID\", \"type\": \"Concept\"},\n    {\"name\": \"system\", \"type\": \"Concept\"},\n    {\"name\": \"other systems\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

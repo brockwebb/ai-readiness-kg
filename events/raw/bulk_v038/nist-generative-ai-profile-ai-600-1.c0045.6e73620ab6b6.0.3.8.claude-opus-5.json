@@ -1,0 +1,33 @@
+{
+ "doc_id": "nist-generative-ai-profile-ai-600-1",
+ "chunk_id": "nist-generative-ai-profile-ai-600-1#c0045",
+ "chunk_index": 45,
+ "chunk_start": 69055,
+ "chunk_end": 69422,
+ "chunk_tokens": 80,
+ "heading_path": [
+  "MP-1.2-001"
+ ],
+ "oversize": false,
+ "doc_sha256": "6e73620ab6b64e90ef2c04bf0e0d6246185a2f4b1b13cab0df494496cff89b6a",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 2760,
+  "cacheReadInputTokens": 13027,
+  "cacheCreationInputTokens": 22677,
+  "webSearchRequests": 0,
+  "costUSD": 0.3022935,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 1344,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3022935,
+ "duration_ms": 28652,
+ "session_id": "5e2999fd-388d-4d1a-9c4d-1874daa1f7b1",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"NIST GAI Profile action MP-1.2-001 recommends establishing and empowering interdisciplinary teams to inform and conduct risk measurement and management functions; tagged to the Human-AI Configuration and Harmful Bias and Homogenization risks.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_interdisciplinary_teams\",\n      \"name\": \"interdisciplinary teams\",\n      \"aliases\": [\"cross-disciplinary teams\"],\n      \"description\": \"Teams spanning a wide range of capabilities, competencies, demographic groups, domain expertise, educational backgrounds, lived experiences, professions, and skills across the enterprise.\",\n      \"anchor\": \"empower interdisciplinary teams\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0045\"\n    },\n    {\n      \"id\": \"c_risk_measurement_management\",\n      \"name\": \"risk measurement and management functions\",\n      \"aliases\": [\"AI risk management\"],\n      \"description\": \"The enterprise functions that interdisciplinary teams are to inform and conduct.\",\n      \"anchor\": \"conduct risk measurement and management functions\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0045\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"cl_mp_1_2_001\",\n      \"claim_text\": \"Establish and empower interdisciplinary teams\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"Establish and empower interdisciplinary teams\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0045\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"cl_mp_1_2_001\",\n      \"anchor\": \"Establish and empower interdisciplinary teams\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0045\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_mp_1_2_001\",\n      \"to_id\": \"c_interdisciplinary_teams\",\n      \"anchor\": \"empower interdisciplinary teams\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0045\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_mp_1_2_001\",\n      \"to_id\": \"c_risk_measurement_management\",\n      \"anchor\": \"conduct risk measurement and management functions\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0045\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"c_interdisciplinary_teams\",\n      \"anchor\": \"empower interdisciplinary teams\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0045\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"Human-AI Conﬁguration\",\n      \"anchor\": \"Human-AI Conﬁguration\"\n    },\n    {\n      \"name\": \"MP-1.2-001\",\n      \"anchor\": \"MP-1.2-001\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"Human-AI Conﬁguration\",\n      \"suggested_edge\": \"action_addresses_gai_risk\",\n      \"diversion_reason\": \"other:no_edge_type_for_risk_tagging\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"Harmful Bias and Homogenization\", \"type\": \"Concept\"},\n    {\"name\": \"demographic groups\", \"type\": \"Concept\"},\n    {\"name\": \"domain expertise\", \"type\": \"Concept\"},\n    {\"name\": \"lived experiences\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

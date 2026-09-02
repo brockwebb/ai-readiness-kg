@@ -1,0 +1,33 @@
+{
+ "doc_id": "nist-generative-ai-profile-ai-600-1",
+ "chunk_id": "nist-generative-ai-profile-ai-600-1#c0035",
+ "chunk_index": 35,
+ "chunk_start": 61158,
+ "chunk_end": 61465,
+ "chunk_tokens": 64,
+ "heading_path": [
+  "GV-6.1-004"
+ ],
+ "oversize": false,
+ "doc_sha256": "6e73620ab6b64e90ef2c04bf0e0d6246185a2f4b1b13cab0df494496cff89b6a",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 3763,
+  "cacheReadInputTokens": 13027,
+  "cacheCreationInputTokens": 22604,
+  "webSearchRequests": 0,
+  "costUSD": 0.3266385,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 1662,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3266385,
+ "duration_ms": 38839,
+ "session_id": "8b3bf13d-5b51-4974-9208-b3f709989784",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"NIST AI 600-1 suggested action GV-6.1-004: draft and maintain contracts/SLAs specifying content ownership, usage rights, quality standards, security requirements, and content provenance expectations for GAI systems; tagged Information Integrity, Information Security, Intellectual Property.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_content_provenance\",\n      \"name\": \"content provenance\",\n      \"aliases\": [\"provenance of content\"],\n      \"description\": \"Expectations about the origin and history of content, to be specified contractually for GAI systems.\",\n      \"anchor\": \"content provenance\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0035\"\n    },\n    {\n      \"id\": \"c_content_ownership\",\n      \"name\": \"content ownership\",\n      \"aliases\": [],\n      \"description\": \"Who owns content produced or ingested by GAI systems; a term to be specified in contracts and SLAs.\",\n      \"anchor\": \"content ownership\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0035\"\n    },\n    {\n      \"id\": \"c_usage_rights\",\n      \"name\": \"usage rights\",\n      \"aliases\": [\"content usage rights\"],\n      \"description\": \"Rights governing permitted use of content, to be specified in GAI contracts and SLAs.\",\n      \"anchor\": \"usage rights\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0035\"\n    },\n    {\n      \"id\": \"c_gai_systems\",\n      \"name\": \"GAI systems\",\n      \"aliases\": [\"generative AI systems\"],\n      \"description\": \"The systems whose supplier contracts and SLAs the action governs.\",\n      \"anchor\": \"GAI systems\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0035\"\n    },\n    {\n      \"id\": \"c_intellectual_property\",\n      \"name\": \"Intellectual Property\",\n      \"aliases\": [],\n      \"description\": \"Risk category the suggested action is tagged to.\",\n      \"anchor\": \"Intellectual Property\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0035\"\n    },\n    {\n      \"id\": \"c_information_integrity\",\n      \"name\": \"Information Integrity\",\n      \"aliases\": [],\n      \"description\": \"Risk category the suggested action is tagged to.\",\n      \"anchor\": \"Information Integrity\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0035\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [\n    {\n      \"id\": \"p_contracts_slas\",\n      \"text\": \"Draft and maintain well-de\\ufb01ned contracts and service level agreements (SLAs)\",\n      \"as_of_date\": null,\n      \"scope\": \"content\",\n      \"anchor\": \"service level agreements (SLAs)\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0035\"\n    }\n  ],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"recommends\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"p_contracts_slas\",\n      \"anchor\": \"Draft and maintain\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0035\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"p_contracts_slas\",\n      \"to_id\": \"c_gai_systems\",\n      \"anchor\": \"expectations for GAI\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0035\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"p_contracts_slas\",\n      \"to_id\": \"c_content_provenance\",\n      \"anchor\": \"content provenance\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0035\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"c_content_ownership\",\n      \"anchor\": \"content ownership\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0035\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"c_usage_rights\",\n      \"anchor\": \"usage rights\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0035\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"c_intellectual_property\",\n      \"anchor\": \"Intellectual Property\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0035\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"nist-generative-ai-profile-ai-600-1\",\n      \"to_id\": \"c_information_integrity\",\n      \"anchor\": \"Information Integrity\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0035\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"GV-6.1-004\",\n      \"anchor\": \"GV-6.1-004\"\n    },\n    {\n      \"name\": \"Information \\nSecurity\",\n      \"anchor\": \"Security; Intellectual\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"suggested_edge\": \"applies_to\",\n      \"from_id\": \"p_contracts_slas\",\n      \"to_id\": \"Component Integration\",\n      \"anchor\": \"and Component Integration\",\n      \"diversion_reason\": \"cross_chunk\",\n      \"location\": \"nist-generative-ai-profile-ai-600-1#c0035\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"quality standards\", \"type\": \"Concept\"},\n    {\"name\": \"security requirements\", \"type\": \"Concept\"},\n    {\"name\": \"Information Security\", \"type\": \"Concept\"},\n    {\"name\": \"service level agreement\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}
