@@ -3,6 +3,13 @@
 Scores whether a dataset record carries the DCAT-required descriptive fields, so a
 machine has standardized metadata rather than ad-hoc prose.
 
+Two surfaces, one scoring rule. On the catalog side the record is a data.json
+dataset entry. On a web surface there is no catalog entry, so `evaluate_page`
+reads the page's in-page JSON-LD schema.org Dataset / DataCatalog markup and
+`harness/jsonld.py` normalizes it to these same field names. A page that
+self-describes in JSON-LD is machine-readable metadata by any reasonable reading
+of the rubric; a page that does not carries none, and scores accordingly.
+
 PASS    all four anchor fields present (title, description, keyword, and a
         publisher or contactPoint).
 PARTIAL some but not all present.
@@ -10,7 +17,7 @@ FAIL    essentially none (title only / empty record).
 """
 from __future__ import annotations
 
-from ..records import Score, Track
+from ..records import SOURCE_CATALOG, SOURCE_SITEMAP, Score, Track
 from .base import MetadataProbe
 
 # DCAT-US required/expected descriptive fields used as the conformance anchors.
@@ -21,6 +28,8 @@ class MetadataStandardProbe(MetadataProbe):
     probe_id = "d3_metadata_standard"
     dimension = "D3"
     track = Track.CORE
+    # On a web surface the record comes from in-page JSON-LD (see evaluate_page).
+    sources = (SOURCE_CATALOG, SOURCE_SITEMAP)
 
     def evaluate(self, dataset: dict):
         present = [f for f in _ANCHORS if dataset.get(f)]

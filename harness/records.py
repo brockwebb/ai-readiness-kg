@@ -11,6 +11,19 @@ import enum
 from dataclasses import dataclass
 from typing import Optional
 
+# --- Enumeration sources -----------------------------------------------------
+# Which enumeration produced a target. Carried on every ProbeResult because the
+# rollup partitions on it: catalog distributions and web-surface pages measure
+# DIFFERENT surfaces, and the whole point of the second source is that the two
+# can diverge, so summing them into one number would destroy the finding.
+SOURCE_SITE = "site"          # a well-known path off base_url (robots, sitemap, ...)
+SOURCE_CATALOG = "data.json"  # a distribution or dataset record from the DCAT catalog
+SOURCE_SITEMAP = "sitemap"    # an HTML page sampled from the declared sitemap
+
+# The sources whose results form the web-surface vector, partitioned out of the
+# catalog composite in rollup.py the same way frontier tracks are.
+WEB_SURFACE_SOURCES = (SOURCE_SITEMAP,)
+
 
 class Score(enum.IntEnum):
     """Pass / partial / fail only (2 / 1 / 0).
@@ -72,11 +85,14 @@ class ProbeResult:
     timestamp: str
     # Path to the evidence file written to disk beside the score.
     evidence_path: str
+    # Which enumeration produced this target (SOURCE_* above). Defaults to the
+    # catalog so every pre-existing caller keeps its meaning.
+    source: str = SOURCE_CATALOG
 
     def to_dict(self) -> dict:
         """JSON-serializable record. This is the on-disk audit shape fixed by the
         CC task: {score, evidence, probe_id, target, timestamp, track, as_of_date}
-        plus dimension and evidence_path for the rollup and reviewer."""
+        plus dimension, evidence_path and source for the rollup and reviewer."""
         return {
             "probe_id": self.probe_id,
             "target": self.target,
@@ -87,4 +103,5 @@ class ProbeResult:
             "evidence": self.evidence,
             "timestamp": self.timestamp,
             "evidence_path": self.evidence_path,
+            "source": self.source,
         }

@@ -23,6 +23,30 @@ root_dir = "evidence"
 # much to each evidence file (with a truncation marker) to keep bundles browsable.
 max_evidence_bytes = 524288
 
+[sitemap]
+# Second enumeration source: the agency's public WEB SURFACE, sampled from the
+# sitemap the site itself declares. data.json enumerates catalog distributions
+# only; for an agency whose distributions all sit on one API host, its web
+# products are outside the measurement universe entirely and a refusal there is
+# invisible to the harness. Sampling keeps the probe count polite.
+#
+# Stratification is by section (one child sitemap = one section), so a section
+# cannot be drowned out by a larger one.
+sample_per_section = 3
+# 0 = no cap. Sections are taken in the order the sitemap index lists them.
+max_sections = 0
+# Seeded so the same seed reproduces the same pages. Recorded in the run output
+# beside the sample, so a reviewer can redraw it.
+sample_seed = 20260901
+
+[probes.d2_no_barriers]
+# Number of fetches per target for the barrier probe. An edge that refuses
+# automated clients intermittently makes a single-fetch verdict a coin flip
+# (measured on census.gov/quickfacts 2026-09-01: 2,874 of 4,374 Common Crawl
+# index records for the sitemap URL form are HTTP 403). One fetch cannot
+# distinguish always from sometimes; n fetches record the refusal fraction.
+attempts = 3
+
 # --- Track definitions (the core-vs-frontier firewall, traceable to icsp_notebook
 # task 51fe4574 flagship term "AI-ready data": Part A = core, Part B = frontier) ---
 

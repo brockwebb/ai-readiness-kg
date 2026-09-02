@@ -10,9 +10,11 @@ separated from the urllib call so it is testable without the network.
 """
 from __future__ import annotations
 
+import gzip
 import time
 import urllib.error
 import urllib.request
+import zlib
 from dataclasses import dataclass, field
 from typing import List, Optional, Protocol, Tuple
 
@@ -37,6 +39,10 @@ class Fetched:
     error: Optional[str] = None
     content_type: str = ""
     elapsed_ms: Optional[int] = None
+    # True when the body arrived gzip-compressed and was decompressed before
+    # decoding. Surfaced in the evidence file so the transformation is visible
+    # and never silent (§4).
+    decompressed: bool = False
 
     @property
     def ok(self) -> bool:
@@ -53,6 +59,7 @@ class Fetched:
             f"FINAL:     {self.final_url}",
             f"STATUS:    {self.status}",
             f"ERROR:     {self.error}",
+            f"DECOMPRESSED: {self.decompressed}",
             "HEADERS:",
         ]
         for k in sorted(self.headers):
@@ -75,8 +82,36 @@ def build_fetched(
     """Pure: normalize a raw HTTP response into a Fetched (no network)."""
     headers = {k.lower(): v for k, v in (raw_headers or [])}
     content_type = headers.get("content-type", "").split(";")[0].strip()
+    raw = (raw_bytes or b"")[:max_body_bytes]
+    # A gzipped body decoded as text is unusable to every probe, so decompress
+    # before decoding. The harness never sends Accept-Encoding, so this fires
+    # only when a server compresses unasked or the resource is itself a .gz
+    # (sitemaps are commonly served that way; the two-signal detection, header
+    # plus magic number, is ported from census-web-concept-inventory stage 01).
+    # A truncated gzip stream is decompressed as far as it goes rather than
+    # discarded, so a capped read still yields readable evidence.
+    decompressed = False
+    is_gzip = bool(raw) and (
+        raw[:2] == b"\x1f\x8b"
+        or headers.get("content-encoding", "").lower() == "gzip"
+    )
+    if is_gzip:
+        try:
+            raw = gzip.decompress(raw)
+            decompressed = True
+        except (OSError, EOFError) as exc:
+            try:
+                d = zlib.decompressobj(16 + zlib.MAX_WBITS)
+                partial = d.decompress(raw)
+            except zlib.error:
+                partial = b""
+            if partial:
+                raw = partial
+                decompressed = True
+            else:
+                error = error or f"gzip body could not be decompressed: {exc}"
     try:
-        body = (raw_bytes or b"")[:max_body_bytes].decode("utf-8", errors="replace")
+        body = raw.decode("utf-8", errors="replace")
     except Exception:  # pragma: no cover - decode with errors='replace' won't raise
         body = ""
     return Fetched(
@@ -88,6 +123,7 @@ def build_fetched(
         error=error,
         content_type=content_type,
         elapsed_ms=elapsed_ms,
+        decompressed=decompressed,
     )
 
 

@@ -11,7 +11,7 @@ FAIL    not retrievable.
 from __future__ import annotations
 
 from ..fetch import Fetched
-from ..records import Score, Track
+from ..records import SOURCE_CATALOG, SOURCE_SITEMAP, Score, Track
 from .base import DistributionProbe
 from ._formats import is_machine_format
 
@@ -20,6 +20,8 @@ class ContentNegotiationProbe(DistributionProbe):
     probe_id = "d2_content_negotiation"
     dimension = "D2"
     track = Track.CORE
+    # Asking an HTML page for a machine format is exactly the negotiation test.
+    sources = (SOURCE_CATALOG, SOURCE_SITEMAP)
 
     def evaluate(self, fetched: Fetched, distribution: dict):
         if not fetched.ok:

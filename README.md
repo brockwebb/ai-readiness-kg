@@ -59,28 +59,70 @@ python -m harness.run --list
 # run against specific agencies, politely capped
 python -m harness.run --agency census --agency bea --max-datasets 3 --max-dists-per-dataset 1
 
+# cap the second (web-surface) source, or skip it entirely
+python -m harness.run --agency census --sitemap-sample-size 2 --max-sitemap-sections 3
+python -m harness.run --agency census --no-sitemap
+
 # run all configured agencies
 python -m harness.run
 ```
 Outputs per agency to `results/`:
 - `<agency>_records.json` — every probe result `{probe_id, target, dimension, track,
   score, as_of_date, evidence, timestamp, evidence_path}`
-- `<agency>_rollup.json` — core dimension vectors, core composite, the two frontier
-  tracks (separate), and enumeration metadata.
+- `<agency>_rollup.json` — core dimension vectors, core composite, the web-surface
+  vector (separate), the two frontier tracks (separate), and enumeration metadata
+  for both sources.
 
 Raw evidence is written to `evidence/<agency>/`. Both `results/` and `evidence/`
 are gitignored (regenerable).
 
 ## Configuration (`config/`, no hardcoded tunables — Engineering Standards §2)
 - `harness.toml` — HTTP behavior (user agent, timeout, retries, politeness delay,
-  body cap), evidence location + per-file cap, and the track dating convention.
-- `agencies.toml` — agency catalog roots the enumerator starts from. An agency with
-  no machine-readable catalog is itself a **D1 finding** (recorded, not an error).
+  body cap), evidence location + per-file cap, the track dating convention, the
+  web-surface sampling tunables (`[sitemap]` size, section cap, seed), and the
+  barrier probe's attempt count (`[probes.d2_no_barriers]`).
+- `agencies.toml` — agency catalog roots the enumerator starts from, plus an
+  optional `sitemap_url` recording the expected sitemap index. An agency with no
+  machine-readable catalog is itself a **D1 finding** (recorded, not an error).
+  robots.txt is what the harness actually follows for the sitemap; a difference
+  from the recorded value is reported as drift.
 
-## Target enumeration
-`harness/enumerate_targets.py` parses a Project Open Data / DCAT `data.json` into
-candidate public data-asset endpoints (each distribution's `downloadURL`/`accessURL`).
-No machine-readable catalog → recorded as a D1 finding; the harness keeps going.
+## Target enumeration: two sources, never summed
+**Source 1, the catalog.** `harness/enumerate_targets.py` parses a Project Open Data
+/ DCAT `data.json` into candidate public data-asset endpoints (each distribution's
+`downloadURL`/`accessURL`). No machine-readable catalog → recorded as a D1 finding;
+the harness keeps going.
+
+**Source 2, the web surface.** `harness/enumerate_sitemap.py` walks the sitemap the
+agency's robots.txt declares and takes a seeded, stratified sample of the agency's
+own product pages (one child sitemap = one section). It exists because source 1 is
+not the whole surface: every one of Census's 1,798 catalog distributions sits on
+api.census.gov, so its web products were outside the measurement universe entirely
+and a product that refuses machines at the edge was invisible no matter how many
+distributions the harness probed.
+
+The two are **reported as separate vectors and never summed** (`harness/rollup.py`,
+partitioned on `ProbeResult.source` before any addition, the same way frontier is
+firewalled). They measure different surfaces, the whole point is that they can
+diverge, and a single averaged number would erase the finding. Probes declare which
+sources they apply to (`sources` on the probe class), so a distribution-only
+question such as bulk availability is never forced onto an HTML page.
+
+On a web surface the D3/D4 metadata probes read the page's own **in-page JSON-LD**
+(schema.org `Dataset` / `DataCatalog`), normalized by `harness/jsonld.py` to the
+same DCAT field names the catalog side uses, so one scoring rule covers both.
+
+An evidence-only **catalog completeness** signal is emitted alongside: the fraction
+of sampled pages carrying in-page `Dataset` markup that no `data.json` distribution
+references, with its denominator. It is deliberately not scored, because the rubric scores
+catalog presence, not completeness, and changing that is a rubric decision.
+
+## Barrier intermittency
+`d2_no_barriers` fetches each target n times (`[probes.d2_no_barriers] attempts`,
+default 3) at the politeness delay and scores every attempt. Any refusal fails the
+probe and the evidence carries the refusal fraction and per-attempt statuses. One
+fetch cannot distinguish "always refuses" from "refuses four times in five", and an
+intermittent refusal is still a barrier to a machine that fetches once.
 
 ## Out of scope (deliberately)
 - **M-25-21 AI use-case inventories.** Self-reported and inflation-prone — a

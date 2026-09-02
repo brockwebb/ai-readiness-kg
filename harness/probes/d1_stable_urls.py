@@ -7,7 +7,7 @@ FAIL    does not resolve.
 from __future__ import annotations
 
 from ..fetch import Fetched
-from ..records import Score, Track
+from ..records import SOURCE_CATALOG, SOURCE_SITEMAP, Score, Track
 from .base import DistributionProbe
 from ._formats import looks_session_gated
 
@@ -16,6 +16,8 @@ class StableUrlProbe(DistributionProbe):
     probe_id = "d1_stable_urls"
     dimension = "D1"
     track = Track.CORE
+    # A URL either resolves and is addressable or it does not, on either surface.
+    sources = (SOURCE_CATALOG, SOURCE_SITEMAP)
 
     def evaluate(self, fetched: Fetched, distribution: dict):
         if not fetched.ok:

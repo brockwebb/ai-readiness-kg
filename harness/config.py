@@ -38,6 +38,13 @@ class HarnessConfig:
     max_body_bytes: int
     evidence_root: str
     max_evidence_bytes: int
+    # Web-surface (sitemap) enumeration sampling. Seeded and recorded so the
+    # same seed redraws the same pages.
+    sitemap_sample_per_section: int
+    sitemap_max_sections: int
+    sitemap_sample_seed: int
+    # Fetches per target for d2_no_barriers. > 1 measures refusal intermittency.
+    no_barriers_attempts: int
     # track label -> as_of_date string
     _track_as_of: dict
 
@@ -58,6 +65,22 @@ def load_harness_config(path: Path) -> HarnessConfig:
     http = _require(data, "http", str(path))
     evidence = _require(data, "evidence", str(path))
     tracks = _require(data, "tracks", str(path))
+    sitemap = _require(data, "sitemap", str(path))
+    probes = _require(data, "probes", str(path))
+    no_barriers = _require(probes, "d2_no_barriers", "harness.toml [probes]")
+
+    attempts = _require(no_barriers, "attempts", "harness.toml [probes.d2_no_barriers]")
+    if not isinstance(attempts, int) or attempts < 1:
+        raise ConfigError(
+            f"[probes.d2_no_barriers] attempts must be an integer >= 1 in {path}; "
+            f"got {attempts!r}"
+        )
+    per_section = _require(sitemap, "sample_per_section", "harness.toml [sitemap]")
+    if not isinstance(per_section, int) or per_section < 1:
+        raise ConfigError(
+            f"[sitemap] sample_per_section must be an integer >= 1 in {path}; "
+            f"got {per_section!r}"
+        )
 
     track_as_of = {}
     for label, spec in tracks.items():
@@ -75,6 +98,10 @@ def load_harness_config(path: Path) -> HarnessConfig:
         max_evidence_bytes=_require(
             evidence, "max_evidence_bytes", "harness.toml [evidence]"
         ),
+        sitemap_sample_per_section=per_section,
+        sitemap_max_sections=_require(sitemap, "max_sections", "harness.toml [sitemap]"),
+        sitemap_sample_seed=_require(sitemap, "sample_seed", "harness.toml [sitemap]"),
+        no_barriers_attempts=attempts,
         _track_as_of=track_as_of,
     )
 

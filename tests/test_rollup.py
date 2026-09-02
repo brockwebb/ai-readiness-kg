@@ -1,6 +1,6 @@
 """Per-agency rollup behavior. The load-bearing invariant: frontier-track scores
 NEVER enter the core composite (the access-axis firewall)."""
-from harness.records import Score, Track, ProbeResult
+from harness.records import SOURCE_SITEMAP, Score, Track, ProbeResult
 from harness.rollup import rollup_agency
 
 
@@ -85,3 +85,78 @@ def test_rollup_counts_distinct_targets():
     roll = rollup_agency("example", [a, b])
     assert roll["n_targets"] == 2
     assert roll["agency_id"] == "example"
+
+
+# --- The surface firewall: web-surface results never enter the catalog composite.
+def _w(probe_id, dimension, score, target="https://example.gov/page"):
+    """A web-surface result (source = sitemap)."""
+    return ProbeResult(
+        probe_id=probe_id,
+        target=target,
+        dimension=dimension,
+        track=Track.CORE,
+        score=score,
+        as_of_date="",
+        evidence="",
+        timestamp="2026-09-01T00:00:00Z",
+        evidence_path="evidence/example/p.txt",
+        source=SOURCE_SITEMAP,
+    )
+
+
+def test_web_surface_results_do_not_change_the_catalog_composite():
+    """The firewall this task exists for: Census scored D2 21/24 on catalog
+    distributions while its flagship web product refused machines. A summed D2
+    would erase that, so a page failing every probe must move the catalog
+    composite by exactly zero."""
+    catalog_only = [_r("d2_no_barriers", "D2", Track.CORE, Score.PASS)]
+    with_web = catalog_only + [
+        _w("d2_no_barriers", "D2", Score.FAIL),
+        _w("d1_stable_urls", "D1", Score.FAIL),
+        _w("d3_metadata_standard", "D3", Score.FAIL),
+    ]
+    base = rollup_agency("example", catalog_only)
+    augmented = rollup_agency("example", with_web)
+    assert base["core_composite"] == augmented["core_composite"] == 2
+    assert base["core_composite_max"] == augmented["core_composite_max"] == 2
+    for dim in ("D1", "D2", "D3", "D4"):
+        assert (base["core_dimension_vectors"][dim]
+                == augmented["core_dimension_vectors"][dim])
+
+
+def test_the_two_d2_vectors_are_reported_side_by_side_and_can_diverge():
+    results = [
+        _r("d2_no_barriers", "D2", Track.CORE, Score.PASS),
+        _r("d2_content_negotiation", "D2", Track.CORE, Score.PASS),
+        _w("d2_no_barriers", "D2", Score.FAIL),
+        _w("d2_content_negotiation", "D2", Score.PARTIAL),
+    ]
+    roll = rollup_agency("example", results)
+    assert roll["core_dimension_vectors"]["D2"] == {"score": 4, "max": 4, "n_probes": 2}
+    web_d2 = roll["web_surface"]["core_dimension_vectors"]["D2"]
+    assert web_d2 == {"score": 1, "max": 4, "n_probes": 2}
+    # Neither number is the other's denominator, and nothing sums them.
+    assert roll["web_surface"]["vector_total"] == 1
+    assert roll["web_surface"]["vector_max"] == 4
+
+
+def test_web_surface_targets_and_probe_counts_are_reported_separately():
+    results = [
+        _r("d1_robots", "D1", Track.CORE, Score.PASS),
+        _w("d2_no_barriers", "D2", Score.FAIL, target="https://example.gov/a"),
+        _w("d2_no_barriers", "D2", Score.FAIL, target="https://example.gov/b"),
+    ]
+    roll = rollup_agency("example", results)
+    assert roll["n_targets"] == 1
+    assert roll["web_surface"]["n_targets"] == 2
+    assert roll["web_surface"]["n_probes"] == 2
+    assert roll["web_surface"]["sources"] == [SOURCE_SITEMAP]
+    assert roll["n_probes_web_surface"] == 2
+
+
+def test_an_agency_with_no_web_surface_reports_an_empty_vector_not_a_missing_key():
+    roll = rollup_agency("example", [_r("d1_robots", "D1", Track.CORE, Score.PASS)])
+    assert roll["web_surface"]["n_probes"] == 0
+    assert roll["web_surface"]["vector_max"] == 0
+    for dim in ("D1", "D2", "D3", "D4"):
+        assert roll["web_surface"]["core_dimension_vectors"][dim]["n_probes"] == 0

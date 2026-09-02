@@ -83,3 +83,30 @@ def test_error_artifact_is_not_ok():
     )
     assert f.ok is False
     assert f.error == "timed out"
+
+
+def test_gzipped_body_is_decompressed_and_the_transformation_is_visible():
+    """Sitemaps are commonly served gzipped. A gzipped body decoded as text is
+    unusable to every probe, so it is decompressed, and the evidence file says
+    so, because a silent transformation of the artifact behind a score is not
+    auditable (§4)."""
+    import gzip
+    raw = gzip.compress(b'<urlset><url><loc>https://x.gov/a</loc></url></urlset>')
+    f = build_fetched("https://x.gov/sitemap.xml.gz", "https://x.gov/sitemap.xml.gz",
+                      200, [("Content-Type", "application/xml")], raw)
+    assert f.decompressed is True
+    assert "<loc>https://x.gov/a</loc>" in f.body
+    assert "DECOMPRESSED: True" in f.evidence_text()
+
+
+def test_plain_body_is_untouched_and_not_marked_decompressed():
+    f = build_fetched("https://x.gov/a.csv", "https://x.gov/a.csv", 200,
+                      [("Content-Type", "text/csv")], b"a,b\n1,2\n")
+    assert f.decompressed is False
+    assert f.body == "a,b\n1,2\n"
+
+
+def test_undecompressible_gzip_body_records_an_error_rather_than_garbage():
+    f = build_fetched("https://x.gov/a.gz", "https://x.gov/a.gz", 200,
+                      [("Content-Encoding", "gzip")], b"\x1f\x8b\x08not-really-gzip")
+    assert f.error and "decompress" in f.error
