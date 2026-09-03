@@ -256,6 +256,27 @@ def check_orphans_and_drift(kg_labels, edge_whitelist) -> tuple[dict, dict]:
     return orphan, drift
 
 
+def refuse_if_projection_stale() -> tuple[str, int]:
+    """Refuse to report while the projection lacks the newest declared corpus epoch (task
+    2026-09-02_post_burn_reconciliation §4). Returns (epoch, member count) when current.
+
+    Runs AFTER `check_orphans_and_drift` has replayed the projection, so a refusal here means
+    the newest epoch's members are not reaching the graph at all — a member with no
+    `manifest_add` on the event log, or a replay that drops them — not merely a graph that
+    had not been rebuilt yet. Either way the numbers below would describe a different corpus
+    than the one the epoch declares, so no report is written."""
+    epoch, members = proj.newest_corpus_epoch()
+    missing = proj.missing_epoch_members(proj.projected_document_ids_live(), members)
+    if missing:
+        raise proj.ProjectionStaleError(
+            f"REFUSING TO REPORT: the projection lacks {len(missing)} of {len(members)} "
+            f"documents of the newest corpus epoch {epoch!r}: {missing}. Replay it "
+            f"(python scripts/build_projection.py) and check that every member has a "
+            f"manifest_add event; gate values off a stale projection are not findings.")
+    print(f"projection current: newest epoch {epoch!r}, all {len(members)} members present")
+    return epoch, len(members)
+
+
 def check_empty(events, members) -> dict:
     events = live_events(events)
     extracted_docs, empty_docs = set(), set()
@@ -369,6 +390,7 @@ def main() -> int:
                check_edges(events, schema)]
     orphan, drift = check_orphans_and_drift(kg_labels, edge_whitelist)
     results += [orphan, drift, check_empty(events, members)]
+    refuse_if_projection_stale()          # SystemExit before any report is written
 
     # TEVV gates: only when the retest shard exists (task 2026-08-22_kernel_tevv Phase 5)
     tevv_cfg = yaml.safe_load((REPO / "dixie_evidence.yaml").read_text(encoding="utf-8")).get("tevv_gates")

@@ -31,6 +31,110 @@ from kg import eventlog  # noqa: E402
 
 PROTECTED_DBS = ("wintermute-intake", "fss-policy-kg", "neo4j", "system")
 
+# Read at call time (tests monkeypatch these onto tmp_path; repo convention).
+CONTROLS_PATH = REPO / "controls.yaml"
+DIXIE_DECISIONS = REPO / "corpus" / "evidence" / "decisions.jsonl"
+
+
+class ProjectionStaleError(SystemExit):
+    """The projection does not contain the newest declared corpus epoch. Raised by the gate
+    runner instead of writing a report (task 2026-09-02_post_burn_reconciliation §4): a
+    gate result read off a projection of the PREVIOUS burn is not a finding, it is a
+    fabrication with a timestamp."""
+
+
+def projection_config() -> dict:
+    """controls.yaml `projection:` block (task 2026-09-02_post_burn_reconciliation §4),
+    paths resolved against the repo root, `python` defaulting to this interpreter. Read at
+    call time, never cached. All three keys are required: a missing key is a config defect
+    surfaced before the replay is attempted, never a silent default."""
+    doc = yaml.safe_load(CONTROLS_PATH.read_text(encoding="utf-8")) or {}
+    block = doc.get("projection")
+    if not block:
+        raise SystemExit(f"FATAL: no `projection:` block in {CONTROLS_PATH}")
+    for key in ("replay_script", "stale_marker", "python"):
+        if key not in block:
+            raise SystemExit(f"FATAL: controls.yaml projection block missing {key!r}")
+    return {"replay_script": REPO / block["replay_script"],
+            "stale_marker": REPO / block["stale_marker"],
+            "python": block["python"] or sys.executable}
+
+
+def newest_corpus_epoch() -> tuple[str, list[str]]:
+    """(epoch, sorted member doc_ids) of the LATEST `corpus_epoch_declared` by timestamp.
+
+    Epochs are declared on the dixie evidence ledger (`ts`, members under `payload`) and,
+    for the crosswalk lane, on an event shard (`timestamp`, top-level `epoch`/`members`);
+    both are read, as in `kg.queue.corpus_epochs`. Latest is by declaration time, not file
+    order — the ledger and the shards interleave. An epoch declared more than once (round 2
+    was, four times) unions its member lists."""
+    decls: list[tuple[str, str, list[str]]] = []
+
+    def _absorb(ev: dict) -> None:
+        if ev.get("event_type") != "corpus_epoch_declared":
+            return
+        body = ev.get("payload") or ev
+        members = body.get("member_doc_ids") or body.get("members") or []
+        decls.append((ev.get("ts") or ev.get("timestamp") or "", body["epoch"], list(members)))
+
+    if DIXIE_DECISIONS.is_file():
+        with DIXIE_DECISIONS.open(encoding="utf-8") as fh:
+            for line in fh:
+                if line.strip():
+                    _absorb(json.loads(line))
+    for ev in eventlog.replay():
+        _absorb(ev)
+    if not decls:
+        raise SystemExit("FATAL: no corpus_epoch_declared event anywhere; nothing to check "
+                         "the projection against")
+    newest = max(decls, key=lambda d: d[0])[1]
+    members = sorted({m for _, e, ms in decls if e == newest for m in ms})
+    return newest, members
+
+
+def missing_epoch_members(projected_doc_ids: set[str], members: list[str]) -> list[str]:
+    """Epoch members with no Document node in the projection, in declared order. Pure."""
+    return [m for m in members if m not in projected_doc_ids]
+
+
+def projected_document_ids_live() -> set[str]:
+    """Document ids present in the live projection (opens its own driver)."""
+    uri, user, pw = _neo4j_creds()
+    db = _database()
+    from neo4j import GraphDatabase
+    driver = GraphDatabase.driver(uri, auth=(user, pw))
+    try:
+        with driver.session(database=db) as session:
+            return {r["id"] for r in session.run("MATCH (d:Document) RETURN d.id AS id")}
+    finally:
+        driver.close()
+
+
+def neo4j_reachable() -> bool:
+    """True iff the configured Neo4j answers a connectivity check. Missing credentials, a
+    missing driver, and a refused/unavailable server all read as unreachable — each is a
+    named class, none is swallowed silently: the reason is printed."""
+    try:
+        uri, user, pw = _neo4j_creds()
+    except SystemExit as exc:
+        print(f"neo4j unreachable: {exc}")
+        return False
+    try:
+        from neo4j import GraphDatabase
+        from neo4j.exceptions import DriverError, Neo4jError
+    except ImportError as exc:
+        print(f"neo4j unreachable: driver not importable ({exc})")
+        return False
+    driver = GraphDatabase.driver(uri, auth=(user, pw))
+    try:
+        driver.verify_connectivity()
+        return True
+    except (DriverError, Neo4jError, OSError) as exc:
+        print(f"neo4j unreachable at {uri}: {exc!r}")
+        return False
+    finally:
+        driver.close()
+
 
 def _load_schema() -> dict:
     return yaml.safe_load((REPO / "kg" / "schema.yaml").read_text(encoding="utf-8"))
@@ -441,6 +545,12 @@ def main() -> int:
         counts = build(session, kg_labels, edge_whitelist)
         fp = fingerprint(session, kg_labels)
     driver.close()
+    # A successful replay is, by construction, current: retire the stale marker a burn
+    # close may have left when the graph was unreachable.
+    marker = projection_config()["stale_marker"]
+    if marker.is_file():
+        marker.unlink()
+        print(f"projection_stale marker retired: {marker}")
     print(json.dumps({"database": db, "counts": counts, "fingerprint": fp}, indent=1))
     return 0
 

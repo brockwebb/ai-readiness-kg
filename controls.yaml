@@ -1,7 +1,8 @@
 # Operational switches. External systems (Wintermute control panel)
 # flip these by writing this file. This file is the entire interface.
-schema_version: "0.3"   # 0.2 (2026-08-26, task preemptive_spend_guard): append-only `spend:` block
+schema_version: "0.4"   # 0.2 (2026-08-26, task preemptive_spend_guard): append-only `spend:` block
                         # 0.3 (2026-08-29, task biblio_cron): append-only `jobs:` block
+                        # 0.4 (2026-09-02, task post_burn_reconciliation): append-only `projection:` block
 forage: off
 extract: off
 budgets:
@@ -76,3 +77,18 @@ jobs:
     # the other half of the same denial of service.
     log_max_run_bytes: 2097152
     log_retention_days: 30
+
+# Projection replay at burn close (task 2026-09-02_post_burn_reconciliation §4). The Neo4j
+# graph is a disposable projection of the event log; a burn that writes its last verdict and
+# leaves the graph un-replayed is not closed — the deck task of 2026-09-02 read ZERO
+# `bulk-v038` nodes from a graph the burn had "finished" writing into. The burn driver runs
+# `replay_script` as its final step when Neo4j is reachable; when it is not, it writes
+# `stale_marker` (JSON: reason, profile, written_at, the replay command) and exits 0 — a
+# graph outage never turns a completed burn into a failed one. `python: null` means the
+# driver's own interpreter (sys.executable); the launchd wrapper runs under anaconda, which
+# carries the neo4j driver. scripts/run_baseline_gates.py refuses to write a gate report
+# while the projection lacks the newest declared corpus epoch, marker or no marker.
+projection:
+  replay_script: scripts/build_projection.py
+  stale_marker: state/projection_stale.json
+  python: null

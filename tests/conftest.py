@@ -4,9 +4,16 @@ never touch the real events/, corpus/staging/, or kg/schema.yaml.
 The extraction parser reads the *real* kg/schema.yaml (the authoritative type catalogue);
 only the event log's schema_version read is redirected to a minimal tmp schema.
 """
+import subprocess
+import sys
+from pathlib import Path
+
 import pytest
 
-from kg import eventlog
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
+import build_projection as _proj  # noqa: E402
+
+from kg import eventlog  # noqa: E402
 from kg.extraction import metrics as metrics_mod
 from kg.extraction import staging
 
@@ -116,3 +123,31 @@ def no_writes_to_the_real_substrate_store(monkeypatch, tmp_path_factory):
     from kg.ingest import convert
     monkeypatch.setattr(convert, "_SUBSTRATE_DIR",
                         tmp_path_factory.mktemp("substrate"))
+
+
+# No test touches the live Neo4j projection (task 2026-09-02_post_burn_reconciliation §4).
+# `phase_burn` now closes a completed burn by probing Neo4j and replaying the projection; a
+# test that drives the loop to completion without injecting both would open a real bolt
+# connection and spawn the real scripts/build_projection.py — which happened once, on
+# 2026-09-02 at 21:40Z, and collided with a rebuild in flight. Autouse and loud: the probe
+# and the live document read raise, and a subprocess whose argv names the replay script is
+# refused before it starts. Tests that mean to exercise the close inject their own probe and
+# replay (see tests/test_projection_at_burn_close.py).
+_REPLAY_SCRIPT = "build_projection.py"
+_real_subprocess_run = subprocess.run
+
+
+@pytest.fixture(autouse=True)
+def no_live_projection(monkeypatch):
+    def refuse(*a, **k):
+        raise AssertionError("test reached the live Neo4j projection; inject probe/replay")
+
+    def guarded_run(cmd, *a, **k):
+        argv = cmd if isinstance(cmd, (list, tuple)) else [cmd]
+        if any(_REPLAY_SCRIPT in str(part) for part in argv):
+            raise AssertionError(f"test tried to spawn the real projection replay: {argv}")
+        return _real_subprocess_run(cmd, *a, **k)
+
+    monkeypatch.setattr(_proj, "neo4j_reachable", refuse)
+    monkeypatch.setattr(_proj, "projected_document_ids_live", refuse)
+    monkeypatch.setattr(subprocess, "run", guarded_run)

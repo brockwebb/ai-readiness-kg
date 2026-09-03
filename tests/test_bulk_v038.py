@@ -32,6 +32,9 @@ def plan_isolation(request, monkeypatch):
     The rule: a test that owns an isolated event log (`ext_iso`) drives the REAL plan
     functions, because that is the behaviour it means to test. Every other test gets an empty
     plan and a no-op recorder, so loop tests keep asserting on the plan they construct."""
+    # The burn close (projection replay) is out of scope for every loop test here; the
+    # conftest guard makes the real one raise, so it is stubbed unconditionally.
+    monkeypatch.setattr(rcb, "close_burn", lambda **kw: {"projection": "stubbed_in_test"})
     if "ext_iso" in request.fixturenames or request.node.get_closest_marker("live_plan"):
         return
     monkeypatch.setattr(rcb, "frozen_plan", lambda profile=rcb.PROFILE: [])

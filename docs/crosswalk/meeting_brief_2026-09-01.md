@@ -8,7 +8,8 @@ event log, the spend ledger, the burn state file, or the graph projection.
 ## What exists
 
 The graph covers the federal AI-readiness gray literature and the adjacent standards it leans
-on. 194 documents are admitted, each with a recorded reason for admission and a content hash. 94
+on. 211 documents are admitted, each with a recorded reason for admission and a content hash;
+17 of them are G1-EVAL prior-art sources admitted on 2026-09-02 and not yet extracted. 94
 have been converted to a uniform markdown substrate whose provenance survives conversion, so a
 reader holding only the substrate can say what it derives from and re-verify it. 35 documents
 have been extracted under a single version-pinned profile, across 1,198 chunks, placing
@@ -44,14 +45,13 @@ standards, and both were acquired at the wrong extent originally. Both have now 
 at their canonical source, both clear the substrate quality check, and both hold reserved batch
 identifiers awaiting one request event.
 
-On the demand ledger: 41 units of crosswalk demand are spread across 35 documents. The batches
-in the current scoped burn account for 31 of those units, or 75.6 percent, and complete when the
-run finishes. The two re-acquired standards add 4 more, bringing the total to 35 units or 85.4
-percent. What remains deferred is six documents carrying 6 units between them, three of them
-long specifications that drive the cost, set aside because that group is 58 percent of the
-remaining extraction work for 16 percent of the remaining demand. A further 159 documents are
-deferred because they carry no demand from this operationalization at all, and every one of
-those 159 is measured at zero demand rather than assumed to be. Nothing deferred is lost. The
+On the demand ledger: 43 units of crosswalk demand are spread across 35 documents, and all 43
+units are covered: the burn extracted every one of the 35 demand-bearing documents, including the
+long specifications that had been set aside on cost and were brought back in by the tome runs.
+What the queue now holds is 156 documents deferred because they carry no demand from this
+operationalization at all, every one measured at zero demand rather than assumed to be; 3
+skipped as oversize; and the 17 G1-EVAL sources admitted on 2026-09-02, which carry no request
+yet. Nothing deferred is lost. The
 extraction unit is the chunk, so any deferred content is one request event away, and a request
 can name individual sections rather than a whole document.
 

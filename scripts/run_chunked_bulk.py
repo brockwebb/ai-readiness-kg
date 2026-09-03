@@ -35,12 +35,14 @@ import math
 import os
 import pathlib
 import random
+import subprocess
 import sys
 
 REPO = pathlib.Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO))
 sys.path.insert(0, str(REPO / "scripts"))
 
+import build_projection as proj                                     # noqa: E402
 import chunked_pilot as cp                                          # noqa: E402
 import run_bulk_extraction as rbe                                   # noqa: E402
 from kg import eventlog, queue, spend                               # noqa: E402
@@ -1092,6 +1094,53 @@ def write_burn_state(rows: list[dict], state: "BurnState", b: dict, budget: int,
                       "sprt": b, "sample_budget": budget, "min_facts_for_accept": n_min})
 
 
+def burn_complete(plan: list[dict], settled: dict[str, str], halted: bool = False) -> bool:
+    """A burn is complete when its loop ran to the end and every batch that dispatches work
+    carries a settled verdict. Deferred batches (no dispatch) are out of scope by ADDENDUM-02
+    §2 and never gate closure. Pure."""
+    if halted:
+        return False
+    return all(bt["batch_id"] in settled for bt in plan if bt["dispatch"])
+
+
+def close_burn(probe=None, replay=None) -> dict:
+    """Final step of a COMPLETED burn (task 2026-09-02_post_burn_reconciliation §4): replay
+    the projection so the graph reflects the burn that just closed. The deck task of
+    2026-09-02 read zero `bulk-v038` nodes off a graph nobody had rebuilt.
+
+    Never fails the burn. Unreachable Neo4j, or a replay that exits non-zero, writes the
+    `projection_stale` marker from controls.yaml `projection:` and prints its path; the
+    gate runner refuses to report until a replay succeeds and retires it. `probe` and
+    `replay` are injectable for tests; the defaults are the live reachability check and a
+    subprocess running the configured interpreter on the configured script."""
+    cfg = proj.projection_config()
+    probe = probe or proj.neo4j_reachable
+    if replay is None:
+        def replay() -> int:
+            return subprocess.run([cfg["python"], str(cfg["replay_script"])]).returncode
+    command = [cfg["python"], str(cfg["replay_script"])]
+
+    def _stale(reason: str, detail: str) -> dict:
+        marker = cfg["stale_marker"]
+        marker.parent.mkdir(parents=True, exist_ok=True)
+        marker.write_text(json.dumps({
+            "reason": reason, "detail": detail, "profile": PROFILE, "task": TASK,
+            "written_at": now(), "replay": command}, indent=1) + "\n", encoding="utf-8")
+        print(f"\nPROJECTION STALE ({reason}): {detail}\nmarker written: {marker}\n"
+              f"replay by hand: {' '.join(command)}", flush=True)
+        return {"projection": "stale", "reason": reason, "marker": str(marker)}
+
+    if not probe():
+        return _stale("neo4j_unreachable", "the configured Neo4j did not answer a "
+                                           "connectivity check")
+    print("\nburn complete: replaying the projection", flush=True)
+    rc = replay()
+    if rc != 0:
+        return _stale("replay_failed", f"{' '.join(command)} exited {rc}")
+    print("projection rebuilt", flush=True)
+    return {"projection": "rebuilt"}
+
+
 def phase_burn(a) -> int:
     apply_production_profile(RUN_ID)
     b = sprt_boundaries()
@@ -1144,6 +1193,7 @@ def phase_burn(a) -> int:
         STATE_DIR / "bulk_v038_phase_a.json").is_file() else {}
     state = BurnState()
     ledger_rows = []
+    halted = False
     for bt in plan[: a.max_batches] if a.max_batches else plan:
         bid = bt["batch_id"]
         # Operator halt, checked BETWEEN batches. `bulk_v038` declares a `stop_file` and
@@ -1156,6 +1206,7 @@ def phase_burn(a) -> int:
             print(f"\nSTOP file present ({stop}); halting before {bid}. "
                   f"Remove it to resume — chunk-level resume means nothing is repeated.",
                   flush=True)
+            halted = True
             break
         # The batch id is already unique and says what it is. Deriving the run id from
         # RUN_ID ("bulk_v038_phase_a") produced `bulk_v038_phase_a_bulk_v038_b001`, which
@@ -1285,8 +1336,14 @@ def phase_burn(a) -> int:
         stop = state.should_stop()
         if stop:
             print(f"\nCORPUS STOP: {stop}. Incident-class report; burn halted.")
+            halted = True
             break
     write_burn_state(ledger_rows, state, b, budget, n_min)
+    # Close = last verdict written AND the graph replayed. A `--max-batches` slice is a
+    # partial run by construction and never closes.
+    settled_now = {r["batch_id"]: r["outcome"] for r in ledger_rows}
+    if not a.max_batches and burn_complete(plan, settled_now, halted=halted):
+        close_burn()
     return 0
 
 
