@@ -135,7 +135,8 @@ _HEDGE_RE = re.compile(
 _CUE_RE = re.compile(
     r"\b(margin(?:s)? of error|MOEs?|error|confidence|interval|uncertain\w*|precis\w*|"
     r"reliab\w*|noise|noisy|privacy|budget|variation|CVs?|SEs?|sampling|standard error|"
-    r"caution|suppress\w*|range|bounds?|rho|epsilon|delta|withheld|unpublished|confidential\w*)\b", re.I)
+    r"caution|suppress\w*|range|bounds?|rho|epsilon|delta|withheld|unpublished|confidential\w*|"
+    r"release|released|caveats?|flag\w*|filter\w*|category)\b", re.I)
 
 # 1. "<est> ± <moe>" and bare "± <moe>"
 _PM_RE = re.compile(
@@ -195,13 +196,25 @@ _LEVEL_RE = re.compile(
 _RELIABILITY_RE = re.compile(
     r"\b(?P<flag>(?:(?:very|quite|highly|fairly|reasonably|extremely|considered\s+(?:a\s+)?|deemed\s+(?:a\s+)?)\s+)?"
     r"(?:not\s+(?:very\s+)?)?(?:reliable|unreliable)|use(?:d)?\s+with\s+caution|low\s+reliability|"
-    r"poor\s+(?:precision|reliability)|imprecise|(?:very\s+)?unprecise|not\s+(?:very\s+)?precise)\b", re.I)
-_NEGATIVE_FLAG_RE = re.compile(r"\b(not|un|caution|poor|imprecise|unprecise|low)", re.I)
+    r"poor\s+(?:precision|reliability)|imprecise|(?:very\s+)?unprecise|not\s+(?:very\s+)?precise|"
+    # Producer flag vocabulary (v1, task 2026-09-03 step 2 — fixture-driven, cited to the
+    # admitted sources and added with the fixtures before any elicitation): StatCan 71-543-G
+    # "no release restrictions" / "release with caveats" / "warning to users" / Category 1–3;
+    # NCHS Series 2 "flagged for statistical review" / "flagged for internal review" /
+    # "flagged as unreliable".
+    r"no\s+release\s+restrictions?|release(?:d)?\s+with\s+(?:caveats?|a\s+warning|warnings?)|"
+    r"(?:accompanied\s+by\s+)?(?:a\s+)?warning\s+to\s+users|"
+    r"flagged\s+(?:for\s+(?:statistical|internal)\s+review|as\s+unreliable)|"
+    r"(?:suppressed\s+or\s+)?flagged(?:\s+for\s+review)?|category\s+[123])\b", re.I)
+_NEGATIVE_FLAG_RE = re.compile(r"\b(not|un|caution|poor|imprecise|unprecise|low|caveats?|warning|flag\w*|"
+                               r"category\s+[23]|review)", re.I)
 # 9. suppression
 _SUPPRESSION_RE = re.compile(
     r"\b(?P<s>suppress(?:ed|ion|es)?|withheld|withhold|not\s+(?:be\s+)?published|not\s+releas(?:able|ed)|"
     r"too\s+unreliable\s+to\s+(?:be\s+)?publish(?:ed)?|restrict(?:ed|s)\s+[^.;]{0,40}?from\s+publication|"
-    r"unpublished)\b", re.I)
+    r"unpublished|not\s+recommended\s+for\s+release|(?:should\s+)?not\s+be\s+released|filtered\s+out|"
+    r"minimum\s+(?:estimate\s+)?size\s+for\s+release|below\s+the\s+minimum|not\s+(?:be\s+)?presented|"
+    r"do\s+not\s+present)\b", re.I)
 # 10. DP parameters
 _DP_PARAM_RE = re.compile(
     r"\b(?P<p>rho|ρ|epsilon|ε|delta|δ)\b\s*(?:of|=|is|was|:|equal(?:s)?\s+to|value\s+of|set\s+(?:to|at))?\s*"

@@ -1,0 +1,110 @@
+# G1 SUPPRESSION / RELIABILITY_FLAG fixture sources — task 2026-09-03_g1_eval_v1_parser_fullgrid_errata
+# step 2. Standing path (harvest_triage.py -> manifest_triage.py), epoch g1srp-2026-09-03.
+#
+# Why: the held StatCan 12-539-X 6e text carries no CV band, letter flag or suppressed cell
+# (v0 RESULT §9.2; memo ERRATUM-01), so SUPPRESSION is empty and RELIABILITY_FLAG is below
+# floor. Candidates in the task's order of expected yield; every one admitted-with-reason or
+# cut-with-reason below. The ACS general handbook already held was checked first for the
+# Census CV reliability rule (candidate 4): ch. 7 states "There are no hard-and-fast rules for
+# determining an acceptable range of error in ACS estimates" and points to the Data Suppression
+# page (candidate 5) — the producer publishes no CV band for ACS; the 12 %/40 % thresholds
+# circulating for data.census.gov are an ESRI white paper's, not the Bureau's (web search
+# 2026-09-03), so candidate 4 is cut: not_a_producer_rule.
+settings:
+  user_agent: "WintermuteAcceptance/0.1 (research; brockwebb45@gmail.com)"
+  browser_user_agent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36"
+  discovered_via: "g1-eval-v1-2026-09-03"
+  discovered_via_gap: "g1-eval-v1-2026-09-03"
+  max_doc_chars: 250000
+  min_content_chars: 200
+  timeout_seconds: 60
+  retries: 1
+  spacing_seconds: 1.0
+  crwl_timeout_seconds: 180
+  fit_min_fraction_of_raw: 0.35
+  challenge_markers: ["Just a moment...", "Enable JavaScript and cookies", "Attention Required!", "Access Denied", "verify you are a human"]
+  crwl_filter:
+    type: pruning
+    threshold: 0.45
+    min_word_threshold: 3
+  paywall_domains: [papers.ssrn.com, ssrn.com, onlinelibrary.wiley.com, researchgate.net,
+                    gartner.com, worldscientific.com, sciencedirect.com,
+                    regulations.gov, downloads.regulations.gov, dl.acm.org, ieeexplore.ieee.org]
+  # Resolved by a named lookup in a logged machine search (step 0, F7 named set), not by a
+  # human panel: no vetting provenance is claimed; the entry marks `gap: true`.
+  vetting_input1:
+    source: machine_search_2026-09-02
+    expertise: none_claimed
+    weight: not_vetting
+
+entries:
+  - row: 1
+    doc_id: nchs-2017-data-presentation-standards-proportions
+    title: "National Center for Health Statistics Data Presentation Standards for Proportions"
+    authors_or_org: ["Jennifer D. Parker", "Makram Talih", "Donald J. Malec", "Vladislav Beresovsky", "Matthew Carroll", "Joe Fred Gonzalez Jr.", "Brady E. Hamilton", "Kathleen Ingram", "Deborah D. Ingram", "Sherry L. Murphy", "Sadeq R. Chowdhury", "Yulei He", "Jennifer M. Madans", "Kristin M. Ellis", "David F. Ingram", "Meena Khare"]
+    year: "2017"
+    source_type: federal
+    primary_url: https://www.cdc.gov/nchs/data/series/sr_02/sr02_175.pdf
+    pdf_url: https://www.cdc.gov/nchs/data/series/sr_02/sr02_175.pdf
+    verdict: fetch
+    clause: R1
+    construct_arm: publication_actionability
+    grounding_surface: document
+    gap: true
+    notes: "Vital and Health Statistics Series 2 No. 175. The federal suppression standard for proportions: denominator sample size, Clopper-Pearson CI absolute and relative width rules with explicit do-not-present and present-with-flag outcomes. Primary SUPPRESSION source; also a producer reliability-flag rule."
+  - row: 2
+    doc_id: nchs-2023-data-presentation-standards-rates-counts
+    title: "National Center for Health Statistics Data Presentation Standards for Rates and Counts"
+    authors_or_org: ["Jennifer D. Parker", "Makram Talih", "Guangyu Zhang", "Donald J. Malec", "Brady E. Hamilton", "Andrés A. Berruezo", "Yulei He", "Farida Ahmad", "Lauren M. Rossen", "Sherry L. Murphy", "Deborah D. Ingram"]
+    year: "2023"
+    source_type: federal
+    primary_url: https://www.cdc.gov/nchs/data/series/sr_02/sr02-200.pdf
+    pdf_url: https://www.cdc.gov/nchs/data/series/sr_02/sr02-200.pdf
+    verdict: fetch
+    clause: R1
+    construct_arm: publication_actionability
+    grounding_surface: document
+    gap: true
+    notes: "Vital and Health Statistics Series 2 No. 200 (2023), the companion standard for rates and counts: RSE- and CI-width-based suppression and flagging rules with worked outcomes. SUPPRESSION / RELIABILITY_FLAG source."
+  - row: 3
+    doc_id: statcan-71-543-g-guide-labour-force-survey-2025
+    title: "Guide to the Labour Force Survey, 2025 (Catalogue no. 71-543-G)"
+    authors_or_org: ["Statistics Canada"]
+    year: "2025"
+    source_type: federal
+    primary_url: https://www150.statcan.gc.ca/n1/pub/71-543-g/71-543-g2025001-eng.htm
+    verdict: fetch
+    clause: R1
+    construct_arm: publication_actionability
+    grounding_surface: document
+    gap: true
+    notes: "Current StatCan product guide stating the CV quality-level bands (acceptable 0.0–16.5 %, marginal 16.6–33.3 % flagged M, unacceptable > 33.3 % not released) as the release rule for LFS estimates. RELIABILITY_FLAG bands + SUPPRESSION rule. First current guide stating the bands: admitted; the 71-526-X methodology chapter 8 carries the same construct and is recorded R5-class below."
+  - row: 4
+    doc_id: statcan-71-526-x-lfs-methodology-2017-ch8-data-quality
+    title: "Methodology of the Canadian Labour Force Survey — Chapter 8, Data quality (Catalogue no. 71-526-X)"
+    authors_or_org: ["Statistics Canada"]
+    year: "2017"
+    source_type: federal
+    primary_url: https://www150.statcan.gc.ca/n1/pub/71-526-x/2017001/chapt8-eng.htm
+    verdict: stage_only
+    clause: R5_already_held
+    construct_arm: publication_actionability
+    grounding_surface: document
+    gap: true
+    notes: "Same CV band construct as the 71-543-G guide (row 3); staged with provenance so the citation is reproducible, not admitted (R5-class duplicate of the construct per the task's rule)."
+  - row: 5
+    doc_id: census-acs-data-suppression-rules
+    title: "American Community Survey — Data Suppression (data release rules)"
+    authors_or_org: ["U.S. Census Bureau"]
+    year: "2026"
+    source_type: federal
+    primary_url: https://www.census.gov/programs-surveys/acs/technical-documentation/data-suppression.html
+    # The HTML page is a landing page whose document is the linked PDF (first fetch 2026-09-03
+    # returned the navigation page: 23 KB of chrome + one paragraph); the PDF is the document.
+    pdf_url: https://www2.census.gov/programs-surveys/acs/tech_docs/data_suppression/ACS_Data_Release_Rules.pdf
+    verdict: fetch
+    clause: R1
+    construct_arm: publication_actionability
+    grounding_surface: document
+    gap: true
+    notes: "The ACS data release (filtering) rules the general handbook points to: CV-based table-level suppression for 1-year products. SUPPRESSION producer rule (table-level, not cell-level)."

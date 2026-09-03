@@ -15,7 +15,14 @@ SOURCES = {
     "census-acs-general-handbook-2020": REPO / "corpus/g1eval/census-acs-general-handbook-2020.pdf",
     "ons-uncertainty-and-how-we-measure-it": REPO / "corpus/g1eval/ons-uncertainty-and-how-we-measure-it.md",
     "census-2020-disclosure-avoidance-handbook-2021": REPO / "corpus/g1eval/census-2020-disclosure-avoidance-handbook-2021.pdf",
+    # v1 (task 2026-09-03 step 2, epoch g1srp-2026-09-03)
+    "statcan-71-543-g-guide-labour-force-survey-2025": REPO / "corpus/g1eval/statcan-71-543-g-guide-labour-force-survey-2025.md",
+    "nchs-2017-data-presentation-standards-proportions": REPO / "corpus/g1eval/nchs-2017-data-presentation-standards-proportions.pdf",
+    "nchs-2023-data-presentation-standards-rates-counts": REPO / "corpus/g1eval/nchs-2023-data-presentation-standards-rates-counts.pdf",
+    "census-acs-data-suppression-rules": REPO / "corpus/g1eval/census-acs-data-suppression-rules.pdf",
 }
+# Task floors (2026-09-02 step 3; 2026-09-03 step 2): >= 4 development / >= 2 held-out per class.
+FLOOR = {"propositions.yaml": 4, "propositions_holdout.yaml": 2}
 
 
 @pytest.fixture(scope="module", params=["propositions.yaml", "propositions_holdout.yaml"])
@@ -45,7 +52,15 @@ def test_empty_classes_are_recorded_not_silent(fixture_set):
     for cls, n in counts.items():
         if n == 0:
             assert cls in fixture_set.empty_classes, f"{cls} is empty with no recorded reason"
-    assert "SUPPRESSION" in fixture_set.empty_classes
+
+
+def test_every_class_meets_the_task_floor(fixture_set):
+    """v1: SUPPRESSION and RELIABILITY_FLAG populated from the 2026-09-03 admissions; every
+    class at or above the task floor (a shortfall would be recorded in the header, and the
+    v0 files recorded two)."""
+    floor = FLOOR[Path(fixture_set.path).name]
+    for cls, n in fixture_set.counts_by_class().items():
+        assert n >= floor, (cls, n, floor)
 
 
 def test_loader_normalisation_matches_the_kg_grounding_module():

@@ -145,3 +145,14 @@ def test_scale_words_multiply_and_units_canonicalise():
 def test_empty_text_parses_to_nothing():
     p = parse("")
     assert not p.numbers and not p.qualifiers and not p.cues
+
+
+def test_producer_flag_vocabulary_from_the_2026_09_03_sources():
+    """StatCan 71-543-G and NCHS Series 2 flag/suppression wording (fixture-driven, step 2)."""
+    assert _one("no release restrictions", Q.RELIABILITY_FLAG).polarity == "reliable"
+    assert _one("release with caveats", Q.RELIABILITY_FLAG).polarity == "unreliable"
+    assert _one("flagged for statistical review by the clearance official", Q.RELIABILITY_FLAG).polarity == "unreliable"
+    assert _one("flagged as unreliable", Q.RELIABILITY_FLAG).polarity == "unreliable"
+    for t in ("not recommended for release", "a table is filtered out", "should not be released",
+              "the LFS suppresses estimates below the minimum size for release", "should not be presented"):
+        assert parse(t).of_class(Q.SUPPRESSION), t

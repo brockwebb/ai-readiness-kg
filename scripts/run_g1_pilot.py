@@ -148,6 +148,11 @@ def main(argv=None) -> int:
     ap.add_argument("--dry-run", action="store_true", help="render prompts, count calls, spend nothing")
     ap.add_argument("--max-calls", type=int, default=0, help="0 = walk the whole schedule (until refused)")
     ap.add_argument("--schedule", default=str(CONFIG / "g1_pilot.toml"))
+    ap.add_argument("--split", choices=["dev", "holdout", "all"], default="all",
+                    help="which fixture file's propositions to elicit (task 2026-09-03: the holdout is "
+                         "sealed until the parser freeze, so the dev run passes --split dev)")
+    ap.add_argument("--evidence-dir", default=None,
+                    help="evidence directory (default assessment/evidence/g1; the holdout run uses .../g1/holdout)")
     a = ap.parse_args(argv)
 
     model_stub.guard_no_api_key()
@@ -171,16 +176,27 @@ def main(argv=None) -> int:
                          f"stop and report (task step 6)")
 
     run_id = a.run_id or spend.default_run_id("g1_eval_pilot")
-    probe = PreservationProbe(prompts, EVIDENCE)
+    evidence_dir = Path(a.evidence_dir) if a.evidence_dir else EVIDENCE
+    probe = PreservationProbe(prompts, evidence_dir)
+    # Split selection (task 2026-09-03 step 3/5): a schedule step belongs to the split of
+    # the propositions it elicits. An indirect step on a passage shared by both splits is
+    # scored only for the selected split's propositions.
+    def in_split(pid: str) -> bool:
+        return a.split == "all" or props[pid][0] == a.split
     plan = []
     for s in steps:
         if s["kind"] == "indirect":
-            plan.append({"kind": "indirect", "passage": s["passage"],
-                         "propositions": [p.id for p in passages[s["passage"]]]})
+            pids = [p.id for p in passages[s["passage"]] if in_split(p.id)]
+            if not pids:
+                continue
+            plan.append({"kind": "indirect", "passage": s["passage"], "propositions": pids})
         else:
+            if not in_split(s["proposition"]):
+                continue
             plan.append({"kind": "direct", "proposition": s["proposition"], "qualifier": s["qualifier"]})
     n_calls = len(plan)
-    report = {"task": TASK, "run_id": run_id, "started_at": _now(), "model_id": consumer_cfg.model_id,
+    report = {"task": TASK, "run_id": run_id, "split": a.split, "evidence_dir": str(evidence_dir.relative_to(REPO)),
+              "started_at": _now(), "model_id": consumer_cfg.model_id,
               "prompt_epoch": prompts.prompt_epoch, "ceiling_tokens": a.ceiling_tokens,
               "call_class": consumer_cfg.call_class, "call_class_floor": floor,
               "schedule_calls": n_calls, "schedule_tokens_at_floor": n_calls * floor,
@@ -214,19 +230,33 @@ def main(argv=None) -> int:
             break
         try:
             if step["kind"] == "indirect":
-                plist = passages[step["passage"]]
-                el = probe.elicit(consumer, plist[0], "indirect", call_id=f"{step['passage']}.indirect")
+                plist = [props[pid][1] for pid in step["propositions"]]
+                call_id = f"{step['passage']}.indirect"
+                existing = probe.existing_evidence(call_id, "indirect", None, consumer.model_id)
+                if existing is not None:
+                    el = existing
+                else:
+                    el = probe.elicit(consumer, passages[step["passage"]][0], "indirect", call_id=call_id)
                 new = []
                 for p in plist:
                     el_p = el.__class__(**{**el.__dict__, "proposition_id": p.id})
                     new.extend(probe.records(el_p, p))
             else:
                 which, p = props[step["proposition"]]
-                el = probe.elicit(consumer, p, "direct", step["qualifier"])
+                existing = probe.existing_evidence(p.id, "direct", step["qualifier"], consumer.model_id)
+                if existing is not None:
+                    el = existing
+                else:
+                    el = probe.elicit(consumer, p, "direct", step["qualifier"])
                 new = probe.records(el, p, only_class=step["qualifier"])
             records.extend(new)
-            report["walk"].append({**step, "status": "ok", "evidence_path": str(Path(el.evidence_path).relative_to(REPO)),
+            status = "reused_evidence" if existing is not None else "ok"
+            report["walk"].append({**step, "status": status, "evidence_path": str(Path(el.evidence_path).relative_to(REPO)),
                                    "usage": el.usage, "n_records": len(new)})
+            if existing is not None:
+                print(f"  [{i + 1}/{n_calls}] {step['kind']} {step.get('passage') or step['proposition']} "
+                      f"-> reused {Path(el.evidence_path).name}; {len(new)} record(s)")
+                continue
             print(f"  [{i + 1}/{n_calls}] {step['kind']} {step.get('passage') or step['proposition']} "
                   f"-> {len(new)} record(s); usage {el.usage.get('inputTokens')}/{el.usage.get('outputTokens')} "
                   f"(+cache {el.usage.get('cacheCreationInputTokens')}/{el.usage.get('cacheReadInputTokens')})")
@@ -250,12 +280,14 @@ def main(argv=None) -> int:
     report["expectations"] = expectation_tests(records)
     report["stop_reason"] = stop_reason
     report["calls_made"] = sum(1 for w in report["walk"] if w["status"] == "ok")
+    report["calls_reused"] = sum(1 for w in report["walk"] if w["status"] == "reused_evidence")
     report["spend"] = ledger.status(run_id)
     report["finished_at"] = _now()
     out = RESULTS / f"g1_pilot_{run_id}.json"
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(report, indent=1, ensure_ascii=False, default=str) + "\n", encoding="utf-8")
-    print(f"\nstop: {stop_reason}; calls made {report['calls_made']}/{n_calls}; records {len(records)}")
+    print(f"\nstop: {stop_reason}; calls made {report['calls_made']}/{n_calls} "
+          f"(reused {report['calls_reused']}); records {len(records)}")
     for cls, modes in report["g1"]["observed"]["by_class_and_mode"].items():
         for mode, cell in modes.items():
             print(f"  {cls:16s} {mode:8s} n={cell['n']:2d} scored={cell['n_scored']:2d} "

@@ -1,11 +1,11 @@
 {
  "manifest_version": 2,
  "project": "ai-readiness-kg",
- "generated_at": "2026-09-03T03:12:41.453774+00:00",
+ "generated_at": "2026-09-03T10:49:00.828881+00:00",
  "generator": "dixie.evidence",
  "note": "PROJECTION — rebuilt from the evidence decisions log; do not hand-edit. The log is truth.",
  "counts_by_decision": {
-  "included": 212,
+  "included": 216,
   "excluded": 69,
   "pending_refetch": 40
  },
@@ -4393,10 +4393,17 @@
    },
    "screening": {
     "decision": "included",
-    "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: The producer's own user handbook for the 2020 Census Disclosure Avoidance System: defines the privacy-loss budget (rho, epsilon, delta) as the published uncertainty parameter of a differentially private release, tabulate",
+    "rationale": "manifest-added by rule (clause R1, construct_arm publication_actionability)",
     "decided_by": "cc",
-    "decided_at": "2026-09-03T03:12:40.503581+00:00",
-    "history": [],
+    "decided_at": "2026-09-03",
+    "history": [
+     {
+      "decision": "included",
+      "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: The producer's own user handbook for the 2020 Census Disclosure Avoidance System: defines the privacy-loss budget (rho, epsilon, delta) as the published uncertainty parameter of a differentially private release, tabulate",
+      "decided_by": "cc",
+      "decided_at": "2026-09-03T03:12:40.503581+00:00"
+     }
+    ],
     "identity_gate": {
      "passed": true,
      "checked": [],
@@ -4411,7 +4418,8 @@
     "quarantined": []
    },
    "provenance_sources": [
-    "g1_eval_probe_family_2026-09-02"
+    "g1_eval_probe_family_2026-09-02",
+    "candidate_register"
    ],
    "extra": {
     "observed_files": {
@@ -4446,7 +4454,108 @@
       "checked_at": "2026-09-03T03:12:41.175656+00:00"
      }
     },
-    "added_in": "g1dp-2026-09-02"
+    "added_in": "g1dp-2026-09-02",
+    "notes": [
+     "The producer's own user handbook for the 2020 Census Disclosure Avoidance System: defines the privacy-loss budget (rho, epsilon, delta) as the published uncertainty parameter of a differentially private release, tabulates its allocation by geography and query, and states user-facing accuracy bounds. G1 DP_NOISE fixture source (the only admitted document carrying DP noise parameters beside publishe"
+    ]
+   }
+  },
+  "census-acs-data-suppression-rules": {
+   "doc_id": "census-acs-data-suppression-rules",
+   "identity": {
+    "sha256": "7fdf15e7c8378e0ea682afc33f4a8c7faf926d5c17b478faed9cef152150a372",
+    "canonical_path": "corpus/g1eval/census-acs-data-suppression-rules.pdf",
+    "title": "American Community Survey — Data Suppression (data release rules)",
+    "authors_or_org": [
+     "U.S. Census Bureau"
+    ],
+    "pub_year": "2026",
+    "doc_type": "federal",
+    "source_url": "https://www.census.gov/programs-surveys/acs/technical-documentation/data-suppression.html",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "httpx-pdf",
+    "acquired_at": null,
+    "acquired_by": "scripts/harvest_triage.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed pdf, detected pdf",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "4487276 bytes vs floor 7000",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "12 pages, extractable text present",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-09-03T10:49:00.004912+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: The ACS data release (filtering) rules the general handbook points to: CV-based table-level suppression for 1-year products. SUPPRESSION producer rule (table-level, not cell-level).",
+    "decided_by": "cc",
+    "decided_at": "2026-09-03T10:48:59.315003+00:00",
+    "history": [],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "g1_eval_v1_2026-09-03"
+   ],
+   "extra": {
+    "observed_files": {
+     "corpus/g1eval/census-acs-data-suppression-rules.pdf": {
+      "sha256": "7fdf15e7c8378e0ea682afc33f4a8c7faf926d5c17b478faed9cef152150a372",
+      "size": 4487276,
+      "claimed_type": "pdf",
+      "detected_type": "pdf"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/g1eval/census-acs-data-suppression-rules.pdf": {
+      "path": "corpus/g1eval/census-acs-data-suppression-rules.pdf",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed pdf, detected pdf",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "4487276 bytes vs floor 7000",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "12 pages, extractable text present",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-09-03T10:49:00.004912+00:00"
+     }
+    },
+    "added_in": "g1srp-2026-09-03"
    }
   },
   "census-acs-general-handbook-2020": {
@@ -18914,6 +19023,227 @@
     ]
    }
   },
+  "nchs-2017-data-presentation-standards-proportions": {
+   "doc_id": "nchs-2017-data-presentation-standards-proportions",
+   "identity": {
+    "sha256": "47a0d06b8f79ceb6de2725f1b94eb2320f7f41d64214790395b4bd035bd7b683",
+    "canonical_path": "corpus/g1eval/nchs-2017-data-presentation-standards-proportions.pdf",
+    "title": "National Center for Health Statistics Data Presentation Standards for Proportions",
+    "authors_or_org": [
+     "Jennifer D. Parker",
+     "Makram Talih",
+     "Donald J. Malec",
+     "Vladislav Beresovsky",
+     "Matthew Carroll",
+     "Joe Fred Gonzalez Jr.",
+     "Brady E. Hamilton",
+     "Kathleen Ingram",
+     "Deborah D. Ingram",
+     "Sherry L. Murphy",
+     "Sadeq R. Chowdhury",
+     "Yulei He",
+     "Jennifer M. Madans",
+     "Kristin M. Ellis",
+     "David F. Ingram",
+     "Meena Khare"
+    ],
+    "pub_year": "2017",
+    "doc_type": "federal",
+    "source_url": "https://www.cdc.gov/nchs/data/series/sr_02/sr02_175.pdf",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "httpx-pdf",
+    "acquired_at": null,
+    "acquired_by": "scripts/harvest_triage.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed pdf, detected pdf",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "1627403 bytes vs floor 7000",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "22 pages, extractable text present",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-09-03T10:49:00.261319+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: Vital and Health Statistics Series 2 No. 175. The federal suppression standard for proportions: denominator sample size, Clopper-Pearson CI absolute and relative width rules with explicit do-not-present and present-with-",
+    "decided_by": "cc",
+    "decided_at": "2026-09-03T10:48:58.088345+00:00",
+    "history": [],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "g1_eval_v1_2026-09-03"
+   ],
+   "extra": {
+    "observed_files": {
+     "corpus/g1eval/nchs-2017-data-presentation-standards-proportions.pdf": {
+      "sha256": "47a0d06b8f79ceb6de2725f1b94eb2320f7f41d64214790395b4bd035bd7b683",
+      "size": 1627403,
+      "claimed_type": "pdf",
+      "detected_type": "pdf"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/g1eval/nchs-2017-data-presentation-standards-proportions.pdf": {
+      "path": "corpus/g1eval/nchs-2017-data-presentation-standards-proportions.pdf",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed pdf, detected pdf",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "1627403 bytes vs floor 7000",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "22 pages, extractable text present",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-09-03T10:49:00.261319+00:00"
+     }
+    },
+    "added_in": "g1srp-2026-09-03"
+   }
+  },
+  "nchs-2023-data-presentation-standards-rates-counts": {
+   "doc_id": "nchs-2023-data-presentation-standards-rates-counts",
+   "identity": {
+    "sha256": "7ac7f2037225a083a5023983674dc8b039509becc6ab8d63f56eb6c9244d7a16",
+    "canonical_path": "corpus/g1eval/nchs-2023-data-presentation-standards-rates-counts.pdf",
+    "title": "National Center for Health Statistics Data Presentation Standards for Rates and Counts",
+    "authors_or_org": [
+     "Jennifer D. Parker",
+     "Makram Talih",
+     "Guangyu Zhang",
+     "Donald J. Malec",
+     "Brady E. Hamilton",
+     "Andrés A. Berruezo",
+     "Yulei He",
+     "Farida Ahmad",
+     "Lauren M. Rossen",
+     "Sherry L. Murphy",
+     "Deborah D. Ingram"
+    ],
+    "pub_year": "2023",
+    "doc_type": "federal",
+    "source_url": "https://www.cdc.gov/nchs/data/series/sr_02/sr02-200.pdf",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "httpx-pdf",
+    "acquired_at": null,
+    "acquired_by": "scripts/harvest_triage.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed pdf, detected pdf",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "1230890 bytes vs floor 7000",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "26 pages, extractable text present",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-09-03T10:49:00.527064+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: Vital and Health Statistics Series 2 No. 200 (2023), the companion standard for rates and counts: RSE- and CI-width-based suppression and flagging rules with worked outcomes. SUPPRESSION / RELIABILITY_FLAG source.",
+    "decided_by": "cc",
+    "decided_at": "2026-09-03T10:48:58.469102+00:00",
+    "history": [],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "g1_eval_v1_2026-09-03"
+   ],
+   "extra": {
+    "observed_files": {
+     "corpus/g1eval/nchs-2023-data-presentation-standards-rates-counts.pdf": {
+      "sha256": "7ac7f2037225a083a5023983674dc8b039509becc6ab8d63f56eb6c9244d7a16",
+      "size": 1230890,
+      "claimed_type": "pdf",
+      "detected_type": "pdf"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/g1eval/nchs-2023-data-presentation-standards-rates-counts.pdf": {
+      "path": "corpus/g1eval/nchs-2023-data-presentation-standards-rates-counts.pdf",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed pdf, detected pdf",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "1230890 bytes vs floor 7000",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "26 pages, extractable text present",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-09-03T10:49:00.527064+00:00"
+     }
+    },
+    "added_in": "g1srp-2026-09-03"
+   }
+  },
   "new-absorb-software-report-ai-ambition-in-l-d-outpacing-read": {
    "doc_id": "new-absorb-software-report-ai-ambition-in-l-d-outpacing-read",
    "identity": {
@@ -24242,6 +24572,104 @@
      }
     },
     "added_in": "kernel-v03"
+   }
+  },
+  "statcan-71-543-g-guide-labour-force-survey-2025": {
+   "doc_id": "statcan-71-543-g-guide-labour-force-survey-2025",
+   "identity": {
+    "sha256": "501a9aee5a7e96c92e231ec759621799f692e1003caa739f0ad6d6895760f664",
+    "canonical_path": "corpus/g1eval/statcan-71-543-g-guide-labour-force-survey-2025.md",
+    "title": "Guide to the Labour Force Survey, 2025 (Catalogue no. 71-543-G)",
+    "authors_or_org": [
+     "Statistics Canada"
+    ],
+    "pub_year": "2025",
+    "doc_type": "federal",
+    "source_url": "https://www150.statcan.gc.ca/n1/pub/71-543-g/71-543-g2025001-eng.htm",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "crwl",
+    "acquired_at": null,
+    "acquired_by": "scripts/harvest_triage.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed markdown, detected text",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "176059 bytes vs floor 256",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "175132 chars",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-09-03T10:49:00.532415+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: Current StatCan product guide stating the CV quality-level bands (acceptable 0.0–16.5 %, marginal 16.6–33.3 % flagged M, unacceptable > 33.3 % not released) as the release rule for LFS estimates. RELIABILITY_FLAG bands +",
+    "decided_by": "cc",
+    "decided_at": "2026-09-03T10:48:58.837578+00:00",
+    "history": [],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "g1_eval_v1_2026-09-03"
+   ],
+   "extra": {
+    "observed_files": {
+     "corpus/g1eval/statcan-71-543-g-guide-labour-force-survey-2025.md": {
+      "sha256": "501a9aee5a7e96c92e231ec759621799f692e1003caa739f0ad6d6895760f664",
+      "size": 176059,
+      "claimed_type": "markdown",
+      "detected_type": "text"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/g1eval/statcan-71-543-g-guide-labour-force-survey-2025.md": {
+      "path": "corpus/g1eval/statcan-71-543-g-guide-labour-force-survey-2025.md",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed markdown, detected text",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "176059 bytes vs floor 256",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "175132 chars",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-09-03T10:49:00.532415+00:00"
+     }
+    },
+    "added_in": "g1srp-2026-09-03"
    }
   },
   "statcan-quality-guidelines-6th-edition": {

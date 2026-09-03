@@ -210,8 +210,8 @@ _CUE_WORDS = {
     QualifierClass.CI: ("confidence", "interval", "range", "bound", "bounds", "uncertain"),
     QualifierClass.SE: ("standard error", "error", "se", "ses", "sampling", "uncertain", "precis"),
     QualifierClass.CV: ("variation", "cv", "cvs", "relative", "precis", "reliab"),
-    QualifierClass.RELIABILITY_FLAG: ("reliab", "caution", "precis"),
-    QualifierClass.SUPPRESSION: ("suppress", "withheld", "unpublished", "publish", "confidential"),
+    QualifierClass.RELIABILITY_FLAG: ("reliab", "caution", "precis", "caveat", "flag", "warning", "category"),
+    QualifierClass.SUPPRESSION: ("suppress", "withheld", "unpublished", "publish", "confidential", "release", "filter"),
     QualifierClass.DP_NOISE: ("noise", "noisy", "privacy", "budget", "rho", "epsilon", "delta"),
     QualifierClass.VINTAGE: (),
 }
@@ -551,6 +551,23 @@ class PreservationProbe(EvalProbe):
     def _evidence_path(self, pid: str, mode: str, qualifier_class: Optional[str], model_id: str) -> Path:
         seg = f"{pid}.{mode}" + (f".{qualifier_class}" if qualifier_class else "")
         return self.evidence_root / f"{seg}.{self.prompts.prompt_epoch}.{model_id}.json"
+
+    def existing_evidence(self, pid_or_call: str, mode: str, qualifier_class: Optional[str],
+                          model_id: str) -> Optional[Elicited]:
+        """The persisted exchange for this slot, if one exists — the fetch/evaluate
+        separation working as designed (task 2026-09-03 step 3): evidence is not
+        regenerable, and a slot that has a response is never re-elicited. Returns None
+        when no file exists; a file that cannot be read is an error, not a miss."""
+        path = self._evidence_path(pid_or_call, mode, qualifier_class, model_id)
+        if not path.exists():
+            return None
+        rec = json.loads(path.read_text(encoding="utf-8"))
+        return Elicited(proposition_id=rec["proposition_id"], mode=rec["mode"], prompt=rec["prompt"],
+                        response_text=rec["response_text"], model_id=rec["model_id"],
+                        prompt_epoch=rec["prompt_epoch"], timestamp=rec["timestamp"], evidence_path=str(path),
+                        usage=rec.get("usage") or {}, duration_ms=rec.get("duration_ms"),
+                        cost_usd=rec.get("cost_usd"), spend_run_id=rec.get("spend_run_id"),
+                        spend_reservation_id=rec.get("spend_reservation_id"))
 
     # -- elicit: model half; evidence written BEFORE anything is scored -------------------
     def elicit(self, consumer, proposition, mode: str, qualifier_class: Optional[str] = None,
