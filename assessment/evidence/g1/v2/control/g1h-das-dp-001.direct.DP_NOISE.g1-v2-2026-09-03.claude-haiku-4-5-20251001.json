@@ -1,0 +1,33 @@
+{
+ "proposition_id": "g1h-das-dp-001",
+ "call_id": "g1h-das-dp-001.direct.DP_NOISE",
+ "mode": "direct",
+ "qualifier_class": "DP_NOISE",
+ "compression_level": null,
+ "prompt_epoch": "g1-v2-2026-09-03",
+ "model_id": "claude-haiku-4-5-20251001",
+ "timestamp": "2026-09-03T19:02:39.027486+00:00",
+ "prompt": "In the first part of their analysis, the researchers sought to determine the minimum population size necessary for geographic areas to have reliable demographic characteristics for the purposes of redistricting. Examining census block groups as well as places and minor civil divisions (MCDs), they demonstrated that for any block group with a total population between 450 and 499 people or larger, and for MCDs and places between 200 and 249 or larger, the difference in the largest demographic group as a proportion of the total population between the published 2010 Census tabulations and the 2010 Demonstration PrivacyProtected Microdata File (2021-06-08) is less than or equal to 5 percentage points at least 95 percent of the time. No congressional or state legislative district fails this test; that is, for these districts, the 5-percentage-point criterion holds 100 percent of the time.\n\nWhat is the disclosure-avoidance noise parameter (privacy-loss budget) on the largest difference in the biggest demographic group’s share of total population between the published 2010 tabulations and the 2021-06-08 privacy-protected file, for block groups of 450 or more people?",
+ "response_text": "The text you've provided does not explicitly state the privacy-loss budget (epsilon parameter). \n\nWhat the passage **does** report is the **empirical impact** of the disclosure-avoidance noise applied to the 2010 Census data:\n\n- For block groups of 450+ people: the largest demographic group's share differs by ≤ 5 percentage points from published tabulations at least 95% of the time\n- For congressional and state legislative districts: this holds 100% of the time\n\nThis describes the **observed perturbation** but not the underlying **privacy parameter** (epsilon) that was set during the noise generation process.\n\nTo find the privacy-loss budget itself, you would likely need to:\n1. Check the full technical documentation or appendices of the source document\n2. Look for Census Bureau's disclosure-avoidance methodology reports (e.g., the 2010 Census Demonstration Data Products documentation)\n3. Search Census technical papers on differential privacy implementation for the 2010 Decennial Census\n\nDo you have access to the full source document, or would you like me to help you search for the Census Bureau's official privacy parameter documentation?",
+ "usage": {
+  "inputTokens": 10,
+  "outputTokens": 601,
+  "cacheReadInputTokens": 17631,
+  "cacheCreationInputTokens": 7920,
+  "webSearchRequests": 0,
+  "costUSD": 0.0206181,
+  "contextWindow": 200000,
+  "maxOutputTokens": 32000,
+  "thinkingTokens": 342,
+  "canonicalModel": "claude-haiku-4-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 7105,
+ "cost_usd": 0.0206181,
+ "spend_run_id": "g1_eval_v2_control_2026-09-03",
+ "spend_reservation_id": "470d6ad8b56445f293383f641721bdaf",
+ "source_doc_id": "census-2020-disclosure-avoidance-handbook-2021",
+ "passage_id": "das-blockgroup-accuracy",
+ "surface_type": "prose_labeled"
+}

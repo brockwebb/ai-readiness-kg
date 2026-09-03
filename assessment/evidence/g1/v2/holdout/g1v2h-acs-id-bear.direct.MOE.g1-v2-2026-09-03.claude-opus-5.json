@@ -1,0 +1,33 @@
+{
+ "proposition_id": "g1v2h-acs-id-bear",
+ "call_id": "g1v2h-acs-id-bear.direct.MOE",
+ "mode": "direct",
+ "qualifier_class": "MOE",
+ "compression_level": null,
+ "prompt_epoch": "g1-v2-2026-09-03",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T18:52:30.230128+00:00",
+ "prompt": "[[\"NAME\",\"B19013_001E\",\"B19013_001M\",\"state\",\"county\"],\n[\"Ada County, Idaho\",\"88907\",\"1710\",\"16\",\"001\"],\n[\"Adams County, Idaho\",\"59286\",\"4144\",\"16\",\"003\"],\n[\"Bannock County, Idaho\",\"64080\",\"2470\",\"16\",\"005\"],\n[\"Bear Lake County, Idaho\",\"67304\",\"6987\",\"16\",\"007\"],\n[\"Benewah County, Idaho\",\"56553\",\"3912\",\"16\",\"009\"],\n\nWhat is the margin of error on B19013_001E for \"Bear Lake County, Idaho\"?",
+ "response_text": "**$6,987**\n\nIn that row, `B19013_001E` (median household income estimate) is `67304` and `B19013_001M` — the matching margin of error column — is `6987`. Census ACS MOEs are published at the 90% confidence level, so the interval is roughly $60,317–$74,291.",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 147,
+  "cacheReadInputTokens": 12842,
+  "cacheCreationInputTokens": 16933,
+  "webSearchRequests": 0,
+  "costUSD": 0.179436,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 49,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 3258,
+ "cost_usd": 0.179436,
+ "spend_run_id": "g1_eval_v2_holdout_2026-09-03",
+ "spend_reservation_id": "cf85a4ab4a8642c5a55742fa66173f9f",
+ "source_doc_id": "census-api-acs5-2023-b19013-counties-idaho",
+ "passage_id": "acs-id-block1",
+ "surface_type": "table_coded"
+}

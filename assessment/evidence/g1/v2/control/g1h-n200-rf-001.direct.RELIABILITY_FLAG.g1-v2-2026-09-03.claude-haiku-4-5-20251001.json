@@ -1,0 +1,33 @@
+{
+ "proposition_id": "g1h-n200-rf-001",
+ "call_id": "g1h-n200-rf-001.direct.RELIABILITY_FLAG",
+ "mode": "direct",
+ "qualifier_class": "RELIABILITY_FLAG",
+ "compression_level": null,
+ "prompt_epoch": "g1-v2-2026-09-03",
+ "model_id": "claude-haiku-4-5-20251001",
+ "timestamp": "2026-09-03T19:03:25.339957+00:00",
+ "prompt": "Table A. National Center for Health Statistics standards for rates and counts Statistic Standard for rates Standard for counts Sample size threshold Estimated rates should be based on a minimum sample size and effective sample size (when applicable) of 10 in both numerator and denominator. Estimated counts should be based on a minimum sample size and effective sample size (when applicable) of 10. Confidence interval (CI) If the sample size criteria are met, calculate a 95% two-sided CI using the appropriate method and obtain its relative width. Estimated rates should have a relative CI width of 160% or lower. If the sample size criteria are met, calculate a 95% twosided CI using the appropriate method and obtain its relative width. Estimated counts should have a relative CI width of 160% or lower. Degrees of freedom When applicable for complex surveys, if the sample size and CI criteria are met for presentation and degrees of freedom are fewer than 8 for either numerator or denominator, then the rate should be flagged for statistical review by the clearance official. This review may result in presentation or suppression of the rate. When applicable for complex surveys, if the sample size and CI criteria are met for presentation and degrees of freedom are fewer than 8, then the count should be flagged for statistical review by the clearance official. This review may result in presentation or suppression of the count. SOURCE: National Center for Health Statistics.\n\nWhat is the reliability assessment on the degrees-of-freedom threshold below which an NCHS rate is flagged for statistical review?",
+ "response_text": "The table does not provide a reliability assessment for the degrees-of-freedom threshold. It simply establishes the standard itself: **degrees of freedom fewer than 8** triggers flagging for statistical review by the clearance official.\n\nThe table states the rule mechanically but does not explain:\n- Why 8 was chosen as the threshold\n- What reliability concerns prompted this standard\n- The empirical basis or rationale underlying the threshold\n\nTo find the reliability assessment or justification for this df < 8 threshold, you would need to consult the source documentation from the National Center for Health Statistics—the table cites only the source agency, not the underlying methodology or evidence. That information likely appears in NCHS guidance documents, technical notes, or standards documentation that this table summarizes.",
+ "usage": {
+  "inputTokens": 10,
+  "outputTokens": 639,
+  "cacheReadInputTokens": 17631,
+  "cacheCreationInputTokens": 7989,
+  "webSearchRequests": 0,
+  "costUSD": 0.0209461,
+  "contextWindow": 200000,
+  "maxOutputTokens": 32000,
+  "thinkingTokens": 469,
+  "canonicalModel": "claude-haiku-4-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 7161,
+ "cost_usd": 0.0209461,
+ "spend_run_id": "g1_eval_v2_control_2026-09-03",
+ "spend_reservation_id": "bbde87caa8c149cdbb35cb486f8c41d9",
+ "source_doc_id": "nchs-2023-data-presentation-standards-rates-counts",
+ "passage_id": "nchs200-table-a",
+ "surface_type": "prose_labeled"
+}

@@ -1,0 +1,33 @@
+{
+ "proposition_id": "g1v2h-bls-2026-05-payrolls",
+ "call_id": "g1v2h-bls-2026-05-payrolls.direct.VINTAGE",
+ "mode": "direct",
+ "qualifier_class": "VINTAGE",
+ "compression_level": null,
+ "prompt_epoch": "g1-v2-2026-09-03",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T18:57:48.880409+00:00",
+ "prompt": "Total nonfarm payroll employment increased by 172,000 in May, and the unemployment rate was\nunchanged at 4.3 percent, the U.S. Bureau of Labor Statistics reported today. Job gains\n   For example, the confidence interval for the monthly change in total nonfarm\nemployment from the establishment survey is on the order of plus or minus 122,000.\nSuppose the estimate of nonfarm employment increases by 50,000 from one month to\nthe next. The 90-percent confidence interval on the monthly change would range from\n-72,000 to +172,000 (50,000 +/- 122,000). These figures do not mean that the sample\nresults are off by these magnitudes, but rather that there is about a 90-percent\nchance that the true over-the-month change lies within this interval. Since this\n\nWhat is the reference period or as-of date on the over-the-month change in total nonfarm payroll employment in May 2026?",
+ "response_text": "**Reference period: May 2026 — specifically the pay period that includes the 12th of May 2026** (the establishment/CES survey reference period). Since a monthly change is a difference between two reference periods, it spans the pay period including April 12, 2026 → the pay period including May 12, 2026, and is dated/labeled as May 2026.\n\nA few things worth flagging about that figure:\n\n- **It's an estimate at first publication.** The +172,000 for May is the first (preliminary) estimate. CES revises each month twice — in the following two releases — and again at the annual benchmark, so the \"as-of\" for the *value* is the release date, not just the reference period.\n- **The ±122,000 in your excerpt is the 90% confidence interval on the over-the-month change**, not on the level. Applied to +172,000, the interval is roughly **+50,000 to +294,000** — the change is statistically distinguishable from zero, but only just.\n- **The 4.3% unemployment rate comes from a different survey** (CPS, household survey) with a different reference period: the calendar week containing the 12th of the month. So the two headline numbers in that release aren't referenced to identical windows.",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 576,
+  "cacheReadInputTokens": 12842,
+  "cacheCreationInputTokens": 17051,
+  "webSearchRequests": 0,
+  "costUSD": 0.19134099999999998,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 199,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 9815,
+ "cost_usd": 0.19134099999999998,
+ "spend_run_id": "g1_eval_v2_holdout_2026-09-03",
+ "spend_reservation_id": "266a9c08871a4536969cccebff74ab52",
+ "source_doc_id": "bls-employment-situation-2026-05-news-release-archive",
+ "passage_id": "bls-2026-05-headline-technote",
+ "surface_type": "footnoted"
+}

@@ -1,0 +1,113 @@
+{
+ "task": "cc_tasks/2026-09-03_g1_eval_v2_product_surfaces_compression.md",
+ "note": "C1 only: the control arm's holdout records beside the pinned consumer's holdout records; the two models are never pooled into one rate (D13). No rollup block on purpose.",
+ "C1": {
+  "statement": "the control consumer's loss rate >= the pinned consumer's at every compression level",
+  "by_level": {
+   "none": {
+    "control": {
+     "n": 31,
+     "preserved": 14,
+     "lost": 17,
+     "preservation_rate": 0.451613,
+     "loss_rate": 0.548387,
+     "wilson95_preservation": [
+      0.291617,
+      0.622278
+     ]
+    },
+    "consumer": {
+     "n": 29,
+     "preserved": 17,
+     "lost": 12,
+     "preservation_rate": 0.586207,
+     "loss_rate": 0.413793,
+     "wilson95_preservation": [
+      0.407378,
+      0.744868
+     ]
+    },
+    "verdict": "underpowered"
+   },
+   "short": {
+    "control": {
+     "n": 23,
+     "preserved": 10,
+     "lost": 13,
+     "preservation_rate": 0.434783,
+     "loss_rate": 0.565217,
+     "wilson95_preservation": [
+      0.256346,
+      0.631886
+     ]
+    },
+    "consumer": {
+     "n": 29,
+     "preserved": 15,
+     "lost": 14,
+     "preservation_rate": 0.517241,
+     "loss_rate": 0.482759,
+     "wilson95_preservation": [
+      0.34431,
+      0.686139
+     ]
+    },
+    "verdict": "underpowered"
+   },
+   "tight": {
+    "control": {
+     "n": 27,
+     "preserved": 10,
+     "lost": 17,
+     "preservation_rate": 0.37037,
+     "loss_rate": 0.62963,
+     "wilson95_preservation": [
+      0.215325,
+      0.557708
+     ]
+    },
+    "consumer": {
+     "n": 31,
+     "preserved": 10,
+     "lost": 21,
+     "preservation_rate": 0.322581,
+     "loss_rate": 0.677419,
+     "wilson95_preservation": [
+      0.185694,
+      0.49859
+     ]
+    },
+    "verdict": "underpowered"
+   },
+   "direct": {
+    "control": {
+     "n": 31,
+     "preserved": 26,
+     "lost": 5,
+     "preservation_rate": 0.83871,
+     "loss_rate": 0.16129,
+     "wilson95_preservation": [
+      0.673656,
+      0.929074
+     ]
+    },
+    "consumer": {
+     "n": 32,
+     "preserved": 29,
+     "lost": 3,
+     "preservation_rate": 0.90625,
+     "loss_rate": 0.09375,
+     "wilson95_preservation": [
+      0.757818,
+      0.967598
+     ]
+    },
+    "verdict": "underpowered"
+   }
+  },
+  "verdict": "not supported",
+  "note": "the control arm's records are compared on the HOLDOUT grid only (the arm ran nowhere else); consumer cells here are the pinned consumer's records passed in"
+ },
+ "holdout_opus_file": "assessment/results/g1_v2_holdout.json",
+ "control_file": "assessment/results/g1_v2_control.json"
+}

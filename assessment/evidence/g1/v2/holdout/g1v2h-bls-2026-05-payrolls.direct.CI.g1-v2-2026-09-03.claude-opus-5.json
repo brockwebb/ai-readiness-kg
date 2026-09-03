@@ -1,0 +1,33 @@
+{
+ "proposition_id": "g1v2h-bls-2026-05-payrolls",
+ "call_id": "g1v2h-bls-2026-05-payrolls.direct.CI",
+ "mode": "direct",
+ "qualifier_class": "CI",
+ "compression_level": null,
+ "prompt_epoch": "g1-v2-2026-09-03",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T18:57:36.925246+00:00",
+ "prompt": "Total nonfarm payroll employment increased by 172,000 in May, and the unemployment rate was\nunchanged at 4.3 percent, the U.S. Bureau of Labor Statistics reported today. Job gains\n   For example, the confidence interval for the monthly change in total nonfarm\nemployment from the establishment survey is on the order of plus or minus 122,000.\nSuppose the estimate of nonfarm employment increases by 50,000 from one month to\nthe next. The 90-percent confidence interval on the monthly change would range from\n-72,000 to +172,000 (50,000 +/- 122,000). These figures do not mean that the sample\nresults are off by these magnitudes, but rather that there is about a 90-percent\nchance that the true over-the-month change lies within this interval. Since this\n\nWhat is the confidence interval on the over-the-month change in total nonfarm payroll employment in May 2026?",
+ "response_text": "**+50,000 to +294,000** (a 90-percent confidence interval).\n\nThe May change was +172,000, and the excerpt states the 90-percent confidence interval for the monthly change in total nonfarm employment from the establishment survey is on the order of ±122,000:\n\n- 172,000 − 122,000 = +50,000\n- 172,000 + 122,000 = +294,000\n\nSince the interval excludes zero, the May increase is statistically significant at the 90-percent level.\n\nOne caveat: the excerpt you pasted doesn't carry a year — it just says \"May.\" I've applied the ±122,000 figure as stated in that same text. If the release is from a different reference period, the arithmetic holds but the ±122,000 should be re-checked against that release, since BLS updates the interval periodically.",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 480,
+  "cacheReadInputTokens": 12842,
+  "cacheCreationInputTokens": 17048,
+  "webSearchRequests": 0,
+  "costUSD": 0.18891100000000002,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 224,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 7538,
+ "cost_usd": 0.18891100000000002,
+ "spend_run_id": "g1_eval_v2_holdout_2026-09-03",
+ "spend_reservation_id": "642615311f444e888ed894d1059f07e6",
+ "source_doc_id": "bls-employment-situation-2026-05-news-release-archive",
+ "passage_id": "bls-2026-05-headline-technote",
+ "surface_type": "footnoted"
+}

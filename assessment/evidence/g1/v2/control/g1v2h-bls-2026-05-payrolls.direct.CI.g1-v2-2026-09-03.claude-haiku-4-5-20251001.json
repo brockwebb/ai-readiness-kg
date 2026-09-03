@@ -1,0 +1,33 @@
+{
+ "proposition_id": "g1v2h-bls-2026-05-payrolls",
+ "call_id": "g1v2h-bls-2026-05-payrolls.direct.CI",
+ "mode": "direct",
+ "qualifier_class": "CI",
+ "compression_level": null,
+ "prompt_epoch": "g1-v2-2026-09-03",
+ "model_id": "claude-haiku-4-5-20251001",
+ "timestamp": "2026-09-03T19:46:03.615777+00:00",
+ "prompt": "Total nonfarm payroll employment increased by 172,000 in May, and the unemployment rate was\nunchanged at 4.3 percent, the U.S. Bureau of Labor Statistics reported today. Job gains\n   For example, the confidence interval for the monthly change in total nonfarm\nemployment from the establishment survey is on the order of plus or minus 122,000.\nSuppose the estimate of nonfarm employment increases by 50,000 from one month to\nthe next. The 90-percent confidence interval on the monthly change would range from\n-72,000 to +172,000 (50,000 +/- 122,000). These figures do not mean that the sample\nresults are off by these magnitudes, but rather that there is about a 90-percent\nchance that the true over-the-month change lies within this interval. Since this\n\nWhat is the confidence interval on the over-the-month change in total nonfarm payroll employment in May 2026?",
+ "response_text": "Based on the text provided, the confidence interval on the over-the-month change in total nonfarm payroll employment in May 2026 is:\n\n**50,000 to 294,000**\n\nThis is calculated by taking the reported increase of 172,000 and applying the stated confidence interval of ±122,000:\n- Lower bound: 172,000 - 122,000 = 50,000\n- Upper bound: 172,000 + 122,000 = 294,000\n\nThis represents a 90-percent confidence interval, meaning there is about a 90-percent chance that the true over-the-month change in employment lies within this range.",
+ "usage": {
+  "inputTokens": 10,
+  "outputTokens": 454,
+  "cacheReadInputTokens": 17631,
+  "cacheCreationInputTokens": 7878,
+  "webSearchRequests": 0,
+  "costUSD": 0.0197991,
+  "contextWindow": 200000,
+  "maxOutputTokens": 32000,
+  "thinkingTokens": 296,
+  "canonicalModel": "claude-haiku-4-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 4513,
+ "cost_usd": 0.0197991,
+ "spend_run_id": "g1_eval_v2_control_2026-09-03",
+ "spend_reservation_id": "a04b3c526b594449a5c133c5f748aa8a",
+ "source_doc_id": "bls-employment-situation-2026-05-news-release-archive",
+ "passage_id": "bls-2026-05-headline-technote",
+ "surface_type": "footnoted"
+}

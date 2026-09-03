@@ -1,0 +1,33 @@
+{
+ "proposition_id": "g1v2h-acs-id-ada",
+ "call_id": "acs-id-block1.indirect",
+ "mode": "indirect",
+ "qualifier_class": null,
+ "compression_level": "none",
+ "prompt_epoch": "g1-v2-2026-09-03",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T18:52:01.405234+00:00",
+ "prompt": "Restate the following for a general-audience summary.\n\n[[\"NAME\",\"B19013_001E\",\"B19013_001M\",\"state\",\"county\"],\n[\"Ada County, Idaho\",\"88907\",\"1710\",\"16\",\"001\"],\n[\"Adams County, Idaho\",\"59286\",\"4144\",\"16\",\"003\"],\n[\"Bannock County, Idaho\",\"64080\",\"2470\",\"16\",\"005\"],\n[\"Bear Lake County, Idaho\",\"67304\",\"6987\",\"16\",\"007\"],\n[\"Benewah County, Idaho\",\"56553\",\"3912\",\"16\",\"009\"],",
+ "response_text": "This is a slice of U.S. Census Bureau data — American Community Survey table **B19013, median household income** — for counties in Idaho (state FIPS code 16), listed alphabetically and cut off after the first five.\n\nThe columns mean:\n- **NAME** — the county\n- **B19013_001E** — the *estimate*: the median household income in dollars (half of households earn more, half less)\n- **B19013_001M** — the *margin of error* on that estimate, in dollars (Census reports these at 90% confidence)\n- **state / county** — FIPS geographic codes\n\nIn plain terms:\n\n| County | Typical household income | Give or take |\n|---|---|---|\n| Ada | ~$88,900 | ±$1,700 |\n| Adams | ~$59,300 | ±$4,100 |\n| Bannock | ~$64,100 | ±$2,500 |\n| Bear Lake | ~$67,300 | ±$7,000 |\n| Benewah | ~$56,600 | ±$3,900 |\n\n**The story:** Ada County — home to Boise, the state's population center — stands out, with a typical household bringing in roughly $89,000 a year, about 50% more than the lowest counties shown. The rural counties cluster in the $56,000–$67,000 range.\n\n**One caveat worth keeping:** the margins of error scale with how few people were surveyed. Ada County's figure is tight (±2%), so you can take it at face value. Bear Lake County's is ±$7,000 (over 10%) — its \"$67,304\" really means \"somewhere between about $60,000 and $74,000.\" So Bear Lake looking richer than Bannock is not a difference you should treat as real; the ranges overlap heavily. Comparisons among the small rural counties are much shakier than the headline numbers suggest.",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 682,
+  "cacheReadInputTokens": 12842,
+  "cacheCreationInputTokens": 16917,
+  "webSearchRequests": 0,
+  "costUSD": 0.19265100000000002,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 98,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 10842,
+ "cost_usd": 0.19265100000000002,
+ "spend_run_id": "g1_eval_v2_holdout_2026-09-03",
+ "spend_reservation_id": "d7fb2d089c7d49068fb5dc8b3573356a",
+ "source_doc_id": "census-api-acs5-2023-b19013-counties-idaho",
+ "passage_id": "acs-id-block1",
+ "surface_type": "table_coded"
+}

@@ -1,0 +1,33 @@
+{
+ "proposition_id": "g1v2h-acs-id-bannock",
+ "call_id": "g1v2h-acs-id-bannock.direct.MOE",
+ "mode": "direct",
+ "qualifier_class": "MOE",
+ "compression_level": null,
+ "prompt_epoch": "g1-v2-2026-09-03",
+ "model_id": "claude-haiku-4-5-20251001",
+ "timestamp": "2026-09-03T19:04:03.221430+00:00",
+ "prompt": "[[\"NAME\",\"B19013_001E\",\"B19013_001M\",\"state\",\"county\"],\n[\"Ada County, Idaho\",\"88907\",\"1710\",\"16\",\"001\"],\n[\"Adams County, Idaho\",\"59286\",\"4144\",\"16\",\"003\"],\n[\"Bannock County, Idaho\",\"64080\",\"2470\",\"16\",\"005\"],\n[\"Bear Lake County, Idaho\",\"67304\",\"6987\",\"16\",\"007\"],\n[\"Benewah County, Idaho\",\"56553\",\"3912\",\"16\",\"009\"],\n\nWhat is the margin of error on B19013_001E for \"Bannock County, Idaho\"?",
+ "response_text": "The margin of error on B19013_001E for Bannock County, Idaho is **2470**.\n\nIn Census Bureau data, columns with an \"M\" suffix (like B19013_001**M**) represent the margin of error for the corresponding estimate (B19013_001**E**). So the median household income estimate of 64,080 has a margin of error of ±2,470.",
+ "usage": {
+  "inputTokens": 10,
+  "outputTokens": 319,
+  "cacheReadInputTokens": 17631,
+  "cacheCreationInputTokens": 7795,
+  "webSearchRequests": 0,
+  "costUSD": 0.0189581,
+  "contextWindow": 200000,
+  "maxOutputTokens": 32000,
+  "thinkingTokens": 223,
+  "canonicalModel": "claude-haiku-4-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 3550,
+ "cost_usd": 0.0189581,
+ "spend_run_id": "g1_eval_v2_control_2026-09-03",
+ "spend_reservation_id": "2ecd6cfc69a54a80918a60c1d9e9de9f",
+ "source_doc_id": "census-api-acs5-2023-b19013-counties-idaho",
+ "passage_id": "acs-id-block1",
+ "surface_type": "table_coded"
+}

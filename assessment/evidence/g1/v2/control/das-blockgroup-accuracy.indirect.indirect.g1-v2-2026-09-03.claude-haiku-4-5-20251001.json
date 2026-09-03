@@ -1,0 +1,33 @@
+{
+ "proposition_id": "g1h-das-dp-001",
+ "call_id": "das-blockgroup-accuracy.indirect",
+ "mode": "indirect",
+ "qualifier_class": null,
+ "compression_level": "none",
+ "prompt_epoch": "g1-v2-2026-09-03",
+ "model_id": "claude-haiku-4-5-20251001",
+ "timestamp": "2026-09-03T19:02:13.938992+00:00",
+ "prompt": "Restate the following for a general-audience summary.\n\nIn the first part of their analysis, the researchers sought to determine the minimum population size necessary for geographic areas to have reliable demographic characteristics for the purposes of redistricting. Examining census block groups as well as places and minor civil divisions (MCDs), they demonstrated that for any block group with a total population between 450 and 499 people or larger, and for MCDs and places between 200 and 249 or larger, the difference in the largest demographic group as a proportion of the total population between the published 2010 Census tabulations and the 2010 Demonstration PrivacyProtected Microdata File (2021-06-08) is less than or equal to 5 percentage points at least 95 percent of the time. No congressional or state legislative district fails this test; that is, for these districts, the 5-percentage-point criterion holds 100 percent of the time.",
+ "response_text": "# General-Audience Summary\n\nResearchers wanted to know: how small can a geographic area be and still provide trustworthy information about who lives there—information needed for redrawing election district lines?\n\nThey compared two versions of the 2010 Census data: the original published numbers and a privacy-protected version designed to keep individuals' identities hidden. They tested neighborhoods of different sizes.\n\n**Their finding:** When a neighborhood has at least 200–250 people (depending on the type of area), the privacy-protected version and the original data tell nearly the same story. Specifically, when looking at the largest demographic group in an area, the two versions differ by no more than 5 percentage points at least 95% of the time. This small difference means the privacy-protected data remains reliable enough for redistricting purposes.\n\nFor larger areas—congressional and state legislative districts—the data stays consistent 100% of the time. In other words, even with privacy protections applied, these district-level numbers are completely trustworthy for drawing lines.\n\n**The bottom line:** Census privacy protections don't meaningfully distort the demographic information that matters for redistricting, as long as areas aren't too tiny.",
+ "usage": {
+  "inputTokens": 10,
+  "outputTokens": 467,
+  "cacheReadInputTokens": 17631,
+  "cacheCreationInputTokens": 7867,
+  "webSearchRequests": 0,
+  "costUSD": 0.0198421,
+  "contextWindow": 200000,
+  "maxOutputTokens": 32000,
+  "thinkingTokens": 203,
+  "canonicalModel": "claude-haiku-4-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 6147,
+ "cost_usd": 0.0198421,
+ "spend_run_id": "g1_eval_v2_control_2026-09-03",
+ "spend_reservation_id": "91fbe4885a0a4df28e1fd3c5a50cfe9e",
+ "source_doc_id": "census-2020-disclosure-avoidance-handbook-2021",
+ "passage_id": "das-blockgroup-accuracy",
+ "surface_type": "prose_labeled"
+}

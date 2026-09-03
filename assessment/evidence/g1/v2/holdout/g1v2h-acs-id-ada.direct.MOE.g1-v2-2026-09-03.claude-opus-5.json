@@ -1,0 +1,33 @@
+{
+ "proposition_id": "g1v2h-acs-id-ada",
+ "call_id": "g1v2h-acs-id-ada.direct.MOE",
+ "mode": "direct",
+ "qualifier_class": "MOE",
+ "compression_level": null,
+ "prompt_epoch": "g1-v2-2026-09-03",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T18:52:18.591778+00:00",
+ "prompt": "[[\"NAME\",\"B19013_001E\",\"B19013_001M\",\"state\",\"county\"],\n[\"Ada County, Idaho\",\"88907\",\"1710\",\"16\",\"001\"],\n[\"Adams County, Idaho\",\"59286\",\"4144\",\"16\",\"003\"],\n[\"Bannock County, Idaho\",\"64080\",\"2470\",\"16\",\"005\"],\n[\"Bear Lake County, Idaho\",\"67304\",\"6987\",\"16\",\"007\"],\n[\"Benewah County, Idaho\",\"56553\",\"3912\",\"16\",\"009\"],\n\nWhat is the margin of error on B19013_001E for \"Ada County, Idaho\"?",
+ "response_text": "**$1,710.**\n\nIn Census ACS API output, `B19013_001M` is the margin of error paired with the `B19013_001E` estimate — the `E`/`M` suffixes are the standard ACS estimate/MOE convention. So Ada County's median household income is $88,907 ± $1,710 at 90% confidence (ACS MOEs are published at 90% by default).",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 124,
+  "cacheReadInputTokens": 12842,
+  "cacheCreationInputTokens": 16930,
+  "webSearchRequests": 0,
+  "costUSD": 0.17883100000000002,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 0,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 3193,
+ "cost_usd": 0.17883100000000002,
+ "spend_run_id": "g1_eval_v2_holdout_2026-09-03",
+ "spend_reservation_id": "3ad39d8073ee473e8be0b7fb222c3308",
+ "source_doc_id": "census-api-acs5-2023-b19013-counties-idaho",
+ "passage_id": "acs-id-block1",
+ "surface_type": "table_coded"
+}

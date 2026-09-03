@@ -33,6 +33,7 @@ def main(argv=None) -> int:
     ap.add_argument("--file", required=True)
     ap.add_argument("--data-name", required=True)
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--skip", type=int, default=0, help="resume: skip the first N commands (already registered)")
     a = ap.parse_args(argv)
     r = json.loads(Path(a.file).read_text(encoding="utf-8"))
     models = ", ".join(r["g1"]["observed"].get("model_ids") or [])
@@ -108,6 +109,7 @@ def main(argv=None) -> int:
         print(len(cmds), "results")
         return 0
     ok = 0
+    cmds = cmds[a.skip:]
     for c in cmds:
         out = subprocess.run(c, capture_output=True, text=True, cwd=REPO)
         if out.returncode == 0:

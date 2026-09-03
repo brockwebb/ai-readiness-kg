@@ -1,0 +1,33 @@
+{
+ "proposition_id": "g1h-n200-rf-001",
+ "call_id": "nchs200-table-a.indirect.short",
+ "mode": "indirect",
+ "qualifier_class": null,
+ "compression_level": "short",
+ "prompt_epoch": "g1-v2-2026-09-03",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T18:51:42.937386+00:00",
+ "prompt": "Restate the following for a general-audience summary in no more than two sentences.\n\nTable A. National Center for Health Statistics standards for rates and counts Statistic Standard for rates Standard for counts Sample size threshold Estimated rates should be based on a minimum sample size and effective sample size (when applicable) of 10 in both numerator and denominator. Estimated counts should be based on a minimum sample size and effective sample size (when applicable) of 10. Confidence interval (CI) If the sample size criteria are met, calculate a 95% two-sided CI using the appropriate method and obtain its relative width. Estimated rates should have a relative CI width of 160% or lower. If the sample size criteria are met, calculate a 95% twosided CI using the appropriate method and obtain its relative width. Estimated counts should have a relative CI width of 160% or lower. Degrees of freedom When applicable for complex surveys, if the sample size and CI criteria are met for presentation and degrees of freedom are fewer than 8 for either numerator or denominator, then the rate should be flagged for statistical review by the clearance official. This review may result in presentation or suppression of the rate. When applicable for complex surveys, if the sample size and CI criteria are met for presentation and degrees of freedom are fewer than 8, then the count should be flagged for statistical review by the clearance official. This review may result in presentation or suppression of the count. SOURCE: National Center for Health Statistics.",
+ "response_text": "The National Center for Health Statistics only publishes a rate or count when it rests on at least 10 sampled cases (in both the numerator and denominator, for rates) and when its 95% confidence interval is no wider than 160% of the estimate itself. Even figures that clear both bars get flagged for a statistician's review — and possibly withheld — if the survey data behind them has fewer than 8 degrees of freedom.",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 195,
+  "cacheReadInputTokens": 12842,
+  "cacheCreationInputTokens": 17231,
+  "webSearchRequests": 0,
+  "costUSD": 0.183616,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 61,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 3958,
+ "cost_usd": 0.183616,
+ "spend_run_id": "g1_eval_v2_holdout_2026-09-03",
+ "spend_reservation_id": "9922143e07524d0dbedeb8cd2132a2f9",
+ "source_doc_id": "nchs-2023-data-presentation-standards-rates-counts",
+ "passage_id": "nchs200-table-a",
+ "surface_type": "prose_labeled"
+}
