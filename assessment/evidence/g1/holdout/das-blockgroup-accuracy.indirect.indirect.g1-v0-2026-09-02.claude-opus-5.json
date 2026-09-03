@@ -1,0 +1,31 @@
+{
+ "proposition_id": "g1h-das-dp-001",
+ "call_id": "das-blockgroup-accuracy.indirect",
+ "mode": "indirect",
+ "qualifier_class": null,
+ "prompt_epoch": "g1-v0-2026-09-02",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T11:18:10.294267+00:00",
+ "prompt": "Restate the following for a general-audience summary.\n\nIn the first part of their analysis, the researchers sought to determine the minimum population size necessary for geographic areas to have reliable demographic characteristics for the purposes of redistricting. Examining census block groups as well as places and minor civil divisions (MCDs), they demonstrated that for any block group with a total population between 450 and 499 people or larger, and for MCDs and places between 200 and 249 or larger, the difference in the largest demographic group as a proportion of the total population between the published 2010 Census tabulations and the 2010 Demonstration PrivacyProtected Microdata File (2021-06-08) is less than or equal to 5 percentage points at least 95 percent of the time. No congressional or state legislative district fails this test; that is, for these districts, the 5-percentage-point criterion holds 100 percent of the time.",
+ "response_text": "**General-audience version**\n\nThe first part of the study asked a practical question: how many people does a geographic area need before its demographic numbers can be trusted for drawing voting districts?\n\nThe researchers looked at three kinds of small areas — census block groups, and \"places\" and minor civil divisions (the towns, townships, and similar local units the Census Bureau tracks). For each one, they compared two sets of numbers: the population figures the Census Bureau actually published for 2010, and the figures produced by the Bureau's newer privacy-protection method, tested on that same 2010 data (the June 8, 2021 demonstration file).\n\nTheir test was whether the largest racial or ethnic group's share of an area's population came out about the same under both versions — specifically, within 5 percentage points. They then asked how big an area has to be for that to hold up at least 95 percent of the time.\n\nThe answers:\n\n- **Block groups** need roughly 450 to 500 people or more.\n- **Places and minor civil divisions** need roughly 200 to 250 people or more.\n- **Congressional and state legislative districts** clear the bar every single time — 100 percent — because they are far larger than any of these thresholds.\n\nThe takeaway is that the privacy protections do introduce some distortion, but it is confined to very small areas. Once a geography reaches a few hundred people, the demographic picture stays reliable, and actual voting districts are never at risk on this measure.",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 689,
+  "cacheReadInputTokens": 12840,
+  "cacheCreationInputTokens": 17036,
+  "webSearchRequests": 0,
+  "costUSD": 0.194015,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 237,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 10733,
+ "cost_usd": 0.194015,
+ "spend_run_id": "g1_eval_v1_holdout_2026-09-03",
+ "spend_reservation_id": "25d5aec21bb1474599e7ea3e6ca744d7",
+ "source_doc_id": "census-2020-disclosure-avoidance-handbook-2021",
+ "passage_id": "das-blockgroup-accuracy"
+}

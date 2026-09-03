@@ -1,0 +1,31 @@
+{
+ "proposition_id": "g1h-lfs-sup-002",
+ "call_id": "g1h-lfs-sup-002.direct.SUPPRESSION",
+ "mode": "direct",
+ "qualifier_class": "SUPPRESSION",
+ "prompt_epoch": "g1-v0-2026-09-02",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T11:19:36.311253+00:00",
+ "prompt": "The LFS suppresses estimates below the levels presented in Table 7.4. Table 7.4 Minimum size for release, Canada, provinces and territories Table summaryThis table displays the results of Minimum size for release, Canada, provinces and territories Minimum size for release, calculated using thousands units of measure (appearing as column headers). Minimum size for release --thousands **Source:** Labour Force Survey (3701). Canada | **1.5** Newfoundland and Labrador | 0.5 Prince Edward Island | 0.2 Nova Scotia | 0.5 New Brunswick | 0.5 Quebec | 1.5 Ontario | 1.5 Manitoba | 0.5 Saskatchewan | 0.5 Alberta | 1.5 British Columbia | 1.5 Yukon | 0.2\n\nWhat is the publication status on the minimum estimate size for release, Prince Edward Island (LFS, thousands)?",
+ "response_text": "For Prince Edward Island the minimum size for release is **0.2 thousand (200 persons)**.\n\nPublication status, read from that threshold:\n\n- **≥ 0.2 thousand** — published/released in LFS output for PEI.\n- **< 0.2 thousand** — suppressed. Statistics Canada does not release LFS estimates below the minimum size, on reliability grounds (the underlying sample count is too small for the estimate to be meaningful), not confidentiality per se.\n\nPEI shares the lowest threshold in the table with Yukon (0.2), reflecting its small population; the four largest provinces and Canada as a whole sit at 1.5.\n\nOne caveat on the table as you pasted it: it lists Yukon but not Northwest Territories or Nunavut, though the title says \"provinces and territories.\" If you're working from the full source table, those two rows are likely present and got dropped in the excerpt — worth checking before citing the table as complete.",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 636,
+  "cacheReadInputTokens": 12840,
+  "cacheCreationInputTokens": 17068,
+  "webSearchRequests": 0,
+  "costUSD": 0.19301,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 328,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 9386,
+ "cost_usd": 0.19301,
+ "spend_run_id": "g1_eval_v1_holdout_2026-09-03",
+ "spend_reservation_id": "0db9ba7399384985876cce8c104d3b44",
+ "source_doc_id": "statcan-71-543-g-guide-labour-force-survey-2025",
+ "passage_id": "lfs-minimum-size"
+}

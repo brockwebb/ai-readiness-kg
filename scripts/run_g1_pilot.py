@@ -176,7 +176,7 @@ def main(argv=None) -> int:
                          f"stop and report (task step 6)")
 
     run_id = a.run_id or spend.default_run_id("g1_eval_pilot")
-    evidence_dir = Path(a.evidence_dir) if a.evidence_dir else EVIDENCE
+    evidence_dir = Path(a.evidence_dir).resolve() if a.evidence_dir else EVIDENCE
     probe = PreservationProbe(prompts, evidence_dir)
     # Split selection (task 2026-09-03 step 3/5): a schedule step belongs to the split of
     # the propositions it elicits. An indirect step on a passage shared by both splits is

@@ -1,0 +1,31 @@
+{
+ "proposition_id": "g1h-das-dp-002",
+ "call_id": "g1h-das-dp-002.direct.DP_NOISE",
+ "mode": "direct",
+ "qualifier_class": "DP_NOISE",
+ "prompt_epoch": "g1-v0-2026-09-02",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T11:19:13.015520+00:00",
+ "prompt": "For the 2020 Census Public Law 94-171 redistricting files, the privacy-loss budget was allocated as shown below, where the fractions in each cell represent the share of privacy-loss budget allocated. Privacy-Loss Budget Allocations for the P.L. 94-171 Redistricting Data: United States Global Privacy-Loss Budget: People Global rho . . . . . . . . . . . . . . . . . . 2.56 Global epsilon . . . . . . . . . . . . . . . 17.14 Delta . . . . . . . . . . . . . . . . . . . . . . . 10–10 Source: U.S. Census Bureau. Privacy-Loss Budget: People Geographic level Rho allocation United States . . . . . . . . . . . . . . . 104/4,099 State . . . . . . . . . . . . . . . . . . . . . . . 1,440/4,099 County . . . . . . . . . . . . . . . . . . . . . 447/4,099 Tract . . . . . . . . . . . . . . . . . . . . . . . 687/4,099 Optimized block group1 . . . . . . 1,256/4,099 Block . . . . . . . . . . . . . . . . . . . . . . 165/4,099\n\nWhat is the disclosure-avoidance noise parameter (privacy-loss budget) on the share of the people privacy-loss budget (rho) allocated to the state geographic level in the P.L. 94-171 redistricting data?",
+ "response_text": "**1,440/4,099** — about 35.1% of the people privacy-loss budget.\n\nThe state level receives the largest single share of any geographic level in the P.L. 94-171 allocation. In absolute terms that works out to roughly ρ ≈ 0.899 of the global ρ = 2.56 (1,440/4,099 × 2.56 = 0.8993).\n\nFor context, the full allocation ranks: state (1,440/4,099) > optimized block group (1,256/4,099) > tract (687/4,099) > county (447/4,099) > block (165/4,099) > United States (104/4,099).",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 349,
+  "cacheReadInputTokens": 12840,
+  "cacheCreationInputTokens": 17240,
+  "webSearchRequests": 0,
+  "costUSD": 0.187555,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 152,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 6317,
+ "cost_usd": 0.187555,
+ "spend_run_id": "g1_eval_v1_holdout_2026-09-03",
+ "spend_reservation_id": "47b96fbd824a454ba7fbec51ea30a057",
+ "source_doc_id": "census-2020-disclosure-avoidance-handbook-2021",
+ "passage_id": "das-plb-people"
+}

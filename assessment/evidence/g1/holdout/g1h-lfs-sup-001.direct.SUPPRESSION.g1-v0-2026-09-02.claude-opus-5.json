@@ -1,0 +1,31 @@
+{
+ "proposition_id": "g1h-lfs-sup-001",
+ "call_id": "g1h-lfs-sup-001.direct.SUPPRESSION",
+ "mode": "direct",
+ "qualifier_class": "SUPPRESSION",
+ "prompt_epoch": "g1-v0-2026-09-02",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T11:19:24.733186+00:00",
+ "prompt": "The LFS suppresses estimates below the levels presented in Table 7.4. Table 7.4 Minimum size for release, Canada, provinces and territories Table summaryThis table displays the results of Minimum size for release, Canada, provinces and territories Minimum size for release, calculated using thousands units of measure (appearing as column headers). Minimum size for release --thousands **Source:** Labour Force Survey (3701). Canada | **1.5** Newfoundland and Labrador | 0.5 Prince Edward Island | 0.2 Nova Scotia | 0.5 New Brunswick | 0.5 Quebec | 1.5 Ontario | 1.5 Manitoba | 0.5 Saskatchewan | 0.5 Alberta | 1.5 British Columbia | 1.5 Yukon | 0.2\n\nWhat is the publication status on the minimum estimate size for release, Ontario (LFS, thousands)?",
+ "response_text": "**Ontario's threshold is 1.5 thousand (1,500 persons).**\n\nPublication status follows mechanically from the rule stated above the table — \"The LFS suppresses estimates below the levels presented in Table 7.4\":\n\n- Estimate **< 1,500** → suppressed, not released.\n- Estimate **≥ 1,500** → released.\n\nSo there's no separate \"status\" value for Ontario in the table; 1.5 thousand *is* the release cutoff. Ontario sits in the highest tier alongside Canada, Quebec, Alberta, and British Columbia — the large populations get the coarsest floor, since a 1,500-person estimate there rests on few enough sample cases to be unreliable and disclosure-sensitive.\n\nOne caveat on the excerpt: the table as pasted ends at Yukon (0.2) and is missing Northwest Territories and Nunavut, so it's truncated relative to the published Table 7.4. That doesn't affect the Ontario answer.",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 594,
+  "cacheReadInputTokens": 12840,
+  "cacheCreationInputTokens": 17064,
+  "webSearchRequests": 0,
+  "costUSD": 0.19191999999999998,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 271,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 9533,
+ "cost_usd": 0.19191999999999998,
+ "spend_run_id": "g1_eval_v1_holdout_2026-09-03",
+ "spend_reservation_id": "5fd69b9aec9246bcbfc9027a578a5919",
+ "source_doc_id": "statcan-71-543-g-guide-labour-force-survey-2025",
+ "passage_id": "lfs-minimum-size"
+}

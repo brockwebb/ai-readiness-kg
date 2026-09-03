@@ -1,0 +1,31 @@
+{
+ "proposition_id": "g1h-n200-rf-001",
+ "call_id": "g1h-n200-rf-001.direct.RELIABILITY_FLAG",
+ "mode": "direct",
+ "qualifier_class": "RELIABILITY_FLAG",
+ "prompt_epoch": "g1-v0-2026-09-02",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T11:21:22.342199+00:00",
+ "prompt": "Table A. National Center for Health Statistics standards for rates and counts Statistic Standard for rates Standard for counts Sample size threshold Estimated rates should be based on a minimum sample size and effective sample size (when applicable) of 10 in both numerator and denominator. Estimated counts should be based on a minimum sample size and effective sample size (when applicable) of 10. Confidence interval (CI) If the sample size criteria are met, calculate a 95% two-sided CI using the appropriate method and obtain its relative width. Estimated rates should have a relative CI width of 160% or lower. If the sample size criteria are met, calculate a 95% twosided CI using the appropriate method and obtain its relative width. Estimated counts should have a relative CI width of 160% or lower. Degrees of freedom When applicable for complex surveys, if the sample size and CI criteria are met for presentation and degrees of freedom are fewer than 8 for either numerator or denominator, then the rate should be flagged for statistical review by the clearance official. This review may result in presentation or suppression of the rate. When applicable for complex surveys, if the sample size and CI criteria are met for presentation and degrees of freedom are fewer than 8, then the count should be flagged for statistical review by the clearance official. This review may result in presentation or suppression of the count. SOURCE: National Center for Health Statistics.\n\nWhat is the reliability assessment on the degrees-of-freedom threshold below which an NCHS rate is flagged for statistical review?",
+ "response_text": "**Threshold: fewer than 8 degrees of freedom** (df < 8).\n\nFrom Table A, the degrees-of-freedom row — and note the assessment is conditional, not a standalone reliability verdict:\n\n- **Applicability**: \"when applicable for complex surveys\" only.\n- **Precondition**: the sample-size criterion (min 10) and the CI criterion (relative 95% CI width ≤ 160%) must *already* have been met for presentation. The df rule never rescues an estimate that failed those two — it only adds scrutiny to one that passed.\n- **Scope for rates**: df fewer than 8 **for either numerator or denominator** triggers the flag. (For counts there is a single df, no numerator/denominator split.)\n- **Consequence**: the rate is not automatically suppressed. It is \"flagged for statistical review by the clearance official,\" and \"this review may result in presentation or suppression of the rate.\"\n\nSo the reliability assessment at df < 8 is *indeterminate pending human adjudication* — a third state alongside present/suppress, unlike the sample-size and CI criteria which are mechanical pass/fail.",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 565,
+  "cacheReadInputTokens": 12840,
+  "cacheCreationInputTokens": 17249,
+  "webSearchRequests": 0,
+  "costUSD": 0.193045,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 195,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 8741,
+ "cost_usd": 0.193045,
+ "spend_run_id": "g1_eval_v1_holdout_2026-09-03",
+ "spend_reservation_id": "5da44d2f807742328365c3f4e76df8ef",
+ "source_doc_id": "nchs-2023-data-presentation-standards-rates-counts",
+ "passage_id": "nchs200-table-a"
+}

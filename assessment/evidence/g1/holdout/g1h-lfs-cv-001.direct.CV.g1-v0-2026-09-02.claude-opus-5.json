@@ -1,0 +1,31 @@
+{
+ "proposition_id": "g1h-lfs-cv-001",
+ "call_id": "g1h-lfs-cv-001.direct.CV",
+ "mode": "direct",
+ "qualifier_class": "CV",
+ "prompt_epoch": "g1-v0-2026-09-02",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T11:19:53.826579+00:00",
+ "prompt": "For example, in January 2024, there were 28,000 unemployed persons in Newfoundland and Labrador and 275,900 participants in the labour force, giving an unemployment rate of 10.4%. Table 7.1 gives the CVs for the two counts as 5.0% and 2.5%, respectively. An approximation of the CV for the unemployment rate of 10.4% using the above formula would be: 5.0% + 2.5% = 7.5%\n\nWhat is the coefficient of variation on the unemployment rate in Newfoundland and Labrador in January 2024?",
+ "response_text": "**7.5%** — using the approximation given: CV(rate) ≈ CV(numerator) + CV(denominator) = 5.0% + 2.5%.\n\nWorth flagging: that additive rule is a deliberately conservative upper bound. The unemployment count is a subset of the labour force, so the two estimates are positively correlated, and the exact ratio CV is CV² = CV_num² + CV_den² − 2ρ·CV_num·CV_den — strictly smaller than the additive result. Statistics Canada publishes the sum because it's simple and never understates the error; the true CV on the 10.4% rate is materially lower (on the order of 4–5%).",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 570,
+  "cacheReadInputTokens": 12840,
+  "cacheCreationInputTokens": 16938,
+  "webSearchRequests": 0,
+  "costUSD": 0.19006000000000003,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 352,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 8568,
+ "cost_usd": 0.19006000000000003,
+ "spend_run_id": "g1_eval_v1_holdout_2026-09-03",
+ "spend_reservation_id": "9aadd1429fa54e71b5969d37da9bfa07",
+ "source_doc_id": "statcan-71-543-g-guide-labour-force-survey-2025",
+ "passage_id": "lfs-unemployment-cv"
+}

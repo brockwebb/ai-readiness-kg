@@ -1,0 +1,31 @@
+{
+ "proposition_id": "g1h-lfs-cv-001",
+ "call_id": "g1h-lfs-cv-001.direct.VINTAGE",
+ "mode": "direct",
+ "qualifier_class": "VINTAGE",
+ "prompt_epoch": "g1-v0-2026-09-02",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T11:20:06.185343+00:00",
+ "prompt": "For example, in January 2024, there were 28,000 unemployed persons in Newfoundland and Labrador and 275,900 participants in the labour force, giving an unemployment rate of 10.4%. Table 7.1 gives the CVs for the two counts as 5.0% and 2.5%, respectively. An approximation of the CV for the unemployment rate of 10.4% using the above formula would be: 5.0% + 2.5% = 7.5%\n\nWhat is the reference period or as-of date on the unemployment rate in Newfoundland and Labrador in January 2024?",
+ "response_text": "**January 2024** — that's the reference month stated in the passage.\n\nThe date is attached to the estimates themselves, not to the CV formula being illustrated: 28,000 unemployed, 275,900 in the labour force, and the resulting 10.4% rate are all January 2024 values, with the CVs (5.0% and 2.5%) read from Table 7.1 for that same month.\n\nTwo caveats worth flagging, since neither is stated in the excerpt:\n\n- **Month vs. week.** This is Labour Force Survey framing, and the LFS reference period within a month is the week containing the 15th — for January 2024 that's Jan 14–20. The passage only says \"January 2024,\" so if you need the narrower reference week, that comes from LFS methodology, not from this text.\n- **Publication date ≠ reference date.** January 2024 LFS results were released in early February 2024. If your field wants an as-of/effective date, use the reference period (January 2024); if it wants provenance, that's a separate release date not given here.",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 646,
+  "cacheReadInputTokens": 12840,
+  "cacheCreationInputTokens": 16939,
+  "webSearchRequests": 0,
+  "costUSD": 0.19196999999999997,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 320,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 10122,
+ "cost_usd": 0.19196999999999997,
+ "spend_run_id": "g1_eval_v1_holdout_2026-09-03",
+ "spend_reservation_id": "5b80d7d4894f46d89ff65736be6da9c0",
+ "source_doc_id": "statcan-71-543-g-guide-labour-force-survey-2025",
+ "passage_id": "lfs-unemployment-cv"
+}

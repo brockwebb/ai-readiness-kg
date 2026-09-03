@@ -1,0 +1,31 @@
+{
+ "proposition_id": "g1h-acs-cv-001",
+ "call_id": "g1h-acs-cv-001.direct.CV",
+ "mode": "direct",
+ "qualifier_class": "CV",
+ "prompt_epoch": "g1-v0-2026-09-02",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T11:16:10.417469+00:00",
+ "prompt": "Data.census.gov includes a collapsed income distribution within Demographic Profile DP03 that makes it possible to assess the difference in results from the approximation method illustrated above versus a direct estimation method that accounts for covariance between the component estimates of the subgroups. The relevant portion of this data.census.gov table, from the 2015 ACS 1-year estimates, is shown in Table 8.3 below. Table 8.3. Data From Demographic Profile DP03 for Loudoun County, Virginia: 2015 Household income category Subgroup # Estimate MOE SE CV $15,000 to $24,999 .... 1 3,497 ±1,037 630 18.0 $25,000 to $34,999 .... 2 3,537 ±973 591 16.7 $35,000 to $49,999 .... 3 7,270 ±1,554 945 13.0 Source: U.S. Census Bureau, data.census.gov, Table DP03: “Selected Economic Characteristics.” While the MOEs, SEs, and CVs for new Subgroup 1 and Subgroup 3 are almost identical to those derived from the approximation method, this is not the case for new Subgroup 2. The user-derived MOE is ±931 compared with the published MOE of ±973, and the derived CV is only 16.0 percent compared with a CV of 16.7 percent based on the published MOE for Subgroup 2.\n\nWhat is the coefficient of variation on the number of Loudoun County, Virginia households with income of $15,000 to $24,999 in 2015 (Table DP03)?",
+ "response_text": "**18.0 percent.**\n\nFrom Table 8.3 (DP03, 2015 ACS 1-year, Loudoun County): the $15,000–$24,999 household income category has an estimate of 3,497 with an MOE of ±1,037, giving SE = 1,037/1.645 ≈ 630 and CV = 630/3,497 × 100 ≈ 18.0%.\n\nNote this is one of the two subgroups (1 and 3) where the published direct estimate and the user-derived approximation agree closely — the discrepancy in the passage concerns Subgroup 2 ($25,000–$34,999), where the derived MOE of ±931 / CV 16.0% falls short of the published ±973 / 16.7%.",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 277,
+  "cacheReadInputTokens": 12840,
+  "cacheCreationInputTokens": 17270,
+  "webSearchRequests": 0,
+  "costUSD": 0.18605500000000003,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 39,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 4374,
+ "cost_usd": 0.18605500000000003,
+ "spend_run_id": "g1_eval_v1_holdout_2026-09-03",
+ "spend_reservation_id": "b84709cda5374b558ab1cca3e36ad954",
+ "source_doc_id": "census-acs-general-handbook-2020",
+ "passage_id": "acs-ch8-loudoun-83"
+}

@@ -1,0 +1,31 @@
+{
+ "proposition_id": "g1h-n175-sup-002",
+ "call_id": "g1h-n175-sup-002.direct.SE",
+ "mode": "direct",
+ "qualifier_class": "SE",
+ "prompt_epoch": "g1-v0-2026-09-02",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T11:20:23.402662+00:00",
+ "prompt": "Table I. Percentage of children aged 8–17 years with elevated and normal or borderline blood pressure, by race and Hispanic origin: United States, 2013–2014 Race and Hispanic origin and blood pressure Sample size Effective sample size 1 Percent estimate Standard error of percent Relative standard error 2 Lower bound 3 Upper bound 3 Absolute CI width 4 Relative CI width 5 Degrees of freedom Non-Hispanic white, elevated . . . . . . . . . . . . . . . . 460 8 583.0 0.5 0.29 58.0 0.1 1.6 1.6 320.0 15 Non-Hispanic white, normal or borderline . . . . . . . 460 8 583.0 99.5 0.29 0.3 98.4 99.9 1.6 1.6 15 Non-Hispanic black, elevated . . . . . . . . . . . . . . . . 447 145.3 6 2.0 1.17 58.5 0.3 6.4 6.1 305.0 13 Non-Hispanic black, normal or borderline . . . . . . . 447 145.3 7 98.0 1.17 1.2 93.6 99.7 6.1 6.2 13 Non-Hispanic Asian, elevated . . . . . . . . . . . . . . . . 164 124.8 6 0.9 0.83 92.2 0.0 5.1 5.1 566.7 13 Non-Hispanic Asian, normal or borderline . . . . . . . 164 124.8 7 99.1 0.83 0.8 94.9 100.0 5.1 5.2 13 Hispanic, elevated . . . . . . . . . 589 8 946.8 2.5 0.51 20.4 1.4 4.1 2.7 108.0 15 Hispanic, normal or borderline . . . . . . . . . . . . . . . 589 8 946.8 97.5 0.51 0.5 95.9 98.6 2.7 2.8 15 1 Sample size divided by the design effect. It is calculated in this table using this formula: . 2 Standard error divided by the estimated percent multiplied by 100%. 3 Lower and upper confidence bounds were computed using the Korn-Graubard method. 4 Difference between the upper and lower confidence bounds. 5 Absolute width divided by the estimated percent multiplied by 100%. 6 Relative CI width is greater than 130%. Estimate would be suppressed. 7 Estimate would have a footnote indicating its complement is suppressed. 8 Effective sample size is greater than sample size. Sample size used in CI calculations. NOTES: CI is confidence interval. Percent estimate and its lower and upper confidence bounds are equal to the proportion estimate and its lower and upper confidence bounds, respectively, multiplied by 100. Standard error of percent and absolute CI width are expressed in percentage points. Numbers in the table are subject to rounding. SOURCE: NCHS, National Health and Nutrition Examination Survey. Series 2, No. 175  Page 9 points, so the relative CI width should be examined. ● Relative CI widths for elevated high blood pressure for non-Hispanic black and non-Hispanic Asian children are greater than 130%, so these estimates would be suppressed. ● The number of events is greater than 0 (and not equal to the denominator) and there are more than 8 degrees of freedom for all estimates, so estimates that have met all other sample size and CI criteria would be presented. ● If the outcome of interest is the complement (normal or borderline high blood pressure), the absolute CI widths are the same. However, the relative CI widths for nonHispanic black and non-Hispanic Asian children are less than 130%, so these estimates would be presented with a note indicating that their complements do not meet presentation standards. ● Estimates of elevated blood pressure for non-Hispanic white children would be presented using the NCHS Data Presentation Standards for Proportions but would have been suppressed or identified as unreliable based on the RSE > 30% criterion.\n\nWhat is the standard error on the percentage of non-Hispanic Asian children aged 8–17 with elevated blood pressure, United States, 2013–2014 (NHANES; Table I)?",
+ "response_text": "0.83 percentage points.\n\nFrom Table I, the non-Hispanic Asian \"elevated\" row: percent estimate 0.9, standard error of percent 0.83, RSE 92.2% (= 0.83/0.9 × 100), 95% Korn-Graubard CI 0.0–5.1, sample size 164, effective sample size 124.8, 13 df.\n\nNote that this estimate is one of the two the document says *would be suppressed* — its relative CI width (566.7%) exceeds 130%. The complement row (normal or borderline, 99.1%) carries the same 0.83 SE but a relative CI width of 5.2%, so it would be presented with a footnote that its complement fails presentation standards.",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 233,
+  "cacheReadInputTokens": 12840,
+  "cacheCreationInputTokens": 18172,
+  "webSearchRequests": 0,
+  "costUSD": 0.19397499999999998,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 0,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 4143,
+ "cost_usd": 0.19397499999999998,
+ "spend_run_id": "g1_eval_v1_holdout_2026-09-03",
+ "spend_reservation_id": "08d56d0aee77475680a145a3cb706103",
+ "source_doc_id": "nchs-2017-data-presentation-standards-proportions",
+ "passage_id": "nchs175-appendix-bp"
+}

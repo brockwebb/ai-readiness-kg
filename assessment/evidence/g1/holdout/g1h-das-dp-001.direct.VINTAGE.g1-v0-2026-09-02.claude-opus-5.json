@@ -1,0 +1,31 @@
+{
+ "proposition_id": "g1h-das-dp-001",
+ "call_id": "g1h-das-dp-001.direct.VINTAGE",
+ "mode": "direct",
+ "qualifier_class": "VINTAGE",
+ "prompt_epoch": "g1-v0-2026-09-02",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T11:19:04.597531+00:00",
+ "prompt": "In the first part of their analysis, the researchers sought to determine the minimum population size necessary for geographic areas to have reliable demographic characteristics for the purposes of redistricting. Examining census block groups as well as places and minor civil divisions (MCDs), they demonstrated that for any block group with a total population between 450 and 499 people or larger, and for MCDs and places between 200 and 249 or larger, the difference in the largest demographic group as a proportion of the total population between the published 2010 Census tabulations and the 2010 Demonstration PrivacyProtected Microdata File (2021-06-08) is less than or equal to 5 percentage points at least 95 percent of the time. No congressional or state legislative district fails this test; that is, for these districts, the 5-percentage-point criterion holds 100 percent of the time.\n\nWhat is the reference period or as-of date on the largest difference in the biggest demographic group’s share of total population between the published 2010 tabulations and the 2021-06-08 privacy-protected file, for block groups of 450 or more people?",
+ "response_text": "**Reference period: 2010 — specifically Census Day, April 1, 2010.**\n\nBoth inputs to the comparison describe the same population as of that date: the published 2010 Census tabulations, and the 2010 Demonstration Data Product (DPPMF), which is the 2010 Census microdata re-run through the disclosure avoidance system. `2021-06-08` is the **release/vintage date of the privacy-protected file**, not a reference period — it identifies which iteration of the demonstration product was used, since the Census Bureau published several with different privacy-loss budgets. So the quantity has one reference period (2010) and two data vintages (2010 published tabulations vs. the 2021-06-08 demonstration file).\n\nOne correction to the premise worth flagging: the passage doesn't report a *largest* difference. It reports a **95th-percentile threshold** — for block groups at 450+ population, the difference in the largest demographic group's share is ≤5 percentage points **at least 95% of the time**. The remaining ≤5% of block groups exceed 5 points by an unstated amount, so no maximum is given. If you're extracting this as a measurement, the value is \"≤5 percentage points at the 95th percentile,\" not a maximum.",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 1041,
+  "cacheReadInputTokens": 12840,
+  "cacheCreationInputTokens": 17095,
+  "webSearchRequests": 0,
+  "costUSD": 0.203405,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 640,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 14395,
+ "cost_usd": 0.203405,
+ "spend_run_id": "g1_eval_v1_holdout_2026-09-03",
+ "spend_reservation_id": "4484cbb991664a90942287c53fa90905",
+ "source_doc_id": "census-2020-disclosure-avoidance-handbook-2021",
+ "passage_id": "das-blockgroup-accuracy"
+}

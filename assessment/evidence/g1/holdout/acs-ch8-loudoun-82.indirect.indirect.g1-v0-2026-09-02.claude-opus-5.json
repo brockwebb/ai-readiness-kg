@@ -1,0 +1,31 @@
+{
+ "proposition_id": "g1h-acs-cv-002",
+ "call_id": "acs-ch8-loudoun-82.indirect",
+ "mode": "indirect",
+ "qualifier_class": null,
+ "prompt_epoch": "g1-v0-2026-09-02",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T11:17:08.474785+00:00",
+ "prompt": "Restate the following for a general-audience summary.\n\nLess than $10,000 ....... – 2,163 ±812 494 22.8 $10,000 to $14,999 ...... – 1,178 ±504 306 26.0 $15,000 to $19,999 ...... 1 1,502 ±743 452 30.1 $20,000 to $24,999 ..... 1 1,995 ±722 439 22.0 $25,000 to $29,999 ..... 2 1,756 ±685 416 23.7 $30,000 to $34,999 ..... 2 1,781 ±631 384 21.5 $35,000 to $39,999 ..... 3 2,708 ±1,007 612 22.6 $40,000 to $44,999 ..... 3 1,981 ±647 393 19.9 $45,000 to $49,999 ..... 3 2,581 ±996 605 23.5 $50,000 to $59,999 ..... – 6,590 ±1,109 674 10.2 $60,000 to $74,999 ..... – 6,861 ±1,288 783 11.4 $75,000 to $99,999 ..... – 14,391 ±1,810 1,100 7.6 $100,000 to $124,999. . . . – 14,790 ±1,944 1,182 8.0 $125,000 to $149,999 .... – 12,735 ±1,341 815 6.4 $150,000 to $199,999 .... – 18,167 ±1,890 1,149 6.3 $200,000 or more ...... – 29,380 ±2,053 1,248 Source: U.S. Census Bureau, data.census.gov, Table B19001: “Household Income in the Past 12 Months (In 2015 Inflation-Adjusted Dollars).”",
+ "response_text": "## What this table is\n\nIt's an excerpt from the U.S. Census Bureau's American Community Survey, Table B19001 — a count of **households sorted into 16 income brackets**, with income stated in 2015 dollars. The excerpt doesn't name the place it covers.\n\n## How to read the numbers\n\nEach row runs: bracket name, an unlabeled marker column, then four numbers.\n\nTaking the first row — `Less than $10,000 — 2,163 ±812  494  22.8`:\n\n- **2,163** — the estimated number of households in that bracket.\n- **±812** — the margin of error. The survey polls a sample, not everyone, so the true count is very likely (90% confidence) somewhere between about 1,350 and 2,975.\n- **494** — the standard error, the raw statistical version of that same uncertainty.\n- **22.8** — the coefficient of variation: the standard error as a percentage of the estimate. It's a plain-English reliability score. Under ~15% is solid; 20–30% means treat the number as a rough indication, not a fact.\n\nThe marker column (`–` for most rows, `1`, `2`, or `3` for a handful of middle brackets) is a footnote flag whose key isn't included in the excerpt, so I can't say what it denotes.\n\n## What the numbers say\n\nTotal: about **120,600 households**. The distribution is strongly weighted toward the top:\n\n| Income | Households | Share |\n|---|---|---|\n| Under $50,000 | ~17,600 | 15% |\n| $50,000–$99,999 | ~27,800 | 23% |\n| $100,000 and up | ~75,100 | 62% |\n| — of which $200,000+ | ~29,400 | 24% |\n\nThe single largest bracket is **$200,000 or more**, with roughly 29,400 households — nearly a quarter of the total, and more than the entire under-$50,000 population combined. The median household sits right around **$125,000**.\n\nReliability tracks the same pattern. The low-income brackets are small and thinly sampled, so their coefficients of variation run 20–30% — the individual counts there are shaky, even though the overall picture of \"few low-income households\" is sound. The high-income brackets are large and well-measured, with coefficients of variation of 6–8%.\n\nTwo caveats: the totals and percentages above are my arithmetic on the published brackets, and they inherit the same sampling uncertainty as the rows they're built from. And the incomes are in 2015 dollars — roughly a third below today's purchasing power.",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 2234,
+  "cacheReadInputTokens": 12840,
+  "cacheCreationInputTokens": 17331,
+  "webSearchRequests": 0,
+  "costUSD": 0.23559,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 1416,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 32308,
+ "cost_usd": 0.23559,
+ "spend_run_id": "g1_eval_v1_holdout_2026-09-03",
+ "spend_reservation_id": "3983728f48d848d3998f86708a4db9c3",
+ "source_doc_id": "census-acs-general-handbook-2020",
+ "passage_id": "acs-ch8-loudoun-82"
+}

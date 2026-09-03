@@ -1,0 +1,31 @@
+{
+ "proposition_id": "g1h-n175-sup-001",
+ "call_id": "g1h-n175-sup-001.direct.SUPPRESSION",
+ "mode": "direct",
+ "qualifier_class": "SUPPRESSION",
+ "prompt_epoch": "g1-v0-2026-09-02",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T11:20:16.823354+00:00",
+ "prompt": "Table. NCHS Data Presentation Standards for Proportions Statistic Standard Sample size Estimated proportions should be based on a minimum denominator sample size and effective denominator sample size (when applicable) of 30. Estimates with either a denominator sample size or an effective denominator sample size (when applicable) less than 30 should be suppressed. If the number of events is 0 (or its complement 1 ), then the denominator sample size should be used to obtain confidence intervals. If all other criteria are met for presentation, an estimate based on 0 events (or its complement 1 ) should be flagged for statistical review by the clearance official. The review could result in either the presentation or the suppression of the proportion. Confidence interval If the sample size criterion is met, calculate a 95% two-sided confidence interval using the Clopper-Pearson method, or the Korn-Graubard method for complex surveys, and obtain its width. Small absolute confidence interval width If the absolute confidence interval width is greater than 0.00 and less than or equal to 0.05, then the proportion can be presented if the number of events is greater than 0 and the degrees of freedom criterion (below) is met. If the number of events is 0 (or its complement 1 ) or the degrees of freedom criterion is not met, then the estimate should be flagged for statistical review by the clearance official. The review could result in either the presentation or the suppression of the proportion. Large absolute confidence interval width If the absolute confidence interval width is greater than or equal to 0.30, then the proportion should be suppressed. Relative confidence interval width If the absolute confidence interval width is between 0.05 and 0.30 and the relative confidence interval width is more than 130%, then the proportion should be suppressed. Relative confidence interval width If the absolute confidence interval width is between 0.05 and 0.30 and the relative confidence interval width is less than or equal to 130%, then the proportion can be presented if the degrees of freedom criterion below is met.\n\nWhat is the publication status on the relative 95% confidence interval width above which an NCHS proportion with absolute width between 0.05 and 0.30 is suppressed?",
+ "response_text": "**Threshold: 130%; status above it: suppressed.**\n\nPer the NCHS Data Presentation Standards for Proportions, when the absolute 95% CI width falls between 0.05 and 0.30:\n\n- **Relative CI width > 130%** → the proportion is **suppressed** (no presentation, no review pathway).\n- **Relative CI width ≤ 130%** → the proportion **may be presented**, but only if the degrees-of-freedom criterion is also met.\n\nSo 130% is the cutoff, and exceeding it is a hard suppression rule rather than a flag-for-clearance-review outcome — unlike the 0-events and small-width (≤0.05) cases, which route to the clearance official for statistical review.",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 434,
+  "cacheReadInputTokens": 12840,
+  "cacheCreationInputTokens": 17452,
+  "webSearchRequests": 0,
+  "costUSD": 0.19179999999999997,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 196,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 8289,
+ "cost_usd": 0.19179999999999997,
+ "spend_run_id": "g1_eval_v1_holdout_2026-09-03",
+ "spend_reservation_id": "57f4c30e61ce444dbb6fafadeff234c7",
+ "source_doc_id": "nchs-2017-data-presentation-standards-proportions",
+ "passage_id": "nchs175-standard"
+}

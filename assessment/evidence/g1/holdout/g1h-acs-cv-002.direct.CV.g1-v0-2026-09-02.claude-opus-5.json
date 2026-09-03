@@ -1,0 +1,31 @@
+{
+ "proposition_id": "g1h-acs-cv-002",
+ "call_id": "g1h-acs-cv-002.direct.CV",
+ "mode": "direct",
+ "qualifier_class": "CV",
+ "prompt_epoch": "g1-v0-2026-09-02",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T11:17:21.065666+00:00",
+ "prompt": "Less than $10,000 ....... – 2,163 ±812 494 22.8 $10,000 to $14,999 ...... – 1,178 ±504 306 26.0 $15,000 to $19,999 ...... 1 1,502 ±743 452 30.1 $20,000 to $24,999 ..... 1 1,995 ±722 439 22.0 $25,000 to $29,999 ..... 2 1,756 ±685 416 23.7 $30,000 to $34,999 ..... 2 1,781 ±631 384 21.5 $35,000 to $39,999 ..... 3 2,708 ±1,007 612 22.6 $40,000 to $44,999 ..... 3 1,981 ±647 393 19.9 $45,000 to $49,999 ..... 3 2,581 ±996 605 23.5 $50,000 to $59,999 ..... – 6,590 ±1,109 674 10.2 $60,000 to $74,999 ..... – 6,861 ±1,288 783 11.4 $75,000 to $99,999 ..... – 14,391 ±1,810 1,100 7.6 $100,000 to $124,999. . . . – 14,790 ±1,944 1,182 8.0 $125,000 to $149,999 .... – 12,735 ±1,341 815 6.4 $150,000 to $199,999 .... – 18,167 ±1,890 1,149 6.3 $200,000 or more ...... – 29,380 ±2,053 1,248 Source: U.S. Census Bureau, data.census.gov, Table B19001: “Household Income in the Past 12 Months (In 2015 Inflation-Adjusted Dollars).”\n\nWhat is the coefficient of variation on the number of Loudoun County, Virginia households with income of $15,000 to $19,999 in 2015 (Table B19001)?",
+ "response_text": "**30.1 percent.**\n\nFrom the table row: estimate 1,502 households, MOE ±743, SE 452.\n\n- SE = MOE / 1.645 = 743 / 1.645 = 451.7 ≈ 452\n- CV = SE / estimate × 100 = 452 / 1,502 × 100 = 30.1%\n\nThe `1` in the flag column marks it: a CV above 30% is the conventional Census threshold at which an ACS estimate is considered too imprecise to publish or interpret on its own. This cell sits just over that line — the true count could plausibly run from roughly 760 to 2,245 households at 90% confidence. If you need a usable number here, collapse it with adjacent brackets (e.g. $15,000–$24,999, which would give ~3,497 with a much tighter relative error).",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 558,
+  "cacheReadInputTokens": 12840,
+  "cacheCreationInputTokens": 17370,
+  "webSearchRequests": 0,
+  "costUSD": 0.19408,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 293,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 10374,
+ "cost_usd": 0.19408,
+ "spend_run_id": "g1_eval_v1_holdout_2026-09-03",
+ "spend_reservation_id": "dd74d8a1d14b42689f9e2b630f524c08",
+ "source_doc_id": "census-acs-general-handbook-2020",
+ "passage_id": "acs-ch8-loudoun-82"
+}

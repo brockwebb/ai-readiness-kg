@@ -1,0 +1,31 @@
+{
+ "proposition_id": "g1h-acs-cv-001",
+ "call_id": "g1h-acs-cv-001.direct.VINTAGE",
+ "mode": "direct",
+ "qualifier_class": "VINTAGE",
+ "prompt_epoch": "g1-v0-2026-09-02",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T11:16:34.162036+00:00",
+ "prompt": "Data.census.gov includes a collapsed income distribution within Demographic Profile DP03 that makes it possible to assess the difference in results from the approximation method illustrated above versus a direct estimation method that accounts for covariance between the component estimates of the subgroups. The relevant portion of this data.census.gov table, from the 2015 ACS 1-year estimates, is shown in Table 8.3 below. Table 8.3. Data From Demographic Profile DP03 for Loudoun County, Virginia: 2015 Household income category Subgroup # Estimate MOE SE CV $15,000 to $24,999 .... 1 3,497 ±1,037 630 18.0 $25,000 to $34,999 .... 2 3,537 ±973 591 16.7 $35,000 to $49,999 .... 3 7,270 ±1,554 945 13.0 Source: U.S. Census Bureau, data.census.gov, Table DP03: “Selected Economic Characteristics.” While the MOEs, SEs, and CVs for new Subgroup 1 and Subgroup 3 are almost identical to those derived from the approximation method, this is not the case for new Subgroup 2. The user-derived MOE is ±931 compared with the published MOE of ±973, and the derived CV is only 16.0 percent compared with a CV of 16.7 percent based on the published MOE for Subgroup 2.\n\nWhat is the reference period or as-of date on the number of Loudoun County, Virginia households with income of $15,000 to $24,999 in 2015 (Table DP03)?",
+ "response_text": "**Reference period: calendar year 2015 — the full 12 months, January 1 to December 31, 2015.**\n\nThe estimate of 3,497 households comes from the 2015 ACS **1-year** estimates, so:\n\n- **Collection period / as-of date:** There is no single as-of date. The ACS is a continuous survey; the 2015 1-year file pools interviews conducted in all 12 months of 2015. Each household's characteristics (including whether it is a household, its size, and its location in Loudoun County) are as of its own interview date, and the published estimate is effectively a **period estimate averaged over calendar year 2015**, not a point-in-time count like the decennial census.\n- **Income measurement window:** The income itself is reported for the **12 months preceding the interview**, so the underlying income reference windows are rolling — spanning roughly January 2014 through December 2015 across the sample.\n- **Dollar denomination:** Because those windows differ, reported amounts are **inflation-adjusted to 2015 dollars** (using the CPI-U) before being tabulated into the `$15,000 to $24,999` bracket. So the bracket boundaries are 2015-dollar boundaries.\n- **Geography vintage:** Loudoun County boundaries as of **January 1, 2015**.\n\nOne caveat worth flagging for the MOE discussion in your text: the 1-year estimates for a county this size are published only because Loudoun exceeds the 65,000-population threshold for 1-year products — that same single-year sample is what drives the relatively large SEs (630 on 3,497, CV 18.0) that make the approximation-vs-direct comparison visible in the first place.",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 747,
+  "cacheReadInputTokens": 12840,
+  "cacheCreationInputTokens": 17271,
+  "webSearchRequests": 0,
+  "costUSD": 0.19781500000000002,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 205,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 11149,
+ "cost_usd": 0.19781500000000002,
+ "spend_run_id": "g1_eval_v1_holdout_2026-09-03",
+ "spend_reservation_id": "6aa8e7402d7d4131b42ba6be611a9c2d",
+ "source_doc_id": "census-acs-general-handbook-2020",
+ "passage_id": "acs-ch8-loudoun-83"
+}

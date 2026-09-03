@@ -1,0 +1,31 @@
+{
+ "proposition_id": "g1h-ons-ci-001",
+ "call_id": "g1h-ons-ci-001.direct.SE",
+ "mode": "direct",
+ "qualifier_class": "SE",
+ "prompt_epoch": "g1-v0-2026-09-02",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T11:17:57.408332+00:00",
+ "prompt": "In 2016, the UK private education industry was estimated to have generated a total turnover of £42,649 million. The standard error for this estimate is £526.8 million. The 95% confidence interval around this estimate is calculated as: Margin of error = 1.96 × £526.8 million = £1,032.5 million The 95% confidence interval is therefore £42,649 million plus or minus £1,032.5 million, which equals £41,616 million and £43,682 million respectively. This means that if we drew 20 random samples and calculated an analogous confidence interval for each, on average, 19 out of 20 (95%) would contain the true population value and 1 in 20 (5%) would not. Therefore, there is a 95% chance that the true population value lies between £41,616 million and £43,682 million.\n\nWhat is the standard error on the total turnover of the UK private education industry in 2016?",
+ "response_text": "£526.8 million.\n\nThat figure is stated directly in the passage as the standard error on the 2016 total turnover estimate of £42,649 million, and it's what drives the ±£1,032.5 million margin of error (1.96 × 526.8).\n\nOne correction to the passage itself: the final sentence misstates the interpretation. A frequentist 95% confidence interval does not mean \"there is a 95% chance the true value lies between £41,616m and £43,682m\" — the true value is fixed, and the probability statement attaches to the procedure, not to this particular interval. The preceding sentence in the passage (\"if we drew 20 random samples... 19 out of 20 would contain the true value\") is the correct interpretation; the last sentence contradicts it.",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 240,
+  "cacheReadInputTokens": 12840,
+  "cacheCreationInputTokens": 17032,
+  "webSearchRequests": 0,
+  "costUSD": 0.18274999999999997,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 0,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 4551,
+ "cost_usd": 0.18274999999999997,
+ "spend_run_id": "g1_eval_v1_holdout_2026-09-03",
+ "spend_reservation_id": "810deb766e8642c0b5eae98214421874",
+ "source_doc_id": "ons-uncertainty-and-how-we-measure-it",
+ "passage_id": "ons-ci-education"
+}

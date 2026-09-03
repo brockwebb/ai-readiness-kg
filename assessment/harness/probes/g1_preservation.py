@@ -710,6 +710,13 @@ class PreservationProbe(EvalProbe):
         regenerable, and a slot that has a response is never re-elicited. Returns None
         when no file exists; a file that cannot be read is an error, not a miss."""
         path = self._evidence_path(pid_or_call, mode, qualifier_class, model_id)
+        if not path.exists() and self.evidence_root.parent.name == "g1":
+            # A run writing to a sub-directory (the sealed holdout, evidence/g1/holdout/)
+            # still reuses a slot elicited into the parent (a passage shared with the
+            # development set): one response per slot, wherever it was first written.
+            parent = self.evidence_root.parent / path.name
+            if parent.exists():
+                path = parent
         if not path.exists():
             return None
         rec = json.loads(path.read_text(encoding="utf-8"))

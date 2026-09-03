@@ -1,0 +1,31 @@
+{
+ "proposition_id": "g1h-n200-rf-001",
+ "call_id": "nchs200-table-a.indirect",
+ "mode": "indirect",
+ "qualifier_class": null,
+ "prompt_epoch": "g1-v0-2026-09-02",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T11:21:11.184059+00:00",
+ "prompt": "Restate the following for a general-audience summary.\n\nTable A. National Center for Health Statistics standards for rates and counts Statistic Standard for rates Standard for counts Sample size threshold Estimated rates should be based on a minimum sample size and effective sample size (when applicable) of 10 in both numerator and denominator. Estimated counts should be based on a minimum sample size and effective sample size (when applicable) of 10. Confidence interval (CI) If the sample size criteria are met, calculate a 95% two-sided CI using the appropriate method and obtain its relative width. Estimated rates should have a relative CI width of 160% or lower. If the sample size criteria are met, calculate a 95% twosided CI using the appropriate method and obtain its relative width. Estimated counts should have a relative CI width of 160% or lower. Degrees of freedom When applicable for complex surveys, if the sample size and CI criteria are met for presentation and degrees of freedom are fewer than 8 for either numerator or denominator, then the rate should be flagged for statistical review by the clearance official. This review may result in presentation or suppression of the rate. When applicable for complex surveys, if the sample size and CI criteria are met for presentation and degrees of freedom are fewer than 8, then the count should be flagged for statistical review by the clearance official. This review may result in presentation or suppression of the count. SOURCE: National Center for Health Statistics.",
+ "response_text": "## In plain language: how NCHS decides whether a number is solid enough to publish\n\nThe National Center for Health Statistics (NCHS) runs every estimated rate or count through three checks before it goes into a report. An estimate has to clear the first two; the third is a judgment call by a reviewer.\n\n**1. Is it based on enough people?**\n\nThere have to be at least 10 people behind the number. For a *rate* — which is a fraction, like \"deaths per 100,000 people\" — that means at least 10 in the top of the fraction *and* at least 10 in the bottom. For a simple *count*, it means at least 10 in the count itself. Surveys that use complex sampling designs also have to meet this bar in terms of \"effective sample size,\" a version of the count adjusted downward for the fact that the sample wasn't drawn at random from the whole population.\n\n**2. Is the number precise enough to say anything?**\n\nIf the sample size test passes, analysts calculate a 95% confidence interval — the range the true value most likely falls in. Then they measure how wide that range is *relative to the estimate itself*. If the range is more than 160% as large as the estimate, the number is too fuzzy to be meaningful and is not published. Roughly: an estimate whose margin of uncertainty dwarfs the estimate isn't telling you much.\n\n**3. Is the estimate resting on too few independent pieces of information?**\n\nFor complex surveys, there's a final check on \"degrees of freedom,\" a measure of how many independent chunks of data the estimate draws on. Even if the first two tests pass, fewer than 8 degrees of freedom (in either part of a rate, or in a count) gets the estimate flagged for a statistician's review. That reviewer decides case by case whether to publish it or hold it back.\n\n**The upshot:** two mechanical filters, then a human backstop. Numbers that fail are suppressed rather than printed with a caveat — the reasoning being that an unreliable published figure gets quoted long after the caveat is forgotten.\n\n*Source: National Center for Health Statistics. These thresholds come from the NCHS Data Presentation Standards for Proportions and for Rates and Counts (Vital and Health Statistics, Series 2), the agency's published successor to the older \"relative standard error above 30%\" rule of thumb.*",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 987,
+  "cacheReadInputTokens": 12840,
+  "cacheCreationInputTokens": 17221,
+  "webSearchRequests": 0,
+  "costUSD": 0.203315,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 246,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 14850,
+ "cost_usd": 0.203315,
+ "spend_run_id": "g1_eval_v1_holdout_2026-09-03",
+ "spend_reservation_id": "e13ebc278c6746b0ae4598d4daf60d5e",
+ "source_doc_id": "nchs-2023-data-presentation-standards-rates-counts",
+ "passage_id": "nchs200-table-a"
+}

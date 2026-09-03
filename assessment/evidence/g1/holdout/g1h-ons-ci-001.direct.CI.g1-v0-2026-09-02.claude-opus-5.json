@@ -1,0 +1,31 @@
+{
+ "proposition_id": "g1h-ons-ci-001",
+ "call_id": "g1h-ons-ci-001.direct.CI",
+ "mode": "direct",
+ "qualifier_class": "CI",
+ "prompt_epoch": "g1-v0-2026-09-02",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T11:17:50.636920+00:00",
+ "prompt": "In 2016, the UK private education industry was estimated to have generated a total turnover of £42,649 million. The standard error for this estimate is £526.8 million. The 95% confidence interval around this estimate is calculated as: Margin of error = 1.96 × £526.8 million = £1,032.5 million The 95% confidence interval is therefore £42,649 million plus or minus £1,032.5 million, which equals £41,616 million and £43,682 million respectively. This means that if we drew 20 random samples and calculated an analogous confidence interval for each, on average, 19 out of 20 (95%) would contain the true population value and 1 in 20 (5%) would not. Therefore, there is a 95% chance that the true population value lies between £41,616 million and £43,682 million.\n\nWhat is the confidence interval on the total turnover of the UK private education industry in 2016?",
+ "response_text": "**£41,616 million to £43,682 million** (i.e. £42,649m ± £1,032.5m, where the margin of error is 1.96 × £526.8m).\n\nThe arithmetic checks out: 1.96 × 526.8 = 1,032.53; 42,649 − 1,032.5 = 41,616.5 and 42,649 + 1,032.5 = 43,681.5, rounded to 41,616 and 43,682.\n\nOne caveat on the passage's wording: the first interpretation given (\"if we drew 20 random samples… 19 out of 20 would contain the true value\") is the correct frequentist reading, but the closing sentence — \"there is a 95% chance that the true population value lies between £41,616m and £43,682m\" — is the standard misinterpretation. Under frequentist inference the population value is fixed, not random; the 95% describes the long-run coverage of the *procedure*, not the probability that this particular interval contains the value. That interval either contains it or it doesn't. (The probabilistic reading is only valid for a Bayesian credible interval.) The two sentences in the source contradict each other; the first is the one to keep.",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 636,
+  "cacheReadInputTokens": 12840,
+  "cacheCreationInputTokens": 17034,
+  "webSearchRequests": 0,
+  "costUSD": 0.19266999999999998,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 266,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 9973,
+ "cost_usd": 0.19266999999999998,
+ "spend_run_id": "g1_eval_v1_holdout_2026-09-03",
+ "spend_reservation_id": "3742b10148114ce884dac0605add09b5",
+ "source_doc_id": "ons-uncertainty-and-how-we-measure-it",
+ "passage_id": "ons-ci-education"
+}

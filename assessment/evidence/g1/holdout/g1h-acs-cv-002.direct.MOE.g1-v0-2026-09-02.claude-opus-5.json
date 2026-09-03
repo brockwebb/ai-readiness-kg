@@ -1,0 +1,31 @@
+{
+ "proposition_id": "g1h-acs-cv-002",
+ "call_id": "g1h-acs-cv-002.direct.MOE",
+ "mode": "direct",
+ "qualifier_class": "MOE",
+ "prompt_epoch": "g1-v0-2026-09-02",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T11:17:26.560568+00:00",
+ "prompt": "Less than $10,000 ....... – 2,163 ±812 494 22.8 $10,000 to $14,999 ...... – 1,178 ±504 306 26.0 $15,000 to $19,999 ...... 1 1,502 ±743 452 30.1 $20,000 to $24,999 ..... 1 1,995 ±722 439 22.0 $25,000 to $29,999 ..... 2 1,756 ±685 416 23.7 $30,000 to $34,999 ..... 2 1,781 ±631 384 21.5 $35,000 to $39,999 ..... 3 2,708 ±1,007 612 22.6 $40,000 to $44,999 ..... 3 1,981 ±647 393 19.9 $45,000 to $49,999 ..... 3 2,581 ±996 605 23.5 $50,000 to $59,999 ..... – 6,590 ±1,109 674 10.2 $60,000 to $74,999 ..... – 6,861 ±1,288 783 11.4 $75,000 to $99,999 ..... – 14,391 ±1,810 1,100 7.6 $100,000 to $124,999. . . . – 14,790 ±1,944 1,182 8.0 $125,000 to $149,999 .... – 12,735 ±1,341 815 6.4 $150,000 to $199,999 .... – 18,167 ±1,890 1,149 6.3 $200,000 or more ...... – 29,380 ±2,053 1,248 Source: U.S. Census Bureau, data.census.gov, Table B19001: “Household Income in the Past 12 Months (In 2015 Inflation-Adjusted Dollars).”\n\nWhat is the margin of error on the number of Loudoun County, Virginia households with income of $15,000 to $19,999 in 2015 (Table B19001)?",
+ "response_text": "±743.\n\nFrom the excerpt, the `$15,000 to $19,999` row reads: `1  1,502  ±743  452  30.1` — an estimate of 1,502 households with a margin of error of ±743 (90% confidence, per ACS convention), a standard error of ~452, and a CV of 30.1%.\n\nNote the CV of 30.1% means this estimate is statistically unreliable on the Census Bureau's usual thresholds — the MOE is roughly half the estimate itself.",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 161,
+  "cacheReadInputTokens": 12840,
+  "cacheCreationInputTokens": 17367,
+  "webSearchRequests": 0,
+  "costUSD": 0.18412499999999998,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 0,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 3411,
+ "cost_usd": 0.18412499999999998,
+ "spend_run_id": "g1_eval_v1_holdout_2026-09-03",
+ "spend_reservation_id": "4a94cc1eb8a24d32a20023d3136ab121",
+ "source_doc_id": "census-acs-general-handbook-2020",
+ "passage_id": "acs-ch8-loudoun-82"
+}
