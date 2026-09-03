@@ -64,6 +64,10 @@ class HarnessConfig:
     g1_footnote_uncertainty_vocabulary: tuple
     # confidence level (as a string key, e.g. "0.90") -> z factor (harness.toml [g1.z_by_level])
     g1_z_by_level: dict
+    # qualifier families (harness.toml [g1.families], design D9) — checked against records.FAMILIES
+    g1_families: dict
+    # D10 binding window: {window_chars, label_min_tokens, label_stop_words}
+    g1_binding: dict
     # track label -> as_of_date string
     _track_as_of: dict
 
@@ -177,6 +181,31 @@ def load_harness_config(path: Path) -> HarnessConfig:
         if isinstance(v, bool) or not isinstance(v, (int, float)) or v <= 0:
             raise ConfigError(f"[g1.z_by_level] {k} must be a positive number in {path}; got {v!r}")
         g1_z[round(lvl, 4)] = float(v)
+    fam_tbl = _require(g1, "families", "harness.toml [g1]")
+    if not isinstance(fam_tbl, dict) or not fam_tbl:
+        raise ConfigError(f"[g1.families] must be a non-empty table family -> [classes] in {path}")
+    from .records import FAMILIES as _FAMILIES  # the code-side table the config must agree with
+    g1_families = {}
+    for fam, classes in fam_tbl.items():
+        if not isinstance(classes, list) or not classes or not all(isinstance(c, str) for c in classes):
+            raise ConfigError(f"[g1.families] {fam} must be a non-empty list of class names in {path}")
+        g1_families[str(fam)] = tuple(classes)
+    if {k: tuple(v) for k, v in g1_families.items()} != {k: tuple(v) for k, v in _FAMILIES.items()}:
+        raise ConfigError(f"[g1.families] in {path} disagrees with harness.records.FAMILIES: "
+                          f"{g1_families} vs {_FAMILIES}")
+    bind = _require(g1, "binding", "harness.toml [g1]")
+    if not isinstance(bind, dict):
+        raise ConfigError(f"[g1.binding] must be a table in {path}")
+    wc = bind.get("window_chars")
+    lm = bind.get("label_min_tokens")
+    sw = bind.get("label_stop_words")
+    if not isinstance(wc, int) or isinstance(wc, bool) or wc < 1:
+        raise ConfigError(f"[g1.binding] window_chars must be a positive integer in {path}; got {wc!r}")
+    if not isinstance(lm, int) or isinstance(lm, bool) or lm < 1:
+        raise ConfigError(f"[g1.binding] label_min_tokens must be a positive integer in {path}; got {lm!r}")
+    if not isinstance(sw, list) or not all(isinstance(x, str) for x in sw):
+        raise ConfigError(f"[g1.binding] label_stop_words must be a list of strings in {path}")
+    g1_binding = {"window_chars": wc, "label_min_tokens": lm, "label_stop_words": tuple(w.lower() for w in sw)}
     per_section = _require(sitemap, "sample_per_section", "harness.toml [sitemap]")
     if not isinstance(per_section, int) or per_section < 1:
         raise ConfigError(
@@ -215,6 +244,8 @@ def load_harness_config(path: Path) -> HarnessConfig:
         g1_id_field_patterns=g1_id,
         g1_footnote_uncertainty_vocabulary=tuple(g1_vocab),
         g1_z_by_level=g1_z,
+        g1_families=g1_families,
+        g1_binding=g1_binding,
         _track_as_of=track_as_of,
     )
 

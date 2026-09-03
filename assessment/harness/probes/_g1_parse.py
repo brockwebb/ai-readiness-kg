@@ -34,7 +34,8 @@ from ..records import QualifierClass
 # Instrument version of this parser (task 2026-09-03 step 4.4, DD-034): stamped on every
 # EvalResult so records scored under different rule sets are never pooled. Bumped on any
 # rule change; the old stamp stays valid for the results files it produced.
-PARSER_VERSION = "g1-parse-v1"
+PARSER_VERSION = "g1-parse-v2"   # v2 opened 2026-09-03 (task g1_eval_v2 step 3): legend-symbol
+                                   # vocabulary from the admitted surfaces; frozen at g1-v2-frozen
 
 # --- number vocabulary -----------------------------------------------------------------
 NUM = r"(?:\d{1,3}(?:,\d{3})+|\d+)(?:\.\d+)?"
@@ -224,6 +225,32 @@ _RELIABILITY_RE = re.compile(
     r"publish(?:ed)?\s+with\s+(?:a\s+)?(?:caution|warning)|publish(?:ed)?\s+freely|no\s+warning\s+label|"
     # NCHS outcome words (nchs175-standard / g1-n175-rf-001.direct.…json)
     r"(?:can|may|should)\s+be\s+presented|judged\s+reliable|presented\s+without)\b", re.I)
+# Cell markers with their legends on the admitted product surfaces (task 2026-09-03_g1_eval_v2
+# step 2 — fixture-driven, cited, added BEFORE any v2 elicitation like the v1 producer words):
+#   StatCan cube-metadata symbol legend (statcan-13-10-0096-01 / 13-10-0113-01 / 14-10-0287-01
+#   -cube-metadata-csv): A–D data quality excellent…acceptable, E "use with caution",
+#   F "too unreliable to be published", x "suppressed to meet the confidentiality requirements
+#   of the Statistics Act", ".." not available.
+#   NCHS Data Brief 530 (nchs-data-brief-530-perinatal-mortality-2022-2023): "† Change not
+#   significant (p = 0.05)." in place of a value.
+# A bare letter is a flag only when it sits where a status sits: after a number / value cell
+# ("37.5 E", "37.5E", "37.5 (E)", "flagged E", "status E", "STATUS: E", "an E flag").
+_SYMBOL_FLAG_RE = re.compile(
+    r"(?:(?<=\d)\s?|(?<=\d\s)|(?<=\d\)\s)|\bflag(?:ged|s)?(?:\s+(?:as|with))?\s+(?:an?\s+)?[\"“']?|\bstatus(?:\s+(?:of|code|is|=|:))?\s*[\"“']?|\bquality(?:\s+(?:indicator|flag|letter|code|rating))?(?:\s+(?:of|is|=|:))?\s*[\"“']?|\bmark(?:ed|er)?\s+(?:with\s+)?(?:an?\s+)?[\"“']?|\bletter\s+[\"“']?|\bsymbol\s+[\"“']?)"
+    r"(?P<sym>\(?[A-F]\)?|†|‡|\*)(?![\w-])(?![.,]?\d)", re.I)
+_SIGNIFICANCE_FLAG_RE = re.compile(
+    r"\b(?P<flag>(?:change|difference|increase|decrease|rise|fall|drop)s?\s+(?:that\s+)?(?:was|were|is|are)?\s*"
+    r"(?:not\s+(?:statistically\s+)?significant|nonsignificant|non-significant|statistically\s+insignificant)|"
+    r"(?:not\s+(?:statistically\s+)?significant|nonsignificant|non-significant|statistically\s+insignificant)(?:\s+(?:change|difference|increase|decrease|rise|fall|drop))?|"
+    r"no\s+(?:statistically\s+)?significant\s+(?:change|difference|increase|decrease|rise|fall|drop)s?|"
+    r"(?:did|does|do)\s+not\s+(?:change|differ)\s+significantly|(?:was|were|is|are)\s+(?:statistically\s+)?similar|"
+    r"(?:statistically\s+)?significant(?:ly)?\s+(?:change|difference|increase|decrease|rise|fall|drop|higher|lower)s?|"
+    r"(?:change|difference|increase|decrease|rise|fall|drop)s?\s+(?:that\s+)?(?:was|were|is|are)\s+(?:statistically\s+)?significant)\b", re.I)
+_SYMBOL_LEGEND = {"A": ("data quality: excellent", "reliable"), "B": ("data quality: very good", "reliable"),
+                  "C": ("data quality: good", "reliable"), "D": ("data quality: acceptable", "reliable"),
+                  "E": ("use with caution", "unreliable"), "F": ("too unreliable to be published", "suppressed"),
+                  "†": ("change not significant", "unreliable"), "‡": ("flagged", "unreliable"), "*": ("flagged", "unreliable")}
+_SUPPRESSION_SYMBOL_RE = re.compile(r"(?:(?<=\d)\s?|\bflag(?:ged|s)?(?:\s+(?:as|with))?\s+|\bstatus(?:\s+(?:of|code|is|=|:))?\s*|\bmarked\s+(?:as\s+)?|\bsymbol\s+|\bshown\s+as\s+|\bappears\s+as\s+)[\"“']?(?P<sym>x|F|\.\.)[\"”']?(?![\w.])", re.I)
 _NEGATIVE_FLAG_RE = re.compile(r"\b(not|un|caution|poor|imprecise|unprecise|low|caveats?|warning|flag\w*|"
                                r"category\s+[23]|review)", re.I)
 # 9. suppression
@@ -251,10 +278,17 @@ _DP_COVERAGE_RE = re.compile(
 _DP_VERBAL_RE = re.compile(r"\b(noise|noisy|noise-infused|perturb\w*|fuzz\w*|differential(?:ly)?\s+priva\w+|"
                            r"disclosure\s+avoidance|privacy[-\s]protect\w*)\b", re.I)
 # 11. vintage
-_YEAR_RANGE_RE = re.compile(r"\b(?P<y1>" + _YEAR + r")\s*(?:–|-|—|to|through|until)\s*(?P<y2>" + _YEAR + r")\b")
+# "2021/2022" (StatCan two-year period estimates, statcan-13-10-0113-01) is a year range too (v2).
+_YEAR_RANGE_RE = re.compile(r"\b(?P<y1>" + _YEAR + r")\s*(?:–|-|—|/|to|through|until)\s*(?P<y2>" + _YEAR + r")\b")
+# "August 2021–August 2023" (NCHS Data Brief 515's NHANES cycle; v2 fixture form): a
+# month-year to month-year range is one reference period with two years.
+_MONTH_YEAR_RANGE_RE = re.compile(
+    r"\b(?P<m1>" + _MONTH + r")\s+(?P<y1>" + _YEAR + r")\s*(?:–|-|—|to|through|until)\s*(?P<m2>" + _MONTH + r")\s+(?P<y2>" + _YEAR + r")\b")
 _MONTH_RANGE_RE = re.compile(
     r"\b(?P<m1>" + _MONTH + r")(?:\s+(?:to|through|–|-)\s+(?P<m2>" + _MONTH + r"))?\s+(?:(?P<d>\d{1,2}),?\s+)?(?P<y>" + _YEAR + r")\b")
 _ISO_DATE_RE = re.compile(r"\b(?P<y>" + _YEAR + r")-(?P<m>\d{2})-(?P<d>\d{2})\b")
+# "2026-07" (StatCan REF_DATE, statcan-14-10-0287-01 slices): a year-month reference period (v2).
+_ISO_MONTH_RE = re.compile(r"\b(?P<y>" + _YEAR + r")-(?P<m>0[1-9]|1[0-2])\b(?!-\d)")
 _YEAR_RE = re.compile(r"(?<!\d,)(?<![\d.])(?P<y>" + _YEAR + r")(?!,\d)(?!\d)")
 _PERIOD_RE = re.compile(r"\b(?P<n>1|3|5)[-\s]year\b", re.I)
 _AS_OF_RE = re.compile(r"\bas\s+of\s+(?:" + _MONTH + r"\s+\d{1,2},?\s+)?(?P<y>" + _YEAR + r")\b", re.I)
@@ -398,6 +432,9 @@ _LABEL_LIST_RE = re.compile(
 _LAST_VALUE_RE = re.compile(r"(?P<cur>" + _CUR + r")?(?P<n>" + NUM + r")\s*(?P<s>" + _SCALE + r")?\s*(?P<u>%|percent(?:age)?\s*points?|percent)?(?![^\n]*\d)")
 
 
+_ITEM_LABEL_RE = re.compile(r"^(?P<lab>[^:\n\d]{1,40}):")
+
+
 def join_label_lists(text: str) -> str:
     """`coefficient of variation:` followed by list items -> one sentence per item, `<keyword>
     of <last value in the item>`, so the keyword–value rules apply. The last numeric token
@@ -412,7 +449,12 @@ def join_label_lists(text: str) -> str:
             for v in _LAST_VALUE_RE.finditer(body):
                 last = v
             if last:
-                joined.append(f"{kw} of {last.group(0).strip()}.")
+                # keep the item's own row label ("Fairfax: 3,860 ÷ 1.645 = 2,347" -> "Fairfax:
+                # standard error of 2,347.") so the sentence binds to its row (v2, D10;
+                # acs-ch8-tricounty.indirect.indirect.…json)
+                lab = _ITEM_LABEL_RE.match(body)
+                prefix = f"{lab.group('lab').strip()}: " if lab else ""
+                joined.append(f"{prefix}{kw} of {last.group(0).strip()}.")
         return m.group(0) + ("\n" + " ".join(joined) + "\n" if joined else "")
     return _LABEL_LIST_RE.sub(_rep, text)
 
@@ -443,7 +485,9 @@ def join_derivation_lines(text: str) -> str:
             last = v
         if not last:
             return m.group(0)
-        return m.group(0) + f" {m.group('kw')} of {last.group(0).strip()}."
+        lead = re.sub(r"^(?:For|for)\s+", "", m.group("lead")).strip().rstrip(":").strip()
+        prefix = f"{lead}: " if lead and not any(ch.isdigit() for ch in lead) else ""
+        return m.group(0) + f" {prefix}{m.group('kw')} of {last.group(0).strip()}."
     return _DERIVATION_RE.sub(_rep, text)
 
 
@@ -651,6 +695,38 @@ def parse(text: str) -> Parsed:
     for m in _SUPPRESSION_RE.finditer(t):
         p.qualifiers.append(ParsedQualifier(QualifierClass.SUPPRESSION, "suppression", m.group(0), m.start(),
                                             text=" ".join(m.group("s").lower().split()), form="flag"))
+    # Legend symbols (v2, fixture-driven): a status letter / dagger beside a value or named as a
+    # flag; the legend meaning travels in `text`, the symbol in `parameter` (reused field).
+    for m in _SYMBOL_FLAG_RE.finditer(t):
+        sym = m.group("sym").strip("()").upper() if m.group("sym").strip("()").isalpha() else m.group("sym")
+        legend, pol = _SYMBOL_LEGEND.get(sym, ("flagged", "unreliable"))
+        # a symbol anchors on a number only when it sits directly beside it ("37.5 E",
+        # "7.73 †"); a named flag ("flagged E", "status: E") binds by sentence / label instead
+        adjacent = bool(re.fullmatch(r"\s?\(?[A-Fa-f†‡*]\)?", m.group(0)))
+        est = _preceding_number(t, m.start()) if adjacent else None
+        if pol == "suppressed":
+            p.qualifiers.append(ParsedQualifier(QualifierClass.SUPPRESSION, "symbol_suppression", m.group(0), m.start(),
+                                                text=legend, parameter=sym, form="flag", bound_estimate=est))
+            continue
+        p.qualifiers.append(ParsedQualifier(QualifierClass.RELIABILITY_FLAG, "symbol_flag", m.group(0), m.start(),
+                                            text=legend, parameter=sym, polarity=pol, form="flag", bound_estimate=est))
+    for m in _SUPPRESSION_SYMBOL_RE.finditer(t):
+        sym = m.group("sym")
+        if sym.upper() == "F" and any(q.rule == "symbol_suppression" and q.start == m.start() for q in p.qualifiers):
+            continue
+        legend = {"x": "suppressed to meet the confidentiality requirements of the Statistics Act",
+                  "F": "too unreliable to be published", "..": "not available for a specific reference period"}[sym if sym == ".." else sym.upper() if sym.upper() == "F" else "x"]
+        adjacent = bool(re.fullmatch(r"\s?[\"“']?(?:x|F|\.\.)[\"”']?", m.group(0), re.I))
+        p.qualifiers.append(ParsedQualifier(QualifierClass.SUPPRESSION, "symbol_suppression", m.group(0), m.start(),
+                                            text=legend, parameter=sym, form="flag",
+                                            bound_estimate=_preceding_number(t, m.start()) if adjacent else None))
+    # Significance statements about a change (NCHS 530 †: "Change not significant"): a
+    # reliability flag on the comparison; negative polarity when the change is NOT significant.
+    for m in _SIGNIFICANCE_FLAG_RE.finditer(t):
+        flag = " ".join(m.group("flag").lower().split())
+        neg = bool(re.search(r"\bnot\b|\bnonsignificant\b|\bnon-significant\b|\binsignificant\b|\bno\s+|\bsimilar\b", flag))
+        p.qualifiers.append(ParsedQualifier(QualifierClass.RELIABILITY_FLAG, "significance_flag", m.group(0), m.start(),
+                                            text=flag, polarity="unreliable" if neg else "reliable", form="flag"))
 
     # --- vintage ----------------------------------------------------------------------------
     covered: List[tuple] = []
@@ -664,9 +740,20 @@ def parse(text: str) -> Parsed:
                                             text=f"{m.group('y1')}–{m.group('y2')}",
                                             years=(int(m.group("y1")), int(m.group("y2"))), period=period,
                                             form="phrase"))
+    for m in _MONTH_YEAR_RANGE_RE.finditer(t):
+        covered.append((m.start(), m.end()))
+        p.qualifiers.append(ParsedQualifier(QualifierClass.VINTAGE, "month_year_range", m.group(0), m.start(),
+                                            text=" ".join(m.group(0).split()),
+                                            years=(int(m.group("y1")), int(m.group("y2"))), period=period, form="phrase"))
     for m in _ISO_DATE_RE.finditer(t):
         covered.append((m.start(), m.end()))
         p.qualifiers.append(ParsedQualifier(QualifierClass.VINTAGE, "iso_date", m.group(0), m.start(),
+                                            text=m.group(0), years=(int(m.group("y")),), period=period, form="phrase"))
+    for m in _ISO_MONTH_RE.finditer(t):
+        if any(a <= m.start() < b for a, b in covered):
+            continue
+        covered.append((m.start(), m.end()))
+        p.qualifiers.append(ParsedQualifier(QualifierClass.VINTAGE, "iso_month", m.group(0), m.start(),
                                             text=m.group(0), years=(int(m.group("y")),), period=period, form="phrase"))
     for m in _MONTH_RANGE_RE.finditer(t):
         covered.append((m.start(), m.end()))

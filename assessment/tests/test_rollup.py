@@ -164,7 +164,7 @@ def test_an_agency_with_no_web_surface_reports_an_empty_vector_not_a_missing_key
 
 # --- The eval firewall: G1 results never enter the core composite, the web-surface
 # vector or a frontier track; they are their own block with their own denominators.
-from harness.records import SOURCE_EVAL, UNPARSEABLE, EvalResult
+from harness.records import SOURCE_EVAL, UNPARSEABLE, EvalResult, Level, level_to_score
 from harness.rollup import g1_block, wilson_interval
 
 
@@ -174,7 +174,7 @@ def _e(cls, mode, level, outcome=None, target="g1-p", est="exact", failure=None)
         score, lvl = None, None
     else:
         score, lvl = level_to_score(Level(level)), level
-    return EvalResult(probe_id="g1_preservation", target=target, qualifier_class=cls, mode=mode,
+    return EvalResult(probe_id="g1_preservation", target=target, qualifier_class=cls, mode=mode, scorer_version="t",
                       outcome=outcome or score.name.lower(), score=score, level=lvl,
                       failure_class=failure, estimate_status=est, model_id="m", prompt_epoch="e", parser_version="t",
                       evidence="", timestamp="2026-09-02T00:00:00Z", evidence_path="p")
@@ -243,3 +243,29 @@ def test_wilson_interval_matches_the_burn_close_arithmetic():
     lo, hi = wilson_interval(37, 1480)
     assert (lo, hi) == (0.018191, 0.034268)
     assert wilson_interval(0, 0) == (None, None)
+
+
+def test_g1_block_reports_family_and_surface_compression_cells():
+    """v2 (D9 / D12): family cells are the v2 denominators; surface x compression cells are the
+    factor cells; a v1-shaped record (no family) is grouped by its class's family."""
+    def _eval(target, cls, mode, level):
+        return EvalResult(probe_id="g1_preservation", target=target, qualifier_class=cls, mode=mode, scorer_version="t",
+                          outcome=level_to_score(Level(level)).name.lower(), score=level_to_score(Level(level)), level=level,
+                          failure_class=None, estimate_status="exact", model_id="m", prompt_epoch="e", parser_version="t",
+                          evidence="", timestamp="t", evidence_path="x")
+    recs = [
+        _eval("p1", "MOE", "indirect", 4),
+        _eval("p2", "SE", "indirect", 1),
+        _eval("p3", "CV", "direct", 3),
+    ]
+    recs[0] = EvalResult(**{**recs[0].__dict__, "family": "interval", "surface_type": "table_coded", "compression_level": "tight"})
+    recs[1] = EvalResult(**{**recs[1].__dict__, "family": "interval", "surface_type": "table_coded", "compression_level": "none"})
+    blk = g1_block(recs)["observed"]
+    fam = blk["by_family_and_mode"]
+    assert fam["interval"]["indirect"]["n"] == 2 and fam["interval"]["indirect"]["preserved"] == 1
+    assert fam["relative"]["direct"]["n"] == 1                       # v1-shaped record grouped by FAMILY_OF
+    sc = blk["by_surface_and_compression"]
+    assert sc["table_coded"]["tight"]["n"] == 1 and sc["table_coded"]["none"]["n"] == 1
+    assert sc["prose_labeled"]["direct"]["n"] == 1                   # no surface -> prose_labeled; direct mode -> "direct"
+    assert blk["by_compression_indirect"]["tight"]["preserved"] == 1
+    assert blk["n_families"] == 3 and blk["n_qualifiers"] == 3

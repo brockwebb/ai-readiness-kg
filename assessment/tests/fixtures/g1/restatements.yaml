@@ -21,6 +21,10 @@ synthetic_propositions:
 synthetic_passages:
   syn: "The estimate for the cell is suppressed because it does not meet the publication standard."
 
+# Scorer v2 (task 2026-09-03_g1_eval_v2, design D10): an absent qualifier with the estimate
+# restated is `omission` with `estimate_restated = true` recorded (Du 2026's certainty assertion
+# is recoverable from the record); the v1 label `certainty_assertion` stays on these cases as the
+# v1 reading and `expect_failure_v2` carries the v2 one.
 cases:
   # ---------------------------------------------------------------- MOE (g1-acs-moe-001: 564,757 ±10,127 @90%)
   - {prop: g1-acs-moe-001, class: MOE, expect_level: 4, expect_failure: null, expect_estimate: exact,
@@ -33,7 +37,7 @@ cases:
      note: "MOE restated as bounds -> transformed"}
   - {prop: g1-acs-moe-001, class: MOE, expect_level: 2, expect_failure: form_shift, expect_estimate: exact,
      text: "Roughly 564,757 households in Colorado were one-person households in 2015."}
-  - {prop: g1-acs-moe-001, class: MOE, expect_level: 1, expect_failure: certainty_assertion, expect_estimate: exact,
+  - {prop: g1-acs-moe-001, class: MOE, expect_level: 1, expect_failure: certainty_assertion, expect_failure_v2: omission, expect_estimate: exact,
      text: "In 2015 there were 564,757 one-person households in Colorado."}
   - {prop: g1-acs-moe-001, class: MOE, expect_level: 1, expect_failure: omission, expect_estimate: absent,
      text: "The ACS publishes data profiles for every state."}
@@ -62,7 +66,7 @@ cases:
      note: "bounds restated as ± -> transformed"}
   - {prop: g1-ons-ci-002, class: CI, expect_level: 2, expect_failure: form_shift, expect_estimate: exact,
      text: "In 2016 the UK private education industry generated roughly £42,649 million in turnover."}
-  - {prop: g1-ons-ci-002, class: CI, expect_level: 1, expect_failure: certainty_assertion, expect_estimate: exact,
+  - {prop: g1-ons-ci-002, class: CI, expect_level: 1, expect_failure: certainty_assertion, expect_failure_v2: omission, expect_estimate: exact,
      text: "In 2016 the UK private education industry generated £42,649 million in turnover."}
   - {prop: g1-ons-ci-002, class: CI, expect_level: 0, expect_failure: quantity_hallucination, expect_estimate: exact,
      expect_direction: widened,
@@ -83,7 +87,7 @@ cases:
      text: "UK plastering turnover was £2,322 million in 2016 (standard error: £201 million)."}
   - {prop: g1-ons-se-003, class: SE, expect_level: 2, expect_failure: form_shift, expect_estimate: exact,
      text: "UK plastering businesses turned over approximately £2,322 million in 2016."}
-  - {prop: g1-ons-se-003, class: SE, expect_level: 1, expect_failure: certainty_assertion, expect_estimate: exact,
+  - {prop: g1-ons-se-003, class: SE, expect_level: 1, expect_failure: certainty_assertion, expect_failure_v2: omission, expect_estimate: exact,
      text: "UK plastering businesses turned over £2,322 million in 2016."}
   - {prop: g1-ons-se-003, class: SE, expect_level: 0, expect_failure: quantity_hallucination, expect_estimate: exact,
      expect_direction: narrowed,
@@ -103,7 +107,7 @@ cases:
      note: "fraction form of a percent CV -> transformed"}
   - {prop: g1-ons-cv-002, class: CV, expect_level: 2, expect_failure: form_shift, expect_estimate: exact,
      text: "Plastering turnover was around £2,322 million."}
-  - {prop: g1-ons-cv-002, class: CV, expect_level: 1, expect_failure: certainty_assertion, expect_estimate: exact,
+  - {prop: g1-ons-cv-002, class: CV, expect_level: 1, expect_failure: certainty_assertion, expect_failure_v2: omission, expect_estimate: exact,
      text: "Plastering turnover was £2,322 million in 2016."}
   - {prop: g1-ons-cv-002, class: CV, expect_level: 0, expect_failure: quantity_hallucination, expect_estimate: exact,
      expect_direction: narrowed,
@@ -118,7 +122,7 @@ cases:
      text: "The Colorado estimate of one-person households is quite reliable (CV 1.1 percent)."}
   - {prop: g1-acs-cv-004, class: RELIABILITY_FLAG, expect_level: 3, expect_failure: null, expect_estimate: absent,
      text: "The Colorado estimate of one-person households is considered reliable."}
-  - {prop: g1-acs-cv-004, class: RELIABILITY_FLAG, expect_level: 1, expect_failure: certainty_assertion, expect_estimate: exact,
+  - {prop: g1-acs-cv-004, class: RELIABILITY_FLAG, expect_level: 1, expect_failure: certainty_assertion, expect_failure_v2: omission, expect_estimate: exact,
      text: "Colorado had 564,757 one-person households in 2015."}
   - {prop: g1-acs-cv-004, class: RELIABILITY_FLAG, expect_level: 0, expect_failure: fabricated_qualifier, expect_estimate: exact,
      text: "Colorado had 564,757 one-person households in 2015, but the estimate is not very reliable."}
@@ -126,7 +130,7 @@ cases:
      text: "Colorado had 564,757 one-person households in 2015; reliability is discussed in the handbook."}
   - {prop: g1-acs-cv-004, class: RELIABILITY_FLAG, expect_level: 2, expect_failure: form_shift, expect_estimate: exact,
      note: "verbal band with no flag: numeric classes only; for a flag class a hedge is not a reliability statement, so this lands at L1 — recorded here as the pre-registered rule and asserted at 1",
-     expect_level_override: 1, expect_failure_override: certainty_assertion,
+     expect_level_override: 1, expect_failure_override: certainty_assertion, expect_failure_v2: omission,
      text: "Colorado had roughly 564,757 one-person households in 2015."}
   # ---------------------------------------------------------------- SUPPRESSION (synthetic)
   - {prop: syn-suppressed-001, class: SUPPRESSION, expect_level: 4, expect_failure: null, expect_estimate: absent,
@@ -156,7 +160,7 @@ cases:
   - {prop: g1-das-dp-003, class: DP_NOISE, expect_outcome: unparseable, expect_estimate: exact,
      text: "The people counts at epsilon 17.14 carry some random noise to protect confidentiality.", which: rho,
      note: "noise mentioned without a parameter: the rules cannot place it on the scale -> unparseable, never L2 (precedence rule in g1_preservation._absent)"}
-  - {prop: g1-das-dp-003, class: DP_NOISE, expect_level: 1, expect_failure: certainty_assertion, expect_estimate: exact,
+  - {prop: g1-das-dp-003, class: DP_NOISE, expect_level: 1, expect_failure: certainty_assertion, expect_failure_v2: omission, expect_estimate: exact,
      text: "The global epsilon for the people file is 17.14.", which: rho}
   - {prop: g1-das-dp-003, class: DP_NOISE, expect_level: 0, expect_failure: quantity_hallucination, expect_estimate: exact,
      expect_direction: widened,
@@ -191,7 +195,7 @@ cases:
      text: "Colorado had about 565,000 one-person households in 2015, with a margin of error of 10,127."}
   - {prop: g1-acs-moe-001, class: MOE, expect_level: 3, expect_failure: null, expect_estimate: rounded,
      text: "Colorado had 0.56 million one-person households in 2015, with a margin of error of 10,127."}
-  - {prop: g1-acs-moe-001, class: MOE, expect_level: 1, expect_failure: certainty_assertion, expect_estimate: wrong,
+  - {prop: g1-acs-moe-001, class: MOE, expect_level: 1, expect_failure: certainty_assertion, expect_failure_v2: omission, expect_estimate: wrong,
      text: "Colorado had 654,757 one-person households in 2015."}
   - {prop: g1-acs-moe-001, class: MOE, expect_level: 3, expect_failure: null, expect_estimate: exact,
      text: "One-person households in Colorado in 2015: 564,757 (MOE ±10,127)."}
@@ -275,3 +279,187 @@ v1_cases:
   - {prop: g1-lfs-sup-001, class: SUPPRESSION, mode: indirect, expect_level: 4, expect_failure: null, expect_estimate: exact,
      evidence: "assessment/evidence/g1/lfs-reliability-categories.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
      text: "| Category | CV | What it means |\n|---|---|---|\n| **1** | 16.5% or less | **Publish freely.** Reliable enough to use as-is, with no warning label. |\n| **2** | Over 16.5%, up to 33.3% | **Publish with a caution.** Still useful for some purposes, but readers must be told the estimate is uncertain. |\n| **3** | Over 33.3% | **Don't publish.** So imprecise it's likely to mislead. |"}
+
+# Scorer v2 cases (task 2026-09-03_g1_eval_v2 step 5a, design D10): the three v1 records the reviewer
+# labelled omission but the v1 scorer labelled binding_error / quantity_hallucination, text VERBATIM from
+# the named evidence file, with the corrected expected class. `family` selects the family verdict.
+v2_cases:
+- prop: g1h-ons-ci-001
+  family: interval
+  class: SE
+  mode: indirect
+  expect_level: 3
+  expect_failure: null
+  expect_estimate: rounded
+  expect_family_level: 3
+  evidence: assessment/evidence/g1/ons-ci-education.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json
+  text: '## Plain-language version
+
+
+    In 2016, the UK''s private education industry brought in around **£42.6 billion** in total turnover.
+
+
+    That figure comes from a survey, not a full count of every business, so it carries some uncertainty. Statisticians measure that uncertainty with a "confidence interval" — a range around the estimate
+    that reflects how much the number might shift if a different sample had been surveyed.
+
+
+    For this estimate, the range runs from about **£41.6 billion to £43.7 billion** (the estimate give or take roughly £1.0 billion).
+
+
+    What that range means: if you repeated the survey 20 times, drawing a fresh random sample each time, and worked out a range like this for each one, about 19 of those 20 ranges would contain the true
+    figure for the whole industry, and about 1 would miss it. So a range built this way is a reliable — though not guaranteed — guide to where the true number sits.
+
+
+    ## One correction to flag
+
+
+    The original''s final sentence — "there is a 95% chance that the true population value lies between £41,616 million and £43,682 million" — is the standard misreading of a confidence interval, and it
+    contradicts the sentence just before it.
+
+
+    The 95% describes the *method*, not this particular interval. The true value is a fixed (if unknown) number; it either falls inside this specific range or it doesn''t. What''s random is which interval
+    the sampling procedure produced. Saying "95% chance the true value is in *this* range" is a Bayesian credible-interval statement, which requires a prior and is not what was calculated here.
+
+
+    I dropped that sentence from the restatement rather than reproducing it. If you want the intuition it was reaching for, the honest general-audience phrasing is: *"we can be 95% confident the true figure
+    lies in this range,"* where "confident" points at the track record of the method.'
+  note: 'v1 scorer: L0 binding_error (the ''give or take roughly £1.0 billion'' is bound to £43.7bn, another number); reviewer: genuine omission of the £526.8 million SE. D10: a candidate anchored on another
+    estimate is not this estimate''s; no bound candidate -> L1 omission. Family verdict is on `interval` (SE + CI published): the CI form is scored on the same response and the family takes the best form.'
+- prop: g1h-acs-cv-002
+  family: relative
+  class: CV
+  mode: indirect
+  expect_level: 1
+  expect_failure: omission
+  expect_estimate: wrong
+  expect_family_level: 1
+  evidence: assessment/evidence/g1/holdout/acs-ch8-loudoun-82.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json
+  text: '## What this table is
+
+
+    It''s an excerpt from the U.S. Census Bureau''s American Community Survey, Table B19001 — a count of **households sorted into 16 income brackets**, with income stated in 2015 dollars. The excerpt doesn''t
+    name the place it covers.
+
+
+    ## How to read the numbers
+
+
+    Each row runs: bracket name, an unlabeled marker column, then four numbers.
+
+
+    Taking the first row — `Less than $10,000 — 2,163 ±812  494  22.8`:
+
+
+    - **2,163** — the estimated number of households in that bracket.
+
+    - **±812** — the margin of error. The survey polls a sample, not everyone, so the true count is very likely (90% confidence) somewhere between about 1,350 and 2,975.
+
+    - **494** — the standard error, the raw statistical version of that same uncertainty.
+
+    - **22.8** — the coefficient of variation: the standard error as a percentage of the estimate. It''s a plain-English reliability score. Under ~15% is solid; 20–30% means treat the number as a rough
+    indication, not a fact.
+
+
+    The marker column (`–` for most rows, `1`, `2`, or `3` for a handful of middle brackets) is a footnote flag whose key isn''t included in the excerpt, so I can''t say what it denotes.
+
+
+    ## What the numbers say
+
+
+    Total: about **120,600 households**. The distribution is strongly weighted toward the top:
+
+
+    | Income | Households | Share |
+
+    |---|---|---|
+
+    | Under $50,000 | ~17,600 | 15% |
+
+    | $50,000–$99,999 | ~27,800 | 23% |
+
+    | $100,000 and up | ~75,100 | 62% |
+
+    | — of which $200,000+ | ~29,400 | 24% |
+
+
+    The single largest bracket is **$200,000 or more**, with roughly 29,400 households — nearly a quarter of the total, and more than the entire under-$50,000 population combined. The median household sits
+    right around **$125,000**.
+
+
+    Reliability tracks the same pattern. The low-income brackets are small and thinly sampled, so their coefficients of variation run 20–30% — the individual counts there are shaky, even though the overall
+    picture of "few low-income households" is sound. The high-income brackets are large and well-measured, with coefficients of variation of 6–8%.
+
+
+    Two caveats: the totals and percentages above are my arithmetic on the published brackets, and they inherit the same sampling uncertainty as the rows they''re built from. And the incomes are in 2015
+    dollars — roughly a third below today''s purchasing power.'
+  note: 'v1 scorer: L0 quantity_hallucination (matched the summary band ''coefficients of variation of 6'' to the $15,000–$19,999 row''s 30.1); reviewer: the row is never restated. D10: nothing binds the
+    band to this estimate -> L1 omission.'
+- prop: g1h-acs-cv-002
+  family: interval
+  class: MOE
+  mode: indirect
+  expect_level: 1
+  expect_failure: omission
+  expect_estimate: wrong
+  expect_family_level: 1
+  evidence: assessment/evidence/g1/holdout/acs-ch8-loudoun-82.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json
+  text: '## What this table is
+
+
+    It''s an excerpt from the U.S. Census Bureau''s American Community Survey, Table B19001 — a count of **households sorted into 16 income brackets**, with income stated in 2015 dollars. The excerpt doesn''t
+    name the place it covers.
+
+
+    ## How to read the numbers
+
+
+    Each row runs: bracket name, an unlabeled marker column, then four numbers.
+
+
+    Taking the first row — `Less than $10,000 — 2,163 ±812  494  22.8`:
+
+
+    - **2,163** — the estimated number of households in that bracket.
+
+    - **±812** — the margin of error. The survey polls a sample, not everyone, so the true count is very likely (90% confidence) somewhere between about 1,350 and 2,975.
+
+    - **494** — the standard error, the raw statistical version of that same uncertainty.
+
+    - **22.8** — the coefficient of variation: the standard error as a percentage of the estimate. It''s a plain-English reliability score. Under ~15% is solid; 20–30% means treat the number as a rough
+    indication, not a fact.
+
+
+    The marker column (`–` for most rows, `1`, `2`, or `3` for a handful of middle brackets) is a footnote flag whose key isn''t included in the excerpt, so I can''t say what it denotes.
+
+
+    ## What the numbers say
+
+
+    Total: about **120,600 households**. The distribution is strongly weighted toward the top:
+
+
+    | Income | Households | Share |
+
+    |---|---|---|
+
+    | Under $50,000 | ~17,600 | 15% |
+
+    | $50,000–$99,999 | ~27,800 | 23% |
+
+    | $100,000 and up | ~75,100 | 62% |
+
+    | — of which $200,000+ | ~29,400 | 24% |
+
+
+    The single largest bracket is **$200,000 or more**, with roughly 29,400 households — nearly a quarter of the total, and more than the entire under-$50,000 population combined. The median household sits
+    right around **$125,000**.
+
+
+    Reliability tracks the same pattern. The low-income brackets are small and thinly sampled, so their coefficients of variation run 20–30% — the individual counts there are shaky, even though the overall
+    picture of "few low-income households" is sound. The high-income brackets are large and well-measured, with coefficients of variation of 6–8%.
+
+
+    Two caveats: the totals and percentages above are my arithmetic on the published brackets, and they inherit the same sampling uncertainty as the rows they''re built from. And the incomes are in 2015
+    dollars — roughly a third below today''s purchasing power.'
+  note: 'v1 scorer: L0 binding_error (another row''s ±812 bound to 2,163); reviewer: genuine omission of the ±743 MOE. D10: a candidate anchored on another estimate, not presented beside this row''s label,
+    is simply not this estimate''s -> L1 omission.'

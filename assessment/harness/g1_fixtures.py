@@ -46,6 +46,10 @@ def is_grounded(span: str, source_text: str) -> bool:
     return normalize(span) in normalize(source_text)
 
 
+# The closed surface-type vocabulary (task 2026-09-03_g1_eval_v2 step 2, skeleton G1 note).
+SURFACE_TYPES = ("table_coded", "table_labeled", "footnoted", "flagged_cell", "no_declared", "prose_labeled")
+
+
 class FixtureError(ValueError):
     """A fixture that does not meet the D1 schema. Names the proposition."""
 
@@ -90,6 +94,22 @@ class Proposition:
     producer_rule: str
     vintage: Optional[dict] = None
     notes: str = ""
+    # v2 (task 2026-09-03_g1_eval_v2 step 2): the product surface the passage was cut from.
+    # `prose_labeled` for the v1 handbook stratum (the default when a v1 file carries none).
+    surface_type: str = "prose_labeled"
+    surface_file: Optional[str] = None
+    # footnoted surfaces: characters between the body span and the qualifier's span in the
+    # captured surface text (D11 covariate, never scored).
+    footnote_distance_chars: Optional[int] = None
+    # table_coded: code -> meaning from the surface's own metadata endpoint; fixture
+    # metadata only, never rendered into a prompt.
+    code_map: Optional[dict] = None
+    # flagged_cell: whether the flag legend is part of the passage the consumer sees.
+    legend_on_surface: Optional[bool] = None
+    # the row / sentence the estimate sits in (D10 binding window anchor)
+    binding: Optional[dict] = None
+    # v1 propositions re-split by passage in v2 keep where they came from
+    split_origin: Optional[str] = None
 
     @property
     def estimate_value(self) -> float:
@@ -117,6 +137,11 @@ class FixtureSet:
     propositions: List[Proposition]
     passages: Dict[str, str] = field(default_factory=dict)
     empty_classes: Dict[str, str] = field(default_factory=dict)   # class -> recorded reason
+    # v2: per-passage metadata — surface_type, surface files, verbatim `parts` (each a
+    # contiguous block of one captured file; the passage is the parts joined by a newline),
+    # legend_on_surface, declared_leg_score (filled by the declared-leg run, step 3).
+    passage_meta: Dict[str, dict] = field(default_factory=dict)
+    fixture_version: str = ""
 
     def by_id(self, pid: str) -> Proposition:
         for p in self.propositions:
@@ -133,6 +158,19 @@ class FixtureSet:
             for q in p.qualifiers:
                 out[q.cls.value] += 1
         return out
+
+    def counts_by_surface(self) -> Dict[str, int]:
+        out: Dict[str, int] = {}
+        for p in self.propositions:
+            out[p.surface_type] = out.get(p.surface_type, 0) + 1
+        return out
+
+    def passage_ids(self) -> List[str]:
+        seen: List[str] = []
+        for p in self.propositions:
+            if p.passage_id not in seen:
+                seen.append(p.passage_id)
+        return seen
 
 
 _REQUIRED_ESTIMATE = ("value", "text", "unit", "label")
@@ -166,6 +204,24 @@ def load_fixture_set(path) -> FixtureSet:
     if not isinstance(passages, dict):
         raise FixtureError(f"{path}: 'passages' must be a mapping id -> verbatim text")
     empty = doc.get("empty_classes") or {}
+    meta = doc.get("passage_meta") or {}
+    if not isinstance(meta, dict):
+        raise FixtureError(f"{path}: 'passage_meta' must be a mapping passage id -> metadata")
+    for pid_, m in meta.items():
+        if pid_ not in passages:
+            raise FixtureError(f"{path}: passage_meta names unknown passage {pid_!r}")
+        parts = m.get("parts")
+        if parts:
+            # every part is verbatim inside the passage text, and their join IS the passage
+            for part in parts:
+                if not is_grounded(part["text"], passages[pid_]):
+                    raise FixtureError(f"{path}: passage {pid_!r} part from {part.get('doc_id')} is not verbatim in the passage")
+            if normalize("\n".join(part["text"] for part in parts)) != normalize(passages[pid_]):
+                raise FixtureError(f"{path}: passage {pid_!r} is not the newline-join of its parts")
+    fixture_version = ""
+    first = path.read_text(encoding="utf-8").splitlines()[0] if path.exists() else ""
+    if first.startswith("# fixture_version:"):
+        fixture_version = first.split(":", 1)[1].strip()
     props: List[Proposition] = []
     seen = set()
     for raw in doc["propositions"] or []:
@@ -197,14 +253,26 @@ def load_fixture_set(path) -> FixtureSet:
             quals.append(Qualifier(cls, {k: v for k, v in q.items() if k != "class"}))
         if not quals:
             raise FixtureError(f"{pid}: a proposition carries at least one qualifier")
+        pmeta = meta.get(raw["passage"], {})
+        surface = raw.get("surface_type") or pmeta.get("surface_type") or "prose_labeled"
+        if surface not in SURFACE_TYPES:
+            raise FixtureError(f"{pid}: unknown surface_type {surface!r} (not in {SURFACE_TYPES})")
+        fd = raw.get("footnote_distance_chars")
+        if fd is not None and (not isinstance(fd, int) or fd < 0):
+            raise FixtureError(f"{pid}: footnote_distance_chars must be a non-negative integer")
         props.append(Proposition(
             id=pid, source_doc_id=raw["source_doc_id"], passage_id=raw["passage"],
             grounding_span=raw["grounding_span"], context_passage=context, estimate=est,
             qualifiers=tuple(quals), producer_rule=raw["producer_rule"],
-            vintage=raw.get("vintage"), notes=raw.get("notes", "") or ""))
+            vintage=raw.get("vintage"), notes=raw.get("notes", "") or "",
+            surface_type=surface, surface_file=raw.get("surface_file") or pmeta.get("surface_file"),
+            footnote_distance_chars=fd, code_map=raw.get("code_map"),
+            legend_on_surface=raw.get("legend_on_surface", pmeta.get("legend_on_surface")),
+            binding=raw.get("binding"), split_origin=raw.get("split_origin")))
     return FixtureSet(path=str(path), propositions=props, passages=dict(passages),
-                      empty_classes={str(k): str(v) for k, v in empty.items()})
+                      empty_classes={str(k): str(v) for k, v in empty.items()},
+                      passage_meta={str(k): dict(v) for k, v in meta.items()}, fixture_version=fixture_version)
 
 
 __all__ = ["FixtureSet", "Proposition", "Qualifier", "FixtureError", "load_fixture_set",
-           "normalize", "is_grounded"]
+           "normalize", "is_grounded", "SURFACE_TYPES"]

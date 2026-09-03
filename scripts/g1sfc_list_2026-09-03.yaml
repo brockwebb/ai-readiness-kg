@@ -1,0 +1,435 @@
+# G1 v2 product-surface fixture sources — task 2026-09-03_g1_eval_v2_product_surfaces_compression
+# step 2. Standing path (harvest_triage.py -> manifest_triage.py), epoch g1sfc-2026-09-03,
+# rationale "G1 v2 product-surface fixture". Surfaces are captured AS SERVED (raw JSON / CSV /
+# PDF / HTML-to-text) because the surface's form is the thing under test; each entry records
+# `surface_type`, `surface_format` and the exact request (`request_url`; a secret rides as a
+# {NAME} placeholder, substituted at request time and redacted from every record — see
+# harvest_kernel.secret_values). Dev and holdout are DIFFERENT files (state / reference period /
+# brief); the fixture test asserts zero passage overlap between splits.
+#
+# Reconnaissance 2026-09-03 (curl, recorded here because every cut cites it):
+#   api.census.gov without a key redirects to /data/missing_key.html (HTTP 302 -> "Missing Key");
+#     with CENSUS_API_KEY (held in ~/.wintermute/.env for the Census MCP server) the ACS 5-year
+#     county query returns the JSON header-row table.
+#   data.census.gov table download: HTTP 403 "Request Rejected" (WAF) for the scripted request.
+#   www.census.gov/quickfacts (HTML and the /fact/csv/ export): HTTP 403 Cloudflare
+#     "Attention Required!" challenge.
+#   www.bls.gov (news.release/empsit.htm, .pdf, archives, lau/laucntycur14.txt): HTTP 403
+#     "Access Denied" for every scripted request.
+#   www150.statcan.gc.ca tv.action table pages: the table and its symbol legend are JS-rendered
+#     (static HTML 4-7 KB of chrome, no cells); the full-table zip for 14-10-0287-01 is 1.18 GB
+#     (the whole series since 1976); the "download selected data" endpoint returns a CSV slice
+#     with STATUS / SYMBOL columns; the cube-metadata CSV carries the symbol legend and notes.
+#   NCHS Data Brief PDFs (cdc.gov/nchs/data/databriefs/dbNNN.pdf) fetch with the research UA;
+#     briefs from No. 498 (March 2024) carry "Data table for Figure N" appendices with
+#     Percent / (95% confidence interval) / Standard error columns; No. 530 (July 2025) carries a
+#     state table whose change column is replaced by "†" with the legend "† Change not
+#     significant (p = 0.05)" beneath it.
+#   Census newsroom 2025 ACS 1-year release (HTTP 200, 6,119 chars of text): no "margin of
+#     error", no technical note; only "not statistically significant" language.
+#   ONS bulletins probed (Labour market overview, Employment in the UK, Crime in England and
+#     Wales, Public opinions and social trends, Adult smoking habits, Sexual orientation, Personal
+#     well-being, Coronavirus and the social impacts): every one points to an accompanying
+#     dataset ("sampling variability dataset A11", "confidence intervals ... in the accompanying
+#     data download"); no CI value is on the bulletin surface.
+settings:
+  user_agent: "WintermuteAcceptance/0.1 (research; brockwebb45@gmail.com)"
+  browser_user_agent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36"
+  discovered_via: "g1-eval-v2-2026-09-03"
+  discovered_via_gap: "g1-eval-v2-2026-09-03"
+  max_doc_chars: 250000
+  min_content_chars: 200
+  timeout_seconds: 180
+  retries: 1
+  spacing_seconds: 1.0
+  crwl_timeout_seconds: 180
+  fit_min_fraction_of_raw: 0.35
+  challenge_markers: ["Just a moment...", "Enable JavaScript and cookies", "Attention Required!", "Access Denied", "verify you are a human", "Request Rejected"]
+  crwl_filter:
+    type: pruning
+    threshold: 0.45
+    min_word_threshold: 3
+  paywall_domains: [papers.ssrn.com, ssrn.com, onlinelibrary.wiley.com, researchgate.net,
+                    gartner.com, worldscientific.com, sciencedirect.com,
+                    regulations.gov, downloads.regulations.gov, dl.acm.org, ieeexplore.ieee.org]
+  vetting_input1:
+    source: machine_search_2026-09-03
+    expertise: none_claimed
+    weight: not_vetting
+
+entries:
+  # ---------------------------------------------------------------- table_coded
+  - row: 1
+    doc_id: census-api-acs5-2023-b19013-counties-colorado
+    title: "Census Data API: ACS 5-Year 2023, B19013_001E / B19013_001M (median household income) for all counties in Colorado"
+    authors_or_org: ["U.S. Census Bureau"]
+    year: "2023"
+    source_type: federal
+    primary_url: "https://api.census.gov/data/2023/acs/acs5?get=NAME,B19013_001E,B19013_001M&for=county:*&in=state:08&key={CENSUS_API_KEY}"
+    raw_url: "https://api.census.gov/data/2023/acs/acs5?get=NAME,B19013_001E,B19013_001M&for=county:*&in=state:08&key={CENSUS_API_KEY}"
+    request_url: "https://api.census.gov/data/2023/acs/acs5?get=NAME,B19013_001E,B19013_001M&for=county:*&in=state:08&key={CENSUS_API_KEY}"
+    secret_env: [CENSUS_API_KEY]
+    fetcher: raw
+    surface_type: table_coded
+    surface_format: json
+    verdict: fetch
+    clause: R1
+    construct_arm: publication_actionability
+    grounding_surface: document
+    gap: true
+    notes: "table_coded DEV surface: estimate and MOE as coded fields (B19013_001E, B19013_001M) with no label on the surface; the code->meaning mapping is read from the API's own variables endpoint (/data/2023/acs/acs5/variables/B19013_001E.json, …M.json) into the fixture metadata, never shown to the consumer. 64 county rows."
+  - row: 2
+    doc_id: census-api-acs5-2023-b19013-counties-idaho
+    title: "Census Data API: ACS 5-Year 2023, B19013_001E / B19013_001M (median household income) for all counties in Idaho"
+    authors_or_org: ["U.S. Census Bureau"]
+    year: "2023"
+    source_type: federal
+    primary_url: "https://api.census.gov/data/2023/acs/acs5?get=NAME,B19013_001E,B19013_001M&for=county:*&in=state:16&key={CENSUS_API_KEY}"
+    raw_url: "https://api.census.gov/data/2023/acs/acs5?get=NAME,B19013_001E,B19013_001M&for=county:*&in=state:16&key={CENSUS_API_KEY}"
+    request_url: "https://api.census.gov/data/2023/acs/acs5?get=NAME,B19013_001E,B19013_001M&for=county:*&in=state:16&key={CENSUS_API_KEY}"
+    secret_env: [CENSUS_API_KEY]
+    fetcher: raw
+    surface_type: table_coded
+    surface_format: json
+    verdict: fetch
+    clause: R1
+    construct_arm: publication_actionability
+    grounding_surface: document
+    gap: true
+    notes: "table_coded HOLDOUT surface: the same query for a different state (Idaho, 44 counties)."
+  # ---------------------------------------------------------------- table_labeled
+  - row: 3
+    doc_id: data-census-gov-acsdt5y2023-b19013-colorado-counties-csv
+    title: "data.census.gov CSV export of ACSDT5Y2023.B19013 for Colorado counties (label row present)"
+    authors_or_org: ["U.S. Census Bureau"]
+    year: "2023"
+    source_type: federal
+    primary_url: "https://data.census.gov/api/access/table/download?tableId=ACSDT5Y2023.B19013&geoIds=040XX00US08$0500000&format=csv"
+    raw_url: "https://data.census.gov/api/access/table/download?tableId=ACSDT5Y2023.B19013&geoIds=040XX00US08$0500000&format=csv"
+    request_url: "https://data.census.gov/api/access/table/download?tableId=ACSDT5Y2023.B19013&geoIds=040XX00US08$0500000&format=csv"
+    fetcher: raw
+    surface_type: table_labeled
+    surface_format: csv
+    verdict: fetch
+    clause: R1
+    construct_arm: publication_actionability
+    grounding_surface: document
+    gap: true
+    notes: "table_labeled DEV target named by the task (the same table with its label row). Reconnaissance: HTTP 403 'Request Rejected' (WAF); if it fails again here it is routed needs_source with this exact URL, not hand-constructed."
+  - row: 4
+    doc_id: statcan-14-10-0287-01-lfs-2026-07-provinces-estimate-se-csv
+    title: "Statistics Canada Table 14-10-0287-01, Labour force characteristics, monthly, seasonally adjusted — July 2026, Canada and provinces, estimate and standard error of estimate (CSV for database loading)"
+    authors_or_org: ["Statistics Canada"]
+    year: "2026"
+    source_type: federal
+    primary_url: "https://www150.statcan.gc.ca/t1/tbl1/en/dtl!downloadDbLoadingData-nonTraduit.action?pid=1410028701&latestN=1&startDate=&endDate=&csvLocale=en&selectedMembers=%5B%5B1%2C2%2C3%2C4%2C5%2C6%2C7%2C8%2C9%2C10%2C11%5D%2C%5B1%2C2%2C3%2C4%2C5%2C6%2C7%2C8%2C9%5D%2C%5B1%5D%2C%5B1%5D%2C%5B1%2C2%5D%2C%5B1%5D%5D&checkedLevels="
+    raw_url: "https://www150.statcan.gc.ca/t1/tbl1/en/dtl!downloadDbLoadingData-nonTraduit.action?pid=1410028701&latestN=1&startDate=&endDate=&csvLocale=en&selectedMembers=%5B%5B1%2C2%2C3%2C4%2C5%2C6%2C7%2C8%2C9%2C10%2C11%5D%2C%5B1%2C2%2C3%2C4%2C5%2C6%2C7%2C8%2C9%5D%2C%5B1%5D%2C%5B1%5D%2C%5B1%2C2%5D%2C%5B1%5D%5D&checkedLevels="
+    request_url: "https://www150.statcan.gc.ca/t1/tbl1/en/dtl!downloadDbLoadingData-nonTraduit.action?pid=1410028701&latestN=1&startDate=&endDate=&csvLocale=en&selectedMembers=%5B%5B1%2C2%2C3%2C4%2C5%2C6%2C7%2C8%2C9%2C10%2C11%5D%2C%5B1%2C2%2C3%2C4%2C5%2C6%2C7%2C8%2C9%5D%2C%5B1%5D%2C%5B1%5D%2C%5B1%2C2%5D%2C%5B1%5D%5D&checkedLevels="
+    fetcher: raw
+    surface_type: table_labeled
+    surface_format: csv
+    verdict: fetch
+    clause: R1
+    construct_arm: publication_actionability
+    grounding_surface: document
+    gap: true
+    notes: "table_labeled DEV surface: long-format CSV whose 'Statistics' column names each row 'Estimate' or 'Standard error of estimate' and whose STATUS/SYMBOL columns carry the quality indicator (selection: Geography Canada + 10 provinces; all 9 labour force characteristics; total gender; 15 years and over; Statistics = Estimate, Standard error of estimate; seasonally adjusted; latest reference month)."
+  - row: 5
+    doc_id: statcan-14-10-0287-01-lfs-2025-12-provinces-estimate-se-csv
+    title: "Statistics Canada Table 14-10-0287-01, Labour force characteristics, monthly, seasonally adjusted — December 2025, Canada and provinces, estimate and standard error of estimate (CSV for database loading)"
+    authors_or_org: ["Statistics Canada"]
+    year: "2025"
+    source_type: federal
+    primary_url: "https://www150.statcan.gc.ca/t1/tbl1/en/dtl!downloadDbLoadingData-nonTraduit.action?pid=1410028701&latestN=0&startDate=2026-01-01&endDate=2026-01-01&csvLocale=en&selectedMembers=%5B%5B1%2C2%2C3%2C4%2C5%2C6%2C7%2C8%2C9%2C10%2C11%5D%2C%5B1%2C2%2C3%2C4%2C5%2C6%2C7%2C8%2C9%5D%2C%5B1%5D%2C%5B1%5D%2C%5B1%2C2%5D%2C%5B1%5D%5D&checkedLevels="
+    raw_url: "https://www150.statcan.gc.ca/t1/tbl1/en/dtl!downloadDbLoadingData-nonTraduit.action?pid=1410028701&latestN=0&startDate=2026-01-01&endDate=2026-01-01&csvLocale=en&selectedMembers=%5B%5B1%2C2%2C3%2C4%2C5%2C6%2C7%2C8%2C9%2C10%2C11%5D%2C%5B1%2C2%2C3%2C4%2C5%2C6%2C7%2C8%2C9%5D%2C%5B1%5D%2C%5B1%5D%2C%5B1%2C2%5D%2C%5B1%5D%5D&checkedLevels="
+    request_url: "https://www150.statcan.gc.ca/t1/tbl1/en/dtl!downloadDbLoadingData-nonTraduit.action?pid=1410028701&latestN=0&startDate=2026-01-01&endDate=2026-01-01&csvLocale=en&selectedMembers=%5B%5B1%2C2%2C3%2C4%2C5%2C6%2C7%2C8%2C9%2C10%2C11%5D%2C%5B1%2C2%2C3%2C4%2C5%2C6%2C7%2C8%2C9%5D%2C%5B1%5D%2C%5B1%5D%2C%5B1%2C2%5D%2C%5B1%5D%5D&checkedLevels="
+    fetcher: raw
+    surface_type: table_labeled
+    surface_format: csv
+    verdict: fetch
+    clause: R1
+    construct_arm: publication_actionability
+    grounding_surface: document
+    gap: true
+    notes: "table_labeled HOLDOUT surface: the same selection for a different reference month (December 2025). The endpoint's date window is exclusive-shifted by one period: startDate=endDate=2026-01-01 returns the 2025-12 rows (verified 2026-09-03: 2025-12-01..2025-12-31 returns no rows; 2025-11-01..2025-12-01 returns 2024-11), so the recorded request is the form that serves December 2025."
+  - row: 6
+    doc_id: statcan-14-10-0287-01-cube-metadata-csv
+    title: "Statistics Canada Table 14-10-0287-01 — cube metadata (dimensions, members, notes, symbol legend)"
+    authors_or_org: ["Statistics Canada"]
+    year: "2026"
+    source_type: federal
+    primary_url: "https://www150.statcan.gc.ca/t1/tbl1/en/dtl!downloadCubeMetaData-nonTraduit.action?pid=1410028701&csvLocale=en"
+    raw_url: "https://www150.statcan.gc.ca/t1/tbl1/en/dtl!downloadCubeMetaData-nonTraduit.action?pid=1410028701&csvLocale=en"
+    request_url: "https://www150.statcan.gc.ca/t1/tbl1/en/dtl!downloadCubeMetaData-nonTraduit.action?pid=1410028701&csvLocale=en"
+    fetcher: raw
+    surface_type: legend
+    surface_format: csv
+    verdict: fetch
+    clause: R1
+    construct_arm: publication_actionability
+    grounding_surface: document
+    gap: true
+    notes: "Companion to rows 4-5: the symbol legend (A-F data quality, E use with caution, F too unreliable to be published, x suppressed, ..) and the member notes (standard error definitions) are served in this separate file, not in the data CSV — recorded as legend_on_surface=false on the fixtures."
+  # ---------------------------------------------------------------- flagged_cell
+  - row: 7
+    doc_id: statcan-13-10-0096-01-cchs-2022-provinces-percent-ci-csv
+    title: "Statistics Canada Table 13-10-0096-01, Health characteristics, annual estimates — 2022, Canada and provinces, percent with 95% confidence interval bounds and quality-indicator letters (CSV for database loading)"
+    authors_or_org: ["Statistics Canada"]
+    year: "2022"
+    source_type: federal
+    primary_url: "https://www150.statcan.gc.ca/t1/tbl1/en/dtl!downloadDbLoadingData-nonTraduit.action?pid=1310009601&latestN=1&startDate=&endDate=&csvLocale=en&selectedMembers=%5B%5B1%2C2%2C3%2C4%2C5%2C6%2C7%2C8%2C9%2C10%2C11%5D%2C%5B1%5D%2C%5B1%5D%2C%5B1%2C2%2C3%2C4%2C5%2C6%2C7%2C8%2C9%2C10%2C11%5D%2C%5B4%2C5%2C6%5D%5D&checkedLevels="
+    raw_url: "https://www150.statcan.gc.ca/t1/tbl1/en/dtl!downloadDbLoadingData-nonTraduit.action?pid=1310009601&latestN=1&startDate=&endDate=&csvLocale=en&selectedMembers=%5B%5B1%2C2%2C3%2C4%2C5%2C6%2C7%2C8%2C9%2C10%2C11%5D%2C%5B1%5D%2C%5B1%5D%2C%5B1%2C2%2C3%2C4%2C5%2C6%2C7%2C8%2C9%2C10%2C11%5D%2C%5B4%2C5%2C6%5D%5D&checkedLevels="
+    request_url: "https://www150.statcan.gc.ca/t1/tbl1/en/dtl!downloadDbLoadingData-nonTraduit.action?pid=1310009601&latestN=1&startDate=&endDate=&csvLocale=en&selectedMembers=%5B%5B1%2C2%2C3%2C4%2C5%2C6%2C7%2C8%2C9%2C10%2C11%5D%2C%5B1%5D%2C%5B1%5D%2C%5B1%2C2%2C3%2C4%2C5%2C6%2C7%2C8%2C9%2C10%2C11%5D%2C%5B4%2C5%2C6%5D%5D&checkedLevels="
+    fetcher: raw
+    surface_type: flagged_cell
+    surface_format: csv
+    verdict: fetch
+    clause: R1
+    construct_arm: publication_actionability
+    grounding_surface: document
+    gap: true
+    notes: "flagged_cell DEV surface (StatCan letter quality indicators): STATUS column carries 'E' (use with caution) on 9 cells and '..' on 33 in the 2022 slice; rows also carry Low/High 95% confidence interval as labeled rows, so unflagged rows serve table_labeled. Selection: Canada + 10 provinces; total 12+; both sexes; indicators 1-11; Characteristics = Percent, Low 95% CI, High 95% CI."
+  - row: 8
+    doc_id: statcan-13-10-0096-01-cube-metadata-csv
+    title: "Statistics Canada Table 13-10-0096-01 — cube metadata (dimensions, members, notes, symbol legend)"
+    authors_or_org: ["Statistics Canada"]
+    year: "2022"
+    source_type: federal
+    primary_url: "https://www150.statcan.gc.ca/t1/tbl1/en/dtl!downloadCubeMetaData-nonTraduit.action?pid=1310009601&csvLocale=en"
+    raw_url: "https://www150.statcan.gc.ca/t1/tbl1/en/dtl!downloadCubeMetaData-nonTraduit.action?pid=1310009601&csvLocale=en"
+    request_url: "https://www150.statcan.gc.ca/t1/tbl1/en/dtl!downloadCubeMetaData-nonTraduit.action?pid=1310009601&csvLocale=en"
+    fetcher: raw
+    surface_type: legend
+    surface_format: csv
+    verdict: fetch
+    clause: R1
+    construct_arm: publication_actionability
+    grounding_surface: document
+    gap: true
+    notes: "Companion to row 7: symbol legend and notes."
+  - row: 9
+    doc_id: statcan-13-10-0113-01-cchs-2021-2022-quebec-health-regions-percent-ci-csv
+    title: "Statistics Canada Table 13-10-0113-01, Health characteristics, two-year period estimates — 2021/2022, Quebec health regions, percent with 95% confidence interval bounds and quality-indicator letters (CSV for database loading)"
+    authors_or_org: ["Statistics Canada"]
+    year: "2022"
+    source_type: federal
+    primary_url: "https://www150.statcan.gc.ca/t1/tbl1/en/dtl!downloadDbLoadingData-nonTraduit.action?pid=1310011301&latestN=1&startDate=&endDate=&csvLocale=en&selectedMembers=%5B%5B23%2C24%2C25%2C26%2C27%2C28%2C29%2C30%2C31%2C32%2C33%2C34%2C35%2C36%2C37%2C38%5D%2C%5B1%5D%2C%5B1%5D%2C%5B1%2C2%2C3%2C4%2C5%2C6%2C7%2C8%2C9%2C10%2C11%5D%2C%5B4%2C5%2C6%5D%5D&checkedLevels="
+    raw_url: "https://www150.statcan.gc.ca/t1/tbl1/en/dtl!downloadDbLoadingData-nonTraduit.action?pid=1310011301&latestN=1&startDate=&endDate=&csvLocale=en&selectedMembers=%5B%5B23%2C24%2C25%2C26%2C27%2C28%2C29%2C30%2C31%2C32%2C33%2C34%2C35%2C36%2C37%2C38%5D%2C%5B1%5D%2C%5B1%5D%2C%5B1%2C2%2C3%2C4%2C5%2C6%2C7%2C8%2C9%2C10%2C11%5D%2C%5B4%2C5%2C6%5D%5D&checkedLevels="
+    request_url: "https://www150.statcan.gc.ca/t1/tbl1/en/dtl!downloadDbLoadingData-nonTraduit.action?pid=1310011301&latestN=1&startDate=&endDate=&csvLocale=en&selectedMembers=%5B%5B23%2C24%2C25%2C26%2C27%2C28%2C29%2C30%2C31%2C32%2C33%2C34%2C35%2C36%2C37%2C38%5D%2C%5B1%5D%2C%5B1%5D%2C%5B1%2C2%2C3%2C4%2C5%2C6%2C7%2C8%2C9%2C10%2C11%5D%2C%5B4%2C5%2C6%5D%5D&checkedLevels="
+    fetcher: raw
+    surface_type: flagged_cell
+    surface_format: csv
+    verdict: fetch
+    clause: R1
+    construct_arm: publication_actionability
+    grounding_surface: document
+    gap: true
+    notes: "flagged_cell HOLDOUT surface: a different table (two-year period estimates) and geography (16 Quebec health regions); STATUS carries 30 'E' and 6 'F' cells in the 2021/2022 slice."
+  - row: 10
+    doc_id: statcan-13-10-0113-01-cube-metadata-csv
+    title: "Statistics Canada Table 13-10-0113-01 — cube metadata (dimensions, members, notes, symbol legend)"
+    authors_or_org: ["Statistics Canada"]
+    year: "2022"
+    source_type: federal
+    primary_url: "https://www150.statcan.gc.ca/t1/tbl1/en/dtl!downloadCubeMetaData-nonTraduit.action?pid=1310011301&csvLocale=en"
+    raw_url: "https://www150.statcan.gc.ca/t1/tbl1/en/dtl!downloadCubeMetaData-nonTraduit.action?pid=1310011301&csvLocale=en"
+    request_url: "https://www150.statcan.gc.ca/t1/tbl1/en/dtl!downloadCubeMetaData-nonTraduit.action?pid=1310011301&csvLocale=en"
+    fetcher: raw
+    surface_type: legend
+    surface_format: csv
+    verdict: fetch
+    clause: R1
+    construct_arm: publication_actionability
+    grounding_surface: document
+    gap: true
+    notes: "Companion to row 9: symbol legend and notes."
+  - row: 11
+    doc_id: nchs-data-brief-530-perinatal-mortality-2022-2023
+    title: "Perinatal Mortality in the United States, 2022 and 2023 (NCHS Data Brief No. 530)"
+    authors_or_org: ["Claudia P. Valenzuela", "Elizabeth C.W. Gregory", "Joyce A. Martin"]
+    year: "2025"
+    source_type: federal
+    primary_url: https://www.cdc.gov/nchs/data/databriefs/db530.pdf
+    pdf_url: https://www.cdc.gov/nchs/data/databriefs/db530.pdf
+    request_url: https://www.cdc.gov/nchs/data/databriefs/db530.pdf
+    surface_type: flagged_cell
+    surface_format: pdf
+    verdict: fetch
+    clause: R1
+    construct_arm: publication_actionability
+    grounding_surface: document
+    gap: true
+    notes: "flagged_cell DEV surface (NCHS): 'Data table for Figure 4' lists each state's 2022 and 2023 perinatal mortality rates and a percent-change column in which a '†' replaces the value where the change is not significant; the legend '† Change not significant (p = 0.05).' is printed beneath the table — a producer flag with its legend on the surface."
+  # ---------------------------------------------------------------- footnoted
+  - row: 12
+    doc_id: nchs-data-brief-500-dental-visits-adults-65-2022
+    title: "Dental Visits Among Adults Age 65 and Older: United States, 2022 (NCHS Data Brief No. 500)"
+    authors_or_org: ["National Center for Health Statistics"]
+    year: "2024"
+    source_type: federal
+    primary_url: https://www.cdc.gov/nchs/data/databriefs/db500.pdf
+    pdf_url: https://www.cdc.gov/nchs/data/databriefs/db500.pdf
+    request_url: https://www.cdc.gov/nchs/data/databriefs/db500.pdf
+    surface_type: footnoted
+    surface_format: pdf
+    verdict: fetch
+    clause: R1
+    construct_arm: publication_actionability
+    grounding_surface: document
+    gap: true
+    notes: "footnoted DEV surface: the estimates appear in the Key findings and body text with no uncertainty; the 95% confidence interval and standard error for each appear only in the 'Data table for Figure N' appendix pages later in the same document (footnote_distance_chars measured on the extracted text)."
+  - row: 13
+    doc_id: nchs-data-brief-515-high-total-cholesterol-2021-2023
+    title: "Total and High-density Lipoprotein Cholesterol in Adults: United States, August 2021–August 2023 (NCHS Data Brief No. 515)"
+    authors_or_org: ["National Center for Health Statistics"]
+    year: "2024"
+    source_type: federal
+    primary_url: https://www.cdc.gov/nchs/data/databriefs/db515.pdf
+    pdf_url: https://www.cdc.gov/nchs/data/databriefs/db515.pdf
+    request_url: https://www.cdc.gov/nchs/data/databriefs/db515.pdf
+    surface_type: footnoted
+    surface_format: pdf
+    verdict: fetch
+    clause: R1
+    construct_arm: publication_actionability
+    grounding_surface: document
+    gap: true
+    notes: "footnoted HOLDOUT surface: a different Data Brief with the same body-text / appendix-table structure (Percent, 95% confidence interval, standard error)."
+  - row: 14
+    doc_id: census-newsroom-2025-acs-1-year-estimates-release
+    title: "U.S. Census Bureau newsroom: 2024 American Community Survey 1-Year Estimates release (2025)"
+    authors_or_org: ["U.S. Census Bureau"]
+    year: "2025"
+    source_type: federal
+    primary_url: https://www.census.gov/newsroom/press-releases/2025/acs-1-year-estimates.html
+    surface_type: footnoted
+    surface_format: html
+    verdict: excluded
+    clause: no_uncertainty_on_surface
+    construct_arm: publication_actionability
+    grounding_surface: document
+    gap: true
+    notes: "The task's footnoted DEV target (a Census ACS newsroom release with a technical note on margins of error). Reconnaissance 2026-09-03: HTTP 200, 6,119 chars of body text; zero occurrences of 'margin of error' or 'technical note'; the only uncertainty language is 'no statistically significant differences'. No MOE or CI is on the surface, so no footnoted proposition can be grounded — cut, not substituted."
+  - row: 15
+    doc_id: ons-employment-in-the-uk-2026-08-bulletin
+    title: "ONS statistical bulletin: Employment in the UK (August 2026)"
+    authors_or_org: ["Office for National Statistics"]
+    year: "2026"
+    source_type: government
+    primary_url: https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/employmentandemployeetypes/bulletins/employmentintheuk/latest
+    surface_type: footnoted
+    surface_format: html
+    verdict: excluded
+    clause: uncertainty_off_surface
+    construct_arm: publication_actionability
+    grounding_surface: document
+    gap: true
+    notes: "The task's footnoted target (an ONS bulletin whose CIs sit in a sampling-variability annex). Reconnaissance 2026-09-03 across eight ONS bulletins: the annex is a separate dataset ('Labour Force Survey sampling variability … Dataset A11'), and no bulletin states a CI value on its own surface. A dataset download is a table, not a footnoted surface — cut."
+  - row: 16
+    doc_id: bls-employment-situation-2026-08-news-release
+    title: "BLS news release: The Employment Situation — July 2026 (released August 2026; Technical Note on reliability of the estimates)"
+    authors_or_org: ["U.S. Bureau of Labor Statistics"]
+    year: "2026"
+    source_type: federal
+    primary_url: https://www.bls.gov/news.release/empsit.htm
+    request_url: https://www.bls.gov/news.release/empsit.htm
+    browser_ua: true
+    surface_type: footnoted
+    surface_format: html
+    verdict: fetch
+    clause: R1
+    construct_arm: publication_actionability
+    grounding_surface: document
+    gap: true
+    notes: "footnoted substitute candidate (same surface type as the cut Census/ONS targets): the release states the monthly change in the body and the 90-percent confidence interval for it in the Technical Note at the end. Reconnaissance: HTTP 403 'Access Denied' for every scripted request; tried here through the browser fetcher so the outcome is on the register."
+  # ---------------------------------------------------------------- no_declared
+  - row: 17
+    doc_id: census-quickfacts-denver-county-colorado
+    title: "Census QuickFacts: Denver County, Colorado"
+    authors_or_org: ["U.S. Census Bureau"]
+    year: "2025"
+    source_type: federal
+    primary_url: https://www.census.gov/quickfacts/denvercountycolorado
+    request_url: https://www.census.gov/quickfacts/denvercountycolorado
+    browser_ua: true
+    surface_type: no_declared
+    surface_format: html
+    verdict: fetch
+    clause: R1
+    construct_arm: publication_actionability
+    grounding_surface: document
+    gap: true
+    notes: "no_declared DEV surface named by the task (declared leg only). Reconnaissance: HTTP 403 Cloudflare 'Attention Required!' for both the page and the /fact/csv/ export; tried here through the browser fetcher."
+  - row: 18
+    doc_id: census-quickfacts-denver-county-colorado-csv
+    title: "Census QuickFacts CSV export: Denver County, Colorado (PST045224)"
+    authors_or_org: ["U.S. Census Bureau"]
+    year: "2025"
+    source_type: federal
+    primary_url: https://www.census.gov/quickfacts/fact/csv/denvercountycolorado/PST045224
+    raw_url: https://www.census.gov/quickfacts/fact/csv/denvercountycolorado/PST045224
+    request_url: https://www.census.gov/quickfacts/fact/csv/denvercountycolorado/PST045224
+    fetcher: raw
+    surface_type: no_declared
+    surface_format: csv
+    verdict: fetch
+    clause: R1
+    construct_arm: publication_actionability
+    grounding_surface: document
+    gap: true
+    notes: "no_declared DEV surface, CSV form of row 17."
+  - row: 19
+    doc_id: census-api-dec2020-dhc-p1-counties-colorado
+    title: "Census Data API: 2020 Census Demographic and Housing Characteristics, P1_001N (total population) for all counties in Colorado"
+    authors_or_org: ["U.S. Census Bureau"]
+    year: "2020"
+    source_type: federal
+    primary_url: "https://api.census.gov/data/2020/dec/dhc?get=NAME,P1_001N&for=county:*&in=state:08&key={CENSUS_API_KEY}"
+    raw_url: "https://api.census.gov/data/2020/dec/dhc?get=NAME,P1_001N&for=county:*&in=state:08&key={CENSUS_API_KEY}"
+    request_url: "https://api.census.gov/data/2020/dec/dhc?get=NAME,P1_001N&for=county:*&in=state:08&key={CENSUS_API_KEY}"
+    secret_env: [CENSUS_API_KEY]
+    fetcher: raw
+    surface_type: no_declared
+    surface_format: json
+    verdict: fetch
+    clause: R1
+    construct_arm: publication_actionability
+    grounding_surface: document
+    gap: true
+    notes: "no_declared substitute (declared leg only) if QuickFacts is bot-blocked: 2020 Census counts served with no uncertainty field at all, although every count carries disclosure-avoidance noise (census-2020-disclosure-avoidance-handbook-2021) — the pointed no_declared case."
+  - row: 20
+    doc_id: bls-laus-laucntycur14-county-unemployment
+    title: "BLS Local Area Unemployment Statistics: county data, 14 most recent months (laucntycur14.txt)"
+    authors_or_org: ["U.S. Bureau of Labor Statistics"]
+    year: "2026"
+    source_type: federal
+    primary_url: https://www.bls.gov/lau/laucntycur14.txt
+    raw_url: https://www.bls.gov/lau/laucntycur14.txt
+    request_url: https://www.bls.gov/lau/laucntycur14.txt
+    fetcher: raw
+    surface_type: no_declared
+    surface_format: text
+    verdict: fetch
+    clause: R1
+    construct_arm: publication_actionability
+    grounding_surface: document
+    gap: true
+    notes: "no_declared substitute candidate (model-based county estimates published without error measures). Reconnaissance: HTTP 403 'Access Denied'."
+  - row: 21
+    doc_id: bls-employment-situation-2026-05-news-release-archive
+    title: "BLS news release archive: The Employment Situation — May 2026 (released June 2026; Technical Note on reliability of the estimates)"
+    authors_or_org: ["U.S. Bureau of Labor Statistics"]
+    year: "2026"
+    source_type: federal
+    primary_url: https://www.bls.gov/news.release/archives/empsit_06052026.htm
+    request_url: https://www.bls.gov/news.release/archives/empsit_06052026.htm
+    alt_urls: ["https://www.bls.gov/news.release/archives/empsit_05082026.htm", "https://www.bls.gov/news.release/archives/empsit_06122026.htm", "https://www.bls.gov/news.release/archives/empsit_04032026.htm"]
+    browser_ua: true
+    surface_type: footnoted
+    surface_format: html
+    verdict: fetch
+    clause: R1
+    construct_arm: publication_actionability
+    grounding_surface: document
+    gap: true
+    notes: "footnoted HOLDOUT surface: an archived release for a different reference month than row 16 (the archive URL carries the release date; the alternates are the other plausible 2026 release dates — whichever serves is the one recorded on the register; the BLS archive index page is JS-rendered and returned nothing to the browser fetcher)."

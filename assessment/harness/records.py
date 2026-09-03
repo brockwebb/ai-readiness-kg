@@ -94,6 +94,22 @@ class QualifierClass(enum.Enum):
     VINTAGE = "VINTAGE"
 
 
+# Qualifier families (design D9, task 2026-09-03_g1_eval_v2 step 3; the table is also in
+# harness.toml [g1.families], which the config loader checks against this one). The family
+# is the scored unit in v2; the published forms inside it are deterministic transforms of
+# one another given the confidence level.
+FAMILIES = {
+    "interval": ("SE", "MOE", "CI"),
+    "relative": ("CV",),
+    "reliability": ("RELIABILITY_FLAG", "SUPPRESSION"),
+    "dp": ("DP_NOISE",),
+    "vintage": ("VINTAGE",),
+}
+FAMILY_OF = {cls: fam for fam, classes in FAMILIES.items() for cls in classes}
+# Compression budget levels (design D12); `none` is the v0/v1 indirect prompt verbatim.
+COMPRESSION_LEVELS = ("none", "short", "tight")
+
+
 class Level(enum.IntEnum):
     """Preservation level of ONE qualifier in ONE restatement (design D2, v0).
 
@@ -243,6 +259,15 @@ class EvalResult:
     # Instrument version of the deterministic parser/scorer that produced the record
     # (task 2026-09-03 step 4.4): required, like prompt_epoch and model_id.
     parser_version: str = ""
+    # v2 (task 2026-09-03_g1_eval_v2 step 3): the scorer is versioned separately from the
+    # parser (`g1-score-v2` implements D9–D11); required on every record. `family` is the
+    # scored unit (D9) — for a v2 record `qualifier_class` names the published form that
+    # achieved the family's level (or the family's first published form when none did).
+    # `surface_type` / `compression_level` are the v2 factors (D11 covariates on the record).
+    scorer_version: str = ""
+    family: str = ""
+    surface_type: str = ""
+    compression_level: str = ""
     dimension: str = "G1"
     track: Track = Track.CORE
     source: str = SOURCE_EVAL
@@ -256,6 +281,12 @@ class EvalResult:
             raise ValueError(f"EvalResult {self.target}/{self.mode}: model_id is required")
         if not self.parser_version or not str(self.parser_version).strip():
             raise ValueError(f"EvalResult {self.target}/{self.mode}: parser_version is required")
+        if not self.scorer_version or not str(self.scorer_version).strip():
+            raise ValueError(f"EvalResult {self.target}/{self.mode}: scorer_version is required")
+        if self.family and self.family not in FAMILIES:
+            raise ValueError(f"unknown qualifier family {self.family!r}")
+        if self.compression_level and self.compression_level not in COMPRESSION_LEVELS:
+            raise ValueError(f"unknown compression level {self.compression_level!r}")
         if self.outcome == UNPARSEABLE:
             if self.score is not None or self.level is not None:
                 raise ValueError("an unparseable record carries no score and no level")
@@ -286,6 +317,10 @@ class EvalResult:
             "model_id": self.model_id,
             "prompt_epoch": self.prompt_epoch,
             "parser_version": self.parser_version,
+            "scorer_version": self.scorer_version,
+            "family": self.family,
+            "surface_type": self.surface_type,
+            "compression_level": self.compression_level,
             "dimension": self.dimension,
             "track": self.track.label,
             "source": self.source,

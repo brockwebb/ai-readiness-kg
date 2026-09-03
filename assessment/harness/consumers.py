@@ -57,18 +57,22 @@ class ConsumerConfig:
     call_class: str
 
 
-def load_consumer_config(path) -> ConsumerConfig:
+def load_consumer_config(path, table: str = "consumer") -> ConsumerConfig:
+    """`table` selects the pinned consumer (`consumer`) or the single control arm
+    (`control`, design D13, task 2026-09-03_g1_eval_v2); both pass the same gates."""
     path = Path(path)
     if not path.is_file():
         raise ConfigError(f"consumer config not found: {path}")
     with path.open("rb") as fh:
         data = tomllib.load(fh)
-    c = data.get("consumer")
+    if table not in ("consumer", "control"):
+        raise ConfigError(f"{path}: unknown consumer table {table!r} (consumer | control)")
+    c = data.get(table)
     if not isinstance(c, dict):
-        raise ConfigError(f"{path}: missing [consumer] table")
+        raise ConfigError(f"{path}: missing [{table}] table")
     for key in ("model_id", "provider", "cli", "timeout_seconds", "call_class"):
         if key not in c or c[key] in ("", None):
-            raise ConfigError(f"{path}: [consumer] missing {key!r}")
+            raise ConfigError(f"{path}: [{table}] missing {key!r}")
     if c["provider"] != "claude_max_oauth":
         raise ConfigError(f"{path}: provider must be 'claude_max_oauth' (DD-007); got {c['provider']!r}")
     if not isinstance(c["timeout_seconds"], int) or c["timeout_seconds"] < 1:

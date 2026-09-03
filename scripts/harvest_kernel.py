@@ -329,6 +329,57 @@ class Fetcher:
 
 
 # ----------------------------------------------------------------------------- one entry
+_SECRET_ENV_FALLBACK = Path.home() / ".wintermute" / ".env"
+
+
+def secret_values(entry: dict) -> dict:
+    """`secret_env: [NAME, ...]` on an entry -> {NAME: value} from the environment, falling
+    back to ~/.wintermute/.env (the same fallback the Neo4j credentials use). Raises when a
+    named secret is absent: an unauthenticated request in place of an authenticated one
+    would silently fetch a different surface (api.census.gov redirects to a 'Missing Key'
+    page). ANTHROPIC_API_KEY is refused by name (DD-007: never a model key)."""
+    out = {}
+    for name in entry.get("secret_env") or []:
+        if name == "ANTHROPIC_API_KEY":
+            raise RuntimeError("secret_env may not name ANTHROPIC_API_KEY (DD-007)")
+        val = os.environ.get(name)
+        if not val and _SECRET_ENV_FALLBACK.is_file():
+            for line in _SECRET_ENV_FALLBACK.read_text(encoding="utf-8").splitlines():
+                line = line.strip()
+                if line.startswith(f"{name}="):
+                    val = line.split("=", 1)[1].strip().strip("'\"")
+                    break
+        if not val:
+            raise RuntimeError(f"secret_env {name} is not set (environment or {_SECRET_ENV_FALLBACK})")
+        out[name] = val
+    return out
+
+
+def expand_secrets(url: str, secrets: dict) -> str:
+    for name, val in secrets.items():
+        url = url.replace("{" + name + "}", val)
+    return url
+
+
+def redact_secrets(text: str, secrets: dict) -> str:
+    for name, val in secrets.items():
+        text = text.replace(val, "{" + name + "}")
+    return text
+
+
+def _redact_record(rec: dict, secrets: dict) -> None:
+    if not secrets:
+        return
+    for k in ("final_url", "reason"):
+        if isinstance(rec.get(k), str):
+            rec[k] = redact_secrets(rec[k], secrets)
+    rec["urls_tried"] = [redact_secrets(u, secrets) for u in rec.get("urls_tried") or []]
+    if isinstance(rec.get("_text"), str):
+        rec["_text"] = redact_secrets(rec["_text"], secrets)
+    if isinstance(rec.get("_bytes"), (bytes, bytearray)):
+        rec["_bytes"] = redact_secrets(rec["_bytes"].decode("utf-8", errors="surrogateescape"), secrets).encode("utf-8", errors="surrogateescape")
+
+
 def fetch_entry(entry: dict, fx: Fetcher, settings: dict, dry_run: bool) -> dict:
     """Returns a record dict with candidate_status and evidence fields. Never raises on a fetch
     failure: every failure mode becomes candidate_status=fetch_failed with `reason` and `urls_tried`."""
@@ -347,12 +398,19 @@ def fetch_entry(entry: dict, fx: Fetcher, settings: dict, dry_run: bool) -> dict
         return rec
 
     INBOX.mkdir(parents=True, exist_ok=True)
+    # Request-time secrets (task 2026-09-03_g1_eval_v2 step 2): an entry may name env vars
+    # in `secret_env`; `{NAME}` placeholders in its URLs are expanded only for the request
+    # and every recorded string (urls_tried, final_url, reason, the capture header) carries
+    # the placeholder back, so no key value reaches a register, an event or a corpus file.
+    # A missing secret fails here, before any request (never a silent unauthenticated fetch).
+    secrets = secret_values(entry)
     # Primary URL first, then the entry's documented alternates (each attempt is recorded in urls_tried).
     urls = [entry.get("pdf_url") or entry.get("raw_url") or entry["primary_url"]] + list(entry.get("alt_urls", []))
     for i, url in enumerate(urls):
+        url = expand_secrets(url, secrets)
         if i:
             time.sleep(settings["spacing_seconds"])
-            log(f"    trying alternate URL: {url}")
+            log(f"    trying alternate URL: {redact_secrets(url, secrets)}")
         for k in ("_text", "_bytes", "_ext"):
             rec.pop(k, None)
         rec["candidate_status"], rec["reason"] = None, None
@@ -367,10 +425,13 @@ def fetch_entry(entry: dict, fx: Fetcher, settings: dict, dry_run: bool) -> dict
                 _fetch_crwl_with_fallback(entry, fx, rec, settings, url)
         except httpx.HTTPError as exc:
             rec["candidate_status"], rec["reason"] = "fetch_failed", f"httpx {type(exc).__name__}: {exc}"
+            _redact_record(rec, secrets)
             continue
         except (subprocess.TimeoutExpired, RuntimeError, json.JSONDecodeError) as exc:
             rec["candidate_status"], rec["reason"] = "fetch_failed", f"{type(exc).__name__}: {str(exc)[:300]}"
+            _redact_record(rec, secrets)
             continue
+        _redact_record(rec, secrets)
         if rec["candidate_status"] == "fetch_failed":
             continue
         if len(rec["_text"].strip()) < settings["min_content_chars"]:

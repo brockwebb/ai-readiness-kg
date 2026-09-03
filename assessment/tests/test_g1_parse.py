@@ -208,3 +208,38 @@ def test_derivation_line_joins_to_keyword_value():
     t = "*Coefficient of variation (CV)* expresses the standard error as a percentage. For Colorado: 6,156 ÷ 564,757 ≈ 1.1 percent."
     assert "Coefficient of variation of 1.1 percent." in join_derivation_lines(strip_markdown_emphasis(t))
     assert _one(t, Q.CV).value == 1.1
+
+
+# ---------------------------------------------------------------- v2 legend symbols (fixture-driven, task 2026-09-03_g1_eval_v2)
+def test_legend_symbols_beside_values_and_named_flags():
+    p = parse("Newfoundland youth overweight or obese: 37.5 E (26.4–50.1); diabetes 12.4 with status E; arthritis 27.3 (no flag).")
+    flags = [q for q in p.qualifiers if q.rule == "symbol_flag"]
+    assert [(q.parameter, q.text, q.polarity, q.bound_estimate) for q in flags] == [
+        ("E", "use with caution", "unreliable", 37.5), ("E", "use with caution", "unreliable", None)]
+    p = parse("Nord-du-Québec is shown as F (too unreliable to be published); one cell is marked x, suppressed for confidentiality.")
+    sup = [q for q in p.qualifiers if q.rule == "symbol_suppression"]
+    assert {q.parameter for q in sup} >= {"F", "x"}
+    # a letter inside a word or a grade is not a flag
+    assert not [q for q in parse("Grade A results; see section E for details; 5 E-class vehicles").qualifiers if q.rule == "symbol_flag" and q.bound_estimate == 5]
+
+
+def test_dagger_and_significance_statements_are_reliability_flags():
+    p = parse("Alaska: 8.39 in 2022 and 7.73 in 2023 †; the change was not significant.")
+    kinds = {(q.rule, q.polarity) for q in p.qualifiers if q.cls.value == "RELIABILITY_FLAG"}
+    assert ("symbol_flag", "unreliable") in kinds and ("significance_flag", "unreliable") in kinds
+    q = [q for q in p.qualifiers if q.rule == "symbol_flag"][0]
+    assert q.parameter == "†" and q.bound_estimate == 7.73
+    pos = [q for q in parse("Colorado's rate rose 18%, a significant increase.").qualifiers if q.rule == "significance_flag"]
+    assert pos and pos[0].polarity == "reliable"
+
+
+def test_v2_vintage_forms_year_month_slash_range_and_month_year_range():
+    p = parse("Reference period 2026-07; two-year period 2021/2022; cycle August 2021–August 2023.")
+    v = {q.rule: q.years for q in p.qualifiers if q.cls.value == "VINTAGE"}
+    assert v["iso_month"] == (2026,) and v["year_range"] == (2021, 2022) and v["month_year_range"] == (2021, 2023)
+
+
+def test_list_and_derivation_joins_keep_the_row_label():
+    from harness.probes._g1_parse import normalise_text
+    t = normalise_text("standard error (SE) — divide by 1.645:\n\n- Fairfax: 3,860 ÷ 1.645 = 2,347\n- Arlington: 2,642 ÷ 1.645 = 1,606\n")
+    assert "Fairfax: SE of 2,347." in t and "Arlington: SE of 1,606." in t

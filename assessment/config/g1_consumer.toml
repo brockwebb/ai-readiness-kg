@@ -14,3 +14,16 @@ cli = "claude"
 timeout_seconds = 600
 # Spend-guard call class (controls.yaml spend.call_class_floors) the run is declared under.
 call_class = "g1_eval"
+
+# Control arm (design D13, task 2026-09-03_g1_eval_v2): ONE weaker consumer, run only on the
+# holdout grid, reported beside the pinned consumer's results and never pooled with them. Same
+# choke point, same three gates; `claude -p --model` selects it under Max OAuth (never the API
+# key, DD-007). If the CLI cannot serve this model under OAuth the run stops at the identity
+# gate and the RESULT reports it.
+[control]
+model_id = "claude-haiku-4-5-20251001"
+provider = "claude_max_oauth"
+cli = "claude"
+timeout_seconds = 600
+call_class = "g1_eval"
+

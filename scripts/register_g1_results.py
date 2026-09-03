@@ -27,14 +27,16 @@ def _cmd(name, value, desc, data_name):
 
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--split", required=True, choices=["dev", "holdout", "pooled", "prefix_v0", "prefix_v1"])
+    ap.add_argument("--split", required=True, choices=["dev", "holdout", "holdout_fresh", "pooled", "prefix_v0", "prefix_v1"])
     ap.add_argument("--file", required=True)
     ap.add_argument("--data-name", required=True)
     ap.add_argument("--dry-run", action="store_true")
     a = ap.parse_args(argv)
     r = json.loads(Path(a.file).read_text(encoding="utf-8"))
     pv = r.get("parser_version", "?")
-    base = (f"G1 EVAL v1, split {a.split}, parser {pv}, model claude-opus-5, prompt epoch g1-v0-2026-09-02; "
+    fresh = ("; fresh_only=true: the 35 sealed-holdout responses in assessment/evidence/g1/holdout/ only, no "
+             "shared-passage dev evidence (task 2026-09-03 v2 step 1, the corrected v1 gate)") if r.get("fresh_only") else ""
+    base = (f"G1 EVAL v1, split {a.split}, parser {pv}, model claude-opus-5, prompt epoch g1-v0-2026-09-02{fresh}; "
             f"derivation: scripts/rescore_g1.py -> {a.file} (path in JSON given)")
     cmds = []
     P = f"g1_v1_{a.split}"

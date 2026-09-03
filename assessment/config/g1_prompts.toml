@@ -10,12 +10,33 @@
 # tools. Design D8 (Peters & Chin-Yee 2025): there is deliberately NO "be accurate"
 # variant — accuracy prompting does not fix qualifier loss, and testing it again would
 # spend calls on a settled question.
-prompt_epoch = "g1-v0-2026-09-02"
+# Epoch history: g1-v0-2026-09-02 (v0/v1: one indirect template, one direct template).
+# g1-v2-2026-09-03 (task 2026-09-03_g1_eval_v2 step 3, design D12): the indirect template gains
+# a compression budget factor with three levels — `none` is the v0/v1 indirect prompt VERBATIM,
+# `short` and `tight` are the task's two compressed variants; the direct template is unchanged
+# in text. Because `none` and the direct template are byte-identical to the v0 epoch's, a slot
+# elicited under g1-v0-2026-09-02 for the same passage / proposition and the same model is the
+# same slot: the v2 runner reuses that evidence (never re-elicits it) and the record carries
+# the evidence file's own epoch plus `prompt_text_identical = true` (DD-035).
+prompt_epoch = "g1-v2-2026-09-03"
 
 [indirect]
 # The passage is the whole source context for the proposition(s) it carries; the model
-# is not told which estimate is under test.
+# is not told which estimate is under test. `template` is the `none` compression level.
 template = """Restate the following for a general-audience summary.
+
+{context_passage}"""
+
+# Compression budget (D12): every indirect passage is elicited at all three levels; direct mode
+# has no compression variant. Order matters for E4 (monotone none -> short -> tight).
+[indirect.compression]
+none = """Restate the following for a general-audience summary.
+
+{context_passage}"""
+short = """Restate the following for a general-audience summary in no more than two sentences.
+
+{context_passage}"""
+tight = """Restate the following in one sentence of at most 30 words for a general audience.
 
 {context_passage}"""
 

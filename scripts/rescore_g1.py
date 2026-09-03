@@ -45,6 +45,11 @@ def main(argv=None) -> int:
     ap.add_argument("--run-id", default=None, help="run id recorded on the results file")
     ap.add_argument("--name", action="append", default=None,
                     help="only evidence files with these basenames (repeatable; default: all in the directory)")
+    ap.add_argument("--task", default="cc_tasks/2026-09-03_g1_eval_v1_parser_fullgrid_errata.md",
+                    help="task reference recorded on the results file")
+    ap.add_argument("--fresh-only", action="store_true",
+                    help="task 2026-09-03 v2 step 1 (seal recompute): score ONLY the evidence files in the given "
+                         "directories — never a parent-directory slot — and record fresh_only=true on the file")
     a = ap.parse_args(argv)
     if a.stamp:
         _g1_parse.PARSER_VERSION = a.stamp
@@ -87,8 +92,9 @@ def main(argv=None) -> int:
             files.append({"evidence_path": rel, "mode": rec["mode"],
                           "n_records": len(new),
                           "normalised_text": getattr(_g1_parse, "normalise_text", lambda t: None)(rec["response_text"])})
-    out = {"task": "cc_tasks/2026-09-03_g1_eval_v1_parser_fullgrid_errata.md", "run_id": a.run_id,
-           "parser_version": stamp, "split": a.split, "evidence_dirs": a.evidence, "scored_at": _now(),
+    out = {"task": a.task, "run_id": a.run_id,
+           "parser_version": stamp, "split": a.split, "evidence_dirs": a.evidence, "fresh_only": bool(a.fresh_only),
+           "scored_at": _now(),
            "n_evidence_files": len(files), "files": files,
            "records": [dict(r.to_dict(), genuine_loss=None) for r in records],
            "g1": g1_block(records), "expectations": expectation_tests(records)}

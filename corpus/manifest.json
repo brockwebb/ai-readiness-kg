@@ -1,12 +1,12 @@
 {
  "manifest_version": 2,
  "project": "ai-readiness-kg",
- "generated_at": "2026-09-03T10:49:00.828881+00:00",
+ "generated_at": "2026-09-03T17:48:38.126797+00:00",
  "generator": "dixie.evidence",
  "note": "PROJECTION — rebuilt from the evidence decisions log; do not hand-edit. The log is truth.",
  "counts_by_decision": {
-  "included": 216,
-  "excluded": 69,
+  "included": 233,
+  "excluded": 70,
   "pending_refetch": 40
  },
  "entries": {
@@ -3801,6 +3801,202 @@
     "added_in": "kernel-v03"
    }
   },
+  "bls-employment-situation-2026-05-news-release-archive": {
+   "doc_id": "bls-employment-situation-2026-05-news-release-archive",
+   "identity": {
+    "sha256": "6a8076faec14eb96bd0f8b507bfd9af257e1d8a1dd6cebddbbeaaa84407d1223",
+    "canonical_path": "corpus/g1eval/bls-employment-situation-2026-05-news-release-archive.md",
+    "title": "BLS news release archive: The Employment Situation — May 2026 (released June 2026; Technical Note on reliability of the estimates)",
+    "authors_or_org": [
+     "U.S. Bureau of Labor Statistics"
+    ],
+    "pub_year": "2026",
+    "doc_type": "federal",
+    "source_url": "https://www.bls.gov/news.release/archives/empsit_06052026.htm",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "crwl",
+    "acquired_at": null,
+    "acquired_by": "scripts/harvest_triage.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed markdown, detected text",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "126992 bytes vs floor 256",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "126990 chars",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-09-03T17:48:37.649719+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: footnoted HOLDOUT surface: an archived release for a different reference month than row 16 (the archive URL carries the release date; the alternates are the other plausible 2026 release dates — whichever serves is the on",
+    "decided_by": "cc",
+    "decided_at": "2026-09-03T17:48:37.035598+00:00",
+    "history": [],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "g1sfc_2026-09-03"
+   ],
+   "extra": {
+    "observed_files": {
+     "corpus/g1eval/bls-employment-situation-2026-05-news-release-archive.md": {
+      "sha256": "6a8076faec14eb96bd0f8b507bfd9af257e1d8a1dd6cebddbbeaaa84407d1223",
+      "size": 126992,
+      "claimed_type": "markdown",
+      "detected_type": "text"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/g1eval/bls-employment-situation-2026-05-news-release-archive.md": {
+      "path": "corpus/g1eval/bls-employment-situation-2026-05-news-release-archive.md",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed markdown, detected text",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "126992 bytes vs floor 256",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "126990 chars",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-09-03T17:48:37.649719+00:00"
+     }
+    },
+    "added_in": "g1sfc-2026-09-03"
+   }
+  },
+  "bls-employment-situation-2026-08-news-release": {
+   "doc_id": "bls-employment-situation-2026-08-news-release",
+   "identity": {
+    "sha256": "b53a42eb2e897f11c412aed4a28f9a9e7dbb37ca67897a5dee0652d3b7d0aacd",
+    "canonical_path": "corpus/g1eval/bls-employment-situation-2026-08-news-release.md",
+    "title": "BLS news release: The Employment Situation — July 2026 (released August 2026; Technical Note on reliability of the estimates)",
+    "authors_or_org": [
+     "U.S. Bureau of Labor Statistics"
+    ],
+    "pub_year": "2026",
+    "doc_type": "federal",
+    "source_url": "https://www.bls.gov/news.release/empsit.htm",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "crwl",
+    "acquired_at": null,
+    "acquired_by": "scripts/harvest_triage.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed markdown, detected text",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "128569 bytes vs floor 256",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "128567 chars",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-09-03T17:48:37.650269+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: footnoted substitute candidate (same surface type as the cut Census/ONS targets): the release states the monthly change in the body and the 90-percent confidence interval for it in the Technical Note at the end. Reconnai",
+    "decided_by": "cc",
+    "decided_at": "2026-09-03T17:48:35.432969+00:00",
+    "history": [],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "g1sfc_2026-09-03"
+   ],
+   "extra": {
+    "observed_files": {
+     "corpus/g1eval/bls-employment-situation-2026-08-news-release.md": {
+      "sha256": "b53a42eb2e897f11c412aed4a28f9a9e7dbb37ca67897a5dee0652d3b7d0aacd",
+      "size": 128569,
+      "claimed_type": "markdown",
+      "detected_type": "text"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/g1eval/bls-employment-situation-2026-08-news-release.md": {
+      "path": "corpus/g1eval/bls-employment-situation-2026-08-news-release.md",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed markdown, detected text",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "128569 bytes vs floor 256",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "128567 chars",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-09-03T17:48:37.650269+00:00"
+     }
+    },
+    "added_in": "g1sfc-2026-09-03"
+   }
+  },
   "building-ai-ready-best-practices-the-work-of-the-commerce-da": {
    "doc_id": "building-ai-ready-best-practices-the-work-of-the-commerce-da",
    "identity": {
@@ -4502,10 +4698,17 @@
    },
    "screening": {
     "decision": "included",
-    "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: The ACS data release (filtering) rules the general handbook points to: CV-based table-level suppression for 1-year products. SUPPRESSION producer rule (table-level, not cell-level).",
+    "rationale": "manifest-added by rule (clause R1, construct_arm publication_actionability)",
     "decided_by": "cc",
-    "decided_at": "2026-09-03T10:48:59.315003+00:00",
-    "history": [],
+    "decided_at": "2026-09-03",
+    "history": [
+     {
+      "decision": "included",
+      "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: The ACS data release (filtering) rules the general handbook points to: CV-based table-level suppression for 1-year products. SUPPRESSION producer rule (table-level, not cell-level).",
+      "decided_by": "cc",
+      "decided_at": "2026-09-03T10:48:59.315003+00:00"
+     }
+    ],
     "identity_gate": {
      "passed": true,
      "checked": [],
@@ -4520,7 +4723,8 @@
     "quarantined": []
    },
    "provenance_sources": [
-    "g1_eval_v1_2026-09-03"
+    "g1_eval_v1_2026-09-03",
+    "candidate_register"
    ],
    "extra": {
     "observed_files": {
@@ -4555,7 +4759,10 @@
       "checked_at": "2026-09-03T10:49:00.004912+00:00"
      }
     },
-    "added_in": "g1srp-2026-09-03"
+    "added_in": "g1srp-2026-09-03",
+    "notes": [
+     "The ACS data release (filtering) rules the general handbook points to: CV-based table-level suppression for 1-year products. SUPPRESSION producer rule (table-level, not cell-level)."
+    ]
    }
   },
   "census-acs-general-handbook-2020": {
@@ -4666,6 +4873,300 @@
      }
     },
     "added_in": "g1eval-2026-09-02"
+   }
+  },
+  "census-api-acs5-2023-b19013-counties-colorado": {
+   "doc_id": "census-api-acs5-2023-b19013-counties-colorado",
+   "identity": {
+    "sha256": "93a46eb4e9f4aff8cf19b2f51d093f83af4d102ce7715e0ffae339cf67ff97c3",
+    "canonical_path": "corpus/g1eval/census-api-acs5-2023-b19013-counties-colorado.md",
+    "title": "Census Data API: ACS 5-Year 2023, B19013_001E / B19013_001M (median household income) for all counties in Colorado",
+    "authors_or_org": [
+     "U.S. Census Bureau"
+    ],
+    "pub_year": "2023",
+    "doc_type": "federal",
+    "source_url": "https://api.census.gov/data/2023/acs/acs5?get=NAME,B19013_001E,B19013_001M&for=county:*&in=state:08&key={CENSUS_API_KEY}",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "httpx-raw",
+    "acquired_at": null,
+    "acquired_by": "scripts/harvest_triage.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed markdown, detected text",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "4014 bytes vs floor 256",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "4014 chars",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-09-03T17:48:37.665401+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: table_coded DEV surface: estimate and MOE as coded fields (B19013_001E, B19013_001M) with no label on the surface; the code->meaning mapping is read from the API's own variables endpoint (/data/2023/acs/acs5/variables/B1",
+    "decided_by": "cc",
+    "decided_at": "2026-09-03T17:48:30.541616+00:00",
+    "history": [],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "g1sfc_2026-09-03"
+   ],
+   "extra": {
+    "observed_files": {
+     "corpus/g1eval/census-api-acs5-2023-b19013-counties-colorado.md": {
+      "sha256": "93a46eb4e9f4aff8cf19b2f51d093f83af4d102ce7715e0ffae339cf67ff97c3",
+      "size": 4014,
+      "claimed_type": "markdown",
+      "detected_type": "text"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/g1eval/census-api-acs5-2023-b19013-counties-colorado.md": {
+      "path": "corpus/g1eval/census-api-acs5-2023-b19013-counties-colorado.md",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed markdown, detected text",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "4014 bytes vs floor 256",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "4014 chars",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-09-03T17:48:37.665401+00:00"
+     }
+    },
+    "added_in": "g1sfc-2026-09-03"
+   }
+  },
+  "census-api-acs5-2023-b19013-counties-idaho": {
+   "doc_id": "census-api-acs5-2023-b19013-counties-idaho",
+   "identity": {
+    "sha256": "5a0bbe6997f2a2e46bacf4657d37731c5e513c70b14ea18f874be4970ecbe19c",
+    "canonical_path": "corpus/g1eval/census-api-acs5-2023-b19013-counties-idaho.md",
+    "title": "Census Data API: ACS 5-Year 2023, B19013_001E / B19013_001M (median household income) for all counties in Idaho",
+    "authors_or_org": [
+     "U.S. Census Bureau"
+    ],
+    "pub_year": "2023",
+    "doc_type": "federal",
+    "source_url": "https://api.census.gov/data/2023/acs/acs5?get=NAME,B19013_001E,B19013_001M&for=county:*&in=state:16&key={CENSUS_API_KEY}",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "httpx-raw",
+    "acquired_at": null,
+    "acquired_by": "scripts/harvest_triage.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed markdown, detected text",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "2733 bytes vs floor 256",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "2733 chars",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-09-03T17:48:37.665750+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: table_coded HOLDOUT surface: the same query for a different state (Idaho, 44 counties).",
+    "decided_by": "cc",
+    "decided_at": "2026-09-03T17:48:31.032567+00:00",
+    "history": [],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "g1sfc_2026-09-03"
+   ],
+   "extra": {
+    "observed_files": {
+     "corpus/g1eval/census-api-acs5-2023-b19013-counties-idaho.md": {
+      "sha256": "5a0bbe6997f2a2e46bacf4657d37731c5e513c70b14ea18f874be4970ecbe19c",
+      "size": 2733,
+      "claimed_type": "markdown",
+      "detected_type": "text"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/g1eval/census-api-acs5-2023-b19013-counties-idaho.md": {
+      "path": "corpus/g1eval/census-api-acs5-2023-b19013-counties-idaho.md",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed markdown, detected text",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "2733 bytes vs floor 256",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "2733 chars",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-09-03T17:48:37.665750+00:00"
+     }
+    },
+    "added_in": "g1sfc-2026-09-03"
+   }
+  },
+  "census-api-dec2020-dhc-p1-counties-colorado": {
+   "doc_id": "census-api-dec2020-dhc-p1-counties-colorado",
+   "identity": {
+    "sha256": "98558a0c3f04bd25b0b9e1fa0283fc21c50e8097034847ae4e89ccce46a940aa",
+    "canonical_path": "corpus/g1eval/census-api-dec2020-dhc-p1-counties-colorado.md",
+    "title": "Census Data API: 2020 Census Demographic and Housing Characteristics, P1_001N (total population) for all counties in Colorado",
+    "authors_or_org": [
+     "U.S. Census Bureau"
+    ],
+    "pub_year": "2020",
+    "doc_type": "federal",
+    "source_url": "https://api.census.gov/data/2020/dec/dhc?get=NAME,P1_001N&for=county:*&in=state:08&key={CENSUS_API_KEY}",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "httpx-raw",
+    "acquired_at": null,
+    "acquired_by": "scripts/harvest_triage.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed markdown, detected text",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "3475 bytes vs floor 256",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "3475 chars",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-09-03T17:48:37.666076+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: no_declared substitute (declared leg only) if QuickFacts is bot-blocked: 2020 Census counts served with no uncertainty field at all, although every count carries disclosure-avoidance noise (census-2020-disclosure-avoidan",
+    "decided_by": "cc",
+    "decided_at": "2026-09-03T17:48:36.637868+00:00",
+    "history": [],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "g1sfc_2026-09-03"
+   ],
+   "extra": {
+    "observed_files": {
+     "corpus/g1eval/census-api-dec2020-dhc-p1-counties-colorado.md": {
+      "sha256": "98558a0c3f04bd25b0b9e1fa0283fc21c50e8097034847ae4e89ccce46a940aa",
+      "size": 3475,
+      "claimed_type": "markdown",
+      "detected_type": "text"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/g1eval/census-api-dec2020-dhc-p1-counties-colorado.md": {
+      "path": "corpus/g1eval/census-api-dec2020-dhc-p1-counties-colorado.md",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed markdown, detected text",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "3475 bytes vs floor 256",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "3475 chars",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-09-03T17:48:37.666076+00:00"
+     }
+    },
+    "added_in": "g1sfc-2026-09-03"
    }
   },
   "census-api-user-guide": {
@@ -5340,6 +5841,202 @@
      }
     },
     "added_in": "kernel-v03"
+   }
+  },
+  "census-quickfacts-denver-county-colorado": {
+   "doc_id": "census-quickfacts-denver-county-colorado",
+   "identity": {
+    "sha256": "b8221bc896c2bf042e0df7c20d43d8f10c0a3da68d438c22d052314e92fbd2c6",
+    "canonical_path": "corpus/g1eval/census-quickfacts-denver-county-colorado.md",
+    "title": "Census QuickFacts: Denver County, Colorado",
+    "authors_or_org": [
+     "U.S. Census Bureau"
+    ],
+    "pub_year": "2025",
+    "doc_type": "federal",
+    "source_url": "https://www.census.gov/quickfacts/denvercountycolorado",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "crwl",
+    "acquired_at": null,
+    "acquired_by": "scripts/harvest_triage.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed markdown, detected text",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "8685 bytes vs floor 256",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "8674 chars",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-09-03T17:48:37.666754+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: no_declared DEV surface named by the task (declared leg only). Reconnaissance: HTTP 403 Cloudflare 'Attention Required!' for both the page and the /fact/csv/ export; tried here through the browser fetcher.",
+    "decided_by": "cc",
+    "decided_at": "2026-09-03T17:48:35.840698+00:00",
+    "history": [],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "g1sfc_2026-09-03"
+   ],
+   "extra": {
+    "observed_files": {
+     "corpus/g1eval/census-quickfacts-denver-county-colorado.md": {
+      "sha256": "b8221bc896c2bf042e0df7c20d43d8f10c0a3da68d438c22d052314e92fbd2c6",
+      "size": 8685,
+      "claimed_type": "markdown",
+      "detected_type": "text"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/g1eval/census-quickfacts-denver-county-colorado.md": {
+      "path": "corpus/g1eval/census-quickfacts-denver-county-colorado.md",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed markdown, detected text",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "8685 bytes vs floor 256",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "8674 chars",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-09-03T17:48:37.666754+00:00"
+     }
+    },
+    "added_in": "g1sfc-2026-09-03"
+   }
+  },
+  "census-quickfacts-denver-county-colorado-csv": {
+   "doc_id": "census-quickfacts-denver-county-colorado-csv",
+   "identity": {
+    "sha256": "5277207ad281ec1045399a141c8fc58e477ddb83a0bdcd5aface67dd30e67edc",
+    "canonical_path": "corpus/g1eval/census-quickfacts-denver-county-colorado-csv.md",
+    "title": "Census QuickFacts CSV export: Denver County, Colorado (PST045224)",
+    "authors_or_org": [
+     "U.S. Census Bureau"
+    ],
+    "pub_year": "2025",
+    "doc_type": "federal",
+    "source_url": "https://www.census.gov/quickfacts/fact/csv/denvercountycolorado/PST045224",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "httpx-raw",
+    "acquired_at": null,
+    "acquired_by": "scripts/harvest_triage.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed markdown, detected text",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "5573 bytes vs floor 256",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "5572 chars",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-09-03T17:48:37.666419+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: no_declared DEV surface, CSV form of row 17.",
+    "decided_by": "cc",
+    "decided_at": "2026-09-03T17:48:36.241493+00:00",
+    "history": [],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "g1sfc_2026-09-03"
+   ],
+   "extra": {
+    "observed_files": {
+     "corpus/g1eval/census-quickfacts-denver-county-colorado-csv.md": {
+      "sha256": "5277207ad281ec1045399a141c8fc58e477ddb83a0bdcd5aface67dd30e67edc",
+      "size": 5573,
+      "claimed_type": "markdown",
+      "detected_type": "text"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/g1eval/census-quickfacts-denver-county-colorado-csv.md": {
+      "path": "corpus/g1eval/census-quickfacts-denver-county-colorado-csv.md",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed markdown, detected text",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "5573 bytes vs floor 256",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "5572 chars",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-09-03T17:48:37.666419+00:00"
+     }
+    },
+    "added_in": "g1sfc-2026-09-03"
    }
   },
   "chen-2025-geo-how-to-dominate-ai-search": {
@@ -18167,6 +18864,53 @@
     }
    }
   },
+  "methodology-of-the-canadian-labour-force-survey-chapter-8-da": {
+   "doc_id": "methodology-of-the-canadian-labour-force-survey-chapter-8-da",
+   "identity": {
+    "sha256": null,
+    "canonical_path": null,
+    "title": "Methodology of the Canadian Labour Force Survey — Chapter 8, Data quality (Catalogue no. 71-526-X)",
+    "authors_or_org": [
+     "Statistics Canada"
+    ],
+    "pub_year": "2017",
+    "doc_type": "federal",
+    "source_url": "https://www150.statcan.gc.ca/n1/pub/71-526-x/2017001/chapt8-eng.htm",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "unknown",
+    "acquired_at": null,
+    "acquired_by": null
+   },
+   "integrity": {
+    "status": "unchecked",
+    "checks": null,
+    "checked_at": null
+   },
+   "screening": {
+    "decision": "excluded",
+    "rationale": "staged, not admitted: clause R5_already_held",
+    "decided_by": "cc",
+    "decided_at": "2026-09-03",
+    "history": []
+   },
+   "lifecycle": {
+    "stage": "cataloged"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "candidate_register"
+   ],
+   "extra": {
+    "notes": [
+     "Same CV band construct as the 71-543-G guide (row 3); staged with provenance so the citation is reproducible, not admitted (R5-class duplicate of the construct per the task's rule)."
+    ]
+   }
+  },
   "min-2023-factscore": {
    "doc_id": "min-2023-factscore",
    "identity": {
@@ -19080,10 +19824,17 @@
    },
    "screening": {
     "decision": "included",
-    "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: Vital and Health Statistics Series 2 No. 175. The federal suppression standard for proportions: denominator sample size, Clopper-Pearson CI absolute and relative width rules with explicit do-not-present and present-with-",
+    "rationale": "manifest-added by rule (clause R1, construct_arm publication_actionability)",
     "decided_by": "cc",
-    "decided_at": "2026-09-03T10:48:58.088345+00:00",
-    "history": [],
+    "decided_at": "2026-09-03",
+    "history": [
+     {
+      "decision": "included",
+      "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: Vital and Health Statistics Series 2 No. 175. The federal suppression standard for proportions: denominator sample size, Clopper-Pearson CI absolute and relative width rules with explicit do-not-present and present-with-",
+      "decided_by": "cc",
+      "decided_at": "2026-09-03T10:48:58.088345+00:00"
+     }
+    ],
     "identity_gate": {
      "passed": true,
      "checked": [],
@@ -19098,7 +19849,8 @@
     "quarantined": []
    },
    "provenance_sources": [
-    "g1_eval_v1_2026-09-03"
+    "g1_eval_v1_2026-09-03",
+    "candidate_register"
    ],
    "extra": {
     "observed_files": {
@@ -19133,7 +19885,10 @@
       "checked_at": "2026-09-03T10:49:00.261319+00:00"
      }
     },
-    "added_in": "g1srp-2026-09-03"
+    "added_in": "g1srp-2026-09-03",
+    "notes": [
+     "Vital and Health Statistics Series 2 No. 175. The federal suppression standard for proportions: denominator sample size, Clopper-Pearson CI absolute and relative width rules with explicit do-not-present and present-with-flag outcomes. Primary SUPPRESSION source; also a producer reliability-flag rule."
+    ]
    }
   },
   "nchs-2023-data-presentation-standards-rates-counts": {
@@ -19188,10 +19943,17 @@
    },
    "screening": {
     "decision": "included",
-    "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: Vital and Health Statistics Series 2 No. 200 (2023), the companion standard for rates and counts: RSE- and CI-width-based suppression and flagging rules with worked outcomes. SUPPRESSION / RELIABILITY_FLAG source.",
+    "rationale": "manifest-added by rule (clause R1, construct_arm publication_actionability)",
     "decided_by": "cc",
-    "decided_at": "2026-09-03T10:48:58.469102+00:00",
-    "history": [],
+    "decided_at": "2026-09-03",
+    "history": [
+     {
+      "decision": "included",
+      "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: Vital and Health Statistics Series 2 No. 200 (2023), the companion standard for rates and counts: RSE- and CI-width-based suppression and flagging rules with worked outcomes. SUPPRESSION / RELIABILITY_FLAG source.",
+      "decided_by": "cc",
+      "decided_at": "2026-09-03T10:48:58.469102+00:00"
+     }
+    ],
     "identity_gate": {
      "passed": true,
      "checked": [],
@@ -19206,7 +19968,8 @@
     "quarantined": []
    },
    "provenance_sources": [
-    "g1_eval_v1_2026-09-03"
+    "g1_eval_v1_2026-09-03",
+    "candidate_register"
    ],
    "extra": {
     "observed_files": {
@@ -19241,7 +20004,306 @@
       "checked_at": "2026-09-03T10:49:00.527064+00:00"
      }
     },
-    "added_in": "g1srp-2026-09-03"
+    "added_in": "g1srp-2026-09-03",
+    "notes": [
+     "Vital and Health Statistics Series 2 No. 200 (2023), the companion standard for rates and counts: RSE- and CI-width-based suppression and flagging rules with worked outcomes. SUPPRESSION / RELIABILITY_FLAG source."
+    ]
+   }
+  },
+  "nchs-data-brief-500-dental-visits-adults-65-2022": {
+   "doc_id": "nchs-data-brief-500-dental-visits-adults-65-2022",
+   "identity": {
+    "sha256": "2394a580650b47848550c03ce988fa3ea2f64109ff11bee1ecea360a630bb603",
+    "canonical_path": "corpus/g1eval/nchs-data-brief-500-dental-visits-adults-65-2022.pdf",
+    "title": "Dental Visits Among Adults Age 65 and Older: United States, 2022 (NCHS Data Brief No. 500)",
+    "authors_or_org": [
+     "National Center for Health Statistics"
+    ],
+    "pub_year": "2024",
+    "doc_type": "federal",
+    "source_url": "https://www.cdc.gov/nchs/data/databriefs/db500.pdf",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "httpx-pdf",
+    "acquired_at": null,
+    "acquired_by": "scripts/harvest_triage.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed pdf, detected pdf",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "497078 bytes vs floor 7000",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "9 pages, extractable text present",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-09-03T17:48:37.789308+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: footnoted DEV surface: the estimates appear in the Key findings and body text with no uncertainty; the 95% confidence interval and standard error for each appear only in the 'Data table for Figure N' appendix pages later",
+    "decided_by": "cc",
+    "decided_at": "2026-09-03T17:48:34.673417+00:00",
+    "history": [],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "g1sfc_2026-09-03"
+   ],
+   "extra": {
+    "observed_files": {
+     "corpus/g1eval/nchs-data-brief-500-dental-visits-adults-65-2022.pdf": {
+      "sha256": "2394a580650b47848550c03ce988fa3ea2f64109ff11bee1ecea360a630bb603",
+      "size": 497078,
+      "claimed_type": "pdf",
+      "detected_type": "pdf"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/g1eval/nchs-data-brief-500-dental-visits-adults-65-2022.pdf": {
+      "path": "corpus/g1eval/nchs-data-brief-500-dental-visits-adults-65-2022.pdf",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed pdf, detected pdf",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "497078 bytes vs floor 7000",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "9 pages, extractable text present",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-09-03T17:48:37.789308+00:00"
+     }
+    },
+    "added_in": "g1sfc-2026-09-03"
+   }
+  },
+  "nchs-data-brief-515-high-total-cholesterol-2021-2023": {
+   "doc_id": "nchs-data-brief-515-high-total-cholesterol-2021-2023",
+   "identity": {
+    "sha256": "f6045a215e2857eda5df83add01edb9ddae62c7cffcea442e94c57b09f487871",
+    "canonical_path": "corpus/g1eval/nchs-data-brief-515-high-total-cholesterol-2021-2023.pdf",
+    "title": "Total and High-density Lipoprotein Cholesterol in Adults: United States, August 2021–August 2023 (NCHS Data Brief No. 515)",
+    "authors_or_org": [
+     "National Center for Health Statistics"
+    ],
+    "pub_year": "2024",
+    "doc_type": "federal",
+    "source_url": "https://www.cdc.gov/nchs/data/databriefs/db515.pdf",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "httpx-pdf",
+    "acquired_at": null,
+    "acquired_by": "scripts/harvest_triage.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed pdf, detected pdf",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "496883 bytes vs floor 7000",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "8 pages, extractable text present",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-09-03T17:48:37.817002+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: footnoted HOLDOUT surface: a different Data Brief with the same body-text / appendix-table structure (Percent, 95% confidence interval, standard error).",
+    "decided_by": "cc",
+    "decided_at": "2026-09-03T17:48:35.072725+00:00",
+    "history": [],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "g1sfc_2026-09-03"
+   ],
+   "extra": {
+    "observed_files": {
+     "corpus/g1eval/nchs-data-brief-515-high-total-cholesterol-2021-2023.pdf": {
+      "sha256": "f6045a215e2857eda5df83add01edb9ddae62c7cffcea442e94c57b09f487871",
+      "size": 496883,
+      "claimed_type": "pdf",
+      "detected_type": "pdf"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/g1eval/nchs-data-brief-515-high-total-cholesterol-2021-2023.pdf": {
+      "path": "corpus/g1eval/nchs-data-brief-515-high-total-cholesterol-2021-2023.pdf",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed pdf, detected pdf",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "496883 bytes vs floor 7000",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "8 pages, extractable text present",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-09-03T17:48:37.817002+00:00"
+     }
+    },
+    "added_in": "g1sfc-2026-09-03"
+   }
+  },
+  "nchs-data-brief-530-perinatal-mortality-2022-2023": {
+   "doc_id": "nchs-data-brief-530-perinatal-mortality-2022-2023",
+   "identity": {
+    "sha256": "e8fa5bf0b20a011db121e4d2134e7c1b7b6d5241f8f6ebe962e9f641a1272742",
+    "canonical_path": "corpus/g1eval/nchs-data-brief-530-perinatal-mortality-2022-2023.pdf",
+    "title": "Perinatal Mortality in the United States, 2022 and 2023 (NCHS Data Brief No. 530)",
+    "authors_or_org": [
+     "Claudia P. Valenzuela",
+     "Elizabeth C.W. Gregory",
+     "Joyce A. Martin"
+    ],
+    "pub_year": "2025",
+    "doc_type": "federal",
+    "source_url": "https://www.cdc.gov/nchs/data/databriefs/db530.pdf",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "httpx-pdf",
+    "acquired_at": null,
+    "acquired_by": "scripts/harvest_triage.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed pdf, detected pdf",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "478650 bytes vs floor 7000",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "10 pages, extractable text present",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-09-03T17:48:37.839710+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: flagged_cell DEV surface (NCHS): 'Data table for Figure 4' lists each state's 2022 and 2023 perinatal mortality rates and a percent-change column in which a '†' replaces the value where the change is not significant; the",
+    "decided_by": "cc",
+    "decided_at": "2026-09-03T17:48:34.246374+00:00",
+    "history": [],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "g1sfc_2026-09-03"
+   ],
+   "extra": {
+    "observed_files": {
+     "corpus/g1eval/nchs-data-brief-530-perinatal-mortality-2022-2023.pdf": {
+      "sha256": "e8fa5bf0b20a011db121e4d2134e7c1b7b6d5241f8f6ebe962e9f641a1272742",
+      "size": 478650,
+      "claimed_type": "pdf",
+      "detected_type": "pdf"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/g1eval/nchs-data-brief-530-perinatal-mortality-2022-2023.pdf": {
+      "path": "corpus/g1eval/nchs-data-brief-530-perinatal-mortality-2022-2023.pdf",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed pdf, detected pdf",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "478650 bytes vs floor 7000",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "10 pages, extractable text present",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-09-03T17:48:37.839710+00:00"
+     }
+    },
+    "added_in": "g1sfc-2026-09-03"
    }
   },
   "new-absorb-software-report-ai-ambition-in-l-d-outpacing-read": {
@@ -24574,6 +25636,692 @@
     "added_in": "kernel-v03"
    }
   },
+  "statcan-13-10-0096-01-cchs-2022-provinces-percent-ci-csv": {
+   "doc_id": "statcan-13-10-0096-01-cchs-2022-provinces-percent-ci-csv",
+   "identity": {
+    "sha256": "b62096272ecc7522d07e34e3cb8c79a30e922a9726562dea5a6130ace58819e1",
+    "canonical_path": "corpus/g1eval/statcan-13-10-0096-01-cchs-2022-provinces-percent-ci-csv.md",
+    "title": "Statistics Canada Table 13-10-0096-01, Health characteristics, annual estimates — 2022, Canada and provinces, percent with 95% confidence interval bounds and quality-indicator letters (CSV for database loading)",
+    "authors_or_org": [
+     "Statistics Canada"
+    ],
+    "pub_year": "2022",
+    "doc_type": "federal",
+    "source_url": "https://www150.statcan.gc.ca/t1/tbl1/en/dtl!downloadDbLoadingData-nonTraduit.action?pid=1310009601&latestN=1&startDate=&endDate=&csvLocale=en&selectedMembers=%5B%5B1%2C2%2C3%2C4%2C5%2C6%2C7%2C8%2C9%2C10%2C11%5D%2C%5B1%5D%2C%5B1%5D%2C%5B1%2C2%2C3%2C4%2C5%2C6%2C7%2C8%2C9%2C10%2C11%5D%2C%5B4%2C5%2C6%5D%5D&checkedLevels=",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "httpx-raw",
+    "acquired_at": null,
+    "acquired_by": "scripts/harvest_triage.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed markdown, detected text",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "83637 bytes vs floor 256",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "83632 chars",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-09-03T17:48:37.847966+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: flagged_cell DEV surface (StatCan letter quality indicators): STATUS column carries 'E' (use with caution) on 9 cells and '..' on 33 in the 2022 slice; rows also carry Low/High 95% confidence interval as labeled rows, so",
+    "decided_by": "cc",
+    "decided_at": "2026-09-03T17:48:32.646783+00:00",
+    "history": [],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "g1sfc_2026-09-03"
+   ],
+   "extra": {
+    "observed_files": {
+     "corpus/g1eval/statcan-13-10-0096-01-cchs-2022-provinces-percent-ci-csv.md": {
+      "sha256": "b62096272ecc7522d07e34e3cb8c79a30e922a9726562dea5a6130ace58819e1",
+      "size": 83637,
+      "claimed_type": "markdown",
+      "detected_type": "text"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/g1eval/statcan-13-10-0096-01-cchs-2022-provinces-percent-ci-csv.md": {
+      "path": "corpus/g1eval/statcan-13-10-0096-01-cchs-2022-provinces-percent-ci-csv.md",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed markdown, detected text",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "83637 bytes vs floor 256",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "83632 chars",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-09-03T17:48:37.847966+00:00"
+     }
+    },
+    "added_in": "g1sfc-2026-09-03"
+   }
+  },
+  "statcan-13-10-0096-01-cube-metadata-csv": {
+   "doc_id": "statcan-13-10-0096-01-cube-metadata-csv",
+   "identity": {
+    "sha256": "8ee4de67c0c446693a99182a27c9a6602f8b05cddc8d9c18db3d9b7257a18df8",
+    "canonical_path": "corpus/g1eval/statcan-13-10-0096-01-cube-metadata-csv.md",
+    "title": "Statistics Canada Table 13-10-0096-01 — cube metadata (dimensions, members, notes, symbol legend)",
+    "authors_or_org": [
+     "Statistics Canada"
+    ],
+    "pub_year": "2022",
+    "doc_type": "federal",
+    "source_url": "https://www150.statcan.gc.ca/t1/tbl1/en/dtl!downloadCubeMetaData-nonTraduit.action?pid=1310009601&csvLocale=en",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "httpx-raw",
+    "acquired_at": null,
+    "acquired_by": "scripts/harvest_triage.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed markdown, detected text",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "23113 bytes vs floor 256",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "23110 chars",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-09-03T17:48:37.848347+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: Companion to row 7: symbol legend and notes.",
+    "decided_by": "cc",
+    "decided_at": "2026-09-03T17:48:33.046250+00:00",
+    "history": [],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "g1sfc_2026-09-03"
+   ],
+   "extra": {
+    "observed_files": {
+     "corpus/g1eval/statcan-13-10-0096-01-cube-metadata-csv.md": {
+      "sha256": "8ee4de67c0c446693a99182a27c9a6602f8b05cddc8d9c18db3d9b7257a18df8",
+      "size": 23113,
+      "claimed_type": "markdown",
+      "detected_type": "text"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/g1eval/statcan-13-10-0096-01-cube-metadata-csv.md": {
+      "path": "corpus/g1eval/statcan-13-10-0096-01-cube-metadata-csv.md",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed markdown, detected text",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "23113 bytes vs floor 256",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "23110 chars",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-09-03T17:48:37.848347+00:00"
+     }
+    },
+    "added_in": "g1sfc-2026-09-03"
+   }
+  },
+  "statcan-13-10-0113-01-cchs-2021-2022-quebec-health-regions-percent-ci-csv": {
+   "doc_id": "statcan-13-10-0113-01-cchs-2021-2022-quebec-health-regions-percent-ci-csv",
+   "identity": {
+    "sha256": "9cf4e71bd40cf4ac3d0bb12f8923a397025ee82813bf08a61c6e10530f73d6d2",
+    "canonical_path": "corpus/g1eval/statcan-13-10-0113-01-cchs-2021-2022-quebec-health-regions-percent-ci-csv.md",
+    "title": "Statistics Canada Table 13-10-0113-01, Health characteristics, two-year period estimates — 2021/2022, Quebec health regions, percent with 95% confidence interval bounds and quality-indicator letters (CSV for database loading)",
+    "authors_or_org": [
+     "Statistics Canada"
+    ],
+    "pub_year": "2022",
+    "doc_type": "federal",
+    "source_url": "https://www150.statcan.gc.ca/t1/tbl1/en/dtl!downloadDbLoadingData-nonTraduit.action?pid=1310011301&latestN=1&startDate=&endDate=&csvLocale=en&selectedMembers=%5B%5B23%2C24%2C25%2C26%2C27%2C28%2C29%2C30%2C31%2C32%2C33%2C34%2C35%2C36%2C37%2C38%5D%2C%5B1%5D%2C%5B1%5D%2C%5B1%2C2%2C3%2C4%2C5%2C6%2C7%2C8%2C9%2C10%2C11%5D%2C%5B4%2C5%2C6%5D%5D&checkedLevels=",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "httpx-raw",
+    "acquired_at": null,
+    "acquired_by": "scripts/harvest_triage.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed markdown, detected text",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "137753 bytes vs floor 256",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "136857 chars",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-09-03T17:48:37.848939+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: flagged_cell HOLDOUT surface: a different table (two-year period estimates) and geography (16 Quebec health regions); STATUS carries 30 'E' and 6 'F' cells in the 2021/2022 slice.",
+    "decided_by": "cc",
+    "decided_at": "2026-09-03T17:48:33.450180+00:00",
+    "history": [],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "g1sfc_2026-09-03"
+   ],
+   "extra": {
+    "observed_files": {
+     "corpus/g1eval/statcan-13-10-0113-01-cchs-2021-2022-quebec-health-regions-percent-ci-csv.md": {
+      "sha256": "9cf4e71bd40cf4ac3d0bb12f8923a397025ee82813bf08a61c6e10530f73d6d2",
+      "size": 137753,
+      "claimed_type": "markdown",
+      "detected_type": "text"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/g1eval/statcan-13-10-0113-01-cchs-2021-2022-quebec-health-regions-percent-ci-csv.md": {
+      "path": "corpus/g1eval/statcan-13-10-0113-01-cchs-2021-2022-quebec-health-regions-percent-ci-csv.md",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed markdown, detected text",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "137753 bytes vs floor 256",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "136857 chars",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-09-03T17:48:37.848939+00:00"
+     }
+    },
+    "added_in": "g1sfc-2026-09-03"
+   }
+  },
+  "statcan-13-10-0113-01-cube-metadata-csv": {
+   "doc_id": "statcan-13-10-0113-01-cube-metadata-csv",
+   "identity": {
+    "sha256": "22506078b7a2e8f41fbc61c3341960c4291d6442b418a0f1a804161c32b09139",
+    "canonical_path": "corpus/g1eval/statcan-13-10-0113-01-cube-metadata-csv.md",
+    "title": "Statistics Canada Table 13-10-0113-01 — cube metadata (dimensions, members, notes, symbol legend)",
+    "authors_or_org": [
+     "Statistics Canada"
+    ],
+    "pub_year": "2022",
+    "doc_type": "federal",
+    "source_url": "https://www150.statcan.gc.ca/t1/tbl1/en/dtl!downloadCubeMetaData-nonTraduit.action?pid=1310011301&csvLocale=en",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "httpx-raw",
+    "acquired_at": null,
+    "acquired_by": "scripts/harvest_triage.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed markdown, detected text",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "32006 bytes vs floor 256",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "31968 chars",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-09-03T17:48:37.849319+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: Companion to row 9: symbol legend and notes.",
+    "decided_by": "cc",
+    "decided_at": "2026-09-03T17:48:33.846822+00:00",
+    "history": [],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "g1sfc_2026-09-03"
+   ],
+   "extra": {
+    "observed_files": {
+     "corpus/g1eval/statcan-13-10-0113-01-cube-metadata-csv.md": {
+      "sha256": "22506078b7a2e8f41fbc61c3341960c4291d6442b418a0f1a804161c32b09139",
+      "size": 32006,
+      "claimed_type": "markdown",
+      "detected_type": "text"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/g1eval/statcan-13-10-0113-01-cube-metadata-csv.md": {
+      "path": "corpus/g1eval/statcan-13-10-0113-01-cube-metadata-csv.md",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed markdown, detected text",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "32006 bytes vs floor 256",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "31968 chars",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-09-03T17:48:37.849319+00:00"
+     }
+    },
+    "added_in": "g1sfc-2026-09-03"
+   }
+  },
+  "statcan-14-10-0287-01-cube-metadata-csv": {
+   "doc_id": "statcan-14-10-0287-01-cube-metadata-csv",
+   "identity": {
+    "sha256": "a0ed4f13cb02345772a1541b4906503426daab9a8fc28bc964376a0ace0dfb5b",
+    "canonical_path": "corpus/g1eval/statcan-14-10-0287-01-cube-metadata-csv.md",
+    "title": "Statistics Canada Table 14-10-0287-01 — cube metadata (dimensions, members, notes, symbol legend)",
+    "authors_or_org": [
+     "Statistics Canada"
+    ],
+    "pub_year": "2026",
+    "doc_type": "federal",
+    "source_url": "https://www150.statcan.gc.ca/t1/tbl1/en/dtl!downloadCubeMetaData-nonTraduit.action?pid=1410028701&csvLocale=en",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "httpx-raw",
+    "acquired_at": null,
+    "acquired_by": "scripts/harvest_triage.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed markdown, detected text",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "15397 bytes vs floor 256",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "15378 chars",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-09-03T17:48:37.849676+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: Companion to rows 4-5: the symbol legend (A-F data quality, E use with caution, F too unreliable to be published, x suppressed, ..) and the member notes (standard error definitions) are served in this separate file, not ",
+    "decided_by": "cc",
+    "decided_at": "2026-09-03T17:48:32.234909+00:00",
+    "history": [],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "g1sfc_2026-09-03"
+   ],
+   "extra": {
+    "observed_files": {
+     "corpus/g1eval/statcan-14-10-0287-01-cube-metadata-csv.md": {
+      "sha256": "a0ed4f13cb02345772a1541b4906503426daab9a8fc28bc964376a0ace0dfb5b",
+      "size": 15397,
+      "claimed_type": "markdown",
+      "detected_type": "text"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/g1eval/statcan-14-10-0287-01-cube-metadata-csv.md": {
+      "path": "corpus/g1eval/statcan-14-10-0287-01-cube-metadata-csv.md",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed markdown, detected text",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "15397 bytes vs floor 256",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "15378 chars",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-09-03T17:48:37.849676+00:00"
+     }
+    },
+    "added_in": "g1sfc-2026-09-03"
+   }
+  },
+  "statcan-14-10-0287-01-lfs-2025-12-provinces-estimate-se-csv": {
+   "doc_id": "statcan-14-10-0287-01-lfs-2025-12-provinces-estimate-se-csv",
+   "identity": {
+    "sha256": "b3037fccfb02a762fb97cb3d878feab02114010374201990d25ef6a64cb599e4",
+    "canonical_path": "corpus/g1eval/statcan-14-10-0287-01-lfs-2025-12-provinces-estimate-se-csv.md",
+    "title": "Statistics Canada Table 14-10-0287-01, Labour force characteristics, monthly, seasonally adjusted — December 2025, Canada and provinces, estimate and standard error of estimate (CSV for database loading)",
+    "authors_or_org": [
+     "Statistics Canada"
+    ],
+    "pub_year": "2025",
+    "doc_type": "federal",
+    "source_url": "https://www150.statcan.gc.ca/t1/tbl1/en/dtl!downloadDbLoadingData-nonTraduit.action?pid=1410028701&latestN=0&startDate=2026-01-01&endDate=2026-01-01&csvLocale=en&selectedMembers=%5B%5B1%2C2%2C3%2C4%2C5%2C6%2C7%2C8%2C9%2C10%2C11%5D%2C%5B1%2C2%2C3%2C4%2C5%2C6%2C7%2C8%2C9%5D%2C%5B1%5D%2C%5B1%5D%2C%5B1%2C2%5D%2C%5B1%5D%5D&checkedLevels=",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "httpx-raw",
+    "acquired_at": null,
+    "acquired_by": "scripts/harvest_triage.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed markdown, detected text",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "42335 bytes vs floor 256",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "42330 chars",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-09-03T17:48:37.850106+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: table_labeled HOLDOUT surface: the same selection for a different reference month (December 2025). The endpoint's date window is exclusive-shifted by one period: startDate=endDate=2026-01-01 returns the 2025-12 rows (ver",
+    "decided_by": "cc",
+    "decided_at": "2026-09-03T17:48:31.835513+00:00",
+    "history": [],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "g1sfc_2026-09-03"
+   ],
+   "extra": {
+    "observed_files": {
+     "corpus/g1eval/statcan-14-10-0287-01-lfs-2025-12-provinces-estimate-se-csv.md": {
+      "sha256": "b3037fccfb02a762fb97cb3d878feab02114010374201990d25ef6a64cb599e4",
+      "size": 42335,
+      "claimed_type": "markdown",
+      "detected_type": "text"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/g1eval/statcan-14-10-0287-01-lfs-2025-12-provinces-estimate-se-csv.md": {
+      "path": "corpus/g1eval/statcan-14-10-0287-01-lfs-2025-12-provinces-estimate-se-csv.md",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed markdown, detected text",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "42335 bytes vs floor 256",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "42330 chars",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-09-03T17:48:37.850106+00:00"
+     }
+    },
+    "added_in": "g1sfc-2026-09-03"
+   }
+  },
+  "statcan-14-10-0287-01-lfs-2026-07-provinces-estimate-se-csv": {
+   "doc_id": "statcan-14-10-0287-01-lfs-2026-07-provinces-estimate-se-csv",
+   "identity": {
+    "sha256": "1b52442bb1f004052c681f7de06351a22e5f9e3f11bca8b68dca37ed8162865c",
+    "canonical_path": "corpus/g1eval/statcan-14-10-0287-01-lfs-2026-07-provinces-estimate-se-csv.md",
+    "title": "Statistics Canada Table 14-10-0287-01, Labour force characteristics, monthly, seasonally adjusted — July 2026, Canada and provinces, estimate and standard error of estimate (CSV for database loading)",
+    "authors_or_org": [
+     "Statistics Canada"
+    ],
+    "pub_year": "2026",
+    "doc_type": "federal",
+    "source_url": "https://www150.statcan.gc.ca/t1/tbl1/en/dtl!downloadDbLoadingData-nonTraduit.action?pid=1410028701&latestN=1&startDate=&endDate=&csvLocale=en&selectedMembers=%5B%5B1%2C2%2C3%2C4%2C5%2C6%2C7%2C8%2C9%2C10%2C11%5D%2C%5B1%2C2%2C3%2C4%2C5%2C6%2C7%2C8%2C9%5D%2C%5B1%5D%2C%5B1%5D%2C%5B1%2C2%5D%2C%5B1%5D%5D&checkedLevels=",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "httpx-raw",
+    "acquired_at": null,
+    "acquired_by": "scripts/harvest_triage.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed markdown, detected text",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "42296 bytes vs floor 256",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "42291 chars",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-09-03T17:48:37.850529+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: table_labeled DEV surface: long-format CSV whose 'Statistics' column names each row 'Estimate' or 'Standard error of estimate' and whose STATUS/SYMBOL columns carry the quality indicator (selection: Geography Canada + 10",
+    "decided_by": "cc",
+    "decided_at": "2026-09-03T17:48:31.428093+00:00",
+    "history": [],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "g1sfc_2026-09-03"
+   ],
+   "extra": {
+    "observed_files": {
+     "corpus/g1eval/statcan-14-10-0287-01-lfs-2026-07-provinces-estimate-se-csv.md": {
+      "sha256": "1b52442bb1f004052c681f7de06351a22e5f9e3f11bca8b68dca37ed8162865c",
+      "size": 42296,
+      "claimed_type": "markdown",
+      "detected_type": "text"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/g1eval/statcan-14-10-0287-01-lfs-2026-07-provinces-estimate-se-csv.md": {
+      "path": "corpus/g1eval/statcan-14-10-0287-01-lfs-2026-07-provinces-estimate-se-csv.md",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed markdown, detected text",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "42296 bytes vs floor 256",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "42291 chars",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-09-03T17:48:37.850529+00:00"
+     }
+    },
+    "added_in": "g1sfc-2026-09-03"
+   }
+  },
   "statcan-71-543-g-guide-labour-force-survey-2025": {
    "doc_id": "statcan-71-543-g-guide-labour-force-survey-2025",
    "identity": {
@@ -24616,10 +26364,17 @@
    },
    "screening": {
     "decision": "included",
-    "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: Current StatCan product guide stating the CV quality-level bands (acceptable 0.0–16.5 %, marginal 16.6–33.3 % flagged M, unacceptable > 33.3 % not released) as the release rule for LFS estimates. RELIABILITY_FLAG bands +",
+    "rationale": "manifest-added by rule (clause R1, construct_arm publication_actionability)",
     "decided_by": "cc",
-    "decided_at": "2026-09-03T10:48:58.837578+00:00",
-    "history": [],
+    "decided_at": "2026-09-03",
+    "history": [
+     {
+      "decision": "included",
+      "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: Current StatCan product guide stating the CV quality-level bands (acceptable 0.0–16.5 %, marginal 16.6–33.3 % flagged M, unacceptable > 33.3 % not released) as the release rule for LFS estimates. RELIABILITY_FLAG bands +",
+      "decided_by": "cc",
+      "decided_at": "2026-09-03T10:48:58.837578+00:00"
+     }
+    ],
     "identity_gate": {
      "passed": true,
      "checked": [],
@@ -24634,7 +26389,8 @@
     "quarantined": []
    },
    "provenance_sources": [
-    "g1_eval_v1_2026-09-03"
+    "g1_eval_v1_2026-09-03",
+    "candidate_register"
    ],
    "extra": {
     "observed_files": {
@@ -24669,7 +26425,10 @@
       "checked_at": "2026-09-03T10:49:00.532415+00:00"
      }
     },
-    "added_in": "g1srp-2026-09-03"
+    "added_in": "g1srp-2026-09-03",
+    "notes": [
+     "Current StatCan product guide stating the CV quality-level bands (acceptable 0.0–16.5 %, marginal 16.6–33.3 % flagged M, unacceptable > 33.3 % not released) as the release rule for LFS estimates. RELIABILITY_FLAG bands + SUPPRESSION rule. First current guide stating the bands: admitted; the 71-526-X methodology chapter 8 carries the same construct and is recorded R5-class below."
+    ]
    }
   },
   "statcan-quality-guidelines-6th-edition": {

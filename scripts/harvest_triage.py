@@ -295,7 +295,10 @@ def main() -> int:
             # verdict metadata rides in the register record verbatim
             for key in ("row", "verdict", "clause", "construct_arm", "grounding_surface",
                         "year", "authors_or_org", "extent_note", "held_doc_id", "gap",
-                        "notes"):
+                        "notes",
+                        # product-surface captures (task 2026-09-03_g1_eval_v2 step 2): the
+                        # surface's form and the exact request ride into the manifest entry
+                        "surface_type", "surface_format", "request_url", "secret_env"):
                 if entry.get(key) is not None:
                     rec[key] = entry[key]
             if not entry.get("gap"):

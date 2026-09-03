@@ -36,6 +36,7 @@ import math
 from typing import List
 
 from .records import (
+    FAMILY_OF,
     EVAL_DIMENSIONS,
     EVAL_SOURCES,
     SOURCE_EVAL,
@@ -136,15 +137,39 @@ def g1_block(eval_results: list) -> dict:
     by_mode = {}
     for r in observed:
         by_mode.setdefault(r.mode, []).append(r)
+    # v2 (design D9 / D12, task 2026-09-03_g1_eval_v2): the family is the scored unit, so the
+    # family cells are the v2 denominators; class cells above remain for v0/v1 comparability.
+    # A record from a v0/v1 file (family "") is grouped by its class's family.
+    fam_cells, factor_cells, by_comp = {}, {}, {}
+    n_qualifiers = 0
+    for r in observed:
+        fam = r.family or FAMILY_OF.get(r.qualifier_class, r.qualifier_class)
+        fam_cells.setdefault(fam, {}).setdefault(r.mode, []).append(r)
+        surface = r.surface_type or "prose_labeled"
+        comp = r.compression_level if r.mode == "indirect" else "direct"
+        factor_cells.setdefault(surface, {}).setdefault(comp or "none", []).append(r)
+        if r.mode == "indirect":
+            by_comp.setdefault(comp or "none", []).append(r)
+        forms = r.observations.get("forms") if isinstance(r.observations, dict) else None
+        n_qualifiers += len(forms) if isinstance(forms, dict) and forms else 1
     return {
         "declared": declared_by_source,
         "observed": {
             "by_class_and_mode": observed_block,
             "by_mode": {m: _observed_cell(recs) for m, recs in sorted(by_mode.items())},
+            "by_family_and_mode": {f: {m: _observed_cell(recs) for m, recs in sorted(modes.items())}
+                                   for f, modes in sorted(fam_cells.items())},
+            "by_surface_and_compression": {sf: {c: _observed_cell(recs) for c, recs in sorted(cells.items())}
+                                           for sf, cells in sorted(factor_cells.items())},
+            "by_compression_indirect": {c: _observed_cell(recs) for c, recs in sorted(by_comp.items())},
             "all": _observed_cell(observed),
             "n_propositions": len({r.target for r in observed}),
+            "n_families": len(observed),
+            "n_qualifiers": n_qualifiers,
             "prompt_epochs": sorted({r.prompt_epoch for r in observed}),
             "model_ids": sorted({r.model_id for r in observed}),
+            "parser_versions": sorted({r.parser_version for r in observed}),
+            "scorer_versions": sorted({getattr(r, "scorer_version", "") for r in observed}),
         },
         "n_records": len(eval_results),
         "note": (

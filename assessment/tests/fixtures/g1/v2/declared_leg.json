@@ -1,0 +1,634 @@
+{
+ "task": "cc_tasks/2026-09-03_g1_eval_v2_product_surfaces_compression.md step 3",
+ "probe": "g1_declared",
+ "epoch": "g1sfc-2026-09-03",
+ "run_at": "2026-09-03T18:02:19.312333+00:00",
+ "heuristic": "field-name patterns from harness.toml [g1]; values not inspected",
+ "surfaces": {
+  "census-api-acs5-2023-b19013-counties-colorado": {
+   "surface_type": "table_coded",
+   "surface_format": "json",
+   "surface_file": "corpus/g1eval/census-api-acs5-2023-b19013-counties-colorado.md",
+   "request_url": "https://api.census.gov/data/2023/acs/acs5?get=NAME,B19013_001E,B19013_001M&for=county:*&in=state:08&key={CENSUS_API_KEY}",
+   "score": 2,
+   "score_name": "PASS",
+   "evidence": "1 estimate field(s) carry a paired uncertainty field (acs_moe_suffix)",
+   "observations": {
+    "read_from": "json_header_row",
+    "n_fields": 5,
+    "uncertainty_fields": [
+     {
+      "field": "B19013_001M",
+      "pattern_id": "acs_moe_suffix",
+      "class": "MOE",
+      "pairs_with": "B19013_001E"
+     }
+    ],
+    "footnote_fields": [],
+    "id_fields": [
+     "NAME",
+     "state",
+     "county"
+    ],
+    "candidate_estimate_fields": [
+     "B19013_001E"
+    ],
+    "paired": [
+     {
+      "uncertainty": "B19013_001M",
+      "estimate": "B19013_001E"
+     }
+    ],
+    "unpaired_estimate_fields": [],
+    "footnote_vocabulary_hits": []
+   }
+  },
+  "census-api-acs5-2023-b19013-counties-idaho": {
+   "surface_type": "table_coded",
+   "surface_format": "json",
+   "surface_file": "corpus/g1eval/census-api-acs5-2023-b19013-counties-idaho.md",
+   "request_url": "https://api.census.gov/data/2023/acs/acs5?get=NAME,B19013_001E,B19013_001M&for=county:*&in=state:16&key={CENSUS_API_KEY}",
+   "score": 2,
+   "score_name": "PASS",
+   "evidence": "1 estimate field(s) carry a paired uncertainty field (acs_moe_suffix)",
+   "observations": {
+    "read_from": "json_header_row",
+    "n_fields": 5,
+    "uncertainty_fields": [
+     {
+      "field": "B19013_001M",
+      "pattern_id": "acs_moe_suffix",
+      "class": "MOE",
+      "pairs_with": "B19013_001E"
+     }
+    ],
+    "footnote_fields": [],
+    "id_fields": [
+     "NAME",
+     "state",
+     "county"
+    ],
+    "candidate_estimate_fields": [
+     "B19013_001E"
+    ],
+    "paired": [
+     {
+      "uncertainty": "B19013_001M",
+      "estimate": "B19013_001E"
+     }
+    ],
+    "unpaired_estimate_fields": [],
+    "footnote_vocabulary_hits": []
+   }
+  },
+  "statcan-14-10-0287-01-lfs-2026-07-provinces-estimate-se-csv": {
+   "surface_type": "table_labeled",
+   "surface_format": "csv",
+   "surface_file": "corpus/g1eval/statcan-14-10-0287-01-lfs-2026-07-provinces-estimate-se-csv.md",
+   "request_url": "https://www150.statcan.gc.ca/t1/tbl1/en/dtl!downloadDbLoadingData-nonTraduit.action?pid=1410028701&latestN=1&startDate=&endDate=&csvLocale=en&selectedMembers=%5B%5B1%2C2%2C3%2C4%2C5%2C6%2C7%2C8%2C9%2C10%2C11%5D%2C%5B1%2C2%2C3%2C4%2C5%2C6%2C7%2C8%2C9%5D%2C%5B1%5D%2C%5B1%5D%2C%5B1%2C2%5D%2C%5B1%5D%5D&checkedLevels=",
+   "score": 1,
+   "score_name": "PARTIAL",
+   "evidence": "uncertainty mentioned in body text only: standard error",
+   "observations": {
+    "read_from": "csv_header",
+    "n_fields": 19,
+    "uncertainty_fields": [],
+    "footnote_fields": [],
+    "id_fields": [
+     "REF_DATE",
+     "GEO",
+     "Age group",
+     "Data type",
+     "UOM_ID",
+     "SCALAR_ID"
+    ],
+    "candidate_estimate_fields": [
+     "DGUID",
+     "Labour force characteristics",
+     "Gender",
+     "Statistics",
+     "UOM",
+     "SCALAR_FACTOR",
+     "VECTOR",
+     "COORDINATE",
+     "VALUE",
+     "STATUS",
+     "SYMBOL",
+     "TERMINATED",
+     "DECIMALS"
+    ],
+    "paired": [],
+    "unpaired_estimate_fields": [
+     "DGUID",
+     "Labour force characteristics",
+     "Gender",
+     "Statistics",
+     "UOM",
+     "SCALAR_FACTOR",
+     "VECTOR",
+     "COORDINATE",
+     "VALUE",
+     "STATUS",
+     "SYMBOL",
+     "TERMINATED",
+     "DECIMALS"
+    ],
+    "footnote_vocabulary_hits": [
+     "standard error"
+    ]
+   }
+  },
+  "statcan-14-10-0287-01-lfs-2025-12-provinces-estimate-se-csv": {
+   "surface_type": "table_labeled",
+   "surface_format": "csv",
+   "surface_file": "corpus/g1eval/statcan-14-10-0287-01-lfs-2025-12-provinces-estimate-se-csv.md",
+   "request_url": "https://www150.statcan.gc.ca/t1/tbl1/en/dtl!downloadDbLoadingData-nonTraduit.action?pid=1410028701&latestN=0&startDate=2026-01-01&endDate=2026-01-01&csvLocale=en&selectedMembers=%5B%5B1%2C2%2C3%2C4%2C5%2C6%2C7%2C8%2C9%2C10%2C11%5D%2C%5B1%2C2%2C3%2C4%2C5%2C6%2C7%2C8%2C9%5D%2C%5B1%5D%2C%5B1%5D%2C%5B1%2C2%5D%2C%5B1%5D%5D&checkedLevels=",
+   "score": 1,
+   "score_name": "PARTIAL",
+   "evidence": "uncertainty mentioned in body text only: standard error",
+   "observations": {
+    "read_from": "csv_header",
+    "n_fields": 19,
+    "uncertainty_fields": [],
+    "footnote_fields": [],
+    "id_fields": [
+     "REF_DATE",
+     "GEO",
+     "Age group",
+     "Data type",
+     "UOM_ID",
+     "SCALAR_ID"
+    ],
+    "candidate_estimate_fields": [
+     "DGUID",
+     "Labour force characteristics",
+     "Gender",
+     "Statistics",
+     "UOM",
+     "SCALAR_FACTOR",
+     "VECTOR",
+     "COORDINATE",
+     "VALUE",
+     "STATUS",
+     "SYMBOL",
+     "TERMINATED",
+     "DECIMALS"
+    ],
+    "paired": [],
+    "unpaired_estimate_fields": [
+     "DGUID",
+     "Labour force characteristics",
+     "Gender",
+     "Statistics",
+     "UOM",
+     "SCALAR_FACTOR",
+     "VECTOR",
+     "COORDINATE",
+     "VALUE",
+     "STATUS",
+     "SYMBOL",
+     "TERMINATED",
+     "DECIMALS"
+    ],
+    "footnote_vocabulary_hits": [
+     "standard error"
+    ]
+   }
+  },
+  "statcan-14-10-0287-01-cube-metadata-csv": {
+   "surface_type": "legend",
+   "surface_format": "csv",
+   "surface_file": "corpus/g1eval/statcan-14-10-0287-01-cube-metadata-csv.md",
+   "request_url": "https://www150.statcan.gc.ca/t1/tbl1/en/dtl!downloadCubeMetaData-nonTraduit.action?pid=1410028701&csvLocale=en",
+   "score": 1,
+   "score_name": "PARTIAL",
+   "evidence": "uncertainty only in a notes/footnote column (Cube Notes): standard error, confidence interval, suppressed",
+   "observations": {
+    "read_from": "csv_header",
+    "n_fields": 10,
+    "uncertainty_fields": [],
+    "footnote_fields": [
+     "Cube Notes"
+    ],
+    "id_fields": [
+     "Product Id",
+     "CANSIM Id",
+     "Start Reference Period",
+     "End Reference Period"
+    ],
+    "candidate_estimate_fields": [
+     "Cube Title",
+     "URL",
+     "Archive Status",
+     "Frequency",
+     "Total number of dimensions"
+    ],
+    "paired": [],
+    "unpaired_estimate_fields": [
+     "Cube Title",
+     "URL",
+     "Archive Status",
+     "Frequency",
+     "Total number of dimensions"
+    ],
+    "footnote_vocabulary_hits": [
+     "standard error",
+     "confidence interval",
+     "suppressed"
+    ]
+   }
+  },
+  "statcan-13-10-0096-01-cchs-2022-provinces-percent-ci-csv": {
+   "surface_type": "flagged_cell",
+   "surface_format": "csv",
+   "surface_file": "corpus/g1eval/statcan-13-10-0096-01-cchs-2022-provinces-percent-ci-csv.md",
+   "request_url": "https://www150.statcan.gc.ca/t1/tbl1/en/dtl!downloadDbLoadingData-nonTraduit.action?pid=1310009601&latestN=1&startDate=&endDate=&csvLocale=en&selectedMembers=%5B%5B1%2C2%2C3%2C4%2C5%2C6%2C7%2C8%2C9%2C10%2C11%5D%2C%5B1%5D%2C%5B1%5D%2C%5B1%2C2%2C3%2C4%2C5%2C6%2C7%2C8%2C9%2C10%2C11%5D%2C%5B4%2C5%2C6%5D%5D&checkedLevels=",
+   "score": 1,
+   "score_name": "PARTIAL",
+   "evidence": "uncertainty mentioned in body text only: confidence interval",
+   "observations": {
+    "read_from": "csv_header",
+    "n_fields": 18,
+    "uncertainty_fields": [],
+    "footnote_fields": [],
+    "id_fields": [
+     "REF_DATE",
+     "GEO",
+     "Age group",
+     "Sex",
+     "UOM_ID",
+     "SCALAR_ID"
+    ],
+    "candidate_estimate_fields": [
+     "DGUID",
+     "Indicators",
+     "Characteristics",
+     "UOM",
+     "SCALAR_FACTOR",
+     "VECTOR",
+     "COORDINATE",
+     "VALUE",
+     "STATUS",
+     "SYMBOL",
+     "TERMINATED",
+     "DECIMALS"
+    ],
+    "paired": [],
+    "unpaired_estimate_fields": [
+     "DGUID",
+     "Indicators",
+     "Characteristics",
+     "UOM",
+     "SCALAR_FACTOR",
+     "VECTOR",
+     "COORDINATE",
+     "VALUE",
+     "STATUS",
+     "SYMBOL",
+     "TERMINATED",
+     "DECIMALS"
+    ],
+    "footnote_vocabulary_hits": [
+     "confidence interval"
+    ]
+   }
+  },
+  "statcan-13-10-0096-01-cube-metadata-csv": {
+   "surface_type": "legend",
+   "surface_format": "csv",
+   "surface_file": "corpus/g1eval/statcan-13-10-0096-01-cube-metadata-csv.md",
+   "request_url": "https://www150.statcan.gc.ca/t1/tbl1/en/dtl!downloadCubeMetaData-nonTraduit.action?pid=1310009601&csvLocale=en",
+   "score": 1,
+   "score_name": "PARTIAL",
+   "evidence": "uncertainty only in a notes/footnote column (Cube Notes): coefficient of variation, confidence interval, suppressed",
+   "observations": {
+    "read_from": "csv_header",
+    "n_fields": 10,
+    "uncertainty_fields": [],
+    "footnote_fields": [
+     "Cube Notes"
+    ],
+    "id_fields": [
+     "Product Id",
+     "CANSIM Id",
+     "Start Reference Period",
+     "End Reference Period"
+    ],
+    "candidate_estimate_fields": [
+     "Cube Title",
+     "URL",
+     "Archive Status",
+     "Frequency",
+     "Total number of dimensions"
+    ],
+    "paired": [],
+    "unpaired_estimate_fields": [
+     "Cube Title",
+     "URL",
+     "Archive Status",
+     "Frequency",
+     "Total number of dimensions"
+    ],
+    "footnote_vocabulary_hits": [
+     "coefficient of variation",
+     "confidence interval",
+     "suppressed"
+    ]
+   }
+  },
+  "statcan-13-10-0113-01-cchs-2021-2022-quebec-health-regions-percent-ci-csv": {
+   "surface_type": "flagged_cell",
+   "surface_format": "csv",
+   "surface_file": "corpus/g1eval/statcan-13-10-0113-01-cchs-2021-2022-quebec-health-regions-percent-ci-csv.md",
+   "request_url": "https://www150.statcan.gc.ca/t1/tbl1/en/dtl!downloadDbLoadingData-nonTraduit.action?pid=1310011301&latestN=1&startDate=&endDate=&csvLocale=en&selectedMembers=%5B%5B23%2C24%2C25%2C26%2C27%2C28%2C29%2C30%2C31%2C32%2C33%2C34%2C35%2C36%2C37%2C38%5D%2C%5B1%5D%2C%5B1%5D%2C%5B1%2C2%2C3%2C4%2C5%2C6%2C7%2C8%2C9%2C10%2C11%5D%2C%5B4%2C5%2C6%5D%5D&checkedLevels=",
+   "score": 1,
+   "score_name": "PARTIAL",
+   "evidence": "uncertainty mentioned in body text only: confidence interval",
+   "observations": {
+    "read_from": "csv_header",
+    "n_fields": 18,
+    "uncertainty_fields": [],
+    "footnote_fields": [],
+    "id_fields": [
+     "REF_DATE",
+     "GEO",
+     "Age group",
+     "Sex",
+     "UOM_ID",
+     "SCALAR_ID"
+    ],
+    "candidate_estimate_fields": [
+     "DGUID",
+     "Indicators",
+     "Characteristics",
+     "UOM",
+     "SCALAR_FACTOR",
+     "VECTOR",
+     "COORDINATE",
+     "VALUE",
+     "STATUS",
+     "SYMBOL",
+     "TERMINATED",
+     "DECIMALS"
+    ],
+    "paired": [],
+    "unpaired_estimate_fields": [
+     "DGUID",
+     "Indicators",
+     "Characteristics",
+     "UOM",
+     "SCALAR_FACTOR",
+     "VECTOR",
+     "COORDINATE",
+     "VALUE",
+     "STATUS",
+     "SYMBOL",
+     "TERMINATED",
+     "DECIMALS"
+    ],
+    "footnote_vocabulary_hits": [
+     "confidence interval"
+    ]
+   }
+  },
+  "statcan-13-10-0113-01-cube-metadata-csv": {
+   "surface_type": "legend",
+   "surface_format": "csv",
+   "surface_file": "corpus/g1eval/statcan-13-10-0113-01-cube-metadata-csv.md",
+   "request_url": "https://www150.statcan.gc.ca/t1/tbl1/en/dtl!downloadCubeMetaData-nonTraduit.action?pid=1310011301&csvLocale=en",
+   "score": 1,
+   "score_name": "PARTIAL",
+   "evidence": "uncertainty only in a notes/footnote column (Cube Notes): coefficient of variation, confidence interval, suppressed",
+   "observations": {
+    "read_from": "csv_header",
+    "n_fields": 10,
+    "uncertainty_fields": [],
+    "footnote_fields": [
+     "Cube Notes"
+    ],
+    "id_fields": [
+     "Product Id",
+     "CANSIM Id",
+     "Start Reference Period",
+     "End Reference Period"
+    ],
+    "candidate_estimate_fields": [
+     "Cube Title",
+     "URL",
+     "Archive Status",
+     "Frequency",
+     "Total number of dimensions"
+    ],
+    "paired": [],
+    "unpaired_estimate_fields": [
+     "Cube Title",
+     "URL",
+     "Archive Status",
+     "Frequency",
+     "Total number of dimensions"
+    ],
+    "footnote_vocabulary_hits": [
+     "coefficient of variation",
+     "confidence interval",
+     "suppressed"
+    ]
+   }
+  },
+  "nchs-data-brief-530-perinatal-mortality-2022-2023": {
+   "surface_type": "flagged_cell",
+   "surface_format": "pdf",
+   "surface_file": "corpus/g1eval/nchs-data-brief-530-perinatal-mortality-2022-2023.pdf",
+   "request_url": "https://www.cdc.gov/nchs/data/databriefs/db530.pdf",
+   "score": 0,
+   "score_name": "FAIL",
+   "evidence": "no readable field header (unsupported_media) and no uncertainty vocabulary",
+   "observations": {
+    "read_from": "unsupported_media",
+    "n_fields": 0,
+    "uncertainty_fields": [],
+    "footnote_fields": [],
+    "id_fields": [],
+    "candidate_estimate_fields": [],
+    "paired": [],
+    "unpaired_estimate_fields": [],
+    "footnote_vocabulary_hits": []
+   }
+  },
+  "nchs-data-brief-500-dental-visits-adults-65-2022": {
+   "surface_type": "footnoted",
+   "surface_format": "pdf",
+   "surface_file": "corpus/g1eval/nchs-data-brief-500-dental-visits-adults-65-2022.pdf",
+   "request_url": "https://www.cdc.gov/nchs/data/databriefs/db500.pdf",
+   "score": 1,
+   "score_name": "PARTIAL",
+   "evidence": "no readable field header (unsupported_media); uncertainty mentioned only in body text: standard error",
+   "observations": {
+    "read_from": "unsupported_media",
+    "n_fields": 0,
+    "uncertainty_fields": [],
+    "footnote_fields": [],
+    "id_fields": [],
+    "candidate_estimate_fields": [],
+    "paired": [],
+    "unpaired_estimate_fields": [],
+    "footnote_vocabulary_hits": [
+     "standard error"
+    ]
+   }
+  },
+  "nchs-data-brief-515-high-total-cholesterol-2021-2023": {
+   "surface_type": "footnoted",
+   "surface_format": "pdf",
+   "surface_file": "corpus/g1eval/nchs-data-brief-515-high-total-cholesterol-2021-2023.pdf",
+   "request_url": "https://www.cdc.gov/nchs/data/databriefs/db515.pdf",
+   "score": 1,
+   "score_name": "PARTIAL",
+   "evidence": "no readable field header (unsupported_media); uncertainty mentioned only in body text: standard error",
+   "observations": {
+    "read_from": "unsupported_media",
+    "n_fields": 0,
+    "uncertainty_fields": [],
+    "footnote_fields": [],
+    "id_fields": [],
+    "candidate_estimate_fields": [],
+    "paired": [],
+    "unpaired_estimate_fields": [],
+    "footnote_vocabulary_hits": [
+     "standard error"
+    ]
+   }
+  },
+  "bls-employment-situation-2026-08-news-release": {
+   "surface_type": "footnoted",
+   "surface_format": "html",
+   "surface_file": "corpus/g1eval/bls-employment-situation-2026-08-news-release.md",
+   "request_url": "https://www.bls.gov/news.release/empsit.htm",
+   "score": 1,
+   "score_name": "PARTIAL",
+   "evidence": "no readable field header (unsupported_media); uncertainty mentioned only in body text: margin of error, standard error, confidence interval, sampling error",
+   "observations": {
+    "read_from": "unsupported_media",
+    "n_fields": 0,
+    "uncertainty_fields": [],
+    "footnote_fields": [],
+    "id_fields": [],
+    "candidate_estimate_fields": [],
+    "paired": [],
+    "unpaired_estimate_fields": [],
+    "footnote_vocabulary_hits": [
+     "margin of error",
+     "standard error",
+     "confidence interval",
+     "sampling error"
+    ]
+   }
+  },
+  "census-quickfacts-denver-county-colorado": {
+   "surface_type": "no_declared",
+   "surface_format": "html",
+   "surface_file": "corpus/g1eval/census-quickfacts-denver-county-colorado.md",
+   "request_url": "https://www.census.gov/quickfacts/denvercountycolorado",
+   "score": 1,
+   "score_name": "PARTIAL",
+   "evidence": "no readable field header (unsupported_media); uncertainty mentioned only in body text: sampling error, suppressed",
+   "observations": {
+    "read_from": "unsupported_media",
+    "n_fields": 0,
+    "uncertainty_fields": [],
+    "footnote_fields": [],
+    "id_fields": [],
+    "candidate_estimate_fields": [],
+    "paired": [],
+    "unpaired_estimate_fields": [],
+    "footnote_vocabulary_hits": [
+     "sampling error",
+     "suppressed"
+    ]
+   }
+  },
+  "census-quickfacts-denver-county-colorado-csv": {
+   "surface_type": "no_declared",
+   "surface_format": "csv",
+   "surface_file": "corpus/g1eval/census-quickfacts-denver-county-colorado-csv.md",
+   "request_url": "https://www.census.gov/quickfacts/fact/csv/denvercountycolorado/PST045224",
+   "score": 1,
+   "score_name": "PARTIAL",
+   "evidence": "uncertainty only in a notes/footnote column (Fact Note, Value Note for Denver County, Colorado): suppressed",
+   "observations": {
+    "read_from": "csv_header",
+    "n_fields": 4,
+    "uncertainty_fields": [],
+    "footnote_fields": [
+     "Fact Note",
+     "Value Note for Denver County, Colorado"
+    ],
+    "id_fields": [
+     "Denver County, Colorado"
+    ],
+    "candidate_estimate_fields": [
+     "Fact"
+    ],
+    "paired": [],
+    "unpaired_estimate_fields": [
+     "Fact"
+    ],
+    "footnote_vocabulary_hits": [
+     "suppressed"
+    ]
+   }
+  },
+  "census-api-dec2020-dhc-p1-counties-colorado": {
+   "surface_type": "no_declared",
+   "surface_format": "json",
+   "surface_file": "corpus/g1eval/census-api-dec2020-dhc-p1-counties-colorado.md",
+   "request_url": "https://api.census.gov/data/2020/dec/dhc?get=NAME,P1_001N&for=county:*&in=state:08&key={CENSUS_API_KEY}",
+   "score": 0,
+   "score_name": "FAIL",
+   "evidence": "no uncertainty field among 4 field(s) and no footnote mention",
+   "observations": {
+    "read_from": "json_header_row",
+    "n_fields": 4,
+    "uncertainty_fields": [],
+    "footnote_fields": [],
+    "id_fields": [
+     "NAME",
+     "state",
+     "county"
+    ],
+    "candidate_estimate_fields": [
+     "P1_001N"
+    ],
+    "paired": [],
+    "unpaired_estimate_fields": [
+     "P1_001N"
+    ],
+    "footnote_vocabulary_hits": []
+   }
+  },
+  "bls-employment-situation-2026-05-news-release-archive": {
+   "surface_type": "footnoted",
+   "surface_format": "html",
+   "surface_file": "corpus/g1eval/bls-employment-situation-2026-05-news-release-archive.md",
+   "request_url": "https://www.bls.gov/news.release/archives/empsit_06052026.htm",
+   "score": 1,
+   "score_name": "PARTIAL",
+   "evidence": "no readable field header (unsupported_media); uncertainty mentioned only in body text: margin of error, standard error, confidence interval, sampling error",
+   "observations": {
+    "read_from": "unsupported_media",
+    "n_fields": 0,
+    "uncertainty_fields": [],
+    "footnote_fields": [],
+    "id_fields": [],
+    "candidate_estimate_fields": [],
+    "paired": [],
+    "unpaired_estimate_fields": [],
+    "footnote_vocabulary_hits": [
+     "margin of error",
+     "standard error",
+     "confidence interval",
+     "sampling error"
+    ]
+   }
+  }
+ }
+}

@@ -166,3 +166,31 @@ footnote_uncertainty_vocabulary = ["margin of error", "standard error", "coeffic
 "0.90" = 1.644854
 "0.95" = 1.959964
 "0.99" = 2.575829
+
+# Qualifier families (design D9, task 2026-09-03_g1_eval_v2 step 3): the scored unit in v2 is
+# the family; the published forms inside a family are deterministic transforms of one another
+# (interval: SE / MOE / CI given the level and z above; relative: CV = SE / estimate, RSE the
+# same ratio). `reliability` is the producer's categorical outcome; `dp` and `vintage` are
+# singletons. Cross-family derivations (an SE stated where only a CV was published) score the
+# target family only when the estimate is also correct and are recorded as
+# `cross_family_derivation` in observations.
+[g1.families]
+interval = ["SE", "MOE", "CI"]
+relative = ["CV"]
+reliability = ["RELIABILITY_FLAG", "SUPPRESSION"]
+dp = ["DP_NOISE"]
+vintage = ["VINTAGE"]
+
+# Binding window (design D10): a candidate qualifier counts as THIS estimate's only when it is
+# bound to it — a ± anchored on the estimate's value, or the estimate's value / row label
+# restated within `window_chars` of the candidate in the same sentence or line, or an explicit
+# reference. No bound candidate -> L1 omission; a bound candidate that is wrong -> L0 with its
+# own class; `binding_error` only when a candidate bound to ANOTHER estimate is presented as
+# this one's. `label_min_tokens` = how many of the row label's tokens (case-insensitive, stop
+# words dropped) must appear near the candidate for a label reference to count.
+[g1.binding]
+window_chars = 240
+label_min_tokens = 2
+label_stop_words = ["the", "of", "in", "for", "and", "a", "an", "to", "on", "at", "by", "rate", "percent", "county", "total", "years", "and-over", "over",
+                    "number", "estimate", "estimates", "estimated", "value", "count", "share", "proportion", "with", "who", "had", "were", "was"]
+

@@ -238,6 +238,13 @@ def run(dry_run: bool, finalize: bool = False) -> int:
         }
         if rec.get("extent_note"):
             acquisition["extent_note"] = rec["extent_note"]
+        if rec.get("surface_type"):
+            # G1 v2 product surface (task 2026-09-03_g1_eval_v2 step 2): captured as served;
+            # `request_url` is the exact request with any secret as a {NAME} placeholder.
+            acquisition["surface"] = {"surface_type": rec["surface_type"],
+                                      "surface_format": rec.get("surface_format"),
+                                      "request_url": rec.get("request_url") or rec.get("primary_url"),
+                                      "secret_env": rec.get("secret_env") or []}
         if rec.get("video_id"):
             acquisition["capture"] = {"video_id": rec["video_id"],
                                       "channel": rec.get("channel"),
