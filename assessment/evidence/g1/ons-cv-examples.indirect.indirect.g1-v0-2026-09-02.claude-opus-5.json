@@ -1,0 +1,31 @@
+{
+ "proposition_id": "g1-ons-se-003",
+ "call_id": "ons-cv-examples.indirect",
+ "mode": "indirect",
+ "qualifier_class": null,
+ "prompt_epoch": "g1-v0-2026-09-02",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T03:22:12.869809+00:00",
+ "prompt": "Restate the following for a general-audience summary.\n\nThe total turnover of plastering businesses in the UK was estimated at £2,322 million in 2016, with a standard error of £201 million. A different survey estimated that the total number of people employed full-time in agriculture, forestry and fishing in the UK was 155,000 in 2016, with a standard error of 12,400 employees It is difficult to compare these two standard errors. By calculating the coefficient of variation for each, the results show that both estimates have a similar level of precision: * £201 million divided by £2,322 million equals 0.087 – a coefficient of variation of 8.7% * 12,400 divided by 155,000 equals 0.08 – a coefficient of variation of 8%",
+ "response_text": "**Comparing how reliable two survey estimates are**\n\nSurveys don't measure everything — they sample. So every survey figure comes with a margin of uncertainty, called the standard error, which says roughly how much the estimate might wobble if you'd surveyed a different sample.\n\nTwo examples from 2016:\n\n- UK plastering businesses turned over an estimated **£2,322 million**, give or take about **£201 million**.\n- An estimated **155,000 people** worked full-time in agriculture, forestry and fishing, give or take about **12,400**.\n\nThose two \"give or take\" figures look nothing alike — £201 million versus 12,400 people. But they're measured in different units, so comparing them directly is meaningless.\n\nThe fix is to express each margin as a *percentage of the estimate it belongs to*. That percentage is called the **coefficient of variation**:\n\n- £201m ÷ £2,322m = 0.087, or **8.7%**\n- 12,400 ÷ 155,000 = 0.08, or **8%**\n\nOnce put on the same scale, the two are nearly identical. Both estimates are about equally precise — each carries roughly 8% uncertainty relative to its own size — even though one deals in millions of pounds and the other in thousands of people.",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 486,
+  "cacheReadInputTokens": 12841,
+  "cacheCreationInputTokens": 16990,
+  "webSearchRequests": 0,
+  "costUSD": 0.18848050000000002,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 83,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 8259,
+ "cost_usd": 0.18848050000000002,
+ "spend_run_id": "g1_eval_pilot_v0_2026-09-03",
+ "spend_reservation_id": "c6798bb368134a0b96b536c3c814419e",
+ "source_doc_id": "ons-uncertainty-and-how-we-measure-it",
+ "passage_id": "ons-cv-examples"
+}

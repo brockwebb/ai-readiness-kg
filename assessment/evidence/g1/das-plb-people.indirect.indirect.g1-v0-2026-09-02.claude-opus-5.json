@@ -1,0 +1,31 @@
+{
+ "proposition_id": "g1-das-dp-003",
+ "call_id": "das-plb-people.indirect",
+ "mode": "indirect",
+ "qualifier_class": null,
+ "prompt_epoch": "g1-v0-2026-09-02",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T03:22:32.726993+00:00",
+ "prompt": "Restate the following for a general-audience summary.\n\nFor the 2020 Census Public Law 94-171 redistricting files, the privacy-loss budget was allocated as shown below, where the fractions in each cell represent the share of privacy-loss budget allocated. Privacy-Loss Budget Allocations for the P.L. 94-171 Redistricting Data: United States Global Privacy-Loss Budget: People Global rho . . . . . . . . . . . . . . . . . . 2.56 Global epsilon . . . . . . . . . . . . . . . 17.14 Delta . . . . . . . . . . . . . . . . . . . . . . . 10–10 Source: U.S. Census Bureau. Privacy-Loss Budget: People Geographic level Rho allocation United States . . . . . . . . . . . . . . . 104/4,099 State . . . . . . . . . . . . . . . . . . . . . . . 1,440/4,099 County . . . . . . . . . . . . . . . . . . . . . 447/4,099 Tract . . . . . . . . . . . . . . . . . . . . . . . 687/4,099 Optimized block group1 . . . . . . 1,256/4,099 Block . . . . . . . . . . . . . . . . . . . . . . 165/4,099",
+ "response_text": "## How the 2020 Census Protected Privacy in the Redistricting Data\n\nWhen the Census Bureau released the P.L. 94-171 redistricting files in 2021, it protected people's confidentiality by adding carefully calibrated statistical noise to the published counts. The amount of noise is governed by a \"privacy-loss budget\" — a fixed quantity of allowable privacy loss that the Bureau divides up across the statistics it publishes. Less budget spent on a given table means more noise and stronger privacy; more budget means sharper numbers but weaker protection. Because the total is fixed, the allocation is a genuine trade-off: every share given to one geographic level is a share taken from another.\n\n**The overall budget for person-level data:**\n\n| Measure | Value |\n|---|---|\n| Global rho | 2.56 |\n| Global epsilon | 17.14 |\n| Delta | 10⁻¹⁰ |\n\nRho and epsilon are two ways of expressing the same total privacy loss; delta is a very small allowance (one in ten billion) for the protection falling short.\n\n**How that budget was split across geographic levels:**\n\n| Geographic level | Share of budget | Approximate percentage |\n|---|---|---|\n| United States | 104/4,099 | 2.5% |\n| State | 1,440/4,099 | 35.1% |\n| County | 447/4,099 | 10.9% |\n| Tract | 687/4,099 | 16.8% |\n| Optimized block group | 1,256/4,099 | 30.6% |\n| Block | 165/4,099 | 4.0% |\n\nThe pattern reflects what the data are used for. States received the largest single share — about a third — because state population totals drive congressional apportionment and statewide redistricting, and they need to be highly accurate. Optimized block groups received nearly as much, roughly 30 percent, since they serve as the workhorse building blocks for drawing districts. Blocks, the smallest geographic units, received only about 4 percent: they contain few people, so they are the most privacy-sensitive, and their numbers are the noisiest. The national total received the smallest share of all, about 2.5 percent, largely because it is already well constrained by the other published figures.\n\nSource: U.S. Census Bureau.",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 952,
+  "cacheReadInputTokens": 12841,
+  "cacheCreationInputTokens": 17183,
+  "webSearchRequests": 0,
+  "costUSD": 0.2020605,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 222,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 13179,
+ "cost_usd": 0.2020605,
+ "spend_run_id": "g1_eval_pilot_v0_2026-09-03",
+ "spend_reservation_id": "cafa167ec54d4a96bdc36a4d366b7d2f",
+ "source_doc_id": "census-2020-disclosure-avoidance-handbook-2021",
+ "passage_id": "das-plb-people"
+}
