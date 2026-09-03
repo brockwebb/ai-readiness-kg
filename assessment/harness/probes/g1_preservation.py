@@ -453,6 +453,12 @@ def bound_to_estimate(parsed: Parsed, cand: ParsedQualifier, prop, cfg: dict, mo
     # window): the next clause's row is the next clause's business ("the count of unemployed
     # people has a CV of 5.0%, and the labour force count has a CV of 2.5%")
     near = _sentence_around(text, cand.start, window, clause=True).lower()
+    # the estimate's own value in the candidate's clause is the strongest reference of all
+    # ("rates with fewer than 20 events were suppressed", g1-n200-sup-001.direct.…json)
+    if not anchored_elsewhere_by_anchor:
+        clause_start = text.lower().find(near, max(0, cand.start - window))
+        if clause_start >= 0 and any(clause_start <= pos < clause_start + len(near) for pos in est_positions):
+            return "bound", "estimate_in_clause"
     own = set(specific) | set(generic)
     others = [sib for sib in (siblings or ()) if sib.id != prop.id]
     # label competition: the clause names THIS row when more of this label's tokens appear
@@ -559,6 +565,19 @@ def _subject_value(parsed: Parsed, text: str, n: ParsedNumber, cand: ParsedQuali
         return False
     if re.search(r"\bper\s*$", text[max(0, n.start - 5):n.start], re.I):
         return False
+    if re.match(r"\s*(?:%|percent)?\s*(?:limit|threshold|cutoff|cut-off|rule|criterion|standard|ceiling|floor|cap)\b",
+                text[n.start + len(n.span): n.start + len(n.span) + 16], re.I):
+        return False                                   # "the 130% limit": a threshold, not a subject value
+    before = text[max(0, n.start - 12):n.start]
+    if re.search(r"\b(?:table|figure|fig\.|section|chapter|no\.?|page|p\.|note)\s*$", before, re.I):
+        return False                                   # "Table 7.4": a reference, not a value
+    after = text[n.start + len(n.span): n.start + len(n.span) + 6]
+    if re.search(r"\bto\s*$", text[max(0, n.start - 4):n.start], re.I) or re.match(r"\s*(?:to|–|-|—)\s*[£$€]?\d", after):
+        return False                                   # a member of an "A to B" pair is a bound, not a subject
+    clause_before = text[max(0, n.start - 60):n.start]
+    if re.search(r"(?:interval|margins?\s+of\s+error|standard\s+errors?|bounds?|range|\bCVs?\b|\bSEs?\b|\bMOEs?\b|confidence|"
+                 r"coefficients?\s+of\s+variation)[^.;\n]{0,60}$", clause_before, re.I):
+        return False                                   # a value introduced by a qualifier keyword is a qualifier
     own = [cand.value, cand.lower, cand.upper]
     if any(v is not None and abs(n.value - v) < 1e-9 for v in own):
         return False

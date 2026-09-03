@@ -197,5 +197,11 @@ window_chars = 240
 anaphora_window_chars = 1000
 label_min_tokens = 2
 label_stop_words = ["the", "of", "in", "for", "and", "a", "an", "to", "on", "at", "by", "percent", "county", "total", "years", "and-over", "over",
-                    "number", "estimate", "estimates", "estimated", "value", "count", "share", "proportion", "with", "who", "had", "were", "was"]
+                    "number", "estimate", "estimates", "estimated", "value", "count", "share", "proportion", "with", "who", "had", "were", "was",
+                    # uncertainty / outcome vocabulary never identifies a row (a label that says "rates … suppressed"
+                    # must not win a clause that says "suppressed")
+                    "suppressed", "suppress", "suppression", "flagged", "flag", "flags", "reliable", "unreliable", "reliability",
+                    "error", "errors", "margin", "margins", "interval", "confidence", "standard", "relative", "published", "publish",
+                    "presented", "presenting", "present", "release", "released", "percentage", "percentages", "united", "states",
+                    "guidance", "previous", "under", "which", "above", "below", "level"]
 
