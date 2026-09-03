@@ -1,0 +1,149 @@
+# G1 pilot run schedule (task 2026-09-02_g1_eval_probe_family_v0 step 6).
+#
+# The declared per-run ceiling is 200,000 tokens. A minimal `claude -p` call books ~30k
+# tokens (controls.yaml spend.call_class_floors.g1_eval and its comment), so the ceiling
+# admits on the order of six calls — far fewer than the full fixture x mode grid. The
+# order below is therefore PRE-REGISTERED here, before any call is made: the runner walks
+# it top to bottom and stops cleanly (exit 0) at the first spend refusal. Modes alternate
+# and classes are spread so whatever prefix the ceiling admits covers both modes and
+# several classes rather than one corner of the grid. The RESULT reports the prefix
+# reached and the ceiling the whole grid would need.
+#
+# Each step: kind = "indirect" (one call per PASSAGE — every proposition sharing that
+# passage is scored from the one restatement) or "direct" (one call per proposition x
+# qualifier class).
+#
+# Passage ids are the `passages` keys of the two fixture files; the held-out propositions
+# that share a development passage (Indiana in acs-ch7-significance; Arlington/Alexandria in
+# acs-ch8-tricounty; 3,497 in acs-ch8-loudoun-83; the state rho share in das-plb-people) are
+# scored from that passage's single indirect call, so no second indirect call is listed.
+[[steps]]
+kind = "indirect"
+passage = "acs-ch7-colorado"
+[[steps]]
+kind = "direct"
+proposition = "g1-acs-moe-001"
+qualifier = "MOE"
+[[steps]]
+kind = "indirect"
+passage = "ons-cv-examples"
+[[steps]]
+kind = "direct"
+proposition = "g1-ons-cv-002"
+qualifier = "CV"
+[[steps]]
+kind = "indirect"
+passage = "das-plb-people"
+[[steps]]
+kind = "direct"
+proposition = "g1-das-dp-003"
+qualifier = "DP_NOISE"
+[[steps]]
+kind = "indirect"
+passage = "ons-ci-education"
+[[steps]]
+kind = "direct"
+proposition = "g1-acs-moe-001"
+qualifier = "VINTAGE"
+[[steps]]
+kind = "indirect"
+passage = "acs-ch8-tricounty"
+[[steps]]
+kind = "direct"
+proposition = "g1-acs-cv-004"
+qualifier = "RELIABILITY_FLAG"
+[[steps]]
+kind = "indirect"
+passage = "acs-ch7-significance"
+[[steps]]
+kind = "direct"
+proposition = "g1-ons-ci-002"
+qualifier = "CI"
+[[steps]]
+kind = "indirect"
+passage = "ons-se-table1"
+[[steps]]
+kind = "direct"
+proposition = "g1-ons-se-003"
+qualifier = "SE"
+[[steps]]
+kind = "indirect"
+passage = "das-county-accuracy"
+[[steps]]
+kind = "direct"
+proposition = "g1-das-dp-001"
+qualifier = "DP_NOISE"
+[[steps]]
+kind = "indirect"
+passage = "acs-ch8-loudoun-83"
+[[steps]]
+kind = "direct"
+proposition = "g1-acs-cv-005"
+qualifier = "CV"
+[[steps]]
+kind = "indirect"
+passage = "acs-ch8-product"
+[[steps]]
+kind = "direct"
+proposition = "g1-acs-ci-004"
+qualifier = "CI"
+[[steps]]
+kind = "indirect"
+passage = "ons-ci-employment"
+[[steps]]
+kind = "direct"
+proposition = "g1-acs-moe-003"
+qualifier = "MOE"
+[[steps]]
+kind = "indirect"
+passage = "das-run-budget"
+[[steps]]
+kind = "direct"
+proposition = "g1-ons-se-001"
+qualifier = "SE"
+[[steps]]
+kind = "indirect"
+passage = "das-plb-units"
+[[steps]]
+kind = "direct"
+proposition = "g1-ons-ci-001"
+qualifier = "VINTAGE"
+# --- held-out set (assessment/tests/fixtures/g1/propositions_holdout.yaml) ---
+[[steps]]
+kind = "indirect"
+passage = "das-blockgroup-accuracy"
+[[steps]]
+kind = "direct"
+proposition = "g1h-acs-moe-002"
+qualifier = "MOE"
+[[steps]]
+kind = "indirect"
+passage = "acs-ch8-loudoun-82"
+[[steps]]
+kind = "direct"
+proposition = "g1h-ons-ci-001"
+qualifier = "CI"
+[[steps]]
+kind = "direct"
+proposition = "g1h-acs-se-002"
+qualifier = "SE"
+[[steps]]
+kind = "direct"
+proposition = "g1h-acs-rf-001"
+qualifier = "RELIABILITY_FLAG"
+[[steps]]
+kind = "direct"
+proposition = "g1h-acs-cv-001"
+qualifier = "CV"
+[[steps]]
+kind = "direct"
+proposition = "g1h-acs-moe-001"
+qualifier = "VINTAGE"
+[[steps]]
+kind = "direct"
+proposition = "g1h-das-dp-002"
+qualifier = "DP_NOISE"
+[[steps]]
+kind = "direct"
+proposition = "g1h-das-dp-001"
+qualifier = "VINTAGE"

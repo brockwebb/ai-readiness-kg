@@ -64,6 +64,7 @@ from .probes.d2_programmatic import ProgrammaticAccessProbe
 from .probes.d2_content_negotiation import ContentNegotiationProbe
 from .probes.d2_bulk import BulkAvailabilityProbe
 from .probes.d2_no_barriers import NoBarriersProbe
+from .probes.g1_declared import G1DeclaredProbe
 from .rollup import rollup_agency
 
 
@@ -81,6 +82,11 @@ class ProbeSettings:
     # The identity the harness sends; it is the token whose declared-vs-observed
     # comparison needs no extra request.
     harness_user_agent: str
+    # G1 declared leg: field-name pattern tables (harness.toml [g1]).
+    g1_uncertainty_field_patterns: Tuple[dict, ...] = ()
+    g1_footnote_field_patterns: Tuple[dict, ...] = ()
+    g1_id_field_patterns: Tuple[dict, ...] = ()
+    g1_footnote_uncertainty_vocabulary: Tuple[str, ...] = ()
 
     @classmethod
     def from_config(cls, cfg: HarnessConfig) -> "ProbeSettings":
@@ -92,6 +98,10 @@ class ProbeSettings:
             crawler_observe_user_agents=tuple(cfg.crawler_observe_user_agents),
             crawler_refusal_statuses=tuple(cfg.crawler_refusal_statuses),
             harness_user_agent=cfg.user_agent,
+            g1_uncertainty_field_patterns=tuple(cfg.g1_uncertainty_field_patterns),
+            g1_footnote_field_patterns=tuple(cfg.g1_footnote_field_patterns),
+            g1_id_field_patterns=tuple(cfg.g1_id_field_patterns),
+            g1_footnote_uncertainty_vocabulary=tuple(cfg.g1_footnote_uncertainty_vocabulary),
         )
 
 
@@ -124,6 +134,18 @@ DISTRIBUTION_PROBES = [
     StableUrlProbe(), ProgrammaticAccessProbe(), ContentNegotiationProbe(),
     BulkAvailabilityProbe(), NoBarriersProbe(),
 ]
+
+# G1 declared leg: a distribution probe whose patterns are config, so it is built
+# per run and appended to DISTRIBUTION_PROBES for catalog targets. Its results carry
+# dimension "G1" and are partitioned into the rollup's G1 block, never into D1–D4.
+def g1_declared_probes(settings: ProbeSettings) -> list:
+    if not settings.g1_uncertainty_field_patterns:
+        return []
+    return [G1DeclaredProbe(settings.g1_uncertainty_field_patterns,
+                            settings.g1_footnote_field_patterns,
+                            settings.g1_id_field_patterns,
+                            settings.g1_footnote_uncertainty_vocabulary)]
+
 
 # Accept header that favors machine formats (drives content negotiation). Sent to
 # web-surface pages as well: asking an HTML product page for a machine format is
@@ -463,7 +485,8 @@ def run_agency(agency: dict, fetcher, evidence_store: EvidenceStore, timestamp: 
             url = dist.get("downloadURL") or dist.get("accessURL")
             if not url:
                 continue
-            _probe_target(url, dist, SOURCE_CATALOG, DISTRIBUTION_PROBES)
+            _probe_target(url, dist, SOURCE_CATALOG,
+                          DISTRIBUTION_PROBES + g1_declared_probes(settings))
 
     # --- Source 2: web surfaces sampled from the declared sitemap ---
     web = None

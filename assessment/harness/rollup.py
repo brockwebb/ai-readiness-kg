@@ -20,12 +20,31 @@ summing happens, so no code path can fold the wrong thing into a headline:
 
 Neither vector is "the real one". They are reported side by side, each with its
 own denominator.
+
+3. **The eval firewall** (task 2026-09-02_g1_eval_probe_family_v0, step 1). G1
+   results — the declared leg (a distribution probe with `dimension = "G1"`) and
+   the observed leg (`source = SOURCE_EVAL`, records elicited from a model
+   consumer) — are partitioned out FIRST, before either composite is summed, and
+   reported as their own block: preservation rate per qualifier class x mode with
+   a Wilson 95 % interval and the denominator, the `unparseable` count, and the
+   estimate-status distribution. There is no product-level PASS/PARTIAL/FAIL for
+   G1 in v0 (design D6; protocol §3: no composite before an intended use).
 """
 from __future__ import annotations
 
+import math
 from typing import List
 
-from .records import WEB_SURFACE_SOURCES, ProbeResult, Track
+from .records import (
+    EVAL_DIMENSIONS,
+    EVAL_SOURCES,
+    SOURCE_EVAL,
+    UNPARSEABLE,
+    WEB_SURFACE_SOURCES,
+    Level,
+    ProbeResult,
+    Track,
+)
 
 # The four core dimensions, always reported even when a dimension has no probes —
 # an absent dimension is a finding, not a silent omission.
@@ -33,6 +52,110 @@ CORE_DIMENSIONS = ("D1", "D2", "D3", "D4")
 
 # Max points per probe (Score.PASS).
 _MAX_PER_PROBE = 2
+
+# z for the Wilson 95 % interval — the same constant the burn-close arithmetic
+# used (cc_tasks/2026-09-02_post_burn_reconciliation_RESULT.md §2), so G1 rates
+# and fabrication rates are interval-comparable.
+_WILSON_Z = 1.959964
+
+# Preservation = L3 or better (design D6: "share at L3+").
+_PRESERVED_FLOOR = Level.PRESERVED_TRANSFORMED
+
+
+def wilson_interval(k: int, n: int, z: float = _WILSON_Z):
+    """Wilson score interval for k successes in n trials; (None, None) when n = 0
+    — an empty denominator is reported as empty, never as 0 %."""
+    if n <= 0:
+        return None, None
+    p = k / n
+    denom = 1 + z * z / n
+    centre = (p + z * z / (2 * n)) / denom
+    half = z * math.sqrt(p * (1 - p) / n + z * z / (4 * n * n)) / denom
+    return round(centre - half, 6), round(centre + half, 6)
+
+
+def _is_eval(result) -> bool:
+    return (getattr(result, "source", None) in EVAL_SOURCES
+            or getattr(result, "dimension", None) in EVAL_DIMENSIONS)
+
+
+def _observed_cell(records: list) -> dict:
+    """One (class, mode) cell of the observed leg."""
+    scored = [r for r in records if r.outcome != UNPARSEABLE]
+    unparseable = [r for r in records if r.outcome == UNPARSEABLE]
+    levels = {lvl.label: 0 for lvl in Level}
+    for r in scored:
+        levels[Level(r.level).label] += 1
+    preserved = sum(1 for r in scored if r.level >= _PRESERVED_FLOOR)
+    lo, hi = wilson_interval(preserved, len(scored))
+    est = {}
+    for r in records:
+        est[r.estimate_status] = est.get(r.estimate_status, 0) + 1
+    failures = {}
+    for r in scored:
+        if r.failure_class:
+            failures[r.failure_class] = failures.get(r.failure_class, 0) + 1
+    return {
+        "n": len(records),
+        "n_scored": len(scored),
+        "n_unparseable": len(unparseable),
+        "preserved": preserved,
+        "preservation_rate": (round(preserved / len(scored), 6) if scored else None),
+        "wilson95": [lo, hi],
+        "levels": levels,
+        "failure_classes": failures,
+        "estimate_status": est,
+    }
+
+
+def g1_block(eval_results: list) -> dict:
+    """The G1 block of the rollup: the declared leg (score vector per source, as a
+    dimension vector) and the observed leg (per qualifier class x mode cells).
+    Reported even when empty — an absent leg is a finding, not a missing key."""
+    declared = [r for r in eval_results if r.source not in EVAL_SOURCES]
+    observed = [r for r in eval_results if r.source in EVAL_SOURCES]
+
+    declared_by_source = {}
+    for r in declared:
+        cell = declared_by_source.setdefault(
+            r.source, {"score": 0, "max": 0, "n_probes": 0, "probe_ids": set()})
+        cell["score"] += int(r.score)
+        cell["max"] += _MAX_PER_PROBE
+        cell["n_probes"] += 1
+        cell["probe_ids"].add(r.probe_id)
+    for cell in declared_by_source.values():
+        cell["probe_ids"] = sorted(cell["probe_ids"])
+
+    cells = {}
+    for r in observed:
+        cells.setdefault(r.qualifier_class, {}).setdefault(r.mode, []).append(r)
+    observed_block = {
+        cls: {mode: _observed_cell(recs) for mode, recs in sorted(modes.items())}
+        for cls, modes in sorted(cells.items())
+    }
+    by_mode = {}
+    for r in observed:
+        by_mode.setdefault(r.mode, []).append(r)
+    return {
+        "declared": declared_by_source,
+        "observed": {
+            "by_class_and_mode": observed_block,
+            "by_mode": {m: _observed_cell(recs) for m, recs in sorted(by_mode.items())},
+            "all": _observed_cell(observed),
+            "n_propositions": len({r.target for r in observed}),
+            "prompt_epochs": sorted({r.prompt_epoch for r in observed}),
+            "model_ids": sorted({r.model_id for r in observed}),
+        },
+        "n_records": len(eval_results),
+        "note": (
+            "G1 is reported as its own block and never enters the core composite, "
+            "the web-surface vector or a frontier track. Observed-leg rates are "
+            "the share of scored (parseable) records at level L3 or better, with a "
+            "Wilson 95 % interval and the denominator; `unparseable` records are "
+            "counted separately and never coerced into a score. No product-level "
+            "threshold exists in v0 (DD-033)."
+        ),
+    }
 
 
 def _frontier_summary(results: List[ProbeResult], track: Track) -> dict:
@@ -62,6 +185,10 @@ def rollup_agency(agency_id: str, results: List[ProbeResult]) -> dict:
     """Aggregate one agency's probe results into the catalog-distribution vector,
     the web-surface vector reported separately, and the two frontier tracks."""
     # Partition by surface FIRST. Everything below sums within one partition.
+    # Eval-family results (G1 declared + observed) leave the pool before anything
+    # else is looked at, so no later sum can reach them.
+    eval_results = [r for r in results if _is_eval(r)]
+    results = [r for r in results if not _is_eval(r)]
     web_results = [r for r in results if r.source in WEB_SURFACE_SOURCES]
     catalog_results = [r for r in results if r.source not in WEB_SURFACE_SOURCES]
 
@@ -111,8 +238,11 @@ def rollup_agency(agency_id: str, results: List[ProbeResult]) -> dict:
             "MCP / WebMCP) and web-surface results are each reported separately "
             "and are never folded into the core composite."
         ),
-        "n_probes_total": len(results),
+        # G1 (eval family): its own block, its own denominators.
+        "g1": g1_block(eval_results),
+        "n_probes_total": len(results) + len(eval_results),
         "n_probes_core": len(core),
         "n_probes_frontier": len(frontier),
         "n_probes_web_surface": len(web_results),
+        "n_probes_eval": len(eval_results),
     }

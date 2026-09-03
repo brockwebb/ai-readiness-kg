@@ -32,12 +32,14 @@ a deliberate edit to its `sources`, visible in the diff.
 """
 from __future__ import annotations
 
+from dataclasses import dataclass, field
 from typing import List, Optional, Tuple
 
 from ..fetch import Fetched
 from ..jsonld import dataset_nodes, dcat_record_from_nodes
 from ..records import (
     SOURCE_CATALOG,
+    SOURCE_EVAL,
     SOURCE_SITE,
     SOURCE_SITEMAP,
     Score,
@@ -115,6 +117,67 @@ class DistributionProbe(_Probe):
         return self.evaluate(attempts[0], distribution)
 
 
+@dataclass(frozen=True)
+class Elicited:
+    """What a consumer returned for one proposition under one elicitation mode —
+    the eval analogue of `Fetched`. Persisted to disk BEFORE scoring (the raw
+    request and response are the evidence; a score is read from them, never
+    asserted). `model_id` is the model the envelope REPORTED, checked against the
+    pinned model at the choke point (invariant 5)."""
+
+    proposition_id: str
+    mode: str
+    prompt: str
+    response_text: str
+    model_id: str
+    prompt_epoch: str
+    timestamp: str
+    evidence_path: str
+    usage: dict = field(default_factory=dict)
+    duration_ms: Optional[int] = None
+    cost_usd: Optional[float] = None
+    spend_run_id: Optional[str] = None
+    spend_reservation_id: Optional[str] = None
+
+
+class EvalProbe(_Probe):
+    """Fourth family: elicit a restatement from a model consumer, then score it
+    with a pure `evaluate` (task 2026-09-02_g1_eval_probe_family_v0 step 1).
+
+    Contract, mirroring the fetch/evaluate split of the other families:
+
+    - `elicit(consumer, proposition, mode) -> Elicited` is the network/model half
+      (the analogue of fetch). It renders the mode's prompt template with the
+      proposition's source passage IN CONTEXT — retrieval is removed by
+      construction (memo §4.8: separate "found the wrong table/vintage" from
+      "found the right estimate and dropped its MOE"; a consumer that cannot see
+      the source is the surfaced leg's problem, not this probe's). It persists the
+      raw request and response before returning.
+    - `evaluate(elicited, proposition) -> (Score | UNPARSEABLE, evidence,
+      observations)` is pure and fixture-testable. Its unit is the proposition
+      (memo §4.1: one estimate plus its qualifier set — FActScore's atomic fact,
+      Du 2026's annotated proposition). Preservation is ordinal (memo §4.2: Du
+      2026's level structure; van der Bles 2019's form-of-expression axis) and
+      failures are named with the memo's vocabulary first (memo §4.3). Both modes
+      (memo §4.4: indirect restatement and direct question) are scored by the
+      same `evaluate`. The producer's published rule is the ground truth (memo
+      §4.5), and no NLI/QA faithfulness score stands in for the metric (memo
+      §4.6: those are number- and qualifier-blind).
+
+    Records are `EvalResult`s with `source = SOURCE_EVAL`, which the rollup
+    partitions out of every composite before summing.
+    """
+
+    sources: Tuple[str, ...] = (SOURCE_EVAL,)
+    modes: Tuple[str, ...] = ("indirect", "direct")
+
+    def elicit(self, consumer, proposition, mode: str) -> Elicited:  # pragma: no cover
+        raise NotImplementedError
+
+    def evaluate(self, elicited: Elicited, proposition):  # pragma: no cover
+        raise NotImplementedError
+
+
 def unpack_verdict(verdict):
     """`(score, evidence)` or `(score, evidence, observations)` -> three values."""
     if len(verdict) == 3:
@@ -129,7 +192,10 @@ __all__ = [
     "SiteProbe",
     "MetadataProbe",
     "DistributionProbe",
+    "EvalProbe",
+    "Elicited",
     "SOURCE_SITE",
     "SOURCE_CATALOG",
     "SOURCE_SITEMAP",
+    "SOURCE_EVAL",
 ]

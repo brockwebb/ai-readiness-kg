@@ -1,15 +1,64 @@
 {
  "manifest_version": 2,
  "project": "ai-readiness-kg",
- "generated_at": "2026-09-02T21:35:41.230442+00:00",
+ "generated_at": "2026-09-03T03:12:41.453774+00:00",
  "generator": "dixie.evidence",
  "note": "PROJECTION — rebuilt from the evidence decisions log; do not hand-edit. The log is truth.",
  "counts_by_decision": {
-  "included": 211,
-  "excluded": 50,
-  "pending_refetch": 39
+  "included": 212,
+  "excluded": 69,
+  "pending_refetch": 40
  },
  "entries": {
+  "a-benchmark-for-open-domain-numerical-fact-checking-enhanced": {
+   "doc_id": "a-benchmark-for-open-domain-numerical-fact-checking-enhanced",
+   "identity": {
+    "sha256": null,
+    "canonical_path": null,
+    "title": "A Benchmark for Open-Domain Numerical Fact-Checking Enhanced by Claim Decomposition",
+    "authors_or_org": [
+     "Venktesh V",
+     "Deepali Prabhu",
+     "Avishek Anand"
+    ],
+    "pub_year": "2025",
+    "doc_type": "academic",
+    "source_url": "https://arxiv.org/abs/2510.22055",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "unknown",
+    "acquired_at": null,
+    "acquired_by": null
+   },
+   "integrity": {
+    "status": "unchecked",
+    "checks": null,
+    "checked_at": null
+   },
+   "screening": {
+    "decision": "excluded",
+    "rationale": "staged, not admitted: clause R1_no_marginal_contribution",
+    "decided_by": "cc",
+    "decided_at": "2026-09-02",
+    "history": []
+   },
+   "lifecycle": {
+    "stage": "cataloged"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "candidate_register"
+   ],
+   "extra": {
+    "notes": [
+     "QuanTemp++: same claim taxonomy with a decomposition-driven evidence corpus. The construct contribution is the admitted QuanTemp's."
+    ]
+   }
+  },
   "a-rag-data-pipeline-transforming-heterogeneous-data-into-ai": {
    "doc_id": "a-rag-data-pipeline-transforming-heterogeneous-data-into-ai",
    "identity": {
@@ -2438,6 +2487,56 @@
     "added_in": "kernel-v03"
    }
   },
+  "alignscore-evaluating-factual-consistency-with-a-unified-ali": {
+   "doc_id": "alignscore-evaluating-factual-consistency-with-a-unified-ali",
+   "identity": {
+    "sha256": null,
+    "canonical_path": null,
+    "title": "AlignScore: Evaluating Factual Consistency with a Unified Alignment Function",
+    "authors_or_org": [
+     "Yuheng Zha",
+     "Yichi Yang",
+     "Ruichen Li",
+     "Zhiting Hu"
+    ],
+    "pub_year": "2023",
+    "doc_type": "academic",
+    "source_url": "https://doi.org/10.18653/v1/2023.acl-long.634",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "unknown",
+    "acquired_at": null,
+    "acquired_by": null
+   },
+   "integrity": {
+    "status": "unchecked",
+    "checks": null,
+    "checked_at": null
+   },
+   "screening": {
+    "decision": "excluded",
+    "rationale": "staged, not admitted: clause R1_method_not_construct",
+    "decided_by": "cc",
+    "decided_at": "2026-09-02",
+    "history": []
+   },
+   "lifecycle": {
+    "stage": "cataloged"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "candidate_register"
+   ],
+   "extra": {
+    "notes": [
+     "Unified alignment-function consistency metric. Method."
+    ]
+   }
+  },
   "anthropic-crawler-support-article": {
    "doc_id": "anthropic-crawler-support-article",
    "identity": {
@@ -2896,6 +2995,55 @@
      }
     },
     "added_in": "v1"
+   }
+  },
+  "asking-and-answering-questions-to-evaluate-the-factual-consi": {
+   "doc_id": "asking-and-answering-questions-to-evaluate-the-factual-consi",
+   "identity": {
+    "sha256": null,
+    "canonical_path": null,
+    "title": "Asking and Answering Questions to Evaluate the Factual Consistency of Summaries",
+    "authors_or_org": [
+     "Alex Wang",
+     "Kyunghyun Cho",
+     "Mike Lewis"
+    ],
+    "pub_year": "2020",
+    "doc_type": "academic",
+    "source_url": "https://doi.org/10.18653/v1/2020.acl-main.450",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "unknown",
+    "acquired_at": null,
+    "acquired_by": null
+   },
+   "integrity": {
+    "status": "unchecked",
+    "checks": null,
+    "checked_at": null
+   },
+   "screening": {
+    "decision": "excluded",
+    "rationale": "staged, not admitted: clause R1_method_not_construct",
+    "decided_by": "cc",
+    "decided_at": "2026-09-02",
+    "history": []
+   },
+   "lifecycle": {
+    "stage": "cataloged"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "candidate_register"
+   ],
+   "extra": {
+    "notes": [
+     "QA-based consistency metric (QAGS). Method."
+    ]
    }
   },
   "authority-signals-in-ai-cited-health-sources-a-framework-for": {
@@ -3982,10 +4130,17 @@
    },
    "screening": {
     "decision": "included",
-    "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: Offers an explicit taxonomy of numeric hallucination in LLM summaries of number-heavy documents (Claude 2, GPT-4) and a computational framework for characterizing numeric use in summaries. A taxonomy is a construct contr",
+    "rationale": "manifest-added by rule (clause R1, construct_arm publication_actionability)",
     "decided_by": "cc",
-    "decided_at": "2026-09-02T21:35:36.616474+00:00",
-    "history": [],
+    "decided_at": "2026-09-02",
+    "history": [
+     {
+      "decision": "included",
+      "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: Offers an explicit taxonomy of numeric hallucination in LLM summaries of number-heavy documents (Claude 2, GPT-4) and a computational framework for characterizing numeric use in summaries. A taxonomy is a construct contr",
+      "decided_by": "cc",
+      "decided_at": "2026-09-02T21:35:36.616474+00:00"
+     }
+    ],
     "identity_gate": {
      "passed": true,
      "checked": [],
@@ -4000,7 +4155,8 @@
     "quarantined": []
    },
    "provenance_sources": [
-    "g1_eval_prior_art_2026-09-02"
+    "g1_eval_prior_art_2026-09-02",
+    "candidate_register"
    ],
    "extra": {
     "observed_files": {
@@ -4035,7 +4191,10 @@
       "checked_at": "2026-09-02T21:35:40.558274+00:00"
      }
     },
-    "added_in": "g1eval-2026-09-02"
+    "added_in": "g1eval-2026-09-02",
+    "notes": [
+     "Offers an explicit taxonomy of numeric hallucination in LLM summaries of number-heavy documents (Claude 2, GPT-4) and a computational framework for characterizing numeric use in summaries. A taxonomy is a construct contribution under R1."
+    ]
    }
   },
   "ccsa-2026-ai-ready-official-statistics": {
@@ -4192,6 +4351,104 @@
     ]
    }
   },
+  "census-2020-disclosure-avoidance-handbook-2021": {
+   "doc_id": "census-2020-disclosure-avoidance-handbook-2021",
+   "identity": {
+    "sha256": "1692bba892ffedb512abcc1407fcee1a0de9157d8c2f5ee2b80f976c333fa541",
+    "canonical_path": "corpus/g1eval/census-2020-disclosure-avoidance-handbook-2021.pdf",
+    "title": "Disclosure Avoidance for the 2020 Census: An Introduction",
+    "authors_or_org": [
+     "U.S. Census Bureau"
+    ],
+    "pub_year": "2021",
+    "doc_type": "federal",
+    "source_url": "https://www.census.gov/library/publications/2021/decennial/2020-census-disclosure-avoidance-handbook.html",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "httpx-pdf",
+    "acquired_at": null,
+    "acquired_by": "scripts/harvest_triage.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed pdf, detected pdf",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "3387032 bytes vs floor 7000",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "43 pages, extractable text present",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-09-03T03:12:41.175656+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: The producer's own user handbook for the 2020 Census Disclosure Avoidance System: defines the privacy-loss budget (rho, epsilon, delta) as the published uncertainty parameter of a differentially private release, tabulate",
+    "decided_by": "cc",
+    "decided_at": "2026-09-03T03:12:40.503581+00:00",
+    "history": [],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "g1_eval_probe_family_2026-09-02"
+   ],
+   "extra": {
+    "observed_files": {
+     "corpus/g1eval/census-2020-disclosure-avoidance-handbook-2021.pdf": {
+      "sha256": "1692bba892ffedb512abcc1407fcee1a0de9157d8c2f5ee2b80f976c333fa541",
+      "size": 3387032,
+      "claimed_type": "pdf",
+      "detected_type": "pdf"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/g1eval/census-2020-disclosure-avoidance-handbook-2021.pdf": {
+      "path": "corpus/g1eval/census-2020-disclosure-avoidance-handbook-2021.pdf",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed pdf, detected pdf",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "3387032 bytes vs floor 7000",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "43 pages, extractable text present",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-09-03T03:12:41.175656+00:00"
+     }
+    },
+    "added_in": "g1dp-2026-09-02"
+   }
+  },
   "census-acs-general-handbook-2020": {
    "doc_id": "census-acs-general-handbook-2020",
    "identity": {
@@ -4234,10 +4491,17 @@
    },
    "screening": {
     "decision": "included",
-    "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: The Census Bureau's definitional statement of what uncertainty accompanies a published ACS estimate (MOE at the 90 percent level), how users must carry it, and how derived estimates propagate it. The producer-side rule a",
+    "rationale": "manifest-added by rule (clause R1, construct_arm publication_actionability)",
     "decided_by": "cc",
-    "decided_at": "2026-09-02T21:35:38.777003+00:00",
-    "history": [],
+    "decided_at": "2026-09-02",
+    "history": [
+     {
+      "decision": "included",
+      "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: The Census Bureau's definitional statement of what uncertainty accompanies a published ACS estimate (MOE at the 90 percent level), how users must carry it, and how derived estimates propagate it. The producer-side rule a",
+      "decided_by": "cc",
+      "decided_at": "2026-09-02T21:35:38.777003+00:00"
+     }
+    ],
     "identity_gate": {
      "passed": true,
      "checked": [],
@@ -4252,11 +4516,13 @@
     "quarantined": []
    },
    "provenance_sources": [
-    "g1_eval_prior_art_2026-09-02"
+    "g1_eval_prior_art_2026-09-02",
+    "candidate_register"
    ],
    "extra": {
     "notes": [
-     "Full handbook; chapter 3 (MOE at 90% confidence, how to use and combine MOEs) is the cited section."
+     "Full handbook; chapter 3 (MOE at 90% confidence, how to use and combine MOEs) is the cited section.",
+     "The Census Bureau's definitional statement of what uncertainty accompanies a published ACS estimate (MOE at the 90 percent level), how users must carry it, and how derived estimates propagate it. The producer-side rule a G1 probe checks for preservation; the corpus holds Census quality standards D3/F1/F2 but not the user-facing MOE guidance."
     ],
     "observed_files": {
      "corpus/g1eval/census-acs-general-handbook-2020.pdf": {
@@ -9034,10 +9300,17 @@
    },
    "screening": {
     "decision": "included",
-    "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: The named prior art for uncertainty preservation under AI restatement: 1,200 documents, 9,184 proposition-level annotations on a five-level ordinal scale, indirect assessment via summarization/revision, failure taxonomy ",
+    "rationale": "manifest-added by rule (clause R1, construct_arm publication_actionability)",
     "decided_by": "cc",
-    "decided_at": "2026-09-02T21:35:34.119108+00:00",
-    "history": [],
+    "decided_at": "2026-09-02",
+    "history": [
+     {
+      "decision": "included",
+      "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: The named prior art for uncertainty preservation under AI restatement: 1,200 documents, 9,184 proposition-level annotations on a five-level ordinal scale, indirect assessment via summarization/revision, failure taxonomy ",
+      "decided_by": "cc",
+      "decided_at": "2026-09-02T21:35:34.119108+00:00"
+     }
+    ],
     "identity_gate": {
      "passed": true,
      "checked": [],
@@ -9052,7 +9325,8 @@
     "quarantined": []
    },
    "provenance_sources": [
-    "g1_eval_prior_art_2026-09-02"
+    "g1_eval_prior_art_2026-09-02",
+    "candidate_register"
    ],
    "extra": {
     "observed_files": {
@@ -9087,7 +9361,10 @@
       "checked_at": "2026-09-02T21:35:40.651224+00:00"
      }
     },
-    "added_in": "g1eval-2026-09-02"
+    "added_in": "g1eval-2026-09-02",
+    "notes": [
+     "The named prior art for uncertainty preservation under AI restatement: 1,200 documents, 9,184 proposition-level annotations on a five-level ordinal scale, indirect assessment via summarization/revision, failure taxonomy (certainty assertion, omission). An instrument with a construct decomposition; the measurement design transfers to numeric uncertainty."
+    ]
    }
   },
   "e-fair-db-functional-dependencies-to-discover-data-bias-and": {
@@ -9182,10 +9459,17 @@
    },
    "screening": {
     "decision": "included",
-    "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: 22 public-service media organizations, 18 countries, >3,000 responses from four assistants scored by journalists on accuracy, sourcing, distinguishing opinion from fact, and context: 45% with a significant issue, 31% sou",
+    "rationale": "manifest-added by rule (clause R1, construct_arm publication_actionability)",
     "decided_by": "cc",
-    "decided_at": "2026-09-02T21:35:38.410420+00:00",
-    "history": [],
+    "decided_at": "2026-09-02",
+    "history": [
+     {
+      "decision": "included",
+      "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: 22 public-service media organizations, 18 countries, >3,000 responses from four assistants scored by journalists on accuracy, sourcing, distinguishing opinion from fact, and context: 45% with a significant issue, 31% sou",
+      "decided_by": "cc",
+      "decided_at": "2026-09-02T21:35:38.410420+00:00"
+     }
+    ],
     "identity_gate": {
      "passed": true,
      "checked": [],
@@ -9200,11 +9484,13 @@
     "quarantined": []
    },
    "provenance_sources": [
-    "g1_eval_prior_art_2026-09-02"
+    "g1_eval_prior_art_2026-09-02",
+    "candidate_register"
    ],
    "extra": {
     "notes": [
-     "Full report; the instrument (accuracy / sourcing / context / opinion-fact criteria) and the cross-assistant results are the cited sections."
+     "Full report; the instrument (accuracy / sourcing / context / opinion-fact criteria) and the cross-assistant results are the cited sections.",
+     "22 public-service media organizations, 18 countries, >3,000 responses from four assistants scored by journalists on accuracy, sourcing, distinguishing opinion from fact, and context: 45% with a significant issue, 31% sourcing problems. The largest audit instrument for machine restatement of published content; no uncertainty criterion, which is the gap the memo records."
     ],
     "observed_files": {
      "corpus/g1eval/ebu-bbc-2025-news-integrity-ai-assistants.pdf": {
@@ -9457,6 +9743,57 @@
     "added_in": "triage-2026-08-24",
     "notes": [
      "General AI-data-readiness checklist (framework, not domain pipeline). README of the checklist repo is the primary text."
+    ]
+   }
+  },
+  "evaluating-commercial-ai-chatbots-as-news-intermediaries": {
+   "doc_id": "evaluating-commercial-ai-chatbots-as-news-intermediaries",
+   "identity": {
+    "sha256": null,
+    "canonical_path": null,
+    "title": "Evaluating Commercial AI Chatbots as News Intermediaries",
+    "authors_or_org": [
+     "Mirac Suzgun",
+     "Emily Shen",
+     "Federico Bianchi",
+     "Alexander Spangher",
+     "Dan Jurafsky"
+    ],
+    "pub_year": "2026",
+    "doc_type": "academic",
+    "source_url": "https://arxiv.org/abs/2605.22785",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "unknown",
+    "acquired_at": null,
+    "acquired_by": null
+   },
+   "integrity": {
+    "status": "unchecked",
+    "checks": null,
+    "checked_at": null
+   },
+   "screening": {
+    "decision": "excluded",
+    "rationale": "staged, not admitted: clause R1_no_marginal_contribution",
+    "decided_by": "cc",
+    "decided_at": "2026-09-02",
+    "history": []
+   },
+   "lifecycle": {
+    "stage": "cataloged"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "candidate_register"
+   ],
+   "extra": {
+    "notes": [
+     "2,100 same-day BBC-derived questions to six chatbots over 14 days; free-response accuracy 11-17 points below multiple-choice, >70% of errors retrieval-driven. Audit evidence; its instrument adds nothing beyond the EBU/BBC criteria and the held DeepTRACE."
     ]
    }
   },
@@ -10147,6 +10484,63 @@
     ]
    }
   },
+  "faithbench-a-diverse-hallucination-benchmark-for-summarizati": {
+   "doc_id": "faithbench-a-diverse-hallucination-benchmark-for-summarizati",
+   "identity": {
+    "sha256": null,
+    "canonical_path": null,
+    "title": "FaithBench: A Diverse Hallucination Benchmark for Summarization by Modern LLMs",
+    "authors_or_org": [
+     "Forrest Sheng Bao",
+     "Miaoran Li",
+     "Renyi Qu",
+     "Ge Luo",
+     "Erana Wan",
+     "Yujia Tang",
+     "Weisi Fan",
+     "Manveer Singh Tamkin",
+     "Suleyman Olcay Polat",
+     "Ofer Mendelevitch",
+     "Amin Ahmad"
+    ],
+    "pub_year": "2025",
+    "doc_type": "academic",
+    "source_url": "https://doi.org/10.18653/v1/2025.naacl-short.38",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "unknown",
+    "acquired_at": null,
+    "acquired_by": null
+   },
+   "integrity": {
+    "status": "unchecked",
+    "checks": null,
+    "checked_at": null
+   },
+   "screening": {
+    "decision": "excluded",
+    "rationale": "staged, not admitted: clause R1_no_marginal_contribution",
+    "decided_by": "cc",
+    "decided_at": "2026-09-02",
+    "history": []
+   },
+   "lifecycle": {
+    "stage": "cataloged"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "candidate_register"
+   ],
+   "extra": {
+    "notes": [
+     "Human-annotated hallucination benchmark with a benign/questionable/unwanted severity taxonomy over span-level hallucinations. Its numeric cases are a subset; the numeric taxonomy is carried by Cao 2024 and the unit of analysis by FActScore."
+    ]
+   }
+  },
   "fcsm-19-01-transparent-reporting-for-integrated-data-quality": {
    "doc_id": "fcsm-19-01-transparent-reporting-for-integrated-data-quality",
    "identity": {
@@ -10622,6 +11016,55 @@
     "candidate_register"
    ],
    "extra": {}
+  },
+  "feqa-a-question-answering-evaluation-framework-for-faithfuln": {
+   "doc_id": "feqa-a-question-answering-evaluation-framework-for-faithfuln",
+   "identity": {
+    "sha256": null,
+    "canonical_path": null,
+    "title": "FEQA: A Question Answering Evaluation Framework for Faithfulness Assessment in Abstractive Summarization",
+    "authors_or_org": [
+     "Esin Durmus",
+     "He He",
+     "Mona Diab"
+    ],
+    "pub_year": "2020",
+    "doc_type": "academic",
+    "source_url": "https://doi.org/10.18653/v1/2020.acl-main.454",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "unknown",
+    "acquired_at": null,
+    "acquired_by": null
+   },
+   "integrity": {
+    "status": "unchecked",
+    "checks": null,
+    "checked_at": null
+   },
+   "screening": {
+    "decision": "excluded",
+    "rationale": "staged, not admitted: clause R1_method_not_construct",
+    "decided_by": "cc",
+    "decided_at": "2026-09-02",
+    "history": []
+   },
+   "lifecycle": {
+    "stage": "cataloged"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "candidate_register"
+   ],
+   "extra": {
+    "notes": [
+     "QA-based faithfulness metric. Method."
+    ]
+   }
   },
   "five-dimensions-of-ai-readiness-air-5d-framework": {
    "doc_id": "five-dimensions-of-ai-readiness-air-5d-framework",
@@ -11556,6 +11999,53 @@
     ]
    }
   },
+  "generative-ai-and-news-report-2025-how-people-think-about-ai": {
+   "doc_id": "generative-ai-and-news-report-2025-how-people-think-about-ai",
+   "identity": {
+    "sha256": null,
+    "canonical_path": null,
+    "title": "Generative AI and News Report 2025: How people think about AI's role in journalism and society",
+    "authors_or_org": [
+     "Reuters Institute for the Study of Journalism"
+    ],
+    "pub_year": "2025",
+    "doc_type": "practitioner",
+    "source_url": "https://reutersinstitute.politics.ox.ac.uk/generative-ai-and-news-report-2025-how-people-think-about-ais-role-journalism-and-society",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "unknown",
+    "acquired_at": null,
+    "acquired_by": null
+   },
+   "integrity": {
+    "status": "unchecked",
+    "checks": null,
+    "checked_at": null
+   },
+   "screening": {
+    "decision": "excluded",
+    "rationale": "Six-country usage survey (54% saw an AI-generated search answer in the past week). Audience behaviour, not restatement fidelity; surfaced by the family-5 web search and logged. Not fetched.",
+    "decided_by": "cc",
+    "decided_at": "2026-09-02",
+    "history": []
+   },
+   "lifecycle": {
+    "stage": "cataloged"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "candidate_register"
+   ],
+   "extra": {
+    "notes": [
+     "Six-country usage survey (54% saw an AI-generated search answer in the past week). Audience behaviour, not restatement fidelity; surfaced by the family-5 web search and logged. Not fetched."
+    ]
+   }
+  },
   "generative-ai-and-open-data-guidelines-and-best-practices-de": {
    "doc_id": "generative-ai-and-open-data-guidelines-and-best-practices-de",
    "identity": {
@@ -11638,6 +12128,53 @@
       "checked_at": "2026-07-05T08:05:43.424683+00:00"
      }
     }
+   }
+  },
+  "generative-ai-for-official-statistics-using-implementing-and": {
+   "doc_id": "generative-ai-for-official-statistics-using-implementing-and",
+   "identity": {
+    "sha256": null,
+    "canonical_path": null,
+    "title": "Generative AI for Official Statistics: Using, Implementing and Developing (HLG-MOS chapter)",
+    "authors_or_org": [
+     "UNECE High-Level Group for the Modernisation of Official Statistics"
+    ],
+    "pub_year": "2025",
+    "doc_type": "intergovernmental",
+    "source_url": "https://unece.org/sites/default/files/2025-03/Gen%20AI%20For%20Official%20Statistics_Using,%20Implementing%20and%20Developing%20Chapter.pdf",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "unknown",
+    "acquired_at": null,
+    "acquired_by": null
+   },
+   "integrity": {
+    "status": "unchecked",
+    "checks": null,
+    "checked_at": null
+   },
+   "screening": {
+    "decision": "pending_refetch",
+    "rationale": "HTTP 403 / not a PDF (text/html; charset=UTF-8) [final_url=https://unece.org/sites/default/files/2025-03/Gen%20AI%20For%20Official%20Statistics_Using,%20Implem]",
+    "decided_by": "cc",
+    "decided_at": "2026-09-02",
+    "history": []
+   },
+   "lifecycle": {
+    "stage": "cataloged"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "candidate_register"
+   ],
+   "extra": {
+    "notes": [
+     "HLG-MOS chapter recording NSO experience that GenAI applications 'perform poorly at delivering official statistics: they frequently provide dangerously reasonable but incorrect figures', with the ONS StatsChat and Statistics Canada IntelliStatCan cases. Measured practice from the producers themselves; distinct from the held UNECE AI-readiness working papers."
+    ]
    }
   },
   "generative-artificial-intelligence-and-open-data-guidelines": {
@@ -15388,10 +15925,17 @@
    },
    "screening": {
     "decision": "included",
-    "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: Defines information fidelity (compression loses fidelity when it changes the decision the source supports) and names 'decontextualization' — evidence retained but separated from the caveats and qualifiers needed to inter",
+    "rationale": "manifest-added by rule (clause R1, construct_arm publication_actionability)",
     "decided_by": "cc",
-    "decided_at": "2026-09-02T21:35:36.977657+00:00",
-    "history": [],
+    "decided_at": "2026-09-02",
+    "history": [
+     {
+      "decision": "included",
+      "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: Defines information fidelity (compression loses fidelity when it changes the decision the source supports) and names 'decontextualization' — evidence retained but separated from the caveats and qualifiers needed to inter",
+      "decided_by": "cc",
+      "decided_at": "2026-09-02T21:35:36.977657+00:00"
+     }
+    ],
     "identity_gate": {
      "passed": true,
      "checked": [],
@@ -15406,7 +15950,8 @@
     "quarantined": []
    },
    "provenance_sources": [
-    "g1_eval_prior_art_2026-09-02"
+    "g1_eval_prior_art_2026-09-02",
+    "candidate_register"
    ],
    "extra": {
     "observed_files": {
@@ -15441,7 +15986,10 @@
       "checked_at": "2026-09-02T21:35:40.754240+00:00"
      }
     },
-    "added_in": "g1eval-2026-09-02"
+    "added_in": "g1eval-2026-09-02",
+    "notes": [
+     "Defines information fidelity (compression loses fidelity when it changes the decision the source supports) and names 'decontextualization' — evidence retained but separated from the caveats and qualifiers needed to interpret it. That is exactly a point estimate surviving while its MOE does not; the only work found that names the failure class generally."
+    ]
    }
   },
   "leveraging-microsoft-fabric-lakehouse-as-an-ai-ready-data-pl": {
@@ -15927,6 +16475,59 @@
      }
     },
     "added_in": "kernel-v03"
+   }
+  },
+  "logu-long-form-generation-with-uncertainty-expressions": {
+   "doc_id": "logu-long-form-generation-with-uncertainty-expressions",
+   "identity": {
+    "sha256": null,
+    "canonical_path": null,
+    "title": "LoGU: Long-form Generation with Uncertainty Expressions",
+    "authors_or_org": [
+     "Ruihan Yang",
+     "Caiqi Zhang",
+     "Zhisong Zhang",
+     "Xinting Huang",
+     "Sen Yang",
+     "Dong Yu",
+     "Nigel Collier"
+    ],
+    "pub_year": "2024",
+    "doc_type": "academic",
+    "source_url": "https://arxiv.org/abs/2410.14309",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "unknown",
+    "acquired_at": null,
+    "acquired_by": null
+   },
+   "integrity": {
+    "status": "unchecked",
+    "checks": null,
+    "checked_at": null
+   },
+   "screening": {
+    "decision": "excluded",
+    "rationale": "staged, not admitted: clause R1_out_of_scope",
+    "decided_by": "cc",
+    "decided_at": "2026-09-02",
+    "history": []
+   },
+   "lifecycle": {
+    "stage": "cataloged"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "candidate_register"
+   ],
+   "extra": {
+    "notes": [
+     "Names 'uncertainty suppression' and 'uncertainty misalignment' for a model's own uncertainty in long-form answers. Same out-of-scope construct as UNCLE; the two failure names are useful vocabulary and are recorded in the memo."
+    ]
    }
   },
   "look-before-you-leap-exploring-bea-data-capture-by-generativ": {
@@ -16880,10 +17481,17 @@
    },
    "screening": {
     "decision": "included",
-    "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: The canonical definitional statement for official statistics: transitory, permanent and conceptual uncertainty in published estimates, and the case that agencies communicate them rather than publish point estimates as if",
+    "rationale": "manifest-added by rule (clause R1, construct_arm publication_actionability)",
     "decided_by": "cc",
-    "decided_at": "2026-09-02T21:35:35.185841+00:00",
-    "history": [],
+    "decided_at": "2026-09-02",
+    "history": [
+     {
+      "decision": "included",
+      "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: The canonical definitional statement for official statistics: transitory, permanent and conceptual uncertainty in published estimates, and the case that agencies communicate them rather than publish point estimates as if",
+      "decided_by": "cc",
+      "decided_at": "2026-09-02T21:35:35.185841+00:00"
+     }
+    ],
     "identity_gate": {
      "passed": true,
      "checked": [],
@@ -16898,7 +17506,8 @@
     "quarantined": []
    },
    "provenance_sources": [
-    "g1_eval_prior_art_2026-09-02"
+    "g1_eval_prior_art_2026-09-02",
+    "candidate_register"
    ],
    "extra": {
     "observed_files": {
@@ -16933,7 +17542,10 @@
       "checked_at": "2026-09-02T21:35:40.765322+00:00"
      }
     },
-    "added_in": "g1eval-2026-09-02"
+    "added_in": "g1eval-2026-09-02",
+    "notes": [
+     "The canonical definitional statement for official statistics: transitory, permanent and conceptual uncertainty in published estimates, and the case that agencies communicate them rather than publish point estimates as if exact. Fixes the classes of uncertainty a G1 probe can ask a machine consumer to preserve. Working-paper copy (NBER w20098) fetched; the JEL version is closed."
+    ]
    }
   },
   "martinez-2026-geo-critical-survey": {
@@ -17089,10 +17701,17 @@
    },
    "screening": {
     "decision": "included",
-    "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: Journal of Official Statistics survey of how NSOs measure and communicate uncertainty (data uncertainty vs sampling uncertainty; revision-based intervals; density forecasts). A survey of the field's constructs on the pro",
+    "rationale": "manifest-added by rule (clause R1, construct_arm publication_actionability)",
     "decided_by": "cc",
-    "decided_at": "2026-09-02T21:35:35.537274+00:00",
-    "history": [],
+    "decided_at": "2026-09-02",
+    "history": [
+     {
+      "decision": "included",
+      "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: Journal of Official Statistics survey of how NSOs measure and communicate uncertainty (data uncertainty vs sampling uncertainty; revision-based intervals; density forecasts). A survey of the field's constructs on the pro",
+      "decided_by": "cc",
+      "decided_at": "2026-09-02T21:35:35.537274+00:00"
+     }
+    ],
     "identity_gate": {
      "passed": true,
      "checked": [],
@@ -17107,7 +17726,8 @@
     "quarantined": []
    },
    "provenance_sources": [
-    "g1_eval_prior_art_2026-09-02"
+    "g1_eval_prior_art_2026-09-02",
+    "candidate_register"
    ],
    "extra": {
     "observed_files": {
@@ -17142,7 +17762,10 @@
       "checked_at": "2026-09-02T21:35:40.779339+00:00"
      }
     },
-    "added_in": "g1eval-2026-09-02"
+    "added_in": "g1eval-2026-09-02",
+    "notes": [
+     "Journal of Official Statistics survey of how NSOs measure and communicate uncertainty (data uncertainty vs sampling uncertainty; revision-based intervals; density forecasts). A survey of the field's constructs on the producer side, complementing Manski's definitional case."
+    ]
    }
   },
   "mckinsey-state-of-ai-2025": {
@@ -17485,10 +18108,17 @@
    },
    "screening": {
     "decision": "included",
-    "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: Fixes the atomic-fact unit of analysis that proposition-level preservation benchmarks (Du 2026) and claim-level numeric metrics (LOOMSUM) inherit. Admitted as the unit-of-analysis definition; the other faithfulness metri",
+    "rationale": "manifest-added by rule (clause R1, construct_arm publication_actionability)",
     "decided_by": "cc",
-    "decided_at": "2026-09-02T21:35:38.053173+00:00",
-    "history": [],
+    "decided_at": "2026-09-02",
+    "history": [
+     {
+      "decision": "included",
+      "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: Fixes the atomic-fact unit of analysis that proposition-level preservation benchmarks (Du 2026) and claim-level numeric metrics (LOOMSUM) inherit. Admitted as the unit-of-analysis definition; the other faithfulness metri",
+      "decided_by": "cc",
+      "decided_at": "2026-09-02T21:35:38.053173+00:00"
+     }
+    ],
     "identity_gate": {
      "passed": true,
      "checked": [],
@@ -17503,7 +18133,8 @@
     "quarantined": []
    },
    "provenance_sources": [
-    "g1_eval_prior_art_2026-09-02"
+    "g1_eval_prior_art_2026-09-02",
+    "candidate_register"
    ],
    "extra": {
     "observed_files": {
@@ -17538,7 +18169,10 @@
       "checked_at": "2026-09-02T21:35:40.832846+00:00"
      }
     },
-    "added_in": "g1eval-2026-09-02"
+    "added_in": "g1eval-2026-09-02",
+    "notes": [
+     "Fixes the atomic-fact unit of analysis that proposition-level preservation benchmarks (Du 2026) and claim-level numeric metrics (LOOMSUM) inherit. Admitted as the unit-of-analysis definition; the other faithfulness metrics (SummaC, QAGS, FEQA, AlignScore, RAGAS, HHEM) are staged as methods and not admitted."
+    ]
    }
   },
   "miroyan-2025-search-arena": {
@@ -17960,6 +18594,56 @@
     "candidate_register"
    ],
    "extra": {}
+  },
+  "moneyball-with-llms-analyzing-tabular-summarization-in-sport": {
+   "doc_id": "moneyball-with-llms-analyzing-tabular-summarization-in-sport",
+   "identity": {
+    "sha256": null,
+    "canonical_path": null,
+    "title": "Moneyball with LLMs: Analyzing Tabular Summarization in Sports Narratives",
+    "authors_or_org": [
+     "Ritam Upadhyay",
+     "Naman Ahuja",
+     "Rishabh Baral",
+     "Aparna Garimella"
+    ],
+    "pub_year": "2025",
+    "doc_type": "academic",
+    "source_url": "https://arxiv.org/abs/2510.18173",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "unknown",
+    "acquired_at": null,
+    "acquired_by": null
+   },
+   "integrity": {
+    "status": "unchecked",
+    "checks": null,
+    "checked_at": null
+   },
+   "screening": {
+    "decision": "excluded",
+    "rationale": "staged, not admitted: clause R1_no_marginal_contribution",
+    "decided_by": "cc",
+    "decided_at": "2026-09-02",
+    "history": []
+   },
+   "lifecycle": {
+    "stage": "cataloged"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "candidate_register"
+   ],
+   "extra": {
+    "notes": [
+     "Long-context tabular summarization diagnostic (numerical fidelity, hallucination / omission / role confusion). The numeric failure classes are carried by Cao 2024 and LOOMSUM."
+    ]
+   }
   },
   "mons-2026-fair-squared-scientific-production": {
    "doc_id": "mons-2026-fair-squared-scientific-production",
@@ -18930,6 +19614,53 @@
     "added_in": "triage-2026-08-24"
    }
   },
+  "numerical-consistency-verification-and-correction-in-abstrac": {
+   "doc_id": "numerical-consistency-verification-and-correction-in-abstrac",
+   "identity": {
+    "sha256": null,
+    "canonical_path": null,
+    "title": "Numerical Consistency Verification and Correction in Abstractive Summaries Using Semantic and Syntactic Features",
+    "authors_or_org": [
+     "(ICAICTA 2025; doi 10.1109/icaicta67604.2025.11335110)"
+    ],
+    "pub_year": "2025",
+    "doc_type": "academic",
+    "source_url": "https://doi.org/10.1109/icaicta67604.2025.11335110",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "unknown",
+    "acquired_at": null,
+    "acquired_by": null
+   },
+   "integrity": {
+    "status": "unchecked",
+    "checks": null,
+    "checked_at": null
+   },
+   "screening": {
+    "decision": "excluded",
+    "rationale": "Post-hoc numeric consistency checker for summaries. Method; IEEE Xplore paywall. Not fetched.",
+    "decided_by": "cc",
+    "decided_at": "2026-09-02",
+    "history": []
+   },
+   "lifecycle": {
+    "stage": "cataloged"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "candidate_register"
+   ],
+   "extra": {
+    "notes": [
+     "Post-hoc numeric consistency checker for summaries. Method; IEEE Xplore paywall. Not fetched."
+    ]
+   }
+  },
   "odcs-open-data-contract-standard": {
    "doc_id": "odcs-open-data-contract-standard",
    "identity": {
@@ -19438,10 +20169,17 @@
    },
    "screening": {
     "decision": "included",
-    "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: ONS methodology page defining sampling error, standard error and confidence intervals as the measures of uncertainty that accompany published survey estimates. The UK producer-side definition, parallel to the ACS handboo",
+    "rationale": "manifest-added by rule (clause R1, construct_arm publication_actionability)",
     "decided_by": "cc",
-    "decided_at": "2026-09-02T21:35:39.140447+00:00",
-    "history": [],
+    "decided_at": "2026-09-02",
+    "history": [
+     {
+      "decision": "included",
+      "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: ONS methodology page defining sampling error, standard error and confidence intervals as the measures of uncertainty that accompany published survey estimates. The UK producer-side definition, parallel to the ACS handboo",
+      "decided_by": "cc",
+      "decided_at": "2026-09-02T21:35:39.140447+00:00"
+     }
+    ],
     "identity_gate": {
      "passed": true,
      "checked": [],
@@ -19456,7 +20194,8 @@
     "quarantined": []
    },
    "provenance_sources": [
-    "g1_eval_prior_art_2026-09-02"
+    "g1_eval_prior_art_2026-09-02",
+    "candidate_register"
    ],
    "extra": {
     "observed_files": {
@@ -19491,7 +20230,10 @@
       "checked_at": "2026-09-02T21:35:40.833429+00:00"
      }
     },
-    "added_in": "g1eval-2026-09-02"
+    "added_in": "g1eval-2026-09-02",
+    "notes": [
+     "ONS methodology page defining sampling error, standard error and confidence intervals as the measures of uncertainty that accompany published survey estimates. The UK producer-side definition, parallel to the ACS handbook; `federal` is the doc_type this corpus already uses for UK government publications."
+    ]
    }
   },
   "openai-crawlers-bots": {
@@ -20110,10 +20852,17 @@
    },
    "screening": {
     "decision": "included",
-    "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: 4,900 summaries from ten LLMs against their sources: scope-limiting details (quantifiers, qualifiers, tense) dropped so conclusions generalize beyond the source; LLM summaries ~5x more likely than human summaries to over",
+    "rationale": "manifest-added by rule (clause R1, construct_arm publication_actionability)",
     "decided_by": "cc",
-    "decided_at": "2026-09-02T21:35:34.833295+00:00",
-    "history": [],
+    "decided_at": "2026-09-02",
+    "history": [
+     {
+      "decision": "included",
+      "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: 4,900 summaries from ten LLMs against their sources: scope-limiting details (quantifiers, qualifiers, tense) dropped so conclusions generalize beyond the source; LLM summaries ~5x more likely than human summaries to over",
+      "decided_by": "cc",
+      "decided_at": "2026-09-02T21:35:34.833295+00:00"
+     }
+    ],
     "identity_gate": {
      "passed": true,
      "checked": [],
@@ -20128,7 +20877,8 @@
     "quarantined": []
    },
    "provenance_sources": [
-    "g1_eval_prior_art_2026-09-02"
+    "g1_eval_prior_art_2026-09-02",
+    "candidate_register"
    ],
    "extra": {
     "observed_files": {
@@ -20163,7 +20913,10 @@
       "checked_at": "2026-09-02T21:35:40.859201+00:00"
      }
     },
-    "added_in": "g1eval-2026-09-02"
+    "added_in": "g1eval-2026-09-02",
+    "notes": [
+     "4,900 summaries from ten LLMs against their sources: scope-limiting details (quantifiers, qualifiers, tense) dropped so conclusions generalize beyond the source; LLM summaries ~5x more likely than human summaries to overgeneralize (OR 4.85). Defines overgeneralization as a preservation failure class and gives a coding instrument for it — the scope-qualifier analogue of dropping an MOE."
+    ]
    }
   },
   "pl-115-336-21st-century-idea-act": {
@@ -20434,6 +21187,53 @@
     ]
    }
   },
+  "proof-carrying-numbers-pcn-a-protocol-for-trustworthy-numeri": {
+   "doc_id": "proof-carrying-numbers-pcn-a-protocol-for-trustworthy-numeri",
+   "identity": {
+    "sha256": null,
+    "canonical_path": null,
+    "title": "Proof-Carrying Numbers (PCN): A Protocol for Trustworthy Numeric Answers from LLMs via Claim Verification",
+    "authors_or_org": [
+     "Aivin V. Solatorio"
+    ],
+    "pub_year": "2025",
+    "doc_type": "academic",
+    "source_url": "https://arxiv.org/abs/2509.06902",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "unknown",
+    "acquired_at": null,
+    "acquired_by": null
+   },
+   "integrity": {
+    "status": "unchecked",
+    "checks": null,
+    "checked_at": null
+   },
+   "screening": {
+    "decision": "excluded",
+    "rationale": "staged, not admitted: clause R1_method_not_construct",
+    "decided_by": "cc",
+    "decided_at": "2026-09-02",
+    "history": []
+   },
+   "lifecycle": {
+    "stage": "cataloged"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "candidate_register"
+   ],
+   "extra": {
+    "notes": [
+     "Presentation-layer protocol: numeric spans emitted as claim-bound tokens, verified in the renderer under a declared policy (exact, rounding, tolerance-with-qualifiers). Names numeric hallucination and the tolerance-with-qualifier policy class, but is a mechanism; listed so the verification-policy idea is not lost."
+    ]
+   }
+  },
   "public-service-in-the-age-of-ai-institutional-strategies-for": {
    "doc_id": "public-service-in-the-age-of-ai-institutional-strategies-for",
    "identity": {
@@ -20676,10 +21476,17 @@
    },
    "screening": {
     "decision": "included",
-    "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: The DataGemma paper: LLMs answering numerical/statistical questions grounded in Data Commons (UN, CDC, census bureaus) via RIG and RAG, with an evaluation of statistical-fact accuracy. The measured-practice document for ",
+    "rationale": "manifest-added by rule (clause R1, construct_arm publication_actionability)",
     "decided_by": "cc",
-    "decided_at": "2026-09-02T21:35:37.337060+00:00",
-    "history": [],
+    "decided_at": "2026-09-02",
+    "history": [
+     {
+      "decision": "included",
+      "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: The DataGemma paper: LLMs answering numerical/statistical questions grounded in Data Commons (UN, CDC, census bureaus) via RIG and RAG, with an evaluation of statistical-fact accuracy. The measured-practice document for ",
+      "decided_by": "cc",
+      "decided_at": "2026-09-02T21:35:37.337060+00:00"
+     }
+    ],
     "identity_gate": {
      "passed": true,
      "checked": [],
@@ -20694,7 +21501,8 @@
     "quarantined": []
    },
    "provenance_sources": [
-    "g1_eval_prior_art_2026-09-02"
+    "g1_eval_prior_art_2026-09-02",
+    "candidate_register"
    ],
    "extra": {
     "observed_files": {
@@ -20729,7 +21537,60 @@
       "checked_at": "2026-09-02T21:35:40.890912+00:00"
      }
     },
-    "added_in": "g1eval-2026-09-02"
+    "added_in": "g1eval-2026-09-02",
+    "notes": [
+     "The DataGemma paper: LLMs answering numerical/statistical questions grounded in Data Commons (UN, CDC, census bureaus) via RIG and RAG, with an evaluation of statistical-fact accuracy. The measured-practice document for machine consumers restating official statistics; the corpus holds the Data Commons docs landing but not the evaluation."
+    ]
+   }
+  },
+  "ragas-automated-evaluation-of-retrieval-augmented-generation": {
+   "doc_id": "ragas-automated-evaluation-of-retrieval-augmented-generation",
+   "identity": {
+    "sha256": null,
+    "canonical_path": null,
+    "title": "RAGAs: Automated Evaluation of Retrieval Augmented Generation",
+    "authors_or_org": [
+     "Shahul Es",
+     "Jithin James",
+     "Luis Espinosa-Anke",
+     "Steven Schockaert"
+    ],
+    "pub_year": "2024",
+    "doc_type": "academic",
+    "source_url": "https://doi.org/10.18653/v1/2024.eacl-demo.16",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "unknown",
+    "acquired_at": null,
+    "acquired_by": null
+   },
+   "integrity": {
+    "status": "unchecked",
+    "checks": null,
+    "checked_at": null
+   },
+   "screening": {
+    "decision": "excluded",
+    "rationale": "staged, not admitted: clause R1_method_not_construct",
+    "decided_by": "cc",
+    "decided_at": "2026-09-02",
+    "history": []
+   },
+   "lifecycle": {
+    "stage": "cataloged"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "candidate_register"
+   ],
+   "extra": {
+    "notes": [
+     "Reference-free RAG faithfulness / answer relevance / context relevance metrics. Method; its faithfulness score is statement-level and number-blind."
+    ]
    }
   },
   "redi-2026-automated-data-readiness": {
@@ -22837,6 +23698,53 @@
     ]
    }
   },
+  "should-we-include-margins-of-error-in-public-opinion-polls": {
+   "doc_id": "should-we-include-margins-of-error-in-public-opinion-polls",
+   "identity": {
+    "sha256": null,
+    "canonical_path": null,
+    "title": "Should we include margins of error in public opinion polls?",
+    "authors_or_org": [
+     "(European Journal of Political Research, 2023; doi 10.1111/1475-6765.12633)"
+    ],
+    "pub_year": "2023",
+    "doc_type": "academic",
+    "source_url": "https://doi.org/10.1111/1475-6765.12633",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "unknown",
+    "acquired_at": null,
+    "acquired_by": null
+   },
+   "integrity": {
+    "status": "unchecked",
+    "checks": null,
+    "checked_at": null
+   },
+   "screening": {
+    "decision": "excluded",
+    "rationale": "Survey experiment on reporting MOEs with poll results. Reception evidence within the van der Bles lineage; Wiley paywall (settings.paywall_domains). Not fetched.",
+    "decided_by": "cc",
+    "decided_at": "2026-09-02",
+    "history": []
+   },
+   "lifecycle": {
+    "stage": "cataloged"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "candidate_register"
+   ],
+   "extra": {
+    "notes": [
+     "Survey experiment on reporting MOEs with poll results. Reception evidence within the van der Bles lineage; Wiley paywall (settings.paywall_domains). Not fetched."
+    ]
+   }
+  },
   "sitemaps-protocol": {
    "doc_id": "sitemaps-protocol",
    "identity": {
@@ -23378,10 +24286,17 @@
    },
    "screening": {
     "decision": "included",
-    "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: Statistics Canada's quality guidelines: the coefficient of variation as the accuracy measure carried on published estimates, with reliability bands and suppression rules. The third producer-side definition, giving G1 a C",
+    "rationale": "manifest-added by rule (clause R1, construct_arm publication_actionability)",
     "decided_by": "cc",
-    "decided_at": "2026-09-02T21:35:39.581427+00:00",
-    "history": [],
+    "decided_at": "2026-09-02",
+    "history": [
+     {
+      "decision": "included",
+      "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: Statistics Canada's quality guidelines: the coefficient of variation as the accuracy measure carried on published estimates, with reliability bands and suppression rules. The third producer-side definition, giving G1 a C",
+      "decided_by": "cc",
+      "decided_at": "2026-09-02T21:35:39.581427+00:00"
+     }
+    ],
     "identity_gate": {
      "passed": true,
      "checked": [],
@@ -23396,11 +24311,13 @@
     "quarantined": []
    },
    "provenance_sources": [
-    "g1_eval_prior_art_2026-09-02"
+    "g1_eval_prior_art_2026-09-02",
+    "candidate_register"
    ],
    "extra": {
     "notes": [
-     "Full guidelines; the accuracy/reliability and dissemination sections (coefficient of variation as the published accuracy measure, quality-flag and suppression rules) are the cited sections."
+     "Full guidelines; the accuracy/reliability and dissemination sections (coefficient of variation as the published accuracy measure, quality-flag and suppression rules) are the cited sections.",
+     "Statistics Canada's quality guidelines: the coefficient of variation as the accuracy measure carried on published estimates, with reliability bands and suppression rules. The third producer-side definition, giving G1 a CV-class qualifier alongside MOE and CI."
     ],
     "observed_files": {
      "corpus/g1eval/statcan-quality-guidelines-6th-edition.pdf": {
@@ -23638,10 +24555,17 @@
    },
    "screening": {
     "decision": "included",
-    "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: Structured evaluation of LLMs over Statistics Netherlands open data with a three-dimension framework (data retrieval & pre-processing, code quality, visual representation); finds locating the right table is the dominant ",
+    "rationale": "manifest-added by rule (clause R1, construct_arm publication_actionability)",
     "decided_by": "cc",
-    "decided_at": "2026-09-02T21:35:39.933256+00:00",
-    "history": [],
+    "decided_at": "2026-09-02",
+    "history": [
+     {
+      "decision": "included",
+      "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: Structured evaluation of LLMs over Statistics Netherlands open data with a three-dimension framework (data retrieval & pre-processing, code quality, visual representation); finds locating the right table is the dominant ",
+      "decided_by": "cc",
+      "decided_at": "2026-09-02T21:35:39.933256+00:00"
+     }
+    ],
     "identity_gate": {
      "passed": true,
      "checked": [],
@@ -23656,7 +24580,8 @@
     "quarantined": []
    },
    "provenance_sources": [
-    "g1_eval_prior_art_2026-09-02"
+    "g1_eval_prior_art_2026-09-02",
+    "candidate_register"
    ],
    "extra": {
     "observed_files": {
@@ -23691,7 +24616,60 @@
       "checked_at": "2026-09-02T21:35:40.925507+00:00"
      }
     },
-    "added_in": "g1eval-2026-09-02"
+    "added_in": "g1eval-2026-09-02",
+    "notes": [
+     "Structured evaluation of LLMs over Statistics Netherlands open data with a three-dimension framework (data retrieval & pre-processing, code quality, visual representation); finds locating the right table is the dominant failure. An instrument for machine consumption of NSO data, adjacent to G1."
+    ]
+   }
+  },
+  "summac-re-visiting-nli-based-models-for-inconsistency-detect": {
+   "doc_id": "summac-re-visiting-nli-based-models-for-inconsistency-detect",
+   "identity": {
+    "sha256": null,
+    "canonical_path": null,
+    "title": "SummaC: Re-Visiting NLI-based Models for Inconsistency Detection in Summarization",
+    "authors_or_org": [
+     "Philippe Laban",
+     "Tobias Schnabel",
+     "Paul N. Bennett",
+     "Marti A. Hearst"
+    ],
+    "pub_year": "2022",
+    "doc_type": "academic",
+    "source_url": "https://doi.org/10.1162/tacl_a_00453",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "unknown",
+    "acquired_at": null,
+    "acquired_by": null
+   },
+   "integrity": {
+    "status": "unchecked",
+    "checks": null,
+    "checked_at": null
+   },
+   "screening": {
+    "decision": "excluded",
+    "rationale": "staged, not admitted: clause R1_method_not_construct",
+    "decided_by": "cc",
+    "decided_at": "2026-09-02",
+    "history": []
+   },
+   "lifecycle": {
+    "stage": "cataloged"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "candidate_register"
+   ],
+   "extra": {
+    "notes": [
+     "Sentence-level NLI inconsistency detector. A metric method; the construct (factual consistency of a summary) is not specific to numbers or uncertainty."
+    ]
    }
   },
   "technology-readiness-and-the-organizational-journey-towards": {
@@ -24040,6 +25018,108 @@
    "extra": {
     "notes": [
      "A 2010 empirical study of data quality versus classification performance. Its finding is carried, with fifteen further years of evidence, by the held 360-degree readiness survey. Closed access besides."
+    ]
+   }
+  },
+  "the-effects-of-communicating-uncertainty-around-statistics-o": {
+   "doc_id": "the-effects-of-communicating-uncertainty-around-statistics-o",
+   "identity": {
+    "sha256": null,
+    "canonical_path": null,
+    "title": "The effects of communicating uncertainty around statistics, on public trust: an international study",
+    "authors_or_org": [
+     "John R. Kerr",
+     "Claudia R. Schneider",
+     "Alexandra L. J. Freeman",
+     "Sarah Dryhurst",
+     "David J. Spiegelhalter",
+     "Sander van der Linden"
+    ],
+    "pub_year": "2023",
+    "doc_type": "academic",
+    "source_url": "https://doi.org/10.1098/rsos.230604",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "unknown",
+    "acquired_at": null,
+    "acquired_by": null
+   },
+   "integrity": {
+    "status": "unchecked",
+    "checks": null,
+    "checked_at": null
+   },
+   "screening": {
+    "decision": "excluded",
+    "rationale": "staged, not admitted: clause R1_no_marginal_contribution",
+    "decided_by": "cc",
+    "decided_at": "2026-09-02",
+    "history": []
+   },
+   "lifecycle": {
+    "stage": "cataloged"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "candidate_register"
+   ],
+   "extra": {
+    "notes": [
+     "Replication of the 2020 result across countries for uncertainty around statistics specifically. Evidence, not a construct; the taxonomy it tests is the admitted 2019 paper."
+    ]
+   }
+  },
+  "the-effects-of-communicating-uncertainty-on-public-trust-in": {
+   "doc_id": "the-effects-of-communicating-uncertainty-on-public-trust-in",
+   "identity": {
+    "sha256": null,
+    "canonical_path": null,
+    "title": "The effects of communicating uncertainty on public trust in facts and numbers",
+    "authors_or_org": [
+     "Anne Marthe van der Bles",
+     "Sander van der Linden",
+     "Alexandra L. J. Freeman",
+     "David J. Spiegelhalter"
+    ],
+    "pub_year": "2020",
+    "doc_type": "academic",
+    "source_url": "https://doi.org/10.1073/pnas.1913678117",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "unknown",
+    "acquired_at": null,
+    "acquired_by": null
+   },
+   "integrity": {
+    "status": "unchecked",
+    "checks": null,
+    "checked_at": null
+   },
+   "screening": {
+    "decision": "excluded",
+    "rationale": "staged, not admitted: clause R1_no_marginal_contribution",
+    "decided_by": "cc",
+    "decided_at": "2026-09-02",
+    "history": []
+   },
+   "lifecycle": {
+    "stage": "cataloged"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "candidate_register"
+   ],
+   "extra": {
+    "notes": [
+     "Five experiments: numeric ranges barely reduce trust, verbal qualifiers reduce it more. Reception evidence for the forms defined in the 2019 taxonomy; adds no construct beyond it."
     ]
    }
   },
@@ -24479,6 +25559,53 @@
    "extra": {
     "notes": [
      "Training-data memorization. Off-construct for a graph about readiness definitions and instruments."
+    ]
+   }
+  },
+  "the-slop-paradox-how-synthetic-standardization-erodes-clinic": {
+   "doc_id": "the-slop-paradox-how-synthetic-standardization-erodes-clinic",
+   "identity": {
+    "sha256": null,
+    "canonical_path": null,
+    "title": "The Slop Paradox: How Synthetic Standardization Erodes Clinical Uncertainty and Cross-Modal Alignment in AI-Rewritten Radiology Reports",
+    "authors_or_org": [
+     "Samar Ansari"
+    ],
+    "pub_year": "2026",
+    "doc_type": "academic",
+    "source_url": "https://arxiv.org/abs/2606.17791",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "unknown",
+    "acquired_at": null,
+    "acquired_by": null
+   },
+   "integrity": {
+    "status": "unchecked",
+    "checks": null,
+    "checked_at": null
+   },
+   "screening": {
+    "decision": "excluded",
+    "rationale": "staged, not admitted: clause ambiguous_contribution",
+    "decided_by": "cc",
+    "decided_at": "2026-09-02",
+    "history": []
+   },
+   "lifecycle": {
+    "stage": "cataloged"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "candidate_register"
+   ],
+   "extra": {
+    "notes": [
+     "Operator review. Measures 'hedging collapse' (43.7% of hedging language lost under EHR summarization of 450 chest X-ray reports) — a named, quantified uncertainty-erosion rate. Cut on the round-2 precedent for one author on one dataset (borysenko-2026); the failure-class name is carried by Du 2026's certainty-assertion mode."
     ]
    }
   },
@@ -25043,6 +26170,60 @@
     "added_in": "triage-2026-08-24",
     "notes": [
      "source_type federal = national government (UK); the schema enum has no separate national-government value and intergovernmental would be wrong."
+    ]
+   }
+  },
+  "uncle-benchmarking-uncertainty-expressions-in-long-form-gene": {
+   "doc_id": "uncle-benchmarking-uncertainty-expressions-in-long-form-gene",
+   "identity": {
+    "sha256": null,
+    "canonical_path": null,
+    "title": "UNCLE: Benchmarking Uncertainty Expressions in Long-Form Generation",
+    "authors_or_org": [
+     "Ruihan Yang",
+     "Caiqi Zhang",
+     "Zhisong Zhang",
+     "Xinting Huang",
+     "Sen Yang",
+     "Nigel Collier",
+     "Dong Yu",
+     "Deqing Yang"
+    ],
+    "pub_year": "2025",
+    "doc_type": "academic",
+    "source_url": "https://arxiv.org/abs/2505.16922",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "unknown",
+    "acquired_at": null,
+    "acquired_by": null
+   },
+   "integrity": {
+    "status": "unchecked",
+    "checks": null,
+    "checked_at": null
+   },
+   "screening": {
+    "decision": "excluded",
+    "rationale": "staged, not admitted: clause R1_out_of_scope",
+    "decided_by": "cc",
+    "decided_at": "2026-09-02",
+    "history": []
+   },
+   "lifecycle": {
+    "stage": "cataloged"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "candidate_register"
+   ],
+   "extra": {
+    "notes": [
+     "Measures whether a model expresses ITS OWN epistemic uncertainty when it lacks knowledge. A different construct from preserving the SOURCE's stated uncertainty; placed in the memo so the two are not confused."
     ]
    }
   },
@@ -26019,10 +27200,17 @@
    },
    "screening": {
     "decision": "included",
-    "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: The taxonomy of what uncertainty is expressed about (facts, numbers, science), its forms of expression (numeric range, verbal qualifier, visual) and the evidence on reception. This is the definition of what 'preserving n",
+    "rationale": "manifest-added by rule (clause R1, construct_arm publication_actionability)",
     "decided_by": "cc",
-    "decided_at": "2026-09-02T21:35:34.478897+00:00",
-    "history": [],
+    "decided_at": "2026-09-02",
+    "history": [
+     {
+      "decision": "included",
+      "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: The taxonomy of what uncertainty is expressed about (facts, numbers, science), its forms of expression (numeric range, verbal qualifier, visual) and the evidence on reception. This is the definition of what 'preserving n",
+      "decided_by": "cc",
+      "decided_at": "2026-09-02T21:35:34.478897+00:00"
+     }
+    ],
     "identity_gate": {
      "passed": true,
      "checked": [],
@@ -26037,7 +27225,8 @@
     "quarantined": []
    },
    "provenance_sources": [
-    "g1_eval_prior_art_2026-09-02"
+    "g1_eval_prior_art_2026-09-02",
+    "candidate_register"
    ],
    "extra": {
     "observed_files": {
@@ -26072,7 +27261,57 @@
       "checked_at": "2026-09-02T21:35:40.953281+00:00"
      }
     },
-    "added_in": "g1eval-2026-09-02"
+    "added_in": "g1eval-2026-09-02",
+    "notes": [
+     "The taxonomy of what uncertainty is expressed about (facts, numbers, science), its forms of expression (numeric range, verbal qualifier, visual) and the evidence on reception. This is the definition of what 'preserving numeric uncertainty' means; the G1 preservation levels are drawn from its form-of-expression axis."
+    ]
+   }
+  },
+  "vectara-hallucination-evaluation-model-hhem-model-card": {
+   "doc_id": "vectara-hallucination-evaluation-model-hhem-model-card",
+   "identity": {
+    "sha256": null,
+    "canonical_path": null,
+    "title": "Vectara Hallucination Evaluation Model (HHEM) model card",
+    "authors_or_org": [
+     "Vectara"
+    ],
+    "pub_year": "2024",
+    "doc_type": "industry",
+    "source_url": "https://huggingface.co/vectara/hallucination_evaluation_model",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "unknown",
+    "acquired_at": null,
+    "acquired_by": null
+   },
+   "integrity": {
+    "status": "unchecked",
+    "checks": null,
+    "checked_at": null
+   },
+   "screening": {
+    "decision": "excluded",
+    "rationale": "staged, not admitted: clause R1_method_not_construct",
+    "decided_by": "cc",
+    "decided_at": "2026-09-02",
+    "history": []
+   },
+   "lifecycle": {
+    "stage": "cataloged"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "candidate_register"
+   ],
+   "extra": {
+    "notes": [
+     "Cross-encoder hallucination classifier behind the Vectara hallucination leaderboard. Method; binary consistency, no numeric or uncertainty dimension."
+    ]
    }
   },
   "venkit-2025-deeptrace": {
@@ -26232,10 +27471,17 @@
    },
    "screening": {
     "decision": "included",
-    "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: Benchmark of natural numerical claims with a claim taxonomy (temporal, statistical, comparison, interval) and fine-grained veracity labels; the field's instrument for whether a numerical claim is supported. Supplies the ",
+    "rationale": "manifest-added by rule (clause R1, construct_arm publication_actionability)",
     "decided_by": "cc",
-    "decided_at": "2026-09-02T21:35:36.254238+00:00",
-    "history": [],
+    "decided_at": "2026-09-02",
+    "history": [
+     {
+      "decision": "included",
+      "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: Benchmark of natural numerical claims with a claim taxonomy (temporal, statistical, comparison, interval) and fine-grained veracity labels; the field's instrument for whether a numerical claim is supported. Supplies the ",
+      "decided_by": "cc",
+      "decided_at": "2026-09-02T21:35:36.254238+00:00"
+     }
+    ],
     "identity_gate": {
      "passed": true,
      "checked": [],
@@ -26250,7 +27496,8 @@
     "quarantined": []
    },
    "provenance_sources": [
-    "g1_eval_prior_art_2026-09-02"
+    "g1_eval_prior_art_2026-09-02",
+    "candidate_register"
    ],
    "extra": {
     "observed_files": {
@@ -26285,7 +27532,10 @@
       "checked_at": "2026-09-02T21:35:40.977808+00:00"
      }
     },
-    "added_in": "g1eval-2026-09-02"
+    "added_in": "g1eval-2026-09-02",
+    "notes": [
+     "Benchmark of natural numerical claims with a claim taxonomy (temporal, statistical, comparison, interval) and fine-grained veracity labels; the field's instrument for whether a numerical claim is supported. Supplies the claim-type axis a G1 probe family needs (an MOE-bearing estimate is an interval-class claim)."
+    ]
    }
   },
   "volpini-2026-structured-linked-data-memory-layer": {
@@ -28718,10 +29968,17 @@
    },
    "screening": {
     "decision": "included",
-    "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: Origin of the named construct 'quantity hallucination': quantity entities (dates, numbers, sums) in a summary unsupported by the source. Defines the entity class and the verification unit that later numeric-fidelity work",
+    "rationale": "manifest-added by rule (clause R1, construct_arm publication_actionability)",
     "decided_by": "cc",
-    "decided_at": "2026-09-02T21:35:35.890160+00:00",
-    "history": [],
+    "decided_at": "2026-09-02",
+    "history": [
+     {
+      "decision": "included",
+      "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: Origin of the named construct 'quantity hallucination': quantity entities (dates, numbers, sums) in a summary unsupported by the source. Defines the entity class and the verification unit that later numeric-fidelity work",
+      "decided_by": "cc",
+      "decided_at": "2026-09-02T21:35:35.890160+00:00"
+     }
+    ],
     "identity_gate": {
      "passed": true,
      "checked": [],
@@ -28736,7 +29993,8 @@
     "quarantined": []
    },
    "provenance_sources": [
-    "g1_eval_prior_art_2026-09-02"
+    "g1_eval_prior_art_2026-09-02",
+    "candidate_register"
    ],
    "extra": {
     "observed_files": {
@@ -28771,7 +30029,10 @@
       "checked_at": "2026-09-02T21:35:40.995397+00:00"
      }
     },
-    "added_in": "g1eval-2026-09-02"
+    "added_in": "g1eval-2026-09-02",
+    "notes": [
+     "Origin of the named construct 'quantity hallucination': quantity entities (dates, numbers, sums) in a summary unsupported by the source. Defines the entity class and the verification unit that later numeric-fidelity work inherits. The Herman re-ranker itself is a method; admitted for the definition."
+    ]
    }
   },
   "zhou-2026-loomsum-table-grounded-faithfulness": {
@@ -28818,10 +30079,17 @@
    },
    "screening": {
     "decision": "included",
-    "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: Introduces Table-Grounded Faithfulness, a claim-level metric decomposed into Numeric Grounding, Analysis Support and Relation Consistency — the nearest existing metric to 'is this number attached to the right qualifier'.",
+    "rationale": "manifest-added by rule (clause R1, construct_arm publication_actionability)",
     "decided_by": "cc",
-    "decided_at": "2026-09-02T21:35:37.689677+00:00",
-    "history": [],
+    "decided_at": "2026-09-02",
+    "history": [
+     {
+      "decision": "included",
+      "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: Introduces Table-Grounded Faithfulness, a claim-level metric decomposed into Numeric Grounding, Analysis Support and Relation Consistency — the nearest existing metric to 'is this number attached to the right qualifier'.",
+      "decided_by": "cc",
+      "decided_at": "2026-09-02T21:35:37.689677+00:00"
+     }
+    ],
     "identity_gate": {
      "passed": true,
      "checked": [],
@@ -28836,7 +30104,8 @@
     "quarantined": []
    },
    "provenance_sources": [
-    "g1_eval_prior_art_2026-09-02"
+    "g1_eval_prior_art_2026-09-02",
+    "candidate_register"
    ],
    "extra": {
     "observed_files": {
@@ -28871,7 +30140,10 @@
       "checked_at": "2026-09-02T21:35:41.018460+00:00"
      }
     },
-    "added_in": "g1eval-2026-09-02"
+    "added_in": "g1eval-2026-09-02",
+    "notes": [
+     "Introduces Table-Grounded Faithfulness, a claim-level metric decomposed into Numeric Grounding, Analysis Support and Relation Consistency — the nearest existing metric to 'is this number attached to the right qualifier'. Admitted for the metric decomposition; the LOOMSUM generator itself is a method."
+    ]
    }
   }
  }

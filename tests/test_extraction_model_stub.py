@@ -119,3 +119,45 @@ def test_extract_json_recovers_toplevel_arrays():
     assert model_stub._extract_json(f"preamble {arr} trailing note") == json.loads(arr)
     # objects still win when the payload is an object
     assert model_stub._extract_json('{"facts": [1, 2]}') == {"facts": [1, 2]}
+
+
+def test_parse_json_false_returns_prose_through_the_same_gates(monkeypatch, declared_run):
+    """G1 EVAL observed leg (task 2026-09-02_g1_eval_probe_family_v0 step 1): the consumer
+    elicits prose through this choke point. With parse_json=False the result text comes
+    back unparsed; the DD-022 reservation is settled at the envelope's usage, and the
+    model-identity gate still fires on a substituted model."""
+    captured = {}
+
+    def fake_run(cmd, **kw):
+        captured["cmd"] = cmd
+        captured["cwd"] = kw.get("cwd")
+
+        class R:
+            returncode = 0
+            stdout = json.dumps({"result": "Colorado had 564,757 one-person households, ±10,127.",
+                                 "modelUsage": {"m": {"inputTokens": 50, "outputTokens": 20}},
+                                 "session_id": "s1"})
+            stderr = ""
+        return R()
+
+    monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
+    monkeypatch.setattr(model_stub.subprocess, "run", fake_run)
+    meta = model_stub.invoke("g1-acs-moe-001.indirect", "", prompt="Restate the following …",
+                             config={"model_id": "m", "cli": "claude"}, parse_json=False)
+    assert meta["output"] == "Colorado had 564,757 one-person households, ±10,127."
+    assert meta["model_id"] == "m" and meta["usage"]["outputTokens"] == 20
+    assert captured["cwd"] and "hermetic" in captured["cwd"]      # 2026-07-09 finding kept
+    assert "--model" in captured["cmd"] and "m" in captured["cmd"]
+    ledger = spend.SpendLedger()
+    assert ledger.committed(declared_run) == 70                    # settled at measured usage
+
+    def substituted(cmd, **kw):
+        class R:
+            returncode = 0
+            stdout = json.dumps({"result": "x", "modelUsage": {"other-model": {"inputTokens": 1}}})
+            stderr = ""
+        return R()
+
+    monkeypatch.setattr(model_stub.subprocess, "run", substituted)
+    with pytest.raises(model_stub.ModelSubstitutionError):
+        model_stub.invoke("d", "", prompt="p", config={"model_id": "m", "cli": "claude"}, parse_json=False)

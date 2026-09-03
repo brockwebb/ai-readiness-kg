@@ -1,0 +1,1423 @@
+{
+ "task": "cc_tasks/2026-09-02_g1_eval_probe_family_v0.md",
+ "generated_at_utc": "2026-09-03T02:38:22Z",
+ "families_run": [
+  "F7_dp_vintage_rounding"
+ ],
+ "named_set": "f7",
+ "families": {
+  "F1_numeric_uncertainty_preservation": [
+   [
+    "numeric uncertainty preservation large language model summarization",
+    "abs:\"uncertainty\" AND abs:\"preserv\" AND (abs:summarization OR abs:paraphrase) AND (abs:LLM OR abs:\"language model\")"
+   ],
+   [
+    "margin of error confidence interval LLM paraphrase restatement",
+    "(abs:\"margin of error\" OR abs:\"confidence interval\") AND (abs:LLM OR abs:\"language model\") AND (abs:summar OR abs:paraphras OR abs:restat OR abs:generat)"
+   ],
+   [
+    "standard error statistical estimate language model summary fidelity",
+    "(abs:\"standard error\" OR abs:\"sampling error\") AND (abs:LLM OR abs:\"large language model\") AND (abs:summar OR abs:report)"
+   ],
+   [
+    "uncertainty interval retrieval-augmented generation numeric answer",
+    "abs:\"retrieval-augmented\" AND (abs:\"confidence interval\" OR abs:\"uncertainty interval\" OR abs:\"margin of error\")"
+   ]
+  ],
+  "F2_quantitative_claim_fidelity": [
+   [
+    "numeric hallucination summarization",
+    "(abs:\"numeric hallucination\" OR abs:\"numerical hallucination\" OR abs:\"quantity hallucination\" OR abs:\"number hallucination\")"
+   ],
+   [
+    "number faithfulness abstractive summarization",
+    "(abs:numer OR abs:quantit OR abs:number) AND abs:faithful AND abs:summarization"
+   ],
+   [
+    "quantitative claim fidelity language model",
+    "(abs:\"numerical claim\" OR abs:\"quantitative claim\" OR abs:\"statistical claim\") AND (abs:LLM OR abs:\"language model\" OR abs:\"fact-check\")"
+   ],
+   [
+    "numerical consistency factual summarization evaluation",
+    "abs:\"factual consistency\" AND abs:summarization AND (abs:numer OR abs:number OR abs:quantit)"
+   ]
+  ],
+  "F3_hedging_epistemic_preservation": [
+   [
+    "hedging preservation summarization language model",
+    "(abs:hedg OR abs:hedges) AND (abs:summar OR abs:generat) AND (abs:LLM OR abs:\"language model\")"
+   ],
+   [
+    "epistemic uncertainty preservation clinical text LLM",
+    "(abs:\"uncertainty preservation\" OR abs:\"preserve uncertainty\" OR abs:\"preserving uncertainty\" OR abs:\"certainty assertion\")"
+   ],
+   [
+    "speculation cue certainty summarization evaluation",
+    "(abs:speculat OR abs:\"epistemic stance\" OR abs:overgeneraliz OR abs:overclaim) AND abs:summar AND (abs:LLM OR abs:\"language model\")"
+   ]
+  ],
+  "F4_uncertainty_communication_statistics": [
+   [
+    "communicating uncertainty statistics margin of error public",
+    "abs:\"communicating uncertainty\" AND (abs:statistic OR abs:\"margin of error\")"
+   ],
+   [
+    "sampling error communication official statistics guidance",
+    "abs:\"official statistics\" AND (abs:uncertainty OR abs:\"sampling error\") AND (abs:communicat OR abs:report OR abs:user)"
+   ],
+   [
+    "communicating statistical uncertainty numeric verbal formats",
+    "abs:uncertainty AND abs:communicat AND (abs:verbal OR abs:numeric OR abs:\"margin of error\") AND abs:public"
+   ]
+  ],
+  "F6_numeric_qualifier_preservation": [
+   [
+    "caveat qualifier preservation LLM summarization decontextualization",
+    "(abs:caveat OR abs:qualifier OR abs:decontextualiz) AND (abs:summar OR abs:compress) AND (abs:LLM OR abs:\"language model\")"
+   ],
+   [
+    "coefficient of variation relative standard error LLM generated text statistics",
+    "(abs:\"coefficient of variation\" OR abs:\"relative standard error\") AND (abs:LLM OR abs:\"language model\" OR abs:chatbot)"
+   ],
+   [
+    "differential privacy noise disclosure LLM answer official statistics",
+    "abs:\"differential privacy\" AND (abs:\"official statistics\" OR abs:census) AND (abs:LLM OR abs:\"language model\" OR abs:chatbot)"
+   ],
+   [
+    "data vintage release date stale statistics LLM answer",
+    "(abs:vintage OR abs:\"as of\" OR abs:stale OR abs:outdated) AND abs:statistic AND (abs:LLM OR abs:\"language model\") AND (abs:answer OR abs:retriev)"
+   ]
+  ],
+  "F7_dp_vintage_rounding": [
+   [
+    "disclosure avoidance noise user guidance large language model",
+    "(abs:\"disclosure avoidance\" OR abs:\"differential privacy\") AND abs:noise AND (abs:LLM OR abs:\"language model\") AND (abs:guidance OR abs:user)"
+   ],
+   [
+    "differential privacy communicating noisy statistics data users",
+    "abs:\"differential privacy\" AND (abs:communicat OR abs:\"data users\" OR abs:\"user expectations\") AND (abs:statistic OR abs:census)"
+   ],
+   [
+    "temporal validity statistics answer large language model release date",
+    "(abs:\"temporal validity\" OR abs:\"time-sensitive\") AND (abs:LLM OR abs:\"language model\") AND (abs:statistic OR abs:\"release date\" OR abs:answer)"
+   ],
+   [
+    "outdated statistic stale answer official data vintage",
+    "(abs:outdated OR abs:stale) AND (abs:LLM OR abs:\"language model\") AND (abs:statistic OR abs:\"official data\" OR abs:vintage)"
+   ],
+   [
+    "data release version temporal misalignment retrieval augmented",
+    "abs:\"retrieval-augmented\" AND (abs:\"temporal misalignment\" OR abs:\"temporal\" OR abs:version) AND (abs:release OR abs:vintage OR abs:outdated)"
+   ],
+   [
+    "number rounding precision preservation summarization",
+    "(abs:rounding OR abs:precision) AND abs:number AND (abs:summariz OR abs:paraphras OR abs:restat) AND (abs:LLM OR abs:\"language model\")"
+   ]
+  ],
+  "F5_answer_engines_official_statistics": [
+   [
+    "generative search engine official statistics accuracy audit",
+    "(abs:\"generative search\" OR abs:\"answer engine\" OR abs:\"AI overview\" OR abs:chatbot) AND (abs:\"official statistics\" OR abs:census OR abs:\"statistical agency\")"
+   ],
+   [
+    "AI answer engine citing statistics accuracy margin of error",
+    "(abs:\"generative search\" OR abs:\"answer engine\" OR abs:\"AI assistant\") AND abs:audit AND (abs:accura OR abs:citation)"
+   ],
+   [
+    "LLM chatbot statistical data accuracy evaluation official statistics",
+    "(abs:LLM OR abs:\"language model\") AND abs:\"official statistics\""
+   ]
+  ]
+ },
+ "anchors": {
+  "arxiv_2606_18471": {
+   "arxiv": "2606.18471",
+   "doi": "10.48550/arXiv.2606.18471"
+  },
+  "vanderbles_2019": {
+   "doi": "10.1098/rsos.181870"
+  }
+ },
+ "entries": [
+  {
+   "source": "openalex:title_abstract",
+   "family": "F7_dp_vintage_rounding",
+   "query": "disclosure avoidance noise user guidance large language model",
+   "hit_count": 0,
+   "status": "ok",
+   "top": [],
+   "ts_utc": "2026-09-03T02:33:06Z"
+  },
+  {
+   "source": "arxiv",
+   "family": "F7_dp_vintage_rounding",
+   "query": "(abs:\"disclosure avoidance\" OR abs:\"differential privacy\") AND abs:noise AND (abs:LLM OR abs:\"language model\") AND (abs:guidance OR abs:user)",
+   "hit_count": null,
+   "status": "error: arxiv 429",
+   "top": [],
+   "ts_utc": "2026-09-03T02:33:07Z"
+  },
+  {
+   "source": "semantic_scholar",
+   "family": "F7_dp_vintage_rounding",
+   "query": "disclosure avoidance noise user guidance large language model",
+   "hit_count": 50,
+   "status": "ok",
+   "top": [
+    {
+     "id": "ca0aa89965e4921c918881f9e5aa926bb2d28ac5",
+     "doi": "10.64898/2026.06.16.26355686",
+     "arxiv": null,
+     "title": "Silent Manipulation of Mental Health Treatment Recommendations from a Large Language Model",
+     "year": 2026,
+     "cited_by": 0,
+     "venue": "medRxiv",
+     "oa_url": "https://www.medrxiv.org/content/medrxiv/early/2026/06/17/2026.06.16.26355686.full.pdf"
+    },
+    {
+     "id": "f621fb10ef1c9f66e0da3984676c99f8af1af6a4",
+     "doi": "10.1109/ICDM65498.2025.00089",
+     "arxiv": "2509.09097",
+     "title": "DP-FedLoRA: Privacy-Enhanced Federated Fine-Tuning for On-Device Large Language Models",
+     "year": 2025,
+     "cited_by": 4,
+     "venue": "Industrial Conference on Data Mining",
+     "oa_url": ""
+    },
+    {
+     "id": "741fa1880db30b8032311ca1817e0fe32cbf8bdd",
+     "doi": "10.48550/arXiv.2508.17329",
+     "arxiv": "2508.17329",
+     "title": "Risk Assessment and Security Analysis of Large Language Models",
+     "year": 2025,
+     "cited_by": 8,
+     "venue": "arXiv.org",
+     "oa_url": ""
+    },
+    {
+     "id": "5abf3fe743462e724254215e632eeea14b96cacf",
+     "doi": "10.48550/arXiv.2511.03675",
+     "arxiv": "2511.03675",
+     "title": "Whisper Leak: a side-channel attack on Large Language Models",
+     "year": 2025,
+     "cited_by": 4,
+     "venue": "arXiv.org",
+     "oa_url": ""
+    },
+    {
+     "id": "28cc46ebc762821ac613c4fed1f9ab8d2be05360",
+     "doi": "10.1109/BigData66926.2025.11401764",
+     "arxiv": null,
+     "title": "Speech-Based Analysis of Aggression in Social Content: Resistance of Large Language Models to Signal Degradation",
+     "year": 2025,
+     "cited_by": 0,
+     "venue": "BigData Congress [Services Society]",
+     "oa_url": ""
+    },
+    {
+     "id": "1b05670d73e6152b253b963618943aafbb400dee",
+     "doi": "10.2196/87034",
+     "arxiv": null,
+     "title": "Measuring Consistency Between Large Language Models’ Responses to Preventive Care Queries and Official US Preventive Services Task Force (USPSTF) Recommendations: Systematic Test Involving All USPSTF Preventive Care Topics via Simulated User Prompts",
+     "year": 2026,
+     "cited_by": 0,
+     "venue": "JMIR AI",
+     "oa_url": "https://doi.org/10.2196/87034"
+    },
+    {
+     "id": "5dd46db93b89e162d4fb7656b273671627db0a8a",
+     "doi": "10.48550/arXiv.2511.20177",
+     "arxiv": "2511.20177",
+     "title": "Enhancing Sequential Recommendation with World Knowledge from Large Language Models",
+     "year": 2025,
+     "cited_by": 0,
+     "venue": "arXiv.org",
+     "oa_url": ""
+    },
+    {
+     "id": "8750b583eb03c2b304998b950b581ae2eab92db0",
+     "doi": null,
+     "arxiv": "2608.28593",
+     "title": "Statutory AI: Aligning Large Language Models With Legal Norms",
+     "year": 2026,
+     "cited_by": 0,
+     "venue": "",
+     "oa_url": ""
+    },
+    {
+     "id": "cdd9a874b8e23d738d0746b5f15a1364d60b5ab7",
+     "doi": "10.48550/arXiv.2606.02444",
+     "arxiv": "2606.02444",
+     "title": "Food Noise & False Safety: A Systematic Evaluation of How LLMs Fail to Adapt to Eating Disorder Queries with Clinician Feedback",
+     "year": 2026,
+     "cited_by": 0,
+     "venue": "arXiv.org",
+     "oa_url": ""
+    },
+    {
+     "id": "d45be559db81b937180bd3e508e010515dff139d",
+     "doi": "10.48550/arXiv.2510.10805",
+     "arxiv": "2510.10805",
+     "title": "Therapeutic AI and the Hidden Risks of Over-Disclosure: An Embedded AI-Literacy Framework for Mental Health Privacy",
+     "year": 2025,
+     "cited_by": 0,
+     "venue": "arXiv.org",
+     "oa_url": ""
+    },
+    {
+     "id": "bb57b2cd15f896738e38024386bf9c1439fcacfb",
+     "doi": "10.14569/ijacsa.2026.0170591",
+     "arxiv": null,
+     "title": "A Human-Centered Evaluation of AI-Generated Guidance: Integrated Statistical and Machine Learning Analysis with a Risk Framework for High-Stakes Domains",
+     "year": 2026,
+     "cited_by": 1,
+     "venue": "International Journal of Advanced Computer Science and Applications",
+     "oa_url": "https://thesai.org/Downloads/Volume17No5/Paper_91-A_Human_Centered_Evaluation_of_AI_Generated_Guidance.pdf"
+    },
+    {
+     "id": "62f0559f6bdec13714138dfec5475c56fc80e991",
+     "doi": "10.1109/TMC.2025.3564937",
+     "arxiv": null,
+     "title": "Hierarchical Index Retrieval-Driven Wireless Network Intent Translation With LLM",
+     "year": 2025,
+     "cited_by": 6,
+     "venue": "IEEE Transactions on Mobile Computing",
+     "oa_url": ""
+    },
+    {
+     "id": "b5a1691c1cb544041aa5c1f1250738ae8f978e6a",
+     "doi": null,
+     "arxiv": "2504.16548",
+     "title": "Exploring human-SAV interaction using LLMs: The impact of psychological factors on user experience",
+     "year": 2025,
+     "cited_by": 0,
+     "venue": "",
+     "oa_url": ""
+    },
+    {
+     "id": "f1e56def812bc398d1b2b8c9a7ea6a623abd38e5",
+     "doi": "10.18653/v1/2022.emnlp-main.144",
+     "arxiv": "2205.12558",
+     "title": "Gradient-based Constrained Sampling from Language Models",
+     "year": 2022,
+     "cited_by": 78,
+     "venue": "Conference on Empirical Methods in Natural Language Processing",
+     "oa_url": "https://aclanthology.org/2022.emnlp-main.144.pdf"
+    },
+    {
+     "id": "69b0affda3818c209328c60bd8dbe1e4f30678c8",
+     "doi": null,
+     "arxiv": "2607.23488",
+     "title": "Learning Sampling Parameters for Diffusion Models",
+     "year": 2026,
+     "cited_by": 0,
+     "venue": "",
+     "oa_url": ""
+    }
+   ],
+   "ts_utc": "2026-09-03T02:33:42Z"
+  },
+  {
+   "source": "openalex:title_abstract",
+   "family": "F7_dp_vintage_rounding",
+   "query": "differential privacy communicating noisy statistics data users",
+   "hit_count": 1,
+   "status": "ok",
+   "top": [
+    {
+     "id": "https://openalex.org/W4296591849",
+     "doi": "https://doi.org/10.1145/3523227.3546771",
+     "title": "Fairness-aware Federated Matrix Factorization",
+     "year": 2022,
+     "cited_by": 44,
+     "venue": null,
+     "oa_url": null,
+     "type": "conference-paper"
+    }
+   ],
+   "ts_utc": "2026-09-03T02:33:43Z"
+  },
+  {
+   "source": "arxiv",
+   "family": "F7_dp_vintage_rounding",
+   "query": "abs:\"differential privacy\" AND (abs:communicat OR abs:\"data users\" OR abs:\"user expectations\") AND (abs:statistic OR abs:census)",
+   "hit_count": null,
+   "status": "error: arxiv 429",
+   "top": [],
+   "ts_utc": "2026-09-03T02:34:14Z"
+  },
+  {
+   "source": "semantic_scholar",
+   "family": "F7_dp_vintage_rounding",
+   "query": "differential privacy communicating noisy statistics data users",
+   "hit_count": 561,
+   "status": "ok",
+   "top": [
+    {
+     "id": "13cc31766d88937f47c0790b24e131d0d69492ee",
+     "doi": "10.1162/99608f92.c3c87223",
+     "arxiv": "2305.07208",
+     "title": "Making Differential Privacy Work for Census Data Users",
+     "year": 2023,
+     "cited_by": 9,
+     "venue": "arXiv.org",
+     "oa_url": "https://hdsr.mitpress.mit.edu/pub/y6oilhhe/download/pdf"
+    },
+    {
+     "id": "f8b2bf79838766c84fcb1205b222f1b96e732f12",
+     "doi": "10.1145/3637309",
+     "arxiv": null,
+     "title": "Communicating the Privacy-Utility Trade-off: Supporting Informed Data Donation with Privacy Decision Interfaces for Differential Privacy",
+     "year": 2024,
+     "cited_by": 12,
+     "venue": "Proc. ACM Hum. Comput. Interact.",
+     "oa_url": "https://doi.org/10.1145/3637309"
+    },
+    {
+     "id": "a6539e002b609679ea613f78370866a37ef088f3",
+     "doi": "10.1109/ISPA63168.2024.00103",
+     "arxiv": null,
+     "title": "Collecting Clustering Coefficient of Distributed Graph Data with Shuffled Differential Privacy",
+     "year": 2024,
+     "cited_by": 0,
+     "venue": "International Symposium on Image and Signal Processing and Analysis",
+     "oa_url": ""
+    },
+    {
+     "id": "014fa43c2d22ad99e3d0dc08e583c31aced2bcfe",
+     "doi": "10.1145/3772318.3791573",
+     "arxiv": "2512.06534",
+     "title": "\"Having Confidence in My Confidence Intervals\": How Data Users Engage with Privacy-Protected Wikipedia Data",
+     "year": 2025,
+     "cited_by": 2,
+     "venue": "International Conference on Human Factors in Computing Systems",
+     "oa_url": "https://doi.org/10.1145/3772318.3791573"
+    },
+    {
+     "id": "2ae4b6847896a3c69fb4d7b7c7d71fc92c70f630",
+     "doi": "10.1109/TKDE.2024.3358909",
+     "arxiv": null,
+     "title": "LDPGuard: Defenses Against Data Poisoning Attacks to Local Differential Privacy Protocols",
+     "year": 2024,
+     "cited_by": 32,
+     "venue": "IEEE Transactions on Knowledge and Data Engineering",
+     "oa_url": ""
+    },
+    {
+     "id": "e35a160ee4bfa618dcc8159f8aad75e361cfed90",
+     "doi": "10.1109/SP61157.2025.00019",
+     "arxiv": "2504.07362",
+     "title": "Augmented Shuffle Protocols for Accurate and Robust Frequency Estimation Under Differential Privacy",
+     "year": 2025,
+     "cited_by": 7,
+     "venue": "IEEE Symposium on Security and Privacy",
+     "oa_url": ""
+    },
+    {
+     "id": "5aea1650265e12b583726762be72b822c6964700",
+     "doi": "10.14778/3725688.3725703",
+     "arxiv": "2503.08297",
+     "title": "Privacy for Free: Leveraging Local Differential Privacy Perturbed Data from Multiple Services",
+     "year": 2025,
+     "cited_by": 2,
+     "venue": "Proceedings of the VLDB Endowment",
+     "oa_url": ""
+    },
+    {
+     "id": "ac54e7892fec68e263328424163a5d5c273661a4",
+     "doi": "10.1109/MobileCloud66020.2025.00007",
+     "arxiv": "2511.09696",
+     "title": "Cooperative Local Differential Privacy: Securing Time Series Data in Distributed Environments",
+     "year": 2025,
+     "cited_by": 0,
+     "venue": "IEEE International Conference on Mobile Cloud Computing, Services, and Engineering",
+     "oa_url": ""
+    },
+    {
+     "id": "84aacf5f4f42d8285b6987d812ec5a2707b57f60",
+     "doi": "10.33140/jmtcm.03.01.01",
+     "arxiv": null,
+     "title": "Augmented Differential Privacy Framework for Data Analytics",
+     "year": 2024,
+     "cited_by": 0,
+     "venue": "Journal of Mathematical Techniques and Computational Mathematics",
+     "oa_url": "https://doi.org/10.33140/jmtcm.03.01.01"
+    },
+    {
+     "id": "cb6e3c78588d339bc4f51b8d291ac154c8c57117",
+     "doi": "10.1109/TVCG.2024.3456304",
+     "arxiv": "2407.19364",
+     "title": "Defogger: A Visual Analysis Approach for Data Exploration of Sensitive Data Protected by Differential Privacy",
+     "year": 2024,
+     "cited_by": 6,
+     "venue": "IEEE Transactions on Visualization and Computer Graphics",
+     "oa_url": ""
+    },
+    {
+     "id": "eced38e0776dc8782cba92850f0912b6bcfee574",
+     "doi": "10.1162/99608f92.a8fb0371",
+     "arxiv": null,
+     "title": "Disclosing Economists’ Privacy Perspectives: A Survey of American Economic Association Members’ Views on Differential Privacy and the Usability of Noise-Infused Data",
+     "year": 2024,
+     "cited_by": 5,
+     "venue": "Harvard data science review",
+     "oa_url": "https://hdsr.mitpress.mit.edu/pub/n4db7079/download/pdf"
+    },
+    {
+     "id": "47e11eb925d08c932d362bee4c97588317b000c1",
+     "doi": "10.3390/app14146368",
+     "arxiv": null,
+     "title": "Robust Estimation Method against Poisoning Attacks for Key-Value Data with Local Differential Privacy",
+     "year": 2024,
+     "cited_by": 5,
+     "venue": "Applied Sciences",
+     "oa_url": "https://doi.org/10.3390/app14146368"
+    },
+    {
+     "id": "64803de297b5948f77ad0bac6f64c992474a601b",
+     "doi": "10.1145/3725348",
+     "arxiv": null,
+     "title": "Robust Privacy-Preserving Triangle Counting under Edge Local Differential Privacy",
+     "year": 2025,
+     "cited_by": 8,
+     "venue": "Proc. ACM Manag. Data",
+     "oa_url": "https://dl.acm.org/doi/pdf/10.1145/3725348"
+    },
+    {
+     "id": "ce68072e313e67d8f98fea6ff6556b1b7aabcdb7",
+     "doi": "10.48550/arXiv.2505.15721",
+     "arxiv": "2505.15721",
+     "title": "Privacy-Preserving Conformal Prediction Under Local Differential Privacy",
+     "year": 2025,
+     "cited_by": 6,
+     "venue": "International Symposium on Conformal and Probabilistic Prediction with Applications",
+     "oa_url": ""
+    },
+    {
+     "id": "f75f803ffc03527ee5f3f3587b9252239c81c783",
+     "doi": "10.1109/TMC.2025.3568511",
+     "arxiv": null,
+     "title": "Personalized Local Differential Privacy for Multi-Dimensional Range Queries Over Mobile User Data",
+     "year": 2025,
+     "cited_by": 14,
+     "venue": "IEEE Transactions on Mobile Computing",
+     "oa_url": ""
+    }
+   ],
+   "ts_utc": "2026-09-03T02:35:43Z"
+  },
+  {
+   "source": "openalex:title_abstract",
+   "family": "F7_dp_vintage_rounding",
+   "query": "temporal validity statistics answer large language model release date",
+   "hit_count": 0,
+   "status": "ok",
+   "top": [],
+   "ts_utc": "2026-09-03T02:35:44Z"
+  },
+  {
+   "source": "arxiv",
+   "family": "F7_dp_vintage_rounding",
+   "query": "(abs:\"temporal validity\" OR abs:\"time-sensitive\") AND (abs:LLM OR abs:\"language model\") AND (abs:statistic OR abs:\"release date\" OR abs:answer)",
+   "hit_count": null,
+   "status": "error: arxiv 429",
+   "top": [],
+   "ts_utc": "2026-09-03T02:35:44Z"
+  },
+  {
+   "source": "semantic_scholar",
+   "family": "F7_dp_vintage_rounding",
+   "query": "temporal validity statistics answer large language model release date",
+   "hit_count": 19,
+   "status": "ok",
+   "top": [
+    {
+     "id": "db25f39673889a3a48c58e4d24b6fa2a11d4ca53",
+     "doi": "10.1038/s41746-026-03058-7",
+     "arxiv": "2508.12393",
+     "title": "MedKGent: A Large Language Model Agent Framework for Constructing Temporally Evolving Medical Knowledge Graph",
+     "year": 2025,
+     "cited_by": 6,
+     "venue": "npj Digital Medicine",
+     "oa_url": "https://www.nature.com/articles/s41746-026-03058-7_reference.pdf"
+    },
+    {
+     "id": "ba2b9d672d6c2d8b50a63d70a893e722364eec50",
+     "doi": null,
+     "arxiv": "2606.20959",
+     "title": "Right Knowledge, Wrong Answer: Characterizing Parametric Temporal Conflict in Open-Weight Language Models",
+     "year": 2026,
+     "cited_by": 3,
+     "venue": "",
+     "oa_url": ""
+    },
+    {
+     "id": "36b733cbf518ed93baccdabbfd3eb30d906f8a8a",
+     "doi": null,
+     "arxiv": "2608.08512",
+     "title": "Time Present and Time Past: Benchmarking Large Language Models on Temporally Evolving Document Understanding",
+     "year": 2026,
+     "cited_by": 0,
+     "venue": "",
+     "oa_url": ""
+    },
+    {
+     "id": "25c7480514c210fdfc6aac678f9e0ff153d03b25",
+     "doi": "10.48550/arXiv.2605.23497",
+     "arxiv": "2605.23497",
+     "title": "Asking For An Old Friend: Diagnosing and Mitigating Temporal Failure Modes in LLM-based Statutory Question Answering",
+     "year": 2026,
+     "cited_by": 1,
+     "venue": "arXiv.org",
+     "oa_url": ""
+    },
+    {
+     "id": "e50a6446818ef51cb2d57d9749a86daaef90a3f7",
+     "doi": "10.3390/computers15080471",
+     "arxiv": null,
+     "title": "Ontology-Driven Legal Rule Auditor for Secure, Trustworthy, and Governed RAG Systems",
+     "year": 2026,
+     "cited_by": 0,
+     "venue": "Computers",
+     "oa_url": "https://www.mdpi.com/2073-431X/15/8/471/pdf?version=1784895251"
+    },
+    {
+     "id": "7e1a9040b0cdbe2bdb983f1a013ee27f75ffd52a",
+     "doi": "10.3386/w35247",
+     "arxiv": "2607.11889",
+     "title": "Scaling Point-in-Time Language Models",
+     "year": 2026,
+     "cited_by": 2,
+     "venue": "",
+     "oa_url": ""
+    },
+    {
+     "id": "f02a9a4dab395cbf4a9108ffcf3a2b6df51dc52a",
+     "doi": "10.1145/3805712.3808638",
+     "arxiv": null,
+     "title": "Temporal Information Retrieval and Extraction: From Foundations to RAG",
+     "year": 2026,
+     "cited_by": 0,
+     "venue": "Annual International ACM SIGIR Conference on Research and Development in Information Retrieval",
+     "oa_url": "https://doi.org/10.1145/3805712.3808638"
+    },
+    {
+     "id": "de5e0a70af551df17e693223d29a1840900d6b74",
+     "doi": "10.48550/arXiv.2305.14824",
+     "arxiv": "2305.14824",
+     "title": "Mitigating Temporal Misalignment by Discarding Outdated Facts",
+     "year": 2023,
+     "cited_by": 26,
+     "venue": "Conference on Empirical Methods in Natural Language Processing",
+     "oa_url": "http://arxiv.org/pdf/2305.14824"
+    },
+    {
+     "id": "4ae4795cd48b846daf9f2476abd3142ae25ff39e",
+     "doi": "10.48550/arXiv.2603.16544",
+     "arxiv": "2603.16544",
+     "title": "How often do Answers Change? Estimating Recency Requirements in Question Answering",
+     "year": 2026,
+     "cited_by": 1,
+     "venue": "arXiv.org",
+     "oa_url": ""
+    },
+    {
+     "id": "c7788986d8900473d816928202da345104fc7845",
+     "doi": "10.33263/briac164.102",
+     "arxiv": null,
+     "title": "Who Knows Before the Public Knows? Journal Metrics, Embargoes, and the Asymmetry of Access",
+     "year": 2026,
+     "cited_by": 0,
+     "venue": "Biointerface Research in Applied Chemistry",
+     "oa_url": "https://doi.org/10.33263/briac164.102"
+    },
+    {
+     "id": "059b7ff0f5d95649fbac1e80a5dd044f780b104b",
+     "doi": null,
+     "arxiv": null,
+     "title": "Intelligent Query Interface for Temporal Database with Natural Language Processing using Efficient Context Free Grammar",
+     "year": 2012,
+     "cited_by": 0,
+     "venue": "",
+     "oa_url": ""
+    },
+    {
+     "id": "4818c0d46c0214de72cd0b7f220e97d4c3a7bc5b",
+     "doi": "10.1111/pde.15417",
+     "arxiv": null,
+     "title": "From eczema to anxiety: How artificial intelligence  shapes parental perspectives",
+     "year": 2023,
+     "cited_by": 1,
+     "venue": "Pediatric dermatology",
+     "oa_url": "https://doi.org/10.1111/pde.15417"
+    },
+    {
+     "id": "f59096e025aaa85dc012fc624b46b2a2421e4212",
+     "doi": null,
+     "arxiv": null,
+     "title": "TomTom Traffic Prediction for Intelligent GPS Navigation",
+     "year": 2010,
+     "cited_by": 33,
+     "venue": "",
+     "oa_url": ""
+    },
+    {
+     "id": "f5911d444c7651f72e1b60c3860a11df2b7acde4",
+     "doi": null,
+     "arxiv": null,
+     "title": "RoboPlan: A Multimodal Long-Horizon Planning Robotics Benchmark",
+     "year": null,
+     "cited_by": 0,
+     "venue": "",
+     "oa_url": ""
+    },
+    {
+     "id": "02d53228d8b525de6cd53ecb8ad7ae93d44a0ca1",
+     "doi": null,
+     "arxiv": null,
+     "title": "Running head: COGNITIVE-PSYCHOMETRIC MODELING OF READING ITEMS Cognitive-Psychometric Modeling of the MELAB Reading Items",
+     "year": 2007,
+     "cited_by": 3,
+     "venue": "",
+     "oa_url": ""
+    }
+   ],
+   "ts_utc": "2026-09-03T02:36:02Z"
+  },
+  {
+   "source": "openalex:title_abstract",
+   "family": "F7_dp_vintage_rounding",
+   "query": "outdated statistic stale answer official data vintage",
+   "hit_count": 0,
+   "status": "ok",
+   "top": [],
+   "ts_utc": "2026-09-03T02:36:03Z"
+  },
+  {
+   "source": "arxiv",
+   "family": "F7_dp_vintage_rounding",
+   "query": "(abs:outdated OR abs:stale) AND (abs:LLM OR abs:\"language model\") AND (abs:statistic OR abs:\"official data\" OR abs:vintage)",
+   "hit_count": null,
+   "status": "error: arxiv 429",
+   "top": [],
+   "ts_utc": "2026-09-03T02:36:04Z"
+  },
+  {
+   "source": "semantic_scholar",
+   "family": "F7_dp_vintage_rounding",
+   "query": "outdated statistic stale answer official data vintage",
+   "hit_count": 7,
+   "status": "ok",
+   "top": [
+    {
+     "id": "b1a0480c2438733699354b47351d49c6e36268e1",
+     "doi": "10.7326/M17-3440",
+     "arxiv": null,
+     "title": "Prevalence and Distribution of E-Cigarette Use Among U.S. Adults: Behavioral Risk Factor Surveillance System, 2016",
+     "year": 2018,
+     "cited_by": 267,
+     "venue": "Annals of Internal Medicine",
+     "oa_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10534294"
+    },
+    {
+     "id": "bf8bdea103d80d8d306a783e018a043ee6ac5c09",
+     "doi": null,
+     "arxiv": null,
+     "title": "Flint’s Data Story: a Government, Corporate, and University Collaboration",
+     "year": 2018,
+     "cited_by": 1,
+     "venue": "",
+     "oa_url": ""
+    },
+    {
+     "id": "9326dce967631876a9617e796aa7a401b7087d39",
+     "doi": null,
+     "arxiv": null,
+     "title": "Poverty Threshold Guidelines",
+     "year": 2021,
+     "cited_by": 0,
+     "venue": "",
+     "oa_url": ""
+    },
+    {
+     "id": "0ac67837a5cd3efac2b0a37d0f2d05024278dab8",
+     "doi": "10.1201/9781315159324-16",
+     "arxiv": null,
+     "title": "Role of Uncertainty Assessment in LCA of Pavements",
+     "year": 2016,
+     "cited_by": 2,
+     "venue": "",
+     "oa_url": ""
+    },
+    {
+     "id": "4d21626248e528d3e97aee18234c26349e26ebfc",
+     "doi": null,
+     "arxiv": null,
+     "title": "Constructing Linear Measures from Counts of Qualitative Observations.",
+     "year": 1993,
+     "cited_by": 10,
+     "venue": "",
+     "oa_url": ""
+    },
+    {
+     "id": "4c5418c79f794e79f0d1964034f070b29a69159a",
+     "doi": null,
+     "arxiv": null,
+     "title": "Future Prospects in Romania : Scenarios for the Development of the Knowledge Society in Romania",
+     "year": 2005,
+     "cited_by": 1,
+     "venue": "",
+     "oa_url": ""
+    },
+    {
+     "id": "4a3544dfa49b55f00f9ead23f12623226a60767c",
+     "doi": null,
+     "arxiv": null,
+     "title": "The Effects of Inserted Questions and Mandatory Review in Computer-Mediated Texts. Reading Research Report No. 50.",
+     "year": 1996,
+     "cited_by": 2,
+     "venue": "",
+     "oa_url": ""
+    }
+   ],
+   "ts_utc": "2026-09-03T02:36:22Z"
+  },
+  {
+   "source": "openalex:title_abstract",
+   "family": "F7_dp_vintage_rounding",
+   "query": "data release version temporal misalignment retrieval augmented",
+   "hit_count": 0,
+   "status": "ok",
+   "top": [],
+   "ts_utc": "2026-09-03T02:36:24Z"
+  },
+  {
+   "source": "arxiv",
+   "family": "F7_dp_vintage_rounding",
+   "query": "abs:\"retrieval-augmented\" AND (abs:\"temporal misalignment\" OR abs:\"temporal\" OR abs:version) AND (abs:release OR abs:vintage OR abs:outdated)",
+   "hit_count": 37,
+   "status": "ok",
+   "top": [
+    {
+     "id": "http://arxiv.org/abs/2503.04800v3",
+     "title": "HoH: A Dynamic Benchmark for Evaluating the Impact of Outdated Information on Retrieval-Augmented Generation",
+     "year": "2025",
+     "oa_url": "http://arxiv.org/pdf/2503.04800v3"
+    },
+    {
+     "id": "http://arxiv.org/abs/2411.08324v2",
+     "title": "Are LLMs Prescient? A Continuous Evaluation using Daily News as the Oracle",
+     "year": "2024",
+     "oa_url": "http://arxiv.org/pdf/2411.08324v2"
+    },
+    {
+     "id": "http://arxiv.org/abs/2604.27306v1",
+     "title": "NuggetIndex: Governed Atomic Retrieval for Maintainable RAG",
+     "year": "2026",
+     "oa_url": "http://arxiv.org/pdf/2604.27306v1"
+    },
+    {
+     "id": "http://arxiv.org/abs/2505.07968v3",
+     "title": "Assessing and Mitigating Medical Knowledge Drift and Conflicts in Large Language Models",
+     "year": "2025",
+     "oa_url": "http://arxiv.org/pdf/2505.07968v3"
+    },
+    {
+     "id": "http://arxiv.org/abs/2511.06668v2",
+     "title": "Contradictions in Context: Challenges for Retrieval-Augmented Generation in Healthcare",
+     "year": "2025",
+     "oa_url": "http://arxiv.org/pdf/2511.06668v2"
+    },
+    {
+     "id": "http://arxiv.org/abs/2505.07637v1",
+     "title": "Chronocept: Instilling a Sense of Time in Machines",
+     "year": "2025",
+     "oa_url": "http://arxiv.org/pdf/2505.07637v1"
+    },
+    {
+     "id": "http://arxiv.org/abs/2402.11034v2",
+     "title": "PAT-Questions: A Self-Updating Benchmark for Present-Anchored Temporal Question-Answering",
+     "year": "2024",
+     "oa_url": "http://arxiv.org/pdf/2402.11034v2"
+    },
+    {
+     "id": "http://arxiv.org/abs/2605.20244v2",
+     "title": "Lean Refactor: Multi-Objective Controllable Proof Optimization via Agentic Strategy Search",
+     "year": "2026",
+     "oa_url": "http://arxiv.org/pdf/2605.20244v2"
+    },
+    {
+     "id": "http://arxiv.org/abs/2504.09651v4",
+     "title": "GitBugs: Bug Reports for Duplicate Detection, Retrieval Augmented Generation, Triage, and More",
+     "year": "2025",
+     "oa_url": "http://arxiv.org/pdf/2504.09651v4"
+    },
+    {
+     "id": "http://arxiv.org/abs/2508.01680v1",
+     "title": "T-GRAG: A Dynamic GraphRAG Framework for Resolving Temporal Conflicts and Redundancy in Knowledge Retrieval",
+     "year": "2025",
+     "oa_url": "http://arxiv.org/pdf/2508.01680v1"
+    },
+    {
+     "id": "http://arxiv.org/abs/2411.14592v2",
+     "title": "G-RAG: Knowledge Expansion in Material Science",
+     "year": "2024",
+     "oa_url": "http://arxiv.org/pdf/2411.14592v2"
+    },
+    {
+     "id": "http://arxiv.org/abs/2511.01305v1",
+     "title": "DeepSpecs: Expert-Level Questions Answering in 5G",
+     "year": "2025",
+     "oa_url": "http://arxiv.org/pdf/2511.01305v1"
+    },
+    {
+     "id": "http://arxiv.org/abs/2604.05096v2",
+     "title": "RAG or Learning? Understanding the Limits of LLM Adaptation under Continuous Knowledge Drift in the Real World",
+     "year": "2026",
+     "oa_url": "http://arxiv.org/pdf/2604.05096v2"
+    },
+    {
+     "id": "http://arxiv.org/abs/2606.06044v1",
+     "title": "IA-RAG: Interval-Algebra-Driven Temporal Reasoning for Dynamic Knowledge Retrieval",
+     "year": "2026",
+     "oa_url": "http://arxiv.org/pdf/2606.06044v1"
+    },
+    {
+     "id": "http://arxiv.org/abs/2411.12449v2",
+     "title": "Neon: News Entity-Interaction Extraction for Enhanced Question Answering",
+     "year": "2024",
+     "oa_url": "http://arxiv.org/pdf/2411.12449v2"
+    }
+   ],
+   "ts_utc": "2026-09-03T02:37:03Z"
+  },
+  {
+   "source": "semantic_scholar",
+   "family": "F7_dp_vintage_rounding",
+   "query": "data release version temporal misalignment retrieval augmented",
+   "hit_count": 107,
+   "status": "ok",
+   "top": [
+    {
+     "id": "866e0f3cc32820bc6e45af07d2ca721571329545",
+     "doi": "10.1109/ACDSA67686.2026.11467963",
+     "arxiv": null,
+     "title": "Integrating Dense, Sparse, and Graph-Based Approaches in Financial Data Analysis for a Retrieval-Augmented Generation Framework",
+     "year": 2026,
+     "cited_by": 0,
+     "venue": "2026 International Conference on Artificial Intelligence, Computer, Data Sciences and Applications (ACDSA)",
+     "oa_url": ""
+    },
+    {
+     "id": "a27e64f3670eba8cb7cf9880bd32a3079a93958e",
+     "doi": "10.48550/arXiv.2601.05270",
+     "arxiv": "2601.05270",
+     "title": "LiveVectorLake: A Real-Time Versioned Knowledge Base Architecture for Streaming Vector Updates and Temporal Retrieval",
+     "year": 2025,
+     "cited_by": 1,
+     "venue": "arXiv.org",
+     "oa_url": ""
+    },
+    {
+     "id": "d1932021a85b36144f6c355897b5ba55403751c8",
+     "doi": "10.1145/3726302.3730102",
+     "arxiv": "2501.07861",
+     "title": "ReARTeR: Retrieval-Augmented Reasoning with Trustworthy Process Rewarding",
+     "year": 2025,
+     "cited_by": 38,
+     "venue": "Annual International ACM SIGIR Conference on Research and Development in Information Retrieval",
+     "oa_url": "https://dl.acm.org/doi/pdf/10.1145/3726302.3730102"
+    },
+    {
+     "id": "de5e0a70af551df17e693223d29a1840900d6b74",
+     "doi": "10.48550/arXiv.2305.14824",
+     "arxiv": "2305.14824",
+     "title": "Mitigating Temporal Misalignment by Discarding Outdated Facts",
+     "year": 2023,
+     "cited_by": 26,
+     "venue": "Conference on Empirical Methods in Natural Language Processing",
+     "oa_url": "http://arxiv.org/pdf/2305.14824"
+    },
+    {
+     "id": "2903e46caad0da9acc709919d7eaaed824668887",
+     "doi": "10.60087/jaigs.v8i02.419",
+     "arxiv": null,
+     "title": "Orgverse: A Temporal And Multidimensional LLM Framework for Enterprise Data Integration And Decision",
+     "year": 2025,
+     "cited_by": 1,
+     "venue": "Journal of Artificial Intelligence General science (JAIGS) ISSN:3006-4023",
+     "oa_url": "https://newjaigs.com/index.php/JAIGS/article/download/419/337"
+    },
+    {
+     "id": "7cc218f5ee6f9793d385fb0cd588291b1d290fbf",
+     "doi": "10.48550/arXiv.2505.00039",
+     "arxiv": null,
+     "title": "Graph RAG for Legal Norms: A Hierarchical and Temporal Approach",
+     "year": 2025,
+     "cited_by": 5,
+     "venue": "arXiv.org",
+     "oa_url": ""
+    },
+    {
+     "id": "7521bbc81ec54105e2711e4333fcba19dee0996e",
+     "doi": "10.1109/MetroLivEnv70468.2026.11659871",
+     "arxiv": null,
+     "title": "Metrologically Grounded Graph-Augmented Multimodal AI for Surgical Video Documentation in Smart Healthcare Environments",
+     "year": 2026,
+     "cited_by": 0,
+     "venue": "2026 IEEE International Workshop on Metrology for Living Environment (MetroLivEnv)",
+     "oa_url": ""
+    },
+    {
+     "id": "33a767b87b3d1fb71b747ad0f07fe73d7eccc686",
+     "doi": "10.3390/RS10071121",
+     "arxiv": null,
+     "title": "The Salinity Retrieval Algorithms for the NASA Aquarius Version 5 and SMAP Version 3 Releases",
+     "year": 2018,
+     "cited_by": 163,
+     "venue": "Remote Sensing",
+     "oa_url": "https://www.mdpi.com/2072-4292/10/7/1121/pdf?version=1531728701"
+    },
+    {
+     "id": "0a5e2f812e0f8fc8e71dc74292193cea33c8d422",
+     "doi": "10.48550/arXiv.2310.07793",
+     "arxiv": "2310.07793",
+     "title": "GenTKG: Generative Forecasting on Temporal Knowledge Graph",
+     "year": 2023,
+     "cited_by": 87,
+     "venue": "NAACL-HLT",
+     "oa_url": "https://arxiv.org/pdf/2310.07793"
+    },
+    {
+     "id": "f3dbe90b135791cf84726d2a06f5e0d60af6f6f1",
+     "doi": "10.48550/arXiv.2603.15583",
+     "arxiv": "2603.15583",
+     "title": "Grounding World Simulation Models in a Real-World Metropolis",
+     "year": 2026,
+     "cited_by": 9,
+     "venue": "arXiv.org",
+     "oa_url": ""
+    },
+    {
+     "id": "43156fcd664c85e34214e28d82331987043cbe83",
+     "doi": "10.48550/arXiv.2602.17518",
+     "arxiv": "2602.17518",
+     "title": "A Picture of Agentic Search",
+     "year": 2026,
+     "cited_by": 1,
+     "venue": "arXiv.org",
+     "oa_url": ""
+    },
+    {
+     "id": "c112a8df7eb63d7fbb397288020434aac6f7a5f6",
+     "doi": "10.3233/FAIA251339",
+     "arxiv": null,
+     "title": "TACTICAL: A Framework for Building Wikipedia-Derived Timelines of Atomic Changes",
+     "year": 2025,
+     "cited_by": 0,
+     "venue": "European Conference on Artificial Intelligence",
+     "oa_url": "https://doi.org/10.3233/faia251339"
+    },
+    {
+     "id": "80dd4c8eb324de82369d0df7d44e2eb9659011a2",
+     "doi": "10.5194/amt-19-2407-2026",
+     "arxiv": null,
+     "title": "TROPOMI/WFMD v2.0: Improved retrievals of XCH\n 4\n and XCO with XGBoost-based quality filtering",
+     "year": 2026,
+     "cited_by": 2,
+     "venue": "Atmospheric Measurement Techniques",
+     "oa_url": "https://doi.org/10.5194/amt-19-2407-2026"
+    },
+    {
+     "id": "b8e99b667ff95be1535afc15f0b00ab654751350",
+     "doi": "10.48550/arXiv.2602.15508",
+     "arxiv": "2602.15508",
+     "title": "Eco-Amazon: Enriching E-commerce Datasets with Product Carbon Footprint for Sustainable Recommendations",
+     "year": 2026,
+     "cited_by": 1,
+     "venue": "arXiv.org",
+     "oa_url": ""
+    },
+    {
+     "id": "4c281b47988c1c4bb1686cb92ec000bfd1980683",
+     "doi": "10.5194/amt-16-1443-2023",
+     "arxiv": null,
+     "title": "Version 8 IMK–IAA MIPAS ozone profiles: nominal observation mode",
+     "year": 2023,
+     "cited_by": 16,
+     "venue": "Atmospheric Measurement Techniques",
+     "oa_url": "https://amt.copernicus.org/articles/16/1443/2023/amt-16-1443-2023.pdf"
+    }
+   ],
+   "ts_utc": "2026-09-03T02:37:14Z"
+  },
+  {
+   "source": "openalex:title_abstract",
+   "family": "F7_dp_vintage_rounding",
+   "query": "number rounding precision preservation summarization",
+   "hit_count": 2,
+   "status": "ok",
+   "top": [
+    {
+     "id": "https://openalex.org/W2117279419",
+     "doi": "https://doi.org/10.1093/ije/30.5.1076",
+     "title": "Commentary: Mediterranean paradoxes continue to provoke",
+     "year": 2001,
+     "cited_by": 2,
+     "venue": "International Journal of Epidemiology",
+     "oa_url": "https://academic.oup.com/ije/article-pdf/30/5/1076/18479021/301076.pdf",
+     "type": "editorial"
+    },
+    {
+     "id": "https://openalex.org/W4283368308",
+     "doi": "https://doi.org/10.1111/trf.16961",
+     "title": "A review of two emerging technologies for pre‐hospital treatment of non‐compressible abdominal hemorrhage",
+     "year": 2022,
+     "cited_by": 2,
+     "venue": "Transfusion",
+     "oa_url": "https://onlinelibrary.wiley.com/doi/pdfdirect/10.1111/trf.16961",
+     "type": "article"
+    }
+   ],
+   "ts_utc": "2026-09-03T02:37:16Z"
+  },
+  {
+   "source": "arxiv",
+   "family": "F7_dp_vintage_rounding",
+   "query": "(abs:rounding OR abs:precision) AND abs:number AND (abs:summariz OR abs:paraphras OR abs:restat) AND (abs:LLM OR abs:\"language model\")",
+   "hit_count": null,
+   "status": "error: arxiv 429",
+   "top": [],
+   "ts_utc": "2026-09-03T02:38:12Z"
+  },
+  {
+   "source": "semantic_scholar",
+   "family": "F7_dp_vintage_rounding",
+   "query": "number rounding precision preservation summarization",
+   "hit_count": 66,
+   "status": "ok",
+   "top": [
+    {
+     "id": "793a0c0d771560edf9a334346abae7ab997b7b62",
+     "doi": "10.1007/s42979-025-04621-x",
+     "arxiv": null,
+     "title": "Context Based Review on Auto Text Summarization Techniques Using Natural Language Processing for Performing Evaluation and Comparative Analysis of ATS Techniques",
+     "year": 2025,
+     "cited_by": 0,
+     "venue": "SN Computer Science",
+     "oa_url": ""
+    },
+    {
+     "id": "3d418fb9de7ecc112d840928f13827723352badb",
+     "doi": "10.21037/tau-2025-393",
+     "arxiv": null,
+     "title": "Research progress on ejaculatory function preservation in minimally invasive surgical treatments for benign prostatic hyperplasia: a narrative review",
+     "year": 2025,
+     "cited_by": 6,
+     "venue": "Translational Andrology and Urology",
+     "oa_url": ""
+    },
+    {
+     "id": "3fe9a784509e76c873cc40d87248bccbf7cb5eab",
+     "doi": "10.52214/vib.v10i.12654",
+     "arxiv": null,
+     "title": "The Epistemological Consequences of Artificial Intelligence, Precision Medicine, and Implantable Brain-Computer Interfaces",
+     "year": 2024,
+     "cited_by": 2,
+     "venue": "Voices in Bioethics",
+     "oa_url": "https://doi.org/10.52214/vib.v10i.12654"
+    },
+    {
+     "id": "422fc0f4dec6605f227f1c158ff8477219002491",
+     "doi": "10.1515/cclm-2017-0112",
+     "arxiv": null,
+     "title": "Sample types applied for molecular diagnosis of therapeutic management of advanced non-small cell lung cancer in the precision medicine",
+     "year": 2017,
+     "cited_by": 14,
+     "venue": "Clinical Chemistry and Laboratory Medicine",
+     "oa_url": ""
+    },
+    {
+     "id": "dcc99e0edb69b73dbe90047aad148f501a540580",
+     "doi": "10.1038/s41598-023-29065-2",
+     "arxiv": null,
+     "title": "Tumor organoid biobank-new platform for medical research",
+     "year": 2023,
+     "cited_by": 57,
+     "venue": "Scientific Reports",
+     "oa_url": "https://www.nature.com/articles/s41598-023-29065-2.pdf"
+    },
+    {
+     "id": "2770e134cc9dbbe0d400e48490e925de71fb5f89",
+     "doi": "10.1097/JS9.0000000000003190",
+     "arxiv": null,
+     "title": "A commentary on “Efficacy and safety of bicompartmental versus total knee arthroplasty for treating medial tibiofemoral compartment combined with patellofemoral compartment osteoarthritis: a systematic review and META-analysis”",
+     "year": 2025,
+     "cited_by": 0,
+     "venue": "International Journal of Surgery",
+     "oa_url": "https://doi.org/10.1097/js9.0000000000003190"
+    },
+    {
+     "id": "7a2b579186808c0e4d7f7ace3239292c671ec372",
+     "doi": "10.1109/ICSSIT69151.2026.11656512",
+     "arxiv": null,
+     "title": "Hybrid Deep Learning for Human Behaviour Analysis with Handwritten Data",
+     "year": 2026,
+     "cited_by": 0,
+     "venue": "2026 7th International Conference on Smart Systems and Inventive Technology (ICSSIT)",
+     "oa_url": ""
+    },
+    {
+     "id": "db1240979faa0b07a59ffceed2d3860eb1f3169b",
+     "doi": "10.3290/j.ijcd.b6654641",
+     "arxiv": null,
+     "title": "Safety and performance of the first supervised automated dental robot to perform minimally invasive tooth prep for laminate veneers.",
+     "year": 2025,
+     "cited_by": 1,
+     "venue": "International Journal of Computerized Dentistry",
+     "oa_url": ""
+    },
+    {
+     "id": "00e0f6b69768ee2b950b44e771f90b4c92d02b47",
+     "doi": "10.32342/anujph.2026.31.3",
+     "arxiv": null,
+     "title": "Vasyl Chaichenko’s Play The Viper: The Textual Dynamics of the Author’s Artistic Decisions",
+     "year": 2026,
+     "cited_by": 0,
+     "venue": "Alfred Nobel University Journal of Philology",
+     "oa_url": "https://doi.org/10.32342/anujph.2026.31.3"
+    },
+    {
+     "id": "c4c15f93e05681b2d3ba24ef0c99032b2a33b9a4",
+     "doi": "10.21037/cco-25-114",
+     "arxiv": null,
+     "title": "Advances in percutaneous lung ablation: techniques, outcomes, and future directions-a literature review.",
+     "year": 2026,
+     "cited_by": 0,
+     "venue": "Chinese Clinical Oncology",
+     "oa_url": "https://doi.org/10.21037/cco-25-114"
+    },
+    {
+     "id": "73f02c5b2d51d2de9f9bee09a1fb0729a8823656",
+     "doi": "10.48786/edbt.2022.10",
+     "arxiv": null,
+     "title": "Aggregation Detection in CSV Files",
+     "year": 2022,
+     "cited_by": 0,
+     "venue": "International Conference on Extending Database Technology",
+     "oa_url": ""
+    },
+    {
+     "id": "2abf0b13d19659b3a0027e02d16165044c40e04b",
+     "doi": "10.3168/jds.2017-13708",
+     "arxiv": null,
+     "title": "Silage review: Recent advances and future technologies for baled silages.",
+     "year": 2018,
+     "cited_by": 91,
+     "venue": "Journal of Dairy Science",
+     "oa_url": "http://www.journalofdairyscience.org/article/S0022030218303278/pdf"
+    },
+    {
+     "id": "d0f219ff4d062e46dd439d75e70ea7abd6687f56",
+     "doi": null,
+     "arxiv": null,
+     "title": "VERTICAL EMITTANCE REDUCTION AND PRESERVATION AT THE ESRF ELECTRON STORAGE RING",
+     "year": 2011,
+     "cited_by": 5,
+     "venue": "",
+     "oa_url": ""
+    },
+    {
+     "id": "b2200f4e7dfea34973e8ef4fa23e5e9a7fe07330",
+     "doi": null,
+     "arxiv": null,
+     "title": "Design of Fault-Tolerant Reversible Floating Point Division",
+     "year": 2018,
+     "cited_by": 10,
+     "venue": "",
+     "oa_url": ""
+    },
+    {
+     "id": "a2d05f70ea7c4689efc167de0f25b4d767add230",
+     "doi": null,
+     "arxiv": null,
+     "title": "Practical methods for biological morphometry",
+     "year": 1979,
+     "cited_by": 1568,
+     "venue": "",
+     "oa_url": ""
+    }
+   ],
+   "ts_utc": "2026-09-03T02:38:19Z"
+  },
+  {
+   "source": "openalex:title",
+   "family": "NAMED",
+   "query": "FreshLLMs: Refreshing Large Language Models with Search Engine Augmentation",
+   "hit_count": 2,
+   "status": "ok",
+   "top": [
+    {
+     "id": "https://openalex.org/W4402684046",
+     "doi": "https://doi.org/10.18653/v1/2024.findings-acl.813",
+     "title": "FreshLLMs: Refreshing Large Language Models with Search Engine Augmentation",
+     "year": 2024,
+     "cited_by": 68,
+     "venue": null,
+     "oa_url": "https://aclanthology.org/2024.findings-acl.813.pdf",
+     "type": "conference-paper"
+    },
+    {
+     "id": "https://openalex.org/W4387432227",
+     "doi": "https://doi.org/10.48550/arxiv.2310.03214",
+     "title": "FreshLLMs: Refreshing Large Language Models with Search Engine Augmentation",
+     "year": 2023,
+     "cited_by": 7,
+     "venue": "arXiv (Cornell University)",
+     "oa_url": "https://arxiv.org/pdf/2310.03214",
+     "type": "preprint"
+    }
+   ],
+   "ts_utc": "2026-09-03T02:38:21Z"
+  },
+  {
+   "source": "openalex:title",
+   "family": "NAMED",
+   "query": "A Dataset for Answering Time-Sensitive Questions",
+   "hit_count": 2,
+   "status": "ok",
+   "top": [
+    {
+     "id": "https://openalex.org/W3195376057",
+     "doi": "https://doi.org/10.48550/arxiv.2108.06314",
+     "title": "A Dataset for Answering Time-Sensitive Questions",
+     "year": 2021,
+     "cited_by": 37,
+     "venue": "arXiv (Cornell University)",
+     "oa_url": "https://arxiv.org/pdf/2108.06314",
+     "type": "preprint"
+    },
+    {
+     "id": "https://openalex.org/W3208688702",
+     "doi": null,
+     "title": "A Dataset for Answering Time-Sensitive Questions",
+     "year": 2021,
+     "cited_by": 0,
+     "venue": "arXiv (Cornell University)",
+     "oa_url": "http://arxiv.org/abs/2108.06314",
+     "type": "preprint"
+    }
+   ],
+   "ts_utc": "2026-09-03T02:38:21Z"
+  },
+  {
+   "source": "openalex:title",
+   "family": "NAMED",
+   "query": "RealTime QA: What's the Answer Right Now?",
+   "hit_count": 2,
+   "status": "ok",
+   "top": [
+    {
+     "id": "https://openalex.org/W4288725442",
+     "doi": "https://doi.org/10.48550/arxiv.2207.13332",
+     "title": "RealTime QA: What's the Answer Right Now?",
+     "year": 2022,
+     "cited_by": 28,
+     "venue": "arXiv (Cornell University)",
+     "oa_url": "https://arxiv.org/pdf/2207.13332",
+     "type": "preprint"
+    },
+    {
+     "id": "https://openalex.org/W7133215177",
+     "doi": "https://doi.org/10.52202/075280-2130",
+     "title": "RealTime QA: What's the Answer Right Now?",
+     "year": 2023,
+     "cited_by": 13,
+     "venue": null,
+     "oa_url": null,
+     "type": "conference-paper"
+    }
+   ],
+   "ts_utc": "2026-09-03T02:38:21Z"
+  },
+  {
+   "source": "openalex:title",
+   "family": "NAMED",
+   "query": "I need a better description: An Investigation Into User Expectations For Differential Privacy",
+   "hit_count": 3,
+   "status": "ok",
+   "top": [
+    {
+     "id": "https://openalex.org/W3205940821",
+     "doi": "https://doi.org/10.1145/3460120.3485252",
+     "title": "\"I need a better description\": An Investigation Into User Expectations For Differential Privacy",
+     "year": 2021,
+     "cited_by": 52,
+     "venue": null,
+     "oa_url": "https://arxiv.org/pdf/2110.06452",
+     "type": "conference-paper"
+    },
+    {
+     "id": "https://openalex.org/W3213134179",
+     "doi": null,
+     "title": "\"I need a better description\": An Investigation Into User Expectations For Differential Privacy",
+     "year": 2023,
+     "cited_by": 42,
+     "venue": "DOAJ (DOAJ: Directory of Open Access Journals)",
+     "oa_url": "https://doaj.org/article/ff1b991858df49248466a2929985cfd0",
+     "type": "article"
+    },
+    {
+     "id": "https://openalex.org/W4386399450",
+     "doi": "https://doi.org/10.29012/jpc.813",
+     "title": "\"I need a better description\": An Investigation Into User Expectations For Differential Privacy",
+     "year": 2023,
+     "cited_by": 2,
+     "venue": "Journal of Privacy and Confidentiality",
+     "oa_url": "https://journalprivacyconfidentiality.org/index.php/jpc/article/download/813/743",
+     "type": "article"
+    }
+   ],
+   "ts_utc": "2026-09-03T02:38:21Z"
+  },
+  {
+   "source": "openalex:title",
+   "family": "NAMED",
+   "query": "Disclosure Avoidance for the 2020 Census: An Introduction",
+   "hit_count": 0,
+   "status": "ok",
+   "top": [],
+   "ts_utc": "2026-09-03T02:38:22Z"
+  },
+  {
+   "source": "openalex:title",
+   "family": "NAMED",
+   "query": "The 2020 Census Disclosure Avoidance System TopDown Algorithm",
+   "hit_count": 2,
+   "status": "ok",
+   "top": [
+    {
+     "id": "https://openalex.org/W4285100324",
+     "doi": "https://doi.org/10.1162/99608f92.529e3cb9",
+     "title": "The 2020 Census Disclosure Avoidance System TopDown Algorithm",
+     "year": 2022,
+     "cited_by": 78,
+     "venue": "Harvard Data Science Review",
+     "oa_url": "https://hdsr.mitpress.mit.edu/pub/7evz361i/download/pdf",
+     "type": "article"
+    },
+    {
+     "id": "https://openalex.org/W4224288011",
+     "doi": "https://doi.org/10.48550/arxiv.2204.08986",
+     "title": "The 2020 Census Disclosure Avoidance System TopDown Algorithm",
+     "year": 2022,
+     "cited_by": 7,
+     "venue": "RePEc: Research Papers in Economics",
+     "oa_url": "https://arxiv.org/pdf/2204.08986",
+     "type": "preprint"
+    }
+   ],
+   "ts_utc": "2026-09-03T02:38:22Z"
+  }
+ ]
+}

@@ -1,0 +1,283 @@
+{
+ "task": "cc_tasks/2026-09-02_g1_eval_probe_family_v0.md",
+ "generated_at_utc": "2026-09-03T02:50:21Z",
+ "families_run": [
+  "F7_dp_vintage_rounding"
+ ],
+ "named_set": "base",
+ "families": {
+  "F1_numeric_uncertainty_preservation": [
+   [
+    "numeric uncertainty preservation large language model summarization",
+    "abs:\"uncertainty\" AND abs:\"preserv\" AND (abs:summarization OR abs:paraphrase) AND (abs:LLM OR abs:\"language model\")"
+   ],
+   [
+    "margin of error confidence interval LLM paraphrase restatement",
+    "(abs:\"margin of error\" OR abs:\"confidence interval\") AND (abs:LLM OR abs:\"language model\") AND (abs:summar OR abs:paraphras OR abs:restat OR abs:generat)"
+   ],
+   [
+    "standard error statistical estimate language model summary fidelity",
+    "(abs:\"standard error\" OR abs:\"sampling error\") AND (abs:LLM OR abs:\"large language model\") AND (abs:summar OR abs:report)"
+   ],
+   [
+    "uncertainty interval retrieval-augmented generation numeric answer",
+    "abs:\"retrieval-augmented\" AND (abs:\"confidence interval\" OR abs:\"uncertainty interval\" OR abs:\"margin of error\")"
+   ]
+  ],
+  "F2_quantitative_claim_fidelity": [
+   [
+    "numeric hallucination summarization",
+    "(abs:\"numeric hallucination\" OR abs:\"numerical hallucination\" OR abs:\"quantity hallucination\" OR abs:\"number hallucination\")"
+   ],
+   [
+    "number faithfulness abstractive summarization",
+    "(abs:numer OR abs:quantit OR abs:number) AND abs:faithful AND abs:summarization"
+   ],
+   [
+    "quantitative claim fidelity language model",
+    "(abs:\"numerical claim\" OR abs:\"quantitative claim\" OR abs:\"statistical claim\") AND (abs:LLM OR abs:\"language model\" OR abs:\"fact-check\")"
+   ],
+   [
+    "numerical consistency factual summarization evaluation",
+    "abs:\"factual consistency\" AND abs:summarization AND (abs:numer OR abs:number OR abs:quantit)"
+   ]
+  ],
+  "F3_hedging_epistemic_preservation": [
+   [
+    "hedging preservation summarization language model",
+    "(abs:hedg OR abs:hedges) AND (abs:summar OR abs:generat) AND (abs:LLM OR abs:\"language model\")"
+   ],
+   [
+    "epistemic uncertainty preservation clinical text LLM",
+    "(abs:\"uncertainty preservation\" OR abs:\"preserve uncertainty\" OR abs:\"preserving uncertainty\" OR abs:\"certainty assertion\")"
+   ],
+   [
+    "speculation cue certainty summarization evaluation",
+    "(abs:speculat OR abs:\"epistemic stance\" OR abs:overgeneraliz OR abs:overclaim) AND abs:summar AND (abs:LLM OR abs:\"language model\")"
+   ]
+  ],
+  "F4_uncertainty_communication_statistics": [
+   [
+    "communicating uncertainty statistics margin of error public",
+    "abs:\"communicating uncertainty\" AND (abs:statistic OR abs:\"margin of error\")"
+   ],
+   [
+    "sampling error communication official statistics guidance",
+    "abs:\"official statistics\" AND (abs:uncertainty OR abs:\"sampling error\") AND (abs:communicat OR abs:report OR abs:user)"
+   ],
+   [
+    "communicating statistical uncertainty numeric verbal formats",
+    "abs:uncertainty AND abs:communicat AND (abs:verbal OR abs:numeric OR abs:\"margin of error\") AND abs:public"
+   ]
+  ],
+  "F6_numeric_qualifier_preservation": [
+   [
+    "caveat qualifier preservation LLM summarization decontextualization",
+    "(abs:caveat OR abs:qualifier OR abs:decontextualiz) AND (abs:summar OR abs:compress) AND (abs:LLM OR abs:\"language model\")"
+   ],
+   [
+    "coefficient of variation relative standard error LLM generated text statistics",
+    "(abs:\"coefficient of variation\" OR abs:\"relative standard error\") AND (abs:LLM OR abs:\"language model\" OR abs:chatbot)"
+   ],
+   [
+    "differential privacy noise disclosure LLM answer official statistics",
+    "abs:\"differential privacy\" AND (abs:\"official statistics\" OR abs:census) AND (abs:LLM OR abs:\"language model\" OR abs:chatbot)"
+   ],
+   [
+    "data vintage release date stale statistics LLM answer",
+    "(abs:vintage OR abs:\"as of\" OR abs:stale OR abs:outdated) AND abs:statistic AND (abs:LLM OR abs:\"language model\") AND (abs:answer OR abs:retriev)"
+   ]
+  ],
+  "F7_dp_vintage_rounding": [
+   [
+    "disclosure avoidance noise user guidance large language model",
+    "(abs:\"disclosure avoidance\" OR abs:\"differential privacy\") AND abs:noise AND (abs:LLM OR abs:\"language model\") AND (abs:guidance OR abs:user)"
+   ],
+   [
+    "differential privacy communicating noisy statistics data users",
+    "abs:\"differential privacy\" AND (abs:communicat OR abs:\"data users\" OR abs:\"user expectations\") AND (abs:statistic OR abs:census)"
+   ],
+   [
+    "temporal validity statistics answer large language model release date",
+    "(abs:\"temporal validity\" OR abs:\"time-sensitive\") AND (abs:LLM OR abs:\"language model\") AND (abs:statistic OR abs:\"release date\" OR abs:answer)"
+   ],
+   [
+    "outdated statistic stale answer official data vintage",
+    "(abs:outdated OR abs:stale) AND (abs:LLM OR abs:\"language model\") AND (abs:statistic OR abs:\"official data\" OR abs:vintage)"
+   ],
+   [
+    "data release version temporal misalignment retrieval augmented",
+    "abs:\"retrieval-augmented\" AND (abs:\"temporal misalignment\" OR abs:\"temporal\" OR abs:version) AND (abs:release OR abs:vintage OR abs:outdated)"
+   ],
+   [
+    "number rounding precision preservation summarization",
+    "(abs:rounding OR abs:precision) AND abs:number AND (abs:summariz OR abs:paraphras OR abs:restat) AND (abs:LLM OR abs:\"language model\")"
+   ]
+  ],
+  "F5_answer_engines_official_statistics": [
+   [
+    "generative search engine official statistics accuracy audit",
+    "(abs:\"generative search\" OR abs:\"answer engine\" OR abs:\"AI overview\" OR abs:chatbot) AND (abs:\"official statistics\" OR abs:census OR abs:\"statistical agency\")"
+   ],
+   [
+    "AI answer engine citing statistics accuracy margin of error",
+    "(abs:\"generative search\" OR abs:\"answer engine\" OR abs:\"AI assistant\") AND abs:audit AND (abs:accura OR abs:citation)"
+   ],
+   [
+    "LLM chatbot statistical data accuracy evaluation official statistics",
+    "(abs:LLM OR abs:\"language model\") AND abs:\"official statistics\""
+   ]
+  ]
+ },
+ "anchors": {
+  "arxiv_2606_18471": {
+   "arxiv": "2606.18471",
+   "doi": "10.48550/arXiv.2606.18471"
+  },
+  "vanderbles_2019": {
+   "doi": "10.1098/rsos.181870"
+  }
+ },
+ "entries": [
+  {
+   "source": "openalex:title_abstract",
+   "family": "F7_dp_vintage_rounding",
+   "query": "disclosure avoidance noise user guidance large language model",
+   "hit_count": 0,
+   "status": "ok",
+   "top": [],
+   "ts_utc": "2026-09-03T02:48:14Z"
+  },
+  {
+   "source": "arxiv",
+   "family": "F7_dp_vintage_rounding",
+   "query": "(abs:\"disclosure avoidance\" OR abs:\"differential privacy\") AND abs:noise AND (abs:LLM OR abs:\"language model\") AND (abs:guidance OR abs:user)",
+   "hit_count": null,
+   "status": "error: arxiv 429",
+   "top": [],
+   "ts_utc": "2026-09-03T02:48:14Z"
+  },
+  {
+   "source": "openalex:title_abstract",
+   "family": "F7_dp_vintage_rounding",
+   "query": "differential privacy communicating noisy statistics data users",
+   "hit_count": 1,
+   "status": "ok",
+   "top": [
+    {
+     "id": "https://openalex.org/W4296591849",
+     "doi": "https://doi.org/10.1145/3523227.3546771",
+     "title": "Fairness-aware Federated Matrix Factorization",
+     "year": 2022,
+     "cited_by": 44,
+     "venue": null,
+     "oa_url": null,
+     "type": "conference-paper"
+    }
+   ],
+   "ts_utc": "2026-09-03T02:48:18Z"
+  },
+  {
+   "source": "arxiv",
+   "family": "F7_dp_vintage_rounding",
+   "query": "abs:\"differential privacy\" AND (abs:communicat OR abs:\"data users\" OR abs:\"user expectations\") AND (abs:statistic OR abs:census)",
+   "hit_count": null,
+   "status": "error: arxiv 429",
+   "top": [],
+   "ts_utc": "2026-09-03T02:48:18Z"
+  },
+  {
+   "source": "openalex:title_abstract",
+   "family": "F7_dp_vintage_rounding",
+   "query": "temporal validity statistics answer large language model release date",
+   "hit_count": 0,
+   "status": "ok",
+   "top": [],
+   "ts_utc": "2026-09-03T02:48:21Z"
+  },
+  {
+   "source": "arxiv",
+   "family": "F7_dp_vintage_rounding",
+   "query": "(abs:\"temporal validity\" OR abs:\"time-sensitive\") AND (abs:LLM OR abs:\"language model\") AND (abs:statistic OR abs:\"release date\" OR abs:answer)",
+   "hit_count": null,
+   "status": "error: arxiv 429",
+   "top": [],
+   "ts_utc": "2026-09-03T02:48:37Z"
+  },
+  {
+   "source": "openalex:title_abstract",
+   "family": "F7_dp_vintage_rounding",
+   "query": "outdated statistic stale answer official data vintage",
+   "hit_count": 0,
+   "status": "ok",
+   "top": [],
+   "ts_utc": "2026-09-03T02:48:40Z"
+  },
+  {
+   "source": "arxiv",
+   "family": "F7_dp_vintage_rounding",
+   "query": "(abs:outdated OR abs:stale) AND (abs:LLM OR abs:\"language model\") AND (abs:statistic OR abs:\"official data\" OR abs:vintage)",
+   "hit_count": null,
+   "status": "error: arxiv 429",
+   "top": [],
+   "ts_utc": "2026-09-03T02:49:11Z"
+  },
+  {
+   "source": "openalex:title_abstract",
+   "family": "F7_dp_vintage_rounding",
+   "query": "data release version temporal misalignment retrieval augmented",
+   "hit_count": 0,
+   "status": "ok",
+   "top": [],
+   "ts_utc": "2026-09-03T02:49:14Z"
+  },
+  {
+   "source": "arxiv",
+   "family": "F7_dp_vintage_rounding",
+   "query": "abs:\"retrieval-augmented\" AND (abs:\"temporal misalignment\" OR abs:\"temporal\" OR abs:version) AND (abs:release OR abs:vintage OR abs:outdated)",
+   "hit_count": null,
+   "status": "error: arxiv 429",
+   "top": [],
+   "ts_utc": "2026-09-03T02:49:15Z"
+  },
+  {
+   "source": "openalex:title_abstract",
+   "family": "F7_dp_vintage_rounding",
+   "query": "number rounding precision preservation summarization",
+   "hit_count": 2,
+   "status": "ok",
+   "top": [
+    {
+     "id": "https://openalex.org/W2117279419",
+     "doi": "https://doi.org/10.1093/ije/30.5.1076",
+     "title": "Commentary: Mediterranean paradoxes continue to provoke",
+     "year": 2001,
+     "cited_by": 2,
+     "venue": "International Journal of Epidemiology",
+     "oa_url": "https://academic.oup.com/ije/article-pdf/30/5/1076/18479021/301076.pdf",
+     "type": "editorial"
+    },
+    {
+     "id": "https://openalex.org/W4283368308",
+     "doi": "https://doi.org/10.1111/trf.16961",
+     "title": "A review of two emerging technologies for pre‐hospital treatment of non‐compressible abdominal hemorrhage",
+     "year": 2022,
+     "cited_by": 2,
+     "venue": "Transfusion",
+     "oa_url": "https://onlinelibrary.wiley.com/doi/pdfdirect/10.1111/trf.16961",
+     "type": "article"
+    }
+   ],
+   "ts_utc": "2026-09-03T02:49:18Z"
+  },
+  {
+   "source": "arxiv",
+   "family": "F7_dp_vintage_rounding",
+   "query": "(abs:rounding OR abs:precision) AND abs:number AND (abs:summariz OR abs:paraphras OR abs:restat) AND (abs:LLM OR abs:\"language model\")",
+   "hit_count": null,
+   "status": "error: HTTPSConnectionPool(host='export.arxiv.org', port=443): Read timed out. (read timeout=60)",
+   "top": [],
+   "ts_utc": "2026-09-03T02:50:18Z"
+  }
+ ]
+}

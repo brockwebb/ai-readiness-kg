@@ -146,3 +146,15 @@ Catalog presence is scored where coverage is the property that matters. There is
 declared-versus-enforced-versus-observed triad. The FSS Machine Diagnostic specification, stubbed
 into the skeleton as indicators A10 and A11, is what these probes grow toward, and closing these
 four gaps is what growing toward it means concretely.
+
+A fourth probe family, the eval family, was added 2026-09-02 for indicator G1 (DD-033; task
+`cc_tasks/2026-09-02_g1_eval_probe_family_v0.md`). An `EvalProbe` splits like the others into
+a model half, `elicit`, which puts the source passage in a consumer's context and persists
+the raw exchange before anything is scored, and a pure `evaluate`, which parses the
+restatement deterministically and scores each published qualifier on a five-level
+preservation scale mapped to the three-point score. The rollup carries a third vector beside
+the catalog composite and the web-surface vector: `SOURCE_EVAL` records and the `G1`
+declared-leg probe are partitioned out before either composite is summed and reported as
+their own block — preservation rate per qualifier class and elicitation mode with a Wilson
+95 % interval and the denominator, an `unparseable` count that is never coerced into a
+score, and no product-level threshold until the January calibration run sets one.

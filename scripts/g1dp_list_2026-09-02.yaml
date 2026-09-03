@@ -1,0 +1,58 @@
+# G1 DP_NOISE fixture source — task 2026-09-02_g1_eval_probe_family_v0 step 0 / step 3.
+#
+# The skeleton (§5d G1, §9) records DP documentation as a gap and the probe-family task
+# forbids inventing a DP example: the DP_NOISE fixture class is built only from an admitted
+# Census Bureau Disclosure Avoidance System document. Step 0's named lookup resolved the
+# current handbook as "Disclosure Avoidance for the 2020 Census: An Introduction" (Nov 2021),
+# which carries the published privacy-loss budget (global rho 2.56 / epsilon 17.14 / delta
+# 10^-10 for the P.L. 94-171 person file; rho 0.07 / epsilon 2.47 for units), the
+# per-geography rho allocations, and user-facing accuracy statements (e.g. 90 percent of
+# counties within ±4 people of the published total). Same standing path as
+# scripts/g1eval_list_2026-09-02.yaml (harvest_triage.py, then manifest_triage.py).
+#
+# Companion brief C2020BR-04 ("How the TopDown Algorithm Works", Mar 2023) was read at step 0
+# and NOT staged: it describes the mechanism qualitatively and carries no parameter values
+# beyond what the handbook publishes (R1_no_marginal_contribution).
+
+settings:
+  user_agent: "WintermuteAcceptance/0.1 (research; brockwebb45@gmail.com)"
+  browser_user_agent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36"
+  discovered_via: "g1-eval-probe-family-2026-09-02"
+  discovered_via_gap: "g1-eval-probe-family-2026-09-02"
+  max_doc_chars: 250000
+  min_content_chars: 200
+  timeout_seconds: 60
+  retries: 1
+  spacing_seconds: 1.0
+  crwl_timeout_seconds: 180
+  fit_min_fraction_of_raw: 0.35
+  challenge_markers: ["Just a moment...", "Enable JavaScript and cookies", "Attention Required!", "Access Denied", "verify you are a human"]
+  crwl_filter:
+    type: pruning
+    threshold: 0.45
+    min_word_threshold: 3
+  paywall_domains: [papers.ssrn.com, ssrn.com, onlinelibrary.wiley.com, researchgate.net,
+                    gartner.com, worldscientific.com, sciencedirect.com,
+                    regulations.gov, downloads.regulations.gov, dl.acm.org, ieeexplore.ieee.org]
+  # Resolved by a named lookup in a logged machine search (step 0, F7 named set), not by a
+  # human panel: no vetting provenance is claimed; the entry marks `gap: true`.
+  vetting_input1:
+    source: machine_search_2026-09-02
+    expertise: none_claimed
+    weight: not_vetting
+
+entries:
+  - row: 1
+    doc_id: census-2020-disclosure-avoidance-handbook-2021
+    title: "Disclosure Avoidance for the 2020 Census: An Introduction"
+    authors_or_org: ["U.S. Census Bureau"]
+    year: "2021"
+    source_type: federal
+    primary_url: https://www.census.gov/library/publications/2021/decennial/2020-census-disclosure-avoidance-handbook.html
+    pdf_url: https://www2.census.gov/library/publications/decennial/2020/2020-census-disclosure-avoidance-handbook.pdf
+    verdict: fetch
+    clause: R1
+    construct_arm: publication_actionability
+    grounding_surface: document
+    gap: true
+    notes: "The producer's own user handbook for the 2020 Census Disclosure Avoidance System: defines the privacy-loss budget (rho, epsilon, delta) as the published uncertainty parameter of a differentially private release, tabulates its allocation by geography and query, and states user-facing accuracy bounds. G1 DP_NOISE fixture source (the only admitted document carrying DP noise parameters beside published counts)."

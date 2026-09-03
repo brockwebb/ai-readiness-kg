@@ -182,8 +182,11 @@ def test_web_surface_pages_are_probed_and_kept_out_of_the_catalog_composite(tmp_
     assert roll["web_surface"]["n_targets"] == 2
     assert roll["n_probes_web_surface"] == len(web_results)
     # Catalog composite counts no web-surface result.
+    # Four partitions, one total: core, frontier, web surface, and the G1 eval block
+    # (task 2026-09-02_g1_eval_probe_family_v0 — the declared probe runs on catalog
+    # distributions and is reported in its own block).
     assert roll["n_probes_core"] + roll["n_probes_frontier"] \
-        + roll["n_probes_web_surface"] == roll["n_probes_total"]
+        + roll["n_probes_web_surface"] + roll["n_probes_eval"] == roll["n_probes_total"]
 
 
 def test_a_refusing_web_surface_diverges_from_a_clean_catalog(tmp_path):

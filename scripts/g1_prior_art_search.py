@@ -98,6 +98,25 @@ FAMILIES = {
         ("data vintage release date stale statistics LLM answer",
          '(abs:vintage OR abs:"as of" OR abs:stale OR abs:outdated) AND abs:statistic AND (abs:LLM OR abs:"language model") AND (abs:answer OR abs:retriev)'),
     ],
+    # F7 (task 2026-09-02_g1_eval_probe_family_v0 step 0): the F6 evidence that DP noise
+    # parameters and vintage are uncharted rested on 12 queries. F7 widens that with the
+    # vocabulary of the neighbouring fields (disclosure-avoidance user guidance, temporal
+    # validity / stale-answer benchmarks, rounding-precision preservation) so a falsifier
+    # phrased in THEIR words would be reached. Run 4 log: *_query_log_f7.json.
+    "F7_dp_vintage_rounding": [
+        ("disclosure avoidance noise user guidance large language model",
+         '(abs:"disclosure avoidance" OR abs:"differential privacy") AND abs:noise AND (abs:LLM OR abs:"language model") AND (abs:guidance OR abs:user)'),
+        ("differential privacy communicating noisy statistics data users",
+         'abs:"differential privacy" AND (abs:communicat OR abs:"data users" OR abs:"user expectations") AND (abs:statistic OR abs:census)'),
+        ("temporal validity statistics answer large language model release date",
+         '(abs:"temporal validity" OR abs:"time-sensitive") AND (abs:LLM OR abs:"language model") AND (abs:statistic OR abs:"release date" OR abs:answer)'),
+        ("outdated statistic stale answer official data vintage",
+         '(abs:outdated OR abs:stale) AND (abs:LLM OR abs:"language model") AND (abs:statistic OR abs:"official data" OR abs:vintage)'),
+        ("data release version temporal misalignment retrieval augmented",
+         'abs:"retrieval-augmented" AND (abs:"temporal misalignment" OR abs:"temporal" OR abs:version) AND (abs:release OR abs:vintage OR abs:outdated)'),
+        ("number rounding precision preservation summarization",
+         '(abs:rounding OR abs:precision) AND abs:number AND (abs:summariz OR abs:paraphras OR abs:restat) AND (abs:LLM OR abs:"language model")'),
+    ],
     "F5_answer_engines_official_statistics": [
         ("generative search engine official statistics accuracy audit",
          '(abs:"generative search" OR abs:"answer engine" OR abs:"AI overview" OR abs:chatbot) AND (abs:"official statistics" OR abs:census OR abs:"statistical agency")'),
@@ -140,6 +159,19 @@ NAMED_LOOKUPS = [
     "Do large language models preserve hedges when summarizing scientific abstracts",
     "Numerical reasoning faithfulness in data-to-text generation hallucination",
 ]
+
+
+# F7 named lookups (same task, step 0): temporal-knowledge benchmarks and DP user-expectation
+# work, resolved by title so the log carries the resolution. Selected with --named-set f7.
+F7_NAMED_LOOKUPS = [
+    "FreshLLMs: Refreshing Large Language Models with Search Engine Augmentation",
+    "A Dataset for Answering Time-Sensitive Questions",
+    "RealTime QA: What's the Answer Right Now?",
+    "I need a better description: An Investigation Into User Expectations For Differential Privacy",
+    "Disclosure Avoidance for the 2020 Census: An Introduction",
+    "The 2020 Census Disclosure Avoidance System TopDown Algorithm",
+]
+NAMED_SETS = {"all": NAMED_LOOKUPS + F7_NAMED_LOOKUPS, "base": NAMED_LOOKUPS, "f7": F7_NAMED_LOOKUPS}
 
 
 def _env_key(name: str) -> str | None:
@@ -206,7 +238,10 @@ class OpenAlex:
         return d["meta"]["count"], [self._row(w) for w in d["results"]]
 
     def by_title(self, title: str) -> tuple[int, list[dict]]:
-        d = self._get("/works", filter=f"title.search:{title.replace(',', ' ')}", **{"per-page": 5},
+        # Comma is the filter separator; '?' and ':' inside a title.search value returned
+        # 400 in run 2 (two titles lost). All three are dropped from the value.
+        cleaned = title.replace(",", " ").replace("?", "").replace(":", " ")
+        d = self._get("/works", filter=f"title.search:{cleaned}", **{"per-page": 5},
                       select="id,doi,title,display_name,publication_year,cited_by_count,primary_location,best_oa_location,type")
         return d["meta"]["count"], [self._row(w) for w in d["results"]]
 
@@ -322,6 +357,10 @@ def main() -> int:
     ap.add_argument("--oa-mode", choices=["title_abstract", "fulltext"], default="title_abstract")
     ap.add_argument("--skip-named", action="store_true")
     ap.add_argument("--skip-citations", action="store_true")
+    ap.add_argument("--named-set", choices=sorted(NAMED_SETS), default="base",
+                    help="which named-lookup list to resolve (default: the run-2 list)")
+    ap.add_argument("--task", default="cc_tasks/2026-09-02_g1_eval_prior_art.md",
+                    help="task reference written into the log header")
     a = ap.parse_args()
 
     oa_key = _env_key("OPENALEX_API_KEY")
@@ -356,7 +395,7 @@ def main() -> int:
 
     # ---- named-work resolution ---------------------------------------------------
     if not a.skip_named:
-        for t in NAMED_LOOKUPS:
+        for t in NAMED_SETS[a.named_set]:
             try:
                 n, rows = oa.by_title(t)
                 log.add(source="openalex:title", family="NAMED", query=t, hit_count=n, status="ok", top=rows)
@@ -403,7 +442,8 @@ def main() -> int:
 
     out = Path(a.out)
     out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(json.dumps({"task": "cc_tasks/2026-09-02_g1_eval_prior_art.md", "generated_at_utc": _now(),
+    out.write_text(json.dumps({"task": a.task, "generated_at_utc": _now(),
+                               "families_run": sorted(fams), "named_set": a.named_set,
                                "families": FAMILIES, "anchors": ANCHORS, "entries": log.entries},
                               indent=1, ensure_ascii=False))
     ok = sum(1 for e in log.entries if e["status"] == "ok")

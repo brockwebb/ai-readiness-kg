@@ -120,3 +120,38 @@ in_core_composite = false
 label = "frontier_deep"
 as_of_date = "2026-01"   # WebMCP standardization
 in_core_composite = false
+
+# --- G1 uncertainty legibility, declared leg (task 2026-09-02_g1_eval_probe_family_v0
+# step 2). The probe reads a CSV header or JSON record keys and matches field NAMES
+# against these patterns. It is a heuristic on names — it says nothing about whether
+# the values are right — and the probe docstring says so. Pattern ids travel in the
+# observations so a match can be traced to the rule that produced it.
+[g1]
+# Uncertainty-field patterns: {id, regex, class}. `class` is the QualifierClass the
+# field name suggests; `pairs_with` is a regex substitution (pattern -> replacement)
+# that turns the uncertainty field name into its estimate field's name, when the
+# producer uses a naming convention (ACS: B01001_001E <-> B01001_001M).
+uncertainty_field_patterns = [
+  { id = "acs_moe_suffix",      regex = "^(?P<stem>[A-Z]\\d{5}[A-Z]?_\\d{3})(M|MA)$",      class = "MOE", pairs_with = "\\g<stem>E" },
+  { id = "moe_word",            regex = "(?i)(^|_|\\b)(moe|margin[_ ]?of[_ ]?error)(s)?(\\b|_|$)", class = "MOE" },
+  { id = "cv_word",             regex = "(?i)(^|_|\\b)(cv|coef(ficient)?[_ ]?of[_ ]?variation)(s)?(\\b|_|$)", class = "CV" },
+  { id = "rse_word",            regex = "(?i)(^|_|\\b)(rse|relative[_ ]?standard[_ ]?error)(s)?(\\b|_|$)", class = "CV" },
+  { id = "se_word",             regex = "(?i)(^|_|\\b)(se|std[_ ]?err(or)?|standard[_ ]?error)(s)?(\\b|_|$)", class = "SE" },
+  { id = "ci_bounds",           regex = "(?i)(^|_|\\b)(lower|upper|low|high|lcl|ucl)([_ ]?(bound|limit|ci|95|90))?(\\b|_|$)", class = "CI" },
+  { id = "ci_word",             regex = "(?i)(^|_|\\b)(ci|conf(idence)?[_ ]?int(erval)?)(\\b|_|$)", class = "CI" },
+  { id = "reliability_flag",    regex = "(?i)(^|_|\\b)(flag|reliab(ility)?|quality[_ ]?(flag|indicator|code))(\\b|_|$)", class = "RELIABILITY_FLAG" },
+  { id = "suppression_flag",    regex = "(?i)(^|_|\\b)(suppress(ed|ion)?|withheld|annotation)(\\b|_|$)", class = "SUPPRESSION" },
+  { id = "dp_noise",            regex = "(?i)(^|_|\\b)(epsilon|rho|noise|privacy[_ ]?loss|plb)(\\b|_|$)", class = "DP_NOISE" },
+]
+# Fields whose name marks a free-text notes/footnote column. Uncertainty mentioned only
+# here is "footnotes, not fields" (skeleton G1) -> PARTIAL.
+footnote_field_patterns = [
+  { id = "notes_word", regex = "(?i)(^|_|\\b)(note|notes|footnote|comment|remarks|caveat)(s)?(\\b|_|$)" },
+]
+# Fields that are identifiers or dimensions, never estimates: excluded from the
+# estimate-field denominator.
+id_field_patterns = [
+  { id = "id_like", regex = "(?i)(^|_|\\b)(id|code|name|label|geo|geoid|fips|state|county|year|date|period|vintage|time|unit|type|category|sex|age|race)(s)?(\\b|_|$)" },
+]
+# Free-text uncertainty vocabulary looked for inside footnote columns / body text.
+footnote_uncertainty_vocabulary = ["margin of error", "standard error", "coefficient of variation", "confidence interval", "sampling error", "differential privacy", "suppressed"]

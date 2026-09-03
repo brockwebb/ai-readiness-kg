@@ -1,6 +1,12 @@
 # Generated probe output — regenerable by re-running the harness, never committed.
-results/
-evidence/
+# (Ignore the CONTENTS, not the directory node, so a specific subtree can be re-included.)
+results/*
+evidence/*
+# EXCEPT the G1 EVAL observed leg (task 2026-09-02_g1_eval_probe_family_v0): a model
+# restatement is not regenerable — it is the raw evidence behind every G1 score and is
+# committed beside the scores, as events/raw/ is for extraction (CLAUDE.md invariant 1).
+!evidence/g1/
+!results/g1_pilot_*.json
 
 # Python
 __pycache__/

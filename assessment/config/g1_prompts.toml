@@ -1,0 +1,38 @@
+# G1 EVAL elicitation prompts (task 2026-09-02_g1_eval_probe_family_v0, design D3;
+# memo §4.4: assess indirectly — a restatement task — AND directly — ask for the
+# uncertainty — because Du 2026 found the indirect route is where preservation fails).
+#
+# `prompt_epoch` is stamped on every record and on every evidence file. Changing a
+# template is a new epoch; records from different epochs are never pooled. Frozen for v0
+# at the g1-eval-v0-frozen commit; the January calibration run may open a new epoch.
+#
+# Design D4: the source passage is ALWAYS in context. No retrieval, no browsing, no
+# tools. Design D8 (Peters & Chin-Yee 2025): there is deliberately NO "be accurate"
+# variant — accuracy prompting does not fix qualifier loss, and testing it again would
+# spend calls on a settled question.
+prompt_epoch = "g1-v0-2026-09-02"
+
+[indirect]
+# The passage is the whole source context for the proposition(s) it carries; the model
+# is not told which estimate is under test.
+template = """Restate the following for a general-audience summary.
+
+{context_passage}"""
+
+[direct]
+template = """{context_passage}
+
+What is the {qualifier_plain} on {estimate_label}?"""
+
+# Plain-words names for the closed qualifier enum (records.QualifierClass), used by the
+# direct template. Producer vocabulary where one exists (ACS "margin of error"; ONS
+# "standard error" / "coefficient of variation"; Census DAS "privacy-loss budget").
+[qualifier_plain]
+MOE = "margin of error"
+CI = "confidence interval"
+SE = "standard error"
+CV = "coefficient of variation"
+RELIABILITY_FLAG = "reliability assessment"
+SUPPRESSION = "publication status"
+DP_NOISE = "disclosure-avoidance noise parameter (privacy-loss budget)"
+VINTAGE = "reference period or as-of date"

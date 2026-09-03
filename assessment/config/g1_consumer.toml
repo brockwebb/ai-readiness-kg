@@ -1,0 +1,16 @@
+# The model consumer under test in the G1 observed leg (task 2026-09-02_g1_eval_probe_family_v0
+# step 1). ONE pinned model per run: a response whose envelope reports any other model is
+# discarded unparsed and the run stops (invariant 5, enforced at kg/extraction/model_stub.invoke).
+#
+# Pin: claude-opus-5, the operator's model of record for this repo (kg/extraction/model_config.yaml,
+# ADDENDUM-04 2026-08-27). The ledger meters tokens, not dollars, so a cheaper model buys no
+# extra calls under the ceiling; the strongest available consumer is the informative one for a
+# preservation measurement (memo §4.7: newer models are not better at keeping qualifiers — a
+# pre-registered expectation this pin lets a later run test against a second pin).
+[consumer]
+model_id = "claude-opus-5"
+provider = "claude_max_oauth"   # subscription OAuth via `claude -p`; never ANTHROPIC_API_KEY (DD-007)
+cli = "claude"
+timeout_seconds = 600
+# Spend-guard call class (controls.yaml spend.call_class_floors) the run is declared under.
+call_class = "g1_eval"

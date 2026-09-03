@@ -271,13 +271,19 @@ class ModelSubstitutionError(ModelConfigError):
 
 def invoke(doc_id: str, source_text: str, prompt: str | None = None,
            timeout: int = 1800, config: dict | None = None,
-           resume_session_id: str | None = None) -> dict:
+           resume_session_id: str | None = None, parse_json: bool = True) -> dict:
     """Extract one document via ``claude -p`` on the subscription OAuth (no API key).
 
     Returns ``{output, model_id, usage, cost_usd, duration_ms, raw_result}`` where ``output``
     is the parsed extraction envelope. Raises ModelConfigError on a forbidden credential or a
     fallback model; ModelInvocationError on transport/CLI failure or an unparseable envelope.
     Never passes ``--bare`` (that path demands an API key).
+
+    ``parse_json=False`` (task 2026-09-02_g1_eval_probe_family_v0 step 1) returns the
+    envelope's result text as ``output`` unparsed: the G1 observed leg elicits prose
+    restatements through this same choke point — same DD-007 gate, same DD-022
+    reservation, same model-identity gate — and scores the prose deterministically
+    downstream. Nothing before this line changes with the flag.
     """
     config = config or load_model_config()
     guard_no_api_key()
@@ -400,12 +406,15 @@ def invoke(doc_id: str, source_text: str, prompt: str | None = None,
         # substitution gate so the driver records it as an event and STOPs — never substitute.
         raise ModelSubstitutionError(expected=model_id, observed=list(model_usage))
 
-    try:
-        output = _extract_json(envelope.get("result", ""))
-    except ModelInvocationError as exc:
-        # carry usage + session so the truncation fallback can decide and resume (§3)
-        raise ModelParseError(str(exc), usage=model_usage.get(model_id, {}),
-                              session_id=envelope.get("session_id")) from exc
+    if parse_json:
+        try:
+            output = _extract_json(envelope.get("result", ""))
+        except ModelInvocationError as exc:
+            # carry usage + session so the truncation fallback can decide and resume (§3)
+            raise ModelParseError(str(exc), usage=model_usage.get(model_id, {}),
+                                  session_id=envelope.get("session_id")) from exc
+    else:
+        output = envelope.get("result", "")
     return {
         "output": output,
         "model_id": model_id,

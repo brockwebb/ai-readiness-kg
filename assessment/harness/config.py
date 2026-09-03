@@ -56,6 +56,12 @@ class HarnessConfig:
     crawler_declared_user_agents: tuple
     crawler_observe_user_agents: tuple
     crawler_refusal_statuses: tuple
+    # G1 declared leg (harness.toml [g1]): field-name pattern tables, each a tuple of
+    # dicts {id, regex, class?, pairs_with?} validated at load.
+    g1_uncertainty_field_patterns: tuple
+    g1_footnote_field_patterns: tuple
+    g1_id_field_patterns: tuple
+    g1_footnote_uncertainty_vocabulary: tuple
     # track label -> as_of_date string
     _track_as_of: dict
 
@@ -78,6 +84,31 @@ def _string_list(d: dict, key: str, where: str, path) -> List[str]:
         raise ConfigError(f"{where} {key} must be a list of strings in {path}; "
                           f"got {value!r}")
     return value
+
+
+def _pattern_table(d: dict, key: str, where: str, path, require_class: bool) -> tuple:
+    """A required list of {id, regex[, class, pairs_with]} tables. Every regex must
+    compile at load (a bad pattern is a config defect, not a runtime surprise)."""
+    import re as _re
+    value = _require(d, key, where)
+    if not isinstance(value, list) or not value:
+        raise ConfigError(f"{where} {key} must be a non-empty list of tables in {path}")
+    out = []
+    seen = set()
+    for row in value:
+        if not isinstance(row, dict) or not row.get("id") or not row.get("regex"):
+            raise ConfigError(f"{where} {key}: every entry needs 'id' and 'regex' in {path}; got {row!r}")
+        if row["id"] in seen:
+            raise ConfigError(f"{where} {key}: duplicate pattern id {row['id']!r} in {path}")
+        seen.add(row["id"])
+        try:
+            _re.compile(row["regex"])
+        except _re.error as exc:
+            raise ConfigError(f"{where} {key}: pattern {row['id']!r} does not compile: {exc}") from exc
+        if require_class and not row.get("class"):
+            raise ConfigError(f"{where} {key}: pattern {row['id']!r} needs a 'class' in {path}")
+        out.append(dict(row))
+    return tuple(out)
 
 
 def load_harness_config(path: Path) -> HarnessConfig:
@@ -125,6 +156,13 @@ def load_harness_config(path: Path) -> HarnessConfig:
             f"[probes.crawler_access] refusal_statuses must be a non-empty list of "
             f"integers in {path}; got {refusal!r}"
         )
+    g1 = _require(data, "g1", str(path))
+    g1_unc = _pattern_table(g1, "uncertainty_field_patterns", "harness.toml [g1]", path, True)
+    g1_fn = _pattern_table(g1, "footnote_field_patterns", "harness.toml [g1]", path, False)
+    g1_id = _pattern_table(g1, "id_field_patterns", "harness.toml [g1]", path, False)
+    g1_vocab = _string_list(g1, "footnote_uncertainty_vocabulary", "harness.toml [g1]", path)
+    if not g1_vocab:
+        raise ConfigError(f"[g1] footnote_uncertainty_vocabulary must not be empty in {path}")
     per_section = _require(sitemap, "sample_per_section", "harness.toml [sitemap]")
     if not isinstance(per_section, int) or per_section < 1:
         raise ConfigError(
@@ -158,6 +196,10 @@ def load_harness_config(path: Path) -> HarnessConfig:
         crawler_declared_user_agents=tuple(declared_uas),
         crawler_observe_user_agents=tuple(observe_uas),
         crawler_refusal_statuses=tuple(refusal),
+        g1_uncertainty_field_patterns=g1_unc,
+        g1_footnote_field_patterns=g1_fn,
+        g1_id_field_patterns=g1_id,
+        g1_footnote_uncertainty_vocabulary=tuple(g1_vocab),
         _track_as_of=track_as_of,
     )
 

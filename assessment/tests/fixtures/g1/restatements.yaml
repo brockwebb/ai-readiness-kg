@@ -1,0 +1,197 @@
+# Hand-written restatements for the G1 observed-leg scorer (task step 4). Each case names a
+# proposition from propositions.yaml (or the synthetic SUPPRESSION proposition below, which
+# is NOT in the fixture set because no admitted source carries a suppressed estimate), a
+# qualifier class, the restatement text, and the EXPECTED level / failure class /
+# estimate_status. Every level L0–L4 is reached for every populated class, `unparseable` is
+# reached, and widened vs narrowed both land on L0 with the direction recorded.
+#
+# These are the parser's development cases (design D5); the held-out propositions were never
+# restated by hand. The readiness gate (parse coverage >= 0.90) is computed over the cases
+# whose expected outcome is a level.
+
+synthetic_propositions:
+  - id: syn-suppressed-001
+    source_doc_id: synthetic
+    passage: syn
+    grounding_span: "The estimate for the cell is suppressed"
+    estimate: {value: 3, text: "3", unit: count, label: "the number of establishments in the cell"}
+    qualifiers:
+      - {class: SUPPRESSION, text: "suppressed"}
+    producer_rule: "Synthetic — stands in for a StatCan/ACS suppression rule until a source is admitted."
+synthetic_passages:
+  syn: "The estimate for the cell is suppressed because it does not meet the publication standard."
+
+cases:
+  # ---------------------------------------------------------------- MOE (g1-acs-moe-001: 564,757 ±10,127 @90%)
+  - {prop: g1-acs-moe-001, class: MOE, expect_level: 4, expect_failure: null, expect_estimate: exact,
+     text: "In 2015 Colorado had 564,757 one-person households, plus or minus 10,127 at the 90 percent confidence level."}
+  - {prop: g1-acs-moe-001, class: MOE, expect_level: 3, expect_failure: null, expect_estimate: exact,
+     text: "Colorado had about 564,757 one-person households in 2015, with a margin of error of 10,127.",
+     note: "value right, confidence level not restated -> L3 (v0 rule: level omitted)"}
+  - {prop: g1-acs-moe-001, class: MOE, expect_level: 3, expect_failure: null, expect_estimate: exact,
+     text: "We can be 90 percent confident that the true number of one-person households in Colorado in 2015 lies between 554,630 and 574,884 (the estimate is 564,757).",
+     note: "MOE restated as bounds -> transformed"}
+  - {prop: g1-acs-moe-001, class: MOE, expect_level: 2, expect_failure: form_shift, expect_estimate: exact,
+     text: "Roughly 564,757 households in Colorado were one-person households in 2015."}
+  - {prop: g1-acs-moe-001, class: MOE, expect_level: 1, expect_failure: certainty_assertion, expect_estimate: exact,
+     text: "In 2015 there were 564,757 one-person households in Colorado."}
+  - {prop: g1-acs-moe-001, class: MOE, expect_level: 1, expect_failure: omission, expect_estimate: absent,
+     text: "The ACS publishes data profiles for every state."}
+  - {prop: g1-acs-moe-001, class: MOE, expect_level: 0, expect_failure: quantity_hallucination, expect_estimate: exact,
+     expect_direction: widened,
+     text: "Colorado had 564,757 one-person households in 2015, plus or minus 20,000 at the 90 percent confidence level."}
+  - {prop: g1-acs-moe-001, class: MOE, expect_level: 0, expect_failure: quantity_hallucination, expect_estimate: exact,
+     expect_direction: narrowed,
+     text: "Colorado had 564,757 one-person households in 2015, ±10,000 at the 90 percent level."}
+  - {prop: g1-acs-moe-001, class: MOE, expect_level: 0, expect_failure: level_change, expect_estimate: exact,
+     text: "Colorado had 564,757 one-person households in 2015, plus or minus 10,127 at the 95 percent confidence level."}
+  - {prop: g1-acs-moe-001, class: MOE, expect_level: 0, expect_failure: binding_error, expect_estimate: exact,
+     text: "Colorado had 564,757 one-person households in 2015; the state also had 2,100,000 households in total, ±10,127."}
+  - {prop: g1-acs-moe-001, class: MOE, expect_outcome: unparseable, expect_estimate: exact,
+     text: "Colorado had 564,757 one-person households in 2015, though the figure carries some sampling error and a margin of error is published with it."}
+  # percent-vs-point (g1-acs-moe-003: 12.6 percent, MOE 0.2 points)
+  - {prop: g1-acs-moe-003, class: MOE, expect_level: 4, expect_failure: null, expect_estimate: exact,
+     text: "In Florida, 12.6 percent of householders aged 65 or older lived alone in 2015 (±0.2 percentage points at the 90 percent confidence level)."}
+  - {prop: g1-acs-moe-003, class: MOE, expect_level: 3, expect_failure: null, expect_estimate: exact,
+     text: "About 12.6% of Florida's older householders lived alone in 2015, with a margin of error of 0.2 percent."}
+  # ---------------------------------------------------------------- CI (g1-ons-ci-002 bounds; g1-ons-ci-001 pm)
+  - {prop: g1-ons-ci-002, class: CI, expect_level: 4, expect_failure: null, expect_estimate: exact,
+     text: "UK private education turned over £42,649 million in 2016; the 95% confidence interval runs between £41,616 million and £43,682 million."}
+  - {prop: g1-ons-ci-002, class: CI, expect_level: 3, expect_failure: null, expect_estimate: exact,
+     text: "In 2016 the UK private education industry generated £42,649 million in turnover, with a 95% confidence interval of plus or minus £1,032.5 million.",
+     note: "bounds restated as ± -> transformed"}
+  - {prop: g1-ons-ci-002, class: CI, expect_level: 2, expect_failure: form_shift, expect_estimate: exact,
+     text: "In 2016 the UK private education industry generated roughly £42,649 million in turnover."}
+  - {prop: g1-ons-ci-002, class: CI, expect_level: 1, expect_failure: certainty_assertion, expect_estimate: exact,
+     text: "In 2016 the UK private education industry generated £42,649 million in turnover."}
+  - {prop: g1-ons-ci-002, class: CI, expect_level: 0, expect_failure: quantity_hallucination, expect_estimate: exact,
+     expect_direction: widened,
+     text: "UK private education turned over £42,649 million in 2016; the 95% confidence interval runs between £40,000 million and £45,000 million."}
+  - {prop: g1-ons-ci-002, class: CI, expect_level: 0, expect_failure: level_change, expect_estimate: exact,
+     text: "UK private education turned over £42,649 million in 2016; the 90% confidence interval runs between £41,616 million and £43,682 million."}
+  - {prop: g1-ons-ci-001, class: CI, expect_level: 4, expect_failure: null, expect_estimate: exact,
+     text: "32.75 million people aged 16 and over were in employment in the UK in July to September 2019, with a 95% confidence interval of plus or minus 177,000."}
+  - {prop: g1-ons-ci-001, class: CI, expect_level: 3, expect_failure: null, expect_estimate: exact,
+     text: "In July to September 2019 the UK had 32.75 million people aged 16 and over in employment, give or take 177,000.",
+     note: "level omitted"}
+  - {prop: g1-ons-ci-001, class: CI, expect_outcome: unparseable, expect_estimate: exact,
+     text: "Some 32.75 million people were in employment in the UK in mid-2019; ONS attaches a confidence interval to the figure."}
+  # ---------------------------------------------------------------- SE (g1-ons-se-003: £2,322m, SE £201m)
+  - {prop: g1-ons-se-003, class: SE, expect_level: 4, expect_failure: null, expect_estimate: exact,
+     text: "Plastering businesses in the UK turned over an estimated £2,322 million in 2016, with a standard error of £201 million."}
+  - {prop: g1-ons-se-003, class: SE, expect_level: 4, expect_failure: null, expect_estimate: exact,
+     text: "UK plastering turnover was £2,322 million in 2016 (standard error: £201 million)."}
+  - {prop: g1-ons-se-003, class: SE, expect_level: 2, expect_failure: form_shift, expect_estimate: exact,
+     text: "UK plastering businesses turned over approximately £2,322 million in 2016."}
+  - {prop: g1-ons-se-003, class: SE, expect_level: 1, expect_failure: certainty_assertion, expect_estimate: exact,
+     text: "UK plastering businesses turned over £2,322 million in 2016."}
+  - {prop: g1-ons-se-003, class: SE, expect_level: 0, expect_failure: quantity_hallucination, expect_estimate: exact,
+     expect_direction: narrowed,
+     text: "UK plastering businesses turned over £2,322 million in 2016, with a standard error of £200 million.",
+     note: "coarser rounding than the source's precision is L0 by pre-registration (D7)"}
+  - {prop: g1-ons-se-003, class: SE, expect_level: 0, expect_failure: quantity_hallucination, expect_estimate: exact,
+     expect_direction: widened,
+     text: "UK plastering businesses turned over £2,322 million in 2016, with a standard error of £2,010 million."}
+  - {prop: g1-acs-se-005, class: SE, expect_level: 4, expect_failure: null, expect_estimate: exact,
+     text: "Fairfax County had 135,173 never-married females in 2015 with a standard error of 2,347.0.",
+     note: "extra precision that rounds back to the source's printed value is exact (D7). NOTE: SE has no legitimate-transformation class in v0 (scale and precision are exact matches), so L3 is unreachable for SE by construction — recorded in the task RESULT."}
+  # ---------------------------------------------------------------- CV (g1-ons-cv-002: 8.7%)
+  - {prop: g1-ons-cv-002, class: CV, expect_level: 4, expect_failure: null, expect_estimate: exact,
+     text: "Plastering turnover (£2,322 million) has a coefficient of variation of 8.7%."}
+  - {prop: g1-ons-cv-002, class: CV, expect_level: 3, expect_failure: null, expect_estimate: exact,
+     text: "Plastering turnover (£2,322 million) has a relative standard error of 0.087.",
+     note: "fraction form of a percent CV -> transformed"}
+  - {prop: g1-ons-cv-002, class: CV, expect_level: 2, expect_failure: form_shift, expect_estimate: exact,
+     text: "Plastering turnover was around £2,322 million."}
+  - {prop: g1-ons-cv-002, class: CV, expect_level: 1, expect_failure: certainty_assertion, expect_estimate: exact,
+     text: "Plastering turnover was £2,322 million in 2016."}
+  - {prop: g1-ons-cv-002, class: CV, expect_level: 0, expect_failure: quantity_hallucination, expect_estimate: exact,
+     expect_direction: narrowed,
+     text: "Plastering turnover (£2,322 million) has a coefficient of variation of 8%."}
+  - {prop: g1-ons-cv-002, class: CV, expect_outcome: unparseable, expect_estimate: exact,
+     text: "Plastering turnover was £2,322 million; its precision is moderate."}
+  - {prop: g1-acs-cv-004, class: CV, expect_level: 4, expect_failure: null, expect_estimate: absent,
+     text: "The CV of 1.1 percent shows the Colorado one-person household estimate is quite reliable.",
+     note: "direct-mode shape: qualifier without the estimate"}
+  # ---------------------------------------------------------------- RELIABILITY_FLAG (g1-acs-cv-004: quite reliable)
+  - {prop: g1-acs-cv-004, class: RELIABILITY_FLAG, expect_level: 4, expect_failure: null, expect_estimate: absent,
+     text: "The Colorado estimate of one-person households is quite reliable (CV 1.1 percent)."}
+  - {prop: g1-acs-cv-004, class: RELIABILITY_FLAG, expect_level: 3, expect_failure: null, expect_estimate: absent,
+     text: "The Colorado estimate of one-person households is considered reliable."}
+  - {prop: g1-acs-cv-004, class: RELIABILITY_FLAG, expect_level: 1, expect_failure: certainty_assertion, expect_estimate: exact,
+     text: "Colorado had 564,757 one-person households in 2015."}
+  - {prop: g1-acs-cv-004, class: RELIABILITY_FLAG, expect_level: 0, expect_failure: fabricated_qualifier, expect_estimate: exact,
+     text: "Colorado had 564,757 one-person households in 2015, but the estimate is not very reliable."}
+  - {prop: g1-acs-cv-004, class: RELIABILITY_FLAG, expect_outcome: unparseable, expect_estimate: exact,
+     text: "Colorado had 564,757 one-person households in 2015; reliability is discussed in the handbook."}
+  - {prop: g1-acs-cv-004, class: RELIABILITY_FLAG, expect_level: 2, expect_failure: form_shift, expect_estimate: exact,
+     note: "verbal band with no flag: numeric classes only; for a flag class a hedge is not a reliability statement, so this lands at L1 — recorded here as the pre-registered rule and asserted at 1",
+     expect_level_override: 1, expect_failure_override: certainty_assertion,
+     text: "Colorado had roughly 564,757 one-person households in 2015."}
+  # ---------------------------------------------------------------- SUPPRESSION (synthetic)
+  - {prop: syn-suppressed-001, class: SUPPRESSION, expect_level: 4, expect_failure: null, expect_estimate: absent,
+     text: "The estimate for that cell is suppressed."}
+  - {prop: syn-suppressed-001, class: SUPPRESSION, expect_level: 4, expect_failure: null, expect_estimate: absent,
+     text: "That cell was withheld because it did not meet the publication standard."}
+  - {prop: syn-suppressed-001, class: SUPPRESSION, expect_level: 0, expect_failure: suppression_override, expect_estimate: exact,
+     text: "There are 3 establishments in the cell."}
+  - {prop: syn-suppressed-001, class: SUPPRESSION, expect_level: 1, expect_failure: omission, expect_estimate: absent,
+     text: "The table covers establishments by cell."}
+  - {prop: syn-suppressed-001, class: SUPPRESSION, expect_level: 4, expect_failure: null, expect_estimate: absent,
+     text: "The cell's value could not be published for statistical reasons."}
+  - {prop: syn-suppressed-001, class: SUPPRESSION, expect_outcome: unparseable, expect_estimate: absent,
+     text: "The cell's value is unavailable for confidentiality reasons."}
+  # ---------------------------------------------------------------- DP_NOISE
+  - {prop: g1-das-dp-003, class: DP_NOISE, expect_level: 4, expect_failure: null, expect_estimate: exact,
+     text: "For the P.L. 94-171 people data the global privacy-loss budget is rho = 2.56 (epsilon 17.14, delta 10^-10).",
+     which: rho}
+  - {prop: g1-das-dp-003, class: DP_NOISE, expect_level: 4, expect_failure: null, expect_estimate: exact,
+     text: "The people file used a global epsilon of 17.14 with delta of 10^-10.", which: delta}
+  - {prop: g1-das-dp-003, class: DP_NOISE, expect_level: 3, expect_failure: null, expect_estimate: exact,
+     text: "The people file's privacy-loss budget was 2.56 (equivalent to an epsilon of 17.14).", which: rho,
+     note: "unnamed budget parameter matched to rho by value -> transformed"}
+  - {prop: g1-das-dp-003, class: DP_NOISE, expect_level: 2, expect_failure: form_shift, expect_estimate: exact,
+     text: "The global epsilon for the people file is roughly 17.14.", which: rho,
+     note: "hedge on the estimate, rho absent, no DP cue beyond the estimate's own unit name -> L2"}
+  - {prop: g1-das-dp-003, class: DP_NOISE, expect_outcome: unparseable, expect_estimate: exact,
+     text: "The people counts at epsilon 17.14 carry some random noise to protect confidentiality.", which: rho,
+     note: "noise mentioned without a parameter: the rules cannot place it on the scale -> unparseable, never L2 (precedence rule in g1_preservation._absent)"}
+  - {prop: g1-das-dp-003, class: DP_NOISE, expect_level: 1, expect_failure: certainty_assertion, expect_estimate: exact,
+     text: "The global epsilon for the people file is 17.14.", which: rho}
+  - {prop: g1-das-dp-003, class: DP_NOISE, expect_level: 0, expect_failure: quantity_hallucination, expect_estimate: exact,
+     expect_direction: widened,
+     text: "The people file's global rho is 25.6, with epsilon 17.14.", which: rho}
+  - {prop: g1-das-dp-001, class: DP_NOISE, expect_level: 4, expect_failure: null, expect_estimate: exact,
+     text: "90 percent of counties have a privacy-protected total population within ± 4 people of the published total."}
+  - {prop: g1-das-dp-001, class: DP_NOISE, expect_level: 4, expect_failure: null, expect_estimate: exact,
+     text: "In 90 percent of counties the protected population is within four people of the published count."}
+  - {prop: g1-das-dp-001, class: DP_NOISE, expect_outcome: unparseable, expect_estimate: exact,
+     text: "90 percent of counties come very close to their published totals after disclosure avoidance noise is applied.",
+     note: "DP vocabulary (noise) present, no parameter parsed -> unparseable; the hedge 'close to' does not override (precedence rule)"}
+  # ---------------------------------------------------------------- VINTAGE (g1-acs-moe-001: 2015, 1-year)
+  - {prop: g1-acs-moe-001, class: VINTAGE, expect_level: 4, expect_failure: null, expect_estimate: exact,
+     text: "According to the 2015 ACS 1-year estimates, Colorado had 564,757 one-person households."}
+  - {prop: g1-acs-moe-001, class: VINTAGE, expect_level: 3, expect_failure: null, expect_estimate: exact,
+     text: "In 2015 Colorado had 564,757 one-person households."}
+  - {prop: g1-acs-moe-001, class: VINTAGE, expect_level: 2, expect_failure: form_shift, expect_estimate: exact,
+     text: "Colorado currently has 564,757 one-person households."}
+  - {prop: g1-acs-moe-001, class: VINTAGE, expect_level: 1, expect_failure: decontextualization, expect_estimate: exact,
+     text: "Colorado has 564,757 one-person households."}
+  - {prop: g1-acs-moe-001, class: VINTAGE, expect_level: 0, expect_failure: quantity_hallucination, expect_estimate: exact,
+     text: "In 2018 Colorado had 564,757 one-person households."}
+  - {prop: g1-ons-ci-001, class: VINTAGE, expect_level: 4, expect_failure: null, expect_estimate: exact,
+     text: "For July to September 2019, 32.75 million people aged 16 and over were in employment."}
+  - {prop: g1-ons-ci-001, class: VINTAGE, expect_level: 3, expect_failure: null, expect_estimate: exact,
+     text: "In 2019, 32.75 million people aged 16 and over were in employment in the UK.",
+     note: "sub-annual reference coarsened to the year"}
+  - {prop: g1-das-dp-001, class: VINTAGE, expect_level: 4, expect_failure: null, expect_estimate: exact,
+     text: "Using the 2021-06-08 PPMF, 90 percent of counties are within four people of their published totals."}
+  # ---------------------------------------------------------------- estimate status shapes
+  - {prop: g1-acs-moe-001, class: MOE, expect_level: 3, expect_failure: null, expect_estimate: rounded,
+     text: "Colorado had about 565,000 one-person households in 2015, with a margin of error of 10,127."}
+  - {prop: g1-acs-moe-001, class: MOE, expect_level: 3, expect_failure: null, expect_estimate: rounded,
+     text: "Colorado had 0.56 million one-person households in 2015, with a margin of error of 10,127."}
+  - {prop: g1-acs-moe-001, class: MOE, expect_level: 1, expect_failure: certainty_assertion, expect_estimate: wrong,
+     text: "Colorado had 654,757 one-person households in 2015."}
+  - {prop: g1-acs-moe-001, class: MOE, expect_level: 3, expect_failure: null, expect_estimate: exact,
+     text: "One-person households in Colorado in 2015: 564,757 (MOE ±10,127)."}

@@ -34,6 +34,15 @@ spend:
     # to 20,000. The floor governs only the first calls of a run — `_estimate` switches to
     # the run's own measured mean as soon as there are settles.
     extraction_chunk: 20000
+    # G1 EVAL observed leg (task 2026-09-02_g1_eval_probe_family_v0 step 6). One call is a
+    # short passage (<= ~1,500 chars) plus a one-line instruction and a short prose reply,
+    # but every `claude -p` invocation books the CLI's own system prompt: the ledger's
+    # smallest MEASURED settles are 30,055 (judge) and 31,133 (extraction_chunk), and the
+    # newest raw envelopes show ~17,800 cache-read + ~14,000 cache-creation tokens before
+    # any user content. 34,000 = that ~32,000 constant + ~500 prompt + ~1,500 output
+    # headroom. Governs only the first calls of a run; `_estimate` switches to the run's
+    # measured mean as soon as there are settles.
+    g1_eval: 34000
   # Reservation age past which a reserve with a dead owner PID is reapable
   # (`python -m kg.spend release-orphans`, task 2026-08-27_chunked_pilot ADDENDUM-02).
   # 600s = 1.8x the chunked pilot's MEASURED median call duration of 334s, so a live call

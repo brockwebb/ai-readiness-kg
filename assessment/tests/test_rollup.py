@@ -160,3 +160,86 @@ def test_an_agency_with_no_web_surface_reports_an_empty_vector_not_a_missing_key
     assert roll["web_surface"]["vector_max"] == 0
     for dim in ("D1", "D2", "D3", "D4"):
         assert roll["web_surface"]["core_dimension_vectors"][dim]["n_probes"] == 0
+
+
+# --- The eval firewall: G1 results never enter the core composite, the web-surface
+# vector or a frontier track; they are their own block with their own denominators.
+from harness.records import SOURCE_EVAL, UNPARSEABLE, EvalResult
+from harness.rollup import g1_block, wilson_interval
+
+
+def _e(cls, mode, level, outcome=None, target="g1-p", est="exact", failure=None):
+    from harness.records import Level, level_to_score
+    if outcome == UNPARSEABLE:
+        score, lvl = None, None
+    else:
+        score, lvl = level_to_score(Level(level)), level
+    return EvalResult(probe_id="g1_preservation", target=target, qualifier_class=cls, mode=mode,
+                      outcome=outcome or score.name.lower(), score=score, level=lvl,
+                      failure_class=failure, estimate_status=est, model_id="m", prompt_epoch="e",
+                      evidence="", timestamp="2026-09-02T00:00:00Z", evidence_path="p")
+
+
+def _g1_declared(score, target="https://x.gov/a.csv"):
+    return ProbeResult("g1_declared", target, "G1", Track.CORE, score, "", "", "2026-09-02T00:00:00Z", "p")
+
+
+def test_eval_results_never_move_the_core_composite_or_web_vector_or_frontier():
+    """Positive control with a mutation: inject a full grid of G1 results (declared PASS,
+    observed L4 everywhere) and assert every non-G1 number is byte-identical."""
+    base_results = [
+        _r("d1_robots", "D1", Track.CORE, Score.PASS),
+        _r("d2_bulk", "D2", Track.CORE, Score.PARTIAL),
+        _w("d2_no_barriers", "D2", Score.FAIL),
+        _r("frontier_llms_txt", None, Track.FRONTIER_NEAR, Score.PASS, "2024-09"),
+    ]
+    injected = base_results + [
+        _g1_declared(Score.PASS), _g1_declared(Score.PASS, "https://x.gov/b.csv"),
+        _e("MOE", "indirect", 4), _e("MOE", "direct", 4), _e("CI", "indirect", 0),
+        _e("VINTAGE", "indirect", None, UNPARSEABLE),
+    ]
+    base = rollup_agency("example", base_results)
+    aug = rollup_agency("example", injected)
+    for key in ("core_composite", "core_composite_max", "core_dimension_vectors", "web_surface",
+                "frontier_near", "frontier_deep", "n_targets", "n_probes_core", "n_probes_frontier",
+                "n_probes_web_surface"):
+        assert base[key] == aug[key], key
+    assert aug["n_probes_eval"] == 6 and aug["n_probes_total"] == base["n_probes_total"] + 6
+    assert "G1" not in aug["core_dimension_vectors"]
+    # Mutation: if the partition were removed, the G1 declared PASSes would raise n_probes_core.
+    assert aug["n_probes_core"] == 2
+
+
+def test_g1_block_reports_rate_interval_denominator_and_unparseable_per_class_and_mode():
+    results = [
+        _e("MOE", "indirect", 4), _e("MOE", "indirect", 3), _e("MOE", "indirect", 1, failure="certainty_assertion"),
+        _e("MOE", "indirect", None, UNPARSEABLE), _e("MOE", "direct", 4),
+        _e("CV", "indirect", 2, failure="form_shift"),
+        _g1_declared(Score.PARTIAL),
+    ]
+    block = rollup_agency("x", results)["g1"]
+    cell = block["observed"]["by_class_and_mode"]["MOE"]["indirect"]
+    assert cell["n"] == 4 and cell["n_scored"] == 3 and cell["n_unparseable"] == 1
+    assert cell["preserved"] == 2 and cell["preservation_rate"] == round(2 / 3, 6)
+    lo, hi = cell["wilson95"]
+    assert 0 < lo < 2 / 3 < hi < 1
+    assert cell["levels"]["preserved_exact"] == 1 and cell["levels"]["omitted"] == 1
+    assert cell["failure_classes"] == {"certainty_assertion": 1}
+    assert block["observed"]["by_class_and_mode"]["CV"]["indirect"]["preservation_rate"] == 0.0
+    assert block["observed"]["by_mode"]["direct"]["n"] == 1
+    assert block["declared"]["data.json"] == {"score": 1, "max": 2, "n_probes": 1, "probe_ids": ["g1_declared"]}
+    assert "no product-level threshold" in block["note"].lower() or "No product-level threshold" in block["note"]
+
+
+def test_an_empty_g1_block_is_reported_not_missing():
+    block = rollup_agency("x", [_r("d1_robots", "D1", Track.CORE, Score.PASS)])["g1"]
+    assert block["observed"]["all"]["n"] == 0 and block["observed"]["all"]["preservation_rate"] is None
+    assert block["observed"]["all"]["wilson95"] == [None, None]
+    assert block["declared"] == {}
+
+
+def test_wilson_interval_matches_the_burn_close_arithmetic():
+    # cc_tasks/2026-09-02_post_burn_reconciliation_RESULT.md §2: 37/1,480 -> [0.018191, 0.034268]
+    lo, hi = wilson_interval(37, 1480)
+    assert (lo, hi) == (0.018191, 0.034268)
+    assert wilson_interval(0, 0) == (None, None)
