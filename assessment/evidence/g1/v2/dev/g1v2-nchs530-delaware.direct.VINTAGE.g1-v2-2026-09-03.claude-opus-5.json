@@ -1,0 +1,33 @@
+{
+ "proposition_id": "g1v2-nchs530-delaware",
+ "call_id": "g1v2-nchs530-delaware.direct.VINTAGE",
+ "mode": "direct",
+ "qualifier_class": "VINTAGE",
+ "compression_level": null,
+ "prompt_epoch": "g1-v2-2026-09-03",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T18:34:40.885650+00:00",
+ "prompt": "Data table for Figure 4. Perinatal mortality rate, by state for 2022 and 2023, and change in rate \nfrom 2022 to 2023: Each state and the District of Columbia\nArea 2022 2023\nChange from \n2022 to 2023\nRate per 1,000 Percent\nAlabama  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9.44 10.96 16\nAlaska . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 8.39 7.73 †\nArizona  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9.56 9.28 †\nArkansas . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 10.86 11.49 †\nCalifornia . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 7.30 7.25 †\nColorado . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 7.32 8.61 18\nConnecticut . . . . . . . . . . . . . . . . . . . . . . . . . . . 6.93 7.63 †\nDelaware . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9.66 8.68 †\n† Change not significant (p = 0.05). \n\nWhat is the reference period or as-of date on the 2023 perinatal mortality rate for Delaware (per 1,000)?",
+ "response_text": "**Reference period: calendar year 2023** — the full-year aggregate, not a point-in-time \"as-of\" value.\n\nThe Delaware figure is **8.68 perinatal deaths per 1,000** (2022: 9.66; change flagged † = not statistically significant at p = 0.05).\n\nDetails on how to read that period:\n\n- The only period marker in the table is the column header `2023`. Column headers are data years, so the rate covers events occurring 2023-01-01 through 2023-12-31.\n- It's an occurrence-year rate: numerator = late fetal deaths (≥28 weeks gestation) + early neonatal deaths (<7 days) in 2023; denominator = live births + late fetal deaths in 2023. Both sides share the same 12-month window, which is why no separate as-of date applies.\n- State assignment is by mother's state of residence, per standard NCHS vital statistics figure conventions.\n\nOne thing the excerpt does **not** carry: the file vintage — i.e., the date the underlying natality/fetal-death/linked-birth-infant-death files were closed out, and whether these are final or provisional data. That's a property of the release, not of the table body, and it would appear in the source report's technical notes rather than in the Figure 4 data table. If you need the vintage stamped alongside the value, pull it from the parent report's notes; the data year alone is what this table supports.",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 768,
+  "cacheReadInputTokens": 12840,
+  "cacheCreationInputTokens": 17261,
+  "webSearchRequests": 0,
+  "costUSD": 0.19823999999999997,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 321,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 11808,
+ "cost_usd": 0.19823999999999997,
+ "spend_run_id": "g1_eval_v2_dev_2026-09-03_b",
+ "spend_reservation_id": "31e9e1138841431ebb6c28345d3f04fb",
+ "source_doc_id": "nchs-data-brief-530-perinatal-mortality-2022-2023",
+ "passage_id": "nchs530-fig4-al-de",
+ "surface_type": "flagged_cell"
+}

@@ -269,8 +269,8 @@ v1_cases:
   - {prop: g1-n175-sup-003, class: CI, mode: direct, expect_level: 4, expect_failure: null, expect_estimate: exact,
      evidence: "assessment/evidence/g1/g1-n175-sup-003.direct.CI.g1-v0-2026-09-02.claude-opus-5.json",
      text: "**95% CI: 0.3% to 6.4%** (Korn–Graubard), around a point estimate of 2.0%.\n\nSupporting detail from Table I (non-Hispanic black, elevated):\n- Sample size 447; effective sample size 145.3; df = 13\n- SE = 1.17 percentage points; RSE = 58.5%"}
-  - {prop: g1-lfs-ci-001, class: CI, mode: direct, expect_level: 3, expect_failure: null, expect_estimate: exact,
-     note: "the 95% in the row label is a table-semantic level (column 'Level'), not a confidence-level phrase; v1 does not read column semantics, so the interval scores L3 with level_omitted — a v2 candidate",
+  - {prop: g1-lfs-ci-001, class: CI, mode: direct, expect_level: 3, expect_level_v2: 4, expect_failure: null, expect_estimate: exact,
+     note: "the 95% in the row label is a table-semantic level (column 'Level'), not a confidence-level phrase; v1 does not read column semantics, so the interval scores L3 with level_omitted — a v2 candidate. v2 reads '95% (±2 SE):' as the level of its own line, so L4",
      evidence: "assessment/evidence/g1/g1-lfs-ci-001.direct.CI.g1-v0-2026-09-02.claude-opus-5.json",
      text: "For the illustrative example (estimated month-to-month increase in total employment of **60,000**, standard error of the movement estimate **25,000**):\n\n| Level | Margin | Interval |\n|---|---|---|\n| 68% (±1 SE) | ±25,000 | **35,000 to 85,000** |\n| 95% (±2 SE) | ±50,000 | **10,000 to 110,000** |"}
   - {prop: g1-das-dp-004, class: DP_NOISE, which: rho, mode: indirect, expect_level: 4, expect_failure: null, expect_estimate: exact,
@@ -463,3 +463,588 @@ v2_cases:
     dollars — roughly a third below today''s purchasing power.'
   note: 'v1 scorer: L0 binding_error (another row''s ±812 bound to 2,163); reviewer: genuine omission of the ±743 MOE. D10: a candidate anchored on another estimate, not presented beside this row''s label,
     is simply not this estimate''s -> L1 omission.'
+
+# The two remaining v1 parser misses (the third, the pm-source / bounds tolerance, is exercised by
+# g1h-ons-ci-001 above), verbatim from the named evidence files.
+v2_cases_parser_misses:
+- prop: g1h-das-dp-001
+  family: dp
+  class: DP_NOISE
+  mode: direct
+  expect_level: 4
+  expect_failure: null
+  expect_estimate: exact
+  expect_family_level: 4
+  evidence: assessment/evidence/g1/holdout/g1h-das-dp-001.direct.DP_NOISE.g1-v0-2026-09-02.claude-opus-5.json
+  text: '**ε ≈ 19.61** — that is the global privacy-loss budget the 2021-06-08 file was produced under, so it''s the parameter attached to every difference statistic computed from it, including the ≤5-percentage-point
+    / 95%-of-the-time result for block groups of 450+.
+
+
+    Breakdown of that budget (Census Bureau''s announced production TopDown settings, which the June 8, 2021 demonstration product implemented):
+
+
+    | Component | ρ (zCDP) | ε equivalent |
+
+    |---|---|---|
+
+    | Person tables | 2.56 | 17.14 |
+
+    | Housing-unit tables | 0.07 | 2.47 |
+
+    | **Total** | **2.63** | **19.61** |
+
+
+    Two things worth flagging about the question as posed:
+
+
+    1. There is no per-threshold epsilon. The DAS applies one global budget to the whole file; the 450-person block-group threshold is an *output* of the analysis (the population size at which noise from
+    that fixed ε stops moving the largest group''s share by more than 5 points, 95% of the time), not a setting that varies by geography size. The same ε = 19.61 governs the MCD/place 200-person threshold
+    and the 100%-pass rate for congressional and legislative districts.
+
+
+    2. ε and ρ are not interchangeable dials. The Bureau allocated in ρ (zero-concentrated DP); 19.61 is the converted ε at δ = 10⁻¹⁰. If the surrounding document quotes 2.63, that''s the same budget in
+    the native unit.
+
+
+    Caveat on verification: web search was denied in this session, so I answered from knowledge rather than pulling the Bureau''s DAS parameter release live. If this is going into a citable document, confirm
+    against the Census Bureau''s "2020 Census Disclosure Avoidance System Privacy-Loss Budget Allocation" documentation for the June 2021 vintage — vintage-to-epsilon mapping is exactly the kind of detail
+    that gets miscopied across the demonstration series (2020-05-27, 2020-11-18, 2021-04-28, 2021-06-08 each differ).'
+  note: 'v1 parser miss (v1 RESULT §6): the coverage figure is written ''≤5-percentage-point / 95%-of-the-time''; v2 reads the hyphenated coverage phrase and the hyphenated unit.'
+- prop: g1-acs-ci-003
+  family: interval
+  class: CI
+  mode: indirect
+  expect_level: 3
+  expect_failure: null
+  expect_estimate: exact
+  expect_family_level: 3
+  evidence: assessment/evidence/g1/acs-ch7-colorado.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json
+  text: '## Understanding Margin of Error in ACS Data — Plain Language Version
+
+
+    **What a margin of error tells you**
+
+
+    The American Community Survey (ACS) asks a sample of people questions rather than counting everyone, so its numbers are estimates, not exact counts. The margin of error (MOE) tells you how close that
+    estimate probably is to the real number for the whole population.
+
+
+    The Census Bureau publishes MOEs at a 90 percent confidence level. Add and subtract the MOE from the estimate, and you get a range — the confidence interval — that should contain the true value about
+    90 percent of the time.
+
+
+    **A worked example**
+
+
+    The 2015 ACS 1-year estimates say Colorado had 564,757 one-person households, with an MOE of 10,127.
+
+
+    - Lower bound: 564,757 − 10,127 = **554,630**
+
+    - Upper bound: 564,757 + 10,127 = **574,884**
+
+
+    So we can be 90 percent confident the true number falls between roughly 554,600 and 574,900. Put another way: if the survey were repeated 100 times, about 90 of those estimates would land inside that
+    range.
+
+
+    The smaller the MOE compared to the estimate itself, the narrower the range — and the more precise the estimate.
+
+
+    **A caution about the edges of the range**
+
+
+    Confidence intervals can produce results that don''t make sense in the real world. If an estimate is close to zero, subtracting the MOE may give a negative number — but there''s no such thing as a negative
+    number of people, so report the lower bound as zero. Similarly, a percentage can''t exceed 100 percent. (Some measures, like income, *can* legitimately be negative.) Always sanity-check the range against
+    what the number actually represents.
+
+
+    **Two related measures**
+
+
+    *Standard error (SE)* measures how much an estimate is likely to bounce around simply because it came from a sample. It''s the building block behind the MOE, and you get it by dividing the MOE by 1.645.
+    For the Colorado example: 10,127 ÷ 1.645 ≈ 6,156.
+
+
+    Standard error depends on how varied the population is and how big the sample is. Bigger samples mean smaller standard errors — which is exactly why the Census Bureau publishes estimates for small places
+    only by pooling several years of data together. More years means more sample, which means more reliable numbers.
+
+
+    *Coefficient of variation (CV)* expresses the standard error as a percentage of the estimate itself, which makes it easy to compare reliability across very different numbers. For Colorado: 6,156 ÷ 564,757
+    ≈ 1.1 percent.
+
+
+    A small CV means the sampling error is small relative to the estimate — the number is reliable. A large CV means the error is nearly as big as the estimate itself, and the number should be treated with
+    caution. Because CVs are percentages, most people find them easier to compare across a set of estimates than raw standard errors.'
+  note: 'v1 parser miss (v1 RESULT §6): the exact ''MOE of 10,127'' was outranked by the rounded bounds ''roughly 554,600 and 574,900'' because CI candidates pre-empted ±-form candidates; v2 ranks every
+    interval-form candidate together, so the exact ± scores the bounds-form source L3 (bounds_to_pm) and the coarser bounds are not chosen.'
+
+# Scorer / parser v2 rules motivated by v2 DEVELOPMENT responses (task 2026-09-03_g1_eval_v2 step 5a):
+# text VERBATIM from the named evidence file; the expected reading is the family verdict under
+# (g1-parse-v2, g1-score-v2), each with the rule it exercises in `note`. Holdout responses motivated
+# nothing here (they did not exist at the freeze).
+v2_cases_dev:
+- prop: g1v2-cchs-nl-obese
+  family: interval
+  mode: direct
+  compression: null
+  evidence: assessment/evidence/g1/v2/dev/g1v2-cchs-nl-obese.direct.CI.g1-v2-2026-09-03.claude-opus-5.json
+  text: 38.9% to 44.9% (point estimate 41.9%), 95% CI, both sexes, no quality flag on these three rows.
+  expect_estimate: exact
+  expect_family_level: 4
+  expect_outcome: pass
+  expect_failure: null
+  expect_form: CI
+  note: bare lead-less range '38.9% to 44.9% (point estimate 41.9%), 95% CI' -> bounds (rule bare_range)
+- prop: g1v2-cchs-nl-youth
+  family: interval
+  mode: direct
+  compression: null
+  evidence: assessment/evidence/g1/v2/dev/g1v2-cchs-nl-youth.direct.CI.g1-v2-2026-09-03.claude-opus-5.json
+  text: '**26.4% to 50.1%** (95% CI), around a point estimate of **37.5%**.
+
+
+    From the provided CANSIM extract — Newfoundland and Labrador, 2022, "Body mass index, self-reported, youth (12 to 17 years old), overweight or obese," both sexes:
+
+
+    | Measure | Value |
+
+    |---|---|
+
+    | Percent | 37.5 |
+
+    | Low 95% CI | 26.4 |
+
+    | High 95% CI | 50.1 |
+
+
+    All three rows carry `STATUS = "E"` — **use with caution**. The interval is ~24 points wide on a 37.5 point estimate, so this is a small-sample cell; treat it as "somewhere between a quarter and half
+    of youth" rather than a precise figure.'
+  expect_estimate: exact
+  expect_family_level: 4
+  expect_outcome: pass
+  expect_failure: null
+  expect_form: CI
+  note: bare range '26.4% to 50.1% (95% CI)' -> bounds
+- prop: g1v2-cchs-nl-youth
+  family: reliability
+  mode: direct
+  compression: null
+  evidence: assessment/evidence/g1/v2/dev/g1v2-cchs-nl-youth.direct.CI.g1-v2-2026-09-03.claude-opus-5.json
+  text: '**26.4% to 50.1%** (95% CI), around a point estimate of **37.5%**.
+
+
+    From the provided CANSIM extract — Newfoundland and Labrador, 2022, "Body mass index, self-reported, youth (12 to 17 years old), overweight or obese," both sexes:
+
+
+    | Measure | Value |
+
+    |---|---|
+
+    | Percent | 37.5 |
+
+    | Low 95% CI | 26.4 |
+
+    | High 95% CI | 50.1 |
+
+
+    All three rows carry `STATUS = "E"` — **use with caution**. The interval is ~24 points wide on a 37.5 point estimate, so this is a small-sample cell; treat it as "somewhere between a quarter and half
+    of youth" rather than a precise figure.'
+  expect_estimate: exact
+  expect_family_level: 4
+  expect_outcome: pass
+  expect_failure: null
+  expect_form: RELIABILITY_FLAG
+  note: quoted symbol 'STATUS = "E" — use with caution' -> reliability flag exact
+- prop: g1v2-acs-co-boulder
+  family: interval
+  mode: direct
+  compression: null
+  evidence: assessment/evidence/g1/v2/dev/g1v2-acs-co-boulder.direct.MOE.g1-v2-2026-09-03.claude-opus-5.json
+  text: '**2628** (dollars).
+
+
+    That''s the `B19013_001M` field — the 90% confidence margin of error on the median household income estimate of $102,772 for Boulder County, Colorado. So the interval is roughly $100,144–$105,400.'
+  expect_estimate: exact
+  expect_family_level: 3
+  expect_outcome: pass
+  expect_failure: null
+  expect_form: MOE
+  note: direct answer '2628 (dollars)' competes with the phrase 'margin of error on the … estimate of $102,772' that swallowed the estimate; the level is not restated -> L3
+- prop: g1v2-cchs-nl-youth
+  family: reliability
+  mode: indirect
+  compression: short
+  evidence: assessment/evidence/g1/v2/dev/cchs-2022-nl.indirect.indirect.short.g1-v2-2026-09-03.claude-opus-5.json
+  text: 'In 2022, about 42% of adults in Newfoundland and Labrador were classified as obese based on self-reported height and weight, and roughly 38% of youth aged 12 to 17 were overweight or obese (though
+    that youth figure is uncertain and should be treated with caution). Chronic conditions were also common: about 27% of residents 15 and over reported arthritis, and roughly 12% reported diabetes.'
+  expect_estimate: rounded
+  expect_family_level: 3
+  expect_outcome: pass
+  expect_failure: null
+  expect_form: RELIABILITY_FLAG
+  note: '''should be treated with caution'' -> reliability flag, transformed wording of ''use with caution'''
+- prop: g1v2-cchs-pe-youth
+  family: reliability
+  mode: indirect
+  compression: none
+  evidence: assessment/evidence/g1/v2/dev/cchs-2022-pe.indirect.indirect.g1-v2-2026-09-03.claude-opus-5.json
+  text: '**Health indicators for Prince Edward Island, 2022** (Statistics Canada, both sexes, based on a survey of people 12 and over)
+
+
+    **Obesity in adults (18+):** About **36%** of PEI adults were classified as obese based on their own reported height and weight, adjusted to correct for the tendency people have to under-report weight.
+    Because this comes from a sample rather than everyone in the province, the true figure is most likely somewhere between **30% and 43%** — roughly one in three adults.
+
+
+    **Overweight or obesity in youth (12–17):** About **32%** of PEI teens fell into the overweight-or-obese range, with a likely true range of **21% to 45%**. Statistics Canada flags this number with an
+    "E," meaning **use it with caution** — the sample was small enough that the estimate is shaky. The wide range says the same thing: it could be as low as one in five teens or as high as nearly one in
+    two.
+
+
+    **Arthritis (15+):** About **19%** of Islanders 15 and over reported having arthritis, likely between **15% and 23%** — close to one in five.
+
+
+    **Diabetes:** About **9%** reported having diabetes, likely between **6% and 13%** — roughly one in eleven.
+
+
+    **A note on reading these numbers.** Every figure is an estimate from a survey, not a count. The "confidence interval" is the range the real value very probably falls in (19 times out of 20); a wide
+    range means less certainty, usually because fewer people in that group were surveyed. The height and weight figures are also **self-reported**, which people are known to shade in flattering directions
+    — the adult numbers have been statistically adjusted for that, the youth numbers have not.'
+  expect_estimate: rounded
+  expect_family_level: 4
+  expect_outcome: pass
+  expect_failure: null
+  expect_form: RELIABILITY_FLAG
+  note: '''flags this number with an "E," meaning use it with caution'' -> quoted-letter code'
+- prop: g1v2-cchs-pe-youth
+  family: interval
+  mode: indirect
+  compression: none
+  evidence: assessment/evidence/g1/v2/dev/cchs-2022-pe.indirect.indirect.g1-v2-2026-09-03.claude-opus-5.json
+  text: '**Health indicators for Prince Edward Island, 2022** (Statistics Canada, both sexes, based on a survey of people 12 and over)
+
+
+    **Obesity in adults (18+):** About **36%** of PEI adults were classified as obese based on their own reported height and weight, adjusted to correct for the tendency people have to under-report weight.
+    Because this comes from a sample rather than everyone in the province, the true figure is most likely somewhere between **30% and 43%** — roughly one in three adults.
+
+
+    **Overweight or obesity in youth (12–17):** About **32%** of PEI teens fell into the overweight-or-obese range, with a likely true range of **21% to 45%**. Statistics Canada flags this number with an
+    "E," meaning **use it with caution** — the sample was small enough that the estimate is shaky. The wide range says the same thing: it could be as low as one in five teens or as high as nearly one in
+    two.
+
+
+    **Arthritis (15+):** About **19%** of Islanders 15 and over reported having arthritis, likely between **15% and 23%** — close to one in five.
+
+
+    **Diabetes:** About **9%** reported having diabetes, likely between **6% and 13%** — roughly one in eleven.
+
+
+    **A note on reading these numbers.** Every figure is an estimate from a survey, not a count. The "confidence interval" is the range the real value very probably falls in (19 times out of 20); a wide
+    range means less certainty, usually because fewer people in that group were surveyed. The height and weight figures are also **self-reported**, which people are known to shade in flattering directions
+    — the adult numbers have been statistically adjusted for that, the youth numbers have not.'
+  expect_estimate: rounded
+  expect_family_level: 0
+  expect_outcome: fail
+  expect_failure: quantity_hallucination
+  expect_form: CI
+  note: 'rounded bounds ''21% to 45%'' for the row''s 21.x–45.x: D7 coarser rounding, L0 — and the adult-obesity sentence''s ''between 30% and 43%'' is not this row''s (the value it follows is the 36 %)'
+- prop: g1-acs-ci-004
+  family: relative
+  mode: indirect
+  compression: short
+  evidence: assessment/evidence/g1/v2/dev/acs-ch8-product.indirect.indirect.short.g1-v2-2026-09-03.claude-opus-5.json
+  text: Sometimes you can estimate a number the Census Bureau doesn't publish directly by multiplying two figures it does publish — for instance, multiplying the 74,506,512 owner-occupied homes in the U.S.
+    in 2015 by the 82.4 percent that were single detached houses gives about 61.4 million such homes. Because both inputs carry some sampling error, the derived figure comes with its own margin of error
+    (about ±202,000, or a 90 percent confidence range of roughly 61.19 to 61.60 million) — a spread small enough, at about 0.2 percent of the estimate, to call the result highly reliable.
+  expect_estimate: rounded
+  expect_family_level: 4
+  expect_outcome: pass
+  expect_failure: null
+  expect_form: CV
+  note: '''at about 0.2 percent of the estimate'' -> CV (rule cv_of_estimate)'
+- prop: g1-ons-ci-002
+  family: interval
+  mode: indirect
+  compression: short
+  evidence: assessment/evidence/g1/v2/dev/ons-ci-education.indirect.indirect.short.g1-v2-2026-09-03.claude-opus-5.json
+  text: 'The UK''s private education industry brought in an estimated £42.6 billion in 2016, and because that figure comes from a sample rather than a full count, the true total is likely somewhere between
+    £41.6 billion and £43.7 billion. Statisticians express this by saying that if the survey were repeated many times, about 19 out of every 20 such ranges would capture the real figure.
+
+
+    One note on the source text: its final sentence ("there is a 95% chance that the true population value lies between...") is a common misreading of confidence intervals — the 95% describes the reliability
+    of the method across repeated samples, not the probability that this particular interval contains the true value. I used the repeated-sampling wording instead, which the source''s own preceding sentence
+    gets right.'
+  expect_estimate: rounded
+  expect_family_level: 0
+  expect_outcome: fail
+  expect_failure: quantity_hallucination
+  expect_form: CI
+  note: '''the true total is likely somewhere between £41.6 billion and £43.7 billion'' -> bounds with the v2 cue; ''19 out of every 20'' -> 95 %; rounded bounds -> L0 by D7'
+- prop: g1-lfs-ci-001
+  family: interval
+  mode: indirect
+  compression: short
+  evidence: assessment/evidence/g1/v2/dev/lfs-ci-example.indirect.indirect.short.g1-v2-2026-09-03.claude-opus-5.json
+  text: If employment rose by an estimated 60,000 between two months, the survey's margin of error means the true change is probably somewhere between 10,000 and 110,000 — with about a 19-in-20 chance of
+    falling in that range. Because that range doesn't include zero, statisticians treat the increase as a real change rather than a fluke of sampling.
+  expect_estimate: exact
+  expect_family_level: 4
+  expect_outcome: pass
+  expect_failure: null
+  expect_form: CI
+  note: '''probably somewhere between 10,000 and 110,000 — with about a 19-in-20 chance'' -> 95 % bounds'
+- prop: g1h-lfs-ci-001
+  family: interval
+  mode: indirect
+  compression: null
+  evidence: assessment/evidence/g1/lfs-ci-example.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json
+  text: '**Understanding the numbers behind employment estimates**
+
+
+    Employment figures are based on a survey, not a count of every worker. Because a survey only reaches a sample of people, its results come with a margin of uncertainty. Statisticians measure that uncertainty
+    with a number called the standard error, and use it to build a range — a "confidence interval" — around the reported figure.
+
+
+    **An example**
+
+
+    Suppose the reported change in total employment from one month to the next was an increase of **60,000**, with a standard error of **25,000**.
+
+
+    - Adding and subtracting one standard error gives a range of **35,000 to 85,000**. There''s roughly a **2-in-3 chance (68%)** that this range contains the true change.
+
+    - Adding and subtracting two standard errors gives a range of **10,000 to 110,000**. There''s roughly a **19-in-20 chance (95%)** that this range contains the true change.
+
+
+    **Deciding whether a change is real**
+
+
+    The point of these ranges is to answer a practical question: did employment actually change, or does the number just reflect the luck of which people happened to be surveyed?
+
+
+    The rule of thumb is simple. Look at the 95% range:
+
+
+    - **If the range does not include zero**, the change is treated as real — statisticians call it "statistically significant." In the example above, the range runs from 10,000 to 110,000, which is entirely
+    above zero, so the 60,000 increase counts as a genuine change.
+
+    - **If the range does include zero**, the apparent change may well be noise from sampling, and shouldn''t be read as real movement.
+
+
+    In general, the bigger a reported change is compared with its standard error, the more confident we can be that something actually happened. And when we say a result is significant "at the 5% level,"
+    we mean there''s about a 5% risk of calling a change real when nothing actually changed.'
+  expect_estimate: exact
+  expect_family_level: 3
+  expect_outcome: pass
+  expect_failure: null
+  expect_form: CI
+  note: 'a 68 % interval and a 95 % one in one response: a level phrase binds to its own sentence, so the 35,000–85,000 interval keeps the 68 % level'
+- prop: g1v2-lfs-ab-participation-rate
+  family: interval
+  mode: indirect
+  compression: short
+  evidence: assessment/evidence/g1/v2/dev/lfs-2026-07-alberta.indirect.indirect.short.g1-v2-2026-09-03.claude-opus-5.json
+  text: In July 2026, about 2.67 million Albertans aged 15 and over were employed — roughly 2.2 million full-time and 467,000 part-time — out of a labour force of about 2.87 million, leaving roughly 202,000
+    people unemployed for a 7.0% unemployment rate. About 69.2% of the province's working-age population was in the labour force and 64.3% was employed, with all figures seasonally adjusted and carrying
+    small margins of error (for example, ±0.4 points on the unemployment rate).
+  expect_estimate: exact
+  expect_family_level: 1
+  expect_outcome: fail
+  expect_failure: omission
+  expect_form: SE
+  note: '''(for example, ±0.4 points on the unemployment rate)'' names a sibling row inside the participation-rate sentence -> not this row''s -> omission'
+- prop: g1v2-lfs-ab-unemployment-rate
+  family: interval
+  mode: indirect
+  compression: short
+  evidence: assessment/evidence/g1/v2/dev/lfs-2026-07-alberta.indirect.indirect.short.g1-v2-2026-09-03.claude-opus-5.json
+  text: In July 2026, about 2.67 million Albertans aged 15 and over were employed — roughly 2.2 million full-time and 467,000 part-time — out of a labour force of about 2.87 million, leaving roughly 202,000
+    people unemployed for a 7.0% unemployment rate. About 69.2% of the province's working-age population was in the labour force and 64.3% was employed, with all figures seasonally adjusted and carrying
+    small margins of error (for example, ±0.4 points on the unemployment rate).
+  expect_estimate: exact
+  expect_family_level: 3
+  expect_outcome: pass
+  expect_failure: null
+  expect_form: SE
+  note: the same ±0.4 points, bound to the unemployment-rate row it names
+- prop: g1v2-lfs-ab-employment-rate
+  family: interval
+  mode: indirect
+  compression: none
+  evidence: assessment/evidence/g1/v2/dev/lfs-2026-07-alberta.indirect.indirect.g1-v2-2026-09-03.claude-opus-5.json
+  text: '## Alberta''s job market, July 2026
+
+
+    *(Statistics Canada Labour Force Survey, seasonally adjusted. All figures come from a monthly sample survey, so each one carries a margin of error.)*
+
+
+    **The basics**
+
+
+    Alberta had about **4.15 million people aged 15 and over**. Of those:
+
+
+    - **2.87 million were in the labour force** — meaning they either had a job or were actively looking for one.
+
+    - **2.67 million were working**: 2.20 million full-time and 467,000 part-time.
+
+    - **202,000 were unemployed** — without work but looking for it.
+
+    - The remaining ~1.28 million were outside the labour force entirely: retirees, students, people caring for family, people not currently job-hunting.
+
+
+    **The three headline rates**
+
+
+    | Rate | Value | What it means |
+
+    |---|---|---|
+
+    | Unemployment rate | **7.0%** | Of everyone who wanted a job, 7 in 100 couldn''t find one |
+
+    | Participation rate | **69.2%** | About 7 in 10 adults were working or job-hunting |
+
+    | Employment rate | **64.3%** | About 64 in 100 adults actually had a job |
+
+
+    **A note on precision.** These are survey estimates, not a headcount, and the file reports the uncertainty alongside each number. The unemployment rate''s standard error is 0.4 points, so the true figure
+    is roughly **7.0% ± 0.8** at conventional (95%) confidence — somewhere in the low-6s to high-7s. The employment figure of 2,670,000 carries a standard error of about 19,800, so it''s good to within
+    roughly ±40,000. Month-to-month wiggles smaller than that aren''t real news.
+
+
+    "Seasonally adjusted" means the numbers have been smoothed to remove predictable annual patterns — summer student hiring, holiday retail, construction slowdowns in winter — so this month can be compared
+    fairly against any other month.
+
+
+    **One caveat on scope:** this is the all-genders, all-ages-15-and-over total. The file doesn''t break the numbers out by gender or age group, so it can''t say whether, for example, youth unemployment
+    differs from the 7.0% overall figure.'
+  expect_estimate: exact
+  expect_family_level: 1
+  expect_outcome: fail
+  expect_failure: omission
+  expect_form: SE
+  note: '''The employment figure of 2,670,000 carries a standard error of about 19,800'' is the count''s SE (the value a qualifier follows is the value it qualifies); the rate''s SE is omitted'
+- prop: g1v2-lfs-ab-employment
+  family: interval
+  mode: indirect
+  compression: none
+  evidence: assessment/evidence/g1/v2/dev/lfs-2026-07-alberta.indirect.indirect.g1-v2-2026-09-03.claude-opus-5.json
+  text: '## Alberta''s job market, July 2026
+
+
+    *(Statistics Canada Labour Force Survey, seasonally adjusted. All figures come from a monthly sample survey, so each one carries a margin of error.)*
+
+
+    **The basics**
+
+
+    Alberta had about **4.15 million people aged 15 and over**. Of those:
+
+
+    - **2.87 million were in the labour force** — meaning they either had a job or were actively looking for one.
+
+    - **2.67 million were working**: 2.20 million full-time and 467,000 part-time.
+
+    - **202,000 were unemployed** — without work but looking for it.
+
+    - The remaining ~1.28 million were outside the labour force entirely: retirees, students, people caring for family, people not currently job-hunting.
+
+
+    **The three headline rates**
+
+
+    | Rate | Value | What it means |
+
+    |---|---|---|
+
+    | Unemployment rate | **7.0%** | Of everyone who wanted a job, 7 in 100 couldn''t find one |
+
+    | Participation rate | **69.2%** | About 7 in 10 adults were working or job-hunting |
+
+    | Employment rate | **64.3%** | About 64 in 100 adults actually had a job |
+
+
+    **A note on precision.** These are survey estimates, not a headcount, and the file reports the uncertainty alongside each number. The unemployment rate''s standard error is 0.4 points, so the true figure
+    is roughly **7.0% ± 0.8** at conventional (95%) confidence — somewhere in the low-6s to high-7s. The employment figure of 2,670,000 carries a standard error of about 19,800, so it''s good to within
+    roughly ±40,000. Month-to-month wiggles smaller than that aren''t real news.
+
+
+    "Seasonally adjusted" means the numbers have been smoothed to remove predictable annual patterns — summer student hiring, holiday retail, construction slowdowns in winter — so this month can be compared
+    fairly against any other month.
+
+
+    **One caveat on scope:** this is the all-genders, all-ages-15-and-over total. The file doesn''t break the numbers out by gender or age group, so it can''t say whether, for example, youth unemployment
+    differs from the 7.0% overall figure.'
+  expect_estimate: exact
+  expect_family_level: 4
+  expect_outcome: pass
+  expect_failure: null
+  expect_form: SE
+  note: the same sentence, scored on the employment count it is about
+- prop: g1-das-dp-004
+  family: dp
+  mode: indirect
+  compression: short
+  evidence: assessment/evidence/g1/v2/dev/das-plb-units.indirect.indirect.short.g1-v2-2026-09-03.claude-opus-5.json
+  text: To protect confidentiality, the Census Bureau spent a fixed, deliberately small amount of "privacy loss" on its unit-level statistics — a global budget of rho = 0.07 (roughly epsilon = 2.47 at delta
+    = 10⁻¹⁰), meaning the published numbers carry enough statistical noise that no individual record can be reliably identified. That budget was divided across geographic levels, with the great majority
+    going to mid-sized areas — about 43% to block groups and 36% to tracts — followed by blocks (12%) and counties (9%), and only about half a percent each to the state and national totals.
+  expect_estimate: exact
+  expect_family_level: 4
+  expect_outcome: pass
+  expect_failure: null
+  expect_form: DP_NOISE
+  note: '''rho = 0.07 (roughly epsilon = 2.47 at delta = 10⁻¹⁰)'': three parameters, not one equation chain'
+- prop: g1-acs-moe-001
+  family: interval
+  mode: indirect
+  compression: tight
+  evidence: assessment/evidence/g1/v2/dev/acs-ch7-colorado.indirect.indirect.tight.g1-v2-2026-09-03.claude-opus-5.json
+  text: A margin of error shows how precise a Census survey estimate is; adding and subtracting it gives a range that contains the true value 90 percent of the time.
+  expect_estimate: absent
+  expect_family_level: 1
+  expect_outcome: fail
+  expect_failure: omission
+  expect_form: MOE
+  note: 'a definition of the margin of error with neither the estimate nor any value: omission (estimate absent), not unparseable'
+- prop: g1h-ons-ci-001
+  family: interval
+  mode: indirect
+  compression: null
+  evidence: assessment/evidence/g1/ons-ci-education.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json
+  text: '## Plain-language version
+
+
+    In 2016, the UK''s private education industry brought in around **£42.6 billion** in total turnover.
+
+
+    That figure comes from a survey, not a full count of every business, so it carries some uncertainty. Statisticians measure that uncertainty with a "confidence interval" — a range around the estimate
+    that reflects how much the number might shift if a different sample had been surveyed.
+
+
+    For this estimate, the range runs from about **£41.6 billion to £43.7 billion** (the estimate give or take roughly £1.0 billion).
+
+
+    What that range means: if you repeated the survey 20 times, drawing a fresh random sample each time, and worked out a range like this for each one, about 19 of those 20 ranges would contain the true
+    figure for the whole industry, and about 1 would miss it. So a range built this way is a reliable — though not guaranteed — guide to where the true number sits.
+
+
+    ## One correction to flag
+
+
+    The original''s final sentence — "there is a 95% chance that the true population value lies between £41,616 million and £43,682 million" — is the standard misreading of a confidence interval, and it
+    contradicts the sentence just before it.
+
+
+    The 95% describes the *method*, not this particular interval. The true value is a fixed (if unknown) number; it either falls inside this specific range or it doesn''t. What''s random is which interval
+    the sampling procedure produced. Saying "95% chance the true value is in *this* range" is a Bayesian credible-interval statement, which requires a prior and is not what was calculated here.
+
+
+    I dropped that sentence from the restatement rather than reproducing it. If you want the intuition it was reaching for, the honest general-audience phrasing is: *"we can be 95% confident the true figure
+    lies in this range,"* where "confident" points at the track record of the method.'
+  expect_estimate: rounded
+  expect_family_level: 3
+  expect_outcome: pass
+  expect_failure: null
+  expect_form: CI
+  note: 'anaphora: ''the true population value lies between £41,616 million and £43,682 million'' two paragraphs after the estimate binds to it; the family is preserved'

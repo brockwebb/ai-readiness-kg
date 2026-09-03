@@ -306,7 +306,7 @@ def pytest_generate_tests_v2(metafunc):  # pragma: no cover — folded into pyte
 
 def _v2_cases():
     cs = yaml.safe_load((FIX / "restatements.yaml").read_text(encoding="utf-8"))
-    return cs.get("v2_cases", [])
+    return cs.get("v2_cases", []) + cs.get("v2_cases_parser_misses", [])
 
 
 @pytest.mark.parametrize("v2case", _v2_cases(), ids=[f"v2:{c['prop']}:{c['family']}" for c in _v2_cases()])
@@ -454,3 +454,30 @@ def test_evidence_reuse_finds_a_byte_identical_legacy_slot(dev, prompts, tmp_pat
     assert probe.existing_evidence(f"{prop.passage_id}.indirect", "indirect", None, "other-model", compression="none") is None
     r = probe.records(el, prop, compression="none")[0]
     assert r.prompt_epoch == "g1-v0-2026-09-02" and r.observations["prompt_text_identical"] is True
+
+
+def _v2_dev_cases():
+    cs = yaml.safe_load((FIX / "restatements.yaml").read_text(encoding="utf-8"))
+    return cs.get("v2_cases_dev", [])
+
+
+@pytest.mark.parametrize("dcase", _v2_dev_cases(), ids=[f"v2dev:{c['prop']}:{c['family']}:{c['mode']}:{c.get('compression')}" for c in _v2_dev_cases()])
+def test_v2_dev_case_verbatim_from_dev_evidence(prompts, dcase, tmp_path):
+    """Every v2 rule motivated by a development response, replayed verbatim: the family level,
+    outcome, failure class and chosen form the rule was written to produce (DD-035; the
+    holdout was sealed when these were written)."""
+    sys_path = str(Path(__file__).parents[2] / "scripts")
+    import sys
+    if sys_path not in sys.path:
+        sys.path.insert(0, sys_path)
+    from run_g1_v2 import load_all_fixtures
+    props, passages, _ = load_all_fixtures()
+    prop = props[dcase["prop"]]
+    probe = PreservationProbe(prompts, tmp_path)
+    fams, est, _, _ = probe.evaluate_families(_elicited(dcase["text"], dcase["mode"]), prop,
+                                              only_family=dcase["family"], siblings=passages[prop.passage_id])
+    v = fams[0]
+    assert est.value == dcase["expect_estimate"], (dcase["prop"], est)
+    assert v.outcome == dcase["expect_outcome"] and v.level == dcase["expect_family_level"], (dcase["prop"], v.evidence, v.observations["binding"])
+    assert v.failure_class == dcase["expect_failure"], (dcase["prop"], v.evidence)
+    assert v.observations["chosen_form"] == dcase["expect_form"], (dcase["prop"], v.observations["chosen_form"])

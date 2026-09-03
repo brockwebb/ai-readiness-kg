@@ -1,0 +1,33 @@
+{
+ "proposition_id": "g1v2-nchs500-65-74",
+ "call_id": "g1v2-nchs500-65-74.direct.VINTAGE",
+ "mode": "direct",
+ "qualifier_class": "VINTAGE",
+ "compression_level": null,
+ "prompt_epoch": "g1-v2-2026-09-03",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T18:36:00.486165+00:00",
+ "prompt": " ● In 2022, 63.7% of adults age 65 and older had a dental visit in the past 12 months (Figure 1, \nTable 1).\n ● Men (62.3%) were less likely than women (64.9%) to have had a dental visit.\n ● The percentage of older adults who had a dental visit decreased from 65.4% among those \nages 65–74 and 63.6% among those ages 75–84 to 53.3% among those age 85 and older.\nData table for Figure 1. Percentage of adults age 65 and older who had a dental visit in the past \n12 months, by sex, age group, and race and Hispanic origin: United States, 2022\nCharacteristic\nPercent\n(95% confidence interval) Standard error\nTotal . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 63.7 (62.4–65.1) 0.68\nSex\nMen . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 62.3 (60.5–64.2) 0.94\nWomen  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 64.9 (63.1–66.6) 0.88\nAge group\n65–74. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 65.4 (63.7–67.1) 0.86\n75–84. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 63.6 (61.4–65.7) 1.08\n85 and older. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 53.3 (49.2–57.3) 2.02\n\nWhat is the reference period or as-of date on the percentage of adults ages 65–74 who had a dental visit in the past 12 months in 2022?",
+ "response_text": "**Reference period: calendar year 2022** — specifically, the 12 months preceding each respondent's interview, for interviews conducted during 2022.\n\nTwo nested time frames are at work in the 65.4% figure:\n\n- **Collection/as-of period:** 2022. The table title states \"United States, 2022,\" so the estimate is an annual 2022 figure (NHIS-style annual estimates; the source excerpt names no other year).\n- **Recall window for the measure itself:** \"past 12 months\" relative to each respondent's interview date. Because interviews are spread across the year, the pooled recall window actually spans roughly early 2021 through the end of 2022 — it is not a fixed calendar-year window for every respondent.\n\nSo if you need a single as-of date for a data field, use 2022 (annual, period-type estimate). If you need the substantive coverage window, it is the rolling 12 months before interview, aggregated over 2022 interviews.\n\nOne caveat worth flagging: the excerpt you provided doesn't include the survey name, collection dates, or the \"Data source\" footnote that would confirm the interview period and pin the exact release. The 2022 attribution is read directly off the table title; the rolling-window characterization follows from standard \"past 12 months\" question wording rather than from anything stated in the text you pasted. If exactness matters here, the source document's data-source and methods notes would settle it.",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 560,
+  "cacheReadInputTokens": 12840,
+  "cacheCreationInputTokens": 17414,
+  "webSearchRequests": 0,
+  "costUSD": 0.19457,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 115,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 9514,
+ "cost_usd": 0.19457,
+ "spend_run_id": "g1_eval_v2_dev_2026-09-03_b",
+ "spend_reservation_id": "9f5dc9361caf4189be00ac03186c0564",
+ "source_doc_id": "nchs-data-brief-500-dental-visits-adults-65-2022",
+ "passage_id": "nchs500-fig1",
+ "surface_type": "footnoted"
+}

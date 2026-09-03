@@ -1,0 +1,33 @@
+{
+ "proposition_id": "g1v2-nchs530-alaska",
+ "call_id": "g1v2-nchs530-alaska.direct.VINTAGE",
+ "mode": "direct",
+ "qualifier_class": "VINTAGE",
+ "compression_level": null,
+ "prompt_epoch": "g1-v2-2026-09-03",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T18:33:23.009554+00:00",
+ "prompt": "Data table for Figure 4. Perinatal mortality rate, by state for 2022 and 2023, and change in rate \nfrom 2022 to 2023: Each state and the District of Columbia\nArea 2022 2023\nChange from \n2022 to 2023\nRate per 1,000 Percent\nAlabama  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9.44 10.96 16\nAlaska . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 8.39 7.73 †\nArizona  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9.56 9.28 †\nArkansas . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 10.86 11.49 †\nCalifornia . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 7.30 7.25 †\nColorado . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 7.32 8.61 18\nConnecticut . . . . . . . . . . . . . . . . . . . . . . . . . . . 6.93 7.63 †\nDelaware . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9.66 8.68 †\n† Change not significant (p = 0.05). \n\nWhat is the reference period or as-of date on the 2023 perinatal mortality rate for Alaska (per 1,000)?",
+ "response_text": "**Calendar year 2023** — that's the entire reference period the table carries for Alaska's 7.73.\n\nDetails and limits of what the excerpt supports:\n\n- The column header `2023` is the only temporal qualifier. Perinatal mortality rates in this NCHS series are annual, calendar-year aggregates (fetal deaths at the relevant gestation threshold plus early neonatal deaths, per 1,000 live births plus fetal deaths), so the period is 2023-01-01 through 2023-12-31 for events occurring in Alaska.\n- There is **no as-of / vintage date in the excerpt**. The file-close or data-extraction date — which matters for NCHS natality/mortality files, since 2023 figures may be provisional or final depending on vintage — would appear in the report's technical notes or source line, not in this figure's data table. The fragment you pasted stops at Delaware and includes only the significance footnote (`† Change not significant (p = 0.05)`).\n- The `†` for Alaska means the 2022→2023 change (8.39 → 7.73) was not statistically significant at p = 0.05, so no percent change is printed. That is a significance flag, not a period qualifier.\n\nIf you need the actual vintage (final vs. provisional, and the file-close date), pull the source report's \"Data and methods\"/technical notes section — I can fetch it if you point me at the report or let me search for it.",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 756,
+  "cacheReadInputTokens": 12840,
+  "cacheCreationInputTokens": 17261,
+  "webSearchRequests": 0,
+  "costUSD": 0.19793999999999998,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 300,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 11373,
+ "cost_usd": 0.19793999999999998,
+ "spend_run_id": "g1_eval_v2_dev_2026-09-03_b",
+ "spend_reservation_id": "e648a1b0d927416e8332d06de16db444",
+ "source_doc_id": "nchs-data-brief-530-perinatal-mortality-2022-2023",
+ "passage_id": "nchs530-fig4-al-de",
+ "surface_type": "flagged_cell"
+}

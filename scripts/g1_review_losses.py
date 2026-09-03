@@ -32,7 +32,11 @@ CRITERION = ("genuine when the raw response, read in full, does not state the qu
 
 
 def key(r: dict) -> str:
-    return f"{r['target']}|{r['qualifier_class']}|{r['mode']}|{r['observations'].get('qualifier_source', {}).get('parameter', '')}"
+    # v2 family records (task 2026-09-03_g1_eval_v2): a (proposition, family, mode) may exist
+    # at three compression levels, so the level is part of the key; v1 records carry none.
+    fam = r.get("family") or ""
+    comp = r.get("compression_level") or ""
+    return f"{r['target']}|{fam or r['qualifier_class']}|{r['mode']}|{comp}|{r['observations'].get('qualifier_source', {}).get('parameter', '')}"
 
 
 def main(argv=None) -> int:

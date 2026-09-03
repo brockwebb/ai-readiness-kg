@@ -1,0 +1,33 @@
+{
+ "proposition_id": "g1v2-acs-co-adams",
+ "call_id": "acs-co-block1.indirect.short",
+ "mode": "indirect",
+ "qualifier_class": null,
+ "compression_level": "short",
+ "prompt_epoch": "g1-v2-2026-09-03",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T18:26:46.010092+00:00",
+ "prompt": "Restate the following for a general-audience summary in no more than two sentences.\n\n[[\"NAME\",\"B19013_001E\",\"B19013_001M\",\"state\",\"county\"],\n[\"Adams County, Colorado\",\"91387\",\"1470\",\"08\",\"001\"],\n[\"Alamosa County, Colorado\",\"51445\",\"6098\",\"08\",\"003\"],\n[\"Arapahoe County, Colorado\",\"97215\",\"1592\",\"08\",\"005\"],\n[\"Archuleta County, Colorado\",\"76524\",\"6714\",\"08\",\"007\"],\n[\"Baca County, Colorado\",\"40380\",\"7753\",\"08\",\"009\"],\n[\"Bent County, Colorado\",\"49194\",\"4596\",\"08\",\"011\"],\n[\"Boulder County, Colorado\",\"102772\",\"2628\",\"08\",\"013\"],",
+ "response_text": "This is Census ACS data (table B19013) showing median household income and its margin of error for Colorado counties:\n\nAcross these Colorado counties, typical household income varies widely — from about $40,000 a year in Baca County to roughly $103,000 in Boulder County, with Denver-area counties like Adams and Arapahoe near $91,000–$97,000. The figures are survey estimates, so each carries a margin of error that is small in populous counties (±$1,500 or so) but much larger in sparsely populated rural ones (±$6,000–$7,800), meaning the rural numbers should be read as rough ranges rather than exact values.",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 283,
+  "cacheReadInputTokens": 12842,
+  "cacheCreationInputTokens": 16974,
+  "webSearchRequests": 0,
+  "costUSD": 0.183246,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 79,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 5564,
+ "cost_usd": 0.183246,
+ "spend_run_id": "g1_eval_v2_dev_2026-09-03",
+ "spend_reservation_id": "e37adfe86f83473fb554251ceba6967d",
+ "source_doc_id": "census-api-acs5-2023-b19013-counties-colorado",
+ "passage_id": "acs-co-block1",
+ "surface_type": "table_coded"
+}

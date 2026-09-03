@@ -1,0 +1,33 @@
+{
+ "proposition_id": "g1-acs-moe-003",
+ "call_id": "acs-ch7-significance.indirect.short",
+ "mode": "indirect",
+ "qualifier_class": null,
+ "compression_level": "short",
+ "prompt_epoch": "g1-v2-2026-09-03",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T18:22:36.155561+00:00",
+ "prompt": "Restate the following for a general-audience summary in no more than two sentences.\n\nThe example below shows how to determine if the difference in the estimated percentage of householders age 65 or older who live alone between Florida (estimated percentage = 12.6, MOE = 0.2) and Arizona (estimated percentage = 10.5, MOE = 0.3) is statistically significant, based on 2015 ACS data. Using formula (1) above, first calculate the corresponding standard errors for Florida (0.122) and Arizona (0.182) by dividing the MOEs by 1.645. Then, using formula (3) above, calculate the test value as follows: Understanding and Using American Community Survey Data 57 What All Data Users Need to Know 57 U.S. Census Bureau Since the test value (9.581) is greater than the critical value for a confidence level of 90 percent (1.645), the difference in the percentages is statistically significant at a 90 percent confidence level. A rough interpretation of the result is that the user can be 90 percent certain that a difference exists between the percentage of householders aged 65 or older who live alone in Florida and in Arizona. By contrast, if the corresponding estimate for Indiana (estimated percentage = 10.8, MOE = 0.2, SE = 0.122) were compared with the estimate for Arizona, formula (3) would yield: Since the test value (1.369) is less than the critical value for a confidence level of 90 percent (1.645), the difference in percentages is not statistically significant. A rough interpretation of the result is that the user cannot be certain to any sufficient degree that the observed difference in the estimates between Indiana and Arizona was not due to chance.",
+ "response_text": "Census data comes with a margin of error, so to check whether two estimates really differ, you convert each margin of error into a standard error (divide by 1.645) and combine them into a test value — if that value exceeds 1.645, the gap is statistically significant at the 90 percent confidence level. Using 2015 ACS data on householders 65 and older who live alone, Florida (12.6 percent) tested well above Arizona (10.5 percent) with a value of 9.581, a real difference, while Indiana (10.8 percent) versus Arizona gave only 1.369, a gap small enough that it could be due to chance.",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 423,
+  "cacheReadInputTokens": 12842,
+  "cacheCreationInputTokens": 17301,
+  "webSearchRequests": 0,
+  "costUSD": 0.190016,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 226,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 6812,
+ "cost_usd": 0.190016,
+ "spend_run_id": "g1_eval_v2_dev_2026-09-03",
+ "spend_reservation_id": "b13151b967cd4b8bae63085d6ba3853c",
+ "source_doc_id": "census-acs-general-handbook-2020",
+ "passage_id": "acs-ch7-significance",
+ "surface_type": "prose_labeled"
+}

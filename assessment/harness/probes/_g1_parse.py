@@ -50,7 +50,9 @@ SCALE_WORDS = {"thousand": 1e3, "million": 1e6, "billion": 1e9, "trillion": 1e12
 _SCALE = r"(?:thousand|million|billion|trillion)"
 _CUR = r"(?:£|\$|€|USD|GBP)"
 # Unit tokens that may follow a number. Order matters: longer alternatives first.
-_UNIT = (r"(?:percentage\s*points?|percent(?:age)?\s*points?|%|percent|points?|"
+# hyphenated unit forms ("≤5-percentage-point", g1h-das-dp-001.direct.DP_NOISE.…json) are the
+# same units (v2)
+_UNIT = (r"(?:percentage[-\s]*points?|percent(?:age)?[-\s]*points?|%|percent|points?|"
          r"people|persons|households|employees|units)")
 _PM = r"(?:±|\+/-|\+/−|\+-|plus\s+or\s+minus|plus-or-minus|give\s+or\s+take)"
 _YEAR = r"(?:19|20)\d{2}"
@@ -190,6 +192,11 @@ _SE_RES = _kw_value(r"standard\s+errors?|sampling\s+errors?|SEs?",
 # 4. coefficient of variation / relative standard error
 _CV_RES = _kw_value(r"coefficients?\s+of\s+variation|CVs?|relative\s+standard\s+errors?|RSEs?",
                     r"(?P<v>" + NUM + r")\s*(?P<u>%|percent)?")
+# "at about 0.2 percent of the estimate" / "uncertainty is roughly 8% of its size" — the ratio
+# stated as a share of the estimate IS the coefficient of variation (v2;
+# acs-ch8-product.indirect.indirect.short.…json, ons-cv-examples.indirect.indirect.tight.…json).
+_CV_OF_ESTIMATE_RE = re.compile(
+    r"(?<![\d.])(?P<v>" + NUM + r")\s*(?P<u>%|percent)\s+of\s+(?:the|its|each|that|this)\s+(?:estimate|total|figure|size|value|estimate's\s+size)\b", re.I)
 # 5. bounds "between X and Y" / "from X to Y" / "X to Y"
 _BOUNDS_RE = re.compile(
     r"\b(?:between|from|of|lies?\s+between|falls?\s+(?:somewhere\s+)?between|range\s+of|runs\s+from|"
@@ -197,20 +204,35 @@ _BOUNDS_RE = re.compile(
     r"(?:about|roughly|approximately|around)?\s*(?P<c1>" + _CUR + r")?(?P<lo>" + NUM + r")\s*(?P<s1>" + _SCALE + r")?\s*(?P<u1>" + _UNIT + r")?"
     r"\s*(?:\s(?:and|to)\s|–|—|-)\s*(?P<c2>" + _CUR + r")?(?P<hi>" + NUM + r")\s*(?P<s2>" + _SCALE + r")?\s*(?P<u2>" + _UNIT + r")?",
     re.I)
+# A lead-less range "26.4% to 50.1% (95% CI)" / "38.9% to 44.9% (point estimate 41.9%), 95% CI"
+# (v2; g1v2-cchs-nl-youth.direct.CI.…json, g1v2-cchs-nl-obese.direct.CI.…json): bounds when a
+# CI cue is nearby (same guard as the led forms).
+_BARE_RANGE_RE = re.compile(
+    r"(?<![\d.,])(?P<c1>" + _CUR + r")?(?P<lo>" + NUM + r")\s*(?P<u1>%|percent)?\s+to\s+(?P<c2>" + _CUR + r")?(?P<hi>" + NUM + r")\s*(?P<u2>%|percent)?(?![\d.])", re.I)
 _LOWER_UPPER_RE = re.compile(
     r"\b(?P<which>lower|upper)\s+(?:bound|limit)\b[^.;:\d]{0,40}?(?P<cur>" + _CUR + r")?(?P<v>" + NUM + r")\s*(?P<s>" + _SCALE + r")?",
     re.I)
+# v2 cues (compressed dev responses, task 2026-09-03_g1_eval_v2 step 5a): "the true total is
+# likely somewhere between …" (ons-ci-education.indirect.indirect.short/tight.…json), "the true
+# change is probably somewhere between …" (lfs-ci-example.indirect.indirect.short.…json).
 _CI_CUE_RE = re.compile(r"confidence\s+interval|confidence\s+level|confident|interval|likely\s+to\s+lie|"
-                        r"true\s+(?:population\s+)?value|range|\bCIs?\b", re.I)
+                        r"true\s+(?:population\s+)?(?:value|total|figure|number|change|count|estimate|rate)|"
+                        r"(?:likely|probably)\s+(?:somewhere\s+)?(?:between|to\s+(?:lie|fall|be))|range|\bCIs?\b", re.I)
 # 6. confidence level
 _LEVEL_RE = re.compile(
     r"\b(?P<lv>\d{2}(?:\.\d)?)\s*(?:%|percent|-percent|per\s+cent)?\s*(?:confidence|CI\b|level|confident)"
     r"|\bconfidence\s+(?:level|interval)\s*(?:of|at)?\s*(?:the\s+)?(?P<lv2>\d{2})\s*(?:%|percent)"
-    r"|\b(?P<lv3>\d{2})\s*(?:%|percent)\s+(?:chance|certain|sure)", re.I)
+    r"|\b(?P<lv3>\d{2})\s*(?:%|percent)\s+(?:chance|certain|sure)"
+    # "19 out of every 20" / "19-in-20 chance" = 95 % (v2; ons-ci-education / lfs-ci-example short
+    # restatements)
+    r"|\b(?P<lv4>19)[-\s]*(?:in|out\s+of)(?:[-\s]+every)?[-\s]*20\b"
+    # "68% (±1 SE):" / "95% (±2 SE):" — a level labelling its interval (lfs-ci-example dev case)
+    r"|\b(?P<lv5>\d{2})\s*(?:%|percent)\s*\(\s*±\s*\d+\s*SEs?\s*\)", re.I)
 # 8. reliability flags
 _RELIABILITY_RE = re.compile(
     r"\b(?P<flag>(?:(?:very|quite|highly|fairly|reasonably|extremely|considered\s+(?:a\s+)?|deemed\s+(?:a\s+)?)\s+)?"
-    r"(?:not\s+(?:very\s+)?)?(?:reliable|unreliable)|use(?:d)?\s+with\s+caution|low\s+reliability|"
+    r"(?:not\s+(?:very\s+)?)?(?:reliable|unreliable)|(?:use|used|treat|treated|interpret|interpreted|read|handle)\s+(?:it|them|this|these|that|those)?\s*with\s+caution|"
+    r"should\s+be\s+treated\s+with\s+caution|low\s+reliability|"
     r"poor\s+(?:precision|reliability)|imprecise|(?:very\s+)?unprecise|not\s+(?:very\s+)?precise|"
     # Producer flag vocabulary (v1, task 2026-09-03 step 2 — fixture-driven, cited to the
     # admitted sources and added with the fixtures before any elicitation): StatCan 71-543-G
@@ -237,7 +259,10 @@ _RELIABILITY_RE = re.compile(
 # ("37.5 E", "37.5E", "37.5 (E)", "flagged E", "status E", "STATUS: E", "an E flag").
 _SYMBOL_FLAG_RE = re.compile(
     r"(?:(?<=\d)\s?|(?<=\d\s)|(?<=\d\)\s)|\bflag(?:ged|s)?(?:\s+(?:as|with))?\s+(?:an?\s+)?[\"“']?|\bstatus(?:\s+(?:of|code|is|=|:))?\s*[\"“']?|\bquality(?:\s+(?:indicator|flag|letter|code|rating))?(?:\s+(?:of|is|=|:))?\s*[\"“']?|\bmark(?:ed|er)?\s+(?:with\s+)?(?:an?\s+)?[\"“']?|\bletter\s+[\"“']?|\bsymbol\s+[\"“']?)"
-    r"(?P<sym>\(?[A-F]\)?|†|‡|\*)(?![\w-])(?![.,]?\d)", re.I)
+    r"(?P<sym>\(?[A-F]\)?|†|‡|\*)(?![\w-])(?![.,]?\d)"
+    # a quoted single capital letter is a code: 'flags this number with an "E," meaning use it
+    # with caution' (cchs-2022-pe.indirect.indirect.…json)
+    r"|[\"“](?P<symq>[A-F])[,.]?[\"”]", re.I)
 _SIGNIFICANCE_FLAG_RE = re.compile(
     r"\b(?P<flag>(?:change|difference|increase|decrease|rise|fall|drop)s?\s+(?:that\s+)?(?:was|were|is|are)?\s*"
     r"(?:not\s+(?:statistically\s+)?significant|nonsignificant|non-significant|statistically\s+insignificant)|"
@@ -272,9 +297,12 @@ _DP_PLB_RE = re.compile(
     r"(?P<sym>ε|epsilon|rho|ρ)?\s*=?\s*(?P<v>" + NUM + r")", re.I)
 _DP_BOUND_RE = re.compile(
     r"\bwithin\s*(?:" + _PM + r")?\s*(?P<v>" + NUM + r"|" + NUMWORD + r")\s*(?P<u>" + _UNIT + r")", re.I)
+# "95%-of-the-time" (hyphenated, g1h-das-dp-001.direct.DP_NOISE.…json — a v1 parser miss) is
+# the same coverage statement as "95 percent of the time" (v2).
 _DP_COVERAGE_RE = re.compile(
     r"\b(?:at\s+least|in|for)\s+(?P<v>" + NUM + r")\s*(?:%|percent)\s+of\s+(?:the\s+time|counties|cases|"
-    r"block\s+groups|areas|places|geographies|runs)", re.I)
+    r"block\s+groups|areas|places|geographies|runs)"
+    r"|(?<![\d.])(?P<v2>" + NUM + r")\s*(?:%|percent)-of-the-time", re.I)
 _DP_VERBAL_RE = re.compile(r"\b(noise|noisy|noise-infused|perturb\w*|fuzz\w*|differential(?:ly)?\s+priva\w+|"
                            r"disclosure\s+avoidance|privacy[-\s]protect\w*)\b", re.I)
 # 11. vintage
@@ -300,13 +328,20 @@ _VAGUE_TIME_RE = re.compile(r"\b(recent(?:ly)?|latest|current(?:ly)?|most\s+rece
 # formula terms, not values (g1-acs-cv-004.direct.CV.…json, g1-acs-ci-004.direct.CV.…json).
 _FRACTION_RE = re.compile(r"(?<![\d.=≈(])(?<![=≈(]\s)(?P<a>" + NUM + r")\s*/\s*(?P<b>(?:\d{1,3}(?:,\d{3})+|\d+))(?![\d.])(?!\s*[×÷*/)])")
 # 13. all numbers
-_ANY_NUM_RE = re.compile(r"(?P<cur>" + _CUR + r")?\s*(?P<n>" + NUM + r")\s*(?P<s>" + _SCALE + r")?\s*(?P<u>" + _UNIT + r")?", re.I)
+# digits glued to letters or underscores are codes, not values (B19013_001M, 2021A000248;
+# g1v2-acs-co-boulder.direct.MOE.…json) — v2
+_ANY_NUM_RE = re.compile(r"(?<![A-Za-z_\d])(?P<cur>" + _CUR + r")?\s*(?P<n>" + NUM + r")(?![A-Za-z_])\s*(?P<s>" + _SCALE + r")?\s*(?P<u>" + _UNIT + r")?", re.I)
+
+
+_SENT_RE = re.compile(r"(?<=[.!?])\s+(?=[A-Z\"“(])|\n")
 
 
 def _preceding_number(text: str, pos: int, window: int = 80) -> Optional[float]:
     """Nearest number before `pos` in the same clause (no sentence boundary between),
     skipping bare years and confidence levels ('90 percent')."""
     seg = text[max(0, pos - window): pos]
+    if "\n" in seg:
+        seg = seg[seg.rindex("\n") + 1:]                 # a line break is a clause boundary too (v2)
     if "." in seg and re.search(r"\.\s+[A-Z]", seg):
         seg = seg[list(re.finditer(r"\.\s+[A-Z]", seg))[-1].end() - 1:]
     best = None
@@ -429,7 +464,7 @@ _LABEL_KEYWORDS = (r"coefficients?\s+of\s+variation|CVs?|relative\s+standard\s+e
 _LABEL_LIST_RE = re.compile(
     r"(?P<kw>\b(?:" + _LABEL_KEYWORDS + r")\b)(?:(?!\b(?:" + _LABEL_KEYWORDS + r")\b)[^\n:]){0,200}?:[^\S\n]*\n(?:[^\S\n]*\n)*"
     r"(?P<items>(?:[^\S\n]*(?:[-*•]|\d+[.)])[^\n]*\n?)+)", re.I)
-_LAST_VALUE_RE = re.compile(r"(?P<cur>" + _CUR + r")?(?P<n>" + NUM + r")\s*(?P<s>" + _SCALE + r")?\s*(?P<u>%|percent(?:age)?\s*points?|percent)?(?![^\n]*\d)")
+_LAST_VALUE_RE = re.compile(r"(?P<cur>" + _CUR + r")?(?P<n>1e-?\d+|" + NUM + r")\s*(?P<s>" + _SCALE + r")?\s*(?P<u>%|percent(?:age)?\s*points?|percent)?(?![^\n]*\d)")
 
 
 _ITEM_LABEL_RE = re.compile(r"^(?P<lab>[^:\n\d]{1,40}):")
@@ -455,7 +490,7 @@ def join_label_lists(text: str) -> str:
                 lab = _ITEM_LABEL_RE.match(body)
                 prefix = f"{lab.group('lab').strip()}: " if lab else ""
                 joined.append(f"{prefix}{kw} of {last.group(0).strip()}.")
-        return m.group(0) + ("\n" + " ".join(joined) + "\n" if joined else "")
+        return m.group(0) + ("\n" + "\n".join(joined) + "\n" if joined else "")
     return _LABEL_LIST_RE.sub(_rep, text)
 
 
@@ -487,13 +522,17 @@ def join_derivation_lines(text: str) -> str:
             return m.group(0)
         lead = re.sub(r"^(?:For|for)\s+", "", m.group("lead")).strip().rstrip(":").strip()
         prefix = f"{lead}: " if lead and not any(ch.isdigit() for ch in lead) else ""
-        return m.group(0) + f" {prefix}{m.group('kw')} of {last.group(0).strip()}."
+        return m.group(0) + f"\n{prefix}{m.group('kw')} of {last.group(0).strip()}."
     return _DERIVATION_RE.sub(_rep, text)
 
 
+# A chain may hold an arithmetic parenthesis "(122,972 / 61,393,366) × 100" but never a worded
+# one: "rho = 0.07 (roughly epsilon = 2.47 at delta = 1e-10)" is three parameters, not one
+# derivation (v2; das-plb-units.indirect.indirect.short.…json).
 _EQ_CHAIN_RE = re.compile(
     r"(?P<kw>\b(?:" + _LABEL_KEYWORDS + r"|SE|CV|MOE)\b(?:\s*\([^)\n]{0,40}\))?)\s*[=≈]\s*"
-    r"(?P<chain>(?:[^\n;,]|,(?=\d{3}))*?[=≈](?:[^\n;,]|,(?=\d{3}))*)")
+    r"(?P<chain>(?:(?!\b(?:rho|epsilon|delta)\b)[^\n;,()]|,(?=\d{3})|\([\d,.\s×÷*/+\-]+\))*?[=≈]"
+    r"(?:(?!\b(?:rho|epsilon|delta)\b)[^\n;,()]|,(?=\d{3})|\([\d,.\s×÷*/+\-]+\))*)")
 
 
 def collapse_equations(text: str) -> str:
@@ -567,16 +606,27 @@ def parse(text: str) -> Parsed:
     p.vague_time = [m.group(1).lower() for m in _VAGUE_TIME_RE.finditer(t)]
     p.dp_verbal = [m.group(1).lower() for m in _DP_VERBAL_RE.finditer(t)]
     for m in _LEVEL_RE.finditer(t):
-        lv = _num(m.group("lv") or m.group("lv2") or m.group("lv3"))
+        lv = _num(m.group("lv") or m.group("lv2") or m.group("lv3") or m.group("lv5"))
+        if m.group("lv4"):
+            lv = 95.0
         if lv and 50 <= lv < 100:
             p.levels.append(round(lv / 100, 3))
 
     def nearest_level(pos: int) -> Optional[float]:
+        """The confidence level stated in the candidate's own sentence (v2: a level phrase
+        in the next sentence belongs to that sentence's interval — lfs-ci-example.indirect
+        .…json states a 68 % interval and a 95 % one)."""
         best, dist = None, 10 ** 9
+        lo = max((m.end() for m in _SENT_RE.finditer(t) if m.end() <= pos), default=0)
+        hi = min((m.start() for m in _SENT_RE.finditer(t) if m.start() > pos), default=len(t))
         for m in _LEVEL_RE.finditer(t):
+            if not (lo <= m.start() < hi):
+                continue
             d = abs(m.start() - pos)
             if d < dist and d <= 220:
-                lv = _num(m.group("lv") or m.group("lv2") or m.group("lv3"))
+                lv = _num(m.group("lv") or m.group("lv2") or m.group("lv3") or m.group("lv5"))
+                if m.group("lv4"):
+                    lv = 95.0
                 if lv and 50 <= lv < 100:
                     best, dist = round(lv / 100, 3), d
         return best
@@ -610,7 +660,7 @@ def parse(text: str) -> Parsed:
         if not claim(m):
             continue
         p.qualifiers.append(ParsedQualifier(QualifierClass.DP_NOISE, "dp_coverage", m.group(0), m.start(),
-                                            value=_num(m.group("v")), unit="percent",
+                                            value=_num(m.group("v") or m.group("v2")), unit="percent",
                                             parameter="coverage", form="phrase"))
 
     # --- CV before SE (its phrase contains "standard error") ---------------------------
@@ -621,6 +671,12 @@ def parse(text: str) -> Parsed:
         unit = "percent" if m.group("u") else ("fraction" if v is not None and v < 1 else None)
         p.qualifiers.append(ParsedQualifier(QualifierClass.CV, "cv_phrase", m.group(0), m.start(),
                                             value=v, unit=unit, form="phrase", hedged=hedged_before(m.start("v"))))
+    for m in _CV_OF_ESTIMATE_RE.finditer(t):
+        if not claim(m):
+            continue
+        p.qualifiers.append(ParsedQualifier(QualifierClass.CV, "cv_of_estimate", m.group(0), m.start(),
+                                            value=_num(m.group("v")), unit="percent", form="phrase",
+                                            hedged=hedged_before(m.start("v"))))
     for m in _finditer(_SE_RES, t):
         if not claim(m):
             continue
@@ -676,6 +732,22 @@ def parse(text: str) -> Parsed:
                                             value=(hi - lo) / 2, lower=lo, upper=hi,
                                             unit=canon_unit(m.group("u2") or m.group("u1")),
                                             level=nearest_level(m.start()), form="bounds"))
+    for m in _BARE_RANGE_RE.finditer(t):
+        lo, hi = _num(m.group("lo")), _num(m.group("hi"))
+        if lo is None or hi is None or lo >= hi:
+            continue
+        if re.fullmatch(_YEAR, m.group("lo")) and re.fullmatch(_YEAR, m.group("hi")):
+            continue
+        if not (m.group("u1") or m.group("u2") or m.group("c1")):
+            continue                                   # a bare "10 to 20" is not an interval claim
+        if not _has_ci_cue(t, m.start(), after=80):
+            continue
+        if not claim(m):
+            continue
+        p.qualifiers.append(ParsedQualifier(QualifierClass.CI, "bare_range", m.group(0), m.start(),
+                                            value=(hi - lo) / 2, lower=lo, upper=hi,
+                                            unit=canon_unit(m.group("u2") or m.group("u1")),
+                                            level=nearest_level(m.start()), form="bounds"))
     lowers = [(m.start(), _scaled(m.group("v"), m.group("s"))) for m in _LOWER_UPPER_RE.finditer(t)
               if m.group("which").lower() == "lower"]
     uppers = [(m.start(), _scaled(m.group("v"), m.group("s"))) for m in _LOWER_UPPER_RE.finditer(t)
@@ -698,7 +770,8 @@ def parse(text: str) -> Parsed:
     # Legend symbols (v2, fixture-driven): a status letter / dagger beside a value or named as a
     # flag; the legend meaning travels in `text`, the symbol in `parameter` (reused field).
     for m in _SYMBOL_FLAG_RE.finditer(t):
-        sym = m.group("sym").strip("()").upper() if m.group("sym").strip("()").isalpha() else m.group("sym")
+        raw = m.group("sym") or m.group("symq")
+        sym = raw.strip("()").upper() if raw.strip("()").isalpha() else raw
         legend, pol = _SYMBOL_LEGEND.get(sym, ("flagged", "unreliable"))
         # a symbol anchors on a number only when it sits directly beside it ("37.5 E",
         # "7.73 †"); a named flag ("flagged E", "status: E") binds by sentence / label instead

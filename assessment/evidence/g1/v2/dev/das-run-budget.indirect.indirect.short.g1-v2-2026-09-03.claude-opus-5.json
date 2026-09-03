@@ -1,0 +1,33 @@
+{
+ "proposition_id": "g1-das-dp-002",
+ "call_id": "das-run-budget.indirect.short",
+ "mode": "indirect",
+ "qualifier_class": null,
+ "compression_level": "short",
+ "prompt_epoch": "g1-v2-2026-09-03",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T18:24:19.453361+00:00",
+ "prompt": "Restate the following for a general-audience summary in no more than two sentences.\n\nNext, the researchers used data where the TDA (production version) had been applied to the 2010 CEF 25 different times. The TDA adds noise randomly and there was interest in how results would vary among the 25 runs. The privacy-loss budget for each run of the TDA was ε=17.41 (rho=2.56, delta=10-10) for the person file.",
+ "response_text": "The researchers then looked at 25 separate runs of the Census Bureau's production disclosure-avoidance system (the TDA) on the same 2010 data, since the system adds random noise each time and they wanted to see how much the results bounced around from run to run. Each run used the same privacy setting for the person-level data — a privacy-loss budget of ε=17.41 (rho=2.56, delta=10⁻¹⁰), which controls how much noise is added.",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 215,
+  "cacheReadInputTokens": 12842,
+  "cacheCreationInputTokens": 16892,
+  "webSearchRequests": 0,
+  "costUSD": 0.18072600000000003,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 67,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 4287,
+ "cost_usd": 0.18072600000000003,
+ "spend_run_id": "g1_eval_v2_dev_2026-09-03",
+ "spend_reservation_id": "167341a44f0f43ccb8b75ec14dd399be",
+ "source_doc_id": "census-2020-disclosure-avoidance-handbook-2021",
+ "passage_id": "das-run-budget",
+ "surface_type": "prose_labeled"
+}

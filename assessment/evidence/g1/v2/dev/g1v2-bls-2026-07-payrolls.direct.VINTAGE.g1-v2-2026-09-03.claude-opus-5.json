@@ -1,0 +1,33 @@
+{
+ "proposition_id": "g1v2-bls-2026-07-payrolls",
+ "call_id": "g1v2-bls-2026-07-payrolls.direct.VINTAGE",
+ "mode": "direct",
+ "qualifier_class": "VINTAGE",
+ "compression_level": null,
+ "prompt_epoch": "g1-v2-2026-09-03",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T18:37:08.866128+00:00",
+ "prompt": "Both nonfarm payroll employment (-23,000) and the unemployment rate (4.1 percent) changed little in \nJuly, the U.S. Bureau of Labor Statistics reported today. Employment declined in local government \neducation and retail trade. Employment continued to trend up in health care.\n   For example, the confidence interval for the monthly change in total nonfarm\nemployment from the establishment survey is on the order of plus or minus 122,000.\nSuppose the estimate of nonfarm employment increases by 50,000 from one month to\nthe next. The 90-percent confidence interval on the monthly change would range from\n-72,000 to +172,000 (50,000 +/- 122,000). These figures do not mean that the sample\nresults are off by these magnitudes, but rather that there is about a 90-percent\nchance that the true over-the-month change lies within this interval. Since this\n\nWhat is the reference period or as-of date on the over-the-month change in total nonfarm payroll employment in July 2026?",
+ "response_text": "**Short answer: the month of July 2026 — specifically, the establishment-survey pay period including the 12th of July 2026, measured against the same reference period in June 2026.**\n\nBreaking that apart:\n\n- **What the excerpt actually says.** The passage gives the value (−23,000) and labels it \"in July.\" It does not state a year, does not name the prior month, and does not state the reference-period convention. Everything below is BLS *Employment Situation* convention, not text on the page — flagging that because if this is an extraction/QA pass, the year \"2026\" is being supplied from outside the span.\n\n- **Reference period (the establishment/CES survey).** Employment, hours, and earnings refer to the **pay period that includes the 12th day of the month**. So the July figure is a July-12-pay-period count, and the −23,000 is (July 2026 pay period incl. the 12th) − (June 2026 pay period incl. the 12th). It is a *point-to-point* change between two reference periods, not an average over the month.\n\n- **The unemployment rate (4.1 percent) has a different reference period.** That comes from the household/CPS survey, whose reference period is the **calendar week containing the 12th** — a week, not a pay period. The two numbers in that opening sentence are not anchored to the same window.\n\n- **As-of / vintage date.** The number is seasonally adjusted and is a **first (preliminary) estimate**, published on the release date (\"reported today\"). It is subject to two scheduled revisions in the following two monthly releases, plus the annual benchmark. If you need an as-of date for provenance, use the release date of the July 2026 *Employment Situation* — the value is only valid as of that vintage.\n\n- **On the confidence-interval paragraph.** That ±122,000 figure applies to exactly this over-the-month change, so −23,000 carries a 90-percent interval of roughly −145,000 to +99,000 — an interval spanning zero, consistent with the release's own wording that payrolls \"changed little.\"\n\nIf you want me to pin the exact release date and confirm the year, say the word — but I'd need to check a source rather than assert it, since the excerpt doesn't carry it.",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 1191,
+  "cacheReadInputTokens": 12840,
+  "cacheCreationInputTokens": 17071,
+  "webSearchRequests": 0,
+  "costUSD": 0.20691500000000002,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 491,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 18081,
+ "cost_usd": 0.20691500000000002,
+ "spend_run_id": "g1_eval_v2_dev_2026-09-03_b",
+ "spend_reservation_id": "f699d621af014e40b4e13b376aaf425c",
+ "source_doc_id": "bls-employment-situation-2026-08-news-release",
+ "passage_id": "bls-2026-07-headline-technote",
+ "surface_type": "footnoted"
+}

@@ -205,7 +205,11 @@ def load_harness_config(path: Path) -> HarnessConfig:
         raise ConfigError(f"[g1.binding] label_min_tokens must be a positive integer in {path}; got {lm!r}")
     if not isinstance(sw, list) or not all(isinstance(x, str) for x in sw):
         raise ConfigError(f"[g1.binding] label_stop_words must be a list of strings in {path}")
-    g1_binding = {"window_chars": wc, "label_min_tokens": lm, "label_stop_words": tuple(w.lower() for w in sw)}
+    aw = bind.get("anaphora_window_chars")
+    if not isinstance(aw, int) or isinstance(aw, bool) or aw < wc:
+        raise ConfigError(f"[g1.binding] anaphora_window_chars must be an integer >= window_chars in {path}; got {aw!r}")
+    g1_binding = {"window_chars": wc, "label_min_tokens": lm, "label_stop_words": tuple(w.lower() for w in sw),
+                  "anaphora_window_chars": aw}
     per_section = _require(sitemap, "sample_per_section", "harness.toml [sitemap]")
     if not isinstance(per_section, int) or per_section < 1:
         raise ConfigError(

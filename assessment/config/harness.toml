@@ -190,7 +190,12 @@ vintage = ["VINTAGE"]
 # words dropped) must appear near the candidate for a label reference to count.
 [g1.binding]
 window_chars = 240
+# An anaphoric reference ("for this estimate", "the true population value", "the figure")
+# in the candidate's clause binds it to the most recent restatement of the estimate within
+# this many characters, provided no sibling row is named in between (the ONS education
+# response states the estimate once and quotes its interval two paragraphs later).
+anaphora_window_chars = 1000
 label_min_tokens = 2
-label_stop_words = ["the", "of", "in", "for", "and", "a", "an", "to", "on", "at", "by", "rate", "percent", "county", "total", "years", "and-over", "over",
+label_stop_words = ["the", "of", "in", "for", "and", "a", "an", "to", "on", "at", "by", "percent", "county", "total", "years", "and-over", "over",
                     "number", "estimate", "estimates", "estimated", "value", "count", "share", "proportion", "with", "who", "had", "were", "was"]
 

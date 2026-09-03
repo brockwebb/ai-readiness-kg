@@ -1,0 +1,33 @@
+{
+ "proposition_id": "g1-lfs-ci-001",
+ "call_id": "lfs-ci-example.indirect.tight",
+ "mode": "indirect",
+ "qualifier_class": null,
+ "compression_level": "tight",
+ "prompt_epoch": "g1-v2-2026-09-03",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T18:25:20.354494+00:00",
+ "prompt": "Restate the following in one sentence of at most 30 words for a general audience.\n\nThe lower and upper bounds of a 68% confidence interval can be computed by adding or subtracting one standard error (25,000) from 60,000. This means that there are approximately two chances in three (68%) that the range (35,000 to 85,000) contains the real value of the change between the two months. * A 95% confidence interval can be constructed by adding and subtracting 50,000 (two standard errors) from 60,000. This means that there are approximately nineteen chances in twenty (95%) that the range (10,000 to 110,000) contains the real value of the change between the two months. **Conducting hypothesis tests** Standard errors may also be used to perform hypothesis testing, a procedure that can be used for comparing population parameters using sample estimates. The larger the observed change between two estimates relative to its standard error, the better the chance that we are observing a real change as opposed to a change due to sampling variability. One simple way to conduct a hypothesis test is with a confidence interval. If the 95% confidence interval of an observed estimate of change does not contain zero, then the change is considered statistically significant at the 5% level of significance. The level of significance is the probability of concluding that there is a change, when in fact the actual change is zero. If the confidence interval of the estimate does contain zero, it is less likely to reflect a real change and more likely to be due to sampling variability. To illustrate, let us say that between two months, the published estimate for total employment increased by 60,000 and the associated standard error for the movement estimate was 25,000. Since the 95% confidence interval (10,000 to 110,000) does not contain zero, this change in employment is considered significant at the 5% level of significance.",
+ "response_text": "Employment rose by an estimated 60,000, and because the margin of error keeps that range above zero, statisticians consider the increase real rather than random survey noise.",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 52,
+  "cacheReadInputTokens": 12842,
+  "cacheCreationInputTokens": 17311,
+  "webSearchRequests": 0,
+  "costUSD": 0.18084099999999997,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 0,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 2152,
+ "cost_usd": 0.18084099999999997,
+ "spend_run_id": "g1_eval_v2_dev_2026-09-03",
+ "spend_reservation_id": "80a8a76f03614ef099593b3a9ef0c1a5",
+ "source_doc_id": "statcan-71-543-g-guide-labour-force-survey-2025",
+ "passage_id": "lfs-ci-example",
+ "surface_type": "prose_labeled"
+}

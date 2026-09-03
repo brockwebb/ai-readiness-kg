@@ -45,6 +45,45 @@ def _now() -> str:
     return datetime.now(timezone.utc).isoformat()
 
 
+def _quantiles(xs: list) -> dict:
+    xs = sorted(x for x in xs if isinstance(x, (int, float)))
+    if not xs:
+        return {"n": 0}
+    def q(p):
+        i = (len(xs) - 1) * p
+        lo, hi = int(i), min(int(i) + 1, len(xs) - 1)
+        return round(xs[lo] + (xs[hi] - xs[lo]) * (i - lo), 6)
+    return {"n": len(xs), "min": xs[0], "q1": q(0.25), "median": q(0.5), "q3": q(0.75), "max": xs[-1],
+            "mean": round(sum(xs) / len(xs), 6)}
+
+
+def covariate_summaries(records: list) -> dict:
+    """D11 summaries for the RESULT: compression_ratio per level (indirect records), the
+    signed relative_deviation among L0 records, rounding_direction counts among L0s, and
+    summary_precision_consistent among records with both numbers present."""
+    by_level = {}
+    for r in records:
+        if r.mode != "indirect":
+            continue
+        cov = r.observations.get("covariates", {})
+        by_level.setdefault(r.compression_level or "none", []).append(cov.get("compression_ratio"))
+    l0 = [r for r in records if r.level == 0]
+    devs = [r.observations.get("covariates", {}).get("relative_deviation") for r in l0]
+    dirs = {}
+    for r in l0:
+        d = r.observations.get("covariates", {}).get("rounding_direction") or "none"
+        dirs[d] = dirs.get(d, 0) + 1
+    spc = [r.observations.get("covariates", {}).get("summary_precision_consistent") for r in records]
+    spc = [x for x in spc if x is not None]
+    return {"compression_ratio_by_level": {k: _quantiles(v) for k, v in sorted(by_level.items())},
+            "relative_deviation_among_L0": _quantiles([d for d in devs if d is not None]),
+            "relative_deviation_among_L0_signs": {"negative": sum(1 for d in devs if d is not None and d < 0),
+                                                  "positive": sum(1 for d in devs if d is not None and d > 0),
+                                                  "zero": sum(1 for d in devs if d == 0), "none": sum(1 for d in devs if d is None)},
+            "rounding_direction_among_L0": dirs,
+            "summary_precision_consistent": {"n": len(spc), "consistent": sum(1 for x in spc if x)}}
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--evidence", action="append", required=True, help="evidence directory (repeatable)")
@@ -105,6 +144,7 @@ def main(argv=None) -> int:
             files.append({"evidence_path": rel, "mode": rec["mode"], "model_id": rec["model_id"], "prompt_epoch": rec["prompt_epoch"],
                           "compression_level": comp if rec["mode"] == "indirect" else None, "n_records": len(new)})
     out = {"task": TASK, "run_id": a.run_id, "parser_version": _g1_parse.PARSER_VERSION, "scorer_version": SCORER_VERSION,
+           "covariate_summaries": covariate_summaries(records),
            "split": a.split, "v2_only": a.v2_only, "v1_only": a.v1_only, "evidence_dirs": a.evidence, "scored_at": _now(),
            "shared_v1_passages_assigned_to_dev": shared,
            "n_evidence_files": len(files), "files": files,

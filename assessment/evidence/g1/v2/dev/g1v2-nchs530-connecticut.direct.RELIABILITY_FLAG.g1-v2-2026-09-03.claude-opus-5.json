@@ -1,0 +1,33 @@
+{
+ "proposition_id": "g1v2-nchs530-connecticut",
+ "call_id": "g1v2-nchs530-connecticut.direct.RELIABILITY_FLAG",
+ "mode": "direct",
+ "qualifier_class": "RELIABILITY_FLAG",
+ "compression_level": null,
+ "prompt_epoch": "g1-v2-2026-09-03",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T18:34:02.039503+00:00",
+ "prompt": "Data table for Figure 4. Perinatal mortality rate, by state for 2022 and 2023, and change in rate \nfrom 2022 to 2023: Each state and the District of Columbia\nArea 2022 2023\nChange from \n2022 to 2023\nRate per 1,000 Percent\nAlabama  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9.44 10.96 16\nAlaska . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 8.39 7.73 †\nArizona  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9.56 9.28 †\nArkansas . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 10.86 11.49 †\nCalifornia . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 7.30 7.25 †\nColorado . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 7.32 8.61 18\nConnecticut . . . . . . . . . . . . . . . . . . . . . . . . . . . 6.93 7.63 †\nDelaware . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9.66 8.68 †\n† Change not significant (p = 0.05). \n\nWhat is the reliability assessment on the 2023 perinatal mortality rate for Connecticut (per 1,000)?",
+ "response_text": "**No reliability flag is attached to it.** The table gives Connecticut 2023 = **7.63 per 1,000**, printed plain.\n\nThe only footnote symbol on Connecticut's row is the **†** in the *change* column, and that is not a reliability marker — it is a significance test result: \"Change not significant (p = 0.05).\" It says the 6.93 → 7.63 movement from 2022 to 2023 can't be distinguished from chance, not that the 7.63 rate itself is unstable or unreliable.\n\nTwo caveats on what this excerpt can support:\n\n- The fragment covers only Alabama–Delaware, and its footnote block shows just the † definition. NCHS Fig. 4-style tables normally also carry flags for rates based on small numbers of events (typically fewer than 20 deaths). Since no such symbol appears on Connecticut and no such footnote is defined in what you pasted, the absence is consistent with \"not flagged\" — but confirm against the full table's footnote legend, since a truncated excerpt can drop legend rows.\n- The published table gives no standard error or confidence interval, so there's no quantitative precision estimate available here beyond the significance test on the change.\n\nShort version: the rate is reported as usable at face value; the flag you see qualifies the year-over-year change, not the estimate.",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 632,
+  "cacheReadInputTokens": 12840,
+  "cacheCreationInputTokens": 17260,
+  "webSearchRequests": 0,
+  "costUSD": 0.19483,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 205,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 10358,
+ "cost_usd": 0.19483,
+ "spend_run_id": "g1_eval_v2_dev_2026-09-03_b",
+ "spend_reservation_id": "db950a1793434f928f9f0870d94b1709",
+ "source_doc_id": "nchs-data-brief-530-perinatal-mortality-2022-2023",
+ "passage_id": "nchs530-fig4-al-de",
+ "surface_type": "flagged_cell"
+}

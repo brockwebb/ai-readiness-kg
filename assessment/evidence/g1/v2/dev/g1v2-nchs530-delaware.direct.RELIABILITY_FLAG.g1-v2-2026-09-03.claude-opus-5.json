@@ -1,0 +1,33 @@
+{
+ "proposition_id": "g1v2-nchs530-delaware",
+ "call_id": "g1v2-nchs530-delaware.direct.RELIABILITY_FLAG",
+ "mode": "direct",
+ "qualifier_class": "RELIABILITY_FLAG",
+ "compression_level": null,
+ "prompt_epoch": "g1-v2-2026-09-03",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T18:34:26.790314+00:00",
+ "prompt": "Data table for Figure 4. Perinatal mortality rate, by state for 2022 and 2023, and change in rate \nfrom 2022 to 2023: Each state and the District of Columbia\nArea 2022 2023\nChange from \n2022 to 2023\nRate per 1,000 Percent\nAlabama  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9.44 10.96 16\nAlaska . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 8.39 7.73 †\nArizona  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9.56 9.28 †\nArkansas . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 10.86 11.49 †\nCalifornia . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 7.30 7.25 †\nColorado . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 7.32 8.61 18\nConnecticut . . . . . . . . . . . . . . . . . . . . . . . . . . . 6.93 7.63 †\nDelaware . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9.66 8.68 †\n† Change not significant (p = 0.05). \n\nWhat is the reliability assessment on the 2023 perinatal mortality rate for Delaware (per 1,000)?",
+ "response_text": "The table doesn't provide one. Delaware's 2023 rate of **8.68 per 1,000** carries no reliability flag or qualifier in this excerpt.\n\nThe only footnote symbol in the table is `†`, and it belongs to the third column — it marks Delaware's 2022→2023 *change* as not statistically significant (p = 0.05), not the rate itself. That's a significance-of-change statement, not a reliability assessment of the estimate.\n\nWorth noting about what's absent: NCHS data tables of this type normally flag unreliable rates (conventionally those based on fewer than 20 events) with a separate symbol and a corresponding footnote. No such symbol appears on Delaware, and no such footnote appears in the excerpt you pasted. Two readings, and this fragment can't distinguish them:\n\n1. The rate met NCHS's reliability threshold, so no flag was needed.\n2. The excerpt is truncated at Delaware (the alphabet stops there), so the full footnote block — which might define an unreliability symbol used later in the table — isn't visible.\n\nEither way, nothing in the text shown assigns a reliability judgment to Delaware's 8.68. If you need one, the source is the full Figure 4 data table and its complete footnotes, plus the underlying numerator (Delaware perinatal deaths) and denominator, which this excerpt doesn't include.",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 674,
+  "cacheReadInputTokens": 12840,
+  "cacheCreationInputTokens": 17259,
+  "webSearchRequests": 0,
+  "costUSD": 0.19587,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 225,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 10685,
+ "cost_usd": 0.19587,
+ "spend_run_id": "g1_eval_v2_dev_2026-09-03_b",
+ "spend_reservation_id": "adc7bfa1d6444b80bb5bd27f6cf0f492",
+ "source_doc_id": "nchs-data-brief-530-perinatal-mortality-2022-2023",
+ "passage_id": "nchs530-fig4-al-de",
+ "surface_type": "flagged_cell"
+}

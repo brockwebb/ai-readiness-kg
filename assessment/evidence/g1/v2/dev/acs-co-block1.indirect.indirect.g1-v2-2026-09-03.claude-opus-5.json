@@ -1,0 +1,33 @@
+{
+ "proposition_id": "g1v2-acs-co-adams",
+ "call_id": "acs-co-block1.indirect",
+ "mode": "indirect",
+ "qualifier_class": null,
+ "compression_level": "none",
+ "prompt_epoch": "g1-v2-2026-09-03",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T18:26:38.246272+00:00",
+ "prompt": "Restate the following for a general-audience summary.\n\n[[\"NAME\",\"B19013_001E\",\"B19013_001M\",\"state\",\"county\"],\n[\"Adams County, Colorado\",\"91387\",\"1470\",\"08\",\"001\"],\n[\"Alamosa County, Colorado\",\"51445\",\"6098\",\"08\",\"003\"],\n[\"Arapahoe County, Colorado\",\"97215\",\"1592\",\"08\",\"005\"],\n[\"Archuleta County, Colorado\",\"76524\",\"6714\",\"08\",\"007\"],\n[\"Baca County, Colorado\",\"40380\",\"7753\",\"08\",\"009\"],\n[\"Bent County, Colorado\",\"49194\",\"4596\",\"08\",\"011\"],\n[\"Boulder County, Colorado\",\"102772\",\"2628\",\"08\",\"013\"],",
+ "response_text": "## What this data is\n\nThese are U.S. Census Bureau figures (table B19013) showing **median household income** for Colorado counties — the income of the household right in the middle, where half of the county's households earn more and half earn less. It's a better measure of a \"typical\" household than an average, since a handful of very wealthy households can pull an average upward.\n\nEach county has two numbers: the estimate itself, and a **margin of error**. These figures come from a survey of a sample of households, not a count of everyone, so the true value sits somewhere in a range around the estimate.\n\n## What it says\n\nThe list is alphabetical and stops at \"B\" — these are 7 of Colorado's 64 counties.\n\n| County | Typical household income | Give or take |\n|---|---|---|\n| Boulder | $102,772 | ±$2,628 |\n| Arapahoe | $97,215 | ±$1,592 |\n| Adams | $91,387 | ±$1,470 |\n| Archuleta | $76,524 | ±$6,714 |\n| Alamosa | $51,445 | ±$6,098 |\n| Bent | $49,194 | ±$4,596 |\n| Baca | $40,380 | ±$7,753 |\n\n**The headline:** a typical household in Boulder County earns roughly two and a half times what a typical household in Baca County earns — about $103,000 versus about $40,000.\n\n**The pattern:** the three highest-income counties here (Boulder, Arapahoe, Adams) are all in the Denver metro area. The lower-income ones (Baca, Bent, Alamosa) are rural counties in southern and southeastern Colorado.\n\n**A caution about precision:** the margins of error are much larger for the small rural counties, because fewer households there were surveyed. Baca County's figure could plausibly be anywhere from about $33,000 to $48,000 — a range that overlaps with Bent County's and Alamosa's. So while it's safe to say those three counties are all substantially poorer than the Denver-area ones, ranking them against *each other* isn't supported by this data. The Denver-area figures, by contrast, are precise enough (±2–3%) that their ordering is meaningful.",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 1172,
+  "cacheReadInputTokens": 12842,
+  "cacheCreationInputTokens": 15847,
+  "webSearchRequests": 0,
+  "costUSD": 0.194201,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 473,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 16940,
+ "cost_usd": 0.194201,
+ "spend_run_id": "g1_eval_v2_dev_2026-09-03",
+ "spend_reservation_id": "f3fd77a658ed4f20aa5310aded42d904",
+ "source_doc_id": "census-api-acs5-2023-b19013-counties-colorado",
+ "passage_id": "acs-co-block1",
+ "surface_type": "table_coded"
+}

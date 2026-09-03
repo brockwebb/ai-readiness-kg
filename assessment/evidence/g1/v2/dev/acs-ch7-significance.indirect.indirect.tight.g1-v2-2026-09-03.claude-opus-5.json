@@ -1,0 +1,33 @@
+{
+ "proposition_id": "g1-acs-moe-003",
+ "call_id": "acs-ch7-significance.indirect.tight",
+ "mode": "indirect",
+ "qualifier_class": null,
+ "compression_level": "tight",
+ "prompt_epoch": "g1-v2-2026-09-03",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T18:22:41.396885+00:00",
+ "prompt": "Restate the following in one sentence of at most 30 words for a general audience.\n\nThe example below shows how to determine if the difference in the estimated percentage of householders age 65 or older who live alone between Florida (estimated percentage = 12.6, MOE = 0.2) and Arizona (estimated percentage = 10.5, MOE = 0.3) is statistically significant, based on 2015 ACS data. Using formula (1) above, first calculate the corresponding standard errors for Florida (0.122) and Arizona (0.182) by dividing the MOEs by 1.645. Then, using formula (3) above, calculate the test value as follows: Understanding and Using American Community Survey Data 57 What All Data Users Need to Know 57 U.S. Census Bureau Since the test value (9.581) is greater than the critical value for a confidence level of 90 percent (1.645), the difference in the percentages is statistically significant at a 90 percent confidence level. A rough interpretation of the result is that the user can be 90 percent certain that a difference exists between the percentage of householders aged 65 or older who live alone in Florida and in Arizona. By contrast, if the corresponding estimate for Indiana (estimated percentage = 10.8, MOE = 0.2, SE = 0.122) were compared with the estimate for Arizona, formula (3) would yield: Since the test value (1.369) is less than the critical value for a confidence level of 90 percent (1.645), the difference in percentages is not statistically significant. A rough interpretation of the result is that the user cannot be certain to any sufficient degree that the observed difference in the estimates between Indiana and Arizona was not due to chance.",
+ "response_text": "Census data comes with a margin of error, so you compare two states by dividing that difference by its uncertainty — Florida clearly differs from Arizona, Indiana doesn't.",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 58,
+  "cacheReadInputTokens": 12842,
+  "cacheCreationInputTokens": 17302,
+  "webSearchRequests": 0,
+  "costUSD": 0.180901,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 0,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 3081,
+ "cost_usd": 0.180901,
+ "spend_run_id": "g1_eval_v2_dev_2026-09-03",
+ "spend_reservation_id": "52a6f9a997a149fdb7264d3bc6e7a36b",
+ "source_doc_id": "census-acs-general-handbook-2020",
+ "passage_id": "acs-ch7-significance",
+ "surface_type": "prose_labeled"
+}

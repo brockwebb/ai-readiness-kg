@@ -1,0 +1,33 @@
+{
+ "proposition_id": "g1-acsr-sup-001",
+ "call_id": "acs-filtering-rule.indirect.tight",
+ "mode": "indirect",
+ "qualifier_class": null,
+ "compression_level": "tight",
+ "prompt_epoch": "g1-v2-2026-09-03",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T18:26:20.328226+00:00",
+ "prompt": "Restate the following in one sentence of at most 30 words for a general audience.\n\nFor both base and collapsed detailed tables, a table is filtered out if the median CV value for the table is greater than 0.61, or in other words, if more than half of the estimates in it have a CV greater than 0.61, suggesting very low reliability. A CV greater than 0.61 is equivalent to saying the estimate is not significantly different from zero at the 90 percent confidence level. Zero estimates, which have an undefined CV, are assigned a CV of 1.0 for determining the median CV. Only lines at the lowest level of detail in a table are included in the calculation of the median CV.",
+ "response_text": "Tables are dropped when over half their most detailed estimates are too unreliable to differ from zero (CV above 0.61); zero estimates count as CV 1.0.",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 250,
+  "cacheReadInputTokens": 12842,
+  "cacheCreationInputTokens": 16968,
+  "webSearchRequests": 0,
+  "costUSD": 0.182361,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 195,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 3462,
+ "cost_usd": 0.182361,
+ "spend_run_id": "g1_eval_v2_dev_2026-09-03",
+ "spend_reservation_id": "7b50fcba3fb74e749ecfa323296dcb22",
+ "source_doc_id": "census-acs-data-suppression-rules",
+ "passage_id": "acs-filtering-rule",
+ "surface_type": "prose_labeled"
+}

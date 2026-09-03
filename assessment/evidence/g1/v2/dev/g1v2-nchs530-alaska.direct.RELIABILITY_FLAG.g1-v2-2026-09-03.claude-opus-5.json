@@ -1,0 +1,33 @@
+{
+ "proposition_id": "g1v2-nchs530-alaska",
+ "call_id": "g1v2-nchs530-alaska.direct.RELIABILITY_FLAG",
+ "mode": "direct",
+ "qualifier_class": "RELIABILITY_FLAG",
+ "compression_level": null,
+ "prompt_epoch": "g1-v2-2026-09-03",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T18:33:09.509926+00:00",
+ "prompt": "Data table for Figure 4. Perinatal mortality rate, by state for 2022 and 2023, and change in rate \nfrom 2022 to 2023: Each state and the District of Columbia\nArea 2022 2023\nChange from \n2022 to 2023\nRate per 1,000 Percent\nAlabama  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9.44 10.96 16\nAlaska . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 8.39 7.73 †\nArizona  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9.56 9.28 †\nArkansas . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 10.86 11.49 †\nCalifornia . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 7.30 7.25 †\nColorado . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 7.32 8.61 18\nConnecticut . . . . . . . . . . . . . . . . . . . . . . . . . . . 6.93 7.63 †\nDelaware . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9.66 8.68 †\n† Change not significant (p = 0.05). \n\nWhat is the reliability assessment on the 2023 perinatal mortality rate for Alaska (per 1,000)?",
+ "response_text": "**No reliability flag is attached to it.** Alaska's 2023 rate is 7.73 per 1,000 with no footnote symbol on the rate itself.\n\nThe `†` on the Alaska row sits in the **\"Change from 2022 to 2023\"** column, not on the rate. It means the 2022→2023 change (8.39 → 7.73) was **not statistically significant at p = 0.05** — which is why the percent-change cell shows the dagger instead of a number. That is a significance statement about the difference between two years, not an assessment of the 2023 rate's reliability.\n\nTwo caveats on what this excerpt can and can't tell you:\n\n- The excerpt contains only one footnote definition (`†`). NCHS tables of this type normally also carry a separate flag for rates based on a small number of events (conventionally an asterisk for fewer than 20 deaths, with rates suppressed below that). Since Alaska's rate carries no such mark, it is presented as a reliable, publishable rate — but the excerpt is truncated at Delaware and doesn't include the full footnote legend or the technical notes, so I can't confirm the exact flagging convention this particular figure used.\n- No confidence interval or standard error is given in the data table, so there's no quantitative precision measure for the 7.73 here. Those would be in the report's technical notes or the underlying period linked birth/infant death file.",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 728,
+  "cacheReadInputTokens": 12840,
+  "cacheCreationInputTokens": 17259,
+  "webSearchRequests": 0,
+  "costUSD": 0.19722,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 281,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 11821,
+ "cost_usd": 0.19722,
+ "spend_run_id": "g1_eval_v2_dev_2026-09-03_b",
+ "spend_reservation_id": "8741c91902384803aa1683065f009962",
+ "source_doc_id": "nchs-data-brief-530-perinatal-mortality-2022-2023",
+ "passage_id": "nchs530-fig4-al-de",
+ "surface_type": "flagged_cell"
+}

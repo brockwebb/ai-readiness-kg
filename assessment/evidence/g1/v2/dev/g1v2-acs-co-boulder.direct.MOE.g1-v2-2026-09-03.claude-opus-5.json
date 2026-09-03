@@ -1,0 +1,33 @@
+{
+ "proposition_id": "g1v2-acs-co-boulder",
+ "call_id": "g1v2-acs-co-boulder.direct.MOE",
+ "mode": "direct",
+ "qualifier_class": "MOE",
+ "compression_level": null,
+ "prompt_epoch": "g1-v2-2026-09-03",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T18:27:26.323390+00:00",
+ "prompt": "[[\"NAME\",\"B19013_001E\",\"B19013_001M\",\"state\",\"county\"],\n[\"Adams County, Colorado\",\"91387\",\"1470\",\"08\",\"001\"],\n[\"Alamosa County, Colorado\",\"51445\",\"6098\",\"08\",\"003\"],\n[\"Arapahoe County, Colorado\",\"97215\",\"1592\",\"08\",\"005\"],\n[\"Archuleta County, Colorado\",\"76524\",\"6714\",\"08\",\"007\"],\n[\"Baca County, Colorado\",\"40380\",\"7753\",\"08\",\"009\"],\n[\"Bent County, Colorado\",\"49194\",\"4596\",\"08\",\"011\"],\n[\"Boulder County, Colorado\",\"102772\",\"2628\",\"08\",\"013\"],\n\nWhat is the margin of error on B19013_001E for \"Boulder County, Colorado\"?",
+ "response_text": "**2628** (dollars).\n\nThat's the `B19013_001M` field — the 90% confidence margin of error on the median household income estimate of $102,772 for Boulder County, Colorado. So the interval is roughly $100,144–$105,400.",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 80,
+  "cacheReadInputTokens": 12842,
+  "cacheCreationInputTokens": 16980,
+  "webSearchRequests": 0,
+  "costUSD": 0.17823099999999997,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 0,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 2596,
+ "cost_usd": 0.17823099999999997,
+ "spend_run_id": "g1_eval_v2_dev_2026-09-03",
+ "spend_reservation_id": "badd5c987c95468cb890e4b5b818dbbb",
+ "source_doc_id": "census-api-acs5-2023-b19013-counties-colorado",
+ "passage_id": "acs-co-block1",
+ "surface_type": "table_coded"
+}

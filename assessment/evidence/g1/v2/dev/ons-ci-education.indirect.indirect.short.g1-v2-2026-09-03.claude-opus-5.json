@@ -1,0 +1,33 @@
+{
+ "proposition_id": "g1-ons-ci-002",
+ "call_id": "ons-ci-education.indirect.short",
+ "mode": "indirect",
+ "qualifier_class": null,
+ "compression_level": "short",
+ "prompt_epoch": "g1-v2-2026-09-03",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T18:23:55.114440+00:00",
+ "prompt": "Restate the following for a general-audience summary in no more than two sentences.\n\nIn 2016, the UK private education industry was estimated to have generated a total turnover of £42,649 million. The standard error for this estimate is £526.8 million. The 95% confidence interval around this estimate is calculated as: Margin of error = 1.96 × £526.8 million = £1,032.5 million The 95% confidence interval is therefore £42,649 million plus or minus £1,032.5 million, which equals £41,616 million and £43,682 million respectively. This means that if we drew 20 random samples and calculated an analogous confidence interval for each, on average, 19 out of 20 (95%) would contain the true population value and 1 in 20 (5%) would not. Therefore, there is a 95% chance that the true population value lies between £41,616 million and £43,682 million.",
+ "response_text": "The UK's private education industry brought in an estimated £42.6 billion in 2016, and because that figure comes from a sample rather than a full count, the true total is likely somewhere between £41.6 billion and £43.7 billion. Statisticians express this by saying that if the survey were repeated many times, about 19 out of every 20 such ranges would capture the real figure.\n\nOne note on the source text: its final sentence (\"there is a 95% chance that the true population value lies between...\") is a common misreading of confidence intervals — the 95% describes the reliability of the method across repeated samples, not the probability that this particular interval contains the true value. I used the repeated-sampling wording instead, which the source's own preceding sentence gets right.",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 318,
+  "cacheReadInputTokens": 12842,
+  "cacheCreationInputTokens": 17031,
+  "webSearchRequests": 0,
+  "costUSD": 0.18469100000000002,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 87,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 5532,
+ "cost_usd": 0.18469100000000002,
+ "spend_run_id": "g1_eval_v2_dev_2026-09-03",
+ "spend_reservation_id": "640721d017e64d4fa656d084e286bc3b",
+ "source_doc_id": "ons-uncertainty-and-how-we-measure-it",
+ "passage_id": "ons-ci-education",
+ "surface_type": "prose_labeled"
+}

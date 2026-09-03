@@ -1,0 +1,33 @@
+{
+ "proposition_id": "g1v2-bls-2026-07-payrolls",
+ "call_id": "g1v2-bls-2026-07-payrolls.direct.CI",
+ "mode": "direct",
+ "qualifier_class": "CI",
+ "compression_level": null,
+ "prompt_epoch": "g1-v2-2026-09-03",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T18:36:48.786972+00:00",
+ "prompt": "Both nonfarm payroll employment (-23,000) and the unemployment rate (4.1 percent) changed little in \nJuly, the U.S. Bureau of Labor Statistics reported today. Employment declined in local government \neducation and retail trade. Employment continued to trend up in health care.\n   For example, the confidence interval for the monthly change in total nonfarm\nemployment from the establishment survey is on the order of plus or minus 122,000.\nSuppose the estimate of nonfarm employment increases by 50,000 from one month to\nthe next. The 90-percent confidence interval on the monthly change would range from\n-72,000 to +172,000 (50,000 +/- 122,000). These figures do not mean that the sample\nresults are off by these magnitudes, but rather that there is about a 90-percent\nchance that the true over-the-month change lies within this interval. Since this\n\nWhat is the confidence interval on the over-the-month change in total nonfarm payroll employment in July 2026?",
+ "response_text": "**±122,000 at 90% confidence** — that's the figure the release itself gives for the monthly change in total nonfarm employment from the establishment survey.\n\nApplied to July's estimate of **−23,000**:\n\n−23,000 ± 122,000 → **−145,000 to +99,000**\n\nThe interval spans zero, which is why BLS characterizes the month as \"changed little\": the estimated decline is not statistically distinguishable from no change at the 90 percent level. The ±122,000 is sampling error only — it does not cover the nonsampling error that later benchmark and seasonal-adjustment revisions correct.\n\nOne caveat on the framing: the excerpt you pasted identifies the month as July but not the year, so I've treated it as the July 2026 release on your word. If that text is actually from a different reference month, the ±122,000 still applies (BLS keeps that figure stable across releases within a benchmark year), but the endpoints would change with the point estimate.",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 690,
+  "cacheReadInputTokens": 12840,
+  "cacheCreationInputTokens": 17068,
+  "webSearchRequests": 0,
+  "costUSD": 0.19436,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 382,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 10599,
+ "cost_usd": 0.19436,
+ "spend_run_id": "g1_eval_v2_dev_2026-09-03_b",
+ "spend_reservation_id": "b4bd5f52beb248b698c731e6430a0d0f",
+ "source_doc_id": "bls-employment-situation-2026-08-news-release",
+ "passage_id": "bls-2026-07-headline-technote",
+ "surface_type": "footnoted"
+}

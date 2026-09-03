@@ -88,7 +88,7 @@ from ..records import (
     Track,
     level_to_score,
 )
-from ._g1_parse import PARSER_VERSION, Parsed, ParsedNumber, ParsedQualifier, parse
+from ._g1_parse import _LEVEL_RE, PARSER_VERSION, Parsed, ParsedNumber, ParsedQualifier, parse
 from .base import Elicited, EvalProbe
 
 # Instrument version of the scorer (DD-035): versioned beside the parser; stamped on every
@@ -182,7 +182,10 @@ def is_rounding_of(src_value: float, src_scale: float, cand_value: float, src_te
     full = src_value * src_scale
     d = decimals_of(src_text)
     for k in range(d - 1, -13, -1):     # fewer decimals, then tens, hundreds, …
-        if abs(round(full, k) - cand_value) < 1e-9 * max(1.0, abs(full)):
+        rounded = round(full, k)
+        if rounded == 0:
+            break                        # rounding to zero identifies nothing (v2 fix: 2.3e9 "rounds" to 0.087)
+        if abs(rounded - cand_value) < 1e-9 * max(1.0, abs(full)):
             return abs(cand_value - full) > 1e-12       # strictly coarser than exact
     return False
 
@@ -230,6 +233,14 @@ def estimate_status(parsed: Parsed, prop) -> Tuple[EstimateStatus, dict]:
     for n in parsed.numbers:
         if n.is_year:
             continue
+        for alt in _estimate_forms(prop)[1:]:
+            if within_published_rounding(alt, txt, scale, n.value) and _unit_compatible(unit, n.unit):
+                obs["estimate_matches"].append(n.span)
+                obs["estimate_unit_transformed"] = True     # 0.05 stated as "5 percentage points"
+                return EstimateStatus.EXACT, obs
+    for n in parsed.numbers:
+        if n.is_year:
+            continue
         if is_rounding_of(v, scale, n.value, txt) and _unit_compatible(unit, n.unit):
             obs["estimate_rounded_to"] = n.span
             return EstimateStatus.ROUNDED, obs
@@ -272,6 +283,15 @@ def _label_tokens(prop, stop_words) -> List[str]:
 
 
 _ROW_CACHE: dict = {}
+_TOK_RE_CACHE: dict = {}
+
+
+def _has_tok(tok: str, text: str) -> bool:
+    """Whole-word token match ("employment" is not inside "unemployment")."""
+    rx = _TOK_RE_CACHE.get(tok)
+    if rx is None:
+        rx = _TOK_RE_CACHE[tok] = re.compile(r"(?<![a-z0-9])" + re.escape(tok) + r"(?![a-z0-9])")
+    return bool(rx.search(text))
 
 
 def _passage_rows(passage: str) -> List[str]:
@@ -291,29 +311,42 @@ def _passage_rows(passage: str) -> List[str]:
 
 def label_token_classes(prop, stop_words) -> Tuple[List[str], List[str]]:
     """(row_specific, generic): label tokens the consumer could have seen (present in the
-    passage), split by whether they pick this row out — a token in at most a third of the
-    passage's rows is row-specific ("youth" in three of twelve CCHS rows; "$15,000" in one
-    table row), one in most rows is generic ("Newfoundland" on every row; "Fairfax" through
+    passage), split by whether they pick this row out — a token in at most half of the
+    passage's rows is row-specific ("youth" in three of twelve CCHS rows; "rate" in six of
+    eighteen LFS rows; "$15,000" in one table row), one in most rows is generic ("Newfoundland" on every row; "Fairfax" through
     a paragraph about Fairfax). Tokens absent from the passage cannot identify the row to
     the consumer and are dropped; if none remain, every label token counts as generic."""
     toks = _label_tokens(prop, stop_words)
     rows = _passage_rows(prop.context_passage)
     low = prop.context_passage.lower()
-    present = [t for t in toks if t in low]
+    present = [t for t in toks if _has_tok(t, low)]
     if not present:
         return [], toks
     if not rows:
         return [], present
     specific, generic = [], []
     for t in present:
-        share = sum(1 for r in rows if t in r) / len(rows)
-        (specific if share <= 1 / 3 else generic).append(t)
+        share = sum(1 for r in rows if _has_tok(t, r)) / len(rows)
+        (specific if share <= 0.5 else generic).append(t)
     return specific, generic
+
+
+def _estimate_forms(prop) -> List[float]:
+    """The estimate's value and its unit-transformed forms (a fraction as a percent or in
+    percentage points, and back): 0.05 published as a fraction is "5 percentage points"."""
+    v = prop.estimate_value
+    unit = prop.estimate.get("unit")
+    forms = [v]
+    if unit == "fraction":
+        forms.append(v * 100)
+    elif unit in ("percent", "percent_points"):
+        forms.append(v / 100)
+    return forms
 
 
 def estimate_positions(parsed: Parsed, prop) -> List[int]:
     """Character offsets (in the normalised text) of numbers that restate the estimate."""
-    v, txt, scale = prop.estimate_value, prop.estimate_text, prop.estimate_scale
+    txt, scale = prop.estimate_text, prop.estimate_scale
     unit = prop.estimate.get("unit")
     out = []
     for n in parsed.numbers:
@@ -321,19 +354,49 @@ def estimate_positions(parsed: Parsed, prop) -> List[int]:
             continue
         if not _unit_compatible(unit, n.unit):
             continue
-        if within_published_rounding(v, txt, scale, n.value) or at_display_scale(v, txt, scale, n.value) \
-                or is_rounding_of(v, scale, n.value, txt):
-            out.append(n.start)
+        for v in _estimate_forms(prop):
+            if within_published_rounding(v, txt, scale, n.value) or at_display_scale(v, txt, scale, n.value) \
+                    or _is_close_rounding(v, scale, n.value, txt, n.span):
+                out.append(n.start)
+                break
     return out
 
 
-def _sentence_around(text: str, pos: int, window: int) -> str:
+def _is_close_rounding(v: float, scale: float, cand: float, txt: str, span: str = "") -> bool:
+    """A rounding that still identifies the estimate: to the integer or finer always
+    (37.5 -> 38), coarser only within 1 % of the value (564,757 -> 565,000; not 32.1 -> 30,
+    which is another row's bound — cchs-2022-pe.indirect.indirect.…json)."""
+    if not is_rounding_of(v, scale, cand, txt):
+        return False
+    full = v * scale
+    m = re.search(r"\d[\d,]*(?:\.\d+)?", span or "")
+    printed_decimals = decimals_of(m.group(0)) if m else 0
+    if abs(round(full) - cand) < 1e-9 or printed_decimals > 0:
+        return True
+    return full != 0 and abs(cand - full) / abs(full) <= 0.01
+
+
+_ANAPHORA_RE = re.compile(r"\b(?:this|that|the|its)\s+(?:estimate|figure|value|total|number|count|rate|true\s+(?:population\s+)?(?:value|figure|total|number))\b|\btrue\s+(?:population\s+)?(?:value|figure|total|number)\b", re.I)
+_CLAUSE_BREAK = re.compile(r";\s+|,\s+(?:and|but|while|whereas|with)\s+|\s+(?:while|whereas)\s+|\s*[()]\s*|\s+[—–]\s+")
+
+
+def _sentence_around(text: str, pos: int, window: int, clause: bool = False) -> str:
+    """The sentence (or, with `clause`, the clause — split at ';' and ', and' / 'while' /
+    'whereas') containing `pos`, bounded by the window."""
     lo, hi = max(0, pos - window), min(len(text), pos + window)
     seg = text[lo:hi]
     rel = pos - lo
-    starts = [m.end() for m in _SENTENCE_BREAK.finditer(seg) if m.end() <= rel]
-    ends = [m.start() for m in _SENTENCE_BREAK.finditer(seg) if m.start() > rel]
-    return seg[(starts[-1] if starts else 0):(ends[0] if ends else len(seg))]
+    breaker = _SENTENCE_BREAK
+    starts = [m.end() for m in breaker.finditer(seg) if m.end() <= rel]
+    ends = [m.start() for m in breaker.finditer(seg) if m.start() > rel]
+    sent_lo, sent_hi = (starts[-1] if starts else 0), (ends[0] if ends else len(seg))
+    if not clause:
+        return seg[sent_lo:sent_hi]
+    sent = seg[sent_lo:sent_hi]
+    rel2 = rel - sent_lo
+    cs = [m.end() for m in _CLAUSE_BREAK.finditer(sent) if m.end() <= rel2]
+    ce = [m.start() for m in _CLAUSE_BREAK.finditer(sent) if m.start() > rel2]
+    return sent[(cs[-1] if cs else 0):(ce[0] if ce else len(sent))]
 
 
 def _same_sentence(text: str, a: int, b: int) -> bool:
@@ -360,48 +423,161 @@ def bound_to_estimate(parsed: Parsed, cand: ParsedQualifier, prop, cfg: dict, mo
     if est_positions is None:
         est_positions = estimate_positions(parsed, prop)
     anchored_elsewhere = False
+    anchored_elsewhere_by_anchor = False        # a ± physically attached to another number
+    if cand.bound_estimate is not None and cand.value is not None and abs(cand.bound_estimate - cand.value) < 1e-9:
+        cand = ParsedQualifier(**{**cand.__dict__, "bound_estimate": None})    # anchored on its own value: no anchor
     if cand.bound_estimate is not None:
         if within_published_rounding(v, txt, scale, cand.bound_estimate) or at_display_scale(v, txt, scale, cand.bound_estimate) \
                 or is_rounding_of(v, scale, cand.bound_estimate, txt):
             return "bound", "anchored_on_estimate"
-        anchored_elsewhere = True
+        anchored_elsewhere = anchored_elsewhere_by_anchor = True
+    # the value a qualifier follows in its own sentence is the value it qualifies (the v1 ±
+    # rule generalised): "The employment figure of 2,670,000 carries a standard error of
+    # about 19,800" is the count's SE, not the employment rate's
+    # (lfs-2026-07-alberta.indirect.indirect.…json)
+    sent = _sentence_around(text, cand.start, window)
+    sent_start = text.find(sent, max(0, cand.start - window))
+    est_set = set(est_positions)
+    preceding = [n for n in parsed.numbers
+                 if sent_start <= n.start < cand.start and _subject_value(parsed, text, n, cand)]
+    if preceding and not anchored_elsewhere:
+        nearest = max(preceding, key=lambda n: n.start)
+        if nearest.start in est_set:
+            return "bound", "estimate_in_sentence"
+        # another value sits between this estimate and the candidate: the candidate is its
+        if not any(n.start in est_set for n in preceding if n.start > nearest.start):
+            anchored_elsewhere = True
     # the row label / estimate label restated near the candidate
     specific, generic = label_token_classes(prop, cfg["label_stop_words"])
-    # a label reference counts only inside the candidate's own sentence / line (and within
-    # the window): the next sentence's row is the next sentence's business
-    near = _sentence_around(text, cand.start, window).lower()
+    # a label reference counts only inside the candidate's own clause (and within the
+    # window): the next clause's row is the next clause's business ("the count of unemployed
+    # people has a CV of 5.0%, and the labour force count has a CV of 2.5%")
+    near = _sentence_around(text, cand.start, window, clause=True).lower()
     own = set(specific) | set(generic)
+    others = [sib for sib in (siblings or ()) if sib.id != prop.id]
+    # label competition: the clause names THIS row when more of this label's tokens appear
+    # in it than of any sibling label's ("the unemployment rate's standard error" names the
+    # unemployment-rate row over the unemployment count and the participation rate; a tie
+    # — "the employment figure … standard error" between the employment count and the
+    # employment rate — decides nothing, and the value the qualifier follows decides)
     sib_only = set()
-    for sib in siblings or ():
-        if sib.id != prop.id:
-            sib_only |= set(_label_tokens(sib, cfg["label_stop_words"])) - own
-    if any(t in near for t in sib_only):
-        label_near = False                       # the sentence names a sibling row
+    for sib in others:
+        sib_only |= set(_label_tokens(sib, cfg["label_stop_words"])) - own
+    own_score = sum(1 for t in own if _has_tok(t, near))
+    wins, loses = True, False
+    for sib in others:
+        st = set(_label_tokens(sib, cfg["label_stop_words"]))
+        s_score = sum(1 for t in st if _has_tok(t, near))
+        if s_score > own_score:
+            loses = True
+        elif s_score == own_score and s_score > 0:
+            # a tie: this row wins only with a token the sibling lacks, or — when its label
+            # is a subset of the sibling's ("Fairfax" vs "Fairfax, Arlington and Alexandria
+            # combined") — when the sibling's extra tokens are absent
+            own_extra = [t for t in own - st if _has_tok(t, near)]
+            sib_extra = [t for t in st - own if _has_tok(t, near)]
+            if not (own_extra or (own <= st and not sib_extra)):
+                wins = False
+    names_sibling = loses
+    if names_sibling:
+        return ("other_estimate" if anchored_elsewhere else "unbound"), "names_sibling_row"
+    if others:
+        label_near = own_score > 0 and wins
     elif specific:
-        label_near = any(t in near for t in specific)
+        label_near = any(_has_tok(t, near) for t in specific)
     else:
-        hits = [t for t in generic if t in near]
+        hits = [t for t in generic if _has_tok(t, near)]
         need = min(int(cfg["label_min_tokens"]), len(generic)) or 1
-        if siblings is not None or (not est_positions and cand.cls in (QualifierClass.RELIABILITY_FLAG, QualifierClass.SUPPRESSION)):
-            # sibling rows are known (and none is named here), or a suppressed / withheld cell
-            # with no value to anchor on: one label token near the candidate is enough
+        if not est_positions and cand.cls in (QualifierClass.RELIABILITY_FLAG, QualifierClass.SUPPRESSION):
+            # a suppressed / withheld cell with no value to anchor on: one label token near
+            # the candidate is the most a restatement can offer
             need = 1
         label_near = len(hits) >= need
+    if label_near and anchored_elsewhere_by_anchor:
+        # an explicit label in the candidate's own clause beats a ± anchor that sits outside
+        # it ("… 64.3% was employed, … (for example, ±0.4 points on the unemployment rate)")
+        anchor_in_clause = any(abs(n.value - cand.bound_estimate) < 1e-9 for n in parsed.numbers
+                               if cand.start - len(near) - 2 <= n.start < cand.start)
+        if not anchor_in_clause:
+            return "bound", "label_reference"
+    elif label_near:
+        return "bound", "label_reference"
     if anchored_elsewhere:
         return "other_estimate", ("label_near" if label_near else None)
     for pos in est_positions:
         if abs(pos - cand.start) <= window and _same_sentence(text, pos, cand.start):
             return "bound", "estimate_in_sentence"
-    if label_near:
-        return "bound", "label_reference"
+    # anaphora: "for this estimate", "the true population value", "the figure" in the clause,
+    # with the estimate's most recent restatement within the anaphora window and no sibling
+    # row named in between (ons-ci-education.indirect.indirect.…json)
+    if _ANAPHORA_RE.search(near):
+        aw = int(cfg.get("anaphora_window_chars", window))
+        prior = [pos for pos in est_positions if 0 <= cand.start - pos <= aw]
+        if prior:
+            between = text[max(prior):cand.start].lower()
+            if not any(_has_tok(t, between) for t in sib_only):
+                return "bound", "anaphora"
     if mode == "direct":
         # the question names the estimate: every candidate in the answer refers to it unless
         # anchored on another number (handled above)
         return "bound", "direct_question"
-    for pos in est_positions:
-        if abs(pos - cand.start) <= window:
-            return "bound", "estimate_in_window"
+    # the adjacent-sentence fallback ("Colorado had 564,757 … . The margin of error is
+    # 10,127.") applies only when the candidate's own sentence carries no other estimate-like
+    # number: a sentence with its own subject value ("About 36% of PEI adults … between 30%
+    # and 43%", cchs-2022-pe.indirect.indirect.…json) is about that value
+    sent = _sentence_around(text, cand.start, window)
+    sent_start = text.find(sent, max(0, cand.start - window))
+    own_numbers = [n for n in parsed.numbers
+                   if sent_start <= n.start < sent_start + len(sent)
+                   and not (cand.start <= n.start < cand.start + len(cand.span))
+                   and _subject_value(parsed, text, n, cand)]
+    if not own_numbers:
+        # … and the nearest preceding value in the window is this estimate (not another
+        # sentence's subject: "About 36% of PEI adults … . Because this comes from a sample …
+        # between 30% and 43%" is about the 36 %, cchs-2022-pe.indirect.indirect.…json)
+        before = [n for n in parsed.numbers if cand.start - window <= n.start < cand.start
+                  and _subject_value(parsed, text, n, cand)]
+        if before:
+            nearest = max(before, key=lambda n: n.start)
+            return ("bound", "estimate_in_window") if nearest.start in est_set else ("unbound", "preceded_by_another_value")
+        for pos in est_positions:
+            if abs(pos - cand.start) <= window:
+                return "bound", "estimate_in_window"
     return "unbound", None
+
+
+_OPERATOR_NEAR = re.compile(r"[×÷*/=≈]")
+
+
+def _subject_value(parsed: Parsed, text: str, n: ParsedNumber, cand: ParsedQualifier) -> bool:
+    """A number that can be the SUBJECT a qualifier follows: estimate-like, not a year, level,
+    fraction or formula term, not a rate denominator ("per 1,000"), and not the candidate's
+    own value restated ("= 0.087, or 8.7% … coefficient of variation of 8.7%")."""
+    if n.is_year or n.is_fraction or _LEVEL_RE.match(text[n.start:]) or not _estimate_like(n):
+        return False
+    if _OPERATOR_NEAR.search(text[max(0, n.start - 3):n.start]) or _OPERATOR_NEAR.search(text[n.start + len(n.span): n.start + len(n.span) + 3]):
+        return False
+    if re.search(r"\bper\s*$", text[max(0, n.start - 5):n.start], re.I):
+        return False
+    own = [cand.value, cand.lower, cand.upper]
+    if any(v is not None and abs(n.value - v) < 1e-9 for v in own):
+        return False
+    # a value that is itself a qualifier (a ± amount, an SE, another interval's bound) is not
+    # a subject: "£2,322 million, give or take about £201 million" has one subject
+    for q in parsed.qualifiers:
+        if q.cls is QualifierClass.VINTAGE:
+            continue
+        if any(v is not None and abs(n.value - v) < 1e-9 for v in (q.value, q.lower, q.upper)):
+            return False
+    return True
+
+
+def _estimate_like(n: ParsedNumber) -> bool:
+    """A number that could be an estimate: carries a unit, currency, scale word, a comma or
+    a decimal, or four or more digits (the v1 `_preceding_number` test)."""
+    raw = n.span
+    return bool(n.unit or n.currency or "," in raw or "." in raw or len(re.sub(r"\D", "", raw)) >= 4
+                or re.search(r"(?:thousand|million|billion|trillion|%|percent)", raw, re.I))
 
 
 def bind_candidates(parsed: Parsed, prop, cfg: dict, mode: str, siblings=None) -> Tuple[Parsed, dict]:
@@ -412,8 +588,11 @@ def bind_candidates(parsed: Parsed, prop, cfg: dict, mode: str, siblings=None) -
     est_pos = estimate_positions(parsed, prop)
     keep, report = [], {"unbound": [], "other_estimate": [], "binding": {}}
     for c in parsed.qualifiers:
-        if c.cls is QualifierClass.VINTAGE:
-            keep.append(c)          # a date binds to the whole restatement (v0 rule, unchanged)
+        if c.cls in (QualifierClass.VINTAGE, QualifierClass.DP_NOISE):
+            # a date, and a disclosure-avoidance parameter (a property of the RELEASE, not
+            # of one cell: the DAS handbook's global rho / epsilon / delta), bind to the whole
+            # restatement (v0 rule for dates, unchanged; DD-035 for DP)
+            keep.append(c)
             continue
         status, how = bound_to_estimate(parsed, c, prop, cfg, mode, est_pos, siblings)
         if status == "bound":
@@ -488,6 +667,19 @@ def _absent(parsed: Parsed, cls: QualifierClass, est: EstimateStatus, obs: dict,
         return _verdict(cls, Level.OMITTED, "omission",
                         f"no {cls.value} bound to this estimate ({len(unbound)} candidate(s) belong to other estimates)", obs)
     cues = _cues_for(parsed, cls, prop)
+    if cues and not restated and cls in _NUMERIC_CLASSES:
+        # v2 precedence (compressed dev responses: acs-ch7-colorado.indirect.indirect.tight.…json
+        # "A margin of error shows how precise a Census survey estimate is …"): the class's
+        # vocabulary about the CONCEPT, with neither this estimate nor any candidate of the class
+        # in the response, is not a claim about this estimate that the rules failed to read — it
+        # is the estimate and its qualifier both dropped: L1 omission, cue words recorded.
+        # Numeric classes only: a flag or suppression statement has no value to restate, so its
+        # wording alone is still the D5 case (syn-suppressed-001 cases). A rho asked where its
+        # epsilon equivalent was given stays unparseable too (a convertible form the rules
+        # cannot verify without delta).
+        return _verdict(cls, Level.OMITTED, "omission",
+                        f"neither the estimate nor its {cls.value} is restated (class vocabulary present: {', '.join(cues)})",
+                        dict(obs, cues=cues))
     if cues:
         return _verdict(cls, None, None,
                         f"uncertainty vocabulary present ({', '.join(cues)}) but no {cls.value} could be classified",
@@ -721,9 +913,17 @@ def _score_suppression(q, parsed: Parsed, est: EstimateStatus, obs: dict, prop=N
 
 def _score_dp(q, parsed: Parsed, est: EstimateStatus, prop, obs: dict) -> QualifierVerdict:
     param = q.fields["parameter"]
-    cands = [c for c in parsed.of_class(QualifierClass.DP_NOISE) if c.parameter == param
+    all_dp = parsed.of_class(QualifierClass.DP_NOISE)
+    cands = [c for c in all_dp if c.parameter == param
              or (param in ("rho", "epsilon") and c.parameter == "plb")]
     if not cands:
+        convertible = param in ("rho", "epsilon") and any(c.parameter in ("rho", "epsilon", "plb") for c in all_dp)
+        if all_dp and not convertible:
+            # other parameters are stated, this one is not (das-plb-units.indirect.indirect.short
+            # .…json states rho / epsilon / delta and drops the allocation share): an omission
+            return _verdict(QualifierClass.DP_NOISE, Level.OMITTED, "omission",
+                            f"DP {param} not restated; other parameters stated ({', '.join(sorted({c.parameter or '' for c in all_dp}))})",
+                            dict(obs, other_parameters=sorted({c.parameter or "" for c in all_dp}), estimate_restated=est is not EstimateStatus.ABSENT))
         return _absent(parsed, QualifierClass.DP_NOISE, est, obs, prop)
     c = cands[0]
     if param == "bound" and q.unit and c.unit and not _unit_compatible(q.unit, c.unit):
@@ -894,7 +1094,7 @@ def score_qualifier(parsed: Parsed, prop, q, est: EstimateStatus, mode: str = "i
         if unbound:
             obs["unbound_candidates"] = unbound
         beside = [u for u in binding_report.get("other_estimate", []) if u.get("beside_this_label") and u["class"] in fam_classes]
-        if beside and not any(c.cls.value in fam_classes for c in parsed.qualifiers):
+        if mode == "indirect" and beside and not any(c.cls.value in fam_classes for c in parsed.qualifiers):
             # another estimate's qualifier presented beside THIS estimate's label (D10)
             return _verdict(cls, Level.CORRUPTED, "binding_error",
                             f"{cls.value} {beside[0]['span']!r} anchored on {beside[0]['anchored_on']} is presented as this estimate's",
@@ -913,6 +1113,14 @@ def score_qualifier(parsed: Parsed, prop, q, est: EstimateStatus, mode: str = "i
         ci_pm = [c for c in parsed.of_class(QualifierClass.CI) if c.form == "pm"]
         if pm or ci_pm:
             cands = pm or ci_pm
+            if mode == "direct":
+                # the bare answer competes with any keyword phrase ("2628 (dollars). That's the
+                # … margin of error on the … estimate of $102,772" — g1v2-acs-co-boulder.direct
+                # .MOE.…json, where the phrase swallowed the estimate)
+                lead = _direct_leading_number(parsed, prop, q)
+                if lead is not None:
+                    cands = [lead] + cands
+                    obs = dict(obs, direct_leading_number=lead.span)
             cand = _pick(cands, prop, lambda c: within_published_rounding(q.value, q.text, q.scale, c.value))
             return _score_pm(cls, q, cand, prop, obs)
         if bounds:
@@ -925,7 +1133,10 @@ def score_qualifier(parsed: Parsed, prop, q, est: EstimateStatus, mode: str = "i
                 return _score_pm(cls, q, lead, prop, dict(obs, direct_leading_number=lead.span))
         return _absent(parsed, cls, est, obs, prop)
     if cls is QualifierClass.CI:
-        cands = parsed.of_class(QualifierClass.CI) or parsed.of_class(QualifierClass.MOE)
+        # every interval-form candidate competes — a ± phrase beside rounded bounds is
+        # ranked, not pre-empted (v2; the v1 RESULT's "exact 'MOE of 10,127' outranked by
+        # rounded bounds" miss, acs-ch7-colorado.indirect.indirect.…json)
+        cands = parsed.of_class(QualifierClass.CI) + parsed.of_class(QualifierClass.MOE)
         if not cands and mode == "direct":
             lead = _direct_leading_number(parsed, prop, q)
             if lead is not None:

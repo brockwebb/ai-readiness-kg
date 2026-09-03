@@ -1,0 +1,33 @@
+{
+ "proposition_id": "g1-acsr-sup-001",
+ "call_id": "acs-filtering-rule.indirect.short",
+ "mode": "indirect",
+ "qualifier_class": null,
+ "compression_level": "short",
+ "prompt_epoch": "g1-v2-2026-09-03",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T18:26:14.502497+00:00",
+ "prompt": "Restate the following for a general-audience summary in no more than two sentences.\n\nFor both base and collapsed detailed tables, a table is filtered out if the median CV value for the table is greater than 0.61, or in other words, if more than half of the estimates in it have a CV greater than 0.61, suggesting very low reliability. A CV greater than 0.61 is equivalent to saying the estimate is not significantly different from zero at the 90 percent confidence level. Zero estimates, which have an undefined CV, are assigned a CV of 1.0 for determining the median CV. Only lines at the lowest level of detail in a table are included in the calculation of the median CV.",
+ "response_text": "We drop a table from publication when most of its estimates are too shaky to trust — specifically, when over half the numbers at the most detailed level have a margin of error so wide that the estimate can't be told apart from zero (a coefficient of variation above 0.61, roughly the 90 percent confidence threshold).\n\nThis rule applies to both the base and collapsed detailed tables, and estimates of zero — which have no meaningful error measure — are counted as unreliable when we check whether the table clears the bar.",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 221,
+  "cacheReadInputTokens": 12842,
+  "cacheCreationInputTokens": 16967,
+  "webSearchRequests": 0,
+  "costUSD": 0.18162599999999998,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 62,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 4411,
+ "cost_usd": 0.18162599999999998,
+ "spend_run_id": "g1_eval_v2_dev_2026-09-03",
+ "spend_reservation_id": "d1ae52728dfd4cadb20942092902688d",
+ "source_doc_id": "census-acs-data-suppression-rules",
+ "passage_id": "acs-filtering-rule",
+ "surface_type": "prose_labeled"
+}

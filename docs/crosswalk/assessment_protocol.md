@@ -162,3 +162,21 @@ deterministic parser is an instrument with a version (`parser_version`, stamped 
 record beside `prompt_epoch` and `model_id`); its readiness is measured on sealed held-out model
 responses elicited only after the parser is frozen, never on restatements its author wrote
 (DD-034).
+
+v2 of the eval family (DD-035; task `cc_tasks/2026-09-03_g1_eval_v2_product_surfaces_compression.md`)
+makes G1's observed leg a product test. Fixtures are cut from product surfaces captured as served
+and typed by a closed `surface_type` vocabulary (`table_coded`, `table_labeled`, `footnoted`,
+`flagged_cell`, `no_declared`, with the v1 handbook passages as the `prose_labeled` control
+stratum), and the indirect prompt carries a compression budget factor (`none`, `short`,
+`tight`). The scored unit is the qualifier family — the published forms that are deterministic
+transforms of one another (SE, MOE and CI at one level are one `interval` family) — so an
+interval carried as its bounds is preserved, not an SE omission; a candidate qualifier counts
+only when it is bound to the estimate (its value, its row, or the question), so a missing
+qualifier is an omission and `binding_error` names only another estimate's qualifier presented as
+this one's; rounding direction, relative deviation, compression ratio, footnote distance and the
+surface's own declared-leg score ride on every record as covariates and never feed the score.
+Because the declared leg (`g1_declared`) runs on the same captured surface file, the record
+joins the A11 triad's declared and observed legs for the first time. A second, weaker consumer
+runs on the holdout grid as a single control arm reported beside the pinned consumer, never
+pooled; the scorer is versioned beside the parser (`scorer_version`), and the split seals by
+passage.

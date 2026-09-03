@@ -1,0 +1,33 @@
+{
+ "proposition_id": "g1-acs-moe-002",
+ "call_id": "acs-ch8-tricounty.indirect.short",
+ "mode": "indirect",
+ "qualifier_class": null,
+ "compression_level": "short",
+ "prompt_epoch": "g1-v2-2026-09-03",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T18:22:47.607149+00:00",
+ "prompt": "Restate the following for a general-audience summary in no more than two sentences.\n\nThe example below shows how to calculate the MOE and SE for the estimated number of never-married females living in the three Virginia counties/independent cities that border Washington, DC (Fairfax and Arlington counties, Alexandria City) from the 2015 ACS 1-year estimates. Table 8.1. Data for Example 1 From Three Virginia Counties/Independent Cities: 2015 Characteristic Estimate MOE Never-married females living in Fairfax County (Component 1) ................................. 135,173 ±3,860 Never-married females living in Arlington County (Component 2) ................................. 43,104 ±2,642 Never-married females living in Alexandria City (Component 3) .................................. 24,842 ±1,957 Source: U.S. Census Bureau, data.census.gov, Table B12001: “Sex by Marital Status for the Population 15 Years and Over.” 60 Understanding and Using American Community Survey Data 60 What All Data Users Need to Know U.S. Census Bureau The aggregate estimate is: Obtain MOEs of the component estimates: MOE (Fairfax) = ±3,860 MOE (Arlington) = ±2,642 MOE (Alexandria) = ±1,957 Using formula (1), calculate the MOE for the aggregate estimate: Thus, the derived estimate of the number of never-married females living in the three Virginia counties/independent cities that border Washington, DC, is 203,119, and the MOE for the estimate is ±5,070. The SE of this derived estimate can be calculated from the SEs of the component estimates as follows: 1. Calculate the SE of each component estimate from its MOE using: (2) SE (Fairfax) = 3,860 / 1.645 = 2,347 SE (Arlington) = 2,642 / 1.645 = 1,606 SE (Alexandria) = 1,957 / 1.645 = 1,190 2. Calculate the SE of the aggregate estimate: (3) With the three component estimates in this example, this becomes: To assess the reliability of this derived estimate, users may find it helpful to calculate the CV as follows: (4) Understanding and Using American Community Survey Data 61 What All Data Users Need to Know 61 U.S. Census Bureau This CV indicates that the sampling error of this estimate is very small relative to the estimate itself, so the number of never-married females residing in the Virginia tri-county area bordering Washington, DC, can be considered a very reliable estimate.",
+ "response_text": "The Census Bureau's example adds up the number of never-married women in Fairfax County, Arlington County, and Alexandria City, Virginia, from the 2015 ACS to get a combined total of 203,119 — with a margin of error of about ±5,070, found by squaring each county's margin of error, adding them, and taking the square root.\n\nBecause that margin is tiny compared with the estimate itself, the combined figure is considered very reliable.",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 162,
+  "cacheReadInputTokens": 12842,
+  "cacheCreationInputTokens": 17602,
+  "webSearchRequests": 0,
+  "costUSD": 0.186501,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 21,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 3409,
+ "cost_usd": 0.186501,
+ "spend_run_id": "g1_eval_v2_dev_2026-09-03",
+ "spend_reservation_id": "041bdcd84cb64db8a589dc0015ff2fb4",
+ "source_doc_id": "census-acs-general-handbook-2020",
+ "passage_id": "acs-ch8-tricounty",
+ "surface_type": "prose_labeled"
+}

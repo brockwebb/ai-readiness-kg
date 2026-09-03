@@ -1,0 +1,33 @@
+{
+ "proposition_id": "g1v2-acs-co-adams",
+ "call_id": "g1v2-acs-co-adams.direct.MOE",
+ "mode": "direct",
+ "qualifier_class": "MOE",
+ "compression_level": null,
+ "prompt_epoch": "g1-v2-2026-09-03",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T18:26:58.349532+00:00",
+ "prompt": "[[\"NAME\",\"B19013_001E\",\"B19013_001M\",\"state\",\"county\"],\n[\"Adams County, Colorado\",\"91387\",\"1470\",\"08\",\"001\"],\n[\"Alamosa County, Colorado\",\"51445\",\"6098\",\"08\",\"003\"],\n[\"Arapahoe County, Colorado\",\"97215\",\"1592\",\"08\",\"005\"],\n[\"Archuleta County, Colorado\",\"76524\",\"6714\",\"08\",\"007\"],\n[\"Baca County, Colorado\",\"40380\",\"7753\",\"08\",\"009\"],\n[\"Bent County, Colorado\",\"49194\",\"4596\",\"08\",\"011\"],\n[\"Boulder County, Colorado\",\"102772\",\"2628\",\"08\",\"013\"],\n\nWhat is the margin of error on B19013_001E for \"Adams County, Colorado\"?",
+ "response_text": "**±1,470** (the `B19013_001M` value in that row).\n\nSo Adams County's median household income estimate is **$91,387 ± $1,470**. ACS margins of error are published at the **90% confidence level**, so the interval is roughly **$89,917 – $92,857**.\n\nNote that the MOE is a separate variable (`B19013_001M`), not an attribute of the estimate column — the `_E`/`_M` suffix pairing is the ACS convention for estimate and margin of error. (If you want the standard error instead: SE = MOE / 1.645 ≈ 894.)",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 379,
+  "cacheReadInputTokens": 12842,
+  "cacheCreationInputTokens": 16979,
+  "webSearchRequests": 0,
+  "costUSD": 0.185696,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 187,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 5988,
+ "cost_usd": 0.185696,
+ "spend_run_id": "g1_eval_v2_dev_2026-09-03",
+ "spend_reservation_id": "f2c4e21f4c8b4a5d9271e0b39c6ca70e",
+ "source_doc_id": "census-api-acs5-2023-b19013-counties-colorado",
+ "passage_id": "acs-co-block1",
+ "surface_type": "table_coded"
+}

@@ -1,0 +1,33 @@
+{
+ "proposition_id": "g1-ons-ci-002",
+ "call_id": "ons-ci-education.indirect.tight",
+ "mode": "indirect",
+ "qualifier_class": null,
+ "compression_level": "tight",
+ "prompt_epoch": "g1-v2-2026-09-03",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T18:24:03.295288+00:00",
+ "prompt": "Restate the following in one sentence of at most 30 words for a general audience.\n\nIn 2016, the UK private education industry was estimated to have generated a total turnover of £42,649 million. The standard error for this estimate is £526.8 million. The 95% confidence interval around this estimate is calculated as: Margin of error = 1.96 × £526.8 million = £1,032.5 million The 95% confidence interval is therefore £42,649 million plus or minus £1,032.5 million, which equals £41,616 million and £43,682 million respectively. This means that if we drew 20 random samples and calculated an analogous confidence interval for each, on average, 19 out of 20 (95%) would contain the true population value and 1 in 20 (5%) would not. Therefore, there is a 95% chance that the true population value lies between £41,616 million and £43,682 million.",
+ "response_text": "In 2016, UK private education turnover was estimated at about £42.6 billion, with the true figure very likely falling between £41.6 billion and £43.7 billion.\n\n(25 words. Note: the source's closing line — \"there is a 95% chance the true value lies between…\" — is the common misreading of a confidence interval; the preceding \"19 in 20 samples\" sentence is the correct statement, so I kept the wording hedged rather than reproducing the probability claim.)",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 378,
+  "cacheReadInputTokens": 12842,
+  "cacheCreationInputTokens": 17032,
+  "webSearchRequests": 0,
+  "costUSD": 0.18620099999999998,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 227,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 6147,
+ "cost_usd": 0.18620099999999998,
+ "spend_run_id": "g1_eval_v2_dev_2026-09-03",
+ "spend_reservation_id": "17049ca746eb409dae4ac4b522c3644c",
+ "source_doc_id": "ons-uncertainty-and-how-we-measure-it",
+ "passage_id": "ons-ci-education",
+ "surface_type": "prose_labeled"
+}

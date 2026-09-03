@@ -1,0 +1,33 @@
+{
+ "proposition_id": "g1v2-nchs530-arizona",
+ "call_id": "g1v2-nchs530-arizona.direct.VINTAGE",
+ "mode": "direct",
+ "qualifier_class": "VINTAGE",
+ "compression_level": null,
+ "prompt_epoch": "g1-v2-2026-09-03",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T18:33:49.388476+00:00",
+ "prompt": "Data table for Figure 4. Perinatal mortality rate, by state for 2022 and 2023, and change in rate \nfrom 2022 to 2023: Each state and the District of Columbia\nArea 2022 2023\nChange from \n2022 to 2023\nRate per 1,000 Percent\nAlabama  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9.44 10.96 16\nAlaska . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 8.39 7.73 †\nArizona  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9.56 9.28 †\nArkansas . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 10.86 11.49 †\nCalifornia . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 7.30 7.25 †\nColorado . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 7.32 8.61 18\nConnecticut . . . . . . . . . . . . . . . . . . . . . . . . . . . 6.93 7.63 †\nDelaware . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9.66 8.68 †\n† Change not significant (p = 0.05). \n\nWhat is the reference period or as-of date on the 2023 perinatal mortality rate for Arizona (per 1,000)?",
+ "response_text": "**Reference period: calendar year 2023** — the column header is the only period marker the table carries.\n\nFor the Arizona cell (9.28 per 1,000), that means:\n\n- **Period covered:** events occurring January 1 – December 31, 2023. For a perinatal rate this is a *cohort of events in the year*, not a point-in-time stock — numerator is late fetal deaths (28+ weeks gestation) plus early neonatal deaths (under 7 days), denominator is live births plus late fetal deaths, all for occurrences in 2023.\n- **Geography basis:** state of Arizona as reported in the vital statistics file (NCHS state tables are normally residence-based).\n- **As-of / vintage date:** **not stated in the excerpt you pasted.** The table gives no file-processing date, \"data as of\" line, or provisional/final designation. That information lives in the source report's Technical Notes or the figure's source line, neither of which is in this fragment.\n\nThat distinction matters if you're recording provenance: the *reference period* is unambiguous (2023), but the *vintage* — which extract of the 2023 natality/fetal-death files produced 9.28, and whether it's provisional or final — is unrecoverable from this table alone. NCHS revises these files, so 9.28 is only pinned once you name the source report and its release date.\n\nIf you tell me which report this Figure 4 comes from (it reads like an NCHS *Vital Statistics Rapid Release* or *National Vital Statistics Reports* perinatal mortality brief), I can pull the Technical Notes and give you the file vintage and the exact perinatal definition used.",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 887,
+  "cacheReadInputTokens": 12840,
+  "cacheCreationInputTokens": 17261,
+  "webSearchRequests": 0,
+  "costUSD": 0.20121499999999998,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 358,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 13376,
+ "cost_usd": 0.20121499999999998,
+ "spend_run_id": "g1_eval_v2_dev_2026-09-03_b",
+ "spend_reservation_id": "34f31e7cafe64798b40a93b36c48358b",
+ "source_doc_id": "nchs-data-brief-530-perinatal-mortality-2022-2023",
+ "passage_id": "nchs530-fig4-al-de",
+ "surface_type": "flagged_cell"
+}

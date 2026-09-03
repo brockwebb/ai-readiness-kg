@@ -1,0 +1,33 @@
+{
+ "proposition_id": "g1-das-dp-004",
+ "call_id": "das-plb-units.indirect.tight",
+ "mode": "indirect",
+ "qualifier_class": null,
+ "compression_level": "tight",
+ "prompt_epoch": "g1-v2-2026-09-03",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T18:24:51.277756+00:00",
+ "prompt": "Restate the following in one sentence of at most 30 words for a general audience.\n\nGlobal Privacy-Loss Budget: Units Global rho . . . . . . . . . . . . . . . . . . 0.07 Global epsilon . . . . . . . . . . . . . . . 2.47 Delta . . . . . . . . . . . . . . . . . . . . . . . 10–10 Source: U.S. Census Bureau. Privacy-Loss Budget: Units Geographic level Rho allocation United States . . . . . . . . . . . . . . . 1/205 State . . . . . . . . . . . . . . . . . . . . . . . 1/205 County . . . . . . . . . . . . . . . . . . . . . 7/82 Tract . . . . . . . . . . . . . . . . . . . . . . . 364/1,025 Optimized block group1 . . . . . . 1,759/4,100 Block . . . . . . . . . . . . . . . . . . . . . . 99/820",
+ "response_text": "The Census Bureau capped total privacy loss for its Units data at epsilon 2.47, splitting that budget across geographic levels, with most going to tracts, block groups, and blocks.",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 236,
+  "cacheReadInputTokens": 12842,
+  "cacheCreationInputTokens": 17082,
+  "webSearchRequests": 0,
+  "costUSD": 0.183151,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 174,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 4436,
+ "cost_usd": 0.183151,
+ "spend_run_id": "g1_eval_v2_dev_2026-09-03",
+ "spend_reservation_id": "9fe9f7662ccc460a8dc32f5b83e936ef",
+ "source_doc_id": "census-2020-disclosure-avoidance-handbook-2021",
+ "passage_id": "das-plb-units",
+ "surface_type": "prose_labeled"
+}

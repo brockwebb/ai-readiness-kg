@@ -1,0 +1,33 @@
+{
+ "proposition_id": "g1v2-nchs530-connecticut",
+ "call_id": "g1v2-nchs530-connecticut.direct.VINTAGE",
+ "mode": "direct",
+ "qualifier_class": "VINTAGE",
+ "compression_level": null,
+ "prompt_epoch": "g1-v2-2026-09-03",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T18:34:13.800153+00:00",
+ "prompt": "Data table for Figure 4. Perinatal mortality rate, by state for 2022 and 2023, and change in rate \nfrom 2022 to 2023: Each state and the District of Columbia\nArea 2022 2023\nChange from \n2022 to 2023\nRate per 1,000 Percent\nAlabama  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9.44 10.96 16\nAlaska . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 8.39 7.73 †\nArizona  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9.56 9.28 †\nArkansas . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 10.86 11.49 †\nCalifornia . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 7.30 7.25 †\nColorado . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 7.32 8.61 18\nConnecticut . . . . . . . . . . . . . . . . . . . . . . . . . . . 6.93 7.63 †\nDelaware . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9.66 8.68 †\n† Change not significant (p = 0.05). \n\nWhat is the reference period or as-of date on the 2023 perinatal mortality rate for Connecticut (per 1,000)?",
+ "response_text": "**Reference period: calendar year 2023** — the full data year, January 1 – December 31, 2023. The value is 7.63 per 1,000.\n\nA few things worth flagging about how to record that as-of date:\n\n- The table gives no more granular period. Each column header is a bare data year, and NCHS perinatal mortality statistics are compiled on a calendar-year basis from the linked birth/infant death and fetal death files, so 2023 = the full calendar year of occurrence.\n- **Year of occurrence, not year of publication.** The report itself was released later (2023-year vital statistics reports appear in 2025); if your schema wants a publication date, that's a separate field from the reference period.\n- The denominator period is the same calendar year — the rate is deaths per 1,000 live births plus fetal deaths for events in 2023.\n- The `†` on Connecticut applies to the *change* column (2022→2023 not significant at p = 0.05), not to the 2023 rate's period.",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 557,
+  "cacheReadInputTokens": 12840,
+  "cacheCreationInputTokens": 17262,
+  "webSearchRequests": 0,
+  "costUSD": 0.192975,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 241,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 9495,
+ "cost_usd": 0.192975,
+ "spend_run_id": "g1_eval_v2_dev_2026-09-03_b",
+ "spend_reservation_id": "b13a4fd0f58845158846f12290a0a4ef",
+ "source_doc_id": "nchs-data-brief-530-perinatal-mortality-2022-2023",
+ "passage_id": "nchs530-fig4-al-de",
+ "surface_type": "flagged_cell"
+}
