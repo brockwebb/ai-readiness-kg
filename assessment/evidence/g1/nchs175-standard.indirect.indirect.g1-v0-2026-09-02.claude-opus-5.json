@@ -1,0 +1,31 @@
+{
+ "proposition_id": "g1-n175-sup-001",
+ "call_id": "nchs175-standard.indirect",
+ "mode": "indirect",
+ "qualifier_class": null,
+ "prompt_epoch": "g1-v0-2026-09-02",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T11:08:33.201352+00:00",
+ "prompt": "Restate the following for a general-audience summary.\n\nTable. NCHS Data Presentation Standards for Proportions Statistic Standard Sample size Estimated proportions should be based on a minimum denominator sample size and effective denominator sample size (when applicable) of 30. Estimates with either a denominator sample size or an effective denominator sample size (when applicable) less than 30 should be suppressed. If the number of events is 0 (or its complement 1 ), then the denominator sample size should be used to obtain confidence intervals. If all other criteria are met for presentation, an estimate based on 0 events (or its complement 1 ) should be flagged for statistical review by the clearance official. The review could result in either the presentation or the suppression of the proportion. Confidence interval If the sample size criterion is met, calculate a 95% two-sided confidence interval using the Clopper-Pearson method, or the Korn-Graubard method for complex surveys, and obtain its width. Small absolute confidence interval width If the absolute confidence interval width is greater than 0.00 and less than or equal to 0.05, then the proportion can be presented if the number of events is greater than 0 and the degrees of freedom criterion (below) is met. If the number of events is 0 (or its complement 1 ) or the degrees of freedom criterion is not met, then the estimate should be flagged for statistical review by the clearance official. The review could result in either the presentation or the suppression of the proportion. Large absolute confidence interval width If the absolute confidence interval width is greater than or equal to 0.30, then the proportion should be suppressed. Relative confidence interval width If the absolute confidence interval width is between 0.05 and 0.30 and the relative confidence interval width is more than 130%, then the proportion should be suppressed. Relative confidence interval width If the absolute confidence interval width is between 0.05 and 0.30 and the relative confidence interval width is less than or equal to 130%, then the proportion can be presented if the degrees of freedom criterion below is met.",
+ "response_text": "## Plain-language version\n\n**What this is:** NCHS's rulebook (from the Data Presentation Standards for Proportions, Parker et al., *Vital and Health Statistics* Series 2, No. 175) for deciding whether a percentage calculated from survey data is solid enough to publish, or too shaky and should be withheld. Each estimate has to clear a series of checks.\n\n**Check 1 — Is the group big enough?**\nA percentage has to be based on at least 30 people (and, for surveys with complex sampling designs, at least 30 in the \"effective\" sample size too, which accounts for the design). Fewer than 30 in either sense, and the estimate isn't published.\n\nSpecial case: if *nobody* in the group had the outcome (0%) or *everybody* did (100%), the group size itself is used to build the margin of error. Such an estimate isn't automatically published — even if it passes everything else, a statistical reviewer looks at it and decides whether it goes out or gets withheld.\n\n**Check 2 — How wide is the margin of error?**\nFor groups that pass Check 1, analysts compute a 95% confidence interval — the range the true value is likely to fall in — using the Clopper-Pearson method, or Korn-Graubard for complex surveys. The width of that range drives everything that follows.\n\n- **Very narrow (up to 5 percentage points):** publishable, as long as at least one person had the outcome and the estimate passes the degrees-of-freedom check (a separate test of whether the survey design supports a reliable interval). If it's a 0% or 100% estimate, or it fails the degrees-of-freedom check, it goes to a reviewer for a judgment call.\n- **Very wide (30 percentage points or more):** too imprecise. Not published.\n- **In between (5 to 30 points):** one more test — see Check 3.\n\n**Check 3 — Is the margin of error large *compared with the estimate itself*?**\nA 10-point margin means something very different around an estimate of 60% than around one of 5%. So the width is expressed as a percentage of the estimate (the \"relative\" width).\n\n- More than 130% of the estimate: the uncertainty swamps the number. Not published.\n- 130% or less: publishable, provided the degrees-of-freedom check passes.\n\n**The underlying idea:** a number is only released when readers can trust it to mean something. Small groups, and numbers whose uncertainty is as large as the number itself, get held back rather than published with a caveat. Borderline cases — especially all-or-nothing results — go to a human reviewer instead of being decided by formula alone.",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 1127,
+  "cacheReadInputTokens": 12841,
+  "cacheCreationInputTokens": 17415,
+  "webSearchRequests": 0,
+  "costUSD": 0.20875549999999998,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 288,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 16141,
+ "cost_usd": 0.20875549999999998,
+ "spend_run_id": "g1_eval_v1_dev_2026-09-03_b",
+ "spend_reservation_id": "b9476cfd536e429288925b9b44a21954",
+ "source_doc_id": "nchs-2017-data-presentation-standards-proportions",
+ "passage_id": "nchs175-standard"
+}

@@ -1,0 +1,31 @@
+{
+ "proposition_id": "g1-das-dp-001",
+ "call_id": "g1-das-dp-001.direct.VINTAGE",
+ "mode": "direct",
+ "qualifier_class": "VINTAGE",
+ "prompt_epoch": "g1-v0-2026-09-02",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T11:02:50.104395+00:00",
+ "prompt": "The latest PPMF vintage 2021-06-08 is the Production Settings run, which uses the same software and settings for the 2020 production run of the redistricting data. Users can compare tabulated values from the PPMFs to published 2010 data to identify the amount of uncertainty that can be expected for a given geography or characteristic. Users can also calculate new measures of the spread of the uncertainty. For example, comparing tabulations from the PPMFs with the published 2010 data will show that 90 percent of counties have a privacy-protected total population that is within ± four people of their published total population.\n\nWhat is the reference period or as-of date on the share of counties whose privacy-protected total population (2021-06-08 PPMF) is within the stated bound of their published 2010 total population?",
+ "response_text": "**Reference period: the 2010 Census — i.e., as of Census Day, April 1, 2010.**\n\nThe ±4-person / 90-percent-of-counties figure comes from comparing PPMF tabulations against the *published 2010 Census data*, so both sides of the comparison carry the 2010 Census reference date. Two dates are in play and shouldn't be conflated:\n\n- **2010 (April 1, 2010)** — the reference period of the underlying population counts being compared. The PPMFs are demonstration products built on 2010 Census data.\n- **2021-06-08** — the *vintage* of the PPMF release (the Production Settings run), i.e., the date identifying which version of the disclosure-avoidance software and parameter settings produced the file. It is not a data reference date.\n\nThe passage itself gives no separate as-of date for the statistic beyond these; it's a property of that specific PPMF vintage applied to 2010 Census county totals.",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 591,
+  "cacheReadInputTokens": 12841,
+  "cacheCreationInputTokens": 16999,
+  "webSearchRequests": 0,
+  "costUSD": 0.19119550000000002,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 284,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 10335,
+ "cost_usd": 0.19119550000000002,
+ "spend_run_id": "g1_eval_v1_dev_2026-09-03",
+ "spend_reservation_id": "1a1e181f984d43aa91f48be8cad84360",
+ "source_doc_id": "census-2020-disclosure-avoidance-handbook-2021",
+ "passage_id": "das-county-accuracy"
+}

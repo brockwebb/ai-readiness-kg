@@ -1,0 +1,31 @@
+{
+ "proposition_id": "g1-das-dp-004",
+ "call_id": "g1-das-dp-004.direct.DP_NOISE",
+ "mode": "direct",
+ "qualifier_class": "DP_NOISE",
+ "prompt_epoch": "g1-v0-2026-09-02",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T11:03:38.688454+00:00",
+ "prompt": "Global Privacy-Loss Budget: Units Global rho . . . . . . . . . . . . . . . . . . 0.07 Global epsilon . . . . . . . . . . . . . . . 2.47 Delta . . . . . . . . . . . . . . . . . . . . . . . 10–10 Source: U.S. Census Bureau. Privacy-Loss Budget: Units Geographic level Rho allocation United States . . . . . . . . . . . . . . . 1/205 State . . . . . . . . . . . . . . . . . . . . . . . 1/205 County . . . . . . . . . . . . . . . . . . . . . 7/82 Tract . . . . . . . . . . . . . . . . . . . . . . . 364/1,025 Optimized block group1 . . . . . . 1,759/4,100 Block . . . . . . . . . . . . . . . . . . . . . . 99/820\n\nWhat is the disclosure-avoidance noise parameter (privacy-loss budget) on the global privacy-loss budget (epsilon) for the P.L. 94-171 redistricting data, housing units?",
+ "response_text": "**ε = 2.47** (global, for the housing-unit workload), with δ = 10⁻¹⁰ and global ρ = 0.07.\n\nPer the source table (U.S. Census Bureau, P.L. 94-171 redistricting data — Privacy-Loss Budget: Units), that global ρ = 0.07 is split across geographic levels as:\n\n| Level | ρ allocation |\n|---|---|\n| United States | 1/205 |\n| State | 1/205 |\n| County | 7/82 |\n| Tract | 364/1,025 |\n| Optimized block group | 1,759/4,100 |\n| Block | 99/820 |\n\nNote this is the *units* (housing units) budget specifically — the persons budget in the same DAS release carries its own, larger ε.",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 302,
+  "cacheReadInputTokens": 12841,
+  "cacheCreationInputTokens": 17123,
+  "webSearchRequests": 0,
+  "costUSD": 0.1852105,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 48,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 5573,
+ "cost_usd": 0.1852105,
+ "spend_run_id": "g1_eval_v1_dev_2026-09-03",
+ "spend_reservation_id": "80114b9ef25e4b3db8eac0329967fd47",
+ "source_doc_id": "census-2020-disclosure-avoidance-handbook-2021",
+ "passage_id": "das-plb-units"
+}

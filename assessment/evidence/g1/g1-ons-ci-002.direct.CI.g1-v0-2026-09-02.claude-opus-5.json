@@ -1,0 +1,31 @@
+{
+ "proposition_id": "g1-ons-ci-002",
+ "call_id": "g1-ons-ci-002.direct.CI",
+ "mode": "direct",
+ "qualifier_class": "CI",
+ "prompt_epoch": "g1-v0-2026-09-02",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T11:02:03.584026+00:00",
+ "prompt": "In 2016, the UK private education industry was estimated to have generated a total turnover of £42,649 million. The standard error for this estimate is £526.8 million. The 95% confidence interval around this estimate is calculated as: Margin of error = 1.96 × £526.8 million = £1,032.5 million The 95% confidence interval is therefore £42,649 million plus or minus £1,032.5 million, which equals £41,616 million and £43,682 million respectively. This means that if we drew 20 random samples and calculated an analogous confidence interval for each, on average, 19 out of 20 (95%) would contain the true population value and 1 in 20 (5%) would not. Therefore, there is a 95% chance that the true population value lies between £41,616 million and £43,682 million.\n\nWhat is the confidence interval on the total turnover of the UK private education industry in 2016?",
+ "response_text": "**£41,616 million to £43,682 million** (i.e. £42,649m ± £1,032.5m, where the margin of error is 1.96 × £526.8m).\n\nOne caveat on the passage's own wording: its first interpretation is correct (over repeated samples, ~19 in 20 such intervals contain the true value), but the closing sentence — \"there is a 95% chance the true population value lies between £41,616m and £43,682m\" — is the standard misstatement of a frequentist CI. The true value is fixed; the interval is what varies across samples, so the 95% attaches to the procedure, not to this particular interval.",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 395,
+  "cacheReadInputTokens": 12841,
+  "cacheCreationInputTokens": 17035,
+  "webSearchRequests": 0,
+  "costUSD": 0.1866555,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 195,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 6088,
+ "cost_usd": 0.1866555,
+ "spend_run_id": "g1_eval_v1_dev_2026-09-03",
+ "spend_reservation_id": "a8bddf35f0c844e9948c7ba41006faf9",
+ "source_doc_id": "ons-uncertainty-and-how-we-measure-it",
+ "passage_id": "ons-ci-education"
+}

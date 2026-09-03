@@ -157,4 +157,8 @@ the catalog composite and the web-surface vector: `SOURCE_EVAL` records and the 
 declared-leg probe are partitioned out before either composite is summed and reported as
 their own block — preservation rate per qualifier class and elicitation mode with a Wilson
 95 % interval and the denominator, an `unparseable` count that is never coerced into a
-score, and no product-level threshold until the January calibration run sets one.
+score, and no product-level threshold until the January calibration run sets one. The
+deterministic parser is an instrument with a version (`parser_version`, stamped on every eval
+record beside `prompt_epoch` and `model_id`); its readiness is measured on sealed held-out model
+responses elicited only after the parser is frozen, never on restatements its author wrote
+(DD-034).

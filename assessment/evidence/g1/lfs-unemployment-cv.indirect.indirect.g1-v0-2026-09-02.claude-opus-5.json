@@ -1,0 +1,31 @@
+{
+ "proposition_id": "g1-lfs-cv-001",
+ "call_id": "lfs-unemployment-cv.indirect",
+ "mode": "indirect",
+ "qualifier_class": null,
+ "prompt_epoch": "g1-v0-2026-09-02",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T11:05:39.904154+00:00",
+ "prompt": "Restate the following for a general-audience summary.\n\nFor example, in January 2024, there were 28,000 unemployed persons in Newfoundland and Labrador and 275,900 participants in the labour force, giving an unemployment rate of 10.4%. Table 7.1 gives the CVs for the two counts as 5.0% and 2.5%, respectively. An approximation of the CV for the unemployment rate of 10.4% using the above formula would be: 5.0% + 2.5% = 7.5%",
+ "response_text": "**Plain-language version**\n\nSurvey numbers are estimates, not exact counts, so each one carries a margin of error. Statisticians express that error as a *coefficient of variation* (CV) — the size of the likely error stated as a percentage of the estimate itself. A smaller CV means a more reliable number.\n\nTake Newfoundland and Labrador in January 2024. The survey estimated 28,000 people unemployed and 275,900 people in the labour force (everyone working or looking for work). Dividing one by the other gives an unemployment rate of 10.4%.\n\nBut both of those underlying figures are estimates with their own uncertainty. Table 7.1 shows the count of unemployed people has a CV of 5.0%, and the labour force count has a CV of 2.5%. Because the rate is built from both, its uncertainty draws on both.\n\nA quick way to gauge the rate's reliability is simply to add the two CVs together: 5.0% + 2.5% = 7.5%. So the 10.4% unemployment rate carries an approximate CV of 7.5%.\n\nThis addition is a deliberately cautious shortcut — it assumes the two errors compound in the worst possible way, so the true uncertainty is generally somewhat smaller. It's used because it's easy to calculate and errs on the side of overstating, rather than understating, how uncertain the figure is.\n\nOne note on the source figures: 28,000 divided by 275,900 works out to 10.1%, not the 10.4% quoted. The published rate is calculated from unrounded data, so the small gap is a rounding artifact rather than an error in the example.",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 803,
+  "cacheReadInputTokens": 12841,
+  "cacheCreationInputTokens": 16917,
+  "webSearchRequests": 0,
+  "costUSD": 0.1956755,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 285,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 11056,
+ "cost_usd": 0.1956755,
+ "spend_run_id": "g1_eval_v1_dev_2026-09-03",
+ "spend_reservation_id": "40f628d4989f457980c2fa56201820b2",
+ "source_doc_id": "statcan-71-543-g-guide-labour-force-survey-2025",
+ "passage_id": "lfs-unemployment-cv"
+}

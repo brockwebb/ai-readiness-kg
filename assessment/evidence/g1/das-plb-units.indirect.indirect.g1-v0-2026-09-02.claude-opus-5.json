@@ -1,0 +1,31 @@
+{
+ "proposition_id": "g1-das-dp-004",
+ "call_id": "das-plb-units.indirect",
+ "mode": "indirect",
+ "qualifier_class": null,
+ "prompt_epoch": "g1-v0-2026-09-02",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T11:03:29.175225+00:00",
+ "prompt": "Restate the following for a general-audience summary.\n\nGlobal Privacy-Loss Budget: Units Global rho . . . . . . . . . . . . . . . . . . 0.07 Global epsilon . . . . . . . . . . . . . . . 2.47 Delta . . . . . . . . . . . . . . . . . . . . . . . 10–10 Source: U.S. Census Bureau. Privacy-Loss Budget: Units Geographic level Rho allocation United States . . . . . . . . . . . . . . . 1/205 State . . . . . . . . . . . . . . . . . . . . . . . 1/205 County . . . . . . . . . . . . . . . . . . . . . 7/82 Tract . . . . . . . . . . . . . . . . . . . . . . . 364/1,025 Optimized block group1 . . . . . . 1,759/4,100 Block . . . . . . . . . . . . . . . . . . . . . . 99/820",
+ "response_text": "## Plain-language summary\n\n**What this table is.** When the Census Bureau publishes 2020 Census results, it deliberately adds a small amount of statistical noise so that no individual's information can be reverse-engineered out of the published tables. How much noise is a budget decision: more privacy protection means less accuracy, and vice versa. This table records how that budget was set for the *units* data (housing units and group quarters), and how it was divided up.\n\n**The total budget.**\n\n| Measure | Value | What it means |\n|---|---|---|\n| Global rho | 0.07 | The technical budget figure the Bureau's system actually spends |\n| Global epsilon | 2.47 | The same budget expressed in the more familiar \"epsilon\" scale |\n| Delta | 10⁻¹⁰ | The tiny allowance for a worst-case failure — about 1 in 10 billion |\n\nLower numbers mean stronger privacy. Epsilon of 2.47 is a moderate setting: enough noise to give people meaningful protection, but not so much that the published counts stop being useful.\n\n**How the budget was split across geography.** The Bureau had to decide which levels of geography get the most accuracy. Every level draws from the same fixed pot, so accuracy given to one level is accuracy taken from another. The shares:\n\n| Geographic level | Share of budget | Roughly |\n|---|---|---|\n| United States | 1/205 | 0.5% |\n| State | 1/205 | 0.5% |\n| County | 7/82 | 8.5% |\n| Tract | 364/1,025 | 35.5% |\n| Optimized block group | 1,759/4,100 | 42.9% |\n| Block | 99/820 | 12.1% |\n\n(The six shares add up to exactly 100% of the budget.)\n\n**What the split tells you.** Nearly 80% of the budget goes to tracts and block groups — neighborhood-scale geography. That is a deliberate choice: national and state totals are so large that even noisy estimates are accurate enough for practical purposes, so they need almost none of the budget. Neighborhood-level counts are small and fragile, so they get the lion's share. Individual blocks — the smallest unit, often just a handful of buildings — get a modest slice; they are the hardest to protect and the least reliable on their own, and are generally meant to be added together into larger areas.\n\n*Source: U.S. Census Bureau.*",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 1173,
+  "cacheReadInputTokens": 12841,
+  "cacheCreationInputTokens": 17072,
+  "webSearchRequests": 0,
+  "costUSD": 0.2064755,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 392,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 18328,
+ "cost_usd": 0.2064755,
+ "spend_run_id": "g1_eval_v1_dev_2026-09-03",
+ "spend_reservation_id": "5d2ab7e4bf454dcdacd9b3cbddc6d9b0",
+ "source_doc_id": "census-2020-disclosure-avoidance-handbook-2021",
+ "passage_id": "das-plb-units"
+}

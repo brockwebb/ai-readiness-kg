@@ -1,0 +1,31 @@
+{
+ "proposition_id": "g1-acs-moe-005",
+ "call_id": "g1-acs-moe-005.direct.VINTAGE",
+ "mode": "direct",
+ "qualifier_class": "VINTAGE",
+ "prompt_epoch": "g1-v0-2026-09-02",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T10:59:35.931714+00:00",
+ "prompt": "In some instances, data users may need to derive an estimate by multiplying a published count by a published percentage. For example, a data user might be interested in the number of 1-unit detached owner-occupied housing units in a geographic area. In 2015, the number of owner-occupied housing units in the United States was 74,506,512 with an MOE of 228,238, and the percent of 1-unit detached owner-occupied housing units was 82.4 (0.824) with an MOE of 0.1 percent (0.001). 66 So, the number of 1-unit detached owner-occupied housing units was 74,506,512 * 0.824 = 61,393,366. The formula to calculate the MOE of a product is: (9) Substituting the estimates and their respective MOEs in formula (9) yields: To obtain the lower and upper bounds of the 90 percent confidence interval around 61,393,366, add and subtract the MOE from 61,393,366. Thus, the 90 percent confidence interval for this estimate is [61,393,366 – 202,289] to [61,393,366 + 202,289] or 61,191,077 to 61,595,655. Using formula (2), the SE of the product is 202,289 / 1.645 = 122,972. Using formula (4), the coefficient of variation for this derived estimate is (122,972 / 61,393,366) * 100 = 0.2 percent, indicating that the derived estimate is very reliable.\n\nWhat is the reference period or as-of date on the number of owner-occupied housing units in the United States in 2015?",
+ "response_text": "**Reference period: calendar year 2015** — that's all the passage states (\"In 2015, the number of owner-occupied housing units in the United States was 74,506,512\").\n\nTwo qualifications worth noting:\n\n- **It's a period estimate, not a point-in-time count.** ACS estimates are compiled from monthly samples collected across the full year, so the value describes the average characteristics over January–December 2015 rather than a single as-of date (unlike the decennial census, which references April 1). There is no day-level as-of date to extract here.\n- **The passage doesn't name the product vintage.** A U.S.-level estimate labeled \"2015\" with an MOE of 228,238 is consistent with the 2015 ACS 1-year estimates, but the excerpt never says whether it's the 1-year or the 2011–2015 5-year file. If the distinction matters for your use, that has to come from the source table/footnote 66, not from this text.",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 564,
+  "cacheReadInputTokens": 12841,
+  "cacheCreationInputTokens": 17248,
+  "webSearchRequests": 0,
+  "costUSD": 0.1930105,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 265,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 8617,
+ "cost_usd": 0.1930105,
+ "spend_run_id": "g1_eval_v1_dev_2026-09-03",
+ "spend_reservation_id": "c43d151d460340c6b734139613dc1f47",
+ "source_doc_id": "census-acs-general-handbook-2020",
+ "passage_id": "acs-ch8-product"
+}

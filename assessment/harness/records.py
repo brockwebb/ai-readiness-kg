@@ -240,6 +240,9 @@ class EvalResult:
     evidence: str
     timestamp: str
     evidence_path: str
+    # Instrument version of the deterministic parser/scorer that produced the record
+    # (task 2026-09-03 step 4.4): required, like prompt_epoch and model_id.
+    parser_version: str = ""
     dimension: str = "G1"
     track: Track = Track.CORE
     source: str = SOURCE_EVAL
@@ -251,6 +254,8 @@ class EvalResult:
             raise ValueError(f"EvalResult {self.target}/{self.mode}: prompt_epoch is required")
         if not self.model_id or not str(self.model_id).strip():
             raise ValueError(f"EvalResult {self.target}/{self.mode}: model_id is required")
+        if not self.parser_version or not str(self.parser_version).strip():
+            raise ValueError(f"EvalResult {self.target}/{self.mode}: parser_version is required")
         if self.outcome == UNPARSEABLE:
             if self.score is not None or self.level is not None:
                 raise ValueError("an unparseable record carries no score and no level")
@@ -280,6 +285,7 @@ class EvalResult:
             "estimate_status": self.estimate_status,
             "model_id": self.model_id,
             "prompt_epoch": self.prompt_epoch,
+            "parser_version": self.parser_version,
             "dimension": self.dimension,
             "track": self.track.label,
             "source": self.source,

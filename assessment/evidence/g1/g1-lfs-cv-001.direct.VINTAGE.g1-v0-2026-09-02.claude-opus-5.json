@@ -1,0 +1,31 @@
+{
+ "proposition_id": "g1-lfs-cv-001",
+ "call_id": "g1-lfs-cv-001.direct.VINTAGE",
+ "mode": "direct",
+ "qualifier_class": "VINTAGE",
+ "prompt_epoch": "g1-v0-2026-09-02",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T11:06:19.707803+00:00",
+ "prompt": "For example, in January 2024, there were 28,000 unemployed persons in Newfoundland and Labrador and 275,900 participants in the labour force, giving an unemployment rate of 10.4%. Table 7.1 gives the CVs for the two counts as 5.0% and 2.5%, respectively. An approximation of the CV for the unemployment rate of 10.4% using the above formula would be: 5.0% + 2.5% = 7.5%\n\nWhat is the reference period or as-of date on the number of unemployed persons in Newfoundland and Labrador in January 2024?",
+ "response_text": "Corpus lookup wasn't available here (the Wintermute `search` call was denied permission, and the working directory is empty), so this is from the published LFS documentation rather than an ingested source.\n\n**Reference period: the LFS *reference week* — Sunday, January 14 to Saturday, January 20, 2024.**\n\nThe mechanics behind that:\n\n- LFS estimates are not an as-of-month-end or monthly-average measure. Labour force status (employed / unemployed / not in the labour force) is determined for **one specific week**, the reference week, defined as the week containing the 15th day of the month. January 15, 2024 fell on a Monday, so the reference week ran Sunday Jan 14 – Saturday Jan 20.\n- **Collection** happens the following week (roughly Jan 21–27, 2024), but respondents are asked about their activity during the reference week, so the collection dates are not the reference period.\n- The 28,000 unemployed and 275,900 labour force figures therefore describe Newfoundland and Labrador's population aged 15+ (excluding institutional residents, full-time armed forces, and reserves) **during that one week**, not the month as a whole.\n\nTwo caveats worth carrying:\n\n1. If the 28,000 / 275,900 figures are the **seasonally adjusted** series (which the headline 10.4% typically is), the underlying reference period is still that week — seasonal adjustment rescales the estimate, it doesn't change what period was measured.\n2. The \"week containing the 15th\" rule has documented exceptions — December is normally moved earlier to avoid the holidays, and March/April are occasionally shifted around Easter. January is not one of the routinely shifted months, so the standard rule applies for January 2024.\n\nFor the CV point in your excerpt: the 5.0% and 2.5% CVs are sampling-error measures for that same reference week, and adding them (7.5%) is a deliberately conservative upper bound, since the numerator and denominator are positively correlated — the true CV of the ratio is lower than the sum.",
+ "usage": {
+  "inputTokens": 6,
+  "outputTokens": 1986,
+  "cacheReadInputTokens": 73724,
+  "cacheCreationInputTokens": 18519,
+  "webSearchRequests": 0,
+  "costUSD": 0.271732,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 986,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 32475,
+ "cost_usd": 0.271732,
+ "spend_run_id": "g1_eval_v1_dev_2026-09-03",
+ "spend_reservation_id": "c0c3ff1edfb84259a267e3105b16cff6",
+ "source_doc_id": "statcan-71-543-g-guide-labour-force-survey-2025",
+ "passage_id": "lfs-unemployment-cv"
+}

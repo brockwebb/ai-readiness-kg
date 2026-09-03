@@ -1,0 +1,31 @@
+{
+ "proposition_id": "g1-ons-se-001",
+ "call_id": "g1-ons-se-001.direct.VINTAGE",
+ "mode": "direct",
+ "qualifier_class": "VINTAGE",
+ "prompt_epoch": "g1-v0-2026-09-02",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T11:00:26.877675+00:00",
+ "prompt": "Table 1: Total turnover estimates, standard error and relative standard error for education and water and waste management, UK, 2016 Total turnover in | Standard error in | Relative standard error (or coefficient of variation)2 ---|---|--£ millions1 | £ millions2 Industry 1: Education (private provision only) | 42,649 | 526.8 | 0.01 (or 1%) Industry 2: Water supply; sewerage, waste management and remediation activities | 34,677 | 222.7 | 0.01 (or 1%)\n\nWhat is the reference period or as-of date on total turnover of private-provision education in the UK in 2016, in £ millions (Annual Business Survey)?",
+ "response_text": "**Reference period: calendar year 2016** — the £42,649 million is a full-year flow, not a point-in-time stock, so it has no single as-of date.\n\nDetails from the table and source:\n\n- **Figure**: £42,649m total turnover, Industry 1 — Education, private provision only (SIC 2007 Section P, ABS-covered non-public parts).\n- **Period type**: annual aggregate. Turnover accumulates over the 12 months of 2016; an \"as-of date\" doesn't apply the way it would to employment or stock levels.\n- **Survey**: Annual Business Survey (ONS), 2016 reference year. ABS collects returns on the business's own accounting year and asks respondents to report for the period nearest the calendar year; ONS treats the result as calendar-year 2016.\n- **Precision**: standard error £526.8m, RSE 1%, so a roughly ±£1.0bn 95% interval (~£41.6bn–£43.7bn).\n\nOne caveat worth carrying: the ABS 2016 figure as published in this table is whichever vintage the source document used — ABS results are revised (provisional → revised → final), so if you need to reconcile against a current ONS release, the number may have moved slightly even though the reference period has not.",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 600,
+  "cacheReadInputTokens": 12841,
+  "cacheCreationInputTokens": 16980,
+  "webSearchRequests": 0,
+  "costUSD": 0.19123049999999997,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 193,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 10429,
+ "cost_usd": 0.19123049999999997,
+ "spend_run_id": "g1_eval_v1_dev_2026-09-03",
+ "spend_reservation_id": "a4457455978641b699641e05853880e1",
+ "source_doc_id": "ons-uncertainty-and-how-we-measure-it",
+ "passage_id": "ons-se-table1"
+}

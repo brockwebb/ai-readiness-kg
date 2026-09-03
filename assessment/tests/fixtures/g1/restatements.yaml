@@ -195,3 +195,83 @@ cases:
      text: "Colorado had 654,757 one-person households in 2015."}
   - {prop: g1-acs-moe-001, class: MOE, expect_level: 3, expect_failure: null, expect_estimate: exact,
      text: "One-person households in Colorado in 2015: 564,757 (MOE ±10,127)."}
+
+# ---------------------------------------------------------------- v1 cases (task 2026-09-03 step 4)
+# Text copied VERBATIM from dev-set model responses (evidence file cited). `mode` selects the
+# scoring mode (direct-mode rules apply only when mode is direct). These are the responses the
+# v0 parser could not read; every v1 rule change is motivated by one of them.
+v1_cases:
+  - {prop: g1-das-dp-003, class: DP_NOISE, which: delta, mode: direct, expect_level: 4, expect_failure: null, expect_estimate: exact,
+     evidence: "assessment/evidence/g1/g1-das-dp-003.direct.DP_NOISE.g1-v0-2026-09-02.claude-opus-5.json",
+     text: "**17.14** — that's the global epsilon for the People (P.L. 94-171 redistricting) privacy-loss budget.\n\nAccompanying parameters from the same table:\n- Global rho: 2.56\n- Delta: 10⁻¹⁰\n\nThe epsilon value is the zCDP-to-approximate-DP conversion of rho = 2.56 at delta = 10⁻¹⁰; the 17.14 figure is what that rho translates to in (ε, δ)-DP terms."}
+  - {prop: g1-das-dp-003, class: DP_NOISE, which: rho, mode: direct, expect_level: 4, expect_failure: null, expect_estimate: exact,
+     evidence: "assessment/evidence/g1/g1-das-dp-003.direct.DP_NOISE.g1-v0-2026-09-02.claude-opus-5.json",
+     text: "**17.14** — that's the global epsilon for the People (P.L. 94-171 redistricting) privacy-loss budget.\n\nAccompanying parameters from the same table:\n- Global rho: 2.56\n- Delta: 10⁻¹⁰"}
+  - {prop: g1-ons-cv-002, class: CV, mode: direct, expect_level: 4, expect_failure: null, expect_estimate: exact,
+     evidence: "assessment/evidence/g1/g1-ons-cv-002.direct.CV.g1-v0-2026-09-02.claude-opus-5.json",
+     text: "8.7%\n\n£201m ÷ £2,322m = 0.0866 ≈ 8.7%"}
+  - {prop: g1-ons-se-003, class: SE, mode: indirect, expect_level: 3, expect_failure: null, expect_estimate: exact,
+     evidence: "assessment/evidence/g1/ons-cv-examples.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+     text: "Two examples from 2016:\n\n- UK plastering businesses turned over an estimated **£2,322 million**, give or take about **£201 million**.\n- An estimated **155,000 people** worked full-time in agriculture, forestry and fishing, give or take about **12,400**.",
+     note: "the SE restated as a hedged ± with the SE's own value: numeric, correct, form-transformed -> L3 (rule se_as_pm)"}
+  - {prop: g1-ons-cv-002, class: CV, mode: indirect, expect_level: 4, expect_failure: null, expect_estimate: exact,
+     evidence: "assessment/evidence/g1/ons-cv-examples.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+     text: "- UK plastering businesses turned over an estimated **£2,322 million**, give or take about **£201 million**.\n\nThat percentage is called the **coefficient of variation**:\n\n- £201m ÷ £2,322m = 0.087, or **8.7%**\n- 12,400 ÷ 155,000 = 0.08, or **8%**"}
+  - {prop: g1-das-dp-003, class: DP_NOISE, which: rho, mode: indirect, expect_level: 4, expect_failure: null, expect_estimate: exact,
+     evidence: "assessment/evidence/g1/das-plb-people.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+     text: "**The overall budget for person-level data:**\n\n| Measure | Value |\n|---|---|\n| Global rho | 2.56 |\n| Global epsilon | 17.14 |\n| Delta | 10⁻¹⁰ |"}
+  - {prop: g1-das-dp-003, class: DP_NOISE, which: delta, mode: indirect, expect_level: 4, expect_failure: null, expect_estimate: exact,
+     evidence: "assessment/evidence/g1/das-plb-people.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+     text: "| Measure | Value |\n|---|---|\n| Global rho | 2.56 |\n| Global epsilon | 17.14 |\n| Delta | 10⁻¹⁰ |"}
+  - {prop: g1-acs-se-005, class: SE, mode: indirect, expect_level: 3, expect_failure: null, expect_estimate: exact,
+     evidence: "synthetic — step 4.3 SE <-> MOE with z from the proposition's MOE level (0.90 -> 1.644854, harness.toml [g1.z_by_level])",
+     text: "Fairfax County had 135,173 never-married females in 2015 with a margin of error of ±3,860."}
+  - {prop: g1-lfs-ci-001, class: SE, mode: indirect, expect_level: 3, expect_failure: null, expect_estimate: exact,
+     evidence: "synthetic — step 4.3 SE <-> CI bounds with the producer's own factor (LFS: two SEs = 95 %, `z: 2.0` on the qualifier)",
+     text: "Employment rose by 60,000 between the two months; the 95% confidence interval runs from 10,000 to 110,000."}
+  - {prop: g1-acs-cv-004, class: CV, mode: indirect, expect_level: 4, expect_failure: null, expect_estimate: exact,
+     evidence: "assessment/evidence/g1/acs-ch7-colorado.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+     text: "The 2015 ACS 1-year estimates say Colorado had 564,757 one-person households, with an MOE of 10,127.\n\n*Coefficient of variation (CV)* expresses the standard error as a percentage of the estimate itself, which makes it easy to compare reliability across very different numbers. For Colorado: 6,156 ÷ 564,757 ≈ 1.1 percent.\n\nA small CV means the sampling error is small relative to the estimate — the number is reliable."}
+  - {prop: g1-acs-se-005, class: SE, mode: direct, expect_level: 4, expect_failure: null, expect_estimate: absent,
+     evidence: "assessment/evidence/g1/g1-acs-se-005.direct.SE.g1-v0-2026-09-02.claude-opus-5.json",
+     text: "**SE ≈ 2,347**\n\nFrom the passage: SE = MOE / 1.645 = 3,860 / 1.645 = 2,346.5 ≈ **2,347** never-married females.\n\nThe 1.645 divisor is the 90% confidence z-value — ACS publishes MOEs at 90% confidence, so dividing by 1.645 recovers the standard error."}
+  - {prop: g1-acs-cv-004, class: CV, mode: direct, expect_level: 4, expect_failure: null, expect_estimate: exact,
+     evidence: "assessment/evidence/g1/g1-acs-cv-004.direct.CV.g1-v0-2026-09-02.claude-opus-5.json",
+     text: "**1.1 percent.**\n\nWorking from the values in the passage:\n\n- SE = MOE / 1.645 = 10,127 / 1.645 ≈ **6,156.8**\n- CV = (SE / estimate) × 100 = (6,156.8 / 564,757) × 100 ≈ **1.1%**\n\nA CV that small means the sampling error is tiny relative to the estimate, so the 564,757 figure for one-person households in Colorado is quite reliable."}
+  - {prop: g1-acs-ci-004, class: CV, mode: direct, expect_level: 4, expect_failure: null, expect_estimate: absent,
+     note: "the estimate appears only as an operand inside a collapsed equation chain; operands of a collapsed chain are not restated numbers",
+     evidence: "assessment/evidence/g1/g1-acs-ci-004.direct.CV.g1-v0-2026-09-02.claude-opus-5.json",
+     text: "0.2 percent.\n\nThe passage's own derivation: SE = 202,289 / 1.645 = 122,972; CV = (122,972 / 61,393,366) × 100 = 0.2 percent — which it characterizes as \"very reliable.\""}
+  - {prop: g1-ons-se-004, class: SE, mode: direct, expect_level: 4, expect_failure: null, expect_estimate: exact,
+     evidence: "assessment/evidence/g1/g1-ons-se-004.direct.SE.g1-v0-2026-09-02.claude-opus-5.json",
+     text: "12,400 employees.\n\nThat's the figure given in the passage, and the 8% coefficient of variation checks out: 12,400 / 155,000 = 0.08."}
+  - {prop: g1-acs-ci-004, class: CV, mode: indirect, expect_level: 4, expect_failure: null, expect_estimate: exact,
+     evidence: "assessment/evidence/g1/acs-ch8-product.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+     text: "> 61,393,366 ± 202,289 → **61,191,077 to 61,595,655**\n\n**Is the estimate any good?** Two quick checks:\n\n- The *standard error* (202,289 ÷ 1.645) is about **122,972** — the underlying measure of sampling variability that the margin of error is built from.\n- The *coefficient of variation* expresses that error as a share of the estimate itself: (122,972 ÷ 61,393,366) × 100 ≈ **0.2 percent**."}
+  - {prop: g1-ons-se-001, class: SE, mode: indirect, expect_level: 4, expect_failure: null, expect_estimate: exact,
+     evidence: "assessment/evidence/g1/ons-se-table1.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+     text: "| Industry | Total turnover (£ millions) | Standard error (£ millions) | Relative standard error |\n|---|---|---|---|\n| Education (private providers only) | 42,649 | 526.8 | 0.01 (1%) |\n| Water supply; sewerage, waste management and remediation | 34,677 | 222.7 | 0.01 (1%) |",
+     note: "header-row table: SE 526.8 in £ millions matches the source at the estimate's scale; the scorer compares at the source scale (millions) — recorded exact"}
+  - {prop: g1-acs-se-005, class: SE, mode: indirect, expect_level: 4, expect_failure: null, expect_estimate: absent,
+     evidence: "assessment/evidence/g1/acs-ch8-tricounty.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+     text: "The MOE is just a rescaled **standard error (SE)** — the ACS uses a 90 percent confidence level, so MOE = 1.645 × SE. Divide by 1.645 to go the other direction:\n\n- Fairfax: 3,860 ÷ 1.645 = 2,347\n- Arlington: 2,642 ÷ 1.645 = 1,606\n- Alexandria: 1,957 ÷ 1.645 = 1,190",
+     note: "formula guard: 'MOE = 1.645 × SE' is not an MOE value; the SE list gives 2,347 for Fairfax"}
+  - {prop: g1-acs-moe-004, class: SE, mode: indirect, expect_level: 3, expect_failure: null, expect_estimate: exact,
+     evidence: "synthetic — derived-SE candidate choice (acs-ch7-significance: Florida's ±0.2 is not Arizona's SE)",
+     text: "Florida: 12.6 percent ± 0.2; Arizona: 10.5 percent ± 0.3 (90 percent confidence)."}
+  - {prop: g1-acsr-sup-001, class: SUPPRESSION, mode: indirect, expect_level: 4, expect_failure: null, expect_estimate: exact,
+     evidence: "assessment/evidence/g1/acs-filtering-rule.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+     text: "We use a cutoff of 0.61. That value isn't arbitrary: an estimate with a CV above 0.61 is so imprecise that we can't confidently say it's different from zero at all (using a 90 percent confidence standard).\n\nTo decide about a whole table, we look at its typical estimate — the median CV, meaning the midpoint when all the estimates are ranked from most to least reliable. If that midpoint is above 0.61, it means more than half the numbers in the table fall into the \"can't distinguish from zero\" range, so we drop the table entirely."}
+  - {prop: g1-n175-sup-003, class: CI, mode: direct, expect_level: 4, expect_failure: null, expect_estimate: exact,
+     evidence: "assessment/evidence/g1/g1-n175-sup-003.direct.CI.g1-v0-2026-09-02.claude-opus-5.json",
+     text: "**95% CI: 0.3% to 6.4%** (Korn–Graubard), around a point estimate of 2.0%.\n\nSupporting detail from Table I (non-Hispanic black, elevated):\n- Sample size 447; effective sample size 145.3; df = 13\n- SE = 1.17 percentage points; RSE = 58.5%"}
+  - {prop: g1-lfs-ci-001, class: CI, mode: direct, expect_level: 3, expect_failure: null, expect_estimate: exact,
+     note: "the 95% in the row label is a table-semantic level (column 'Level'), not a confidence-level phrase; v1 does not read column semantics, so the interval scores L3 with level_omitted — a v2 candidate",
+     evidence: "assessment/evidence/g1/g1-lfs-ci-001.direct.CI.g1-v0-2026-09-02.claude-opus-5.json",
+     text: "For the illustrative example (estimated month-to-month increase in total employment of **60,000**, standard error of the movement estimate **25,000**):\n\n| Level | Margin | Interval |\n|---|---|---|\n| 68% (±1 SE) | ±25,000 | **35,000 to 85,000** |\n| 95% (±2 SE) | ±50,000 | **10,000 to 110,000** |"}
+  - {prop: g1-das-dp-004, class: DP_NOISE, which: rho, mode: indirect, expect_level: 4, expect_failure: null, expect_estimate: exact,
+     evidence: "assessment/evidence/g1/das-plb-units.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+     text: "| Measure | Value | What it means |\n|---|---|---|\n| Global rho | 0.07 | The technical budget figure the Bureau's system actually spends |\n| Global epsilon | 2.47 | The same budget expressed in the more familiar \"epsilon\" scale |\n| Delta | 10⁻¹⁰ | The tiny allowance for a worst-case failure — about 1 in 10 billion |"}
+  - {prop: g1-lfs-sup-001, class: SUPPRESSION, mode: indirect, expect_level: 4, expect_failure: null, expect_estimate: exact,
+     evidence: "assessment/evidence/g1/lfs-reliability-categories.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+     text: "| Category | CV | What it means |\n|---|---|---|\n| **1** | 16.5% or less | **Publish freely.** Reliable enough to use as-is, with no warning label. |\n| **2** | Over 16.5%, up to 33.3% | **Publish with a caution.** Still useful for some purposes, but readers must be told the estimate is uncertain. |\n| **3** | Over 33.3% | **Don't publish.** So imprecise it's likely to mislead. |"}

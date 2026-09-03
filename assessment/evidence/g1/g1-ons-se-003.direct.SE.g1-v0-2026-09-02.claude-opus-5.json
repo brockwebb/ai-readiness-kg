@@ -1,0 +1,31 @@
+{
+ "proposition_id": "g1-ons-se-003",
+ "call_id": "g1-ons-se-003.direct.SE",
+ "mode": "direct",
+ "qualifier_class": "SE",
+ "prompt_epoch": "g1-v0-2026-09-02",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T11:00:40.753320+00:00",
+ "prompt": "The total turnover of plastering businesses in the UK was estimated at £2,322 million in 2016, with a standard error of £201 million. A different survey estimated that the total number of people employed full-time in agriculture, forestry and fishing in the UK was 155,000 in 2016, with a standard error of 12,400 employees It is difficult to compare these two standard errors. By calculating the coefficient of variation for each, the results show that both estimates have a similar level of precision: * £201 million divided by £2,322 million equals 0.087 – a coefficient of variation of 8.7% * 12,400 divided by 155,000 equals 0.08 – a coefficient of variation of 8%\n\nWhat is the standard error on the total turnover of plastering businesses in the UK in 2016?",
+ "response_text": "£201 million.\n\nThat's given directly in the passage, and it's the numerator of the plastering coefficient of variation: £201m ÷ £2,322m = 0.087, or 8.7%.",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 63,
+  "cacheReadInputTokens": 12841,
+  "cacheCreationInputTokens": 15885,
+  "webSearchRequests": 0,
+  "costUSD": 0.1668555,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 0,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 2425,
+ "cost_usd": 0.1668555,
+ "spend_run_id": "g1_eval_v1_dev_2026-09-03",
+ "spend_reservation_id": "25fff7204eea4d54a3d124eeec506664",
+ "source_doc_id": "ons-uncertainty-and-how-we-measure-it",
+ "passage_id": "ons-cv-examples"
+}

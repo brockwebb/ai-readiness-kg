@@ -69,7 +69,7 @@ from ..records import (
     Track,
     level_to_score,
 )
-from ._g1_parse import Parsed, ParsedNumber, ParsedQualifier, parse
+from ._g1_parse import PARSER_VERSION, Parsed, ParsedNumber, ParsedQualifier, parse
 from .base import Elicited, EvalProbe
 
 # ---------------------------------------------------------------- prompts (D3)
@@ -254,13 +254,19 @@ def _absent(parsed: Parsed, cls: QualifierClass, est: EstimateStatus, obs: dict,
 
 
 def _pick(cands: List[ParsedQualifier], prop, matcher) -> ParsedQualifier:
-    """Prefer the candidate bound to the source estimate, then one whose value matches."""
+    """Prefer a candidate bound to the source estimate whose value matches, then any whose
+    value matches, then one bound to the estimate, then the first."""
+    def _bound(c):
+        return c.bound_estimate is not None and within_published_rounding(
+            prop.estimate_value, prop.estimate_text, prop.estimate_scale, c.bound_estimate)
     for c in cands:
-        if c.bound_estimate is not None and within_published_rounding(
-                prop.estimate_value, prop.estimate_text, prop.estimate_scale, c.bound_estimate):
+        if _bound(c) and matcher(c):
             return c
     for c in cands:
         if matcher(c):
+            return c
+    for c in cands:
+        if _bound(c):
             return c
     return cands[0]
 
@@ -485,8 +491,94 @@ def _score_vintage(q, parsed: Parsed, est: EstimateStatus, obs: dict) -> Qualifi
                     dict(obs, restated=c.text, source=as_of))
 
 
-def score_qualifier(parsed: Parsed, prop, q, est: EstimateStatus) -> QualifierVerdict:
+_NUMERIC_UNIT_OK = {
+    QualifierClass.MOE: ("percent", "percent_points", "count", "currency", "fraction", None),
+    QualifierClass.CI: ("percent", "percent_points", "count", "currency", None),
+    QualifierClass.SE: ("percent", "percent_points", "count", "currency", "fraction", None),
+    QualifierClass.CV: ("percent", "fraction", None),
+}
+
+
+def _direct_leading_number(parsed: Parsed, prop, q) -> Optional[ParsedQualifier]:
+    """Direct-mode rule (v1, task 2026-09-03 step 4.2; motivating evidence
+    g1-ons-cv-002.direct.CV.…json answered "8.7%" bare): the question names the class, so the
+    first numeric token whose unit is compatible with the class — and which is not the
+    estimate itself — is the qualifier even with no class keyword. Indirect mode never uses
+    this; a bare number there is still not a qualifier."""
+    ok_units = _NUMERIC_UNIT_OK.get(q.cls)
+    if ok_units is None:
+        return None
+    from ._g1_parse import _LEVEL_RE
+    for n in parsed.numbers:
+        if n.is_year:
+            continue
+        if _LEVEL_RE.match(parsed.normalised[n.start:]):
+            continue                                   # "95% confidence interval": a level, not a value
+        if within_published_rounding(prop.estimate_value, prop.estimate_text, prop.estimate_scale, n.value) \
+                and _unit_compatible(prop.estimate.get("unit"), n.unit):
+            continue                                   # the estimate, not its qualifier
+        if n.unit not in ok_units:
+            continue
+        unit = n.unit
+        if q.cls is QualifierClass.CV and unit is None and n.value < 1:
+            unit = "fraction"
+        if q.cls is QualifierClass.MOE and unit == "percent" and prop.estimate.get("unit") == "percent":
+            unit = "percent_points"
+        return ParsedQualifier(q.cls, "direct_leading_number", n.span, n.start, value=n.value, unit=unit, form="pm")
+    return None
+
+
+def _se_from_other_classes(parsed: Parsed, prop, q, z_by_level: dict) -> Optional[Tuple[ParsedQualifier, str, float]]:
+    """SE restated as an MOE or as CI bounds (v1 step 4.3): SE = MOE / z or (upper − lower) / 2z,
+    z from the proposition's own level (its MOE/CI qualifier's `level`, or the qualifier's `z`
+    when the producer states the factor). Returns (candidate, transformation, z) or None."""
+    level = q.fields.get("level")
+    z = q.fields.get("z")
+    if level is None or z is None:
+        for other in prop.qualifiers:
+            if other.cls in (QualifierClass.MOE, QualifierClass.CI):
+                level = level if level is not None else other.fields.get("level")
+                z = z if z is not None else other.fields.get("z")
+    if z is None:
+        z = _z_for(q, level, z_by_level)
+    if not z:
+        return None
+    pm = [c for c in parsed.of_class(QualifierClass.MOE) + [c for c in parsed.of_class(QualifierClass.CI) if c.form == "pm"]
+          if c.value is not None]
+    if pm:
+        # Prefer the ± whose derived value matches, then the one bound to this estimate, then
+        # the first — a passage with several estimates has several ±s (acs-ch7-significance:
+        # Florida's ±0.2 is not Arizona's SE source; acs-ch8-loudoun-83: ±931 vs ±973).
+        def _matches(c):
+            return within_published_rounding(q.value, q.text or str(q.value), q.scale, c.value / z)
+        def _bound(c):
+            return c.bound_estimate is not None and within_published_rounding(
+                prop.estimate_value, prop.estimate_text, prop.estimate_scale, c.bound_estimate)
+        c = next((c for c in pm if _matches(c)), None) or next((c for c in pm if _bound(c)), None) or pm[0]
+        derived = ParsedQualifier(QualifierClass.SE, "se_from_moe", c.span, c.start, value=c.value / z,
+                                  unit=c.unit, form="phrase", bound_estimate=c.bound_estimate)
+        return derived, "moe_to_se", z
+    est = prop.estimate_value * prop.estimate_scale
+    for c in parsed.of_class(QualifierClass.CI):
+        if c.form == "bounds" and c.lower is not None:
+            # Only a SYMMETRIC interval about this estimate implies an SE (a Korn–Graubard or
+            # Clopper–Pearson interval is asymmetric: nchs175-appendix-bp.indirect.…json
+            # "0.3% – 6.4%" around 2.0 % does not encode the 1.17-point SE).
+            d = decimals_of(prop.estimate_text)
+            if not _close(est - c.lower, c.upper - est, d):
+                continue
+            if not (_close((c.lower + c.upper) / 2, est, d)):
+                continue
+            derived = ParsedQualifier(QualifierClass.SE, "se_from_bounds", c.span, c.start,
+                                      value=(c.upper - c.lower) / (2 * z), unit=c.unit, form="phrase")
+            return derived, "bounds_to_se", z
+    return None
+
+
+def score_qualifier(parsed: Parsed, prop, q, est: EstimateStatus, mode: str = "indirect",
+                    z_by_level: Optional[dict] = None) -> QualifierVerdict:
     cls = q.cls
+    z_by_level = z_by_level or {}
     obs = {"qualifier_source": q.fields, "estimate_status": est.value, "rules_fired": sorted({c.rule for c in parsed.qualifiers})}
     if cls is QualifierClass.RELIABILITY_FLAG:
         return _score_flag(q, parsed, est, obs)
@@ -508,29 +600,88 @@ def score_qualifier(parsed: Parsed, prop, q, est: EstimateStatus) -> QualifierVe
             v = _score_moe_as_bounds(q, bounds[0], prop, obs)
             if v is not None:
                 return v
-        return _absent(parsed, cls, est, obs)
+        if mode == "direct":
+            lead = _direct_leading_number(parsed, prop, q)
+            if lead is not None:
+                return _score_pm(cls, q, lead, prop, dict(obs, direct_leading_number=lead.span))
+        return _absent(parsed, cls, est, obs, prop)
     if cls is QualifierClass.CI:
         cands = parsed.of_class(QualifierClass.CI) or parsed.of_class(QualifierClass.MOE)
+        if not cands and mode == "direct":
+            lead = _direct_leading_number(parsed, prop, q)
+            if lead is not None:
+                return _score_ci(q, lead, prop, dict(obs, direct_leading_number=lead.span))
         if not cands:
-            return _absent(parsed, cls, est, obs)
-        return _score_ci(q, cands[0], prop, obs)
+            return _absent(parsed, cls, est, obs, prop)
+        # A response may state several intervals (LFS: 68 % and 95 %; ONS: bounds and a ±).
+        # Prefer the candidate that scores best against THIS qualifier — its level, then
+        # its bounds/half-width — rather than the first one parsed
+        # (lfs-ci-example.indirect.…json, ons-ci-education.indirect.…json).
+        def _rank(c):
+            v = _score_ci(q, c, prop, obs)
+            level_match = c.level is not None and abs(c.level - q.level) < 1e-9
+            return (v.level if v.level is not None else -1, level_match, c.form == "bounds")
+        best = max(cands, key=_rank)
+        return _score_ci(q, best, prop, obs)
     cands = parsed.of_class(cls)
+    if mode == "direct":
+        # Direct mode (v1 step 4.2): the leading number is a candidate beside any keyword
+        # candidates; `_pick` prefers the one whose value matches, so a bare correct answer
+        # followed by a derivation with other numbers scores on the answer
+        # (g1-lfs-cv-001.direct.CV.…json "5.0%. … 2.5%, is the CV on the labour force count").
+        lead = _direct_leading_number(parsed, prop, q)
+        if lead is not None:
+            cands = [lead] + cands
+            obs = dict(obs, direct_leading_number=lead.span)
+    if not cands and cls is QualifierClass.SE:
+        # SE restated in ± form with the SE's own value ("£2,322 million, give or take about
+        # £201 million" — ons-cv-examples.indirect.indirect.…json): the number is the SE, the
+        # form is a ±, so L3 (numeric, correct, transformed); a wrong value still scores L0.
+        pm = [c for c in parsed.of_class(QualifierClass.MOE) + parsed.of_class(QualifierClass.CI)
+              if c.form == "pm" and c.value is not None]
+        same = [c for c in pm if within_published_rounding(q.value, q.text, q.scale, c.value)]
+        if same:
+            c = same[0]
+            v = _score_pm(cls, q, c, prop, dict(obs, transformation="se_as_pm"))
+            if v.level == Level.PRESERVED_EXACT:
+                v = _verdict(cls, Level.PRESERVED_TRANSFORMED, None, v.evidence + " (restated as ±)", v.observations)
+            return v
+        derived = _se_from_other_classes(parsed, prop, q, z_by_level)
+        if derived is not None:
+            cand, transformation, z = derived
+            v = _score_pm(cls, q, cand, prop, dict(obs, transformation=transformation, z=z))
+            if v.level == Level.PRESERVED_EXACT:
+                v = _verdict(cls, Level.PRESERVED_TRANSFORMED, None, v.evidence + f" (derived: {transformation}, z={z})",
+                             v.observations)
+            return v
     if not cands:
-        return _absent(parsed, cls, est, obs)
+        return _absent(parsed, cls, est, obs, prop)
     cand = _pick(cands, prop, lambda c: within_published_rounding(q.value, q.text, q.scale, c.value))
     return _score_pm(cls, q, cand, prop, obs)
 
 
 # ---------------------------------------------------------------- the probe
+def _z_for(q_or_prop, level: Optional[float], z_by_level: dict) -> Optional[float]:
+    """z for a level: the producer's own factor when the qualifier carries `z`, else the
+    config table (harness.toml [g1.z_by_level]); None when neither knows the level."""
+    if level is None:
+        return None
+    return z_by_level.get(round(float(level), 4))
+
+
 class PreservationProbe(EvalProbe):
     probe_id = "g1_preservation"
     dimension = "G1"
     track = Track.CORE
 
-    def __init__(self, prompts: PromptSet, evidence_root, timestamp: Optional[str] = None):
+    def __init__(self, prompts: PromptSet, evidence_root, timestamp: Optional[str] = None,
+                 z_by_level: Optional[dict] = None):
         self.prompts = prompts
         self.evidence_root = Path(evidence_root)
         self.timestamp = timestamp
+        # Level -> z (config). Loaded lazily from harness.toml when not injected, so the
+        # table is never hardcoded here (task 2026-09-03 step 4.3).
+        self._z_by_level = z_by_level
 
     # -- prompt rendering (D3) --------------------------------------------------------
     def render_prompt(self, proposition, mode: str, qualifier_class: Optional[str] = None) -> str:
@@ -598,15 +749,25 @@ class PreservationProbe(EvalProbe):
                         spend_reservation_id=completion.spend_reservation_id)
 
     # -- evaluate: pure ------------------------------------------------------------------
+    @property
+    def z_by_level(self) -> dict:
+        if self._z_by_level is None:
+            from ..config import load_harness_config
+            cfg = load_harness_config(Path(__file__).resolve().parents[2] / "config" / "harness.toml")
+            self._z_by_level = dict(cfg.g1_z_by_level)
+        return self._z_by_level
+
     def evaluate_qualifiers(self, elicited: Elicited, proposition,
                             only_class: Optional[str] = None) -> Tuple[List[QualifierVerdict], EstimateStatus, dict]:
         parsed = parse(elicited.response_text)
         est, est_obs = estimate_status(parsed, proposition)
+        est_obs = dict(est_obs, normalised_text=parsed.normalised)
         verdicts = []
         for q in proposition.qualifiers:
             if only_class and q.cls.value != only_class:
                 continue
-            verdicts.append(score_qualifier(parsed, proposition, q, est))
+            verdicts.append(score_qualifier(parsed, proposition, q, est, mode=elicited.mode,
+                                            z_by_level=self.z_by_level))
         return verdicts, est, est_obs
 
     def evaluate(self, elicited: Elicited, proposition, only_class: Optional[str] = None):
@@ -630,6 +791,7 @@ class PreservationProbe(EvalProbe):
                 mode=elicited.mode, outcome=v.outcome, score=v.score, level=v.level,
                 failure_class=v.failure_class, estimate_status=est.value,
                 model_id=elicited.model_id, prompt_epoch=elicited.prompt_epoch,
+                parser_version=PARSER_VERSION,
                 evidence=v.evidence, timestamp=elicited.timestamp, evidence_path=elicited.evidence_path,
                 observations=dict(v.observations, estimate=est_obs, source_doc_id=proposition.source_doc_id,
                                   passage_id=proposition.passage_id)))

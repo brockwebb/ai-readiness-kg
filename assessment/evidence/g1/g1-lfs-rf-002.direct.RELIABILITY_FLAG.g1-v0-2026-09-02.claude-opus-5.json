@@ -1,0 +1,31 @@
+{
+ "proposition_id": "g1-lfs-rf-002",
+ "call_id": "g1-lfs-rf-002.direct.RELIABILITY_FLAG",
+ "mode": "direct",
+ "qualifier_class": "RELIABILITY_FLAG",
+ "prompt_epoch": "g1-v0-2026-09-02",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T11:04:14.530643+00:00",
+ "prompt": "**Guidelines on data reliability** Household surveys within Statistics Canada generally use the following guidelines and reliability categories in interpreting CV values for data accuracy and in the dissemination of statistical information. **Category 1** – If the CV is ≤ 16.5% – no release restrictions: data are of sufficient accuracy that no special warnings to users or other restrictions are required. **Category 2** – If the CV is > 16.5% and ≤ 33.3% – release with caveats: data are potentially useful for some purposes but should be accompanied by a warning to users regarding their accuracy. **Category 3** – If the CV > 33.3% – not recommended for release: data contain a level of error that makes them so potentially misleading that they should not be released in most circumstances. If users insist on inclusion of Category 3 data in a non-standard product, even after being advised of their accuracy, the data should be accompanied by a disclaimer. The user should acknowledge the warnings given and undertake not to disseminate, present or report the data, directly or indirectly, without this disclaimer.\n\nWhat is the reliability assessment on the CV ceiling for Category 2 LFS estimates (release with caveats)?",
+ "response_text": "**Category 2 ceiling: CV = 33.3%, inclusive — the assessment is \"release with caveats.\"**\n\nFrom the Statistics Canada guidelines as quoted:\n\n- **Band:** CV > 16.5% and **≤ 33.3%**. The 33.3% boundary belongs to Category 2, not Category 3 — an estimate with a CV of exactly 33.3% is still releasable with caveats.\n- **Assessment at the ceiling:** data are \"potentially useful for some purposes but should be accompanied by a warning to users regarding their accuracy.\" So the estimate may be disseminated in standard products, but never bare — the accuracy warning travels with it.\n- **Just past the ceiling:** any CV strictly above 33.3% falls into Category 3 — not recommended for release, because the error level makes the estimate potentially misleading. Release then requires a non-standard product, an explicit disclaimer, and the user's acknowledgment plus an undertaking not to disseminate or report the data without that disclaimer.\n\nPractical reading: 33.3% is the outer edge of usability, not a comfortable zone. An estimate sitting near it is qualitatively closer to \"suppress\" than to \"publish freely\" — the caveat is doing real work, and it should describe the imprecision rather than merely gesture at it.",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 784,
+  "cacheReadInputTokens": 12841,
+  "cacheCreationInputTokens": 17141,
+  "webSearchRequests": 0,
+  "costUSD": 0.19744050000000002,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 354,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 12185,
+ "cost_usd": 0.19744050000000002,
+ "spend_run_id": "g1_eval_v1_dev_2026-09-03",
+ "spend_reservation_id": "bd7d1c1d9b6e45dfbe0a86416606447c",
+ "source_doc_id": "statcan-71-543-g-guide-labour-force-survey-2025",
+ "passage_id": "lfs-reliability-categories"
+}

@@ -1,0 +1,31 @@
+{
+ "proposition_id": "g1-lfs-cv-001",
+ "call_id": "g1-lfs-cv-001.direct.CV",
+ "mode": "direct",
+ "qualifier_class": "CV",
+ "prompt_epoch": "g1-v0-2026-09-02",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T11:05:45.139896+00:00",
+ "prompt": "For example, in January 2024, there were 28,000 unemployed persons in Newfoundland and Labrador and 275,900 participants in the labour force, giving an unemployment rate of 10.4%. Table 7.1 gives the CVs for the two counts as 5.0% and 2.5%, respectively. An approximation of the CV for the unemployment rate of 10.4% using the above formula would be: 5.0% + 2.5% = 7.5%\n\nWhat is the coefficient of variation on the number of unemployed persons in Newfoundland and Labrador in January 2024?",
+ "response_text": "5.0%.\n\nThat's the CV given in Table 7.1 for the estimated 28,000 unemployed persons — meaning the standard error is about 5% of 28,000, roughly 1,400. The other figure, 2.5%, is the CV on the labour force count (275,900), and the approximation adds the two to get 7.5% as an upper bound on the CV of the 10.4% unemployment rate.",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 131,
+  "cacheReadInputTokens": 12841,
+  "cacheCreationInputTokens": 16941,
+  "webSearchRequests": 0,
+  "costUSD": 0.1791155,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 0,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 3077,
+ "cost_usd": 0.1791155,
+ "spend_run_id": "g1_eval_v1_dev_2026-09-03",
+ "spend_reservation_id": "518de36bd3e24e74b3b5f1601af58ee7",
+ "source_doc_id": "statcan-71-543-g-guide-labour-force-survey-2025",
+ "passage_id": "lfs-unemployment-cv"
+}

@@ -62,6 +62,8 @@ class HarnessConfig:
     g1_footnote_field_patterns: tuple
     g1_id_field_patterns: tuple
     g1_footnote_uncertainty_vocabulary: tuple
+    # confidence level (as a string key, e.g. "0.90") -> z factor (harness.toml [g1.z_by_level])
+    g1_z_by_level: dict
     # track label -> as_of_date string
     _track_as_of: dict
 
@@ -163,6 +165,18 @@ def load_harness_config(path: Path) -> HarnessConfig:
     g1_vocab = _string_list(g1, "footnote_uncertainty_vocabulary", "harness.toml [g1]", path)
     if not g1_vocab:
         raise ConfigError(f"[g1] footnote_uncertainty_vocabulary must not be empty in {path}")
+    z_tbl = _require(g1, "z_by_level", "harness.toml [g1]")
+    if not isinstance(z_tbl, dict) or not z_tbl:
+        raise ConfigError(f"[g1.z_by_level] must be a non-empty table of level -> z in {path}")
+    g1_z = {}
+    for k, v in z_tbl.items():
+        try:
+            lvl = float(k)
+        except ValueError as exc:
+            raise ConfigError(f"[g1.z_by_level] key {k!r} is not a confidence level in {path}") from exc
+        if isinstance(v, bool) or not isinstance(v, (int, float)) or v <= 0:
+            raise ConfigError(f"[g1.z_by_level] {k} must be a positive number in {path}; got {v!r}")
+        g1_z[round(lvl, 4)] = float(v)
     per_section = _require(sitemap, "sample_per_section", "harness.toml [sitemap]")
     if not isinstance(per_section, int) or per_section < 1:
         raise ConfigError(
@@ -200,6 +214,7 @@ def load_harness_config(path: Path) -> HarnessConfig:
         g1_footnote_field_patterns=g1_fn,
         g1_id_field_patterns=g1_id,
         g1_footnote_uncertainty_vocabulary=tuple(g1_vocab),
+        g1_z_by_level=g1_z,
         _track_as_of=track_as_of,
     )
 

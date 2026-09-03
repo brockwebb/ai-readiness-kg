@@ -156,3 +156,55 @@ def test_producer_flag_vocabulary_from_the_2026_09_03_sources():
     for t in ("not recommended for release", "a table is filtered out", "should not be released",
               "the LFS suppresses estimates below the minimum size for release", "should not be presented"):
         assert parse(t).of_class(Q.SUPPRESSION), t
+
+
+# --- v1 pre-normalisation (task 2026-09-03 step 4.1) ------------------------------------------
+from harness.probes._g1_parse import (expand_currency_abbreviations, flatten_pipe_tables, join_label_lists,
+                                      normalise_superscripts, normalise_text, strip_markdown_emphasis)
+
+
+def test_superscript_exponent_survives_and_all_forms_agree():
+    assert normalise_superscripts("Delta: 10⁻¹⁰") == "Delta: 1e-10"
+    assert normalise_superscripts("delta=10^-10") == "delta=1e-10"
+    assert normalise_superscripts("10**(-10)") == "1e-10"
+    assert normalise_superscripts("10−10") == "1e-10"
+    q = _one("Delta: 10⁻¹⁰", Q.DP_NOISE)
+    assert q.parameter == "delta" and q.value == 1e-10
+    assert normalise_superscripts("footnote¹") == "footnote1"
+
+
+def test_markdown_emphasis_is_stripped_but_field_names_survive():
+    assert strip_markdown_emphasis("**£2,322 million**, give or take about **£201 million**") == \
+        "£2,322 million, give or take about £201 million"
+    assert strip_markdown_emphasis("the _estimate_ and `B01001_001E`") == "the estimate and B01001_001E"
+    q = _one("**£2,322 million**, give or take about **£201 million**", Q.MOE)
+    assert q.value == 201e6 and q.bound_estimate == 2322e6 and q.hedged
+
+
+def test_pipe_tables_flatten_to_label_value_lines():
+    t = "| Measure | Value |\n|---|---|\n| Global rho | 2.56 |\n| State | 1,440/4,099 | 35.1% |"
+    assert flatten_pipe_tables(t) == "Measure: Value.\nGlobal rho: 2.56.\nState: 1,440/4,099; 35.1%."
+    assert _one(t, Q.DP_NOISE).value == 2.56
+
+
+def test_label_then_list_joins_to_keyword_value_sentences():
+    t = "called the coefficient of variation:\n- £201m ÷ £2,322m = 0.087, or 8.7%\n- 12,400 ÷ 155,000 = 0.08, or 8%\n"
+    out = join_label_lists(expand_currency_abbreviations(t))
+    assert "coefficient of variation of 8.7%." in out and "coefficient of variation of 8%." in out
+    assert {q.value for q in parse(t).of_class(Q.CV)} == {8.7, 8.0}
+
+
+def test_currency_abbreviations_expand():
+    assert expand_currency_abbreviations("£201m ÷ £2,322m and $3bn") == "£201 million ÷ £2,322 million and $3 billion"
+
+
+def test_normalised_text_is_exposed_on_the_parse():
+    p = parse("**x** 10⁻¹⁰")
+    assert p.normalised == "x 1e-10" and p.text == "**x** 10⁻¹⁰"
+
+
+def test_derivation_line_joins_to_keyword_value():
+    from harness.probes._g1_parse import join_derivation_lines
+    t = "*Coefficient of variation (CV)* expresses the standard error as a percentage. For Colorado: 6,156 ÷ 564,757 ≈ 1.1 percent."
+    assert "Coefficient of variation of 1.1 percent." in join_derivation_lines(strip_markdown_emphasis(t))
+    assert _one(t, Q.CV).value == 1.1

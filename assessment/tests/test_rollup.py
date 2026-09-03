@@ -176,7 +176,7 @@ def _e(cls, mode, level, outcome=None, target="g1-p", est="exact", failure=None)
         score, lvl = level_to_score(Level(level)), level
     return EvalResult(probe_id="g1_preservation", target=target, qualifier_class=cls, mode=mode,
                       outcome=outcome or score.name.lower(), score=score, level=lvl,
-                      failure_class=failure, estimate_status=est, model_id="m", prompt_epoch="e",
+                      failure_class=failure, estimate_status=est, model_id="m", prompt_epoch="e", parser_version="t",
                       evidence="", timestamp="2026-09-02T00:00:00Z", evidence_path="p")
 
 

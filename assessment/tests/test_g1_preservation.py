@@ -55,7 +55,8 @@ def _elicited(text, mode="indirect"):
 
 
 def _verdict_for(probe, prop, case):
-    verdicts, est, _ = probe.evaluate_qualifiers(_elicited(case["text"]), prop, only_class=case["class"])
+    verdicts, est, _ = probe.evaluate_qualifiers(_elicited(case["text"], case.get("mode", "indirect")), prop,
+                                                 only_class=case["class"])
     cls_verdicts = [v for v in verdicts if v.qualifier_class == case["class"]]
     assert cls_verdicts, f"{case['prop']}: no verdict for class {case['class']}"
     which = case.get("which")
@@ -73,6 +74,41 @@ def pytest_generate_tests(metafunc):
     if "case" in metafunc.fixturenames:
         cs = yaml.safe_load((FIX / "restatements.yaml").read_text(encoding="utf-8"))
         metafunc.parametrize("case", cs["cases"], ids=_case_ids(cs))
+    if "v1case" in metafunc.fixturenames:
+        cs = yaml.safe_load((FIX / "restatements.yaml").read_text(encoding="utf-8"))
+        metafunc.parametrize("v1case", cs.get("v1_cases", []),
+                             ids=[f"v1:{c['prop']}:{c['class']}:{i}" for i, c in enumerate(cs.get("v1_cases", []))])
+
+
+def test_v1_case_from_dev_evidence(dev, cases, prompts, v1case, tmp_path):
+    """Parser v1 cases: text verbatim from a named dev-response evidence file (or a synthetic
+    case for the level-derived SE transformation, so marked)."""
+    assert v1case.get("evidence"), "a v1 case names its motivating evidence"
+    probe = PreservationProbe(prompts, tmp_path)
+    prop = _prop(dev, cases, v1case["prop"])
+    v, est = _verdict_for(probe, prop, v1case)
+    assert est.value == v1case["expect_estimate"], (v1case["text"], v.evidence, v.observations.get("estimate"))
+    assert v.level == v1case["expect_level"], (v1case["text"], v.evidence, v.observations)
+    assert v.failure_class == v1case.get("expect_failure"), (v1case["text"], v.evidence)
+
+
+def test_normalised_text_travels_in_observations(dev, prompts, tmp_path):
+    prop = dev.by_id("g1-das-dp-003")
+    probe = PreservationProbe(prompts, tmp_path)
+    _, _, obs = probe.evaluate(_elicited("| Delta | 10⁻¹⁰ |"), prop)
+    assert obs["estimate"]["normalised_text"] == "Delta: 1e-10."
+
+
+def test_records_carry_the_parser_version(dev, prompts, tmp_path):
+    from harness.probes._g1_parse import PARSER_VERSION
+    prop = dev.by_id("g1-acs-moe-001")
+    probe = PreservationProbe(prompts, tmp_path)
+    for r in probe.records(_elicited("564,757 ± 10,127 in 2015"), prop):
+        assert r.parser_version == PARSER_VERSION == "g1-parse-v1"
+    with pytest.raises(ValueError):
+        EvalResult(probe_id="g1_preservation", target="p", qualifier_class="MOE", mode="indirect",
+                   outcome="pass", score=Score.PASS, level=4, failure_class=None, estimate_status="exact",
+                   model_id="m", prompt_epoch="e", parser_version="", evidence="", timestamp="t", evidence_path="x")
 
 
 def test_case(dev, cases, prompts, case, tmp_path):
@@ -127,12 +163,35 @@ def test_unparseable_is_reached_counted_and_never_coerced(dev, cases, prompts, t
     assert unp, "no fixture case reaches unparseable"
     for c, v in unp:
         assert v.score is None and v.level is None and v.failure_class is None
-    # The readiness floor (D5): parse coverage on the cases a human labelled parseable.
+
+
+def test_dev_coverage_is_reported_but_is_not_the_gate(dev, cases, prompts, tmp_path, capsys):
+    """v0's gate measured parse coverage on restatements the parser's author wrote and scored
+    1.00 while 8 of 18 real responses were unparseable (v0 RESULT §6). The number is still
+    reported here; the gate is `test_holdout_readiness_gate` below (task 2026-09-03 step 6)."""
     labelled = [c for c in cases["cases"] if c.get("expect_outcome") != UNPARSEABLE]
     parsed = [c for c, v in _all_verdicts(dev, cases, prompts, tmp_path)
               if c.get("expect_outcome") != UNPARSEABLE and v.outcome != UNPARSEABLE]
     coverage = len(parsed) / len(labelled)
-    assert coverage >= 0.90, f"parse coverage {coverage:.3f} < 0.90 — probe not ready (D5)"
+    print(f"dev-restatement parse coverage (reported, not a gate): {coverage:.3f} on {len(labelled)} cases")
+    assert 0.0 <= coverage <= 1.0
+
+
+HOLDOUT_RESULTS = sorted((Path(__file__).parents[1] / "results").glob("g1_v1_*holdout*.json"))
+
+
+def test_holdout_readiness_gate():
+    """Pre-registered readiness gate (task 2026-09-03 step 6, replaces D5's): `unparseable`
+    share on the SEALED holdout responses <= 0.10. The holdout responses exist only after the
+    parser freeze; until they are scored, this test is skipped with that reason and the
+    parser is not ready."""
+    if not HOLDOUT_RESULTS:
+        pytest.skip("no holdout results file yet: parser readiness cannot be claimed (step 5 not run)")
+    report = json.loads(HOLDOUT_RESULTS[-1].read_text(encoding="utf-8"))
+    a = report["g1"]["observed"]["all"]
+    share = a["n_unparseable"] / a["n"] if a["n"] else None
+    assert share is not None and share <= 0.10, (
+        f"holdout unparseable share {share:.3f} > 0.10 on n={a['n']} ({HOLDOUT_RESULTS[-1].name}) — parser not ready")
 
 
 def test_widened_and_narrowed_are_both_l0_with_direction(dev, cases, prompts, tmp_path):
@@ -213,15 +272,15 @@ def test_record_without_epoch_or_model_is_invalid():
     with pytest.raises(ValueError):
         EvalResult(probe_id="g1_preservation", target="p", qualifier_class="MOE", mode="indirect",
                    outcome="pass", score=Score.PASS, level=4, failure_class=None, estimate_status="exact",
-                   model_id="", prompt_epoch="e", evidence="", timestamp="t", evidence_path="x")
+                   model_id="", prompt_epoch="e", parser_version="t", evidence="", timestamp="t", evidence_path="x")
     with pytest.raises(ValueError):
         EvalResult(probe_id="g1_preservation", target="p", qualifier_class="MOE", mode="indirect",
                    outcome="pass", score=Score.PASS, level=4, failure_class=None, estimate_status="exact",
-                   model_id="m", prompt_epoch=" ", evidence="", timestamp="t", evidence_path="x")
+                   model_id="m", prompt_epoch=" ", parser_version="t", evidence="", timestamp="t", evidence_path="x")
     with pytest.raises(ValueError):                # score must follow from level
         EvalResult(probe_id="g1_preservation", target="p", qualifier_class="MOE", mode="indirect",
                    outcome="pass", score=Score.PASS, level=1, failure_class=None, estimate_status="exact",
-                   model_id="m", prompt_epoch="e", evidence="", timestamp="t", evidence_path="x")
+                   model_id="m", prompt_epoch="e", parser_version="t", evidence="", timestamp="t", evidence_path="x")
 
 
 def test_prompt_config_requires_epoch_and_context_placeholder(tmp_path):

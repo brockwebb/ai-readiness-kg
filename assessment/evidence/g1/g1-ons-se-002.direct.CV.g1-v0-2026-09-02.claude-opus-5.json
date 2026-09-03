@@ -1,0 +1,31 @@
+{
+ "proposition_id": "g1-ons-se-002",
+ "call_id": "g1-ons-se-002.direct.CV",
+ "mode": "direct",
+ "qualifier_class": "CV",
+ "prompt_epoch": "g1-v0-2026-09-02",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T11:00:33.366578+00:00",
+ "prompt": "Table 1: Total turnover estimates, standard error and relative standard error for education and water and waste management, UK, 2016 Total turnover in | Standard error in | Relative standard error (or coefficient of variation)2 ---|---|--£ millions1 | £ millions2 Industry 1: Education (private provision only) | 42,649 | 526.8 | 0.01 (or 1%) Industry 2: Water supply; sewerage, waste management and remediation activities | 34,677 | 222.7 | 0.01 (or 1%)\n\nWhat is the coefficient of variation on total turnover of water supply, sewerage, waste management and remediation activities in the UK in 2016, in £ millions?",
+ "response_text": "**0.01 (1%)** — that's the relative standard error / coefficient of variation for the water supply, sewerage, waste management and remediation activities row.\n\nOne correction to the question as posed: the CV isn't in £ millions. It's a ratio — standard error divided by the estimate (222.7 / 34,677 ≈ 0.0064, rounded in the table to 0.01) — so it's dimensionless, conventionally expressed as a percentage. The £ millions figures for that industry are the turnover estimate (34,677) and its standard error (222.7).",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 247,
+  "cacheReadInputTokens": 12841,
+  "cacheCreationInputTokens": 16982,
+  "webSearchRequests": 0,
+  "costUSD": 0.1824255,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 66,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 4346,
+ "cost_usd": 0.1824255,
+ "spend_run_id": "g1_eval_v1_dev_2026-09-03",
+ "spend_reservation_id": "c80c835c6f794c55a655bce52e7b6d84",
+ "source_doc_id": "ons-uncertainty-and-how-we-measure-it",
+ "passage_id": "ons-se-table1"
+}

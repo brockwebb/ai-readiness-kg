@@ -1,0 +1,31 @@
+{
+ "proposition_id": "g1-das-dp-002",
+ "call_id": "g1-das-dp-002.direct.DP_NOISE",
+ "mode": "direct",
+ "qualifier_class": "DP_NOISE",
+ "prompt_epoch": "g1-v0-2026-09-02",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T11:03:08.728759+00:00",
+ "prompt": "Next, the researchers used data where the TDA (production version) had been applied to the 2010 CEF 25 different times. The TDA adds noise randomly and there was interest in how results would vary among the 25 runs. The privacy-loss budget for each run of the TDA was ε=17.41 (rho=2.56, delta=10-10) for the person file.\n\nWhat is the disclosure-avoidance noise parameter (privacy-loss budget) on the privacy-loss budget (epsilon) for each production run of the TopDown Algorithm on the 2010 person file?",
+ "response_text": "ε = 17.41 per production TDA run on the 2010 CEF person file.\n\nStated in zCDP terms, that corresponds to ρ = 2.56 with δ = 10⁻¹⁰. That budget was spent on each of the 25 independent runs separately — the 25 runs were done to characterize run-to-run variability from the TDA's random noise injection, not as a single 25× budget allocation.",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 202,
+  "cacheReadInputTokens": 12841,
+  "cacheCreationInputTokens": 15817,
+  "webSearchRequests": 0,
+  "costUSD": 0.1696505,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 68,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 4134,
+ "cost_usd": 0.1696505,
+ "spend_run_id": "g1_eval_v1_dev_2026-09-03",
+ "spend_reservation_id": "f50ac7cb3188448194da5de2735a71c8",
+ "source_doc_id": "census-2020-disclosure-avoidance-handbook-2021",
+ "passage_id": "das-run-budget"
+}

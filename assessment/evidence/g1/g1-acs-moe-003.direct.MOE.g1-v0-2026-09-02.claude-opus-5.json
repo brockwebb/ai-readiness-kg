@@ -1,0 +1,31 @@
+{
+ "proposition_id": "g1-acs-moe-003",
+ "call_id": "g1-acs-moe-003.direct.MOE",
+ "mode": "direct",
+ "qualifier_class": "MOE",
+ "prompt_epoch": "g1-v0-2026-09-02",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T10:56:54.836343+00:00",
+ "prompt": "The example below shows how to determine if the difference in the estimated percentage of householders age 65 or older who live alone between Florida (estimated percentage = 12.6, MOE = 0.2) and Arizona (estimated percentage = 10.5, MOE = 0.3) is statistically significant, based on 2015 ACS data. Using formula (1) above, first calculate the corresponding standard errors for Florida (0.122) and Arizona (0.182) by dividing the MOEs by 1.645. Then, using formula (3) above, calculate the test value as follows: Understanding and Using American Community Survey Data 57 What All Data Users Need to Know 57 U.S. Census Bureau Since the test value (9.581) is greater than the critical value for a confidence level of 90 percent (1.645), the difference in the percentages is statistically significant at a 90 percent confidence level. A rough interpretation of the result is that the user can be 90 percent certain that a difference exists between the percentage of householders aged 65 or older who live alone in Florida and in Arizona. By contrast, if the corresponding estimate for Indiana (estimated percentage = 10.8, MOE = 0.2, SE = 0.122) were compared with the estimate for Arizona, formula (3) would yield: Since the test value (1.369) is less than the critical value for a confidence level of 90 percent (1.645), the difference in percentages is not statistically significant. A rough interpretation of the result is that the user cannot be certain to any sufficient degree that the observed difference in the estimates between Indiana and Arizona was not due to chance.\n\nWhat is the margin of error on the percentage of householders aged 65 or older who live alone in Florida (2015 ACS)?",
+ "response_text": "0.2 percentage points.\n\nFrom the passage: Florida's estimate is 12.6 percent with an MOE of 0.2, which yields a standard error of 0.122 (0.2 ÷ 1.645).",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 70,
+  "cacheReadInputTokens": 12841,
+  "cacheCreationInputTokens": 17317,
+  "webSearchRequests": 0,
+  "costUSD": 0.1813505,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 0,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 2404,
+ "cost_usd": 0.1813505,
+ "spend_run_id": "g1_eval_v1_dev_2026-09-03",
+ "spend_reservation_id": "a53177bf80014d74b0e49b835164591e",
+ "source_doc_id": "census-acs-general-handbook-2020",
+ "passage_id": "acs-ch7-significance"
+}

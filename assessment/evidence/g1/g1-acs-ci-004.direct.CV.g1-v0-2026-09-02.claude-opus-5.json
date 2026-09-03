@@ -1,0 +1,31 @@
+{
+ "proposition_id": "g1-acs-ci-004",
+ "call_id": "g1-acs-ci-004.direct.CV",
+ "mode": "direct",
+ "qualifier_class": "CV",
+ "prompt_epoch": "g1-v0-2026-09-02",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T10:59:51.330674+00:00",
+ "prompt": "In some instances, data users may need to derive an estimate by multiplying a published count by a published percentage. For example, a data user might be interested in the number of 1-unit detached owner-occupied housing units in a geographic area. In 2015, the number of owner-occupied housing units in the United States was 74,506,512 with an MOE of 228,238, and the percent of 1-unit detached owner-occupied housing units was 82.4 (0.824) with an MOE of 0.1 percent (0.001). 66 So, the number of 1-unit detached owner-occupied housing units was 74,506,512 * 0.824 = 61,393,366. The formula to calculate the MOE of a product is: (9) Substituting the estimates and their respective MOEs in formula (9) yields: To obtain the lower and upper bounds of the 90 percent confidence interval around 61,393,366, add and subtract the MOE from 61,393,366. Thus, the 90 percent confidence interval for this estimate is [61,393,366 – 202,289] to [61,393,366 + 202,289] or 61,191,077 to 61,595,655. Using formula (2), the SE of the product is 202,289 / 1.645 = 122,972. Using formula (4), the coefficient of variation for this derived estimate is (122,972 / 61,393,366) * 100 = 0.2 percent, indicating that the derived estimate is very reliable.\n\nWhat is the coefficient of variation on the number of 1-unit detached owner-occupied housing units in the United States in 2015 (derived)?",
+ "response_text": "0.2 percent.\n\nThe passage's own derivation: SE = 202,289 / 1.645 = 122,972; CV = (122,972 / 61,393,366) × 100 = 0.2 percent — which it characterizes as \"very reliable.\"",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 81,
+  "cacheReadInputTokens": 12841,
+  "cacheCreationInputTokens": 17259,
+  "webSearchRequests": 0,
+  "costUSD": 0.1810455,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 0,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 2466,
+ "cost_usd": 0.1810455,
+ "spend_run_id": "g1_eval_v1_dev_2026-09-03",
+ "spend_reservation_id": "3f5c553d96f54cd5a4b61050e9f176f0",
+ "source_doc_id": "census-acs-general-handbook-2020",
+ "passage_id": "acs-ch8-product"
+}

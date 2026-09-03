@@ -1,0 +1,31 @@
+{
+ "proposition_id": "g1-lfs-rf-001",
+ "call_id": "g1-lfs-rf-001.direct.RELIABILITY_FLAG",
+ "mode": "direct",
+ "qualifier_class": "RELIABILITY_FLAG",
+ "prompt_epoch": "g1-v0-2026-09-02",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T11:04:00.114957+00:00",
+ "prompt": "**Guidelines on data reliability** Household surveys within Statistics Canada generally use the following guidelines and reliability categories in interpreting CV values for data accuracy and in the dissemination of statistical information. **Category 1** – If the CV is ≤ 16.5% – no release restrictions: data are of sufficient accuracy that no special warnings to users or other restrictions are required. **Category 2** – If the CV is > 16.5% and ≤ 33.3% – release with caveats: data are potentially useful for some purposes but should be accompanied by a warning to users regarding their accuracy. **Category 3** – If the CV > 33.3% – not recommended for release: data contain a level of error that makes them so potentially misleading that they should not be released in most circumstances. If users insist on inclusion of Category 3 data in a non-standard product, even after being advised of their accuracy, the data should be accompanied by a disclaimer. The user should acknowledge the warnings given and undertake not to disseminate, present or report the data, directly or indirectly, without this disclaimer.\n\nWhat is the reliability assessment on the CV ceiling for Category 1 LFS estimates (no release restrictions)?",
+ "response_text": "**CV ≤ 16.5% → Category 1: no release restrictions.**\n\nThe reliability assessment at that ceiling is that the estimate is *of sufficient accuracy that no special warnings to users or other restrictions are required* — it can be disseminated as-is, with no caveat, footnote, or qualifier attached.\n\nTwo details on the boundary itself:\n\n- **16.5% is inclusive.** An estimate with a CV of exactly 16.5% is still Category 1. The next category begins strictly above it (> 16.5% and ≤ 33.3% → release with caveats).\n- **The ceiling is a dissemination rule, not a claim of negligible error.** A CV of 16.5% still means the standard error is roughly a sixth of the estimate — e.g. an estimate of 100,000 carries a standard error near 16,500, so a 95% interval spans roughly ±32,000. Category 1 asserts that this level of sampling error doesn't require warning the user, not that the estimate is precise in an absolute sense. Analytically, a Category 1 estimate can still be too imprecise to support a specific comparison (small month-to-month change, fine cross-tabulation), and that judgment sits with the analyst, not the category.",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 627,
+  "cacheReadInputTokens": 12841,
+  "cacheCreationInputTokens": 17142,
+  "webSearchRequests": 0,
+  "costUSD": 0.19352550000000002,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 227,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 9738,
+ "cost_usd": 0.19352550000000002,
+ "spend_run_id": "g1_eval_v1_dev_2026-09-03",
+ "spend_reservation_id": "2dc3220e88a64194b8708c8d5c4aacc3",
+ "source_doc_id": "statcan-71-543-g-guide-labour-force-survey-2025",
+ "passage_id": "lfs-reliability-categories"
+}

@@ -1,0 +1,31 @@
+{
+ "proposition_id": "g1-lfs-sup-002",
+ "call_id": "g1-lfs-sup-002.direct.SUPPRESSION",
+ "mode": "direct",
+ "qualifier_class": "SUPPRESSION",
+ "prompt_epoch": "g1-v0-2026-09-02",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T11:04:48.011867+00:00",
+ "prompt": "The LFS suppresses estimates below the levels presented in Table 7.4. Table 7.4 Minimum size for release, Canada, provinces and territories Table summaryThis table displays the results of Minimum size for release, Canada, provinces and territories Minimum size for release, calculated using thousands units of measure (appearing as column headers). Minimum size for release --thousands **Source:** Labour Force Survey (3701). Canada | **1.5** Newfoundland and Labrador | 0.5 Prince Edward Island | 0.2 Nova Scotia | 0.5 New Brunswick | 0.5 Quebec | 1.5 Ontario | 1.5 Manitoba | 0.5 Saskatchewan | 0.5 Alberta | 1.5 British Columbia | 1.5 Yukon | 0.2\n\nWhat is the publication status on the minimum estimate size for release, Canada (LFS, thousands)?",
+ "response_text": "**Suppressed below 1.5 thousand.** For Canada as a whole, the LFS minimum size for release is 1.5 thousand (1,500 persons):\n\n- An estimate of **1,500 or more** is published.\n- An estimate **below 1,500** is suppressed — not released.\n\nTwo caveats from the table itself:\n- The threshold is geography-specific. Canada's 1.5 is shared by Quebec, Ontario, Alberta, and British Columbia; the smaller provinces use 0.5, and PEI and Yukon use 0.2. So a national-level 1.5 is *not* the floor applied to a provincial estimate.\n- The snippet is truncated — Northwest Territories and Nunavut are missing from the territory rows shown.\n\nSource: Statistics Canada, Labour Force Survey (record 3701), Table 7.4 \"Minimum size for release.\"",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 534,
+  "cacheReadInputTokens": 12841,
+  "cacheCreationInputTokens": 17064,
+  "webSearchRequests": 0,
+  "costUSD": 0.1904205,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 245,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 7613,
+ "cost_usd": 0.1904205,
+ "spend_run_id": "g1_eval_v1_dev_2026-09-03",
+ "spend_reservation_id": "bc796fc17b76407483f66e5126fc18bb",
+ "source_doc_id": "statcan-71-543-g-guide-labour-force-survey-2025",
+ "passage_id": "lfs-minimum-size"
+}

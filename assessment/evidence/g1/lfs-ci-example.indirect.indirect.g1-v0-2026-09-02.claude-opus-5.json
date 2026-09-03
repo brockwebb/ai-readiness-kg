@@ -1,0 +1,31 @@
+{
+ "proposition_id": "g1-lfs-ci-001",
+ "call_id": "lfs-ci-example.indirect",
+ "mode": "indirect",
+ "qualifier_class": null,
+ "prompt_epoch": "g1-v0-2026-09-02",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T11:05:14.088195+00:00",
+ "prompt": "Restate the following for a general-audience summary.\n\nThe lower and upper bounds of a 68% confidence interval can be computed by adding or subtracting one standard error (25,000) from 60,000. This means that there are approximately two chances in three (68%) that the range (35,000 to 85,000) contains the real value of the change between the two months. * A 95% confidence interval can be constructed by adding and subtracting 50,000 (two standard errors) from 60,000. This means that there are approximately nineteen chances in twenty (95%) that the range (10,000 to 110,000) contains the real value of the change between the two months. **Conducting hypothesis tests** Standard errors may also be used to perform hypothesis testing, a procedure that can be used for comparing population parameters using sample estimates. The larger the observed change between two estimates relative to its standard error, the better the chance that we are observing a real change as opposed to a change due to sampling variability. One simple way to conduct a hypothesis test is with a confidence interval. If the 95% confidence interval of an observed estimate of change does not contain zero, then the change is considered statistically significant at the 5% level of significance. The level of significance is the probability of concluding that there is a change, when in fact the actual change is zero. If the confidence interval of the estimate does contain zero, it is less likely to reflect a real change and more likely to be due to sampling variability. To illustrate, let us say that between two months, the published estimate for total employment increased by 60,000 and the associated standard error for the movement estimate was 25,000. Since the 95% confidence interval (10,000 to 110,000) does not contain zero, this change in employment is considered significant at the 5% level of significance.",
+ "response_text": "**Understanding the numbers behind employment estimates**\n\nEmployment figures are based on a survey, not a count of every worker. Because a survey only reaches a sample of people, its results come with a margin of uncertainty. Statisticians measure that uncertainty with a number called the standard error, and use it to build a range — a \"confidence interval\" — around the reported figure.\n\n**An example**\n\nSuppose the reported change in total employment from one month to the next was an increase of **60,000**, with a standard error of **25,000**.\n\n- Adding and subtracting one standard error gives a range of **35,000 to 85,000**. There's roughly a **2-in-3 chance (68%)** that this range contains the true change.\n- Adding and subtracting two standard errors gives a range of **10,000 to 110,000**. There's roughly a **19-in-20 chance (95%)** that this range contains the true change.\n\n**Deciding whether a change is real**\n\nThe point of these ranges is to answer a practical question: did employment actually change, or does the number just reflect the luck of which people happened to be surveyed?\n\nThe rule of thumb is simple. Look at the 95% range:\n\n- **If the range does not include zero**, the change is treated as real — statisticians call it \"statistically significant.\" In the example above, the range runs from 10,000 to 110,000, which is entirely above zero, so the 60,000 increase counts as a genuine change.\n- **If the range does include zero**, the apparent change may well be noise from sampling, and shouldn't be read as real movement.\n\nIn general, the bigger a reported change is compared with its standard error, the more confident we can be that something actually happened. And when we say a result is significant \"at the 5% level,\" we mean there's about a 5% risk of calling a change real when nothing actually changed.",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 693,
+  "cacheReadInputTokens": 12841,
+  "cacheCreationInputTokens": 17301,
+  "webSearchRequests": 0,
+  "costUSD": 0.19676549999999998,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 128,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 11036,
+ "cost_usd": 0.19676549999999998,
+ "spend_run_id": "g1_eval_v1_dev_2026-09-03",
+ "spend_reservation_id": "c939e63075f34cdfaf9c3e4d5379b468",
+ "source_doc_id": "statcan-71-543-g-guide-labour-force-survey-2025",
+ "passage_id": "lfs-ci-example"
+}

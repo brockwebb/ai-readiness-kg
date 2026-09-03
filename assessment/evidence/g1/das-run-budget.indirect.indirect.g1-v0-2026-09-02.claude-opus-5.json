@@ -1,0 +1,31 @@
+{
+ "proposition_id": "g1-das-dp-002",
+ "call_id": "das-run-budget.indirect",
+ "mode": "indirect",
+ "qualifier_class": null,
+ "prompt_epoch": "g1-v0-2026-09-02",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T11:03:03.595213+00:00",
+ "prompt": "Restate the following for a general-audience summary.\n\nNext, the researchers used data where the TDA (production version) had been applied to the 2010 CEF 25 different times. The TDA adds noise randomly and there was interest in how results would vary among the 25 runs. The privacy-loss budget for each run of the TDA was ε=17.41 (rho=2.56, delta=10-10) for the person file.",
+ "response_text": "**General-audience version:**\n\nNext, the researchers worked with a dataset produced by running the Census Bureau's official privacy protection system — the TopDown Algorithm, or TDA — on the 2010 census records 25 separate times.\n\nThe TDA protects people's confidentiality by deliberately adding a small amount of random statistical \"noise\" to the published numbers, so that no individual's information can be reverse-engineered from the results. Because that noise is random, each run of the algorithm produces slightly different published figures, even when the underlying census records are identical. The researchers wanted to see how much the results bounced around from one run to the next.\n\nEach of the 25 runs used the same setting for how much privacy protection to apply. That setting is called the privacy-loss budget: a smaller budget means more noise and stronger privacy, while a larger budget means less noise and more accurate numbers. For the person-level records, the budget was ε = 17.41 (equivalently, ρ = 2.56 with δ = 10⁻¹⁰) — the same amount used by the production version of the system.\n\nTwo notes on the source text:\n- \"TDA (production version)\" means the actual algorithm the Census Bureau deployed, not a research prototype — worth stating explicitly for a general reader.\n- \"delta=10-10\" is almost certainly δ = 10⁻¹⁰ (a lost exponent); I've restated it that way.",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 652,
+  "cacheReadInputTokens": 12841,
+  "cacheCreationInputTokens": 16883,
+  "webSearchRequests": 0,
+  "costUSD": 0.19156049999999997,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 204,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 11259,
+ "cost_usd": 0.19156049999999997,
+ "spend_run_id": "g1_eval_v1_dev_2026-09-03",
+ "spend_reservation_id": "cd170fbe58a347928776d2f11551e78e",
+ "source_doc_id": "census-2020-disclosure-avoidance-handbook-2021",
+ "passage_id": "das-run-budget"
+}

@@ -1,0 +1,31 @@
+{
+ "proposition_id": "g1-acsr-sup-001",
+ "call_id": "g1-acsr-sup-001.direct.SUPPRESSION",
+ "mode": "direct",
+ "qualifier_class": "SUPPRESSION",
+ "prompt_epoch": "g1-v0-2026-09-02",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T11:11:34.011470+00:00",
+ "prompt": "For both base and collapsed detailed tables, a table is filtered out if the median CV value for the table is greater than 0.61, or in other words, if more than half of the estimates in it have a CV greater than 0.61, suggesting very low reliability. A CV greater than 0.61 is equivalent to saying the estimate is not significantly different from zero at the 90 percent confidence level. Zero estimates, which have an undefined CV, are assigned a CV of 1.0 for determining the median CV. Only lines at the lowest level of detail in a table are included in the calculation of the median CV.\n\nWhat is the publication status on the median CV above which an ACS 1-year detailed table is filtered out?",
+ "response_text": "**Not published — the table is suppressed for that geography.**\n\nFrom the passage: a base or collapsed detailed table whose median CV exceeds **0.61** is filtered out of the ACS 1-year release, so it does not appear in the published data products for that geographic area (other tables for the same area, and the same table for other areas, are unaffected — the filter is applied table-by-geography).\n\nThe rationale given is reliability: CV > 0.61 is the point at which an estimate is no longer significantly different from zero at the 90% confidence level, so a median CV above that means more than half the table's lowest-level estimates fail that bar. Zero estimates (undefined CV) are assigned CV = 1.0 for the median calculation, and only lowest-level-of-detail lines are counted.\n\nOne caveat on the phrasing of your question: \"publication status\" isn't a term the passage defines. If you're after a formal status label used in ACS metadata (e.g., a suppression flag or filtering reason code attached to the table), that isn't in the text you supplied — the passage only states the filtering rule and its threshold. Say the word and I'll check the Census ACS data-product documentation for the actual flag vocabulary.",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 840,
+  "cacheReadInputTokens": 12841,
+  "cacheCreationInputTokens": 16975,
+  "webSearchRequests": 0,
+  "costUSD": 0.1971805,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 458,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 12529,
+ "cost_usd": 0.1971805,
+ "spend_run_id": "g1_eval_v1_dev_2026-09-03_b",
+ "spend_reservation_id": "82e672486125418993ff7e70d2c3b673",
+ "source_doc_id": "census-acs-data-suppression-rules",
+ "passage_id": "acs-filtering-rule"
+}

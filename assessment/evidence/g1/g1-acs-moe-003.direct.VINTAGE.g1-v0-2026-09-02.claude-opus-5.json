@@ -1,0 +1,31 @@
+{
+ "proposition_id": "g1-acs-moe-003",
+ "call_id": "g1-acs-moe-003.direct.VINTAGE",
+ "mode": "direct",
+ "qualifier_class": "VINTAGE",
+ "prompt_epoch": "g1-v0-2026-09-02",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T10:57:07.827318+00:00",
+ "prompt": "The example below shows how to determine if the difference in the estimated percentage of householders age 65 or older who live alone between Florida (estimated percentage = 12.6, MOE = 0.2) and Arizona (estimated percentage = 10.5, MOE = 0.3) is statistically significant, based on 2015 ACS data. Using formula (1) above, first calculate the corresponding standard errors for Florida (0.122) and Arizona (0.182) by dividing the MOEs by 1.645. Then, using formula (3) above, calculate the test value as follows: Understanding and Using American Community Survey Data 57 What All Data Users Need to Know 57 U.S. Census Bureau Since the test value (9.581) is greater than the critical value for a confidence level of 90 percent (1.645), the difference in the percentages is statistically significant at a 90 percent confidence level. A rough interpretation of the result is that the user can be 90 percent certain that a difference exists between the percentage of householders aged 65 or older who live alone in Florida and in Arizona. By contrast, if the corresponding estimate for Indiana (estimated percentage = 10.8, MOE = 0.2, SE = 0.122) were compared with the estimate for Arizona, formula (3) would yield: Since the test value (1.369) is less than the critical value for a confidence level of 90 percent (1.645), the difference in percentages is not statistically significant. A rough interpretation of the result is that the user cannot be certain to any sufficient degree that the observed difference in the estimates between Indiana and Arizona was not due to chance.\n\nWhat is the reference period or as-of date on the percentage of householders aged 65 or older who live alone in Florida (2015 ACS)?",
+ "response_text": "**Reference period: calendar year 2015** — the excerpt attributes the Florida estimate (12.6%, MOE 0.2) to \"2015 ACS data,\" and nothing narrower is stated.\n\nTwo caveats worth carrying if this is going into a structured extraction:\n\n- **The excerpt does not say which ACS product.** If it's the 2015 ACS 1-year estimates, the reference period is the 12 months of calendar year 2015 (Jan 1–Dec 31, 2015), collected continuously across that year. If it's the 2015 5-year estimates, the reference period is the 60 months of 2011–2015, inflation-adjusted to 2015 dollars where money is involved. The MOEs here (0.2, 0.3 on state-level percentages) are consistent with either at state geography, so the text alone doesn't disambiguate. State-level published examples in this handbook typically use 1-year data, but that's an inference, not something the passage states.\n- **There is no \"as-of date\" in the point-in-time sense.** ACS is a continuous-measurement survey, not a decennial-style snapshot; the estimate is an average over the reference period rather than a value on a specific day. The only date-like anchors are the survey year label (2015) and the residence rule (current residence, 2-month rule) that governs who is counted where.\n\nIf the extraction schema needs a single field, `2015` (survey vintage) is the defensible value; flag product type as unresolved from this source span.",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 715,
+  "cacheReadInputTokens": 12841,
+  "cacheCreationInputTokens": 17321,
+  "webSearchRequests": 0,
+  "costUSD": 0.1975155,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 240,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 10866,
+ "cost_usd": 0.1975155,
+ "spend_run_id": "g1_eval_v1_dev_2026-09-03",
+ "spend_reservation_id": "fd37602dadc748abb2a546b7c9b8a0ff",
+ "source_doc_id": "census-acs-general-handbook-2020",
+ "passage_id": "acs-ch7-significance"
+}

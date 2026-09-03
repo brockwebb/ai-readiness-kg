@@ -1,0 +1,31 @@
+{
+ "proposition_id": "g1-ons-se-004",
+ "call_id": "g1-ons-se-004.direct.VINTAGE",
+ "mode": "direct",
+ "qualifier_class": "VINTAGE",
+ "prompt_epoch": "g1-v0-2026-09-02",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T11:01:13.809041+00:00",
+ "prompt": "The total turnover of plastering businesses in the UK was estimated at £2,322 million in 2016, with a standard error of £201 million. A different survey estimated that the total number of people employed full-time in agriculture, forestry and fishing in the UK was 155,000 in 2016, with a standard error of 12,400 employees It is difficult to compare these two standard errors. By calculating the coefficient of variation for each, the results show that both estimates have a similar level of precision: * £201 million divided by £2,322 million equals 0.087 – a coefficient of variation of 8.7% * 12,400 divided by 155,000 equals 0.08 – a coefficient of variation of 8%\n\nWhat is the reference period or as-of date on the number of people employed full-time in agriculture, forestry and fishing in the UK in 2016?",
+ "response_text": "**2016** — that's the only temporal qualifier the passage attaches to the figure (\"the total number of people employed full-time in agriculture, forestry and fishing in the UK was 155,000 in 2016\").\n\nTwo caveats worth flagging, since neither is resolvable from this text:\n\n- **Granularity is calendar-year only.** The passage doesn't say whether 155,000 is a point-in-time headcount (an as-of date, e.g. a June or December reference week) or an annual average. Employment estimates are usually the former — a reference week or quarter — but the source doesn't state it, and the two are not interchangeable.\n- **The 2016 on the £2,322m plastering figure is a different animal.** Turnover is a *flow* accumulated over a period; employment is typically a *stock* at an instant. Both are labelled \"2016,\" but they are not the same reference period, which is incidental here (the passage only uses them to contrast coefficients of variation, 8.7% vs 8%) but would matter if either figure were reused.\n\nIf you need the actual reference date, it has to come from the survey documentation — the passage describes it only as \"a different survey\" and names neither the source nor its reference period.",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 558,
+  "cacheReadInputTokens": 12841,
+  "cacheCreationInputTokens": 17019,
+  "webSearchRequests": 0,
+  "costUSD": 0.1905705,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 179,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 9670,
+ "cost_usd": 0.1905705,
+ "spend_run_id": "g1_eval_v1_dev_2026-09-03",
+ "spend_reservation_id": "e9a67ffe54e74ad5b8616bea368f7e1d",
+ "source_doc_id": "ons-uncertainty-and-how-we-measure-it",
+ "passage_id": "ons-cv-examples"
+}

@@ -1,0 +1,7110 @@
+{
+ "task": "cc_tasks/2026-09-02_g1_eval_probe_family_v0.md",
+ "run_id": "g1_eval_v1_dev_2026-09-03",
+ "split": "dev",
+ "evidence_dir": "assessment/evidence/g1",
+ "started_at": "2026-09-03T10:55:57.973156+00:00",
+ "model_id": "claude-opus-5",
+ "prompt_epoch": "g1-v0-2026-09-02",
+ "ceiling_tokens": 2000000,
+ "call_class": "g1_eval",
+ "call_class_floor": 34000,
+ "schedule_calls": 84,
+ "schedule_tokens_at_floor": 2856000,
+ "dry_run": false,
+ "walk": [
+  {
+   "kind": "indirect",
+   "passage": "acs-ch7-colorado",
+   "propositions": [
+    "g1-acs-moe-001",
+    "g1-acs-ci-003",
+    "g1-acs-cv-004"
+   ],
+   "status": "reused_evidence",
+   "evidence_path": "assessment/evidence/g1/acs-ch7-colorado.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 969,
+    "cacheReadInputTokens": 10121,
+    "cacheCreationInputTokens": 21194,
+    "webSearchRequests": 0,
+    "costUSD": 0.24123550000000002,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 55,
+    "canonicalModel": "claude-opus-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "n_records": 5
+  },
+  {
+   "kind": "direct",
+   "proposition": "g1-acs-moe-001",
+   "qualifier": "MOE",
+   "status": "reused_evidence",
+   "evidence_path": "assessment/evidence/g1/g1-acs-moe-001.direct.MOE.g1-v0-2026-09-02.claude-opus-5.json",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 72,
+    "cacheReadInputTokens": 12841,
+    "cacheCreationInputTokens": 18501,
+    "webSearchRequests": 0,
+    "costUSD": 0.1932405,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 0,
+    "canonicalModel": "claude-opus-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "n_records": 1
+  },
+  {
+   "kind": "direct",
+   "proposition": "g1-acs-moe-001",
+   "qualifier": "VINTAGE",
+   "status": "ok",
+   "evidence_path": "assessment/evidence/g1/g1-acs-moe-001.direct.VINTAGE.g1-v0-2026-09-02.claude-opus-5.json",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 784,
+    "cacheReadInputTokens": 10121,
+    "cacheCreationInputTokens": 21225,
+    "webSearchRequests": 0,
+    "costUSD": 0.23692049999999998,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 326,
+    "canonicalModel": "claude-opus-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "n_records": 1
+  },
+  {
+   "kind": "direct",
+   "proposition": "g1-acs-ci-003",
+   "qualifier": "CI",
+   "status": "ok",
+   "evidence_path": "assessment/evidence/g1/g1-acs-ci-003.direct.CI.g1-v0-2026-09-02.claude-opus-5.json",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 309,
+    "cacheReadInputTokens": 12841,
+    "cacheCreationInputTokens": 18486,
+    "webSearchRequests": 0,
+    "costUSD": 0.19901549999999998,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 45,
+    "canonicalModel": "claude-opus-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "n_records": 1
+  },
+  {
+   "kind": "direct",
+   "proposition": "g1-acs-cv-004",
+   "qualifier": "CV",
+   "status": "ok",
+   "evidence_path": "assessment/evidence/g1/g1-acs-cv-004.direct.CV.g1-v0-2026-09-02.claude-opus-5.json",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 234,
+    "cacheReadInputTokens": 12841,
+    "cacheCreationInputTokens": 18488,
+    "webSearchRequests": 0,
+    "costUSD": 0.19716050000000002,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 80,
+    "canonicalModel": "claude-opus-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "n_records": 1
+  },
+  {
+   "kind": "direct",
+   "proposition": "g1-acs-cv-004",
+   "qualifier": "RELIABILITY_FLAG",
+   "status": "ok",
+   "evidence_path": "assessment/evidence/g1/g1-acs-cv-004.direct.RELIABILITY_FLAG.g1-v0-2026-09-02.claude-opus-5.json",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 386,
+    "cacheReadInputTokens": 12841,
+    "cacheCreationInputTokens": 18487,
+    "webSearchRequests": 0,
+    "costUSD": 0.2009505,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 105,
+    "canonicalModel": "claude-opus-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "n_records": 1
+  },
+  {
+   "kind": "indirect",
+   "passage": "acs-ch7-significance",
+   "propositions": [
+    "g1-acs-moe-003",
+    "g1-acs-moe-004"
+   ],
+   "status": "ok",
+   "evidence_path": "assessment/evidence/g1/acs-ch7-significance.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 943,
+    "cacheReadInputTokens": 12841,
+    "cacheCreationInputTokens": 17292,
+    "webSearchRequests": 0,
+    "costUSD": 0.20292549999999998,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 242,
+    "canonicalModel": "claude-opus-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "n_records": 4
+  },
+  {
+   "kind": "direct",
+   "proposition": "g1-acs-moe-003",
+   "qualifier": "MOE",
+   "status": "ok",
+   "evidence_path": "assessment/evidence/g1/g1-acs-moe-003.direct.MOE.g1-v0-2026-09-02.claude-opus-5.json",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 70,
+    "cacheReadInputTokens": 12841,
+    "cacheCreationInputTokens": 17317,
+    "webSearchRequests": 0,
+    "costUSD": 0.1813505,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 0,
+    "canonicalModel": "claude-opus-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "n_records": 1
+  },
+  {
+   "kind": "direct",
+   "proposition": "g1-acs-moe-003",
+   "qualifier": "VINTAGE",
+   "status": "ok",
+   "evidence_path": "assessment/evidence/g1/g1-acs-moe-003.direct.VINTAGE.g1-v0-2026-09-02.claude-opus-5.json",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 715,
+    "cacheReadInputTokens": 12841,
+    "cacheCreationInputTokens": 17321,
+    "webSearchRequests": 0,
+    "costUSD": 0.1975155,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 240,
+    "canonicalModel": "claude-opus-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "n_records": 1
+  },
+  {
+   "kind": "direct",
+   "proposition": "g1-acs-moe-004",
+   "qualifier": "MOE",
+   "status": "ok",
+   "evidence_path": "assessment/evidence/g1/g1-acs-moe-004.direct.MOE.g1-v0-2026-09-02.claude-opus-5.json",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 81,
+    "cacheReadInputTokens": 12841,
+    "cacheCreationInputTokens": 17318,
+    "webSearchRequests": 0,
+    "costUSD": 0.1816355,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 0,
+    "canonicalModel": "claude-opus-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "n_records": 1
+  },
+  {
+   "kind": "direct",
+   "proposition": "g1-acs-moe-004",
+   "qualifier": "SE",
+   "status": "ok",
+   "evidence_path": "assessment/evidence/g1/g1-acs-moe-004.direct.SE.g1-v0-2026-09-02.claude-opus-5.json",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 42,
+    "cacheReadInputTokens": 12841,
+    "cacheCreationInputTokens": 17317,
+    "webSearchRequests": 0,
+    "costUSD": 0.1806505,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 0,
+    "canonicalModel": "claude-opus-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "n_records": 1
+  },
+  {
+   "kind": "indirect",
+   "passage": "acs-ch8-tricounty",
+   "propositions": [
+    "g1-acs-moe-002",
+    "g1-acs-se-005"
+   ],
+   "status": "ok",
+   "evidence_path": "assessment/evidence/g1/acs-ch8-tricounty.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 1276,
+    "cacheReadInputTokens": 12841,
+    "cacheCreationInputTokens": 17593,
+    "webSearchRequests": 0,
+    "costUSD": 0.21426050000000002,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 285,
+    "canonicalModel": "claude-opus-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "n_records": 5
+  },
+  {
+   "kind": "direct",
+   "proposition": "g1-acs-moe-002",
+   "qualifier": "MOE",
+   "status": "ok",
+   "evidence_path": "assessment/evidence/g1/g1-acs-moe-002.direct.MOE.g1-v0-2026-09-02.claude-opus-5.json",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 414,
+    "cacheReadInputTokens": 12841,
+    "cacheCreationInputTokens": 17630,
+    "webSearchRequests": 0,
+    "costUSD": 0.19308050000000002,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 129,
+    "canonicalModel": "claude-opus-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "n_records": 1
+  },
+  {
+   "kind": "direct",
+   "proposition": "g1-acs-moe-002",
+   "qualifier": "RELIABILITY_FLAG",
+   "status": "ok",
+   "evidence_path": "assessment/evidence/g1/g1-acs-moe-002.direct.RELIABILITY_FLAG.g1-v0-2026-09-02.claude-opus-5.json",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 535,
+    "cacheReadInputTokens": 12841,
+    "cacheCreationInputTokens": 17632,
+    "webSearchRequests": 0,
+    "costUSD": 0.19612549999999998,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 159,
+    "canonicalModel": "claude-opus-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "n_records": 1
+  },
+  {
+   "kind": "direct",
+   "proposition": "g1-acs-moe-002",
+   "qualifier": "VINTAGE",
+   "status": "ok",
+   "evidence_path": "assessment/evidence/g1/g1-acs-moe-002.direct.VINTAGE.g1-v0-2026-09-02.claude-opus-5.json",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 517,
+    "cacheReadInputTokens": 12841,
+    "cacheCreationInputTokens": 17634,
+    "webSearchRequests": 0,
+    "costUSD": 0.1956955,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 100,
+    "canonicalModel": "claude-opus-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "n_records": 1
+  },
+  {
+   "kind": "direct",
+   "proposition": "g1-acs-se-005",
+   "qualifier": "MOE",
+   "status": "ok",
+   "evidence_path": "assessment/evidence/g1/g1-acs-se-005.direct.MOE.g1-v0-2026-09-02.claude-opus-5.json",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 22,
+    "cacheReadInputTokens": 12841,
+    "cacheCreationInputTokens": 17615,
+    "webSearchRequests": 0,
+    "costUSD": 0.18313049999999997,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 0,
+    "canonicalModel": "claude-opus-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "n_records": 1
+  },
+  {
+   "kind": "direct",
+   "proposition": "g1-acs-se-005",
+   "qualifier": "SE",
+   "status": "ok",
+   "evidence_path": "assessment/evidence/g1/g1-acs-se-005.direct.SE.g1-v0-2026-09-02.claude-opus-5.json",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 197,
+    "cacheReadInputTokens": 12841,
+    "cacheCreationInputTokens": 17614,
+    "webSearchRequests": 0,
+    "costUSD": 0.1874955,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 73,
+    "canonicalModel": "claude-opus-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "n_records": 1
+  },
+  {
+   "kind": "indirect",
+   "passage": "acs-ch8-loudoun-83",
+   "propositions": [
+    "g1-acs-cv-005"
+   ],
+   "status": "ok",
+   "evidence_path": "assessment/evidence/g1/acs-ch8-loudoun-83.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 849,
+    "cacheReadInputTokens": 12841,
+    "cacheCreationInputTokens": 17232,
+    "webSearchRequests": 0,
+    "costUSD": 0.1999755,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 254,
+    "canonicalModel": "claude-opus-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "n_records": 4
+  },
+  {
+   "kind": "direct",
+   "proposition": "g1-acs-cv-005",
+   "qualifier": "CV",
+   "status": "ok",
+   "evidence_path": "assessment/evidence/g1/g1-acs-cv-005.direct.CV.g1-v0-2026-09-02.claude-opus-5.json",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 247,
+    "cacheReadInputTokens": 12841,
+    "cacheCreationInputTokens": 17271,
+    "webSearchRequests": 0,
+    "costUSD": 0.18531550000000002,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 0,
+    "canonicalModel": "claude-opus-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "n_records": 1
+  },
+  {
+   "kind": "direct",
+   "proposition": "g1-acs-cv-005",
+   "qualifier": "MOE",
+   "status": "ok",
+   "evidence_path": "assessment/evidence/g1/g1-acs-cv-005.direct.MOE.g1-v0-2026-09-02.claude-opus-5.json",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 116,
+    "cacheReadInputTokens": 12841,
+    "cacheCreationInputTokens": 17268,
+    "webSearchRequests": 0,
+    "costUSD": 0.1820105,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 0,
+    "canonicalModel": "claude-opus-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "n_records": 1
+  },
+  {
+   "kind": "direct",
+   "proposition": "g1-acs-cv-005",
+   "qualifier": "SE",
+   "status": "ok",
+   "evidence_path": "assessment/evidence/g1/g1-acs-cv-005.direct.SE.g1-v0-2026-09-02.claude-opus-5.json",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 249,
+    "cacheReadInputTokens": 12841,
+    "cacheCreationInputTokens": 17267,
+    "webSearchRequests": 0,
+    "costUSD": 0.18532550000000003,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 45,
+    "canonicalModel": "claude-opus-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "n_records": 1
+  },
+  {
+   "kind": "direct",
+   "proposition": "g1-acs-cv-005",
+   "qualifier": "VINTAGE",
+   "status": "ok",
+   "evidence_path": "assessment/evidence/g1/g1-acs-cv-005.direct.VINTAGE.g1-v0-2026-09-02.claude-opus-5.json",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 821,
+    "cacheReadInputTokens": 12841,
+    "cacheCreationInputTokens": 17272,
+    "webSearchRequests": 0,
+    "costUSD": 0.19967549999999998,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 277,
+    "canonicalModel": "claude-opus-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "n_records": 1
+  },
+  {
+   "kind": "indirect",
+   "passage": "acs-ch8-product",
+   "propositions": [
+    "g1-acs-moe-005",
+    "g1-acs-moe-006",
+    "g1-acs-ci-004"
+   ],
+   "status": "ok",
+   "evidence_path": "assessment/evidence/g1/acs-ch8-product.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 868,
+    "cacheReadInputTokens": 12841,
+    "cacheCreationInputTokens": 17229,
+    "webSearchRequests": 0,
+    "costUSD": 0.2004205,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 226,
+    "canonicalModel": "claude-opus-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "n_records": 5
+  },
+  {
+   "kind": "direct",
+   "proposition": "g1-acs-moe-005",
+   "qualifier": "MOE",
+   "status": "ok",
+   "evidence_path": "assessment/evidence/g1/g1-acs-moe-005.direct.MOE.g1-v0-2026-09-02.claude-opus-5.json",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 84,
+    "cacheReadInputTokens": 12841,
+    "cacheCreationInputTokens": 16125,
+    "webSearchRequests": 0,
+    "costUSD": 0.1697805,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 0,
+    "canonicalModel": "claude-opus-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "n_records": 1
+  },
+  {
+   "kind": "direct",
+   "proposition": "g1-acs-moe-005",
+   "qualifier": "VINTAGE",
+   "status": "ok",
+   "evidence_path": "assessment/evidence/g1/g1-acs-moe-005.direct.VINTAGE.g1-v0-2026-09-02.claude-opus-5.json",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 564,
+    "cacheReadInputTokens": 12841,
+    "cacheCreationInputTokens": 17248,
+    "webSearchRequests": 0,
+    "costUSD": 0.1930105,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 265,
+    "canonicalModel": "claude-opus-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "n_records": 1
+  },
+  {
+   "kind": "direct",
+   "proposition": "g1-acs-moe-006",
+   "qualifier": "MOE",
+   "status": "ok",
+   "evidence_path": "assessment/evidence/g1/g1-acs-moe-006.direct.MOE.g1-v0-2026-09-02.claude-opus-5.json",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 52,
+    "cacheReadInputTokens": 12841,
+    "cacheCreationInputTokens": 17254,
+    "webSearchRequests": 0,
+    "costUSD": 0.18027049999999997,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 0,
+    "canonicalModel": "claude-opus-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "n_records": 1
+  },
+  {
+   "kind": "direct",
+   "proposition": "g1-acs-ci-004",
+   "qualifier": "CI",
+   "status": "ok",
+   "evidence_path": "assessment/evidence/g1/g1-acs-ci-004.direct.CI.g1-v0-2026-09-02.claude-opus-5.json",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 187,
+    "cacheReadInputTokens": 12841,
+    "cacheCreationInputTokens": 17257,
+    "webSearchRequests": 0,
+    "costUSD": 0.1836755,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 28,
+    "canonicalModel": "claude-opus-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "n_records": 1
+  },
+  {
+   "kind": "direct",
+   "proposition": "g1-acs-ci-004",
+   "qualifier": "CV",
+   "status": "ok",
+   "evidence_path": "assessment/evidence/g1/g1-acs-ci-004.direct.CV.g1-v0-2026-09-02.claude-opus-5.json",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 81,
+    "cacheReadInputTokens": 12841,
+    "cacheCreationInputTokens": 17259,
+    "webSearchRequests": 0,
+    "costUSD": 0.1810455,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 0,
+    "canonicalModel": "claude-opus-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "n_records": 1
+  },
+  {
+   "kind": "indirect",
+   "passage": "ons-se-table1",
+   "propositions": [
+    "g1-ons-se-001",
+    "g1-ons-se-002"
+   ],
+   "status": "ok",
+   "evidence_path": "assessment/evidence/g1/ons-se-table1.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 616,
+    "cacheReadInputTokens": 12841,
+    "cacheCreationInputTokens": 16947,
+    "webSearchRequests": 0,
+    "costUSD": 0.1913005,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 176,
+    "canonicalModel": "claude-opus-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "n_records": 5
+  },
+  {
+   "kind": "direct",
+   "proposition": "g1-ons-se-001",
+   "qualifier": "CV",
+   "status": "ok",
+   "evidence_path": "assessment/evidence/g1/g1-ons-se-001.direct.CV.g1-v0-2026-09-02.claude-opus-5.json",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 274,
+    "cacheReadInputTokens": 12841,
+    "cacheCreationInputTokens": 16979,
+    "webSearchRequests": 0,
+    "costUSD": 0.1830705,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 104,
+    "canonicalModel": "claude-opus-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "n_records": 1
+  },
+  {
+   "kind": "direct",
+   "proposition": "g1-ons-se-001",
+   "qualifier": "SE",
+   "status": "ok",
+   "evidence_path": "assessment/evidence/g1/g1-ons-se-001.direct.SE.g1-v0-2026-09-02.claude-opus-5.json",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 62,
+    "cacheReadInputTokens": 12841,
+    "cacheCreationInputTokens": 16975,
+    "webSearchRequests": 0,
+    "costUSD": 0.1777305,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 0,
+    "canonicalModel": "claude-opus-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "n_records": 1
+  },
+  {
+   "kind": "direct",
+   "proposition": "g1-ons-se-001",
+   "qualifier": "VINTAGE",
+   "status": "ok",
+   "evidence_path": "assessment/evidence/g1/g1-ons-se-001.direct.VINTAGE.g1-v0-2026-09-02.claude-opus-5.json",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 600,
+    "cacheReadInputTokens": 12841,
+    "cacheCreationInputTokens": 16980,
+    "webSearchRequests": 0,
+    "costUSD": 0.19123049999999997,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 193,
+    "canonicalModel": "claude-opus-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "n_records": 1
+  },
+  {
+   "kind": "direct",
+   "proposition": "g1-ons-se-002",
+   "qualifier": "CV",
+   "status": "ok",
+   "evidence_path": "assessment/evidence/g1/g1-ons-se-002.direct.CV.g1-v0-2026-09-02.claude-opus-5.json",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 247,
+    "cacheReadInputTokens": 12841,
+    "cacheCreationInputTokens": 16982,
+    "webSearchRequests": 0,
+    "costUSD": 0.1824255,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 66,
+    "canonicalModel": "claude-opus-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "n_records": 1
+  },
+  {
+   "kind": "direct",
+   "proposition": "g1-ons-se-002",
+   "qualifier": "SE",
+   "status": "ok",
+   "evidence_path": "assessment/evidence/g1/g1-ons-se-002.direct.SE.g1-v0-2026-09-02.claude-opus-5.json",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 9,
+    "cacheReadInputTokens": 12841,
+    "cacheCreationInputTokens": 16978,
+    "webSearchRequests": 0,
+    "costUSD": 0.1764355,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 0,
+    "canonicalModel": "claude-opus-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "n_records": 1
+  },
+  {
+   "kind": "indirect",
+   "passage": "ons-cv-examples",
+   "propositions": [
+    "g1-ons-se-003",
+    "g1-ons-cv-002",
+    "g1-ons-se-004"
+   ],
+   "status": "reused_evidence",
+   "evidence_path": "assessment/evidence/g1/ons-cv-examples.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 486,
+    "cacheReadInputTokens": 12841,
+    "cacheCreationInputTokens": 16990,
+    "webSearchRequests": 0,
+    "costUSD": 0.18848050000000002,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 83,
+    "canonicalModel": "claude-opus-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "n_records": 6
+  },
+  {
+   "kind": "direct",
+   "proposition": "g1-ons-se-003",
+   "qualifier": "SE",
+   "status": "ok",
+   "evidence_path": "assessment/evidence/g1/g1-ons-se-003.direct.SE.g1-v0-2026-09-02.claude-opus-5.json",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 63,
+    "cacheReadInputTokens": 12841,
+    "cacheCreationInputTokens": 15885,
+    "webSearchRequests": 0,
+    "costUSD": 0.1668555,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 0,
+    "canonicalModel": "claude-opus-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "n_records": 1
+  },
+  {
+   "kind": "direct",
+   "proposition": "g1-ons-se-003",
+   "qualifier": "VINTAGE",
+   "status": "ok",
+   "evidence_path": "assessment/evidence/g1/g1-ons-se-003.direct.VINTAGE.g1-v0-2026-09-02.claude-opus-5.json",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 588,
+    "cacheReadInputTokens": 12841,
+    "cacheCreationInputTokens": 17009,
+    "webSearchRequests": 0,
+    "costUSD": 0.1912205,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 237,
+    "canonicalModel": "claude-opus-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "n_records": 1
+  },
+  {
+   "kind": "direct",
+   "proposition": "g1-ons-cv-002",
+   "qualifier": "CV",
+   "status": "reused_evidence",
+   "evidence_path": "assessment/evidence/g1/g1-ons-cv-002.direct.CV.g1-v0-2026-09-02.claude-opus-5.json",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 35,
+    "cacheReadInputTokens": 12841,
+    "cacheCreationInputTokens": 17008,
+    "webSearchRequests": 0,
+    "costUSD": 0.17738549999999997,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 0,
+    "canonicalModel": "claude-opus-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "n_records": 1
+  },
+  {
+   "kind": "direct",
+   "proposition": "g1-ons-se-004",
+   "qualifier": "CV",
+   "status": "ok",
+   "evidence_path": "assessment/evidence/g1/g1-ons-se-004.direct.CV.g1-v0-2026-09-02.claude-opus-5.json",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 84,
+    "cacheReadInputTokens": 12841,
+    "cacheCreationInputTokens": 17018,
+    "webSearchRequests": 0,
+    "costUSD": 0.1787105,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 0,
+    "canonicalModel": "claude-opus-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "n_records": 1
+  },
+  {
+   "kind": "direct",
+   "proposition": "g1-ons-se-004",
+   "qualifier": "SE",
+   "status": "ok",
+   "evidence_path": "assessment/evidence/g1/g1-ons-se-004.direct.SE.g1-v0-2026-09-02.claude-opus-5.json",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 54,
+    "cacheReadInputTokens": 12841,
+    "cacheCreationInputTokens": 17014,
+    "webSearchRequests": 0,
+    "costUSD": 0.1779205,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 0,
+    "canonicalModel": "claude-opus-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "n_records": 1
+  },
+  {
+   "kind": "direct",
+   "proposition": "g1-ons-se-004",
+   "qualifier": "VINTAGE",
+   "status": "ok",
+   "evidence_path": "assessment/evidence/g1/g1-ons-se-004.direct.VINTAGE.g1-v0-2026-09-02.claude-opus-5.json",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 558,
+    "cacheReadInputTokens": 12841,
+    "cacheCreationInputTokens": 17019,
+    "webSearchRequests": 0,
+    "costUSD": 0.1905705,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 179,
+    "canonicalModel": "claude-opus-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "n_records": 1
+  },
+  {
+   "kind": "indirect",
+   "passage": "ons-ci-employment",
+   "propositions": [
+    "g1-ons-ci-001"
+   ],
+   "status": "ok",
+   "evidence_path": "assessment/evidence/g1/ons-ci-employment.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 278,
+    "cacheReadInputTokens": 12841,
+    "cacheCreationInputTokens": 16873,
+    "webSearchRequests": 0,
+    "costUSD": 0.18211049999999998,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 58,
+    "canonicalModel": "claude-opus-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "n_records": 2
+  },
+  {
+   "kind": "direct",
+   "proposition": "g1-ons-ci-001",
+   "qualifier": "CI",
+   "status": "ok",
+   "evidence_path": "assessment/evidence/g1/g1-ons-ci-001.direct.CI.g1-v0-2026-09-02.claude-opus-5.json",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 343,
+    "cacheReadInputTokens": 12841,
+    "cacheCreationInputTokens": 16895,
+    "webSearchRequests": 0,
+    "costUSD": 0.1839555,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 133,
+    "canonicalModel": "claude-opus-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "n_records": 1
+  },
+  {
+   "kind": "direct",
+   "proposition": "g1-ons-ci-001",
+   "qualifier": "VINTAGE",
+   "status": "ok",
+   "evidence_path": "assessment/evidence/g1/g1-ons-ci-001.direct.VINTAGE.g1-v0-2026-09-02.claude-opus-5.json",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 572,
+    "cacheReadInputTokens": 12841,
+    "cacheCreationInputTokens": 16898,
+    "webSearchRequests": 0,
+    "costUSD": 0.1897105,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 239,
+    "canonicalModel": "claude-opus-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "n_records": 1
+  },
+  {
+   "kind": "indirect",
+   "passage": "ons-ci-education",
+   "propositions": [
+    "g1-ons-ci-002"
+   ],
+   "status": "ok",
+   "evidence_path": "assessment/evidence/g1/ons-ci-education.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 712,
+    "cacheReadInputTokens": 12841,
+    "cacheCreationInputTokens": 17022,
+    "webSearchRequests": 0,
+    "costUSD": 0.19445049999999997,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 146,
+    "canonicalModel": "claude-opus-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "n_records": 2
+  },
+  {
+   "kind": "direct",
+   "proposition": "g1-ons-ci-002",
+   "qualifier": "CI",
+   "status": "ok",
+   "evidence_path": "assessment/evidence/g1/g1-ons-ci-002.direct.CI.g1-v0-2026-09-02.claude-opus-5.json",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 395,
+    "cacheReadInputTokens": 12841,
+    "cacheCreationInputTokens": 17035,
+    "webSearchRequests": 0,
+    "costUSD": 0.1866555,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 195,
+    "canonicalModel": "claude-opus-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "n_records": 1
+  },
+  {
+   "kind": "direct",
+   "proposition": "g1-ons-ci-002",
+   "qualifier": "VINTAGE",
+   "status": "ok",
+   "evidence_path": "assessment/evidence/g1/g1-ons-ci-002.direct.VINTAGE.g1-v0-2026-09-02.claude-opus-5.json",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 675,
+    "cacheReadInputTokens": 12841,
+    "cacheCreationInputTokens": 17038,
+    "webSearchRequests": 0,
+    "costUSD": 0.1936855,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 214,
+    "canonicalModel": "claude-opus-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "n_records": 1
+  },
+  {
+   "kind": "indirect",
+   "passage": "das-county-accuracy",
+   "propositions": [
+    "g1-das-dp-001"
+   ],
+   "status": "ok",
+   "evidence_path": "assessment/evidence/g1/das-county-accuracy.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 292,
+    "cacheReadInputTokens": 12841,
+    "cacheCreationInputTokens": 16956,
+    "webSearchRequests": 0,
+    "costUSD": 0.1832905,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 53,
+    "canonicalModel": "claude-opus-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "n_records": 2
+  },
+  {
+   "kind": "direct",
+   "proposition": "g1-das-dp-001",
+   "qualifier": "DP_NOISE",
+   "status": "ok",
+   "evidence_path": "assessment/evidence/g1/g1-das-dp-001.direct.DP_NOISE.g1-v0-2026-09-02.claude-opus-5.json",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 696,
+    "cacheReadInputTokens": 12841,
+    "cacheCreationInputTokens": 17015,
+    "webSearchRequests": 0,
+    "costUSD": 0.1939805,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 366,
+    "canonicalModel": "claude-opus-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "n_records": 1
+  },
+  {
+   "kind": "direct",
+   "proposition": "g1-das-dp-001",
+   "qualifier": "VINTAGE",
+   "status": "ok",
+   "evidence_path": "assessment/evidence/g1/g1-das-dp-001.direct.VINTAGE.g1-v0-2026-09-02.claude-opus-5.json",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 591,
+    "cacheReadInputTokens": 12841,
+    "cacheCreationInputTokens": 16999,
+    "webSearchRequests": 0,
+    "costUSD": 0.19119550000000002,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 284,
+    "canonicalModel": "claude-opus-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "n_records": 1
+  },
+  {
+   "kind": "indirect",
+   "passage": "das-run-budget",
+   "propositions": [
+    "g1-das-dp-002"
+   ],
+   "status": "ok",
+   "evidence_path": "assessment/evidence/g1/das-run-budget.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 652,
+    "cacheReadInputTokens": 12841,
+    "cacheCreationInputTokens": 16883,
+    "webSearchRequests": 0,
+    "costUSD": 0.19156049999999997,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 204,
+    "canonicalModel": "claude-opus-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "n_records": 2
+  },
+  {
+   "kind": "direct",
+   "proposition": "g1-das-dp-002",
+   "qualifier": "DP_NOISE",
+   "status": "ok",
+   "evidence_path": "assessment/evidence/g1/g1-das-dp-002.direct.DP_NOISE.g1-v0-2026-09-02.claude-opus-5.json",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 202,
+    "cacheReadInputTokens": 12841,
+    "cacheCreationInputTokens": 15817,
+    "webSearchRequests": 0,
+    "costUSD": 0.1696505,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 68,
+    "canonicalModel": "claude-opus-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "n_records": 2
+  },
+  {
+   "kind": "indirect",
+   "passage": "das-plb-people",
+   "propositions": [
+    "g1-das-dp-003"
+   ],
+   "status": "reused_evidence",
+   "evidence_path": "assessment/evidence/g1/das-plb-people.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 952,
+    "cacheReadInputTokens": 12841,
+    "cacheCreationInputTokens": 17183,
+    "webSearchRequests": 0,
+    "costUSD": 0.2020605,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 222,
+    "canonicalModel": "claude-opus-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "n_records": 2
+  },
+  {
+   "kind": "direct",
+   "proposition": "g1-das-dp-003",
+   "qualifier": "DP_NOISE",
+   "status": "reused_evidence",
+   "evidence_path": "assessment/evidence/g1/g1-das-dp-003.direct.DP_NOISE.g1-v0-2026-09-02.claude-opus-5.json",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 267,
+    "cacheReadInputTokens": 12841,
+    "cacheCreationInputTokens": 17232,
+    "webSearchRequests": 0,
+    "costUSD": 0.1854255,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 43,
+    "canonicalModel": "claude-opus-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "n_records": 2
+  },
+  {
+   "kind": "indirect",
+   "passage": "das-plb-units",
+   "propositions": [
+    "g1-das-dp-004"
+   ],
+   "status": "ok",
+   "evidence_path": "assessment/evidence/g1/das-plb-units.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 1173,
+    "cacheReadInputTokens": 12841,
+    "cacheCreationInputTokens": 17072,
+    "webSearchRequests": 0,
+    "costUSD": 0.2064755,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 392,
+    "canonicalModel": "claude-opus-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "n_records": 2
+  },
+  {
+   "kind": "direct",
+   "proposition": "g1-das-dp-004",
+   "qualifier": "DP_NOISE",
+   "status": "ok",
+   "evidence_path": "assessment/evidence/g1/g1-das-dp-004.direct.DP_NOISE.g1-v0-2026-09-02.claude-opus-5.json",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 302,
+    "cacheReadInputTokens": 12841,
+    "cacheCreationInputTokens": 17123,
+    "webSearchRequests": 0,
+    "costUSD": 0.1852105,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 48,
+    "canonicalModel": "claude-opus-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "n_records": 2
+  },
+  {
+   "kind": "indirect",
+   "passage": "lfs-reliability-categories",
+   "propositions": [
+    "g1-lfs-rf-001",
+    "g1-lfs-rf-002",
+    "g1-lfs-sup-001"
+   ],
+   "status": "ok",
+   "evidence_path": "assessment/evidence/g1/lfs-reliability-categories.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 487,
+    "cacheReadInputTokens": 12841,
+    "cacheCreationInputTokens": 17118,
+    "webSearchRequests": 0,
+    "costUSD": 0.1897855,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 55,
+    "canonicalModel": "claude-opus-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "n_records": 3
+  },
+  {
+   "kind": "direct",
+   "proposition": "g1-lfs-rf-001",
+   "qualifier": "RELIABILITY_FLAG",
+   "status": "ok",
+   "evidence_path": "assessment/evidence/g1/g1-lfs-rf-001.direct.RELIABILITY_FLAG.g1-v0-2026-09-02.claude-opus-5.json",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 627,
+    "cacheReadInputTokens": 12841,
+    "cacheCreationInputTokens": 17142,
+    "webSearchRequests": 0,
+    "costUSD": 0.19352550000000002,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 227,
+    "canonicalModel": "claude-opus-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "n_records": 1
+  },
+  {
+   "kind": "direct",
+   "proposition": "g1-lfs-rf-002",
+   "qualifier": "RELIABILITY_FLAG",
+   "status": "ok",
+   "evidence_path": "assessment/evidence/g1/g1-lfs-rf-002.direct.RELIABILITY_FLAG.g1-v0-2026-09-02.claude-opus-5.json",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 784,
+    "cacheReadInputTokens": 12841,
+    "cacheCreationInputTokens": 17141,
+    "webSearchRequests": 0,
+    "costUSD": 0.19744050000000002,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 354,
+    "canonicalModel": "claude-opus-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "n_records": 1
+  },
+  {
+   "kind": "direct",
+   "proposition": "g1-lfs-sup-001",
+   "qualifier": "SUPPRESSION",
+   "status": "ok",
+   "evidence_path": "assessment/evidence/g1/g1-lfs-sup-001.direct.SUPPRESSION.g1-v0-2026-09-02.claude-opus-5.json",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 495,
+    "cacheReadInputTokens": 12841,
+    "cacheCreationInputTokens": 17137,
+    "webSearchRequests": 0,
+    "costUSD": 0.1901755,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 210,
+    "canonicalModel": "claude-opus-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "n_records": 1
+  },
+  {
+   "kind": "indirect",
+   "passage": "lfs-minimum-size",
+   "propositions": [
+    "g1-lfs-sup-002",
+    "g1-lfs-sup-003"
+   ],
+   "status": "ok",
+   "evidence_path": "assessment/evidence/g1/lfs-minimum-size.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 730,
+    "cacheReadInputTokens": 12841,
+    "cacheCreationInputTokens": 17047,
+    "webSearchRequests": 0,
+    "costUSD": 0.1951505,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 175,
+    "canonicalModel": "claude-opus-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "n_records": 2
+  },
+  {
+   "kind": "direct",
+   "proposition": "g1-lfs-sup-002",
+   "qualifier": "SUPPRESSION",
+   "status": "ok",
+   "evidence_path": "assessment/evidence/g1/g1-lfs-sup-002.direct.SUPPRESSION.g1-v0-2026-09-02.claude-opus-5.json",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 534,
+    "cacheReadInputTokens": 12841,
+    "cacheCreationInputTokens": 17064,
+    "webSearchRequests": 0,
+    "costUSD": 0.1904205,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 245,
+    "canonicalModel": "claude-opus-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "n_records": 1
+  },
+  {
+   "kind": "direct",
+   "proposition": "g1-lfs-sup-003",
+   "qualifier": "SUPPRESSION",
+   "status": "ok",
+   "evidence_path": "assessment/evidence/g1/g1-lfs-sup-003.direct.SUPPRESSION.g1-v0-2026-09-02.claude-opus-5.json",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 667,
+    "cacheReadInputTokens": 12841,
+    "cacheCreationInputTokens": 17065,
+    "webSearchRequests": 0,
+    "costUSD": 0.1937555,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 309,
+    "canonicalModel": "claude-opus-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "n_records": 1
+  },
+  {
+   "kind": "indirect",
+   "passage": "lfs-ci-example",
+   "propositions": [
+    "g1-lfs-ci-001"
+   ],
+   "status": "ok",
+   "evidence_path": "assessment/evidence/g1/lfs-ci-example.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 693,
+    "cacheReadInputTokens": 12841,
+    "cacheCreationInputTokens": 17301,
+    "webSearchRequests": 0,
+    "costUSD": 0.19676549999999998,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 128,
+    "canonicalModel": "claude-opus-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "n_records": 2
+  },
+  {
+   "kind": "direct",
+   "proposition": "g1-lfs-ci-001",
+   "qualifier": "CI",
+   "status": "ok",
+   "evidence_path": "assessment/evidence/g1/g1-lfs-ci-001.direct.CI.g1-v0-2026-09-02.claude-opus-5.json",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 350,
+    "cacheReadInputTokens": 12841,
+    "cacheCreationInputTokens": 17320,
+    "webSearchRequests": 0,
+    "costUSD": 0.1883805,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 119,
+    "canonicalModel": "claude-opus-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "n_records": 1
+  },
+  {
+   "kind": "direct",
+   "proposition": "g1-lfs-ci-001",
+   "qualifier": "SE",
+   "status": "ok",
+   "evidence_path": "assessment/evidence/g1/g1-lfs-ci-001.direct.SE.g1-v0-2026-09-02.claude-opus-5.json",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 131,
+    "cacheReadInputTokens": 12841,
+    "cacheCreationInputTokens": 17318,
+    "webSearchRequests": 0,
+    "costUSD": 0.1828855,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 0,
+    "canonicalModel": "claude-opus-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "n_records": 1
+  },
+  {
+   "kind": "indirect",
+   "passage": "lfs-unemployment-cv",
+   "propositions": [
+    "g1-lfs-cv-001",
+    "g1-lfs-cv-002"
+   ],
+   "status": "ok",
+   "evidence_path": "assessment/evidence/g1/lfs-unemployment-cv.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 803,
+    "cacheReadInputTokens": 12841,
+    "cacheCreationInputTokens": 16917,
+    "webSearchRequests": 0,
+    "costUSD": 0.1956755,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 285,
+    "canonicalModel": "claude-opus-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "n_records": 3
+  },
+  {
+   "kind": "direct",
+   "proposition": "g1-lfs-cv-001",
+   "qualifier": "CV",
+   "status": "ok",
+   "evidence_path": "assessment/evidence/g1/g1-lfs-cv-001.direct.CV.g1-v0-2026-09-02.claude-opus-5.json",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 131,
+    "cacheReadInputTokens": 12841,
+    "cacheCreationInputTokens": 16941,
+    "webSearchRequests": 0,
+    "costUSD": 0.1791155,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 0,
+    "canonicalModel": "claude-opus-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "n_records": 1
+  },
+  {
+   "kind": "direct",
+   "proposition": "g1-lfs-cv-001",
+   "qualifier": "VINTAGE",
+   "status": "ok",
+   "evidence_path": "assessment/evidence/g1/g1-lfs-cv-001.direct.VINTAGE.g1-v0-2026-09-02.claude-opus-5.json",
+   "usage": {
+    "inputTokens": 6,
+    "outputTokens": 1986,
+    "cacheReadInputTokens": 73724,
+    "cacheCreationInputTokens": 18519,
+    "webSearchRequests": 0,
+    "costUSD": 0.271732,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 986,
+    "canonicalModel": "claude-opus-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "n_records": 1
+  },
+  {
+   "kind": "direct",
+   "proposition": "g1-lfs-cv-002",
+   "qualifier": "CV",
+   "status": "spend_refused",
+   "detail": "spend guard refused dispatch (over_ceiling, scope=run): committed 1,983,468 + estimate 36,846 vs ceiling 2,000,000 [run g1_eval_v1_dev_2026-09-03]"
+  }
+ ],
+ "records": [
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-acs-moe-001",
+   "qualifier_class": "MOE",
+   "mode": "indirect",
+   "outcome": "pass",
+   "score": 2,
+   "level": 4,
+   "level_label": "preserved_exact",
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "MOE 'MOE of 10,127' matches source 10,127",
+   "timestamp": "2026-09-03T03:21:56.976182+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/acs-ch7-colorado.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "value": 10127,
+     "text": "10,127",
+     "unit": "count",
+     "level": 0.9
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "moe_phrase",
+     "reliability",
+     "year"
+    ],
+    "matched_span": "MOE of 10,127",
+    "level": 4,
+    "level_label": "preserved_exact",
+    "estimate": {
+     "estimate_matches": [
+      "564,757"
+     ]
+    },
+    "source_doc_id": "census-acs-general-handbook-2020",
+    "passage_id": "acs-ch7-colorado"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-acs-moe-001",
+   "qualifier_class": "VINTAGE",
+   "mode": "indirect",
+   "outcome": "pass",
+   "score": 2,
+   "level": 4,
+   "level_label": "preserved_exact",
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "as-of '2015' matches source '2015'",
+   "timestamp": "2026-09-03T03:21:56.976182+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/acs-ch7-colorado.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "as_of": "2015",
+     "period": "1-year",
+     "text": "2015 ACS 1-year estimates"
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "moe_phrase",
+     "reliability",
+     "year"
+    ],
+    "matched_span": "2015",
+    "level": 4,
+    "level_label": "preserved_exact",
+    "estimate": {
+     "estimate_matches": [
+      "564,757"
+     ]
+    },
+    "source_doc_id": "census-acs-general-handbook-2020",
+    "passage_id": "acs-ch7-colorado"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-acs-ci-003",
+   "qualifier_class": "CI",
+   "mode": "indirect",
+   "outcome": "pass",
+   "score": 2,
+   "level": 3,
+   "level_label": "preserved_transformed",
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "CI ± 'MOE of 10,127' matches source",
+   "timestamp": "2026-09-03T03:21:56.976182+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/acs-ch7-colorado.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "form": "bounds",
+     "lower": 554630,
+     "upper": 574884,
+     "lower_text": "554,630",
+     "upper_text": "574,884",
+     "level": 0.9,
+     "text": "554,630 to 574,884"
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "moe_phrase",
+     "reliability",
+     "year"
+    ],
+    "transformation": "bounds_to_pm",
+    "level": 3,
+    "level_label": "preserved_transformed",
+    "estimate": {
+     "estimate_matches": [
+      "564,757"
+     ]
+    },
+    "source_doc_id": "census-acs-general-handbook-2020",
+    "passage_id": "acs-ch7-colorado"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-acs-cv-004",
+   "qualifier_class": "CV",
+   "mode": "indirect",
+   "outcome": "unparseable",
+   "score": null,
+   "level": null,
+   "level_label": null,
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "uncertainty vocabulary present (cv, cvs, precise, reliability, reliable, variation) but no CV could be classified",
+   "timestamp": "2026-09-03T03:21:56.976182+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/acs-ch7-colorado.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "value": 1.1,
+     "text": "1.1",
+     "unit": "percent"
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "moe_phrase",
+     "reliability",
+     "year"
+    ],
+    "cues": [
+     "cv",
+     "cvs",
+     "precise",
+     "reliability",
+     "reliable",
+     "variation"
+    ],
+    "estimate": {
+     "estimate_matches": [
+      "564,757"
+     ]
+    },
+    "source_doc_id": "census-acs-general-handbook-2020",
+    "passage_id": "acs-ch7-colorado"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-acs-cv-004",
+   "qualifier_class": "RELIABILITY_FLAG",
+   "mode": "indirect",
+   "outcome": "pass",
+   "score": 2,
+   "level": 3,
+   "level_label": "preserved_transformed",
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "reliability flag restated as 'reliable' (source 'quite reliable')",
+   "timestamp": "2026-09-03T03:21:56.976182+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/acs-ch7-colorado.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "text": "quite reliable",
+     "polarity": "reliable"
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "moe_phrase",
+     "reliability",
+     "year"
+    ],
+    "matched_span": "reliable",
+    "polarity": "reliable",
+    "level": 3,
+    "level_label": "preserved_transformed",
+    "estimate": {
+     "estimate_matches": [
+      "564,757"
+     ]
+    },
+    "source_doc_id": "census-acs-general-handbook-2020",
+    "passage_id": "acs-ch7-colorado"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-acs-moe-001",
+   "qualifier_class": "MOE",
+   "mode": "direct",
+   "outcome": "pass",
+   "score": 2,
+   "level": 4,
+   "level_label": "preserved_exact",
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "MOE '564,757 ± 10,127 ' matches source 10,127",
+   "timestamp": "2026-09-03T03:22:02.155198+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/g1-acs-moe-001.direct.MOE.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "value": 10127,
+     "text": "10,127",
+     "unit": "count",
+     "level": 0.9
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "bounds",
+     "pm",
+     "year"
+    ],
+    "matched_span": "564,757 ± 10,127 ",
+    "level": 4,
+    "level_label": "preserved_exact",
+    "estimate": {
+     "estimate_matches": [
+      "564,757"
+     ]
+    },
+    "source_doc_id": "census-acs-general-handbook-2020",
+    "passage_id": "acs-ch7-colorado"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-acs-moe-001",
+   "qualifier_class": "VINTAGE",
+   "mode": "direct",
+   "outcome": "pass",
+   "score": 2,
+   "level": 4,
+   "level_label": "preserved_exact",
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "as-of 'December 31, 2015' matches source '2015'",
+   "timestamp": "2026-09-03T10:56:14.201433+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/g1-acs-moe-001.direct.VINTAGE.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "as_of": "2015",
+     "period": "1-year",
+     "text": "2015 ACS 1-year estimates"
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "month_year",
+     "year"
+    ],
+    "matched_span": "December 31, 2015",
+    "level": 4,
+    "level_label": "preserved_exact",
+    "estimate": {
+     "estimate_matches": [
+      "564,757"
+     ]
+    },
+    "source_doc_id": "census-acs-general-handbook-2020",
+    "passage_id": "acs-ch7-colorado"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-acs-ci-003",
+   "qualifier_class": "CI",
+   "mode": "direct",
+   "outcome": "pass",
+   "score": 2,
+   "level": 3,
+   "level_label": "preserved_transformed",
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "CI ± 'MOE of 10,127' matches source",
+   "timestamp": "2026-09-03T10:56:21.674160+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/g1-acs-ci-003.direct.CI.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "form": "bounds",
+     "lower": 554630,
+     "upper": 574884,
+     "lower_text": "554,630",
+     "upper_text": "574,884",
+     "level": 0.9,
+     "text": "554,630 to 574,884"
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "cv_phrase",
+     "moe_phrase",
+     "reliability",
+     "se_phrase",
+     "year"
+    ],
+    "transformation": "bounds_to_pm",
+    "level": 3,
+    "level_label": "preserved_transformed",
+    "estimate": {
+     "estimate_matches": [
+      "564,757"
+     ]
+    },
+    "source_doc_id": "census-acs-general-handbook-2020",
+    "passage_id": "acs-ch7-colorado"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-acs-cv-004",
+   "qualifier_class": "CV",
+   "mode": "direct",
+   "outcome": "unparseable",
+   "score": null,
+   "level": null,
+   "level_label": null,
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "uncertainty vocabulary present (cv, reliable) but no CV could be classified",
+   "timestamp": "2026-09-03T10:56:27.890383+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/g1-acs-cv-004.direct.CV.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "value": 1.1,
+     "text": "1.1",
+     "unit": "percent"
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "reliability"
+    ],
+    "cues": [
+     "cv",
+     "reliable"
+    ],
+    "estimate": {
+     "estimate_matches": [
+      "564,757"
+     ]
+    },
+    "source_doc_id": "census-acs-general-handbook-2020",
+    "passage_id": "acs-ch7-colorado"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-acs-cv-004",
+   "qualifier_class": "RELIABILITY_FLAG",
+   "mode": "direct",
+   "outcome": "pass",
+   "score": 2,
+   "level": 3,
+   "level_label": "preserved_transformed",
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "reliability flag restated as 'reliable' (source 'quite reliable')",
+   "timestamp": "2026-09-03T10:56:35.699329+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/g1-acs-cv-004.direct.RELIABILITY_FLAG.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "text": "quite reliable",
+     "polarity": "reliable"
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "cv_phrase",
+     "moe_phrase",
+     "pm",
+     "reliability"
+    ],
+    "matched_span": "reliable",
+    "polarity": "reliable",
+    "level": 3,
+    "level_label": "preserved_transformed",
+    "estimate": {
+     "estimate_matches": [
+      "564,757"
+     ]
+    },
+    "source_doc_id": "census-acs-general-handbook-2020",
+    "passage_id": "acs-ch7-colorado"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-acs-moe-003",
+   "qualifier_class": "MOE",
+   "mode": "indirect",
+   "outcome": "pass",
+   "score": 2,
+   "level": 3,
+   "level_label": "preserved_transformed",
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "MOE 'margin of error ±0.2\\n' matches source 0.2",
+   "timestamp": "2026-09-03T10:56:50.335289+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/acs-ch7-significance.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "value": 0.2,
+     "text": "0.2",
+     "unit": "percent_points",
+     "level": 0.9
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "moe_phrase",
+     "year"
+    ],
+    "matched_span": "margin of error ±0.2\n",
+    "level_omitted": true,
+    "level": 3,
+    "level_label": "preserved_transformed",
+    "estimate": {
+     "estimate_matches": [
+      "12.6 percent"
+     ]
+    },
+    "source_doc_id": "census-acs-general-handbook-2020",
+    "passage_id": "acs-ch7-significance"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-acs-moe-003",
+   "qualifier_class": "VINTAGE",
+   "mode": "indirect",
+   "outcome": "pass",
+   "score": 2,
+   "level": 4,
+   "level_label": "preserved_exact",
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "as-of '2015' matches source '2015'",
+   "timestamp": "2026-09-03T10:56:50.335289+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/acs-ch7-significance.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "as_of": "2015",
+     "text": "based on 2015 ACS data"
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "moe_phrase",
+     "year"
+    ],
+    "matched_span": "2015",
+    "level": 4,
+    "level_label": "preserved_exact",
+    "estimate": {
+     "estimate_matches": [
+      "12.6 percent"
+     ]
+    },
+    "source_doc_id": "census-acs-general-handbook-2020",
+    "passage_id": "acs-ch7-significance"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-acs-moe-004",
+   "qualifier_class": "MOE",
+   "mode": "indirect",
+   "outcome": "pass",
+   "score": 2,
+   "level": 3,
+   "level_label": "preserved_transformed",
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "MOE 'margin of error ±0.3\\n' matches source 0.3",
+   "timestamp": "2026-09-03T10:56:50.335289+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/acs-ch7-significance.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "value": 0.3,
+     "text": "0.3",
+     "unit": "percent_points",
+     "level": 0.9
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "moe_phrase",
+     "year"
+    ],
+    "matched_span": "margin of error ±0.3\n",
+    "level_omitted": true,
+    "level": 3,
+    "level_label": "preserved_transformed",
+    "estimate": {
+     "estimate_matches": [
+      "10.5 percent"
+     ]
+    },
+    "source_doc_id": "census-acs-general-handbook-2020",
+    "passage_id": "acs-ch7-significance"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-acs-moe-004",
+   "qualifier_class": "SE",
+   "mode": "indirect",
+   "outcome": "unparseable",
+   "score": null,
+   "level": null,
+   "level_label": null,
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "uncertainty vocabulary present (margin of error, noise, precise, precisely, sampling, standard error) but no SE could be classified",
+   "timestamp": "2026-09-03T10:56:50.335289+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/acs-ch7-significance.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "value": 0.182,
+     "text": "0.182",
+     "unit": "percent_points"
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "moe_phrase",
+     "year"
+    ],
+    "cues": [
+     "margin of error",
+     "noise",
+     "precise",
+     "precisely",
+     "sampling",
+     "standard error"
+    ],
+    "estimate": {
+     "estimate_matches": [
+      "10.5 percent"
+     ]
+    },
+    "source_doc_id": "census-acs-general-handbook-2020",
+    "passage_id": "acs-ch7-significance"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-acs-moe-003",
+   "qualifier_class": "MOE",
+   "mode": "direct",
+   "outcome": "pass",
+   "score": 2,
+   "level": 3,
+   "level_label": "preserved_transformed",
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "MOE 'MOE of 0.2' matches source 0.2",
+   "timestamp": "2026-09-03T10:56:54.836343+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/g1-acs-moe-003.direct.MOE.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "value": 0.2,
+     "text": "0.2",
+     "unit": "percent_points",
+     "level": 0.9
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "moe_phrase",
+     "se_phrase"
+    ],
+    "matched_span": "MOE of 0.2",
+    "level_omitted": true,
+    "level": 3,
+    "level_label": "preserved_transformed",
+    "estimate": {
+     "estimate_matches": [
+      "12.6 percent"
+     ]
+    },
+    "source_doc_id": "census-acs-general-handbook-2020",
+    "passage_id": "acs-ch7-significance"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-acs-moe-003",
+   "qualifier_class": "VINTAGE",
+   "mode": "direct",
+   "outcome": "pass",
+   "score": 2,
+   "level": 4,
+   "level_label": "preserved_exact",
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "as-of '2015' matches source '2015'",
+   "timestamp": "2026-09-03T10:57:07.827318+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/g1-acs-moe-003.direct.VINTAGE.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "as_of": "2015",
+     "text": "based on 2015 ACS data"
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "moe_phrase",
+     "year",
+     "year_range"
+    ],
+    "matched_span": "2015",
+    "level": 4,
+    "level_label": "preserved_exact",
+    "estimate": {
+     "estimate_matches": [
+      "12.6%"
+     ]
+    },
+    "source_doc_id": "census-acs-general-handbook-2020",
+    "passage_id": "acs-ch7-significance"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-acs-moe-004",
+   "qualifier_class": "MOE",
+   "mode": "direct",
+   "outcome": "pass",
+   "score": 2,
+   "level": 3,
+   "level_label": "preserved_transformed",
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "MOE 'MOE = 0.3' matches source 0.3",
+   "timestamp": "2026-09-03T10:57:12.533214+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/g1-acs-moe-004.direct.MOE.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "value": 0.3,
+     "text": "0.3",
+     "unit": "percent_points",
+     "level": 0.9
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "moe_phrase",
+     "se_phrase"
+    ],
+    "matched_span": "MOE = 0.3",
+    "level_omitted": true,
+    "level": 3,
+    "level_label": "preserved_transformed",
+    "estimate": {
+     "estimate_matches": [
+      "10.5"
+     ]
+    },
+    "source_doc_id": "census-acs-general-handbook-2020",
+    "passage_id": "acs-ch7-significance"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-acs-moe-004",
+   "qualifier_class": "SE",
+   "mode": "direct",
+   "outcome": "fail",
+   "score": 0,
+   "level": 1,
+   "level_label": "omitted",
+   "failure_class": "omission",
+   "estimate_status": "absent",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "neither the estimate nor its SE is restated",
+   "timestamp": "2026-09-03T10:57:16.565488+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/g1-acs-moe-004.direct.SE.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "value": 0.182,
+     "text": "0.182",
+     "unit": "percent_points"
+    },
+    "estimate_status": "absent",
+    "rules_fired": [
+     "moe_phrase"
+    ],
+    "level": 1,
+    "level_label": "omitted",
+    "estimate": {
+     "estimate_matches": []
+    },
+    "source_doc_id": "census-acs-general-handbook-2020",
+    "passage_id": "acs-ch7-significance"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-acs-moe-002",
+   "qualifier_class": "MOE",
+   "mode": "indirect",
+   "outcome": "pass",
+   "score": 2,
+   "level": 4,
+   "level_label": "preserved_exact",
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "MOE '203,119 ± 5,070' matches source 5,070",
+   "timestamp": "2026-09-03T10:57:35.937212+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/acs-ch8-tricounty.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "value": 5070,
+     "text": "5,070",
+     "unit": "count",
+     "level": 0.9
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "cv_phrase",
+     "moe_phrase",
+     "pm",
+     "reliability",
+     "year"
+    ],
+    "matched_span": "203,119 ± 5,070",
+    "level": 4,
+    "level_label": "preserved_exact",
+    "estimate": {
+     "estimate_matches": [
+      "203,119"
+     ]
+    },
+    "source_doc_id": "census-acs-general-handbook-2020",
+    "passage_id": "acs-ch8-tricounty"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-acs-moe-002",
+   "qualifier_class": "VINTAGE",
+   "mode": "indirect",
+   "outcome": "pass",
+   "score": 2,
+   "level": 4,
+   "level_label": "preserved_exact",
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "as-of '2015' matches source '2015'",
+   "timestamp": "2026-09-03T10:57:35.937212+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/acs-ch8-tricounty.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "as_of": "2015",
+     "period": "1-year",
+     "text": "2015 ACS 1-year estimates"
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "cv_phrase",
+     "moe_phrase",
+     "pm",
+     "reliability",
+     "year"
+    ],
+    "matched_span": "2015",
+    "level": 4,
+    "level_label": "preserved_exact",
+    "estimate": {
+     "estimate_matches": [
+      "203,119"
+     ]
+    },
+    "source_doc_id": "census-acs-general-handbook-2020",
+    "passage_id": "acs-ch8-tricounty"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-acs-moe-002",
+   "qualifier_class": "RELIABILITY_FLAG",
+   "mode": "indirect",
+   "outcome": "pass",
+   "score": 2,
+   "level": 3,
+   "level_label": "preserved_transformed",
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "reliability flag restated as 'reliable' (source 'very reliable')",
+   "timestamp": "2026-09-03T10:57:35.937212+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/acs-ch8-tricounty.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "text": "very reliable",
+     "polarity": "reliable"
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "cv_phrase",
+     "moe_phrase",
+     "pm",
+     "reliability",
+     "year"
+    ],
+    "matched_span": "reliable",
+    "polarity": "reliable",
+    "level": 3,
+    "level_label": "preserved_transformed",
+    "estimate": {
+     "estimate_matches": [
+      "203,119"
+     ]
+    },
+    "source_doc_id": "census-acs-general-handbook-2020",
+    "passage_id": "acs-ch8-tricounty"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-acs-se-005",
+   "qualifier_class": "SE",
+   "mode": "indirect",
+   "outcome": "unparseable",
+   "score": null,
+   "level": null,
+   "level_label": null,
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "uncertainty vocabulary present (error, margin of error, margins of error, sampling, se, standard error, uncertainty) but no SE could be classified",
+   "timestamp": "2026-09-03T10:57:35.937212+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/acs-ch8-tricounty.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "value": 2347,
+     "text": "2,347",
+     "unit": "count"
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "cv_phrase",
+     "moe_phrase",
+     "pm",
+     "reliability",
+     "year"
+    ],
+    "cues": [
+     "error",
+     "margin of error",
+     "margins of error",
+     "sampling",
+     "se",
+     "standard error",
+     "uncertainty"
+    ],
+    "estimate": {
+     "estimate_matches": [
+      "135,173"
+     ]
+    },
+    "source_doc_id": "census-acs-general-handbook-2020",
+    "passage_id": "acs-ch8-tricounty"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-acs-se-005",
+   "qualifier_class": "MOE",
+   "mode": "indirect",
+   "outcome": "fail",
+   "score": 0,
+   "level": 0,
+   "level_label": "corrupted",
+   "failure_class": "quantity_hallucination",
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "MOE restated as 'MOE = 1.645 '; source 3,860 — narrowed",
+   "timestamp": "2026-09-03T10:57:35.937212+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/acs-ch8-tricounty.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "value": 3860,
+     "text": "3,860",
+     "unit": "count",
+     "level": 0.9
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "cv_phrase",
+     "moe_phrase",
+     "pm",
+     "reliability",
+     "year"
+    ],
+    "direction": "narrowed",
+    "restated_value": 1.645,
+    "source_value": 3860.0,
+    "level": 0,
+    "level_label": "corrupted",
+    "estimate": {
+     "estimate_matches": [
+      "135,173"
+     ]
+    },
+    "source_doc_id": "census-acs-general-handbook-2020",
+    "passage_id": "acs-ch8-tricounty"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-acs-moe-002",
+   "qualifier_class": "MOE",
+   "mode": "direct",
+   "outcome": "pass",
+   "score": 2,
+   "level": 3,
+   "level_label": "preserved_transformed",
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "MOE '±5,070' matches source 5,070",
+   "timestamp": "2026-09-03T10:57:46.539751+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/g1-acs-moe-002.direct.MOE.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "value": 5070,
+     "text": "5,070",
+     "unit": "count",
+     "level": 0.9
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "cv_phrase",
+     "pm",
+     "reliability",
+     "se_phrase",
+     "year"
+    ],
+    "matched_span": "±5,070",
+    "level_omitted": true,
+    "level": 3,
+    "level_label": "preserved_transformed",
+    "estimate": {
+     "estimate_matches": [
+      "203,119"
+     ]
+    },
+    "source_doc_id": "census-acs-general-handbook-2020",
+    "passage_id": "acs-ch8-tricounty"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-acs-moe-002",
+   "qualifier_class": "RELIABILITY_FLAG",
+   "mode": "direct",
+   "outcome": "pass",
+   "score": 2,
+   "level": 4,
+   "level_label": "preserved_exact",
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "reliability flag restated as 'very reliable' (source 'very reliable')",
+   "timestamp": "2026-09-03T10:57:56.636676+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/g1-acs-moe-002.direct.RELIABILITY_FLAG.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "text": "very reliable",
+     "polarity": "reliable"
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "cv_phrase",
+     "pm",
+     "reliability"
+    ],
+    "matched_span": "Very reliable",
+    "polarity": "reliable",
+    "level": 4,
+    "level_label": "preserved_exact",
+    "estimate": {
+     "estimate_matches": [
+      "203,119"
+     ]
+    },
+    "source_doc_id": "census-acs-general-handbook-2020",
+    "passage_id": "acs-ch8-tricounty"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-acs-moe-002",
+   "qualifier_class": "VINTAGE",
+   "mode": "direct",
+   "outcome": "pass",
+   "score": 2,
+   "level": 4,
+   "level_label": "preserved_exact",
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "as-of 'December 31, 2015' matches source '2015'",
+   "timestamp": "2026-09-03T10:58:07.342820+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/g1-acs-moe-002.direct.VINTAGE.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "as_of": "2015",
+     "period": "1-year",
+     "text": "2015 ACS 1-year estimates"
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "moe_phrase",
+     "month_year",
+     "pm",
+     "year"
+    ],
+    "matched_span": "December 31, 2015",
+    "level": 4,
+    "level_label": "preserved_exact",
+    "estimate": {
+     "estimate_matches": [
+      "203,119"
+     ]
+    },
+    "source_doc_id": "census-acs-general-handbook-2020",
+    "passage_id": "acs-ch8-tricounty"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-acs-se-005",
+   "qualifier_class": "MOE",
+   "mode": "direct",
+   "outcome": "pass",
+   "score": 2,
+   "level": 3,
+   "level_label": "preserved_transformed",
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "MOE '±3,860 ' matches source 3,860",
+   "timestamp": "2026-09-03T10:58:11.183110+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/g1-acs-se-005.direct.MOE.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "value": 3860,
+     "text": "3,860",
+     "unit": "count",
+     "level": 0.9
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "pm"
+    ],
+    "matched_span": "±3,860 ",
+    "level_omitted": true,
+    "level": 3,
+    "level_label": "preserved_transformed",
+    "estimate": {
+     "estimate_matches": [
+      "135,173"
+     ]
+    },
+    "source_doc_id": "census-acs-general-handbook-2020",
+    "passage_id": "acs-ch8-tricounty"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-acs-se-005",
+   "qualifier_class": "SE",
+   "mode": "direct",
+   "outcome": "unparseable",
+   "score": null,
+   "level": null,
+   "level_label": null,
+   "failure_class": null,
+   "estimate_status": "absent",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "uncertainty vocabulary present (se, standard error) but no SE could be classified",
+   "timestamp": "2026-09-03T10:58:16.970419+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/g1-acs-se-005.direct.SE.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "value": 2347,
+     "text": "2,347",
+     "unit": "count"
+    },
+    "estimate_status": "absent",
+    "rules_fired": [
+     "moe_phrase"
+    ],
+    "cues": [
+     "se",
+     "standard error"
+    ],
+    "estimate": {
+     "estimate_matches": []
+    },
+    "source_doc_id": "census-acs-general-handbook-2020",
+    "passage_id": "acs-ch8-tricounty"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-acs-cv-005",
+   "qualifier_class": "CV",
+   "mode": "indirect",
+   "outcome": "fail",
+   "score": 0,
+   "level": 0,
+   "level_label": "corrupted",
+   "failure_class": "quantity_hallucination",
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "CV restated as 'coefficient of variation: 16.0 percent'; source 16.7 — narrowed",
+   "timestamp": "2026-09-03T10:58:31.439279+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/acs-ch8-loudoun-83.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "value": 16.7,
+     "text": "16.7",
+     "unit": "percent"
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "cv_phrase",
+     "moe_phrase",
+     "pm",
+     "year"
+    ],
+    "direction": "narrowed",
+    "restated_value": 16.0,
+    "source_value": 16.7,
+    "level": 0,
+    "level_label": "corrupted",
+    "estimate": {
+     "estimate_matches": [
+      "3,537"
+     ]
+    },
+    "source_doc_id": "census-acs-general-handbook-2020",
+    "passage_id": "acs-ch8-loudoun-83"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-acs-cv-005",
+   "qualifier_class": "MOE",
+   "mode": "indirect",
+   "outcome": "pass",
+   "score": 2,
+   "level": 3,
+   "level_label": "preserved_transformed",
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "MOE '±973 ' matches source 973",
+   "timestamp": "2026-09-03T10:58:31.439279+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/acs-ch8-loudoun-83.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "value": 973,
+     "text": "973",
+     "unit": "count",
+     "level": 0.9
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "cv_phrase",
+     "moe_phrase",
+     "pm",
+     "year"
+    ],
+    "matched_span": "±973 ",
+    "level_omitted": true,
+    "level": 3,
+    "level_label": "preserved_transformed",
+    "estimate": {
+     "estimate_matches": [
+      "3,537"
+     ]
+    },
+    "source_doc_id": "census-acs-general-handbook-2020",
+    "passage_id": "acs-ch8-loudoun-83"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-acs-cv-005",
+   "qualifier_class": "SE",
+   "mode": "indirect",
+   "outcome": "unparseable",
+   "score": null,
+   "level": null,
+   "level_label": null,
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "uncertainty vocabulary present (margin of error, margins of error, precise, standard error, uncertainty) but no SE could be classified",
+   "timestamp": "2026-09-03T10:58:31.439279+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/acs-ch8-loudoun-83.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "value": 591,
+     "text": "591",
+     "unit": "count"
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "cv_phrase",
+     "moe_phrase",
+     "pm",
+     "year"
+    ],
+    "cues": [
+     "margin of error",
+     "margins of error",
+     "precise",
+     "standard error",
+     "uncertainty"
+    ],
+    "estimate": {
+     "estimate_matches": [
+      "3,537"
+     ]
+    },
+    "source_doc_id": "census-acs-general-handbook-2020",
+    "passage_id": "acs-ch8-loudoun-83"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-acs-cv-005",
+   "qualifier_class": "VINTAGE",
+   "mode": "indirect",
+   "outcome": "pass",
+   "score": 2,
+   "level": 4,
+   "level_label": "preserved_exact",
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "as-of '2015' matches source '2015'",
+   "timestamp": "2026-09-03T10:58:31.439279+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/acs-ch8-loudoun-83.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "as_of": "2015",
+     "period": "1-year",
+     "text": "from the 2015 ACS 1-year estimates"
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "cv_phrase",
+     "moe_phrase",
+     "pm",
+     "year"
+    ],
+    "matched_span": "2015",
+    "level": 4,
+    "level_label": "preserved_exact",
+    "estimate": {
+     "estimate_matches": [
+      "3,537"
+     ]
+    },
+    "source_doc_id": "census-acs-general-handbook-2020",
+    "passage_id": "acs-ch8-loudoun-83"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-acs-cv-005",
+   "qualifier_class": "CV",
+   "mode": "direct",
+   "outcome": "pass",
+   "score": 2,
+   "level": 4,
+   "level_label": "preserved_exact",
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "CV 'CV of 16.7%' matches source 16.7",
+   "timestamp": "2026-09-03T10:58:39.630348+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/g1-acs-cv-005.direct.CV.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "value": 16.7,
+     "text": "16.7",
+     "unit": "percent"
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "cv_phrase",
+     "moe_phrase",
+     "se_phrase",
+     "year"
+    ],
+    "matched_span": "CV of 16.7%",
+    "level": 4,
+    "level_label": "preserved_exact",
+    "estimate": {
+     "estimate_matches": [
+      "3,537"
+     ]
+    },
+    "source_doc_id": "census-acs-general-handbook-2020",
+    "passage_id": "acs-ch8-loudoun-83"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-acs-cv-005",
+   "qualifier_class": "MOE",
+   "mode": "direct",
+   "outcome": "pass",
+   "score": 2,
+   "level": 3,
+   "level_label": "preserved_transformed",
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "MOE 'MOE for the $25,000–$34,999 category (estimate 3,537) is ±973' matches source 973",
+   "timestamp": "2026-09-03T10:58:46.105266+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/g1-acs-cv-005.direct.MOE.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "value": 973,
+     "text": "973",
+     "unit": "count",
+     "level": 0.9
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "cv_phrase",
+     "moe_phrase",
+     "pm",
+     "se_phrase"
+    ],
+    "matched_span": "MOE for the $25,000–$34,999 category (estimate 3,537) is ±973",
+    "level_omitted": true,
+    "level": 3,
+    "level_label": "preserved_transformed",
+    "estimate": {
+     "estimate_matches": [
+      "3,537"
+     ]
+    },
+    "source_doc_id": "census-acs-general-handbook-2020",
+    "passage_id": "acs-ch8-loudoun-83"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-acs-cv-005",
+   "qualifier_class": "SE",
+   "mode": "direct",
+   "outcome": "unparseable",
+   "score": null,
+   "level": null,
+   "level_label": null,
+   "failure_class": null,
+   "estimate_status": "wrong",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "uncertainty vocabulary present (se) but no SE could be classified",
+   "timestamp": "2026-09-03T10:58:53.067673+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/g1-acs-cv-005.direct.SE.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "value": 591,
+     "text": "591",
+     "unit": "count"
+    },
+    "estimate_status": "wrong",
+    "rules_fired": [
+     "cv_phrase",
+     "moe_phrase"
+    ],
+    "cues": [
+     "se"
+    ],
+    "estimate": {
+     "estimate_matches": [],
+     "estimate_wrong_candidate": "931",
+     "estimate_wrong_rule": "same-unit number within [0.2x, 5x] of the source value"
+    },
+    "source_doc_id": "census-acs-general-handbook-2020",
+    "passage_id": "acs-ch8-loudoun-83"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-acs-cv-005",
+   "qualifier_class": "VINTAGE",
+   "mode": "direct",
+   "outcome": "pass",
+   "score": 2,
+   "level": 4,
+   "level_label": "preserved_exact",
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "as-of 'December 31, 2015' matches source '2015'",
+   "timestamp": "2026-09-03T10:59:07.085514+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/g1-acs-cv-005.direct.VINTAGE.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "as_of": "2015",
+     "period": "1-year",
+     "text": "from the 2015 ACS 1-year estimates"
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "month_year",
+     "pm",
+     "year",
+     "year_range"
+    ],
+    "matched_span": "December 31, 2015",
+    "level": 4,
+    "level_label": "preserved_exact",
+    "estimate": {
+     "estimate_matches": [
+      "3,537 households"
+     ]
+    },
+    "source_doc_id": "census-acs-general-handbook-2020",
+    "passage_id": "acs-ch8-loudoun-83"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-acs-moe-005",
+   "qualifier_class": "MOE",
+   "mode": "indirect",
+   "outcome": "fail",
+   "score": 0,
+   "level": 0,
+   "level_label": "corrupted",
+   "failure_class": "binding_error",
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "MOE '61,393,366 ± 202,289 ' is bound to 61393366.0, not the source estimate",
+   "timestamp": "2026-09-03T10:59:21.990075+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/acs-ch8-product.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "value": 228238,
+     "text": "228,238",
+     "unit": "count",
+     "level": 0.9
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "pm",
+     "reliability",
+     "year"
+    ],
+    "bound_to": 61393366.0,
+    "level": 0,
+    "level_label": "corrupted",
+    "estimate": {
+     "estimate_matches": [
+      "74,506,512"
+     ]
+    },
+    "source_doc_id": "census-acs-general-handbook-2020",
+    "passage_id": "acs-ch8-product"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-acs-moe-005",
+   "qualifier_class": "VINTAGE",
+   "mode": "indirect",
+   "outcome": "pass",
+   "score": 2,
+   "level": 3,
+   "level_label": "preserved_transformed",
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "as-of '2015' kept; period '1-year' not restated",
+   "timestamp": "2026-09-03T10:59:21.990075+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/acs-ch8-product.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "as_of": "2015",
+     "period": "1-year",
+     "text": "In 2015 … ACS 1-year estimates (footnote 66)"
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "pm",
+     "reliability",
+     "year"
+    ],
+    "matched_span": "2015",
+    "period_omitted": true,
+    "level": 3,
+    "level_label": "preserved_transformed",
+    "estimate": {
+     "estimate_matches": [
+      "74,506,512"
+     ]
+    },
+    "source_doc_id": "census-acs-general-handbook-2020",
+    "passage_id": "acs-ch8-product"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-acs-moe-006",
+   "qualifier_class": "MOE",
+   "mode": "indirect",
+   "outcome": "fail",
+   "score": 0,
+   "level": 0,
+   "level_label": "corrupted",
+   "failure_class": "binding_error",
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "MOE '61,393,366 ± 202,289 ' is bound to 61393366.0, not the source estimate",
+   "timestamp": "2026-09-03T10:59:21.990075+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/acs-ch8-product.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "value": 0.1,
+     "text": "0.1",
+     "unit": "percent_points",
+     "level": 0.9
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "pm",
+     "reliability",
+     "year"
+    ],
+    "bound_to": 61393366.0,
+    "level": 0,
+    "level_label": "corrupted",
+    "estimate": {
+     "estimate_matches": [
+      "82.4%"
+     ]
+    },
+    "source_doc_id": "census-acs-general-handbook-2020",
+    "passage_id": "acs-ch8-product"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-acs-ci-004",
+   "qualifier_class": "CI",
+   "mode": "indirect",
+   "outcome": "pass",
+   "score": 2,
+   "level": 3,
+   "level_label": "preserved_transformed",
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "CI ± '61,393,366 ± 202,289 ' matches source",
+   "timestamp": "2026-09-03T10:59:21.990075+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/acs-ch8-product.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "form": "bounds",
+     "lower": 61191077,
+     "upper": 61595655,
+     "lower_text": "61,191,077",
+     "upper_text": "61,595,655",
+     "level": 0.9,
+     "text": "61,191,077 to 61,595,655"
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "pm",
+     "reliability",
+     "year"
+    ],
+    "transformation": "bounds_to_pm",
+    "level": 3,
+    "level_label": "preserved_transformed",
+    "estimate": {
+     "estimate_matches": [
+      "61,393,366"
+     ]
+    },
+    "source_doc_id": "census-acs-general-handbook-2020",
+    "passage_id": "acs-ch8-product"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-acs-ci-004",
+   "qualifier_class": "CV",
+   "mode": "indirect",
+   "outcome": "unparseable",
+   "score": null,
+   "level": null,
+   "level_label": null,
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "uncertainty vocabulary present (reliable, variation) but no CV could be classified",
+   "timestamp": "2026-09-03T10:59:21.990075+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/acs-ch8-product.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "value": 0.2,
+     "text": "0.2",
+     "unit": "percent"
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "pm",
+     "reliability",
+     "year"
+    ],
+    "cues": [
+     "reliable",
+     "variation"
+    ],
+    "estimate": {
+     "estimate_matches": [
+      "61,393,366"
+     ]
+    },
+    "source_doc_id": "census-acs-general-handbook-2020",
+    "passage_id": "acs-ch8-product"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-acs-moe-005",
+   "qualifier_class": "MOE",
+   "mode": "direct",
+   "outcome": "pass",
+   "score": 2,
+   "level": 4,
+   "level_label": "preserved_exact",
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "MOE 'margin of error of ±228,238 ' matches source 228,238",
+   "timestamp": "2026-09-03T10:59:25.212930+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/g1-acs-moe-005.direct.MOE.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "value": 228238,
+     "text": "228,238",
+     "unit": "count",
+     "level": 0.9
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "moe_phrase",
+     "year"
+    ],
+    "matched_span": "margin of error of ±228,238 ",
+    "level": 4,
+    "level_label": "preserved_exact",
+    "estimate": {
+     "estimate_matches": [
+      "74,506,512"
+     ]
+    },
+    "source_doc_id": "census-acs-general-handbook-2020",
+    "passage_id": "acs-ch8-product"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-acs-moe-005",
+   "qualifier_class": "VINTAGE",
+   "mode": "direct",
+   "outcome": "pass",
+   "score": 2,
+   "level": 4,
+   "level_label": "preserved_exact",
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "as-of 'December 2015' matches source '2015'",
+   "timestamp": "2026-09-03T10:59:35.931714+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/g1-acs-moe-005.direct.VINTAGE.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "as_of": "2015",
+     "period": "1-year",
+     "text": "In 2015 … ACS 1-year estimates (footnote 66)"
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "moe_phrase",
+     "month_year",
+     "year",
+     "year_range"
+    ],
+    "matched_span": "December 2015",
+    "level": 4,
+    "level_label": "preserved_exact",
+    "estimate": {
+     "estimate_matches": [
+      "74,506,512"
+     ]
+    },
+    "source_doc_id": "census-acs-general-handbook-2020",
+    "passage_id": "acs-ch8-product"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-acs-moe-006",
+   "qualifier_class": "MOE",
+   "mode": "direct",
+   "outcome": "unparseable",
+   "score": null,
+   "level": null,
+   "level_label": null,
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "uncertainty vocabulary present (moe) but no MOE could be classified",
+   "timestamp": "2026-09-03T10:59:40.485725+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/g1-acs-moe-006.direct.MOE.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "value": 0.1,
+     "text": "0.1",
+     "unit": "percent_points",
+     "level": 0.9
+    },
+    "estimate_status": "exact",
+    "rules_fired": [],
+    "cues": [
+     "moe"
+    ],
+    "estimate": {
+     "estimate_matches": [
+      "82.4 percent"
+     ]
+    },
+    "source_doc_id": "census-acs-general-handbook-2020",
+    "passage_id": "acs-ch8-product"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-acs-ci-004",
+   "qualifier_class": "CI",
+   "mode": "direct",
+   "outcome": "pass",
+   "score": 2,
+   "level": 3,
+   "level_label": "preserved_transformed",
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "CI ± 'MOE 202,289' matches source",
+   "timestamp": "2026-09-03T10:59:46.625813+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/g1-acs-ci-004.direct.CI.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "form": "bounds",
+     "lower": 61191077,
+     "upper": 61595655,
+     "lower_text": "61,191,077",
+     "upper_text": "61,595,655",
+     "level": 0.9,
+     "text": "61,191,077 to 61,595,655"
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "cv_phrase",
+     "moe_phrase",
+     "reliability",
+     "se_phrase"
+    ],
+    "transformation": "bounds_to_pm",
+    "level": 3,
+    "level_label": "preserved_transformed",
+    "estimate": {
+     "estimate_matches": [
+      "61,393,366"
+     ]
+    },
+    "source_doc_id": "census-acs-general-handbook-2020",
+    "passage_id": "acs-ch8-product"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-acs-ci-004",
+   "qualifier_class": "CV",
+   "mode": "direct",
+   "outcome": "unparseable",
+   "score": null,
+   "level": null,
+   "level_label": null,
+   "failure_class": null,
+   "estimate_status": "absent",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "uncertainty vocabulary present (cv, reliable) but no CV could be classified",
+   "timestamp": "2026-09-03T10:59:51.330674+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/g1-acs-ci-004.direct.CV.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "value": 0.2,
+     "text": "0.2",
+     "unit": "percent"
+    },
+    "estimate_status": "absent",
+    "rules_fired": [
+     "reliability",
+     "se_phrase"
+    ],
+    "cues": [
+     "cv",
+     "reliable"
+    ],
+    "estimate": {
+     "estimate_matches": []
+    },
+    "source_doc_id": "census-acs-general-handbook-2020",
+    "passage_id": "acs-ch8-product"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-ons-se-001",
+   "qualifier_class": "SE",
+   "mode": "indirect",
+   "outcome": "unparseable",
+   "score": null,
+   "level": null,
+   "level_label": null,
+   "failure_class": null,
+   "estimate_status": "rounded",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "uncertainty vocabulary present (precise, standard error) but no SE could be classified",
+   "timestamp": "2026-09-03T11:00:02.813941+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/ons-se-table1.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "value": 526.8,
+     "text": "526.8",
+     "unit": "currency",
+     "scale": 1000000
+    },
+    "estimate_status": "rounded",
+    "rules_fired": [
+     "reliability",
+     "year"
+    ],
+    "cues": [
+     "precise",
+     "standard error"
+    ],
+    "estimate": {
+     "estimate_matches": [],
+     "estimate_rounded_to": "1"
+    },
+    "source_doc_id": "ons-uncertainty-and-how-we-measure-it",
+    "passage_id": "ons-se-table1"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-ons-se-001",
+   "qualifier_class": "CV",
+   "mode": "indirect",
+   "outcome": "unparseable",
+   "score": null,
+   "level": null,
+   "level_label": null,
+   "failure_class": null,
+   "estimate_status": "rounded",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "uncertainty vocabulary present (precise, reliable) but no CV could be classified",
+   "timestamp": "2026-09-03T11:00:02.813941+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/ons-se-table1.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "value": 1,
+     "text": "1",
+     "unit": "percent"
+    },
+    "estimate_status": "rounded",
+    "rules_fired": [
+     "reliability",
+     "year"
+    ],
+    "cues": [
+     "precise",
+     "reliable"
+    ],
+    "estimate": {
+     "estimate_matches": [],
+     "estimate_rounded_to": "1"
+    },
+    "source_doc_id": "ons-uncertainty-and-how-we-measure-it",
+    "passage_id": "ons-se-table1"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-ons-se-001",
+   "qualifier_class": "VINTAGE",
+   "mode": "indirect",
+   "outcome": "pass",
+   "score": 2,
+   "level": 4,
+   "level_label": "preserved_exact",
+   "failure_class": null,
+   "estimate_status": "rounded",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "as-of '2016' matches source '2016'",
+   "timestamp": "2026-09-03T11:00:02.813941+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/ons-se-table1.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "as_of": "2016",
+     "text": "UK, 2016"
+    },
+    "estimate_status": "rounded",
+    "rules_fired": [
+     "reliability",
+     "year"
+    ],
+    "matched_span": "2016",
+    "level": 4,
+    "level_label": "preserved_exact",
+    "estimate": {
+     "estimate_matches": [],
+     "estimate_rounded_to": "1"
+    },
+    "source_doc_id": "ons-uncertainty-and-how-we-measure-it",
+    "passage_id": "ons-se-table1"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-ons-se-002",
+   "qualifier_class": "SE",
+   "mode": "indirect",
+   "outcome": "unparseable",
+   "score": null,
+   "level": null,
+   "level_label": null,
+   "failure_class": null,
+   "estimate_status": "rounded",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "uncertainty vocabulary present (precise, standard error) but no SE could be classified",
+   "timestamp": "2026-09-03T11:00:02.813941+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/ons-se-table1.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "value": 222.7,
+     "text": "222.7",
+     "unit": "currency",
+     "scale": 1000000
+    },
+    "estimate_status": "rounded",
+    "rules_fired": [
+     "reliability",
+     "year"
+    ],
+    "cues": [
+     "precise",
+     "standard error"
+    ],
+    "estimate": {
+     "estimate_matches": [],
+     "estimate_rounded_to": "1"
+    },
+    "source_doc_id": "ons-uncertainty-and-how-we-measure-it",
+    "passage_id": "ons-se-table1"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-ons-se-002",
+   "qualifier_class": "CV",
+   "mode": "indirect",
+   "outcome": "unparseable",
+   "score": null,
+   "level": null,
+   "level_label": null,
+   "failure_class": null,
+   "estimate_status": "rounded",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "uncertainty vocabulary present (precise, reliable) but no CV could be classified",
+   "timestamp": "2026-09-03T11:00:02.813941+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/ons-se-table1.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "value": 1,
+     "text": "1",
+     "unit": "percent"
+    },
+    "estimate_status": "rounded",
+    "rules_fired": [
+     "reliability",
+     "year"
+    ],
+    "cues": [
+     "precise",
+     "reliable"
+    ],
+    "estimate": {
+     "estimate_matches": [],
+     "estimate_rounded_to": "1"
+    },
+    "source_doc_id": "ons-uncertainty-and-how-we-measure-it",
+    "passage_id": "ons-se-table1"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-ons-se-001",
+   "qualifier_class": "CV",
+   "mode": "direct",
+   "outcome": "pass",
+   "score": 2,
+   "level": 3,
+   "level_label": "preserved_transformed",
+   "failure_class": null,
+   "estimate_status": "rounded",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "CV 'relative standard error 0.01 ' matches source 1",
+   "timestamp": "2026-09-03T11:00:09.891250+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/g1-ons-se-001.direct.CV.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "value": 1,
+     "text": "1",
+     "unit": "percent"
+    },
+    "estimate_status": "rounded",
+    "rules_fired": [
+     "cv_phrase",
+     "se_phrase"
+    ],
+    "matched_span": "relative standard error 0.01 ",
+    "level": 3,
+    "level_label": "preserved_transformed",
+    "estimate": {
+     "estimate_matches": [],
+     "estimate_rounded_to": "0.01"
+    },
+    "source_doc_id": "ons-uncertainty-and-how-we-measure-it",
+    "passage_id": "ons-se-table1"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-ons-se-001",
+   "qualifier_class": "SE",
+   "mode": "direct",
+   "outcome": "pass",
+   "score": 2,
+   "level": 4,
+   "level_label": "preserved_exact",
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "SE 'standard error of £526.8 million' matches source 526.8",
+   "timestamp": "2026-09-03T11:00:14.106140+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/g1-ons-se-001.direct.SE.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "value": 526.8,
+     "text": "526.8",
+     "unit": "currency",
+     "scale": 1000000
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "se_phrase"
+    ],
+    "matched_span": "standard error of £526.8 million",
+    "level": 4,
+    "level_label": "preserved_exact",
+    "estimate": {
+     "estimate_matches": [
+      "£42,649 million"
+     ]
+    },
+    "source_doc_id": "ons-uncertainty-and-how-we-measure-it",
+    "passage_id": "ons-se-table1"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-ons-se-001",
+   "qualifier_class": "VINTAGE",
+   "mode": "direct",
+   "outcome": "pass",
+   "score": 2,
+   "level": 4,
+   "level_label": "preserved_exact",
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "as-of '2016' matches source '2016'",
+   "timestamp": "2026-09-03T11:00:26.877675+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/g1-ons-se-001.direct.VINTAGE.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "as_of": "2016",
+     "text": "UK, 2016"
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "cv_phrase",
+     "pm",
+     "se_phrase",
+     "year"
+    ],
+    "matched_span": "2016",
+    "level": 4,
+    "level_label": "preserved_exact",
+    "estimate": {
+     "estimate_matches": [
+      "£42,649 million"
+     ]
+    },
+    "source_doc_id": "ons-uncertainty-and-how-we-measure-it",
+    "passage_id": "ons-se-table1"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-ons-se-002",
+   "qualifier_class": "CV",
+   "mode": "direct",
+   "outcome": "unparseable",
+   "score": null,
+   "level": null,
+   "level_label": null,
+   "failure_class": null,
+   "estimate_status": "rounded",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "uncertainty vocabulary present (cv, variation) but no CV could be classified",
+   "timestamp": "2026-09-03T11:00:33.366578+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/g1-ons-se-002.direct.CV.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "value": 1,
+     "text": "1",
+     "unit": "percent"
+    },
+    "estimate_status": "rounded",
+    "rules_fired": [
+     "se_phrase"
+    ],
+    "cues": [
+     "cv",
+     "variation"
+    ],
+    "estimate": {
+     "estimate_matches": [],
+     "estimate_rounded_to": "0.01"
+    },
+    "source_doc_id": "ons-uncertainty-and-how-we-measure-it",
+    "passage_id": "ons-se-table1"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-ons-se-002",
+   "qualifier_class": "SE",
+   "mode": "direct",
+   "outcome": "fail",
+   "score": 0,
+   "level": 1,
+   "level_label": "omitted",
+   "failure_class": "omission",
+   "estimate_status": "absent",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "neither the estimate nor its SE is restated",
+   "timestamp": "2026-09-03T11:00:37.257484+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/g1-ons-se-002.direct.SE.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "value": 222.7,
+     "text": "222.7",
+     "unit": "currency",
+     "scale": 1000000
+    },
+    "estimate_status": "absent",
+    "rules_fired": [],
+    "level": 1,
+    "level_label": "omitted",
+    "estimate": {
+     "estimate_matches": []
+    },
+    "source_doc_id": "ons-uncertainty-and-how-we-measure-it",
+    "passage_id": "ons-se-table1"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-ons-se-003",
+   "qualifier_class": "SE",
+   "mode": "indirect",
+   "outcome": "unparseable",
+   "score": null,
+   "level": null,
+   "level_label": null,
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "uncertainty vocabulary present (precise, standard error, uncertainty) but no SE could be classified",
+   "timestamp": "2026-09-03T03:22:12.869809+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/ons-cv-examples.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "value": 201,
+     "text": "201",
+     "unit": "currency",
+     "scale": 1000000
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "reliability",
+     "year"
+    ],
+    "cues": [
+     "precise",
+     "standard error",
+     "uncertainty"
+    ],
+    "estimate": {
+     "estimate_matches": [
+      "£2,322 million"
+     ]
+    },
+    "source_doc_id": "ons-uncertainty-and-how-we-measure-it",
+    "passage_id": "ons-cv-examples"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-ons-se-003",
+   "qualifier_class": "VINTAGE",
+   "mode": "indirect",
+   "outcome": "pass",
+   "score": 2,
+   "level": 4,
+   "level_label": "preserved_exact",
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "as-of '2016' matches source '2016'",
+   "timestamp": "2026-09-03T03:22:12.869809+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/ons-cv-examples.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "as_of": "2016",
+     "text": "in 2016"
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "reliability",
+     "year"
+    ],
+    "matched_span": "2016",
+    "level": 4,
+    "level_label": "preserved_exact",
+    "estimate": {
+     "estimate_matches": [
+      "£2,322 million"
+     ]
+    },
+    "source_doc_id": "ons-uncertainty-and-how-we-measure-it",
+    "passage_id": "ons-cv-examples"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-ons-cv-002",
+   "qualifier_class": "CV",
+   "mode": "indirect",
+   "outcome": "unparseable",
+   "score": null,
+   "level": null,
+   "level_label": null,
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "uncertainty vocabulary present (precise, reliable, variation) but no CV could be classified",
+   "timestamp": "2026-09-03T03:22:12.869809+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/ons-cv-examples.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "value": 8.7,
+     "text": "8.7",
+     "unit": "percent"
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "reliability",
+     "year"
+    ],
+    "cues": [
+     "precise",
+     "reliable",
+     "variation"
+    ],
+    "estimate": {
+     "estimate_matches": [
+      "£2,322 million"
+     ]
+    },
+    "source_doc_id": "ons-uncertainty-and-how-we-measure-it",
+    "passage_id": "ons-cv-examples"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-ons-se-004",
+   "qualifier_class": "SE",
+   "mode": "indirect",
+   "outcome": "unparseable",
+   "score": null,
+   "level": null,
+   "level_label": null,
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "uncertainty vocabulary present (precise, standard error, uncertainty) but no SE could be classified",
+   "timestamp": "2026-09-03T03:22:12.869809+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/ons-cv-examples.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "value": 12400,
+     "text": "12,400",
+     "unit": "count"
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "reliability",
+     "year"
+    ],
+    "cues": [
+     "precise",
+     "standard error",
+     "uncertainty"
+    ],
+    "estimate": {
+     "estimate_matches": [
+      "155,000 people"
+     ]
+    },
+    "source_doc_id": "ons-uncertainty-and-how-we-measure-it",
+    "passage_id": "ons-cv-examples"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-ons-se-004",
+   "qualifier_class": "CV",
+   "mode": "indirect",
+   "outcome": "unparseable",
+   "score": null,
+   "level": null,
+   "level_label": null,
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "uncertainty vocabulary present (precise, reliable, variation) but no CV could be classified",
+   "timestamp": "2026-09-03T03:22:12.869809+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/ons-cv-examples.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "value": 8,
+     "text": "8",
+     "unit": "percent"
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "reliability",
+     "year"
+    ],
+    "cues": [
+     "precise",
+     "reliable",
+     "variation"
+    ],
+    "estimate": {
+     "estimate_matches": [
+      "155,000 people"
+     ]
+    },
+    "source_doc_id": "ons-uncertainty-and-how-we-measure-it",
+    "passage_id": "ons-cv-examples"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-ons-se-004",
+   "qualifier_class": "VINTAGE",
+   "mode": "indirect",
+   "outcome": "pass",
+   "score": 2,
+   "level": 4,
+   "level_label": "preserved_exact",
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "as-of '2016' matches source '2016'",
+   "timestamp": "2026-09-03T03:22:12.869809+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/ons-cv-examples.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "as_of": "2016",
+     "text": "in 2016"
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "reliability",
+     "year"
+    ],
+    "matched_span": "2016",
+    "level": 4,
+    "level_label": "preserved_exact",
+    "estimate": {
+     "estimate_matches": [
+      "155,000 people"
+     ]
+    },
+    "source_doc_id": "ons-uncertainty-and-how-we-measure-it",
+    "passage_id": "ons-cv-examples"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-ons-se-003",
+   "qualifier_class": "SE",
+   "mode": "direct",
+   "outcome": "fail",
+   "score": 0,
+   "level": 1,
+   "level_label": "omitted",
+   "failure_class": "certainty_assertion",
+   "estimate_status": "rounded",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "estimate restated as definite; SE absent",
+   "timestamp": "2026-09-03T11:00:40.753320+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/g1-ons-se-003.direct.SE.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "value": 201,
+     "text": "201",
+     "unit": "currency",
+     "scale": 1000000
+    },
+    "estimate_status": "rounded",
+    "rules_fired": [],
+    "level": 1,
+    "level_label": "omitted",
+    "estimate": {
+     "estimate_matches": [],
+     "estimate_rounded_to": "0.087"
+    },
+    "source_doc_id": "ons-uncertainty-and-how-we-measure-it",
+    "passage_id": "ons-cv-examples"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-ons-se-003",
+   "qualifier_class": "VINTAGE",
+   "mode": "direct",
+   "outcome": "pass",
+   "score": 2,
+   "level": 4,
+   "level_label": "preserved_exact",
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "as-of '2016' matches source '2016'",
+   "timestamp": "2026-09-03T11:00:53.054968+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/g1-ons-se-003.direct.VINTAGE.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "as_of": "2016",
+     "text": "in 2016"
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "cv_phrase",
+     "se_phrase",
+     "year"
+    ],
+    "matched_span": "2016",
+    "level": 4,
+    "level_label": "preserved_exact",
+    "estimate": {
+     "estimate_matches": [
+      "£2,322 million"
+     ]
+    },
+    "source_doc_id": "ons-uncertainty-and-how-we-measure-it",
+    "passage_id": "ons-cv-examples"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-ons-cv-002",
+   "qualifier_class": "CV",
+   "mode": "direct",
+   "outcome": "fail",
+   "score": 0,
+   "level": 1,
+   "level_label": "omitted",
+   "failure_class": "certainty_assertion",
+   "estimate_status": "rounded",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "estimate restated as definite; CV absent",
+   "timestamp": "2026-09-03T03:22:17.312277+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/g1-ons-cv-002.direct.CV.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "value": 8.7,
+     "text": "8.7",
+     "unit": "percent"
+    },
+    "estimate_status": "rounded",
+    "rules_fired": [],
+    "level": 1,
+    "level_label": "omitted",
+    "estimate": {
+     "estimate_matches": [],
+     "estimate_rounded_to": "0.0866"
+    },
+    "source_doc_id": "ons-uncertainty-and-how-we-measure-it",
+    "passage_id": "ons-cv-examples"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-ons-se-004",
+   "qualifier_class": "CV",
+   "mode": "direct",
+   "outcome": "unparseable",
+   "score": null,
+   "level": null,
+   "level_label": null,
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "uncertainty vocabulary present (precision) but no CV could be classified",
+   "timestamp": "2026-09-03T11:00:57.777297+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/g1-ons-se-004.direct.CV.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "value": 8,
+     "text": "8",
+     "unit": "percent"
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "se_phrase"
+    ],
+    "cues": [
+     "precision"
+    ],
+    "estimate": {
+     "estimate_matches": [
+      "155,000"
+     ]
+    },
+    "source_doc_id": "ons-uncertainty-and-how-we-measure-it",
+    "passage_id": "ons-cv-examples"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-ons-se-004",
+   "qualifier_class": "SE",
+   "mode": "direct",
+   "outcome": "fail",
+   "score": 0,
+   "level": 1,
+   "level_label": "omitted",
+   "failure_class": "omission",
+   "estimate_status": "absent",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "neither the estimate nor its SE is restated",
+   "timestamp": "2026-09-03T11:01:01.898282+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/g1-ons-se-004.direct.SE.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "value": 12400,
+     "text": "12,400",
+     "unit": "count"
+    },
+    "estimate_status": "absent",
+    "rules_fired": [],
+    "level": 1,
+    "level_label": "omitted",
+    "estimate": {
+     "estimate_matches": []
+    },
+    "source_doc_id": "ons-uncertainty-and-how-we-measure-it",
+    "passage_id": "ons-cv-examples"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-ons-se-004",
+   "qualifier_class": "VINTAGE",
+   "mode": "direct",
+   "outcome": "pass",
+   "score": 2,
+   "level": 4,
+   "level_label": "preserved_exact",
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "as-of '2016' matches source '2016'",
+   "timestamp": "2026-09-03T11:01:13.809041+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/g1-ons-se-004.direct.VINTAGE.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "as_of": "2016",
+     "text": "in 2016"
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "year"
+    ],
+    "matched_span": "2016",
+    "level": 4,
+    "level_label": "preserved_exact",
+    "estimate": {
+     "estimate_matches": [
+      "155,000"
+     ]
+    },
+    "source_doc_id": "ons-uncertainty-and-how-we-measure-it",
+    "passage_id": "ons-cv-examples"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-ons-ci-001",
+   "qualifier_class": "CI",
+   "mode": "indirect",
+   "outcome": "pass",
+   "score": 2,
+   "level": 3,
+   "level_label": "preserved_transformed",
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "CI ± 'margin of error is about 177,000 people' matches source",
+   "timestamp": "2026-09-03T11:01:20.528360+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/ons-ci-employment.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "form": "pm",
+     "value": 177000,
+     "text": "177,000",
+     "level": 0.95
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "moe_phrase",
+     "month_year",
+     "reliability"
+    ],
+    "level_omitted": true,
+    "level": 3,
+    "level_label": "preserved_transformed",
+    "estimate": {
+     "estimate_matches": [
+      "32.75 million people"
+     ]
+    },
+    "source_doc_id": "ons-uncertainty-and-how-we-measure-it",
+    "passage_id": "ons-ci-employment"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-ons-ci-001",
+   "qualifier_class": "VINTAGE",
+   "mode": "indirect",
+   "outcome": "pass",
+   "score": 2,
+   "level": 3,
+   "level_label": "preserved_transformed",
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "year 'September 2019' kept; sub-annual reference 'July to September 2019' coarsened",
+   "timestamp": "2026-09-03T11:01:20.528360+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/ons-ci-employment.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "as_of": "July to September 2019",
+     "text": "July to September 2019"
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "moe_phrase",
+     "month_year",
+     "reliability"
+    ],
+    "matched_span": "September 2019",
+    "coarsened": true,
+    "level": 3,
+    "level_label": "preserved_transformed",
+    "estimate": {
+     "estimate_matches": [
+      "32.75 million people"
+     ]
+    },
+    "source_doc_id": "ons-uncertainty-and-how-we-measure-it",
+    "passage_id": "ons-ci-employment"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-ons-ci-001",
+   "qualifier_class": "CI",
+   "mode": "direct",
+   "outcome": "pass",
+   "score": 2,
+   "level": 4,
+   "level_label": "preserved_exact",
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "CI ± 'Margin of error: 177,000\\n' matches source",
+   "timestamp": "2026-09-03T11:01:27.789376+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/g1-ons-ci-001.direct.CI.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "form": "pm",
+     "value": 177000,
+     "text": "177,000",
+     "level": 0.95
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "moe_phrase",
+     "pm"
+    ],
+    "level": 4,
+    "level_label": "preserved_exact",
+    "estimate": {
+     "estimate_matches": [
+      "32,750,000"
+     ]
+    },
+    "source_doc_id": "ons-uncertainty-and-how-we-measure-it",
+    "passage_id": "ons-ci-employment"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-ons-ci-001",
+   "qualifier_class": "VINTAGE",
+   "mode": "direct",
+   "outcome": "pass",
+   "score": 2,
+   "level": 3,
+   "level_label": "preserved_transformed",
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "year '2019-07-01' kept; sub-annual reference 'July to September 2019' coarsened",
+   "timestamp": "2026-09-03T11:01:41.090267+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/g1-ons-ci-001.direct.VINTAGE.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "as_of": "July to September 2019",
+     "text": "July to September 2019"
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "iso_date",
+     "month_year",
+     "pm",
+     "year"
+    ],
+    "matched_span": "2019-07-01",
+    "coarsened": true,
+    "level": 3,
+    "level_label": "preserved_transformed",
+    "estimate": {
+     "estimate_matches": [
+      "32.75 million"
+     ]
+    },
+    "source_doc_id": "ons-uncertainty-and-how-we-measure-it",
+    "passage_id": "ons-ci-employment"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-ons-ci-002",
+   "qualifier_class": "CI",
+   "mode": "indirect",
+   "outcome": "pass",
+   "score": 2,
+   "level": 4,
+   "level_label": "preserved_exact",
+   "failure_class": null,
+   "estimate_status": "rounded",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "CI bounds 'lies between £41,616 million and £43,682 million' matches source",
+   "timestamp": "2026-09-03T11:01:55.274799+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/ons-ci-education.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "form": "bounds",
+     "lower": 41616,
+     "upper": 43682,
+     "lower_text": "41,616",
+     "upper_text": "43,682",
+     "scale": 1000000,
+     "level": 0.95,
+     "text": "41,616 to 43,682 (£ million)"
+    },
+    "estimate_status": "rounded",
+    "rules_fired": [
+     "bounds",
+     "reliability",
+     "year"
+    ],
+    "level": 4,
+    "level_label": "preserved_exact",
+    "estimate": {
+     "estimate_matches": [],
+     "estimate_rounded_to": "£42.6 billion"
+    },
+    "source_doc_id": "ons-uncertainty-and-how-we-measure-it",
+    "passage_id": "ons-ci-education"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-ons-ci-002",
+   "qualifier_class": "VINTAGE",
+   "mode": "indirect",
+   "outcome": "pass",
+   "score": 2,
+   "level": 4,
+   "level_label": "preserved_exact",
+   "failure_class": null,
+   "estimate_status": "rounded",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "as-of '2016' matches source '2016'",
+   "timestamp": "2026-09-03T11:01:55.274799+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/ons-ci-education.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "as_of": "2016",
+     "text": "In 2016"
+    },
+    "estimate_status": "rounded",
+    "rules_fired": [
+     "bounds",
+     "reliability",
+     "year"
+    ],
+    "matched_span": "2016",
+    "level": 4,
+    "level_label": "preserved_exact",
+    "estimate": {
+     "estimate_matches": [],
+     "estimate_rounded_to": "£42.6 billion"
+    },
+    "source_doc_id": "ons-uncertainty-and-how-we-measure-it",
+    "passage_id": "ons-ci-education"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-ons-ci-002",
+   "qualifier_class": "CI",
+   "mode": "direct",
+   "outcome": "fail",
+   "score": 0,
+   "level": 0,
+   "level_label": "corrupted",
+   "failure_class": "quantity_hallucination",
+   "estimate_status": "rounded",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "interval restated as 'margin of error is 1.96 '; source half-width 41,616 to 43,682 (£ million)",
+   "timestamp": "2026-09-03T11:02:03.584026+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/g1-ons-ci-002.direct.CI.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "form": "bounds",
+     "lower": 41616,
+     "upper": 43682,
+     "lower_text": "41,616",
+     "upper_text": "43,682",
+     "scale": 1000000,
+     "level": 0.95,
+     "text": "41,616 to 43,682 (£ million)"
+    },
+    "estimate_status": "rounded",
+    "rules_fired": [
+     "moe_phrase",
+     "pm"
+    ],
+    "direction": "narrowed",
+    "restated": "margin of error is 1.96 ",
+    "level": 0,
+    "level_label": "corrupted",
+    "estimate": {
+     "estimate_matches": [],
+     "estimate_rounded_to": "1.96"
+    },
+    "source_doc_id": "ons-uncertainty-and-how-we-measure-it",
+    "passage_id": "ons-ci-education"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-ons-ci-002",
+   "qualifier_class": "VINTAGE",
+   "mode": "direct",
+   "outcome": "pass",
+   "score": 2,
+   "level": 4,
+   "level_label": "preserved_exact",
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "as-of '2016' matches source '2016'",
+   "timestamp": "2026-09-03T11:02:16.839614+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/g1-ons-ci-002.direct.VINTAGE.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "as_of": "2016",
+     "text": "In 2016"
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "bounds",
+     "year"
+    ],
+    "matched_span": "2016",
+    "level": 4,
+    "level_label": "preserved_exact",
+    "estimate": {
+     "estimate_matches": [
+      "£42,649 million"
+     ]
+    },
+    "source_doc_id": "ons-uncertainty-and-how-we-measure-it",
+    "passage_id": "ons-ci-education"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-das-dp-001",
+   "qualifier_class": "DP_NOISE",
+   "mode": "indirect",
+   "outcome": "pass",
+   "score": 2,
+   "level": 4,
+   "level_label": "preserved_exact",
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "DP bound restated as 'within four people'",
+   "timestamp": "2026-09-03T11:02:24.393422+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/das-county-accuracy.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "parameter": "bound",
+     "value": 4,
+     "text": "four",
+     "unit": "count"
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "dp_bound",
+     "dp_coverage",
+     "month_year",
+     "year"
+    ],
+    "matched_span": "within four people",
+    "parameter": "bound",
+    "level": 4,
+    "level_label": "preserved_exact",
+    "estimate": {
+     "estimate_matches": [
+      "90 percent"
+     ]
+    },
+    "source_doc_id": "census-2020-disclosure-avoidance-handbook-2021",
+    "passage_id": "das-county-accuracy"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-das-dp-001",
+   "qualifier_class": "VINTAGE",
+   "mode": "indirect",
+   "outcome": "pass",
+   "score": 2,
+   "level": 4,
+   "level_label": "preserved_exact",
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "as-of 'June 8, 2021' matches source '2021-06-08'",
+   "timestamp": "2026-09-03T11:02:24.393422+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/das-county-accuracy.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "as_of": "2021-06-08",
+     "text": "PPMF vintage 2021-06-08"
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "dp_bound",
+     "dp_coverage",
+     "month_year",
+     "year"
+    ],
+    "matched_span": "June 8, 2021",
+    "level": 4,
+    "level_label": "preserved_exact",
+    "estimate": {
+     "estimate_matches": [
+      "90 percent"
+     ]
+    },
+    "source_doc_id": "census-2020-disclosure-avoidance-handbook-2021",
+    "passage_id": "das-county-accuracy"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-das-dp-001",
+   "qualifier_class": "DP_NOISE",
+   "mode": "direct",
+   "outcome": "pass",
+   "score": 2,
+   "level": 4,
+   "level_label": "preserved_exact",
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "DP bound restated as 'within ±4 people'",
+   "timestamp": "2026-09-03T11:02:37.604467+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/g1-das-dp-001.direct.DP_NOISE.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "parameter": "bound",
+     "value": 4,
+     "text": "four",
+     "unit": "count"
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "dp_bound",
+     "iso_date",
+     "pm",
+     "year"
+    ],
+    "matched_span": "within ±4 people",
+    "parameter": "bound",
+    "level": 4,
+    "level_label": "preserved_exact",
+    "estimate": {
+     "estimate_matches": [
+      "90 percent"
+     ]
+    },
+    "source_doc_id": "census-2020-disclosure-avoidance-handbook-2021",
+    "passage_id": "das-county-accuracy"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-das-dp-001",
+   "qualifier_class": "VINTAGE",
+   "mode": "direct",
+   "outcome": "pass",
+   "score": 2,
+   "level": 4,
+   "level_label": "preserved_exact",
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "as-of '2021-06-08' matches source '2021-06-08'",
+   "timestamp": "2026-09-03T11:02:50.104395+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/g1-das-dp-001.direct.VINTAGE.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "as_of": "2021-06-08",
+     "text": "PPMF vintage 2021-06-08"
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "iso_date",
+     "month_year",
+     "pm",
+     "year"
+    ],
+    "matched_span": "2021-06-08",
+    "level": 4,
+    "level_label": "preserved_exact",
+    "estimate": {
+     "estimate_matches": [
+      "90"
+     ]
+    },
+    "source_doc_id": "census-2020-disclosure-avoidance-handbook-2021",
+    "passage_id": "das-county-accuracy"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-das-dp-002",
+   "qualifier_class": "DP_NOISE",
+   "mode": "indirect",
+   "outcome": "pass",
+   "score": 2,
+   "level": 4,
+   "level_label": "preserved_exact",
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "DP rho restated as 'ρ = 2.56'",
+   "timestamp": "2026-09-03T11:03:03.595213+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/das-run-budget.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "parameter": "rho",
+     "value": 2.56,
+     "text": "2.56"
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "dp_param",
+     "year"
+    ],
+    "matched_span": "ρ = 2.56",
+    "parameter": "rho",
+    "level": 4,
+    "level_label": "preserved_exact",
+    "estimate": {
+     "estimate_matches": [
+      "17.41"
+     ]
+    },
+    "source_doc_id": "census-2020-disclosure-avoidance-handbook-2021",
+    "passage_id": "das-run-budget"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-das-dp-002",
+   "qualifier_class": "DP_NOISE",
+   "mode": "indirect",
+   "outcome": "fail",
+   "score": 0,
+   "level": 0,
+   "level_label": "corrupted",
+   "failure_class": "quantity_hallucination",
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "DP delta restated as 'δ = 10'; source 0.0000000001",
+   "timestamp": "2026-09-03T11:03:03.595213+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/das-run-budget.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "parameter": "delta",
+     "value": 1e-10,
+     "text": "0.0000000001"
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "dp_param",
+     "year"
+    ],
+    "direction": "widened",
+    "restated_value": 10.0,
+    "level": 0,
+    "level_label": "corrupted",
+    "estimate": {
+     "estimate_matches": [
+      "17.41"
+     ]
+    },
+    "source_doc_id": "census-2020-disclosure-avoidance-handbook-2021",
+    "passage_id": "das-run-budget"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-das-dp-002",
+   "qualifier_class": "DP_NOISE",
+   "mode": "direct",
+   "outcome": "pass",
+   "score": 2,
+   "level": 4,
+   "level_label": "preserved_exact",
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "DP rho restated as 'ρ = 2.56'",
+   "timestamp": "2026-09-03T11:03:08.728759+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/g1-das-dp-002.direct.DP_NOISE.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "parameter": "rho",
+     "value": 2.56,
+     "text": "2.56"
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "dp_param",
+     "year"
+    ],
+    "matched_span": "ρ = 2.56",
+    "parameter": "rho",
+    "level": 4,
+    "level_label": "preserved_exact",
+    "estimate": {
+     "estimate_matches": [
+      "17.41"
+     ]
+    },
+    "source_doc_id": "census-2020-disclosure-avoidance-handbook-2021",
+    "passage_id": "das-run-budget"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-das-dp-002",
+   "qualifier_class": "DP_NOISE",
+   "mode": "direct",
+   "outcome": "fail",
+   "score": 0,
+   "level": 0,
+   "level_label": "corrupted",
+   "failure_class": "quantity_hallucination",
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "DP delta restated as 'δ = 10'; source 0.0000000001",
+   "timestamp": "2026-09-03T11:03:08.728759+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/g1-das-dp-002.direct.DP_NOISE.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "parameter": "delta",
+     "value": 1e-10,
+     "text": "0.0000000001"
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "dp_param",
+     "year"
+    ],
+    "direction": "widened",
+    "restated_value": 10.0,
+    "level": 0,
+    "level_label": "corrupted",
+    "estimate": {
+     "estimate_matches": [
+      "17.41"
+     ]
+    },
+    "source_doc_id": "census-2020-disclosure-avoidance-handbook-2021",
+    "passage_id": "das-run-budget"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-das-dp-003",
+   "qualifier_class": "DP_NOISE",
+   "mode": "indirect",
+   "outcome": "unparseable",
+   "score": null,
+   "level": null,
+   "level_label": null,
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "uncertainty vocabulary present (budget, delta, noise, privacy, rho) but no DP_NOISE could be classified",
+   "timestamp": "2026-09-03T03:22:32.726993+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/das-plb-people.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "parameter": "rho",
+     "value": 2.56,
+     "text": "2.56"
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "year"
+    ],
+    "cues": [
+     "budget",
+     "delta",
+     "noise",
+     "privacy",
+     "rho"
+    ],
+    "estimate": {
+     "estimate_matches": [
+      "17.14"
+     ]
+    },
+    "source_doc_id": "census-2020-disclosure-avoidance-handbook-2021",
+    "passage_id": "das-plb-people"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-das-dp-003",
+   "qualifier_class": "DP_NOISE",
+   "mode": "indirect",
+   "outcome": "unparseable",
+   "score": null,
+   "level": null,
+   "level_label": null,
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "uncertainty vocabulary present (budget, delta, noise, privacy, rho) but no DP_NOISE could be classified",
+   "timestamp": "2026-09-03T03:22:32.726993+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/das-plb-people.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "parameter": "delta",
+     "value": 1e-10,
+     "text": "0.0000000001"
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "year"
+    ],
+    "cues": [
+     "budget",
+     "delta",
+     "noise",
+     "privacy",
+     "rho"
+    ],
+    "estimate": {
+     "estimate_matches": [
+      "17.14"
+     ]
+    },
+    "source_doc_id": "census-2020-disclosure-avoidance-handbook-2021",
+    "passage_id": "das-plb-people"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-das-dp-003",
+   "qualifier_class": "DP_NOISE",
+   "mode": "direct",
+   "outcome": "pass",
+   "score": 2,
+   "level": 4,
+   "level_label": "preserved_exact",
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "DP rho restated as 'rho: 2.56'",
+   "timestamp": "2026-09-03T03:22:39.862582+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/g1-das-dp-003.direct.DP_NOISE.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "parameter": "rho",
+     "value": 2.56,
+     "text": "2.56"
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "dp_param"
+    ],
+    "matched_span": "rho: 2.56",
+    "parameter": "rho",
+    "level": 4,
+    "level_label": "preserved_exact",
+    "estimate": {
+     "estimate_matches": [
+      "17.14"
+     ]
+    },
+    "source_doc_id": "census-2020-disclosure-avoidance-handbook-2021",
+    "passage_id": "das-plb-people"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-das-dp-003",
+   "qualifier_class": "DP_NOISE",
+   "mode": "direct",
+   "outcome": "fail",
+   "score": 0,
+   "level": 0,
+   "level_label": "corrupted",
+   "failure_class": "quantity_hallucination",
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "DP delta restated as 'Delta: 10'; source 0.0000000001",
+   "timestamp": "2026-09-03T03:22:39.862582+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/g1-das-dp-003.direct.DP_NOISE.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "parameter": "delta",
+     "value": 1e-10,
+     "text": "0.0000000001"
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "dp_param"
+    ],
+    "direction": "widened",
+    "restated_value": 10.0,
+    "level": 0,
+    "level_label": "corrupted",
+    "estimate": {
+     "estimate_matches": [
+      "17.14"
+     ]
+    },
+    "source_doc_id": "census-2020-disclosure-avoidance-handbook-2021",
+    "passage_id": "das-plb-people"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-das-dp-004",
+   "qualifier_class": "DP_NOISE",
+   "mode": "indirect",
+   "outcome": "unparseable",
+   "score": null,
+   "level": null,
+   "level_label": null,
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "uncertainty vocabulary present (budget, delta, noise, noisy, privacy, rho) but no DP_NOISE could be classified",
+   "timestamp": "2026-09-03T11:03:29.175225+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/das-plb-units.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "parameter": "rho",
+     "value": 0.07,
+     "text": "0.07"
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "dp_param",
+     "reliability",
+     "year"
+    ],
+    "cues": [
+     "budget",
+     "delta",
+     "noise",
+     "noisy",
+     "privacy",
+     "rho"
+    ],
+    "estimate": {
+     "estimate_matches": [
+      "2.47"
+     ]
+    },
+    "source_doc_id": "census-2020-disclosure-avoidance-handbook-2021",
+    "passage_id": "das-plb-units"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-das-dp-004",
+   "qualifier_class": "DP_NOISE",
+   "mode": "indirect",
+   "outcome": "unparseable",
+   "score": null,
+   "level": null,
+   "level_label": null,
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "uncertainty vocabulary present (budget, delta, noise, noisy, privacy, rho) but no DP_NOISE could be classified",
+   "timestamp": "2026-09-03T11:03:29.175225+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/das-plb-units.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "parameter": "delta",
+     "value": 1e-10,
+     "text": "0.0000000001"
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "dp_param",
+     "reliability",
+     "year"
+    ],
+    "cues": [
+     "budget",
+     "delta",
+     "noise",
+     "noisy",
+     "privacy",
+     "rho"
+    ],
+    "estimate": {
+     "estimate_matches": [
+      "2.47"
+     ]
+    },
+    "source_doc_id": "census-2020-disclosure-avoidance-handbook-2021",
+    "passage_id": "das-plb-units"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-das-dp-004",
+   "qualifier_class": "DP_NOISE",
+   "mode": "direct",
+   "outcome": "pass",
+   "score": 2,
+   "level": 4,
+   "level_label": "preserved_exact",
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "DP rho restated as 'ρ = 0.07'",
+   "timestamp": "2026-09-03T11:03:38.688454+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/g1-das-dp-004.direct.DP_NOISE.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "parameter": "rho",
+     "value": 0.07,
+     "text": "0.07"
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "dp_param"
+    ],
+    "matched_span": "ρ = 0.07",
+    "parameter": "rho",
+    "level": 4,
+    "level_label": "preserved_exact",
+    "estimate": {
+     "estimate_matches": [
+      "2.47"
+     ]
+    },
+    "source_doc_id": "census-2020-disclosure-avoidance-handbook-2021",
+    "passage_id": "das-plb-units"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-das-dp-004",
+   "qualifier_class": "DP_NOISE",
+   "mode": "direct",
+   "outcome": "fail",
+   "score": 0,
+   "level": 0,
+   "level_label": "corrupted",
+   "failure_class": "quantity_hallucination",
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "DP delta restated as 'δ = 10'; source 0.0000000001",
+   "timestamp": "2026-09-03T11:03:38.688454+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/g1-das-dp-004.direct.DP_NOISE.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "parameter": "delta",
+     "value": 1e-10,
+     "text": "0.0000000001"
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "dp_param"
+    ],
+    "direction": "widened",
+    "restated_value": 10.0,
+    "level": 0,
+    "level_label": "corrupted",
+    "estimate": {
+     "estimate_matches": [
+      "2.47"
+     ]
+    },
+    "source_doc_id": "census-2020-disclosure-avoidance-handbook-2021",
+    "passage_id": "das-plb-units"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-lfs-rf-001",
+   "qualifier_class": "RELIABILITY_FLAG",
+   "mode": "indirect",
+   "outcome": "pass",
+   "score": 2,
+   "level": 3,
+   "level_label": "preserved_transformed",
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "reliability flag restated as 'reliable' (source 'no release restrictions')",
+   "timestamp": "2026-09-03T11:03:48.262195+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/lfs-reliability-categories.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "text": "no release restrictions",
+     "polarity": "reliable"
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "reliability"
+    ],
+    "matched_span": "Reliable",
+    "polarity": "reliable",
+    "level": 3,
+    "level_label": "preserved_transformed",
+    "estimate": {
+     "estimate_matches": [
+      "16.5%"
+     ]
+    },
+    "source_doc_id": "statcan-71-543-g-guide-labour-force-survey-2025",
+    "passage_id": "lfs-reliability-categories"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-lfs-rf-002",
+   "qualifier_class": "RELIABILITY_FLAG",
+   "mode": "indirect",
+   "outcome": "pass",
+   "score": 2,
+   "level": 3,
+   "level_label": "preserved_transformed",
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "reliability flag restated as 'imprecise' (source 'release with caveats')",
+   "timestamp": "2026-09-03T11:03:48.262195+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/lfs-reliability-categories.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "text": "release with caveats",
+     "polarity": "unreliable"
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "reliability"
+    ],
+    "matched_span": "imprecise",
+    "polarity": "unreliable",
+    "level": 3,
+    "level_label": "preserved_transformed",
+    "estimate": {
+     "estimate_matches": [
+      "33.3%"
+     ]
+    },
+    "source_doc_id": "statcan-71-543-g-guide-labour-force-survey-2025",
+    "passage_id": "lfs-reliability-categories"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-lfs-sup-001",
+   "qualifier_class": "SUPPRESSION",
+   "mode": "indirect",
+   "outcome": "fail",
+   "score": 0,
+   "level": 0,
+   "level_label": "corrupted",
+   "failure_class": "suppression_override",
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "an estimate the producer would not publish is restated as a usable number",
+   "timestamp": "2026-09-03T11:03:48.262195+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/lfs-reliability-categories.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "text": "not recommended for release"
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "reliability"
+    ],
+    "level": 0,
+    "level_label": "corrupted",
+    "estimate": {
+     "estimate_matches": [
+      "33.3%"
+     ]
+    },
+    "source_doc_id": "statcan-71-543-g-guide-labour-force-survey-2025",
+    "passage_id": "lfs-reliability-categories"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-lfs-rf-001",
+   "qualifier_class": "RELIABILITY_FLAG",
+   "mode": "direct",
+   "outcome": "pass",
+   "score": 2,
+   "level": 3,
+   "level_label": "preserved_transformed",
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "reliability flag restated as 'category 1' (source 'no release restrictions')",
+   "timestamp": "2026-09-03T11:04:00.114957+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/g1-lfs-rf-001.direct.RELIABILITY_FLAG.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "text": "no release restrictions",
+     "polarity": "reliable"
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "cv_phrase",
+     "pm",
+     "reliability"
+    ],
+    "matched_span": "Category 1",
+    "polarity": "reliable",
+    "level": 3,
+    "level_label": "preserved_transformed",
+    "estimate": {
+     "estimate_matches": [
+      "16.5%"
+     ]
+    },
+    "source_doc_id": "statcan-71-543-g-guide-labour-force-survey-2025",
+    "passage_id": "lfs-reliability-categories"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-lfs-rf-002",
+   "qualifier_class": "RELIABILITY_FLAG",
+   "mode": "direct",
+   "outcome": "pass",
+   "score": 2,
+   "level": 3,
+   "level_label": "preserved_transformed",
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "reliability flag restated as 'category 2' (source 'release with caveats')",
+   "timestamp": "2026-09-03T11:04:14.530643+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/g1-lfs-rf-002.direct.RELIABILITY_FLAG.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "text": "release with caveats",
+     "polarity": "unreliable"
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "cv_phrase",
+     "reliability",
+     "suppression"
+    ],
+    "matched_span": "Category 2",
+    "polarity": "unreliable",
+    "level": 3,
+    "level_label": "preserved_transformed",
+    "estimate": {
+     "estimate_matches": [
+      "33.3%"
+     ]
+    },
+    "source_doc_id": "statcan-71-543-g-guide-labour-force-survey-2025",
+    "passage_id": "lfs-reliability-categories"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-lfs-sup-001",
+   "qualifier_class": "SUPPRESSION",
+   "mode": "direct",
+   "outcome": "pass",
+   "score": 2,
+   "level": 4,
+   "level_label": "preserved_exact",
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "suppression restated: 'not recommended for release'",
+   "timestamp": "2026-09-03T11:04:23.973612+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/g1-lfs-sup-001.direct.SUPPRESSION.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "text": "not recommended for release"
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "reliability",
+     "suppression"
+    ],
+    "matched_span": "not recommended for release",
+    "level": 4,
+    "level_label": "preserved_exact",
+    "estimate": {
+     "estimate_matches": [
+      "33.3%"
+     ]
+    },
+    "source_doc_id": "statcan-71-543-g-guide-labour-force-survey-2025",
+    "passage_id": "lfs-reliability-categories"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-lfs-sup-002",
+   "qualifier_class": "SUPPRESSION",
+   "mode": "indirect",
+   "outcome": "pass",
+   "score": 2,
+   "level": 4,
+   "level_label": "preserved_exact",
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "suppression restated: 'suppressed'",
+   "timestamp": "2026-09-03T11:04:38.276511+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/lfs-minimum-size.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "text": "suppresses estimates below"
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "reliability",
+     "suppression"
+    ],
+    "matched_span": "suppressed",
+    "level": 4,
+    "level_label": "preserved_exact",
+    "estimate": {
+     "estimate_matches": [
+      "1,500 people"
+     ]
+    },
+    "source_doc_id": "statcan-71-543-g-guide-labour-force-survey-2025",
+    "passage_id": "lfs-minimum-size"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-lfs-sup-003",
+   "qualifier_class": "SUPPRESSION",
+   "mode": "indirect",
+   "outcome": "pass",
+   "score": 2,
+   "level": 4,
+   "level_label": "preserved_exact",
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "suppression restated: 'suppressed'",
+   "timestamp": "2026-09-03T11:04:38.276511+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/lfs-minimum-size.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "text": "suppresses estimates below"
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "reliability",
+     "suppression"
+    ],
+    "matched_span": "suppressed",
+    "level": 4,
+    "level_label": "preserved_exact",
+    "estimate": {
+     "estimate_matches": [
+      "1,500 people"
+     ]
+    },
+    "source_doc_id": "statcan-71-543-g-guide-labour-force-survey-2025",
+    "passage_id": "lfs-minimum-size"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-lfs-sup-002",
+   "qualifier_class": "SUPPRESSION",
+   "mode": "direct",
+   "outcome": "pass",
+   "score": 2,
+   "level": 4,
+   "level_label": "preserved_exact",
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "suppression restated: 'suppressed'",
+   "timestamp": "2026-09-03T11:04:48.011867+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/g1-lfs-sup-002.direct.SUPPRESSION.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "text": "suppresses estimates below"
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "suppression"
+    ],
+    "matched_span": "Suppressed",
+    "level": 4,
+    "level_label": "preserved_exact",
+    "estimate": {
+     "estimate_matches": [
+      "1.5 thousand"
+     ]
+    },
+    "source_doc_id": "statcan-71-543-g-guide-labour-force-survey-2025",
+    "passage_id": "lfs-minimum-size"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-lfs-sup-003",
+   "qualifier_class": "SUPPRESSION",
+   "mode": "direct",
+   "outcome": "pass",
+   "score": 2,
+   "level": 4,
+   "level_label": "preserved_exact",
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "suppression restated: 'suppression'",
+   "timestamp": "2026-09-03T11:05:00.667875+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/g1-lfs-sup-003.direct.SUPPRESSION.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "text": "suppresses estimates below"
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "reliability",
+     "suppression"
+    ],
+    "matched_span": "suppression",
+    "level": 4,
+    "level_label": "preserved_exact",
+    "estimate": {
+     "estimate_matches": [
+      "1.5 thousand"
+     ]
+    },
+    "source_doc_id": "statcan-71-543-g-guide-labour-force-survey-2025",
+    "passage_id": "lfs-minimum-size"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-lfs-ci-001",
+   "qualifier_class": "CI",
+   "mode": "indirect",
+   "outcome": "pass",
+   "score": 2,
+   "level": 3,
+   "level_label": "preserved_transformed",
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "CI bounds 'from 10,000 to 110,000' matches source",
+   "timestamp": "2026-09-03T11:05:14.088195+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/lfs-ci-example.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "form": "bounds",
+     "lower": 10000,
+     "upper": 110000,
+     "lower_text": "10,000",
+     "upper_text": "110,000",
+     "level": 0.95,
+     "text": "10,000 to 110,000"
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "bounds"
+    ],
+    "level_omitted": true,
+    "level": 3,
+    "level_label": "preserved_transformed",
+    "estimate": {
+     "estimate_matches": [
+      "60,000"
+     ]
+    },
+    "source_doc_id": "statcan-71-543-g-guide-labour-force-survey-2025",
+    "passage_id": "lfs-ci-example"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-lfs-ci-001",
+   "qualifier_class": "SE",
+   "mode": "indirect",
+   "outcome": "unparseable",
+   "score": null,
+   "level": null,
+   "level_label": null,
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "uncertainty vocabulary present (noise, sampling, standard error, uncertainty) but no SE could be classified",
+   "timestamp": "2026-09-03T11:05:14.088195+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/lfs-ci-example.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "value": 25000,
+     "text": "25,000",
+     "unit": "count"
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "bounds"
+    ],
+    "cues": [
+     "noise",
+     "sampling",
+     "standard error",
+     "uncertainty"
+    ],
+    "estimate": {
+     "estimate_matches": [
+      "60,000"
+     ]
+    },
+    "source_doc_id": "statcan-71-543-g-guide-labour-force-survey-2025",
+    "passage_id": "lfs-ci-example"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-lfs-ci-001",
+   "qualifier_class": "CI",
+   "mode": "direct",
+   "outcome": "fail",
+   "score": 0,
+   "level": 0,
+   "level_label": "corrupted",
+   "failure_class": "binding_error",
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "interval '68% (±1 ' is bound to 68.0, not the source estimate",
+   "timestamp": "2026-09-03T11:05:21.832286+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/g1-lfs-ci-001.direct.CI.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "form": "bounds",
+     "lower": 10000,
+     "upper": 110000,
+     "lower_text": "10,000",
+     "upper_text": "110,000",
+     "level": 0.95,
+     "text": "10,000 to 110,000"
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "pm"
+    ],
+    "bound_to": 68.0,
+    "level": 0,
+    "level_label": "corrupted",
+    "estimate": {
+     "estimate_matches": [
+      "60,000"
+     ]
+    },
+    "source_doc_id": "statcan-71-543-g-guide-labour-force-survey-2025",
+    "passage_id": "lfs-ci-example"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-lfs-ci-001",
+   "qualifier_class": "SE",
+   "mode": "direct",
+   "outcome": "pass",
+   "score": 2,
+   "level": 4,
+   "level_label": "preserved_exact",
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "SE 'standard error of 25,000 ' matches source 25,000",
+   "timestamp": "2026-09-03T11:05:26.799750+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/g1-lfs-ci-001.direct.SE.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "value": 25000,
+     "text": "25,000",
+     "unit": "count"
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "pm",
+     "se_phrase"
+    ],
+    "matched_span": "standard error of 25,000 ",
+    "level": 4,
+    "level_label": "preserved_exact",
+    "estimate": {
+     "estimate_matches": [
+      "60,000"
+     ]
+    },
+    "source_doc_id": "statcan-71-543-g-guide-labour-force-survey-2025",
+    "passage_id": "lfs-ci-example"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-lfs-cv-001",
+   "qualifier_class": "CV",
+   "mode": "indirect",
+   "outcome": "pass",
+   "score": 2,
+   "level": 4,
+   "level_label": "preserved_exact",
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "CV 'CV of 5.0%' matches source 5.0",
+   "timestamp": "2026-09-03T11:05:39.904154+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/lfs-unemployment-cv.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "value": 5.0,
+     "text": "5.0",
+     "unit": "percent"
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "cv_phrase",
+     "month_year",
+     "reliability"
+    ],
+    "matched_span": "CV of 5.0%",
+    "level": 4,
+    "level_label": "preserved_exact",
+    "estimate": {
+     "estimate_matches": [
+      "28,000 people"
+     ]
+    },
+    "source_doc_id": "statcan-71-543-g-guide-labour-force-survey-2025",
+    "passage_id": "lfs-unemployment-cv"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-lfs-cv-001",
+   "qualifier_class": "VINTAGE",
+   "mode": "indirect",
+   "outcome": "pass",
+   "score": 2,
+   "level": 4,
+   "level_label": "preserved_exact",
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "as-of 'January 2024' matches source 'January 2024'",
+   "timestamp": "2026-09-03T11:05:39.904154+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/lfs-unemployment-cv.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "as_of": "January 2024",
+     "text": "January 2024"
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "cv_phrase",
+     "month_year",
+     "reliability"
+    ],
+    "matched_span": "January 2024",
+    "level": 4,
+    "level_label": "preserved_exact",
+    "estimate": {
+     "estimate_matches": [
+      "28,000 people"
+     ]
+    },
+    "source_doc_id": "statcan-71-543-g-guide-labour-force-survey-2025",
+    "passage_id": "lfs-unemployment-cv"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-lfs-cv-002",
+   "qualifier_class": "CV",
+   "mode": "indirect",
+   "outcome": "pass",
+   "score": 2,
+   "level": 4,
+   "level_label": "preserved_exact",
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "CV 'CV of 2.5%' matches source 2.5",
+   "timestamp": "2026-09-03T11:05:39.904154+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/lfs-unemployment-cv.indirect.indirect.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "value": 2.5,
+     "text": "2.5",
+     "unit": "percent"
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "cv_phrase",
+     "month_year",
+     "reliability"
+    ],
+    "matched_span": "CV of 2.5%",
+    "level": 4,
+    "level_label": "preserved_exact",
+    "estimate": {
+     "estimate_matches": [
+      "275,900 people"
+     ]
+    },
+    "source_doc_id": "statcan-71-543-g-guide-labour-force-survey-2025",
+    "passage_id": "lfs-unemployment-cv"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-lfs-cv-001",
+   "qualifier_class": "CV",
+   "mode": "direct",
+   "outcome": "fail",
+   "score": 0,
+   "level": 0,
+   "level_label": "corrupted",
+   "failure_class": "quantity_hallucination",
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "CV restated as 'CV on the labour force count (275,900'; source 5.0 — widened",
+   "timestamp": "2026-09-03T11:05:45.139896+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/g1-lfs-cv-001.direct.CV.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "value": 5.0,
+     "text": "5.0",
+     "unit": "percent"
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "cv_phrase",
+     "se_phrase"
+    ],
+    "direction": "widened",
+    "restated_value": 275900.0,
+    "source_value": 5.0,
+    "level": 0,
+    "level_label": "corrupted",
+    "estimate": {
+     "estimate_matches": [
+      "28,000"
+     ]
+    },
+    "source_doc_id": "statcan-71-543-g-guide-labour-force-survey-2025",
+    "passage_id": "lfs-unemployment-cv"
+   }
+  },
+  {
+   "probe_id": "g1_preservation",
+   "target": "g1-lfs-cv-001",
+   "qualifier_class": "VINTAGE",
+   "mode": "direct",
+   "outcome": "pass",
+   "score": 2,
+   "level": 4,
+   "level_label": "preserved_exact",
+   "failure_class": null,
+   "estimate_status": "exact",
+   "model_id": "claude-opus-5",
+   "prompt_epoch": "g1-v0-2026-09-02",
+   "dimension": "G1",
+   "track": "core",
+   "source": "eval",
+   "as_of_date": "",
+   "evidence": "as-of 'January 20, 2024' matches source 'January 2024'",
+   "timestamp": "2026-09-03T11:06:19.707803+00:00",
+   "evidence_path": "/Users/brock/GitHub/ai-readiness-kg/assessment/evidence/g1/g1-lfs-cv-001.direct.VINTAGE.g1-v0-2026-09-02.claude-opus-5.json",
+   "observations": {
+    "qualifier_source": {
+     "as_of": "January 2024",
+     "text": "January 2024"
+    },
+    "estimate_status": "exact",
+    "rules_fired": [
+     "month_year",
+     "year"
+    ],
+    "matched_span": "January 20, 2024",
+    "level": 4,
+    "level_label": "preserved_exact",
+    "estimate": {
+     "estimate_matches": [
+      "28,000"
+     ]
+    },
+    "source_doc_id": "statcan-71-543-g-guide-labour-force-survey-2025",
+    "passage_id": "lfs-unemployment-cv"
+   }
+  }
+ ],
+ "g1": {
+  "declared": {},
+  "observed": {
+   "by_class_and_mode": {
+    "CI": {
+     "direct": {
+      "n": 5,
+      "n_scored": 5,
+      "n_unparseable": 0,
+      "preserved": 3,
+      "preservation_rate": 0.6,
+      "wilson95": [
+       0.230724,
+       0.882379
+      ],
+      "levels": {
+       "corrupted": 2,
+       "omitted": 0,
+       "degraded_verbal": 0,
+       "preserved_transformed": 2,
+       "preserved_exact": 1
+      },
+      "failure_classes": {
+       "quantity_hallucination": 1,
+       "binding_error": 1
+      },
+      "estimate_status": {
+       "exact": 4,
+       "rounded": 1
+      }
+     },
+     "indirect": {
+      "n": 5,
+      "n_scored": 5,
+      "n_unparseable": 0,
+      "preserved": 5,
+      "preservation_rate": 1.0,
+      "wilson95": [
+       0.565518,
+       1.0
+      ],
+      "levels": {
+       "corrupted": 0,
+       "omitted": 0,
+       "degraded_verbal": 0,
+       "preserved_transformed": 4,
+       "preserved_exact": 1
+      },
+      "failure_classes": {},
+      "estimate_status": {
+       "exact": 4,
+       "rounded": 1
+      }
+     }
+    },
+    "CV": {
+     "direct": {
+      "n": 8,
+      "n_scored": 4,
+      "n_unparseable": 4,
+      "preserved": 2,
+      "preservation_rate": 0.5,
+      "wilson95": [
+       0.150039,
+       0.849961
+      ],
+      "levels": {
+       "corrupted": 1,
+       "omitted": 1,
+       "degraded_verbal": 0,
+       "preserved_transformed": 1,
+       "preserved_exact": 1
+      },
+      "failure_classes": {
+       "certainty_assertion": 1,
+       "quantity_hallucination": 1
+      },
+      "estimate_status": {
+       "exact": 4,
+       "absent": 1,
+       "rounded": 3
+      }
+     },
+     "indirect": {
+      "n": 9,
+      "n_scored": 3,
+      "n_unparseable": 6,
+      "preserved": 2,
+      "preservation_rate": 0.666667,
+      "wilson95": [
+       0.20766,
+       0.938508
+      ],
+      "levels": {
+       "corrupted": 1,
+       "omitted": 0,
+       "degraded_verbal": 0,
+       "preserved_transformed": 0,
+       "preserved_exact": 2
+      },
+      "failure_classes": {
+       "quantity_hallucination": 1
+      },
+      "estimate_status": {
+       "exact": 7,
+       "rounded": 2
+      }
+     }
+    },
+    "DP_NOISE": {
+     "direct": {
+      "n": 7,
+      "n_scored": 7,
+      "n_unparseable": 0,
+      "preserved": 4,
+      "preservation_rate": 0.571429,
+      "wilson95": [
+       0.250458,
+       0.84178
+      ],
+      "levels": {
+       "corrupted": 3,
+       "omitted": 0,
+       "degraded_verbal": 0,
+       "preserved_transformed": 0,
+       "preserved_exact": 4
+      },
+      "failure_classes": {
+       "quantity_hallucination": 3
+      },
+      "estimate_status": {
+       "exact": 7
+      }
+     },
+     "indirect": {
+      "n": 7,
+      "n_scored": 3,
+      "n_unparseable": 4,
+      "preserved": 2,
+      "preservation_rate": 0.666667,
+      "wilson95": [
+       0.20766,
+       0.938508
+      ],
+      "levels": {
+       "corrupted": 1,
+       "omitted": 0,
+       "degraded_verbal": 0,
+       "preserved_transformed": 0,
+       "preserved_exact": 2
+      },
+      "failure_classes": {
+       "quantity_hallucination": 1
+      },
+      "estimate_status": {
+       "exact": 7
+      }
+     }
+    },
+    "MOE": {
+     "direct": {
+      "n": 8,
+      "n_scored": 7,
+      "n_unparseable": 1,
+      "preserved": 7,
+      "preservation_rate": 1.0,
+      "wilson95": [
+       0.64567,
+       1.0
+      ],
+      "levels": {
+       "corrupted": 0,
+       "omitted": 0,
+       "degraded_verbal": 0,
+       "preserved_transformed": 5,
+       "preserved_exact": 2
+      },
+      "failure_classes": {},
+      "estimate_status": {
+       "exact": 8
+      }
+     },
+     "indirect": {
+      "n": 8,
+      "n_scored": 8,
+      "n_unparseable": 0,
+      "preserved": 5,
+      "preservation_rate": 0.625,
+      "wilson95": [
+       0.305742,
+       0.863156
+      ],
+      "levels": {
+       "corrupted": 3,
+       "omitted": 0,
+       "degraded_verbal": 0,
+       "preserved_transformed": 3,
+       "preserved_exact": 2
+      },
+      "failure_classes": {
+       "quantity_hallucination": 1,
+       "binding_error": 2
+      },
+      "estimate_status": {
+       "exact": 8
+      }
+     }
+    },
+    "RELIABILITY_FLAG": {
+     "direct": {
+      "n": 4,
+      "n_scored": 4,
+      "n_unparseable": 0,
+      "preserved": 4,
+      "preservation_rate": 1.0,
+      "wilson95": [
+       0.510109,
+       1.0
+      ],
+      "levels": {
+       "corrupted": 0,
+       "omitted": 0,
+       "degraded_verbal": 0,
+       "preserved_transformed": 3,
+       "preserved_exact": 1
+      },
+      "failure_classes": {},
+      "estimate_status": {
+       "exact": 4
+      }
+     },
+     "indirect": {
+      "n": 4,
+      "n_scored": 4,
+      "n_unparseable": 0,
+      "preserved": 4,
+      "preservation_rate": 1.0,
+      "wilson95": [
+       0.510109,
+       1.0
+      ],
+      "levels": {
+       "corrupted": 0,
+       "omitted": 0,
+       "degraded_verbal": 0,
+       "preserved_transformed": 4,
+       "preserved_exact": 0
+      },
+      "failure_classes": {},
+      "estimate_status": {
+       "exact": 4
+      }
+     }
+    },
+    "SE": {
+     "direct": {
+      "n": 8,
+      "n_scored": 6,
+      "n_unparseable": 2,
+      "preserved": 2,
+      "preservation_rate": 0.333333,
+      "wilson95": [
+       0.096771,
+       0.700007
+      ],
+      "levels": {
+       "corrupted": 0,
+       "omitted": 4,
+       "degraded_verbal": 0,
+       "preserved_transformed": 0,
+       "preserved_exact": 2
+      },
+      "failure_classes": {
+       "omission": 3,
+       "certainty_assertion": 1
+      },
+      "estimate_status": {
+       "absent": 4,
+       "wrong": 1,
+       "exact": 2,
+       "rounded": 1
+      }
+     },
+     "indirect": {
+      "n": 8,
+      "n_scored": 0,
+      "n_unparseable": 8,
+      "preserved": 0,
+      "preservation_rate": null,
+      "wilson95": [
+       null,
+       null
+      ],
+      "levels": {
+       "corrupted": 0,
+       "omitted": 0,
+       "degraded_verbal": 0,
+       "preserved_transformed": 0,
+       "preserved_exact": 0
+      },
+      "failure_classes": {},
+      "estimate_status": {
+       "exact": 6,
+       "rounded": 2
+      }
+     }
+    },
+    "SUPPRESSION": {
+     "direct": {
+      "n": 3,
+      "n_scored": 3,
+      "n_unparseable": 0,
+      "preserved": 3,
+      "preservation_rate": 1.0,
+      "wilson95": [
+       0.438503,
+       1.0
+      ],
+      "levels": {
+       "corrupted": 0,
+       "omitted": 0,
+       "degraded_verbal": 0,
+       "preserved_transformed": 0,
+       "preserved_exact": 3
+      },
+      "failure_classes": {},
+      "estimate_status": {
+       "exact": 3
+      }
+     },
+     "indirect": {
+      "n": 3,
+      "n_scored": 3,
+      "n_unparseable": 0,
+      "preserved": 2,
+      "preservation_rate": 0.666667,
+      "wilson95": [
+       0.20766,
+       0.938508
+      ],
+      "levels": {
+       "corrupted": 1,
+       "omitted": 0,
+       "degraded_verbal": 0,
+       "preserved_transformed": 0,
+       "preserved_exact": 2
+      },
+      "failure_classes": {
+       "suppression_override": 1
+      },
+      "estimate_status": {
+       "exact": 3
+      }
+     }
+    },
+    "VINTAGE": {
+     "direct": {
+      "n": 12,
+      "n_scored": 12,
+      "n_unparseable": 0,
+      "preserved": 12,
+      "preservation_rate": 1.0,
+      "wilson95": [
+       0.757506,
+       1.0
+      ],
+      "levels": {
+       "corrupted": 0,
+       "omitted": 0,
+       "degraded_verbal": 0,
+       "preserved_transformed": 1,
+       "preserved_exact": 11
+      },
+      "failure_classes": {},
+      "estimate_status": {
+       "exact": 12
+      }
+     },
+     "indirect": {
+      "n": 12,
+      "n_scored": 12,
+      "n_unparseable": 0,
+      "preserved": 12,
+      "preservation_rate": 1.0,
+      "wilson95": [
+       0.757506,
+       1.0
+      ],
+      "levels": {
+       "corrupted": 0,
+       "omitted": 0,
+       "degraded_verbal": 0,
+       "preserved_transformed": 2,
+       "preserved_exact": 10
+      },
+      "failure_classes": {},
+      "estimate_status": {
+       "exact": 10,
+       "rounded": 2
+      }
+     }
+    }
+   },
+   "by_mode": {
+    "direct": {
+     "n": 55,
+     "n_scored": 48,
+     "n_unparseable": 7,
+     "preserved": 37,
+     "preservation_rate": 0.770833,
+     "wilson95": [
+      0.634607,
+      0.866922
+     ],
+     "levels": {
+      "corrupted": 6,
+      "omitted": 5,
+      "degraded_verbal": 0,
+      "preserved_transformed": 12,
+      "preserved_exact": 25
+     },
+     "failure_classes": {
+      "omission": 3,
+      "certainty_assertion": 2,
+      "quantity_hallucination": 5,
+      "binding_error": 1
+     },
+     "estimate_status": {
+      "exact": 44,
+      "absent": 5,
+      "wrong": 1,
+      "rounded": 5
+     }
+    },
+    "indirect": {
+     "n": 56,
+     "n_scored": 38,
+     "n_unparseable": 18,
+     "preserved": 32,
+     "preservation_rate": 0.842105,
+     "wilson95": [
+      0.695832,
+      0.925561
+     ],
+     "levels": {
+      "corrupted": 6,
+      "omitted": 0,
+      "degraded_verbal": 0,
+      "preserved_transformed": 13,
+      "preserved_exact": 19
+     },
+     "failure_classes": {
+      "quantity_hallucination": 3,
+      "binding_error": 2,
+      "suppression_override": 1
+     },
+     "estimate_status": {
+      "exact": 49,
+      "rounded": 7
+     }
+    }
+   },
+   "all": {
+    "n": 111,
+    "n_scored": 86,
+    "n_unparseable": 25,
+    "preserved": 69,
+    "preservation_rate": 0.802326,
+    "wilson95": [
+     0.706041,
+     0.872756
+    ],
+    "levels": {
+     "corrupted": 12,
+     "omitted": 5,
+     "degraded_verbal": 0,
+     "preserved_transformed": 25,
+     "preserved_exact": 44
+    },
+    "failure_classes": {
+     "omission": 3,
+     "quantity_hallucination": 8,
+     "binding_error": 3,
+     "certainty_assertion": 2,
+     "suppression_override": 1
+    },
+    "estimate_status": {
+     "exact": 93,
+     "absent": 5,
+     "wrong": 1,
+     "rounded": 12
+    }
+   },
+   "n_propositions": 30,
+   "prompt_epochs": [
+    "g1-v0-2026-09-02"
+   ],
+   "model_ids": [
+    "claude-opus-5"
+   ]
+  },
+  "n_records": 111,
+  "note": "G1 is reported as its own block and never enters the core composite, the web-surface vector or a frontier track. Observed-leg rates are the share of scored (parseable) records at level L3 or better, with a Wilson 95 % interval and the denominator; `unparseable` records are counted separately and never coerced into a score. No product-level threshold exists in v0 (DD-033)."
+ },
+ "expectations": {
+  "E1": {
+   "statement": "indirect loses qualifiers at a higher rate than direct (Du 2026)",
+   "indirect": {
+    "n": 38,
+    "preserved": 32,
+    "rate": 0.842105,
+    "wilson95": [
+     0.695832,
+     0.925561
+    ]
+   },
+   "direct": {
+    "n": 48,
+    "preserved": 37,
+    "rate": 0.770833,
+    "wilson95": [
+     0.634607,
+     0.866922
+    ]
+   },
+   "verdict": "underpowered"
+  },
+  "E2": {
+   "statement": "omission (L1) exceeds corruption (L0) (Du 2026; Ansari 2026)",
+   "L1": 5,
+   "L0": 12,
+   "n_scored": 86,
+   "verdict": "not supported"
+  },
+  "E3": {
+   "statement": "among non-omission failures, form_shift (L2) is the most frequent (van der Bles 2019)",
+   "failure_classes": {
+    "quantity_hallucination": 8,
+    "binding_error": 3,
+    "suppression_override": 1
+   },
+   "most_frequent": "quantity_hallucination",
+   "verdict": "not supported"
+  },
+  "H1": {
+   "statement": "CV / RELIABILITY_FLAG / SUPPRESSION are lost at a higher rate than MOE / CI (hypothesis, no prior art)",
+   "cv_flag_supp": {
+    "n": 21,
+    "preserved": 17,
+    "rate": 0.809524,
+    "wilson95": [
+     0.599994,
+     0.923324
+    ]
+   },
+   "moe_ci": {
+    "n": 25,
+    "preserved": 20,
+    "rate": 0.8,
+    "wilson95": [
+     0.60869,
+     0.911394
+    ]
+   },
+   "verdict": "underpowered"
+  },
+  "H2": {
+   "statement": "VINTAGE is omitted more often than any numeric qualifier (hypothesis, no prior art)",
+   "vintage_omission": {
+    "n": 24,
+    "omitted": 0,
+    "rate": 0.0,
+    "wilson95": [
+     0.0,
+     0.137976
+    ]
+   },
+   "numeric_omission": {
+    "n": 48,
+    "omitted": 5,
+    "rate": 0.104167,
+    "wilson95": [
+     0.045322,
+     0.221674
+    ]
+   },
+   "verdict": "underpowered"
+  }
+ },
+ "stop_reason": "spend_refused: spend guard refused dispatch (over_ceiling, scope=run): committed 1,983,468 + estimate 36,846 vs ceiling 2,000,000 [run g1_eval_v1_dev_2026-09-03]",
+ "calls_made": 63,
+ "calls_reused": 6,
+ "spend": {
+  "ledger": "/Users/brock/GitHub/ai-readiness-kg/state/spend_ledger.jsonl",
+  "daily_tokens": 55000000,
+  "committed_today": 2168695,
+  "runs": {
+   "g1_eval_v1_dev_2026-09-03": {
+    "ceiling_tokens": 2000000,
+    "call_class": "g1_eval",
+    "committed": 1983468,
+    "settled": 1983468,
+    "outstanding": 0,
+    "released": 0,
+    "remaining": 16532,
+    "refusals": 1,
+    "settled_by_class": {
+     "success": 1983468
+    },
+    "released_by_class": {}
+   }
+  }
+ },
+ "finished_at": "2026-09-03T11:06:19.769640+00:00"
+}

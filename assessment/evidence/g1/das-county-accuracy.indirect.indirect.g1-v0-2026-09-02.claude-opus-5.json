@@ -1,0 +1,31 @@
+{
+ "proposition_id": "g1-das-dp-001",
+ "call_id": "das-county-accuracy.indirect",
+ "mode": "indirect",
+ "qualifier_class": null,
+ "prompt_epoch": "g1-v0-2026-09-02",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T11:02:24.393422+00:00",
+ "prompt": "Restate the following for a general-audience summary.\n\nThe latest PPMF vintage 2021-06-08 is the Production Settings run, which uses the same software and settings for the 2020 production run of the redistricting data. Users can compare tabulated values from the PPMFs to published 2010 data to identify the amount of uncertainty that can be expected for a given geography or characteristic. Users can also calculate new measures of the spread of the uncertainty. For example, comparing tabulations from the PPMFs with the published 2010 data will show that 90 percent of counties have a privacy-protected total population that is within ± four people of their published total population.",
+ "response_text": "**Plain-language version**\n\nThe Census Bureau's newest practice file — the version released on June 8, 2021 — was produced with the exact same software and settings the Bureau used to make the real 2020 redistricting data. That makes it a realistic preview of how the privacy protections affect the numbers.\n\nBecause these practice files apply those protections to *2010* census data — for which the true published counts are already public — anyone can put the two side by side and see how far the protected numbers stray from the originals. That gives a concrete sense of how much noise to expect for a particular place or population characteristic, and people are free to build their own measures of that spread.\n\nOne example of what such a comparison shows: for 90 percent of counties, the privacy-protected total population lands within four people of the published total.",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 292,
+  "cacheReadInputTokens": 12841,
+  "cacheCreationInputTokens": 16956,
+  "webSearchRequests": 0,
+  "costUSD": 0.1832905,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 53,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 5311,
+ "cost_usd": 0.1832905,
+ "spend_run_id": "g1_eval_v1_dev_2026-09-03",
+ "spend_reservation_id": "6bc77175a98341159a640e1b98783196",
+ "source_doc_id": "census-2020-disclosure-avoidance-handbook-2021",
+ "passage_id": "das-county-accuracy"
+}

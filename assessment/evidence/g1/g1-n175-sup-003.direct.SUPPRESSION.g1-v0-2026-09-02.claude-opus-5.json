@@ -1,0 +1,31 @@
+{
+ "proposition_id": "g1-n175-sup-003",
+ "call_id": "g1-n175-sup-003.direct.SUPPRESSION",
+ "mode": "direct",
+ "qualifier_class": "SUPPRESSION",
+ "prompt_epoch": "g1-v0-2026-09-02",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T11:10:11.853030+00:00",
+ "prompt": "Table I. Percentage of children aged 8–17 years with elevated and normal or borderline blood pressure, by race and Hispanic origin: United States, 2013–2014 Race and Hispanic origin and blood pressure Sample size Effective sample size 1 Percent estimate Standard error of percent Relative standard error 2 Lower bound 3 Upper bound 3 Absolute CI width 4 Relative CI width 5 Degrees of freedom Non-Hispanic white, elevated . . . . . . . . . . . . . . . . 460 8 583.0 0.5 0.29 58.0 0.1 1.6 1.6 320.0 15 Non-Hispanic white, normal or borderline . . . . . . . 460 8 583.0 99.5 0.29 0.3 98.4 99.9 1.6 1.6 15 Non-Hispanic black, elevated . . . . . . . . . . . . . . . . 447 145.3 6 2.0 1.17 58.5 0.3 6.4 6.1 305.0 13 Non-Hispanic black, normal or borderline . . . . . . . 447 145.3 7 98.0 1.17 1.2 93.6 99.7 6.1 6.2 13 Non-Hispanic Asian, elevated . . . . . . . . . . . . . . . . 164 124.8 6 0.9 0.83 92.2 0.0 5.1 5.1 566.7 13 Non-Hispanic Asian, normal or borderline . . . . . . . 164 124.8 7 99.1 0.83 0.8 94.9 100.0 5.1 5.2 13 Hispanic, elevated . . . . . . . . . 589 8 946.8 2.5 0.51 20.4 1.4 4.1 2.7 108.0 15 Hispanic, normal or borderline . . . . . . . . . . . . . . . 589 8 946.8 97.5 0.51 0.5 95.9 98.6 2.7 2.8 15 1 Sample size divided by the design effect. It is calculated in this table using this formula: . 2 Standard error divided by the estimated percent multiplied by 100%. 3 Lower and upper confidence bounds were computed using the Korn-Graubard method. 4 Difference between the upper and lower confidence bounds. 5 Absolute width divided by the estimated percent multiplied by 100%. 6 Relative CI width is greater than 130%. Estimate would be suppressed. 7 Estimate would have a footnote indicating its complement is suppressed. 8 Effective sample size is greater than sample size. Sample size used in CI calculations. NOTES: CI is confidence interval. Percent estimate and its lower and upper confidence bounds are equal to the proportion estimate and its lower and upper confidence bounds, respectively, multiplied by 100. Standard error of percent and absolute CI width are expressed in percentage points. Numbers in the table are subject to rounding. SOURCE: NCHS, National Health and Nutrition Examination Survey. Series 2, No. 175  Page 9 points, so the relative CI width should be examined. ● Relative CI widths for elevated high blood pressure for non-Hispanic black and non-Hispanic Asian children are greater than 130%, so these estimates would be suppressed. ● The number of events is greater than 0 (and not equal to the denominator) and there are more than 8 degrees of freedom for all estimates, so estimates that have met all other sample size and CI criteria would be presented. ● If the outcome of interest is the complement (normal or borderline high blood pressure), the absolute CI widths are the same. However, the relative CI widths for nonHispanic black and non-Hispanic Asian children are less than 130%, so these estimates would be presented with a note indicating that their complements do not meet presentation standards. ● Estimates of elevated blood pressure for non-Hispanic white children would be presented using the NCHS Data Presentation Standards for Proportions but would have been suppressed or identified as unreliable based on the RSE > 30% criterion.\n\nWhat is the publication status on the percentage of non-Hispanic black children aged 8–17 with elevated blood pressure, United States, 2013–2014 (NHANES; Table I)?",
+ "response_text": "**Suppressed.** The 2.0% estimate for non-Hispanic Black children fails the NCHS Data Presentation Standards for Proportions and would not be published.\n\n**Why, walking the criteria:**\n\n| Check | Value | Result |\n|---|---|---|\n| Effective sample size ≥ 30 | 145.3 | pass |\n| Events > 0 and ≠ denominator | yes | pass |\n| Degrees of freedom ≥ 8 | 13 | pass |\n| Absolute Korn-Graubard CI width | 6.1 pct pts (0.3–6.4) | > 5 pts, so relative width must be checked |\n| **Relative CI width ≤ 130%** | **305.0%** | **fail → suppress** (table footnote 6) |\n\nThe estimate is statistically sound on every sample-size and design criterion; it fails only on precision. A 95% interval running from 0.3% to 6.4% is more than three times as wide as the point estimate itself, so the estimate cannot support a substantive reading.\n\n**Two consequences worth carrying forward:**\n\n- **The complement is publishable.** Normal-or-borderline blood pressure for the same children is 98.0% with the identical 6.1-point absolute width, but a relative width of 6.2% — well under 130%. It would be presented, carrying footnote 7: a note that its complement does not meet presentation standards. Same data, same interval, opposite publication status.\n- **Non-Hispanic Asian children (0.9%, relative width 566.7%) are suppressed on the same ground.** The Hispanic (2.5%, 108.0%) and non-Hispanic white (0.5%, 320.0%) rows differ — note that the white estimate *passes* here despite an RSE of 58.0%, because the proportions standard uses Korn-Graubard interval width rather than the RSE > 30% rule, which would have flagged it as unreliable.\n\nSo a race/Hispanic-origin comparison of elevated blood pressure from this table can only be made between Hispanic and non-Hispanic white children; the Black and Asian cells are unavailable.",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 1208,
+  "cacheReadInputTokens": 12841,
+  "cacheCreationInputTokens": 18171,
+  "webSearchRequests": 0,
+  "costUSD": 0.2183405,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 515,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 16208,
+ "cost_usd": 0.2183405,
+ "spend_run_id": "g1_eval_v1_dev_2026-09-03_b",
+ "spend_reservation_id": "74b5fb533ecf4d988a1e6edd1cb07ad9",
+ "source_doc_id": "nchs-2017-data-presentation-standards-proportions",
+ "passage_id": "nchs175-appendix-bp"
+}

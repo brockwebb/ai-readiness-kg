@@ -1,0 +1,31 @@
+{
+ "proposition_id": "g1-ons-ci-001",
+ "call_id": "g1-ons-ci-001.direct.VINTAGE",
+ "mode": "direct",
+ "qualifier_class": "VINTAGE",
+ "prompt_epoch": "g1-v0-2026-09-02",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T11:01:41.090267+00:00",
+ "prompt": "Estimates for July to September 2019 show 32.75 million people aged 16 years and over in employment in the UK, with a confidence interval of plus or minus 177,000 people based on the results from a sample. If we took a large number of samples repeatedly, 95% of the confidence intervals would contain the unknown population estimate.\n\nWhat is the reference period or as-of date on the number of people aged 16 years and over in employment in the UK, July to September 2019?",
+ "response_text": "**Reference period: July to September 2019** — i.e. the three months 1 July – 30 September 2019.\n\nA few details worth noting about how that period works in this statistic:\n\n- It is a **rolling three-month average**, not a snapshot on a single date. The 32.75 million figure is the average level of employment across the whole quarter, from the ONS Labour Force Survey. There is no single \"as-of\" day.\n- The **age reference** is people aged 16 and over at the time of interview during that period.\n- These are **UK** estimates, published in the ONS *Labour market overview* bulletin — the Jul–Sep 2019 edition was released in mid-November 2019.\n- The ±177,000 confidence interval attaches to that same quarterly average, reflecting sampling error only.\n\nSo if you need a date field: the period start is 2019-07-01 and the period end is 2019-09-30, with periodicity \"3-month rolling quarter.\" Using 2019-09-30 alone as an as-of date would misrepresent it as a point-in-time count.",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 572,
+  "cacheReadInputTokens": 12841,
+  "cacheCreationInputTokens": 16898,
+  "webSearchRequests": 0,
+  "costUSD": 0.1897105,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 239,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 11084,
+ "cost_usd": 0.1897105,
+ "spend_run_id": "g1_eval_v1_dev_2026-09-03",
+ "spend_reservation_id": "d6bcc326a23a4552b532470eaa67a81a",
+ "source_doc_id": "ons-uncertainty-and-how-we-measure-it",
+ "passage_id": "ons-ci-employment"
+}

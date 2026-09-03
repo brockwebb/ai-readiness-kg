@@ -1,0 +1,31 @@
+{
+ "proposition_id": "g1-ons-ci-002",
+ "call_id": "g1-ons-ci-002.direct.VINTAGE",
+ "mode": "direct",
+ "qualifier_class": "VINTAGE",
+ "prompt_epoch": "g1-v0-2026-09-02",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T11:02:16.839614+00:00",
+ "prompt": "In 2016, the UK private education industry was estimated to have generated a total turnover of £42,649 million. The standard error for this estimate is £526.8 million. The 95% confidence interval around this estimate is calculated as: Margin of error = 1.96 × £526.8 million = £1,032.5 million The 95% confidence interval is therefore £42,649 million plus or minus £1,032.5 million, which equals £41,616 million and £43,682 million respectively. This means that if we drew 20 random samples and calculated an analogous confidence interval for each, on average, 19 out of 20 (95%) would contain the true population value and 1 in 20 (5%) would not. Therefore, there is a 95% chance that the true population value lies between £41,616 million and £43,682 million.\n\nWhat is the reference period or as-of date on the total turnover of the UK private education industry in 2016?",
+ "response_text": "**Reference period: calendar year 2016** — that is, the estimate is an annual turnover figure covering the full year 2016.\n\nThat is the only temporal qualifier the passage supplies. Specifically:\n\n- The passage states \"In 2016, the UK private education industry was estimated to have generated a total turnover of £42,649 million,\" so the measure is a flow accumulated over the year, not a stock at a point in time.\n- No narrower as-of date is given — no survey reference date, no financial-year boundary (e.g. whether it is calendar 2016 or an April–March accounting year), and no publication or extraction date.\n\nIf you need an as-of date rather than a reference period, the passage doesn't contain one; it would have to come from the source publication's metadata.\n\nOne correction to the passage while I'm here, since it bears on how the interval should be reported: the final sentence (\"there is a 95% chance that the true population value lies between £41,616 million and £43,682 million\") contradicts the sentence before it. The preceding sentence gives the correct frequentist interpretation — 19 in 20 such intervals constructed this way contain the true value. Under that framework the true value is fixed, so a specific realized interval either contains it or doesn't; there is no 95% probability attached to this particular interval. The \"95% chance\" phrasing is a Bayesian credible-interval reading and shouldn't be carried forward if you're extracting the interpretation alongside the estimate.",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 675,
+  "cacheReadInputTokens": 12841,
+  "cacheCreationInputTokens": 17038,
+  "webSearchRequests": 0,
+  "costUSD": 0.1936855,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 214,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 11083,
+ "cost_usd": 0.1936855,
+ "spend_run_id": "g1_eval_v1_dev_2026-09-03",
+ "spend_reservation_id": "8c6c51441dd243a0afeaafa61d4a0969",
+ "source_doc_id": "ons-uncertainty-and-how-we-measure-it",
+ "passage_id": "ons-ci-education"
+}

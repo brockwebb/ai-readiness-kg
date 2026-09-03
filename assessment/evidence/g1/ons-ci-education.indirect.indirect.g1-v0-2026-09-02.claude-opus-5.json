@@ -1,0 +1,31 @@
+{
+ "proposition_id": "g1-ons-ci-002",
+ "call_id": "ons-ci-education.indirect",
+ "mode": "indirect",
+ "qualifier_class": null,
+ "prompt_epoch": "g1-v0-2026-09-02",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T11:01:55.274799+00:00",
+ "prompt": "Restate the following for a general-audience summary.\n\nIn 2016, the UK private education industry was estimated to have generated a total turnover of £42,649 million. The standard error for this estimate is £526.8 million. The 95% confidence interval around this estimate is calculated as: Margin of error = 1.96 × £526.8 million = £1,032.5 million The 95% confidence interval is therefore £42,649 million plus or minus £1,032.5 million, which equals £41,616 million and £43,682 million respectively. This means that if we drew 20 random samples and calculated an analogous confidence interval for each, on average, 19 out of 20 (95%) would contain the true population value and 1 in 20 (5%) would not. Therefore, there is a 95% chance that the true population value lies between £41,616 million and £43,682 million.",
+ "response_text": "## Plain-language version\n\nIn 2016, the UK's private education industry brought in around **£42.6 billion** in total turnover.\n\nThat figure comes from a survey, not a full count of every business, so it carries some uncertainty. Statisticians measure that uncertainty with a \"confidence interval\" — a range around the estimate that reflects how much the number might shift if a different sample had been surveyed.\n\nFor this estimate, the range runs from about **£41.6 billion to £43.7 billion** (the estimate give or take roughly £1.0 billion).\n\nWhat that range means: if you repeated the survey 20 times, drawing a fresh random sample each time, and worked out a range like this for each one, about 19 of those 20 ranges would contain the true figure for the whole industry, and about 1 would miss it. So a range built this way is a reliable — though not guaranteed — guide to where the true number sits.\n\n## One correction to flag\n\nThe original's final sentence — \"there is a 95% chance that the true population value lies between £41,616 million and £43,682 million\" — is the standard misreading of a confidence interval, and it contradicts the sentence just before it.\n\nThe 95% describes the *method*, not this particular interval. The true value is a fixed (if unknown) number; it either falls inside this specific range or it doesn't. What's random is which interval the sampling procedure produced. Saying \"95% chance the true value is in *this* range\" is a Bayesian credible-interval statement, which requires a prior and is not what was calculated here.\n\nI dropped that sentence from the restatement rather than reproducing it. If you want the intuition it was reaching for, the honest general-audience phrasing is: *\"we can be 95% confident the true figure lies in this range,\"* where \"confident\" points at the track record of the method.",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 712,
+  "cacheReadInputTokens": 12841,
+  "cacheCreationInputTokens": 17022,
+  "webSearchRequests": 0,
+  "costUSD": 0.19445049999999997,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 146,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 12029,
+ "cost_usd": 0.19445049999999997,
+ "spend_run_id": "g1_eval_v1_dev_2026-09-03",
+ "spend_reservation_id": "b3bf2a68bad94428aeba30dd7c734b36",
+ "source_doc_id": "ons-uncertainty-and-how-we-measure-it",
+ "passage_id": "ons-ci-education"
+}

@@ -1,0 +1,31 @@
+{
+ "proposition_id": "g1-ons-ci-001",
+ "call_id": "g1-ons-ci-001.direct.CI",
+ "mode": "direct",
+ "qualifier_class": "CI",
+ "prompt_epoch": "g1-v0-2026-09-02",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T11:01:27.789376+00:00",
+ "prompt": "Estimates for July to September 2019 show 32.75 million people aged 16 years and over in employment in the UK, with a confidence interval of plus or minus 177,000 people based on the results from a sample. If we took a large number of samples repeatedly, 95% of the confidence intervals would contain the unknown population estimate.\n\nWhat is the confidence interval on the number of people aged 16 years and over in employment in the UK, July to September 2019?",
+ "response_text": "**± 177,000 people** — that is, the 95% confidence interval runs from about **32.573 million to 32.927 million**.\n\n- Point estimate: 32,750,000\n- Margin of error: 177,000\n- Lower bound: 32,750,000 − 177,000 = **32,573,000**\n- Upper bound: 32,750,000 + 177,000 = **32,927,000**\n\nThe interval reflects sampling variability only (the estimate comes from the Labour Force Survey sample, not a census). The 95% refers to the procedure, not this one interval: over many repeated samples, 95% of intervals constructed this way would contain the true population value.",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 343,
+  "cacheReadInputTokens": 12841,
+  "cacheCreationInputTokens": 16895,
+  "webSearchRequests": 0,
+  "costUSD": 0.1839555,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 133,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 4985,
+ "cost_usd": 0.1839555,
+ "spend_run_id": "g1_eval_v1_dev_2026-09-03",
+ "spend_reservation_id": "61fc1b10085e42d58fa63391e546ca75",
+ "source_doc_id": "ons-uncertainty-and-how-we-measure-it",
+ "passage_id": "ons-ci-employment"
+}

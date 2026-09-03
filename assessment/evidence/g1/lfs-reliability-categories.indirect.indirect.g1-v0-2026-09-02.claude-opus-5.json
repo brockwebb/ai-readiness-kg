@@ -1,0 +1,31 @@
+{
+ "proposition_id": "g1-lfs-rf-001",
+ "call_id": "lfs-reliability-categories.indirect",
+ "mode": "indirect",
+ "qualifier_class": null,
+ "prompt_epoch": "g1-v0-2026-09-02",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T11:03:48.262195+00:00",
+ "prompt": "Restate the following for a general-audience summary.\n\n**Guidelines on data reliability** Household surveys within Statistics Canada generally use the following guidelines and reliability categories in interpreting CV values for data accuracy and in the dissemination of statistical information. **Category 1** – If the CV is ≤ 16.5% – no release restrictions: data are of sufficient accuracy that no special warnings to users or other restrictions are required. **Category 2** – If the CV is > 16.5% and ≤ 33.3% – release with caveats: data are potentially useful for some purposes but should be accompanied by a warning to users regarding their accuracy. **Category 3** – If the CV > 33.3% – not recommended for release: data contain a level of error that makes them so potentially misleading that they should not be released in most circumstances. If users insist on inclusion of Category 3 data in a non-standard product, even after being advised of their accuracy, the data should be accompanied by a disclaimer. The user should acknowledge the warnings given and undertake not to disseminate, present or report the data, directly or indirectly, without this disclaimer.",
+ "response_text": "**How Statistics Canada rates the reliability of survey estimates**\n\nWhen Statistics Canada publishes a number from a household survey, that number is an estimate based on a sample, not a count of everyone. The **coefficient of variation (CV)** measures how shaky that estimate is — roughly, how much it would bounce around if the survey were repeated. A low CV means a solid number; a high CV means a wobbly one.\n\nEstimates fall into three buckets:\n\n| Category | CV | What it means |\n|---|---|---|\n| **1** | 16.5% or less | **Publish freely.** Reliable enough to use as-is, with no warning label. |\n| **2** | Over 16.5%, up to 33.3% | **Publish with a caution.** Still useful for some purposes, but readers must be told the estimate is uncertain. |\n| **3** | Over 33.3% | **Don't publish.** So imprecise it's likely to mislead. |\n\nFor Category 3, there's a narrow exception. If someone asks for the data in a custom (non-standard) product and still wants it after being warned how unreliable it is, Statistics Canada may provide it — but only attached to a disclaimer. The person receiving it has to acknowledge the warning and agree never to share, present, or report the figures, directly or indirectly, without that disclaimer traveling with them.",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 487,
+  "cacheReadInputTokens": 12841,
+  "cacheCreationInputTokens": 17118,
+  "webSearchRequests": 0,
+  "costUSD": 0.1897855,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 55,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 7395,
+ "cost_usd": 0.1897855,
+ "spend_run_id": "g1_eval_v1_dev_2026-09-03",
+ "spend_reservation_id": "c1ef3003987a4197ba6ee2922333150b",
+ "source_doc_id": "statcan-71-543-g-guide-labour-force-survey-2025",
+ "passage_id": "lfs-reliability-categories"
+}

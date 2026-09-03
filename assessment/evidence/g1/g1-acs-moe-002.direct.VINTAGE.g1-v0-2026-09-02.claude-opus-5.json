@@ -1,0 +1,31 @@
+{
+ "proposition_id": "g1-acs-moe-002",
+ "call_id": "g1-acs-moe-002.direct.VINTAGE",
+ "mode": "direct",
+ "qualifier_class": "VINTAGE",
+ "prompt_epoch": "g1-v0-2026-09-02",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T10:58:07.342820+00:00",
+ "prompt": "The example below shows how to calculate the MOE and SE for the estimated number of never-married females living in the three Virginia counties/independent cities that border Washington, DC (Fairfax and Arlington counties, Alexandria City) from the 2015 ACS 1-year estimates. Table 8.1. Data for Example 1 From Three Virginia Counties/Independent Cities: 2015 Characteristic Estimate MOE Never-married females living in Fairfax County (Component 1) ................................. 135,173 ±3,860 Never-married females living in Arlington County (Component 2) ................................. 43,104 ±2,642 Never-married females living in Alexandria City (Component 3) .................................. 24,842 ±1,957 Source: U.S. Census Bureau, data.census.gov, Table B12001: “Sex by Marital Status for the Population 15 Years and Over.” 60 Understanding and Using American Community Survey Data 60 What All Data Users Need to Know U.S. Census Bureau The aggregate estimate is: Obtain MOEs of the component estimates: MOE (Fairfax) = ±3,860 MOE (Arlington) = ±2,642 MOE (Alexandria) = ±1,957 Using formula (1), calculate the MOE for the aggregate estimate: Thus, the derived estimate of the number of never-married females living in the three Virginia counties/independent cities that border Washington, DC, is 203,119, and the MOE for the estimate is ±5,070. The SE of this derived estimate can be calculated from the SEs of the component estimates as follows: 1. Calculate the SE of each component estimate from its MOE using: (2) SE (Fairfax) = 3,860 / 1.645 = 2,347 SE (Arlington) = 2,642 / 1.645 = 1,606 SE (Alexandria) = 1,957 / 1.645 = 1,190 2. Calculate the SE of the aggregate estimate: (3) With the three component estimates in this example, this becomes: To assess the reliability of this derived estimate, users may find it helpful to calculate the CV as follows: (4) Understanding and Using American Community Survey Data 61 What All Data Users Need to Know 61 U.S. Census Bureau This CV indicates that the sampling error of this estimate is very small relative to the estimate itself, so the number of never-married females residing in the Virginia tri-county area bordering Washington, DC, can be considered a very reliable estimate.\n\nWhat is the reference period or as-of date on the number of never-married females living in Fairfax County, Arlington County and Alexandria City combined (2015 ACS 1-year)?",
+ "response_text": "**Reference period: calendar year 2015 — January 1 through December 31, 2015.**\n\nThe aggregate (203,119 never-married females, MOE ±5,070) inherits the reference period of its three components, all drawn from Table B12001 of the **2015 ACS 1-year estimates**.\n\nKey points about what that means:\n\n- **It is a period estimate, not a point-in-time count.** ACS 1-year estimates describe the average characteristics of the area over the full 12 months of data collection. There is no \"as-of\" date analogous to the decennial census's April 1 reference date.\n- **Interview-date reference.** Marital status in B12001 is recorded as of the respondent's interview date, and interviews are spread across all 12 months of 2015. The published estimate is effectively an average over the year.\n- **Inflation-adjusted dollar figures** (not relevant here, since this is a person count) would be in 2015 dollars — the same year.\n- **Population universe:** population 15 years and over, per the B12001 table title.\n\nSo the correct citation of the derived figure is: *approximately 203,119 never-married females aged 15+ in Fairfax County, Arlington County, and Alexandria City, VA, averaged over calendar year 2015 (±5,070 at the 90% confidence level).*",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 517,
+  "cacheReadInputTokens": 12841,
+  "cacheCreationInputTokens": 17634,
+  "webSearchRequests": 0,
+  "costUSD": 0.1956955,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 100,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 8363,
+ "cost_usd": 0.1956955,
+ "spend_run_id": "g1_eval_v1_dev_2026-09-03",
+ "spend_reservation_id": "5bb3966200d847b1bb4228fea386adb3",
+ "source_doc_id": "census-acs-general-handbook-2020",
+ "passage_id": "acs-ch8-tricounty"
+}

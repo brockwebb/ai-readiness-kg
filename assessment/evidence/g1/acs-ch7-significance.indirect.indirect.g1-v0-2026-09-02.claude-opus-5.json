@@ -1,0 +1,31 @@
+{
+ "proposition_id": "g1-acs-moe-003",
+ "call_id": "acs-ch7-significance.indirect",
+ "mode": "indirect",
+ "qualifier_class": null,
+ "prompt_epoch": "g1-v0-2026-09-02",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T10:56:50.335289+00:00",
+ "prompt": "Restate the following for a general-audience summary.\n\nThe example below shows how to determine if the difference in the estimated percentage of householders age 65 or older who live alone between Florida (estimated percentage = 12.6, MOE = 0.2) and Arizona (estimated percentage = 10.5, MOE = 0.3) is statistically significant, based on 2015 ACS data. Using formula (1) above, first calculate the corresponding standard errors for Florida (0.122) and Arizona (0.182) by dividing the MOEs by 1.645. Then, using formula (3) above, calculate the test value as follows: Understanding and Using American Community Survey Data 57 What All Data Users Need to Know 57 U.S. Census Bureau Since the test value (9.581) is greater than the critical value for a confidence level of 90 percent (1.645), the difference in the percentages is statistically significant at a 90 percent confidence level. A rough interpretation of the result is that the user can be 90 percent certain that a difference exists between the percentage of householders aged 65 or older who live alone in Florida and in Arizona. By contrast, if the corresponding estimate for Indiana (estimated percentage = 10.8, MOE = 0.2, SE = 0.122) were compared with the estimate for Arizona, formula (3) would yield: Since the test value (1.369) is less than the critical value for a confidence level of 90 percent (1.645), the difference in percentages is not statistically significant. A rough interpretation of the result is that the user cannot be certain to any sufficient degree that the observed difference in the estimates between Indiana and Arizona was not due to chance.",
+ "response_text": "**Plain-language version**\n\nSuppose you want to know whether two survey estimates are really different, or whether the gap between them is just noise from sampling. Here's how that check works, using 2015 American Community Survey data on the share of householders age 65 or older who live alone.\n\n**The estimates**\n\n- Florida: 12.6 percent, margin of error ±0.2\n- Arizona: 10.5 percent, margin of error ±0.3\n- Indiana: 10.8 percent, margin of error ±0.2\n\n**Step 1 — Convert each margin of error into a standard error.** Divide the margin of error by 1.645. Florida's becomes 0.122, Arizona's becomes 0.182, and Indiana's becomes 0.122. (The standard error is just a measure of how much an estimate would bounce around if the survey were repeated.)\n\n**Step 2 — Compare the gap to the noise.** Take the difference between the two estimates and divide it by the combined standard error of the pair. That gives a \"test value\" — essentially, how many units of survey noise the gap is worth.\n\n**Step 3 — Compare the test value to 1.645.** That's the cutoff for 90 percent confidence.\n\n**Florida vs. Arizona:** The gap is 2.1 percentage points, and the test value comes out to 9.581. That's far above 1.645, so the difference is statistically significant at the 90 percent confidence level. Roughly speaking: you can be 90 percent confident that Florida and Arizona genuinely differ on this measure.\n\n**Indiana vs. Arizona:** The gap is only 0.3 percentage points, and the test value is 1.369 — below the 1.645 cutoff. The difference is *not* statistically significant. Roughly speaking: the observed gap is small enough that it could easily be a product of chance, and the data don't let you conclude the two states actually differ.\n\n**The takeaway:** A visible difference between two estimates isn't automatically a real difference. Whether it counts depends on both how big the gap is and how precise the underlying estimates are. A 2.1-point gap between precisely measured estimates is convincing; a 0.3-point gap is not.",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 943,
+  "cacheReadInputTokens": 12841,
+  "cacheCreationInputTokens": 17292,
+  "webSearchRequests": 0,
+  "costUSD": 0.20292549999999998,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 242,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 12486,
+ "cost_usd": 0.20292549999999998,
+ "spend_run_id": "g1_eval_v1_dev_2026-09-03",
+ "spend_reservation_id": "703aff12f9464233a91db646d609245a",
+ "source_doc_id": "census-acs-general-handbook-2020",
+ "passage_id": "acs-ch7-significance"
+}

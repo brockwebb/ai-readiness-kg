@@ -1,0 +1,31 @@
+{
+ "proposition_id": "g1-n175-sup-001",
+ "call_id": "g1-n175-sup-001.direct.SUPPRESSION",
+ "mode": "direct",
+ "qualifier_class": "SUPPRESSION",
+ "prompt_epoch": "g1-v0-2026-09-02",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T11:08:52.925402+00:00",
+ "prompt": "Table. NCHS Data Presentation Standards for Proportions Statistic Standard Sample size Estimated proportions should be based on a minimum denominator sample size and effective denominator sample size (when applicable) of 30. Estimates with either a denominator sample size or an effective denominator sample size (when applicable) less than 30 should be suppressed. If the number of events is 0 (or its complement 1 ), then the denominator sample size should be used to obtain confidence intervals. If all other criteria are met for presentation, an estimate based on 0 events (or its complement 1 ) should be flagged for statistical review by the clearance official. The review could result in either the presentation or the suppression of the proportion. Confidence interval If the sample size criterion is met, calculate a 95% two-sided confidence interval using the Clopper-Pearson method, or the Korn-Graubard method for complex surveys, and obtain its width. Small absolute confidence interval width If the absolute confidence interval width is greater than 0.00 and less than or equal to 0.05, then the proportion can be presented if the number of events is greater than 0 and the degrees of freedom criterion (below) is met. If the number of events is 0 (or its complement 1 ) or the degrees of freedom criterion is not met, then the estimate should be flagged for statistical review by the clearance official. The review could result in either the presentation or the suppression of the proportion. Large absolute confidence interval width If the absolute confidence interval width is greater than or equal to 0.30, then the proportion should be suppressed. Relative confidence interval width If the absolute confidence interval width is between 0.05 and 0.30 and the relative confidence interval width is more than 130%, then the proportion should be suppressed. Relative confidence interval width If the absolute confidence interval width is between 0.05 and 0.30 and the relative confidence interval width is less than or equal to 130%, then the proportion can be presented if the degrees of freedom criterion below is met.\n\nWhat is the publication status on the minimum denominator sample size for presenting an NCHS proportion?",
+ "response_text": "**Minimum denominator sample size = 30, and it is a hard suppression gate — not a reviewable one.**\n\nPublication status by case:\n\n| Condition | Status |\n|---|---|\n| Denominator sample size < 30 (or effective denominator < 30, for complex surveys) | **Suppress.** No review, no flag. |\n| Denominator ≥ 30 (and effective denominator ≥ 30 where applicable) | Gate passed — but *not* publishable yet. The estimate still has to clear the Clopper-Pearson / Korn-Graubard CI width criteria and the degrees-of-freedom criterion. |\n| Denominator ≥ 30, all other criteria met, but number of events = 0 (or complement = 1) | **Flag for statistical review** by the clearance official, who may present or suppress. CIs in this case are obtained using the denominator sample size. |\n\nTwo things worth being precise about, since they're where this standard gets misapplied:\n\n1. **The 30 is on the denominator, not the numerator.** The numerator (event count) only matters for the 0-events / all-events flag.\n2. **Passing 30 buys nothing on its own.** It's necessary, not sufficient — the sample-size criterion is the entry condition for even computing the interval; suppression can still follow from absolute CI width ≥ 0.30, or relative width > 130% when absolute width falls between 0.05 and 0.30.\n\nThis is the standard from NCHS's *Data Presentation Standards for Proportions* (Parker et al., Vital and Health Statistics Series 2, No. 175, 2017), which superseded the older \"relative standard error > 30%\" rule of thumb for proportions.",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 1045,
+  "cacheReadInputTokens": 12841,
+  "cacheCreationInputTokens": 17431,
+  "webSearchRequests": 0,
+  "costUSD": 0.20686549999999998,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 494,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 17377,
+ "cost_usd": 0.20686549999999998,
+ "spend_run_id": "g1_eval_v1_dev_2026-09-03_b",
+ "spend_reservation_id": "05b1a645427748629aaf04108c992da8",
+ "source_doc_id": "nchs-2017-data-presentation-standards-proportions",
+ "passage_id": "nchs175-standard"
+}

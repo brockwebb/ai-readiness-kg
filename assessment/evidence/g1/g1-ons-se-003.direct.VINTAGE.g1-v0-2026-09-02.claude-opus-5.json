@@ -1,0 +1,31 @@
+{
+ "proposition_id": "g1-ons-se-003",
+ "call_id": "g1-ons-se-003.direct.VINTAGE",
+ "mode": "direct",
+ "qualifier_class": "VINTAGE",
+ "prompt_epoch": "g1-v0-2026-09-02",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T11:00:53.054968+00:00",
+ "prompt": "The total turnover of plastering businesses in the UK was estimated at £2,322 million in 2016, with a standard error of £201 million. A different survey estimated that the total number of people employed full-time in agriculture, forestry and fishing in the UK was 155,000 in 2016, with a standard error of 12,400 employees It is difficult to compare these two standard errors. By calculating the coefficient of variation for each, the results show that both estimates have a similar level of precision: * £201 million divided by £2,322 million equals 0.087 – a coefficient of variation of 8.7% * 12,400 divided by 155,000 equals 0.08 – a coefficient of variation of 8%\n\nWhat is the reference period or as-of date on the total turnover of plastering businesses in the UK in 2016?",
+ "response_text": "**2016 — the full year, as an annual total.**\n\nThe passage supplies nothing finer than that:\n\n- The estimate is a *total turnover* figure, which is a flow measured over a period rather than a stock at a point in time, so it is a period reference (year 2016), not an as-of date.\n- No month, quarter, or survey-collection date is stated. The companion figure (155,000 employed full-time in agriculture, forestry and fishing) is likewise given for 2016 with no finer qualifier.\n- Geography is UK; the figure is £2,322 million with a standard error of £201 million (CV 8.7%).\n\nTwo caveats worth carrying into any extraction record: the text does not say whether \"2016\" means calendar year or a financial/business year, and it does not name the source survey — the turnover figure is characteristic of the ONS Annual Business Survey and the employment figure of a different survey (\"A different survey estimated…\"), but the passage itself doesn't attribute either. If the extraction schema needs a provenance-grade reference period, that would have to come from the underlying source publication, not from this text.",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 588,
+  "cacheReadInputTokens": 12841,
+  "cacheCreationInputTokens": 17009,
+  "webSearchRequests": 0,
+  "costUSD": 0.1912205,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 237,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 9938,
+ "cost_usd": 0.1912205,
+ "spend_run_id": "g1_eval_v1_dev_2026-09-03",
+ "spend_reservation_id": "6cbd5560e0c042b585c9df7e2d8bffd3",
+ "source_doc_id": "ons-uncertainty-and-how-we-measure-it",
+ "passage_id": "ons-cv-examples"
+}

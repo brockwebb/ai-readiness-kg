@@ -1,0 +1,31 @@
+{
+ "proposition_id": "g1-lfs-sup-002",
+ "call_id": "lfs-minimum-size.indirect",
+ "mode": "indirect",
+ "qualifier_class": null,
+ "prompt_epoch": "g1-v0-2026-09-02",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T11:04:38.276511+00:00",
+ "prompt": "Restate the following for a general-audience summary.\n\nThe LFS suppresses estimates below the levels presented in Table 7.4. Table 7.4 Minimum size for release, Canada, provinces and territories Table summaryThis table displays the results of Minimum size for release, Canada, provinces and territories Minimum size for release, calculated using thousands units of measure (appearing as column headers). Minimum size for release --thousands **Source:** Labour Force Survey (3701). Canada | **1.5** Newfoundland and Labrador | 0.5 Prince Edward Island | 0.2 Nova Scotia | 0.5 New Brunswick | 0.5 Quebec | 1.5 Ontario | 1.5 Manitoba | 0.5 Saskatchewan | 0.5 Alberta | 1.5 British Columbia | 1.5 Yukon | 0.2",
+ "response_text": "## Plain-language summary\n\nCanada's Labour Force Survey (LFS) is a sample survey, not a headcount. When an estimate covers a very small number of people, it's too shaky to be reliable — so Statistics Canada doesn't publish it. Estimates below the cutoffs in Table 7.4 are suppressed.\n\n**The cutoffs (Table 7.4 — Minimum size for release):**\n\n| Area | Minimum estimate that can be published |\n|---|---|\n| Canada | 1,500 people |\n| Quebec, Ontario, Alberta, British Columbia | 1,500 each |\n| Newfoundland and Labrador, Nova Scotia, New Brunswick, Manitoba, Saskatchewan | 500 each |\n| Prince Edward Island | 200 |\n| Yukon | 200 |\n\n*Source: Labour Force Survey (3701). Original figures are in thousands (e.g., 1.5 = 1,500 people).*\n\n**What this means in practice:** if the survey estimates that, say, 400 people in Ontario fall into some category, that number won't appear — it falls under Ontario's 1,500-person floor. The same estimate in Prince Edward Island *would* be published, since the floor there is 200. Smaller provinces and territories get lower thresholds because the survey is designed to produce usable numbers for their smaller populations.\n\nSo a blank or suppressed cell in an LFS table doesn't mean \"zero.\" It means the estimate was too small to report with confidence.\n\nOne note on the source material: the table as provided lists only Yukon among the territories — the rows for the Northwest Territories and Nunavut appear to be cut off, so I can't give their thresholds.",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 730,
+  "cacheReadInputTokens": 12841,
+  "cacheCreationInputTokens": 17047,
+  "webSearchRequests": 0,
+  "costUSD": 0.1951505,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 175,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 11704,
+ "cost_usd": 0.1951505,
+ "spend_run_id": "g1_eval_v1_dev_2026-09-03",
+ "spend_reservation_id": "4e054ad4c8e648b4aefddd0cc1b50755",
+ "source_doc_id": "statcan-71-543-g-guide-labour-force-survey-2025",
+ "passage_id": "lfs-minimum-size"
+}

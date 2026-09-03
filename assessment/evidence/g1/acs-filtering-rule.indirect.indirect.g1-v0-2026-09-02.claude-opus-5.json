@@ -1,0 +1,31 @@
+{
+ "proposition_id": "g1-acsr-sup-001",
+ "call_id": "acs-filtering-rule.indirect",
+ "mode": "indirect",
+ "qualifier_class": null,
+ "prompt_epoch": "g1-v0-2026-09-02",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T11:11:19.237217+00:00",
+ "prompt": "Restate the following for a general-audience summary.\n\nFor both base and collapsed detailed tables, a table is filtered out if the median CV value for the table is greater than 0.61, or in other words, if more than half of the estimates in it have a CV greater than 0.61, suggesting very low reliability. A CV greater than 0.61 is equivalent to saying the estimate is not significantly different from zero at the 90 percent confidence level. Zero estimates, which have an undefined CV, are assigned a CV of 1.0 for determining the median CV. Only lines at the lowest level of detail in a table are included in the calculation of the median CV.",
+ "response_text": "**General-audience version:**\n\nWe leave out tables whose numbers are too uncertain to be useful.\n\nEvery estimate in a table comes with a margin of error. We measure how shaky an estimate is using its coefficient of variation (CV) — basically, the size of the error compared to the size of the estimate itself. A bigger CV means a less trustworthy number.\n\nWe use a cutoff of 0.61. That value isn't arbitrary: an estimate with a CV above 0.61 is so imprecise that we can't confidently say it's different from zero at all (using a 90 percent confidence standard).\n\nTo decide about a whole table, we look at its typical estimate — the median CV, meaning the midpoint when all the estimates are ranked from most to least reliable. If that midpoint is above 0.61, it means more than half the numbers in the table fall into the \"can't distinguish from zero\" range, so we drop the table entirely.\n\nTwo details:\n\n- **Estimates of zero** have no defined CV (you can't compare an error to nothing), so we treat them as 0.61's worst case — a CV of 1.0 — when finding the midpoint.\n- **Only the most detailed rows count.** Tables often show subtotals and grand totals built from finer categories; including those would double-count, so we base the calculation only on the bottom-level lines.\n\nThis same rule applies to both the base detailed tables and the collapsed detailed tables.",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 569,
+  "cacheReadInputTokens": 12841,
+  "cacheCreationInputTokens": 16958,
+  "webSearchRequests": 0,
+  "costUSD": 0.1902355,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 119,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 9285,
+ "cost_usd": 0.1902355,
+ "spend_run_id": "g1_eval_v1_dev_2026-09-03_b",
+ "spend_reservation_id": "e22f49eff1584e0f92b509301e6fdbc5",
+ "source_doc_id": "census-acs-data-suppression-rules",
+ "passage_id": "acs-filtering-rule"
+}

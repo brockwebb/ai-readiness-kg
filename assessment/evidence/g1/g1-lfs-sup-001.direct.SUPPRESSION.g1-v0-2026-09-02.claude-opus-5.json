@@ -1,0 +1,31 @@
+{
+ "proposition_id": "g1-lfs-sup-001",
+ "call_id": "g1-lfs-sup-001.direct.SUPPRESSION",
+ "mode": "direct",
+ "qualifier_class": "SUPPRESSION",
+ "prompt_epoch": "g1-v0-2026-09-02",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T11:04:23.973612+00:00",
+ "prompt": "**Guidelines on data reliability** Household surveys within Statistics Canada generally use the following guidelines and reliability categories in interpreting CV values for data accuracy and in the dissemination of statistical information. **Category 1** – If the CV is ≤ 16.5% – no release restrictions: data are of sufficient accuracy that no special warnings to users or other restrictions are required. **Category 2** – If the CV is > 16.5% and ≤ 33.3% – release with caveats: data are potentially useful for some purposes but should be accompanied by a warning to users regarding their accuracy. **Category 3** – If the CV > 33.3% – not recommended for release: data contain a level of error that makes them so potentially misleading that they should not be released in most circumstances. If users insist on inclusion of Category 3 data in a non-standard product, even after being advised of their accuracy, the data should be accompanied by a disclaimer. The user should acknowledge the warnings given and undertake not to disseminate, present or report the data, directly or indirectly, without this disclaimer.\n\nWhat is the publication status on the CV above which LFS estimates are Category 3 (not recommended for release)?",
+ "response_text": "**Threshold: CV > 33.3%.**\n\nEstimates with a coefficient of variation above 33.3% fall into Category 3 — **not recommended for release**. Per the Statistics Canada guideline as quoted:\n\n- The data \"contain a level of error that makes them so potentially misleading that they should not be released in most circumstances.\"\n- If a user insists on including Category 3 data in a **non-standard product** after being advised of the accuracy limitations, the data must be accompanied by a **disclaimer**.\n- The user must acknowledge the warnings and undertake not to disseminate, present, or report the data — directly or indirectly — without that disclaimer.\n\nFor contrast, the two releasable bands are CV ≤ 16.5% (Category 1, no restrictions) and 16.5% < CV ≤ 33.3% (Category 2, release with an accuracy caveat).",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 495,
+  "cacheReadInputTokens": 12841,
+  "cacheCreationInputTokens": 17137,
+  "webSearchRequests": 0,
+  "costUSD": 0.1901755,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 210,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 7115,
+ "cost_usd": 0.1901755,
+ "spend_run_id": "g1_eval_v1_dev_2026-09-03",
+ "spend_reservation_id": "b3fbd2a76866423cb7b4be2efda1cc06",
+ "source_doc_id": "statcan-71-543-g-guide-labour-force-survey-2025",
+ "passage_id": "lfs-reliability-categories"
+}

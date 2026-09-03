@@ -1,0 +1,31 @@
+{
+ "proposition_id": "g1-lfs-sup-003",
+ "call_id": "g1-lfs-sup-003.direct.SUPPRESSION",
+ "mode": "direct",
+ "qualifier_class": "SUPPRESSION",
+ "prompt_epoch": "g1-v0-2026-09-02",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T11:05:00.667875+00:00",
+ "prompt": "The LFS suppresses estimates below the levels presented in Table 7.4. Table 7.4 Minimum size for release, Canada, provinces and territories Table summaryThis table displays the results of Minimum size for release, Canada, provinces and territories Minimum size for release, calculated using thousands units of measure (appearing as column headers). Minimum size for release --thousands **Source:** Labour Force Survey (3701). Canada | **1.5** Newfoundland and Labrador | 0.5 Prince Edward Island | 0.2 Nova Scotia | 0.5 New Brunswick | 0.5 Quebec | 1.5 Ontario | 1.5 Manitoba | 0.5 Saskatchewan | 0.5 Alberta | 1.5 British Columbia | 1.5 Yukon | 0.2\n\nWhat is the publication status on the minimum estimate size for release, Quebec (LFS, thousands)?",
+ "response_text": "**Published — no flag, no suppression.**\n\nIn Table 7.4 the Quebec cell carries the value **1.5 thousand** with no status symbol attached (no `E` for use-with-caution, no `F` for too-unreliable-to-publish, no `x` for confidentiality suppression). It is a released figure.\n\nTwo things worth separating, since the wording invites conflating them:\n\n- **The cell's own status:** normal/published. Quebec's threshold is one of the higher ones, shared with Canada, Ontario, Alberta, and British Columbia at 1.5 thousand — the smaller provinces and Yukon sit at 0.2–0.5 thousand.\n- **What the cell *governs*:** this is a suppression *rule*, not an estimate. It means LFS will not release a Quebec estimate below 1,500 persons — such estimates are suppressed as unreliable. The threshold itself is always published; the estimates falling under it are not.\n\nOnly \"Canada | 1.5\" appears bolded in the source you pasted; that's table formatting for the national row, not a status indicator on Quebec.",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 667,
+  "cacheReadInputTokens": 12841,
+  "cacheCreationInputTokens": 17065,
+  "webSearchRequests": 0,
+  "costUSD": 0.1937555,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 309,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 10295,
+ "cost_usd": 0.1937555,
+ "spend_run_id": "g1_eval_v1_dev_2026-09-03",
+ "spend_reservation_id": "be01e140e7b34625a6fc3fa48a2f4757",
+ "source_doc_id": "statcan-71-543-g-guide-labour-force-survey-2025",
+ "passage_id": "lfs-minimum-size"
+}

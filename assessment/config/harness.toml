@@ -155,3 +155,14 @@ id_field_patterns = [
 ]
 # Free-text uncertainty vocabulary looked for inside footnote columns / body text.
 footnote_uncertainty_vocabulary = ["margin of error", "standard error", "coefficient of variation", "confidence interval", "sampling error", "differential privacy", "suppressed"]
+
+# z factors by confidence level for level-derived transformations (parser v1, task 2026-09-03
+# step 4.3): SE <-> MOE and SE <-> CI bounds are L3 transformations with z read here, so the
+# ACS "MOE / 1.645" rule is the producer's rule, not the parser's. A proposition whose
+# producer states its own factor (StatCan LFS: 68 % = one SE, 95 % = two SEs) carries a `z`
+# field on the qualifier, which overrides this table.
+[g1.z_by_level]
+"0.68" = 0.994458
+"0.90" = 1.644854
+"0.95" = 1.959964
+"0.99" = 2.575829

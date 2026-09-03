@@ -1,0 +1,31 @@
+{
+ "proposition_id": "g1-das-dp-001",
+ "call_id": "g1-das-dp-001.direct.DP_NOISE",
+ "mode": "direct",
+ "qualifier_class": "DP_NOISE",
+ "prompt_epoch": "g1-v0-2026-09-02",
+ "model_id": "claude-opus-5",
+ "timestamp": "2026-09-03T11:02:37.604467+00:00",
+ "prompt": "The latest PPMF vintage 2021-06-08 is the Production Settings run, which uses the same software and settings for the 2020 production run of the redistricting data. Users can compare tabulated values from the PPMFs to published 2010 data to identify the amount of uncertainty that can be expected for a given geography or characteristic. Users can also calculate new measures of the spread of the uncertainty. For example, comparing tabulations from the PPMFs with the published 2010 data will show that 90 percent of counties have a privacy-protected total population that is within ± four people of their published total population.\n\nWhat is the disclosure-avoidance noise parameter (privacy-loss budget) on the share of counties whose privacy-protected total population (2021-06-08 PPMF) is within the stated bound of their published 2010 total population?",
+ "response_text": "The passage doesn't contain that value. It states an accuracy result — for the 2021-06-08 PPMF (Production Settings), ~90 percent of counties have a privacy-protected total population within ±4 people of the published 2010 count — but it never gives the privacy-loss budget that produced it. The ±4 figure is an empirical error bound, not a noise parameter, and the two aren't recoverable from one another without the DAS parameterization.\n\nThe question also folds together two different things: a privacy-loss budget is a global allocation for the whole DAS run, not something attached \"to the share of counties\" within a bound. There's no per-statistic PLB to report here.\n\nIf you want the actual number for that vintage, it's in the Census Bureau's release documentation for the Production Settings PPMF (the DAS parameter files distributed alongside it), which specifies the global ρ/ε and its allocation across geographic levels and query strata. I can look that up if you point me at the release page or want me to search for it — I'd rather cite it than recall it.",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 696,
+  "cacheReadInputTokens": 12841,
+  "cacheCreationInputTokens": 17015,
+  "webSearchRequests": 0,
+  "costUSD": 0.1939805,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 366,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 11077,
+ "cost_usd": 0.1939805,
+ "spend_run_id": "g1_eval_v1_dev_2026-09-03",
+ "spend_reservation_id": "adc93eccbdc9453ba3b487fbb88a3013",
+ "source_doc_id": "census-2020-disclosure-avoidance-handbook-2021",
+ "passage_id": "das-county-accuracy"
+}
