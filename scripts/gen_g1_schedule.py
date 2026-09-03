@@ -50,13 +50,19 @@ def steps_for(fs, seen: set) -> list:
     the two splits is elicited once (in the set where it first appears) and every
     proposition on it, from either split, is scored from that one response."""
     out = []
+    done_passages: set = set()
     for p in fs.propositions:
+        if p.passage_id in done_passages:
+            continue
+        done_passages.add(p.passage_id)
         if p.passage_id not in seen:
             seen.add(p.passage_id)
             out.append(("indirect", p.passage_id, None, None))
-            for q in fs.by_passage(p.passage_id):
-                for cls in sorted({x.cls.value for x in q.qualifiers}):
-                    out.append(("direct", None, q.id, cls))
+        # Direct steps for EVERY proposition of this set on the passage, whether or not the
+        # indirect call was scheduled by the other set.
+        for q in fs.by_passage(p.passage_id):
+            for cls in sorted({x.cls.value for x in q.qualifiers}):
+                out.append(("direct", None, q.id, cls))
     return out
 
 

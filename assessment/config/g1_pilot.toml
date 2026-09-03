@@ -9,9 +9,9 @@
 # --split selects the half to elicit, and a slot whose evidence file exists is reused, never
 # re-elicited. Ordered passage-by-passage so any prefix covers both modes.
 #
-# Size: 84 development steps + 8 held-out steps = 92 calls;
-# at the g1_eval floor of 34,000 tokens/call the whole grid needs 3,128,000 tokens
-# (development 2,856,000; held-out 272,000). Per-run ceiling declared by the runner.
+# Size: 84 development steps + 35 held-out steps = 119 calls;
+# at the g1_eval floor of 34,000 tokens/call the whole grid needs 4,046,000 tokens
+# (development 2,856,000; held-out 1,190,000). Per-run ceiling declared by the runner.
 # --- development set (propositions.yaml) ---
 [[steps]]
 kind = "indirect"
@@ -330,6 +330,54 @@ proposition = "g1-acsr-sup-001"
 qualifier = "SUPPRESSION"
 # --- held-out set (propositions_holdout.yaml) ---
 [[steps]]
+kind = "direct"
+proposition = "g1h-acs-moe-001"
+qualifier = "MOE"
+[[steps]]
+kind = "direct"
+proposition = "g1h-acs-moe-001"
+qualifier = "SE"
+[[steps]]
+kind = "direct"
+proposition = "g1h-acs-moe-001"
+qualifier = "VINTAGE"
+[[steps]]
+kind = "direct"
+proposition = "g1h-acs-moe-002"
+qualifier = "MOE"
+[[steps]]
+kind = "direct"
+proposition = "g1h-acs-moe-002"
+qualifier = "SE"
+[[steps]]
+kind = "direct"
+proposition = "g1h-acs-moe-002"
+qualifier = "VINTAGE"
+[[steps]]
+kind = "direct"
+proposition = "g1h-acs-se-002"
+qualifier = "MOE"
+[[steps]]
+kind = "direct"
+proposition = "g1h-acs-se-002"
+qualifier = "SE"
+[[steps]]
+kind = "direct"
+proposition = "g1h-acs-cv-001"
+qualifier = "CV"
+[[steps]]
+kind = "direct"
+proposition = "g1h-acs-cv-001"
+qualifier = "MOE"
+[[steps]]
+kind = "direct"
+proposition = "g1h-acs-cv-001"
+qualifier = "SE"
+[[steps]]
+kind = "direct"
+proposition = "g1h-acs-cv-001"
+qualifier = "VINTAGE"
+[[steps]]
 kind = "indirect"
 passage = "acs-ch8-loudoun-82"
 [[steps]]
@@ -341,6 +389,22 @@ kind = "direct"
 proposition = "g1h-acs-cv-002"
 qualifier = "MOE"
 [[steps]]
+kind = "direct"
+proposition = "g1h-acs-rf-001"
+qualifier = "RELIABILITY_FLAG"
+[[steps]]
+kind = "direct"
+proposition = "g1h-acs-rf-001"
+qualifier = "SE"
+[[steps]]
+kind = "direct"
+proposition = "g1h-ons-ci-001"
+qualifier = "CI"
+[[steps]]
+kind = "direct"
+proposition = "g1h-ons-ci-001"
+qualifier = "SE"
+[[steps]]
 kind = "indirect"
 passage = "das-blockgroup-accuracy"
 [[steps]]
@@ -351,6 +415,50 @@ qualifier = "DP_NOISE"
 kind = "direct"
 proposition = "g1h-das-dp-001"
 qualifier = "VINTAGE"
+[[steps]]
+kind = "direct"
+proposition = "g1h-das-dp-002"
+qualifier = "DP_NOISE"
+[[steps]]
+kind = "direct"
+proposition = "g1h-lfs-sup-001"
+qualifier = "SUPPRESSION"
+[[steps]]
+kind = "direct"
+proposition = "g1h-lfs-sup-002"
+qualifier = "SUPPRESSION"
+[[steps]]
+kind = "direct"
+proposition = "g1h-lfs-ci-001"
+qualifier = "CI"
+[[steps]]
+kind = "direct"
+proposition = "g1h-lfs-cv-001"
+qualifier = "CV"
+[[steps]]
+kind = "direct"
+proposition = "g1h-lfs-cv-001"
+qualifier = "VINTAGE"
+[[steps]]
+kind = "direct"
+proposition = "g1h-n175-sup-001"
+qualifier = "SUPPRESSION"
+[[steps]]
+kind = "direct"
+proposition = "g1h-n175-sup-002"
+qualifier = "SE"
+[[steps]]
+kind = "direct"
+proposition = "g1h-n175-sup-002"
+qualifier = "SUPPRESSION"
+[[steps]]
+kind = "direct"
+proposition = "g1h-n200-sup-001"
+qualifier = "SUPPRESSION"
+[[steps]]
+kind = "direct"
+proposition = "g1h-n200-rf-002"
+qualifier = "RELIABILITY_FLAG"
 [[steps]]
 kind = "indirect"
 passage = "nchs200-table-a"
