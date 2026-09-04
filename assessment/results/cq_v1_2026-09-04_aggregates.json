@@ -1,0 +1,80 @@
+{
+ "n_cqs": 26,
+ "A_raw": 0.807692,
+ "A_collapsed": 0.769231,
+ "flip": 0.269231,
+ "flip_ids": [
+  "CQ-05",
+  "CQ-06",
+  "CQ-10",
+  "CQ-20",
+  "CQ-22",
+  "CQ-23",
+  "CQ-24"
+ ],
+ "C_dup_groups_unioned_total": 98,
+ "misleading_raw_count": 8,
+ "by_category": {
+  "construct_definition": {
+   "n": 4,
+   "flips": 0,
+   "ids": [],
+   "flip": 0.0
+  },
+  "measure_lookup": {
+   "n": 3,
+   "flips": 2,
+   "ids": [
+    "CQ-05",
+    "CQ-06"
+   ],
+   "flip": 0.666667
+  },
+  "instrument_coverage": {
+   "n": 3,
+   "flips": 1,
+   "ids": [
+    "CQ-10"
+   ],
+   "flip": 0.333333
+  },
+  "claim_evidence": {
+   "n": 3,
+   "flips": 0,
+   "ids": [],
+   "flip": 0.0
+  },
+  "conflict_detection": {
+   "n": 3,
+   "flips": 0,
+   "ids": [],
+   "flip": 0.0
+  },
+  "provenance_traceback": {
+   "n": 3,
+   "flips": 0,
+   "ids": [],
+   "flip": 0.0
+  },
+  "discovery_stack": {
+   "n": 3,
+   "flips": 2,
+   "ids": [
+    "CQ-20",
+    "CQ-22"
+   ],
+   "flip": 0.666667
+  },
+  "frontier_candidate": {
+   "n": 4,
+   "flips": 2,
+   "ids": [
+    "CQ-23",
+    "CQ-24"
+   ],
+   "flip": 0.5
+  }
+ },
+ "rule_branch": "entity resolution scheduled as a task, not blocking probe design (sift-kg three-layer pattern as the design)",
+ "rule": "pre-registered §1.5: flip >= 0.30 -> ER is P0; flip < 0.10 -> ER deferred; otherwise ER scheduled, not blocking"
+}
