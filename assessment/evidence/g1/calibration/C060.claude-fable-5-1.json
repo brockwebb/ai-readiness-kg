@@ -1,0 +1,59 @@
+{
+ "task": "cc_tasks/2026-09-03_g1_calibration_rating_agreement.md",
+ "run_id": "g1_calibration_fable_2026-09-03",
+ "sample_id": "C060",
+ "model_id": "claude-fable-5-1",
+ "rater_role": "independent calibration rater (DD-037)",
+ "sheet": "assessment/results/g1_calibration_sheet_2026-09-03.md",
+ "prompt": "## What to do\n\nFor each record below you see exactly what the consumer saw (the prompt), exactly what it answered (the response), and what the source published for one qualifier family attached to one estimate. Read the response in full and decide which preservation level that response achieved **for that family and that estimate** — not for the response as a whole, and not for any other number in it. Write the level on the answer line, and a short note if the record is not clean (a form you had to convert, a value bound to the wrong row, a qualifier stated about something else). Write **U** if the qualifier is stated in a form you cannot classify at all. Nothing here tells you what the scorer or the reviewer decided; that is the point, so please do not go looking before you finish.\n\n**The level scale (D2, verbatim from DD-033):** L4 preserved_exact (class, value within published rounding, confidence level and binding all restated); L3 preserved_transformed (numeric and correct under a legitimate transformation — MOE↔bounds, ±↔interval, percent↔fraction, precision that rounds back to the source's, and, in v0, a right value with the confidence level omitted); L2 degraded_verbal (verbal band, no number); L1 omitted; L0 corrupted (magnitude outside published rounding with `widened`/`narrowed` recorded, wrong level, wrong binding, fabricated qualifier, suppressed or flagged-unreliable estimate restated as usable).\n\n**Qualifier families (D9, verbatim from DD-035):** {SE, MOE, CI} = `interval`, {CV} = `relative`, {RELIABILITY_FLAG, SUPPRESSION} = `reliability`, {DP_NOISE} = `dp`, {VINTAGE} = `vintage` … The record unit is (proposition, family, mode[, compression]); the family level is the best level any published form achieved.\n\n**Question, once per record:** which level (L0–L4) did the response achieve for this family, or U if the qualifier is stated in a form you cannot classify?\n\n---\n\n## C060\n\n- **Estimate:** overweight or obese youth (12 to 17, self-reported BMI) in Newfoundland and Labrador, 2022 (percent) — **37.5**\n- **Qualifier family:** `reliability` · **published forms:** RELIABILITY_FLAG = E (legend=use with caution, polarity=unreliable, status_column=STATUS, symbol=E)\n- **Mode:** indirect · **Compression:** short\n\n**Prompt shown to the consumer:**\n\n```text\nRestate the following for a general-audience summary in no more than two sentences.\n\n﻿\"REF_DATE\",\"GEO\",\"DGUID\",\"Age group\",\"Sex\",\"Indicators\",\"Characteristics\",\"UOM\",\"UOM_ID\",\"SCALAR_FACTOR\",\"SCALAR_ID\",\"VECTOR\",\"COORDINATE\",\"VALUE\",\"STATUS\",\"SYMBOL\",\"TERMINATED\",\"DECIMALS\"\n\"2022\",\"Newfoundland and Labrador\",\"2016A000210\",\"Total, 12 years and over\",\"Both sexes\",\"Body mass index, adjusted self-reported, adult (18 years and over), obese\",\"Percent\",\"Percent\",\"239\",\"units\",\"0\",\"v110790864\",\"2.1.1.7.4\",\"41.9\",\"\",\"\",\"\",\"1\"\n\"2022\",\"Newfoundland and Labrador\",\"2016A000210\",\"Total, 12 years and over\",\"Both sexes\",\"Body mass index, adjusted self-reported, adult (18 years and over), obese\",\"Low 95% confidence interval, percent\",\"Percent\",\"239\",\"units\",\"0\",\"v110790865\",\"2.1.1.7.5\",\"38.9\",\"\",\"\",\"\",\"1\"\n\"2022\",\"Newfoundland and Labrador\",\"2016A000210\",\"Total, 12 years and over\",\"Both sexes\",\"Body mass index, adjusted self-reported, adult (18 years and over), obese\",\"High 95% confidence interval, percent\",\"Percent\",\"239\",\"units\",\"0\",\"v110790866\",\"2.1.1.7.6\",\"44.9\",\"\",\"\",\"\",\"1\"\n\"2022\",\"Newfoundland and Labrador\",\"2016A000210\",\"Total, 12 years and over\",\"Both sexes\",\"Body mass index, self-reported, youth (12 to 17 years old), overweight or obese\",\"Percent\",\"Percent\",\"239\",\"units\",\"0\",\"v110790871\",\"2.1.1.8.4\",\"37.5\",\"E\",\"\",\"\",\"1\"\n\"2022\",\"Newfoundland and Labrador\",\"2016A000210\",\"Total, 12 years and over\",\"Both sexes\",\"Body mass index, self-reported, youth (12 to 17 years old), overweight or obese\",\"Low 95% confidence interval, percent\",\"Percent\",\"239\",\"units\",\"0\",\"v110790872\",\"2.1.1.8.5\",\"26.4\",\"E\",\"\",\"\",\"1\"\n\"2022\",\"Newfoundland and Labrador\",\"2016A000210\",\"Total, 12 years and over\",\"Both sexes\",\"Body mass index, self-reported, youth (12 to 17 years old), overweight or obese\",\"High 95% confidence interval, percent\",\"Percent\",\"239\",\"units\",\"0\",\"v110790873\",\"2.1.1.8.6\",\"50.1\",\"E\",\"\",\"\",\"1\"\n\"2022\",\"Newfoundland and Labrador\",\"2016A000210\",\"Total, 12 years and over\",\"Both sexes\",\"Arthritis (15 years and over)\",\"Percent\",\"Percent\",\"239\",\"units\",\"0\",\"v110790878\",\"2.1.1.9.4\",\"27.3\",\"\",\"\",\"\",\"1\"\n\"2022\",\"Newfoundland and Labrador\",\"2016A000210\",\"Total, 12 years and over\",\"Both sexes\",\"Arthritis (15 years and over)\",\"Low 95% confidence interval, percent\",\"Percent\",\"239\",\"units\",\"0\",\"v110790879\",\"2.1.1.9.5\",\"25.3\",\"\",\"\",\"\",\"1\"\n\"2022\",\"Newfoundland and Labrador\",\"2016A000210\",\"Total, 12 years and over\",\"Both sexes\",\"Arthritis (15 years and over)\",\"High 95% confidence interval, percent\",\"Percent\",\"239\",\"units\",\"0\",\"v110790880\",\"2.1.1.9.6\",\"29.4\",\"\",\"\",\"\",\"1\"\n\"2022\",\"Newfoundland and Labrador\",\"2016A000210\",\"Total, 12 years and over\",\"Both sexes\",\"Diabetes\",\"Percent\",\"Percent\",\"239\",\"units\",\"0\",\"v110790885\",\"2.1.1.10.4\",\"12.4\",\"\",\"\",\"\",\"1\"\n\"2022\",\"Newfoundland and Labrador\",\"2016A000210\",\"Total, 12 years and over\",\"Both sexes\",\"Diabetes\",\"Low 95% confidence interval, percent\",\"Percent\",\"239\",\"units\",\"0\",\"v110790886\",\"2.1.1.10.5\",\"10.6\",\"\",\"\",\"\",\"1\"\n\"2022\",\"Newfoundland and Labrador\",\"2016A000210\",\"Total, 12 years and over\",\"Both sexes\",\"Diabetes\",\"High 95% confidence interval, percent\",\"Percent\",\"239\",\"units\",\"0\",\"v110790887\",\"2.1.1.10.6\",\"14.5\",\"\",\"\",\"\",\"1\"\nSymbol Legend\nDescription,Symbol\n\"not available for a specific reference period\",\"..\",\n\"less than the limit of detection\",\"<LOD\",\n\"value rounded to 0 (zero) where there is a meaningful distinction between true zero and the value that was rounded\",\"0s\",\n\"data quality: excellent\",\"A\",\n\"data quality: very good\",\"B\",\n\"data quality: good\",\"C\",\n\"data quality: acceptable\",\"D\",\n\"use with caution\",\"E\",\n\"too unreliable to be published\",\"F\",\n\"not applicable\",\"...\",\n\"preliminary\",\"p\",\n\"revised\",\"r\",\n\"suppressed to meet the confidentiality requirements of the Statistics Act\",\"x\",\n```\n\n**Response:**\n\n```text\nIn 2022, about 42% of adults in Newfoundland and Labrador were classified as obese based on self-reported height and weight, and roughly 38% of youth aged 12 to 17 were overweight or obese (though that youth figure is uncertain and should be treated with caution). Chronic conditions were also common: about 27% of residents 15 and over reported arthritis, and roughly 12% reported diabetes.\n```\n\n---\n\nAnswer with exactly two lines and nothing else:\nLEVEL: <one of L0, L1, L2, L3, L4, U>\nNOTE: <one short sentence; write none if the record is clean>\n",
+ "response_text": "LEVEL: L4\nNOTE: none",
+ "level": "L4",
+ "note": "none",
+ "attempts": [
+  {
+   "attempt": 1,
+   "response_text": "LEVEL: L4\nNOTE: none",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 352,
+    "cacheReadInputTokens": 13729,
+    "cacheCreationInputTokens": 19378,
+    "webSearchRequests": 0,
+    "costUSD": 0.40861225,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 335,
+    "canonicalModel": "claude-fable-5-1",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "duration_ms": 7676,
+   "cost_usd": 0.40861225,
+   "spend_reservation_id": "83b52007c2614943aaf9bbfde8f0e22a",
+   "level": "L4",
+   "note": "none",
+   "timestamp": "2026-09-04T01:14:33.745765+00:00"
+  }
+ ],
+ "retried": false,
+ "unparseable_after_retry": false,
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 352,
+  "cacheReadInputTokens": 13729,
+  "cacheCreationInputTokens": 19378,
+  "webSearchRequests": 0,
+  "costUSD": 0.40861225,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 335,
+  "canonicalModel": "claude-fable-5-1",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 7676,
+ "cost_usd": 0.40861225,
+ "spend_run_id": "g1_calibration_fable_2026-09-03",
+ "spend_reservation_id": "83b52007c2614943aaf9bbfde8f0e22a",
+ "timestamp": "2026-09-04T01:14:33.745765+00:00"
+}

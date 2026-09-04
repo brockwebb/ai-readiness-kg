@@ -1,0 +1,59 @@
+{
+ "task": "cc_tasks/2026-09-03_g1_calibration_rating_agreement.md",
+ "run_id": "g1_calibration_fable_2026-09-03",
+ "sample_id": "C038",
+ "model_id": "claude-fable-5-1",
+ "rater_role": "independent calibration rater (DD-037)",
+ "sheet": "assessment/results/g1_calibration_sheet_2026-09-03.md",
+ "prompt": "## What to do\n\nFor each record below you see exactly what the consumer saw (the prompt), exactly what it answered (the response), and what the source published for one qualifier family attached to one estimate. Read the response in full and decide which preservation level that response achieved **for that family and that estimate** — not for the response as a whole, and not for any other number in it. Write the level on the answer line, and a short note if the record is not clean (a form you had to convert, a value bound to the wrong row, a qualifier stated about something else). Write **U** if the qualifier is stated in a form you cannot classify at all. Nothing here tells you what the scorer or the reviewer decided; that is the point, so please do not go looking before you finish.\n\n**The level scale (D2, verbatim from DD-033):** L4 preserved_exact (class, value within published rounding, confidence level and binding all restated); L3 preserved_transformed (numeric and correct under a legitimate transformation — MOE↔bounds, ±↔interval, percent↔fraction, precision that rounds back to the source's, and, in v0, a right value with the confidence level omitted); L2 degraded_verbal (verbal band, no number); L1 omitted; L0 corrupted (magnitude outside published rounding with `widened`/`narrowed` recorded, wrong level, wrong binding, fabricated qualifier, suppressed or flagged-unreliable estimate restated as usable).\n\n**Qualifier families (D9, verbatim from DD-035):** {SE, MOE, CI} = `interval`, {CV} = `relative`, {RELIABILITY_FLAG, SUPPRESSION} = `reliability`, {DP_NOISE} = `dp`, {VINTAGE} = `vintage` … The record unit is (proposition, family, mode[, compression]); the family level is the best level any published form achieved.\n\n**Question, once per record:** which level (L0–L4) did the response achieve for this family, or U if the qualifier is stated in a form you cannot classify?\n\n---\n\n## C038\n\n- **Estimate:** the total turnover of plastering businesses in the UK in 2016 — **2,322**\n- **Qualifier family:** `relative` · **published forms:** CV = 8.7 (unit=percent)\n- **Mode:** indirect · **Compression:** tight\n\n**Prompt shown to the consumer:**\n\n```text\nRestate the following in one sentence of at most 30 words for a general audience.\n\nThe total turnover of plastering businesses in the UK was estimated at £2,322 million in 2016, with a standard error of £201 million. A different survey estimated that the total number of people employed full-time in agriculture, forestry and fishing in the UK was 155,000 in 2016, with a standard error of 12,400 employees It is difficult to compare these two standard errors. By calculating the coefficient of variation for each, the results show that both estimates have a similar level of precision: * £201 million divided by £2,322 million equals 0.087 – a coefficient of variation of 8.7% * 12,400 divided by 155,000 equals 0.08 – a coefficient of variation of 8%\n```\n\n**Response:**\n\n```text\nTwo very different UK statistics — plastering industry turnover and farming employment — turn out to be about equally reliable, since each estimate's uncertainty is roughly 8% of its size.\n```\n\n---\n\nAnswer with exactly two lines and nothing else:\nLEVEL: <one of L0, L1, L2, L3, L4, U>\nNOTE: <one short sentence; write none if the record is clean>\n",
+ "response_text": "LEVEL: L0\nNOTE: The plastering CV of 8.7% is restated as \"roughly 8%\" jointly bound to both estimates, which is the agriculture CV and falls outside 8.7's published rounding (narrowed); the hedge \"roughly\" makes it borderline with L3.",
+ "level": "L0",
+ "note": "The plastering CV of 8.7% is restated as \"roughly 8%\" jointly bound to both estimates, which is the agriculture CV and falls outside 8.7's published rounding (narrowed); the hedge \"roughly\" makes it borderline with L3.",
+ "attempts": [
+  {
+   "attempt": 1,
+   "response_text": "LEVEL: L0\nNOTE: The plastering CV of 8.7% is restated as \"roughly 8%\" jointly bound to both estimates, which is the agriculture CV and falls outside 8.7's published rounding (narrowed); the hedge \"roughly\" makes it borderline with L3.",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 654,
+    "cacheReadInputTokens": 13729,
+    "cacheCreationInputTokens": 17914,
+    "webSearchRequests": 0,
+    "costUSD": 0.39443225,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 555,
+    "canonicalModel": "claude-fable-5-1",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "duration_ms": 10963,
+   "cost_usd": 0.39443225,
+   "spend_reservation_id": "a626583505da4bbca9444bb53b55f6fb",
+   "level": "L0",
+   "note": "The plastering CV of 8.7% is restated as \"roughly 8%\" jointly bound to both estimates, which is the agriculture CV and falls outside 8.7's published rounding (narrowed); the hedge \"roughly\" makes it borderline with L3.",
+   "timestamp": "2026-09-04T01:11:34.023085+00:00"
+  }
+ ],
+ "retried": false,
+ "unparseable_after_retry": false,
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 654,
+  "cacheReadInputTokens": 13729,
+  "cacheCreationInputTokens": 17914,
+  "webSearchRequests": 0,
+  "costUSD": 0.39443225,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 555,
+  "canonicalModel": "claude-fable-5-1",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 10963,
+ "cost_usd": 0.39443225,
+ "spend_run_id": "g1_calibration_fable_2026-09-03",
+ "spend_reservation_id": "a626583505da4bbca9444bb53b55f6fb",
+ "timestamp": "2026-09-04T01:11:34.023085+00:00"
+}

@@ -1,0 +1,59 @@
+{
+ "task": "cc_tasks/2026-09-03_g1_calibration_rating_agreement.md",
+ "run_id": "g1_calibration_fable_2026-09-03",
+ "sample_id": "C013",
+ "model_id": "claude-fable-5-1",
+ "rater_role": "independent calibration rater (DD-037)",
+ "sheet": "assessment/results/g1_calibration_sheet_2026-09-03.md",
+ "prompt": "## What to do\n\nFor each record below you see exactly what the consumer saw (the prompt), exactly what it answered (the response), and what the source published for one qualifier family attached to one estimate. Read the response in full and decide which preservation level that response achieved **for that family and that estimate** — not for the response as a whole, and not for any other number in it. Write the level on the answer line, and a short note if the record is not clean (a form you had to convert, a value bound to the wrong row, a qualifier stated about something else). Write **U** if the qualifier is stated in a form you cannot classify at all. Nothing here tells you what the scorer or the reviewer decided; that is the point, so please do not go looking before you finish.\n\n**The level scale (D2, verbatim from DD-033):** L4 preserved_exact (class, value within published rounding, confidence level and binding all restated); L3 preserved_transformed (numeric and correct under a legitimate transformation — MOE↔bounds, ±↔interval, percent↔fraction, precision that rounds back to the source's, and, in v0, a right value with the confidence level omitted); L2 degraded_verbal (verbal band, no number); L1 omitted; L0 corrupted (magnitude outside published rounding with `widened`/`narrowed` recorded, wrong level, wrong binding, fabricated qualifier, suppressed or flagged-unreliable estimate restated as usable).\n\n**Qualifier families (D9, verbatim from DD-035):** {SE, MOE, CI} = `interval`, {CV} = `relative`, {RELIABILITY_FLAG, SUPPRESSION} = `reliability`, {DP_NOISE} = `dp`, {VINTAGE} = `vintage` … The record unit is (proposition, family, mode[, compression]); the family level is the best level any published form achieved.\n\n**Question, once per record:** which level (L0–L4) did the response achieve for this family, or U if the qualifier is stated in a form you cannot classify?\n\n---\n\n## C013\n\n- **Estimate:** B19013_001E for \"Bannock County, Idaho\" — **64080**\n- **Qualifier family:** `interval` · **published forms:** MOE = 2470 (field=B19013_001M, level=0.9, unit=currency)\n- **Mode:** indirect · **Compression:** none\n\n**Prompt shown to the consumer:**\n\n```text\nRestate the following for a general-audience summary.\n\n[[\"NAME\",\"B19013_001E\",\"B19013_001M\",\"state\",\"county\"],\n[\"Ada County, Idaho\",\"88907\",\"1710\",\"16\",\"001\"],\n[\"Adams County, Idaho\",\"59286\",\"4144\",\"16\",\"003\"],\n[\"Bannock County, Idaho\",\"64080\",\"2470\",\"16\",\"005\"],\n[\"Bear Lake County, Idaho\",\"67304\",\"6987\",\"16\",\"007\"],\n[\"Benewah County, Idaho\",\"56553\",\"3912\",\"16\",\"009\"],\n```\n\n**Response:**\n\n```text\nThis is a slice of U.S. Census Bureau data — American Community Survey table **B19013, median household income** — for counties in Idaho (state FIPS code 16), listed alphabetically and cut off after the first five.\n\nThe columns mean:\n- **NAME** — the county\n- **B19013_001E** — the *estimate*: the median household income in dollars (half of households earn more, half less)\n- **B19013_001M** — the *margin of error* on that estimate, in dollars (Census reports these at 90% confidence)\n- **state / county** — FIPS geographic codes\n\nIn plain terms:\n\n| County | Typical household income | Give or take |\n|---|---|---|\n| Ada | ~$88,900 | ±$1,700 |\n| Adams | ~$59,300 | ±$4,100 |\n| Bannock | ~$64,100 | ±$2,500 |\n| Bear Lake | ~$67,300 | ±$7,000 |\n| Benewah | ~$56,600 | ±$3,900 |\n\n**The story:** Ada County — home to Boise, the state's population center — stands out, with a typical household bringing in roughly $89,000 a year, about 50% more than the lowest counties shown. The rural counties cluster in the $56,000–$67,000 range.\n\n**One caveat worth keeping:** the margins of error scale with how few people were surveyed. Ada County's figure is tight (±2%), so you can take it at face value. Bear Lake County's is ±$7,000 (over 10%) — its \"$67,304\" really means \"somewhere between about $60,000 and $74,000.\" So Bear Lake looking richer than Bannock is not a difference you should treat as real; the ranges overlap heavily. Comparisons among the small rural counties are much shakier than the headline numbers suggest.\n```\n\n---\n\nAnswer with exactly two lines and nothing else:\nLEVEL: <one of L0, L1, L2, L3, L4, U>\nNOTE: <one short sentence; write none if the record is clean>\n",
+ "response_text": "LEVEL: L3\nNOTE: MOE restated as ±$2,500 (rounded from 2470) with 90% level and correct Bannock binding; rounding to hundreds is a legitimate transformation, not exact.",
+ "level": "L3",
+ "note": "MOE restated as ±$2,500 (rounded from 2470) with 90% level and correct Bannock binding; rounding to hundreds is a legitimate transformation, not exact.",
+ "attempts": [
+  {
+   "attempt": 1,
+   "response_text": "LEVEL: L3\nNOTE: MOE restated as ±$2,500 (rounded from 2470) with 90% level and correct Bannock binding; rounding to hundreds is a legitimate transformation, not exact.",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 273,
+    "cacheReadInputTokens": 13729,
+    "cacheCreationInputTokens": 18366,
+    "webSearchRequests": 0,
+    "costUSD": 0.38442224999999997,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 198,
+    "canonicalModel": "claude-fable-5-1",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "duration_ms": 6051,
+   "cost_usd": 0.38442224999999997,
+   "spend_reservation_id": "da95573ff9864c2dbb3f9110d3804e72",
+   "level": "L3",
+   "note": "MOE restated as ±$2,500 (rounded from 2470) with 90% level and correct Bannock binding; rounding to hundreds is a legitimate transformation, not exact.",
+   "timestamp": "2026-09-04T01:07:48.047401+00:00"
+  }
+ ],
+ "retried": false,
+ "unparseable_after_retry": false,
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 273,
+  "cacheReadInputTokens": 13729,
+  "cacheCreationInputTokens": 18366,
+  "webSearchRequests": 0,
+  "costUSD": 0.38442224999999997,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 198,
+  "canonicalModel": "claude-fable-5-1",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 6051,
+ "cost_usd": 0.38442224999999997,
+ "spend_run_id": "g1_calibration_fable_2026-09-03",
+ "spend_reservation_id": "da95573ff9864c2dbb3f9110d3804e72",
+ "timestamp": "2026-09-04T01:07:48.047401+00:00"
+}

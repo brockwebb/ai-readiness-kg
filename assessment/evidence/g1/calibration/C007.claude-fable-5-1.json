@@ -1,0 +1,59 @@
+{
+ "task": "cc_tasks/2026-09-03_g1_calibration_rating_agreement.md",
+ "run_id": "g1_calibration_fable_2026-09-03",
+ "sample_id": "C007",
+ "model_id": "claude-fable-5-1",
+ "rater_role": "independent calibration rater (DD-037)",
+ "sheet": "assessment/results/g1_calibration_sheet_2026-09-03.md",
+ "prompt": "## What to do\n\nFor each record below you see exactly what the consumer saw (the prompt), exactly what it answered (the response), and what the source published for one qualifier family attached to one estimate. Read the response in full and decide which preservation level that response achieved **for that family and that estimate** — not for the response as a whole, and not for any other number in it. Write the level on the answer line, and a short note if the record is not clean (a form you had to convert, a value bound to the wrong row, a qualifier stated about something else). Write **U** if the qualifier is stated in a form you cannot classify at all. Nothing here tells you what the scorer or the reviewer decided; that is the point, so please do not go looking before you finish.\n\n**The level scale (D2, verbatim from DD-033):** L4 preserved_exact (class, value within published rounding, confidence level and binding all restated); L3 preserved_transformed (numeric and correct under a legitimate transformation — MOE↔bounds, ±↔interval, percent↔fraction, precision that rounds back to the source's, and, in v0, a right value with the confidence level omitted); L2 degraded_verbal (verbal band, no number); L1 omitted; L0 corrupted (magnitude outside published rounding with `widened`/`narrowed` recorded, wrong level, wrong binding, fabricated qualifier, suppressed or flagged-unreliable estimate restated as usable).\n\n**Qualifier families (D9, verbatim from DD-035):** {SE, MOE, CI} = `interval`, {CV} = `relative`, {RELIABILITY_FLAG, SUPPRESSION} = `reliability`, {DP_NOISE} = `dp`, {VINTAGE} = `vintage` … The record unit is (proposition, family, mode[, compression]); the family level is the best level any published form achieved.\n\n**Question, once per record:** which level (L0–L4) did the response achieve for this family, or U if the qualifier is stated in a form you cannot classify?\n\n---\n\n## C007\n\n- **Estimate:** B19013_001E for \"Bent County, Colorado\" — **49194**\n- **Qualifier family:** `interval` · **published forms:** MOE = 4596 (field=B19013_001M, level=0.9, unit=currency)\n- **Mode:** indirect · **Compression:** short\n\n**Prompt shown to the consumer:**\n\n```text\nRestate the following for a general-audience summary in no more than two sentences.\n\n[[\"NAME\",\"B19013_001E\",\"B19013_001M\",\"state\",\"county\"],\n[\"Adams County, Colorado\",\"91387\",\"1470\",\"08\",\"001\"],\n[\"Alamosa County, Colorado\",\"51445\",\"6098\",\"08\",\"003\"],\n[\"Arapahoe County, Colorado\",\"97215\",\"1592\",\"08\",\"005\"],\n[\"Archuleta County, Colorado\",\"76524\",\"6714\",\"08\",\"007\"],\n[\"Baca County, Colorado\",\"40380\",\"7753\",\"08\",\"009\"],\n[\"Bent County, Colorado\",\"49194\",\"4596\",\"08\",\"011\"],\n[\"Boulder County, Colorado\",\"102772\",\"2628\",\"08\",\"013\"],\n```\n\n**Response:**\n\n```text\nThis is Census ACS data (table B19013) showing median household income and its margin of error for Colorado counties:\n\nAcross these Colorado counties, typical household income varies widely — from about $40,000 a year in Baca County to roughly $103,000 in Boulder County, with Denver-area counties like Adams and Arapahoe near $91,000–$97,000. The figures are survey estimates, so each carries a margin of error that is small in populous counties (±$1,500 or so) but much larger in sparsely populated rural ones (±$6,000–$7,800), meaning the rural numbers should be read as rough ranges rather than exact values.\n```\n\n---\n\nAnswer with exactly two lines and nothing else:\nLEVEL: <one of L0, L1, L2, L3, L4, U>\nNOTE: <one short sentence; write none if the record is clean>\n",
+ "response_text": "LEVEL: L1\nNOTE: Bent County and its 49194 estimate are never restated, so no MOE is bound to it; the only rural band given (±$6,000–$7,800) excludes Bent's 4596 and names other counties, leaving at most a generic \"each carries a margin of error\" that is not bound to this row.",
+ "level": "L1",
+ "note": "Bent County and its 49194 estimate are never restated, so no MOE is bound to it; the only rural band given (±$6,000–$7,800) excludes Bent's 4596 and names other counties, leaving at most a generic \"each carries a margin of error\" that is not bound to this row.",
+ "attempts": [
+  {
+   "attempt": 1,
+   "response_text": "LEVEL: L1\nNOTE: Bent County and its 49194 estimate are never restated, so no MOE is bound to it; the only rural band given (±$6,000–$7,800) excludes Bent's 4596 and names other counties, leaving at most a generic \"each carries a margin of error\" that is not bound to this row.",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 677,
+    "cacheReadInputTokens": 13729,
+    "cacheCreationInputTokens": 18042,
+    "webSearchRequests": 0,
+    "costUSD": 0.39814225,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 570,
+    "canonicalModel": "claude-fable-5-1",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "duration_ms": 10696,
+   "cost_usd": 0.39814225,
+   "spend_reservation_id": "eaa6fb79ea3e4bbb8af51e4d005a75e5",
+   "level": "L1",
+   "note": "Bent County and its 49194 estimate are never restated, so no MOE is bound to it; the only rural band given (±$6,000–$7,800) excludes Bent's 4596 and names other counties, leaving at most a generic \"each carries a margin of error\" that is not bound to this row.",
+   "timestamp": "2026-09-04T01:06:54.740388+00:00"
+  }
+ ],
+ "retried": false,
+ "unparseable_after_retry": false,
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 677,
+  "cacheReadInputTokens": 13729,
+  "cacheCreationInputTokens": 18042,
+  "webSearchRequests": 0,
+  "costUSD": 0.39814225,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 570,
+  "canonicalModel": "claude-fable-5-1",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 10696,
+ "cost_usd": 0.39814225,
+ "spend_run_id": "g1_calibration_fable_2026-09-03",
+ "spend_reservation_id": "eaa6fb79ea3e4bbb8af51e4d005a75e5",
+ "timestamp": "2026-09-04T01:06:54.740388+00:00"
+}

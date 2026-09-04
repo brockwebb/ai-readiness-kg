@@ -1,0 +1,59 @@
+{
+ "task": "cc_tasks/2026-09-03_g1_calibration_rating_agreement.md",
+ "run_id": "g1_calibration_fable_2026-09-03",
+ "sample_id": "C043",
+ "model_id": "claude-fable-5-1",
+ "rater_role": "independent calibration rater (DD-037)",
+ "sheet": "assessment/results/g1_calibration_sheet_2026-09-03.md",
+ "prompt": "## What to do\n\nFor each record below you see exactly what the consumer saw (the prompt), exactly what it answered (the response), and what the source published for one qualifier family attached to one estimate. Read the response in full and decide which preservation level that response achieved **for that family and that estimate** — not for the response as a whole, and not for any other number in it. Write the level on the answer line, and a short note if the record is not clean (a form you had to convert, a value bound to the wrong row, a qualifier stated about something else). Write **U** if the qualifier is stated in a form you cannot classify at all. Nothing here tells you what the scorer or the reviewer decided; that is the point, so please do not go looking before you finish.\n\n**The level scale (D2, verbatim from DD-033):** L4 preserved_exact (class, value within published rounding, confidence level and binding all restated); L3 preserved_transformed (numeric and correct under a legitimate transformation — MOE↔bounds, ±↔interval, percent↔fraction, precision that rounds back to the source's, and, in v0, a right value with the confidence level omitted); L2 degraded_verbal (verbal band, no number); L1 omitted; L0 corrupted (magnitude outside published rounding with `widened`/`narrowed` recorded, wrong level, wrong binding, fabricated qualifier, suppressed or flagged-unreliable estimate restated as usable).\n\n**Qualifier families (D9, verbatim from DD-035):** {SE, MOE, CI} = `interval`, {CV} = `relative`, {RELIABILITY_FLAG, SUPPRESSION} = `reliability`, {DP_NOISE} = `dp`, {VINTAGE} = `vintage` … The record unit is (proposition, family, mode[, compression]); the family level is the best level any published form achieved.\n\n**Question, once per record:** which level (L0–L4) did the response achieve for this family, or U if the qualifier is stated in a form you cannot classify?\n\n---\n\n## C043\n\n- **Estimate:** the degrees-of-freedom threshold below which an NCHS rate is flagged for statistical review — **8**\n- **Qualifier family:** `reliability` · **published forms:** RELIABILITY_FLAG = flagged for statistical review (polarity=unreliable)\n- **Mode:** indirect · **Compression:** tight\n\n**Prompt shown to the consumer:**\n\n```text\nRestate the following in one sentence of at most 30 words for a general audience.\n\nTable A. National Center for Health Statistics standards for rates and counts Statistic Standard for rates Standard for counts Sample size threshold Estimated rates should be based on a minimum sample size and effective sample size (when applicable) of 10 in both numerator and denominator. Estimated counts should be based on a minimum sample size and effective sample size (when applicable) of 10. Confidence interval (CI) If the sample size criteria are met, calculate a 95% two-sided CI using the appropriate method and obtain its relative width. Estimated rates should have a relative CI width of 160% or lower. If the sample size criteria are met, calculate a 95% twosided CI using the appropriate method and obtain its relative width. Estimated counts should have a relative CI width of 160% or lower. Degrees of freedom When applicable for complex surveys, if the sample size and CI criteria are met for presentation and degrees of freedom are fewer than 8 for either numerator or denominator, then the rate should be flagged for statistical review by the clearance official. This review may result in presentation or suppression of the rate. When applicable for complex surveys, if the sample size and CI criteria are met for presentation and degrees of freedom are fewer than 8, then the count should be flagged for statistical review by the clearance official. This review may result in presentation or suppression of the count. SOURCE: National Center for Health Statistics.\n```\n\n**Response:**\n\n```text\nThe National Center for Health Statistics only publishes rates and counts based on at least 10 cases with reasonably precise confidence intervals, flagging results from very small surveys for expert review.\n```\n\n---\n\nAnswer with exactly two lines and nothing else:\nLEVEL: <one of L0, L1, L2, L3, L4, U>\nNOTE: <one short sentence; write none if the record is clean>\n",
+ "response_text": "LEVEL: L2\nNOTE: Flag for review is preserved only verbally; the degrees-of-freedom threshold of 8 is dropped and paraphrased as \"very small surveys.\"",
+ "level": "L2",
+ "note": "Flag for review is preserved only verbally; the degrees-of-freedom threshold of 8 is dropped and paraphrased as \"very small surveys.\"",
+ "attempts": [
+  {
+   "attempt": 1,
+   "response_text": "LEVEL: L2\nNOTE: Flag for review is preserved only verbally; the degrees-of-freedom threshold of 8 is dropped and paraphrased as \"very small surveys.\"",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 387,
+    "cacheReadInputTokens": 13729,
+    "cacheCreationInputTokens": 18171,
+    "webSearchRequests": 0,
+    "costUSD": 0.38622225,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 322,
+    "canonicalModel": "claude-fable-5-1",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "duration_ms": 8986,
+   "cost_usd": 0.38622225,
+   "spend_reservation_id": "7b5cd5351f584d1f8cf0dc0e00238b01",
+   "level": "L2",
+   "note": "Flag for review is preserved only verbally; the degrees-of-freedom threshold of 8 is dropped and paraphrased as \"very small surveys.\"",
+   "timestamp": "2026-09-04T01:12:16.637437+00:00"
+  }
+ ],
+ "retried": false,
+ "unparseable_after_retry": false,
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 387,
+  "cacheReadInputTokens": 13729,
+  "cacheCreationInputTokens": 18171,
+  "webSearchRequests": 0,
+  "costUSD": 0.38622225,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 322,
+  "canonicalModel": "claude-fable-5-1",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 8986,
+ "cost_usd": 0.38622225,
+ "spend_run_id": "g1_calibration_fable_2026-09-03",
+ "spend_reservation_id": "7b5cd5351f584d1f8cf0dc0e00238b01",
+ "timestamp": "2026-09-04T01:12:16.637437+00:00"
+}

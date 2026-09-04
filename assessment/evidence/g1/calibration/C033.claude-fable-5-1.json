@@ -1,0 +1,59 @@
+{
+ "task": "cc_tasks/2026-09-03_g1_calibration_rating_agreement.md",
+ "run_id": "g1_calibration_fable_2026-09-03",
+ "sample_id": "C033",
+ "model_id": "claude-fable-5-1",
+ "rater_role": "independent calibration rater (DD-037)",
+ "sheet": "assessment/results/g1_calibration_sheet_2026-09-03.md",
+ "prompt": "## What to do\n\nFor each record below you see exactly what the consumer saw (the prompt), exactly what it answered (the response), and what the source published for one qualifier family attached to one estimate. Read the response in full and decide which preservation level that response achieved **for that family and that estimate** — not for the response as a whole, and not for any other number in it. Write the level on the answer line, and a short note if the record is not clean (a form you had to convert, a value bound to the wrong row, a qualifier stated about something else). Write **U** if the qualifier is stated in a form you cannot classify at all. Nothing here tells you what the scorer or the reviewer decided; that is the point, so please do not go looking before you finish.\n\n**The level scale (D2, verbatim from DD-033):** L4 preserved_exact (class, value within published rounding, confidence level and binding all restated); L3 preserved_transformed (numeric and correct under a legitimate transformation — MOE↔bounds, ±↔interval, percent↔fraction, precision that rounds back to the source's, and, in v0, a right value with the confidence level omitted); L2 degraded_verbal (verbal band, no number); L1 omitted; L0 corrupted (magnitude outside published rounding with `widened`/`narrowed` recorded, wrong level, wrong binding, fabricated qualifier, suppressed or flagged-unreliable estimate restated as usable).\n\n**Qualifier families (D9, verbatim from DD-035):** {SE, MOE, CI} = `interval`, {CV} = `relative`, {RELIABILITY_FLAG, SUPPRESSION} = `reliability`, {DP_NOISE} = `dp`, {VINTAGE} = `vintage` … The record unit is (proposition, family, mode[, compression]); the family level is the best level any published form achieved.\n\n**Question, once per record:** which level (L0–L4) did the response achieve for this family, or U if the qualifier is stated in a form you cannot classify?\n\n---\n\n## C033\n\n- **Estimate:** the prevalence of low HDL-C in women age 20 and older during August 2021–August 2023 (crude) — **6.6**\n- **Qualifier family:** `vintage` · **published forms:** VINTAGE = August 2021–August 2023 (as_of=August 2021–August 2023)\n- **Mode:** indirect · **Compression:** none\n\n**Prompt shown to the consumer:**\n\n```text\nRestate the following for a general-audience summary.\n\nDuring August 2021–August 2023, the prevalence of low HDL-C was 13.8% in adults and was \nhigher in men (21.5%) than in women (6.6%), overall and within each age group  \n(Figure 2, Table 2).\nData table for Figure 2. Prevalence of low high-density lipoprotein cholesterol in adults age 20 \nand older, by sex and age group: United States, August 2021–August 2023\nSex and age group Sample size\nPercent \n (95% confidence interval) Standard error\nTotal\n20 and older (age adjusted). . . . . . . . . . 5,498 14.2 (12.5–15.9) 0.9\n20 and older (crude)  . . . . . . . . . . . . . . . 5,498 13.8 (12.1–15.7) 0.8\n20–39 . . . . . . . . . . . . . . . . . . . . . . . . . 1,383 16.2 (12.7–20.1) 1.7\n40–59 . . . . . . . . . . . . . . . . . . . . . . . . . 1,598 13.8 (11.6–16.3) 1.1\n60 and older . . . . . . . . . . . . . . . . . . . . 2,517 11.2 (10.0–12.5) 0.5\nMen\n20 and older (age adjusted). . . . . . . . . . 2,481 21.8 (19.1–24.7) 1.5\n20 and older (crude)  . . . . . . . . . . . . . . . 2,481 21.5 (18.6–24.6) 1.4\n20–39 . . . . . . . . . . . . . . . . . . . . . . . . . 598 25.1 (19.3–31.6) 2.8\n40–59 . . . . . . . . . . . . . . . . . . . . . . . . . 706 20.8 (17.3–24.8) 1.7\n60 and older . . . . . . . . . . . . . . . . . . . . 1,177 17.9 (15.7–20.2) 1.0\nWomen\n20 and older (age adjusted). . . . . . . . . . 3,017 6.8 (5.6–8.2) 0.7\n20 and older (crude)  . . . . . . . . . . . . . . . 3,017 6.6 (5.4–8.0) 0.6\n20–39 . . . . . . . . . . . . . . . . . . . . . . . . . 785 7.6 (5.4–10.3) 1.1\n40–59 . . . . . . . . . . . . . . . . . . . . . . . . . 892 7.0 (5.4–8.9) 0.7\n60 and older . . . . . . . . . . . . . . . . . . . . 1,340 5.2 (4.1–6.5) 0.4\n```\n\n**Response:**\n\n```text\n# Low HDL Cholesterol in American Adults: Key Findings\n\nBetween August 2021 and August 2023, roughly **1 in 7 American adults** (13.8%) had low levels of \"good\" cholesterol (HDL cholesterol). This is a known risk factor for heart disease.\n\n## Key Patterns\n\n**Men are hit harder than women:** About **1 in 5 men** (21.5%) had low HDL, compared to about **1 in 15 women** (6.6%) — more than triple the rate.\n\n**Age matters, but differently for men and women:**\n- **Ages 20–39:** Men had the highest prevalence (25%), while younger women were close behind (7.6%)\n- **Ages 40–59:** The gender gap stayed wide (men at 20.8%, women at 7%)\n- **Ages 60+:** The rate dropped for both groups (men 17.9%, women 5.2%), though men still had roughly 3.5 times the rate of women\n\nThis data comes from a representative sample of over 5,400 American adults and suggests that low HDL is a widespread concern, particularly for men across all age groups.\n```\n\n---\n\nAnswer with exactly two lines and nothing else:\nLEVEL: <one of L0, L1, L2, L3, L4, U>\nNOTE: <one short sentence; write none if the record is clean>\n",
+ "response_text": "The response states \"Between August 2021 and August 2023\" and the women's 6.6% is presented within that same time frame, so the vintage is restated exactly and bound to the estimate.\n\nLEVEL: L4\nNOTE: none",
+ "level": "L4",
+ "note": "none",
+ "attempts": [
+  {
+   "attempt": 1,
+   "response_text": "The response states \"Between August 2021 and August 2023\" and the women's 6.6% is presented within that same time frame, so the vintage is restated exactly and bound to the estimate.\n\nLEVEL: L4\nNOTE: none",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 74,
+    "cacheReadInputTokens": 13729,
+    "cacheCreationInputTokens": 18913,
+    "webSearchRequests": 0,
+    "costUSD": 0.38541225,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 0,
+    "canonicalModel": "claude-fable-5-1",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "duration_ms": 3232,
+   "cost_usd": 0.38541225,
+   "spend_reservation_id": "fa4726d751624dad8e638f980b667462",
+   "level": "L4",
+   "note": "none",
+   "timestamp": "2026-09-04T01:10:48.631633+00:00"
+  }
+ ],
+ "retried": false,
+ "unparseable_after_retry": false,
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 74,
+  "cacheReadInputTokens": 13729,
+  "cacheCreationInputTokens": 18913,
+  "webSearchRequests": 0,
+  "costUSD": 0.38541225,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 0,
+  "canonicalModel": "claude-fable-5-1",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 3232,
+ "cost_usd": 0.38541225,
+ "spend_run_id": "g1_calibration_fable_2026-09-03",
+ "spend_reservation_id": "fa4726d751624dad8e638f980b667462",
+ "timestamp": "2026-09-04T01:10:48.631633+00:00"
+}

@@ -1,0 +1,59 @@
+{
+ "task": "cc_tasks/2026-09-03_g1_calibration_rating_agreement.md",
+ "run_id": "g1_calibration_fable_2026-09-03",
+ "sample_id": "C055",
+ "model_id": "claude-fable-5-1",
+ "rater_role": "independent calibration rater (DD-037)",
+ "sheet": "assessment/results/g1_calibration_sheet_2026-09-03.md",
+ "prompt": "## What to do\n\nFor each record below you see exactly what the consumer saw (the prompt), exactly what it answered (the response), and what the source published for one qualifier family attached to one estimate. Read the response in full and decide which preservation level that response achieved **for that family and that estimate** — not for the response as a whole, and not for any other number in it. Write the level on the answer line, and a short note if the record is not clean (a form you had to convert, a value bound to the wrong row, a qualifier stated about something else). Write **U** if the qualifier is stated in a form you cannot classify at all. Nothing here tells you what the scorer or the reviewer decided; that is the point, so please do not go looking before you finish.\n\n**The level scale (D2, verbatim from DD-033):** L4 preserved_exact (class, value within published rounding, confidence level and binding all restated); L3 preserved_transformed (numeric and correct under a legitimate transformation — MOE↔bounds, ±↔interval, percent↔fraction, precision that rounds back to the source's, and, in v0, a right value with the confidence level omitted); L2 degraded_verbal (verbal band, no number); L1 omitted; L0 corrupted (magnitude outside published rounding with `widened`/`narrowed` recorded, wrong level, wrong binding, fabricated qualifier, suppressed or flagged-unreliable estimate restated as usable).\n\n**Qualifier families (D9, verbatim from DD-035):** {SE, MOE, CI} = `interval`, {CV} = `relative`, {RELIABILITY_FLAG, SUPPRESSION} = `reliability`, {DP_NOISE} = `dp`, {VINTAGE} = `vintage` … The record unit is (proposition, family, mode[, compression]); the family level is the best level any published form achieved.\n\n**Question, once per record:** which level (L0–L4) did the response achieve for this family, or U if the qualifier is stated in a form you cannot classify?\n\n---\n\n## C055\n\n- **Estimate:** labour force in Alberta, 2026-07 (seasonally adjusted) — **2872.2**\n- **Qualifier family:** `vintage` · **published forms:** VINTAGE = 2026-07 (as_of=2026-07)\n- **Mode:** direct · **Compression:** (n/a — direct mode)\n\n**Prompt shown to the consumer:**\n\n```text\n﻿\"REF_DATE\",\"GEO\",\"DGUID\",\"Labour force characteristics\",\"Gender\",\"Age group\",\"Statistics\",\"Data type\",\"UOM\",\"UOM_ID\",\"SCALAR_FACTOR\",\"SCALAR_ID\",\"VECTOR\",\"COORDINATE\",\"VALUE\",\"STATUS\",\"SYMBOL\",\"TERMINATED\",\"DECIMALS\"\n\"2026-07\",\"Alberta\",\"2021A000248\",\"Population\",\"Total - Gender\",\"15 years and over\",\"Estimate\",\"Seasonally adjusted\",\"Persons in thousands\",\"428\",\"thousands\",\"3\",\"v2064510\",\"10.1.1.1.1.1\",\"4150.2\",\"\",\"\",\"\",\"1\"\n\"2026-07\",\"Alberta\",\"2021A000248\",\"Labour force\",\"Total - Gender\",\"15 years and over\",\"Estimate\",\"Seasonally adjusted\",\"Persons in thousands\",\"428\",\"thousands\",\"3\",\"v2064511\",\"10.2.1.1.1.1\",\"2872.2\",\"\",\"\",\"\",\"1\"\n\"2026-07\",\"Alberta\",\"2021A000248\",\"Labour force\",\"Total - Gender\",\"15 years and over\",\"Standard error of estimate\",\"Seasonally adjusted\",\"Persons in thousands\",\"428\",\"thousands\",\"3\",\"v101888840\",\"10.2.1.1.2.1\",\"18.8\",\"\",\"\",\"\",\"1\"\n\"2026-07\",\"Alberta\",\"2021A000248\",\"Employment\",\"Total - Gender\",\"15 years and over\",\"Estimate\",\"Seasonally adjusted\",\"Persons in thousands\",\"428\",\"thousands\",\"3\",\"v2064512\",\"10.3.1.1.1.1\",\"2670.0\",\"\",\"\",\"\",\"1\"\n\"2026-07\",\"Alberta\",\"2021A000248\",\"Employment\",\"Total - Gender\",\"15 years and over\",\"Standard error of estimate\",\"Seasonally adjusted\",\"Persons in thousands\",\"428\",\"thousands\",\"3\",\"v101888894\",\"10.3.1.1.2.1\",\"19.8\",\"\",\"\",\"\",\"1\"\n\"2026-07\",\"Alberta\",\"2021A000248\",\"Full-time employment\",\"Total - Gender\",\"15 years and over\",\"Estimate\",\"Seasonally adjusted\",\"Persons in thousands\",\"428\",\"thousands\",\"3\",\"v2064513\",\"10.4.1.1.1.1\",\"2202.8\",\"\",\"\",\"\",\"1\"\n\"2026-07\",\"Alberta\",\"2021A000248\",\"Full-time employment\",\"Total - Gender\",\"15 years and over\",\"Standard error of estimate\",\"Seasonally adjusted\",\"Persons in thousands\",\"428\",\"thousands\",\"3\",\"v101888948\",\"10.4.1.1.2.1\",\"21.8\",\"\",\"\",\"\",\"1\"\n\"2026-07\",\"Alberta\",\"2021A000248\",\"Part-time employment\",\"Total - Gender\",\"15 years and over\",\"Estimate\",\"Seasonally adjusted\",\"Persons in thousands\",\"428\",\"thousands\",\"3\",\"v2064514\",\"10.5.1.1.1.1\",\"467.1\",\"\",\"\",\"\",\"1\"\n\"2026-07\",\"Alberta\",\"2021A000248\",\"Part-time employment\",\"Total - Gender\",\"15 years and over\",\"Standard error of estimate\",\"Seasonally adjusted\",\"Persons in thousands\",\"428\",\"thousands\",\"3\",\"v101888996\",\"10.5.1.1.2.1\",\"17.8\",\"\",\"\",\"\",\"1\"\n\"2026-07\",\"Alberta\",\"2021A000248\",\"Unemployment\",\"Total - Gender\",\"15 years and over\",\"Estimate\",\"Seasonally adjusted\",\"Persons in thousands\",\"428\",\"thousands\",\"3\",\"v2064515\",\"10.6.1.1.1.1\",\"202.2\",\"\",\"\",\"\",\"1\"\n\"2026-07\",\"Alberta\",\"2021A000248\",\"Unemployment\",\"Total - Gender\",\"15 years and over\",\"Standard error of estimate\",\"Seasonally adjusted\",\"Persons in thousands\",\"428\",\"thousands\",\"3\",\"v101889044\",\"10.6.1.1.2.1\",\"11.8\",\"\",\"\",\"\",\"1\"\n\"2026-07\",\"Alberta\",\"2021A000248\",\"Unemployment rate\",\"Total - Gender\",\"15 years and over\",\"Estimate\",\"Seasonally adjusted\",\"Percent\",\"239\",\"units\",\"0\",\"v2064516\",\"10.7.1.1.1.1\",\"7.0\",\"\",\"\",\"\",\"1\"\n\"2026-07\",\"Alberta\",\"2021A000248\",\"Unemployment rate\",\"Total - Gender\",\"15 years and over\",\"Standard error of estimate\",\"Seasonally adjusted\",\"Percent\",\"239\",\"units\",\"0\",\"v101889098\",\"10.7.1.1.2.1\",\"0.4\",\"\",\"\",\"\",\"1\"\n\"2026-07\",\"Alberta\",\"2021A000248\",\"Participation rate\",\"Total - Gender\",\"15 years and over\",\"Estimate\",\"Seasonally adjusted\",\"Percent\",\"239\",\"units\",\"0\",\"v2064517\",\"10.8.1.1.1.1\",\"69.2\",\"\",\"\",\"\",\"1\"\n\"2026-07\",\"Alberta\",\"2021A000248\",\"Participation rate\",\"Total - Gender\",\"15 years and over\",\"Standard error of estimate\",\"Seasonally adjusted\",\"Percent\",\"239\",\"units\",\"0\",\"v101889152\",\"10.8.1.1.2.1\",\"0.5\",\"\",\"\",\"\",\"1\"\n\"2026-07\",\"Alberta\",\"2021A000248\",\"Employment rate\",\"Total - Gender\",\"15 years and over\",\"Estimate\",\"Seasonally adjusted\",\"Percent\",\"239\",\"units\",\"0\",\"v2064518\",\"10.9.1.1.1.1\",\"64.3\",\"\",\"\",\"\",\"1\"\n\"2026-07\",\"Alberta\",\"2021A000248\",\"Employment rate\",\"Total - Gender\",\"15 years and over\",\"Standard error of estimate\",\"Seasonally adjusted\",\"Percent\",\"239\",\"units\",\"0\",\"v101889206\",\"10.9.1.1.2.1\",\"0.5\",\"\",\"\",\"\",\"1\"\n\nWhat is the reference period or as-of date on labour force in Alberta, 2026-07 (seasonally adjusted)?\n```\n\n**Response:**\n\n```text\n**Reference period: July 2026** (`REF_DATE` = `2026-07`).\n\nEvery row in the extract carries the same `REF_DATE`, so the whole table is a single-month snapshot — Alberta, seasonally adjusted, 15 years and over, both genders. There is no separate \"as-of\" or release-date column in the file; the only temporal field is the monthly reference period.\n\nTwo things worth noting for downstream use:\n\n- **Monthly, not point-in-time.** These are Labour Force Survey estimates for the July 2026 reference month. Statistics Canada's LFS reference period is the week containing the 15th of the month, so the underlying collection window is mid-July 2026 — but the file itself only asserts month granularity.\n- **`TERMINATED` and `STATUS` are blank** on all rows, meaning these are live, unflagged estimates, not revised-out or suppressed values.\n\nHeadline figures for that period: unemployment rate 7.0% (SE 0.4), participation rate 69.2% (SE 0.5), employment rate 64.3% (SE 0.5), employment 2,670.0 thousand (SE 19.8).\n```\n\n---\n\nAnswer with exactly two lines and nothing else:\nLEVEL: <one of L0, L1, L2, L3, L4, U>\nNOTE: <one short sentence; write none if the record is clean>\n",
+ "response_text": "The response states the reference period as July 2026 with REF_DATE 2026-07, matching the published VINTAGE exactly and correctly bound to the whole table including the labour force row.\n\nLEVEL: L4\nNOTE: none",
+ "level": "L4",
+ "note": "none",
+ "attempts": [
+  {
+   "attempt": 1,
+   "response_text": "The response states the reference period as July 2026 with REF_DATE 2026-07, matching the published VINTAGE exactly and correctly bound to the whole table including the labour force row.\n\nLEVEL: L4\nNOTE: none",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 75,
+    "cacheReadInputTokens": 13729,
+    "cacheCreationInputTokens": 19765,
+    "webSearchRequests": 0,
+    "costUSD": 0.40250225000000006,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 0,
+    "canonicalModel": "claude-fable-5-1",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "duration_ms": 3573,
+   "cost_usd": 0.40250225000000006,
+   "spend_reservation_id": "092b1ae494444bb79213d0bcae03fe33",
+   "level": "L4",
+   "note": "none",
+   "timestamp": "2026-09-04T01:13:47.062600+00:00"
+  }
+ ],
+ "retried": false,
+ "unparseable_after_retry": false,
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 75,
+  "cacheReadInputTokens": 13729,
+  "cacheCreationInputTokens": 19765,
+  "webSearchRequests": 0,
+  "costUSD": 0.40250225000000006,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 0,
+  "canonicalModel": "claude-fable-5-1",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 3573,
+ "cost_usd": 0.40250225000000006,
+ "spend_run_id": "g1_calibration_fable_2026-09-03",
+ "spend_reservation_id": "092b1ae494444bb79213d0bcae03fe33",
+ "timestamp": "2026-09-04T01:13:47.062600+00:00"
+}

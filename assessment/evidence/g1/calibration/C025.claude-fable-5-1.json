@@ -1,0 +1,59 @@
+{
+ "task": "cc_tasks/2026-09-03_g1_calibration_rating_agreement.md",
+ "run_id": "g1_calibration_fable_2026-09-03",
+ "sample_id": "C025",
+ "model_id": "claude-fable-5-1",
+ "rater_role": "independent calibration rater (DD-037)",
+ "sheet": "assessment/results/g1_calibration_sheet_2026-09-03.md",
+ "prompt": "## What to do\n\nFor each record below you see exactly what the consumer saw (the prompt), exactly what it answered (the response), and what the source published for one qualifier family attached to one estimate. Read the response in full and decide which preservation level that response achieved **for that family and that estimate** — not for the response as a whole, and not for any other number in it. Write the level on the answer line, and a short note if the record is not clean (a form you had to convert, a value bound to the wrong row, a qualifier stated about something else). Write **U** if the qualifier is stated in a form you cannot classify at all. Nothing here tells you what the scorer or the reviewer decided; that is the point, so please do not go looking before you finish.\n\n**The level scale (D2, verbatim from DD-033):** L4 preserved_exact (class, value within published rounding, confidence level and binding all restated); L3 preserved_transformed (numeric and correct under a legitimate transformation — MOE↔bounds, ±↔interval, percent↔fraction, precision that rounds back to the source's, and, in v0, a right value with the confidence level omitted); L2 degraded_verbal (verbal band, no number); L1 omitted; L0 corrupted (magnitude outside published rounding with `widened`/`narrowed` recorded, wrong level, wrong binding, fabricated qualifier, suppressed or flagged-unreliable estimate restated as usable).\n\n**Qualifier families (D9, verbatim from DD-035):** {SE, MOE, CI} = `interval`, {CV} = `relative`, {RELIABILITY_FLAG, SUPPRESSION} = `reliability`, {DP_NOISE} = `dp`, {VINTAGE} = `vintage` … The record unit is (proposition, family, mode[, compression]); the family level is the best level any published form achieved.\n\n**Question, once per record:** which level (L0–L4) did the response achieve for this family, or U if the qualifier is stated in a form you cannot classify?\n\n---\n\n## C025\n\n- **Estimate:** the median CV above which an ACS 1-year detailed table is filtered out — **0.61**\n- **Qualifier family:** `reliability` · **published forms:** SUPPRESSION = filtered out\n- **Mode:** indirect · **Compression:** short\n\n**Prompt shown to the consumer:**\n\n```text\nRestate the following for a general-audience summary in no more than two sentences.\n\nFor both base and collapsed detailed tables, a table is filtered out if the median CV value for the table is greater than 0.61, or in other words, if more than half of the estimates in it have a CV greater than 0.61, suggesting very low reliability. A CV greater than 0.61 is equivalent to saying the estimate is not significantly different from zero at the 90 percent confidence level. Zero estimates, which have an undefined CV, are assigned a CV of 1.0 for determining the median CV. Only lines at the lowest level of detail in a table are included in the calculation of the median CV.\n```\n\n**Response:**\n\n```text\nWe drop a table from publication when most of its estimates are too shaky to trust — specifically, when over half the numbers at the most detailed level have a margin of error so wide that the estimate can't be told apart from zero (a coefficient of variation above 0.61, roughly the 90 percent confidence threshold).\n\nThis rule applies to both the base and collapsed detailed tables, and estimates of zero — which have no meaningful error measure — are counted as unreliable when we check whether the table clears the bar.\n```\n\n---\n\nAnswer with exactly two lines and nothing else:\nLEVEL: <one of L0, L1, L2, L3, L4, U>\nNOTE: <one short sentence; write none if the record is clean>\n",
+ "response_text": "LEVEL: L4\nNOTE: none",
+ "level": "L4",
+ "note": "none",
+ "attempts": [
+  {
+   "attempt": 1,
+   "response_text": "LEVEL: L4\nNOTE: none",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 319,
+    "cacheReadInputTokens": 13729,
+    "cacheCreationInputTokens": 16861,
+    "webSearchRequests": 0,
+    "costUSD": 0.35662225000000003,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 302,
+    "canonicalModel": "claude-fable-5-1",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "duration_ms": 5929,
+   "cost_usd": 0.35662225000000003,
+   "spend_reservation_id": "7f25aa9dbb9b41178fa1c2e8333c00c0",
+   "level": "L4",
+   "note": "none",
+   "timestamp": "2026-09-04T01:09:46.563609+00:00"
+  }
+ ],
+ "retried": false,
+ "unparseable_after_retry": false,
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 319,
+  "cacheReadInputTokens": 13729,
+  "cacheCreationInputTokens": 16861,
+  "webSearchRequests": 0,
+  "costUSD": 0.35662225000000003,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 302,
+  "canonicalModel": "claude-fable-5-1",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 5929,
+ "cost_usd": 0.35662225000000003,
+ "spend_run_id": "g1_calibration_fable_2026-09-03",
+ "spend_reservation_id": "7f25aa9dbb9b41178fa1c2e8333c00c0",
+ "timestamp": "2026-09-04T01:09:46.563609+00:00"
+}

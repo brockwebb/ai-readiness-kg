@@ -1,0 +1,59 @@
+{
+ "task": "cc_tasks/2026-09-03_g1_calibration_rating_agreement.md",
+ "run_id": "g1_calibration_fable_2026-09-03",
+ "sample_id": "C056",
+ "model_id": "claude-fable-5-1",
+ "rater_role": "independent calibration rater (DD-037)",
+ "sheet": "assessment/results/g1_calibration_sheet_2026-09-03.md",
+ "prompt": "## What to do\n\nFor each record below you see exactly what the consumer saw (the prompt), exactly what it answered (the response), and what the source published for one qualifier family attached to one estimate. Read the response in full and decide which preservation level that response achieved **for that family and that estimate** — not for the response as a whole, and not for any other number in it. Write the level on the answer line, and a short note if the record is not clean (a form you had to convert, a value bound to the wrong row, a qualifier stated about something else). Write **U** if the qualifier is stated in a form you cannot classify at all. Nothing here tells you what the scorer or the reviewer decided; that is the point, so please do not go looking before you finish.\n\n**The level scale (D2, verbatim from DD-033):** L4 preserved_exact (class, value within published rounding, confidence level and binding all restated); L3 preserved_transformed (numeric and correct under a legitimate transformation — MOE↔bounds, ±↔interval, percent↔fraction, precision that rounds back to the source's, and, in v0, a right value with the confidence level omitted); L2 degraded_verbal (verbal band, no number); L1 omitted; L0 corrupted (magnitude outside published rounding with `widened`/`narrowed` recorded, wrong level, wrong binding, fabricated qualifier, suppressed or flagged-unreliable estimate restated as usable).\n\n**Qualifier families (D9, verbatim from DD-035):** {SE, MOE, CI} = `interval`, {CV} = `relative`, {RELIABILITY_FLAG, SUPPRESSION} = `reliability`, {DP_NOISE} = `dp`, {VINTAGE} = `vintage` … The record unit is (proposition, family, mode[, compression]); the family level is the best level any published form achieved.\n\n**Question, once per record:** which level (L0–L4) did the response achieve for this family, or U if the qualifier is stated in a form you cannot classify?\n\n---\n\n## C056\n\n- **Estimate:** the number of never-married females living in Arlington County (2015 ACS 1-year) — **43,104**\n- **Qualifier family:** `vintage` · **published forms:** VINTAGE = 2015 ACS 1-year estimates (as_of=2015, period=1-year)\n- **Mode:** direct · **Compression:** (n/a — direct mode)\n\n**Prompt shown to the consumer:**\n\n```text\nThe example below shows how to calculate the MOE and SE for the estimated number of never-married females living in the three Virginia counties/independent cities that border Washington, DC (Fairfax and Arlington counties, Alexandria City) from the 2015 ACS 1-year estimates. Table 8.1. Data for Example 1 From Three Virginia Counties/Independent Cities: 2015 Characteristic Estimate MOE Never-married females living in Fairfax County (Component 1) ................................. 135,173 ±3,860 Never-married females living in Arlington County (Component 2) ................................. 43,104 ±2,642 Never-married females living in Alexandria City (Component 3) .................................. 24,842 ±1,957 Source: U.S. Census Bureau, data.census.gov, Table B12001: “Sex by Marital Status for the Population 15 Years and Over.” 60 Understanding and Using American Community Survey Data 60 What All Data Users Need to Know U.S. Census Bureau The aggregate estimate is: Obtain MOEs of the component estimates: MOE (Fairfax) = ±3,860 MOE (Arlington) = ±2,642 MOE (Alexandria) = ±1,957 Using formula (1), calculate the MOE for the aggregate estimate: Thus, the derived estimate of the number of never-married females living in the three Virginia counties/independent cities that border Washington, DC, is 203,119, and the MOE for the estimate is ±5,070. The SE of this derived estimate can be calculated from the SEs of the component estimates as follows: 1. Calculate the SE of each component estimate from its MOE using: (2) SE (Fairfax) = 3,860 / 1.645 = 2,347 SE (Arlington) = 2,642 / 1.645 = 1,606 SE (Alexandria) = 1,957 / 1.645 = 1,190 2. Calculate the SE of the aggregate estimate: (3) With the three component estimates in this example, this becomes: To assess the reliability of this derived estimate, users may find it helpful to calculate the CV as follows: (4) Understanding and Using American Community Survey Data 61 What All Data Users Need to Know 61 U.S. Census Bureau This CV indicates that the sampling error of this estimate is very small relative to the estimate itself, so the number of never-married females residing in the Virginia tri-county area bordering Washington, DC, can be considered a very reliable estimate.\n\nWhat is the reference period or as-of date on the number of never-married females living in Arlington County (2015 ACS 1-year)?\n```\n\n**Response:**\n\n```text\n**Reference period: calendar year 2015 (January 1 – December 31, 2015) — a 12-month period average, not a point-in-time as-of date.**\n\nSpecifics for the Arlington County figure (43,104 ±2,642, Table B12001):\n\n- **1-year estimates** are built from all ACS interviews conducted over the 12 months of 2015. Every respondent reports marital status as of their own interview date, and those responses are spread across the year, so the published number represents the *average* characteristics of the population over the full year — there is no single day it describes.\n- **Geography** is defined by the boundaries in effect on **January 1, 2015** (the vintage date for ACS geographic definitions), which is why \"Arlington County\" here is a county-level tabulation with its 2015 boundaries.\n- **Not comparable to a decennial census count**, which is an as-of-April-1 point-in-time enumeration. This is the most common misreading of ACS figures.\n- Contrast with 5-year estimates, where the same table for a small area would carry a 2011–2015 reference period.\n- Dollar-denominated ACS variables get inflation-adjusted to the reference year; irrelevant for this table since it's a person count, but it's the same reference-period logic.\n\nRelease timing (published September 2016) is a *publication* date, not the reference period — worth keeping separate when citing.\n```\n\n---\n\nAnswer with exactly two lines and nothing else:\nLEVEL: <one of L0, L1, L2, L3, L4, U>\nNOTE: <one short sentence; write none if the record is clean>\n",
+ "response_text": "LEVEL: L4\nNOTE: none",
+ "level": "L4",
+ "note": "none",
+ "attempts": [
+  {
+   "attempt": 1,
+   "response_text": "LEVEL: L4\nNOTE: none",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 216,
+    "cacheReadInputTokens": 13729,
+    "cacheCreationInputTokens": 18945,
+    "webSearchRequests": 0,
+    "costUSD": 0.39315225000000004,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 199,
+    "canonicalModel": "claude-fable-5-1",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "duration_ms": 5786,
+   "cost_usd": 0.39315225000000004,
+   "spend_reservation_id": "002bca94bb624789a6806dc2e14b59f8",
+   "level": "L4",
+   "note": "none",
+   "timestamp": "2026-09-04T01:13:55.156129+00:00"
+  }
+ ],
+ "retried": false,
+ "unparseable_after_retry": false,
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 216,
+  "cacheReadInputTokens": 13729,
+  "cacheCreationInputTokens": 18945,
+  "webSearchRequests": 0,
+  "costUSD": 0.39315225000000004,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 199,
+  "canonicalModel": "claude-fable-5-1",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 5786,
+ "cost_usd": 0.39315225000000004,
+ "spend_run_id": "g1_calibration_fable_2026-09-03",
+ "spend_reservation_id": "002bca94bb624789a6806dc2e14b59f8",
+ "timestamp": "2026-09-04T01:13:55.156129+00:00"
+}

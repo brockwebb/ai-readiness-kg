@@ -1,0 +1,59 @@
+{
+ "task": "cc_tasks/2026-09-03_g1_calibration_rating_agreement.md",
+ "run_id": "g1_calibration_fable_2026-09-03",
+ "sample_id": "C032",
+ "model_id": "claude-fable-5-1",
+ "rater_role": "independent calibration rater (DD-037)",
+ "sheet": "assessment/results/g1_calibration_sheet_2026-09-03.md",
+ "prompt": "## What to do\n\nFor each record below you see exactly what the consumer saw (the prompt), exactly what it answered (the response), and what the source published for one qualifier family attached to one estimate. Read the response in full and decide which preservation level that response achieved **for that family and that estimate** — not for the response as a whole, and not for any other number in it. Write the level on the answer line, and a short note if the record is not clean (a form you had to convert, a value bound to the wrong row, a qualifier stated about something else). Write **U** if the qualifier is stated in a form you cannot classify at all. Nothing here tells you what the scorer or the reviewer decided; that is the point, so please do not go looking before you finish.\n\n**The level scale (D2, verbatim from DD-033):** L4 preserved_exact (class, value within published rounding, confidence level and binding all restated); L3 preserved_transformed (numeric and correct under a legitimate transformation — MOE↔bounds, ±↔interval, percent↔fraction, precision that rounds back to the source's, and, in v0, a right value with the confidence level omitted); L2 degraded_verbal (verbal band, no number); L1 omitted; L0 corrupted (magnitude outside published rounding with `widened`/`narrowed` recorded, wrong level, wrong binding, fabricated qualifier, suppressed or flagged-unreliable estimate restated as usable).\n\n**Qualifier families (D9, verbatim from DD-035):** {SE, MOE, CI} = `interval`, {CV} = `relative`, {RELIABILITY_FLAG, SUPPRESSION} = `reliability`, {DP_NOISE} = `dp`, {VINTAGE} = `vintage` … The record unit is (proposition, family, mode[, compression]); the family level is the best level any published form achieved.\n\n**Question, once per record:** which level (L0–L4) did the response achieve for this family, or U if the qualifier is stated in a form you cannot classify?\n\n---\n\n## C032\n\n- **Estimate:** the number of one-person households in Colorado in 2015 (2015 ACS 1-year estimate) — **564,757**\n- **Qualifier family:** `interval` · **published forms:** MOE = 10,127 (level=0.9, unit=count)\n- **Mode:** indirect · **Compression:** short\n\n**Prompt shown to the consumer:**\n\n```text\nRestate the following for a general-audience summary in no more than two sentences.\n\nA margin of error (MOE) describes the precision of an ACS estimate at a given level of confidence. The confidence level associated with the MOE indicates the likelihood that the ACS sample estimate is within a certain range (the MOE) of the population value. The MOEs for published ACS estimates are provided at a 90 percent confidence level. From these MOEs, data users can easily calculate 90 percent confidence intervals that define a range expected to contain the true or population value of an estimate 90 percent of the time. For example, in the Data Profile for Selected Social Characteristics (Table DP02) for Colorado, a portion of which is shown in Figure 7.1, data from the 2015 ACS 1-year estimates indicate that there were 564,757 one-person households in the state in 2015 with an MOE of 10,127. By adding and subtracting the MOE from the point estimate, we can calculate the 90 percent confidence interval for that estimate: 564,757 – 10,127 = 554,630 = Lower bound of the interval 564,757 + 10,127 = 574,884 = Upper bound of the interval 56 U.S. Census Bureau, American Community Survey, Sample Size and Data Quality, <www.census.gov/acs/www/methodology/sample-size -and-data-quality/>. 54 Understanding and Using American Community Survey Data 54 What All Data Users Need to Know U.S. Census Bureau 564,757 – 10,127 = 554,630 = Lower bound of the interval 564,757 + 10,127 = 574,884 = Upper bound of the interval Source: U.S. Census Bureau, data.census.gov, Table DP02: “Selected Social Characteristics in the United States.” Figure 7.1. Sample Estimates and Margins of Error in Data.census.gov: 2015 Therefore, we can be 90 percent confident that the true number of one-person households in Colorado in 2015 falls somewhere between 554,630 and 574,884. Put another way, if the ACS were independently conducted 100 times in 2015, sampling theory suggests that 90 times the estimate of one-person households in Colorado would fall in the given confidence interval. Estimates with smaller MOEs—relative to the value of the estimate—will have narrower confidence intervals indicating that the estimate is more precise and has less sampling error associated with it. TIP: When constructing confidence intervals from MOEs, data users should be aware of any “natural” limits on the upper and lower bounds. For example, if a population estimate is near zero, the calculated value of the lower confidence bound may be less than zero. However, a negative number of people does not make sense, so the lower confidence bound should be reported as zero instead. For other estimates, such as income, negative values may be valid. Another natural limit would be 100 percent for the upper confidence bound of a percent estimate. Data users should always keep the context and meaning of an estimate in mind when creating and interpreting confidence intervals. Standard Errors and Coefficients of Variation A standard error (SE) measures the variability of an estimate due to sampling and provides the basis for calculating the MOE. The SE provides a quantitative measure of the extent to which an estimate derived from a sample can be expected to deviate from the value for the full population. SEs are needed to calculate coefficients of Understanding and Using American Community Survey Data 55 What All Data Users Need to Know 55 U.S. Census Bureau variation and to conduct tests of statistical significance. Data users can easily calculate the SE of an ACS estimate by dividing the positive value of its MOE by 1.645 as shown below:57 (1) Using the data in Table 7.1, the SE for the number of one-person households in Colorado in 2015 would be: The SE for an estimate depends on the underlying variability in the population for that characteristic and the sample size used for the survey. In general, the larger the sample size, the smaller the SE of the estimates produced from the sample data. This relationship between sample size and SE is the reason that ACS estimates for less populous areas are only published using multiple years of data. Combining data from multiple ACS 1-year files increases sample size and helps to reduce SEs. Coefficients of variation are another useful measure of sampling error. A coefficient of variation (CV) measures the relative amount of sampling error that is associated with a sample estimate. The CV is calculated as the ratio of the SE for an estimate to the estimate itself and is usually expressed as a percent: (2) A small CV indicates that the SE is small relative to the estimate, and a data user can be more confident that the estimate is close to the population value. The CV is also an indicator of the reliability of an estimate. When the SE of an estimate is close to the value of the estimate, the CV will be larger, indicating that the estimate has a large amount of sampling error associated with it and is not very reliable. For the example of one-person households in Colorado, the CV would be calculated as: 58 A CV of 1.1 percent indicates that the ACS estimate of one-person households in Colorado has a relatively small amount of sampling error and is quite reliable. Data users often find it easier to interpret and compare CVs across a series of ACS estimates than to interpret and compare SEs.\n```\n\n**Response:**\n\n```text\nA margin of error tells you how precise a Census Bureau ACS estimate is: the Bureau publishes MOEs at a 90 percent confidence level, so adding and subtracting the MOE from an estimate gives a range that should contain the true population value 90 percent of the time — for example, Colorado's 2015 estimate of 564,757 one-person households (MOE 10,127) means the real number was likely between 554,630 and 574,884. Related measures derived from the MOE, the standard error and the coefficient of variation, indicate how much sampling error an estimate carries, with smaller values signaling a more reliable estimate.\n```\n\n---\n\nAnswer with exactly two lines and nothing else:\nLEVEL: <one of L0, L1, L2, L3, L4, U>\nNOTE: <one short sentence; write none if the record is clean>\n",
+ "response_text": "LEVEL: L4\nNOTE: none",
+ "level": "L4",
+ "note": "none",
+ "attempts": [
+  {
+   "attempt": 1,
+   "response_text": "LEVEL: L4\nNOTE: none",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 115,
+    "cacheReadInputTokens": 13729,
+    "cacheCreationInputTokens": 18436,
+    "webSearchRequests": 0,
+    "costUSD": 0.37792225000000007,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 98,
+    "canonicalModel": "claude-fable-5-1",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "duration_ms": 3771,
+   "cost_usd": 0.37792225000000007,
+   "spend_reservation_id": "ceefe157e0f947549913f96f3be89ae9",
+   "level": "L4",
+   "note": "none",
+   "timestamp": "2026-09-04T01:10:43.049562+00:00"
+  }
+ ],
+ "retried": false,
+ "unparseable_after_retry": false,
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 115,
+  "cacheReadInputTokens": 13729,
+  "cacheCreationInputTokens": 18436,
+  "webSearchRequests": 0,
+  "costUSD": 0.37792225000000007,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 98,
+  "canonicalModel": "claude-fable-5-1",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 3771,
+ "cost_usd": 0.37792225000000007,
+ "spend_run_id": "g1_calibration_fable_2026-09-03",
+ "spend_reservation_id": "ceefe157e0f947549913f96f3be89ae9",
+ "timestamp": "2026-09-04T01:10:43.049562+00:00"
+}

@@ -1,0 +1,59 @@
+{
+ "task": "cc_tasks/2026-09-03_g1_calibration_rating_agreement.md",
+ "run_id": "g1_calibration_fable_2026-09-03",
+ "sample_id": "C047",
+ "model_id": "claude-fable-5-1",
+ "rater_role": "independent calibration rater (DD-037)",
+ "sheet": "assessment/results/g1_calibration_sheet_2026-09-03.md",
+ "prompt": "## What to do\n\nFor each record below you see exactly what the consumer saw (the prompt), exactly what it answered (the response), and what the source published for one qualifier family attached to one estimate. Read the response in full and decide which preservation level that response achieved **for that family and that estimate** — not for the response as a whole, and not for any other number in it. Write the level on the answer line, and a short note if the record is not clean (a form you had to convert, a value bound to the wrong row, a qualifier stated about something else). Write **U** if the qualifier is stated in a form you cannot classify at all. Nothing here tells you what the scorer or the reviewer decided; that is the point, so please do not go looking before you finish.\n\n**The level scale (D2, verbatim from DD-033):** L4 preserved_exact (class, value within published rounding, confidence level and binding all restated); L3 preserved_transformed (numeric and correct under a legitimate transformation — MOE↔bounds, ±↔interval, percent↔fraction, precision that rounds back to the source's, and, in v0, a right value with the confidence level omitted); L2 degraded_verbal (verbal band, no number); L1 omitted; L0 corrupted (magnitude outside published rounding with `widened`/`narrowed` recorded, wrong level, wrong binding, fabricated qualifier, suppressed or flagged-unreliable estimate restated as usable).\n\n**Qualifier families (D9, verbatim from DD-035):** {SE, MOE, CI} = `interval`, {CV} = `relative`, {RELIABILITY_FLAG, SUPPRESSION} = `reliability`, {DP_NOISE} = `dp`, {VINTAGE} = `vintage` … The record unit is (proposition, family, mode[, compression]); the family level is the best level any published form achieved.\n\n**Question, once per record:** which level (L0–L4) did the response achieve for this family, or U if the qualifier is stated in a form you cannot classify?\n\n---\n\n## C047\n\n- **Estimate:** the relative 95% confidence interval width above which an NCHS proportion with absolute width between 0.05 and 0.30 is suppressed — **130**\n- **Qualifier family:** `reliability` · **published forms:** SUPPRESSION = suppressed\n- **Mode:** direct · **Compression:** (n/a — direct mode)\n\n**Prompt shown to the consumer:**\n\n```text\nTable. NCHS Data Presentation Standards for Proportions Statistic Standard Sample size Estimated proportions should be based on a minimum denominator sample size and effective denominator sample size (when applicable) of 30. Estimates with either a denominator sample size or an effective denominator sample size (when applicable) less than 30 should be suppressed. If the number of events is 0 (or its complement 1 ), then the denominator sample size should be used to obtain confidence intervals. If all other criteria are met for presentation, an estimate based on 0 events (or its complement 1 ) should be flagged for statistical review by the clearance official. The review could result in either the presentation or the suppression of the proportion. Confidence interval If the sample size criterion is met, calculate a 95% two-sided confidence interval using the Clopper-Pearson method, or the Korn-Graubard method for complex surveys, and obtain its width. Small absolute confidence interval width If the absolute confidence interval width is greater than 0.00 and less than or equal to 0.05, then the proportion can be presented if the number of events is greater than 0 and the degrees of freedom criterion (below) is met. If the number of events is 0 (or its complement 1 ) or the degrees of freedom criterion is not met, then the estimate should be flagged for statistical review by the clearance official. The review could result in either the presentation or the suppression of the proportion. Large absolute confidence interval width If the absolute confidence interval width is greater than or equal to 0.30, then the proportion should be suppressed. Relative confidence interval width If the absolute confidence interval width is between 0.05 and 0.30 and the relative confidence interval width is more than 130%, then the proportion should be suppressed. Relative confidence interval width If the absolute confidence interval width is between 0.05 and 0.30 and the relative confidence interval width is less than or equal to 130%, then the proportion can be presented if the degrees of freedom criterion below is met.\n\nWhat is the publication status on the relative 95% confidence interval width above which an NCHS proportion with absolute width between 0.05 and 0.30 is suppressed?\n```\n\n**Response:**\n\n```text\n**Threshold: 130%; status above it: suppressed.**\n\nPer the NCHS Data Presentation Standards for Proportions, when the absolute 95% CI width falls between 0.05 and 0.30:\n\n- **Relative CI width > 130%** → the proportion is **suppressed** (no presentation, no review pathway).\n- **Relative CI width ≤ 130%** → the proportion **may be presented**, but only if the degrees-of-freedom criterion is also met.\n\nSo 130% is the cutoff, and exceeding it is a hard suppression rule rather than a flag-for-clearance-review outcome — unlike the 0-events and small-width (≤0.05) cases, which route to the clearance official for statistical review.\n```\n\n---\n\nAnswer with exactly two lines and nothing else:\nLEVEL: <one of L0, L1, L2, L3, L4, U>\nNOTE: <one short sentence; write none if the record is clean>\n",
+ "response_text": "LEVEL: L4\nNOTE: Response restates the 130% threshold and the suppressed status bound to it exactly; the \"estimate\" is a policy threshold rather than a survey statistic, so the suppression qualifier is a rule outcome, not a flag on a published number.",
+ "level": "L4",
+ "note": "Response restates the 130% threshold and the suppressed status bound to it exactly; the \"estimate\" is a policy threshold rather than a survey statistic, so the suppression qualifier is a rule outcome, not a flag on a published number.",
+ "attempts": [
+  {
+   "attempt": 1,
+   "response_text": "LEVEL: L4\nNOTE: Response restates the 130% threshold and the suppressed status bound to it exactly; the \"estimate\" is a policy threshold rather than a survey statistic, so the suppression qualifier is a rule outcome, not a flag on a published number.",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 321,
+    "cacheReadInputTokens": 13729,
+    "cacheCreationInputTokens": 18573,
+    "webSearchRequests": 0,
+    "costUSD": 0.39096225,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 230,
+    "canonicalModel": "claude-fable-5-1",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "duration_ms": 8732,
+   "cost_usd": 0.39096225,
+   "spend_reservation_id": "023df312711c445abc6a3216034ec22d",
+   "level": "L4",
+   "note": "Response restates the 130% threshold and the suppressed status bound to it exactly; the \"estimate\" is a policy threshold rather than a survey statistic, so the suppression qualifier is a rule outcome, not a flag on a published number.",
+   "timestamp": "2026-09-04T01:12:57.992425+00:00"
+  }
+ ],
+ "retried": false,
+ "unparseable_after_retry": false,
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 321,
+  "cacheReadInputTokens": 13729,
+  "cacheCreationInputTokens": 18573,
+  "webSearchRequests": 0,
+  "costUSD": 0.39096225,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 230,
+  "canonicalModel": "claude-fable-5-1",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 8732,
+ "cost_usd": 0.39096225,
+ "spend_run_id": "g1_calibration_fable_2026-09-03",
+ "spend_reservation_id": "023df312711c445abc6a3216034ec22d",
+ "timestamp": "2026-09-04T01:12:57.992425+00:00"
+}

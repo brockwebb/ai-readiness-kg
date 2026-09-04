@@ -1,0 +1,59 @@
+{
+ "task": "cc_tasks/2026-09-03_g1_calibration_rating_agreement.md",
+ "run_id": "g1_calibration_fable_2026-09-03",
+ "sample_id": "C018",
+ "model_id": "claude-fable-5-1",
+ "rater_role": "independent calibration rater (DD-037)",
+ "sheet": "assessment/results/g1_calibration_sheet_2026-09-03.md",
+ "prompt": "## What to do\n\nFor each record below you see exactly what the consumer saw (the prompt), exactly what it answered (the response), and what the source published for one qualifier family attached to one estimate. Read the response in full and decide which preservation level that response achieved **for that family and that estimate** — not for the response as a whole, and not for any other number in it. Write the level on the answer line, and a short note if the record is not clean (a form you had to convert, a value bound to the wrong row, a qualifier stated about something else). Write **U** if the qualifier is stated in a form you cannot classify at all. Nothing here tells you what the scorer or the reviewer decided; that is the point, so please do not go looking before you finish.\n\n**The level scale (D2, verbatim from DD-033):** L4 preserved_exact (class, value within published rounding, confidence level and binding all restated); L3 preserved_transformed (numeric and correct under a legitimate transformation — MOE↔bounds, ±↔interval, percent↔fraction, precision that rounds back to the source's, and, in v0, a right value with the confidence level omitted); L2 degraded_verbal (verbal band, no number); L1 omitted; L0 corrupted (magnitude outside published rounding with `widened`/`narrowed` recorded, wrong level, wrong binding, fabricated qualifier, suppressed or flagged-unreliable estimate restated as usable).\n\n**Qualifier families (D9, verbatim from DD-035):** {SE, MOE, CI} = `interval`, {CV} = `relative`, {RELIABILITY_FLAG, SUPPRESSION} = `reliability`, {DP_NOISE} = `dp`, {VINTAGE} = `vintage` … The record unit is (proposition, family, mode[, compression]); the family level is the best level any published form achieved.\n\n**Question, once per record:** which level (L0–L4) did the response achieve for this family, or U if the qualifier is stated in a form you cannot classify?\n\n---\n\n## C018\n\n- **Estimate:** the illustrative month-to-month change in total employment (LFS guide example) — **60,000**\n- **Qualifier family:** `interval` · **published forms:** CI = 35,000 to 85,000 (form=bounds, level=0.68, lower=35000, lower_text=35,000, upper=85000, upper_text=85,000, z=1.0)\n- **Mode:** indirect · **Compression:** short\n\n**Prompt shown to the consumer:**\n\n```text\nRestate the following for a general-audience summary in no more than two sentences.\n\nThe lower and upper bounds of a 68% confidence interval can be computed by adding or subtracting one standard error (25,000) from 60,000. This means that there are approximately two chances in three (68%) that the range (35,000 to 85,000) contains the real value of the change between the two months. * A 95% confidence interval can be constructed by adding and subtracting 50,000 (two standard errors) from 60,000. This means that there are approximately nineteen chances in twenty (95%) that the range (10,000 to 110,000) contains the real value of the change between the two months. **Conducting hypothesis tests** Standard errors may also be used to perform hypothesis testing, a procedure that can be used for comparing population parameters using sample estimates. The larger the observed change between two estimates relative to its standard error, the better the chance that we are observing a real change as opposed to a change due to sampling variability. One simple way to conduct a hypothesis test is with a confidence interval. If the 95% confidence interval of an observed estimate of change does not contain zero, then the change is considered statistically significant at the 5% level of significance. The level of significance is the probability of concluding that there is a change, when in fact the actual change is zero. If the confidence interval of the estimate does contain zero, it is less likely to reflect a real change and more likely to be due to sampling variability. To illustrate, let us say that between two months, the published estimate for total employment increased by 60,000 and the associated standard error for the movement estimate was 25,000. Since the 95% confidence interval (10,000 to 110,000) does not contain zero, this change in employment is considered significant at the 5% level of significance.\n```\n\n**Response:**\n\n```text\nIf employment rose by an estimated 60,000 between two months, the survey's margin of error means the true change is probably somewhere between 10,000 and 110,000 — with about a 19-in-20 chance of falling in that range. Because that range doesn't include zero, statisticians treat the increase as a real change rather than a fluke of sampling.\n```\n\n---\n\nAnswer with exactly two lines and nothing else:\nLEVEL: <one of L0, L1, L2, L3, L4, U>\nNOTE: <one short sentence; write none if the record is clean>\n",
+ "response_text": "LEVEL: L4\nNOTE: Response restates the source's 95% CI (10,000–110,000, \"19-in-20\") exactly and bound to 60,000, but the record lists only the 68% form (35,000–85,000), so the match is to an unlisted published form, not a widening of the listed one.",
+ "level": "L4",
+ "note": "Response restates the source's 95% CI (10,000–110,000, \"19-in-20\") exactly and bound to 60,000, but the record lists only the 68% form (35,000–85,000), so the match is to an unlisted published form, not a widening of the listed one.",
+ "attempts": [
+  {
+   "attempt": 1,
+   "response_text": "LEVEL: L4\nNOTE: Response restates the source's 95% CI (10,000–110,000, \"19-in-20\") exactly and bound to 60,000, but the record lists only the 68% form (35,000–85,000), so the match is to an unlisted published form, not a widening of the listed one.",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 945,
+    "cacheReadInputTokens": 13729,
+    "cacheCreationInputTokens": 18322,
+    "webSearchRequests": 0,
+    "costUSD": 0.41714225000000005,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 846,
+    "canonicalModel": "claude-fable-5-1",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "duration_ms": 15620,
+   "cost_usd": 0.41714225000000005,
+   "spend_reservation_id": "03780c5c89a34bf3a18ab4914348558f",
+   "level": "L4",
+   "note": "Response restates the source's 95% CI (10,000–110,000, \"19-in-20\") exactly and bound to 60,000, but the record lists only the 68% form (35,000–85,000), so the match is to an unlisted published form, not a widening of the listed one.",
+   "timestamp": "2026-09-04T01:08:43.249067+00:00"
+  }
+ ],
+ "retried": false,
+ "unparseable_after_retry": false,
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 945,
+  "cacheReadInputTokens": 13729,
+  "cacheCreationInputTokens": 18322,
+  "webSearchRequests": 0,
+  "costUSD": 0.41714225000000005,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 846,
+  "canonicalModel": "claude-fable-5-1",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 15620,
+ "cost_usd": 0.41714225000000005,
+ "spend_run_id": "g1_calibration_fable_2026-09-03",
+ "spend_reservation_id": "03780c5c89a34bf3a18ab4914348558f",
+ "timestamp": "2026-09-04T01:08:43.249067+00:00"
+}

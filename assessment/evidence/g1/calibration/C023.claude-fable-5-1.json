@@ -1,0 +1,59 @@
+{
+ "task": "cc_tasks/2026-09-03_g1_calibration_rating_agreement.md",
+ "run_id": "g1_calibration_fable_2026-09-03",
+ "sample_id": "C023",
+ "model_id": "claude-fable-5-1",
+ "rater_role": "independent calibration rater (DD-037)",
+ "sheet": "assessment/results/g1_calibration_sheet_2026-09-03.md",
+ "prompt": "## What to do\n\nFor each record below you see exactly what the consumer saw (the prompt), exactly what it answered (the response), and what the source published for one qualifier family attached to one estimate. Read the response in full and decide which preservation level that response achieved **for that family and that estimate** — not for the response as a whole, and not for any other number in it. Write the level on the answer line, and a short note if the record is not clean (a form you had to convert, a value bound to the wrong row, a qualifier stated about something else). Write **U** if the qualifier is stated in a form you cannot classify at all. Nothing here tells you what the scorer or the reviewer decided; that is the point, so please do not go looking before you finish.\n\n**The level scale (D2, verbatim from DD-033):** L4 preserved_exact (class, value within published rounding, confidence level and binding all restated); L3 preserved_transformed (numeric and correct under a legitimate transformation — MOE↔bounds, ±↔interval, percent↔fraction, precision that rounds back to the source's, and, in v0, a right value with the confidence level omitted); L2 degraded_verbal (verbal band, no number); L1 omitted; L0 corrupted (magnitude outside published rounding with `widened`/`narrowed` recorded, wrong level, wrong binding, fabricated qualifier, suppressed or flagged-unreliable estimate restated as usable).\n\n**Qualifier families (D9, verbatim from DD-035):** {SE, MOE, CI} = `interval`, {CV} = `relative`, {RELIABILITY_FLAG, SUPPRESSION} = `reliability`, {DP_NOISE} = `dp`, {VINTAGE} = `vintage` … The record unit is (proposition, family, mode[, compression]); the family level is the best level any published form achieved.\n\n**Question, once per record:** which level (L0–L4) did the response achieve for this family, or U if the qualifier is stated in a form you cannot classify?\n\n---\n\n## C023\n\n- **Estimate:** the share of counties whose privacy-protected total population (2021-06-08 PPMF) is within the stated bound of their published 2010 total population — **90**\n- **Qualifier family:** `vintage` · **published forms:** VINTAGE = PPMF vintage 2021-06-08 (as_of=2021-06-08)\n- **Mode:** indirect · **Compression:** tight\n\n**Prompt shown to the consumer:**\n\n```text\nRestate the following in one sentence of at most 30 words for a general audience.\n\nThe latest PPMF vintage 2021-06-08 is the Production Settings run, which uses the same software and settings for the 2020 production run of the redistricting data. Users can compare tabulated values from the PPMFs to published 2010 data to identify the amount of uncertainty that can be expected for a given geography or characteristic. Users can also calculate new measures of the spread of the uncertainty. For example, comparing tabulations from the PPMFs with the published 2010 data will show that 90 percent of counties have a privacy-protected total population that is within ± four people of their published total population.\n```\n\n**Response:**\n\n```text\nThe newest privacy-protected census test file mirrors the real 2020 settings, letting users gauge accuracy — 90 percent of counties land within four people of their published 2010 population.\n```\n\n---\n\nAnswer with exactly two lines and nothing else:\nLEVEL: <one of L0, L1, L2, L3, L4, U>\nNOTE: <one short sentence; write none if the record is clean>\n",
+ "response_text": "LEVEL: L2\nNOTE: The as_of date 2021-06-08 is dropped; only the relative descriptor \"newest\" survives, which I treat as the verbal-band analogue for vintage, though the L2 definition is interval-shaped and fits vintage loosely.",
+ "level": "L2",
+ "note": "The as_of date 2021-06-08 is dropped; only the relative descriptor \"newest\" survives, which I treat as the verbal-band analogue for vintage, though the L2 definition is interval-shaped and fits vintage loosely.",
+ "attempts": [
+  {
+   "attempt": 1,
+   "response_text": "LEVEL: L2\nNOTE: The as_of date 2021-06-08 is dropped; only the relative descriptor \"newest\" survives, which I treat as the verbal-band analogue for vintage, though the L2 definition is interval-shaped and fits vintage loosely.",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 377,
+    "cacheReadInputTokens": 13729,
+    "cacheCreationInputTokens": 17920,
+    "webSearchRequests": 0,
+    "costUSD": 0.38070224999999996,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 285,
+    "canonicalModel": "claude-fable-5-1",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "duration_ms": 6767,
+   "cost_usd": 0.38070224999999996,
+   "spend_reservation_id": "4d7b7279b140452d8ff0115a247bef55",
+   "level": "L2",
+   "note": "The as_of date 2021-06-08 is dropped; only the relative descriptor \"newest\" survives, which I treat as the verbal-band analogue for vintage, though the L2 definition is interval-shaped and fits vintage loosely.",
+   "timestamp": "2026-09-04T01:09:28.994395+00:00"
+  }
+ ],
+ "retried": false,
+ "unparseable_after_retry": false,
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 377,
+  "cacheReadInputTokens": 13729,
+  "cacheCreationInputTokens": 17920,
+  "webSearchRequests": 0,
+  "costUSD": 0.38070224999999996,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 285,
+  "canonicalModel": "claude-fable-5-1",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 6767,
+ "cost_usd": 0.38070224999999996,
+ "spend_run_id": "g1_calibration_fable_2026-09-03",
+ "spend_reservation_id": "4d7b7279b140452d8ff0115a247bef55",
+ "timestamp": "2026-09-04T01:09:28.994395+00:00"
+}

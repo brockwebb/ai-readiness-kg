@@ -1,0 +1,59 @@
+{
+ "task": "cc_tasks/2026-09-03_g1_calibration_rating_agreement.md",
+ "run_id": "g1_calibration_fable_2026-09-03",
+ "sample_id": "C022",
+ "model_id": "claude-fable-5-1",
+ "rater_role": "independent calibration rater (DD-037)",
+ "sheet": "assessment/results/g1_calibration_sheet_2026-09-03.md",
+ "prompt": "## What to do\n\nFor each record below you see exactly what the consumer saw (the prompt), exactly what it answered (the response), and what the source published for one qualifier family attached to one estimate. Read the response in full and decide which preservation level that response achieved **for that family and that estimate** — not for the response as a whole, and not for any other number in it. Write the level on the answer line, and a short note if the record is not clean (a form you had to convert, a value bound to the wrong row, a qualifier stated about something else). Write **U** if the qualifier is stated in a form you cannot classify at all. Nothing here tells you what the scorer or the reviewer decided; that is the point, so please do not go looking before you finish.\n\n**The level scale (D2, verbatim from DD-033):** L4 preserved_exact (class, value within published rounding, confidence level and binding all restated); L3 preserved_transformed (numeric and correct under a legitimate transformation — MOE↔bounds, ±↔interval, percent↔fraction, precision that rounds back to the source's, and, in v0, a right value with the confidence level omitted); L2 degraded_verbal (verbal band, no number); L1 omitted; L0 corrupted (magnitude outside published rounding with `widened`/`narrowed` recorded, wrong level, wrong binding, fabricated qualifier, suppressed or flagged-unreliable estimate restated as usable).\n\n**Qualifier families (D9, verbatim from DD-035):** {SE, MOE, CI} = `interval`, {CV} = `relative`, {RELIABILITY_FLAG, SUPPRESSION} = `reliability`, {DP_NOISE} = `dp`, {VINTAGE} = `vintage` … The record unit is (proposition, family, mode[, compression]); the family level is the best level any published form achieved.\n\n**Question, once per record:** which level (L0–L4) did the response achieve for this family, or U if the qualifier is stated in a form you cannot classify?\n\n---\n\n## C022\n\n- **Estimate:** B19013_001E for \"Boulder County, Colorado\" — **102772**\n- **Qualifier family:** `interval` · **published forms:** MOE = 2628 (field=B19013_001M, level=0.9, unit=currency)\n- **Mode:** indirect · **Compression:** tight\n\n**Prompt shown to the consumer:**\n\n```text\nRestate the following in one sentence of at most 30 words for a general audience.\n\n[[\"NAME\",\"B19013_001E\",\"B19013_001M\",\"state\",\"county\"],\n[\"Adams County, Colorado\",\"91387\",\"1470\",\"08\",\"001\"],\n[\"Alamosa County, Colorado\",\"51445\",\"6098\",\"08\",\"003\"],\n[\"Arapahoe County, Colorado\",\"97215\",\"1592\",\"08\",\"005\"],\n[\"Archuleta County, Colorado\",\"76524\",\"6714\",\"08\",\"007\"],\n[\"Baca County, Colorado\",\"40380\",\"7753\",\"08\",\"009\"],\n[\"Bent County, Colorado\",\"49194\",\"4596\",\"08\",\"011\"],\n[\"Boulder County, Colorado\",\"102772\",\"2628\",\"08\",\"013\"],\n```\n\n**Response:**\n\n```text\nMedian household incomes across these Colorado counties range from about $40,000 in rural Baca County to roughly $103,000 in Boulder County, based on Census survey estimates.\n```\n\n---\n\nAnswer with exactly two lines and nothing else:\nLEVEL: <one of L0, L1, L2, L3, L4, U>\nNOTE: <one short sentence; write none if the record is clean>\n",
+ "response_text": "LEVEL: L1\nNOTE: Boulder's estimate is restated within rounding, but the MOE is absent; \"roughly\" reflects rounding and \"based on Census survey estimates\" is generic provenance, not a verbal uncertainty band for this interval.",
+ "level": "L1",
+ "note": "Boulder's estimate is restated within rounding, but the MOE is absent; \"roughly\" reflects rounding and \"based on Census survey estimates\" is generic provenance, not a verbal uncertainty band for this interval.",
+ "attempts": [
+  {
+   "attempt": 1,
+   "response_text": "LEVEL: L1\nNOTE: Boulder's estimate is restated within rounding, but the MOE is absent; \"roughly\" reflects rounding and \"based on Census survey estimates\" is generic provenance, not a verbal uncertainty band for this interval.",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 276,
+    "cacheReadInputTokens": 13729,
+    "cacheCreationInputTokens": 17898,
+    "webSearchRequests": 0,
+    "costUSD": 0.37521225,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 189,
+    "canonicalModel": "claude-fable-5-1",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "duration_ms": 6061,
+   "cost_usd": 0.37521225,
+   "spend_reservation_id": "f8a217e52a394f9682b394b41daaa896",
+   "level": "L1",
+   "note": "Boulder's estimate is restated within rounding, but the MOE is absent; \"roughly\" reflects rounding and \"based on Census survey estimates\" is generic provenance, not a verbal uncertainty band for this interval.",
+   "timestamp": "2026-09-04T01:09:19.928128+00:00"
+  }
+ ],
+ "retried": false,
+ "unparseable_after_retry": false,
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 276,
+  "cacheReadInputTokens": 13729,
+  "cacheCreationInputTokens": 17898,
+  "webSearchRequests": 0,
+  "costUSD": 0.37521225,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 189,
+  "canonicalModel": "claude-fable-5-1",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 6061,
+ "cost_usd": 0.37521225,
+ "spend_run_id": "g1_calibration_fable_2026-09-03",
+ "spend_reservation_id": "f8a217e52a394f9682b394b41daaa896",
+ "timestamp": "2026-09-04T01:09:19.928128+00:00"
+}

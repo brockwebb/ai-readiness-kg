@@ -1,0 +1,59 @@
+{
+ "task": "cc_tasks/2026-09-03_g1_calibration_rating_agreement.md",
+ "run_id": "g1_calibration_fable_2026-09-03",
+ "sample_id": "C058",
+ "model_id": "claude-fable-5-1",
+ "rater_role": "independent calibration rater (DD-037)",
+ "sheet": "assessment/results/g1_calibration_sheet_2026-09-03.md",
+ "prompt": "## What to do\n\nFor each record below you see exactly what the consumer saw (the prompt), exactly what it answered (the response), and what the source published for one qualifier family attached to one estimate. Read the response in full and decide which preservation level that response achieved **for that family and that estimate** — not for the response as a whole, and not for any other number in it. Write the level on the answer line, and a short note if the record is not clean (a form you had to convert, a value bound to the wrong row, a qualifier stated about something else). Write **U** if the qualifier is stated in a form you cannot classify at all. Nothing here tells you what the scorer or the reviewer decided; that is the point, so please do not go looking before you finish.\n\n**The level scale (D2, verbatim from DD-033):** L4 preserved_exact (class, value within published rounding, confidence level and binding all restated); L3 preserved_transformed (numeric and correct under a legitimate transformation — MOE↔bounds, ±↔interval, percent↔fraction, precision that rounds back to the source's, and, in v0, a right value with the confidence level omitted); L2 degraded_verbal (verbal band, no number); L1 omitted; L0 corrupted (magnitude outside published rounding with `widened`/`narrowed` recorded, wrong level, wrong binding, fabricated qualifier, suppressed or flagged-unreliable estimate restated as usable).\n\n**Qualifier families (D9, verbatim from DD-035):** {SE, MOE, CI} = `interval`, {CV} = `relative`, {RELIABILITY_FLAG, SUPPRESSION} = `reliability`, {DP_NOISE} = `dp`, {VINTAGE} = `vintage` … The record unit is (proposition, family, mode[, compression]); the family level is the best level any published form achieved.\n\n**Question, once per record:** which level (L0–L4) did the response achieve for this family, or U if the qualifier is stated in a form you cannot classify?\n\n---\n\n## C058\n\n- **Estimate:** the largest difference in the biggest demographic group’s share of total population between the published 2010 tabulations and the 2021-06-08 privacy-protected file, for block groups of 450 or more people — **5**\n- **Qualifier family:** `vintage` · **published forms:** VINTAGE = Privacy-Protected Microdata File (2021-06-08) (as_of=2021-06-08)\n- **Mode:** indirect · **Compression:** tight\n\n**Prompt shown to the consumer:**\n\n```text\nRestate the following in one sentence of at most 30 words for a general audience.\n\nIn the first part of their analysis, the researchers sought to determine the minimum population size necessary for geographic areas to have reliable demographic characteristics for the purposes of redistricting. Examining census block groups as well as places and minor civil divisions (MCDs), they demonstrated that for any block group with a total population between 450 and 499 people or larger, and for MCDs and places between 200 and 249 or larger, the difference in the largest demographic group as a proportion of the total population between the published 2010 Census tabulations and the 2010 Demonstration PrivacyProtected Microdata File (2021-06-08) is less than or equal to 5 percentage points at least 95 percent of the time. No congressional or state legislative district fails this test; that is, for these districts, the 5-percentage-point criterion holds 100 percent of the time.\n```\n\n**Response:**\n\n```text\nResearchers found that demographic data needed for redistricting remains accurate when geographic areas have sufficient population, even with privacy protections applied.\n```\n\n---\n\nAnswer with exactly two lines and nothing else:\nLEVEL: <one of L0, L1, L2, L3, L4, U>\nNOTE: <one short sentence; write none if the record is clean>\n",
+ "response_text": "The response gives no vintage at all: no date, no mention of the 2021-06-08 file or the 2010 Demonstration Privacy-Protected Microdata File. \"Even with privacy protections applied\" gestures at the DP mechanism but does not identify which release, and the estimate's number is also gone.\n\nLEVEL: L1\nNOTE: The vintage is entirely omitted; \"with privacy protections applied\" names neither the file nor the 2021-06-08 date, and the 5-point estimate itself is dropped too.",
+ "level": "L1",
+ "note": "The vintage is entirely omitted; \"with privacy protections applied\" names neither the file nor the 2021-06-08 date, and the 5-point estimate itself is dropped too.",
+ "attempts": [
+  {
+   "attempt": 1,
+   "response_text": "The response gives no vintage at all: no date, no mention of the 2021-06-08 file or the 2010 Demonstration Privacy-Protected Microdata File. \"Even with privacy protections applied\" gestures at the DP mechanism but does not identify which release, and the estimate's number is also gone.\n\nLEVEL: L1\nNOTE: The vintage is entirely omitted; \"with privacy protections applied\" names neither the file nor the 2021-06-08 date, and the 5-point estimate itself is dropped too.",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 170,
+    "cacheReadInputTokens": 13729,
+    "cacheCreationInputTokens": 18011,
+    "webSearchRequests": 0,
+    "costUSD": 0.37217225,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 0,
+    "canonicalModel": "claude-fable-5-1",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "duration_ms": 6114,
+   "cost_usd": 0.37217225,
+   "spend_reservation_id": "512aaffff6f646129cdb1880bc2e240e",
+   "level": "L1",
+   "note": "The vintage is entirely omitted; \"with privacy protections applied\" names neither the file nor the 2021-06-08 date, and the 5-point estimate itself is dropped too.",
+   "timestamp": "2026-09-04T01:14:15.009675+00:00"
+  }
+ ],
+ "retried": false,
+ "unparseable_after_retry": false,
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 170,
+  "cacheReadInputTokens": 13729,
+  "cacheCreationInputTokens": 18011,
+  "webSearchRequests": 0,
+  "costUSD": 0.37217225,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 0,
+  "canonicalModel": "claude-fable-5-1",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 6114,
+ "cost_usd": 0.37217225,
+ "spend_run_id": "g1_calibration_fable_2026-09-03",
+ "spend_reservation_id": "512aaffff6f646129cdb1880bc2e240e",
+ "timestamp": "2026-09-04T01:14:15.009675+00:00"
+}

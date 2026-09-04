@@ -1,0 +1,59 @@
+{
+ "task": "cc_tasks/2026-09-03_g1_calibration_rating_agreement.md",
+ "run_id": "g1_calibration_fable_2026-09-03",
+ "sample_id": "C045",
+ "model_id": "claude-fable-5-1",
+ "rater_role": "independent calibration rater (DD-037)",
+ "sheet": "assessment/results/g1_calibration_sheet_2026-09-03.md",
+ "prompt": "## What to do\n\nFor each record below you see exactly what the consumer saw (the prompt), exactly what it answered (the response), and what the source published for one qualifier family attached to one estimate. Read the response in full and decide which preservation level that response achieved **for that family and that estimate** — not for the response as a whole, and not for any other number in it. Write the level on the answer line, and a short note if the record is not clean (a form you had to convert, a value bound to the wrong row, a qualifier stated about something else). Write **U** if the qualifier is stated in a form you cannot classify at all. Nothing here tells you what the scorer or the reviewer decided; that is the point, so please do not go looking before you finish.\n\n**The level scale (D2, verbatim from DD-033):** L4 preserved_exact (class, value within published rounding, confidence level and binding all restated); L3 preserved_transformed (numeric and correct under a legitimate transformation — MOE↔bounds, ±↔interval, percent↔fraction, precision that rounds back to the source's, and, in v0, a right value with the confidence level omitted); L2 degraded_verbal (verbal band, no number); L1 omitted; L0 corrupted (magnitude outside published rounding with `widened`/`narrowed` recorded, wrong level, wrong binding, fabricated qualifier, suppressed or flagged-unreliable estimate restated as usable).\n\n**Qualifier families (D9, verbatim from DD-035):** {SE, MOE, CI} = `interval`, {CV} = `relative`, {RELIABILITY_FLAG, SUPPRESSION} = `reliability`, {DP_NOISE} = `dp`, {VINTAGE} = `vintage` … The record unit is (proposition, family, mode[, compression]); the family level is the best level any published form achieved.\n\n**Question, once per record:** which level (L0–L4) did the response achieve for this family, or U if the qualifier is stated in a form you cannot classify?\n\n---\n\n## C045\n\n- **Estimate:** the percentage of householders aged 65 or older who live alone in Florida (2015 ACS) — **12.6**\n- **Qualifier family:** `interval` · **published forms:** MOE = 0.2 (level=0.9, unit=percent_points)\n- **Mode:** indirect · **Compression:** tight\n\n**Prompt shown to the consumer:**\n\n```text\nRestate the following in one sentence of at most 30 words for a general audience.\n\nThe example below shows how to determine if the difference in the estimated percentage of householders age 65 or older who live alone between Florida (estimated percentage = 12.6, MOE = 0.2) and Arizona (estimated percentage = 10.5, MOE = 0.3) is statistically significant, based on 2015 ACS data. Using formula (1) above, first calculate the corresponding standard errors for Florida (0.122) and Arizona (0.182) by dividing the MOEs by 1.645. Then, using formula (3) above, calculate the test value as follows: Understanding and Using American Community Survey Data 57 What All Data Users Need to Know 57 U.S. Census Bureau Since the test value (9.581) is greater than the critical value for a confidence level of 90 percent (1.645), the difference in the percentages is statistically significant at a 90 percent confidence level. A rough interpretation of the result is that the user can be 90 percent certain that a difference exists between the percentage of householders aged 65 or older who live alone in Florida and in Arizona. By contrast, if the corresponding estimate for Indiana (estimated percentage = 10.8, MOE = 0.2, SE = 0.122) were compared with the estimate for Arizona, formula (3) would yield: Since the test value (1.369) is less than the critical value for a confidence level of 90 percent (1.645), the difference in percentages is not statistically significant. A rough interpretation of the result is that the user cannot be certain to any sufficient degree that the observed difference in the estimates between Indiana and Arizona was not due to chance.\n```\n\n**Response:**\n\n```text\nCensus data comes with a margin of error, so you compare two states by dividing that difference by its uncertainty — Florida clearly differs from Arizona, Indiana doesn't.\n```\n\n---\n\nAnswer with exactly two lines and nothing else:\nLEVEL: <one of L0, L1, L2, L3, L4, U>\nNOTE: <one short sentence; write none if the record is clean>\n",
+ "response_text": "LEVEL: L2\nNOTE: The response never restates the 12.6 estimate and only says census data \"comes with a margin of error\" generically, so the verbal qualifier is not bound to the Florida figure; arguably L1.",
+ "level": "L2",
+ "note": "The response never restates the 12.6 estimate and only says census data \"comes with a margin of error\" generically, so the verbal qualifier is not bound to the Florida figure; arguably L1.",
+ "attempts": [
+  {
+   "attempt": 1,
+   "response_text": "LEVEL: L2\nNOTE: The response never restates the 12.6 estimate and only says census data \"comes with a margin of error\" generically, so the verbal qualifier is not bound to the Florida figure; arguably L1.",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 380,
+    "cacheReadInputTokens": 13729,
+    "cacheCreationInputTokens": 18232,
+    "webSearchRequests": 0,
+    "costUSD": 0.38709225,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 305,
+    "canonicalModel": "claude-fable-5-1",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "duration_ms": 6688,
+   "cost_usd": 0.38709225,
+   "spend_reservation_id": "e5f7d449c97e4820985384183a11e6de",
+   "level": "L2",
+   "note": "The response never restates the 12.6 estimate and only says census data \"comes with a margin of error\" generically, so the verbal qualifier is not bound to the Florida figure; arguably L1.",
+   "timestamp": "2026-09-04T01:12:36.590017+00:00"
+  }
+ ],
+ "retried": false,
+ "unparseable_after_retry": false,
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 380,
+  "cacheReadInputTokens": 13729,
+  "cacheCreationInputTokens": 18232,
+  "webSearchRequests": 0,
+  "costUSD": 0.38709225,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 305,
+  "canonicalModel": "claude-fable-5-1",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 6688,
+ "cost_usd": 0.38709225,
+ "spend_run_id": "g1_calibration_fable_2026-09-03",
+ "spend_reservation_id": "e5f7d449c97e4820985384183a11e6de",
+ "timestamp": "2026-09-04T01:12:36.590017+00:00"
+}

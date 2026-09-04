@@ -1,0 +1,59 @@
+{
+ "task": "cc_tasks/2026-09-03_g1_calibration_rating_agreement.md",
+ "run_id": "g1_calibration_fable_2026-09-03",
+ "sample_id": "C040",
+ "model_id": "claude-fable-5-1",
+ "rater_role": "independent calibration rater (DD-037)",
+ "sheet": "assessment/results/g1_calibration_sheet_2026-09-03.md",
+ "prompt": "## What to do\n\nFor each record below you see exactly what the consumer saw (the prompt), exactly what it answered (the response), and what the source published for one qualifier family attached to one estimate. Read the response in full and decide which preservation level that response achieved **for that family and that estimate** — not for the response as a whole, and not for any other number in it. Write the level on the answer line, and a short note if the record is not clean (a form you had to convert, a value bound to the wrong row, a qualifier stated about something else). Write **U** if the qualifier is stated in a form you cannot classify at all. Nothing here tells you what the scorer or the reviewer decided; that is the point, so please do not go looking before you finish.\n\n**The level scale (D2, verbatim from DD-033):** L4 preserved_exact (class, value within published rounding, confidence level and binding all restated); L3 preserved_transformed (numeric and correct under a legitimate transformation — MOE↔bounds, ±↔interval, percent↔fraction, precision that rounds back to the source's, and, in v0, a right value with the confidence level omitted); L2 degraded_verbal (verbal band, no number); L1 omitted; L0 corrupted (magnitude outside published rounding with `widened`/`narrowed` recorded, wrong level, wrong binding, fabricated qualifier, suppressed or flagged-unreliable estimate restated as usable).\n\n**Qualifier families (D9, verbatim from DD-035):** {SE, MOE, CI} = `interval`, {CV} = `relative`, {RELIABILITY_FLAG, SUPPRESSION} = `reliability`, {DP_NOISE} = `dp`, {VINTAGE} = `vintage` … The record unit is (proposition, family, mode[, compression]); the family level is the best level any published form achieved.\n\n**Question, once per record:** which level (L0–L4) did the response achieve for this family, or U if the qualifier is stated in a form you cannot classify?\n\n---\n\n## C040\n\n- **Estimate:** the global privacy-loss budget (epsilon) for the P.L. 94-171 redistricting data, housing units — **2.47**\n- **Qualifier family:** `dp` · **published forms:** DP_NOISE = 0.07 (parameter=rho); DP_NOISE = 0.0000000001 (parameter=delta)\n- **Mode:** indirect · **Compression:** short\n\n**Prompt shown to the consumer:**\n\n```text\nRestate the following for a general-audience summary in no more than two sentences.\n\nGlobal Privacy-Loss Budget: Units Global rho . . . . . . . . . . . . . . . . . . 0.07 Global epsilon . . . . . . . . . . . . . . . 2.47 Delta . . . . . . . . . . . . . . . . . . . . . . . 10–10 Source: U.S. Census Bureau. Privacy-Loss Budget: Units Geographic level Rho allocation United States . . . . . . . . . . . . . . . 1/205 State . . . . . . . . . . . . . . . . . . . . . . . 1/205 County . . . . . . . . . . . . . . . . . . . . . 7/82 Tract . . . . . . . . . . . . . . . . . . . . . . . 364/1,025 Optimized block group1 . . . . . . 1,759/4,100 Block . . . . . . . . . . . . . . . . . . . . . . 99/820\n```\n\n**Response:**\n\n```text\nTo protect confidentiality, the Census Bureau spent a fixed, deliberately small amount of \"privacy loss\" on its unit-level statistics — a global budget of rho = 0.07 (roughly epsilon = 2.47 at delta = 10⁻¹⁰), meaning the published numbers carry enough statistical noise that no individual record can be reliably identified. That budget was divided across geographic levels, with the great majority going to mid-sized areas — about 43% to block groups and 36% to tracts — followed by blocks (12%) and counties (9%), and only about half a percent each to the state and national totals.\n```\n\n---\n\nAnswer with exactly two lines and nothing else:\nLEVEL: <one of L0, L1, L2, L3, L4, U>\nNOTE: <one short sentence; write none if the record is clean>\n",
+ "response_text": "LEVEL: L4\nNOTE: none",
+ "level": "L4",
+ "note": "none",
+ "attempts": [
+  {
+   "attempt": 1,
+   "response_text": "LEVEL: L4\nNOTE: none",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 257,
+    "cacheReadInputTokens": 13729,
+    "cacheCreationInputTokens": 18179,
+    "webSearchRequests": 0,
+    "costUSD": 0.37988225000000003,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 240,
+    "canonicalModel": "claude-fable-5-1",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "duration_ms": 5581,
+   "cost_usd": 0.37988225000000003,
+   "spend_reservation_id": "6a18e2eb21b2499fb825e4208f61b40d",
+   "level": "L4",
+   "note": "none",
+   "timestamp": "2026-09-04T01:11:46.989857+00:00"
+  }
+ ],
+ "retried": false,
+ "unparseable_after_retry": false,
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 257,
+  "cacheReadInputTokens": 13729,
+  "cacheCreationInputTokens": 18179,
+  "webSearchRequests": 0,
+  "costUSD": 0.37988225000000003,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 240,
+  "canonicalModel": "claude-fable-5-1",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 5581,
+ "cost_usd": 0.37988225000000003,
+ "spend_run_id": "g1_calibration_fable_2026-09-03",
+ "spend_reservation_id": "6a18e2eb21b2499fb825e4208f61b40d",
+ "timestamp": "2026-09-04T01:11:46.989857+00:00"
+}

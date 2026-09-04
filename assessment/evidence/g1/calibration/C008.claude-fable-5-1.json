@@ -1,0 +1,59 @@
+{
+ "task": "cc_tasks/2026-09-03_g1_calibration_rating_agreement.md",
+ "run_id": "g1_calibration_fable_2026-09-03",
+ "sample_id": "C008",
+ "model_id": "claude-fable-5-1",
+ "rater_role": "independent calibration rater (DD-037)",
+ "sheet": "assessment/results/g1_calibration_sheet_2026-09-03.md",
+ "prompt": "## What to do\n\nFor each record below you see exactly what the consumer saw (the prompt), exactly what it answered (the response), and what the source published for one qualifier family attached to one estimate. Read the response in full and decide which preservation level that response achieved **for that family and that estimate** — not for the response as a whole, and not for any other number in it. Write the level on the answer line, and a short note if the record is not clean (a form you had to convert, a value bound to the wrong row, a qualifier stated about something else). Write **U** if the qualifier is stated in a form you cannot classify at all. Nothing here tells you what the scorer or the reviewer decided; that is the point, so please do not go looking before you finish.\n\n**The level scale (D2, verbatim from DD-033):** L4 preserved_exact (class, value within published rounding, confidence level and binding all restated); L3 preserved_transformed (numeric and correct under a legitimate transformation — MOE↔bounds, ±↔interval, percent↔fraction, precision that rounds back to the source's, and, in v0, a right value with the confidence level omitted); L2 degraded_verbal (verbal band, no number); L1 omitted; L0 corrupted (magnitude outside published rounding with `widened`/`narrowed` recorded, wrong level, wrong binding, fabricated qualifier, suppressed or flagged-unreliable estimate restated as usable).\n\n**Qualifier families (D9, verbatim from DD-035):** {SE, MOE, CI} = `interval`, {CV} = `relative`, {RELIABILITY_FLAG, SUPPRESSION} = `reliability`, {DP_NOISE} = `dp`, {VINTAGE} = `vintage` … The record unit is (proposition, family, mode[, compression]); the family level is the best level any published form achieved.\n\n**Question, once per record:** which level (L0–L4) did the response achieve for this family, or U if the qualifier is stated in a form you cannot classify?\n\n---\n\n## C008\n\n- **Estimate:** the largest difference in the biggest demographic group’s share of total population between the published 2010 tabulations and the 2021-06-08 privacy-protected file, for block groups of 450 or more people — **5**\n- **Qualifier family:** `vintage` · **published forms:** VINTAGE = Privacy-Protected Microdata File (2021-06-08) (as_of=2021-06-08)\n- **Mode:** indirect · **Compression:** none\n\n**Prompt shown to the consumer:**\n\n```text\nRestate the following for a general-audience summary.\n\nIn the first part of their analysis, the researchers sought to determine the minimum population size necessary for geographic areas to have reliable demographic characteristics for the purposes of redistricting. Examining census block groups as well as places and minor civil divisions (MCDs), they demonstrated that for any block group with a total population between 450 and 499 people or larger, and for MCDs and places between 200 and 249 or larger, the difference in the largest demographic group as a proportion of the total population between the published 2010 Census tabulations and the 2010 Demonstration PrivacyProtected Microdata File (2021-06-08) is less than or equal to 5 percentage points at least 95 percent of the time. No congressional or state legislative district fails this test; that is, for these districts, the 5-percentage-point criterion holds 100 percent of the time.\n```\n\n**Response:**\n\n```text\n# General-Audience Summary\n\nResearchers wanted to know: how small can a geographic area be and still provide trustworthy information about who lives there—information needed for redrawing election district lines?\n\nThey compared two versions of the 2010 Census data: the original published numbers and a privacy-protected version designed to keep individuals' identities hidden. They tested neighborhoods of different sizes.\n\n**Their finding:** When a neighborhood has at least 200–250 people (depending on the type of area), the privacy-protected version and the original data tell nearly the same story. Specifically, when looking at the largest demographic group in an area, the two versions differ by no more than 5 percentage points at least 95% of the time. This small difference means the privacy-protected data remains reliable enough for redistricting purposes.\n\nFor larger areas—congressional and state legislative districts—the data stays consistent 100% of the time. In other words, even with privacy protections applied, these district-level numbers are completely trustworthy for drawing lines.\n\n**The bottom line:** Census privacy protections don't meaningfully distort the demographic information that matters for redistricting, as long as areas aren't too tiny.\n```\n\n---\n\nAnswer with exactly two lines and nothing else:\nLEVEL: <one of L0, L1, L2, L3, L4, U>\nNOTE: <one short sentence; write none if the record is clean>\n",
+ "response_text": "LEVEL: L2\nNOTE: Response names \"a privacy-protected version\" of the 2010 data but drops the Demonstration file identity and its 2021-06-08 date; separately, the 450-person block-group threshold for this estimate is misbound to \"200–250 people,\" which is outside the vintage family.",
+ "level": "L2",
+ "note": "Response names \"a privacy-protected version\" of the 2010 data but drops the Demonstration file identity and its 2021-06-08 date; separately, the 450-person block-group threshold for this estimate is misbound to \"200–250 people,\" which is outside the vintage family.",
+ "attempts": [
+  {
+   "attempt": 1,
+   "response_text": "LEVEL: L2\nNOTE: Response names \"a privacy-protected version\" of the 2010 data but drops the Demonstration file identity and its 2021-06-08 date; separately, the 450-person block-group threshold for this estimate is misbound to \"200–250 people,\" which is outside the vintage family.",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 543,
+    "cacheReadInputTokens": 13729,
+    "cacheCreationInputTokens": 18325,
+    "webSearchRequests": 0,
+    "costUSD": 0.39710225000000005,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 442,
+    "canonicalModel": "claude-fable-5-1",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "duration_ms": 12755,
+   "cost_usd": 0.39710225000000005,
+   "spend_reservation_id": "9cb4b2cbe741452ba52319b5b1694ef3",
+   "level": "L2",
+   "note": "Response names \"a privacy-protected version\" of the 2010 data but drops the Demonstration file identity and its 2021-06-08 date; separately, the 450-person block-group threshold for this estimate is misbound to \"200–250 people,\" which is outside the vintage family.",
+   "timestamp": "2026-09-04T01:07:09.719528+00:00"
+  }
+ ],
+ "retried": false,
+ "unparseable_after_retry": false,
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 543,
+  "cacheReadInputTokens": 13729,
+  "cacheCreationInputTokens": 18325,
+  "webSearchRequests": 0,
+  "costUSD": 0.39710225000000005,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 442,
+  "canonicalModel": "claude-fable-5-1",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 12755,
+ "cost_usd": 0.39710225000000005,
+ "spend_run_id": "g1_calibration_fable_2026-09-03",
+ "spend_reservation_id": "9cb4b2cbe741452ba52319b5b1694ef3",
+ "timestamp": "2026-09-04T01:07:09.719528+00:00"
+}

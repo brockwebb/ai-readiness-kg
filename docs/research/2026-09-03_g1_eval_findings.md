@@ -1,6 +1,7 @@
 # G1 EVAL — findings at the v2 freeze
 
 **Date:** 2026-09-03. **Status:** internal; not for distribution until the operator says so.
+**Revision:** v1.1, 2026-09-03 — §4 replaced: the reviewer's genuine-loss count is now reported as a range bounded by the scorer's count and an independent model rater's, with the two agreement coefficients and the escalation list (task `cc_tasks/2026-09-03_g1_calibration_rating_agreement.md`, DD-037). No other section changed. Prior: v1.0, 2026-09-03.
 **Instrument:** parser `g1-parse-v2`, scorer `g1-score-v2`, prompt epoch `g1-v2-2026-09-03`,
 pinned consumer `claude-opus-5` — frozen for the January pilot (DD-036).
 **Numbers:** every number in this memo is a `{{result:<NAME>:value}}` token resolving to a
@@ -149,7 +150,7 @@ Every scored record below L3, and every `unparseable` record, went into a review
 judged by an LLM reviewer (this repo's CC session) against a criterion recorded on each results
 file: genuine when the raw response does not state the qualifier's class and value for that
 estimate in any form, a parser miss when it states it in a form the parser could not read. The
-counts: pooled queue {{result:g1_v2_pooled_opus_review_queue:value}} →
+reviewer's own counts: pooled queue {{result:g1_v2_pooled_opus_review_queue:value}} →
 {{result:g1_v2_pooled_opus_genuine_losses:value}} genuine and {{result:g1_v2_pooled_opus_parser_misses:value}}
 parser misses; holdout {{result:g1_v2_holdout_review_queue:value}} →
 {{result:g1_v2_holdout_genuine_losses:value}} and {{result:g1_v2_holdout_parser_misses:value}}; dev
@@ -157,14 +158,70 @@ parser misses; holdout {{result:g1_v2_holdout_review_queue:value}} →
 {{result:g1_v2_dev_parser_misses:value}}; control arm {{result:g1_v2_control_review_queue:value}} →
 {{result:g1_v2_control_genuine_losses:value}} and {{result:g1_v2_control_parser_misses:value}}.
 
-That reviewer is an LLM judge, and its agreement with a human is unmeasured. A blind
-stratified sample of 60 records (`assessment/results/g1_calibration_sheet_2026-09-03.md`, seed and
-stratum table on the sheet) has been issued for the operator to label without seeing the scorer's
-level or the reviewer's verdict; `scripts/g1_calibration_agreement.py` will compute the
-quadratic-weighted kappa against both, with a bootstrap interval, raw agreement and a confusion
-table (ResearchTask `85851bcd`). Until that runs, every genuine-loss count in this memo is a
-count made by an uncalibrated judge, and the preservation rates — which do not depend on the
-reviewer — are not.
+**Those counts are never to be read alone** (DD-037). A second, independent rater has now rated
+the blind sample, and the genuine-loss count on the pooled grid is reported as a range:
+
+> **{{result:g1_cal_fable_range_rater_implied_genuine_losses:value}} (rater-implied) —
+> {{result:g1_v2_pooled_opus_genuine_losses:value}} (reviewer) —
+> {{result:g1_cal_fable_range_scorer_genuine_losses:value}} (scorer)**, out of
+> {{result:g1_cal_fable_range_queue_population:value}} queued records.
+
+The upper bound is the scorer's own position, that every record it put below L3 or could not
+parse is a loss. The lower bound extrapolates the rater's judgments from the 60 sampled records
+to the grid by stratum weights, which assumes the rater's genuine share inside a stratum is the
+same in the grid as in the sample; the weights and the per-stratum rates are registered
+individually so the arithmetic is inspectable. Only the pooled grid has a rater-implied bound —
+the sample was drawn to represent it — so the holdout, dev and control counts above stand as the
+reviewer's alone, to be read against the agreement measured here.
+
+**The rater.** `claude-fable-5-1`, a different model from the reviewer's (`claude-opus-5`), which
+is refused by name in `scripts/g1_calibration_rate.py`. The independence conditions, each
+enforced rather than asserted: one record per call, so the rater could not see a distribution and
+rate to it; the call made through the repo's model choke point, which runs `claude -p` from a
+hermetic empty directory, so no CLAUDE.md, design decision or results file was in its context;
+the prompt built from the blind sheet's own instruction paragraph and the D2 and D9 definitions
+verbatim, carrying the passage, the response, the estimate, the family and its published forms,
+the mode and the compression level — and no scorer level, reviewer verdict, failure class,
+surface type or model id. It answered {{result:g1_cal_fable_n_rated:value}} of 60 records, with
+{{result:g1_cal_fable_n_U:value}} answers of U and none unparseable. The raw exchanges are under
+`assessment/evidence/g1/calibration/`.
+
+**Agreement.** Rater against the scorer, on the ordinal levels with quadratic weights:
+κ_w = {{result:g1_cal_fable_scorer_kappa_w:value}}
+[{{result:g1_cal_fable_scorer_kappa_w_ci_lower:value}},
+{{result:g1_cal_fable_scorer_kappa_w_ci_upper:value}}] over
+{{result:g1_cal_fable_scorer_n:value}} records, raw agreement
+{{result:g1_cal_fable_scorer_raw_agreement:value}}; including the scorer's `unparseable` outcome as a
+sixth, unweighted category, κ = {{result:g1_cal_fable_scorer_kappa_six_category:value}}
+[{{result:g1_cal_fable_scorer_kappa_six_ci_lower:value}},
+{{result:g1_cal_fable_scorer_kappa_six_ci_upper:value}}] over
+{{result:g1_cal_fable_scorer_six_n:value}}. Rater against the reviewer, on the reviewer's own binary
+verdict over the review queue: κ = {{result:g1_cal_fable_reviewer_kappa:value}}
+[{{result:g1_cal_fable_reviewer_kappa_ci_lower:value}},
+{{result:g1_cal_fable_reviewer_kappa_ci_upper:value}}] over
+{{result:g1_cal_fable_reviewer_n:value}} records, raw agreement
+{{result:g1_cal_fable_reviewer_raw_agreement:value}}, positive specific agreement on the minority
+call (`parser_miss`) {{result:g1_cal_fable_reviewer_positive_agreement_parser_miss:value}}. No
+threshold is applied to any of these and no verbal band is named: a low κ widens the range and
+triggers nothing.
+
+Where the agreement sits is as informative as its size, and the per-stratum table
+(`assessment/results/g1_calibration_stratum_agreement_2026-09-03.json`) locates it. The two
+instruments agree completely on preserved-exact records and on which flagged records are parser
+misses; they disagree about *which* sub-L3 level a loss is, which moves the level distribution
+and not the loss count — which is why the range's lower bound
+({{result:g1_cal_fable_range_rater_implied_genuine_losses:value}}) lands near the reviewer's count
+({{result:g1_v2_pooled_opus_genuine_losses:value}}) while κ_w on the levels is middling.
+
+**What this does and does not establish.** It measures agreement between two instruments. It does
+not establish that either is right: both are language models, and two models can share an error a
+human would not make. The rater is a different model family with no shared context, which reduces
+that risk without removing it, and no human has labelled any of these records.
+{{result:g1_cal_fable_disagreements_listed:value}} of the {{result:g1_cal_fable_n_rated:value}} rated
+records — {{result:g1_cal_fable_disagreements_level_gap:value}} separated by two or more levels and
+{{result:g1_cal_fable_disagreements_with_U:value}} where one side had no level to give — are listed
+in `assessment/results/g1_calibration_disagreements_2026-09-03.md` for the operator to look at if
+he chooses. Nothing in this memo waits on that.
 
 ## 5. Limits
 

@@ -1,0 +1,371 @@
+{
+ "task": "cc_tasks/2026-09-03_g1_calibration_rating_agreement.md",
+ "computed_at": "2026-09-04T01:15:20.869617+00:00",
+ "sheet_n": 60,
+ "labelled": 60,
+ "unlabelled": [],
+ "missing_from_sheet": [],
+ "seed": 20260903,
+ "bootstrap_resamples": 10000,
+ "operator_vs_scorer_ordinal": {
+  "comparison": "operator vs scorer, L0–L4 only, quadratic weights",
+  "n": 52,
+  "kappa": 0.392118,
+  "weights": "quadratic",
+  "bootstrap95": {
+   "lower": 0.205282,
+   "upper": 0.614277,
+   "b": 10000,
+   "undefined": 0
+  },
+  "raw_agreement": 0.442308,
+  "categories": [
+   "L0",
+   "L1",
+   "L2",
+   "L3",
+   "L4"
+  ],
+  "confusion": {
+   "L0|L0": 0,
+   "L0|L1": 1,
+   "L0|L2": 0,
+   "L0|L3": 0,
+   "L0|L4": 0,
+   "L1|L0": 0,
+   "L1|L1": 4,
+   "L1|L2": 5,
+   "L1|L3": 0,
+   "L1|L4": 0,
+   "L2|L0": 2,
+   "L2|L1": 2,
+   "L2|L2": 0,
+   "L2|L3": 0,
+   "L2|L4": 0,
+   "L3|L0": 1,
+   "L3|L1": 2,
+   "L3|L2": 3,
+   "L3|L3": 1,
+   "L3|L4": 0,
+   "L4|L0": 5,
+   "L4|L1": 2,
+   "L4|L2": 0,
+   "L4|L3": 6,
+   "L4|L4": 18
+  }
+ },
+ "operator_vs_scorer_six_category": {
+  "comparison": "operator vs scorer, L0–L4 + unparseable/U, unweighted",
+  "n": 60,
+  "kappa": 0.199134,
+  "weights": "none",
+  "bootstrap95": {
+   "lower": 0.091534,
+   "upper": 0.312603,
+   "b": 10000,
+   "undefined": 0
+  },
+  "raw_agreement": 0.383333,
+  "categories": [
+   "L0",
+   "L1",
+   "L2",
+   "L3",
+   "L4",
+   "unparseable"
+  ],
+  "confusion": {
+   "L0|L0": 0,
+   "L0|L1": 1,
+   "L0|L2": 0,
+   "L0|L3": 0,
+   "L0|L4": 0,
+   "L0|unparseable": 0,
+   "L1|L0": 0,
+   "L1|L1": 4,
+   "L1|L2": 5,
+   "L1|L3": 0,
+   "L1|L4": 0,
+   "L1|unparseable": 3,
+   "L2|L0": 2,
+   "L2|L1": 2,
+   "L2|L2": 0,
+   "L2|L3": 0,
+   "L2|L4": 0,
+   "L2|unparseable": 3,
+   "L3|L0": 1,
+   "L3|L1": 2,
+   "L3|L2": 3,
+   "L3|L3": 1,
+   "L3|L4": 0,
+   "L3|unparseable": 1,
+   "L4|L0": 5,
+   "L4|L1": 2,
+   "L4|L2": 0,
+   "L4|L3": 6,
+   "L4|L4": 18,
+   "L4|unparseable": 1,
+   "unparseable|L0": 0,
+   "unparseable|L1": 0,
+   "unparseable|L2": 0,
+   "unparseable|L3": 0,
+   "unparseable|L4": 0,
+   "unparseable|unparseable": 0
+  }
+ },
+ "operator_vs_reviewer_queue": {
+  "comparison": "operator (implied) vs reviewer, review queue only",
+  "n": 35,
+  "kappa": 0.421053,
+  "weights": "none",
+  "bootstrap95": {
+   "lower": 0.205607,
+   "upper": 0.664537,
+   "b": 10000,
+   "undefined": 0
+  },
+  "raw_agreement": 0.685714,
+  "categories": [
+   "genuine",
+   "parser_miss"
+  ],
+  "confusion": {
+   "genuine|genuine": 10,
+   "genuine|parser_miss": 0,
+   "parser_miss|genuine": 11,
+   "parser_miss|parser_miss": 14
+  },
+  "excluded_operator_U": 0,
+  "positive_agreement_parser_miss": 0.717949
+ },
+ "notes": [
+  "Rows of a confusion table read 'operator|other'.",
+  "No kappa threshold is pre-registered; no verbal band is applied.",
+  "Read kappa beside the raw agreement and the confusion table: the level distribution is skewed (L4 dominates the population), and a skewed marginal drives kappa down independently of how the raters actually behaved."
+ ],
+ "stratum_agreement": {
+  "L0|genuine": {
+   "n_sampled": 4,
+   "n_rated": 4,
+   "n_U": 0,
+   "scorer_agree": 0,
+   "reviewer_n": 4,
+   "reviewer_agree": 0,
+   "rater_below_L3": 2,
+   "rater_L3plus": 2,
+   "raw_agreement_with_scorer": 0.0,
+   "raw_agreement_with_reviewer": 0.0,
+   "rater_genuine_rate": 0.5
+  },
+  "L0|parser_miss": {
+   "n_sampled": 4,
+   "n_rated": 4,
+   "n_U": 0,
+   "scorer_agree": 0,
+   "reviewer_n": 4,
+   "reviewer_agree": 4,
+   "rater_below_L3": 0,
+   "rater_L3plus": 4,
+   "raw_agreement_with_scorer": 0.0,
+   "raw_agreement_with_reviewer": 1.0,
+   "rater_genuine_rate": 0.0
+  },
+  "L1|genuine": {
+   "n_sampled": 7,
+   "n_rated": 7,
+   "n_U": 0,
+   "scorer_agree": 4,
+   "reviewer_n": 7,
+   "reviewer_agree": 5,
+   "rater_below_L3": 7,
+   "rater_L3plus": 0,
+   "raw_agreement_with_scorer": 0.571429,
+   "raw_agreement_with_reviewer": 0.714286,
+   "rater_genuine_rate": 1.0
+  },
+  "L1|parser_miss": {
+   "n_sampled": 4,
+   "n_rated": 4,
+   "n_U": 0,
+   "scorer_agree": 0,
+   "reviewer_n": 4,
+   "reviewer_agree": 4,
+   "rater_below_L3": 0,
+   "rater_L3plus": 4,
+   "raw_agreement_with_scorer": 0.0,
+   "raw_agreement_with_reviewer": 1.0,
+   "rater_genuine_rate": 0.0
+  },
+  "L2|genuine": {
+   "n_sampled": 5,
+   "n_rated": 5,
+   "n_U": 0,
+   "scorer_agree": 0,
+   "reviewer_n": 5,
+   "reviewer_agree": 5,
+   "rater_below_L3": 5,
+   "rater_L3plus": 0,
+   "raw_agreement_with_scorer": 0.0,
+   "raw_agreement_with_reviewer": 1.0,
+   "rater_genuine_rate": 1.0
+  },
+  "L2|parser_miss": {
+   "n_sampled": 3,
+   "n_rated": 3,
+   "n_U": 0,
+   "scorer_agree": 0,
+   "reviewer_n": 3,
+   "reviewer_agree": 3,
+   "rater_below_L3": 0,
+   "rater_L3plus": 3,
+   "raw_agreement_with_scorer": 0.0,
+   "raw_agreement_with_reviewer": 1.0,
+   "rater_genuine_rate": 0.0
+  },
+  "L3|not_in_queue": {
+   "n_sampled": 7,
+   "n_rated": 7,
+   "n_U": 0,
+   "scorer_agree": 1,
+   "reviewer_n": 0,
+   "reviewer_agree": 0,
+   "rater_below_L3": 0,
+   "rater_L3plus": 7,
+   "raw_agreement_with_scorer": 0.142857,
+   "raw_agreement_with_reviewer": null,
+   "rater_genuine_rate": 0.0
+  },
+  "L4|not_in_queue": {
+   "n_sampled": 18,
+   "n_rated": 18,
+   "n_U": 0,
+   "scorer_agree": 18,
+   "reviewer_n": 0,
+   "reviewer_agree": 0,
+   "rater_below_L3": 0,
+   "rater_L3plus": 18,
+   "raw_agreement_with_scorer": 1.0,
+   "raw_agreement_with_reviewer": null,
+   "rater_genuine_rate": 0.0
+  },
+  "unparseable|genuine": {
+   "n_sampled": 5,
+   "n_rated": 5,
+   "n_U": 0,
+   "scorer_agree": 0,
+   "reviewer_n": 5,
+   "reviewer_agree": 0,
+   "rater_below_L3": 5,
+   "rater_L3plus": 0,
+   "raw_agreement_with_scorer": 0.0,
+   "raw_agreement_with_reviewer": 0.0,
+   "rater_genuine_rate": 1.0
+  },
+  "unparseable|parser_miss": {
+   "n_sampled": 3,
+   "n_rated": 3,
+   "n_U": 0,
+   "scorer_agree": 0,
+   "reviewer_n": 3,
+   "reviewer_agree": 3,
+   "rater_below_L3": 1,
+   "rater_L3plus": 2,
+   "raw_agreement_with_scorer": 0.0,
+   "raw_agreement_with_reviewer": 1.0,
+   "rater_genuine_rate": 0.333333
+  }
+ },
+ "range": {
+  "grid": "pooled Opus (dev + holdout), pinned consumer claude-opus-5",
+  "queue_population": 232,
+  "scorer_genuine_losses": 232,
+  "reviewer_genuine_losses": 178,
+  "rater_implied_genuine_losses": 173,
+  "rater_implied_genuine_losses_exact": 173.167,
+  "rater_implied_U": 0.0,
+  "strata": {
+   "L0|genuine": {
+    "pooled_population": 13,
+    "sampled": 4,
+    "rated": 4,
+    "rater_genuine_rate": 0.5,
+    "rater_U_rate": 0.0,
+    "implied_genuine": 6.5
+   },
+   "L0|parser_miss": {
+    "pooled_population": 18,
+    "sampled": 4,
+    "rated": 4,
+    "rater_genuine_rate": 0.0,
+    "rater_U_rate": 0.0,
+    "implied_genuine": 0.0
+   },
+   "L1|genuine": {
+    "pooled_population": 86,
+    "sampled": 7,
+    "rated": 7,
+    "rater_genuine_rate": 1.0,
+    "rater_U_rate": 0.0,
+    "implied_genuine": 86.0
+   },
+   "L1|parser_miss": {
+    "pooled_population": 24,
+    "sampled": 4,
+    "rated": 4,
+    "rater_genuine_rate": 0.0,
+    "rater_U_rate": 0.0,
+    "implied_genuine": 0.0
+   },
+   "L2|genuine": {
+    "pooled_population": 50,
+    "sampled": 5,
+    "rated": 5,
+    "rater_genuine_rate": 1.0,
+    "rater_U_rate": 0.0,
+    "implied_genuine": 50.0
+   },
+   "L2|parser_miss": {
+    "pooled_population": 7,
+    "sampled": 3,
+    "rated": 3,
+    "rater_genuine_rate": 0.0,
+    "rater_U_rate": 0.0,
+    "implied_genuine": 0.0
+   },
+   "unparseable|genuine": {
+    "pooled_population": 29,
+    "sampled": 5,
+    "rated": 5,
+    "rater_genuine_rate": 1.0,
+    "rater_U_rate": 0.0,
+    "implied_genuine": 29.0
+   },
+   "unparseable|parser_miss": {
+    "pooled_population": 5,
+    "sampled": 3,
+    "rated": 3,
+    "rater_genuine_rate": 0.333333,
+    "rater_U_rate": 0.0,
+    "implied_genuine": 1.667
+   }
+  },
+  "strata_without_a_rate": [],
+  "extrapolation": "sum over queue strata of (pooled population) x (share of the stratum's rated sample the rater put below L3, U excluded). ASSUMES stratum homogeneity: that the rater's genuine share within a stratum is the same in the pooled grid as in the 60-record sample, which mixes pooled-Opus and control-arm records.",
+  "consequence_rule": "DD-037: the reviewer's count is never reported alone; it is reported inside the range bounded by the scorer's count and the rater-implied count, with kappa stating how wide the disagreement is. No threshold."
+ },
+ "pooled_stratum_weights": {
+  "L0|genuine": 13,
+  "L0|parser_miss": 18,
+  "L1|genuine": 86,
+  "L1|parser_miss": 24,
+  "L2|genuine": 50,
+  "L2|parser_miss": 7,
+  "L3|not_in_queue": 92,
+  "L4|not_in_queue": 326,
+  "unparseable|genuine": 29,
+  "unparseable|parser_miss": 5
+ },
+ "n_U": 0,
+ "rater": "claude-fable-5-1",
+ "filled_sheet": "assessment/results/g1_calibration_sheet_2026-09-03_filled_fable.md"
+}

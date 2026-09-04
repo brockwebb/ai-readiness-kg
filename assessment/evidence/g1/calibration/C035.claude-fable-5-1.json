@@ -1,0 +1,59 @@
+{
+ "task": "cc_tasks/2026-09-03_g1_calibration_rating_agreement.md",
+ "run_id": "g1_calibration_fable_2026-09-03",
+ "sample_id": "C035",
+ "model_id": "claude-fable-5-1",
+ "rater_role": "independent calibration rater (DD-037)",
+ "sheet": "assessment/results/g1_calibration_sheet_2026-09-03.md",
+ "prompt": "## What to do\n\nFor each record below you see exactly what the consumer saw (the prompt), exactly what it answered (the response), and what the source published for one qualifier family attached to one estimate. Read the response in full and decide which preservation level that response achieved **for that family and that estimate** — not for the response as a whole, and not for any other number in it. Write the level on the answer line, and a short note if the record is not clean (a form you had to convert, a value bound to the wrong row, a qualifier stated about something else). Write **U** if the qualifier is stated in a form you cannot classify at all. Nothing here tells you what the scorer or the reviewer decided; that is the point, so please do not go looking before you finish.\n\n**The level scale (D2, verbatim from DD-033):** L4 preserved_exact (class, value within published rounding, confidence level and binding all restated); L3 preserved_transformed (numeric and correct under a legitimate transformation — MOE↔bounds, ±↔interval, percent↔fraction, precision that rounds back to the source's, and, in v0, a right value with the confidence level omitted); L2 degraded_verbal (verbal band, no number); L1 omitted; L0 corrupted (magnitude outside published rounding with `widened`/`narrowed` recorded, wrong level, wrong binding, fabricated qualifier, suppressed or flagged-unreliable estimate restated as usable).\n\n**Qualifier families (D9, verbatim from DD-035):** {SE, MOE, CI} = `interval`, {CV} = `relative`, {RELIABILITY_FLAG, SUPPRESSION} = `reliability`, {DP_NOISE} = `dp`, {VINTAGE} = `vintage` … The record unit is (proposition, family, mode[, compression]); the family level is the best level any published form achieved.\n\n**Question, once per record:** which level (L0–L4) did the response achieve for this family, or U if the qualifier is stated in a form you cannot classify?\n\n---\n\n## C035\n\n- **Estimate:** total turnover of private-provision education in the UK in 2016, in £ millions (Annual Business Survey) — **42,649**\n- **Qualifier family:** `relative` · **published forms:** CV = 1 (unit=percent)\n- **Mode:** indirect · **Compression:** none\n\n**Prompt shown to the consumer:**\n\n```text\nRestate the following for a general-audience summary.\n\nTable 1: Total turnover estimates, standard error and relative standard error for education and water and waste management, UK, 2016 Total turnover in | Standard error in | Relative standard error (or coefficient of variation)2 ---|---|--£ millions1 | £ millions2 Industry 1: Education (private provision only) | 42,649 | 526.8 | 0.01 (or 1%) Industry 2: Water supply; sewerage, waste management and remediation activities | 34,677 | 222.7 | 0.01 (or 1%)\n```\n\n**Response:**\n\n```text\n**Table 1: How much money two UK industries took in during 2016 — and how confident we are in those figures**\n\n| Industry | Total turnover (£ millions) | Standard error (£ millions) | Relative standard error |\n|---|---|---|---|\n| Education (private providers only) | 42,649 | 526.8 | 0.01 (1%) |\n| Water supply; sewerage, waste management and remediation | 34,677 | 222.7 | 0.01 (1%) |\n\n**In plain terms**\n\nThese numbers come from a survey rather than a count of every business, so each total is an estimate. The extra columns say how precise that estimate is.\n\n- **Private education providers** took in about **£42.6 billion** in 2016.\n- **Water, sewerage and waste companies** took in about **£34.7 billion**.\n\nThe **standard error** is the typical amount an estimate like this would wobble by if the survey were run again with a different sample of businesses — roughly £527 million for education and £223 million for water and waste. The **relative standard error** simply expresses that wobble as a share of the total. For both industries it is about **1%**, meaning the estimates are considered reliable: the true figure is very likely close to the number shown.\n\n(Note: your source text labels both money columns with the same footnote-mangled heading; the second column is the standard error in £ millions, not a separate turnover figure.)\n```\n\n---\n\nAnswer with exactly two lines and nothing else:\nLEVEL: <one of L0, L1, L2, L3, L4, U>\nNOTE: <one short sentence; write none if the record is clean>\n",
+ "response_text": "LEVEL: L4\nNOTE: none",
+ "level": "L4",
+ "note": "none",
+ "attempts": [
+  {
+   "attempt": 1,
+   "response_text": "LEVEL: L4\nNOTE: none",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 17,
+    "cacheReadInputTokens": 13729,
+    "cacheCreationInputTokens": 18252,
+    "webSearchRequests": 0,
+    "costUSD": 0.36934225000000004,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 0,
+    "canonicalModel": "claude-fable-5-1",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "duration_ms": 3007,
+   "cost_usd": 0.36934225000000004,
+   "spend_reservation_id": "1e0012872f98431196fb0535780e40e7",
+   "level": "L4",
+   "note": "none",
+   "timestamp": "2026-09-04T01:10:59.783774+00:00"
+  }
+ ],
+ "retried": false,
+ "unparseable_after_retry": false,
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 17,
+  "cacheReadInputTokens": 13729,
+  "cacheCreationInputTokens": 18252,
+  "webSearchRequests": 0,
+  "costUSD": 0.36934225000000004,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 0,
+  "canonicalModel": "claude-fable-5-1",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 3007,
+ "cost_usd": 0.36934225000000004,
+ "spend_run_id": "g1_calibration_fable_2026-09-03",
+ "spend_reservation_id": "1e0012872f98431196fb0535780e40e7",
+ "timestamp": "2026-09-04T01:10:59.783774+00:00"
+}

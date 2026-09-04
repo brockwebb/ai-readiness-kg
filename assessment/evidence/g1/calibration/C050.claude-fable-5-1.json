@@ -1,0 +1,59 @@
+{
+ "task": "cc_tasks/2026-09-03_g1_calibration_rating_agreement.md",
+ "run_id": "g1_calibration_fable_2026-09-03",
+ "sample_id": "C050",
+ "model_id": "claude-fable-5-1",
+ "rater_role": "independent calibration rater (DD-037)",
+ "sheet": "assessment/results/g1_calibration_sheet_2026-09-03.md",
+ "prompt": "## What to do\n\nFor each record below you see exactly what the consumer saw (the prompt), exactly what it answered (the response), and what the source published for one qualifier family attached to one estimate. Read the response in full and decide which preservation level that response achieved **for that family and that estimate** — not for the response as a whole, and not for any other number in it. Write the level on the answer line, and a short note if the record is not clean (a form you had to convert, a value bound to the wrong row, a qualifier stated about something else). Write **U** if the qualifier is stated in a form you cannot classify at all. Nothing here tells you what the scorer or the reviewer decided; that is the point, so please do not go looking before you finish.\n\n**The level scale (D2, verbatim from DD-033):** L4 preserved_exact (class, value within published rounding, confidence level and binding all restated); L3 preserved_transformed (numeric and correct under a legitimate transformation — MOE↔bounds, ±↔interval, percent↔fraction, precision that rounds back to the source's, and, in v0, a right value with the confidence level omitted); L2 degraded_verbal (verbal band, no number); L1 omitted; L0 corrupted (magnitude outside published rounding with `widened`/`narrowed` recorded, wrong level, wrong binding, fabricated qualifier, suppressed or flagged-unreliable estimate restated as usable).\n\n**Qualifier families (D9, verbatim from DD-035):** {SE, MOE, CI} = `interval`, {CV} = `relative`, {RELIABILITY_FLAG, SUPPRESSION} = `reliability`, {DP_NOISE} = `dp`, {VINTAGE} = `vintage` … The record unit is (proposition, family, mode[, compression]); the family level is the best level any published form achieved.\n\n**Question, once per record:** which level (L0–L4) did the response achieve for this family, or U if the qualifier is stated in a form you cannot classify?\n\n---\n\n## C050\n\n- **Estimate:** the number of Loudoun County, Virginia households with income of $25,000 to $34,999 in 2015 (Table DP03) — **3,537**\n- **Qualifier family:** `vintage` · **published forms:** VINTAGE = from the 2015 ACS 1-year estimates (as_of=2015, period=1-year)\n- **Mode:** indirect · **Compression:** none\n\n**Prompt shown to the consumer:**\n\n```text\nRestate the following for a general-audience summary.\n\nData.census.gov includes a collapsed income distribution within Demographic Profile DP03 that makes it possible to assess the difference in results from the approximation method illustrated above versus a direct estimation method that accounts for covariance between the component estimates of the subgroups. The relevant portion of this data.census.gov table, from the 2015 ACS 1-year estimates, is shown in Table 8.3 below. Table 8.3. Data From Demographic Profile DP03 for Loudoun County, Virginia: 2015 Household income category Subgroup # Estimate MOE SE CV $15,000 to $24,999 .... 1 3,497 ±1,037 630 18.0 $25,000 to $34,999 .... 2 3,537 ±973 591 16.7 $35,000 to $49,999 .... 3 7,270 ±1,554 945 13.0 Source: U.S. Census Bureau, data.census.gov, Table DP03: “Selected Economic Characteristics.” While the MOEs, SEs, and CVs for new Subgroup 1 and Subgroup 3 are almost identical to those derived from the approximation method, this is not the case for new Subgroup 2. The user-derived MOE is ±931 compared with the published MOE of ±973, and the derived CV is only 16.0 percent compared with a CV of 16.7 percent based on the published MOE for Subgroup 2.\n```\n\n**Response:**\n\n```text\n**General-audience restatement**\n\nCensus data on data.census.gov includes a table (Demographic Profile DP03) that already groups household incomes into broad categories. That gives us a useful test: we can compare the shortcut method for combining margins of error — the approximation shown earlier — against the Census Bureau's own published figures, which are calculated directly and account for the fact that errors in the individual income groups are related to one another (their covariance).\n\nThe comparison uses Loudoun County, Virginia, from the 2015 ACS 1-year estimates:\n\n| Income category | Subgroup | Households | Margin of error | Standard error | Coefficient of variation |\n|---|---|---|---|---|---|\n| $15,000–$24,999 | 1 | 3,497 | ±1,037 | 630 | 18.0% |\n| $25,000–$34,999 | 2 | 3,537 | ±973 | 591 | 16.7% |\n| $35,000–$49,999 | 3 | 7,270 | ±1,554 | 945 | 13.0% |\n\n*Source: U.S. Census Bureau, data.census.gov, Table DP03, \"Selected Economic Characteristics.\"*\n\n**What the comparison shows:** For Subgroups 1 and 3, the shortcut method produces margins of error, standard errors, and coefficients of variation that are essentially the same as the published values. Subgroup 2 is the exception. There, the shortcut gives a margin of error of ±931, while the published value is ±973 — the shortcut understates the uncertainty. The same gap appears in the coefficient of variation: 16.0 percent by the shortcut versus 16.7 percent using the published margin of error.\n\n**The takeaway:** The approximation is usually close, but it can make an estimate look slightly more precise than it really is. When published figures are available, use them.\n```\n\n---\n\nAnswer with exactly two lines and nothing else:\nLEVEL: <one of L0, L1, L2, L3, L4, U>\nNOTE: <one short sentence; write none if the record is clean>\n",
+ "response_text": "LEVEL: L4\nNOTE: none",
+ "level": "L4",
+ "note": "none",
+ "attempts": [
+  {
+   "attempt": 1,
+   "response_text": "LEVEL: L4\nNOTE: none",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 17,
+    "cacheReadInputTokens": 13729,
+    "cacheCreationInputTokens": 18724,
+    "webSearchRequests": 0,
+    "costUSD": 0.37878225000000004,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 0,
+    "canonicalModel": "claude-fable-5-1",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "duration_ms": 2637,
+   "cost_usd": 0.37878225000000004,
+   "spend_reservation_id": "328f445eb2da42f693cb025b6d6db967",
+   "level": "L4",
+   "note": "none",
+   "timestamp": "2026-09-04T01:13:14.318018+00:00"
+  }
+ ],
+ "retried": false,
+ "unparseable_after_retry": false,
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 17,
+  "cacheReadInputTokens": 13729,
+  "cacheCreationInputTokens": 18724,
+  "webSearchRequests": 0,
+  "costUSD": 0.37878225000000004,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 0,
+  "canonicalModel": "claude-fable-5-1",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 2637,
+ "cost_usd": 0.37878225000000004,
+ "spend_run_id": "g1_calibration_fable_2026-09-03",
+ "spend_reservation_id": "328f445eb2da42f693cb025b6d6db967",
+ "timestamp": "2026-09-04T01:13:14.318018+00:00"
+}

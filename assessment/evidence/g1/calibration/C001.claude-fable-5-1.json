@@ -1,0 +1,59 @@
+{
+ "task": "cc_tasks/2026-09-03_g1_calibration_rating_agreement.md",
+ "run_id": "g1_calibration_fable_2026-09-03",
+ "sample_id": "C001",
+ "model_id": "claude-fable-5-1",
+ "rater_role": "independent calibration rater (DD-037)",
+ "sheet": "assessment/results/g1_calibration_sheet_2026-09-03.md",
+ "prompt": "## What to do\n\nFor each record below you see exactly what the consumer saw (the prompt), exactly what it answered (the response), and what the source published for one qualifier family attached to one estimate. Read the response in full and decide which preservation level that response achieved **for that family and that estimate** — not for the response as a whole, and not for any other number in it. Write the level on the answer line, and a short note if the record is not clean (a form you had to convert, a value bound to the wrong row, a qualifier stated about something else). Write **U** if the qualifier is stated in a form you cannot classify at all. Nothing here tells you what the scorer or the reviewer decided; that is the point, so please do not go looking before you finish.\n\n**The level scale (D2, verbatim from DD-033):** L4 preserved_exact (class, value within published rounding, confidence level and binding all restated); L3 preserved_transformed (numeric and correct under a legitimate transformation — MOE↔bounds, ±↔interval, percent↔fraction, precision that rounds back to the source's, and, in v0, a right value with the confidence level omitted); L2 degraded_verbal (verbal band, no number); L1 omitted; L0 corrupted (magnitude outside published rounding with `widened`/`narrowed` recorded, wrong level, wrong binding, fabricated qualifier, suppressed or flagged-unreliable estimate restated as usable).\n\n**Qualifier families (D9, verbatim from DD-035):** {SE, MOE, CI} = `interval`, {CV} = `relative`, {RELIABILITY_FLAG, SUPPRESSION} = `reliability`, {DP_NOISE} = `dp`, {VINTAGE} = `vintage` … The record unit is (proposition, family, mode[, compression]); the family level is the best level any published form achieved.\n\n**Question, once per record:** which level (L0–L4) did the response achieve for this family, or U if the qualifier is stated in a form you cannot classify?\n\n---\n\n## C001\n\n- **Estimate:** employment in Alberta, 2026-07 (seasonally adjusted) — **2670.0**\n- **Qualifier family:** `vintage` · **published forms:** VINTAGE = 2026-07 (as_of=2026-07)\n- **Mode:** indirect · **Compression:** none\n\n**Prompt shown to the consumer:**\n\n```text\nRestate the following for a general-audience summary.\n\n﻿\"REF_DATE\",\"GEO\",\"DGUID\",\"Labour force characteristics\",\"Gender\",\"Age group\",\"Statistics\",\"Data type\",\"UOM\",\"UOM_ID\",\"SCALAR_FACTOR\",\"SCALAR_ID\",\"VECTOR\",\"COORDINATE\",\"VALUE\",\"STATUS\",\"SYMBOL\",\"TERMINATED\",\"DECIMALS\"\n\"2026-07\",\"Alberta\",\"2021A000248\",\"Population\",\"Total - Gender\",\"15 years and over\",\"Estimate\",\"Seasonally adjusted\",\"Persons in thousands\",\"428\",\"thousands\",\"3\",\"v2064510\",\"10.1.1.1.1.1\",\"4150.2\",\"\",\"\",\"\",\"1\"\n\"2026-07\",\"Alberta\",\"2021A000248\",\"Labour force\",\"Total - Gender\",\"15 years and over\",\"Estimate\",\"Seasonally adjusted\",\"Persons in thousands\",\"428\",\"thousands\",\"3\",\"v2064511\",\"10.2.1.1.1.1\",\"2872.2\",\"\",\"\",\"\",\"1\"\n\"2026-07\",\"Alberta\",\"2021A000248\",\"Labour force\",\"Total - Gender\",\"15 years and over\",\"Standard error of estimate\",\"Seasonally adjusted\",\"Persons in thousands\",\"428\",\"thousands\",\"3\",\"v101888840\",\"10.2.1.1.2.1\",\"18.8\",\"\",\"\",\"\",\"1\"\n\"2026-07\",\"Alberta\",\"2021A000248\",\"Employment\",\"Total - Gender\",\"15 years and over\",\"Estimate\",\"Seasonally adjusted\",\"Persons in thousands\",\"428\",\"thousands\",\"3\",\"v2064512\",\"10.3.1.1.1.1\",\"2670.0\",\"\",\"\",\"\",\"1\"\n\"2026-07\",\"Alberta\",\"2021A000248\",\"Employment\",\"Total - Gender\",\"15 years and over\",\"Standard error of estimate\",\"Seasonally adjusted\",\"Persons in thousands\",\"428\",\"thousands\",\"3\",\"v101888894\",\"10.3.1.1.2.1\",\"19.8\",\"\",\"\",\"\",\"1\"\n\"2026-07\",\"Alberta\",\"2021A000248\",\"Full-time employment\",\"Total - Gender\",\"15 years and over\",\"Estimate\",\"Seasonally adjusted\",\"Persons in thousands\",\"428\",\"thousands\",\"3\",\"v2064513\",\"10.4.1.1.1.1\",\"2202.8\",\"\",\"\",\"\",\"1\"\n\"2026-07\",\"Alberta\",\"2021A000248\",\"Full-time employment\",\"Total - Gender\",\"15 years and over\",\"Standard error of estimate\",\"Seasonally adjusted\",\"Persons in thousands\",\"428\",\"thousands\",\"3\",\"v101888948\",\"10.4.1.1.2.1\",\"21.8\",\"\",\"\",\"\",\"1\"\n\"2026-07\",\"Alberta\",\"2021A000248\",\"Part-time employment\",\"Total - Gender\",\"15 years and over\",\"Estimate\",\"Seasonally adjusted\",\"Persons in thousands\",\"428\",\"thousands\",\"3\",\"v2064514\",\"10.5.1.1.1.1\",\"467.1\",\"\",\"\",\"\",\"1\"\n\"2026-07\",\"Alberta\",\"2021A000248\",\"Part-time employment\",\"Total - Gender\",\"15 years and over\",\"Standard error of estimate\",\"Seasonally adjusted\",\"Persons in thousands\",\"428\",\"thousands\",\"3\",\"v101888996\",\"10.5.1.1.2.1\",\"17.8\",\"\",\"\",\"\",\"1\"\n\"2026-07\",\"Alberta\",\"2021A000248\",\"Unemployment\",\"Total - Gender\",\"15 years and over\",\"Estimate\",\"Seasonally adjusted\",\"Persons in thousands\",\"428\",\"thousands\",\"3\",\"v2064515\",\"10.6.1.1.1.1\",\"202.2\",\"\",\"\",\"\",\"1\"\n\"2026-07\",\"Alberta\",\"2021A000248\",\"Unemployment\",\"Total - Gender\",\"15 years and over\",\"Standard error of estimate\",\"Seasonally adjusted\",\"Persons in thousands\",\"428\",\"thousands\",\"3\",\"v101889044\",\"10.6.1.1.2.1\",\"11.8\",\"\",\"\",\"\",\"1\"\n\"2026-07\",\"Alberta\",\"2021A000248\",\"Unemployment rate\",\"Total - Gender\",\"15 years and over\",\"Estimate\",\"Seasonally adjusted\",\"Percent\",\"239\",\"units\",\"0\",\"v2064516\",\"10.7.1.1.1.1\",\"7.0\",\"\",\"\",\"\",\"1\"\n\"2026-07\",\"Alberta\",\"2021A000248\",\"Unemployment rate\",\"Total - Gender\",\"15 years and over\",\"Standard error of estimate\",\"Seasonally adjusted\",\"Percent\",\"239\",\"units\",\"0\",\"v101889098\",\"10.7.1.1.2.1\",\"0.4\",\"\",\"\",\"\",\"1\"\n\"2026-07\",\"Alberta\",\"2021A000248\",\"Participation rate\",\"Total - Gender\",\"15 years and over\",\"Estimate\",\"Seasonally adjusted\",\"Percent\",\"239\",\"units\",\"0\",\"v2064517\",\"10.8.1.1.1.1\",\"69.2\",\"\",\"\",\"\",\"1\"\n\"2026-07\",\"Alberta\",\"2021A000248\",\"Participation rate\",\"Total - Gender\",\"15 years and over\",\"Standard error of estimate\",\"Seasonally adjusted\",\"Percent\",\"239\",\"units\",\"0\",\"v101889152\",\"10.8.1.1.2.1\",\"0.5\",\"\",\"\",\"\",\"1\"\n\"2026-07\",\"Alberta\",\"2021A000248\",\"Employment rate\",\"Total - Gender\",\"15 years and over\",\"Estimate\",\"Seasonally adjusted\",\"Percent\",\"239\",\"units\",\"0\",\"v2064518\",\"10.9.1.1.1.1\",\"64.3\",\"\",\"\",\"\",\"1\"\n\"2026-07\",\"Alberta\",\"2021A000248\",\"Employment rate\",\"Total - Gender\",\"15 years and over\",\"Standard error of estimate\",\"Seasonally adjusted\",\"Percent\",\"239\",\"units\",\"0\",\"v101889206\",\"10.9.1.1.2.1\",\"0.5\",\"\",\"\",\"\",\"1\"\n```\n\n**Response:**\n\n```text\n## Alberta's job market, July 2026\n\n*(Statistics Canada Labour Force Survey, seasonally adjusted. All figures come from a monthly sample survey, so each one carries a margin of error.)*\n\n**The basics**\n\nAlberta had about **4.15 million people aged 15 and over**. Of those:\n\n- **2.87 million were in the labour force** — meaning they either had a job or were actively looking for one.\n- **2.67 million were working**: 2.20 million full-time and 467,000 part-time.\n- **202,000 were unemployed** — without work but looking for it.\n- The remaining ~1.28 million were outside the labour force entirely: retirees, students, people caring for family, people not currently job-hunting.\n\n**The three headline rates**\n\n| Rate | Value | What it means |\n|---|---|---|\n| Unemployment rate | **7.0%** | Of everyone who wanted a job, 7 in 100 couldn't find one |\n| Participation rate | **69.2%** | About 7 in 10 adults were working or job-hunting |\n| Employment rate | **64.3%** | About 64 in 100 adults actually had a job |\n\n**A note on precision.** These are survey estimates, not a headcount, and the file reports the uncertainty alongside each number. The unemployment rate's standard error is 0.4 points, so the true figure is roughly **7.0% ± 0.8** at conventional (95%) confidence — somewhere in the low-6s to high-7s. The employment figure of 2,670,000 carries a standard error of about 19,800, so it's good to within roughly ±40,000. Month-to-month wiggles smaller than that aren't real news.\n\n\"Seasonally adjusted\" means the numbers have been smoothed to remove predictable annual patterns — summer student hiring, holiday retail, construction slowdowns in winter — so this month can be compared fairly against any other month.\n\n**One caveat on scope:** this is the all-genders, all-ages-15-and-over total. The file doesn't break the numbers out by gender or age group, so it can't say whether, for example, youth unemployment differs from the 7.0% overall figure.\n```\n\n---\n\nAnswer with exactly two lines and nothing else:\nLEVEL: <one of L0, L1, L2, L3, L4, U>\nNOTE: <one short sentence; write none if the record is clean>\n",
+ "response_text": "LEVEL: L4\nNOTE: none",
+ "level": "L4",
+ "note": "none",
+ "attempts": [
+  {
+   "attempt": 1,
+   "response_text": "LEVEL: L4\nNOTE: none",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 110,
+    "cacheReadInputTokens": 10123,
+    "cacheCreationInputTokens": 23661,
+    "webSearchRequests": 0,
+    "costUSD": 0.48127075,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 93,
+    "canonicalModel": "claude-fable-5-1",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "duration_ms": 4012,
+   "cost_usd": 0.48127075,
+   "spend_reservation_id": "dc117fb04af84e8b83229a907aaed332",
+   "level": "L4",
+   "note": "none",
+   "timestamp": "2026-09-04T01:05:59.824062+00:00"
+  }
+ ],
+ "retried": false,
+ "unparseable_after_retry": false,
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 110,
+  "cacheReadInputTokens": 10123,
+  "cacheCreationInputTokens": 23661,
+  "webSearchRequests": 0,
+  "costUSD": 0.48127075,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 93,
+  "canonicalModel": "claude-fable-5-1",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 4012,
+ "cost_usd": 0.48127075,
+ "spend_run_id": "g1_calibration_fable_2026-09-03",
+ "spend_reservation_id": "dc117fb04af84e8b83229a907aaed332",
+ "timestamp": "2026-09-04T01:05:59.824062+00:00"
+}

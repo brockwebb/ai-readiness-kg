@@ -1,0 +1,59 @@
+{
+ "task": "cc_tasks/2026-09-03_g1_calibration_rating_agreement.md",
+ "run_id": "g1_calibration_fable_2026-09-03",
+ "sample_id": "C003",
+ "model_id": "claude-fable-5-1",
+ "rater_role": "independent calibration rater (DD-037)",
+ "sheet": "assessment/results/g1_calibration_sheet_2026-09-03.md",
+ "prompt": "## What to do\n\nFor each record below you see exactly what the consumer saw (the prompt), exactly what it answered (the response), and what the source published for one qualifier family attached to one estimate. Read the response in full and decide which preservation level that response achieved **for that family and that estimate** — not for the response as a whole, and not for any other number in it. Write the level on the answer line, and a short note if the record is not clean (a form you had to convert, a value bound to the wrong row, a qualifier stated about something else). Write **U** if the qualifier is stated in a form you cannot classify at all. Nothing here tells you what the scorer or the reviewer decided; that is the point, so please do not go looking before you finish.\n\n**The level scale (D2, verbatim from DD-033):** L4 preserved_exact (class, value within published rounding, confidence level and binding all restated); L3 preserved_transformed (numeric and correct under a legitimate transformation — MOE↔bounds, ±↔interval, percent↔fraction, precision that rounds back to the source's, and, in v0, a right value with the confidence level omitted); L2 degraded_verbal (verbal band, no number); L1 omitted; L0 corrupted (magnitude outside published rounding with `widened`/`narrowed` recorded, wrong level, wrong binding, fabricated qualifier, suppressed or flagged-unreliable estimate restated as usable).\n\n**Qualifier families (D9, verbatim from DD-035):** {SE, MOE, CI} = `interval`, {CV} = `relative`, {RELIABILITY_FLAG, SUPPRESSION} = `reliability`, {DP_NOISE} = `dp`, {VINTAGE} = `vintage` … The record unit is (proposition, family, mode[, compression]); the family level is the best level any published form achieved.\n\n**Question, once per record:** which level (L0–L4) did the response achieve for this family, or U if the qualifier is stated in a form you cannot classify?\n\n---\n\n## C003\n\n- **Estimate:** the percentage of men age 65 and older who had a dental visit in the past 12 months in 2022 — **62.3**\n- **Qualifier family:** `vintage` · **published forms:** VINTAGE = 2022 (as_of=2022)\n- **Mode:** indirect · **Compression:** tight\n\n**Prompt shown to the consumer:**\n\n```text\nRestate the following in one sentence of at most 30 words for a general audience.\n\n ● In 2022, 63.7% of adults age 65 and older had a dental visit in the past 12 months (Figure 1, \nTable 1).\n ● Men (62.3%) were less likely than women (64.9%) to have had a dental visit.\n ● The percentage of older adults who had a dental visit decreased from 65.4% among those \nages 65–74 and 63.6% among those ages 75–84 to 53.3% among those age 85 and older.\nData table for Figure 1. Percentage of adults age 65 and older who had a dental visit in the past \n12 months, by sex, age group, and race and Hispanic origin: United States, 2022\nCharacteristic\nPercent\n(95% confidence interval) Standard error\nTotal . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 63.7 (62.4–65.1) 0.68\nSex\nMen . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 62.3 (60.5–64.2) 0.94\nWomen  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 64.9 (63.1–66.6) 0.88\nAge group\n65–74. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 65.4 (63.7–67.1) 0.86\n75–84. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 63.6 (61.4–65.7) 1.08\n85 and older. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 53.3 (49.2–57.3) 2.02\n```\n\n**Response:**\n\n```text\nIn 2022, about 64% of U.S. adults 65 and older saw a dentist in the past year, with women slightly more likely than men and rates dropping sharply after 85.\n```\n\n---\n\nAnswer with exactly two lines and nothing else:\nLEVEL: <one of L0, L1, L2, L3, L4, U>\nNOTE: <one short sentence; write none if the record is clean>\n",
+ "response_text": "LEVEL: L4\nNOTE: \"In 2022\" binds to the whole sentence including the men-vs-women comparison, so the vintage is preserved for the men's estimate even though the 62.3 value itself is not restated.",
+ "level": "L4",
+ "note": "\"In 2022\" binds to the whole sentence including the men-vs-women comparison, so the vintage is preserved for the men's estimate even though the 62.3 value itself is not restated.",
+ "attempts": [
+  {
+   "attempt": 1,
+   "response_text": "LEVEL: L4\nNOTE: \"In 2022\" binds to the whole sentence including the men-vs-women comparison, so the vintage is preserved for the men's estimate even though the 62.3 value itself is not restated.",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 75,
+    "cacheReadInputTokens": 13729,
+    "cacheCreationInputTokens": 18320,
+    "webSearchRequests": 0,
+    "costUSD": 0.37360225,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 0,
+    "canonicalModel": "claude-fable-5-1",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "duration_ms": 3084,
+   "cost_usd": 0.37360225,
+   "spend_reservation_id": "09571bce35434d79815c90abd96af723",
+   "level": "L4",
+   "note": "\"In 2022\" binds to the whole sentence including the men-vs-women comparison, so the vintage is preserved for the men's estimate even though the 62.3 value itself is not restated.",
+   "timestamp": "2026-09-04T01:06:11.560493+00:00"
+  }
+ ],
+ "retried": false,
+ "unparseable_after_retry": false,
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 75,
+  "cacheReadInputTokens": 13729,
+  "cacheCreationInputTokens": 18320,
+  "webSearchRequests": 0,
+  "costUSD": 0.37360225,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 0,
+  "canonicalModel": "claude-fable-5-1",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 3084,
+ "cost_usd": 0.37360225,
+ "spend_run_id": "g1_calibration_fable_2026-09-03",
+ "spend_reservation_id": "09571bce35434d79815c90abd96af723",
+ "timestamp": "2026-09-04T01:06:11.560493+00:00"
+}

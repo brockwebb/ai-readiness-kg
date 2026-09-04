@@ -1,0 +1,59 @@
+{
+ "task": "cc_tasks/2026-09-03_g1_calibration_rating_agreement.md",
+ "run_id": "g1_calibration_fable_2026-09-03",
+ "sample_id": "C011",
+ "model_id": "claude-fable-5-1",
+ "rater_role": "independent calibration rater (DD-037)",
+ "sheet": "assessment/results/g1_calibration_sheet_2026-09-03.md",
+ "prompt": "## What to do\n\nFor each record below you see exactly what the consumer saw (the prompt), exactly what it answered (the response), and what the source published for one qualifier family attached to one estimate. Read the response in full and decide which preservation level that response achieved **for that family and that estimate** — not for the response as a whole, and not for any other number in it. Write the level on the answer line, and a short note if the record is not clean (a form you had to convert, a value bound to the wrong row, a qualifier stated about something else). Write **U** if the qualifier is stated in a form you cannot classify at all. Nothing here tells you what the scorer or the reviewer decided; that is the point, so please do not go looking before you finish.\n\n**The level scale (D2, verbatim from DD-033):** L4 preserved_exact (class, value within published rounding, confidence level and binding all restated); L3 preserved_transformed (numeric and correct under a legitimate transformation — MOE↔bounds, ±↔interval, percent↔fraction, precision that rounds back to the source's, and, in v0, a right value with the confidence level omitted); L2 degraded_verbal (verbal band, no number); L1 omitted; L0 corrupted (magnitude outside published rounding with `widened`/`narrowed` recorded, wrong level, wrong binding, fabricated qualifier, suppressed or flagged-unreliable estimate restated as usable).\n\n**Qualifier families (D9, verbatim from DD-035):** {SE, MOE, CI} = `interval`, {CV} = `relative`, {RELIABILITY_FLAG, SUPPRESSION} = `reliability`, {DP_NOISE} = `dp`, {VINTAGE} = `vintage` … The record unit is (proposition, family, mode[, compression]); the family level is the best level any published form achieved.\n\n**Question, once per record:** which level (L0–L4) did the response achieve for this family, or U if the qualifier is stated in a form you cannot classify?\n\n---\n\n## C011\n\n- **Estimate:** the CV ceiling for Category 1 LFS estimates (no release restrictions) — **16.5**\n- **Qualifier family:** `reliability` · **published forms:** RELIABILITY_FLAG = no release restrictions (polarity=reliable)\n- **Mode:** direct · **Compression:** (n/a — direct mode)\n\n**Prompt shown to the consumer:**\n\n```text\n**Guidelines on data reliability** Household surveys within Statistics Canada generally use the following guidelines and reliability categories in interpreting CV values for data accuracy and in the dissemination of statistical information. **Category 1** – If the CV is ≤ 16.5% – no release restrictions: data are of sufficient accuracy that no special warnings to users or other restrictions are required. **Category 2** – If the CV is > 16.5% and ≤ 33.3% – release with caveats: data are potentially useful for some purposes but should be accompanied by a warning to users regarding their accuracy. **Category 3** – If the CV > 33.3% – not recommended for release: data contain a level of error that makes them so potentially misleading that they should not be released in most circumstances. If users insist on inclusion of Category 3 data in a non-standard product, even after being advised of their accuracy, the data should be accompanied by a disclaimer. The user should acknowledge the warnings given and undertake not to disseminate, present or report the data, directly or indirectly, without this disclaimer.\n\nWhat is the reliability assessment on the CV ceiling for Category 1 LFS estimates (no release restrictions)?\n```\n\n**Response:**\n\n```text\n**CV ≤ 16.5% → Category 1: no release restrictions.**\n\nThe reliability assessment at that ceiling is that the estimate is *of sufficient accuracy that no special warnings to users or other restrictions are required* — it can be disseminated as-is, with no caveat, footnote, or qualifier attached.\n\nTwo details on the boundary itself:\n\n- **16.5% is inclusive.** An estimate with a CV of exactly 16.5% is still Category 1. The next category begins strictly above it (> 16.5% and ≤ 33.3% → release with caveats).\n- **The ceiling is a dissemination rule, not a claim of negligible error.** A CV of 16.5% still means the standard error is roughly a sixth of the estimate — e.g. an estimate of 100,000 carries a standard error near 16,500, so a 95% interval spans roughly ±32,000. Category 1 asserts that this level of sampling error doesn't require warning the user, not that the estimate is precise in an absolute sense. Analytically, a Category 1 estimate can still be too imprecise to support a specific comparison (small month-to-month change, fine cross-tabulation), and that judgment sits with the analyst, not the category.\n```\n\n---\n\nAnswer with exactly two lines and nothing else:\nLEVEL: <one of L0, L1, L2, L3, L4, U>\nNOTE: <one short sentence; write none if the record is clean>\n",
+ "response_text": "LEVEL: L4\nNOTE: none",
+ "level": "L4",
+ "note": "none",
+ "attempts": [
+  {
+   "attempt": 1,
+   "response_text": "LEVEL: L4\nNOTE: none",
+   "usage": {
+    "inputTokens": 2,
+    "outputTokens": 241,
+    "cacheReadInputTokens": 13729,
+    "cacheCreationInputTokens": 18424,
+    "webSearchRequests": 0,
+    "costUSD": 0.38398224999999997,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 224,
+    "canonicalModel": "claude-fable-5-1",
+    "provider": "firstParty",
+    "costBasis": "list"
+   },
+   "duration_ms": 5287,
+   "cost_usd": 0.38398224999999997,
+   "spend_reservation_id": "6f66a6f258704d68b600ef53df78f7f7",
+   "level": "L4",
+   "note": "none",
+   "timestamp": "2026-09-04T01:07:27.908991+00:00"
+  }
+ ],
+ "retried": false,
+ "unparseable_after_retry": false,
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 241,
+  "cacheReadInputTokens": 13729,
+  "cacheCreationInputTokens": 18424,
+  "webSearchRequests": 0,
+  "costUSD": 0.38398224999999997,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 224,
+  "canonicalModel": "claude-fable-5-1",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "duration_ms": 5287,
+ "cost_usd": 0.38398224999999997,
+ "spend_run_id": "g1_calibration_fable_2026-09-03",
+ "spend_reservation_id": "6f66a6f258704d68b600ef53df78f7f7",
+ "timestamp": "2026-09-04T01:07:27.908991+00:00"
+}
