@@ -1,0 +1,549 @@
+# Competency questions for the ai-readiness KG — set v1
+#
+# Task: cc_tasks/2026-09-04_kg_diagnostic_and_cq_harness.md §1.2.
+# **Authored and committed BEFORE any CQ query was run.** The commit that adds this file is
+# the pre-run SHA cited in the RESULT; the pass criteria below were written without having
+# seen a single answer, which is the only guard available when the author and the judge are
+# the same session (§1.7).
+#
+# PRIOR ART. Competency questions are Grüninger & Fox (1995): an ontology is evaluated by
+# whether it answers the questions its intended use requires, not by inspection of its
+# schema. The method is still the standard one (KG-EmpiRE 2023; Q²Forge, K-CAP 2025). The
+# duplicate-union measurement is the CONCISENESS dimension of Zaveri et al. 2016 (Semantic
+# Web 7:63–93) — redundancy of entities — and `dup_groups_unioned` is that cost per question.
+# Paulheim (2016) frames this as refinement/evaluation. None of it is invented here.
+#
+# WHAT THIS SET IS FOR. To decide, by the pre-registered rule in §1.5 of the task, whether the
+# absence of entity resolution blocks the KG's intended uses — BEFORE spending on entity
+# resolution or on probe design that assumes the KG answers questions it cannot.
+#
+# THE TWO VIEWS (§1.3).
+#   raw       — the graph as it is.
+#   collapsed — a query-time canonical key `toLower(trim(<display text>))`, then a second
+#               level over `aliases`: if A.aliases contains B's name, A and B are one group.
+# The collapse is implemented ONCE, as the Python post-join `collapse_rows()` in
+# `assessment/cq/collapse.py`, which §1.3 permits explicitly ("a Cypher fragment **or a
+# Python post-join**"). Each CQ therefore declares `collapse_on` — the column whose entity
+# duplicates are unioned — instead of carrying its own `cypher_collapsed`. Per-CQ collapse
+# logic is what §1.3 forbids, and a second hand-written query per CQ is exactly that.
+#
+# READING THE FIELDS.
+#   expected_shape  — columns the query returns, and the cardinality range that would count
+#                     as a sane answer. A result outside the range is not automatically a
+#                     failure; it is a flag for the judge.
+#   pass_criterion  — pre-registered. Judged by CC reading the returned grounding spans.
+#                     THIS IS AN LLM JUDGE and the report says so. A criterion is never
+#                     revised to make a CQ pass (§1.7); a failure is recorded as a failure.
+#   collapse_on     — column whose values are canonicalised for the collapsed view.
+#
+# A CQ edited after its first run is a NEW id carrying `supersedes`, never an edit in place.
+
+version: v1
+authored: 2026-09-04
+author: cc
+graph_labels_text_property:
+  Concept: name
+  Standard: name
+  Instrument: name
+  Framework: name
+  Platform: name
+  Tool: name
+  Measure: text
+  Practice: text
+  Claim: claim_text
+  Definition: verbatim_text
+
+questions:
+
+  # ---------------------------------------------------------------- construct definition
+  - id: CQ-01
+    category: construct_definition
+    question: >-
+      How do documents in the corpus define uncertainty legibility, or its nearest terms
+      (uncertainty, margin of error, confidence interval)?
+    cypher_raw: |
+      MATCH (d:Document)-[:DEFINES]->(df:Definition)
+      WHERE toLower(df.verbatim_text) CONTAINS 'uncertain'
+         OR toLower(df.verbatim_text) CONTAINS 'margin of error'
+         OR toLower(df.verbatim_text) CONTAINS 'confidence interval'
+      RETURN d.doc_id AS doc_id, df.verbatim_text AS text, df.grounding_span AS span
+      ORDER BY doc_id
+    collapse_on: text
+    expected_shape: {columns: [doc_id, text, span], min_rows: 1, max_rows: 200}
+    pass_criterion: >-
+      At least one returned row whose grounding span, on reading, states what uncertainty
+      means for a data product or how it is expressed — not merely a sentence containing the
+      word.
+    judge_notes: ""
+
+  - id: CQ-02
+    category: construct_definition
+    question: How does the corpus define "AI-ready data"?
+    cypher_raw: |
+      MATCH (d:Document)-[:DEFINES]->(df:Definition)
+      WHERE toLower(df.verbatim_text) CONTAINS 'ai-ready'
+         OR toLower(df.verbatim_text) CONTAINS 'ai ready'
+      RETURN d.doc_id AS doc_id, df.verbatim_text AS text, df.normative_status AS status,
+             df.grounding_span AS span
+      ORDER BY doc_id
+    collapse_on: text
+    expected_shape: {columns: [doc_id, text, status, span], min_rows: 2, max_rows: 200}
+    pass_criterion: >-
+      Two or more distinct documents return a span that defines the term, so the definitions
+      can be compared. One definition is a partial answer to a question about how the corpus
+      defines it.
+    judge_notes: ""
+
+  - id: CQ-03
+    category: construct_definition
+    question: >-
+      What definitions does the corpus give for data quality, and do they agree on its
+      dimensions?
+    cypher_raw: |
+      MATCH (d:Document)-[:DEFINES]->(df:Definition)
+      WHERE toLower(df.verbatim_text) CONTAINS 'data quality'
+      RETURN d.doc_id AS doc_id, df.verbatim_text AS text, df.grounding_span AS span
+      ORDER BY doc_id
+    collapse_on: text
+    expected_shape: {columns: [doc_id, text, span], min_rows: 2, max_rows: 200}
+    pass_criterion: >-
+      At least two documents' spans define data quality in terms a reader could compare
+      (dimensions, criteria, or a stated scope).
+    judge_notes: ""
+
+  - id: CQ-04
+    category: construct_definition
+    question: >-
+      Which Concepts does the corpus treat as components of "data quality", and from how many
+      distinct documents?
+    cypher_raw: |
+      MATCH (parent:Concept)-[:HAS_COMPONENT]->(child:Concept)
+      WHERE toLower(trim(parent.name)) = 'data quality'
+      RETURN parent.doc_id AS doc_id, child.name AS component,
+             child.grounding_span AS span
+      ORDER BY component
+    collapse_on: component
+    expected_shape: {columns: [doc_id, component, span], min_rows: 1, max_rows: 300}
+    pass_criterion: >-
+      At least one component returned with a grounding span that shows the source treating it
+      as part of data quality. The interesting quantity is how many distinct documents the
+      components come from, which the collapsed view is expected to change.
+    judge_notes: ""
+
+  # ---------------------------------------------------------------------- measure lookup
+  - id: CQ-05
+    category: measure_lookup
+    question: Which Measures operationalise "completeness", and in which Instruments?
+    cypher_raw: |
+      MATCH (m:Measure)-[:MEASURES]->(c:Concept)
+      WHERE toLower(trim(c.name)) CONTAINS 'completeness'
+      OPTIONAL MATCH (i:Instrument)-[:USES_MEASURE]->(m)
+      RETURN c.name AS concept, m.text AS measure, i.name AS instrument,
+             m.grounding_span AS span, m.doc_id AS doc_id
+      ORDER BY concept
+    collapse_on: concept
+    expected_shape: {columns: [concept, measure, instrument, span, doc_id], min_rows: 1, max_rows: 200}
+    pass_criterion: >-
+      At least one Measure whose span shows it operationalising completeness. An Instrument
+      naming it is what makes the answer useful; rows with a null instrument are a partial
+      answer.
+    judge_notes: ""
+
+  - id: CQ-06
+    category: measure_lookup
+    question: Which Measures does the corpus attach to metadata quality or documentation?
+    cypher_raw: |
+      MATCH (m:Measure)-[:MEASURES|APPLIES_TO]->(c:Concept)
+      WHERE toLower(trim(c.name)) CONTAINS 'metadata'
+         OR toLower(trim(c.name)) CONTAINS 'documentation'
+      RETURN c.name AS concept, m.text AS measure, m.grounding_span AS span, m.doc_id AS doc_id
+      ORDER BY concept
+    collapse_on: concept
+    expected_shape: {columns: [concept, measure, span, doc_id], min_rows: 1, max_rows: 300}
+    pass_criterion: >-
+      At least one Measure whose span states how metadata quality or documentation is
+      assessed.
+    judge_notes: ""
+
+  - id: CQ-07
+    category: measure_lookup
+    question: >-
+      For the Instrument AIDRIN, which Measures does it use and which Concepts do they
+      measure?
+    cypher_raw: |
+      MATCH (i:Instrument)-[:USES_MEASURE]->(m:Measure)
+      WHERE toLower(i.name) CONTAINS 'aidrin'
+      OPTIONAL MATCH (m)-[:MEASURES]->(c:Concept)
+      RETURN i.name AS instrument, m.text AS measure, c.name AS concept,
+             m.grounding_span AS span
+      ORDER BY measure
+    collapse_on: concept
+    expected_shape: {columns: [instrument, measure, concept, span], min_rows: 1, max_rows: 100}
+    pass_criterion: >-
+      At least one Measure returned for AIDRIN with a span showing what it measures. This CQ
+      is the single-instrument case of CQ-05 and tests whether one named instrument can be
+      traversed end to end.
+    judge_notes: ""
+
+  # ----------------------------------------------------------------- instrument coverage
+  - id: CQ-08
+    category: instrument_coverage
+    question: >-
+      Which of the framework's own constructs (by name) are measured by no Instrument in the
+      corpus?
+    cypher_raw: |
+      WITH ['uncertainty', 'provenance', 'license', 'revision', 'timeliness', 'discoverability',
+            'machine-readable', 'semantic consistency', 'authority', 'disclosure'] AS terms
+      UNWIND terms AS term
+      OPTIONAL MATCH (i:Instrument)-[:MEASURES]->(c:Concept)
+      WHERE toLower(trim(c.name)) CONTAINS term
+      RETURN term, count(DISTINCT i) AS instruments, collect(DISTINCT c.name)[..5] AS concepts
+      ORDER BY instruments
+    collapse_on: term
+    expected_shape: {columns: [term, instruments, concepts], min_rows: 10, max_rows: 10}
+    pass_criterion: >-
+      All ten terms return a row, and the zero-instrument terms are identifiable. The answer
+      is the list of uncovered constructs; an empty result set means the question cannot be
+      asked at all.
+    judge_notes: ""
+
+  - id: CQ-09
+    category: instrument_coverage
+    question: Which Instruments measure uncertainty-related concepts, and who owns them?
+    cypher_raw: |
+      MATCH (i:Instrument)-[:MEASURES]->(c:Concept)
+      WHERE toLower(trim(c.name)) CONTAINS 'uncertain'
+         OR toLower(trim(c.name)) CONTAINS 'margin of error'
+         OR toLower(trim(c.name)) CONTAINS 'confidence'
+      RETURN i.name AS instrument, i.owner AS owner, c.name AS concept,
+             i.grounding_span AS span, i.doc_id AS doc_id
+      ORDER BY instrument
+    collapse_on: instrument
+    expected_shape: {columns: [instrument, owner, concept, span, doc_id], min_rows: 0, max_rows: 100}
+    pass_criterion: >-
+      Either at least one Instrument with a span showing it measures uncertainty, OR an empty
+      result that is itself the finding (no instrument in the corpus measures uncertainty).
+      An empty answer here is a PASS only if the raw and collapsed views agree it is empty —
+      otherwise the emptiness is a duplication artefact.
+    judge_notes: ""
+
+  - id: CQ-10
+    category: instrument_coverage
+    question: >-
+      How many distinct Instruments does the corpus describe, and how many are traceable to a
+      document with a content hash?
+    cypher_raw: |
+      MATCH (i:Instrument)
+      OPTIONAL MATCH (d:Document {doc_id: i.doc_id})
+      RETURN i.name AS instrument, i.doc_id AS doc_id, d.content_hash AS content_hash
+      ORDER BY instrument
+    collapse_on: instrument
+    expected_shape: {columns: [instrument, doc_id, content_hash], min_rows: 100, max_rows: 500}
+    pass_criterion: >-
+      Every returned Instrument carries a doc_id, and the count of DISTINCT instruments after
+      collapse is the honest answer to "how many instruments does the corpus describe". The
+      raw count is expected to overstate it; that overstatement is the measurement.
+    judge_notes: ""
+
+  # --------------------------------------------------------------------- claim evidence
+  - id: CQ-11
+    category: claim_evidence
+    question: >-
+      What Claims support the practice of publishing machine-readable metadata, and from which
+      documents?
+    cypher_raw: |
+      MATCH (p:Practice)-[:SUPPORTED_BY]->(cl:Claim)
+      WHERE toLower(p.text) CONTAINS 'metadata'
+      MATCH (d:Document)-[:ASSERTS]->(cl)
+      RETURN p.text AS practice, cl.claim_text AS claim, d.doc_id AS doc_id,
+             cl.grounding_span AS span
+      ORDER BY doc_id
+    collapse_on: practice
+    expected_shape: {columns: [practice, claim, doc_id, span], min_rows: 1, max_rows: 200}
+    pass_criterion: >-
+      At least one Practice–Claim pair where the claim's span, on reading, supports the
+      practice and names its source document.
+    judge_notes: ""
+
+  - id: CQ-12
+    category: claim_evidence
+    question: What does the corpus claim about the cost or burden of preparing data for AI?
+    cypher_raw: |
+      MATCH (d:Document)-[:ASSERTS]->(cl:Claim)
+      WHERE toLower(cl.claim_text) CONTAINS 'cost'
+         OR toLower(cl.claim_text) CONTAINS 'burden'
+         OR toLower(cl.claim_text) CONTAINS 'effort'
+      RETURN d.doc_id AS doc_id, cl.claim_text AS claim, cl.claim_type AS type,
+             cl.grounding_span AS span
+      ORDER BY doc_id
+    collapse_on: claim
+    expected_shape: {columns: [doc_id, claim, type, span], min_rows: 1, max_rows: 300}
+    pass_criterion: >-
+      At least one claim whose span makes an assertion about cost, burden or effort of data
+      preparation, attributable to a named document.
+    judge_notes: ""
+
+  - id: CQ-13
+    category: claim_evidence
+    question: >-
+      Which Claims are about the Concept "interoperability", and which documents assert them?
+    cypher_raw: |
+      MATCH (cl:Claim)-[:ABOUT]->(c:Concept)
+      WHERE toLower(trim(c.name)) CONTAINS 'interoperab'
+      OPTIONAL MATCH (d:Document)-[:ASSERTS]->(cl)
+      RETURN c.name AS concept, cl.claim_text AS claim, d.doc_id AS doc_id,
+             cl.grounding_span AS span
+      ORDER BY concept
+    collapse_on: concept
+    expected_shape: {columns: [concept, claim, doc_id, span], min_rows: 1, max_rows: 300}
+    pass_criterion: >-
+      At least one claim about interoperability with a readable span and an asserting
+      document. Rows with a null doc_id are the orphan-claim finding, not a pass.
+    judge_notes: ""
+
+  # ------------------------------------------------------------------ conflict detection
+  - id: CQ-14
+    category: conflict_detection
+    question: Where do two Documents make conflicting Claims, and about what?
+    cypher_raw: |
+      MATCH (a:Claim)-[:CONFLICTS_WITH]->(b:Claim)
+      OPTIONAL MATCH (da:Document)-[:ASSERTS]->(a)
+      OPTIONAL MATCH (db:Document)-[:ASSERTS]->(b)
+      RETURN da.doc_id AS doc_a, a.claim_text AS claim_a,
+             db.doc_id AS doc_b, b.claim_text AS claim_b, a.grounding_span AS span
+    collapse_on: claim_a
+    expected_shape: {columns: [doc_a, claim_a, doc_b, claim_b, span], min_rows: 1, max_rows: 50}
+    pass_criterion: >-
+      At least one conflict pair whose two spans, on reading, actually disagree. A pair that
+      does not disagree on reading is recorded as a false positive and the CQ fails.
+    judge_notes: ""
+
+  - id: CQ-15
+    category: conflict_detection
+    question: Are there conflicting Definitions of the same term in the corpus?
+    cypher_raw: |
+      MATCH (a:Definition)-[:CONFLICTS_WITH]->(b:Definition)
+      RETURN a.doc_id AS doc_a, a.verbatim_text AS def_a,
+             b.doc_id AS doc_b, b.verbatim_text AS def_b, a.grounding_span AS span
+    collapse_on: def_a
+    expected_shape: {columns: [doc_a, def_a, doc_b, def_b, span], min_rows: 0, max_rows: 50}
+    pass_criterion: >-
+      At least one definition pair whose spans disagree about the same term. An empty result
+      is a FAIL for this question as asked — the corpus certainly contains competing
+      definitions of "AI readiness" (see CQ-02), so an empty conflict set means the edge is
+      not being extracted, which is the finding.
+    judge_notes: ""
+
+  - id: CQ-16
+    category: conflict_detection
+    question: >-
+      Do any two documents define "data quality" incompatibly, judged by reading their
+      definitions side by side rather than by a CONFLICTS_WITH edge?
+    cypher_raw: |
+      MATCH (d:Document)-[:DEFINES]->(df:Definition)
+      WHERE toLower(df.verbatim_text) CONTAINS 'data quality'
+      RETURN d.doc_id AS doc_id, df.verbatim_text AS text, df.normative_status AS status,
+             df.grounding_span AS span
+      ORDER BY doc_id
+    collapse_on: text
+    expected_shape: {columns: [doc_id, text, status, span], min_rows: 2, max_rows: 200}
+    pass_criterion: >-
+      Two or more definitions returned from different documents that a reader can compare.
+      This CQ deliberately does NOT use the conflict edge: it tests whether the graph supports
+      conflict detection by retrieval when the edge is absent.
+    judge_notes: ""
+
+  # ----------------------------------------------------------------- provenance traceback
+  - id: CQ-17
+    category: provenance_traceback
+    question: >-
+      For a given Claim, return its grounding span, its source document's content hash, and
+      the extraction event that produced it.
+    cypher_raw: |
+      MATCH (d:Document)-[:ASSERTS]->(cl:Claim)
+      RETURN cl.claim_text AS claim, cl.grounding_span AS span, d.doc_id AS doc_id,
+             d.content_hash AS content_hash, cl.prov_extraction_event_id AS event_id,
+             cl.prov_model_id AS model_id
+      ORDER BY doc_id LIMIT 25
+    collapse_on: claim
+    expected_shape: {columns: [claim, span, doc_id, content_hash, event_id, model_id], min_rows: 1, max_rows: 25}
+    pass_criterion: >-
+      Every returned row carries a non-null grounding span, content hash and extraction event
+      id. A single null in any of the three is a partial answer: provenance traceback is a
+      property that holds for all rows or does not hold.
+    judge_notes: ""
+
+  - id: CQ-18
+    category: provenance_traceback
+    question: >-
+      Which Concepts lack a source hash on their own node, and how many are there?
+    cypher_raw: |
+      MATCH (n:Concept)
+      WHERE n.prov_source_sha256 IS NULL
+      RETURN n.name AS concept, n.doc_id AS doc_id, n.grounding_span AS span
+      ORDER BY doc_id
+    collapse_on: concept
+    expected_shape: {columns: [concept, doc_id, span], min_rows: 0, max_rows: 2000}
+    pass_criterion: >-
+      The query returns a countable set (possibly empty) and every returned row still carries
+      a doc_id, so the gap is attributable to documents. An empty result is a PASS.
+    judge_notes: ""
+
+  - id: CQ-19
+    category: provenance_traceback
+    question: >-
+      For the Practices the corpus recommends, can each be traced to a document and a
+      verbatim span?
+    cypher_raw: |
+      MATCH (d:Document)-[:RECOMMENDS]->(p:Practice)
+      RETURN p.text AS practice, d.doc_id AS doc_id, p.grounding_span AS span,
+             p.scope AS scope
+      ORDER BY doc_id LIMIT 50
+    collapse_on: practice
+    expected_shape: {columns: [practice, doc_id, span, scope], min_rows: 1, max_rows: 50}
+    pass_criterion: >-
+      Every returned Practice has a non-null grounding span and doc_id.
+    judge_notes: ""
+
+  # --------------------------------------------------------------------- discovery stack
+  - id: CQ-20
+    category: discovery_stack
+    question: >-
+      Which Platforms consume which Standards of the established discovery stack (robots.txt /
+      RFC 9309, sitemaps, RFC 8615 well-known URIs, schema.org Dataset, DCAT)?
+    cypher_raw: |
+      MATCH (p:Platform)-[:CONSUMES]->(s:Standard)
+      RETURN p.name AS platform, s.name AS standard, s.steward AS steward,
+             s.grounding_span AS span, p.doc_id AS doc_id
+      ORDER BY platform
+    collapse_on: standard
+    expected_shape: {columns: [platform, standard, steward, span, doc_id], min_rows: 1, max_rows: 200}
+    pass_criterion: >-
+      At least one platform-standard pair whose span shows the platform consuming that
+      standard. The collapsed view is expected to reduce the standard count materially; the
+      question "which standards" cannot be answered from a list with the same standard eight
+      times.
+    judge_notes: ""
+
+  - id: CQ-21
+    category: discovery_stack
+    question: What does the corpus say about robots.txt as a machine-access control?
+    cypher_raw: |
+      MATCH (s:Standard)
+      WHERE toLower(s.name) CONTAINS 'robots' OR toLower(s.name) CONTAINS '9309'
+      OPTIONAL MATCH (s)-[r]-(other)
+      RETURN s.name AS standard, s.doc_id AS doc_id, s.grounding_span AS span,
+             type(r) AS rel, labels(other)[0] AS other_label,
+             coalesce(other.name, other.text, other.claim_text) AS other_text
+      ORDER BY standard
+    collapse_on: standard
+    expected_shape: {columns: [standard, doc_id, span, rel, other_label, other_text], min_rows: 1, max_rows: 300}
+    pass_criterion: >-
+      At least one row whose span describes robots.txt's role in machine access, and at least
+      one relationship to another node that adds something the span alone does not.
+    judge_notes: ""
+
+  - id: CQ-22
+    category: discovery_stack
+    question: >-
+      Which Standards does the corpus associate with dataset discovery metadata (DCAT,
+      schema.org, sitemaps), and which documents describe them?
+    cypher_raw: |
+      MATCH (s:Standard)
+      WHERE toLower(s.name) CONTAINS 'dcat' OR toLower(s.name) CONTAINS 'schema.org'
+         OR toLower(s.name) CONTAINS 'sitemap'
+      RETURN s.name AS standard, s.doc_id AS doc_id, s.steward AS steward,
+             s.grounding_span AS span
+      ORDER BY standard
+    collapse_on: standard
+    expected_shape: {columns: [standard, doc_id, steward, span], min_rows: 1, max_rows: 300}
+    pass_criterion: >-
+      At least one standard from each of at least two of the three families (DCAT,
+      schema.org, sitemaps) with a readable span. The distinct-standard count after collapse
+      is the answer to "which standards".
+    judge_notes: ""
+
+  # ------------------------------------------------------------------ frontier candidate
+  - id: CQ-23
+    category: frontier_candidate
+    question: >-
+      What does the corpus assert about MCP (Model Context Protocol) as a discovery or access
+      mechanism, and with what dates?
+    cypher_raw: |
+      MATCH (n)
+      WHERE (n:Standard OR n:Concept OR n:Platform OR n:Tool)
+        AND (toLower(coalesce(n.name, '')) CONTAINS 'model context protocol'
+             OR toLower(coalesce(n.name, '')) = 'mcp'
+             OR toLower(coalesce(n.name, '')) CONTAINS ' mcp ')
+      OPTIONAL MATCH (d:Document {doc_id: n.doc_id})
+      RETURN labels(n)[0] AS label, n.name AS name, n.doc_id AS doc_id,
+             d.pub_date AS pub_date, n.grounding_span AS span
+      ORDER BY pub_date
+    collapse_on: name
+    expected_shape: {columns: [label, name, doc_id, pub_date, span], min_rows: 0, max_rows: 200}
+    pass_criterion: >-
+      At least one node whose span asserts something about MCP as a discovery or access
+      mechanism, with a publication date attached so the assertion can be dated. An empty
+      result is a FAIL: the framework treats MCP as a dated frontier candidate, so a corpus
+      that cannot answer this cannot support that part of the instrument.
+    judge_notes: ""
+
+  - id: CQ-24
+    category: frontier_candidate
+    question: What does the corpus assert about llms.txt as a discovery mechanism, with dates?
+    cypher_raw: |
+      MATCH (n)
+      WHERE (n:Standard OR n:Concept OR n:Platform OR n:Tool)
+        AND toLower(coalesce(n.name, '')) CONTAINS 'llms.txt'
+      OPTIONAL MATCH (d:Document {doc_id: n.doc_id})
+      RETURN labels(n)[0] AS label, n.name AS name, n.doc_id AS doc_id,
+             d.pub_date AS pub_date, n.grounding_span AS span
+      ORDER BY pub_date
+    collapse_on: name
+    expected_shape: {columns: [label, name, doc_id, pub_date, span], min_rows: 0, max_rows: 100}
+    pass_criterion: >-
+      At least one node whose span asserts something about llms.txt, dated. An empty result is
+      a FAIL for the same reason as CQ-23.
+    judge_notes: ""
+
+  - id: CQ-25
+    category: frontier_candidate
+    question: >-
+      Which frontier access mechanisms does the corpus mention at all (MCP, llms.txt, agent
+      APIs, pay-per-crawl), and how recently?
+    cypher_raw: |
+      MATCH (d:Document)-[:MENTIONS]->(c:Concept)
+      WHERE toLower(trim(c.name)) CONTAINS 'llms.txt'
+         OR toLower(trim(c.name)) CONTAINS 'model context protocol'
+         OR toLower(trim(c.name)) CONTAINS 'pay-per-crawl'
+         OR toLower(trim(c.name)) CONTAINS 'agent api'
+      RETURN c.name AS mechanism, d.doc_id AS doc_id, d.pub_date AS pub_date,
+             c.grounding_span AS span
+      ORDER BY pub_date DESC
+    collapse_on: mechanism
+    expected_shape: {columns: [mechanism, doc_id, pub_date, span], min_rows: 0, max_rows: 200}
+    pass_criterion: >-
+      At least two distinct mechanisms returned with dates, so the frontier set can be
+      compared by recency. One mechanism is a partial answer.
+    judge_notes: ""
+
+  - id: CQ-26
+    category: frontier_candidate
+    question: >-
+      Does the corpus contain any Claim that a frontier mechanism is or is not yet an
+      established practice?
+    cypher_raw: |
+      MATCH (d:Document)-[:ASSERTS]->(cl:Claim)
+      WHERE toLower(cl.claim_text) CONTAINS 'llms.txt'
+         OR toLower(cl.claim_text) CONTAINS 'model context protocol'
+         OR toLower(cl.claim_text) CONTAINS 'emerging'
+         OR toLower(cl.claim_text) CONTAINS 'not yet standard'
+      RETURN d.doc_id AS doc_id, d.pub_date AS pub_date, cl.claim_text AS claim,
+             cl.claim_type AS type, cl.grounding_span AS span
+      ORDER BY pub_date DESC
+    collapse_on: claim
+    expected_shape: {columns: [doc_id, pub_date, claim, type, span], min_rows: 0, max_rows: 200}
+    pass_criterion: >-
+      At least one dated claim whose span takes a position on whether a mechanism is
+      established. This is the CQ that the frontier-candidate rule in the protocol depends on.
+    judge_notes: ""
