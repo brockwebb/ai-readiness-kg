@@ -65,6 +65,22 @@ DATED_LOG = re.compile(r"^\d{4}-\d{2}-\d{2}\.log$")
 #: Modules whose presence in the run's import closure means a spend path is reachable.
 SPEND_MODULES = ("kg.extraction.model_stub", "kg.spend")
 
+#: The tracked files the two legs write, and the ONLY paths this job may stage. An explicit
+#: list, never `git add -A`: a scheduled job that stages by wildcard commits whatever else
+#: happens to be in the tree at 2:30am — an operator's half-finished edit, another job's
+#: output — under this job's name and message. Derived from the legs themselves:
+#:   kg.biblio resume        -> CANDIDATES (acquisition_candidates.md), PRIORITY (t2_priority.json)
+#:   t1_build_index.py       -> TABLE_OUT (manifest_table.md), PICKUP_OUT (operator_pickup.md),
+#:                              and `substrate_converted` events on the batch-024 shard
+#: `state/candidate_oa.json` is deliberately absent: it is a gitignored provider cache (DD-030).
+COMMIT_PATHS = (
+    "docs/corpus/acquisition_candidates.md",
+    "docs/corpus/manifest_table.md",
+    "docs/corpus/operator_pickup.md",
+    "state/t2_priority.json",
+    "events/batch-024.jsonl",
+)
+
 
 def controls() -> dict:
     """Job config from controls.yaml. Missing block is a hard error, not a default.
@@ -164,6 +180,67 @@ def run_leg(name: str, cmd: list[str], log: Log) -> int:
     return rc
 
 
+def _git(log: Log, *args: str) -> tuple[int, str]:
+    """Run one git command in the repo, log it, return (rc, combined output)."""
+    cmd = ["git", *args]
+    log.line(f"$ {' '.join(cmd)}")
+    p = subprocess.run(cmd, cwd=REPO, capture_output=True, text=True)
+    out = (p.stdout + p.stderr).strip()
+    if out:
+        log.line(out)
+    return p.returncode, out
+
+
+def commit_own_writes(log: Log, today: dt.date) -> int:
+    """Stage, commit and push exactly this job's own outputs. Returns an rc; non-zero fails
+    the run.
+
+    Why the job commits at all (task 2026-09-03_hygiene_sweep_post_g1_freeze, Lane 2): every
+    night this job rewrote four tracked projections and left them uncommitted, so every
+    `seldon verify` in every session afterwards reported a dirty tree that no session owned.
+    A scheduled writer that does not commit turns its own output into standing noise, and
+    standing noise is how a real dirty file stops being noticed. Per ~/GitHub/CLAUDE.md §10
+    the job commits what it wrote, the same rule every task follows.
+
+    Guarded three ways: only `COMMIT_PATHS` are staged; nothing to stage is a clean no-op,
+    not a failure; and a failing commit or push fails the run loudly instead of leaving the
+    tree dirty and the log quiet.
+    """
+    log.line("--- commit: own writes")
+    present = [p for p in COMMIT_PATHS if (REPO / p).exists()]
+    missing = [p for p in COMMIT_PATHS if not (REPO / p).exists()]
+    if missing:
+        log.line(f"note: not on disk this run, not staged: {', '.join(missing)}")
+    rc, _ = _git(log, "add", "--", *present)
+    if rc:
+        log.line(f"FATAL: git add failed (rc={rc}); tree left untouched")
+        return 5
+    rc, staged = _git(log, "diff", "--cached", "--name-only")
+    if rc:
+        log.line(f"FATAL: git diff --cached failed (rc={rc})")
+        return 5
+    if not staged:
+        log.line("nothing to commit: the legs changed none of this job's outputs")
+        return 0
+    # Detective control: anything dirty that this job does not own is reported, never staged.
+    _, others = _git(log, "status", "--porcelain", "--untracked-files=no")
+    unowned = sorted({ln[3:] for ln in others.splitlines() if ln[3:] not in COMMIT_PATHS})
+    if unowned:
+        log.line(f"note: {len(unowned)} file(s) dirty outside this job's write set, left alone: "
+                 f"{', '.join(unowned)}")
+    rc, _ = _git(log, "commit", "-m", f"biblio cron: {today.isoformat()}")
+    if rc:
+        log.line(f"FATAL: git commit failed (rc={rc}); staged changes left in the index")
+        return 5
+    rc, _ = _git(log, "push")
+    if rc:
+        log.line(f"FATAL: git push failed (rc={rc}); the commit exists locally and will go "
+                 f"out with the next successful push")
+        return 6
+    log.line(f"committed and pushed {len(staged.splitlines())} file(s)")
+    return 0
+
+
 def prune(log: Log, retention_days: int, today: dt.date) -> list[str]:
     """Delete this job's own dated logs older than the retention window."""
     cutoff = today - dt.timedelta(days=retention_days)
@@ -210,6 +287,10 @@ def main(argv=None) -> int:
                     help="cap documents harvested this run (0 = no cap)")
     ap.add_argument("--dry-run", action="store_true",
                     help="report what would run, touch nothing")
+    ap.add_argument("--no-commit", action="store_true",
+                    help="run the legs but do not stage/commit/push this job's outputs. For "
+                         "manual and test runs; the scheduled unit never passes it, so the "
+                         "nightly run always commits what it wrote.")
     a = ap.parse_args(argv)
 
     # DD-007: subscription OAuth only. Refuse inherited API credentials on every invocation,
@@ -267,7 +348,18 @@ def main(argv=None) -> int:
     else:
         log.line("guardrail: this run imported no spend-path module")
 
-    rc = breach or max(rcs, default=0)
+    # The commit runs only on a clean guardrail: a run that tripped the spend fingerprint or
+    # the import closure is under investigation, and committing its output would publish work
+    # produced by a path that was not supposed to exist.
+    commit_rc = 0
+    if breach:
+        log.line("commit skipped: guardrail breach — outputs left uncommitted for inspection")
+    elif a.no_commit:
+        log.line("commit skipped: --no-commit")
+    else:
+        commit_rc = commit_own_writes(log, today)
+
+    rc = breach or commit_rc or max(rcs, default=0)
     elapsed = (dt.datetime.now(dt.timezone.utc) - started).total_seconds()
     log.line(f"=== rc={rc} legs={rcs} elapsed={elapsed:.1f}s")
     log.close()

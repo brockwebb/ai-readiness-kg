@@ -203,7 +203,7 @@ def test_module_check_is_a_delta_not_an_absolute_reading(env, tmp_path, monkeypa
 
     monkeypatch.setattr(job, "run_leg", lambda name, cmd, log: 0)
     monkeypatch.setitem(sys.modules, "kg.spend", object())   # pollute as a test runner would
-    assert job.main([]) == 0, "pre-existing import misattributed to the scheduled run"
+    assert job.main(["--no-commit"]) == 0, "pre-existing import misattributed to the scheduled run"
     assert "guardrail: this run imported no spend-path module" in _log(tmp_path)
 
 
@@ -217,7 +217,7 @@ def test_module_check_fires_when_the_run_itself_imports_a_spend_path(env, tmp_pa
         return 0
     monkeypatch.setattr(job, "run_leg", importing_leg)
     try:
-        assert job.main([]) == 4
+        assert job.main(["--no-commit"]) == 4
         assert "this run imported spend-path module(s): kg.spend" in _log(tmp_path)
     finally:
         sys.modules.pop("kg.spend", None)
@@ -246,7 +246,7 @@ def test_ledger_change_fails_the_job(env, tmp_path, monkeypatch):
                 f.write('{"record":"reserve","tokens":111000}\n')
         return 0
     monkeypatch.setattr(job, "run_leg", spending_leg)
-    assert job.main([]) == 3
+    assert job.main(["--no-commit"]) == 3
     text = _log(tmp_path)
     assert "FATAL: spend ledger changed" in text
     assert "unbudgeted by construction" in text
@@ -254,7 +254,7 @@ def test_ledger_change_fails_the_job(env, tmp_path, monkeypatch):
 
 def test_clean_run_is_green_and_says_both_guards_held(env, tmp_path, monkeypatch):
     monkeypatch.setattr(job, "run_leg", lambda name, cmd, log: 0)
-    assert job.main([]) == 0
+    assert job.main(["--no-commit"]) == 0
     text = _log(tmp_path)
     assert "guardrail: spend ledger unchanged" in text
     assert "guardrail: this run imported no spend-path module" in text
@@ -263,7 +263,7 @@ def test_clean_run_is_green_and_says_both_guards_held(env, tmp_path, monkeypatch
 
 def test_leg_failure_propagates_but_does_not_mask_the_guard(env, tmp_path, monkeypatch):
     monkeypatch.setattr(job, "run_leg", lambda name, cmd, log: 2 if name == "t1-project" else 0)
-    assert job.main([]) == 2
+    assert job.main(["--no-commit"]) == 2
 
 
 def test_api_credentials_are_dropped_on_every_invocation(env, monkeypatch):
@@ -272,7 +272,7 @@ def test_api_credentials_are_dropped_on_every_invocation(env, monkeypatch):
     monkeypatch.setenv("ANTHROPIC_AUTH_TOKEN", "tok")
     monkeypatch.setattr(job, "run_leg", lambda name, cmd, log: 0)
     import os
-    assert job.main([]) == 0
+    assert job.main(["--no-commit"]) == 0
     assert "ANTHROPIC_API_KEY" not in os.environ
     assert "ANTHROPIC_AUTH_TOKEN" not in os.environ
 
@@ -297,7 +297,7 @@ def test_coverage_complete_is_noted_but_nothing_self_disables(env, tmp_path, mon
                                                    "blocked": 0})
     monkeypatch.setitem(sys.modules, "kg.biblio", fake)
     monkeypatch.setattr(sys.modules["kg"], "biblio", fake, raising=False)
-    assert job.main([]) == 0
+    assert job.main(["--no-commit"]) == 0
     assert "coverage: COMPLETE" in _log(tmp_path)
 
 
@@ -310,7 +310,7 @@ def test_coverage_incomplete_says_nothing_about_completion(env, tmp_path, monkey
                                                    "blocked": 1})
     monkeypatch.setitem(sys.modules, "kg.biblio", fake)
     monkeypatch.setattr(sys.modules["kg"], "biblio", fake, raising=False)
-    assert job.main([]) == 0
+    assert job.main(["--no-commit"]) == 0
     text = _log(tmp_path)
     assert "coverage: resolved=29/178" in text and "COMPLETE" not in text
 
@@ -347,3 +347,150 @@ def test_render_fails_loud_on_an_unsubstituted_placeholder(monkeypatch, tmp_path
     monkeypatch.setattr(installer, "TEMPLATE", bad)
     with pytest.raises(SystemExit, match="unsubstituted placeholders"):
         installer.render(sys.executable)
+
+
+# --- Lane 2 of cc_tasks/2026-09-03_hygiene_sweep_post_g1_freeze.md -----------------------
+# The job now commits its own writes. The risk this creates is bigger than the one it fixes:
+# a scheduled `git` caller that stages the wrong thing commits an operator's half-finished
+# work at 2:30am under this job's name. So the path list is pinned, the wildcard is proven
+# absent, and the failure modes are shown failing.
+
+class _RecordingLog:
+    def __init__(self): self.lines = []
+    def line(self, text): self.lines.append(str(text).rstrip())
+    @property
+    def text(self): return "\n".join(self.lines)
+
+
+def _job():
+    import importlib, sys
+    from pathlib import Path
+    sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "scripts" / "jobs"))
+    return importlib.import_module("biblio_resume_job")
+
+
+def test_commit_paths_are_exactly_the_legs_write_set():
+    """If a leg gains an output, this list must gain it too — otherwise the new file becomes
+    the next permanently-dirty file, which is the defect this lane exists to remove."""
+    job = _job()
+    assert job.COMMIT_PATHS == (
+        "docs/corpus/acquisition_candidates.md",
+        "docs/corpus/manifest_table.md",
+        "docs/corpus/operator_pickup.md",
+        "state/t2_priority.json",
+        "events/batch-024.jsonl",
+    )
+    # the gitignored provider cache must never be staged
+    assert "state/candidate_oa.json" not in job.COMMIT_PATHS
+
+
+def test_the_job_never_stages_by_wildcard():
+    """A positive control on the source itself: `git add -A`/`-u`/`.` would defeat every
+    other guard in this file, and no test of behaviour catches it if the paths happen to be
+    the only dirty files on the day the test runs."""
+    from pathlib import Path
+    src = (Path(__file__).resolve().parent.parent / "scripts" / "jobs"
+           / "biblio_resume_job.py").read_text(encoding="utf-8")
+    code = "\n".join(ln for ln in src.splitlines()
+                     if not ln.lstrip().startswith("#") and not ln.lstrip().startswith("#:"))
+    for forbidden in ('"add", "-A"', '"add", "-u"', '"add", "."', "add -A", "add -u"):
+        assert forbidden not in code, f"job stages by wildcard: {forbidden}"
+    assert '_git(log, "add", "--", *present)' in src      # explicit, and `--` ends the options
+
+
+def test_nothing_to_commit_is_a_clean_no_op(monkeypatch):
+    job = _job()
+    calls = []
+
+    def fake_git(log, *args):
+        calls.append(args)
+        return (0, "") if args[0] in ("add", "diff") else (0, "")
+    monkeypatch.setattr(job, "_git", fake_git)
+    monkeypatch.setattr(job.Path, "exists", lambda self: True, raising=False)
+    log = _RecordingLog()
+    import datetime as dt
+    assert job.commit_own_writes(log, dt.date(2026, 9, 4)) == 0
+    assert "nothing to commit" in log.text
+    assert not any(a[0] == "commit" for a in calls)       # never committed an empty index
+
+
+def test_a_failing_commit_fails_the_run(monkeypatch):
+    job = _job()
+
+    def fake_git(log, *args):
+        if args[0] == "diff":
+            return 0, "docs/corpus/operator_pickup.md"
+        if args[0] == "status":
+            return 0, ""
+        if args[0] == "commit":
+            return 1, "nothing added / hook rejected"
+        return 0, ""
+    monkeypatch.setattr(job, "_git", fake_git)
+    monkeypatch.setattr(job.Path, "exists", lambda self: True, raising=False)
+    log = _RecordingLog()
+    import datetime as dt
+    assert job.commit_own_writes(log, dt.date(2026, 9, 4)) == 5
+    assert "FATAL: git commit failed" in log.text
+
+
+def test_a_failing_push_fails_the_run_and_says_the_commit_survived(monkeypatch):
+    job = _job()
+
+    def fake_git(log, *args):
+        if args[0] == "diff":
+            return 0, "state/t2_priority.json"
+        if args[0] == "status":
+            return 0, ""
+        if args[0] == "push":
+            return 1, "could not read from remote"
+        return 0, ""
+    monkeypatch.setattr(job, "_git", fake_git)
+    monkeypatch.setattr(job.Path, "exists", lambda self: True, raising=False)
+    log = _RecordingLog()
+    import datetime as dt
+    assert job.commit_own_writes(log, dt.date(2026, 9, 4)) == 6
+    assert "FATAL: git push failed" in log.text
+    assert "will go out with the next successful push" in log.text
+
+
+def test_files_dirty_outside_the_write_set_are_reported_and_left_alone(monkeypatch):
+    job = _job()
+    staged_arg = {}
+
+    def fake_git(log, *args):
+        if args[0] == "add":
+            staged_arg["paths"] = args[2:]
+            return 0, ""
+        if args[0] == "diff":
+            return 0, "docs/corpus/operator_pickup.md"
+        if args[0] == "status":
+            return 0, " M scripts/some_operator_edit.py\n M docs/corpus/operator_pickup.md"
+        return 0, ""
+    monkeypatch.setattr(job, "_git", fake_git)
+    monkeypatch.setattr(job.Path, "exists", lambda self: True, raising=False)
+    log = _RecordingLog()
+    import datetime as dt
+    assert job.commit_own_writes(log, dt.date(2026, 9, 4)) == 0
+    assert "scripts/some_operator_edit.py" in log.text
+    assert "left alone" in log.text
+    assert "scripts/some_operator_edit.py" not in staged_arg["paths"]
+
+
+def test_a_guardrail_breach_skips_the_commit():
+    """Output produced by a run that reached a spend path must not be published by that run."""
+    from pathlib import Path
+    src = (Path(__file__).resolve().parent.parent / "scripts" / "jobs"
+           / "biblio_resume_job.py").read_text(encoding="utf-8")
+    assert "if breach:" in src and "commit skipped: guardrail breach" in src
+
+
+def test_the_scheduled_unit_does_not_pass_no_commit():
+    """--no-commit exists for manual runs. If it ever reached the plist the nightly job would
+    go back to leaving a dirty tree, silently."""
+    from pathlib import Path
+    plist = (Path(__file__).resolve().parent.parent / "scripts" / "launchd"
+             / "com.brock.aikg.biblio-resume.plist.template")
+    assert plist.exists(), f"plist template missing at {plist}"
+    text = plist.read_text(encoding="utf-8")
+    assert "--no-commit" not in text
+    assert "biblio_resume_job.py" in text

@@ -1,7 +1,7 @@
 # G1 EVAL — findings at the v2 freeze
 
 **Date:** 2026-09-03. **Status:** internal; not for distribution until the operator says so.
-**Revision:** v1.2, 2026-09-03 — G1-O's score is stated as the L3+ share and the level distribution beneath it as descriptive: §3 gains that sentence and the level-based verdicts E5 and E6 each carry the calibration's level-agreement caveat (their verdicts stand, unchanged, as the scorer's); §4 gains the implied-verdict rule's `unparseable` defect and how many escalated records it accounts for; §5 limit 6 now cites the genuine-loss range instead of a lone reviewer count. E4, H3, H4, H5 and C1 are untouched — they are L3+ claims. Nothing was re-scored and nothing withdrawn (task `cc_tasks/2026-09-03_g1_memo_v1_2_level_caveat.md`, DD-038). Prior: v1.1, 2026-09-03 — §4 replaced: the reviewer's genuine-loss count is now reported as a range bounded by the scorer's count and an independent model rater's, with the two agreement coefficients and the escalation list (task `cc_tasks/2026-09-03_g1_calibration_rating_agreement.md`, DD-037). No other section changed. Prior: v1.0, 2026-09-03.
+**Revision:** v1.3, 2026-09-04 — §3's E3 entry gains its own caveat: it is a level claim like E5 and E6, but the calibration rated `g1-score-v2` records while E3 was scored by the v1 pair, so §4's level agreement does not transfer to it and none exists for v1 (task `cc_tasks/2026-09-03_hygiene_sweep_post_g1_freeze.md` Lane 3, ResearchTask `a74433f8`). No other section changed. Prior: v1.2, 2026-09-03 — G1-O's score is stated as the L3+ share and the level distribution beneath it as descriptive: §3 gains that sentence and the level-based verdicts E5 and E6 each carry the calibration's level-agreement caveat (their verdicts stand, unchanged, as the scorer's); §4 gains the implied-verdict rule's `unparseable` defect and how many escalated records it accounts for; §5 limit 6 now cites the genuine-loss range instead of a lone reviewer count. E4, H3, H4, H5 and C1 are untouched — they are L3+ claims. Nothing was re-scored and nothing withdrawn (task `cc_tasks/2026-09-03_g1_memo_v1_2_level_caveat.md`, DD-038). Prior: v1.1, 2026-09-03 — §4 replaced: the reviewer's genuine-loss count is now reported as a range bounded by the scorer's count and an independent model rater's, with the two agreement coefficients and the escalation list (task `cc_tasks/2026-09-03_g1_calibration_rating_agreement.md`, DD-037). No other section changed. Prior: v1.0, 2026-09-03.
 **Instrument:** parser `g1-parse-v2`, scorer `g1-score-v2`, prompt epoch `g1-v2-2026-09-03`,
 pinned consumer `claude-opus-5` — frozen for the January pilot (DD-036).
 **Numbers:** every number in this memo is a `{{result:<NAME>:value}}` token resolving to a
@@ -57,7 +57,13 @@ the L3+ share does not.
 failure. In the v1 grid it never occurred: {{result:g1_v1_pooled_all_level_degraded_verbal:value}} L2 records in
 {{result:g1_v1_pooled_all_n:value}}; the non-omission failures were quantity hallucination
 {{result:g1_v1_pooled_all_failure_quantity_hallucination:value}} and binding error
-{{result:g1_v1_pooled_all_failure_binding_error:value}}. The v1 consumer either carried the number or dropped it.
+{{result:g1_v1_pooled_all_failure_binding_error:value}}. The v1 consumer either carried the number or dropped it. **This is a level claim too, and its caveat is not E5's and E6's.** The calibration
+rated records scored by `g1-score-v2`; E3 was scored by the v1 parser and scorer, so the level
+agreement measured in §4 does not transfer to it and no level-agreement estimate exists for the
+v1 pair. What the claim rests on is also weaker in one way and stronger in another: it is a count
+of **zero** — there was no L2 record for two raters to disagree about — but "no L2 occurred"
+depends entirely on the v1 scorer's ability to recognise an L2, which is exactly the capability
+left unmeasured. Read it as the v1 scorer's reading, unreplicated.
 
 **E4 (v2, supported).** Family loss rises with the compression budget: loss
 {{result:g1_v2_pooled_opus_E4_loss_rate_none:value}} at `none`, {{result:g1_v2_pooled_opus_E4_loss_rate_short:value}} at
