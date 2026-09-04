@@ -152,16 +152,21 @@ A fourth probe family, the eval family, was added 2026-09-02 for indicator G1 (D
 a model half, `elicit`, which puts the source passage in a consumer's context and persists
 the raw exchange before anything is scored, and a pure `evaluate`, which parses the
 restatement deterministically and scores each published qualifier on a five-level
-preservation scale mapped to the three-point score. The rollup carries a third vector beside
-the catalog composite and the web-surface vector: `SOURCE_EVAL` records and the `G1`
-declared-leg probe are partitioned out before either composite is summed and reported as
-their own block — preservation rate per qualifier class and elicitation mode with a Wilson
-95 % interval and the denominator, an `unparseable` count that is never coerced into a
-score, and no product-level threshold until the January calibration run sets one. The
-deterministic parser is an instrument with a version (`parser_version`, stamped on every eval
-record beside `prompt_epoch` and `model_id`); its readiness is measured on sealed held-out model
-responses elicited only after the parser is frozen, never on restatements its author wrote
-(DD-034).
+preservation scale. G1 is therefore **two legs, reported as two vectors and never composited**
+(§3: no composite until intended use is decided): **G1-D**, the declared leg, the AUTO
+`g1_declared` probe — uncertainty present as structured fields beside the estimates on the
+product surface; and **G1-O**, the observed leg, the eval — the preservation rate at indirect
+compression `none` for a pinned consumer on that same captured surface, with the `unparseable`
+share and the compressed rates beside it. **G1-O's denominator is qualifier families (D9), the
+published forms that are deterministic transforms of one another — not forms, not documents.**
+The rollup carries them as a third block beside the catalog composite and the web-surface
+vector: `SOURCE_EVAL` records and the `G1` declared-leg probe are partitioned out before either
+composite is summed, every cell reported with a Wilson 95 % interval and its denominator, an
+`unparseable` count that is never coerced into a score, and no product-level threshold until
+the January calibration run sets one. The deterministic parser is an instrument with a
+version (`parser_version`, stamped on every eval record beside `prompt_epoch` and `model_id`);
+its readiness is measured on sealed held-out model responses elicited only after the parser is
+frozen, never on restatements its author wrote (DD-034).
 
 v2 of the eval family (DD-035; task `cc_tasks/2026-09-03_g1_eval_v2_product_surfaces_compression.md`)
 makes G1's observed leg a product test. Fixtures are cut from product surfaces captured as served

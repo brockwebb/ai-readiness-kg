@@ -122,3 +122,8 @@ state/candidate_oa.json
 # are tracked — the `substrate_converted` / `conversion_gap` events on events/batch-024.jsonl
 # and the auto-registered ResearchTasks.
 state/substrate_md/
+
+# G1 reviewer-calibration key (sample id -> record). The blind sheet must not be joinable
+# to the scorer/reviewer verdicts before the operator has labelled it (task
+# 2026-09-03_g1_freeze_calibration_redefinition_findings step 1).
+assessment/results/.g1_calibration_key_*.json
