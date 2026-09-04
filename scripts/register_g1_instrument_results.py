@@ -48,6 +48,18 @@ BASE = ("G1 EVAL v2 instrument at freeze (parser g1-parse-v2, scorer g1-score-v2
         "g1-v2-2026-09-03, consumer claude-opus-5), frozen for the January pilot by DD-036; "
         f"registered by scripts/register_g1_instrument_results.py for {TASK}")
 
+#: The registered DataFiles each group of numbers is read from, cited as `--data-name` so the
+#: Results carry `computed_from` instead of naming their source only in prose. The first run of
+#: this script passed no provenance flags at all and its 29 Results had to be backfilled
+#: afterwards (cc_tasks/2026-09-04_result_migration_completion.md step 6); citing the source at
+#: registration is what stops that recurring.
+FIXTURE_DATA = {"dev": "g1_v2_fixture_propositions_dev",
+                "holdout": "g1_v2_fixture_propositions_holdout"}
+SCHEDULE_DATA = "g1_v2_schedule"
+LEDGER_DATA = "spend_ledger"
+GATE_DATA = {"g1_v1_holdout_fresh_gate_unparseable_share": "g1_v1_holdout_fresh_reviewed",
+             "g1_v2_holdout_gate_unparseable_share": "g1_v2_holdout_reviewed"}
+
 
 def fixture_numbers() -> list:
     out = []
@@ -55,12 +67,14 @@ def fixture_numbers() -> list:
         fs = load_fixture_set(path)
         props = fs.propositions
         out.append((f"g1_v2_instrument_fixture_{split}_propositions", len(props),
-                    f"propositions in {path.relative_to(REPO)} (v2 product-surface fixtures)"))
+                    f"propositions in {path.relative_to(REPO)} (v2 product-surface fixtures)",
+                    FIXTURE_DATA[split]))
         out.append((f"g1_v2_instrument_fixture_{split}_passages", len({p.passage_id for p in props}),
-                    f"distinct passages in {path.relative_to(REPO)}"))
+                    f"distinct passages in {path.relative_to(REPO)}", FIXTURE_DATA[split]))
         for st, n in sorted(Counter(p.surface_type for p in props).items()):
             out.append((f"g1_v2_instrument_fixture_{split}_{st}_propositions", n,
-                        f"propositions of surface_type {st} in {path.relative_to(REPO)}"))
+                        f"propositions of surface_type {st} in {path.relative_to(REPO)}",
+                        FIXTURE_DATA[split]))
     return out
 
 
@@ -94,7 +108,8 @@ def schedule_numbers() -> list:
                 "consumer calls the same schedule would have cost with no byte-identical reuse"))
     out.append(("g1_v2_instrument_schedule_tokens_at_floor_without_reuse", total_steps * FLOOR,
                 f"that counterfactual at the {FLOOR}-token floor (against the task cap of 8,000,000)"))
-    return out
+    # every schedule number is read from the one pre-registered schedule file
+    return [r if len(r) == 4 else (*r, SCHEDULE_DATA) for r in out]
 
 
 def spend_numbers() -> list:
@@ -110,8 +125,9 @@ def spend_numbers() -> list:
             f"tokens settled on state/spend_ledger.jsonl by run {run} (declared ceiling 2,000,000)")
            for run in RUNS]
     out.append(("g1_v2_instrument_spend_task_total", sum(settled.values()),
-                "tokens settled across the four declared v2 runs (task cap 8,000,000)"))
-    return out
+                "tokens settled across the four declared v2 runs (task cap 8,000,000)", LEDGER_DATA))
+    # every spend number is read from the shared ledger
+    return [r if len(r) == 4 else (*r, LEDGER_DATA) for r in out]
 
 
 def gate_numbers() -> list:
@@ -131,7 +147,8 @@ def gate_numbers() -> list:
         n = cell.get("n")
         out.append((name, round(cell["n_unparseable"] / n, 6),
                     f"{note}: unparseable share = n_unparseable / n from {path.relative_to(REPO)} "
-                    f"(threshold 0.10, pre-registered; reported before any other number)"))
+                    f"(threshold 0.10, pre-registered; reported before any other number)",
+                    GATE_DATA[name]))
     return out
 
 
@@ -142,15 +159,15 @@ def main(argv=None) -> int:
     a = ap.parse_args(argv)
     rows = fixture_numbers() + schedule_numbers() + spend_numbers() + gate_numbers()
     if a.dry_run:
-        for name, value, note in rows:
-            print(f"{name}\t{value}\t{note}")
+        for name, value, note, data in rows:
+            print(f"{name}\t{value}\t{data}\t{note}")
         print(len(rows), "Results")
         return 0
     ok = 0
     rows = rows[a.skip:]
-    for name, value, note in rows:
-        cmd = ["seldon", "result", "register", "--value", str(value), "--units", name,
-               "--description", f"{BASE}: {note}"]
+    for name, value, note, data in rows:
+        cmd = ["seldon", "result", "register", "--value", str(value), "--name", name,
+               "--units", name, "--description", f"{BASE}: {note}", "--data-name", data]
         r = subprocess.run(cmd, capture_output=True, text=True, cwd=REPO)
         if r.returncode == 0:
             ok += 1
