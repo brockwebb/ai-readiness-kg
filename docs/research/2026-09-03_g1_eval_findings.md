@@ -1,7 +1,7 @@
 # G1 EVAL — findings at the v2 freeze
 
 **Date:** 2026-09-03. **Status:** internal; not for distribution until the operator says so.
-**Revision:** v1.1, 2026-09-03 — §4 replaced: the reviewer's genuine-loss count is now reported as a range bounded by the scorer's count and an independent model rater's, with the two agreement coefficients and the escalation list (task `cc_tasks/2026-09-03_g1_calibration_rating_agreement.md`, DD-037). No other section changed. Prior: v1.0, 2026-09-03.
+**Revision:** v1.2, 2026-09-03 — G1-O's score is stated as the L3+ share and the level distribution beneath it as descriptive: §3 gains that sentence and the level-based verdicts E5 and E6 each carry the calibration's level-agreement caveat (their verdicts stand, unchanged, as the scorer's); §4 gains the implied-verdict rule's `unparseable` defect and how many escalated records it accounts for; §5 limit 6 now cites the genuine-loss range instead of a lone reviewer count. E4, H3, H4, H5 and C1 are untouched — they are L3+ claims. Nothing was re-scored and nothing withdrawn (task `cc_tasks/2026-09-03_g1_memo_v1_2_level_caveat.md`, DD-038). Prior: v1.1, 2026-09-03 — §4 replaced: the reviewer's genuine-loss count is now reported as a range bounded by the scorer's count and an independent model rater's, with the two agreement coefficients and the escalation list (task `cc_tasks/2026-09-03_g1_calibration_rating_agreement.md`, DD-037). No other section changed. Prior: v1.0, 2026-09-03.
 **Instrument:** parser `g1-parse-v2`, scorer `g1-score-v2`, prompt epoch `g1-v2-2026-09-03`,
 pinned consumer `claude-opus-5` — frozen for the January pilot (DD-036).
 **Numbers:** every number in this memo is a `{{result:<NAME>:value}}` token resolving to a
@@ -47,7 +47,11 @@ unparseable, {{result:g1_v2_rescore_v1_pooled_genuine_losses:value}} genuine los
 ## 3. Findings
 
 Each row is a statement registered before the responses it is tested on were read. Verdicts are
-the coded verdicts in `expectations_v2` of the named results file.
+the coded verdicts in `expectations_v2` of the named results file. **G1-O's score is the L3+
+share of families; the level distribution beneath it is descriptive** — the calibration (§4)
+found the two instruments agree on L3+ against below-L3 and disagree on which sub-L3 level a
+loss is, so a statement about levels carries the caveat printed with it and a statement about
+the L3+ share does not.
 
 **E3 (v1, not supported).** Form shift (L2) was pre-registered as the most frequent non-omission
 failure. In the v1 grid it never occurred: {{result:g1_v1_pooled_all_level_degraded_verbal:value}} L2 records in
@@ -70,7 +74,14 @@ by class, omission {{result:g1_v2_expect_E5_class_omission:value}}, form shift
 {{result:g1_v2_expect_E5_class_form_shift:value}}, suppression override
 {{result:g1_v2_expect_E5_class_suppression_override:value}}, decontextualization
 {{result:g1_v2_expect_E5_class_decontextualization:value}}, quantity hallucination
-{{result:g1_v2_expect_E5_class_quantity_hallucination:value}}.
+{{result:g1_v2_expect_E5_class_quantity_hallucination:value}}. **This is a claim about which
+sub-L3 level a failure sits at, and the level scale is the part of the instrument the
+calibration found least robust:** the independent rater matched the scorer's exact level on
+{{result:g1_cal_fable_stratum_scorer_agreed_L2_genuine:value}} of
+{{result:g1_cal_fable_stratum_n_L2_genuine:value}} L2 records and
+{{result:g1_cal_fable_stratum_scorer_agreed_L0_genuine:value}} of
+{{result:g1_cal_fable_stratum_n_L0_genuine:value}} L0 records. The verdict stands as the
+scorer's, and it is not rater-robust.
 
 **E6 (v2, supported).** The verbal-band mechanism v1 never saw appears under compression: L2 rate
 {{result:g1_v2_pooled_opus_E6_L2_rate_none:value}} at `none`
@@ -78,7 +89,17 @@ by class, omission {{result:g1_v2_expect_E5_class_omission:value}}, form shift
 {{result:g1_v2_pooled_opus_indirect_none_scored:value}}) against
 {{result:g1_v2_pooled_opus_E6_L2_rate_tight:value}} at `tight`
 ({{result:g1_v2_pooled_opus_indirect_tight_level_degraded_verbal:value}} of
-{{result:g1_v2_pooled_opus_indirect_tight_scored:value}}).
+{{result:g1_v2_pooled_opus_indirect_tight_scored:value}}). **The same caveat applies:** L2 is a
+sub-L3 level, and the rater matched the scorer's exact level on
+{{result:g1_cal_fable_stratum_scorer_agreed_L2_genuine:value}} of
+{{result:g1_cal_fable_stratum_n_L2_genuine:value}} L2 records, so the appearance of the
+verbal-band mechanism is the scorer's reading and is not rater-robust. What the rater does
+confirm on those records is the loss call rather than the level: on the sampled L2 records its
+verdict matched the reviewer's on
+{{result:g1_cal_fable_stratum_reviewer_agreed_L2_genuine:value}} of
+{{result:g1_cal_fable_stratum_reviewer_n_L2_genuine:value}} called genuine losses and
+{{result:g1_cal_fable_stratum_reviewer_agreed_L2_parser_miss:value}} of
+{{result:g1_cal_fable_stratum_reviewer_n_L2_parser_miss:value}} called parser misses.
 
 **H3 (v2, supported).** Coded API tables and handbook prose differ, and the coded tables lose more:
 table_coded {{result:g1_v2_expect_H3_table_coded_preserved:value}}/{{result:g1_v2_expect_H3_table_coded_n:value}}
@@ -221,7 +242,13 @@ that risk without removing it, and no human has labelled any of these records.
 records — {{result:g1_cal_fable_disagreements_level_gap:value}} separated by two or more levels and
 {{result:g1_cal_fable_disagreements_with_U:value}} where one side had no level to give — are listed
 in `assessment/results/g1_calibration_disagreements_2026-09-03.md` for the operator to look at if
-he chooses. Nothing in this memo waits on that.
+he chooses. Nothing in this memo waits on that. Those
+{{result:g1_cal_fable_disagreements_with_U:value}} are artifacts of the pre-registered
+implied-verdict rule rather than real disagreements: `unparseable` has no position on the level
+scale, so any level the rater gives reads as "the parser missed it" even when the rater's level
+says the qualifier is absent and the reviewer says the same. The rule was frozen before the
+ratings existed and is not patched here (DD-037; v3 backlog `73f0aa5d`), which leaves
+{{result:g1_cal_fable_disagreements_level_gap:value}} substantive disagreements on the list.
 
 ## 5. Limits
 
@@ -242,10 +269,14 @@ he chooses. Nothing in this memo waits on that.
    before any holdout response had been read: the required re-score of the v0/v1 evidence exposed
    binding defects in the frozen scorer. §9.1 of the v2 RESULT states what changed; no rule in the
    amendment is motivated by a holdout response.
-6. **Parser misses bias the loss rate upward.** {{result:g1_v2_pooled_opus_parser_misses:value}} of the
+6. **Parser misses bias the loss rate upward.** Some of the
    {{result:g1_v2_pooled_opus_review_queue:value}} queued records are qualifiers the response did state and the
-   parser did not read. Correcting them would move the measured loss down, so the direction of
-   every finding above survives them; their magnitudes would change. The v3 rule list is a
+   parser did not read. How many is exactly what §4's range leaves open: genuine losses
+   {{result:g1_cal_fable_range_rater_implied_genuine_losses:value}} (rater-implied) —
+   {{result:g1_v2_pooled_opus_genuine_losses:value}} (reviewer) —
+   {{result:g1_cal_fable_range_scorer_genuine_losses:value}} (scorer), the rest of the queue being
+   parser misses under whichever bound is read. Correcting them would move the measured loss down, so the
+   direction of every finding above survives them; their magnitudes would change. The v3 rule list is a
    registered backlog (ResearchTask `73f0aa5d`), not queued work.
 7. **The gate is a parse-coverage gate, not an accuracy gate.** It bounds how often the
    instrument cannot read a response; it says nothing about whether the levels it assigns are the
