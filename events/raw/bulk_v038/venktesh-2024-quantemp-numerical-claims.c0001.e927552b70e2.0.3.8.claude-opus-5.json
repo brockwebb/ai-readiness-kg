@@ -1,0 +1,31 @@
+{
+ "doc_id": "venktesh-2024-quantemp-numerical-claims",
+ "chunk_id": "venktesh-2024-quantemp-numerical-claims#c0001",
+ "chunk_index": 1,
+ "chunk_start": 0,
+ "chunk_end": 392,
+ "chunk_tokens": 134,
+ "heading_path": [],
+ "oversize": false,
+ "doc_sha256": "e927552b70e20260b26dc9eb1ff4a758e105ca3b3ce931334553f6113d23d37a",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 2886,
+  "cacheReadInputTokens": 12842,
+  "cacheCreationInputTokens": 22928,
+  "webSearchRequests": 0,
+  "costUSD": 0.307861,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 2146,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.307861,
+ "duration_ms": 33637,
+ "session_id": "d4b5f3c7-6b43-4cb7-8541-d95dfd7b90d8",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Title and author/affiliation front matter introducing QuanTemp, a real-world open-domain benchmark for fact-checking numerical claims; no substantive assertions beyond the title.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c-fact-checking-numerical-claims\",\n      \"name\": \"fact-checking numerical claims\",\n      \"aliases\": [\"numerical claim verification\"],\n      \"description\": \"The task the paper's benchmark targets, as named in the title.\",\n      \"anchor\": \"fact-checking numerical claims\",\n      \"location\": \"venktesh-2024-quantemp-numerical-claims#c0001\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [\n    {\n      \"id\": \"i-quantemp\",\n      \"name\": \"QuanTemp\",\n      \"owner\": null,\n      \"year\": null,\n      \"method\": null,\n      \"attribute_anchors\": {},\n      \"anchor\": \"QuanTemp:\",\n      \"location\": \"venktesh-2024-quantemp-numerical-claims#c0001\"\n    }\n  ],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"measures\",\n      \"from_id\": \"i-quantemp\",\n      \"to_id\": \"c-fact-checking-numerical-claims\",\n      \"anchor\": \"benchmark for\",\n      \"location\": \"venktesh-2024-quantemp-numerical-claims#c0001\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"venktesh-2024-quantemp-numerical-claims\",\n      \"to_id\": \"c-fact-checking-numerical-claims\",\n      \"anchor\": \"fact-checking numerical\",\n      \"location\": \"venktesh-2024-quantemp-numerical-claims#c0001\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [],\n  \"proposed_relationships\": [],\n  \"gleaned\": [\n    {\"name\": \"open-domain\", \"type\": \"Concept\"},\n    {\"name\": \"real-world benchmark\", \"type\": \"Concept\"}\n  ]\n}"
+}

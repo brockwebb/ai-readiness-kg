@@ -1,0 +1,33 @@
+{
+ "doc_id": "zhou-2026-loomsum-table-grounded-faithfulness",
+ "chunk_id": "zhou-2026-loomsum-table-grounded-faithfulness#c0029",
+ "chunk_index": 29,
+ "chunk_start": 52895,
+ "chunk_end": 53125,
+ "chunk_tokens": 58,
+ "heading_path": [
+  "4 .(8)"
+ ],
+ "oversize": false,
+ "doc_sha256": "d8c0055e63b69dda11cb9523d61ff5fb0be563dc6142055ac5be8853fdfe3074",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 4275,
+  "cacheReadInputTokens": 12842,
+  "cacheCreationInputTokens": 22790,
+  "webSearchRequests": 0,
+  "costUSD": 0.341206,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 2666,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.341206,
+ "duration_ms": 47588,
+ "session_id": "026e653a-70c4-4310-8f2d-eb6236b773bb",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Metric-definition fragment: a matched generated claim is additionally rated on Numeric Grounding, Analysis Support, and Relation Consistency against source evidence, with each applicable rating normalized to [0,1].\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_numeric_grounding\",\n      \"name\": \"Numeric Grounding\",\n      \"aliases\": [\"NG\"],\n      \"description\": \"A rating dimension on which a matched generated claim is evaluated against the source evidence.\",\n      \"anchor\": \"Numeric Grounding (NG)\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0029\"\n    },\n    {\n      \"id\": \"c_relation_consistency\",\n      \"name\": \"Relation Consistency\",\n      \"aliases\": [\"RC\"],\n      \"description\": \"A rating dimension on which a matched generated claim is evaluated against the source evidence.\",\n      \"anchor\": \"Relation Consistency (RC)\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0029\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"cl_additional_eval\",\n      \"claim_text\": \"The matched generated claim is additionally evaluated for Numeric Grounding (NG)\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"measured_practitioner\",\n      \"anchor\": \"is additionally\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0029\"\n    },\n    {\n      \"id\": \"cl_normalized_ratings\",\n      \"claim_text\": \"Each applicable rating is normalized to[0,1]\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"measured_practitioner\",\n      \"anchor\": \"normalized to[0,1]\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0029\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"zhou-2026-loomsum-table-grounded-faithfulness\",\n      \"to_id\": \"cl_additional_eval\",\n      \"anchor\": \"is additionally\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0029\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"zhou-2026-loomsum-table-grounded-faithfulness\",\n      \"to_id\": \"cl_normalized_ratings\",\n      \"anchor\": \"normalized to[0,1]\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0029\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_additional_eval\",\n      \"to_id\": \"c_numeric_grounding\",\n      \"anchor\": \"Numeric Grounding (NG)\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0029\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_additional_eval\",\n      \"to_id\": \"c_relation_consistency\",\n      \"anchor\": \"Relation Consistency (RC)\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0029\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"zhou-2026-loomsum-table-grounded-faithfulness\",\n      \"to_id\": \"c_numeric_grounding\",\n      \"anchor\": \"Numeric Grounding (NG)\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0029\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"zhou-2026-loomsum-table-grounded-faithfulness\",\n      \"to_id\": \"c_relation_consistency\",\n      \"anchor\": \"Relation Consistency (RC)\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0029\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"source evidence\",\n      \"anchor\": \"source evidence\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"Each applicable rating\",\n      \"suggested_edge\": \"uses_measure\",\n      \"diversion_reason\": \"cross_chunk\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"Analysis Support\", \"type\": \"Concept\"},\n    {\"name\": \"matched generated claim\", \"type\": \"Concept\"}\n  ]\n}"
+}

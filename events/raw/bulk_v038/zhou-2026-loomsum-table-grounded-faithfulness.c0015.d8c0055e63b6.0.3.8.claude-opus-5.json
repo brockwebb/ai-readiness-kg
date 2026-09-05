@@ -1,0 +1,34 @@
+{
+ "doc_id": "zhou-2026-loomsum-table-grounded-faithfulness",
+ "chunk_id": "zhou-2026-loomsum-table-grounded-faithfulness#c0015",
+ "chunk_index": 15,
+ "chunk_start": 30278,
+ "chunk_end": 30471,
+ "chunk_tokens": 41,
+ "heading_path": [
+  "5 Results",
+  "5.3 Results on Human Evaluation (RQ3)"
+ ],
+ "oversize": false,
+ "doc_sha256": "d8c0055e63b69dda11cb9523d61ff5fb0be563dc6142055ac5be8853fdfe3074",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 4943,
+  "cacheReadInputTokens": 12842,
+  "cacheCreationInputTokens": 22814,
+  "webSearchRequests": 0,
+  "costUSD": 0.358146,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 3471,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.358146,
+ "duration_ms": 57514,
+ "session_id": "661ab0c3-1bfb-4db8-a6b4-76673a35b00e",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Fragment of a human-evaluation results discussion: TGF-RC is said to explicitly target quantitative–narrative relation errors, which is offered as the reason for its stronger agreement with human RC judgments; the chunk ends in a table header row (Input, Method, FINDSum-Liquidity, FINDSum-ROO).\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_quant_narr_relation_errors\",\n      \"name\": \"quantitative–narrative relation errors\",\n      \"aliases\": [\"quantitative-narrative relation error\"],\n      \"description\": \"A summarization failure mode in which the relation between reported numbers and the surrounding narrative text is wrong.\",\n      \"anchor\": \"quantitative–narrative relation errors\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0015\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"cl_tgfrc_targets_failure_mode\",\n      \"claim_text\": \"explicitly targets this failure mode\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"peer_reviewed_experiment\",\n      \"anchor\": \"explicitly targets\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0015\"\n    }\n  ],\n  \"instruments\": [\n    {\n      \"id\": \"i_tgf_rc\",\n      \"name\": \"TGF-RC\",\n      \"owner\": null,\n      \"year\": null,\n      \"method\": null,\n      \"attribute_anchors\": {},\n      \"anchor\": \"TGF-RC\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0015\"\n    }\n  ],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"zhou-2026-loomsum-table-grounded-faithfulness\",\n      \"to_id\": \"cl_tgfrc_targets_failure_mode\",\n      \"anchor\": \"explicitly targets this failure\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0015\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_tgfrc_targets_failure_mode\",\n      \"to_id\": \"c_quant_narr_relation_errors\",\n      \"anchor\": \"targets this failure mode\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0015\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"zhou-2026-loomsum-table-grounded-faithfulness\",\n      \"to_id\": \"c_quant_narr_relation_errors\",\n      \"anchor\": \"relation errors\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0015\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"FINDSum-Liquidity\",\n      \"anchor\": \"FINDSum-Liquidity\"\n    },\n    {\n      \"name\": \"FINDSum-ROO\",\n      \"anchor\": \"FINDSum-ROO\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"from_id\": \"i_tgf_rc\",\n      \"to_id\": \"c_quant_narr_relation_errors\",\n      \"suggested_edge\": \"targets\",\n      \"anchor\": \"targets this failure\",\n      \"diversion_reason\": \"other:endpoint_type\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0015\"\n    },\n    {\n      \"from_id\": \"i_tgf_rc\",\n      \"to_id\": \"human RC judgments\",\n      \"suggested_edge\": \"correlates_with\",\n      \"anchor\": \"stronger correspondence with human\",\n      \"diversion_reason\": \"cross_chunk\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0015\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"human RC judgments\", \"type\": \"Concept\"},\n    {\"name\": \"Numeric\", \"type\": \"Concept\"},\n    {\"name\": \"FINDSum\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

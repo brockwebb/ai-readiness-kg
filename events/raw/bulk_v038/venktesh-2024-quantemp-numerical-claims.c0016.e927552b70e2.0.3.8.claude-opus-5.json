@@ -1,0 +1,33 @@
+{
+ "doc_id": "venktesh-2024-quantemp-numerical-claims",
+ "chunk_id": "venktesh-2024-quantemp-numerical-claims#c0016",
+ "chunk_index": 16,
+ "chunk_start": 27792,
+ "chunk_end": 27960,
+ "chunk_tokens": 46,
+ "heading_path": [
+  "4193 (27.03%)"
+ ],
+ "oversize": false,
+ "doc_sha256": "e927552b70e20260b26dc9eb1ff4a758e105ca3b3ce931334553f6113d23d37a",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 2036,
+  "cacheReadInputTokens": 12842,
+  "cacheCreationInputTokens": 22722,
+  "webSearchRequests": 0,
+  "costUSD": 0.284551,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 1379,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.284551,
+ "duration_ms": 24853,
+ "session_id": "478c5acb-7606-4af9-8ff5-731fa18379d3",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"A table fragment listing the numerical claim type 'Interval' with its dataset count 4193 (27.03%) and one example claim about Austin, Texas school-district recapture costs; surrounding text is OCR noise.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_interval\",\n      \"name\": \"Interval\",\n      \"aliases\": [\"interval claim\", \"interval numerical claim\"],\n      \"description\": \"A numerical claim type catalogued by the document, accounting for 4193 (27.03%) of the dataset and illustrated by an example claim stating a dollar range.\",\n      \"anchor\": \"Interval In Austin\",\n      \"location\": \"venktesh-2024-quantemp-numerical-claims#c0016\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"venktesh-2024-quantemp-numerical-claims\",\n      \"to_id\": \"c_interval\",\n      \"anchor\": \"Interval In Austin\",\n      \"location\": \"venktesh-2024-quantemp-numerical-claims#c0016\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"Austin, Texas\",\n      \"anchor\": \"Austin, Texas\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"4193 (27.03%)\\nInterval\",\n      \"suggested_edge\": \"has_component\",\n      \"diversion_reason\": \"structural_inference\"\n    }\n  ],\n  \"gleaned\": [\n    {\n      \"name\": \"Austin homeowner pays about $1,300 to $1,400 for recapture\",\n      \"type\": \"Claim\"\n    }\n  ]\n}\n```"
+}

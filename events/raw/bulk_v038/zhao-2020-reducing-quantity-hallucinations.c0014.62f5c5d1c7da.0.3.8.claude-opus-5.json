@@ -1,0 +1,33 @@
+{
+ "doc_id": "zhao-2020-reducing-quantity-hallucinations",
+ "chunk_id": "zhao-2020-reducing-quantity-hallucinations#c0014",
+ "chunk_index": 14,
+ "chunk_start": 24815,
+ "chunk_end": 25044,
+ "chunk_tokens": 133,
+ "heading_path": [
+  "BART"
+ ],
+ "oversize": false,
+ "doc_sha256": "62f5c5d1c7da3f6e74178319517e0ed159cccd3243017921103e52cbac0653c4",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 5445,
+  "cacheReadInputTokens": 12842,
+  "cacheCreationInputTokens": 22935,
+  "webSearchRequests": 0,
+  "costUSD": 0.371906,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 3942,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.371906,
+ "duration_ms": 65259,
+ "session_id": "235511bc-5f4a-4b48-9866-51232697a534",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"A results table only: ROUGE recall/precision/F1 columns plus avg-Q for three BART system variants (Baseline-shortest, Baseline-max-overlap, Original); no prose, so no sentence-grounded claims or semantic edges are available here.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_baseline_shortest\",\n      \"name\": \"Baseline-shortest\",\n      \"aliases\": [\"shortest baseline system\"],\n      \"description\": \"A baseline system variant whose ROUGE and avg-Q scores are reported for BART in this table.\",\n      \"anchor\": \"Baseline-shortest\",\n      \"location\": \"zhao-2020-reducing-quantity-hallucinations#c0014\"\n    },\n    {\n      \"id\": \"c_baseline_max_overlap\",\n      \"name\": \"Baseline-max-overlap\",\n      \"aliases\": [\"maximum-overlap baseline system\"],\n      \"description\": \"A baseline system variant whose ROUGE and avg-Q scores are reported for BART in this table.\",\n      \"anchor\": \"Baseline-max-overlap\",\n      \"location\": \"zhao-2020-reducing-quantity-hallucinations#c0014\"\n    },\n    {\n      \"id\": \"c_original\",\n      \"name\": \"Original\",\n      \"aliases\": [\"original system\"],\n      \"description\": \"The unmodified system variant whose ROUGE and avg-Q scores are reported for BART in this table.\",\n      \"anchor\": \"Original 49.64\",\n      \"location\": \"zhao-2020-reducing-quantity-hallucinations#c0014\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [\n    {\n      \"id\": \"m_avg_q\",\n      \"text\": \"avg-Q\",\n      \"response_type\": \"numeric\",\n      \"anchor\": \"avg-Q\",\n      \"location\": \"zhao-2020-reducing-quantity-hallucinations#c0014\"\n    }\n  ],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"zhao-2020-reducing-quantity-hallucinations\",\n      \"to_id\": \"c_baseline_shortest\",\n      \"anchor\": \"Baseline-shortest\",\n      \"location\": \"zhao-2020-reducing-quantity-hallucinations#c0014\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"zhao-2020-reducing-quantity-hallucinations\",\n      \"to_id\": \"c_baseline_max_overlap\",\n      \"anchor\": \"Baseline-max-overlap\",\n      \"location\": \"zhao-2020-reducing-quantity-hallucinations#c0014\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"zhao-2020-reducing-quantity-hallucinations\",\n      \"to_id\": \"c_original\",\n      \"anchor\": \"Original 49.64\",\n      \"location\": \"zhao-2020-reducing-quantity-hallucinations#c0014\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"BART\",\n      \"anchor\": \"BART\\nBaseline-shortest\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"suggested_edge\": \"evaluated_on_model\",\n      \"from_id\": \"c_original\",\n      \"to_id\": \"BART\",\n      \"anchor\": \"Original 49.64\",\n      \"diversion_reason\": \"structural_inference\"\n    },\n    {\n      \"suggested_edge\": \"measures\",\n      \"from_id\": \"m_avg_q\",\n      \"to_id\": \"c_original\",\n      \"anchor\": \"avg-Q\",\n      \"diversion_reason\": \"structural_inference\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"R1-R\", \"type\": \"Measure\"},\n    {\"name\": \"R1-P\", \"type\": \"Measure\"},\n    {\"name\": \"R1-F\", \"type\": \"Measure\"},\n    {\"name\": \"R2-R\", \"type\": \"Measure\"},\n    {\"name\": \"R2-P\", \"type\": \"Measure\"},\n    {\"name\": \"R2-F\", \"type\": \"Measure\"},\n    {\"name\": \"RL-R\", \"type\": \"Measure\"},\n    {\"name\": \"RL-P\", \"type\": \"Measure\"},\n    {\"name\": \"RL-F\", \"type\": \"Measure\"},\n    {\"name\": \"Model\", \"type\": \"Concept\"}\n  ]\n}"
+}

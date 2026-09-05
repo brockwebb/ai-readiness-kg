@@ -1,0 +1,33 @@
+{
+ "doc_id": "radhakrishnan-2024-knowing-when-to-ask-data-commons",
+ "chunk_id": "radhakrishnan-2024-knowing-when-to-ask-data-commons#c0012",
+ "chunk_index": 12,
+ "chunk_start": 47444,
+ "chunk_end": 47488,
+ "chunk_tokens": 12,
+ "heading_path": [
+  "INPUT:"
+ ],
+ "oversize": false,
+ "doc_sha256": "faf4a4afd242542c0ee9d25d32cc896bf23c3c75b886f0f179a14581baa6649d",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 8371,
+  "cacheReadInputTokens": 12842,
+  "cacheCreationInputTokens": 22961,
+  "webSearchRequests": 0,
+  "costUSD": 0.445316,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 6970,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.445316,
+ "duration_ms": 100059,
+ "session_id": "615631e0-dc9f-4197-a345-b8a9dda7aeb5",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Tail of a few-shot example inside the paper's prompt template: an answer sentence whose energy-mix figures are each carried by a __DC__ annotation with its returned percentage, followed by the template's INPUT slot for {question}/{answer}.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_petroleum\",\n      \"name\": \"petroleum\",\n      \"aliases\": [\"Petroleum\", \"oil\"],\n      \"description\": \"Fossil energy source cited in the example answer as a share of United States energy in 2022, with its figure supplied by a Data Commons annotation.\",\n      \"anchor\": \"frompetroleum\",\n      \"location\": \"radhakrishnan-2024-knowing-when-to-ask-data-commons#c0012\"\n    },\n    {\n      \"id\": \"c_natural_gas\",\n      \"name\": \"natural gas\",\n      \"aliases\": [\"Natural gas\"],\n      \"description\": \"Fossil energy source cited in the example answer as a share of United States energy in 2022, with its figure supplied by a Data Commons annotation.\",\n      \"anchor\": \"bynatural gas\",\n      \"location\": \"radhakrishnan-2024-knowing-when-to-ask-data-commons#c0012\"\n    },\n    {\n      \"id\": \"c_renewable_sources\",\n      \"name\": \"renewable sources\",\n      \"aliases\": [\"Renewable energy sources\", \"renewables\"],\n      \"description\": \"Energy source category cited in the example answer as a share of United States energy in 2022, with its figure supplied by a Data Commons annotation.\",\n      \"anchor\": \"andrenewable sources\",\n      \"location\": \"radhakrishnan-2024-knowing-when-to-ask-data-commons#c0012\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"radhakrishnan-2024-knowing-when-to-ask-data-commons\",\n      \"to_id\": \"c_petroleum\",\n      \"anchor\": \"frompetroleum\",\n      \"location\": \"radhakrishnan-2024-knowing-when-to-ask-data-commons#c0012\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"radhakrishnan-2024-knowing-when-to-ask-data-commons\",\n      \"to_id\": \"c_natural_gas\",\n      \"anchor\": \"bynatural gas\",\n      \"location\": \"radhakrishnan-2024-knowing-when-to-ask-data-commons#c0012\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"radhakrishnan-2024-knowing-when-to-ask-data-commons\",\n      \"to_id\": \"c_renewable_sources\",\n      \"anchor\": \"andrenewable sources\",\n      \"location\": \"radhakrishnan-2024-knowing-when-to-ask-data-commons#c0012\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"__DC__\",\n      \"anchor\": \"[__DC__(\\\"what percentage of energy in theUnited\"\n    },\n    {\n      \"name\": \"United States\",\n      \"anchor\": \"in theUnited States\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"suggested_edge\": \"ranked_above\",\n      \"from_id\": \"c_petroleum\",\n      \"to_id\": \"c_natural_gas\",\n      \"anchor\": \"followed bynatural gas\",\n      \"diversion_reason\": \"other:ranking\"\n    },\n    {\n      \"suggested_edge\": \"about\",\n      \"from_id\": \"energy_mix_claim\",\n      \"to_id\": \"c_petroleum\",\n      \"anchor\": \"energy came frompetroleum\",\n      \"diversion_reason\": \"cross_chunk\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"energy came frompetroleum\", \"type\": \"Claim\"},\n    {\"name\": \"Question/Answer INPUT slot of the annotation prompt template\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

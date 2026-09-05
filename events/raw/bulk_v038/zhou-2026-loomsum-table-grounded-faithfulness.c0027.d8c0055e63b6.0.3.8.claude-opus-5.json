@@ -1,0 +1,33 @@
+{
+ "doc_id": "zhou-2026-loomsum-table-grounded-faithfulness",
+ "chunk_id": "zhou-2026-loomsum-table-grounded-faithfulness#c0027",
+ "chunk_index": 27,
+ "chunk_start": 49253,
+ "chunk_end": 51188,
+ "chunk_tokens": 450,
+ "heading_path": [
+  "2021 Conference of the North American Chapter of"
+ ],
+ "oversize": false,
+ "doc_sha256": "d8c0055e63b69dda11cb9523d61ff5fb0be563dc6142055ac5be8853fdfe3074",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 7015,
+  "cacheReadInputTokens": 12842,
+  "cacheCreationInputTokens": 24044,
+  "webSearchRequests": 0,
+  "costUSD": 0.422246,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 4719,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.422246,
+ "duration_ms": 74211,
+ "session_id": "12f326c4-a0dd-44d5-9380-639a896d0681",
+ "raw_result": "{\n\"extract_plan\": {\"chunk_summary\": \"Appendix A reports test-set statistics for the FINDSum subsets (Liquidity, ROO) and USTT — instance counts, average source and summary lengths in GPT o200_base tokens — and argues FINDSum is long-context while USTT is a shorter complementary table–text setting.\"},\n\"concepts\": [\n{\"id\": \"c_findsum\", \"name\": \"FINDSum\", \"aliases\": [\"FindSum\"], \"description\": \"Long-context financial table–text summarization dataset whose source length includes both narrative content and associated tabular information; used here as a test set.\", \"anchor\": \"nature of FINDSum\", \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0027\"},\n{\"id\": \"c_ustt\", \"name\": \"USTT\", \"aliases\": [], \"description\": \"Shorter table–text summarization test set in a different language and input scale, used as a complement to FINDSum.\", \"anchor\": \"USTT contains 1,390\", \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0027\"},\n{\"id\": \"c_findsum_roo\", \"name\": \"FINDSum-ROO\", \"aliases\": [\"FindSum-ROO\"], \"description\": \"FINDSum subset with 6,201 test instances, average source length 36,447 tokens and average reference summary length 444 tokens.\", \"anchor\": \"FINDSum-ROO contains\", \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0027\"},\n{\"id\": \"c_findsum_liquidity\", \"name\": \"FindSum-Liquidity\", \"aliases\": [\"FINDSum-Liquidity\"], \"description\": \"FINDSum subset with 4,204 test instances, average source length 34,630 tokens and average reference summary length 538 tokens.\", \"anchor\": \"FindSum-Liquidity 4204\", \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0027\"}\n],\n\"definitions\": [],\n\"claims\": [\n{\"id\": \"cl_ustt_size\", \"claim_text\": \"USTT contains 1,390 test instances\", \"claim_type\": \"empirical\", \"evidence_grade\": \"measured_practitioner\", \"anchor\": \"1,390 test instances\", \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0027\"},\n{\"id\": \"cl_roo_larger\", \"claim_text\": \"FINDSum-ROO contains a larger test set\", \"claim_type\": \"empirical\", \"evidence_grade\": \"measured_practitioner\", \"anchor\": \"a larger test set\", \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0027\"},\n{\"id\": \"cl_ustt_shorter\", \"claim_text\": \"USTT is considerably shorter than FINDSum\", \"claim_type\": \"empirical\", \"evidence_grade\": \"measured_practitioner\", \"anchor\": \"considerably shorter than\", \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0027\"},\n{\"id\": \"cl_token_measure\", \"claim_text\": \"All lengths are measured in tokens\", \"claim_type\": \"empirical\", \"evidence_grade\": \"measured_practitioner\", \"anchor\": \"All lengths are measured\", \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0027\"}\n],\n\"instruments\": [],\n\"measures\": [],\n\"standards\": [],\n\"frameworks\": [],\n\"practices\": [],\n\"tools\": [],\n\"platforms\": [],\n\"edges\": [\n{\"type\": \"asserts\", \"from_id\": \"zhou-2026-loomsum-table-grounded-faithfulness\", \"to_id\": \"cl_ustt_size\", \"anchor\": \"1,390\", \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0027\"},\n{\"type\": \"asserts\", \"from_id\": \"zhou-2026-loomsum-table-grounded-faithfulness\", \"to_id\": \"cl_roo_larger\", \"anchor\": \"larger test set of\", \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0027\"},\n{\"type\": \"asserts\", \"from_id\": \"zhou-2026-loomsum-table-grounded-faithfulness\", \"to_id\": \"cl_ustt_shorter\", \"anchor\": \"Although\", \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0027\"},\n{\"type\": \"asserts\", \"from_id\": \"zhou-2026-loomsum-table-grounded-faithfulness\", \"to_id\": \"cl_token_measure\", \"anchor\": \"measured in tokens using\", \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0027\"},\n{\"type\": \"about\", \"from_id\": \"cl_ustt_size\", \"to_id\": \"c_ustt\", \"anchor\": \"In contrast, USTT\", \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0027\"},\n{\"type\": \"about\", \"from_id\": \"cl_roo_larger\", \"to_id\": \"c_findsum_roo\", \"anchor\": \"6,201\", \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0027\"},\n{\"type\": \"about\", \"from_id\": \"cl_ustt_shorter\", \"to_id\": \"c_findsum\", \"anchor\": \"shorter than FINDSum, it\", \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0027\"}\n],\n\"cites\": [],\n\"mentions\": [\n{\"name\": \"o200_base tokenizer\", \"anchor\": \"o200_base tokenizer\"},\n{\"name\": \"Table 5\", \"anchor\": \"Table 5 summarizes\"}\n],\n\"proposed_relationships\": [\n{\"suggested_edge\": \"has_component\", \"from_id\": \"c_findsum\", \"to_id\": \"c_findsum_liquidity\", \"anchor\": \"The two FINDSum subsets\", \"diversion_reason\": \"structural_inference\", \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0027\"},\n{\"suggested_edge\": \"has_component\", \"from_id\": \"c_findsum\", \"to_id\": \"c_findsum_roo\", \"anchor\": \"two FINDSum subsets represent\", \"diversion_reason\": \"structural_inference\", \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0027\"}\n],\n\"gleaned\": [\n{\"name\": \"table–text summarization\", \"type\": \"Concept\"},\n{\"name\": \"long-context summarization\", \"type\": \"Concept\"},\n{\"name\": \"reference summary length\", \"type\": \"Concept\"},\n{\"name\": \"average source length\", \"type\": \"Concept\"},\n{\"name\": \"Sensitive Analysis of Base Model\", \"type\": \"Concept\"},\n{\"name\": \"Evaluation Prompts\", \"type\": \"Concept\"}\n]\n}"
+}

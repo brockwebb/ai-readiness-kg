@@ -1,0 +1,33 @@
+{
+ "doc_id": "zhou-2026-loomsum-table-grounded-faithfulness",
+ "chunk_id": "zhou-2026-loomsum-table-grounded-faithfulness#c0039",
+ "chunk_index": 39,
+ "chunk_start": 67029,
+ "chunk_end": 67452,
+ "chunk_tokens": 94,
+ "heading_path": [
+  "2. You may resolve local pronouns or references using"
+ ],
+ "oversize": false,
+ "doc_sha256": "d8c0055e63b69dda11cb9523d61ff5fb0be563dc6142055ac5be8853fdfe3074",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 7858,
+  "cacheReadInputTokens": 12842,
+  "cacheCreationInputTokens": 22887,
+  "webSearchRequests": 0,
+  "costUSD": 0.43175100000000005,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 6630,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.43175100000000005,
+ "duration_ms": 92324,
+ "session_id": "77e6689c-5b2d-4585-ae0e-c3a1838072e2",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Appendix prompt rules 2-3 for claim decomposition: local references may be resolved from the summary but nothing unstated may be added, and each claim's exact semantic content (values, units, directions, negation, modality, hedging, causal strength) must be preserved.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_semantic_content\",\n      \"name\": \"semantic content\",\n      \"aliases\": [\"exact semantic content\"],\n      \"description\": \"The meaning carried by a claim, which the instructions require be preserved without alteration.\",\n      \"anchor\": \"exact semantic content\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0039\"\n    },\n    {\n      \"id\": \"c_claim_unit\",\n      \"name\": \"claim\",\n      \"aliases\": [\"decomposed claim\"],\n      \"description\": \"The individual assertion unit whose content, attribution, modality and causal strength must be preserved.\",\n      \"anchor\": \"each claim\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0039\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [\n    {\n      \"id\": \"p_preserve_semantic_content\",\n      \"text\": \"Preserve the exact semantic content of each claim,\",\n      \"scope\": \"content\",\n      \"as_of_date\": null,\n      \"anchor\": \"Preserve the exact semantic\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0039\"\n    }\n  ],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"recommends\",\n      \"from_id\": \"zhou-2026-loomsum-table-grounded-faithfulness\",\n      \"to_id\": \"p_preserve_semantic_content\",\n      \"anchor\": \"3. Preserve\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0039\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"p_preserve_semantic_content\",\n      \"to_id\": \"c_claim_unit\",\n      \"anchor\": \"semantic content of each claim\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0039\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"summary\",\n      \"anchor\": \"within the summary\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"suggested_edge\": \"has_component\",\n      \"from_name\": \"Preserve the exact semantic content of each claim,\",\n      \"to_name\": \"claim decomposition instruction set\",\n      \"anchor\": \"including:\",\n      \"diversion_reason\": \"cross_chunk\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0039\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"local pronouns\", \"type\": \"Concept\"},\n    {\"name\": \"unstated entities, causes, or relations\", \"type\": \"Concept\"},\n    {\"name\": \"negation\", \"type\": \"Concept\"},\n    {\"name\": \"attribution\", \"type\": \"Concept\"},\n    {\"name\": \"modality\", \"type\": \"Concept\"},\n    {\"name\": \"uncertainty\", \"type\": \"Concept\"},\n    {\"name\": \"hedging\", \"type\": \"Concept\"},\n    {\"name\": \"directions and magnitudes of change\", \"type\": \"Concept\"},\n    {\"name\": \"You may resolve local pronouns or references using\", \"type\": \"Practice\"}\n  ]\n}"
+}

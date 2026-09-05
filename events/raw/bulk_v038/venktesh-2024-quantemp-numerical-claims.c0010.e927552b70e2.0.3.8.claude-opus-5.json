@@ -1,0 +1,33 @@
+{
+ "doc_id": "venktesh-2024-quantemp-numerical-claims",
+ "chunk_id": "venktesh-2024-quantemp-numerical-claims#c0010",
+ "chunk_index": 10,
+ "chunk_start": 15982,
+ "chunk_end": 16993,
+ "chunk_tokens": 299,
+ "heading_path": [
+  "CD NNPS"
+ ],
+ "oversize": false,
+ "doc_sha256": "e927552b70e20260b26dc9eb1ff4a758e105ca3b3ce931334553f6113d23d37a",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 9256,
+  "cacheReadInputTokens": 12842,
+  "cacheCreationInputTokens": 23474,
+  "webSearchRequests": 0,
+  "costUSD": 0.47257099999999996,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 7259,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.47257099999999996,
+ "duration_ms": 103753,
+ "session_id": "9c291e93-a19b-4551-b67a-156d3eb13eb8",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Figure 2 fragment showing the QuanTemp construction pipeline (a numerical claim decomposed into questions Q1–Q3 with retrieved evidence snippets E1–E3), followed by Table 2 listing top fact-checking domains with occurrence counts and the header of Table 3 on claim source countries.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c1\",\n      \"name\": \"QuanTemp Construction Pipeline\",\n      \"aliases\": [\"QuanTemp dataset construction pipeline\"],\n      \"description\": \"The pipeline by which the QuanTemp dataset is constructed, illustrated in Figure 2 as a claim decomposed into questions with retrieved evidence snippets.\",\n      \"anchor\": \"QuanTemp Construction Pipeline\",\n      \"location\": \"venktesh-2024-quantemp-numerical-claims#c0010\"\n    },\n    {\n      \"id\": \"c2\",\n      \"name\": \"Evidence Snippets\",\n      \"aliases\": [\"retrieved evidence\"],\n      \"description\": \"Retrieved evidence passages (E1–E3) shown in the pipeline figure alongside the decomposed questions for a numerical claim.\",\n      \"anchor\": \"Evidence Snippets\",\n      \"location\": \"venktesh-2024-quantemp-numerical-claims#c0010\"\n    },\n    {\n      \"id\": \"c3\",\n      \"name\": \"Top fact-checking domains\",\n      \"aliases\": [\"claim source domains\"],\n      \"description\": \"The fact-checking domains contributing the most claims, tabulated with occurrence counts in Table 2.\",\n      \"anchor\": \"Top fact-checking domains\",\n      \"location\": \"venktesh-2024-quantemp-numerical-claims#c0010\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"cl1\",\n      \"claim_text\": \"Politifact 3,840\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"measured_practitioner\",\n      \"anchor\": \"Politifact 3,840\",\n      \"location\": \"venktesh-2024-quantemp-numerical-claims#c0010\"\n    }\n  ],\n  \"instruments\": [\n    {\n      \"id\": \"i1\",\n      \"name\": \"QuanTemp\",\n      \"owner\": null,\n      \"year\": null,\n      \"method\": null,\n      \"attribute_anchors\": {},\n      \"anchor\": \"QuanTemp\",\n      \"location\": \"venktesh-2024-quantemp-numerical-claims#c0010\"\n    }\n  ],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"venktesh-2024-quantemp-numerical-claims\",\n      \"to_id\": \"c1\",\n      \"anchor\": \"QuanTemp Construction Pipeline\",\n      \"location\": \"venktesh-2024-quantemp-numerical-claims#c0010\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"venktesh-2024-quantemp-numerical-claims\",\n      \"to_id\": \"c2\",\n      \"anchor\": \"Evidence Snippets\",\n      \"location\": \"venktesh-2024-quantemp-numerical-claims#c0010\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"venktesh-2024-quantemp-numerical-claims\",\n      \"to_id\": \"c3\",\n      \"anchor\": \"Top fact-checking domains\",\n      \"location\": \"venktesh-2024-quantemp-numerical-claims#c0010\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"venktesh-2024-quantemp-numerical-claims\",\n      \"to_id\": \"cl1\",\n      \"anchor\": \"Politifact 3,840\",\n      \"location\": \"venktesh-2024-quantemp-numerical-claims#c0010\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl1\",\n      \"to_id\": \"c3\",\n      \"anchor\": \"Top fact-checking domains\",\n      \"location\": \"venktesh-2024-quantemp-numerical-claims#c0010\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\"name\": \"Politifact\", \"anchor\": \"Politifact\"},\n    {\"name\": \"Snopes\", \"anchor\": \"Snopes\"},\n    {\"name\": \"AfP\", \"anchor\": \"AfP\"},\n    {\"name\": \"Africacheck\", \"anchor\": \"Africacheck\"},\n    {\"name\": \"Fullfact\", \"anchor\": \"Fullfact\"},\n    {\"name\": \"Factly\", \"anchor\": \"Factly\"},\n    {\"name\": \"Boomlive_in\", \"anchor\": \"Boomlive_in\"},\n    {\"name\": \"Logically\", \"anchor\": \"Logically\"},\n    {\"name\": \"Reuters\", \"anchor\": \"Reuters\"},\n    {\"name\": \"Lead Stories\", \"anchor\": \"Lead Stories\"},\n    {\"name\": \"Top claim source countries\", \"anchor\": \"Top claim source countries\"}\n  ],\n  \"proposed_relationships\": [\n    {\n      \"from_id\": \"i1\",\n      \"to_id\": \"c1\",\n      \"suggested_edge\": \"has_component\",\n      \"anchor\": \"QuanTemp Construction Pipeline\",\n      \"diversion_reason\": \"other:endpoint_type_invalid\",\n      \"location\": \"venktesh-2024-quantemp-numerical-claims#c0010\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"Only 536 Georgians are signed up for Obamacare while 400,000 in the state lost their health insurance\", \"type\": \"Claim\"},\n    {\"name\": \"Snopes 1,648\", \"type\": \"Claim\"},\n    {\"name\": \"Claim Source\", \"type\": \"Concept\"},\n    {\"name\": \"decomposed questions Q1-Q3\", \"type\": \"Concept\"}\n  ]\n}"
+}

@@ -1,0 +1,33 @@
+{
+ "doc_id": "zhao-2020-reducing-quantity-hallucinations",
+ "chunk_id": "zhao-2020-reducing-quantity-hallucinations#c0012",
+ "chunk_index": 12,
+ "chunk_start": 23502,
+ "chunk_end": 23680,
+ "chunk_tokens": 93,
+ "heading_path": [
+  "O 100.0 100.0 100.0"
+ ],
+ "oversize": false,
+ "doc_sha256": "62f5c5d1c7da3f6e74178319517e0ed159cccd3243017921103e52cbac0653c4",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 3339,
+  "cacheReadInputTokens": 12842,
+  "cacheCreationInputTokens": 22814,
+  "webSearchRequests": 0,
+  "costUSD": 0.318046,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 2424,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.318046,
+ "duration_ms": 39911,
+ "session_id": "b172cfc7-310d-428f-83c3-5c4a9bf4f497",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Table 5 reports per-label precision/recall/F1 for HERMAN on the test set using BERT word embedding; the only extractable content is the system and its embedding input.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_bert_word_embedding\",\n      \"name\": \"BERT word embedding\",\n      \"aliases\": [\"BERT embeddings\"],\n      \"description\": \"Word embedding input used by the evaluated system in this table.\",\n      \"anchor\": \"BERT word embedding\",\n      \"location\": \"zhao-2020-reducing-quantity-hallucinations#c0012\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [\n    {\n      \"id\": \"i_herman\",\n      \"name\": \"H ERMAN\",\n      \"aliases\": [\"HERMAN\"],\n      \"owner\": null,\n      \"year\": null,\n      \"method\": \"evaluated on the test set using BERT word embedding\",\n      \"attribute_anchors\": {\n        \"method\": \"BERT word embedding\"\n      },\n      \"anchor\": \"H ERMAN\",\n      \"location\": \"zhao-2020-reducing-quantity-hallucinations#c0012\"\n    }\n  ],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"zhao-2020-reducing-quantity-hallucinations\",\n      \"to_id\": \"c_bert_word_embedding\",\n      \"anchor\": \"BERT word embedding\",\n      \"location\": \"zhao-2020-reducing-quantity-hallucinations#c0012\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\"name\": \"B-V\", \"anchor\": \"B-V\"},\n    {\"name\": \"B-U\", \"anchor\": \"B-U\"},\n    {\"name\": \"I-V\", \"anchor\": \"I-V\"},\n    {\"name\": \"I-U\", \"anchor\": \"I-U\"}\n  ],\n  \"proposed_relationships\": [\n    {\n      \"from_id\": \"i_herman\",\n      \"to_id\": \"c_bert_word_embedding\",\n      \"suggested_edge\": \"uses_representation\",\n      \"anchor\": \"using\",\n      \"location\": \"zhao-2020-reducing-quantity-hallucinations#c0012\",\n      \"diversion_reason\": \"other:no_edge_type\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"Precision\", \"type\": \"Concept\"},\n    {\"name\": \"Recall\", \"type\": \"Concept\"},\n    {\"name\": \"F 1\", \"type\": \"Concept\"},\n    {\"name\": \"test set\", \"type\": \"Concept\"}\n  ]\n}"
+}

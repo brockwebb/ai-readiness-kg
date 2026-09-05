@@ -1,0 +1,33 @@
+{
+ "doc_id": "zhou-2026-loomsum-table-grounded-faithfulness",
+ "chunk_id": "zhou-2026-loomsum-table-grounded-faithfulness#c0004",
+ "chunk_index": 4,
+ "chunk_start": 4333,
+ "chunk_end": 4443,
+ "chunk_tokens": 37,
+ "heading_path": [
+  "TEXT FACT"
+ ],
+ "oversize": false,
+ "doc_sha256": "d8c0055e63b69dda11cb9523d61ff5fb0be563dc6142055ac5be8853fdfe3074",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 2698,
+  "cacheReadInputTokens": 12842,
+  "cacheCreationInputTokens": 22717,
+  "webSearchRequests": 0,
+  "costUSD": 0.301051,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 1636,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.301051,
+ "duration_ms": 31368,
+ "session_id": "817c1acb-4d7e-4be6-9a3f-c39687445f78",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Table/figure fragment: a text fact stating total revenue rose $25.7M, decomposed into non-interest income and net interest income contributions, alongside a '+$14.1M (+2.3%)' change row.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_total_revenue\",\n      \"name\": \"Total revenue\",\n      \"aliases\": [],\n      \"description\": \"The document's revenue aggregate, reported as increasing in this fragment.\",\n      \"anchor\": \"Total revenue\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0004\"\n    },\n    {\n      \"id\": \"c_net_interest_income\",\n      \"name\": \"net interest income\",\n      \"aliases\": [\"Net interest income\"],\n      \"description\": \"Interest-income component contributing +$14.1M to the reported revenue increase.\",\n      \"anchor\": \"net interest income\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0004\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"cl_revenue_increase\",\n      \"claim_text\": \"Total revenue increased $25.7M\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"Total revenue increased\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0004\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"zhou-2026-loomsum-table-grounded-faithfulness\",\n      \"to_id\": \"cl_revenue_increase\",\n      \"anchor\": \"Total revenue increased\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0004\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_revenue_increase\",\n      \"to_id\": \"c_total_revenue\",\n      \"anchor\": \"Total revenue\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0004\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"zhou-2026-loomsum-table-grounded-faithfulness\",\n      \"to_id\": \"c_net_interest_income\",\n      \"anchor\": \"net interest income\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0004\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"Change: +$14.1M\",\n      \"suggested_edge\": \"quantifies\",\n      \"from_hint\": \"Change: +$14.1M (+2.3%)\",\n      \"to_hint\": \"net interest income\",\n      \"diversion_reason\": \"structural_inference\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"non-interest income\", \"type\": \"Concept\"}\n  ]\n}"
+}

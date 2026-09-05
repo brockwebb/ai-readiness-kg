@@ -1,0 +1,33 @@
+{
+ "doc_id": "zhou-2026-loomsum-table-grounded-faithfulness",
+ "chunk_id": "zhou-2026-loomsum-table-grounded-faithfulness#c0010",
+ "chunk_index": 10,
+ "chunk_start": 19318,
+ "chunk_end": 20064,
+ "chunk_tokens": 241,
+ "heading_path": [
+  "4 Experiments"
+ ],
+ "oversize": false,
+ "doc_sha256": "d8c0055e63b69dda11cb9523d61ff5fb0be563dc6142055ac5be8853fdfe3074",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 6812,
+  "cacheReadInputTokens": 12842,
+  "cacheCreationInputTokens": 23320,
+  "webSearchRequests": 0,
+  "costUSD": 0.40993100000000005,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 4757,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.40993100000000005,
+ "duration_ms": 72775,
+ "session_id": "5a1ef145-624b-44f6-808a-faf9951aa840",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Opening of the Experiments section: three research questions (overall effectiveness of LOOMSUM, contributions of cross-modal alignment and planning, validity of the TGF metric) followed by a garbled results table over FINDSum-ROO and FINDSum-Liquidity.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_loomsum\",\n      \"name\": \"LOOMSUM\",\n      \"aliases\": [\"LoomSum\"],\n      \"description\": \"The summarization method this paper evaluates; the experiments ask whether it improves summary quality, numeric content coverage, and table-grounded faithfulness, and how cross-modal alignment and planning contribute to its performance.\",\n      \"anchor\": \"performance of LOOMSUM\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0010\"\n    },\n    {\n      \"id\": \"c_tgf\",\n      \"name\": \"TGF\",\n      \"aliases\": [\"table-grounded faithfulness metric\"],\n      \"description\": \"The paper's metric, whose validity is examined by asking whether it aligns with human judgments and captures relation-level errors.\",\n      \"anchor\": \"TGF align\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0010\"\n    },\n    {\n      \"id\": \"c_numeric_coverage\",\n      \"name\": \"numeric content coverage\",\n      \"aliases\": [],\n      \"description\": \"One of the three dimensions on which the experiments ask whether LOOMSUM improves over existing summarization methods.\",\n      \"anchor\": \"numeric content coverage\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0010\"\n    },\n    {\n      \"id\": \"c_relation_level_errors\",\n      \"name\": \"relation-level errors\",\n      \"aliases\": [],\n      \"description\": \"The error class the metric-validity question targets; described as overlooked by generic factuality metrics.\",\n      \"anchor\": \"relation-level errors\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0010\"\n    },\n    {\n      \"id\": \"c_generic_factuality_metrics\",\n      \"name\": \"generic factuality metrics\",\n      \"aliases\": [],\n      \"description\": \"The comparison class against which TGF's metric validity is posed; said to overlook relation-level errors.\",\n      \"anchor\": \"generic factuality metrics\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0010\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"zhou-2026-loomsum-table-grounded-faithfulness\",\n      \"to_id\": \"c_loomsum\",\n      \"anchor\": \"performance of LOOMSUM\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0010\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"zhou-2026-loomsum-table-grounded-faithfulness\",\n      \"to_id\": \"c_tgf\",\n      \"anchor\": \"TGF align\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0010\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"zhou-2026-loomsum-table-grounded-faithfulness\",\n      \"to_id\": \"c_numeric_coverage\",\n      \"anchor\": \"numeric content coverage\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0010\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"zhou-2026-loomsum-table-grounded-faithfulness\",\n      \"to_id\": \"c_relation_level_errors\",\n      \"anchor\": \"relation-level errors\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0010\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"zhou-2026-loomsum-table-grounded-faithfulness\",\n      \"to_id\": \"c_generic_factuality_metrics\",\n      \"anchor\": \"generic factuality metrics\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0010\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"FINDSum-ROO\",\n      \"anchor\": \"FINDSum-ROO\"\n    },\n    {\n      \"name\": \"FINDSum-Liquidity\",\n      \"anchor\": \"FINDSum-Liquidity\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"FINDSum-ROO\",\n      \"suggested_edge\": \"evaluated_on\",\n      \"from_id\": \"c_loomsum\",\n      \"to_id\": \"FINDSum-ROO\",\n      \"diversion_reason\": \"structural_inference\"\n    },\n    {\n      \"anchor\": \"TGF align\",\n      \"suggested_edge\": \"measures\",\n      \"from_id\": \"c_tgf\",\n      \"to_id\": \"c_relation_level_errors\",\n      \"diversion_reason\": \"predicate_not_located\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"table-grounded faithfulness\", \"type\": \"Concept\"},\n    {\"name\": \"cross-modal alignment\", \"type\": \"Concept\"},\n    {\"name\": \"planning\", \"type\": \"Concept\"},\n    {\"name\": \"summary quality\", \"type\": \"Concept\"},\n    {\"name\": \"human judgments\", \"type\": \"Concept\"},\n    {\"name\": \"TextRank\", \"type\": \"Concept\"},\n    {\"name\": \"Table-RAG\", \"type\": \"Concept\"},\n    {\"name\": \"GCG\", \"type\": \"Concept\"},\n    {\"name\": \"Direct-LC\", \"type\": \"Concept\"},\n    {\"name\": \"RAG-Sum\", \"type\": \"Concept\"}\n  ]\n}"
+}

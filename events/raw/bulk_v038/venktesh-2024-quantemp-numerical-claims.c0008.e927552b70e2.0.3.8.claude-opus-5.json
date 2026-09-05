@@ -1,0 +1,33 @@
+{
+ "doc_id": "venktesh-2024-quantemp-numerical-claims",
+ "chunk_id": "venktesh-2024-quantemp-numerical-claims#c0008",
+ "chunk_index": 8,
+ "chunk_start": 14776,
+ "chunk_end": 15191,
+ "chunk_tokens": 94,
+ "heading_path": [
+  "3 DATASET CONSTRUCTION"
+ ],
+ "oversize": false,
+ "doc_sha256": "e927552b70e20260b26dc9eb1ff4a758e105ca3b3ce931334553f6113d23d37a",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 5851,
+  "cacheReadInputTokens": 12842,
+  "cacheCreationInputTokens": 22898,
+  "webSearchRequests": 0,
+  "costUSD": 0.3816860000000001,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 4237,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3816860000000001,
+ "duration_ms": 65329,
+ "session_id": "9226efe3-506d-4777-9f3d-fe147f077d11",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Opening of the dataset-construction section: real-world claims are collected from professional fact-checkers via Google Fact Check Tool APIs, yielding 278,636 fact-checks before non-English filtering.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_real_world_claims\",\n      \"name\": \"real-world claims\",\n      \"aliases\": [\"real-world fact-checked claims\"],\n      \"description\": \"Claims curated by professional fact-checkers at fact-checking organizations, collected as the raw material for the dataset.\",\n      \"anchor\": \"real-world claims\",\n      \"location\": \"3.1 Collecting Real-world Claims\"\n    },\n    {\n      \"id\": \"c_fact_checks\",\n      \"name\": \"fact-checks\",\n      \"aliases\": [\"fact-check records\"],\n      \"description\": \"The fact-check records gathered through the Google Fact Check Tool APIs; the full collection is counted and then filtered by language.\",\n      \"anchor\": \"collection of fact-checks\",\n      \"location\": \"3.1 Collecting Real-world Claims\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"cl_collect_claims\",\n      \"claim_text\": \"We first collect real-world claims\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"measured_practitioner\",\n      \"anchor\": \"We first collect\",\n      \"location\": \"3.1 Collecting Real-world Claims\"\n    },\n    {\n      \"id\": \"cl_278636\",\n      \"claim_text\": \"The full collection of fact-checks consists of 278,636\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"measured_practitioner\",\n      \"anchor\": \"consists of 278,636\",\n      \"location\": \"3.1 Collecting Real-world Claims\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"venktesh-2024-quantemp-numerical-claims\",\n      \"to_id\": \"cl_collect_claims\",\n      \"anchor\": \"collect real-world claims\",\n      \"location\": \"3.1 Collecting Real-world Claims\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"venktesh-2024-quantemp-numerical-claims\",\n      \"to_id\": \"cl_278636\",\n      \"anchor\": \"278,636\",\n      \"location\": \"3.1 Collecting Real-world Claims\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_collect_claims\",\n      \"to_id\": \"c_real_world_claims\",\n      \"anchor\": \"claims curated by\",\n      \"location\": \"3.1 Collecting Real-world Claims\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_278636\",\n      \"to_id\": \"c_fact_checks\",\n      \"anchor\": \"full collection\",\n      \"location\": \"3.1 Collecting Real-world Claims\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"venktesh-2024-quantemp-numerical-claims\",\n      \"to_id\": \"c_real_world_claims\",\n      \"anchor\": \"first collect real-world\",\n      \"location\": \"3.1 Collecting Real-world Claims\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"venktesh-2024-quantemp-numerical-claims\",\n      \"to_id\": \"c_fact_checks\",\n      \"anchor\": \"of fact-checks consists\",\n      \"location\": \"3.1 Collecting Real-world Claims\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"Google Fact Check\",\n      \"anchor\": \"Google Fact Check\"\n    },\n    {\n      \"name\": \"fact-checking organizations\",\n      \"anchor\": \"fact-checking organizations\"\n    },\n    {\n      \"name\": \"NLI models\",\n      \"anchor\": \"NLI models\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"via Google Fact Check\",\n      \"suggested_edge\": \"collected_via\",\n      \"diversion_reason\": \"endpoint_not_located\"\n    },\n    {\n      \"anchor\": \"filtering non-English fact-checks\",\n      \"suggested_edge\": \"filtered_to\",\n      \"diversion_reason\": \"cross_chunk\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"Google Fact Check Tool APIs\", \"type\": \"Tool\"},\n    {\"name\": \"dataset collection process\", \"type\": \"Concept\"},\n    {\"name\": \"non-English fact-checks\", \"type\": \"Concept\"},\n    {\"name\": \"professional fact-checkers\", \"type\": \"Concept\"}\n  ]\n}"
+}

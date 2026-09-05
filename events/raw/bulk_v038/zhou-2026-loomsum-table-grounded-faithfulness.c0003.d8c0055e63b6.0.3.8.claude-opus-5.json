@@ -1,0 +1,33 @@
+{
+ "doc_id": "zhou-2026-loomsum-table-grounded-faithfulness",
+ "chunk_id": "zhou-2026-loomsum-table-grounded-faithfulness#c0003",
+ "chunk_index": 3,
+ "chunk_start": 4249,
+ "chunk_end": 4332,
+ "chunk_tokens": 39,
+ "heading_path": [
+  "TABLE FACT"
+ ],
+ "oversize": false,
+ "doc_sha256": "d8c0055e63b69dda11cb9523d61ff5fb0be563dc6142055ac5be8853fdfe3074",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 2698,
+  "cacheReadInputTokens": 12842,
+  "cacheCreationInputTokens": 22745,
+  "webSearchRequests": 0,
+  "costUSD": 0.301331,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 1537,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.301331,
+ "duration_ms": 31055,
+ "session_id": "3d9adc71-f2de-4e1b-99b1-f79d277de4a5",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"A table-fact fragment reporting net interest income of $634.3M in 2015 vs $620.2M in 2014, a change of +$14.1M (+2.3%).\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_net_interest_income\",\n      \"name\": \"Net interest income\",\n      \"aliases\": [\"net interest income\"],\n      \"description\": \"The income line item whose 2015 and 2014 values and year-over-year change this table fact reports.\",\n      \"anchor\": \"Net interest income\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0003\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"cl_nii_2015\",\n      \"claim_text\": \"2015: $634.3M\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"$634.3M\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0003\"\n    },\n    {\n      \"id\": \"cl_nii_change\",\n      \"claim_text\": \"+$14.1M (+2.3%)\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"+$14.1M\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0003\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"zhou-2026-loomsum-table-grounded-faithfulness\",\n      \"to_id\": \"c_net_interest_income\",\n      \"anchor\": \"Net interest income\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0003\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"zhou-2026-loomsum-table-grounded-faithfulness\",\n      \"to_id\": \"cl_nii_2015\",\n      \"anchor\": \"$634.3M\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0003\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"zhou-2026-loomsum-table-grounded-faithfulness\",\n      \"to_id\": \"cl_nii_change\",\n      \"anchor\": \"+$14.1M\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0003\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_nii_change\",\n      \"to_id\": \"c_net_interest_income\",\n      \"anchor\": \"Change:\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0003\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"$620.2M\",\n      \"suggested_edge\": \"prior_year_value_of\",\n      \"diversion_reason\": \"other:no_schema_edge_for_table_row_value\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"2014: $620.2M\", \"type\": \"Claim\"},\n    {\"name\": \"TABLE FACT\", \"type\": \"Concept\"}\n  ]\n}"
+}

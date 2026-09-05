@@ -1,0 +1,31 @@
+{
+ "doc_id": "zhao-2020-reducing-quantity-hallucinations",
+ "chunk_id": "zhao-2020-reducing-quantity-hallucinations#c0001",
+ "chunk_index": 1,
+ "chunk_start": 0,
+ "chunk_end": 363,
+ "chunk_tokens": 94,
+ "heading_path": [],
+ "oversize": false,
+ "doc_sha256": "62f5c5d1c7da3f6e74178319517e0ed159cccd3243017921103e52cbac0653c4",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 2177,
+  "cacheReadInputTokens": 12842,
+  "cacheCreationInputTokens": 21736,
+  "webSearchRequests": 0,
+  "costUSD": 0.278216,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 1199,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.278216,
+ "duration_ms": 24816,
+ "session_id": "5a6ad26d-d3c7-436c-be2a-f82be9f16bb6",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Front matter of an EMNLP 2020 Findings paper: venue/page line, title 'Reducing Quantity Hallucinations in Abstractive Summarization', three authors, and their Edinburgh affiliation; no substantive assertions yet, so only the two title concepts are typed and the named organizations are mention-only stubs.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_quantity_hallucinations\",\n      \"name\": \"Quantity Hallucinations\",\n      \"aliases\": [\"quantity hallucination\", \"hallucinated quantities\"],\n      \"description\": \"Hallucinated quantity expressions (numbers, dates, amounts) appearing in generated summaries; the phenomenon the paper's title states it aims to reduce.\",\n      \"anchor\": \"Quantity Hallucinations\",\n      \"location\": \"zhao-2020-reducing-quantity-hallucinations#c0001\"\n    },\n    {\n      \"id\": \"c_abstractive_summarization\",\n      \"name\": \"Abstractive Summarization\",\n      \"aliases\": [\"abstractive summarisation\"],\n      \"description\": \"The summarization setting the paper's title names as the domain of the problem it addresses.\",\n      \"anchor\": \"Abstractive Summarization\",\n      \"location\": \"zhao-2020-reducing-quantity-hallucinations#c0001\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"zhao-2020-reducing-quantity-hallucinations\",\n      \"to_id\": \"c_quantity_hallucinations\",\n      \"anchor\": \"Reducing Quantity\",\n      \"location\": \"zhao-2020-reducing-quantity-hallucinations#c0001\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"zhao-2020-reducing-quantity-hallucinations\",\n      \"to_id\": \"c_abstractive_summarization\",\n      \"anchor\": \"in Abstractive\",\n      \"location\": \"zhao-2020-reducing-quantity-hallucinations#c0001\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"Association for Computational Linguistics\",\n      \"anchor\": \"c⃝2020 Association\"\n    },\n    {\n      \"name\": \"Institute for Language, Cognition and Computation\",\n      \"anchor\": \"Institute for Language\"\n    },\n    {\n      \"name\": \"School of Informatics\",\n      \"anchor\": \"School of Informatics\"\n    },\n    {\n      \"name\": \"University of Edinburgh\",\n      \"anchor\": \"University of Edinburgh\"\n    }\n  ],\n  \"proposed_relationships\": [],\n  \"gleaned\": []\n}"
+}

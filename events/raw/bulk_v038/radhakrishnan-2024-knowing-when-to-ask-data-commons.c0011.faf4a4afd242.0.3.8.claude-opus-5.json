@@ -1,0 +1,33 @@
+{
+ "doc_id": "radhakrishnan-2024-knowing-when-to-ask-data-commons",
+ "chunk_id": "radhakrishnan-2024-knowing-when-to-ask-data-commons#c0011",
+ "chunk_index": 11,
+ "chunk_start": 46226,
+ "chunk_end": 47443,
+ "chunk_tokens": 289,
+ "heading_path": [
+  "OUTPUT:"
+ ],
+ "oversize": false,
+ "doc_sha256": "faf4a4afd242542c0ee9d25d32cc896bf23c3c75b886f0f179a14581baa6649d",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 8434,
+  "cacheReadInputTokens": 12842,
+  "cacheCreationInputTokens": 23802,
+  "webSearchRequests": 0,
+  "costUSD": 0.45530100000000007,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 6575,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.45530100000000007,
+ "duration_ms": 91797,
+ "session_id": "76cedddd-e4b2-4ee7-b1e9-5ba97bc91924",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Appendix example of the paper's prompt OUTPUT format: a generated answer in which statistical assertions about California, San Francisco and US energy are wrapped in __DC__ Data Commons callouts while non-statistical sentences are left unannotated.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"concept-dc-callout\",\n      \"name\": \"__DC__\",\n      \"aliases\": [\"Data Commons callout\", \"DC annotation\"],\n      \"description\": \"The inline annotation the model emits in place of a statistic, carrying a natural-language Data Commons query and the value returned for it.\",\n      \"anchor\": \"what was the population of california\",\n      \"location\": \"radhakrishnan-2024-knowing-when-to-ask-data-commons#c0011\"\n    },\n    {\n      \"id\": \"concept-california\",\n      \"name\": \"California\",\n      \"aliases\": [],\n      \"description\": \"US state used in the example question as a subject for which a statistic is requested.\",\n      \"anchor\": \"statistic about California\",\n      \"location\": \"radhakrishnan-2024-knowing-when-to-ask-data-commons#c0011\"\n    },\n    {\n      \"id\": \"concept-diabetes-rate\",\n      \"name\": \"diabetes rate\",\n      \"aliases\": [\"prevalence of diabetes\"],\n      \"description\": \"Statistic reported for San Francisco in the example output, resolved through a Data Commons callout.\",\n      \"anchor\": \"the diabetes rate is\",\n      \"location\": \"radhakrishnan-2024-knowing-when-to-ask-data-commons#c0011\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"claim-california-most-populous\",\n      \"claim_text\": \"California is 1st as the nation's most populous state\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"California is 1st\",\n      \"location\": \"radhakrishnan-2024-knowing-when-to-ask-data-commons#c0011\"\n    },\n    {\n      \"id\": \"claim-us-fossil-fuel-share\",\n      \"claim_text\": \"the United States receives approximately 81% of itsenergy from fossil fuel\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"approximately 81% of itsenergy\",\n      \"location\": \"radhakrishnan-2024-knowing-when-to-ask-data-commons#c0011\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"radhakrishnan-2024-knowing-when-to-ask-data-commons\",\n      \"to_id\": \"claim-california-most-populous\",\n      \"anchor\": \"California is 1st\",\n      \"location\": \"radhakrishnan-2024-knowing-when-to-ask-data-commons#c0011\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"radhakrishnan-2024-knowing-when-to-ask-data-commons\",\n      \"to_id\": \"claim-us-fossil-fuel-share\",\n      \"anchor\": \"approximately 81% of itsenergy\",\n      \"location\": \"radhakrishnan-2024-knowing-when-to-ask-data-commons#c0011\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"claim-california-most-populous\",\n      \"to_id\": \"concept-california\",\n      \"anchor\": \"statistic about California\",\n      \"location\": \"radhakrishnan-2024-knowing-when-to-ask-data-commons#c0011\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"radhakrishnan-2024-knowing-when-to-ask-data-commons\",\n      \"to_id\": \"concept-dc-callout\",\n      \"anchor\": \"what was the population of california\",\n      \"location\": \"radhakrishnan-2024-knowing-when-to-ask-data-commons#c0011\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"radhakrishnan-2024-knowing-when-to-ask-data-commons\",\n      \"to_id\": \"concept-diabetes-rate\",\n      \"anchor\": \"the diabetes rate is\",\n      \"location\": \"radhakrishnan-2024-knowing-when-to-ask-data-commons#c0011\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"San Francisco\",\n      \"anchor\": \"prevalence of diabetes in San Francisco\"\n    },\n    {\n      \"name\": \"Alabama\",\n      \"anchor\": \"Alabama and the US\"\n    },\n    {\n      \"name\": \"United States\",\n      \"anchor\": \"the United States receives approximately 81%\"\n    }\n  ],\n  \"proposed_relationships\": [],\n  \"gleaned\": [\n    {\"name\": \"Data Commons\", \"type\": \"Platform\"},\n    {\"name\": \"Alabama secession from the United States in 1861\", \"type\": \"Claim\"},\n    {\"name\": \"petroleum share of US energy (35.8%)\", \"type\": \"Claim\"},\n    {\"name\": \"natural gas share of US energy (33.4%)\", \"type\": \"Claim\"},\n    {\"name\": \"renewable share of US energy (13.3%)\", \"type\": \"Claim\"},\n    {\"name\": \"San Francisco Bay Area\", \"type\": \"Concept\"},\n    {\"name\": \"population of California\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

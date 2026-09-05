@@ -1,0 +1,33 @@
+{
+ "doc_id": "van-der-bles-2019-communicating-uncertainty",
+ "chunk_id": "van-der-bles-2019-communicating-uncertainty#c0017",
+ "chunk_index": 17,
+ "chunk_start": 62019,
+ "chunk_end": 62310,
+ "chunk_tokens": 84,
+ "heading_path": [
+  "CI)"
+ ],
+ "oversize": false,
+ "doc_sha256": "881316b3eecfe912efc9db51d32f06bfda8cf46544c755c055ddd15c9c62ba84",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 4683,
+  "cacheReadInputTokens": 12842,
+  "cacheCreationInputTokens": 22822,
+  "webSearchRequests": 0,
+  "costUSD": 0.351726,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 3069,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.351726,
+ "duration_ms": 52234,
+ "session_id": "40c1c22b-0ed9-4060-902b-2d11c506e375",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Page furniture plus the Figure 4 caption: a Cochrane 'summary of findings' table illustrates direct (confidence interval) and indirect (GRADE scale) levels of uncertainty.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_cochrane_sof_table\",\n      \"name\": \"Cochrane ‘summary of findings’ table\",\n      \"aliases\": [\"summary of findings table\"],\n      \"description\": \"Tabular evidence-summary format used as the figure's illustration of two levels of uncertainty.\",\n      \"anchor\": \"Cochrane ‘summary of findings’\",\n      \"location\": \"van-der-bles-2019-communicating-uncertainty#c0017\"\n    },\n    {\n      \"id\": \"c_confidence_interval\",\n      \"name\": \"confidence interval\",\n      \"aliases\": [\"CI\"],\n      \"description\": \"The direct level of uncertainty shown in the summary of findings table.\",\n      \"anchor\": \"confidence interval\",\n      \"location\": \"van-der-bles-2019-communicating-uncertainty#c0017\"\n    },\n    {\n      \"id\": \"c_grade_scale\",\n      \"name\": \"GRADE scale\",\n      \"aliases\": [\"GRADE\"],\n      \"description\": \"The indirect level of uncertainty (quality of the evidence rating) shown in the summary of findings table.\",\n      \"anchor\": \"GRADE scale\",\n      \"location\": \"van-der-bles-2019-communicating-uncertainty#c0017\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"cl_direct_indirect_uncertainty\",\n      \"claim_text\": \"A Cochrane ‘summary of findings’ table illustrating both direct (confidence interval) and indirect (GRADE scale)\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"inference\",\n      \"anchor\": \"illustrating both direct\",\n      \"location\": \"van-der-bles-2019-communicating-uncertainty#c0017\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"van-der-bles-2019-communicating-uncertainty\",\n      \"to_id\": \"cl_direct_indirect_uncertainty\",\n      \"anchor\": \"illustrating both direct\",\n      \"location\": \"van-der-bles-2019-communicating-uncertainty#c0017\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_direct_indirect_uncertainty\",\n      \"to_id\": \"c_cochrane_sof_table\",\n      \"anchor\": \"Cochrane ‘summary of findings’\",\n      \"location\": \"van-der-bles-2019-communicating-uncertainty#c0017\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_direct_indirect_uncertainty\",\n      \"to_id\": \"c_confidence_interval\",\n      \"anchor\": \"confidence interval\",\n      \"location\": \"van-der-bles-2019-communicating-uncertainty#c0017\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_direct_indirect_uncertainty\",\n      \"to_id\": \"c_grade_scale\",\n      \"anchor\": \"GRADE scale\",\n      \"location\": \"van-der-bles-2019-communicating-uncertainty#c0017\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"van-der-bles-2019-communicating-uncertainty\",\n      \"to_id\": \"c_grade_scale\",\n      \"anchor\": \"GRADE scale\",\n      \"location\": \"van-der-bles-2019-communicating-uncertainty#c0017\"\n    }\n  ],\n  \"cites\": [\n    {\n      \"from_id\": \"van-der-bles-2019-communicating-uncertainty\",\n      \"to_id\": \"ref-74\",\n      \"anchor\": \"[74]\",\n      \"location\": \"van-der-bles-2019-communicating-uncertainty#c0017\"\n    }\n  ],\n  \"mentions\": [],\n  \"proposed_relationships\": [\n    {\n      \"suggested_edge\": \"has_component\",\n      \"from_id\": \"c_cochrane_sof_table\",\n      \"to_id\": \"c_grade_scale\",\n      \"anchor\": \"quality of\",\n      \"diversion_reason\": \"structural_inference\",\n      \"location\": \"van-der-bles-2019-communicating-uncertainty#c0017\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"levels of uncertainty\", \"type\": \"Concept\"},\n    {\"name\": \"quality of the evidence\", \"type\": \"Concept\"},\n    {\"name\": \"no. participants (studies)\", \"type\": \"Measure\"}\n  ]\n}"
+}

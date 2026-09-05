@@ -1,0 +1,33 @@
+{
+ "doc_id": "zhou-2026-loomsum-table-grounded-faithfulness",
+ "chunk_id": "zhou-2026-loomsum-table-grounded-faithfulness#c0040",
+ "chunk_index": 40,
+ "chunk_start": 67453,
+ "chunk_end": 67688,
+ "chunk_tokens": 48,
+ "heading_path": [
+  "4. Keep a quantitative proposition and an analytical"
+ ],
+ "oversize": false,
+ "doc_sha256": "d8c0055e63b69dda11cb9523d61ff5fb0be563dc6142055ac5be8853fdfe3074",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 7146,
+  "cacheReadInputTokens": 12842,
+  "cacheCreationInputTokens": 22765,
+  "webSearchRequests": 0,
+  "costUSD": 0.412731,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 5895,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.412731,
+ "duration_ms": 86739,
+ "session_id": "f280e42f-6ed4-4b41-aad1-1ca6df91035f",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"A single numbered guideline (rule 4) restricting when a quantitative proposition and an analytical proposition may be kept together in a summary — only when the summary explicitly asserts a relation (cause, driver, consequence, qualification, attribution, offset, or contextualization) between them.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c1\",\n      \"name\": \"quantitative proposition\",\n      \"aliases\": [],\n      \"description\": \"A proposition stating a quantity, which the rule allows to be paired with an analytical proposition only under an explicitly asserted relation.\",\n      \"anchor\": \"proposition together only\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0040\"\n    },\n    {\n      \"id\": \"c2\",\n      \"name\": \"analytical proposition\",\n      \"aliases\": [],\n      \"description\": \"A proposition carrying analysis rather than a figure, which the rule allows to be kept with a quantitative proposition only when a relation between them is explicitly asserted.\",\n      \"anchor\": \"the summary explicitly\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0040\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [\n    {\n      \"id\": \"p1\",\n      \"text\": \"Keep a quantitative proposition and an analytical proposition together only when the summary explicitly asserts a relation between them, such as a cause, driver, consequence, qualification, attribution, offset, or contextualization\",\n      \"as_of_date\": null,\n      \"scope\": \"content\",\n      \"anchor\": \"asserts a relation between them\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0040\"\n    }\n  ],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"recommends\",\n      \"from_id\": \"zhou-2026-loomsum-table-grounded-faithfulness\",\n      \"to_id\": \"p1\",\n      \"anchor\": \"such as a cause\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0040\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"p1\",\n      \"to_id\": \"c1\",\n      \"anchor\": \"only when the summary\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0040\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"p1\",\n      \"to_id\": \"c2\",\n      \"anchor\": \"explicitly\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0040\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [],\n  \"proposed_relationships\": [\n    {\n      \"from_id\": \"c1\",\n      \"to_id\": \"c2\",\n      \"suggested_edge\": \"may_be_kept_with_when_relation_asserted\",\n      \"anchor\": \"together only when\",\n      \"diversion_reason\": \"other:conditional_pairing\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0040\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"cause\", \"type\": \"Concept\"},\n    {\"name\": \"driver\", \"type\": \"Concept\"},\n    {\"name\": \"consequence\", \"type\": \"Concept\"},\n    {\"name\": \"qualification\", \"type\": \"Concept\"},\n    {\"name\": \"attribution\", \"type\": \"Concept\"},\n    {\"name\": \"offset\", \"type\": \"Concept\"},\n    {\"name\": \"contextualization\", \"type\": \"Concept\"}\n  ]\n}"
+}

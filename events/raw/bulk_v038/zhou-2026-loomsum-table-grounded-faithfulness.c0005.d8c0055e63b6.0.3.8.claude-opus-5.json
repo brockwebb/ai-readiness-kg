@@ -1,0 +1,33 @@
+{
+ "doc_id": "zhou-2026-loomsum-table-grounded-faithfulness",
+ "chunk_id": "zhou-2026-loomsum-table-grounded-faithfulness#c0005",
+ "chunk_index": 5,
+ "chunk_start": 4444,
+ "chunk_end": 4690,
+ "chunk_tokens": 62,
+ "heading_path": [
+  "DIRECT SUMMARY (LINK OMITTED)"
+ ],
+ "oversize": false,
+ "doc_sha256": "d8c0055e63b69dda11cb9523d61ff5fb0be563dc6142055ac5be8853fdfe3074",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 5713,
+  "cacheReadInputTokens": 12842,
+  "cacheCreationInputTokens": 22834,
+  "webSearchRequests": 0,
+  "costUSD": 0.37759600000000004,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 4461,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.37759600000000004,
+ "duration_ms": 64582,
+ "session_id": "b35ea130-4e57-43d9-b00f-b096f31a2c19",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Figure excerpt showing a DIRECT SUMMARY of bank financials (total revenue, net interest income, non-interest income) annotated by the authors as containing unsupported analysis and a wrong number.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"n1\",\n      \"name\": \"Net interest income\",\n      \"aliases\": [\"net interest income\"],\n      \"description\": \"Interest-based revenue line reported in the example summary, given both as a raw and a tax-equivalent figure.\",\n      \"anchor\": \"Net interest income was\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0005\"\n    },\n    {\n      \"id\": \"n2\",\n      \"name\": \"Total revenue\",\n      \"aliases\": [],\n      \"description\": \"Top-line revenue figure whose change is reported in the example summary.\",\n      \"anchor\": \"Total revenue\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0005\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"n3\",\n      \"claim_text\": \"Total revenue increased $25.7 million\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"increased $25.7 million\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0005\"\n    },\n    {\n      \"id\": \"n4\",\n      \"claim_text\": \"Unsupported analysis, wrong number\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"inference\",\n      \"anchor\": \"Unsupported analysis\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0005\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"zhou-2026-loomsum-table-grounded-faithfulness\",\n      \"to_id\": \"n3\",\n      \"anchor\": \"increased $25.7 million\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0005\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"zhou-2026-loomsum-table-grounded-faithfulness\",\n      \"to_id\": \"n4\",\n      \"anchor\": \"wrong number\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0005\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"n3\",\n      \"to_id\": \"n2\",\n      \"anchor\": \"Total revenue\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0005\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"Unsupported analysis\",\n      \"suggested_edge\": \"annotates_summary_error\",\n      \"diversion_reason\": \"other:annotation-of-example\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"direct summary\", \"type\": \"Concept\"},\n    {\"name\": \"non-interest income\", \"type\": \"Concept\"},\n    {\"name\": \"tax-equivalent net interest income\", \"type\": \"Concept\"},\n    {\"name\": \"Net interest income was $634.3 million (tax-equivalent $664.0 million)\", \"type\": \"Claim\"},\n    {\"name\": \"non-interest income was $447.6 million (increase of $11.6 million)\", \"type\": \"Claim\"}\n  ]\n}\n```"
+}

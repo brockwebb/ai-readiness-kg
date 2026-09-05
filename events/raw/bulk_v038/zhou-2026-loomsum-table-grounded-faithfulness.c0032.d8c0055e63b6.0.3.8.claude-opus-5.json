@@ -1,0 +1,33 @@
+{
+ "doc_id": "zhou-2026-loomsum-table-grounded-faithfulness",
+ "chunk_id": "zhou-2026-loomsum-table-grounded-faithfulness#c0032",
+ "chunk_index": 32,
+ "chunk_start": 58097,
+ "chunk_end": 58995,
+ "chunk_tokens": 483,
+ "heading_path": [
+  "BART 18.37 4.62 8.96 67.21 13.24 6.70 6.50 56.96 34.38 10.51 46.69"
+ ],
+ "oversize": false,
+ "doc_sha256": "d8c0055e63b69dda11cb9523d61ff5fb0be563dc6142055ac5be8853fdfe3074",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 7252,
+  "cacheReadInputTokens": 12842,
+  "cacheCreationInputTokens": 23770,
+  "webSearchRequests": 0,
+  "costUSD": 0.425431,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 4962,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.425431,
+ "duration_ms": 80544,
+ "session_id": "c94647ff-c61a-4242-bf16-501f989f92ff",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Table 6 results grid (FINDSum-ROO test set) plus its caption, which states the reading convention, the GPT-5-nano backbone marker, and the 0-100 metric scale; method and metric names appear only as table cells.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_findsum_roo\",\n      \"name\": \"FINDSum-ROO test set\",\n      \"aliases\": [\"FINDSum-ROO\"],\n      \"description\": \"The evaluation test set on which Table 6 reports full results.\",\n      \"anchor\": \"FINDSum-ROO test set\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0032\"\n    },\n    {\n      \"id\": \"c_loomsum\",\n      \"name\": \"LOOMSUM\",\n      \"aliases\": [\"LOOMSUM(Ours)\"],\n      \"description\": \"The method the paper presents as its own, reported as a row in Table 6.\",\n      \"anchor\": \"LOOMSUM(Ours)\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0032\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"cl_higher_better\",\n      \"claim_text\": \"Higher values are better\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"Higher values are better\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0032\"\n    },\n    {\n      \"id\": \"cl_scale\",\n      \"claim_text\": \"All metrics are reported on a 0–100 scale\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"measured_practitioner\",\n      \"anchor\": \"0–100 scale\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0032\"\n    },\n    {\n      \"id\": \"cl_backbone\",\n      \"claim_text\": \"† denotes methods using GPT-5-nano\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"measured_practitioner\",\n      \"anchor\": \"denotes methods using\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0032\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"zhou-2026-loomsum-table-grounded-faithfulness\",\n      \"to_id\": \"cl_higher_better\",\n      \"anchor\": \"Higher values are better\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0032\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"zhou-2026-loomsum-table-grounded-faithfulness\",\n      \"to_id\": \"cl_scale\",\n      \"anchor\": \"0–100 scale\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0032\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"zhou-2026-loomsum-table-grounded-faithfulness\",\n      \"to_id\": \"cl_backbone\",\n      \"anchor\": \"denotes methods using\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0032\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_higher_better\",\n      \"to_id\": \"c_findsum_roo\",\n      \"anchor\": \"Full results on the\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0032\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"zhou-2026-loomsum-table-grounded-faithfulness\",\n      \"to_id\": \"c_loomsum\",\n      \"anchor\": \"LOOMSUM(Ours)\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0032\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"zhou-2026-loomsum-table-grounded-faithfulness\",\n      \"to_id\": \"c_findsum_roo\",\n      \"anchor\": \"FINDSum-ROO test set\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0032\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\"name\": \"BigBird-Pegasus\", \"anchor\": \"BigBird-Pegasus\"},\n    {\"name\": \"Table-RAG\", \"anchor\": \"Table-RAG\"},\n    {\"name\": \"GCG\", \"anchor\": \"GCG\"},\n    {\"name\": \"Direct-LC\", \"anchor\": \"Direct-LC\"},\n    {\"name\": \"RAG-Sum\", \"anchor\": \"RAG-Sum\"},\n    {\"name\": \"TextRank\", \"anchor\": \"TextRank\"},\n    {\"name\": \"GPT-5-nano\", \"anchor\": \"GPT-5-nano\"},\n    {\"name\": \"AlignScore\", \"anchor\": \"AlignScore\"},\n    {\"name\": \"SummaC\", \"anchor\": \"SummaC\"},\n    {\"name\": \"TGF\", \"anchor\": \"TGF\"}\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"LOOMSUM(Ours)\",\n      \"suggested_edge\": \"outperforms\",\n      \"diversion_reason\": \"structural_inference\",\n      \"note\": \"LOOMSUM's superiority over the listed baselines is carried by table cells and the blue-highlight convention, not by a sentence.\"\n    },\n    {\n      \"anchor\": \"shown in blue\",\n      \"suggested_edge\": \"reports_result_on\",\n      \"diversion_reason\": \"structural_inference\",\n      \"note\": \"Method-to-metric-score associations exist only as table rows and columns.\"\n    },\n    {\n      \"anchor\": \"Table 6\",\n      \"suggested_edge\": \"evaluated_on\",\n      \"diversion_reason\": \"cross_chunk\",\n      \"note\": \"The methods' definitions and setup are described outside this chunk.\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"BART\", \"type\": \"Concept\"},\n    {\"name\": \"R-1\", \"type\": \"Measure\"},\n    {\"name\": \"R-2\", \"type\": \"Measure\"},\n    {\"name\": \"R-L\", \"type\": \"Measure\"},\n    {\"name\": \"BS\", \"type\": \"Measure\"},\n    {\"name\": \"NP\", \"type\": \"Measure\"},\n    {\"name\": \"NC\", \"type\": \"Measure\"},\n    {\"name\": \"NS\", \"type\": \"Measure\"},\n    {\"name\": \"Cov.\", \"type\": \"Measure\"}\n  ]\n}"
+}

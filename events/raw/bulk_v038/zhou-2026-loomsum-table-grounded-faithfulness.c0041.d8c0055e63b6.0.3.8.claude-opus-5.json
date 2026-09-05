@@ -1,0 +1,33 @@
+{
+ "doc_id": "zhou-2026-loomsum-table-grounded-faithfulness",
+ "chunk_id": "zhou-2026-loomsum-table-grounded-faithfulness#c0041",
+ "chunk_index": 41,
+ "chunk_start": 67689,
+ "chunk_end": 67907,
+ "chunk_tokens": 49,
+ "heading_path": [
+  "5. A linked claim may span multiple sentences when an"
+ ],
+ "oversize": false,
+ "doc_sha256": "d8c0055e63b69dda11cb9523d61ff5fb0be563dc6142055ac5be8853fdfe3074",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 4354,
+  "cacheReadInputTokens": 12842,
+  "cacheCreationInputTokens": 22759,
+  "webSearchRequests": 0,
+  "costUSD": 0.34287100000000004,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 2778,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.34287100000000004,
+ "duration_ms": 47229,
+ "session_id": "0caa27a9-2877-43ac-8168-0bd1cb2c5a97",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Annotation-guideline item 5: a linked claim may span multiple sentences when an explicit discourse cue or coreference establishes the relation, and such claims warrant extra attention.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_linked_claim\",\n      \"name\": \"linked claim\",\n      \"aliases\": [\"multi-sentence linked claim\"],\n      \"description\": \"A claim whose extent may cover more than one sentence when a discourse cue or coreference establishes the relation between them.\",\n      \"anchor\": \"A linked claim\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0041\"\n    },\n    {\n      \"id\": \"c_discourse_cue\",\n      \"name\": \"explicit discourse cue\",\n      \"aliases\": [\"discourse marker\"],\n      \"description\": \"A surface signal such as \\\"this increase,\\\" \\\"this decline,\\\" or \\\"as a result\\\" that establishes a relation across sentences.\",\n      \"anchor\": \"explicit discourse cue\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0041\"\n    },\n    {\n      \"id\": \"c_coreference\",\n      \"name\": \"coreference\",\n      \"aliases\": [],\n      \"description\": \"Referential linkage across sentences that, like a discourse cue, establishes the relation licensing a multi-sentence claim.\",\n      \"anchor\": \"coreference establishes\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0041\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"cl_span_multi\",\n      \"claim_text\": \"A linked claim may span multiple sentences\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"may span multiple\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0041\"\n    },\n    {\n      \"id\": \"cl_attention\",\n      \"claim_text\": \"Pay more attention to this type of claim\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"Pay more attention\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0041\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"zhou-2026-loomsum-table-grounded-faithfulness\",\n      \"to_id\": \"cl_span_multi\",\n      \"anchor\": \"5. A linked\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0041\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"zhou-2026-loomsum-table-grounded-faithfulness\",\n      \"to_id\": \"cl_attention\",\n      \"anchor\": \"more attention to\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0041\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_span_multi\",\n      \"to_id\": \"c_linked_claim\",\n      \"anchor\": \"claim may span\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0041\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_attention\",\n      \"to_id\": \"c_linked_claim\",\n      \"anchor\": \"type of claim\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0041\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"zhou-2026-loomsum-table-grounded-faithfulness\",\n      \"to_id\": \"c_discourse_cue\",\n      \"anchor\": \"discourse cue or\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0041\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"zhou-2026-loomsum-table-grounded-faithfulness\",\n      \"to_id\": \"c_coreference\",\n      \"anchor\": \"or coreference\",\n      \"location\": \"zhou-2026-loomsum-table-grounded-faithfulness#c0041\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [],\n  \"proposed_relationships\": [],\n  \"gleaned\": [\n    {\"name\": \"contextualization\", \"type\": \"Concept\"},\n    {\"name\": \"discourse relation\", \"type\": \"Concept\"}\n  ]\n}"
+}
