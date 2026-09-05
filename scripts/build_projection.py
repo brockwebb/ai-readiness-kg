@@ -365,6 +365,19 @@ def build(session, kg_labels: list[str], edge_whitelist: set[str]) -> dict:
     # reset ONLY KG labels
     label_pred = " OR ".join(f"n:{lbl}" for lbl in kg_labels)
     session.run(f"MATCH (n) WHERE {label_pred} DETACH DELETE n")
+    # Document skeletons FIRST, from the same pre-pass that built `document_ids` (task
+    # 2026-09-04_extract_g1eval_17_and_rerun §1.4). The edge branch merges an endpoint on
+    # `{key: ...}` alone, while `manifest_add` merges on `(:Document {id: ...})`: two
+    # different patterns for the same node, so whichever runs first decides whether the
+    # document ends up labelled. Shards replay in batch order, so a document EXTRACTED into
+    # the open bulk shard but ADMITTED in a later one — which is every one of the 17 g1eval
+    # sources, extracted into batch-023 and manifested in batch-025 — had all of its edges
+    # attached to an unlabelled twin, leaving the real Document node at degree zero and the
+    # gap diagnostic reading `run_ok_no_edges` after a clean extraction. Creating the
+    # skeletons here makes the projection independent of shard order; the `manifest_add`
+    # handler below still writes every property onto the same node.
+    for did in sorted(document_ids):
+        session.run("MERGE (d:Document {id: $id}) SET d.key = $id, d.doc_id = $id", id=did)
 
     for ev in eventlog.replay():
         et = ev.get("event_type")

@@ -344,7 +344,10 @@ def main(argv=None) -> int:
     print(f"estimate (§3 set): {e['to_run']['documents']} docs, {e['to_run']['chunks']} chunks, "
           f"{e['to_run']['tokens_at_chunk_floor']:,} tokens at the {CHUNK_FLOOR:,} floor — "
           f"{'INSIDE' if e['inside_standing_band'] else 'EXCEEDS'} the {e['standing_daily_band']:,} band")
-    print(f"-> {Path(a.out).relative_to(REPO)}")
+    # `.resolve()` first: a RELATIVE --out (the natural way to pass one from the repo root)
+    # is not "in the subpath of" the absolute REPO, so this line raised ValueError AFTER the
+    # JSON had been written — a run that had done all its work reported as a crash.
+    print(f"-> {Path(a.out).resolve().relative_to(REPO)}")
     return 0
 
 
