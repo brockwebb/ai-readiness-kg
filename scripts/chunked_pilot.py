@@ -405,8 +405,55 @@ def _extract_one(d: str, c: chunker.Chunk, sha: str, title: str, cfg: dict, susp
     return "ok"
 
 
-def phase_extract(a) -> int:
+#: Consecutive failures that mean the failure is systemic rather than one bad chunk. Silence
+#: on repeated failure would be the lazy error handling standard 4 forbids.
+STOP_AFTER_FAILURES = 5
+
+
+def dispatch_waves(todo, workers, run_one, stop_after=STOP_AFTER_FAILURES):
+    """Run `run_one(d, c, sha, title)` over `todo` in waves of `workers`, stopping when
+    `stop_after` calls fail in a row. Returns (done, failures, truncated, streak).
+
+    **Why waves.** The first version submitted every future to the pool up front and called
+    `f.cancel()` on the rest once the streak tripped. `cancel()` only stops a future that has
+    not STARTED: everything already handed to a worker ran to completion, reserved on the
+    spend ledger, called the model and settled — and the same loop's `continue` skipped
+    collecting its exception, so the failures were neither counted nor printed. On
+    2026-09-04 that billed **286 calls / 15,073,098 tokens for discarded output**, 32.5% of
+    that run, and printed 5 FAILED lines for 286 failures (Issue `830330b4`,
+    `cc_tasks/2026-09-04_extract_g1eval_17_and_rerun_ADDENDUM-01.md` §2).
+
+    The streak is tested BEFORE each wave is submitted, so at most `workers - 1` calls beyond
+    the tripping one can be in flight and billed, and every submitted future's outcome is
+    collected — the printed failure count equals the number of `error_with_output` settles.
+    The spend guard remains the concurrency-safe boundary (flock on the ledger); waves bound
+    the blast radius of a systemic failure, they do not make concurrency safe.
+    """
     from concurrent.futures import ThreadPoolExecutor
+    done, failures, truncated, streak = 0, [], [], 0
+    i = 0
+    with ThreadPoolExecutor(max_workers=workers) as pool:
+        while i < len(todo) and streak < stop_after:
+            wave = todo[i:i + workers]
+            i += len(wave)
+            futs = {pool.submit(run_one, d, c, sha, title): c.chunk_id
+                    for d, c, sha, title in wave}
+            for f, cid in futs.items():
+                try:
+                    done += 1 if f.result() == "ok" else 0
+                    streak = 0
+                except spend.SpendRefusalStop:
+                    raise
+                except Exception as exc:               # noqa: BLE001 — recorded, not swallowed
+                    failures.append((cid, f"{type(exc).__name__}: {exc}"))
+                    if isinstance(exc, TruncatedChunk):
+                        truncated.append(cid)
+                    streak += 1
+                    print(f"  FAILED {cid}: {type(exc).__name__}: {str(exc)[:200]}", flush=True)
+    return done, failures, truncated, streak
+
+
+def phase_extract(a) -> int:
     cfg = model_cfg()
     m = members()
     print(f"prompt {profile_template().name} v{verify_prompt_binding()}", flush=True)
@@ -463,31 +510,8 @@ def phase_extract(a) -> int:
     if a.limit:
         todo = todo[:a.limit]
     print(f"dispatching {len(todo)} chunk calls, {a.workers} workers", flush=True)
-    done, failures, truncated = 0, [], []
-    # The spend guard is the concurrency-safe boundary (flock on the ledger), so workers only
-    # need to be few enough not to trip rate limits. A single failed chunk must not discard a
-    # pass whose other calls are already paid for: it is recorded and the pass continues, but
-    # a systemic failure (STOP_AFTER_FAILURES in a row) ends it — silence on repeated failure
-    # would be the lazy handling standard 4 forbids.
-    STOP_AFTER_FAILURES = 5
-    streak = 0
-    with ThreadPoolExecutor(max_workers=a.workers) as pool:
-        futs = {pool.submit(_extract_one, d, c, sha, title, cfg, suspect): c.chunk_id
-                for d, c, sha, title in todo}
-        for f, cid in futs.items():
-            if streak >= STOP_AFTER_FAILURES:
-                f.cancel(); continue
-            try:
-                done += 1 if f.result() == "ok" else 0
-                streak = 0
-            except spend.SpendRefusalStop:
-                raise
-            except Exception as exc:                       # noqa: BLE001 — recorded, not swallowed
-                failures.append((cid, f"{type(exc).__name__}: {exc}"))
-                if isinstance(exc, TruncatedChunk):
-                    truncated.append(cid)
-                streak += 1
-                print(f"  FAILED {cid}: {type(exc).__name__}: {str(exc)[:200]}", flush=True)
+    done, failures, truncated, streak = dispatch_waves(
+        todo, a.workers, lambda d, c, sha, title: _extract_one(d, c, sha, title, cfg, suspect))
     print(f"\nextraction calls this pass: {done}; failures: {len(failures)}")
     for cid, why in failures:
         print(f"  {cid}: {why}")
