@@ -29,6 +29,18 @@ integrity:
   pdf_smoke_max_pages: 10
   text_min_chars: 200
 
+# Eval fixtures, not literature (task 2026-09-05_extract_ai_ready_strand_11 §0.2, closing
+# Issue 2e226acb). Every member document of an epoch named here is `excluded_by_design` with
+# reason `eval_fixture`: it is admitted because the G1 evaluation needs a Document node to
+# score against, and it is never queued for extraction because nothing in it is a construct
+# claim to be read. Before the rule these 22 sat in the gap diagnostic's `never_queued` class
+# — "no extraction_request was ever emitted for it", which is true and reads as an oversight.
+# Operator decision; code reads this list and never edits it.
+fixture_epochs:
+  - g1dp-2026-09-02      # G1 DP_NOISE fixture source (Census DAS user handbook)
+  - g1srp-2026-09-03     # G1 SUPPRESSION / RELIABILITY_FLAG fixture sources
+  - g1sfc-2026-09-03     # G1 v2 product-surface fixtures captured as served
+
 # Identity admission gate (source-access tactical Stage 1). A record whose
 # connector-supplied signals fail these DECLARED thresholds cannot reach `included`
 # — it is forced to pending_refetch. Belt-and-suspenders: title match AND extent

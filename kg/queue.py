@@ -31,6 +31,7 @@ _REPO = Path(__file__).resolve().parent.parent
 _MANIFEST_PATH = _REPO / "corpus/manifest.json"
 _PROFILES_PATH = _REPO / "scripts/run_profiles.yaml"
 _LEDGER_PATH = _REPO / "state/spend_ledger.jsonl"
+_DIXIE_CONFIG = _REPO / "dixie_evidence.yaml"
 
 #: The graph shard these events live on. Untagged: the queue is part of the graph's history,
 #: not an experiment arm.
@@ -139,6 +140,12 @@ def request(document_id: str, priority: int, requested_by: str, reason: str,
         raise QueueRefusal(
             f"{document_id!r} is not manifest-included; admission precedes request "
             f"(refused, not emitted). Admit it via kg.manifest first.")
+    fixture = fixture_documents().get(document_id)
+    if fixture:
+        raise QueueRefusal(
+            f"{document_id!r} belongs to fixture epoch {fixture!r}; eval fixtures are what G1 "
+            f"SCORES, not literature to read (dixie_evidence.yaml fixture_epochs, task "
+            f"2026-09-05_extract_ai_ready_strand_11 §0.2). Untag the epoch if that is wrong.")
     prof = profile or pinned_profile()
     known = profiles()
     if prof not in known:
@@ -175,7 +182,14 @@ def defer(document_id: str, reason: str) -> str:
 
 
 def deferrals() -> dict[str, dict]:
-    """{doc_id: live deferral}. A later request revives the document; ordinary replay."""
+    """{doc_id: live deferral}. A later request revives the document; ordinary replay.
+
+    Fixture-epoch membership is overlaid LAST and is not revivable. The revive-on-request
+    rule exists so a human can change their mind about one document; a fixture exclusion is
+    not a judgment about a document, it is what the document IS, so a stray request event —
+    one written before this rule existed, or by a path that bypassed `request` — must not
+    silently re-arm extraction on an eval fixture.
+    """
     out: dict[str, dict] = {}
     for ev in eventlog.replay():
         t = ev.get("event_type")
@@ -186,6 +200,9 @@ def deferrals() -> dict[str, dict]:
             out[doc] = ev
         elif t == REQUEST:
             out.pop(doc, None)
+    for doc, epoch in fixture_documents().items():
+        out[doc] = {"event_type": DEFERRED, "document_id": doc, "reason": "eval_fixture",
+                    "epoch": epoch, "by_rule": "dixie_evidence.yaml fixture_epochs"}
     return out
 
 
@@ -456,6 +473,33 @@ def corpus_epochs() -> dict[str, list[str]]:
     for ev in eventlog.replay():
         _absorb(ev)
     return dict(out)
+
+
+def fixture_epochs() -> list[str]:
+    """Epoch names the operator has tagged as EVAL FIXTURES in `dixie_evidence.yaml`.
+
+    A fixture epoch's members are the artifacts the G1 evaluation *scores* — a Census API
+    JSON slice, an NCHS Data Brief, a StatCan cube. They are admitted to the corpus because
+    G1 needs their Document nodes to score against; they are not literature and are never
+    read for constructs, so no `extraction_request` is ever owed on them (task
+    2026-09-05_extract_ai_ready_strand_11 §0.2, closing Issue 2e226acb).
+
+    The tag lives in the config beside the corpus's other operator decisions rather than in
+    this module, for the reason the whole file already follows: code reads thresholds, it
+    never carries them. A fourth fixture epoch is then one line in the YAML, not an edit here
+    plus 17 hand-emitted deferrals someone has to remember.
+    """
+    import yaml
+    if not _DIXIE_CONFIG.is_file():
+        return []
+    cfg = yaml.safe_load(_DIXIE_CONFIG.read_text(encoding="utf-8")) or {}
+    return list(cfg.get("fixture_epochs") or [])
+
+
+def fixture_documents() -> dict[str, str]:
+    """{doc_id: the fixture epoch that excludes it}."""
+    epochs = corpus_epochs()
+    return {doc: name for name in fixture_epochs() for doc in epochs.get(name, ())}
 
 
 #: Backfill cohorts (base task §6, corrected on measurement — see the RESULT).
