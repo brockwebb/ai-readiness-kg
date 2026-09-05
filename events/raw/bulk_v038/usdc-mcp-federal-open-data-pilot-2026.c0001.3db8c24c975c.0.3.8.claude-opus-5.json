@@ -1,0 +1,31 @@
+{
+ "doc_id": "usdc-mcp-federal-open-data-pilot-2026",
+ "chunk_id": "usdc-mcp-federal-open-data-pilot-2026#c0001",
+ "chunk_index": 1,
+ "chunk_start": 2,
+ "chunk_end": 1173,
+ "chunk_tokens": 327,
+ "heading_path": [],
+ "oversize": false,
+ "doc_sha256": "3db8c24c975c30902cccac5c836608d9a5fb82af0f2d1aced620b6b7138cb689",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 6376,
+  "cacheReadInputTokens": 12840,
+  "cacheCreationInputTokens": 23743,
+  "webSearchRequests": 0,
+  "costUSD": 0.40326,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 4351,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.40326,
+ "duration_ms": 67502,
+ "session_id": "8033a66a-ce5e-44d2-9217-39069c5ea97f",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Title page and 'About the U.S. Digital Corps' front matter: names the pilot study of Model Context Protocol servers for federal data access, and states when/by whom the U.S. Digital Corps was launched and what gap sparked it.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_usdc\",\n      \"name\": \"U.S.  Digital  Corps\",\n      \"aliases\": [\"U.S. Digital Corps\", \"USDC\", \"Digital Corps\"],\n      \"description\": \"A cross-government early-career technology fellowship launched in 2021 and operated by GSA's Technology Transformation Services; the authoring body of this document.\",\n      \"anchor\": \"Digital  Corps  was  launched\",\n      \"location\": \"usdc-mcp-federal-open-data-pilot-2026#c0001\"\n    },\n    {\n      \"id\": \"c_mcp_servers\",\n      \"name\": \"Model  Context  Protocol  Servers\",\n      \"aliases\": [\"Model Context Protocol servers\", \"MCP servers\"],\n      \"description\": \"The subject of the pilot study reported by this document: servers used to improve LLM access to federal open data.\",\n      \"anchor\": \"Model  Context  Protocol  Servers\",\n      \"location\": \"usdc-mcp-federal-open-data-pilot-2026#c0001\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"cl_launch\",\n      \"claim_text\": \"The  U.S.  Digital  Corps  was  launched  in  August  2021  by  the  General  Services  Administration\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"was  launched  in  August  2021\",\n      \"location\": \"usdc-mcp-federal-open-data-pilot-2026#c0001\"\n    },\n    {\n      \"id\": \"cl_spark\",\n      \"claim_text\": \"The  idea  for  a  Digital  Corps  was  sparked  by  technologists  across  government\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"sparked  by  technologists\",\n      \"location\": \"usdc-mcp-federal-open-data-pilot-2026#c0001\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"usdc-mcp-federal-open-data-pilot-2026\",\n      \"to_id\": \"cl_launch\",\n      \"anchor\": \"was  launched  in  August  2021\",\n      \"location\": \"usdc-mcp-federal-open-data-pilot-2026#c0001\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"usdc-mcp-federal-open-data-pilot-2026\",\n      \"to_id\": \"cl_spark\",\n      \"anchor\": \"sparked  by  technologists\",\n      \"location\": \"usdc-mcp-federal-open-data-pilot-2026#c0001\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_launch\",\n      \"to_id\": \"c_usdc\",\n      \"anchor\": \"Digital  Corps  was  launched\",\n      \"location\": \"usdc-mcp-federal-open-data-pilot-2026#c0001\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_spark\",\n      \"to_id\": \"c_usdc\",\n      \"anchor\": \"idea  for  a  Digital  Corps\",\n      \"location\": \"usdc-mcp-federal-open-data-pilot-2026#c0001\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"usdc-mcp-federal-open-data-pilot-2026\",\n      \"to_id\": \"c_mcp_servers\",\n      \"anchor\": \"Pilot  Study  of  Model  Context\",\n      \"location\": \"usdc-mcp-federal-open-data-pilot-2026#c0001\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"General  Services  Administration\",\n      \"anchor\": \"by  the  General  Services  Administration\"\n    },\n    {\n      \"name\": \"Technology  Transformation  Services\",\n      \"anchor\": \"Technology  Transformation  Services  Federal\"\n    },\n    {\n      \"name\": \"Federal  Acquisition  Service\",\n      \"anchor\": \"Federal  Acquisition  Service\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"operated\",\n      \"suggested_edge\": \"operated_by\",\n      \"from_hint\": \"U.S.  Digital  Corps\",\n      \"to_hint\": \"Technology  Transformation  Services\",\n      \"diversion_reason\": \"other:org_relation\"\n    },\n    {\n      \"anchor\": \"Bella  Mendoza  Mark  Aronson\",\n      \"suggested_edge\": \"authored_by\",\n      \"from_hint\": \"usdc-mcp-federal-open-data-pilot-2026\",\n      \"to_hint\": \"U.S.  Digital  Corps\",\n      \"diversion_reason\": \"structural_inference\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"Federal Open Data\", \"type\": \"Concept\"},\n    {\"name\": \"Federal Data Access\", \"type\": \"Concept\"},\n    {\"name\": \"LLM Access\", \"type\": \"Concept\"},\n    {\"name\": \"early-career technology talent\", \"type\": \"Concept\"},\n    {\"name\": \"cross-government fellowship opportunity\", \"type\": \"Definition\"},\n    {\"name\": \"White House Office of Management and Budget\", \"type\": \"Concept\"},\n    {\"name\": \"Office of Personnel Management\", \"type\": \"Concept\"},\n    {\"name\": \"Cybersecurity and Infrastructure Security Agency\", \"type\": \"Concept\"},\n    {\"name\": \"White House Office of Science and Technology Policy\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

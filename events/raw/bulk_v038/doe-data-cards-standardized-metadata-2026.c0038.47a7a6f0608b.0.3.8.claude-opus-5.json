@@ -1,0 +1,33 @@
+{
+ "doc_id": "doe-data-cards-standardized-metadata-2026",
+ "chunk_id": "doe-data-cards-standardized-metadata-2026#c0038",
+ "chunk_index": 38,
+ "chunk_start": 98537,
+ "chunk_end": 100299,
+ "chunk_tokens": 508,
+ "heading_path": [
+  "JSON"
+ ],
+ "oversize": false,
+ "doc_sha256": "47a7a6f0608b196d5c51dd02d0b732fda03a7a687b6b5eba76f478172bbcedcd",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 7522,
+  "cacheReadInputTokens": 12840,
+  "cacheCreationInputTokens": 24309,
+  "webSearchRequests": 0,
+  "costUSD": 0.43757,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 5588,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.43757,
+ "duration_ms": 85879,
+ "session_id": "d872141a-986f-4288-a6a1-f36ffe600b07",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Appendix D lists the data-cards code repository structure: a LinkML schema (genesis_datacard.yaml) with generated Pydantic data model and test fixtures, example cards, and the canonical Genesis Datacard v1.0 template (plus a sensitivity-markings template and archived versions), with an instruction to use the latest template version for new data cards.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"n1\",\n      \"name\": \"data card schema\",\n      \"aliases\": [\"Genesis data card schema\"],\n      \"description\": \"The schema the repository documents and validates data cards against.\",\n      \"anchor\": \"docs/:\",\n      \"location\": \"doe-data-cards-standardized-metadata-2026#c0038\"\n    },\n    {\n      \"id\": \"n2\",\n      \"name\": \"Pydantic data model\",\n      \"aliases\": [\"generated Pydantic model\"],\n      \"description\": \"A programmatically generated data model derived from the schema.\",\n      \"anchor\": \"datamodel/:\",\n      \"location\": \"doe-data-cards-standardized-metadata-2026#c0038\"\n    },\n    {\n      \"id\": \"n3\",\n      \"name\": \"data card template\",\n      \"aliases\": [\"canonical data card template\"],\n      \"description\": \"The canonical template used when authoring new data cards.\",\n      \"anchor\": \"canonical\",\n      \"location\": \"doe-data-cards-standardized-metadata-2026#c0038\"\n    },\n    {\n      \"id\": \"n4\",\n      \"name\": \"sensitivity markings template\",\n      \"aliases\": [\"genesis_sensitivity template\"],\n      \"description\": \"A separate reference template for the data card sensitivity and governance markings included in the data card schema and template.\",\n      \"anchor\": \"genesis_sensitivity/:\",\n      \"location\": \"doe-data-cards-standardized-metadata-2026#c0038\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [\n    {\n      \"id\": \"n5\",\n      \"name\": \"LinkML schema\",\n      \"version\": null,\n      \"steward\": null,\n      \"as_of_date\": null,\n      \"anchor\": \"genesis_datacard.yaml\",\n      \"location\": \"doe-data-cards-standardized-metadata-2026#c0038\"\n    },\n    {\n      \"id\": \"n6\",\n      \"name\": \"Genesis Datacard v1.0\",\n      \"version\": \"v1.0\",\n      \"steward\": null,\n      \"as_of_date\": null,\n      \"anchor\": \"genesis_datacard_merged_shared.md\",\n      \"location\": \"doe-data-cards-standardized-metadata-2026#c0038\"\n    }\n  ],\n  \"frameworks\": [],\n  \"practices\": [\n    {\n      \"id\": \"n7\",\n      \"text\": \"please use the latest version (latest/) for new data cards\",\n      \"as_of_date\": null,\n      \"scope\": \"content\",\n      \"anchor\": \"please\",\n      \"location\": \"doe-data-cards-standardized-metadata-2026#c0038\"\n    }\n  ],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"doe-data-cards-standardized-metadata-2026\",\n      \"to_id\": \"n1\",\n      \"anchor\": \"docs/:\",\n      \"location\": \"doe-data-cards-standardized-metadata-2026#c0038\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"doe-data-cards-standardized-metadata-2026\",\n      \"to_id\": \"n3\",\n      \"anchor\": \"canonical\",\n      \"location\": \"doe-data-cards-standardized-metadata-2026#c0038\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"doe-data-cards-standardized-metadata-2026\",\n      \"to_id\": \"n4\",\n      \"anchor\": \"genesis_sensitivity/:\",\n      \"location\": \"doe-data-cards-standardized-metadata-2026#c0038\"\n    },\n    {\n      \"type\": \"recommends\",\n      \"from_id\": \"doe-data-cards-standardized-metadata-2026\",\n      \"to_id\": \"n7\",\n      \"anchor\": \"please\",\n      \"location\": \"doe-data-cards-standardized-metadata-2026#c0038\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"data-cards/\",\n      \"anchor\": \"data-cards/\"\n    },\n    {\n      \"name\": \"YAML front matter\",\n      \"anchor\": \"datacard_field_reference_guide.md\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"genesis_datacard.yaml\",\n      \"suggested_edge\": \"has_component\",\n      \"from_id\": \"n1\",\n      \"to_id\": \"n5\",\n      \"diversion_reason\": \"structural_inference\"\n    },\n    {\n      \"anchor\": \"datamodel/:\",\n      \"suggested_edge\": \"generated_from\",\n      \"from_id\": \"n2\",\n      \"to_id\": \"n5\",\n      \"diversion_reason\": \"structural_inference\"\n    },\n    {\n      \"anchor\": \"genesis_datacard_merged_shared.md\",\n      \"suggested_edge\": \"instantiates\",\n      \"from_id\": \"n6\",\n      \"to_id\": \"n3\",\n      \"diversion_reason\": \"structural_inference\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"genesis_datacard_merged_shared.yaml\", \"type\": \"Standard\"},\n    {\"name\": \"archived versions of the data card template\", \"type\": \"Concept\"},\n    {\"name\": \"example valid completed data card\", \"type\": \"Concept\"},\n    {\"name\": \"example data card segments that are invalid against the schema\", \"type\": \"Concept\"},\n    {\"name\": \"datacard_field_reference_guide.md\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

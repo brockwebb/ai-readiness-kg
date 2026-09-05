@@ -1,0 +1,33 @@
+{
+ "doc_id": "doe-data-cards-standardized-metadata-2026",
+ "chunk_id": "doe-data-cards-standardized-metadata-2026#c0011",
+ "chunk_index": 11,
+ "chunk_start": 33436,
+ "chunk_end": 33752,
+ "chunk_tokens": 82,
+ "heading_path": [
+  "DCAT-US"
+ ],
+ "oversize": false,
+ "doc_sha256": "47a7a6f0608b196d5c51dd02d0b732fda03a7a687b6b5eba76f478172bbcedcd",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 7569,
+  "cacheReadInputTokens": 12840,
+  "cacheCreationInputTokens": 22869,
+  "webSearchRequests": 0,
+  "costUSD": 0.424345,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 5820,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.424345,
+ "duration_ms": 90741,
+ "session_id": "7ab7642c-4cb2-44d9-b16e-a1d0046f2e11",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Fragment asserting that DCAT-US (with a standard named in the prior chunk) provides an interoperability foundation for shared metadata efforts spanning catalogs, repositories, and public-sector data systems, and that researchers and DOE-funded entities engage with DataCite's framework via platforms named beyond the chunk boundary.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_interoperability\",\n      \"name\": \"interoperability\",\n      \"aliases\": [\"metadata interoperability\"],\n      \"description\": \"The property the document says DCAT-US supplies a foundation for, across catalogs, repositories, and public-sector data systems.\",\n      \"anchor\": \"interoperability\",\n      \"location\": \"doe-data-cards-standardized-metadata-2026#c0011\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"cl_dcatus_foundation\",\n      \"claim_text\": \"DCAT-US offer an important interoperability foundation for any shared metadata effort intended to span catalogs, repositories, and public-sector data systems\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"offer an important\",\n      \"location\": \"doe-data-cards-standardized-metadata-2026#c0011\"\n    },\n    {\n      \"id\": \"cl_datacite_engagement\",\n      \"claim_text\": \"Researchers and DOE-funded entities engage with DataCite’s framework\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"engage\",\n      \"location\": \"doe-data-cards-standardized-metadata-2026#c0011\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [\n    {\n      \"id\": \"s_dcat_us\",\n      \"name\": \"DCAT-US\",\n      \"version\": null,\n      \"steward\": null,\n      \"as_of_date\": null,\n      \"anchor\": \"DCAT-US\",\n      \"location\": \"doe-data-cards-standardized-metadata-2026#c0011\"\n    }\n  ],\n  \"frameworks\": [\n    {\n      \"id\": \"f_datacite\",\n      \"name\": \"DataCite\",\n      \"owner\": null,\n      \"year\": null,\n      \"anchor\": \"DataCite’s\",\n      \"location\": \"doe-data-cards-standardized-metadata-2026#c0011\"\n    }\n  ],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"doe-data-cards-standardized-metadata-2026\",\n      \"to_id\": \"cl_dcatus_foundation\",\n      \"anchor\": \"offer an important\",\n      \"location\": \"doe-data-cards-standardized-metadata-2026#c0011\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"doe-data-cards-standardized-metadata-2026\",\n      \"to_id\": \"cl_datacite_engagement\",\n      \"anchor\": \"engage\",\n      \"location\": \"doe-data-cards-standardized-metadata-2026#c0011\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_dcatus_foundation\",\n      \"to_id\": \"c_interoperability\",\n      \"anchor\": \"interoperability\",\n      \"location\": \"doe-data-cards-standardized-metadata-2026#c0011\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"doe-data-cards-standardized-metadata-2026\",\n      \"to_id\": \"c_interoperability\",\n      \"anchor\": \"interoperability\",\n      \"location\": \"doe-data-cards-standardized-metadata-2026#c0011\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\"name\": \"catalogs\", \"anchor\": \"catalogs,\"},\n    {\"name\": \"repositories\", \"anchor\": \"repositories,\"},\n    {\"name\": \"public-sector data systems\", \"anchor\": \"public-sector\"},\n    {\"name\": \"DOE-funded entities\", \"anchor\": \"DOE-funded\"}\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"and\",\n      \"suggested_edge\": \"builds_on\",\n      \"diversion_reason\": \"cross_chunk\",\n      \"note\": \"The sentence opens mid-list; the co-subject standard that DCAT-US is paired with is named in the previous chunk.\"\n    },\n    {\n      \"anchor\": \"managed\",\n      \"suggested_edge\": \"consumes\",\n      \"diversion_reason\": \"cross_chunk\",\n      \"note\": \"The platforms that carry DataCite's framework, and the operator that manages them, are named past the chunk boundary.\"\n    },\n    {\n      \"anchor\": \"interoperability foundation\",\n      \"suggested_edge\": \"provides_foundation_for\",\n      \"diversion_reason\": \"other:no_edge_type\",\n      \"note\": \"DCAT-US to interoperability: the schema has no edge type for a standard supplying a foundation for a concept.\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"shared metadata effort\", \"type\": \"Concept\"},\n    {\"name\": \"public-sector data systems\", \"type\": \"Concept\"}\n  ]\n}"
+}

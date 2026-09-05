@@ -1,0 +1,33 @@
+{
+ "doc_id": "doc-rfi-ai-open-gov-data-2024",
+ "chunk_id": "doc-rfi-ai-open-gov-data-2024#c0009",
+ "chunk_index": 9,
+ "chunk_start": 12963,
+ "chunk_end": 13320,
+ "chunk_tokens": 81,
+ "heading_path": [
+  "3. How does raw data, such as data"
+ ],
+ "oversize": false,
+ "doc_sha256": "e469fe5df482665352ea4bd6bd7dce11a774ca5d54c605db3ab82800feb8b452",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 4516,
+  "cacheReadInputTokens": 12840,
+  "cacheCreationInputTokens": 22855,
+  "webSearchRequests": 0,
+  "costUSD": 0.34787999999999997,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 2597,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.34787999999999997,
+ "duration_ms": 46860,
+ "session_id": "a84203df-cbe2-4700-b530-0ec22c7982ce",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Two RFI questions: Q3 asks how raw data (sensor networks) differs from derived data (Census Bureau statistical data) with respect to metadata standards; Q4 asks what data licensing practices, standards, and usage considerations Commerce should adopt to support broad, equitable, and open access to its datasets and metadata.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c-raw-data\",\n      \"name\": \"raw data\",\n      \"aliases\": [\"primary data\", \"unprocessed data\"],\n      \"description\": \"Data as collected at the source, exemplified in the chunk by data from sensor networks; the RFI asks how it differs from derived data for metadata standards.\",\n      \"anchor\": \"raw data\",\n      \"location\": \"doc-rfi-ai-open-gov-data-2024#c0009\"\n    },\n    {\n      \"id\": \"c-derived-data\",\n      \"name\": \"derived data\",\n      \"aliases\": [\"processed data\", \"statistical products\"],\n      \"description\": \"Data produced by processing or aggregation, exemplified in the chunk by statistical data from the U.S. Census Bureau.\",\n      \"anchor\": \"derived data\",\n      \"location\": \"doc-rfi-ai-open-gov-data-2024#c0009\"\n    },\n    {\n      \"id\": \"c-metadata-standards\",\n      \"name\": \"metadata standards\",\n      \"aliases\": [\"metadata specifications\"],\n      \"description\": \"The standards governing metadata, which the RFI treats as potentially differing between raw and derived data.\",\n      \"anchor\": \"metadata standards\",\n      \"location\": \"doc-rfi-ai-open-gov-data-2024#c0009\"\n    },\n    {\n      \"id\": \"c-data-licensing-practices\",\n      \"name\": \"data licensing practices\",\n      \"aliases\": [\"data licensing\"],\n      \"description\": \"Licensing practices, alongside standards and usage considerations, that the RFI asks Commerce to consider for its datasets and metadata.\",\n      \"anchor\": \"data licensing practices\",\n      \"location\": \"doc-rfi-ai-open-gov-data-2024#c0009\"\n    },\n    {\n      \"id\": \"c-open-access\",\n      \"name\": \"open access\",\n      \"aliases\": [\"broad, equitable, and open access\"],\n      \"description\": \"The access goal the RFI names for Commerce datasets and metadata, qualified as broad and equitable.\",\n      \"anchor\": \"open access\",\n      \"location\": \"doc-rfi-ai-open-gov-data-2024#c0009\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"doc-rfi-ai-open-gov-data-2024\",\n      \"to_id\": \"c-raw-data\",\n      \"anchor\": \"raw data\",\n      \"location\": \"doc-rfi-ai-open-gov-data-2024#c0009\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"doc-rfi-ai-open-gov-data-2024\",\n      \"to_id\": \"c-derived-data\",\n      \"anchor\": \"derived data\",\n      \"location\": \"doc-rfi-ai-open-gov-data-2024#c0009\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"doc-rfi-ai-open-gov-data-2024\",\n      \"to_id\": \"c-metadata-standards\",\n      \"anchor\": \"metadata standards\",\n      \"location\": \"doc-rfi-ai-open-gov-data-2024#c0009\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"doc-rfi-ai-open-gov-data-2024\",\n      \"to_id\": \"c-data-licensing-practices\",\n      \"anchor\": \"data licensing practices\",\n      \"location\": \"doc-rfi-ai-open-gov-data-2024#c0009\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"doc-rfi-ai-open-gov-data-2024\",\n      \"to_id\": \"c-open-access\",\n      \"anchor\": \"open access\",\n      \"location\": \"doc-rfi-ai-open-gov-data-2024#c0009\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\"name\": \"sensor networks\", \"anchor\": \"sensor networks\"},\n    {\"name\": \"U.S. Census Bureau\", \"anchor\": \"U.S. Census Bureau\"},\n    {\"name\": \"statistical data\", \"anchor\": \"statistical data\"},\n    {\"name\": \"Commerce\", \"anchor\": \"Commerce\"}\n  ],\n  \"proposed_relationships\": [\n    {\n      \"from_id\": \"c-raw-data\",\n      \"to_id\": \"c-derived-data\",\n      \"suggested_edge\": \"contrasts_with\",\n      \"anchor\": \"differ from\",\n      \"location\": \"doc-rfi-ai-open-gov-data-2024#c0009\",\n      \"diversion_reason\": \"other:no_edge_type\"\n    },\n    {\n      \"from_id\": \"c-data-licensing-practices\",\n      \"to_id\": \"c-open-access\",\n      \"suggested_edge\": \"supports\",\n      \"anchor\": \"consider to support\",\n      \"location\": \"doc-rfi-ai-open-gov-data-2024#c0009\",\n      \"diversion_reason\": \"other:no_edge_type\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"usage considerations\", \"type\": \"Concept\"},\n    {\"name\": \"documentation\", \"type\": \"Concept\"},\n    {\"name\": \"AI applications\", \"type\": \"Concept\"},\n    {\"name\": \"datasets and metadata\", \"type\": \"Concept\"}\n  ]\n}"
+}

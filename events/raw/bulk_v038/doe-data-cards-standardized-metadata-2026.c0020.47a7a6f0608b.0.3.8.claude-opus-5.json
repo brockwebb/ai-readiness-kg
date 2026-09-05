@@ -1,0 +1,35 @@
+{
+ "doc_id": "doe-data-cards-standardized-metadata-2026",
+ "chunk_id": "doe-data-cards-standardized-metadata-2026#c0020",
+ "chunk_index": 20,
+ "chunk_start": 67704,
+ "chunk_end": 67707,
+ "chunk_tokens": 1,
+ "heading_path": [
+  "DOI",
+  "6.4  Alignment  with  ISO/IEC  11179  Metadata  Registry  Standards",
+  "6.4.2  W here  the  Shared  Data  Card  Extends  Beyond  ISO /IEC  11179"
+ ],
+ "oversize": false,
+ "doc_sha256": "47a7a6f0608b196d5c51dd02d0b732fda03a7a687b6b5eba76f478172bbcedcd",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 4562,
+  "cacheReadInputTokens": 12840,
+  "cacheCreationInputTokens": 22833,
+  "webSearchRequests": 0,
+  "costUSD": 0.34880999999999995,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 3185,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.34880999999999995,
+ "duration_ms": 51556,
+ "session_id": "a3e003a8-d805-4e0c-b412-ac578b0a1e76",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Section 6.5 opener: names Project Alexandria [24] and asserts it is a valuable reference for governance-driven research data and metadata; the sentence is cut off at the chunk boundary.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_project_alexandria\",\n      \"name\": \"Project  Alexandria\",\n      \"aliases\": [\"Project Alexandria\", \"Alexandria\"],\n      \"description\": \"A reference project the document points to as an implementation reference for governance-driven research data and metadata.\",\n      \"anchor\": \"Project  Alexandria\",\n      \"location\": \"doe-data-cards-standardized-metadata-2026#c0020\"\n    },\n    {\n      \"id\": \"c_governance_driven_research_data\",\n      \"name\": \"governance-driven  research  data  and  metadata\",\n      \"aliases\": [\"governance-driven research data and metadata\"],\n      \"description\": \"Research data and metadata managed under an explicit governance regime; the domain for which the document says Alexandria supplies a reference.\",\n      \"anchor\": \"governance-driven\",\n      \"location\": \"doe-data-cards-standardized-metadata-2026#c0020\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"cl_alexandria_valuable_reference\",\n      \"claim_text\": \"Project  Alexandria  [24]  provides  a  valuable  reference  for  governance-driven  research  data  and  metadata\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"provides  a  valuable  reference\",\n      \"location\": \"doe-data-cards-standardized-metadata-2026#c0020\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"doe-data-cards-standardized-metadata-2026\",\n      \"to_id\": \"c_project_alexandria\",\n      \"anchor\": \"Alexandria  [24]\",\n      \"location\": \"doe-data-cards-standardized-metadata-2026#c0020\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"doe-data-cards-standardized-metadata-2026\",\n      \"to_id\": \"c_governance_driven_research_data\",\n      \"anchor\": \"for  governance-driven\",\n      \"location\": \"doe-data-cards-standardized-metadata-2026#c0020\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"doe-data-cards-standardized-metadata-2026\",\n      \"to_id\": \"cl_alexandria_valuable_reference\",\n      \"anchor\": \"provides  a\",\n      \"location\": \"doe-data-cards-standardized-metadata-2026#c0020\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_alexandria_valuable_reference\",\n      \"to_id\": \"c_project_alexandria\",\n      \"anchor\": \"[24]  provides\",\n      \"location\": \"doe-data-cards-standardized-metadata-2026#c0020\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_alexandria_valuable_reference\",\n      \"to_id\": \"c_governance_driven_research_data\",\n      \"anchor\": \"reference  for  governance-driven\",\n      \"location\": \"doe-data-cards-standardized-metadata-2026#c0020\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [],\n  \"proposed_relationships\": [\n    {\n      \"suggested_edge\": \"cites\",\n      \"anchor\": \"[24]\",\n      \"diversion_reason\": \"endpoint_not_located\",\n      \"note\": \"Reference marker [24] for Project Alexandria; the cited document is not identified in this chunk.\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"research  data\", \"type\": \"Concept\"},\n    {\"name\": \"metadata\", \"type\": \"Concept\"},\n    {\"name\": \"implementation reference\", \"type\": \"Concept\"}\n  ]\n}"
+}

@@ -1,0 +1,33 @@
+{
+ "doc_id": "odi-framework-for-ai-ready-data-2025",
+ "chunk_id": "odi-framework-for-ai-ready-data-2025#c0018",
+ "chunk_index": 18,
+ "chunk_start": 26131,
+ "chunk_end": 26960,
+ "chunk_tokens": 244,
+ "heading_path": [
+  "RDF"
+ ],
+ "oversize": false,
+ "doc_sha256": "ed1ea1b0ab4d8bc9f7c9ed6373b5d727743b8247ee3cb5b7253ca85d544b945e",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 8359,
+  "cacheReadInputTokens": 12840,
+  "cacheCreationInputTokens": 23475,
+  "webSearchRequests": 0,
+  "costUSD": 0.45015499999999997,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 6222,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.45015499999999997,
+ "duration_ms": 93118,
+ "session_id": "c180dc02-c796-4f90-92d6-97a9c522bebe",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Chunk closes a recommendation of the RDF file format and opens the Metadata section of the ODI AI-ready data framework: metadata gives contextual information, specific subsets are critical for AI use, metadata is saved per a vocabulary/ontology such as the Croissant metadata standard, and metadata should be machine-readable.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c1\",\n      \"name\": \"Metadata\",\n      \"aliases\": [\"dataset metadata\"],\n      \"description\": \"Contextual information attached to a dataset, saved in text-based files according to a chosen vocabulary or ontology.\",\n      \"anchor\": \"attached\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0018\"\n    },\n    {\n      \"id\": \"c2\",\n      \"name\": \"machine-readability\",\n      \"aliases\": [\"machine-readable metadata\"],\n      \"description\": \"The property that metadata is written into a format programmatic workflows and automated systems can load and parse.\",\n      \"anchor\": \"entails\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0018\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"cl1\",\n      \"claim_text\": \"Metadata attached to a dataset can provide users with all kinds of contextual information\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"contextual\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0018\"\n    },\n    {\n      \"id\": \"cl2\",\n      \"claim_text\": \"critical for AI contexts to enable accurate, responsible use of the dataset\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"critical\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0018\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [\n    {\n      \"id\": \"s1\",\n      \"name\": \"RDF\",\n      \"version\": null,\n      \"steward\": null,\n      \"as_of_date\": null,\n      \"anchor\": \"recommended\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0018\"\n    },\n    {\n      \"id\": \"s2\",\n      \"name\": \"Croissant metadata standard\",\n      \"version\": null,\n      \"steward\": null,\n      \"as_of_date\": null,\n      \"anchor\": \"Croissant\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0018\"\n    }\n  ],\n  \"frameworks\": [],\n  \"practices\": [\n    {\n      \"id\": \"p1\",\n      \"text\": \"Metadata should be machine-readable\",\n      \"as_of_date\": null,\n      \"scope\": \"dataset\",\n      \"anchor\": \"machine-readable\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0018\"\n    }\n  ],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"odi-framework-for-ai-ready-data-2025\",\n      \"to_id\": \"c1\",\n      \"anchor\": \"attached\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0018\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"odi-framework-for-ai-ready-data-2025\",\n      \"to_id\": \"c2\",\n      \"anchor\": \"entails\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0018\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"odi-framework-for-ai-ready-data-2025\",\n      \"to_id\": \"cl1\",\n      \"anchor\": \"contextual\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0018\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"odi-framework-for-ai-ready-data-2025\",\n      \"to_id\": \"cl2\",\n      \"anchor\": \"critical\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0018\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl1\",\n      \"to_id\": \"c1\",\n      \"anchor\": \"contextual\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0018\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl2\",\n      \"to_id\": \"c1\",\n      \"anchor\": \"responsible\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0018\"\n    },\n    {\n      \"type\": \"recommends\",\n      \"from_id\": \"odi-framework-for-ai-ready-data-2025\",\n      \"to_id\": \"p1\",\n      \"anchor\": \"machine-readable\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0018\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"p1\",\n      \"to_id\": \"c1\",\n      \"anchor\": \"programmatic\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0018\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\"name\": \"dataset\", \"anchor\": \"the dataset\"},\n    {\"name\": \"AI\", \"anchor\": \"AI\"},\n    {\"name\": \"ontology\", \"anchor\": \"ontology\"},\n    {\"name\": \"vocabulary\", \"anchor\": \"vocabulary\"}\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"Croissant\",\n      \"suggested_edge\": \"instance_of\",\n      \"from_id\": \"s2\",\n      \"to_id\": \"c1\",\n      \"diversion_reason\": \"other:no_edge_type\"\n    },\n    {\n      \"anchor\": \"recommended\",\n      \"suggested_edge\": \"recommends\",\n      \"from_id\": \"odi-framework-for-ai-ready-data-2025\",\n      \"to_id\": \"s1\",\n      \"diversion_reason\": \"cross_chunk\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"text-based files\", \"type\": \"Concept\"},\n    {\"name\": \"programmatic workflows\", \"type\": \"Concept\"},\n    {\"name\": \"automated systems\", \"type\": \"Concept\"},\n    {\"name\": \"file format\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

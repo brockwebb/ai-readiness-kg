@@ -1,0 +1,33 @@
+{
+ "doc_id": "usdc-mcp-federal-open-data-pilot-2026",
+ "chunk_id": "usdc-mcp-federal-open-data-pilot-2026#c0018",
+ "chunk_index": 18,
+ "chunk_start": 40075,
+ "chunk_end": 40657,
+ "chunk_tokens": 168,
+ "heading_path": [
+  "FAQ"
+ ],
+ "oversize": false,
+ "doc_sha256": "3db8c24c975c30902cccac5c836608d9a5fb82af0f2d1aced620b6b7138cb689",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 6008,
+  "cacheReadInputTokens": 12840,
+  "cacheCreationInputTokens": 23180,
+  "webSearchRequests": 0,
+  "costUSD": 0.38843000000000005,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 4109,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.38843000000000005,
+ "duration_ms": 66254,
+ "session_id": "9719eb88-fcbd-4373-9225-71be1a26bdcb",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Chunk enumerates documented security risks of poorly implemented servers — tool invocation exploits and tool shadowing — with a footnote citing Peponnet 2025 on cross-server tool shadowing.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c1\",\n      \"name\": \"Tool invocation exploits\",\n      \"aliases\": [\"tool invocation exploit\"],\n      \"description\": \"Unauthorized access through backend APIs triggered by improperly validated tool calls.\",\n      \"anchor\": \"backend\",\n      \"location\": \"usdc-mcp-federal-open-data-pilot-2026#c0018\"\n    },\n    {\n      \"id\": \"c2\",\n      \"name\": \"Tool shadowing\",\n      \"aliases\": [\"cross-server tool shadowing\"],\n      \"description\": \"Attackers stand up servers with identical or similar tool names/descriptions to redirect tool calls to their own servers.\",\n      \"anchor\": \"Attackers\",\n      \"location\": \"usdc-mcp-federal-open-data-pilot-2026#c0018\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d1\",\n      \"term\": \"Tool invocation exploits\",\n      \"verbatim_text\": \"Unauthorized access through backend APIs triggered by improperly validated tool calls.\",\n      \"normative_status\": \"industry\",\n      \"as_of_date\": null,\n      \"anchor\": \"improperly\",\n      \"location\": \"usdc-mcp-federal-open-data-pilot-2026#c0018\"\n    },\n    {\n      \"id\": \"d2\",\n      \"term\": \"Tool shadowing\",\n      \"verbatim_text\": \"Attackers create servers with identical or similar tool names/descriptions to redirect tool calls to their own servers.\",\n      \"normative_status\": \"industry\",\n      \"as_of_date\": null,\n      \"anchor\": \"redirect\",\n      \"location\": \"usdc-mcp-federal-open-data-pilot-2026#c0018\"\n    }\n  ],\n  \"claims\": [\n    {\n      \"id\": \"cl1\",\n      \"claim_text\": \"these servers can expose sensitive data or enable malicious behavior\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"malicious\",\n      \"location\": \"usdc-mcp-federal-open-data-pilot-2026#c0018\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"usdc-mcp-federal-open-data-pilot-2026\",\n      \"to_id\": \"cl1\",\n      \"anchor\": \"expose\",\n      \"location\": \"usdc-mcp-federal-open-data-pilot-2026#c0018\"\n    },\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"usdc-mcp-federal-open-data-pilot-2026\",\n      \"to_id\": \"d1\",\n      \"anchor\": \"invocation\",\n      \"location\": \"usdc-mcp-federal-open-data-pilot-2026#c0018\"\n    },\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"usdc-mcp-federal-open-data-pilot-2026\",\n      \"to_id\": \"d2\",\n      \"anchor\": \"names/descriptions\",\n      \"location\": \"usdc-mcp-federal-open-data-pilot-2026#c0018\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"usdc-mcp-federal-open-data-pilot-2026\",\n      \"to_id\": \"c1\",\n      \"anchor\": \"exploits\",\n      \"location\": \"usdc-mcp-federal-open-data-pilot-2026#c0018\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"usdc-mcp-federal-open-data-pilot-2026\",\n      \"to_id\": \"c2\",\n      \"anchor\": \"identical\",\n      \"location\": \"usdc-mcp-federal-open-data-pilot-2026#c0018\"\n    }\n  ],\n  \"cites\": [\n    {\n      \"id\": \"cite1\",\n      \"from_id\": \"usdc-mcp-federal-open-data-pilot-2026\",\n      \"to_id\": \"peponnet-2025-cross-server-tool-shadowing\",\n      \"title\": \"Cross-Server Tool Shadowing: Hijacking Calls Between Servers — Acuvity\",\n      \"anchor\": \"Peponnet\",\n      \"location\": \"usdc-mcp-federal-open-data-pilot-2026#c0018\"\n    }\n  ],\n  \"mentions\": [\n    {\n      \"name\": \"backend APIs\",\n      \"anchor\": \"through\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"suggested_edge\": \"subtype_of\",\n      \"from_id\": \"c2\",\n      \"to_id\": \"documented risks\",\n      \"anchor\": \"Documented\",\n      \"diversion_reason\": \"structural_inference\",\n      \"location\": \"usdc-mcp-federal-open-data-pilot-2026#c0018\"\n    },\n    {\n      \"suggested_edge\": \"about\",\n      \"from_id\": \"cl1\",\n      \"to_id\": \"MCP server\",\n      \"anchor\": \"servers can expose\",\n      \"diversion_reason\": \"cross_chunk\",\n      \"location\": \"usdc-mcp-federal-open-data-pilot-2026#c0018\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"tool calls\", \"type\": \"Concept\"},\n    {\"name\": \"sensitive data\", \"type\": \"Concept\"},\n    {\"name\": \"Acuvity\", \"type\": \"Concept\"}\n  ]\n}"
+}

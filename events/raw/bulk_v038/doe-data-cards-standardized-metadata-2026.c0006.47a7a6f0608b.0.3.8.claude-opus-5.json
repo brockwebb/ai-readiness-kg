@@ -1,0 +1,33 @@
+{
+ "doc_id": "doe-data-cards-standardized-metadata-2026",
+ "chunk_id": "doe-data-cards-standardized-metadata-2026#c0006",
+ "chunk_index": 6,
+ "chunk_start": 23840,
+ "chunk_end": 24549,
+ "chunk_tokens": 189,
+ "heading_path": [
+  "DCAT,"
+ ],
+ "oversize": false,
+ "doc_sha256": "47a7a6f0608b196d5c51dd02d0b732fda03a7a687b6b5eba76f478172bbcedcd",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 11348,
+  "cacheReadInputTokens": 12840,
+  "cacheCreationInputTokens": 23329,
+  "webSearchRequests": 0,
+  "costUSD": 0.52342,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 9655,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.52342,
+ "duration_ms": 132082,
+ "session_id": "f61adee6-75a2-408a-a8c8-2c74c3c58aba",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Section-roadmap paragraph (Sections 5–9) naming the data card and the existing metadata frameworks it will be related to (DCAT, Alexandria, OSTI, Office of Science guidance, Genesis Mission sensitivity/governance metadata), followed by the opening of Related Work §2.1 asserting the growing prominence of dataset documentation.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"n_data_card\",\n      \"name\": \"data  card\",\n      \"aliases\": [\"data card\"],\n      \"description\": \"The proposed documentation artifact whose structure and supported capabilities Section 5 outlines and whose relationship to existing metadata frameworks Section 6 discusses.\",\n      \"anchor\": \"structure  of  the  data  card\",\n      \"location\": \"doe-data-cards-standardized-metadata-2026#c0006\"\n    },\n    {\n      \"id\": \"n_dataset_documentation\",\n      \"name\": \"Dataset  Documentation\",\n      \"aliases\": [\"dataset documentation\"],\n      \"description\": \"Documenting datasets as meaningful technical artifacts, treated by the paper as an object of design.\",\n      \"anchor\": \"Dataset  Documentation  as  an  Object\",\n      \"location\": \"doe-data-cards-standardized-metadata-2026#c0006\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"n_claim_doc_prominence\",\n      \"claim_text\": \"The  need  to  document  datasets  as  meaningful  technical  artifacts  has  become  increasingly\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"meaningful  technical  artifacts\",\n      \"location\": \"doe-data-cards-standardized-metadata-2026#c0006\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [\n    {\n      \"id\": \"n_dcat\",\n      \"name\": \"DCAT\",\n      \"owner\": null,\n      \"year\": null,\n      \"anchor\": \"DCAT\",\n      \"location\": \"doe-data-cards-standardized-metadata-2026#c0006\"\n    },\n    {\n      \"id\": \"n_alexandria\",\n      \"name\": \"Alexandria\",\n      \"owner\": null,\n      \"year\": null,\n      \"anchor\": \"Alexandria\",\n      \"location\": \"doe-data-cards-standardized-metadata-2026#c0006\"\n    }\n  ],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"doe-data-cards-standardized-metadata-2026\",\n      \"to_id\": \"n_data_card\",\n      \"anchor\": \"structure  of  the  data  card\",\n      \"location\": \"doe-data-cards-standardized-metadata-2026#c0006\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"doe-data-cards-standardized-metadata-2026\",\n      \"to_id\": \"n_dataset_documentation\",\n      \"anchor\": \"Dataset  Documentation  as  an  Object\",\n      \"location\": \"doe-data-cards-standardized-metadata-2026#c0006\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"doe-data-cards-standardized-metadata-2026\",\n      \"to_id\": \"n_claim_doc_prominence\",\n      \"anchor\": \"meaningful  technical  artifacts\",\n      \"location\": \"doe-data-cards-standardized-metadata-2026#c0006\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"n_claim_doc_prominence\",\n      \"to_id\": \"n_dataset_documentation\",\n      \"anchor\": \"meaningful  technical  artifacts\",\n      \"location\": \"doe-data-cards-standardized-metadata-2026#c0006\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"OSTI\",\n      \"anchor\": \"OSTI\"\n    },\n    {\n      \"name\": \"Genesis  Mission\",\n      \"anchor\": \"within  the  Genesis  Mission\"\n    },\n    {\n      \"name\": \"sensitivity  and  governance  metadata\",\n      \"anchor\": \"sensitivity  and  governance  metadata\"\n    },\n    {\n      \"name\": \"autonomous  science\",\n      \"anchor\": \"enable  autonomous  science\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"existing  metadata  frameworks,  including\",\n      \"suggested_edge\": \"aligns_with\",\n      \"from_id\": \"n_data_card\",\n      \"to_id\": \"n_dcat\",\n      \"diversion_reason\": \"other:no_valid_edge_type\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"Office of Science guidance\", \"type\": \"Framework\"},\n    {\"name\": \"machine learning\", \"type\": \"Concept\"},\n    {\"name\": \"phased approach to enable autonomous science\", \"type\": \"Framework\"}\n  ]\n}"
+}

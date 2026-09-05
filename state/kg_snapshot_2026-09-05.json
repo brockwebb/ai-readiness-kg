@@ -1,0 +1,284 @@
+{
+ "generated_at": "2026-09-05T13:30:19.224864+00:00",
+ "kg_labels": [
+  "Concept",
+  "Claim",
+  "Definition",
+  "Measure",
+  "Practice",
+  "Standard",
+  "Framework",
+  "Instrument",
+  "Platform",
+  "Document",
+  "Tool"
+ ],
+ "nodes_total": 34753,
+ "label_counts": {
+  "Concept": 11432,
+  "Claim": 6776,
+  "Artifact": 4492,
+  "Result": 4161,
+  "Definition": 1974,
+  "Measure": 1429,
+  "Practice": 1347,
+  "Standard": 943,
+  "Framework": 506,
+  "Instrument": 502,
+  "Platform": 332,
+  "Tool": 262,
+  "Document": 233,
+  "OntologyTerm": 111,
+  "ResearchTask": 106,
+  "DataFile": 62,
+  "DesignNote": 22,
+  "Script": 19,
+  "Issue": 9,
+  "_SeldonMeta": 1,
+  "_OntologyReplicaMeta": 1,
+  "LabNotebookEntry": 1,
+  "ArchitecturalDecision": 1
+ },
+ "concept_total": 11432,
+ "claim_total": 6776,
+ "document_total": 233,
+ "concept_dup_groups": 1486,
+ "concept_dup_nodes": 4722,
+ "concept_dup_node_share": 0.413051,
+ "concept_dup_largest_groups": [
+  {
+   "key": "data quality",
+   "nodes": 41
+  },
+  {
+   "key": "accessibility",
+   "nodes": 31
+  },
+  {
+   "key": "metadata",
+   "nodes": 31
+  },
+  {
+   "key": "accuracy",
+   "nodes": 24
+  },
+  {
+   "key": "dataset",
+   "nodes": 24
+  },
+  {
+   "key": "interoperability",
+   "nodes": 22
+  },
+  {
+   "key": "ai readiness",
+   "nodes": 21
+  },
+  {
+   "key": "generative ai",
+   "nodes": 21
+  },
+  {
+   "key": "provenance",
+   "nodes": 21
+  },
+  {
+   "key": "timeliness",
+   "nodes": 20
+  },
+  {
+   "key": "large language models",
+   "nodes": 19
+  },
+  {
+   "key": "ai actors",
+   "nodes": 18
+  },
+  {
+   "key": "relevance",
+   "nodes": 18
+  },
+  {
+   "key": "transparency",
+   "nodes": 18
+  },
+  {
+   "key": "administrative data",
+   "nodes": 17
+  }
+ ],
+ "ai_readiness_nodes": 21,
+ "ai_readiness_in_edges": 66,
+ "concept_degree_median": 1,
+ "concept_degree_max": 26,
+ "concept_degree_1": 5661,
+ "concept_degree_0": 869,
+ "concept_degree_ge5": 502,
+ "domain_edges_total": 34388,
+ "domain_edges_both_kg_labels": 29865,
+ "edges_total": 42640,
+ "domain_edge_triples": [
+  {
+   "a": "Document",
+   "t": "MENTIONS",
+   "b": "Concept",
+   "n": 8640
+  },
+  {
+   "a": "Document",
+   "t": "ASSERTS",
+   "b": "Claim",
+   "n": 6721
+  },
+  {
+   "a": "Claim",
+   "t": "ABOUT",
+   "b": "Concept",
+   "n": 6190
+  },
+  {
+   "a": "Document",
+   "t": "DEFINES",
+   "b": "Definition",
+   "n": 1949
+  },
+  {
+   "a": "Document",
+   "t": "RECOMMENDS",
+   "b": "Practice",
+   "n": 1347
+  },
+  {
+   "a": "Practice",
+   "t": "APPLIES_TO",
+   "b": "Concept",
+   "n": 826
+  },
+  {
+   "a": "Measure",
+   "t": "MEASURES",
+   "b": "Concept",
+   "n": 773
+  },
+  {
+   "a": "Instrument",
+   "t": "USES_MEASURE",
+   "b": "Measure",
+   "n": 745
+  },
+  {
+   "a": "Concept",
+   "t": "HAS_COMPONENT",
+   "b": "Concept",
+   "n": 564
+  },
+  {
+   "a": "Instrument",
+   "t": "MEASURES",
+   "b": "Concept",
+   "n": 352
+  },
+  {
+   "a": "Concept",
+   "t": "SUBTYPE_OF",
+   "b": "Concept",
+   "n": 308
+  },
+  {
+   "a": "Framework",
+   "t": "HAS_COMPONENT",
+   "b": "Concept",
+   "n": 291
+  },
+  {
+   "a": "Practice",
+   "t": "SUPPORTED_BY",
+   "b": "Claim",
+   "n": 139
+  },
+  {
+   "a": "Concept",
+   "t": "PRECEDES",
+   "b": "Concept",
+   "n": 117
+  },
+  {
+   "a": "Standard",
+   "t": "BUILDS_ON",
+   "b": "Standard",
+   "n": 112
+  },
+  {
+   "a": "Measure",
+   "t": "APPLIES_TO",
+   "b": "Concept",
+   "n": 101
+  },
+  {
+   "a": "Standard",
+   "t": "IMPLEMENTS",
+   "b": "Concept",
+   "n": 93
+  },
+  {
+   "a": "Practice",
+   "t": "TARGETS",
+   "b": "Platform",
+   "n": 90
+  },
+  {
+   "a": "Claim",
+   "t": "ABOUT",
+   "b": "Claim",
+   "n": 80
+  },
+  {
+   "a": "Concept",
+   "t": "ABOUT",
+   "b": "Concept",
+   "n": 71
+  }
+ ],
+ "domain_edges_by_type": {
+  "MENTIONS": 8679,
+  "ASSERTS": 6792,
+  "ABOUT": 6341,
+  "DEFINES": 1949,
+  "RECOMMENDS": 1351,
+  "MEASURES": 1137,
+  "APPLIES_TO": 932,
+  "HAS_COMPONENT": 855,
+  "USES_MEASURE": 745,
+  "SUBTYPE_OF": 308,
+  "BUILDS_ON": 174,
+  "SUPPORTED_BY": 140,
+  "PRECEDES": 117,
+  "IMPLEMENTS": 93,
+  "TARGETS": 91,
+  "CONSUMES": 58,
+  "IMPLEMENTED_BY": 39,
+  "CITES": 36,
+  "EXTENDS": 21,
+  "CONFLICTS_WITH": 7
+ },
+ "document_cites_document": 36,
+ "claim_conflicts_claim": 5,
+ "definition_conflicts": 2,
+ "claims_without_asserts_source": 55,
+ "claims_without_asserts_sample": [
+  "cl-adas-62",
+  "cl-adopt-accelerate",
+  "cl-adoption",
+  "cl-ai-infra-layer",
+  "cl-architecture-holds"
+ ],
+ "documents_without_extractions": 66,
+ "document_extractions_median": 41,
+ "concept_with_doc_id": 11432,
+ "concept_with_grounding_span": 11432,
+ "concept_with_aliases": 10899,
+ "document_with_content_hash": 233,
+ "document_with_prov_source_sha256": 0,
+ "documents_extracted": 167,
+ "database": "seldon-ai-readiness-kg"
+}

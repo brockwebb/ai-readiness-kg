@@ -1,0 +1,33 @@
+{
+ "doc_id": "usdc-mcp-federal-open-data-pilot-2026",
+ "chunk_id": "usdc-mcp-federal-open-data-pilot-2026#c0012",
+ "chunk_index": 12,
+ "chunk_start": 23844,
+ "chunk_end": 24059,
+ "chunk_tokens": 70,
+ "heading_path": [
+  "PLACES’"
+ ],
+ "oversize": false,
+ "doc_sha256": "3db8c24c975c30902cccac5c836608d9a5fb82af0f2d1aced620b6b7138cb689",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 3533,
+  "cacheReadInputTokens": 12840,
+  "cacheCreationInputTokens": 22836,
+  "webSearchRequests": 0,
+  "costUSD": 0.323115,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 2430,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.323115,
+ "duration_ms": 43651,
+ "session_id": "f6a3f99e-e51b-4164-8cb4-428601005277",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Sentence fragment warning that a user reaching PLACES' website via an LLM may conclude the LLM is an authoritative source and use data the LLM incorrectly queried or falsely attributed.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_authoritative_source\",\n      \"name\": \"authoritative source\",\n      \"aliases\": [\"authoritativeness of an LLM as a data source\"],\n      \"description\": \"The status a user may wrongly assign to an LLM after being routed to a data publisher's website by it.\",\n      \"anchor\": \"authoritative\",\n      \"location\": \"usdc-mcp-federal-open-data-pilot-2026#c0012\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"cl_false_attribution\",\n      \"claim_text\": \"conclude the LLM is an authoritative source, and proceed to use data that the LLM had incorrectly queried, or in many cases, falsely attributed to\",\n      \"claim_type\": \"speculative\",\n      \"evidence_grade\": \"inference\",\n      \"anchor\": \"conclude\",\n      \"location\": \"usdc-mcp-federal-open-data-pilot-2026#c0012\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"usdc-mcp-federal-open-data-pilot-2026\",\n      \"to_id\": \"cl_false_attribution\",\n      \"anchor\": \"proceed\",\n      \"location\": \"usdc-mcp-federal-open-data-pilot-2026#c0012\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_false_attribution\",\n      \"to_id\": \"c_authoritative_source\",\n      \"anchor\": \"authoritative\",\n      \"location\": \"usdc-mcp-federal-open-data-pilot-2026#c0012\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"usdc-mcp-federal-open-data-pilot-2026\",\n      \"to_id\": \"c_authoritative_source\",\n      \"anchor\": \"source,\",\n      \"location\": \"usdc-mcp-federal-open-data-pilot-2026#c0012\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"website\",\n      \"anchor\": \"website,\"\n    },\n    {\n      \"name\": \"incorrectly\",\n      \"anchor\": \"incorrectly\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"suggested_edge\": \"targets\",\n      \"anchor\": \"falsely\",\n      \"diversion_reason\": \"cross_chunk\",\n      \"note\": \"The LLM as a machine consumer misattributing data to PLACES is asserted here, but neither a typed Platform node for the LLM nor the PLACES data product is established within this chunk.\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"LLM\", \"type\": \"Platform\"},\n    {\"name\": \"PLACES\", \"type\": \"Concept\"},\n    {\"name\": \"falsely attributed\", \"type\": \"Concept\"},\n    {\"name\": \"incorrectly queried\", \"type\": \"Concept\"}\n  ]\n}"
+}

@@ -1,0 +1,33 @@
+{
+ "doc_id": "odi-framework-for-ai-ready-data-2025",
+ "chunk_id": "odi-framework-for-ai-ready-data-2025#c0016",
+ "chunk_index": 16,
+ "chunk_start": 25230,
+ "chunk_end": 25341,
+ "chunk_tokens": 34,
+ "heading_path": [
+  "CSV"
+ ],
+ "oversize": false,
+ "doc_sha256": "ed1ea1b0ab4d8bc9f7c9ed6373b5d727743b8247ee3cb5b7253ca85d544b945e",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 4886,
+  "cacheReadInputTokens": 12840,
+  "cacheCreationInputTokens": 22672,
+  "webSearchRequests": 0,
+  "costUSD": 0.3553,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 3184,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3553,
+ "duration_ms": 54847,
+ "session_id": "33219f69-48b7-4eb0-97a3-2cc0cc1f4c43",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"One sentence: W3C's CSV on the Web (CSVW) standard is said to improve the interoperability and machine-readability of CSV files.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"concept_interoperability\",\n      \"name\": \"interoperability\",\n      \"aliases\": [\"data interoperability\"],\n      \"description\": \"The property the chunk says CSVW improves for CSV files.\",\n      \"anchor\": \"interoperability\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0016\"\n    },\n    {\n      \"id\": \"concept_machine_readability\",\n      \"name\": \"machine-readability\",\n      \"aliases\": [\"machine readability\"],\n      \"description\": \"The property the chunk says CSVW improves for CSV files.\",\n      \"anchor\": \"machine-readability\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0016\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"claim_csvw_improves\",\n      \"claim_text\": \"improves their interoperability and machine-readability\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"improves\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0016\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [\n    {\n      \"id\": \"standard_csvw\",\n      \"name\": \"CSVW\",\n      \"version\": null,\n      \"steward\": \"W3C\",\n      \"as_of_date\": null,\n      \"anchor\": \"CSVW\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0016\"\n    }\n  ],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"odi-framework-for-ai-ready-data-2025\",\n      \"to_id\": \"claim_csvw_improves\",\n      \"anchor\": \"improves\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0016\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"claim_csvw_improves\",\n      \"to_id\": \"concept_interoperability\",\n      \"anchor\": \"interoperability\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0016\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"claim_csvw_improves\",\n      \"to_id\": \"concept_machine_readability\",\n      \"anchor\": \"machine-readability\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0016\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"odi-framework-for-ai-ready-data-2025\",\n      \"to_id\": \"concept_interoperability\",\n      \"anchor\": \"interoperability\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0016\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"odi-framework-for-ai-ready-data-2025\",\n      \"to_id\": \"concept_machine_readability\",\n      \"anchor\": \"machine-readability\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0016\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"W3C\",\n      \"anchor\": \"W3C\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"suggested_edge\": \"improves\",\n      \"from_id\": \"standard_csvw\",\n      \"to_id\": \"concept_interoperability\",\n      \"anchor\": \"improves\",\n      \"diversion_reason\": \"other:no_edge_type\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0016\"\n    },\n    {\n      \"suggested_edge\": \"improves\",\n      \"from_id\": \"standard_csvw\",\n      \"to_id\": \"concept_machine_readability\",\n      \"anchor\": \"improves\",\n      \"diversion_reason\": \"other:no_edge_type\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0016\"\n    },\n    {\n      \"suggested_edge\": \"applies_to\",\n      \"from_id\": \"standard_csvw\",\n      \"to_id\": \"CSV files\",\n      \"anchor\": \"their\",\n      \"diversion_reason\": \"cross_chunk\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0016\"\n    },\n    {\n      \"suggested_edge\": \"stewarded_by\",\n      \"from_id\": \"standard_csvw\",\n      \"to_id\": \"W3C\",\n      \"anchor\": \"W3C\",\n      \"diversion_reason\": \"other:no_edge_type\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0016\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"CSV\", \"type\": \"Concept\"},\n    {\"name\": \"CSV on the Web\", \"type\": \"Standard\"},\n    {\"name\": \"W3C\", \"type\": \"Concept\"}\n  ]\n}"
+}

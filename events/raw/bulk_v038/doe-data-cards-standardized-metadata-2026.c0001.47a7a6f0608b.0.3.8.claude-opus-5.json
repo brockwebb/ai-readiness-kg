@@ -1,0 +1,33 @@
+{
+ "doc_id": "doe-data-cards-standardized-metadata-2026",
+ "chunk_id": "doe-data-cards-standardized-metadata-2026#c0001",
+ "chunk_index": 1,
+ "chunk_start": 0,
+ "chunk_end": 4690,
+ "chunk_tokens": 1298,
+ "heading_path": [
+  "DISCLAIMER"
+ ],
+ "oversize": false,
+ "doc_sha256": "47a7a6f0608b196d5c51dd02d0b732fda03a7a687b6b5eba76f478172bbcedcd",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 9454,
+  "cacheReadInputTokens": 12840,
+  "cacheCreationInputTokens": 27014,
+  "webSearchRequests": 0,
+  "costUSD": 0.51292,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 8000,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.51292,
+ "duration_ms": 115475,
+ "session_id": "47ade5e6-e1dc-40af-99d7-2471cefb4aa2",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Front matter of a DOE report on Data Cards: standard government disclaimer boilerplate, title and author affiliations, a scope disclaimer describing the report as a versioned document supporting a shared Data Card across DOE-aligned initiatives, and a stakeholder review-and-approval statement.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c1\",\n      \"name\": \"Data  Card\",\n      \"aliases\": [\"Data Card\", \"Data Cards\"],\n      \"description\": \"A shared documentation artifact comprising both structured metadata and narrative sections, developed across multiple DOE-aligned data initiatives and released in versions.\",\n      \"anchor\": \"shared\",\n      \"location\": \"doe-data-cards-standardized-metadata-2026#c0001\"\n    },\n    {\n      \"id\": \"c2\",\n      \"name\": \"Standardized  Metadata\",\n      \"aliases\": [\"standardized metadata\"],\n      \"description\": \"Metadata conforming to a common specification, used across DOE-aligned data initiatives for transparent, interoperable, and governed dataset documentation.\",\n      \"anchor\": \"Standardized\",\n      \"location\": \"doe-data-cards-standardized-metadata-2026#c0001\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"cl1\",\n      \"claim_text\": \"This  is  a  versioned  document  intended  to  support  the  development  of  a  shared  Data  Card\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"versioned\",\n      \"location\": \"doe-data-cards-standardized-metadata-2026#c0001\"\n    },\n    {\n      \"id\": \"cl2\",\n      \"claim_text\": \"Participating  stakeholders  have  approved  this  report  through  technical  and  programmatic\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"Participating\",\n      \"location\": \"doe-data-cards-standardized-metadata-2026#c0001\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"doe-data-cards-standardized-metadata-2026\",\n      \"to_id\": \"cl1\",\n      \"anchor\": \"versioned\",\n      \"location\": \"doe-data-cards-standardized-metadata-2026#c0001\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"doe-data-cards-standardized-metadata-2026\",\n      \"to_id\": \"cl2\",\n      \"anchor\": \"Participating\",\n      \"location\": \"doe-data-cards-standardized-metadata-2026#c0001\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl1\",\n      \"to_id\": \"c1\",\n      \"anchor\": \"shared\",\n      \"location\": \"doe-data-cards-standardized-metadata-2026#c0001\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"doe-data-cards-standardized-metadata-2026\",\n      \"to_id\": \"c2\",\n      \"anchor\": \"Standardized\",\n      \"location\": \"doe-data-cards-standardized-metadata-2026#c0001\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"United  States  Department  of  Energy\",\n      \"anchor\": \"Department\"\n    }\n  ],\n  \"proposed_relationships\": [],\n  \"gleaned\": [\n    {\"name\": \"does not supersede applicable laws, regulations, DOE directives, laboratory policies\", \"type\": \"Claim\"},\n    {\"name\": \"project was funded by the United States Department of Energy\", \"type\": \"Claim\"},\n    {\"name\": \"no warranty, express or implied, by the United States Government\", \"type\": \"Claim\"},\n    {\"name\": \"DOE-aligned data initiatives\", \"type\": \"Concept\"},\n    {\"name\": \"dataset documentation\", \"type\": \"Concept\"},\n    {\"name\": \"review-and-release processes\", \"type\": \"Concept\"},\n    {\"name\": \"ORCID\", \"type\": \"Standard\"},\n    {\"name\": \"ROR\", \"type\": \"Standard\"}\n  ]\n}"
+}

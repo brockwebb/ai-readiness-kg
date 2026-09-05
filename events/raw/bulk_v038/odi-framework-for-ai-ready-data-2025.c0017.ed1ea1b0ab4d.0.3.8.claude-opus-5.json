@@ -1,0 +1,33 @@
+{
+ "doc_id": "odi-framework-for-ai-ready-data-2025",
+ "chunk_id": "odi-framework-for-ai-ready-data-2025#c0017",
+ "chunk_index": 17,
+ "chunk_start": 25344,
+ "chunk_end": 26128,
+ "chunk_tokens": 227,
+ "heading_path": [
+  "CSVW"
+ ],
+ "oversize": false,
+ "doc_sha256": "ed1ea1b0ab4d8bc9f7c9ed6373b5d727743b8247ee3cb5b7253ca85d544b945e",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 7144,
+  "cacheReadInputTokens": 12840,
+  "cacheCreationInputTokens": 23473,
+  "webSearchRequests": 0,
+  "costUSD": 0.41976,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 4940,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.41976,
+ "duration_ms": 76297,
+ "session_id": "c7db34ae-5fbe-4a1e-adfe-c6ef17349796",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Chunk contrasts CSVW's metadata benefits with Apache Parquet, which interviews confirmed is arguably the most AI-ready file format (columnar storage, metadata attachments, multimodal, compression) and is being adopted by Hugging Face and Kaggle.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_ai_ready_file_formats\",\n      \"name\": \"AI-ready ﬁle formats\",\n      \"aliases\": [\"AI-ready file formats\"],\n      \"description\": \"File formats judged most suitable for AI consumption on the basis of properties such as columnar storage, metadata attachments, multimodal capability and compression.\",\n      \"anchor\": \"formats\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0017\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"cl_csvw_metadata\",\n      \"claim_text\": \"CSVW allows for the inclusion of metadata that describes the structure and semantics of the data\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"inclusion\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0017\"\n    },\n    {\n      \"id\": \"cl_parquet_most_ai_ready\",\n      \"claim_text\": \"arguably the most AI-ready ﬁle formats due to several unique properties\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"measured_practitioner\",\n      \"anchor\": \"arguably\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0017\"\n    },\n    {\n      \"id\": \"cl_parquet_adoption\",\n      \"claim_text\": \"Parquet ﬁles are being adopted by the two largest AI data repositories, Hugging Face and Kaggle\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"adopted\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0017\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [\n    {\n      \"id\": \"s_csvw\",\n      \"name\": \"CSVW\",\n      \"version\": null,\n      \"steward\": null,\n      \"as_of_date\": null,\n      \"anchor\": \"allows\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0017\"\n    },\n    {\n      \"id\": \"s_parquet\",\n      \"name\": \"Apache Parquet\",\n      \"version\": null,\n      \"steward\": null,\n      \"as_of_date\": null,\n      \"anchor\": \"Apache\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0017\"\n    }\n  ],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [\n    {\n      \"id\": \"p_hugging_face\",\n      \"name\": \"Hugging Face\",\n      \"operator\": null,\n      \"as_of_date\": null,\n      \"anchor\": \"Hugging\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0017\"\n    },\n    {\n      \"id\": \"p_kaggle\",\n      \"name\": \"Kaggle\",\n      \"operator\": null,\n      \"as_of_date\": null,\n      \"anchor\": \"Kaggle\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0017\"\n    }\n  ],\n  \"edges\": [\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"odi-framework-for-ai-ready-data-2025\",\n      \"to_id\": \"cl_csvw_metadata\",\n      \"anchor\": \"inclusion\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0017\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"odi-framework-for-ai-ready-data-2025\",\n      \"to_id\": \"cl_parquet_most_ai_ready\",\n      \"anchor\": \"arguably\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0017\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"odi-framework-for-ai-ready-data-2025\",\n      \"to_id\": \"cl_parquet_adoption\",\n      \"anchor\": \"adopted\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0017\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_parquet_most_ai_ready\",\n      \"to_id\": \"c_ai_ready_file_formats\",\n      \"anchor\": \"arguably\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0017\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"odi-framework-for-ai-ready-data-2025\",\n      \"to_id\": \"c_ai_ready_file_formats\",\n      \"anchor\": \"formats\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0017\"\n    },\n    {\n      \"type\": \"consumes\",\n      \"from_id\": \"p_hugging_face\",\n      \"to_id\": \"s_parquet\",\n      \"anchor\": \"adopted\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0017\"\n    },\n    {\n      \"type\": \"consumes\",\n      \"from_id\": \"p_kaggle\",\n      \"to_id\": \"s_parquet\",\n      \"anchor\": \"adopted\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0017\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\"name\": \"columnar storage\", \"anchor\": \"columnar\"},\n    {\"name\": \"knowledge graphs\", \"anchor\": \"graphs\"},\n    {\"name\": \"relational datasets\", \"anchor\": \"relational\"}\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"previously\",\n      \"suggested_edge\": \"applies_to\",\n      \"diversion_reason\": \"cross_chunk\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0017\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"metadata attachments\", \"type\": \"Concept\"},\n    {\"name\": \"multimodal capabilities\", \"type\": \"Concept\"},\n    {\"name\": \"innate compression\", \"type\": \"Concept\"},\n    {\"name\": \"AI data repositories\", \"type\": \"Concept\"},\n    {\"name\": \"integration and reuse across diﬀerent systems\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

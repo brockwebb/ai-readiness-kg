@@ -1,0 +1,33 @@
+{
+ "doc_id": "doc-rfi-ai-open-gov-data-2024",
+ "chunk_id": "doc-rfi-ai-open-gov-data-2024#c0018",
+ "chunk_index": 18,
+ "chunk_start": 14709,
+ "chunk_end": 14904,
+ "chunk_tokens": 43,
+ "heading_path": [
+  "2. What are the potential areas of"
+ ],
+ "oversize": false,
+ "doc_sha256": "e469fe5df482665352ea4bd6bd7dce11a774ca5d54c605db3ab82800feb8b452",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 3990,
+  "cacheReadInputTokens": 12840,
+  "cacheCreationInputTokens": 22733,
+  "webSearchRequests": 0,
+  "costUSD": 0.33351,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 2847,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.33351,
+ "duration_ms": 45586,
+ "session_id": "8a9fe1a9-070f-442d-aacf-5c55694a4fc9",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"RFI question 2 asks what the potential areas of partnership are and how industry and academia can contribute to enhancing data quality, integrity, and usefulness for AI purposes, followed by the topic heading 'Data Integrity and Quality'; the chunk is interrogative and asserts no falsifiable claims.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c-partnership\",\n      \"name\": \"partnership\",\n      \"aliases\": [\"areas of partnership\", \"industry-academia partnership\"],\n      \"description\": \"Potential areas of partnership the RFI asks about, through which industry and academia could contribute to AI-ready open data.\",\n      \"anchor\": \"partnership\",\n      \"location\": \"doc-rfi-ai-open-gov-data-2024#c0018\"\n    },\n    {\n      \"id\": \"c-data-integrity-quality\",\n      \"name\": \"Data Integrity and Quality\",\n      \"aliases\": [\"data quality and integrity\"],\n      \"description\": \"RFI topic area grouping responses about the integrity and quality of data for AI purposes.\",\n      \"anchor\": \"Data Integrity and Quality\",\n      \"location\": \"doc-rfi-ai-open-gov-data-2024#c0018\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"doc-rfi-ai-open-gov-data-2024\",\n      \"to_id\": \"c-partnership\",\n      \"anchor\": \"potential areas of\",\n      \"location\": \"doc-rfi-ai-open-gov-data-2024#c0018\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"doc-rfi-ai-open-gov-data-2024\",\n      \"to_id\": \"c-data-integrity-quality\",\n      \"anchor\": \"Data Integrity and Quality\",\n      \"location\": \"doc-rfi-ai-open-gov-data-2024#c0018\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    { \"name\": \"AI-ready open data\", \"anchor\": \"AI-ready open data\" },\n    { \"name\": \"industry\", \"anchor\": \"industry\" },\n    { \"name\": \"academia\", \"anchor\": \"academia\" }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"contribute to enhancing\",\n      \"from_name\": \"academia\",\n      \"to_name\": \"Data Integrity and Quality\",\n      \"suggested_edge\": \"contributes_to\",\n      \"diversion_reason\": \"other:no_edge_type\",\n      \"location\": \"doc-rfi-ai-open-gov-data-2024#c0018\"\n    },\n    {\n      \"anchor\": \"dissemination of\",\n      \"from_name\": \"AI-ready open data\",\n      \"to_name\": \"dissemination\",\n      \"suggested_edge\": \"about\",\n      \"diversion_reason\": \"cross_chunk\",\n      \"location\": \"doc-rfi-ai-open-gov-data-2024#c0018\"\n    }\n  ],\n  \"gleaned\": [\n    { \"name\": \"dissemination\", \"type\": \"Concept\" },\n    { \"name\": \"usefulness for AI purposes\", \"type\": \"Concept\" },\n    { \"name\": \"data quality\", \"type\": \"Concept\" }\n  ]\n}"
+}

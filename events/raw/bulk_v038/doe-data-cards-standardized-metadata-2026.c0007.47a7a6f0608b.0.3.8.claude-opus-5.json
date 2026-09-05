@@ -1,0 +1,33 @@
+{
+ "doc_id": "doe-data-cards-standardized-metadata-2026",
+ "chunk_id": "doe-data-cards-standardized-metadata-2026#c0007",
+ "chunk_index": 7,
+ "chunk_start": 24552,
+ "chunk_end": 25039,
+ "chunk_tokens": 128,
+ "heading_path": [
+  "AI,"
+ ],
+ "oversize": false,
+ "doc_sha256": "47a7a6f0608b196d5c51dd02d0b732fda03a7a687b6b5eba76f478172bbcedcd",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 6111,
+  "cacheReadInputTokens": 12840,
+  "cacheCreationInputTokens": 23083,
+  "webSearchRequests": 0,
+  "costUSD": 0.390035,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 4111,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.390035,
+ "duration_ms": 67458,
+ "session_id": "a77ad023-b1fa-48d9-bc45-36538fa1eb19",
+ "raw_result": "{\n\"extract_plan\": {\"chunk_summary\": \"Related-work passage citing Bender and Friedman's Data Statements for Natural Language Processing, which argues dataset documentation should characterize language variety, speaker demographics, annotation context, and provenance to mitigate bias, improve scientific clarity, and support responsible deployment.\"},\n\"concepts\": [\n{\"id\": \"c_dataset_documentation\", \"name\": \"dataset documentation\", \"aliases\": [\"data documentation\"], \"description\": \"Documentation accompanying a dataset that the passage says should explicitly characterize the dataset's linguistic, demographic, annotation, and provenance context.\", \"anchor\": \"dataset\", \"location\": \"doe-data-cards-standardized-metadata-2026#c0007\"},\n{\"id\": \"c_language_variety\", \"name\": \"language variety\", \"aliases\": [\"linguistic variety\"], \"description\": \"A dimension dataset documentation should explicitly characterize.\", \"anchor\": \"variety\", \"location\": \"doe-data-cards-standardized-metadata-2026#c0007\"},\n{\"id\": \"c_speaker_demographics\", \"name\": \"speaker demographics\", \"aliases\": [], \"description\": \"A dimension dataset documentation should explicitly characterize.\", \"anchor\": \"demographics\", \"location\": \"doe-data-cards-standardized-metadata-2026#c0007\"},\n{\"id\": \"c_annotation_context\", \"name\": \"annotation context\", \"aliases\": [], \"description\": \"A dimension dataset documentation should explicitly characterize.\", \"anchor\": \"annotation\", \"location\": \"doe-data-cards-standardized-metadata-2026#c0007\"},\n{\"id\": \"c_provenance\", \"name\": \"provenance\", \"aliases\": [\"data provenance\"], \"description\": \"A dimension dataset documentation should explicitly characterize.\", \"anchor\": \"provenance\", \"location\": \"doe-data-cards-standardized-metadata-2026#c0007\"},\n{\"id\": \"c_bias\", \"name\": \"bias\", \"aliases\": [\"dataset bias\"], \"description\": \"Outcome that explicit dataset documentation is argued to mitigate.\", \"anchor\": \"bias\", \"location\": \"doe-data-cards-standardized-metadata-2026#c0007\"}\n],\n\"definitions\": [],\n\"claims\": [\n{\"id\": \"cl_data_statements_argument\", \"claim_text\": \"dataset documentation should explicitly characterize language variety, speaker demographics, annotation context, and provenance\", \"claim_type\": \"normative\", \"evidence_grade\": \"inference\", \"anchor\": \"explicitly\", \"location\": \"doe-data-cards-standardized-metadata-2026#c0007\"}\n],\n\"instruments\": [],\n\"measures\": [],\n\"standards\": [],\n\"frameworks\": [\n{\"id\": \"f_data_statements\", \"name\": \"Data Statements for Natural Language Processing\", \"owner\": \"Bender and Friedman\", \"year\": null, \"anchor\": \"Statements\", \"location\": \"doe-data-cards-standardized-metadata-2026#c0007\"}\n],\n\"practices\": [],\n\"tools\": [],\n\"platforms\": [],\n\"edges\": [\n{\"type\": \"asserts\", \"from_id\": \"doe-data-cards-standardized-metadata-2026\", \"to_id\": \"cl_data_statements_argument\", \"anchor\": \"argue\", \"location\": \"doe-data-cards-standardized-metadata-2026#c0007\"},\n{\"type\": \"about\", \"from_id\": \"cl_data_statements_argument\", \"to_id\": \"c_dataset_documentation\", \"anchor\": \"documentation\", \"location\": \"doe-data-cards-standardized-metadata-2026#c0007\"},\n{\"type\": \"about\", \"from_id\": \"cl_data_statements_argument\", \"to_id\": \"c_provenance\", \"anchor\": \"provenance\", \"location\": \"doe-data-cards-standardized-metadata-2026#c0007\"},\n{\"type\": \"about\", \"from_id\": \"cl_data_statements_argument\", \"to_id\": \"c_bias\", \"anchor\": \"mitigate\", \"location\": \"doe-data-cards-standardized-metadata-2026#c0007\"},\n{\"type\": \"mentions\", \"from_id\": \"doe-data-cards-standardized-metadata-2026\", \"to_id\": \"c_language_variety\", \"anchor\": \"variety\", \"location\": \"doe-data-cards-standardized-metadata-2026#c0007\"},\n{\"type\": \"mentions\", \"from_id\": \"doe-data-cards-standardized-metadata-2026\", \"to_id\": \"c_speaker_demographics\", \"anchor\": \"demographics\", \"location\": \"doe-data-cards-standardized-metadata-2026#c0007\"},\n{\"type\": \"mentions\", \"from_id\": \"doe-data-cards-standardized-metadata-2026\", \"to_id\": \"c_annotation_context\", \"anchor\": \"annotation\", \"location\": \"doe-data-cards-standardized-metadata-2026#c0007\"}\n],\n\"cites\": [\n{\"from_id\": \"doe-data-cards-standardized-metadata-2026\", \"to_title\": \"Data Statements for Natural Language Processing\", \"to_authors\": \"Bender and Friedman\", \"reference_marker\": \"[1]\", \"anchor\": \"[1]\", \"location\": \"doe-data-cards-standardized-metadata-2026#c0007\"}\n],\n\"mentions\": [\n{\"name\": \"data-intensive\", \"anchor\": \"data-intensive\"},\n{\"name\": \"Bender\", \"anchor\": \"Bender\"},\n{\"name\": \"Friedman\", \"anchor\": \"Friedman\"}\n],\n\"proposed_relationships\": [\n{\"suggested_edge\": \"has_component\", \"from_id\": \"f_data_statements\", \"to_id\": \"c_language_variety\", \"anchor\": \"characterize\", \"diversion_reason\": \"structural_inference\", \"location\": \"doe-data-cards-standardized-metadata-2026#c0007\"}\n],\n\"gleaned\": [\n{\"name\": \"AI\", \"type\": \"Concept\"},\n{\"name\": \"data-intensive research\", \"type\": \"Concept\"},\n{\"name\": \"scientific clarity\", \"type\": \"Concept\"},\n{\"name\": \"responsible deployment\", \"type\": \"Concept\"}\n]\n}"
+}

@@ -1,0 +1,33 @@
+{
+ "doc_id": "odi-framework-for-ai-ready-data-2025",
+ "chunk_id": "odi-framework-for-ai-ready-data-2025#c0005",
+ "chunk_index": 5,
+ "chunk_start": 9826,
+ "chunk_end": 10404,
+ "chunk_tokens": 182,
+ "heading_path": [
+  "ABC"
+ ],
+ "oversize": false,
+ "doc_sha256": "ed1ea1b0ab4d8bc9f7c9ed6373b5d727743b8247ee3cb5b7253ca85d544b945e",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 10292,
+  "cacheReadInputTokens": 12840,
+  "cacheCreationInputTokens": 23233,
+  "webSearchRequests": 0,
+  "costUSD": 0.49606000000000006,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 8463,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.49606000000000006,
+ "duration_ms": 118335,
+ "session_id": "616a759a-f5e3-4315-87d7-940b798b06b5",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Related-work passage: dataset AI-readiness frameworks are often single-domain, exemplified by the Bridge2AI task force's biomedical guidelines (criticized as environment-focused) and Schwabe et al. (2024) in medical data.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c1\",\n      \"name\": \"Dataset AI-readiness frameworks\",\n      \"aliases\": [\"dataset AI readiness framework\"],\n      \"description\": \"Frameworks intended to make or assess datasets as AI-ready; the chunk asserts they are frequently built for a single domain or subject matter.\",\n      \"anchor\": \"frameworks\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0005\"\n    },\n    {\n      \"id\": \"c2\",\n      \"name\": \"biomedical datasets\",\n      \"aliases\": [\"biomedical data\"],\n      \"description\": \"The dataset class the Bridge2AI task force's AI-readiness guidelines target.\",\n      \"anchor\": \"biomedical\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0005\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"cl1\",\n      \"claim_text\": \"Dataset AI-readiness frameworks are often designed speciﬁcally for single domains and subject matters.\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"often\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0005\"\n    },\n    {\n      \"id\": \"cl2\",\n      \"claim_text\": \"focusing on the environment around a dataset rather than its speciﬁc properties\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"albeit\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0005\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [\n    {\n      \"id\": \"f1\",\n      \"name\": \"Bridge2AI\",\n      \"owner\": null,\n      \"year\": null,\n      \"anchor\": \"Bridge2AI\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0005\"\n    }\n  ],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"odi-framework-for-ai-ready-data-2025\",\n      \"to_id\": \"c1\",\n      \"anchor\": \"frameworks\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0005\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"odi-framework-for-ai-ready-data-2025\",\n      \"to_id\": \"c2\",\n      \"anchor\": \"biomedical\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0005\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"odi-framework-for-ai-ready-data-2025\",\n      \"to_id\": \"cl1\",\n      \"anchor\": \"often\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0005\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"odi-framework-for-ai-ready-data-2025\",\n      \"to_id\": \"cl2\",\n      \"anchor\": \"albeit\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0005\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl1\",\n      \"to_id\": \"c1\",\n      \"anchor\": \"domains\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0005\"\n    }\n  ],\n  \"cites\": [\n    {\n      \"from_id\": \"odi-framework-for-ai-ready-data-2025\",\n      \"to_id\": \"schwabe-et-al-2024\",\n      \"title\": \"Schwabe et al. (2024)\",\n      \"anchor\": \"Schwabe\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0005\"\n    }\n  ],\n  \"mentions\": [\n    {\n      \"name\": \"data publishers\",\n      \"anchor\": \"publishers\"\n    },\n    {\n      \"name\": \"medical data\",\n      \"anchor\": \"medical\"\n    },\n    {\n      \"name\": \"ABC framework\",\n      \"anchor\": \"ABC framework\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"suggested_edge\": \"example_of\",\n      \"from_id\": \"f1\",\n      \"to_id\": \"c1\",\n      \"anchor\": \"example,\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0005\",\n      \"diversion_reason\": \"structural_inference\"\n    },\n    {\n      \"suggested_edge\": \"claim_about_framework\",\n      \"from_id\": \"cl2\",\n      \"to_id\": \"f1\",\n      \"anchor\": \"environment\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0005\",\n      \"diversion_reason\": \"other:no_edge_type\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"AI-ready\", \"type\": \"Concept\"},\n    {\"name\": \"ABC framework\", \"type\": \"Framework\"},\n    {\"name\": \"Schwabe et al. (2024)\", \"type\": \"Document\"}\n  ]\n}"
+}

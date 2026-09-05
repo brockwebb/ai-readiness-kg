@@ -1,0 +1,33 @@
+{
+ "doc_id": "odi-framework-for-ai-ready-data-2025",
+ "chunk_id": "odi-framework-for-ai-ready-data-2025#c0006",
+ "chunk_index": 6,
+ "chunk_start": 10407,
+ "chunk_end": 10677,
+ "chunk_tokens": 77,
+ "heading_path": [
+  "METRIC"
+ ],
+ "oversize": false,
+ "doc_sha256": "ed1ea1b0ab4d8bc9f7c9ed6373b5d727743b8247ee3cb5b7253ca85d544b945e",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 7798,
+  "cacheReadInputTokens": 12840,
+  "cacheCreationInputTokens": 22857,
+  "webSearchRequests": 0,
+  "costUSD": 0.42995000000000005,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 5700,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.42995000000000005,
+ "duration_ms": 88014,
+ "session_id": "f3d2aed0-c0df-4603-90b4-3a6470e0e9c3",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Contrasts the METRIC framework — centred on intrinsic data quality metrics from medical literature — with Bridge2AI's holistic view of data practices, then breaks off mid-sentence introducing a further report.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_bridge2ai\",\n      \"name\": \"Bridge2AI\",\n      \"aliases\": [],\n      \"description\": \"A prior effort the document uses as the contrast case: characterized here as taking a holistic view of data practices rather than centring on intrinsic data quality metrics.\",\n      \"anchor\": \"Bridge2AI\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0006\"\n    },\n    {\n      \"id\": \"c_intrinsic_dq_metrics\",\n      \"name\": \"intrinsic data quality metrics\",\n      \"aliases\": [\"intrinsic data quality measurement\"],\n      \"description\": \"Data quality metrics internal to the data itself, drawn from across medical literature; the focus of the METRIC framework.\",\n      \"anchor\": \"intrinsic\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0006\"\n    },\n    {\n      \"id\": \"c_holistic_view_data_practices\",\n      \"name\": \"holistic view of data practices\",\n      \"aliases\": [\"holistic data practice assessment\"],\n      \"description\": \"The contrasting orientation the chunk sets against intrinsic metrics: assessing data practices as a whole rather than intrinsic properties of the data.\",\n      \"anchor\": \"holistic\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0006\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"cl_metric_opposite_bridge2ai\",\n      \"claim_text\": \"their METRIC framework is diametrically opposite to Bridge2AI\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"opposite\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0006\"\n    },\n    {\n      \"id\": \"cl_metric_centres_intrinsic\",\n      \"claim_text\": \"centring on intrinsic data quality metrics found across medical literature\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"centring\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0006\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [\n    {\n      \"id\": \"f_metric\",\n      \"name\": \"METRIC\",\n      \"owner\": null,\n      \"year\": null,\n      \"anchor\": \"diametrically\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0006\"\n    }\n  ],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"odi-framework-for-ai-ready-data-2025\",\n      \"to_id\": \"cl_metric_opposite_bridge2ai\",\n      \"anchor\": \"opposite\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0006\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"odi-framework-for-ai-ready-data-2025\",\n      \"to_id\": \"cl_metric_centres_intrinsic\",\n      \"anchor\": \"centring\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0006\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_metric_opposite_bridge2ai\",\n      \"to_id\": \"c_bridge2ai\",\n      \"anchor\": \"opposite\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0006\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_metric_centres_intrinsic\",\n      \"to_id\": \"c_intrinsic_dq_metrics\",\n      \"anchor\": \"centring\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0006\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"odi-framework-for-ai-ready-data-2025\",\n      \"to_id\": \"c_bridge2ai\",\n      \"anchor\": \"Bridge2AI\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0006\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"odi-framework-for-ai-ready-data-2025\",\n      \"to_id\": \"c_holistic_view_data_practices\",\n      \"anchor\": \"holistic\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0006\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [],\n  \"proposed_relationships\": [\n    {\n      \"from_id\": \"f_metric\",\n      \"to_id\": \"c_intrinsic_dq_metrics\",\n      \"suggested_edge\": \"centres_on\",\n      \"anchor\": \"centring\",\n      \"diversion_reason\": \"other:not_part_whole\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0006\"\n    },\n    {\n      \"from_id\": \"f_metric\",\n      \"to_id\": \"c_bridge2ai\",\n      \"suggested_edge\": \"contrasts_with\",\n      \"anchor\": \"diametrically\",\n      \"diversion_reason\": \"other:no_such_edge_type\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0006\"\n    },\n    {\n      \"from_id\": \"c_bridge2ai\",\n      \"to_id\": \"c_holistic_view_data_practices\",\n      \"suggested_edge\": \"characterized_by\",\n      \"anchor\": \"rather\",\n      \"diversion_reason\": \"other:no_such_edge_type\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0006\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"medical literature\", \"type\": \"Concept\"},\n    {\"name\": \"data practices\", \"type\": \"Concept\"},\n    {\"name\": \"data quality\", \"type\": \"Concept\"}\n  ]\n}"
+}

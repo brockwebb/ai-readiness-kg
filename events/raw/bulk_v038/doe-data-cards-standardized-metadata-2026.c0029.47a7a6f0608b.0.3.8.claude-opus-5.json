@@ -1,0 +1,33 @@
+{
+ "doc_id": "doe-data-cards-standardized-metadata-2026",
+ "chunk_id": "doe-data-cards-standardized-metadata-2026#c0029",
+ "chunk_index": 29,
+ "chunk_start": 82334,
+ "chunk_end": 82988,
+ "chunk_tokens": 201,
+ "heading_path": [
+  "DE-AC02-05CH11231"
+ ],
+ "oversize": false,
+ "doc_sha256": "47a7a6f0608b196d5c51dd02d0b732fda03a7a687b6b5eba76f478172bbcedcd",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 5446,
+  "cacheReadInputTokens": 12840,
+  "cacheCreationInputTokens": 23301,
+  "webSearchRequests": 0,
+  "costUSD": 0.37559000000000003,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 4272,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.37559000000000003,
+ "duration_ms": 68068,
+ "session_id": "777169c3-8320-4bc1-979a-bf1462b6c951",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Funding and copyright boilerplate — DOE contract DE-AC02-05CH11231 and the U.S. Government's retained license to publish or reproduce the manuscript — followed by the opening of the reference list (Bender & Friedman, data statements for NLP).\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c0029-con-1\",\n      \"name\": \"license\",\n      \"aliases\": [\n        \"non-exclusive, paid-up, irrevocable, world-wide license\",\n        \"U.S. Government publication license\"\n      ],\n      \"description\": \"The publication license the U.S. Government retains in the published form of the manuscript when the publisher accepts the article.\",\n      \"anchor\": \"license\",\n      \"location\": \"doe-data-cards-standardized-metadata-2026#c0029\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"c0029-clm-1\",\n      \"claim_text\": \"the U.S. Government retains a non-exclusive, paid-up, irrevocable, world-wide license to publish or reproduce the published form of this manuscript\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"irrevocable\",\n      \"location\": \"doe-data-cards-standardized-metadata-2026#c0029\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"doe-data-cards-standardized-metadata-2026\",\n      \"to_id\": \"c0029-clm-1\",\n      \"anchor\": \"irrevocable\",\n      \"location\": \"doe-data-cards-standardized-metadata-2026#c0029\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"c0029-clm-1\",\n      \"to_id\": \"c0029-con-1\",\n      \"anchor\": \"world-wide\",\n      \"location\": \"doe-data-cards-standardized-metadata-2026#c0029\"\n    }\n  ],\n  \"cites\": [\n    {\n      \"from_id\": \"doe-data-cards-standardized-metadata-2026\",\n      \"to_id\": \"bender-friedman-data-statements-nlp\",\n      \"title\": \"Data statements for natural language processing: Toward mitigating system bias and enabling better science\",\n      \"authors\": \"E. M. Bender and B. Friedman\",\n      \"anchor\": \"Bender\",\n      \"location\": \"doe-data-cards-standardized-metadata-2026#c0029\"\n    }\n  ],\n  \"mentions\": [\n    {\n      \"name\": \"U.S. Department of Energy\",\n      \"anchor\": \"Energy\"\n    },\n    {\n      \"name\": \"publisher\",\n      \"anchor\": \"publisher\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"from_id\": \"doe-data-cards-standardized-metadata-2026\",\n      \"to_id\": \"U.S. Department of Energy\",\n      \"suggested_edge\": \"produced_under_contract\",\n      \"diversion_reason\": \"other:no_funding_edge\",\n      \"anchor\": \"Energy\",\n      \"location\": \"doe-data-cards-standardized-metadata-2026#c0029\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"data statements\", \"type\": \"Concept\"},\n    {\"name\": \"system bias\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

@@ -1,0 +1,33 @@
+{
+ "doc_id": "doc-rfi-ai-open-gov-data-2024",
+ "chunk_id": "doc-rfi-ai-open-gov-data-2024#c0015",
+ "chunk_index": 15,
+ "chunk_start": 14272,
+ "chunk_end": 14400,
+ "chunk_tokens": 38,
+ "heading_path": [
+  "27413 Federal Register / Vol. 89, No. 75 / Wednesday, April 17, 2024 / Notices"
+ ],
+ "oversize": false,
+ "doc_sha256": "e469fe5df482665352ea4bd6bd7dce11a774ca5d54c605db3ab82800feb8b452",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 3550,
+  "cacheReadInputTokens": 12840,
+  "cacheCreationInputTokens": 23013,
+  "webSearchRequests": 0,
+  "costUSD": 0.32531,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 2333,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.32531,
+ "duration_ms": 40744,
+ "session_id": "4f909731-6a36-47cb-839d-8618e6659668",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Fragment of an RFI question asking how to encourage user-friendly interfaces, clear labeling, and readable formats for Commerce's online data resources; the rest of the chunk is Federal Register page furniture.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c-user-friendly-interfaces\",\n      \"name\": \"user-friendly interfaces\",\n      \"aliases\": [\"usable data interfaces\"],\n      \"description\": \"Interfaces for online data resources that the RFI question asks how to encourage.\",\n      \"anchor\": \"user-friendly interfaces\",\n      \"location\": \"doc-rfi-ai-open-gov-data-2024#c0015\"\n    },\n    {\n      \"id\": \"c-clear-labeling\",\n      \"name\": \"clear labeling\",\n      \"aliases\": [\"data labeling\"],\n      \"description\": \"An element of user-friendly interfaces named in the question.\",\n      \"anchor\": \"clear labeling\",\n      \"location\": \"doc-rfi-ai-open-gov-data-2024#c0015\"\n    },\n    {\n      \"id\": \"c-commerce-online-data-resources\",\n      \"name\": \"Commerce’s online data resources\",\n      \"aliases\": [\"Department of Commerce online data resources\"],\n      \"description\": \"The asset class the question's interface and format recommendations are directed at.\",\n      \"anchor\": \"Commerce’s online data\",\n      \"location\": \"doc-rfi-ai-open-gov-data-2024#c0015\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"doc-rfi-ai-open-gov-data-2024\",\n      \"to_id\": \"c-user-friendly-interfaces\",\n      \"anchor\": \"user-friendly interfaces\",\n      \"location\": \"doc-rfi-ai-open-gov-data-2024#c0015\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"doc-rfi-ai-open-gov-data-2024\",\n      \"to_id\": \"c-clear-labeling\",\n      \"anchor\": \"clear labeling\",\n      \"location\": \"doc-rfi-ai-open-gov-data-2024#c0015\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"doc-rfi-ai-open-gov-data-2024\",\n      \"to_id\": \"c-commerce-online-data-resources\",\n      \"anchor\": \"Commerce’s online data\",\n      \"location\": \"doc-rfi-ai-open-gov-data-2024#c0015\"\n    },\n    {\n      \"type\": \"has_component\",\n      \"from_id\": \"c-user-friendly-interfaces\",\n      \"to_id\": \"c-clear-labeling\",\n      \"anchor\": \"including clear labeling\",\n      \"location\": \"doc-rfi-ai-open-gov-data-2024#c0015\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"formats, for Commerce\",\n      \"suggested_edge\": \"applies_to\",\n      \"from_hint\": \"readable formats\",\n      \"to_hint\": \"Commerce’s online data resources\",\n      \"diversion_reason\": \"endpoint_not_located\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"readable formats\", \"type\": \"Concept\"},\n    {\"name\": \"encourage user-friendly interfaces for online data resources\", \"type\": \"Practice\"}\n  ]\n}\n```"
+}

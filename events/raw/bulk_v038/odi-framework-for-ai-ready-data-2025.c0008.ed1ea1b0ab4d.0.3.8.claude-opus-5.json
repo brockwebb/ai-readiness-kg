@@ -1,0 +1,33 @@
+{
+ "doc_id": "odi-framework-for-ai-ready-data-2025",
+ "chunk_id": "odi-framework-for-ai-ready-data-2025#c0008",
+ "chunk_index": 8,
+ "chunk_start": 11298,
+ "chunk_end": 11668,
+ "chunk_tokens": 110,
+ "heading_path": [
+  "AI,"
+ ],
+ "oversize": false,
+ "doc_sha256": "ed1ea1b0ab4d8bc9f7c9ed6373b5d727743b8247ee3cb5b7253ca85d544b945e",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 5935,
+  "cacheReadInputTokens": 12840,
+  "cacheCreationInputTokens": 22977,
+  "webSearchRequests": 0,
+  "costUSD": 0.384575,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 4081,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.384575,
+ "duration_ms": 66789,
+ "session_id": "db876969-92db-430a-9c4b-3b49adbc817c",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Survey passage noting that most AI maturity models contain a 'data governance' or 'data management' component, citing Accenture's AI Maturity Explorer and Deloitte's AI-readiness & Management framework as asking operational questions about the use of data.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_data_governance\",\n      \"name\": \"data governance\",\n      \"aliases\": [],\n      \"description\": \"A component present in most AI maturity models, relevant to the document's purposes.\",\n      \"anchor\": \"governance’\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0008\"\n    },\n    {\n      \"id\": \"c_data_management\",\n      \"name\": \"data management\",\n      \"aliases\": [],\n      \"description\": \"A component present in most AI maturity models, relevant to the document's purposes.\",\n      \"anchor\": \"management’\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0008\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"cl_component_present\",\n      \"claim_text\": \"most contain a ‘data governance’ or ‘data management’ component that is relevant for our purposes\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"purposes.\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0008\"\n    },\n    {\n      \"id\": \"cl_operational_questions\",\n      \"claim_text\": \"ask operational questions about the use of data\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"operational\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0008\"\n    }\n  ],\n  \"instruments\": [\n    {\n      \"id\": \"i_accenture_ai_maturity_explorer\",\n      \"name\": \"AI Maturity Explorer\",\n      \"owner\": \"Accenture\",\n      \"year\": null,\n      \"method\": \"ask operational questions about the use of data\",\n      \"attribute_anchors\": {\n        \"owner\": \"Accenture’s\",\n        \"method\": \"operational\"\n      },\n      \"anchor\": \"Explorer\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0008\"\n    },\n    {\n      \"id\": \"i_deloitte_ai_readiness_management\",\n      \"name\": \"AI-readiness & Management framework\",\n      \"owner\": \"Deloitte\",\n      \"year\": null,\n      \"method\": \"ask operational questions about the use of data\",\n      \"attribute_anchors\": {\n        \"owner\": \"Deloitte’s\",\n        \"method\": \"operational\"\n      },\n      \"anchor\": \"AI-readiness\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0008\"\n    }\n  ],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"odi-framework-for-ai-ready-data-2025\",\n      \"to_id\": \"cl_component_present\",\n      \"anchor\": \"purposes.\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0008\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"odi-framework-for-ai-ready-data-2025\",\n      \"to_id\": \"cl_operational_questions\",\n      \"anchor\": \"operational\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0008\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_component_present\",\n      \"to_id\": \"c_data_governance\",\n      \"anchor\": \"governance’\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0008\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_component_present\",\n      \"to_id\": \"c_data_management\",\n      \"anchor\": \"management’\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0008\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"odi-framework-for-ai-ready-data-2025\",\n      \"to_id\": \"c_data_governance\",\n      \"anchor\": \"governance’\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0008\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"odi-framework-for-ai-ready-data-2025\",\n      \"to_id\": \"c_data_management\",\n      \"anchor\": \"management’\",\n      \"location\": \"odi-framework-for-ai-ready-data-2025#c0008\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"Accenture\",\n      \"anchor\": \"Accenture’s\"\n    },\n    {\n      \"name\": \"Deloitte\",\n      \"anchor\": \"Deloitte’s\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"suggested_edge\": \"has_component\",\n      \"anchor\": \"component\",\n      \"diversion_reason\": \"cross_chunk\",\n      \"note\": \"The whole ('most' of the maturity models introduced before this chunk) is not a node in this chunk; the component endpoints are data governance / data management.\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"use of data\", \"type\": \"Concept\"},\n    {\"name\": \"AI maturity model\", \"type\": \"Concept\"},\n    {\"name\": \"operational questions\", \"type\": \"Concept\"}\n  ]\n}"
+}

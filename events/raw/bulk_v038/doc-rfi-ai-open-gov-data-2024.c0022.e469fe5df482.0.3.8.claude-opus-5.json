@@ -1,0 +1,33 @@
+{
+ "doc_id": "doc-rfi-ai-open-gov-data-2024",
+ "chunk_id": "doc-rfi-ai-open-gov-data-2024#c0022",
+ "chunk_index": 22,
+ "chunk_start": 15512,
+ "chunk_end": 15790,
+ "chunk_tokens": 57,
+ "heading_path": [
+  "4. How can Commerce promote"
+ ],
+ "oversize": false,
+ "doc_sha256": "e469fe5df482665352ea4bd6bd7dce11a774ca5d54c605db3ab82800feb8b452",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 4391,
+  "cacheReadInputTokens": 12840,
+  "cacheCreationInputTokens": 22751,
+  "webSearchRequests": 0,
+  "costUSD": 0.343715,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 2673,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.343715,
+ "duration_ms": 48140,
+ "session_id": "d4681436-cd2f-4a0d-8832-ba0f1e7fe9bd",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"RFI question 4 asks how Commerce can promote transparency in data sourcing and processing methods to enhance trust and reliability, and what the expectation is for reporting data quality through to the end user; the chunk is interrogative, so it contains no falsifiable claims.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c-transparency-data-sourcing\",\n      \"name\": \"transparency in data sourcing\",\n      \"aliases\": [\"data sourcing transparency\"],\n      \"description\": \"Transparency about where data comes from, raised as a lever Commerce could promote to enhance trust and reliability.\",\n      \"anchor\": \"transparency\",\n      \"location\": \"doc-rfi-ai-open-gov-data-2024#c0022\"\n    },\n    {\n      \"id\": \"c-processing-methods\",\n      \"name\": \"processing methods\",\n      \"aliases\": [\"data processing methods\"],\n      \"description\": \"The methods by which data is processed, named alongside data sourcing as a subject of transparency.\",\n      \"anchor\": \"processing methods\",\n      \"location\": \"doc-rfi-ai-open-gov-data-2024#c0022\"\n    },\n    {\n      \"id\": \"c-trust\",\n      \"name\": \"trust\",\n      \"aliases\": [\"trustworthiness\"],\n      \"description\": \"An outcome the RFI frames transparency in data sourcing and processing methods as enhancing.\",\n      \"anchor\": \"trust\",\n      \"location\": \"doc-rfi-ai-open-gov-data-2024#c0022\"\n    },\n    {\n      \"id\": \"c-reliability\",\n      \"name\": \"reliability\",\n      \"aliases\": [],\n      \"description\": \"An outcome the RFI frames transparency in data sourcing and processing methods as enhancing.\",\n      \"anchor\": \"reliability\",\n      \"location\": \"doc-rfi-ai-open-gov-data-2024#c0022\"\n    },\n    {\n      \"id\": \"c-data-quality-reporting\",\n      \"name\": \"the quality of its data\",\n      \"aliases\": [\"data quality reporting\"],\n      \"description\": \"The RFI asks what the expectation is for reporting data quality and how that information can be carried through to the end user.\",\n      \"anchor\": \"quality of its data\",\n      \"location\": \"doc-rfi-ai-open-gov-data-2024#c0022\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"doc-rfi-ai-open-gov-data-2024\",\n      \"to_id\": \"c-transparency-data-sourcing\",\n      \"anchor\": \"transparency\",\n      \"location\": \"doc-rfi-ai-open-gov-data-2024#c0022\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"doc-rfi-ai-open-gov-data-2024\",\n      \"to_id\": \"c-processing-methods\",\n      \"anchor\": \"processing methods\",\n      \"location\": \"doc-rfi-ai-open-gov-data-2024#c0022\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"doc-rfi-ai-open-gov-data-2024\",\n      \"to_id\": \"c-trust\",\n      \"anchor\": \"trust\",\n      \"location\": \"doc-rfi-ai-open-gov-data-2024#c0022\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"doc-rfi-ai-open-gov-data-2024\",\n      \"to_id\": \"c-reliability\",\n      \"anchor\": \"reliability\",\n      \"location\": \"doc-rfi-ai-open-gov-data-2024#c0022\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"doc-rfi-ai-open-gov-data-2024\",\n      \"to_id\": \"c-data-quality-reporting\",\n      \"anchor\": \"quality of its data\",\n      \"location\": \"doc-rfi-ai-open-gov-data-2024#c0022\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\"name\": \"Commerce\", \"anchor\": \"Commerce\"},\n    {\"name\": \"the end user\", \"anchor\": \"the end user\"}\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"How can Commerce promote\",\n      \"suggested_edge\": \"promotes\",\n      \"from_hint\": \"Commerce\",\n      \"to_hint\": \"c-transparency-data-sourcing\",\n      \"diversion_reason\": \"other:actor_endpoint_untyped\"\n    },\n    {\n      \"anchor\": \"presented to\",\n      \"suggested_edge\": \"delivered_to\",\n      \"from_hint\": \"c-data-quality-reporting\",\n      \"to_hint\": \"the end user\",\n      \"diversion_reason\": \"other:no_such_edge_type\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"data sourcing\", \"type\": \"Concept\"},\n    {\"name\": \"manipulation\", \"type\": \"Concept\"},\n    {\"name\": \"end user\", \"type\": \"Concept\"}\n  ]\n}"
+}

@@ -1,0 +1,33 @@
+{
+ "doc_id": "doc-rfi-ai-open-gov-data-2024",
+ "chunk_id": "doc-rfi-ai-open-gov-data-2024#c0026",
+ "chunk_index": 26,
+ "chunk_start": 16209,
+ "chunk_end": 16362,
+ "chunk_tokens": 30,
+ "heading_path": [
+  "2. What types of policies could"
+ ],
+ "oversize": false,
+ "doc_sha256": "e469fe5df482665352ea4bd6bd7dce11a774ca5d54c605db3ab82800feb8b452",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 4702,
+  "cacheReadInputTokens": 12840,
+  "cacheCreationInputTokens": 22777,
+  "webSearchRequests": 0,
+  "costUSD": 0.35174999999999995,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 2896,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.35174999999999995,
+ "duration_ms": 48805,
+ "session_id": "6d457d20-4a6a-463a-95ea-b13577e8ee69",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Tail of one RFI question on legal/ethical AI data-usage guidelines (privacy, property rights, equitable outcomes) followed by RFI question 2 asking what Commerce policies could identify and mitigate biases in AI algorithms.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c-legal-ethical-guidelines\",\n      \"name\": \"legal and ethical guidelines\",\n      \"aliases\": [\"legal and ethical guidelines for AI data usage\"],\n      \"description\": \"Guidelines governing AI data usage that the RFI asks about, framed as covering privacy, property rights, and equitable outcomes.\",\n      \"anchor\": \"legal and ethical guidelines\",\n      \"location\": \"doc-rfi-ai-open-gov-data-2024#c0026\"\n    },\n    {\n      \"id\": \"c-privacy-rights\",\n      \"name\": \"privacy rights\",\n      \"aliases\": [],\n      \"description\": \"Rights the RFI asks AI data-usage guidelines to ensure.\",\n      \"anchor\": \"ensuring privacy rights\",\n      \"location\": \"doc-rfi-ai-open-gov-data-2024#c0026\"\n    },\n    {\n      \"id\": \"c-property-rights\",\n      \"name\": \"property rights\",\n      \"aliases\": [],\n      \"description\": \"Rights the RFI asks AI data-usage guidelines to preserve.\",\n      \"anchor\": \"preserving property rights\",\n      \"location\": \"doc-rfi-ai-open-gov-data-2024#c0026\"\n    },\n    {\n      \"id\": \"c-equitable-outcomes\",\n      \"name\": \"equitable outcomes\",\n      \"aliases\": [],\n      \"description\": \"The focus the RFI asks AI data-usage guidelines to adopt.\",\n      \"anchor\": \"equitable outcomes\",\n      \"location\": \"doc-rfi-ai-open-gov-data-2024#c0026\"\n    },\n    {\n      \"id\": \"c-bias-in-ai-algorithms\",\n      \"name\": \"biases in AI algorithms\",\n      \"aliases\": [\"algorithmic bias\"],\n      \"description\": \"Bias in AI algorithms that RFI question 2 asks what Commerce policies could identify and mitigate.\",\n      \"anchor\": \"mitigate biases in AI algorithms\",\n      \"location\": \"doc-rfi-ai-open-gov-data-2024#c0026\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"doc-rfi-ai-open-gov-data-2024\",\n      \"to_id\": \"c-legal-ethical-guidelines\",\n      \"anchor\": \"legal and ethical guidelines\",\n      \"location\": \"doc-rfi-ai-open-gov-data-2024#c0026\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"doc-rfi-ai-open-gov-data-2024\",\n      \"to_id\": \"c-privacy-rights\",\n      \"anchor\": \"ensuring privacy rights\",\n      \"location\": \"doc-rfi-ai-open-gov-data-2024#c0026\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"doc-rfi-ai-open-gov-data-2024\",\n      \"to_id\": \"c-property-rights\",\n      \"anchor\": \"preserving property rights\",\n      \"location\": \"doc-rfi-ai-open-gov-data-2024#c0026\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"doc-rfi-ai-open-gov-data-2024\",\n      \"to_id\": \"c-equitable-outcomes\",\n      \"anchor\": \"equitable outcomes\",\n      \"location\": \"doc-rfi-ai-open-gov-data-2024#c0026\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"doc-rfi-ai-open-gov-data-2024\",\n      \"to_id\": \"c-bias-in-ai-algorithms\",\n      \"anchor\": \"mitigate biases in AI algorithms\",\n      \"location\": \"doc-rfi-ai-open-gov-data-2024#c0026\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"Commerce\",\n      \"anchor\": \"Commerce implement\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"including ensuring diverse data\",\n      \"suggested_edge\": \"mitigated_by\",\n      \"from_hint\": \"biases in AI algorithms\",\n      \"to_hint\": \"diverse data representation\",\n      \"diversion_reason\": \"endpoint_not_located\"\n    },\n    {\n      \"anchor\": \"clear legal and ethical guidelines\",\n      \"suggested_edge\": \"question_asks_about\",\n      \"from_hint\": \"the RFI question opening in the previous chunk\",\n      \"to_hint\": \"legal and ethical guidelines\",\n      \"diversion_reason\": \"cross_chunk\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"diverse data representation\", \"type\": \"Concept\"},\n    {\"name\": \"AI data usage\", \"type\": \"Concept\"},\n    {\"name\": \"bias identification and mitigation policy\", \"type\": \"Concept\"}\n  ]\n}"
+}

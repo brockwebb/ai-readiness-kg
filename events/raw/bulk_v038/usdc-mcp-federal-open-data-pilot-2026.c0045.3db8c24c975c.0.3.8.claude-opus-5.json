@@ -1,0 +1,34 @@
+{
+ "doc_id": "usdc-mcp-federal-open-data-pilot-2026",
+ "chunk_id": "usdc-mcp-federal-open-data-pilot-2026#c0045",
+ "chunk_index": 45,
+ "chunk_start": 137155,
+ "chunk_end": 140395,
+ "chunk_tokens": 950,
+ "heading_path": [
+  "2022  (2018:  12%,  2019:  13.2%,  2020:  11.7%,  2021:  6.2%,  2022:  5.8%)",
+  "3.2  billion"
+ ],
+ "oversize": false,
+ "doc_sha256": "3db8c24c975c30902cccac5c836608d9a5fb82af0f2d1aced620b6b7138cb689",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 5227,
+  "cacheReadInputTokens": 12840,
+  "cacheCreationInputTokens": 25986,
+  "webSearchRequests": 0,
+  "costUSD": 0.396965,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 3693,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.396965,
+ "duration_ms": 62644,
+ "session_id": "d19066cd-7cfa-4576-9319-99f7ebeb4d3d",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Back matter: a table of USAspending API v2 endpoint paths with one-line descriptions of what each returns, followed by two references to federal work (Commerce Data Governance Board GenAI/open-data guidelines; FCSM AI-Ready Federal Statistical Data) and a contributor acknowledgments list of named federal staff and their agencies.\"\n  },\n  \"concepts\": [],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [],\n  \"cites\": [\n    {\n      \"id\": \"cite1\",\n      \"from_id\": \"usdc-mcp-federal-open-data-pilot-2026\",\n      \"to_id\": \"commerce-dgb-generative-ai-and-open-data-guidelines-2025\",\n      \"title\": \"Generative  Artificial  Intelligence  and  Open  Data:  Guidelines  and  Best  Practices\",\n      \"url\": \"https://www.commerce.gov/news/blog/2025/01/generative-artificial-intelligence-and-open-data-guidelines-and-best-practices\",\n      \"anchor\": \"Commerce  Data  Governance  Board\",\n      \"location\": \"usdc-mcp-federal-open-data-pilot-2026#c0045\"\n    },\n    {\n      \"id\": \"cite2\",\n      \"from_id\": \"usdc-mcp-federal-open-data-pilot-2026\",\n      \"to_id\": \"fcsm-25-03-ai-ready-federal-statistical-data-2025\",\n      \"title\": \"AI-Ready  Federal  Statistical  Data:  An  Extension  of  Communicating  Data  Quality\",\n      \"url\": \"https://www.statspolicy.gov/assets/fcsm/files/docs/ FCSM.25.03_AI-Ready-Extension-Data-Quality.pdf\",\n      \"anchor\": \"Federal  Committee  on  Statistical  Methodology\",\n      \"location\": \"usdc-mcp-federal-open-data-pilot-2026#c0045\"\n    }\n  ],\n  \"mentions\": [\n    {\n      \"name\": \"U.S.  Census  Bureau\",\n      \"anchor\": \"U.S.  Census  Bureau\"\n    },\n    {\n      \"name\": \"General  Services  Administration\",\n      \"anchor\": \"Kai  Cobb ,  General  Services  Administration\"\n    },\n    {\n      \"name\": \"National  Institute  of  Standards  and  Technology\",\n      \"anchor\": \"National  Institute  of  Standards  and  Technology\"\n    },\n    {\n      \"name\": \"U.S.  Centers  for  Disease  Control  and  Prevention\",\n      \"anchor\": \"U.S.  Centers  for  Disease  Control  and  Prevention\"\n    },\n    {\n      \"name\": \"Cybersecurity  and  Infrastructure  Security  Agency\",\n      \"anchor\": \"Cybersecurity  and  Infrastructure  Security  Agency\"\n    }\n  ],\n  \"proposed_relationships\": [],\n  \"gleaned\": [\n    {\"name\": \"/api/v2/agency/<TOPTIER_AGENCY_CODE>/sub_agency/\", \"type\": \"Concept\"},\n    {\"name\": \"/api/v2/agency/<TOPTIER_AGENCY_CODE>/sub_components/\", \"type\": \"Concept\"},\n    {\"name\": \"/api/v2/agency/<TOPTIER_AGENCY_CODE>/sub_components/<BUREAU_SLUG>/\", \"type\": \"Concept\"},\n    {\"name\": \"/api/v2/search/spending_by_award/\", \"type\": \"Concept\"},\n    {\"name\": \"/api/v2/awards/<AWARD_ID>/\", \"type\": \"Concept\"},\n    {\"name\": \"/api/v2/search/spending_by_geography/\", \"type\": \"Concept\"},\n    {\"name\": \"/api/v2/agency/<TOPTIER_AGENCY_CODE>/program_activity/\", \"type\": \"Concept\"},\n    {\"name\": \"/api/v2/award_spending/recipient/\", \"type\": \"Concept\"},\n    {\"name\": \"/api/v2/references/toptier_agencies/\", \"type\": \"Concept\"},\n    {\"name\": \"/api/v2/references/award_types/\", \"type\": \"Concept\"},\n    {\"name\": \"/api/v2/references/glossary/\", \"type\": \"Concept\"},\n    {\"name\": \"/api/v2/spending/\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}
