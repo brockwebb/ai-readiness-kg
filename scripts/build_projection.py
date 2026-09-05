@@ -365,6 +365,17 @@ def build(session, kg_labels: list[str], edge_whitelist: set[str]) -> dict:
     # reset ONLY KG labels
     label_pred = " OR ".join(f"n:{lbl}" for lbl in kg_labels)
     session.run(f"MATCH (n) WHERE {label_pred} DETACH DELETE n")
+    # ... and the UNLABELLED endpoint nodes the projection itself creates. `MERGE (a {key: ...})`
+    # below makes a node with no label whenever an endpoint is not a typed item: a cited
+    # document that was never manifested, a scoped item id, and — before the Document skeletons
+    # above existed — a twin of a real Document. None of them carry a KG label, so the reset
+    # above never touched them and they accumulated across every replay AND across code
+    # generations: the graph held 1,201 degree-zero nodes carrying only an `id`, the endpoint
+    # shape an older keying scheme used. Worse, a surviving twin still matches
+    # `MERGE (a {key: ...})` alongside the new skeleton, and Cypher's MERGE binds BOTH, so the
+    # same edge is written twice. Everything deleted here is recreated by this replay if the
+    # log still asserts it; Seldon's artifacts all carry labels and are not touched.
+    session.run("MATCH (n) WHERE size(labels(n)) = 0 DETACH DELETE n")
     # Document skeletons FIRST, from the same pre-pass that built `document_ids` (task
     # 2026-09-04_extract_g1eval_17_and_rerun §1.4). The edge branch merges an endpoint on
     # `{key: ...}` alone, while `manifest_add` merges on `(:Document {id: ...})`: two

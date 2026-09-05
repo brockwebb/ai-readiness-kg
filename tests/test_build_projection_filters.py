@@ -135,3 +135,28 @@ def test_a_document_manifested_after_its_extraction_still_owns_its_edges(tmp_pat
     assert min(merges) < min(edges), (
         "the Document node must exist before an edge merges on its key, or the edge creates "
         "an unlabelled twin and the Document ends up with no edges at all")
+
+
+def test_the_reset_clears_unlabelled_endpoint_nodes_too(tmp_path, monkeypatch):
+    """REGRESSION, found by the fix above. `MERGE (a {key: ...})` creates endpoint nodes that
+    carry NO label — scoped item keys, cited-document ids, and (before the fix above) twins of
+    real Documents. The reset deleted only KG-LABELLED nodes, so every one of those survived
+    every replay: the live graph held 1,201 degree-zero nodes carrying only an `id`, left by an
+    older keying scheme, and 17 labelless twins that still matched `MERGE (a {key: ...})` —
+    which then attached the SAME edge to both the twin and the real Document.
+
+    A projection that is rebuilt by replay must be rebuilt entirely, or it is not a projection.
+    Seldon's own artifacts are unaffected: every one of them carries a label."""
+    from kg import eventlog
+    events = tmp_path / "events"
+    events.mkdir()
+    monkeypatch.setattr(eventlog, "_EVENTS_DIR", events)
+    _shard(events, 1, [])
+
+    session = _RecordingSession()
+    bp.build(session, ["Document", "Concept"], set())
+
+    deletes = [q for q, _ in session.calls if "DETACH DELETE" in q]
+    assert any("size(labels(n)) = 0" in q for q in deletes), (
+        "the reset must clear unlabelled endpoint nodes, or they accumulate across replays "
+        f"and across code generations; deletes were {deletes}")
