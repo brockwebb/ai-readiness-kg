@@ -2,10 +2,15 @@
 """Chunk-level extraction of the 17 `g1eval-2026-09-02` prior-art sources.
 
 Task `cc_tasks/2026-09-04_extract_g1eval_17_and_rerun.md` §1. **Model spend, bounded:** the
-run is declared on the shared ledger with the task's own ceiling (13,280,000, priced in the
-extraction-gap RESULT §3 at 664 chunks × the 20,000 `extraction_chunk` floor), reserve-then-
-settle at `kg/extraction/model_stub.invoke` as normal. Claude Max OAuth only — the stub
-refuses `ANTHROPIC_API_KEY` by name (DD-007) and that refusal is a stop, never a fallback.
+run is declared on the shared ledger with a per-run ceiling, reserve-then-settle at
+`kg/extraction/model_stub.invoke` as normal. Claude Max OAuth only — the stub refuses
+`ANTHROPIC_API_KEY` by name (DD-007) and that refusal is a stop, never a fallback.
+
+The task's own ceiling of 13,280,000 was priced in the extraction-gap RESULT §3 as 664 chunks
+× the 20,000 `extraction_chunk` *floor*. The floor is the guard's first-call estimate, not a
+measurement: the measured mean on this cohort is ~47,300 tokens/chunk over 688 chunks, so the
+declared ceiling was raised to 69,000,000 by `declare(..., supersede=True)` on operator
+authorization and recorded in DD-041. Pass `--ceiling-tokens` accordingly.
 
 **Why a driver rather than `run_chunked_bulk.py --phase burn`:** that driver's worklist is
 `compute_cut()`, the DD-024 demand-pull cut over `state/t2_priority.json`. These 17 carry no
@@ -46,18 +51,30 @@ RUN_ID = "g1eval_extraction_2026-09-04"
 STATE = REPO / "state" / "g1eval_extraction_2026-09-04.json"
 
 
+#: Queue states that prove an `extraction_request` exists on the record for a document.
+#: `extracted` and `extracting` are in the set because a *completed* run consumes its request:
+#: `queue.worklist()` reports only what is still owed, so gating the cohort on the live
+#: worklist — which this function did in its first draft — makes every read-only phase
+#: (`--phase spend`, a re-`plan`) fail with "carries no live extraction_request" the moment
+#: the extraction it is reporting on succeeds. The requirement was never that the request be
+#: outstanding; it is that nothing runs off an ad-hoc list.
+REQUESTED_STATES = frozenset({"queued", "stale", "extracting", "extracted"})
+
+
 def cohort() -> list:
-    """The 17, as the intersection of the epoch declaration and the live worklist. Both
-    conditions are required: the epoch says which documents these are, and the worklist says
-    an `extraction_request` justifies running them (nothing runs off an ad-hoc list)."""
+    """The 17, as the epoch declaration intersected with the documents the queue can show a
+    request for. The epoch says which documents these are; the queue state says an
+    `extraction_request` justifies them."""
     members = set(queue.corpus_epochs().get(EPOCH) or ())
     if not members:
         raise SystemExit(f"FATAL: no corpus_epoch_declared {EPOCH} in the dixie ledger")
-    requested = set(queue.worklist(PROFILE))
-    cohort = sorted(members & requested)
+    rows = queue.project()
+    requested = {d for d in members
+                 if (rows.get(d) or {}).get("extraction_state") in REQUESTED_STATES}
+    cohort = sorted(requested)
     missing = sorted(members - requested)
     if missing:
-        raise SystemExit(f"FATAL: {len(missing)} epoch member(s) carry no live extraction_request "
+        raise SystemExit(f"FATAL: {len(missing)} epoch member(s) carry no extraction_request "
                          f"— run `python -m kg queue add` first: {missing[:5]}")
     return cohort
 

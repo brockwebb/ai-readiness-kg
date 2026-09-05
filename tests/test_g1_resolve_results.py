@@ -16,9 +16,11 @@ a shim has to preserve and what a library swap can silently break:
   every count in three documents;
 * no `(proposed)` marker leaks into documents that have always rendered bare numbers, even
   though every Result here is `proposed` and the call passes `allow_proposed=True`;
-* the documentation placeholder `{{result:<NAME>:value}}` is not a token — seldon's own
-  pattern matches it (registered upstream as seldon ResearchTask `3376805b`), and the two
-  documents that explain the syntax in prose depend on this pre-filter.
+* the documentation placeholder `{{result:<NAME>:value}}` is not a token — the two documents
+  that explain the syntax in prose depend on that. Seldon's own pattern used to match it
+  (registered upstream as seldon ResearchTask `3376805b`); as of seldon `fa7d113`, 2026-09-04,
+  it does not, so the pre-filter is redundant rather than load-bearing and the control below
+  pins the agreement instead of the divergence.
 
 The index-loading tests inject a fake index rather than standing up Neo4j, so the suite stays
 runnable without a database; the one test that does touch the real graph is the end-to-end
@@ -57,13 +59,26 @@ def test_the_placeholder_is_not_a_token_but_a_real_name_is():
     assert res.TOKEN_RE.findall("{{result:g1_a-b.c:value}}") == [("g1_a-b.c", "value")]
 
 
-def test_the_shim_pattern_is_stricter_than_the_librarys():
-    """A positive control on the reason the pre-filter exists: if seldon ever tightens
-    REFERENCE_PATTERN this test fails and the pre-filter can go."""
+def test_the_library_adopted_a_name_grammar_so_the_pre_filter_is_redundant():
+    """This test was written as a positive control that FAILED on the day seldon tightened
+    `REFERENCE_PATTERN`, saying in its own docstring that the pre-filter could then go. It
+    fired: seldon `fa7d113` (2026-09-04) rebuilt the pattern on `unanchored_name_grammar()`,
+    which is the upstream ResearchTask `3376805b` this shim registered. So the control is
+    inverted rather than deleted — it now pins the *agreement*, and it is the thing that must
+    keep holding for the pre-filter to stay removable.
+
+    The pre-filter itself is NOT removed here: `resolve_text` reports errors and substitutes
+    through `TOKEN_RE`, so retiring it is a rewrite of that function's error paths and belongs
+    to the resolver-migration task, not to an extraction task that merely has to keep the
+    suite honest."""
     sys.path.insert(0, "/Users/brock/GitHub/seldon")
     from seldon.paper.build import REFERENCE_PATTERN
-    assert REFERENCE_PATTERN.findall("{{result:<NAME>:value}}") == [("result", "<NAME>", "value")]
+    # The placeholder both documents carry in prose: neither grammar accepts it any more.
+    assert REFERENCE_PATTERN.findall("{{result:<NAME>:value}}") == []
     assert res.TOKEN_RE.findall("{{result:<NAME>:value}}") == []
+    # A real name: both accept it, which is what makes the pre-filter redundant and not load-bearing.
+    assert REFERENCE_PATTERN.findall("{{result:g1_a-b.c:value}}") == [("result", "g1_a-b.c", "value")]
+    assert res.TOKEN_RE.findall("{{result:g1_a-b.c:value}}") == [("g1_a-b.c", "value")]
 
 
 # ---------------------------------------------------------------------------

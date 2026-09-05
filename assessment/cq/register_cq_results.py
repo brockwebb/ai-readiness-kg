@@ -4,8 +4,10 @@
 
 Every aggregate (`cq_v1_<metric>`) and every per-CQ metric (`cq_v1_<cqid>_<metric>`), each
 `computed_from` the dated results DataFile and `generated_by` the Script `run_cq`. A rerun
-after a dedup pass is a NEW dated file and NEW Results — never an overwrite (§1.6), which is
-why the date is in the name of the data file and not in the Result name.
+after a dedup pass — or after new extraction — is a NEW dated file and NEW Results, never an
+overwrite (§1.6). The date rides on the DataFile name; the Result name carries a `--suffix`
+under the **DD-041** rerun convention (`cq_v1_A_raw_2026-09-04b`), so the un-suffixed names
+stay bound to the first run they were measured on and a reader quoting either knows which.
 
 **Every answerability-derived Result says in its description that the verdict is an LLM
 judge's.** `A_raw`, `A_collapsed` and `flip` all rest on that judgement; the row counts,
@@ -31,7 +33,7 @@ PER_CQ = ("rows_raw", "rows_collapsed", "dup_groups_unioned", "provenance_comple
           "collapse_shrink", "distinct_entities_raw", "distinct_entities_collapsed")
 
 
-def rows(date: str) -> list:
+def rows(date: str, suffix: str = "") -> list:
     recs = [json.loads(l) for l in
             (REPO / "assessment" / "results" / f"cq_v1_{date}.jsonl").read_text().splitlines() if l.strip()]
     agg = json.loads((REPO / "assessment" / "results" / f"cq_v1_{date}_aggregates.json").read_text())
@@ -61,13 +63,16 @@ def rows(date: str) -> list:
                 continue
             out.append((f"cq_v1_{r['id'].replace('-', '_')}_{m}", v,
                         f"{r['id']} ({r['category']}) {m}"))
-    return out
+    # One place, so no emitter above can forget it and silently overwrite a prior run's Result.
+    return [(name + suffix, value, note) for name, value, note in out]
 
 
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--date", default="2026-09-04")
     ap.add_argument("--data-name", default=None)
+    ap.add_argument("--suffix", default="",
+                    help="rerun suffix appended to every Result name, e.g. _2026-09-04b (DD-041)")
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--skip", type=int, default=0)
     a = ap.parse_args(argv)
@@ -77,7 +82,7 @@ def main(argv=None) -> int:
             f"the conciseness dimension of Zaveri et al. (2016). CQ set pre-registered and "
             f"committed before any query ran. Derivation: assessment/cq/run_cq.py -> "
             f"assessment/results/cq_v1_{a.date}.jsonl ({TASK})")
-    data = rows(a.date)
+    data = rows(a.date, a.suffix)
     if a.dry_run:
         for name, value, note in data:
             print(f"{name}\t{value}\t{note[:90]}")

@@ -31,11 +31,15 @@ resolver swap must not rewrite documents that have rendered the same way for thr
    proposed count is reported by `--check`, and SI-09 fallback resolutions are reported per
    token, which is what the migration is tracked by.
 
-The token pattern stays this project's stricter one. Seldon's `REFERENCE_PATTERN` uses
-`[^:}]+` for the name, which matches the documentation placeholder `{{result:<NAME>:value}}`
+The token pattern stays this project's own. Seldon's `REFERENCE_PATTERN` used to use
+`[^:}]+` for the name, which matched the documentation placeholder `{{result:<NAME>:value}}`
 that the memo and `docs/design_decisions.md` both carry in prose; this shim pre-filters those
-so a placeholder is never reported as an unresolvable Result. Registered upstream as a seldon
-ResearchTask; remove the pre-filter if the library adopts a name grammar for the pattern.
+so a placeholder is never reported as an unresolvable Result. **The library has since adopted
+a name grammar** (seldon `fa7d113`, 2026-09-04, `unanchored_name_grammar()` — the upstream
+ResearchTask `3376805b` this shim registered), so the pre-filter no longer changes any
+outcome. It is kept for now because `resolve_text` substitutes and reports errors THROUGH
+`TOKEN_RE`, so retiring it is a rewrite of that function's error paths, not a deletion; the
+agreement between the two grammars is pinned by a test so it cannot rot unnoticed.
 
     /opt/anaconda3/bin/python3 scripts/g1_resolve_results.py --check docs/research/2026-09-03_g1_eval_findings.md
     /opt/anaconda3/bin/python3 scripts/g1_resolve_results.py --render IN.md --out OUT.md
