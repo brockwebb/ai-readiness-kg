@@ -1,0 +1,33 @@
+{
+ "doc_id": "du-2026-possible-or-definite",
+ "chunk_id": "du-2026-possible-or-definite#c0004",
+ "chunk_index": 4,
+ "chunk_start": 10716,
+ "chunk_end": 10852,
+ "chunk_tokens": 33,
+ "heading_path": [
+  "3. Method"
+ ],
+ "oversize": false,
+ "doc_sha256": "c33854c1632311020686121923ad6b93e155c77cad1b651d08a8941b9c244d31",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 7260,
+  "cacheReadInputTokens": 12841,
+  "cacheCreationInputTokens": 22920,
+  "webSearchRequests": 0,
+  "costUSD": 0.41713049999999996,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 5303,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.41713049999999996,
+ "duration_ms": 78743,
+ "session_id": "13f20004-c971-426d-b781-8634954994c4",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"The authors state they constructed a benchmark to evaluate LLMs' understanding of diagnostic uncertainty, describe its two-approach construction method with three citations, and begin a Method section listing the 200-sample assessment's source report fields.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_diagnostic_uncertainty\",\n      \"name\": \"diagnostic uncertainty\",\n      \"aliases\": [\"uncertainty in diagnosis\"],\n      \"description\": \"The construct the constructed benchmark evaluates LLMs' understanding of.\",\n      \"anchor\": \"diagnostic uncertainty\",\n      \"location\": \"du-2026-possible-or-definite#c0004\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"cl_benchmark_constructed\",\n      \"claim_text\": \"we constructed a benchmark to evaluate LLMs’ understanding of diagnostic uncertainty\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"measured_practitioner\",\n      \"anchor\": \"To address this gap\",\n      \"location\": \"du-2026-possible-or-definite#c0004\"\n    },\n    {\n      \"id\": \"cl_two_approaches\",\n      \"claim_text\": \"our benchmark\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"measured_practitioner\",\n      \"anchor\": \"Motivated by prior work\",\n      \"location\": \"du-2026-possible-or-definite#c0004\"\n    }\n  ],\n  \"instruments\": [\n    {\n      \"id\": \"i_benchmark\",\n      \"name\": \"benchmark\",\n      \"aliases\": [\"diagnostic uncertainty benchmark\"],\n      \"owner\": null,\n      \"year\": null,\n      \"method\": \"combines two approaches: (1) deriving supervision from existing clinical document collections and (2) combining automated data extraction with human review\",\n      \"attribute_anchors\": {\n        \"method\": \"combines two approaches\"\n      },\n      \"anchor\": \"constructed a benchmark\",\n      \"location\": \"du-2026-possible-or-definite#c0004\"\n    }\n  ],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"du-2026-possible-or-definite\",\n      \"to_id\": \"cl_benchmark_constructed\",\n      \"anchor\": \"address this gap, we constructed\",\n      \"location\": \"du-2026-possible-or-definite#c0004\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_benchmark_constructed\",\n      \"to_id\": \"c_diagnostic_uncertainty\",\n      \"anchor\": \"understanding of diagnostic uncertainty\",\n      \"location\": \"du-2026-possible-or-definite#c0004\"\n    },\n    {\n      \"type\": \"measures\",\n      \"from_id\": \"i_benchmark\",\n      \"to_id\": \"c_diagnostic_uncertainty\",\n      \"anchor\": \"benchmark to evaluate\",\n      \"location\": \"du-2026-possible-or-definite#c0004\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"du-2026-possible-or-definite\",\n      \"to_id\": \"c_diagnostic_uncertainty\",\n      \"anchor\": \"diagnostic uncertainty\",\n      \"location\": \"du-2026-possible-or-definite#c0004\"\n    }\n  ],\n  \"cites\": [\n    {\n      \"from_id\": \"du-2026-possible-or-definite\",\n      \"to_text\": \"Gao et al., 2023a\",\n      \"anchor\": \"(Gao et al., 2023a)\",\n      \"location\": \"du-2026-possible-or-definite#c0004\"\n    },\n    {\n      \"from_id\": \"du-2026-possible-or-definite\",\n      \"to_text\": \"Kweon et al., 2024\",\n      \"anchor\": \"Kweon et al., 2024\",\n      \"location\": \"du-2026-possible-or-definite#c0004\"\n    },\n    {\n      \"from_id\": \"du-2026-possible-or-definite\",\n      \"to_text\": \"Grazhdanski et al., 2025\",\n      \"anchor\": \"Grazhdanski et al., 2025\",\n      \"location\": \"du-2026-possible-or-definite#c0004\"\n    }\n  ],\n  \"mentions\": [\n    {\"name\": \"LLMs\", \"anchor\": \"LLMs’ understanding\"},\n    {\"name\": \"Assessment 200 Sampes\", \"anchor\": \"Assessment 200 Sampes\"},\n    {\"name\": \"Brief Hospital Course\", \"anchor\": \"Brief Hospital Course\"},\n    {\"name\": \"Discharge Diagnosis\", \"anchor\": \"Discharge Diagnosis\"},\n    {\"name\": \"Radiology Findings\", \"anchor\": \"Radiology Findings\"},\n    {\"name\": \"Radiology Impression\", \"anchor\": \"Radiology Impression\"},\n    {\"name\": \"Pathology Full Report\", \"anchor\": \"Pathology Full Report\"}\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"Brief Hospital Course\",\n      \"suggested_edge\": \"uses_input\",\n      \"diversion_reason\": \"structural_inference\"\n    },\n    {\n      \"anchor\": \"human review (Kweon\",\n      \"suggested_edge\": \"constructed_by_method\",\n      \"diversion_reason\": \"cross_chunk\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"clinical document collections\", \"type\": \"Concept\"},\n    {\"name\": \"automated data extraction\", \"type\": \"Concept\"},\n    {\"name\": \"human review\", \"type\": \"Concept\"},\n    {\"name\": \"deriving supervision\", \"type\": \"Concept\"},\n    {\"name\": \"large language models\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

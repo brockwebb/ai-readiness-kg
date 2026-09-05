@@ -1,0 +1,33 @@
+{
+ "doc_id": "census-acs-general-handbook-2020",
+ "chunk_id": "census-acs-general-handbook-2020#c0066",
+ "chunk_index": 66,
+ "chunk_start": 66734,
+ "chunk_end": 66816,
+ "chunk_tokens": 18,
+ "heading_path": [
+  "19 The Census Bureau suggests"
+ ],
+ "oversize": false,
+ "doc_sha256": "d2b7ba1b80826765a12a7be367650315ab7cd4ac8ec02b253c0bb438bbbd40f0",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 2785,
+  "cacheReadInputTokens": 12841,
+  "cacheCreationInputTokens": 22616,
+  "webSearchRequests": 0,
+  "costUSD": 0.30221549999999997,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 1955,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.30221549999999997,
+ "duration_ms": 33120,
+ "session_id": "e815975e-bc37-4f4b-9109-cf96deb0ac37",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Footnote fragment: the Census Bureau suggests comparing 5-year estimates that do not overlap; preceded by a dangling date-range fragment from the previous sentence.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_five_year_estimates\",\n      \"name\": \"5-year estimates\",\n      \"aliases\": [\"ACS 5-year estimates\"],\n      \"description\": \"Multiyear ACS estimates covering a five-year period, whose comparison across periods is addressed by this footnote.\",\n      \"anchor\": \"5-year estimates\",\n      \"location\": \"census-acs-general-handbook-2020#c0066\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"cl_nonoverlapping\",\n      \"claim_text\": \"comparing 5-year estimates that do not overlap\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"comparing 5-year estimates\",\n      \"location\": \"census-acs-general-handbook-2020#c0066\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_id\": \"cl_nonoverlapping\",\n      \"anchor\": \"comparing 5-year estimates\",\n      \"location\": \"census-acs-general-handbook-2020#c0066\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_nonoverlapping\",\n      \"to_id\": \"c_five_year_estimates\",\n      \"anchor\": \"estimates that do not overlap\",\n      \"location\": \"census-acs-general-handbook-2020#c0066\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_id\": \"c_five_year_estimates\",\n      \"anchor\": \"5-year estimates\",\n      \"location\": \"census-acs-general-handbook-2020#c0066\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [],\n  \"proposed_relationships\": [],\n  \"gleaned\": [\n    {\"name\": \"Census Bureau\", \"type\": \"Concept\"},\n    {\"name\": \"period estimate overlap\", \"type\": \"Concept\"}\n  ]\n}"
+}

@@ -1,0 +1,33 @@
+{
+ "doc_id": "census-acs-general-handbook-2020",
+ "chunk_id": "census-acs-general-handbook-2020#c0069",
+ "chunk_index": 69,
+ "chunk_start": 67161,
+ "chunk_end": 67465,
+ "chunk_tokens": 57,
+ "heading_path": [
+  "19 While the interpretation of this difference is difficult, these com-"
+ ],
+ "oversize": false,
+ "doc_sha256": "d2b7ba1b80826765a12a7be367650315ab7cd4ac8ec02b253c0bb438bbbd40f0",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 2689,
+  "cacheReadInputTokens": 12841,
+  "cacheCreationInputTokens": 22738,
+  "webSearchRequests": 0,
+  "costUSD": 0.3010355,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 1791,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3010355,
+ "duration_ms": 30621,
+ "session_id": "653b1187-c705-4f7b-b464-0d46a8427f85",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Footnote 19 of the ACS handbook: interpreting the difference between overlapping multiyear period estimates is difficult but such comparisons can be made with caution, with a cross-reference to the section on understanding error and statistical significance.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c1\",\n      \"name\": \"overlapping multiyear period estimates\",\n      \"aliases\": [\"overlapping multiyear estimates\", \"overlapping period estimates\"],\n      \"description\": \"ACS estimates covering multiyear periods that share one or more years of data, whose comparison the handbook addresses in this footnote.\",\n      \"anchor\": \"overlapping multiyear period estimates\",\n      \"location\": \"census-acs-general-handbook-2020#c0069\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"cl1\",\n      \"claim_text\": \"the interpretation of this difference is difficult\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"interpretation of this difference\",\n      \"location\": \"census-acs-general-handbook-2020#c0069\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_id\": \"c1\",\n      \"anchor\": \"overlapping multiyear period estimates\",\n      \"location\": \"census-acs-general-handbook-2020#c0069\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_id\": \"cl1\",\n      \"anchor\": \"interpretation of this difference\",\n      \"location\": \"census-acs-general-handbook-2020#c0069\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"Understanding Error and Determining Statistical Significance\",\n      \"anchor\": \"Understanding Error and Determining\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"suggested_edge\": \"about\",\n      \"from_id\": \"cl1\",\n      \"to_id\": \"c1\",\n      \"anchor\": \"these com-\",\n      \"diversion_reason\": \"predicate_not_located\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"statistical significance\", \"type\": \"Concept\"},\n    {\"name\": \"sampling error\", \"type\": \"Concept\"},\n    {\"name\": \"New England states\", \"type\": \"Concept\"}\n  ]\n}"
+}

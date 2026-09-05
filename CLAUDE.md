@@ -8,7 +8,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 A knowledge graph that is the **validity layer** under the FSS AI-readiness survey: which definitions of *AI readiness* / *AI-ready data* exist, which constructs the literature proposes, which instruments operationalize them, and the crosswalk survey item → construct → definition → primary source. Every assertion must be citable by a stranger.
 
-Status (2026-08): corpus epoch **v1 frozen at 71 docs, 71/71 extracted**, bulk-v1 closed out. Gate results in `docs/research/2026-08-14_bulk_v1_closeout_gate_report.md`; three gates (`quarantine_rate`, `edge_endpoint_validation`, `orphan_rate`) FAIL as *recorded findings* — a failed pre-registered gate triggers investigation, never retuning.
+Status (2026-08): corpus epoch **v1 frozen at 71 docs, 70 of 71 contributing edges to the graph** — `itu-ai-ready-analysis-towards-a-standardized-readiness-frame` was later cut `extent_unremediable` (served only through ITU's JavaScript e-publications reader, no downloadable form), so the "71/71 extracted" this line used to claim does not hold against the graph (`cc_tasks/2026-09-04_extraction_gap_diagnostic_RESULT.md` §1). bulk-v1 closed out. Gate results in `docs/research/2026-08-14_bulk_v1_closeout_gate_report.md`; three gates (`quarantine_rate`, `edge_endpoint_validation`, `orphan_rate`) FAIL as *recorded findings* — a failed pre-registered gate triggers investigation, never retuning.
 
 ## Commands
 

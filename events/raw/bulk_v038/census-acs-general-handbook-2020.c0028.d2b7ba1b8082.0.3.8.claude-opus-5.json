@@ -1,0 +1,33 @@
+{
+ "doc_id": "census-acs-general-handbook-2020",
+ "chunk_id": "census-acs-general-handbook-2020#c0028",
+ "chunk_index": 28,
+ "chunk_start": 28849,
+ "chunk_end": 29128,
+ "chunk_tokens": 50,
+ "heading_path": [
+  "5 The survey response rate is the ratio of the estimate of housing"
+ ],
+ "oversize": false,
+ "doc_sha256": "d2b7ba1b80826765a12a7be367650315ab7cd4ac8ec02b253c0bb438bbbd40f0",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 5508,
+  "cacheReadInputTokens": 12841,
+  "cacheCreationInputTokens": 22732,
+  "webSearchRequests": 0,
+  "costUSD": 0.3714505,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 4522,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3714505,
+ "duration_ms": 64849,
+ "session_id": "e4be5636-f9b2-41e5-ad2e-8ee948c154ee",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Footnote 5 defines the survey response rate as the ratio of estimated housing units interviewed after data collection to estimated units that should have been interviewed, and states which interviews count.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c1\",\n      \"name\": \"survey response rate\",\n      \"aliases\": [\"ACS survey response rate\"],\n      \"description\": \"Ratio of the estimate of housing units interviewed after data collection is complete to the estimate of all units that should have been interviewed.\",\n      \"anchor\": \"all units that should have been interviewed\",\n      \"location\": \"census-acs-general-handbook-2020#c0028\"\n    },\n    {\n      \"id\": \"c2\",\n      \"name\": \"partial interviews\",\n      \"aliases\": [\"partial interview\"],\n      \"description\": \"Interviews with enough information to be processed, counted alongside complete interviews in the response rate numerator.\",\n      \"anchor\": \"partial interviews with enough information\",\n      \"location\": \"census-acs-general-handbook-2020#c0028\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d1\",\n      \"term\": \"survey response rate\",\n      \"verbatim_text\": \"The survey response rate is the ratio of the estimate of housing units interviewed after data collection is complete to the estimate of all units that should have been interviewed.\",\n      \"normative_status\": \"policy\",\n      \"as_of_date\": null,\n      \"anchor\": \"units interviewed after data collection is complete\",\n      \"location\": \"census-acs-general-handbook-2020#c0028\"\n    }\n  ],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_id\": \"d1\",\n      \"anchor\": \"to the estimate of all units\",\n      \"location\": \"census-acs-general-handbook-2020#c0028\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_id\": \"c1\",\n      \"anchor\": \"should have been interviewed\",\n      \"location\": \"census-acs-general-handbook-2020#c0028\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_id\": \"c2\",\n      \"anchor\": \"Interviews include\",\n      \"location\": \"census-acs-general-handbook-2020#c0028\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [],\n  \"proposed_relationships\": [],\n  \"gleaned\": [\n    {\"name\": \"Interviews include complete and partial interviews\", \"type\": \"Definition\"},\n    {\"name\": \"data collection\", \"type\": \"Concept\"},\n    {\"name\": \"housing units interviewed\", \"type\": \"Concept\"}\n  ]\n}"
+}

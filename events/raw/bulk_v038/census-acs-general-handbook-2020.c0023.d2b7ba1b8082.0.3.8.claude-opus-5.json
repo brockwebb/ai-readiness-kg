@@ -1,0 +1,33 @@
+{
+ "doc_id": "census-acs-general-handbook-2020",
+ "chunk_id": "census-acs-general-handbook-2020#c0023",
+ "chunk_index": 23,
+ "chunk_start": 20256,
+ "chunk_end": 20611,
+ "chunk_tokens": 85,
+ "heading_path": [
+  "10 In the aftermath"
+ ],
+ "oversize": false,
+ "doc_sha256": "d2b7ba1b80826765a12a7be367650315ab7cd4ac8ec02b253c0bb438bbbd40f0",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 4725,
+  "cacheReadInputTokens": 12841,
+  "cacheCreationInputTokens": 22830,
+  "webSearchRequests": 0,
+  "costUSD": 0.3528555,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 3549,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3528555,
+ "duration_ms": 56023,
+ "session_id": "80b73ae0-7ba6-4598-836d-f3dde0c59728",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Footnote text asserting that after Hurricane Katrina (2005), up-to-date before-and-after snapshots of community characteristics helped responders target preparedness, response, and recovery; plus a footnote citation to Minnesota Compass.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"cn_community_characteristics\",\n      \"name\": \"community characteristics\",\n      \"aliases\": [\"community characteristics data\"],\n      \"description\": \"Attributes of a community captured in before-and-after snapshots used by disaster responders to target preparedness, response, and recovery efforts.\",\n      \"anchor\": \"community characteristics\",\n      \"location\": \"census-acs-general-handbook-2020#c0023\"\n    },\n    {\n      \"id\": \"cn_hurricane_katrina\",\n      \"name\": \"Hurricane Katrina\",\n      \"aliases\": [\"Katrina (2005)\"],\n      \"description\": \"The 2005 hurricane whose aftermath the document cites as a case where current community-characteristics data aided responders.\",\n      \"anchor\": \"Hurricane Katrina\",\n      \"location\": \"census-acs-general-handbook-2020#c0023\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"cl_katrina_snapshots\",\n      \"claim_text\": \"snapshots of community characteristics helped first and subsequent responders\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"subsequent responders\",\n      \"location\": \"census-acs-general-handbook-2020#c0023\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_id\": \"cl_katrina_snapshots\",\n      \"anchor\": \"In the aftermath\",\n      \"location\": \"census-acs-general-handbook-2020#c0023\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_katrina_snapshots\",\n      \"to_id\": \"cn_community_characteristics\",\n      \"anchor\": \"snapshots of community characteristics\",\n      \"location\": \"census-acs-general-handbook-2020#c0023\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_id\": \"cn_hurricane_katrina\",\n      \"anchor\": \"Hurricane Katrina in 2005\",\n      \"location\": \"census-acs-general-handbook-2020#c0023\"\n    }\n  ],\n  \"cites\": [\n    {\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_id\": \"minnesota-compass-social-determinants-of-health\",\n      \"anchor\": \"Minnesota Compass\",\n      \"location\": \"census-acs-general-handbook-2020#c0023\"\n    }\n  ],\n  \"mentions\": [\n    {\n      \"name\": \"Social Determinants of Health\",\n      \"anchor\": \"Social Determinants of Health\"\n    }\n  ],\n  \"proposed_relationships\": [],\n  \"gleaned\": [\n    {\"name\": \"preparedness, response, and recovery\", \"type\": \"Concept\"},\n    {\"name\": \"response and recovery phases\", \"type\": \"Concept\"},\n    {\"name\": \"first and subsequent responders\", \"type\": \"Concept\"}\n  ]\n}"
+}

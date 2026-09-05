@@ -1,0 +1,33 @@
+{
+ "doc_id": "census-acs-general-handbook-2020",
+ "chunk_id": "census-acs-general-handbook-2020#c0014",
+ "chunk_index": 14,
+ "chunk_start": 16151,
+ "chunk_end": 16614,
+ "chunk_tokens": 104,
+ "heading_path": [
+  "2 U.S. Census Bureau, American Community Survey Handbook"
+ ],
+ "oversize": false,
+ "doc_sha256": "d2b7ba1b80826765a12a7be367650315ab7cd4ac8ec02b253c0bb438bbbd40f0",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 3619,
+  "cacheReadInputTokens": 12841,
+  "cacheCreationInputTokens": 22972,
+  "webSearchRequests": 0,
+  "costUSD": 0.32662549999999996,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 1844,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.32662549999999996,
+ "duration_ms": 38204,
+ "session_id": "f4c8b3f2-3d77-4bbe-ac3e-eeef000bbf4d",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Footnote citation to the 2014 ACS Handbook of Questions and Current Federal Uses, followed by a 'Journalists' data-user vignette asserting that journalists report ACS data and that the New York Times used it to map poverty rates and men's employment.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_journalists\",\n      \"name\": \"Journalists\",\n      \"aliases\": [\"news media\", \"the press\"],\n      \"description\": \"A class of ACS data users who report ACS data to inform the public about social, economic, housing, and demographic trends.\",\n      \"anchor\": \"Journalists:\",\n      \"location\": \"census-acs-general-handbook-2020#c0014\"\n    },\n    {\n      \"id\": \"c_acs_data\",\n      \"name\": \"ACS data\",\n      \"aliases\": [\"American Community Survey data\"],\n      \"description\": \"Data produced by the American Community Survey, reported by journalists and used to map social and economic conditions.\",\n      \"anchor\": \"regularly report ACS data\",\n      \"location\": \"census-acs-general-handbook-2020#c0014\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"cl_journalists_report\",\n      \"claim_text\": \"Journalists regularly report ACS data to keep the public informed about emerging social, economic, housing, and demographic trends.\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"keep the public informed\",\n      \"location\": \"census-acs-general-handbook-2020#c0014\"\n    },\n    {\n      \"id\": \"cl_nyt_mapped\",\n      \"claim_text\": \"the New York Times used ACS data to map poverty rates and men’s employment in America\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"to map poverty rates\",\n      \"location\": \"census-acs-general-handbook-2020#c0014\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_id\": \"cl_journalists_report\",\n      \"anchor\": \"keep the public informed\",\n      \"location\": \"census-acs-general-handbook-2020#c0014\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_id\": \"cl_nyt_mapped\",\n      \"anchor\": \"to map poverty rates\",\n      \"location\": \"census-acs-general-handbook-2020#c0014\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_journalists_report\",\n      \"to_id\": \"c_journalists\",\n      \"anchor\": \"Journalists regularly report\",\n      \"location\": \"census-acs-general-handbook-2020#c0014\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_nyt_mapped\",\n      \"to_id\": \"c_acs_data\",\n      \"anchor\": \"Times used ACS data\",\n      \"location\": \"census-acs-general-handbook-2020#c0014\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_id\": \"c_acs_data\",\n      \"anchor\": \"regularly report ACS data\",\n      \"location\": \"census-acs-general-handbook-2020#c0014\"\n    }\n  ],\n  \"cites\": [\n    {\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_id\": \"census-acs-handbook-of-questions-and-current-federal-uses-2014\",\n      \"title\": \"American Community Survey Handbook of Questions and Current Federal Uses\",\n      \"year\": \"2014\",\n      \"url\": \"www.census.gov/programs-surveys/acs/operations-and-administration/2014-content-review/federal-uses.html\",\n      \"anchor\": \"Current Federal Uses, 2014\",\n      \"location\": \"census-acs-general-handbook-2020#c0014\"\n    },\n    {\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_id\": \"uses-of-census-bureau-data-in-federal-funds-distribution\",\n      \"title\": \"Uses of Census Bureau Data in Federal Funds Distribution\",\n      \"anchor\": \"/Uses-of-Census-Bureau-Data-in-Federal-Funds-Distribution.pdf>.\",\n      \"location\": \"census-acs-general-handbook-2020#c0014\"\n    }\n  ],\n  \"mentions\": [\n    {\n      \"name\": \"New York Times\",\n      \"anchor\": \"the New York Times\"\n    },\n    {\n      \"name\": \"U.S. Census Bureau\",\n      \"anchor\": \"2 U.S. Census Bureau,\"\n    }\n  ],\n  \"proposed_relationships\": [],\n  \"gleaned\": [\n    {\"name\": \"poverty rates\", \"type\": \"Concept\"},\n    {\"name\": \"men’s employment\", \"type\": \"Concept\"},\n    {\"name\": \"demographic trends\", \"type\": \"Concept\"},\n    {\"name\": \"American Community Survey\", \"type\": \"Instrument\"}\n  ]\n}\n```"
+}

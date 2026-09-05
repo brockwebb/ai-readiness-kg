@@ -1,0 +1,33 @@
+{
+ "doc_id": "census-acs-general-handbook-2020",
+ "chunk_id": "census-acs-general-handbook-2020#c0068",
+ "chunk_index": 68,
+ "chunk_start": 67013,
+ "chunk_end": 67160,
+ "chunk_tokens": 30,
+ "heading_path": [
+  "18 Although Public Use Microdata Areas typically follow county"
+ ],
+ "oversize": false,
+ "doc_sha256": "d2b7ba1b80826765a12a7be367650315ab7cd4ac8ec02b253c0bb438bbbd40f0",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 3718,
+  "cacheReadInputTokens": 12841,
+  "cacheCreationInputTokens": 22674,
+  "webSearchRequests": 0,
+  "costUSD": 0.3261205,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 2862,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3261205,
+ "duration_ms": 40676,
+ "session_id": "eb337875-e317-4efa-bdc3-060b685f64f2",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"A footnote qualifying Public Use Microdata Area geography: PUMAs typically follow county boundaries but not always, notably in some New England states.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_puma\",\n      \"name\": \"Public Use Microdata Areas\",\n      \"aliases\": [\"PUMA\", \"PUMAs\"],\n      \"description\": \"Census geographic areas that typically, but not always, follow county boundaries.\",\n      \"anchor\": \"Areas typically follow county boundaries\",\n      \"location\": \"census-acs-general-handbook-2020#c0068\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"cl_puma_county\",\n      \"claim_text\": \"Although Public Use Microdata Areas typically follow county boundaries, this is not always the case, particularly in some New England states.\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"boundaries, this is not always\",\n      \"location\": \"census-acs-general-handbook-2020#c0068\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_id\": \"cl_puma_county\",\n      \"anchor\": \"particularly in some New\",\n      \"location\": \"census-acs-general-handbook-2020#c0068\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_puma_county\",\n      \"to_id\": \"c_puma\",\n      \"anchor\": \"not always the case, particularly\",\n      \"location\": \"census-acs-general-handbook-2020#c0068\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_id\": \"c_puma\",\n      \"anchor\": \"typically follow county boundaries\",\n      \"location\": \"census-acs-general-handbook-2020#c0068\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"New England states\",\n      \"anchor\": \"England states\"\n    }\n  ],\n  \"proposed_relationships\": [],\n  \"gleaned\": [\n    {\"name\": \"county boundaries\", \"type\": \"Concept\"},\n    {\"name\": \"geographic areas with at least 20,000 people\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

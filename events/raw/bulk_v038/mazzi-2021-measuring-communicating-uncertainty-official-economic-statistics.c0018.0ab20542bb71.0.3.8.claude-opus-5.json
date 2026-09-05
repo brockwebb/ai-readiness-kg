@@ -1,0 +1,33 @@
+{
+ "doc_id": "mazzi-2021-measuring-communicating-uncertainty-official-economic-statistics",
+ "chunk_id": "mazzi-2021-measuring-communicating-uncertainty-official-economic-statistics#c0018",
+ "chunk_index": 18,
+ "chunk_start": 64278,
+ "chunk_end": 65599,
+ "chunk_tokens": 766,
+ "heading_path": [
+  "3 years later 2 years later 1 years later 5 months later"
+ ],
+ "oversize": false,
+ "doc_sha256": "0ab20542bb71c4c35ba9cbc4414e4fcd79f25c131fe3ca9f879214bb9d5af1f4",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 3400,
+  "cacheReadInputTokens": 12841,
+  "cacheCreationInputTokens": 24402,
+  "webSearchRequests": 0,
+  "costUSD": 0.3354505,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 1904,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3354505,
+ "duration_ms": 35644,
+ "session_id": "9d9bb41a-1127-4f7c-8fd9-f7f1952b014b",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Figure 4 caption and data table: ONS (via Walton 2016) estimates of bias in GDP revisions — mean revisions to quarter-on-quarter GDP growth for selected OECD and G20 countries, 1998Q4–2015Q2.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_bias_gdp_revisions\",\n      \"name\": \"bias to GDP revisions\",\n      \"aliases\": [\"GDP revision bias\"],\n      \"description\": \"Systematic directional error in successive revisions to published GDP estimates, estimated here for selected OECD and G20 countries.\",\n      \"anchor\": \"bias to GDP revisions\",\n      \"location\": \"mazzi-2021-measuring-communicating-uncertainty-official-economic-statistics#c0018\"\n    },\n    {\n      \"id\": \"c_mean_revisions_gdp_growth\",\n      \"name\": \"Mean revisions to GDP growth\",\n      \"aliases\": [\"mean GDP growth revision\"],\n      \"description\": \"The average revision to quarter-on-quarter GDP growth over the period 1998Q4–2015Q2, reported per country and per revision horizon.\",\n      \"anchor\": \"Mean revisions to GDP\",\n      \"location\": \"mazzi-2021-measuring-communicating-uncertainty-official-economic-statistics#c0018\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"cl_ons_bias_estimates\",\n      \"claim_text\": \"ONS (taken from Walton 2016) estimates of the bias to GDP revisions for selected OECD and G20 countries\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"measured_practitioner\",\n      \"anchor\": \"estimates of the bias\",\n      \"location\": \"mazzi-2021-measuring-communicating-uncertainty-official-economic-statistics#c0018\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"mazzi-2021-measuring-communicating-uncertainty-official-economic-statistics\",\n      \"to_id\": \"cl_ons_bias_estimates\",\n      \"anchor\": \"estimates of the bias\",\n      \"location\": \"mazzi-2021-measuring-communicating-uncertainty-official-economic-statistics#c0018\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_ons_bias_estimates\",\n      \"to_id\": \"c_bias_gdp_revisions\",\n      \"anchor\": \"bias to GDP revisions\",\n      \"location\": \"mazzi-2021-measuring-communicating-uncertainty-official-economic-statistics#c0018\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"mazzi-2021-measuring-communicating-uncertainty-official-economic-statistics\",\n      \"to_id\": \"c_mean_revisions_gdp_growth\",\n      \"anchor\": \"Mean revisions to GDP\",\n      \"location\": \"mazzi-2021-measuring-communicating-uncertainty-official-economic-statistics#c0018\"\n    }\n  ],\n  \"cites\": [\n    {\n      \"id\": \"cite_walton_2016\",\n      \"from_id\": \"mazzi-2021-measuring-communicating-uncertainty-official-economic-statistics\",\n      \"target_text\": \"Walton (2016)\",\n      \"anchor\": \"Source: Walton\",\n      \"location\": \"mazzi-2021-measuring-communicating-uncertainty-official-economic-statistics#c0018\"\n    }\n  ],\n  \"mentions\": [\n    {\n      \"name\": \"ONS\",\n      \"anchor\": \"ONS (taken\"\n    },\n    {\n      \"name\": \"OECD\",\n      \"anchor\": \"selected OECD\"\n    },\n    {\n      \"name\": \"G20\",\n      \"anchor\": \"G20 countries\"\n    },\n    {\n      \"name\": \"chain volume measure\",\n      \"anchor\": \"chain volume measure\"\n    }\n  ],\n  \"proposed_relationships\": [],\n  \"gleaned\": [\n    {\"name\": \"quarter on quarter GDP growth\", \"type\": \"Concept\"},\n    {\"name\": \"revision horizon\", \"type\": \"Concept\"},\n    {\"name\": \"average revision across countries\", \"type\": \"Claim\"}\n  ]\n}\n```"
+}

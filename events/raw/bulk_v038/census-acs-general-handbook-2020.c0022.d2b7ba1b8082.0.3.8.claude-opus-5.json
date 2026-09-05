@@ -1,0 +1,33 @@
+{
+ "doc_id": "census-acs-general-handbook-2020",
+ "chunk_id": "census-acs-general-handbook-2020#c0022",
+ "chunk_index": 22,
+ "chunk_start": 19824,
+ "chunk_end": 20255,
+ "chunk_tokens": 94,
+ "heading_path": [
+  "8 For more information, see <www.commerce.gov/news"
+ ],
+ "oversize": false,
+ "doc_sha256": "d2b7ba1b80826765a12a7be367650315ab7cd4ac8ec02b253c0bb438bbbd40f0",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 5099,
+  "cacheReadInputTokens": 12841,
+  "cacheCreationInputTokens": 22892,
+  "webSearchRequests": 0,
+  "costUSD": 0.3628255,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 3209,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3628255,
+ "duration_ms": 54850,
+ "session_id": "36b14e93-9c27-43d1-8a13-44e61e9d5067",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Footnote citations plus a use-case passage stating that the American Red Cross uses ACS data to identify vulnerable populations before disasters and to monitor disaster impacts during response and recovery.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_disaster_response_recovery\",\n      \"name\": \"Disaster response and recovery\",\n      \"aliases\": [\"disaster response\", \"disaster recovery\"],\n      \"description\": \"The phases of responding to and recovering from a disaster, during which ACS data is used to identify vulnerable populations and monitor disaster impacts.\",\n      \"anchor\": \"Disaster response and recovery\",\n      \"location\": \"census-acs-general-handbook-2020#c0022\"\n    },\n    {\n      \"id\": \"c_vulnerable_populations\",\n      \"name\": \"vulnerable populations\",\n      \"aliases\": [\"at-risk populations\"],\n      \"description\": \"Population groups the American Red Cross seeks to identify with ACS data before a disaster strikes.\",\n      \"anchor\": \"vulnerable populations\",\n      \"location\": \"census-acs-general-handbook-2020#c0022\"\n    },\n    {\n      \"id\": \"c_acs_data\",\n      \"name\": \"ACS data\",\n      \"aliases\": [\"American Community Survey data\"],\n      \"description\": \"Data from the American Community Survey, used here by the American Red Cross for disaster preparedness and impact monitoring.\",\n      \"anchor\": \"ACS data\",\n      \"location\": \"census-acs-general-handbook-2020#c0022\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"cl_red_cross_acs_disaster\",\n      \"claim_text\": \"The American Red Cross uses ACS data to help identify vulnerable populations—before a disaster strikes—and to monitor the impacts of a disaster during the response and recovery phases.\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"uses ACS data to help identify\",\n      \"location\": \"census-acs-general-handbook-2020#c0022\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_id\": \"cl_red_cross_acs_disaster\",\n      \"anchor\": \"uses ACS data to help identify\",\n      \"location\": \"census-acs-general-handbook-2020#c0022\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_red_cross_acs_disaster\",\n      \"to_id\": \"c_vulnerable_populations\",\n      \"anchor\": \"identify \\nvulnerable populations\",\n      \"location\": \"census-acs-general-handbook-2020#c0022\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_red_cross_acs_disaster\",\n      \"to_id\": \"c_disaster_response_recovery\",\n      \"anchor\": \"response and recovery phases\",\n      \"location\": \"census-acs-general-handbook-2020#c0022\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_id\": \"c_acs_data\",\n      \"anchor\": \"ACS data\",\n      \"location\": \"census-acs-general-handbook-2020#c0022\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_id\": \"c_disaster_response_recovery\",\n      \"anchor\": \"Disaster response and recovery\",\n      \"location\": \"census-acs-general-handbook-2020#c0022\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_id\": \"c_vulnerable_populations\",\n      \"anchor\": \"vulnerable populations\",\n      \"location\": \"census-acs-general-handbook-2020#c0022\"\n    }\n  ],\n  \"cites\": [\n    {\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_id\": \"www.census.gov/library/video/sia-zillow.html\",\n      \"anchor\": \"sia-zillow.html\",\n      \"location\": \"census-acs-general-handbook-2020#c0022\"\n    },\n    {\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_id\": \"www.commerce.gov/news/reports/2015/05/value-american-community-survey-smart-government-competitive-businesses-and\",\n      \"anchor\": \"/reports/2015/05/value-american-community-survey-smart\",\n      \"location\": \"census-acs-general-handbook-2020#c0022\"\n    }\n  ],\n  \"mentions\": [\n    {\n      \"name\": \"American Red Cross\",\n      \"anchor\": \"American Red Cross\"\n    },\n    {\n      \"name\": \"health professionals\",\n      \"anchor\": \"health professionals\"\n    },\n    {\n      \"name\": \"coronavirus\",\n      \"anchor\": \"coronavirus\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"American Red Cross uses ACS data\",\n      \"suggested_edge\": \"uses_data\",\n      \"diversion_reason\": \"other:untyped_endpoint\",\n      \"from\": \"American Red Cross\",\n      \"to\": \"c_acs_data\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"American Community Survey\", \"type\": \"Instrument\"},\n    {\"name\": \"spread of the coronavirus\", \"type\": \"Concept\"}\n  ]\n}"
+}

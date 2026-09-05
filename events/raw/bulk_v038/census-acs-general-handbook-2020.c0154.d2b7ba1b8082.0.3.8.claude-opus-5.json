@@ -1,0 +1,33 @@
+{
+ "doc_id": "census-acs-general-handbook-2020",
+ "chunk_id": "census-acs-general-handbook-2020#c0154",
+ "chunk_index": 154,
+ "chunk_start": 222281,
+ "chunk_end": 222598,
+ "chunk_tokens": 66,
+ "heading_path": [
+  "13 of the U.S. Code provides the authorization for con-"
+ ],
+ "oversize": false,
+ "doc_sha256": "d2b7ba1b80826765a12a7be367650315ab7cd4ac8ec02b253c0bb438bbbd40f0",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 9199,
+  "cacheReadInputTokens": 12841,
+  "cacheCreationInputTokens": 22802,
+  "webSearchRequests": 0,
+  "costUSD": 0.46442550000000005,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 7538,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.46442550000000005,
+ "duration_ms": 106473,
+ "session_id": "c64afea9-2131-4189-90b1-fd3819bbdffa",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Chunk states Title 13 authorizes the census in Puerto Rico and the Island Areas, then introduces derived estimates as unique ACS estimates built by aggregating estimates.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_derived_estimates\",\n      \"name\": \"derived estimates\",\n      \"aliases\": [\"derived estimate\"],\n      \"description\": \"Unique estimates developed from ACS data, usually based on aggregating estimates.\",\n      \"anchor\": \"called derived estimates\",\n      \"location\": \"census-acs-general-handbook-2020#c0154\"\n    },\n    {\n      \"id\": \"c_title13\",\n      \"name\": \"Title 13 of the U.S. Code\",\n      \"aliases\": [\"Title 13\"],\n      \"description\": \"The statutory authority the document cites as authorizing conduct of the census in Puerto Rico and the Island Areas.\",\n      \"anchor\": \"U.S. Code provides\",\n      \"location\": \"census-acs-general-handbook-2020#c0154\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"cl_title13_auth\",\n      \"claim_text\": \"Title 13 of the U.S. Code provides the authorization for\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"authorization for con-\",\n      \"location\": \"census-acs-general-handbook-2020#c0154\"\n    },\n    {\n      \"id\": \"cl_derived_benefit\",\n      \"claim_text\": \"One of the benefits of working with ACS data is the ability to develop unique\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"benefits of working\",\n      \"location\": \"census-acs-general-handbook-2020#c0154\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_id\": \"c_derived_estimates\",\n      \"anchor\": \"called derived estimates\",\n      \"location\": \"census-acs-general-handbook-2020#c0154\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_id\": \"c_title13\",\n      \"anchor\": \"U.S. Code provides\",\n      \"location\": \"census-acs-general-handbook-2020#c0154\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_id\": \"cl_title13_auth\",\n      \"anchor\": \"authorization for con-\",\n      \"location\": \"census-acs-general-handbook-2020#c0154\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_id\": \"cl_derived_benefit\",\n      \"anchor\": \"benefits of working\",\n      \"location\": \"census-acs-general-handbook-2020#c0154\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_title13_auth\",\n      \"to_id\": \"c_title13\",\n      \"anchor\": \"13 of the U.S. Code provides\",\n      \"location\": \"census-acs-general-handbook-2020#c0154\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_derived_benefit\",\n      \"to_id\": \"c_derived_estimates\",\n      \"anchor\": \"develop unique esti-\",\n      \"location\": \"census-acs-general-handbook-2020#c0154\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"ACS data\",\n      \"anchor\": \"with ACS data\"\n    },\n    {\n      \"name\": \"U.S. House of Representatives\",\n      \"anchor\": \"U.S. House of Representatives\"\n    },\n    {\n      \"name\": \"Puerto Rico\",\n      \"anchor\": \"Puerto Rico\"\n    },\n    {\n      \"name\": \"the Island Areas\",\n      \"anchor\": \"the Island Areas\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"suggested_edge\": \"authorizes\",\n      \"from_id\": \"c_title13\",\n      \"to_id\": \"census in Puerto Rico and the Island Areas\",\n      \"anchor\": \"the census in Puerto Rico\",\n      \"diversion_reason\": \"other:no_edge_type_for_statutory_authorization\",\n      \"location\": \"census-acs-general-handbook-2020#c0154\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"census\", \"type\": \"Concept\"},\n    {\"name\": \"reapportioning\", \"type\": \"Concept\"},\n    {\"name\": \"aggregating estimates\", \"type\": \"Concept\"},\n    {\"name\": \"American Community Survey\", \"type\": \"Instrument\"}\n  ]\n}"
+}

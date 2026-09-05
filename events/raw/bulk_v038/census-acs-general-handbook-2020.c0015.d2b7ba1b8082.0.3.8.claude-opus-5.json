@@ -1,0 +1,33 @@
+{
+ "doc_id": "census-acs-general-handbook-2020",
+ "chunk_id": "census-acs-general-handbook-2020#c0015",
+ "chunk_index": 15,
+ "chunk_start": 16615,
+ "chunk_end": 16735,
+ "chunk_tokens": 25,
+ "heading_path": [
+  "3 The Wall Street Journal reported on the"
+ ],
+ "oversize": false,
+ "doc_sha256": "d2b7ba1b80826765a12a7be367650315ab7cd4ac8ec02b253c0bb438bbbd40f0",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 3132,
+  "cacheReadInputTokens": 12841,
+  "cacheCreationInputTokens": 22624,
+  "webSearchRequests": 0,
+  "costUSD": 0.3109705,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 2224,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3109705,
+ "duration_ms": 38878,
+ "session_id": "544c3d7e-3662-4e8c-a0ef-625a6ca2730f",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Footnote crediting a Wall Street Journal report on cities with the fastest-growing median household incomes as being based on ACS data.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_acs_data\",\n      \"name\": \"ACS data\",\n      \"aliases\": [\"American Community Survey data\"],\n      \"description\": \"Data produced by the American Community Survey, used here as the basis for external journalistic reporting.\",\n      \"anchor\": \"ACS data\",\n      \"location\": \"census-acs-general-handbook-2020#c0015\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"cl_wsj_income_report\",\n      \"claim_text\": \"The Wall Street Journal reported on the cities with the fastest-growing median household incomes, based on ACS data\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"reported on the\",\n      \"location\": \"census-acs-general-handbook-2020#c0015\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_id\": \"cl_wsj_income_report\",\n      \"anchor\": \"reported on the\",\n      \"location\": \"census-acs-general-handbook-2020#c0015\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_wsj_income_report\",\n      \"to_id\": \"c_acs_data\",\n      \"anchor\": \"based on ACS data\",\n      \"location\": \"census-acs-general-handbook-2020#c0015\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_id\": \"c_acs_data\",\n      \"anchor\": \"ACS data\",\n      \"location\": \"census-acs-general-handbook-2020#c0015\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"The Wall Street Journal\",\n      \"anchor\": \"Wall Street Journal\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"Wall Street Journal\",\n      \"suggested_edge\": \"cites\",\n      \"diversion_reason\": \"endpoint_not_located\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"median household incomes\", \"type\": \"Concept\"},\n    {\"name\": \"cities with the fastest-growing median household incomes\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

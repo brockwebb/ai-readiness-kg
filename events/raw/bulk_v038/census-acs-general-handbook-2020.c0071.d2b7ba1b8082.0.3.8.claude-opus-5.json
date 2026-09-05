@@ -1,0 +1,33 @@
+{
+ "doc_id": "census-acs-general-handbook-2020",
+ "chunk_id": "census-acs-general-handbook-2020#c0071",
+ "chunk_index": 71,
+ "chunk_start": 69317,
+ "chunk_end": 69655,
+ "chunk_tokens": 71,
+ "heading_path": [
+  "2000 Census boundaries. Given the major changes to"
+ ],
+ "oversize": false,
+ "doc_sha256": "d2b7ba1b80826765a12a7be367650315ab7cd4ac8ec02b253c0bb438bbbd40f0",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 5043,
+  "cacheReadInputTokens": 12841,
+  "cacheCreationInputTokens": 22804,
+  "webSearchRequests": 0,
+  "costUSD": 0.3605455,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 3301,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3605455,
+ "duration_ms": 54554,
+ "session_id": "70abaa2f-6932-440c-91e6-1b4b6a06e9a1",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"ACS geography vintage: earlier-year ACS data reflect 2000 Census boundaries, so 2011-vs-2012 congressional district comparisons are not feasible, and ACS data are regularly updated for local boundary changes (Jurupa Valley example).\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"k1\",\n      \"name\": \"district boundaries\",\n      \"aliases\": [\"legislative district boundaries\"],\n      \"description\": \"The geographic boundaries of districts, which change substantially after each census.\",\n      \"anchor\": \"district boundaries\",\n      \"location\": \"census-acs-general-handbook-2020#c0071\"\n    },\n    {\n      \"id\": \"k2\",\n      \"name\": \"congressional district data\",\n      \"aliases\": [\"data for congressional districts\"],\n      \"description\": \"ACS data tabulated for congressional districts, whose comparability is broken by redistricting.\",\n      \"anchor\": \"congressional district data\",\n      \"location\": \"census-acs-general-handbook-2020#c0071\"\n    },\n    {\n      \"id\": \"k3\",\n      \"name\": \"geographic boundaries\",\n      \"aliases\": [\"geographic boundary changes\"],\n      \"description\": \"Local geographic boundaries, such as municipal incorporations, that ACS data are updated to reflect.\",\n      \"anchor\": \"geographic boundaries\",\n      \"location\": \"census-acs-general-handbook-2020#c0071\"\n    },\n    {\n      \"id\": \"k4\",\n      \"name\": \"ACS data\",\n      \"aliases\": [\"American Community Survey data\"],\n      \"description\": \"The survey estimates whose geographic vintage tracks census boundary definitions and local boundary changes.\",\n      \"anchor\": \"ACS data are also\",\n      \"location\": \"census-acs-general-handbook-2020#c0071\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"c1\",\n      \"claim_text\": \"a comparison of congressional district data between 2011 and 2012 is not feasible\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"inference\",\n      \"anchor\": \"not feasible\",\n      \"location\": \"census-acs-general-handbook-2020#c0071\"\n    },\n    {\n      \"id\": \"c2\",\n      \"claim_text\": \"ACS data are also regularly updated to reflect local changes in geographic boundaries\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"regularly updated\",\n      \"location\": \"census-acs-general-handbook-2020#c0071\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_id\": \"c1\",\n      \"anchor\": \"not feasible\",\n      \"location\": \"census-acs-general-handbook-2020#c0071\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_id\": \"c2\",\n      \"anchor\": \"regularly updated\",\n      \"location\": \"census-acs-general-handbook-2020#c0071\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"c1\",\n      \"to_id\": \"k2\",\n      \"anchor\": \"congressional district data\",\n      \"location\": \"census-acs-general-handbook-2020#c0071\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"c1\",\n      \"to_id\": \"k1\",\n      \"anchor\": \"district boundaries\",\n      \"location\": \"census-acs-general-handbook-2020#c0071\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"c2\",\n      \"to_id\": \"k3\",\n      \"anchor\": \"geographic boundaries\",\n      \"location\": \"census-acs-general-handbook-2020#c0071\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"c2\",\n      \"to_id\": \"k4\",\n      \"anchor\": \"ACS data are also\",\n      \"location\": \"census-acs-general-handbook-2020#c0071\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_id\": \"k1\",\n      \"anchor\": \"major changes to\",\n      \"location\": \"census-acs-general-handbook-2020#c0071\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"2000 Census boundaries\",\n      \"anchor\": \"2000 Census boundaries\"\n    },\n    {\n      \"name\": \"Jurupa Valley\",\n      \"anchor\": \"Jurupa Valley\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"incorporated in July\",\n      \"suggested_edge\": \"about\",\n      \"diversion_reason\": \"cross_chunk\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"ACS\", \"type\": \"Instrument\"},\n    {\"name\": \"census\", \"type\": \"Instrument\"},\n    {\"name\": \"comparability of ACS estimates over time\", \"type\": \"Concept\"}\n  ]\n}"
+}

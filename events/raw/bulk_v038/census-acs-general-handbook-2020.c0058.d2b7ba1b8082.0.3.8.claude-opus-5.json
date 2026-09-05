@@ -1,0 +1,33 @@
+{
+ "doc_id": "census-acs-general-handbook-2020",
+ "chunk_id": "census-acs-general-handbook-2020#c0058",
+ "chunk_index": 58,
+ "chunk_start": 58863,
+ "chunk_end": 58952,
+ "chunk_tokens": 31,
+ "heading_path": [
+  "2018 ACS 1-year estimates"
+ ],
+ "oversize": false,
+ "doc_sha256": "d2b7ba1b80826765a12a7be367650315ab7cd4ac8ec02b253c0bb438bbbd40f0",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 4096,
+  "cacheReadInputTokens": 12841,
+  "cacheCreationInputTokens": 22625,
+  "webSearchRequests": 0,
+  "costUSD": 0.3350805,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 3319,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3350805,
+ "duration_ms": 50846,
+ "session_id": "9a1d7cf2-b75b-4317-ab1a-3a6d4f0bd465",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"A caption-style example fragment naming the 2018 ACS 1-year estimates and the dates over which they were collected; no other assertions.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_acs_2018_1yr\",\n      \"name\": \"2018 ACS 1-year estimates\",\n      \"aliases\": [\"American Community Survey 2018 1-year estimates\"],\n      \"description\": \"The one-year American Community Survey estimates for 2018, used here as a worked example of a data collection period.\",\n      \"anchor\": \"Dates collected:\",\n      \"location\": \"census-acs-general-handbook-2020#c0058\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"cl_collection_period_2018\",\n      \"claim_text\": \"January 1, 2018, to December 31, 2018\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"January 1, 2018\",\n      \"location\": \"census-acs-general-handbook-2020#c0058\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_id\": \"c_acs_2018_1yr\",\n      \"anchor\": \"Dates collected:\",\n      \"location\": \"census-acs-general-handbook-2020#c0058\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_id\": \"cl_collection_period_2018\",\n      \"anchor\": \"January 1, 2018\",\n      \"location\": \"census-acs-general-handbook-2020#c0058\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_collection_period_2018\",\n      \"to_id\": \"c_acs_2018_1yr\",\n      \"anchor\": \"December 31, 2018\",\n      \"location\": \"census-acs-general-handbook-2020#c0058\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [],\n  \"proposed_relationships\": [],\n  \"gleaned\": []\n}\n```"
+}

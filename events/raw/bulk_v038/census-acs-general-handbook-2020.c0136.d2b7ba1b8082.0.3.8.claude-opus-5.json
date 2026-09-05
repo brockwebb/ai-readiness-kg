@@ -1,0 +1,33 @@
+{
+ "doc_id": "census-acs-general-handbook-2020",
+ "chunk_id": "census-acs-general-handbook-2020#c0136",
+ "chunk_index": 136,
+ "chunk_start": 183903,
+ "chunk_end": 184261,
+ "chunk_tokens": 80,
+ "heading_path": [
+  "70   What All Data Users Need to Know"
+ ],
+ "oversize": false,
+ "doc_sha256": "d2b7ba1b80826765a12a7be367650315ab7cd4ac8ec02b253c0bb438bbbd40f0",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 6985,
+  "cacheReadInputTokens": 12841,
+  "cacheCreationInputTokens": 22920,
+  "webSearchRequests": 0,
+  "costUSD": 0.4102555,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 5282,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.4102555,
+ "duration_ms": 78917,
+ "session_id": "52492d69-f60e-4b8f-92bd-95b6890cf92a",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Chunk states the group quarters residency/eligibility rule for ACS interviewing, then (School Enrollment comparison) contrasts the ACS reference period of 3 months preceding the interview date with the 2000 Census reference period of any time since February 1, 2000.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"co1\",\n      \"name\": \"group quarters facilities\",\n      \"aliases\": [\"group quarters\"],\n      \"description\": \"Facilities whose residency for ACS interview eligibility is determined differently from housing units, by presence at the time of interview.\",\n      \"anchor\": \"group quarters facilities\",\n      \"location\": \"census-acs-general-handbook-2020#c0136\"\n    },\n    {\n      \"id\": \"co2\",\n      \"name\": \"reference period\",\n      \"aliases\": [\"survey reference period\"],\n      \"description\": \"The window of time a data item refers to; differs between the ACS and the 2000 Census for School Enrollment.\",\n      \"anchor\": \"ACS reference period\",\n      \"location\": \"census-acs-general-handbook-2020#c0136\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"cl1\",\n      \"claim_text\": \"Residency in group quarters facilities is determined differently.\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"platform_official\",\n      \"anchor\": \"is determined differently\",\n      \"location\": \"census-acs-general-handbook-2020#c0136\"\n    },\n    {\n      \"id\": \"cl2\",\n      \"claim_text\": \"The ACS reference period was 3 months preceding\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"platform_official\",\n      \"anchor\": \"reference period was 3 months\",\n      \"location\": \"census-acs-general-handbook-2020#c0136\"\n    }\n  ],\n  \"instruments\": [\n    {\n      \"id\": \"in1\",\n      \"name\": \"ACS\",\n      \"owner\": null,\n      \"year\": null,\n      \"method\": \"eligible to be selected to be interviewed\",\n      \"attribute_anchors\": {\n        \"method\": \"eligible to be selected to be interviewed\"\n      },\n      \"anchor\": \"the ACS.\",\n      \"location\": \"census-acs-general-handbook-2020#c0136\"\n    },\n    {\n      \"id\": \"in2\",\n      \"name\": \"2000 Census\",\n      \"owner\": null,\n      \"year\": null,\n      \"method\": \"reference period was any time since February 1, 2000\",\n      \"attribute_anchors\": {\n        \"method\": \"period was any time since February 1\"\n      },\n      \"anchor\": \"2000 Census reference\",\n      \"location\": \"census-acs-general-handbook-2020#c0136\"\n    }\n  ],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_id\": \"cl1\",\n      \"anchor\": \"is determined differently\",\n      \"location\": \"census-acs-general-handbook-2020#c0136\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl1\",\n      \"to_id\": \"co1\",\n      \"anchor\": \"Residency in group quarters\",\n      \"location\": \"census-acs-general-handbook-2020#c0136\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_id\": \"cl2\",\n      \"anchor\": \"was 3 months preceding\",\n      \"location\": \"census-acs-general-handbook-2020#c0136\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl2\",\n      \"to_id\": \"co2\",\n      \"anchor\": \"The ACS reference period\",\n      \"location\": \"census-acs-general-handbook-2020#c0136\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_id\": \"co1\",\n      \"anchor\": \"in group quarters facilities\",\n      \"location\": \"census-acs-general-handbook-2020#c0136\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"School Enrollment\",\n      \"anchor\": \"School Enrollment (Compare)\"\n    },\n    {\n      \"name\": \"U.S. Census Bureau\",\n      \"anchor\": \"U.S. Census Bureau\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"while the 2000 Census reference\",\n      \"suggested_edge\": \"compares_reference_period_with\",\n      \"from_id\": \"in1\",\n      \"to_id\": \"in2\",\n      \"diversion_reason\": \"other:comparison\",\n      \"location\": \"census-acs-general-handbook-2020#c0136\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"length of stay\", \"type\": \"Concept\"},\n    {\"name\": \"date of interview\", \"type\": \"Concept\"},\n    {\"name\": \"selected facility\", \"type\": \"Concept\"},\n    {\"name\": \"data items\", \"type\": \"Concept\"}\n  ]\n}"
+}

@@ -685,3 +685,16 @@ Every one of this project's 3,592 Results now carries a `name`, and `{{result:<N
 
 **The rule, going forward.** Any graph figure quoted in a handoff, a memo, a design decision or a task file must resolve by name to a `kg_diag_*` Result (structure) or a `cq_v1_*` Result (coverage). Re-run the script and register a new dated snapshot rather than quoting a stale one; a rerun is a new file and new Results, never an overwrite. Reading the graph interactively to orient is fine and expected — what is not fine is a conclusion whose evidence exists only in a transcript.
 
+
+## DD-041: The 17 `g1eval` prior-art sources are extracted; the 55 demand-pull deferrals stay deferred
+
+**Date:** 2026-09-04. **Task:** `cc_tasks/2026-09-04_extract_g1eval_17_and_rerun.md` §0. **Builds on** DD-024 (bulk extraction closed; semantic edges are demand-pull) and DD-040 (a graph figure must resolve to a Result). **Premise:** `kg_diag_gap_never_queued` = 17, all epoch `g1eval-2026-09-02`, from the extraction-gap diagnostic.
+
+**What is decided.** The 17 are extracted. They are the sources the G1 prior-art memo cites, and the two competency questions that failed hardest on substance — CQ-01, how the corpus defines uncertainty, and CQ-02, how it defines AI-ready data — have the most unextracted evidence behind them (27 and 23 of the 72 gap documents mention their terms). A corpus that holds the memo's own sources but cannot answer the memo's own questions is a coverage failure with a known, priced fix.
+
+**What is not decided.** The 55 documents deferred under DD-024 with reason `no consumer` **stay deferred**. Reviving them reverses a standing decision, and the thing that would justify it is evidence, not intuition: the CQ rerun in this task's §3 is that evidence, and it comes after the extraction rather than before. Pricing them was done (1,024 chunks, 20,480,000 tokens at the DD-022 floor, also inside the standing band) so the option is costed and available, not so it is exercised here.
+
+**Why this is not an operator touchpoint.** The extraction was priced at 664 chunks and ≤ 13,280,000 reserved tokens — 24 % of the standing 55,000,000 daily band. Under the cap, the run proceeds and is reported; only spend *above* the declared cap is the operator's call.
+
+**Rerun naming convention, recorded because the first run established none.** A rerun of a registered measurement writes a NEW dated artifact and NEW Results; it never overwrites. Where a metric name would otherwise collide with the first run's, the rerun suffixes the run: `kg_diag_<metric>_2026-09-04b` for the post-extraction diagnostic, against the un-suffixed pre-extraction names. The CQ harness already carried this rule (`cq_v1_<date>` files) and needed no new convention; the diagnostic did.
+

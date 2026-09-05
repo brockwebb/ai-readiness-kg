@@ -1,0 +1,33 @@
+{
+ "doc_id": "cao-2024-multimodal-long-form-summarization-financial-reports",
+ "chunk_id": "cao-2024-multimodal-long-form-summarization-financial-reports#c0013",
+ "chunk_index": 13,
+ "chunk_start": 32748,
+ "chunk_end": 32833,
+ "chunk_tokens": 17,
+ "heading_path": [
+  "5 Prompt Engineering to Improve Use of Numbers"
+ ],
+ "oversize": false,
+ "doc_sha256": "bbcf0ef79d228123a31a7490d01494eaceb63f7188d783ac52f0c346e1e980a6",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 4206,
+  "cacheReadInputTokens": 12841,
+  "cacheCreationInputTokens": 22808,
+  "webSearchRequests": 0,
+  "costUSD": 0.3396605,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 2332,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3396605,
+ "duration_ms": 44954,
+ "session_id": "a9b99c7d-c5b7-4260-81e9-596d0bf80b29",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Tail of a results sentence claiming fewer context mismatch hallucinations than GPT-4 and more consistent semantic grounding when quoting numeric values, followed by the section heading for prompt engineering to improve use of numbers and a table header row.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"cpt_context_mismatch_hallucinations\",\n      \"name\": \"context mismatch hallucinations\",\n      \"aliases\": [\"context mismatch hallucination\", \"numeric context hallucination\"],\n      \"description\": \"Hallucinations in which a numeric value quoted in a generated summary does not match the context it had in the source report.\",\n      \"anchor\": \"context mismatch hallucinations\",\n      \"location\": \"5 Prompt Engineering to Improve Use of Numbers\"\n    },\n    {\n      \"id\": \"cpt_quoting_numeric_values\",\n      \"name\": \"quoting numeric values\",\n      \"aliases\": [\"numeric value quoting\", \"use of numbers in summaries\"],\n      \"description\": \"Reproducing numbers from the source report inside the generated summaries; the chunk attributes more consistent semantic grounding to this behavior.\",\n      \"anchor\": \"quoting numeric values\",\n      \"location\": \"5 Prompt Engineering to Improve Use of Numbers\"\n    },\n    {\n      \"id\": \"cpt_prompt_engineering_numbers\",\n      \"name\": \"Prompt Engineering to Improve Use of Numbers\",\n      \"aliases\": [\"prompt engineering for numeric fidelity\"],\n      \"description\": \"The paper's section-level approach: engineering prompts so the model makes better use of numbers drawn from the report.\",\n      \"anchor\": \"Prompt Engineering to Improve\",\n      \"location\": \"5 Prompt Engineering to Improve Use of Numbers\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"clm_fewer_context_mismatch\",\n      \"claim_text\": \"context mismatch hallucinations compared to GPT-4\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"peer_reviewed_experiment\",\n      \"anchor\": \"mismatch hallucinations compared\",\n      \"location\": \"5 Prompt Engineering to Improve Use of Numbers\"\n    },\n    {\n      \"id\": \"clm_semantic_grounding\",\n      \"claim_text\": \"grounding when quoting numeric values from the report within the generated summaries\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"inference\",\n      \"anchor\": \"from the report within\",\n      \"location\": \"5 Prompt Engineering to Improve Use of Numbers\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"cao-2024-multimodal-long-form-summarization-financial-reports\",\n      \"to_id\": \"clm_fewer_context_mismatch\",\n      \"anchor\": \"hallucinations compared to GPT-4\",\n      \"location\": \"5 Prompt Engineering to Improve Use of Numbers\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"cao-2024-multimodal-long-form-summarization-financial-reports\",\n      \"to_id\": \"clm_semantic_grounding\",\n      \"anchor\": \"within the generated summaries\",\n      \"location\": \"5 Prompt Engineering to Improve Use of Numbers\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"clm_fewer_context_mismatch\",\n      \"to_id\": \"cpt_context_mismatch_hallucinations\",\n      \"anchor\": \"context mismatch hallucinations\",\n      \"location\": \"5 Prompt Engineering to Improve Use of Numbers\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"clm_semantic_grounding\",\n      \"to_id\": \"cpt_quoting_numeric_values\",\n      \"anchor\": \"quoting numeric values\",\n      \"location\": \"5 Prompt Engineering to Improve Use of Numbers\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"cao-2024-multimodal-long-form-summarization-financial-reports\",\n      \"to_id\": \"cpt_prompt_engineering_numbers\",\n      \"anchor\": \"Improve Use of Numbers\",\n      \"location\": \"5 Prompt Engineering to Improve Use of Numbers\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"GPT-4\",\n      \"anchor\": \"GPT-4\"\n    },\n    {\n      \"name\": \"Dens.%\",\n      \"anchor\": \"Dens.%\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"hallucinations compared to GPT-4\",\n      \"suggested_edge\": \"compared_against\",\n      \"diversion_reason\": \"cross_chunk\"\n    },\n    {\n      \"anchor\": \"Prompt Engineering to Improve\",\n      \"suggested_edge\": \"addresses\",\n      \"diversion_reason\": \"structural_inference\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"Total\", \"type\": \"Measure\"},\n    {\"name\": \"Dens.%\", \"type\": \"Measure\"},\n    {\"name\": \"Percentage %\", \"type\": \"Measure\"},\n    {\"name\": \"Prompt\", \"type\": \"Concept\"},\n    {\"name\": \"GPT-4\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

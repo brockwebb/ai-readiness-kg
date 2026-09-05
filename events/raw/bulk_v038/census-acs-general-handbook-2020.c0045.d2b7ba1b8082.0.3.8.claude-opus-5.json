@@ -1,0 +1,33 @@
+{
+ "doc_id": "census-acs-general-handbook-2020",
+ "chunk_id": "census-acs-general-handbook-2020#c0045",
+ "chunk_index": 45,
+ "chunk_start": 45727,
+ "chunk_end": 45950,
+ "chunk_tokens": 64,
+ "heading_path": [
+  "2018 (see Figure 2.4). Iowa has 35 counties with popu-"
+ ],
+ "oversize": false,
+ "doc_sha256": "d2b7ba1b80826765a12a7be367650315ab7cd4ac8ec02b253c0bb438bbbd40f0",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 4784,
+  "cacheReadInputTokens": 12841,
+  "cacheCreationInputTokens": 22789,
+  "webSearchRequests": 0,
+  "costUSD": 0.35392049999999997,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 3332,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.35392049999999997,
+ "duration_ms": 52600,
+ "session_id": "f3e9fde0-3666-4685-a0ae-1be5dd3bd394",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Chunk states which Iowa counties receive 1-year Supplemental Estimates (35 counties of at least 20,000 people) versus only 5-year estimates (64 counties under 20,000).\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"n_supplemental_estimates\",\n      \"name\": \"Supplemental Estimates\",\n      \"aliases\": [\"1-year Supplemental Estimates\"],\n      \"description\": \"ACS estimates released for areas with populations of at least 20,000 people.\",\n      \"anchor\": \"Supplemental Estimates\",\n      \"location\": \"census-acs-general-handbook-2020#c0045\"\n    },\n    {\n      \"id\": \"n_five_year_estimates\",\n      \"name\": \"5-year estimates\",\n      \"aliases\": [\"5-year ACS estimates\"],\n      \"description\": \"The only ACS estimates available to areas with populations below 20,000.\",\n      \"anchor\": \"5-year\",\n      \"location\": \"census-acs-general-handbook-2020#c0045\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"n_claim_supplemental\",\n      \"claim_text\": \"at least 20,000 people that receive 1-year Supplemental Estimates\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"that receive 1-year\",\n      \"location\": \"census-acs-general-handbook-2020#c0045\"\n    },\n    {\n      \"id\": \"n_claim_five_year\",\n      \"claim_text\": \"The 64 counties in Iowa with fewer than 20,000 people only receive 5-year estimates.\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"The 64 counties\",\n      \"location\": \"census-acs-general-handbook-2020#c0045\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_id\": \"n_claim_supplemental\",\n      \"anchor\": \"that receive 1-year\",\n      \"location\": \"census-acs-general-handbook-2020#c0045\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_id\": \"n_claim_five_year\",\n      \"anchor\": \"The 64 counties\",\n      \"location\": \"census-acs-general-handbook-2020#c0045\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"n_claim_supplemental\",\n      \"to_id\": \"n_supplemental_estimates\",\n      \"anchor\": \"Supplemental Estimates\",\n      \"location\": \"census-acs-general-handbook-2020#c0045\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"n_claim_five_year\",\n      \"to_id\": \"n_five_year_estimates\",\n      \"anchor\": \"only receive 5-year\",\n      \"location\": \"census-acs-general-handbook-2020#c0045\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_id\": \"n_supplemental_estimates\",\n      \"anchor\": \"Supplemental Estimates\",\n      \"location\": \"census-acs-general-handbook-2020#c0045\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_id\": \"n_five_year_estimates\",\n      \"anchor\": \"5-year\",\n      \"location\": \"census-acs-general-handbook-2020#c0045\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"Iowa\",\n      \"anchor\": \"counties in Iowa\"\n    }\n  ],\n  \"proposed_relationships\": [],\n  \"gleaned\": [\n    {\"name\": \"1-year estimates\", \"type\": \"Concept\"},\n    {\"name\": \"population threshold of 65,000 or more\", \"type\": \"Concept\"},\n    {\"name\": \"population threshold of 20,000\", \"type\": \"Concept\"},\n    {\"name\": \"county\", \"type\": \"Concept\"}\n  ]\n}"
+}

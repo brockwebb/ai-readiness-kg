@@ -1,0 +1,33 @@
+{
+ "doc_id": "lee-2026-when-summaries-distort-decisions",
+ "chunk_id": "lee-2026-when-summaries-distort-decisions#c0026",
+ "chunk_index": 26,
+ "chunk_start": 35352,
+ "chunk_end": 35618,
+ "chunk_tokens": 110,
+ "heading_path": [
+  "CVX"
+ ],
+ "oversize": false,
+ "doc_sha256": "97de6ed96df4eb0311af628646c61e3c408597de9da7872f3f9c4d2faca05961",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 2905,
+  "cacheReadInputTokens": 12841,
+  "cacheCreationInputTokens": 22867,
+  "webSearchRequests": 0,
+  "costUSD": 0.3077255,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 1449,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3077255,
+ "duration_ms": 29561,
+ "session_id": "15ce3ade-14b8-4cf2-8ff3-7c8b082e641c",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Figure 7 fragment: axis labels and legend for a plot of decision movement (analyst stance, P(bull)/P(bear)) across four summarizer models for MD&A disclosures; no prose assertions.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_decision_movement\",\n      \"name\": \"Decision movement\",\n      \"aliases\": [\"decision shift\"],\n      \"description\": \"The quantity plotted in Figure 7 for MD&A disclosures.\",\n      \"anchor\": \"Decision movement for\",\n      \"location\": \"lee-2026-when-summaries-distort-decisions#c0026\"\n    },\n    {\n      \"id\": \"c_analyst_stance\",\n      \"name\": \"Analyst stance\",\n      \"aliases\": [],\n      \"description\": \"Figure axis quantity expressed as P(bull) minus P(bear), ranging over bearish, neutral, and bullish.\",\n      \"anchor\": \"Analyst stance\",\n      \"location\": \"lee-2026-when-summaries-distort-decisions#c0026\"\n    },\n    {\n      \"id\": \"c_mdna_disclosures\",\n      \"name\": \"MD&A disclosures\",\n      \"aliases\": [\"Management's Discussion and Analysis\"],\n      \"description\": \"The disclosure class for which decision movement is plotted in Figure 7.\",\n      \"anchor\": \"MD&A disclosures\",\n      \"location\": \"lee-2026-when-summaries-distort-decisions#c0026\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"lee-2026-when-summaries-distort-decisions\",\n      \"to_id\": \"c_decision_movement\",\n      \"anchor\": \"Decision movement for\",\n      \"location\": \"lee-2026-when-summaries-distort-decisions#c0026\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"lee-2026-when-summaries-distort-decisions\",\n      \"to_id\": \"c_analyst_stance\",\n      \"anchor\": \"Analyst stance\",\n      \"location\": \"lee-2026-when-summaries-distort-decisions#c0026\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"lee-2026-when-summaries-distort-decisions\",\n      \"to_id\": \"c_mdna_disclosures\",\n      \"anchor\": \"MD&A disclosures\",\n      \"location\": \"lee-2026-when-summaries-distort-decisions#c0026\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\"name\": \"GPT-5.4 mini\", \"anchor\": \"GPT-5.4 mini\"},\n    {\"name\": \"Gemini 3 Flash\", \"anchor\": \"Gemini 3 Flash\"},\n    {\"name\": \"Qwen3.5-397B\", \"anchor\": \"Qwen3.5-397B\"},\n    {\"name\": \"DeepSeek V4 Flash\", \"anchor\": \"DeepSeek V4 Flash\"},\n    {\"name\": \"AXP\", \"anchor\": \"AXP\"}\n  ],\n  \"proposed_relationships\": [\n    {\n      \"suggested_edge\": \"measured_on\",\n      \"from_name\": \"Decision movement\",\n      \"to_name\": \"GPT-5.4 mini\",\n      \"anchor\": \"GPT-5.4 mini\",\n      \"diversion_reason\": \"cross_chunk\"\n    },\n    {\n      \"suggested_edge\": \"plotted_against\",\n      \"from_name\": \"Decision movement\",\n      \"to_name\": \"Analyst stance\",\n      \"anchor\": \"Analyst stance\",\n      \"diversion_reason\": \"structural_inference\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"P(bull)\", \"type\": \"Concept\"},\n    {\"name\": \"P(bear)\", \"type\": \"Concept\"},\n    {\"name\": \"Bearish\", \"type\": \"Concept\"},\n    {\"name\": \"Neutral\", \"type\": \"Concept\"},\n    {\"name\": \"Bullish\", \"type\": \"Concept\"},\n    {\"name\": \"Source (original)\", \"type\": \"Concept\"},\n    {\"name\": \"CVX\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

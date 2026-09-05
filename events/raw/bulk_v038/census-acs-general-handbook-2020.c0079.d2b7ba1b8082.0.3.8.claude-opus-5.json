@@ -1,0 +1,33 @@
+{
+ "doc_id": "census-acs-general-handbook-2020",
+ "chunk_id": "census-acs-general-handbook-2020#c0079",
+ "chunk_index": 79,
+ "chunk_start": 76196,
+ "chunk_end": 76396,
+ "chunk_tokens": 45,
+ "heading_path": [
+  "23 More advanced users"
+ ],
+ "oversize": false,
+ "doc_sha256": "d2b7ba1b80826765a12a7be367650315ab7cd4ac8ec02b253c0bb438bbbd40f0",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 3073,
+  "cacheReadInputTokens": 12841,
+  "cacheCreationInputTokens": 22690,
+  "webSearchRequests": 0,
+  "costUSD": 0.3101555,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 2243,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3101555,
+ "duration_ms": 36311,
+ "session_id": "37be3895-61f0-4a8c-9897-cc0c770bc000",
+ "raw_result": "{\n\"extract_plan\": {\"chunk_summary\": \"Fragment of an ACS handbook page stating that more advanced users have several options to access more detailed ACS data through downloadable Summary Files, followed by a page-footer artifact citing data.census.gov.\"},\n\"concepts\": [\n{\"id\": \"c_summary_files\", \"name\": \"Summary Files\", \"aliases\": [\"ACS Summary Files\"], \"description\": \"Downloadable files through which more advanced users access more detailed ACS data.\", \"anchor\": \"downloadable Summary Files\", \"location\": \"census-acs-general-handbook-2020#c0079\"},\n{\"id\": \"c_acs\", \"name\": \"ACS\", \"aliases\": [\"American Community Survey\"], \"description\": \"The survey whose more detailed data is available to advanced users via downloadable products.\", \"anchor\": \"detailed ACS\", \"location\": \"census-acs-general-handbook-2020#c0079\"}\n],\n\"definitions\": [],\n\"claims\": [\n{\"id\": \"cl_advanced_access\", \"claim_text\": \"also have several options to access more detailed ACS\", \"claim_type\": \"empirical\", \"evidence_grade\": \"platform_official\", \"anchor\": \"several options to access\", \"location\": \"census-acs-general-handbook-2020#c0079\"}\n],\n\"instruments\": [],\n\"measures\": [],\n\"standards\": [],\n\"frameworks\": [],\n\"practices\": [],\n\"tools\": [],\n\"platforms\": [],\n\"edges\": [\n{\"type\": \"asserts\", \"from_id\": \"census-acs-general-handbook-2020\", \"to_id\": \"cl_advanced_access\", \"anchor\": \"options to access more detailed\", \"location\": \"census-acs-general-handbook-2020#c0079\"},\n{\"type\": \"about\", \"from_id\": \"cl_advanced_access\", \"to_id\": \"c_summary_files\", \"anchor\": \"through downloadable Summary\", \"location\": \"census-acs-general-handbook-2020#c0079\"},\n{\"type\": \"mentions\", \"from_id\": \"census-acs-general-handbook-2020\", \"to_id\": \"c_acs\", \"anchor\": \"more detailed ACS\", \"location\": \"census-acs-general-handbook-2020#c0079\"}\n],\n\"cites\": [],\n\"mentions\": [\n{\"name\": \"data.census.gov\", \"anchor\": \"Census Bureau, data.census.gov\"}\n],\n\"proposed_relationships\": [],\n\"gleaned\": [\n{\"name\": \"Public Use Microdata Sample\", \"type\": \"Concept\"},\n{\"name\": \"geographic areas\", \"type\": \"Concept\"}\n]\n}"
+}

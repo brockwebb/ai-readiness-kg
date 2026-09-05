@@ -1,0 +1,33 @@
+{
+ "doc_id": "census-acs-general-handbook-2020",
+ "chunk_id": "census-acs-general-handbook-2020#c0124",
+ "chunk_index": 124,
+ "chunk_start": 160480,
+ "chunk_end": 160674,
+ "chunk_tokens": 82,
+ "heading_path": [
+  "3. Calculate the SE of each new subgroup estimate using formula (2):"
+ ],
+ "oversize": false,
+ "doc_sha256": "d2b7ba1b80826765a12a7be367650315ab7cd4ac8ec02b253c0bb438bbbd40f0",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 2607,
+  "cacheReadInputTokens": 12841,
+  "cacheCreationInputTokens": 22783,
+  "webSearchRequests": 0,
+  "costUSD": 0.29943549999999997,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 1845,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.29943549999999997,
+ "duration_ms": 29866,
+ "session_id": "3d68a3c4-f65b-441a-bba1-5c86ee1ca733",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Step 3 of a worked example: the SE of each of three new subgroup estimates is computed by dividing a margin of error by 1.645, yielding 630, 566, and 947.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_se\",\n      \"name\": \"SE\",\n      \"aliases\": [\"standard error\", \"standard error of a subgroup estimate\"],\n      \"description\": \"The standard error of a subgroup estimate, obtained in this worked example by dividing the subgroup's margin of error by 1.645.\",\n      \"anchor\": \"SE (Subgroup 1)\",\n      \"location\": \"census-acs-general-handbook-2020#c0124\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_id\": \"c_se\",\n      \"anchor\": \"SE (Subgroup 1)\",\n      \"location\": \"census-acs-general-handbook-2020#c0124\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\"name\": \"Subgroup 1\", \"anchor\": \"Subgroup 1\"},\n    {\"name\": \"Subgroup 2\", \"anchor\": \"Subgroup 2\"},\n    {\"name\": \"Subgroup 3\", \"anchor\": \"Subgroup 3\"}\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"1,036 / 1.645 = 630\",\n      \"suggested_edge\": \"uses_formula\",\n      \"from_hint\": \"SE\",\n      \"to_hint\": \"formula (2)\",\n      \"diversion_reason\": \"cross_chunk\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"formula (2)\", \"type\": \"Concept\"},\n    {\"name\": \"margin of error\", \"type\": \"Concept\"},\n    {\"name\": \"subgroup estimate\", \"type\": \"Concept\"},\n    {\"name\": \"1.645 (90-percent confidence level multiplier)\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

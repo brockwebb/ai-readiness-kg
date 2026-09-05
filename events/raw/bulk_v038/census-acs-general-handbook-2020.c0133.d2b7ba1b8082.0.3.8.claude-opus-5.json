@@ -1,0 +1,33 @@
+{
+ "doc_id": "census-acs-general-handbook-2020",
+ "chunk_id": "census-acs-general-handbook-2020#c0133",
+ "chunk_index": 133,
+ "chunk_start": 180838,
+ "chunk_end": 180992,
+ "chunk_tokens": 52,
+ "heading_path": [
+  "12 months.” For example, the 2018 ACS 1-year data"
+ ],
+ "oversize": false,
+ "doc_sha256": "d2b7ba1b80826765a12a7be367650315ab7cd4ac8ec02b253c0bb438bbbd40f0",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 6323,
+  "cacheReadInputTokens": 12841,
+  "cacheCreationInputTokens": 22728,
+  "webSearchRequests": 0,
+  "costUSD": 0.3917855,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 4871,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3917855,
+ "duration_ms": 72894,
+ "session_id": "a0acbdfa-cca2-460f-9d17-ca039411a476",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"The ACS income question uses a \\\"past 12 months\\\" reference period; the chunk illustrates this with the 1-year and 5-year data products' income reference spans.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_respondent_income\",\n      \"name\": \"respondent’s income\",\n      \"aliases\": [\"ACS income\", \"income\"],\n      \"description\": \"The income amount an ACS respondent reports, collected over a rolling past-12-months reference period.\",\n      \"anchor\": \"respondent’s income\",\n      \"location\": \"census-acs-general-handbook-2020#c0133\"\n    },\n    {\n      \"id\": \"c_acs_5year_data\",\n      \"name\": \"ACS 5-year data\",\n      \"aliases\": [\"ACS 5-year estimates\"],\n      \"description\": \"The ACS data product pooling five years of collection; its income figures span the collection years plus the preceding reference year.\",\n      \"anchor\": \"ACS 5-year data\",\n      \"location\": \"census-acs-general-handbook-2020#c0133\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"cl_acs_asks_income\",\n      \"claim_text\": \"The ACS asks for a respondent’s income\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"asks for a respondent’s income\",\n      \"location\": \"census-acs-general-handbook-2020#c0133\"\n    },\n    {\n      \"id\": \"cl_5year_reference_period\",\n      \"claim_text\": \"ACS 5-year data reflect incomes over 2013–2018\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"reflect incomes over 2013–2018\",\n      \"location\": \"census-acs-general-handbook-2020#c0133\"\n    }\n  ],\n  \"instruments\": [\n    {\n      \"id\": \"i_acs\",\n      \"name\": \"ACS\",\n      \"owner\": null,\n      \"year\": null,\n      \"method\": \"asks for a respondent’s income over a past-12-months reference period\",\n      \"attribute_anchors\": {\n        \"method\": \"asks for a respondent’s income\"\n      },\n      \"anchor\": \"The ACS asks\",\n      \"location\": \"census-acs-general-handbook-2020#c0133\"\n    }\n  ],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_id\": \"cl_acs_asks_income\",\n      \"anchor\": \"asks for a respondent’s income\",\n      \"location\": \"census-acs-general-handbook-2020#c0133\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_id\": \"cl_5year_reference_period\",\n      \"anchor\": \"reflect incomes over 2013–2018\",\n      \"location\": \"census-acs-general-handbook-2020#c0133\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_acs_asks_income\",\n      \"to_id\": \"c_respondent_income\",\n      \"anchor\": \"respondent’s income\",\n      \"location\": \"census-acs-general-handbook-2020#c0133\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_5year_reference_period\",\n      \"to_id\": \"c_acs_5year_data\",\n      \"anchor\": \"ACS 5-year data\",\n      \"location\": \"census-acs-general-handbook-2020#c0133\"\n    },\n    {\n      \"type\": \"measures\",\n      \"from_id\": \"i_acs\",\n      \"to_id\": \"c_respondent_income\",\n      \"anchor\": \"The ACS asks\",\n      \"location\": \"census-acs-general-handbook-2020#c0133\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [],\n  \"proposed_relationships\": [],\n  \"gleaned\": [\n    {\"name\": \"ACS 1-year data\", \"type\": \"Concept\"},\n    {\"name\": \"the 2018 ACS 1-year data reflect incomes over 2017–2018\", \"type\": \"Claim\"},\n    {\"name\": \"past 12 months income reference period\", \"type\": \"Concept\"}\n  ]\n}"
+}

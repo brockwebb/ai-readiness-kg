@@ -1,0 +1,33 @@
+{
+ "doc_id": "census-acs-general-handbook-2020",
+ "chunk_id": "census-acs-general-handbook-2020#c0067",
+ "chunk_index": 67,
+ "chunk_start": 66817,
+ "chunk_end": 67012,
+ "chunk_tokens": 46,
+ "heading_path": [
+  "17 In July 2016, the Census Bureau also released a series of 1-year"
+ ],
+ "oversize": false,
+ "doc_sha256": "d2b7ba1b80826765a12a7be367650315ab7cd4ac8ec02b253c0bb438bbbd40f0",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 4283,
+  "cacheReadInputTokens": 12841,
+  "cacheCreationInputTokens": 22730,
+  "webSearchRequests": 0,
+  "costUSD": 0.3408055,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 2984,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3408055,
+ "duration_ms": 47082,
+ "session_id": "c1d4d878-c7f8-4119-8766-7dd38e2bb09b",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"A footnote stating that in July 2016 the Census Bureau released 1-year Supplemental Estimates — simplified versions of popular ACS tables for geographic areas of at least 20,000 people — preceded by a truncated fragment about comparing non-overlapping 5-year estimates.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_supplemental_estimates\",\n      \"name\": \"Supplemental Estimates\",\n      \"aliases\": [\"1-year Supplemental Estimates\", \"ACS Supplemental Estimates\"],\n      \"description\": \"A Census Bureau data product released in July 2016: simplified versions of popular ACS tables published for geographic areas with at least 20,000 people.\",\n      \"anchor\": \"Supplemental Estimates—simplified versions\",\n      \"location\": \"census-acs-general-handbook-2020#c0067\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d_supplemental_estimates\",\n      \"term\": \"Supplemental Estimates\",\n      \"verbatim_text\": \"simplified versions of popular ACS tables\",\n      \"normative_status\": \"policy\",\n      \"as_of_date\": \"2016-07\",\n      \"anchor\": \"simplified versions of popular ACS\",\n      \"location\": \"census-acs-general-handbook-2020#c0067\"\n    }\n  ],\n  \"claims\": [\n    {\n      \"id\": \"cl_20000_threshold\",\n      \"claim_text\": \"available for geographic areas with at least 20,000 people\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"platform_official\",\n      \"anchor\": \"at least 20,000 people\",\n      \"location\": \"census-acs-general-handbook-2020#c0067\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_id\": \"d_supplemental_estimates\",\n      \"anchor\": \"simplified versions of popular ACS\",\n      \"location\": \"census-acs-general-handbook-2020#c0067\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_id\": \"c_supplemental_estimates\",\n      \"anchor\": \"Supplemental Estimates—simplified versions\",\n      \"location\": \"census-acs-general-handbook-2020#c0067\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_id\": \"cl_20000_threshold\",\n      \"anchor\": \"at least 20,000 people\",\n      \"location\": \"census-acs-general-handbook-2020#c0067\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_20000_threshold\",\n      \"to_id\": \"c_supplemental_estimates\",\n      \"anchor\": \"for geographic areas with\",\n      \"location\": \"census-acs-general-handbook-2020#c0067\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"5-year estimates\",\n      \"anchor\": \"comparing 5-year estimates\"\n    },\n    {\n      \"name\": \"ACS tables\",\n      \"anchor\": \"popular ACS tables\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"comparing 5-year estimates\",\n      \"suggested_edge\": \"applies_to\",\n      \"diversion_reason\": \"cross_chunk\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"American Community Survey\", \"type\": \"Instrument\"},\n    {\"name\": \"1-year estimates\", \"type\": \"Concept\"},\n    {\"name\": \"geographic area\", \"type\": \"Concept\"}\n  ]\n}"
+}

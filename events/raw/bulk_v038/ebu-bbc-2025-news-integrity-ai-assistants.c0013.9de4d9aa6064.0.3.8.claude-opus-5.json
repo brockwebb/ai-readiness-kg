@@ -1,0 +1,33 @@
+{
+ "doc_id": "ebu-bbc-2025-news-integrity-ai-assistants",
+ "chunk_id": "ebu-bbc-2025-news-integrity-ai-assistants#c0013",
+ "chunk_index": 13,
+ "chunk_start": 62940,
+ "chunk_end": 63466,
+ "chunk_tokens": 116,
+ "heading_path": [
+  "1. Kalai et al (2025), Why Language Models Hallucinate"
+ ],
+ "oversize": false,
+ "doc_sha256": "9de4d9aa60641cb8d8cda99f6eadab3c1b44313ec59dcff9db00e77c603a1b8b",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 9384,
+  "cacheReadInputTokens": 12841,
+  "cacheCreationInputTokens": 23020,
+  "webSearchRequests": 0,
+  "costUSD": 0.4712305,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 7089,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.4712305,
+ "duration_ms": 104723,
+ "session_id": "70e4a594-f391-4d54-8ab5-81439d7af14b",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Broadcaster evaluators (Yle, CBC, NPR) report Gemini sourcing failures: citing a brand without links, unattributable statements, and a claimed NPR-sourced breakdown whose 11 sources were not from NPR.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_sourcing_behaviour\",\n      \"name\": \"problematic sourcing behaviour\",\n      \"aliases\": [\"sourcing behaviour\", \"citation behaviour\"],\n      \"description\": \"Behaviour in which an AI assistant names a news brand as a source while failing to provide actual links or references.\",\n      \"anchor\": \"problematic sourcing behaviour\",\n      \"location\": \"ebu-bbc-2025-news-integrity-ai-assistants#c0013\"\n    },\n    {\n      \"id\": \"c_eager_to_please\",\n      \"name\": \"eager to please\",\n      \"aliases\": [\"sycophancy\", \"overly eager to please\"],\n      \"description\": \"An assistant's disposition to satisfy the user at the expense of accuracy.\",\n      \"anchor\": \"eager to please\",\n      \"location\": \"ebu-bbc-2025-news-integrity-ai-assistants#c0013\"\n    },\n    {\n      \"id\": \"c_accuracy\",\n      \"name\": \"accuracy\",\n      \"aliases\": [],\n      \"description\": \"Correctness of an assistant's response, traded away when the assistant optimises for pleasing the user.\",\n      \"anchor\": \"expense of accuracy\",\n      \"location\": \"ebu-bbc-2025-news-integrity-ai-assistants#c0013\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"cl_gemini_sourcing\",\n      \"claim_text\": \"Gemini showed problematic sourcing behaviour\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"measured_practitioner\",\n      \"anchor\": \"showed problematic sourcing behaviour\",\n      \"location\": \"ebu-bbc-2025-news-integrity-ai-assistants#c0013\"\n    },\n    {\n      \"id\": \"cl_cbc_no_origin\",\n      \"claim_text\": \"CBC evaluators were unable to find any origin for these specific statements, outside of expert interviews.\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"measured_practitioner\",\n      \"anchor\": \"CBC evaluators were unable\",\n      \"location\": \"ebu-bbc-2025-news-integrity-ai-assistants#c0013\"\n    },\n    {\n      \"id\": \"cl_eleven_sources\",\n      \"claim_text\": \"of the 11 sources provided, none were from\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"measured_practitioner\",\n      \"anchor\": \"of the 11 sources provided\",\n      \"location\": \"ebu-bbc-2025-news-integrity-ai-assistants#c0013\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [\n    {\n      \"id\": \"p_gemini\",\n      \"name\": \"Gemini\",\n      \"operator\": null,\n      \"as_of_date\": null,\n      \"anchor\": \"Gemini showed\",\n      \"location\": \"ebu-bbc-2025-news-integrity-ai-assistants#c0013\"\n    }\n  ],\n  \"edges\": [\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"ebu-bbc-2025-news-integrity-ai-assistants\",\n      \"to_id\": \"cl_gemini_sourcing\",\n      \"anchor\": \"showed problematic sourcing behaviour\",\n      \"location\": \"ebu-bbc-2025-news-integrity-ai-assistants#c0013\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"ebu-bbc-2025-news-integrity-ai-assistants\",\n      \"to_id\": \"cl_cbc_no_origin\",\n      \"anchor\": \"CBC evaluators were unable\",\n      \"location\": \"ebu-bbc-2025-news-integrity-ai-assistants#c0013\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"ebu-bbc-2025-news-integrity-ai-assistants\",\n      \"to_id\": \"cl_eleven_sources\",\n      \"anchor\": \"of the 11 sources provided\",\n      \"location\": \"ebu-bbc-2025-news-integrity-ai-assistants#c0013\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_gemini_sourcing\",\n      \"to_id\": \"c_sourcing_behaviour\",\n      \"anchor\": \"problematic sourcing behaviour\",\n      \"location\": \"ebu-bbc-2025-news-integrity-ai-assistants#c0013\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"ebu-bbc-2025-news-integrity-ai-assistants\",\n      \"to_id\": \"c_eager_to_please\",\n      \"anchor\": \"eager to please\",\n      \"location\": \"ebu-bbc-2025-news-integrity-ai-assistants#c0013\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"ebu-bbc-2025-news-integrity-ai-assistants\",\n      \"to_id\": \"c_accuracy\",\n      \"anchor\": \"expense of accuracy\",\n      \"location\": \"ebu-bbc-2025-news-integrity-ai-assistants#c0013\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\"name\": \"ARD\", \"anchor\": \"ARD analysis\"},\n    {\"name\": \"Yle\", \"anchor\": \"Yle analysis\"},\n    {\"name\": \"CBC\", \"anchor\": \"CBC evaluators\"},\n    {\"name\": \"NPR\", \"anchor\": \"a question from NPR\"}\n  ],\n  \"proposed_relationships\": [\n    {\n      \"suggested_edge\": \"claim_about_platform\",\n      \"from_id\": \"cl_gemini_sourcing\",\n      \"to_id\": \"p_gemini\",\n      \"anchor\": \"Gemini showed\",\n      \"diversion_reason\": \"other:no_claim_to_platform_edge\"\n    },\n    {\n      \"suggested_edge\": \"exhibits\",\n      \"from_id\": \"p_gemini\",\n      \"to_id\": \"c_eager_to_please\",\n      \"anchor\": \"eager to please\",\n      \"diversion_reason\": \"other:no_platform_to_concept_edge\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"expert interviews\", \"type\": \"Concept\"},\n    {\"name\": \"actual links or references\", \"type\": \"Concept\"},\n    {\"name\": \"NPR sources\", \"type\": \"Concept\"},\n    {\"name\": \"Here's a breakdown of the key aspects\", \"type\": \"Claim\"}\n  ]\n}\n```"
+}

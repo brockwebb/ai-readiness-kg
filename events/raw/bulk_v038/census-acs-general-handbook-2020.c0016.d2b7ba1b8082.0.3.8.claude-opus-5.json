@@ -1,0 +1,33 @@
+{
+ "doc_id": "census-acs-general-handbook-2020",
+ "chunk_id": "census-acs-general-handbook-2020#c0016",
+ "chunk_index": 16,
+ "chunk_start": 16736,
+ "chunk_end": 17843,
+ "chunk_tokens": 228,
+ "heading_path": [
+  "4 The Durango Herald"
+ ],
+ "oversize": false,
+ "doc_sha256": "d2b7ba1b80826765a12a7be367650315ab7cd4ac8ec02b253c0bb438bbbd40f0",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 10449,
+  "cacheReadInputTokens": 12841,
+  "cacheCreationInputTokens": 23278,
+  "webSearchRequests": 0,
+  "costUSD": 0.5004355,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 8460,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.5004355,
+ "duration_ms": 120697,
+ "session_id": "e7f1f3ff-8a9b-499e-8d5e-763eed5cea30",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Examples of ACS data users: a Colorado newspaper on in-migration, state/local governments (Council on Virginia's Future travel-time trends, NYC City Planning bilingual voting materials), and businesses including Zillow's home database.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c1\",\n      \"name\": \"ACS 5-year data\",\n      \"aliases\": [\"American Community Survey 5-year estimates\"],\n      \"description\": \"The multi-year ACS data product used here to show state-to-state migration into Colorado.\",\n      \"anchor\": \"ACS 5-year data\",\n      \"location\": \"census-acs-general-handbook-2020#c0016\"\n    },\n    {\n      \"id\": \"c2\",\n      \"name\": \"travel time to work\",\n      \"aliases\": [\"commute time\"],\n      \"description\": \"An ACS-measured characteristic whose annual trends the Council on Virginia's Future monitors.\",\n      \"anchor\": \"travel time to work\",\n      \"location\": \"census-acs-general-handbook-2020#c0016\"\n    },\n    {\n      \"id\": \"c3\",\n      \"name\": \"Businesses\",\n      \"aliases\": [\"business data users\"],\n      \"description\": \"A class of ACS data user that uses ACS information to understand customers, make location or relocation decisions, and support loan applications.\",\n      \"anchor\": \"Businesses: Businesses\",\n      \"location\": \"census-acs-general-handbook-2020#c0016\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"cl1\",\n      \"claim_text\": \"the ACS is critical for state and local policymakers\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"the ACS is critical\",\n      \"location\": \"census-acs-general-handbook-2020#c0016\"\n    },\n    {\n      \"id\": \"cl2\",\n      \"claim_text\": \"data are a key component of Zillow’s database\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"Zillow’s database\",\n      \"location\": \"census-acs-general-handbook-2020#c0016\"\n    }\n  ],\n  \"instruments\": [\n    {\n      \"id\": \"i1\",\n      \"name\": \"ACS\",\n      \"owner\": null,\n      \"year\": null,\n      \"method\": null,\n      \"attribute_anchors\": {},\n      \"anchor\": \"the ACS is critical\",\n      \"location\": \"census-acs-general-handbook-2020#c0016\"\n    }\n  ],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_id\": \"c1\",\n      \"anchor\": \"ACS 5-year data\",\n      \"location\": \"census-acs-general-handbook-2020#c0016\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_id\": \"c2\",\n      \"anchor\": \"travel time to work\",\n      \"location\": \"census-acs-general-handbook-2020#c0016\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_id\": \"c3\",\n      \"anchor\": \"Businesses: Businesses\",\n      \"location\": \"census-acs-general-handbook-2020#c0016\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_id\": \"cl1\",\n      \"anchor\": \"the ACS is critical\",\n      \"location\": \"census-acs-general-handbook-2020#c0016\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_id\": \"cl2\",\n      \"anchor\": \"Zillow’s database\",\n      \"location\": \"census-acs-general-handbook-2020#c0016\"\n    },\n    {\n      \"type\": \"measures\",\n      \"from_id\": \"i1\",\n      \"to_id\": \"c2\",\n      \"anchor\": \"monitor annual trends\",\n      \"location\": \"census-acs-general-handbook-2020#c0016\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"The Durango Herald\",\n      \"anchor\": \"(Durango, Colorado)\"\n    },\n    {\n      \"name\": \"New York City’s Department of City Planning\",\n      \"anchor\": \"Department of City Planning\"\n    },\n    {\n      \"name\": \"Zillow\",\n      \"anchor\": \"Zillow’s database\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"(Durango, Colorado)\",\n      \"suggested_edge\": \"uses_data\",\n      \"diversion_reason\": \"other:untyped_endpoint\"\n    },\n    {\n      \"anchor\": \"Department of City Planning\",\n      \"suggested_edge\": \"uses_data\",\n      \"diversion_reason\": \"other:untyped_endpoint\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"bilingual voting materials\", \"type\": \"Concept\"},\n    {\"name\": \"Council on Virginia’s Future\", \"type\": \"Concept\"},\n    {\"name\": \"The Durango Herald used ACS 5-year data to show that many of Colorado’s newest residents are arriving from California and Texas\", \"type\": \"Claim\"},\n    {\"name\": \"New York City’s Department of City Planning used ACS data to identify the need for bilingual voting materials in certain New York neighborhoods\", \"type\": \"Claim\"},\n    {\"name\": \"Businesses use information from the ACS to understand their customers, make location or relocation decisions, and provide background information in loan applications\", \"type\": \"Claim\"},\n    {\"name\": \"state and local governments\", \"type\": \"Concept\"},\n    {\"name\": \"loan applications\", \"type\": \"Concept\"}\n  ]\n}"
+}

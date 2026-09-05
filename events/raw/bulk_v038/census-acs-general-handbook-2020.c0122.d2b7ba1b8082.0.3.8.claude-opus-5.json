@@ -1,0 +1,33 @@
+{
+ "doc_id": "census-acs-general-handbook-2020",
+ "chunk_id": "census-acs-general-handbook-2020#c0122",
+ "chunk_index": 122,
+ "chunk_start": 158447,
+ "chunk_end": 158681,
+ "chunk_tokens": 107,
+ "heading_path": [
+  "1. Aggregate counts to form new subgroup estimates:"
+ ],
+ "oversize": false,
+ "doc_sha256": "d2b7ba1b80826765a12a7be367650315ab7cd4ac8ec02b253c0bb438bbbd40f0",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 3718,
+  "cacheReadInputTokens": 12841,
+  "cacheCreationInputTokens": 22945,
+  "webSearchRequests": 0,
+  "costUSD": 0.32883049999999997,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 2674,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.32883049999999997,
+ "duration_ms": 42040,
+ "session_id": "d747db52-5bab-4188-8242-8b2363d14a67",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Worked ACS example: aggregate published counts across income categories to form three new subgroup estimates, following the same combination steps as Example 1.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_derived_est_moe\",\n      \"name\": \"derived estimates and MOEs\",\n      \"aliases\": [\"derived estimates and margins of error\"],\n      \"description\": \"Estimates and margins of error produced by combining published ACS estimates rather than read directly from a table.\",\n      \"anchor\": \"derived estimates and MOEs\",\n      \"location\": \"census-acs-general-handbook-2020#c0122\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"cl_subgroup_calc\",\n      \"claim_text\": \"derived estimates and MOEs for the three new subgroups could be calculated\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"could be calculated as\",\n      \"location\": \"census-acs-general-handbook-2020#c0122\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_id\": \"cl_subgroup_calc\",\n      \"anchor\": \"could be calculated as\",\n      \"location\": \"census-acs-general-handbook-2020#c0122\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_subgroup_calc\",\n      \"to_id\": \"c_derived_est_moe\",\n      \"anchor\": \"derived estimates and MOEs\",\n      \"location\": \"census-acs-general-handbook-2020#c0122\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_id\": \"c_derived_est_moe\",\n      \"anchor\": \"derived estimates and MOEs\",\n      \"location\": \"census-acs-general-handbook-2020#c0122\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"Example 1\",\n      \"anchor\": \"Example 1\"\n    },\n    {\n      \"name\": \"geographic areas\",\n      \"anchor\": \"geographic areas\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"Example 1\",\n      \"suggested_edge\": \"follows_procedure_of\",\n      \"diversion_reason\": \"cross_chunk\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"Aggregate counts to form new subgroup estimates\", \"type\": \"Practice\"},\n    {\"name\": \"margin of error\", \"type\": \"Concept\"},\n    {\"name\": \"income category subgroup\", \"type\": \"Concept\"},\n    {\"name\": \"Subgroup 3 ($35,000 to $49,999) = 2,708 + 1,981 + 2,581 = 7,270\", \"type\": \"Claim\"}\n  ]\n}\n```"
+}

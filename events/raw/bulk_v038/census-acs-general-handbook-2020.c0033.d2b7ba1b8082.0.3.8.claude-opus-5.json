@@ -1,0 +1,33 @@
+{
+ "doc_id": "census-acs-general-handbook-2020",
+ "chunk_id": "census-acs-general-handbook-2020#c0033",
+ "chunk_index": 33,
+ "chunk_start": 34616,
+ "chunk_end": 35151,
+ "chunk_tokens": 138,
+ "heading_path": [
+  "8 U.S. Census Bureau, American Community Survey Design and"
+ ],
+ "oversize": false,
+ "doc_sha256": "d2b7ba1b80826765a12a7be367650315ab7cd4ac8ec02b253c0bb438bbbd40f0",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 5868,
+  "cacheReadInputTokens": 12841,
+  "cacheCreationInputTokens": 23016,
+  "webSearchRequests": 0,
+  "costUSD": 0.3832905,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 3986,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3832905,
+ "duration_ms": 66053,
+ "session_id": "db10d34d-0711-470d-aa3e-c8eea634e4a3",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Footnote citing the ACS Design and Methodology Report, followed by the caption and column headers of Table 1.2 (ACS release schedule: 1-year, 1-year supplemental, 3-year, and 5-year estimates with their population thresholds) — almost entirely citation and table structure, so extraction is limited to the named data products and the cited report.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"n1\",\n      \"name\": \"Release Schedule for ACS Data\",\n      \"aliases\": [\"ACS data release schedule\"],\n      \"description\": \"The schedule, given in Table 1.2, by which ACS data products are released by year of data collection.\",\n      \"anchor\": \"Release Schedule for ACS Data\",\n      \"location\": \"census-acs-general-handbook-2020#c0033\"\n    },\n    {\n      \"id\": \"n2\",\n      \"name\": \"1-year estimates\",\n      \"aliases\": [\"ACS 1-year estimates\"],\n      \"description\": \"ACS data product listed in the release schedule for areas of 65,000 or more.\",\n      \"anchor\": \"1-year estimates\",\n      \"location\": \"census-acs-general-handbook-2020#c0033\"\n    },\n    {\n      \"id\": \"n3\",\n      \"name\": \"1-year supplemental\",\n      \"aliases\": [\"1-year supplemental estimates\"],\n      \"description\": \"ACS data product listed in the release schedule for areas of 20,000 or more.\",\n      \"anchor\": \"1-year supplemental\",\n      \"location\": \"census-acs-general-handbook-2020#c0033\"\n    },\n    {\n      \"id\": \"n4\",\n      \"name\": \"3-year estimates\",\n      \"aliases\": [\"ACS 3-year estimates\"],\n      \"description\": \"ACS data product listed in the release schedule for areas of 20,000 or more.\",\n      \"anchor\": \"3-year estimates\",\n      \"location\": \"census-acs-general-handbook-2020#c0033\"\n    },\n    {\n      \"id\": \"n5\",\n      \"name\": \"5-year estimates\",\n      \"aliases\": [\"ACS 5-year estimates\"],\n      \"description\": \"ACS data product listed in the release schedule, available for all areas.\",\n      \"anchor\": \"5-year estimates\",\n      \"location\": \"census-acs-general-handbook-2020#c0033\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_id\": \"n1\",\n      \"anchor\": \"Release Schedule for ACS Data\",\n      \"location\": \"census-acs-general-handbook-2020#c0033\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_id\": \"n2\",\n      \"anchor\": \"1-year estimates\",\n      \"location\": \"census-acs-general-handbook-2020#c0033\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_id\": \"n3\",\n      \"anchor\": \"1-year supplemental\",\n      \"location\": \"census-acs-general-handbook-2020#c0033\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_id\": \"n4\",\n      \"anchor\": \"3-year estimates\",\n      \"location\": \"census-acs-general-handbook-2020#c0033\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_id\": \"n5\",\n      \"anchor\": \"5-year estimates\",\n      \"location\": \"census-acs-general-handbook-2020#c0033\"\n    }\n  ],\n  \"cites\": [\n    {\n      \"id\": \"cit1\",\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"title\": \"American Community Survey Design and Methodology Report\",\n      \"publisher\": \"U.S. Census Bureau\",\n      \"url\": \"www.census.gov/programs-surveys/acs/methodology/design-and-methodology.html\",\n      \"anchor\": \"Methodology Report\",\n      \"location\": \"census-acs-general-handbook-2020#c0033\"\n    }\n  ],\n  \"mentions\": [\n    {\n      \"name\": \"Understanding and Using American Community Survey Data\",\n      \"anchor\": \"Understanding and Using American\"\n    },\n    {\n      \"name\": \"Table 1.2\",\n      \"anchor\": \"Table 1.2\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"(65,000+)\",\n      \"suggested_edge\": \"has_population_threshold\",\n      \"from_id\": \"n2\",\n      \"to_id\": null,\n      \"diversion_reason\": \"structural_inference\",\n      \"location\": \"census-acs-general-handbook-2020#c0033\"\n    },\n    {\n      \"anchor\": \"(All areas)\",\n      \"suggested_edge\": \"has_population_threshold\",\n      \"from_id\": \"n5\",\n      \"to_id\": null,\n      \"diversion_reason\": \"structural_inference\",\n      \"location\": \"census-acs-general-handbook-2020#c0033\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"American Community Survey\", \"type\": \"Instrument\"},\n    {\"name\": \"U.S. Census Bureau\", \"type\": \"Concept\"},\n    {\"name\": \"Year of data release\", \"type\": \"Concept\"},\n    {\"name\": \"population threshold\", \"type\": \"Concept\"}\n  ]\n}"
+}

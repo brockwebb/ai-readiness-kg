@@ -1,0 +1,33 @@
+{
+ "doc_id": "census-acs-general-handbook-2020",
+ "chunk_id": "census-acs-general-handbook-2020#c0054",
+ "chunk_index": 54,
+ "chunk_start": 55280,
+ "chunk_end": 55729,
+ "chunk_tokens": 133,
+ "heading_path": [
+  "2010 to 2018"
+ ],
+ "oversize": false,
+ "doc_sha256": "d2b7ba1b80826765a12a7be367650315ab7cd4ac8ec02b253c0bb438bbbd40f0",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 6656,
+  "cacheReadInputTokens": 12841,
+  "cacheCreationInputTokens": 22988,
+  "webSearchRequests": 0,
+  "costUSD": 0.4027105,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 4665,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.4027105,
+ "duration_ms": 75365,
+ "session_id": "3da4d3d8-70da-4345-af94-cb627789ba0f",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Figure 3.3 caption and source note on work-from-home in Austin, TX, followed by the opening of 'Deciding Which ACS Estimate to Use', which states that ACS 5-year estimates are the only option for small geographic areas (under 65,000 residents).\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_acs_5yr\",\n      \"name\": \"ACS 5-year estimates\",\n      \"aliases\": [\"5-year estimates\", \"American Community Survey 5-year estimates\"],\n      \"description\": \"The ACS estimate vintage the document says is the only option for obtaining detailed data for small geographic areas.\",\n      \"anchor\": \"ACS 5-year estimates\",\n      \"location\": \"census-acs-general-handbook-2020#c0054\"\n    },\n    {\n      \"id\": \"c_small_geo\",\n      \"name\": \"small geographic areas\",\n      \"aliases\": [\"small areas\"],\n      \"description\": \"Areas with fewer than 65,000 residents, for which the document says only 5-year estimates are available.\",\n      \"anchor\": \"small geographic areas\",\n      \"location\": \"census-acs-general-handbook-2020#c0054\"\n    },\n    {\n      \"id\": \"c_acs\",\n      \"name\": \"ACS\",\n      \"aliases\": [\"American Community Survey\"],\n      \"description\": \"The survey whose estimate vintages the document is instructing data users to choose among.\",\n      \"anchor\": \"detailed ACS\",\n      \"location\": \"census-acs-general-handbook-2020#c0054\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d_small_geo\",\n      \"term\": \"small geographic areas\",\n      \"verbatim_text\": \"small geographic areas (areas with fewer than 65,000 residents)\",\n      \"normative_status\": \"policy\",\n      \"as_of_date\": null,\n      \"anchor\": \"areas with fewer than\",\n      \"location\": \"census-acs-general-handbook-2020#c0054\"\n    }\n  ],\n  \"claims\": [\n    {\n      \"id\": \"cl_5yr_only_option\",\n      \"claim_text\": \"For data users interested in obtaining detailed ACS data for small geographic areas (areas with fewer than 65,000 residents), ACS 5-year estimates are the only option.\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"platform_official\",\n      \"anchor\": \"estimates are the only\",\n      \"location\": \"census-acs-general-handbook-2020#c0054\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_id\": \"cl_5yr_only_option\",\n      \"anchor\": \"the only\",\n      \"location\": \"census-acs-general-handbook-2020#c0054\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_5yr_only_option\",\n      \"to_id\": \"c_acs_5yr\",\n      \"anchor\": \"ACS 5-year estimates are the only\",\n      \"location\": \"census-acs-general-handbook-2020#c0054\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_5yr_only_option\",\n      \"to_id\": \"c_small_geo\",\n      \"anchor\": \"detailed ACS\",\n      \"location\": \"census-acs-general-handbook-2020#c0054\"\n    },\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_id\": \"d_small_geo\",\n      \"anchor\": \"65,000 residents)\",\n      \"location\": \"census-acs-general-handbook-2020#c0054\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_id\": \"c_acs\",\n      \"anchor\": \"obtaining detailed ACS\",\n      \"location\": \"census-acs-general-handbook-2020#c0054\"\n    }\n  ],\n  \"cites\": [\n    {\n      \"type\": \"cites\",\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_id\": \"dp02-selected-social-characteristics-in-the-united-states\",\n      \"anchor\": \"DP02\",\n      \"location\": \"census-acs-general-handbook-2020#c0054\"\n    }\n  ],\n  \"mentions\": [\n    {\"name\": \"1-year estimates\", \"anchor\": \"1-year estimates\"},\n    {\"name\": \"Austin, Texas\", \"anchor\": \"Austin, Texas\"},\n    {\"name\": \"Worked From Home\", \"anchor\": \"Worked From Home\"},\n    {\"name\": \"data.census.gov\", \"anchor\": \"data.census.gov\"},\n    {\"name\": \"U.S. Census Bureau\", \"anchor\": \"U.S. Census Bureau\"}\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"Deciding Which ACS Estimate to Use\",\n      \"suggested_edge\": \"has_component\",\n      \"from_name\": \"ACS\",\n      \"to_name\": \"ACS 5-year estimates\",\n      \"diversion_reason\": \"structural_inference\"\n    },\n    {\n      \"anchor\": \"1-year estimates\",\n      \"suggested_edge\": \"conflicts_with\",\n      \"from_name\": \"ACS 1-year estimates\",\n      \"to_name\": \"ACS 5-year estimates\",\n      \"diversion_reason\": \"cross_chunk\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"1-year estimates\", \"type\": \"Concept\"},\n    {\"name\": \"American Community Survey\", \"type\": \"Instrument\"},\n    {\"name\": \"Selected Social Characteristics in the United States\", \"type\": \"Instrument\"},\n    {\"name\": \"data.census.gov\", \"type\": \"Platform\"},\n    {\"name\": \"percentage of workers 16 years and over who worked from home\", \"type\": \"Measure\"}\n  ]\n}"
+}

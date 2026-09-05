@@ -1,0 +1,33 @@
+{
+ "doc_id": "cao-2024-multimodal-long-form-summarization-financial-reports",
+ "chunk_id": "cao-2024-multimodal-long-form-summarization-financial-reports#c0023",
+ "chunk_index": 23,
+ "chunk_start": 44631,
+ "chunk_end": 49726,
+ "chunk_tokens": 1210,
+ "heading_path": [
+  "5. Synthesize the extracted information and numbers into a concise summary"
+ ],
+ "oversize": false,
+ "doc_sha256": "bbcf0ef79d228123a31a7490d01494eaceb63f7188d783ac52f0c346e1e980a6",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 5351,
+  "cacheReadInputTokens": 12841,
+  "cacheCreationInputTokens": 26494,
+  "webSearchRequests": 0,
+  "costUSD": 0.40514550000000005,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 3811,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.40514550000000005,
+ "duration_ms": 60632,
+ "session_id": "97460ddb-876c-4f15-b0b9-1d26ab51a83b",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Appendix E/F of the paper: pseudocode for the greedy_match algorithm that computes a similarity score between a summary sentence and report sentences (with a SentenceBERT-embedding tie-break), plus a table of sample summary/report sentence pairs at different similarity score ranges.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_similarity_score\",\n      \"name\": \"similarity score\",\n      \"aliases\": [\"similarity score calculation\"],\n      \"description\": \"The score the paper computes between a summary sentence and a report sentence, derived from matched token sequences and used to align summary content to its source.\",\n      \"anchor\": \"for similarity score calculation\",\n      \"location\": \"cao-2024-multimodal-long-form-summarization-financial-reports#c0023\"\n    },\n    {\n      \"id\": \"c_sentbert_embedding\",\n      \"name\": \"SentenceBERT embedding\",\n      \"aliases\": [\"sentBERT embedding\"],\n      \"description\": \"Sentence embedding used to break ties among report sentences that share the same similarity score, by comparing cosine similarity to the summary sentence embedding.\",\n      \"anchor\": \"Use SentenceBERT embedding\",\n      \"location\": \"cao-2024-multimodal-long-form-summarization-financial-reports#c0023\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [\n    {\n      \"id\": \"i_greedy_match\",\n      \"name\": \"Greedy match algorithm\",\n      \"aliases\": [\"greedy_match\"],\n      \"owner\": null,\n      \"year\": null,\n      \"method\": \"Tokenizes the summary sentence into non-stopword, non-punctuation tokens, greedily matches longest token subsequences against each report sentence, scores by matched sequence length over summary token length, and breaks ties among equal-scoring report sentences using SentenceBERT embedding cosine similarity.\",\n      \"attribute_anchors\": {\n        \"method\": \"Use SentenceBERT embedding\"\n      },\n      \"anchor\": \"Greedy match algorithm\",\n      \"location\": \"cao-2024-multimodal-long-form-summarization-financial-reports#c0023\"\n    }\n  ],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"measures\",\n      \"from_id\": \"i_greedy_match\",\n      \"to_id\": \"c_similarity_score\",\n      \"anchor\": \"algorithm for similarity score\",\n      \"location\": \"cao-2024-multimodal-long-form-summarization-financial-reports#c0023\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"cao-2024-multimodal-long-form-summarization-financial-reports\",\n      \"to_id\": \"c_similarity_score\",\n      \"anchor\": \"E Details of Similarity Score\",\n      \"location\": \"cao-2024-multimodal-long-form-summarization-financial-reports#c0023\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"cao-2024-multimodal-long-form-summarization-financial-reports\",\n      \"to_id\": \"c_sentbert_embedding\",\n      \"anchor\": \"get_sentBERT_embedding(summary_sentence)\",\n      \"location\": \"cao-2024-multimodal-long-form-summarization-financial-reports#c0023\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"cosine_similarity\",\n      \"anchor\": \"cosine_similarity(summary_embedding, top1_embedding)\"\n    },\n    {\n      \"name\": \"stop_words\",\n      \"anchor\": \"if w ∉ stop_words\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"choose the top match report sentence\",\n      \"suggested_edge\": \"uses_component\",\n      \"from_id\": \"i_greedy_match\",\n      \"to_id\": \"c_sentbert_embedding\",\n      \"diversion_reason\": \"other:no_edge_type\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"tokenization\", \"type\": \"Concept\"},\n    {\"name\": \"stop word removal\", \"type\": \"Concept\"},\n    {\"name\": \"matched token sequence\", \"type\": \"Concept\"},\n    {\"name\": \"summary sentence\", \"type\": \"Concept\"},\n    {\"name\": \"report sentence\", \"type\": \"Concept\"},\n    {\"name\": \"cosine similarity\", \"type\": \"Concept\"},\n    {\"name\": \"SentenceBERT\", \"type\": \"Tool\"}\n  ]\n}"
+}

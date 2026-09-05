@@ -1,0 +1,33 @@
+{
+ "doc_id": "census-acs-general-handbook-2020",
+ "chunk_id": "census-acs-general-handbook-2020#c0078",
+ "chunk_index": 78,
+ "chunk_start": 75848,
+ "chunk_end": 76195,
+ "chunk_tokens": 72,
+ "heading_path": [
+  "22 Data.cen-"
+ ],
+ "oversize": false,
+ "doc_sha256": "d2b7ba1b80826765a12a7be367650315ab7cd4ac8ec02b253c0bb438bbbd40f0",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 8354,
+  "cacheReadInputTokens": 12841,
+  "cacheCreationInputTokens": 22778,
+  "webSearchRequests": 0,
+  "costUSD": 0.44306049999999997,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 6385,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.44306049999999997,
+ "duration_ms": 94736,
+ "session_id": "5027f13a-6438-4405-906b-eb105acc15bd",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Chunk states that data.census.gov provides access to ACS data across many geography levels, and that specialized tools — My Congressional District and Census Business Builder — give quick access to statistics for particular areas and topics.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"con_acs_data\",\n      \"name\": \"ACS data\",\n      \"aliases\": [\"American Community Survey data\"],\n      \"description\": \"Data from the American Community Survey, disseminated by the Census Bureau for a wide range of geographic areas.\",\n      \"anchor\": \"access to ACS data\",\n      \"location\": \"census-acs-general-handbook-2020#c0078\"\n    },\n    {\n      \"id\": \"con_geographic_areas\",\n      \"name\": \"geographic areas\",\n      \"aliases\": [\"geographies\", \"geographic levels\"],\n      \"description\": \"The levels of geography for which ACS data are available, including states, cities, counties, census tracts, and block groups.\",\n      \"anchor\": \"geographic areas, including\",\n      \"location\": \"census-acs-general-handbook-2020#c0078\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"clm_datacensusgov_access\",\n      \"claim_text\": \"provides access to ACS data for a wide range of geographic areas\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"platform_official\",\n      \"anchor\": \"sus.gov provides access\",\n      \"location\": \"census-acs-general-handbook-2020#c0078\"\n    },\n    {\n      \"id\": \"clm_specialized_tools_access\",\n      \"claim_text\": \"provide users with quick and easy access to statistics for particular geographic areas and topics\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"platform_official\",\n      \"anchor\": \"quick and easy access\",\n      \"location\": \"census-acs-general-handbook-2020#c0078\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [\n    {\n      \"id\": \"tool_data_census_gov\",\n      \"name\": \"Data.cen- sus.gov\",\n      \"steward\": null,\n      \"license\": null,\n      \"url\": null,\n      \"as_of_date\": null,\n      \"anchor\": \"sus.gov\",\n      \"location\": \"census-acs-general-handbook-2020#c0078\"\n    },\n    {\n      \"id\": \"tool_my_congressional_district\",\n      \"name\": \"My Congressional District\",\n      \"steward\": null,\n      \"license\": null,\n      \"url\": null,\n      \"as_of_date\": null,\n      \"anchor\": \"My Congressional\",\n      \"location\": \"census-acs-general-handbook-2020#c0078\"\n    },\n    {\n      \"id\": \"tool_census_business_builder\",\n      \"name\": \"Census Business Builder\",\n      \"steward\": null,\n      \"license\": null,\n      \"url\": null,\n      \"as_of_date\": null,\n      \"anchor\": \"Census Business Builder\",\n      \"location\": \"census-acs-general-handbook-2020#c0078\"\n    }\n  ],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_id\": \"clm_datacensusgov_access\",\n      \"anchor\": \"sus.gov provides access\",\n      \"location\": \"census-acs-general-handbook-2020#c0078\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"clm_datacensusgov_access\",\n      \"to_id\": \"con_acs_data\",\n      \"anchor\": \"access to ACS data\",\n      \"location\": \"census-acs-general-handbook-2020#c0078\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"clm_datacensusgov_access\",\n      \"to_id\": \"con_geographic_areas\",\n      \"anchor\": \"geographic areas, including\",\n      \"location\": \"census-acs-general-handbook-2020#c0078\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_id\": \"clm_specialized_tools_access\",\n      \"anchor\": \"quick and easy access\",\n      \"location\": \"census-acs-general-handbook-2020#c0078\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_id\": \"con_geographic_areas\",\n      \"anchor\": \"for particular geographic areas\",\n      \"location\": \"census-acs-general-handbook-2020#c0078\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\"name\": \"states\", \"anchor\": \"including states\"},\n    {\"name\": \"cities\", \"anchor\": \"cities, counties\"},\n    {\"name\": \"census tracts\", \"anchor\": \"census tracts\"},\n    {\"name\": \"block groups\", \"anchor\": \"block groups\"},\n    {\"name\": \"Census Bureau data sets\", \"anchor\": \"many other Census Bureau data sets\"}\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"sus.gov provides access\",\n      \"suggested_edge\": \"provides_access_to\",\n      \"from_id\": \"tool_data_census_gov\",\n      \"to_id\": \"con_acs_data\",\n      \"diversion_reason\": \"other:no_tool_to_concept_edge\"\n    },\n    {\n      \"anchor\": \"such as My Congressional\",\n      \"suggested_edge\": \"provides_access_to\",\n      \"from_id\": \"tool_my_congressional_district\",\n      \"to_id\": \"con_geographic_areas\",\n      \"diversion_reason\": \"other:no_tool_to_concept_edge\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"statistics\", \"type\": \"Concept\"},\n    {\"name\": \"counties\", \"type\": \"Concept\"},\n    {\"name\": \"topics\", \"type\": \"Concept\"},\n    {\"name\": \"specialized tools\", \"type\": \"Concept\"}\n  ]\n}"
+}

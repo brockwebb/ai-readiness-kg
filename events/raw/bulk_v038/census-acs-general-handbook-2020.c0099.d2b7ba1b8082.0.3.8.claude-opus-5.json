@@ -1,0 +1,33 @@
+{
+ "doc_id": "census-acs-general-handbook-2020",
+ "chunk_id": "census-acs-general-handbook-2020#c0099",
+ "chunk_index": 99,
+ "chunk_start": 116102,
+ "chunk_end": 117023,
+ "chunk_tokens": 251,
+ "heading_path": [
+  "38   What All Data Users Need to Know"
+ ],
+ "oversize": false,
+ "doc_sha256": "d2b7ba1b80826765a12a7be367650315ab7cd4ac8ec02b253c0bb438bbbd40f0",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 4009,
+  "cacheReadInputTokens": 12841,
+  "cacheCreationInputTokens": 23430,
+  "webSearchRequests": 0,
+  "costUSD": 0.3409555,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 3064,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3409555,
+ "duration_ms": 46510,
+ "session_id": "122b2690-8ed9-42c6-98fa-85f0ec0bc5f3",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Procedural/figure-caption passage giving data.census.gov filter steps (geography = ARC's 20 Georgia counties, survey = ACS 5-Year Estimates Detailed Tables, topic = Housing/Vacancy), plus a footnote citing the Atlanta Regional Commission 20-County Data Dashboard; almost nothing is asserted about, so most entities are mention-only stubs.\"\n  },\n  \"concepts\": [],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"claim-selected-filters\",\n      \"claim_text\": \"All 22 filters should appear in the “Selected Filters” at the bottom of the page.\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"platform_official\",\n      \"anchor\": \"All 22 filters\",\n      \"location\": \"census-acs-general-handbook-2020#c0099\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_id\": \"claim-selected-filters\",\n      \"anchor\": \"All 22 filters\",\n      \"location\": \"census-acs-general-handbook-2020#c0099\"\n    }\n  ],\n  \"cites\": [\n    {\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_title\": \"Atlanta Regional Commission, 20-County Data Dashboard\",\n      \"to_url\": \"http://33n.atlantaregional.com/20-county-data-dashboard\",\n      \"anchor\": \"20-County Data Dashboard\",\n      \"location\": \"census-acs-general-handbook-2020#c0099\"\n    }\n  ],\n  \"mentions\": [\n    {\n      \"name\": \"Atlanta Regional Commission\",\n      \"anchor\": \"Atlanta Regional Commission\"\n    },\n    {\n      \"name\": \"Data.census.gov\",\n      \"anchor\": \"Selecting a Geography\"\n    },\n    {\n      \"name\": \"ACS 5-Year Estimates Detailed Tables\",\n      \"anchor\": \"ACS 5-Year Estimates Detailed Tables\"\n    },\n    {\n      \"name\": \"Vacancy\",\n      \"anchor\": \"check box for “Vacancy.”\"\n    }\n  ],\n  \"proposed_relationships\": [],\n  \"gleaned\": [\n    {\"name\": \"Selected Filters\", \"type\": \"Concept\"},\n    {\"name\": \"Housing\", \"type\": \"Concept\"},\n    {\"name\": \"20-County Data Dashboard\", \"type\": \"Tool\"},\n    {\"name\": \"U.S. Census Bureau\", \"type\": \"Concept\"}\n  ]\n}"
+}

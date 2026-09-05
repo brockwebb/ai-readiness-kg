@@ -1,0 +1,33 @@
+{
+ "doc_id": "census-acs-general-handbook-2020",
+ "chunk_id": "census-acs-general-handbook-2020#c0008",
+ "chunk_index": 8,
+ "chunk_start": 8378,
+ "chunk_end": 8617,
+ "chunk_tokens": 64,
+ "heading_path": [
+  "36 months of data collection. In 2015, the 3-year products were discon-"
+ ],
+ "oversize": false,
+ "doc_sha256": "d2b7ba1b80826765a12a7be367650315ab7cd4ac8ec02b253c0bb438bbbd40f0",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 5164,
+  "cacheReadInputTokens": 12841,
+  "cacheCreationInputTokens": 22756,
+  "webSearchRequests": 0,
+  "costUSD": 0.3630905,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 3356,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3630905,
+ "duration_ms": 56091,
+ "session_id": "1b56276c-ab13-4d04-9358-609519f9352a",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Footnote stating that the Census Bureau previously released ACS 3-year estimates based on 36 months of data collection and discontinued the product in 2015, with the 2011-2013 estimates as the last release.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_three_year_estimates\",\n      \"name\": \"3-year estimates\",\n      \"aliases\": [\"3-year products\", \"ACS 3-year estimates\"],\n      \"description\": \"An ACS estimate product built from 36 months of data collection, discontinued in 2015.\",\n      \"anchor\": \"3-year estimates based\",\n      \"location\": \"census-acs-general-handbook-2020#c0008\"\n    },\n    {\n      \"id\": \"c_data_collection\",\n      \"name\": \"data collection\",\n      \"aliases\": [\"36 months of data collection\"],\n      \"description\": \"The collection period underlying an ACS estimate product; 36 months for the 3-year estimates.\",\n      \"anchor\": \"36 months of data collection\",\n      \"location\": \"census-acs-general-handbook-2020#c0008\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"cl_prev_released\",\n      \"claim_text\": \"The Census Bureau previously released 3-year estimates based on\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"platform_official\",\n      \"anchor\": \"previously released 3-year estimates\",\n      \"location\": \"census-acs-general-handbook-2020#c0008\"\n    },\n    {\n      \"id\": \"cl_discontinued\",\n      \"claim_text\": \"In 2015, the 3-year products were\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"platform_official\",\n      \"anchor\": \"In 2015, the 3-year products\",\n      \"location\": \"census-acs-general-handbook-2020#c0008\"\n    },\n    {\n      \"id\": \"cl_last_release\",\n      \"claim_text\": \"The 2011–2013 ACS 3-year estimates, released in 2014\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"platform_official\",\n      \"anchor\": \"2011–2013 ACS 3-year estimates\",\n      \"location\": \"census-acs-general-handbook-2020#c0008\"\n    }\n  ],\n  \"instruments\": [\n    {\n      \"id\": \"i_acs\",\n      \"name\": \"ACS\",\n      \"owner\": \"The Census Bureau\",\n      \"year\": null,\n      \"method\": \"based on 36 months of data collection\",\n      \"attribute_anchors\": {\n        \"owner\": \"Census Bureau previously released\",\n        \"method\": \"36 months of data collection\"\n      },\n      \"anchor\": \"ACS 3-year estimates\",\n      \"location\": \"census-acs-general-handbook-2020#c0008\"\n    }\n  ],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_id\": \"cl_prev_released\",\n      \"anchor\": \"previously released 3-year estimates\",\n      \"location\": \"census-acs-general-handbook-2020#c0008\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_id\": \"cl_discontinued\",\n      \"anchor\": \"In 2015, the 3-year products\",\n      \"location\": \"census-acs-general-handbook-2020#c0008\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_id\": \"cl_last_release\",\n      \"anchor\": \"2011–2013 ACS 3-year estimates\",\n      \"location\": \"census-acs-general-handbook-2020#c0008\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_discontinued\",\n      \"to_id\": \"c_three_year_estimates\",\n      \"anchor\": \"the 3-year products were\",\n      \"location\": \"census-acs-general-handbook-2020#c0008\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_last_release\",\n      \"to_id\": \"c_three_year_estimates\",\n      \"anchor\": \"last release of this product\",\n      \"location\": \"census-acs-general-handbook-2020#c0008\"\n    },\n    {\n      \"type\": \"measures\",\n      \"from_id\": \"i_acs\",\n      \"to_id\": \"c_three_year_estimates\",\n      \"anchor\": \"ACS 3-year estimates, released\",\n      \"location\": \"census-acs-general-handbook-2020#c0008\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"The Census Bureau\",\n      \"anchor\": \"The Census Bureau previously\"\n    },\n    {\n      \"name\": \"natural disasters\",\n      \"anchor\": \"natural disasters like Superstorm\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"36 months of data collection\",\n      \"suggested_edge\": \"has_component\",\n      \"from_id\": \"c_three_year_estimates\",\n      \"to_id\": \"c_data_collection\",\n      \"diversion_reason\": \"predicate_not_located\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"Superstorm\", \"type\": \"Concept\"},\n    {\"name\": \"2011–2013\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

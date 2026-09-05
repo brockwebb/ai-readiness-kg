@@ -1,0 +1,33 @@
+{
+ "doc_id": "census-acs-general-handbook-2020",
+ "chunk_id": "census-acs-general-handbook-2020#c0050",
+ "chunk_index": 50,
+ "chunk_start": 50644,
+ "chunk_end": 50813,
+ "chunk_tokens": 42,
+ "heading_path": [
+  "11 Public Use Microdata Areas, or PUMAs, are collections of coun-"
+ ],
+ "oversize": false,
+ "doc_sha256": "d2b7ba1b80826765a12a7be367650315ab7cd4ac8ec02b253c0bb438bbbd40f0",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 4214,
+  "cacheReadInputTokens": 12841,
+  "cacheCreationInputTokens": 22734,
+  "webSearchRequests": 0,
+  "costUSD": 0.3391205,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 2899,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3391205,
+ "duration_ms": 48190,
+ "session_id": "6f664c11-5691-4cac-9ba2-4e22753fbcf6",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"A footnote defining Public Use Microdata Areas (PUMAs) as ~100,000-person collections of counties or tracts within counties that do not cross state lines, preceded by a trailing fragment about the April 1, 2000 resident U.S. population.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_pumas\",\n      \"name\": \"Public Use Microdata Areas\",\n      \"aliases\": [\"PUMAs\", \"PUMA\"],\n      \"description\": \"Census geographic areas formed as collections of counties, or of tracts within counties, of approximately 100,000 people each, which do not cross state lines.\",\n      \"anchor\": \"Public Use Microdata Areas\",\n      \"location\": \"census-acs-general-handbook-2020#c0050\"\n    },\n    {\n      \"id\": \"c_counties\",\n      \"name\": \"counties\",\n      \"aliases\": [\"county\"],\n      \"description\": \"The county-level geographic units that PUMAs are built from, either whole or as tracts within them.\",\n      \"anchor\": \"tracts within counties\",\n      \"location\": \"census-acs-general-handbook-2020#c0050\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d_pumas\",\n      \"term\": \"PUMAs\",\n      \"verbatim_text\": \"Public Use Microdata Areas, or PUMAs, are collections of coun-\",\n      \"normative_status\": \"policy\",\n      \"as_of_date\": null,\n      \"anchor\": \"or PUMAs, are collections\",\n      \"location\": \"census-acs-general-handbook-2020#c0050\"\n    }\n  ],\n  \"claims\": [\n    {\n      \"id\": \"cl_no_state_lines\",\n      \"claim_text\": \"PUMAs do not cross state lines\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"do not cross state lines\",\n      \"location\": \"census-acs-general-handbook-2020#c0050\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_id\": \"d_pumas\",\n      \"anchor\": \"or PUMAs, are collections\",\n      \"location\": \"census-acs-general-handbook-2020#c0050\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_id\": \"c_pumas\",\n      \"anchor\": \"Public Use Microdata Areas\",\n      \"location\": \"census-acs-general-handbook-2020#c0050\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_id\": \"cl_no_state_lines\",\n      \"anchor\": \"do not cross state lines\",\n      \"location\": \"census-acs-general-handbook-2020#c0050\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_no_state_lines\",\n      \"to_id\": \"c_pumas\",\n      \"anchor\": \"PUMAs do not cross\",\n      \"location\": \"census-acs-general-handbook-2020#c0050\"\n    },\n    {\n      \"type\": \"has_component\",\n      \"from_id\": \"c_pumas\",\n      \"to_id\": \"c_counties\",\n      \"anchor\": \"are collections of\",\n      \"location\": \"census-acs-general-handbook-2020#c0050\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"resident U.S. population\",\n      \"anchor\": \"resident U.S. population\"\n    }\n  ],\n  \"proposed_relationships\": [],\n  \"gleaned\": [\n    {\"name\": \"census tract\", \"type\": \"Concept\"},\n    {\"name\": \"state\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

@@ -30,14 +30,18 @@ SKIP = {"generated_at", "database", "kg_labels", "label_counts", "concept_dup_la
         "domain_edge_triples", "domain_edges_by_type", "claims_without_asserts_sample"}
 
 
-def rows(snap: dict) -> list:
+def rows(snap: dict, suffix: str = "") -> list:
+    """`suffix` names a RERUN. DD-041 records the convention: a rerun never overwrites a
+    registered measurement, so where a metric name would collide with an earlier run's it
+    carries the run instead (`kg_diag_<metric>_2026-09-04b`), and the un-suffixed names stay
+    with the first run they were measured on."""
     out = []
     for key, value in snap.items():
         if key in SKIP or not isinstance(value, (int, float)) or isinstance(value, bool):
             continue
-        out.append((f"kg_diag_{key}", value, f"{key} from the structural diagnostic"))
+        out.append((f"kg_diag_{key}{suffix}", value, f"{key} from the structural diagnostic"))
     for label, count in (snap.get("label_counts") or {}).items():
-        out.append((f"kg_diag_label_{label}", count, f"nodes carrying the {label} label"))
+        out.append((f"kg_diag_label_{label}{suffix}", count, f"nodes carrying the {label} label"))
     return out
 
 
@@ -45,6 +49,8 @@ def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--snapshot", default="state/kg_snapshot_2026-09-04.json")
     ap.add_argument("--data-name", default="kg_snapshot_2026-09-04")
+    ap.add_argument("--suffix", default="",
+                    help="rerun suffix appended to every Result name, e.g. _2026-09-04b (DD-041)")
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--skip", type=int, default=0)
     a = ap.parse_args(argv)
@@ -52,7 +58,7 @@ def main(argv=None) -> int:
     base = (f"KG structural diagnostic of database '{snap.get('database')}' at "
             f"{snap.get('generated_at')}, re-deriving in code the figures a Desktop session "
             f"had run in chat ({TASK} §0). Derivation: scripts/kg_diagnostic.py -> {a.snapshot}")
-    data = rows(snap)
+    data = rows(snap, a.suffix)
     if a.dry_run:
         for name, value, note in data:
             print(f"{name}\t{value}\t{note}")

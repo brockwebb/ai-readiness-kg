@@ -1,0 +1,33 @@
+{
+ "doc_id": "cao-2024-multimodal-long-form-summarization-financial-reports",
+ "chunk_id": "cao-2024-multimodal-long-form-summarization-financial-reports#c0021",
+ "chunk_index": 21,
+ "chunk_start": 44219,
+ "chunk_end": 44342,
+ "chunk_tokens": 25,
+ "heading_path": [
+  "3. Pay attention to any tables presenting numeric data, such as income"
+ ],
+ "oversize": false,
+ "doc_sha256": "bbcf0ef79d228123a31a7490d01494eaceb63f7188d783ac52f0c346e1e980a6",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 4524,
+  "cacheReadInputTokens": 12841,
+  "cacheCreationInputTokens": 22705,
+  "webSearchRequests": 0,
+  "costUSD": 0.3465805,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 3142,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3465805,
+ "duration_ms": 50177,
+ "session_id": "acfcb2b9-d36b-4c72-bc55-097370711987",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Tail of a prompt-instruction list: item 3 directs the summarizer to attend to tables of numeric data, exemplified by income statements, balance sheets, and cash flow statements.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_numeric_tables\",\n      \"name\": \"tables presenting numeric data\",\n      \"aliases\": [\"numeric tables\", \"financial statement tables\"],\n      \"description\": \"Tables in a financial report that present numeric data, given as the target of attention in the instruction list.\",\n      \"anchor\": \"statements, balance sheets\",\n      \"location\": \"cao-2024-multimodal-long-form-summarization-financial-reports#c0021\"\n    },\n    {\n      \"id\": \"c_balance_sheets\",\n      \"name\": \"balance sheets\",\n      \"aliases\": [\"balance sheet\"],\n      \"description\": \"Named as an example of a table presenting numeric data.\",\n      \"anchor\": \"balance sheets\",\n      \"location\": \"cao-2024-multimodal-long-form-summarization-financial-reports#c0021\"\n    },\n    {\n      \"id\": \"c_cash_flow_statements\",\n      \"name\": \"cash flow statements\",\n      \"aliases\": [\"cash flow statement\"],\n      \"description\": \"Named as an example of a table presenting numeric data.\",\n      \"anchor\": \"cash flow statements\",\n      \"location\": \"cao-2024-multimodal-long-form-summarization-financial-reports#c0021\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [\n    {\n      \"id\": \"p_attend_numeric_tables\",\n      \"text\": \"Pay attention to any tables presenting numeric data\",\n      \"scope\": \"content\",\n      \"as_of_date\": null,\n      \"anchor\": \"or cash flow statements\",\n      \"location\": \"cao-2024-multimodal-long-form-summarization-financial-reports#c0021\"\n    }\n  ],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"cao-2024-multimodal-long-form-summarization-financial-reports\",\n      \"to_id\": \"c_numeric_tables\",\n      \"anchor\": \"statements, balance sheets\",\n      \"location\": \"cao-2024-multimodal-long-form-summarization-financial-reports#c0021\"\n    },\n    {\n      \"type\": \"subtype_of\",\n      \"from_id\": \"c_balance_sheets\",\n      \"to_id\": \"c_numeric_tables\",\n      \"anchor\": \"statements, balance sheets, or\",\n      \"location\": \"cao-2024-multimodal-long-form-summarization-financial-reports#c0021\"\n    },\n    {\n      \"type\": \"subtype_of\",\n      \"from_id\": \"c_cash_flow_statements\",\n      \"to_id\": \"c_numeric_tables\",\n      \"anchor\": \"sheets, or cash flow\",\n      \"location\": \"cao-2024-multimodal-long-form-summarization-financial-reports#c0021\"\n    },\n    {\n      \"type\": \"recommends\",\n      \"from_id\": \"cao-2024-multimodal-long-form-summarization-financial-reports\",\n      \"to_id\": \"p_attend_numeric_tables\",\n      \"anchor\": \"or cash flow statements\",\n      \"location\": \"cao-2024-multimodal-long-form-summarization-financial-reports#c0021\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"p_attend_numeric_tables\",\n      \"to_id\": \"c_numeric_tables\",\n      \"anchor\": \"balance sheets\",\n      \"location\": \"cao-2024-multimodal-long-form-summarization-financial-reports#c0021\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"report.\",\n      \"suggested_edge\": \"part_of_instruction_list\",\n      \"diversion_reason\": \"cross_chunk\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"income statements\", \"type\": \"Concept\"}\n  ]\n}"
+}

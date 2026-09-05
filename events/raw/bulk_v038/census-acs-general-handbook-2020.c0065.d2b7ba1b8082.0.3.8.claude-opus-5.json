@@ -1,0 +1,33 @@
+{
+ "doc_id": "census-acs-general-handbook-2020",
+ "chunk_id": "census-acs-general-handbook-2020#c0065",
+ "chunk_index": 65,
+ "chunk_start": 66550,
+ "chunk_end": 66733,
+ "chunk_tokens": 48,
+ "heading_path": [
+  "2013 to 2017 and 2014 to 2018 are unlikely to show"
+ ],
+ "oversize": false,
+ "doc_sha256": "d2b7ba1b80826765a12a7be367650315ab7cd4ac8ec02b253c0bb438bbbd40f0",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 2290,
+  "cacheReadInputTokens": 12841,
+  "cacheCreationInputTokens": 22722,
+  "webSearchRequests": 0,
+  "costUSD": 0.2909005,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 1522,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.2909005,
+ "duration_ms": 25763,
+ "session_id": "49326190-c0b6-4d0f-b4eb-d4f55d9de932",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Illustrates that comparisons of overlapping ACS 5-year estimates (2013-2017 vs 2014-2018) are unlikely to differ much because four years of data are shared.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_five_year_estimates\",\n      \"name\": \"5-year estimates\",\n      \"aliases\": [\"five-year estimates\", \"multiyear ACS estimates\"],\n      \"description\": \"ACS estimates aggregated over five years of collected data; consecutive vintages share overlapping collection years.\",\n      \"anchor\": \"5-year estimates\",\n      \"location\": \"census-acs-general-handbook-2020#c0065\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"cl_overlap_years\",\n      \"claim_text\": \"four of the years overlap\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"inference\",\n      \"anchor\": \"four of the years overlap\",\n      \"location\": \"census-acs-general-handbook-2020#c0065\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_id\": \"cl_overlap_years\",\n      \"anchor\": \"four of the years overlap\",\n      \"location\": \"census-acs-general-handbook-2020#c0065\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_overlap_years\",\n      \"to_id\": \"c_five_year_estimates\",\n      \"anchor\": \"comparisons of 5-year estimates\",\n      \"location\": \"census-acs-general-handbook-2020#c0065\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_id\": \"c_five_year_estimates\",\n      \"anchor\": \"5-year estimates\",\n      \"location\": \"census-acs-general-handbook-2020#c0065\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [],\n  \"proposed_relationships\": [],\n  \"gleaned\": []\n}\n```"
+}

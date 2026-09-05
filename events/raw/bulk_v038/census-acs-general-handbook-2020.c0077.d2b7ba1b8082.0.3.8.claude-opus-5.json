@@ -1,0 +1,33 @@
+{
+ "doc_id": "census-acs-general-handbook-2020",
+ "chunk_id": "census-acs-general-handbook-2020#c0077",
+ "chunk_index": 77,
+ "chunk_start": 75574,
+ "chunk_end": 75847,
+ "chunk_tokens": 62,
+ "heading_path": [
+  "5. ACCESSING ACS DATA"
+ ],
+ "oversize": false,
+ "doc_sha256": "d2b7ba1b80826765a12a7be367650315ab7cd4ac8ec02b253c0bb438bbbd40f0",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 7305,
+  "cacheReadInputTokens": 12841,
+  "cacheCreationInputTokens": 22768,
+  "webSearchRequests": 0,
+  "costUSD": 0.41673550000000004,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 6005,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.41673550000000004,
+ "duration_ms": 87455,
+ "session_id": "b47250f6-20f7-45e6-8c8c-537eded276ef",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Opening of section 5 states that Data.census.gov is the Census Bureau's primary tool for accessing ACS, Puerto Rico Community Survey, decennial census, and other Census Bureau data.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"concept-acs\",\n      \"name\": \"American Community Survey\",\n      \"aliases\": [\"ACS\"],\n      \"description\": \"Census Bureau survey whose population, housing, and economic data are accessed through Data.census.gov.\",\n      \"anchor\": \"the American Community Survey\",\n      \"location\": \"census-acs-general-handbook-2020#c0077\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"claim-datacensusgov-primary-tool\",\n      \"claim_text\": \"Data.census.gov is the U.S. Census Bureau’s primary \\ntool for accessing population, housing, and economic \\ndata from the American Community Survey (ACS), the \\nPuerto Rico Community Survey, the decennial census, \\nand many other Census Bureau data sets.\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"platform_official\",\n      \"anchor\": \"Data.census.gov is\",\n      \"location\": \"census-acs-general-handbook-2020#c0077\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [\n    {\n      \"id\": \"tool-data-census-gov\",\n      \"name\": \"Data.census.gov\",\n      \"steward\": \"U.S. Census Bureau\",\n      \"license\": null,\n      \"url\": null,\n      \"as_of_date\": null,\n      \"anchor\": \"Data.census.gov\",\n      \"location\": \"census-acs-general-handbook-2020#c0077\"\n    }\n  ],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_id\": \"claim-datacensusgov-primary-tool\",\n      \"anchor\": \"Data.census.gov is\",\n      \"location\": \"census-acs-general-handbook-2020#c0077\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"claim-datacensusgov-primary-tool\",\n      \"to_id\": \"concept-acs\",\n      \"anchor\": \"American Community Survey (ACS)\",\n      \"location\": \"census-acs-general-handbook-2020#c0077\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_id\": \"concept-acs\",\n      \"anchor\": \"the American Community Survey\",\n      \"location\": \"census-acs-general-handbook-2020#c0077\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"Puerto Rico Community Survey\",\n      \"anchor\": \"Puerto Rico Community Survey\"\n    },\n    {\n      \"name\": \"decennial census\",\n      \"anchor\": \"decennial census\"\n    },\n    {\n      \"name\": \"U.S. Census Bureau\",\n      \"anchor\": \"U.S. Census Bureau’s\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"from_id\": \"tool-data-census-gov\",\n      \"to_id\": \"concept-acs\",\n      \"suggested_edge\": \"provides_access_to\",\n      \"anchor\": \"tool for accessing\",\n      \"diversion_reason\": \"other:unsupported_edge_type\",\n      \"location\": \"census-acs-general-handbook-2020#c0077\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"Puerto Rico Community Survey\", \"type\": \"Concept\"},\n    {\"name\": \"decennial census\", \"type\": \"Concept\"},\n    {\"name\": \"U.S. Census Bureau\", \"type\": \"Concept\"}\n  ]\n}"
+}

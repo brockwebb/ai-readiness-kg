@@ -1,0 +1,33 @@
+{
+ "doc_id": "census-acs-general-handbook-2020",
+ "chunk_id": "census-acs-general-handbook-2020#c0053",
+ "chunk_index": 53,
+ "chunk_start": 53510,
+ "chunk_end": 55279,
+ "chunk_tokens": 557,
+ "heading_path": [
+  "14   What All Data Users Need to Know"
+ ],
+ "oversize": false,
+ "doc_sha256": "d2b7ba1b80826765a12a7be367650315ab7cd4ac8ec02b253c0bb438bbbd40f0",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 3993,
+  "cacheReadInputTokens": 12841,
+  "cacheCreationInputTokens": 24433,
+  "webSearchRequests": 0,
+  "costUSD": 0.3505855,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 2304,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3505855,
+ "duration_ms": 45090,
+ "session_id": "274486de-f0f9-44e8-8a8a-b87d672e7027",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Page furniture and figure captions from ACS handbook Ch. 3: a child poverty rate comparison figure for Bay County, Michigan, a figure on sample cases used in producing ACS 5-year estimates, and a truncated work-from-home figure caption for Austin, Texas — plus two source/citation lines; the chunk carries no prose assertions.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_child_poverty_rate\",\n      \"name\": \"Child Poverty Rate\",\n      \"aliases\": [\"Percentage of children in poverty\", \"child poverty\"],\n      \"description\": \"The rate of poverty among children, presented in Figure 3.2 as a 1-year (2018) versus 5-year (2014-2018) ACS estimate for Bay County, Michigan.\",\n      \"anchor\": \"Child Poverty Rate in Bay County\",\n      \"location\": \"census-acs-general-handbook-2020#c0053\"\n    },\n    {\n      \"id\": \"c_acs_5_year_estimates\",\n      \"name\": \"ACS 5-Year Estimates\",\n      \"aliases\": [\"5-year estimate\", \"5-year estimates\"],\n      \"description\": \"ACS estimates produced from five years of pooled sample cases; Figure 3.1 depicts the sample cases used in producing them by year of data release and data collection period.\",\n      \"anchor\": \"Sample Cases Used in Producing\",\n      \"location\": \"census-acs-general-handbook-2020#c0053\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_id\": \"c_child_poverty_rate\",\n      \"anchor\": \"Child Poverty Rate in Bay County\",\n      \"location\": \"census-acs-general-handbook-2020#c0053\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_id\": \"c_acs_5_year_estimates\",\n      \"anchor\": \"Sample Cases Used in Producing\",\n      \"location\": \"census-acs-general-handbook-2020#c0053\"\n    }\n  ],\n  \"cites\": [\n    {\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_title\": \"Table DP03: \\u201cSelected Economic Characteristics in the United States.\\u201d\",\n      \"to_url\": \"https://data.census.gov\",\n      \"anchor\": \"Table DP03\",\n      \"location\": \"census-acs-general-handbook-2020#c0053\"\n    },\n    {\n      \"from_id\": \"census-acs-general-handbook-2020\",\n      \"to_title\": \"When to Use 1-year, 3-year, or 5-year Estimates\",\n      \"to_url\": \"www.census.gov/programs-surveys/acs/guidance/estimates.html\",\n      \"anchor\": \"When to Use 1-year, 3-year, or 5-year\",\n      \"location\": \"census-acs-general-handbook-2020#c0053\"\n    }\n  ],\n  \"mentions\": [\n    {\n      \"name\": \"U.S. Census Bureau\",\n      \"anchor\": \"Source: U.S. Census Bureau, data.census.gov\"\n    },\n    {\n      \"name\": \"data.census.gov\",\n      \"anchor\": \"data.census.gov\"\n    },\n    {\n      \"name\": \"Bay County, Michigan\",\n      \"anchor\": \"Bay County, Michigan\"\n    },\n    {\n      \"name\": \"Austin, Texas\",\n      \"anchor\": \"in Austin, Texas\"\n    },\n    {\n      \"name\": \"American Community Survey Data\",\n      \"anchor\": \"Understanding and Using American Community Survey Data  15\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"Percentage of children in poverty\",\n      \"suggested_edge\": \"measures\",\n      \"from_hint\": \"Percentage of children in poverty\",\n      \"to_hint\": \"c_child_poverty_rate\",\n      \"diversion_reason\": \"structural_inference\"\n    },\n    {\n      \"anchor\": \"Child Poverty Rate in Bay County\",\n      \"suggested_edge\": \"about\",\n      \"from_hint\": \"Figure 3.2 comparison of 1-year and 5-year estimates\",\n      \"to_hint\": \"c_acs_5_year_estimates\",\n      \"diversion_reason\": \"structural_inference\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"1-year estimate\", \"type\": \"Concept\"},\n    {\"name\": \"Percentage of Workers 16 Years and Over Who Worked From Home\", \"type\": \"Concept\"},\n    {\"name\": \"Year of data release\", \"type\": \"Concept\"},\n    {\"name\": \"Data collection period\", \"type\": \"Concept\"},\n    {\"name\": \"Selected Economic Characteristics in the United States\", \"type\": \"Concept\"}\n  ]\n}"
+}
