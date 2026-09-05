@@ -138,3 +138,36 @@ def load_alias_index(session) -> Dict[str, List[str]]:
         vals = [canonical_key(a) for a in (aliases or [])]
         index.setdefault(key, []).extend([v for v in vals if v and v != key])
     return index
+
+
+def load_canonical_index(session) -> Dict[str, List[str]]:
+    """canonical name -> the other canonical names that RESOLVE TO THE SAME vocabulary term.
+
+    The third view (task 2026-09-05_vocabulary_and_entity_linking §4). It is deliberately the
+    SAME shape as `load_alias_index`, so `collapse_rows` needs no new code path and no CQ
+    carries view-specific logic — the module's own rule, restated: the collapse is implemented
+    once. What changes between the collapsed and canonical views is only which index is
+    handed in, which is exactly the difference the two views are meant to measure:
+
+        collapsed   what the CHEAPEST DEFENSIBLE merge buys — identical strings, plus the
+                    model's own `aliases` property. A floor on redundancy.
+        canonical   what a CURATED VOCABULARY buys — every name a `RESOLVES_TO` edge points
+                    at one term, whether it got there by the deterministic alias-first rule
+                    or by a judged decision in the clerical band.
+
+    Names on nodes carrying no `RESOLVES_TO` edge appear in no group here, so an unresolved
+    entity stays its own group and the canonical view never merges what the vocabulary
+    declined to name. That is the property that keeps this view honest: it can only look
+    better than `collapsed` where the vocabulary actually did work.
+    """
+    index: Dict[str, List[str]] = {}
+    rows = session.run(
+        "MATCH (n)-[:RESOLVES_TO]->(t:Term) WHERE n.name IS NOT NULL "
+        "RETURN t.term_id AS term, collect(DISTINCT n.name) AS names").data()
+    for r in rows:
+        keys = sorted({k for k in (canonical_key(n) for n in r["names"]) if k})
+        if len(keys) < 2:
+            continue
+        for k in keys:
+            index.setdefault(k, []).extend([o for o in keys if o != k])
+    return index

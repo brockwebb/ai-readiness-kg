@@ -352,7 +352,10 @@ def build(session, kg_labels: list[str], edge_whitelist: set[str]) -> dict:
               "skipped_unknown_edge_type": 0,
               "skipped_superseded_extraction": 0, "skipped_superseded_stratum": 0,
               "skipped_non_graph_purpose": 0,
-              "aliased_endpoints": 0}
+              "aliased_endpoints": 0,
+              # vocabulary layer (task 2026-09-05_vocabulary_and_entity_linking §1.4)
+              "terms": 0, "resolved": 0, "unresolved": 0,
+              "unresolved_ambiguous_across_assertions": 0}
     superseded, aliases = read_overlays()
     quarantined = quarantined_batches()
     bulk = bulk_purposes()
@@ -365,6 +368,13 @@ def build(session, kg_labels: list[str], edge_whitelist: set[str]) -> dict:
     # reset ONLY KG labels
     label_pred = " OR ".join(f"n:{lbl}" for lbl in kg_labels)
     session.run(f"MATCH (n) WHERE {label_pred} DETACH DELETE n")
+    # ... plus the vocabulary. `Term` is deliberately NOT in `kg/schema.yaml` — the catalogue
+    # there is the parser's edge/node whitelist, and a model must never be able to assert a
+    # vocabulary term or a RESOLVES_TO edge; those come from the vocabulary log and from
+    # judged links, never from a payload. But that also means `kg_labels` does not contain
+    # `Term`, so the reset above misses it and a deprecated or renamed term would survive
+    # every replay forever, which is invariant 1 broken.
+    session.run("MATCH (n) WHERE n:Term DETACH DELETE n")
     # ... and the UNLABELLED endpoint nodes the projection itself creates. `MERGE (a {key: ...})`
     # below makes a node with no label whenever an endpoint is not a typed item: a cited
     # document that was never manifested, a scoped item id, and — before the Document skeletons
@@ -389,6 +399,70 @@ def build(session, kg_labels: list[str], edge_whitelist: set[str]) -> dict:
     # handler below still writes every property onto the same node.
     for did in sorted(document_ids):
         session.run("MERGE (d:Document {id: $id}) SET d.key = $id, d.doc_id = $id", id=did)
+
+    # ---- the controlled vocabulary (task 2026-09-05_vocabulary_and_entity_linking §1.4).
+    # Projected BEFORE the node pass, so `MERGE (t:Term {term_id})` in the resolve branch
+    # binds a term that already exists rather than creating a bare twin — the same
+    # merge-pattern trap the Document skeletons above exist for.
+    from kg import vocab as _vocab
+    _terms = _vocab.project()
+    _vocab_epoch = _vocab.epoch()
+    for tid, t in sorted(_terms.items()):
+        session.run(
+            "MERGE (t:Term {term_id: $id}) SET t.key = $id, t.pref_label = $pl, "
+            "t.scope_note = $sn, t.state = $st, t.node_labels = $nl, t.epoch = $ep",
+            id=tid, pl=t["pref_label"], sn=t["scope_note"], st=t["state"],
+            nl=t.get("node_labels") or [], ep=_vocab_epoch)
+        counts["terms"] += 1
+    # One index per KG label, hoisted: `resolve` would otherwise replay the vocabulary log
+    # once per node, and there are 13,977 nodes.
+    _index_by_label = {lbl: _vocab.alias_index(_terms, node_label=lbl) for lbl in kg_labels}
+    # §2.2's accepted merges are DECISIONS and therefore events; the deterministic link is a
+    # DERIVATION and is recomputed here. Storing the derivation would make the log disagree
+    # with itself the moment the vocabulary changed.
+    _judged = {ev["node_key"]: ev["term_id"] for ev in eventlog.replay()
+               if ev.get("event_type") == "term_link_judged" and ev.get("verdict") == "same"
+               and ev.get("node_key") and ev.get("term_id")}
+
+    # {node key: set of term ids this node's assertions resolved to}. Accumulated during the
+    # pass and written once, after it, for two reasons that are both defects found by running
+    # it the other way:
+    #
+    #  * a node is asserted once per chunk that mentions it, and the extractor's spelling can
+    #    drift between assertions (`scientifc integrity` and `scientific integrity` on ONE node
+    #    key). Resolving per assertion wrote BOTH edges and left 292 nodes claiming two terms —
+    #    the ambiguity `vocab.resolve` refuses at the term level, reappearing at the node
+    #    level. One node, one term, or none.
+    #  * one round-trip per assertion is 30,144 of them against 14,000 nodes.
+    _resolutions: dict = {}
+
+    def _resolve_node(key: str, label: str, name) -> None:
+        """Alias-first at write time, recorded now and written after the pass.
+
+        A node with NO NAME is neither resolved nor flagged: `Claim`, `Definition`, `Measure`
+        and `Practice` carry no `name` at all — a claim is a sentence, not a named entity —
+        and flagging 11,526 of them `unresolved: true` made the residue read three times its
+        real size and invited a search for terms that could never exist.
+        """
+        if not (name and str(name).strip()):
+            return
+        tid = _judged.get(key) or _vocab.resolve(name, index=_index_by_label.get(label, {}))
+        _resolutions.setdefault(key, set())
+        if tid:
+            _resolutions[key].add(tid)
+
+    def _write_resolutions() -> None:
+        for key, tids in sorted(_resolutions.items()):
+            if len(tids) == 1:
+                session.run(
+                    "MATCH (n {key: $key}) MERGE (t:Term {term_id: $term}) "
+                    "MERGE (n)-[:RESOLVES_TO]->(t)", key=key, term=next(iter(tids)))
+                counts["resolved"] += 1
+            else:
+                session.run("MATCH (n {key: $key}) SET n.unresolved = true", key=key)
+                counts["unresolved"] += 1
+                if tids:
+                    counts["unresolved_ambiguous_across_assertions"] += 1
 
     for ev in eventlog.replay():
         et = ev.get("event_type")
@@ -449,10 +523,12 @@ def build(session, kg_labels: list[str], edge_whitelist: set[str]) -> dict:
                 "prov_wasDerivedFrom": ev.get("doc_id"),
             })
             props.update({"id": p["id"], "doc_id": ev.get("doc_id")})
+            _key = node_key(ev.get("doc_id"), p["id"])
             session.run(
                 f"MERGE (n:{label} {{key: $key}}) SET n += $props",
-                key=node_key(ev.get("doc_id"), p["id"]), props=props)
+                key=_key, props=props)
             counts["nodes"] += 1
+            _resolve_node(_key, label, props.get("name"))
         elif et in ("edge_asserted", "curated_promotion"):
             p = ev["payload"] if et == "edge_asserted" else ev
             rel = p.get("type") if et == "edge_asserted" else p.get("edge")
@@ -516,6 +592,10 @@ def build(session, kg_labels: list[str], edge_whitelist: set[str]) -> dict:
                         key=node_key(ev["doc_id"], ev["item_id"]), value=ev.get("value"),
                         attr=attr)
             counts["overlays_restored"] += 1
+
+    # After the whole pass, so a node asserted five times produces one write and a node whose
+    # assertions disagree produces none. See `_resolutions` above.
+    _write_resolutions()
     return counts
 
 

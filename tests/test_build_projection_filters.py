@@ -160,3 +160,176 @@ def test_the_reset_clears_unlabelled_endpoint_nodes_too(tmp_path, monkeypatch):
     assert any("size(labels(n)) = 0" in q for q in deletes), (
         "the reset must clear unlabelled endpoint nodes, or they accumulate across replays "
         f"and across code generations; deletes were {deletes}")
+
+
+# --- vocabulary resolution at write time (task 2026-09-05_vocabulary_and_entity_linking §1.4)
+
+def test_a_node_whose_name_is_a_vocabulary_term_gets_a_resolves_to_edge(tmp_path, monkeypatch):
+    """§1.4: the loader resolves at WRITE time, alias-first, against the current vocabulary
+    epoch. Doing it here rather than in a later pass is the whole point — a node that reaches
+    the graph unresolved and is linked afterwards has a window in which every query over it
+    silently reads the per-document duplicate."""
+    from kg import eventlog, vocab
+    events = tmp_path / "events"
+    events.mkdir()
+    schema = tmp_path / "schema.yaml"
+    schema.write_text('schema_version: "0.3.5"\n', encoding="utf-8")
+    monkeypatch.setattr(eventlog, "_EVENTS_DIR", events)
+    monkeypatch.setattr(eventlog, "_SCHEMA_PATH", schema)
+
+    prov = {"model_id": "m"}
+    _shard(events, 1, [
+        {"event_type": "term_added", "term_id": "air:concept/dcat", "pref_label": "DCAT",
+         "scope_note": "W3C Data Catalog Vocabulary.", "source": "graph: 3 Concept nodes",
+         "alt_labels": [], "node_labels": ["Concept"], "ts": "2026-09-05T00:00:00+00:00"},
+        {"event_type": "term_alias_added", "term_id": "air:concept/dcat",
+         "alias": "Data Catalog Vocabulary", "source": "s", "ts": "2026-09-05T00:00:00+00:00"},
+        {"event_type": "vocabulary_epoch", "epoch": 1, "note": "seed",
+         "ts": "2026-09-05T00:00:00+00:00"},
+        {"event_type": "node_asserted", "doc_id": "d1", "provenance": prov,
+         "payload": {"type": "Concept", "id": "c1", "item": {"name": "Data Catalog Vocabulary"}}},
+        {"event_type": "node_asserted", "doc_id": "d1", "provenance": prov,
+         "payload": {"type": "Concept", "id": "c2", "item": {"name": "a novel term nobody indexed"}}},
+    ])
+
+    session = _RecordingSession()
+    bp.build(session, ["Document", "Concept"], set())
+    qs = [q for q, _ in session.calls]
+
+    # the hit: a RESOLVES_TO edge to the term
+    resolved = [(q, p) for q, p in session.calls if "RESOLVES_TO" in q]
+    assert len(resolved) == 1, qs
+    assert resolved[0][1]["term"] == "air:concept/dcat"
+    assert resolved[0][1]["key"] == bp.node_key("d1", "c1")
+
+    # the miss: flagged, never guessed
+    unresolved = [(q, p) for q, p in session.calls if "unresolved" in q]
+    assert len(unresolved) == 1
+    assert unresolved[0][1]["key"] == bp.node_key("d1", "c2")
+
+    # and the Term node itself is projected from the log, so the graph stays disposable
+    assert any("MERGE (t:Term" in q for q in qs)
+
+
+def test_the_reset_clears_term_nodes_so_a_replay_rebuilds_the_vocabulary(tmp_path, monkeypatch):
+    """`Term` is not a KG schema label, so it is not in `kg_labels` and the label reset misses
+    it. Left alone, a deprecated or renamed term would survive every replay forever — the
+    graph would stop being a projection of the log, which is invariant 1."""
+    from kg import eventlog
+    events = tmp_path / "events"
+    events.mkdir()
+    monkeypatch.setattr(eventlog, "_EVENTS_DIR", events)
+    _shard(events, 1, [])
+    session = _RecordingSession()
+    bp.build(session, ["Concept"], set())
+    deletes = [q for q, _ in session.calls if "DETACH DELETE" in q]
+    assert any("n:Term" in q for q in deletes), deletes
+
+
+def test_a_judged_link_is_written_from_its_event_not_recomputed(tmp_path, monkeypatch):
+    """§2.2's accepted merges are DECISIONS, so they are events and the loader replays them.
+    The deterministic link is a DERIVATION and is recomputed. Storing the derivation would
+    make the log disagree with itself the moment the vocabulary changed."""
+    from kg import eventlog
+    events = tmp_path / "events"
+    events.mkdir()
+    schema = tmp_path / "schema.yaml"
+    schema.write_text('schema_version: "0.3.5"\n', encoding="utf-8")
+    monkeypatch.setattr(eventlog, "_EVENTS_DIR", events)
+    monkeypatch.setattr(eventlog, "_SCHEMA_PATH", schema)
+    _shard(events, 1, [
+        {"event_type": "term_added", "term_id": "air:concept/x", "pref_label": "X",
+         "scope_note": "", "source": "graph: 2 Concept nodes", "alt_labels": [],
+         "node_labels": ["Concept"], "ts": "2026-09-05T00:00:00+00:00"},
+        {"event_type": "node_asserted", "doc_id": "d1", "provenance": {"model_id": "m"},
+         "payload": {"type": "Concept", "id": "c9", "item": {"name": "something else entirely"}}},
+        {"event_type": "term_link_judged", "node_key": "d1::c9", "term_id": "air:concept/x",
+         "verdict": "same", "confidence": 0.91, "ts": "2026-09-05T00:00:00+00:00"},
+    ])
+    session = _RecordingSession()
+    bp.build(session, ["Concept"], set())
+    linked = [(q, p) for q, p in session.calls if "RESOLVES_TO" in q]
+    assert len(linked) == 1 and linked[0][1]["term"] == "air:concept/x"
+    assert linked[0][1]["key"] == "d1::c9"
+
+
+def test_a_node_with_no_name_is_neither_resolved_nor_flagged_unresolved(tmp_path, monkeypatch):
+    """`Claim`, `Definition`, `Measure` and `Practice` nodes carry no `name` property at all —
+    a claim is a sentence, not a named entity. Flagging 11,526 of them `unresolved: true`
+    (which the first cut of §1.4 did) makes the residue read almost three times its real size
+    and invites someone to go looking for vocabulary terms that could never exist."""
+    from kg import eventlog
+    events = tmp_path / "events"
+    events.mkdir()
+    schema = tmp_path / "schema.yaml"
+    schema.write_text('schema_version: "0.3.5"\n', encoding="utf-8")
+    monkeypatch.setattr(eventlog, "_EVENTS_DIR", events)
+    monkeypatch.setattr(eventlog, "_SCHEMA_PATH", schema)
+    _shard(events, 1, [
+        {"event_type": "node_asserted", "doc_id": "d1", "provenance": {"model_id": "m"},
+         "payload": {"type": "Claim", "id": "cl1", "item": {"claim_text": "a sentence"}}},
+        {"event_type": "node_asserted", "doc_id": "d1", "provenance": {"model_id": "m"},
+         "payload": {"type": "Concept", "id": "c1", "item": {"name": "unknown term"}}},
+    ])
+    session = _RecordingSession()
+    counts = bp.build(session, ["Claim", "Concept"], set())
+    flagged = [p["key"] for q, p in session.calls if "unresolved" in q]
+    assert flagged == [bp.node_key("d1", "c1")], flagged
+    assert counts["unresolved"] == 1
+
+
+def test_a_node_that_resolves_two_ways_across_its_assertions_resolves_to_neither(tmp_path, monkeypatch):
+    """A node is asserted once per chunk that mentions it, and the extractor's spelling can
+    drift between assertions — `scientifc integrity` and `scientific integrity` on one node
+    key. Resolving per assertion writes BOTH edges and the node then claims two terms, which
+    is the ambiguity `vocab.resolve` refuses at the term level reappearing at the node level.
+    One node, one term, or none."""
+    from kg import eventlog
+    events = tmp_path / "events"
+    events.mkdir()
+    schema = tmp_path / "schema.yaml"
+    schema.write_text('schema_version: "0.3.5"\n', encoding="utf-8")
+    monkeypatch.setattr(eventlog, "_EVENTS_DIR", events)
+    monkeypatch.setattr(eventlog, "_SCHEMA_PATH", schema)
+    _shard(events, 1, [
+        {"event_type": "term_added", "term_id": "air:concept/a", "pref_label": "Alpha",
+         "scope_note": "", "source": "graph: 2 Concept nodes", "alt_labels": [],
+         "node_labels": ["Concept"], "ts": "2026-09-05T00:00:00+00:00"},
+        {"event_type": "term_added", "term_id": "air:concept/b", "pref_label": "Beta",
+         "scope_note": "", "source": "graph: 2 Concept nodes", "alt_labels": [],
+         "node_labels": ["Concept"], "ts": "2026-09-05T00:00:00+00:00"},
+        {"event_type": "node_asserted", "doc_id": "d1", "provenance": {"model_id": "m"},
+         "payload": {"type": "Concept", "id": "c1", "item": {"name": "Alpha"}}},
+        {"event_type": "node_asserted", "doc_id": "d1", "provenance": {"model_id": "m"},
+         "payload": {"type": "Concept", "id": "c1", "item": {"name": "Beta"}}},
+    ])
+    session = _RecordingSession()
+    counts = bp.build(session, ["Concept"], set())
+    assert [q for q, _ in session.calls if "RESOLVES_TO" in q] == []
+    assert counts["unresolved"] == 1
+    assert counts["resolved"] == 0
+
+
+def test_each_resolved_node_gets_exactly_one_resolves_to_write(tmp_path, monkeypatch):
+    """A node asserted five times must not produce five writes. The projection is already the
+    slowest step in the pipeline; one round-trip per assertion added 16,000 needless ones."""
+    from kg import eventlog
+    events = tmp_path / "events"
+    events.mkdir()
+    schema = tmp_path / "schema.yaml"
+    schema.write_text('schema_version: "0.3.5"\n', encoding="utf-8")
+    monkeypatch.setattr(eventlog, "_EVENTS_DIR", events)
+    monkeypatch.setattr(eventlog, "_SCHEMA_PATH", schema)
+    _shard(events, 1, [
+        {"event_type": "term_added", "term_id": "air:concept/a", "pref_label": "Alpha",
+         "scope_note": "", "source": "graph: 2 Concept nodes", "alt_labels": [],
+         "node_labels": ["Concept"], "ts": "2026-09-05T00:00:00+00:00"},
+    ] + [
+        {"event_type": "node_asserted", "doc_id": "d1", "provenance": {"model_id": "m"},
+         "payload": {"type": "Concept", "id": "c1", "item": {"name": "Alpha"}}}
+        for _ in range(5)
+    ])
+    session = _RecordingSession()
+    counts = bp.build(session, ["Concept"], set())
+    assert len([q for q, _ in session.calls if "RESOLVES_TO" in q]) == 1
+    assert counts["resolved"] == 1
