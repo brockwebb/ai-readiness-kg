@@ -1,0 +1,150 @@
+<!doctype html>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI-readiness framework — progress</title>
+<style>
+:root { --fg:#0f172a; --muted:#64748b; --line:#e2e8f0; --bg:#ffffff; }
+@media (prefers-color-scheme: dark) {
+  :root { --fg:#e2e8f0; --muted:#94a3b8; --line:#334155; --bg:#0f172a; } }
+* { box-sizing:border-box }
+body { margin:0; padding:2rem 1.25rem 4rem; background:var(--bg); color:var(--fg);
+  font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  max-width:900px; margin-inline:auto }
+h1 { font-size:1.5rem; margin:0 0 .25rem }
+.sub { color:var(--muted); margin:0 0 2rem }
+.cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:.75rem;
+  margin-bottom:2rem }
+.card { border:1px solid var(--line); border-radius:10px; padding:.85rem 1rem }
+.card b { display:block; font-size:1.6rem; font-weight:600 }
+.card span { color:var(--muted); font-size:.82rem }
+figure { margin:0 0 2rem }
+figcaption { font-weight:600; margin-bottom:.5rem }
+.lbl { font-size:11px; fill:var(--muted) }
+.inbar { font-size:11px; fill:#fff; font-weight:600 }
+.tot { font-size:11px; fill:var(--muted) }
+.legend { margin:.35rem 0 0; font-size:.8rem; color:var(--muted) }
+.legend span { margin-right:1rem; white-space:nowrap }
+.legend i { display:inline-block; width:10px; height:10px; border-radius:2px;
+  margin-right:.35rem; vertical-align:-1px }
+table { border-collapse:collapse; width:100%; font-size:.85rem }
+th,td { text-align:left; padding:.35rem .5rem; border-bottom:1px solid var(--line) }
+th { color:var(--muted); font-weight:600 }
+td.gap { color:#d97706 } td.ok { color:#059669 }
+.note { color:var(--muted); font-size:.85rem; border-left:3px solid var(--line);
+  padding-left:.85rem; margin:2rem 0 }
+.wrap { overflow-x:auto }
+</style>
+<h1>AI-readiness framework — progress</h1>
+<p class="sub">Coverage of the assessment instrument, 48 indicators across
+7 criteria. Generated 2026-09-06
+from <code>framework/ai_readiness_framework.json</code>.</p>
+
+<div class="cards">
+  <div class="card"><b>29/48</b>
+    <span>indicators with corpus evidence</span></div>
+  <div class="card"><b>2/48</b>
+    <span>measured</span></div>
+  <div class="card"><b>15/20</b>
+    <span>AUTO legs with a named collector</span></div>
+  <div class="card"><b>19</b>
+    <span>public-tier indicators</span></div>
+</div>
+
+<figure><figcaption>Indicators by criterion × measurement status</figcaption>
+<svg viewBox="0 0 640 226" role="img" aria-label="Indicators by criterion × measurement status" width="100%">
+<text x="124" y="20" text-anchor="end" class="lbl">A · ACCESSIBLE</text>
+<rect x="132.0" y="6" width="438.0" height="18" fill="#94a3b8"><title>A · ACCESSIBLE — specified: 11</title></rect>
+<text x="351.0" y="19" text-anchor="middle" class="inbar">11</text>
+<text x="576.0" y="19" class="tot">11</text>
+<text x="124" y="46" text-anchor="end" class="lbl">B · UNDERSTANDABLE</text>
+<rect x="132.0" y="32" width="238.9" height="18" fill="#94a3b8"><title>B · UNDERSTANDABLE — specified: 6</title></rect>
+<text x="251.5" y="45" text-anchor="middle" class="inbar">6</text>
+<text x="376.9" y="45" class="tot">6</text>
+<text x="124" y="72" text-anchor="end" class="lbl">C · ACCURATE</text>
+<rect x="132.0" y="58" width="199.1" height="18" fill="#94a3b8"><title>C · ACCURATE — specified: 5</title></rect>
+<text x="231.5" y="71" text-anchor="middle" class="inbar">5</text>
+<text x="337.1" y="71" class="tot">5</text>
+<text x="124" y="98" text-anchor="end" class="lbl">D · OPEN</text>
+<rect x="132.0" y="84" width="159.3" height="18" fill="#94a3b8"><title>D · OPEN — specified: 4</title></rect>
+<text x="211.6" y="97" text-anchor="middle" class="inbar">4</text>
+<text x="297.3" y="97" class="tot">4</text>
+<text x="124" y="124" text-anchor="end" class="lbl">E · TEVV loop</text>
+<rect x="132.0" y="110" width="358.4" height="18" fill="#94a3b8"><title>E · TEVV loop — specified: 9</title></rect>
+<text x="311.2" y="123" text-anchor="middle" class="inbar">9</text>
+<text x="496.4" y="123" class="tot">9</text>
+<text x="124" y="150" text-anchor="end" class="lbl">F · release engineering</text>
+<rect x="132.0" y="136" width="238.9" height="18" fill="#94a3b8"><title>F · release engineering — specified: 6</title></rect>
+<text x="251.5" y="149" text-anchor="middle" class="inbar">6</text>
+<text x="376.9" y="149" class="tot">6</text>
+<text x="124" y="176" text-anchor="end" class="lbl">G · FSS-derived constructs</text>
+<rect x="132.0" y="162" width="199.1" height="18" fill="#94a3b8"><title>G · FSS-derived constructs — specified: 5</title></rect>
+<text x="231.5" y="175" text-anchor="middle" class="inbar">5</text>
+<rect x="331.1" y="162" width="79.6" height="18" fill="#059669"><title>G · FSS-derived constructs — measured: 2</title></rect>
+<text x="370.9" y="175" text-anchor="middle" class="inbar">2</text>
+<text x="416.7" y="175" class="tot">7</text>
+</svg>
+<p class="legend"><span><i style="background:#94a3b8"></i>specified</span> <span><i style="background:#3b82f6"></i>harness_built</span> <span><i style="background:#059669"></i>measured</span></p></figure>
+<figure><figcaption>Evidenced vs gap, by criterion</figcaption>
+<svg viewBox="0 0 640 226" role="img" aria-label="Evidenced vs gap, by criterion" width="100%">
+<text x="124" y="20" text-anchor="end" class="lbl">A · ACCESSIBLE</text>
+<rect x="132.0" y="6" width="238.9" height="18" fill="#059669"><title>A · ACCESSIBLE — evidenced: 6</title></rect>
+<text x="251.5" y="19" text-anchor="middle" class="inbar">6</text>
+<rect x="370.9" y="6" width="199.1" height="18" fill="#d97706"><title>A · ACCESSIBLE — gap: 5</title></rect>
+<text x="470.5" y="19" text-anchor="middle" class="inbar">5</text>
+<text x="576.0" y="19" class="tot">11</text>
+<text x="124" y="46" text-anchor="end" class="lbl">B · UNDERSTANDABLE</text>
+<rect x="132.0" y="32" width="119.5" height="18" fill="#059669"><title>B · UNDERSTANDABLE — evidenced: 3</title></rect>
+<text x="191.7" y="45" text-anchor="middle" class="inbar">3</text>
+<rect x="251.5" y="32" width="119.5" height="18" fill="#d97706"><title>B · UNDERSTANDABLE — gap: 3</title></rect>
+<text x="311.2" y="45" text-anchor="middle" class="inbar">3</text>
+<text x="376.9" y="45" class="tot">6</text>
+<text x="124" y="72" text-anchor="end" class="lbl">C · ACCURATE</text>
+<rect x="132.0" y="58" width="159.3" height="18" fill="#059669"><title>C · ACCURATE — evidenced: 4</title></rect>
+<text x="211.6" y="71" text-anchor="middle" class="inbar">4</text>
+<rect x="291.3" y="58" width="39.8" height="18" fill="#d97706"><title>C · ACCURATE — gap: 1</title></rect>
+<text x="311.2" y="71" text-anchor="middle" class="inbar">1</text>
+<text x="337.1" y="71" class="tot">5</text>
+<text x="124" y="98" text-anchor="end" class="lbl">D · OPEN</text>
+<rect x="132.0" y="84" width="159.3" height="18" fill="#d97706"><title>D · OPEN — gap: 4</title></rect>
+<text x="211.6" y="97" text-anchor="middle" class="inbar">4</text>
+<text x="297.3" y="97" class="tot">4</text>
+<text x="124" y="124" text-anchor="end" class="lbl">E · TEVV loop</text>
+<rect x="132.0" y="110" width="278.7" height="18" fill="#059669"><title>E · TEVV loop — evidenced: 7</title></rect>
+<text x="271.4" y="123" text-anchor="middle" class="inbar">7</text>
+<rect x="410.7" y="110" width="79.6" height="18" fill="#d97706"><title>E · TEVV loop — gap: 2</title></rect>
+<text x="450.5" y="123" text-anchor="middle" class="inbar">2</text>
+<text x="496.4" y="123" class="tot">9</text>
+<text x="124" y="150" text-anchor="end" class="lbl">F · release engineering</text>
+<rect x="132.0" y="136" width="159.3" height="18" fill="#059669"><title>F · release engineering — evidenced: 4</title></rect>
+<text x="211.6" y="149" text-anchor="middle" class="inbar">4</text>
+<rect x="291.3" y="136" width="79.6" height="18" fill="#d97706"><title>F · release engineering — gap: 2</title></rect>
+<text x="331.1" y="149" text-anchor="middle" class="inbar">2</text>
+<text x="376.9" y="149" class="tot">6</text>
+<text x="124" y="176" text-anchor="end" class="lbl">G · FSS-derived constructs</text>
+<rect x="132.0" y="162" width="199.1" height="18" fill="#059669"><title>G · FSS-derived constructs — evidenced: 5</title></rect>
+<text x="231.5" y="175" text-anchor="middle" class="inbar">5</text>
+<rect x="331.1" y="162" width="79.6" height="18" fill="#d97706"><title>G · FSS-derived constructs — gap: 2</title></rect>
+<text x="370.9" y="175" text-anchor="middle" class="inbar">2</text>
+<text x="416.7" y="175" class="tot">7</text>
+</svg>
+<p class="legend"><span><i style="background:#059669"></i>evidenced</span> <span><i style="background:#d97706"></i>gap</span></p></figure>
+<figure><figcaption>Public-tier AUTO legs: named collector vs none known</figcaption>
+<svg viewBox="0 0 640 70" role="img" aria-label="Public-tier AUTO legs: named collector vs none known" width="100%">
+<text x="124" y="20" text-anchor="end" class="lbl">public-tier AUTO legs</text>
+<rect x="132.0" y="6" width="328.5" height="18" fill="#3b82f6"><title>public-tier AUTO legs — collector: 15</title></rect>
+<text x="296.2" y="19" text-anchor="middle" class="inbar">15</text>
+<rect x="460.5" y="6" width="109.5" height="18" fill="#d97706"><title>public-tier AUTO legs — none_known: 5</title></rect>
+<text x="515.2" y="19" text-anchor="middle" class="inbar">5</text>
+<text x="576.0" y="19" class="tot">20</text>
+</svg>
+<p class="legend"><span><i style="background:#3b82f6"></i>collector</span> <span><i style="background:#d97706"></i>none_known</span></p></figure>
+
+<p class="note"><strong>No composite, deliberately.</strong> Every number here is a fraction
+with its counts. A single readiness score embeds a weighting that only a stated purpose can
+justify, and no purpose has been stated — assessment protocol §3, and DD-036's two-leg rule
+for G1 carried up from the indicator to the framework.</p>
+
+<h2>Indicators</h2>
+<div class="wrap"><table>
+<thead><tr><th>Code</th><th>Construct</th><th>Type</th><th>Tier</th><th>Evidence</th>
+<th>Measurement</th></tr></thead>
+<tbody><tr><td>A1</td><td>Machine-readable formats</td><td>AUTO</td><td><code>public</code></td><td class='gap'>gap</td><td>specified</td></tr><tr><td>A10</td><td>Application/data-tool machine surface</td><td>AUTO</td><td><code>public</code></td><td class='ok'>evidenced</td><td>specified</td></tr><tr><td>A11</td><td>Effective crawler access (declared / enforced / observed)</td><td>AUTO + agency_instrumented</td><td><code>agency_instrumented</code></td><td class='ok'>evidenced</td><td>specified</td></tr><tr><td>A2</td><td>Programmatic access</td><td>AUTO/DOC</td><td><code>public</code></td><td class='gap'>gap</td><td>specified</td></tr><tr><td>A3</td><td>Bulk access</td><td>AUTO</td><td><code>public</code></td><td class='gap'>gap</td><td>specified</td></tr><tr><td>A4</td><td>Crawler/agent access</td><td>AUTO</td><td><code>public</code></td><td class='ok'>evidenced</td><td>specified</td></tr><tr><td>A5</td><td>Discoverability surface</td><td>AUTO</td><td><code>public</code></td><td class='ok'>evidenced</td><td>specified</td></tr><tr><td>A6</td><td>Structured markup</td><td>AUTO</td><td><code>public</code></td><td class='ok'>evidenced</td><td>specified</td></tr><tr><td>A7</td><td>Stable identifiers</td><td>DOC</td><td><code>agency_instrumented</code></td><td class='gap'>gap</td><td>specified</td></tr><tr><td>A8</td><td>Timeliness of surface</td><td>AUTO</td><td><code>public</code></td><td class='gap'>gap</td><td>specified</td></tr><tr><td>A9</td><td>M2M agent surface</td><td>AUTO</td><td><code>public</code></td><td class='ok'>evidenced</td><td>specified</td></tr><tr><td>B1</td><td>Variable-level semantics</td><td>DOC</td><td><code>agency_instrumented</code></td><td class='ok'>evidenced</td><td>specified</td></tr><tr><td>B2</td><td>Definitions surface</td><td>DOC</td><td><code>agency_instrumented</code></td><td class='ok'>evidenced</td><td>specified</td></tr><tr><td>B3</td><td>Methodology legibility</td><td>AUTO/DOC</td><td><code>public</code></td><td class='gap'>gap</td><td>specified</td></tr><tr><td>B4</td><td>Quality metadata</td><td>DOC</td><td><code>agency_instrumented</code></td><td class='ok'>evidenced</td><td>specified</td></tr><tr><td>B5</td><td>Semantic consistency</td><td>DOC</td><td><code>agency_instrumented</code></td><td class='gap'>gap</td><td>specified</td></tr><tr><td>B6</td><td>NL affordances</td><td>DOC</td><td><code>agency_instrumented</code></td><td class='gap'>gap</td><td>specified</td></tr><tr><td>C1</td><td>Retrieval-grounded QA accuracy</td><td>EVAL</td><td><code>paid</code></td><td class='ok'>evidenced</td><td>specified</td></tr><tr><td>C2</td><td>Faithfulness of AI restatement</td><td>EVAL</td><td><code>paid</code></td><td class='ok'>evidenced</td><td>specified</td></tr><tr><td>C3</td><td>Value-drift resistance</td><td>EVAL</td><td><code>paid</code></td><td class='gap'>gap</td><td>specified</td></tr><tr><td>C4</td><td>Citation quality</td><td>EVAL/AUTO</td><td><code>public</code></td><td class='ok'>evidenced</td><td>specified</td></tr><tr><td>C5</td><td>Readiness metrics baseline</td><td>DOC</td><td><code>agency_instrumented</code></td><td class='ok'>evidenced</td><td>specified</td></tr><tr><td>D1</td><td>License clarity</td><td>AUTO</td><td><code>public</code></td><td class='gap'>gap</td><td>specified</td></tr><tr><td>D2</td><td>Reuse permissions for AI</td><td>DOC</td><td><code>agency_instrumented</code></td><td class='gap'>gap</td><td>specified</td></tr><tr><td>D3</td><td>Provenance completeness</td><td>DOC</td><td><code>agency_instrumented</code></td><td class='gap'>gap</td><td>specified</td></tr><tr><td>D4</td><td>No dark data</td><td>AUTO</td><td><code>public</code></td><td class='gap'>gap</td><td>specified</td></tr><tr><td>E1</td><td>Verification vs validation split</td><td>DOC</td><td><code>agency_instrumented</code></td><td class='ok'>evidenced</td><td>specified</td></tr><tr><td>E2</td><td>Acceptance thresholds</td><td>DOC</td><td><code>agency_instrumented</code></td><td class='ok'>evidenced</td><td>specified</td></tr><tr><td>E3</td><td>Instrument versioning</td><td>DOC</td><td><code>agency_instrumented</code></td><td class='ok'>evidenced</td><td>specified</td></tr><tr><td>E4</td><td>Contamination policy</td><td>DOC</td><td><code>agency_instrumented</code></td><td class='ok'>evidenced</td><td>specified</td></tr><tr><td>E5</td><td>Positive controls</td><td>AUTO</td><td><code>public</code></td><td class='ok'>evidenced</td><td>specified</td></tr><tr><td>E6</td><td>Failure attribution</td><td>EVAL</td><td><code>paid</code></td><td class='gap'>gap</td><td>specified</td></tr><tr><td>E7</td><td>Corrective-action closure</td><td>DOC</td><td><code>agency_instrumented</code></td><td class='gap'>gap</td><td>specified</td></tr><tr><td>E8</td><td>Drift sentinels (golden questions)</td><td>AUTO/EVAL</td><td><code>paid</code></td><td class='ok'>evidenced</td><td>specified</td></tr><tr><td>E9</td><td>Adversarial evaluation (red team)</td><td>EVAL</td><td><code>paid</code></td><td class='ok'>evidenced</td><td>specified</td></tr><tr><td>F1</td><td>Pre-release gates</td><td>DOC</td><td><code>agency_instrumented</code></td><td class='ok'>evidenced</td><td>specified</td></tr><tr><td>F2</td><td>Contract stability</td><td>AUTO/DOC</td><td><code>public</code></td><td class='ok'>evidenced</td><td>specified</td></tr><tr><td>F3</td><td>Regression on vintage transition</td><td>AUTO</td><td><code>public</code></td><td class='gap'>gap</td><td>specified</td></tr><tr><td>F4</td><td>Change legibility</td><td>AUTO</td><td><code>public</code></td><td class='ok'>evidenced</td><td>specified</td></tr><tr><td>F5</td><td>Staged rollout</td><td>DOC</td><td><code>agency_instrumented</code></td><td class='gap'>gap</td><td>specified</td></tr><tr><td>F6</td><td>Release authenticity</td><td>AUTO</td><td><code>paid</code></td><td class='ok'>evidenced</td><td>specified</td></tr><tr><td>G1-D</td><td>Uncertainty legibility (two legs, scored as a vector)</td><td>AUTO</td><td><code>public</code></td><td class='ok'>evidenced</td><td>measured</td></tr><tr><td>G1-O</td><td>Uncertainty legibility (two legs, scored as a vector)</td><td>EVAL</td><td><code>paid</code></td><td class='ok'>evidenced</td><td>measured</td></tr><tr><td>G2</td><td>Revision semantics</td><td>DOC + EVAL</td><td><code>agency_instrumented</code></td><td class='gap'>gap</td><td>specified</td></tr><tr><td>G3</td><td>Classification/vintage identity</td><td>AUTO/DOC</td><td><code>public</code></td><td class='gap'>gap</td><td>specified</td></tr><tr><td>G4</td><td>Authority metadata</td><td>DOC</td><td><code>agency_instrumented</code></td><td class='ok'>evidenced</td><td>specified</td></tr><tr><td>G5</td><td>Disclosure semantics</td><td>DOC</td><td><code>agency_instrumented</code></td><td class='ok'>evidenced</td><td>specified</td></tr><tr><td>G6</td><td>Measurement-protocol provenance</td><td>DOC + EVAL</td><td><code>agency_instrumented</code></td><td class='ok'>evidenced</td><td>specified</td></tr></tbody></table></div>

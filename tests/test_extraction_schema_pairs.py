@@ -63,9 +63,17 @@ def test_v02_subtype_and_precedes():
     assert not schema_loader.is_valid_endpoint(SCHEMA, "subtype_of", "Framework", "Concept")
 
 
-def test_schema_version_is_v03_line():
-    # v0.3.x: patch releases (v0.3.1 added Document.is_platform_operator) keep the v0.3 catalogue
-    assert SCHEMA["schema_version"].startswith("0.3")
+def test_schema_version_is_on_the_current_line():
+    """v0.4.0 (2026-09-06, DD-051) adds the ASSESSMENT LAYER and `operationalized_by`.
+
+    This tripwire pins the line so a version bump is a deliberate edit here rather than a
+    silent drift. It fired on the 0.3 -> 0.4 bump, which is the behaviour it exists for. The
+    v0.3 catalogue itself is not re-asserted here — `tests/test_schema_append_only.py` holds
+    the append-only invariant, and duplicating it would give two places to update and one
+    place to forget.
+    """
+    major, minor = (int(x) for x in SCHEMA["schema_version"].split(".")[:2])
+    assert (major, minor) == (0, 4), SCHEMA["schema_version"]
 
 
 def test_v02_edges_carry_external_alignment():

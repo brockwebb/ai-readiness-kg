@@ -1,0 +1,69 @@
+{
+ "task": "cc_tasks/2026-09-06_freeze_and_framework_graph.md",
+ "note": "\u00a75 asks for `blocks` edges between these ResearchTasks so `seldon go` shows the path. Seldon's research domain does not permit it: `blocks` targets only [Result, PaperSection, Figure], `depends_on` only [Result, DataFile, Script], and the ONLY ResearchTask->ResearchTask relationship in seldon/domain/research.yaml is `superseded_by`, which asserts replacement rather than order. The ordering is therefore recorded HERE and restated in each task's own description, and seldon ResearchTask 505f4c61 is registered upstream for the missing relationship.",
+ "instrument_chain": [
+  {
+   "step": 1,
+   "id": "09745466-d401-48ce-ad46-18da781f698c",
+   "name": "harness-scaffold",
+   "then": "22fb59b2-fe41-43d4-a4e8-5f26e2ee26fc"
+  },
+  {
+   "step": 2,
+   "id": "22fb59b2-fe41-43d4-a4e8-5f26e2ee26fc",
+   "name": "scan-targets",
+   "then": "e3e38014-6b1e-4782-811d-af7e3ce7223a"
+  },
+  {
+   "step": 3,
+   "id": "e3e38014-6b1e-4782-811d-af7e3ce7223a",
+   "name": "scan-run",
+   "then": "c1ede3d9-f14f-4976-b5ee-2a2fb33df9c3"
+  },
+  {
+   "step": 4,
+   "id": "c1ede3d9-f14f-4976-b5ee-2a2fb33df9c3",
+   "name": "eda-and-charts",
+   "then": "2517cda8-1f4e-414d-bc7d-faaf7588bd79"
+  },
+  {
+   "step": 5,
+   "id": "2517cda8-1f4e-414d-bc7d-faaf7588bd79",
+   "name": "report-draft",
+   "then": "37476f34-386d-495c-b72e-e198c7de79b2"
+  }
+ ],
+ "er_debt_gate": {
+  "id": "37476f34-386d-495c-b72e-e198c7de79b2",
+  "name": "er_research_resumes",
+  "prerequisites": [
+   "43edd2cc-a536-4162-a5c6-25d98bd7f1ad",
+   "26214693-c962-406b-808f-d190d18a4a27",
+   "f9c5d054-2158-4492-8360-8ff89674be66",
+   "d9c26f0c-081b-41c7-9807-2b9f455712fa",
+   "4e132d0e-56a0-4d21-972c-f9007a622b39"
+  ]
+ },
+ "er_debt": [
+  {
+   "id": "43edd2cc-a536-4162-a5c6-25d98bd7f1ad",
+   "name": "full Phase B homograph pass on backfilled spans"
+  },
+  {
+   "id": "26214693-c962-406b-808f-d190d18a4a27",
+   "name": "token-set aliases + epoch-1 term dedupe"
+  },
+  {
+   "id": "f9c5d054-2158-4492-8360-8ff89674be66",
+   "name": "stratum-D band lowered to 0.70 through the judge"
+  },
+  {
+   "id": "d9c26f0c-081b-41c7-9807-2b9f455712fa",
+   "name": "the regold draw (allocation 2026-09-06b, seed 20260906)"
+  },
+  {
+   "id": "4e132d0e-56a0-4d21-972c-f9007a622b39",
+   "name": "Issue e21b9ab3 disposition"
+  }
+ ]
+}

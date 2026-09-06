@@ -1,0 +1,3570 @@
+{
+ "generated_from": "docs/crosswalk/usafacts_operationalization_skeleton.md",
+ "generated_by": "scripts/build_framework_graph.py",
+ "task": "cc_tasks/2026-09-06_freeze_and_framework_graph.md",
+ "schema_epoch": "0.4.0",
+ "counts": {
+  "criteria": 7,
+  "constructs": 47,
+  "indicators": 48,
+  "evidenced_by": 122,
+  "evidenced_by_internal": 17,
+  "gaps": 19,
+  "measurement_specs": 21,
+  "collectors_none_known": 5
+ },
+ "unparsed_rows": [],
+ "evidence_doc_ids_not_in_manifest": [
+  {
+   "indicator": "A1",
+   "doc_id": "acquisition_blocked"
+  },
+  {
+   "indicator": "C2",
+   "doc_id": "2026-08-27_chunked_vs_wholedoc_verdict.md"
+  },
+  {
+   "indicator": "G1-D",
+   "doc_id": "g1_preservation.py"
+  },
+  {
+   "indicator": "G1-D",
+   "doc_id": "g1sfc-2026-09-03"
+  },
+  {
+   "indicator": "G1-D",
+   "doc_id": "g1eval-2026-09-02"
+  },
+  {
+   "indicator": "G1-D",
+   "doc_id": "g1srp-2026-09-03"
+  }
+ ],
+ "nodes": [
+  {
+   "id": "crit:A",
+   "labels": [
+    "AssessmentCriterion"
+   ],
+   "properties": {
+    "code": "A",
+    "name": "ACCESSIBLE",
+    "anchor": "USAFacts anchor: machine-readable access matters most. FCSM bridge: Utility → accessibility, timeliness."
+   }
+  },
+  {
+   "id": "crit:B",
+   "labels": [
+    "AssessmentCriterion"
+   ],
+   "properties": {
+    "code": "B",
+    "name": "UNDERSTANDABLE",
+    "anchor": ""
+   }
+  },
+  {
+   "id": "crit:C",
+   "labels": [
+    "AssessmentCriterion"
+   ],
+   "properties": {
+    "code": "C",
+    "name": "ACCURATE",
+    "anchor": "USAFacts anchor: hold retrieval-paired systems to accuracy evaluations. FCSM bridge: Objectivity → accuracy, reliability. This is the EVAL-heavy criterion and the probe machinery's second life."
+   }
+  },
+  {
+   "id": "crit:D",
+   "labels": [
+    "AssessmentCriterion"
+   ],
+   "properties": {
+    "code": "D",
+    "name": "OPEN",
+    "anchor": ""
+   }
+  },
+  {
+   "id": "crit:E",
+   "labels": [
+    "AssessmentCriterion"
+   ],
+   "properties": {
+    "code": "E",
+    "name": "TEVV loop",
+    "anchor": ""
+   }
+  },
+  {
+   "id": "crit:F",
+   "labels": [
+    "AssessmentCriterion"
+   ],
+   "properties": {
+    "code": "F",
+    "name": "release engineering",
+    "anchor": ""
+   }
+  },
+  {
+   "id": "crit:G",
+   "labels": [
+    "AssessmentCriterion"
+   ],
+   "properties": {
+    "code": "G",
+    "name": "FSS-derived constructs",
+    "anchor": ""
+   }
+  },
+  {
+   "id": "con:A:machine-readable-formats",
+   "labels": [
+    "AssessmentConstruct"
+   ],
+   "properties": {
+    "name": "Machine-readable formats",
+    "criterion_code": "A"
+   }
+  },
+  {
+   "id": "ind:A1",
+   "labels": [
+    "AssessmentIndicator"
+   ],
+   "properties": {
+    "code": "A1",
+    "construct": "Machine-readable formats",
+    "indicator": "Product available as structured data (CSV/JSON/parquet), not PDF-only",
+    "type": "AUTO",
+    "tier": "public",
+    "tier_raw": "`public`",
+    "status": "draft",
+    "evidence_raw": "**gap** — named source (Commerce GenAI-Open-Data guidance) is `acquisition_blocked`, batch-017",
+    "measurement_status": "specified",
+    "gap": "**gap** — named source (Commerce GenAI-Open-Data guidance) is `acquisition_blocked`, batch-017",
+    "criterion_code": "A"
+   }
+  },
+  {
+   "id": "con:A:programmatic-access",
+   "labels": [
+    "AssessmentConstruct"
+   ],
+   "properties": {
+    "name": "Programmatic access",
+    "criterion_code": "A"
+   }
+  },
+  {
+   "id": "ind:A2",
+   "labels": [
+    "AssessmentIndicator"
+   ],
+   "properties": {
+    "code": "A2",
+    "construct": "Programmatic access",
+    "indicator": "Documented public API; auth model; rate limits stated",
+    "type": "AUTO/DOC",
+    "tier": "public",
+    "tier_raw": "`public`",
+    "status": "draft",
+    "evidence_raw": "**gap**",
+    "measurement_status": "specified",
+    "gap": "**gap**",
+    "criterion_code": "A"
+   }
+  },
+  {
+   "id": "con:A:bulk-access",
+   "labels": [
+    "AssessmentConstruct"
+   ],
+   "properties": {
+    "name": "Bulk access",
+    "criterion_code": "A"
+   }
+  },
+  {
+   "id": "ind:A3",
+   "labels": [
+    "AssessmentIndicator"
+   ],
+   "properties": {
+    "code": "A3",
+    "construct": "Bulk access",
+    "indicator": "Full-product bulk download exists and is linked from product page",
+    "type": "AUTO",
+    "tier": "public",
+    "tier_raw": "`public`",
+    "status": "draft",
+    "evidence_raw": "**gap**",
+    "measurement_status": "specified",
+    "gap": "**gap**",
+    "criterion_code": "A"
+   }
+  },
+  {
+   "id": "con:A:crawler-agent-access",
+   "labels": [
+    "AssessmentConstruct"
+   ],
+   "properties": {
+    "name": "Crawler/agent access",
+    "criterion_code": "A"
+   }
+  },
+  {
+   "id": "ind:A4",
+   "labels": [
+    "AssessmentIndicator"
+   ],
+   "properties": {
+    "code": "A4",
+    "construct": "Crawler/agent access",
+    "indicator": "robots.txt + AI-crawler policy permit retrieval; no soft-blocks on data paths",
+    "type": "AUTO",
+    "tier": "public",
+    "tier_raw": "`public`",
+    "status": "draft",
+    "evidence_raw": "`rfc-9309-robots-exclusion-protocol`; `google-robots-txt-intro`; `openai-crawlers-bots`; `anthropic-crawler-support-article`; `perplexity-crawlers`; `cloudflare-ai-crawl-control-manage-crawlers`",
+    "measurement_status": "specified",
+    "gap": null,
+    "criterion_code": "A"
+   }
+  },
+  {
+   "id": "con:A:discoverability-surface",
+   "labels": [
+    "AssessmentConstruct"
+   ],
+   "properties": {
+    "name": "Discoverability surface",
+    "criterion_code": "A"
+   }
+  },
+  {
+   "id": "ind:A5",
+   "labels": [
+    "AssessmentIndicator"
+   ],
+   "properties": {
+    "code": "A5",
+    "construct": "Discoverability surface",
+    "indicator": "llms.txt (or equivalent) present; sitemap covers data products",
+    "type": "AUTO",
+    "tier": "public",
+    "tier_raw": "`public`",
+    "status": "draft",
+    "evidence_raw": "`llmstxt-proposal`; `sitemaps-protocol`",
+    "measurement_status": "specified",
+    "gap": null,
+    "criterion_code": "A"
+   }
+  },
+  {
+   "id": "con:A:structured-markup",
+   "labels": [
+    "AssessmentConstruct"
+   ],
+   "properties": {
+    "name": "Structured markup",
+    "criterion_code": "A"
+   }
+  },
+  {
+   "id": "ind:A6",
+   "labels": [
+    "AssessmentIndicator"
+   ],
+   "properties": {
+    "code": "A6",
+    "construct": "Structured markup",
+    "indicator": "schema.org/Dataset (or DCAT/Croissant) markup valid on product pages",
+    "type": "AUTO",
+    "tier": "public",
+    "tier_raw": "`public`",
+    "status": "draft",
+    "evidence_raw": "`schema-org-dataset`; `w3c-dcat-3`; `mlcommons-croissant-spec`; `croissant-akhtar-2024-paper`",
+    "measurement_status": "specified",
+    "gap": null,
+    "criterion_code": "A"
+   }
+  },
+  {
+   "id": "con:A:stable-identifiers",
+   "labels": [
+    "AssessmentConstruct"
+   ],
+   "properties": {
+    "name": "Stable identifiers",
+    "criterion_code": "A"
+   }
+  },
+  {
+   "id": "ind:A7",
+   "labels": [
+    "AssessmentIndicator"
+   ],
+   "properties": {
+    "code": "A7",
+    "construct": "Stable identifiers",
+    "indicator": "Persistent URLs/DOIs for products and vintages",
+    "type": "DOC",
+    "tier": "agency_instrumented",
+    "tier_raw": "`agency_instrumented`",
+    "status": "draft",
+    "evidence_raw": "**gap**",
+    "measurement_status": "specified",
+    "gap": "**gap**",
+    "criterion_code": "A"
+   }
+  },
+  {
+   "id": "con:A:timeliness-of-surface",
+   "labels": [
+    "AssessmentConstruct"
+   ],
+   "properties": {
+    "name": "Timeliness of surface",
+    "criterion_code": "A"
+   }
+  },
+  {
+   "id": "ind:A8",
+   "labels": [
+    "AssessmentIndicator"
+   ],
+   "properties": {
+    "code": "A8",
+    "construct": "Timeliness of surface",
+    "indicator": "Release date machine-readable; latest-vintage pointer resolvable",
+    "type": "AUTO",
+    "tier": "public",
+    "tier_raw": "`public`",
+    "status": "draft",
+    "evidence_raw": "**gap**",
+    "measurement_status": "specified",
+    "gap": "**gap**",
+    "criterion_code": "A"
+   }
+  },
+  {
+   "id": "con:A:m2m-agent-surface",
+   "labels": [
+    "AssessmentConstruct"
+   ],
+   "properties": {
+    "name": "M2M agent surface",
+    "criterion_code": "A"
+   }
+  },
+  {
+   "id": "ind:A9",
+   "labels": [
+    "AssessmentIndicator"
+   ],
+   "properties": {
+    "code": "A9",
+    "construct": "M2M agent surface",
+    "indicator": "Product exposes a machine-first entry point (documented API plus MCP/A2A-class endpoint or equivalent agent protocol); human pages derivable from it",
+    "type": "AUTO",
+    "tier": "public",
+    "tier_raw": "`public`",
+    "status": "draft; frontier_deep track, as_of 2026-01",
+    "evidence_raw": "`wilkinson-2016-fair-guiding-principles`; internal existence proof: fss-policy-kg (MCP server)",
+    "measurement_status": "specified",
+    "gap": null,
+    "criterion_code": "A",
+    "frontier": true,
+    "as_of": "2026-01"
+   }
+  },
+  {
+   "id": "con:A:application-data-tool-machine-surface",
+   "labels": [
+    "AssessmentConstruct"
+   ],
+   "properties": {
+    "name": "Application/data-tool machine surface",
+    "criterion_code": "A"
+   }
+  },
+  {
+   "id": "ind:A10",
+   "labels": [
+    "AssessmentIndicator"
+   ],
+   "properties": {
+    "code": "A10",
+    "construct": "Application/data-tool machine surface",
+    "indicator": "Interactive data tools expose stable, directly-requestable deep links; meaningful states are not fragment-only or session-dependent; invalid routes return true 404/410, not HTTP-200 shell (soft-404); page-specific content present in raw HTML before JS execution",
+    "type": "AUTO",
+    "tier": "public",
+    "tier_raw": "`public`",
+    "status": "stub",
+    "evidence_raw": "internal draft: FSS Machine Diagnostic spec (SEO SME, 2026-09, operator-held; admission gated)",
+    "measurement_status": "specified",
+    "gap": null,
+    "criterion_code": "A"
+   }
+  },
+  {
+   "id": "con:A:effective-crawler-access-declared-enforced-observed",
+   "labels": [
+    "AssessmentConstruct"
+   ],
+   "properties": {
+    "name": "Effective crawler access (declared / enforced / observed)",
+    "criterion_code": "A"
+   }
+  },
+  {
+   "id": "ind:A11",
+   "labels": [
+    "AssessmentIndicator"
+   ],
+   "properties": {
+    "code": "A11",
+    "construct": "Effective crawler access (declared / enforced / observed)",
+    "indicator": "A4 upgraded from declared-policy check to three-layer comparison: declared (robots.txt/meta directives) vs enforced (edge/WAF/bot-management treatment) vs observed (actual crawler request logs). A mismatch between layers is itself the finding, not an error state",
+    "type": "AUTO + agency_instrumented",
+    "tier": "agency_instrumented",
+    "tier_raw": "`agency_instrumented` (observed leg requires edge logs; declared leg stays `public`)",
+    "status": "stub",
+    "evidence_raw": "`cloudflare-ai-crawl-control-manage-crawlers`; `rfc-9309-robots-exclusion-protocol`; internal draft: FSS Machine Diagnostic spec (as above)",
+    "measurement_status": "specified",
+    "gap": null,
+    "criterion_code": "A"
+   }
+  },
+  {
+   "id": "con:B:variable-level-semantics",
+   "labels": [
+    "AssessmentConstruct"
+   ],
+   "properties": {
+    "name": "Variable-level semantics",
+    "criterion_code": "B"
+   }
+  },
+  {
+   "id": "ind:B1",
+   "labels": [
+    "AssessmentIndicator"
+   ],
+   "properties": {
+    "code": "B1",
+    "construct": "Variable-level semantics",
+    "indicator": "Comprehensive variable-level metadata (labels, definitions, units, universes)",
+    "type": "DOC",
+    "tier": "agency_instrumented",
+    "tier_raw": "`agency_instrumented`",
+    "status": "draft",
+    "evidence_raw": "`fcsm-25-03`",
+    "measurement_status": "specified",
+    "gap": null,
+    "criterion_code": "B"
+   }
+  },
+  {
+   "id": "con:B:definitions-surface",
+   "labels": [
+    "AssessmentConstruct"
+   ],
+   "properties": {
+    "name": "Definitions surface",
+    "criterion_code": "B"
+   }
+  },
+  {
+   "id": "ind:B2",
+   "labels": [
+    "AssessmentIndicator"
+   ],
+   "properties": {
+    "code": "B2",
+    "construct": "Definitions surface",
+    "indicator": "Concept/term definitions published, versioned, linked from variables",
+    "type": "DOC",
+    "tier": "agency_instrumented",
+    "tier_raw": "`agency_instrumented`",
+    "status": "draft",
+    "evidence_raw": "`schema-org-definedterm`; `w3c-dcat-3`; internal: this KG's Definition layer",
+    "measurement_status": "specified",
+    "gap": null,
+    "criterion_code": "B"
+   }
+  },
+  {
+   "id": "con:B:methodology-legibility",
+   "labels": [
+    "AssessmentConstruct"
+   ],
+   "properties": {
+    "name": "Methodology legibility",
+    "criterion_code": "B"
+   }
+  },
+  {
+   "id": "ind:B3",
+   "labels": [
+    "AssessmentIndicator"
+   ],
+   "properties": {
+    "code": "B3",
+    "construct": "Methodology legibility",
+    "indicator": "Methodology docs in structured text (not PDF-only); summarizable by retrieval",
+    "type": "AUTO/DOC",
+    "tier": "public",
+    "tier_raw": "`public`",
+    "status": "draft",
+    "evidence_raw": "**gap**",
+    "measurement_status": "specified",
+    "gap": "**gap**",
+    "criterion_code": "B"
+   }
+  },
+  {
+   "id": "con:B:quality-metadata",
+   "labels": [
+    "AssessmentConstruct"
+   ],
+   "properties": {
+    "name": "Quality metadata",
+    "criterion_code": "B"
+   }
+  },
+  {
+   "id": "ind:B4",
+   "labels": [
+    "AssessmentIndicator"
+   ],
+   "properties": {
+    "code": "B4",
+    "construct": "Quality metadata",
+    "indicator": "Data-quality attributes (error measures, suppression rules, revisions policy) published as metadata, not prose",
+    "type": "DOC",
+    "tier": "agency_instrumented",
+    "tier_raw": "`agency_instrumented`",
+    "status": "draft",
+    "evidence_raw": "`fcsm-23-02-a-framework-for-data-quality-case-studies`; `fcsm-20-04-a-framework-for-data-quality`",
+    "measurement_status": "specified",
+    "gap": null,
+    "criterion_code": "B"
+   }
+  },
+  {
+   "id": "con:B:semantic-consistency",
+   "labels": [
+    "AssessmentConstruct"
+   ],
+   "properties": {
+    "name": "Semantic consistency",
+    "criterion_code": "B"
+   }
+  },
+  {
+   "id": "ind:B5",
+   "labels": [
+    "AssessmentIndicator"
+   ],
+   "properties": {
+    "code": "B5",
+    "construct": "Semantic consistency",
+    "indicator": "Same concept ⇒ same identifier across products/vintages",
+    "type": "DOC",
+    "tier": "agency_instrumented",
+    "tier_raw": "`agency_instrumented`",
+    "status": "draft",
+    "evidence_raw": "**gap**",
+    "measurement_status": "specified",
+    "gap": "**gap**",
+    "criterion_code": "B"
+   }
+  },
+  {
+   "id": "con:B:nl-affordances",
+   "labels": [
+    "AssessmentConstruct"
+   ],
+   "properties": {
+    "name": "NL affordances",
+    "criterion_code": "B"
+   }
+  },
+  {
+   "id": "ind:B6",
+   "labels": [
+    "AssessmentIndicator"
+   ],
+   "properties": {
+    "code": "B6",
+    "construct": "NL affordances",
+    "indicator": "Plain-language product summary present and current (the retrieval target)",
+    "type": "DOC",
+    "tier": "agency_instrumented",
+    "tier_raw": "`agency_instrumented`",
+    "status": "draft",
+    "evidence_raw": "**gap**",
+    "measurement_status": "specified",
+    "gap": "**gap**",
+    "criterion_code": "B"
+   }
+  },
+  {
+   "id": "con:C:retrieval-grounded-qa-accuracy",
+   "labels": [
+    "AssessmentConstruct"
+   ],
+   "properties": {
+    "name": "Retrieval-grounded QA accuracy",
+    "criterion_code": "C"
+   }
+  },
+  {
+   "id": "ind:C1",
+   "labels": [
+    "AssessmentIndicator"
+   ],
+   "properties": {
+    "code": "C1",
+    "construct": "Retrieval-grounded QA accuracy",
+    "indicator": "Benchmark question set per product; answer accuracy of a retrieval-paired model vs published values",
+    "type": "EVAL",
+    "tier": "paid",
+    "tier_raw": "`paid`",
+    "status": "draft",
+    "evidence_raw": "`from-accuracy-to-readiness-metrics-and-benchmarks-for-human`",
+    "measurement_status": "specified",
+    "gap": null,
+    "criterion_code": "C"
+   }
+  },
+  {
+   "id": "con:C:faithfulness-of-ai-restatement",
+   "labels": [
+    "AssessmentConstruct"
+   ],
+   "properties": {
+    "name": "Faithfulness of AI restatement",
+    "criterion_code": "C"
+   }
+  },
+  {
+   "id": "ind:C2",
+   "labels": [
+    "AssessmentIndicator"
+   ],
+   "properties": {
+    "code": "C2",
+    "construct": "Faithfulness of AI restatement",
+    "indicator": "Entailment-judged: do model statements about the product entail from product text? (probe protocol, re-aimed)",
+    "type": "EVAL",
+    "tier": "paid",
+    "tier_raw": "`paid`",
+    "status": "draft",
+    "evidence_raw": "internal: probe protocol, `2026-08-27_chunked_vs_wholedoc_verdict.md`",
+    "measurement_status": "specified",
+    "gap": null,
+    "criterion_code": "C"
+   }
+  },
+  {
+   "id": "con:C:value-drift-resistance",
+   "labels": [
+    "AssessmentConstruct"
+   ],
+   "properties": {
+    "name": "Value-drift resistance",
+    "criterion_code": "C"
+   }
+  },
+  {
+   "id": "ind:C3",
+   "labels": [
+    "AssessmentIndicator"
+   ],
+   "properties": {
+    "code": "C3",
+    "construct": "Value-drift resistance",
+    "indicator": "Version/vintage disambiguation: does retrieval return the vintage asked for?",
+    "type": "EVAL",
+    "tier": "paid",
+    "tier_raw": "`paid`",
+    "status": "draft",
+    "evidence_raw": "**gap**",
+    "measurement_status": "specified",
+    "gap": "**gap**",
+    "criterion_code": "C"
+   }
+  },
+  {
+   "id": "con:C:citation-quality",
+   "labels": [
+    "AssessmentConstruct"
+   ],
+   "properties": {
+    "name": "Citation quality",
+    "criterion_code": "C"
+   }
+  },
+  {
+   "id": "ind:C4",
+   "labels": [
+    "AssessmentIndicator"
+   ],
+   "properties": {
+    "code": "C4",
+    "construct": "Citation quality",
+    "indicator": "Generative engines citing the product cite the authoritative page (not aggregators)",
+    "type": "EVAL/AUTO",
+    "tier": "public",
+    "tier_raw": "`public`",
+    "status": "draft",
+    "evidence_raw": "`aggarwal-2024-geo-generative-engine-optimization`; `chen-2025-geo-how-to-dominate-ai-search`",
+    "measurement_status": "specified",
+    "gap": null,
+    "criterion_code": "C"
+   }
+  },
+  {
+   "id": "con:C:readiness-metrics-baseline",
+   "labels": [
+    "AssessmentConstruct"
+   ],
+   "properties": {
+    "name": "Readiness metrics baseline",
+    "criterion_code": "C"
+   }
+  },
+  {
+   "id": "ind:C5",
+   "labels": [
+    "AssessmentIndicator"
+   ],
+   "properties": {
+    "code": "C5",
+    "construct": "Readiness metrics baseline",
+    "indicator": "Product scored against published AI-data-readiness metrics",
+    "type": "DOC",
+    "tier": "agency_instrumented",
+    "tier_raw": "`agency_instrumented`",
+    "status": "draft",
+    "evidence_raw": "`aidrin-hiniduma-2024`; `data-readiness-for-ai-a-360-degree-survey`; `aidrin-2-0-a-framework-to-assess-data-readiness-for-ai`",
+    "measurement_status": "specified",
+    "gap": null,
+    "criterion_code": "C"
+   }
+  },
+  {
+   "id": "con:D:license-clarity",
+   "labels": [
+    "AssessmentConstruct"
+   ],
+   "properties": {
+    "name": "License clarity",
+    "criterion_code": "D"
+   }
+  },
+  {
+   "id": "ind:D1",
+   "labels": [
+    "AssessmentIndicator"
+   ],
+   "properties": {
+    "code": "D1",
+    "construct": "License clarity",
+    "indicator": "Explicit machine-readable license/terms on product and API",
+    "type": "AUTO",
+    "tier": "public",
+    "tier_raw": "`public`",
+    "status": "draft",
+    "evidence_raw": "**gap**",
+    "measurement_status": "specified",
+    "gap": "**gap**",
+    "criterion_code": "D"
+   }
+  },
+  {
+   "id": "con:D:reuse-permissions-for-ai",
+   "labels": [
+    "AssessmentConstruct"
+   ],
+   "properties": {
+    "name": "Reuse permissions for AI",
+    "criterion_code": "D"
+   }
+  },
+  {
+   "id": "ind:D2",
+   "labels": [
+    "AssessmentIndicator"
+   ],
+   "properties": {
+    "code": "D2",
+    "construct": "Reuse permissions for AI",
+    "indicator": "Terms address model training/retrieval use explicitly",
+    "type": "DOC",
+    "tier": "agency_instrumented",
+    "tier_raw": "`agency_instrumented`",
+    "status": "draft",
+    "evidence_raw": "**gap**",
+    "measurement_status": "specified",
+    "gap": "**gap**",
+    "criterion_code": "D"
+   }
+  },
+  {
+   "id": "con:D:provenance-completeness",
+   "labels": [
+    "AssessmentConstruct"
+   ],
+   "properties": {
+    "name": "Provenance completeness",
+    "criterion_code": "D"
+   }
+  },
+  {
+   "id": "ind:D3",
+   "labels": [
+    "AssessmentIndicator"
+   ],
+   "properties": {
+    "code": "D3",
+    "construct": "Provenance completeness",
+    "indicator": "Source lineage published (collection → processing → product)",
+    "type": "DOC",
+    "tier": "agency_instrumented",
+    "tier_raw": "`agency_instrumented`",
+    "status": "draft",
+    "evidence_raw": "**gap** — no PROV-O/W3C-PROV document is admitted; the skeleton's \"PROV-aligned standards nodes\" did not resolve",
+    "measurement_status": "specified",
+    "gap": "**gap** — no PROV-O/W3C-PROV document is admitted; the skeleton's \"PROV-aligned standards nodes\" did not resolve",
+    "criterion_code": "D"
+   }
+  },
+  {
+   "id": "con:D:no-dark-data",
+   "labels": [
+    "AssessmentConstruct"
+   ],
+   "properties": {
+    "name": "No dark data",
+    "criterion_code": "D"
+   }
+  },
+  {
+   "id": "ind:D4",
+   "labels": [
+    "AssessmentIndicator"
+   ],
+   "properties": {
+    "code": "D4",
+    "construct": "No dark data",
+    "indicator": "Statutory products enumerable from a public inventory (data.gov/agency inventory current)",
+    "type": "AUTO",
+    "tier": "public",
+    "tier_raw": "`public`",
+    "status": "draft",
+    "evidence_raw": "**gap**",
+    "measurement_status": "specified",
+    "gap": "**gap**",
+    "criterion_code": "D"
+   }
+  },
+  {
+   "id": "con:E:verification-vs-validation-split",
+   "labels": [
+    "AssessmentConstruct"
+   ],
+   "properties": {
+    "name": "Verification vs validation split",
+    "criterion_code": "E"
+   }
+  },
+  {
+   "id": "ind:E1",
+   "labels": [
+    "AssessmentIndicator"
+   ],
+   "properties": {
+    "code": "E1",
+    "construct": "Verification vs validation split",
+    "indicator": "Product spec conformance (AUTO/DOC set) reported separately from fit-for-use evals (EVAL set); a product cannot pass validation while failing verification",
+    "type": "DOC",
+    "tier": "agency_instrumented",
+    "tier_raw": "`agency_instrumented`",
+    "status": "draft",
+    "evidence_raw": "`nist-ai-risk-management-framework-ai-rmf`; internal: this instrument's A/B/D vs C split",
+    "measurement_status": "specified",
+    "gap": null,
+    "criterion_code": "E"
+   }
+  },
+  {
+   "id": "con:E:acceptance-thresholds",
+   "labels": [
+    "AssessmentConstruct"
+   ],
+   "properties": {
+    "name": "Acceptance thresholds",
+    "criterion_code": "E"
+   }
+  },
+  {
+   "id": "ind:E2",
+   "labels": [
+    "AssessmentIndicator"
+   ],
+   "properties": {
+    "code": "E2",
+    "construct": "Acceptance thresholds",
+    "indicator": "Published pass/fail thresholds per eval, pre-registered before results; threshold changes are versioned events",
+    "type": "DOC",
+    "tier": "agency_instrumented",
+    "tier_raw": "`agency_instrumented`",
+    "status": "draft",
+    "evidence_raw": "internal: methodology §3; `nist-ai-rmf-playbook`",
+    "measurement_status": "specified",
+    "gap": null,
+    "criterion_code": "E"
+   }
+  },
+  {
+   "id": "con:E:instrument-versioning",
+   "labels": [
+    "AssessmentConstruct"
+   ],
+   "properties": {
+    "name": "Instrument versioning",
+    "criterion_code": "E"
+   }
+  },
+  {
+   "id": "ind:E3",
+   "labels": [
+    "AssessmentIndicator"
+   ],
+   "properties": {
+    "code": "E3",
+    "construct": "Instrument versioning",
+    "indicator": "Eval sets and rubrics carry versions; results never pooled across versions",
+    "type": "DOC",
+    "tier": "agency_instrumented",
+    "tier_raw": "`agency_instrumented`",
+    "status": "draft",
+    "evidence_raw": "internal: methodology §4 and §7.6 (instrument-version citation rule)",
+    "measurement_status": "specified",
+    "gap": null,
+    "criterion_code": "E"
+   }
+  },
+  {
+   "id": "con:E:contamination-policy",
+   "labels": [
+    "AssessmentConstruct"
+   ],
+   "properties": {
+    "name": "Contamination policy",
+    "criterion_code": "E"
+   }
+  },
+  {
+   "id": "ind:E4",
+   "labels": [
+    "AssessmentIndicator"
+   ],
+   "properties": {
+    "code": "E4",
+    "construct": "Contamination policy",
+    "indicator": "Public eval sets have a held-out rotation; publication schedule assumes training-set leakage within one model generation",
+    "type": "DOC",
+    "tier": "agency_instrumented",
+    "tier_raw": "`agency_instrumented`",
+    "status": "draft",
+    "evidence_raw": "`sainz-2023-llm-data-contamination`",
+    "measurement_status": "specified",
+    "gap": null,
+    "criterion_code": "E"
+   }
+  },
+  {
+   "id": "con:E:positive-controls",
+   "labels": [
+    "AssessmentConstruct"
+   ],
+   "properties": {
+    "name": "Positive controls",
+    "criterion_code": "E"
+   }
+  },
+  {
+   "id": "ind:E5",
+   "labels": [
+    "AssessmentIndicator"
+   ],
+   "properties": {
+    "code": "E5",
+    "construct": "Positive controls",
+    "indicator": "Seeded known-bad items (canaries/decoys) in every continuous-eval cycle; a cycle with zero fired controls is INVALID, not passing",
+    "type": "AUTO",
+    "tier": "public",
+    "tier_raw": "`public`",
+    "status": "draft",
+    "evidence_raw": "internal: DD-019 decoy discipline; methodology §7.5",
+    "measurement_status": "specified",
+    "gap": null,
+    "criterion_code": "E"
+   }
+  },
+  {
+   "id": "con:E:failure-attribution",
+   "labels": [
+    "AssessmentConstruct"
+   ],
+   "properties": {
+    "name": "Failure attribution",
+    "criterion_code": "E"
+   }
+  },
+  {
+   "id": "ind:E6",
+   "labels": [
+    "AssessmentIndicator"
+   ],
+   "properties": {
+    "code": "E6",
+    "construct": "Failure attribution",
+    "indicator": "Discrepancy taxonomy localizing failures to retrieval / vintage / metadata / model; each stage instrumented",
+    "type": "EVAL",
+    "tier": "paid",
+    "tier_raw": "`paid`",
+    "status": "draft",
+    "evidence_raw": "**gap**",
+    "measurement_status": "specified",
+    "gap": "**gap**",
+    "criterion_code": "E"
+   }
+  },
+  {
+   "id": "con:E:corrective-action-closure",
+   "labels": [
+    "AssessmentConstruct"
+   ],
+   "properties": {
+    "name": "Corrective-action closure",
+    "criterion_code": "E"
+   }
+  },
+  {
+   "id": "ind:E7",
+   "labels": [
+    "AssessmentIndicator"
+   ],
+   "properties": {
+    "code": "E7",
+    "construct": "Corrective-action closure",
+    "indicator": "Documented path from failed eval back into the data product (metadata fix, vintage pointer, dictionary entry) with re-test; mean-time-to-closure tracked",
+    "type": "DOC",
+    "tier": "agency_instrumented",
+    "tier_raw": "`agency_instrumented`",
+    "status": "draft",
+    "evidence_raw": "**gap**",
+    "measurement_status": "specified",
+    "gap": "**gap**",
+    "criterion_code": "E"
+   }
+  },
+  {
+   "id": "con:E:drift-sentinels-golden-questions",
+   "labels": [
+    "AssessmentConstruct"
+   ],
+   "properties": {
+    "name": "Drift sentinels (golden questions)",
+    "criterion_code": "E"
+   }
+  },
+  {
+   "id": "ind:E8",
+   "labels": [
+    "AssessmentIndicator"
+   ],
+   "properties": {
+    "code": "E8",
+    "construct": "Drift sentinels (golden questions)",
+    "indicator": "Versioned golden question/answer sets re-run on schedule against the product surface; baseline deltas alarmed; state fidelity across product versions measured, not assumed",
+    "type": "AUTO/EVAL",
+    "tier": "paid",
+    "tier_raw": "`paid`",
+    "status": "draft",
+    "evidence_raw": "`webb-2026-state-fidelity-validity`",
+    "measurement_status": "specified",
+    "gap": null,
+    "criterion_code": "E"
+   }
+  },
+  {
+   "id": "con:E:adversarial-evaluation-red-team",
+   "labels": [
+    "AssessmentConstruct"
+   ],
+   "properties": {
+    "name": "Adversarial evaluation (red team)",
+    "criterion_code": "E"
+   }
+  },
+  {
+   "id": "ind:E9",
+   "labels": [
+    "AssessmentIndicator"
+   ],
+   "properties": {
+    "code": "E9",
+    "construct": "Adversarial evaluation (red team)",
+    "indicator": "Standing adversarial bank: vintage traps, confusable series, unit traps, DP-noise misreads, suppression probes; plus surface red team — misparse and injection resistance of pages/markup/llms.txt. Reported as break modes, not just pass rates",
+    "type": "EVAL",
+    "tier": "paid",
+    "tier_raw": "`paid`",
+    "status": "draft",
+    "evidence_raw": "`nist-generative-ai-profile-ai-600-1`; `nist-ai-risk-management-framework-ai-rmf`",
+    "measurement_status": "specified",
+    "gap": null,
+    "criterion_code": "E"
+   }
+  },
+  {
+   "id": "con:F:pre-release-gates",
+   "labels": [
+    "AssessmentConstruct"
+   ],
+   "properties": {
+    "name": "Pre-release gates",
+    "criterion_code": "F"
+   }
+  },
+  {
+   "id": "ind:F1",
+   "labels": [
+    "AssessmentIndicator"
+   ],
+   "properties": {
+    "code": "F1",
+    "construct": "Pre-release gates",
+    "indicator": "New releases pass a published expectation suite (schema validity, row/total sanity, identifier persistence) before going live",
+    "type": "DOC",
+    "tier": "agency_instrumented",
+    "tier_raw": "`agency_instrumented`",
+    "status": "draft",
+    "evidence_raw": "`odcs-open-data-contract-standard`",
+    "measurement_status": "specified",
+    "gap": null,
+    "criterion_code": "F"
+   }
+  },
+  {
+   "id": "con:F:contract-stability",
+   "labels": [
+    "AssessmentConstruct"
+   ],
+   "properties": {
+    "name": "Contract stability",
+    "criterion_code": "F"
+   }
+  },
+  {
+   "id": "ind:F2",
+   "labels": [
+    "AssessmentIndicator"
+   ],
+   "properties": {
+    "code": "F2",
+    "construct": "Contract stability",
+    "indicator": "API/schema changes are versioned; breaking changes announced with deprecation windows; compatibility checked mechanically",
+    "type": "AUTO/DOC",
+    "tier": "public",
+    "tier_raw": "`public`",
+    "status": "draft",
+    "evidence_raw": "`odcs-open-data-contract-standard`",
+    "measurement_status": "specified",
+    "gap": null,
+    "criterion_code": "F"
+   }
+  },
+  {
+   "id": "con:F:regression-on-vintage-transition",
+   "labels": [
+    "AssessmentConstruct"
+   ],
+   "properties": {
+    "name": "Regression on vintage transition",
+    "criterion_code": "F"
+   }
+  },
+  {
+   "id": "ind:F3",
+   "labels": [
+    "AssessmentIndicator"
+   ],
+   "properties": {
+    "code": "F3",
+    "construct": "Regression on vintage transition",
+    "indicator": "Time-series identifiers, geography codes, and endpoints survive a new vintage or a crosswalk is published; tested per release",
+    "type": "AUTO",
+    "tier": "public",
+    "tier_raw": "`public`",
+    "status": "draft",
+    "evidence_raw": "**gap**",
+    "measurement_status": "specified",
+    "gap": "**gap**",
+    "criterion_code": "F"
+   }
+  },
+  {
+   "id": "con:F:change-legibility",
+   "labels": [
+    "AssessmentConstruct"
+   ],
+   "properties": {
+    "name": "Change legibility",
+    "criterion_code": "F"
+   }
+  },
+  {
+   "id": "ind:F4",
+   "labels": [
+    "AssessmentIndicator"
+   ],
+   "properties": {
+    "code": "F4",
+    "construct": "Change legibility",
+    "indicator": "Machine-readable changelog per release (what changed, why, revision class); webhooks/push for high-frequency products",
+    "type": "AUTO",
+    "tier": "public",
+    "tier_raw": "`public`",
+    "status": "draft",
+    "evidence_raw": "`usafacts-ai-ready-data-guide`",
+    "measurement_status": "specified",
+    "gap": null,
+    "criterion_code": "F"
+   }
+  },
+  {
+   "id": "con:F:staged-rollout",
+   "labels": [
+    "AssessmentConstruct"
+   ],
+   "properties": {
+    "name": "Staged rollout",
+    "criterion_code": "F"
+   }
+  },
+  {
+   "id": "ind:F5",
+   "labels": [
+    "AssessmentIndicator"
+   ],
+   "properties": {
+    "code": "F5",
+    "construct": "Staged rollout",
+    "indicator": "Canary/staging surface for major product changes; AI-consumer regression run before promotion",
+    "type": "DOC",
+    "tier": "agency_instrumented",
+    "tier_raw": "`agency_instrumented`",
+    "status": "draft",
+    "evidence_raw": "**gap**",
+    "measurement_status": "specified",
+    "gap": "**gap**",
+    "criterion_code": "F"
+   }
+  },
+  {
+   "id": "con:F:release-authenticity",
+   "labels": [
+    "AssessmentConstruct"
+   ],
+   "properties": {
+    "name": "Release authenticity",
+    "criterion_code": "F"
+   }
+  },
+  {
+   "id": "ind:F6",
+   "labels": [
+    "AssessmentIndicator"
+   ],
+   "properties": {
+    "code": "F6",
+    "construct": "Release authenticity",
+    "indicator": "Signed releases / provenance attestations so downstream copies are traceable to the authoritative artifact (SLSA-class, adapted)",
+    "type": "AUTO",
+    "tier": "paid",
+    "tier_raw": "`paid`",
+    "status": "`paid`-tier candidate",
+    "evidence_raw": "`slsa-specification-v1-0`",
+    "measurement_status": "specified",
+    "gap": null,
+    "criterion_code": "F"
+   }
+  },
+  {
+   "id": "con:G:uncertainty-legibility-two-legs-scored-as-a-vector",
+   "labels": [
+    "AssessmentConstruct"
+   ],
+   "properties": {
+    "name": "Uncertainty legibility (two legs, scored as a vector)",
+    "criterion_code": "G"
+   }
+  },
+  {
+   "id": "ind:G1-D",
+   "labels": [
+    "AssessmentIndicator"
+   ],
+   "properties": {
+    "code": "G1-D",
+    "construct": "Uncertainty legibility (two legs, scored as a vector)",
+    "indicator": "**G1-D (declared)** — error measures (MOEs, CVs, DP noise parameters) present as structured fields beside the estimates on the product surface, not as footnotes (`assessment/harness/probes/g1_declared.py`); unchanged.",
+    "type": "AUTO",
+    "tier": "public",
+    "tier_raw": "`public`",
+    "status": "v2 harness, frozen for the pilot (DD-036)",
+    "evidence_raw": "`fcsm-23-02-a-framework-for-data-quality-case-studies`; DD-033 (v0 harness: `assessment/harness/probes/g1_declared.py`, `g1_preservation.py`); prior art (memo 2026-09-02): `du-2026-possible-or-definite`, `peters-2025-generalization-bias-llm-summarization`, `lee-2026-when-summaries-distort-decisions`, `zhao-2020-reducing-quantity-hallucinations`, `cao-2024-multimodal-long-form-summarization-financial-reports`, `zhou-2026-loomsum-table-grounded-faithfulness`, `venktesh-2024-quantemp-numerical-claims`, `min-2023-factscore`, `van-der-bles-2019-communicating-uncertainty`, `manski-2015-communicating-uncertainty-official-economic-statistics`, `mazzi-2021-measuring-communicating-uncertainty-official-economic-statistics`, `census-acs-general-handbook-2020`, `ons-uncertainty-and-how-we-measure-it`, `statcan-quality-guidelines-6th-edition`, `ebu-bbc-2025-news-integrity-ai-assistants`, `radhakrishnan-2024-knowing-when-to-ask-data-commons`, `suleymanli-2025-llms-charts-official-statistics`; DP: `census-2020-disclosure-avoidance-handbook-2021`; DD-034 (parser v1, sealed-holdout readiness); suppression / reliability-flag rules: `nchs-2017-data-presentation-standards-proportions`, `nchs-2023-data-presentation-standards-rates-counts`, `statcan-71-543-g-guide-labour-force-survey-2025`, `census-acs-data-suppression-rules`; DD-035 (v2: product surfaces × compression, families, binding, control arm); DD-036 (instrument frozen at v2 for the January pilot; two-leg G1; reviewer-calibration protocol); product surfaces (epoch `g1sfc-2026-09-03`, captured as served): `census-api-acs5-2023-b19013-counties-colorado`, `census-api-acs5-2023-b19013-counties-idaho`, `statcan-14-10-0287-01-lfs-2026-07-provinces-estimate-se-csv`, `statcan-14-10-0287-01-lfs-2025-12-provinces-estimate-se-csv`, `statcan-14-10-0287-01-cube-metadata-csv`, `statcan-13-10-0096-01-cchs-2022-provinces-percent-ci-csv`, `statcan-13-10-0096-01-cube-metadata-csv`, `statcan-13-10-0113-01-cchs-2021-2022-quebec-health-regions-percent-ci-csv`, `statcan-13-10-0113-01-cube-metadata-csv`, `nchs-data-brief-530-perinatal-mortality-2022-2023`, `nchs-data-brief-500-dental-visits-adults-65-2022`, `nchs-data-brief-515-high-total-cholesterol-2021-2023`, `bls-employment-situation-2026-08-news-release`, `bls-employment-situation-2026-05-news-release-archive`, `census-quickfacts-denver-county-colorado`, `census-quickfacts-denver-county-colorado-csv`, `census-api-dec2020-dhc-p1-counties-colorado`; admissions behind the fixtures, by epoch: 17 prior-art sources (`g1eval-2026-09-02`, the memo), 4 suppression / reliability-flag producer rules (`g1srp-2026-09-03`), 17 product surfaces (`g1sfc-2026-09-03`, listed above); pilot execution records: `cc_tasks/2026-09-02_g1_eval_probe_family_v0_RESULT.md`, `cc_tasks/2026-09-03_g1_eval_v1_parser_fullgrid_errata_RESULT.md`, `cc_tasks/2026-09-03_g1_eval_v2_product_surfaces_compression_RESULT.md`",
+    "measurement_status": "measured",
+    "gap": null,
+    "criterion_code": "G",
+    "g1_leg_of": "G1"
+   }
+  },
+  {
+   "id": "ind:G1-O",
+   "labels": [
+    "AssessmentIndicator"
+   ],
+   "properties": {
+    "code": "G1-O",
+    "construct": "Uncertainty legibility (two legs, scored as a vector)",
+    "indicator": "**G1-O (observed)** — the family preservation rate (the L3+ share of scored qualifier families, D9) when the pinned consumer restates that same captured surface at indirect compression `none`, reported per surface with the `unparseable` share and the `short` / `tight` rates beside it, every record stamped with consumer, prompt epoch, `parser_version` and `scorer_version` (`g1_preservation.py`). The two legs are reported as a vector and are never composited (protocol §3). **No product-level PASS/PARTIAL/FAIL in v0.2.x:** the rate and its Wilson interval are the score until the January calibration run sets a boundary. Compression is a reported condition, not a scored one, until intended use says which condition the consumer of the assessment cares about",
+    "type": "EVAL",
+    "tier": "paid",
+    "tier_raw": "`paid`",
+    "status": "v2 harness, frozen for the pilot (DD-036)",
+    "evidence_raw": "`fcsm-23-02-a-framework-for-data-quality-case-studies`; DD-033 (v0 harness: `assessment/harness/probes/g1_declared.py`, `g1_preservation.py`); prior art (memo 2026-09-02): `du-2026-possible-or-definite`, `peters-2025-generalization-bias-llm-summarization`, `lee-2026-when-summaries-distort-decisions`, `zhao-2020-reducing-quantity-hallucinations`, `cao-2024-multimodal-long-form-summarization-financial-reports`, `zhou-2026-loomsum-table-grounded-faithfulness`, `venktesh-2024-quantemp-numerical-claims`, `min-2023-factscore`, `van-der-bles-2019-communicating-uncertainty`, `manski-2015-communicating-uncertainty-official-economic-statistics`, `mazzi-2021-measuring-communicating-uncertainty-official-economic-statistics`, `census-acs-general-handbook-2020`, `ons-uncertainty-and-how-we-measure-it`, `statcan-quality-guidelines-6th-edition`, `ebu-bbc-2025-news-integrity-ai-assistants`, `radhakrishnan-2024-knowing-when-to-ask-data-commons`, `suleymanli-2025-llms-charts-official-statistics`; DP: `census-2020-disclosure-avoidance-handbook-2021`; DD-034 (parser v1, sealed-holdout readiness); suppression / reliability-flag rules: `nchs-2017-data-presentation-standards-proportions`, `nchs-2023-data-presentation-standards-rates-counts`, `statcan-71-543-g-guide-labour-force-survey-2025`, `census-acs-data-suppression-rules`; DD-035 (v2: product surfaces × compression, families, binding, control arm); DD-036 (instrument frozen at v2 for the January pilot; two-leg G1; reviewer-calibration protocol); product surfaces (epoch `g1sfc-2026-09-03`, captured as served): `census-api-acs5-2023-b19013-counties-colorado`, `census-api-acs5-2023-b19013-counties-idaho`, `statcan-14-10-0287-01-lfs-2026-07-provinces-estimate-se-csv`, `statcan-14-10-0287-01-lfs-2025-12-provinces-estimate-se-csv`, `statcan-14-10-0287-01-cube-metadata-csv`, `statcan-13-10-0096-01-cchs-2022-provinces-percent-ci-csv`, `statcan-13-10-0096-01-cube-metadata-csv`, `statcan-13-10-0113-01-cchs-2021-2022-quebec-health-regions-percent-ci-csv`, `statcan-13-10-0113-01-cube-metadata-csv`, `nchs-data-brief-530-perinatal-mortality-2022-2023`, `nchs-data-brief-500-dental-visits-adults-65-2022`, `nchs-data-brief-515-high-total-cholesterol-2021-2023`, `bls-employment-situation-2026-08-news-release`, `bls-employment-situation-2026-05-news-release-archive`, `census-quickfacts-denver-county-colorado`, `census-quickfacts-denver-county-colorado-csv`, `census-api-dec2020-dhc-p1-counties-colorado`; admissions behind the fixtures, by epoch: 17 prior-art sources (`g1eval-2026-09-02`, the memo), 4 suppression / reliability-flag producer rules (`g1srp-2026-09-03`), 17 product surfaces (`g1sfc-2026-09-03`, listed above); pilot execution records: `cc_tasks/2026-09-02_g1_eval_probe_family_v0_RESULT.md`, `cc_tasks/2026-09-03_g1_eval_v1_parser_fullgrid_errata_RESULT.md`, `cc_tasks/2026-09-03_g1_eval_v2_product_surfaces_compression_RESULT.md`",
+    "measurement_status": "measured",
+    "gap": null,
+    "criterion_code": "G",
+    "g1_leg_of": "G1"
+   }
+  },
+  {
+   "id": "con:G:revision-semantics",
+   "labels": [
+    "AssessmentConstruct"
+   ],
+   "properties": {
+    "name": "Revision semantics",
+    "criterion_code": "G"
+   }
+  },
+  {
+   "id": "ind:G2",
+   "labels": [
+    "AssessmentIndicator"
+   ],
+   "properties": {
+    "code": "G2",
+    "construct": "Revision semantics",
+    "indicator": "Revision status machine-readable per value (preliminary/revised/final/benchmark), with scheduled-revision dates; EVAL: vintage disambiguation (ties C3)",
+    "type": "DOC + EVAL",
+    "tier": "agency_instrumented",
+    "tier_raw": "`agency_instrumented`",
+    "status": "draft",
+    "evidence_raw": "**gap**",
+    "measurement_status": "specified",
+    "gap": "**gap**",
+    "criterion_code": "G"
+   }
+  },
+  {
+   "id": "con:G:classification-vintage-identity",
+   "labels": [
+    "AssessmentConstruct"
+   ],
+   "properties": {
+    "name": "Classification/vintage identity",
+    "criterion_code": "G"
+   }
+  },
+  {
+   "id": "ind:G3",
+   "labels": [
+    "AssessmentIndicator"
+   ],
+   "properties": {
+    "code": "G3",
+    "construct": "Classification/vintage identity",
+    "indicator": "Stable series IDs; machine-readable crosswalks when classifications or geographies change (industry codes, boundary revisions)",
+    "type": "AUTO/DOC",
+    "tier": "public",
+    "tier_raw": "`public`",
+    "status": "draft",
+    "evidence_raw": "**gap**",
+    "measurement_status": "specified",
+    "gap": "**gap**",
+    "criterion_code": "G"
+   }
+  },
+  {
+   "id": "con:G:authority-metadata",
+   "labels": [
+    "AssessmentConstruct"
+   ],
+   "properties": {
+    "name": "Authority metadata",
+    "criterion_code": "G"
+   }
+  },
+  {
+   "id": "ind:G4",
+   "labels": [
+    "AssessmentIndicator"
+   ],
+   "properties": {
+    "code": "G4",
+    "construct": "Authority metadata",
+    "indicator": "Issuing authority, statutory mandate, and statistical-vs-administrative provenance carried as structured metadata — the trust signal AI rankers need to prefer authoritative sources over aggregators",
+    "type": "DOC",
+    "tier": "agency_instrumented",
+    "tier_raw": "`agency_instrumented`",
+    "status": "draft",
+    "evidence_raw": "`statistical-policy-working-paper-46-data-quality-assessment`; `fcsm-19-01-transparent-reporting-for-integrated-data-quality`",
+    "measurement_status": "specified",
+    "gap": null,
+    "criterion_code": "G"
+   }
+  },
+  {
+   "id": "con:G:disclosure-semantics",
+   "labels": [
+    "AssessmentConstruct"
+   ],
+   "properties": {
+    "name": "Disclosure semantics",
+    "criterion_code": "G"
+   }
+  },
+  {
+   "id": "ind:G5",
+   "labels": [
+    "AssessmentIndicator"
+   ],
+   "properties": {
+    "code": "G5",
+    "construct": "Disclosure semantics",
+    "indicator": "Suppression and disclosure-avoidance documented machine-readably with unique identifiers (strengthens the guide's own bullet from prose to spec)",
+    "type": "DOC",
+    "tier": "agency_instrumented",
+    "tier_raw": "`agency_instrumented`",
+    "status": "draft",
+    "evidence_raw": "`usafacts-ai-ready-data-guide`",
+    "measurement_status": "specified",
+    "gap": null,
+    "criterion_code": "G"
+   }
+  },
+  {
+   "id": "con:G:measurement-protocol-provenance",
+   "labels": [
+    "AssessmentConstruct"
+   ],
+   "properties": {
+    "name": "Measurement-protocol provenance",
+    "criterion_code": "G"
+   }
+  },
+  {
+   "id": "ind:G6",
+   "labels": [
+    "AssessmentIndicator"
+   ],
+   "properties": {
+    "code": "G6",
+    "construct": "Measurement-protocol provenance",
+    "indicator": "Collection instrument/protocol carried as a versioned epoch on the series; changes annotated machine-readably with reason and inter-epoch crosswalk (SDMX break-in-series class metadata). The consumer-side test: an AI system asked to compare values across a break must surface the break",
+    "type": "DOC + EVAL",
+    "tier": "agency_instrumented",
+    "tier_raw": "`agency_instrumented`",
+    "status": "draft",
+    "evidence_raw": "`sdmx-3-0-section-1-framework`; `sdmx-standards-overview`; `odcs-open-data-contract-standard`",
+    "measurement_status": "specified",
+    "gap": null,
+    "criterion_code": "G"
+   }
+  },
+  {
+   "id": "spec:A1",
+   "labels": [
+    "MeasurementSpec"
+   ],
+   "properties": {
+    "indicator_code": "A1",
+    "leg": "A1",
+    "mode": "auto",
+    "rule_id": "RULE-A1-v0",
+    "collector_pin": "httpx>=0.27",
+    "signal": "HTTP GET the product page; extract every download link; for each, HEAD and read Content-Type and file extension. Structured iff any of csv/json/parquet/xlsx/xml; PDF-only iff every link is application/pdf.",
+    "collector": "httpx",
+    "evidence_kind": "response headers + link list + body sha256",
+    "prior_art": "`usafacts-ai-ready-data-guide`"
+   }
+  },
+  {
+   "id": "spec:A2",
+   "labels": [
+    "MeasurementSpec"
+   ],
+   "properties": {
+    "indicator_code": "A2",
+    "leg": "A2",
+    "mode": "auto",
+    "rule_id": "RULE-A2-v0",
+    "collector_pin": "httpx>=0.27",
+    "signal": "HTTP GET the documented API base and any OpenAPI/Swagger document; record auth scheme, declared rate limits, and whether the description is machine-readable.",
+    "collector": "httpx",
+    "evidence_kind": "OpenAPI document + response headers",
+    "fuji_metric": "FsF-A1-03D",
+    "prior_art": "`w3c-dwbp-2017`"
+   }
+  },
+  {
+   "id": "spec:A3",
+   "labels": [
+    "MeasurementSpec"
+   ],
+   "properties": {
+    "indicator_code": "A3",
+    "leg": "A3",
+    "mode": "auto",
+    "rule_id": "RULE-A3-v0",
+    "collector_pin": "scrapy>=2.11",
+    "signal": "Crawl the product page one hop; classify links as bulk (whole-product archive or full dataset file) vs filtered query.",
+    "collector": "scrapy",
+    "evidence_kind": "link graph + Content-Length per candidate",
+    "prior_art": "`w3c-dwbp-2017`"
+   }
+  },
+  {
+   "id": "spec:A4",
+   "labels": [
+    "MeasurementSpec"
+   ],
+   "properties": {
+    "indicator_code": "A4",
+    "leg": "A4",
+    "mode": "auto",
+    "rule_id": "RULE-A4-v0",
+    "collector_pin": "protego>=0.3",
+    "signal": "HTTP GET /robots.txt; parse; evaluate Allow/Disallow for the product path per user-agent in the AI-crawler list (GPTBot, ClaudeBot, PerplexityBot, Google-Extended, CCBot, Bingbot).",
+    "collector": "protego",
+    "evidence_kind": "robots.txt body + sha256 + per-UA verdict",
+    "prior_art": "`rfc-9309-robots-exclusion-protocol`; `openai-crawlers-bots`"
+   }
+  },
+  {
+   "id": "spec:A5",
+   "labels": [
+    "MeasurementSpec"
+   ],
+   "properties": {
+    "indicator_code": "A5",
+    "leg": "A5",
+    "mode": "auto",
+    "rule_id": "RULE-A5-v0",
+    "collector_pin": "ultimate-sitemap-parser>=1.0",
+    "signal": "HTTP GET /sitemap.xml (and the path robots.txt declares), /llms.txt, /.well-known/; parse the sitemap and test whether the product URL is covered.",
+    "collector": "ultimate-sitemap-parser",
+    "evidence_kind": "sitemap tree + coverage verdict for the product URL",
+    "prior_art": "`sitemaps-protocol`; `llmstxt-proposal`"
+   }
+  },
+  {
+   "id": "spec:A6",
+   "labels": [
+    "MeasurementSpec"
+   ],
+   "properties": {
+    "indicator_code": "A6",
+    "leg": "A6",
+    "mode": "auto",
+    "rule_id": "RULE-A6-v0",
+    "collector_pin": "extruct>=0.17",
+    "signal": "Extract embedded JSON-LD / microdata / RDFa from the product page; test for schema.org Dataset or DCAT; validate the DCAT graph against DCAT-AP SHACL shapes.",
+    "collector": "extruct + pyshacl",
+    "evidence_kind": "extracted graph + SHACL report",
+    "fuji_metric": "FsF-F4-01M, FsF-I1-01M",
+    "prior_art": "`schema-org-dataset`; `w3c-dcat-3`; `mlcommons-croissant-spec`"
+   }
+  },
+  {
+   "id": "spec:A8",
+   "labels": [
+    "MeasurementSpec"
+   ],
+   "properties": {
+    "indicator_code": "A8",
+    "leg": "A8",
+    "mode": "auto",
+    "rule_id": "RULE-A8-v0",
+    "collector_pin": "httpx>=0.27",
+    "signal": "Read Last-Modified and any dcterms:modified / schema.org dateModified in the markup; test whether a latest-vintage pointer resolves.",
+    "collector": "httpx + extruct",
+    "evidence_kind": "headers + markup date fields",
+    "prior_art": "`w3c-dwbp-2017`"
+   }
+  },
+  {
+   "id": "spec:A9",
+   "labels": [
+    "MeasurementSpec"
+   ],
+   "properties": {
+    "indicator_code": "A9",
+    "leg": "A9",
+    "mode": "auto",
+    "rule_id": "RULE-A9-v0",
+    "collector_pin": "httpx>=0.27",
+    "signal": "Probe for a machine-first entry point: OpenAPI at the documented base, /.well-known/mcp or an advertised MCP/A2A endpoint, /llms.txt.",
+    "collector": "httpx",
+    "evidence_kind": "probe matrix + any served descriptor",
+    "frontier": true,
+    "as_of": "2026-01",
+    "prior_art": "`wilkinson-2016-fair-guiding-principles`; `fcsm-25-03`"
+   }
+  },
+  {
+   "id": "spec:A10",
+   "labels": [
+    "MeasurementSpec"
+   ],
+   "properties": {
+    "indicator_code": "A10",
+    "leg": "A10",
+    "mode": "auto",
+    "rule_id": "RULE-A10-v0",
+    "collector_pin": "lighthouse-cli>=12",
+    "signal": "For an interactive data tool: request a deep link and an invalid route; compare status codes and pre-JS HTML; a soft-404 is HTTP 200 with an error shell. Render once to compare pre- and post-JS DOM.",
+    "collector": "lighthouse",
+    "evidence_kind": "status codes + raw HTML + rendered DOM",
+    "prior_art": "internal draft: FSS Machine Diagnostic spec (operator-held)"
+   }
+  },
+  {
+   "id": "spec:A11-declared",
+   "labels": [
+    "MeasurementSpec"
+   ],
+   "properties": {
+    "indicator_code": "A11",
+    "leg": "A11-declared",
+    "mode": "auto",
+    "rule_id": "RULE-A11-declared-v0",
+    "collector_pin": "protego>=0.3",
+    "signal": "The DECLARED layer only: robots.txt and meta-robots directives for the product path. The enforced and observed layers need edge/WAF logs and are agency_instrumented.",
+    "collector": "protego",
+    "evidence_kind": "robots.txt + meta-robots + per-UA declared verdict",
+    "prior_art": "`rfc-9309-robots-exclusion-protocol`; `cloudflare-ai-crawl-control-manage-crawlers`"
+   }
+  },
+  {
+   "id": "spec:B3",
+   "labels": [
+    "MeasurementSpec"
+   ],
+   "properties": {
+    "indicator_code": "B3",
+    "leg": "B3",
+    "mode": "auto",
+    "rule_id": "RULE-B3-v0",
+    "collector_pin": "httpx>=0.27",
+    "signal": "Fetch the methodology document; test whether it is structured text (HTML/markdown) or PDF-only, and whether it is retrievable without JS.",
+    "collector": "httpx",
+    "evidence_kind": "Content-Type + body sha256",
+    "prior_art": "`fcsm-25-03`",
+    "note": "NOT in the task's §3 list; derived from the framework as public-tier and AUTO/DOC. Reported as a discrepancy."
+   }
+  },
+  {
+   "id": "spec:C4-auto",
+   "labels": [
+    "MeasurementSpec"
+   ],
+   "properties": {
+    "indicator_code": "C4",
+    "leg": "C4-auto",
+    "mode": "auto",
+    "rule_id": "RULE-C4-auto-v0",
+    "collector_pin": "n/a",
+    "signal": "Given a generative engine's answer citing the product, resolve the cited URL and test whether it is the authoritative agency page or an aggregator.",
+    "collector": "none_known",
+    "evidence_kind": "cited URL + resolution chain + authority verdict",
+    "prior_art": "`aggarwal-2024-geo-generative-engine-optimization`",
+    "note": "The AUTO leg needs a generative engine's citations as input, which is the EVAL half of the indicator. No open-source collector produces them; this is genuinely blocked on the harness."
+   }
+  },
+  {
+   "id": "spec:D1",
+   "labels": [
+    "MeasurementSpec"
+   ],
+   "properties": {
+    "indicator_code": "D1",
+    "leg": "D1",
+    "mode": "auto",
+    "rule_id": "RULE-D1-v0",
+    "collector_pin": "extruct>=0.17",
+    "signal": "Read the licence from schema.org/DCAT markup, an HTTP Link header, and the API's terms endpoint; test whether it is a recognised identifier (SPDX or a known URL) rather than free text.",
+    "collector": "extruct + httpx",
+    "evidence_kind": "licence field + resolution verdict",
+    "fuji_metric": "FsF-R1.1-01M",
+    "prior_art": "`odcs-open-data-contract-standard`"
+   }
+  },
+  {
+   "id": "spec:D4",
+   "labels": [
+    "MeasurementSpec"
+   ],
+   "properties": {
+    "indicator_code": "D4",
+    "leg": "D4",
+    "mode": "auto",
+    "rule_id": "RULE-D4-v0",
+    "collector_pin": "json-schema (Project Open Data v1.1 schema)",
+    "signal": "Fetch /data.json (Project Open Data catalog); validate against the POD v1.1 schema; test whether the product appears in it.",
+    "collector": "project-open-data-validator",
+    "evidence_kind": "catalog document + validation report + membership verdict",
+    "prior_art": "`dcat-us-1-1-schema`; `m-25-05-phase-2-implementation-of-the-evidence-act-open-gove`"
+   }
+  },
+  {
+   "id": "spec:E5",
+   "labels": [
+    "MeasurementSpec"
+   ],
+   "properties": {
+    "indicator_code": "E5",
+    "leg": "E5",
+    "mode": "auto",
+    "rule_id": "RULE-E5-v0",
+    "collector_pin": "n/a",
+    "signal": "Seeded known-bad items fired per continuous-eval cycle.",
+    "collector": "none_known",
+    "evidence_kind": "canary definitions + per-cycle fire log",
+    "prior_art": "internal: DD-019 decoy discipline",
+    "note": "A property of the harness's own cycle, not an observation of an external surface. There is nothing to collect until the harness runs."
+   }
+  },
+  {
+   "id": "spec:F2",
+   "labels": [
+    "MeasurementSpec"
+   ],
+   "properties": {
+    "indicator_code": "F2",
+    "leg": "F2",
+    "mode": "auto",
+    "rule_id": "RULE-F2-v0",
+    "collector_pin": "n/a",
+    "signal": "Compare the API/schema description across two releases; detect breaking changes and test for a declared deprecation window.",
+    "collector": "none_known",
+    "evidence_kind": "two dated schema documents + diff",
+    "prior_art": "`odcs-open-data-contract-standard`",
+    "note": "Needs a version history; a single-point scan cannot observe stability. Becomes collectible once the scan runs twice."
+   }
+  },
+  {
+   "id": "spec:F3",
+   "labels": [
+    "MeasurementSpec"
+   ],
+   "properties": {
+    "indicator_code": "F3",
+    "leg": "F3",
+    "mode": "auto",
+    "rule_id": "RULE-F3-v0",
+    "collector_pin": "n/a",
+    "signal": "Across a vintage transition, test whether series identifiers, geography codes and endpoints survive, or a crosswalk is published.",
+    "collector": "none_known",
+    "evidence_kind": "two vintages + identifier join",
+    "prior_art": "**gap** — no admitted source",
+    "note": "Same shape as F2: requires two vintages."
+   }
+  },
+  {
+   "id": "spec:F4",
+   "labels": [
+    "MeasurementSpec"
+   ],
+   "properties": {
+    "indicator_code": "F4",
+    "leg": "F4",
+    "mode": "auto",
+    "rule_id": "RULE-F4-v0",
+    "collector_pin": "httpx>=0.27",
+    "signal": "Fetch any changelog or release-notes endpoint; test whether it is machine-readable and carries a revision class per entry.",
+    "collector": "httpx",
+    "evidence_kind": "changelog document + parse verdict",
+    "prior_art": "`usafacts-ai-ready-data-guide`"
+   }
+  },
+  {
+   "id": "spec:G1-D",
+   "labels": [
+    "MeasurementSpec"
+   ],
+   "properties": {
+    "indicator_code": "G1-D",
+    "leg": "G1-D",
+    "mode": "auto",
+    "rule_id": "RULE-G1-D-v0",
+    "collector_pin": "assessment/harness/probes/g1_declared.py (frozen, DD-036)",
+    "signal": "On the captured product surface, test whether error measures (MOE, CV, SE, CI, DP noise parameters) are present as STRUCTURED FIELDS beside the estimates rather than as footnotes.",
+    "collector": "g1_declared",
+    "evidence_kind": "captured surface file + per-cell verdict",
+    "prior_art": "DD-033; DD-036 (instrument frozen at v2)",
+    "note": "Already built and run — `measurement_status: measured`."
+   }
+  },
+  {
+   "id": "spec:G3",
+   "labels": [
+    "MeasurementSpec"
+   ],
+   "properties": {
+    "indicator_code": "G3",
+    "leg": "G3",
+    "mode": "auto",
+    "rule_id": "RULE-G3-v0",
+    "collector_pin": "n/a",
+    "signal": "Test for stable series IDs across vintages and a published crosswalk when a classification or geography changes.",
+    "collector": "none_known",
+    "evidence_kind": "series id sets + crosswalk document",
+    "prior_art": "**gap** — no admitted source"
+   }
+  },
+  {
+   "id": "spec:G1-O",
+   "labels": [
+    "MeasurementSpec"
+   ],
+   "properties": {
+    "indicator_code": "G1-O",
+    "leg": "G1-O",
+    "mode": "harness",
+    "signal": "see assessment/harness/probes/g1_preservation.py (frozen at v2, DD-036)",
+    "collector": "assessment/harness/probes/g1_preservation.py (frozen at v2, DD-036)",
+    "collector_pin": "assessment/harness/probes/g1_preservation.py (frozen, DD-036)",
+    "evidence_kind": "raw consumer exchange, persisted before scoring",
+    "rule_id": "RULE-G1-O-v0",
+    "prior_art": "DD-035; DD-036"
+   }
+  }
+ ],
+ "edges": [
+  {
+   "from": "crit:A",
+   "type": "DECOMPOSES_INTO",
+   "to": "con:A:machine-readable-formats"
+  },
+  {
+   "from": "con:A:machine-readable-formats",
+   "type": "DECOMPOSES_INTO",
+   "to": "ind:A1"
+  },
+  {
+   "from": "crit:A",
+   "type": "DECOMPOSES_INTO",
+   "to": "con:A:programmatic-access"
+  },
+  {
+   "from": "con:A:programmatic-access",
+   "type": "DECOMPOSES_INTO",
+   "to": "ind:A2"
+  },
+  {
+   "from": "crit:A",
+   "type": "DECOMPOSES_INTO",
+   "to": "con:A:bulk-access"
+  },
+  {
+   "from": "con:A:bulk-access",
+   "type": "DECOMPOSES_INTO",
+   "to": "ind:A3"
+  },
+  {
+   "from": "crit:A",
+   "type": "DECOMPOSES_INTO",
+   "to": "con:A:crawler-agent-access"
+  },
+  {
+   "from": "con:A:crawler-agent-access",
+   "type": "DECOMPOSES_INTO",
+   "to": "ind:A4"
+  },
+  {
+   "from": "ind:A4",
+   "type": "EVIDENCED_BY",
+   "to": "doc:rfc-9309-robots-exclusion-protocol",
+   "properties": {
+    "doc_id": "rfc-9309-robots-exclusion-protocol"
+   }
+  },
+  {
+   "from": "ind:A4",
+   "type": "EVIDENCED_BY",
+   "to": "doc:google-robots-txt-intro",
+   "properties": {
+    "doc_id": "google-robots-txt-intro"
+   }
+  },
+  {
+   "from": "ind:A4",
+   "type": "EVIDENCED_BY",
+   "to": "doc:openai-crawlers-bots",
+   "properties": {
+    "doc_id": "openai-crawlers-bots"
+   }
+  },
+  {
+   "from": "ind:A4",
+   "type": "EVIDENCED_BY",
+   "to": "doc:anthropic-crawler-support-article",
+   "properties": {
+    "doc_id": "anthropic-crawler-support-article"
+   }
+  },
+  {
+   "from": "ind:A4",
+   "type": "EVIDENCED_BY",
+   "to": "doc:perplexity-crawlers",
+   "properties": {
+    "doc_id": "perplexity-crawlers"
+   }
+  },
+  {
+   "from": "ind:A4",
+   "type": "EVIDENCED_BY",
+   "to": "doc:cloudflare-ai-crawl-control-manage-crawlers",
+   "properties": {
+    "doc_id": "cloudflare-ai-crawl-control-manage-crawlers"
+   }
+  },
+  {
+   "from": "crit:A",
+   "type": "DECOMPOSES_INTO",
+   "to": "con:A:discoverability-surface"
+  },
+  {
+   "from": "con:A:discoverability-surface",
+   "type": "DECOMPOSES_INTO",
+   "to": "ind:A5"
+  },
+  {
+   "from": "ind:A5",
+   "type": "EVIDENCED_BY",
+   "to": "doc:llmstxt-proposal",
+   "properties": {
+    "doc_id": "llmstxt-proposal"
+   }
+  },
+  {
+   "from": "ind:A5",
+   "type": "EVIDENCED_BY",
+   "to": "doc:sitemaps-protocol",
+   "properties": {
+    "doc_id": "sitemaps-protocol"
+   }
+  },
+  {
+   "from": "crit:A",
+   "type": "DECOMPOSES_INTO",
+   "to": "con:A:structured-markup"
+  },
+  {
+   "from": "con:A:structured-markup",
+   "type": "DECOMPOSES_INTO",
+   "to": "ind:A6"
+  },
+  {
+   "from": "ind:A6",
+   "type": "EVIDENCED_BY",
+   "to": "doc:schema-org-dataset",
+   "properties": {
+    "doc_id": "schema-org-dataset"
+   }
+  },
+  {
+   "from": "ind:A6",
+   "type": "EVIDENCED_BY",
+   "to": "doc:w3c-dcat-3",
+   "properties": {
+    "doc_id": "w3c-dcat-3"
+   }
+  },
+  {
+   "from": "ind:A6",
+   "type": "EVIDENCED_BY",
+   "to": "doc:mlcommons-croissant-spec",
+   "properties": {
+    "doc_id": "mlcommons-croissant-spec"
+   }
+  },
+  {
+   "from": "ind:A6",
+   "type": "EVIDENCED_BY",
+   "to": "doc:croissant-akhtar-2024-paper",
+   "properties": {
+    "doc_id": "croissant-akhtar-2024-paper"
+   }
+  },
+  {
+   "from": "crit:A",
+   "type": "DECOMPOSES_INTO",
+   "to": "con:A:stable-identifiers"
+  },
+  {
+   "from": "con:A:stable-identifiers",
+   "type": "DECOMPOSES_INTO",
+   "to": "ind:A7"
+  },
+  {
+   "from": "crit:A",
+   "type": "DECOMPOSES_INTO",
+   "to": "con:A:timeliness-of-surface"
+  },
+  {
+   "from": "con:A:timeliness-of-surface",
+   "type": "DECOMPOSES_INTO",
+   "to": "ind:A8"
+  },
+  {
+   "from": "crit:A",
+   "type": "DECOMPOSES_INTO",
+   "to": "con:A:m2m-agent-surface"
+  },
+  {
+   "from": "con:A:m2m-agent-surface",
+   "type": "DECOMPOSES_INTO",
+   "to": "ind:A9"
+  },
+  {
+   "from": "ind:A9",
+   "type": "EVIDENCED_BY",
+   "to": "doc:wilkinson-2016-fair-guiding-principles",
+   "properties": {
+    "doc_id": "wilkinson-2016-fair-guiding-principles"
+   }
+  },
+  {
+   "from": "crit:A",
+   "type": "DECOMPOSES_INTO",
+   "to": "con:A:application-data-tool-machine-surface"
+  },
+  {
+   "from": "con:A:application-data-tool-machine-surface",
+   "type": "DECOMPOSES_INTO",
+   "to": "ind:A10"
+  },
+  {
+   "from": "crit:A",
+   "type": "DECOMPOSES_INTO",
+   "to": "con:A:effective-crawler-access-declared-enforced-observed"
+  },
+  {
+   "from": "con:A:effective-crawler-access-declared-enforced-observed",
+   "type": "DECOMPOSES_INTO",
+   "to": "ind:A11"
+  },
+  {
+   "from": "ind:A11",
+   "type": "EVIDENCED_BY",
+   "to": "doc:cloudflare-ai-crawl-control-manage-crawlers",
+   "properties": {
+    "doc_id": "cloudflare-ai-crawl-control-manage-crawlers"
+   }
+  },
+  {
+   "from": "ind:A11",
+   "type": "EVIDENCED_BY",
+   "to": "doc:rfc-9309-robots-exclusion-protocol",
+   "properties": {
+    "doc_id": "rfc-9309-robots-exclusion-protocol"
+   }
+  },
+  {
+   "from": "crit:B",
+   "type": "DECOMPOSES_INTO",
+   "to": "con:B:variable-level-semantics"
+  },
+  {
+   "from": "con:B:variable-level-semantics",
+   "type": "DECOMPOSES_INTO",
+   "to": "ind:B1"
+  },
+  {
+   "from": "ind:B1",
+   "type": "EVIDENCED_BY",
+   "to": "doc:fcsm-25-03",
+   "properties": {
+    "doc_id": "fcsm-25-03"
+   }
+  },
+  {
+   "from": "crit:B",
+   "type": "DECOMPOSES_INTO",
+   "to": "con:B:definitions-surface"
+  },
+  {
+   "from": "con:B:definitions-surface",
+   "type": "DECOMPOSES_INTO",
+   "to": "ind:B2"
+  },
+  {
+   "from": "ind:B2",
+   "type": "EVIDENCED_BY",
+   "to": "doc:schema-org-definedterm",
+   "properties": {
+    "doc_id": "schema-org-definedterm"
+   }
+  },
+  {
+   "from": "ind:B2",
+   "type": "EVIDENCED_BY",
+   "to": "doc:w3c-dcat-3",
+   "properties": {
+    "doc_id": "w3c-dcat-3"
+   }
+  },
+  {
+   "from": "crit:B",
+   "type": "DECOMPOSES_INTO",
+   "to": "con:B:methodology-legibility"
+  },
+  {
+   "from": "con:B:methodology-legibility",
+   "type": "DECOMPOSES_INTO",
+   "to": "ind:B3"
+  },
+  {
+   "from": "crit:B",
+   "type": "DECOMPOSES_INTO",
+   "to": "con:B:quality-metadata"
+  },
+  {
+   "from": "con:B:quality-metadata",
+   "type": "DECOMPOSES_INTO",
+   "to": "ind:B4"
+  },
+  {
+   "from": "ind:B4",
+   "type": "EVIDENCED_BY",
+   "to": "doc:fcsm-23-02-a-framework-for-data-quality-case-studies",
+   "properties": {
+    "doc_id": "fcsm-23-02-a-framework-for-data-quality-case-studies"
+   }
+  },
+  {
+   "from": "ind:B4",
+   "type": "EVIDENCED_BY",
+   "to": "doc:fcsm-20-04-a-framework-for-data-quality",
+   "properties": {
+    "doc_id": "fcsm-20-04-a-framework-for-data-quality"
+   }
+  },
+  {
+   "from": "crit:B",
+   "type": "DECOMPOSES_INTO",
+   "to": "con:B:semantic-consistency"
+  },
+  {
+   "from": "con:B:semantic-consistency",
+   "type": "DECOMPOSES_INTO",
+   "to": "ind:B5"
+  },
+  {
+   "from": "crit:B",
+   "type": "DECOMPOSES_INTO",
+   "to": "con:B:nl-affordances"
+  },
+  {
+   "from": "con:B:nl-affordances",
+   "type": "DECOMPOSES_INTO",
+   "to": "ind:B6"
+  },
+  {
+   "from": "crit:C",
+   "type": "DECOMPOSES_INTO",
+   "to": "con:C:retrieval-grounded-qa-accuracy"
+  },
+  {
+   "from": "con:C:retrieval-grounded-qa-accuracy",
+   "type": "DECOMPOSES_INTO",
+   "to": "ind:C1"
+  },
+  {
+   "from": "ind:C1",
+   "type": "EVIDENCED_BY",
+   "to": "doc:from-accuracy-to-readiness-metrics-and-benchmarks-for-human",
+   "properties": {
+    "doc_id": "from-accuracy-to-readiness-metrics-and-benchmarks-for-human"
+   }
+  },
+  {
+   "from": "crit:C",
+   "type": "DECOMPOSES_INTO",
+   "to": "con:C:faithfulness-of-ai-restatement"
+  },
+  {
+   "from": "con:C:faithfulness-of-ai-restatement",
+   "type": "DECOMPOSES_INTO",
+   "to": "ind:C2"
+  },
+  {
+   "from": "crit:C",
+   "type": "DECOMPOSES_INTO",
+   "to": "con:C:value-drift-resistance"
+  },
+  {
+   "from": "con:C:value-drift-resistance",
+   "type": "DECOMPOSES_INTO",
+   "to": "ind:C3"
+  },
+  {
+   "from": "crit:C",
+   "type": "DECOMPOSES_INTO",
+   "to": "con:C:citation-quality"
+  },
+  {
+   "from": "con:C:citation-quality",
+   "type": "DECOMPOSES_INTO",
+   "to": "ind:C4"
+  },
+  {
+   "from": "ind:C4",
+   "type": "EVIDENCED_BY",
+   "to": "doc:aggarwal-2024-geo-generative-engine-optimization",
+   "properties": {
+    "doc_id": "aggarwal-2024-geo-generative-engine-optimization"
+   }
+  },
+  {
+   "from": "ind:C4",
+   "type": "EVIDENCED_BY",
+   "to": "doc:chen-2025-geo-how-to-dominate-ai-search",
+   "properties": {
+    "doc_id": "chen-2025-geo-how-to-dominate-ai-search"
+   }
+  },
+  {
+   "from": "crit:C",
+   "type": "DECOMPOSES_INTO",
+   "to": "con:C:readiness-metrics-baseline"
+  },
+  {
+   "from": "con:C:readiness-metrics-baseline",
+   "type": "DECOMPOSES_INTO",
+   "to": "ind:C5"
+  },
+  {
+   "from": "ind:C5",
+   "type": "EVIDENCED_BY",
+   "to": "doc:aidrin-hiniduma-2024",
+   "properties": {
+    "doc_id": "aidrin-hiniduma-2024"
+   }
+  },
+  {
+   "from": "ind:C5",
+   "type": "EVIDENCED_BY",
+   "to": "doc:data-readiness-for-ai-a-360-degree-survey",
+   "properties": {
+    "doc_id": "data-readiness-for-ai-a-360-degree-survey"
+   }
+  },
+  {
+   "from": "ind:C5",
+   "type": "EVIDENCED_BY",
+   "to": "doc:aidrin-2-0-a-framework-to-assess-data-readiness-for-ai",
+   "properties": {
+    "doc_id": "aidrin-2-0-a-framework-to-assess-data-readiness-for-ai"
+   }
+  },
+  {
+   "from": "crit:D",
+   "type": "DECOMPOSES_INTO",
+   "to": "con:D:license-clarity"
+  },
+  {
+   "from": "con:D:license-clarity",
+   "type": "DECOMPOSES_INTO",
+   "to": "ind:D1"
+  },
+  {
+   "from": "crit:D",
+   "type": "DECOMPOSES_INTO",
+   "to": "con:D:reuse-permissions-for-ai"
+  },
+  {
+   "from": "con:D:reuse-permissions-for-ai",
+   "type": "DECOMPOSES_INTO",
+   "to": "ind:D2"
+  },
+  {
+   "from": "crit:D",
+   "type": "DECOMPOSES_INTO",
+   "to": "con:D:provenance-completeness"
+  },
+  {
+   "from": "con:D:provenance-completeness",
+   "type": "DECOMPOSES_INTO",
+   "to": "ind:D3"
+  },
+  {
+   "from": "crit:D",
+   "type": "DECOMPOSES_INTO",
+   "to": "con:D:no-dark-data"
+  },
+  {
+   "from": "con:D:no-dark-data",
+   "type": "DECOMPOSES_INTO",
+   "to": "ind:D4"
+  },
+  {
+   "from": "crit:E",
+   "type": "DECOMPOSES_INTO",
+   "to": "con:E:verification-vs-validation-split"
+  },
+  {
+   "from": "con:E:verification-vs-validation-split",
+   "type": "DECOMPOSES_INTO",
+   "to": "ind:E1"
+  },
+  {
+   "from": "ind:E1",
+   "type": "EVIDENCED_BY",
+   "to": "doc:nist-ai-risk-management-framework-ai-rmf",
+   "properties": {
+    "doc_id": "nist-ai-risk-management-framework-ai-rmf"
+   }
+  },
+  {
+   "from": "crit:E",
+   "type": "DECOMPOSES_INTO",
+   "to": "con:E:acceptance-thresholds"
+  },
+  {
+   "from": "con:E:acceptance-thresholds",
+   "type": "DECOMPOSES_INTO",
+   "to": "ind:E2"
+  },
+  {
+   "from": "ind:E2",
+   "type": "EVIDENCED_BY",
+   "to": "doc:nist-ai-rmf-playbook",
+   "properties": {
+    "doc_id": "nist-ai-rmf-playbook"
+   }
+  },
+  {
+   "from": "crit:E",
+   "type": "DECOMPOSES_INTO",
+   "to": "con:E:instrument-versioning"
+  },
+  {
+   "from": "con:E:instrument-versioning",
+   "type": "DECOMPOSES_INTO",
+   "to": "ind:E3"
+  },
+  {
+   "from": "crit:E",
+   "type": "DECOMPOSES_INTO",
+   "to": "con:E:contamination-policy"
+  },
+  {
+   "from": "con:E:contamination-policy",
+   "type": "DECOMPOSES_INTO",
+   "to": "ind:E4"
+  },
+  {
+   "from": "ind:E4",
+   "type": "EVIDENCED_BY",
+   "to": "doc:sainz-2023-llm-data-contamination",
+   "properties": {
+    "doc_id": "sainz-2023-llm-data-contamination"
+   }
+  },
+  {
+   "from": "crit:E",
+   "type": "DECOMPOSES_INTO",
+   "to": "con:E:positive-controls"
+  },
+  {
+   "from": "con:E:positive-controls",
+   "type": "DECOMPOSES_INTO",
+   "to": "ind:E5"
+  },
+  {
+   "from": "ind:E5",
+   "type": "EVIDENCED_BY_INTERNAL",
+   "to": "internal:DD-019",
+   "properties": {
+    "artifact_path": "DD-019"
+   }
+  },
+  {
+   "from": "crit:E",
+   "type": "DECOMPOSES_INTO",
+   "to": "con:E:failure-attribution"
+  },
+  {
+   "from": "con:E:failure-attribution",
+   "type": "DECOMPOSES_INTO",
+   "to": "ind:E6"
+  },
+  {
+   "from": "crit:E",
+   "type": "DECOMPOSES_INTO",
+   "to": "con:E:corrective-action-closure"
+  },
+  {
+   "from": "con:E:corrective-action-closure",
+   "type": "DECOMPOSES_INTO",
+   "to": "ind:E7"
+  },
+  {
+   "from": "crit:E",
+   "type": "DECOMPOSES_INTO",
+   "to": "con:E:drift-sentinels-golden-questions"
+  },
+  {
+   "from": "con:E:drift-sentinels-golden-questions",
+   "type": "DECOMPOSES_INTO",
+   "to": "ind:E8"
+  },
+  {
+   "from": "ind:E8",
+   "type": "EVIDENCED_BY",
+   "to": "doc:webb-2026-state-fidelity-validity",
+   "properties": {
+    "doc_id": "webb-2026-state-fidelity-validity"
+   }
+  },
+  {
+   "from": "crit:E",
+   "type": "DECOMPOSES_INTO",
+   "to": "con:E:adversarial-evaluation-red-team"
+  },
+  {
+   "from": "con:E:adversarial-evaluation-red-team",
+   "type": "DECOMPOSES_INTO",
+   "to": "ind:E9"
+  },
+  {
+   "from": "ind:E9",
+   "type": "EVIDENCED_BY",
+   "to": "doc:nist-generative-ai-profile-ai-600-1",
+   "properties": {
+    "doc_id": "nist-generative-ai-profile-ai-600-1"
+   }
+  },
+  {
+   "from": "ind:E9",
+   "type": "EVIDENCED_BY",
+   "to": "doc:nist-ai-risk-management-framework-ai-rmf",
+   "properties": {
+    "doc_id": "nist-ai-risk-management-framework-ai-rmf"
+   }
+  },
+  {
+   "from": "crit:F",
+   "type": "DECOMPOSES_INTO",
+   "to": "con:F:pre-release-gates"
+  },
+  {
+   "from": "con:F:pre-release-gates",
+   "type": "DECOMPOSES_INTO",
+   "to": "ind:F1"
+  },
+  {
+   "from": "ind:F1",
+   "type": "EVIDENCED_BY",
+   "to": "doc:odcs-open-data-contract-standard",
+   "properties": {
+    "doc_id": "odcs-open-data-contract-standard"
+   }
+  },
+  {
+   "from": "crit:F",
+   "type": "DECOMPOSES_INTO",
+   "to": "con:F:contract-stability"
+  },
+  {
+   "from": "con:F:contract-stability",
+   "type": "DECOMPOSES_INTO",
+   "to": "ind:F2"
+  },
+  {
+   "from": "ind:F2",
+   "type": "EVIDENCED_BY",
+   "to": "doc:odcs-open-data-contract-standard",
+   "properties": {
+    "doc_id": "odcs-open-data-contract-standard"
+   }
+  },
+  {
+   "from": "crit:F",
+   "type": "DECOMPOSES_INTO",
+   "to": "con:F:regression-on-vintage-transition"
+  },
+  {
+   "from": "con:F:regression-on-vintage-transition",
+   "type": "DECOMPOSES_INTO",
+   "to": "ind:F3"
+  },
+  {
+   "from": "crit:F",
+   "type": "DECOMPOSES_INTO",
+   "to": "con:F:change-legibility"
+  },
+  {
+   "from": "con:F:change-legibility",
+   "type": "DECOMPOSES_INTO",
+   "to": "ind:F4"
+  },
+  {
+   "from": "ind:F4",
+   "type": "EVIDENCED_BY",
+   "to": "doc:usafacts-ai-ready-data-guide",
+   "properties": {
+    "doc_id": "usafacts-ai-ready-data-guide"
+   }
+  },
+  {
+   "from": "crit:F",
+   "type": "DECOMPOSES_INTO",
+   "to": "con:F:staged-rollout"
+  },
+  {
+   "from": "con:F:staged-rollout",
+   "type": "DECOMPOSES_INTO",
+   "to": "ind:F5"
+  },
+  {
+   "from": "crit:F",
+   "type": "DECOMPOSES_INTO",
+   "to": "con:F:release-authenticity"
+  },
+  {
+   "from": "con:F:release-authenticity",
+   "type": "DECOMPOSES_INTO",
+   "to": "ind:F6"
+  },
+  {
+   "from": "ind:F6",
+   "type": "EVIDENCED_BY",
+   "to": "doc:slsa-specification-v1-0",
+   "properties": {
+    "doc_id": "slsa-specification-v1-0"
+   }
+  },
+  {
+   "from": "crit:G",
+   "type": "DECOMPOSES_INTO",
+   "to": "con:G:uncertainty-legibility-two-legs-scored-as-a-vector"
+  },
+  {
+   "from": "con:G:uncertainty-legibility-two-legs-scored-as-a-vector",
+   "type": "DECOMPOSES_INTO",
+   "to": "ind:G1-D"
+  },
+  {
+   "from": "ind:G1-D",
+   "type": "EVIDENCED_BY",
+   "to": "doc:fcsm-23-02-a-framework-for-data-quality-case-studies",
+   "properties": {
+    "doc_id": "fcsm-23-02-a-framework-for-data-quality-case-studies"
+   }
+  },
+  {
+   "from": "ind:G1-D",
+   "type": "EVIDENCED_BY",
+   "to": "doc:du-2026-possible-or-definite",
+   "properties": {
+    "doc_id": "du-2026-possible-or-definite"
+   }
+  },
+  {
+   "from": "ind:G1-D",
+   "type": "EVIDENCED_BY",
+   "to": "doc:peters-2025-generalization-bias-llm-summarization",
+   "properties": {
+    "doc_id": "peters-2025-generalization-bias-llm-summarization"
+   }
+  },
+  {
+   "from": "ind:G1-D",
+   "type": "EVIDENCED_BY",
+   "to": "doc:lee-2026-when-summaries-distort-decisions",
+   "properties": {
+    "doc_id": "lee-2026-when-summaries-distort-decisions"
+   }
+  },
+  {
+   "from": "ind:G1-D",
+   "type": "EVIDENCED_BY",
+   "to": "doc:zhao-2020-reducing-quantity-hallucinations",
+   "properties": {
+    "doc_id": "zhao-2020-reducing-quantity-hallucinations"
+   }
+  },
+  {
+   "from": "ind:G1-D",
+   "type": "EVIDENCED_BY",
+   "to": "doc:cao-2024-multimodal-long-form-summarization-financial-reports",
+   "properties": {
+    "doc_id": "cao-2024-multimodal-long-form-summarization-financial-reports"
+   }
+  },
+  {
+   "from": "ind:G1-D",
+   "type": "EVIDENCED_BY",
+   "to": "doc:zhou-2026-loomsum-table-grounded-faithfulness",
+   "properties": {
+    "doc_id": "zhou-2026-loomsum-table-grounded-faithfulness"
+   }
+  },
+  {
+   "from": "ind:G1-D",
+   "type": "EVIDENCED_BY",
+   "to": "doc:venktesh-2024-quantemp-numerical-claims",
+   "properties": {
+    "doc_id": "venktesh-2024-quantemp-numerical-claims"
+   }
+  },
+  {
+   "from": "ind:G1-D",
+   "type": "EVIDENCED_BY",
+   "to": "doc:min-2023-factscore",
+   "properties": {
+    "doc_id": "min-2023-factscore"
+   }
+  },
+  {
+   "from": "ind:G1-D",
+   "type": "EVIDENCED_BY",
+   "to": "doc:van-der-bles-2019-communicating-uncertainty",
+   "properties": {
+    "doc_id": "van-der-bles-2019-communicating-uncertainty"
+   }
+  },
+  {
+   "from": "ind:G1-D",
+   "type": "EVIDENCED_BY",
+   "to": "doc:manski-2015-communicating-uncertainty-official-economic-statistics",
+   "properties": {
+    "doc_id": "manski-2015-communicating-uncertainty-official-economic-statistics"
+   }
+  },
+  {
+   "from": "ind:G1-D",
+   "type": "EVIDENCED_BY",
+   "to": "doc:mazzi-2021-measuring-communicating-uncertainty-official-economic-statistics",
+   "properties": {
+    "doc_id": "mazzi-2021-measuring-communicating-uncertainty-official-economic-statistics"
+   }
+  },
+  {
+   "from": "ind:G1-D",
+   "type": "EVIDENCED_BY",
+   "to": "doc:census-acs-general-handbook-2020",
+   "properties": {
+    "doc_id": "census-acs-general-handbook-2020"
+   }
+  },
+  {
+   "from": "ind:G1-D",
+   "type": "EVIDENCED_BY",
+   "to": "doc:ons-uncertainty-and-how-we-measure-it",
+   "properties": {
+    "doc_id": "ons-uncertainty-and-how-we-measure-it"
+   }
+  },
+  {
+   "from": "ind:G1-D",
+   "type": "EVIDENCED_BY",
+   "to": "doc:statcan-quality-guidelines-6th-edition",
+   "properties": {
+    "doc_id": "statcan-quality-guidelines-6th-edition"
+   }
+  },
+  {
+   "from": "ind:G1-D",
+   "type": "EVIDENCED_BY",
+   "to": "doc:ebu-bbc-2025-news-integrity-ai-assistants",
+   "properties": {
+    "doc_id": "ebu-bbc-2025-news-integrity-ai-assistants"
+   }
+  },
+  {
+   "from": "ind:G1-D",
+   "type": "EVIDENCED_BY",
+   "to": "doc:radhakrishnan-2024-knowing-when-to-ask-data-commons",
+   "properties": {
+    "doc_id": "radhakrishnan-2024-knowing-when-to-ask-data-commons"
+   }
+  },
+  {
+   "from": "ind:G1-D",
+   "type": "EVIDENCED_BY",
+   "to": "doc:suleymanli-2025-llms-charts-official-statistics",
+   "properties": {
+    "doc_id": "suleymanli-2025-llms-charts-official-statistics"
+   }
+  },
+  {
+   "from": "ind:G1-D",
+   "type": "EVIDENCED_BY",
+   "to": "doc:census-2020-disclosure-avoidance-handbook-2021",
+   "properties": {
+    "doc_id": "census-2020-disclosure-avoidance-handbook-2021"
+   }
+  },
+  {
+   "from": "ind:G1-D",
+   "type": "EVIDENCED_BY",
+   "to": "doc:nchs-2017-data-presentation-standards-proportions",
+   "properties": {
+    "doc_id": "nchs-2017-data-presentation-standards-proportions"
+   }
+  },
+  {
+   "from": "ind:G1-D",
+   "type": "EVIDENCED_BY",
+   "to": "doc:nchs-2023-data-presentation-standards-rates-counts",
+   "properties": {
+    "doc_id": "nchs-2023-data-presentation-standards-rates-counts"
+   }
+  },
+  {
+   "from": "ind:G1-D",
+   "type": "EVIDENCED_BY",
+   "to": "doc:statcan-71-543-g-guide-labour-force-survey-2025",
+   "properties": {
+    "doc_id": "statcan-71-543-g-guide-labour-force-survey-2025"
+   }
+  },
+  {
+   "from": "ind:G1-D",
+   "type": "EVIDENCED_BY",
+   "to": "doc:census-acs-data-suppression-rules",
+   "properties": {
+    "doc_id": "census-acs-data-suppression-rules"
+   }
+  },
+  {
+   "from": "ind:G1-D",
+   "type": "EVIDENCED_BY",
+   "to": "doc:census-api-acs5-2023-b19013-counties-colorado",
+   "properties": {
+    "doc_id": "census-api-acs5-2023-b19013-counties-colorado"
+   }
+  },
+  {
+   "from": "ind:G1-D",
+   "type": "EVIDENCED_BY",
+   "to": "doc:census-api-acs5-2023-b19013-counties-idaho",
+   "properties": {
+    "doc_id": "census-api-acs5-2023-b19013-counties-idaho"
+   }
+  },
+  {
+   "from": "ind:G1-D",
+   "type": "EVIDENCED_BY",
+   "to": "doc:statcan-14-10-0287-01-lfs-2026-07-provinces-estimate-se-csv",
+   "properties": {
+    "doc_id": "statcan-14-10-0287-01-lfs-2026-07-provinces-estimate-se-csv"
+   }
+  },
+  {
+   "from": "ind:G1-D",
+   "type": "EVIDENCED_BY",
+   "to": "doc:statcan-14-10-0287-01-lfs-2025-12-provinces-estimate-se-csv",
+   "properties": {
+    "doc_id": "statcan-14-10-0287-01-lfs-2025-12-provinces-estimate-se-csv"
+   }
+  },
+  {
+   "from": "ind:G1-D",
+   "type": "EVIDENCED_BY",
+   "to": "doc:statcan-14-10-0287-01-cube-metadata-csv",
+   "properties": {
+    "doc_id": "statcan-14-10-0287-01-cube-metadata-csv"
+   }
+  },
+  {
+   "from": "ind:G1-D",
+   "type": "EVIDENCED_BY",
+   "to": "doc:statcan-13-10-0096-01-cchs-2022-provinces-percent-ci-csv",
+   "properties": {
+    "doc_id": "statcan-13-10-0096-01-cchs-2022-provinces-percent-ci-csv"
+   }
+  },
+  {
+   "from": "ind:G1-D",
+   "type": "EVIDENCED_BY",
+   "to": "doc:statcan-13-10-0096-01-cube-metadata-csv",
+   "properties": {
+    "doc_id": "statcan-13-10-0096-01-cube-metadata-csv"
+   }
+  },
+  {
+   "from": "ind:G1-D",
+   "type": "EVIDENCED_BY",
+   "to": "doc:statcan-13-10-0113-01-cchs-2021-2022-quebec-health-regions-percent-ci-csv",
+   "properties": {
+    "doc_id": "statcan-13-10-0113-01-cchs-2021-2022-quebec-health-regions-percent-ci-csv"
+   }
+  },
+  {
+   "from": "ind:G1-D",
+   "type": "EVIDENCED_BY",
+   "to": "doc:statcan-13-10-0113-01-cube-metadata-csv",
+   "properties": {
+    "doc_id": "statcan-13-10-0113-01-cube-metadata-csv"
+   }
+  },
+  {
+   "from": "ind:G1-D",
+   "type": "EVIDENCED_BY",
+   "to": "doc:nchs-data-brief-530-perinatal-mortality-2022-2023",
+   "properties": {
+    "doc_id": "nchs-data-brief-530-perinatal-mortality-2022-2023"
+   }
+  },
+  {
+   "from": "ind:G1-D",
+   "type": "EVIDENCED_BY",
+   "to": "doc:nchs-data-brief-500-dental-visits-adults-65-2022",
+   "properties": {
+    "doc_id": "nchs-data-brief-500-dental-visits-adults-65-2022"
+   }
+  },
+  {
+   "from": "ind:G1-D",
+   "type": "EVIDENCED_BY",
+   "to": "doc:nchs-data-brief-515-high-total-cholesterol-2021-2023",
+   "properties": {
+    "doc_id": "nchs-data-brief-515-high-total-cholesterol-2021-2023"
+   }
+  },
+  {
+   "from": "ind:G1-D",
+   "type": "EVIDENCED_BY",
+   "to": "doc:bls-employment-situation-2026-08-news-release",
+   "properties": {
+    "doc_id": "bls-employment-situation-2026-08-news-release"
+   }
+  },
+  {
+   "from": "ind:G1-D",
+   "type": "EVIDENCED_BY",
+   "to": "doc:bls-employment-situation-2026-05-news-release-archive",
+   "properties": {
+    "doc_id": "bls-employment-situation-2026-05-news-release-archive"
+   }
+  },
+  {
+   "from": "ind:G1-D",
+   "type": "EVIDENCED_BY",
+   "to": "doc:census-quickfacts-denver-county-colorado",
+   "properties": {
+    "doc_id": "census-quickfacts-denver-county-colorado"
+   }
+  },
+  {
+   "from": "ind:G1-D",
+   "type": "EVIDENCED_BY",
+   "to": "doc:census-quickfacts-denver-county-colorado-csv",
+   "properties": {
+    "doc_id": "census-quickfacts-denver-county-colorado-csv"
+   }
+  },
+  {
+   "from": "ind:G1-D",
+   "type": "EVIDENCED_BY",
+   "to": "doc:census-api-dec2020-dhc-p1-counties-colorado",
+   "properties": {
+    "doc_id": "census-api-dec2020-dhc-p1-counties-colorado"
+   }
+  },
+  {
+   "from": "ind:G1-D",
+   "type": "EVIDENCED_BY_INTERNAL",
+   "to": "internal:DD-033",
+   "properties": {
+    "artifact_path": "DD-033"
+   }
+  },
+  {
+   "from": "ind:G1-D",
+   "type": "EVIDENCED_BY_INTERNAL",
+   "to": "internal:DD-034",
+   "properties": {
+    "artifact_path": "DD-034"
+   }
+  },
+  {
+   "from": "ind:G1-D",
+   "type": "EVIDENCED_BY_INTERNAL",
+   "to": "internal:DD-035",
+   "properties": {
+    "artifact_path": "DD-035"
+   }
+  },
+  {
+   "from": "ind:G1-D",
+   "type": "EVIDENCED_BY_INTERNAL",
+   "to": "internal:DD-036",
+   "properties": {
+    "artifact_path": "DD-036"
+   }
+  },
+  {
+   "from": "ind:G1-D",
+   "type": "EVIDENCED_BY_INTERNAL",
+   "to": "internal:assessment/harness/probes/g1_declared.py",
+   "properties": {
+    "artifact_path": "assessment/harness/probes/g1_declared.py"
+   }
+  },
+  {
+   "from": "ind:G1-D",
+   "type": "EVIDENCED_BY_INTERNAL",
+   "to": "internal:cc_tasks/2026-09-02_g1_eval_probe_family_v0_RESULT.md",
+   "properties": {
+    "artifact_path": "cc_tasks/2026-09-02_g1_eval_probe_family_v0_RESULT.md"
+   }
+  },
+  {
+   "from": "ind:G1-D",
+   "type": "EVIDENCED_BY_INTERNAL",
+   "to": "internal:cc_tasks/2026-09-03_g1_eval_v1_parser_fullgrid_errata_RESULT.md",
+   "properties": {
+    "artifact_path": "cc_tasks/2026-09-03_g1_eval_v1_parser_fullgrid_errata_RESULT.md"
+   }
+  },
+  {
+   "from": "ind:G1-D",
+   "type": "EVIDENCED_BY_INTERNAL",
+   "to": "internal:cc_tasks/2026-09-03_g1_eval_v2_product_surfaces_compression_RESULT.md",
+   "properties": {
+    "artifact_path": "cc_tasks/2026-09-03_g1_eval_v2_product_surfaces_compression_RESULT.md"
+   }
+  },
+  {
+   "from": "con:G:uncertainty-legibility-two-legs-scored-as-a-vector",
+   "type": "DECOMPOSES_INTO",
+   "to": "ind:G1-O"
+  },
+  {
+   "from": "ind:G1-O",
+   "type": "EVIDENCED_BY",
+   "to": "doc:fcsm-23-02-a-framework-for-data-quality-case-studies",
+   "properties": {
+    "doc_id": "fcsm-23-02-a-framework-for-data-quality-case-studies"
+   }
+  },
+  {
+   "from": "ind:G1-O",
+   "type": "EVIDENCED_BY",
+   "to": "doc:du-2026-possible-or-definite",
+   "properties": {
+    "doc_id": "du-2026-possible-or-definite"
+   }
+  },
+  {
+   "from": "ind:G1-O",
+   "type": "EVIDENCED_BY",
+   "to": "doc:peters-2025-generalization-bias-llm-summarization",
+   "properties": {
+    "doc_id": "peters-2025-generalization-bias-llm-summarization"
+   }
+  },
+  {
+   "from": "ind:G1-O",
+   "type": "EVIDENCED_BY",
+   "to": "doc:lee-2026-when-summaries-distort-decisions",
+   "properties": {
+    "doc_id": "lee-2026-when-summaries-distort-decisions"
+   }
+  },
+  {
+   "from": "ind:G1-O",
+   "type": "EVIDENCED_BY",
+   "to": "doc:zhao-2020-reducing-quantity-hallucinations",
+   "properties": {
+    "doc_id": "zhao-2020-reducing-quantity-hallucinations"
+   }
+  },
+  {
+   "from": "ind:G1-O",
+   "type": "EVIDENCED_BY",
+   "to": "doc:cao-2024-multimodal-long-form-summarization-financial-reports",
+   "properties": {
+    "doc_id": "cao-2024-multimodal-long-form-summarization-financial-reports"
+   }
+  },
+  {
+   "from": "ind:G1-O",
+   "type": "EVIDENCED_BY",
+   "to": "doc:zhou-2026-loomsum-table-grounded-faithfulness",
+   "properties": {
+    "doc_id": "zhou-2026-loomsum-table-grounded-faithfulness"
+   }
+  },
+  {
+   "from": "ind:G1-O",
+   "type": "EVIDENCED_BY",
+   "to": "doc:venktesh-2024-quantemp-numerical-claims",
+   "properties": {
+    "doc_id": "venktesh-2024-quantemp-numerical-claims"
+   }
+  },
+  {
+   "from": "ind:G1-O",
+   "type": "EVIDENCED_BY",
+   "to": "doc:min-2023-factscore",
+   "properties": {
+    "doc_id": "min-2023-factscore"
+   }
+  },
+  {
+   "from": "ind:G1-O",
+   "type": "EVIDENCED_BY",
+   "to": "doc:van-der-bles-2019-communicating-uncertainty",
+   "properties": {
+    "doc_id": "van-der-bles-2019-communicating-uncertainty"
+   }
+  },
+  {
+   "from": "ind:G1-O",
+   "type": "EVIDENCED_BY",
+   "to": "doc:manski-2015-communicating-uncertainty-official-economic-statistics",
+   "properties": {
+    "doc_id": "manski-2015-communicating-uncertainty-official-economic-statistics"
+   }
+  },
+  {
+   "from": "ind:G1-O",
+   "type": "EVIDENCED_BY",
+   "to": "doc:mazzi-2021-measuring-communicating-uncertainty-official-economic-statistics",
+   "properties": {
+    "doc_id": "mazzi-2021-measuring-communicating-uncertainty-official-economic-statistics"
+   }
+  },
+  {
+   "from": "ind:G1-O",
+   "type": "EVIDENCED_BY",
+   "to": "doc:census-acs-general-handbook-2020",
+   "properties": {
+    "doc_id": "census-acs-general-handbook-2020"
+   }
+  },
+  {
+   "from": "ind:G1-O",
+   "type": "EVIDENCED_BY",
+   "to": "doc:ons-uncertainty-and-how-we-measure-it",
+   "properties": {
+    "doc_id": "ons-uncertainty-and-how-we-measure-it"
+   }
+  },
+  {
+   "from": "ind:G1-O",
+   "type": "EVIDENCED_BY",
+   "to": "doc:statcan-quality-guidelines-6th-edition",
+   "properties": {
+    "doc_id": "statcan-quality-guidelines-6th-edition"
+   }
+  },
+  {
+   "from": "ind:G1-O",
+   "type": "EVIDENCED_BY",
+   "to": "doc:ebu-bbc-2025-news-integrity-ai-assistants",
+   "properties": {
+    "doc_id": "ebu-bbc-2025-news-integrity-ai-assistants"
+   }
+  },
+  {
+   "from": "ind:G1-O",
+   "type": "EVIDENCED_BY",
+   "to": "doc:radhakrishnan-2024-knowing-when-to-ask-data-commons",
+   "properties": {
+    "doc_id": "radhakrishnan-2024-knowing-when-to-ask-data-commons"
+   }
+  },
+  {
+   "from": "ind:G1-O",
+   "type": "EVIDENCED_BY",
+   "to": "doc:suleymanli-2025-llms-charts-official-statistics",
+   "properties": {
+    "doc_id": "suleymanli-2025-llms-charts-official-statistics"
+   }
+  },
+  {
+   "from": "ind:G1-O",
+   "type": "EVIDENCED_BY",
+   "to": "doc:census-2020-disclosure-avoidance-handbook-2021",
+   "properties": {
+    "doc_id": "census-2020-disclosure-avoidance-handbook-2021"
+   }
+  },
+  {
+   "from": "ind:G1-O",
+   "type": "EVIDENCED_BY",
+   "to": "doc:nchs-2017-data-presentation-standards-proportions",
+   "properties": {
+    "doc_id": "nchs-2017-data-presentation-standards-proportions"
+   }
+  },
+  {
+   "from": "ind:G1-O",
+   "type": "EVIDENCED_BY",
+   "to": "doc:nchs-2023-data-presentation-standards-rates-counts",
+   "properties": {
+    "doc_id": "nchs-2023-data-presentation-standards-rates-counts"
+   }
+  },
+  {
+   "from": "ind:G1-O",
+   "type": "EVIDENCED_BY",
+   "to": "doc:statcan-71-543-g-guide-labour-force-survey-2025",
+   "properties": {
+    "doc_id": "statcan-71-543-g-guide-labour-force-survey-2025"
+   }
+  },
+  {
+   "from": "ind:G1-O",
+   "type": "EVIDENCED_BY",
+   "to": "doc:census-acs-data-suppression-rules",
+   "properties": {
+    "doc_id": "census-acs-data-suppression-rules"
+   }
+  },
+  {
+   "from": "ind:G1-O",
+   "type": "EVIDENCED_BY",
+   "to": "doc:census-api-acs5-2023-b19013-counties-colorado",
+   "properties": {
+    "doc_id": "census-api-acs5-2023-b19013-counties-colorado"
+   }
+  },
+  {
+   "from": "ind:G1-O",
+   "type": "EVIDENCED_BY",
+   "to": "doc:census-api-acs5-2023-b19013-counties-idaho",
+   "properties": {
+    "doc_id": "census-api-acs5-2023-b19013-counties-idaho"
+   }
+  },
+  {
+   "from": "ind:G1-O",
+   "type": "EVIDENCED_BY",
+   "to": "doc:statcan-14-10-0287-01-lfs-2026-07-provinces-estimate-se-csv",
+   "properties": {
+    "doc_id": "statcan-14-10-0287-01-lfs-2026-07-provinces-estimate-se-csv"
+   }
+  },
+  {
+   "from": "ind:G1-O",
+   "type": "EVIDENCED_BY",
+   "to": "doc:statcan-14-10-0287-01-lfs-2025-12-provinces-estimate-se-csv",
+   "properties": {
+    "doc_id": "statcan-14-10-0287-01-lfs-2025-12-provinces-estimate-se-csv"
+   }
+  },
+  {
+   "from": "ind:G1-O",
+   "type": "EVIDENCED_BY",
+   "to": "doc:statcan-14-10-0287-01-cube-metadata-csv",
+   "properties": {
+    "doc_id": "statcan-14-10-0287-01-cube-metadata-csv"
+   }
+  },
+  {
+   "from": "ind:G1-O",
+   "type": "EVIDENCED_BY",
+   "to": "doc:statcan-13-10-0096-01-cchs-2022-provinces-percent-ci-csv",
+   "properties": {
+    "doc_id": "statcan-13-10-0096-01-cchs-2022-provinces-percent-ci-csv"
+   }
+  },
+  {
+   "from": "ind:G1-O",
+   "type": "EVIDENCED_BY",
+   "to": "doc:statcan-13-10-0096-01-cube-metadata-csv",
+   "properties": {
+    "doc_id": "statcan-13-10-0096-01-cube-metadata-csv"
+   }
+  },
+  {
+   "from": "ind:G1-O",
+   "type": "EVIDENCED_BY",
+   "to": "doc:statcan-13-10-0113-01-cchs-2021-2022-quebec-health-regions-percent-ci-csv",
+   "properties": {
+    "doc_id": "statcan-13-10-0113-01-cchs-2021-2022-quebec-health-regions-percent-ci-csv"
+   }
+  },
+  {
+   "from": "ind:G1-O",
+   "type": "EVIDENCED_BY",
+   "to": "doc:statcan-13-10-0113-01-cube-metadata-csv",
+   "properties": {
+    "doc_id": "statcan-13-10-0113-01-cube-metadata-csv"
+   }
+  },
+  {
+   "from": "ind:G1-O",
+   "type": "EVIDENCED_BY",
+   "to": "doc:nchs-data-brief-530-perinatal-mortality-2022-2023",
+   "properties": {
+    "doc_id": "nchs-data-brief-530-perinatal-mortality-2022-2023"
+   }
+  },
+  {
+   "from": "ind:G1-O",
+   "type": "EVIDENCED_BY",
+   "to": "doc:nchs-data-brief-500-dental-visits-adults-65-2022",
+   "properties": {
+    "doc_id": "nchs-data-brief-500-dental-visits-adults-65-2022"
+   }
+  },
+  {
+   "from": "ind:G1-O",
+   "type": "EVIDENCED_BY",
+   "to": "doc:nchs-data-brief-515-high-total-cholesterol-2021-2023",
+   "properties": {
+    "doc_id": "nchs-data-brief-515-high-total-cholesterol-2021-2023"
+   }
+  },
+  {
+   "from": "ind:G1-O",
+   "type": "EVIDENCED_BY",
+   "to": "doc:bls-employment-situation-2026-08-news-release",
+   "properties": {
+    "doc_id": "bls-employment-situation-2026-08-news-release"
+   }
+  },
+  {
+   "from": "ind:G1-O",
+   "type": "EVIDENCED_BY",
+   "to": "doc:bls-employment-situation-2026-05-news-release-archive",
+   "properties": {
+    "doc_id": "bls-employment-situation-2026-05-news-release-archive"
+   }
+  },
+  {
+   "from": "ind:G1-O",
+   "type": "EVIDENCED_BY",
+   "to": "doc:census-quickfacts-denver-county-colorado",
+   "properties": {
+    "doc_id": "census-quickfacts-denver-county-colorado"
+   }
+  },
+  {
+   "from": "ind:G1-O",
+   "type": "EVIDENCED_BY",
+   "to": "doc:census-quickfacts-denver-county-colorado-csv",
+   "properties": {
+    "doc_id": "census-quickfacts-denver-county-colorado-csv"
+   }
+  },
+  {
+   "from": "ind:G1-O",
+   "type": "EVIDENCED_BY",
+   "to": "doc:census-api-dec2020-dhc-p1-counties-colorado",
+   "properties": {
+    "doc_id": "census-api-dec2020-dhc-p1-counties-colorado"
+   }
+  },
+  {
+   "from": "ind:G1-O",
+   "type": "EVIDENCED_BY_INTERNAL",
+   "to": "internal:DD-033",
+   "properties": {
+    "artifact_path": "DD-033"
+   }
+  },
+  {
+   "from": "ind:G1-O",
+   "type": "EVIDENCED_BY_INTERNAL",
+   "to": "internal:DD-034",
+   "properties": {
+    "artifact_path": "DD-034"
+   }
+  },
+  {
+   "from": "ind:G1-O",
+   "type": "EVIDENCED_BY_INTERNAL",
+   "to": "internal:DD-035",
+   "properties": {
+    "artifact_path": "DD-035"
+   }
+  },
+  {
+   "from": "ind:G1-O",
+   "type": "EVIDENCED_BY_INTERNAL",
+   "to": "internal:DD-036",
+   "properties": {
+    "artifact_path": "DD-036"
+   }
+  },
+  {
+   "from": "ind:G1-O",
+   "type": "EVIDENCED_BY_INTERNAL",
+   "to": "internal:assessment/harness/probes/g1_declared.py",
+   "properties": {
+    "artifact_path": "assessment/harness/probes/g1_declared.py"
+   }
+  },
+  {
+   "from": "ind:G1-O",
+   "type": "EVIDENCED_BY_INTERNAL",
+   "to": "internal:cc_tasks/2026-09-02_g1_eval_probe_family_v0_RESULT.md",
+   "properties": {
+    "artifact_path": "cc_tasks/2026-09-02_g1_eval_probe_family_v0_RESULT.md"
+   }
+  },
+  {
+   "from": "ind:G1-O",
+   "type": "EVIDENCED_BY_INTERNAL",
+   "to": "internal:cc_tasks/2026-09-03_g1_eval_v1_parser_fullgrid_errata_RESULT.md",
+   "properties": {
+    "artifact_path": "cc_tasks/2026-09-03_g1_eval_v1_parser_fullgrid_errata_RESULT.md"
+   }
+  },
+  {
+   "from": "ind:G1-O",
+   "type": "EVIDENCED_BY_INTERNAL",
+   "to": "internal:cc_tasks/2026-09-03_g1_eval_v2_product_surfaces_compression_RESULT.md",
+   "properties": {
+    "artifact_path": "cc_tasks/2026-09-03_g1_eval_v2_product_surfaces_compression_RESULT.md"
+   }
+  },
+  {
+   "from": "crit:G",
+   "type": "DECOMPOSES_INTO",
+   "to": "con:G:revision-semantics"
+  },
+  {
+   "from": "con:G:revision-semantics",
+   "type": "DECOMPOSES_INTO",
+   "to": "ind:G2"
+  },
+  {
+   "from": "crit:G",
+   "type": "DECOMPOSES_INTO",
+   "to": "con:G:classification-vintage-identity"
+  },
+  {
+   "from": "con:G:classification-vintage-identity",
+   "type": "DECOMPOSES_INTO",
+   "to": "ind:G3"
+  },
+  {
+   "from": "crit:G",
+   "type": "DECOMPOSES_INTO",
+   "to": "con:G:authority-metadata"
+  },
+  {
+   "from": "con:G:authority-metadata",
+   "type": "DECOMPOSES_INTO",
+   "to": "ind:G4"
+  },
+  {
+   "from": "ind:G4",
+   "type": "EVIDENCED_BY",
+   "to": "doc:statistical-policy-working-paper-46-data-quality-assessment",
+   "properties": {
+    "doc_id": "statistical-policy-working-paper-46-data-quality-assessment"
+   }
+  },
+  {
+   "from": "ind:G4",
+   "type": "EVIDENCED_BY",
+   "to": "doc:fcsm-19-01-transparent-reporting-for-integrated-data-quality",
+   "properties": {
+    "doc_id": "fcsm-19-01-transparent-reporting-for-integrated-data-quality"
+   }
+  },
+  {
+   "from": "crit:G",
+   "type": "DECOMPOSES_INTO",
+   "to": "con:G:disclosure-semantics"
+  },
+  {
+   "from": "con:G:disclosure-semantics",
+   "type": "DECOMPOSES_INTO",
+   "to": "ind:G5"
+  },
+  {
+   "from": "ind:G5",
+   "type": "EVIDENCED_BY",
+   "to": "doc:usafacts-ai-ready-data-guide",
+   "properties": {
+    "doc_id": "usafacts-ai-ready-data-guide"
+   }
+  },
+  {
+   "from": "crit:G",
+   "type": "DECOMPOSES_INTO",
+   "to": "con:G:measurement-protocol-provenance"
+  },
+  {
+   "from": "con:G:measurement-protocol-provenance",
+   "type": "DECOMPOSES_INTO",
+   "to": "ind:G6"
+  },
+  {
+   "from": "ind:G6",
+   "type": "EVIDENCED_BY",
+   "to": "doc:sdmx-3-0-section-1-framework",
+   "properties": {
+    "doc_id": "sdmx-3-0-section-1-framework"
+   }
+  },
+  {
+   "from": "ind:G6",
+   "type": "EVIDENCED_BY",
+   "to": "doc:sdmx-standards-overview",
+   "properties": {
+    "doc_id": "sdmx-standards-overview"
+   }
+  },
+  {
+   "from": "ind:G6",
+   "type": "EVIDENCED_BY",
+   "to": "doc:odcs-open-data-contract-standard",
+   "properties": {
+    "doc_id": "odcs-open-data-contract-standard"
+   }
+  },
+  {
+   "from": "ind:A1",
+   "type": "MEASURED_BY",
+   "to": "spec:A1"
+  },
+  {
+   "from": "ind:A2",
+   "type": "MEASURED_BY",
+   "to": "spec:A2"
+  },
+  {
+   "from": "ind:A3",
+   "type": "MEASURED_BY",
+   "to": "spec:A3"
+  },
+  {
+   "from": "ind:A4",
+   "type": "MEASURED_BY",
+   "to": "spec:A4"
+  },
+  {
+   "from": "ind:A5",
+   "type": "MEASURED_BY",
+   "to": "spec:A5"
+  },
+  {
+   "from": "ind:A6",
+   "type": "MEASURED_BY",
+   "to": "spec:A6"
+  },
+  {
+   "from": "ind:A8",
+   "type": "MEASURED_BY",
+   "to": "spec:A8"
+  },
+  {
+   "from": "ind:A9",
+   "type": "MEASURED_BY",
+   "to": "spec:A9"
+  },
+  {
+   "from": "ind:A10",
+   "type": "MEASURED_BY",
+   "to": "spec:A10"
+  },
+  {
+   "from": "ind:A11",
+   "type": "MEASURED_BY",
+   "to": "spec:A11-declared"
+  },
+  {
+   "from": "ind:B3",
+   "type": "MEASURED_BY",
+   "to": "spec:B3"
+  },
+  {
+   "from": "ind:C4",
+   "type": "MEASURED_BY",
+   "to": "spec:C4-auto"
+  },
+  {
+   "from": "ind:D1",
+   "type": "MEASURED_BY",
+   "to": "spec:D1"
+  },
+  {
+   "from": "ind:D4",
+   "type": "MEASURED_BY",
+   "to": "spec:D4"
+  },
+  {
+   "from": "ind:E5",
+   "type": "MEASURED_BY",
+   "to": "spec:E5"
+  },
+  {
+   "from": "ind:F2",
+   "type": "MEASURED_BY",
+   "to": "spec:F2"
+  },
+  {
+   "from": "ind:F3",
+   "type": "MEASURED_BY",
+   "to": "spec:F3"
+  },
+  {
+   "from": "ind:F4",
+   "type": "MEASURED_BY",
+   "to": "spec:F4"
+  },
+  {
+   "from": "ind:G1-D",
+   "type": "MEASURED_BY",
+   "to": "spec:G1-D"
+  },
+  {
+   "from": "ind:G3",
+   "type": "MEASURED_BY",
+   "to": "spec:G3"
+  },
+  {
+   "from": "ind:G1-O",
+   "type": "MEASURED_BY",
+   "to": "spec:G1-O"
+  }
+ ]
+}

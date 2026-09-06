@@ -54,7 +54,7 @@
 #     classification fields (as_of_date, enums, ids) that a span cannot be expected to carry.
 #     Read by the faithfulness probe's decomposer (facts only for true attributes) and by the
 #     scoring rule (`doc_level_attribute` class excluded from F). DD-015.
-schema_version: "0.3.8"
+schema_version: "0.4.0"
 
 # --- Section 2: Node types -------------------------------------------------
 # Each node type lists the "Key properties" column verbatim. Parenthetical
@@ -319,6 +319,21 @@ edge_types:
     pairs: [[Instrument, Construct]]
     meaning: Instrument measures this dimension
 
+  operationalized_by:
+    # v0.4.0 (task 2026-09-06_freeze_and_framework_graph §2.1; closes Issue 2a2b6461).
+    # CQ-27 asked which Instruments measure an uncertainty concept AND belong to a Framework
+    # that is an AI-readiness assessment. It could not be asked: the graph held 506 Framework
+    # nodes and 502 Instrument nodes and ZERO relationships of any type between them, because
+    # no edge type had domain Framework and range Instrument. `has_component` is
+    # Framework->Concept, `uses_measure` is Instrument->Measure, `operationalizes` is
+    # Instrument->Construct. The parser's whitelist would have rejected such an edge even if
+    # the model asserted one, so the absence was structural rather than empirical.
+    from: Framework
+    to: Instrument
+    pairs: [[Framework, Instrument]]
+    meaning: The framework is operationalized by this instrument — the instrument is the
+             framework's measuring apparatus, not merely a thing it mentions
+
   measures:
     # v0.2: extended from Measure->Construct (v0.1) to also allow Concept endpoints, per
     # the pilot audit (proposed measures/measures_concept/evaluates/assesses/operationalizes).
@@ -553,3 +568,86 @@ event_types:
       document_id: doc_id of a manifest-included document that will not be extracted
       reason: why it was declined (e.g. "no consumer")
       ts: UTC ISO-8601
+
+# ---------------------------------------------------------------------------
+# ASSESSMENT LAYER — schema epoch v0.4.0
+# (task cc_tasks/2026-09-06_freeze_and_framework_graph.md §2.1; DD-051)
+#
+# DELIBERATELY NOT IN `node_types` / `edge_types`. Those two keys ARE the parser's whitelist
+# (`kg/extraction/schema_loader.py`: "The edge whitelist is exactly `edge_types` keys"), so a
+# label placed there is a label a MODEL can assert from a document. The assessment layer is
+# AUTHORED — it is the instrument, not a finding about the literature — and an extraction that
+# could mint an `AssessmentIndicator` would let a source document rewrite the framework
+# measuring it. Same reasoning that kept `Term` and `RESOLVES_TO` out of the whitelist in
+# DD-044 §4. The framework loader reads this block; the parser never sees it.
+#
+# Labels are prefixed `Assessment*` because the KG's own `Framework` label is taken (506
+# extracted nodes) and `Construct` already means the construct arm.
+#
+# Prior art (DD-050): NIST OSCAL's catalog -> profile -> assessment-plan -> assessment-results
+# layering with observation/evidence/finding as first-class objects — the LAYERING is OSCAL's,
+# the schema is not; F-UJI (Devaraju & Huber 2021) for the shape of a MeasurementSpec; FAIR
+# maturity indicators (Wilkinson et al. 2019) for an indicator as a machine-readable test with
+# a defined pass condition.
+assessment_layer:
+  version: "0.4.0"
+  source_of_truth: framework/ai_readiness_framework.json
+  parser_visible: false
+
+  node_types:
+    AssessmentCriterion:
+      what: One of the framework's seven top-level criteria (A-G).
+      properties: [code, name, anchor, bridge]
+    AssessmentConstruct:
+      what: A measurable dimension underneath a criterion — the skeleton's Construct column.
+      properties: [name, criterion_code]
+    AssessmentIndicator:
+      what: One of the 45 concrete checks. G1 is TWO indicator nodes (G1-D, G1-O) under one
+            construct, per DD-036's two-leg rule.
+      properties: [code, construct, indicator, type, tier, status, evidence_raw,
+                   measurement_status, frontier, as_of, notes]
+      property_values:
+        type: [AUTO, DOC, EVAL]
+        tier: [public, agency_instrumented, paid]
+        measurement_status: [specified, harness_built, measured]
+    MeasurementSpec:
+      what: How one indicator leg is obtained. One per indicator leg.
+      properties: [indicator_code, mode, signal, collector, collector_pin, evidence_kind,
+                   rule_id, prior_art, fuji_metric]
+      property_values:
+        mode: [auto, checklist, harness]
+    Observation:
+      what: A raw fact captured against a product surface. Evidence-first — stored before it
+            is scored, exactly as the G1 eval family stores the raw exchange before scoring.
+      properties: [indicator_code, surface_doc_id, captured_at, evidence_hash, raw_ref]
+    Finding:
+      what: A verdict over Observations under a VERSIONED rule. Separate from Observation so a
+            rule change re-derives findings without re-collecting evidence.
+      properties: [indicator_code, rule_id, verdict, wilson_lo, wilson_hi, denominator]
+
+  edge_types:
+    DECOMPOSES_INTO:
+      pairs: [[AssessmentCriterion, AssessmentConstruct],
+              [AssessmentConstruct, AssessmentIndicator]]
+      meaning: The framework's decomposition, criterion -> construct -> indicator.
+    EVIDENCED_BY:
+      pairs: [[AssessmentIndicator, Document]]
+      meaning: An admitted corpus doc_id from the indicator's Evidence cell. Written only when
+               the doc_id exists in corpus/manifest.json; otherwise the cell's stated reason is
+               kept as a gap marker on the indicator.
+    EVIDENCED_BY_INTERNAL:
+      pairs: [[AssessmentIndicator, Document]]
+      meaning: An internal reference in an Evidence cell (a DD, a methodology section, a
+               harness path) that is not a corpus document. Carries `artifact_path`.
+    MEASURED_BY:
+      pairs: [[AssessmentIndicator, MeasurementSpec]]
+      meaning: How this indicator leg is obtained.
+    OBSERVED_ON:
+      pairs: [[Observation, Document]]
+      meaning: The product surface the observation was captured against.
+    SUPPORTS:
+      pairs: [[Observation, Finding]]
+      meaning: The observations a finding rests on.
+    RULED_BY:
+      pairs: [[Finding, MeasurementSpec]]
+      meaning: The versioned rule that produced the verdict, held on the spec's `rule_id`.
