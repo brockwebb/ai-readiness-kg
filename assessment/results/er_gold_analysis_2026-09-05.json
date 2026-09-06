@@ -1,0 +1,130 @@
+{
+ "task": "cc_tasks/2026-09-05_er_gold_fable_labels_and_score.md",
+ "rater": "claude-fable-5-1",
+ "labelled_main": 100,
+ "labelled_retest": 30,
+ "verdict_counts": {
+  "same": 62,
+  "uncertain": 3,
+  "different": 35
+ },
+ "scores": {
+  "pairs_on_sheet": 100,
+  "pairs_scored": 97,
+  "pairs_uncertain_or_unfilled": 3,
+  "by_stratum": {
+   "A": {
+    "tp": 19,
+    "fp": 0,
+    "fn": 0,
+    "tn": 0,
+    "n": 19,
+    "weight": 831.2,
+    "precision": 1.0,
+    "recall": 1.0,
+    "precision_ci": [
+     0.831821,
+     1.0
+    ],
+    "recall_ci": [
+     0.831821,
+     1.0
+    ]
+   },
+   "B": {
+    "tp": 20,
+    "fp": 0,
+    "fn": 0,
+    "tn": 0,
+    "n": 20,
+    "weight": 2.25,
+    "precision": 1.0,
+    "recall": 1.0,
+    "precision_ci": [
+     0.838875,
+     1.0
+    ],
+    "recall_ci": [
+     0.838875,
+     1.0
+    ]
+   },
+   "C": {
+    "tp": 0,
+    "fp": 0,
+    "fn": 1,
+    "tn": 19,
+    "n": 20,
+    "weight": 3.7,
+    "precision": null,
+    "recall": 0.0,
+    "precision_ci": [
+     null,
+     null
+    ],
+    "recall_ci": [
+     0.0,
+     0.793451
+    ]
+   },
+   "D": {
+    "tp": 0,
+    "fp": 0,
+    "fn": 6,
+    "tn": 14,
+    "n": 20,
+    "weight": 21.55,
+    "precision": null,
+    "recall": 0.0,
+    "precision_ci": [
+     null,
+     null
+    ],
+    "recall_ci": [
+     0.0,
+     0.390334
+    ]
+   },
+   "E": {
+    "tp": 16,
+    "fp": 2,
+    "fn": 0,
+    "tn": 0,
+    "n": 18,
+    "weight": 45.75,
+    "precision": 0.888889,
+    "recall": 1.0,
+    "precision_ci": [
+     0.672002,
+     0.96898
+    ],
+    "recall_ci": [
+     0.806392,
+     1.0
+    ]
+   }
+  },
+  "precision": 0.994508,
+  "precision_ci": [
+   0.836763,
+   0.999844
+  ],
+  "precision_n_eff": 21.087,
+  "recall": 0.992037,
+  "recall_ci": [
+   0.833399,
+   0.999678
+  ],
+  "recall_n_eff": 21.194,
+  "cluster_precision": 0.88189,
+  "cluster_recall": 0.918033,
+  "cluster_f1": 0.899598,
+  "thresholds": {
+   "precision_floor": 0.95,
+   "recall_floor": 0.8
+  },
+  "passes_precision": true,
+  "passes_recall": true
+ },
+ "escalations": []
+}

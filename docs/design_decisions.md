@@ -796,3 +796,18 @@ each with a **Wilson (1927) 95 % interval on the effective sample size**, stratu
 **The negative control agrees.** Of the ten highest-membership cross-arm `Standard` terms, expected to be single-sense, **five auto-split** — JSON-LD, ISO 8601, DataCite, VoID, Croissant-RAI — and `Schema.org` (33 members) fell in the band at cross 0.383. A method that would split JSON-LD is not ready to split anything.
 
 **What would fix it, recorded and not done here.** A same-arm null distribution: score pairs drawn *within* one arm to learn what "same sense, different document" looks like in this space, and set the floor from that distribution rather than importing one. That is a calibration task with its own pre-registration, not a threshold nudged after seeing this result — the thresholds above are left exactly as the task fixed them.
+
+
+### DD-045 addendum-01: the gold is model-labelled, not human-labelled
+
+**Date:** 2026-09-05 (executed 2026-09-06 UTC). **Task:** `cc_tasks/2026-09-05_er_gold_fable_labels_and_score.md`. **Amends** DD-045 §4, which said "Gold is human-labelled."
+
+**Withdrawn.** The 100-pair gold sample was labelled by **`claude-fable-5-1`**, an independent model rater that took no part in any pipeline decision on these pairs — the vocabulary seed, the alias-first links, the clerical-band judgments and the homograph scores were all `claude-opus-5` or deterministic code. Independence is enforced in `scripts/er_gold_rate.py`, which refuses `claude-opus-5` by name, runs one pair per call from a hermetic empty cwd with no repo access, and passes the rater the sheet's own instruction block plus one pair block and nothing else — no cosine, no vocabulary term, no stratum, no pipeline decision.
+
+**The limitation, stated plainly and carried on every Result derived from it.** A same-family rater bounds correctness **relative to that rater**, not to ground truth. Two models trained by one lab on overlapping data can share a mistake, and a shared mistake is invisible to any agreement statistic between them. The measured test-retest reliability — raw agreement **1.000**, Cohen's κ **1.000** over 30 re-rated pairs — bounds how *repeatable* the labels are and says nothing about whether they are *right*; it is also measured on a draw that happened to contain none of the three `uncertain` pairs, which are the least stable ones.
+
+**What this changes about DD-045 §3.** Nothing in the thresholds. The acceptance instrument (pairwise precision ≥ 0.95, recall ≥ 0.80, Wilson intervals, stratum-weighted) is unchanged, and the numbers it produced stand — with the rater named wherever they are quoted, so no reader can mistake them for human adjudication.
+
+**The operator's role is now narrow and mechanical**, which is the point: a pair reaches him **only** when the rater answered `uncertain` **and** flipping that single verdict would move a threshold verdict, computed by re-scoring with the flip. On this sample that set is **empty**, and `docs/research/2026-09-05_er_gold_escalations.md` says so. There is no queue.
+
+**When a human relabel would be worth its cost:** if a later pass measures precision near the 0.95 floor rather than comfortably above it, or if the two raters' shared-error risk becomes load-bearing for a published claim. Neither holds here — see the interval caveat in that task's RESULT §2.
