@@ -1,0 +1,25 @@
+{
+ "before": {
+  "air:concept/accessibility": {
+   "verdict": "same_sense",
+   "confidence": 0.72
+  },
+  "air:concept/ai-ready": {
+   "verdict": "distinct_senses",
+   "confidence": 0.78
+  }
+ },
+ "after": {
+  "air:concept/accessibility": {
+   "verdict": "same_sense",
+   "confidence": 0.7,
+   "reason": "All three arms name the same property \u2014 the conditions under which data can be obtained \u2014 with FCSM's \"ease with which data users can obtain an agency's\" data, the readiness arm's \"dataset's accessibility requires a platform with controlled access, considering privacy or licensing constraints,\" and MITRE listing \"governance, accessibility, sharing/access controls\" as data-pillar activities, i.e. the same data property viewed from the organisation's maturing angle rather than a separate organisational capability (the one genuine outlier, DCAT's \"alternative text for non-text data resources ... to improve the accessibility to data,\" is a11y-sense drift *within* the publication arm, not a cross"
+  },
+  "air:concept/ai-ready": {
+   "verdict": "distinct_senses",
+   "confidence": 0.76,
+   "reason": "The organisational-maturity arm's anchor span asks \"When does a user become \u201cAI-ready\u201d?\" \u2014 a property of a *human decision-maker's* competence \u2014 whereas the publication arm asserts \"data should be \u201cAI-Ready\u201d\" and the training arm says publishers should \"make their datasets AI-ready\", both properties of a *dataset*; the person-readiness sense and the artifact-readiness sense are two things wearing one label (note the org arm's own second node, \"disseminating public data in AI ready formats\", actually belongs to the artifact sense, so the split is user-vs-data, not arm-vs-arm)."
+  }
+ },
+ "gate_passed": false
+}

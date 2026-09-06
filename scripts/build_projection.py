@@ -354,7 +354,7 @@ def build(session, kg_labels: list[str], edge_whitelist: set[str]) -> dict:
               "skipped_non_graph_purpose": 0,
               "aliased_endpoints": 0,
               # vocabulary layer (task 2026-09-05_vocabulary_and_entity_linking §1.4)
-              "terms": 0, "resolved": 0, "unresolved": 0,
+              "terms": 0, "resolved": 0, "unresolved": 0, "grounding_thin": 0,
               "unresolved_ambiguous_across_assertions": 0}
     superseded, aliases = read_overlays()
     quarantined = quarantined_batches()
@@ -442,6 +442,11 @@ def build(session, kg_labels: list[str], edge_whitelist: set[str]) -> dict:
     #    level. One node, one term, or none.
     #  * one round-trip per assertion is 30,144 of them against 14,000 nodes.
     _resolutions: dict = {}
+    #: {(node key, label): (name, span)} — the span AS IT ENDS UP on the node, so invariant
+    #: 3's thinness floor (task 2026-09-06_bare_span_backfill §3) is measured after any
+    #: `grounding_relocated` overlay rather than before it. Measuring before would flag every
+    #: node the backfill just repaired.
+    _spans: dict = {}
 
     def _resolve_node(key: str, label: str, name) -> None:
         """Alias-first at write time, recorded now and written after the pass.
@@ -457,6 +462,14 @@ def build(session, kg_labels: list[str], edge_whitelist: set[str]) -> dict:
         _resolutions.setdefault((key, label), set())
         if tid:
             _resolutions[(key, label)].add(tid)
+
+    def _flag_thin_spans() -> None:
+        """Annotate, never delete: the extraction event stands and the node stays queryable."""
+        for (key, label), (name, span) in sorted(_spans.items()):
+            if is_thin_span(span, name):
+                session.run(f"MATCH (n:{label} {{key: $key}}) SET n.grounding_thin = true",
+                            key=key)
+                counts["grounding_thin"] += 1
 
     def _write_resolutions() -> None:
         # The label is interpolated, never a payload value: it comes from `kg_labels`, which
@@ -540,6 +553,8 @@ def build(session, kg_labels: list[str], edge_whitelist: set[str]) -> dict:
                 key=_key, props=props)
             counts["nodes"] += 1
             _resolve_node(_key, label, props.get("name"))
+            if props.get("name"):
+                _spans[(_key, label)] = (props.get("name"), props.get("grounding_span"))
         elif et in ("edge_asserted", "curated_promotion"):
             p = ev["payload"] if et == "edge_asserted" else ev
             rel = p.get("type") if et == "edge_asserted" else p.get("edge")
@@ -569,11 +584,27 @@ def build(session, kg_labels: list[str], edge_whitelist: set[str]) -> dict:
     for ev in eventlog.replay():
         et = ev.get("event_type")
         if et == "grounding_relocated":
-            session.run("MATCH (n {key: $key}) WHERE any(l IN labels(n) WHERE l IN $kg) "
-                        "SET n.grounding_span = $span, n.grounding_relocated_from = $old, "
-                        "n.grounding_relocation_method = $m",
-                        key=node_key(ev["doc_id"], ev["item_id"]), span=ev["new_span"],
-                        old=ev["old_span"], m=ev["method"], kg=kg_labels)
+            # A relocation event written since 2026-09-06 carries the node's LABEL, so the
+            # write can be label-exact rather than merely label-set-guarded — which matters
+            # for the 82 keys DD-020's <doc_id>::<item_id> does not make unique across types.
+            # Historical events carry no label and keep the set guard.
+            _lbl = ev.get("label")
+            for _k, _v in list(_spans.items()):
+                if _k[0] == node_key(ev["doc_id"], ev["item_id"]) and (
+                        _lbl is None or _k[1] == _lbl):
+                    _spans[_k] = (_v[0], ev["new_span"])
+            if _lbl in kg_labels:
+                session.run(f"MATCH (n:{_lbl} {{key: $key}}) "
+                            f"SET n.grounding_span = $span, n.grounding_relocated_from = $old, "
+                            f"n.grounding_relocation_method = $m",
+                            key=node_key(ev["doc_id"], ev["item_id"]), span=ev["new_span"],
+                            old=ev["old_span"], m=ev["method"])
+            else:
+                session.run("MATCH (n {key: $key}) WHERE any(l IN labels(n) WHERE l IN $kg) "
+                            "SET n.grounding_span = $span, n.grounding_relocated_from = $old, "
+                            "n.grounding_relocation_method = $m",
+                            key=node_key(ev["doc_id"], ev["item_id"]), span=ev["new_span"],
+                            old=ev["old_span"], m=ev["method"], kg=kg_labels)
             counts["overlays_relocated"] += 1
         elif et == "attribute_nulled":
             attr = ev["attribute"]
@@ -608,7 +639,23 @@ def build(session, kg_labels: list[str], edge_whitelist: set[str]) -> dict:
     # After the whole pass, so a node asserted five times produces one write and a node whose
     # assertions disagree produces none. See `_resolutions` above.
     _write_resolutions()
+    _flag_thin_spans()
     return counts
+
+
+def is_thin_span(span, name) -> bool:
+    """Invariant 3's floor (task 2026-09-06_bare_span_backfill §3): a grounding span carries
+    >= 8 tokens OR >= 3 tokens outside the node's own name.
+
+    A span equal to the node's name satisfies invariant 3 as written — present, verbatim,
+    grounded — and says nothing. `RDF 1.1` against the name `RDF` is flagged too, and that is
+    the floor's recorded cost: thinness is what it measures, and an exception for short
+    standard names would make it unfalsifiable.
+    """
+    import re as _re
+    tok = lambda s: _re.findall(r"[a-z0-9]+", (s or "").lower())   # noqa: E731
+    t = tok(span)
+    return not (len(t) >= 8 or len(set(t) - set(tok(name))) >= 3)
 
 
 def fingerprint(session, kg_labels: list[str]) -> dict:

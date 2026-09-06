@@ -828,3 +828,31 @@ each with a **Wilson (1927) 95 % interval on the effective sample size**, stratu
 **Recorded against that allocation, because applying the rule literally exposed a mismatch of objectives.** Neyman (1934) minimises the variance of the **population** estimate, and with `p = 0.5` for the two strata that showed zero errors it puts **188 of 200 pairs into stratum A** — the stratum with no observed defect — and **zero into stratum C**. That is arithmetically correct for the objective Neyman optimises and close to useless for the objective this regold has, which is per-stratum precision on the strata where defects were measured. Cochran (1977) §5.5 covers the alternative: allocation for **domain** estimates, where each domain needs enough sample to carry its own interval. The pre-registered rule is followed and registered as specified — it is not retuned after seeing its output — and the mismatch is recorded here so the next task can choose the objective deliberately rather than inherit it.
 
 **5. What this DD does not do.** It does not move any threshold from `0b8ea847` §1.2 or DD-045 §3, does not withdraw the DD-045 verdict, and does not authorise a term-level merge. Both of this task's write gates failed and nothing reached the vocabulary log; epoch 1 stands.
+
+
+## DD-048: bare grounding spans are an extraction quality defect, remediated by deterministic KWIC backfill; invariant 3 gains a thinness floor; the regold objective is per-stratum, not population
+
+**Date:** 2026-09-06. **Task:** `cc_tasks/2026-09-06_bare_span_backfill.md` §5. **Resolves the cause** behind Issue `e21b9ab3`. **Amends** invariant 3 (§3 below) and **supersedes** DD-047 §4's allocation objective. **Premises, registered:** `bare_span_nodes_total` 1,773; `bare_span_backfilled` 1,695; `bare_span_share_after` 0.0056.
+
+**1. A bare span is a quality defect, and it is remediated as an overlay — never by rewriting an extraction.** 1,773 named nodes carried a `grounding_span` equal to their own `name`. Invariant 3 ("no grounding span, no write") accepted every one, because the span **is** present, **is** verbatim and **is** grounded — it simply says nothing. The remediation is deterministic and asks no model anything: **Luhn (1960)**, "Key word-in-context index for technical literature", *American Documentation* 11(4) — the useful unit is the mention **plus its bounded context** — over CommonMark block structure (§4–§5), with the widened span written as a `grounding_relocated` overlay. That event type already implements **PROV-O `prov:wasRevisionOf`** semantics: the bare span is retained on the log and the extraction event is untouched. `prov_extraction_event_id` is unchanged on all 1,695 relocated nodes, verified by a labelled count.
+
+**What `location` actually encodes, read from the code rather than assumed:** a **model-authored heading path in free text**. `prompt_template_v0_3_8.md` requires a `location` on every node and never defines its format, so the model writes `Stages of the journey > Readiness`, `Introduction`, `title/intro`, `DIME PROJECT banner`. It is not an offset and not a stable section id. It is therefore used **only to disambiguate** between candidate matches of the name, and can never lose a match a plain phrase search would have found.
+
+**2. Invariant 3 gains a floor, and thin spans are annotated rather than dropped.** A grounding span must carry **≥ 8 tokens or ≥ 3 tokens outside the node's name**; one that does not is flagged `grounding_thin: true` in the projection. It is an annotation, not a deletion: the extraction event stands, the node stays queryable, and what changes is that a reader can now see which spans carry nothing. 991 nodes are flagged after the backfill. **`RDF 1.1` against the name `RDF` is flagged and stays flagged** — that is the floor's recorded cost, kept deliberately, because thinness is exactly what it measures and an exception for short standard names would make it unfalsifiable.
+
+**3. The regold allocation objective is DOMAIN precision, not population precision.** DD-047 §4 registered a Neyman (1934) allocation and recorded that applying it literally put **188 of 200 pairs into stratum A** — the stratum with zero observed errors — and none into stratum C. That is correct for the objective Neyman optimises, the variance of the whole-corpus estimate, which stratum A's N of 16,624 dominates. It is the wrong objective for an acceptance measurement whose purpose is per-stratum precision where defects were measured. **Cochran (1977), *Sampling Techniques*, §5.6** gives the alternative: `n_h ∝ S_h`, equal precision within each stratum. Registered as `er_regold_allocation_2026-09-06b` with Results `er_regold_b_n_stratum_*`:
+
+| stratum | population (Neyman) | **domain (Cochran §5.6)** |
+|---|---:|---:|
+| A exact-name auto-links | 188 | **52** |
+| B band accepted | 1 | **45** (its whole population) |
+| C band rejected | 0 | **22** |
+| D near-miss | 4 | **48** |
+| E cross-arm kept | 7 | **33** |
+| F pairs the next write task changes | 0 | 0 |
+
+The DD-047 table stays registered as the superseded population-objective design; a superseded measurement is not deleted. The draw is still not made; seed 20260906.
+
+**4. The spend stop rule is SETTLED tokens.** `230b282f` §6.4 recorded the ambiguity between settled spend and the sum of DD-042 ceilings. It is resolved: the stop applies to **settled** tokens. DD-042 ceilings are declared budgets whose headroom exists so a run does not halt mid-pass, and summing them to compare against a spend stop would forbid runs that never spend the money.
+
+**5. What this DD does not settle.** The §4 acceptance control **failed**, and it failed differently than before: with the MITRE span supplied, the judge read it and called `air:concept/accessibility` one sense — *"the same data property viewed from the organisation's maturing angle rather than a separate organisational capability"* — which contradicts the ER gold label, formed from the document title when the span was empty. **Which reading is right is not settled here and is not settled by more model calls.** The overlays are not reverted; they are correct on their own terms, and the disagreement is now between two readings of the same visible evidence rather than between a reading and an absence.

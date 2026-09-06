@@ -376,3 +376,67 @@ def test_a_key_asserted_under_two_types_resolves_only_the_node_that_has_the_name
     assert counts["resolved"] == 1
     # and the Claim twin is neither resolved nor flagged: it has no name
     assert [q for q, _ in session.calls if "unresolved" in q] == []
+
+
+# --- invariant 3's thinness floor (task 2026-09-06_bare_span_backfill §3) -------------
+
+def test_a_thin_grounding_span_is_annotated_not_dropped(tmp_path, monkeypatch):
+    """§3: a span must carry >= 8 tokens OR >= 3 tokens outside the node's name. A span that
+    fails is flagged `grounding_thin: true` — an ANNOTATION, never a deletion.
+
+    Invariant 3 ("no grounding span, no write") is satisfied by a span equal to the node's own
+    name: it is present, verbatim, and grounded. 1,773 named nodes shipped that way and it
+    broke the §2.3 homograph control, every ER gold `uncertain`, and 45 of 212 judged terms.
+    The floor measures THINNESS, so the extraction event stands and the node stays queryable —
+    what changes is that a reader can now see which spans carry nothing.
+    """
+    from kg import eventlog
+    events = tmp_path / "events"
+    events.mkdir()
+    schema = tmp_path / "schema.yaml"
+    schema.write_text('schema_version: "0.3.5"\n', encoding="utf-8")
+    monkeypatch.setattr(eventlog, "_EVENTS_DIR", events)
+    monkeypatch.setattr(eventlog, "_SCHEMA_PATH", schema)
+    prov = {"model_id": "m"}
+    _shard(events, 1, [
+        {"event_type": "node_asserted", "doc_id": "d1", "provenance": prov,
+         "payload": {"type": "Concept", "id": "bare",
+                     "item": {"name": "Accessibility", "grounding_span": "Accessibility"}}},
+        {"event_type": "node_asserted", "doc_id": "d1", "provenance": prov,
+         "payload": {"type": "Concept", "id": "rich",
+                     "item": {"name": "Accessibility",
+                              "grounding_span": "Accessibility relates to the ease with which "
+                                                "data users can obtain an agency's data."}}},
+    ])
+    session = _RecordingSession()
+    counts = bp.build(session, ["Concept"], set())
+    thin = [(q, p) for q, p in session.calls if "grounding_thin" in q]
+    assert len(thin) == 1, [q for q, _ in session.calls if "grounding" in q]
+    assert thin[0][1]["key"] == bp.node_key("d1", "bare")
+    assert "n:Concept" in thin[0][0]              # labelled, per the lint
+    assert counts["grounding_thin"] == 1
+
+
+def test_a_relocated_span_is_measured_after_relocation_not_before(tmp_path, monkeypatch):
+    """The whole point of the backfill: a node whose bare span was relocated to a real one
+    must NOT be flagged thin. Overlays are applied after the node pass, so the flag has to be
+    computed from the span that ends up on the node."""
+    from kg import eventlog
+    events = tmp_path / "events"
+    events.mkdir()
+    schema = tmp_path / "schema.yaml"
+    schema.write_text('schema_version: "0.3.5"\n', encoding="utf-8")
+    monkeypatch.setattr(eventlog, "_EVENTS_DIR", events)
+    monkeypatch.setattr(eventlog, "_SCHEMA_PATH", schema)
+    _shard(events, 1, [
+        {"event_type": "node_asserted", "doc_id": "d1", "provenance": {"model_id": "m"},
+         "payload": {"type": "Concept", "id": "bare",
+                     "item": {"name": "Accessibility", "grounding_span": "Accessibility"}}},
+        {"event_type": "grounding_relocated", "doc_id": "d1", "item_id": "bare",
+         "label": "Concept", "old_span": "Accessibility",
+         "new_span": "Accessibility relates to the ease with which data users can obtain it.",
+         "method": "kwic_backfill_v1"},
+    ])
+    session = _RecordingSession()
+    counts = bp.build(session, ["Concept"], set())
+    assert counts["grounding_thin"] == 0, [q for q, _ in session.calls if "thin" in q]

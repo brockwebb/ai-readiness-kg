@@ -44,6 +44,12 @@ DESCRIPTIONS = {
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--total", type=int, default=200)
+    ap.add_argument("--objective", choices=("population", "domain"), default="population",
+                    help="population: Neyman, n_h proportional to N_h*S_h — minimises the "
+                         "variance of the POPULATION estimate. domain: Cochran (1977) §5.6, "
+                         "n_h proportional to S_h — equal precision PER STRATUM, which is what "
+                         "a per-stratum acceptance measurement actually needs (DD-048 §3).")
+    ap.add_argument("--out", default=None)
     ap.add_argument("--changed-pairs", type=int, default=0,
                     help="N_F: pairs whose resolution this task changed (§1.3 + §2.4)")
     a = ap.parse_args(argv)
@@ -69,34 +75,76 @@ def main(argv=None) -> int:
                      "observed_error_p": None if observed_p is None else round(observed_p, 6),
                      "p_used": round(p, 6), "S": round(S, 6), "NS": round(N * S, 4)})
 
-    total_ns = sum(r["NS"] for r in rows)
+    # The allocation weight IS the objective, and the two objectives are different questions:
+    #   population  n_h ∝ N_h·S_h  — Neyman (1934): minimise the variance of the whole-corpus
+    #                                 estimate. Stratum A's N dominates, so it takes the sample.
+    #   domain      n_h ∝ S_h      — Cochran (1977) §5.6: equal precision within each stratum,
+    #                                 which is what a PER-STRATUM acceptance measurement needs.
     for r in rows:
-        r["n_neyman"] = (round(a.total * r["NS"] / total_ns, 3) if total_ns else 0.0)
-    # Largest-remainder rounding to hit the total exactly.
-    floors = {r["stratum"]: int(r["n_neyman"]) for r in rows}
-    left = a.total - sum(floors.values())
-    for r in sorted(rows, key=lambda x: -(x["n_neyman"] - int(x["n_neyman"]))):
-        if left <= 0:
+        r["weight"] = r["NS"] if a.objective == "population" else r["S"]
+        if r["N"] <= 0:
+            r["weight"] = 0.0
+    # Proportional allocation, then capped at each stratum's population with the surplus
+    # redistributed — a stratum of 45 cannot yield 51 pairs however much precision it deserves.
+    remaining, caps = a.total, {r["stratum"]: r["N"] for r in rows}
+    alloc = {r["stratum"]: 0 for r in rows}
+    live = [r for r in rows if r["weight"] > 0]
+    for _ in range(10):
+        tw = sum(r["weight"] for r in live if alloc[r["stratum"]] < caps[r["stratum"]])
+        if not tw or remaining <= 0:
             break
-        if r["N"] > 0:
-            floors[r["stratum"]] += 1
-            left -= 1
+        want = {r["stratum"]: alloc[r["stratum"]] + remaining * r["weight"] / tw
+                for r in live if alloc[r["stratum"]] < caps[r["stratum"]]}
+        changed = False
+        for h, v in want.items():
+            new = min(int(round(v)), caps[h])
+            if new != alloc[h]:
+                alloc[h], changed = new, True
+        remaining = a.total - sum(alloc.values())
+        if not changed:
+            break
+    # Rounding can OVERSHOOT as easily as undershoot — `int(round(v))` per stratum summed to
+    # 201 on the first domain run. Trim before topping up, taking from the stratum with the
+    # smallest weight per allocated pair so the trim costs the least precision.
+    while sum(alloc.values()) > a.total:
+        cand = [r for r in live if alloc[r["stratum"]] > 0]
+        if not cand:
+            break
+        worst = min(cand, key=lambda r: r["weight"] / max(1, alloc[r["stratum"]]))
+        alloc[worst["stratum"]] -= 1
+    remaining = a.total - sum(alloc.values())
+    # largest-remainder top-up for any rounding shortfall
+    while remaining > 0:
+        cand = [r for r in live if alloc[r["stratum"]] < caps[r["stratum"]]]
+        if not cand:
+            break
+        best = max(cand, key=lambda r: r["weight"] / max(1, alloc[r["stratum"]]))
+        alloc[best["stratum"]] += 1
+        remaining -= 1
     for r in rows:
-        r["n_allocated"] = min(floors[r["stratum"]], r["N"])
+        r["n_allocated"] = alloc[r["stratum"]]
 
-    out = {"task": TASK, "method": "Neyman (1934) n_h proportional to N_h * S_h; "
-                                   "Cochran (1977) Sampling Techniques §5.5",
+    method = ("Neyman (1934) n_h proportional to N_h * S_h; Cochran (1977) §5.5 "
+              "— POPULATION objective"
+              if a.objective == "population" else
+              "Cochran (1977) Sampling Techniques §5.6, n_h proportional to S_h "
+              "— DOMAIN (per-stratum) objective, DD-048 §3")
+    out = {"task": TASK, "method": method, "objective": a.objective,
            "total": a.total, "seed_for_the_draw": 20260906,
            "draw_made_here": False, "strata": rows,
            "note": ("Registered BEFORE epoch 2's numbers exist. The draw belongs to the next "
                     "task. Stratum F is 0 because both this task's write gates failed and "
                     "nothing changed any node's resolution.")}
-    OUT.write_text(json.dumps(out, indent=1) + "\n", encoding="utf-8")
+    dest = Path(a.out) if a.out else OUT
+    dest.write_text(json.dumps(out, indent=1) + "\n", encoding="utf-8")
     print(f"{'h':2s} {'N':>7s} {'err/scored':>11s} {'p':>7s} {'S':>7s} {'N*S':>10s} {'n':>5s}  what")
     for r in rows:
         print(f"{r['stratum']:2s} {r['N']:>7d} {str(r['errors_in_gold'])+'/'+str(r['scored_in_gold']):>11s} "
               f"{r['p_used']:>7.4f} {r['S']:>7.4f} {r['NS']:>10.1f} {r['n_allocated']:>5d}  {r['description']}")
-    print(f"\n-> {OUT.relative_to(REPO)}")
+    # `.resolve()` first: a RELATIVE --out is not "in the subpath of" the absolute
+    # REPO, so this raised ValueError AFTER the JSON had been written. Same defect
+    # class as the one fixed in extraction_gap_diagnostic.py on 2026-09-04.
+    print(f"\n{method}\n-> {dest.resolve().relative_to(REPO)}")
     return 0
 
 
