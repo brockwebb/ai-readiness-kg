@@ -161,12 +161,24 @@ def add_term(term_id: str, pref_label: str, scope_note: str, source: str,
         "node_labels": sorted(node_labels), "ts": _now()}, batch=VOCAB_BATCH)
 
 
-def add_alias(term_id: str, alias: str, source: str) -> str:
+def add_alias(term_id: str, alias: str, source: str,
+              derivation: str | None = None, evidence: str | None = None) -> str:
+    """Emit one `term_alias_added`.
+
+    `derivation` names the GENERATOR that produced the alias and `evidence` the node it was
+    read off (task 2026-09-06_aliases_homograph_judge_epoch2 §1.1). Both are optional so the
+    epoch-1 events replay unchanged; both are required by the generators, because an alias
+    nobody can trace back to a surface form in the corpus is a guess, and the whole point of
+    the label-theft guard is that guesses are refused rather than absorbed."""
     if not normalize(alias):
         raise VocabRefusal(f"alias {alias!r} normalises to nothing")
-    return eventlog.append({
-        "event_type": TERM_ALIAS_ADDED, "term_id": term_id, "alias": alias,
-        "source": source, "ts": _now()}, batch=VOCAB_BATCH)
+    ev = {"event_type": TERM_ALIAS_ADDED, "term_id": term_id, "alias": alias,
+          "source": source, "ts": _now()}
+    if derivation:
+        ev["derivation"] = derivation
+    if evidence:
+        ev["evidence"] = evidence
+    return eventlog.append(ev, batch=VOCAB_BATCH)
 
 
 def deprecate(term_id: str, reason: str, replaced_by: str | None = None) -> str:

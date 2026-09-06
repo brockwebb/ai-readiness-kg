@@ -569,18 +569,19 @@ def build(session, kg_labels: list[str], edge_whitelist: set[str]) -> dict:
     for ev in eventlog.replay():
         et = ev.get("event_type")
         if et == "grounding_relocated":
-            session.run("MATCH (n {key: $key}) "
+            session.run("MATCH (n {key: $key}) WHERE any(l IN labels(n) WHERE l IN $kg) "
                         "SET n.grounding_span = $span, n.grounding_relocated_from = $old, "
                         "n.grounding_relocation_method = $m",
-                        key=node_key(ev["doc_id"], ev["item_id"]), span=ev["new_span"], old=ev["old_span"], m=ev["method"])
+                        key=node_key(ev["doc_id"], ev["item_id"]), span=ev["new_span"],
+                        old=ev["old_span"], m=ev["method"], kg=kg_labels)
             counts["overlays_relocated"] += 1
         elif et == "attribute_nulled":
             attr = ev["attribute"]
             if attr not in NULLABLE_ATTRIBUTES:
                 continue
-            session.run(f"MATCH (n {{key: $key}}) "
+            session.run(f"MATCH (n {{key: $key}}) WHERE any(l IN labels(n) WHERE l IN $kg) "
                         f"SET n.{attr} = null, n.nulled_attributes = coalesce(n.nulled_attributes, []) + $attr",
-                        key=node_key(ev["doc_id"], ev["item_id"]), attr=attr)
+                        key=node_key(ev["doc_id"], ev["item_id"]), attr=attr, kg=kg_labels)
             counts["overlays_nulled"] += 1
 
     # Restoration v2 — GATE BEFORE WIRE (task 2026-08-26_overnight_burn Lane 4).
@@ -597,11 +598,11 @@ def build(session, kg_labels: list[str], edge_whitelist: set[str]) -> dict:
             attr = ev["attribute"]
             if attr not in NULLABLE_ATTRIBUTES:
                 continue
-            session.run(f"MATCH (n {{key: $key}}) "
+            session.run(f"MATCH (n {{key: $key}}) WHERE any(l IN labels(n) WHERE l IN $kg) "
                         f"SET n.{attr} = $value, "
                         f"n.restored_attributes = coalesce(n.restored_attributes, []) + $attr",
                         key=node_key(ev["doc_id"], ev["item_id"]), value=ev.get("value"),
-                        attr=attr)
+                        attr=attr, kg=kg_labels)
             counts["overlays_restored"] += 1
 
     # After the whole pass, so a node asserted five times produces one write and a node whose

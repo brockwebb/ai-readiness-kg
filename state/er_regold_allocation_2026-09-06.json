@@ -1,0 +1,88 @@
+{
+ "task": "cc_tasks/2026-09-06_aliases_homograph_judge_epoch2.md",
+ "method": "Neyman (1934) n_h proportional to N_h * S_h; Cochran (1977) Sampling Techniques \u00a75.5",
+ "total": 200,
+ "seed_for_the_draw": 20260906,
+ "draw_made_here": false,
+ "strata": [
+  {
+   "stratum": "A",
+   "description": "exact-name auto-links",
+   "N": 16624,
+   "scored_in_gold": 19,
+   "errors_in_gold": 0,
+   "observed_error_p": 0.0,
+   "p_used": 0.5,
+   "S": 0.5,
+   "NS": 8312.0,
+   "n_neyman": 188.146,
+   "n_allocated": 188
+  },
+  {
+   "stratum": "B",
+   "description": "clerical band, accepted",
+   "N": 45,
+   "scored_in_gold": 20,
+   "errors_in_gold": 0,
+   "observed_error_p": 0.0,
+   "p_used": 0.5,
+   "S": 0.5,
+   "NS": 22.5,
+   "n_neyman": 0.509,
+   "n_allocated": 1
+  },
+  {
+   "stratum": "C",
+   "description": "clerical band, rejected",
+   "N": 74,
+   "scored_in_gold": 20,
+   "errors_in_gold": 1,
+   "observed_error_p": 0.05,
+   "p_used": 0.05,
+   "S": 0.217945,
+   "NS": 16.1279,
+   "n_neyman": 0.365,
+   "n_allocated": 0
+  },
+  {
+   "stratum": "D",
+   "description": "near-miss, cosine in [0.70, 0.80)",
+   "N": 431,
+   "scored_in_gold": 20,
+   "errors_in_gold": 6,
+   "observed_error_p": 0.3,
+   "p_used": 0.3,
+   "S": 0.458258,
+   "NS": 197.509,
+   "n_neyman": 4.471,
+   "n_allocated": 4
+  },
+  {
+   "stratum": "E",
+   "description": "cross-arm pairs in terms the homograph pass KEPT",
+   "N": 915,
+   "scored_in_gold": 18,
+   "errors_in_gold": 2,
+   "observed_error_p": 0.111111,
+   "p_used": 0.111111,
+   "S": 0.31427,
+   "NS": 287.5568,
+   "n_neyman": 6.509,
+   "n_allocated": 7
+  },
+  {
+   "stratum": "F",
+   "description": "pairs this task changed \u2014 a new alias or a split moved their resolution",
+   "N": 0,
+   "scored_in_gold": 0,
+   "errors_in_gold": 0,
+   "observed_error_p": null,
+   "p_used": 0.5,
+   "S": 0.5,
+   "NS": 0.0,
+   "n_neyman": 0.0,
+   "n_allocated": 0
+  }
+ ],
+ "note": "Registered BEFORE epoch 2's numbers exist. The draw belongs to the next task. Stratum F is 0 because both this task's write gates failed and nothing changed any node's resolution."
+}
