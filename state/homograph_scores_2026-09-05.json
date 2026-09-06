@@ -1,0 +1,7012 @@
+{
+ "task": "cc_tasks/2026-09-05_homograph_split_and_er_gold_sample.md",
+ "vocabulary_epoch": 1,
+ "active_terms": 1946,
+ "cross_arm_terms": 289,
+ "cross_arm_nodes": 1660,
+ "scored_terms": 289,
+ "arms_histogram": {
+  "2": 259,
+  "3": 30
+ },
+ "counts": {
+  "band": 139,
+  "auto_keep": 79,
+  "auto_split": 71
+ },
+ "band_size": 139,
+ "band_stop_threshold": 150,
+ "band_exceeds_stop": false,
+ "thresholds": {
+  "cross_floor": 0.8,
+  "s_floor": -0.1
+ },
+ "embed_model": "sentence-transformers/all-MiniLM-L6-v2",
+ "scored_on_cross_only": 82,
+ "positive_control": {
+  "air:concept/ai-readiness": "band",
+  "air:concept/ai-ready-data": "band",
+  "air:concept/ai-ready": "auto_keep"
+ },
+ "positive_control_passed": false,
+ "negative_control": [
+  {
+   "term_id": "air:standard/schema-org",
+   "pref_label": "Schema.org",
+   "nodes": 33,
+   "klass": "band",
+   "cross_arm_mean": 0.38307518186047673
+  },
+  {
+   "term_id": "air:standard/json-ld",
+   "pref_label": "JSON-LD",
+   "nodes": 17,
+   "klass": "auto_split",
+   "cross_arm_mean": 0.3664917588233948
+  },
+  {
+   "term_id": "air:standard/iso-8601",
+   "pref_label": "ISO 8601",
+   "nodes": 7,
+   "klass": "auto_split",
+   "cross_arm_mean": 0.5012821793556214
+  },
+  {
+   "term_id": "air:standard/datacite",
+   "pref_label": "DataCite",
+   "nodes": 6,
+   "klass": "auto_split",
+   "cross_arm_mean": 0.38177840411663055
+  },
+  {
+   "term_id": "air:standard/prov-o",
+   "pref_label": "PROV-O",
+   "nodes": 6,
+   "klass": "auto_keep",
+   "cross_arm_mean": 0.4538170754909515
+  },
+  {
+   "term_id": "air:standard/rdf",
+   "pref_label": "RDF",
+   "nodes": 6,
+   "klass": "auto_keep",
+   "cross_arm_mean": 0.5125432722270489
+  },
+  {
+   "term_id": "air:standard/void",
+   "pref_label": "VoID",
+   "nodes": 6,
+   "klass": "auto_split",
+   "cross_arm_mean": 0.3799004554748535
+  },
+  {
+   "term_id": "air:standard/csvw",
+   "pref_label": "CSVW",
+   "nodes": 5,
+   "klass": "band",
+   "cross_arm_mean": 0.5633555750052134
+  },
+  {
+   "term_id": "air:standard/croissant-rai",
+   "pref_label": "Croissant-RAI",
+   "nodes": 4,
+   "klass": "auto_split",
+   "cross_arm_mean": 0.38923800985018414
+  },
+  {
+   "term_id": "air:standard/nist-ai-600-1",
+   "pref_label": "NIST AI 600-1",
+   "nodes": 3,
+   "klass": "band",
+   "cross_arm_mean": 0.40890760719776154
+  }
+ ],
+ "terms": {
+  "air:concept/access-control": {
+   "arms": {
+    "org_maturity": 4,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 4,
+    "publication_actionability": 1
+   },
+   "nodes": 5,
+   "within_arm_mean": 0.3676365738113721,
+   "within_by_arm": {
+    "org_maturity": 0.3676365738113721
+   },
+   "cross_arm_mean": 0.33694593608379364,
+   "s": -0.030690637727578463,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/access-control",
+   "pref_label": "Access control",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/access-mode": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.26995518803596497,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:concept/access-mode",
+   "pref_label": "access modes",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/accessibility": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 29,
+    "training_data_readiness": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 16,
+    "training_data_readiness": 1
+   },
+   "nodes": 31,
+   "within_arm_mean": 0.5251106842985294,
+   "within_by_arm": {
+    "publication_actionability": 0.5251106842985294
+   },
+   "cross_arm_mean": 0.6142536714925604,
+   "s": 0.08914298719403102,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/accessibility",
+   "pref_label": "Accessibility",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_keep"
+  },
+  "air:concept/accountability": {
+   "arms": {
+    "org_maturity": 11,
+    "publication_actionability": 2
+   },
+   "documents_by_arm": {
+    "org_maturity": 8,
+    "publication_actionability": 2
+   },
+   "nodes": 13,
+   "within_arm_mean": 0.468824701146646,
+   "within_by_arm": {
+    "org_maturity": 0.4995017382231626,
+    "publication_actionability": 0.4381476640701294
+   },
+   "cross_arm_mean": 0.5688962719657205,
+   "s": 0.10007157081907447,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/accountability",
+   "pref_label": "accountability",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_keep"
+  },
+  "air:concept/accuracy": {
+   "arms": {
+    "org_maturity": 4,
+    "publication_actionability": 21,
+    "training_data_readiness": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 3,
+    "publication_actionability": 11,
+    "training_data_readiness": 1
+   },
+   "nodes": 26,
+   "within_arm_mean": 0.34266713417268224,
+   "within_by_arm": {
+    "publication_actionability": 0.32720978621038654,
+    "org_maturity": 0.358124482134978
+   },
+   "cross_arm_mean": 0.34575913740544145,
+   "s": 0.0030920032327592106,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/accuracy",
+   "pref_label": "Accuracy",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_keep"
+  },
+  "air:concept/adversarial-testing": {
+   "arms": {
+    "org_maturity": 4,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 3,
+    "publication_actionability": 1
+   },
+   "nodes": 5,
+   "within_arm_mean": 0.5637740443150202,
+   "within_by_arm": {
+    "org_maturity": 0.5637740443150202
+   },
+   "cross_arm_mean": 0.4638971611857414,
+   "s": -0.09987688312927878,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/adversarial-testing",
+   "pref_label": "adversarial testing",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/agency-head": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 1.0,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:concept/agency-head",
+   "pref_label": "Agency Head",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_keep"
+  },
+  "air:concept/ai-adoption": {
+   "arms": {
+    "org_maturity": 5,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 5,
+    "publication_actionability": 1
+   },
+   "nodes": 6,
+   "within_arm_mean": 0.8307571589946747,
+   "within_by_arm": {
+    "org_maturity": 0.8307571589946747
+   },
+   "cross_arm_mean": 0.6259661912918091,
+   "s": -0.20479096770286564,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/ai-adoption",
+   "pref_label": "AI adoption",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_split"
+  },
+  "air:concept/ai-agent": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 3
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 3
+   },
+   "nodes": 4,
+   "within_arm_mean": 0.5526947180430094,
+   "within_by_arm": {
+    "publication_actionability": 0.5526947180430094
+   },
+   "cross_arm_mean": 0.621519943078359,
+   "s": 0.0688252250353496,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/ai-agent",
+   "pref_label": "AI agents",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_keep"
+  },
+  "air:concept/ai-ecosystem": {
+   "arms": {
+    "org_maturity": 2,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 2,
+    "publication_actionability": 1
+   },
+   "nodes": 3,
+   "within_arm_mean": 0.7154372334480286,
+   "within_by_arm": {
+    "org_maturity": 0.7154372334480286
+   },
+   "cross_arm_mean": 0.6960171759128571,
+   "s": -0.01942005753517151,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/ai-ecosystem",
+   "pref_label": "AI ecosystem",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/ai-governance": {
+   "arms": {
+    "org_maturity": 14,
+    "training_data_readiness": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 12,
+    "training_data_readiness": 1
+   },
+   "nodes": 15,
+   "within_arm_mean": 0.7699712639326578,
+   "within_by_arm": {
+    "org_maturity": 0.7699712639326578
+   },
+   "cross_arm_mean": 0.6373357559953418,
+   "s": -0.13263550793731604,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/ai-governance",
+   "pref_label": "AI governance",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_split"
+  },
+  "air:concept/ai-lifecycle": {
+   "arms": {
+    "org_maturity": 8,
+    "training_data_readiness": 2
+   },
+   "documents_by_arm": {
+    "org_maturity": 4,
+    "training_data_readiness": 1
+   },
+   "nodes": 10,
+   "within_arm_mean": 0.5642470350222928,
+   "within_by_arm": {
+    "org_maturity": 0.5484081964407649,
+    "training_data_readiness": 0.5800858736038208
+   },
+   "cross_arm_mean": 0.43512572906911373,
+   "s": -0.12912130595317906,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/ai-lifecycle",
+   "pref_label": "AI lifecycle",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_split"
+  },
+  "air:concept/ai-literacy": {
+   "arms": {
+    "org_maturity": 3,
+    "publication_actionability": 2
+   },
+   "documents_by_arm": {
+    "org_maturity": 3,
+    "publication_actionability": 2
+   },
+   "nodes": 5,
+   "within_arm_mean": 0.6534032225608826,
+   "within_by_arm": {
+    "org_maturity": 0.7920928597450256,
+    "publication_actionability": 0.5147135853767395
+   },
+   "cross_arm_mean": 0.6063906848430634,
+   "s": -0.047012537717819214,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/ai-literacy",
+   "pref_label": "AI literacy",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/ai-maturity": {
+   "arms": {
+    "org_maturity": 3,
+    "training_data_readiness": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 3,
+    "training_data_readiness": 1
+   },
+   "nodes": 4,
+   "within_arm_mean": 0.9119554758071899,
+   "within_by_arm": {
+    "org_maturity": 0.9119554758071899
+   },
+   "cross_arm_mean": 0.49717875321706134,
+   "s": -0.4147767225901286,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/ai-maturity",
+   "pref_label": "AI maturity",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_split"
+  },
+  "air:concept/ai-maturity-model": {
+   "arms": {
+    "org_maturity": 2,
+    "training_data_readiness": 2
+   },
+   "documents_by_arm": {
+    "org_maturity": 2,
+    "training_data_readiness": 1
+   },
+   "nodes": 4,
+   "within_arm_mean": 0.8029788136482239,
+   "within_by_arm": {
+    "org_maturity": 0.7738759517669678,
+    "training_data_readiness": 0.83208167552948
+   },
+   "cross_arm_mean": 0.7054538130760193,
+   "s": -0.09752500057220459,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/ai-maturity-model",
+   "pref_label": "AI maturity models",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/ai-model": {
+   "arms": {
+    "org_maturity": 2,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 2,
+    "publication_actionability": 1
+   },
+   "nodes": 3,
+   "within_arm_mean": 0.5153138637542725,
+   "within_by_arm": {
+    "org_maturity": 0.5153138637542725
+   },
+   "cross_arm_mean": 0.28368012607097626,
+   "s": -0.2316337376832962,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/ai-model",
+   "pref_label": "AI model",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_split"
+  },
+  "air:concept/ai-readiness": {
+   "arms": {
+    "org_maturity": 12,
+    "publication_actionability": 9,
+    "training_data_readiness": 7
+   },
+   "documents_by_arm": {
+    "org_maturity": 11,
+    "publication_actionability": 7,
+    "training_data_readiness": 4
+   },
+   "nodes": 28,
+   "within_arm_mean": 0.6666935715087908,
+   "within_by_arm": {
+    "org_maturity": 0.8088643794709985,
+    "publication_actionability": 0.634851299226284,
+    "training_data_readiness": 0.5563650358290899
+   },
+   "cross_arm_mean": 0.6490977551422867,
+   "s": -0.01759581636650409,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/ai-readiness",
+   "pref_label": "AI readiness",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/ai-readiness-of-data": {
+   "arms": {
+    "publication_actionability": 1,
+    "training_data_readiness": 1
+   },
+   "documents_by_arm": {
+    "publication_actionability": 1,
+    "training_data_readiness": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.644623875617981,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:concept/ai-readiness-of-data",
+   "pref_label": "AI readiness of data",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/ai-ready": {
+   "arms": {
+    "org_maturity": 2,
+    "publication_actionability": 4,
+    "training_data_readiness": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 2,
+    "publication_actionability": 4,
+    "training_data_readiness": 1
+   },
+   "nodes": 7,
+   "within_arm_mean": 0.45217621823151904,
+   "within_by_arm": {
+    "org_maturity": 0.35718369483947754,
+    "publication_actionability": 0.5471687416235606
+   },
+   "cross_arm_mean": 0.5564419669764382,
+   "s": 0.10426574874491917,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/ai-ready",
+   "pref_label": "AI-ready",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_keep"
+  },
+  "air:concept/ai-ready-data": {
+   "arms": {
+    "publication_actionability": 8,
+    "training_data_readiness": 3
+   },
+   "documents_by_arm": {
+    "publication_actionability": 4,
+    "training_data_readiness": 3
+   },
+   "nodes": 11,
+   "within_arm_mean": 0.644064343401364,
+   "within_by_arm": {
+    "publication_actionability": 0.6377790697983333,
+    "training_data_readiness": 0.6503496170043945
+   },
+   "cross_arm_mean": 0.614398580044508,
+   "s": -0.029665763356856,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/ai-ready-data",
+   "pref_label": "AI-ready data",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/ai-ready-open-data": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.6095936298370361,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:concept/ai-ready-open-data",
+   "pref_label": "AI-ready open data",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/ai-system": {
+   "arms": {
+    "org_maturity": 7,
+    "publication_actionability": 3
+   },
+   "documents_by_arm": {
+    "org_maturity": 5,
+    "publication_actionability": 2
+   },
+   "nodes": 10,
+   "within_arm_mean": 0.4604158798853556,
+   "within_by_arm": {
+    "org_maturity": 0.4805191059907277,
+    "publication_actionability": 0.4403126537799835
+   },
+   "cross_arm_mean": 0.41353912296749296,
+   "s": -0.04687675691786264,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/ai-system",
+   "pref_label": "AI system",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/ai-system-evaluation-metric": {
+   "arms": {
+    "org_maturity": 3,
+    "training_data_readiness": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 3,
+    "training_data_readiness": 1
+   },
+   "nodes": 4,
+   "within_arm_mean": 0.9941792885462443,
+   "within_by_arm": {
+    "org_maturity": 0.9941792885462443
+   },
+   "cross_arm_mean": 0.5214491089185079,
+   "s": -0.47273017962773634,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/ai-system-evaluation-metric",
+   "pref_label": "AI system evaluation metrics",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_split"
+  },
+  "air:concept/ai-system-trustworthiness": {
+   "arms": {
+    "org_maturity": 2,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 2,
+    "publication_actionability": 1
+   },
+   "nodes": 3,
+   "within_arm_mean": 0.6702097654342651,
+   "within_by_arm": {
+    "org_maturity": 0.6702097654342651
+   },
+   "cross_arm_mean": 0.7666917145252228,
+   "s": 0.09648194909095764,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/ai-system-trustworthiness",
+   "pref_label": "AI system trustworthiness",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_keep"
+  },
+  "air:concept/ai-training": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.854027271270752,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:concept/ai-training",
+   "pref_label": "AI training",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_keep"
+  },
+  "air:concept/ai-use-cas": {
+   "arms": {
+    "org_maturity": 2,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "nodes": 3,
+   "within_arm_mean": 0.7392140030860901,
+   "within_by_arm": {
+    "org_maturity": 0.7392140030860901
+   },
+   "cross_arm_mean": 0.5753196775913239,
+   "s": -0.16389432549476624,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/ai-use-cas",
+   "pref_label": "AI use cases",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_split"
+  },
+  "air:concept/alternative-data-source": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 3
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 2
+   },
+   "nodes": 4,
+   "within_arm_mean": 0.4580503801504771,
+   "within_by_arm": {
+    "publication_actionability": 0.4580503801504771
+   },
+   "cross_arm_mean": 0.21438593169053397,
+   "s": -0.24366444845994314,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/alternative-data-source",
+   "pref_label": "alternative data sources",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_split"
+  },
+  "air:concept/anonymization": {
+   "arms": {
+    "org_maturity": 1,
+    "training_data_readiness": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "training_data_readiness": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.4218153953552246,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:concept/anonymization",
+   "pref_label": "anonymization",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/api": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 4
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 4
+   },
+   "nodes": 5,
+   "within_arm_mean": 0.4324495842059453,
+   "within_by_arm": {
+    "publication_actionability": 0.4324495842059453
+   },
+   "cross_arm_mean": 0.2476153802126646,
+   "s": -0.1848342039932807,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/api",
+   "pref_label": "API",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_split"
+  },
+  "air:concept/artificial-intelligence": {
+   "arms": {
+    "org_maturity": 12,
+    "publication_actionability": 1,
+    "training_data_readiness": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 12,
+    "publication_actionability": 1,
+    "training_data_readiness": 1
+   },
+   "nodes": 14,
+   "within_arm_mean": 0.6691047016418341,
+   "within_by_arm": {
+    "org_maturity": 0.6691047016418341
+   },
+   "cross_arm_mean": 0.5954587751626969,
+   "s": -0.07364592647913726,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/artificial-intelligence",
+   "pref_label": "Artificial intelligence",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/artificial-intelligence-ai": {
+   "arms": {
+    "org_maturity": 2,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 2,
+    "publication_actionability": 1
+   },
+   "nodes": 3,
+   "within_arm_mean": 0.5987192988395691,
+   "within_by_arm": {
+    "org_maturity": 0.5987192988395691
+   },
+   "cross_arm_mean": 0.5071782469749451,
+   "s": -0.09154105186462402,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/artificial-intelligence-ai",
+   "pref_label": "artificial intelligence (AI)",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/attack-surface": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.2716761529445648,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:concept/attack-surface",
+   "pref_label": "attack surface",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/attention-mechanism": {
+   "arms": {
+    "org_maturity": 2,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 2,
+    "publication_actionability": 1
+   },
+   "nodes": 3,
+   "within_arm_mean": 0.45725858211517334,
+   "within_by_arm": {
+    "org_maturity": 0.45725858211517334
+   },
+   "cross_arm_mean": 0.2804906368255615,
+   "s": -0.17676794528961182,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/attention-mechanism",
+   "pref_label": "Attention mechanism",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_split"
+  },
+  "air:concept/auditability": {
+   "arms": {
+    "org_maturity": 2,
+    "training_data_readiness": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "training_data_readiness": 1
+   },
+   "nodes": 3,
+   "within_arm_mean": 0.9382829070091248,
+   "within_by_arm": {
+    "org_maturity": 0.9382829070091248
+   },
+   "cross_arm_mean": 0.42418085038661957,
+   "s": -0.5141020566225052,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/auditability",
+   "pref_label": "auditability",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_split"
+  },
+  "air:concept/automated-decision-making": {
+   "arms": {
+    "org_maturity": 1,
+    "training_data_readiness": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "training_data_readiness": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.4644085168838501,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:concept/automated-decision-making",
+   "pref_label": "automated decision-making",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/benchmark": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 2,
+    "training_data_readiness": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 2,
+    "training_data_readiness": 1
+   },
+   "nodes": 4,
+   "within_arm_mean": 0.29411637783050537,
+   "within_by_arm": {
+    "publication_actionability": 0.29411637783050537
+   },
+   "cross_arm_mean": 0.276735932379961,
+   "s": -0.017380445450544346,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/benchmark",
+   "pref_label": "benchmark",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/bert": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 3
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "nodes": 4,
+   "within_arm_mean": 0.4675029218196869,
+   "within_by_arm": {
+    "publication_actionability": 0.4675029218196869
+   },
+   "cross_arm_mean": 0.44919907053311664,
+   "s": -0.01830385128657025,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/bert",
+   "pref_label": "BERT",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/bias": {
+   "arms": {
+    "org_maturity": 5,
+    "publication_actionability": 7,
+    "training_data_readiness": 3
+   },
+   "documents_by_arm": {
+    "org_maturity": 4,
+    "publication_actionability": 6,
+    "training_data_readiness": 3
+   },
+   "nodes": 15,
+   "within_arm_mean": 0.400185533222698,
+   "within_by_arm": {
+    "training_data_readiness": 0.43958041071891785,
+    "org_maturity": 0.439977690577507,
+    "publication_actionability": 0.3209984983716692
+   },
+   "cross_arm_mean": 0.40038287954431184,
+   "s": 0.0001973463216138338,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/bias",
+   "pref_label": "bias",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_keep"
+  },
+  "air:concept/bias-and-fairness": {
+   "arms": {
+    "org_maturity": 1,
+    "training_data_readiness": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "training_data_readiness": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.4226645827293396,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:concept/bias-and-fairness",
+   "pref_label": "Bias and fairness",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/big-data": {
+   "arms": {
+    "publication_actionability": 1,
+    "training_data_readiness": 1
+   },
+   "documents_by_arm": {
+    "publication_actionability": 1,
+    "training_data_readiness": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.5945751070976257,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:concept/big-data",
+   "pref_label": "big data",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/black-box": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.591270923614502,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:concept/black-box",
+   "pref_label": "black box",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/calibration": {
+   "arms": {
+    "org_maturity": 3,
+    "publication_actionability": 3
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 2
+   },
+   "nodes": 6,
+   "within_arm_mean": 0.37252165873845416,
+   "within_by_arm": {
+    "org_maturity": 0.3572354515393575,
+    "publication_actionability": 0.38780786593755084
+   },
+   "cross_arm_mean": 0.2367549373043908,
+   "s": -0.13576672143406338,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/calibration",
+   "pref_label": "calibration",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_split"
+  },
+  "air:concept/capacity-building": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.4479520916938782,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:concept/capacity-building",
+   "pref_label": "Capacity building",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/chatgpt": {
+   "arms": {
+    "publication_actionability": 5,
+    "training_data_readiness": 2
+   },
+   "documents_by_arm": {
+    "publication_actionability": 1,
+    "training_data_readiness": 1
+   },
+   "nodes": 7,
+   "within_arm_mean": 0.32379807680845263,
+   "within_by_arm": {
+    "training_data_readiness": 0.24857798218727112,
+    "publication_actionability": 0.3990181714296341
+   },
+   "cross_arm_mean": 0.3091991484165192,
+   "s": -0.014598928391933441,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/chatgpt",
+   "pref_label": "ChatGPT",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/chief-data-officer": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 3
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 3
+   },
+   "nodes": 4,
+   "within_arm_mean": 0.7934093475341797,
+   "within_by_arm": {
+    "publication_actionability": 0.7934093475341797
+   },
+   "cross_arm_mean": 0.7258240580558777,
+   "s": -0.067585289478302,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/chief-data-officer",
+   "pref_label": "Chief Data Officer",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/chief-data-officer-council": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 3
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 3
+   },
+   "nodes": 4,
+   "within_arm_mean": 0.5577571292718252,
+   "within_by_arm": {
+    "publication_actionability": 0.5577571292718252
+   },
+   "cross_arm_mean": 0.61713178952535,
+   "s": 0.05937466025352478,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/chief-data-officer-council",
+   "pref_label": "Chief Data Officer Council",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_keep"
+  },
+  "air:concept/community-of-practice": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.5374507308006287,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:concept/community-of-practice",
+   "pref_label": "Communities of practice",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/completeness": {
+   "arms": {
+    "publication_actionability": 5,
+    "training_data_readiness": 4
+   },
+   "documents_by_arm": {
+    "publication_actionability": 4,
+    "training_data_readiness": 3
+   },
+   "nodes": 9,
+   "within_arm_mean": 0.452152622739474,
+   "within_by_arm": {
+    "publication_actionability": 0.45931092500686643,
+    "training_data_readiness": 0.4449943204720815
+   },
+   "cross_arm_mean": 0.4440665304660797,
+   "s": -0.008086092273394296,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/completeness",
+   "pref_label": "completeness",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/compliance": {
+   "arms": {
+    "org_maturity": 2,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 2,
+    "publication_actionability": 1
+   },
+   "nodes": 3,
+   "within_arm_mean": 0.5188893675804138,
+   "within_by_arm": {
+    "org_maturity": 0.5188893675804138
+   },
+   "cross_arm_mean": 0.4322507679462433,
+   "s": -0.08663859963417053,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/compliance",
+   "pref_label": "compliance",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/computer-and-physical-security": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 10
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 2
+   },
+   "nodes": 11,
+   "within_arm_mean": 0.5894365320603053,
+   "within_by_arm": {
+    "publication_actionability": 0.5894365320603053
+   },
+   "cross_arm_mean": 0.09133017733693123,
+   "s": -0.4981063547233741,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/computer-and-physical-security",
+   "pref_label": "Computer and Physical Security",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_split"
+  },
+  "air:concept/concept-drift": {
+   "arms": {
+    "org_maturity": 4,
+    "training_data_readiness": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 3,
+    "training_data_readiness": 1
+   },
+   "nodes": 5,
+   "within_arm_mean": 0.5688535322745641,
+   "within_by_arm": {
+    "org_maturity": 0.5688535322745641
+   },
+   "cross_arm_mean": 0.5741623193025589,
+   "s": 0.005308787027994755,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/concept-drift",
+   "pref_label": "concept drift",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_keep"
+  },
+  "air:concept/confabulation": {
+   "arms": {
+    "org_maturity": 4,
+    "publication_actionability": 1,
+    "training_data_readiness": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 2,
+    "publication_actionability": 1,
+    "training_data_readiness": 1
+   },
+   "nodes": 6,
+   "within_arm_mean": 0.35697444155812263,
+   "within_by_arm": {
+    "org_maturity": 0.35697444155812263
+   },
+   "cross_arm_mean": 0.4511488957537545,
+   "s": 0.09417445419563186,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/confabulation",
+   "pref_label": "Confabulation",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_keep"
+  },
+  "air:concept/confirmation-bias": {
+   "arms": {
+    "org_maturity": 3,
+    "publication_actionability": 3
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 3
+   },
+   "nodes": 6,
+   "within_arm_mean": 0.4485078752040863,
+   "within_by_arm": {
+    "publication_actionability": 0.4214300016562144,
+    "org_maturity": 0.4755857487519582
+   },
+   "cross_arm_mean": 0.39296337299876744,
+   "s": -0.05554450220531887,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/confirmation-bias",
+   "pref_label": "confirmation bias",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/consistency": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 3
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "nodes": 4,
+   "within_arm_mean": 0.36613979935646057,
+   "within_by_arm": {
+    "publication_actionability": 0.36613979935646057
+   },
+   "cross_arm_mean": 0.4772614737351735,
+   "s": 0.11112167437871295,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/consistency",
+   "pref_label": "consistency",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_keep"
+  },
+  "air:concept/construct-validity": {
+   "arms": {
+    "org_maturity": 2,
+    "publication_actionability": 3,
+    "training_data_readiness": 5
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 2,
+    "training_data_readiness": 1
+   },
+   "nodes": 10,
+   "within_arm_mean": 0.5443378617366155,
+   "within_by_arm": {
+    "publication_actionability": 0.5754354596138,
+    "org_maturity": 0.5869051218032837,
+    "training_data_readiness": 0.4706730037927628
+   },
+   "cross_arm_mean": 0.5139755385537301,
+   "s": -0.030362323182885342,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/construct-validity",
+   "pref_label": "construct validity",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/context": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 5
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 2
+   },
+   "nodes": 6,
+   "within_arm_mean": 0.2986685484647751,
+   "within_by_arm": {
+    "publication_actionability": 0.2986685484647751
+   },
+   "cross_arm_mean": 0.2640414983034134,
+   "s": -0.034627050161361694,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/context",
+   "pref_label": "context",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/context-window": {
+   "arms": {
+    "publication_actionability": 1,
+    "training_data_readiness": 1
+   },
+   "documents_by_arm": {
+    "publication_actionability": 1,
+    "training_data_readiness": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.1217762678861618,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:concept/context-window",
+   "pref_label": "Context windows",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/control": {
+   "arms": {
+    "org_maturity": 2,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "nodes": 3,
+   "within_arm_mean": 0.39382919669151306,
+   "within_by_arm": {
+    "org_maturity": 0.39382919669151306
+   },
+   "cross_arm_mean": 0.07211787905544043,
+   "s": -0.32171131763607264,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/control",
+   "pref_label": "Control",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_split"
+  },
+  "air:concept/corrective-action": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.6200729608535767,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:concept/corrective-action",
+   "pref_label": "corrective actions",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/customer-experience": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 2
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 2
+   },
+   "nodes": 3,
+   "within_arm_mean": 0.7942584156990051,
+   "within_by_arm": {
+    "publication_actionability": 0.7942584156990051
+   },
+   "cross_arm_mean": 0.5599902868270874,
+   "s": -0.23426812887191772,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/customer-experience",
+   "pref_label": "Customer experience",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_split"
+  },
+  "air:concept/data": {
+   "arms": {
+    "org_maturity": 4,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 4,
+    "publication_actionability": 1
+   },
+   "nodes": 5,
+   "within_arm_mean": 0.6607833604017893,
+   "within_by_arm": {
+    "org_maturity": 0.6607833604017893
+   },
+   "cross_arm_mean": 0.7816115468740463,
+   "s": 0.12082818647225702,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/data",
+   "pref_label": "Data",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_keep"
+  },
+  "air:concept/data-accessibility": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 1,
+    "training_data_readiness": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 1,
+    "training_data_readiness": 1
+   },
+   "nodes": 3,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.6582096616427103,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:concept/data-accessibility",
+   "pref_label": "data accessibility",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/data-accuracy": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.5777415633201599,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:concept/data-accuracy",
+   "pref_label": "Data accuracy",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/data-annotation": {
+   "arms": {
+    "publication_actionability": 1,
+    "training_data_readiness": 1
+   },
+   "documents_by_arm": {
+    "publication_actionability": 1,
+    "training_data_readiness": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.44092029333114624,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:concept/data-annotation",
+   "pref_label": "data annotation",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/data-architecture": {
+   "arms": {
+    "org_maturity": 2,
+    "publication_actionability": 2
+   },
+   "documents_by_arm": {
+    "org_maturity": 2,
+    "publication_actionability": 1
+   },
+   "nodes": 4,
+   "within_arm_mean": 0.8751890659332275,
+   "within_by_arm": {
+    "org_maturity": 1.0000001192092896,
+    "publication_actionability": 0.7503780126571655
+   },
+   "cross_arm_mean": 0.6753876209259033,
+   "s": -0.19980144500732422,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/data-architecture",
+   "pref_label": "Data Architecture",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_split"
+  },
+  "air:concept/data-asset": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 4,
+    "training_data_readiness": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 4,
+    "training_data_readiness": 1
+   },
+   "nodes": 6,
+   "within_arm_mean": 0.6307417949040731,
+   "within_by_arm": {
+    "publication_actionability": 0.6307417949040731
+   },
+   "cross_arm_mean": 0.4755227300855849,
+   "s": -0.15521906481848824,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/data-asset",
+   "pref_label": "Data asset",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_split"
+  },
+  "air:concept/data-catalog": {
+   "arms": {
+    "publication_actionability": 8,
+    "training_data_readiness": 2
+   },
+   "documents_by_arm": {
+    "publication_actionability": 6,
+    "training_data_readiness": 1
+   },
+   "nodes": 10,
+   "within_arm_mean": 0.599550476031644,
+   "within_by_arm": {
+    "publication_actionability": 0.5325900124652045,
+    "training_data_readiness": 0.6665109395980835
+   },
+   "cross_arm_mean": 0.4051912482827902,
+   "s": -0.19435922774885384,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/data-catalog",
+   "pref_label": "data catalogs",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_split"
+  },
+  "air:concept/data-drift": {
+   "arms": {
+    "org_maturity": 2,
+    "training_data_readiness": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 2,
+    "training_data_readiness": 1
+   },
+   "nodes": 3,
+   "within_arm_mean": 0.5356762409210205,
+   "within_by_arm": {
+    "org_maturity": 0.5356762409210205
+   },
+   "cross_arm_mean": 0.34859293699264526,
+   "s": -0.18708330392837524,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/data-drift",
+   "pref_label": "data drift",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_split"
+  },
+  "air:concept/data-governance": {
+   "arms": {
+    "org_maturity": 5,
+    "publication_actionability": 4,
+    "training_data_readiness": 2
+   },
+   "documents_by_arm": {
+    "org_maturity": 5,
+    "publication_actionability": 4,
+    "training_data_readiness": 2
+   },
+   "nodes": 11,
+   "within_arm_mean": 0.6582264602184296,
+   "within_by_arm": {
+    "org_maturity": 0.765268474817276,
+    "publication_actionability": 0.659621000289917,
+    "training_data_readiness": 0.5497899055480957
+   },
+   "cross_arm_mean": 0.634015793078824,
+   "s": -0.024210667139605513,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/data-governance",
+   "pref_label": "data governance",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/data-governance-body": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 2
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 2
+   },
+   "nodes": 3,
+   "within_arm_mean": 0.8122776746749878,
+   "within_by_arm": {
+    "publication_actionability": 0.8122776746749878
+   },
+   "cross_arm_mean": 0.8041715323925018,
+   "s": -0.008106142282485962,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/data-governance-body",
+   "pref_label": "Data Governance Body",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_keep"
+  },
+  "air:concept/data-infrastructure": {
+   "arms": {
+    "org_maturity": 2,
+    "publication_actionability": 3
+   },
+   "documents_by_arm": {
+    "org_maturity": 2,
+    "publication_actionability": 3
+   },
+   "nodes": 5,
+   "within_arm_mean": 0.7373321205377579,
+   "within_by_arm": {
+    "org_maturity": 1.0,
+    "publication_actionability": 0.47466424107551575
+   },
+   "cross_arm_mean": 0.5946826537450155,
+   "s": -0.14264946679274237,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/data-infrastructure",
+   "pref_label": "data infrastructure",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_split"
+  },
+  "air:concept/data-integrity": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.3354749381542206,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:concept/data-integrity",
+   "pref_label": "data integrity",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/data-lineage": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 2,
+    "training_data_readiness": 3
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 2,
+    "training_data_readiness": 1
+   },
+   "nodes": 6,
+   "within_arm_mean": 0.5357104192177455,
+   "within_by_arm": {
+    "publication_actionability": 0.568507730960846,
+    "training_data_readiness": 0.502913107474645
+   },
+   "cross_arm_mean": 0.4201780178330161,
+   "s": -0.11553240138472942,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/data-lineage",
+   "pref_label": "data lineage",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_split"
+  },
+  "air:concept/data-literacy": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 2
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 2
+   },
+   "nodes": 3,
+   "within_arm_mean": 0.529158353805542,
+   "within_by_arm": {
+    "publication_actionability": 0.529158353805542
+   },
+   "cross_arm_mean": 0.47176873683929443,
+   "s": -0.05738961696624756,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/data-literacy",
+   "pref_label": "data literacy",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/data-management": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.566910982131958,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:concept/data-management",
+   "pref_label": "data management",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/data-privacy": {
+   "arms": {
+    "org_maturity": 3,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "nodes": 4,
+   "within_arm_mean": 0.47927191853523254,
+   "within_by_arm": {
+    "org_maturity": 0.47927191853523254
+   },
+   "cross_arm_mean": 0.609993596871694,
+   "s": 0.13072167833646142,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/data-privacy",
+   "pref_label": "Data Privacy",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_keep"
+  },
+  "air:concept/data-protection": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.6537953615188599,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:concept/data-protection",
+   "pref_label": "Data protection",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/data-provenance": {
+   "arms": {
+    "org_maturity": 2,
+    "publication_actionability": 1,
+    "training_data_readiness": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 2,
+    "publication_actionability": 1,
+    "training_data_readiness": 1
+   },
+   "nodes": 4,
+   "within_arm_mean": 0.4010687470436096,
+   "within_by_arm": {
+    "org_maturity": 0.4010687470436096
+   },
+   "cross_arm_mean": 0.4671728789806366,
+   "s": 0.06610413193702697,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/data-provenance",
+   "pref_label": "Data provenance",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_keep"
+  },
+  "air:concept/data-quality": {
+   "arms": {
+    "org_maturity": 8,
+    "publication_actionability": 27,
+    "training_data_readiness": 6
+   },
+   "documents_by_arm": {
+    "org_maturity": 7,
+    "publication_actionability": 16,
+    "training_data_readiness": 4
+   },
+   "nodes": 41,
+   "within_arm_mean": 0.5847725242441019,
+   "within_by_arm": {
+    "publication_actionability": 0.6003641989453565,
+    "training_data_readiness": 0.7033676306406657,
+    "org_maturity": 0.4505857431462833
+   },
+   "cross_arm_mean": 0.5491981877652412,
+   "s": -0.03557433647886066,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/data-quality",
+   "pref_label": "data quality",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/data-quality-assessment": {
+   "arms": {
+    "publication_actionability": 1,
+    "training_data_readiness": 1
+   },
+   "documents_by_arm": {
+    "publication_actionability": 1,
+    "training_data_readiness": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.7211480140686035,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:concept/data-quality-assessment",
+   "pref_label": "Data quality assessment",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/data-quality-dimension": {
+   "arms": {
+    "publication_actionability": 9,
+    "training_data_readiness": 1
+   },
+   "documents_by_arm": {
+    "publication_actionability": 5,
+    "training_data_readiness": 1
+   },
+   "nodes": 10,
+   "within_arm_mean": 0.5713444939917989,
+   "within_by_arm": {
+    "publication_actionability": 0.5713444939917989
+   },
+   "cross_arm_mean": 0.5511365400420295,
+   "s": -0.020207953949769375,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/data-quality-dimension",
+   "pref_label": "data quality dimensions",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/data-quality-framework": {
+   "arms": {
+    "publication_actionability": 1,
+    "training_data_readiness": 1
+   },
+   "documents_by_arm": {
+    "publication_actionability": 1,
+    "training_data_readiness": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.6584492921829224,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:concept/data-quality-framework",
+   "pref_label": "data quality framework",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/data-readiness": {
+   "arms": {
+    "org_maturity": 2,
+    "publication_actionability": 2,
+    "training_data_readiness": 3
+   },
+   "documents_by_arm": {
+    "org_maturity": 2,
+    "publication_actionability": 2,
+    "training_data_readiness": 3
+   },
+   "nodes": 7,
+   "within_arm_mean": 0.6697699924310049,
+   "within_by_arm": {
+    "org_maturity": 0.8758156299591064,
+    "training_data_readiness": 0.6190551221370697,
+    "publication_actionability": 0.5144392251968384
+   },
+   "cross_arm_mean": 0.5911203902214766,
+   "s": -0.07864960220952832,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/data-readiness",
+   "pref_label": "data readiness",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/data-readiness-for-ai": {
+   "arms": {
+    "publication_actionability": 1,
+    "training_data_readiness": 6
+   },
+   "documents_by_arm": {
+    "publication_actionability": 1,
+    "training_data_readiness": 2
+   },
+   "nodes": 7,
+   "within_arm_mean": 0.7400991280873617,
+   "within_by_arm": {
+    "training_data_readiness": 0.7400991280873617
+   },
+   "cross_arm_mean": 0.8373821874459585,
+   "s": 0.09728305935859682,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/data-readiness-for-ai",
+   "pref_label": "Data Readiness for AI",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_keep"
+  },
+  "air:concept/data-readiness-level": {
+   "arms": {
+    "org_maturity": 1,
+    "training_data_readiness": 3
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "training_data_readiness": 2
+   },
+   "nodes": 4,
+   "within_arm_mean": 0.80473526318868,
+   "within_by_arm": {
+    "training_data_readiness": 0.80473526318868
+   },
+   "cross_arm_mean": 0.7110516826311747,
+   "s": -0.09368358055750536,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/data-readiness-level",
+   "pref_label": "data readiness levels",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/data-reliability": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.5640947222709656,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:concept/data-reliability",
+   "pref_label": "Data reliability",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/data-set": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 3
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "nodes": 4,
+   "within_arm_mean": 0.4700319766998291,
+   "within_by_arm": {
+    "publication_actionability": 0.4700319766998291
+   },
+   "cross_arm_mean": 0.3837957481543223,
+   "s": -0.08623622854550678,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/data-set",
+   "pref_label": "Data Set",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/data-source": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.41052818298339844,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:concept/data-source",
+   "pref_label": "Data sources",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/data-usage": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.3230219781398773,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:concept/data-usage",
+   "pref_label": "data usage",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/dataset": {
+   "arms": {
+    "org_maturity": 2,
+    "publication_actionability": 23,
+    "training_data_readiness": 4
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 15,
+    "training_data_readiness": 2
+   },
+   "nodes": 29,
+   "within_arm_mean": 0.5640279182286497,
+   "within_by_arm": {
+    "publication_actionability": 0.4871872053021499,
+    "training_data_readiness": 0.4584545890490214,
+    "org_maturity": 0.7464419603347778
+   },
+   "cross_arm_mean": 0.441483627137256,
+   "s": -0.12254429109139375,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/dataset",
+   "pref_label": "Dataset",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_split"
+  },
+  "air:concept/dataset-representativeness": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.5923372507095337,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:concept/dataset-representativeness",
+   "pref_label": "dataset representativeness",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/decision-support": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.34353935718536377,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:concept/decision-support",
+   "pref_label": "Decision support",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/decontextualization": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 2
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "nodes": 3,
+   "within_arm_mean": 0.37784266471862793,
+   "within_by_arm": {
+    "publication_actionability": 0.37784266471862793
+   },
+   "cross_arm_mean": 0.20160481333732605,
+   "s": -0.17623785138130188,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/decontextualization",
+   "pref_label": "decontextualization",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_split"
+  },
+  "air:concept/demographic-parity": {
+   "arms": {
+    "org_maturity": 2,
+    "training_data_readiness": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 2,
+    "training_data_readiness": 1
+   },
+   "nodes": 3,
+   "within_arm_mean": 0.3907298445701599,
+   "within_by_arm": {
+    "org_maturity": 0.3907298445701599
+   },
+   "cross_arm_mean": 0.45113731920719147,
+   "s": 0.060407474637031555,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/demographic-parity",
+   "pref_label": "demographic parity",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_keep"
+  },
+  "air:concept/differential-privacy": {
+   "arms": {
+    "org_maturity": 6,
+    "publication_actionability": 3
+   },
+   "documents_by_arm": {
+    "org_maturity": 5,
+    "publication_actionability": 3
+   },
+   "nodes": 9,
+   "within_arm_mean": 0.6462209095557531,
+   "within_by_arm": {
+    "publication_actionability": 0.6872958540916443,
+    "org_maturity": 0.6051459650198618
+   },
+   "cross_arm_mean": 0.6739378985431459,
+   "s": 0.027716988987392832,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/differential-privacy",
+   "pref_label": "differential privacy",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_keep"
+  },
+  "air:concept/digital-service": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.7409062385559082,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:concept/digital-service",
+   "pref_label": "Digital services",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/digital-signature": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 2
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 2
+   },
+   "nodes": 3,
+   "within_arm_mean": 0.5548791885375977,
+   "within_by_arm": {
+    "publication_actionability": 0.5548791885375977
+   },
+   "cross_arm_mean": 0.4316055178642273,
+   "s": -0.12327367067337036,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/digital-signature",
+   "pref_label": "Digital signature",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_split"
+  },
+  "air:concept/dimension": {
+   "arms": {
+    "org_maturity": 2,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 2,
+    "publication_actionability": 1
+   },
+   "nodes": 3,
+   "within_arm_mean": 1.0,
+   "within_by_arm": {
+    "org_maturity": 1.0
+   },
+   "cross_arm_mean": 0.3916310966014862,
+   "s": -0.6083689033985138,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/dimension",
+   "pref_label": "Dimensions",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_split"
+  },
+  "air:concept/disclosure": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.2455560863018036,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:concept/disclosure",
+   "pref_label": "disclosure",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/discoverability": {
+   "arms": {
+    "publication_actionability": 13,
+    "training_data_readiness": 1
+   },
+   "documents_by_arm": {
+    "publication_actionability": 10,
+    "training_data_readiness": 1
+   },
+   "nodes": 14,
+   "within_arm_mean": 0.4603113896953754,
+   "within_by_arm": {
+    "publication_actionability": 0.4603113896953754
+   },
+   "cross_arm_mean": 0.5681761938792008,
+   "s": 0.10786480418382544,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/discoverability",
+   "pref_label": "discoverability",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_keep"
+  },
+  "air:concept/documentation": {
+   "arms": {
+    "org_maturity": 2,
+    "publication_actionability": 11
+   },
+   "documents_by_arm": {
+    "org_maturity": 2,
+    "publication_actionability": 5
+   },
+   "nodes": 13,
+   "within_arm_mean": 0.4124222687699578,
+   "within_by_arm": {
+    "publication_actionability": 0.41061311797662214,
+    "org_maturity": 0.41423141956329346
+   },
+   "cross_arm_mean": 0.4126780100844123,
+   "s": 0.000255741314454494,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/documentation",
+   "pref_label": "documentation",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_keep"
+  },
+  "air:concept/domain-expert": {
+   "arms": {
+    "org_maturity": 3,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 3,
+    "publication_actionability": 1
+   },
+   "nodes": 4,
+   "within_arm_mean": 0.4523226320743561,
+   "within_by_arm": {
+    "org_maturity": 0.4523226320743561
+   },
+   "cross_arm_mean": 0.6030632356802622,
+   "s": 0.15074060360590613,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/domain-expert",
+   "pref_label": "Domain experts",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_keep"
+  },
+  "air:concept/epistemic-uncertainty": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 4
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "nodes": 5,
+   "within_arm_mean": 0.5539312462011973,
+   "within_by_arm": {
+    "publication_actionability": 0.5539312462011973
+   },
+   "cross_arm_mean": 0.587261751294136,
+   "s": 0.03333050509293878,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/epistemic-uncertainty",
+   "pref_label": "epistemic uncertainty",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_keep"
+  },
+  "air:concept/error-propagation": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.11594538390636444,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:concept/error-propagation",
+   "pref_label": "error propagation",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/explainability": {
+   "arms": {
+    "org_maturity": 7,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 5,
+    "publication_actionability": 1
+   },
+   "nodes": 8,
+   "within_arm_mean": 0.48508728189127787,
+   "within_by_arm": {
+    "org_maturity": 0.48508728189127787
+   },
+   "cross_arm_mean": 0.6715466805866787,
+   "s": 0.1864593986954008,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/explainability",
+   "pref_label": "explainability",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_keep"
+  },
+  "air:concept/explainable-ai": {
+   "arms": {
+    "org_maturity": 3,
+    "training_data_readiness": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 3,
+    "training_data_readiness": 1
+   },
+   "nodes": 4,
+   "within_arm_mean": 0.8119872808456421,
+   "within_by_arm": {
+    "org_maturity": 0.8119872808456421
+   },
+   "cross_arm_mean": 0.544075091679891,
+   "s": -0.2679121891657511,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/explainable-ai",
+   "pref_label": "explainable AI",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_split"
+  },
+  "air:concept/exploratory-data-analysis": {
+   "arms": {
+    "publication_actionability": 1,
+    "training_data_readiness": 2
+   },
+   "documents_by_arm": {
+    "publication_actionability": 1,
+    "training_data_readiness": 1
+   },
+   "nodes": 3,
+   "within_arm_mean": 0.7481387853622437,
+   "within_by_arm": {
+    "training_data_readiness": 0.7481387853622437
+   },
+   "cross_arm_mean": 0.616377055644989,
+   "s": -0.13176172971725464,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/exploratory-data-analysis",
+   "pref_label": "Exploratory Data Analysis",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_split"
+  },
+  "air:concept/external-validity": {
+   "arms": {
+    "org_maturity": 3,
+    "training_data_readiness": 3
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "training_data_readiness": 1
+   },
+   "nodes": 6,
+   "within_arm_mean": 0.5511468450228374,
+   "within_by_arm": {
+    "org_maturity": 0.6095580657323202,
+    "training_data_readiness": 0.4927356243133545
+   },
+   "cross_arm_mean": 0.47567617893218994,
+   "s": -0.07547066609064745,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/external-validity",
+   "pref_label": "external validity",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/fair-principle": {
+   "arms": {
+    "publication_actionability": 7,
+    "training_data_readiness": 4
+   },
+   "documents_by_arm": {
+    "publication_actionability": 4,
+    "training_data_readiness": 3
+   },
+   "nodes": 11,
+   "within_arm_mean": 0.4417225612061364,
+   "within_by_arm": {
+    "publication_actionability": 0.4377493446781522,
+    "training_data_readiness": 0.44569577773412067
+   },
+   "cross_arm_mean": 0.433770267026765,
+   "s": -0.007952294179371378,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/fair-principle",
+   "pref_label": "FAIR principles",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/fairness": {
+   "arms": {
+    "org_maturity": 6,
+    "publication_actionability": 3,
+    "training_data_readiness": 5
+   },
+   "documents_by_arm": {
+    "org_maturity": 6,
+    "publication_actionability": 2,
+    "training_data_readiness": 4
+   },
+   "nodes": 14,
+   "within_arm_mean": 0.5724901361597908,
+   "within_by_arm": {
+    "org_maturity": 0.583080514272054,
+    "publication_actionability": 0.5251842339833578,
+    "training_data_readiness": 0.6092056602239608
+   },
+   "cross_arm_mean": 0.520337362847631,
+   "s": -0.05215277331215984,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/fairness",
+   "pref_label": "fairness",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/fairness-and-bias": {
+   "arms": {
+    "org_maturity": 3,
+    "training_data_readiness": 4
+   },
+   "documents_by_arm": {
+    "org_maturity": 2,
+    "training_data_readiness": 2
+   },
+   "nodes": 7,
+   "within_arm_mean": 0.7536414563655853,
+   "within_by_arm": {
+    "training_data_readiness": 0.5220305720965067,
+    "org_maturity": 0.9852523406346639
+   },
+   "cross_arm_mean": 0.5321651299794515,
+   "s": -0.2214763263861338,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/fairness-and-bias",
+   "pref_label": "Fairness and bias",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_split"
+  },
+  "air:concept/federated-learning": {
+   "arms": {
+    "org_maturity": 3,
+    "publication_actionability": 1,
+    "training_data_readiness": 6
+   },
+   "documents_by_arm": {
+    "org_maturity": 3,
+    "publication_actionability": 1,
+    "training_data_readiness": 3
+   },
+   "nodes": 10,
+   "within_arm_mean": 0.7015608410040537,
+   "within_by_arm": {
+    "training_data_readiness": 0.6063296318054199,
+    "org_maturity": 0.7967920502026876
+   },
+   "cross_arm_mean": 0.6424354535562021,
+   "s": -0.05912538744785156,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/federated-learning",
+   "pref_label": "federated learning",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/feedback": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.3894602656364441,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:concept/feedback",
+   "pref_label": "Feedback",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/feedback-loop": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 2
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "nodes": 3,
+   "within_arm_mean": 0.4774215817451477,
+   "within_by_arm": {
+    "publication_actionability": 0.4774215817451477
+   },
+   "cross_arm_mean": 0.4067128896713257,
+   "s": -0.07070869207382202,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/feedback-loop",
+   "pref_label": "Feedback loops",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/findability": {
+   "arms": {
+    "publication_actionability": 4,
+    "training_data_readiness": 1
+   },
+   "documents_by_arm": {
+    "publication_actionability": 2,
+    "training_data_readiness": 1
+   },
+   "nodes": 5,
+   "within_arm_mean": 0.44504043459892273,
+   "within_by_arm": {
+    "publication_actionability": 0.44504043459892273
+   },
+   "cross_arm_mean": 0.28534549102187157,
+   "s": -0.15969494357705116,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/findability",
+   "pref_label": "Findability",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_split"
+  },
+  "air:concept/foundation-model": {
+   "arms": {
+    "org_maturity": 6,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 4,
+    "publication_actionability": 1
+   },
+   "nodes": 7,
+   "within_arm_mean": 0.34876829087734224,
+   "within_by_arm": {
+    "org_maturity": 0.34876829087734224
+   },
+   "cross_arm_mean": 0.3417193541924159,
+   "s": -0.0070489366849263435,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/foundation-model",
+   "pref_label": "foundation models",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/genai": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.4371330142021179,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:concept/genai",
+   "pref_label": "GenAI",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/generalizability": {
+   "arms": {
+    "org_maturity": 2,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 2,
+    "publication_actionability": 1
+   },
+   "nodes": 3,
+   "within_arm_mean": 0.41233766078948975,
+   "within_by_arm": {
+    "org_maturity": 0.41233766078948975
+   },
+   "cross_arm_mean": 0.2527034506201744,
+   "s": -0.15963421016931534,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/generalizability",
+   "pref_label": "generalizability",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_split"
+  },
+  "air:concept/generative-ai": {
+   "arms": {
+    "org_maturity": 12,
+    "publication_actionability": 11
+   },
+   "documents_by_arm": {
+    "org_maturity": 11,
+    "publication_actionability": 6
+   },
+   "nodes": 23,
+   "within_arm_mean": 0.5789221418739268,
+   "within_by_arm": {
+    "org_maturity": 0.6031365029965386,
+    "publication_actionability": 0.554707780751315
+   },
+   "cross_arm_mean": 0.5366050731955152,
+   "s": -0.04231706867841156,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/generative-ai",
+   "pref_label": "Generative AI",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/governance": {
+   "arms": {
+    "org_maturity": 7,
+    "publication_actionability": 3,
+    "training_data_readiness": 2
+   },
+   "documents_by_arm": {
+    "org_maturity": 6,
+    "publication_actionability": 3,
+    "training_data_readiness": 2
+   },
+   "nodes": 12,
+   "within_arm_mean": 0.4369461763472784,
+   "within_by_arm": {
+    "training_data_readiness": 0.47897112369537354,
+    "publication_actionability": 0.41184906164805096,
+    "org_maturity": 0.42001834369841073
+   },
+   "cross_arm_mean": 0.42138937152013545,
+   "s": -0.015556804827142945,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/governance",
+   "pref_label": "Governance",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/governance-mechanism": {
+   "arms": {
+    "org_maturity": 2,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "nodes": 3,
+   "within_arm_mean": 0.46434327960014343,
+   "within_by_arm": {
+    "org_maturity": 0.46434327960014343
+   },
+   "cross_arm_mean": 0.2773558273911476,
+   "s": -0.18698745220899582,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/governance-mechanism",
+   "pref_label": "governance mechanisms",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_split"
+  },
+  "air:concept/governance-pillar": {
+   "arms": {
+    "org_maturity": 1,
+    "training_data_readiness": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "training_data_readiness": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.4739432632923126,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:concept/governance-pillar",
+   "pref_label": "Governance pillar",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/governance-structure": {
+   "arms": {
+    "org_maturity": 1,
+    "training_data_readiness": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "training_data_readiness": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.5452049374580383,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:concept/governance-structure",
+   "pref_label": "governance structure",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/guardrail": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 4
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 3
+   },
+   "nodes": 5,
+   "within_arm_mean": 0.43076351781686145,
+   "within_by_arm": {
+    "publication_actionability": 0.43076351781686145
+   },
+   "cross_arm_mean": 0.3596407286822796,
+   "s": -0.07112278913458187,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/guardrail",
+   "pref_label": "guardrails",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/hallucination": {
+   "arms": {
+    "org_maturity": 2,
+    "publication_actionability": 16
+   },
+   "documents_by_arm": {
+    "org_maturity": 2,
+    "publication_actionability": 11
+   },
+   "nodes": 18,
+   "within_arm_mean": 0.46865089585383735,
+   "within_by_arm": {
+    "org_maturity": 0.5459519624710083,
+    "publication_actionability": 0.39134982923666634
+   },
+   "cross_arm_mean": 0.416923311073333,
+   "s": -0.05172758478050432,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/hallucination",
+   "pref_label": "hallucination",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/high-stake-domain": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.45975756645202637,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:concept/high-stake-domain",
+   "pref_label": "High-stakes domains",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/human-error": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.6657132506370544,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:concept/human-error",
+   "pref_label": "human error",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/human-judgment": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.1864878535270691,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:concept/human-judgment",
+   "pref_label": "human judgment",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/human-review": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.5330443382263184,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:concept/human-review",
+   "pref_label": "human review",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/imbalance-degree-id": {
+   "arms": {
+    "publication_actionability": 1,
+    "training_data_readiness": 2
+   },
+   "documents_by_arm": {
+    "publication_actionability": 1,
+    "training_data_readiness": 1
+   },
+   "nodes": 3,
+   "within_arm_mean": 0.6490352153778076,
+   "within_by_arm": {
+    "training_data_readiness": 0.6490352153778076
+   },
+   "cross_arm_mean": 0.2946457415819168,
+   "s": -0.3543894737958908,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/imbalance-degree-id",
+   "pref_label": "Imbalance Degree (ID)",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_split"
+  },
+  "air:concept/incident-and-error": {
+   "arms": {
+    "org_maturity": 3,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 3,
+    "publication_actionability": 1
+   },
+   "nodes": 4,
+   "within_arm_mean": 0.8903586268424988,
+   "within_by_arm": {
+    "org_maturity": 0.8903586268424988
+   },
+   "cross_arm_mean": 0.1386807362238566,
+   "s": -0.7516778906186422,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/incident-and-error",
+   "pref_label": "Incidents and errors",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_split"
+  },
+  "air:concept/indicator": {
+   "arms": {
+    "org_maturity": 2,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 2,
+    "publication_actionability": 1
+   },
+   "nodes": 3,
+   "within_arm_mean": 0.608465313911438,
+   "within_by_arm": {
+    "org_maturity": 0.608465313911438
+   },
+   "cross_arm_mean": 0.28077182173728943,
+   "s": -0.32769349217414856,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/indicator",
+   "pref_label": "Indicators",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_split"
+  },
+  "air:concept/information-security": {
+   "arms": {
+    "org_maturity": 7,
+    "publication_actionability": 2
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 2
+   },
+   "nodes": 9,
+   "within_arm_mean": 0.7332979696137565,
+   "within_by_arm": {
+    "org_maturity": 0.46659582001822336,
+    "publication_actionability": 1.0000001192092896
+   },
+   "cross_arm_mean": 0.5596701375075749,
+   "s": -0.1736278321061816,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/information-security",
+   "pref_label": "Information Security",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_split"
+  },
+  "air:concept/infrastructure": {
+   "arms": {
+    "org_maturity": 4,
+    "training_data_readiness": 3
+   },
+   "documents_by_arm": {
+    "org_maturity": 4,
+    "training_data_readiness": 1
+   },
+   "nodes": 7,
+   "within_arm_mean": 0.6589326312144598,
+   "within_by_arm": {
+    "org_maturity": 0.8247720003128052,
+    "training_data_readiness": 0.4930932621161143
+   },
+   "cross_arm_mean": 0.6652178143461546,
+   "s": 0.006285183131694794,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/infrastructure",
+   "pref_label": "Infrastructure",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_keep"
+  },
+  "air:concept/intellectual-property": {
+   "arms": {
+    "org_maturity": 5,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 2,
+    "publication_actionability": 1
+   },
+   "nodes": 6,
+   "within_arm_mean": 0.5125130534172058,
+   "within_by_arm": {
+    "org_maturity": 0.5125130534172058
+   },
+   "cross_arm_mean": 0.6308312535285949,
+   "s": 0.11831820011138916,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/intellectual-property",
+   "pref_label": "Intellectual Property",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_keep"
+  },
+  "air:concept/intended-purpose": {
+   "arms": {
+    "org_maturity": 2,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "nodes": 3,
+   "within_arm_mean": 0.22304393351078033,
+   "within_by_arm": {
+    "org_maturity": 0.22304393351078033
+   },
+   "cross_arm_mean": 0.40965403616428375,
+   "s": 0.18661010265350342,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/intended-purpose",
+   "pref_label": "intended purpose",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_keep"
+  },
+  "air:concept/interagency-collaboration": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.3587263822555542,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:concept/interagency-collaboration",
+   "pref_label": "interagency collaboration",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/internal-validity": {
+   "arms": {
+    "org_maturity": 2,
+    "training_data_readiness": 3
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "training_data_readiness": 1
+   },
+   "nodes": 5,
+   "within_arm_mean": 0.6443869074185689,
+   "within_by_arm": {
+    "org_maturity": 0.670561671257019,
+    "training_data_readiness": 0.6182121435801188
+   },
+   "cross_arm_mean": 0.5250551054875056,
+   "s": -0.1193318019310633,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/internal-validity",
+   "pref_label": "internal validity",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_split"
+  },
+  "air:concept/interoperability": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 18,
+    "training_data_readiness": 3
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 13,
+    "training_data_readiness": 2
+   },
+   "nodes": 22,
+   "within_arm_mean": 0.5159370625038552,
+   "within_by_arm": {
+    "publication_actionability": 0.3809967287420447,
+    "training_data_readiness": 0.6508773962656657
+   },
+   "cross_arm_mean": 0.5443498378992081,
+   "s": 0.02841277539535292,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/interoperability",
+   "pref_label": "interoperability",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_keep"
+  },
+  "air:concept/k-anonymity": {
+   "arms": {
+    "org_maturity": 2,
+    "training_data_readiness": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "training_data_readiness": 1
+   },
+   "nodes": 3,
+   "within_arm_mean": 0.9054907560348511,
+   "within_by_arm": {
+    "org_maturity": 0.9054907560348511
+   },
+   "cross_arm_mean": 0.8732971549034119,
+   "s": -0.03219360113143921,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/k-anonymity",
+   "pref_label": "k-anonymity",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_keep"
+  },
+  "air:concept/knowledge-graph": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 4,
+    "training_data_readiness": 3
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 4,
+    "training_data_readiness": 1
+   },
+   "nodes": 8,
+   "within_arm_mean": 0.4939153095086416,
+   "within_by_arm": {
+    "publication_actionability": 0.5610018571217855,
+    "training_data_readiness": 0.4268287618954976
+   },
+   "cross_arm_mean": 0.4649479804854644,
+   "s": -0.028967329023177224,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/knowledge-graph",
+   "pref_label": "knowledge graphs",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/l-diversity": {
+   "arms": {
+    "org_maturity": 1,
+    "training_data_readiness": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "training_data_readiness": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.9477016925811768,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:concept/l-diversity",
+   "pref_label": "l-diversity",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_keep"
+  },
+  "air:concept/label-data": {
+   "arms": {
+    "publication_actionability": 3,
+    "training_data_readiness": 1
+   },
+   "documents_by_arm": {
+    "publication_actionability": 1,
+    "training_data_readiness": 1
+   },
+   "nodes": 4,
+   "within_arm_mean": 0.4303641120592753,
+   "within_by_arm": {
+    "publication_actionability": 0.4303641120592753
+   },
+   "cross_arm_mean": 0.46921639641125995,
+   "s": 0.03885228435198462,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/label-data",
+   "pref_label": "Label data",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_keep"
+  },
+  "air:concept/large-language-model": {
+   "arms": {
+    "org_maturity": 5,
+    "publication_actionability": 18,
+    "training_data_readiness": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 5,
+    "publication_actionability": 15,
+    "training_data_readiness": 1
+   },
+   "nodes": 24,
+   "within_arm_mean": 0.6090638351693651,
+   "within_by_arm": {
+    "org_maturity": 0.6478354632854462,
+    "publication_actionability": 0.5702922070532842
+   },
+   "cross_arm_mean": 0.5710669167801342,
+   "s": -0.037996918389230916,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/large-language-model",
+   "pref_label": "Large language models",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/large-language-model-llm": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 5,
+    "training_data_readiness": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 3,
+    "training_data_readiness": 1
+   },
+   "nodes": 7,
+   "within_arm_mean": 0.4455594062805176,
+   "within_by_arm": {
+    "publication_actionability": 0.4455594062805176
+   },
+   "cross_arm_mean": 0.37016391957348044,
+   "s": -0.07539548670703716,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/large-language-model-llm",
+   "pref_label": "large language models (LLMs)",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/latency": {
+   "arms": {
+    "org_maturity": 2,
+    "publication_actionability": 2
+   },
+   "documents_by_arm": {
+    "org_maturity": 2,
+    "publication_actionability": 2
+   },
+   "nodes": 4,
+   "within_arm_mean": 0.7082890868186951,
+   "within_by_arm": {
+    "org_maturity": 1.0,
+    "publication_actionability": 0.41657817363739014
+   },
+   "cross_arm_mean": 0.3469887003302574,
+   "s": -0.36130038648843765,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/latency",
+   "pref_label": "latency",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_split"
+  },
+  "air:concept/llm": {
+   "arms": {
+    "publication_actionability": 3,
+    "training_data_readiness": 1
+   },
+   "documents_by_arm": {
+    "publication_actionability": 3,
+    "training_data_readiness": 1
+   },
+   "nodes": 4,
+   "within_arm_mean": 0.4080190857251485,
+   "within_by_arm": {
+    "publication_actionability": 0.4080190857251485
+   },
+   "cross_arm_mean": 0.5186926027139028,
+   "s": 0.11067351698875433,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/llm",
+   "pref_label": "LLMs",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_keep"
+  },
+  "air:concept/machine-learning": {
+   "arms": {
+    "org_maturity": 7,
+    "training_data_readiness": 2
+   },
+   "documents_by_arm": {
+    "org_maturity": 7,
+    "training_data_readiness": 1
+   },
+   "nodes": 9,
+   "within_arm_mean": 0.5090331066222418,
+   "within_by_arm": {
+    "org_maturity": 0.5051202036085582,
+    "training_data_readiness": 0.5129460096359253
+   },
+   "cross_arm_mean": 0.5152032417910439,
+   "s": 0.00617013516880216,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/machine-learning",
+   "pref_label": "Machine learning",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_keep"
+  },
+  "air:concept/machine-readability": {
+   "arms": {
+    "publication_actionability": 3,
+    "training_data_readiness": 1
+   },
+   "documents_by_arm": {
+    "publication_actionability": 2,
+    "training_data_readiness": 1
+   },
+   "nodes": 4,
+   "within_arm_mean": 0.4572763939698537,
+   "within_by_arm": {
+    "publication_actionability": 0.4572763939698537
+   },
+   "cross_arm_mean": 0.49574069182078045,
+   "s": 0.038464297850926754,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/machine-readability",
+   "pref_label": "machine-readability",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_keep"
+  },
+  "air:concept/machine-understandable": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 2
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 2
+   },
+   "nodes": 3,
+   "within_arm_mean": 0.48071467876434326,
+   "within_by_arm": {
+    "publication_actionability": 0.48071467876434326
+   },
+   "cross_arm_mean": 0.5235652476549149,
+   "s": 0.042850568890571594,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/machine-understandable",
+   "pref_label": "machine understandable",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_keep"
+  },
+  "air:concept/measure-function": {
+   "arms": {
+    "org_maturity": 5,
+    "training_data_readiness": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 3,
+    "training_data_readiness": 1
+   },
+   "nodes": 6,
+   "within_arm_mean": 0.3653657704591751,
+   "within_by_arm": {
+    "org_maturity": 0.3653657704591751
+   },
+   "cross_arm_mean": 0.4120727241039276,
+   "s": 0.04670695364475247,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/measure-function",
+   "pref_label": "MEASURE function",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_keep"
+  },
+  "air:concept/measure-of-uncertainty": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 2
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 2
+   },
+   "nodes": 3,
+   "within_arm_mean": 0.6465710401535034,
+   "within_by_arm": {
+    "publication_actionability": 0.6465710401535034
+   },
+   "cross_arm_mean": 0.4267737418413162,
+   "s": -0.2197972983121872,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/measure-of-uncertainty",
+   "pref_label": "measures of uncertainty",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_split"
+  },
+  "air:concept/membership-inference-attack": {
+   "arms": {
+    "org_maturity": 1,
+    "training_data_readiness": 2
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "training_data_readiness": 1
+   },
+   "nodes": 3,
+   "within_arm_mean": 0.5740848183631897,
+   "within_by_arm": {
+    "training_data_readiness": 0.5740848183631897
+   },
+   "cross_arm_mean": 0.7382604777812958,
+   "s": 0.16417565941810608,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/membership-inference-attack",
+   "pref_label": "membership inference attacks",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_keep"
+  },
+  "air:concept/memorization": {
+   "arms": {
+    "publication_actionability": 1,
+    "training_data_readiness": 2
+   },
+   "documents_by_arm": {
+    "publication_actionability": 1,
+    "training_data_readiness": 1
+   },
+   "nodes": 3,
+   "within_arm_mean": 0.6900774240493774,
+   "within_by_arm": {
+    "training_data_readiness": 0.6900774240493774
+   },
+   "cross_arm_mean": 0.3439556658267975,
+   "s": -0.34612175822257996,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/memorization",
+   "pref_label": "memorization",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_split"
+  },
+  "air:concept/metadata": {
+   "arms": {
+    "publication_actionability": 24,
+    "training_data_readiness": 8
+   },
+   "documents_by_arm": {
+    "publication_actionability": 19,
+    "training_data_readiness": 3
+   },
+   "nodes": 32,
+   "within_arm_mean": 0.5710353891502132,
+   "within_by_arm": {
+    "publication_actionability": 0.5908834003451942,
+    "training_data_readiness": 0.5511873779552323
+   },
+   "cross_arm_mean": 0.5574762842152268,
+   "s": -0.013559104934986466,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/metadata",
+   "pref_label": "metadata",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/metadata-standard": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 3
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 3
+   },
+   "nodes": 4,
+   "within_arm_mean": 0.6316227912902832,
+   "within_by_arm": {
+    "publication_actionability": 0.6316227912902832
+   },
+   "cross_arm_mean": 0.5440225203831991,
+   "s": -0.08760027090708411,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/metadata-standard",
+   "pref_label": "metadata standards",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/metric": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.3032112717628479,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:concept/metric",
+   "pref_label": "metric",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/misinformation": {
+   "arms": {
+    "org_maturity": 2,
+    "publication_actionability": 6
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 5
+   },
+   "nodes": 8,
+   "within_arm_mean": 0.3603120346864065,
+   "within_by_arm": {
+    "org_maturity": 0.2986691892147064,
+    "publication_actionability": 0.4219548801581065
+   },
+   "cross_arm_mean": 0.394138403236866,
+   "s": 0.03382636855045951,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/misinformation",
+   "pref_label": "misinformation",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_keep"
+  },
+  "air:concept/missing-value": {
+   "arms": {
+    "publication_actionability": 2,
+    "training_data_readiness": 2
+   },
+   "documents_by_arm": {
+    "publication_actionability": 1,
+    "training_data_readiness": 1
+   },
+   "nodes": 4,
+   "within_arm_mean": 0.7788451015949249,
+   "within_by_arm": {
+    "training_data_readiness": 0.6990339756011963,
+    "publication_actionability": 0.8586562275886536
+   },
+   "cross_arm_mean": 0.5091992616653442,
+   "s": -0.2696458399295807,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/missing-value",
+   "pref_label": "missing values",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_split"
+  },
+  "air:concept/model-card": {
+   "arms": {
+    "org_maturity": 4,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 3,
+    "publication_actionability": 1
+   },
+   "nodes": 5,
+   "within_arm_mean": 0.31945550441741943,
+   "within_by_arm": {
+    "org_maturity": 0.31945550441741943
+   },
+   "cross_arm_mean": 0.5027243420481682,
+   "s": 0.18326883763074875,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/model-card",
+   "pref_label": "model cards",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_keep"
+  },
+  "air:concept/model-drift": {
+   "arms": {
+    "org_maturity": 4,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 3,
+    "publication_actionability": 1
+   },
+   "nodes": 5,
+   "within_arm_mean": 0.43114859859148663,
+   "within_by_arm": {
+    "org_maturity": 0.43114859859148663
+   },
+   "cross_arm_mean": 0.48056866973638535,
+   "s": 0.049420071144898714,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/model-drift",
+   "pref_label": "model drift",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_keep"
+  },
+  "air:concept/monitoring": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.5173889994621277,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:concept/monitoring",
+   "pref_label": "Monitoring",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/multidisciplinary-team": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.5993938446044922,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:concept/multidisciplinary-team",
+   "pref_label": "multidisciplinary teams",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/national-security": {
+   "arms": {
+    "org_maturity": 2,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 2,
+    "publication_actionability": 1
+   },
+   "nodes": 3,
+   "within_arm_mean": 0.8538114428520203,
+   "within_by_arm": {
+    "org_maturity": 0.8538114428520203
+   },
+   "cross_arm_mean": 0.7070519626140594,
+   "s": -0.14675948023796082,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/national-security",
+   "pref_label": "national security",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_split"
+  },
+  "air:concept/objectivity": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 8
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 4
+   },
+   "nodes": 9,
+   "within_arm_mean": 0.44434006778257235,
+   "within_by_arm": {
+    "publication_actionability": 0.44434006778257235
+   },
+   "cross_arm_mean": 0.5205127848312259,
+   "s": 0.07617271704865353,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/objectivity",
+   "pref_label": "Objectivity",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_keep"
+  },
+  "air:concept/ontology": {
+   "arms": {
+    "publication_actionability": 3,
+    "training_data_readiness": 1
+   },
+   "documents_by_arm": {
+    "publication_actionability": 3,
+    "training_data_readiness": 1
+   },
+   "nodes": 4,
+   "within_arm_mean": 0.6240846912066141,
+   "within_by_arm": {
+    "publication_actionability": 0.6240846912066141
+   },
+   "cross_arm_mean": 0.48521954814593,
+   "s": -0.13886514306068415,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/ontology",
+   "pref_label": "Ontology",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_split"
+  },
+  "air:concept/open-data": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 2
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 2
+   },
+   "nodes": 3,
+   "within_arm_mean": 0.38201993703842163,
+   "within_by_arm": {
+    "publication_actionability": 0.38201993703842163
+   },
+   "cross_arm_mean": 0.6910099685192108,
+   "s": 0.3089900314807892,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/open-data",
+   "pref_label": "open data",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_keep"
+  },
+  "air:concept/open-source": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 3
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 3
+   },
+   "nodes": 4,
+   "within_arm_mean": 0.431007315715154,
+   "within_by_arm": {
+    "publication_actionability": 0.431007315715154
+   },
+   "cross_arm_mean": 0.595570703347524,
+   "s": 0.16456338763237005,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/open-source",
+   "pref_label": "open source",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_keep"
+  },
+  "air:concept/open-source-software": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.32741880416870117,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:concept/open-source-software",
+   "pref_label": "open-source software",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/organization": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 3
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "nodes": 4,
+   "within_arm_mean": 0.5468125343322754,
+   "within_by_arm": {
+    "publication_actionability": 0.5468125343322754
+   },
+   "cross_arm_mean": 0.46334784229596454,
+   "s": -0.08346469203631085,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/organization",
+   "pref_label": "Organization",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/organizational-readiness": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.5320885181427002,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:concept/organizational-readiness",
+   "pref_label": "Organizational readiness",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/outlier": {
+   "arms": {
+    "publication_actionability": 2,
+    "training_data_readiness": 4
+   },
+   "documents_by_arm": {
+    "publication_actionability": 2,
+    "training_data_readiness": 3
+   },
+   "nodes": 6,
+   "within_arm_mean": 0.5259129305680592,
+   "within_by_arm": {
+    "training_data_readiness": 0.552068958679835,
+    "publication_actionability": 0.49975690245628357
+   },
+   "cross_arm_mean": 0.5052315630018711,
+   "s": -0.020681367566188102,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/outlier",
+   "pref_label": "outliers",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/performance": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.354964017868042,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:concept/performance",
+   "pref_label": "Performance",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/performance-metric": {
+   "arms": {
+    "org_maturity": 3,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 2,
+    "publication_actionability": 1
+   },
+   "nodes": 4,
+   "within_arm_mean": 0.7392686009407043,
+   "within_by_arm": {
+    "org_maturity": 0.7392686009407043
+   },
+   "cross_arm_mean": 0.7602942188580831,
+   "s": 0.02102561791737878,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/performance-metric",
+   "pref_label": "Performance metrics",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_keep"
+  },
+  "air:concept/persistent-uri": {
+   "arms": {
+    "publication_actionability": 1,
+    "training_data_readiness": 1
+   },
+   "documents_by_arm": {
+    "publication_actionability": 1,
+    "training_data_readiness": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.3296363353729248,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:concept/persistent-uri",
+   "pref_label": "Persistent URI",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/personalization": {
+   "arms": {
+    "publication_actionability": 1,
+    "training_data_readiness": 1
+   },
+   "documents_by_arm": {
+    "publication_actionability": 1,
+    "training_data_readiness": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.4518865644931793,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:concept/personalization",
+   "pref_label": "Personalization",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/personally-identifiable-information": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 6
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 5
+   },
+   "nodes": 7,
+   "within_arm_mean": 0.5597585320472718,
+   "within_by_arm": {
+    "publication_actionability": 0.5597585320472718
+   },
+   "cross_arm_mean": 0.7362970610459646,
+   "s": 0.17653852899869282,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/personally-identifiable-information",
+   "pref_label": "personally identifiable information",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_keep"
+  },
+  "air:concept/personally-identifiable-information-pii": {
+   "arms": {
+    "publication_actionability": 1,
+    "training_data_readiness": 1
+   },
+   "documents_by_arm": {
+    "publication_actionability": 1,
+    "training_data_readiness": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.5003927946090698,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:concept/personally-identifiable-information-pii",
+   "pref_label": "personally identifiable information (PII)",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/pii": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.4103955626487732,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:concept/pii",
+   "pref_label": "PII",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/plain-language": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.5062397122383118,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:concept/plain-language",
+   "pref_label": "Plain language",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/potential-bias": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.2540195882320404,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:concept/potential-bias",
+   "pref_label": "potential bias",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/privacy": {
+   "arms": {
+    "org_maturity": 9,
+    "publication_actionability": 1,
+    "training_data_readiness": 4
+   },
+   "documents_by_arm": {
+    "org_maturity": 7,
+    "publication_actionability": 1,
+    "training_data_readiness": 2
+   },
+   "nodes": 14,
+   "within_arm_mean": 0.4578466905901829,
+   "within_by_arm": {
+    "org_maturity": 0.5262781269848347,
+    "training_data_readiness": 0.3894152541955312
+   },
+   "cross_arm_mean": 0.48740333622815657,
+   "s": 0.029556645637973666,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/privacy",
+   "pref_label": "privacy",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_keep"
+  },
+  "air:concept/privacy-budget": {
+   "arms": {
+    "publication_actionability": 1,
+    "training_data_readiness": 1
+   },
+   "documents_by_arm": {
+    "publication_actionability": 1,
+    "training_data_readiness": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.6506481170654297,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:concept/privacy-budget",
+   "pref_label": "privacy budget",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/privacy-enhanced": {
+   "arms": {
+    "org_maturity": 2,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "nodes": 3,
+   "within_arm_mean": 0.7401266694068909,
+   "within_by_arm": {
+    "org_maturity": 0.7401266694068909
+   },
+   "cross_arm_mean": 0.3288976550102234,
+   "s": -0.4112290143966675,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/privacy-enhanced",
+   "pref_label": "Privacy-Enhanced",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_split"
+  },
+  "air:concept/privacy-enhancing-technique": {
+   "arms": {
+    "org_maturity": 2,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "nodes": 3,
+   "within_arm_mean": 0.6070679426193237,
+   "within_by_arm": {
+    "org_maturity": 0.6070679426193237
+   },
+   "cross_arm_mean": 0.6142964661121368,
+   "s": 0.00722852349281311,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/privacy-enhancing-technique",
+   "pref_label": "Privacy enhancing techniques",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_keep"
+  },
+  "air:concept/process": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 2
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "nodes": 3,
+   "within_arm_mean": 0.587502658367157,
+   "within_by_arm": {
+    "publication_actionability": 0.587502658367157
+   },
+   "cross_arm_mean": 0.3450567126274109,
+   "s": -0.2424459457397461,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/process",
+   "pref_label": "Process",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_split"
+  },
+  "air:concept/prompt-injection": {
+   "arms": {
+    "org_maturity": 2,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "nodes": 3,
+   "within_arm_mean": 0.3798333406448364,
+   "within_by_arm": {
+    "org_maturity": 0.3798333406448364
+   },
+   "cross_arm_mean": 0.41942010819911957,
+   "s": 0.03958676755428314,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/prompt-injection",
+   "pref_label": "prompt injection",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_keep"
+  },
+  "air:concept/property": {
+   "arms": {
+    "publication_actionability": 5,
+    "training_data_readiness": 2
+   },
+   "documents_by_arm": {
+    "publication_actionability": 4,
+    "training_data_readiness": 1
+   },
+   "nodes": 7,
+   "within_arm_mean": 0.6146894216537475,
+   "within_by_arm": {
+    "publication_actionability": 0.7080090880393982,
+    "training_data_readiness": 0.5213697552680969
+   },
+   "cross_arm_mean": 0.31682751178741453,
+   "s": -0.297861909866333,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/property",
+   "pref_label": "properties",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_split"
+  },
+  "air:concept/provenance": {
+   "arms": {
+    "publication_actionability": 16,
+    "training_data_readiness": 4
+   },
+   "documents_by_arm": {
+    "publication_actionability": 7,
+    "training_data_readiness": 3
+   },
+   "nodes": 20,
+   "within_arm_mean": 0.5406519899455209,
+   "within_by_arm": {
+    "publication_actionability": 0.4162800470367074,
+    "training_data_readiness": 0.6650239328543345
+   },
+   "cross_arm_mean": 0.5235273167490959,
+   "s": -0.017124673196424967,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/provenance",
+   "pref_label": "provenance",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/provenance-verification": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 2
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "nodes": 3,
+   "within_arm_mean": 0.5399243831634521,
+   "within_by_arm": {
+    "publication_actionability": 0.5399243831634521
+   },
+   "cross_arm_mean": 0.39386068284511566,
+   "s": -0.1460637003183365,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/provenance-verification",
+   "pref_label": "Provenance verification",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_split"
+  },
+  "air:concept/public-data": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 2
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 2
+   },
+   "nodes": 3,
+   "within_arm_mean": 0.6440507769584656,
+   "within_by_arm": {
+    "publication_actionability": 0.6440507769584656
+   },
+   "cross_arm_mean": 0.5493739545345306,
+   "s": -0.09467682242393494,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/public-data",
+   "pref_label": "Public data",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/public-data-asset": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 2
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 2
+   },
+   "nodes": 3,
+   "within_arm_mean": 0.8913325071334839,
+   "within_by_arm": {
+    "publication_actionability": 0.8913325071334839
+   },
+   "cross_arm_mean": 0.4669009745121002,
+   "s": -0.42443153262138367,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/public-data-asset",
+   "pref_label": "Public data asset",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_split"
+  },
+  "air:concept/public-trust": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.5127477645874023,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:concept/public-trust",
+   "pref_label": "public trust",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/purposive-sampling": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.5960298180580139,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:concept/purposive-sampling",
+   "pref_label": "purposive sampling",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/quality": {
+   "arms": {
+    "publication_actionability": 1,
+    "training_data_readiness": 2
+   },
+   "documents_by_arm": {
+    "publication_actionability": 1,
+    "training_data_readiness": 2
+   },
+   "nodes": 3,
+   "within_arm_mean": 0.28587254881858826,
+   "within_by_arm": {
+    "training_data_readiness": 0.28587254881858826
+   },
+   "cross_arm_mean": 0.6429363340139389,
+   "s": 0.35706378519535065,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/quality",
+   "pref_label": "Quality",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_keep"
+  },
+  "air:concept/quality-dimension": {
+   "arms": {
+    "publication_actionability": 8,
+    "training_data_readiness": 1
+   },
+   "documents_by_arm": {
+    "publication_actionability": 4,
+    "training_data_readiness": 1
+   },
+   "nodes": 9,
+   "within_arm_mean": 0.7004314959049225,
+   "within_by_arm": {
+    "publication_actionability": 0.7004314959049225
+   },
+   "cross_arm_mean": 0.3439612165093422,
+   "s": -0.3564702793955803,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/quality-dimension",
+   "pref_label": "Quality dimensions",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_split"
+  },
+  "air:concept/rag": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 2
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 2
+   },
+   "nodes": 3,
+   "within_arm_mean": 0.27234357595443726,
+   "within_by_arm": {
+    "publication_actionability": 0.27234357595443726
+   },
+   "cross_arm_mean": 0.22200112789869308,
+   "s": -0.05034244805574417,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/rag",
+   "pref_label": "RAG",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/re-identification-risk": {
+   "arms": {
+    "publication_actionability": 1,
+    "training_data_readiness": 3
+   },
+   "documents_by_arm": {
+    "publication_actionability": 1,
+    "training_data_readiness": 1
+   },
+   "nodes": 4,
+   "within_arm_mean": 0.5837420026461283,
+   "within_by_arm": {
+    "training_data_readiness": 0.5837420026461283
+   },
+   "cross_arm_mean": 0.4524119695027669,
+   "s": -0.1313300331433614,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/re-identification-risk",
+   "pref_label": "Re-identification risk",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_split"
+  },
+  "air:concept/reinforcement-learning": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.5532955527305603,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:concept/reinforcement-learning",
+   "pref_label": "Reinforcement learning",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/reliability": {
+   "arms": {
+    "org_maturity": 3,
+    "publication_actionability": 7
+   },
+   "documents_by_arm": {
+    "org_maturity": 2,
+    "publication_actionability": 5
+   },
+   "nodes": 10,
+   "within_arm_mean": 0.3692315508212362,
+   "within_by_arm": {
+    "org_maturity": 0.41040287415186566,
+    "publication_actionability": 0.32806022749060676
+   },
+   "cross_arm_mean": 0.3707571703763235,
+   "s": 0.0015256195550872875,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/reliability",
+   "pref_label": "reliability",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_keep"
+  },
+  "air:concept/reproducibility": {
+   "arms": {
+    "org_maturity": 2,
+    "publication_actionability": 7,
+    "training_data_readiness": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 2,
+    "publication_actionability": 5,
+    "training_data_readiness": 1
+   },
+   "nodes": 10,
+   "within_arm_mean": 0.47292719923314597,
+   "within_by_arm": {
+    "publication_actionability": 0.6359693138372331,
+    "org_maturity": 0.30988508462905884
+   },
+   "cross_arm_mean": 0.4891856533029805,
+   "s": 0.01625845406983456,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/reproducibility",
+   "pref_label": "reproducibility",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_keep"
+  },
+  "air:concept/responsible-ai": {
+   "arms": {
+    "org_maturity": 7,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 6,
+    "publication_actionability": 1
+   },
+   "nodes": 8,
+   "within_arm_mean": 0.8285571762493679,
+   "within_by_arm": {
+    "org_maturity": 0.8285571762493679
+   },
+   "cross_arm_mean": 0.5717975582395282,
+   "s": -0.2567596180098397,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/responsible-ai",
+   "pref_label": "Responsible AI",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_split"
+  },
+  "air:concept/responsible-ai-rai": {
+   "arms": {
+    "publication_actionability": 3,
+    "training_data_readiness": 2
+   },
+   "documents_by_arm": {
+    "publication_actionability": 2,
+    "training_data_readiness": 1
+   },
+   "nodes": 5,
+   "within_arm_mean": 0.3270757769544919,
+   "within_by_arm": {
+    "publication_actionability": 0.5650442639986674,
+    "training_data_readiness": 0.08910728991031647
+   },
+   "cross_arm_mean": 0.3455838883916537,
+   "s": 0.0185081114371618,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/responsible-ai-rai",
+   "pref_label": "Responsible AI (RAI)",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_keep"
+  },
+  "air:concept/retrieval-augmented-generation": {
+   "arms": {
+    "org_maturity": 5,
+    "publication_actionability": 4,
+    "training_data_readiness": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 3,
+    "publication_actionability": 4,
+    "training_data_readiness": 1
+   },
+   "nodes": 10,
+   "within_arm_mean": 0.6521549080808957,
+   "within_by_arm": {
+    "publication_actionability": 0.8477604190508524,
+    "org_maturity": 0.456549397110939
+   },
+   "cross_arm_mean": 0.48689287130174963,
+   "s": -0.16526203677914608,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/retrieval-augmented-generation",
+   "pref_label": "retrieval-augmented generation",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_split"
+  },
+  "air:concept/reusability": {
+   "arms": {
+    "publication_actionability": 4,
+    "training_data_readiness": 2
+   },
+   "documents_by_arm": {
+    "publication_actionability": 3,
+    "training_data_readiness": 2
+   },
+   "nodes": 6,
+   "within_arm_mean": 0.4136406108736992,
+   "within_by_arm": {
+    "publication_actionability": 0.42723338305950165,
+    "training_data_readiness": 0.40004783868789673
+   },
+   "cross_arm_mean": 0.46678279526531696,
+   "s": 0.053142184391617775,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/reusability",
+   "pref_label": "Reusability",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_keep"
+  },
+  "air:concept/risk-score": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.4971434772014618,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:concept/risk-score",
+   "pref_label": "risk score",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/safe": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 2
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 2
+   },
+   "nodes": 3,
+   "within_arm_mean": 0.06404255330562592,
+   "within_by_arm": {
+    "publication_actionability": 0.06404255330562592
+   },
+   "cross_arm_mean": 0.182130865752697,
+   "s": 0.11808831244707108,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/safe",
+   "pref_label": "Safe",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_keep"
+  },
+  "air:concept/sample-size": {
+   "arms": {
+    "publication_actionability": 5,
+    "training_data_readiness": 1
+   },
+   "documents_by_arm": {
+    "publication_actionability": 4,
+    "training_data_readiness": 1
+   },
+   "nodes": 6,
+   "within_arm_mean": 0.37281735241413116,
+   "within_by_arm": {
+    "publication_actionability": 0.37281735241413116
+   },
+   "cross_arm_mean": 0.3713375389575958,
+   "s": -0.0014798134565353616,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/sample-size",
+   "pref_label": "sample size",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/scientific-integrity": {
+   "arms": {
+    "org_maturity": 2,
+    "publication_actionability": 6
+   },
+   "documents_by_arm": {
+    "org_maturity": 2,
+    "publication_actionability": 2
+   },
+   "nodes": 8,
+   "within_arm_mean": 0.7860507637262344,
+   "within_by_arm": {
+    "publication_actionability": 0.676580959558487,
+    "org_maturity": 0.8955205678939819
+   },
+   "cross_arm_mean": 0.46774084866046906,
+   "s": -0.31830991506576534,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/scientific-integrity",
+   "pref_label": "Scientific Integrity",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_split"
+  },
+  "air:concept/security": {
+   "arms": {
+    "org_maturity": 6,
+    "training_data_readiness": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 4,
+    "training_data_readiness": 1
+   },
+   "nodes": 7,
+   "within_arm_mean": 0.4392177085081736,
+   "within_by_arm": {
+    "org_maturity": 0.4392177085081736
+   },
+   "cross_arm_mean": 0.3720384140809377,
+   "s": -0.06717929442723591,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/security",
+   "pref_label": "security",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/security-and-privacy": {
+   "arms": {
+    "org_maturity": 2,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 2,
+    "publication_actionability": 1
+   },
+   "nodes": 3,
+   "within_arm_mean": 0.6438812613487244,
+   "within_by_arm": {
+    "org_maturity": 0.6438812613487244
+   },
+   "cross_arm_mean": 0.8219406008720398,
+   "s": 0.17805933952331543,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/security-and-privacy",
+   "pref_label": "Security and privacy",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_keep"
+  },
+  "air:concept/semantic-interoperability": {
+   "arms": {
+    "publication_actionability": 1,
+    "training_data_readiness": 2
+   },
+   "documents_by_arm": {
+    "publication_actionability": 1,
+    "training_data_readiness": 1
+   },
+   "nodes": 3,
+   "within_arm_mean": 0.8141648769378662,
+   "within_by_arm": {
+    "training_data_readiness": 0.8141648769378662
+   },
+   "cross_arm_mean": 0.583377331495285,
+   "s": -0.23078754544258118,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/semantic-interoperability",
+   "pref_label": "semantic interoperability",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_split"
+  },
+  "air:concept/semantic-layer": {
+   "arms": {
+    "publication_actionability": 4,
+    "training_data_readiness": 3
+   },
+   "documents_by_arm": {
+    "publication_actionability": 4,
+    "training_data_readiness": 1
+   },
+   "nodes": 7,
+   "within_arm_mean": 0.458635613322258,
+   "within_by_arm": {
+    "publication_actionability": 0.4119757612546285,
+    "training_data_readiness": 0.5052954653898875
+   },
+   "cross_arm_mean": 0.4131517211596171,
+   "s": -0.04548389216264087,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/semantic-layer",
+   "pref_label": "semantic layer",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/sensitivity-analysis": {
+   "arms": {
+    "org_maturity": 2,
+    "publication_actionability": 5
+   },
+   "documents_by_arm": {
+    "org_maturity": 2,
+    "publication_actionability": 2
+   },
+   "nodes": 7,
+   "within_arm_mean": 0.5479822933673859,
+   "within_by_arm": {
+    "publication_actionability": 0.6650573372840881,
+    "org_maturity": 0.4309072494506836
+   },
+   "cross_arm_mean": 0.5816725760698318,
+   "s": 0.033690282702445895,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/sensitivity-analysis",
+   "pref_label": "sensitivity analysis",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_keep"
+  },
+  "air:concept/sharding": {
+   "arms": {
+    "publication_actionability": 1,
+    "training_data_readiness": 1
+   },
+   "documents_by_arm": {
+    "publication_actionability": 1,
+    "training_data_readiness": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.5007649660110474,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:concept/sharding",
+   "pref_label": "sharding",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/specification-gap": {
+   "arms": {
+    "publication_actionability": 1,
+    "training_data_readiness": 1
+   },
+   "documents_by_arm": {
+    "publication_actionability": 1,
+    "training_data_readiness": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.71314537525177,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:concept/specification-gap",
+   "pref_label": "Specification gap",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/stakeholder": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.322864294052124,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:concept/stakeholder",
+   "pref_label": "stakeholders",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/stakeholder-engagement": {
+   "arms": {
+    "org_maturity": 2,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "nodes": 3,
+   "within_arm_mean": -0.06051186844706535,
+   "within_by_arm": {
+    "org_maturity": -0.06051186844706535
+   },
+   "cross_arm_mean": 0.4196115806698799,
+   "s": 0.48012344911694527,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/stakeholder-engagement",
+   "pref_label": "Stakeholder engagement",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_keep"
+  },
+  "air:concept/standard": {
+   "arms": {
+    "org_maturity": 2,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 2,
+    "publication_actionability": 1
+   },
+   "nodes": 3,
+   "within_arm_mean": 0.4245101809501648,
+   "within_by_arm": {
+    "org_maturity": 0.4245101809501648
+   },
+   "cross_arm_mean": 0.6031535267829895,
+   "s": 0.1786433458328247,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/standard",
+   "pref_label": "Standards",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_keep"
+  },
+  "air:concept/statistical-bias": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.3238391876220703,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:concept/statistical-bias",
+   "pref_label": "Statistical bias",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/statistical-uncertainty": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.38470953702926636,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:concept/statistical-uncertainty",
+   "pref_label": "statistical uncertainty",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/structured-data": {
+   "arms": {
+    "publication_actionability": 9,
+    "training_data_readiness": 2
+   },
+   "documents_by_arm": {
+    "publication_actionability": 9,
+    "training_data_readiness": 2
+   },
+   "nodes": 11,
+   "within_arm_mean": 0.44168957074483234,
+   "within_by_arm": {
+    "publication_actionability": 0.5536343256632487,
+    "training_data_readiness": 0.329744815826416
+   },
+   "cross_arm_mean": 0.44241490380631554,
+   "s": 0.0007253330614832021,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/structured-data",
+   "pref_label": "structured data",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_keep"
+  },
+  "air:concept/supply-chain": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.49097925424575806,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:concept/supply-chain",
+   "pref_label": "supply chain",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/synthetic-data": {
+   "arms": {
+    "org_maturity": 4,
+    "publication_actionability": 3,
+    "training_data_readiness": 2
+   },
+   "documents_by_arm": {
+    "org_maturity": 3,
+    "publication_actionability": 2,
+    "training_data_readiness": 2
+   },
+   "nodes": 9,
+   "within_arm_mean": 0.4471514821052551,
+   "within_by_arm": {
+    "publication_actionability": 0.5396602551142374,
+    "org_maturity": 0.5066778262456259,
+    "training_data_readiness": 0.2951163649559021
+   },
+   "cross_arm_mean": 0.4665866643190384,
+   "s": 0.019435182213783264,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/synthetic-data",
+   "pref_label": "synthetic data",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_keep"
+  },
+  "air:concept/system-requirement": {
+   "arms": {
+    "org_maturity": 2,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 2,
+    "publication_actionability": 1
+   },
+   "nodes": 3,
+   "within_arm_mean": 0.9422385692596436,
+   "within_by_arm": {
+    "org_maturity": 0.9422385692596436
+   },
+   "cross_arm_mean": 0.2736635208129883,
+   "s": -0.6685750484466553,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/system-requirement",
+   "pref_label": "System requirements",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_split"
+  },
+  "air:concept/t-closeness": {
+   "arms": {
+    "org_maturity": 1,
+    "training_data_readiness": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "training_data_readiness": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.9477016925811768,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:concept/t-closeness",
+   "pref_label": "t-closeness",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_keep"
+  },
+  "air:concept/task-definition": {
+   "arms": {
+    "org_maturity": 1,
+    "training_data_readiness": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "training_data_readiness": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.2601977288722992,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:concept/task-definition",
+   "pref_label": "task definition",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/taxonomy": {
+   "arms": {
+    "org_maturity": 1,
+    "training_data_readiness": 2
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "training_data_readiness": 2
+   },
+   "nodes": 3,
+   "within_arm_mean": 0.12576568126678467,
+   "within_by_arm": {
+    "training_data_readiness": 0.12576568126678467
+   },
+   "cross_arm_mean": 0.34607408940792084,
+   "s": 0.22030840814113617,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/taxonomy",
+   "pref_label": "taxonomy",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_keep"
+  },
+  "air:concept/technical-readiness": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.6164517402648926,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:concept/technical-readiness",
+   "pref_label": "Technical readiness",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/technology-readiness-level": {
+   "arms": {
+    "org_maturity": 2,
+    "training_data_readiness": 2
+   },
+   "documents_by_arm": {
+    "org_maturity": 2,
+    "training_data_readiness": 1
+   },
+   "nodes": 4,
+   "within_arm_mean": 0.8890976309776306,
+   "within_by_arm": {
+    "training_data_readiness": 1.0000001192092896,
+    "org_maturity": 0.7781951427459717
+   },
+   "cross_arm_mean": 0.8890976309776306,
+   "s": 0.0,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/technology-readiness-level",
+   "pref_label": "Technology Readiness Levels",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_keep"
+  },
+  "air:concept/term-definition": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.15863759815692902,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:concept/term-definition",
+   "pref_label": "Term definition",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/tevv": {
+   "arms": {
+    "org_maturity": 7,
+    "training_data_readiness": 2
+   },
+   "documents_by_arm": {
+    "org_maturity": 3,
+    "training_data_readiness": 1
+   },
+   "nodes": 9,
+   "within_arm_mean": 0.5464587878613245,
+   "within_by_arm": {
+    "org_maturity": 0.6208217583951496,
+    "training_data_readiness": 0.4720958173274994
+   },
+   "cross_arm_mean": 0.5177170272384372,
+   "s": -0.028741760622887358,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/tevv",
+   "pref_label": "TEVV",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/third-party": {
+   "arms": {
+    "org_maturity": 2,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "nodes": 3,
+   "within_arm_mean": 0.27192091941833496,
+   "within_by_arm": {
+    "org_maturity": 0.27192091941833496
+   },
+   "cross_arm_mean": 0.21389240026474,
+   "s": -0.05802851915359497,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/third-party",
+   "pref_label": "third parties",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/timeliness": {
+   "arms": {
+    "publication_actionability": 18,
+    "training_data_readiness": 2
+   },
+   "documents_by_arm": {
+    "publication_actionability": 7,
+    "training_data_readiness": 2
+   },
+   "nodes": 20,
+   "within_arm_mean": 0.7341982915120966,
+   "within_by_arm": {
+    "publication_actionability": 0.46839634460561413,
+    "training_data_readiness": 1.000000238418579
+   },
+   "cross_arm_mean": 0.5321580146749815,
+   "s": -0.20204027683711512,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/timeliness",
+   "pref_label": "Timeliness",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_split"
+  },
+  "air:concept/total-variation-distance": {
+   "arms": {
+    "publication_actionability": 2,
+    "training_data_readiness": 1
+   },
+   "documents_by_arm": {
+    "publication_actionability": 1,
+    "training_data_readiness": 1
+   },
+   "nodes": 3,
+   "within_arm_mean": 0.4983943998813629,
+   "within_by_arm": {
+    "publication_actionability": 0.4983943998813629
+   },
+   "cross_arm_mean": 0.24482795596122742,
+   "s": -0.2535664439201355,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/total-variation-distance",
+   "pref_label": "Total Variation Distance",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_split"
+  },
+  "air:concept/traceability": {
+   "arms": {
+    "org_maturity": 2,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 2,
+    "publication_actionability": 1
+   },
+   "nodes": 3,
+   "within_arm_mean": 0.5679208636283875,
+   "within_by_arm": {
+    "org_maturity": 0.5679208636283875
+   },
+   "cross_arm_mean": 0.3139641806483269,
+   "s": -0.2539566829800606,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/traceability",
+   "pref_label": "traceability",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_split"
+  },
+  "air:concept/transform": {
+   "arms": {
+    "publication_actionability": 1,
+    "training_data_readiness": 1
+   },
+   "documents_by_arm": {
+    "publication_actionability": 1,
+    "training_data_readiness": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.3441263735294342,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:concept/transform",
+   "pref_label": "transform",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/transparency": {
+   "arms": {
+    "org_maturity": 15,
+    "publication_actionability": 4,
+    "training_data_readiness": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 12,
+    "publication_actionability": 4,
+    "training_data_readiness": 1
+   },
+   "nodes": 20,
+   "within_arm_mean": 0.4636722891103654,
+   "within_by_arm": {
+    "publication_actionability": 0.4400198707977931,
+    "org_maturity": 0.48732470742293765
+   },
+   "cross_arm_mean": 0.496630333458321,
+   "s": 0.03295804434795563,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/transparency",
+   "pref_label": "transparency",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_keep"
+  },
+  "air:concept/trustworthiness": {
+   "arms": {
+    "org_maturity": 3,
+    "publication_actionability": 2
+   },
+   "documents_by_arm": {
+    "org_maturity": 3,
+    "publication_actionability": 1
+   },
+   "nodes": 5,
+   "within_arm_mean": 0.4713237981001536,
+   "within_by_arm": {
+    "org_maturity": 0.547064205010732,
+    "publication_actionability": 0.3955833911895752
+   },
+   "cross_arm_mean": 0.45771484076976776,
+   "s": -0.013608957330385862,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/trustworthiness",
+   "pref_label": "trustworthiness",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/trustworthy-ai": {
+   "arms": {
+    "org_maturity": 6,
+    "training_data_readiness": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 6,
+    "training_data_readiness": 1
+   },
+   "nodes": 7,
+   "within_arm_mean": 0.7375389854113261,
+   "within_by_arm": {
+    "org_maturity": 0.7375389854113261
+   },
+   "cross_arm_mean": 0.7495428025722504,
+   "s": 0.012003817160924246,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/trustworthy-ai",
+   "pref_label": "trustworthy AI",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_keep"
+  },
+  "air:concept/trustworthy-ai-characteristic": {
+   "arms": {
+    "org_maturity": 2,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "nodes": 3,
+   "within_arm_mean": 0.39313167333602905,
+   "within_by_arm": {
+    "org_maturity": 0.39313167333602905
+   },
+   "cross_arm_mean": 0.6439653187990189,
+   "s": 0.2508336454629898,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/trustworthy-ai-characteristic",
+   "pref_label": "trustworthy AI characteristics",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_keep"
+  },
+  "air:concept/uncertainty": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 4
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 4
+   },
+   "nodes": 5,
+   "within_arm_mean": 0.4301191419363022,
+   "within_by_arm": {
+    "publication_actionability": 0.4301191419363022
+   },
+   "cross_arm_mean": 0.45253337174654007,
+   "s": 0.022414229810237885,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/uncertainty",
+   "pref_label": "uncertainty",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_keep"
+  },
+  "air:concept/understandability": {
+   "arms": {
+    "publication_actionability": 1,
+    "training_data_readiness": 1
+   },
+   "documents_by_arm": {
+    "publication_actionability": 1,
+    "training_data_readiness": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.5114520788192749,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:concept/understandability",
+   "pref_label": "understandability",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/unstructured-data": {
+   "arms": {
+    "publication_actionability": 2,
+    "training_data_readiness": 2
+   },
+   "documents_by_arm": {
+    "publication_actionability": 2,
+    "training_data_readiness": 1
+   },
+   "nodes": 4,
+   "within_arm_mean": 0.575448751449585,
+   "within_by_arm": {
+    "publication_actionability": 0.6324344277381897,
+    "training_data_readiness": 0.5184630751609802
+   },
+   "cross_arm_mean": 0.53263209015131,
+   "s": -0.042816661298274994,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/unstructured-data",
+   "pref_label": "unstructured data",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/usability-problem": {
+   "arms": {
+    "org_maturity": 2,
+    "training_data_readiness": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "training_data_readiness": 1
+   },
+   "nodes": 3,
+   "within_arm_mean": 0.7849305272102356,
+   "within_by_arm": {
+    "org_maturity": 0.7849305272102356
+   },
+   "cross_arm_mean": 0.5536443293094635,
+   "s": -0.2312861979007721,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/usability-problem",
+   "pref_label": "usability problems",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_split"
+  },
+  "air:concept/user-interface": {
+   "arms": {
+    "org_maturity": 1,
+    "training_data_readiness": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "training_data_readiness": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.13124963641166687,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:concept/user-interface",
+   "pref_label": "user interface",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/user-research": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.5972713828086853,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:concept/user-research",
+   "pref_label": "User research",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/validity": {
+   "arms": {
+    "org_maturity": 2,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "nodes": 3,
+   "within_arm_mean": 0.5917644500732422,
+   "within_by_arm": {
+    "org_maturity": 0.5917644500732422
+   },
+   "cross_arm_mean": 0.3705518990755081,
+   "s": -0.22121255099773407,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/validity",
+   "pref_label": "validity",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_split"
+  },
+  "air:concept/value": {
+   "arms": {
+    "org_maturity": 1,
+    "training_data_readiness": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "training_data_readiness": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.36435726284980774,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:concept/value",
+   "pref_label": "Values",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:concept/variable-level-metadata": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 2
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "nodes": 3,
+   "within_arm_mean": 0.7467190027236938,
+   "within_by_arm": {
+    "publication_actionability": 0.7467190027236938
+   },
+   "cross_arm_mean": 0.4602315425872803,
+   "s": -0.2864874601364136,
+   "scored_on_cross_only": false,
+   "term_id": "air:concept/variable-level-metadata",
+   "pref_label": "Variable-level metadata",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "auto_split"
+  },
+  "air:concept/vendor-lock-in": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.24489548802375793,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:concept/vendor-lock-in",
+   "pref_label": "vendor lock-in",
+   "node_labels": [
+    "Concept"
+   ],
+   "klass": "band"
+  },
+  "air:croissant": {
+   "arms": {
+    "publication_actionability": 11,
+    "training_data_readiness": 2
+   },
+   "documents_by_arm": {
+    "publication_actionability": 4,
+    "training_data_readiness": 1
+   },
+   "nodes": 13,
+   "within_arm_mean": 0.39480776028199627,
+   "within_by_arm": {
+    "publication_actionability": 0.40967417630282316,
+    "training_data_readiness": 0.37994134426116943
+   },
+   "cross_arm_mean": 0.40994892946698447,
+   "s": 0.015141169184988201,
+   "scored_on_cross_only": false,
+   "term_id": "air:croissant",
+   "pref_label": "Croissant",
+   "node_labels": [],
+   "klass": "auto_keep"
+  },
+  "air:dcat": {
+   "arms": {
+    "publication_actionability": 15,
+    "training_data_readiness": 3
+   },
+   "documents_by_arm": {
+    "publication_actionability": 7,
+    "training_data_readiness": 1
+   },
+   "nodes": 18,
+   "within_arm_mean": 0.42331735413698923,
+   "within_by_arm": {
+    "publication_actionability": 0.46776968481994813,
+    "training_data_readiness": 0.37886502345403034
+   },
+   "cross_arm_mean": 0.4032117383347617,
+   "s": -0.020105615802227528,
+   "scored_on_cross_only": false,
+   "term_id": "air:dcat",
+   "pref_label": "DCAT",
+   "node_labels": [],
+   "klass": "band"
+  },
+  "air:framework/a-framework-for-ai-ready-data": {
+   "arms": {
+    "publication_actionability": 1,
+    "training_data_readiness": 2
+   },
+   "documents_by_arm": {
+    "publication_actionability": 1,
+    "training_data_readiness": 1
+   },
+   "nodes": 3,
+   "within_arm_mean": 0.9999999403953552,
+   "within_by_arm": {
+    "training_data_readiness": 0.9999999403953552
+   },
+   "cross_arm_mean": 0.7568472623825073,
+   "s": -0.2431526780128479,
+   "scored_on_cross_only": false,
+   "term_id": "air:framework/a-framework-for-ai-ready-data",
+   "pref_label": "A  framework  for  AI-ready  data",
+   "node_labels": [
+    "Framework"
+   ],
+   "klass": "auto_split"
+  },
+  "air:framework/ai-rmf-1-0": {
+   "arms": {
+    "org_maturity": 6,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 5,
+    "publication_actionability": 1
+   },
+   "nodes": 7,
+   "within_arm_mean": 0.84866863489151,
+   "within_by_arm": {
+    "org_maturity": 0.84866863489151
+   },
+   "cross_arm_mean": 0.8809213638305664,
+   "s": 0.032252728939056396,
+   "scored_on_cross_only": false,
+   "term_id": "air:framework/ai-rmf-1-0",
+   "pref_label": "AI RMF 1.0",
+   "node_labels": [
+    "Framework"
+   ],
+   "klass": "auto_keep"
+  },
+  "air:framework/data-card": {
+   "arms": {
+    "publication_actionability": 4,
+    "training_data_readiness": 1
+   },
+   "documents_by_arm": {
+    "publication_actionability": 3,
+    "training_data_readiness": 1
+   },
+   "nodes": 5,
+   "within_arm_mean": 0.44689301153024036,
+   "within_by_arm": {
+    "publication_actionability": 0.44689301153024036
+   },
+   "cross_arm_mean": 0.3762180283665657,
+   "s": -0.07067498316367465,
+   "scored_on_cross_only": false,
+   "term_id": "air:framework/data-card",
+   "pref_label": "Data Cards",
+   "node_labels": [
+    "Framework"
+   ],
+   "klass": "band"
+  },
+  "air:framework/dataset-nutrition-label": {
+   "arms": {
+    "publication_actionability": 1,
+    "training_data_readiness": 2
+   },
+   "documents_by_arm": {
+    "publication_actionability": 1,
+    "training_data_readiness": 2
+   },
+   "nodes": 3,
+   "within_arm_mean": 0.784203290939331,
+   "within_by_arm": {
+    "training_data_readiness": 0.784203290939331
+   },
+   "cross_arm_mean": 0.5918647944927216,
+   "s": -0.1923384964466095,
+   "scored_on_cross_only": false,
+   "term_id": "air:framework/dataset-nutrition-label",
+   "pref_label": "Dataset Nutrition Label",
+   "node_labels": [
+    "Framework"
+   ],
+   "klass": "auto_split"
+  },
+  "air:framework/datasheet-for-dataset": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 3,
+    "training_data_readiness": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 2,
+    "training_data_readiness": 1
+   },
+   "nodes": 5,
+   "within_arm_mean": 0.6194838484128317,
+   "within_by_arm": {
+    "publication_actionability": 0.6194838484128317
+   },
+   "cross_arm_mean": 0.5908842512539455,
+   "s": -0.02859959715888616,
+   "scored_on_cross_only": false,
+   "term_id": "air:framework/datasheet-for-dataset",
+   "pref_label": "Datasheets for Datasets",
+   "node_labels": [
+    "Framework"
+   ],
+   "klass": "band"
+  },
+  "air:framework/fair": {
+   "arms": {
+    "publication_actionability": 1,
+    "training_data_readiness": 2
+   },
+   "documents_by_arm": {
+    "publication_actionability": 1,
+    "training_data_readiness": 2
+   },
+   "nodes": 3,
+   "within_arm_mean": 0.5833367705345154,
+   "within_by_arm": {
+    "training_data_readiness": 0.5833367705345154
+   },
+   "cross_arm_mean": 0.15702011063694954,
+   "s": -0.42631665989756584,
+   "scored_on_cross_only": false,
+   "term_id": "air:framework/fair",
+   "pref_label": "FAIR",
+   "node_labels": [
+    "Framework"
+   ],
+   "klass": "auto_split"
+  },
+  "air:framework/fair-principle": {
+   "arms": {
+    "publication_actionability": 3,
+    "training_data_readiness": 4
+   },
+   "documents_by_arm": {
+    "publication_actionability": 3,
+    "training_data_readiness": 2
+   },
+   "nodes": 7,
+   "within_arm_mean": 0.40345384180545807,
+   "within_by_arm": {
+    "publication_actionability": 0.28689200679461163,
+    "training_data_readiness": 0.5200156768163046
+   },
+   "cross_arm_mean": 0.42607952406009036,
+   "s": 0.022625682254632296,
+   "scored_on_cross_only": false,
+   "term_id": "air:framework/fair-principle",
+   "pref_label": "FAIR principles",
+   "node_labels": [
+    "Framework"
+   ],
+   "klass": "auto_keep"
+  },
+  "air:framework/federal-data-strategy": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 5
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 3
+   },
+   "nodes": 6,
+   "within_arm_mean": 0.6648581802845002,
+   "within_by_arm": {
+    "publication_actionability": 0.6648581802845002
+   },
+   "cross_arm_mean": 0.7475239515304566,
+   "s": 0.08266577124595642,
+   "scored_on_cross_only": false,
+   "term_id": "air:framework/federal-data-strategy",
+   "pref_label": "Federal Data Strategy",
+   "node_labels": [
+    "Framework"
+   ],
+   "klass": "auto_keep"
+  },
+  "air:framework/framework": {
+   "arms": {
+    "publication_actionability": 4,
+    "training_data_readiness": 1
+   },
+   "documents_by_arm": {
+    "publication_actionability": 3,
+    "training_data_readiness": 1
+   },
+   "nodes": 5,
+   "within_arm_mean": 0.4794590324163437,
+   "within_by_arm": {
+    "publication_actionability": 0.4794590324163437
+   },
+   "cross_arm_mean": 0.4778166189789772,
+   "s": -0.0016424134373664856,
+   "scored_on_cross_only": false,
+   "term_id": "air:framework/framework",
+   "pref_label": "framework",
+   "node_labels": [
+    "Framework"
+   ],
+   "klass": "band"
+  },
+  "air:framework/model-ai-governance-framework": {
+   "arms": {
+    "org_maturity": 6,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 3,
+    "publication_actionability": 1
+   },
+   "nodes": 7,
+   "within_arm_mean": 0.8137435913085938,
+   "within_by_arm": {
+    "org_maturity": 0.8137435913085938
+   },
+   "cross_arm_mean": 0.6579627096652985,
+   "s": -0.1557808816432953,
+   "scored_on_cross_only": false,
+   "term_id": "air:framework/model-ai-governance-framework",
+   "pref_label": "Model AI Governance Framework",
+   "node_labels": [
+    "Framework"
+   ],
+   "klass": "auto_split"
+  },
+  "air:framework/model-card": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.9052746295928955,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:framework/model-card",
+   "pref_label": "Model Cards",
+   "node_labels": [
+    "Framework"
+   ],
+   "klass": "auto_keep"
+  },
+  "air:framework/secure-software-development-framework": {
+   "arms": {
+    "org_maturity": 2,
+    "publication_actionability": 2
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 2
+   },
+   "nodes": 4,
+   "within_arm_mean": 0.6178566217422485,
+   "within_by_arm": {
+    "org_maturity": 0.5508373975753784,
+    "publication_actionability": 0.6848758459091187
+   },
+   "cross_arm_mean": 0.6367826461791992,
+   "s": 0.018926024436950684,
+   "scored_on_cross_only": false,
+   "term_id": "air:framework/secure-software-development-framework",
+   "pref_label": "Secure Software Development Framework",
+   "node_labels": [
+    "Framework"
+   ],
+   "klass": "auto_keep"
+  },
+  "air:framework/technology-readiness-level": {
+   "arms": {
+    "org_maturity": 2,
+    "training_data_readiness": 2
+   },
+   "documents_by_arm": {
+    "org_maturity": 2,
+    "training_data_readiness": 1
+   },
+   "nodes": 4,
+   "within_arm_mean": 0.8890976309776306,
+   "within_by_arm": {
+    "training_data_readiness": 1.0000001192092896,
+    "org_maturity": 0.7781951427459717
+   },
+   "cross_arm_mean": 0.8890976309776306,
+   "s": 0.0,
+   "scored_on_cross_only": false,
+   "term_id": "air:framework/technology-readiness-level",
+   "pref_label": "Technology Readiness Levels",
+   "node_labels": [
+    "Framework"
+   ],
+   "klass": "auto_keep"
+  },
+  "air:interpretability": {
+   "arms": {
+    "org_maturity": 6,
+    "publication_actionability": 7
+   },
+   "documents_by_arm": {
+    "org_maturity": 4,
+    "publication_actionability": 4
+   },
+   "nodes": 13,
+   "within_arm_mean": 0.5515775774916013,
+   "within_by_arm": {
+    "org_maturity": 0.6241898576418559,
+    "publication_actionability": 0.47896529734134674
+   },
+   "cross_arm_mean": 0.4488667696714401,
+   "s": -0.10271080782016118,
+   "scored_on_cross_only": false,
+   "term_id": "air:interpretability",
+   "pref_label": "Interpretability",
+   "node_labels": [],
+   "klass": "auto_split"
+  },
+  "air:machine-readable-format": {
+   "arms": {
+    "org_maturity": 1,
+    "training_data_readiness": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "training_data_readiness": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.23224586248397827,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:machine-readable-format",
+   "pref_label": "Machine-readable formats",
+   "node_labels": [],
+   "klass": "band"
+  },
+  "air:persistent-identifier": {
+   "arms": {
+    "publication_actionability": 3,
+    "training_data_readiness": 1
+   },
+   "documents_by_arm": {
+    "publication_actionability": 3,
+    "training_data_readiness": 1
+   },
+   "nodes": 4,
+   "within_arm_mean": 0.43210914731025696,
+   "within_by_arm": {
+    "publication_actionability": 0.43210914731025696
+   },
+   "cross_arm_mean": 0.22089430689811707,
+   "s": -0.2112148404121399,
+   "scored_on_cross_only": false,
+   "term_id": "air:persistent-identifier",
+   "pref_label": "Persistent identifier",
+   "node_labels": [],
+   "klass": "auto_split"
+  },
+  "air:platform/chatgpt": {
+   "arms": {
+    "publication_actionability": 24,
+    "training_data_readiness": 1
+   },
+   "documents_by_arm": {
+    "publication_actionability": 9,
+    "training_data_readiness": 1
+   },
+   "nodes": 25,
+   "within_arm_mean": 0.3504850632389602,
+   "within_by_arm": {
+    "publication_actionability": 0.3504850632389602
+   },
+   "cross_arm_mean": 0.2613967771952351,
+   "s": -0.08908828604372515,
+   "scored_on_cross_only": false,
+   "term_id": "air:platform/chatgpt",
+   "pref_label": "ChatGPT",
+   "node_labels": [
+    "Platform"
+   ],
+   "klass": "band"
+  },
+  "air:standard/cc0": {
+   "arms": {
+    "publication_actionability": 1,
+    "training_data_readiness": 1
+   },
+   "documents_by_arm": {
+    "publication_actionability": 1,
+    "training_data_readiness": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.26772308349609375,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:standard/cc0",
+   "pref_label": "CC0",
+   "node_labels": [
+    "Standard"
+   ],
+   "klass": "band"
+  },
+  "air:standard/croissant-rai": {
+   "arms": {
+    "publication_actionability": 3,
+    "training_data_readiness": 1
+   },
+   "documents_by_arm": {
+    "publication_actionability": 1,
+    "training_data_readiness": 1
+   },
+   "nodes": 4,
+   "within_arm_mean": 0.7916021148363749,
+   "within_by_arm": {
+    "publication_actionability": 0.7916021148363749
+   },
+   "cross_arm_mean": 0.38923800985018414,
+   "s": -0.40236410498619074,
+   "scored_on_cross_only": false,
+   "term_id": "air:standard/croissant-rai",
+   "pref_label": "Croissant-RAI",
+   "node_labels": [
+    "Standard"
+   ],
+   "klass": "auto_split"
+  },
+  "air:standard/csvw": {
+   "arms": {
+    "publication_actionability": 3,
+    "training_data_readiness": 2
+   },
+   "documents_by_arm": {
+    "publication_actionability": 2,
+    "training_data_readiness": 1
+   },
+   "nodes": 5,
+   "within_arm_mean": 0.6341790954271953,
+   "within_by_arm": {
+    "publication_actionability": 0.725922425587972,
+    "training_data_readiness": 0.5424357652664185
+   },
+   "cross_arm_mean": 0.5633555750052134,
+   "s": -0.07082352042198192,
+   "scored_on_cross_only": false,
+   "term_id": "air:standard/csvw",
+   "pref_label": "CSVW",
+   "node_labels": [
+    "Standard"
+   ],
+   "klass": "band"
+  },
+  "air:standard/datacite": {
+   "arms": {
+    "publication_actionability": 4,
+    "training_data_readiness": 2
+   },
+   "documents_by_arm": {
+    "publication_actionability": 2,
+    "training_data_readiness": 1
+   },
+   "nodes": 6,
+   "within_arm_mean": 0.7140760496258736,
+   "within_by_arm": {
+    "publication_actionability": 0.7415513545274734,
+    "training_data_readiness": 0.6866007447242737
+   },
+   "cross_arm_mean": 0.38177840411663055,
+   "s": -0.332297645509243,
+   "scored_on_cross_only": false,
+   "term_id": "air:standard/datacite",
+   "pref_label": "DataCite",
+   "node_labels": [
+    "Standard"
+   ],
+   "klass": "auto_split"
+  },
+  "air:standard/datacite-metadata-schema": {
+   "arms": {
+    "publication_actionability": 1,
+    "training_data_readiness": 1
+   },
+   "documents_by_arm": {
+    "publication_actionability": 1,
+    "training_data_readiness": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.7483761310577393,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:standard/datacite-metadata-schema",
+   "pref_label": "DataCite metadata schema",
+   "node_labels": [
+    "Standard"
+   ],
+   "klass": "band"
+  },
+  "air:standard/gdpr": {
+   "arms": {
+    "org_maturity": 1,
+    "training_data_readiness": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "training_data_readiness": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.5678756833076477,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:standard/gdpr",
+   "pref_label": "GDPR",
+   "node_labels": [
+    "Standard"
+   ],
+   "klass": "band"
+  },
+  "air:standard/hipaa": {
+   "arms": {
+    "publication_actionability": 1,
+    "training_data_readiness": 1
+   },
+   "documents_by_arm": {
+    "publication_actionability": 1,
+    "training_data_readiness": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.5420627593994141,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:standard/hipaa",
+   "pref_label": "HIPAA",
+   "node_labels": [
+    "Standard"
+   ],
+   "klass": "band"
+  },
+  "air:standard/iso-8601": {
+   "arms": {
+    "publication_actionability": 5,
+    "training_data_readiness": 2
+   },
+   "documents_by_arm": {
+    "publication_actionability": 5,
+    "training_data_readiness": 1
+   },
+   "nodes": 7,
+   "within_arm_mean": 0.6470856457948685,
+   "within_by_arm": {
+    "publication_actionability": 0.480870920419693,
+    "training_data_readiness": 0.813300371170044
+   },
+   "cross_arm_mean": 0.5012821793556214,
+   "s": -0.14580346643924713,
+   "scored_on_cross_only": false,
+   "term_id": "air:standard/iso-8601",
+   "pref_label": "ISO 8601",
+   "node_labels": [
+    "Standard"
+   ],
+   "klass": "auto_split"
+  },
+  "air:standard/json-ld": {
+   "arms": {
+    "publication_actionability": 15,
+    "training_data_readiness": 2
+   },
+   "documents_by_arm": {
+    "publication_actionability": 11,
+    "training_data_readiness": 1
+   },
+   "nodes": 17,
+   "within_arm_mean": 0.4803837612980888,
+   "within_by_arm": {
+    "publication_actionability": 0.5537935645807357,
+    "training_data_readiness": 0.4069739580154419
+   },
+   "cross_arm_mean": 0.3664917588233948,
+   "s": -0.113892002474694,
+   "scored_on_cross_only": false,
+   "term_id": "air:standard/json-ld",
+   "pref_label": "JSON-LD",
+   "node_labels": [
+    "Standard"
+   ],
+   "klass": "auto_split"
+  },
+  "air:standard/niem": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.44958198070526123,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:standard/niem",
+   "pref_label": "NIEM",
+   "node_labels": [
+    "Standard"
+   ],
+   "klass": "band"
+  },
+  "air:standard/nist-ai-600-1": {
+   "arms": {
+    "org_maturity": 1,
+    "training_data_readiness": 2
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "training_data_readiness": 1
+   },
+   "nodes": 3,
+   "within_arm_mean": 0.49612435698509216,
+   "within_by_arm": {
+    "training_data_readiness": 0.49612435698509216
+   },
+   "cross_arm_mean": 0.40890760719776154,
+   "s": -0.08721674978733063,
+   "scored_on_cross_only": false,
+   "term_id": "air:standard/nist-ai-600-1",
+   "pref_label": "NIST AI 600-1",
+   "node_labels": [
+    "Standard"
+   ],
+   "klass": "band"
+  },
+  "air:standard/omb-circular-a-130": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 2
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 2
+   },
+   "nodes": 3,
+   "within_arm_mean": 0.2451106756925583,
+   "within_by_arm": {
+    "publication_actionability": 0.2451106756925583
+   },
+   "cross_arm_mean": 0.5995052754878998,
+   "s": 0.3543945997953415,
+   "scored_on_cross_only": false,
+   "term_id": "air:standard/omb-circular-a-130",
+   "pref_label": "OMB Circular A-130",
+   "node_labels": [
+    "Standard"
+   ],
+   "klass": "auto_keep"
+  },
+  "air:standard/parquet": {
+   "arms": {
+    "publication_actionability": 1,
+    "training_data_readiness": 2
+   },
+   "documents_by_arm": {
+    "publication_actionability": 1,
+    "training_data_readiness": 1
+   },
+   "nodes": 3,
+   "within_arm_mean": 0.5680110454559326,
+   "within_by_arm": {
+    "training_data_readiness": 0.5680110454559326
+   },
+   "cross_arm_mean": 0.4978311061859131,
+   "s": -0.07017993927001953,
+   "scored_on_cross_only": false,
+   "term_id": "air:standard/parquet",
+   "pref_label": "Parquet",
+   "node_labels": [
+    "Standard"
+   ],
+   "klass": "band"
+  },
+  "air:standard/prov-o": {
+   "arms": {
+    "publication_actionability": 5,
+    "training_data_readiness": 1
+   },
+   "documents_by_arm": {
+    "publication_actionability": 1,
+    "training_data_readiness": 1
+   },
+   "nodes": 6,
+   "within_arm_mean": 0.41544307470321656,
+   "within_by_arm": {
+    "publication_actionability": 0.41544307470321656
+   },
+   "cross_arm_mean": 0.4538170754909515,
+   "s": 0.03837400078773495,
+   "scored_on_cross_only": false,
+   "term_id": "air:standard/prov-o",
+   "pref_label": "PROV-O",
+   "node_labels": [
+    "Standard"
+   ],
+   "klass": "auto_keep"
+  },
+  "air:standard/rdf": {
+   "arms": {
+    "publication_actionability": 4,
+    "training_data_readiness": 2
+   },
+   "documents_by_arm": {
+    "publication_actionability": 3,
+    "training_data_readiness": 1
+   },
+   "nodes": 6,
+   "within_arm_mean": 0.4851180464029312,
+   "within_by_arm": {
+    "publication_actionability": 0.580046147108078,
+    "training_data_readiness": 0.3901899456977844
+   },
+   "cross_arm_mean": 0.5125432722270489,
+   "s": 0.02742522582411766,
+   "scored_on_cross_only": false,
+   "term_id": "air:standard/rdf",
+   "pref_label": "RDF",
+   "node_labels": [
+    "Standard"
+   ],
+   "klass": "auto_keep"
+  },
+  "air:standard/schema-org": {
+   "arms": {
+    "org_maturity": 1,
+    "publication_actionability": 32
+   },
+   "documents_by_arm": {
+    "org_maturity": 1,
+    "publication_actionability": 17
+   },
+   "nodes": 33,
+   "within_arm_mean": 0.47545000327931297,
+   "within_by_arm": {
+    "publication_actionability": 0.47545000327931297
+   },
+   "cross_arm_mean": 0.38307518186047673,
+   "s": -0.09237482141883624,
+   "scored_on_cross_only": false,
+   "term_id": "air:standard/schema-org",
+   "pref_label": "Schema.org",
+   "node_labels": [
+    "Standard"
+   ],
+   "klass": "band"
+  },
+  "air:standard/void": {
+   "arms": {
+    "publication_actionability": 5,
+    "training_data_readiness": 1
+   },
+   "documents_by_arm": {
+    "publication_actionability": 5,
+    "training_data_readiness": 1
+   },
+   "nodes": 6,
+   "within_arm_mean": 0.5170911610126495,
+   "within_by_arm": {
+    "publication_actionability": 0.5170911610126495
+   },
+   "cross_arm_mean": 0.3799004554748535,
+   "s": -0.137190705537796,
+   "scored_on_cross_only": false,
+   "term_id": "air:standard/void",
+   "pref_label": "VoID",
+   "node_labels": [
+    "Standard"
+   ],
+   "klass": "auto_split"
+  },
+  "air:tool/matplotlib": {
+   "arms": {
+    "publication_actionability": 1,
+    "training_data_readiness": 1
+   },
+   "documents_by_arm": {
+    "publication_actionability": 1,
+    "training_data_readiness": 1
+   },
+   "nodes": 2,
+   "within_arm_mean": null,
+   "within_by_arm": {},
+   "cross_arm_mean": 0.4905253052711487,
+   "s": null,
+   "scored_on_cross_only": true,
+   "term_id": "air:tool/matplotlib",
+   "pref_label": "Matplotlib",
+   "node_labels": [
+    "Tool"
+   ],
+   "klass": "band"
+  },
+  "air:trust": {
+   "arms": {
+    "org_maturity": 3,
+    "publication_actionability": 4
+   },
+   "documents_by_arm": {
+    "org_maturity": 3,
+    "publication_actionability": 4
+   },
+   "nodes": 7,
+   "within_arm_mean": 0.5528737505276998,
+   "within_by_arm": {
+    "publication_actionability": 0.6431628167629242,
+    "org_maturity": 0.4625846842924754
+   },
+   "cross_arm_mean": 0.5877909660339355,
+   "s": 0.03491721550623572,
+   "scored_on_cross_only": false,
+   "term_id": "air:trust",
+   "pref_label": "Trust",
+   "node_labels": [],
+   "klass": "auto_keep"
+  }
+ }
+}

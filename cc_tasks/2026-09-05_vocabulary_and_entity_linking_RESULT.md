@@ -224,3 +224,22 @@ v2 acceptance also fails: `flip_canonical` 0.296296, and CQ-27 is `no`.
 ## §7. Out of scope, untouched
 
 Term-level merges across the vocabulary; the 41 `no consumer` deferrals; the memo and the deck (Issue `cfe9eaf7` still decides those, and CQ-27 did not answer it); probe design; any retrieval index over raw text. Epoch 2 is proposed and not promoted.
+
+---
+
+## ERRATUM-01 (2026-09-05, appended by `cc_tasks/2026-09-05_homograph_split_and_er_gold_sample.md` §4)
+
+Two counts in this RESULT disagreed with the graph, and the follow-on task found one cause for both.
+
+| figure | this RESULT | graph, as it stood | cause |
+|---|---:|---:|---|
+| `RESOLVES_TO` edges | 6,408 | **6,440** (+32) | 30 `Claim` + 2 `Practice` twins |
+| nodes `unresolved: true` | 7,569 | **7,619** (+50) | 45 `Claim` + 5 `Practice` twins |
+
+**The counters in §1.4 were right; the writes were not.** `_write_resolutions` matched on `MATCH (n {key: $key})`, and DD-020's `<doc_id>::<item_id>` is **not unique across types**: the extractor asserts one item id under two types in one document **82 times** in the live graph (75 `Claim`+`Concept`, 7 `Platform`+`Practice`). Every one of those 82 keys took a spurious write — 32 got the edge on the twin, 50 got the flag — and 32 + 50 = 82 accounts for both gaps exactly. It is the same Cypher trap as the g1eval defect of 2026-09-04: a pattern without a label binds every node that matches it.
+
+**Not what the follow-on task's premise supposed.** That premise reads the +32 as evidence that "RESULT §1.3's 'not one Practice carries a `name`' is false and the loader's nameless-node fix was label-gated, not property-gated." Both halves are wrong: **zero** `Claim` and **zero** `Practice` nodes carry a `name` — §1.3 stands — and `_resolve_node` was already gated on the property (`if not (name and str(name).strip()): return`), not on the label. The fix was correct; the *write* was not scoped.
+
+**Fixed** in `scripts/build_projection.py`: `_resolutions` is keyed on `(node key, kg label)` and the write interpolates the label, which comes from `kg_labels` and was already validated in the node branch. Regression test `test_a_key_asserted_under_two_types_resolves_only_the_node_that_has_the_name`. After the rebuild the graph reads 6,408 and 7,569, matching this RESULT's counters, with zero `Claim` or `Practice` nodes resolved or flagged.
+
+**§1.3's "not one Measure or Practice carries a `name`" stands as written**, and is now registered per label: `vocab_resolved_by_label_*` and `vocab_unresolved_by_label_*`.

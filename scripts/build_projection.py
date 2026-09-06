@@ -424,7 +424,14 @@ def build(session, kg_labels: list[str], edge_whitelist: set[str]) -> dict:
                if ev.get("event_type") == "term_link_judged" and ev.get("verdict") == "same"
                and ev.get("node_key") and ev.get("term_id")}
 
-    # {node key: set of term ids this node's assertions resolved to}. Accumulated during the
+    # {(node key, kg label): set of term ids this node's assertions resolved to}. The LABEL is
+    # part of the key, and that is not tidiness — `MATCH (n {key: $key})` binds EVERY node
+    # carrying that key, and DD-020's `<doc_id>::<item_id>` is not unique across types: the
+    # extractor asserts one item id under two types in one document 82 times in the live graph
+    # (75 Claim+Concept, 7 Platform+Practice). Resolving on the key alone wrote the edge onto
+    # the twin as well — 32 spurious RESOLVES_TO edges and 50 spurious `unresolved` flags,
+    # which are exactly the two counts the prior RESULT could not reconcile against the graph.
+    # Accumulated during the
     # pass and written once, after it, for two reasons that are both defects found by running
     # it the other way:
     #
@@ -447,19 +454,23 @@ def build(session, kg_labels: list[str], edge_whitelist: set[str]) -> dict:
         if not (name and str(name).strip()):
             return
         tid = _judged.get(key) or _vocab.resolve(name, index=_index_by_label.get(label, {}))
-        _resolutions.setdefault(key, set())
+        _resolutions.setdefault((key, label), set())
         if tid:
-            _resolutions[key].add(tid)
+            _resolutions[(key, label)].add(tid)
 
     def _write_resolutions() -> None:
-        for key, tids in sorted(_resolutions.items()):
+        # The label is interpolated, never a payload value: it comes from `kg_labels`, which
+        # is `kg/schema.yaml`'s own key list, and the node branch above already validated it
+        # (`if label not in kg_labels: continue`). Same rule as every other interpolation here
+        # — invariant 4, never interpolate payload text into Cypher.
+        for (key, label), tids in sorted(_resolutions.items()):
             if len(tids) == 1:
                 session.run(
-                    "MATCH (n {key: $key}) MERGE (t:Term {term_id: $term}) "
-                    "MERGE (n)-[:RESOLVES_TO]->(t)", key=key, term=next(iter(tids)))
+                    f"MATCH (n:{label} {{key: $key}}) MERGE (t:Term {{term_id: $term}}) "
+                    f"MERGE (n)-[:RESOLVES_TO]->(t)", key=key, term=next(iter(tids)))
                 counts["resolved"] += 1
             else:
-                session.run("MATCH (n {key: $key}) SET n.unresolved = true", key=key)
+                session.run(f"MATCH (n:{label} {{key: $key}}) SET n.unresolved = true", key=key)
                 counts["unresolved"] += 1
                 if tids:
                     counts["unresolved_ambiguous_across_assertions"] += 1

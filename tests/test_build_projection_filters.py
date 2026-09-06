@@ -333,3 +333,46 @@ def test_each_resolved_node_gets_exactly_one_resolves_to_write(tmp_path, monkeyp
     counts = bp.build(session, ["Concept"], set())
     assert len([q for q, _ in session.calls if "RESOLVES_TO" in q]) == 1
     assert counts["resolved"] == 1
+
+
+def test_a_key_asserted_under_two_types_resolves_only_the_node_that_has_the_name(tmp_path, monkeypatch):
+    """REGRESSION, and the same trap as the g1eval one: `MATCH (n {key: $key})` binds EVERY
+    node carrying that key, so a resolution written for a Concept also lands on a Claim twin.
+
+    DD-020 keys a node `<doc_id>::<item_id>`, and the extractor sometimes asserts one item id
+    under two types in one document — 82 of them live: 75 Claim+Concept, 7 Platform+Practice.
+    Every one produced a spurious write: 32 got a RESOLVES_TO edge on the twin (which is the
+    whole 6,408 -> 6,440 gap the prior RESULT could not account for) and 50 got
+    `unresolved: true` on it (7,569 -> 7,619). The counters were right; the writes were not.
+
+    A `Claim` carries no `name` and can never resolve, so a RESOLVES_TO edge on one is
+    meaningless — and worse, it makes the Claim a MEMBER of a vocabulary term, which any
+    per-term analysis then reads as evidence.
+    """
+    from kg import eventlog
+    events = tmp_path / "events"
+    events.mkdir()
+    schema = tmp_path / "schema.yaml"
+    schema.write_text('schema_version: "0.3.5"\n', encoding="utf-8")
+    monkeypatch.setattr(eventlog, "_EVENTS_DIR", events)
+    monkeypatch.setattr(eventlog, "_SCHEMA_PATH", schema)
+    _shard(events, 1, [
+        {"event_type": "term_added", "term_id": "air:concept/a", "pref_label": "Alpha",
+         "scope_note": "", "source": "graph: 2 Concept nodes", "alt_labels": [],
+         "node_labels": ["Concept"], "ts": "2026-09-05T00:00:00+00:00"},
+        # one item id, two types, one document — exactly the live shape
+        {"event_type": "node_asserted", "doc_id": "d1", "provenance": {"model_id": "m"},
+         "payload": {"type": "Concept", "id": "c4", "item": {"name": "Alpha"}}},
+        {"event_type": "node_asserted", "doc_id": "d1", "provenance": {"model_id": "m"},
+         "payload": {"type": "Claim", "id": "c4", "item": {"claim_text": "a sentence"}}},
+    ])
+    session = _RecordingSession()
+    counts = bp.build(session, ["Concept", "Claim"], set())
+
+    resolved = [(q, p) for q, p in session.calls if "RESOLVES_TO" in q]
+    assert len(resolved) == 1, [q for q, _ in session.calls]
+    # the write must name the label, or it binds the twin as well
+    assert "n:Concept" in resolved[0][0], resolved[0][0]
+    assert counts["resolved"] == 1
+    # and the Claim twin is neither resolved nor flagged: it has no name
+    assert [q for q, _ in session.calls if "unresolved" in q] == []

@@ -1,0 +1,835 @@
+{
+ "task": "cc_tasks/2026-09-05_homograph_split_and_er_gold_sample.md",
+ "seed": 20260905,
+ "per_stratum": 20,
+ "strata": {
+  "A": "exact-name auto-links: both nodes reached one term by the alias-first rule",
+  "B": "clerical band, ACCEPTED by the prior task's judge",
+  "C": "clerical band, REJECTED by the prior task's judge",
+  "D": "near-miss: best-term cosine in [0.70, 0.80), auto-rejected below the floor",
+  "E": "cross-arm pairs inside a term the homograph pass KEPT"
+ },
+ "stratum_population": {
+  "A": 16624,
+  "B": 45,
+  "C": 74,
+  "D": 431,
+  "E": 915
+ },
+ "stratum_drawn": {
+  "A": 20,
+  "B": 20,
+  "C": 20,
+  "D": 20,
+  "E": 20
+ },
+ "stratum_weights": {
+  "A": 831.2,
+  "B": 2.25,
+  "C": 3.7,
+  "D": 21.55,
+  "E": 45.75
+ },
+ "pairs": [
+  {
+   "pair_id": "P001",
+   "stratum": "A",
+   "system_match": true,
+   "node_a": "aidrin-hiniduma-2024::c_data_quality",
+   "node_b": "data-readiness-for-ai-a-360-degree-survey::c_data_quality",
+   "term_id": "air:concept/data-quality"
+  },
+  {
+   "pair_id": "P002",
+   "stratum": "A",
+   "system_match": true,
+   "node_a": "aidrin-hiniduma-2024::c_data_quality",
+   "node_b": "statcan-quality-guidelines-6th-edition::c_data_quality",
+   "term_id": "air:concept/data-quality"
+  },
+  {
+   "pair_id": "P003",
+   "stratum": "A",
+   "system_match": true,
+   "node_a": "bing-webmaster-api-docs::plat_bing",
+   "node_b": "hu-2025-auditing-google-ai-overviews::pl2",
+   "term_id": "air:platform/bing"
+  },
+  {
+   "pair_id": "P004",
+   "stratum": "A",
+   "system_match": true,
+   "node_a": "census-acs-general-handbook-2020::c_nonsampling_error",
+   "node_b": "census-bureau-statistical-quality-standards-standard-f2-prov::c-nonsampling-error",
+   "term_id": "air:concept/nonsampling-error"
+  },
+  {
+   "pair_id": "P005",
+   "stratum": "A",
+   "system_match": true,
+   "node_a": "census-bureau-statistical-quality-standards-standard-f1-rele::c_metadata",
+   "node_b": "jacobsen-2020-fair-principles-interpretations::c_metadata",
+   "term_id": "air:concept/metadata"
+  },
+  {
+   "pair_id": "P006",
+   "stratum": "A",
+   "system_match": true,
+   "node_a": "census-bureau-statistical-quality-standards-standard-f2-prov::c-nonsampling-error",
+   "node_b": "mazzi-2021-measuring-communicating-uncertainty-official-economic-statistics::c_nonsampling_errors",
+   "term_id": "air:concept/nonsampling-error"
+  },
+  {
+   "pair_id": "P007",
+   "stratum": "A",
+   "system_match": true,
+   "node_a": "chen-2025-geo-how-to-dominate-ai-search::p-chatgpt",
+   "node_b": "usdc-mcp-federal-open-data-pilot-2026::pf_chatgpt",
+   "term_id": "air:platform/chatgpt"
+  },
+  {
+   "pair_id": "P008",
+   "stratum": "A",
+   "system_match": true,
+   "node_a": "datahub-mlmu-25::c-accuracy",
+   "node_b": "fcsm-23-02-a-framework-for-data-quality-case-studies::c_accuracy",
+   "term_id": "air:concept/accuracy"
+  },
+  {
+   "pair_id": "P009",
+   "stratum": "A",
+   "system_match": true,
+   "node_a": "fcsm-19-01-transparent-reporting-for-integrated-data-quality::c-relevance",
+   "node_b": "webb-fcsm-nist-crosswalk::c_relevance",
+   "term_id": "air:concept/relevance"
+  },
+  {
+   "pair_id": "P010",
+   "stratum": "A",
+   "system_match": true,
+   "node_a": "google-robots-txt-intro::p-google-search",
+   "node_b": "google-search-console-start::pl-google-search",
+   "term_id": "air:platform/google-search"
+  },
+  {
+   "pair_id": "P011",
+   "stratum": "A",
+   "system_match": true,
+   "node_a": "m-25-05-phase-2-implementation-of-the-evidence-act-open-gove::c_metadata",
+   "node_b": "odi-framework-for-ai-ready-data-2025::c_metadata",
+   "term_id": "air:concept/metadata"
+  },
+  {
+   "pair_id": "P012",
+   "stratum": "A",
+   "system_match": true,
+   "node_a": "mlcommons-croissant-spec::c_dataset",
+   "node_b": "schema-org-dataset::n_dataset_class",
+   "term_id": "air:concept/dataset"
+  },
+  {
+   "pair_id": "P013",
+   "stratum": "A",
+   "system_match": true,
+   "node_a": "nist-ai-risk-management-framework-ai-rmf::c_ai_risk",
+   "node_b": "nist-generative-ai-profile-ai-600-1::c_ai_risks",
+   "term_id": "air:concept/ai-risk"
+  },
+  {
+   "pair_id": "P014",
+   "stratum": "A",
+   "system_match": true,
+   "node_a": "nist-ai-risk-management-framework-ai-rmf::c_human_ai_configurations",
+   "node_b": "nist-ai-rmf-playbook::c_human_ai_teaming",
+   "term_id": "air:concept/human-ai-configuration"
+  },
+  {
+   "pair_id": "P015",
+   "stratum": "A",
+   "system_match": true,
+   "node_a": "nist-ai-rmf-playbook::framework_gao_ai_accountability",
+   "node_b": "nist-ai-rmf-playbook::fw-gao-ai-accountability",
+   "term_id": "air:framework/ai-accountability-framework-for-federal-agency-other-entity"
+  },
+  {
+   "pair_id": "P016",
+   "stratum": "A",
+   "system_match": true,
+   "node_a": "nist-generative-ai-profile-ai-600-1::c_misinformation",
+   "node_b": "usafacts-ai-ready-data-guide::c_misinformation",
+   "term_id": "air:concept/misinformation"
+  },
+  {
+   "pair_id": "P017",
+   "stratum": "A",
+   "system_match": true,
+   "node_a": "perplexity-crawlers::s_robots",
+   "node_b": "sitemaps-protocol::s1",
+   "term_id": "air:robot-txt"
+  },
+  {
+   "pair_id": "P018",
+   "stratum": "A",
+   "system_match": true,
+   "node_a": "schema-org-datacatalog::pl-google",
+   "node_b": "schema-org-softwareapplication::plat-google",
+   "term_id": "air:platform/google"
+  },
+  {
+   "pair_id": "P019",
+   "stratum": "A",
+   "system_match": true,
+   "node_a": "technology-readiness-levels-for-machine-learning-systems-mlt::c-data-readiness",
+   "node_b": "uk-ai-ready-data-action-plan-2026::c_data_readiness",
+   "term_id": "air:concept/data-readiness"
+  },
+  {
+   "pair_id": "P020",
+   "stratum": "A",
+   "system_match": true,
+   "node_a": "uk-ai-ready-data-action-plan-2026::con-fair",
+   "node_b": "wilkinson-2016-fair-guiding-principles::con_fair_principles",
+   "term_id": "air:concept/fair-principle"
+  },
+  {
+   "pair_id": "P021",
+   "stratum": "B",
+   "system_match": true,
+   "node_a": "ai-data-readiness-checklist-digital-government-hub::c_ai_data_readiness",
+   "node_b": "aidrin-hiniduma-2024::c-data-readiness-for-ai",
+   "term_id": "air:concept/data-readiness-for-ai"
+  },
+  {
+   "pair_id": "P022",
+   "stratum": "B",
+   "system_match": true,
+   "node_a": "ai-real-toolkit-ai-readiness-assessment-guide::c_bias",
+   "node_b": "nist-ai-risk-management-framework-ai-rmf::c_fairness",
+   "term_id": "air:concept/fairness-in-ai"
+  },
+  {
+   "pair_id": "P023",
+   "stratum": "B",
+   "system_match": true,
+   "node_a": "census-acs-general-handbook-2020::c_puma",
+   "node_b": "census-acs-general-handbook-2020::c-pumas",
+   "term_id": "air:concept/public-use-microdata-area"
+  },
+  {
+   "pair_id": "P024",
+   "stratum": "B",
+   "system_match": true,
+   "node_a": "executive-order-14110-safe-secure-and-trustworthy-developmen::fw-ai-rmf",
+   "node_b": "beyond-model-readiness-institutional-readiness-for-ai-deploy::f_nist_rmf",
+   "term_id": "air:framework/nist-ai-risk-management-framework"
+  },
+  {
+   "pair_id": "P025",
+   "stratum": "B",
+   "system_match": true,
+   "node_a": "fcsm-23-02-a-framework-for-data-quality-case-studies::i-ssdq",
+   "node_b": "fcsm-23-02-a-framework-for-data-quality-case-studies::ins_ssdq",
+   "term_id": "air:instrument/state-safety-data-quality"
+  },
+  {
+   "pair_id": "P026",
+   "stratum": "B",
+   "system_match": true,
+   "node_a": "fcsm-25-03::fw-fcsm-dq",
+   "node_b": "fcsm-23-02-a-framework-for-data-quality-case-studies::f_fcsm_dq",
+   "term_id": "air:framework/fcsm-framework-for-data-quality"
+  },
+  {
+   "pair_id": "P027",
+   "stratum": "B",
+   "system_match": true,
+   "node_a": "from-accuracy-to-readiness-metrics-and-benchmarks-for-human::fw-taxonomy",
+   "node_b": "from-accuracy-to-readiness-metrics-and-benchmarks-for-human::f-taxonomy-metrics",
+   "term_id": "air:framework/four-part-taxonomy-of-evaluation-metric"
+  },
+  {
+   "pair_id": "P028",
+   "stratum": "B",
+   "system_match": true,
+   "node_a": "llmstxt-proposal::s3",
+   "node_b": "llmstxt-proposal::s_sitemapxml",
+   "term_id": "air:standard/sitemap-xml"
+  },
+  {
+   "pair_id": "P029",
+   "stratum": "B",
+   "system_match": true,
+   "node_a": "llmstxt-proposal::s_sitemapxml",
+   "node_b": "llmstxt-proposal::s3",
+   "term_id": "air:standard/sitemap-xml"
+  },
+  {
+   "pair_id": "P030",
+   "stratum": "B",
+   "system_match": true,
+   "node_a": "m-24-10-advancing-governance-innovation-and-risk-management::f1",
+   "node_b": "nist-ai-risk-management-framework-ai-rmf::fw_ai_rmf_1_0",
+   "term_id": "air:framework/ai-rmf-1-0"
+  },
+  {
+   "pair_id": "P031",
+   "stratum": "B",
+   "system_match": true,
+   "node_a": "nist-ai-rmf-playbook::c_kanon",
+   "node_b": "aidrin-2-0-a-framework-to-assess-data-readiness-for-ai::c-k-anonymity",
+   "term_id": "air:concept/k-anonymity"
+  },
+  {
+   "pair_id": "P032",
+   "stratum": "B",
+   "system_match": true,
+   "node_a": "nist-ai-rmf-playbook::fw_wef",
+   "node_b": "nist-ai-rmf-playbook::f_wef_model_ai_governance",
+   "term_id": "air:framework/wef-model-ai-governance-framework-assessment-2020"
+  },
+  {
+   "pair_id": "P033",
+   "stratum": "B",
+   "system_match": true,
+   "node_a": "nist-generative-ai-profile-ai-600-1::f-airmf",
+   "node_b": "nist-ai-100-3-the-language-of-trustworthy-ai-an-in-depth-glo::f-ai-rmf",
+   "term_id": "air:framework/ai-rmf-1-0"
+  },
+  {
+   "pair_id": "P034",
+   "stratum": "B",
+   "system_match": true,
+   "node_a": "peters-2025-generalization-bias-llm-summarization::c_overgen",
+   "node_b": "peters-2025-generalization-bias-llm-summarization::c_algorithmic_overgeneralizations",
+   "term_id": "air:concept/algorithmic-overgeneralization"
+  },
+  {
+   "pair_id": "P035",
+   "stratum": "B",
+   "system_match": true,
+   "node_a": "schema-org-dataset::s-dcat",
+   "node_b": "google-dataset-structured-data::s_dcat",
+   "term_id": "air:standard/data-catalog-vocabulary-dcat"
+  },
+  {
+   "pair_id": "P036",
+   "stratum": "B",
+   "system_match": true,
+   "node_a": "sdmx-3-0-section-1-framework::c_sdmx",
+   "node_b": "worldbank-fostering-ai-readiness-official-statistics::std_sdmx",
+   "term_id": "air:sdmx"
+  },
+  {
+   "pair_id": "P037",
+   "stratum": "B",
+   "system_match": true,
+   "node_a": "sdmx-standards-overview::c-sdmx",
+   "node_b": "worldbank-fostering-ai-readiness-official-statistics::st_sdmx",
+   "term_id": "air:sdmx"
+  },
+  {
+   "pair_id": "P038",
+   "stratum": "B",
+   "system_match": true,
+   "node_a": "statistical-policy-working-paper-46-data-quality-assessment::std_omb",
+   "node_b": "statistical-policy-working-paper-46-data-quality-assessment::s_omb_race",
+   "term_id": "air:standard/race-and-ethnicity-category"
+  },
+  {
+   "pair_id": "P039",
+   "stratum": "B",
+   "system_match": true,
+   "node_a": "w3c-dcat-3::co_data_access_service",
+   "node_b": "w3c-dcat-3::c-data-service",
+   "term_id": "air:concept/data-service"
+  },
+  {
+   "pair_id": "P040",
+   "stratum": "B",
+   "system_match": true,
+   "node_a": "webb-fcsm-nist-crosswalk::f_nist_rmf",
+   "node_b": "m-24-10-advancing-governance-innovation-and-risk-management::f1",
+   "term_id": "air:framework/ai-rmf-1-0"
+  },
+  {
+   "pair_id": "P041",
+   "stratum": "C",
+   "system_match": false,
+   "node_a": "aggarwal-2024-geo-generative-engine-optimization::c_vis",
+   "node_b": "aggarwal-2024-geo-generative-engine-optimization::c_seo_methods",
+   "term_id": "air:concept/seo-method"
+  },
+  {
+   "pair_id": "P042",
+   "stratum": "C",
+   "system_match": false,
+   "node_a": "aidrin-hiniduma-2024::c-sgc",
+   "node_b": "aidrin-hiniduma-2024::c_tcga_luad",
+   "term_id": "air:concept/tcga-luad"
+  },
+  {
+   "pair_id": "P043",
+   "stratum": "C",
+   "system_match": false,
+   "node_a": "aidrin-hiniduma-2024::t_pandas",
+   "node_b": "suleymanli-2025-llms-charts-official-statistics::t_matplotlib",
+   "term_id": "air:tool/matplotlib"
+  },
+  {
+   "pair_id": "P044",
+   "stratum": "C",
+   "system_match": false,
+   "node_a": "cao-2024-multimodal-long-form-summarization-financial-reports::c_num",
+   "node_b": "cao-2024-multimodal-long-form-summarization-financial-reports::c_gpt4",
+   "term_id": "air:concept/gpt-4"
+  },
+  {
+   "pair_id": "P045",
+   "stratum": "C",
+   "system_match": false,
+   "node_a": "cao-2024-multimodal-long-form-summarization-financial-reports::c_numeric_values",
+   "node_b": "min-2023-factscore::c_gpt4",
+   "term_id": "air:concept/gpt-4"
+  },
+  {
+   "pair_id": "P046",
+   "stratum": "C",
+   "system_match": false,
+   "node_a": "census-acs-general-handbook-2020::cn_product",
+   "node_b": "census-acs-general-handbook-2020::c_acs_multiyear_estimates",
+   "term_id": "air:concept/acs-multiyear-estimate"
+  },
+  {
+   "pair_id": "P047",
+   "stratum": "C",
+   "system_match": false,
+   "node_a": "cisco-ai-readiness-assessment-instrument::instr-cisco-ai-readiness",
+   "node_b": "cisco-ai-readiness-index-methodology::i_index",
+   "term_id": "air:instrument/cisco-ai-readiness-index"
+  },
+  {
+   "pair_id": "P048",
+   "stratum": "C",
+   "system_match": false,
+   "node_a": "llmstxt-proposal::cn_llm_friendly_content",
+   "node_b": "llmstxt-proposal::cn_llmstxt",
+   "term_id": "air:llm-txt"
+  },
+  {
+   "pair_id": "P049",
+   "stratum": "C",
+   "system_match": false,
+   "node_a": "m-25-05-phase-2-implementation-of-the-evidence-act-open-gove::s_dcat_w3c",
+   "node_b": "google-dataset-structured-data::s_dcat",
+   "term_id": "air:standard/data-catalog-vocabulary-dcat"
+  },
+  {
+   "pair_id": "P050",
+   "stratum": "C",
+   "system_match": false,
+   "node_a": "nist-ai-risk-management-framework-ai-rmf::c-fair-harmful-bias-managed",
+   "node_b": "nist-ai-risk-management-framework-ai-rmf::c-trustworthy-ai-systems",
+   "term_id": "air:concept/trustworthy-ai-system"
+  },
+  {
+   "pair_id": "P051",
+   "stratum": "C",
+   "system_match": false,
+   "node_a": "nist-ai-rmf-playbook::c_ai_system_overseers",
+   "node_b": "nist-ai-rmf-playbook::c_ai_risk_management_activities",
+   "term_id": "air:concept/ai-risk-management-activity"
+  },
+  {
+   "pair_id": "P052",
+   "stratum": "C",
+   "system_match": false,
+   "node_a": "nist-ai-rmf-playbook::c_diverse_workforce",
+   "node_b": "nist-ai-rmf-playbook::cn6",
+   "term_id": "air:concept/team-diversity"
+  },
+  {
+   "pair_id": "P053",
+   "stratum": "C",
+   "system_match": false,
+   "node_a": "nist-ai-rmf-playbook::c_oversight_governance",
+   "node_b": "nist-ai-rmf-playbook::c_ai_risk_management_activities",
+   "term_id": "air:concept/ai-risk-management-activity"
+  },
+  {
+   "pair_id": "P054",
+   "stratum": "C",
+   "system_match": false,
+   "node_a": "nist-generative-ai-profile-ai-600-1::c_xai",
+   "node_b": "arm-ai-readiness-index::c-xai",
+   "term_id": "air:concept/explainable-ai"
+  },
+  {
+   "pair_id": "P055",
+   "stratum": "C",
+   "system_match": false,
+   "node_a": "radhakrishnan-2024-knowing-when-to-ask-data-commons::cpt_united_states",
+   "node_b": "radhakrishnan-2024-knowing-when-to-ask-data-commons::cpt_california",
+   "term_id": "air:concept/california"
+  },
+  {
+   "pair_id": "P056",
+   "stratum": "C",
+   "system_match": false,
+   "node_a": "sdmx-standards-overview::s10",
+   "node_b": "sdmx-standards-overview::s-sdmx-10",
+   "term_id": "air:standard/sdmx-standard"
+  },
+  {
+   "pair_id": "P057",
+   "stratum": "C",
+   "system_match": false,
+   "node_a": "suleymanli-2025-llms-charts-official-statistics::c7",
+   "node_b": "suleymanli-2025-llms-charts-official-statistics::c8",
+   "term_id": "air:concept/code-generation"
+  },
+  {
+   "pair_id": "P058",
+   "stratum": "C",
+   "system_match": false,
+   "node_a": "venktesh-2024-quantemp-numerical-claims::c_mnli_data",
+   "node_b": "venktesh-2024-quantemp-numerical-claims::c_numerical_claim",
+   "term_id": "air:concept/numerical-claim"
+  },
+  {
+   "pair_id": "P059",
+   "stratum": "C",
+   "system_match": false,
+   "node_a": "w3c-dcat-3::c-conformance-degree",
+   "node_b": "w3c-dcat-3::c-conformance-test",
+   "term_id": "air:concept/conformance-test"
+  },
+  {
+   "pair_id": "P060",
+   "stratum": "C",
+   "system_match": false,
+   "node_a": "w3c-dcat-3::s-vocab-dcat-1",
+   "node_b": "doe-data-cards-standardized-metadata-2026::std-dcat-3",
+   "term_id": "air:standard/data-catalog-vocabulary-dcat-version-3"
+  },
+  {
+   "pair_id": "P061",
+   "stratum": "D",
+   "system_match": false,
+   "node_a": "ai-real-toolkit-ai-readiness-assessment-guide::f_governance",
+   "node_b": "arm-ai-readiness-index::f-model-ai-gov",
+   "term_id": "air:framework/model-ai-governance-framework"
+  },
+  {
+   "pair_id": "P062",
+   "stratum": "D",
+   "system_match": false,
+   "node_a": "ai-watch-revisiting-technology-readiness-levels-for-relevant::f-rvg-method",
+   "node_b": "odi-framework-for-ai-ready-data-2025::f_ai_readiness",
+   "term_id": "air:framework/ai-readiness-framework"
+  },
+  {
+   "pair_id": "P063",
+   "stratum": "D",
+   "system_match": false,
+   "node_a": "data-readiness-for-ai-a-360-degree-survey::i3",
+   "node_b": "data-readiness-for-ai-a-360-degree-survey::i_cv_coherence",
+   "term_id": "air:instrument/cv-coherence-score"
+  },
+  {
+   "pair_id": "P064",
+   "stratum": "D",
+   "system_match": false,
+   "node_a": "data-readiness-for-scientific-ai-at-scale::f_hiniduma",
+   "node_b": "lawrence-data-readiness-levels-2017::fr-drl",
+   "term_id": "air:framework/data-readiness-level"
+  },
+  {
+   "pair_id": "P065",
+   "stratum": "D",
+   "system_match": false,
+   "node_a": "executive-order-13960-promoting-the-use-of-trustworthy-ai-in::c-agency-inventory",
+   "node_b": "m-24-10-advancing-governance-innovation-and-risk-management::c7",
+   "term_id": "air:concept/ai-use-case-inventory"
+  },
+  {
+   "pair_id": "P066",
+   "stratum": "D",
+   "system_match": false,
+   "node_a": "executive-order-14110-safe-secure-and-trustworthy-developmen::c-fed-use-ai",
+   "node_b": "m-24-18-advancing-the-responsible-acquisition-of-ai-in-gover::c39",
+   "term_id": "air:concept/artificial-intelligence-ai"
+  },
+  {
+   "pair_id": "P067",
+   "stratum": "D",
+   "system_match": false,
+   "node_a": "jacobsen-2020-fair-principles-interpretations::s_rdf",
+   "node_b": "w3c-rdf-data-cube::s-rdf",
+   "term_id": "air:standard/rdf-resource-description-framework"
+  },
+  {
+   "pair_id": "P068",
+   "stratum": "D",
+   "system_match": false,
+   "node_a": "linkchecker-readme::s_robots",
+   "node_b": "llmstxt-proposal::s_robotstxt",
+   "term_id": "air:robot-txt"
+  },
+  {
+   "pair_id": "P069",
+   "stratum": "D",
+   "system_match": false,
+   "node_a": "nist-ai-100-3-the-language-of-trustworthy-ai-an-in-depth-glo::c-interdisciplinary-field",
+   "node_b": "nist-ai-risk-management-framework-ai-rmf::concept-trustworthy-ai-systems",
+   "term_id": "air:concept/trustworthy-ai-system"
+  },
+  {
+   "pair_id": "P070",
+   "stratum": "D",
+   "system_match": false,
+   "node_a": "nist-ai-risk-management-framework-ai-rmf::cpt_identification_of_incidents",
+   "node_b": "nist-ai-risk-management-framework-ai-rmf::cpt_information_sharing",
+   "term_id": "air:concept/information-sharing"
+  },
+  {
+   "pair_id": "P071",
+   "stratum": "D",
+   "system_match": false,
+   "node_a": "nist-ai-rmf-playbook::c_data_min",
+   "node_b": "nist-ai-rmf-playbook::c_pets",
+   "term_id": "air:concept/privacy-enhancing-technology"
+  },
+  {
+   "pair_id": "P072",
+   "stratum": "D",
+   "system_match": false,
+   "node_a": "nist-ai-rmf-playbook::c_range_validity",
+   "node_b": "nist-ai-rmf-playbook::c_error_propagation",
+   "term_id": "air:concept/error-propagation"
+  },
+  {
+   "pair_id": "P073",
+   "stratum": "D",
+   "system_match": false,
+   "node_a": "nist-ai-rmf-playbook::c_subject_protection",
+   "node_b": "nist-generative-ai-profile-ai-600-1::c_human_subject_protection",
+   "term_id": "air:concept/human-subject-protection"
+  },
+  {
+   "pair_id": "P074",
+   "stratum": "D",
+   "system_match": false,
+   "node_a": "nist-ai-rmf-playbook::cn5",
+   "node_b": "nist-ai-rmf-playbook::c_diverse_team",
+   "term_id": "air:concept/diverse-team"
+  },
+  {
+   "pair_id": "P075",
+   "stratum": "D",
+   "system_match": false,
+   "node_a": "odi-ai-ready-national-data-library-2025::c_gov_of_data",
+   "node_b": "ai-readiness-for-official-data-and-statistics-un-statistical::c_data_governance",
+   "term_id": "air:concept/data-governance"
+  },
+  {
+   "pair_id": "P076",
+   "stratum": "D",
+   "system_match": false,
+   "node_a": "sdmx-standards-overview::s9",
+   "node_b": "sdmx-standards-overview::s-sdmx-20",
+   "term_id": "air:standard/sdmx-technical-standard"
+  },
+  {
+   "pair_id": "P077",
+   "stratum": "D",
+   "system_match": false,
+   "node_a": "sdmx-standards-overview::std-sdmx-31",
+   "node_b": "sdmx-standards-overview::s-sdmx-31",
+   "term_id": "air:standard/sdmx-technical-specification"
+  },
+  {
+   "pair_id": "P078",
+   "stratum": "D",
+   "system_match": false,
+   "node_a": "van-der-bles-2019-communicating-uncertainty::c_object",
+   "node_b": "van-der-bles-2019-communicating-uncertainty::concept_communication_of_uncertainty",
+   "term_id": "air:concept/communication-of-uncertainty"
+  },
+  {
+   "pair_id": "P079",
+   "stratum": "D",
+   "system_match": false,
+   "node_a": "webb-2026-state-fidelity-validity::n_validity_construct",
+   "node_b": "webb-2026-state-fidelity-validity::c-construct-validity",
+   "term_id": "air:concept/construct-validity"
+  },
+  {
+   "pair_id": "P080",
+   "stratum": "D",
+   "system_match": false,
+   "node_a": "worldbank-fostering-ai-readiness-official-statistics::c_metadata_mapping",
+   "node_b": "omb-m-23-22-digital-first-public-experience::c-metadata",
+   "term_id": "air:concept/descriptive-metadata"
+  },
+  {
+   "pair_id": "P081",
+   "stratum": "E",
+   "system_match": true,
+   "node_a": "arm-ai-readiness-index::c-transparency",
+   "node_b": "webb-fcsm-nist-crosswalk::c_transparency",
+   "term_id": "air:concept/transparency"
+  },
+  {
+   "pair_id": "P082",
+   "stratum": "E",
+   "system_match": true,
+   "node_a": "croissant-akhtar-2024-paper::c-croissant",
+   "node_b": "odi-framework-for-ai-ready-data-2025::s_croissant",
+   "term_id": "air:croissant"
+  },
+  {
+   "pair_id": "P083",
+   "stratum": "E",
+   "system_match": true,
+   "node_a": "croissant-akhtar-2024-paper::s-croissant",
+   "node_b": "odi-framework-for-ai-ready-data-2025::s_croissant",
+   "term_id": "air:croissant"
+  },
+  {
+   "pair_id": "P084",
+   "stratum": "E",
+   "system_match": true,
+   "node_a": "datahub-mlmu-25::c-machine-readability",
+   "node_b": "odi-framework-for-ai-ready-data-2025::concept_machine_readability",
+   "term_id": "air:concept/machine-readability"
+  },
+  {
+   "pair_id": "P085",
+   "stratum": "E",
+   "system_match": true,
+   "node_a": "doc-rfi-ai-open-gov-data-2024::c-reliability",
+   "node_b": "statcan-quality-guidelines-6th-edition::c_reliability",
+   "term_id": "air:concept/reliability"
+  },
+  {
+   "pair_id": "P086",
+   "stratum": "E",
+   "system_match": true,
+   "node_a": "gao-ai-accountability-framework-ariga-testimony::c_bias",
+   "node_b": "uk-ai-ready-data-action-plan-2026::c_bias",
+   "term_id": "air:concept/bias"
+  },
+  {
+   "pair_id": "P087",
+   "stratum": "E",
+   "system_match": true,
+   "node_a": "m-24-18-advancing-the-responsible-acquisition-of-ai-in-gover::c7",
+   "node_b": "sdmx-3-0-section-1-framework::c-interoperability",
+   "term_id": "air:concept/interoperability"
+  },
+  {
+   "pair_id": "P088",
+   "stratum": "E",
+   "system_match": true,
+   "node_a": "m-24-18-advancing-the-responsible-acquisition-of-ai-in-gover::c7",
+   "node_b": "wilkinson-2016-fair-guiding-principles::c_interoperability",
+   "term_id": "air:concept/interoperability"
+  },
+  {
+   "pair_id": "P089",
+   "stratum": "E",
+   "system_match": true,
+   "node_a": "mitre-ai-maturity-model::d-accessibility",
+   "node_b": "statistical-policy-working-paper-46-data-quality-assessment::c_accessibility",
+   "term_id": "air:concept/accessibility"
+  },
+  {
+   "pair_id": "P090",
+   "stratum": "E",
+   "system_match": true,
+   "node_a": "mitre-ai-maturity-model::d-accessibility",
+   "node_b": "wilkinson-2016-fair-guiding-principles::c_accessibility",
+   "term_id": "air:concept/accessibility"
+  },
+  {
+   "pair_id": "P091",
+   "stratum": "E",
+   "system_match": true,
+   "node_a": "nist-ai-risk-management-framework-ai-rmf::accuracy",
+   "node_b": "census-acs-general-handbook-2020::c_accuracy",
+   "term_id": "air:concept/accuracy"
+  },
+  {
+   "pair_id": "P092",
+   "stratum": "E",
+   "system_match": true,
+   "node_a": "nist-ai-risk-management-framework-ai-rmf::bias",
+   "node_b": "uk-ai-ready-data-action-plan-2026::c_bias",
+   "term_id": "air:concept/bias"
+  },
+  {
+   "pair_id": "P093",
+   "stratum": "E",
+   "system_match": true,
+   "node_a": "nist-ai-rmf-playbook::c_pet",
+   "node_b": "foundations-for-evidence-based-policymaking-act-of-2018-evid::c32",
+   "term_id": "air:concept/privacy-enhancing-technique"
+  },
+  {
+   "pair_id": "P094",
+   "stratum": "E",
+   "system_match": true,
+   "node_a": "nist-ai-rmf-playbook::concept_documentation",
+   "node_b": "fcsm-19-01-transparent-reporting-for-integrated-data-quality::co1",
+   "term_id": "air:concept/documentation"
+  },
+  {
+   "pair_id": "P095",
+   "stratum": "E",
+   "system_match": true,
+   "node_a": "pyshacl-readme::s-rdf",
+   "node_b": "odi-framework-for-ai-ready-data-2025::s_rdf",
+   "term_id": "air:standard/rdf"
+  },
+  {
+   "pair_id": "P096",
+   "stratum": "E",
+   "system_match": true,
+   "node_a": "schema-org-softwareapplication::c-structured-data",
+   "node_b": "data-readiness-for-ai-a-360-degree-survey::c_structured_data",
+   "term_id": "air:concept/structured-data"
+  },
+  {
+   "pair_id": "P097",
+   "stratum": "E",
+   "system_match": true,
+   "node_a": "technology-readiness-levels-for-machine-learning-systems-mlt::c-epistemic",
+   "node_b": "van-der-bles-2019-communicating-uncertainty::c-epistemic-uncertainty",
+   "term_id": "air:concept/epistemic-uncertainty"
+  },
+  {
+   "pair_id": "P098",
+   "stratum": "E",
+   "system_match": true,
+   "node_a": "technology-readiness-levels-for-machine-learning-systems-mlt::c-epistemic",
+   "node_b": "van-der-bles-2019-communicating-uncertainty::c_epistemic_uncertainty",
+   "term_id": "air:concept/epistemic-uncertainty"
+  },
+  {
+   "pair_id": "P099",
+   "stratum": "E",
+   "system_match": true,
+   "node_a": "technology-readiness-levels-for-machine-learning-systems-mlt::c-sensitivity-analysis",
+   "node_b": "fcsm-20-04-a-framework-for-data-quality::c_sensitivity_analysis",
+   "term_id": "air:concept/sensitivity-analysis"
+  },
+  {
+   "pair_id": "P100",
+   "stratum": "E",
+   "system_match": true,
+   "node_a": "technology-readiness-levels-for-machine-learning-systems-mlt::c-synthetic-data",
+   "node_b": "uk-ai-ready-data-action-plan-2026::c_synthetic_data",
+   "term_id": "air:concept/synthetic-data"
+  }
+ ]
+}
