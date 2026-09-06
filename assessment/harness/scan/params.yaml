@@ -1,0 +1,134 @@
+# Every constant the scan harness uses. NOTHING numeric is hard-coded in a collector — a test
+# greps `collectors/` for integer literals outside an allowlist and fails on a new one.
+#
+# Why (task 2026-09-06_harness_scaffold.md §2.3, prior art Khan 2026 / Wintermute
+# wm-20260906-075432-d860df): one unswept truncation constant was worth 14 points. A constant
+# that lives in a collector cannot be swept, cannot be versioned, and cannot be stamped on the
+# evidence it shaped. `params_hash` rides on every Observation, so a Finding always names the
+# parameter set that produced its evidence.
+params_version: "0.1.0"
+
+manners:
+  # RFC 9309: the scanner obeys the file it measures.
+  user_agent: "ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg)"
+  requests_per_second_per_host: 1.0
+  connect_timeout_seconds: 10.0
+  read_timeout_seconds: 30.0
+  max_retries: 3
+  backoff_base_seconds: 2.0
+  backoff_on_status: [429, 503]
+  follow_redirects: true
+  max_redirects: 5
+  # Paths that are always fetched because they ARE the object of measurement — a robots.txt
+  # that disallows /robots.txt cannot hide it from a measurement of robots.txt.
+  always_fetch_paths: ["/robots.txt", "/sitemap.xml", "/sitemap_index.xml", "/llms.txt",
+                       "/data.json", "/.well-known/"]
+  # No byte cap by default. §2.1: whole body retained, no truncation anywhere. A cap must be
+  # set explicitly to exist, and setting one is a decision that shows up in params_hash.
+  max_body_bytes: null
+  # Statuses at which we did not OBSERVE the surface, we were REFUSED it. A 404 is a real
+  # measurement (the path is not served); a 403/401/429 is the host declining this client, and
+  # scoring it `fail` publishes an absence claim about a product nobody was allowed to look at.
+  # www.bls.gov answered 403 to all 60 requests in the first smoke run and both BLS surfaces
+  # scored `fail` on all 15 legs; that is what this list exists to stop. `error_class` cannot
+  # carry the distinction because `http_4xx` covers both.
+  unobservable_statuses: [401, 403, 407, 429]
+
+crawl:
+  # A3 bulk-access link discovery: one hop from the product page, per §3's signal.
+  depth: 1
+  max_links_followed: 40
+
+a1_formats:
+  # A1: which Content-Types / extensions count as structured data rather than PDF-only.
+  structured_content_types: ["text/csv", "application/json", "application/geo+json",
+                             "application/vnd.apache.parquet", "application/x-parquet",
+                             "application/vnd.ms-excel",
+                             "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                             "application/xml", "text/xml"]
+  structured_extensions: [".csv", ".json", ".geojson", ".parquet", ".xlsx", ".xls", ".xml", ".tsv"]
+  pdf_content_types: ["application/pdf"]
+
+a4_crawlers:
+  # The AI-crawler user agents A4 and A11-declared evaluate robots.txt against. A list, in
+  # params, because it changes: GPTBot did not exist in 2022 and something else will not exist
+  # in 2027.
+  user_agents: ["GPTBot", "ClaudeBot", "Claude-Web", "PerplexityBot", "Google-Extended",
+                "CCBot", "Bingbot", "Applebot-Extended"]
+
+a5_discovery:
+  well_known_probes: ["/llms.txt", "/.well-known/ai-plugin.json", "/.well-known/mcp.json"]
+  # How many sitemap URLs are kept on the Observation for a reader's convenience. NOT
+  # evidence truncation — the whole body is stored content-addressed either way — but it is
+  # still a constant, and the lint was right to refuse it inside the collector.
+  sample_urls_retained: 5
+
+a6_markup:
+  # extruct syntaxes to extract, and the types that satisfy A6.
+  syntaxes: ["json-ld", "microdata", "rdfa"]
+  dataset_types: ["Dataset", "DataCatalog", "http://schema.org/Dataset",
+                  "https://schema.org/Dataset"]
+  dcat_classes: ["http://www.w3.org/ns/dcat#Dataset", "http://www.w3.org/ns/dcat#Catalog"]
+
+a8_freshness:
+  header_fields: ["last-modified", "date"]
+  markup_fields: ["dateModified", "datePublished", "temporalCoverage"]
+
+a9_m2m:
+  probes: ["/openapi.json", "/swagger.json", "/api/openapi.json", "/llms.txt",
+           "/.well-known/mcp.json"]
+
+a10_soft404:
+  # A soft-404 is HTTP 200 on a route that should not exist.
+  invalid_path_suffix: "/__ai-readiness-kg-probe-404__"
+  # Rendering half needs a browser; see collectors/lighthouse.py for what happens without one.
+  renderer: "none"
+
+d1_licence:
+  markup_fields: ["license", "licence", "http://schema.org/license",
+                  "http://purl.org/dc/terms/license"]
+  recognised_prefixes: ["https://creativecommons.org/", "http://creativecommons.org/",
+                        "https://spdx.org/licenses/", "https://opensource.org/licenses/",
+                        "https://www.usa.gov/government-works", "https://opendefinition.org/"]
+  recognised_tokens: ["CC0", "CC-BY", "PUBLIC DOMAIN", "U.S. GOVERNMENT WORK", "MIT",
+                      "APACHE-2.0", "ODC-BY"]
+
+d4_catalog:
+  paths: ["/data.json"]
+  # Project Open Data v1.1 required fields on a dataset entry.
+  required_dataset_fields: ["title", "description", "keyword", "modified", "publisher",
+                            "contactPoint", "identifier", "accessLevel"]
+
+f4_changelog:
+  paths: ["/changelog", "/changelog.json", "/releases", "/whatsnew", "/news"]
+  machine_readable_content_types: ["application/json", "application/atom+xml",
+                                   "application/rss+xml"]
+
+g1d_uncertainty:
+  # G1-D: error measures present as STRUCTURED FIELDS beside the estimates, not footnotes.
+  # Column-header tokens that name an error measure.
+  field_tokens: ["margin of error", "moe", "standard error", "se", "cv",
+                 "coefficient of variation", "confidence interval", "ci", "lower bound",
+                 "upper bound", "±"]
+
+e5_control:
+  # The control cycle is the instrument's own E5. A cycle with zero fired controls is INVALID.
+  expected_verdicts:
+    passes_all: "pass"
+    fails_all: "fail"
+
+fuji:
+  # NOT WIRED. The PyPI name `fuji` is a DIFFERENT package (startechsheffield, "a small
+  # library made to make common tasks easier") — a name collision that installs cleanly and
+  # imports, which is exactly how a wrong dependency gets into a harness unnoticed. The real
+  # F-UJI (pangaea-data-publisher/fuji, Devaraju & Huber 2021) is a SERVER installed from
+  # GitHub source with its own config and metadata catalogues; `fuji-server` is not on PyPI.
+  # Standing it up is a dependency this scaffold does not take on. The three overlapping legs
+  # use their own collectors and the cross-check is deferred, with the metric ids kept here so
+  # the next task does not have to re-derive them.
+  available: false
+  deferred_metrics:
+    A2: "FsF-A1-03D"
+    A6: ["FsF-F4-01M", "FsF-I1-01M"]
+    D1: "FsF-R1.1-01M"
+  install_note: "pip install git+https://github.com/pangaea-data-publisher/fuji ; needs config/server.ini"

@@ -116,3 +116,45 @@ def test_the_tier_cell_round_trips_when_it_carries_prose():
     assert a11["tier"] == "agency_instrumented"
     assert a11["tier_raw"].count("`") == 4
     assert rf.render_row(a11).endswith("| stub |")
+
+
+# ------------------------------------------------- the write-back and its summary counters
+def test_counts_agree_with_the_specs_they_summarise(graph):
+    """`counts.collectors_none_known` said 5 after E5 had stopped being `none_known`.
+
+    The write-back in `2026-09-06_harness_scaffold` was done from an ad-hoc command, so the
+    derived summary drifted from the nodes it summarises and nothing noticed. A counter that
+    can disagree with its own data is a number computed in chat (DD-040): this test is the
+    reader that makes it a derivation.
+    """
+    specs = [n["properties"] for n in graph["nodes"] if "MeasurementSpec" in n["labels"]]
+    assert graph["counts"]["measurement_specs"] == len(specs)
+    assert graph["counts"]["collectors_none_known"] == sum(
+        1 for s in specs if s.get("collector") == "none_known")
+
+
+def test_the_rule_write_back_is_idempotent():
+    """Re-running it on the file it produced must change nothing. If it does, the framework of
+    record and the rules package disagree, and only one of them can be right."""
+    import framework_writeback_rules as wb  # noqa: E402
+    from assessment.harness.scan.rules import BY_LEG
+
+    g = json.loads(JSON_PATH.read_text(encoding="utf-8"))
+    before = json.dumps(g, sort_keys=True)
+    touched = wb.writeback(g, BY_LEG)
+    assert touched == {"specs_rule_id": 0, "indicators_status": 0, "e5_collector": 0}
+    assert json.dumps(g, sort_keys=True) == before
+
+
+def test_every_leg_with_a_rule_carries_its_rule_id(graph):
+    """The chain the RESULT quotes is MeasurementSpec -> rule_id -> Finding.evidence -> obs_id
+    (F-UJI's metric -> tests -> evidence, DD-052 §2). A spec whose leg has a rule but no
+    `rule_id` breaks the first link and the Finding can never be traced back to its spec."""
+    from assessment.harness.scan.rules import BY_LEG
+
+    for n in graph["nodes"]:
+        if "MeasurementSpec" not in n["labels"]:
+            continue
+        leg = n["properties"].get("leg")
+        if leg in BY_LEG:
+            assert n["properties"].get("rule_id") == BY_LEG[leg], leg

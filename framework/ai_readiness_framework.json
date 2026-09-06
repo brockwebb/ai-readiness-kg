@@ -11,7 +11,8 @@
   "evidenced_by_internal": 17,
   "gaps": 19,
   "measurement_specs": 21,
-  "collectors_none_known": 5
+  "collectors_none_known": 4,
+  "rules_built": 16
  },
  "unparsed_rows": [],
  "evidence_doc_ids_not_in_manifest": [
@@ -142,7 +143,7 @@
     "tier_raw": "`public`",
     "status": "draft",
     "evidence_raw": "**gap** — named source (Commerce GenAI-Open-Data guidance) is `acquisition_blocked`, batch-017",
-    "measurement_status": "specified",
+    "measurement_status": "harness_built",
     "gap": "**gap** — named source (Commerce GenAI-Open-Data guidance) is `acquisition_blocked`, batch-017",
     "criterion_code": "A"
    }
@@ -171,7 +172,7 @@
     "tier_raw": "`public`",
     "status": "draft",
     "evidence_raw": "**gap**",
-    "measurement_status": "specified",
+    "measurement_status": "harness_built",
     "gap": "**gap**",
     "criterion_code": "A"
    }
@@ -200,7 +201,7 @@
     "tier_raw": "`public`",
     "status": "draft",
     "evidence_raw": "**gap**",
-    "measurement_status": "specified",
+    "measurement_status": "harness_built",
     "gap": "**gap**",
     "criterion_code": "A"
    }
@@ -229,7 +230,7 @@
     "tier_raw": "`public`",
     "status": "draft",
     "evidence_raw": "`rfc-9309-robots-exclusion-protocol`; `google-robots-txt-intro`; `openai-crawlers-bots`; `anthropic-crawler-support-article`; `perplexity-crawlers`; `cloudflare-ai-crawl-control-manage-crawlers`",
-    "measurement_status": "specified",
+    "measurement_status": "harness_built",
     "gap": null,
     "criterion_code": "A"
    }
@@ -258,7 +259,7 @@
     "tier_raw": "`public`",
     "status": "draft",
     "evidence_raw": "`llmstxt-proposal`; `sitemaps-protocol`",
-    "measurement_status": "specified",
+    "measurement_status": "harness_built",
     "gap": null,
     "criterion_code": "A"
    }
@@ -287,7 +288,7 @@
     "tier_raw": "`public`",
     "status": "draft",
     "evidence_raw": "`schema-org-dataset`; `w3c-dcat-3`; `mlcommons-croissant-spec`; `croissant-akhtar-2024-paper`",
-    "measurement_status": "specified",
+    "measurement_status": "harness_built",
     "gap": null,
     "criterion_code": "A"
    }
@@ -345,7 +346,7 @@
     "tier_raw": "`public`",
     "status": "draft",
     "evidence_raw": "**gap**",
-    "measurement_status": "specified",
+    "measurement_status": "harness_built",
     "gap": "**gap**",
     "criterion_code": "A"
    }
@@ -374,7 +375,7 @@
     "tier_raw": "`public`",
     "status": "draft; frontier_deep track, as_of 2026-01",
     "evidence_raw": "`wilkinson-2016-fair-guiding-principles`; internal existence proof: fss-policy-kg (MCP server)",
-    "measurement_status": "specified",
+    "measurement_status": "harness_built",
     "gap": null,
     "criterion_code": "A",
     "frontier": true,
@@ -405,7 +406,7 @@
     "tier_raw": "`public`",
     "status": "stub",
     "evidence_raw": "internal draft: FSS Machine Diagnostic spec (SEO SME, 2026-09, operator-held; admission gated)",
-    "measurement_status": "specified",
+    "measurement_status": "harness_built",
     "gap": null,
     "criterion_code": "A"
    }
@@ -434,7 +435,7 @@
     "tier_raw": "`agency_instrumented` (observed leg requires edge logs; declared leg stays `public`)",
     "status": "stub",
     "evidence_raw": "`cloudflare-ai-crawl-control-manage-crawlers`; `rfc-9309-robots-exclusion-protocol`; internal draft: FSS Machine Diagnostic spec (as above)",
-    "measurement_status": "specified",
+    "measurement_status": "harness_built",
     "gap": null,
     "criterion_code": "A"
    }
@@ -521,7 +522,7 @@
     "tier_raw": "`public`",
     "status": "draft",
     "evidence_raw": "**gap**",
-    "measurement_status": "specified",
+    "measurement_status": "harness_built",
     "gap": "**gap**",
     "criterion_code": "B"
    }
@@ -782,7 +783,7 @@
     "tier_raw": "`public`",
     "status": "draft",
     "evidence_raw": "**gap**",
-    "measurement_status": "specified",
+    "measurement_status": "harness_built",
     "gap": "**gap**",
     "criterion_code": "D"
    }
@@ -869,7 +870,7 @@
     "tier_raw": "`public`",
     "status": "draft",
     "evidence_raw": "**gap**",
-    "measurement_status": "specified",
+    "measurement_status": "harness_built",
     "gap": "**gap**",
     "criterion_code": "D"
    }
@@ -1014,7 +1015,7 @@
     "tier_raw": "`public`",
     "status": "draft",
     "evidence_raw": "internal: DD-019 decoy discipline; methodology §7.5",
-    "measurement_status": "specified",
+    "measurement_status": "harness_built",
     "gap": null,
     "criterion_code": "E"
    }
@@ -1246,7 +1247,7 @@
     "tier_raw": "`public`",
     "status": "draft",
     "evidence_raw": "`usafacts-ai-ready-data-guide`",
-    "measurement_status": "specified",
+    "measurement_status": "harness_built",
     "gap": null,
     "criterion_code": "F"
    }
@@ -1513,7 +1514,7 @@
     "indicator_code": "A1",
     "leg": "A1",
     "mode": "auto",
-    "rule_id": "RULE-A1-v0",
+    "rule_id": "RULE-A1-v1",
     "collector_pin": "httpx>=0.27",
     "signal": "HTTP GET the product page; extract every download link; for each, HEAD and read Content-Type and file extension. Structured iff any of csv/json/parquet/xlsx/xml; PDF-only iff every link is application/pdf.",
     "collector": "httpx",
@@ -1530,7 +1531,7 @@
     "indicator_code": "A2",
     "leg": "A2",
     "mode": "auto",
-    "rule_id": "RULE-A2-v0",
+    "rule_id": "RULE-A2-v1",
     "collector_pin": "httpx>=0.27",
     "signal": "HTTP GET the documented API base and any OpenAPI/Swagger document; record auth scheme, declared rate limits, and whether the description is machine-readable.",
     "collector": "httpx",
@@ -1548,7 +1549,7 @@
     "indicator_code": "A3",
     "leg": "A3",
     "mode": "auto",
-    "rule_id": "RULE-A3-v0",
+    "rule_id": "RULE-A3-v1",
     "collector_pin": "scrapy>=2.11",
     "signal": "Crawl the product page one hop; classify links as bulk (whole-product archive or full dataset file) vs filtered query.",
     "collector": "scrapy",
@@ -1565,7 +1566,7 @@
     "indicator_code": "A4",
     "leg": "A4",
     "mode": "auto",
-    "rule_id": "RULE-A4-v0",
+    "rule_id": "RULE-A4-v1",
     "collector_pin": "protego>=0.3",
     "signal": "HTTP GET /robots.txt; parse; evaluate Allow/Disallow for the product path per user-agent in the AI-crawler list (GPTBot, ClaudeBot, PerplexityBot, Google-Extended, CCBot, Bingbot).",
     "collector": "protego",
@@ -1582,7 +1583,7 @@
     "indicator_code": "A5",
     "leg": "A5",
     "mode": "auto",
-    "rule_id": "RULE-A5-v0",
+    "rule_id": "RULE-A5-v1",
     "collector_pin": "ultimate-sitemap-parser>=1.0",
     "signal": "HTTP GET /sitemap.xml (and the path robots.txt declares), /llms.txt, /.well-known/; parse the sitemap and test whether the product URL is covered.",
     "collector": "ultimate-sitemap-parser",
@@ -1599,7 +1600,7 @@
     "indicator_code": "A6",
     "leg": "A6",
     "mode": "auto",
-    "rule_id": "RULE-A6-v0",
+    "rule_id": "RULE-A6-v1",
     "collector_pin": "extruct>=0.17",
     "signal": "Extract embedded JSON-LD / microdata / RDFa from the product page; test for schema.org Dataset or DCAT; validate the DCAT graph against DCAT-AP SHACL shapes.",
     "collector": "extruct + pyshacl",
@@ -1617,7 +1618,7 @@
     "indicator_code": "A8",
     "leg": "A8",
     "mode": "auto",
-    "rule_id": "RULE-A8-v0",
+    "rule_id": "RULE-A8-v1",
     "collector_pin": "httpx>=0.27",
     "signal": "Read Last-Modified and any dcterms:modified / schema.org dateModified in the markup; test whether a latest-vintage pointer resolves.",
     "collector": "httpx + extruct",
@@ -1634,7 +1635,7 @@
     "indicator_code": "A9",
     "leg": "A9",
     "mode": "auto",
-    "rule_id": "RULE-A9-v0",
+    "rule_id": "RULE-A9-v1",
     "collector_pin": "httpx>=0.27",
     "signal": "Probe for a machine-first entry point: OpenAPI at the documented base, /.well-known/mcp or an advertised MCP/A2A endpoint, /llms.txt.",
     "collector": "httpx",
@@ -1653,7 +1654,7 @@
     "indicator_code": "A10",
     "leg": "A10",
     "mode": "auto",
-    "rule_id": "RULE-A10-v0",
+    "rule_id": "RULE-A10-v1",
     "collector_pin": "lighthouse-cli>=12",
     "signal": "For an interactive data tool: request a deep link and an invalid route; compare status codes and pre-JS HTML; a soft-404 is HTTP 200 with an error shell. Render once to compare pre- and post-JS DOM.",
     "collector": "lighthouse",
@@ -1670,7 +1671,7 @@
     "indicator_code": "A11",
     "leg": "A11-declared",
     "mode": "auto",
-    "rule_id": "RULE-A11-declared-v0",
+    "rule_id": "RULE-A11-declared-v1",
     "collector_pin": "protego>=0.3",
     "signal": "The DECLARED layer only: robots.txt and meta-robots directives for the product path. The enforced and observed layers need edge/WAF logs and are agency_instrumented.",
     "collector": "protego",
@@ -1687,7 +1688,7 @@
     "indicator_code": "B3",
     "leg": "B3",
     "mode": "auto",
-    "rule_id": "RULE-B3-v0",
+    "rule_id": "RULE-B3-v1",
     "collector_pin": "httpx>=0.27",
     "signal": "Fetch the methodology document; test whether it is structured text (HTML/markdown) or PDF-only, and whether it is retrievable without JS.",
     "collector": "httpx",
@@ -1723,7 +1724,7 @@
     "indicator_code": "D1",
     "leg": "D1",
     "mode": "auto",
-    "rule_id": "RULE-D1-v0",
+    "rule_id": "RULE-D1-v1",
     "collector_pin": "extruct>=0.17",
     "signal": "Read the licence from schema.org/DCAT markup, an HTTP Link header, and the API's terms endpoint; test whether it is a recognised identifier (SPDX or a known URL) rather than free text.",
     "collector": "extruct + httpx",
@@ -1741,7 +1742,7 @@
     "indicator_code": "D4",
     "leg": "D4",
     "mode": "auto",
-    "rule_id": "RULE-D4-v0",
+    "rule_id": "RULE-D4-v1",
     "collector_pin": "json-schema (Project Open Data v1.1 schema)",
     "signal": "Fetch /data.json (Project Open Data catalog); validate against the POD v1.1 schema; test whether the product appears in it.",
     "collector": "project-open-data-validator",
@@ -1758,13 +1759,13 @@
     "indicator_code": "E5",
     "leg": "E5",
     "mode": "auto",
-    "rule_id": "RULE-E5-v0",
-    "collector_pin": "n/a",
-    "signal": "Seeded known-bad items fired per continuous-eval cycle.",
-    "collector": "none_known",
-    "evidence_kind": "canary definitions + per-cycle fire log",
+    "rule_id": "RULE-E5-v1",
+    "collector_pin": "assessment/harness/scan/fixtures (passes_all, fails_all)",
+    "signal": "Both control fixtures are scanned before any real host. A cycle in which either produced an unexpected verdict is INVALID.",
+    "collector": "control_fixtures",
+    "evidence_kind": "per-fixture verdict map for every rule in the cycle",
     "prior_art": "internal: DD-019 decoy discipline",
-    "note": "A property of the harness's own cycle, not an observation of an external surface. There is nothing to collect until the harness runs."
+    "note": "Was `none_known`: a seeded canary is a property of the harness's own cycle, not an observation of an external surface. Task §4 makes the fixtures that property."
    }
   },
   {
@@ -1812,7 +1813,7 @@
     "indicator_code": "F4",
     "leg": "F4",
     "mode": "auto",
-    "rule_id": "RULE-F4-v0",
+    "rule_id": "RULE-F4-v1",
     "collector_pin": "httpx>=0.27",
     "signal": "Fetch any changelog or release-notes endpoint; test whether it is machine-readable and carries a revision class per entry.",
     "collector": "httpx",
@@ -1829,7 +1830,7 @@
     "indicator_code": "G1-D",
     "leg": "G1-D",
     "mode": "auto",
-    "rule_id": "RULE-G1-D-v0",
+    "rule_id": "RULE-G1-D-v1",
     "collector_pin": "assessment/harness/probes/g1_declared.py (frozen, DD-036)",
     "signal": "On the captured product surface, test whether error measures (MOE, CV, SE, CI, DP noise parameters) are present as STRUCTURED FIELDS beside the estimates rather than as footnotes.",
     "collector": "g1_declared",
