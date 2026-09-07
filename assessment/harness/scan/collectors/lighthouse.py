@@ -16,7 +16,7 @@ from __future__ import annotations
 import shutil
 import urllib.parse
 
-from ..manners import error_class_for
+from ..errors import classify_exception, classify_status
 from ..model import Observation, store_evidence
 
 VERSION = "0.1.0"
@@ -39,7 +39,7 @@ def fetch(fetcher, leg: str, doc_id: str, product_url: str, params: dict,
                                         {"status": None, "headers": {}, "body_sha256": None,
                                          "body_path": None, "bytes": 0, "elapsed_ms": 0,
                                          "error": f"{type(exc).__name__}: {exc}"},
-                                        parsed={"probe": kind}, error_class="dns"))
+                                        parsed={"probe": kind}, error_class=classify_exception(exc)))
             continue
         digest, path = store_evidence(r["body"])
         text = r["body"].decode("utf-8", "replace")
@@ -51,5 +51,5 @@ def fetch(fetcher, leg: str, doc_id: str, product_url: str, params: dict,
             parsed={"probe": kind, "pre_js_chars": len(text),
                     "renderer": params["a10_soft404"]["renderer"],
                     "renderer_available": available()},
-            error_class=None if kind == "invalid_route" else error_class_for(r["status"])))
+            error_class=None if kind == "invalid_route" else classify_status(r["status"], params)))
     return out

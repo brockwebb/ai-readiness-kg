@@ -44,12 +44,22 @@ def collect_leg(spec: dict, target: dict, params: dict, fetcher=None) -> list:
     base = "{0.scheme}://{0.netloc}".format(urllib.parse.urlsplit(url))
     join = lambda p: urllib.parse.urljoin(base, p)          # noqa: E731
 
-    if leg in ("A1", "A3"):
-        # A1-v2 and A3-v2: the spec says HEAD every download link and read what it SERVES.
-        # v1 classified on the href suffix, which both over- and under-counted.
+    lp = params["link_probe"]
+    if leg == lp["shared_leg"]:
+        # The product page and every download link on it, observed ONCE per surface. A1 and A3
+        # ask different questions of the same 25 objects; before this leg existed each HEADed
+        # all of them independently, which is 559 duplicate requests against public federal
+        # hosts in one cycle and no additional evidence (§1.3, and §0's manners note: RFC 9309
+        # governs what may be fetched and licenses nothing about fetching it twice).
         page = http.fetch(f, leg, doc_id, url, params, parse_links=True)
         found = ((page[0].parsed or {}).get("links") or [])
         return page + links.probe(f, leg, doc_id, found, params, page_url=url)
+    if leg in lp["legs_served"]:
+        # Nothing of their own: everything the CURRENT rules for these legs read is on the
+        # shared leg above, which they declare through `CONSUMES`. The superseded rules that
+        # collected here (`RULE-A1-v2`, `RULE-A3-v3`) stay in `REGISTRY` and are only ever
+        # re-run against STORED observations by `rederive.py`, which never collects.
+        return []
     if leg == "A2":
         out = []
         for p in params["a9_m2m"]["probes"]:

@@ -29,6 +29,7 @@ from . import (rule_a1_v2, rule_a10_v2, rule_a11_declared_v2, rule_a2_v2, rule_a
                rule_a6_v2, rule_a8_v2, rule_b3_v2, rule_d1_v2, rule_d4_v2, rule_e5_v2,
                rule_f4_v2)
 from . import rule_a2_v3, rule_a3_v3, rule_d1_v3, rule_f4_v3
+from . import rule_a1_v3, rule_a3_v4
 from . import rule_a12
 
 #: Every version ever shipped, keyed by rule id. Never prune it: a pruned entry is a stored
@@ -41,14 +42,26 @@ V2 = [rule_a1_v2, rule_a2_v2, rule_a3_v2, rule_a6_v2, rule_a8_v2, rule_a10_v2,
 #: A third generation, for the four `v2` modules that shared one guard bug. See any of their
 #: docstrings: `.get("status", 999)` returns `None` on a present-but-None key, and it stopped a
 #: live cycle. `v2` stays here so every Finding recorded under it still re-derives.
-V3 = [rule_a2_v3, rule_a3_v3, rule_d1_v3, rule_f4_v3]
+V3 = [rule_a2_v3, rule_a3_v3, rule_d1_v3, rule_f4_v3, rule_a1_v3]
+
+#: A fourth generation for A3 alone. `RULE-A1-v3` and `RULE-A3-v4` decide exactly what their
+#: predecessors decided; what changed is where the evidence comes from — the SHARED
+#: `link_probe` leg, collected once per surface instead of twice
+#: (`cc_tasks/2026-09-07_scan_harness_v3.md` §1.3). Their predecessors stay in `REGISTRY`.
+V4 = [rule_a3_v4]
 
 #: Rules for CANDIDATE indicators. They judge, they are recorded, and their Findings enter no
 #: numerator and no denominator (DD-054). Kept in their own list so the reporting layer can
 #: exclude them mechanically rather than by remembering a code.
 CANDIDATE_RULES = [rule_a12]
 
-MODULES = V1 + V2 + V3 + CANDIDATE_RULES
+#: Every generation, in order. A LIST of lists rather than four names a reader has to keep
+#: track of: the registry-integrity tests read this, so a fifth generation is one entry here
+#: and nothing else to remember — which is the same reasoning `parse_rule_id` gives for being
+#: a regex instead of a per-rule table.
+GENERATIONS = (V1, V2, V3, V4)
+
+MODULES = [m for g in GENERATIONS for m in g] + CANDIDATE_RULES
 
 REGISTRY = {m.RULE_ID: m for m in MODULES}
 
@@ -56,9 +69,9 @@ REGISTRY = {m.RULE_ID: m for m in MODULES}
 #: A9 and G1-D stay at v1 — the review returned `spec_underspecified` for the first three
 #: (the fix is in the spec, recorded as a `decision` property, not in the code) and the G1-D
 #: `deviates` did not survive verification against the collector.
-CURRENT = {m.LEG: m.RULE_ID for m in V1}
-CURRENT.update({m.LEG: m.RULE_ID for m in V2})
-CURRENT.update({m.LEG: m.RULE_ID for m in V3})
+CURRENT = {}
+for _gen in GENERATIONS:
+    CURRENT.update({m.LEG: m.RULE_ID for m in _gen})
 CURRENT.update({m.LEG: m.RULE_ID for m in CANDIDATE_RULES})
 
 #: Legs whose Findings are reported and never counted.
@@ -102,6 +115,26 @@ def parse_rule_id(rule_id: str) -> dict:
     return {"rule_id": rule_id, "indicator_code": m.group("indicator_code"),
             "qualifier": m.group("qualifier").lstrip("-") or None,
             "version": m.group("version")}
+
+
+def consumes(rule_id: str) -> tuple:
+    """Legs whose observations this rule reads IN ADDITION to its own.
+
+    Declared on the rule module (`CONSUMES`) and read by the two callers that must agree —
+    `run.py` when it builds the group a rule judges, and `rederive.py` when it rebuilds that
+    group from stored observations. One declaration, two readers: a re-derivation that grouped
+    differently from the cycle would move the derived `finding_id` and fail the gate for a
+    reason that has nothing to do with the rule.
+    """
+    mod = REGISTRY.get(rule_id)
+    if mod is None:
+        raise KeyError(f"no rule {rule_id!r}; known: {sorted(REGISTRY)}")
+    return tuple(getattr(mod, "CONSUMES", ()))
+
+
+#: Legs a NEW cycle collects only because some CURRENT rule consumes them. They have no rule of
+#: their own and produce no Finding — they are evidence, shared.
+SHARED_LEGS = tuple(sorted({l for r in set(CURRENT.values()) for l in consumes(r)}))
 
 
 def judge(rule_id: str, observations: list, params: dict):

@@ -86,6 +86,11 @@ def writeback(g: dict, by_leg: dict) -> dict:
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--task", default=TASK,
+                    help="the task that ORDERED this run, recorded on the "
+                         "`framework_writeback` event. Defaults to the task this script "
+                         "implements; a later task that moves a rule id should name itself, "
+                         "so the log says who caused the change rather than only what it does.")
     a = ap.parse_args(argv)
     from assessment.harness.scan.rules import BY_LEG
     g = json.loads(FRAMEWORK.read_text(encoding="utf-8"))
@@ -95,7 +100,7 @@ def main(argv=None) -> int:
     print(json.dumps(out, indent=1))
     # Through the shared writer, so the write and the `framework_writeback` event that records
     # it cannot come apart.
-    ev = fw.save(g, script=SCRIPT, task=TASK, changes=out["touched"], dry_run=a.dry_run)
+    ev = fw.save(g, script=SCRIPT, task=a.task, changes=out["touched"], dry_run=a.dry_run)
     print(json.dumps({k: v for k, v in ev.items() if k != "counts"}, indent=1), file=sys.stderr)
     return 0
 

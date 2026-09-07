@@ -119,12 +119,10 @@ class Fetcher:
                 "elapsed_ms": elapsed, "final_url": str(resp.url), "method": "HEAD"}
 
 
-def error_class_for(status: int) -> str | None:
-    if status >= 500:
-        return "http_5xx"
-    if status >= 400:
-        return "http_4xx"
-    return None
+# `error_class_for(status)` lived here and knew only 4xx/5xx, so it could not tell a 404 (the
+# measurement) from a 403 (the host declining this client). It is superseded by
+# `scan.errors.classify_status(status, params)`, which reads the refusal statuses from params
+# rather than from a constant — see `cc_tasks/2026-09-07_scan_harness_v3.md` §1.2.
 
 
 def repo_root() -> Path:

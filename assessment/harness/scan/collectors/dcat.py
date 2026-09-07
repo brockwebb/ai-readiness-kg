@@ -8,7 +8,7 @@ from __future__ import annotations
 import json
 import urllib.parse
 
-from ..manners import error_class_for
+from ..errors import classify_exception, classify_status
 from ..model import Observation, store_evidence
 
 VERSION = "0.1.0"
@@ -29,7 +29,7 @@ def fetch_catalog(fetcher, leg: str, doc_id: str, product_url: str, params: dict
                                         {"status": None, "headers": {}, "body_sha256": None,
                                          "body_path": None, "bytes": 0, "elapsed_ms": 0,
                                          "error": f"{type(exc).__name__}: {exc}"},
-                                        error_class="dns"))
+                                        error_class=classify_exception(exc)))
             continue
         digest, path = store_evidence(r["body"])
         ctype = (r["headers"].get("content-type") or "").split(";")[0].strip().lower()
@@ -59,5 +59,5 @@ def fetch_catalog(fetcher, leg: str, doc_id: str, product_url: str, params: dict
                                      "body_sha256": digest, "body_path": path,
                                      "bytes": len(r["body"]), "elapsed_ms": r["elapsed_ms"]},
                                     parsed=parsed,
-                                    error_class=err or error_class_for(r["status"])))
+                                    error_class=err or classify_status(r["status"], params)))
     return out

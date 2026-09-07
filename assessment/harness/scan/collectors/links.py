@@ -14,7 +14,7 @@ from __future__ import annotations
 
 import urllib.parse
 
-from ..manners import error_class_for
+from ..errors import classify_exception, classify_status
 from ..model import Observation
 
 VERSION = "0.1.0"
@@ -72,7 +72,7 @@ def probe(fetcher, leg: str, doc_id: str, links: list, params: dict,
                 {"status": None, "headers": {}, "body_sha256": None, "body_path": None,
                  "bytes": 0, "elapsed_ms": 0, "error": f"{type(exc).__name__}: {exc}"},
                 parsed={"probe": "link", "anchor_text": link.get("text")},
-                error_class="timeout" if "timeout" in type(exc).__name__.lower() else "dns"))
+                error_class=classify_exception(exc)))
             continue
         hdrs = {k.lower(): v for k, v in (r["headers"] or {}).items()}
         ctype = (hdrs.get("content-type") or "").split(";")[0].strip().lower()
@@ -87,5 +87,5 @@ def probe(fetcher, leg: str, doc_id: str, links: list, params: dict,
             {"method": r.get("method", "HEAD"), "url": href},
             {"status": r["status"], "headers": r["headers"], "body_sha256": None,
              "body_path": None, "bytes": 0, "elapsed_ms": r["elapsed_ms"]},
-            parsed=parsed, error_class=error_class_for(r["status"])))
+            parsed=parsed, error_class=classify_status(r["status"], params)))
     return out

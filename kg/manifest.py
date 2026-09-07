@@ -46,6 +46,10 @@ _MANIFEST_BATCH = 1
 
 _MANIFEST_ADD = "manifest_add"
 _CONTENT_UPDATE = "content_update"
+#: An append-only declaration of what an already-admitted document IS FOR. Applied over the
+#: admission entry by `_load_entries`, exactly as `content_update` is; never an edit to the
+#: admission event (invariant 1). `cc_tasks/2026-09-07_scan_harness_v3.md` §1.5.
+_PURPOSE_DECLARED = "manifest_purpose_declared"
 #: Why a document's bytes were legitimately replaced after admission. Closed, because an
 #: open reason field is how "the file changed" becomes an explanation instead of a finding.
 #: `extent_corrected` — the admitted copy was the wrong extent (a whole statute standing in
@@ -65,6 +69,19 @@ _SOURCE_TYPES = ("federal", "academic", "industry", "standard", "intergovernment
 # entries are backfilled via document_annotation events, never re-manifested.
 _CONSTRUCT_ARMS = ("publication_actionability", "training_data_readiness", "org_maturity")
 _GROUNDING_SURFACES = ("document", "transcript", "slides")
+#: What an admitted document is FOR, as a CLOSED set — a free-text purpose that switches a
+#: gate off is a hole, not a field.
+#:
+#: `corpus_document` is the default and the only kind DD-030's convertibility gate was written
+#: for: a document admitted to be READ, whose missing substrate is a real gap.
+#: `scan_surface` is a live product page admitted to be MEASURED. Its extent is the
+#: measurement — A10 exists to catch a page with no document behind it — so gapping it for
+#: thin extent registers a ResearchTask asking someone to re-acquire a page that was acquired
+#: correctly. 22 such tasks were minted by the 2026-09-07 admission and withdrawn by hand.
+_PURPOSES = ("corpus_document", "scan_surface")
+#: Purposes DD-030's gate does not apply to, named separately from the set so that adding a
+#: purpose does not silently exempt it.
+_GATE_EXEMPT_PURPOSES = ("scan_surface",)
 _DOC_ID_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 
 # Fields the caller must supply (non-empty). local_path and content_hash are computed;
@@ -128,6 +145,7 @@ def _load_entries() -> list[dict]:
     #: The guard's intent is "no admission EXISTS", not "none seen yet in shard order", and
     #: it still raises below for a genuinely orphaned supersession.
     deferred_updates: list[dict] = []
+    deferred_purposes: list[dict] = []
     for ev in eventlog.replay():
         et = ev.get("event_type")
         if et == _MANIFEST_ADD:
@@ -135,6 +153,17 @@ def _load_entries() -> list[dict]:
             entries[entry["doc_id"]] = entry
         elif et == _CONTENT_UPDATE:
             deferred_updates.append(ev["payload"])
+        elif et == _PURPOSE_DECLARED:
+            deferred_purposes.append(ev)
+    # Deferred for the same reason the content updates are: shard order is not causal order.
+    for p in deferred_purposes:
+        base = entries.get(p["doc_id"])
+        if base is None:
+            raise ManifestError(
+                f"manifest_purpose_declared for {p['doc_id']!r} which has no manifest_add event")
+        base["purpose"] = p["purpose"]
+        base.setdefault("purpose_history", []).append(
+            {k: p.get(k) for k in ("purpose", "reason", "task")})
     for p in deferred_updates:
         base = entries.get(p["doc_id"])
         if base is None:
@@ -181,6 +210,15 @@ def _convertibility_gate(doc_id: str, src: Path, entry: dict) -> None:
     whole rule exists to forbid.
     """
     from kg.ingest import convert as _convert, gate as _gate
+    # A document admitted to be MEASURED, not read. DD-030's rule is that admission requires
+    # convertibility, and the premise under it is that the document has a text substrate
+    # somebody will extract from. A scan surface has no such reader: it is a live product page
+    # whose extent IS the measurement (A10 and B3 both score exactly that), so a thin one is a
+    # finding, never a gap to remediate. Gapping them anyway minted 22 ResearchTasks on
+    # 2026-09-07 asking for the re-acquisition of pages that were acquired correctly, and every
+    # one had to be withdrawn by hand. `cc_tasks/2026-09-07_scan_harness_v3.md` §1.5.
+    if entry.get("purpose") in _GATE_EXEMPT_PURPOSES:
+        return
     if src.suffix.lower() in _convert.DELEGATED:
         return
     _gate.check(doc_id, src, {"source_url": entry.get("primary_url"),
@@ -288,6 +326,11 @@ def add(filepath, **fields) -> str:
             f"invalid grounding_surface {grounding_surface!r}; must be one of "
             f"{', '.join(_GROUNDING_SURFACES)}"
         )
+    purpose = fields.get("purpose")
+    if purpose is not None and purpose not in _PURPOSES:
+        raise ManifestError(
+            f"invalid purpose {purpose!r}; must be one of {', '.join(_PURPOSES)}"
+        )
 
     # 2. File must exist and live under corpus/.
     path = Path(filepath).resolve()
@@ -336,6 +379,8 @@ def add(filepath, **fields) -> str:
         entry["construct_arm"] = construct_arm
     if grounding_surface is not None:
         entry["grounding_surface"] = grounding_surface
+    if purpose is not None:
+        entry["purpose"] = purpose
     # Optional acquisition/TEVV evidence (fetch provenance, identity check, page count,
     # re-hash confirmation). Carried in the event so the audit trail is self-contained;
     # omitted entirely when not supplied so pre-existing entries stay unchanged.

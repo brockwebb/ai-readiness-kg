@@ -36,7 +36,9 @@ REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO))
 sys.path.insert(0, str(REPO / "assessment"))
 sys.path.insert(0, str(REPO / "assessment" / "harness"))
+sys.path.insert(0, str(REPO / "scripts"))
 
+import cycle_results                                              # noqa: E402
 from harness.rollup import wilson_interval                        # noqa: E402
 from scan.rules import CANDIDATE_LEGS, CURRENT                    # noqa: E402
 
@@ -207,24 +209,15 @@ def main(argv=None) -> int:
         return 0
     MATRIX.write_text(json.dumps({**mx, "per_leg": legs, "a12": a12v}, indent=1) + "\n",
                       encoding="utf-8")
-    ok, already, failed = 0, [], []
-    for n, v, note in data:
-        r = subprocess.run(["seldon", "result", "register", "--value", str(v), "--name", n,
-                            "--units", n, "--description", f"{note} ({TASK})",
-                            "--script-name", "scan_report", "--data-name",
-                            "scan_matrix_2026-09-07"],
-                           capture_output=True, text=True, cwd=REPO)
-        if r.returncode == 0:
-            ok += 1
-        elif "unique per project graph" in r.stderr and f"value={float(v)}" in r.stderr:
-            already.append(n)
-        else:
-            failed.append(n)
-            print("FAILED:", n, r.stderr.strip()[-180:])
-    print(json.dumps({"registered": ok, "already_at_this_value": len(already),
-                      "failed": len(failed), "of": len(data),
-                      "matrix": str(MATRIX.relative_to(REPO))}, indent=1))
-    return 1 if failed else 0
+    # Through the shared registrar, which refuses a per-cycle name that does not carry its
+    # cycle BEFORE anything is registered (DD-056, `cc_tasks/2026-09-07_scan_harness_v3.md`
+    # §1.6). `scan_control_findings` was refused mid-run on 2026-09-07 for exactly this, after
+    # the measurement; the check now happens before the first write.
+    out = cycle_results.register([(n, v, f"{note} ({TASK})") for n, v, note in data],
+                                 cycle=CYCLE, script="scan_report",
+                                 data="scan_matrix_2026-09-07")
+    print(json.dumps({**out, "matrix": str(MATRIX.relative_to(REPO))}, indent=1))
+    return 1 if out["failed"] else 0
 
 
 if __name__ == "__main__":

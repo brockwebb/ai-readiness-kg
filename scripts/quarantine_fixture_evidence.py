@@ -20,6 +20,13 @@ same task exists to annotate. So the test is BOTH conditions:
 An unreferenced blob is litter by construction: the event log is the source of truth
 (invariant 1), and a body no event points at is a body no Finding can ever cite.
 
+**A second category, added 2026-09-07 by `cc_tasks/2026-09-07_scan_harness_v3.md`:** a blob
+that git does not track AND no Observation cites was never part of the corpus at all, whatever
+its content — so the fixture-host marker is not needed to recognise it. That is not a wider net
+thrown at tracked evidence: a pending cycle's bodies become cited the moment its payload is
+published, and until then they are not corpus either. It exists because the `refuses_identified_client`
+fixture answers 403 with an EMPTY body, and a zero-length blob carries no marker to match on.
+
 Litter that git TRACKS is moved, never deleted (invariant 2): the bytes go to
 `corpus/quarantine/evidence_scan_fixture/` under their own digest, with one `reason.txt`
 naming every one of them. Litter git does not track is REMOVED, and the distinction is
@@ -86,20 +93,23 @@ def classify(root: Path | None = None) -> dict:
     """`{litter, cited_fixture_blobs, other}` as sorted path lists, relative to the repo."""
     root = root or EVIDENCE_ROOT
     cited = cited_digests()
-    litter, cited_fixture, other = [], [], []
+    tracked = tracked_paths()
+    litter, cited_fixture, orphan, other = [], [], [], []
     for path in sorted(p for p in root.rglob("*") if p.is_file()):
         try:
             body = path.read_bytes()
         except OSError as exc:                       # a blob we cannot read is not a blob we
             raise SystemExit(f"FATAL: cannot read {path}: {exc}")   # may silently pass over
-        if MARKER not in body:
-            other.append(path)
-        elif path.name in cited:
-            cited_fixture.append(path)
-        else:
+        if path.name in cited:
+            (cited_fixture if MARKER in body else other).append(path)
+        elif MARKER in body:
             litter.append(path)
-    return {"litter": litter, "cited_fixture_blobs": cited_fixture, "other": other,
-            "cited_total": len(cited)}
+        elif path not in tracked:
+            orphan.append(path)
+        else:
+            other.append(path)
+    return {"litter": litter, "cited_fixture_blobs": cited_fixture, "orphan_untracked": orphan,
+            "other": other, "cited_total": len(cited)}
 
 
 def sweep(apply: bool, root: Path | None = None) -> dict:
@@ -107,7 +117,9 @@ def sweep(apply: bool, root: Path | None = None) -> dict:
     tracked = tracked_paths()
     litter = c["litter"]
     committed = [p for p in litter if p in tracked]
-    uncommitted = [p for p in litter if p not in tracked]
+    # Untracked litter and untracked orphans are removed the same way and for the same reason:
+    # neither was ever in the corpus.
+    uncommitted = [p for p in litter if p not in tracked] + c["orphan_untracked"]
     if apply and litter:
         QUARANTINE.mkdir(parents=True, exist_ok=True)
         for p in committed:
@@ -143,6 +155,7 @@ def sweep(apply: bool, root: Path | None = None) -> dict:
             if d.is_dir() and not any(d.iterdir()):
                 d.rmdir()
     return {"quarantined": len(committed), "untracked_litter_removed": len(uncommitted),
+            "untracked_orphans_included": len(c["orphan_untracked"]),
             "cited_fixture_blobs_left_in_place":
             len(c["cited_fixture_blobs"]), "non_fixture_blobs": len(c["other"]),
             "distinct_body_hashes_cited_by_the_log": c["cited_total"],

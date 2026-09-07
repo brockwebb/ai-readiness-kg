@@ -1,0 +1,8 @@
+# The DECLARED layer, and it permits everything. The ENFORCED layer (the server, see
+# fixtures/server.py::MODES) answers 403 to this identified scanner on every other path.
+# That disagreement between the two layers is what A12 measures — the branch the smoke run
+# found at www.bls.gov and neither of the first two control fixtures could produce.
+User-agent: *
+Allow: /
+
+Sitemap: http://HOSTPORT/sitemap.xml

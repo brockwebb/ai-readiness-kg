@@ -9,7 +9,7 @@ from __future__ import annotations
 import urllib.parse
 
 from ..model import Observation, store_evidence
-from ..manners import error_class_for
+from ..errors import classify_exception, classify_status
 
 VERSION = "0.1.0"
 
@@ -35,8 +35,8 @@ def fetch(fetcher, leg: str, doc_id: str, url: str, params: dict, parse_links: b
                                  parsed=None, error_class="robots_disallowed")]
     try:
         r = fetcher.raw_get(url)
-    except Exception as exc:                                  # dns / timeout / transport
-        cls = "timeout" if "timeout" in type(exc).__name__.lower() else "dns"
+    except Exception as exc:                                  # transport: see scan/errors.py
+        cls = classify_exception(exc)
         return [Observation.make(spec_code or leg, leg, doc_id, url, "http", VERSION, params,
                                  {"method": "GET", "url": url,
                                   "ua": params["manners"]["user_agent"]},
@@ -60,4 +60,4 @@ def fetch(fetcher, leg: str, doc_id: str, url: str, params: dict, parse_links: b
                              {"status": r["status"], "headers": r["headers"],
                               "body_sha256": digest, "body_path": path,
                               "bytes": len(r["body"]), "elapsed_ms": r["elapsed_ms"]},
-                             parsed=parsed, error_class=error_class_for(r["status"]))]
+                             parsed=parsed, error_class=classify_status(r["status"], params))]

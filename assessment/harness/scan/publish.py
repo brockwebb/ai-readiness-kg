@@ -40,6 +40,12 @@ FIND_EVENT = "finding_derived"
 #: append-only admission that the evidence is gone — and it is the ONLY thing that licenses
 #: such a Finding to sit on the log. See `write_events`.
 UNRETAINED_EVENT = "finding_evidence_unretained"
+#: `cc_tasks/2026-09-07_scan_harness_v3.md` §1.2. The same append-only shape one layer down: an
+#: Observation's `error_class` was misfiled by a fallback the closed set gave no better answer
+#: to, and the line is never edited (its `obs_id` is DERIVED from that class, so an edit would
+#: re-identify the record and orphan the Findings citing it). The overlay carries the class it
+#: should have had; the projection reads it and keeps the recorded one beside it.
+RECLASSIFIED_EVENT = "observation_error_reclassified"
 
 
 def batch_for(payload: dict) -> int:
@@ -180,13 +186,19 @@ def project() -> dict:
     #: check permanently non-zero and therefore meaningless.
     counts = {"observations": 0, "findings": 0, "rules": 0, "observed_on": 0, "supports": 0,
               "ruled_by": 0, "observed_on_missing_document": 0, "control_observations": 0,
-              "host_observations": 0, "findings_evidence_unretained": 0}
+              "host_observations": 0, "findings_evidence_unretained": 0,
+              "observations_error_reclassified": 0}
     # Read the annotations BEFORE the replay, because an annotation may be appended to a later
     # shard than the Finding it corrects — that is what an append-only correction is — and a
     # single forward pass would project the Finding before it had seen the event that qualifies
     # it. `edge_endpoint_alias` in batch-005 has the same shape for the same reason.
-    unretained = {ev.get("finding_id") for ev in eventlog.replay()
-                  if ev.get("event_type") == UNRETAINED_EVENT}
+    unretained, reclassified = set(), {}
+    for ev in eventlog.replay():
+        t = ev.get("event_type")
+        if t == UNRETAINED_EVENT:
+            unretained.add(ev.get("finding_id"))
+        elif t == RECLASSIFIED_EVENT:
+            reclassified[ev["obs_id"]] = ev["error_class"]
     try:
         with driver.session(database=cfg["neo4j"]["database"]) as s:
             pred = " OR ".join(f"n:{l}" for l in SCAN_LABELS)
@@ -198,14 +210,19 @@ def project() -> dict:
                           "o.indicator_code = $code, o.surface_doc_id = $doc, "
                           "o.captured_at = $at, o.collector = $col, "
                           "o.evidence_hash = $hash, o.raw_ref = $ref, "
-                          "o.error_class = $err, o.params_hash = $ph",
+                          "o.error_class = $err, o.error_class_recorded = $err0, "
+                          "o.error_reclassified = $recl, o.params_hash = $ph",
                           id=ev["obs_id"], leg=ev["leg"], code=ev["spec_code"],
                           doc=ev["target_doc_id"], at=ev["captured_at"],
                           col=ev["collector"],
                           hash=(ev.get("response") or {}).get("body_sha256"),
                           ref=(ev.get("response") or {}).get("body_path"),
-                          err=ev.get("error_class"), ph=ev["params_hash"])
+                          err=reclassified.get(ev["obs_id"], ev.get("error_class")),
+                          err0=ev.get("error_class"),
+                          recl=ev["obs_id"] in reclassified, ph=ev["params_hash"])
                     counts["observations"] += 1
+                    counts["observations_error_reclassified"] += int(
+                        ev["obs_id"] in reclassified)
                     hit = s.run("MATCH (d:Document {doc_id: $d}) RETURN count(d) AS n",
                                 d=ev["target_doc_id"]).single()["n"]
                     if hit:

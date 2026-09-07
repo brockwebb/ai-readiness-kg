@@ -151,10 +151,13 @@ def test_every_rule_covers_a_leg_that_has_a_measurement_spec():
     # 16 legs; REGISTRY holds every version ever shipped for them, which is 16 + one v2 per
     # leg the 2026-09-06 conformance review found deviating. It may only grow: a pruned entry
     # is a stored Finding that can no longer be re-derived (DD-053 §6).
-    from scan.rules import CANDIDATE_LEGS, FRAMEWORK_LEGS, V2, V3
+    from scan.rules import CANDIDATE_LEGS, FRAMEWORK_LEGS, GENERATIONS
     assert len(FRAMEWORK_LEGS) == 16, "16 framework legs; a candidate is not one of them"
     assert len(BY_LEG) == len(FRAMEWORK_LEGS) + len(CANDIDATE_LEGS)
-    assert len(REGISTRY) == 16 + len(V2) + len(V3) + len(CANDIDATE_LEGS)
+    # Summed over the GENERATIONS list rather than over four names: a fifth generation used to
+    # mean editing this arithmetic, and the version of it that was forgotten would be the one
+    # that mattered. V4 (`RULE-A1-v3`, `RULE-A3-v4`) is what found that.
+    assert len(REGISTRY) == sum(len(g) for g in GENERATIONS) + len(CANDIDATE_LEGS)
     assert {REGISTRY[r].LEG for r in REGISTRY} == set(BY_LEG)
 
 
@@ -321,7 +324,11 @@ def test_the_cycles_own_validity_verdict_is_on_the_record():
     from scan.rules import CURRENT
     assert ok and e5.rule_id == CURRENT["E5"]
     e5_obs = [o for o in control_obs if o.leg == "E5"]
-    assert len(e5_obs) == 2, "one E5 Observation per fixture"
+    # One per fixture, counted from the pre-registered table rather than from a literal `2`:
+    # `cc_tasks/2026-09-07_scan_harness_v3.md` §1.4 added a third and a fourth fixture, and a
+    # hard-coded count is a test that has to be edited every time the control set grows.
+    n_fixtures = len(params["e5_control"]["expected_verdicts"])
+    assert len(e5_obs) == n_fixtures, "one E5 Observation per fixture"
     assert set(e5.evidence) == {o.obs_id for o in e5_obs}
     # And the fixture evidence the per-rule control Findings rest on is retained alongside it,
     # or those Findings could never be re-derived.
@@ -344,10 +351,15 @@ def test_merging_controls_replaces_them_rather_than_accumulating(tmp_path):
     first = json.loads(payload.read_text(encoding="utf-8"))
     assert run_mod.merge_controls(payload, params) == 0
     second = json.loads(payload.read_text(encoding="utf-8"))
-    assert first["control_findings"] == second["control_findings"] == len(BY_LEG) * 2 - 1
+    # One Finding per control leg per fixture, plus E5's own — derived, not a literal, for the
+    # reason above. `CONTROL_FIXTURE_LEGS` is the fifteen product legs plus the candidate; E5
+    # judges the CYCLE and has no per-fixture Finding.
+    n_fixtures = len(params["e5_control"]["expected_verdicts"])
+    expected = len(run_mod.CONTROL_FIXTURE_LEGS) * n_fixtures + 1
+    assert first["control_findings"] == second["control_findings"] == expected
     assert all(f["rule_id"] in REGISTRY for f in second["control_findings_detail"])
     assert len([o for o in second["observations_detail"]
-                if o["collector"] == "control_fixture"]) == 2
+                if o["collector"] == "control_fixture"]) == n_fixtures
 
 
 def test_merging_controls_refuses_across_a_params_change(tmp_path):
@@ -432,21 +444,29 @@ def test_history_re_derives_under_the_rule_that_made_it_not_the_current_one():
 def test_every_shipped_rule_version_stays_in_the_registry():
     """A pruned REGISTRY entry is a stored Finding that can no longer be re-derived. CURRENT
     may move; REGISTRY may only grow."""
-    from scan.rules import CURRENT, REGISTRY, V1, V2
+    from scan.rules import CURRENT, GENERATIONS, REGISTRY, parse_rule_id
     assert set(CURRENT.values()) <= set(REGISTRY)
-    assert {m.RULE_ID for m in V1} <= set(REGISTRY)
-    assert {m.RULE_ID for m in V2} <= set(REGISTRY)
-    # Each generation supersedes the one before for the same leg, never the reverse.
-    from scan.rules import V3
-    for m in V2:
-        assert m.RULE_ID.endswith("-v2")
-        assert any(v.LEG == m.LEG for v in V1), f"{m.LEG} has a v2 with no v1"
-    for m in V3:
-        assert m.RULE_ID.endswith("-v3") and CURRENT[m.LEG] == m.RULE_ID
-        assert any(v.LEG == m.LEG for v in V2), f"{m.LEG} has a v3 with no v2"
-    superseded = {m.LEG for m in V3}
-    for m in V2:
-        assert (CURRENT[m.LEG] == m.RULE_ID) == (m.LEG not in superseded)
+    for gen in GENERATIONS:
+        assert {m.RULE_ID for m in gen} <= set(REGISTRY)
+    # Each generation supersedes the one before for the same leg, never the reverse — checked
+    # over the GENERATIONS list rather than over named pairs, so a new one cannot slip past by
+    # simply not being mentioned. A generation's rule need not carry that generation's version
+    # NUMBER: `RULE-A3-v4` and `RULE-A1-v3` ship together in V4 because A3 had one more
+    # ancestor than A1. What must hold is that a later generation's rule for a leg outranks
+    # every earlier one, and that the highest-ranked is the one CURRENT points at.
+    seen: dict = {}
+    for gen in GENERATIONS:
+        for m in gen:
+            prior = seen.get(m.LEG)
+            v = int(parse_rule_id(m.RULE_ID)["version"].lstrip("v"))
+            assert prior is None or v > prior, f"{m.LEG}: {m.RULE_ID} does not outrank v{prior}"
+            seen[m.LEG] = v
+    highest = {}
+    for gen in GENERATIONS:
+        for m in gen:
+            highest[m.LEG] = m.RULE_ID
+    for leg, rule_id in highest.items():
+        assert CURRENT[leg] == rule_id, f"{leg} is CURRENT on {CURRENT[leg]}, not {rule_id}"
 
 
 def test_a_v2_rule_is_a_new_module_and_v1_is_untouched():

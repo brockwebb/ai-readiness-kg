@@ -28,8 +28,10 @@ REPO = Path(__file__).resolve().parents[3]
 #: Content-addressed evidence store. Whole bodies, never truncated (§2.1).
 EVIDENCE_ROOT = REPO / "corpus" / "evidence" / "scan"
 
-ERROR_CLASSES = (None, "dns", "timeout", "http_4xx", "http_5xx", "robots_disallowed",
-                 "parse_error", "collector_unavailable")
+#: The closed set, defined once in `errors.py` beside the rule that resolves each class and
+#: the flag saying whether it means "we did not observe". Re-exported here because the
+#: dataclass validates against it and every collector already imports this module.
+from .errors import ERROR_CLASSES                                    # noqa: E402
 VERDICTS = ("pass", "fail", "not_applicable", "error")
 
 

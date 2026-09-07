@@ -21,10 +21,11 @@ REPO = HARNESS.parents[1]
 sys.path.insert(0, str(HARNESS))
 sys.path.insert(0, str(REPO))
 
+from scan import errors as _errors                             # noqa: E402
 from scan import load_params                                   # noqa: E402
 from scan.model import Observation, params_hash                # noqa: E402
 from scan.rules import (CANDIDATE_LEGS, CURRENT, FRAMEWORK_LEGS,   # noqa: E402
-                        judge as judge_rule)
+                        consumes, judge as judge_rule)
 from scan.runner import collect_leg                            # noqa: E402
 
 FRAMEWORK = REPO / "framework" / "ai_readiness_framework.json"
@@ -36,6 +37,36 @@ def out_paths(params: dict) -> tuple:
     name = params["cycle"]["name"]
     return (REPO / "state" / f"{name}.json",
             REPO / "state" / f"{name}_controls.json")
+
+
+def refuse_clobber(path: Path, params: dict) -> None:
+    """Refuse to write over a payload measured under DIFFERENT parameters.
+
+    The output path is derived from `cycle.name`, and a params change that leaves the name
+    alone therefore points a NEW cycle at an OLD cycle's file. That is not hypothetical: on
+    2026-09-07 a `--controls-only` run under the new `finding_identity`/`link_probe` parameters
+    overwrote `state/scan_2026-09-07_controls.json`, which is a registered DataFile and the
+    stored evidence the re-derivation gate compares that cycle against
+    (`cc_tasks/2026-09-07_scan_harness_v3.md` RESULT §5). It was recovered from git; nothing
+    should have to be.
+
+    CLAUDE.md §11: a new version gets a new NAME. So this refuses and names the fix — move
+    `cycle.name` — rather than silently destroying the evidence of a measurement that can
+    never be taken again.
+    """
+    if not path.is_file():
+        return
+    try:
+        prior = json.loads(path.read_text(encoding="utf-8")).get("params_hash")
+    except (OSError, json.JSONDecodeError):
+        return
+    now = params_hash(params)
+    if prior and prior != now:
+        raise SystemExit(
+            f"REFUSING to overwrite {path.relative_to(REPO)}: it holds a cycle measured under "
+            f"params_hash {prior[:12]}… and these params are {now[:12]}…. A measurement under "
+            f"different parameters is a different cycle and needs its own `cycle.name` "
+            f"(DD-041, CLAUDE.md §11).")
 
 
 #: The scaffold's smoke-run payload. Kept as a name so the re-derivation gate can still be
@@ -60,24 +91,62 @@ def specs() -> dict:
             if "MeasurementSpec" in n["labels"]}
 
 
+def _collect(leg: str, spec: dict, target: dict, params: dict, fetcher) -> list:
+    """One leg's observations, with a collector defect RECORDED rather than raised."""
+    try:
+        return collect_leg(spec, target, params, fetcher)
+    except Exception as exc:                                  # a collector defect, recorded
+        return [Observation.make(leg, leg, target["doc_id"], target["url"], "runner", "0.1.0",
+                                 params, {"method": "GET", "url": target["url"]},
+                                 {"status": None, "headers": {}, "body_sha256": None,
+                                  "body_path": None, "bytes": 0, "elapsed_ms": 0,
+                                  "error": f"{type(exc).__name__}: {exc}"},
+                                 error_class="collector_unavailable")]
+
+
 def run_surface(sp: dict, target: dict, params: dict, legs: list, fetcher=None) -> tuple:
+    """Observe every leg of one surface, then judge each with the rule its leg is CURRENTLY on.
+
+    Shared legs (`rules.SHARED_LEGS`) are collected ONCE and handed to every rule that declares
+    it consumes them, which is how A1 and A3 stopped HEADing the same 25 links twice
+    (`cc_tasks/2026-09-07_scan_harness_v3.md` §1.3). The grouping is `rules.consumes`, the same
+    function `rederive.py` uses — a cycle and a re-derivation that grouped differently would
+    produce different `finding_id`s from identical evidence.
+    """
     obs, findings = [], []
-    for leg in legs:
-        spec = sp.get(leg)
-        if spec is None:
-            continue
-        try:
-            o = collect_leg(spec, target, params, fetcher)
-        except Exception as exc:                              # a collector defect, recorded
-            o = [Observation.make(leg, leg, target["doc_id"], target["url"], "runner", "0.1.0",
-                                  params, {"method": "GET", "url": target["url"]},
-                                  {"status": None, "headers": {}, "body_sha256": None,
-                                   "body_path": None, "bytes": 0, "elapsed_ms": 0,
-                                   "error": f"{type(exc).__name__}: {exc}"},
-                                  error_class="collector_unavailable")]
+    wanted = [l for l in legs if sp.get(l) is not None]
+    shared_legs = sorted({c for l in wanted for c in consumes(CURRENT[l])})
+    shared: dict = {}
+    for sl in shared_legs:
+        o = _collect(sl, {"leg": sl}, target, params, fetcher)
+        shared[sl] = o
         obs += o
-        findings.append(judge_rule(CURRENT[leg], o, params))
+    for leg in wanted:
+        o = _collect(leg, sp[leg], target, params, fetcher)
+        obs += o
+        group = o + [x for c in consumes(CURRENT[leg]) for x in shared.get(c, [])]
+        findings.append(judge_rule(CURRENT[leg], group, params))
     return obs, findings
+
+
+def expected_verdict(table, leg: str) -> str:
+    """The verdict a fixture's PRE-REGISTERED table expects for one leg.
+
+    A scalar means every leg expects it. A mapping means a `default` plus per-leg exceptions,
+    which two of the four fixtures need: on `refuses_identified_client` the legs that behave
+    DIFFERENTLY from the rest (A4 and A11-declared read the declared layer, which IS served;
+    A12 reads the disagreement) are the whole point of the fixture, and a blanket expectation
+    would hide exactly the branches it exists to exercise.
+
+    A mapping with no `default` is a hard error rather than a shrug: a leg the table forgot
+    would otherwise be a leg with no expectation, which is a control that cannot fail.
+    """
+    if not isinstance(table, dict):
+        return table
+    if "default" not in table:
+        raise SystemExit(f"REFUSING: expected-verdict table {sorted(table)} has no `default`; "
+                         f"a leg with no expectation is a control that cannot fail")
+    return table.get(leg, table["default"])
 
 
 def run_controls(params: dict) -> tuple:
@@ -86,7 +155,7 @@ def run_controls(params: dict) -> tuple:
     from scan.manners import Fetcher
     sp = specs()
     all_findings, control_obs, fixture_obs = [], [], []
-    for fixture, expected in params["e5_control"]["expected_verdicts"].items():
+    for fixture, table in params["e5_control"]["expected_verdicts"].items():
         with FixtureServer(fixture) as base:
             target = {"doc_id": f"control:{fixture}", "url": f"{base}/index.html"}
             obs, findings = run_surface(sp, target, params, CONTROL_FIXTURE_LEGS,
@@ -96,14 +165,19 @@ def run_controls(params: dict) -> tuple:
         # matters most — they are what licenses the cycle.
         fixture_obs += obs
         all_findings += findings
-        unexpected = [f"{f.leg}={f.verdict}" for f in findings if f.verdict != expected]
+        unexpected = [f"{f.leg}={f.verdict} (expected {expected_verdict(table, f.leg)})"
+                      for f in findings if f.verdict != expected_verdict(table, f.leg)]
         control_obs.append(Observation.make(
             "E5", "E5", f"control:{fixture}", f"fixture://{fixture}", "control_fixture",
             "0.1.0", params, {"method": "FIXTURE", "url": f"fixture://{fixture}"},
             {"status": 200, "headers": {}, "body_sha256": None, "body_path": None,
              "bytes": 0, "elapsed_ms": 0},
-            parsed={"fixture": fixture, "expected": expected,
+            parsed={"fixture": fixture, "expected": table,
                     "verdicts": {f.leg: f.verdict for f in findings},
+                    # Every error class the fixture produced, so the control gate can assert
+                    # that a NEW class is actually reachable — a class nothing can produce is
+                    # a class nobody can trust a zero from (§1.2, §1.4).
+                    "error_classes": sorted({o.error_class for o in obs if o.error_class}),
                     "unexpected": unexpected}))
     e5 = judge_rule(CURRENT["E5"], control_obs, params)
     return all_findings, e5, control_obs + fixture_obs, e5.verdict == "pass"
@@ -248,6 +322,7 @@ def main(argv=None) -> int:
             "control_findings_detail": [f.to_dict() for f in cf] + [e5.to_dict()],
             "observations_detail": [o.to_dict() for o in control_obs],
         }
+        refuse_clobber(controls_out, params)
         controls_out.write_text(json.dumps(payload, indent=1, default=str) + "\n",
                                 encoding="utf-8")
         print(json.dumps({k: v for k, v in payload.items()
@@ -310,6 +385,14 @@ def main(argv=None) -> int:
         "findings": len(all_find), "observations": len(all_obs),
         "verdict_counts": {v: sum(1 for f in all_find if f.verdict == v)
                            for v in ("pass", "fail", "not_applicable", "error")},
+        # Every class the cycle produced, and `unknown` broken out on its own line
+        # (`cc_tasks/2026-09-07_scan_harness_v3.md` §1.2). `unknown` is the ONLY remainder the
+        # classifier has, so a cycle that produced any is a cycle whose map is missing a rule —
+        # a number that has to be looked at, not a bucket things quietly land in. Every class
+        # is listed, zeros included, so a class that stopped appearing is visible too.
+        "error_class_counts": {c: sum(1 for o in all_obs if o.error_class == c)
+                               for c in _errors.ERROR_CLASSES},
+        "error_class_unknown": sum(1 for o in all_obs if o.error_class == "unknown"),
         "legs_erroring_on_every_surface": [l for l, n in by_leg_err.items()
                                            if rows and n == len(rows)],
         "matrix": rows,
@@ -318,6 +401,7 @@ def main(argv=None) -> int:
         "observations_detail": [o.to_dict() for o in all_obs] + [o.to_dict() for o in control_obs],
     }
     cycle_out, _ = out_paths(params)
+    refuse_clobber(cycle_out, params)
     cycle_out.write_text(json.dumps(summary, indent=1, default=str) + "\n", encoding="utf-8")
     print(json.dumps({k: v for k, v in summary.items()
                       if k not in ("matrix", "findings_detail", "observations_detail",
