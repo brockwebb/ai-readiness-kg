@@ -1,0 +1,50 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Control Estimates</title>
+<link rel="latest-version" href="/estimates-latest.csv">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Dataset","name":"Control Estimates",
+ "description":"A control product with margins of error, published as CSV and JSON.",
+ "license":"https://creativecommons.org/publicdomain/zero/1.0/",
+ "dateModified":"2026-09-01","datePublished":"2026-01-15",
+ "distribution":[{"@type":"DataDownload","encodingFormat":"text/csv",
+   "contentUrl":"http://127.0.0.1:54563/estimates.csv"}]}
+</script></head><body>
+<h1>Control Estimates</h1>
+<p>Download: <a href="/estimates.csv">estimates.csv</a> &middot; <a href="/estimates.json">JSON</a>
+ &middot; <a href="/bulk/estimates-2026.zip">whole-product archive</a>
+ &middot; <a href="/estimates-latest.csv">Latest release</a></p>
+<p>API: <a href="/openapi.json">OpenAPI</a> &middot; <a href="/llms.txt">llms.txt</a></p>
+<p><a href="/methodology.html">Methodology</a> &middot; <a href="/changelog.json">Changelog</a></p>
+<table><thead><tr><th>Geography</th><th>Estimate</th><th>Margin of error</th></tr></thead>
+<tbody><tr><td>Denver County</td><td>72,345</td><td>&plusmn;1,820</td></tr></tbody></table>
+<h2>About these estimates</h2>
+
+<p>These control estimates are produced from a stratified probability sample of housing units
+drawn independently in each geography. Sampling strata are defined by county and by tenure,
+and the sample is allocated across strata in proportion to the square root of stratum size, so
+that small geographies retain enough sample to support a published estimate. Weighting
+proceeds in three stages: a base weight equal to the inverse of the selection probability, a
+non-response adjustment computed within weighting class, and a post-stratification adjustment
+to independent population controls.</p>
+<p>Every published estimate carries a margin of error at the ninety percent confidence level.
+The margin of error is derived from a successive-difference replication variance estimate with
+eighty replicate weights. Users combining estimates across geographies should not add margins
+of error directly; the covariance between estimates drawn from the same sample is not zero and
+the resulting interval would be too wide. The published replicate weights allow a correct
+variance estimate for any derived quantity.</p>
+<p>Estimates are suppressed where the unweighted sample count falls below the disclosure
+threshold, or where the estimated coefficient of variation exceeds the publication ceiling.
+A suppressed cell is published as a reserved code rather than omitted, so that a machine
+reading the file can distinguish a suppressed value from a missing one. The reserved codes and
+their meanings are listed in the accompanying data dictionary and repeated in the column
+descriptions of every distribution.</p>
+<p>Revisions follow a published schedule. A scheduled revision replaces the estimate for a
+prior reference period when new source data become available; an unscheduled revision corrects
+an error and is announced in the changelog with a revision class of correction. Both kinds of
+revision preserve the identifier of the affected dataset, so a consumer holding a prior
+vintage can determine what changed without re-downloading the whole product.</p>
+<p>Questions about methodology, including requests for the replicate weights or for the
+variance estimation code, should be directed to the data desk. The methodology document is
+maintained alongside the product and is versioned with it.</p>
+
+<p>License: <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0</a></p>
+</body></html>

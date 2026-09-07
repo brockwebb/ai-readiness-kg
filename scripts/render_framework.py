@@ -45,6 +45,13 @@ def rows_from_json(g: dict) -> list:
     out, g1_legs = [], {}
     for n in inds:
         p = n["properties"]
+        # A CANDIDATE is not the framework. It renders into its own table (`candidate_rows`),
+        # never into the criterion tables, because a reader scanning the A table must not have
+        # to check a status column to know whether a row is part of the instrument. Promotion
+        # is an operator decision (DD-054); until it happens, the separation is the whole
+        # mechanism by which the distinction survives contact with a reader.
+        if p.get("status") == "candidate":
+            continue
         if p.get("g1_leg_of"):
             g1_legs[p["code"]] = p
             continue
@@ -62,6 +69,37 @@ def rows_from_json(g: dict) -> list:
                                       int(re.sub(r"\D", "", p["code"]) or 0)))
 
 
+def candidate_rows(g: dict) -> list:
+    """Candidate indicators, in code order. Kept out of `rows_from_json` on purpose."""
+    out = [n["properties"] for n in g["nodes"]
+           if "AssessmentIndicator" in n["labels"]
+           and n["properties"].get("status") == "candidate"]
+    return sorted(out, key=lambda p: p["code"])
+
+
+CANDIDATE_HEADING = "### Candidate indicators (not part of the framework)"
+CANDIDATE_NOTE = (
+    "Proposed but **not adopted**. A candidate is not counted in any criterion, does not "
+    "appear in the tables above, and is not counted in any progress fraction. Promotion to "
+    "the framework is an operator decision (DD-054). Each row states where it came from, "
+    "because a candidate found by the instrument measuring itself has different evidentiary "
+    "standing from one crosswalked out of a published framework.")
+
+
+def render_candidate_table(g: dict) -> str:
+    rows = candidate_rows(g)
+    if not rows:
+        return ""
+    out = [CANDIDATE_HEADING, "", CANDIDATE_NOTE, "",
+           "| Code | Construct | Candidate indicator | Type | Evidence | Tier | Where it came from |",
+           "|---|---|---|---|---|---|---|"]
+    for p in rows:
+        out.append(f"| {p['code']} | {p['construct']} | {p['indicator']} | {p['type']} | "
+                   f"{p['evidence_raw']} | {p.get('tier_raw', p['tier'])} | "
+                   f"{p.get('candidate_provenance', '')} |")
+    return "\n".join(out) + "\n"
+
+
 def render_row(p: dict) -> str:
     """The Tier cell is rendered from `tier_raw`, verbatim. Rendering the ENUM and re-wrapping
     it in backticks is how the first round trip failed: A11's cell carries prose and a second
@@ -71,8 +109,17 @@ def render_row(p: dict) -> str:
 
 
 def skeleton_rows(text: str) -> dict:
+    """Indicator rows from the criterion tables ONLY.
+
+    The candidate table's rows look identical to a criterion row — same leading code cell —
+    so a reader of this function that did not stop at the candidate heading would read A12 back
+    as a framework indicator and fail the round trip against a JSON that correctly excludes it.
+    Truncating at the heading is what keeps "candidate" from leaking back in through the
+    projection it was deliberately kept out of.
+    """
+    head = text.split(CANDIDATE_HEADING, 1)[0]
     out = {}
-    for line in text.splitlines():
+    for line in head.splitlines():
         m = re.match(r"^\|\s*([A-G]\d{1,2})\s*\|", line)
         if m:
             out[m.group(1)] = line
@@ -115,8 +162,12 @@ def main(argv=None) -> int:
         else:
             diffs.append(entry)
 
+    cands = candidate_rows(g)
     report = {"task": TASK, "indicator_rows_in_skeleton": len(original),
               "indicator_rows_rendered": len(rendered),
+              "candidate_indicators": [p["code"] for p in cands],
+              "candidates_in_criterion_tables": sorted(
+                  set(p["code"] for p in cands) & set(rendered)),
               "unexplained_diffs": diffs, "explained_diffs": explained,
               "gate_passed": not diffs}
     REPORT.write_text(json.dumps(report, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
@@ -129,8 +180,17 @@ def main(argv=None) -> int:
         for code, line in rendered.items():
             if code in original and code != "G1":
                 text = text.replace(original[code], line)
+        block = render_candidate_table(g)
+        if block:
+            start = text.find(CANDIDATE_HEADING)
+            if start == -1:
+                text = text.rstrip("\n") + "\n\n" + block
+            else:
+                end = text.find("\n## ", start)
+                text = text[:start] + block + (text[end:] if end != -1 else "\n")
         SKELETON.write_text(text, encoding="utf-8")
-        print("skeleton tables rewritten from the JSON")
+        print(f"skeleton tables rewritten from the JSON"
+              f"{f'; {len(cands)} candidate row(s) in their own table' if block else ''}")
     return 0 if not diffs else 1
 
 

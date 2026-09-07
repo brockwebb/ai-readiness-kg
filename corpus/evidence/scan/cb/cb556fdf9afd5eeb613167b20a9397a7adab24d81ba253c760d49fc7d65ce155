@@ -1,0 +1,1744 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Explore Data | NCSES | NSF</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=11" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta charset="UTF-8" />
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+	<meta name="description" content="Explore Data" />
+	<link rel="shortcut icon" href="/resources/assets/images/statistics/favicon.png" type="image/x-icon" />
+    <link rel="preload" as="font" type="font/woff2" href="/resources/assets/fonts/fontawesome-webfont.woff2?v=4.7.0" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="/resources/assets/css/pages/statistics/bootstrap.min.css" />
+	<script src="/resources/assets/js/pages/statistics/statistics.concat.js"></script>
+	<link rel="stylesheet" href="/resources/assets/css/core/gov-banner.css?v=2026.06.00" />
+	<script async src="/resources/assets/js/core/gov-banner.js?v=2026.06.00"></script>
+
+
+		<link rel="preload" as="font" type="font/woff2" href="/resources/assets/fonts/fontawesome-webfont.woff2?v=4.7.0" crossorigin="true"/>
+		<link rel="stylesheet" href="/resources/assets/css/pages/statistics/explore-data-page.css?v=2026.06.00" />
+	</head>
+	<body class="container-fluid">
+		<a role="link" id="skip-link" tabindex="0" class="sr-only skip-link">Skip to Main Content</a>
+		<header id="main-header" class="header">
+	<section id="gov-banner" aria-label="Official website of the United States government">
+		<div role="heading" id="gov-banner-header">
+			<p>
+				<img aria-hidden="true" class="gov-banner-flag" src="/resources/assets/images/core/gov-banner/us_flag_small.png" alt="United States Flag" />
+				An official website of the United States government
+			</p>
+			<button type="button" id="gov-banner-toggle" aria-expanded="false" aria-controls="gov-banner-body">
+				<span>Here’s how you know</span>
+			</button>
+		</div>
+		<div id="gov-banner-body" hidden>
+			<div class="gov-banner-item">
+				<img src="/resources/assets/images/core/gov-banner/icon-dot-gov.svg" role="img" alt="Gov building" aria-hidden="true" />
+				<p>
+					<strong>Official websites use .gov</strong><br />
+					A <strong>.gov</strong> website belongs to an official government organization in the United States.
+				</p>
+			</div>
+			<div class="gov-banner-item">
+				<img src="/resources/assets/images/core/gov-banner/icon-https.svg" role="img" alt="Locked padlock icon" aria-hidden="true" />
+				<p>
+					<strong>Secure .gov websites use HTTPS</strong><br />
+					A <strong>lock</strong> ( <span class="gov-banner-lock">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="52" height="64" viewBox="0 0 52 64" role="img" aria-labelledby="banner-lock-description-default" focusable="false">
+                          <title id="banner-lock-title-default">Lock</title>
+                          <desc id="banner-lock-description-default">Locked padlock icon</desc>
+                          <path fill="#000000" fill-rule="evenodd" d="M26 0c10.493 0 19 8.507 19 19v9h3a4 4 0 0 1 4 4v28a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V32a4 4 0 0 1 4-4h3v-9C7 8.507 15.507 0 26 0zm0 8c-5.979 0-10.843 4.77-10.996 10.712L15 19v9h22v-9c0-6.075-4.925-11-11-11z" />
+                        </svg>
+                    </span> ) or <strong>https://</strong> means you’ve safely connected to
+					the .gov website. Share sensitive information only on official,
+					secure websites.
+				</p>
+			</div>
+		</div>
+	</section>
+
+		<div id="main-header-container" class="main-header-container">
+			<div class="header-banner">
+    <div class="banner-icon-block header">
+        <a class="logo-link nsf-logo"  href="https://www.nsf.gov/" tabindex="0" rel="noopener">
+            <img src="/resources/assets/images/master-template/nsf-logo.svg" alt="National Science Foundation home"/>
+        </a>
+        <img aria-hidden="true" src="/resources/assets/images/master-template/pipe.svg" alt="Separator"/>
+        <a class="logo-link ncses-logo"  href="/" tabindex="0" rel="noopener">
+            <img src="/resources/assets/images/master-template/ncses-logo.svg" alt="National Center for Science and Engineering Statistics home"/>
+        </a>
+    </div>
+    <div class="banner-title-block header">
+        <a class="banner-link ncses"  href="/" tabindex="0" rel="noopener">
+            <div>National Center for Science and Engineering Statistics</div>
+        </a>
+    </div>
+
+				<button id="mobile-menu-toggle" class="mobile-menu-button" data-toggle-target="header-nav" aria-label="Toggle navigation menu" tabindex="0" type="button">
+					<label class="collapsed" for="mobile-menu-toggle">MENU</label>
+					<span class="expanded"><i class="st-close-main-nav"></i></span>
+					<label class="expanded" for="mobile-menu-toggle">CLOSE</label>
+				</button>
+				<nav id="header-nav" aria-label="Main Site Navigation" data-toggle-controller="mobile-menu-toggle" hidden>
+					<ul id="header-nav-menu">
+						<li>
+							<button id="about-panel-controller" data-toggle-target="about-panel" type="button">About</button>
+							<div id="about-panel" class="menu-panel" data-toggle-controller="about-panel-controller" hidden>
+								<div class="panel-info">
+									<div>About</div>
+									<p>Learn about NCSES's mission, organization, and responsibilities within the federal statistical system.</p>
+								</div>
+								<ul class="two-columns">
+									<li>
+    <a  href="/about" tabindex="0" aria-label="About N C S E S" rel="noopener">About NCSES</a>
+</li>
+									<li>
+    <a  href="/about/data-governance" tabindex="0" rel="noopener">Data Governance</a>
+</li>
+									<li>
+    <a  href="/about/quality-transparency" tabindex="0" rel="noopener">Quality & Transparency</a>
+</li>
+									<li>
+    <a  href="/about/research" tabindex="0" rel="noopener">Research</a>
+</li>
+									<li>
+    <a  href="/about/whats-new" tabindex="0" aria-label="Whats new from N C S E S" rel="noopener">What's New from NCSES</a>
+</li>
+									<li>
+    <a  href="/about/contact" tabindex="0" rel="noopener">Contact</a>
+</li>
+								</ul>
+							</div>
+						</li>
+						<li>
+							<button id="aoi-panel-controller" data-toggle-target="aoi-panel" type="button">Areas of Interest</button>
+							<div id="aoi-panel" class="menu-panel" data-toggle-controller="aoi-panel-controller" hidden>
+								<div class="panel-info">
+									<div>Areas of Interest</div>
+									<p>NCSES's mission focuses on four core areas of interest related to the U.S. science and engineering enterprise. Explore each area to discover related data and products.</p>
+								</div>
+								<ul class="two-columns">
+									<li>
+    <a  href="/interest-areas" tabindex="0" rel="noopener">Areas of Interest Overview</a>
+</li>
+									<li>
+    <a  href="/interest-areas/innovation-global-competitiveness" tabindex="0" rel="noopener">Innovation & Global Competitiveness</a>
+</li>
+									<li>
+    <a  href="/interest-areas/research-development" tabindex="0" rel="noopener">Research & Development Funding & Performance</a>
+</li>
+									<li>
+    <a  href="/interest-areas/science-engineering-workforce" tabindex="0" rel="noopener">Science & Engineering Workforce</a>
+</li>
+									<li>
+    <a  href="/interest-areas/stem" tabindex="0" rel="noopener">STEM Education</a>
+</li>
+								</ul>
+							</div>
+						</li>
+						<li>
+							<button id="s-a-panel-controller" data-toggle-target="s-a-panel" type="button">Surveys & Analysis</button>
+							<div id="s-a-panel" class="menu-panel" data-toggle-controller="s-a-panel-controller" hidden>
+								<div class="panel-info">
+									<div>Surveys & Analysis</div>
+									<p>Browse NCSES's surveys of the science and engineering enterprise and explore related reports and data collections.</p>
+								</div>
+								<ul class="two-columns">
+									<li>
+    <a  href="/surveys-analysis" tabindex="0" rel="noopener">Surveys & Analysis Overview</a>
+</li>
+									<li>
+    <a  href="/surveys" tabindex="0" rel="noopener">All Surveys</a>
+</li>
+									<li>
+    <a  href="/schedule-of-release-dates" tabindex="0" rel="noopener">Schedule of Release Dates</a>
+</li>
+									<li>
+    <a  href="/search?query=&amp;excludePubAssets=true&amp;pageSize=40&amp;sort=date" tabindex="0" rel="noopener">Latest Releases</a>
+</li>
+									<li>
+    <a  href="/corrections" tabindex="0" rel="noopener">Corrections</a>
+</li>
+								</ul>
+							</div>
+						</li>
+						<li>
+							<button id="explore-data-panel-controller" data-toggle-target="explore-data-panel" type="button">Data</button>
+							<div id="explore-data-panel" class="menu-panel" data-toggle-controller="explore-data-panel-controller" hidden>
+								<div class="panel-info">
+									<div>Explore Data</div>
+									<p>Discover and analyze NCSES data through our collection of interactive data tools, profiles, and related resources.</p>
+								</div>
+								<ul class="two-columns">
+									<li>
+    <a  href="/explore-data" tabindex="0" class="active" rel="noopener">Explore Data Overview</a>
+</li>
+									<li>
+    <a  href="https://ncsesdata.nsf.gov/explorer" tabindex="0" rel="noopener">Data Explorer</a>
+</li>
+                                    <li>
+    <a  href="https://ncsesdata.nsf.gov/builder/welcome?type=chart" tabindex="0" rel="noopener">Chart Builder</a>
+</li>
+                                    <li>
+    <a  href="https://ncsesdata.nsf.gov/builder/welcome?type=table" tabindex="0" rel="noopener">Table Builder</a>
+</li>
+									<li>
+    <a  href="https://ncsesdata.nsf.gov/profiles" tabindex="0" rel="noopener">Academic Institution Profiles</a>
+</li>
+									<li>
+    <a  href="https://ncsesdata.nsf.gov/indicators/explorer" tabindex="0" rel="noopener">Indicators Explorer</a>
+</li>
+									<li>
+    <a  href="https://ncsesdata.nsf.gov/indicators/states" tabindex="0" rel="noopener">State Indicators</a>
+</li>
+									<li>
+    <a  href="/explore-data/microdata" tabindex="0" rel="noopener">Public Use Files</a>
+</li>
+									<li>
+    <a  href="/licensing" tabindex="0" rel="noopener">Restricted Use Data Licensing</a>
+</li>
+								</ul>
+							</div>
+						</li>
+						<li>
+							<button id="initiatives-resources-panel-controller" data-toggle-target="initiatives-resources-panel" type="button">Initiatives & Resources</button>
+							<div id="initiatives-resources-panel" class="menu-panel" data-toggle-controller="initiatives-resources-panel-controller" hidden>
+								<div class="panel-info">
+									<div>Initiatives & Resources</div>
+									<p>Learn about NCSES's crosscutting initiatives and projects and browse our collection of educational resources. </p>
+								</div>
+								<ul class="two-columns">
+									<li>
+    <a  href="/funding-opportunities" tabindex="0" rel="noopener">Funding Opportunities</a>
+</li>
+									<li class="with-sublist">
+    <a  href="/initiatives" tabindex="0" rel="noopener">Initiatives Overview</a>
+
+										<ul>
+											<li>
+    <a class="sub"  href="/initiatives/cybersecurity-workforce-data-initiative" tabindex="0" rel="noopener"><span>Cybersecurity Workforce Data Initiative</span></a>
+</li>
+											<li>
+    <a class="sub"  href="/initiatives/national-secure-data-service-demo" tabindex="0" rel="noopener"><span>National Secure Data Service Demo</span></a>
+</li>
+											<li>
+    <a class="sub"  href="/initiatives/standard-application-process" tabindex="0" rel="noopener"><span>Standard Application Process</span></a>
+</li>
+										</ul>
+									</li>
+									<li class="xl-only" aria-hidden="true"></li>
+									<li class="with-sublist">
+    <a  href="/resource" tabindex="0" rel="noopener">Resources Overview</a>
+
+										<ul>
+											<li>
+    <a class="sub"  href="/resource/library" tabindex="0" rel="noopener"><span>Resource Library</span></a>
+</li>
+											<li>
+    <a class="sub"  href="https://now.nsf.gov/ncses" tabindex="0" rel="noopener"><span>Knowledge Base</span></a>
+</li>
+											<li>
+    <a class="sub"  href="/resource/master-gov-lists-ffrdc" tabindex="0" rel="noopener"><span>Master Government List of FFRDCs</span></a>
+</li>
+											<li>
+    <a class="sub"  href="/resource/glossary" tabindex="0" rel="noopener"><span>Glossary</span></a>
+</li>
+											<li>
+    <a class="sub"  href="/resource/faqs" tabindex="0" rel="noopener"><span>FAQ</span></a>
+</li>
+										</ul>
+									</li>
+								</ul>
+							</div>
+						</li>
+					</ul>
+    <div class="search-box">
+        <form id="mobile-ncses-search" class="search-box-form" method="GET" accept-charset="UTF-8" action="/search">
+            <input autocomplete="off" type="text" class="search-box-input" placeholder="Search NCSES" name="query" aria-label="Search N C S E S">
+            <button type="submit" class="cms-fa-pro" aria-label="Submit search query"><i class="fa-solid fa-magnifying-glass"></i><span class="button-label">Search</span></button>
+        </form>
+    </div>
+
+				</nav>
+				<form id="header-search-form" method="GET" accept-charset="UTF-8" action="/search" data-toggle-controller="search-expand-button" hidden>
+					<input id="header-search-input" type="text" name="query" autocomplete="off" placeholder="Search for surveys, variables, and keywords id" />
+					<button id="header-search-form-close-button" class="st-close-main-nav" aria-label="Close search box" tabindex="0" type="button"></button>
+				</form>
+			</div>
+			<button id="search-expand-button" data-toggle-target="header-search-form" aria-label="Expand search bar" tabindex="0" type="button">
+				<span class="cms-fa-pro"><i class="fa-solid fa-magnifying-glass"></i></span>
+				<label for="search-expand-button">Search</label>
+			</button>
+			<button id="search-submit-button" aria-label="Submit search query" tabindex="0" hidden type="button">
+				<span class="cms-fa-pro"><i class="fa-solid fa-magnifying-glass"></i></span>
+				<label for="search-submit-button">Search</label>
+			</button>
+		</div>
+	</header>
+        
+            <span id="skip-link-destination"></span>
+            <article class="content clearfix">
+                
+                    
+                        
+                            <div class="narrative-text section">
+                                
+                                
+                                    <div class="container">
+                                        <div class="row">
+                                            
+                                            
+    
+        
+            
+        
+            <div class="narrative-text-content subsection ">
+                
+                
+    
+        
+            
+        
+            
+        
+    
+        
+        
+            
+        
+            <div id="s262" class="row subsection-container">
+                
+                    
+        
+            <div id="card205" class="card text-with-header" data-card-type="text-with-header">
+                
+                
+    
+    <div class="card-body">
+        <span class="card-title"><h1>Explore Data</h1></span>
+        <span class="card-content" data-property="content">
+            
+            <span><div>Explore and analyze NCSES data through our collection of data tools, profiles, and resources.&nbsp;</div><span>
+        </span>
+    </div>
+
+                
+            </div>
+        
+    
+                
+            </div>
+        
+    
+        
+    
+
+                
+            </div>
+        
+    
+        
+    
+
+                                            
+                                        </div>
+                                    </div>
+                                
+                            </div>
+                        
+                    
+                
+                
+                    
+                        
+                            <div class="explore-data-tools section">
+                                
+                                
+                                    <div class="container">
+                                        <div class="row">
+                                            
+                                            
+    
+        
+            
+        
+            <div class="explore-data-tools-header subsection col-xs-12">
+                
+                
+    
+        
+            
+        
+            <div id="s264" class="row subsection-container">
+                
+                    
+        
+            <div id="card206" class="card explore-data-tools-header" data-card-type="explore-data-tools-header">
+                
+                
+    
+    <div class="row">
+        <div class="col-xs-12 col-sm-10 col-md-6 col-lg-8 col-xxl-9 align-self-center">
+            
+    <h2 class="card-title large" data-property="title"><div>Our Data Tools</div></h2>
+    
+    
+    
+
+            <div class="summary"><div>Intuitive tools to analyze NCSES data on R&amp;D and the education and employment of the STEM workforce.</div></div>
+        </div>
+        <div class="col-xs-12 col-sm-10 col-md-6 col-lg-4 col-xxl-3 callout-container">
+            <div class="callout"><div>View our <a  href="https://ncses.nsf.gov/resource/glossary" rel="noopener" tabindex="0">Glossary</a> to better understand the differences between our data tools</div></div>
+        </div>
+    </div>
+
+                
+            </div>
+        
+    
+                
+            </div>
+        
+    
+        
+        
+            
+        
+            
+        
+    
+        
+    
+
+                
+            </div>
+        
+    
+        
+        
+            
+        
+            <div class="explore-data-tools-items subsection col-xs-12">
+                
+                
+    
+        
+            
+        
+            
+        
+    
+        
+        
+            
+        
+            <div id="s265" class="row subsection-container">
+                
+                    
+        
+            <div id="card7578" class="card explore-data-tools-item" data-card-type="tool-detail">
+                
+                
+    
+    
+        
+        
+            
+                <img data-chrono-display data-start="2026-08-05T08:00:00-04:00" data-end="2026-11-10T00:00:00-05:00" hidden
+                     class="promo-banner" src="/resources/assets/images/pages/statistics/new-banner.svg" alt="This item is new." />
+            
+        
+    
+    
+    
+    
+    <h3 class="card-title h4 mb-0 with-banner" data-property="title"><div>Indicators Explorer</div></h3>
+    
+    
+
+
+    <div class="section-border summary-container with-banner">
+        <div class="small-text"><div>Create custom visualizations using data from NCSES and Science and Engineering Indicators.<br></div></div>
+    </div>
+    <div class="section-border info-container">
+        <div class="eyebrow">Tool purpose</div>
+        <div class="small-text"><div>Access <em>Indicators </em>data<br></div></div>
+    </div>
+    <div class="section-border info-container">
+        <div class="eyebrow">Region</div>
+        <div class="small-text"><div>International and U.S. national, state</div></div>
+    </div>
+    
+    <a class="btn btn-primary arrow align-self-start"  href="https://ncsesdata.nsf.gov/indicators/explorer/" role="button" rel="noopener" tabindex="0">Explore</a>
+
+
+                
+            </div>
+        
+    
+                
+                
+                    
+        
+            <div id="card209" class="card explore-data-tools-item" data-card-type="tool-detail">
+                
+                
+    
+    
+        
+        
+            
+                <img data-chrono-display data-start="2024-12-17T14:52:00-05:00" data-end="2025-05-08T23:59:00-04:00" hidden
+                     class="promo-banner" src="/resources/assets/images/pages/statistics/updated-banner.svg" alt="This item is updated." />
+            
+        
+    
+    
+    
+    
+    <h3 class="card-title h4 mb-0 with-banner" data-property="title"><h4>Table Builder</h4></h3>
+    
+    
+
+
+    <div class="section-border summary-container with-banner">
+        <div class="small-text"><div>Create custom tables using public data from NCSES surveys and two surveys from the Department of Education.</div></div>
+    </div>
+    <div class="section-border info-container">
+        <div class="eyebrow"><div>Tool purpose</div></div>
+        <div class="small-text"><div>Tabulate NCSES data</div></div>
+    </div>
+    <div class="section-border info-container">
+        <div class="eyebrow"><div>Region</div></div>
+        <div class="small-text"><div>National and state</div></div>
+    </div>
+    
+    <a class="btn btn-primary arrow align-self-start"  href="https://ncsesdata.nsf.gov/builder/welcome?type=table" role="button" rel="noopener" tabindex="0">Explore</a>
+
+
+                
+            </div>
+        
+    
+                
+                
+                    
+        
+            <div id="card210" class="card explore-data-tools-item" data-card-type="tool-detail">
+                
+                
+    
+    
+        
+        
+            
+                <img data-chrono-display data-start="2024-12-17T14:51:00-05:00" data-end="2025-05-08T23:59:00-04:00" hidden
+                     class="promo-banner" src="/resources/assets/images/pages/statistics/updated-banner.svg" alt="This item is updated." />
+            
+        
+    
+    
+    
+    
+    <h3 class="card-title h4 mb-0 with-banner" data-property="title"><h4>Chart Builder</h4></h3>
+    
+    
+
+
+    <div class="section-border summary-container with-banner">
+        <div class="small-text"><div>Easily generate line and bar graphs using the Chart Builder.</div></div>
+    </div>
+    <div class="section-border info-container">
+        <div class="eyebrow"><div>Tool purpose</div></div>
+        <div class="small-text"><div>Visualize NCSES data</div></div>
+    </div>
+    <div class="section-border info-container">
+        <div class="eyebrow"><div>Region</div></div>
+        <div class="small-text"><div>National and state</div></div>
+    </div>
+    
+    <a class="btn btn-primary arrow align-self-start"  href="https://ncsesdata.nsf.gov/builder/welcome?type=chart" role="button" rel="noopener" tabindex="0">Explore</a>
+
+
+                
+            </div>
+        
+    
+                
+                
+                    
+        
+            <div id="card207" class="card explore-data-tools-item" data-card-type="tool-detail">
+                
+                
+    
+    
+        
+        
+            
+                <img data-chrono-display data-start="2024-12-17T14:45:00-05:00" data-end="2025-05-08T23:59:00-04:00" hidden
+                     class="promo-banner" src="/resources/assets/images/pages/statistics/updated-banner.svg" alt="This item is updated." />
+            
+        
+    
+    
+    
+    
+    <h3 class="card-title h4 mb-0 with-banner" data-property="title"><h4>Data Explorer</h4></h3>
+    
+    
+
+
+    <div class="section-border summary-container with-banner">
+        <div class="small-text"><div>Quickly discover and learn about available surveys and measures with the Data Explorer.</div></div>
+    </div>
+    <div class="section-border info-container">
+        <div class="eyebrow"><div>Tool purpose</div></div>
+        <div class="small-text"><div>Access NCSES metadata</div></div>
+    </div>
+    <div class="section-border info-container">
+        <div class="eyebrow"><div>Region</div></div>
+        <div class="small-text"><div>N/A</div></div>
+    </div>
+    
+    <a class="btn btn-primary arrow align-self-start"  href="https://ncsesdata.nsf.gov/explorer" role="button" rel="noopener" tabindex="0">Explore</a>
+
+
+                
+            </div>
+        
+    
+                
+            </div>
+        
+    
+        
+    
+
+                
+            </div>
+        
+    
+        
+    
+
+                                            
+                                        </div>
+                                    </div>
+                                
+                            </div>
+                        
+                    
+                
+                
+                    
+                        
+                            <div class="data-profiles section">
+                                
+                                
+                                    <div class="container">
+                                        <div class="row">
+                                            
+                                            
+    
+        
+            
+        
+            <div class="data-profiles-header subsection col-12">
+                
+                
+    
+        
+            
+        
+            <div id="s267" class="row subsection-container">
+                
+                    
+        
+            <div id="card211" class="card data-profiles-header-detail" data-card-type="header">
+                
+                
+    
+    <!-- header -->
+    <div class="card-body">
+        <h2 class="card-title">NCSES Data Profiles</h2>
+        
+    </div>
+
+                
+            </div>
+        
+    
+                
+            </div>
+        
+    
+        
+        
+            
+        
+            
+        
+    
+        
+    
+
+                
+            </div>
+        
+    
+        
+        
+            
+        
+            <div class="data-profiles-items subsection col-12">
+                
+                
+    
+        
+            
+        
+            
+        
+    
+        
+        
+            
+        
+            <div id="s268" class="row subsection-container">
+                
+                    
+        
+            <div id="card212" class="card data-profiles-item" data-card-type="data-profiles-item">
+                
+                
+    
+
+    <div class="card-body row top-border with-banner">
+        <div class="col-12 col-lg-6 data-profiles-body">
+            <div class="card-header">
+                <span class="st-school icon"></span>
+                
+    
+    <h3 class="card-title " data-property="title"><div>Academic Institution Profiles</div></h3>
+    
+    
+
+            </div>
+            <div class="card-text pdiv" data-property="summary"><div>Compare institution profiles to view selected data on doctorates, graduate students, funding, and expenditures. Profiles and corresponding data are based on data collections from four NCSES surveys.</div></div>
+            
+        </div>
+
+        <div class="col-12 col-lg-6 data-profiles-components">
+            
+                
+        
+            
+                <img data-chrono-display data-start="2024-12-17T12:07:00-05:00" data-end="2025-02-15T23:59:00-05:00" hidden
+                     class="promo-banner" src="/resources/assets/images/pages/statistics/updated-banner.svg" alt="This item is updated." />
+            
+        
+    
+            
+            <div class="search-container">
+                
+    
+    
+    <h4 class="card-title " data-property="title">Search by institution or <a  href="http://ncsesdata.nsf.gov/profiles/" rel="noopener" tabindex="0">view all institutions</a></h4>
+    
+
+                
+        <div class="search-box">
+            <form name="ncsesSearch" method="GET" accept-charset="UTF-8" action="https://ncsesdata.nsf.gov/profiles/site?method=search">
+                
+                <input autocomplete="off" type="text" class="search-box-input" placeholder="Search by institution name" name="n" aria-label="Search by institution name">
+                <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i><span>Search</span></button>
+                <input autocomplete="off" type="text" name="method" value="search" title="search" style="display:none;"/>
+            </form>
+        </div>
+    
+            </div>
+
+            <div class="select-container">
+                <span id="select212-label">
+                    
+    
+    
+    <h4 class="card-title " data-property="title">View institutions ranked by:</h4>
+    
+
+                </span>
+                <div>
+                    <select aria-labelledby="select212-label" class="form-select form-select-lg mb-3 col" data-select-id="select212">
+                        <option selected disabled>Select a ranking...</option>
+                        <option value="https://ncsesdata.nsf.gov/profiles/site?method=rankingBySource&amp;ds=drf">Number of earned doctorates</option>
+                        <option value="https://ncsesdata.nsf.gov/profiles/site?method=rankingBySource&amp;ds=gss">Number of Full-time graduate students</option>
+                        <option value="https://ncsesdata.nsf.gov/profiles/site?method=rankingBySource&amp;ds=herd">Total R&D expenditures</option>
+                        <option value="https://ncsesdata.nsf.gov/profiles/site?method=rankingBySource&amp;ds=fac">Research space</option>
+                        <option value="https://ncsesdata.nsf.gov/profiles/site?method=ranking">All variables, most recent year</option>
+                    </select>
+                    <button type="button" class="btn btn-primary col-2" data-select-id="select212" disabled="disabled">
+                        <a href="">Go</a>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                
+            </div>
+        
+    
+                
+                
+                    
+        
+            <div id="card214" class="card data-profiles-item" data-card-type="data-profiles-item">
+                
+                
+    
+
+    <div class="card-body row top-border with-banner">
+        <div class="col-12 col-lg-6 data-profiles-body">
+            <div class="card-header">
+                <span class="st-compare icon"></span>
+                
+    
+    <h3 class="card-title " data-property="title"><div>State Indicators</div></h3>
+    
+    
+
+            </div>
+            <div class="card-text pdiv" data-property="summary"><div>Compare 60 key indicators to understand how your state ranks against other states and the nation. State trends include science and engineering education, workforce, R&amp;D, patents and publications, and knowledge-intensive industries.&nbsp;</div></div>
+            
+        </div>
+
+        <div class="col-12 col-lg-6 data-profiles-components">
+            
+                
+        
+            
+                <img data-chrono-display data-start="2024-12-01T07:31:00-05:00" data-end="2025-01-03T00:00:00-05:00" hidden
+                     class="promo-banner" src="/resources/assets/images/pages/statistics/updated-banner.svg" alt="This item is updated." />
+            
+        
+    
+            
+            
+
+            <div class="select-container">
+                <span id="select214-label">
+                    
+    
+    
+    <h4 class="card-title " data-property="title">Start exploring <a  href="https://ncsesdata.nsf.gov/indicators/states" rel="noopener" tabindex="0">S&E State Indicators</a></h4>
+    
+
+                </span>
+                <div>
+                    <select aria-labelledby="select214-label" class="form-select form-select-lg mb-3 col" data-select-id="select214">
+                        <option selected disabled>Select a state…</option>
+                        <option value="https://ncses.nsf.gov/indicators/states/state/alabama">Alabama</option>
+                        <option value="https://ncses.nsf.gov/indicators/states/state/alaska">Alaska</option>
+                        <option value="https://ncses.nsf.gov/indicators/states/state/arizona">Arizona</option>
+                        <option value="https://ncses.nsf.gov/indicators/states/state/arkansas">Arkansas</option>
+                        <option value="https://ncses.nsf.gov/indicators/states/state/california">California</option>
+                        <option value="https://ncses.nsf.gov/indicators/states/state/colorado">Colorado</option>
+                        <option value="https://ncses.nsf.gov/indicators/states/state/connecticut">Connecticut</option>
+                        <option value="https://ncses.nsf.gov/indicators/states/state/delaware">Delaware</option>
+                        <option value="https://ncses.nsf.gov/indicators/states/state/district-of-columbia">District of Columbia</option>
+                        <option value="https://ncses.nsf.gov/indicators/states/state/florida">Florida</option>
+                        <option value="https://ncses.nsf.gov/indicators/states/state/georgia">Georgia</option>
+                        <option value="https://ncses.nsf.gov/indicators/states/state/hawaii">Hawaii</option>
+                        <option value="https://ncses.nsf.gov/indicators/states/state/idaho">Idaho</option>
+                        <option value="https://ncses.nsf.gov/indicators/states/state/illinois">Illinois</option>
+                        <option value="https://ncses.nsf.gov/indicators/states/state/indiana">Indiana</option>
+                        <option value="https://ncses.nsf.gov/indicators/states/state/iowa">Iowa</option>
+                        <option value="https://ncses.nsf.gov/indicators/states/state/kansas">Kansas</option>
+                        <option value="https://ncses.nsf.gov/indicators/states/state/kentucky">Kentucky</option>
+                        <option value="https://ncses.nsf.gov/indicators/states/state/louisiana">Louisiana</option>
+                        <option value="https://ncses.nsf.gov/indicators/states/state/maine">Maine</option>
+                        <option value="https://ncses.nsf.gov/indicators/states/state/maryland">Maryland</option>
+                        <option value="https://ncses.nsf.gov/indicators/states/state/massachusetts">Massachusetts</option>
+                        <option value="https://ncses.nsf.gov/indicators/states/state/michigan">Michigan</option>
+                        <option value="https://ncses.nsf.gov/indicators/states/state/minnesota">Minnesota</option>
+                        <option value="https://ncses.nsf.gov/indicators/states/state/mississippi">Mississippi</option>
+                        <option value="https://ncses.nsf.gov/indicators/states/state/missouri">Missouri</option>
+                        <option value="https://ncses.nsf.gov/indicators/states/state/montana">Montana</option>
+                        <option value="https://ncses.nsf.gov/indicators/states/state/nebraska">Nebraska</option>
+                        <option value="https://ncses.nsf.gov/indicators/states/state/nevada">Nevada</option>
+                        <option value="https://ncses.nsf.gov/indicators/states/state/new-hampshire">New Hampshire</option>
+                        <option value="https://ncses.nsf.gov/indicators/states/state/new-jersey">New Jersey</option>
+                        <option value="https://ncses.nsf.gov/indicators/states/state/new-mexico">New Mexico</option>
+                        <option value="https://ncses.nsf.gov/indicators/states/state/new-york">New York</option>
+                        <option value="https://ncses.nsf.gov/indicators/states/state/north-carolina">North Carolina</option>
+                        <option value="https://ncses.nsf.gov/indicators/states/state/north-dakota">North Dakota</option>
+                        <option value="https://ncses.nsf.gov/indicators/states/state/ohio">Ohio</option>
+                        <option value="https://ncses.nsf.gov/indicators/states/state/oklahoma">Oklahoma</option>
+                        <option value="https://ncses.nsf.gov/indicators/states/state/oregon">Oregon</option>
+                        <option value="https://ncses.nsf.gov/indicators/states/state/pennsylvania">Pennsylvania</option>
+                        <option value="https://ncses.nsf.gov/indicators/states/state/puerto-rico">Puerto Rico</option>
+                        <option value="https://ncses.nsf.gov/indicators/states/state/rhode-island">Rhode Island</option>
+                        <option value="https://ncses.nsf.gov/indicators/states/state/south-carolina">South Carolina</option>
+                        <option value="https://ncses.nsf.gov/indicators/states/state/south-dakota">South Dakota</option>
+                        <option value="https://ncses.nsf.gov/indicators/states/state/tennessee">Tennessee</option>
+                        <option value="https://ncses.nsf.gov/indicators/states/state/texas">Texas</option>
+                        <option value="https://ncses.nsf.gov/indicators/states/state/utah">Utah</option>
+                        <option value="https://ncses.nsf.gov/indicators/states/state/vermont">Vermont</option>
+                        <option value="https://ncses.nsf.gov/indicators/states/state/virginia">Virginia</option>
+                        <option value="https://ncses.nsf.gov/indicators/states/state/washington">Washington</option>
+                        <option value="https://ncses.nsf.gov/indicators/states/state/west-virginia">West Virginia</option>
+                        <option value="https://ncses.nsf.gov/indicators/states/state/wisconsin">Wisconsin</option>
+                        <option value="https://ncses.nsf.gov/indicators/states/state/wyoming">Wyoming</option>
+                    </select>
+                    <button type="button" class="btn btn-primary col-2" data-select-id="select214" disabled="disabled">
+                        <a href="">Go</a>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                
+            </div>
+        
+    
+                
+                
+                    
+        
+            <div id="card213" class="card data-profiles-item" data-card-type="data-profiles-item">
+                
+                
+    
+
+    <div class="card-body row top-border with-banner">
+        <div class="col-12 col-lg-6 data-profiles-body">
+            <div class="card-header">
+                <span class="st-map icon"></span>
+                
+    
+    <h3 class="card-title " data-property="title"><div>Science and Engineering State Profiles | <span style="color:#ED1F1F; font-weight: 500;">Archived</span> |</div></h3>
+    
+    
+
+            </div>
+            <div class="card-text pdiv" data-property="summary"><div>Learn about state-level data on science and engineering personnel and finances, R&amp;D performance, and federal R&amp;D obligations. All data are available for download.</div></div>
+            
+        </div>
+
+        <div class="col-12 col-lg-6 data-profiles-components">
+            
+                
+        
+            
+                <img data-chrono-display data-start="2024-05-23T09:24:00-04:00" data-end="2024-06-23T00:00:00-04:00" hidden
+                     class="promo-banner" src="/resources/assets/images/pages/statistics/updated-banner.svg" alt="This item is updated." />
+            
+        
+    
+            
+            
+
+            <div class="select-container">
+                <span id="select213-label">
+                    
+    
+    
+    <h4 class="card-title " data-property="title">View State Profiles by release</h4>
+    
+
+                </span>
+                <div>
+                    <select aria-labelledby="select213-label" class="form-select form-select-lg mb-3 col" data-select-id="select213">
+                        <option selected disabled>Select a release...</option>
+                        <option value="https://ncses.nsf.gov/archived?url=https%3A%2F%2Fwww.nsf.gov%2Fstatistics%2Fstates%2Fdownload%2Fstate-profiles-2024-05.xlsx">Science and Engineering State Profiles: Spring 2024 Update</option>
+                        <option value="https://ncses.nsf.gov/archived?url=https%3A%2F%2Fwww.nsf.gov%2Fstatistics%2Fstates%2Fdownload%2Fstate-profiles-2023-12.xlsx">Science and Engineering State Profiles: Fall 2023 Update</option>
+                        <option value="https://ncses.nsf.gov/archived?url=https%3A%2F%2Fwww.nsf.gov%2Fstatistics%2Fstates%2Fdownload%2Fstate-profiles-2023-07.xlsx">Science and Engineering State Profiles: Spring 2023 Update</option>
+                        <option value="https://ncses.nsf.gov/archived?url=https%3A%2F%2Fwww.nsf.gov%2Fstatistics%2Fstates%2Fdownload%2Fstate-profiles-2022-10.xlsx">Science and Engineering State Profiles: Fall 2022 Update</option>
+                        <option value="https://ncses.nsf.gov/archived?url=https%3A%2F%2Fwww.nsf.gov%2Fstatistics%2Fstates%2Fdownload%2Fstate-profiles-2022-06.xlsx">Science and Engineering State Profiles: Spring 2022 Update</option>
+                        <option value="https://ncses.nsf.gov/archived?url=https%3A%2F%2Fwww.nsf.gov%2Fstatistics%2Fstates%2Fdownload%2Fstate-profiles-2021-11.xlsx">Science and Engineering State Profiles: Fall 2021 Update</option>
+                        <option value="https://ncses.nsf.gov/archived?url=https%3A%2F%2Fwww.nsf.gov%2Fstatistics%2Fstates%2Fdownload%2Fstate-profiles-2021-05.xlsx">Science and Engineering State Profiles: Spring 2021 Update</option>
+                        <option value="https://ncses.nsf.gov/archived?url=https%3A%2F%2Fwww.nsf.gov%2Fstatistics%2Fstates%2Fdownload%2Fstate-profiles-2020-11.xlsx">Science and Engineering State Profiles: Fall 2020 Update</option>
+                        <option value="https://ncses.nsf.gov/archived?url=https%3A%2F%2Fwww.nsf.gov%2Fstatistics%2Fstates%2Fdownload%2Fstate-profiles-2020-04.xlsx">Science and Engineering State Profiles: Spring 2020 Update</option>
+                        <option value="https://ncses.nsf.gov/archived?url=https%3A%2F%2Fwww.nsf.gov%2Fstatistics%2Fstates%2Fdownload%2Fstate-profiles-2019-11.xlsx">Science and Engineering State Profiles: Fall 2019 Update</option>
+                        <option value="https://ncses.nsf.gov/archived?url=https%3A%2F%2Fwww.nsf.gov%2Fstatistics%2Fstates%2Fdownload%2Fstate-profiles-2019-05.xlsx">Science and Engineering State Profiles: Spring 2019 Update</option>
+                        <option value="https://ncses.nsf.gov/archived?url=https%3A%2F%2Fwww.nsf.gov%2Fstatistics%2Fstates%2Fdownload%2Fstate-profiles-2018-12.xlsx">Science and Engineering State Profiles: Fall 2018 Update</option>
+                        <option value="https://ncses.nsf.gov/archived?url=https%3A%2F%2Fwww.nsf.gov%2Fstatistics%2Fstates%2Fdownload%2Fstate-profiles-2018-04.xlsx">Science and Engineering State Profiles: Spring 2018 Update</option>
+                        <option value="https://ncses.nsf.gov/archived?url=https%3A%2F%2Fwww.nsf.gov%2Fstatistics%2Fstates%2Fdownload%2Fstate-profiles-2017-10.xlsx">Science and Engineering State Profiles: Fall 2017 Update</option>
+                        <option value="https://ncses.nsf.gov/archived?url=https%3A%2F%2Fwww.nsf.gov%2Fstatistics%2Fstates%2Fdownload%2Fstate-profiles-2017-05.xlsx">Science and Engineering State Profiles: Spring 2017 Update</option>
+                        <option value="https://ncses.nsf.gov/archived?url=https%3A%2F%2Fwww.nsf.gov%2Fstatistics%2Fstates%2Fdownload%2Fstate-profiles-2017.xlsx">Science and Engineering State Profiles: 2017 Update</option>
+                        <option value="https://ncses.nsf.gov/archived?url=https%3A%2F%2Fwww.nsf.gov%2Fstatistics%2Fstates%2Fdownload%2Fstate-profiles-2016-08.xlsx">Science and Engineering State Profiles: 2016 Update</option>
+                        <option value="https://ncses.nsf.gov/archived?url=https%3A%2F%2Fwww.nsf.gov%2Fstatistics%2Fstates%2Fdownload%2Fstate-profiles-2015-12.xlsx">Science and Engineering State Profiles: 2016</option>
+                        <option value="https://ncses.nsf.gov/archived?url=https%3A%2F%2Fwww.nsf.gov%2Fstatistics%2Fstates%2Fdownload%2Fstate-profiles-2015-05.xlsx">Science and Engineering State Profiles: 2015</option>
+                        <option value="https://ncses.nsf.gov/archived?url=https%3A%2F%2Fwww.nsf.gov%2Fstatistics%2Fstates%2Fdownload%2Fstate-profiles-2014-11.xlsx">Science and Engineering State Profiles: 2014</option>
+                        <option value="https://ncses.nsf.gov/archived?url=https%3A%2F%2Fwww.nsf.gov%2Fstatistics%2Fstates%2Fdownload%2Fstate_profiles_2014.xls">Science and Engineering State Profiles</option>
+                        <option value="https://ncses.nsf.gov/archived?url=https%3A%2F%2Fwww.nsf.gov%2Fstatistics%2Fstates%2Fdownload%2Fstate_profiles_2013.xls">Science and Engineering State Profiles: 2013</option>
+                        <option value="https://ncses.nsf.gov/archived?url=https%3A%2F%2Fwww.nsf.gov%2Fstatistics%2Fstates%2Fdownload%2Fstate_profiles_2012.xls">Data Update for Science and Engineering State Profiles</option>
+                    </select>
+                    <button type="button" class="btn btn-primary col-2" data-select-id="select213" disabled="disabled">
+                        <a href="">Go</a>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                
+            </div>
+        
+    
+                
+            </div>
+        
+    
+        
+    
+
+                
+            </div>
+        
+    
+        
+    
+
+                                            
+                                        </div>
+                                    </div>
+                                
+                            </div>
+                        
+                    
+                
+                
+                    
+                        
+                            <div class="recent-data-tables section">
+                                
+                                
+                                    <div class="container">
+                                        <div class="row">
+                                            
+                                            
+    
+        
+            
+        
+            <div class="recent-data-tables-header subsection ">
+                
+                
+    
+        
+            
+        
+            <div id="s270" class="row subsection-container">
+                
+                    
+        
+            <div id="card215" class="card recent-data-tables-header" data-card-type="recent-data-tables-header">
+                
+                
+    
+    
+    <h2 class="card-title rdt-title" data-property="title"><div>Recent Data Tables</div></h2>
+    
+    
+    
+
+    
+    <a class="rdt-view-all-link"  href="https://ncses.nsf.gov/browse-library?contentType=Data%20Tables" role="link" rel="noopener" tabindex="0">View all recent data tables</a>
+
+
+                
+            </div>
+        
+    
+                
+            </div>
+        
+    
+        
+        
+            
+        
+            
+        
+    
+        
+    
+  
+                
+            </div>
+        
+    
+        
+        
+            
+        
+            <div class="recent-data-tables-items subsection ">
+                
+                
+    
+        
+            
+        
+            
+        
+    
+        
+        
+            
+        
+            <div id="s271" class="row subsection-container">
+                
+                    
+        
+            <div id="card216" class="card recent-data-tables-items" data-card-type="recent-data-tables-items">
+                
+                
+    
+    <div class="row g-3 g-sm-4">
+        
+            <div class="col-12 col-sm-6 col-lg-3">
+                <div class="rdt-item">
+                    <div class="rdt-item-header">
+                        <span class="rdt-item-icon st-bar-chart icon"></span>
+                        <span class="rdt-item-heading">Data</span>
+                    </div>
+                    <div class="rdt-item-body">
+                        <a class="rdt-item-title"  href="/pubs/nsf26323" rel="noopener" tabindex="0"><h3>FFRDC Research and Development Expenditures: FY 2025</h3></a>
+                        <div class="rdt-item-pub-date">August 20, 2026</div>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="col-12 col-sm-6 col-lg-3">
+                <div class="rdt-item">
+                    <div class="rdt-item-header">
+                        <span class="rdt-item-icon st-bar-chart icon"></span>
+                        <span class="rdt-item-heading">Data</span>
+                    </div>
+                    <div class="rdt-item-body">
+                        <a class="rdt-item-title"  href="/pubs/nsf26321" rel="noopener" tabindex="0"><h3>Annual Business Survey: 2024 (Data Year 2023)</h3></a>
+                        <div class="rdt-item-pub-date">August 17, 2026</div>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="col-12 col-sm-6 col-lg-3">
+                <div class="rdt-item">
+                    <div class="rdt-item-header">
+                        <span class="rdt-item-icon st-bar-chart icon"></span>
+                        <span class="rdt-item-heading">Data</span>
+                    </div>
+                    <div class="rdt-item-body">
+                        <a class="rdt-item-title"  href="/pubs/nsf26320" rel="noopener" tabindex="0"><h3>Federal Science and Engineering Support to Universities, Colleges, and Nonprofit Institutions: Fiscal Year 2024</h3></a>
+                        <div class="rdt-item-pub-date">June 24, 2026</div>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="col-12 col-sm-6 col-lg-3">
+                <div class="rdt-item">
+                    <div class="rdt-item-header">
+                        <span class="rdt-item-icon st-bar-chart icon"></span>
+                        <span class="rdt-item-heading">Data</span>
+                    </div>
+                    <div class="rdt-item-body">
+                        <a class="rdt-item-title"  href="/pubs/nsf26316" rel="noopener" tabindex="0"><h3>Federal Funds for Research and Development: Fiscal Years 2024–25</h3></a>
+                        <div class="rdt-item-pub-date">May 4, 2026</div>
+                    </div>
+                </div>
+            </div>
+        
+    </div>
+
+                
+            </div>
+        
+    
+                
+            </div>
+        
+    
+        
+    
+  
+                
+            </div>
+        
+    
+        
+    
+  
+                                            
+                                        </div>
+                                    </div>
+                                
+                            </div>
+                        
+                    
+                
+                
+                    
+                        
+                            <div class="data-access section">
+                                
+                                
+                                    <div class="container">
+                                        <div class="row">
+                                            
+                                            
+            
+        
+            
+        
+            <div class="data-access-header-wrapper subsection col-xs-12">
+                
+                
+            
+        
+            
+        
+            <div id="s273" class="row subsection-container">
+                
+                    
+        
+            <div id="card217" class="card data-access-header" data-card-type="header">
+                
+                
+    
+    <!-- header -->
+    <div class="card-body">
+        <h2 class="card-title">Access Our Data for Analysis</h2>
+        
+    </div>
+
+                
+            </div>
+        
+    
+                
+            </div>
+        
+    
+        
+        
+            
+        
+            
+        
+    
+        
+    
+        
+                
+            </div>
+        
+    
+        
+        
+            
+        
+            <div class="data-access-items subsection col-xs-12">
+                
+                
+            
+        
+            
+        
+            
+        
+    
+        
+        
+            
+        
+            <div id="s274" class="row subsection-container">
+                
+                    
+        
+            <div id="card219" class="card data-access-item" data-card-type="four-block">
+                
+                
+    
+    <!-- four-block -->
+    <div class="card-body">
+        
+        
+    
+    <a class="card-title-link"
+        href="/explore-data/microdata" rel="noopener" tabindex="0">
+        
+    
+    <h3 class="card-title " data-property="title">Public Use Data Files</h3>
+    
+    
+
+    </a>
+
+        <div class="card-text" data-property="summary">Public use data files are microdata files and documentation available for public use.</div>
+    </div>
+
+                
+            </div>
+        
+    
+                
+                
+                    
+        
+            <div id="card221" class="card data-access-item" data-card-type="four-block">
+                
+                
+    
+    <!-- four-block -->
+    <div class="card-body">
+        
+        
+    
+    <a class="card-title-link"
+        href="https://ncsesdata.nsf.gov/rdas" rel="noopener" tabindex="0">
+        
+    
+    <h3 class="card-title " data-property="title">Survey of Earned Doctorates Restricted Data Analysis System (RDAS)</h3>
+    
+    
+
+    </a>
+
+        <div class="card-text" data-property="summary">The RDAS allows users to access a comprehensive set of SED variables on a secure platform to create data tables.</div>
+    </div>
+
+                
+            </div>
+        
+    
+                
+                
+                    
+        
+            <div id="card218" class="card data-access-item" data-card-type="four-block">
+                
+                
+    
+    <!-- four-block -->
+    <div class="card-body">
+        
+        
+    
+    <a class="card-title-link"
+        href="/licensing" rel="noopener" tabindex="0">
+        
+    
+    <h3 class="card-title " data-property="title">Access Restricted Use Data</h3>
+    
+    
+
+    </a>
+
+        <div class="card-text" data-property="summary"><div>Apply to gain access to NCSES's restricted use microdata.</div></div>
+    </div>
+
+                
+            </div>
+        
+    
+                
+                
+                    
+        
+            <div id="card220" class="card data-access-item" data-card-type="four-block">
+                
+                
+    
+    <!-- four-block -->
+    <div class="card-body">
+        
+        
+    
+    <a class="card-title-link"
+        href="https://catalog.data.gov/dataset?publisher=National%20Center%20for%20Science%20and%20Engineering%20Statistics" rel="noopener" tabindex="0">
+        
+    
+    <h3 class="card-title " data-property="title">Data Inventory</h3>
+    
+    
+
+    </a>
+
+        <div class="card-text" data-property="summary">View our available data inventory.</div>
+    </div>
+
+                
+            </div>
+        
+    
+                
+            </div>
+        
+    
+        
+    
+        
+                
+            </div>
+        
+    
+        
+    
+        
+                                            
+                                        </div>
+                                    </div>
+                                
+                            </div>
+                        
+                    
+                
+                
+                    
+                        
+                            <div class="data-resources section">
+                                
+                                
+                                    <div class="container">
+                                        <div class="row">
+                                            
+                                            
+            
+        
+            
+        
+            <div class="data-resources-header-wrapper subsection col-xs-12">
+                
+                
+            
+        
+            
+        
+            
+        
+    
+        
+        
+            
+        
+            <div id="s276" class="row subsection-container">
+                
+                    
+        
+            <div id="card222" class="card data-resources-header" data-card-type="header">
+                
+                
+    
+    <!-- header -->
+    <div class="card-body">
+        <h2 class="card-title">Data Resources</h2>
+        
+    </div>
+
+                
+            </div>
+        
+    
+                
+            </div>
+        
+    
+        
+    
+        
+                
+            </div>
+        
+    
+        
+        
+            
+        
+            <div class="data-resources-items subsection col-xs-12">
+                
+                
+            
+        
+            
+        
+            
+        
+    
+        
+        
+            
+        
+            <div id="s277" class="row subsection-container">
+                
+                    
+        
+            <div id="card226" class="card data-resources-item" data-card-type="four-block">
+                
+                
+    
+    <!-- four-block -->
+    <div class="card-body">
+        
+        
+    
+    <a class="card-title-link"
+        href="/schedule-of-release-dates" rel="noopener" tabindex="0">
+        
+    
+    <h3 class="card-title " data-property="title">Schedule of Release Dates</h3>
+    
+    
+
+    </a>
+
+        <div class="card-text" data-property="summary"><div>See the release schedule for NCSES data and products.</div></div>
+    </div>
+
+                
+            </div>
+        
+    
+                
+                
+                    
+        
+            <div id="card225" class="card data-resources-item" data-card-type="four-block">
+                
+                
+    
+    <!-- four-block -->
+    <div class="card-body with-banner">
+        
+            
+        
+            
+                <img data-chrono-display data-start="2024-08-01T05:03:00-04:00" data-end="2024-09-01T23:59:00-04:00" hidden
+                     class="promo-banner" src="/resources/assets/images/pages/statistics/updated-banner.svg" alt="This item is updated." />
+            
+        
+    
+        
+        
+    
+    <a class="card-title-link"
+        href="https://now.nsf.gov/ncses" rel="noopener" tabindex="0">
+        
+    
+    <h3 class="card-title " data-property="title">NCSES Knowledge Base</h3>
+    
+    
+
+    </a>
+
+        <div class="card-text" data-property="summary"><div>Explore our self-service library to learn more about NCSES data and tools.</div></div>
+    </div>
+
+                
+            </div>
+        
+    
+                
+                
+                    
+        
+            <div id="card224" class="card data-resources-item" data-card-type="four-block">
+                
+                
+    
+    <!-- four-block -->
+    <div class="card-body">
+        
+        
+    
+    <a class="card-title-link"
+        href="https://ncses.nsf.gov/corrections" rel="noopener" tabindex="0">
+        
+    
+    <h3 class="card-title " data-property="title">Corrections</h3>
+    
+    
+
+    </a>
+
+        <div class="card-text" data-property="summary"><div>NCSES policy requires the correction of substantive errors in its content. Corrections posted since August 2010 are available here.</div></div>
+    </div>
+
+                
+            </div>
+        
+    
+                
+                
+                    
+        
+            <div id="card223" class="card data-resources-item" data-card-type="four-block">
+                
+                
+    
+    <!-- four-block -->
+    <div class="card-body">
+        
+        
+    
+    <a class="card-title-link"
+        href="https://www.nsf.gov/statistics/iris/" rel="noopener" tabindex="0">
+        
+    
+    <h3 class="card-title " data-property="title">IRIS (Archived Data Resource)</h3>
+    
+    
+
+    </a>
+
+        <div class="card-text" data-property="summary">Access historical detailed statistical tables on industrial R&amp;D from the Survey of Industrial Research and Development (IRIS).</div>
+    </div>
+
+                
+            </div>
+        
+    
+                
+            </div>
+        
+    
+        
+    
+        
+                
+            </div>
+        
+    
+        
+    
+        
+                                            
+                                        </div>
+                                    </div>
+                                
+                            </div>
+                        
+                    
+                
+            </article>
+        
+    
+		<div class="subscribe-box">
+		<div class="subscribe-banner">
+			<div class="subscribe-container">
+				<h3>Get e-mail updates from NCSES</h3>
+				<p>NCSES is an official statistical agency. Subscribe below to receive our latest news and announcements.</p>
+				<form autocomplete="off" accept-charset="UTF-8" target="_self" action="https://public.govdelivery.com/accounts/USNSF/subscribers/qualify" id="GD-snippet-form" method="post">
+					<input type="text" placeholder="Enter your e-mail address" name="email" aria-label="Enter your e-mail address"/>
+					<input type="hidden" name="topic_id" id="topic_id" value="USNSF_66" />
+					<button class="btn btn-primary arrow" type="submit">Subscribe</button>
+				</form>
+			</div>
+			<div class="social-box">
+				<span class="social-banner">Connect with us online</span>
+				<div class="social-divider"></div>
+				<div class="social-links-ctr">
+					<div class="social-buttons cms-fa-pro">
+						<a  href="https://twitter.com/NCSESgov" target="_blank" rel="noopener noreferrer" tabindex="0" data-external-link><span role="img" class="fab fa-x-twitter" title="NCSES X/Twitter"><span class="sr-only">X/Twitter</span></span></a>
+						<a  href="https://www.facebook.com/US.NSF" target="_blank" rel="noopener noreferrer" tabindex="0" data-external-link><span role="img" class="fab fa-facebook-f" title="Facebook"><span class="sr-only">Facebook</span></span></a>
+						<a  href="https://www.linkedin.com/company/national-center-for-science-and-engineering-statistics/" target="_blank" rel="noopener noreferrer" tabindex="0" data-external-link><span role="img" class="fab fa-linkedin-in" title="LinkedIn"><span class="sr-only">Linked-In</span></span></a>
+					</div>
+					<a  href="https://ncses.nsf.gov/rss" class="rss" tabindex="0" rel="noopener"><span class="rss-text">RSS Feed</span><span role="img" class="st-rss"></span></a>
+				</div>
+			</div>
+		</div>
+	</div>
+		<footer>
+		<div id="modalHolder"></div>
+		<div class="footer-nav-links">
+        <div class="title-box">
+            <div class="footer-icon-block">
+                
+    <div class="banner-icon-block footer">
+        <a class="logo-link nsf-logo"  href="https://www.nsf.gov/" tabindex="0" rel="noopener">
+            <img src="/resources/assets/images/master-template/nsf-logo.svg" alt="National Science Foundation home"/>
+        </a>
+        <img aria-hidden="true" src="/resources/assets/images/master-template/pipe.svg" alt="Separator"/>
+        <a class="logo-link ncses-logo"  href="/" tabindex="0" rel="noopener">
+            <img src="/resources/assets/images/master-template/ncses-logo.svg" alt="National Center for Science and Engineering Statistics home"/>
+        </a>
+    </div>
+    <div class="banner-title-block footer">
+        <a class="banner-link ncses"  href="/" tabindex="0" rel="noopener">
+            <div>National Center for Science and Engineering Statistics</div>
+        </a>
+    </div>
+
+            </div>
+            
+    <div class="search-box">
+        <form id="footer-ncses-search" class="search-box-form" method="GET" accept-charset="UTF-8" action="/search">
+            <input autocomplete="off" type="text" class="search-box-input" placeholder="Search NCSES" name="query" aria-label="Search N C S E S">
+            <button type="submit" class="cms-fa-pro" aria-label="Submit search query"><i class="fa-solid fa-magnifying-glass"></i><span class="button-label">Search</span></button>
+        </form>
+    </div>
+
+        </div>
+        <div class="ncses-links">
+            <ul aria-label="Our data and analysis" class="ncses-link-column">
+                OUR DATA AND ANALYSIS
+                <li><a  href="/interest-areas" rel="noopener" tabindex="0">Areas of Interest</a></li>
+                <li><a  href="/corrections" rel="noopener" tabindex="0">Corrections</a></li>
+                <li><a  href="/explore-data" rel="noopener" tabindex="0">Explore Data</a></li>
+                <li><a  href="/schedule-of-release-dates" rel="noopener" tabindex="0">Schedule of Release Dates</a></li>
+                <li><a  href="/surveys-analysis" rel="noopener" tabindex="0">Surveys & Analysis</a></li>
+            </ul>
+            <ul aria-label="About" class="ncses-link-column">
+                ABOUT
+                <li><a  href="/about" rel="noopener" tabindex="0">About NCSES</a></li>
+                <li><a  href="/about/quality-transparency" rel="noopener" tabindex="0">Quality & Transparency</a></li>
+                <li><a  href="/about/whats-new" rel="noopener" tabindex="0">What's New From NCSES</a></li>
+            </ul>
+            <ul aria-label="Help" class="ncses-link-column">
+                HELP
+                <li><a  href="/about/contact" aria-label="N C S E S contact page" rel="noopener" tabindex="0">Contact Us</a></li>
+                <li><a  href="/resource/faqs" rel="noopener" tabindex="0">Frequently Asked Questions</a></li>
+                <li><a  href="/resource/glossary" aria-label="N C S E S glossary page" rel="noopener" tabindex="0">Glossary</a></li>
+                <li><a  href="https://now.nsf.gov/ncses" rel="noopener" tabindex="0">NCSES Knowledge Base</a></li>
+            </ul>
+        </div>
+    </div>
+		<div class="footer-partner-links">
+        <ul>
+            <li><a  href="https://www.nsf.gov/policies/" rel="noopener" tabindex="0">Website Policies</a><span class="separator">|</span></li>
+            <li><a  href="https://www.nsf.gov/about/performance/" rel="noopener" tabindex="0">Budget and Performance</a><span class="separator">|</span></li>
+            <li><a  href="https://www.nsf.gov/oig/" rel="noopener" tabindex="0">Inspector General</a><span class="separator">|</span></li>
+            <li><a  href="https://www.nsf.gov/policies/privacy.jsp" rel="noopener" tabindex="0">Privacy</a><span class="separator">|</span></li>
+            <li><a  href="https://www.nsf.gov/policies/foia.jsp" rel="noopener" tabindex="0">FOIA</a><span class="separator">|</span></li>
+            <li><a  href="https://www.nsf.gov/od/oecr/nofearact_notice.jsp" rel="noopener" tabindex="0">No FEAR Act</a><span class="separator">|</span></li>
+            <li><a  href="https://www.usa.gov/" rel="noopener" tabindex="0">USA.gov</a><span class="separator">|</span></li>
+            <li><a  href="/accessibility" rel="noopener" tabindex="0">Accessibility</a><span class="separator">|</span></li>
+            <li><a  href="https://www.nsf.gov/policies/nsf_plain_language.jsp" rel="noopener" tabindex="0">Plain Language</a><span class="separator">|</span></li>
+            <li><a  href="https://www.research.gov/" rel="noopener" tabindex="0">Research.gov</a></li>
+        </ul>
+        <address aria-label="N C S E S address">
+            <span>National Center for Science and Engineering Statistics</span>
+            <span>Randolph Building, 401 Dulany Street, Alexandria, VA 22314</span>
+            <span>Tel: (703) 292-8780 FIRS: (800) 877-8339 TDD: (800) 281-8749</span>
+        </address>
+    </div>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q083SYM3V7"></script>
+    <script src="/resources/assets/js/core/analytics.js"></script>
+
+    
+    
+        <script async src="https://script.crazyegg.com/pages/scripts/0041/5508.js?496726"></script>
+    
+
+    
+    <script defer id="_fed_an_ua_tag" src="https://dap.digitalgov.gov/Universal-Federated-Analytics-Min.js?agency=NSF&amp;subagency=NCSES&amp;dclink=true&amp;exts=sas7bdat,sav"></script>
+
+    
+        <input type="hidden" id="public-announcement-msg" value="" />
+    
+
+	</footer>
+	</body>
+</html>

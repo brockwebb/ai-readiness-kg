@@ -132,3 +132,144 @@ fuji:
     A6: ["FsF-F4-01M", "FsF-I1-01M"]
     D1: "FsF-R1.1-01M"
   install_note: "pip install git+https://github.com/pangaea-data-publisher/fuji ; needs config/server.ini"
+
+# ---------------------------------------------------------------------------------------
+# v2 clause parameters. Task `cc_tasks/2026-09-06_scan_targets.md` §2: the 2026-09-06 rule
+# review found that 12 of 16 `v1` rules implement only part of their MeasurementSpec's signal.
+# Every constant a v2 clause needs lives here, under the same rule as every other constant —
+# a threshold inside a rule cannot be swept, versioned, or stamped on the evidence it shaped.
+# ---------------------------------------------------------------------------------------
+
+link_probe:
+  # A1-v2 and A3-v2 need the per-link Content-Type their specs ask for ("for each, HEAD and
+  # read Content-Type"). v1 classified on the href suffix alone, so an extensionless endpoint
+  # serving text/csv was invisible. Bounded, because a product page can carry hundreds of
+  # links and this is one request each at the standing rate.
+  max_links_probed: 25
+  method: HEAD
+  # Same-host only. Two reasons, and the second is the one that bites: A1 and A3 ask what the
+  # PRODUCT offers, not what it links to elsewhere; and the control fixture links out to a
+  # licence URL, so probing off-host would make the control cycle reach the real internet
+  # before the gate that exists to run before any real host.
+  same_host_only: true
+  # A HEAD that a host answers 405 is retried as a ranged GET: some servers refuse HEAD
+  # outright, and treating that as "no content type" would read a server quirk as a product
+  # property.
+  fallback_get_on_status: [405, 501]
+
+a3_bulk:
+  # A3-v2: "classify links as bulk (whole-product archive or full dataset file) vs filtered
+  # query". Three mechanical discriminators, none of them a judgement call:
+  archive_extensions: [".zip", ".gz", ".tgz", ".tar", ".tar.gz", ".7z", ".bz2"]
+  archive_content_types: ["application/zip", "application/gzip", "application/x-gzip",
+                          "application/x-tar", "application/x-7z-compressed"]
+  # A query string is the signature of a filtered export: /export?state=CA&year=2020 is a
+  # subset by construction, whatever it is served as.
+  query_string_is_filtered: true
+  # A whole-product file is large. Below this, a "download" is a preview or a row sample.
+  # 50 KiB: the smallest whole-product CSV among the 17 admitted g1sfc surfaces is 63 KiB
+  # (statcan-14-10-0287-01 LFS provinces), and the Census QuickFacts preview export is 4 KiB.
+  min_bulk_bytes: 51200
+  # A Content-Length a host does not send is not evidence of smallness.
+  missing_length_is_bulk: false
+
+a2_api:
+  # A2-v2: "record auth scheme, declared rate limits, and whether the description is
+  # machine-readable". The first two were never read.
+  auth_headers: ["www-authenticate", "proxy-authenticate"]
+  rate_limit_headers: ["ratelimit", "ratelimit-limit", "ratelimit-policy",
+                       "x-ratelimit-limit", "x-rate-limit-limit", "retry-after"]
+  # OpenAPI 3 puts the auth model at components.securitySchemes and Swagger 2 at
+  # securityDefinitions; an API that documents neither has not declared an auth scheme.
+  openapi_auth_keys: ["securitySchemes", "securityDefinitions", "security"]
+  openapi_rate_limit_keys: ["x-ratelimit", "x-rate-limit", "rateLimit", "x-throttling"]
+
+a6_shacl:
+  # A6-v2: the spec says validate against DCAT-AP SHACL shapes. See the header of the shapes
+  # file for why this is a stated MINIMAL subset rather than the DCAT-AP distribution.
+  shapes_path: "shapes/dcat_ap_min.ttl"
+  shapes_profile: "dcat_ap_min"
+  # A graph that pyshacl cannot even load is a parse_error, never a `fail`: we did not
+  # observe the product's conformance, we failed to read it.
+  treat_load_failure_as: parse_error
+
+a8_latest:
+  # A8-v2: "test whether a latest-vintage pointer resolves". v1 read the date and never
+  # dereferenced anything.
+  link_rels: ["latest-version", "last", "canonical"]
+  href_tokens: ["/latest", "latest.", "current.", "/current", "most-recent"]
+  anchor_tokens: ["latest", "most recent", "current release", "current version"]
+  max_pointers_followed: 3
+  resolves_statuses: [200, 203, 206]
+
+a11_meta:
+  # A11-declared-v2: the signal names robots.txt AND meta-robots; only the first was read.
+  meta_names: ["robots", "googlebot", "gptbot", "claudebot"]
+  # A directive that withholds the product from an AI client. `noai`/`noimageai` are the
+  # de-facto opt-out tokens; they are not in RFC 9309 and are recorded as convention.
+  restricting_tokens: ["noindex", "nofollow", "noarchive", "nosnippet", "noai", "noimageai"]
+
+b3_without_js:
+  # B3-v2: "and whether it is retrievable without JS" — never implemented in v1.
+  #
+  # Prior art already in this repo: DD-030's extent gate, from Kohlschütter, Fankhauser &
+  # Nejdl, *Boilerplate Detection using Shallow Text Features* (WSDM 2010). The same two
+  # shallow features answer "is there a document here before JavaScript runs" as answer "did
+  # this conversion produce a navigation surface". Reused deliberately rather than invented:
+  # the floors below are the ingest gate's own, so a methodology page that would not have been
+  # admitted to the corpus cannot be scored as legible here.
+  min_visible_chars: 2000
+  max_link_density: 0.25
+
+a10_shell:
+  # A10-v2: v1 decided on status codes alone and never tested for the "error shell" the
+  # signal names, and never used the `pre_js_chars` its own collector records.
+  error_shell_tokens: ["page not found", "not found", "sorry", "we can't find",
+                       "cannot be found", "error 404", "page unavailable"]
+  # A deep link whose raw HTML carries less than this is a client-rendered shell: there is
+  # no product on the page until JavaScript runs. Same floor as b3_without_js, same source.
+  min_pre_js_visible_chars: 2000
+
+d1_sources:
+  # D1-v2: the signal names three licence sources and v1 read one.
+  # RFC 8288 Web Linking: `Link: <...>; rel="license"`.
+  link_header_rels: ["license", "licence", "terms-of-service"]
+  terms_paths: ["/terms", "/terms-of-service", "/policies/terms", "/about/policies",
+                "/license", "/licence", "/legal"]
+  max_terms_probed: 3
+
+d4_validation:
+  schema_path: "shapes/pod_v1_1_min.schema.json"
+  schema_profile: "pod_v1_1_min"
+  # A catalog too large to validate whole is validated on a bounded sample of its datasets;
+  # the Finding records how many were checked, so nobody reads a sample as a census.
+  max_datasets_validated: 200
+
+f4_entries:
+  # F4-v2: "and carries a revision class per entry" — v1 stopped at the content type.
+  revision_class_fields: ["type", "change_type", "changeType", "revision", "revision_class",
+                          "category", "kind", "class", "severity"]
+  # Atom/RSS carry the class as <category term="..."> on an entry.
+  atom_category_elements: ["category"]
+  min_entries_classified_fraction: 0.5
+
+e5_ordering:
+  # E5-v2: the signal's first sentence — "Both control fixtures are scanned before any real
+  # host" — was never implemented, because a pure rule cannot read a clock. It can read
+  # TIMESTAMPS it is given: the cycle passes the earliest surface observation's `captured_at`
+  # alongside the control observations, and the rule asserts the controls all precede it.
+  # That makes the ordering falsifiable from stored evidence rather than asserted by the
+  # runner's control flow.
+  require_controls_before_surfaces: true
+
+reporting:
+  # How much of a validator's output is retained ON the Observation for a reader. NOT evidence
+  # truncation — the whole response body is stored content-addressed either way — but the
+  # integer-literal lint was right to refuse these inside a collector: a cap nobody can sweep
+  # is a cap nobody can question, which is the whole of Khan 2026's finding.
+  validator_messages_retained: 10
+  anchor_text_retained_chars: 40
+  # Rounding precision for the ratios reported on an Observation. A ratio is a convenience for
+  # a reader; every rule compares against the params floor, never against the rounded value.
+  ratio_decimal_places: 4
+

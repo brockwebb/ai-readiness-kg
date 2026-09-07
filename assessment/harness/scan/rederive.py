@@ -23,7 +23,7 @@ sys.path.insert(0, str(HARNESS))
 
 from scan import load_params                                   # noqa: E402
 from scan.model import Observation, params_hash                # noqa: E402
-from scan.rules import BY_LEG, judge as judge_rule             # noqa: E402
+from scan.rules import CURRENT, REGISTRY, judge as judge_rule   # noqa: E402
 
 
 def rehydrate(rows: list) -> list:
@@ -62,13 +62,18 @@ def rederive(payload: dict, params: dict) -> dict:
     for o in obs:
         by_key.setdefault(("*cycle*" if o.leg == "E5" else o.target_doc_id, o.leg), []).append(o)
 
+    # Re-judge each recorded Finding under ITS OWN rule version, never under the leg's current
+    # rule. Two versions now live side by side (rules/__init__ `CURRENT` vs `REGISTRY`), and
+    # re-deriving a `RULE-A1-v1` Finding with `RULE-A1-v2` would silently re-score history
+    # under a rule that did not exist when the surface was measured — the exact thing the
+    # versioning is for. Rule versions the payload never used are simply not exercised.
+    wanted = {f.get("rule_id") for f in recorded.values()} or set(CURRENT.values())
     rederived, mismatches = {}, []
     for (doc_id, leg), group in sorted(by_key.items()):
-        rule_id = BY_LEG.get(leg)
-        if rule_id is None:
-            continue
-        f = judge_rule(rule_id, group, params)
-        rederived[f.finding_id] = f.to_dict()
+        for rule_id in sorted(r for r in wanted if REGISTRY.get(r) is not None
+                              and REGISTRY[r].LEG == leg):
+            f = judge_rule(rule_id, group, params)
+            rederived[f.finding_id] = f.to_dict()
 
     missing = sorted(set(recorded) - set(rederived))
     extra = sorted(set(rederived) - set(recorded))

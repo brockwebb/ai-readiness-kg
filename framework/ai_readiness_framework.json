@@ -10,9 +10,11 @@
   "evidenced_by": 122,
   "evidenced_by_internal": 17,
   "gaps": 19,
-  "measurement_specs": 21,
+  "measurement_specs": 22,
   "collectors_none_known": 4,
-  "rules_built": 16
+  "rules_built": 16,
+  "specs_with_recorded_decision": 3,
+  "candidate_indicators": 1
  },
  "unparsed_rows": [],
  "evidence_doc_ids_not_in_manifest": [
@@ -1514,7 +1516,7 @@
     "indicator_code": "A1",
     "leg": "A1",
     "mode": "auto",
-    "rule_id": "RULE-A1-v1",
+    "rule_id": "RULE-A1-v2",
     "collector_pin": "httpx>=0.27",
     "signal": "HTTP GET the product page; extract every download link; for each, HEAD and read Content-Type and file extension. Structured iff any of csv/json/parquet/xlsx/xml; PDF-only iff every link is application/pdf.",
     "collector": "httpx",
@@ -1531,7 +1533,7 @@
     "indicator_code": "A2",
     "leg": "A2",
     "mode": "auto",
-    "rule_id": "RULE-A2-v1",
+    "rule_id": "RULE-A2-v2",
     "collector_pin": "httpx>=0.27",
     "signal": "HTTP GET the documented API base and any OpenAPI/Swagger document; record auth scheme, declared rate limits, and whether the description is machine-readable.",
     "collector": "httpx",
@@ -1549,7 +1551,7 @@
     "indicator_code": "A3",
     "leg": "A3",
     "mode": "auto",
-    "rule_id": "RULE-A3-v1",
+    "rule_id": "RULE-A3-v2",
     "collector_pin": "scrapy>=2.11",
     "signal": "Crawl the product page one hop; classify links as bulk (whole-product archive or full dataset file) vs filtered query.",
     "collector": "scrapy",
@@ -1571,7 +1573,15 @@
     "signal": "HTTP GET /robots.txt; parse; evaluate Allow/Disallow for the product path per user-agent in the AI-crawler list (GPTBot, ClaudeBot, PerplexityBot, Google-Extended, CCBot, Bingbot).",
     "collector": "protego",
     "evidence_kind": "robots.txt body + sha256 + per-UA verdict",
-    "prior_art": "`rfc-9309-robots-exclusion-protocol`; `openai-crawlers-bots`"
+    "prior_art": "`rfc-9309-robots-exclusion-protocol`; `openai-crawlers-bots`",
+    "decision": {
+     "decided_by": "RULE-A4-v1",
+     "question": "The signal says to fetch and evaluate robots.txt but does not settle the verdict when no robots.txt is served at all.",
+     "decision": "Absence is `fail`. RFC 9309 is clear that absence PERMITS retrieval, so a rule reading the crawler's question would return `pass`; A4 does not ask what a crawler may do, it asks whether the agency has DECLARED a policy, and a host that has declared nothing has not declared permission. The reading matters: it flips the verdict on every real surface with no robots.txt and no soft-blocks, and both control fixtures land on their stated verdicts either way.",
+     "alternative": "Read A4 as a compliance question and absence becomes `pass`. If the operator prefers that reading it is a `v2`, not an edit.",
+     "recorded_by": "cc_tasks/2026-09-06_scan_targets.md",
+     "why_here": "The review returned `spec_underspecified`: a different reasonable implementation would return a different verdict on some real surface, and neither control fixture can see the difference."
+    }
    }
   },
   {
@@ -1588,7 +1598,15 @@
     "signal": "HTTP GET /sitemap.xml (and the path robots.txt declares), /llms.txt, /.well-known/; parse the sitemap and test whether the product URL is covered.",
     "collector": "ultimate-sitemap-parser",
     "evidence_kind": "sitemap tree + coverage verdict for the product URL",
-    "prior_art": "`sitemaps-protocol`; `llmstxt-proposal`"
+    "prior_art": "`sitemaps-protocol`; `llmstxt-proposal`",
+    "decision": {
+     "decided_by": "RULE-A5-v1",
+     "question": "The signal says to fetch /llms.txt and /.well-known/ alongside the sitemap but states a coverage test only for the sitemap, leaving unsettled what a served llms.txt contributes to the verdict.",
+     "decision": "A covering sitemap is the SOLE pass path. A served llms.txt is recorded as evidence and cannot satisfy the leg on its own. Rationale: the sitemap is the only one of the three with a standardised way to assert that a specific URL is covered; llms.txt has no such semantics, and accepting its mere presence would score having the file rather than being discoverable. Consequence: a site whose llms.txt lists the data product but which serves no sitemap gets `fail`, where an implementation reading the indicator's 'llms.txt (or equivalent) present' as an alternative satisfier would return `pass`.",
+     "alternative": "Treat llms.txt as an alternative satisfier. That is a change to what the indicator MEANS, not to how it is measured, and belongs to the operator.",
+     "recorded_by": "cc_tasks/2026-09-06_scan_targets.md",
+     "why_here": "The review returned `spec_underspecified`: a different reasonable implementation would return a different verdict on some real surface, and neither control fixture can see the difference."
+    }
    }
   },
   {
@@ -1600,7 +1618,7 @@
     "indicator_code": "A6",
     "leg": "A6",
     "mode": "auto",
-    "rule_id": "RULE-A6-v1",
+    "rule_id": "RULE-A6-v2",
     "collector_pin": "extruct>=0.17",
     "signal": "Extract embedded JSON-LD / microdata / RDFa from the product page; test for schema.org Dataset or DCAT; validate the DCAT graph against DCAT-AP SHACL shapes.",
     "collector": "extruct + pyshacl",
@@ -1618,7 +1636,7 @@
     "indicator_code": "A8",
     "leg": "A8",
     "mode": "auto",
-    "rule_id": "RULE-A8-v1",
+    "rule_id": "RULE-A8-v2",
     "collector_pin": "httpx>=0.27",
     "signal": "Read Last-Modified and any dcterms:modified / schema.org dateModified in the markup; test whether a latest-vintage pointer resolves.",
     "collector": "httpx + extruct",
@@ -1642,7 +1660,15 @@
     "evidence_kind": "probe matrix + any served descriptor",
     "frontier": true,
     "as_of": "2026-01",
-    "prior_art": "`wilkinson-2016-fair-guiding-principles`; `fcsm-25-03`"
+    "prior_art": "`wilkinson-2016-fair-guiding-principles`; `fcsm-25-03`",
+    "decision": {
+     "decided_by": "RULE-A9-v1",
+     "question": "The signal names which paths to probe but does not settle what counts as a served machine-first entry point.",
+     "decision": "A non-HTML content type on a 2xx response with a non-empty body. The descriptor is NOT parsed. Rationale: A9 is FRONTIER (as_of 2026-01) and is reported, never scored, so the cheapest test that excludes the failure the control fixture caught — a soft-404 HTML shell counted as an agent surface — is the right one for now. Consequence: a text/plain 'Not Found' body, or a JSON error blob, passes; an implementation that parsed the descriptor would fail those same real surfaces.",
+     "alternative": "Parse the descriptor (validate as OpenAPI / MCP / llms.txt). Worth doing when A9 stops being frontier and enters a score; until then it would buy precision nobody is reading.",
+     "recorded_by": "cc_tasks/2026-09-06_scan_targets.md",
+     "why_here": "The review returned `spec_underspecified`: a different reasonable implementation would return a different verdict on some real surface, and neither control fixture can see the difference."
+    }
    }
   },
   {
@@ -1654,7 +1680,7 @@
     "indicator_code": "A10",
     "leg": "A10",
     "mode": "auto",
-    "rule_id": "RULE-A10-v1",
+    "rule_id": "RULE-A10-v2",
     "collector_pin": "lighthouse-cli>=12",
     "signal": "For an interactive data tool: request a deep link and an invalid route; compare status codes and pre-JS HTML; a soft-404 is HTTP 200 with an error shell. Render once to compare pre- and post-JS DOM.",
     "collector": "lighthouse",
@@ -1671,7 +1697,7 @@
     "indicator_code": "A11",
     "leg": "A11-declared",
     "mode": "auto",
-    "rule_id": "RULE-A11-declared-v1",
+    "rule_id": "RULE-A11-declared-v2",
     "collector_pin": "protego>=0.3",
     "signal": "The DECLARED layer only: robots.txt and meta-robots directives for the product path. The enforced and observed layers need edge/WAF logs and are agency_instrumented.",
     "collector": "protego",
@@ -1688,7 +1714,7 @@
     "indicator_code": "B3",
     "leg": "B3",
     "mode": "auto",
-    "rule_id": "RULE-B3-v1",
+    "rule_id": "RULE-B3-v2",
     "collector_pin": "httpx>=0.27",
     "signal": "Fetch the methodology document; test whether it is structured text (HTML/markdown) or PDF-only, and whether it is retrievable without JS.",
     "collector": "httpx",
@@ -1724,7 +1750,7 @@
     "indicator_code": "D1",
     "leg": "D1",
     "mode": "auto",
-    "rule_id": "RULE-D1-v1",
+    "rule_id": "RULE-D1-v2",
     "collector_pin": "extruct>=0.17",
     "signal": "Read the licence from schema.org/DCAT markup, an HTTP Link header, and the API's terms endpoint; test whether it is a recognised identifier (SPDX or a known URL) rather than free text.",
     "collector": "extruct + httpx",
@@ -1742,7 +1768,7 @@
     "indicator_code": "D4",
     "leg": "D4",
     "mode": "auto",
-    "rule_id": "RULE-D4-v1",
+    "rule_id": "RULE-D4-v2",
     "collector_pin": "json-schema (Project Open Data v1.1 schema)",
     "signal": "Fetch /data.json (Project Open Data catalog); validate against the POD v1.1 schema; test whether the product appears in it.",
     "collector": "project-open-data-validator",
@@ -1759,7 +1785,7 @@
     "indicator_code": "E5",
     "leg": "E5",
     "mode": "auto",
-    "rule_id": "RULE-E5-v1",
+    "rule_id": "RULE-E5-v2",
     "collector_pin": "assessment/harness/scan/fixtures (passes_all, fails_all)",
     "signal": "Both control fixtures are scanned before any real host. A cycle in which either produced an unexpected verdict is INVALID.",
     "collector": "control_fixtures",
@@ -1813,7 +1839,7 @@
     "indicator_code": "F4",
     "leg": "F4",
     "mode": "auto",
-    "rule_id": "RULE-F4-v1",
+    "rule_id": "RULE-F4-v2",
     "collector_pin": "httpx>=0.27",
     "signal": "Fetch any changelog or release-notes endpoint; test whether it is machine-readable and carries a revision class per entry.",
     "collector": "httpx",
@@ -1871,6 +1897,57 @@
     "evidence_kind": "raw consumer exchange, persisted before scoring",
     "rule_id": "RULE-G1-O-v0",
     "prior_art": "DD-035; DD-036"
+   }
+  },
+  {
+   "id": "con:A12-access-policy-coherence",
+   "labels": [
+    "AssessmentConstruct"
+   ],
+   "properties": {
+    "name": "Access policy coherence",
+    "criterion_code": "A",
+    "status": "candidate"
+   }
+  },
+  {
+   "id": "ind:A12",
+   "labels": [
+    "AssessmentIndicator"
+   ],
+   "properties": {
+    "code": "A12",
+    "construct": "Access policy coherence",
+    "indicator": "An identified, robots-compliant machine client that robots.txt permits is served (not refused by a WAF or bot manager)",
+    "type": "AUTO",
+    "tier": "public",
+    "tier_raw": "`public`",
+    "status": "candidate",
+    "measurement_status": "specified",
+    "criterion_code": "A",
+    "evidence_raw": "`rfc-9309-robots-exclusion-protocol` (the declared layer's semantics); `cloudflare-ai-crawl-control-manage-crawlers` (the enforcing layer this indicator detects from outside)",
+    "candidate_rationale": "The public-observable leg of A11's enforced layer. A11 places enforced and observed access at `agency_instrumented` because a WAF is not visible from outside; that holds in general and fails for the one case where robots.txt PERMITS a path and the host REFUSES a compliant client asking for it. The disagreement between the two declared and enforced layers is then observable at the public tier with no edge logs at all.",
+    "candidate_provenance": "Found by the harness, not by the literature: 3 of the 13 principal statistical agencies (BLS, BTS, ORES/SSA) answered 401/403 to `ai-readiness-kg-scanner/0.1` on every probe while their own robots.txt permits the paths. No corpus source proposes this as an AI-readiness construct.",
+    "candidate_promotion": "Operator decision. The framework goes out under his name and an indicator the instrument invented about itself is exactly the kind that needs a human to accept it.",
+    "recorded_by": "cc_tasks/2026-09-06_scan_targets.md"
+   }
+  },
+  {
+   "id": "spec:A12",
+   "labels": [
+    "MeasurementSpec"
+   ],
+   "properties": {
+    "indicator_code": "A12",
+    "leg": "A12",
+    "mode": "auto",
+    "rule_id": "RULE-A12-v0",
+    "collector": "http + robots",
+    "collector_pin": "httpx>=0.27 + protego (scripts/scan_preflight.py)",
+    "signal": "Per host: GET /robots.txt and parse it; then GET the product path under the identified UA. Coherent iff robots.txt permits the path for this UA AND the host serves it. Incoherent iff robots.txt permits and the host answers a status in `manners.unobservable_statuses` (401/403/407/429). A robots.txt that DISALLOWS the path is not incoherence — it is A4's measurement, and this indicator is `not_applicable` there.",
+    "evidence_kind": "robots.txt body + per-UA verdict + the response status for the same path",
+    "prior_art": "RFC 9309 (what a declaration means); `cloudflare-ai-crawl-control-manage-crawlers` (what an enforcing layer does)",
+    "recorded_by": "cc_tasks/2026-09-06_scan_targets.md"
    }
   }
  ],
@@ -3566,6 +3643,61 @@
    "from": "ind:G1-O",
    "type": "MEASURED_BY",
    "to": "spec:G1-O"
+  },
+  {
+   "from": "crit:A",
+   "to": "con:A12-access-policy-coherence",
+   "type": "DECOMPOSES_INTO"
+  },
+  {
+   "from": "con:A12-access-policy-coherence",
+   "to": "ind:A12",
+   "type": "DECOMPOSES_INTO"
+  },
+  {
+   "from": "ind:A12",
+   "to": "spec:A12",
+   "type": "MEASURED_BY"
+  },
+  {
+   "from": "ind:A12",
+   "type": "EVIDENCED_BY",
+   "to": "doc:rfc-9309-robots-exclusion-protocol",
+   "properties": {
+    "doc_id": "rfc-9309-robots-exclusion-protocol"
+   }
+  },
+  {
+   "from": "ind:A12",
+   "type": "EVIDENCED_BY",
+   "to": "doc:cloudflare-ai-crawl-control-manage-crawlers",
+   "properties": {
+    "doc_id": "cloudflare-ai-crawl-control-manage-crawlers"
+   }
+  },
+  {
+   "from": "ind:A12",
+   "type": "EVIDENCED_BY_INTERNAL",
+   "to": "cc_tasks/2026-09-06_harness_scaffold_RESULT.md §5",
+   "properties": {
+    "ref": "cc_tasks/2026-09-06_harness_scaffold_RESULT.md §5"
+   }
+  },
+  {
+   "from": "ind:A12",
+   "type": "EVIDENCED_BY_INTERNAL",
+   "to": "docs/design_decisions.md DD-052 §6a",
+   "properties": {
+    "ref": "docs/design_decisions.md DD-052 §6a"
+   }
+  },
+  {
+   "from": "ind:A12",
+   "type": "EVIDENCED_BY_INTERNAL",
+   "to": "state/scan_preflight_2026-09.json",
+   "properties": {
+    "ref": "state/scan_preflight_2026-09.json"
+   }
   }
  ]
 }

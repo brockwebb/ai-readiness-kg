@@ -22,13 +22,14 @@ sys.path.insert(0, str(REPO))
 
 from scan import load_params                                   # noqa: E402
 from scan.model import Observation, params_hash                # noqa: E402
-from scan.rules import BY_LEG, judge as judge_rule             # noqa: E402
+from scan.rules import CURRENT, judge as judge_rule            # noqa: E402
 from scan.runner import collect_leg                            # noqa: E402
 
 FRAMEWORK = REPO / "framework" / "ai_readiness_framework.json"
 OUT = REPO / "state" / "scan_smoke_2026-09-06.json"
+CONTROLS_OUT = REPO / "state" / "scan_controls_2026-09-06.json"
 #: Legs the control fixtures are built to exercise. E5 judges the cycle, not a surface.
-CONTROL_LEGS = [l for l in BY_LEG if l != "E5"]
+CONTROL_LEGS = [l for l in CURRENT if l != "E5"]
 
 
 def specs() -> dict:
@@ -53,7 +54,7 @@ def run_surface(sp: dict, target: dict, params: dict, legs: list, fetcher=None) 
                                    "error": f"{type(exc).__name__}: {exc}"},
                                   error_class="collector_unavailable")]
         obs += o
-        findings.append(judge_rule(BY_LEG[leg], o, params))
+        findings.append(judge_rule(CURRENT[leg], o, params))
     return obs, findings
 
 
@@ -81,7 +82,7 @@ def run_controls(params: dict) -> tuple:
             parsed={"fixture": fixture, "expected": expected,
                     "verdicts": {f.leg: f.verdict for f in findings},
                     "unexpected": unexpected}))
-    e5 = judge_rule("RULE-E5-v1", control_obs, params)
+    e5 = judge_rule(CURRENT["E5"], control_obs, params)
     return all_findings, e5, control_obs + fixture_obs, e5.verdict == "pass"
 
 
@@ -166,6 +167,28 @@ def main(argv=None) -> int:
         print("cycle INVALID; no real host was touched", file=sys.stderr)
         return 2
     if a.controls_only:
+        # A control-only cycle is still a cycle and still has to be re-derivable. Writing the
+        # payload is what lets `rederive.py` run its gate over the controls after a rule
+        # change without re-scanning seventeen federal hosts — which is the whole point of a
+        # rule being pure, and was not usable before because the payload was only written on
+        # a full run.
+        payload = {
+            "task": "cc_tasks/2026-09-06_scan_targets.md",
+            "cycle": "controls_only",
+            "params_version": params["params_version"], "params_hash": params_hash(params),
+            "control_verdict": e5.verdict, "control_reason": e5.reason,
+            "control_findings": len(cf) + 1,
+            "rules": sorted({f.rule_id for f in cf} | {e5.rule_id}),
+            "findings_detail": [],
+            "control_findings_detail": [f.to_dict() for f in cf] + [e5.to_dict()],
+            "observations_detail": [o.to_dict() for o in control_obs],
+        }
+        CONTROLS_OUT.write_text(json.dumps(payload, indent=1, default=str) + "\n",
+                                encoding="utf-8")
+        print(json.dumps({k: v for k, v in payload.items()
+                          if k not in ("findings_detail", "control_findings_detail",
+                                       "observations_detail")}, indent=1))
+        print(f"-> {CONTROLS_OUT.relative_to(REPO)}", file=sys.stderr)
         return 0
 
     sp, tgts = specs(), surfaces()
@@ -182,6 +205,20 @@ def main(argv=None) -> int:
                      "verdicts": {f.leg: f.verdict for f in findings}})
         print(f"  {t['doc_id'][:46]:46s} " +
               " ".join(f.verdict[0].upper() for f in findings))
+
+    # E5-v2's first clause — "both control fixtures are scanned before any real host" — is
+    # only falsifiable against a timestamp. The gate above already ran and already stopped the
+    # cycle if a control misfired; this re-judges E5 with the ordering evidence now that there
+    # IS a first real host, so the cycle's recorded E5 Finding carries the whole signal rather
+    # than the half a pure rule could see beforehand.
+    earliest = min((o.captured_at for o in all_obs), default=None)
+    if earliest:
+        for o in control_obs:
+            if o.leg == "E5":
+                o.parsed = dict(o.parsed or {}, earliest_surface_captured_at=earliest)
+        e5 = judge_rule(CURRENT["E5"], [o for o in control_obs if o.leg == "E5"], params)
+        if e5.verdict != "pass":
+            print(f"CYCLE INVALID after the fact: {e5.reason}", file=sys.stderr)
 
     by_leg_err = {leg: sum(1 for r in rows if r["verdicts"].get(leg) == "error")
                   for leg in CONTROL_LEGS}

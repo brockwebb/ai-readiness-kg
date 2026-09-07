@@ -96,6 +96,29 @@ class Fetcher:
                     "elapsed_ms": elapsed, "final_url": str(resp.url)}
 
 
+    def raw_head(self, url: str) -> dict:
+        """One HEAD, same manners. A1-v2 and A3-v2 need the per-link `Content-Type` their
+        specs say to read ("for each, HEAD and read Content-Type and file extension"); v1
+        classified on the href suffix alone, so an extensionless endpoint serving `text/csv`
+        was invisible to it.
+
+        A host that answers 405/501 is retried once as a GET, because refusing HEAD is a
+        server quirk and reading it as "this link has no content type" would score the quirk
+        as a property of the product.
+        """
+        host = urllib.parse.urlsplit(url).netloc
+        self._wait(host)
+        t0 = time.monotonic()
+        resp = self.client.head(url)
+        elapsed = int((time.monotonic() - t0) * 1000)
+        if resp.status_code in self.params.get("link_probe", {}).get(
+                "fallback_get_on_status", []):
+            got = self.raw_get(url)
+            return {**got, "method": "GET", "head_refused_status": resp.status_code}
+        return {"status": resp.status_code, "headers": dict(resp.headers), "body": b"",
+                "elapsed_ms": elapsed, "final_url": str(resp.url), "method": "HEAD"}
+
+
 def error_class_for(status: int) -> str | None:
     if status >= 500:
         return "http_5xx"

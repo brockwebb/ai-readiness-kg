@@ -38,7 +38,17 @@ COLOURS = {"specified": "#94a3b8", "harness_built": "#3b82f6", "measured": "#059
 
 
 def indicators(g: dict) -> list:
-    return [n["properties"] for n in g["nodes"] if "AssessmentIndicator" in n["labels"]]
+    """The framework's indicators. **Candidates are excluded** (DD-054): a candidate is not the
+    framework, so it is not in any fraction's numerator OR denominator. Counting one in the
+    denominator would make the instrument look less complete for having noticed something;
+    counting it in the numerator would adopt it by arithmetic."""
+    return [n["properties"] for n in g["nodes"] if "AssessmentIndicator" in n["labels"]
+            and n["properties"].get("status") != "candidate"]
+
+
+def candidates(g: dict) -> list:
+    return [n["properties"] for n in g["nodes"] if "AssessmentIndicator" in n["labels"]
+            and n["properties"].get("status") == "candidate"]
 
 
 def specs(g: dict) -> dict:
@@ -109,6 +119,19 @@ def bars(title: str, rows: list, keys: list, width: int = 640) -> str:
     return "\n".join(out)
 
 
+def candidate_banner(s: dict) -> str:
+    """Candidates, said out loud rather than left out. A page that simply omitted them would
+    be accurate and would hide the one thing a reader most needs to know about them: that they
+    exist, and that nobody has adopted them."""
+    c = s.get("candidates") or {}
+    if not c.get("n"):
+        return ""
+    codes = ", ".join(html.escape(x) for x in c["codes"])
+    return (f'<p class="note"><b>{c["n"]} candidate indicator'
+            f'{"s" if c["n"] != 1 else ""} ({codes}) — proposed, not adopted.</b> '
+            f'{html.escape(c["note"])}</p>')
+
+
 def page(g: dict, s: dict, sp: dict) -> str:
     inds = indicators(g)
     by_crit = [(f"{c} · {g_name(g, c)}",
@@ -169,6 +192,7 @@ td.gap {{ color:#d97706 }} td.ok {{ color:#059669 }}
 <p class="sub">Coverage of the assessment instrument, {w['indicators']} indicators across
 {len(s['by_criterion'])} criteria. Generated {html.escape(g.get('generated_at', '2026-09-06'))}
 from <code>framework/ai_readiness_framework.json</code>.</p>
+{candidate_banner(s)}
 
 <div class="cards">
   <div class="card"><b>{w['evidenced']['n']}/{w['evidenced']['of']}</b>
@@ -223,10 +247,21 @@ def main(argv=None) -> int:
         "with_fuji_metric": [p["leg"] for p in auto if p.get("fuji_metric")],
     }
     s["task"] = TASK
+    # Candidates are their own status class, reported and NOT counted (DD-054). Reporting them
+    # here rather than only in the skeleton means the page can say "1 candidate, not counted"
+    # instead of leaving a reader to wonder why 48 indicators became 48 again.
+    cands = candidates(g)
+    s["candidates"] = {"n": len(cands),
+                       "codes": [c["code"] for c in cands],
+                       "counted_in_any_fraction": False,
+                       "note": ("A candidate is proposed, not adopted. It is excluded from "
+                                "every numerator AND every denominator; promotion is an "
+                                "operator decision (DD-054).")}
     OUT_JSON.parent.mkdir(parents=True, exist_ok=True)
     OUT_JSON.write_text(json.dumps(s, indent=1) + "\n", encoding="utf-8")
     OUT_HTML.write_text(page(g, s, sp), encoding="utf-8")
-    print(json.dumps({"whole": s["whole"], "measurement_specs": s["measurement_specs"],
+    print(json.dumps({"whole": s["whole"], "candidates": s["candidates"],
+                      "measurement_specs": s["measurement_specs"],
                       "by_tier": {k: v["indicators"] for k, v in s["by_tier"].items()}},
                      indent=1))
     print(f"-> {OUT_JSON.resolve().relative_to(REPO)}  {OUT_HTML.resolve().relative_to(REPO)}",

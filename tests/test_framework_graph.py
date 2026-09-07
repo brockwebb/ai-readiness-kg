@@ -158,3 +158,27 @@ def test_every_leg_with_a_rule_carries_its_rule_id(graph):
         leg = n["properties"].get("leg")
         if leg in BY_LEG:
             assert n["properties"].get("rule_id") == BY_LEG[leg], leg
+
+
+# ------------------------------------------------------- candidates are not the framework
+def test_a_candidate_indicator_never_renders_into_a_criterion_table(graph):
+    """DD-054. A reader scanning the A table must not have to check a status column to know
+    whether a row is part of the instrument, so a `candidate` renders into its own table and
+    nowhere else. This is the mechanism by which "proposed, not adopted" survives contact with
+    a reader; a status column would not."""
+    cands = {p["code"] for p in rf.candidate_rows(graph)}
+    assert cands, "no candidate indicator to test the separation with"
+    rendered = {p["code"] for p in rf.rows_from_json(graph)}
+    assert not (cands & rendered), sorted(cands & rendered)
+    block = rf.render_candidate_table(graph)
+    for code in cands:
+        assert f"| {code} |" in block
+
+
+def test_a_candidate_states_where_it_came_from(graph):
+    """A candidate found by the instrument measuring itself has different evidentiary standing
+    from one crosswalked out of a published framework, and the row has to say which."""
+    for p in rf.candidate_rows(graph):
+        assert p.get("candidate_provenance"), p["code"]
+        assert p.get("candidate_rationale"), p["code"]
+        assert p.get("candidate_promotion"), p["code"]

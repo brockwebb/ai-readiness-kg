@@ -1,0 +1,222 @@
+# The scan target roster. Task `cc_tasks/2026-09-06_scan_targets.md` §3.1.
+#
+# POPULATION, stated before any URL was chosen: the 13 U.S. principal statistical agencies as
+# enumerated by OMB **Statistical Policy Directive No. 1**, "Fundamental Responsibilities of
+# Federal Statistical Agencies and Recognized Statistical Units" (79 FR 71610, 2014-12-02),
+# read from the fss-policy-kg corpus (`spd_1`, segments s22-s39) rather than from memory — the
+# segment id for each agency is recorded on its row. That directive is the OMB statistical
+# policy list the task names. Note the wider set: `sap_policy_m_23_04` §s33 records **16**
+# agencies and units recognized under 44 U.S.C. 3561(11)/3562; the three additional recognized
+# UNITS are out of scope here because the task says principal statistical agencies, and the
+# difference is recorded rather than silently resolved.
+#
+# Plus: the two non-U.S. comparators the admitted corpus already contains. StatCan is admitted
+# (7 surfaces under epoch g1sfc-2026-09-03). No second non-U.S. comparator is added — the task
+# permits one "only if the corpus already admits a document from it", and no other national
+# statistical office has an admitted document.
+#
+# HOST VERIFICATION is mechanical, not asserted: the pre-flight reads `publisher.name` from
+# `<host>/data.json` where the host serves one (Project Open Data / OPEN Government Data Act
+# metadata), else the `<title>` of the home page, and stores the capture. "bls.gov is the
+# Bureau of Labor Statistics" is then a recorded observation, not a claim from memory.
+#
+# FLAGSHIP SELECTION is by the agency's own listing, never by what looks good or bad for the
+# instrument. `listing_url` is the page the agency itself calls its data / featured products
+# page; the selected flagship must appear on it, and `selection_source` on the emitted row
+# carries the listing URL and the anchor text it was read from. A flagship that cannot be
+# found on the agency's own listing is NOT substituted from elsewhere — it is recorded as
+# `listing_unreadable` and the agency contributes only its well-known set.
+
+epoch: scan-2026-09
+source_type: product_surface
+construct_arm: publication_actionability
+
+agencies:
+  - code: BEA
+    name: Bureau of Economic Analysis
+    department: Commerce
+    spd1_segment: spd_1#s22
+    host: https://www.bea.gov
+    listing_url: https://www.bea.gov/data
+  - code: BJS
+    name: Bureau of Justice Statistics
+    department: Justice
+    spd1_segment: spd_1#s24
+    host: https://bjs.ojp.gov
+    listing_url: https://bjs.ojp.gov/data
+  - code: BLS
+    name: Bureau of Labor Statistics
+    department: Labor
+    spd1_segment: spd_1#s26
+    host: https://www.bls.gov
+    listing_url: https://www.bls.gov/data/
+  - code: BTS
+    name: Bureau of Transportation Statistics
+    department: Transportation
+    spd1_segment: spd_1#s27
+    host: https://www.bts.gov
+    listing_url: https://www.bts.gov/browse-statistical-products-and-data
+  - code: CENSUS
+    name: Census Bureau
+    department: Commerce
+    spd1_segment: spd_1#s28
+    host: https://www.census.gov
+    listing_url: https://www.census.gov/data.html
+  - code: ERS
+    name: Economic Research Service
+    department: Agriculture
+    spd1_segment: spd_1#s29
+    host: https://www.ers.usda.gov
+    listing_url: https://www.ers.usda.gov/data-products
+  - code: EIA
+    name: Energy Information Administration
+    department: Energy
+    spd1_segment: spd_1#s31
+    host: https://www.eia.gov
+    listing_url: https://www.eia.gov/tools/
+  - code: NASS
+    name: National Agricultural Statistics Service
+    department: Agriculture
+    spd1_segment: spd_1#s33
+    host: https://www.nass.usda.gov
+    listing_url: https://www.nass.usda.gov/Data_and_Statistics/
+  - code: NCES
+    name: National Center for Education Statistics
+    department: Education
+    spd1_segment: spd_1#s34
+    host: https://nces.ed.gov
+    listing_url: https://nces.ed.gov/datatools/
+  - code: NCHS
+    name: National Center for Health Statistics
+    department: Health and Human Services
+    spd1_segment: spd_1#s36
+    # NCHS does not control its own host: it is a section of www.cdc.gov. The agency-level
+    # well-known set for this row is therefore CDC's, not NCHS's — recorded because it means
+    # robots.txt, /data.json and /.well-known/ answer for a parent department, and a finding
+    # against them is not a finding about the statistical agency.
+    host: https://www.cdc.gov
+    host_shared_with: Centers for Disease Control and Prevention
+    listing_url: https://www.cdc.gov/nchs/products/index.htm
+  - code: NCSES
+    name: National Center for Science and Engineering Statistics
+    department: National Science Foundation
+    spd1_segment: spd_1#s37
+    host: https://ncses.nsf.gov
+    listing_url: https://ncses.nsf.gov/data
+  - code: ORES
+    name: Office of Research, Evaluation, and Statistics
+    department: Social Security Administration
+    spd1_segment: spd_1#s38
+    host: https://www.ssa.gov
+    listing_url: https://www.ssa.gov/policy/docs/statcomps/
+  - code: SOI
+    name: Statistics of Income Division
+    department: Treasury
+    spd1_segment: spd_1#s39
+    host: https://www.irs.gov
+    listing_url: https://www.irs.gov/statistics
+  - code: STATCAN
+    name: Statistics Canada
+    department: (non-U.S. comparator, already admitted)
+    spd1_segment: null
+    admitted_reason: "7 surfaces already admitted under epoch g1sfc-2026-09-03"
+    host: https://www150.statcan.gc.ca
+    listing_url: https://www150.statcan.gc.ca/n1/en/type/data
+
+# Anchor text that marks a link on a listing page as a candidate flagship product. Not a
+# ranking — a filter, so that the selection is made from the agency's own product links
+# rather than from its navigation chrome.
+candidate_link_tokens:
+  - survey
+  - statistics
+  - data
+  - estimates
+  - index
+  - report
+  - release
+  - table
+  - census
+  - accounts
+
+# Navigation and boilerplate anchors that are never a product.
+reject_link_tokens:
+  - about
+  - contact
+  - privacy
+  - accessibility
+  - foia
+  - careers
+  - newsroom
+  - subscribe
+  - help
+  - glossary
+  - sitemap
+  - search
+
+# The agency-level well-known set is a SYNTHETIC surface, one per host, not a document.
+well_known_paths:
+  - /robots.txt
+  - /sitemap.xml
+  - /sitemap_index.xml
+  - /llms.txt
+  - /data.json
+  - /.well-known/
+
+# SELECTION, stated before any product was chosen (§3.1: "Do not choose products because they
+# look good or bad for the instrument"). Applied mechanically to the candidates harvested from
+# each agency's own listing, in the agency's own document order:
+#
+#   flagship = the first candidates whose anchor text NAMES A PRODUCT — i.e. survives
+#              `reject_link_tokens` and `section_link_tokens`, and whose href is deeper than
+#              the listing page itself. One per agency, two where a distinct second exists.
+#   machine  = the first candidate matching `machine_entry_tokens`; else `<host>/data.json`
+#              if the host serves one; else recorded `none_found`.
+#
+# Document order is the agency's ranking, not ours. Where that yields something the author
+# would not have picked, the pick stands and the row records what it came from.
+
+# Anchors that name a SECTION, a tool, or a policy page rather than a statistical product.
+# Everything here is a page an agency has, not a product it publishes.
+section_link_tokens:
+  - overview
+  - browse
+  - all surveys
+  - data tools
+  - data analysis tools
+  - data visualization
+  - index
+  - schedule
+  - calendar
+  - licensing
+  - governance
+  - collection process
+  - academy
+  - respondents
+  - genealogy
+  - combining data
+  - explore data
+  - latest releases
+  - view all
+  - report fraud
+  - financial and budget
+  - restricted
+  - special tabulations
+  - by date
+  - by title
+  - initiative
+  - demo
+  - archive of
+
+# Anchors or hrefs that mark a MACHINE entry point: an API root, a bulk-download index, or a
+# catalog. `/data.json` is checked separately because it is a path, not an anchor.
+machine_entry_tokens:
+  - open data
+  - opendata
+  - api
+  - developers
+  - download
+  - data files
+  - datasets
+  - bulk
+  - quick stats
+

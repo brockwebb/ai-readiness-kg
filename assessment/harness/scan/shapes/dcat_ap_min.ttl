@@ -1,0 +1,67 @@
+# MINIMAL DCAT-AP shapes — the mandatory-property subset, and nothing more.
+#
+# Task `cc_tasks/2026-09-06_scan_targets.md` §2, disposition of the A6 `deviates` finding:
+# RULE-A6-v1's spec says "validate the DCAT graph against DCAT-AP SHACL shapes" and the rule
+# only checked type membership, so a graph declaring `dcat:Dataset` while violating every
+# shape returned `pass`.
+#
+# SCOPE, stated rather than implied: this is NOT the DCAT-AP SHACL distribution. It encodes
+# the three MANDATORY properties DCAT-AP 3.0 §5 places on a Dataset — dct:title,
+# dct:description, and (on the catalogue record's dataset) dct:publisher — plus the mandatory
+# dcat:accessURL on a Distribution. The full DCAT-AP shapes are a versioned external artifact
+# with its own release cadence; vendoring a snapshot of it here would create a silent fork,
+# and fetching it at scan time would make a measurement depend on a third-party host being up.
+# A6-v2 therefore reports `shapes_profile: dcat_ap_min` on every Finding, so no reader can
+# mistake a pass here for DCAT-AP conformance. Pinning the real shapes is recorded as the
+# residual and belongs to the F-UJI/validator task, not to this one.
+#
+# schema.org `Dataset` is validated against the same three, mapped: name, description,
+# publisher. A surface may carry either vocabulary and the indicator does not prefer one.
+
+@prefix sh:     <http://www.w3.org/ns/shacl#> .
+@prefix dcat:   <http://www.w3.org/ns/dcat#> .
+@prefix dct:    <http://purl.org/dc/terms/> .
+@prefix schema: <https://schema.org/> .
+@prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
+
+<#DatasetShape>
+    a sh:NodeShape ;
+    sh:targetClass dcat:Dataset ;
+    sh:property [
+        sh:path dct:title ;
+        sh:minCount 1 ;
+        sh:severity sh:Violation ;
+        sh:message "DCAT-AP: a Dataset must carry dct:title." ;
+    ] ;
+    sh:property [
+        sh:path dct:description ;
+        sh:minCount 1 ;
+        sh:severity sh:Violation ;
+        sh:message "DCAT-AP: a Dataset must carry dct:description." ;
+    ] .
+
+<#DistributionShape>
+    a sh:NodeShape ;
+    sh:targetClass dcat:Distribution ;
+    sh:property [
+        sh:path dcat:accessURL ;
+        sh:minCount 1 ;
+        sh:severity sh:Violation ;
+        sh:message "DCAT-AP: a Distribution must carry dcat:accessURL." ;
+    ] .
+
+<#SchemaOrgDatasetShape>
+    a sh:NodeShape ;
+    sh:targetClass schema:Dataset ;
+    sh:property [
+        sh:path schema:name ;
+        sh:minCount 1 ;
+        sh:severity sh:Violation ;
+        sh:message "schema.org Dataset: name is required (DCAT-AP dct:title equivalent)." ;
+    ] ;
+    sh:property [
+        sh:path schema:description ;
+        sh:minCount 1 ;
+        sh:severity sh:Violation ;
+        sh:message "schema.org Dataset: description is required (DCAT-AP dct:description equivalent)." ;
+    ] .

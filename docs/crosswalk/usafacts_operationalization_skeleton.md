@@ -245,3 +245,12 @@ Cited by task id, filename, or DOI. These are this project's own record, and are
 - `cc_tasks/2026-08-29_crosswalk_operationalization.md` and its RESULT — this pass: the admission table, the evidence-resolution table, the tier log, and the plagiarism check.
 - `events/batch-017.jsonl` — the `manifest_add` events for the eight documents admitted 2026-08-29, the `acquisition_blocked` event for the Commerce guidance, and the `corpus_epoch_declared` for epoch `crosswalk-2026-08-29`.
 - **fss-policy-kg** — sibling project; a federal policy corpus whose primary interface is an MCP server. Cited in §1b as an existence proof for the machine-first stance, and nowhere as evidence for an indicator.
+
+### Candidate indicators (not part of the framework)
+
+Proposed but **not adopted**. A candidate is not counted in any criterion, does not appear in the tables above, and is not counted in any progress fraction. Promotion to the framework is an operator decision (DD-054). Each row states where it came from, because a candidate found by the instrument measuring itself has different evidentiary standing from one crosswalked out of a published framework.
+
+| Code | Construct | Candidate indicator | Type | Evidence | Tier | Where it came from |
+|---|---|---|---|---|---|---|
+| A12 | Access policy coherence | An identified, robots-compliant machine client that robots.txt permits is served (not refused by a WAF or bot manager) | AUTO | `rfc-9309-robots-exclusion-protocol` (the declared layer's semantics); `cloudflare-ai-crawl-control-manage-crawlers` (the enforcing layer this indicator detects from outside) | `public` | Found by the harness, not by the literature: 3 of the 13 principal statistical agencies (BLS, BTS, ORES/SSA) answered 401/403 to `ai-readiness-kg-scanner/0.1` on every probe while their own robots.txt permits the paths. No corpus source proposes this as an AI-readiness construct. |
+

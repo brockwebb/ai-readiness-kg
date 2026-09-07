@@ -28,14 +28,21 @@ class _Handler(http.server.SimpleHTTPRequestHandler):
     def log_message(self, *a) -> None:            # silence in tests
         pass
 
-    def _serve_bytes(self, body: bytes, ctype: str, status: int = 200) -> None:
+    _head_only: bool = False
+
+    def _serve_bytes(self, body: bytes, ctype: str, status: int = 200,
+                     head_only: bool = False) -> None:
         self.send_response(status)
         self.send_header("Content-Type", ctype)
+        # Content-Length is the size of the REPRESENTATION, sent on a HEAD too (RFC 9110
+        # §9.3.2). A3-v2 sizes a candidate download from it, so a HEAD that omitted it would
+        # make every whole-product archive look like a file of unknown size.
         self.send_header("Content-Length", str(len(body)))
-        if status == 200 and self.path.endswith((".html", ".csv", ".json")):
+        if status == 200 and self.path.endswith((".html", ".csv", ".json", ".zip")):
             self.send_header("Last-Modified", "Tue, 01 Sep 2026 00:00:00 GMT")
         self.end_headers()
-        self.wfile.write(body)
+        if not head_only:
+            self.wfile.write(body)
 
     def do_GET(self) -> None:                      # noqa: N802
         rel = self.path.split("?")[0].lstrip("/") or "index.html"
@@ -44,15 +51,28 @@ class _Handler(http.server.SimpleHTTPRequestHandler):
             target = target / "index.html"
         if not target.is_file():
             if self.soft_404:
-                return self._serve_bytes(SOFT_404_SHELL, "text/html")
-            return self._serve_bytes(b"not found", "text/plain", status=404)
+                return self._serve_bytes(SOFT_404_SHELL, "text/html",
+                                         head_only=self._head_only)
+            return self._serve_bytes(b"not found", "text/plain", status=404,
+                                     head_only=self._head_only)
         body = target.read_bytes()
         if b"HOSTPORT" in body:
             body = body.replace(b"HOSTPORT", self.hostport.encode())
         ctype = {".html": "text/html", ".json": "application/json", ".csv": "text/csv",
                  ".xml": "application/xml", ".txt": "text/plain",
-                 ".pdf": "application/pdf"}.get(target.suffix, "application/octet-stream")
-        self._serve_bytes(body, ctype)
+                 ".pdf": "application/pdf", ".zip": "application/zip"}.get(
+                     target.suffix, "application/octet-stream")
+        self._serve_bytes(body, ctype, head_only=self._head_only)
+
+    def do_HEAD(self) -> None:                     # noqa: N802
+        """A1-v2 and A3-v2 HEAD every download link — their specs say to read the served
+        Content-Type rather than the href suffix — so a control fixture that answered only GET
+        would fail them for a reason that is about the fixture, not the rule."""
+        self._head_only = True
+        try:
+            self.do_GET()
+        finally:
+            self._head_only = False
 
 
 class FixtureServer:
