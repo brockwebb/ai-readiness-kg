@@ -72,6 +72,21 @@ When a Desktop session registers a cc_task, it must end that turn by giving the 
 
 Rules for CC when dispatched this way: read every addendum before any step (a task whose addendum says SUPERSEDED is not executed — stop and report); honor the task's own SEQUENCING line; write the RESULT, run `seldon cc complete`, commit and push. Rules for Desktop: never end a registration turn without the dispatch line; sequencing constraints between queued tasks are stated in the dispatch line, not assumed.
 
+## Desktop session protocol (operator-ordered, 2026-09-07)
+
+**Resume.** A new Desktop thread starts with the exact line from the newest file in `handoffs/` (absolute path, always):
+
+> `seldon go --brief /Users/brock/GitHub/ai-readiness-kg/handoffs/<date>_<slug>.md` — read the handoff, verify its premises against the graph before trusting them, then act on its final section.
+
+**Every completed cc_task gets the same loop, whether or not the operator says "OODA".** "Task done" from the operator means run it:
+1. Read the RESULT. Cross-check its central claims against the live graph (`seldon_query`, labelled Cypher): counts, states, registered Results. A RESULT is a claim, not a fact.
+2. Name every premise the task file got wrong, including Desktop's own. A wrong premise in the task file is the author's defect, not CC's.
+3. Decide on the grounding (prior art first; a threshold without a citation or a measured rate is a defect), state the decision, and author the next task. Do not ask the operator to ratify. Bring the operator in only for a genuinely novel value input, spend above a declared limit, or something that goes out publicly under his name.
+4. Register it (`seldon_cc_register`) and end the turn with the dispatch line, last and alone (protocol above).
+5. When handing off a thread: write `handoffs/<date>_<slug>.md` containing the resume line above, the chain state from `seldon go`, the open dispatch line(s), and what the next OODA should verify first.
+
+One gate per task. A task that fails a control fixture, a re-derivation check, or a pre-registered threshold writes nothing and reports; the next task is authored from the failure, never by moving the threshold.
+
 ## Conventions specific to this repo
 
 - Module path globals (`_EVENTS_DIR`, `_METRICS_DIR`, `_REVIEW_DIR`, `_SCHEMA_PATH`) are read at call time so `tests/conftest.py` can monkeypatch them onto `tmp_path`; don't inline them into function bodies.
