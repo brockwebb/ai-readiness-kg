@@ -80,6 +80,51 @@ def write_events(payload: dict) -> dict:
 SCAN_LABELS = ("Observation", "Finding", "Rule")
 
 
+def link_rules_to_indicators(session) -> dict:
+    """`Rule -[:MEASURES]-> AssessmentIndicator`, and the Rule properties that edge implies.
+
+    The two layers are projected by two scripts with two sources — the scan layer from the
+    event log (here), the framework layer from `framework/ai_readiness_framework.json`
+    (`scripts/load_framework_graph.py`) — and each one's reset removes the edge BETWEEN them.
+    So the bridge is rebuilt by whichever ran last: both projectors call this, and running
+    either alone leaves the graph whole. That is the whole reason this is a function and not
+    four lines inlined in `project()`.
+
+    `Rule.version` is parsed from the rule id, never read from the Finding's `rule_version`:
+    that field is the literal `"v1"` for every rule ever shipped (`rules/_common.py`) and it
+    is an INPUT to the derived `finding_id`, so it cannot be corrected in the events without
+    re-identifying all 1,353 stored Findings. See `rules.parse_rule_id`.
+
+    An unresolvable rule id or an indicator code with no node is COUNTED, never skipped
+    silently — a Rule with no MEASURES edge is the defect this exists to make visible.
+    """
+    from scan.rules import CURRENT, parse_rule_id
+    counts = {"measures": 0, "rules_seen": 0, "rules_unparseable": [],
+              "rules_without_indicator": []}
+    current_ids = set(CURRENT.values())
+    for rec in list(session.run("MATCH (r:Rule) RETURN r.rule_id AS rid ORDER BY rid")):
+        rid = rec["rid"]
+        counts["rules_seen"] += 1
+        try:
+            parsed = parse_rule_id(rid)
+        except ValueError:
+            counts["rules_unparseable"].append(rid)
+            continue
+        session.run("MATCH (r:Rule {rule_id: $rid}) SET r.version = $ver, "
+                    "r.indicator_code = $code, r.qualifier = $q, r.current = $cur",
+                    rid=rid, ver=parsed["version"], code=parsed["indicator_code"],
+                    q=parsed["qualifier"], cur=rid in current_ids)
+        n = session.run("MATCH (r:Rule {rule_id: $rid}) "
+                        "MATCH (i:AssessmentIndicator {code: $code}) "
+                        "MERGE (r)-[:MEASURES]->(i) RETURN count(*) AS n",
+                        rid=rid, code=parsed["indicator_code"]).single()["n"]
+        if n:
+            counts["measures"] += 1
+        else:
+            counts["rules_without_indicator"].append(rid)
+    return counts
+
+
 def project() -> dict:
     from kg import eventlog
     from seldon.config import get_neo4j_driver, load_project_config
@@ -147,6 +192,7 @@ def project() -> dict:
                               o=oid, f=ev["finding_id"])
                         counts["supports"] += 1
             counts["rules"] = s.run("MATCH (r:Rule) RETURN count(r)").single()[0]
+            counts.update(link_rules_to_indicators(s))
     finally:
         driver.close()
     return counts

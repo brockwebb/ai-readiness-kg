@@ -12,6 +12,12 @@ Target database: `seldon-ai-readiness-kg` — the hive's declared KG database pe
 repo convention (seldon.yaml::neo4j.database, federation registry). KG content
 coexists with Seldon's artifact graph under disjoint labels.
 
+Since `cc_tasks/2026-09-07_framework_projection_repair.md` this is the WHOLE projection: the
+KG replay, then the scan layer from the event log, then the framework layer from
+`framework/ai_readiness_framework.json` (`--no-scan` / `--no-framework` opt out). Those last
+two were manual steps nothing called, and the framework layer went two write-backs stale
+while the Desktop protocol was verifying framework state against it.
+
 Rel types come ONLY from the schema.yaml edge_types whitelist — an edge event
 with an unknown type is skipped and counted (never string-interpolated into
 Cypher from payload text).
@@ -695,7 +701,49 @@ def project_extraction_queue(session) -> dict:
     return dict(_c.Counter(r["extraction_state"] for r in rows.values()))
 
 
+def project_assessment(session, scan: bool, framework: bool) -> dict:
+    """The two layers outside the KG whitelist, projected in the only order that works.
+
+    The scan layer (`Observation`/`Finding`/`Rule`) replays from the event log; the framework
+    layer (`AssessmentCriterion`/`Construct`/`Indicator`/`MeasurementSpec`/`InternalRef`)
+    projects from `framework/ai_readiness_framework.json`. Order is not a preference:
+    `EVIDENCED_BY` needs the `Document` nodes `build()` just wrote, and the
+    `Rule -[:MEASURES]-> AssessmentIndicator` bridge needs both layers to exist, so the
+    framework load — which rebuilds that bridge last — goes after the scan replay.
+
+    Both steps used to be manual, and on 2026-09-07 the graph's framework layer was two
+    write-backs stale while `seldon go` verified against it. That is why they are here:
+    `python scripts/build_projection.py` is the documented projection entry point, and a
+    projection entry point that leaves a layer stale is a fabrication with a timestamp.
+    """
+    out = {}
+    sys.path.insert(0, str(REPO / "assessment" / "harness"))
+    if scan:
+        from scan.publish import project as _scan_project
+        # `project()` opens its own driver: it is also the standalone `publish.py --project`
+        # path, and giving it a session here would make the two callers different code.
+        out["scan"] = _scan_project()
+    if framework:
+        import importlib.util
+        spec = importlib.util.spec_from_file_location(
+            "_load_framework_graph", REPO / "scripts" / "load_framework_graph.py")
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        out["framework"] = mod.load(session, json.loads(
+            (REPO / "framework" / "ai_readiness_framework.json").read_text(encoding="utf-8")))
+    return out
+
+
 def main() -> int:
+    import argparse
+    ap = argparse.ArgumentParser(description=__doc__,
+                                 formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("--no-scan", action="store_true",
+                    help="skip the Observation/Finding/Rule replay (assessment/harness/scan)")
+    ap.add_argument("--no-framework", action="store_true",
+                    help="skip projecting framework/ai_readiness_framework.json")
+    args = ap.parse_args()
+
     schema = _load_schema()
     kg_labels = list(schema["node_types"])
     edge_whitelist = set(schema["edge_types"])
@@ -707,6 +755,8 @@ def main() -> int:
     with driver.session(database=db) as session:
         counts = build(session, kg_labels, edge_whitelist)
         fp = fingerprint(session, kg_labels)
+        assessment = project_assessment(session, scan=not args.no_scan,
+                                        framework=not args.no_framework)
     driver.close()
     # A successful replay is, by construction, current: retire the stale marker a burn
     # close may have left when the graph was unreachable.
@@ -714,7 +764,8 @@ def main() -> int:
     if marker.is_file():
         marker.unlink()
         print(f"projection_stale marker retired: {marker}")
-    print(json.dumps({"database": db, "counts": counts, "fingerprint": fp}, indent=1))
+    print(json.dumps({"database": db, "counts": counts, "fingerprint": fp,
+                      "assessment": assessment}, indent=1))
     return 0
 
 

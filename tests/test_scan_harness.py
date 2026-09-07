@@ -603,3 +603,39 @@ def test_a_v3_leaves_its_v2_byte_identical():
         r = subprocess.run(["git", "diff", "--stat", "HEAD", "--", str(rel)],
                            capture_output=True, text=True, cwd=str(REPO))
         assert not r.stdout.strip(), f"{rel} was edited: {r.stdout.strip()}"
+
+
+def test_parse_rule_id_derives_indicator_and_version_for_every_shipped_rule():
+    """`Rule.version` and `Rule -[:MEASURES]-> AssessmentIndicator` are DERIVED from the rule
+    id (`cc_tasks/2026-09-07_framework_projection_repair.md` §2). The property that makes a
+    derivation safe is that it holds for every id that exists, so assert it over REGISTRY
+    rather than over a hand-picked four."""
+    import json as _json
+    from scan.rules import CURRENT, MODULES, parse_rule_id
+
+    codes = {n["properties"]["code"] for n in
+             _json.loads((REPO / "framework" / "ai_readiness_framework.json")
+                         .read_text(encoding="utf-8"))["nodes"]
+             if n["labels"][0] == "AssessmentIndicator"}
+    for m in MODULES:
+        p = parse_rule_id(m.RULE_ID)
+        assert p["version"] == m.RULE_ID.rsplit("-", 1)[1]
+        assert p["indicator_code"] in codes, f"{m.RULE_ID} -> {p['indicator_code']}, not a code"
+        # the leg keeps the qualifier the indicator code drops
+        assert m.LEG.startswith(p["indicator_code"])
+    assert parse_rule_id("RULE-A11-declared-v2")["indicator_code"] == "A11"
+    assert parse_rule_id("RULE-A11-declared-v2")["qualifier"] == "declared"
+    assert parse_rule_id("RULE-G1-D-v1")["indicator_code"] == "G1-D"
+    assert parse_rule_id("RULE-A12-v1") == {"rule_id": "RULE-A12-v1", "indicator_code": "A12",
+                                            "qualifier": None, "version": "v1"}
+    assert set(CURRENT.values()) <= {m.RULE_ID for m in MODULES}
+
+
+@pytest.mark.parametrize("bad", ["A1-v1", "RULE-A1", "RULE-a1-v1", "RULE-A1-v", "RULE--v1",
+                                 "RULE-H1-v1", "RULE-A1-v1-extra"])
+def test_parse_rule_id_refuses_what_it_cannot_derive(bad):
+    """Loud, not lenient: a rule id this cannot parse would otherwise become a Rule node with
+    no indicator and no version, which is exactly the state this task is repairing."""
+    from scan.rules import parse_rule_id
+    with pytest.raises(ValueError):
+        parse_rule_id(bad)

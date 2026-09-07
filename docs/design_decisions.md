@@ -981,3 +981,31 @@ The definition is short. What it excludes is the substance, and each exclusion c
 **5. Not measured is a reason, not a silence.** An indicator that misses the bar keeps `harness_built` and gains `not_measured_reason` on the node, naming the leg, the counts and why. *"Why is A2 not measured?"* is the first question a reader of the progress page will ask, and answering it should not require re-deriving the cycle.
 
 **6. The definition is per-leg and per-cycle, and it is not sticky in the wrong direction.** `measured_by` records the cycle, the legs, the `params_hash` and the counts that earned it. An indicator already `measured` under a different instrument — G1-D and G1-O under DD-036 — is **not re-derived** by a scan cycle: the frozen probe governs its own leg, and a scan agreeing with it is not the thing that made it measured.
+
+
+## DD-056: a cycle-level Result name carries its cycle, because a Result name is immutable and a cycle repeats
+
+**Date:** 2026-09-07. **Task:** `cc_tasks/2026-09-07_framework_projection_repair.md` §5. **Motivating incident:** `cc_tasks/2026-09-07_scan_run_RESULT.md` §7.4.
+
+**The rule.** Every Result registered by a scan cycle is named `scan_<metric>_<cycle>` — `scan_surfaces_2026-09-07`, `scan_a1_fail_2026-09-08`. The metric alone is not a name; it is a column heading.
+
+**Why.** A Seldon Result name is bound once and is immutable (AD-028): re-registering a bound name with a different value is refused, not overwritten. That is the right rule — a number that silently changes under a name someone cited is the drift the whole registry exists to stop — and it makes a bare metric name a single-use resource. The 2026-09-07 cycle discovered this the hard way: `scan_control_findings` was already bound at **31** by the 2026-09-06 control cycle, so this cycle's **33** was refused mid-run and had to be registered as `scan_control_findings_2026-09-07`. The refusal was correct and the name was wrong.
+
+**What is not renamed.** The bare names this cycle did bind — `scan_surfaces`, `scan_findings`, `scan_observations`, and the per-leg `scan_<leg>_*` family — **stand**. They are immutable and they are cited in `cc_tasks/2026-09-07_scan_run_RESULT.md`; renaming them would mean re-registering values under new names and leaving the old ones pointing at the same numbers, which is two records of one measurement. They are **first-cycle exceptions and are never reused**: the second scan cycle registers cycle-suffixed names only, and the bare names are read as "the 2026-09-07 cycle" wherever they appear.
+
+**Where the rule bites.** They registered cleanly the first time only because it was the first time. `scan_surfaces` on the second cycle would be refused exactly as `scan_control_findings` was — mid-run, after the measurement, at the point where the cheapest response is to invent a name under pressure. Naming the convention in advance is the difference between a registry that refuses and a registry that has to be argued with.
+
+
+## DD-057: the framework projection is part of `build_projection.py`'s contract, and Cypher verification of framework state is valid only while its round-trip gate is green
+
+**Date:** 2026-09-07. **Task:** `cc_tasks/2026-09-07_framework_projection_repair.md` §1–§3. **Gate:** `tests/test_framework_projection_roundtrip.py`.
+
+**The defect this closes.** DD-051 put the assessment layer outside the parser's whitelist so that no extraction could mint an `AssessmentIndicator`. That isolation was right and it had an unpriced cost: `scripts/load_framework_graph.py` was a **manual** step that nothing called. On 2026-09-07 the graph's framework layer was two write-backs stale — 48 indicators where the JSON of record held 49, 2 `measured` where it held 16 — while the Desktop protocol's standing instruction ("verify the handoff's premises against the graph before trusting them") was reading that layer as ground truth. A stale projection does not look stale. It answers.
+
+**The rule.** `python scripts/build_projection.py` projects **everything**: the KG replay, then the scan layer from the event log, then the framework layer from `framework/ai_readiness_framework.json`. The order is forced, not preferred — `EVIDENCED_BY` needs the `Document` nodes the KG replay writes, and the `Rule -[:MEASURES]-> AssessmentIndicator` bridge needs both layers to exist. A write-back that changes the JSON is not finished until a projection follows it.
+
+**One layer, one owner.** The framework loader used to reset `Observation` and `Finding`, two labels the framework JSON has never contained: running it after a scan cycle would have deleted 3,717 Observations and 1,353 Findings and rebuilt none of them. A reset that owns a label it cannot rebuild is a delete with extra steps. Those labels belong to `assessment/harness/scan/publish.py`, which projects them from the event log; the loader owns the five framework labels and nothing else. The one edge that spans the two — `MEASURES` — is rebuilt by whichever projector ran last, so either run alone leaves the graph whole.
+
+**`Rule.version` is derived from the rule id, not read from the Finding.** Every stored Finding carries `rule_version: "v1"`, because `rules/_common.py` holds that string as a module constant and every rule of every generation calls through it. It cannot be corrected in the events: `rule_version` is an input to the derived `finding_id`, so changing it re-identifies all 1,353 stored Findings and voids the re-derivation gate. The graph therefore parses the version out of the rule id (`rules.parse_rule_id`), which is the only place it was ever true. The constant itself is a live defect, named here and left standing.
+
+**The validity condition.** Verification of framework state by Cypher — `seldon go`, `seldon_query`, any labelled `MATCH (i:AssessmentIndicator)` in a handoff — is valid **only while `tests/test_framework_projection_roundtrip.py` is green**. That test compares every node in the JSON of record to its graph node cell for cell, not by count: a stale projection with the right node count is precisely the state that produced this decision. Red gate, no Cypher verification of that layer; re-project first.

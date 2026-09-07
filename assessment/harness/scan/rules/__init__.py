@@ -20,6 +20,8 @@ re-scored under a rule that did not exist when it was measured.
 """
 from __future__ import annotations
 
+import re
+
 from . import (rule_a1, rule_a10, rule_a11_declared, rule_a2, rule_a3, rule_a4, rule_a5,
                rule_a6, rule_a8, rule_a9, rule_b3, rule_d1, rule_d4, rule_e5, rule_f4,
                rule_g1d)
@@ -67,6 +69,39 @@ FRAMEWORK_LEGS = tuple(l for l in CURRENT if l not in CANDIDATE_LEGS)
 
 #: Back-compatible alias. `BY_LEG` was the scaffold's name for what is now `CURRENT`.
 BY_LEG = CURRENT
+
+
+#: A rule id parses; it is never looked up. `RULE-<indicator>[-<qualifier>...]-<version>`.
+#: The indicator code is the leading `[A-G]<digits>`, optionally followed by a single
+#: UPPERCASE leg letter — that is the shape `build_framework_graph.py` mints (`_ROW`'s
+#: `[A-G]\d{1,2}`, plus the `G1-D` / `G1-O` split of DD-036). A lowercase segment after it is
+#: a rule QUALIFIER, not part of the indicator: `RULE-A11-declared-v2` measures A11, and
+#: `RULE-G1-D-v1` measures G1-D. Case is what separates the two, which is why this is a regex
+#: and not a table: a per-rule table would have to be edited for every new rule, and the one
+#: that was forgotten would be the one that mattered.
+_RULE_ID = re.compile(
+    r"^RULE-"
+    r"(?P<indicator_code>[A-G]\d{1,2}(?:-[A-Z])?)"
+    r"(?P<qualifier>(?:-[a-z][a-z0-9_]*)*)"
+    r"-(?P<version>v\d+)$")
+
+
+def parse_rule_id(rule_id: str) -> dict:
+    """`{indicator_code, qualifier, version}` for a rule id, or `ValueError`.
+
+    The graph needs `Rule -> AssessmentIndicator` and needs each `Rule` to carry its own
+    version. Neither can come from the recorded Finding: `_common.RULE_VERSION` is the
+    literal `"v1"` for every rule ever shipped, and it is an INPUT to the derived
+    `finding_id`, so it cannot be corrected without re-identifying every stored Finding.
+    The rule id is the only place the version is actually true, so parse it there.
+    """
+    m = _RULE_ID.match(rule_id)
+    if m is None:
+        raise ValueError(f"unparseable rule id {rule_id!r}: expected RULE-<indicator>"
+                         f"[-<qualifier>]-v<n>")
+    return {"rule_id": rule_id, "indicator_code": m.group("indicator_code"),
+            "qualifier": m.group("qualifier").lstrip("-") or None,
+            "version": m.group("version")}
 
 
 def judge(rule_id: str, observations: list, params: dict):

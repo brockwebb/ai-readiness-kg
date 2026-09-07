@@ -24,7 +24,9 @@ python -m kg.manifest verify
 
 python scripts/run_bulk_extraction.py --dry-run --ceiling-tokens N  # runner; --ceiling-tokens REQUIRED (per-run ceiling from the task file, DD-022), --run-id, --profile v1|kernel_v03 (scripts/run_profiles.yaml), --only DOC_ID, --max-docs, --retry-failed, --fleet, --shard
 python -m kg.spend status|reconcile              # shared preemptive spend ledger (state/spend_ledger.jsonl, DD-022)
-python scripts/build_projection.py               # reset-and-replay events → Neo4j (db: seldon-ai-readiness-kg)
+python scripts/build_projection.py               # reset-and-replay events → Neo4j (db: seldon-ai-readiness-kg); projects ALL THREE layers: KG, then scan (Observation/Finding/Rule), then framework (DD-057). --no-scan / --no-framework opt out
+python scripts/load_framework_graph.py           # framework layer alone, from framework/ai_readiness_framework.json; run after any write-back that edits it
+python -m pytest tests/test_framework_projection_roundtrip.py  # the gate that makes Cypher verification of framework state valid (DD-057); skips when Neo4j is down
 python scripts/run_baseline_gates.py [--profiles v1,kernel_v03 --report PATH]  # pre-registered checks
 ```
 
@@ -62,7 +64,8 @@ Transcribed from `docs/schema_v0.1.md` (the doc is authoritative; currently v0.2
 - `docs/design_decisions.md` — DD-001..DD-008 (append-only, dated).
 - `docs/schema_v0.1.md` — node/edge types, provenance (§4), extraction protocol (§5), state machine (§7).
 - `cc_tasks/*_RESULT.md` — execution records; the newest (`2026-08-14_bulk_v1_closeout_RESULT.md`) is the current state of play. `cc_tasks/` is intentionally tracked; `handoffs/` is not.
-- Seldon is active (`seldon.yaml`, `seldon_events.jsonl`); Neo4j database `seldon-ai-readiness-kg` holds both the KG labels and Seldon's artifact graph under disjoint labels — `build_projection.py` deletes only KG-schema labels.
+- Seldon is active (`seldon.yaml`, `seldon_events.jsonl`); Neo4j database `seldon-ai-readiness-kg` holds the KG labels, the assessment layer (framework + scan) and Seldon's artifact graph under disjoint labels. Each layer has exactly one owner: `build_projection.py` resets only KG-schema labels, `assessment/harness/scan/publish.py` owns `Observation`/`Finding`/`Rule`, `scripts/load_framework_graph.py` owns the five framework labels. `build_projection.py` runs all three in that order (DD-057).
+- **A write-back that edits `framework/ai_readiness_framework.json` is not finished until a projection follows it.** Verifying framework state by Cypher is valid only while `tests/test_framework_projection_roundtrip.py` is green (DD-057); a stale projection does not look stale, it answers.
 
 ## CC dispatch protocol (operator-ordered, 2026-09-01)
 
