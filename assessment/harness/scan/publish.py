@@ -26,14 +26,39 @@ sys.path.insert(0, str(REPO))
 sys.path.insert(0, "/Users/brock/GitHub/seldon")
 
 #: Its own shard, and this time checked to be free before use — batch 27 was not, and the
-#: 2026-09-06 bare-span backfill had to record that rather than move its events.
+#: 2026-09-06 bare-span backfill had to record that rather than move its events. Each CYCLE
+#: gets its own shard: two cycles sharing one would be readable but would make "the events of
+#: the 2026-09-07 cycle" a query rather than a file, and the shard is the unit an operator
+#: reaches for when something is wrong.
 SCAN_BATCH = 29
+CYCLE_BATCH = {"scan_2026-09-07": 31}
 OBS_EVENT = "observation_recorded"
 FIND_EVENT = "finding_derived"
 
 
+def batch_for(payload: dict) -> int:
+    """The shard this cycle's events belong on, refusing a shard that already holds another
+    cycle's. A cycle silently appended to a shard it does not own is exactly the defect the
+    bare-span backfill had to record instead of fixing."""
+    cycle = payload.get("cycle")
+    batch = CYCLE_BATCH.get(cycle, SCAN_BATCH)
+    path = REPO / "events" / f"batch-{batch:03d}.jsonl"
+    if path.is_file() and cycle in CYCLE_BATCH:
+        for line in path.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            ev = json.loads(line)
+            other = ev.get("params_hash")
+            if other and other != payload["params_hash"]:
+                raise SystemExit(
+                    f"REFUSING: events/batch-{batch:03d}.jsonl already holds events under "
+                    f"params_hash {other[:12]}…, not this cycle's {payload['params_hash'][:12]}…")
+    return batch
+
+
 def write_events(payload: dict) -> dict:
     from kg import eventlog
+    batch = batch_for(payload)
     seen_obs = {ev.get("obs_id") for ev in eventlog.replay() if ev.get("event_type") == OBS_EVENT}
     seen_fnd = {ev.get("finding_id") for ev in eventlog.replay()
                 if ev.get("event_type") == FIND_EVENT}
@@ -41,14 +66,15 @@ def write_events(payload: dict) -> dict:
     for o in payload["observations_detail"]:
         if o["obs_id"] in seen_obs:
             continue
-        eventlog.append({"event_type": OBS_EVENT, **o}, batch=SCAN_BATCH)
+        eventlog.append({"event_type": OBS_EVENT, **o}, batch=batch)
         n_o += 1
     for f in payload["findings_detail"] + payload.get("control_findings_detail", []):
         if f["finding_id"] in seen_fnd:
             continue
-        eventlog.append({"event_type": FIND_EVENT, **f}, batch=SCAN_BATCH)
+        eventlog.append({"event_type": FIND_EVENT, **f}, batch=batch)
         n_f += 1
-    return {"observation_events_written": n_o, "finding_events_written": n_f}
+    return {"observation_events_written": n_o, "finding_events_written": n_f,
+            "shard": f"events/batch-{batch:03d}.jsonl"}
 
 
 SCAN_LABELS = ("Observation", "Finding", "Rule")
@@ -64,7 +90,8 @@ def project() -> dict:
     #: not a corpus document), so they are counted apart; folding them in would leave the
     #: check permanently non-zero and therefore meaningless.
     counts = {"observations": 0, "findings": 0, "rules": 0, "observed_on": 0, "supports": 0,
-              "ruled_by": 0, "observed_on_missing_document": 0, "control_observations": 0}
+              "ruled_by": 0, "observed_on_missing_document": 0, "control_observations": 0,
+              "host_observations": 0}
     try:
         with driver.session(database=cfg["neo4j"]["database"]) as s:
             pred = " OR ".join(f"n:{l}" for l in SCAN_LABELS)
@@ -93,6 +120,12 @@ def project() -> dict:
                         counts["observed_on"] += 1
                     elif str(ev["target_doc_id"]).startswith("control:"):
                         counts["control_observations"] += 1
+                    # A well-known set is a SYNTHETIC host surface: nothing was admitted for
+                    # it because there is nothing to admit. Same reasoning as the control
+                    # observations above — folding either into the integrity check leaves it
+                    # permanently non-zero and therefore meaningless.
+                    elif str(ev["target_doc_id"]).startswith("host:"):
+                        counts["host_observations"] += 1
                     else:
                         counts["observed_on_missing_document"] += 1
                 elif t == FIND_EVENT:

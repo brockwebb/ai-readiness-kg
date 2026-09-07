@@ -61,6 +61,11 @@ def writeback(g: dict, by_leg: dict) -> dict:
         # An indicator already `measured` (G1-D, G1-O under DD-036) is NOT demoted: a real
         # measurement outranks the fact that a harness now exists for it.
         ind = inds.get(p.get("leg", "").split("-")[0]) or inds.get(p.get("leg"))
+        # A CANDIDATE indicator does not move on the strength of a rule existing for it. A12
+        # has a rule and is not the framework (DD-054); promoting it to `harness_built` here
+        # would adopt it by side effect of registering its rule.
+        if ind is not None and ind["properties"].get("status") == "candidate":
+            continue
         if ind is not None and ind["properties"].get("measurement_status") == "specified":
             ind["properties"]["measurement_status"] = "harness_built"
             touched["indicators_status"] += 1

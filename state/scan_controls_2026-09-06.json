@@ -2,14 +2,15 @@
  "task": "cc_tasks/2026-09-06_scan_targets.md",
  "cycle": "controls_only",
  "params_version": "0.1.0",
- "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
+ "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
  "control_verdict": "pass",
  "control_reason": "both control fixtures fired and every rule returned its expected verdict; ordering not asserted (no surface was scanned in this cycle)",
- "control_findings": 31,
+ "control_findings": 33,
  "rules": [
   "RULE-A1-v2",
   "RULE-A10-v2",
   "RULE-A11-declared-v2",
+  "RULE-A12-v1",
   "RULE-A2-v2",
   "RULE-A3-v2",
   "RULE-A4-v1",
@@ -27,7 +28,7 @@
  "findings_detail": [],
  "control_findings_detail": [
   {
-   "finding_id": "fnd_caa253d05cc8767c039dbf72",
+   "finding_id": "fnd_5416d284afc997f51ddf2909",
    "rule_id": "RULE-A1-v2",
    "rule_version": "v1",
    "spec_code": "A1",
@@ -35,21 +36,21 @@
    "target_doc_id": "control:passes_all",
    "verdict": "pass",
    "evidence": [
-    "obs_1202ff7b2cda417edb2ac659",
-    "obs_15fa69bce49293d0460b3925",
-    "obs_4628079961b06d2c496cdf37",
-    "obs_482c6ab6a570c145deaf9d6e",
-    "obs_5b33b3a96f2389847a91b24b",
-    "obs_5d6aa543a15ba36d59a98fd0",
-    "obs_7ee950779efa27a32bfae636",
-    "obs_8a8a7f5fdced6bec1ddc8cec",
-    "obs_d663ae5e40f9e270a05931b5"
+    "obs_3c850b071a127232fef90b57",
+    "obs_41c2c2af8e681aff3f42f4ff",
+    "obs_75d91d6d63fad0f5878772ba",
+    "obs_863ecc87cbe63acadaea26b5",
+    "obs_90d22f55f1be67b877a56188",
+    "obs_a5096ad6c45a6e4e35285759",
+    "obs_a51cd37023dee25d3405d913",
+    "obs_d39e1be56dc82e5a1780513f",
+    "obs_eb5df3a1085c395865781207"
    ],
-   "reason": "structured data SERVED at http://127.0.0.1:54788/estimates.csv (text/csv); classified on the response, not on the href",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38"
+   "reason": "structured data SERVED at http://127.0.0.1:59823/estimates.csv (text/csv); classified on the response, not on the href",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4"
   },
   {
-   "finding_id": "fnd_5c3f0b7f4438481ce7855114",
+   "finding_id": "fnd_bfa4436ac620349176c1fd01",
    "rule_id": "RULE-A2-v2",
    "rule_version": "v1",
    "spec_code": "A2",
@@ -57,15 +58,15 @@
    "target_doc_id": "control:passes_all",
    "verdict": "pass",
    "evidence": [
-    "obs_452819e091d900fa33ae1370",
-    "obs_75379347dc0f3468dead56c9",
-    "obs_82291607f9f3ded62b56ae04"
+    "obs_36e04a4e225a61a9032824a0",
+    "obs_48d1fa13677227f0b5542f7b",
+    "obs_6c0566aad23bcf6438124fad"
    ],
-   "reason": "machine-readable API description at http://127.0.0.1:54788/openapi.json (OpenAPI 3.0.3); auth scheme ['ApiKeyAuth']; rate limits declared",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38"
+   "reason": "machine-readable API description at http://127.0.0.1:59823/openapi.json (OpenAPI 3.0.3); auth scheme ['ApiKeyAuth']; rate limits declared",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4"
   },
   {
-   "finding_id": "fnd_846828365f5f1aa711d1694e",
+   "finding_id": "fnd_bdd06a4f236b2291f9cffd95",
    "rule_id": "RULE-A3-v2",
    "rule_version": "v1",
    "spec_code": "A3",
@@ -73,21 +74,21 @@
    "target_doc_id": "control:passes_all",
    "verdict": "pass",
    "evidence": [
-    "obs_040b921b2500ef0d72480b94",
-    "obs_11bbbb8c43134afe2cbcc46e",
-    "obs_5039a7a7ca200bf173ed5e26",
-    "obs_5e1f2c16b89c18343379b048",
-    "obs_a7ff3493d6ac4efcf7e8f25d",
-    "obs_aefa5f7a386f84dc4cdabbd1",
-    "obs_b2efceb1be4ecb6384699863",
-    "obs_b7d61c6f16718b648460d3de",
-    "obs_f5a3ac60c288ce071f91b603"
+    "obs_05d37df6fb5447185465cc35",
+    "obs_0a22760008eb3fe7ad0054db",
+    "obs_4539c35e9ccf640dd545d34d",
+    "obs_4c469aa35bc57165230ddbb3",
+    "obs_62675bc3aa0c1402195ad258",
+    "obs_70f8253e752b496e96c47bd3",
+    "obs_843a62e10bf00aba85946c48",
+    "obs_b89049a25f53f0455c46dc12",
+    "obs_c37a1f455d759ee372100466"
    ],
-   "reason": "whole-product download linked from the product page: http://127.0.0.1:54788/bulk/estimates-2026.zip (archive)",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38"
+   "reason": "whole-product download linked from the product page: http://127.0.0.1:59823/bulk/estimates-2026.zip (archive)",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4"
   },
   {
-   "finding_id": "fnd_b64ee629f03869aeb5b9762a",
+   "finding_id": "fnd_1ce7575e595d243b9d679680",
    "rule_id": "RULE-A4-v1",
    "rule_version": "v1",
    "spec_code": "A4",
@@ -95,13 +96,13 @@
    "target_doc_id": "control:passes_all",
    "verdict": "pass",
    "evidence": [
-    "obs_a8c63179ad3a2abc9184ba78"
+    "obs_c99f65a6bf5f953bb9d219d3"
    ],
    "reason": "robots.txt allows the product path for all 8 AI-crawler user agents",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38"
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4"
   },
   {
-   "finding_id": "fnd_909d477f1d4886e5da579969",
+   "finding_id": "fnd_224581675e97f5ab6deeb791",
    "rule_id": "RULE-A5-v1",
    "rule_version": "v1",
    "spec_code": "A5",
@@ -109,17 +110,17 @@
    "target_doc_id": "control:passes_all",
    "verdict": "pass",
    "evidence": [
-    "obs_624747f43d869825963cbf17",
-    "obs_650914bb19f9a464dface323",
-    "obs_875d9152085ea650ec87b88b",
-    "obs_b0db6d60b0e6f007c5a0ff8c",
-    "obs_e6f6f9ee21d8e80519fe6551"
+    "obs_240f41d91a2439a54536cd73",
+    "obs_4127f186c5c7d4cf26e8617b",
+    "obs_5b1f90e6a5797717d9826da8",
+    "obs_b1006650c8958cafc81aea1c",
+    "obs_fab618386c55a8650c98926a"
    ],
-   "reason": "sitemap at http://127.0.0.1:54788/sitemap.xml lists the product URL (2 URLs)",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38"
+   "reason": "sitemap at http://127.0.0.1:59823/sitemap.xml lists the product URL (2 URLs)",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4"
   },
   {
-   "finding_id": "fnd_d9cec04f340313350f783d2a",
+   "finding_id": "fnd_6fe3c4a976e8e886b18f3bb7",
    "rule_id": "RULE-A6-v2",
    "rule_version": "v1",
    "spec_code": "A6",
@@ -127,13 +128,13 @@
    "target_doc_id": "control:passes_all",
    "verdict": "pass",
    "evidence": [
-    "obs_05c751d51e0fd9b103063e7a"
+    "obs_b9f29b72ad152f92643cbbef"
    ],
    "reason": "markup declares Dataset and the graph conforms to the dcat_ap_min shapes (10 triples)",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38"
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4"
   },
   {
-   "finding_id": "fnd_0246f805ac5f53b74d0100fe",
+   "finding_id": "fnd_6083c7eeb80006d1a45dbd67",
    "rule_id": "RULE-A8-v2",
    "rule_version": "v1",
    "spec_code": "A8",
@@ -141,13 +142,13 @@
    "target_doc_id": "control:passes_all",
    "verdict": "pass",
    "evidence": [
-    "obs_9d580cee2df4269c0a706e99"
+    "obs_a6d522ba1472e6684258512c"
    ],
-   "reason": "markup declares the vintage via dateModified and the latest-vintage pointer resolves (http://127.0.0.1:54788/estimates-latest.csv -> HTTP 200, found by href token)",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38"
+   "reason": "markup declares the vintage via dateModified and the latest-vintage pointer resolves (http://127.0.0.1:59823/estimates-latest.csv -> HTTP 200, found by href token)",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4"
   },
   {
-   "finding_id": "fnd_af0832d0ba21ef3807097b9f",
+   "finding_id": "fnd_bb15fcb0c56d6865bd6bd2cc",
    "rule_id": "RULE-A9-v1",
    "rule_version": "v1",
    "spec_code": "A9",
@@ -155,17 +156,17 @@
    "target_doc_id": "control:passes_all",
    "verdict": "pass",
    "evidence": [
-    "obs_41986fe66b5f8cefde7b1092",
-    "obs_4cc7d933fc6fbc97e475ebb5",
-    "obs_af7a810eeb87cce1455037eb",
-    "obs_cf42e985a5e5e83899f4d04e",
-    "obs_ed7d0015ecef9ccd1f436baf"
+    "obs_7b5d3f8fc32b72d61c66cbd4",
+    "obs_98b5bc8e41183266d107c191",
+    "obs_b0d89af4980ca5b99334ab8d",
+    "obs_e17c7a89185976501c2c5c68",
+    "obs_f99e6bda5a6355629440c32b"
    ],
-   "reason": "machine-first entry point served at http://127.0.0.1:54788/openapi.json (application/json, HTTP 200)",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38"
+   "reason": "machine-first entry point served at http://127.0.0.1:59823/openapi.json (application/json, HTTP 200)",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4"
   },
   {
-   "finding_id": "fnd_b9954fca4636aa04b34439da",
+   "finding_id": "fnd_f1832d4314a850e25263b763",
    "rule_id": "RULE-A10-v2",
    "rule_version": "v1",
    "spec_code": "A10",
@@ -173,14 +174,14 @@
    "target_doc_id": "control:passes_all",
    "verdict": "pass",
    "evidence": [
-    "obs_b41e1b797b896e9c415b8b16",
-    "obs_c38bd6972759cef8ac247bfb"
+    "obs_a847133eb9c0a1546a87e69c",
+    "obs_ad26bf85528d76bc36ef8ce2"
    ],
    "reason": "deep link HTTP 200; invalid route correctly HTTP 404; 2556 visible characters present before JS. The pre/post-JS DOM diff the signal also names was NOT run (renderer: none)",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38"
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4"
   },
   {
-   "finding_id": "fnd_d3afc2c26bc65af1dd2dd119",
+   "finding_id": "fnd_050c428181230db4a21844a4",
    "rule_id": "RULE-A11-declared-v2",
    "rule_version": "v1",
    "spec_code": "A11",
@@ -188,14 +189,14 @@
    "target_doc_id": "control:passes_all",
    "verdict": "pass",
    "evidence": [
-    "obs_e2ac54d6d0b40624ac994c4c",
-    "obs_f8e3cb92600bb1ae2a666c1c"
+    "obs_0245d0f88a81d755a466f16f",
+    "obs_12dabc2f85067885e6db8f38"
    ],
    "reason": "both declared-layer sources permit: robots.txt allows all 8 AI-crawler user agents and the page declares no restricting meta-robots directive. Enforced and observed layers require edge logs (agency_instrumented)",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38"
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4"
   },
   {
-   "finding_id": "fnd_0c99ff0378b13984361a9afc",
+   "finding_id": "fnd_96a232268d905954011484ff",
    "rule_id": "RULE-B3-v2",
    "rule_version": "v1",
    "spec_code": "B3",
@@ -203,14 +204,14 @@
    "target_doc_id": "control:passes_all",
    "verdict": "pass",
    "evidence": [
-    "obs_06ad657f2f1de8492df3bc08",
-    "obs_13349e33ae2964197ed86ff0"
+    "obs_267cb69857c10629526fb25e",
+    "obs_4c759047f2b94a6c8f2746fc"
    ],
-   "reason": "methodology served as text/html at http://127.0.0.1:54788/methodology.html and retrievable without JS: 2403 visible characters, link density 0.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38"
+   "reason": "methodology served as text/html at http://127.0.0.1:59823/methodology.html and retrievable without JS: 2403 visible characters, link density 0.0",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4"
   },
   {
-   "finding_id": "fnd_621608509365384ca80370f3",
+   "finding_id": "fnd_d968353340b8147c6ff40324",
    "rule_id": "RULE-D1-v2",
    "rule_version": "v1",
    "spec_code": "D1",
@@ -218,16 +219,16 @@
    "target_doc_id": "control:passes_all",
    "verdict": "pass",
    "evidence": [
-    "obs_2ba84c04d38a06f11aa72e43",
-    "obs_3d0aba4b00c42f92dd4d67a7",
-    "obs_dfd84feb14b6b68ede7f1d7a",
-    "obs_f78a7a8d848c1e2e9561a486"
+    "obs_075e6896e7e43b20bbe5956c",
+    "obs_64bf87ab24cc30c7c6d7f7a3",
+    "obs_af8a3e8482af64aea039916f",
+    "obs_d51e33890efd4baa44661683"
    ],
    "reason": "markup licence field carries a recognised identifier (https://creativecommons.org/\u2026)",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38"
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4"
   },
   {
-   "finding_id": "fnd_0c85649d2875273e6952e82e",
+   "finding_id": "fnd_020cb22998340006d5ed8c32",
    "rule_id": "RULE-D4-v2",
    "rule_version": "v1",
    "spec_code": "D4",
@@ -235,13 +236,13 @@
    "target_doc_id": "control:passes_all",
    "verdict": "pass",
    "evidence": [
-    "obs_87f60ebf48a712e71252494c"
+    "obs_8ac939f7ce84d103db1e68fc"
    ],
-   "reason": "the product appears in http://127.0.0.1:54788/data.json and the catalog conforms to the pod_v1_1_min schema (1 of 1 datasets validated)",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38"
+   "reason": "the product appears in http://127.0.0.1:59823/data.json and the catalog conforms to the pod_v1_1_min schema (1 of 1 datasets validated)",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4"
   },
   {
-   "finding_id": "fnd_a736abd11a96a0c3a87b7d0e",
+   "finding_id": "fnd_08f71969738e9b30299d9d78",
    "rule_id": "RULE-F4-v2",
    "rule_version": "v1",
    "spec_code": "F4",
@@ -249,17 +250,17 @@
    "target_doc_id": "control:passes_all",
    "verdict": "pass",
    "evidence": [
-    "obs_2e9dc3bbd79efff08b7fc7a4",
-    "obs_730d29c243abdfce1f697a41",
-    "obs_7e4507cf90a0104ba8e44638",
-    "obs_81325b063921ffc033fba298",
-    "obs_d4a49e04ebfee7b4607e854e"
+    "obs_05b2eb7512b4a2612a2f1872",
+    "obs_0bddaa8318992836dc7bc489",
+    "obs_3d5e2fba13257a6b7674ece3",
+    "obs_8991ccb1cb80c7dac245ebdb",
+    "obs_a6a8e65001960d368d2f5773"
    ],
-   "reason": "machine-readable changelog at http://127.0.0.1:54788/changelog.json (application/json); 1 of 1 entries carry a revision class",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38"
+   "reason": "machine-readable changelog at http://127.0.0.1:59823/changelog.json (application/json); 1 of 1 entries carry a revision class",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4"
   },
   {
-   "finding_id": "fnd_783c8b62b4db5e522327e4dd",
+   "finding_id": "fnd_01ad2196ccb322a9ab246f23",
    "rule_id": "RULE-G1-D-v1",
    "rule_version": "v1",
    "spec_code": "G1",
@@ -267,13 +268,28 @@
    "target_doc_id": "control:passes_all",
    "verdict": "pass",
    "evidence": [
-    "obs_9f3d55edcf7388f110d8db2e"
+    "obs_c5aa7ab2c629ac649bcdac59"
    ],
    "reason": "error-measure field(s) present on the surface: margin of error",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38"
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4"
   },
   {
-   "finding_id": "fnd_3f88d76ccaace44beade32d1",
+   "finding_id": "fnd_10745b1f053b520d73835ce3",
+   "rule_id": "RULE-A12-v1",
+   "rule_version": "v1",
+   "spec_code": "A12",
+   "leg": "A12",
+   "target_doc_id": "control:passes_all",
+   "verdict": "pass",
+   "evidence": [
+    "obs_2ab6097532561792f746ff9e",
+    "obs_527285ef0d7de0849c649c34"
+   ],
+   "reason": "robots.txt permits ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg) for http://127.0.0.1:59823/index.html and the host served it (HTTP 200): the declared and enforced layers agree",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4"
+  },
+  {
+   "finding_id": "fnd_5a2019fd6f33fd763160e417",
    "rule_id": "RULE-A1-v2",
    "rule_version": "v1",
    "spec_code": "A1",
@@ -281,14 +297,14 @@
    "target_doc_id": "control:fails_all",
    "verdict": "fail",
    "evidence": [
-    "obs_0a539a23fd478722bb80e7da",
-    "obs_6153bd5e327966cf44081801"
+    "obs_0c3b51d47a5dfe9a90f1f4a0",
+    "obs_0cdbb7ece2fc23de4dc07708"
    ],
-   "reason": "only PDF served; first: http://127.0.0.1:54850/report.pdf",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38"
+   "reason": "only PDF served; first: http://127.0.0.1:59898/report.pdf",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4"
   },
   {
-   "finding_id": "fnd_1783f80610084ba47c875136",
+   "finding_id": "fnd_f4b02a457a29822473c93317",
    "rule_id": "RULE-A2-v2",
    "rule_version": "v1",
    "spec_code": "A2",
@@ -296,15 +312,15 @@
    "target_doc_id": "control:fails_all",
    "verdict": "fail",
    "evidence": [
-    "obs_1b9665b41fbe917f1aa53cf3",
-    "obs_b6dc196152cf39bbdd79e48d",
-    "obs_cf29c2c7f9e5d1a09e9ddcf3"
+    "obs_020076365ffc49f0125c18bb",
+    "obs_393babc1065fc99177d86a6b",
+    "obs_4c49d045b7c74aae839a5465"
    ],
-   "reason": "a document is served at http://127.0.0.1:54850/openapi.json but it does not parse as an API description; a JSON content type alone is not a description",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38"
+   "reason": "a document is served at http://127.0.0.1:59898/openapi.json but it does not parse as an API description; a JSON content type alone is not a description",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4"
   },
   {
-   "finding_id": "fnd_236684e5ebd75ea51fc486ea",
+   "finding_id": "fnd_9ebb7a2f7358a563a59c5fa9",
    "rule_id": "RULE-A3-v2",
    "rule_version": "v1",
    "spec_code": "A3",
@@ -312,14 +328,14 @@
    "target_doc_id": "control:fails_all",
    "verdict": "fail",
    "evidence": [
-    "obs_2a57778f20cb5fe458c17e8e",
-    "obs_777293cfcd5254d4f33b853d"
+    "obs_8413afd9777ddabb40418173",
+    "obs_e99ffa1181dce6ab037c0c24"
    ],
-   "reason": "the largest linked download is below the 51200-byte whole-product floor; first: http://127.0.0.1:54850/report.pdf",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38"
+   "reason": "the largest linked download is below the 51200-byte whole-product floor; first: http://127.0.0.1:59898/report.pdf",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4"
   },
   {
-   "finding_id": "fnd_e2a5c63ee674f9ecb07b8204",
+   "finding_id": "fnd_c8db1779e1a68ea9fadf45c5",
    "rule_id": "RULE-A4-v1",
    "rule_version": "v1",
    "spec_code": "A4",
@@ -327,13 +343,13 @@
    "target_doc_id": "control:fails_all",
    "verdict": "fail",
    "evidence": [
-    "obs_d8fcabc42e8b5a7d84cfd5b9"
+    "obs_b67ab707df803409cbb23a4a"
    ],
    "reason": "no robots.txt served; retrieval is permitted by default but nothing is declared for AI crawlers",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38"
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4"
   },
   {
-   "finding_id": "fnd_4737b4d7867164f3cd919be7",
+   "finding_id": "fnd_b851cb86a957d3f4044584fa",
    "rule_id": "RULE-A5-v1",
    "rule_version": "v1",
    "spec_code": "A5",
@@ -341,17 +357,17 @@
    "target_doc_id": "control:fails_all",
    "verdict": "fail",
    "evidence": [
-    "obs_58b03259d4bbed2f2867ab76",
-    "obs_6b85e9d1a0a752eeb26143b6",
-    "obs_baa3648d9b10b0c6bfba2c7a",
-    "obs_dbee02cdf603872f6fb4318a",
-    "obs_ec65ec203dd0767d7cf12cba"
+    "obs_3d3758e9ee63bb649342dd33",
+    "obs_694085e5f88fa6f87ed71b9e",
+    "obs_724417fb0dca075cf70e3419",
+    "obs_d8e720c359c6a20da01263ed",
+    "obs_fa6022a9c45bbaa7abd123da"
    ],
    "reason": "no sitemap, llms.txt or well-known discovery file served",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38"
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4"
   },
   {
-   "finding_id": "fnd_c8bfd98a6ef4eac4e60a7e58",
+   "finding_id": "fnd_0a859fc9f0f5a821383b4e9d",
    "rule_id": "RULE-A6-v2",
    "rule_version": "v1",
    "spec_code": "A6",
@@ -359,13 +375,13 @@
    "target_doc_id": "control:fails_all",
    "verdict": "fail",
    "evidence": [
-    "obs_02f41e9cef2763a86d723de1"
+    "obs_c0776b21a0a45c61933d492c"
    ],
    "reason": "no JSON-LD, microdata or RDFa on the product page",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38"
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4"
   },
   {
-   "finding_id": "fnd_e77e035f08df452506a582bb",
+   "finding_id": "fnd_89d410537028ed6282329f61",
    "rule_id": "RULE-A8-v2",
    "rule_version": "v1",
    "spec_code": "A8",
@@ -373,13 +389,13 @@
    "target_doc_id": "control:fails_all",
    "verdict": "fail",
    "evidence": [
-    "obs_8793d3cdcdb66a5561617943"
+    "obs_124b4a28346dff71626c6046"
    ],
    "reason": "only an HTTP Last-Modified header (Tue, 01 Sep 2026 00:00:00 GMT) \u2014 a fact about the file, not a declared product vintage",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38"
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4"
   },
   {
-   "finding_id": "fnd_b69d7c638fc83b96bd5f4c9f",
+   "finding_id": "fnd_93b1ffd4d9ecd9274baf9b54",
    "rule_id": "RULE-A9-v1",
    "rule_version": "v1",
    "spec_code": "A9",
@@ -387,17 +403,17 @@
    "target_doc_id": "control:fails_all",
    "verdict": "fail",
    "evidence": [
-    "obs_462b889cf36d82699ad12a8b",
-    "obs_4af74898e93accb944ba7cb3",
-    "obs_4d3eafd33a1de0d9119a37e3",
-    "obs_527467d4f751ee235acd6668",
-    "obs_ea5b5baf82d317fc620838a5"
+    "obs_060dc59e68fa8f81fb0d02bb",
+    "obs_249cb2ef684905c9611fec84",
+    "obs_55e9c674e856e9e324c0cfb0",
+    "obs_89ff5050f59f9bf3e1adea6a",
+    "obs_c4e2528742c2953e3664503e"
    ],
-   "reason": "5 probed path(s) answer with HTML rather than a machine format; first: http://127.0.0.1:54850/openapi.json",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38"
+   "reason": "5 probed path(s) answer with HTML rather than a machine format; first: http://127.0.0.1:59898/openapi.json",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4"
   },
   {
-   "finding_id": "fnd_97772d5da8c4a475612f39af",
+   "finding_id": "fnd_40fcb3ef0bc5c683f49b4447",
    "rule_id": "RULE-A10-v2",
    "rule_version": "v1",
    "spec_code": "A10",
@@ -405,14 +421,14 @@
    "target_doc_id": "control:fails_all",
    "verdict": "fail",
    "evidence": [
-    "obs_1ee772f2dda4182b164643c9",
-    "obs_a53e0ca77c5d9c56094556dd"
+    "obs_322096834c26f09d84cd0e33",
+    "obs_4b0754a31284699a58b716de"
    ],
-   "reason": "soft-404: http://127.0.0.1:54850/index.html/__ai-readiness-kg-probe-404__ returns HTTP 200 for a route that should not exist, and its body is an error shell (page not found, not found)",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38"
+   "reason": "soft-404: http://127.0.0.1:59898/index.html/__ai-readiness-kg-probe-404__ returns HTTP 200 for a route that should not exist, and its body is an error shell (page not found, not found)",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4"
   },
   {
-   "finding_id": "fnd_8ce21bdba8cac68b1e6c5f5d",
+   "finding_id": "fnd_f2dd8245919b6a2e8c5f2602",
    "rule_id": "RULE-A11-declared-v2",
    "rule_version": "v1",
    "spec_code": "A11",
@@ -420,14 +436,14 @@
    "target_doc_id": "control:fails_all",
    "verdict": "fail",
    "evidence": [
-    "obs_18305bda593aab05655f8404",
-    "obs_7862782abb402b252707d06e"
+    "obs_07a72bd0f0f0be9264d60d18",
+    "obs_22cd3a2f7b8db56443738bed"
    ],
    "reason": "nothing is DECLARED: no robots.txt is served, so the declared layer of the A11 triad is empty",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38"
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4"
   },
   {
-   "finding_id": "fnd_3b61a4830b2cce8cfaced2df",
+   "finding_id": "fnd_03cc21522c8c88ac780e7892",
    "rule_id": "RULE-B3-v2",
    "rule_version": "v1",
    "spec_code": "B3",
@@ -435,13 +451,13 @@
    "target_doc_id": "control:fails_all",
    "verdict": "fail",
    "evidence": [
-    "obs_c461ccffa067bad95063c539"
+    "obs_a6f37d504307da1f3e1f4d9a"
    ],
    "reason": "no link to a methodology document from the product surface",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38"
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4"
   },
   {
-   "finding_id": "fnd_356d4452d6f53920321efda6",
+   "finding_id": "fnd_e1d48418b2b053181018a8d7",
    "rule_id": "RULE-D1-v2",
    "rule_version": "v1",
    "spec_code": "D1",
@@ -449,14 +465,14 @@
    "target_doc_id": "control:fails_all",
    "verdict": "fail",
    "evidence": [
-    "obs_1f622db6ffb57c9f23e58ae8",
-    "obs_8d1e144e914c79bf4fe36106"
+    "obs_4eacad4cb73f87fe6263a0c5",
+    "obs_aae2d9b0e25679d8a049acc7"
    ],
-   "reason": "a licence statement is present at the terms endpoint http://127.0.0.1:54850/terms but its value is free text, not a recognised identifier",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38"
+   "reason": "a licence statement is present at the terms endpoint http://127.0.0.1:59898/terms but its value is free text, not a recognised identifier",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4"
   },
   {
-   "finding_id": "fnd_4b0c4204b9498d29edd14f2e",
+   "finding_id": "fnd_6646527f8af9c2d2b9a0b3a6",
    "rule_id": "RULE-D4-v2",
    "rule_version": "v1",
    "spec_code": "D4",
@@ -464,13 +480,13 @@
    "target_doc_id": "control:fails_all",
    "verdict": "fail",
    "evidence": [
-    "obs_2e4d845a181f2f199013b291"
+    "obs_0fec324d832dc8851cbd6be2"
    ],
    "reason": "no public data.json catalog served on this host",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38"
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4"
   },
   {
-   "finding_id": "fnd_0878fd8655fb6aec562495e3",
+   "finding_id": "fnd_e8a4f0312ff0506892fd346a",
    "rule_id": "RULE-F4-v2",
    "rule_version": "v1",
    "spec_code": "F4",
@@ -478,17 +494,17 @@
    "target_doc_id": "control:fails_all",
    "verdict": "fail",
    "evidence": [
-    "obs_0479ec5b1d45ab81d398a136",
-    "obs_7dfdc68cc660e4b2b6b3dfa6",
-    "obs_9610a3f691bed65366401ce9",
-    "obs_c2ecd82b0d4a56c77c9164f9",
-    "obs_d78cc334037f94f0913227b9"
+    "obs_267d1b00e075ac4823b4738a",
+    "obs_30cca535ab4b6600b8c1a100",
+    "obs_32b768f0b9e1669bac058564",
+    "obs_42bf3e94567603f1858d1c48",
+    "obs_9a81b35353e9e34d2b6c852d"
    ],
-   "reason": "a changelog page is served at http://127.0.0.1:54850/changelog but not in a machine-readable content type",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38"
+   "reason": "a changelog page is served at http://127.0.0.1:59898/changelog but not in a machine-readable content type",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4"
   },
   {
-   "finding_id": "fnd_ac0630dd44a15adb4800747f",
+   "finding_id": "fnd_a43b8a7d43e9f3ac86875c35",
    "rule_id": "RULE-G1-D-v1",
    "rule_version": "v1",
    "spec_code": "G1",
@@ -496,13 +512,28 @@
    "target_doc_id": "control:fails_all",
    "verdict": "fail",
    "evidence": [
-    "obs_1005af88c02a124d77ec2144"
+    "obs_7dde7d2e7658cc4465ab6a1d"
    ],
    "reason": "none of the 11 error-measure field tokens appears as a structured field on the surface",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38"
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4"
   },
   {
-   "finding_id": "fnd_66e0d8459e9b51fbd435d78b",
+   "finding_id": "fnd_d9b5798e54263b728b17b715",
+   "rule_id": "RULE-A12-v1",
+   "rule_version": "v1",
+   "spec_code": "A12",
+   "leg": "A12",
+   "target_doc_id": "control:fails_all",
+   "verdict": "fail",
+   "evidence": [
+    "obs_8597ac3c06d38422c0806b3c",
+    "obs_c0875bffdf9a320f837ffcc9"
+   ],
+   "reason": "robots.txt is served with a content type that cannot be robots.txt, so nothing is DECLARED for this client and there is no declaration for the enforced layer to cohere with",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4"
+  },
+  {
+   "finding_id": "fnd_f80bf8448c0916432322e878",
    "rule_id": "RULE-E5-v2",
    "rule_version": "v1",
    "spec_code": "E5",
@@ -510,24 +541,24 @@
    "target_doc_id": "control:passes_all",
    "verdict": "pass",
    "evidence": [
-    "obs_38f84089e35ddf27cc391ca7",
-    "obs_ee2c630b49ae455258c0e30b"
+    "obs_bc9af34b1293fc402945ec69",
+    "obs_c182d56a9ef0808eaf23bb0f"
    ],
    "reason": "both control fixtures fired and every rule returned its expected verdict; ordering not asserted (no surface was scanned in this cycle)",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38"
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4"
   }
  ],
  "observations_detail": [
   {
-   "obs_id": "obs_ee2c630b49ae455258c0e30b",
+   "obs_id": "obs_bc9af34b1293fc402945ec69",
    "spec_code": "E5",
    "leg": "E5",
    "target_doc_id": "control:passes_all",
    "target_url": "fixture://passes_all",
-   "captured_at": "2026-09-07T02:41:56.764003+00:00",
+   "captured_at": "2026-09-07T09:42:29.491257+00:00",
    "collector": "control_fixture",
    "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
    "request": {
     "method": "FIXTURE",
     "url": "fixture://passes_all"
@@ -558,22 +589,23 @@
      "D1": "pass",
      "D4": "pass",
      "F4": "pass",
-     "G1-D": "pass"
+     "G1-D": "pass",
+     "A12": "pass"
     },
     "unexpected": []
    },
    "error_class": null
   },
   {
-   "obs_id": "obs_38f84089e35ddf27cc391ca7",
+   "obs_id": "obs_c182d56a9ef0808eaf23bb0f",
    "spec_code": "E5",
    "leg": "E5",
    "target_doc_id": "control:fails_all",
    "target_url": "fixture://fails_all",
-   "captured_at": "2026-09-07T02:42:32.429039+00:00",
+   "captured_at": "2026-09-07T09:43:07.165533+00:00",
    "collector": "control_fixture",
    "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
    "request": {
     "method": "FIXTURE",
     "url": "fixture://fails_all"
@@ -604,76 +636,77 @@
      "D1": "fail",
      "D4": "fail",
      "F4": "fail",
-     "G1-D": "fail"
+     "G1-D": "fail",
+     "A12": "fail"
     },
     "unexpected": []
    },
    "error_class": null
   },
   {
-   "obs_id": "obs_d663ae5e40f9e270a05931b5",
+   "obs_id": "obs_41c2c2af8e681aff3f42f4ff",
    "spec_code": "A1",
    "leg": "A1",
    "target_doc_id": "control:passes_all",
-   "target_url": "http://127.0.0.1:54788/index.html",
-   "captured_at": "2026-09-07T02:41:04.130720+00:00",
+   "target_url": "http://127.0.0.1:59823/index.html",
+   "captured_at": "2026-09-07T09:41:34.840286+00:00",
    "collector": "http",
    "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
    "request": {
     "method": "GET",
-    "url": "http://127.0.0.1:54788/index.html",
+    "url": "http://127.0.0.1:59823/index.html",
     "ua": "ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg)"
    },
    "response": {
     "status": 200,
     "headers": {
      "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:41:04 GMT",
+     "date": "Mon, 07 Sep 2026 09:41:34 GMT",
      "content-type": "text/html",
      "content-length": "3680",
      "last-modified": "Tue, 01 Sep 2026 00:00:00 GMT"
     },
-    "body_sha256": "ffa57679f7e04c0fe2af37d174de6cc69bf215811e8e24609b2930da7ffd2ca4",
-    "body_path": "corpus/evidence/scan/ff/ffa57679f7e04c0fe2af37d174de6cc69bf215811e8e24609b2930da7ffd2ca4",
+    "body_sha256": "02f516cea40d288101cc596a0be89a994eddebfb6571bc4133fc330f1ffbe458",
+    "body_path": "corpus/evidence/scan/02/02f516cea40d288101cc596a0be89a994eddebfb6571bc4133fc330f1ffbe458",
     "bytes": 3680,
     "elapsed_ms": 6
    },
    "parsed": {
     "content_type": "text/html",
-    "final_url": "http://127.0.0.1:54788/index.html",
+    "final_url": "http://127.0.0.1:59823/index.html",
     "extension": "html",
     "links": [
      {
-      "href": "http://127.0.0.1:54788/estimates.csv",
+      "href": "http://127.0.0.1:59823/estimates.csv",
       "text": "estimates.csv"
      },
      {
-      "href": "http://127.0.0.1:54788/estimates.json",
+      "href": "http://127.0.0.1:59823/estimates.json",
       "text": "JSON"
      },
      {
-      "href": "http://127.0.0.1:54788/bulk/estimates-2026.zip",
+      "href": "http://127.0.0.1:59823/bulk/estimates-2026.zip",
       "text": "whole-product archive"
      },
      {
-      "href": "http://127.0.0.1:54788/estimates-latest.csv",
+      "href": "http://127.0.0.1:59823/estimates-latest.csv",
       "text": "Latest release"
      },
      {
-      "href": "http://127.0.0.1:54788/openapi.json",
+      "href": "http://127.0.0.1:59823/openapi.json",
       "text": "OpenAPI"
      },
      {
-      "href": "http://127.0.0.1:54788/llms.txt",
+      "href": "http://127.0.0.1:59823/llms.txt",
       "text": "llms.txt"
      },
      {
-      "href": "http://127.0.0.1:54788/methodology.html",
+      "href": "http://127.0.0.1:59823/methodology.html",
       "text": "Methodology"
      },
      {
-      "href": "http://127.0.0.1:54788/changelog.json",
+      "href": "http://127.0.0.1:59823/changelog.json",
       "text": "Changelog"
      },
      {
@@ -685,24 +718,24 @@
    "error_class": null
   },
   {
-   "obs_id": "obs_4628079961b06d2c496cdf37",
+   "obs_id": "obs_3c850b071a127232fef90b57",
    "spec_code": "A1",
    "leg": "A1",
    "target_doc_id": "control:passes_all",
-   "target_url": "http://127.0.0.1:54788/estimates.csv",
-   "captured_at": "2026-09-07T02:41:05.062456+00:00",
+   "target_url": "http://127.0.0.1:59823/estimates.csv",
+   "captured_at": "2026-09-07T09:41:35.770413+00:00",
    "collector": "links",
    "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
    "request": {
     "method": "HEAD",
-    "url": "http://127.0.0.1:54788/estimates.csv"
+    "url": "http://127.0.0.1:59823/estimates.csv"
    },
    "response": {
     "status": 200,
     "headers": {
      "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:41:05 GMT",
+     "date": "Mon, 07 Sep 2026 09:41:35 GMT",
      "content-type": "text/csv",
      "content-length": "86",
      "last-modified": "Tue, 01 Sep 2026 00:00:00 GMT"
@@ -710,14 +743,14 @@
     "body_sha256": null,
     "body_path": null,
     "bytes": 0,
-    "elapsed_ms": 7
+    "elapsed_ms": 6
    },
    "parsed": {
     "probe": "link",
     "anchor_text": "estimates.csv",
     "content_type": "text/csv",
     "extension": ".csv",
-    "final_url": "http://127.0.0.1:54788/estimates.csv",
+    "final_url": "http://127.0.0.1:59823/estimates.csv",
     "method_used": "HEAD",
     "is_archive": false,
     "has_query_string": false,
@@ -729,24 +762,24 @@
    "error_class": null
   },
   {
-   "obs_id": "obs_8a8a7f5fdced6bec1ddc8cec",
+   "obs_id": "obs_eb5df3a1085c395865781207",
    "spec_code": "A1",
    "leg": "A1",
    "target_doc_id": "control:passes_all",
-   "target_url": "http://127.0.0.1:54788/estimates.json",
-   "captured_at": "2026-09-07T02:41:06.063465+00:00",
+   "target_url": "http://127.0.0.1:59823/estimates.json",
+   "captured_at": "2026-09-07T09:41:36.767812+00:00",
    "collector": "links",
    "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
    "request": {
     "method": "HEAD",
-    "url": "http://127.0.0.1:54788/estimates.json"
+    "url": "http://127.0.0.1:59823/estimates.json"
    },
    "response": {
     "status": 200,
     "headers": {
      "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:41:06 GMT",
+     "date": "Mon, 07 Sep 2026 09:41:36 GMT",
      "content-type": "application/json",
      "content-length": "72",
      "last-modified": "Tue, 01 Sep 2026 00:00:00 GMT"
@@ -754,14 +787,14 @@
     "body_sha256": null,
     "body_path": null,
     "bytes": 0,
-    "elapsed_ms": 4
+    "elapsed_ms": 2
    },
    "parsed": {
     "probe": "link",
     "anchor_text": "JSON",
     "content_type": "application/json",
     "extension": ".json",
-    "final_url": "http://127.0.0.1:54788/estimates.json",
+    "final_url": "http://127.0.0.1:59823/estimates.json",
     "method_used": "HEAD",
     "is_archive": false,
     "has_query_string": false,
@@ -773,24 +806,24 @@
    "error_class": null
   },
   {
-   "obs_id": "obs_5d6aa543a15ba36d59a98fd0",
+   "obs_id": "obs_a51cd37023dee25d3405d913",
    "spec_code": "A1",
    "leg": "A1",
    "target_doc_id": "control:passes_all",
-   "target_url": "http://127.0.0.1:54788/bulk/estimates-2026.zip",
-   "captured_at": "2026-09-07T02:41:07.068234+00:00",
+   "target_url": "http://127.0.0.1:59823/bulk/estimates-2026.zip",
+   "captured_at": "2026-09-07T09:41:37.773208+00:00",
    "collector": "links",
    "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
    "request": {
     "method": "HEAD",
-    "url": "http://127.0.0.1:54788/bulk/estimates-2026.zip"
+    "url": "http://127.0.0.1:59823/bulk/estimates-2026.zip"
    },
    "response": {
     "status": 200,
     "headers": {
      "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:41:07 GMT",
+     "date": "Mon, 07 Sep 2026 09:41:37 GMT",
      "content-type": "application/zip",
      "content-length": "92157",
      "last-modified": "Tue, 01 Sep 2026 00:00:00 GMT"
@@ -805,7 +838,7 @@
     "anchor_text": "whole-product archive",
     "content_type": "application/zip",
     "extension": ".zip",
-    "final_url": "http://127.0.0.1:54788/bulk/estimates-2026.zip",
+    "final_url": "http://127.0.0.1:59823/bulk/estimates-2026.zip",
     "method_used": "HEAD",
     "is_archive": true,
     "has_query_string": false,
@@ -817,24 +850,24 @@
    "error_class": null
   },
   {
-   "obs_id": "obs_7ee950779efa27a32bfae636",
+   "obs_id": "obs_863ecc87cbe63acadaea26b5",
    "spec_code": "A1",
    "leg": "A1",
    "target_doc_id": "control:passes_all",
-   "target_url": "http://127.0.0.1:54788/estimates-latest.csv",
-   "captured_at": "2026-09-07T02:41:08.069180+00:00",
+   "target_url": "http://127.0.0.1:59823/estimates-latest.csv",
+   "captured_at": "2026-09-07T09:41:38.778447+00:00",
    "collector": "links",
    "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
    "request": {
     "method": "HEAD",
-    "url": "http://127.0.0.1:54788/estimates-latest.csv"
+    "url": "http://127.0.0.1:59823/estimates-latest.csv"
    },
    "response": {
     "status": 200,
     "headers": {
      "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:41:08 GMT",
+     "date": "Mon, 07 Sep 2026 09:41:38 GMT",
      "content-type": "text/csv",
      "content-length": "92023",
      "last-modified": "Tue, 01 Sep 2026 00:00:00 GMT"
@@ -842,14 +875,14 @@
     "body_sha256": null,
     "body_path": null,
     "bytes": 0,
-    "elapsed_ms": 3
+    "elapsed_ms": 7
    },
    "parsed": {
     "probe": "link",
     "anchor_text": "Latest release",
     "content_type": "text/csv",
     "extension": ".csv",
-    "final_url": "http://127.0.0.1:54788/estimates-latest.csv",
+    "final_url": "http://127.0.0.1:59823/estimates-latest.csv",
     "method_used": "HEAD",
     "is_archive": false,
     "has_query_string": false,
@@ -861,24 +894,24 @@
    "error_class": null
   },
   {
-   "obs_id": "obs_1202ff7b2cda417edb2ac659",
+   "obs_id": "obs_75d91d6d63fad0f5878772ba",
    "spec_code": "A1",
    "leg": "A1",
    "target_doc_id": "control:passes_all",
-   "target_url": "http://127.0.0.1:54788/openapi.json",
-   "captured_at": "2026-09-07T02:41:09.077863+00:00",
+   "target_url": "http://127.0.0.1:59823/openapi.json",
+   "captured_at": "2026-09-07T09:41:39.782236+00:00",
    "collector": "links",
    "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
    "request": {
     "method": "HEAD",
-    "url": "http://127.0.0.1:54788/openapi.json"
+    "url": "http://127.0.0.1:59823/openapi.json"
    },
    "response": {
     "status": 200,
     "headers": {
      "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:41:09 GMT",
+     "date": "Mon, 07 Sep 2026 09:41:39 GMT",
      "content-type": "application/json",
      "content-length": "489",
      "last-modified": "Tue, 01 Sep 2026 00:00:00 GMT"
@@ -886,14 +919,14 @@
     "body_sha256": null,
     "body_path": null,
     "bytes": 0,
-    "elapsed_ms": 8
+    "elapsed_ms": 7
    },
    "parsed": {
     "probe": "link",
     "anchor_text": "OpenAPI",
     "content_type": "application/json",
     "extension": ".json",
-    "final_url": "http://127.0.0.1:54788/openapi.json",
+    "final_url": "http://127.0.0.1:59823/openapi.json",
     "method_used": "HEAD",
     "is_archive": false,
     "has_query_string": false,
@@ -905,38 +938,38 @@
    "error_class": null
   },
   {
-   "obs_id": "obs_482c6ab6a570c145deaf9d6e",
+   "obs_id": "obs_a5096ad6c45a6e4e35285759",
    "spec_code": "A1",
    "leg": "A1",
    "target_doc_id": "control:passes_all",
-   "target_url": "http://127.0.0.1:54788/llms.txt",
-   "captured_at": "2026-09-07T02:41:10.076399+00:00",
+   "target_url": "http://127.0.0.1:59823/llms.txt",
+   "captured_at": "2026-09-07T09:41:40.786540+00:00",
    "collector": "links",
    "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
    "request": {
     "method": "HEAD",
-    "url": "http://127.0.0.1:54788/llms.txt"
+    "url": "http://127.0.0.1:59823/llms.txt"
    },
    "response": {
     "status": 200,
     "headers": {
      "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:41:10 GMT",
+     "date": "Mon, 07 Sep 2026 09:41:40 GMT",
      "content-type": "text/plain",
      "content-length": "175"
     },
     "body_sha256": null,
     "body_path": null,
     "bytes": 0,
-    "elapsed_ms": 4
+    "elapsed_ms": 8
    },
    "parsed": {
     "probe": "link",
     "anchor_text": "llms.txt",
     "content_type": "text/plain",
     "extension": ".txt",
-    "final_url": "http://127.0.0.1:54788/llms.txt",
+    "final_url": "http://127.0.0.1:59823/llms.txt",
     "method_used": "HEAD",
     "is_archive": false,
     "has_query_string": false,
@@ -948,24 +981,24 @@
    "error_class": null
   },
   {
-   "obs_id": "obs_15fa69bce49293d0460b3925",
+   "obs_id": "obs_d39e1be56dc82e5a1780513f",
    "spec_code": "A1",
    "leg": "A1",
    "target_doc_id": "control:passes_all",
-   "target_url": "http://127.0.0.1:54788/methodology.html",
-   "captured_at": "2026-09-07T02:41:11.082346+00:00",
+   "target_url": "http://127.0.0.1:59823/methodology.html",
+   "captured_at": "2026-09-07T09:41:41.790309+00:00",
    "collector": "links",
    "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
    "request": {
     "method": "HEAD",
-    "url": "http://127.0.0.1:54788/methodology.html"
+    "url": "http://127.0.0.1:59823/methodology.html"
    },
    "response": {
     "status": 200,
     "headers": {
      "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:41:11 GMT",
+     "date": "Mon, 07 Sep 2026 09:41:41 GMT",
      "content-type": "text/html",
      "content-length": "2549",
      "last-modified": "Tue, 01 Sep 2026 00:00:00 GMT"
@@ -980,7 +1013,7 @@
     "anchor_text": "Methodology",
     "content_type": "text/html",
     "extension": ".html",
-    "final_url": "http://127.0.0.1:54788/methodology.html",
+    "final_url": "http://127.0.0.1:59823/methodology.html",
     "method_used": "HEAD",
     "is_archive": false,
     "has_query_string": false,
@@ -992,24 +1025,24 @@
    "error_class": null
   },
   {
-   "obs_id": "obs_5b33b3a96f2389847a91b24b",
+   "obs_id": "obs_90d22f55f1be67b877a56188",
    "spec_code": "A1",
    "leg": "A1",
    "target_doc_id": "control:passes_all",
-   "target_url": "http://127.0.0.1:54788/changelog.json",
-   "captured_at": "2026-09-07T02:41:12.083246+00:00",
+   "target_url": "http://127.0.0.1:59823/changelog.json",
+   "captured_at": "2026-09-07T09:41:42.798404+00:00",
    "collector": "links",
    "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
    "request": {
     "method": "HEAD",
-    "url": "http://127.0.0.1:54788/changelog.json"
+    "url": "http://127.0.0.1:59823/changelog.json"
    },
    "response": {
     "status": 200,
     "headers": {
      "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:41:12 GMT",
+     "date": "Mon, 07 Sep 2026 09:41:42 GMT",
      "content-type": "application/json",
      "content-length": "144",
      "last-modified": "Tue, 01 Sep 2026 00:00:00 GMT"
@@ -1017,14 +1050,14 @@
     "body_sha256": null,
     "body_path": null,
     "bytes": 0,
-    "elapsed_ms": 4
+    "elapsed_ms": 7
    },
    "parsed": {
     "probe": "link",
     "anchor_text": "Changelog",
     "content_type": "application/json",
     "extension": ".json",
-    "final_url": "http://127.0.0.1:54788/changelog.json",
+    "final_url": "http://127.0.0.1:59823/changelog.json",
     "method_used": "HEAD",
     "is_archive": false,
     "has_query_string": false,
@@ -1036,25 +1069,25 @@
    "error_class": null
   },
   {
-   "obs_id": "obs_82291607f9f3ded62b56ae04",
+   "obs_id": "obs_6c0566aad23bcf6438124fad",
    "spec_code": "A2",
    "leg": "A2",
    "target_doc_id": "control:passes_all",
-   "target_url": "http://127.0.0.1:54788/openapi.json",
-   "captured_at": "2026-09-07T02:41:13.085125+00:00",
+   "target_url": "http://127.0.0.1:59823/openapi.json",
+   "captured_at": "2026-09-07T09:41:43.805537+00:00",
    "collector": "http",
    "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
    "request": {
     "method": "GET",
-    "url": "http://127.0.0.1:54788/openapi.json",
+    "url": "http://127.0.0.1:59823/openapi.json",
     "ua": "ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg)"
    },
    "response": {
     "status": 200,
     "headers": {
      "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:41:13 GMT",
+     "date": "Mon, 07 Sep 2026 09:41:43 GMT",
      "content-type": "application/json",
      "content-length": "489",
      "last-modified": "Tue, 01 Sep 2026 00:00:00 GMT"
@@ -1062,11 +1095,11 @@
     "body_sha256": "ec0d349a8a57dd9391bf7ef37003732c85021283dbc4d96f47dc33b3337117d5",
     "body_path": "corpus/evidence/scan/ec/ec0d349a8a57dd9391bf7ef37003732c85021283dbc4d96f47dc33b3337117d5",
     "bytes": 489,
-    "elapsed_ms": 2
+    "elapsed_ms": 9
    },
    "parsed": {
     "content_type": "application/json",
-    "final_url": "http://127.0.0.1:54788/openapi.json",
+    "final_url": "http://127.0.0.1:59823/openapi.json",
     "extension": "json",
     "api": {
      "auth_headers_seen": [],
@@ -1082,25 +1115,68 @@
    "error_class": null
   },
   {
-   "obs_id": "obs_452819e091d900fa33ae1370",
+   "obs_id": "obs_48d1fa13677227f0b5542f7b",
    "spec_code": "A2",
    "leg": "A2",
    "target_doc_id": "control:passes_all",
-   "target_url": "http://127.0.0.1:54788/swagger.json",
-   "captured_at": "2026-09-07T02:41:14.089896+00:00",
+   "target_url": "http://127.0.0.1:59823/swagger.json",
+   "captured_at": "2026-09-07T09:41:44.801637+00:00",
    "collector": "http",
    "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
    "request": {
     "method": "GET",
-    "url": "http://127.0.0.1:54788/swagger.json",
+    "url": "http://127.0.0.1:59823/swagger.json",
     "ua": "ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg)"
    },
    "response": {
     "status": 404,
     "headers": {
      "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:41:14 GMT",
+     "date": "Mon, 07 Sep 2026 09:41:44 GMT",
+     "content-type": "text/plain",
+     "content-length": "9"
+    },
+    "body_sha256": "907ba78b4545338d3539683e63ecb51cf51c10adc9dabd86e92bd52339f298b9",
+    "body_path": "corpus/evidence/scan/90/907ba78b4545338d3539683e63ecb51cf51c10adc9dabd86e92bd52339f298b9",
+    "bytes": 9,
+    "elapsed_ms": 1
+   },
+   "parsed": {
+    "content_type": "text/plain",
+    "final_url": "http://127.0.0.1:59823/swagger.json",
+    "extension": "json",
+    "api": {
+     "auth_headers_seen": [],
+     "rate_limit_headers_seen": [],
+     "openapi_parsed": false,
+     "openapi_version": null,
+     "auth_schemes_declared": [],
+     "rate_limit_declared_in_description": false
+    }
+   },
+   "error_class": "http_4xx"
+  },
+  {
+   "obs_id": "obs_36e04a4e225a61a9032824a0",
+   "spec_code": "A2",
+   "leg": "A2",
+   "target_doc_id": "control:passes_all",
+   "target_url": "http://127.0.0.1:59823/api/openapi.json",
+   "captured_at": "2026-09-07T09:41:45.804672+00:00",
+   "collector": "http",
+   "collector_version": "0.1.0",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
+   "request": {
+    "method": "GET",
+    "url": "http://127.0.0.1:59823/api/openapi.json",
+    "ua": "ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg)"
+   },
+   "response": {
+    "status": 404,
+    "headers": {
+     "server": "SimpleHTTP/0.6 Python/3.12.4",
+     "date": "Mon, 07 Sep 2026 09:41:45 GMT",
      "content-type": "text/plain",
      "content-length": "9"
     },
@@ -1111,7 +1187,7 @@
    },
    "parsed": {
     "content_type": "text/plain",
-    "final_url": "http://127.0.0.1:54788/swagger.json",
+    "final_url": "http://127.0.0.1:59823/api/openapi.json",
     "extension": "json",
     "api": {
      "auth_headers_seen": [],
@@ -1125,112 +1201,69 @@
    "error_class": "http_4xx"
   },
   {
-   "obs_id": "obs_75379347dc0f3468dead56c9",
-   "spec_code": "A2",
-   "leg": "A2",
-   "target_doc_id": "control:passes_all",
-   "target_url": "http://127.0.0.1:54788/api/openapi.json",
-   "captured_at": "2026-09-07T02:41:15.094822+00:00",
-   "collector": "http",
-   "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
-   "request": {
-    "method": "GET",
-    "url": "http://127.0.0.1:54788/api/openapi.json",
-    "ua": "ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg)"
-   },
-   "response": {
-    "status": 404,
-    "headers": {
-     "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:41:15 GMT",
-     "content-type": "text/plain",
-     "content-length": "9"
-    },
-    "body_sha256": "907ba78b4545338d3539683e63ecb51cf51c10adc9dabd86e92bd52339f298b9",
-    "body_path": "corpus/evidence/scan/90/907ba78b4545338d3539683e63ecb51cf51c10adc9dabd86e92bd52339f298b9",
-    "bytes": 9,
-    "elapsed_ms": 3
-   },
-   "parsed": {
-    "content_type": "text/plain",
-    "final_url": "http://127.0.0.1:54788/api/openapi.json",
-    "extension": "json",
-    "api": {
-     "auth_headers_seen": [],
-     "rate_limit_headers_seen": [],
-     "openapi_parsed": false,
-     "openapi_version": null,
-     "auth_schemes_declared": [],
-     "rate_limit_declared_in_description": false
-    }
-   },
-   "error_class": "http_4xx"
-  },
-  {
-   "obs_id": "obs_5039a7a7ca200bf173ed5e26",
+   "obs_id": "obs_0a22760008eb3fe7ad0054db",
    "spec_code": "A3",
    "leg": "A3",
    "target_doc_id": "control:passes_all",
-   "target_url": "http://127.0.0.1:54788/index.html",
-   "captured_at": "2026-09-07T02:41:16.099875+00:00",
+   "target_url": "http://127.0.0.1:59823/index.html",
+   "captured_at": "2026-09-07T09:41:46.815518+00:00",
    "collector": "http",
    "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
    "request": {
     "method": "GET",
-    "url": "http://127.0.0.1:54788/index.html",
+    "url": "http://127.0.0.1:59823/index.html",
     "ua": "ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg)"
    },
    "response": {
     "status": 200,
     "headers": {
      "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:41:16 GMT",
+     "date": "Mon, 07 Sep 2026 09:41:46 GMT",
      "content-type": "text/html",
      "content-length": "3680",
      "last-modified": "Tue, 01 Sep 2026 00:00:00 GMT"
     },
-    "body_sha256": "ffa57679f7e04c0fe2af37d174de6cc69bf215811e8e24609b2930da7ffd2ca4",
-    "body_path": "corpus/evidence/scan/ff/ffa57679f7e04c0fe2af37d174de6cc69bf215811e8e24609b2930da7ffd2ca4",
+    "body_sha256": "02f516cea40d288101cc596a0be89a994eddebfb6571bc4133fc330f1ffbe458",
+    "body_path": "corpus/evidence/scan/02/02f516cea40d288101cc596a0be89a994eddebfb6571bc4133fc330f1ffbe458",
     "bytes": 3680,
-    "elapsed_ms": 2
+    "elapsed_ms": 4
    },
    "parsed": {
     "content_type": "text/html",
-    "final_url": "http://127.0.0.1:54788/index.html",
+    "final_url": "http://127.0.0.1:59823/index.html",
     "extension": "html",
     "links": [
      {
-      "href": "http://127.0.0.1:54788/estimates.csv",
+      "href": "http://127.0.0.1:59823/estimates.csv",
       "text": "estimates.csv"
      },
      {
-      "href": "http://127.0.0.1:54788/estimates.json",
+      "href": "http://127.0.0.1:59823/estimates.json",
       "text": "JSON"
      },
      {
-      "href": "http://127.0.0.1:54788/bulk/estimates-2026.zip",
+      "href": "http://127.0.0.1:59823/bulk/estimates-2026.zip",
       "text": "whole-product archive"
      },
      {
-      "href": "http://127.0.0.1:54788/estimates-latest.csv",
+      "href": "http://127.0.0.1:59823/estimates-latest.csv",
       "text": "Latest release"
      },
      {
-      "href": "http://127.0.0.1:54788/openapi.json",
+      "href": "http://127.0.0.1:59823/openapi.json",
       "text": "OpenAPI"
      },
      {
-      "href": "http://127.0.0.1:54788/llms.txt",
+      "href": "http://127.0.0.1:59823/llms.txt",
       "text": "llms.txt"
      },
      {
-      "href": "http://127.0.0.1:54788/methodology.html",
+      "href": "http://127.0.0.1:59823/methodology.html",
       "text": "Methodology"
      },
      {
-      "href": "http://127.0.0.1:54788/changelog.json",
+      "href": "http://127.0.0.1:59823/changelog.json",
       "text": "Changelog"
      },
      {
@@ -1242,24 +1275,24 @@
    "error_class": null
   },
   {
-   "obs_id": "obs_040b921b2500ef0d72480b94",
+   "obs_id": "obs_b89049a25f53f0455c46dc12",
    "spec_code": "A3",
    "leg": "A3",
    "target_doc_id": "control:passes_all",
-   "target_url": "http://127.0.0.1:54788/estimates.csv",
-   "captured_at": "2026-09-07T02:41:17.100722+00:00",
+   "target_url": "http://127.0.0.1:59823/estimates.csv",
+   "captured_at": "2026-09-07T09:41:47.813691+00:00",
    "collector": "links",
    "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
    "request": {
     "method": "HEAD",
-    "url": "http://127.0.0.1:54788/estimates.csv"
+    "url": "http://127.0.0.1:59823/estimates.csv"
    },
    "response": {
     "status": 200,
     "headers": {
      "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:41:17 GMT",
+     "date": "Mon, 07 Sep 2026 09:41:47 GMT",
      "content-type": "text/csv",
      "content-length": "86",
      "last-modified": "Tue, 01 Sep 2026 00:00:00 GMT"
@@ -1267,14 +1300,14 @@
     "body_sha256": null,
     "body_path": null,
     "bytes": 0,
-    "elapsed_ms": 2
+    "elapsed_ms": 5
    },
    "parsed": {
     "probe": "link",
     "anchor_text": "estimates.csv",
     "content_type": "text/csv",
     "extension": ".csv",
-    "final_url": "http://127.0.0.1:54788/estimates.csv",
+    "final_url": "http://127.0.0.1:59823/estimates.csv",
     "method_used": "HEAD",
     "is_archive": false,
     "has_query_string": false,
@@ -1286,24 +1319,24 @@
    "error_class": null
   },
   {
-   "obs_id": "obs_5e1f2c16b89c18343379b048",
+   "obs_id": "obs_05d37df6fb5447185465cc35",
    "spec_code": "A3",
    "leg": "A3",
    "target_doc_id": "control:passes_all",
-   "target_url": "http://127.0.0.1:54788/estimates.json",
-   "captured_at": "2026-09-07T02:41:18.102707+00:00",
+   "target_url": "http://127.0.0.1:59823/estimates.json",
+   "captured_at": "2026-09-07T09:41:48.815129+00:00",
    "collector": "links",
    "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
    "request": {
     "method": "HEAD",
-    "url": "http://127.0.0.1:54788/estimates.json"
+    "url": "http://127.0.0.1:59823/estimates.json"
    },
    "response": {
     "status": 200,
     "headers": {
      "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:41:18 GMT",
+     "date": "Mon, 07 Sep 2026 09:41:48 GMT",
      "content-type": "application/json",
      "content-length": "72",
      "last-modified": "Tue, 01 Sep 2026 00:00:00 GMT"
@@ -1318,7 +1351,7 @@
     "anchor_text": "JSON",
     "content_type": "application/json",
     "extension": ".json",
-    "final_url": "http://127.0.0.1:54788/estimates.json",
+    "final_url": "http://127.0.0.1:59823/estimates.json",
     "method_used": "HEAD",
     "is_archive": false,
     "has_query_string": false,
@@ -1330,24 +1363,24 @@
    "error_class": null
   },
   {
-   "obs_id": "obs_b2efceb1be4ecb6384699863",
+   "obs_id": "obs_843a62e10bf00aba85946c48",
    "spec_code": "A3",
    "leg": "A3",
    "target_doc_id": "control:passes_all",
-   "target_url": "http://127.0.0.1:54788/bulk/estimates-2026.zip",
-   "captured_at": "2026-09-07T02:41:19.115719+00:00",
+   "target_url": "http://127.0.0.1:59823/bulk/estimates-2026.zip",
+   "captured_at": "2026-09-07T09:41:49.822069+00:00",
    "collector": "links",
    "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
    "request": {
     "method": "HEAD",
-    "url": "http://127.0.0.1:54788/bulk/estimates-2026.zip"
+    "url": "http://127.0.0.1:59823/bulk/estimates-2026.zip"
    },
    "response": {
     "status": 200,
     "headers": {
      "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:41:19 GMT",
+     "date": "Mon, 07 Sep 2026 09:41:49 GMT",
      "content-type": "application/zip",
      "content-length": "92157",
      "last-modified": "Tue, 01 Sep 2026 00:00:00 GMT"
@@ -1355,14 +1388,14 @@
     "body_sha256": null,
     "body_path": null,
     "bytes": 0,
-    "elapsed_ms": 9
+    "elapsed_ms": 2
    },
    "parsed": {
     "probe": "link",
     "anchor_text": "whole-product archive",
     "content_type": "application/zip",
     "extension": ".zip",
-    "final_url": "http://127.0.0.1:54788/bulk/estimates-2026.zip",
+    "final_url": "http://127.0.0.1:59823/bulk/estimates-2026.zip",
     "method_used": "HEAD",
     "is_archive": true,
     "has_query_string": false,
@@ -1374,24 +1407,24 @@
    "error_class": null
   },
   {
-   "obs_id": "obs_a7ff3493d6ac4efcf7e8f25d",
+   "obs_id": "obs_4539c35e9ccf640dd545d34d",
    "spec_code": "A3",
    "leg": "A3",
    "target_doc_id": "control:passes_all",
-   "target_url": "http://127.0.0.1:54788/estimates-latest.csv",
-   "captured_at": "2026-09-07T02:41:20.119820+00:00",
+   "target_url": "http://127.0.0.1:59823/estimates-latest.csv",
+   "captured_at": "2026-09-07T09:41:50.829091+00:00",
    "collector": "links",
    "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
    "request": {
     "method": "HEAD",
-    "url": "http://127.0.0.1:54788/estimates-latest.csv"
+    "url": "http://127.0.0.1:59823/estimates-latest.csv"
    },
    "response": {
     "status": 200,
     "headers": {
      "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:41:20 GMT",
+     "date": "Mon, 07 Sep 2026 09:41:50 GMT",
      "content-type": "text/csv",
      "content-length": "92023",
      "last-modified": "Tue, 01 Sep 2026 00:00:00 GMT"
@@ -1399,14 +1432,14 @@
     "body_sha256": null,
     "body_path": null,
     "bytes": 0,
-    "elapsed_ms": 8
+    "elapsed_ms": 3
    },
    "parsed": {
     "probe": "link",
     "anchor_text": "Latest release",
     "content_type": "text/csv",
     "extension": ".csv",
-    "final_url": "http://127.0.0.1:54788/estimates-latest.csv",
+    "final_url": "http://127.0.0.1:59823/estimates-latest.csv",
     "method_used": "HEAD",
     "is_archive": false,
     "has_query_string": false,
@@ -1418,24 +1451,24 @@
    "error_class": null
   },
   {
-   "obs_id": "obs_b7d61c6f16718b648460d3de",
+   "obs_id": "obs_4c469aa35bc57165230ddbb3",
    "spec_code": "A3",
    "leg": "A3",
    "target_doc_id": "control:passes_all",
-   "target_url": "http://127.0.0.1:54788/openapi.json",
-   "captured_at": "2026-09-07T02:41:21.115886+00:00",
+   "target_url": "http://127.0.0.1:59823/openapi.json",
+   "captured_at": "2026-09-07T09:41:51.836382+00:00",
    "collector": "links",
    "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
    "request": {
     "method": "HEAD",
-    "url": "http://127.0.0.1:54788/openapi.json"
+    "url": "http://127.0.0.1:59823/openapi.json"
    },
    "response": {
     "status": 200,
     "headers": {
      "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:41:21 GMT",
+     "date": "Mon, 07 Sep 2026 09:41:51 GMT",
      "content-type": "application/json",
      "content-length": "489",
      "last-modified": "Tue, 01 Sep 2026 00:00:00 GMT"
@@ -1443,14 +1476,14 @@
     "body_sha256": null,
     "body_path": null,
     "bytes": 0,
-    "elapsed_ms": 2
+    "elapsed_ms": 6
    },
    "parsed": {
     "probe": "link",
     "anchor_text": "OpenAPI",
     "content_type": "application/json",
     "extension": ".json",
-    "final_url": "http://127.0.0.1:54788/openapi.json",
+    "final_url": "http://127.0.0.1:59823/openapi.json",
     "method_used": "HEAD",
     "is_archive": false,
     "has_query_string": false,
@@ -1462,38 +1495,38 @@
    "error_class": null
   },
   {
-   "obs_id": "obs_aefa5f7a386f84dc4cdabbd1",
+   "obs_id": "obs_62675bc3aa0c1402195ad258",
    "spec_code": "A3",
    "leg": "A3",
    "target_doc_id": "control:passes_all",
-   "target_url": "http://127.0.0.1:54788/llms.txt",
-   "captured_at": "2026-09-07T02:41:22.121683+00:00",
+   "target_url": "http://127.0.0.1:59823/llms.txt",
+   "captured_at": "2026-09-07T09:41:52.843363+00:00",
    "collector": "links",
    "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
    "request": {
     "method": "HEAD",
-    "url": "http://127.0.0.1:54788/llms.txt"
+    "url": "http://127.0.0.1:59823/llms.txt"
    },
    "response": {
     "status": 200,
     "headers": {
      "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:41:22 GMT",
+     "date": "Mon, 07 Sep 2026 09:41:52 GMT",
      "content-type": "text/plain",
      "content-length": "175"
     },
     "body_sha256": null,
     "body_path": null,
     "bytes": 0,
-    "elapsed_ms": 3
+    "elapsed_ms": 9
    },
    "parsed": {
     "probe": "link",
     "anchor_text": "llms.txt",
     "content_type": "text/plain",
     "extension": ".txt",
-    "final_url": "http://127.0.0.1:54788/llms.txt",
+    "final_url": "http://127.0.0.1:59823/llms.txt",
     "method_used": "HEAD",
     "is_archive": false,
     "has_query_string": false,
@@ -1505,24 +1538,24 @@
    "error_class": null
   },
   {
-   "obs_id": "obs_11bbbb8c43134afe2cbcc46e",
+   "obs_id": "obs_70f8253e752b496e96c47bd3",
    "spec_code": "A3",
    "leg": "A3",
    "target_doc_id": "control:passes_all",
-   "target_url": "http://127.0.0.1:54788/methodology.html",
-   "captured_at": "2026-09-07T02:41:23.128055+00:00",
+   "target_url": "http://127.0.0.1:59823/methodology.html",
+   "captured_at": "2026-09-07T09:41:53.846569+00:00",
    "collector": "links",
    "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
    "request": {
     "method": "HEAD",
-    "url": "http://127.0.0.1:54788/methodology.html"
+    "url": "http://127.0.0.1:59823/methodology.html"
    },
    "response": {
     "status": 200,
     "headers": {
      "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:41:23 GMT",
+     "date": "Mon, 07 Sep 2026 09:41:53 GMT",
      "content-type": "text/html",
      "content-length": "2549",
      "last-modified": "Tue, 01 Sep 2026 00:00:00 GMT"
@@ -1530,14 +1563,14 @@
     "body_sha256": null,
     "body_path": null,
     "bytes": 0,
-    "elapsed_ms": 4
+    "elapsed_ms": 7
    },
    "parsed": {
     "probe": "link",
     "anchor_text": "Methodology",
     "content_type": "text/html",
     "extension": ".html",
-    "final_url": "http://127.0.0.1:54788/methodology.html",
+    "final_url": "http://127.0.0.1:59823/methodology.html",
     "method_used": "HEAD",
     "is_archive": false,
     "has_query_string": false,
@@ -1549,24 +1582,24 @@
    "error_class": null
   },
   {
-   "obs_id": "obs_f5a3ac60c288ce071f91b603",
+   "obs_id": "obs_c37a1f455d759ee372100466",
    "spec_code": "A3",
    "leg": "A3",
    "target_doc_id": "control:passes_all",
-   "target_url": "http://127.0.0.1:54788/changelog.json",
-   "captured_at": "2026-09-07T02:41:24.138558+00:00",
+   "target_url": "http://127.0.0.1:59823/changelog.json",
+   "captured_at": "2026-09-07T09:41:54.842209+00:00",
    "collector": "links",
    "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
    "request": {
     "method": "HEAD",
-    "url": "http://127.0.0.1:54788/changelog.json"
+    "url": "http://127.0.0.1:59823/changelog.json"
    },
    "response": {
     "status": 200,
     "headers": {
      "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:41:24 GMT",
+     "date": "Mon, 07 Sep 2026 09:41:54 GMT",
      "content-type": "application/json",
      "content-length": "144",
      "last-modified": "Tue, 01 Sep 2026 00:00:00 GMT"
@@ -1574,14 +1607,14 @@
     "body_sha256": null,
     "body_path": null,
     "bytes": 0,
-    "elapsed_ms": 7
+    "elapsed_ms": 2
    },
    "parsed": {
     "probe": "link",
     "anchor_text": "Changelog",
     "content_type": "application/json",
     "extension": ".json",
-    "final_url": "http://127.0.0.1:54788/changelog.json",
+    "final_url": "http://127.0.0.1:59823/changelog.json",
     "method_used": "HEAD",
     "is_archive": false,
     "has_query_string": false,
@@ -1593,31 +1626,31 @@
    "error_class": null
   },
   {
-   "obs_id": "obs_a8c63179ad3a2abc9184ba78",
+   "obs_id": "obs_c99f65a6bf5f953bb9d219d3",
    "spec_code": "A4",
    "leg": "A4",
    "target_doc_id": "control:passes_all",
-   "target_url": "http://127.0.0.1:54788/robots.txt",
-   "captured_at": "2026-09-07T02:41:25.139842+00:00",
+   "target_url": "http://127.0.0.1:59823/robots.txt",
+   "captured_at": "2026-09-07T09:41:55.868293+00:00",
    "collector": "robots",
    "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
    "request": {
     "method": "GET",
-    "url": "http://127.0.0.1:54788/robots.txt"
+    "url": "http://127.0.0.1:59823/robots.txt"
    },
    "response": {
     "status": 200,
     "headers": {
      "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:41:25 GMT",
+     "date": "Mon, 07 Sep 2026 09:41:55 GMT",
      "content-type": "text/plain",
      "content-length": "67"
     },
-    "body_sha256": "bac6ee7c8d3d44538cb80a208a2156ae4c1f15d3e804397fe5277b72727dab10",
-    "body_path": "corpus/evidence/scan/ba/bac6ee7c8d3d44538cb80a208a2156ae4c1f15d3e804397fe5277b72727dab10",
+    "body_sha256": "d99df2a4e487b8b86587cfc84300a7ecd65f2ff2f31cad18da898e3056ad140f",
+    "body_path": "corpus/evidence/scan/d9/d99df2a4e487b8b86587cfc84300a7ecd65f2ff2f31cad18da898e3056ad140f",
     "bytes": 67,
-    "elapsed_ms": 4
+    "elapsed_ms": 13
    },
    "parsed": {
     "present": true,
@@ -1633,38 +1666,42 @@
      "Bingbot": true,
      "Applebot-Extended": true
     },
+    "robots_status": 200,
+    "probe_url": "http://127.0.0.1:59823/index.html",
+    "self_ua": "ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg)",
+    "self_ua_allowed": true,
     "sitemaps": [
-     "http://127.0.0.1:54788/sitemap.xml"
+     "http://127.0.0.1:59823/sitemap.xml"
     ]
    },
    "error_class": null
   },
   {
-   "obs_id": "obs_624747f43d869825963cbf17",
+   "obs_id": "obs_5b1f90e6a5797717d9826da8",
    "spec_code": "A5",
    "leg": "A5",
    "target_doc_id": "control:passes_all",
-   "target_url": "http://127.0.0.1:54788/sitemap.xml",
-   "captured_at": "2026-09-07T02:41:27.227869+00:00",
+   "target_url": "http://127.0.0.1:59823/sitemap.xml",
+   "captured_at": "2026-09-07T09:41:57.975111+00:00",
    "collector": "sitemap",
    "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
    "request": {
     "method": "GET",
-    "url": "http://127.0.0.1:54788/sitemap.xml"
+    "url": "http://127.0.0.1:59823/sitemap.xml"
    },
    "response": {
     "status": 200,
     "headers": {
      "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:41:27 GMT",
+     "date": "Mon, 07 Sep 2026 09:41:57 GMT",
      "content-type": "application/xml",
      "content-length": "261"
     },
-    "body_sha256": "b65874e8cb0f976a684be38b3d0c77d0de940bf2aa1c00f2d04aaf6942851a16",
-    "body_path": "corpus/evidence/scan/b6/b65874e8cb0f976a684be38b3d0c77d0de940bf2aa1c00f2d04aaf6942851a16",
+    "body_sha256": "435acafa4894df7564fd044eadcf0880066f9cd378cb24b3e71de23260a4c3fc",
+    "body_path": "corpus/evidence/scan/43/435acafa4894df7564fd044eadcf0880066f9cd378cb24b3e71de23260a4c3fc",
     "bytes": 261,
-    "elapsed_ms": 4
+    "elapsed_ms": 2
    },
    "parsed": {
     "present": true,
@@ -1674,38 +1711,38 @@
     "covers_product": true,
     "url_count": 2,
     "sample": [
-     "http://127.0.0.1:54788/index.html",
-     "http://127.0.0.1:54788/methodology.html"
+     "http://127.0.0.1:59823/index.html",
+     "http://127.0.0.1:59823/methodology.html"
     ]
    },
    "error_class": null
   },
   {
-   "obs_id": "obs_650914bb19f9a464dface323",
+   "obs_id": "obs_fab618386c55a8650c98926a",
    "spec_code": "A5",
    "leg": "A5",
    "target_doc_id": "control:passes_all",
-   "target_url": "http://127.0.0.1:54788/sitemap_index.xml",
-   "captured_at": "2026-09-07T02:41:28.148200+00:00",
+   "target_url": "http://127.0.0.1:59823/sitemap_index.xml",
+   "captured_at": "2026-09-07T09:41:58.865454+00:00",
    "collector": "sitemap",
    "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
    "request": {
     "method": "GET",
-    "url": "http://127.0.0.1:54788/sitemap_index.xml"
+    "url": "http://127.0.0.1:59823/sitemap_index.xml"
    },
    "response": {
     "status": 404,
     "headers": {
      "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:41:28 GMT",
+     "date": "Mon, 07 Sep 2026 09:41:58 GMT",
      "content-type": "text/plain",
      "content-length": "9"
     },
     "body_sha256": "907ba78b4545338d3539683e63ecb51cf51c10adc9dabd86e92bd52339f298b9",
     "body_path": "corpus/evidence/scan/90/907ba78b4545338d3539683e63ecb51cf51c10adc9dabd86e92bd52339f298b9",
     "bytes": 9,
-    "elapsed_ms": 6
+    "elapsed_ms": 7
    },
    "parsed": {
     "present": false,
@@ -1718,24 +1755,24 @@
    "error_class": "http_4xx"
   },
   {
-   "obs_id": "obs_b0db6d60b0e6f007c5a0ff8c",
+   "obs_id": "obs_240f41d91a2439a54536cd73",
    "spec_code": "A5",
    "leg": "A5",
    "target_doc_id": "control:passes_all",
-   "target_url": "http://127.0.0.1:54788/llms.txt",
-   "captured_at": "2026-09-07T02:41:29.147228+00:00",
+   "target_url": "http://127.0.0.1:59823/llms.txt",
+   "captured_at": "2026-09-07T09:41:59.862906+00:00",
    "collector": "sitemap",
    "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
    "request": {
     "method": "GET",
-    "url": "http://127.0.0.1:54788/llms.txt"
+    "url": "http://127.0.0.1:59823/llms.txt"
    },
    "response": {
     "status": 200,
     "headers": {
      "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:41:29 GMT",
+     "date": "Mon, 07 Sep 2026 09:41:59 GMT",
      "content-type": "text/plain",
      "content-length": "175"
     },
@@ -1755,24 +1792,24 @@
    "error_class": null
   },
   {
-   "obs_id": "obs_875d9152085ea650ec87b88b",
+   "obs_id": "obs_4127f186c5c7d4cf26e8617b",
    "spec_code": "A5",
    "leg": "A5",
    "target_doc_id": "control:passes_all",
-   "target_url": "http://127.0.0.1:54788/.well-known/ai-plugin.json",
-   "captured_at": "2026-09-07T02:41:30.154697+00:00",
+   "target_url": "http://127.0.0.1:59823/.well-known/ai-plugin.json",
+   "captured_at": "2026-09-07T09:42:00.869992+00:00",
    "collector": "sitemap",
    "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
    "request": {
     "method": "GET",
-    "url": "http://127.0.0.1:54788/.well-known/ai-plugin.json"
+    "url": "http://127.0.0.1:59823/.well-known/ai-plugin.json"
    },
    "response": {
     "status": 404,
     "headers": {
      "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:41:30 GMT",
+     "date": "Mon, 07 Sep 2026 09:42:00 GMT",
      "content-type": "text/plain",
      "content-length": "9"
     },
@@ -1792,24 +1829,24 @@
    "error_class": "http_4xx"
   },
   {
-   "obs_id": "obs_e6f6f9ee21d8e80519fe6551",
+   "obs_id": "obs_b1006650c8958cafc81aea1c",
    "spec_code": "A5",
    "leg": "A5",
    "target_doc_id": "control:passes_all",
-   "target_url": "http://127.0.0.1:54788/.well-known/mcp.json",
-   "captured_at": "2026-09-07T02:41:31.160736+00:00",
+   "target_url": "http://127.0.0.1:59823/.well-known/mcp.json",
+   "captured_at": "2026-09-07T09:42:01.874060+00:00",
    "collector": "sitemap",
    "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
    "request": {
     "method": "GET",
-    "url": "http://127.0.0.1:54788/.well-known/mcp.json"
+    "url": "http://127.0.0.1:59823/.well-known/mcp.json"
    },
    "response": {
     "status": 200,
     "headers": {
      "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:41:31 GMT",
+     "date": "Mon, 07 Sep 2026 09:42:01 GMT",
      "content-type": "application/json",
      "content-length": "148",
      "last-modified": "Tue, 01 Sep 2026 00:00:00 GMT"
@@ -1817,7 +1854,7 @@
     "body_sha256": "04e627adf06074fdf610d5cf1eaef2f2c75b78f25c7b8d363129be816bab9b28",
     "body_path": "corpus/evidence/scan/04/04e627adf06074fdf610d5cf1eaef2f2c75b78f25c7b8d363129be816bab9b28",
     "bytes": 148,
-    "elapsed_ms": 7
+    "elapsed_ms": 3
    },
    "parsed": {
     "present": true,
@@ -1830,32 +1867,32 @@
    "error_class": null
   },
   {
-   "obs_id": "obs_05c751d51e0fd9b103063e7a",
+   "obs_id": "obs_b9f29b72ad152f92643cbbef",
    "spec_code": "A6",
    "leg": "A6",
    "target_doc_id": "control:passes_all",
-   "target_url": "http://127.0.0.1:54788/index.html",
-   "captured_at": "2026-09-07T02:41:32.290828+00:00",
+   "target_url": "http://127.0.0.1:59823/index.html",
+   "captured_at": "2026-09-07T09:42:02.988310+00:00",
    "collector": "structured_data",
    "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
    "request": {
     "method": "GET",
-    "url": "http://127.0.0.1:54788/index.html"
+    "url": "http://127.0.0.1:59823/index.html"
    },
    "response": {
     "status": 200,
     "headers": {
      "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:41:32 GMT",
+     "date": "Mon, 07 Sep 2026 09:42:02 GMT",
      "content-type": "text/html",
      "content-length": "3680",
      "last-modified": "Tue, 01 Sep 2026 00:00:00 GMT"
     },
-    "body_sha256": "ffa57679f7e04c0fe2af37d174de6cc69bf215811e8e24609b2930da7ffd2ca4",
-    "body_path": "corpus/evidence/scan/ff/ffa57679f7e04c0fe2af37d174de6cc69bf215811e8e24609b2930da7ffd2ca4",
+    "body_sha256": "02f516cea40d288101cc596a0be89a994eddebfb6571bc4133fc330f1ffbe458",
+    "body_path": "corpus/evidence/scan/02/02f516cea40d288101cc596a0be89a994eddebfb6571bc4133fc330f1ffbe458",
     "bytes": 3680,
-    "elapsed_ms": 3
+    "elapsed_ms": 6
    },
    "parsed": {
     "syntaxes": {
@@ -1898,7 +1935,7 @@
         {
          "@type": "DataDownload",
          "encodingFormat": "text/csv",
-         "contentUrl": "http://127.0.0.1:54788/estimates.csv"
+         "contentUrl": "http://127.0.0.1:59823/estimates.csv"
         }
        ]
       }
@@ -1917,32 +1954,32 @@
    "error_class": null
   },
   {
-   "obs_id": "obs_9d580cee2df4269c0a706e99",
+   "obs_id": "obs_a6d522ba1472e6684258512c",
    "spec_code": "A8",
    "leg": "A8",
    "target_doc_id": "control:passes_all",
-   "target_url": "http://127.0.0.1:54788/index.html",
-   "captured_at": "2026-09-07T02:41:33.176441+00:00",
+   "target_url": "http://127.0.0.1:59823/index.html",
+   "captured_at": "2026-09-07T09:42:03.889107+00:00",
    "collector": "structured_data",
    "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
    "request": {
     "method": "GET",
-    "url": "http://127.0.0.1:54788/index.html"
+    "url": "http://127.0.0.1:59823/index.html"
    },
    "response": {
     "status": 200,
     "headers": {
      "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:41:33 GMT",
+     "date": "Mon, 07 Sep 2026 09:42:03 GMT",
      "content-type": "text/html",
      "content-length": "3680",
      "last-modified": "Tue, 01 Sep 2026 00:00:00 GMT"
     },
-    "body_sha256": "ffa57679f7e04c0fe2af37d174de6cc69bf215811e8e24609b2930da7ffd2ca4",
-    "body_path": "corpus/evidence/scan/ff/ffa57679f7e04c0fe2af37d174de6cc69bf215811e8e24609b2930da7ffd2ca4",
+    "body_sha256": "02f516cea40d288101cc596a0be89a994eddebfb6571bc4133fc330f1ffbe458",
+    "body_path": "corpus/evidence/scan/02/02f516cea40d288101cc596a0be89a994eddebfb6571bc4133fc330f1ffbe458",
     "bytes": 3680,
-    "elapsed_ms": 4
+    "elapsed_ms": 2
    },
    "parsed": {
     "syntaxes": {
@@ -1985,7 +2022,7 @@
         {
          "@type": "DataDownload",
          "encodingFormat": "text/csv",
-         "contentUrl": "http://127.0.0.1:54788/estimates.csv"
+         "contentUrl": "http://127.0.0.1:59823/estimates.csv"
         }
        ]
       }
@@ -1997,7 +2034,7 @@
      "pointers_tried": [
       {
        "how": "href token",
-       "url": "http://127.0.0.1:54788/estimates-latest.csv",
+       "url": "http://127.0.0.1:59823/estimates-latest.csv",
        "status": 200,
        "resolved": true
       }
@@ -2008,25 +2045,25 @@
    "error_class": null
   },
   {
-   "obs_id": "obs_ed7d0015ecef9ccd1f436baf",
+   "obs_id": "obs_f99e6bda5a6355629440c32b",
    "spec_code": "A9",
    "leg": "A9",
    "target_doc_id": "control:passes_all",
-   "target_url": "http://127.0.0.1:54788/openapi.json",
-   "captured_at": "2026-09-07T02:41:35.176860+00:00",
+   "target_url": "http://127.0.0.1:59823/openapi.json",
+   "captured_at": "2026-09-07T09:42:05.886735+00:00",
    "collector": "http",
    "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
    "request": {
     "method": "GET",
-    "url": "http://127.0.0.1:54788/openapi.json",
+    "url": "http://127.0.0.1:59823/openapi.json",
     "ua": "ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg)"
    },
    "response": {
     "status": 200,
     "headers": {
      "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:41:35 GMT",
+     "date": "Mon, 07 Sep 2026 09:42:05 GMT",
      "content-type": "application/json",
      "content-length": "489",
      "last-modified": "Tue, 01 Sep 2026 00:00:00 GMT"
@@ -2034,140 +2071,140 @@
     "body_sha256": "ec0d349a8a57dd9391bf7ef37003732c85021283dbc4d96f47dc33b3337117d5",
     "body_path": "corpus/evidence/scan/ec/ec0d349a8a57dd9391bf7ef37003732c85021283dbc4d96f47dc33b3337117d5",
     "bytes": 489,
-    "elapsed_ms": 4
+    "elapsed_ms": 3
    },
    "parsed": {
     "content_type": "application/json",
-    "final_url": "http://127.0.0.1:54788/openapi.json",
+    "final_url": "http://127.0.0.1:59823/openapi.json",
     "extension": "json"
    },
    "error_class": null
   },
   {
-   "obs_id": "obs_af7a810eeb87cce1455037eb",
+   "obs_id": "obs_b0d89af4980ca5b99334ab8d",
    "spec_code": "A9",
    "leg": "A9",
    "target_doc_id": "control:passes_all",
-   "target_url": "http://127.0.0.1:54788/swagger.json",
-   "captured_at": "2026-09-07T02:41:36.177073+00:00",
+   "target_url": "http://127.0.0.1:59823/swagger.json",
+   "captured_at": "2026-09-07T09:42:06.894049+00:00",
    "collector": "http",
    "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
    "request": {
     "method": "GET",
-    "url": "http://127.0.0.1:54788/swagger.json",
+    "url": "http://127.0.0.1:59823/swagger.json",
     "ua": "ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg)"
    },
    "response": {
     "status": 404,
     "headers": {
      "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:41:36 GMT",
+     "date": "Mon, 07 Sep 2026 09:42:06 GMT",
      "content-type": "text/plain",
      "content-length": "9"
     },
     "body_sha256": "907ba78b4545338d3539683e63ecb51cf51c10adc9dabd86e92bd52339f298b9",
     "body_path": "corpus/evidence/scan/90/907ba78b4545338d3539683e63ecb51cf51c10adc9dabd86e92bd52339f298b9",
     "bytes": 9,
-    "elapsed_ms": 2
+    "elapsed_ms": 4
    },
    "parsed": {
     "content_type": "text/plain",
-    "final_url": "http://127.0.0.1:54788/swagger.json",
+    "final_url": "http://127.0.0.1:59823/swagger.json",
     "extension": "json"
    },
    "error_class": "http_4xx"
   },
   {
-   "obs_id": "obs_4cc7d933fc6fbc97e475ebb5",
+   "obs_id": "obs_7b5d3f8fc32b72d61c66cbd4",
    "spec_code": "A9",
    "leg": "A9",
    "target_doc_id": "control:passes_all",
-   "target_url": "http://127.0.0.1:54788/api/openapi.json",
-   "captured_at": "2026-09-07T02:41:37.184498+00:00",
+   "target_url": "http://127.0.0.1:59823/api/openapi.json",
+   "captured_at": "2026-09-07T09:42:07.911329+00:00",
    "collector": "http",
    "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
    "request": {
     "method": "GET",
-    "url": "http://127.0.0.1:54788/api/openapi.json",
+    "url": "http://127.0.0.1:59823/api/openapi.json",
     "ua": "ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg)"
    },
    "response": {
     "status": 404,
     "headers": {
      "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:41:37 GMT",
+     "date": "Mon, 07 Sep 2026 09:42:07 GMT",
      "content-type": "text/plain",
      "content-length": "9"
     },
     "body_sha256": "907ba78b4545338d3539683e63ecb51cf51c10adc9dabd86e92bd52339f298b9",
     "body_path": "corpus/evidence/scan/90/907ba78b4545338d3539683e63ecb51cf51c10adc9dabd86e92bd52339f298b9",
     "bytes": 9,
-    "elapsed_ms": 1
+    "elapsed_ms": 16
    },
    "parsed": {
     "content_type": "text/plain",
-    "final_url": "http://127.0.0.1:54788/api/openapi.json",
+    "final_url": "http://127.0.0.1:59823/api/openapi.json",
     "extension": "json"
    },
    "error_class": "http_4xx"
   },
   {
-   "obs_id": "obs_cf42e985a5e5e83899f4d04e",
+   "obs_id": "obs_98b5bc8e41183266d107c191",
    "spec_code": "A9",
    "leg": "A9",
    "target_doc_id": "control:passes_all",
-   "target_url": "http://127.0.0.1:54788/llms.txt",
-   "captured_at": "2026-09-07T02:41:38.191091+00:00",
+   "target_url": "http://127.0.0.1:59823/llms.txt",
+   "captured_at": "2026-09-07T09:42:08.902211+00:00",
    "collector": "http",
    "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
    "request": {
     "method": "GET",
-    "url": "http://127.0.0.1:54788/llms.txt",
+    "url": "http://127.0.0.1:59823/llms.txt",
     "ua": "ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg)"
    },
    "response": {
     "status": 200,
     "headers": {
      "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:41:38 GMT",
+     "date": "Mon, 07 Sep 2026 09:42:08 GMT",
      "content-type": "text/plain",
      "content-length": "175"
     },
     "body_sha256": "b3ce3912b5425cc87f58ca9a3613eae3298b66944450a5c26e64c2d8ae9f7b9c",
     "body_path": "corpus/evidence/scan/b3/b3ce3912b5425cc87f58ca9a3613eae3298b66944450a5c26e64c2d8ae9f7b9c",
     "bytes": 175,
-    "elapsed_ms": 3
+    "elapsed_ms": 2
    },
    "parsed": {
     "content_type": "text/plain",
-    "final_url": "http://127.0.0.1:54788/llms.txt",
+    "final_url": "http://127.0.0.1:59823/llms.txt",
     "extension": "txt"
    },
    "error_class": null
   },
   {
-   "obs_id": "obs_41986fe66b5f8cefde7b1092",
+   "obs_id": "obs_e17c7a89185976501c2c5c68",
    "spec_code": "A9",
    "leg": "A9",
    "target_doc_id": "control:passes_all",
-   "target_url": "http://127.0.0.1:54788/.well-known/mcp.json",
-   "captured_at": "2026-09-07T02:41:39.196808+00:00",
+   "target_url": "http://127.0.0.1:59823/.well-known/mcp.json",
+   "captured_at": "2026-09-07T09:42:09.907894+00:00",
    "collector": "http",
    "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
    "request": {
     "method": "GET",
-    "url": "http://127.0.0.1:54788/.well-known/mcp.json",
+    "url": "http://127.0.0.1:59823/.well-known/mcp.json",
     "ua": "ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg)"
    },
    "response": {
     "status": 200,
     "headers": {
      "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:41:39 GMT",
+     "date": "Mon, 07 Sep 2026 09:42:09 GMT",
      "content-type": "application/json",
      "content-length": "148",
      "last-modified": "Tue, 01 Sep 2026 00:00:00 GMT"
@@ -2175,42 +2212,42 @@
     "body_sha256": "04e627adf06074fdf610d5cf1eaef2f2c75b78f25c7b8d363129be816bab9b28",
     "body_path": "corpus/evidence/scan/04/04e627adf06074fdf610d5cf1eaef2f2c75b78f25c7b8d363129be816bab9b28",
     "bytes": 148,
-    "elapsed_ms": 7
+    "elapsed_ms": 3
    },
    "parsed": {
     "content_type": "application/json",
-    "final_url": "http://127.0.0.1:54788/.well-known/mcp.json",
+    "final_url": "http://127.0.0.1:59823/.well-known/mcp.json",
     "extension": "json"
    },
    "error_class": null
   },
   {
-   "obs_id": "obs_b41e1b797b896e9c415b8b16",
+   "obs_id": "obs_ad26bf85528d76bc36ef8ce2",
    "spec_code": "A10",
    "leg": "A10",
    "target_doc_id": "control:passes_all",
-   "target_url": "http://127.0.0.1:54788/index.html",
-   "captured_at": "2026-09-07T02:41:40.204132+00:00",
+   "target_url": "http://127.0.0.1:59823/index.html",
+   "captured_at": "2026-09-07T09:42:10.922101+00:00",
    "collector": "lighthouse",
    "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
    "request": {
     "method": "GET",
-    "url": "http://127.0.0.1:54788/index.html"
+    "url": "http://127.0.0.1:59823/index.html"
    },
    "response": {
     "status": 200,
     "headers": {
      "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:41:40 GMT",
+     "date": "Mon, 07 Sep 2026 09:42:10 GMT",
      "content-type": "text/html",
      "content-length": "3680",
      "last-modified": "Tue, 01 Sep 2026 00:00:00 GMT"
     },
-    "body_sha256": "ffa57679f7e04c0fe2af37d174de6cc69bf215811e8e24609b2930da7ffd2ca4",
-    "body_path": "corpus/evidence/scan/ff/ffa57679f7e04c0fe2af37d174de6cc69bf215811e8e24609b2930da7ffd2ca4",
+    "body_sha256": "02f516cea40d288101cc596a0be89a994eddebfb6571bc4133fc330f1ffbe458",
+    "body_path": "corpus/evidence/scan/02/02f516cea40d288101cc596a0be89a994eddebfb6571bc4133fc330f1ffbe458",
     "bytes": 3680,
-    "elapsed_ms": 9
+    "elapsed_ms": 6
    },
    "parsed": {
     "probe": "valid",
@@ -2229,31 +2266,31 @@
    "error_class": null
   },
   {
-   "obs_id": "obs_c38bd6972759cef8ac247bfb",
+   "obs_id": "obs_a847133eb9c0a1546a87e69c",
    "spec_code": "A10",
    "leg": "A10",
    "target_doc_id": "control:passes_all",
-   "target_url": "http://127.0.0.1:54788/index.html/__ai-readiness-kg-probe-404__",
-   "captured_at": "2026-09-07T02:41:41.208139+00:00",
+   "target_url": "http://127.0.0.1:59823/index.html/__ai-readiness-kg-probe-404__",
+   "captured_at": "2026-09-07T09:42:11.919358+00:00",
    "collector": "lighthouse",
    "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
    "request": {
     "method": "GET",
-    "url": "http://127.0.0.1:54788/index.html/__ai-readiness-kg-probe-404__"
+    "url": "http://127.0.0.1:59823/index.html/__ai-readiness-kg-probe-404__"
    },
    "response": {
     "status": 404,
     "headers": {
      "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:41:41 GMT",
+     "date": "Mon, 07 Sep 2026 09:42:11 GMT",
      "content-type": "text/plain",
      "content-length": "9"
     },
     "body_sha256": "907ba78b4545338d3539683e63ecb51cf51c10adc9dabd86e92bd52339f298b9",
     "body_path": "corpus/evidence/scan/90/907ba78b4545338d3539683e63ecb51cf51c10adc9dabd86e92bd52339f298b9",
     "bytes": 9,
-    "elapsed_ms": 7
+    "elapsed_ms": 2
    },
    "parsed": {
     "probe": "invalid_route",
@@ -2274,31 +2311,31 @@
    "error_class": null
   },
   {
-   "obs_id": "obs_e2ac54d6d0b40624ac994c4c",
+   "obs_id": "obs_0245d0f88a81d755a466f16f",
    "spec_code": "A11-declared",
    "leg": "A11-declared",
    "target_doc_id": "control:passes_all",
-   "target_url": "http://127.0.0.1:54788/robots.txt",
-   "captured_at": "2026-09-07T02:41:42.209350+00:00",
+   "target_url": "http://127.0.0.1:59823/robots.txt",
+   "captured_at": "2026-09-07T09:42:12.921958+00:00",
    "collector": "robots",
    "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
    "request": {
     "method": "GET",
-    "url": "http://127.0.0.1:54788/robots.txt"
+    "url": "http://127.0.0.1:59823/robots.txt"
    },
    "response": {
     "status": 200,
     "headers": {
      "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:41:42 GMT",
+     "date": "Mon, 07 Sep 2026 09:42:12 GMT",
      "content-type": "text/plain",
      "content-length": "67"
     },
-    "body_sha256": "bac6ee7c8d3d44538cb80a208a2156ae4c1f15d3e804397fe5277b72727dab10",
-    "body_path": "corpus/evidence/scan/ba/bac6ee7c8d3d44538cb80a208a2156ae4c1f15d3e804397fe5277b72727dab10",
+    "body_sha256": "d99df2a4e487b8b86587cfc84300a7ecd65f2ff2f31cad18da898e3056ad140f",
+    "body_path": "corpus/evidence/scan/d9/d99df2a4e487b8b86587cfc84300a7ecd65f2ff2f31cad18da898e3056ad140f",
     "bytes": 67,
-    "elapsed_ms": 5
+    "elapsed_ms": 1
    },
    "parsed": {
     "present": true,
@@ -2314,44 +2351,48 @@
      "Bingbot": true,
      "Applebot-Extended": true
     },
+    "robots_status": 200,
+    "probe_url": "http://127.0.0.1:59823/index.html",
+    "self_ua": "ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg)",
+    "self_ua_allowed": true,
     "sitemaps": [
-     "http://127.0.0.1:54788/sitemap.xml"
+     "http://127.0.0.1:59823/sitemap.xml"
     ]
    },
    "error_class": null
   },
   {
-   "obs_id": "obs_f8e3cb92600bb1ae2a666c1c",
+   "obs_id": "obs_12dabc2f85067885e6db8f38",
    "spec_code": "A11-declared",
    "leg": "A11-declared",
    "target_doc_id": "control:passes_all",
-   "target_url": "http://127.0.0.1:54788/index.html",
-   "captured_at": "2026-09-07T02:41:43.221396+00:00",
+   "target_url": "http://127.0.0.1:59823/index.html",
+   "captured_at": "2026-09-07T09:42:13.928675+00:00",
    "collector": "http",
    "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
    "request": {
     "method": "GET",
-    "url": "http://127.0.0.1:54788/index.html",
+    "url": "http://127.0.0.1:59823/index.html",
     "ua": "ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg)"
    },
    "response": {
     "status": 200,
     "headers": {
      "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:41:43 GMT",
+     "date": "Mon, 07 Sep 2026 09:42:13 GMT",
      "content-type": "text/html",
      "content-length": "3680",
      "last-modified": "Tue, 01 Sep 2026 00:00:00 GMT"
     },
-    "body_sha256": "ffa57679f7e04c0fe2af37d174de6cc69bf215811e8e24609b2930da7ffd2ca4",
-    "body_path": "corpus/evidence/scan/ff/ffa57679f7e04c0fe2af37d174de6cc69bf215811e8e24609b2930da7ffd2ca4",
+    "body_sha256": "02f516cea40d288101cc596a0be89a994eddebfb6571bc4133fc330f1ffbe458",
+    "body_path": "corpus/evidence/scan/02/02f516cea40d288101cc596a0be89a994eddebfb6571bc4133fc330f1ffbe458",
     "bytes": 3680,
-    "elapsed_ms": 11
+    "elapsed_ms": 2
    },
    "parsed": {
     "content_type": "text/html",
-    "final_url": "http://127.0.0.1:54788/index.html",
+    "final_url": "http://127.0.0.1:59823/index.html",
     "extension": "html",
     "meta": {
      "meta_robots": {},
@@ -2362,69 +2403,69 @@
    "error_class": null
   },
   {
-   "obs_id": "obs_06ad657f2f1de8492df3bc08",
+   "obs_id": "obs_4c759047f2b94a6c8f2746fc",
    "spec_code": "B3",
    "leg": "B3",
    "target_doc_id": "control:passes_all",
-   "target_url": "http://127.0.0.1:54788/index.html",
-   "captured_at": "2026-09-07T02:41:44.216431+00:00",
+   "target_url": "http://127.0.0.1:59823/index.html",
+   "captured_at": "2026-09-07T09:42:14.943843+00:00",
    "collector": "http",
    "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
    "request": {
     "method": "GET",
-    "url": "http://127.0.0.1:54788/index.html",
+    "url": "http://127.0.0.1:59823/index.html",
     "ua": "ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg)"
    },
    "response": {
     "status": 200,
     "headers": {
      "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:41:44 GMT",
+     "date": "Mon, 07 Sep 2026 09:42:14 GMT",
      "content-type": "text/html",
      "content-length": "3680",
      "last-modified": "Tue, 01 Sep 2026 00:00:00 GMT"
     },
-    "body_sha256": "ffa57679f7e04c0fe2af37d174de6cc69bf215811e8e24609b2930da7ffd2ca4",
-    "body_path": "corpus/evidence/scan/ff/ffa57679f7e04c0fe2af37d174de6cc69bf215811e8e24609b2930da7ffd2ca4",
+    "body_sha256": "02f516cea40d288101cc596a0be89a994eddebfb6571bc4133fc330f1ffbe458",
+    "body_path": "corpus/evidence/scan/02/02f516cea40d288101cc596a0be89a994eddebfb6571bc4133fc330f1ffbe458",
     "bytes": 3680,
-    "elapsed_ms": 4
+    "elapsed_ms": 6
    },
    "parsed": {
     "content_type": "text/html",
-    "final_url": "http://127.0.0.1:54788/index.html",
+    "final_url": "http://127.0.0.1:59823/index.html",
     "extension": "html",
     "links": [
      {
-      "href": "http://127.0.0.1:54788/estimates.csv",
+      "href": "http://127.0.0.1:59823/estimates.csv",
       "text": "estimates.csv"
      },
      {
-      "href": "http://127.0.0.1:54788/estimates.json",
+      "href": "http://127.0.0.1:59823/estimates.json",
       "text": "JSON"
      },
      {
-      "href": "http://127.0.0.1:54788/bulk/estimates-2026.zip",
+      "href": "http://127.0.0.1:59823/bulk/estimates-2026.zip",
       "text": "whole-product archive"
      },
      {
-      "href": "http://127.0.0.1:54788/estimates-latest.csv",
+      "href": "http://127.0.0.1:59823/estimates-latest.csv",
       "text": "Latest release"
      },
      {
-      "href": "http://127.0.0.1:54788/openapi.json",
+      "href": "http://127.0.0.1:59823/openapi.json",
       "text": "OpenAPI"
      },
      {
-      "href": "http://127.0.0.1:54788/llms.txt",
+      "href": "http://127.0.0.1:59823/llms.txt",
       "text": "llms.txt"
      },
      {
-      "href": "http://127.0.0.1:54788/methodology.html",
+      "href": "http://127.0.0.1:59823/methodology.html",
       "text": "Methodology"
      },
      {
-      "href": "http://127.0.0.1:54788/changelog.json",
+      "href": "http://127.0.0.1:59823/changelog.json",
       "text": "Changelog"
      },
      {
@@ -2436,25 +2477,25 @@
    "error_class": null
   },
   {
-   "obs_id": "obs_13349e33ae2964197ed86ff0",
+   "obs_id": "obs_267cb69857c10629526fb25e",
    "spec_code": "B3",
    "leg": "B3",
    "target_doc_id": "control:passes_all",
-   "target_url": "http://127.0.0.1:54788/methodology.html",
-   "captured_at": "2026-09-07T02:41:45.220204+00:00",
+   "target_url": "http://127.0.0.1:59823/methodology.html",
+   "captured_at": "2026-09-07T09:42:15.943368+00:00",
    "collector": "http",
    "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
    "request": {
     "method": "GET",
-    "url": "http://127.0.0.1:54788/methodology.html",
+    "url": "http://127.0.0.1:59823/methodology.html",
     "ua": "ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg)"
    },
    "response": {
     "status": 200,
     "headers": {
      "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:41:45 GMT",
+     "date": "Mon, 07 Sep 2026 09:42:15 GMT",
      "content-type": "text/html",
      "content-length": "2549",
      "last-modified": "Tue, 01 Sep 2026 00:00:00 GMT"
@@ -2462,11 +2503,11 @@
     "body_sha256": "cadd20b7302fae4019cd0aa0deb449957b805d212e80804d8cdce8a06c585008",
     "body_path": "corpus/evidence/scan/ca/cadd20b7302fae4019cd0aa0deb449957b805d212e80804d8cdce8a06c585008",
     "bytes": 2549,
-    "elapsed_ms": 5
+    "elapsed_ms": 8
    },
    "parsed": {
     "content_type": "text/html",
-    "final_url": "http://127.0.0.1:54788/methodology.html",
+    "final_url": "http://127.0.0.1:59823/methodology.html",
     "extension": "html",
     "extent": {
      "visible_chars": 2403,
@@ -2479,30 +2520,30 @@
    "error_class": null
   },
   {
-   "obs_id": "obs_f78a7a8d848c1e2e9561a486",
+   "obs_id": "obs_af8a3e8482af64aea039916f",
    "spec_code": "D1",
    "leg": "D1",
    "target_doc_id": "control:passes_all",
-   "target_url": "http://127.0.0.1:54788/index.html",
-   "captured_at": "2026-09-07T02:41:46.225837+00:00",
+   "target_url": "http://127.0.0.1:59823/index.html",
+   "captured_at": "2026-09-07T09:42:16.948133+00:00",
    "collector": "structured_data",
    "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
    "request": {
     "method": "GET",
-    "url": "http://127.0.0.1:54788/index.html"
+    "url": "http://127.0.0.1:59823/index.html"
    },
    "response": {
     "status": 200,
     "headers": {
      "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:41:46 GMT",
+     "date": "Mon, 07 Sep 2026 09:42:16 GMT",
      "content-type": "text/html",
      "content-length": "3680",
      "last-modified": "Tue, 01 Sep 2026 00:00:00 GMT"
     },
-    "body_sha256": "ffa57679f7e04c0fe2af37d174de6cc69bf215811e8e24609b2930da7ffd2ca4",
-    "body_path": "corpus/evidence/scan/ff/ffa57679f7e04c0fe2af37d174de6cc69bf215811e8e24609b2930da7ffd2ca4",
+    "body_sha256": "02f516cea40d288101cc596a0be89a994eddebfb6571bc4133fc330f1ffbe458",
+    "body_path": "corpus/evidence/scan/02/02f516cea40d288101cc596a0be89a994eddebfb6571bc4133fc330f1ffbe458",
     "bytes": 3680,
     "elapsed_ms": 2
    },
@@ -2547,7 +2588,7 @@
         {
          "@type": "DataDownload",
          "encodingFormat": "text/csv",
-         "contentUrl": "http://127.0.0.1:54788/estimates.csv"
+         "contentUrl": "http://127.0.0.1:59823/estimates.csv"
         }
        ]
       }
@@ -2560,25 +2601,62 @@
    "error_class": null
   },
   {
-   "obs_id": "obs_2ba84c04d38a06f11aa72e43",
+   "obs_id": "obs_d51e33890efd4baa44661683",
    "spec_code": "D1",
    "leg": "D1",
    "target_doc_id": "control:passes_all",
-   "target_url": "http://127.0.0.1:54788/terms",
-   "captured_at": "2026-09-07T02:41:47.221560+00:00",
+   "target_url": "http://127.0.0.1:59823/terms",
+   "captured_at": "2026-09-07T09:42:17.943959+00:00",
    "collector": "http",
    "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
    "request": {
     "method": "GET",
-    "url": "http://127.0.0.1:54788/terms",
+    "url": "http://127.0.0.1:59823/terms",
     "ua": "ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg)"
    },
    "response": {
     "status": 404,
     "headers": {
      "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:41:47 GMT",
+     "date": "Mon, 07 Sep 2026 09:42:17 GMT",
+     "content-type": "text/plain",
+     "content-length": "9"
+    },
+    "body_sha256": "907ba78b4545338d3539683e63ecb51cf51c10adc9dabd86e92bd52339f298b9",
+    "body_path": "corpus/evidence/scan/90/907ba78b4545338d3539683e63ecb51cf51c10adc9dabd86e92bd52339f298b9",
+    "bytes": 9,
+    "elapsed_ms": 1
+   },
+   "parsed": {
+    "content_type": "text/plain",
+    "final_url": "http://127.0.0.1:59823/terms",
+    "extension": null,
+    "probe": "terms",
+    "terms_text": "not found"
+   },
+   "error_class": "http_4xx"
+  },
+  {
+   "obs_id": "obs_075e6896e7e43b20bbe5956c",
+   "spec_code": "D1",
+   "leg": "D1",
+   "target_doc_id": "control:passes_all",
+   "target_url": "http://127.0.0.1:59823/terms-of-service",
+   "captured_at": "2026-09-07T09:42:18.949960+00:00",
+   "collector": "http",
+   "collector_version": "0.1.0",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
+   "request": {
+    "method": "GET",
+    "url": "http://127.0.0.1:59823/terms-of-service",
+    "ua": "ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg)"
+   },
+   "response": {
+    "status": 404,
+    "headers": {
+     "server": "SimpleHTTP/0.6 Python/3.12.4",
+     "date": "Mon, 07 Sep 2026 09:42:18 GMT",
      "content-type": "text/plain",
      "content-length": "9"
     },
@@ -2589,7 +2667,7 @@
    },
    "parsed": {
     "content_type": "text/plain",
-    "final_url": "http://127.0.0.1:54788/terms",
+    "final_url": "http://127.0.0.1:59823/terms-of-service",
     "extension": null,
     "probe": "terms",
     "terms_text": "not found"
@@ -2597,36 +2675,36 @@
    "error_class": "http_4xx"
   },
   {
-   "obs_id": "obs_dfd84feb14b6b68ede7f1d7a",
+   "obs_id": "obs_64bf87ab24cc30c7c6d7f7a3",
    "spec_code": "D1",
    "leg": "D1",
    "target_doc_id": "control:passes_all",
-   "target_url": "http://127.0.0.1:54788/terms-of-service",
-   "captured_at": "2026-09-07T02:41:48.230262+00:00",
+   "target_url": "http://127.0.0.1:59823/policies/terms",
+   "captured_at": "2026-09-07T09:42:19.956337+00:00",
    "collector": "http",
    "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
    "request": {
     "method": "GET",
-    "url": "http://127.0.0.1:54788/terms-of-service",
+    "url": "http://127.0.0.1:59823/policies/terms",
     "ua": "ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg)"
    },
    "response": {
     "status": 404,
     "headers": {
      "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:41:48 GMT",
+     "date": "Mon, 07 Sep 2026 09:42:19 GMT",
      "content-type": "text/plain",
      "content-length": "9"
     },
     "body_sha256": "907ba78b4545338d3539683e63ecb51cf51c10adc9dabd86e92bd52339f298b9",
     "body_path": "corpus/evidence/scan/90/907ba78b4545338d3539683e63ecb51cf51c10adc9dabd86e92bd52339f298b9",
     "bytes": 9,
-    "elapsed_ms": 5
+    "elapsed_ms": 4
    },
    "parsed": {
     "content_type": "text/plain",
-    "final_url": "http://127.0.0.1:54788/terms-of-service",
+    "final_url": "http://127.0.0.1:59823/policies/terms",
     "extension": null,
     "probe": "terms",
     "terms_text": "not found"
@@ -2634,69 +2712,32 @@
    "error_class": "http_4xx"
   },
   {
-   "obs_id": "obs_3d0aba4b00c42f92dd4d67a7",
-   "spec_code": "D1",
-   "leg": "D1",
-   "target_doc_id": "control:passes_all",
-   "target_url": "http://127.0.0.1:54788/policies/terms",
-   "captured_at": "2026-09-07T02:41:49.237518+00:00",
-   "collector": "http",
-   "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
-   "request": {
-    "method": "GET",
-    "url": "http://127.0.0.1:54788/policies/terms",
-    "ua": "ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg)"
-   },
-   "response": {
-    "status": 404,
-    "headers": {
-     "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:41:49 GMT",
-     "content-type": "text/plain",
-     "content-length": "9"
-    },
-    "body_sha256": "907ba78b4545338d3539683e63ecb51cf51c10adc9dabd86e92bd52339f298b9",
-    "body_path": "corpus/evidence/scan/90/907ba78b4545338d3539683e63ecb51cf51c10adc9dabd86e92bd52339f298b9",
-    "bytes": 9,
-    "elapsed_ms": 8
-   },
-   "parsed": {
-    "content_type": "text/plain",
-    "final_url": "http://127.0.0.1:54788/policies/terms",
-    "extension": null,
-    "probe": "terms",
-    "terms_text": "not found"
-   },
-   "error_class": "http_4xx"
-  },
-  {
-   "obs_id": "obs_87f60ebf48a712e71252494c",
+   "obs_id": "obs_8ac939f7ce84d103db1e68fc",
    "spec_code": "D4",
    "leg": "D4",
    "target_doc_id": "control:passes_all",
-   "target_url": "http://127.0.0.1:54788/data.json",
-   "captured_at": "2026-09-07T02:41:50.244133+00:00",
+   "target_url": "http://127.0.0.1:59823/data.json",
+   "captured_at": "2026-09-07T09:42:20.970713+00:00",
    "collector": "dcat",
    "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
    "request": {
     "method": "GET",
-    "url": "http://127.0.0.1:54788/data.json"
+    "url": "http://127.0.0.1:59823/data.json"
    },
    "response": {
     "status": 200,
     "headers": {
      "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:41:50 GMT",
+     "date": "Mon, 07 Sep 2026 09:42:20 GMT",
      "content-type": "application/json",
      "content-length": "549",
      "last-modified": "Tue, 01 Sep 2026 00:00:00 GMT"
     },
-    "body_sha256": "e73fe27b46e641765a67167d8ffeaea3d27cd4c8af8d99769df75103d77e0968",
-    "body_path": "corpus/evidence/scan/e7/e73fe27b46e641765a67167d8ffeaea3d27cd4c8af8d99769df75103d77e0968",
+    "body_sha256": "4c083bcce1c3ce74d14b4f81c2d58406499d243d3a56863da01155d6db37b8c9",
+    "body_path": "corpus/evidence/scan/4c/4c083bcce1c3ce74d14b4f81c2d58406499d243d3a56863da01155d6db37b8c9",
     "bytes": 549,
-    "elapsed_ms": 8
+    "elapsed_ms": 10
    },
    "parsed": {
     "present": true,
@@ -2718,36 +2759,36 @@
    "error_class": null
   },
   {
-   "obs_id": "obs_730d29c243abdfce1f697a41",
+   "obs_id": "obs_0bddaa8318992836dc7bc489",
    "spec_code": "F4",
    "leg": "F4",
    "target_doc_id": "control:passes_all",
-   "target_url": "http://127.0.0.1:54788/changelog",
-   "captured_at": "2026-09-07T02:41:51.244874+00:00",
+   "target_url": "http://127.0.0.1:59823/changelog",
+   "captured_at": "2026-09-07T09:42:21.969259+00:00",
    "collector": "http",
    "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
    "request": {
     "method": "GET",
-    "url": "http://127.0.0.1:54788/changelog",
+    "url": "http://127.0.0.1:59823/changelog",
     "ua": "ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg)"
    },
    "response": {
     "status": 404,
     "headers": {
      "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:41:51 GMT",
+     "date": "Mon, 07 Sep 2026 09:42:21 GMT",
      "content-type": "text/plain",
      "content-length": "9"
     },
     "body_sha256": "907ba78b4545338d3539683e63ecb51cf51c10adc9dabd86e92bd52339f298b9",
     "body_path": "corpus/evidence/scan/90/907ba78b4545338d3539683e63ecb51cf51c10adc9dabd86e92bd52339f298b9",
     "bytes": 9,
-    "elapsed_ms": 5
+    "elapsed_ms": 4
    },
    "parsed": {
     "content_type": "text/plain",
-    "final_url": "http://127.0.0.1:54788/changelog",
+    "final_url": "http://127.0.0.1:59823/changelog",
     "extension": null,
     "changelog": {
      "entries": 0,
@@ -2759,25 +2800,25 @@
    "error_class": "http_4xx"
   },
   {
-   "obs_id": "obs_81325b063921ffc033fba298",
+   "obs_id": "obs_05b2eb7512b4a2612a2f1872",
    "spec_code": "F4",
    "leg": "F4",
    "target_doc_id": "control:passes_all",
-   "target_url": "http://127.0.0.1:54788/changelog.json",
-   "captured_at": "2026-09-07T02:41:52.250423+00:00",
+   "target_url": "http://127.0.0.1:59823/changelog.json",
+   "captured_at": "2026-09-07T09:42:22.968500+00:00",
    "collector": "http",
    "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
    "request": {
     "method": "GET",
-    "url": "http://127.0.0.1:54788/changelog.json",
+    "url": "http://127.0.0.1:59823/changelog.json",
     "ua": "ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg)"
    },
    "response": {
     "status": 200,
     "headers": {
      "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:41:52 GMT",
+     "date": "Mon, 07 Sep 2026 09:42:22 GMT",
      "content-type": "application/json",
      "content-length": "144",
      "last-modified": "Tue, 01 Sep 2026 00:00:00 GMT"
@@ -2785,11 +2826,11 @@
     "body_sha256": "0aa35b2a98ce1d226b5331476e8ead04cc9c46b5cab31a22652a501e423e7105",
     "body_path": "corpus/evidence/scan/0a/0aa35b2a98ce1d226b5331476e8ead04cc9c46b5cab31a22652a501e423e7105",
     "bytes": 144,
-    "elapsed_ms": 7
+    "elapsed_ms": 2
    },
    "parsed": {
     "content_type": "application/json",
-    "final_url": "http://127.0.0.1:54788/changelog.json",
+    "final_url": "http://127.0.0.1:59823/changelog.json",
     "extension": "json",
     "changelog": {
      "entries": 1,
@@ -2801,25 +2842,25 @@
    "error_class": null
   },
   {
-   "obs_id": "obs_7e4507cf90a0104ba8e44638",
+   "obs_id": "obs_3d5e2fba13257a6b7674ece3",
    "spec_code": "F4",
    "leg": "F4",
    "target_doc_id": "control:passes_all",
-   "target_url": "http://127.0.0.1:54788/releases",
-   "captured_at": "2026-09-07T02:41:53.252030+00:00",
+   "target_url": "http://127.0.0.1:59823/releases",
+   "captured_at": "2026-09-07T09:42:23.973619+00:00",
    "collector": "http",
    "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
    "request": {
     "method": "GET",
-    "url": "http://127.0.0.1:54788/releases",
+    "url": "http://127.0.0.1:59823/releases",
     "ua": "ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg)"
    },
    "response": {
     "status": 404,
     "headers": {
      "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:41:53 GMT",
+     "date": "Mon, 07 Sep 2026 09:42:23 GMT",
      "content-type": "text/plain",
      "content-length": "9"
     },
@@ -2830,7 +2871,7 @@
    },
    "parsed": {
     "content_type": "text/plain",
-    "final_url": "http://127.0.0.1:54788/releases",
+    "final_url": "http://127.0.0.1:59823/releases",
     "extension": null,
     "changelog": {
      "entries": 0,
@@ -2842,36 +2883,36 @@
    "error_class": "http_4xx"
   },
   {
-   "obs_id": "obs_d4a49e04ebfee7b4607e854e",
+   "obs_id": "obs_8991ccb1cb80c7dac245ebdb",
    "spec_code": "F4",
    "leg": "F4",
    "target_doc_id": "control:passes_all",
-   "target_url": "http://127.0.0.1:54788/whatsnew",
-   "captured_at": "2026-09-07T02:41:54.252340+00:00",
+   "target_url": "http://127.0.0.1:59823/whatsnew",
+   "captured_at": "2026-09-07T09:42:24.980739+00:00",
    "collector": "http",
    "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
    "request": {
     "method": "GET",
-    "url": "http://127.0.0.1:54788/whatsnew",
+    "url": "http://127.0.0.1:59823/whatsnew",
     "ua": "ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg)"
    },
    "response": {
     "status": 404,
     "headers": {
      "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:41:54 GMT",
+     "date": "Mon, 07 Sep 2026 09:42:24 GMT",
      "content-type": "text/plain",
      "content-length": "9"
     },
     "body_sha256": "907ba78b4545338d3539683e63ecb51cf51c10adc9dabd86e92bd52339f298b9",
     "body_path": "corpus/evidence/scan/90/907ba78b4545338d3539683e63ecb51cf51c10adc9dabd86e92bd52339f298b9",
     "bytes": 9,
-    "elapsed_ms": 2
+    "elapsed_ms": 7
    },
    "parsed": {
     "content_type": "text/plain",
-    "final_url": "http://127.0.0.1:54788/whatsnew",
+    "final_url": "http://127.0.0.1:59823/whatsnew",
     "extension": null,
     "changelog": {
      "entries": 0,
@@ -2883,36 +2924,36 @@
    "error_class": "http_4xx"
   },
   {
-   "obs_id": "obs_2e9dc3bbd79efff08b7fc7a4",
+   "obs_id": "obs_a6a8e65001960d368d2f5773",
    "spec_code": "F4",
    "leg": "F4",
    "target_doc_id": "control:passes_all",
-   "target_url": "http://127.0.0.1:54788/news",
-   "captured_at": "2026-09-07T02:41:55.256672+00:00",
+   "target_url": "http://127.0.0.1:59823/news",
+   "captured_at": "2026-09-07T09:42:25.984186+00:00",
    "collector": "http",
    "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
    "request": {
     "method": "GET",
-    "url": "http://127.0.0.1:54788/news",
+    "url": "http://127.0.0.1:59823/news",
     "ua": "ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg)"
    },
    "response": {
     "status": 404,
     "headers": {
      "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:41:55 GMT",
+     "date": "Mon, 07 Sep 2026 09:42:25 GMT",
      "content-type": "text/plain",
      "content-length": "9"
     },
     "body_sha256": "907ba78b4545338d3539683e63ecb51cf51c10adc9dabd86e92bd52339f298b9",
     "body_path": "corpus/evidence/scan/90/907ba78b4545338d3539683e63ecb51cf51c10adc9dabd86e92bd52339f298b9",
     "bytes": 9,
-    "elapsed_ms": 2
+    "elapsed_ms": 5
    },
    "parsed": {
     "content_type": "text/plain",
-    "final_url": "http://127.0.0.1:54788/news",
+    "final_url": "http://127.0.0.1:59823/news",
     "extension": null,
     "changelog": {
      "entries": 0,
@@ -2924,37 +2965,37 @@
    "error_class": "http_4xx"
   },
   {
-   "obs_id": "obs_9f3d55edcf7388f110d8db2e",
+   "obs_id": "obs_c5aa7ab2c629ac649bcdac59",
    "spec_code": "G1-D",
    "leg": "G1-D",
    "target_doc_id": "control:passes_all",
-   "target_url": "http://127.0.0.1:54788/index.html",
-   "captured_at": "2026-09-07T02:41:56.263305+00:00",
+   "target_url": "http://127.0.0.1:59823/index.html",
+   "captured_at": "2026-09-07T09:42:26.988344+00:00",
    "collector": "http",
    "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
    "request": {
     "method": "GET",
-    "url": "http://127.0.0.1:54788/index.html",
+    "url": "http://127.0.0.1:59823/index.html",
     "ua": "ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg)"
    },
    "response": {
     "status": 200,
     "headers": {
      "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:41:56 GMT",
+     "date": "Mon, 07 Sep 2026 09:42:26 GMT",
      "content-type": "text/html",
      "content-length": "3680",
      "last-modified": "Tue, 01 Sep 2026 00:00:00 GMT"
     },
-    "body_sha256": "ffa57679f7e04c0fe2af37d174de6cc69bf215811e8e24609b2930da7ffd2ca4",
-    "body_path": "corpus/evidence/scan/ff/ffa57679f7e04c0fe2af37d174de6cc69bf215811e8e24609b2930da7ffd2ca4",
+    "body_sha256": "02f516cea40d288101cc596a0be89a994eddebfb6571bc4133fc330f1ffbe458",
+    "body_path": "corpus/evidence/scan/02/02f516cea40d288101cc596a0be89a994eddebfb6571bc4133fc330f1ffbe458",
     "bytes": 3680,
-    "elapsed_ms": 3
+    "elapsed_ms": 4
    },
    "parsed": {
     "content_type": "text/html",
-    "final_url": "http://127.0.0.1:54788/index.html",
+    "final_url": "http://127.0.0.1:59823/index.html",
     "extension": "html",
     "uncertainty_field_source": "text/html",
     "uncertainty_tokens": [
@@ -2964,25 +3005,113 @@
    "error_class": null
   },
   {
-   "obs_id": "obs_6153bd5e327966cf44081801",
-   "spec_code": "A1",
-   "leg": "A1",
-   "target_doc_id": "control:fails_all",
-   "target_url": "http://127.0.0.1:54850/index.html",
-   "captured_at": "2026-09-07T02:41:57.797079+00:00",
-   "collector": "http",
+   "obs_id": "obs_527285ef0d7de0849c649c34",
+   "spec_code": "A12",
+   "leg": "A12",
+   "target_doc_id": "control:passes_all",
+   "target_url": "http://127.0.0.1:59823/robots.txt",
+   "captured_at": "2026-09-07T09:42:27.991229+00:00",
+   "collector": "robots",
    "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
    "request": {
     "method": "GET",
-    "url": "http://127.0.0.1:54850/index.html",
+    "url": "http://127.0.0.1:59823/robots.txt"
+   },
+   "response": {
+    "status": 200,
+    "headers": {
+     "server": "SimpleHTTP/0.6 Python/3.12.4",
+     "date": "Mon, 07 Sep 2026 09:42:27 GMT",
+     "content-type": "text/plain",
+     "content-length": "67"
+    },
+    "body_sha256": "d99df2a4e487b8b86587cfc84300a7ecd65f2ff2f31cad18da898e3056ad140f",
+    "body_path": "corpus/evidence/scan/d9/d99df2a4e487b8b86587cfc84300a7ecd65f2ff2f31cad18da898e3056ad140f",
+    "bytes": 67,
+    "elapsed_ms": 5
+   },
+   "parsed": {
+    "present": true,
+    "served_content_type": "text/plain",
+    "wrong_content_type": false,
+    "per_ua": {
+     "GPTBot": true,
+     "ClaudeBot": true,
+     "Claude-Web": true,
+     "PerplexityBot": true,
+     "Google-Extended": true,
+     "CCBot": true,
+     "Bingbot": true,
+     "Applebot-Extended": true
+    },
+    "robots_status": 200,
+    "probe_url": "http://127.0.0.1:59823/index.html",
+    "self_ua": "ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg)",
+    "self_ua_allowed": true,
+    "sitemaps": [
+     "http://127.0.0.1:59823/sitemap.xml"
+    ]
+   },
+   "error_class": null
+  },
+  {
+   "obs_id": "obs_2ab6097532561792f746ff9e",
+   "spec_code": "A12",
+   "leg": "A12",
+   "target_doc_id": "control:passes_all",
+   "target_url": "http://127.0.0.1:59823/index.html",
+   "captured_at": "2026-09-07T09:42:28.990610+00:00",
+   "collector": "http",
+   "collector_version": "0.1.0",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
+   "request": {
+    "method": "GET",
+    "url": "http://127.0.0.1:59823/index.html",
     "ua": "ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg)"
    },
    "response": {
     "status": 200,
     "headers": {
      "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:41:57 GMT",
+     "date": "Mon, 07 Sep 2026 09:42:28 GMT",
+     "content-type": "text/html",
+     "content-length": "3680",
+     "last-modified": "Tue, 01 Sep 2026 00:00:00 GMT"
+    },
+    "body_sha256": "02f516cea40d288101cc596a0be89a994eddebfb6571bc4133fc330f1ffbe458",
+    "body_path": "corpus/evidence/scan/02/02f516cea40d288101cc596a0be89a994eddebfb6571bc4133fc330f1ffbe458",
+    "bytes": 3680,
+    "elapsed_ms": 2
+   },
+   "parsed": {
+    "content_type": "text/html",
+    "final_url": "http://127.0.0.1:59823/index.html",
+    "extension": "html",
+    "probe": "a12_target"
+   },
+   "error_class": null
+  },
+  {
+   "obs_id": "obs_0cdbb7ece2fc23de4dc07708",
+   "spec_code": "A1",
+   "leg": "A1",
+   "target_doc_id": "control:fails_all",
+   "target_url": "http://127.0.0.1:59898/index.html",
+   "captured_at": "2026-09-07T09:42:30.518837+00:00",
+   "collector": "http",
+   "collector_version": "0.1.0",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
+   "request": {
+    "method": "GET",
+    "url": "http://127.0.0.1:59898/index.html",
+    "ua": "ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg)"
+   },
+   "response": {
+    "status": 200,
+    "headers": {
+     "server": "SimpleHTTP/0.6 Python/3.12.4",
+     "date": "Mon, 07 Sep 2026 09:42:30 GMT",
      "content-type": "text/html",
      "content-length": "225",
      "last-modified": "Tue, 01 Sep 2026 00:00:00 GMT"
@@ -2990,15 +3119,15 @@
     "body_sha256": "3b227cc12790caea99bc14acd73b2f567ca7929f52892bd466a04ce2ae1470d4",
     "body_path": "corpus/evidence/scan/3b/3b227cc12790caea99bc14acd73b2f567ca7929f52892bd466a04ce2ae1470d4",
     "bytes": 225,
-    "elapsed_ms": 3
+    "elapsed_ms": 2
    },
    "parsed": {
     "content_type": "text/html",
-    "final_url": "http://127.0.0.1:54850/index.html",
+    "final_url": "http://127.0.0.1:59898/index.html",
     "extension": "html",
     "links": [
      {
-      "href": "http://127.0.0.1:54850/report.pdf",
+      "href": "http://127.0.0.1:59898/report.pdf",
       "text": "a PDF"
      }
     ]
@@ -3006,24 +3135,24 @@
    "error_class": null
   },
   {
-   "obs_id": "obs_0a539a23fd478722bb80e7da",
+   "obs_id": "obs_0c3b51d47a5dfe9a90f1f4a0",
    "spec_code": "A1",
    "leg": "A1",
    "target_doc_id": "control:fails_all",
-   "target_url": "http://127.0.0.1:54850/report.pdf",
-   "captured_at": "2026-09-07T02:41:58.798864+00:00",
+   "target_url": "http://127.0.0.1:59898/report.pdf",
+   "captured_at": "2026-09-07T09:42:31.526358+00:00",
    "collector": "links",
    "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
    "request": {
     "method": "HEAD",
-    "url": "http://127.0.0.1:54850/report.pdf"
+    "url": "http://127.0.0.1:59898/report.pdf"
    },
    "response": {
     "status": 200,
     "headers": {
      "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:41:58 GMT",
+     "date": "Mon, 07 Sep 2026 09:42:31 GMT",
      "content-type": "application/pdf",
      "content-length": "69"
     },
@@ -3037,7 +3166,7 @@
     "anchor_text": "a PDF",
     "content_type": "application/pdf",
     "extension": ".pdf",
-    "final_url": "http://127.0.0.1:54850/report.pdf",
+    "final_url": "http://127.0.0.1:59898/report.pdf",
     "method_used": "HEAD",
     "is_archive": false,
     "has_query_string": false,
@@ -3049,69 +3178,25 @@
    "error_class": null
   },
   {
-   "obs_id": "obs_b6dc196152cf39bbdd79e48d",
+   "obs_id": "obs_393babc1065fc99177d86a6b",
    "spec_code": "A2",
    "leg": "A2",
    "target_doc_id": "control:fails_all",
-   "target_url": "http://127.0.0.1:54850/openapi.json",
-   "captured_at": "2026-09-07T02:41:59.805230+00:00",
+   "target_url": "http://127.0.0.1:59898/openapi.json",
+   "captured_at": "2026-09-07T09:42:32.527883+00:00",
    "collector": "http",
    "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
    "request": {
     "method": "GET",
-    "url": "http://127.0.0.1:54850/openapi.json",
+    "url": "http://127.0.0.1:59898/openapi.json",
     "ua": "ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg)"
    },
    "response": {
     "status": 200,
     "headers": {
      "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:41:59 GMT",
-     "content-type": "text/html",
-     "content-length": "122",
-     "last-modified": "Tue, 01 Sep 2026 00:00:00 GMT"
-    },
-    "body_sha256": "392ff9c58b78178dac1e4963e5a6fe9bc1d8a1f5a1eed1f001d37c8d810aefad",
-    "body_path": "corpus/evidence/scan/39/392ff9c58b78178dac1e4963e5a6fe9bc1d8a1f5a1eed1f001d37c8d810aefad",
-    "bytes": 122,
-    "elapsed_ms": 5
-   },
-   "parsed": {
-    "content_type": "text/html",
-    "final_url": "http://127.0.0.1:54850/openapi.json",
-    "extension": "json",
-    "api": {
-     "auth_headers_seen": [],
-     "rate_limit_headers_seen": [],
-     "openapi_parsed": false,
-     "openapi_version": null,
-     "auth_schemes_declared": [],
-     "rate_limit_declared_in_description": false
-    }
-   },
-   "error_class": null
-  },
-  {
-   "obs_id": "obs_1b9665b41fbe917f1aa53cf3",
-   "spec_code": "A2",
-   "leg": "A2",
-   "target_doc_id": "control:fails_all",
-   "target_url": "http://127.0.0.1:54850/swagger.json",
-   "captured_at": "2026-09-07T02:42:00.806163+00:00",
-   "collector": "http",
-   "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
-   "request": {
-    "method": "GET",
-    "url": "http://127.0.0.1:54850/swagger.json",
-    "ua": "ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg)"
-   },
-   "response": {
-    "status": 200,
-    "headers": {
-     "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:42:00 GMT",
+     "date": "Mon, 07 Sep 2026 09:42:32 GMT",
      "content-type": "text/html",
      "content-length": "122",
      "last-modified": "Tue, 01 Sep 2026 00:00:00 GMT"
@@ -3123,7 +3208,7 @@
    },
    "parsed": {
     "content_type": "text/html",
-    "final_url": "http://127.0.0.1:54850/swagger.json",
+    "final_url": "http://127.0.0.1:59898/openapi.json",
     "extension": "json",
     "api": {
      "auth_headers_seen": [],
@@ -3137,25 +3222,25 @@
    "error_class": null
   },
   {
-   "obs_id": "obs_cf29c2c7f9e5d1a09e9ddcf3",
+   "obs_id": "obs_4c49d045b7c74aae839a5465",
    "spec_code": "A2",
    "leg": "A2",
    "target_doc_id": "control:fails_all",
-   "target_url": "http://127.0.0.1:54850/api/openapi.json",
-   "captured_at": "2026-09-07T02:42:01.811002+00:00",
+   "target_url": "http://127.0.0.1:59898/swagger.json",
+   "captured_at": "2026-09-07T09:42:33.532996+00:00",
    "collector": "http",
    "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
    "request": {
     "method": "GET",
-    "url": "http://127.0.0.1:54850/api/openapi.json",
+    "url": "http://127.0.0.1:59898/swagger.json",
     "ua": "ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg)"
    },
    "response": {
     "status": 200,
     "headers": {
      "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:42:01 GMT",
+     "date": "Mon, 07 Sep 2026 09:42:33 GMT",
      "content-type": "text/html",
      "content-length": "122",
      "last-modified": "Tue, 01 Sep 2026 00:00:00 GMT"
@@ -3163,11 +3248,11 @@
     "body_sha256": "392ff9c58b78178dac1e4963e5a6fe9bc1d8a1f5a1eed1f001d37c8d810aefad",
     "body_path": "corpus/evidence/scan/39/392ff9c58b78178dac1e4963e5a6fe9bc1d8a1f5a1eed1f001d37c8d810aefad",
     "bytes": 122,
-    "elapsed_ms": 3
+    "elapsed_ms": 2
    },
    "parsed": {
     "content_type": "text/html",
-    "final_url": "http://127.0.0.1:54850/api/openapi.json",
+    "final_url": "http://127.0.0.1:59898/swagger.json",
     "extension": "json",
     "api": {
      "auth_headers_seen": [],
@@ -3181,25 +3266,69 @@
    "error_class": null
   },
   {
-   "obs_id": "obs_2a57778f20cb5fe458c17e8e",
-   "spec_code": "A3",
-   "leg": "A3",
+   "obs_id": "obs_020076365ffc49f0125c18bb",
+   "spec_code": "A2",
+   "leg": "A2",
    "target_doc_id": "control:fails_all",
-   "target_url": "http://127.0.0.1:54850/index.html",
-   "captured_at": "2026-09-07T02:42:02.816738+00:00",
+   "target_url": "http://127.0.0.1:59898/api/openapi.json",
+   "captured_at": "2026-09-07T09:42:34.536458+00:00",
    "collector": "http",
    "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
    "request": {
     "method": "GET",
-    "url": "http://127.0.0.1:54850/index.html",
+    "url": "http://127.0.0.1:59898/api/openapi.json",
     "ua": "ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg)"
    },
    "response": {
     "status": 200,
     "headers": {
      "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:42:02 GMT",
+     "date": "Mon, 07 Sep 2026 09:42:34 GMT",
+     "content-type": "text/html",
+     "content-length": "122",
+     "last-modified": "Tue, 01 Sep 2026 00:00:00 GMT"
+    },
+    "body_sha256": "392ff9c58b78178dac1e4963e5a6fe9bc1d8a1f5a1eed1f001d37c8d810aefad",
+    "body_path": "corpus/evidence/scan/39/392ff9c58b78178dac1e4963e5a6fe9bc1d8a1f5a1eed1f001d37c8d810aefad",
+    "bytes": 122,
+    "elapsed_ms": 1
+   },
+   "parsed": {
+    "content_type": "text/html",
+    "final_url": "http://127.0.0.1:59898/api/openapi.json",
+    "extension": "json",
+    "api": {
+     "auth_headers_seen": [],
+     "rate_limit_headers_seen": [],
+     "openapi_parsed": false,
+     "openapi_version": null,
+     "auth_schemes_declared": [],
+     "rate_limit_declared_in_description": false
+    }
+   },
+   "error_class": null
+  },
+  {
+   "obs_id": "obs_e99ffa1181dce6ab037c0c24",
+   "spec_code": "A3",
+   "leg": "A3",
+   "target_doc_id": "control:fails_all",
+   "target_url": "http://127.0.0.1:59898/index.html",
+   "captured_at": "2026-09-07T09:42:35.544956+00:00",
+   "collector": "http",
+   "collector_version": "0.1.0",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
+   "request": {
+    "method": "GET",
+    "url": "http://127.0.0.1:59898/index.html",
+    "ua": "ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg)"
+   },
+   "response": {
+    "status": 200,
+    "headers": {
+     "server": "SimpleHTTP/0.6 Python/3.12.4",
+     "date": "Mon, 07 Sep 2026 09:42:35 GMT",
      "content-type": "text/html",
      "content-length": "225",
      "last-modified": "Tue, 01 Sep 2026 00:00:00 GMT"
@@ -3211,11 +3340,11 @@
    },
    "parsed": {
     "content_type": "text/html",
-    "final_url": "http://127.0.0.1:54850/index.html",
+    "final_url": "http://127.0.0.1:59898/index.html",
     "extension": "html",
     "links": [
      {
-      "href": "http://127.0.0.1:54850/report.pdf",
+      "href": "http://127.0.0.1:59898/report.pdf",
       "text": "a PDF"
      }
     ]
@@ -3223,38 +3352,38 @@
    "error_class": null
   },
   {
-   "obs_id": "obs_777293cfcd5254d4f33b853d",
+   "obs_id": "obs_8413afd9777ddabb40418173",
    "spec_code": "A3",
    "leg": "A3",
    "target_doc_id": "control:fails_all",
-   "target_url": "http://127.0.0.1:54850/report.pdf",
-   "captured_at": "2026-09-07T02:42:03.824259+00:00",
+   "target_url": "http://127.0.0.1:59898/report.pdf",
+   "captured_at": "2026-09-07T09:42:36.543542+00:00",
    "collector": "links",
    "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
    "request": {
     "method": "HEAD",
-    "url": "http://127.0.0.1:54850/report.pdf"
+    "url": "http://127.0.0.1:59898/report.pdf"
    },
    "response": {
     "status": 200,
     "headers": {
      "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:42:03 GMT",
+     "date": "Mon, 07 Sep 2026 09:42:36 GMT",
      "content-type": "application/pdf",
      "content-length": "69"
     },
     "body_sha256": null,
     "body_path": null,
     "bytes": 0,
-    "elapsed_ms": 3
+    "elapsed_ms": 1
    },
    "parsed": {
     "probe": "link",
     "anchor_text": "a PDF",
     "content_type": "application/pdf",
     "extension": ".pdf",
-    "final_url": "http://127.0.0.1:54850/report.pdf",
+    "final_url": "http://127.0.0.1:59898/report.pdf",
     "method_used": "HEAD",
     "is_archive": false,
     "has_query_string": false,
@@ -3266,173 +3395,26 @@
    "error_class": null
   },
   {
-   "obs_id": "obs_d8fcabc42e8b5a7d84cfd5b9",
+   "obs_id": "obs_b67ab707df803409cbb23a4a",
    "spec_code": "A4",
    "leg": "A4",
    "target_doc_id": "control:fails_all",
-   "target_url": "http://127.0.0.1:54850/robots.txt",
-   "captured_at": "2026-09-07T02:42:04.829353+00:00",
+   "target_url": "http://127.0.0.1:59898/robots.txt",
+   "captured_at": "2026-09-07T09:42:37.549644+00:00",
    "collector": "robots",
    "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
    "request": {
     "method": "GET",
-    "url": "http://127.0.0.1:54850/robots.txt"
+    "url": "http://127.0.0.1:59898/robots.txt"
    },
    "response": {
     "status": 200,
     "headers": {
      "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:42:04 GMT",
+     "date": "Mon, 07 Sep 2026 09:42:37 GMT",
      "content-type": "text/html",
      "content-length": "122"
-    },
-    "body_sha256": "392ff9c58b78178dac1e4963e5a6fe9bc1d8a1f5a1eed1f001d37c8d810aefad",
-    "body_path": "corpus/evidence/scan/39/392ff9c58b78178dac1e4963e5a6fe9bc1d8a1f5a1eed1f001d37c8d810aefad",
-    "bytes": 122,
-    "elapsed_ms": 3
-   },
-   "parsed": {
-    "present": false,
-    "served_content_type": "text/html",
-    "wrong_content_type": true,
-    "per_ua": {}
-   },
-   "error_class": null
-  },
-  {
-   "obs_id": "obs_58b03259d4bbed2f2867ab76",
-   "spec_code": "A5",
-   "leg": "A5",
-   "target_doc_id": "control:fails_all",
-   "target_url": "http://127.0.0.1:54850/sitemap.xml",
-   "captured_at": "2026-09-07T02:42:06.836341+00:00",
-   "collector": "sitemap",
-   "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
-   "request": {
-    "method": "GET",
-    "url": "http://127.0.0.1:54850/sitemap.xml"
-   },
-   "response": {
-    "status": 200,
-    "headers": {
-     "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:42:06 GMT",
-     "content-type": "text/html",
-     "content-length": "122"
-    },
-    "body_sha256": "392ff9c58b78178dac1e4963e5a6fe9bc1d8a1f5a1eed1f001d37c8d810aefad",
-    "body_path": "corpus/evidence/scan/39/392ff9c58b78178dac1e4963e5a6fe9bc1d8a1f5a1eed1f001d37c8d810aefad",
-    "bytes": 122,
-    "elapsed_ms": 4
-   },
-   "parsed": {
-    "present": false,
-    "served_content_type": "text/html",
-    "wrong_content_type": true,
-    "kind": "sitemap",
-    "covers_product": null,
-    "url_count": null
-   },
-   "error_class": null
-  },
-  {
-   "obs_id": "obs_6b85e9d1a0a752eeb26143b6",
-   "spec_code": "A5",
-   "leg": "A5",
-   "target_doc_id": "control:fails_all",
-   "target_url": "http://127.0.0.1:54850/sitemap_index.xml",
-   "captured_at": "2026-09-07T02:42:07.838114+00:00",
-   "collector": "sitemap",
-   "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
-   "request": {
-    "method": "GET",
-    "url": "http://127.0.0.1:54850/sitemap_index.xml"
-   },
-   "response": {
-    "status": 200,
-    "headers": {
-     "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:42:07 GMT",
-     "content-type": "text/html",
-     "content-length": "122"
-    },
-    "body_sha256": "392ff9c58b78178dac1e4963e5a6fe9bc1d8a1f5a1eed1f001d37c8d810aefad",
-    "body_path": "corpus/evidence/scan/39/392ff9c58b78178dac1e4963e5a6fe9bc1d8a1f5a1eed1f001d37c8d810aefad",
-    "bytes": 122,
-    "elapsed_ms": 3
-   },
-   "parsed": {
-    "present": false,
-    "served_content_type": "text/html",
-    "wrong_content_type": true,
-    "kind": "sitemap",
-    "covers_product": null,
-    "url_count": null
-   },
-   "error_class": null
-  },
-  {
-   "obs_id": "obs_baa3648d9b10b0c6bfba2c7a",
-   "spec_code": "A5",
-   "leg": "A5",
-   "target_doc_id": "control:fails_all",
-   "target_url": "http://127.0.0.1:54850/llms.txt",
-   "captured_at": "2026-09-07T02:42:08.843584+00:00",
-   "collector": "sitemap",
-   "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
-   "request": {
-    "method": "GET",
-    "url": "http://127.0.0.1:54850/llms.txt"
-   },
-   "response": {
-    "status": 200,
-    "headers": {
-     "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:42:08 GMT",
-     "content-type": "text/html",
-     "content-length": "122"
-    },
-    "body_sha256": "392ff9c58b78178dac1e4963e5a6fe9bc1d8a1f5a1eed1f001d37c8d810aefad",
-    "body_path": "corpus/evidence/scan/39/392ff9c58b78178dac1e4963e5a6fe9bc1d8a1f5a1eed1f001d37c8d810aefad",
-    "bytes": 122,
-    "elapsed_ms": 3
-   },
-   "parsed": {
-    "present": false,
-    "served_content_type": "text/html",
-    "wrong_content_type": true,
-    "kind": "discovery_file",
-    "covers_product": null,
-    "url_count": null
-   },
-   "error_class": null
-  },
-  {
-   "obs_id": "obs_ec65ec203dd0767d7cf12cba",
-   "spec_code": "A5",
-   "leg": "A5",
-   "target_doc_id": "control:fails_all",
-   "target_url": "http://127.0.0.1:54850/.well-known/ai-plugin.json",
-   "captured_at": "2026-09-07T02:42:09.845431+00:00",
-   "collector": "sitemap",
-   "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
-   "request": {
-    "method": "GET",
-    "url": "http://127.0.0.1:54850/.well-known/ai-plugin.json"
-   },
-   "response": {
-    "status": 200,
-    "headers": {
-     "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:42:09 GMT",
-     "content-type": "text/html",
-     "content-length": "122",
-     "last-modified": "Tue, 01 Sep 2026 00:00:00 GMT"
     },
     "body_sha256": "392ff9c58b78178dac1e4963e5a6fe9bc1d8a1f5a1eed1f001d37c8d810aefad",
     "body_path": "corpus/evidence/scan/39/392ff9c58b78178dac1e4963e5a6fe9bc1d8a1f5a1eed1f001d37c8d810aefad",
@@ -3443,6 +3425,117 @@
     "present": false,
     "served_content_type": "text/html",
     "wrong_content_type": true,
+    "per_ua": {},
+    "robots_status": 200,
+    "probe_url": "http://127.0.0.1:59898/index.html"
+   },
+   "error_class": null
+  },
+  {
+   "obs_id": "obs_694085e5f88fa6f87ed71b9e",
+   "spec_code": "A5",
+   "leg": "A5",
+   "target_doc_id": "control:fails_all",
+   "target_url": "http://127.0.0.1:59898/sitemap.xml",
+   "captured_at": "2026-09-07T09:42:39.558256+00:00",
+   "collector": "sitemap",
+   "collector_version": "0.1.0",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
+   "request": {
+    "method": "GET",
+    "url": "http://127.0.0.1:59898/sitemap.xml"
+   },
+   "response": {
+    "status": 200,
+    "headers": {
+     "server": "SimpleHTTP/0.6 Python/3.12.4",
+     "date": "Mon, 07 Sep 2026 09:42:39 GMT",
+     "content-type": "text/html",
+     "content-length": "122"
+    },
+    "body_sha256": "392ff9c58b78178dac1e4963e5a6fe9bc1d8a1f5a1eed1f001d37c8d810aefad",
+    "body_path": "corpus/evidence/scan/39/392ff9c58b78178dac1e4963e5a6fe9bc1d8a1f5a1eed1f001d37c8d810aefad",
+    "bytes": 122,
+    "elapsed_ms": 2
+   },
+   "parsed": {
+    "present": false,
+    "served_content_type": "text/html",
+    "wrong_content_type": true,
+    "kind": "sitemap",
+    "covers_product": null,
+    "url_count": null
+   },
+   "error_class": null
+  },
+  {
+   "obs_id": "obs_fa6022a9c45bbaa7abd123da",
+   "spec_code": "A5",
+   "leg": "A5",
+   "target_doc_id": "control:fails_all",
+   "target_url": "http://127.0.0.1:59898/sitemap_index.xml",
+   "captured_at": "2026-09-07T09:42:40.562214+00:00",
+   "collector": "sitemap",
+   "collector_version": "0.1.0",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
+   "request": {
+    "method": "GET",
+    "url": "http://127.0.0.1:59898/sitemap_index.xml"
+   },
+   "response": {
+    "status": 200,
+    "headers": {
+     "server": "SimpleHTTP/0.6 Python/3.12.4",
+     "date": "Mon, 07 Sep 2026 09:42:40 GMT",
+     "content-type": "text/html",
+     "content-length": "122"
+    },
+    "body_sha256": "392ff9c58b78178dac1e4963e5a6fe9bc1d8a1f5a1eed1f001d37c8d810aefad",
+    "body_path": "corpus/evidence/scan/39/392ff9c58b78178dac1e4963e5a6fe9bc1d8a1f5a1eed1f001d37c8d810aefad",
+    "bytes": 122,
+    "elapsed_ms": 2
+   },
+   "parsed": {
+    "present": false,
+    "served_content_type": "text/html",
+    "wrong_content_type": true,
+    "kind": "sitemap",
+    "covers_product": null,
+    "url_count": null
+   },
+   "error_class": null
+  },
+  {
+   "obs_id": "obs_d8e720c359c6a20da01263ed",
+   "spec_code": "A5",
+   "leg": "A5",
+   "target_doc_id": "control:fails_all",
+   "target_url": "http://127.0.0.1:59898/llms.txt",
+   "captured_at": "2026-09-07T09:42:41.567467+00:00",
+   "collector": "sitemap",
+   "collector_version": "0.1.0",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
+   "request": {
+    "method": "GET",
+    "url": "http://127.0.0.1:59898/llms.txt"
+   },
+   "response": {
+    "status": 200,
+    "headers": {
+     "server": "SimpleHTTP/0.6 Python/3.12.4",
+     "date": "Mon, 07 Sep 2026 09:42:41 GMT",
+     "content-type": "text/html",
+     "content-length": "122"
+    },
+    "body_sha256": "392ff9c58b78178dac1e4963e5a6fe9bc1d8a1f5a1eed1f001d37c8d810aefad",
+    "body_path": "corpus/evidence/scan/39/392ff9c58b78178dac1e4963e5a6fe9bc1d8a1f5a1eed1f001d37c8d810aefad",
+    "bytes": 122,
+    "elapsed_ms": 3
+   },
+   "parsed": {
+    "present": false,
+    "served_content_type": "text/html",
+    "wrong_content_type": true,
     "kind": "discovery_file",
     "covers_product": null,
     "url_count": null
@@ -3450,24 +3543,24 @@
    "error_class": null
   },
   {
-   "obs_id": "obs_dbee02cdf603872f6fb4318a",
+   "obs_id": "obs_724417fb0dca075cf70e3419",
    "spec_code": "A5",
    "leg": "A5",
    "target_doc_id": "control:fails_all",
-   "target_url": "http://127.0.0.1:54850/.well-known/mcp.json",
-   "captured_at": "2026-09-07T02:42:10.851333+00:00",
+   "target_url": "http://127.0.0.1:59898/.well-known/ai-plugin.json",
+   "captured_at": "2026-09-07T09:42:42.573482+00:00",
    "collector": "sitemap",
    "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
    "request": {
     "method": "GET",
-    "url": "http://127.0.0.1:54850/.well-known/mcp.json"
+    "url": "http://127.0.0.1:59898/.well-known/ai-plugin.json"
    },
    "response": {
     "status": 200,
     "headers": {
      "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:42:10 GMT",
+     "date": "Mon, 07 Sep 2026 09:42:42 GMT",
      "content-type": "text/html",
      "content-length": "122",
      "last-modified": "Tue, 01 Sep 2026 00:00:00 GMT"
@@ -3488,24 +3581,62 @@
    "error_class": null
   },
   {
-   "obs_id": "obs_02f41e9cef2763a86d723de1",
-   "spec_code": "A6",
-   "leg": "A6",
+   "obs_id": "obs_3d3758e9ee63bb649342dd33",
+   "spec_code": "A5",
+   "leg": "A5",
    "target_doc_id": "control:fails_all",
-   "target_url": "http://127.0.0.1:54850/index.html",
-   "captured_at": "2026-09-07T02:42:11.855861+00:00",
-   "collector": "structured_data",
+   "target_url": "http://127.0.0.1:59898/.well-known/mcp.json",
+   "captured_at": "2026-09-07T09:42:43.580985+00:00",
+   "collector": "sitemap",
    "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
    "request": {
     "method": "GET",
-    "url": "http://127.0.0.1:54850/index.html"
+    "url": "http://127.0.0.1:59898/.well-known/mcp.json"
    },
    "response": {
     "status": 200,
     "headers": {
      "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:42:11 GMT",
+     "date": "Mon, 07 Sep 2026 09:42:43 GMT",
+     "content-type": "text/html",
+     "content-length": "122",
+     "last-modified": "Tue, 01 Sep 2026 00:00:00 GMT"
+    },
+    "body_sha256": "392ff9c58b78178dac1e4963e5a6fe9bc1d8a1f5a1eed1f001d37c8d810aefad",
+    "body_path": "corpus/evidence/scan/39/392ff9c58b78178dac1e4963e5a6fe9bc1d8a1f5a1eed1f001d37c8d810aefad",
+    "bytes": 122,
+    "elapsed_ms": 4
+   },
+   "parsed": {
+    "present": false,
+    "served_content_type": "text/html",
+    "wrong_content_type": true,
+    "kind": "discovery_file",
+    "covers_product": null,
+    "url_count": null
+   },
+   "error_class": null
+  },
+  {
+   "obs_id": "obs_c0776b21a0a45c61933d492c",
+   "spec_code": "A6",
+   "leg": "A6",
+   "target_doc_id": "control:fails_all",
+   "target_url": "http://127.0.0.1:59898/index.html",
+   "captured_at": "2026-09-07T09:42:44.585609+00:00",
+   "collector": "structured_data",
+   "collector_version": "0.1.0",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
+   "request": {
+    "method": "GET",
+    "url": "http://127.0.0.1:59898/index.html"
+   },
+   "response": {
+    "status": 200,
+    "headers": {
+     "server": "SimpleHTTP/0.6 Python/3.12.4",
+     "date": "Mon, 07 Sep 2026 09:42:44 GMT",
      "content-type": "text/html",
      "content-length": "225",
      "last-modified": "Tue, 01 Sep 2026 00:00:00 GMT"
@@ -3513,7 +3644,7 @@
     "body_sha256": "3b227cc12790caea99bc14acd73b2f567ca7929f52892bd466a04ce2ae1470d4",
     "body_path": "corpus/evidence/scan/3b/3b227cc12790caea99bc14acd73b2f567ca7929f52892bd466a04ce2ae1470d4",
     "bytes": 225,
-    "elapsed_ms": 3
+    "elapsed_ms": 2
    },
    "parsed": {
     "syntaxes": {
@@ -3545,24 +3676,24 @@
    "error_class": null
   },
   {
-   "obs_id": "obs_8793d3cdcdb66a5561617943",
+   "obs_id": "obs_124b4a28346dff71626c6046",
    "spec_code": "A8",
    "leg": "A8",
    "target_doc_id": "control:fails_all",
-   "target_url": "http://127.0.0.1:54850/index.html",
-   "captured_at": "2026-09-07T02:42:12.862091+00:00",
+   "target_url": "http://127.0.0.1:59898/index.html",
+   "captured_at": "2026-09-07T09:42:45.590704+00:00",
    "collector": "structured_data",
    "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
    "request": {
     "method": "GET",
-    "url": "http://127.0.0.1:54850/index.html"
+    "url": "http://127.0.0.1:59898/index.html"
    },
    "response": {
     "status": 200,
     "headers": {
      "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:42:12 GMT",
+     "date": "Mon, 07 Sep 2026 09:42:45 GMT",
      "content-type": "text/html",
      "content-length": "225",
      "last-modified": "Tue, 01 Sep 2026 00:00:00 GMT"
@@ -3570,7 +3701,7 @@
     "body_sha256": "3b227cc12790caea99bc14acd73b2f567ca7929f52892bd466a04ce2ae1470d4",
     "body_path": "corpus/evidence/scan/3b/3b227cc12790caea99bc14acd73b2f567ca7929f52892bd466a04ce2ae1470d4",
     "bytes": 225,
-    "elapsed_ms": 3
+    "elapsed_ms": 4
    },
    "parsed": {
     "syntaxes": {
@@ -3599,25 +3730,25 @@
    "error_class": null
   },
   {
-   "obs_id": "obs_4af74898e93accb944ba7cb3",
+   "obs_id": "obs_55e9c674e856e9e324c0cfb0",
    "spec_code": "A9",
    "leg": "A9",
    "target_doc_id": "control:fails_all",
-   "target_url": "http://127.0.0.1:54850/openapi.json",
-   "captured_at": "2026-09-07T02:42:13.859613+00:00",
+   "target_url": "http://127.0.0.1:59898/openapi.json",
+   "captured_at": "2026-09-07T09:42:46.586644+00:00",
    "collector": "http",
    "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
    "request": {
     "method": "GET",
-    "url": "http://127.0.0.1:54850/openapi.json",
+    "url": "http://127.0.0.1:59898/openapi.json",
     "ua": "ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg)"
    },
    "response": {
     "status": 200,
     "headers": {
      "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:42:13 GMT",
+     "date": "Mon, 07 Sep 2026 09:42:46 GMT",
      "content-type": "text/html",
      "content-length": "122",
      "last-modified": "Tue, 01 Sep 2026 00:00:00 GMT"
@@ -3629,31 +3760,31 @@
    },
    "parsed": {
     "content_type": "text/html",
-    "final_url": "http://127.0.0.1:54850/openapi.json",
+    "final_url": "http://127.0.0.1:59898/openapi.json",
     "extension": "json"
    },
    "error_class": null
   },
   {
-   "obs_id": "obs_527467d4f751ee235acd6668",
+   "obs_id": "obs_060dc59e68fa8f81fb0d02bb",
    "spec_code": "A9",
    "leg": "A9",
    "target_doc_id": "control:fails_all",
-   "target_url": "http://127.0.0.1:54850/swagger.json",
-   "captured_at": "2026-09-07T02:42:14.858519+00:00",
+   "target_url": "http://127.0.0.1:59898/swagger.json",
+   "captured_at": "2026-09-07T09:42:47.588567+00:00",
    "collector": "http",
    "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
    "request": {
     "method": "GET",
-    "url": "http://127.0.0.1:54850/swagger.json",
+    "url": "http://127.0.0.1:59898/swagger.json",
     "ua": "ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg)"
    },
    "response": {
     "status": 200,
     "headers": {
      "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:42:14 GMT",
+     "date": "Mon, 07 Sep 2026 09:42:47 GMT",
      "content-type": "text/html",
      "content-length": "122",
      "last-modified": "Tue, 01 Sep 2026 00:00:00 GMT"
@@ -3665,31 +3796,31 @@
    },
    "parsed": {
     "content_type": "text/html",
-    "final_url": "http://127.0.0.1:54850/swagger.json",
+    "final_url": "http://127.0.0.1:59898/swagger.json",
     "extension": "json"
    },
    "error_class": null
   },
   {
-   "obs_id": "obs_4d3eafd33a1de0d9119a37e3",
+   "obs_id": "obs_c4e2528742c2953e3664503e",
    "spec_code": "A9",
    "leg": "A9",
    "target_doc_id": "control:fails_all",
-   "target_url": "http://127.0.0.1:54850/api/openapi.json",
-   "captured_at": "2026-09-07T02:42:15.861503+00:00",
+   "target_url": "http://127.0.0.1:59898/api/openapi.json",
+   "captured_at": "2026-09-07T09:42:48.596762+00:00",
    "collector": "http",
    "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
    "request": {
     "method": "GET",
-    "url": "http://127.0.0.1:54850/api/openapi.json",
+    "url": "http://127.0.0.1:59898/api/openapi.json",
     "ua": "ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg)"
    },
    "response": {
     "status": 200,
     "headers": {
      "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:42:15 GMT",
+     "date": "Mon, 07 Sep 2026 09:42:48 GMT",
      "content-type": "text/html",
      "content-length": "122",
      "last-modified": "Tue, 01 Sep 2026 00:00:00 GMT"
@@ -3697,35 +3828,35 @@
     "body_sha256": "392ff9c58b78178dac1e4963e5a6fe9bc1d8a1f5a1eed1f001d37c8d810aefad",
     "body_path": "corpus/evidence/scan/39/392ff9c58b78178dac1e4963e5a6fe9bc1d8a1f5a1eed1f001d37c8d810aefad",
     "bytes": 122,
-    "elapsed_ms": 2
+    "elapsed_ms": 4
    },
    "parsed": {
     "content_type": "text/html",
-    "final_url": "http://127.0.0.1:54850/api/openapi.json",
+    "final_url": "http://127.0.0.1:59898/api/openapi.json",
     "extension": "json"
    },
    "error_class": null
   },
   {
-   "obs_id": "obs_ea5b5baf82d317fc620838a5",
+   "obs_id": "obs_249cb2ef684905c9611fec84",
    "spec_code": "A9",
    "leg": "A9",
    "target_doc_id": "control:fails_all",
-   "target_url": "http://127.0.0.1:54850/llms.txt",
-   "captured_at": "2026-09-07T02:42:16.865313+00:00",
+   "target_url": "http://127.0.0.1:59898/llms.txt",
+   "captured_at": "2026-09-07T09:42:49.598406+00:00",
    "collector": "http",
    "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
    "request": {
     "method": "GET",
-    "url": "http://127.0.0.1:54850/llms.txt",
+    "url": "http://127.0.0.1:59898/llms.txt",
     "ua": "ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg)"
    },
    "response": {
     "status": 200,
     "headers": {
      "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:42:16 GMT",
+     "date": "Mon, 07 Sep 2026 09:42:49 GMT",
      "content-type": "text/html",
      "content-length": "122"
     },
@@ -3736,31 +3867,31 @@
    },
    "parsed": {
     "content_type": "text/html",
-    "final_url": "http://127.0.0.1:54850/llms.txt",
+    "final_url": "http://127.0.0.1:59898/llms.txt",
     "extension": "txt"
    },
    "error_class": null
   },
   {
-   "obs_id": "obs_462b889cf36d82699ad12a8b",
+   "obs_id": "obs_89ff5050f59f9bf3e1adea6a",
    "spec_code": "A9",
    "leg": "A9",
    "target_doc_id": "control:fails_all",
-   "target_url": "http://127.0.0.1:54850/.well-known/mcp.json",
-   "captured_at": "2026-09-07T02:42:17.869592+00:00",
+   "target_url": "http://127.0.0.1:59898/.well-known/mcp.json",
+   "captured_at": "2026-09-07T09:42:50.603573+00:00",
    "collector": "http",
    "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
    "request": {
     "method": "GET",
-    "url": "http://127.0.0.1:54850/.well-known/mcp.json",
+    "url": "http://127.0.0.1:59898/.well-known/mcp.json",
     "ua": "ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg)"
    },
    "response": {
     "status": 200,
     "headers": {
      "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:42:17 GMT",
+     "date": "Mon, 07 Sep 2026 09:42:50 GMT",
      "content-type": "text/html",
      "content-length": "122",
      "last-modified": "Tue, 01 Sep 2026 00:00:00 GMT"
@@ -3768,34 +3899,34 @@
     "body_sha256": "392ff9c58b78178dac1e4963e5a6fe9bc1d8a1f5a1eed1f001d37c8d810aefad",
     "body_path": "corpus/evidence/scan/39/392ff9c58b78178dac1e4963e5a6fe9bc1d8a1f5a1eed1f001d37c8d810aefad",
     "bytes": 122,
-    "elapsed_ms": 6
+    "elapsed_ms": 3
    },
    "parsed": {
     "content_type": "text/html",
-    "final_url": "http://127.0.0.1:54850/.well-known/mcp.json",
+    "final_url": "http://127.0.0.1:59898/.well-known/mcp.json",
     "extension": "json"
    },
    "error_class": null
   },
   {
-   "obs_id": "obs_1ee772f2dda4182b164643c9",
+   "obs_id": "obs_322096834c26f09d84cd0e33",
    "spec_code": "A10",
    "leg": "A10",
    "target_doc_id": "control:fails_all",
-   "target_url": "http://127.0.0.1:54850/index.html",
-   "captured_at": "2026-09-07T02:42:18.869740+00:00",
+   "target_url": "http://127.0.0.1:59898/index.html",
+   "captured_at": "2026-09-07T09:42:51.606756+00:00",
    "collector": "lighthouse",
    "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
    "request": {
     "method": "GET",
-    "url": "http://127.0.0.1:54850/index.html"
+    "url": "http://127.0.0.1:59898/index.html"
    },
    "response": {
     "status": 200,
     "headers": {
      "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:42:18 GMT",
+     "date": "Mon, 07 Sep 2026 09:42:51 GMT",
      "content-type": "text/html",
      "content-length": "225",
      "last-modified": "Tue, 01 Sep 2026 00:00:00 GMT"
@@ -3803,7 +3934,7 @@
     "body_sha256": "3b227cc12790caea99bc14acd73b2f567ca7929f52892bd466a04ce2ae1470d4",
     "body_path": "corpus/evidence/scan/3b/3b227cc12790caea99bc14acd73b2f567ca7929f52892bd466a04ce2ae1470d4",
     "bytes": 225,
-    "elapsed_ms": 1
+    "elapsed_ms": 2
    },
    "parsed": {
     "probe": "valid",
@@ -3822,31 +3953,31 @@
    "error_class": null
   },
   {
-   "obs_id": "obs_a53e0ca77c5d9c56094556dd",
+   "obs_id": "obs_4b0754a31284699a58b716de",
    "spec_code": "A10",
    "leg": "A10",
    "target_doc_id": "control:fails_all",
-   "target_url": "http://127.0.0.1:54850/index.html/__ai-readiness-kg-probe-404__",
-   "captured_at": "2026-09-07T02:42:19.875642+00:00",
+   "target_url": "http://127.0.0.1:59898/index.html/__ai-readiness-kg-probe-404__",
+   "captured_at": "2026-09-07T09:42:52.615267+00:00",
    "collector": "lighthouse",
    "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
    "request": {
     "method": "GET",
-    "url": "http://127.0.0.1:54850/index.html/__ai-readiness-kg-probe-404__"
+    "url": "http://127.0.0.1:59898/index.html/__ai-readiness-kg-probe-404__"
    },
    "response": {
     "status": 200,
     "headers": {
      "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:42:19 GMT",
+     "date": "Mon, 07 Sep 2026 09:42:52 GMT",
      "content-type": "text/html",
      "content-length": "122"
     },
     "body_sha256": "392ff9c58b78178dac1e4963e5a6fe9bc1d8a1f5a1eed1f001d37c8d810aefad",
     "body_path": "corpus/evidence/scan/39/392ff9c58b78178dac1e4963e5a6fe9bc1d8a1f5a1eed1f001d37c8d810aefad",
     "bytes": 122,
-    "elapsed_ms": 3
+    "elapsed_ms": 5
    },
    "parsed": {
     "probe": "invalid_route",
@@ -3870,60 +4001,62 @@
    "error_class": null
   },
   {
-   "obs_id": "obs_18305bda593aab05655f8404",
+   "obs_id": "obs_07a72bd0f0f0be9264d60d18",
    "spec_code": "A11-declared",
    "leg": "A11-declared",
    "target_doc_id": "control:fails_all",
-   "target_url": "http://127.0.0.1:54850/robots.txt",
-   "captured_at": "2026-09-07T02:42:20.881452+00:00",
+   "target_url": "http://127.0.0.1:59898/robots.txt",
+   "captured_at": "2026-09-07T09:42:53.615630+00:00",
    "collector": "robots",
    "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
    "request": {
     "method": "GET",
-    "url": "http://127.0.0.1:54850/robots.txt"
+    "url": "http://127.0.0.1:59898/robots.txt"
    },
    "response": {
     "status": 200,
     "headers": {
      "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:42:20 GMT",
+     "date": "Mon, 07 Sep 2026 09:42:53 GMT",
      "content-type": "text/html",
      "content-length": "122"
     },
     "body_sha256": "392ff9c58b78178dac1e4963e5a6fe9bc1d8a1f5a1eed1f001d37c8d810aefad",
     "body_path": "corpus/evidence/scan/39/392ff9c58b78178dac1e4963e5a6fe9bc1d8a1f5a1eed1f001d37c8d810aefad",
     "bytes": 122,
-    "elapsed_ms": 4
+    "elapsed_ms": 3
    },
    "parsed": {
     "present": false,
     "served_content_type": "text/html",
     "wrong_content_type": true,
-    "per_ua": {}
+    "per_ua": {},
+    "robots_status": 200,
+    "probe_url": "http://127.0.0.1:59898/index.html"
    },
    "error_class": null
   },
   {
-   "obs_id": "obs_7862782abb402b252707d06e",
+   "obs_id": "obs_22cd3a2f7b8db56443738bed",
    "spec_code": "A11-declared",
    "leg": "A11-declared",
    "target_doc_id": "control:fails_all",
-   "target_url": "http://127.0.0.1:54850/index.html",
-   "captured_at": "2026-09-07T02:42:21.885830+00:00",
+   "target_url": "http://127.0.0.1:59898/index.html",
+   "captured_at": "2026-09-07T09:42:54.620269+00:00",
    "collector": "http",
    "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
    "request": {
     "method": "GET",
-    "url": "http://127.0.0.1:54850/index.html",
+    "url": "http://127.0.0.1:59898/index.html",
     "ua": "ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg)"
    },
    "response": {
     "status": 200,
     "headers": {
      "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:42:21 GMT",
+     "date": "Mon, 07 Sep 2026 09:42:54 GMT",
      "content-type": "text/html",
      "content-length": "225",
      "last-modified": "Tue, 01 Sep 2026 00:00:00 GMT"
@@ -3931,11 +4064,11 @@
     "body_sha256": "3b227cc12790caea99bc14acd73b2f567ca7929f52892bd466a04ce2ae1470d4",
     "body_path": "corpus/evidence/scan/3b/3b227cc12790caea99bc14acd73b2f567ca7929f52892bd466a04ce2ae1470d4",
     "bytes": 225,
-    "elapsed_ms": 4
+    "elapsed_ms": 3
    },
    "parsed": {
     "content_type": "text/html",
-    "final_url": "http://127.0.0.1:54850/index.html",
+    "final_url": "http://127.0.0.1:59898/index.html",
     "extension": "html",
     "meta": {
      "meta_robots": {},
@@ -3946,25 +4079,25 @@
    "error_class": null
   },
   {
-   "obs_id": "obs_c461ccffa067bad95063c539",
+   "obs_id": "obs_a6f37d504307da1f3e1f4d9a",
    "spec_code": "B3",
    "leg": "B3",
    "target_doc_id": "control:fails_all",
-   "target_url": "http://127.0.0.1:54850/index.html",
-   "captured_at": "2026-09-07T02:42:22.891301+00:00",
+   "target_url": "http://127.0.0.1:59898/index.html",
+   "captured_at": "2026-09-07T09:42:55.626571+00:00",
    "collector": "http",
    "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
    "request": {
     "method": "GET",
-    "url": "http://127.0.0.1:54850/index.html",
+    "url": "http://127.0.0.1:59898/index.html",
     "ua": "ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg)"
    },
    "response": {
     "status": 200,
     "headers": {
      "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:42:22 GMT",
+     "date": "Mon, 07 Sep 2026 09:42:55 GMT",
      "content-type": "text/html",
      "content-length": "225",
      "last-modified": "Tue, 01 Sep 2026 00:00:00 GMT"
@@ -3972,15 +4105,15 @@
     "body_sha256": "3b227cc12790caea99bc14acd73b2f567ca7929f52892bd466a04ce2ae1470d4",
     "body_path": "corpus/evidence/scan/3b/3b227cc12790caea99bc14acd73b2f567ca7929f52892bd466a04ce2ae1470d4",
     "bytes": 225,
-    "elapsed_ms": 2
+    "elapsed_ms": 4
    },
    "parsed": {
     "content_type": "text/html",
-    "final_url": "http://127.0.0.1:54850/index.html",
+    "final_url": "http://127.0.0.1:59898/index.html",
     "extension": "html",
     "links": [
      {
-      "href": "http://127.0.0.1:54850/report.pdf",
+      "href": "http://127.0.0.1:59898/report.pdf",
       "text": "a PDF"
      }
     ]
@@ -3988,24 +4121,24 @@
    "error_class": null
   },
   {
-   "obs_id": "obs_8d1e144e914c79bf4fe36106",
+   "obs_id": "obs_4eacad4cb73f87fe6263a0c5",
    "spec_code": "D1",
    "leg": "D1",
    "target_doc_id": "control:fails_all",
-   "target_url": "http://127.0.0.1:54850/index.html",
-   "captured_at": "2026-09-07T02:42:23.904884+00:00",
+   "target_url": "http://127.0.0.1:59898/index.html",
+   "captured_at": "2026-09-07T09:42:56.638902+00:00",
    "collector": "structured_data",
    "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
    "request": {
     "method": "GET",
-    "url": "http://127.0.0.1:54850/index.html"
+    "url": "http://127.0.0.1:59898/index.html"
    },
    "response": {
     "status": 200,
     "headers": {
      "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:42:23 GMT",
+     "date": "Mon, 07 Sep 2026 09:42:56 GMT",
      "content-type": "text/html",
      "content-length": "225",
      "last-modified": "Tue, 01 Sep 2026 00:00:00 GMT"
@@ -4013,7 +4146,7 @@
     "body_sha256": "3b227cc12790caea99bc14acd73b2f567ca7929f52892bd466a04ce2ae1470d4",
     "body_path": "corpus/evidence/scan/3b/3b227cc12790caea99bc14acd73b2f567ca7929f52892bd466a04ce2ae1470d4",
     "bytes": 225,
-    "elapsed_ms": 3
+    "elapsed_ms": 10
    },
    "parsed": {
     "syntaxes": {
@@ -4039,25 +4172,25 @@
    "error_class": null
   },
   {
-   "obs_id": "obs_1f622db6ffb57c9f23e58ae8",
+   "obs_id": "obs_aae2d9b0e25679d8a049acc7",
    "spec_code": "D1",
    "leg": "D1",
    "target_doc_id": "control:fails_all",
-   "target_url": "http://127.0.0.1:54850/terms",
-   "captured_at": "2026-09-07T02:42:24.899263+00:00",
+   "target_url": "http://127.0.0.1:59898/terms",
+   "captured_at": "2026-09-07T09:42:57.626995+00:00",
    "collector": "http",
    "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
    "request": {
     "method": "GET",
-    "url": "http://127.0.0.1:54850/terms",
+    "url": "http://127.0.0.1:59898/terms",
     "ua": "ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg)"
    },
    "response": {
     "status": 200,
     "headers": {
      "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:42:24 GMT",
+     "date": "Mon, 07 Sep 2026 09:42:57 GMT",
      "content-type": "text/html",
      "content-length": "122"
     },
@@ -4068,7 +4201,7 @@
    },
    "parsed": {
     "content_type": "text/html",
-    "final_url": "http://127.0.0.1:54850/terms",
+    "final_url": "http://127.0.0.1:59898/terms",
     "extension": null,
     "probe": "terms",
     "terms_text": "<!doctype html><html><head><title>Page not found</title></head><body><h1>Sorry, we can't find that page</h1></body></html>"
@@ -4076,24 +4209,24 @@
    "error_class": null
   },
   {
-   "obs_id": "obs_2e4d845a181f2f199013b291",
+   "obs_id": "obs_0fec324d832dc8851cbd6be2",
    "spec_code": "D4",
    "leg": "D4",
    "target_doc_id": "control:fails_all",
-   "target_url": "http://127.0.0.1:54850/data.json",
-   "captured_at": "2026-09-07T02:42:25.901451+00:00",
+   "target_url": "http://127.0.0.1:59898/data.json",
+   "captured_at": "2026-09-07T09:42:58.633215+00:00",
    "collector": "dcat",
    "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
    "request": {
     "method": "GET",
-    "url": "http://127.0.0.1:54850/data.json"
+    "url": "http://127.0.0.1:59898/data.json"
    },
    "response": {
     "status": 200,
     "headers": {
      "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:42:25 GMT",
+     "date": "Mon, 07 Sep 2026 09:42:58 GMT",
      "content-type": "text/html",
      "content-length": "122",
      "last-modified": "Tue, 01 Sep 2026 00:00:00 GMT"
@@ -4101,7 +4234,7 @@
     "body_sha256": "392ff9c58b78178dac1e4963e5a6fe9bc1d8a1f5a1eed1f001d37c8d810aefad",
     "body_path": "corpus/evidence/scan/39/392ff9c58b78178dac1e4963e5a6fe9bc1d8a1f5a1eed1f001d37c8d810aefad",
     "bytes": 122,
-    "elapsed_ms": 1
+    "elapsed_ms": 5
    },
    "parsed": {
     "present": false,
@@ -4111,25 +4244,25 @@
    "error_class": null
   },
   {
-   "obs_id": "obs_d78cc334037f94f0913227b9",
+   "obs_id": "obs_267d1b00e075ac4823b4738a",
    "spec_code": "F4",
    "leg": "F4",
    "target_doc_id": "control:fails_all",
-   "target_url": "http://127.0.0.1:54850/changelog",
-   "captured_at": "2026-09-07T02:42:26.907383+00:00",
+   "target_url": "http://127.0.0.1:59898/changelog",
+   "captured_at": "2026-09-07T09:42:59.631294+00:00",
    "collector": "http",
    "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
    "request": {
     "method": "GET",
-    "url": "http://127.0.0.1:54850/changelog",
+    "url": "http://127.0.0.1:59898/changelog",
     "ua": "ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg)"
    },
    "response": {
     "status": 200,
     "headers": {
      "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:42:26 GMT",
+     "date": "Mon, 07 Sep 2026 09:42:59 GMT",
      "content-type": "text/html",
      "content-length": "122"
     },
@@ -4140,7 +4273,7 @@
    },
    "parsed": {
     "content_type": "text/html",
-    "final_url": "http://127.0.0.1:54850/changelog",
+    "final_url": "http://127.0.0.1:59898/changelog",
     "extension": null,
     "changelog": {
      "entries": 0,
@@ -4152,25 +4285,25 @@
    "error_class": null
   },
   {
-   "obs_id": "obs_9610a3f691bed65366401ce9",
+   "obs_id": "obs_30cca535ab4b6600b8c1a100",
    "spec_code": "F4",
    "leg": "F4",
    "target_doc_id": "control:fails_all",
-   "target_url": "http://127.0.0.1:54850/changelog.json",
-   "captured_at": "2026-09-07T02:42:27.911768+00:00",
+   "target_url": "http://127.0.0.1:59898/changelog.json",
+   "captured_at": "2026-09-07T09:43:00.634431+00:00",
    "collector": "http",
    "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
    "request": {
     "method": "GET",
-    "url": "http://127.0.0.1:54850/changelog.json",
+    "url": "http://127.0.0.1:59898/changelog.json",
     "ua": "ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg)"
    },
    "response": {
     "status": 200,
     "headers": {
      "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:42:27 GMT",
+     "date": "Mon, 07 Sep 2026 09:43:00 GMT",
      "content-type": "text/html",
      "content-length": "122",
      "last-modified": "Tue, 01 Sep 2026 00:00:00 GMT"
@@ -4182,7 +4315,7 @@
    },
    "parsed": {
     "content_type": "text/html",
-    "final_url": "http://127.0.0.1:54850/changelog.json",
+    "final_url": "http://127.0.0.1:59898/changelog.json",
     "extension": "json",
     "changelog": {
      "entries": 0,
@@ -4194,25 +4327,185 @@
    "error_class": null
   },
   {
-   "obs_id": "obs_0479ec5b1d45ab81d398a136",
+   "obs_id": "obs_9a81b35353e9e34d2b6c852d",
    "spec_code": "F4",
    "leg": "F4",
    "target_doc_id": "control:fails_all",
-   "target_url": "http://127.0.0.1:54850/releases",
-   "captured_at": "2026-09-07T02:42:28.917538+00:00",
+   "target_url": "http://127.0.0.1:59898/releases",
+   "captured_at": "2026-09-07T09:43:01.639121+00:00",
    "collector": "http",
    "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
    "request": {
     "method": "GET",
-    "url": "http://127.0.0.1:54850/releases",
+    "url": "http://127.0.0.1:59898/releases",
     "ua": "ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg)"
    },
    "response": {
     "status": 200,
     "headers": {
      "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:42:28 GMT",
+     "date": "Mon, 07 Sep 2026 09:43:01 GMT",
+     "content-type": "text/html",
+     "content-length": "122"
+    },
+    "body_sha256": "392ff9c58b78178dac1e4963e5a6fe9bc1d8a1f5a1eed1f001d37c8d810aefad",
+    "body_path": "corpus/evidence/scan/39/392ff9c58b78178dac1e4963e5a6fe9bc1d8a1f5a1eed1f001d37c8d810aefad",
+    "bytes": 122,
+    "elapsed_ms": 2
+   },
+   "parsed": {
+    "content_type": "text/html",
+    "final_url": "http://127.0.0.1:59898/releases",
+    "extension": null,
+    "changelog": {
+     "entries": 0,
+     "entries_classified": 0,
+     "classified_fraction": 0.0,
+     "parse_failed": false
+    }
+   },
+   "error_class": null
+  },
+  {
+   "obs_id": "obs_42bf3e94567603f1858d1c48",
+   "spec_code": "F4",
+   "leg": "F4",
+   "target_doc_id": "control:fails_all",
+   "target_url": "http://127.0.0.1:59898/whatsnew",
+   "captured_at": "2026-09-07T09:43:02.647300+00:00",
+   "collector": "http",
+   "collector_version": "0.1.0",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
+   "request": {
+    "method": "GET",
+    "url": "http://127.0.0.1:59898/whatsnew",
+    "ua": "ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg)"
+   },
+   "response": {
+    "status": 200,
+    "headers": {
+     "server": "SimpleHTTP/0.6 Python/3.12.4",
+     "date": "Mon, 07 Sep 2026 09:43:02 GMT",
+     "content-type": "text/html",
+     "content-length": "122"
+    },
+    "body_sha256": "392ff9c58b78178dac1e4963e5a6fe9bc1d8a1f5a1eed1f001d37c8d810aefad",
+    "body_path": "corpus/evidence/scan/39/392ff9c58b78178dac1e4963e5a6fe9bc1d8a1f5a1eed1f001d37c8d810aefad",
+    "bytes": 122,
+    "elapsed_ms": 2
+   },
+   "parsed": {
+    "content_type": "text/html",
+    "final_url": "http://127.0.0.1:59898/whatsnew",
+    "extension": null,
+    "changelog": {
+     "entries": 0,
+     "entries_classified": 0,
+     "classified_fraction": 0.0,
+     "parse_failed": false
+    }
+   },
+   "error_class": null
+  },
+  {
+   "obs_id": "obs_32b768f0b9e1669bac058564",
+   "spec_code": "F4",
+   "leg": "F4",
+   "target_doc_id": "control:fails_all",
+   "target_url": "http://127.0.0.1:59898/news",
+   "captured_at": "2026-09-07T09:43:03.652440+00:00",
+   "collector": "http",
+   "collector_version": "0.1.0",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
+   "request": {
+    "method": "GET",
+    "url": "http://127.0.0.1:59898/news",
+    "ua": "ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg)"
+   },
+   "response": {
+    "status": 200,
+    "headers": {
+     "server": "SimpleHTTP/0.6 Python/3.12.4",
+     "date": "Mon, 07 Sep 2026 09:43:03 GMT",
+     "content-type": "text/html",
+     "content-length": "122"
+    },
+    "body_sha256": "392ff9c58b78178dac1e4963e5a6fe9bc1d8a1f5a1eed1f001d37c8d810aefad",
+    "body_path": "corpus/evidence/scan/39/392ff9c58b78178dac1e4963e5a6fe9bc1d8a1f5a1eed1f001d37c8d810aefad",
+    "bytes": 122,
+    "elapsed_ms": 3
+   },
+   "parsed": {
+    "content_type": "text/html",
+    "final_url": "http://127.0.0.1:59898/news",
+    "extension": null,
+    "changelog": {
+     "entries": 0,
+     "entries_classified": 0,
+     "classified_fraction": 0.0,
+     "parse_failed": false
+    }
+   },
+   "error_class": null
+  },
+  {
+   "obs_id": "obs_7dde7d2e7658cc4465ab6a1d",
+   "spec_code": "G1-D",
+   "leg": "G1-D",
+   "target_doc_id": "control:fails_all",
+   "target_url": "http://127.0.0.1:59898/index.html",
+   "captured_at": "2026-09-07T09:43:04.654049+00:00",
+   "collector": "http",
+   "collector_version": "0.1.0",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
+   "request": {
+    "method": "GET",
+    "url": "http://127.0.0.1:59898/index.html",
+    "ua": "ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg)"
+   },
+   "response": {
+    "status": 200,
+    "headers": {
+     "server": "SimpleHTTP/0.6 Python/3.12.4",
+     "date": "Mon, 07 Sep 2026 09:43:04 GMT",
+     "content-type": "text/html",
+     "content-length": "225",
+     "last-modified": "Tue, 01 Sep 2026 00:00:00 GMT"
+    },
+    "body_sha256": "3b227cc12790caea99bc14acd73b2f567ca7929f52892bd466a04ce2ae1470d4",
+    "body_path": "corpus/evidence/scan/3b/3b227cc12790caea99bc14acd73b2f567ca7929f52892bd466a04ce2ae1470d4",
+    "bytes": 225,
+    "elapsed_ms": 2
+   },
+   "parsed": {
+    "content_type": "text/html",
+    "final_url": "http://127.0.0.1:59898/index.html",
+    "extension": "html",
+    "uncertainty_field_source": "text/html",
+    "uncertainty_tokens": []
+   },
+   "error_class": null
+  },
+  {
+   "obs_id": "obs_8597ac3c06d38422c0806b3c",
+   "spec_code": "A12",
+   "leg": "A12",
+   "target_doc_id": "control:fails_all",
+   "target_url": "http://127.0.0.1:59898/robots.txt",
+   "captured_at": "2026-09-07T09:43:05.661193+00:00",
+   "collector": "robots",
+   "collector_version": "0.1.0",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
+   "request": {
+    "method": "GET",
+    "url": "http://127.0.0.1:59898/robots.txt"
+   },
+   "response": {
+    "status": 200,
+    "headers": {
+     "server": "SimpleHTTP/0.6 Python/3.12.4",
+     "date": "Mon, 07 Sep 2026 09:43:05 GMT",
      "content-type": "text/html",
      "content-length": "122"
     },
@@ -4222,120 +4515,35 @@
     "elapsed_ms": 4
    },
    "parsed": {
-    "content_type": "text/html",
-    "final_url": "http://127.0.0.1:54850/releases",
-    "extension": null,
-    "changelog": {
-     "entries": 0,
-     "entries_classified": 0,
-     "classified_fraction": 0.0,
-     "parse_failed": false
-    }
+    "present": false,
+    "served_content_type": "text/html",
+    "wrong_content_type": true,
+    "per_ua": {},
+    "robots_status": 200,
+    "probe_url": "http://127.0.0.1:59898/index.html"
    },
    "error_class": null
   },
   {
-   "obs_id": "obs_7dfdc68cc660e4b2b6b3dfa6",
-   "spec_code": "F4",
-   "leg": "F4",
+   "obs_id": "obs_c0875bffdf9a320f837ffcc9",
+   "spec_code": "A12",
+   "leg": "A12",
    "target_doc_id": "control:fails_all",
-   "target_url": "http://127.0.0.1:54850/whatsnew",
-   "captured_at": "2026-09-07T02:42:29.921110+00:00",
+   "target_url": "http://127.0.0.1:59898/index.html",
+   "captured_at": "2026-09-07T09:43:06.665245+00:00",
    "collector": "http",
    "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
+   "params_hash": "4a1350802619fe8ff65c0fc38cce128298278d0d2787b24cd6cfa3a17eb656f4",
    "request": {
     "method": "GET",
-    "url": "http://127.0.0.1:54850/whatsnew",
+    "url": "http://127.0.0.1:59898/index.html",
     "ua": "ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg)"
    },
    "response": {
     "status": 200,
     "headers": {
      "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:42:29 GMT",
-     "content-type": "text/html",
-     "content-length": "122"
-    },
-    "body_sha256": "392ff9c58b78178dac1e4963e5a6fe9bc1d8a1f5a1eed1f001d37c8d810aefad",
-    "body_path": "corpus/evidence/scan/39/392ff9c58b78178dac1e4963e5a6fe9bc1d8a1f5a1eed1f001d37c8d810aefad",
-    "bytes": 122,
-    "elapsed_ms": 2
-   },
-   "parsed": {
-    "content_type": "text/html",
-    "final_url": "http://127.0.0.1:54850/whatsnew",
-    "extension": null,
-    "changelog": {
-     "entries": 0,
-     "entries_classified": 0,
-     "classified_fraction": 0.0,
-     "parse_failed": false
-    }
-   },
-   "error_class": null
-  },
-  {
-   "obs_id": "obs_c2ecd82b0d4a56c77c9164f9",
-   "spec_code": "F4",
-   "leg": "F4",
-   "target_doc_id": "control:fails_all",
-   "target_url": "http://127.0.0.1:54850/news",
-   "captured_at": "2026-09-07T02:42:30.923760+00:00",
-   "collector": "http",
-   "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
-   "request": {
-    "method": "GET",
-    "url": "http://127.0.0.1:54850/news",
-    "ua": "ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg)"
-   },
-   "response": {
-    "status": 200,
-    "headers": {
-     "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:42:30 GMT",
-     "content-type": "text/html",
-     "content-length": "122"
-    },
-    "body_sha256": "392ff9c58b78178dac1e4963e5a6fe9bc1d8a1f5a1eed1f001d37c8d810aefad",
-    "body_path": "corpus/evidence/scan/39/392ff9c58b78178dac1e4963e5a6fe9bc1d8a1f5a1eed1f001d37c8d810aefad",
-    "bytes": 122,
-    "elapsed_ms": 2
-   },
-   "parsed": {
-    "content_type": "text/html",
-    "final_url": "http://127.0.0.1:54850/news",
-    "extension": null,
-    "changelog": {
-     "entries": 0,
-     "entries_classified": 0,
-     "classified_fraction": 0.0,
-     "parse_failed": false
-    }
-   },
-   "error_class": null
-  },
-  {
-   "obs_id": "obs_1005af88c02a124d77ec2144",
-   "spec_code": "G1-D",
-   "leg": "G1-D",
-   "target_doc_id": "control:fails_all",
-   "target_url": "http://127.0.0.1:54850/index.html",
-   "captured_at": "2026-09-07T02:42:31.928802+00:00",
-   "collector": "http",
-   "collector_version": "0.1.0",
-   "params_hash": "bca106ff5f211808c2adc76c8259e8e063ea3f8f768133c701317f4121d1ed38",
-   "request": {
-    "method": "GET",
-    "url": "http://127.0.0.1:54850/index.html",
-    "ua": "ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg)"
-   },
-   "response": {
-    "status": 200,
-    "headers": {
-     "server": "SimpleHTTP/0.6 Python/3.12.4",
-     "date": "Mon, 07 Sep 2026 02:42:31 GMT",
+     "date": "Mon, 07 Sep 2026 09:43:06 GMT",
      "content-type": "text/html",
      "content-length": "225",
      "last-modified": "Tue, 01 Sep 2026 00:00:00 GMT"
@@ -4343,14 +4551,13 @@
     "body_sha256": "3b227cc12790caea99bc14acd73b2f567ca7929f52892bd466a04ce2ae1470d4",
     "body_path": "corpus/evidence/scan/3b/3b227cc12790caea99bc14acd73b2f567ca7929f52892bd466a04ce2ae1470d4",
     "bytes": 225,
-    "elapsed_ms": 3
+    "elapsed_ms": 4
    },
    "parsed": {
     "content_type": "text/html",
-    "final_url": "http://127.0.0.1:54850/index.html",
+    "final_url": "http://127.0.0.1:59898/index.html",
     "extension": "html",
-    "uncertainty_field_source": "text/html",
-    "uncertainty_tokens": []
+    "probe": "a12_target"
    },
    "error_class": null
   }

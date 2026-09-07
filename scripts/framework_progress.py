@@ -132,8 +132,106 @@ def candidate_banner(s: dict) -> str:
             f'{html.escape(c["note"])}</p>')
 
 
+MATRIX_PATH = REPO / "state" / "scan_matrix_2026-09-07.json"
+
+#: One fill per verdict class, and one more for a surface nobody was allowed to look at.
+#: `error` and `unobservable` are deliberately NOT the same colour as `fail`: the whole point
+#: of the distinction is that a refusal is not a product failure, and a reader who has to
+#: consult a legend to see that will not see it.
+VERDICT_FILL = {"pass": "#059669", "fail": "#d97706", "not_applicable": "#94a3b8",
+                "error": "#64748b", "": "#e2e8f0"}
+
+
+def scan_matrix() -> dict | None:
+    if not MATRIX_PATH.is_file():
+        return None
+    return json.loads(MATRIX_PATH.read_text(encoding="utf-8"))
+
+
+def matrix_svg(mx: dict, cell: int = 15, gap: int = 2) -> str:
+    """Agencies × legs, one cell per Finding. Inline SVG so the page has no dependency and no
+    fetch; a progress page that needed a CDN to render its own measurement would be a poor
+    advertisement for machine-readable publication."""
+    legs = mx["legs"]
+    rows = [r for r in mx["rows"] if r["surface_kind"] != "well_known"]
+    if not rows:
+        return ""
+    label_w, head_h = 210, 74
+    w = label_w + len(legs) * (cell + gap) + 60
+    h = head_h + len(rows) * (cell + gap) + 10
+    out = [f'<svg viewBox="0 0 {w} {h}" width="100%" role="img" '
+           f'aria-label="Agencies by leg, verdict per cell">']
+    for i, leg in enumerate(legs):
+        x = label_w + i * (cell + gap) + cell / 2
+        out.append(f'<text class="lbl" x="{x}" y="{head_h - 8}" text-anchor="start" '
+                   f'transform="rotate(-60 {x} {head_h - 8})">{html.escape(leg)}</text>')
+    unob = set(mx.get("agencies_wholly_unobservable") or [])
+    for j, r in enumerate(rows):
+        y = head_h + j * (cell + gap)
+        name = f"{r['agency']} · {r['surface_kind'][:4]}"
+        cls = "lbl unob" if r["agency"] in unob else "lbl"
+        out.append(f'<text class="{cls}" x="0" y="{y + cell - 3}">{html.escape(name)}'
+                   f'{" ✕" if r["agency"] in unob else ""}</text>')
+        for i, leg in enumerate(legs):
+            v = (r["verdicts"] or {}).get(leg, "")
+            x = label_w + i * (cell + gap)
+            out.append(f'<rect x="{x}" y="{y}" width="{cell}" height="{cell}" rx="2" '
+                       f'fill="{VERDICT_FILL.get(v, VERDICT_FILL[""])}">'
+                       f'<title>{html.escape(r["doc_id"])} · {html.escape(leg)} · '
+                       f'{html.escape(v or "no finding")}</title></rect>')
+    out.append("</svg>")
+    legend = " ".join(
+        f'<span><i style="background:{VERDICT_FILL[k]}"></i>{k}</span>'
+        for k in ("pass", "fail", "not_applicable", "error"))
+    return (f'<figure><figcaption>Agencies × legs — one cell per Finding</figcaption>'
+            f'{"".join(out)}<p class="legend">{legend}'
+            f'<span>✕ every leg returned <code>error</code>: the host refused an identified, '
+            f'robots-compliant client</span></p></figure>')
+
+
+def rate_bars(mx: dict, width: int = 640) -> str:
+    """Per-leg pass rate with its Wilson 95% interval, and its denominator on the row.
+
+    A bar without its interval at n = 8 is a decoration. The `n` is printed because a rate over
+    eight surfaces and a rate over eighteen are different claims, and the reader cannot tell
+    them apart from bar length.
+    """
+    legs = mx.get("per_leg") or {}
+    rows = [(l, d) for l, d in sorted(legs.items()) if d.get("applicable_n")]
+    if not rows:
+        return ""
+    row_h, label_w, pad = 22, 110, 46
+    h = len(rows) * row_h + 26
+    inner = width - label_w - pad
+    out = [f'<svg viewBox="0 0 {width} {h}" width="100%" role="img" '
+           f'aria-label="Pass rate per leg with Wilson 95% intervals">']
+    for j, (leg, d) in enumerate(rows):
+        y = j * row_h + 14
+        out.append(f'<text class="lbl" x="0" y="{y + 11}">{html.escape(leg)}</text>')
+        out.append(f'<line x1="{label_w}" x2="{label_w + inner}" y1="{y + 7}" y2="{y + 7}" '
+                   f'stroke="var(--line)" stroke-width="1"/>')
+        lo, hi = d.get("ci95_low") or 0.0, d.get("ci95_high") or 0.0
+        x1, x2 = label_w + inner * lo, label_w + inner * hi
+        out.append(f'<line x1="{x1}" x2="{x2}" y1="{y + 7}" y2="{y + 7}" '
+                   f'stroke="#94a3b8" stroke-width="5" stroke-linecap="round"/>')
+        cx = label_w + inner * (d["pass_rate"] or 0.0)
+        out.append(f'<circle cx="{cx}" cy="{y + 7}" r="4" fill="{VERDICT_FILL["pass"]}">'
+                   f'<title>{leg}: {d["pass"]}/{d["applicable_n"]} = {d["pass_rate"]}, '
+                   f'95% [{lo}, {hi}]</title></circle>')
+        out.append(f'<text class="tot" x="{label_w + inner + 6}" y="{y + 11}">'
+                   f'{d["pass"]}/{d["applicable_n"]}</text>')
+    out.append("</svg>")
+    return (f'<figure><figcaption>Pass rate per leg, Wilson 95% interval, with its '
+            f'denominator</figcaption>{"".join(out)}'
+            f'<p class="legend">Denominator: pass + fail on admitted surfaces that were '
+            f'observable. <code>error</code> is excluded — the collector could not observe, '
+            f'which is ours and not the product\'s. Rates are NOT comparable across legs: '
+            f'these legs measure different constructs.</p></figure>')
+
+
 def page(g: dict, s: dict, sp: dict) -> str:
     inds = indicators(g)
+    mx = scan_matrix()
     by_crit = [(f"{c} · {g_name(g, c)}",
                 {k: s["by_criterion"][c]["by_measurement_status"][k]["n"] for k in STATUSES})
                for c in sorted(s["by_criterion"])]
@@ -176,6 +274,7 @@ figcaption {{ font-weight:600; margin-bottom:.5rem }}
 .lbl {{ font-size:11px; fill:var(--muted) }}
 .inbar {{ font-size:11px; fill:#fff; font-weight:600 }}
 .tot {{ font-size:11px; fill:var(--muted) }}
+.unob {{ font-weight:700 }}
 .legend {{ margin:.35rem 0 0; font-size:.8rem; color:var(--muted) }}
 .legend span {{ margin-right:1rem; white-space:nowrap }}
 .legend i {{ display:inline-block; width:10px; height:10px; border-radius:2px;
@@ -208,6 +307,8 @@ from <code>framework/ai_readiness_framework.json</code>.</p>
 {bars('Indicators by criterion × measurement status', by_crit, list(STATUSES))}
 {bars('Evidenced vs gap, by criterion', ev_gap, ['evidenced', 'gap'])}
 {bars('Public-tier AUTO legs: named collector vs none known', coll, ['collector', 'none_known'])}
+{matrix_svg(mx) if mx else ''}
+{rate_bars(mx) if mx else ''}
 
 <p class="note"><strong>No composite, deliberately.</strong> Every number here is a fraction
 with its counts. A single readiness score embeds a weighting that only a stated purpose can

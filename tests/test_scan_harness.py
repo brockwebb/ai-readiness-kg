@@ -151,9 +151,10 @@ def test_every_rule_covers_a_leg_that_has_a_measurement_spec():
     # 16 legs; REGISTRY holds every version ever shipped for them, which is 16 + one v2 per
     # leg the 2026-09-06 conformance review found deviating. It may only grow: a pruned entry
     # is a stored Finding that can no longer be re-derived (DD-053 §6).
-    from scan.rules import V2
-    assert len(BY_LEG) == 16
-    assert len(REGISTRY) == 16 + len(V2)
+    from scan.rules import CANDIDATE_LEGS, FRAMEWORK_LEGS, V2, V3
+    assert len(FRAMEWORK_LEGS) == 16, "16 framework legs; a candidate is not one of them"
+    assert len(BY_LEG) == len(FRAMEWORK_LEGS) + len(CANDIDATE_LEGS)
+    assert len(REGISTRY) == 16 + len(V2) + len(V3) + len(CANDIDATE_LEGS)
     assert {REGISTRY[r].LEG for r in REGISTRY} == set(BY_LEG)
 
 
@@ -395,20 +396,33 @@ def test_history_re_derives_under_the_rule_that_made_it_not_the_current_one():
     import importlib.util
     import subprocess
     import yaml
-    old = subprocess.run(["git", "show", "HEAD:assessment/harness/scan/params.yaml"],
-                         capture_output=True, text=True, cwd=str(REPO))
-    if old.returncode != 0 or not old.stdout.strip():
-        pytest.skip("no committed params.yaml to compare against")
+    from scan.model import params_hash
     payload_path = REPO / "state" / "scan_smoke_2026-09-06.json"
     if not payload_path.is_file():
         pytest.skip("no v1 cycle payload on disk")
+    payload = json.loads(payload_path.read_text(encoding="utf-8"))
+    # Find the commit whose params.yaml actually HASHES to the one this cycle ran under. The
+    # first version of this test read `HEAD:params.yaml` and skipped when it did not match —
+    # so the moment params moved on, the test silently stopped testing anything. A gate that
+    # skips itself when the thing it guards changes is not a gate.
+    revs = subprocess.run(
+        ["git", "log", "--format=%H", "--", "assessment/harness/scan/params.yaml"],
+        capture_output=True, text=True, cwd=str(REPO)).stdout.split()
+    wanted = None
+    for rev in revs:
+        txt = subprocess.run(["git", "show", f"{rev}:assessment/harness/scan/params.yaml"],
+                             capture_output=True, text=True, cwd=str(REPO)).stdout
+        if txt.strip() and params_hash(yaml.safe_load(txt)) == payload["params_hash"]:
+            wanted = yaml.safe_load(txt)
+            break
+    assert wanted is not None, (
+        f"no commit of params.yaml hashes to {payload['params_hash'][:12]}…; the parameters "
+        f"this cycle was measured under are not recoverable, so its Findings can never be "
+        f"re-derived")
     spec = importlib.util.spec_from_file_location("scan_rederive_hist", SCAN / "rederive.py")
     rd = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(rd)
-    payload = json.loads(payload_path.read_text(encoding="utf-8"))
-    out = rd.rederive(payload, yaml.safe_load(old.stdout))
-    if out.get("params_changed"):
-        pytest.skip("the committed params are not the ones that cycle ran under")
+    out = rd.rederive(payload, wanted)
     assert out["identical"], out
     recorded_versions = {f["rule_id"] for f in
                          payload["findings_detail"] + payload["control_findings_detail"]}
@@ -422,10 +436,17 @@ def test_every_shipped_rule_version_stays_in_the_registry():
     assert set(CURRENT.values()) <= set(REGISTRY)
     assert {m.RULE_ID for m in V1} <= set(REGISTRY)
     assert {m.RULE_ID for m in V2} <= set(REGISTRY)
-    # Every v2 replaces a v1 for the same leg, and never the other way round.
+    # Each generation supersedes the one before for the same leg, never the reverse.
+    from scan.rules import V3
     for m in V2:
-        assert m.RULE_ID.endswith("-v2") and CURRENT[m.LEG] == m.RULE_ID
+        assert m.RULE_ID.endswith("-v2")
         assert any(v.LEG == m.LEG for v in V1), f"{m.LEG} has a v2 with no v1"
+    for m in V3:
+        assert m.RULE_ID.endswith("-v3") and CURRENT[m.LEG] == m.RULE_ID
+        assert any(v.LEG == m.LEG for v in V2), f"{m.LEG} has a v3 with no v2"
+    superseded = {m.LEG for m in V3}
+    for m in V2:
+        assert (CURRENT[m.LEG] == m.RULE_ID) == (m.LEG not in superseded)
 
 
 def test_a_v2_rule_is_a_new_module_and_v1_is_untouched():
@@ -434,6 +455,150 @@ def test_a_v2_rule_is_a_new_module_and_v1_is_untouched():
     import subprocess
     from scan.rules import V1
     for m in V1:
+        rel = Path(m.__file__).resolve().relative_to(REPO)
+        r = subprocess.run(["git", "diff", "--stat", "HEAD", "--", str(rel)],
+                           capture_output=True, text=True, cwd=str(REPO))
+        assert not r.stdout.strip(), f"{rel} was edited: {r.stdout.strip()}"
+
+
+# ------------------------------------------------------- A12: the candidate host-level rule
+def _a12_obs(robots_status, present, self_allowed, probe_status, params):
+    """The (robots, probe) pair A12 judges, built directly. The branch that matters most —
+    permitted in the file, refused at the edge — is NOT reachable from either control fixture,
+    because `fails_all` models a content-poor host and not an access-refusing one. Constructing
+    it here is the honest substitute; a fixture that modelled it is named as the residual in
+    the RESULT."""
+    robots = Observation.make(
+        "A12", "A12", "host:x", "https://x/robots.txt", "robots", "1", params,
+        {"method": "GET", "url": "https://x/robots.txt"},
+        {"status": robots_status, "headers": {}, "body_sha256": None, "body_path": None,
+         "bytes": 1, "elapsed_ms": 1},
+        parsed={"present": present, "robots_status": robots_status,
+                "self_ua": params["manners"]["user_agent"], "self_ua_allowed": self_allowed,
+                "probe_url": "https://x/product", "per_ua": {}},
+        error_class="http_4xx" if (robots_status or 0) >= 400 else None)
+    probe = Observation.make(
+        "A12", "A12", "host:x", "https://x/product", "http", "1", params,
+        {"method": "GET", "url": "https://x/product"},
+        {"status": probe_status, "headers": {}, "body_sha256": None, "body_path": None,
+         "bytes": 1, "elapsed_ms": 1},
+        parsed={"probe": "a12_target"},
+        error_class="http_4xx" if (probe_status or 0) >= 400 else None)
+    return [robots, probe]
+
+
+def test_a12_fails_when_robots_permits_and_the_host_refuses():
+    """The incoherence A12 exists to name, and the branch no control fixture reaches."""
+    from scan.rules import REGISTRY
+    params = load_params()
+    for status in params["manners"]["unobservable_statuses"]:
+        f = REGISTRY["RULE-A12-v1"].judge(
+            _a12_obs(200, True, True, status, params), params)
+        assert f.verdict == "fail", (status, f.reason)
+        assert "disagree" in f.reason
+
+
+def test_a12_is_not_applicable_when_robots_disallows_us():
+    """A host obeyed is not a host in conflict with itself — that reading is A4's."""
+    from scan.rules import REGISTRY
+    params = load_params()
+    f = REGISTRY["RULE-A12-v1"].judge(_a12_obs(200, True, False, 200, params), params)
+    assert f.verdict == "not_applicable", f.reason
+
+
+def test_a12_passes_on_a_404_because_a_404_is_not_a_refusal():
+    """A12 asks whether we were turned away, not whether the path exists. Scoring a 404 as
+    incoherence would make A12 a second, worse A9."""
+    from scan.rules import REGISTRY
+    params = load_params()
+    for status in (200, 301, 404):
+        f = REGISTRY["RULE-A12-v1"].judge(_a12_obs(200, True, True, status, params), params)
+        assert f.verdict == "pass", (status, f.reason)
+
+
+def test_a12_fails_when_the_host_refuses_robots_txt_itself():
+    """`www.bls.gov` does exactly this. A rule that only asked "does robots permit?" would
+    have to answer "unknown" and fall through."""
+    from scan.rules import REGISTRY
+    params = load_params()
+    f = REGISTRY["RULE-A12-v1"].judge(_a12_obs(403, False, None, 403, params), params)
+    assert f.verdict == "fail" and "/robots.txt itself" in f.reason
+
+
+def test_a12_findings_are_never_counted_in_a_fraction():
+    """DD-054: a candidate is reported, not adopted. The exclusion is mechanical — the
+    reporting layer reads `CANDIDATE_LEGS`, never a remembered code."""
+    from scan.rules import CANDIDATE_LEGS, CURRENT, FRAMEWORK_LEGS
+    assert "A12" in CANDIDATE_LEGS
+    assert "A12" not in FRAMEWORK_LEGS
+    assert set(FRAMEWORK_LEGS) | CANDIDATE_LEGS == set(CURRENT)
+
+
+def test_a_host_surface_is_judged_only_by_host_legs():
+    """A well-known set is not a document: no product page, no downloads, no methodology.
+    Running the fifteen product legs against one would manufacture fifteen `fail` verdicts per
+    host about properties a host is not supposed to have."""
+    run_mod = scan_run()
+    tgts = run_mod.targets(load_params())
+    hosts = [t for t in tgts if t["surface_kind"] == "well_known"]
+    docs = [t for t in tgts if t["surface_kind"] != "well_known"]
+    assert hosts and docs
+    assert all(t["legs"] == list(run_mod.HOST_LEGS) for t in hosts)
+    assert all("A12" not in t["legs"] for t in docs)
+    assert all(t["admitted"] for t in docs), "an unadmitted target has no :Document to hang on"
+
+
+# ------------------------------------------------- the guard that stopped a live cycle
+def test_a_present_but_none_status_never_raises():
+    """`.get("status", 999)` looks safe and is not: `status` is always PRESENT on an
+    Observation and holds `None` whenever nothing was fetched — a robots disallow, a DNS
+    failure, a timeout — so the default never fires and the comparison raises. It stopped the
+    2026-09-07 cycle 20 minutes in, on a surface whose links include robots-disallowed paths.
+
+    Asserted for EVERY current rule, not just the four that had the bug: the shape of the
+    input is what makes it a trap, and any rule may meet it.
+    """
+    from scan.rules import CURRENT, REGISTRY
+    params = load_params()
+    for leg, rule_id in sorted(CURRENT.items()):
+        blind = Observation.make(
+            leg, leg, "d", "https://x/p", "http", "1", params,
+            {"method": "GET", "url": "https://x/p"},
+            {"status": None, "headers": {}, "body_sha256": None, "body_path": None,
+             "bytes": 0, "elapsed_ms": 0},
+            parsed={"probe": "link"}, error_class="robots_disallowed")
+        served = Observation.make(
+            leg, leg, "d", "https://x/q", "http", "1", params,
+            {"method": "GET", "url": "https://x/q"},
+            {"status": 200, "headers": {}, "body_sha256": None, "body_path": None,
+             "bytes": 5, "elapsed_ms": 1},
+            parsed={"probe": "link", "content_type": "text/html"}, error_class=None)
+        f = REGISTRY[rule_id].judge([blind, served], params)   # must not raise
+        assert f.verdict in ("pass", "fail", "not_applicable", "error"), (leg, f.verdict)
+
+
+def test_served_fires_on_a_missing_key_and_a_none_value_alike():
+    from scan.rules import _common
+    params = load_params()
+
+    class _O:
+        def __init__(self, response):
+            self.response = response
+
+    assert _common.served(_O({"status": 200}))
+    assert _common.served(_O({"status": 301}))
+    assert not _common.served(_O({"status": 404}))
+    assert not _common.served(_O({"status": None})), "the bug: a present key holding None"
+    assert not _common.served(_O({})), "and a missing key"
+    assert not _common.served(_O(None))
+
+
+def test_a_v3_leaves_its_v2_byte_identical():
+    """Same rule as v2-over-v1: a corrected module is a NEW module. A v2 whose bytes changed
+    after Findings were recorded under it would make the re-derivation gate a tautology."""
+    import subprocess
+    from scan.rules import V2
+    for m in V2:
         rel = Path(m.__file__).resolve().relative_to(REPO)
         r = subprocess.run(["git", "diff", "--stat", "HEAD", "--", str(rel)],
                            capture_output=True, text=True, cwd=str(REPO))

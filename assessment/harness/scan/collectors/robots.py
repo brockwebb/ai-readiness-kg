@@ -36,13 +36,21 @@ def fetch(fetcher, leg: str, doc_id: str, product_url: str, params: dict,
     # error, which would read as "we could not observe" when in fact we observed clearly.
     wrong_type = bool(ctype) and not ctype.startswith("text/plain")
     parsed = {"present": r["status"] < 400 and bool(text.strip()) and not wrong_type,
-              "served_content_type": ctype, "wrong_content_type": wrong_type, "per_ua": {}}
+              "served_content_type": ctype, "wrong_content_type": wrong_type, "per_ua": {},
+              "robots_status": r["status"], "probe_url": product_url}
     if parsed["present"]:
         try:
             from protego import Protego
             rp = Protego.parse(text)
             for ua in params["a4_crawlers"]["user_agents"]:
                 parsed["per_ua"][ua] = bool(rp.can_fetch(product_url, ua))
+            # A12 asks about OUR OWN client, not the AI-crawler list: the coherence question
+            # is whether what this host DECLARES for the identified scanner matches what it
+            # SERVES to it. `Fetcher.allowed()` computes the same thing, but a rule is pure
+            # and cannot call it, so the verdict has to be recorded here as evidence.
+            parsed["self_ua"] = params["manners"]["user_agent"]
+            parsed["self_ua_allowed"] = bool(rp.can_fetch(product_url,
+                                                          params["manners"]["user_agent"]))
             parsed["sitemaps"] = list(rp.sitemaps or [])
         except Exception as exc:
             return [Observation.make(spec_code or leg, leg, doc_id, url, "robots", VERSION,

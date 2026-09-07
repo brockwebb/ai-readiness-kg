@@ -960,3 +960,24 @@ The DD-047 table stays registered as the superseded population-objective design;
 **4. Why not simply extend A11.** Because A11's tier is a claim about what is measurable, and A12 falsifies part of it. Editing A11's tier in place would erase the finding — the record would then read as though the framework had always known this leg was public, and the fact that the instrument discovered it by being refused would be gone. A11 stays as written; A12 stands beside it and says what was learned.
 
 **5. What would have to be true to promote it.** That the refusal is a property of the product's access policy rather than of this scanner. The evidence so far is one UA, one client, one week. A promotion should rest on at least: the same refusal from a second compliant client identity, and a check that the refusing hosts serve the same paths to an ordinary browser UA — which the harness will not do, because impersonating a browser to get around a refusal is exactly the evasion §3.3 forbids. That asymmetry is itself a finding for the operator to weigh, not a gap for the machine to close.
+
+
+## DD-055: what `measured` means, and the four ways of claiming it that this definition refuses
+
+**Date:** 2026-09-07. **Task:** `cc_tasks/2026-09-07_scan_run.md` §0. **Implemented by:** `scripts/framework_writeback_measured.py`, which is the definition — the word cannot drift from it, because nothing else moves the status.
+
+> An indicator is **`measured`** when a cycle **with fired controls** produced, for that indicator's AUTO leg, at least one `pass` / `fail` / `not_applicable` Finding on an **admitted, observable** surface under `CURRENT` rules, with the evidence bytes committed and the Finding re-derivable.
+
+The definition is short. What it excludes is the substance, and each exclusion closes a way of claiming a measurement nobody made:
+
+**1. `error` does not count.** `error` means the collector could not observe (DD-052 §6). A leg that errored on every surface produced Findings, filled a column, and measured nothing. Counting them would let the instrument's own blindness read as coverage — and on this corpus that is not hypothetical: three of thirteen principal statistical agencies refuse an identified, robots-compliant client, so an `error`-counting definition would promote legs on the strength of verdicts about hosts nobody was permitted to look at.
+
+**2. An unadmitted surface does not count.** No `:Document`, no `OBSERVED_ON`, nothing for a reader to trace a Finding back to. A measurement whose subject is not in the corpus is an assertion.
+
+**3. A cycle whose controls did not fire promotes nothing.** DD-019: a cycle with zero fired controls is INVALID, and an invalid cycle cannot be the evidence for anything. The write-back **refuses** on a non-`pass` control verdict rather than skipping quietly, because a silent skip in a promotion script is how a status ends up set by a run nobody would have accepted.
+
+**4. A candidate indicator never moves.** A12 stays `candidate` whatever it observed (DD-054). `measured` is a claim about **the framework**, and the framework has not adopted it. Measuring something is not the same as agreeing to measure it.
+
+**5. Not measured is a reason, not a silence.** An indicator that misses the bar keeps `harness_built` and gains `not_measured_reason` on the node, naming the leg, the counts and why. *"Why is A2 not measured?"* is the first question a reader of the progress page will ask, and answering it should not require re-deriving the cycle.
+
+**6. The definition is per-leg and per-cycle, and it is not sticky in the wrong direction.** `measured_by` records the cycle, the legs, the `params_hash` and the counts that earned it. An indicator already `measured` under a different instrument — G1-D and G1-O under DD-036 — is **not re-derived** by a scan cycle: the frozen probe governs its own leg, and a scan agreeing with it is not the thing that made it measured.

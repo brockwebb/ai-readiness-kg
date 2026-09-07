@@ -8,6 +8,14 @@
 # parameter set that produced its evidence.
 params_version: "0.1.0"
 
+cycle:
+  # Which cycle these parameters belong to, and which target list it measures. Named here so
+  # a Finding can be traced to its cycle without a reader having to know which state file was
+  # current on the day, and so `params_hash` moves when the target list does — a measurement
+  # of a different set of surfaces is a different measurement.
+  name: scan_2026-09-07
+  targets: scan_targets_2026-09
+
 manners:
   # RFC 9309: the scanner obeys the file it measures.
   user_agent: "ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg)"

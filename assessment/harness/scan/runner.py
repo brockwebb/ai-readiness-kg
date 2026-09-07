@@ -60,6 +60,15 @@ def collect_leg(spec: dict, target: dict, params: dict, fetcher=None) -> list:
                         _body(o), (o.response or {}).get("headers") or {}, params))
                 out += obs
         return out
+    if leg == "A12":
+        # The two layers, observed against the SAME path so the comparison is real. A12 judges
+        # a host, and the path it probes is the one the target row names — the agency's
+        # flagship where it has one, the host root where it does not.
+        obs = robots.fetch(f, leg, doc_id, url, params)
+        probe = http.fetch(f, leg, doc_id, url, params)
+        for o in probe:
+            o.parsed = dict(o.parsed or {}, probe="a12_target")
+        return obs + probe
     if leg == "A4":
         return robots.fetch(f, leg, doc_id, url, params)
     if leg == "A5":
@@ -126,7 +135,13 @@ def collect_leg(spec: dict, target: dict, params: dict, fetcher=None) -> list:
                     o.parsed = dict(o.parsed or {}, probe="terms",
                                     terms_text=_body(o).decode("utf-8", "replace")[:20000])
                 obs += t
-                if (t[0].response or {}).get("status", 999) < 400:
+                # `.get("status", 999)` here is the same bug the four v3 rules exist for, and
+                # it survived the rule fix because it lives in the COLLECTOR layer: it crashed
+                # D1 on all three StatCan surfaces after StatCan began resetting connections
+                # mid-cycle. A default fires on a MISSING key, never on a present one holding
+                # `None`, and `status` is always present.
+                st = (t[0].response or {}).get("status")
+                if isinstance(st, int) and st < 400:
                     break
         return obs
     if leg == "D4":

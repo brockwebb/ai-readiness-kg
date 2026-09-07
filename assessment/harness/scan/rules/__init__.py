@@ -26,6 +26,8 @@ from . import (rule_a1, rule_a10, rule_a11_declared, rule_a2, rule_a3, rule_a4, 
 from . import (rule_a1_v2, rule_a10_v2, rule_a11_declared_v2, rule_a2_v2, rule_a3_v2,
                rule_a6_v2, rule_a8_v2, rule_b3_v2, rule_d1_v2, rule_d4_v2, rule_e5_v2,
                rule_f4_v2)
+from . import rule_a2_v3, rule_a3_v3, rule_d1_v3, rule_f4_v3
+from . import rule_a12
 
 #: Every version ever shipped, keyed by rule id. Never prune it: a pruned entry is a stored
 #: Finding that can no longer be re-derived.
@@ -33,7 +35,18 @@ V1 = [rule_a1, rule_a2, rule_a3, rule_a4, rule_a5, rule_a6, rule_a8, rule_a9, ru
       rule_a11_declared, rule_b3, rule_d1, rule_d4, rule_e5, rule_f4, rule_g1d]
 V2 = [rule_a1_v2, rule_a2_v2, rule_a3_v2, rule_a6_v2, rule_a8_v2, rule_a10_v2,
       rule_a11_declared_v2, rule_b3_v2, rule_d1_v2, rule_d4_v2, rule_e5_v2, rule_f4_v2]
-MODULES = V1 + V2
+
+#: A third generation, for the four `v2` modules that shared one guard bug. See any of their
+#: docstrings: `.get("status", 999)` returns `None` on a present-but-None key, and it stopped a
+#: live cycle. `v2` stays here so every Finding recorded under it still re-derives.
+V3 = [rule_a2_v3, rule_a3_v3, rule_d1_v3, rule_f4_v3]
+
+#: Rules for CANDIDATE indicators. They judge, they are recorded, and their Findings enter no
+#: numerator and no denominator (DD-054). Kept in their own list so the reporting layer can
+#: exclude them mechanically rather than by remembering a code.
+CANDIDATE_RULES = [rule_a12]
+
+MODULES = V1 + V2 + V3 + CANDIDATE_RULES
 
 REGISTRY = {m.RULE_ID: m for m in MODULES}
 
@@ -43,6 +56,14 @@ REGISTRY = {m.RULE_ID: m for m in MODULES}
 #: `deviates` did not survive verification against the collector.
 CURRENT = {m.LEG: m.RULE_ID for m in V1}
 CURRENT.update({m.LEG: m.RULE_ID for m in V2})
+CURRENT.update({m.LEG: m.RULE_ID for m in V3})
+CURRENT.update({m.LEG: m.RULE_ID for m in CANDIDATE_RULES})
+
+#: Legs whose Findings are reported and never counted.
+CANDIDATE_LEGS = frozenset(m.LEG for m in CANDIDATE_RULES)
+
+#: The legs a FRACTION may be computed over. `CURRENT` minus the candidates.
+FRAMEWORK_LEGS = tuple(l for l in CURRENT if l not in CANDIDATE_LEGS)
 
 #: Back-compatible alias. `BY_LEG` was the scaffold's name for what is now `CURRENT`.
 BY_LEG = CURRENT

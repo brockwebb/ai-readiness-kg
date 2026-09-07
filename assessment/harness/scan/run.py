@@ -13,6 +13,7 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+import urllib.parse
 from pathlib import Path
 
 HARNESS = Path(__file__).resolve().parents[1]
@@ -22,14 +23,35 @@ sys.path.insert(0, str(REPO))
 
 from scan import load_params                                   # noqa: E402
 from scan.model import Observation, params_hash                # noqa: E402
-from scan.rules import CURRENT, judge as judge_rule            # noqa: E402
+from scan.rules import (CANDIDATE_LEGS, CURRENT, FRAMEWORK_LEGS,   # noqa: E402
+                        judge as judge_rule)
 from scan.runner import collect_leg                            # noqa: E402
 
 FRAMEWORK = REPO / "framework" / "ai_readiness_framework.json"
+#: Output paths are derived from `params.cycle.name`, not typed. A cycle that wrote over a
+#: previous cycle's payload would destroy the evidence the re-derivation gate compares
+#: against, and DD-041's rerun convention exists precisely so a rerun never overwrites a
+#: registered measurement.
+def out_paths(params: dict) -> tuple:
+    name = params["cycle"]["name"]
+    return (REPO / "state" / f"{name}.json",
+            REPO / "state" / f"{name}_controls.json")
+
+
+#: The scaffold's smoke-run payload. Kept as a name so the re-derivation gate can still be
+#: pointed at the v1 history it must not re-score.
+TASK = "cc_tasks/2026-09-07_scan_run.md"
 OUT = REPO / "state" / "scan_smoke_2026-09-06.json"
 CONTROLS_OUT = REPO / "state" / "scan_controls_2026-09-06.json"
 #: Legs the control fixtures are built to exercise. E5 judges the cycle, not a surface.
-CONTROL_LEGS = [l for l in CURRENT if l != "E5"]
+#: The product legs. E5 judges the cycle, and A12 judges a HOST — running either against a
+#: product surface would manufacture a verdict about the wrong subject.
+CONTROL_LEGS = [l for l in FRAMEWORK_LEGS if l != "E5"]
+
+#: What the control fixtures are scanned with. A12 is included even though it is a candidate:
+#: an unexercised rule in a cycle is an unexercised rule, and DD-019's decoy discipline does
+#: not care whether the framework has adopted the indicator yet.
+CONTROL_FIXTURE_LEGS = CONTROL_LEGS + sorted(CANDIDATE_LEGS)
 
 
 def specs() -> dict:
@@ -67,7 +89,8 @@ def run_controls(params: dict) -> tuple:
     for fixture, expected in params["e5_control"]["expected_verdicts"].items():
         with FixtureServer(fixture) as base:
             target = {"doc_id": f"control:{fixture}", "url": f"{base}/index.html"}
-            obs, findings = run_surface(sp, target, params, CONTROL_LEGS, Fetcher(params))
+            obs, findings = run_surface(sp, target, params, CONTROL_FIXTURE_LEGS,
+                                        Fetcher(params))
         # Retained, not discarded. The re-derivation gate can only check a Finding whose
         # evidence it still holds, and the control Findings are the ones whose determinism
         # matters most — they are what licenses the cycle.
@@ -86,20 +109,61 @@ def run_controls(params: dict) -> tuple:
     return all_findings, e5, control_obs + fixture_obs, e5.verdict == "pass"
 
 
-def surfaces() -> list:
-    """The 17 product surfaces admitted under epoch g1sfc-2026-09-03, with their primary URLs
-    read from the manifest — never a URL typed here."""
-    sys.path.insert(0, str(REPO))
-    from kg import queue
-    members = queue.corpus_epochs().get("g1sfc-2026-09-03") or []
-    entries = json.loads((REPO / "corpus" / "manifest.json").read_text(encoding="utf-8"))["entries"]
-    out = []
-    for d in sorted(members):
-        e = entries.get(d) or {}
-        url = ((e.get("identity") or {}).get("source_url") or "")
-        if url:
-            out.append({"doc_id": d, "url": url})
+#: Legs a synthetic host surface is judged by. A well-known set is not a document: no product
+#: page, no download links, no methodology. Running the fifteen product legs against it would
+#: manufacture fifteen `fail` verdicts per host about properties a host is not supposed to
+#: have, and those would be false negatives in exactly the way DD-052 §6 warns about.
+HOST_LEGS = ("A12",)
+
+
+def targets(params: dict) -> list:
+    """The scan targets, read from the target DataFile named in `params.cycle.targets` —
+    never a URL typed here, and never an epoch guessed at.
+
+    Three surface kinds, and they are judged differently on purpose:
+
+    * `flagship` / `machine` — admitted documents, judged by the fifteen framework legs.
+    * `well_known` — a SYNTHETIC surface, one per host, judged only by the host legs. It has
+      no `:Document` and needs none: nothing was admitted because there is nothing to admit.
+
+    A target whose document was never admitted is skipped with its reason recorded, because
+    `OBSERVED_ON` requires a `:Document` and a Finding with no surface to hang on is a Finding
+    nobody can trace. The one such target — an EIA path `eia.gov/robots.txt` disallows for
+    this UA — is not a gap in the target list; it is the scanner obeying the file it measures.
+    """
+    src = REPO / "state" / f"{params['cycle']['targets']}.json"
+    doc = json.loads(src.read_text(encoding="utf-8"))
+    entries = json.loads(
+        (REPO / "corpus" / "manifest.json").read_text(encoding="utf-8"))["entries"]
+    out, skipped = [], []
+    for r in doc["rows"]:
+        kind = r["surface_kind"]
+        if kind == "well_known":
+            out.append({"doc_id": f"host:{urllib.parse.urlsplit(r['host']).netloc}",
+                        "url": r["url"], "surface_kind": kind, "agency": r["agency"],
+                        "legs": list(HOST_LEGS), "admitted": False,
+                        # A12 compares the two layers against the SAME path, so the probe is
+                        # the agency's flagship where the list has one and the host otherwise.
+                        "probe_url": next((x["url"] for x in doc["rows"]
+                                           if x["agency"] == r["agency"]
+                                           and x["surface_kind"] == "flagship"), r["host"])})
+            continue
+        if not r.get("doc_id") or r["doc_id"] not in entries:
+            skipped.append((r.get("doc_id") or r["url"],
+                            r.get("not_admitted") or "not admitted"))
+            continue
+        url = ((entries[r["doc_id"]].get("identity") or {}).get("source_url") or r["url"])
+        out.append({"doc_id": r["doc_id"], "url": url, "surface_kind": kind,
+                    "agency": r["agency"], "legs": list(CONTROL_LEGS), "admitted": True})
+    for doc_id, why in skipped:
+        print(f"  SKIPPED {str(doc_id)[:52]:54s} {why}", file=sys.stderr)
     return out
+
+
+def surfaces() -> list:
+    """Back-compatible alias for the scaffold's name."""
+    from scan import load_params
+    return targets(load_params())
 
 
 def merge_controls(payload_path: Path, params: dict) -> int:
@@ -172,9 +236,10 @@ def main(argv=None) -> int:
         # change without re-scanning seventeen federal hosts — which is the whole point of a
         # rule being pure, and was not usable before because the payload was only written on
         # a full run.
+        _, controls_out = out_paths(params)
         payload = {
-            "task": "cc_tasks/2026-09-06_scan_targets.md",
-            "cycle": "controls_only",
+            "task": TASK,
+            "cycle": params["cycle"]["name"], "cycle_kind": "controls_only",
             "params_version": params["params_version"], "params_hash": params_hash(params),
             "control_verdict": e5.verdict, "control_reason": e5.reason,
             "control_findings": len(cf) + 1,
@@ -183,28 +248,36 @@ def main(argv=None) -> int:
             "control_findings_detail": [f.to_dict() for f in cf] + [e5.to_dict()],
             "observations_detail": [o.to_dict() for o in control_obs],
         }
-        CONTROLS_OUT.write_text(json.dumps(payload, indent=1, default=str) + "\n",
+        controls_out.write_text(json.dumps(payload, indent=1, default=str) + "\n",
                                 encoding="utf-8")
         print(json.dumps({k: v for k, v in payload.items()
                           if k not in ("findings_detail", "control_findings_detail",
                                        "observations_detail")}, indent=1))
-        print(f"-> {CONTROLS_OUT.relative_to(REPO)}", file=sys.stderr)
+        print(f"-> {controls_out.relative_to(REPO)}", file=sys.stderr)
         return 0
 
-    sp, tgts = specs(), surfaces()
+    sp, tgts = specs(), targets(params)
     if a.limit:
         tgts = tgts[:a.limit]
     from scan.manners import Fetcher
     fetcher = Fetcher(params)
     rows, all_obs, all_find = [], [], []
     for t in tgts:
-        obs, findings = run_surface(sp, t, params, CONTROL_LEGS, fetcher)
+        # A12 compares the declared and enforced layers against the same path, so a host
+        # surface is collected against its agency's flagship URL rather than /robots.txt.
+        tgt = dict(t, url=t.get("probe_url", t["url"]))
+        obs, findings = run_surface(sp, tgt, params, t["legs"], fetcher)
         all_obs += obs
         all_find += findings
-        rows.append({"doc_id": t["doc_id"], "url": t["url"],
+        rows.append({"doc_id": t["doc_id"], "url": tgt["url"],
+                     "surface_kind": t["surface_kind"], "agency": t["agency"],
+                     "admitted": t["admitted"],
                      "verdicts": {f.leg: f.verdict for f in findings}})
-        print(f"  {t['doc_id'][:46]:46s} " +
-              " ".join(f.verdict[0].upper() for f in findings))
+        marks = (" ".join(f"{f.leg}={f.verdict[0].upper()}" for f in findings)
+                 if t["surface_kind"] == "well_known"
+                 else " ".join(f.verdict[0].upper() for f in findings))
+        print(f"  {t['agency']:8s} {t['surface_kind']:10s} {t['doc_id'][:40]:42s} {marks}",
+              flush=True)
 
     # E5-v2's first clause — "both control fixtures are scanned before any real host" — is
     # only falsifiable against a timestamp. The gate above already ran and already stopped the
@@ -223,7 +296,8 @@ def main(argv=None) -> int:
     by_leg_err = {leg: sum(1 for r in rows if r["verdicts"].get(leg) == "error")
                   for leg in CONTROL_LEGS}
     summary = {
-        "task": "cc_tasks/2026-09-06_harness_scaffold.md",
+        "task": TASK, "cycle": params["cycle"]["name"],
+        "targets": params["cycle"]["targets"],
         "params_version": params["params_version"], "params_hash": params_hash(params),
         "control_verdict": e5.verdict, "control_reason": e5.reason,
         # +1 for E5's own Finding. The cycle's validity verdict is the single most important
@@ -243,11 +317,12 @@ def main(argv=None) -> int:
         "findings_detail": [f.to_dict() for f in all_find],
         "observations_detail": [o.to_dict() for o in all_obs] + [o.to_dict() for o in control_obs],
     }
-    OUT.write_text(json.dumps(summary, indent=1, default=str) + "\n", encoding="utf-8")
+    cycle_out, _ = out_paths(params)
+    cycle_out.write_text(json.dumps(summary, indent=1, default=str) + "\n", encoding="utf-8")
     print(json.dumps({k: v for k, v in summary.items()
                       if k not in ("matrix", "findings_detail", "observations_detail",
                                    "control_findings_detail")}, indent=1))
-    print(f"-> {OUT.relative_to(REPO)}", file=sys.stderr)
+    print(f"-> {cycle_out.relative_to(REPO)}", file=sys.stderr)
     return 0
 
 

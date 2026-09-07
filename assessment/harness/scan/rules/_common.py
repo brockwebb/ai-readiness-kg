@@ -42,6 +42,23 @@ def only_errors(obs: list, params: dict) -> bool:
     return bool(obs) and all(unobserved(o, params) for o in obs)
 
 
+def served(o) -> bool:
+    """True when this observation carries a real, non-error HTTP status.
+
+    Written because four `v2` rules got it wrong the same way and one of them crashed a live
+    cycle: `(o.response or {}).get("status", 999) < 400` looks like a safe default and is not.
+    The key `status` is always PRESENT on an Observation — it is `None` when nothing was
+    fetched (a robots disallow, a DNS failure, a timeout) — so `.get` returns `None` rather
+    than the default, and the comparison raises `TypeError`. A default only fires on a MISSING
+    key, never on a present one holding `None`.
+
+    Naming the check once is the fix: a guard duplicated in four modules is a guard that will
+    be wrong in four modules.
+    """
+    st = (getattr(o, "response", None) or {}).get("status")
+    return isinstance(st, int) and st < 400
+
+
 def make(rule_id: str, leg: str, obs: list, verdict: str, reason: str, params: dict) -> Finding:
     return Finding.make(rule_id=rule_id, rule_version=RULE_VERSION, leg=leg,
                         target_doc_id=target(obs), verdict=verdict, evidence=ids(obs),
