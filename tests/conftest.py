@@ -151,3 +151,66 @@ def no_live_projection(monkeypatch):
     monkeypatch.setattr(_proj, "neo4j_reachable", refuse)
     monkeypatch.setattr(_proj, "projected_document_ids_live", refuse)
     monkeypatch.setattr(subprocess, "run", guarded_run)
+
+
+# The scan harness's evidence store is a DURABLE, COMMITTED store — `corpus/evidence/scan/`
+# is tracked, unlike every other `corpus/` lane (see the note in .gitignore). Same reasoning
+# as the event-log and substrate guards above: a test that stores evidence writes into the
+# corpus, and content-addressing does not save it, because the control fixture server binds an
+# EPHEMERAL port that is substituted into every body carrying `HOSTPORT`. So each run of
+# `tests/test_scan_harness.py` produced a fresh set of blobs under a fresh digest and the
+# store grew without bound; 260 of them were committed before this guard existed
+# (`cc_tasks/2026-09-07_scan_hygiene.md` §2, quarantined by
+# `scripts/quarantine_fixture_evidence.py`).
+#
+# `store_evidence` reads `EVIDENCE_ROOT` at CALL time (`root or EVIDENCE_ROOT` inside the
+# body), which is the module-path-global convention this repo uses precisely so a test can
+# repoint it — so redirecting the global is the whole fix. The wrapper is the belt to that
+# suspenders: the collectors bound `store_evidence` by name at import (`from ..model import
+# store_evidence`), so a future caller passing an explicit `root=` would bypass the redirect,
+# and this refuses that loudly rather than letting it write.
+#
+# Autouse, so no future test can opt out by forgetting.
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "assessment" / "harness"))
+from scan import model as _scan_model                                    # noqa: E402
+from scan import collectors as _scan_collectors                          # noqa: E402
+
+_REAL_EVIDENCE_ROOT = _scan_model.EVIDENCE_ROOT
+
+
+def _evidence_writers() -> list:
+    """Every module holding its own binding of `store_evidence`. Enumerated once, here, so a
+    collector added tomorrow is covered without anyone remembering this file — and enumerated
+    at import rather than per test, because the fixture below runs on all ~1,500 of them."""
+    import importlib
+    import pkgutil
+    mods = [_scan_model]
+    for info in pkgutil.iter_modules(_scan_collectors.__path__):
+        mod = importlib.import_module(f"{_scan_collectors.__name__}.{info.name}")
+        if hasattr(mod, "store_evidence"):
+            mods.append(mod)
+    return mods
+
+
+_EVIDENCE_WRITERS = _evidence_writers()
+
+
+@pytest.fixture(autouse=True)
+def no_writes_to_the_real_evidence_store(monkeypatch, tmp_path_factory):
+    monkeypatch.setattr(_scan_model, "EVIDENCE_ROOT",
+                        tmp_path_factory.mktemp("scan_evidence"))
+
+    real_store = _scan_model.store_evidence
+
+    def guarded(body, root=None):
+        if (root or _scan_model.EVIDENCE_ROOT) == _REAL_EVIDENCE_ROOT:
+            raise AssertionError(
+                "test wrote into the REAL scan evidence store "
+                f"({_REAL_EVIDENCE_ROOT}). Let the autouse redirect stand, or pass an "
+                "explicit tmp_path root.")
+        return real_store(body, root)
+
+    # Every module that did `from ..model import store_evidence` holds its OWN binding, so
+    # patching the model alone does not reach them.
+    for mod in _EVIDENCE_WRITERS:
+        monkeypatch.setattr(mod, "store_evidence", guarded)

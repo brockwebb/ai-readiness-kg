@@ -34,6 +34,12 @@ SCAN_BATCH = 29
 CYCLE_BATCH = {"scan_2026-09-07": 31}
 OBS_EVENT = "observation_recorded"
 FIND_EVENT = "finding_derived"
+#: `cc_tasks/2026-09-07_scan_hygiene.md` §1. A Finding whose `evidence` names `obs_id`s the log
+#: does not hold is the same class of claim as a grounding span whose bytes are missing
+#: (invariant 3). One of these events, written by `scripts/annotate_orphan_findings.py`, is the
+#: append-only admission that the evidence is gone — and it is the ONLY thing that licenses
+#: such a Finding to sit on the log. See `write_events`.
+UNRETAINED_EVENT = "finding_evidence_unretained"
 
 
 def batch_for(payload: dict) -> int:
@@ -57,23 +63,61 @@ def batch_for(payload: dict) -> int:
 
 
 def write_events(payload: dict) -> dict:
+    """Append this cycle's Observations and Findings, refusing any Finding whose evidence the
+    log will not hold.
+
+    The refusal (`cc_tasks/2026-09-07_scan_hygiene.md` §1) is the standing rule the 120 orphan
+    control Findings of 2026-09-06 exist because nothing enforced: the scaffold published
+    Findings derived from fixture Observations it had already dropped, and an append-only log
+    then kept them forever. A Finding is admitted only if every `obs_id` it cites is on the log
+    or in this same payload — or if it carries a `finding_evidence_unretained` annotation, the
+    append-only way of saying "the evidence is gone and here is why".
+
+    It fails LOUD and writes nothing: the observations are appended after the check, so a
+    refused payload leaves the log exactly as it found it.
+    """
     from kg import eventlog
     batch = batch_for(payload)
-    seen_obs = {ev.get("obs_id") for ev in eventlog.replay() if ev.get("event_type") == OBS_EVENT}
-    seen_fnd = {ev.get("finding_id") for ev in eventlog.replay()
-                if ev.get("event_type") == FIND_EVENT}
+    seen_obs, seen_fnd, annotated = set(), set(), set()
+    for ev in eventlog.replay():
+        t = ev.get("event_type")
+        if t == OBS_EVENT:
+            seen_obs.add(ev.get("obs_id"))
+        elif t == FIND_EVENT:
+            seen_fnd.add(ev.get("finding_id"))
+        elif t == UNRETAINED_EVENT:
+            annotated.add(ev.get("finding_id"))
+
+    findings = payload["findings_detail"] + payload.get("control_findings_detail", [])
+    admissible = seen_obs | {o["obs_id"] for o in payload["observations_detail"]}
+    ungrounded = [
+        (f["finding_id"], sorted(set(f.get("evidence") or []) - admissible))
+        for f in findings
+        if f["finding_id"] not in annotated
+        and not set(f.get("evidence") or []) <= admissible
+    ]
+    if ungrounded:
+        detail = "; ".join(f"{fid} misses {ids}" for fid, ids in ungrounded[:5])
+        raise SystemExit(
+            f"REFUSING: {len(ungrounded)} Finding(s) cite obs_ids that are neither on the log "
+            f"nor in this payload, and carry no `{UNRETAINED_EVENT}` annotation: {detail}"
+            f"{' …' if len(ungrounded) > 5 else ''}. Publish the Observations with them, or "
+            f"annotate the Findings (scripts/annotate_orphan_findings.py).")
+
     n_o = n_f = 0
     for o in payload["observations_detail"]:
         if o["obs_id"] in seen_obs:
             continue
         eventlog.append({"event_type": OBS_EVENT, **o}, batch=batch)
         n_o += 1
-    for f in payload["findings_detail"] + payload.get("control_findings_detail", []):
+    for f in findings:
         if f["finding_id"] in seen_fnd:
             continue
         eventlog.append({"event_type": FIND_EVENT, **f}, batch=batch)
         n_f += 1
     return {"observation_events_written": n_o, "finding_events_written": n_f,
+            "findings_evidence_unretained": sum(1 for f in findings
+                                                if f["finding_id"] in annotated),
             "shard": f"events/batch-{batch:03d}.jsonl"}
 
 
@@ -136,7 +180,13 @@ def project() -> dict:
     #: check permanently non-zero and therefore meaningless.
     counts = {"observations": 0, "findings": 0, "rules": 0, "observed_on": 0, "supports": 0,
               "ruled_by": 0, "observed_on_missing_document": 0, "control_observations": 0,
-              "host_observations": 0}
+              "host_observations": 0, "findings_evidence_unretained": 0}
+    # Read the annotations BEFORE the replay, because an annotation may be appended to a later
+    # shard than the Finding it corrects — that is what an append-only correction is — and a
+    # single forward pass would project the Finding before it had seen the event that qualifies
+    # it. `edge_endpoint_alias` in batch-005 has the same shape for the same reason.
+    unretained = {ev.get("finding_id") for ev in eventlog.replay()
+                  if ev.get("event_type") == UNRETAINED_EVENT}
     try:
         with driver.session(database=cfg["neo4j"]["database"]) as s:
             pred = " OR ".join(f"n:{l}" for l in SCAN_LABELS)
@@ -174,13 +224,21 @@ def project() -> dict:
                     else:
                         counts["observed_on_missing_document"] += 1
                 elif t == FIND_EVENT:
+                    # `evidence_unretained` is set on EVERY Finding, true or false, rather
+                    # than only on the annotated ones: a property that is absent and a property
+                    # that is false read the same way to `coalesce`, and the integrity check
+                    # this exists for ("a Finding with no SUPPORTS edge and no annotation")
+                    # deserves an answer that is stored rather than inferred from a missing key.
+                    unret = ev["finding_id"] in unretained
                     s.run("MERGE (f:Finding {finding_id: $id}) SET f.rule_id = $rid, "
                           "f.indicator_code = $code, f.verdict = $v, f.reason = $r, "
-                          "f.params_hash = $ph, f.target_doc_id = $doc",
+                          "f.params_hash = $ph, f.target_doc_id = $doc, "
+                          "f.evidence_unretained = $unret",
                           id=ev["finding_id"], rid=ev["rule_id"], code=ev["spec_code"],
                           v=ev["verdict"], r=ev["reason"], ph=ev["params_hash"],
-                          doc=ev["target_doc_id"])
+                          doc=ev["target_doc_id"], unret=unret)
                     counts["findings"] += 1
+                    counts["findings_evidence_unretained"] += int(unret)
                     s.run("MERGE (r:Rule {rule_id: $rid}) SET r.version = $ver",
                           rid=ev["rule_id"], ver=ev["rule_version"])
                     s.run("MATCH (f:Finding {finding_id: $id}) MATCH (r:Rule {rule_id: $rid}) "

@@ -35,11 +35,15 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO))
+sys.path.insert(0, str(REPO / "scripts"))
+
+import framework_writeback as fw                                    # noqa: E402
 sys.path.insert(0, str(REPO / "assessment" / "harness"))
 
 from scan.rules import CANDIDATE_LEGS, CURRENT                     # noqa: E402
 
 TASK = "cc_tasks/2026-09-07_scan_run.md"
+SCRIPT = "scripts/framework_writeback_measured.py"
 CYCLE = "scan_2026-09-07"
 PAYLOAD = REPO / "state" / f"{CYCLE}.json"
 FRAMEWORK = REPO / "framework" / "ai_readiness_framework.json"
@@ -121,10 +125,10 @@ def writeback(g: dict, payload: dict, ev: dict) -> dict:
             p["not_measured_reason"] = {"cycle": CYCLE, "legs": legs, "reason": why,
                                         "counts": best["counts"], "recorded_by": TASK}
             held.append((code, why))
-    g["counts"]["indicators_measured"] = sum(
-        1 for n in g["nodes"] if "AssessmentIndicator" in n["labels"]
-        and n["properties"].get("status") != "candidate"
-        and n["properties"].get("measurement_status") == "measured")
+    # See `scripts/framework_writeback.py`: one definition of every denominator, regenerated
+    # on every write-back (`cc_tasks/2026-09-07_scan_hygiene.md` §3). `indicators_measured` is
+    # candidate-excluded there for the reason it was here — DD-054.
+    fw.apply_counts(g)
     return {"promoted": sorted(promoted), "held": sorted(held),
             "indicators_measured": g["counts"]["indicators_measured"]}
 
@@ -137,10 +141,10 @@ def main(argv=None) -> int:
     g = json.loads(FRAMEWORK.read_text(encoding="utf-8"))
     out = writeback(g, payload, evidence(payload))
     print(json.dumps(out, indent=1))
-    if not a.dry_run:
-        FRAMEWORK.write_text(json.dumps(g, indent=1, ensure_ascii=False) + "\n",
-                             encoding="utf-8")
-        print(f"-> {FRAMEWORK.relative_to(REPO)}", file=sys.stderr)
+    # Through the shared writer, so the write and the `framework_writeback` event that records
+    # it cannot come apart.
+    ev = fw.save(g, script=SCRIPT, task=TASK, changes=out, dry_run=a.dry_run)
+    print(json.dumps({k: v for k, v in ev.items() if k != "counts"}, indent=1), file=sys.stderr)
     return 0
 
 

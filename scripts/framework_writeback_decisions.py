@@ -30,9 +30,13 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO))
+sys.path.insert(0, str(REPO / "scripts"))
+
+import framework_writeback as fw                                    # noqa: E402
 
 FRAMEWORK = REPO / "framework" / "ai_readiness_framework.json"
 TASK = "cc_tasks/2026-09-06_scan_targets.md"
+SCRIPT = "scripts/framework_writeback_decisions.py"
 
 DECISIONS = {
     "A4": {
@@ -101,9 +105,10 @@ def writeback(g: dict) -> dict:
         if n["properties"].get("decision") != payload:
             n["properties"]["decision"] = payload
             touched.append(n["properties"]["leg"])
-    g["counts"]["specs_with_recorded_decision"] = sum(
-        1 for n in g["nodes"] if "MeasurementSpec" in n["labels"]
-        and n["properties"].get("decision"))
+    # Counters are regenerated once, by the shared writer, on save
+    # (`scripts/framework_writeback.py`, `cc_tasks/2026-09-07_scan_hygiene.md` §3). Four
+    # write-backs each recomputing their own handful is how the one nobody recomputed drifted.
+    fw.apply_counts(g)
     return {"decisions_written": touched,
             "specs_with_recorded_decision": g["counts"]["specs_with_recorded_decision"]}
 
@@ -115,10 +120,10 @@ def main(argv=None) -> int:
     g = json.loads(FRAMEWORK.read_text(encoding="utf-8"))
     out = writeback(g)
     print(json.dumps(out, indent=1))
-    if not a.dry_run:
-        FRAMEWORK.write_text(json.dumps(g, indent=1, ensure_ascii=False) + "\n",
-                             encoding="utf-8")
-        print(f"-> {FRAMEWORK.relative_to(REPO)}", file=sys.stderr)
+    # Through the shared writer, so the write and the `framework_writeback` event that records
+    # it cannot come apart.
+    ev = fw.save(g, script=SCRIPT, task=TASK, changes=out, dry_run=a.dry_run)
+    print(json.dumps({k: v for k, v in ev.items() if k != "counts"}, indent=1), file=sys.stderr)
     return 0
 
 

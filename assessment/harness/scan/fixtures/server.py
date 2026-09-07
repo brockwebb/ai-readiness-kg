@@ -16,6 +16,12 @@ import threading
 from pathlib import Path
 
 FIXTURES = Path(__file__).resolve().parent
+#: Loopback only, and named once because two things need it: the bind call below, and the
+#: sweep that recognises a stored body as fixture output rather than a measurement
+#: (`scripts/quarantine_fixture_evidence.py`). A second literal in the sweep would be a
+#: second definition of "what a fixture body looks like", and the one that drifted would be
+#: the one that mattered.
+BIND_HOST = "127.0.0.1"
 SOFT_404_SHELL = (b"<!doctype html><html><head><title>Page not found</title></head>"
                   b"<body><h1>Sorry, we can't find that page</h1></body></html>")
 
@@ -88,12 +94,12 @@ class FixtureServer:
             "root": FIXTURES / self.fixture,
             "soft_404": self.fixture == "fails_all"})
         socketserver.TCPServer.allow_reuse_address = True
-        self.httpd = socketserver.TCPServer(("127.0.0.1", 0), handler)
+        self.httpd = socketserver.TCPServer((BIND_HOST, 0), handler)
         port = self.httpd.server_address[1]
-        handler.hostport = f"127.0.0.1:{port}"
+        handler.hostport = f"{BIND_HOST}:{port}"
         self.thread = threading.Thread(target=self.httpd.serve_forever, daemon=True)
         self.thread.start()
-        return f"http://127.0.0.1:{port}"
+        return f"http://{BIND_HOST}:{port}"
 
     def __exit__(self, *exc) -> None:
         if self.httpd:

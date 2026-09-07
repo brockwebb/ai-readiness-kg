@@ -36,8 +36,13 @@ import sys
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
-FRAMEWORK = REPO / "framework" / "ai_readiness_framework.json"
+sys.path.insert(0, str(REPO / "scripts"))
+
+import framework_writeback as fw                                    # noqa: E402
+
+FRAMEWORK = fw.FRAMEWORK
 TASK = "cc_tasks/2026-09-06_scan_targets.md"
+SCRIPT = "scripts/add_candidate_indicator.py"
 CODE = "A12"
 
 INDICATOR = {
@@ -116,22 +121,23 @@ def add(g: dict) -> dict:
         g["edges"].append({"from": f"ind:{CODE}", "type": "EVIDENCED_BY", "to": f"doc:{doc}",
                            "properties": {"doc_id": doc}})
     for ref in EVIDENCED_BY_INTERNAL:
+        # `artifact_path` under an `internal:`-prefixed node id — the shape
+        # `build_framework_graph.py` mints and the other seventeen edges already use. This
+        # script wrote `{to: <ref>, properties: {ref: <ref>}}` instead, and
+        # `load_framework_graph.py` grew a two-key read to tolerate it (`:111`); the record was
+        # normalised by `scripts/framework_writeback_normalize.py`
+        # (`cc_tasks/2026-09-07_scan_hygiene.md` §3) and the writer fixed here, so the next
+        # candidate does not need a third repair. The prefix is not decoration: `to` is the
+        # node id the loader MERGEs on, and without it an internal reference could collide with
+        # a corpus `doc:` reference on a bare path.
         g["edges"].append({"from": f"ind:{CODE}", "type": "EVIDENCED_BY_INTERNAL",
-                           "to": ref, "properties": {"ref": ref}})
-    g["counts"]["candidate_indicators"] = sum(
-        1 for n in g["nodes"] if "AssessmentIndicator" in n["labels"]
-        and n["properties"].get("status") == "candidate")
-    # Derived counters, recomputed rather than incremented: `measurement_specs` said 21 after
-    # A12's spec made it 22, which is the same drift `framework_writeback_rules` was written
-    # to stop. A count that can disagree with its own data is a number computed in chat.
-    g["counts"]["measurement_specs"] = sum(
-        1 for n in g["nodes"] if "MeasurementSpec" in n["labels"])
-    g["counts"]["indicators"] = sum(
-        1 for n in g["nodes"] if "AssessmentIndicator" in n["labels"]
-        and n["properties"].get("status") != "candidate")
-    g["counts"]["constructs"] = sum(
-        1 for n in g["nodes"] if "AssessmentConstruct" in n["labels"]
-        and n["properties"].get("status") != "candidate")
+                           "to": f"internal:{ref}", "properties": {"artifact_path": ref}})
+    # Every derived counter, recomputed rather than incremented, and recomputed in ONE place:
+    # `measurement_specs` said 21 after A12's spec made it 22, and the four write-backs each
+    # recomputing the handful they touched is how the one nobody recomputed drifted. The
+    # denominators — which keys exclude candidates under DD-054 and which do not — are stated
+    # once in `scripts/framework_writeback.py` (`cc_tasks/2026-09-07_scan_hygiene.md` §3).
+    fw.apply_counts(g)
     return {"added": True, "code": CODE,
             "candidate_indicators": g["counts"]["candidate_indicators"],
             "evidenced_by": EVIDENCED_BY,
@@ -145,10 +151,12 @@ def main(argv=None) -> int:
     g = json.loads(FRAMEWORK.read_text(encoding="utf-8"))
     out = add(g)
     print(json.dumps(out, indent=1))
-    if not a.dry_run and out["added"]:
-        FRAMEWORK.write_text(json.dumps(g, indent=1, ensure_ascii=False) + "\n",
-                             encoding="utf-8")
-        print(f"-> {FRAMEWORK.relative_to(REPO)}", file=sys.stderr)
+    if out["added"]:
+        # Through the shared writer, so the write and the `framework_writeback` event that
+        # records it cannot come apart.
+        ev = fw.save(g, script=SCRIPT, task=TASK, changes=out, dry_run=a.dry_run)
+        print(json.dumps({k: v for k, v in ev.items() if k != "counts"}, indent=1),
+              file=sys.stderr)
     return 0
 
 
