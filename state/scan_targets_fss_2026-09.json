@@ -1,1069 +1,337 @@
 {
  "task": "cc_tasks/2026-09-08_scan_frame_fss.md",
- "addendum": "cc_tasks/2026-09-08_scan_frame_fss_ADDENDUM-02.md",
+ "addendum": "cc_tasks/2026-09-08_scan_frame_fss_ADDENDUM-05.md",
  "epoch": "scan-fss-2026-09",
- "generated_at": "2026-09-08T16:03:30.770544+00:00",
+ "generated_at": "2026-09-08T18:10:36.979169+00:00",
  "derived_from": "fss_roster_2026-09",
  "source_type": "product_surface",
  "construct_arm": "publication_actionability",
- "agencies": 16,
- "surfaces": 34,
+ "frame": "16 OMB-recognized statistical agencies and units (Tier A) + 3 reference hosts (Tier C, tier-0 legs only). No Tier B. Nothing outside these hosts.",
+ "tier_a_agencies": 16,
+ "tier_c_hosts": 3,
+ "hosts": [
+  {
+   "host": "www.federalreserve.gov",
+   "tier": "A",
+   "agency": "DRSMSU"
+  },
+  {
+   "host": "www.ers.usda.gov",
+   "tier": "A",
+   "agency": "ERS"
+  },
+  {
+   "host": "www.nass.usda.gov",
+   "tier": "A",
+   "agency": "NASS"
+  },
+  {
+   "host": "www.aphis.usda.gov",
+   "tier": "A",
+   "agency": "NAHMSAPHIS"
+  },
+  {
+   "host": "www.bea.gov",
+   "tier": "A",
+   "agency": "BEA"
+  },
+  {
+   "host": "www.census.gov",
+   "tier": "A",
+   "agency": "CENSUS"
+  },
+  {
+   "host": "nces.ed.gov",
+   "tier": "A",
+   "agency": "NCES"
+  },
+  {
+   "host": "www.eia.gov",
+   "tier": "A",
+   "agency": "EIA"
+  },
+  {
+   "host": "www.cdc.gov",
+   "tier": "A",
+   "agency": "NCHS"
+  },
+  {
+   "host": "www.samhsa.gov",
+   "tier": "A",
+   "agency": "SAMHSACBHS"
+  },
+  {
+   "host": "bjs.ojp.gov",
+   "tier": "A",
+   "agency": "BJS"
+  },
+  {
+   "host": "www.bls.gov",
+   "tier": "A",
+   "agency": "BLS"
+  },
+  {
+   "host": "www.irs.gov",
+   "tier": "A",
+   "agency": "SOI"
+  },
+  {
+   "host": "www.bts.gov",
+   "tier": "A",
+   "agency": "BTS"
+  },
+  {
+   "host": "ncses.nsf.gov",
+   "tier": "A",
+   "agency": "NCSES"
+  },
+  {
+   "host": "www.ssa.gov",
+   "tier": "A",
+   "agency": "ORES"
+  },
+  {
+   "host": "www.data.gov",
+   "tier": "C",
+   "agency": "data.gov"
+  },
+  {
+   "host": "www.nist.gov",
+   "tier": "C",
+   "agency": "NIST"
+  },
+  {
+   "host": "www.gsa.gov",
+   "tier": "C",
+   "agency": "GSA"
+  }
+ ],
+ "host_count": 19,
+ "surfaces": 65,
  "by_kind": {
   "flagship": 17,
-  "machine": 1,
-  "well_known": 16
+  "home": 19,
+  "machine": 10,
+  "well_known": 19
  },
- "edi_hosts_serving": [
-  "ed.gov",
-  "nsf.gov",
-  "www.bea.gov",
-  "www.census.gov",
-  "www.federalreserve.gov"
+ "carried_from_cycle_1": [
+  "scan-bea-flagship-1-interactive-data",
+  "scan-bea-flagship-2-news-releases",
+  "scan-bea-machine",
+  "scan-bjs-flagship-1-data-by-topic",
+  "scan-bjs-flagship-2-death-in-custody-reporting-act",
+  "scan-census-flagship-1-surveys-programs",
+  "scan-census-flagship-2-american-community-survey-acs",
+  "scan-census-machine",
+  "scan-eia-flagship-1-open-data",
+  "scan-eia-flagship-2-eia-survey-forms",
+  "scan-eia-machine",
+  "scan-ers-flagship-1-ag-and-food-statistics-charting-the-essentials",
+  "scan-ers-flagship-2-agricultural-baseline-database",
+  "scan-ers-machine",
+  "scan-nass-flagship-1-data-statistics",
+  "scan-nass-flagship-2-livestock-county-estimates",
+  "scan-nass-machine",
+  "scan-nchs-flagship-1-data-briefs",
+  "scan-nchs-flagship-2-early-releases-of-selected-estimates-from-the-nhis",
+  "scan-nchs-machine",
+  "scan-ncses-flagship-1-annual-business-survey-2024-data-year-2023",
+  "scan-ncses-machine",
+  "scan-soi-flagship-1-individual-tax-statistics",
+  "scan-soi-flagship-2-business-tax-statistics"
  ],
- "agencies_with_edi": 5,
- "agencies_with_api_distribution": 1,
- "agencies_flagships_pending": [
-  "RSMSU",
-  "NAHMAPHI",
-  "NCES",
-  "SAMHCBHSQ",
+ "doc_id_rows_not_admitted": [
+  "scan-eia-flagship-2-eia-survey-forms"
+ ],
+ "agencies_pending_operator_declaration": [
   "BLS",
   "BTS",
-  "NCSES",
-  "ORES"
+  "DRSMSU",
+  "NAHMSAPHIS",
+  "NCES",
+  "ORES",
+  "SAMHSACBHS"
  ],
- "flagships_declared": 17,
- "tier_b": [
-  {
-   "name": "Department of Defense",
-   "tier": "B",
-   "host": null,
-   "no_host_on_source": true,
-   "note": "neither named roster source carries a URL for a department without a recognized statistical unit, so this row has no host to probe; resolving it needs the catalog.data.gov organization list"
-  },
-  {
-   "name": "Department of Homeland Security",
-   "tier": "B",
-   "host": null,
-   "no_host_on_source": true,
-   "note": "neither named roster source carries a URL for a department without a recognized statistical unit, so this row has no host to probe; resolving it needs the catalog.data.gov organization list"
-  },
-  {
-   "name": "Department of Housing and Urban Development",
-   "tier": "B",
-   "host": null,
-   "no_host_on_source": true,
-   "note": "neither named roster source carries a URL for a department without a recognized statistical unit, so this row has no host to probe; resolving it needs the catalog.data.gov organization list"
-  },
-  {
-   "name": "Department of State",
-   "tier": "B",
-   "host": null,
-   "no_host_on_source": true,
-   "note": "neither named roster source carries a URL for a department without a recognized statistical unit, so this row has no host to probe; resolving it needs the catalog.data.gov organization list"
-  },
-  {
-   "name": "Department of the Interior",
-   "tier": "B",
-   "host": null,
-   "no_host_on_source": true,
-   "note": "neither named roster source carries a URL for a department without a recognized statistical unit, so this row has no host to probe; resolving it needs the catalog.data.gov organization list"
-  },
-  {
-   "name": "Department of Veterans Affairs",
-   "tier": "B",
-   "host": null,
-   "no_host_on_source": true,
-   "note": "neither named roster source carries a URL for a department without a recognized statistical unit, so this row has no host to probe; resolving it needs the catalog.data.gov organization list"
-  },
-  {
-   "name": "Environmental Protection Agency",
-   "tier": "B",
-   "host": null,
-   "no_host_on_source": true,
-   "note": "neither named roster source carries a URL for a department without a recognized statistical unit, so this row has no host to probe; resolving it needs the catalog.data.gov organization list"
-  },
-  {
-   "name": "General Services Administration",
-   "tier": "B",
-   "host": null,
-   "no_host_on_source": true,
-   "note": "neither named roster source carries a URL for a department without a recognized statistical unit, so this row has no host to probe; resolving it needs the catalog.data.gov organization list"
-  },
-  {
-   "name": "National Aeronautics and Space Administration",
-   "tier": "B",
-   "host": null,
-   "no_host_on_source": true,
-   "note": "neither named roster source carries a URL for a department without a recognized statistical unit, so this row has no host to probe; resolving it needs the catalog.data.gov organization list"
-  },
-  {
-   "name": "Nuclear Regulatory Commission",
-   "tier": "B",
-   "host": null,
-   "no_host_on_source": true,
-   "note": "neither named roster source carries a URL for a department without a recognized statistical unit, so this row has no host to probe; resolving it needs the catalog.data.gov organization list"
-  },
-  {
-   "name": "Office of Management and Budget, Office of the Chief Statistician of the U.S.",
-   "tier": "B",
-   "host": null,
-   "no_host_on_source": true,
-   "note": "neither named roster source carries a URL for a department without a recognized statistical unit, so this row has no host to probe; resolving it needs the catalog.data.gov organization list"
-  },
-  {
-   "name": "Office of Personnel Management",
-   "tier": "B",
-   "host": null,
-   "no_host_on_source": true,
-   "note": "neither named roster source carries a URL for a department without a recognized statistical unit, so this row has no host to probe; resolving it needs the catalog.data.gov organization list"
-  },
-  {
-   "name": "Small Business Administration",
-   "tier": "B",
-   "host": null,
-   "no_host_on_source": true,
-   "note": "neither named roster source carries a URL for a department without a recognized statistical unit, so this row has no host to probe; resolving it needs the catalog.data.gov organization list"
-  },
-  {
-   "name": "U.S. Agency for International Development",
-   "tier": "B",
-   "host": null,
-   "no_host_on_source": true,
-   "note": "neither named roster source carries a URL for a department without a recognized statistical unit, so this row has no host to probe; resolving it needs the catalog.data.gov organization list"
-  }
- ],
- "tier_c": [
-  {
-   "name": "data.gov",
-   "home": "https://www.data.gov",
-   "machine_entry_point": "https://catalog.data.gov",
-   "reason": "the federal DCAT catalog, GSA-operated; catalog.data.gov is its machine entry point",
-   "tier": "C",
-   "source": "operator declaration 2026-09-08 (cc_tasks/2026-09-08_scan_frame_fss_ADDENDUM-01.md)",
-   "host": "www.data.gov",
-   "machine_host": "catalog.data.gov",
-   "tier0_legs_only": true,
-   "restriction": "reference host, not a statistical agency: tier-0 legs only, never in a Tier A or Tier B denominator and never on the agencies x legs matrix"
-  },
-  {
-   "name": "NIST",
-   "home": "https://www.nist.gov",
-   "machine_entry_point": "https://data.nist.gov",
-   "reason": "NIST's data portal is its declared machine entry point",
-   "tier": "C",
-   "source": "operator declaration 2026-09-08 (cc_tasks/2026-09-08_scan_frame_fss_ADDENDUM-01.md)",
-   "host": "www.nist.gov",
-   "machine_host": "data.nist.gov",
-   "tier0_legs_only": true,
-   "restriction": "reference host, not a statistical agency: tier-0 legs only, never in a Tier A or Tier B denominator and never on the agencies x legs matrix"
-  },
-  {
-   "name": "GSA",
-   "home": "https://www.gsa.gov",
-   "machine_entry_point": "https://open.gsa.gov",
-   "reason": "GSA's developer/API landing",
-   "tier": "C",
-   "source": "operator declaration 2026-09-08 (cc_tasks/2026-09-08_scan_frame_fss_ADDENDUM-01.md)",
-   "host": "www.gsa.gov",
-   "machine_host": "open.gsa.gov",
-   "tier0_legs_only": true,
-   "restriction": "reference host, not a statistical agency: tier-0 legs only, never in a Tier A or Tier B denominator and never on the agencies x legs matrix"
-  }
+ "statcan_excluded": [
+  "STATCAN"
  ],
  "agency_detail": [
   {
-   "agency": "RSMSU",
-   "agency_code_source": "derived from the unit name (not measured in cycle 1)",
+   "agency": "DRSMSU",
    "agency_name": "Division of Research and Statistics, Microeconomic Surveys Unit",
    "tier": "A",
-   "parent_department": "Board of Governors of the Federal Reserve System",
    "host": "www.federalreserve.gov",
-   "home_url": "https://www.federalreserve.gov/econres/rsmecs-staff.htm",
-   "home_url_source": "statspolicy.gov/about/ recognized-agency list",
-   "edi_probed": [
-    {
-     "host": "www.federalreserve.gov",
-     "status": 200,
-     "served": true,
-     "sha256": "6ff943db1b2714d3e194729fabb7d0fe9b076df56e1d656059dee2e909cddcee",
-     "datasets": 167,
-     "note": null
-    }
-   ],
-   "edi_host": "www.federalreserve.gov",
-   "edi_sha256": "6ff943db1b2714d3e194729fabb7d0fe9b076df56e1d656059dee2e909cddcee",
-   "edi_retained": "corpus/evidence/frame/6f/6ff943db1b2714d3e194729fabb7d0fe9b076df56e1d656059dee2e909cddcee",
-   "edi_datasets_for_agency": 0,
-   "edi_matched_by": {
-    "publisher_name": 0,
-    "bureau_code": 0
-   },
-   "edi_datasets_total": 167,
-   "shortlist": [],
-   "machine": {
-    "url": null,
-    "marker": "no_api_distribution_declared_in_edi",
-    "declared_distributions_scanned": 0
-   },
-   "flagships": {
-    "flagships": [],
-    "pending": true,
-    "marker": "flagships_pending_operator_declaration"
-   }
+   "parent_department": "Board of Governors of the Federal Reserve System",
+   "declared_surfaces": 0,
+   "pending_operator_declaration": true,
+   "marker": "pending_operator_declaration"
   },
   {
    "agency": "ERS",
-   "agency_code_source": "cycle-1 target list, matched on host",
    "agency_name": "Economic Research Service",
    "tier": "A",
-   "parent_department": "Department of Agriculture",
    "host": "www.ers.usda.gov",
-   "home_url": "https://www.ers.usda.gov/",
-   "home_url_source": "statspolicy.gov/about/ recognized-agency list",
-   "edi_probed": [
-    {
-     "host": "www.ers.usda.gov",
-     "status": 404,
-     "served": false,
-     "sha256": null,
-     "datasets": null,
-     "note": null
-    },
-    {
-     "host": "usda.gov",
-     "status": 403,
-     "served": false,
-     "sha256": null,
-     "datasets": null,
-     "note": null
-    }
-   ],
-   "edi_host": null,
-   "edi_sha256": null,
-   "edi_retained": null,
-   "edi_datasets_for_agency": 0,
-   "edi_matched_by": {},
-   "edi_datasets_total": 0,
-   "shortlist": [],
-   "machine": {
-    "url": null,
-    "marker": "no_enterprise_data_inventory_found"
-   },
-   "flagships": {
-    "flagships": [
-     {
-      "url": "https://www.ers.usda.gov/data-products/ag-and-food-statistics-charting-the-essentials",
-      "doc_id": "scan-ers-flagship-1-ag-and-food-statistics-charting-the-essentials",
-      "selected_as": "Ag and Food Statistics: Charting the Essentials",
-      "selection_source": "operator declaration, cycle 1 target list"
-     },
-     {
-      "url": "https://www.ers.usda.gov/data-products/agricultural-baseline-database",
-      "doc_id": "scan-ers-flagship-2-agricultural-baseline-database",
-      "selected_as": "Agricultural Baseline Database",
-      "selection_source": "operator declaration, cycle 1 target list"
-     }
-    ],
-    "pending": false,
-    "marker": null
-   }
+   "parent_department": "Department of Agriculture",
+   "declared_surfaces": 3,
+   "pending_operator_declaration": false,
+   "marker": null
   },
   {
    "agency": "NASS",
-   "agency_code_source": "cycle-1 target list, matched on host",
    "agency_name": "National Agricultural Statistics Service",
    "tier": "A",
-   "parent_department": "Department of Agriculture",
    "host": "www.nass.usda.gov",
-   "home_url": "https://www.nass.usda.gov/",
-   "home_url_source": "statspolicy.gov/about/ recognized-agency list",
-   "edi_probed": [
-    {
-     "host": "www.nass.usda.gov",
-     "status": 404,
-     "served": false,
-     "sha256": null,
-     "datasets": null,
-     "note": null
-    },
-    {
-     "host": "usda.gov",
-     "status": 403,
-     "served": false,
-     "sha256": null,
-     "datasets": null,
-     "note": null
-    }
-   ],
-   "edi_host": null,
-   "edi_sha256": null,
-   "edi_retained": null,
-   "edi_datasets_for_agency": 0,
-   "edi_matched_by": {},
-   "edi_datasets_total": 0,
-   "shortlist": [],
-   "machine": {
-    "url": null,
-    "marker": "no_enterprise_data_inventory_found"
-   },
-   "flagships": {
-    "flagships": [
-     {
-      "url": "https://www.nass.usda.gov/Data_and_Statistics/index.php",
-      "doc_id": "scan-nass-flagship-1-data-statistics",
-      "selected_as": "Data & Statistics",
-      "selection_source": "operator declaration, cycle 1 target list"
-     },
-     {
-      "url": "https://www.nass.usda.gov/Data_and_Statistics/County_Data_Files/Livestock_County_Estimates/index.php",
-      "doc_id": "scan-nass-flagship-2-livestock-county-estimates",
-      "selected_as": "Livestock County Estimates",
-      "selection_source": "operator declaration, cycle 1 target list"
-     }
-    ],
-    "pending": false,
-    "marker": null
-   }
+   "parent_department": "Department of Agriculture",
+   "declared_surfaces": 3,
+   "pending_operator_declaration": false,
+   "marker": null
   },
   {
-   "agency": "NAHMAPHI",
-   "agency_code_source": "derived from the unit name (not measured in cycle 1)",
+   "agency": "NAHMSAPHIS",
    "agency_name": "National Animal Health Monitoring System, Animal and Plant Health Inspection Service",
    "tier": "A",
-   "parent_department": "Department of Agriculture",
    "host": "www.aphis.usda.gov",
-   "home_url": "https://www.aphis.usda.gov/aphis/ourfocus/animalhealth/monitoring-and-surveillance/nahms",
-   "home_url_source": "statspolicy.gov/about/ recognized-agency list",
-   "edi_probed": [
-    {
-     "host": "www.aphis.usda.gov",
-     "status": 404,
-     "served": false,
-     "sha256": null,
-     "datasets": null,
-     "note": null
-    },
-    {
-     "host": "usda.gov",
-     "status": 403,
-     "served": false,
-     "sha256": null,
-     "datasets": null,
-     "note": null
-    }
-   ],
-   "edi_host": null,
-   "edi_sha256": null,
-   "edi_retained": null,
-   "edi_datasets_for_agency": 0,
-   "edi_matched_by": {},
-   "edi_datasets_total": 0,
-   "shortlist": [],
-   "machine": {
-    "url": null,
-    "marker": "no_enterprise_data_inventory_found"
-   },
-   "flagships": {
-    "flagships": [],
-    "pending": true,
-    "marker": "flagships_pending_operator_declaration"
-   }
+   "parent_department": "Department of Agriculture",
+   "declared_surfaces": 0,
+   "pending_operator_declaration": true,
+   "marker": "pending_operator_declaration"
   },
   {
    "agency": "BEA",
-   "agency_code_source": "cycle-1 target list, matched on host",
    "agency_name": "Bureau of Economic Analysis",
    "tier": "A",
-   "parent_department": "Department of Commerce",
    "host": "www.bea.gov",
-   "home_url": "https://www.bea.gov/",
-   "home_url_source": "statspolicy.gov/about/ recognized-agency list",
-   "edi_probed": [
-    {
-     "host": "www.bea.gov",
-     "status": 200,
-     "served": true,
-     "sha256": "31baba5922d54e9bcec1ee710f96302cd3c455822e2f2f18f5c4627a3e906a3b",
-     "datasets": 26,
-     "note": null
-    }
-   ],
-   "edi_host": "www.bea.gov",
-   "edi_sha256": "31baba5922d54e9bcec1ee710f96302cd3c455822e2f2f18f5c4627a3e906a3b",
-   "edi_retained": "corpus/evidence/frame/31/31baba5922d54e9bcec1ee710f96302cd3c455822e2f2f18f5c4627a3e906a3b",
-   "edi_datasets_for_agency": 26,
-   "edi_matched_by": {
-    "publisher_name": 26,
-    "bureau_code": 0
-   },
-   "edi_datasets_total": 26,
-   "shortlist": [
-    {
-     "title": "National Accounts - Fixed Assets, , Advanced Download Section",
-     "modified": "P6M",
-     "landing_page": "",
-     "identifier": "https://apps.bea.gov/national/FA2004/DownSS2.asp",
-     "matched_on": "publisher_name"
-    },
-    {
-     "title": "International Accounts",
-     "modified": "P3M",
-     "landing_page": "",
-     "identifier": "http://apps.bea.gov/iTable/bp_download_modern.cfm?pid=1",
-     "matched_on": "publisher_name"
-    },
-    {
-     "title": "International Accounts - International Services",
-     "modified": "P3M",
-     "landing_page": "",
-     "identifier": "https://apps.bea.gov/iTable/bp_download_modern.cfm?pid=4",
-     "matched_on": "publisher_name"
-    },
-    {
-     "title": "International Accounts - International Investment Position",
-     "modified": "P3M",
-     "landing_page": "",
-     "identifier": "https://apps.bea.gov/iTable/bp_download_modern.cfm?pid=5",
-     "matched_on": "publisher_name"
-    },
-    {
-     "title": "International Accounts - Direct Investment and Multinational Enterprises",
-     "modified": "P3M",
-     "landing_page": "",
-     "identifier": "https://www.bea.gov/international/direct-investment-and-multinational-enterprises-comprehensive-data",
-     "matched_on": "publisher_name"
-    }
-   ],
-   "machine": {
-    "url": "http://www.bea.gov/api",
-    "count": 12,
-    "distinct_prefixes": 3,
-    "example": {
-     "url": "http://www.bea.gov/api/signup/index.cfm",
-     "why": "format/mediaType 'api'"
-    },
-    "selection_source": "most frequent API-type distribution prefix in the department's /data.json Enterprise Data Inventory (12 of 14 API distributions across 26 datasets attributed to this agency); matched by format/mediaType 'api'"
-   },
-   "flagships": {
-    "flagships": [
-     {
-      "url": "https://www.bea.gov/itable",
-      "doc_id": "scan-bea-flagship-1-interactive-data",
-      "selected_as": "Interactive Data",
-      "selection_source": "operator declaration, cycle 1 target list"
-     },
-     {
-      "url": "https://www.bea.gov/news/current-releases",
-      "doc_id": "scan-bea-flagship-2-news-releases",
-      "selected_as": "News Releases",
-      "selection_source": "operator declaration, cycle 1 target list"
-     }
-    ],
-    "pending": false,
-    "marker": null
-   }
+   "parent_department": "Department of Commerce",
+   "declared_surfaces": 3,
+   "pending_operator_declaration": false,
+   "marker": null
   },
   {
    "agency": "CENSUS",
-   "agency_code_source": "cycle-1 target list, matched on host",
    "agency_name": "Bureau of the Census",
    "tier": "A",
-   "parent_department": "Department of Commerce",
    "host": "www.census.gov",
-   "home_url": "https://www.census.gov/",
-   "home_url_source": "statspolicy.gov/about/ recognized-agency list",
-   "edi_probed": [
-    {
-     "host": "www.census.gov",
-     "status": 200,
-     "served": true,
-     "sha256": "1ab37548f8ce67b3cafe7edba510ce3bebe52d93bb204c58fe3c9509fa2fc987",
-     "datasets": 1803,
-     "note": null
-    }
-   ],
-   "edi_host": "www.census.gov",
-   "edi_sha256": "1ab37548f8ce67b3cafe7edba510ce3bebe52d93bb204c58fe3c9509fa2fc987",
-   "edi_retained": "corpus/evidence/frame/1a/1ab37548f8ce67b3cafe7edba510ce3bebe52d93bb204c58fe3c9509fa2fc987",
-   "edi_datasets_for_agency": 0,
-   "edi_matched_by": {
-    "publisher_name": 0,
-    "bureau_code": 0
-   },
-   "edi_datasets_total": 1803,
-   "shortlist": [],
-   "machine": {
-    "url": null,
-    "marker": "no_api_distribution_declared_in_edi",
-    "declared_distributions_scanned": 0
-   },
-   "flagships": {
-    "flagships": [
-     {
-      "url": "https://www.census.gov/programs-surveys.html",
-      "doc_id": "scan-census-flagship-1-surveys-programs",
-      "selected_as": "Surveys & Programs",
-      "selection_source": "operator declaration, cycle 1 target list"
-     },
-     {
-      "url": "https://www.census.gov/programs-surveys/acs.html",
-      "doc_id": "scan-census-flagship-2-american-community-survey-acs",
-      "selected_as": "American Community Survey (ACS)",
-      "selection_source": "operator declaration, cycle 1 target list"
-     }
-    ],
-    "pending": false,
-    "marker": null
-   }
+   "parent_department": "Department of Commerce",
+   "declared_surfaces": 3,
+   "pending_operator_declaration": false,
+   "marker": null
   },
   {
    "agency": "NCES",
-   "agency_code_source": "cycle-1 target list, matched on host",
    "agency_name": "National Center for Education Statistics",
    "tier": "A",
-   "parent_department": "Department of Education",
    "host": "nces.ed.gov",
-   "home_url": "https://nces.ed.gov/",
-   "home_url_source": "statspolicy.gov/about/ recognized-agency list",
-   "edi_probed": [
-    {
-     "host": "nces.ed.gov",
-     "status": 404,
-     "served": false,
-     "sha256": null,
-     "datasets": null,
-     "note": null
-    },
-    {
-     "host": "ed.gov",
-     "status": 200,
-     "served": true,
-     "sha256": "2eec1200cd538b6c3f607c9d90e448140bf2a4193e6b8207e4be324ec24acd17",
-     "datasets": 906,
-     "note": null
-    }
-   ],
-   "edi_host": "ed.gov",
-   "edi_sha256": "2eec1200cd538b6c3f607c9d90e448140bf2a4193e6b8207e4be324ec24acd17",
-   "edi_retained": "corpus/evidence/frame/2e/2eec1200cd538b6c3f607c9d90e448140bf2a4193e6b8207e4be324ec24acd17",
-   "edi_datasets_for_agency": 0,
-   "edi_matched_by": {
-    "publisher_name": 0,
-    "bureau_code": 0
-   },
-   "edi_datasets_total": 906,
-   "shortlist": [],
-   "machine": {
-    "url": null,
-    "marker": "no_api_distribution_declared_in_edi",
-    "declared_distributions_scanned": 0
-   },
-   "flagships": {
-    "flagships": [],
-    "pending": true,
-    "marker": "flagships_pending_operator_declaration"
-   }
+   "parent_department": "Department of Education",
+   "declared_surfaces": 0,
+   "pending_operator_declaration": true,
+   "marker": "pending_operator_declaration"
   },
   {
    "agency": "EIA",
-   "agency_code_source": "cycle-1 target list, matched on host",
    "agency_name": "Energy Information Administration",
    "tier": "A",
-   "parent_department": "Department of Energy",
    "host": "www.eia.gov",
-   "home_url": "https://www.eia.gov/",
-   "home_url_source": "statspolicy.gov/about/ recognized-agency list",
-   "edi_probed": [
-    {
-     "host": "www.eia.gov",
-     "status": 404,
-     "served": false,
-     "sha256": null,
-     "datasets": null,
-     "note": null
-    },
-    {
-     "host": "eia.gov",
-     "status": 404,
-     "served": false,
-     "sha256": null,
-     "datasets": null,
-     "note": null
-    }
-   ],
-   "edi_host": null,
-   "edi_sha256": null,
-   "edi_retained": null,
-   "edi_datasets_for_agency": 0,
-   "edi_matched_by": {},
-   "edi_datasets_total": 0,
-   "shortlist": [],
-   "machine": {
-    "url": null,
-    "marker": "no_enterprise_data_inventory_found"
-   },
-   "flagships": {
-    "flagships": [
-     {
-      "url": "https://www.eia.gov/beta/api/",
-      "doc_id": "scan-eia-flagship-1-open-data",
-      "selected_as": "Open Data",
-      "selection_source": "operator declaration, cycle 1 target list"
-     },
-     {
-      "url": "https://www.eia.gov/survey/",
-      "doc_id": "scan-eia-flagship-2-eia-survey-forms",
-      "selected_as": "EIA Survey Forms",
-      "selection_source": "operator declaration, cycle 1 target list"
-     }
-    ],
-    "pending": false,
-    "marker": null
-   }
+   "parent_department": "Department of Energy",
+   "declared_surfaces": 3,
+   "pending_operator_declaration": false,
+   "marker": null
   },
   {
    "agency": "NCHS",
-   "agency_code_source": "cycle-1 target list, matched on host",
    "agency_name": "National Center for Health Statistics",
    "tier": "A",
-   "parent_department": "Department of Health and Human Services",
    "host": "www.cdc.gov",
-   "home_url": "https://www.cdc.gov/nchs/index.htm",
-   "home_url_source": "statspolicy.gov/about/ recognized-agency list",
-   "edi_probed": [
-    {
-     "host": "www.cdc.gov",
-     "status": 404,
-     "served": false,
-     "sha256": null,
-     "datasets": null,
-     "note": null
-    },
-    {
-     "host": "cdc.gov",
-     "status": 404,
-     "served": false,
-     "sha256": null,
-     "datasets": null,
-     "note": null
-    }
-   ],
-   "edi_host": null,
-   "edi_sha256": null,
-   "edi_retained": null,
-   "edi_datasets_for_agency": 0,
-   "edi_matched_by": {},
-   "edi_datasets_total": 0,
-   "shortlist": [],
-   "machine": {
-    "url": null,
-    "marker": "no_enterprise_data_inventory_found"
-   },
-   "flagships": {
-    "flagships": [
-     {
-      "url": "https://www.cdc.gov/nchs/products/databriefs.htm",
-      "doc_id": "scan-nchs-flagship-1-data-briefs",
-      "selected_as": "Data Briefs",
-      "selection_source": "operator declaration, cycle 1 target list"
-     },
-     {
-      "url": "https://www.cdc.gov/nchs/nhis/early-release/index.html",
-      "doc_id": "scan-nchs-flagship-2-early-releases-of-selected-estimates-from-the-nhis",
-      "selected_as": "Early Releases of Selected Estimates from the NHIS",
-      "selection_source": "operator declaration, cycle 1 target list"
-     }
-    ],
-    "pending": false,
-    "marker": null
-   }
+   "parent_department": "Department of Health and Human Services",
+   "declared_surfaces": 3,
+   "pending_operator_declaration": false,
+   "marker": null
   },
   {
-   "agency": "SAMHCBHSQ",
-   "agency_code_source": "derived from the unit name (not measured in cycle 1)",
+   "agency": "SAMHSACBHS",
    "agency_name": "Substance Abuse and Mental Health Services Administration, Center for Behavioral Health Statistics and Quality",
    "tier": "A",
-   "parent_department": "Department of Health and Human Services",
    "host": "www.samhsa.gov",
-   "home_url": "https://www.samhsa.gov/about-us/who-we-are/offices-centers/cbhsq",
-   "home_url_source": "statspolicy.gov/about/ recognized-agency list",
-   "edi_probed": [
-    {
-     "host": "www.samhsa.gov",
-     "status": 500,
-     "served": false,
-     "sha256": null,
-     "datasets": null,
-     "note": null
-    },
-    {
-     "host": "samhsa.gov",
-     "status": 500,
-     "served": false,
-     "sha256": null,
-     "datasets": null,
-     "note": null
-    }
-   ],
-   "edi_host": null,
-   "edi_sha256": null,
-   "edi_retained": null,
-   "edi_datasets_for_agency": 0,
-   "edi_matched_by": {},
-   "edi_datasets_total": 0,
-   "shortlist": [],
-   "machine": {
-    "url": null,
-    "marker": "no_enterprise_data_inventory_found"
-   },
-   "flagships": {
-    "flagships": [],
-    "pending": true,
-    "marker": "flagships_pending_operator_declaration"
-   }
+   "parent_department": "Department of Health and Human Services",
+   "declared_surfaces": 0,
+   "pending_operator_declaration": true,
+   "marker": "pending_operator_declaration"
   },
   {
    "agency": "BJS",
-   "agency_code_source": "cycle-1 target list, matched on host",
    "agency_name": "Bureau of Justice Statistics",
    "tier": "A",
-   "parent_department": "Department of Justice",
    "host": "bjs.ojp.gov",
-   "home_url": "https://bjs.ojp.gov/",
-   "home_url_source": "statspolicy.gov/about/ recognized-agency list",
-   "edi_probed": [
-    {
-     "host": "bjs.ojp.gov",
-     "status": 404,
-     "served": false,
-     "sha256": null,
-     "datasets": null,
-     "note": null
-    },
-    {
-     "host": "ojp.gov",
-     "status": null,
-     "served": false,
-     "sha256": null,
-     "datasets": null,
-     "note": "ConnectError: [Errno 8] nodename nor servname provided, or not known"
-    }
-   ],
-   "edi_host": null,
-   "edi_sha256": null,
-   "edi_retained": null,
-   "edi_datasets_for_agency": 0,
-   "edi_matched_by": {},
-   "edi_datasets_total": 0,
-   "shortlist": [],
-   "machine": {
-    "url": null,
-    "marker": "no_enterprise_data_inventory_found"
-   },
-   "flagships": {
-    "flagships": [
-     {
-      "url": "https://bjs.ojp.gov/data/topic",
-      "doc_id": "scan-bjs-flagship-1-data-by-topic",
-      "selected_as": "Data by Topic",
-      "selection_source": "operator declaration, cycle 1 target list"
-     },
-     {
-      "url": "https://bjs.ojp.gov/programs/dicra",
-      "doc_id": "scan-bjs-flagship-2-death-in-custody-reporting-act",
-      "selected_as": "Death in Custody Reporting Act",
-      "selection_source": "operator declaration, cycle 1 target list"
-     }
-    ],
-    "pending": false,
-    "marker": null
-   }
+   "parent_department": "Department of Justice",
+   "declared_surfaces": 2,
+   "pending_operator_declaration": false,
+   "marker": null
   },
   {
    "agency": "BLS",
-   "agency_code_source": "cycle-1 target list, matched on host",
    "agency_name": "Bureau of Labor Statistics",
    "tier": "A",
-   "parent_department": "Department of Labor",
    "host": "www.bls.gov",
-   "home_url": "https://www.bls.gov/",
-   "home_url_source": "statspolicy.gov/about/ recognized-agency list",
-   "edi_probed": [
-    {
-     "host": "www.bls.gov",
-     "status": 403,
-     "served": false,
-     "sha256": null,
-     "datasets": null,
-     "note": null
-    },
-    {
-     "host": "bls.gov",
-     "status": 403,
-     "served": false,
-     "sha256": null,
-     "datasets": null,
-     "note": null
-    }
-   ],
-   "edi_host": null,
-   "edi_sha256": null,
-   "edi_retained": null,
-   "edi_datasets_for_agency": 0,
-   "edi_matched_by": {},
-   "edi_datasets_total": 0,
-   "shortlist": [],
-   "machine": {
-    "url": null,
-    "marker": "no_enterprise_data_inventory_found"
-   },
-   "flagships": {
-    "flagships": [],
-    "pending": true,
-    "marker": "flagships_pending_operator_declaration"
-   }
+   "parent_department": "Department of Labor",
+   "declared_surfaces": 0,
+   "pending_operator_declaration": true,
+   "marker": "pending_operator_declaration"
   },
   {
    "agency": "SOI",
-   "agency_code_source": "cycle-1 target list, matched on host",
    "agency_name": "Statistics of Income",
    "tier": "A",
-   "parent_department": "Department of the Treasury",
    "host": "www.irs.gov",
-   "home_url": "https://www.irs.gov/statistics/soi-tax-stats-statistics-of-income",
-   "home_url_source": "statspolicy.gov/about/ recognized-agency list",
-   "edi_probed": [
-    {
-     "host": "www.irs.gov",
-     "status": 404,
-     "served": false,
-     "sha256": null,
-     "datasets": null,
-     "note": null
-    },
-    {
-     "host": "irs.gov",
-     "status": 404,
-     "served": false,
-     "sha256": null,
-     "datasets": null,
-     "note": null
-    }
-   ],
-   "edi_host": null,
-   "edi_sha256": null,
-   "edi_retained": null,
-   "edi_datasets_for_agency": 0,
-   "edi_matched_by": {},
-   "edi_datasets_total": 0,
-   "shortlist": [],
-   "machine": {
-    "url": null,
-    "marker": "no_enterprise_data_inventory_found"
-   },
-   "flagships": {
-    "flagships": [
-     {
-      "url": "https://www.irs.gov/statistics/soi-tax-stats-individual-tax-statistics",
-      "doc_id": "scan-soi-flagship-1-individual-tax-statistics",
-      "selected_as": "Individual tax statistics",
-      "selection_source": "operator declaration, cycle 1 target list"
-     },
-     {
-      "url": "https://www.irs.gov/statistics/soi-tax-stats-business-tax-statistics",
-      "doc_id": "scan-soi-flagship-2-business-tax-statistics",
-      "selected_as": "Business tax statistics",
-      "selection_source": "operator declaration, cycle 1 target list"
-     }
-    ],
-    "pending": false,
-    "marker": null
-   }
+   "parent_department": "Department of the Treasury",
+   "declared_surfaces": 2,
+   "pending_operator_declaration": false,
+   "marker": null
   },
   {
    "agency": "BTS",
-   "agency_code_source": "cycle-1 target list, matched on host",
    "agency_name": "Bureau of Transportation Statistics",
    "tier": "A",
-   "parent_department": "Department of Transportation",
    "host": "www.bts.gov",
-   "home_url": "https://www.bts.gov/",
-   "home_url_source": "statspolicy.gov/about/ recognized-agency list",
-   "edi_probed": [
-    {
-     "host": "www.bts.gov",
-     "status": 403,
-     "served": false,
-     "sha256": null,
-     "datasets": null,
-     "note": null
-    },
-    {
-     "host": "bts.gov",
-     "status": null,
-     "served": false,
-     "sha256": null,
-     "datasets": null,
-     "note": "ConnectError: [Errno 8] nodename nor servname provided, or not known"
-    }
-   ],
-   "edi_host": null,
-   "edi_sha256": null,
-   "edi_retained": null,
-   "edi_datasets_for_agency": 0,
-   "edi_matched_by": {},
-   "edi_datasets_total": 0,
-   "shortlist": [],
-   "machine": {
-    "url": null,
-    "marker": "no_enterprise_data_inventory_found"
-   },
-   "flagships": {
-    "flagships": [],
-    "pending": true,
-    "marker": "flagships_pending_operator_declaration"
-   }
+   "parent_department": "Department of Transportation",
+   "declared_surfaces": 0,
+   "pending_operator_declaration": true,
+   "marker": "pending_operator_declaration"
   },
   {
    "agency": "NCSES",
-   "agency_code_source": "cycle-1 target list, matched on host",
    "agency_name": "National Center for Science and Engineering Statistics",
    "tier": "A",
-   "parent_department": "National Science Foundation",
    "host": "ncses.nsf.gov",
-   "home_url": "https://ncses.nsf.gov/",
-   "home_url_source": "statspolicy.gov/about/ recognized-agency list",
-   "edi_probed": [
-    {
-     "host": "ncses.nsf.gov",
-     "status": 404,
-     "served": false,
-     "sha256": null,
-     "datasets": null,
-     "note": null
-    },
-    {
-     "host": "nsf.gov",
-     "status": 200,
-     "served": true,
-     "sha256": "039d963f0343ef8f368e841a8895c0bdad9301fb20b1efb549e6adac79eb7bc3",
-     "datasets": 170,
-     "note": null
-    }
-   ],
-   "edi_host": "nsf.gov",
-   "edi_sha256": "039d963f0343ef8f368e841a8895c0bdad9301fb20b1efb549e6adac79eb7bc3",
-   "edi_retained": "corpus/evidence/frame/03/039d963f0343ef8f368e841a8895c0bdad9301fb20b1efb549e6adac79eb7bc3",
-   "edi_datasets_for_agency": 80,
-   "edi_matched_by": {
-    "publisher_name": 80,
-    "bureau_code": 0
-   },
-   "edi_datasets_total": 170,
-   "shortlist": [
-    {
-     "title": "Survey of Federal Funds for Research and Development 2023-2024",
-     "modified": "2026-05-05",
-     "landing_page": "",
-     "identifier": "NCSES-FedFunds2024",
-     "matched_on": "publisher_name"
-    },
-    {
-     "title": "Survey of Federal Funds for Research and Development 2024-2025",
-     "modified": "2026-05-05",
-     "landing_page": "",
-     "identifier": "NCSES-FedFunds2025",
-     "matched_on": "publisher_name"
-    },
-    {
-     "title": "Survey of Graduate Students and Postdoctorates in Science and Engineering 2024",
-     "modified": "2026-02-23",
-     "landing_page": "",
-     "identifier": "NCSES-GSS2024",
-     "matched_on": "publisher_name"
-    },
-    {
-     "title": "Survey of State Government Research and Development 2024",
-     "modified": "2025-12-11",
-     "landing_page": "",
-     "identifier": "NCSES-SGRD2024",
-     "matched_on": "publisher_name"
-    },
-    {
-     "title": "Federal Facilities Research and Development Survey 2024",
-     "modified": "2025-12-09",
-     "landing_page": "",
-     "identifier": "NCSES-FFRD2024",
-     "matched_on": "publisher_name"
-    }
-   ],
-   "machine": {
-    "url": null,
-    "marker": "no_api_distribution_declared_in_edi",
-    "declared_distributions_scanned": 164
-   },
-   "flagships": {
-    "flagships": [
-     {
-      "url": "https://ncses.nsf.gov/pubs/nsf26321",
-      "doc_id": "scan-ncses-flagship-1-annual-business-survey-2024-data-year-2023",
-      "selected_as": "Annual Business Survey: 2024 (Data Year 2023)",
-      "selection_source": "operator declaration, cycle 1 target list"
-     }
-    ],
-    "pending": true,
-    "marker": "flagships_pending_operator_declaration"
-   }
+   "parent_department": "National Science Foundation",
+   "declared_surfaces": 2,
+   "pending_operator_declaration": false,
+   "marker": null
   },
   {
    "agency": "ORES",
-   "agency_code_source": "cycle-1 target list, matched on host",
    "agency_name": "Office of Research, Evaluation, and Statistics",
    "tier": "A",
-   "parent_department": "Social Security Administration",
    "host": "www.ssa.gov",
-   "home_url": "https://www.ssa.gov",
-   "home_url_source": "absent from the live statspolicy.gov recognized-agency link list; carried from this repo's cycle-1 roster assessment/harness/scan/targets.yaml (OMB Statistical Policy Directive No. 1, segment spd_1#s38)",
-   "edi_probed": [
-    {
-     "host": "www.ssa.gov",
-     "status": 403,
-     "served": false,
-     "sha256": null,
-     "datasets": null,
-     "note": null
-    },
-    {
-     "host": "ssa.gov",
-     "status": null,
-     "served": false,
-     "sha256": null,
-     "datasets": null,
-     "note": "ConnectError: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1000)"
-    }
-   ],
-   "edi_host": null,
-   "edi_sha256": null,
-   "edi_retained": null,
-   "edi_datasets_for_agency": 0,
-   "edi_matched_by": {},
-   "edi_datasets_total": 0,
-   "shortlist": [],
-   "machine": {
-    "url": null,
-    "marker": "no_enterprise_data_inventory_found"
-   },
-   "flagships": {
-    "flagships": [],
-    "pending": true,
-    "marker": "flagships_pending_operator_declaration"
-   }
+   "parent_department": "Social Security Administration",
+   "declared_surfaces": 0,
+   "pending_operator_declaration": true,
+   "marker": "pending_operator_declaration"
   }
  ],
  "rows": [
   {
-   "agency": "RSMSU",
+   "agency": "DRSMSU",
+   "agency_name": "Division of Research and Statistics, Microeconomic Surveys Unit",
+   "tier": "A",
+   "host": "www.federalreserve.gov",
+   "parent_department": "Board of Governors of the Federal Reserve System",
+   "surface_kind": "home",
+   "url": "https://www.federalreserve.gov/econres/rsmecs-staff.htm",
+   "doc_id": null,
+   "selected_as": "agency home",
+   "selection_source": "roster host (fss_roster_2026-09, statspolicy.gov/about/ recognized-agency list)"
+  },
+  {
+   "agency": "DRSMSU",
    "agency_name": "Division of Research and Statistics, Microeconomic Surveys Unit",
    "tier": "A",
    "host": "www.federalreserve.gov",
@@ -1072,9 +340,19 @@
    "url": "https://www.federalreserve.gov/robots.txt",
    "doc_id": null,
    "selected_as": "agency-level well-known set (synthetic surface)",
-   "selection_source": "frame: one synthetic host surface per Tier A agency",
-   "edi_sha256": null,
-   "carried_from_cycle_1": false
+   "selection_source": "roster host: one synthetic host surface per agency"
+  },
+  {
+   "agency": "ERS",
+   "agency_name": "Economic Research Service",
+   "tier": "A",
+   "host": "www.ers.usda.gov",
+   "parent_department": "Department of Agriculture",
+   "surface_kind": "home",
+   "url": "https://www.ers.usda.gov/",
+   "doc_id": null,
+   "selected_as": "agency home",
+   "selection_source": "roster host (fss_roster_2026-09, statspolicy.gov/about/ recognized-agency list)"
   },
   {
    "agency": "ERS",
@@ -1087,7 +365,6 @@
    "doc_id": "scan-ers-flagship-1-ag-and-food-statistics-charting-the-essentials",
    "selected_as": "Ag and Food Statistics: Charting the Essentials",
    "selection_source": "operator declaration, cycle 1 target list",
-   "edi_sha256": null,
    "carried_from_cycle_1": true
   },
   {
@@ -1101,7 +378,19 @@
    "doc_id": "scan-ers-flagship-2-agricultural-baseline-database",
    "selected_as": "Agricultural Baseline Database",
    "selection_source": "operator declaration, cycle 1 target list",
-   "edi_sha256": null,
+   "carried_from_cycle_1": true
+  },
+  {
+   "agency": "ERS",
+   "agency_name": "Economic Research Service",
+   "tier": "A",
+   "host": "www.ers.usda.gov",
+   "parent_department": "Department of Agriculture",
+   "surface_kind": "machine",
+   "url": "https://www.ers.usda.gov/data-products?type=downloadable-data-files",
+   "doc_id": "scan-ers-machine",
+   "selected_as": "Downloadable Data Files",
+   "selection_source": "operator declaration, cycle 1 target list",
    "carried_from_cycle_1": true
   },
   {
@@ -1114,9 +403,19 @@
    "url": "https://www.ers.usda.gov/robots.txt",
    "doc_id": null,
    "selected_as": "agency-level well-known set (synthetic surface)",
-   "selection_source": "frame: one synthetic host surface per Tier A agency",
-   "edi_sha256": null,
-   "carried_from_cycle_1": false
+   "selection_source": "roster host: one synthetic host surface per agency"
+  },
+  {
+   "agency": "NASS",
+   "agency_name": "National Agricultural Statistics Service",
+   "tier": "A",
+   "host": "www.nass.usda.gov",
+   "parent_department": "Department of Agriculture",
+   "surface_kind": "home",
+   "url": "https://www.nass.usda.gov/",
+   "doc_id": null,
+   "selected_as": "agency home",
+   "selection_source": "roster host (fss_roster_2026-09, statspolicy.gov/about/ recognized-agency list)"
   },
   {
    "agency": "NASS",
@@ -1129,7 +428,6 @@
    "doc_id": "scan-nass-flagship-1-data-statistics",
    "selected_as": "Data & Statistics",
    "selection_source": "operator declaration, cycle 1 target list",
-   "edi_sha256": null,
    "carried_from_cycle_1": true
   },
   {
@@ -1143,7 +441,19 @@
    "doc_id": "scan-nass-flagship-2-livestock-county-estimates",
    "selected_as": "Livestock County Estimates",
    "selection_source": "operator declaration, cycle 1 target list",
-   "edi_sha256": null,
+   "carried_from_cycle_1": true
+  },
+  {
+   "agency": "NASS",
+   "agency_name": "National Agricultural Statistics Service",
+   "tier": "A",
+   "host": "www.nass.usda.gov",
+   "parent_department": "Department of Agriculture",
+   "surface_kind": "machine",
+   "url": "https://www.nass.usda.gov/datasets",
+   "doc_id": "scan-nass-machine",
+   "selected_as": "Download Quick Stats data files",
+   "selection_source": "operator declaration, cycle 1 target list",
    "carried_from_cycle_1": true
   },
   {
@@ -1156,12 +466,22 @@
    "url": "https://www.nass.usda.gov/robots.txt",
    "doc_id": null,
    "selected_as": "agency-level well-known set (synthetic surface)",
-   "selection_source": "frame: one synthetic host surface per Tier A agency",
-   "edi_sha256": null,
-   "carried_from_cycle_1": false
+   "selection_source": "roster host: one synthetic host surface per agency"
   },
   {
-   "agency": "NAHMAPHI",
+   "agency": "NAHMSAPHIS",
+   "agency_name": "National Animal Health Monitoring System, Animal and Plant Health Inspection Service",
+   "tier": "A",
+   "host": "www.aphis.usda.gov",
+   "parent_department": "Department of Agriculture",
+   "surface_kind": "home",
+   "url": "https://www.aphis.usda.gov/aphis/ourfocus/animalhealth/monitoring-and-surveillance/nahms",
+   "doc_id": null,
+   "selected_as": "agency home",
+   "selection_source": "roster host (fss_roster_2026-09, statspolicy.gov/about/ recognized-agency list)"
+  },
+  {
+   "agency": "NAHMSAPHIS",
    "agency_name": "National Animal Health Monitoring System, Animal and Plant Health Inspection Service",
    "tier": "A",
    "host": "www.aphis.usda.gov",
@@ -1170,9 +490,19 @@
    "url": "https://www.aphis.usda.gov/robots.txt",
    "doc_id": null,
    "selected_as": "agency-level well-known set (synthetic surface)",
-   "selection_source": "frame: one synthetic host surface per Tier A agency",
-   "edi_sha256": null,
-   "carried_from_cycle_1": false
+   "selection_source": "roster host: one synthetic host surface per agency"
+  },
+  {
+   "agency": "BEA",
+   "agency_name": "Bureau of Economic Analysis",
+   "tier": "A",
+   "host": "www.bea.gov",
+   "parent_department": "Department of Commerce",
+   "surface_kind": "home",
+   "url": "https://www.bea.gov/",
+   "doc_id": null,
+   "selected_as": "agency home",
+   "selection_source": "roster host (fss_roster_2026-09, statspolicy.gov/about/ recognized-agency list)"
   },
   {
    "agency": "BEA",
@@ -1185,7 +515,6 @@
    "doc_id": "scan-bea-flagship-1-interactive-data",
    "selected_as": "Interactive Data",
    "selection_source": "operator declaration, cycle 1 target list",
-   "edi_sha256": null,
    "carried_from_cycle_1": true
   },
   {
@@ -1199,7 +528,6 @@
    "doc_id": "scan-bea-flagship-2-news-releases",
    "selected_as": "News Releases",
    "selection_source": "operator declaration, cycle 1 target list",
-   "edi_sha256": null,
    "carried_from_cycle_1": true
   },
   {
@@ -1209,12 +537,11 @@
    "host": "www.bea.gov",
    "parent_department": "Department of Commerce",
    "surface_kind": "machine",
-   "url": "http://www.bea.gov/api",
-   "doc_id": "scan-bea-machine-edi",
-   "selected_as": "API entry point declared in the www.bea.gov Enterprise Data Inventory",
-   "selection_source": "most frequent API-type distribution prefix in the department's /data.json Enterprise Data Inventory (12 of 14 API distributions across 26 datasets attributed to this agency); matched by format/mediaType 'api'",
-   "edi_sha256": "31baba5922d54e9bcec1ee710f96302cd3c455822e2f2f18f5c4627a3e906a3b",
-   "carried_from_cycle_1": false
+   "url": "https://www.bea.gov/open-data",
+   "doc_id": "scan-bea-machine",
+   "selected_as": "Open Data",
+   "selection_source": "operator declaration, cycle 1 target list",
+   "carried_from_cycle_1": true
   },
   {
    "agency": "BEA",
@@ -1226,9 +553,19 @@
    "url": "https://www.bea.gov/robots.txt",
    "doc_id": null,
    "selected_as": "agency-level well-known set (synthetic surface)",
-   "selection_source": "frame: one synthetic host surface per Tier A agency",
-   "edi_sha256": null,
-   "carried_from_cycle_1": false
+   "selection_source": "roster host: one synthetic host surface per agency"
+  },
+  {
+   "agency": "CENSUS",
+   "agency_name": "Bureau of the Census",
+   "tier": "A",
+   "host": "www.census.gov",
+   "parent_department": "Department of Commerce",
+   "surface_kind": "home",
+   "url": "https://www.census.gov/",
+   "doc_id": null,
+   "selected_as": "agency home",
+   "selection_source": "roster host (fss_roster_2026-09, statspolicy.gov/about/ recognized-agency list)"
   },
   {
    "agency": "CENSUS",
@@ -1241,7 +578,6 @@
    "doc_id": "scan-census-flagship-1-surveys-programs",
    "selected_as": "Surveys & Programs",
    "selection_source": "operator declaration, cycle 1 target list",
-   "edi_sha256": null,
    "carried_from_cycle_1": true
   },
   {
@@ -1255,7 +591,19 @@
    "doc_id": "scan-census-flagship-2-american-community-survey-acs",
    "selected_as": "American Community Survey (ACS)",
    "selection_source": "operator declaration, cycle 1 target list",
-   "edi_sha256": null,
+   "carried_from_cycle_1": true
+  },
+  {
+   "agency": "CENSUS",
+   "agency_name": "Bureau of the Census",
+   "tier": "A",
+   "host": "www.census.gov",
+   "parent_department": "Department of Commerce",
+   "surface_kind": "machine",
+   "url": "https://www.census.gov/data/datasets.html",
+   "doc_id": "scan-census-machine",
+   "selected_as": "Datasets",
+   "selection_source": "operator declaration, cycle 1 target list",
    "carried_from_cycle_1": true
   },
   {
@@ -1268,9 +616,19 @@
    "url": "https://www.census.gov/robots.txt",
    "doc_id": null,
    "selected_as": "agency-level well-known set (synthetic surface)",
-   "selection_source": "frame: one synthetic host surface per Tier A agency",
-   "edi_sha256": null,
-   "carried_from_cycle_1": false
+   "selection_source": "roster host: one synthetic host surface per agency"
+  },
+  {
+   "agency": "NCES",
+   "agency_name": "National Center for Education Statistics",
+   "tier": "A",
+   "host": "nces.ed.gov",
+   "parent_department": "Department of Education",
+   "surface_kind": "home",
+   "url": "https://nces.ed.gov/",
+   "doc_id": null,
+   "selected_as": "agency home",
+   "selection_source": "roster host (fss_roster_2026-09, statspolicy.gov/about/ recognized-agency list)"
   },
   {
    "agency": "NCES",
@@ -1282,9 +640,19 @@
    "url": "https://nces.ed.gov/robots.txt",
    "doc_id": null,
    "selected_as": "agency-level well-known set (synthetic surface)",
-   "selection_source": "frame: one synthetic host surface per Tier A agency",
-   "edi_sha256": null,
-   "carried_from_cycle_1": false
+   "selection_source": "roster host: one synthetic host surface per agency"
+  },
+  {
+   "agency": "EIA",
+   "agency_name": "Energy Information Administration",
+   "tier": "A",
+   "host": "www.eia.gov",
+   "parent_department": "Department of Energy",
+   "surface_kind": "home",
+   "url": "https://www.eia.gov/",
+   "doc_id": null,
+   "selected_as": "agency home",
+   "selection_source": "roster host (fss_roster_2026-09, statspolicy.gov/about/ recognized-agency list)"
   },
   {
    "agency": "EIA",
@@ -1297,7 +665,6 @@
    "doc_id": "scan-eia-flagship-1-open-data",
    "selected_as": "Open Data",
    "selection_source": "operator declaration, cycle 1 target list",
-   "edi_sha256": null,
    "carried_from_cycle_1": true
   },
   {
@@ -1311,7 +678,21 @@
    "doc_id": "scan-eia-flagship-2-eia-survey-forms",
    "selected_as": "EIA Survey Forms",
    "selection_source": "operator declaration, cycle 1 target list",
-   "edi_sha256": null,
+   "carried_from_cycle_1": true,
+   "not_admitted": "robots_disallowed",
+   "not_admitted_note": "the host's robots.txt disallows this path for the scanner's identified UA; no Document, so no Finding. RFC 9309 obeyed."
+  },
+  {
+   "agency": "EIA",
+   "agency_name": "Energy Information Administration",
+   "tier": "A",
+   "host": "www.eia.gov",
+   "parent_department": "Department of Energy",
+   "surface_kind": "machine",
+   "url": "https://www.eia.gov/opendata/browser/",
+   "doc_id": "scan-eia-machine",
+   "selected_as": "Browse data \u00bb",
+   "selection_source": "operator declaration, cycle 1 target list",
    "carried_from_cycle_1": true
   },
   {
@@ -1324,9 +705,19 @@
    "url": "https://www.eia.gov/robots.txt",
    "doc_id": null,
    "selected_as": "agency-level well-known set (synthetic surface)",
-   "selection_source": "frame: one synthetic host surface per Tier A agency",
-   "edi_sha256": null,
-   "carried_from_cycle_1": false
+   "selection_source": "roster host: one synthetic host surface per agency"
+  },
+  {
+   "agency": "NCHS",
+   "agency_name": "National Center for Health Statistics",
+   "tier": "A",
+   "host": "www.cdc.gov",
+   "parent_department": "Department of Health and Human Services",
+   "surface_kind": "home",
+   "url": "https://www.cdc.gov/nchs/index.htm",
+   "doc_id": null,
+   "selected_as": "agency home",
+   "selection_source": "roster host (fss_roster_2026-09, statspolicy.gov/about/ recognized-agency list)"
   },
   {
    "agency": "NCHS",
@@ -1339,7 +730,6 @@
    "doc_id": "scan-nchs-flagship-1-data-briefs",
    "selected_as": "Data Briefs",
    "selection_source": "operator declaration, cycle 1 target list",
-   "edi_sha256": null,
    "carried_from_cycle_1": true
   },
   {
@@ -1353,7 +743,19 @@
    "doc_id": "scan-nchs-flagship-2-early-releases-of-selected-estimates-from-the-nhis",
    "selected_as": "Early Releases of Selected Estimates from the NHIS",
    "selection_source": "operator declaration, cycle 1 target list",
-   "edi_sha256": null,
+   "carried_from_cycle_1": true
+  },
+  {
+   "agency": "NCHS",
+   "agency_name": "National Center for Health Statistics",
+   "tier": "A",
+   "host": "www.cdc.gov",
+   "parent_department": "Department of Health and Human Services",
+   "surface_kind": "machine",
+   "url": "https://www.cdc.gov/nchs/nvss/vsrr.htm",
+   "doc_id": "scan-nchs-machine",
+   "selected_as": "Vital Statistics Rapid Release",
+   "selection_source": "operator declaration, cycle 1 target list",
    "carried_from_cycle_1": true
   },
   {
@@ -1366,12 +768,22 @@
    "url": "https://www.cdc.gov/robots.txt",
    "doc_id": null,
    "selected_as": "agency-level well-known set (synthetic surface)",
-   "selection_source": "frame: one synthetic host surface per Tier A agency",
-   "edi_sha256": null,
-   "carried_from_cycle_1": false
+   "selection_source": "roster host: one synthetic host surface per agency"
   },
   {
-   "agency": "SAMHCBHSQ",
+   "agency": "SAMHSACBHS",
+   "agency_name": "Substance Abuse and Mental Health Services Administration, Center for Behavioral Health Statistics and Quality",
+   "tier": "A",
+   "host": "www.samhsa.gov",
+   "parent_department": "Department of Health and Human Services",
+   "surface_kind": "home",
+   "url": "https://www.samhsa.gov/about-us/who-we-are/offices-centers/cbhsq",
+   "doc_id": null,
+   "selected_as": "agency home",
+   "selection_source": "roster host (fss_roster_2026-09, statspolicy.gov/about/ recognized-agency list)"
+  },
+  {
+   "agency": "SAMHSACBHS",
    "agency_name": "Substance Abuse and Mental Health Services Administration, Center for Behavioral Health Statistics and Quality",
    "tier": "A",
    "host": "www.samhsa.gov",
@@ -1380,9 +792,19 @@
    "url": "https://www.samhsa.gov/robots.txt",
    "doc_id": null,
    "selected_as": "agency-level well-known set (synthetic surface)",
-   "selection_source": "frame: one synthetic host surface per Tier A agency",
-   "edi_sha256": null,
-   "carried_from_cycle_1": false
+   "selection_source": "roster host: one synthetic host surface per agency"
+  },
+  {
+   "agency": "BJS",
+   "agency_name": "Bureau of Justice Statistics",
+   "tier": "A",
+   "host": "bjs.ojp.gov",
+   "parent_department": "Department of Justice",
+   "surface_kind": "home",
+   "url": "https://bjs.ojp.gov/",
+   "doc_id": null,
+   "selected_as": "agency home",
+   "selection_source": "roster host (fss_roster_2026-09, statspolicy.gov/about/ recognized-agency list)"
   },
   {
    "agency": "BJS",
@@ -1395,7 +817,6 @@
    "doc_id": "scan-bjs-flagship-1-data-by-topic",
    "selected_as": "Data by Topic",
    "selection_source": "operator declaration, cycle 1 target list",
-   "edi_sha256": null,
    "carried_from_cycle_1": true
   },
   {
@@ -1409,7 +830,6 @@
    "doc_id": "scan-bjs-flagship-2-death-in-custody-reporting-act",
    "selected_as": "Death in Custody Reporting Act",
    "selection_source": "operator declaration, cycle 1 target list",
-   "edi_sha256": null,
    "carried_from_cycle_1": true
   },
   {
@@ -1422,9 +842,19 @@
    "url": "https://bjs.ojp.gov/robots.txt",
    "doc_id": null,
    "selected_as": "agency-level well-known set (synthetic surface)",
-   "selection_source": "frame: one synthetic host surface per Tier A agency",
-   "edi_sha256": null,
-   "carried_from_cycle_1": false
+   "selection_source": "roster host: one synthetic host surface per agency"
+  },
+  {
+   "agency": "BLS",
+   "agency_name": "Bureau of Labor Statistics",
+   "tier": "A",
+   "host": "www.bls.gov",
+   "parent_department": "Department of Labor",
+   "surface_kind": "home",
+   "url": "https://www.bls.gov/",
+   "doc_id": null,
+   "selected_as": "agency home",
+   "selection_source": "roster host (fss_roster_2026-09, statspolicy.gov/about/ recognized-agency list)"
   },
   {
    "agency": "BLS",
@@ -1436,9 +866,19 @@
    "url": "https://www.bls.gov/robots.txt",
    "doc_id": null,
    "selected_as": "agency-level well-known set (synthetic surface)",
-   "selection_source": "frame: one synthetic host surface per Tier A agency",
-   "edi_sha256": null,
-   "carried_from_cycle_1": false
+   "selection_source": "roster host: one synthetic host surface per agency"
+  },
+  {
+   "agency": "SOI",
+   "agency_name": "Statistics of Income",
+   "tier": "A",
+   "host": "www.irs.gov",
+   "parent_department": "Department of the Treasury",
+   "surface_kind": "home",
+   "url": "https://www.irs.gov/statistics/soi-tax-stats-statistics-of-income",
+   "doc_id": null,
+   "selected_as": "agency home",
+   "selection_source": "roster host (fss_roster_2026-09, statspolicy.gov/about/ recognized-agency list)"
   },
   {
    "agency": "SOI",
@@ -1451,7 +891,6 @@
    "doc_id": "scan-soi-flagship-1-individual-tax-statistics",
    "selected_as": "Individual tax statistics",
    "selection_source": "operator declaration, cycle 1 target list",
-   "edi_sha256": null,
    "carried_from_cycle_1": true
   },
   {
@@ -1465,7 +904,6 @@
    "doc_id": "scan-soi-flagship-2-business-tax-statistics",
    "selected_as": "Business tax statistics",
    "selection_source": "operator declaration, cycle 1 target list",
-   "edi_sha256": null,
    "carried_from_cycle_1": true
   },
   {
@@ -1478,9 +916,19 @@
    "url": "https://www.irs.gov/robots.txt",
    "doc_id": null,
    "selected_as": "agency-level well-known set (synthetic surface)",
-   "selection_source": "frame: one synthetic host surface per Tier A agency",
-   "edi_sha256": null,
-   "carried_from_cycle_1": false
+   "selection_source": "roster host: one synthetic host surface per agency"
+  },
+  {
+   "agency": "BTS",
+   "agency_name": "Bureau of Transportation Statistics",
+   "tier": "A",
+   "host": "www.bts.gov",
+   "parent_department": "Department of Transportation",
+   "surface_kind": "home",
+   "url": "https://www.bts.gov/",
+   "doc_id": null,
+   "selected_as": "agency home",
+   "selection_source": "roster host (fss_roster_2026-09, statspolicy.gov/about/ recognized-agency list)"
   },
   {
    "agency": "BTS",
@@ -1492,9 +940,19 @@
    "url": "https://www.bts.gov/robots.txt",
    "doc_id": null,
    "selected_as": "agency-level well-known set (synthetic surface)",
-   "selection_source": "frame: one synthetic host surface per Tier A agency",
-   "edi_sha256": null,
-   "carried_from_cycle_1": false
+   "selection_source": "roster host: one synthetic host surface per agency"
+  },
+  {
+   "agency": "NCSES",
+   "agency_name": "National Center for Science and Engineering Statistics",
+   "tier": "A",
+   "host": "ncses.nsf.gov",
+   "parent_department": "National Science Foundation",
+   "surface_kind": "home",
+   "url": "https://ncses.nsf.gov/",
+   "doc_id": null,
+   "selected_as": "agency home",
+   "selection_source": "roster host (fss_roster_2026-09, statspolicy.gov/about/ recognized-agency list)"
   },
   {
    "agency": "NCSES",
@@ -1507,7 +965,19 @@
    "doc_id": "scan-ncses-flagship-1-annual-business-survey-2024-data-year-2023",
    "selected_as": "Annual Business Survey: 2024 (Data Year 2023)",
    "selection_source": "operator declaration, cycle 1 target list",
-   "edi_sha256": null,
+   "carried_from_cycle_1": true
+  },
+  {
+   "agency": "NCSES",
+   "agency_name": "National Center for Science and Engineering Statistics",
+   "tier": "A",
+   "host": "ncses.nsf.gov",
+   "parent_department": "National Science Foundation",
+   "surface_kind": "machine",
+   "url": "https://ncses.nsf.gov/explore-data/microdata",
+   "doc_id": "scan-ncses-machine",
+   "selected_as": "Public Use Data Files",
+   "selection_source": "operator declaration, cycle 1 target list",
    "carried_from_cycle_1": true
   },
   {
@@ -1520,9 +990,19 @@
    "url": "https://ncses.nsf.gov/robots.txt",
    "doc_id": null,
    "selected_as": "agency-level well-known set (synthetic surface)",
-   "selection_source": "frame: one synthetic host surface per Tier A agency",
-   "edi_sha256": null,
-   "carried_from_cycle_1": false
+   "selection_source": "roster host: one synthetic host surface per agency"
+  },
+  {
+   "agency": "ORES",
+   "agency_name": "Office of Research, Evaluation, and Statistics",
+   "tier": "A",
+   "host": "www.ssa.gov",
+   "parent_department": "Social Security Administration",
+   "surface_kind": "home",
+   "url": "https://www.ssa.gov",
+   "doc_id": null,
+   "selected_as": "agency home",
+   "selection_source": "roster host (fss_roster_2026-09, absent from the live statspolicy.gov recognized-agency link list; carried from this repo's cycle-1 roster assessment/harness/scan/targets.yaml (OMB Statistical Policy Directive No. 1, segment spd_1#s38))"
   },
   {
    "agency": "ORES",
@@ -1534,10 +1014,133 @@
    "url": "https://www.ssa.gov/robots.txt",
    "doc_id": null,
    "selected_as": "agency-level well-known set (synthetic surface)",
-   "selection_source": "frame: one synthetic host surface per Tier A agency",
-   "edi_sha256": null,
-   "carried_from_cycle_1": false
+   "selection_source": "roster host: one synthetic host surface per agency"
+  },
+  {
+   "agency": "data.gov",
+   "agency_name": "data.gov",
+   "tier": "C",
+   "host": "www.data.gov",
+   "parent_department": null,
+   "surface_kind": "home",
+   "url": "https://www.data.gov",
+   "doc_id": null,
+   "selected_as": "the federal DCAT catalog, GSA-operated; catalog.data.gov is its machine entry point",
+   "selection_source": "roster host (Tier C, operator declaration 2026-09-08)",
+   "tier0_legs_only": true,
+   "restriction": "reference host, not a statistical agency: tier-0 legs only, never in a Tier A or Tier B denominator and never on the agencies x legs matrix"
+  },
+  {
+   "agency": "data.gov",
+   "agency_name": "data.gov",
+   "tier": "C",
+   "host": "www.data.gov",
+   "parent_department": null,
+   "surface_kind": "machine",
+   "url": "https://catalog.data.gov",
+   "doc_id": null,
+   "selected_as": "the federal DCAT catalog, GSA-operated; catalog.data.gov is its machine entry point",
+   "selection_source": "declared machine entry point (Tier C, operator declaration 2026-09-08)",
+   "tier0_legs_only": true,
+   "restriction": "reference host, not a statistical agency: tier-0 legs only, never in a Tier A or Tier B denominator and never on the agencies x legs matrix"
+  },
+  {
+   "agency": "data.gov",
+   "agency_name": "data.gov",
+   "tier": "C",
+   "host": "www.data.gov",
+   "parent_department": null,
+   "surface_kind": "well_known",
+   "url": "https://www.data.gov/robots.txt",
+   "doc_id": null,
+   "selected_as": "host-level well-known set (synthetic surface)",
+   "selection_source": "roster host: one synthetic host surface per host",
+   "tier0_legs_only": true,
+   "restriction": "reference host, not a statistical agency: tier-0 legs only, never in a Tier A or Tier B denominator and never on the agencies x legs matrix"
+  },
+  {
+   "agency": "NIST",
+   "agency_name": "NIST",
+   "tier": "C",
+   "host": "www.nist.gov",
+   "parent_department": null,
+   "surface_kind": "home",
+   "url": "https://www.nist.gov",
+   "doc_id": null,
+   "selected_as": "NIST's data portal is its declared machine entry point",
+   "selection_source": "roster host (Tier C, operator declaration 2026-09-08)",
+   "tier0_legs_only": true,
+   "restriction": "reference host, not a statistical agency: tier-0 legs only, never in a Tier A or Tier B denominator and never on the agencies x legs matrix"
+  },
+  {
+   "agency": "NIST",
+   "agency_name": "NIST",
+   "tier": "C",
+   "host": "www.nist.gov",
+   "parent_department": null,
+   "surface_kind": "machine",
+   "url": "https://data.nist.gov",
+   "doc_id": null,
+   "selected_as": "NIST's data portal is its declared machine entry point",
+   "selection_source": "declared machine entry point (Tier C, operator declaration 2026-09-08)",
+   "tier0_legs_only": true,
+   "restriction": "reference host, not a statistical agency: tier-0 legs only, never in a Tier A or Tier B denominator and never on the agencies x legs matrix"
+  },
+  {
+   "agency": "NIST",
+   "agency_name": "NIST",
+   "tier": "C",
+   "host": "www.nist.gov",
+   "parent_department": null,
+   "surface_kind": "well_known",
+   "url": "https://www.nist.gov/robots.txt",
+   "doc_id": null,
+   "selected_as": "host-level well-known set (synthetic surface)",
+   "selection_source": "roster host: one synthetic host surface per host",
+   "tier0_legs_only": true,
+   "restriction": "reference host, not a statistical agency: tier-0 legs only, never in a Tier A or Tier B denominator and never on the agencies x legs matrix"
+  },
+  {
+   "agency": "GSA",
+   "agency_name": "GSA",
+   "tier": "C",
+   "host": "www.gsa.gov",
+   "parent_department": null,
+   "surface_kind": "home",
+   "url": "https://www.gsa.gov",
+   "doc_id": null,
+   "selected_as": "GSA's developer/API landing",
+   "selection_source": "roster host (Tier C, operator declaration 2026-09-08)",
+   "tier0_legs_only": true,
+   "restriction": "reference host, not a statistical agency: tier-0 legs only, never in a Tier A or Tier B denominator and never on the agencies x legs matrix"
+  },
+  {
+   "agency": "GSA",
+   "agency_name": "GSA",
+   "tier": "C",
+   "host": "www.gsa.gov",
+   "parent_department": null,
+   "surface_kind": "machine",
+   "url": "https://open.gsa.gov",
+   "doc_id": null,
+   "selected_as": "GSA's developer/API landing",
+   "selection_source": "declared machine entry point (Tier C, operator declaration 2026-09-08)",
+   "tier0_legs_only": true,
+   "restriction": "reference host, not a statistical agency: tier-0 legs only, never in a Tier A or Tier B denominator and never on the agencies x legs matrix"
+  },
+  {
+   "agency": "GSA",
+   "agency_name": "GSA",
+   "tier": "C",
+   "host": "www.gsa.gov",
+   "parent_department": null,
+   "surface_kind": "well_known",
+   "url": "https://www.gsa.gov/robots.txt",
+   "doc_id": null,
+   "selected_as": "host-level well-known set (synthetic surface)",
+   "selection_source": "roster host: one synthetic host surface per host",
+   "tier0_legs_only": true,
+   "restriction": "reference host, not a statistical agency: tier-0 legs only, never in a Tier A or Tier B denominator and never on the agencies x legs matrix"
   }
- ],
- "shortlist_path": "docs/design/fss_flagship_shortlist.md"
+ ]
 }

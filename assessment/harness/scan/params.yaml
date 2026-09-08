@@ -39,7 +39,11 @@ cycle:
 
 manners:
   # RFC 9309: the scanner obeys the file it measures.
-  user_agent: "ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg)"
+  # ONE identity, with a contact URL a host operator can actually reach (RFC 9309 practice).
+  # DD-060: the instrument never varies its identity to get a better answer — retrying as a
+  # browser would produce data, and the data would measure our willingness to misrepresent
+  # ourselves rather than the product's accessibility. 0.2 from the 2026-09-08 frame task.
+  user_agent: "ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg)"
   requests_per_second_per_host: 1.0
   connect_timeout_seconds: 10.0
   read_timeout_seconds: 30.0

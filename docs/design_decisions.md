@@ -1034,3 +1034,45 @@ So they are: **registered** as a count (`scan_evidence_uncited_real_host_bodies`
 The corrected property is stronger than the one claimed, and it is the one the gate now checks: **the uncited set is monotonically non-increasing, and every departure from it is a citation, never a deletion.** `scripts/register_evidence_retention_result.py --cycle` decomposes the census so the arithmetic is exact rather than merely plausible: `uncited_now + newly_cited_by_this_cycle == uncited_before_this_cycle`, 417 + 1 = 418. `scan_evidence_uncited_real_host_bodies` stays bound at 418 as the pre-flight census — a Result name is bound once (AD-028) and 418 was true when it was measured — and each cycle registers its own `_<cycle>` census beside it.
 
 Nothing in the retention decision changes: the bodies stay where they are, excluded from the promoted-body integrity check and cited by nothing. What changes is the claim about how the number can move, which was mine and was wrong.
+
+---
+
+## DD-059
+
+**The frame is 16 recognized statistical agencies plus 3 reference hosts, and every surface in it is declared rather than derived.**
+
+*2026-09-08. `cc_tasks/2026-09-08_scan_frame_fss.md` with ADDENDUM-01 and ADDENDUM-05; supersedes the frame clauses of ADDENDUM-02, -03 and -04, which are withdrawn.*
+
+**Tier A** is the 16 statistical agencies and units OMB recognizes under CIPSEA 2018 (44 U.S.C. 3561(11), 3562). Every one, no sampling. The roster is PARSED from two named sources and never typed: the ICSP charter and the statspolicy.gov About page, both retained content-addressed under `corpus/evidence/frame/` and both cited by `fss_roster_2026-09`. Each tier is a parse of the sources' own flag legend — `^` a Recognized Statistical Agency or Unit, `*` a designated Statistical Official, `**` the Chair.
+
+**The two sources disagree, and the disagreement is on the roster's face.** The charter flags 16; the live About page flags 15 and links 15, while that same page's prose says 16 — it contradicts itself. The one entry that differs is `Social Security Administration, Office of Research, Evaluation, and Statistics`, which the charter flags `^` and the About page carries as `*` only. `params.frame.roster_authority` settles it and was declared BEFORE either body was parsed: membership from the charter, because it is the Council's constitutive document and enumerates under the legend; URLs from the About page, because it is the only source carrying one per agency. CISA's `.gov` registry, consulted under the withdrawn ADDENDUM-03, independently confirmed 15 of the 16 parent-department attributions (the sixteenth is a Federal Reserve name-string difference, not a disagreement about ownership).
+
+**Tier C** is three reference hosts — `data.gov`/`catalog.data.gov`, `nist.gov`/`data.nist.gov`, `gsa.gov`/`open.gsa.gov` — at **tier-0 legs only**. A tier-0 check is a property of a host that publishes data, not of a statistical product, and at that level a federal data publisher outside the statistical system is the same kind of thing as one inside it. Above tier 0 the comparison stops being like-for-like, so Tier C appears on no leg outside `params.tier0.legs`, in no Tier A denominator, and on no agencies × legs matrix. StatCan is out of the frame: the tier-0 comparison holds for federal hosts under one legal regime, which is what makes it a comparison rather than decoration. Its two cycles stay on the log, immutable, and are excluded from every FSS denominator; numerically nothing moves, because it was `error` on every leg in both.
+
+**There is no Tier B.** Fourteen departments of designated Statistical Officials with no recognized unit were carried through three drafts and are removed. They are parsed onto the roster and `fss_departments_tier_b` = 14 stands as a registered fact, used by nothing.
+
+**Every surface is declared.** The agency's home comes from the roster; products and machine entry points come from the operator's cycle-1 target list, carried forward with their `doc_id`s so two cycles of Findings stay attached to the surface they were measured on. An agency with no cycle-1 declaration carries its home and its tier-0 probes only and is marked `pending_operator_declaration`; `docs/design/fss_flagship_shortlist.md` is where that declaration gets made.
+
+**Why declared and not derived — the part worth keeping.** Three selection rules were built and all three failed, each in a way the next one did not anticipate:
+
+1. **Anchor-substring scraping of agency home pages.** Its own output falsified it: 12 flagships across 16 agencies where cycle 1's hand list had 26 for 13, 12 agencies with none at all, and matches by accident — `api` inside "Capital Markets" on the Federal Reserve's staff page, `products` inside "traveling-with-ag-products" at APHIS, whose selected "flagship products" were travel advisories.
+2. **The Enterprise Data Inventory at `/data.json`.** Sound prior art — the OPEN Government Data Act requires it — and blocked on a fact nobody publishes: the department → domain mapping. Probing the hosts that ARE derivable (the agency's own host and its registrable domain) reaches a department domain only for USDA, and found an inventory for 5 of 16 agencies and an API distribution for 1. `cdc.gov` is not `hhs.gov`, `bls.gov` is not `dol.gov`.
+3. **CISA's `.gov` registry plus data.gov's harvest API.** The registry has no primary-domain field — one row per domain, 28 for Labor, 124 for HHS, and neither `hhs.gov` nor `ed.gov` nor `treasury.gov` is in its department's suborganization-empty set — and data.gov's CKAN action API is gone: `organization_list`, `harvest_source_list` and `package_search` all answer HTTP 404.
+
+**The government publishes no machine-readable department → inventory map.** That is a recorded observation about the federal data estate, not a defect in the harness, and it belongs in the report rather than in a workaround. Tier 0 needs none of it: what a tier-0 leg asks is answered against a host, and the host is on the roster.
+
+---
+
+## DD-060
+
+**One client identity, contact URL on its face, and refusals are findings.**
+
+*2026-09-08. `cc_tasks/2026-09-08_scan_frame_fss.md` §5.*
+
+The scanner identifies itself as `ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg)` — one identity, RFC 9309 practice, with a contact URL a host operator can actually reach. `params.manners.user_agent` is the single place it is written.
+
+**The instrument never varies its identity to get a better answer.** `www.bls.gov`, `www.bts.gov` and `www.ssa.gov` answer 403 to an identified, robots-compliant client, across the 2026-09-07 pre-flight, both scan cycles and the 2026-09-08 pre-flight of this frame. Retrying as a browser would produce data, and the data would be a measurement of our willingness to misrepresent ourselves rather than of the product's accessibility. So a refusal is recorded as a refusal, its surfaces stay in the frame, and their legs return `error` — which the harness already distinguishes from `fail` (DD-052 §6: `error` means the COLLECTOR could not observe, never that the product failed).
+
+Dropping a refused surface would be worse than retrying. It would quietly restrict the instrument to the agencies that let us look, which is the worst possible sampling rule for an accessibility assessment, and it would make the refusal invisible in exactly the measurement it most belongs in.
+
+**Cadence: monthly, from cycle 3, first Monday UTC**, run through the existing launchd pattern — and **only after cycle 3 validates the full frame**. No scheduler is installed by this task. The pre-flight is what a cycle is scheduled against: 19 hosts, 2 probes each, and a fresh answer to which hosts will refuse before any leg runs.

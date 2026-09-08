@@ -1,23 +1,30 @@
 #!/usr/bin/env python3
-"""Targets from the Enterprise Data Inventory, not from scraping. **Zero model spend.**
+"""The target list, DECLARED. **Zero model spend. No network in the build itself.**
 
-Task `cc_tasks/2026-09-08_scan_frame_fss.md` §2 as REPLACED by `..._ADDENDUM-02.md`. The rule
-this replaces scraped agency home pages for anchor substrings and its own output falsified it;
-`assessment/harness/scan/frame.py` carries that history. What runs now reads each department's
-own DCAT-US declaration at `/data.json` (OPEN Government Data Act, 44 U.S.C. 3511).
+Task `cc_tasks/2026-09-08_scan_frame_fss.md` §2 as finally settled by `..._ADDENDUM-05.md`,
+which withdraws ADDENDUM-02, -03 and -04 and removes Tier B.
 
-**Network:** one GET per candidate inventory host, at most two per Tier A agency and
-de-duplicated across agencies that share a department, plus nothing at all for Tier B and Tier
-C (their probes are §3's). Identified UA, 1 req/s per host, robots obeyed.
+**Nothing here selects a surface.** Three rules were tried and all three were derivations the
+operator never asked for: anchor-substring scraping of agency home pages (its own output
+falsified it), the Enterprise Data Inventory (blocked on a department -> domain mapping), and
+the CISA registry plus data.gov's harvest API (the registry has no primary-domain field and the
+API is gone). Tier 0 needs none of it. What a tier-0 leg asks — is `robots.txt` served, are the
+discovery files there, does a deep link behave, is the machine layer declared, do the declared
+and enforced layers agree — is answered against a HOST, and the host is on the roster.
 
-**Which hosts carry an inventory is itself derived, and the derivation is the weak point.**
-The department -> domain mapping is on NEITHER named roster source: the ICSP charter and the
-statspolicy.gov About page both name departments in prose and neither carries a URL for one.
-So the rule probes the agency's own host and its registrable domain and records which served.
-Where a department's domain is not the agency's registrable domain — `census.gov` sits under
-Commerce, `bls.gov` under Labor — the result is a RECORDED null, never an invented host. The
-proper resolver is the organization list at `catalog.data.gov`, and it is named for the next
-task rather than reached for here.
+So the frame is 16 Tier A agencies plus 3 Tier C reference hosts, and every surface is either
+
+* a **roster host** — the agency's or reference host's home, which the roster already carries
+  from its own parsed source; or
+* an **operator declaration** — the cycle-1 target list, carried forward with its `doc_id`s so
+  two cycles of Findings stay attached to the surface they were measured on.
+
+An agency with no cycle-1 declaration carries its home and its probes and is marked
+`pending_operator_declaration`; `docs/design/fss_flagship_shortlist.md` is where that
+declaration gets made. A guess is not a declaration and this script does not make one.
+
+`assessment/harness/scan/frame.py` still exists and is still tested, and **nothing in this
+build calls it** (ADDENDUM-05). Its history is why.
 
     /opt/anaconda3/bin/python3 scripts/build_fss_targets.py --dry-run
     /opt/anaconda3/bin/python3 scripts/build_fss_targets.py
@@ -25,9 +32,7 @@ task rather than reached for here.
 from __future__ import annotations
 
 import argparse
-import hashlib
 import json
-import re
 import sys
 import urllib.parse
 from datetime import datetime, timezone
@@ -36,248 +41,122 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO))
 sys.path.insert(0, str(REPO / "assessment" / "harness"))
-sys.path.insert(0, str(REPO / "scripts"))
 
-from scan import frame, load_params                                 # noqa: E402
+from scan import load_params                                        # noqa: E402
 
 TASK = "cc_tasks/2026-09-08_scan_frame_fss.md"
-ADDENDUM = "cc_tasks/2026-09-08_scan_frame_fss_ADDENDUM-02.md"
+ADDENDUM = "cc_tasks/2026-09-08_scan_frame_fss_ADDENDUM-05.md"
 ROSTER = REPO / "state" / "fss_roster_2026-09.json"
+CYCLE1 = REPO / "state" / "scan_targets_2026-09.json"
 OUT = REPO / "state" / "scan_targets_fss_2026-09.json"
-SHORTLIST = REPO / "docs" / "design" / "fss_flagship_shortlist.md"
-EVIDENCE = REPO / "corpus" / "evidence" / "frame"
 EPOCH = "scan-fss-2026-09"
-CYCLE1_TARGETS = REPO / "state" / "scan_targets_2026-09.json"
+
+#: Out of the frame from here on. Its two cycles stay on the log, immutable, and are excluded
+#: from every FSS denominator: it is not a federal publisher, and the tier-0 comparison holds
+#: for federal hosts under ONE legal regime, which is what makes it a comparison rather than
+#: decoration. Numerically nothing moves — it was `error` on every leg in both cycles.
+OUT_OF_FRAME = {"STATCAN"}
 
 
-def _slug(text: str, n: int = 60) -> str:
-    return re.sub(r"[^a-z0-9]+", "-", str(text).lower()).strip("-")[:n].strip("-")
-
-
-def retain(body: bytes) -> tuple:
-    EVIDENCE.mkdir(parents=True, exist_ok=True)
-    d = hashlib.sha256(body).hexdigest()
-    p = EVIDENCE / d[:2] / d
-    p.parent.mkdir(parents=True, exist_ok=True)
-    if not p.exists():
-        p.write_bytes(body)
-    return d, str(p.relative_to(REPO))
+def host_of(url: str) -> str:
+    return urllib.parse.urlsplit(url or "").netloc.lower()
 
 
 def cycle1_rows() -> list:
-    """The operator's cycle-1 declaration, which ADDENDUM-02 §2.b makes the flagship source."""
-    if not CYCLE1_TARGETS.is_file():
+    if not CYCLE1.is_file():
         return []
-    return json.loads(CYCLE1_TARGETS.read_text(encoding="utf-8"))["rows"]
+    return [r for r in json.loads(CYCLE1.read_text(encoding="utf-8"))["rows"]
+            if r.get("doc_id") and str(r.get("agency", "")).upper() not in OUT_OF_FRAME]
 
 
-def cycle1_code_for(entry: dict, rows: list) -> str | None:
-    """The cycle-1 agency CODE for a roster entry, matched on host.
+def build(params: dict, roster: dict) -> dict:
+    declared = cycle1_rows()
+    by_host: dict = {}
+    for r in declared:
+        by_host.setdefault(host_of(r["url"]), []).append(r)
 
-    On the HOST, not on a derived acronym. My first pass derived codes from the unit name and
-    produced `NAHMAPHIS`, `SAMHSACBHSQ` and `RES`, none of which is any cycle-1 code, so only
-    4 of 26 cycle-1 surfaces carried forward and the rest looked dropped. The host is the one
-    thing both records state the same way.
-    """
-    host = (entry.get("host") or "").lower()
-    if not host:
-        return None
-    for r in rows:
-        if urllib.parse.urlsplit(r.get("url") or "").netloc.lower() == host:
-            return str(r.get("agency"))
-    for r in rows:                                   # registrable-domain fallback, recorded
-        if frame.registrable_domain(urllib.parse.urlsplit(r.get("url") or "").netloc.lower()) \
-                == frame.registrable_domain(host):
-            return str(r.get("agency"))
-    return None
+    rows, agencies, hosts = [], [], []
 
-
-def code_for(entry: dict, rows: list, taken: set) -> tuple:
-    """(code, source). Cycle 1's code where the agency is one cycle 1 measured — so its
-    `doc_id`s and its two cycles of Findings stay attached — else derived from the unit name.
-    """
-    got = cycle1_code_for(entry, rows)
-    if got and got.upper() not in taken:
-        return got.upper(), "cycle-1 target list, matched on host"
-    words = [w for w in re.sub(r"[^A-Za-z ]", " ", entry["unit_name"]).split()
-             if w[:1].isupper() and w.lower() not in
-             ("of", "the", "and", "for", "department", "office", "division", "board",
-              "governors", "system", "administration", "service", "services")]
-    base = ("".join(w[0] for w in words) or _slug(entry["unit_name"])[:6]).upper()
-    code, i = base, 2
-    while code in taken:
-        code, i = f"{base}{i}", i + 1
-    return code, "derived from the unit name (not measured in cycle 1)"
-
-
-def fetch_inventory(fetcher, host: str, params: dict, cache: dict) -> dict:
-    """One `/data.json` probe per host, cached across the agencies that share a department."""
-    if host in cache:
-        return cache[host]
-    url = f"https://{host}{params['frame']['edi']['path']}"
-    try:
-        r = fetcher.raw_get(url)
-    except Exception as exc:                                        # noqa: BLE001
-        from scan.errors import classify_exception
-        cache[host] = {"url": url, "status": None, "served": False,
-                       "error_class": classify_exception(exc),
-                       "error": f"{type(exc).__name__}: {exc}"}
-        return cache[host]
-    out = {"url": url, "status": r["status"], "bytes": len(r["body"]),
-           "content_type": (r["headers"].get("content-type") or "").split(";")[0].strip(),
-           "served": False, "catalog": None}
-    if r["status"] == 200 and r["body"]:
-        try:
-            cat = json.loads(r["body"].decode("utf-8", "replace"))
-        except Exception as exc:                                    # noqa: BLE001
-            out["parse_error"] = f"{type(exc).__name__}: {exc}"
-        else:
-            if isinstance(cat, dict) and frame.datasets(cat):
-                d, path = retain(r["body"])
-                out.update({"served": True, "catalog": cat, "sha256": d, "retained": path,
-                            "datasets": len(frame.datasets(cat))})
-            else:
-                out["parse_error"] = "200 at /data.json but no DCAT `dataset` array"
-    cache[host] = out
-    return out
-
-
-def build(params: dict, roster: dict, fetcher) -> dict:
-    prior = cycle1_rows()
-    cache: dict = {}
-    agencies, rows, taken = [], [], set()
-
-    for entry in roster["tier_a"]:
-        code, code_source = code_for(entry, prior, taken)
-        taken.add(code)
-        rec = {"agency": code, "agency_code_source": code_source,
-               "agency_name": entry["unit_name"], "tier": "A",
-               "parent_department": entry["parent_department"], "host": entry["host"],
-               "home_url": entry["home_url"], "home_url_source": entry["home_url_source"]}
-
-        inv, probed = None, []
-        for host in frame.edi_hosts(entry["host"] or "", params):
-            got = fetch_inventory(fetcher, host, params, cache)
-            probed.append({"host": host, "status": got.get("status"),
-                           "served": got["served"], "sha256": got.get("sha256"),
-                           "datasets": got.get("datasets"),
-                           "note": got.get("parse_error") or got.get("error")})
-            print(f"  {code:8s} /data.json {host:28s} HTTP {got.get('status')} "
-                  f"{'EDI' if got['served'] else '-'}", flush=True)
-            if got["served"]:
-                inv = got
-                break
-        rec["edi_probed"] = probed
-        rec["edi_host"] = urllib.parse.urlsplit(inv["url"]).netloc if inv else None
-        rec["edi_sha256"] = inv.get("sha256") if inv else None
-        rec["edi_retained"] = inv.get("retained") if inv else None
-
-        if inv:
-            names = [entry["unit_name"], entry["name"]]
-            got = frame.for_agency(frame.datasets(inv["catalog"]), names)
-            rec.update({"edi_datasets_for_agency": got["n"],
-                        "edi_matched_by": got["matched_by"],
-                        "edi_datasets_total": inv["datasets"]})
-            machine = frame.api_entry_point(got["datasets"], params)
-            rec["shortlist"] = frame.shortlist(got["datasets"], params)
-        else:
-            rec.update({"edi_datasets_for_agency": 0,
-                        "edi_matched_by": {}, "edi_datasets_total": 0})
-            machine = {"url": None, "marker": "no_enterprise_data_inventory_found"}
-            rec["shortlist"] = []
-        rec["machine"] = machine
-
-        flags = frame.declared_flagships(code, prior, params)
-        rec["flagships"] = flags
-        agencies.append(rec)
-
-        base = {k: rec[k] for k in ("agency", "agency_name", "tier", "host",
-                                    "parent_department")}
-        for f in flags["flagships"]:
-            rows.append({**base, "surface_kind": "flagship", "url": f["url"],
-                         "doc_id": f["doc_id"], "selected_as": f["selected_as"],
-                         "selection_source": f["selection_source"],
-                         "edi_sha256": None, "carried_from_cycle_1": True})
-        if machine.get("url"):
-            rows.append({**base, "surface_kind": "machine", "url": machine["url"],
-                         "doc_id": f"scan-{code.lower()}-machine-edi",
-                         "selected_as": f"API entry point declared in the "
-                                        f"{rec['edi_host']} Enterprise Data Inventory",
-                         "selection_source": machine["selection_source"],
-                         "edi_sha256": rec["edi_sha256"], "carried_from_cycle_1": False})
+    for e in roster["tier_a"]:
+        host = (e.get("host") or "").lower()
+        mine = by_host.get(host, [])
+        code = (str(mine[0]["agency"]).upper() if mine
+                else "".join(w[0] for w in e["unit_name"].split() if w[:1].isupper())[:10]
+                or "UNKNOWN")
+        base = {"agency": code, "agency_name": e["unit_name"], "tier": "A", "host": host,
+                "parent_department": e["parent_department"]}
+        hosts.append({"host": host, "tier": "A", "agency": code})
+        # The home row: every host gets one, and it is where the tier-0 legs land.
+        rows.append({**base, "surface_kind": "home", "url": e["home_url"], "doc_id": None,
+                     "selected_as": "agency home",
+                     "selection_source": "roster host (fss_roster_2026-09, "
+                                         f"{e['home_url_source']})"})
+        for r in mine:
+            rows.append({**base, "surface_kind": r["surface_kind"], "url": r["url"],
+                         "doc_id": r["doc_id"], "selected_as": r.get("selected_as"),
+                         "selection_source": "operator declaration, cycle 1 target list",
+                         "carried_from_cycle_1": True})
         rows.append({**base, "surface_kind": "well_known",
-                     "url": f"https://{rec['host']}/robots.txt", "doc_id": None,
+                     "url": f"https://{host}/robots.txt", "doc_id": None,
                      "selected_as": "agency-level well-known set (synthetic surface)",
-                     "selection_source": "frame: one synthetic host surface per Tier A agency",
-                     "edi_sha256": None, "carried_from_cycle_1": False})
+                     "selection_source": "roster host: one synthetic host surface per agency"})
+        agencies.append({**base, "declared_surfaces": len(mine),
+                         "pending_operator_declaration": not mine,
+                         "marker": None if mine else "pending_operator_declaration"})
 
-    tier_b = [{"name": e["name"], "tier": "B", "host": e.get("host"),
-               "no_host_on_source": True,
-               "note": ("neither named roster source carries a URL for a department without a "
-                        "recognized statistical unit, so this row has no host to probe; "
-                        "resolving it needs the catalog.data.gov organization list")}
-              for e in roster["tier_b"]]
-    tier_c = [{**t, "tier": "C"} for t in roster.get("tier_c", [])]
+    for t in roster.get("tier_c", []):
+        host = t["host"].lower()
+        base = {"agency": t["name"], "agency_name": t["name"], "tier": "C", "host": host,
+                "parent_department": None}
+        hosts.append({"host": host, "tier": "C", "agency": t["name"]})
+        for kind, url, why in (
+                ("home", t["home"], "roster host (Tier C, operator declaration 2026-09-08)"),
+                ("machine", t["machine_entry_point"],
+                 "declared machine entry point (Tier C, operator declaration 2026-09-08)")):
+            rows.append({**base, "surface_kind": kind, "url": url, "doc_id": None,
+                         "selected_as": t["reason"], "selection_source": why,
+                         "tier0_legs_only": True, "restriction": t["restriction"]})
+        rows.append({**base, "surface_kind": "well_known",
+                     "url": f"https://{host}/robots.txt", "doc_id": None,
+                     "selected_as": "host-level well-known set (synthetic surface)",
+                     "selection_source": "roster host: one synthetic host surface per host",
+                     "tier0_legs_only": True, "restriction": t["restriction"]})
 
-    pending = [a["agency"] for a in agencies if a["flagships"]["pending"]]
+    # A doc_id row that is NOT admitted cannot produce a Finding — `OBSERVED_ON` requires a
+    # `:Document` — so the target list says so on the row rather than letting a reader assume
+    # every declared surface is measurable. The one case is `scan-eia-flagship-2-eia-survey-
+    # forms`: `eia.gov/robots.txt` disallows it for this UA and the scanner obeys the file it
+    # measures. That is a recorded property of the surface, not a gap in the frame.
+    from kg import manifest as _manifest
+    admitted = {e["doc_id"] for e in _manifest._load_entries()}
+    for r in rows:
+        if r.get("doc_id") and r["doc_id"] not in admitted:
+            r["not_admitted"] = "robots_disallowed"
+            r["not_admitted_note"] = (
+                "the host's robots.txt disallows this path for the scanner's identified UA; "
+                "no Document, so no Finding. RFC 9309 obeyed.")
+
+    pending = sorted(a["agency"] for a in agencies if a["pending_operator_declaration"])
     return {
         "task": TASK, "addendum": ADDENDUM, "epoch": EPOCH,
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "derived_from": "fss_roster_2026-09",
         "source_type": "product_surface",
         "construct_arm": "publication_actionability",
-        "agencies": len(roster["tier_a"]),
+        "frame": "16 OMB-recognized statistical agencies and units (Tier A) + 3 reference "
+                 "hosts (Tier C, tier-0 legs only). No Tier B. Nothing outside these hosts.",
+        "tier_a_agencies": sum(1 for h in hosts if h["tier"] == "A"),
+        "tier_c_hosts": sum(1 for h in hosts if h["tier"] == "C"),
+        "hosts": hosts, "host_count": len(hosts),
         "surfaces": len(rows),
         "by_kind": {k: sum(1 for r in rows if r["surface_kind"] == k)
-                    for k in ("flagship", "machine", "well_known")},
-        "edi_hosts_serving": sorted({a["edi_host"] for a in agencies if a["edi_host"]}),
-        "agencies_with_edi": sum(1 for a in agencies if a["edi_host"]),
-        "agencies_with_api_distribution": sum(
-            1 for a in agencies if (a["machine"] or {}).get("url")),
-        "agencies_flagships_pending": pending,
-        "flagships_declared": sum(len(a["flagships"]["flagships"]) for a in agencies),
-        "tier_b": tier_b, "tier_c": tier_c,
+                    for k in sorted({r["surface_kind"] for r in rows})},
+        "carried_from_cycle_1": sorted(r["doc_id"] for r in rows if r.get("doc_id")),
+        "doc_id_rows_not_admitted": sorted(r["doc_id"] for r in rows
+                                           if r.get("doc_id") and r.get("not_admitted")),
+        "agencies_pending_operator_declaration": pending,
+        "statcan_excluded": sorted(OUT_OF_FRAME),
         "agency_detail": agencies, "rows": rows}
-
-
-def write_shortlist(doc: dict) -> str:
-    """The operator's shortlist. **Offered, never selected from** (ADDENDUM-02 §2.b)."""
-    out = [
-        "# Flagship shortlist for operator declaration",
-        "",
-        f"Generated by `scripts/build_fss_targets.py` from each department's `/data.json`",
-        f"Enterprise Data Inventory. Task {doc['task']}, {doc['addendum']} §2.b.",
-        "",
-        "**This is a shortlist, not a selection.** The inventory carries no field that ranks",
-        "datasets, so ranking them would be a value judgment the source does not make. The rows",
-        "below are ordered by the inventory's own `modified` date, most recent first, purely so",
-        "a human has somewhere to start. Nothing here enters the target list until the operator",
-        "declares it; until then these agencies carry a machine entry point and tier-0 host",
-        "probes only, marked `flagships_pending_operator_declaration`.",
-        "",
-        f"Agencies pending: **{len(doc['agencies_flagships_pending'])}** of {doc['agencies']} "
-        f"— {', '.join(doc['agencies_flagships_pending']) or 'none'}.",
-        "",
-    ]
-    for a in doc["agency_detail"]:
-        if not a["flagships"]["pending"]:
-            continue
-        out += [f"## {a['agency']} — {a['agency_name']}", "",
-                f"Parent: {a['parent_department']}. Host: `{a['host']}`. "
-                f"Inventory: `{a['edi_host'] or 'none found'}`"
-                + (f" (sha256 `{a['edi_sha256'][:12]}…`, "
-                   f"{a['edi_datasets_for_agency']} of {a['edi_datasets_total']} datasets "
-                   f"attributed to this agency)" if a["edi_sha256"] else ""), ""]
-        if not a["shortlist"]:
-            out += ["_No dataset in any reachable inventory is attributed to this agency._", ""]
-            continue
-        out += ["| modified | title | landing page |", "|---|---|---|"]
-        for r in a["shortlist"]:
-            out.append(f"| {r['modified'][:10]} | {r['title'][:70]} | {r['landing_page']} |")
-        out.append("")
-    SHORTLIST.parent.mkdir(parents=True, exist_ok=True)
-    SHORTLIST.write_text("\n".join(out) + "\n", encoding="utf-8")
-    return str(SHORTLIST.relative_to(REPO))
 
 
 def main(argv=None) -> int:
@@ -285,21 +164,18 @@ def main(argv=None) -> int:
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--dry-run", action="store_true")
     a = ap.parse_args(argv)
-    params = load_params()
-    roster = json.loads(ROSTER.read_text(encoding="utf-8"))
-    from scan.manners import Fetcher
-    doc = build(params, roster, Fetcher(params))
+    doc = build(load_params(), json.loads(ROSTER.read_text(encoding="utf-8")))
     brief = {k: v for k, v in doc.items()
-             if k not in ("rows", "agency_detail", "tier_b", "tier_c")}
+             if k not in ("rows", "agency_detail", "hosts", "carried_from_cycle_1")}
     print(json.dumps(brief, indent=1))
+    print(f"carried forward: {len(doc['carried_from_cycle_1'])} cycle-1 doc_ids")
     if a.dry_run:
         for r in doc["rows"]:
-            print(f"  {r['agency']:8s} {r['surface_kind']:11s} "
-                  f"{str(r['selected_as'])[:44]:46s} {r['url'][:58]}")
+            print(f"  {r['tier']} {str(r['agency'])[:12]:14s} {r['surface_kind']:11s} "
+                  f"{str(r['url'])[:64]}")
         return 0
-    doc["shortlist_path"] = write_shortlist(doc)
     OUT.write_text(json.dumps(doc, indent=1, default=str) + "\n", encoding="utf-8")
-    print(f"-> {OUT.relative_to(REPO)} and {doc['shortlist_path']}", file=sys.stderr)
+    print(f"-> {OUT.relative_to(REPO)}", file=sys.stderr)
     return 0
 
 

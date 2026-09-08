@@ -1,61 +1,56 @@
-# CC Task — eda-and-charts: the 2026-09-07 cycle as four figures, every number a registered Result
+# CC Task: eda-and-charts: the week's progress and gap views, every number re-derived from the graph
 
 **Date:** 2026-09-07
 **Project:** ai-readiness-kg
-**Authored by:** Desktop session (OODA on `2026-09-07_scan_run_RESULT.md`; every count below was re-read from the Result registry by Cypher on 2026-09-07, not from the RESULT prose)
-**Fulfils:** ResearchTask `eda-and-charts` (`c1ede3d9`). Predecessor `scan-run` (`e3e38014`) completed 11:38Z. **Runs after `cc_tasks/2026-09-07_framework_projection_repair.md`** and reads the graph that task repairs; if that task's RESULT reports its gate failed, stop here and report.
-**Spend:** zero model calls. No network.
-
-**Premise (verified):** 149 Results exist for the cycle and the framework snapshots, all `proposed`, all named; per leg for 15 legs: `scan_<leg>_pass`, `_fail`, `_error`, `_not_applicable`, `_applicable_n` (= 23 on every leg), `_pass_rate`; cycle: `scan_surfaces` 40, `scan_findings` 404, `scan_observations` 2018, `scan_control_findings_2026-09-07` 33, `scan_surfaces_unobservable` 3, `scan_agencies_unobservable` 1, `scan_agencies_with_no_admitted_surface` 4, `scan_hosts_refusing_or_unreachable` 5; A12 candidate counts `scan_a12_pass` 8 / `_fail` 4 / `_not_applicable` 1 / `_error` 1; framework snapshots `framework_indicators_measured_2026-09-07` 16, `_harness_built_2026-09-07` 1, `_specified_2026-09-07` 31, `framework_indicators_harness_built_after_review` 15 (02:16Z). DataFile `scan_matrix_2026-09-07` (`f2e33667`) holds the 26 × 15 verdict matrix. **Not registered:** any Wilson bound (the RESULT quotes 15 intervals from nowhere in the registry), the 2026-09-06 snapshot counts, per-criterion status counts. `error_class` on the log misfiles ECONNRESET as `dns` (RESULT §6.2), so no figure in this task breaks errors out by class.
-
-**Operator constraints in force (not re-decided here):** no composite score; no ranking of agencies; legs are not comparable across legs and no figure may imply they are; every fraction printed with its count; unobservable and un-admitted agencies shown, never dropped; all rendering static, inline SVG, no CDN; the page is served through webdesktop or not at all.
-
-**Zero edits to:** any rule module, `params.yaml`, the target list, events, the G1 harness, `assessment/cq/*.yaml`, `framework/ai_readiness_framework.json`, any prior cc_task or RESULT.
+**Authored by:** Desktop session (OODA on `2026-09-07_scan_run_RESULT.md`)
+**Fulfils:** ResearchTask `eda-and-charts` (`c1ede3d9`); predecessor `scan-run` (`e3e38014`) completed 2026-09-07T11:38Z.
+**Spend:** zero model calls (the existing test asserts it). **Network: none.** This task scans nothing and fetches nothing; it reads the graph, the framework JSON, the fixtures, and git history.
+**Zero edits to:** any rule module, `params.yaml`, the target list, the G1 harness, `assessment/cq/*.yaml`, indicator content in the framework JSON. The only framework write permitted is the projection in §0, which changes no cell.
 
 **Immutable once written. Changes require a new task file or an `_ADDENDUM-NN.md` sibling. Glob and read all siblings `2026-09-07_eda_and_charts_ADDENDUM*.md` before starting.**
 
 ---
 
-## 0. Grounding (prior art the figures are built on; cite in the RESULT and the page footer)
-- Intervals: Wilson (1927, JASA 22:209); Brown, Cai and DasGupta (2001, Statist. Sci. 16:101) and Newcombe (1998, Stat. Med. 17:857) both recommend Wilson over Wald at small n and at 0 or n successes. Already this harness's convention; this task makes the bounds registered Results instead of prose.
-- Zero counts: Hanley and Lippman-Hand (1983, JAMA 249:1743), the rule of three: with 0 events in n, the 95% upper bound is about 3/n (3/23 = 0.13, against Wilson 0.14). Print the Wilson bound; footnote the rule of three as the reader's sanity check.
-- Encoding: Cleveland and McGill (1984, JASA 79:531) and Cleveland (1985, *The Elements of Graphing Data*): position along a common scale beats length; use dot-and-interval plots, not bars, for the rates. Bars also assert a zero baseline as a claim, which for eight legs at 0/23 is the very point under caution (RESULT §9).
-- Matrix: Bertin (1967/1983, *Semiology of Graphics*), the reorderable matrix. **Not reordered by pass count here**: reordering rows by score is a ranking of agencies, which is forbidden. Rows grouped by agency in a fixed order; columns grouped by criterion.
-- Fractions: Gigerenzer and Hoffrage (1995, Psychol. Rev. 102:684): natural frequencies (`4/23`) beside every rate, never a bare percentage.
-- Small multiples for the progress view: Tufte (1983, *The Visual Display of Quantitative Information*).
+## Premises, verified against the graph 2026-09-07 before this file was written
 
-## 1. Register what the figures need, before drawing anything
-- `scan_<leg>_wilson_lo_2026-09-07` and `scan_<leg>_wilson_hi_2026-09-07` for the 15 legs (30 Results), z = 1.959964, computed by **one** function `assessment/harness/scan/stats.py::wilson(k, n, z)` with a unit test against the closed form for (0, 23), (16, 23), (19, 23), (23, 23) and against the 2-dp values in the scan-run RESULT §4 table. Description states `k/n`, the observable-surface denominator, the cycle and `params_hash`.
-- `framework_indicators_measured_2026-09-06`, `_harness_built_2026-09-06`, `_specified_2026-09-06` from `git show <kg-freeze-2026-09-06 commit>:framework/ai_readiness_framework.json` (expected 2 / 0 / 46, but register what the file says; the 09-06 projection still in Neo4j before the repair task showed 46 / 2).
-- Per criterion, for the 2026-09-07 snapshot: `framework_<crit>_measured_2026-09-07`, `_harness_built_`, `_specified_` for the 7 criteria (21 Results), A12 excluded from every count (candidate).
-- `scan_agencies_total` = 14 (13 SPD-1 principal agencies + StatCan), with the roster as provenance, so the "4 of 14 invisible" fraction has a registered denominator.
-Cycle-suffixed names only (repair task §5 convention).
+- Cycle `scan_2026-09-07`, `params_hash 4a1350802619…`: 437 Findings in the graph = 390 product (67 pass / 278 fail / 45 error) + 14 A12 host (8/4/1 na/1 error) + 33 control. Matches the RESULT and `scan_findings` (404 = 390 + 14; the RESULT's §6.4 calls the 404 "product-surface Findings", which is wrong: the single `not_applicable` is A12 on EIA, a host Finding; product-surface `not_applicable` is 0).
+- 102 Results carry the cycle string; per-leg pass rates carry Wilson bounds in their description text only, not as separate numeric Results.
+- **The graph's `AssessmentIndicator` projection is stale.** Graph: 2 `measured`, 46 `specified`, no `A12` node, no `harness_built`. Framework JSON: 16 `measured`, 32 `specified`, 1 `harness_built` (E5), plus A12 `specified`/candidate (49 nodes). The RESULT's "16 of 48 measured" is true of the file and false of the graph, because `scan-run` moved status in the JSON and never re-projected. The freeze task projected once on 2026-09-06 and nothing since. This is Desktop's premise defect: the scan-run task file demanded "graph is the source of truth" and never named the projection step.
+- Two Results the scan-run task §4 demanded were not registered and the RESULT does not say so: `scan_rederived_findings` for this cycle (graph still holds the smoke cycle's 286 under the bare name; this cycle's 437 is unregistered) and `scan_params_hash`. The second was Desktop's defect: a hash is not a numeric value and cannot be a Result; the hash already rides on every Result description. Drop it. Register the first under the dated name.
 
-## 2. Four figures, as SVG files, each a Seldon `Figure` artifact linked to every Result it prints
-Directory `assessment/harness/scan/figures/scan_2026-09-07/`. Generator `assessment/harness/scan/figures.py` reads **only** the Result registry by name and the `scan_matrix_2026-09-07` DataFile; the existing integer-literal lint is extended to this module so it cannot carry a number of its own. Fonts system default; no external resource of any kind.
+## 0. Projection parity, before any chart (precondition, not the gate)
 
-**F1 `per_leg_pass_rate`** — dot at `pass_rate`, horizontal Wilson interval, `k/n` printed at each dot, legs grouped by criterion (A, B, D, F, G) and within a criterion sorted by rate; axis title states the denominator (`observable admitted surfaces, n = 23; 3 StatCan surfaces excluded as error`). A small mark per leg shows the control verdict (`passes_all` → pass, `fails_all` → fail) so a 0/23 leg is visibly a live rule and not a dead one: that is what "floors from the fixtures" means here. Caption: legs measure different constructs, no composite, one cycle, one client identity.
+1. Re-run the framework-to-graph projection recorded in `cc_tasks/2026-09-06_freeze_and_framework_graph_RESULT.md`. Do not reconstruct it; use the script that RESULT names.
+2. Assert with labelled Cypher: `AssessmentIndicator` count and per-status counts equal the JSON's (`measured` 16, `specified` 32 + A12, `harness_built` 1); A12 present and marked candidate.
+3. Add a test that fails when the JSON and the graph disagree on any indicator's `measurement_status`, and wire it into whatever the round-trip gate runs under, so the next status move cannot leave the graph behind. Append **DD-056** to `docs/design_decisions.md`: the framework JSON is the record (DD-050), the graph is its projection, and any write that moves `measurement_status` re-projects in the same step; the parity test is the enforcement. In the same DD, record the naming rule the RESULT §7.4 asked for: every cycle- or date-scoped Result name carries `_YYYY-MM-DD`; bare cycle names are retired after this task.
 
-**F2 `agencies_by_legs_matrix`** — all **14** agencies, not 26 surfaces alone: surface rows grouped under their agency (fixed roster order), the 3 StatCan rows as `error` (TCP reset, unobservable), and one row each for BLS, BTS, ORES (`no admitted surface: host refused the identified client at listing`) and NCES (`no admitted surface: listing JS-only`) in a distinct fill. Two control rows at the top (`passes_all`, `fails_all`) as the instrument's ceiling and floor. Columns grouped by criterion. Four verdict fills plus the two "not observable" fills; a legend that names them. Nothing sorted by count.
+## 1. What the page already has, audited
 
-**F3 `gap_map_by_criterion`** — 7 criteria × status (`specified` / `harness_built` / `measured`) as stacked horizontal counts with the count printed in each segment and the indicator codes listed beside the bar (48 codes total; A12 listed separately as candidate). This is the "where the gaps are" view the operator asked for; it says nothing about pass rates.
+`docs/progress/index.html` (served at `readiness.home`) gained the agencies × legs matrix and a per-leg pass-rate chart in `scan-run`. Do not redraw them from memory. For each existing figure: re-derive every plotted number from the graph (Findings by `params_hash` and `indicator_code`), compare to the registered Result, and record the check in the RESULT. Then make these changes only where the audit or the items below require them:
 
-**F4 `progress_over_snapshots`** — three snapshots (2026-09-06 freeze; 2026-09-07 02:16Z after rule review; 2026-09-07 11:03Z after scan-run), each a stacked status count out of 48, x labelled with the datetime and the commit short-hash the snapshot was read from. Three points is what exists; do not draw a trend line through them.
+- **Per-leg pass rates:** the datum at 0/23 is the interval, not the point. If the chart is a bar with an error bar, replace it with a dot-and-interval plot (Cleveland, *The Elements of Graphing Data*, 1985; dot plots over bars for estimates with uncertainty). Print `pass/n` and the Wilson bounds (Brown, Cai, DasGupta 2001, *Statistical Science* 16(2), already the project's interval) beside each leg. Print the `error` count per leg in a muted column so the excluded-from-denominator surfaces are visible on the same row. Legs sorted by rate; state on the figure that legs are not comparable to each other and that there is no composite.
+- **Matrix:** add the two control fixtures as reference rows above the agencies, visibly marked as fixtures. Those rows are "floors from the fixtures": the instrument's demonstrated ability to return all-pass and all-fail. Add four rows for BLS, BTS, NCES, ORES marked `no admitted surface` in a fill distinct from `error`, so the hole named in RESULT §5 is on the chart and not only in prose. Colour scale for verdicts: Okabe-Ito palette (Okabe & Ito 2008, colourblind-safe); do not encode a verdict by hue alone, keep the glyph.
 
-Excluded on purpose, stated in the page: error-class breakdown (§6.2 misclassification), agency composites, agency rankings, cross-leg comparison language, A12 in any fraction.
+## 2. New views
 
-## 3. Page and service
-Re-run `framework_progress.py`: replace the per-leg bar chart from scan-run §8 with F1, replace the 26-row matrix with F2, add F3 and F4, inline SVG. Footer carries the §0 citations and the non-claims from scan-run RESULT §9 verbatim. Confirm the page is a webdesktop service per `/Users/brock/GitHub/webdesktop/ONBOARDING.md` (service YAML → regenerate → install-units → caddy reload; `curl -H 'Host: <sub>.home' localhost`); if it is not yet onboarded, onboard it there and cite the YAML path in the RESULT. Never hand-edit generated output or the live Caddyfile.
+Inline SVG, no CDN, every fraction printed with numerator and denominator, every source Result named in a `<title>` or caption.
 
-## 4. Gate (the one gate of this task)
-`tests/test_scan_figures.py`:
-- `wilson()` matches the closed form at the four (k, n) pairs above to 1e-9 and the RESULT's 2-dp table;
-- the literal lint passes on `figures.py`;
-- every numeric string rendered into any of the four SVGs (walk the generated text nodes) equals a registered Result by name and value, or is a count printed from `scan_matrix_2026-09-07`; unmatched numerals fail the test with the numeral and the figure named;
-- re-derivation: for each of the 15 legs, `MATCH (f:Finding)-[:RULED_BY]->(r:Rule)-[:MEASURES]->(i:AssessmentIndicator {code: $code}) WHERE f.cycle = 'scan_2026-09-07' RETURN f.verdict, count(*)` (adapt property names to the projection; labelled Cypher on `seldon-ai-readiness-kg`) equals the registered `scan_<leg>_{pass,fail,error,not_applicable}` counts.
-**Failure writes no figures and no page: report the diff and stop.**
+- **2a. Gap map by criterion.** Seven criteria (A..G). For each: indicators by `measurement_status` (`measured`, `harness_built`, `specified`), stacked horizontal counts, A12 drawn separately as candidate and excluded from the 48. Source: the graph after §0. Register per-criterion measured counts as Results: `framework_measured_<criterion>_2026-09-07`, and the totals `framework_measured_2026-09-07` (16), `framework_specified_2026-09-07`, `framework_harness_built_2026-09-07`.
+- **2b. Positive-progress view.** A burn-up of `measured` indicators against the 48 total by date (Anderson, *Kanban*, 2010, ch. 12 for the form; it is a cumulative count, nothing more). Derive the series from the git history of `framework/ai_readiness_framework.json`: for each commit that changed any `measurement_status`, the count of `measured` at that commit and its author date. Expect two points this week (2 on 2026-09-06, 16 on 2026-09-07); draw them, do not interpolate, and the chart grows as the week does. If the history technique cannot recover a point, say so on the chart; do not backfill from memory.
+- **2c. Instrument coverage.** One small figure: 14 hosts by observation outcome for this cycle (product surface admitted and observed: 9; admitted, every leg error: STATCAN; no admitted surface: 4). Source: `scan_agencies_unobservable`, `scan_agencies_with_no_admitted_surface`, `scan_targets_hosts`. This is the figure a reader of the pass rates needs first.
+
+## 3. Register
+
+- `scan_rederived_findings_2026-09-07` = 437 (from the RESULT's gate line; re-derive by re-running the gate, not by copying).
+- The Results in §2a. Every one carries `cycle: scan_2026-09-07` where cycle-scoped, the `params_hash`, and a description that states its denominator.
+- Link each new chart's data to the Results it draws, by whatever edge the freeze task used for the existing charts; do not invent an edge type.
+
+## 4. Gate (one)
+
+**Page-to-graph parity.** A check script re-derives, from labelled Cypher alone, every number printed on `docs/progress/index.html` (pass, fail, error, n, rate, both Wilson bounds per leg; per-criterion counts; host outcome counts; burn-up points from git) and asserts each equals both the rendered value and the registered Result. Any mismatch: **write nothing to the page, register nothing, report.** The check runs in `pytest` so `seldon verify` before commit catches drift.
 
 ## 5. Report
-RESULT: `cc_tasks/2026-09-07_eda_and_charts_RESULT.md`. Lead with the §4 gate output, then the four figures by path with the Result names each one prints, then **what the figures show that the scan-run RESULT prose did not** (EDA observations, no inference, no recommendation), then every premise this task got wrong. `python -m pytest tests/ assessment/`, `seldon verify`, `git diff` empty on protected paths. `seldon cc complete`; move `c1ede3d9` to completed with this RESULT as evidence; commit, push.
 
-**SEQUENCING:** repair task complete and green → §1 → §2 → §4 (hard stop) → §3 → §5. (§4 before §3 on purpose: the page is rendered only from figures that passed.)
+RESULT: `cc_tasks/2026-09-07_eda_and_charts_RESULT.md`. Lead with the §0 parity result and the §4 gate, then the audit of the two existing figures (what changed and why), then the three new views with their numbers, then every premise this task got wrong. `python -m pytest tests/ assessment/`, `seldon verify`, `git diff` empty on protected files. `seldon cc complete`; move `c1ede3d9` to completed with this RESULT as evidence; commit, push.
+
+**SEQUENCING:** §0 (hard stop on parity failure) → §1 → §2 → §3 → §4 → §5.
