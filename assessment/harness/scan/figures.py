@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""The 2026-09-07 cycle as four figures. **Zero model spend. No network. No CDN.**
+"""One scan cycle as five figures. **Zero model spend. No network. No CDN.**
 
 Task `cc_tasks/2026-09-07_eda_and_charts.md` §2. Every number printed here comes from the
 Seldon Result registry by name or from `state/scan_matrix_2026-09-07.json`; the module carries
@@ -46,15 +46,39 @@ SCAN = Path(__file__).resolve().parent
 REPO = SCAN.parents[2]
 CONFIG = SCAN / "figures.yaml"
 sys.path.insert(0, "/Users/brock/GitHub/seldon")
+sys.path.insert(0, str(REPO / "scripts"))
+sys.path.insert(0, str(SCAN.parent))
+
+import cycle_results                                                   # noqa: E402
+from scan import load_params                                           # noqa: E402
 
 FIGURES = ("per_leg_pass_rate", "agencies_by_legs_matrix", "gap_map_by_criterion",
-           "progress_over_snapshots")
+           "progress_over_snapshots", "cycle_over_cycle")
 
 
-def config() -> dict:
-    """Read at call time, never cached — the repo convention, so a test can point it at a
-    tmp file."""
-    return yaml.safe_load(CONFIG.read_text(encoding="utf-8"))
+def config(cycle: str | None = None) -> dict:
+    """Layout from `figures.yaml`; WHICH CYCLE from `params.cycle.name`.
+
+    Read at call time, never cached — the repo convention, so a test can point it at a tmp
+    file. The cycle-dependent keys are derived rather than stored: `figures.yaml` used to
+    carry `cycle`, `cycle_suffix`, `out_dir` and `matrix_json`, which made it a second
+    definition of which cycle is being drawn, and a renderer that reads a stale one draws the
+    previous cycle's numbers under this cycle's heading without erroring.
+    """
+    cfg = yaml.safe_load(CONFIG.read_text(encoding="utf-8"))
+    cyc = cycle or load_params()["cycle"]["name"]
+    suffix = cycle_results.cycle_suffix(cyc)
+    cfg.update({"cycle": cyc, "cycle_suffix": suffix,
+                "out_dir": f"assessment/harness/scan/figures/{cyc}",
+                "matrix_json": f"state/scan_matrix_{suffix}.json"})
+    return cfg
+
+
+def rname(base: str, cfg: dict) -> str:
+    """The Result name this cycle registered `base` under. One resolver, shared with the
+    registrars (`scripts/cycle_results.name_for`), so a figure can never look up a name no
+    registrar ever bound — which is what the first cycle's bare names would do here."""
+    return cycle_results.name_for(base, cfg["cycle"])
 
 
 def slug(leg: str) -> str:
@@ -81,8 +105,8 @@ def load_results(prefixes=("scan_", "framework_")) -> dict:
         driver.close()
 
 
-def matrix() -> dict:
-    return json.loads((REPO / config()["matrix_json"]).read_text(encoding="utf-8"))
+def matrix(cfg: dict | None = None) -> dict:
+    return json.loads((REPO / (cfg or config())["matrix_json"]).read_text(encoding="utf-8"))
 
 
 def framework() -> dict:
@@ -108,11 +132,19 @@ def text(x, y, body: str, cls: str, src: str, anchor: str = "start", extra: str 
 #: DataFile artifact names, by the config key that points at the file. The figure records
 #: which of them it read, so provenance covers the figures that print no registered number at
 #: all — F2's data is entirely in the matrix, and it would otherwise have no edge to anything.
-DATA_NAMES = {"matrix_json": "scan_matrix_2026-09-07",
-              "framework_json": "ai_readiness_framework"}
+DATA_NAMES = {"framework_json": "ai_readiness_framework"}
 
 
-def svg(width, height, label: str, body: list, reads=(), files=()) -> str:
+def data_name(key: str, cfg: dict) -> str:
+    """The DataFile artifact name behind a config key. `matrix_json` is per cycle, so it is
+    derived from the cycle rather than listed — the figure and the registrar must name the
+    same artifact, and a hand-kept second copy of that name is how they stop doing so."""
+    if key == "matrix_json":
+        return f"scan_matrix_{cfg['cycle_suffix']}"
+    return DATA_NAMES[key]
+
+
+def svg(width, height, label: str, body: list, reads=(), files=(), cfg=None) -> str:
     """`data-reads` names every Result the figure LOOKED UP, printed or not. F1's control
     marks are the case that matters: their fill is decided by
     `scan_<leg>_control_fired_2026-09-07`, which never appears as a numeral, so a provenance
@@ -120,7 +152,8 @@ def svg(width, height, label: str, body: list, reads=(), files=()) -> str:
     on. `scripts/register_scan_figures.py` reads this attribute back to build the edges, so
     the dependency list cannot go stale — it is derived from the run that drew the figure."""
     attr = f' data-reads="{html.escape(" ".join(sorted(reads)))}"' if reads else ""
-    attr += f' data-files="{html.escape(" ".join(DATA_NAMES[k] for k in files))}"' if files else ""
+    attr += (f' data-files="{html.escape(" ".join(data_name(k, cfg) for k in files))}"'
+             if files else "")
     return (f'<svg viewBox="0 0 {width:g} {height:g}" width="100%" role="img" '
             f'aria-label="{html.escape(label)}"{attr}>{"".join(body)}</svg>')
 
@@ -165,7 +198,7 @@ def per_leg_pass_rate(mx: dict, R: dict, cfg: dict) -> str:
         members = [l for l in legs if criterion_of(l) == crit]
         if not members:
             continue
-        members.sort(key=lambda l: -R[f"scan_{slug(l)}_pass_rate"])
+        members.sort(key=lambda l: -R[rname(f"scan_{slug(l)}_pass_rate", cfg)])
         groups.append((crit, members))
 
     left, plot = f["label_w"], f["plot_w"]
@@ -178,8 +211,9 @@ def per_leg_pass_rate(mx: dict, R: dict, cfg: dict) -> str:
         body.append(text(0, y - f["group_label_dy"], f"criterion {crit}", "grp", "label"))
         for leg in members:
             n = f"scan_{slug(leg)}"
-            rate, lo, hi = (R[f"{n}_pass_rate"], R[f"{n}_wilson_lo_{cfg['cycle_suffix']}"],
-                            R[f"{n}_wilson_hi_{cfg['cycle_suffix']}"])
+            rate = R[rname(f"{n}_pass_rate", cfg)]
+            lo = R[f"{n}_wilson_lo_{cfg['cycle_suffix']}"]
+            hi = R[f"{n}_wilson_hi_{cfg['cycle_suffix']}"]
             cy = y + f["row_h"] / 2
             body.append(text(0, cy + f["text_dy"], leg, "lbl", "label"))
             fired = R[f"{n}_control_fired_{cfg['cycle_suffix']}"]
@@ -199,9 +233,10 @@ def per_leg_pass_rate(mx: dict, R: dict, cfg: dict) -> str:
             body.append(
                 f'<circle cx="{left + plot * rate:g}" cy="{cy:g}" r="{f["dot_r"]:g}" '
                 f'fill="{col["pass"]}"/>')
+            npass, napp = rname(f"{n}_pass", cfg), rname(f"{n}_applicable_n", cfg)
             body.append(text(left + plot + f["frac_dx"], cy + f["text_dy"],
-                             f'{as_count(R[n + "_pass"])}/{as_count(R[n + "_applicable_n"])}',
-                             "num", f"result:{n}_pass result:{n}_applicable_n"))
+                             f'{as_count(R[npass])}/{as_count(R[napp])}',
+                             "num", f"result:{npass} result:{napp}"))
             body.append(text(
                 left + plot + f["ci_dx"], cy + f["text_dy"],
                 f'[{fmt(lo, dec)}, {fmt(hi, dec)}]', "num",
@@ -220,7 +255,7 @@ def per_leg_pass_rate(mx: dict, R: dict, cfg: dict) -> str:
         body.append(text(x, base + f["tick_label_dy"], fmt(t, dec), "num", "axis", "middle"))
     return svg(cfg["canvas"]["width"], height,
                "Pass rate per leg with its Wilson 95 percent interval and denominator", body,
-               getattr(R, "seen", ()), ("matrix_json",))
+               getattr(R, "seen", ()), ("matrix_json",), cfg)
 
 
 # ---------------------------------------------------------------- F2
@@ -280,7 +315,7 @@ def agencies_by_legs_matrix(mx: dict, R: dict, cfg: dict) -> str:
                         f'<title>{html.escape(label)} · {html.escape(leg)} · '
                         f'{html.escape(title)}</title></rect>')
     return svg(width, height, "Agencies by legs, one cell per finding", body,
-               getattr(R, "seen", ()), ("matrix_json",))
+               getattr(R, "seen", ()), ("matrix_json",), cfg)
 
 
 # ---------------------------------------------------------------- F3
@@ -331,7 +366,7 @@ def gap_map_by_criterion(fw: dict, R: dict, cfg: dict) -> str:
                      " ".join(sorted(p["code"] for p in cands)), "codes", "label"))
     return svg(cfg["canvas"]["width"], height,
                "Indicators by criterion and measurement status", body,
-               getattr(R, "seen", ()), ("framework_json",))
+               getattr(R, "seen", ()), ("framework_json",), cfg)
 
 
 # ---------------------------------------------------------------- F4
@@ -368,8 +403,96 @@ def progress_over_snapshots(R: dict, cfg: dict) -> str:
             x += w
         y += f["row_h"]
     return svg(cfg["canvas"]["width"], height,
-               "Indicator measurement status at three snapshots", body,
-               getattr(R, "seen", ()), ())
+               "Indicator measurement status at the framework snapshots", body,
+               getattr(R, "seen", ()), (), cfg)
+
+
+# ---------------------------------------------------------------- F5
+
+def cycle_over_cycle(mx: dict, R: dict, cfg: dict) -> str:
+    """Both cycles' pass rates per leg, side by side, with `k/n` and the interval on each —
+    and A1 and A3 marked **rule changed, not comparable**.
+
+    The mark is the point of the figure. Two dots at different heights invite exactly one
+    reading, "the host changed", and for A1 and A3 that reading is wrong: `RULE-A1-v2` became
+    `RULE-A1-v3` and `RULE-A3-v3` became `RULE-A3-v4` between the cycles, so a difference
+    there is the instrument moving under a fixed subject. Drawing the pair and leaving the
+    reader to remember which rules moved is the failure mode; the legs that moved are read
+    from `figures.yaml` and printed on the row.
+
+    No line, no delta number, no arrow. A difference between two points is not a trend, and
+    two cycles hours apart on federal publication schedules is not a rate of change. Where a
+    leg has no interval in one cycle — no applicable denominator — that cycle's row is left
+    blank rather than plotted at zero: DD-055 again, not measured is not a zero.
+
+    Prior art, as F1: Cleveland & McGill (1984) position on a common scale; Gigerenzer &
+    Hoffrage (1995) natural frequency beside every rate; Wilson (1927) for the intervals.
+    """
+    f, ax, col = cfg["f5"], cfg["rate_axis"], cfg["colours"]
+    cmp_ = cfg["compare_to"]
+    dec = ax["tick_decimals"]
+    legs = mx["legs"]
+    left, plot = f["label_w"], f["plot_w"]
+    height = f["top"] + f["bottom"] + len(legs) * f["row_h"]
+    body = [f'<rect x="0" y="0" width="{cfg["canvas"]["width"]:g}" height="{height:g}" '
+            f'fill="none"/>']
+    #: (suffix, colours, label). The PRIOR cycle first so the current one draws on top.
+    series = [(cmp_["suffix"], col["prior"], col["prior_interval"], cmp_["label"]),
+              (cfg["cycle_suffix"], col["pass"], col["interval"],
+               f"cycle 2 · {cfg['cycle_suffix']}")]
+    y = f["top"]
+    for leg in legs:
+        n = f"scan_{slug(leg)}"
+        changed = cmp_["rule_changed"].get(leg)
+        body.append(text(0, y + f["text_dy"] + f["cycle_dy"], leg,
+                         "lbl warn" if changed else "lbl", "label"))
+        if changed:
+            body.append(text(0, y + f["text_dy"] + 2 * f["cycle_dy"],
+                             f"rule changed ({changed}): not comparable", "sub", "label"))
+        for i, (suffix, dot, bar, label) in enumerate(series):
+            cy = y + f["cycle_dy"] * (i + 1)
+            body.append(f'<line x1="{left:g}" x2="{left + plot:g}" y1="{cy:g}" y2="{cy:g}" '
+                        f'stroke="{col["axis"]}" '
+                        f'stroke-width="{cfg["canvas"]["stroke"]:g}"/>')
+            rate_key = cycle_results.name_for(f"{n}_pass_rate",
+                                              f"scan_{suffix}")
+            if rate_key not in R:
+                # A leg with no registered rate in that cycle: it had no applicable
+                # denominator, or the cycle did not judge it. Left blank on purpose.
+                body.append(text(left, cy + f["text_dy"], "not measured in this cycle",
+                                 "sub", "label"))
+                continue
+            rate = R[rate_key]
+            lo, hi = R[f"{n}_wilson_lo_{suffix}"], R[f"{n}_wilson_hi_{suffix}"]
+            body.append(
+                f'<line x1="{left + plot * lo:g}" x2="{left + plot * hi:g}" y1="{cy:g}" '
+                f'y2="{cy:g}" stroke="{bar}" stroke-width="{f["interval_w"]:g}" '
+                f'stroke-linecap="round"/>')
+            body.append(f'<circle cx="{left + plot * rate:g}" cy="{cy:g}" '
+                        f'r="{f["dot_r"]:g}" fill="{dot}">'
+                        f'<title>{html.escape(label)} · {html.escape(leg)}</title></circle>')
+            kp = cycle_results.name_for(f"{n}_pass", f"scan_{suffix}")
+            kn = cycle_results.name_for(f"{n}_applicable_n", f"scan_{suffix}")
+            body.append(text(left + plot + f["frac_dx"], cy + f["text_dy"],
+                             f'{as_count(R[kp])}/{as_count(R[kn])}', "num",
+                             f"result:{kp} result:{kn}"))
+            body.append(text(left + plot + f["note_dx"], cy + f["text_dy"],
+                             f'[{fmt(lo, dec)}, {fmt(hi, dec)}]', "num",
+                             f"result:{n}_wilson_lo_{suffix} "
+                             f"result:{n}_wilson_hi_{suffix}"))
+        y += f["row_h"]
+    base = y
+    body.append(f'<line x1="{left:g}" x2="{left + plot:g}" y1="{base:g}" y2="{base:g}" '
+                f'stroke="{col["axis"]}" stroke-width="{cfg["canvas"]["stroke"]:g}"/>')
+    for t in ax["ticks"]:
+        x = left + plot * t
+        body.append(f'<line x1="{x:g}" x2="{x:g}" y1="{base:g}" '
+                    f'y2="{base + f["tick_len"]:g}" stroke="{col["axis"]}" '
+                    f'stroke-width="{cfg["canvas"]["stroke"]:g}"/>')
+        body.append(text(x, base + f["tick_label_dy"], fmt(t, dec), "num", "axis", "middle"))
+    return svg(cfg["canvas"]["width"], height,
+               "Pass rate per leg in both cycles, with the legs whose rule changed marked",
+               body, getattr(R, "seen", ()), ("matrix_json",), cfg)
 
 
 # ---------------------------------------------------------------- build
@@ -377,12 +500,13 @@ def progress_over_snapshots(R: dict, cfg: dict) -> str:
 def build(cfg: dict | None = None, R: dict | None = None) -> dict:
     cfg = cfg or config()
     R = R if R is not None else load_results()
-    mx, fw = matrix(), framework()
+    mx, fw = matrix(cfg), framework()
     # One recorder per figure, so `data-reads` names that figure's inputs and not the union.
     out = {"per_leg_pass_rate": per_leg_pass_rate(mx, Reads(R), cfg),
            "agencies_by_legs_matrix": agencies_by_legs_matrix(mx, Reads(R), cfg),
            "gap_map_by_criterion": gap_map_by_criterion(fw, Reads(R), cfg),
-           "progress_over_snapshots": progress_over_snapshots(Reads(R), cfg)}
+           "progress_over_snapshots": progress_over_snapshots(Reads(R), cfg),
+           "cycle_over_cycle": cycle_over_cycle(mx, Reads(R), cfg)}
     assert tuple(out) == FIGURES
     return out
 
@@ -391,8 +515,9 @@ def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--dry-run", action="store_true", help="render, do not write")
+    ap.add_argument("--cycle", default=None, help="draw a cycle other than params.cycle.name")
     a = ap.parse_args(argv)
-    cfg = config()
+    cfg = config(a.cycle)
     figs = build(cfg)
     dest = REPO / cfg["out_dir"]
     written = {}

@@ -29,7 +29,12 @@ cycle:
   # a Finding can be traced to its cycle without a reader having to know which state file was
   # current on the day, and so `params_hash` moves when the target list does — a measurement
   # of a different set of surfaces is a different measurement.
-  name: scan_2026-09-07
+  # Cycle 2. `b`, not a new date: the second cycle ran on the SAME UTC day as the first, and
+  # the name is what every output path, every Result suffix and `refuse_clobber` key on — so
+  # a colliding name would point cycle 2 at cycle 1's payload. DD-041's rerun convention is
+  # exactly this suffix (`kg_diag_<metric>_2026-09-04b` against the un-suffixed first run),
+  # and DD-056 takes the suffix from here, so this cycle's Results read `..._2026-09-07b`.
+  name: scan_2026-09-07b
   targets: scan_targets_2026-09
 
 manners:

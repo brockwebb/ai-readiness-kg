@@ -40,14 +40,26 @@ sys.path.insert(0, str(REPO / "scripts"))
 import framework_writeback as fw                                    # noqa: E402
 sys.path.insert(0, str(REPO / "assessment" / "harness"))
 
+from scan import load_params                                        # noqa: E402
 from scan.rules import CANDIDATE_LEGS, CURRENT                     # noqa: E402
 
-TASK = "cc_tasks/2026-09-07_scan_run.md"
+#: Which cycle the write-back reads is `params.cycle.name`, never typed — the same single
+#: source `run.py`, `publish.py`, `scan_report.py` and `figures.py` read. A promotion to
+#: `measured` is a claim about THE FRAMEWORK made on the strength of one cycle's evidence
+#: (DD-055 §6), so a stale cycle name here would promote an indicator on last week's numbers
+#: and stamp this week's cycle onto the record of why.
 SCRIPT = "scripts/framework_writeback_measured.py"
-CYCLE = "scan_2026-09-07"
-PAYLOAD = REPO / "state" / f"{CYCLE}.json"
+#: The task that WROTE this script and its definition of `measured`. `--task` names the task
+#: that ORDERED a given run, and that is what lands on the record — a promotion's
+#: `recorded_by` should answer "who decided this indicator is measured", not "who wrote the
+#: script that can decide it".
+TASK = "cc_tasks/2026-09-07_scan_run.md"
 FRAMEWORK = REPO / "framework" / "ai_readiness_framework.json"
 COUNTS_AS_MEASURED = ("pass", "fail", "not_applicable")
+
+
+def cycle_name(override: str | None = None) -> str:
+    return override or load_params()["cycle"]["name"]
 
 
 def evidence(payload: dict) -> dict:
@@ -64,7 +76,7 @@ def evidence(payload: dict) -> dict:
     return out
 
 
-def writeback(g: dict, payload: dict, ev: dict) -> dict:
+def writeback(g: dict, payload: dict, ev: dict, cycle: str, task: str = TASK) -> dict:
     if payload.get("control_verdict") != "pass":
         raise SystemExit(f"REFUSING: the cycle's controls did not fire "
                          f"({payload.get('control_verdict')!r}); an INVALID cycle promotes "
@@ -98,12 +110,12 @@ def writeback(g: dict, payload: dict, ev: dict) -> dict:
         if best["qualifying"] > 0:
             p["measurement_status"] = "measured"
             p["measured_by"] = {
-                "cycle": CYCLE, "legs": legs, "params_hash": payload["params_hash"],
+                "cycle": cycle, "legs": legs, "params_hash": payload["params_hash"],
                 "qualifying_findings": best["qualifying"], "counts": best["counts"],
                 "definition": ("at least one pass/fail/not_applicable Finding on an admitted, "
                                "observable surface in a cycle with fired controls; `error` "
                                "does not count"),
-                "recorded_by": TASK}
+                "recorded_by": task}
             promoted.append(code)
         else:
             # E5's subject is the CYCLE, not a surface, so §0's definition — which requires a
@@ -122,8 +134,8 @@ def writeback(g: dict, payload: dict, ev: dict) -> dict:
                        "admitted surface")
             else:
                 why = "no admitted surface produced a Finding for this leg"
-            p["not_measured_reason"] = {"cycle": CYCLE, "legs": legs, "reason": why,
-                                        "counts": best["counts"], "recorded_by": TASK}
+            p["not_measured_reason"] = {"cycle": cycle, "legs": legs, "reason": why,
+                                        "counts": best["counts"], "recorded_by": task}
             held.append((code, why))
     # See `scripts/framework_writeback.py`: one definition of every denominator, regenerated
     # on every write-back (`cc_tasks/2026-09-07_scan_hygiene.md` §3). `indicators_measured` is
@@ -136,14 +148,22 @@ def writeback(g: dict, payload: dict, ev: dict) -> dict:
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--cycle", default=None,
+                    help="write back from a cycle other than params.cycle.name")
+    ap.add_argument("--task", default=None,
+                    help="the cc_task that ordered this run; recorded on the "
+                         "`framework_writeback` event so the record of record names who "
+                         "changed it")
     a = ap.parse_args(argv)
-    payload = json.loads(PAYLOAD.read_text(encoding="utf-8"))
+    cycle = cycle_name(a.cycle)
+    payload = json.loads((REPO / "state" / f"{cycle}.json").read_text(encoding="utf-8"))
     g = json.loads(FRAMEWORK.read_text(encoding="utf-8"))
-    out = writeback(g, payload, evidence(payload))
-    print(json.dumps(out, indent=1))
+    out = writeback(g, payload, evidence(payload), cycle, a.task or TASK)
+    print(json.dumps({**out, "cycle": cycle}, indent=1))
     # Through the shared writer, so the write and the `framework_writeback` event that records
     # it cannot come apart.
-    ev = fw.save(g, script=SCRIPT, task=TASK, changes=out, dry_run=a.dry_run)
+    ev = fw.save(g, script=SCRIPT, task=a.task or TASK, changes={**out, "cycle": cycle},
+                 dry_run=a.dry_run)
     print(json.dumps({k: v for k, v in ev.items() if k != "counts"}, indent=1), file=sys.stderr)
     return 0
 

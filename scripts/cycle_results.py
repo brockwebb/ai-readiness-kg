@@ -24,9 +24,11 @@ from __future__ import annotations
 
 import re
 import subprocess
+import sys
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(REPO / "scripts"))
 
 #: `scan_2026-09-07` -> `2026-09-07`. The cycle name is the parameter; the suffix is its date
 #: part, which is what DD-056's examples use (`scan_surfaces_2026-09-07`).
@@ -72,15 +74,54 @@ FIRST_CYCLE_EXCEPTIONS = frozenset({
 })
 
 
+#: The cycle that bound the bare names above. Named so `name_for` can tell "this is that
+#: cycle re-registering its own Result" from "a later cycle reaching for a bound name".
+FIRST_CYCLE = "scan_2026-09-07"
+
+
+def name_for(base: str, cycle: str) -> str:
+    """The Result name a cycle registers a metric under. **The single point of suffixing.**
+
+    DD-041's amendment is the prior art and the reason this is one function: the CQ harness
+    suffixed its FILES and not its Result NAMES, so a rerun would have overwritten a
+    registered measurement, and the fix was "applied at the single point where the name list
+    is returned so no emitter can forget it". Same shape here — an emitter names the metric
+    and never the cycle.
+
+    The first cycle keeps the bare names it already bound (DD-056 §"What is not renamed"):
+    they are immutable and cited, and re-registering them suffixed would leave two records of
+    one measurement. Every other cycle, including a re-run of a metric the first cycle never
+    bound, is suffixed.
+    """
+    if cycle == FIRST_CYCLE and base in FIRST_CYCLE_EXCEPTIONS:
+        return base
+    suffix = cycle_suffix(cycle)
+    return base if base.endswith(f"_{suffix}") else f"{base}_{suffix}"
+
+
 class ResultNameError(ValueError):
     """A per-cycle Result name that does not carry its cycle."""
 
 
 def check_name(name: str, cycle: str) -> None:
-    """Raise unless `name` carries `cycle`, or is a recorded first-cycle exception."""
-    if name in FIRST_CYCLE_EXCEPTIONS:
-        return
+    """Raise unless `name` carries `cycle`, or is the FIRST cycle re-registering its own name.
+
+    The exception is scoped to `FIRST_CYCLE`, and that scoping is the enforcement. Without it
+    the allow-list was a loophole exactly where DD-056 says it must not be: this module's own
+    docstring promises the bare names "are never reused by a later cycle", and a bare
+    `check_name` let cycle 2 through to `seldon result register`, which refuses a bound name at
+    a new value (AD-028) — mid-run, after the measurement, which is the incident DD-056 was
+    written about. Found by `tests/test_scan_run_2.py`; the hole shipped with the check.
+    """
     suffix = cycle_suffix(cycle)
+    if name in FIRST_CYCLE_EXCEPTIONS:
+        if cycle == FIRST_CYCLE:
+            return
+        raise ResultNameError(
+            f"Result name {name!r} is bound by the {FIRST_CYCLE} cycle and is a first-cycle "
+            f"exception, not a free name. DD-056: cycle {cycle} registers it as "
+            f"{name}_{suffix}. A Result name is bound once (AD-028), so reusing it here is "
+            f"refused by the registry after the measurement rather than before it.")
     if name.endswith(f"_{suffix}"):
         return
     raise ResultNameError(
@@ -101,18 +142,57 @@ def check_names(names, cycle: str) -> None:
         raise ResultNameError("\n".join(bad))
 
 
-def register(rows, cycle: str, script: str, data: str) -> dict:
+def ensure_data_file(name: str, path: str, description: str) -> str:
+    """The DataFile a cycle's Results are computed from, created if this cycle has none.
+
+    Every cycle writes a new matrix under a new name, so every cycle needs a new DataFile —
+    and `seldon result register` resolves every reference BEFORE writing an event (AD-028), so
+    a missing one refuses the whole batch rather than dropping a link. Cycle 2 hit exactly
+    that: 143 Results refused, 0 registered, which is the right failure and the wrong place to
+    discover the artifact was missing. Creating it here means the registrar that needs it is
+    the one that guarantees it.
+    """
+    from seldon_artifacts import live_artifact
+    found = live_artifact(name)
+    if found:
+        return found
+    r = subprocess.run(["seldon", "artifact", "create", "DataFile", "--actor", "cc",
+                        "-p", f"name={name}", "-p", f"path={path}",
+                        "-p", f"description={description}"],
+                       capture_output=True, text=True, cwd=REPO)
+    if r.returncode:
+        raise SystemExit(f"FATAL: cannot create DataFile {name}: {r.stderr.strip()[-400:]}")
+    made = live_artifact(name)
+    if not made:
+        raise SystemExit(f"FATAL: created DataFile {name} but cannot resolve it")
+    return made
+
+
+def register(rows, cycle: str, script: str, data: str, data_path: str | None = None,
+             data_description: str | None = None) -> dict:
     """Register a cycle's Results after checking every name. `rows` is (name, value, note).
 
     Idempotent in the only sense AD-028 allows: a name already bound AT THE SAME VALUE is this
     script re-running; at a different value it is drift and stays an error.
+
+    References are resolved to UUIDs here rather than passed as names, because
+    `--script-name` matches over superseded artifacts too: a name that was ever duplicated
+    stays unresolvable even after the twin is superseded.
     """
+    from seldon_artifacts import live_artifact
     check_names([n for n, _v, _note in rows], cycle)
+    data_id = (ensure_data_file(data, data_path, data_description)
+               if data_path else live_artifact(data))
+    script_id = live_artifact(script)
+    for label, ident, nm in (("Script", script_id, script), ("DataFile", data_id, data)):
+        if not ident:
+            raise SystemExit(f"FATAL: no live {label} artifact named {nm!r}; "
+                             f"nothing was registered")
     ok, already, failed = 0, [], []
     for n, v, note in rows:
         r = subprocess.run(["seldon", "result", "register", "--value", str(v), "--name", n,
                             "--units", n, "--description", note,
-                            "--script-name", script, "--data-name", data],
+                            "--script-id", script_id, "--data-ids", data_id],
                            capture_output=True, text=True, cwd=REPO)
         if r.returncode == 0:
             ok += 1

@@ -12,12 +12,26 @@ cite it. The overlay says, on its face, what the class should have been and why.
 both survive on the log; `scan.errors.classify_recorded_error` resolves them under the new map.
 The evidence for each correction is the observation's own stored bytes.
 
-**Scope: transport errors only.** 266 observations carry `error_class: http_4xx` on an HTTP 403
-and would be `refused` under the new map. They are NOT overlaid here: `http_4xx` was the only
-answer the old closed set had for a 403, so it was not a misfiling in the way `dns` for a
-connection reset was; and the rules already read that refusal correctly through
-`manners.unobservable_statuses`, so nothing downstream is wrong today. The count is reported so
-the next cycle's task can decide whether the log should carry one convention or two.
+**Two sources, one convention.** A failure is classified from whichever record names it:
+
+* the **recorded exception text** (`response.error`), for a transport failure — this is what
+  the harness-v3 pass overlaid, 93 observations that a `dns` fallback had misfiled;
+* the **recorded status**, for a response that arrived — `classify_status`. This is the pass
+  `cc_tasks/2026-09-07_scan_run_2.md` §1.2 adds. 266 observations carry `http_4xx` on an HTTP
+  403, which the closed set now calls `refused`.
+
+Harness-v3 reported those 266 and deliberately did not act, because `http_4xx` was the only
+answer the old closed set HAD for a 403 and nothing downstream read it wrongly. Cycle 2 acts,
+for a reason that only appears once there are two cycles: `error_class_counts` is a per-cycle
+metric compared ACROSS cycles, and cycle 2 will file its 403s as `refused` because the
+collectors now classify by status. Two conventions on one log make that comparison a
+measurement of the instrument. One convention, applied by overlay, is the alternative that
+edits nothing — `error_class_recorded` keeps what the collector wrote.
+
+**No Finding moves.** Rules read `manners.unobservable_statuses` (the status), never the class,
+so a 403 was already `error` rather than `fail`. The re-derivation gate proves it: the overlay
+is an event, not a change to the observation line, and `obs_id` is derived from the RECORDED
+class, so every stored id is untouched.
 
     /opt/anaconda3/bin/python3 scripts/reclassify_observation_errors.py --report
     /opt/anaconda3/bin/python3 scripts/reclassify_observation_errors.py
@@ -35,17 +49,51 @@ sys.path.insert(0, str(REPO))
 sys.path.insert(0, str(REPO / "assessment" / "harness"))
 
 from kg import eventlog                                              # noqa: E402
-from scan.errors import classify_recorded_error                      # noqa: E402
+from scan.errors import (classify_recorded_error,                    # noqa: E402
+                         classify_status)
 
-TASK = "cc_tasks/2026-09-07_scan_harness_v3.md"
-#: Its own shard, checked to be free before use.
-BATCH = 34
 EVENT = "observation_error_reclassified"
 OBS_EVENT = "observation_recorded"
 
+#: One entry per PASS. A pass is a source of truth about what went wrong (a recorded exception,
+#: a recorded status), the task that decided to act on it, and the shard its overlay lands on.
+#: Each pass gets its OWN shard for the reason every overlay here does: the shard is the unit
+#: an operator reaches for, and "the 266 status-derived corrections" has to be a file rather
+#: than a query. A pass is never re-run onto another pass's shard — `misfiled` is idempotent
+#: across ALL overlays on the log, so a second pass never re-corrects what a first one did.
+PASSES = {
+    "recorded_error": {
+        "batch": 34,
+        "task": "cc_tasks/2026-09-07_scan_harness_v3.md",
+        "reason": ("the closed set had no member for this failure when the observation was "
+                   "made, so the collector's fallback filed it under the nearest available "
+                   "class; scan/errors.py now names it"),
+    },
+    "status": {
+        "batch": 36,
+        "task": "cc_tasks/2026-09-07_scan_run_2.md",
+        "reason": ("the host ANSWERED, and the answer was a refusal status on a "
+                   "robots-permitted path; `http_4xx` was the only class the old closed set "
+                   "had for it, and `refused` is what scan/errors.py now calls it. One "
+                   "convention on the log, so error_class_counts compares across cycles"),
+    },
+}
+#: The default pass, kept as a name so the module reads the same as it did before there were two.
+TASK = PASSES["recorded_error"]["task"]
+BATCH = PASSES["recorded_error"]["batch"]
 
-def misfiled() -> list:
-    """Observations whose recorded transport error resolves to a different class now."""
+
+def misfiled(pass_name: str = "recorded_error", params: dict | None = None) -> list:
+    """Observations whose recorded failure resolves to a different class under the new map.
+
+    `recorded_error` reads `response.error` — the persisted `f"{type(exc).__name__}: {exc}"` —
+    and settles a TRANSPORT failure. `status` reads `response.status` and settles a response
+    that ARRIVED; it needs `params`, because which statuses count as a refusal is a policy list
+    (`manners.unobservable_statuses`), not a protocol constant.
+    """
+    if pass_name == "status" and params is None:
+        raise ValueError("the `status` pass classifies against "
+                         "`params.manners.unobservable_statuses` and cannot run without params")
     out = []
     for ev in eventlog.replay():
         if ev.get("event_type") != OBS_EVENT:
@@ -59,33 +107,39 @@ def misfiled() -> list:
         # standing over this class and must not overwrite it.
         if ev.get("error_class") == "collector_unavailable":
             continue
-        text = (ev.get("response") or {}).get("error")
-        want = classify_recorded_error(text)
+        if pass_name == "status":
+            # Only a response that ARRIVED, and only one whose recorded error is absent: an
+            # observation carrying both a status and a transport error is the `recorded_error`
+            # pass's, and two passes correcting one record would put two overlays on it with
+            # nothing saying which wins.
+            if (ev.get("response") or {}).get("error"):
+                continue
+            # An overlay CORRECTS a recorded classification. Where the collector recorded
+            # none, there is nothing to correct — and here `None` is not an omission, it is a
+            # deliberate statement. All 47 such records are `lighthouse`'s `invalid_route`
+            # probe, which asks for a path that should not exist: its 404 IS A10's
+            # measurement, and the collector passes `error_class=None` on that branch on
+            # purpose (`collectors/lighthouse.py`). Backfilling a class the collector chose
+            # not to record would be a claim about what the collector saw that only the
+            # collector can make, and it would relabel a passing measurement a refusal.
+            if ev.get("error_class") is None:
+                continue
+            want = classify_status((ev.get("response") or {}).get("status"), params)
+        else:
+            want = classify_recorded_error((ev.get("response") or {}).get("error"))
         if want and want != ev.get("error_class"):
             out.append((ev, want))
     return out
 
 
-def status_derived_divergence(params: dict) -> dict:
-    """Reported, never written: observations whose STATUS-derived class would move. See the
-    module docstring for why these are out of scope."""
-    refusal = tuple((params.get("manners") or {}).get("unobservable_statuses") or ())
-    n = collections.Counter()
-    for ev in eventlog.replay():
-        if ev.get("event_type") != OBS_EVENT:
-            continue
-        st = (ev.get("response") or {}).get("status")
-        if ev.get("error_class") == "http_4xx" and st in refusal:
-            n[st] += 1
-    return {"total": sum(n.values()), "by_status": dict(n)}
-
-
 def overlaid() -> set:
-    """`obs_id`s already carrying an overlay. Makes this idempotent."""
+    """`obs_id`s already carrying an overlay, from ANY pass. Makes this idempotent, and keeps
+    a second pass from correcting a record a first pass already corrected."""
     return {ev["obs_id"] for ev in eventlog.replay() if ev.get("event_type") == EVENT}
 
 
-def rows() -> list:
+def rows(pass_name: str = "recorded_error", params: dict | None = None) -> list:
+    spec = PASSES[pass_name]
     return [{
         "event_type": EVENT,
         "obs_id": ev["obs_id"],
@@ -94,45 +148,62 @@ def rows() -> list:
         "error_class_recorded": ev.get("error_class"),
         "error_class": want,
         "recorded_error": (ev.get("response") or {}).get("error"),
-        "reason": ("the closed set had no member for this failure when the observation was "
-                   "made, so the collector's fallback filed it under the nearest available "
-                   "class; scan/errors.py now names it"),
-        "reclassified_by": TASK,
-    } for ev, want in misfiled()]
+        "recorded_status": (ev.get("response") or {}).get("status"),
+        "classified_from": pass_name,
+        "reason": spec["reason"],
+        "reclassified_by": spec["task"],
+    } for ev, want in misfiled(pass_name, params)]
 
 
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--report", action="store_true")
+    ap.add_argument("--pass", dest="pass_name", default="status", choices=sorted(PASSES),
+                    help="which source of truth to classify from (default: status, the pass "
+                         "cc_tasks/2026-09-07_scan_run_2.md adds; `recorded_error` is the "
+                         "harness-v3 pass and is already applied)")
     a = ap.parse_args(argv)
     from scan import load_params
-    data = rows()
+    params = load_params()
+    spec = PASSES[a.pass_name]
+    data = rows(a.pass_name, params)
     already = overlaid()
     todo = [r for r in data if r["obs_id"] not in already]
     summary = {
+        "pass": a.pass_name,
         "misfiled_observations": len(data),
         "already_overlaid": len(data) - len(todo),
         "to_overlay": len(todo),
         "moves": dict(collections.Counter(
             f"{r['error_class_recorded']} -> {r['error_class']}" for r in data)),
+        "by_status": dict(collections.Counter(r["recorded_status"] for r in data)),
         "targets": dict(collections.Counter(r["target_doc_id"] for r in data)),
-        "status_derived_divergence_NOT_overlaid": status_derived_divergence(load_params()),
-        "shard": f"events/batch-{BATCH:03d}.jsonl",
+        "shard": f"events/batch-{spec['batch']:03d}.jsonl",
     }
     if a.report:
-        print(json.dumps(summary, indent=1))
+        print(json.dumps(summary, indent=1, default=str))
         return 0
-    shard = REPO / "events" / f"batch-{BATCH:03d}.jsonl"
+    shard = REPO / "events" / f"batch-{spec['batch']:03d}.jsonl"
     if shard.is_file():
         for line in shard.read_text(encoding="utf-8").splitlines():
-            if line.strip() and json.loads(line).get("event_type") != EVENT:
+            if not line.strip():
+                continue
+            ev = json.loads(line)
+            # Same shard guard as before, tightened by a pass: batch 34 holds the
+            # `recorded_error` overlays and must not gain the status ones, or "the 266" stops
+            # being a file. A shard whose events are all this pass's is this script re-running.
+            if ev.get("event_type") != EVENT:
                 raise SystemExit(f"REFUSING: {shard.name} already holds events of another "
                                  f"kind; this overlay gets its own shard")
+            if ev.get("classified_from", "recorded_error") != a.pass_name:
+                raise SystemExit(f"REFUSING: {shard.name} holds the "
+                                 f"{ev.get('classified_from', 'recorded_error')!r} pass; the "
+                                 f"{a.pass_name!r} pass gets its own shard")
     for r in todo:
-        eventlog.append(r, batch=BATCH)
+        eventlog.append(r, batch=spec["batch"])
     summary["written"] = len(todo)
-    print(json.dumps(summary, indent=1))
+    print(json.dumps(summary, indent=1, default=str))
     return 0
 
 

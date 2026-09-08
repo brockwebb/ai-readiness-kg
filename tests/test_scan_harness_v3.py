@@ -199,14 +199,29 @@ def test_no_collector_still_guesses_an_error_class():
 
 
 def test_the_misfiled_observations_are_overlaid_and_never_edited():
-    """Append-only: the observation lines still say `dns` and an overlay says what they are."""
+    """Append-only: the observation lines still say `dns` and an overlay says what they are.
+
+    **Counted per PASS, not over the whole shard.** `rc.overlaid()` is deliberately
+    pass-agnostic — it is the idempotence guard that stops a second pass re-correcting a record
+    a first pass already corrected — so it grew to 359 when
+    `cc_tasks/2026-09-07_scan_run_2.md` §1.2 added the 266 status-derived overlays. THIS test
+    is about the harness-v3 `recorded_error` pass and its 93; asserting against the total made
+    it a test of how many passes have ever run.
+    """
     import reclassify_observation_errors as rc
+    from kg import eventlog
     remaining = rc.misfiled()
     overlaid = rc.overlaid()
     assert {ev["obs_id"] for ev, _ in remaining} <= overlaid, (
         f"{len([1 for ev, _ in remaining if ev['obs_id'] not in overlaid])} misfiled "
         f"observation(s) carry no overlay")
-    assert len(overlaid) == 93, f"{len(overlaid)} overlays, not the 93 recorded by the task"
+    # `classified_from` defaults to `recorded_error`: the 93 predate the field.
+    mine = [ev for ev in eventlog.replay()
+            if ev.get("event_type") == rc.EVENT
+            and ev.get("classified_from", "recorded_error") == "recorded_error"]
+    assert len(mine) == 93, (
+        f"{len(mine)} `recorded_error` overlays, not the 93 recorded by the task "
+        f"(total across all passes: {len(overlaid)})")
 
 
 # ----------------------------------------------------- §1.3 one probe per object per cycle
@@ -368,11 +383,28 @@ def test_a_per_cycle_name_without_its_cycle_is_refused():
                                   "scan_2026-09-08")
 
 
-def test_a_cycle_suffixed_name_and_a_recorded_exception_are_allowed():
+def test_the_first_cycles_exceptions_belong_to_the_first_cycle_and_to_no_other():
+    """**Corrected 2026-09-07 by `cc_tasks/2026-09-07_scan_run_2.md`.** This test used to
+    assert that `check_name("scan_surfaces", "scan_2026-09-08")` PASSES, and the check was
+    written to match. Both were wrong in the same direction.
+
+    DD-056 §"What is not renamed" says the bare names the first cycle bound stand and "are
+    **never reused** by a later cycle", and `cycle_results`' own docstring repeats it. The
+    check ignored the cycle, so cycle 2 would have passed the pre-flight with a bare
+    `scan_surfaces` and then been refused by `seldon result register` (AD-028) mid-run, after
+    the measurement — which is the exact incident DD-056 was written about. The allow-list is
+    the record of an exception; scoping it to `FIRST_CYCLE` is what keeps it from being a
+    loophole.
+    """
     cycle_results.check_name("scan_surfaces_2026-09-08", "scan_2026-09-08")
-    # DD-056's first-cycle exceptions, by exact string.
-    cycle_results.check_name("scan_surfaces", "scan_2026-09-08")
-    cycle_results.check_name("scan_a1_pass_rate", "scan_2026-09-08")
+    # The first cycle re-registering its own bound name: allowed, and the only case that is.
+    cycle_results.check_name("scan_surfaces", cycle_results.FIRST_CYCLE)
+    cycle_results.check_name("scan_a1_pass_rate", cycle_results.FIRST_CYCLE)
+    for later in ("scan_2026-09-07b", "scan_2026-09-08"):
+        with pytest.raises(cycle_results.ResultNameError, match="first-cycle exception"):
+            cycle_results.check_name("scan_surfaces", later)
+        assert cycle_results.name_for("scan_surfaces", later).endswith(
+            cycle_results.cycle_suffix(later))
     # `scan_control_findings` is deliberately NOT on the list: DD-056's motivating incident is
     # that it was already bound at 31 by the 2026-09-06 control cycle, so the 2026-09-07 cycle
     # was refused and registered `scan_control_findings_2026-09-07` instead. The name the
@@ -386,7 +418,13 @@ def test_the_exception_list_is_exactly_what_the_registrar_would_emit_bare():
     """Not a hand-kept list: every entry is a name `scan_report.py` actually produces without a
     cycle suffix. A stale entry would be a licence for a name nothing emits."""
     import re
-    out = subprocess.run([sys.executable, "scripts/scan_report.py", "--dry-run"],
+    # Explicitly the FIRST cycle: `scan_report.py` now reads `params.cycle.name`, so with no
+    # `--cycle` it reports whatever cycle is current and emits nothing bare at all — which
+    # would make this test pass vacuously against an empty set on cycle 2 and fail loudly on
+    # cycle 3. The exception list is a fact about the first cycle, so it is checked against
+    # the first cycle.
+    out = subprocess.run([sys.executable, "scripts/scan_report.py", "--dry-run",
+                          "--cycle", cycle_results.FIRST_CYCLE],
                          capture_output=True, text=True, cwd=str(REPO))
     assert out.returncode == 0, out.stderr[-500:]
     emitted = {l.split("\t")[0] for l in out.stdout.splitlines() if "\t" in l}

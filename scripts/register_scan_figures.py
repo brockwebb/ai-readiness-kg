@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
-"""Register the four cycle figures and link each to every Result it prints. **Zero spend.**
+"""Register a cycle's figures and link each to every Result it prints. **Zero spend.**
 
-Task `cc_tasks/2026-09-07_eda_and_charts.md` §2. The link set is not typed in: it is read back
+Task `cc_tasks/2026-09-07_eda_and_charts.md` §2, carried to cycle 2 by
+`cc_tasks/2026-09-07_scan_run_2.md` §5. The link set is not typed in: it is read back
 out of the SVG's own `data-src` attributes, so a figure that stops printing a Result loses the
 edge on the next run, and one that starts printing a new one gains it. A hand-maintained list
 of "what this figure shows" is a list that goes stale silently.
@@ -25,12 +26,13 @@ import subprocess
 import sys
 from pathlib import Path
 
-import yaml
+
 
 REPO = Path(__file__).resolve().parents[1]
 SCAN = REPO / "assessment" / "harness" / "scan"
-TASK = "cc_tasks/2026-09-07_eda_and_charts.md"
+TASK = "cc_tasks/2026-09-07_scan_run_2.md"
 CONFIG = SCAN / "figures.yaml"
+sys.path.insert(0, str(REPO / "assessment" / "harness"))
 
 _READS = re.compile(r'data-reads="([^"]*)"')
 _FILES = re.compile(r'data-files="([^"]*)"')
@@ -61,11 +63,23 @@ CAPTIONS = {
         "F4. The same 48 indicators at three snapshots, each read from the commit named on the "
         "row. Three points is what exists and there is no line through them: two intervals of "
         "a few hours are not a rate of progress, and a line would say they were.",
+    "cycle_over_cycle":
+        "F5. Both cycles' pass rate per leg, side by side, each with its own `k/n` and Wilson "
+        "95 % interval. A1 and A3 are marked **rule changed (v2\u2192v3, v3\u2192v4): not "
+        "comparable** \u2014 a difference on those rows is the instrument moving, not the "
+        "host. No line, no delta, no arrow: a difference between two points is not a trend, "
+        "and two cycles hours apart on federal publication schedules are not a rate of "
+        "change. A leg with no applicable denominator in a cycle is left blank rather than "
+        "plotted at zero (DD-055: not measured is a reason, not a zero).",
 }
 
 
-def figures() -> dict:
-    cfg = yaml.safe_load(CONFIG.read_text(encoding="utf-8"))
+def figures(cycle: str | None = None) -> dict:
+    """The rendered SVGs of one cycle. The out_dir comes from `figures.config()`, which
+    derives it from `params.cycle.name` — one definition of which cycle, shared with the
+    renderer that wrote the files."""
+    from scan import figures as _figs
+    cfg = _figs.config(cycle)
     out = {}
     for path in sorted((REPO / cfg["out_dir"]).glob("*.svg")):
         body = path.read_text(encoding="utf-8")
@@ -89,29 +103,25 @@ def existing(name: str) -> str | None:
     2026-09-07 and every link then failed with "Multiple artifacts with name=…". The guard is
     here rather than in the CLI because the CLI's rule is the CLI's to change; what this
     script owes is not to create what it can find.
+
+    The reader itself now lives in `scripts/seldon_artifacts.py`, because two other registrars
+    needed the same question answered and answered it with a check that could not work
+    (`cc_tasks/2026-09-07_scan_run_2.md` §1.4). This name is kept as the local vocabulary.
     """
-    sys.path.insert(0, "/Users/brock/GitHub/seldon")
-    from seldon.config import get_neo4j_driver, load_project_config
-    cfg = load_project_config(REPO)
-    driver = get_neo4j_driver(cfg)
-    try:
-        with driver.session(database=cfg["neo4j"]["database"]) as s:
-            rows = [r["id"] for r in s.run(
-                "MATCH (f:Figure {name: $n}) WHERE coalesce(f.state, '') <> 'superseded' "
-                "RETURN f.artifact_id AS id ORDER BY f.created_at DESC", n=name)]
-    finally:
-        driver.close()
-    if len(rows) > 1:
-        raise SystemExit(f"FATAL: {len(rows)} live Figures named {name!r}: {rows}")
-    return rows[0] if rows else None
+    from seldon_artifacts import live_artifact
+    return live_artifact(name)
 
 
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--cycle", default=None,
+                    help="register a cycle other than params.cycle.name")
     a = ap.parse_args(argv)
-    figs = figures()
+    from scan import figures as _figs
+    suffix = _figs.config(a.cycle)["cycle_suffix"]
+    figs = figures(a.cycle)
     if not figs:
         raise SystemExit("FATAL: no SVGs found; run assessment/harness/scan/figures.py first")
     if a.dry_run:
@@ -120,7 +130,7 @@ def main(argv=None) -> int:
         return 0
     made, linked, failed, reused = 0, 0, [], 0
     for name, f in figs.items():
-        node = f"{name}_2026-09-07"
+        node = f"{name}_{suffix}"
         fid = existing(node)
         if fid:
             reused += 1
@@ -130,7 +140,7 @@ def main(argv=None) -> int:
         else:
             fid = None
         r = None if fid else run(["seldon", "artifact", "create", "Figure", "--actor", "cc",
-                 "-p", f"name={name}_2026-09-07", "-p", f"path={f['path']}",
+                 "-p", f"name={node}", "-p", f"path={f['path']}",
                  "-p", f"caption={CAPTIONS[name]}",
                  "-p", f"data_source={', '.join(f['files']) or 'the Result registry only'}",
                  "-p", f"description={CAPTIONS[name]} Generated by "

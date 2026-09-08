@@ -1,4 +1,4 @@
-"""The gate on the four figures: no figure prints a number nobody can trace.
+"""The gate on the cycle figures: no figure prints a number nobody can trace.
 
 `cc_tasks/2026-09-07_eda_and_charts.md` §4. The motivating defect is in the record: the
 scan-run RESULT §4 quoted fifteen Wilson intervals, and not one of them existed in the Result
@@ -7,7 +7,7 @@ with a rectangle around it.
 
 Four checks, and the third is the one that matters: every text node in every generated SVG
 that contains a digit carries `data-src`, and this test RESOLVES it — against the registry by
-name, against `scan_matrix_2026-09-07.json`, against the declared axis scale, or as a label
+name, against the cycle's matrix JSON, against the declared axis scale, or as a label
 from the framework's own code vocabulary. An unresolvable numeral fails with the numeral and
 the figure named.
 
@@ -23,7 +23,7 @@ import sys
 from pathlib import Path
 
 import pytest
-import yaml
+
 
 REPO = Path(__file__).resolve().parent.parent
 SCAN = REPO / "assessment" / "harness" / "scan"
@@ -44,7 +44,15 @@ _ATTR = re.compile(r'(\w[\w-]*)="([^"]*)"')
 
 
 def cfg() -> dict:
-    return yaml.safe_load((SCAN / "figures.yaml").read_text(encoding="utf-8"))
+    """The renderer's OWN config, not a second read of `figures.yaml`.
+
+    `cycle`, `cycle_suffix`, `out_dir` and `matrix_json` are derived from `params.cycle.name`
+    by `figures.config()` (`cc_tasks/2026-09-07_scan_run_2.md` §5). A test that re-read the
+    YAML directly would be checking a file the renderer no longer treats as complete, and
+    would keep passing against the previous cycle's matrix.
+    """
+    from scan.figures import config
+    return config()
 
 
 def matrix() -> dict:
@@ -164,6 +172,14 @@ def _codes() -> set:
     out |= set(mx["legs"]) | set(mx["candidate_legs"]) | set(mx["agencies"]) | set(c["criteria"])
     for s in c["snapshots"]:
         out |= set(s["label"].split()) | set(s["note"].split()) | {s["commit"]}
+    # F5's "rule changed (v2 → v3): not comparable" note. The version tokens come from
+    # `figures.yaml`'s `compare_to.rule_changed`, which is where the claim lives — so the
+    # vocabulary cannot drift from the label, and a version pair invented in the renderer
+    # would still fail.
+    for change in (c.get("compare_to") or {}).get("rule_changed", {}).values():
+        out |= {f"({t}" for t in change.split()} | {f"{t}):" for t in change.split()}
+        out |= set(change.split())
+    out |= {c["cycle_suffix"], (c.get("compare_to") or {}).get("suffix", "")}
     return {t for t in out if _NUM.search(t)}
 
 
@@ -279,6 +295,20 @@ def test_the_figures_print_the_things_the_task_asked_them_to(figures):
     for s in cfg()["snapshots"]:
         assert s["commit"] in f4, f"F4 omits snapshot {s['commit']}"
     assert "<line" not in f4, "F4 must not draw a trend line through three points"
+    # F5. The mark on the legs whose RULE changed is the whole point of the figure: two dots
+    # at different heights invite "the host changed", and on those rows that reading is wrong.
+    f5 = figures["cycle_over_cycle"]
+    for leg in mx["legs"]:
+        assert f">{leg}<" in f5, f"F5 omits {leg}"
+    for leg, change in cfg()["compare_to"]["rule_changed"].items():
+        assert f"rule changed ({change}): not comparable" in f5, (
+            f"F5 does not mark {leg} as not comparable across the rule change")
+    # No arrow and no connector between the two cycles' dots. A difference between two points
+    # is not a direction of travel, and two cycles hours apart are not a rate of change; an
+    # arrow would say both. (The `→` inside the rule-change TEXT is the version bump, not a
+    # trend, which is why this checks drawn geometry rather than glyphs.)
+    for forbidden in ("<polyline", "marker-end", "<path"):
+        assert forbidden not in f5, f"F5 draws {forbidden}: that reads as a trend"
 
 
 def test_no_figure_reaches_the_network(figures):
@@ -309,8 +339,16 @@ def test_each_legs_registered_counts_re_derive_from_the_graph(session, results):
         got = {r["v"]: r["c"] for r in session.run(q, code=code, ph=ph)}
         s = leg.replace("-", "_").lower()
         for verdict in ("pass", "fail", "error", "not_applicable"):
-            want = results[f"scan_{s}_{verdict}"]
+            # Through `figures.rname`, the same resolver the figures use. The bare
+            # `scan_<leg>_<verdict}` is the FIRST cycle's Result (DD-056's exception list), so
+            # a literal here silently compared cycle 2's Findings — selected by cycle 2's
+            # `params_hash`, from the matrix — against cycle 1's registered counts, and
+            # reported the difference as drift. The params_hash and the Result name have to
+            # name the same cycle or the check means nothing.
+            from scan.figures import rname
+            key = rname(f"scan_{s}_{verdict}", cfg())
+            want = results[key]
             if got.get(verdict, 0) != want:
                 bad.append(f"{leg} {verdict}: graph {got.get(verdict, 0)}, "
-                           f"registry scan_{s}_{verdict} = {want}")
+                           f"registry {key} = {want}")
     assert not bad, "\n".join(bad)

@@ -5,13 +5,24 @@
 #
 # Geometry is in user units of the SVG viewBox; the figures scale to their container.
 
-cycle: scan_2026-09-07
-# The date every cycle-suffixed Result name ends with (DD-056). Sliced out of `cycle` it
-# would be a magic -10 in the renderer, which is the thing figures.yaml exists to prevent.
-cycle_suffix: "2026-09-07"
-out_dir: assessment/harness/scan/figures/scan_2026-09-07
+# `cycle`, `cycle_suffix`, `out_dir` and `matrix_json` USED to live here and now do not.
+# They are derived by `figures.config()` from `params.cycle.name` — the same single source
+# `run.py`, `publish.py` and `scan_report.py` read. A cycle name in two files is two
+# definitions of "which cycle", and the stale one is the one that draws last week's numbers
+# under this week's heading. What stays here is layout, colour and the snapshot list.
 framework_json: framework/ai_readiness_framework.json
-matrix_json: state/scan_matrix_2026-09-07.json
+
+# The cycle whose figures a `cycle_over_cycle` comparison is drawn AGAINST (F5). A prior
+# cycle, so it is a fact about the past and not derivable from today's params.
+compare_to:
+  cycle: scan_2026-09-07
+  suffix: "2026-09-07"
+  label: "cycle 1 · 2026-09-07"
+  # Legs whose RULE changed between the two cycles. F5 marks these so a reader cannot read a
+  # difference as a change in the host: the instrument moved.
+  rule_changed:
+    A1: "v2 → v3"
+    A3: "v3 → v4"
 
 # The rate axis. `ticks` is the ONLY numeric text in a figure that is not a Result or a
 # matrix count, and the gate checks the rendered ticks against exactly this list.
@@ -66,6 +77,23 @@ f3:
   seg_text_dy: 13
   label_dy: 13
 
+f5:
+  label_w: 150
+  plot_w: 400
+  top: 40
+  row_h: 34
+  cycle_dy: 13
+  group_gap: 10
+  bottom: 34
+  dot_r: 4
+  interval_w: 5
+  text_dy: 4
+  frac_dx: 14
+  note_dx: 74
+  tick_len: 4
+  tick_label_dy: 15
+  group_label_dy: 10
+
 f4:
   label_w: 210
   bar_w: 430
@@ -94,6 +122,10 @@ colours:
   candidate: "#a78bfa"
   interval: "#94a3b8"
   axis: "#cbd5e1"
+  # F5 only: the earlier cycle is drawn muted so the current one reads as the foreground.
+  prior: "#94a3b8"
+  prior_interval: "#e2e8f0"
+  rule_changed: "#b45309"
 
 # Criterion order for column and row grouping. Fixed, never sorted by any count: reordering
 # a Bertin matrix by score is a ranking, and ranking agencies is forbidden.

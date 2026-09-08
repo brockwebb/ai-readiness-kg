@@ -16,6 +16,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import shutil
 import sys
 from pathlib import Path
 
@@ -31,7 +32,7 @@ sys.path.insert(0, "/Users/brock/GitHub/seldon")
 #: the 2026-09-07 cycle" a query rather than a file, and the shard is the unit an operator
 #: reaches for when something is wrong.
 SCAN_BATCH = 29
-CYCLE_BATCH = {"scan_2026-09-07": 31}
+CYCLE_BATCH = {"scan_2026-09-07": 31, "scan_2026-09-07b": 38}
 OBS_EVENT = "observation_recorded"
 FIND_EVENT = "finding_derived"
 #: `cc_tasks/2026-09-07_scan_hygiene.md` §1. A Finding whose `evidence` names `obs_id`s the log
@@ -125,6 +126,76 @@ def write_events(payload: dict) -> dict:
             "findings_evidence_unretained": sum(1 for f in findings
                                                 if f["finding_id"] in annotated),
             "shard": f"events/batch-{batch:03d}.jsonl"}
+
+
+#: `cc_tasks/2026-09-07_scan_run_2.md` §1.1. The one direction bytes may travel into the
+#: committed evidence store.
+def promote_evidence(payload: dict, staging: Path | None = None,
+                     committed: Path | None = None) -> dict:
+    """Copy into `corpus/evidence/scan/` exactly the bodies this payload's Observations cite,
+    then delete the staging directory.
+
+    Inverts the default that produced two separate hygiene defects: `run.py` used to write
+    every body it fetched straight into the committed store, so a diagnostic run, an aborted
+    run, and a fixture run all left bytes behind that nothing ever cited (418 tracked bodies
+    cited by no Observation; 260 fixture blobs quarantined). Content-addressed storage makes
+    that cheap to do and impossible to undo cleanly — the digest tells you nothing about who
+    wanted the body.
+
+    Promotion is CITATION-driven, which is the same rule invariant 3 states one layer up: no
+    grounding span, no write. A body in the committed store is a claim that some Observation
+    on the log points at it, and this is the only thing that makes the claim true.
+
+    A cited digest with no body anywhere is a hard failure, not a warning: publishing a
+    Finding whose evidence the repo does not hold is precisely the orphan-Finding defect
+    `cc_tasks/2026-09-07_scan_hygiene.md` §1 had to annotate 120 of.
+
+    Paths are REWRITTEN on the payload's observations, because a `body_path` pointing into a
+    staging directory that this function then deletes is a dangling reference on an
+    append-only log. Safe to rewrite: `body_path` is not an input to the derived `obs_id`
+    (`model.Observation.make` hashes `body_sha256`), so the record keeps its identity.
+    """
+    from scan.model import EVIDENCE_ROOT
+    committed = committed or EVIDENCE_ROOT
+    staging = Path(staging or payload.get("evidence_root") or "")
+    if not staging.is_absolute():
+        staging = REPO / staging
+    obs = payload.get("observations_detail") or []
+    cited = {(o.get("response") or {}).get("body_sha256") for o in obs}
+    cited.discard(None)
+
+    promoted, already, missing = [], [], []
+    for digest in sorted(cited):
+        dest = committed / digest[:2] / digest
+        if dest.exists():
+            already.append(digest)
+            continue
+        src = staging / digest[:2] / digest
+        if not src.is_file():
+            missing.append(digest)
+            continue
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        dest.write_bytes(src.read_bytes())
+        promoted.append(digest)
+    if missing:
+        raise SystemExit(
+            f"REFUSING: {len(missing)} body digest(s) cited by this payload's Observations are "
+            f"in neither the staging root ({staging}) nor the committed store: "
+            f"{missing[:5]}{' …' if len(missing) > 5 else ''}. A Finding whose evidence the "
+            f"repo does not hold is not evidence (invariant 3).")
+
+    for o in obs:
+        d = (o.get("response") or {}).get("body_sha256")
+        if d:
+            o["response"]["body_path"] = str(
+                (committed / d[:2] / d).relative_to(REPO)
+                if str(committed).startswith(str(REPO)) else committed / d[:2] / d)
+    if staging.is_dir() and staging != committed:
+        shutil.rmtree(staging)
+    return {"evidence_promoted": len(promoted),
+            "evidence_already_committed": len(already),
+            "evidence_cited_digests": len(cited),
+            "staging_removed": str(staging) if staging.name else None}
 
 
 SCAN_LABELS = ("Observation", "Finding", "Rule")
@@ -277,10 +348,23 @@ def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--from", dest="src", default=None)
     ap.add_argument("--project", action="store_true")
+    ap.add_argument("--no-promote", action="store_true",
+                    help="publish without promoting staged bodies (for a payload whose "
+                         "evidence is already in the committed store)")
     a = ap.parse_args(argv)
     out = {}
     if a.src:
-        out.update(write_events(json.loads(Path(a.src).read_text(encoding="utf-8"))))
+        src = Path(a.src)
+        payload = json.loads(src.read_text(encoding="utf-8"))
+        # Promote BEFORE the events are written, so the `body_path` that lands on the
+        # append-only log already points into the committed store. The other order would put
+        # a staging path — a directory this run then deletes — on a line that can never be
+        # edited. `--no-promote` exists for the four cycles published before staging existed,
+        # whose bodies are already committed and have no staging root to find.
+        if not a.no_promote:
+            out.update(promote_evidence(payload))
+            src.write_text(json.dumps(payload, indent=1, default=str) + "\n", encoding="utf-8")
+        out.update(write_events(payload))
     if a.project:
         out.update(project())
     print(json.dumps(out, indent=1))

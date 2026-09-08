@@ -27,6 +27,7 @@ sys.path.insert(0, str(REPO / "assessment" / "harness"))
 
 import annotate_orphan_findings as ann                              # noqa: E402
 import quarantine_fixture_evidence as qfe                           # noqa: E402
+from seldon_artifacts import live_artifact                          # noqa: E402
 
 TASK = "cc_tasks/2026-09-07_scan_hygiene.md"
 
@@ -106,11 +107,19 @@ def rows() -> list:
 
 
 def ensure_artifacts(dry_run: bool) -> dict:
+    """Create the artifacts this task mints, exactly once each.
+
+    **Corrected 2026-09-07 by `cc_tasks/2026-09-07_scan_run_2.md` §1.4.** The guard used to be
+    `name in $(seldon artifact list --type <kind>)`, and `seldon artifact list` does not print
+    names — only type, state and UUID. The test was therefore always False, so every run of
+    this script minted a twin of all six artifacts; `seldon artifact create` enforces name
+    uniqueness only on Results (AD-028), so nothing refused it. The twin surfaces later, as
+    `ValueError: Multiple Script artifacts with name=…`, when a Result tries to reference one.
+    `scripts/seldon_artifacts.live_artifact` asks the graph, which is where the answer is.
+    """
     made, present = [], []
     for kind, name, path, desc in ARTIFACTS:
-        probe = subprocess.run(["seldon", "artifact", "list", "--type", kind],
-                               capture_output=True, text=True, cwd=REPO)
-        if probe.returncode == 0 and name in probe.stdout:
+        if live_artifact(name):
             present.append(name)
             continue
         if dry_run:

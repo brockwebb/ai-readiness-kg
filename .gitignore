@@ -135,3 +135,10 @@ state/substrate_md/
 # to the scorer/reviewer verdicts before the operator has labelled it (task
 # 2026-09-03_g1_freeze_calibration_redefinition_findings step 1).
 assessment/results/.g1_calibration_key_*.json
+
+# Scan evidence STAGING (cc_tasks/2026-09-07_scan_run_2.md §1.1). A cycle captures bodies here
+# and `assessment/harness/scan/publish.py::promote_evidence` copies into corpus/evidence/scan/
+# exactly the digests the published payload's Observations cite, then deletes the directory.
+# Untracked on purpose: a staged body is not evidence until something cites it, and the whole
+# point of the staging root is that an unpublished run leaves nothing behind.
+state/evidence_staging/

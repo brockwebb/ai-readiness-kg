@@ -142,14 +142,26 @@ def candidate_banner(s: dict) -> str:
 FIGURES_YAML = REPO / "assessment" / "harness" / "scan" / "figures.yaml"
 
 
+def _figures_module():
+    """`assessment/harness/scan/figures.py`, imported for its config and figure NAMES.
+
+    The page used to enumerate the four figure names itself. It no longer does: `FIGURES` and
+    the out_dir are the generator's, and a fifth figure that the generator draws but the page
+    does not list is a figure nobody sees — which is a silent omission, the worst kind.
+    """
+    sys.path.insert(0, str(REPO / "assessment" / "harness"))
+    from scan import figures
+    return figures
+
+
 def figure_svgs() -> dict:
     """`{name: (svg, caption)}` from the generated files, or `{}` if they have not been
     generated. Read from disk rather than re-rendered: the SVG on disk is what the gate
     checked, and rendering a second copy here would put an ungated figure on the page."""
-    import yaml as _yaml
     if not FIGURES_YAML.is_file():
         return {}
-    cfg = _yaml.safe_load(FIGURES_YAML.read_text(encoding="utf-8"))
+    figures = _figures_module()
+    cfg = figures.config()
     sys.path.insert(0, str(REPO / "scripts"))
     import importlib.util
     spec = importlib.util.spec_from_file_location(
@@ -157,8 +169,7 @@ def figure_svgs() -> dict:
     mod = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mod)
     out = {}
-    for name in ("per_leg_pass_rate", "agencies_by_legs_matrix", "gap_map_by_criterion",
-                 "progress_over_snapshots"):
+    for name in figures.FIGURES:
         path = REPO / cfg["out_dir"] / f"{name}.svg"
         if path.is_file():
             out[name] = (path.read_text(encoding="utf-8"), mod.CAPTIONS[name])
@@ -177,6 +188,9 @@ LEGEND = {
                              ("#94a3b8", "specified"), ("#a78bfa", "candidate, not counted")],
     "progress_over_snapshots": [("#059669", "measured"), ("#3b82f6", "harness_built"),
                                 ("#94a3b8", "specified")],
+    "cycle_over_cycle": [("#94a3b8", "cycle 1 pass rate"), ("#059669", "cycle 2 pass rate"),
+                         ("#e2e8f0", "cycle 1 Wilson 95 % interval"),
+                         ("#94a3b8", "cycle 2 Wilson 95 % interval")],
 }
 
 
@@ -190,15 +204,46 @@ def figure_block(name: str, body: str, caption: str) -> str:
 #: implement, and the sentence the cycle's own RESULT wrote about what it does not claim —
 #: quoted verbatim, because a non-claim that gets paraphrased on the way to the reader is a
 #: claim.
-NON_CLAIMS = (
-    "One cycle, one client identity, one week, n = 23 per leg. The rates in \u00a74 are a "
-    "measurement of these 26 surfaces on 2026-09-07, selected by a rule stated before any "
-    "product was chosen, and they are not a score of any agency: there is no composite, no "
-    "ranking, and the legs are not comparable to each other. Four of fourteen agencies "
-    "contributed no surface at all (\u00a75), which is a property of the instrument as much as "
-    "of them. Eight legs are at zero with an upper bound of 0.14, and a zero that has never "
-    "been anything else is the kind of number that deserves a second cycle before it is "
-    "quoted anywhere that matters.")
+def matrix_for_page() -> dict:
+    """The matrix of the cycle currently being drawn. One read, shared by the non-claims
+    paragraph and anything else that needs the cycle's own numbers."""
+    sys.path.insert(0, str(REPO / "assessment" / "harness"))
+    from scan import figures as _figs
+    cfg = _figs.config()
+    return json.loads((REPO / cfg["matrix_json"]).read_text(encoding="utf-8"))
+
+
+def non_claims() -> str:
+    """What the page does NOT claim, with its numbers DERIVED from the cycle being shown.
+
+    This was a fixed paragraph carrying cycle 1's literals — "n = 23 per leg", "eight legs at
+    zero with an upper bound of 0.14". Cycle 2's denominator is **not** constant (two ERS
+    surfaces went unobservable on a host-side DNS transient, so `applicable_n` is 22 on some
+    legs and 23 on others), and a non-claim that quotes a stale number is a claim
+    (`cc_tasks/2026-09-07_scan_run_2_ADDENDUM-01.md` defect 3). Derived, so it cannot go stale
+    without the figures going stale with it.
+    """
+    mx = matrix_for_page()
+    per = mx["per_leg"]
+    ns = sorted({s["applicable_n"] for s in per.values()})
+    n_txt = (f"n = {ns[0]} per leg" if len(ns) == 1 else
+             f"n = {ns[0]}–{ns[-1]} depending on the leg, because a leg is denominated only "
+             f"by the surfaces it could actually observe")
+    zeros = [l for l, s in per.items() if s["applicable_n"] and s["pass"] == 0]
+    hi = max((per[l]["ci95_high"] for l in zeros), default=0.0)
+    surfaces = len([r for r in mx["rows"] if r["surface_kind"] != "well_known"])
+    return (
+        f"One cycle, one client identity, one day, {html.escape(n_txt)}. The rates here are a "
+        f"measurement of these {surfaces} surfaces in cycle "
+        f"{html.escape(mx['cycle'])}, selected by a rule stated before any product was "
+        f"chosen, and they are not a score of any agency: there is no composite, no ranking, "
+        f"and the legs are not comparable to each other. "
+        f"{len(mx['agencies_without_surfaces'])} of {len(mx['agencies'])} agencies "
+        f"contributed no surface at all, which is a property of the instrument as much as of "
+        f"them. {len(zeros)} legs are at zero with an upper bound of {hi:.2f}, and a zero is "
+        f"not evidence of absence at these denominators. Where a leg's rate moved between "
+        f"cycles, F5 marks whether the RULE changed: on A1 and A3 it did, and a difference "
+        f"there is the instrument moving, not the host.")
 
 CITATIONS = [
     ("Intervals", "Wilson, E. B. (1927). Probable inference, the law of succession, and "
@@ -207,8 +252,9 @@ CITATIONS = [
                   "17:857, both recommend the score interval over Wald at small n and at 0 or "
                   "n successes."),
     ("Zero counts", "Hanley &amp; Lippman-Hand (1983), <i>JAMA</i> 249:1743 \u2014 the rule of "
-                    "three: with 0 events in n, the 95 % upper bound is about 3/n. For n = 23 "
-                    "that is 0.13, against the Wilson bound of 0.14 printed on the figure."),
+                    "three: with 0 events in n, the 95 % upper bound is about 3/n. At these "
+                    "denominators that is about 0.13\u20130.14, which is what the Wilson "
+                    "bounds printed on F1 come to."),
     ("Encoding", "Cleveland &amp; McGill (1984), <i>JASA</i> 79:531, and Cleveland (1985), "
                  "<i>The Elements of Graphing Data</i>: position along a common scale beats "
                  "length. F1 is a dot-and-interval plot, not bars."),
@@ -221,22 +267,66 @@ CITATIONS = [
 ]
 
 EXCLUDED = [
-    "an error-class breakdown \u2014 <code>error_class</code> on the log misfiles ECONNRESET as "
-    "<code>dns</code> (scan-run RESULT \u00a76.2), so no figure here breaks errors out by class",
+    "any figure breaking errors out BY CLASS. The classes are now sound \u2014 "
+    "<code>scan/errors.py</code> names every failure and the log carries one convention after "
+    "the 266-observation overlay of <code>cc_tasks/2026-09-07_scan_run_2.md</code> \u00a71.2 "
+    "\u2014 and the counts are registered as Results per cycle; what is excluded is a CHART of "
+    "them, because an error class is a fact about the instrument and this page is about the "
+    "products",
     "any agency composite, and any ranking of agencies",
     "any language comparing one leg to another: they measure different constructs",
     "the candidate indicator A12 in any fraction (DD-054)",
 ]
 
-FOOTER = ("<footer><h3>What this does not claim</h3><p>" + NON_CLAIMS + "</p>"
-          + "<h3>Excluded on purpose</h3><ul>"
-          + "".join(f"<li>{t}</li>" for t in EXCLUDED) + "</ul>"
-          + "<h3>Prior art the figures implement</h3><ul>"
-          + "".join(f"<li><b>{k}.</b> {v}</li>" for k, v in CITATIONS) + "</ul>"
-          + "<p>Figures generated by <code>assessment/harness/scan/figures.py</code>, gated by "
-          + "<code>tests/test_scan_figures.py</code>: every numeral resolves to a registered "
-          + "Result, a count in <code>state/scan_matrix_2026-09-07.json</code>, or a declared "
-          + "axis tick. Static SVG, inline, no external resource of any kind.</p></footer>")
+def requests_table() -> str:
+    """What this scanner ASKED of each host in the current cycle, from the cycle payload.
+
+    On the page, not only in a RESULT, because the manners claim the harness makes in public
+    — RFC 9309 obeyed, identified UA, one request per second per host, no forms, no logins —
+    is a claim about our conduct toward someone else's server, and a reader of a page that
+    scores those servers is entitled to the load we put on them. Empty when the payload has
+    no counts, which is every cycle before `manners.Fetcher` counted them.
+    """
+    import yaml as _yaml
+    sys.path.insert(0, str(REPO / "assessment" / "harness"))
+    from scan import figures as _figs
+    cfg = _figs.config()
+    path = REPO / "state" / f"{cfg['cycle']}.json"
+    if not path.is_file():
+        return ""
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    per_host = payload.get("requests_per_host") or {}
+    if not per_host:
+        return ""
+    rows = "".join(f"<tr><td><code>{html.escape(h)}</code></td><td>{n}</td></tr>"
+                   for h, n in sorted(per_host.items()))
+    return (f"<h3>What this cycle asked of each host</h3>"
+            f"<p>HTTP requests issued in cycle <code>{html.escape(cfg['cycle'])}</code>, "
+            f"counted at the socket and including <code>robots.txt</code> fetches, 429/503 "
+            f"retries and HEAD-refused GET fallbacks. Rate-limited to one request per second "
+            f"per host under the identified user agent "
+            f"<code>ai-readiness-kg-scanner/0.1</code>, with <code>robots.txt</code> obeyed "
+            f"(RFC 9309). No forms, no logins, no query-string fuzzing. Total "
+            f"{sum(per_host.values())} across {len(per_host)} hosts.</p>"
+            f'<div class="wrap"><table><thead><tr><th>Host</th><th>Requests</th></tr></thead>'
+            f"<tbody>{rows}</tbody></table></div>")
+
+
+def footer() -> str:
+    sys.path.insert(0, str(REPO / "assessment" / "harness"))
+    from scan import figures as _figs
+    cfg = _figs.config()
+    return ("<footer><h3>What this does not claim</h3><p>" + non_claims() + "</p>"
+            + "<h3>Excluded on purpose</h3><ul>"
+            + "".join(f"<li>{t}</li>" for t in EXCLUDED) + "</ul>"
+            + requests_table()
+            + "<h3>Prior art the figures implement</h3><ul>"
+            + "".join(f"<li><b>{k}.</b> {v}</li>" for k, v in CITATIONS) + "</ul>"
+            + "<p>Figures generated by <code>assessment/harness/scan/figures.py</code>, gated "
+            + "by <code>tests/test_scan_figures.py</code>: every numeral resolves to a "
+            + "registered Result, a count in <code>"
+            + html.escape(cfg["matrix_json"]) + "</code>, or a declared axis tick. Static "
+            + "SVG, inline, no external resource of any kind.</p></footer>")
 
 
 def page(g: dict, s: dict, sp: dict) -> str:
@@ -327,7 +417,7 @@ from <code>framework/ai_readiness_framework.json</code>.</p>
 {bars('Evidenced vs gap, by criterion', ev_gap, ['evidenced', 'gap'])}
 {bars('Public-tier AUTO legs: named collector vs none known', coll, ['collector', 'none_known'])}
 
-<h2>The 2026-09-07 cycle</h2>
+<h2>{html.escape(cycle_heading())}</h2>
 {''.join(figure_block(n, b, c) for n, (b, c) in figs.items())}
 
 <p class="note"><strong>No composite, deliberately.</strong> Every number here is a fraction
@@ -340,8 +430,16 @@ for G1 carried up from the indicator to the framework.</p>
 <thead><tr><th>Code</th><th>Construct</th><th>Type</th><th>Tier</th><th>Evidence</th>
 <th>Measurement</th></tr></thead>
 <tbody>{rows}</tbody></table></div>
-{FOOTER}
+{footer()}
 """
+
+
+def cycle_heading() -> str:
+    """"The <cycle> cycle" — from `params.cycle.name`, never typed. The page carried the
+    literal `2026-09-07`, which would have headed cycle 2's figures with cycle 1's date."""
+    sys.path.insert(0, str(REPO / "assessment" / "harness"))
+    from scan import figures as _figs
+    return f"The {_figs.config()['cycle_suffix']} cycle"
 
 
 def g_name(g: dict, code: str) -> str:

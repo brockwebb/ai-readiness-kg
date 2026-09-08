@@ -29,6 +29,26 @@ from scan.rules import (CANDIDATE_LEGS, CURRENT, FRAMEWORK_LEGS,   # noqa: E402
 from scan.runner import collect_leg                            # noqa: E402
 
 FRAMEWORK = REPO / "framework" / "ai_readiness_framework.json"
+#: Where a cycle STAGES the bodies it captures, before anything is published.
+#: `cc_tasks/2026-09-07_scan_run_2.md` §1.1. The committed store is what a Finding cites, so a
+#: byte in it is a claim that some Observation on the log points at it; a run that wrote
+#: straight into `corpus/evidence/scan/` made that claim of every body it happened to fetch,
+#: including the ones from a diagnostic run that was never published (418 tracked bodies are
+#: cited by nothing, and 260 fixture blobs had to be quarantined). Staging inverts the default:
+#: bytes enter the committed store only through `publish.promote_evidence`, which copies
+#: exactly the digests the published payload's Observations cite.
+#:
+#: Under `state/` rather than `corpus/` deliberately — `corpus/` is the acquisition lane and
+#: invariant 2 protects what is in it. A staging directory is neither an acquisition nor
+#: evidence; it is a scratch area that is deleted on publish, and it is gitignored.
+EVIDENCE_STAGING = REPO / "state" / "evidence_staging"
+
+
+def staging_root(params: dict) -> Path:
+    """Per CYCLE, so two cycles staged at once cannot promote each other's bytes."""
+    return EVIDENCE_STAGING / params["cycle"]["name"]
+
+
 #: Output paths are derived from `params.cycle.name`, not typed. A cycle that wrote over a
 #: previous cycle's payload would destroy the evidence the re-derivation gate compares
 #: against, and DD-041's rerun convention exists precisely so a rerun never overwrites a
@@ -62,15 +82,28 @@ def refuse_clobber(path: Path, params: dict) -> None:
         return
     now = params_hash(params)
     if prior and prior != now:
+        # `relative_to` only where it applies. The guard used to call it unconditionally, so a
+        # payload path outside the repo made the REFUSAL itself raise `ValueError` — a guard
+        # whose failure path fails is a guard that reports the wrong thing at the one moment
+        # it matters. Found by `tests/test_scan_run_2.py` driving it on a tmp_path.
+        try:
+            shown = path.relative_to(REPO)
+        except ValueError:
+            shown = path
         raise SystemExit(
-            f"REFUSING to overwrite {path.relative_to(REPO)}: it holds a cycle measured under "
+            f"REFUSING to overwrite {shown}: it holds a cycle measured under "
             f"params_hash {prior[:12]}… and these params are {now[:12]}…. A measurement under "
             f"different parameters is a different cycle and needs its own `cycle.name` "
             f"(DD-041, CLAUDE.md §11).")
 
 
-#: The scaffold's smoke-run payload. Kept as a name so the re-derivation gate can still be
-#: pointed at the v1 history it must not re-score.
+#: The task that FIRST ran a full cycle, and the default when `--task` is not given. It is a
+#: default and not the answer: `cc_tasks/2026-09-07_scan_run_2_ADDENDUM-01.md` defect 1 found
+#: `scan_2026-09-07b.json` carrying this string, because the cycle-2 run inherited a module
+#: constant instead of naming its own task. A payload that misattributes itself is a
+#: provenance claim that is simply false, and the RESULT reading it would cite the wrong
+#: order. `--task` is how a run says who ordered it, the same flag
+#: `scripts/framework_writeback_rules.py` grew for the same reason.
 TASK = "cc_tasks/2026-09-07_scan_run.md"
 OUT = REPO / "state" / "scan_smoke_2026-09-06.json"
 CONTROLS_OUT = REPO / "state" / "scan_controls_2026-09-06.json"
@@ -293,8 +326,33 @@ def main(argv=None) -> int:
     ap.add_argument("--merge-controls", metavar="PAYLOAD", default=None,
                     help="re-run the control gate ALONE and merge its records into an "
                          "existing cycle payload, without re-measuring a single surface")
+    ap.add_argument("--task", default=TASK, metavar="PATH",
+                    help="the cc_task that ordered this run. Recorded on the payload so it "
+                         "names the order it fulfils rather than the task that wrote the "
+                         "runner.")
+    ap.add_argument("--evidence-root", default=None, metavar="DIR",
+                    help="where captured bodies are STAGED (default "
+                         "state/evidence_staging/<cycle.name>/). They enter the committed "
+                         "store only through publish.py, and only if this cycle's published "
+                         "Observations cite them.")
     a = ap.parse_args(argv)
     params = load_params()
+    # Redirect the module-path global rather than threading a root through seven collectors:
+    # `store_evidence` reads `EVIDENCE_ROOT` at CALL time, which is the repo convention
+    # (CLAUDE.md "Conventions specific to this repo") and the same seam `tests/conftest.py`
+    # uses. Set before ANY collection, controls included — a fixture body is exactly the kind
+    # of byte that has been landing in the committed store uninvited.
+    from scan import model as _model
+    _model.EVIDENCE_ROOT = Path(a.evidence_root) if a.evidence_root else staging_root(params)
+    _model.EVIDENCE_ROOT.mkdir(parents=True, exist_ok=True)
+    print(f"evidence staged in {_model.EVIDENCE_ROOT}", file=sys.stderr)
+    # Recorded repo-RELATIVE where it can be, so a payload moved between checkouts still
+    # names a directory that exists. An explicit `--evidence-root` outside the repo is kept
+    # absolute, because that is what it is.
+    try:
+        _staging_rel = str(_model.EVIDENCE_ROOT.relative_to(REPO))
+    except ValueError:
+        _staging_rel = str(_model.EVIDENCE_ROOT)
 
     if a.merge_controls:
         return merge_controls(Path(a.merge_controls), params)
@@ -312,11 +370,15 @@ def main(argv=None) -> int:
         # a full run.
         _, controls_out = out_paths(params)
         payload = {
-            "task": TASK,
+            "task": a.task,
             "cycle": params["cycle"]["name"], "cycle_kind": "controls_only",
             "params_version": params["params_version"], "params_hash": params_hash(params),
             "control_verdict": e5.verdict, "control_reason": e5.reason,
             "control_findings": len(cf) + 1,
+            # Where this cycle's bodies are staged, so `publish.promote_evidence` finds them
+            # without being told twice. Recorded rather than re-derived: a run with an
+            # explicit `--evidence-root` staged somewhere the cycle name does not name.
+            "evidence_root": _staging_rel,
             "rules": sorted({f.rule_id for f in cf} | {e5.rule_id}),
             "findings_detail": [],
             "control_findings_detail": [f.to_dict() for f in cf] + [e5.to_dict()],
@@ -371,10 +433,12 @@ def main(argv=None) -> int:
     by_leg_err = {leg: sum(1 for r in rows if r["verdicts"].get(leg) == "error")
                   for leg in CONTROL_LEGS}
     summary = {
-        "task": TASK, "cycle": params["cycle"]["name"],
+        "task": a.task, "cycle": params["cycle"]["name"],
         "targets": params["cycle"]["targets"],
         "params_version": params["params_version"], "params_hash": params_hash(params),
         "control_verdict": e5.verdict, "control_reason": e5.reason,
+        #: Where this cycle's bodies are staged. See the controls-only payload above.
+        "evidence_root": _staging_rel,
         # +1 for E5's own Finding. The cycle's validity verdict is the single most important
         # record the cycle produces and it was NOT on the event log: `rules_built` said 16 and
         # the projected graph held 15 `:Rule` nodes, because RULE-E5-v1 never emitted one.
@@ -393,6 +457,14 @@ def main(argv=None) -> int:
         "error_class_counts": {c: sum(1 for o in all_obs if o.error_class == c)
                                for c in _errors.ERROR_CLASSES},
         "error_class_unknown": sum(1 for o in all_obs if o.error_class == "unknown"),
+        # What this scanner actually ASKED of each host, counted at the socket
+        # (`manners.Fetcher.requests`) rather than inferred from Observations — a link probe
+        # issues one HEAD per link inside a single Observation, so the two numbers are not the
+        # same and only this one is the manners claim. Controls are excluded: the fixture
+        # server is us, and folding 127.0.0.1 in would put our own loopback in a table about
+        # federal hosts.
+        "requests_per_host": {h: n for h, n in sorted(fetcher.requests.items())},
+        "requests_total": sum(fetcher.requests.values()),
         "legs_erroring_on_every_surface": [l for l, n in by_leg_err.items()
                                            if rows and n == len(rows)],
         "matrix": rows,

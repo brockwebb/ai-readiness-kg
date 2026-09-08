@@ -14,6 +14,7 @@ refusal is evidence, not an absence.
 """
 from __future__ import annotations
 
+import collections
 import time
 import urllib.parse
 from pathlib import Path
@@ -30,6 +31,14 @@ class Fetcher:
         self.params = params
         self._last: dict = {}
         self._robots: dict = {}
+        #: Requests actually issued, per host. Counted here rather than derived from
+        #: Observations because an Observation is not a request: A1/A3's link probe issues one
+        #: HEAD per link and records them inside ONE observation's `parsed`, and a 429 retry or
+        #: a HEAD-refused GET fallback issues a second request under the same record. This is
+        #: the number the manners claim is about — what this scanner asked of someone else's
+        #: server — so it is the number the cycle reports (`cc_tasks/2026-09-07_scan_run_2.md`
+        #: §2, which asserts the shared link probe against it).
+        self.requests: collections.Counter = collections.Counter()
         self.client = client or httpx.Client(
             follow_redirects=self.p["follow_redirects"],
             max_redirects=self.p["max_redirects"],
@@ -81,6 +90,7 @@ class Fetcher:
         attempts = 0
         while True:
             self._wait(host)
+            self.requests[host] += 1
             t0 = time.monotonic()
             resp = self.client.get(url)
             elapsed = int((time.monotonic() - t0) * 1000)
@@ -108,6 +118,7 @@ class Fetcher:
         """
         host = urllib.parse.urlsplit(url).netloc
         self._wait(host)
+        self.requests[host] += 1
         t0 = time.monotonic()
         resp = self.client.head(url)
         elapsed = int((time.monotonic() - t0) * 1000)

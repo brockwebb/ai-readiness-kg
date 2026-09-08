@@ -24,14 +24,28 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "assessment" / "harness"))
 
+sys.path.insert(0, str(REPO / "scripts"))
+
+import cycle_results                                                 # noqa: E402
+from scan import load_params                                         # noqa: E402
+from seldon_artifacts import live_artifact                           # noqa: E402
 from scan.stats import Z, wilson                                     # noqa: E402
 
-TASK = "cc_tasks/2026-09-07_eda_and_charts.md"
-CYCLE = "scan_2026-09-07"
-SUFFIX = "2026-09-07"
-MATRIX = REPO / "state" / "scan_matrix_2026-09-07.json"
-CYCLE_PAYLOAD = REPO / "state" / "scan_2026-09-07.json"
+TASK = "cc_tasks/2026-09-07_scan_run_2.md"
 FRAMEWORK = REPO / "framework" / "ai_readiness_framework.json"
+
+
+#: Which cycle's figures these Results feed is read from `params.cycle.name`, never typed —
+#: the same single-source rule `scripts/scan_report.py` follows, and for the same reason: a
+#: second copy of the cycle name is a second definition of "which cycle", and the stale copy
+#: is the one that reports last week's numbers under this week's heading.
+def paths(cycle: str) -> dict:
+    suffix = cycle_results.cycle_suffix(cycle)
+    return {"cycle": cycle, "suffix": suffix,
+            "matrix": REPO / "state" / f"scan_matrix_{suffix}.json",
+            "payload": REPO / "state" / f"{cycle}.json",
+            "matrix_name": f"scan_matrix_{suffix}",
+            "payload_name": cycle}
 
 #: The three framework snapshots F4 draws, each read from a COMMIT rather than from a
 #: remembered number. `git show <commit>:<path>` is the provenance; the short hash goes on the
@@ -40,7 +54,7 @@ FRAMEWORK = REPO / "framework" / "ai_readiness_framework.json"
 #: for its `harness_built` count rather than inventing a second naming for one snapshot.
 SNAPSHOTS = [("2026-09-06", "51d2526", "the KG freeze, before any harness existed"),
              ("after_review", "72cdec6", "after the 16-rule conformance review of 2026-09-06"),
-             (SUFFIX, "52ec048", "after the scan-run write-back")]
+             ("2026-09-07", "52ec048", "after the scan-run write-back")]
 
 STATUSES = ("measured", "harness_built", "specified")
 CRITERIA = ("A", "B", "C", "D", "E", "F", "G")
@@ -65,8 +79,10 @@ def snapshot_counts(commit: str) -> dict:
     return {"total": len(inds), **{s: counts[s] for s in STATUSES}}
 
 
-def rows() -> list:
+def rows(cycle: str) -> list:
     """(name, value, script, data, description). Nothing here is typed in from prose."""
+    P = paths(cycle)
+    SUFFIX, CYCLE, MATRIX = P["suffix"], P["cycle"], P["matrix"]
     mx = json.loads(MATRIX.read_text(encoding="utf-8"))
     g = json.loads(FRAMEWORK.read_text(encoding="utf-8"))
     out = []
@@ -87,9 +103,9 @@ def rows() -> list:
                 f"over Wald at small n and at 0 or n successes by Brown, Cai & DasGupta (2001) "
                 f"and Newcombe (1998).")
         out.append((f"scan_{slug(leg)}_wilson_lo_{SUFFIX}", lo, "scan_stats",
-                    "scan_matrix_2026-09-07", note.format("LOWER")))
+                    P["matrix_name"], note.format("LOWER")))
         out.append((f"scan_{slug(leg)}_wilson_hi_{SUFFIX}", hi, "scan_stats",
-                    "scan_matrix_2026-09-07", note.format("UPPER")))
+                    P["matrix_name"], note.format("UPPER")))
 
     # ---- did each leg's rule actually fire on the fixtures? ----
     # F1 shows eight legs at 0/23, and a rate of zero has two readings: the products do not
@@ -97,7 +113,7 @@ def rows() -> list:
     # is only visible on the figure if the answer is a registered number rather than a
     # sentence in a RESULT. `passes_all` must produce `pass` and `fails_all` must produce
     # `fail`; anything else is 0 and the cycle would have been invalid (DD-019).
-    cyc = json.loads(CYCLE_PAYLOAD.read_text(encoding="utf-8"))
+    cyc = json.loads(P["payload"].read_text(encoding="utf-8"))
     ctrl = collections.defaultdict(dict)
     for f in cyc["control_findings_detail"]:
         ctrl[f["leg"]][f["target_doc_id"]] = f["verdict"]
@@ -106,7 +122,7 @@ def rows() -> list:
         fired = int(got.get("control:passes_all") == "pass"
                     and got.get("control:fails_all") == "fail")
         out.append((f"scan_{slug(leg)}_control_fired_{SUFFIX}", fired, "scan_run",
-                    "scan_2026-09-07",
+                    P["payload_name"],
                     f"1 when {leg}'s CURRENT rule returned `pass` on the `passes_all` fixture "
                     f"AND `fail` on the `fails_all` fixture in cycle {CYCLE}, else 0. This is "
                     f"the ceiling-and-floor check that tells a 0/23 rate apart from a rule "
@@ -154,18 +170,42 @@ def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--cycle", default=None,
+                    help="which cycle's figures to register inputs for "
+                         "(default: params.cycle.name)")
     a = ap.parse_args(argv)
-    data = rows()
+    data = rows(a.cycle or load_params()["cycle"]["name"])
     if a.dry_run:
         for n, v, sc, dn, note in data:
             print(f"{n}\t{v}\t{sc}\t{dn}")
         print(len(data), "Results")
         return 0
+    # The cycle payload is a DataFile like any other and every cycle writes a new one, so it is
+    # ensured here for the reason `cycle_results.ensure_data_file` exists: `seldon result
+    # register` resolves every reference BEFORE writing an event (AD-028), so a missing
+    # artifact refuses the batch — correctly, and at the wrong moment to find out.
+    P = paths(a.cycle or load_params()["cycle"]["name"])
+    cycle_results.ensure_data_file(
+        P["payload_name"], f"state/{P['cycle']}.json",
+        f"The {P['cycle']} scan cycle's payload: every Observation with its stored body "
+        f"digest, every Finding with its evidence, the control-fixture records and the "
+        f"cycle summary. Written by assessment/harness/scan/run.py; the evidence a Finding "
+        f"cites is in corpus/evidence/scan/ and was promoted on publication. Task {TASK}.")
+    # UUIDs, not names: `--script-name` and `--data-name` resolve over superseded artifacts
+    # too, so a name that was ever duplicated stays unresolvable (see scripts/seldon_artifacts).
+    ids = {}
+    for _n, _v, sc, dn, _note in data:
+        for nm in (sc, dn):
+            if nm not in ids:
+                ids[nm] = live_artifact(nm)
+                if not ids[nm]:
+                    raise SystemExit(f"FATAL: no live artifact named {nm!r}; "
+                                     f"nothing was registered")
     ok, already, failed = 0, [], []
     for n, v, sc, dn, note in data:
         r = subprocess.run(["seldon", "result", "register", "--value", str(v), "--name", n,
                             "--units", n, "--description", f"{note} ({TASK})",
-                            "--script-name", sc, "--data-name", dn],
+                            "--script-id", ids[sc], "--data-ids", ids[dn]],
                            capture_output=True, text=True, cwd=REPO)
         if r.returncode == 0:
             ok += 1
