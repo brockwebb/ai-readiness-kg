@@ -200,12 +200,17 @@ def test_every_rule_from_generation_four_consults_the_blind_guard():
                 f"{stem} changed; the lint exemption was pinned to its bytes and no longer "
                 f"applies. Add `unobserved_error` to it, or re-pin with the reason.")
             continue
-        if "unobserved_error" not in src:
+        # EITHER guard counts. `unobserved_error` answers "is THIS probe blind" and returns
+        # the Finding; `unobserved` is the predicate underneath it, and a rule judging a SET of
+        # probes — `RULE-A1-v4` and `RULE-A3-v5` over a page's links — needs the predicate per
+        # link rather than a Finding per link. Requiring the wrapper alone would push those two
+        # toward the coarser check, which is the opposite of the point.
+        if not any(g in src for g in ("unobserved_error", "c.unobserved(")):
             missing.append(m.RULE_ID)
     assert not missing, (
-        f"{missing} are generation-4-or-later rules that never consult "
-        f"`_common.unobserved_error`. A verdict from a probe the collector did not observe is "
-        f"a measurement of the scanner, not of the product.")
+        f"{missing} are generation-4-or-later rules that never consult a blind guard "
+        f"(`_common.unobserved_error` or `_common.unobserved`). A verdict from a probe the "
+        f"collector did not observe is a measurement of the scanner, not of the product.")
 
 
 def test_the_new_generation_is_new_modules_and_its_predecessors_are_untouched():
@@ -225,12 +230,17 @@ def test_the_new_generation_is_new_modules_and_its_predecessors_are_untouched():
 
 # ============================================================ §1.2 the isolating fixture
 
-def test_there_are_five_fixtures_and_every_one_has_a_pre_registered_table():
+def test_every_fixture_has_a_pre_registered_table_and_the_roster_only_grows():
+    """The roster grew to six with `resets_links_only`
+    (`cc_tasks/2026-09-08_scan_run_3.md` §1.2). Pinned by NAME so a fixture cannot be quietly
+    removed, and asserted as a superset so the next addition is one line here rather than a
+    failure that looks like a regression."""
     params = load_params()
     expected = params["e5_control"]["expected_verdicts"]
-    assert set(expected) == set(MODES) == {
-        "passes_all", "fails_all", "refuses_identified_client", "resets_connection",
-        ISOLATING_FIXTURE}
+    assert set(expected) == set(MODES)
+    assert {"passes_all", "fails_all", "refuses_identified_client", "resets_connection",
+            ISOLATING_FIXTURE, "resets_links_only"} <= set(MODES), (
+        "a control fixture may not be removed")
     for fixture, table in expected.items():
         if isinstance(table, dict):
             assert "default" in table, fixture

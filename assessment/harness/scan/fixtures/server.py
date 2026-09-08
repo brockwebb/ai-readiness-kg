@@ -16,6 +16,9 @@ was tested by a hand-built observation pair instead, which tests the rule and no
   what A12 measures and what `www.bls.gov` did to the first smoke run.
 * `resets_connection` — the socket is accepted and reset (RFC 9293 RST) before a byte of
   response. Nothing is observable, including robots.txt.
+* `resets_links_only` — everything `passes_all` serves over GET, and every HEAD reset. The
+  product page is served and every link on it is unobservable, which is the state
+  `RULE-A1-v3`/`RULE-A3-v4` scored as "this product offers nothing".
 * `invalid_route_unobserved` — everything `passes_all` serves, and the connection reset on
   A10's invented invalid route ALONE. PARTIAL blindness, which is the state no other fixture
   can reach: `resets_connection` blinds every leg at once, so it cannot reproduce the surface
@@ -72,6 +75,13 @@ MODES = {
     # two definitions of "a well-formed surface", and the copy that drifted would be the one
     # that mattered. The fixture's own directory holds only its README.
     "invalid_route_unobserved": {"serves_as": "passes_all", "reset_on_invalid_route": True},
+    # Everything `passes_all` serves over GET, and every HEAD reset. That is the shape of the
+    # surface `cc_tasks/2026-09-08_scan_harness_v4_RESULT.md` §7.1 named and could not fix
+    # then: the product page is SERVED, so `_common.only_errors` is false, while every link on
+    # it is unobservable — and `RULE-A1-v3`/`RULE-A3-v4` scored that as "offers nothing".
+    # HEAD is the discriminator because the link probe is a HEAD (`link_probe.method`) and the
+    # page fetch is a GET, so this blinds exactly the links and nothing else.
+    "resets_links_only": {"serves_as": "passes_all", "reset_on_head": True},
 }
 
 
@@ -92,6 +102,8 @@ class _Handler(http.server.SimpleHTTPRequestHandler):
     #: the fixture and the collector can never disagree about which path is "the invalid one".
     reset_on_invalid_route: bool = False
     invalid_route_suffix: str = ""
+    #: Reset every HEAD and serve every GET. Blinds the link probe alone.
+    reset_on_head: bool = False
     #: Appended to by every request. A list on the CLASS, handed in by `FixtureServer`, so the
     #: log outlives the per-request handler instance.
     requests: list = []
@@ -166,7 +178,7 @@ class _Handler(http.server.SimpleHTTPRequestHandler):
         # Logged BEFORE the reset: the request WAS received, and a request log that omitted it
         # would make the fixture look like a host that never heard from us.
         self.requests.append({"method": "HEAD" if self._head_only else "GET", "path": path})
-        if self._resets_this_path(path):
+        if self._resets_this_path(path) or (self.reset_on_head and self._head_only):
             return self._reset()
         if self.refuse_status is not None and path not in self.served_paths:
             return self._serve_bytes(b"", "text/plain", status=self.refuse_status,

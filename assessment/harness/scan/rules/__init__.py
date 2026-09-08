@@ -31,6 +31,7 @@ from . import (rule_a1_v2, rule_a10_v2, rule_a11_declared_v2, rule_a2_v2, rule_a
 from . import rule_a2_v3, rule_a3_v3, rule_d1_v3, rule_f4_v3
 from . import rule_a1_v3, rule_a3_v4
 from . import rule_a8_v3, rule_a10_v3
+from . import rule_a1_v4, rule_a3_v5
 from . import rule_a12
 
 #: Every version ever shipped, keyed by rule id. Never prune it: a pruned entry is a stored
@@ -63,6 +64,15 @@ V4 = [rule_a3_v4]
 #: on, and `tests/test_scan_harness_v4.py` lints for it. Their predecessors stay in `REGISTRY`.
 V5 = [rule_a8_v3, rule_a10_v3]
 
+#: A sixth generation for the two legs harness-v4 left open and NAMED rather than fixed
+#: (`cc_tasks/2026-09-08_scan_harness_v4_RESULT.md` §7.1): A1 and A3 filter link probes through
+#: `_common.served()` and then return `fail` when nothing survives, so a page that WAS served
+#: while every link on it was reset is scored as offering nothing. That is harness-v4's own
+#: defect pointed the other way, and `only_errors` cannot catch it because the page observation
+#: is real. A blind link is unobserved FOR THAT LINK; all blind is `error`; some blind is judged
+#: over the rest with the blind count on the Finding. Predecessors stay in `REGISTRY`.
+V6 = [rule_a1_v4, rule_a3_v5]
+
 #: Rules for CANDIDATE indicators. They judge, they are recorded, and their Findings enter no
 #: numerator and no denominator (DD-054). Kept in their own list so the reporting layer can
 #: exclude them mechanically rather than by remembering a code.
@@ -72,7 +82,7 @@ CANDIDATE_RULES = [rule_a12]
 #: track of: the registry-integrity tests read this, so a fifth generation is one entry here
 #: and nothing else to remember — which is the same reasoning `parse_rule_id` gives for being
 #: a regex instead of a per-rule table.
-GENERATIONS = (V1, V2, V3, V4, V5)
+GENERATIONS = (V1, V2, V3, V4, V5, V6)
 
 MODULES = [m for g in GENERATIONS for m in g] + CANDIDATE_RULES
 

@@ -24,6 +24,27 @@ params_version: "0.1.0"
 # that travels with the record, never an edit to the past.
 finding_identity: 2
 
+# TIER 0 — the headline legs, and the only legs a Tier C reference host is judged on.
+#
+# `cc_tasks/2026-09-08_scan_frame_fss.md` names this set and `..._RESULT.md` §9.2 records that
+# it did not exist yet; `cc_tasks/2026-09-08_scan_run_3.md` §1.1 declares it BEFORE the cycle
+# that uses it, which is the whole point — a headline set chosen after the numbers are in is a
+# choice of numbers.
+#
+# What makes a leg tier 0: it asks about a HOST THAT PUBLISHES DATA rather than about a
+# statistical product. robots.txt served, discovery files present, a deep link and a bogus
+# route, the declared machine layer, whether the declared and enforced layers agree, and
+# whether error measures are present as structured fields. A federal data publisher outside the
+# statistical system is the same kind of thing as one inside it at that level, which is what
+# licenses the Tier C comparison (DD-059) — and above it, a catalog has no product vintage and
+# no bulk download, so the comparison would stop being like-for-like.
+tier0:
+  legs: ["A4", "A5", "A10", "A11-declared", "A12", "G1-D"]
+  # A12 is a CANDIDATE indicator (DD-054): reported beside the others, counted in no fraction.
+  # It is in the tier-0 set because declare-vs-enforce is a host property and the single most
+  # informative one for a reference host; it is not in any denominator.
+  candidate_legs_in_set: ["A12"]
+
 cycle:
   # Which cycle these parameters belong to, and which target list it measures. Named here so
   # a Finding can be traced to its cycle without a reader having to know which state file was
@@ -385,6 +406,17 @@ e5_control:
     invalid_route_unobserved:
       default: "pass"
       A10: "error"
+    # PRE-REGISTERED before the fixture was first run (`cc_tasks/2026-09-08_scan_run_3.md`
+    # §1.2), derived from the rule source. Every GET is served and every HEAD is reset, so:
+    #   default `pass`  no other leg probes with HEAD; each sees exactly `passes_all`.
+    #   A1, A3 `error`  their evidence is the shared `link_probe` leg, which HEADs every link.
+    #                   All links blind and the page served is the exact state
+    #                   `RULE-A1-v3`/`RULE-A3-v4` returned `fail` for; `RULE-A1-v4` and
+    #                   `RULE-A3-v5` return `error` — unmeasured, not absent.
+    resets_links_only:
+      default: "pass"
+      A1: "error"
+      A3: "error"
 
 fuji:
   # NOT WIRED. The PyPI name `fuji` is a DIFFERENT package (startechsheffield, "a small
