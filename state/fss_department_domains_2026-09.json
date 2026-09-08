@@ -1,0 +1,549 @@
+{
+ "task": "cc_tasks/2026-09-08_scan_frame_fss.md",
+ "addendum": "cc_tasks/2026-09-08_scan_frame_fss_ADDENDUM-03.md",
+ "generated_at": "2026-09-08T16:32:18.438664+00:00",
+ "registry": {
+  "url": "https://raw.githubusercontent.com/cisagov/dotgov-data/main/current-federal.csv",
+  "sha256": "b4dc1b7cee8bbfcb86dcc16a666972e902705505de7bea1af53f904c72c80f48",
+  "retained_path": "corpus/evidence/frame/b4/b4dc1b7cee8bbfcb86dcc16a666972e902705505de7bea1af53f904c72c80f48",
+  "domains": 1321,
+  "columns": [
+   "Domain name",
+   "Domain type",
+   "Organization name",
+   "Suborganization name",
+   "City",
+   "State",
+   "Security contact email"
+  ],
+  "columns_expected_by_addendum": [
+   "Domain name",
+   "Agency",
+   "Organization"
+  ],
+  "schema_matches_addendum": false
+ },
+ "normalisation": [
+  "casefold",
+  "strip leading 'U.S.'/'the'",
+  "collapse whitespace"
+ ],
+ "reverse_attribution": [
+  {
+   "agency": "Division of Research and Statistics, Microeconomic Surveys Unit",
+   "host": "www.federalreserve.gov",
+   "registrable_domain": "federalreserve.gov",
+   "registry_organization": "Board of Governors of the Federal Reserve",
+   "registry_suborganization": "Federal Reserve Bank",
+   "registry_domain_type": "Federal - Executive",
+   "in_registry": true,
+   "agrees_with_roster_parent": false
+  },
+  {
+   "agency": "Economic Research Service",
+   "host": "www.ers.usda.gov",
+   "registrable_domain": "usda.gov",
+   "registry_organization": "Department of Agriculture",
+   "registry_suborganization": "",
+   "registry_domain_type": "Federal - Executive",
+   "in_registry": true,
+   "agrees_with_roster_parent": true
+  },
+  {
+   "agency": "National Agricultural Statistics Service",
+   "host": "www.nass.usda.gov",
+   "registrable_domain": "usda.gov",
+   "registry_organization": "Department of Agriculture",
+   "registry_suborganization": "",
+   "registry_domain_type": "Federal - Executive",
+   "in_registry": true,
+   "agrees_with_roster_parent": true
+  },
+  {
+   "agency": "National Animal Health Monitoring System, Animal and Plant Health Inspection Service",
+   "host": "www.aphis.usda.gov",
+   "registrable_domain": "usda.gov",
+   "registry_organization": "Department of Agriculture",
+   "registry_suborganization": "",
+   "registry_domain_type": "Federal - Executive",
+   "in_registry": true,
+   "agrees_with_roster_parent": true
+  },
+  {
+   "agency": "Bureau of Economic Analysis",
+   "host": "www.bea.gov",
+   "registrable_domain": "bea.gov",
+   "registry_organization": "Department of Commerce",
+   "registry_suborganization": "Bureau of Economic Analysis",
+   "registry_domain_type": "Federal - Executive",
+   "in_registry": true,
+   "agrees_with_roster_parent": true
+  },
+  {
+   "agency": "Bureau of the Census",
+   "host": "www.census.gov",
+   "registrable_domain": "census.gov",
+   "registry_organization": "Department of Commerce",
+   "registry_suborganization": "Bureau of the Census",
+   "registry_domain_type": "Federal - Executive",
+   "in_registry": true,
+   "agrees_with_roster_parent": true
+  },
+  {
+   "agency": "National Center for Education Statistics",
+   "host": "nces.ed.gov",
+   "registrable_domain": "ed.gov",
+   "registry_organization": "Department of Education",
+   "registry_suborganization": "Office of the Chief Information Officer",
+   "registry_domain_type": "Federal - Executive",
+   "in_registry": true,
+   "agrees_with_roster_parent": true
+  },
+  {
+   "agency": "Energy Information Administration",
+   "host": "www.eia.gov",
+   "registrable_domain": "eia.gov",
+   "registry_organization": "Department of Energy",
+   "registry_suborganization": "Energy Information Administration",
+   "registry_domain_type": "Federal - Executive",
+   "in_registry": true,
+   "agrees_with_roster_parent": true
+  },
+  {
+   "agency": "National Center for Health Statistics",
+   "host": "www.cdc.gov",
+   "registrable_domain": "cdc.gov",
+   "registry_organization": "Department of Health and Human Services",
+   "registry_suborganization": "Centers for Disease Control and Prevention",
+   "registry_domain_type": "Federal - Executive",
+   "in_registry": true,
+   "agrees_with_roster_parent": true
+  },
+  {
+   "agency": "Substance Abuse and Mental Health Services Administration, Center for Behavioral Health Statistics and Quality",
+   "host": "www.samhsa.gov",
+   "registrable_domain": "samhsa.gov",
+   "registry_organization": "Department of Health and Human Services",
+   "registry_suborganization": "Substance Abuse and Mental Health Services Administration",
+   "registry_domain_type": "Federal - Executive",
+   "in_registry": true,
+   "agrees_with_roster_parent": true
+  },
+  {
+   "agency": "Bureau of Justice Statistics",
+   "host": "bjs.ojp.gov",
+   "registrable_domain": "ojp.gov",
+   "registry_organization": "Department of Justice",
+   "registry_suborganization": "Office of Justice Programs",
+   "registry_domain_type": "Federal - Executive",
+   "in_registry": true,
+   "agrees_with_roster_parent": true
+  },
+  {
+   "agency": "Bureau of Labor Statistics",
+   "host": "www.bls.gov",
+   "registrable_domain": "bls.gov",
+   "registry_organization": "Department of Labor",
+   "registry_suborganization": "Bureau of Labor Statistics",
+   "registry_domain_type": "Federal - Executive",
+   "in_registry": true,
+   "agrees_with_roster_parent": true
+  },
+  {
+   "agency": "Statistics of Income",
+   "host": "www.irs.gov",
+   "registrable_domain": "irs.gov",
+   "registry_organization": "Department of the Treasury",
+   "registry_suborganization": "Internal Revenue Service",
+   "registry_domain_type": "Federal - Executive",
+   "in_registry": true,
+   "agrees_with_roster_parent": true
+  },
+  {
+   "agency": "Bureau of Transportation Statistics",
+   "host": "www.bts.gov",
+   "registrable_domain": "bts.gov",
+   "registry_organization": "Department of Transportation",
+   "registry_suborganization": "Bureau of Transportation Statistics",
+   "registry_domain_type": "Federal - Executive",
+   "in_registry": true,
+   "agrees_with_roster_parent": true
+  },
+  {
+   "agency": "National Center for Science and Engineering Statistics",
+   "host": "ncses.nsf.gov",
+   "registrable_domain": "nsf.gov",
+   "registry_organization": "National Science Foundation",
+   "registry_suborganization": "",
+   "registry_domain_type": "Federal - Executive",
+   "in_registry": true,
+   "agrees_with_roster_parent": true
+  },
+  {
+   "agency": "Office of Research, Evaluation, and Statistics",
+   "host": "www.ssa.gov",
+   "registrable_domain": "ssa.gov",
+   "registry_organization": "Social Security Administration",
+   "registry_suborganization": "",
+   "registry_domain_type": "Federal - Executive",
+   "in_registry": true,
+   "agrees_with_roster_parent": true
+  }
+ ],
+ "forward_mapping": [
+  {
+   "department": "Board of Governors of the Federal Reserve System",
+   "registry_rows": 0,
+   "suborganization_empty_rows": 0,
+   "candidate_domains_sample": [],
+   "resolvable_to_one_domain": false,
+   "note": "the registry has no field designating a department's primary domain; one row per domain, so this is a count of candidates, not a mapping"
+  },
+  {
+   "department": "Department of Agriculture",
+   "registry_rows": 29,
+   "suborganization_empty_rows": 7,
+   "candidate_domains_sample": [
+    "aff.gov",
+    "ag.gov",
+    "ama.gov",
+    "execsec.gov",
+    "nwcg.gov",
+    "usda.gov",
+    "wildfire.gov"
+   ],
+   "resolvable_to_one_domain": false,
+   "note": "the registry has no field designating a department's primary domain; one row per domain, so this is a count of candidates, not a mapping"
+  },
+  {
+   "department": "Department of Commerce",
+   "registry_rows": 62,
+   "suborganization_empty_rows": 4,
+   "candidate_domains_sample": [
+    "commerce.gov",
+    "doc.gov",
+    "techhubs.gov",
+    "trumpgoldcard.gov"
+   ],
+   "resolvable_to_one_domain": false,
+   "note": "the registry has no field designating a department's primary domain; one row per domain, so this is a count of candidates, not a mapping"
+  },
+  {
+   "department": "Department of Defense",
+   "registry_rows": 42,
+   "suborganization_empty_rows": 3,
+   "candidate_domains_sample": [
+    "mtmc.gov",
+    "soarc.gov",
+    "war.gov"
+   ],
+   "resolvable_to_one_domain": false,
+   "note": "the registry has no field designating a department's primary domain; one row per domain, so this is a count of candidates, not a mapping"
+  },
+  {
+   "department": "Department of Education",
+   "registry_rows": 11,
+   "suborganization_empty_rows": 3,
+   "candidate_domains_sample": [
+    "fafsa.gov",
+    "studentaid.gov",
+    "studentloans.gov"
+   ],
+   "resolvable_to_one_domain": false,
+   "note": "the registry has no field designating a department's primary domain; one row per domain, so this is a count of candidates, not a mapping"
+  },
+  {
+   "department": "Department of Energy",
+   "registry_rows": 62,
+   "suborganization_empty_rows": 4,
+   "candidate_domains_sample": [
+    "nuclear.gov",
+    "pcast.gov",
+    "rideelectric.gov",
+    "safgrandchallenge.gov"
+   ],
+   "resolvable_to_one_domain": false,
+   "note": "the registry has no field designating a department's primary domain; one row per domain, so this is a count of candidates, not a mapping"
+  },
+  {
+   "department": "Department of Health and Human Services",
+   "registry_rows": 124,
+   "suborganization_empty_rows": 4,
+   "candidate_domains_sample": [
+    "fosteringthefuture.gov",
+    "getactive.gov",
+    "hhsoig.gov",
+    "reproductivehealthservices.gov"
+   ],
+   "resolvable_to_one_domain": false,
+   "note": "the registry has no field designating a department's primary domain; one row per domain, so this is a count of candidates, not a mapping"
+  },
+  {
+   "department": "Department of Homeland Security",
+   "registry_rows": 40,
+   "suborganization_empty_rows": 1,
+   "candidate_domains_sample": [
+    "hsi.gov"
+   ],
+   "resolvable_to_one_domain": true,
+   "note": "the registry has no field designating a department's primary domain; one row per domain, so this is a count of candidates, not a mapping"
+  },
+  {
+   "department": "Department of Housing and Urban Development",
+   "registry_rows": 8,
+   "suborganization_empty_rows": 6,
+   "candidate_domains_sample": [
+    "disasterhousing.gov",
+    "fha.gov",
+    "hud.gov",
+    "hudhomestore.gov",
+    "hudoig.gov",
+    "opportunityzones.gov"
+   ],
+   "resolvable_to_one_domain": false,
+   "note": "the registry has no field designating a department's primary domain; one row per domain, so this is a count of candidates, not a mapping"
+  },
+  {
+   "department": "Department of Justice",
+   "registry_rows": 63,
+   "suborganization_empty_rows": 6,
+   "candidate_domains_sample": [
+    "bats.gov",
+    "doj.gov",
+    "justice.gov",
+    "learndoj.gov",
+    "ncjrs.gov",
+    "vcf.gov"
+   ],
+   "resolvable_to_one_domain": false,
+   "note": "the registry has no field designating a department's primary domain; one row per domain, so this is a count of candidates, not a mapping"
+  },
+  {
+   "department": "Department of Labor",
+   "registry_rows": 28,
+   "suborganization_empty_rows": 23,
+   "candidate_domains_sample": [
+    "aiworkforcehub.gov",
+    "apprenticeship.gov",
+    "apprenticeships.gov",
+    "dol.gov",
+    "doleta.gov",
+    "employer.gov",
+    "goodjobs.gov",
+    "hirevets.gov"
+   ],
+   "resolvable_to_one_domain": false,
+   "note": "the registry has no field designating a department's primary domain; one row per domain, so this is a count of candidates, not a mapping"
+  },
+  {
+   "department": "Department of State",
+   "registry_rows": 30,
+   "suborganization_empty_rows": 11,
+   "candidate_domains_sample": [
+    "childreninadversity.gov",
+    "dfafacts.gov",
+    "feedthefuture.gov",
+    "foreignassistance.gov",
+    "fso.gov",
+    "neglecteddiseases.gov",
+    "passport.gov",
+    "passports.gov"
+   ],
+   "resolvable_to_one_domain": false,
+   "note": "the registry has no field designating a department's primary domain; one row per domain, so this is a count of candidates, not a mapping"
+  },
+  {
+   "department": "Department of Transportation",
+   "registry_rows": 19,
+   "suborganization_empty_rows": 1,
+   "candidate_domains_sample": [
+    "dot.gov"
+   ],
+   "resolvable_to_one_domain": true,
+   "note": "the registry has no field designating a department's primary domain; one row per domain, so this is a count of candidates, not a mapping"
+  },
+  {
+   "department": "Department of Veterans Affairs",
+   "registry_rows": 5,
+   "suborganization_empty_rows": 0,
+   "candidate_domains_sample": [],
+   "resolvable_to_one_domain": false,
+   "note": "the registry has no field designating a department's primary domain; one row per domain, so this is a count of candidates, not a mapping"
+  },
+  {
+   "department": "Department of the Interior",
+   "registry_rows": 64,
+   "suborganization_empty_rows": 9,
+   "candidate_domains_sample": [
+    "boemre.gov",
+    "doi.gov",
+    "evergladesrestoration.gov",
+    "fireleadership.gov",
+    "geoplatform.gov",
+    "interior.gov",
+    "invasivespecies.gov",
+    "landimaging.gov"
+   ],
+   "resolvable_to_one_domain": false,
+   "note": "the registry has no field designating a department's primary domain; one row per domain, so this is a count of candidates, not a mapping"
+  },
+  {
+   "department": "Department of the Treasury",
+   "registry_rows": 87,
+   "suborganization_empty_rows": 1,
+   "candidate_domains_sample": [
+    "trumpaccounts.gov"
+   ],
+   "resolvable_to_one_domain": true,
+   "note": "the registry has no field designating a department's primary domain; one row per domain, so this is a count of candidates, not a mapping"
+  },
+  {
+   "department": "Environmental Protection Agency",
+   "registry_rows": 13,
+   "suborganization_empty_rows": 13,
+   "candidate_domains_sample": [
+    "airknowledge.gov",
+    "airnow.gov",
+    "cbi-epa.gov",
+    "energystar.gov",
+    "epa.gov",
+    "epaoig.gov",
+    "fedcenter.gov",
+    "frtr.gov"
+   ],
+   "resolvable_to_one_domain": false,
+   "note": "the registry has no field designating a department's primary domain; one row per domain, so this is a count of candidates, not a mapping"
+  },
+  {
+   "department": "General Services Administration",
+   "registry_rows": 89,
+   "suborganization_empty_rows": 11,
+   "candidate_domains_sample": [
+    "benefits.gov",
+    "cdo.gov",
+    "fcsm.gov",
+    "fleet.gov",
+    "govloans.gov",
+    "gsafleet.gov",
+    "paymentaccuracy.gov",
+    "ppms.gov"
+   ],
+   "resolvable_to_one_domain": false,
+   "note": "the registry has no field designating a department's primary domain; one row per domain, so this is a count of candidates, not a mapping"
+  },
+  {
+   "department": "National Aeronautics and Space Administration",
+   "registry_rows": 5,
+   "suborganization_empty_rows": 0,
+   "candidate_domains_sample": [],
+   "resolvable_to_one_domain": false,
+   "note": "the registry has no field designating a department's primary domain; one row per domain, so this is a count of candidates, not a mapping"
+  },
+  {
+   "department": "National Science Foundation",
+   "registry_rows": 4,
+   "suborganization_empty_rows": 4,
+   "candidate_domains_sample": [
+    "nsf.gov",
+    "research.gov",
+    "sac.gov",
+    "usap.gov"
+   ],
+   "resolvable_to_one_domain": false,
+   "note": "the registry has no field designating a department's primary domain; one row per domain, so this is a count of candidates, not a mapping"
+  },
+  {
+   "department": "Nuclear Regulatory Commission",
+   "registry_rows": 2,
+   "suborganization_empty_rows": 2,
+   "candidate_domains_sample": [
+    "nrc-gateway.gov",
+    "nrc.gov"
+   ],
+   "resolvable_to_one_domain": false,
+   "note": "the registry has no field designating a department's primary domain; one row per domain, so this is a count of candidates, not a mapping"
+  },
+  {
+   "department": "Office of Management and Budget, Office of the Chief Statistician of the U.S.",
+   "registry_rows": 0,
+   "suborganization_empty_rows": 0,
+   "candidate_domains_sample": [],
+   "resolvable_to_one_domain": false,
+   "note": "the registry has no field designating a department's primary domain; one row per domain, so this is a count of candidates, not a mapping"
+  },
+  {
+   "department": "Office of Personnel Management",
+   "registry_rows": 24,
+   "suborganization_empty_rows": 24,
+   "candidate_domains_sample": [
+    "applicationmanager.gov",
+    "benefeds.gov",
+    "chcoc.gov",
+    "cybercareers.gov",
+    "e-qip.gov",
+    "employeeexpress.gov",
+    "feb.gov",
+    "federaljobs.gov"
+   ],
+   "resolvable_to_one_domain": false,
+   "note": "the registry has no field designating a department's primary domain; one row per domain, so this is a count of candidates, not a mapping"
+  },
+  {
+   "department": "Small Business Administration",
+   "registry_rows": 4,
+   "suborganization_empty_rows": 4,
+   "candidate_domains_sample": [
+    "business.gov",
+    "nwbc.gov",
+    "sba.gov",
+    "sbir.gov"
+   ],
+   "resolvable_to_one_domain": false,
+   "note": "the registry has no field designating a department's primary domain; one row per domain, so this is a count of candidates, not a mapping"
+  },
+  {
+   "department": "Social Security Administration",
+   "registry_rows": 3,
+   "suborganization_empty_rows": 3,
+   "candidate_domains_sample": [
+    "segurosocial.gov",
+    "socialsecurity.gov",
+    "ssa.gov"
+   ],
+   "resolvable_to_one_domain": false,
+   "note": "the registry has no field designating a department's primary domain; one row per domain, so this is a count of candidates, not a mapping"
+  },
+  {
+   "department": "U.S. Agency for International Development",
+   "registry_rows": 0,
+   "suborganization_empty_rows": 0,
+   "candidate_domains_sample": [],
+   "resolvable_to_one_domain": false,
+   "note": "the registry has no field designating a department's primary domain; one row per domain, so this is a count of candidates, not a mapping"
+  }
+ ],
+ "forward_resolvable": 3,
+ "forward_departments": 26,
+ "catalog_api": [
+  {
+   "url": "https://catalog.data.gov/api/3/action/organization_list?all_fields=true",
+   "status": 404,
+   "bytes": 36,
+   "content_type": "application/json"
+  },
+  {
+   "url": "https://catalog.data.gov/api/3/action/harvest_source_list",
+   "status": 404,
+   "bytes": 36,
+   "content_type": "application/json"
+  },
+  {
+   "url": "https://catalog.data.gov/api/3/action/package_search?rows=0",
+   "status": 404,
+   "bytes": 36,
+   "content_type": "application/json"
+  }
+ ],
+ "catalog_api_available": false,
+ "conclusion": "The forward mapping department -> primary domain is NOT resolvable from either named source. The .gov registry is one row per domain with no primary-domain field; data.gov's CKAN action API answers 404 at every documented endpoint. No domain is invented to stand in for it."
+}

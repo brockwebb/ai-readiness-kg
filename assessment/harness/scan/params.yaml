@@ -174,6 +174,29 @@ frame:
     # `flagships_pending_operator_declaration`.
     min_declared_flagships: 2
 
+  # DEPARTMENT -> INVENTORY URL, the two sources `..._ADDENDUM-03.md` names.
+  # Both are declared here rather than typed into a script, and both turned out to contain
+  # something other than what the addendum expected — which is why the script MEASURES them
+  # instead of working around them. See `scripts/resolve_department_domains.py`.
+  dept_domains:
+    # CISA's .gov registry. Authoritative for WHICH DEPARTMENT OWNS A DOMAIN (reverse), and
+    # silent on which domain is a department's primary one (forward): one row per domain, no
+    # primary-domain field, 28 rows for Labor and 124 for HHS.
+    dotgov_registry_url: "https://raw.githubusercontent.com/cisagov/dotgov-data/main/current-federal.csv"
+    dotgov_source: "CISA .gov registry, cisagov/dotgov-data, current-federal.csv"
+    # What the addendum expected to find, kept so the mismatch is on the record rather than in
+    # a commit message.
+    dotgov_columns_expected: ["Domain name", "Agency", "Organization"]
+    # data.gov's harvest source registry — the authoritative record of where the government
+    # itself reads each department's data.json from. Every documented endpoint is probed, and
+    # the STATUS of each is the measurement: ADDENDUM-01 declared Tier C because a federal
+    # catalog that is not machine-legible is a finding in its own right.
+    catalog_api_urls:
+      - "https://catalog.data.gov/api/3/action/organization_list?all_fields=true"
+      - "https://catalog.data.gov/api/3/action/harvest_source_list"
+      - "https://catalog.data.gov/api/3/action/package_search?rows=0"
+    datajson_harvest_type: "datajson"
+
   # TIER C — reference hosts, NOT statistical agencies. `..._ADDENDUM-01.md`.
   #
   # Declared, not parsed: they are not on the ICSP source because they are not part of the
