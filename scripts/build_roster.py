@@ -303,8 +303,21 @@ def build(params: dict, caps: dict) -> dict:
                 "about_page": "designated Statistical Official (*) only, and absent from the "
                               "page's own recognized-agency link list",
                 "resolved_by": params["frame"]["roster_authority"]})
+    # Tier C is DECLARED, never parsed: it is not on the ICSP source because it is not part of
+    # the statistical system (ADDENDUM-01 item 2). It rides on the roster so one artifact
+    # answers "who is in the frame", with its own tier letter and its own provenance, and it
+    # carries the tier-0-only restriction on its face so no later reader has to remember it.
+    tier_c = [{**t, "tier": "C", "source": params["frame"]["tier_c_source"],
+               "host": urllib.parse.urlsplit(t["home"]).netloc,
+               "machine_host": urllib.parse.urlsplit(t["machine_entry_point"]).netloc,
+               "tier0_legs_only": True,
+               "restriction": (
+                   "reference host, not a statistical agency: tier-0 legs only, never in a "
+                   "Tier A or Tier B denominator and never on the agencies x legs matrix")}
+              for t in params["frame"]["tier_c"]]
+
     return {
-        "tier_a": tier_a, "tier_b": tier_b,
+        "tier_a": tier_a, "tier_b": tier_b, "tier_c": tier_c,
         "counts": {
             "tier_a_charter": len(tier_a_src),
             "tier_a_about_flags": len(about_recognized),
@@ -314,6 +327,7 @@ def build(params: dict, caps: dict) -> dict:
             "officials_about_prose": about["prose_officials"],
             "charter_members": len(charter["entries"]),
             "about_members": len(about["entries"]),
+            "tier_c_declared": len(tier_c),
         },
         "tier_a_disagreements": disagreements,
         "tier_a_without_home_url": [a["name"] for a in tier_a if not a["home_url"]],
@@ -365,6 +379,8 @@ def main(argv=None) -> int:
             print(f"  A {t['name'][:62]:64s} {t['host'] or '-'}")
         for t in doc["tier_b"]:
             print(f"  B {t['name'][:62]:64s} {t['host'] or '(no host on source)'}")
+        for t in doc["tier_c"]:
+            print(f"  C {t['name'][:62]:64s} {t['host']} / {t['machine_host']}")
         return 0
     OUT.write_text(json.dumps(doc, indent=1, default=str) + "\n", encoding="utf-8")
     print(json.dumps(doc["counts"], indent=1))

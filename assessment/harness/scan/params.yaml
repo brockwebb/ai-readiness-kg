@@ -137,6 +137,75 @@ frame:
                     "subscribe", "newsletter", "search", "home", "espanol", "español"]
     min_anchor_words: 2
     none_found_marker: no_flagship_products
+  # THE ENTERPRISE DATA INVENTORY, and why §2's first rule was thrown away.
+  # `..._ADDENDUM-02.md`. The replaced rule scraped anchor SUBSTRINGS off an agency home page:
+  # it found fewer real surfaces than the hand list it was meant to replace (12 flagships for
+  # 16 agencies against cycle 1's 26 for 13), and it found some by accident — `api` inside
+  # "Capital Markets" on the Federal Reserve's staff page. A rule that finds surfaces by
+  # accident is not a sampling statement.
+  #
+  # The replacement is prior art rather than scraping. Every CFO Act department must publish a
+  # machine-readable Enterprise Data Inventory at `/data.json` under the OPEN Government Data
+  # Act (44 U.S.C. 3511, continuing OMB M-13-13), in DCAT-US: the department's OWN declaration
+  # of its datasets, with `publisher` and `bureauCode` per dataset, a `landingPage`, and typed
+  # `distribution` entries that say which are APIs. Uniform across the frame, machine-parseable,
+  # and already the object of a framework indicator.
+  edi:
+    path: "/data.json"
+    # WHICH HOSTS ARE PROBED for an inventory. Derived from the roster by rule, because the
+    # department -> domain mapping is on NEITHER named roster source: the ICSP charter and the
+    # About page both name departments in prose and neither carries a URL for one. So the rule
+    # probes the agency's own host and its registrable domain, records which served, and
+    # records a null where neither does. Where a department's domain is not the agency's
+    # registrable domain (census.gov sits under Commerce, bls.gov under Labor) the outcome is a
+    # RECORDED null and never an invented host; resolving those properly needs the
+    # organization list at catalog.data.gov, which is named for the next task.
+    probe_agency_host: true
+    probe_registrable_domain: true
+    # A distribution is an API when its declared format/mediaType says so, or when its
+    # accessURL sits on an api/developer path. Word-boundary matched, never substring.
+    api_format_tokens: ["api", "rest", "graphql", "odata"]
+    api_path_tokens: ["api", "apis", "developer", "developers", "data-access"]
+    # How many datasets the operator shortlist offers per agency, most recently modified first.
+    # A SHORTLIST, never a selection: the inventory carries no field that ranks datasets, so
+    # ranking them would be a value judgment the source does not make.
+    shortlist_n: 5
+    # An agency with fewer declared flagships than this gets a shortlist and is marked
+    # `flagships_pending_operator_declaration`.
+    min_declared_flagships: 2
+
+  # TIER C — reference hosts, NOT statistical agencies. `..._ADDENDUM-01.md`.
+  #
+  # Declared, not parsed: they are not on the ICSP source because they are not part of the
+  # statistical system, and that is the point. A tier-0 check — robots.txt served, discovery
+  # files present, deep link and bogus route, declared machine layer, declare-vs-enforce
+  # coherence — is a property of a HOST THAT PUBLISHES DATA, not of a statistical product, and
+  # at that level a federal data publisher outside the statistical system is the same kind of
+  # thing as one inside it. If the government's own catalog is not machine-legible at tier 0,
+  # that is a finding in its own right.
+  #
+  # ABOVE tier 0 the comparison stops being like-for-like — error-measure fields, product
+  # vintages, bulk download of a product are claims about a statistical product and a catalog
+  # has none — so Tier C appears on NO leg outside `tier0.legs`, in no Tier A or Tier B
+  # denominator, and on no agencies x legs matrix. `tests/test_scan_figures.py` asserts it.
+  #
+  # StatCan stays OUT: the tier-0 comparison holds for federal hosts under ONE legal regime,
+  # which is what makes it a comparison rather than decoration.
+  tier_c_source: "operator declaration 2026-09-08 (cc_tasks/2026-09-08_scan_frame_fss_ADDENDUM-01.md)"
+  tier_c:
+    - name: data.gov
+      home: "https://www.data.gov"
+      machine_entry_point: "https://catalog.data.gov"
+      reason: "the federal DCAT catalog, GSA-operated; catalog.data.gov is its machine entry point"
+    - name: NIST
+      home: "https://www.nist.gov"
+      machine_entry_point: "https://data.nist.gov"
+      reason: "NIST's data portal is its declared machine entry point"
+    - name: GSA
+      home: "https://www.gsa.gov"
+      machine_entry_point: "https://open.gsa.gov"
+      reason: "GSA's developer/API landing"
+
   # Tier B is measured at the host layer only: there is no product listing to read, because a
   # department without a recognized statistical unit publishes no official statistics as such.
   tier_b_surfaces: ["home", "robots.txt"]

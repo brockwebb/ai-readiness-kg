@@ -1,163 +1,215 @@
-"""Surface selection: which pages of an agency the instrument measures. **Pure. No network.**
+"""Surface selection from the Enterprise Data Inventory. **Pure. No network.**
 
-Task `cc_tasks/2026-09-08_scan_frame_fss.md` §2. The rule is declared in `params.frame` BEFORE
-any agency page was fetched, and it is a function of a parsed link list rather than a
-judgement, so it can be run, tested on stored bodies, and re-run. `targets.yaml` makes the same
-argument for cycle 1 and states the reason this file inherits:
+Task `cc_tasks/2026-09-08_scan_frame_fss.md` §2 as REPLACED by `..._ADDENDUM-02.md`.
 
-    *"Do not choose products because they look good or bad for the instrument; choose by the
-    agency's own 'principal products' or 'featured data' listing, and cite where each came
-    from."*
+**The rule this file used to hold was thrown away, and the reason is worth keeping.** It
+scanned an agency's home page for anchor SUBSTRINGS. Run over the sixteen-agency frame it
+found 12 flagships where cycle 1's hand list had 26 for thirteen agencies, left 12 of 16
+agencies with none at all, and matched `api` inside *"Capital Markets"* on the Federal
+Reserve's staff page. A rule that finds fewer real surfaces than the list it replaces, and
+finds some of those by accident, is not a sampling statement — it is noise with a provenance
+trail. Its own output falsified it, which is the one thing a pre-registered rule is for.
 
-A selection made by an author reading sixteen listings and picking what seems representative
-is not a sample, it is a preference. So every selected surface carries the listing it was read
-from, the digest of that listing's body, the verbatim anchor text, and **its position on the
-page** — the last because "the first three in the agency's own order" is only checkable if the
-order is recorded.
+**What replaces it is prior art, not a better scraper.** Every CFO Act department must publish
+a machine-readable Enterprise Data Inventory at `/data.json` under the OPEN Government Data Act
+(44 U.S.C. 3511, continuing OMB M-13-13), in DCAT-US. That inventory is the department's OWN
+declaration of its datasets — `publisher`, `bureauCode`, `landingPage`, and typed
+`distribution` entries that say which are APIs. It is uniform across the frame, it is
+machine-parseable, and it is already the object of a framework indicator.
 
-**Where the rule finds nothing, the entry says so.** `no_machine_entry_point` and
-`no_flagship_products` are recorded outcomes about the agency, never a gap in the roster and
-never an invitation to substitute something by hand. An agency whose listing this rule cannot
-read contributes its host-level surfaces and nothing else, and that is a finding about the
-agency's publication surface rather than a hole in the frame.
+**Two things this module will not do.**
+
+* It will not rank datasets. The inventory carries no field that ranks them, so a "top" product
+  is a value judgment the source does not make. `shortlist` orders by `modified` and is offered
+  to the operator; `select` never reads it. Flagships are DECLARED (cycle 1's target list is
+  the operator's declaration) or they are `pending_operator_declaration`.
+* It will not match a token inside a word. `word_match` is the only matcher here, every caller
+  goes through it, and `tests/test_scan_frame.py` pins it against the "Capital Markets" case
+  that killed the previous rule.
 """
 from __future__ import annotations
 
+import re
 import urllib.parse
 
-VERSION = "0.1.0"
+VERSION = "0.2.0"
 
 
 def _clean(text: str) -> str:
     return " ".join(str(text or "").split())
 
 
-def _path(url: str) -> str:
-    return urllib.parse.urlsplit(url or "").path.lower()
+def word_match(text: str, tokens: list) -> str | None:
+    """The token that matches `text` on WORD BOUNDARIES, or None.
 
-
-def _same_host(url: str, page_url: str) -> bool:
-    """A surface of THIS agency. The frame's unit of analysis is the surface and agencies group
-    surfaces, so a link to another agency's product would put a row under the wrong group —
-    and `manners.on_roster_host` already makes the same call for what may be fetched."""
-    a, b = urllib.parse.urlsplit(url or ""), urllib.parse.urlsplit(page_url or "")
-    return bool(a.netloc) and a.netloc == b.netloc
-
-
-def _matches(link: dict, tokens: list) -> str | None:
-    """The token this link matches on, in the anchor text or the path, or None.
-
-    Returns the TOKEN and not a boolean: a selection that cannot say which token chose it
-    leaves a target nobody can check, which is the defect
-    `cc_tasks/2026-09-08_scan_harness_v4.md` §1.4 recorded one layer down when A8's matcher
-    could not say why it matched.
+    The only matcher in this module, and the reason it exists is on the record: the rule this
+    file replaced matched `api` inside "Capital Markets" and made a staff biography page an
+    agency's machine entry point. Hyphens and slashes are word boundaries here — `data-access`
+    and `/api/` are single tokens in a URL — so `\\b` over a string where separators have been
+    normalised to spaces is the whole of it.
     """
-    hay = f"{_clean(link.get('text')).lower()} {_path(link.get('href'))}"
-    return next((t for t in tokens if t in hay), None)
+    hay = re.sub(r"[^a-z0-9]+", " ", str(text or "").lower())
+    for t in tokens:
+        needle = re.sub(r"[^a-z0-9]+", " ", str(t).lower()).strip()
+        if needle and re.search(rf"\b{re.escape(needle)}\b", hay):
+            return t
+    return None
 
 
-def machine_entry_point(links: list, page_url: str, params: dict) -> dict:
-    """The agency's declared machine entry point: the FIRST link on its home page whose anchor
-    or path carries one of `params.frame.machine_entry_point.tokens`.
+def registrable_domain(host: str) -> str:
+    """`www.ers.usda.gov` -> `usda.gov`. The last two labels.
 
-    First, not best. "Best" is a judgement and there is no listing that ranks them; first in
-    the agency's own order is a rule.
+    Deliberately naive and deliberately NOT a public-suffix lookup: every host in this frame is
+    a `.gov` second-level registration, so two labels is exact here, and a PSL dependency would
+    be a library carried for a case the frame does not contain. It is used only to PROBE for an
+    inventory, and a wrong guess yields a recorded null rather than a wrong host.
     """
-    cfg = params["frame"]["machine_entry_point"]
-    for i, link in enumerate(links):
-        href = (link.get("href") or "").split("#")[0]
-        if not href.startswith("http") or not _same_host(href, page_url):
+    parts = [p for p in str(host or "").split(".") if p]
+    return ".".join(parts[-2:]) if len(parts) >= 2 else str(host or "")
+
+
+def edi_hosts(agency_host: str, params: dict) -> list:
+    """The hosts to probe for this agency's inventory, in order, without duplicates."""
+    cfg = params["frame"]["edi"]
+    out = []
+    if cfg.get("probe_agency_host") and agency_host:
+        out.append(agency_host)
+    if cfg.get("probe_registrable_domain") and agency_host:
+        rd = registrable_domain(agency_host)
+        if rd and rd not in out:
+            out.append(rd)
+    return out
+
+
+# ------------------------------------------------------------------ DCAT-US reading
+
+def datasets(catalog: dict) -> list:
+    """The `dataset` array of a DCAT-US catalog, or []. Shape-tolerant: a host may serve
+    something at `/data.json` that is not an inventory at all, and that is a measurement."""
+    got = (catalog or {}).get("dataset")
+    return [d for d in got if isinstance(d, dict)] if isinstance(got, list) else []
+
+
+def _publisher_names(ds: dict) -> list:
+    """Every publisher name on a dataset, including the `subOrganizationOf` chain — DCAT-US
+    nests the bureau under the department, and the agency we are looking for is usually the
+    innermost one."""
+    out, node = [], ds.get("publisher")
+    while isinstance(node, dict):
+        if node.get("name"):
+            out.append(_clean(node["name"]))
+        node = node.get("subOrganizationOf")
+    return out
+
+
+def for_agency(cat_datasets: list, names: list, bureau_codes: list | None = None) -> dict:
+    """The datasets an inventory attributes to THIS agency, and how each was matched.
+
+    `publisher.name` first, `bureauCode` second, and which one matched is recorded — a filter
+    that cannot say why it kept a row leaves a target nobody can check.
+    """
+    keep, how = [], {"publisher_name": 0, "bureau_code": 0}
+    wanted = {n.lower() for n in names if n}
+    codes = {str(c) for c in (bureau_codes or [])}
+    for ds in cat_datasets:
+        pubs = {p.lower() for p in _publisher_names(ds)}
+        if pubs & wanted:
+            keep.append({"dataset": ds, "matched_on": "publisher_name"})
+            how["publisher_name"] += 1
             continue
-        hit = _matches({**link, "href": href}, cfg["tokens"])
-        if hit:
-            return {"url": href, "anchor_text": _clean(link.get("text")),
-                    "matched_token": hit, "position": i,
-                    "selection_source": f"{page_url} link {i}, matched "
-                                        f"frame.machine_entry_point.tokens {hit!r}"}
-    return {"url": None, "marker": cfg["none_found_marker"],
-            "selection_source": f"{page_url}: no link matches "
-                                f"frame.machine_entry_point.tokens"}
+        if codes and codes & {str(c) for c in (ds.get("bureauCode") or [])}:
+            keep.append({"dataset": ds, "matched_on": "bureau_code"})
+            how["bureau_code"] += 1
+    return {"datasets": keep, "matched_by": how, "n": len(keep)}
 
 
-def listing_page(links: list, page_url: str, params: dict) -> dict:
-    """The agency's own product/data listing, as the first home-page link matching
-    `params.frame.flagship_products.listing_tokens`."""
-    cfg = params["frame"]["flagship_products"]
-    for i, link in enumerate(links):
-        href = (link.get("href") or "").split("#")[0]
-        if not href.startswith("http") or not _same_host(href, page_url):
+def _api_distributions(ds: dict, params: dict) -> list:
+    cfg = params["frame"]["edi"]
+    out = []
+    for dist in (ds.get("distribution") or []):
+        if not isinstance(dist, dict):
             continue
-        if _path(href).rstrip("/") == _path(page_url).rstrip("/"):
-            continue                                  # a link back to the home page
-        hit = _matches({**link, "href": href}, cfg["listing_tokens"])
-        if hit:
-            return {"url": href, "anchor_text": _clean(link.get("text")),
-                    "matched_token": hit, "position": i,
-                    "selection_source": f"{page_url} link {i}, matched "
-                                        f"frame.flagship_products.listing_tokens {hit!r}"}
-    return {"url": None, "marker": "no_listing_page",
-            "selection_source": f"{page_url}: no link matches "
-                                f"frame.flagship_products.listing_tokens"}
+        fmt = f"{dist.get('format') or ''} {dist.get('mediaType') or ''}"
+        url = dist.get("accessURL") or dist.get("downloadURL") or ""
+        hit = word_match(fmt, cfg["api_format_tokens"])
+        why = f"format/mediaType {hit!r}" if hit else None
+        if not why and url:
+            hit = word_match(urllib.parse.urlsplit(url).path, cfg["api_path_tokens"])
+            why = f"accessURL path {hit!r}" if hit else None
+        if why and url:
+            out.append({"url": url, "why": why})
+    return out
 
 
-def is_product(link: dict, listing_url: str, params: dict) -> bool:
-    """Is this link a PRODUCT on the listing, rather than navigation around it?
+def api_entry_point(agency_datasets: list, params: dict) -> dict:
+    """The agency's machine entry point: the most frequent API-type distribution prefix.
 
-    Three mechanical discriminators, none of them a judgement, and all three inherited from
-    cycle 1's `targets.yaml` rather than re-derived: it is on the agency's own host, it goes
-    DEEPER than the listing page (a link at or above the listing's own depth is a section),
-    and its anchor is neither one of the declared reject tokens nor a single word.
+    "Most frequent" is a count over the department's own declaration, not a judgement, and the
+    count is recorded so a reader can see how thin or thick the evidence is. Ties break by
+    count then lexically, so the rule is deterministic; a single-dataset agency and a
+    hundred-dataset agency are both answered the same way.
     """
-    cfg = params["frame"]["flagship_products"]
-    href = (link.get("href") or "").split("#")[0]
-    text = _clean(link.get("text"))
-    if not href.startswith("http") or not _same_host(href, listing_url):
-        return False
-    if any(t in text.lower() for t in cfg["reject_tokens"]):
-        return False
-    if len(text.split()) < int(cfg["min_anchor_words"]):
-        return False
-    lp, hp = _path(listing_url).rstrip("/"), _path(href).rstrip("/")
-    return hp != lp and hp.startswith(lp) and len(hp) > len(lp)
+    from collections import Counter
+    seen, examples = Counter(), {}
+    for row in agency_datasets:
+        for dist in _api_distributions(row["dataset"], params):
+            u = urllib.parse.urlsplit(dist["url"])
+            if not u.netloc:
+                continue
+            # host + first path segment: the prefix an API is published under.
+            seg = (u.path.strip("/").split("/") or [""])[0]
+            prefix = f"{u.scheme or 'https'}://{u.netloc}/{seg}".rstrip("/")
+            seen[prefix] += 1
+            examples.setdefault(prefix, dist)
+    if not seen:
+        return {"url": None, "marker": "no_api_distribution_declared_in_edi",
+                "declared_distributions_scanned": sum(
+                    len(r["dataset"].get("distribution") or []) for r in agency_datasets)}
+    prefix, count = sorted(seen.items(), key=lambda kv: (-kv[1], kv[0]))[0]
+    return {"url": prefix, "count": count, "distinct_prefixes": len(seen),
+            "example": examples[prefix],
+            "selection_source": (
+                f"most frequent API-type distribution prefix in the department's "
+                f"/data.json Enterprise Data Inventory ({count} of "
+                f"{sum(seen.values())} API distributions across {len(agency_datasets)} "
+                f"datasets attributed to this agency); matched by {examples[prefix]['why']}")}
 
 
-def flagship_products(links: list, listing_url: str, params: dict) -> dict:
-    """The first `params.frame.flagship_products.n` products in the agency's OWN order.
+def shortlist(agency_datasets: list, params: dict) -> list:
+    """The operator's shortlist: most recently modified first, with landing pages.
 
-    Position on the listing is recorded for every one of them, because "the first N in the
-    agency's order" is a claim about the page and is only checkable against the page if the
-    order is on the record.
+    **Offered, never selected from.** `select` does not call this. The inventory has no field
+    that ranks datasets, so any ordering this module imposes is a convenience for a human
+    making a declaration and not a measurement.
     """
-    cfg = params["frame"]["flagship_products"]
-    out, seen = [], set()
-    for i, link in enumerate(links):
-        href = (link.get("href") or "").split("#")[0]
-        if href in seen or not is_product(link, listing_url, params):
-            continue
-        seen.add(href)
-        out.append({"url": href, "anchor_text": _clean(link.get("text")), "position": i,
-                    "selection_source": f"{listing_url} link {i} "
-                                        f"{_clean(link.get('text'))!r}"})
-        if len(out) >= int(cfg["n"]):
-            break
-    if not out:
-        return {"products": [], "marker": cfg["none_found_marker"],
-                "selection_source": f"{listing_url}: no link satisfies frame."
-                                    f"flagship_products"}
-    return {"products": out}
+    n = int(params["frame"]["edi"]["shortlist_n"])
+    rows = []
+    for row in agency_datasets:
+        ds = row["dataset"]
+        rows.append({"title": _clean(ds.get("title")), "modified": _clean(ds.get("modified")),
+                     "landing_page": ds.get("landingPage") or "",
+                     "identifier": _clean(ds.get("identifier")),
+                     "matched_on": row["matched_on"]})
+    rows.sort(key=lambda r: r["modified"], reverse=True)
+    return rows[:n]
 
 
-def select(home_links: list, home_url: str, listing_links: list | None,
-           listing_url: str | None, params: dict) -> dict:
-    """The whole rule for one agency, over already-fetched link lists.
+def declared_flagships(agency_code: str, cycle1_rows: list, params: dict) -> dict:
+    """Flagships as the operator DECLARED them in the cycle-1 target list.
 
-    Pure, so `tests/test_scan_frame.py` runs it on stored listing bodies — the property §2 asks
-    for, and the only way the rule can be checked without contacting an agency again.
+    ADDENDUM-02 §2.b: a ranking of an agency's products is a value judgment the inventory does
+    not carry, so the 26 cycle-1 flagship surfaces stand as the declaration and this module
+    does not derive a replacement. An agency below `min_declared_flagships` is marked pending
+    and gets a shortlist for the operator — it does not get a guess.
     """
-    machine = machine_entry_point(home_links, home_url, params)
-    flagships = (flagship_products(listing_links, listing_url, params)
-                 if listing_links is not None and listing_url
-                 else {"products": [],
-                       "marker": params["frame"]["flagship_products"]["none_found_marker"],
-                       "selection_source": "no listing page was found on the agency home"})
-    return {"machine_entry_point": machine, "flagships": flagships}
+    floor = int(params["frame"]["edi"]["min_declared_flagships"])
+    rows = [r for r in cycle1_rows
+            if r.get("surface_kind") == "flagship"
+            and str(r.get("agency", "")).upper() == agency_code.upper()]
+    return {"flagships": [{"url": r["url"], "doc_id": r["doc_id"],
+                           "selected_as": r.get("selected_as"),
+                           "selection_source": "operator declaration, cycle 1 target list"}
+                          for r in rows],
+            "pending": len(rows) < floor,
+            "marker": None if len(rows) >= floor
+            else "flagships_pending_operator_declaration"}

@@ -1,6 +1,6 @@
 {
  "task": "cc_tasks/2026-09-08_scan_frame_fss.md",
- "generated_at": "2026-09-08T15:46:45.281069+00:00",
+ "generated_at": "2026-09-08T15:59:40.877403+00:00",
  "authority": "icsp_charter",
  "authority_reason": "Recognition under CIPSEA 2018 (44 U.S.C. 3561(11), 3562) is a legal status OMB confers. The ICSP charter is the Council's constitutive document and enumerates its membership under an explicit flag legend; the About page is a rendered summary of the same fact and is authoritative only for what it alone carries, the current home URL of each agency. Declared in params.frame BEFORE either body was parsed.",
  "sources": [
@@ -11,7 +11,7 @@
    "bytes": 291896,
    "content_type": "application/pdf",
    "sha256": "9177e9a7cfff6a561fec17a39f53bc693ba1e4f2fb639aacc1d9ddf2cfc47ca9",
-   "fetched_at": "2026-09-08T15:46:44.098001+00:00",
+   "fetched_at": "2026-09-08T15:59:39.599226+00:00",
    "role": "membership",
    "note": "The ICSP's own constitutive document (April 2023). Enumerates every member with an explicit legend \u2014 `^` a Recognized Statistical Agency or Unit, `*` a designated Statistical Official, `**` the Chair \u2014 so both tiers are a PARSE of a flag, not a reading of prose.",
    "name": "icsp_charter",
@@ -24,7 +24,7 @@
    "bytes": 64822,
    "content_type": "text/html",
    "sha256": "72611d8bca2dcb7e69ff07868219e56cbc15ec1b2b07156440205ce1edf769ec",
-   "fetched_at": "2026-09-08T15:46:44.921153+00:00",
+   "fetched_at": "2026-09-08T15:59:40.491532+00:00",
    "role": "current_urls_and_crosscheck",
    "note": "The live rendering of the same fact, and the only source that carries an agency HOME URL per recognized agency. Used for URLs and as a cross-check on the counts.",
    "name": "statspolicy_about",
@@ -325,6 +325,44 @@
    "no_host_on_source": true
   }
  ],
+ "tier_c": [
+  {
+   "name": "data.gov",
+   "home": "https://www.data.gov",
+   "machine_entry_point": "https://catalog.data.gov",
+   "reason": "the federal DCAT catalog, GSA-operated; catalog.data.gov is its machine entry point",
+   "tier": "C",
+   "source": "operator declaration 2026-09-08 (cc_tasks/2026-09-08_scan_frame_fss_ADDENDUM-01.md)",
+   "host": "www.data.gov",
+   "machine_host": "catalog.data.gov",
+   "tier0_legs_only": true,
+   "restriction": "reference host, not a statistical agency: tier-0 legs only, never in a Tier A or Tier B denominator and never on the agencies x legs matrix"
+  },
+  {
+   "name": "NIST",
+   "home": "https://www.nist.gov",
+   "machine_entry_point": "https://data.nist.gov",
+   "reason": "NIST's data portal is its declared machine entry point",
+   "tier": "C",
+   "source": "operator declaration 2026-09-08 (cc_tasks/2026-09-08_scan_frame_fss_ADDENDUM-01.md)",
+   "host": "www.nist.gov",
+   "machine_host": "data.nist.gov",
+   "tier0_legs_only": true,
+   "restriction": "reference host, not a statistical agency: tier-0 legs only, never in a Tier A or Tier B denominator and never on the agencies x legs matrix"
+  },
+  {
+   "name": "GSA",
+   "home": "https://www.gsa.gov",
+   "machine_entry_point": "https://open.gsa.gov",
+   "reason": "GSA's developer/API landing",
+   "tier": "C",
+   "source": "operator declaration 2026-09-08 (cc_tasks/2026-09-08_scan_frame_fss_ADDENDUM-01.md)",
+   "host": "www.gsa.gov",
+   "machine_host": "open.gsa.gov",
+   "tier0_legs_only": true,
+   "restriction": "reference host, not a statistical agency: tier-0 legs only, never in a Tier A or Tier B denominator and never on the agencies x legs matrix"
+  }
+ ],
  "counts": {
   "tier_a_charter": 16,
   "tier_a_about_flags": 15,
@@ -333,7 +371,8 @@
   "tier_b_charter": 14,
   "officials_about_prose": 24,
   "charter_members": 30,
-  "about_members": 32
+  "about_members": 32,
+  "tier_c_declared": 3
  },
  "tier_a_disagreements": [
   {
