@@ -64,15 +64,72 @@ def cited_digests() -> set:
     return out
 
 
-def tracked_digests() -> list:
-    """Digests COMMITTED to the store. `git ls-files`, not a directory walk: an untracked
-    body in the working tree is this session's litter, not part of the retained set, and the
-    two answers differ by exactly the thing being counted."""
-    out = subprocess.run(["git", "ls-files", str(EVIDENCE_ROOT.relative_to(REPO))],
-                         capture_output=True, text=True, cwd=REPO)
+def tracked_digests(rev: str | None = None) -> list:
+    """Digests COMMITTED to the store, in the working tree or AT A COMMIT.
+
+    `git ls-files`, not a directory walk: an untracked body in the working tree is this
+    session's litter, not part of the retained set, and the two answers differ by exactly the
+    thing being counted. With `rev`, `git ls-tree` answers the same question about the past —
+    which is the only way to know what the store held BEFORE a cycle promoted into it.
+    """
+    cmd = (["git", "ls-tree", "-r", "--name-only", rev,
+            str(EVIDENCE_ROOT.relative_to(REPO))] if rev else
+           ["git", "ls-files", str(EVIDENCE_ROOT.relative_to(REPO))])
+    out = subprocess.run(cmd, capture_output=True, text=True, cwd=REPO)
     if out.returncode:
-        raise SystemExit(f"FATAL: git ls-files failed: {out.stderr.strip()[-300:]}")
+        raise SystemExit(f"FATAL: {' '.join(cmd[:3])} failed: {out.stderr.strip()[-300:]}")
     return [line.rsplit("/", 1)[-1] for line in out.stdout.split()]
+
+
+def publishing_commit(cycle: str) -> str:
+    """The commit that FIRST ADDED this cycle's payload — and therefore, by the repo's own
+    commit convention, the commit that added the bodies it promoted.
+
+    `cc_tasks/2026-09-08_scan_frame_fss.md` §0. The census's "before this cycle" figure needs
+    the tracked set as it was BEFORE the cycle published, and that set is not recoverable from
+    today's disk: `git ls-files` returns the store as it is now, which already contains
+    everything the cycle promoted. Reading it at this commit's PARENT is the recoverable
+    answer, and it is exact rather than approximate.
+
+    The convention this rests on is stated in CLAUDE.md — "Event shards, raw model responses,
+    sub-RESULTs, and the RESULT file are committed together with the code that produced them"
+    — and a convention is not a guarantee, so `assert_evidence_committed_with_payload` checks
+    it against the payload rather than trusting it.
+    """
+    out = subprocess.run(
+        ["git", "log", "--diff-filter=A", "--format=%H", "--", f"state/{cycle}.json"],
+        capture_output=True, text=True, cwd=REPO)
+    revs = out.stdout.split()
+    if not revs:
+        raise SystemExit(
+            f"FATAL: no commit adds state/{cycle}.json, so the store as it was before that "
+            f"cycle published cannot be recovered. A cycle whose payload was never committed "
+            f"has no 'before' to compare against.")
+    return revs[-1]                     # the FIRST commit to add it; `git log` is newest-first
+
+
+def assert_evidence_committed_with_payload(cycle: str, rev: str) -> None:
+    """Every body this cycle's Observations cite is tracked at `rev`, or the census refuses.
+
+    This is what makes `publishing_commit` a measurement rather than an assumption. If a cycle
+    ever commits its payload in one commit and its promoted bodies in another, the parent of
+    the payload commit is NOT the pre-cycle store, and the decomposition below would close on
+    the wrong number — silently, because every quantity in it would still be an integer.
+    """
+    payload = json.loads((REPO / "state" / f"{cycle}.json").read_text(encoding="utf-8"))
+    cited = {(o.get("response") or {}).get("body_sha256")
+             for o in payload.get("observations_detail") or []}
+    cited.discard(None)
+    if not cited:
+        return                          # a re-judged cycle cites bodies through its source
+    missing = cited - set(tracked_digests(rev))
+    if missing:
+        raise SystemExit(
+            f"REFUSING: {len(missing)} body digest(s) cited by {cycle} are not tracked at "
+            f"{rev[:12]}, the commit that added its payload. The payload and its evidence were "
+            f"committed apart, so that commit's parent is not the store as it was before this "
+            f"cycle: {sorted(missing)[:3]}. Name the right commit rather than reporting a "
+            f"decomposition that closes on the wrong number.")
 
 
 def cycle_params_hash(cycle: str) -> str:
@@ -92,25 +149,52 @@ def cycle_params_hash(cycle: str) -> str:
     return json.loads(payload.read_text(encoding="utf-8"))["params_hash"]
 
 
-def census(before_params_hash: str | None = None) -> dict:
+def census(cycle: str | None = None) -> dict:
     """The uncited-tracked-body census, optionally decomposed by what a cycle cited.
 
-    `before_params_hash` names a cycle to hold OUT: the census then reads as it did before
-    that cycle published, and `newly_cited` is the count of tracked bodies that cycle was the
-    first to cite. That decomposition is what makes the drift checkable rather than merely
-    noticed — `uncited + newly_cited` must equal the earlier census exactly.
+    `cycle` names a cycle to hold OUT: the census then also reports what it read BEFORE that
+    cycle published, and `newly_cited` is the count of already-retained bodies that cycle was
+    the first to cite. That decomposition is what makes the drift checkable rather than merely
+    noticed — `uncited_now + newly_cited == uncited_before` must hold exactly.
+
+    **Two sets, two moments, and getting that wrong is what made this red.** The decomposition
+    is about the bodies the store ALREADY HELD; a body the cycle itself promoted was in neither
+    set before it ran. The first version measured `tracked` once, NOW, and subtracted the
+    digests cited before the cycle — so all 160 bodies cycle 2 promoted counted as "uncited
+    before this cycle", and 418 read as 578 = 418 + 160
+    (`cc_tasks/2026-09-08_scan_harness_v4_RESULT.md` §7.2). Every quantity was still an
+    integer, which is why it failed as a wrong number rather than as an error.
+
+    So `before` is read at the PARENT of the commit that published the cycle
+    (`publishing_commit`), which is the one recoverable answer — and the alternative,
+    restating the invariant over a set recoverable from today's disk, was rejected because
+    there is no such set: nothing on disk distinguishes a body the store held from one this
+    cycle promoted, since content addressing makes them identical in every respect but history.
+    Git IS the record of that history, and `assert_evidence_committed_with_payload` checks the
+    commit actually is the one, rather than trusting the convention that it would be.
+
+    A cycle takes ONE argument, not a hash and a revision: a caller that could pass a mismatched
+    pair eventually would.
     """
     cited, tracked = cited_digests(), set(tracked_digests())
     out = {"tracked_bodies": len(tracked), "cited_digests_on_log": len(cited),
            "uncited_tracked_bodies": len(tracked - cited)}
-    if before_params_hash:
+    if cycle:
+        rev = publishing_commit(cycle)
+        assert_evidence_committed_with_payload(cycle, rev)
+        before = set(tracked_digests(f"{rev}^"))
         prior = {(ev.get("response") or {}).get("body_sha256") for ev in eventlog.replay()
                  if ev.get("event_type") == OBS_EVENT
-                 and ev.get("params_hash") != before_params_hash}
+                 and ev.get("params_hash") != cycle_params_hash(cycle)}
         prior.discard(None)
-        newly = (tracked & cited) - prior
+        # Only bodies the store ALREADY HELD can leave the uncited set; one the cycle promoted
+        # was never in it.
+        newly = (before & cited) - prior
+        out["published_at_commit"] = rev
+        out["tracked_bodies_before_this_cycle"] = len(before)
+        out["promoted_by_this_cycle"] = len(tracked - before)
         out["newly_cited_by_this_cycle"] = len(newly)
-        out["uncited_before_this_cycle"] = len(tracked - prior)
+        out["uncited_before_this_cycle"] = len(before - prior)
         out["newly_cited_digests"] = sorted(newly)
     return out
 
@@ -123,13 +207,12 @@ def main(argv=None) -> int:
                     help="register the census AFTER this cycle, under a cycle-suffixed name "
                          "(DD-056). Without it the bare pre-flight census is registered.")
     a = ap.parse_args(argv)
-    name, ph = NAME, None
+    name = NAME
     if a.cycle:
         sys.path.insert(0, str(REPO / "scripts"))
         import cycle_results
-        ph = cycle_params_hash(a.cycle)
         name = cycle_results.name_for(NAME, a.cycle)
-    c = census(ph)
+    c = census(a.cycle)
     print(json.dumps({k: v for k, v in c.items() if k != "newly_cited_digests"}, indent=1))
     moved = ("" if not a.cycle else (
         f" Down from {c['uncited_before_this_cycle']} before cycle {a.cycle}: "

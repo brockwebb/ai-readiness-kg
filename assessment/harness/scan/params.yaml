@@ -68,6 +68,79 @@ crawl:
   depth: 1
   max_links_followed: 40
 
+# ---------------------------------------------------------------------------------------
+# The FRAME: who is measured, and how a surface is chosen for them.
+# `cc_tasks/2026-09-08_scan_frame_fss.md` §1 and §2. Declared BEFORE any agency page was
+# fetched, which is the whole point: a selection rule written after looking at the listings is
+# a preference wearing a rule's clothes (`targets.yaml` makes the same argument for cycle 1).
+# ---------------------------------------------------------------------------------------
+frame:
+  # WHERE THE ROSTER COMES FROM. Two documents, both retained content-addressed under
+  # corpus/evidence/frame/ and both cited by the roster DataFile. Neither is typed into a
+  # script: `build_roster.py` parses the bodies.
+  #
+  # They disagree, and the reconciliation rule is declared here rather than decided after the
+  # counts were seen (see `roster_authority`).
+  roster_sources:
+    - name: icsp_charter
+      url: "https://statspolicy.gov/assets/files/ICSP%20Charter.pdf"
+      role: membership
+      note: >-
+        The ICSP's own constitutive document (April 2023). Enumerates every member with an
+        explicit legend — `^` a Recognized Statistical Agency or Unit, `*` a designated
+        Statistical Official, `**` the Chair — so both tiers are a PARSE of a flag, not a
+        reading of prose.
+    - name: statspolicy_about
+      url: "https://statspolicy.gov/about/"
+      role: current_urls_and_crosscheck
+      note: >-
+        The live rendering of the same fact, and the only source that carries an agency HOME
+        URL per recognized agency. Used for URLs and as a cross-check on the counts.
+  # Which source settles MEMBERSHIP when the two disagree, and why — stated as a rule about
+  # the kind of document each is, so it cannot be chosen after the fact to get a number.
+  #
+  # Recognition under CIPSEA 2018 (44 U.S.C. 3561(11), 3562) is a legal status OMB confers.
+  # The charter is the Council's constitutive document and enumerates its membership under a
+  # flag legend; the About page is a rendered summary of the same fact and is authoritative
+  # for what it alone carries — the current home URL of each agency. So: membership from the
+  # charter, URLs from the About page, and every disagreement recorded on the roster's face
+  # rather than resolved silently.
+  roster_authority: icsp_charter
+  # The legend both sources use. Read from the documents, restated here only so the parser has
+  # a declared vocabulary rather than an inline literal.
+  flags:
+    recognized_agency_or_unit: "^"
+    statistical_official: "*"
+    chair: "**"
+  # A member line the parser must not mistake for an entry: the legend line itself begins with
+  # the flag character it defines.
+  legend_line_tokens: ["denotes a recognized", "denotes a statistical", "denotes the chair"]
+
+  # SURFACE SELECTION, per agency. §2, and every clause is a token list rather than a
+  # judgement so the rule can be run, tested and re-run.
+  machine_entry_point:
+    tokens: ["api", "developers", "developer", "data-access", "open-data", "datasets"]
+    # Nothing matched is a RECORDED OBSERVATION about the agency, never a gap in the roster
+    # and never a hand-picked substitute.
+    none_found_marker: no_machine_entry_point
+  flagship_products:
+    # The first N product links in the AGENCY'S OWN ORDER on its own listing page. Order is
+    # the agency's editorial judgement and is the nearest thing to a published "principal
+    # products" list that every agency has; taking the first N is a rule, choosing among them
+    # is a preference.
+    n: 3
+    listing_tokens: ["data", "statistics", "publications", "products", "surveys", "tables"]
+    # A link is a PRODUCT only if it goes deeper than the listing page itself and is not one
+    # of these. Same discriminators as cycle 1's `targets.yaml`, reused rather than re-derived.
+    reject_tokens: ["about", "contact", "help", "faq", "news", "blog", "careers", "privacy",
+                    "accessibility", "foia", "policy", "policies", "glossary", "sitemap",
+                    "subscribe", "newsletter", "search", "home", "espanol", "español"]
+    min_anchor_words: 2
+    none_found_marker: no_flagship_products
+  # Tier B is measured at the host layer only: there is no product listing to read, because a
+  # department without a recognized statistical unit publishes no official statistics as such.
+  tier_b_surfaces: ["home", "robots.txt"]
+
 probes:
   # ONE same-host policy, for EVERY collector that dereferences a URL it discovered on a
   # surface. `cc_tasks/2026-09-08_scan_harness_v4.md` §1.3.

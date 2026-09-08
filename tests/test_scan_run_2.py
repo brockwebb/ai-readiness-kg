@@ -312,12 +312,16 @@ def test_the_uncited_set_only_shrinks_and_only_by_citation(session):
     So the checkable property is the decomposition, not the equality: every body that left the
     set left by being CITED, never by being deleted, and the arithmetic closes exactly.
     """
-    # The cycle's OWN params_hash, off its payload — not the hash of the parameters on disk
-    # now. The two are equal only while `params.yaml` has not moved since the cycle ran, and a
-    # task that corrects a rule without re-measuring anything breaks that silently: the census
-    # holds nothing out and the decomposition stops closing, with no error to say why
-    # (`cc_tasks/2026-09-08_scan_harness_v4.md` RESULT §"premises this task got wrong").
-    c = retention.census(retention.cycle_params_hash(load_params()["cycle"]["name"]))
+    # The CYCLE, not a params hash: the census needs the cycle's hash AND the commit that
+    # published it, and a caller that could pass a mismatched pair eventually would.
+    #
+    # This test was red from the moment cycle 2 was committed, and the failure was a wrong
+    # NUMBER rather than an error — 578 against 418, which is 418 + the 160 bodies cycle 2
+    # itself promoted. `tracked` was read NOW and `prior` before the cycle, so every body the
+    # cycle put into the store counted as one the store had failed to cite beforehand. The
+    # "before" set is now read at the parent of the publishing commit
+    # (`cc_tasks/2026-09-08_scan_frame_fss.md` §0).
+    c = retention.census(load_params()["cycle"]["name"])
     row = session.run("MATCH (r:Result {name: $n}) RETURN r.value AS v",
                       n=retention.NAME).single()
     if row is None:
@@ -330,6 +334,14 @@ def test_the_uncited_set_only_shrinks_and_only_by_citation(session):
     assert c["uncited_tracked_bodies"] + c["newly_cited_by_this_cycle"] == registered, c
     assert c["uncited_tracked_bodies"] <= registered, (
         "the uncited set GREW; staging is supposed to make that impossible")
+    # The two sets the decomposition is ABOUT, kept apart. A body this cycle promoted was in
+    # neither set before it ran, and folding it into either is exactly how this went wrong.
+    assert c["promoted_by_this_cycle"] > 0, (
+        "a cycle that promoted nothing cannot demonstrate the property this test is for")
+    assert c["tracked_bodies"] == (c["tracked_bodies_before_this_cycle"]
+                                   + c["promoted_by_this_cycle"]), c
+    assert c["newly_cited_by_this_cycle"] <= c["tracked_bodies_before_this_cycle"], (
+        "a body can only LEAVE the uncited set if the store already held it")
 
 
 # ------------------------------------------------ §1.5 / §4 a cycle name and its Results
