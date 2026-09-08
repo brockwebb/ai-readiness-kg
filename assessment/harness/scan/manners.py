@@ -130,6 +130,64 @@ class Fetcher:
                 "elapsed_ms": elapsed, "final_url": str(resp.url), "method": "HEAD"}
 
 
+#: The two spellings of the one same-host policy. `probes.same_host_only` is the key; the
+#: `link_probe` one is where it used to live and is kept readable because the 2026-09-07 and
+#: 2026-09-07b cycles were measured under it and their params sets are recovered from git by
+#: hash for the re-derivation gate.
+_SAME_HOST_KEYS = (("probes", "same_host_only"), ("link_probe", "same_host_only"))
+
+
+def same_host_only(params: dict) -> bool:
+    """Whether a collector may dereference a URL it discovered on a surface but off its host.
+
+    **One policy, read in one place.** `cc_tasks/2026-09-08_scan_harness_v4.md` §1.3: the
+    switch was enforced in `collectors/links.probe` and nowhere else, so
+    `collectors/v2clauses.follow_latest_pointer` dereferenced `public.govdelivery.com` from a
+    Census surface (`cc_tasks/2026-09-07_scan_run_2_RESULT.md` §6.1). A policy enforced in one
+    of the two places it applies is not a policy; it is a comment.
+
+    Two keys that could hold different values would be two policies again, so a disagreement is
+    a hard error rather than a precedence rule. A precedence rule makes the stale key
+    unreadable in exactly the way that hides the defect: the reader sees `true` and the code
+    obeys `false`.
+    """
+    seen = {}
+    for section, key in _SAME_HOST_KEYS:
+        block = params.get(section) or {}
+        if key in block:
+            seen[f"{section}.{key}"] = bool(block[key])
+    if len(set(seen.values())) > 1:
+        raise ValueError(
+            f"the same-host policy is declared twice and the two disagree: {seen}. There is "
+            f"ONE policy (params.probes.same_host_only); `link_probe.same_host_only` is the "
+            f"superseded spelling kept readable for the cycles measured under it, and it may "
+            f"not diverge from it.")
+    #: Default TRUE, not false. The absent-key case is a params set that predates the policy,
+    #: and every such set carried `link_probe.same_host_only: true`; defaulting to false would
+    #: make a missing key mean "probe the whole internet", which is the wrong direction for a
+    #: default that governs what this scanner asks of hosts it does not measure.
+    return next(iter(seen.values()), True)
+
+
+def on_roster_host(url: str, surface_url: str, params: dict) -> bool:
+    """True when `url` may be dereferenced while measuring the surface at `surface_url`.
+
+    The single gate every collector that follows a discovered link goes through. A surface's
+    own host is the subject of the measurement; anything else is somebody else's server, and
+    A1, A3 and A8 all ask what the PRODUCT offers rather than what it links to.
+
+    A surface URL with no host (the empty string a caller may pass when there is nothing to
+    compare against) leaves the policy unenforceable, and the answer is True: refusing every
+    URL because the caller gave us nothing to compare against would silently stop collecting.
+    """
+    if not same_host_only(params):
+        return True
+    host = urllib.parse.urlsplit(surface_url or "").netloc
+    if not host:
+        return True
+    return urllib.parse.urlsplit(url or "").netloc == host
+
+
 # `error_class_for(status)` lived here and knew only 4xx/5xx, so it could not tell a 404 (the
 # measurement) from a 403 (the host declining this client). It is superseded by
 # `scan.errors.classify_status(status, params)`, which reads the refusal statuses from params

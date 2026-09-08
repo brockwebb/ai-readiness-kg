@@ -32,7 +32,11 @@ sys.path.insert(0, "/Users/brock/GitHub/seldon")
 #: the 2026-09-07 cycle" a query rather than a file, and the shard is the unit an operator
 #: reaches for when something is wrong.
 SCAN_BATCH = 29
-CYCLE_BATCH = {"scan_2026-09-07": 31, "scan_2026-09-07b": 38}
+#: A RE-JUDGED cycle gets its own shard too, and for a sharper reason than a measured one: its
+#: Findings cite `obs_id`s that live on ANOTHER shard, so "the events of the re-judgement" is
+#: only a file if the judgements are alone in it. `cc_tasks/2026-09-08_scan_harness_v4.md` §1.5.
+CYCLE_BATCH = {"scan_2026-09-07": 31, "scan_2026-09-07b": 38,
+               "scan_2026-09-07_rj1": 40, "scan_2026-09-07b_rj1": 41}
 OBS_EVENT = "observation_recorded"
 FIND_EVENT = "finding_derived"
 #: `cc_tasks/2026-09-07_scan_hygiene.md` §1. A Finding whose `evidence` names `obs_id`s the log

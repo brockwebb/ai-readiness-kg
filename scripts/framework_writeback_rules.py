@@ -26,6 +26,7 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO))
 sys.path.insert(0, str(REPO / "scripts"))
+sys.path.insert(0, str(REPO / "assessment" / "harness"))
 
 import framework_writeback as fw                                    # noqa: E402
 
@@ -33,13 +34,27 @@ FRAMEWORK = REPO / "framework" / "ai_readiness_framework.json"
 TASK = "cc_tasks/2026-09-06_harness_scaffold.md"
 SCRIPT = "scripts/framework_writeback_rules.py"
 
+def _fixture_pin() -> str:
+    """The fixtures E5 actually judges, read from the fixture table rather than listed.
+
+    It said "(passes_all, fails_all)" from the day it was written and was wrong twice over
+    before anyone noticed: harness-v3 added `refuses_identified_client` and
+    `resets_connection`, and harness-v4 added `invalid_route_unobserved`. A `collector_pin` in
+    the framework of record that names two of five fixtures is a provenance claim that is
+    simply false, and it is exactly the kind of hand-kept list DD-040 exists to stop.
+    """
+    from scan.fixtures.server import MODES
+    return f"assessment/harness/scan/fixtures ({', '.join(sorted(MODES))})"
+
+
 #: E5 is not a surface measurement and never was: it asks whether the cycle's own controls
-#: fired. §4 makes the control fixtures that collector, so the spec stops saying `none_known`.
+#: fired. Task `2026-09-06_harness_scaffold.md` §4 makes the control fixtures that collector,
+#: so the spec stops saying `none_known`.
 E5 = {
     "collector": "control_fixtures",
-    "collector_pin": "assessment/harness/scan/fixtures (passes_all, fails_all)",
-    "signal": ("Both control fixtures are scanned before any real host. A cycle in which "
-               "either produced an unexpected verdict is INVALID."),
+    "collector_pin": _fixture_pin(),
+    "signal": ("Every control fixture is scanned before any real host. A cycle in which any "
+               "of them produced an unexpected verdict is INVALID."),
     "evidence_kind": "per-fixture verdict map for every rule in the cycle",
     "note": ("Was `none_known`: a seeded canary is a property of the harness's own cycle, not "
              f"an observation of an external surface. Task §4 makes the fixtures that property."),
@@ -59,7 +74,12 @@ def writeback(g: dict, by_leg: dict) -> dict:
         if p.get("rule_id") != rule:
             p["rule_id"] = rule
             touched["specs_rule_id"] += 1
-        if p.get("leg") == "E5" and p.get("collector") != E5["collector"]:
+        # Written whenever ANY field differs, not only when the collector name does. The
+        # narrower test made the write-back non-idempotent in the one direction that matters:
+        # `collector_pin` names the fixtures E5 judges, the fixture set grew twice, and a
+        # guard keyed on the collector NAME would have left the framework of record naming two
+        # of five forever.
+        if p.get("leg") == "E5" and any(p.get(k) != v for k, v in E5.items()):
             p.update(E5)
             touched["e5_collector"] += 1
         # An indicator already `measured` (G1-D, G1-O under DD-036) is NOT demoted: a real

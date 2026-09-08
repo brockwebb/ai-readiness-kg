@@ -213,6 +213,70 @@ def matrix_for_page() -> dict:
     return json.loads((REPO / cfg["matrix_json"]).read_text(encoding="utf-8"))
 
 
+def _rule_changed_clause() -> str:
+    """Which legs' rules moved between the two cycles F5 draws, read from the SAME declaration
+    the figure reads.
+
+    It was the literal "on A1 and A3 it did" — true for the cycle it was written for, and a
+    false statement about every cycle after. `figures.yaml`'s `compare_to.rule_changed` is
+    where the figure gets its marks; a page that restates them in prose is a second source of
+    the same fact, and the stale one is always the prose.
+    """
+    sys.path.insert(0, str(REPO / "assessment" / "harness"))
+    from scan import figures as _figs
+    changed = (_figs.config()["compare_to"].get("rule_changed") or {})
+    if not changed:
+        return ("no leg's rule moved between these two, so every difference on F5 is the "
+                "host.")
+    named = ", ".join(f"{html.escape(leg)} ({html.escape(how)})"
+                      for leg, how in sorted(changed.items()))
+    return (f"on {named} it did, and a difference there is the instrument moving, not the "
+            f"host.")
+
+
+def rejudged_note() -> str:
+    """Which of this page's rates have been superseded by a re-judgement, and under which rules.
+
+    A re-judged cycle is its own cycle with its own Results and its own figures
+    (`cc_tasks/2026-09-08_scan_harness_v4.md` §1.5), so nothing on this page silently changes
+    when one is published — which is right, and is exactly why the page has to SAY so. A rate
+    drawn here that a later re-judgement corrected is a number a reader would otherwise carry
+    away as current.
+
+    Empty when no re-judgement of the cycle being drawn exists, which is every cycle before
+    this one.
+    """
+    sys.path.insert(0, str(REPO / "assessment" / "harness"))
+    from scan import figures as _figs
+    cfg = _figs.config()
+    path = REPO / "state" / f"{cfg['cycle']}_rj1.json"
+    if not path.is_file():
+        return ""
+    rj = json.loads(path.read_text(encoding="utf-8"))
+    changed = rj.get("rules_changed_since_source") or {}
+    moved = rj.get("verdicts_moved") or []
+    by_leg = {}
+    for m in moved:
+        by_leg.setdefault(m["leg"], []).append(m)
+    rules = "".join(
+        f"<li><b>{html.escape(leg)}</b>: {html.escape(v['source'])} → "
+        f"{html.escape(v['current'])} — {len(by_leg.get(leg, []))} verdict(s) moved</li>"
+        for leg, v in sorted(changed.items()))
+    not_judged = rj.get("legs_not_judged") or {}
+    return (f"<h3>Rates on this page that have been re-judged</h3>"
+            f"<p>The figures above are cycle <code>{html.escape(cfg['cycle'])}</code> "
+            f"<b>as it was judged when it ran</b>. Its stored Observations have since been "
+            f"re-judged under corrected rules as "
+            f"<code>{html.escape(rj['cycle'])}</code> — the same evidence, nothing re-fetched, "
+            f"no Observation created — and that cycle has its own Results and its own F1 and "
+            f"F5. {len(moved)} verdict(s) moved in total. The rules that differ:</p>"
+            f"<ul>{rules}</ul>"
+            f"<p>{len(not_judged)} leg(s) were not re-judged at all and register nothing "
+            f"there, each with its reason on the payload: "
+            f"{html.escape(', '.join(sorted(not_judged)))}. Not measured is a reason, not a "
+            f"zero (DD-055).</p>")
+
+
 def non_claims() -> str:
     """What the page does NOT claim, with its numbers DERIVED from the cycle being shown.
 
@@ -242,8 +306,7 @@ def non_claims() -> str:
         f"contributed no surface at all, which is a property of the instrument as much as of "
         f"them. {len(zeros)} legs are at zero with an upper bound of {hi:.2f}, and a zero is "
         f"not evidence of absence at these denominators. Where a leg's rate moved between "
-        f"cycles, F5 marks whether the RULE changed: on A1 and A3 it did, and a difference "
-        f"there is the instrument moving, not the host.")
+        f"cycles, F5 marks whether the RULE changed: {_rule_changed_clause()}")
 
 CITATIONS = [
     ("Intervals", "Wilson, E. B. (1927). Probable inference, the law of succession, and "
@@ -319,6 +382,7 @@ def footer() -> str:
     return ("<footer><h3>What this does not claim</h3><p>" + non_claims() + "</p>"
             + "<h3>Excluded on purpose</h3><ul>"
             + "".join(f"<li>{t}</li>" for t in EXCLUDED) + "</ul>"
+            + rejudged_note()
             + requests_table()
             + "<h3>Prior art the figures implement</h3><ul>"
             + "".join(f"<li><b>{k}.</b> {v}</li>" for k, v in CITATIONS) + "</ul>"

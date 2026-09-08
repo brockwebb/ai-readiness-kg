@@ -1,6 +1,7 @@
 """Test-only static server for the control fixtures. **Localhost, no network egress.**
 
-Task §4, extended by `cc_tasks/2026-09-07_scan_harness_v3.md` §1.4. Four fixtures, because a
+Task §4, extended by `cc_tasks/2026-09-07_scan_harness_v3.md` §1.4 and
+`cc_tasks/2026-09-08_scan_harness_v4.md` §1.2. Five fixtures, because a
 control that cannot FAIL is not a control: a rule that returns `error` for every input passes a
 two-fixture gate made only of `pass` and `fail` cases, and the two branches that mattered most
 in the 2026-09-07 cycle — a host that refuses an identified client, and a host that resets the
@@ -15,6 +16,10 @@ was tested by a hand-built observation pair instead, which tests the rule and no
   what A12 measures and what `www.bls.gov` did to the first smoke run.
 * `resets_connection` — the socket is accepted and reset (RFC 9293 RST) before a byte of
   response. Nothing is observable, including robots.txt.
+* `invalid_route_unobserved` — everything `passes_all` serves, and the connection reset on
+  A10's invented invalid route ALONE. PARTIAL blindness, which is the state no other fixture
+  can reach: `resets_connection` blinds every leg at once, so it cannot reproduce the surface
+  that produced `RULE-A10-v2`'s false `pass` — deep link served, invalid route never observed.
 
 `HOSTPORT` in a fixture body is substituted at serve time, because a sitemap that must list an
 absolute URL cannot know the ephemeral port until the server binds.
@@ -39,6 +44,11 @@ FIXTURES = Path(__file__).resolve().parent
 #: second definition of "what a fixture body looks like", and the one that drifted would be
 #: the one that mattered.
 BIND_HOST = "127.0.0.1"
+#: The request-line cap `http.server` itself uses (`BaseHTTPRequestHandler.handle_one_request`
+#: reads `65537` and calls anything longer a 414). Named because the reset fixture reads the
+#: request line by hand before killing the socket, and an unnamed 65537 in a fixture is the
+#: same unswept constant the collectors' integer-literal lint exists to refuse.
+MAX_REQUEST_LINE = 65537
 SOFT_404_SHELL = (b"<!doctype html><html><head><title>Page not found</title></head>"
                   b"<body><h1>Sorry, we can't find that page</h1></body></html>")
 
@@ -50,6 +60,18 @@ MODES = {
     "fails_all": {"soft_404": True},
     "refuses_identified_client": {"refuse_status": 403, "served_paths": ("/robots.txt",)},
     "resets_connection": {"reset": True},
+    # Everything `passes_all` serves, EXCEPT the one path A10 invents to test the shell.
+    # `resets_connection` cannot stand in for this: it resets every path, so every leg is
+    # `error` and the surface is uniformly unobservable — it cannot isolate "the invalid route
+    # was never observed and everything else was served", which is exactly the state
+    # `scan-eia-flagship-1-open-data` was in when `RULE-A10-v2` scored it `pass`
+    # (`cc_tasks/2026-09-07_scan_run_2_RESULT.md` §6.2). A control that cannot reproduce the
+    # defect cannot certify the fix.
+    #
+    # `serves_as` rather than a copied directory: duplicating eleven fixture files would make
+    # two definitions of "a well-formed surface", and the copy that drifted would be the one
+    # that mattered. The fixture's own directory holds only its README.
+    "invalid_route_unobserved": {"serves_as": "passes_all", "reset_on_invalid_route": True},
 }
 
 
@@ -65,6 +87,11 @@ class _Handler(http.server.SimpleHTTPRequestHandler):
     #: is what makes `close()` send RST rather than FIN, so the client sees ECONNRESET — the
     #: failure `www150.statcan.gc.ca` produced 92 times and the closed set had no name for.
     reset: bool = False
+    #: Same reset, scoped to A10's invented invalid route alone. The suffix is NOT a literal
+    #: here: it is read from `params.a10_soft404.invalid_path_suffix` when the server binds, so
+    #: the fixture and the collector can never disagree about which path is "the invalid one".
+    reset_on_invalid_route: bool = False
+    invalid_route_suffix: str = ""
     #: Appended to by every request. A list on the CLASS, handed in by `FixtureServer`, so the
     #: log outlives the per-request handler instance.
     requests: list = []
@@ -72,16 +99,51 @@ class _Handler(http.server.SimpleHTTPRequestHandler):
     def log_message(self, *a) -> None:            # silence in tests
         pass
 
+    def _reset(self) -> None:
+        """Send RST rather than FIN, so the client sees ECONNRESET / a server disconnect."""
+        try:
+            self.connection.setsockopt(socket.SOL_SOCKET, socket.SO_LINGER,
+                                       struct.pack("ii", 1, 0))
+            self.connection.close()
+        except OSError:                            # already gone; the client sees the same
+            pass
+
     def handle(self) -> None:
         if self.reset:
+            # The request line is READ first, then the socket is reset without a byte of
+            # response. Resetting before the read is what the fixture used to do, and it made
+            # the control non-deterministic: the client sometimes failed at CONNECT time with
+            # `ConnectError: [Errno 22] Invalid argument` (EINVAL — a local socket-state
+            # failure, not a statement by the peer), which `errors.classify_exception`
+            # correctly declines to name and files as `unknown`. That is a real `unknown` on a
+            # control fixture — the condition `cc_tasks/2026-09-07_scan_harness_v3.md` §1.4
+            # makes a gate — arising from macOS socket state rather than from anything the
+            # instrument measures, at roughly one observation in a hundred.
+            #
+            # A control that produces its declared failure only most of the time is not a
+            # control. Reading the request first puts the client in an established connection
+            # waiting on a response, so the RST always arrives as ECONNRESET / a server
+            # disconnect and always classifies as `connection_reset`. The fixture's declared
+            # behaviour is unchanged and is now what it declares: *reset before a byte of
+            # response*, RFC 9293. `invalid_route_unobserved` resets at this same point, which
+            # is why it was deterministic from its first run.
             try:
-                self.connection.setsockopt(socket.SOL_SOCKET, socket.SO_LINGER,
-                                           struct.pack("ii", 1, 0))
-                self.connection.close()
-            except OSError:                        # already gone; the client sees the same
+                self.rfile.readline(MAX_REQUEST_LINE)
+            except OSError:
                 pass
+            self._reset()
             return
         super().handle()
+
+    def _resets_this_path(self, path: str) -> bool:
+        """True when this fixture kills the connection for THIS path and serves every other.
+
+        The suffix comes from params, so a change to `a10_soft404.invalid_path_suffix` moves
+        the fixture with the collector; a literal here would leave the control silently
+        serving a 404 on the path it exists to make unobservable.
+        """
+        return bool(self.reset_on_invalid_route and self.invalid_route_suffix
+                    and path.endswith(self.invalid_route_suffix))
 
     _head_only: bool = False
 
@@ -101,7 +163,11 @@ class _Handler(http.server.SimpleHTTPRequestHandler):
 
     def do_GET(self) -> None:                      # noqa: N802
         path = self.path.split("?")[0]
+        # Logged BEFORE the reset: the request WAS received, and a request log that omitted it
+        # would make the fixture look like a host that never heard from us.
         self.requests.append({"method": "HEAD" if self._head_only else "GET", "path": path})
+        if self._resets_this_path(path):
+            return self._reset()
         if self.refuse_status is not None and path not in self.served_paths:
             return self._serve_bytes(b"", "text/plain", status=self.refuse_status,
                                      head_only=self._head_only)
@@ -149,10 +215,16 @@ class FixtureServer:
         self.requests: list = []
 
     def __enter__(self) -> str:
+        from .. import load_params
+        mode = dict(MODES[self.fixture])
+        # A fixture may SERVE another's tree (`invalid_route_unobserved` serves `passes_all`)
+        # so that "a well-formed surface" has exactly one definition on disk.
+        served_by = mode.pop("serves_as", self.fixture)
         handler = type("H", (_Handler,), {
-            "root": FIXTURES / self.fixture,
+            "root": FIXTURES / served_by,
             "requests": self.requests,
-            **MODES[self.fixture]})
+            "invalid_route_suffix": load_params()["a10_soft404"]["invalid_path_suffix"],
+            **mode})
         socketserver.TCPServer.allow_reuse_address = True
         self.httpd = socketserver.TCPServer((BIND_HOST, 0), handler)
         port = self.httpd.server_address[1]

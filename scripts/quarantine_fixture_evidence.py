@@ -112,7 +112,19 @@ def classify(root: Path | None = None) -> dict:
             "other": other, "cited_total": len(cited)}
 
 
-def sweep(apply: bool, root: Path | None = None) -> dict:
+#: What wrote the litter, when the caller does not say. It was `tests/test_scan_harness.py`
+#: for every sweep to 2026-09-07, and the sentence was written as a constant — so the
+#: 2026-09-08 sweep recorded that attribution for 54 blobs written by
+#: `scan/rederive.control_gate_record`, which had reached `run_controls` directly and
+#: inherited the DEFAULT evidence root. A quarantine record that names the wrong writer sends
+#: the next reader to the wrong file, so the source is now an ARGUMENT with the old value as
+#: its default, and `--wrote-by` is how a caller says otherwise.
+DEFAULT_WRITER = ("`tests/test_scan_harness.py` before "
+                  "`tests/conftest.py::no_writes_to_the_real_evidence_store` redirected the "
+                  "evidence root under test")
+
+
+def sweep(apply: bool, root: Path | None = None, wrote_by: str | None = None) -> dict:
     c = classify(root)
     tracked = tracked_paths()
     litter = c["litter"]
@@ -138,9 +150,8 @@ def sweep(apply: bool, root: Path | None = None) -> dict:
                 f"# swept {stamp} by scripts/quarantine_fixture_evidence.py ({TASK})\n"
                 f"# control-fixture test litter: the stored body names the fixture host "
                 f"{BIND_HOST} AND no `observation_recorded` event cites its digest, so no "
-                f"Finding can ever cite it. Written by `tests/test_scan_harness.py` before "
-                f"`tests/conftest.py::no_writes_to_the_real_evidence_store` redirected the "
-                f"evidence root under test. Moved, not deleted (project invariant 2). "
+                f"Finding can ever cite it. Written by {wrote_by or DEFAULT_WRITER}. "
+                f"Moved, not deleted (project invariant 2). "
                 f"{len(uncommitted)} of them were untracked when swept and were removed "
                 f"rather than moved (see this script's docstring). "
                 f"{len(c['cited_fixture_blobs'])} fixture-host blobs ARE cited by "
@@ -166,8 +177,13 @@ def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--wrote-by", default=None, metavar="TEXT",
+                    help="what produced this litter, recorded verbatim in reason.txt. "
+                         "Defaults to the writer every sweep to 2026-09-07 had; a sweep after "
+                         "a different writer must say so, or the record sends the next reader "
+                         "to the wrong file.")
     a = ap.parse_args(argv)
-    out = sweep(apply=not a.dry_run)
+    out = sweep(apply=not a.dry_run, wrote_by=a.wrote_by)
     print(json.dumps(out, indent=1))
     return 0
 

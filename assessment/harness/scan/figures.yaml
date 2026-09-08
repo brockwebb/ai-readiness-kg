@@ -24,6 +24,28 @@ compare_to:
     A1: "v2 → v3"
     A3: "v3 → v4"
 
+# Per-cycle overrides of `compare_to`. A RE-JUDGED cycle is drawn against the cycle it derives
+# from — the same evidence under the old rules and the new — so its comparison is fixed by what
+# it is, not by which cycle ran last. `note` is printed on the figure: a reader who sees two
+# dots must be told that the second one moved because the RULE moved and nothing was re-fetched.
+compare_to_by_cycle:
+  scan_2026-09-07b_rj1:
+    cycle: scan_2026-09-07b
+    suffix: "2026-09-07b"
+    label: "cycle 2 · 2026-09-07b, as judged then"
+    note: "re-judged under v4 from stored observations, no re-fetch"
+    rule_changed:
+      A10: "v2 → v3"
+      A8: "v2 → v3"
+  scan_2026-09-07_rj1:
+    cycle: scan_2026-09-07
+    suffix: "2026-09-07"
+    label: "cycle 1 · 2026-09-07, as judged then"
+    note: "re-judged under v4 from stored observations, no re-fetch"
+    rule_changed:
+      A10: "v2 → v3"
+      A8: "v2 → v3"
+
 # The rate axis. `ticks` is the ONLY numeric text in a figure that is not a Result or a
 # matrix count, and the gate checks the rendered ticks against exactly this list.
 rate_axis:

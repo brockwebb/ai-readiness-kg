@@ -62,6 +62,23 @@ CLASSES: dict = {
     "robots_disallowed": {"blind": False,
                           "note": "not fetched, because robots.txt disallows this client; "
                                   "the refusal is evidence, not an absence"},
+    # The mirror of `robots_disallowed`, one policy layer up: not fetched because the SCANNER'S
+    # own same-host policy (`manners.on_roster_host`) puts the URL outside the measurement, not
+    # because anyone refused us. `cc_tasks/2026-09-08_scan_harness_v4.md` §1.3.
+    #
+    # NOT blind, for the same reason `robots_disallowed` is not: it IS the measurement's scope
+    # boundary rather than a failure to see. A1 and A3 ask what the PRODUCT offers, and a link
+    # to somebody else's server is not an answer either way — marking it blind would let a
+    # page whose links are all off-host return `error` ("we could not look") instead of the
+    # true `fail` ("this product offers nothing of its own").
+    #
+    # It exists as a CLASS rather than as silence because the exclusion used to be a `continue`
+    # in `links.probe`: an off-host link left no record at all, so nothing on the log could
+    # show whether the policy had been applied, or to what.
+    "off_host": {"blind": False,
+                 "note": "not fetched, because the scanner's same-host policy puts this URL "
+                         "outside the surface being measured; the exclusion is recorded, "
+                         "not silent"},
     "parse_error": {"blind": True, "note": "a response arrived and could not be read"},
     "collector_unavailable": {"blind": True, "note": "the collector itself raised"},
     "unknown": {"blind": True,

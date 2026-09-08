@@ -142,7 +142,20 @@ def matrix(payload: dict, cycle: str) -> dict:
     # E5 judges the CYCLE, not a surface, so it has no column in a surfaces × legs matrix.
     # Leaving it in printed an empty column of "?" across every row, which reads as missing
     # data rather than as a leg with a different subject.
-    legs = [l for l in CURRENT if l not in CANDIDATE_LEGS and l != "E5"]
+    # The legs this payload actually holds verdicts for. `CURRENT` minus the candidates and
+    # E5 is the answer for a measured cycle; a RE-JUDGED cycle may hold fewer, because a leg
+    # whose CURRENT rule consumes an observation the source cycle never collected is not
+    # judged at all (`scan/rederive.py::rejudge`). Listing it here would put a column in the
+    # matrix that every figure then looks up a Result for and does not find — "not measured is
+    # a reason, not a zero" (DD-055), and a KeyError is not a reason either.
+    reportable = [l for l in CURRENT if l not in CANDIDATE_LEGS and l != "E5"]
+    judged = payload.get("legs_judged")
+    # Intersected, never substituted. `legs_judged` is what the re-judgement DID judge and it
+    # includes A12 — a candidate, which enters no fraction (DD-054) and has no `pass_rate`
+    # Result — and would put a column on the matrix that F1 then looks up a rate for and does
+    # not find. The reportable set is still the framework's; a re-judged cycle can only narrow
+    # it.
+    legs = [l for l in reportable if l in judged] if judged else reportable
     rows = []
     for r in sorted(payload["matrix"], key=lambda r: (r["agency"], r["surface_kind"],
                                                       r["doc_id"])):
@@ -174,7 +187,19 @@ def results(payload: dict, legs: dict, a12v: dict, mx: dict, cycle: str,
     where a cycle is stamped onto a name, so no emitter here can forget one (DD-041's
     amendment, DD-056)."""
     ph = payload["params_hash"][:12]
-    tag = f"Cycle {cycle}, params_hash {ph}…."
+    #: A RE-JUDGED cycle made no measurement: it judged another cycle's stored Observations
+    #: under today's rules, fetched nothing and created no Observation
+    #: (`scan/rederive.py::rejudge`). Its per-leg counts and rates are real and are the whole
+    #: point; the Results that describe the MEASUREMENT — observations captured, requests
+    #: issued per host, error classes recorded, control Findings published — are the source
+    #: cycle's and are not re-registered under this cycle's name. Registering them at 0 would
+    #: publish "this cycle issued 0 requests to www.census.gov" as a fact about a scan, which
+    #: reads as a measurement of a host that was never asked.
+    rejudged = payload.get("cycle_kind") == "rejudged"
+    tag = (f"Cycle {cycle}, params_hash {ph}…. RE-JUDGED from the stored Observations of "
+           f"{payload.get('derived_from')} under the rules current at "
+           f"{payload.get('task')}; nothing was re-fetched."
+           if rejudged else f"Cycle {cycle}, params_hash {ph}….")
     out = []
     for leg, s in legs.items():
         key = leg.replace("-", "_").lower()
@@ -242,6 +267,9 @@ def results(payload: dict, legs: dict, a12v: dict, mx: dict, cycle: str,
         ("scan_surfaces", payload["surfaces"], f"{tag} Surfaces scanned, of the 41 on "
                                                f"`scan_targets_2026-09`."),
         ("scan_findings", payload["findings"], f"{tag} Findings produced: {vc}."),
+    ]
+    if not rejudged:
+        out += [
         ("scan_observations", payload["observations"], f"{tag} Observations captured, each "
                                                        f"with its whole response body stored "
                                                        f"content-addressed."),
@@ -254,6 +282,8 @@ def results(payload: dict, legs: dict, a12v: dict, mx: dict, cycle: str,
          f"{tag} Control Findings, including RULE-E5-v2's own verdict on the cycle and A12 on "
          f"every fixture. The gate ran before any real host was touched, and E5-v2 asserted "
          f"that ordering against the first surface timestamp."),
+        ]
+    out += [
         ("scan_agencies_unobservable", len(mx["agencies_wholly_unobservable"]),
          f"{tag} Agencies on which EVERY leg of EVERY ADMITTED surface returned `error`: "
          f"{mx['agencies_wholly_unobservable']}. Read this WITH "
@@ -291,6 +321,12 @@ def results(payload: dict, legs: dict, a12v: dict, mx: dict, cycle: str,
                     f"(sha256 of rule_id | rule_version | target | params_hash | sorted "
                     f"evidence). An id from a counter or a clock would make the comparison "
                     f"vacuous."))
+    if rejudged:
+        # Everything below describes what the SCANNER did — requests per host, error classes
+        # recorded on Observations. A re-judgement did none of it, and the source cycle's
+        # numbers are registered under the source cycle's names. Stopping here is DD-055's
+        # rule applied to a whole family: not measured is a reason, not a zero.
+        return out
     # What this scanner ASKED of each host, one Result per host (§4). The manners claim
     # (RFC 9309, identified UA, 1 req/s) is auditable only against this number, and cycle 2's
     # shared `link_probe` is asserted against cycle 1's here rather than assumed: A1 and A3

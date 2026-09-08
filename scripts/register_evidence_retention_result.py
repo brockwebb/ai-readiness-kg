@@ -75,6 +75,23 @@ def tracked_digests() -> list:
     return [line.rsplit("/", 1)[-1] for line in out.stdout.split()]
 
 
+def cycle_params_hash(cycle: str) -> str:
+    """The `params_hash` a CYCLE was measured under, read off its own payload.
+
+    Not `params_hash(load_params())`. That is the hash of the parameters ON DISK NOW, and it
+    equals the cycle's only while `params.yaml` has not moved since the cycle ran — which stops
+    being true the moment a task corrects a rule's parameters without re-measuring anything
+    (`cc_tasks/2026-09-08_scan_harness_v4.md`). The census holds a cycle's observations OUT by
+    matching this hash, so reading it from the wrong place does not error: it silently holds
+    nothing out and reports a decomposition that does not close.
+    """
+    payload = REPO / "state" / f"{cycle}.json"
+    if not payload.is_file():
+        raise SystemExit(f"FATAL: no payload at {payload}; the census cannot hold out a cycle "
+                         f"it cannot read the params_hash of")
+    return json.loads(payload.read_text(encoding="utf-8"))["params_hash"]
+
+
 def census(before_params_hash: str | None = None) -> dict:
     """The uncited-tracked-body census, optionally decomposed by what a cycle cited.
 
@@ -110,9 +127,7 @@ def main(argv=None) -> int:
     if a.cycle:
         sys.path.insert(0, str(REPO / "scripts"))
         import cycle_results
-        from scan import load_params
-        from scan.model import params_hash
-        ph = params_hash(load_params())
+        ph = cycle_params_hash(a.cycle)
         name = cycle_results.name_for(NAME, a.cycle)
     c = census(ph)
     print(json.dumps({k: v for k, v in c.items() if k != "newly_cited_digests"}, indent=1))

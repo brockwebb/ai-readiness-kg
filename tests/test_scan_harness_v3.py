@@ -133,7 +133,11 @@ def test_the_closed_set_grew_and_nothing_left_it():
            "collector_unavailable"}
     now = set(errors.ERROR_CLASSES)
     assert was <= now
-    assert now - was == {"connection_reset", "refused", "unknown"}
+    # v3 added three; v4 added `off_host`, the mirror of `robots_disallowed` one policy layer
+    # up — not fetched because the SCANNER's same-host policy excludes the URL
+    # (`cc_tasks/2026-09-08_scan_harness_v4.md` §1.3). The set may only grow, and each entry
+    # names the task that added it so a later reader can see the shape of the growth.
+    assert now - was == {"connection_reset", "refused", "unknown", "off_host"}
 
 
 def test_the_blind_set_grew_only_by_the_new_classes():
@@ -271,12 +275,22 @@ def test_a_rule_that_consumes_a_shared_leg_regroups_the_same_way_on_re_derivatio
     assert inspect.isfunction(consumes)
 
 
-# ------------------------------------------------------------------- §1.4 four controls
-def test_there_are_four_fixtures_and_every_one_has_a_pre_registered_table():
+# ------------------------------------------------------------------- §1.4 the controls
+def test_every_fixture_has_a_pre_registered_table_and_every_table_a_fixture():
+    """The invariant this test owns, stated without a count.
+
+    It used to pin the four fixture NAMES, which made adding the fifth
+    (`invalid_route_unobserved`, `cc_tasks/2026-09-08_scan_harness_v4.md` §1.2) look like a
+    regression. What must hold is the correspondence: a fixture with no pre-registered
+    expectation is a control that cannot fail, and an expectation with no fixture is an
+    expectation nothing tests. The current roster is pinned by name in
+    `tests/test_scan_harness_v4.py`, where the fixture that added to it lives.
+    """
     params = load_params()
     expected = params["e5_control"]["expected_verdicts"]
-    assert set(expected) == set(MODES) == {
-        "passes_all", "fails_all", "refuses_identified_client", "resets_connection"}
+    assert set(expected) == set(MODES)
+    assert {"passes_all", "fails_all", "refuses_identified_client",
+            "resets_connection"} <= set(MODES), "a control fixture may not be removed"
     for fixture, table in expected.items():
         if isinstance(table, dict):
             assert "default" in table, fixture

@@ -101,6 +101,27 @@ def served(o) -> bool:
     return isinstance(st, int) and st < 400
 
 
+def host_of(url: str) -> str:
+    """The host of a URL, by string surgery, because a rule may not import `urllib`.
+
+    `tests/test_scan_harness.py::test_no_rule_reaches_the_network_a_clock_or_the_filesystem`
+    bans the whole `urllib` PACKAGE from `rules/`, not `urllib.request` alone, and it is right
+    to: a module that can reach `urllib.parse` can reach `urllib.request` on the next edit, and
+    the purity of a rule is what makes re-judging history without re-measuring it meaningful.
+    So the one thing a rule needs from a URL is done here, once, in pure string work.
+
+    Not a URL parser and not trying to be. It is a COMPARATOR: both sides of every comparison
+    go through this same function, so a scheme, a port or a userinfo segment that it handles
+    unusually still makes the two sides agree or disagree for the same reason. The collector
+    (`manners.on_roster_host`) uses `urllib.parse` and is the authority on what gets FETCHED;
+    this only has to reproduce that judgement over stored records.
+    """
+    rest = str(url or "").split("://", 1)[-1]
+    for sep in ("/", "?", "#"):
+        rest = rest.split(sep, 1)[0]
+    return rest.rsplit("@", 1)[-1].lower()
+
+
 def make(rule_id: str, leg: str, obs: list, verdict: str, reason: str, params: dict) -> Finding:
     return Finding.make(rule_id=rule_id, rule_version=rule_version(rule_id, params), leg=leg,
                         target_doc_id=target(obs), verdict=verdict, evidence=ids(obs),
@@ -111,3 +132,36 @@ def empty(rule_id: str, leg: str, params: dict, doc_id: str = "unknown") -> Find
     return Finding.make(rule_id=rule_id, rule_version=rule_version(rule_id, params), leg=leg,
                         target_doc_id=doc_id, verdict="error", evidence=[],
                         reason="no observations were collected for this leg", params=params)
+
+
+def unobserved_error(rule_id: str, leg: str, obs: list, probe, params: dict, what: str):
+    """The `error` Finding a rule owes when a probe it is ABOUT TO SCORE ON was never
+    observed — or `None` when the probe is real and the rule may go on.
+
+    `only_errors` asks the question of a WHOLE surface: it fires only when every observation
+    is blind. That leaves the case this exists for wide open. On
+    `scan-eia-flagship-1-open-data` the A10 valid-route probe returned HTTP 200 and the
+    invalid-route probe raised `RemoteProtocolError` (`connection_reset`, blind), so
+    `only_errors` was false, and `RULE-A10-v2` — which tests only that the invalid route is
+    not 200 — read a killed connection as a correct rejection and returned **pass**
+    (`cc_tasks/2026-09-07_scan_run_2_RESULT.md` §6.2).
+
+    DD-052 §6 says `error` must never mean the product FAILED. The mirror was nowhere
+    enforced: `error` must never mean the product PASSED either. A verdict reached from a
+    probe the collector never saw is a measurement of the scanner, not of the product, and it
+    is a defect by construction whichever direction it points.
+
+    Every rule of generation 4 and later calls this on each probe it reads; a lint over
+    `rules/` (`tests/test_scan_harness_v4.py`) fails a module that does not, so the guard
+    cannot be forgotten in the one rule where it matters.
+    """
+    if probe is None or not unobserved(probe, params):
+        return None
+    status = (getattr(probe, "response", None) or {}).get("status")
+    named = probe.error_class or f"HTTP {status}"
+    note = (_errors.CLASSES.get(probe.error_class) or {}).get(
+        "note", "the host declined to answer this client about the path")
+    return make(rule_id, leg, obs, "error",
+                f"{what} was not observed ({named}): {note}. A verdict reached from a probe "
+                f"the collector never saw would be a measurement of the scanner, not of the "
+                f"product", params)

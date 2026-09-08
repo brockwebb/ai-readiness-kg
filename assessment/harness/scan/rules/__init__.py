@@ -30,6 +30,7 @@ from . import (rule_a1_v2, rule_a10_v2, rule_a11_declared_v2, rule_a2_v2, rule_a
                rule_f4_v2)
 from . import rule_a2_v3, rule_a3_v3, rule_d1_v3, rule_f4_v3
 from . import rule_a1_v3, rule_a3_v4
+from . import rule_a8_v3, rule_a10_v3
 from . import rule_a12
 
 #: Every version ever shipped, keyed by rule id. Never prune it: a pruned entry is a stored
@@ -50,6 +51,18 @@ V3 = [rule_a2_v3, rule_a3_v3, rule_d1_v3, rule_f4_v3, rule_a1_v3]
 #: (`cc_tasks/2026-09-07_scan_harness_v3.md` §1.3). Their predecessors stay in `REGISTRY`.
 V4 = [rule_a3_v4]
 
+#: A fifth generation, for the defect a SURFACE found that no fixture anticipated: a rule that
+#: reaches a verdict from a probe whose error class is BLIND. `RULE-A10-v2` returned `pass` on
+#: `scan-eia-flagship-1-open-data` because its invalid-route probe was killed mid-connection and
+#: "not 200" was the only test it ran (`cc_tasks/2026-09-07_scan_run_2_RESULT.md` §6.2), and
+#: `RULE-A8-v2` would have credited an email-signup page on a third-party host as a resolving
+#: latest-vintage pointer (§6.1). Both are the same shape: a verdict about the product reached
+#: from something that is not evidence about the product.
+#:
+#: From this generation on, every rule calls `_common.unobserved_error` on each probe it scores
+#: on, and `tests/test_scan_harness_v4.py` lints for it. Their predecessors stay in `REGISTRY`.
+V5 = [rule_a8_v3, rule_a10_v3]
+
 #: Rules for CANDIDATE indicators. They judge, they are recorded, and their Findings enter no
 #: numerator and no denominator (DD-054). Kept in their own list so the reporting layer can
 #: exclude them mechanically rather than by remembering a code.
@@ -59,7 +72,7 @@ CANDIDATE_RULES = [rule_a12]
 #: track of: the registry-integrity tests read this, so a fifth generation is one entry here
 #: and nothing else to remember — which is the same reasoning `parse_rule_id` gives for being
 #: a regex instead of a per-rule table.
-GENERATIONS = (V1, V2, V3, V4)
+GENERATIONS = (V1, V2, V3, V4, V5)
 
 MODULES = [m for g in GENERATIONS for m in g] + CANDIDATE_RULES
 

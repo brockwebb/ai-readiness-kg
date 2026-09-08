@@ -68,6 +68,25 @@ crawl:
   depth: 1
   max_links_followed: 40
 
+probes:
+  # ONE same-host policy, for EVERY collector that dereferences a URL it discovered on a
+  # surface. `cc_tasks/2026-09-08_scan_harness_v4.md` §1.3.
+  #
+  # It used to be `link_probe.same_host_only`, which is where `collectors/links.probe` reads
+  # it — and `collectors/v2clauses.follow_latest_pointer` read nothing at all, so A8
+  # dereferenced `public.govdelivery.com` on the Census ACS surface after its anchor matcher
+  # took "subscribe to govdelivery email updates" for a latest-vintage pointer
+  # (`cc_tasks/2026-09-07_scan_run_2_RESULT.md` §6.1). Two requests, robots obeyed, no verdict
+  # resting on it — and the `link_probe` comment named the exposure exactly ("probing off-host
+  # would make the control cycle reach the real internet before the gate that exists to run
+  # before any real host") while governing only one of the two collectors.
+  #
+  # A policy enforced in one of the two places it applies is not a policy. Both collectors now
+  # go through `manners.on_roster_host`, which reads THIS key; `link_probe.same_host_only` is
+  # kept readable for the cycles measured under it and `manners.same_host_only` REFUSES if the
+  # two ever disagree — two keys that can differ are two policies.
+  same_host_only: true
+
 a1_formats:
   # A1: which Content-Types / extensions count as structured data rather than PDF-only.
   structured_content_types: ["text/csv", "application/json", "application/geo+json",
@@ -181,6 +200,22 @@ e5_control:
     # branch rather than on a coherence verdict, which is the right answer: a host that cannot
     # be reached has not been shown to be incoherent.
     resets_connection: "error"
+    # PRE-REGISTERED before the fixture was first run (`cc_tasks/2026-09-08_scan_harness_v4.md`
+    # §1.2), derived from the rule source. The fixture serves everything `passes_all` serves
+    # and resets the connection on A10's invented invalid route ALONE, so:
+    #   default `pass`  every leg but A10 sees exactly what it sees on `passes_all`; not one
+    #                   of them fetches `a10_soft404.invalid_path_suffix`.
+    #   A10  `error`    the valid-route probe is served HTTP 200, so `_common.only_errors` is
+    #                   FALSE and `RULE-A10-v2` would reach its status branches and return
+    #                   `pass` on "invalid route correctly HTTP None" — the false positive of
+    #                   `cc_tasks/2026-09-07_scan_run_2_RESULT.md` §6.2. `RULE-A10-v3` calls
+    #                   `_common.unobserved_error` on the invalid-route probe first, sees
+    #                   `connection_reset` (blind), and returns `error`.
+    # This is the fixture that must FIRE: a control that cannot reproduce the defect cannot
+    # certify the fix.
+    invalid_route_unobserved:
+      default: "pass"
+      A10: "error"
 
 fuji:
   # NOT WIRED. The PyPI name `fuji` is a DIFFERENT package (startechsheffield, "a small
@@ -212,6 +247,12 @@ link_probe:
   # links and this is one request each at the standing rate.
   max_links_probed: 25
   method: HEAD
+  # SUPERSEDED by `probes.same_host_only`, and kept readable rather than deleted: it is the
+  # key the 2026-09-07 and 2026-09-07b cycles were measured under, and their params sets are
+  # recovered from git by hash for the re-derivation gate. `manners.same_host_only` reads
+  # `probes.same_host_only` and refuses if this key disagrees with it — one policy, two
+  # spellings, never two answers.
+  #
   # Same-host only. Two reasons, and the second is the one that bites: A1 and A3 ask what the
   # PRODUCT offers, not what it links to elsewhere; and the control fixture links out to a
   # licence URL, so probing off-host would make the control cycle reach the real internet
@@ -275,6 +316,27 @@ a8_latest:
   link_rels: ["latest-version", "last", "canonical"]
   href_tokens: ["/latest", "latest.", "current.", "/current", "most-recent"]
   anchor_tokens: ["latest", "most recent", "current release", "current version"]
+  # Anchor text that names a SUBSCRIPTION or a notification, not a vintage. A8-v3 drops a
+  # candidate whose anchor text carries any of these, whatever else it matched.
+  #
+  # The test case is the one that fired: on
+  # `scan-census-flagship-2-american-community-survey-acs` an anchor whose RETAINED text reads
+  # "subscribe subscribe to govdelivery email" matched `anchor_tokens` and resolved HTTP 200 on
+  # `public.govdelivery.com`, so A8 would have credited an email signup page as a resolving
+  # latest-vintage pointer. It did not manufacture a verdict — A8 was 23 fail / 3 error, zero
+  # pass — which is luck, not design (`cc_tasks/2026-09-07_scan_run_2_RESULT.md` §6.1).
+  #
+  # WHICH token matched is not recoverable from that record: `reporting.anchor_text_retained_chars`
+  # is 40, the stored `how` string stops there, and the matcher scanned the whole anchor. So
+  # `find_latest_pointers` now records `matched_token` beside the text — a matcher that cannot
+  # say why it matched leaves a Finding nobody can check.
+  #
+  # An exclusion list rather than a tighter inclusion list: the inclusion tokens are what the
+  # indicator MEANS ("latest", "most recent") and narrowing them would lose real pointers, while
+  # what went wrong is a distinct vocabulary — a mailing list — that no vintage pointer uses.
+  excluded_anchor_tokens: ["subscribe", "subscription", "sign up", "signup", "e-mail",
+                           "email updates", "govdelivery", "newsletter", "notify me",
+                           "get updates", "alerts", "rss feed"]
   max_pointers_followed: 3
   resolves_statuses: [200, 203, 206]
 

@@ -99,7 +99,8 @@ def collect_leg(spec: dict, target: dict, params: dict, fetcher=None) -> list:
             ptrs = v2clauses.find_latest_pointers(
                 _body(o), o.target_url, (o.response or {}).get("headers") or {}, params)
             o.parsed = dict(o.parsed or {},
-                            latest=v2clauses.follow_latest_pointer(f, ptrs, params))
+                            latest=v2clauses.follow_latest_pointer(
+                                f, ptrs, params, surface_url=o.target_url))
         return obs
     if leg == "A9":
         return [o for p in params["a9_m2m"]["probes"]

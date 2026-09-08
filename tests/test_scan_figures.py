@@ -43,7 +43,7 @@ _TEXT = re.compile(r"<text\b([^>]*)>(.*?)</text>", re.S)
 _ATTR = re.compile(r'(\w[\w-]*)="([^"]*)"')
 
 
-def cfg() -> dict:
+def cfg(cycle: str | None = None) -> dict:
     """The renderer's OWN config, not a second read of `figures.yaml`.
 
     `cycle`, `cycle_suffix`, `out_dir` and `matrix_json` are derived from `params.cycle.name`
@@ -52,11 +52,11 @@ def cfg() -> dict:
     would keep passing against the previous cycle's matrix.
     """
     from scan.figures import config
-    return config()
+    return config(cycle)
 
 
-def matrix() -> dict:
-    return json.loads((REPO / cfg()["matrix_json"]).read_text(encoding="utf-8"))
+def matrix(cycle: str | None = None) -> dict:
+    return json.loads((REPO / cfg(cycle)["matrix_json"]).read_text(encoding="utf-8"))
 
 
 @pytest.fixture(scope="module")
@@ -156,7 +156,7 @@ def test_the_figure_generator_hides_no_constant():
 
 # ------------------------------------------------------------------ 3. every numeral sourced
 
-def _codes() -> set:
+def _codes(cycle: str | None = None) -> set:
     """Every WHITESPACE TOKEN carrying a digit that a figure is allowed to print as a label:
     indicator codes, leg codes, agency codes, criterion letters, commit hashes, snapshot
     timestamps. Checked token by token rather than whole-string, because F3 prints a code list
@@ -164,9 +164,9 @@ def _codes() -> set:
     could ever be printed — which is a vocabulary of lists, not of codes.
 
     Tokens without a digit are prose and carry no measurement; the gate is about numerals."""
-    fw = json.loads((REPO / cfg()["framework_json"]).read_text(encoding="utf-8"))
-    mx = matrix()
-    c = cfg()
+    fw = json.loads((REPO / cfg(cycle)["framework_json"]).read_text(encoding="utf-8"))
+    mx = matrix(cycle)
+    c = cfg(cycle)
     out = {n["properties"]["code"] for n in fw["nodes"]
            if "AssessmentIndicator" in n["labels"]}
     out |= set(mx["legs"]) | set(mx["candidate_legs"]) | set(mx["agencies"]) | set(c["criteria"])
@@ -179,6 +179,10 @@ def _codes() -> set:
     for change in (c.get("compare_to") or {}).get("rule_changed", {}).values():
         out |= {f"({t}" for t in change.split()} | {f"{t}):" for t in change.split()}
         out |= set(change.split())
+    # F5's re-judgement note ("re-judged under v4 from stored observations, no re-fetch").
+    # From `figures.yaml`'s `compare_to.note`, where the claim lives — the same rule the
+    # snapshot labels above follow, so a note invented in the renderer would still fail.
+    out |= set(((c.get("compare_to") or {}).get("note") or "").split())
     out |= {c["cycle_suffix"], (c.get("compare_to") or {}).get("suffix", "")}
     return {t for t in out if _NUM.search(t)}
 
@@ -202,12 +206,13 @@ def figures(results):
     return build(cfg(), results)
 
 
-def audit(figs: dict, results: dict) -> list:
+def audit(figs: dict, results: dict, cycle: str | None = None) -> list:
     """Every numeral in every figure, resolved or reported. The gate itself, extracted so a
     mutation can be run through it — a checker nobody has watched fail is not a checker."""
-    mx = matrix()
-    codes = _codes()
-    ticks = {f'{t:.{cfg()["rate_axis"]["tick_decimals"]}f}' for t in cfg()["rate_axis"]["ticks"]}
+    mx = matrix(cycle)
+    codes = _codes(cycle)
+    ticks = {f'{t:.{cfg(cycle)["rate_axis"]["tick_decimals"]}f}'
+             for t in cfg(cycle)["rate_axis"]["ticks"]}
     matrix_counts = {str(len(mx["rows"])), str(len(mx["agencies"])), str(len(mx["legs"]))}
     for pl in mx["per_leg"].values():
         matrix_counts |= {str(pl[k]) for k in ("pass", "fail", "error", "not_applicable",

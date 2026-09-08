@@ -71,6 +71,10 @@ def config(cycle: str | None = None) -> dict:
     cfg.update({"cycle": cyc, "cycle_suffix": suffix,
                 "out_dir": f"assessment/harness/scan/figures/{cyc}",
                 "matrix_json": f"state/scan_matrix_{suffix}.json"})
+    # Which cycle F5 compares AGAINST is a fact about the cycle being drawn, not a global.
+    # A re-judged cycle is drawn against the cycle it derives from — same evidence, old rules
+    # against new — and the default `compare_to` would silently draw it against cycle 1.
+    cfg["compare_to"] = (cfg.get("compare_to_by_cycle") or {}).get(cyc, cfg["compare_to"])
     return cfg
 
 
@@ -441,6 +445,10 @@ def cycle_over_cycle(mx: dict, R: dict, cfg: dict) -> str:
               (cfg["cycle_suffix"], col["pass"], col["interval"],
                f"cycle 2 · {cfg['cycle_suffix']}")]
     y = f["top"]
+    # The one sentence a reader of a re-judged pair cannot do without: the second point is the
+    # SAME evidence under a different rule. Without it the figure reads as two measurements.
+    if cmp_.get("note"):
+        body.append(text(0, f["group_label_dy"], cmp_["note"], "sub", "label"))
     for leg in legs:
         n = f"scan_{slug(leg)}"
         changed = cmp_["rule_changed"].get(leg)
@@ -497,18 +505,21 @@ def cycle_over_cycle(mx: dict, R: dict, cfg: dict) -> str:
 
 # ---------------------------------------------------------------- build
 
-def build(cfg: dict | None = None, R: dict | None = None) -> dict:
+def build(cfg: dict | None = None, R: dict | None = None, only: tuple | None = None) -> dict:
+    """Every figure, or the named subset. `only` is a filter on WHICH are drawn and never on
+    how one is drawn: a figure in the subset is byte-identical to the same figure in the whole
+    set, so a partial build can never produce a different chart from a full one."""
     cfg = cfg or config()
     R = R if R is not None else load_results()
     mx, fw = matrix(cfg), framework()
     # One recorder per figure, so `data-reads` names that figure's inputs and not the union.
-    out = {"per_leg_pass_rate": per_leg_pass_rate(mx, Reads(R), cfg),
-           "agencies_by_legs_matrix": agencies_by_legs_matrix(mx, Reads(R), cfg),
-           "gap_map_by_criterion": gap_map_by_criterion(fw, Reads(R), cfg),
-           "progress_over_snapshots": progress_over_snapshots(Reads(R), cfg),
-           "cycle_over_cycle": cycle_over_cycle(mx, Reads(R), cfg)}
-    assert tuple(out) == FIGURES
-    return out
+    draw = {"per_leg_pass_rate": lambda: per_leg_pass_rate(mx, Reads(R), cfg),
+            "agencies_by_legs_matrix": lambda: agencies_by_legs_matrix(mx, Reads(R), cfg),
+            "gap_map_by_criterion": lambda: gap_map_by_criterion(fw, Reads(R), cfg),
+            "progress_over_snapshots": lambda: progress_over_snapshots(Reads(R), cfg),
+            "cycle_over_cycle": lambda: cycle_over_cycle(mx, Reads(R), cfg)}
+    assert tuple(draw) == FIGURES
+    return {name: fn() for name, fn in draw.items() if only is None or name in only}
 
 
 def main(argv=None) -> int:
@@ -516,9 +527,17 @@ def main(argv=None) -> int:
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--dry-run", action="store_true", help="render, do not write")
     ap.add_argument("--cycle", default=None, help="draw a cycle other than params.cycle.name")
+    ap.add_argument("--only", action="append", default=None, metavar="FIGURE",
+                    help="draw only these figures (repeatable). Used for a RE-JUDGED cycle, "
+                         "which has per-leg rates and a cycle-over-cycle comparison and no "
+                         "measurement of its own to draw the rest from.")
     a = ap.parse_args(argv)
     cfg = config(a.cycle)
-    figs = build(cfg)
+    if a.only:
+        unknown = [n for n in a.only if n not in FIGURES]
+        if unknown:
+            raise SystemExit(f"REFUSING: no figure named {unknown}; known: {list(FIGURES)}")
+    figs = build(cfg, only=tuple(a.only) if a.only else None)
     dest = REPO / cfg["out_dir"]
     written = {}
     if not a.dry_run:

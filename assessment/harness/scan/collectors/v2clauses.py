@@ -149,14 +149,26 @@ def find_latest_pointers(body: bytes, base_url: str, headers: dict, params: dict
         if rel and rel.group(1).strip() in p["link_rels"]:
             found.append({"how": f"Link header rel={rel.group(1).strip()}",
                           "url": urllib.parse.urljoin(base_url, target)})
+    keep = _retain(params, "anchor_text_retained_chars")
     for m in re.finditer(r'<a\b[^>]*href=["\']([^"\']+)["\'][^>]*>(.*?)</a>', html, re.S | re.I):
         href, text = m.group(1), re.sub(r"<[^>]+>", " ", m.group(2))
         low_href, low_text = href.lower(), " ".join(text.split()).lower()
-        if any(t in low_href for t in p["href_tokens"]):
-            found.append({"how": "href token", "url": urllib.parse.urljoin(base_url, href)})
-        elif any(t in low_text for t in p["anchor_tokens"]):
-            found.append({"how": f"anchor text "
-                                 f"{low_text[:_retain(params, 'anchor_text_retained_chars')]!r}",
+        hit = next((t for t in p["href_tokens"] if t in low_href), None)
+        if hit:
+            found.append({"how": "href token", "matched_on": "href", "matched_token": hit,
+                          "anchor_text": low_text[:keep],
+                          "url": urllib.parse.urljoin(base_url, href)})
+            continue
+        # `matched_token` is recorded because the stored record could not say WHY it matched:
+        # `how` carries only the first `anchor_text_retained_chars` of the anchor while the
+        # matcher scans the whole of it, so the govdelivery pointer of
+        # `cc_tasks/2026-09-07_scan_run_2_RESULT.md` §6.1 is on the log with no recoverable
+        # reason for having been taken as a latest-vintage pointer. A matcher that cannot say
+        # why it matched leaves a Finding nobody can check.
+        hit = next((t for t in p["anchor_tokens"] if t in low_text), None)
+        if hit:
+            found.append({"how": f"anchor text {low_text[:keep]!r}", "matched_on": "anchor",
+                          "matched_token": hit, "anchor_text": low_text[:keep],
                           "url": urllib.parse.urljoin(base_url, href)})
     seen, uniq = set(), []
     for f in found:
@@ -167,12 +179,30 @@ def find_latest_pointers(body: bytes, base_url: str, headers: dict, params: dict
     return uniq[:int(p["max_pointers_followed"])]
 
 
-def follow_latest_pointer(fetcher, pointers: list, params: dict) -> dict:
+def follow_latest_pointer(fetcher, pointers: list, params: dict,
+                          surface_url: str | None = None) -> dict:
     """Dereference. The only impure function in this module, because "does it resolve" cannot
-    be answered from stored bytes."""
+    be answered from stored bytes.
+
+    **Same-host policy, via `manners.on_roster_host`** — the one function `links.probe` also
+    calls (`cc_tasks/2026-09-08_scan_harness_v4.md` §1.3). This collector previously read no
+    host policy at all, and dereferenced `public.govdelivery.com` from a Census surface. An
+    off-host pointer is now RECORDED with `off_host: true` and not fetched: the exclusion is
+    evidence, exactly as `robots_disallowed` is, and a silent `continue` would leave no way to
+    tell a policy that was applied from a pointer that was never found.
+
+    `surface_url` defaults to None only so the signature stays call-compatible with the two
+    cycles already on the log; with no surface to compare against, `on_roster_host` cannot
+    enforce anything and says so.
+    """
     p = params["a8_latest"]
     tried = []
     for ptr in pointers:
+        from .. import manners
+        if not manners.on_roster_host(ptr["url"], surface_url or "", params):
+            tried.append({**ptr, "status": None, "resolved": False, "off_host": True,
+                          "note": "off_host: not fetched, outside the surface being measured"})
+            continue
         if not fetcher.allowed(ptr["url"]):
             tried.append({**ptr, "status": None, "resolved": False,
                           "note": "robots_disallowed"})

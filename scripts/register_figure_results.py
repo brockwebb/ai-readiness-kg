@@ -117,6 +117,19 @@ def rows(cycle: str) -> list:
     ctrl = collections.defaultdict(dict)
     for f in cyc["control_findings_detail"]:
         ctrl[f["leg"]][f["target_doc_id"]] = f["verdict"]
+    # A RE-JUDGED cycle publishes no control Findings — publishing them would mean publishing
+    # the fixture Observations behind them, and a re-judgement creates no Observation — so the
+    # gate it stands on is recorded on the payload instead (`scan/rederive.control_gate_record`,
+    # `cc_tasks/2026-09-08_scan_harness_v4.md` §1.5). Same verdicts, same fixtures, same
+    # pre-registered table; a different place on the payload. Read it rather than registering
+    # fifteen zeros, which would say every rule is dead.
+    gate = cyc.get("control_gate") or {}
+    if not ctrl and gate.get("verdicts"):
+        for leg, per_fixture in gate["verdicts"].items():
+            ctrl[leg].update(per_fixture)
+    where = (f"the control gate recorded on cycle {CYCLE} ({gate.get('rule')}: "
+             f"{gate.get('verdict')})" if gate.get("verdicts") and cyc.get("cycle_kind")
+             == "rejudged" else f"cycle {CYCLE}")
     for leg in mx["legs"]:
         got = ctrl.get(leg, {})
         fired = int(got.get("control:passes_all") == "pass"
@@ -124,7 +137,7 @@ def rows(cycle: str) -> list:
         out.append((f"scan_{slug(leg)}_control_fired_{SUFFIX}", fired, "scan_run",
                     P["payload_name"],
                     f"1 when {leg}'s CURRENT rule returned `pass` on the `passes_all` fixture "
-                    f"AND `fail` on the `fails_all` fixture in cycle {CYCLE}, else 0. This is "
+                    f"AND `fail` on the `fails_all` fixture in {where}, else 0. This is "
                     f"the ceiling-and-floor check that tells a 0/23 rate apart from a rule "
                     f"that cannot return `pass` at all; a cycle with no fired control is "
                     f"invalid (DD-019). Observed: passes_all -> "

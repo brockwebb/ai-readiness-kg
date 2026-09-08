@@ -14,6 +14,7 @@ from __future__ import annotations
 
 import urllib.parse
 
+from .. import manners
 from ..errors import classify_exception, classify_status
 from ..model import Observation
 
@@ -40,21 +41,38 @@ def _classify(url: str, ctype: str, length, params: dict) -> dict:
 
 def probe(fetcher, leg: str, doc_id: str, links: list, params: dict,
           spec_code: str | None = None, page_url: str | None = None) -> list:
-    """One Observation per probed link, bounded by `link_probe.max_links_probed` and, when
-    `same_host_only`, to the product's own host."""
+    """One Observation per link: a HEAD for the ones on the product's own host, bounded by
+    `link_probe.max_links_probed`, and a fetch-free record with `parsed.off_host: true` and
+    `error_class: off_host` for the ones `manners.on_roster_host` excludes."""
     out = []
     seen = set()
-    host = urllib.parse.urlsplit(page_url or "").netloc
-    same_host_only = bool(params["link_probe"].get("same_host_only"))
+    probed = 0
     for link in links:
         href = (link.get("href") or "").split("#")[0]
         if not href.startswith("http") or href in seen:
             continue
-        if same_host_only and host and urllib.parse.urlsplit(href).netloc != host:
-            continue
         seen.add(href)
-        if len(out) >= int(params["link_probe"]["max_links_probed"]):
+        # The ONE same-host gate (`cc_tasks/2026-09-08_scan_harness_v4.md` §1.3). It used to be
+        # an inline `continue` on a `link_probe` key read here and nowhere else, which left an
+        # off-host link with NO record — so nothing could show whether the policy had been
+        # applied — while the other collector that dereferences discovered URLs
+        # (`v2clauses.follow_latest_pointer`) read no key at all and probed off-host freely.
+        if not manners.on_roster_host(href, page_url or "", params):
+            out.append(Observation.make(
+                spec_code or leg, leg, doc_id, href, "links", VERSION, params,
+                {"method": None, "url": href, "fetched": False},
+                {"status": None, "headers": {}, "body_sha256": None, "body_path": None,
+                 "bytes": 0, "elapsed_ms": 0},
+                parsed={"probe": "link", "anchor_text": link.get("text"), "off_host": True,
+                        "surface_host": urllib.parse.urlsplit(page_url or "").netloc},
+                error_class="off_host"))
+            continue
+        # The cap bounds REQUESTS, so only a link that is actually fetched spends it. Counting
+        # the off-host records against it would let a page full of outbound links shrink the
+        # number of the product's own downloads the probe ever reaches.
+        if probed >= int(params["link_probe"]["max_links_probed"]):
             break
+        probed += 1
         if not fetcher.allowed(href):
             out.append(Observation.make(
                 spec_code or leg, leg, doc_id, href, "links", VERSION, params,

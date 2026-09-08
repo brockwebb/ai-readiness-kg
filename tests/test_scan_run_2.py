@@ -312,7 +312,12 @@ def test_the_uncited_set_only_shrinks_and_only_by_citation(session):
     So the checkable property is the decomposition, not the equality: every body that left the
     set left by being CITED, never by being deleted, and the arithmetic closes exactly.
     """
-    c = retention.census(params_hash(load_params()))
+    # The cycle's OWN params_hash, off its payload — not the hash of the parameters on disk
+    # now. The two are equal only while `params.yaml` has not moved since the cycle ran, and a
+    # task that corrects a rule without re-measuring anything breaks that silently: the census
+    # holds nothing out and the decomposition stops closing, with no error to say why
+    # (`cc_tasks/2026-09-08_scan_harness_v4.md` RESULT §"premises this task got wrong").
+    c = retention.census(retention.cycle_params_hash(load_params()["cycle"]["name"]))
     row = session.run("MATCH (r:Result {name: $n}) RETURN r.value AS v",
                       n=retention.NAME).single()
     if row is None:
@@ -391,7 +396,12 @@ def test_this_cycle_re_derives_byte_identically():
     if not path.is_file():
         pytest.skip(f"{cycle} has not been run yet")
     payload = json.loads(path.read_text(encoding="utf-8"))
-    out = _rederive_module().rederive(payload, load_params())
+    # Under the params this cycle was MEASURED under, recovered from git by hash — the same
+    # rule every other re-derivation reader here follows. It used to pass `load_params()`,
+    # which is only the same thing while `params.yaml` has not moved since the cycle ran; the
+    # first task to correct a rule without re-measuring anything made it report
+    # `params_changed`, which is the guard working and reads as the gate failing.
+    out = _rederive_module().rederive(payload, _params_for(payload))
     assert out["identical"], out
 
 

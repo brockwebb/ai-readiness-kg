@@ -88,9 +88,9 @@ def test_no_collector_hides_a_constant():
 
 def test_every_parameter_the_collectors_read_exists():
     p = load_params()
-    for key in ("manners", "crawl", "a1_formats", "a4_crawlers", "a5_discovery", "a6_markup",
-                "a8_freshness", "a9_m2m", "a10_soft404", "d1_licence", "d4_catalog",
-                "f4_changelog", "g1d_uncertainty", "e5_control"):
+    for key in ("manners", "crawl", "probes", "a1_formats", "a4_crawlers", "a5_discovery",
+                "a6_markup", "a8_freshness", "a9_m2m", "a10_soft404", "d1_licence",
+                "d4_catalog", "f4_changelog", "g1d_uncertainty", "e5_control"):
         assert key in p, key
     # §2.3: the byte cap must be null unless someone explicitly sets one.
     assert p["manners"]["max_body_bytes"] is None
