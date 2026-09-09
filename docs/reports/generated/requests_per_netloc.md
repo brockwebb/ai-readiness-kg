@@ -1,0 +1,27 @@
+| Netloc | Requests |
+|---|---|
+| `bjs.ojp.gov` | 183 |
+| `catalog.data.gov` | 13 |
+| `data.gov` | 1 |
+| `data.nist.gov` | 13 |
+| `nces.ed.gov` | 62 |
+| `ncses.nsf.gov` | 184 |
+| `open.gsa.gov` | 13 |
+| `samhsa.gov` | 1 |
+| `www.aphis.usda.gov` | 62 |
+| `www.bea.gov` | 247 |
+| `www.bls.gov` | 38 |
+| `www.bts.gov` | 37 |
+| `www.cdc.gov` | 219 |
+| `www.census.gov` | 246 |
+| `www.data.gov` | 15 |
+| `www.eia.gov` | 143 |
+| `www.ers.usda.gov` | 243 |
+| `www.federalreserve.gov` | 63 |
+| `www.gsa.gov` | 15 |
+| `www.irs.gov` | 181 |
+| `www.nass.usda.gov` | 247 |
+| `www.nist.gov` | 15 |
+| `www.samhsa.gov` | 63 |
+| `www.ssa.gov` | 37 |
+| **total** | **2341** |

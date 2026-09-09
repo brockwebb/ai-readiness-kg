@@ -399,3 +399,99 @@ def test_each_legs_registered_counts_re_derive_from_the_graph(session, results):
     assert not bad, "\n".join(bad)
     assert checked_c, ("no `scan_tierc_*` Result resolved, so the Tier C half of this check "
                        "verified nothing")
+
+# ------------------------------------------------- the L0 report's matrices (report-draft §3)
+
+L0_MATRICES = ("scan_matrix_tierA", "scan_matrix_tierC", "scan_matrix_product")
+
+
+def _l0_csv(stem: str):
+    """One L0 matrix CSV, or a skip. `cc_tasks/2026-09-09_report_draft.md` §1."""
+    import csv as _csv
+    from scan.figures import config as _config
+    suffix = _config()["cycle_suffix"]
+    path = REPO / "docs" / "reports" / f"{stem}_{suffix}.csv"
+    if not path.is_file():
+        pytest.skip(f"{path.relative_to(REPO)} has not been built")
+    with path.open(encoding="utf-8") as fh:
+        return path, list(_csv.DictReader(fh))
+
+
+@pytest.mark.parametrize("stem", L0_MATRICES)
+def test_every_l0_matrix_row_re_derives_from_the_graph(session, stem):
+    """**Every cell of the published matrix, checked against the Finding it names.**
+
+    The report's whole claim is that a stranger can walk back from a cell to the bytes behind
+    it. That is only true if the cell names a Finding and the Finding says what the cell says,
+    so this reads each row's `finding_ids` column, looks the Finding up in the graph by
+    identity, and compares its verdict to the printed one. A cell whose Finding is absent from
+    the graph, or disagrees with it, fails here rather than in front of a reader.
+
+    Cells with no Finding identity are the ones that legitimately have none: `not declared` on
+    an agency with no declared flagship, and `not measured` where a surface does not exist.
+    They are counted, and a matrix in which EVERY cell lacked an identity would pass a
+    comparison that never ran, so the count of checked cells is asserted to be non-zero.
+    """
+    path, rows = _l0_csv(stem)
+    assert rows, f"{path.name} has no rows"
+    # `leg` is not a property of a :Finding in the graph; `rule_id` and `indicator_code` are.
+    # The rule id carries the leg (`RULE-A11-declared-v2`), which is the check that matters:
+    # a cell must cite a Finding of ITS OWN leg on ITS OWN surface, or the matrix is
+    # transposed somewhere and every verdict still resolves.
+    q = ("MATCH (f:Finding {finding_id: $fid}) "
+         "RETURN f.verdict AS verdict, f.rule_id AS rule_id, f.target_doc_id AS doc")
+    checked, unidentified, bad = 0, 0, []
+    for r in rows:
+        pairs = [p for p in (r.get("finding_ids") or "").split() if "=" in p]
+        by_leg = dict(p.split("=", 1) for p in pairs)
+        for col, cell in r.items():
+            if col in ("agency", "tier", "host_surface", "host_url", "candidate_surface",
+                       "surface", "url", "declared", "finding_ids",
+                       "refused_identified_client", "probes_on_host_surface"):
+                continue
+            fid = by_leg.get(col)
+            if not fid:
+                unidentified += 1
+                assert cell in ("not declared", "not measured"), (
+                    f"{path.name}: {r['agency']} {col} = {cell!r} names no Finding, and only "
+                    f"an undeclared or unmeasured cell may do that")
+                continue
+            rec = session.run(q, fid=fid).single()
+            assert rec is not None, (
+                f"{path.name}: {r['agency']} {col} cites {fid}, which is not in the graph")
+            assert rec["verdict"] == cell, (
+                f"{path.name}: {r['agency']} {col} prints {cell!r}; Finding {fid} says "
+                f"{rec['verdict']!r}")
+            assert str(rec["rule_id"]).startswith(f"RULE-{col}-"), (
+                f"{path.name}: {r['agency']} {col} cites {rec['rule_id']}, a rule for another "
+                f"leg")
+            want_doc = (r.get("candidate_surface") if col == "A12"
+                        else r.get("host_surface") or r.get("surface"))
+            assert rec["doc"] == want_doc, (
+                f"{path.name}: {r['agency']} {col} is printed against {want_doc} and cites a "
+                f"Finding on {rec['doc']}")
+            checked += 1
+    assert checked, f"{path.name}: not one cell named a Finding, so nothing was re-derived"
+    print(f"{path.name}: {checked} cells re-derived, {unidentified} with no Finding by design")
+
+
+def test_the_l0_matrices_and_the_report_agree_on_the_cycle():
+    """The three matrices and the built report describe ONE cycle.
+
+    A report assembled from a fresh matrix and a stale one would resolve every reference and
+    still be two measurements wearing one date.
+    """
+    import json as _json
+    from scan.figures import config as _config
+    suffix = _config()["cycle_suffix"]
+    report = REPO / "docs" / "reports" / f"2026-09_fss_ai_readiness_L0.md"
+    hashes = set()
+    for stem in L0_MATRICES:
+        path = REPO / "docs" / "reports" / f"{stem}_{suffix}.json"
+        if not path.is_file():
+            pytest.skip(f"{path.name} has not been built")
+        hashes.add(_json.loads(path.read_text(encoding="utf-8"))["params_hash"])
+    assert len(hashes) == 1, f"the L0 matrices span {len(hashes)} parameter sets: {hashes}"
+    if report.is_file():
+        assert hashes.pop()[:12] in report.read_text(encoding="utf-8"), (
+            "the built report does not carry the parameter hash its matrices were built under")
