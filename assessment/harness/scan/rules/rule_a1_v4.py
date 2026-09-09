@@ -45,7 +45,7 @@ def judge(observations: list, params: dict):
         return c.make(RULE_ID, LEG, obs, "error",
                       f"all {len(blind)} link(s) on this surface were unobserved "
                       f"({blind[0].error_class}); the page was served but nothing it links to "
-                      f"could be probed, so what it offers is unmeasured — not absent", params)
+                      f"could be probed, so what it offers is unmeasured — not absent", params, blind_links=len(blind) or None)
     p = params["a1_formats"]
     struct, pdf = [], []
     for o in obs:
@@ -67,10 +67,10 @@ def judge(observations: list, params: dict):
         url, how = struct[0]
         return c.make(RULE_ID, LEG, obs, "pass",
                       f"structured data SERVED at {url} ({how}); classified on the response, "
-                      f"not on the href{tail}", params)
+                      f"not on the href{tail}", params, blind_links=len(blind) or None)
     if pdf:
         return c.make(RULE_ID, LEG, obs, "fail",
-                      f"only PDF served; first: {pdf[0][0]}{tail}", params)
+                      f"only PDF served; first: {pdf[0][0]}{tail}", params, blind_links=len(blind) or None)
     return c.make(RULE_ID, LEG, obs, "fail",
                   f"no probed link serves a structured content type ({len(seen)} link(s) "
-                  f"observed){tail}", params)
+                  f"observed){tail}", params, blind_links=len(blind) or None)

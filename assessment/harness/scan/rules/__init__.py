@@ -31,7 +31,7 @@ from . import (rule_a1_v2, rule_a10_v2, rule_a11_declared_v2, rule_a2_v2, rule_a
 from . import rule_a2_v3, rule_a3_v3, rule_d1_v3, rule_f4_v3
 from . import rule_a1_v3, rule_a3_v4
 from . import rule_a8_v3, rule_a10_v3
-from . import rule_a1_v4, rule_a3_v5
+from . import rule_a1_v4, rule_a3_v5, rule_a8_v4
 from . import rule_a12
 
 #: Every version ever shipped, keyed by rule id. Never prune it: a pruned entry is a stored
@@ -71,7 +71,7 @@ V5 = [rule_a8_v3, rule_a10_v3]
 #: defect pointed the other way, and `only_errors` cannot catch it because the page observation
 #: is real. A blind link is unobserved FOR THAT LINK; all blind is `error`; some blind is judged
 #: over the rest with the blind count on the Finding. Predecessors stay in `REGISTRY`.
-V6 = [rule_a1_v4, rule_a3_v5]
+V6 = [rule_a1_v4, rule_a3_v5, rule_a8_v4]
 
 #: Rules for CANDIDATE indicators. They judge, they are recorded, and their Findings enter no
 #: numerator and no denominator (DD-054). Kept in their own list so the reporting layer can

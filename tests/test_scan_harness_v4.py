@@ -56,6 +56,14 @@ PRIOR_CYCLES = {
     "scan_2026-09-07": 437,
     "scan_2026-09-07_controls": 33,
     "scan_2026-09-07b": 469,
+    # The two re-judged payloads. This RESULT promised they would "join the set for the next
+    # task" and they did not; running them by hand under today's params reported
+    # `params_changed` — the guard working, and reading exactly like a failed gate. They belong
+    # here, where `_params_for` recovers the params they were judged under from git by hash.
+    # Their evidence lives in the cycle each names in `derived_from`
+    # (`rederive.observations_for`), so a Findings-only payload is re-derivable.
+    "scan_2026-09-07_rj1": 352,
+    "scan_2026-09-07b_rj1": 404,
 }
 
 #: The fixture whose existence IS the fix's proof. Named once, here, because three tests need
@@ -224,8 +232,14 @@ def test_the_new_generation_is_new_modules_and_its_predecessors_are_untouched():
         r = subprocess.run(["git", "diff", "--stat", "HEAD", "--", str(rel)],
                            capture_output=True, text=True, cwd=str(REPO))
         assert not r.stdout.strip(), f"{rel} was edited: {r.stdout.strip()}"
-    assert CURRENT["A10"] == "RULE-A10-v3"
-    assert CURRENT["A8"] == "RULE-A8-v3"
+    # The property is that v2 stayed put and a NEW module supersedes it, not that v3 is
+    # current forever: `RULE-A8-v4` supersedes v3 in generation 6
+    # (`cc_tasks/2026-09-08_a8_v4_blind_pointer_and_fixture_table.md`), and v3 is still in
+    # REGISTRY re-deriving cycles 1, 2 and 2-rj1.
+    for rid in ("RULE-A10-v3", "RULE-A8-v3"):
+        assert rid in REGISTRY
+    assert CURRENT["A10"].startswith("RULE-A10-v")
+    assert CURRENT["A8"].startswith("RULE-A8-v")
 
 
 # ============================================================ §1.2 the isolating fixture
@@ -543,7 +557,13 @@ def test_e5_is_never_rejudged_and_says_why(rederive_mod):
 
 
 def test_the_rejudgement_names_the_rules_that_differ_from_the_source(rederive_mod):
-    out = _rejudged(rederive_mod, "scan_2026-09-07b")
+    """Read from the PAYLOAD ON DISK, not from a re-run.
+
+    `_rejudged` re-runs `rejudge` under today's `CURRENT`, so this asserted a moving fact and
+    broke the moment A8 moved to v4 — reporting a rule advance as a regression. What the
+    payload recorded when it was written is the durable claim, and it is the one worth pinning.
+    """
+    out = json.loads((REPO / "state" / "scan_2026-09-07b_rj1.json").read_text(encoding="utf-8"))
     assert out["rules_changed_since_source"]["A10"] == {"source": "RULE-A10-v2",
                                                         "current": "RULE-A10-v3"}
     assert out["rules_changed_since_source"]["A8"] == {"source": "RULE-A8-v2",

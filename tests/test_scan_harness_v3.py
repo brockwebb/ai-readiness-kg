@@ -262,7 +262,11 @@ def test_the_current_a1_and_a3_read_the_shared_leg():
     # The superseded modules stay in REGISTRY and are still the rules their Findings re-derive
     # under; they simply are not what a new cycle judges with.
     assert {"RULE-A1-v2", "RULE-A3-v3"} <= set(REGISTRY)
-    assert CURRENT["A1"] == "RULE-A1-v3" and CURRENT["A3"] == "RULE-A3-v4"
+    # NOT pinned to a version. Which rule is CURRENT is a moving fact by design — that is
+    # what `GENERATIONS` is for, and `test_every_shipped_rule_version_stays_in_the_registry`
+    # already asserts CURRENT is the highest shipped generation for each leg. What this test
+    # owns is that whatever is current reads the SHARED leg, which the two lines above check.
+    assert CURRENT["A1"] in REGISTRY and CURRENT["A3"] in REGISTRY
 
 
 def test_a_rule_that_consumes_a_shared_leg_regroups_the_same_way_on_re_derivation():
@@ -463,5 +467,9 @@ def test_the_new_generation_is_new_modules_and_its_predecessors_are_untouched():
         r = subprocess.run(["git", "diff", "--stat", "HEAD", "--", str(rel)],
                            capture_output=True, text=True, cwd=str(REPO))
         assert not r.stdout.strip(), f"{rel} was edited: {r.stdout.strip()}"
+    # The newest generation's rules OUTRANK their predecessors; the specific version numbers
+    # are not the property this test owns. The pin ("v3", "v4") reported generation 6 — which
+    # ships RULE-A1-v4, RULE-A3-v5 and RULE-A8-v4 — as a regression.
+    # `test_every_shipped_rule_version_stays_in_the_registry` checks the ranking properly.
     for m in GENERATIONS[-1]:
-        assert parse_rule_id(m.RULE_ID)["version"] in ("v3", "v4")
+        assert parse_rule_id(m.RULE_ID)["version"].startswith("v")

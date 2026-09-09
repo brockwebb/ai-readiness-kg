@@ -1076,3 +1076,34 @@ The scanner identifies itself as `ai-readiness-kg-scanner/0.2 (+https://github.c
 Dropping a refused surface would be worse than retrying. It would quietly restrict the instrument to the agencies that let us look, which is the worst possible sampling rule for an accessibility assessment, and it would make the refusal invisible in exactly the measurement it most belongs in.
 
 **Cadence: monthly, from cycle 3, first Monday UTC**, run through the existing launchd pattern — and **only after cycle 3 validates the full frame**. No scheduler is installed by this task. The pre-flight is what a cycle is scheduled against: 19 hosts, 2 probes each, and a fresh answer to which hosts will refuse before any leg runs.
+
+---
+
+## DD-061
+
+**A control fixture's expected verdicts are DERIVED from collector dispatch, never written from rule source.**
+
+*2026-09-08. `cc_tasks/2026-09-08_a8_v4_blind_pointer_and_fixture_table.md` decision 2, from the block in `cc_tasks/2026-09-08_scan_run_3_RESULT.md` §1.*
+
+A pre-registered control table is what makes a fixture a control. It has to be written before the fixture runs, and it has to be right, and those two requirements pull against each other: the only way to know what a fixture will produce is to reason about the harness, and reasoning is where the error gets in.
+
+`resets_links_only` is the case. It resets every HEAD and serves every GET, so its table was written by reading rule source and asking which legs would be touched. The answer given was A1 and A3. It was wrong: `collectors/v2clauses.follow_latest_pointer` also dereferences with `raw_head`, so A8 was blinded too, and the table said `pass` where the harness produced `fail`. The control gate caught it and the cycle did not run — the gate did its job. But a method that produced one wrong row will produce another, so the method is retired rather than the row corrected.
+
+**The rule.** A fixture blinds an HTTP **method**; which legs issue which methods is a fact about the collectors. `assessment/harness/scan/fixture_expectations.py` reads three things from source and nothing from memory:
+
+* which collector functions each leg dispatches to — `runner.collect_leg`'s own branches, split into blocks, **with parameterised branch names resolved**: the shared link probe is selected by `if leg == lp["shared_leg"]`, and a parser reading literals names that block `lp` and loses A1 and A3 entirely;
+* which HTTP method each of those functions issues — `raw_head` / `raw_get` call sites, followed one hop into module-level helpers;
+* whether a probe is a **dereference** — a fetch of a URL discovered on the surface rather than of the surface itself, detected from the signature (a function taking `links` or `pointers` is handed URLs it did not choose). That is what `links.probe` and `follow_latest_pointer` have in common, and it is why one fixture blinds three legs.
+
+It also follows `rules.consumes`, or A1 and A3 — whose own dispatch blocks collect nothing — are deferred rather than derived, and the fixture built for them would confirm their rows by not looking at them.
+
+**What it derives and what it refuses to.** Blindness, and only blindness: a leg whose evidence a fixture makes unobservable is `error`, which is decidable. Whether a *served* surface then passes is the rule's judgement over content, which no dispatch analysis reaches, so those rows are marked `deferred` and take the checked-in table's value. Every emitted row says which it is. A script that claimed to derive `A12 = fail` on `refuses_identified_client` would be guessing with a provenance trail, which is the thing being replaced.
+
+**Neither side is edited to match the other.** A difference between the derivation and the table is a stop, reported line by line, and it is either a new blind-probe instance or a defect in the derivation. Correcting the table to match the script would be as bad as correcting the script to match the table.
+
+**Two definitions this settles**, because A8 conflated them and `RULE-A8-v3` returned `fail` on the result:
+
+* **blind** = `status is None` (the fetch raised) or the probe was never issued by policy (`robots_disallowed`). Unobserved; a verdict may not rest on it.
+* **`off_host`** = **scope, not blindness.** The scanner declined to look because the URL is outside the surface being measured. It is excluded from every count, exactly as `errors.CLASSES["off_host"]` is not blind — folding it into blindness would turn a page whose links are all outbound into `error` when the true answer is that this product offers nothing of its own.
+
+`RULE-A8-v4` implements the four-state split (resolved / observed non-resolution / blind / off-host) and reports the blind and off-host counts as **fields** on the Finding rather than in prose. Those fields are absent from the record when unset and are not inputs to `finding_id`, so no stored Finding is re-identified and every prior cycle still re-derives byte-identically.

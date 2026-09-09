@@ -122,10 +122,18 @@ def host_of(url: str) -> str:
     return rest.rsplit("@", 1)[-1].lower()
 
 
-def make(rule_id: str, leg: str, obs: list, verdict: str, reason: str, params: dict) -> Finding:
+def make(rule_id: str, leg: str, obs: list, verdict: str, reason: str, params: dict,
+         blind_links: int | None = None, blind_pointers: int | None = None) -> Finding:
+    """A Finding, with the optional blind counts a generation-6 rule reports as FIELDS.
+
+    Both default to None and are omitted from the record when unset (`model.Finding.to_dict`),
+    so every rule that does not report them produces exactly the dict it produced before they
+    existed — which is what keeps the re-derivation gate meaningful across the change.
+    """
     return Finding.make(rule_id=rule_id, rule_version=rule_version(rule_id, params), leg=leg,
                         target_doc_id=target(obs), verdict=verdict, evidence=ids(obs),
-                        reason=reason, params=params)
+                        reason=reason, params=params, blind_links=blind_links,
+                        blind_pointers=blind_pointers)
 
 
 def empty(rule_id: str, leg: str, params: dict, doc_id: str = "unknown") -> Finding:

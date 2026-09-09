@@ -413,10 +413,23 @@ e5_control:
     #                   All links blind and the page served is the exact state
     #                   `RULE-A1-v3`/`RULE-A3-v4` returned `fail` for; `RULE-A1-v4` and
     #                   `RULE-A3-v5` return `error` — unmeasured, not absent.
+    # DERIVED, not written. `assessment/harness/scan/fixture_expectations.py` reads which
+    # collectors each leg dispatches to (following `rules.consumes` for the shared link probe),
+    # which HTTP method each issues, and which methods this fixture blinds. Three legs
+    # dereference with HEAD — A1 and A3 through `links.probe`, A8 through
+    # `v2clauses.follow_latest_pointer` — so all three are `error` here.
+    #
+    # A8 was pre-registered `pass` by reading RULE source and asking which legs the fixture
+    # would touch. That method missed `follow_latest_pointer` entirely and the control gate
+    # caught it (`cc_tasks/2026-09-08_scan_run_3_RESULT.md` §1). The row below is the
+    # derivation's, and the derivation is checked against this table by
+    # `tests/test_a8_v4_and_fixture_tables.py`: a difference stops, and neither side is edited
+    # to match the other (DD-061).
     resets_links_only:
       default: "pass"
       A1: "error"
       A3: "error"
+      A8: "error"
 
 fuji:
   # NOT WIRED. The PyPI name `fuji` is a DIFFERENT package (startechsheffield, "a small

@@ -123,6 +123,19 @@ class Finding:
     evidence: list
     reason: str
     params_hash: str
+    #: How much of the evidence the rule could NOT see, as FIELDS rather than prose
+    #: (`cc_tasks/2026-09-08_a8_v4_blind_pointer_and_fixture_table.md` decision 3, closing
+    #: `cc_tasks/2026-09-08_scan_run_3_RESULT.md` §4.3: the counts lived only in the reason
+    #: string, so registering them meant parsing prose).
+    #:
+    #: **Omitted from `to_dict` when unset**, and that is what keeps history re-derivable. A
+    #: Finding recorded before these fields existed carries neither key; a re-judgement of it
+    #: under its own rule sets neither; the two dicts are equal and the byte-identical gate
+    #: still means what it meant. They are NOT inputs to `finding_id` — `make` hashes
+    #: rule_id | rule_version | target | params_hash | sorted evidence and nothing else — so no
+    #: stored Finding is re-identified by their existence.
+    blind_links: int | None = None
+    blind_pointers: int | None = None
 
     def __post_init__(self) -> None:
         if self.verdict not in VERDICTS:
@@ -130,15 +143,29 @@ class Finding:
 
     @staticmethod
     def make(rule_id: str, rule_version: str, leg: str, target_doc_id: str, verdict: str,
-             evidence: list, reason: str, params: dict, spec_code: str | None = None) -> "Finding":
+             evidence: list, reason: str, params: dict, spec_code: str | None = None,
+             blind_links: int | None = None,
+             blind_pointers: int | None = None) -> "Finding":
         ph = params_hash(params)
         ev = sorted(evidence)
+        # The id inputs are UNCHANGED by the blind counts. They describe how much the rule
+        # could see, not what it judged, and folding them in would re-identify every stored
+        # Finding the moment a rule started reporting them.
         fid = "fnd_" + sha256_bytes(
             "|".join([rule_id, rule_version, target_doc_id, ph] + ev).encode())[:24]
         return Finding(finding_id=fid, rule_id=rule_id, rule_version=rule_version,
                        spec_code=spec_code or leg.split("-")[0], leg=leg,
                        target_doc_id=target_doc_id, verdict=verdict, evidence=ev,
-                       reason=reason, params_hash=ph)
+                       reason=reason, params_hash=ph, blind_links=blind_links,
+                       blind_pointers=blind_pointers)
 
     def to_dict(self) -> dict:
-        return dataclasses.asdict(self)
+        """The record. A blind count that was never set is ABSENT, not `null`: a Finding made
+        before these fields existed must produce the same dict it produced then, or the
+        byte-identical re-derivation gate would fail for every prior cycle on a key nobody
+        wrote."""
+        d = dataclasses.asdict(self)
+        for k in ("blind_links", "blind_pointers"):
+            if d.get(k) is None:
+                d.pop(k, None)
+        return d

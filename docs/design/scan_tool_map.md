@@ -15,8 +15,8 @@ Every row is read from the harness itself: `params.yaml`, the `scan.collectors` 
 | `links` | 0.1.0 | stdlib only | `classify_exception`, `classify_status`, `probe` | A1, A3 | `RULE-A1-v4`, `RULE-A3-v5` |
 | `robots` | 0.1.0 | `protego` | `classify_exception`, `classify_status`, `fetch`, `store_evidence` | A11-declared, A12, A4, A5 | `RULE-A11-declared-v2`, `RULE-A12-v1`, `RULE-A4-v1`, `RULE-A5-v1` |
 | `sitemap` | 0.1.0 | `usp`, `xml` | `classify_exception`, `classify_status`, `fetch`, `store_evidence` | A5 | `RULE-A5-v1` |
-| `structured_data` | 0.1.0 | `extruct` | `classify_exception`, `classify_status`, `fetch`, `store_evidence` | A6, A8, D1 | `RULE-A6-v2`, `RULE-A8-v3`, `RULE-D1-v3` |
-| `v2clauses` | 0.1.0 | `jsonschema`, `pyshacl`, `rdflib` | `api_declarations`, `changelog_entries`, `find_latest_pointers`, `follow_latest_pointer` | A11-declared, A2, A6, A8, D1, D4, F4 | `RULE-A11-declared-v2`, `RULE-A2-v3`, `RULE-A6-v2`, `RULE-A8-v3`, `RULE-D1-v3`, `RULE-D4-v2`, `RULE-F4-v3` |
+| `structured_data` | 0.1.0 | `extruct` | `classify_exception`, `classify_status`, `fetch`, `store_evidence` | A6, A8, D1 | `RULE-A6-v2`, `RULE-A8-v4`, `RULE-D1-v3` |
+| `v2clauses` | 0.1.0 | `jsonschema`, `pyshacl`, `rdflib` | `api_declarations`, `changelog_entries`, `find_latest_pointers`, `follow_latest_pointer` | A11-declared, A2, A6, A8, D1, D4, F4 | `RULE-A11-declared-v2`, `RULE-A2-v3`, `RULE-A6-v2`, `RULE-A8-v4`, `RULE-D1-v3`, `RULE-D4-v2`, `RULE-F4-v3` |
 
 Evidence retained by every collector is the same and is not a per-row property: the whole response body, content-addressed under `corpus/evidence/scan/`, cited by the Observation that produced it. `manners.max_body_bytes` is `null`, so nothing is truncated (`cc_tasks/2026-09-06_harness_scaffold.md` §2.1).
 

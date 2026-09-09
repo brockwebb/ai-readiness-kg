@@ -35,7 +35,7 @@ def judge(observations: list, params: dict):
         return c.make(RULE_ID, LEG, obs, "error",
                       f"all {len(blind)} link(s) on this surface were unobserved "
                       f"({blind[0].error_class}); whether the product offers a whole-product "
-                      f"download is unmeasured, not absent", params)
+                      f"download is unmeasured, not absent", params, blind_links=len(blind) or None)
     tail = (f" ({len(blind)} of {len(on_scope)} link(s) were unobserved and are excluded)"
             if blind else "")
     links = [o for o in seen if c.served(o)]
@@ -47,19 +47,19 @@ def judge(observations: list, params: dict):
                else f"unfiltered file of {p.get('content_length')} bytes")
         return c.make(RULE_ID, LEG, obs, "pass",
                       f"whole-product download linked from the product page: "
-                      f"{o.target_url} ({how}){tail}", params)
+                      f"{o.target_url} ({how}){tail}", params, blind_links=len(blind) or None)
     filtered = [o for o in links if (o.parsed or {}).get("filtered_by_query")]
     small = [o for o in links if (o.parsed or {}).get("content_length") is not None
              and not (o.parsed or {}).get("meets_size_floor")]
     if filtered:
         return c.make(RULE_ID, LEG, obs, "fail",
                       f"{len(filtered)} download link(s) are filtered queries, not "
-                      f"whole-product downloads; first: {filtered[0].target_url}{tail}", params)
+                      f"whole-product downloads; first: {filtered[0].target_url}{tail}", params, blind_links=len(blind) or None)
     if small:
         return c.make(RULE_ID, LEG, obs, "fail",
                       f"the largest linked download is below the "
                       f"{params['a3_bulk']['min_bulk_bytes']}-byte whole-product floor; "
-                      f"first: {small[0].target_url}{tail}", params)
+                      f"first: {small[0].target_url}{tail}", params, blind_links=len(blind) or None)
     return c.make(RULE_ID, LEG, obs, "fail",
                   f"no whole-product download linked from the product page "
-                  f"({len(links)} link(s) probed){tail}", params)
+                  f"({len(links)} link(s) probed){tail}", params, blind_links=len(blind) or None)
