@@ -20,6 +20,8 @@ from __future__ import annotations
 import dataclasses
 import hashlib
 import json
+import os
+import sys
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -49,10 +51,84 @@ def params_hash(params: dict) -> str:
     return sha256_bytes(json.dumps(params, sort_keys=True, separators=(",", ":")).encode())
 
 
+#: Set by the cycle runner, and by nothing else, for the duration of a cycle. Its presence is
+#: what licenses a write into the COMMITTED evidence store.
+CYCLE_TOKEN_ENV = "AIRKG_SCAN_CYCLE"
+
+#: Where a write that is not part of a cycle goes instead. It is the same quarantine lane the
+#: sweep already uses, so the litter lands where the tool that cleans it looks.
+SCRIPT_QUARANTINE = REPO / "corpus" / "quarantine" / "evidence_scan_fixture" / "unlicensed"
+
+#: Every redirect, appended here so the redirect is a record and not a silence.
+REDIRECT_LOG = SCRIPT_QUARANTINE / "redirects.jsonl"
+
+
+#: The lane the guard protects. `corpus/evidence/` and everything under it.
+COMMITTED_EVIDENCE = REPO / "corpus" / "evidence"
+
+
+def _under_committed_store(root: Path) -> bool:
+    """Whether a write to `root` would land in the committed evidence store.
+
+    **This, and not "the caller passed no root", is the condition decision 3 states.** The
+    first implementation keyed on `root is None`, which redirected any defaulted write no
+    matter where `EVIDENCE_ROOT` pointed — so a caller that had deliberately repointed the
+    module global to a staging directory got its bytes sent to quarantine instead, and
+    `tests/conftest.py`'s autouse redirect and `--evidence-root` were both defeated by the
+    guard meant to sit beside them. A guard that fires on the wrong condition protects the
+    wrong thing.
+    """
+    try:
+        Path(root).resolve().relative_to(COMMITTED_EVIDENCE.resolve())
+        return True
+    except ValueError:
+        return False
+
+
+def _cycle_licensed() -> bool:
+    """Whether this process is the cycle runner. `run.py` sets the token; nothing else does."""
+    return bool(os.environ.get(CYCLE_TOKEN_ENV))
+
+
+def _redirect_root(root: Path, why: str) -> Path:
+    """Send an unlicensed write to quarantine and LOG that it was sent.
+
+    `cc_tasks/2026-09-09_manners_closeout.md` decision 3. `corpus/evidence/scan/` is the one
+    `corpus/` lane the repo commits, and twice in two consecutive tasks a fixture driver run
+    from a script filled it with loopback bodies that no Observation cited. The standing guard
+    is `tests/conftest.py`, which redirects the store under pytest and cannot see a script.
+
+    A refusal would have been the wrong shape: the caller is usually a collector deep inside a
+    driver, it has no way to choose another root, and raising would turn "you wrote litter"
+    into "your script crashed". Redirecting keeps the driver working and puts the bytes where
+    the sweep already looks; logging is what stops the redirect being a silence.
+    """
+    SCRIPT_QUARANTINE.mkdir(parents=True, exist_ok=True)
+    rec = {"at": datetime.now(timezone.utc).isoformat(),
+           "requested_root": str(root), "redirected_to": str(SCRIPT_QUARANTINE),
+           "why": why, "argv": " ".join(sys.argv)[:400]}
+    with REDIRECT_LOG.open("a", encoding="utf-8") as fh:
+        fh.write(json.dumps(rec, sort_keys=True) + "\n")
+    return SCRIPT_QUARANTINE
+
+
 def store_evidence(body: bytes, root: Path | None = None) -> tuple:
     """(sha256, path-relative-to-repo). Content-addressed, so identical bodies are stored once
-    and a stored body can always be verified against the hash a Finding cites."""
-    root = root or EVIDENCE_ROOT
+    and a stored body can always be verified against the hash a Finding cites.
+
+    **A write into the committed store requires a cycle** (decision 3). The guard fires on
+    where the bytes would LAND, not on whether the caller named a root: a write aimed at
+    `corpus/evidence/` from a process the cycle runner did not start is redirected to
+    quarantine and the redirect is logged. A root pointing anywhere else — a staging
+    directory, a tmp_path, whatever `tests/conftest.py` substitutes — is honoured untouched,
+    because there is nothing there to protect.
+    """
+    chosen = root or EVIDENCE_ROOT
+    if _under_committed_store(chosen) and not _cycle_licensed():
+        chosen = _redirect_root(
+            chosen, f"no {CYCLE_TOKEN_ENV} in the environment: this write is not part of a "
+                    f"scan cycle, and only the cycle runner may add to the committed store")
+    root = chosen
     digest = sha256_bytes(body)
     path = root / digest[:2] / digest
     path.parent.mkdir(parents=True, exist_ok=True)

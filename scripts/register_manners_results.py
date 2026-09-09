@@ -31,7 +31,7 @@ sys.path.insert(0, str(REPO / "scripts"))
 
 import cycle_results                                                # noqa: E402
 from scan import errors, load_params                                # noqa: E402
-from scan.manners import psl_identity, same_site, site_of           # noqa: E402
+from scan.manners import same_site, site_key                        # noqa: E402
 
 TASK = "cc_tasks/2026-09-09_closeout_and_manners.md"
 SCRIPT_ARTIFACT = "register_manners_results"
@@ -71,6 +71,12 @@ def replay(cycle: str) -> dict:
             robots_read.add(netloc)
     unread = sorted(set(first) - robots_read)
     would_add = sorted(first[n] for n in unread)
+    # OFF-SITE FETCHES: requests to a netloc that domain-matches no roster site key. Under
+    # DD-063 those are the requests the unified bound forbids outright, as against the ones it
+    # merely makes polite. Cycle 3 has none, which is the claim being registered.
+    keys = {h["site_key"] for h in json.loads(
+        (REPO / "state" / "scan_targets_fss_2026-09.json").read_text(encoding="utf-8"))["hosts"]}
+    off_site = sorted(n for n in first if not any(same_site(n, k) for k in keys))
     # Refused only if the declared URL is on ANOTHER site from the host that declared it.
     # Both of cycle 3's are same-site, which is why this comes out empty.
     would_refuse = [u for u in would_add
@@ -78,7 +84,9 @@ def replay(cycle: str) -> dict:
     return {"requests_issued": issued, "netlocs_contacted": len(first),
             "netlocs_with_robots_read": len(robots_read),
             "robots_reads_added": len(would_add), "added_urls": would_add,
-            "requests_refused": len(would_refuse), "refused_urls": would_refuse}
+            "requests_refused": len(would_refuse), "refused_urls": would_refuse,
+            "off_site_fetches": len(off_site), "off_site_netlocs": off_site,
+            "site_keys": len(keys)}
 
 
 def ensure_script(dry: bool) -> None:
@@ -108,16 +116,19 @@ def ensure_targets_v3(params: dict, dry: bool) -> str:
     if not found:
         desc = (
             f"The cycle-3 frame's target list, VERSION {doc['targets_version']}, derived_from "
-            f"version {doc['derived_from_version']} ({prev}). The ROWS are byte-identical to "
-            f"v2; what v3 adds is the SITE each host belongs to, the registrable domain under "
-            f"the Public Suffix List (DD-062, decision 2). The three counts are published "
-            f"separately and none stands in for another: {doc['site_count']} sites (the "
-            f"CONTACT unit), {doc['netloc_count']} netlocs, {doc['host_count']} bodies (the "
-            f"DENOMINATOR, decision 4). The site bound is wider than the netloc bound it "
-            f"replaces: {', '.join(sorted(doc['sites']))} — three recognized agencies share "
-            f"usda.gov, and each Tier C body's home and machine entry point are one site. "
-            f"Resolved offline; `site_bound` records the resolver, its version and the list "
-            f"snapshot's digest. Written by scripts/build_fss_targets.py. Task {TASK}.")
+            f"version {doc['derived_from_version']} ({prev}). The ROWS are byte-identical "
+            f"across every version since v2; what v4 carries is a `site_key` per host, the "
+            f"roster host with one leading `www.` stripped (DD-063, superseding DD-062's "
+            f"registrable-domain definition). The three counts are published separately and "
+            f"none stands in for another: {doc['site_count']} SITE KEYS (the contact unit), "
+            f"{doc['netloc_count']} netlocs, {doc['host_count']} bodies (the denominator). "
+            f"One key per body, and every netloc in the frame domain-matches exactly one of "
+            f"them by RFC 6265 §5.1.3. A Tier C machine entry point takes its BODY's key, so "
+            f"catalog.data.gov is a netloc on the data.gov site rather than a twentieth. v3 "
+            f"used the Public Suffix List and reported 17 sites, merging ERS, NASS and APHIS "
+            f"into usda.gov and admitting every netloc under a department domain; no suffix "
+            f"list is consulted now. Keys: {', '.join(sorted(doc['site_keys']))}. Written by "
+            f"scripts/build_fss_targets.py. Task {TASK}.")
         r = subprocess.run(["seldon", "artifact", "create", "DataFile", "--actor", "cc",
                             "-p", f"name={name}", "-p",
                             f"path=state/{params['cycle']['targets']}.json",
@@ -143,25 +154,28 @@ def main(argv=None) -> int:
     cycle = params["cycle"]["name"]
     doc = targets(params)
     rp = replay(cycle)
-    psl = psl_identity()
 
     ensure_script(a.dry_run)
     v3 = ensure_targets_v3(params, a.dry_run)
 
     batches = [
         (FRAME_EPOCH, f"{params['cycle']['targets']}_v{doc['targets_version']}", [
-            ("fss_scan_sites", doc["site_count"],
-             f"Distinct SITES on the cycle-3 target list: registrable domains under the Public "
-             f"Suffix List, which is the contact unit under DD-062 decision 2. "
-             f"{doc['site_count']} sites for {doc['netloc_count']} netlocs and "
-             f"{doc['host_count']} bodies, and the three are deliberately different numbers: "
-             f"the site is what bounds contact, the body is what denominates every rate "
-             f"(decision 4). The bound is WIDER than the netlocs it replaces — "
-             f"www.ers.usda.gov, www.nass.usda.gov and www.aphis.usda.gov are one site, and "
-             f"every netloc under a roster site is in scope. Resolved offline with "
-             f"{psl['resolver']} {psl['version']}, list snapshot "
-             f"{(psl['snapshot_sha256'] or '')[:12]}...; the bundled list carries no date. "
-             f"Task {TASK}."),
+            # A NEW NAME, not a re-binding. `fss_scan_sites_2026-09` is bound at 17 under
+            # DD-062's registrable-domain definition and a Result name is bound once
+            # (AD-028); the count moved because the DEFINITION moved, so the new definition
+            # gets its own name and the old Result keeps meaning what it meant.
+            ("fss_scan_site_keys", doc["site_count"],
+             f"Distinct SITE KEYS on the cycle-3 target list: each roster host with one "
+             f"leading `www.` stripped, which is the contact unit under DD-063. "
+             f"{doc['site_count']} keys for {doc['netloc_count']} netlocs and "
+             f"{doc['host_count']} bodies — one key per body, and every netloc in the frame "
+             f"domain-matches exactly one of them (RFC 6265 §5.1.3). A Tier C machine entry "
+             f"point takes its BODY's key, so catalog.data.gov is a netloc on the data.gov "
+             f"site rather than a twentieth. SUPERSEDES fss_scan_sites_2026-09 = 17, which "
+             f"counted registrable domains under the Public Suffix List and merged "
+             f"www.ers.usda.gov, www.nass.usda.gov and www.aphis.usda.gov into usda.gov while "
+             f"admitting every netloc under a department domain. That Result is not re-bound "
+             f"and still describes what it measured. Task {TASK}."),
         ]),
         (cycle, cycle, [
             ("scan_manners_netlocs_contacted_without_robots_read", rp["robots_reads_added"],
@@ -181,6 +195,13 @@ def main(argv=None) -> int:
              f"robots.txt read. The new policy refuses nothing on this log and adds "
              f"{rp['robots_reads_added']} reads. Registered at its measured value because "
              f"'refused none' is the finding. Task {TASK} §3."),
+            ("scan_manners_off_site_fetches", rp["off_site_fetches"],
+             f"Requests cycle {cycle} issued to a netloc that domain-matches NO roster site "
+             f"key: {rp['off_site_netlocs'] or 'none'}. Under DD-063 these are the requests "
+             f"the unified contact bound forbids outright, as against the ones it merely makes "
+             f"polite; the two apex sitemap GETs are the second kind, because samhsa.gov and "
+             f"data.gov each domain-match a key. Measured over the {rp['site_keys']} keys the "
+             f"target list carries. Task {TASK} §3."),
             ("scan_manners_netlocs_contacted", rp["netlocs_contacted"],
              f"Netlocs cycle {cycle} actually issued at least one request to, replayed from "
              f"the observation log rather than from the per-host counter, and agreeing with "
@@ -192,7 +213,7 @@ def main(argv=None) -> int:
     if a.dry_run:
         print(json.dumps({"replay": rp, "sites": doc["site_count"],
                           "netlocs": doc["netloc_count"], "bodies": doc["host_count"],
-                          "targets_v3": v3}, indent=1))
+                          "targets_v4": v3}, indent=1))
         for ep, data, rows in batches:
             for base, v, _n in rows:
                 print(f"  {cycle_results.name_for(base, ep):58s} {v}   <- {data}")

@@ -1136,3 +1136,29 @@ A disallowed URL now raises `errors.RobotsDisallowed` rather than returning, and
 `RULE-A5-v2` is the consequence and it is the fifth instance of DD-052 §6. Under v1 a host that declares a sitemap we decline to fetch has "no discovery file served" and **fails** — which reports the scanner's own bound as the product's omission. v2 returns `not_applicable` with the declaring site on the Finding. Not `error`: the collector observed exactly what there was to observe, which is a declaration naming somebody else's site. Nothing failed and nothing was blind; the measurement does not apply. The branch decides only when nothing else does, so an off-site declaration alongside a served same-site sitemap that covers the product is still a `pass`.
 
 **What the derivation had to learn.** `fixture_expectations.py` derived blindness and nothing else, so it could not see any of this: a fixture makes a leg blind, and no fact about blindness says whether a request was polite. It now also derives, from source, whether the fetcher gates every request and which collectors issue one without a gate. The invariant needs no pre-registered table and has no threshold — **the set is empty** — because a request no collector gates is a request the fetcher must. `declared_sitemaps` joined `links` and `pointers` as a dereference parameter, which is what made A5's probe visible to the derivation at all.
+
+---
+
+## DD-063
+
+**A site is a roster host with one leading `www.` stripped. One contact policy governs links and declarations alike. A script cannot write into the committed evidence store.**
+
+*2026-09-09. `cc_tasks/2026-09-09_manners_closeout.md` decisions 1 to 3, from the consequences recorded in `cc_tasks/2026-09-09_closeout_and_manners_RESULT.md` §5 item 6.*
+
+**DD-062's site definition is superseded, and it stood for one task.** It said a site is the registrable domain under the Public Suffix List, which is the WHATWG "same site" test, and that is a correct definition of a different thing. Applied to this frame it gave `usda.gov` for `www.ers.usda.gov`, `ed.gov` for `nces.ed.gov` and `ojp.gov` for `bjs.ojp.gov`: 22 netlocs collapsed to **17** sites, three separately recognized statistical agencies became one contact unit, and every netloc under a department domain came into scope. The registrable domain is the right unit for cookie scope and the wrong one for "which host is this agency". A decision superseded before a cycle ever ran under it is worth naming as that rather than folding into a progression.
+
+**1. The site key.** The roster host IS the unit; the key is that host with **one** leading `www.` stripped. One, not every leading label, because stripping labels is exactly what produced `ed.gov` from `nces.ed.gov`. A netloc belongs to the site if it equals the key or ends with `.` + the key.
+
+*Prior art, adopted rather than invented:* **RFC 6265 §5.1.3** domain-matching — a string domain-matches a domain string if they are identical, or the string is a suffix of it and the character immediately preceding the match is `%x2E` (`.`). That is the test a cookie uses to decide whether it may be sent to a host, and it is the same question asked here. The dot is what makes `evilsamhsa.gov` fail against `samhsa.gov`, and both negative cases are pinned in the tests.
+
+The frame now carries **19 site keys for 19 bodies**, and every one of its 22 netlocs domain-matches exactly one. A Tier C machine entry point takes its **body's** key rather than its own — `catalog.data.gov` is a netloc on the `data.gov` site — because keying it to itself would report 22 sites for 19 bodies and quietly re-create the netloc bound this decision replaces. **No suffix-list dependency remains**, and a test asserts that over source, because an unused import is how a dependency survives the decision that retired it.
+
+**2. One contact policy.** `manners.on_roster_host` compared netlocs for equality while `collectors/sitemap.fetch` compared declared URLs by site. Two contact policies wearing one name, under which a sibling netloc was off-limits to a link and reachable through a `Sitemap:` line. Both now delegate to the same `same_site`, so links, latest-vintage pointers and sitemap declarations agree by construction rather than by coincidence. `params.manners.site_bound` states the definition and the match rule and carries `resolver: null`.
+
+**3. A write into the committed evidence store requires a cycle.** `corpus/evidence/scan/` is the one `corpus/` lane the repo commits, and twice in two consecutive tasks a fixture driver run from a script filled it with loopback bodies no Observation cited. The standing guard is `tests/conftest.py`, which redirects the store under pytest and **cannot see a script**.
+
+`model.store_evidence` now writes to the committed store only when `AIRKG_SCAN_CYCLE` is set, and only `run.py::main` sets it. Three properties, each tested:
+
+* An explicit `root` is **always** honoured. A caller that named a staging directory has already chosen; the guard is about the caller that did not.
+* An unlicensed write is **redirected to quarantine and logged**, not refused. The caller is usually a collector deep inside a driver with no way to choose another root; raising would turn "you wrote litter" into "your script crashed". Logging is what stops the redirect being a silence.
+* The token is set in `main`, **not at import**, so importing the runner to reach `run_surface` or `targets` from a driver licenses nothing. Every occurrence of this defect began with such an import, and an import-time token would have licensed exactly those.

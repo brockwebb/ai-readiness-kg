@@ -75,6 +75,35 @@ When a Desktop session registers a cc_task, it must end that turn by giving the 
 
 Rules for CC when dispatched this way: read every addendum before any step (a task whose addendum says SUPERSEDED is not executed — stop and report); honor the task's own SEQUENCING line; write the RESULT, run `seldon cc complete`, commit and push. Rules for Desktop: never end a registration turn without the dispatch line; sequencing constraints between queued tasks are stated in the dispatch line, not assumed.
 
+### The RESULT waits for the suite (operator-ordered, 2026-09-09)
+
+**No RESULT file is created until the full suite, `seldon verify` and the protected-paths diff have run to completion and their output is on disk.** The RESULT is then written from that output.
+
+**A placeholder is never written into a RESULT.** Not `<SUITE>`, not `<VERIFY>`, not `<PROTECTED>`, not any other. A RESULT is the execution record; a placeholder in one is a claim nobody has checked, sitting in the place a reader looks for the check. Three consecutive tasks shipped a RESULT with unfilled placeholders and each needed a following task to close it out, which is how `cc_tasks/2026-09-09_manners_closeout.md` came to exist. There is no RESULT template in this repo, so there was no template to fix: the habit was the defect.
+
+If the session cannot reach the end of the gate, **the RESULT is still written** and its first section says in words at which line it stopped and why — "suite not run", "stopped at §2 on a blocked dependency" — never a placeholder standing in for a result that does not exist yet.
+
+### Long-running commands (operator-ordered, 2026-09-09)
+
+**Any command that can run longer than two minutes is started detached, logged to a file, and polled to completion.** The full suite, a scan cycle, a projection and a control gate all qualify.
+
+```bash
+mkdir -p logs
+nohup <cmd> > logs/<name>.log 2>&1 &            # record the PID
+# ... then, in repeated tool calls, until the process has exited:
+sleep 240; tail -5 logs/<name>.log
+```
+
+Append `; echo EXIT=$? >> logs/<name>.log` to the command itself, so the log carries the exit code and a reader never has to infer success from the absence of a traceback.
+
+Three rules that are the point of it:
+
+* **Do not end the turn while a required command is still running.** Poll.
+* **Do not write the RESULT until the log shows `EXIT=0`** for the full suite, `seldon verify` and the protected-paths diff.
+* **Cite the log paths in RESULT §6.** A verification section that quotes a number without saying where the number can be re-read is the same defect as a placeholder: it asks the reader to trust the summary instead of the run.
+
+`logs/` is gitignored, so the log is a local artifact the session can point at and not something that ships. What ships is the RESULT that quotes it.
+
 ## Desktop session protocol (operator-ordered, 2026-09-07)
 
 **Resume.** A new Desktop thread starts with the exact line from the newest file in `handoffs/` (absolute path, always):

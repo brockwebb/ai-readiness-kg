@@ -15,7 +15,7 @@ from __future__ import annotations
 import urllib.parse
 
 from ..errors import classify_exception, classify_status
-from ..manners import same_site, site_of
+from ..manners import same_site, site_key
 from ..model import Observation, store_evidence
 
 VERSION = "0.1.0"
@@ -50,8 +50,8 @@ def fetch(fetcher, leg: str, doc_id: str, product_url: str, params: dict,
                 parsed={"present": None, "served_content_type": None,
                         "wrong_content_type": None, "kind": "sitemap",
                         "covers_product": None, "url_count": None,
-                        "declared_by": base, "declared_site": site_of(product_url),
-                        "sitemap_site": site_of(url)},
+                        "declared_by": base, "declared_site": site_key(product_url),
+                        "sitemap_site": site_key(url)},
                 error_class="sitemap_off_site"))
             continue
         try:

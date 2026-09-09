@@ -345,6 +345,15 @@ def merge_controls(payload_path: Path, params: dict) -> int:
 
 
 def main(argv=None) -> int:
+    # THE CYCLE LICENCE (`cc_tasks/2026-09-09_manners_closeout.md` decision 3). Only this
+    # entry point may add to the committed evidence store, and it says so by setting the
+    # token `model.store_evidence` looks for. Set here rather than at import, so importing
+    # this module to reach `run_surface` or `targets` from a driver does NOT license writes:
+    # every fixture driver that filled `corpus/evidence/scan/` with loopback bodies did it by
+    # importing collectors, and an import-time token would have licensed exactly those.
+    import os
+    from scan.model import CYCLE_TOKEN_ENV
+    os.environ[CYCLE_TOKEN_ENV] = "1"
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--controls-only", action="store_true")
     ap.add_argument("--smoke", action="store_true")

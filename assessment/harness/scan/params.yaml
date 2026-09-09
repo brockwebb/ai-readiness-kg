@@ -81,22 +81,20 @@ manners:
   # No byte cap by default. §2.1: whole body retained, no truncation anywhere. A cap must be
   # set explicitly to exist, and setting one is a decision that shows up in params_hash.
   max_body_bytes: null
-  # The contact bound is the SITE, not the netloc (DD-062, decision 2). A site is the
-  # registrable domain under the Public Suffix List, which is the same test the WHATWG URL and
-  # Fetch standards use for "same site" and which puts `www.samhsa.gov` and `samhsa.gov`
-  # together. Resolved offline: `tldextract` is configured with no suffix-list URLs, because a
-  # resolver that fetched the list over the network would falsify this harness's own account
-  # of which hosts a cycle contacted.
+  # The contact bound is the SITE, and a site is a ROSTER HOST with one leading `www.`
+  # stripped (DD-063, superseding DD-062's registrable-domain definition). A netloc belongs to
+  # the site if it equals the key or ends with `.` + the key, which is RFC 6265 §5.1.3
+  # domain-matching, adopted rather than invented.
   #
-  # `snapshot_date` is null because the bundled list carries no date. The version and the
-  # snapshot's digest identify it exactly; an mtime would be the install time wearing the
-  # look of provenance. Read by `manners.psl_identity()`, which recomputes the digest, so a
-  # value here that stopped matching the installed package is a difference a test can see.
+  # DD-062 used the Public Suffix List and it answered a different question: `www.ers.usda.gov`
+  # resolved to `usda.gov`, `nces.ed.gov` to `ed.gov`, so 22 netlocs became 17 sites, three
+  # separately recognized agencies became one contact unit, and whole department domains came
+  # into scope. The registrable domain is right for cookie scope and wrong for "which host is
+  # this agency". No suffix list is consulted and no such dependency remains.
   site_bound:
-    resolver: "tldextract"
-    version: "3.2.0"
-    snapshot_sha256: "e86b831f26b65b20a18e78f848db04fe380ac13c2680af12305cda2395b3c71f"
-    snapshot_date: null
+    definition: "roster host with one leading www. stripped"
+    match: "equal to the key, or ending in '.' + the key (RFC 6265 §5.1.3)"
+    resolver: null
   # Statuses at which we did not OBSERVE the surface, we were REFUSED it. A 404 is a real
   # measurement (the path is not served); a 403/401/429 is the host declining this client, and
   # scoring it `fail` publishes an absence claim about a product nobody was allowed to look at.

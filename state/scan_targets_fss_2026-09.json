@@ -2,10 +2,10 @@
  "task": "cc_tasks/2026-09-08_scan_run_3b.md",
  "supersedes_task": "cc_tasks/2026-09-08_scan_frame_fss.md",
  "addendum": "cc_tasks/2026-09-08_scan_frame_fss_ADDENDUM-05.md",
- "targets_version": 3,
- "derived_from_version": 2,
+ "targets_version": 4,
+ "derived_from_version": 3,
  "epoch": "scan-fss-2026-09",
- "generated_at": "2026-09-09T14:43:20.029335+00:00",
+ "generated_at": "2026-09-09T18:46:13.536677+00:00",
  "derived_from": "fss_roster_2026-09",
  "source_type": "product_surface",
  "construct_arm": "publication_actionability",
@@ -14,167 +14,166 @@
  "tier_c_hosts": 3,
  "tier_c_netlocs": 6,
  "site_bound": {
-  "resolver": "tldextract",
-  "version": "3.2.0",
-  "snapshot_sha256": "e86b831f26b65b20a18e78f848db04fe380ac13c2680af12305cda2395b3c71f",
-  "snapshot_date": null,
-  "snapshot_date_note": "the bundled Public Suffix List snapshot carries no date; version and digest identify it"
+  "definition": "roster host with one leading www. stripped",
+  "match": "equal to the key, or ending in '.' + the key (RFC 6265 \u00a75.1.3)"
  },
- "sites": [
+ "site_keys": [
+  "aphis.usda.gov",
   "bea.gov",
+  "bjs.ojp.gov",
   "bls.gov",
   "bts.gov",
   "cdc.gov",
   "census.gov",
   "data.gov",
-  "ed.gov",
   "eia.gov",
+  "ers.usda.gov",
   "federalreserve.gov",
   "gsa.gov",
   "irs.gov",
+  "nass.usda.gov",
+  "nces.ed.gov",
+  "ncses.nsf.gov",
   "nist.gov",
-  "nsf.gov",
-  "ojp.gov",
   "samhsa.gov",
-  "ssa.gov",
-  "usda.gov"
+  "ssa.gov"
  ],
- "site_count": 17,
+ "site_count": 19,
  "hosts": [
   {
    "host": "www.federalreserve.gov",
    "tier": "A",
    "agency": "DRSMSU",
-   "site": "federalreserve.gov"
+   "site_key": "federalreserve.gov"
   },
   {
    "host": "www.ers.usda.gov",
    "tier": "A",
    "agency": "ERS",
-   "site": "usda.gov"
+   "site_key": "ers.usda.gov"
   },
   {
    "host": "www.nass.usda.gov",
    "tier": "A",
    "agency": "NASS",
-   "site": "usda.gov"
+   "site_key": "nass.usda.gov"
   },
   {
    "host": "www.aphis.usda.gov",
    "tier": "A",
    "agency": "NAHMSAPHIS",
-   "site": "usda.gov"
+   "site_key": "aphis.usda.gov"
   },
   {
    "host": "www.bea.gov",
    "tier": "A",
    "agency": "BEA",
-   "site": "bea.gov"
+   "site_key": "bea.gov"
   },
   {
    "host": "www.census.gov",
    "tier": "A",
    "agency": "CENSUS",
-   "site": "census.gov"
+   "site_key": "census.gov"
   },
   {
    "host": "nces.ed.gov",
    "tier": "A",
    "agency": "NCES",
-   "site": "ed.gov"
+   "site_key": "nces.ed.gov"
   },
   {
    "host": "www.eia.gov",
    "tier": "A",
    "agency": "EIA",
-   "site": "eia.gov"
+   "site_key": "eia.gov"
   },
   {
    "host": "www.cdc.gov",
    "tier": "A",
    "agency": "NCHS",
-   "site": "cdc.gov"
+   "site_key": "cdc.gov"
   },
   {
    "host": "www.samhsa.gov",
    "tier": "A",
    "agency": "SAMHSACBHS",
-   "site": "samhsa.gov"
+   "site_key": "samhsa.gov"
   },
   {
    "host": "bjs.ojp.gov",
    "tier": "A",
    "agency": "BJS",
-   "site": "ojp.gov"
+   "site_key": "bjs.ojp.gov"
   },
   {
    "host": "www.bls.gov",
    "tier": "A",
    "agency": "BLS",
-   "site": "bls.gov"
+   "site_key": "bls.gov"
   },
   {
    "host": "www.irs.gov",
    "tier": "A",
    "agency": "SOI",
-   "site": "irs.gov"
+   "site_key": "irs.gov"
   },
   {
    "host": "www.bts.gov",
    "tier": "A",
    "agency": "BTS",
-   "site": "bts.gov"
+   "site_key": "bts.gov"
   },
   {
    "host": "ncses.nsf.gov",
    "tier": "A",
    "agency": "NCSES",
-   "site": "nsf.gov"
+   "site_key": "ncses.nsf.gov"
   },
   {
    "host": "www.ssa.gov",
    "tier": "A",
    "agency": "ORES",
-   "site": "ssa.gov"
+   "site_key": "ssa.gov"
   },
   {
    "host": "www.data.gov",
    "tier": "C",
    "agency": "data.gov",
-   "site": "data.gov"
+   "site_key": "data.gov"
   },
   {
    "host": "catalog.data.gov",
    "tier": "C",
    "agency": "data.gov",
    "netloc_of": "www.data.gov",
-   "site": "data.gov"
+   "site_key": "data.gov"
   },
   {
    "host": "www.nist.gov",
    "tier": "C",
    "agency": "NIST",
-   "site": "nist.gov"
+   "site_key": "nist.gov"
   },
   {
    "host": "data.nist.gov",
    "tier": "C",
    "agency": "NIST",
    "netloc_of": "www.nist.gov",
-   "site": "nist.gov"
+   "site_key": "nist.gov"
   },
   {
    "host": "www.gsa.gov",
    "tier": "C",
    "agency": "GSA",
-   "site": "gsa.gov"
+   "site_key": "gsa.gov"
   },
   {
    "host": "open.gsa.gov",
    "tier": "C",
    "agency": "GSA",
    "netloc_of": "www.gsa.gov",
-   "site": "gsa.gov"
+   "site_key": "gsa.gov"
   }
  ],
  "netloc_count": 22,

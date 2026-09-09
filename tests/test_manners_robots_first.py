@@ -25,7 +25,8 @@ sys.path.insert(0, str(REPO / "assessment" / "harness"))
 from scan import load_params                                        # noqa: E402
 from scan.errors import RobotsDisallowed                            # noqa: E402
 from scan.fixtures.server import FixtureServer                      # noqa: E402
-from scan.manners import Fetcher, psl_identity, same_site, site_of  # noqa: E402
+from scan.manners import (Fetcher, netloc_of, same_site,            # noqa: E402
+                          site_key)
 from scan.collectors import robots as robots_col                    # noqa: E402
 from scan.collectors import sitemap as sitemap_col                  # noqa: E402
 
@@ -42,37 +43,72 @@ def _declared(fetcher, base, params):
 
 # ------------------------------------------------------------------ decision 2: the site
 
-def test_a_site_is_the_registrable_domain_and_the_port_is_not_part_of_it():
-    """The WHATWG "same site" test: scheme plus registrable domain, port excluded. This is
-    what makes `www.samhsa.gov` and `samhsa.gov` one site, which is the relation the cycle-3
-    defect ran along."""
-    assert site_of("https://www.samhsa.gov/x") == "samhsa.gov"
-    assert site_of("https://samhsa.gov/sitemap.xml") == "samhsa.gov"
-    assert same_site("https://www.samhsa.gov/x", "https://samhsa.gov/sitemap.xml")
-    # Two ports of one IP literal are one site: an IP has no registrable domain, so the host
-    # itself is the key. The loopback fixture depends on this being true.
-    assert same_site("http://127.0.0.1:1/", "http://127.0.0.1:2/sitemap.xml")
-    assert not same_site("https://www.bls.gov/", "https://example.org/sitemap.xml")
-    # A body's own subdomain is the same site as its department domain, which WIDENS the
-    # contact bound. Asserted so the widening is visible rather than discovered later.
-    assert site_of("https://www.ers.usda.gov/") == site_of("https://www.nass.usda.gov/")
+def test_a_site_key_is_the_roster_host_with_one_www_stripped():
+    """DD-063 decision 1. ONE leading `www.`, and nothing else: stripping every leading label
+    is what turned `nces.ed.gov` into `ed.gov` under the superseded definition."""
+    assert site_key("https://www.samhsa.gov/x") == "samhsa.gov"
+    assert site_key("https://samhsa.gov/sitemap.xml") == "samhsa.gov"
+    assert site_key("nces.ed.gov") == "nces.ed.gov"
+    assert site_key("bjs.ojp.gov") == "bjs.ojp.gov"
+    assert site_key("https://www.ers.usda.gov/") == "ers.usda.gov"
+    assert netloc_of("https://user@www.bls.gov:443/x") == "www.bls.gov"
 
 
-def test_the_suffix_list_is_resolved_offline_and_identified_in_params():
-    """A resolver that fetched the Public Suffix List over the network would falsify this
-    harness's account of which hosts a cycle contacted, in the one module whose subject is
-    exactly that. The identity is registered so a silent package upgrade is visible."""
-    declared = load_params()["manners"]["site_bound"]
-    live = psl_identity()
-    assert declared["resolver"] == live["resolver"] == "tldextract"
-    assert declared["version"] == live["version"], (
-        "the installed tldextract is not the version params declares; the site bound moved "
-        "without anyone registering it")
-    assert declared["snapshot_sha256"] == live["snapshot_sha256"], (
-        "the Public Suffix List snapshot changed under the same version")
-    assert declared["snapshot_date"] is None, (
-        "the bundled list carries no date; a date here would be an mtime wearing the look of "
-        "provenance")
+@pytest.mark.parametrize("netloc,roster_host,want", [
+    # Every consequence decision 1 lists, by name.
+    ("samhsa.gov", "www.samhsa.gov", True),
+    ("catalog.data.gov", "www.data.gov", True),
+    ("nass.usda.gov", "www.ers.usda.gov", False),
+    ("www.usda.gov", "www.ers.usda.gov", False),
+    # And the three the superseded PSL definition got wrong in the other direction.
+    ("data.nist.gov", "www.nist.gov", True),
+    ("open.gsa.gov", "www.gsa.gov", True),
+    ("ies.ed.gov", "nces.ed.gov", False),
+    ("www.ojp.gov", "bjs.ojp.gov", False),
+    # Suffix matching is on a LABEL boundary, not a substring: RFC 6265 §5.1.3.
+    ("evilsamhsa.gov", "www.samhsa.gov", False),
+    ("samhsa.gov.attacker.test", "www.samhsa.gov", False),
+])
+def test_same_site_is_rfc_6265_domain_matching(netloc, roster_host, want):
+    """Prior art adopted, not invented: a string domain-matches a domain string if they are
+    identical, or the string is a suffix of it and the character before the match is a dot.
+    The two negative cases at the end are why the dot is in the test."""
+    assert same_site(netloc, roster_host) is want
+
+
+def test_the_frame_has_one_site_key_per_body():
+    """The count decision 1 predicts, over the real target list: 19 keys for 19 bodies, and
+    every netloc in the frame belongs to exactly one of them. A Tier C machine entry point
+    takes its BODY's key, so `catalog.data.gov` does not become a twentieth site."""
+    import json as _json
+    doc = _json.loads((REPO / "state" / "scan_targets_fss_2026-09.json")
+                      .read_text(encoding="utf-8"))
+    assert doc["targets_version"] >= 4
+    keys = {h["site_key"] for h in doc["hosts"]}
+    bodies = {h.get("netloc_of") or h["host"] for h in doc["hosts"]}
+    assert len(keys) == len(bodies) == 19, (sorted(keys), sorted(bodies))
+    assert doc["site_count"] == 19
+    for h in doc["hosts"]:
+        assert same_site(h["host"], h["site_key"]), h
+    # The merge the superseded definition made, asserted as undone.
+    by = {h["host"]: h["site_key"] for h in doc["hosts"]}
+    assert by["www.ers.usda.gov"] != by["www.nass.usda.gov"] != by["www.aphis.usda.gov"]
+
+
+def test_no_suffix_list_dependency_remains():
+    """Decision 1: "The PSL dependency is removed unless something else uses it." Nothing
+    does. Asserted over source, because an unused import is exactly how a dependency survives
+    the decision that retired it."""
+    import subprocess
+    # The needles are assembled rather than written, so this file does not match its own
+    # search and report itself as the surviving dependency.
+    needles = ["tld" + "extract", "psl_" + "identity"]
+    r = subprocess.run(["git", "grep", "-l", "-e", needles[0], "-e", needles[1],
+                        "--", "assessment", "scripts", "tests"],
+                       capture_output=True, text=True, cwd=str(REPO))
+    left = [f for f in r.stdout.split() if f != "tests/test_manners_robots_first.py"]
+    assert not left, f"the Public Suffix List is still reached from: {left}"
+    assert load_params()["manners"]["site_bound"]["resolver"] is None
 
 
 # ------------------------------------------------- decision 1: robots before anything else
@@ -167,7 +203,11 @@ def test_an_off_site_declaration_is_recorded_and_never_requested():
         assert o.target_url == off
         assert o.request.get("not_requested") is True
         assert o.response["status"] is None
-        assert (o.parsed or {})["sitemap_site"] == "example.org"
+        # The site key of a host with no leading `www.` is the host itself. Under DD-062's
+        # registrable-domain definition this read `example.org`; under DD-063 an unrelated
+        # host is named in full, which is the more useful thing to record about a declaration
+        # we declined to follow.
+        assert (o.parsed or {})["sitemap_site"] == "someone-elses-site.example.org"
         assert not any(r["netloc"].startswith("someone") for r in srv.requests)
         assert f.requests.get("someone-elses-site.example.org", 0) == 0, (
             "the fetcher counted a request to an off-site netloc")
@@ -238,14 +278,14 @@ def test_replaying_cycle_3_names_exactly_the_two_apex_sitemap_gets():
     imaginary hosts. `errors.NOT_FETCHED` is the set that says which, and it is read from
     there rather than listed here.
     """
-    import json
+    import json as _json
     import urllib.parse
     from scan import errors
 
     payload = REPO / "state" / "scan_2026-09-09.json"
     if not payload.is_file():
         pytest.skip("cycle 3's payload is not on disk")
-    doc = json.loads(payload.read_text(encoding="utf-8"))
+    doc = _json.loads(payload.read_text(encoding="utf-8"))
 
     first_request, robots_read, issued = {}, set(), 0
     for o in doc["observations_detail"]:
@@ -263,10 +303,22 @@ def test_replaying_cycle_3_names_exactly_the_two_apex_sitemap_gets():
             robots_read.add(netloc)
 
     assert issued > 0 and first_request, "the replay found no requests to judge"
+    # The four counts §3 of `cc_tasks/2026-09-09_manners_closeout.md` names.
+    assert len(first_request) == 24, sorted(first_request)
     unread = sorted(set(first_request) - robots_read)
     would_add = sorted(first_request[n] for n in unread)
     assert would_add == ["https://data.gov/sitemap.xml",
                          "https://samhsa.gov/sitemap.xml"], would_add
+
+    # OFF-SITE FETCHES, under the unified bound: a netloc matching no roster site key. These
+    # are what the bound forbids outright, as against the two above, which it merely makes
+    # polite. Cycle 3 has none, and the two apex GETs are on-site by DD-063.
+    keys = {h["site_key"] for h in _json.loads(
+        (REPO / "state" / "scan_targets_fss_2026-09.json")
+        .read_text(encoding="utf-8"))["hosts"]}
+    assert len(keys) == 19
+    off_site = sorted(n for n in first_request if not any(same_site(n, k) for k in keys))
+    assert off_site == [], off_site
 
     # And each is same-site with the host whose robots.txt declared it, so decision 3 permits
     # the fetch and only decision 1 changes anything.
@@ -277,3 +329,97 @@ def test_replaying_cycle_3_names_exactly_the_two_apex_sitemap_gets():
     assert would_refuse == [], (
         "the new policy would refuse a request on this log; §3 expected it to refuse none and "
         "to add two robots reads")
+
+
+# ------------------------------------------- decision 2: one contact policy, not two
+
+def test_links_and_declarations_are_bounded_by_the_same_test():
+    """Decision 2. `on_roster_host` governed links by NETLOC EQUALITY while `sitemap.fetch`
+    compared declared URLs by site: two contact policies wearing one name, under which a
+    sibling netloc was off-limits to a link and reachable through a `Sitemap:` line. Both go
+    through `same_site` now, so the two agree by construction rather than by coincidence."""
+    from scan import manners
+    params = load_params()
+    surface = "https://www.data.gov/"
+    for url, want in (("https://catalog.data.gov/dataset", True),
+                      ("https://www.data.gov/x", True),
+                      ("https://data.gov/sitemap.xml", True),
+                      ("https://www.usda.gov/x", False)):
+        assert manners.on_roster_host(url, surface, params) is want, url
+        assert same_site(url, surface) is want, url
+    # The link gate and the declaration gate are the same function, read from source: a second
+    # comparison anywhere is the defect returning.
+    src = Path(manners.__file__).read_text(encoding="utf-8")
+    assert "return same_site(url, surface_url)" in src, (
+        "on_roster_host no longer delegates to the shared site test")
+
+
+# ---------------------------------- decision 3: a script cannot write into the committed store
+
+def test_a_collector_call_from_a_script_lands_in_quarantine(tmp_path, monkeypatch):
+    """Decision 3, and it is aimed at what actually happened: twice in two consecutive tasks a
+    fixture driver run from a script filled `corpus/evidence/scan/` with loopback bodies that
+    no Observation cited. The standing guard is `tests/conftest.py`, which redirects the store
+    under pytest and cannot see a script.
+
+    Driven through `store_evidence` with no explicit root, which is exactly how a collector
+    calls it.
+    """
+    from scan import model
+    monkeypatch.delenv(model.CYCLE_TOKEN_ENV, raising=False)
+    # BOTH the root and the protected LANE move. The guard fires on where the bytes would
+    # land, so a test that repoints only the root is testing a write to somewhere unprotected
+    # and would pass against a guard that does nothing.
+    monkeypatch.setattr(model, "COMMITTED_EVIDENCE", tmp_path / "committed")
+    monkeypatch.setattr(model, "EVIDENCE_ROOT", tmp_path / "committed" / "scan")
+    monkeypatch.setattr(model, "SCRIPT_QUARANTINE", tmp_path / "quarantine")
+    monkeypatch.setattr(model, "REDIRECT_LOG", tmp_path / "quarantine" / "redirects.jsonl")
+
+    _digest, path = model.store_evidence(b"<html>a driver wrote this</html>")
+    assert "quarantine" in path, path
+    assert "committed" not in path
+    assert not (tmp_path / "committed").exists(), (
+        "an unlicensed write created the committed store")
+    # The redirect is a RECORD, not a silence.
+    logged = (tmp_path / "quarantine" / "redirects.jsonl").read_text(encoding="utf-8")
+    assert model.CYCLE_TOKEN_ENV in logged and "redirected_to" in logged
+
+
+def test_the_cycle_runner_licenses_the_write_and_nothing_else_does(tmp_path, monkeypatch):
+    """With the token set, the same call reaches the committed store. The token is set in
+    `run.py::main` and not at import, so importing the runner to reach `run_surface` from a
+    driver licenses nothing."""
+    from scan import model
+    monkeypatch.setattr(model, "COMMITTED_EVIDENCE", tmp_path / "committed")
+    monkeypatch.setattr(model, "EVIDENCE_ROOT", tmp_path / "committed" / "scan")
+    monkeypatch.setenv(model.CYCLE_TOKEN_ENV, "1")
+    _digest, path = model.store_evidence(b"<html>a cycle wrote this</html>")
+    assert "committed" in path, path
+
+    run_src = (REPO / "assessment" / "harness" / "scan" / "run.py").read_text(encoding="utf-8")
+    token_line = f'os.environ[CYCLE_TOKEN_ENV]'
+    assert token_line in run_src
+    before_main = run_src.split("def main(")[0]
+    assert token_line not in before_main, (
+        "the cycle token is set at import; importing run.py from a driver would license every "
+        "write that driver makes, which is the case this guard exists for")
+
+
+def test_a_root_outside_the_committed_store_is_always_honoured(tmp_path, monkeypatch):
+    """The guard fires on WHERE THE BYTES LAND, not on whether the caller named a root.
+
+    Both spellings are asserted, because the first implementation keyed on `root is None` and
+    broke the second: `tests/conftest.py` redirects the store under pytest by repointing the
+    module global, and `--evidence-root` passes a root explicitly. A guard that redirected a
+    defaulted write no matter where the default pointed sent a deliberately staged body to
+    quarantine, and it took the full suite to find it.
+    """
+    from scan import model
+    monkeypatch.delenv(model.CYCLE_TOKEN_ENV, raising=False)
+    # (a) named explicitly
+    _d, path = model.store_evidence(b"staged", root=tmp_path / "staging")
+    assert "staging" in path and "quarantine" not in path
+    # (b) defaulted, with the module global repointed away from the committed lane
+    monkeypatch.setattr(model, "EVIDENCE_ROOT", tmp_path / "repointed")
+    _d2, path2 = model.store_evidence(b"repointed")
+    assert "repointed" in path2 and "quarantine" not in path2

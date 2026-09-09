@@ -142,3 +142,11 @@ assessment/results/.g1_calibration_key_*.json
 # Untracked on purpose: a staged body is not evidence until something cites it, and the whole
 # point of the staging root is that an unpublished run leaves nothing behind.
 state/evidence_staging/
+
+# Evidence writes REDIRECTED out of the committed store (DD-063 decision 3). A collector call
+# from a script or a fixture driver is not part of a cycle, so `model.store_evidence` sends
+# its bytes here instead of into corpus/evidence/scan/ and appends a line to redirects.jsonl.
+# Untracked for the same reason the staging root is: these bytes are litter by construction,
+# and committing them would recreate, one directory over, exactly the problem the redirect
+# exists to prevent. The LOG is what carries the finding; the bodies carry nothing.
+corpus/quarantine/evidence_scan_fixture/unlicensed/
