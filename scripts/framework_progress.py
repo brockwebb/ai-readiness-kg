@@ -188,6 +188,10 @@ LEGEND = {
                              ("#94a3b8", "specified"), ("#a78bfa", "candidate, not counted")],
     "progress_over_snapshots": [("#059669", "measured"), ("#3b82f6", "harness_built"),
                                 ("#94a3b8", "specified")],
+    # F6 has no rate and no interval by construction, so its legend is verdicts alone.
+    "tier_c_reference_hosts": [("#059669", "pass"), ("#d97706", "fail"),
+                               ("#64748b", "error"), ("#94a3b8", "not_applicable"),
+                               ("#e2e8f0", "leg not asked of this host")],
     "cycle_over_cycle": [("#94a3b8", "cycle 1 pass rate"), ("#059669", "cycle 2 pass rate"),
                          ("#e2e8f0", "cycle 1 Wilson 95 % interval"),
                          ("#94a3b8", "cycle 2 Wilson 95 % interval")],
@@ -211,6 +215,28 @@ def matrix_for_page() -> dict:
     from scan import figures as _figs
     cfg = _figs.config()
     return json.loads((REPO / cfg["matrix_json"]).read_text(encoding="utf-8"))
+
+
+def _frame_clause() -> str:
+    """What the frame IS, on the page rather than only in a design decision.
+
+    A reader looking at a rate needs to know it is over 16 recognized statistical agencies and
+    units, that 3 reference hosts sit beside them at tier 0 only and in no rate here, and that
+    some agencies contribute a thin row because their products are not yet declared. Read from
+    the targets DataFile, so it cannot drift from the frame the cycle actually measured.
+    """
+    src = REPO / "state" / "scan_targets_fss_2026-09.json"
+    if not src.is_file():
+        return ""
+    d = json.loads(src.read_text(encoding="utf-8"))
+    pending = d.get("agencies_pending_operator_declaration") or []
+    return (f"The frame is {d.get('tier_a_agencies')} OMB-recognized statistical agencies and "
+            f"units plus {d.get('tier_c_hosts')} reference hosts, on "
+            f"{d.get('netloc_count')} netlocs; the reference hosts are judged on tier-0 legs "
+            f"only and appear in no rate on this page (F6 shows them on their own). "
+            f"{len(pending)} agencies carry a host row and its probes and nothing else, "
+            f"because their products are not yet declared ({', '.join(pending)}) — a thin row "
+            f"is a measurement, not a gap. ")
 
 
 def _rule_changed_clause() -> str:
@@ -304,7 +330,8 @@ def non_claims() -> str:
         f"and the legs are not comparable to each other. "
         f"{len(mx['agencies_without_surfaces'])} of {len(mx['agencies'])} agencies "
         f"contributed no surface at all, which is a property of the instrument as much as of "
-        f"them. {len(zeros)} legs are at zero with an upper bound of {hi:.2f}, and a zero is "
+        f"them. {_frame_clause()}"
+        f"{len(zeros)} legs are at zero with an upper bound of {hi:.2f}, and a zero is "
         f"not evidence of absence at these denominators. Where a leg's rate moved between "
         f"cycles, F5 marks whether the RULE changed: {_rule_changed_clause()}")
 
@@ -341,6 +368,13 @@ EXCLUDED = [
     "the candidate indicator A12 in any fraction (DD-054)",
 ]
 
+def _user_agent() -> str:
+    """The one client identity, from `params.manners.user_agent` (DD-060)."""
+    sys.path.insert(0, str(REPO / "assessment" / "harness"))
+    from scan import load_params
+    return str(load_params()["manners"]["user_agent"])
+
+
 def requests_table() -> str:
     """What this scanner ASKED of each host in the current cycle, from the cycle payload.
 
@@ -367,8 +401,13 @@ def requests_table() -> str:
             f"<p>HTTP requests issued in cycle <code>{html.escape(cfg['cycle'])}</code>, "
             f"counted at the socket and including <code>robots.txt</code> fetches, 429/503 "
             f"retries and HEAD-refused GET fallbacks. Rate-limited to one request per second "
+            # The UA is READ, not typed. DD-060 is that there is exactly one client
+            # identity and `params.manners.user_agent` is where it lives; this page carried
+            # `ai-readiness-kg-scanner/0.1` as a literal and went on printing it after the
+            # identity moved to `0.2`, so the page made a false claim about how the
+            # measurement below it was taken.
             f"per host under the identified user agent "
-            f"<code>ai-readiness-kg-scanner/0.1</code>, with <code>robots.txt</code> obeyed "
+            f"<code>{html.escape(_user_agent())}</code>, with <code>robots.txt</code> obeyed "
             f"(RFC 9309). No forms, no logins, no query-string fuzzing. Total "
             f"{sum(per_host.values())} across {len(per_host)} hosts.</p>"
             f'<div class="wrap"><table><thead><tr><th>Host</th><th>Requests</th></tr></thead>'

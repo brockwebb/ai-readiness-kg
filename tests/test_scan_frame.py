@@ -39,7 +39,16 @@ PREFLIGHT = json.loads((REPO / "state" / "fss_preflight_2026-09.json")
 #: The frame, ADDENDUM-05: 16 recognized statistical agencies and units + 3 reference hosts.
 TIER_A = 16
 TIER_C = 3
+#: The ROSTER's hosts — one per body, and the set the pre-flight measured on 2026-09-08.
 HOSTS = TIER_A + TIER_C
+#: The TARGET list's hosts, which is a larger set and was always going to be. ADDENDUM-01
+#: declares each Tier C body's machine entry point, and all three sit on their own hostname
+#: (`catalog.data.gov`, `data.nist.gov`, `open.gsa.gov`) rather than a path under the home.
+#: Targets v2 gave those rows their own `machine:` ids
+#: (`cc_tasks/2026-09-08_scan_run_3b.md` decision 1), so the target list names 22 hosts for 19
+#: bodies. Written as the ARITHMETIC and not as `22`, because a bare 22 would be equally happy
+#: with a twentieth agency arriving unnoticed.
+TARGET_HOSTS = HOSTS + TIER_C
 
 #: What a `selection_source` may begin with. Anything else is a rule, and a rule is what
 #: ADDENDUM-05 removed.
@@ -108,17 +117,29 @@ def test_every_target_row_is_declared_and_none_is_derived():
     assert not bad, f"{len(bad)} row(s) carry a derived selection_source: {bad[:5]}"
 
 
-def test_no_row_lies_outside_the_nineteen_hosts():
+def test_no_row_lies_outside_the_declared_hosts():
+    """Every row sits on a host the frame declares, and the host list is exactly the roster's
+    plus the three declared Tier C machine entry points — nothing else.
+
+    Named for the property rather than for a count: this test was `..._the_nineteen_hosts` and
+    pinned `len(allowed) == 19`, which targets v2 falsified by giving each Tier C machine entry
+    point its own `machine:` row on its own hostname. Those three hosts were inside the frame
+    the whole time — ADDENDUM-01 declares them and the ROW check below already carved them
+    out — so the pin was measuring the id scheme, not the frame.
+    """
     import urllib.parse
     allowed = {h["host"] for h in TARGETS["hosts"]}
-    assert len(allowed) == HOSTS
-    off = sorted({urllib.parse.urlsplit(r["url"]).netloc.lower() for r in TARGETS["rows"]
-                  if urllib.parse.urlsplit(r["url"]).netloc.lower() not in allowed})
-    # A Tier C machine entry point is a declared surface on its own hostname; it is inside the
-    # frame and is named by ADDENDUM-01, and this task does not contact it.
     tier_c_machine = {urllib.parse.urlsplit(t["machine_entry_point"]).netloc.lower()
                       for t in ROSTER["tier_c"]}
-    assert not (set(off) - tier_c_machine), f"rows outside the frame: {off}"
+    assert len(allowed) == TARGET_HOSTS
+    assert len(tier_c_machine) == TIER_C
+    # The composition, so a host cannot join the target list by being neither.
+    assert allowed - tier_c_machine == {h["host"] for h in PREFLIGHT["rows"]}, (
+        "the target hosts are not the pre-flighted roster plus the declared machine entry "
+        "points")
+    off = sorted({urllib.parse.urlsplit(r["url"]).netloc.lower() for r in TARGETS["rows"]
+                  if urllib.parse.urlsplit(r["url"]).netloc.lower() not in allowed})
+    assert not off, f"rows outside the frame: {off}"
 
 
 def test_the_frame_has_no_tier_b_and_statcan_is_out():
@@ -186,9 +207,20 @@ def test_an_unadmitted_row_says_why_on_its_face():
 
 # ------------------------------------------------------------------ 4. pre-flight
 
-def test_preflight_covers_exactly_the_nineteen_hosts():
+def test_preflight_covers_exactly_the_nineteen_roster_hosts():
+    """The pre-flight measured the ROSTER — one host per body, 19 — on 2026-09-08, before
+    targets v2 existed. It does not cover the three Tier C machine entry points, and it must
+    not be made to: a pre-flight is a measurement at a moment, and back-filling three rows into
+    a registered artifact so an equality holds would be editing the record to fit the test.
+    Cycle 3 contacted those three hosts for the first time and reported what it found
+    (`cc_tasks/2026-09-08_scan_run_3b_RESULT.md` §7).
+    """
+    import urllib.parse
     assert PREFLIGHT["hosts"] == HOSTS
-    assert {r["host"] for r in PREFLIGHT["rows"]} == {h["host"] for h in TARGETS["hosts"]}
+    tier_c_machine = {urllib.parse.urlsplit(t["machine_entry_point"]).netloc.lower()
+                      for t in ROSTER["tier_c"]}
+    assert ({r["host"] for r in PREFLIGHT["rows"]}
+            == {h["host"] for h in TARGETS["hosts"]} - tier_c_machine)
     assert PREFLIGHT["user_agent"] == load_params()["manners"]["user_agent"], (
         "the pre-flight was measured under a different identity from the one params declares; "
         "DD-060 is that there is exactly one")
@@ -230,3 +262,41 @@ def test_the_tool_map_regenerates_byte_identically():
     r = subprocess.run([sys.executable, "scripts/scan_tool_map.py", "--check"],
                        capture_output=True, text=True, cwd=str(REPO))
     assert r.returncode == 0, (r.stdout + r.stderr)[-800:]
+
+
+# ------------------------------------------------------------------ 6. Tier C stays at tier 0
+
+def test_no_tier_c_row_appears_in_a_tier_a_figure():
+    """ADDENDUM-01 item 5: placing a Tier C host beside a Tier A agency ABOVE tier 0 is a
+    category error, and the page refuses to render it.
+
+    Enforced at the source of the numbers rather than in the renderer: `scripts/scan_report.py`
+    writes two matrices, and F1, F2 and F5 read only the Tier A one. A reference host cannot
+    reach a Tier A figure because it is not in the file those figures are drawn from.
+    """
+    import json as _json
+    suffix = "2026-09-09"
+    tier_a = REPO / "state" / f"scan_matrix_{suffix}.json"
+    tier_c = REPO / "state" / f"scan_matrix_tierc_{suffix}.json"
+    if not tier_a.is_file() or not tier_c.is_file():
+        pytest.skip("cycle 3 has not been reported yet")
+    a = _json.loads(tier_a.read_text(encoding="utf-8"))
+    c = _json.loads(tier_c.read_text(encoding="utf-8"))
+    assert a["tier"] == "A" and c["tier"] == "C"
+    tiers = {r["doc_id"]: r.get("tier", "A")
+             for r in _json.loads((REPO / "state" / "scan_targets_fss_2026-09.json")
+                                  .read_text(encoding="utf-8"))["rows"] if r.get("doc_id")}
+    stray = [r["doc_id"] for r in a["rows"] if tiers.get(r["doc_id"]) == "C"]
+    assert not stray, f"Tier C surfaces in the Tier A matrix that F1/F2/F5 draw from: {stray}"
+    assert c["rows"], "the Tier C matrix is empty; F6 would have nothing to draw"
+
+
+def test_tier_c_is_judged_on_tier0_legs_and_no_others():
+    import json as _json
+    p = REPO / "state" / "scan_matrix_tierc_2026-09-09.json"
+    if not p.is_file():
+        pytest.skip("cycle 3 has not been reported yet")
+    c = _json.loads(p.read_text(encoding="utf-8"))
+    tier0 = set(load_params()["tier0"]["legs"])
+    judged = {leg for r in c["rows"] for leg in r["verdicts"]}
+    assert judged and judged <= tier0, f"Tier C judged outside tier0.legs: {judged - tier0}"

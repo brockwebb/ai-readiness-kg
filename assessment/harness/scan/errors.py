@@ -59,7 +59,7 @@ CLASSES: dict = {
     # conflict with itself"). Marking it blind would make `only_errors` return `error` for a
     # leg whose observations are all disallows, changing the verdict of every shipped rule —
     # which `cc_tasks/2026-09-07_scan_harness_v3.md` forbids without a new module.
-    "robots_disallowed": {"blind": False,
+    "robots_disallowed": {"blind": False, "not_fetched": True,
                           "note": "not fetched, because robots.txt disallows this client; "
                                   "the refusal is evidence, not an absence"},
     # The mirror of `robots_disallowed`, one policy layer up: not fetched because the SCANNER'S
@@ -75,7 +75,7 @@ CLASSES: dict = {
     # It exists as a CLASS rather than as silence because the exclusion used to be a `continue`
     # in `links.probe`: an off-host link left no record at all, so nothing on the log could
     # show whether the policy had been applied, or to what.
-    "off_host": {"blind": False,
+    "off_host": {"blind": False, "not_fetched": True,
                  "note": "not fetched, because the scanner's same-host policy puts this URL "
                          "outside the surface being measured; the exclusion is recorded, "
                          "not silent"},
@@ -88,6 +88,18 @@ CLASSES: dict = {
 
 ERROR_CLASSES = tuple(CLASSES)
 BLIND = tuple(k for k, v in CLASSES.items() if v["blind"])
+
+#: The classes recorded when NO REQUEST WAS MADE, because a policy layer excluded the URL
+#: before anything was attempted. They are the two classes with nothing to classify FROM —
+#: no exception text, no status — and they need none: the decision is the record.
+#:
+#: Declared here for the same reason `blind` is (see above), and after the same defect. A test
+#: asserting "every error class is grounded in recorded text or a status" carried
+#: `robots_disallowed` as a literal exemption; `off_host` arrived one task later as the second
+#: member of a set nobody had named, and 164 correctly-recorded observations read as
+#: ungrounded. A closed set with an unnamed subset gets re-derived by hand at every call site,
+#: and one of them is always stale.
+NOT_FETCHED = tuple(k for k, v in CLASSES.items() if v.get("not_fetched"))
 
 #: Exception TYPE name -> class, for failures the type alone settles. httpx's timeout family
 #: and protocol errors are unambiguous; `ConnectError` and `ReadError` are not (both cover a

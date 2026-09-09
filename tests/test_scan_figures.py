@@ -327,22 +327,62 @@ def test_no_figure_reaches_the_network(figures):
 
 # ------------------------------------------------------------------ 4. re-derivation
 
+def _tier_doc_ids(tier: str) -> set:
+    """The doc_ids of one tier, from the targets DataFile — the same join
+    `scripts/scan_report.py::tier_of` makes, and the same authority."""
+    from scan import load_params
+    src = REPO / "state" / f"{load_params()['cycle']['targets']}.json"
+    rows = json.loads(src.read_text(encoding="utf-8"))["rows"]
+    return {r["doc_id"] for r in rows if r.get("doc_id") and r.get("tier", "A") == tier}
+
+
 def test_each_legs_registered_counts_re_derive_from_the_graph(session, results):
     """The registry is checked against the Findings themselves, through the
     `Rule -[:MEASURES]-> AssessmentIndicator` edge the repair task added. Without that edge
     this check could not be written at all, which is why it is here and not in the scan-run
-    task."""
+    task.
+
+    **Both families, and each against its own population.** The query excluded `control:` and
+    nothing else, which was the whole answer while a cycle held two populations. Cycle 3 added
+    a third — Tier C reference hosts, judged on tier-0 legs, in no Tier A denominator
+    (DD-059) — and their six Findings per leg landed in a comparison against Tier A's
+    registered counts and read as drift (A4 graph 39 against registry 33, and five more, each
+    difference exactly the Tier C rows). Excluding them and leaving it there would have made
+    the Tier C Results the one family nothing re-derives, so `scan_tierc_*` is checked here
+    too, against the Findings the Tier C rows actually produced.
+    """
     mx = matrix()
     ph = mx["params_hash"]
+    tier_c = _tier_doc_ids("C")
+    assert tier_c, "no Tier C surfaces; the split this test makes would be vacuous"
+    checked_c = 0
     q = ("MATCH (f:Finding)-[:RULED_BY]->(:Rule)-[:MEASURES]->"
          "(:AssessmentIndicator {code: $code}) "
          "WHERE f.params_hash = $ph AND NOT f.target_doc_id STARTS WITH 'control:' "
-         "RETURN f.verdict AS v, count(*) AS c")
+         "RETURN f.verdict AS v, f.target_doc_id AS d, count(*) AS c")
     bad = []
     for leg in mx["legs"]:
         code = parse_rule_id(CURRENT[leg])["indicator_code"]
-        got = {r["v"]: r["c"] for r in session.run(q, code=code, ph=ph)}
+        rows = list(session.run(q, code=code, ph=ph))
+        got: dict = {}
+        got_c: dict = {}
+        for r in rows:
+            sink = got_c if r["d"] in tier_c else got
+            sink[r["v"]] = sink.get(r["v"], 0) + r["c"]
         s = leg.replace("-", "_").lower()
+        # Tier C, where a Result exists for this leg. `scan_tierc_*` is registered only for
+        # the tier-0 legs a reference host is judged on, and `not_applicable` is not in the
+        # family (`scripts/scan_report.py::results`), so the absent name is the answer rather
+        # than a lookup failure.
+        from scan.figures import rname as _rname
+        for verdict in ("pass", "fail", "error"):
+            key_c = _rname(f"scan_tierc_{s}_{verdict}", cfg())
+            if key_c not in results:
+                continue
+            checked_c += 1
+            if got_c.get(verdict, 0) != results[key_c]:
+                bad.append(f"TIER C {leg} {verdict}: graph {got_c.get(verdict, 0)}, "
+                           f"registry {key_c} = {results[key_c]}")
         for verdict in ("pass", "fail", "error", "not_applicable"):
             # Through `figures.rname`, the same resolver the figures use. The bare
             # `scan_<leg>_<verdict}` is the FIRST cycle's Result (DD-056's exception list), so
@@ -357,3 +397,5 @@ def test_each_legs_registered_counts_re_derive_from_the_graph(session, results):
                 bad.append(f"{leg} {verdict}: graph {got.get(verdict, 0)}, "
                            f"registry {key} = {want}")
     assert not bad, "\n".join(bad)
+    assert checked_c, ("no `scan_tierc_*` Result resolved, so the Tier C half of this check "
+                       "verified nothing")

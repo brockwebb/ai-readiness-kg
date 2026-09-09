@@ -69,6 +69,15 @@ CAPTIONS = {
         "points is not a trend, and two cycles hours apart on federal publication schedules "
         "are not a rate of change. A leg with no applicable denominator in a cycle is left "
         "blank rather than plotted at zero (DD-055: not measured is a reason, not a zero).",
+    "tier_c_reference_hosts":
+        "F6. The three Tier C reference hosts and their machine entry points \u2014 "
+        "data.gov / catalog.data.gov, nist.gov / data.nist.gov, gsa.gov / open.gsa.gov "
+        "\u2014 by tier-0 leg, one cell per Finding. **Verdict cells, no rate and no "
+        "interval**: a reference host is not a statistical agency, it is judged only on "
+        "properties of a host that publishes data, and it enters no Tier A denominator "
+        "(DD-059, ADDENDUM-01). Drawing a pass rate here would invite exactly the cross-tier "
+        "comparison the frame decision forbids. A blank cell is a leg that was never asked, "
+        "not a leg that failed.",
 }
 
 

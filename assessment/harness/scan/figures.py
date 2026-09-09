@@ -53,7 +53,7 @@ import cycle_results                                                   # noqa: E
 from scan import load_params                                           # noqa: E402
 
 FIGURES = ("per_leg_pass_rate", "agencies_by_legs_matrix", "gap_map_by_criterion",
-           "progress_over_snapshots", "cycle_over_cycle")
+           "progress_over_snapshots", "cycle_over_cycle", "tier_c_reference_hosts")
 
 
 def config(cycle: str | None = None) -> dict:
@@ -111,6 +111,14 @@ def load_results(prefixes=("scan_", "framework_")) -> dict:
 
 def matrix(cfg: dict | None = None) -> dict:
     return json.loads((REPO / (cfg or config())["matrix_json"]).read_text(encoding="utf-8"))
+
+
+def tier_c_matrix(cfg: dict | None = None) -> dict:
+    """The Tier C matrix, written beside the Tier A one by `scripts/scan_report.py`. Separate
+    files because they are separate populations and must never share a denominator."""
+    cfg = cfg or config()
+    p = REPO / "state" / f"scan_matrix_tierc_{cfg['cycle_suffix']}.json"
+    return json.loads(p.read_text(encoding="utf-8")) if p.is_file() else {"rows": [], "legs": []}
 
 
 def framework() -> dict:
@@ -503,6 +511,48 @@ def cycle_over_cycle(mx: dict, R: dict, cfg: dict) -> str:
                body, getattr(R, "seen", ()), ("matrix_json",), cfg)
 
 
+# ---------------------------------------------------------------- F6
+
+def tier_c_reference_hosts(mx: dict, R: dict, cfg: dict) -> str:
+    """Tier C: reference hosts by tier-0 leg, verdict cells, **no rate and no interval**.
+
+    A reference host is not a statistical agency. It is judged on `params.tier0.legs` only —
+    properties of a host that publishes data — and it enters no Tier A denominator, so there is
+    no `k/n` to print and nothing to draw an interval through (DD-059, ADDENDUM-01). Drawing a
+    rate here would invite exactly the cross-tier comparison the frame decision forbids.
+
+    Cells, not dots, for the same reason F2 uses cells: six surfaces by six legs is a matrix of
+    judgements, not a distribution.
+    """
+    f, col = cfg["f6"], cfg["colours"]
+    rows = sorted(mx["rows"], key=lambda r: (r["agency"], r["surface_kind"]))
+    legs = mx["legs"]
+    cell, gap = f["cell"], f["gap"]
+    height = f["head_h"] + len(rows) * (cell + gap) + f["bottom"]
+    body = []
+    for i, leg in enumerate(legs):
+        x = f["label_w"] + i * (cell + gap) + cell / 2
+        y = f["head_h"] - f["header_dy"]
+        body.append(f'<text class="lbl" x="{x:g}" y="{y:g}" text-anchor="start" '
+                    f'data-src="label" transform="rotate({f["label_rotate"]:g} {x:g} {y:g})">'
+                    f'{html.escape(leg)}</text>')
+    for j, r in enumerate(rows):
+        y = f["head_h"] + j * (cell + gap)
+        body.append(text(0, y + cell - f["text_dy"],
+                         f'{r["agency"]} · {r["surface_kind"]}', "lbl", "label"))
+        for i, leg in enumerate(legs):
+            x = f["label_w"] + i * (cell + gap)
+            v = r["verdicts"].get(leg, "")
+            body.append(f'<rect x="{x:g}" y="{y:g}" width="{cell:g}" height="{cell:g}" '
+                        f'rx="{f["cell_radius"]:g}" fill="{col.get(v, col["empty"])}">'
+                        f'<title>{html.escape(r["agency"])} · {html.escape(r["surface_kind"])}'
+                        f' · {html.escape(leg)} · {html.escape(v or "not asked")}</title>'
+                        f'</rect>')
+    return svg(cfg["canvas"]["width"], height,
+               "Tier C reference hosts by tier-0 leg, verdict cells, no rate", body,
+               getattr(R, "seen", ()), (), cfg)
+
+
 # ---------------------------------------------------------------- build
 
 def build(cfg: dict | None = None, R: dict | None = None, only: tuple | None = None) -> dict:
@@ -517,7 +567,9 @@ def build(cfg: dict | None = None, R: dict | None = None, only: tuple | None = N
             "agencies_by_legs_matrix": lambda: agencies_by_legs_matrix(mx, Reads(R), cfg),
             "gap_map_by_criterion": lambda: gap_map_by_criterion(fw, Reads(R), cfg),
             "progress_over_snapshots": lambda: progress_over_snapshots(Reads(R), cfg),
-            "cycle_over_cycle": lambda: cycle_over_cycle(mx, Reads(R), cfg)}
+            "cycle_over_cycle": lambda: cycle_over_cycle(mx, Reads(R), cfg),
+            "tier_c_reference_hosts": lambda: tier_c_reference_hosts(
+                tier_c_matrix(cfg), Reads(R), cfg)}
     assert tuple(draw) == FIGURES
     return {name: fn() for name, fn in draw.items() if only is None or name in only}
 

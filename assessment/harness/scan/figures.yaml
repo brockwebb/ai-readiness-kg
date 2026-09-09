@@ -29,6 +29,21 @@ compare_to:
 # it is, not by which cycle ran last. `note` is printed on the figure: a reader who sees two
 # dots must be told that the second one moved because the RULE moved and nothing was re-fetched.
 compare_to_by_cycle:
+  # Cycle 3 against cycle 2. FOUR legs changed rule between them — A1 v3→v4, A3 v4→v5,
+  # A8 v3→v4, A10 v2→v3 — so a difference on those rows is the instrument moving, and the
+  # frame moved too (13 agencies + StatCan became 16 + 3 reference hosts), which F5's note
+  # says outright because two dots cannot say it.
+  scan_2026-09-09:
+    cycle: scan_2026-09-07b
+    suffix: "2026-09-07b"
+    label: "cycle 2 · 2026-09-07b, 13 agencies"
+    note: "different frame: cycle 2 measured 13 agencies + StatCan, cycle 3 measures 16 + 3 reference hosts"
+    rule_changed:
+      A1: "v3 → v4"
+      A3: "v4 → v5"
+      A8: "v3 → v4"
+      A10: "v2 → v3"
+
   scan_2026-09-07b_rj1:
     cycle: scan_2026-09-07b
     suffix: "2026-09-07b"
@@ -115,6 +130,19 @@ f5:
   tick_len: 4
   tick_label_dy: 15
   group_label_dy: 10
+
+# F6, the Tier C block. Verdict cells only: a reference host is judged on tier-0 legs and
+# enters no rate, so there is no `k/n` and no interval to draw (DD-059).
+f6:
+  cell: 22
+  gap: 3
+  label_w: 240
+  head_h: 70
+  bottom: 14
+  label_rotate: -60
+  header_dy: 8
+  cell_radius: 2
+  text_dy: 4
 
 f4:
   label_w: 210

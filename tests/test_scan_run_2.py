@@ -311,6 +311,16 @@ def test_the_uncited_set_only_shrinks_and_only_by_citation(session):
 
     So the checkable property is the decomposition, not the equality: every body that left the
     set left by being CITED, never by being deleted, and the arithmetic closes exactly.
+
+    **And `registered` is a fact about ONE moment, which is the second thing this test got
+    wrong.** `retention.NAME` carries no cycle deliberately: it is the pre-flight census, what
+    the store held uncited when `publish.promote_evidence` was installed (the script's own
+    docstring). Two clauses below read it as though it were this cycle's `before` figure, which
+    it was — for exactly one cycle. Cycle 2 cited one of those bodies, so cycle 3's `before`
+    is 417 against a registered 418 and the test reported the property WORKING as the property
+    failing. The arithmetic now closes against `uncited_before_this_cycle`, which is the
+    quantity it was always about, and `registered` is used for the two things it can still
+    say: the set never rose above it, and nothing left the committed store at all.
     """
     # The CYCLE, not a params hash: the census needs the cycle's hash AND the commit that
     # published it, and a caller that could pass a mismatched pair eventually would.
@@ -327,12 +337,25 @@ def test_the_uncited_set_only_shrinks_and_only_by_citation(session):
     if row is None:
         pytest.skip(f"{retention.NAME} is not registered yet")
     registered = int(row["v"])
-    assert c["uncited_before_this_cycle"] == registered, (
-        f"the pre-flight census recounts to {c['uncited_before_this_cycle']} against a "
-        f"registered {registered}; a body left the set by some route other than citation, "
-        f"which under DD-058 means bytes were deleted")
-    assert c["uncited_tracked_bodies"] + c["newly_cited_by_this_cycle"] == registered, c
-    assert c["uncited_tracked_bodies"] <= registered, (
+    # NEVER BY DELETION, said directly rather than inferred from a count: every body the
+    # store held before this cycle is still in it. This is DD-058's actual retention claim,
+    # and a count falling can no longer be mistaken for it.
+    before_set = set(retention.tracked_digests(f"{c['published_at_commit']}^"))
+    now_set = set(retention.tracked_digests())
+    gone = sorted(before_set - now_set)
+    assert not gone, (
+        f"{len(gone)} committed evidence body/bodies are no longer tracked: {gone[:5]}. "
+        f"DD-058 retains them where they are; a body fetched from a public host is the record "
+        f"that this scanner contacted it")
+    assert c["uncited_before_this_cycle"] <= registered, (
+        f"the uncited set stood at {c['uncited_before_this_cycle']} before this cycle against "
+        f"a pre-flight census of {registered}; it GREW, and staging is supposed to make that "
+        f"impossible")
+    # The decomposition, closing against the quantity it is about. `uncited_now + newly_cited
+    # == uncited_before` is the identity `census` is built to make checkable.
+    assert (c["uncited_tracked_bodies"] + c["newly_cited_by_this_cycle"]
+            == c["uncited_before_this_cycle"]), c
+    assert c["uncited_tracked_bodies"] <= c["uncited_before_this_cycle"], (
         "the uncited set GREW; staging is supposed to make that impossible")
     # The two sets the decomposition is ABOUT, kept apart. A body this cycle promoted was in
     # neither set before it ran, and folding it into either is exactly how this went wrong.
@@ -464,17 +487,27 @@ def test_every_error_class_on_this_cycle_is_grounded_in_recorded_text_or_a_statu
     evidence the reclassification overlay reads. **Measured: the premise is false** — all 21
     carry `f"{type(exc).__name__}: {exc}"`, and this test is what keeps it that way. A
     transport class with nothing to classify FROM is a class nobody can re-derive or correct.
+
+    **The exemption is READ from `errors.CLASSES`, not written here.** This test carried
+    `robots_disallowed` as a literal, and `off_host` — the same thing one policy layer up,
+    added by `cc_tasks/2026-09-08_scan_harness_v4.md` §1.3 — arrived as the second member of a
+    set nobody had named. Cycle 3 recorded 164 correct `off_host` observations and this test
+    called every one of them ungrounded. A closed set with an unnamed subset gets re-derived by
+    hand at each call site and one copy is always stale, which is the defect `errors.py` exists
+    to have closed once.
     """
     cycle = load_params()["cycle"]["name"]
     path = REPO / "state" / f"{cycle}.json"
     if not path.is_file():
         pytest.skip(f"{cycle} has not been run yet")
     payload = json.loads(path.read_text(encoding="utf-8"))
+    assert set(scan_errors.NOT_FETCHED) == {"robots_disallowed", "off_host"}, (
+        "the classes recorded without a request changed; this test's exemption follows them")
     ungrounded = []
     for o in payload["observations_detail"]:
         cls = o.get("error_class")
-        if cls is None or cls == "robots_disallowed":
-            continue                       # a disallow is a decision, not a failure to record
+        if cls is None or cls in scan_errors.NOT_FETCHED:
+            continue          # no request was made; the decision IS the record, not a failure
         r = o.get("response") or {}
         if not r.get("error") and not isinstance(r.get("status"), int):
             ungrounded.append((cls, o["leg"], o["target_doc_id"]))

@@ -565,7 +565,35 @@ def test_a_host_surface_is_judged_only_by_host_legs():
     assert hosts and docs
     assert all(t["legs"] == list(run_mod.HOST_LEGS) for t in hosts)
     assert all("A12" not in t["legs"] for t in docs)
-    assert all(t["admitted"] for t in docs), "an unadmitted target has no :Document to hang on"
+
+
+def test_every_target_either_has_a_document_or_an_id_the_projection_knows():
+    """`admitted` means "there is a `:Document` to hang `OBSERVED_ON` on", and the checkable
+    property is that every target has one OR is synthetic under an id kind the projection
+    recognises. Nothing may be neither.
+
+    This clause used to read `all(t["admitted"] for t in docs)` and was true only because the
+    synthetic `host:` row was the sole non-document surface and carried `surface_kind ==
+    "well_known"`. Targets v2 added `home:` and `machine:` rows
+    (`cc_tasks/2026-09-08_scan_run_3b.md` decision 1) — synthetic, documentless by design, and
+    not well-known — so the old clause read a correct id scheme as an admission failure.
+
+    Asserted against `publish.SYNTHETIC_PREFIXES` itself, because the id scheme and the
+    projection's list of what it recognises going out of step is not hypothetical: they did,
+    and 957 observations of ordinary host surfaces were counted as
+    `observed_on_missing_document` until the list caught up (that RESULT §1).
+    """
+    from scan.publish import CONTROL_PREFIX, SYNTHETIC_PREFIXES
+    run_mod = scan_run()
+    known = tuple(SYNTHETIC_PREFIXES) + (CONTROL_PREFIX,)
+    unplaceable = [t["doc_id"] for t in run_mod.targets(load_params())
+                   if not t["admitted"] and not str(t["doc_id"]).startswith(known)]
+    assert not unplaceable, (
+        f"target(s) with neither a :Document nor an id the projection places: {unplaceable}")
+    synthetic = [t for t in run_mod.targets(load_params())
+                 if str(t["doc_id"]).startswith(tuple(SYNTHETIC_PREFIXES))]
+    assert synthetic and not any(t["admitted"] for t in synthetic), (
+        "a synthetic id claims to be admitted; `admitted` is what says a :Document exists")
 
 
 # ------------------------------------------------- the guard that stopped a live cycle

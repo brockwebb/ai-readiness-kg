@@ -71,6 +71,37 @@ def load(cycle: str) -> dict:
     return json.loads(payload_path(cycle).read_text(encoding="utf-8"))
 
 
+def tier_of(params: dict) -> dict:
+    """`doc_id -> tier`, joined from the targets DataFile.
+
+    The cycle payload's matrix rows do not carry the tier — the runner never needed it — and
+    re-running a measured cycle to add a field would be re-measuring to gain bookkeeping. The
+    targets file is the authority for which tier a surface belongs to and is keyed by the same
+    `doc_id`, so the join is exact.
+    """
+    src = REPO / "state" / f"{params['cycle']['targets']}.json"
+    if not src.is_file():
+        return {}
+    return {r["doc_id"]: r.get("tier", "A")
+            for r in json.loads(src.read_text(encoding="utf-8"))["rows"] if r.get("doc_id")}
+
+
+def blind_counts(payload: dict) -> dict:
+    """Per leg, how much of the evidence the rules could not see.
+
+    Read from the Finding FIELDS (`blind_links`, `blind_pointers`), which
+    `cc_tasks/2026-09-08_a8_v4_blind_pointer_and_fixture_table.md` decision 3 added precisely so
+    this number does not have to be parsed out of a reason string.
+    """
+    out: dict = {}
+    for f in payload.get("findings_detail") or []:
+        for key in ("blind_links", "blind_pointers"):
+            if f.get(key):
+                out.setdefault(f["leg"], {}).setdefault(key, 0)
+                out[f["leg"]][key] += int(f[key])
+    return out
+
+
 def control_fired(payload: dict) -> dict:
     """Per leg: how many control fixtures its rule returned the PRE-REGISTERED verdict on.
 
@@ -95,9 +126,18 @@ def control_fired(payload: dict) -> dict:
     return {"fired": fired, "fixtures": fixtures}
 
 
-def per_leg(payload: dict) -> dict:
-    """Counts and a Wilson interval per leg, over admitted product surfaces only."""
-    rows = [r for r in payload["matrix"] if r["surface_kind"] != "well_known"]
+def per_leg(payload: dict, tiers: dict | None = None, tier: str = "A") -> dict:
+    """Counts and a Wilson interval per leg, over one TIER's product surfaces.
+
+    Tier A and Tier C never share a denominator (DD-059): a reference host is judged on tier-0
+    legs only and is not a statistical product, so pooling them would put a catalog in a rate
+    about agencies. `well_known` rows are excluded here as always — A12 judges a host and has
+    its own block.
+    """
+    tiers = tiers or {}
+    rows = [r for r in payload["matrix"]
+            if r["surface_kind"] != "well_known"
+            and tiers.get(r["doc_id"], "A") == tier]
     cf = control_fired(payload)
     out = {}
     for leg in sorted(l for l in CURRENT if l not in CANDIDATE_LEGS and l != "E5"):
@@ -136,7 +176,7 @@ def a12(payload: dict) -> dict:
                 rows, key=lambda x: x["agency"])}}
 
 
-def matrix(payload: dict, cycle: str) -> dict:
+def matrix(payload: dict, cycle: str, tiers: dict | None = None, tier: str = "A") -> dict:
     """Agencies × legs. One row per agency per surface kind, so a reader can see that BEA's
     two flagships disagree rather than seeing an agency-level average that hides it."""
     # E5 judges the CYCLE, not a surface, so it has no column in a surfaces × legs matrix.
@@ -156,23 +196,35 @@ def matrix(payload: dict, cycle: str) -> dict:
     # not find. The reportable set is still the framework's; a re-judged cycle can only narrow
     # it.
     legs = [l for l in reportable if l in judged] if judged else reportable
+    tiers = tiers or {}
     rows = []
     for r in sorted(payload["matrix"], key=lambda r: (r["agency"], r["surface_kind"],
                                                       r["doc_id"])):
+        if tiers.get(r["doc_id"], "A") != tier:
+            continue
         rows.append({"agency": r["agency"], "surface_kind": r["surface_kind"],
                      "doc_id": r["doc_id"], "url": r["url"], "admitted": r["admitted"],
                      "verdicts": r["verdicts"]})
-    unobservable = sorted({r["agency"] for r in payload["matrix"]
+    # Every agency figure on this matrix counts THIS TIER'S rows, not the payload's.
+    # `rows` was filtered above and these three were not, so a Tier A matrix listed 19
+    # agencies over 16 agencies' worth of rows — the three Tier C reference hosts, inside a
+    # count that DD-059 says they are never inside. It surfaced as F2 "omitting" GSA: the
+    # figure drew the 16 agencies it had rows for and the roster it was checked against was
+    # the wrong one. A reference host cannot reach a Tier A figure because it is not in the
+    # file the figure is drawn from, and that is only true if the file's own roster is the
+    # tier's as well.
+    mine = [r for r in payload["matrix"] if tiers.get(r["doc_id"], "A") == tier]
+    unobservable = sorted({r["agency"] for r in mine
                            if r["surface_kind"] != "well_known"
                            and r["verdicts"] and all(v == "error"
                                                      for v in r["verdicts"].values())})
-    with_surfaces = {r["agency"] for r in payload["matrix"]
-                     if r["surface_kind"] != "well_known"}
-    all_agencies = {r["agency"] for r in payload["matrix"]}
-    return {"task": TASK, "cycle": cycle, "params_hash": payload["params_hash"],
+    with_surfaces = {r["agency"] for r in mine if r["surface_kind"] != "well_known"}
+    all_agencies = {r["agency"] for r in mine}
+    return {"task": TASK, "cycle": cycle, "tier": tier,
+            "params_hash": payload["params_hash"],
             "agencies_without_surfaces": sorted(all_agencies - with_surfaces),
             "legs": legs, "candidate_legs": sorted(CANDIDATE_LEGS),
-            "agencies": sorted({r["agency"] for r in payload["matrix"]}),
+            "agencies": sorted(all_agencies),
             "agencies_wholly_unobservable": unobservable,
             "note": ("No composite and no ranking. These legs measure different constructs; a "
                      "single number over them, weighted by nothing in particular, would be "
@@ -182,7 +234,8 @@ def matrix(payload: dict, cycle: str) -> dict:
 
 
 def results(payload: dict, legs: dict, a12v: dict, mx: dict, cycle: str,
-            rederived: int | None = None) -> list:
+            rederived: int | None = None, legs_c: dict | None = None,
+            blinds: dict | None = None) -> list:
     """(base name, value, note). Bases are BARE — `cycle_results.name_for` is the single point
     where a cycle is stamped onto a name, so no emitter here can forget one (DD-041's
     amendment, DD-056)."""
@@ -262,6 +315,32 @@ def results(payload: dict, legs: dict, a12v: dict, mx: dict, cycle: str,
                 f"`not_applicable` (robots.txt disallows this client, which is A4's "
                 f"measurement; a host obeyed is not a host in conflict with itself). Not "
                 f"measured is a reason, not a zero (DD-055)."))
+    # ---- Tier C, in its own namespace and no shared denominator (DD-059) ----
+    for leg, s_ in (legs_c or {}).items():
+        key = leg.replace("-", "_").lower()
+        base = (f"{tag} **TIER C reference host**, leg {leg} judged by {CURRENT[leg]} over "
+                f"{s_['surfaces_targeted']} reference surfaces. Tier-0 legs only; a reference "
+                f"host is not a statistical agency and enters NO Tier A denominator "
+                f"(DD-059).")
+        out += [
+            (f"scan_tierc_{key}_pass", s_["pass"], f"{base} Findings of `pass`."),
+            (f"scan_tierc_{key}_fail", s_["fail"], f"{base} Findings of `fail`."),
+            (f"scan_tierc_{key}_error", s_["error"],
+             f"{base} Findings of `error` — the COLLECTOR could not observe."),
+            (f"scan_tierc_{key}_applicable_n", s_["applicable_n"],
+             f"{base} Denominator: {s_['denominator']}."),
+        ]
+    # ---- how much of the evidence the rules could not see, per leg ----
+    for leg, counts in sorted((blinds or {}).items()):
+        key = leg.replace("-", "_").lower()
+        for field, value in sorted(counts.items()):
+            out.append((f"scan_{key}_{field}", value,
+                        f"{tag} Probes on leg {leg} that were UNOBSERVED and therefore excluded "
+                        f"from the verdict, summed over this cycle's Findings. Read from the "
+                        f"Finding FIELD `{field}`, not parsed from a reason string "
+                        f"(cc_tasks/2026-09-08_a8_v4_blind_pointer_and_fixture_table.md "
+                        f"decision 3). A blind probe is not a product failure: it is evidence "
+                        f"nobody saw (DD-052 §6)."))
     vc = payload["verdict_counts"]
     out += [
         ("scan_surfaces", payload["surfaces"], f"{tag} Surfaces scanned, of the 41 on "
@@ -389,17 +468,28 @@ def main(argv=None) -> int:
     a = ap.parse_args(argv)
     cycle = cycle_name(a.cycle)
     payload = load(cycle)
-    legs, a12v = per_leg(payload), a12(payload)
-    mx = matrix(payload, cycle)
+    tiers = tier_of(load_params())
+    legs, a12v = per_leg(payload, tiers, "A"), a12(payload)
+    legs_c = per_leg(payload, tiers, "C")
+    blinds = blind_counts(payload)
+    mx = matrix(payload, cycle, tiers, "A")
+    mx_c = matrix(payload, cycle, tiers, "C")
     rederived = rederived_count(payload, load_params()) if not a.cycle else None
     data = [(cycle_results.name_for(base, cycle), v, note)
-            for base, v, note in results(payload, legs, a12v, mx, cycle, rederived)]
+            for base, v, note in results(payload, legs, a12v, mx, cycle, rederived,
+                                         legs_c, blinds)]
     matrix_file = matrix_path(cycle)
     if a.dry_run:
         for n, v, note in data:
             print(f"{n}\t{v}\t{note[:70]}")
         print(len(data), "Results ->", matrix_file.relative_to(REPO))
         return 0
+    tierc_file = REPO / "state" / f"scan_matrix_tierc_{cycle_results.cycle_suffix(cycle)}.json"
+    tierc_file.write_text(json.dumps({**mx_c, "per_leg": legs_c,
+                                      "note": ("Tier C reference hosts, tier-0 legs only. In "
+                                               "no Tier A denominator and on no agencies x "
+                                               "legs matrix (DD-059).")},
+                                     indent=1) + "\n", encoding="utf-8")
     matrix_file.write_text(json.dumps({**mx, "per_leg": legs, "a12": a12v,
                                        "requests_per_host": payload.get("requests_per_host"),
                                        "error_class_counts": payload.get("error_class_counts")},
