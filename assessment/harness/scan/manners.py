@@ -71,6 +71,33 @@ class Fetcher:
             self._robots[base] = None
         return self._robots[base]
 
+    def ensure_robots(self, url: str) -> None:
+        """Read and parse this netloc's `robots.txt` BEFORE anything else is asked of it.
+
+        `cc_tasks/2026-09-09_closeout_and_manners.md` decision 1, and it is strictly stronger
+        than `allowed()`. `always_fetch_paths` short-circuits `allowed()` to True without ever
+        consulting robots, which is right for the permission question (a `robots.txt` that
+        disallows `/robots.txt` cannot thereby hide it from a measurement OF robots.txt) and
+        wrong for the manners question. Cycle 3 issued `GET https://samhsa.gov/sitemap.xml`,
+        a carve-out path on a netloc nothing had read robots for, and `allowed()` would have
+        waved it through.
+
+        The bootstrap is the one exemption and it is structural: fetching `/robots.txt` cannot
+        require having fetched `/robots.txt`.
+        """
+        parts = urllib.parse.urlsplit(url)
+        if (parts.path or "/") == "/robots.txt":
+            return
+        self._robots_for(f"{parts.scheme}://{parts.netloc}")
+
+    def _gate(self, url: str) -> None:
+        """Robots-first, then obey. Raises `RobotsDisallowed` rather than returning, so a
+        collector that never checked cannot mistake a refusal for a response."""
+        from .errors import RobotsDisallowed
+        self.ensure_robots(url)
+        if not self.allowed(url):
+            raise RobotsDisallowed(url)
+
     def allowed(self, url: str) -> bool:
         parts = urllib.parse.urlsplit(url)
         path = parts.path or "/"
@@ -85,7 +112,15 @@ class Fetcher:
     def raw_get(self, url: str) -> dict:
         """One GET, rate-limited, with backoff. Returns a dict; raises nothing for HTTP
         status. `body` is the WHOLE body — `max_body_bytes` is null by default and a cap must
-        be set explicitly to exist (§2.3)."""
+        be set explicitly to exist (§2.3).
+
+        **Robots-first is enforced here and not in the collectors** (DD-062). It was the
+        collectors' job and three of them never did it: `sitemap.fetch`, `dcat.fetch_catalog`
+        and `lighthouse.fetch` issued GETs with no robots read at all. An obligation every
+        caller must remember is an obligation some caller will forget, and the one that forgot
+        reached federal hosts.
+        """
+        self._gate(url)
         host = urllib.parse.urlsplit(url).netloc
         attempts = 0
         while True:
@@ -115,7 +150,10 @@ class Fetcher:
         A host that answers 405/501 is retried once as a GET, because refusing HEAD is a
         server quirk and reading it as "this link has no content type" would score the quirk
         as a property of the product.
+
+        Robots-first applies here too (DD-062); see `raw_get`.
         """
+        self._gate(url)
         host = urllib.parse.urlsplit(url).netloc
         self._wait(host)
         self.requests[host] += 1
@@ -135,6 +173,72 @@ class Fetcher:
 #: 2026-09-07b cycles were measured under it and their params sets are recovered from git by
 #: hash for the re-derivation gate.
 _SAME_HOST_KEYS = (("probes", "same_host_only"), ("link_probe", "same_host_only"))
+
+
+#: The registrable-domain resolver, built ONCE and **offline**.
+#:
+#: `suffix_list_urls=()` is not an optimisation: `tldextract`'s default is to fetch the Public
+#: Suffix List over the network on first use, and this harness must be able to state that a
+#: cycle contacted exactly the hosts it measured. A resolver that quietly fetched mozilla.org
+#: would falsify that in the one module whose whole subject is what we may contact.
+_EXTRACT = None
+
+
+def _extractor():
+    global _EXTRACT
+    if _EXTRACT is None:
+        import tldextract
+        _EXTRACT = tldextract.TLDExtract(suffix_list_urls=(), fallback_to_snapshot=True)
+    return _EXTRACT
+
+
+def psl_identity() -> dict:
+    """What the site resolver is deciding with, so a cycle can register it.
+
+    `cc_tasks/2026-09-09_closeout_and_manners.md` decision 2 asks for "the list snapshot's
+    date". **The package carries no date**: the bundled snapshot is the raw Public Suffix List
+    with an MPL header and no timestamp, and its file mtime is the install time, not the
+    snapshot's. The version and the snapshot's digest identify it exactly and are recorded
+    instead; a date recovered from an mtime would be a number that looks like provenance and
+    is not.
+    """
+    import hashlib
+    import tldextract
+    snap = Path(tldextract.__file__).resolve().parent / ".tld_set_snapshot"
+    return {"resolver": "tldextract",
+            "version": getattr(tldextract, "__version__", "unknown"),
+            "snapshot_sha256": (hashlib.sha256(snap.read_bytes()).hexdigest()
+                                if snap.is_file() else None),
+            "snapshot_date": None,
+            "snapshot_date_note": ("the bundled Public Suffix List snapshot carries no date; "
+                                   "version and digest identify it")}
+
+
+def site_of(url_or_host: str) -> str:
+    """The SITE a URL belongs to: its registrable domain under the Public Suffix List.
+
+    Decision 2, and the definition is the one the WHATWG URL and Fetch standards use for
+    "same site": scheme plus registrable domain, with the **port excluded**. `www.samhsa.gov`
+    and `samhsa.gov` are one site; `127.0.0.1:1` and `127.0.0.1:2` are one site.
+
+    An IP-literal host has no registrable domain, and `tldextract` returns an empty string for
+    it. The host itself is the site key in that case, which is what makes the loopback fixture
+    a same-site pair rather than two unrelated authorities.
+    """
+    host = url_or_host
+    if "//" in host:
+        host = urllib.parse.urlsplit(host).netloc
+    host = (host or "").split("@")[-1].rsplit(":", 1)[0].strip("[]").lower()
+    if not host:
+        return ""
+    reg = _extractor()(f"http://{host}").registered_domain
+    return reg or host
+
+
+def same_site(a: str, b: str) -> bool:
+    """Whether two URLs or hosts belong to one site. Empty never matches empty."""
+    sa, sb = site_of(a), site_of(b)
+    return bool(sa) and sa == sb
 
 
 def same_host_only(params: dict) -> bool:

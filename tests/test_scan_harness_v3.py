@@ -137,7 +137,12 @@ def test_the_closed_set_grew_and_nothing_left_it():
     # up — not fetched because the SCANNER's same-host policy excludes the URL
     # (`cc_tasks/2026-09-08_scan_harness_v4.md` §1.3). The set may only grow, and each entry
     # names the task that added it so a later reader can see the shape of the growth.
-    assert now - was == {"connection_reset", "refused", "unknown", "off_host"}
+    # `sitemap_off_site` joined in `cc_tasks/2026-09-09_closeout_and_manners.md` decision 3:
+    # a sitemap declared on another site is recorded with its URL and never requested. It is
+    # in the `not_fetched` family beside `robots_disallowed` and `off_host`, and it is growth,
+    # which this test permits and pins so that growth is always deliberate.
+    assert now - was == {"connection_reset", "refused", "unknown", "off_host",
+                         "sitemap_off_site"}
 
 
 def test_the_blind_set_grew_only_by_the_new_classes():

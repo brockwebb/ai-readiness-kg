@@ -75,6 +75,18 @@ CLASSES: dict = {
     # It exists as a CLASS rather than as silence because the exclusion used to be a `continue`
     # in `links.probe`: an off-host link left no record at all, so nothing on the log could
     # show whether the policy had been applied, or to what.
+    # Declared on one site and hosted on another. `cc_tasks/2026-09-09_closeout_and_manners.md`
+    # decision 3: a `robots.txt` may name its sitemap anywhere, and following the name off the
+    # site is not discovery, it is a second site. The declaration IS evidence and is recorded
+    # with the URL; no request is made.
+    #
+    # Distinct from `off_host`, which is the SAME-SITE netloc policy applied to links found on
+    # a page. Merging them would lose which bound refused the fetch, and the two bounds move
+    # independently: `www.samhsa.gov` -> `samhsa.gov` is off-host and ON-site, and is fetched.
+    "sitemap_off_site": {"blind": False, "not_fetched": True,
+                         "note": "not fetched, because the robots.txt that declared this "
+                                 "sitemap is on a different site; the declaration is recorded "
+                                 "with its URL and nothing is requested"},
     "off_host": {"blind": False, "not_fetched": True,
                  "note": "not fetched, because the scanner's same-host policy puts this URL "
                          "outside the surface being measured; the exclusion is recorded, "
@@ -116,7 +128,23 @@ BY_EXCEPTION_TYPE = {
     "InvalidURL": "unknown",
     "TooManyRedirects": "unknown",
     "DecodingError": "parse_error",
+    # Raised by `manners.Fetcher` itself when robots disallows the URL. It reaches this map
+    # because the three collectors that never gated on robots record a failed fetch through a
+    # bare `except Exception`, and without an entry here a refusal this scanner CHOSE would be
+    # filed as `unknown` — a class that means "the map does not name this failure", which
+    # would be false.
+    "RobotsDisallowed": "robots_disallowed",
 }
+
+
+class RobotsDisallowed(Exception):
+    """`robots.txt` disallows this URL for this user agent, so no request was made.
+
+    An exception rather than a return value because `Fetcher.raw_get`/`raw_head` return a
+    response dict and every caller reads it positionally; a sentinel dict would be read as a
+    response by the collectors that do not check for it, which is precisely the set of
+    collectors this exception exists to protect.
+    """
 
 #: OS errno -> class, read from the exception chain. Named through the `errno` module rather
 #: than as integers: ECONNRESET is 54 on Darwin and 104 on Linux, and a hard-coded 54 would

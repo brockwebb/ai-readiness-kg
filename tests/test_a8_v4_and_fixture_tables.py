@@ -151,7 +151,13 @@ def test_the_derivation_reads_the_collectors_not_the_rules():
     """The three facts the derivation rests on, each read from source."""
     probes = collector_probes()
     deref = {fq for fq, i in probes.items() if i["dereference"]}
-    assert deref == {"links.probe", "v2clauses.follow_latest_pointer"}, (
+    # THREE now. `sitemap.fetch` joined when `declared_sitemaps` was recognised as a
+    # dereference parameter (`cc_tasks/2026-09-09_closeout_and_manners.md` §1): it is handed
+    # the `Sitemap:` URLs a robots.txt names, which are URLs it did not choose, and that is
+    # exactly the property this set is about. It was missing while the cycle-3 defect ran
+    # along it, and this assertion firing is what the set exists for.
+    assert deref == {"links.probe", "sitemap.fetch",
+                     "v2clauses.follow_latest_pointer"}, (
         "the set of collectors that dereference a discovered URL changed; the fixture tables "
         "derive from it")
     assert probes["links.probe"]["methods"] == {"HEAD"}

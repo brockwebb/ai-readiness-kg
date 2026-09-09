@@ -3,12 +3,19 @@
 Reads the sitemap at the path robots.txt DECLARES where there is one, not only the fixed
 `/sitemap.xml` — closing one of the four probe-depth gaps `assessment_protocol.md` §9 lists so
 that nobody rediscovers them.
+
+**A declaration is followed only within the SITE** (`cc_tasks/2026-09-09_closeout_and_manners.md`
+decision 3). Cycle 3 followed two declarations onto apex netlocs and, because this collector
+called `raw_get` directly, did so without reading those netlocs' `robots.txt` first. Robots-first
+now lives in the fetcher, and the site bound lives here: an off-site declaration is recorded
+with its URL and never requested, because it names somebody else's site.
 """
 from __future__ import annotations
 
 import urllib.parse
 
 from ..errors import classify_exception, classify_status
+from ..manners import same_site, site_of
 from ..model import Observation, store_evidence
 
 VERSION = "0.1.0"
@@ -22,11 +29,31 @@ def fetch(fetcher, leg: str, doc_id: str, product_url: str, params: dict,
     candidates = list(declared_sitemaps or []) + [
         urllib.parse.urljoin(base, p) for p in params["manners"]["always_fetch_paths"]
         if "sitemap" in p]
+    declared = set(declared_sitemaps or [])
     for url in candidates + [urllib.parse.urljoin(base, p)
                              for p in params["a5_discovery"]["well_known_probes"]]:
         if url in seen:
             continue
         seen.add(url)
+        # DECISION 3 (`cc_tasks/2026-09-09_closeout_and_manners.md`): a `robots.txt` may name
+        # its sitemap on any host, and following the name off the SITE is not discovery, it is
+        # a second site. The declaration is evidence and is recorded with its URL; no request
+        # is made. Same-site siblings ARE followed: `www.samhsa.gov` declaring
+        # `samhsa.gov/sitemap.xml` is one site by the registrable-domain test, and the fetcher
+        # reads that netloc's own robots.txt before touching it (DD-062).
+        if url in declared and not same_site(url, product_url):
+            obs.append(Observation.make(
+                spec_code or leg, leg, doc_id, url, "sitemap", VERSION, params,
+                {"method": None, "url": url, "not_requested": True},
+                {"status": None, "headers": {}, "body_sha256": None, "body_path": None,
+                 "bytes": 0, "elapsed_ms": 0},
+                parsed={"present": None, "served_content_type": None,
+                        "wrong_content_type": None, "kind": "sitemap",
+                        "covers_product": None, "url_count": None,
+                        "declared_by": base, "declared_site": site_of(product_url),
+                        "sitemap_site": site_of(url)},
+                error_class="sitemap_off_site"))
+            continue
         try:
             r = fetcher.raw_get(url)
         except Exception as exc:

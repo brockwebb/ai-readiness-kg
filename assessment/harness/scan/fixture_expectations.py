@@ -35,6 +35,7 @@ from __future__ import annotations
 import ast
 import inspect
 import re
+import textwrap
 from pathlib import Path
 
 VERSION = "0.1.0"
@@ -46,7 +47,13 @@ COLLECTORS = SCAN / "collectors"
 #: A parameter name that means "URLs this function did not choose" — the signature of a
 #: dereference. Read from the signature rather than listed by function name, so a third
 #: dereferencing collector is covered the day it is written.
-DEREFERENCE_PARAMS = ("links", "pointers")
+DEREFERENCE_PARAMS = ("links", "pointers", "declared_sitemaps")
+
+#: The gate a collector must pass a URL through before fetching it: `Fetcher.allowed(url)`,
+#: which is the only thing that reads and caches a netloc's `robots.txt`. Named here because
+#: this module derives WHO calls it, and a second spelling of the call would make a collector
+#: look ungated when it is not.
+ROBOTS_GATE = "allowed"
 
 #: The status classes a fixture can produce that mean "not observed". `refused` statuses come
 #: from `params.manners.unobservable_statuses`; a reset produces no status at all.
@@ -81,6 +88,63 @@ def leg_blocks(src: str | None = None, params: dict | None = None) -> dict:
     return out
 
 
+def _calls_gate(*sources: str) -> bool:
+    """True when any of `sources` really CALLS `.<ROBOTS_GATE>(...)`, read from the tree.
+
+    Comments and docstrings MENTION the gate; only a Call node is one. `robots.py` carries a
+    comment explaining why a rule does not use `Fetcher.allowed()`, and a text search for
+    `.allowed(` reported that collector as gated when it never calls it.
+
+    Each source is parsed SEPARATELY. The reachable source of a function is its own body plus
+    the bodies of the module helpers it calls, and concatenating two `def` blocks produces text
+    that does not parse, so a single joined parse returned False for every collector that gates
+    in its own body. Both mistakes give an answer with no relation to the code.
+    """
+    for src in sources:
+        if not src:
+            continue
+        try:
+            tree = ast.parse(src)
+        except SyntaxError:
+            try:
+                tree = ast.parse(textwrap.dedent(src))
+            except SyntaxError:
+                continue
+        if any(isinstance(n, ast.Call) and isinstance(n.func, ast.Attribute)
+               and n.func.attr == ROBOTS_GATE for n in ast.walk(tree)):
+            return True
+    return False
+
+
+def fetcher_gates() -> dict:
+    """Whether the FETCHER itself puts every request through the robots gate.
+
+    This is the question decision 1 turns on. While `raw_get` and `raw_head` do not gate, the
+    obligation sits on each collector and a new collector can simply forget it, which is how
+    three of them came to issue requests with no robots read at all. Once the fetcher gates,
+    no collector can forget, and `ungated_probes` is empty by construction rather than by
+    everyone having remembered.
+    """
+    text = (SCAN / "manners.py").read_text(encoding="utf-8")
+    tree = ast.parse(text)
+    # Every method of the Fetcher, so a gate applied ONE HOP DOWN counts — the same rule
+    # `collector_probes` already uses for a method issued one hop down. `raw_get` calls
+    # `self._gate(url)`, which calls `self.allowed(url)`; a derivation that read only the
+    # immediate body would report the fetcher as ungated after it had been fixed, which is
+    # the failure mode of asking a narrower question than the property.
+    bodies = {}
+    for cls in (n for n in ast.walk(tree) if isinstance(n, ast.ClassDef)):
+        for fn in (n for n in cls.body if isinstance(n, ast.FunctionDef)):
+            bodies[fn.name] = ast.get_source_segment(text, fn) or ""
+    out = {}
+    for name in ("raw_get", "raw_head"):
+        body = bodies.get(name, "")
+        reachable = [body] + [bodies.get(m, "") for m in bodies
+                              if m != name and re.search(rf"\bself\.{re.escape(m)}\s*\(", body)]
+        out[name] = _calls_gate(*reachable)
+    return {"methods": out, "gates": bool(out) and all(out.values())}
+
+
 def collector_probes() -> dict:
     """`{module.function: {"methods": {...}, "dereference": bool}}`, read from the source.
 
@@ -99,8 +163,9 @@ def collector_probes() -> dict:
         bodies = {n.name: ast.get_source_segment(text, n) or ""
                   for n in tree.body if isinstance(n, ast.FunctionDef)}
         for name, body in bodies.items():
-            reach = body + "".join(bodies.get(m, "") for m in bodies
-                                   if m != name and re.search(rf"\b{re.escape(m)}\s*\(", body))
+            reachable = [body] + [bodies.get(m, "") for m in bodies
+                                  if m != name and re.search(rf"\b{re.escape(m)}\s*\(", body)]
+            reach = "".join(reachable)
             methods = set()
             if "raw_head" in reach:
                 methods.add("HEAD")
@@ -114,7 +179,62 @@ def collector_probes() -> dict:
             out[f"{path.stem}.{name}"] = {
                 "methods": methods,
                 "dereference": bool(args & set(DEREFERENCE_PARAMS)),
+                # Does this function put every URL through the robots gate before fetching
+                # it? Detected over the AST of the same reachable text, NOT over the text: a
+                # regex for `.allowed(` matches the phrase inside `robots.py`'s own comment
+                # explaining why a rule does not use it, and reported that collector as gated
+                # when it never calls it. The right answer for the wrong reason is the defect
+                # this module was built to stop.
+                "robots_gated": _calls_gate(*reachable),
             }
+    return out
+
+
+def ungated_probes(legs) -> dict:
+    """Per leg, the collectors it dispatches to that issue a request WITHOUT the robots gate.
+
+    **This is the second thing this module derives, and it is not blindness.** A fixture makes
+    a leg blind; nothing about blindness can say whether a request was polite. The cycle-3
+    defect (`cc_tasks/2026-09-09_report_draft_RESULT.md` §3) was exactly that: `sitemap.fetch`
+    dereferenced a `Sitemap:` URL on a second netloc with `raw_get` and no `allowed()` call, so
+    the apex host received a GET before this scanner had read its `robots.txt`. The derivation
+    could not see it, because it was only ever asked which legs a fixture blinds.
+
+    `dereference` is reported beside it because the two together say how bad an instance is. An
+    ungated fetch of the surface's OWN netloc is impolite and self-limited: some other leg in
+    the same cycle reads that host's robots.txt and the fetcher caches it. An ungated
+    DEREFERENCE can land on a netloc nothing in the cycle has read at all, which is the case
+    that reached federal hosts.
+
+    The invariant this exists to check has no threshold and needs no pre-registered table:
+    **the set is empty**, because a request that no collector gates is a request the FETCHER
+    must gate (`cc_tasks/2026-09-09_closeout_and_manners.md` decision 1).
+    """
+    if fetcher_gates()["gates"]:
+        # Nothing can be ungated: every request goes through `raw_get`/`raw_head` and both
+        # gate. Returning empty here is the point of the fix, not a way of passing the check.
+        return {}
+    blocks = leg_blocks()
+    probes = collector_probes()
+    out: dict = {}
+    for leg in legs:
+        body = blocks.get(leg, "") + "".join(blocks.get(c, "") for c in _consumed(leg))
+        rows = []
+        for fq, info in sorted(probes.items()):
+            mod, fn = fq.split(".")
+            if not re.search(rf"\b{re.escape(mod)}\.{re.escape(fn)}\s*\(", body):
+                continue
+            if info["robots_gated"]:
+                continue
+            rows.append({"collector": fq, "methods": sorted(info["methods"]),
+                         "dereference": info["dereference"],
+                         "why": (f"{fq} issues {sorted(info['methods'])} and its reachable "
+                                 f"source never calls `.{ROBOTS_GATE}(`"
+                                 + (", and it dereferences a URL it did not choose, so the "
+                                    "request may land on a netloc this cycle has not read "
+                                    "robots.txt for" if info["dereference"] else ""))})
+        if rows:
+            out[leg] = rows
     return out
 
 
@@ -233,5 +353,17 @@ def check(params: dict, legs) -> dict:
             if info["how"] == "derived" and info["verdict"] != have:
                 diffs.append({"fixture": fixture, "leg": leg, "table": have,
                               "derived": info["verdict"], "why": info["why"]})
+    # ---- manners, which is not a verdict and is checked separately -------------------
+    # A fixture decides which legs are BLIND. Nothing about blindness can say whether a
+    # request was polite, so the robots-first property is derived from the collectors and the
+    # fetcher rather than from any fixture's table, and it is reported in its own list. Folding
+    # it into `differences` would make a manners violation look like a mis-registered verdict.
+    gates = fetcher_gates()
+    ungated = ungated_probes(legs)
+    manners = [{"leg": leg, **row} for leg, rows in sorted(ungated.items()) for row in rows]
     return {"fixtures": len(per_fixture), "derived": derived_n, "deferred": deferred_n,
-            "differences": diffs, "per_fixture": per_fixture}
+            "differences": diffs, "per_fixture": per_fixture,
+            "fetcher_gates_every_request": gates["gates"],
+            "fetcher_gate_by_method": gates["methods"],
+            "ungated_probes": manners,
+            "ungated_dereferences": [m for m in manners if m["dereference"]]}

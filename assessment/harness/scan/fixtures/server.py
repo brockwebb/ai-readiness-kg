@@ -82,6 +82,21 @@ MODES = {
     # HEAD is the discriminator because the link probe is a HEAD (`link_probe.method`) and the
     # page fetch is a GET, so this blinds exactly the links and nothing else.
     "resets_links_only": {"serves_as": "passes_all", "reset_on_head": True},
+    # A host whose robots.txt declares its sitemap on a SECOND NETLOC OF THE SAME SITE.
+    # `cc_tasks/2026-09-09_closeout_and_manners.md` §1, reproducing the defect
+    # `cc_tasks/2026-09-09_report_draft_RESULT.md` §3 found on the cycle-3 request log:
+    # `GET https://samhsa.gov/sitemap.xml` was issued after reading `www.samhsa.gov`'s
+    # robots.txt and following its `Sitemap:` line, without ever fetching the apex netloc's
+    # own robots.txt.
+    #
+    # `overlay` rather than a copied tree: this fixture differs from `passes_all` in one line
+    # of one file, and duplicating eleven files would make two definitions of "a well-formed
+    # surface". The overlay directory is searched first and `serves_as` is the fallback.
+    #
+    # `sibling` names the fixture the SECOND server serves. It binds first, so the primary's
+    # robots.txt can name its port through the `SIBLINGHOSTPORT` substitution.
+    "sitemap_on_sibling": {"serves_as": "passes_all", "overlay": "sitemap_on_sibling",
+                           "sibling": "passes_all"},
 }
 
 
@@ -104,6 +119,12 @@ class _Handler(http.server.SimpleHTTPRequestHandler):
     invalid_route_suffix: str = ""
     #: Reset every HEAD and serve every GET. Blinds the link probe alone.
     reset_on_head: bool = False
+    #: Searched BEFORE `root`. A fixture that differs from another in one file overlays that
+    #: file and inherits the rest, so "a well-formed surface" has one definition on disk.
+    overlay_root: Path | None = None
+    #: `netloc` of this fixture's sibling server, substituted for `SIBLINGHOSTPORT`. Empty
+    #: when the fixture has no sibling.
+    sibling_hostport: str = ""
     #: Appended to by every request. A list on the CLASS, handed in by `FixtureServer`, so the
     #: log outlives the per-request handler instance.
     requests: list = []
@@ -177,7 +198,11 @@ class _Handler(http.server.SimpleHTTPRequestHandler):
         path = self.path.split("?")[0]
         # Logged BEFORE the reset: the request WAS received, and a request log that omitted it
         # would make the fixture look like a host that never heard from us.
-        self.requests.append({"method": "HEAD" if self._head_only else "GET", "path": path})
+        # `netloc` rides on every entry because a fixture with a sibling shares ONE log
+        # across two servers, and "which server answered" is what makes the order across them
+        # readable. Additive: existing readers key on `method` and `path`.
+        self.requests.append({"method": "HEAD" if self._head_only else "GET", "path": path,
+                              "netloc": self.hostport})
         if self._resets_this_path(path) or (self.reset_on_head and self._head_only):
             return self._reset()
         if self.refuse_status is not None and path not in self.served_paths:
@@ -185,6 +210,8 @@ class _Handler(http.server.SimpleHTTPRequestHandler):
                                      head_only=self._head_only)
         rel = path.lstrip("/") or "index.html"
         target = self.root / rel
+        if self.overlay_root is not None and (self.overlay_root / rel).is_file():
+            target = self.overlay_root / rel
         if target.is_dir():
             target = target / "index.html"
         if not target.is_file():
@@ -194,6 +221,10 @@ class _Handler(http.server.SimpleHTTPRequestHandler):
             return self._serve_bytes(b"not found", "text/plain", status=404,
                                      head_only=self._head_only)
         body = target.read_bytes()
+        # SIBLINGHOSTPORT first: it CONTAINS "HOSTPORT", so substituting the shorter token
+        # first would rewrite the tail of the longer one and leave `SIBLING127.0.0.1:PORT`.
+        if b"SIBLINGHOSTPORT" in body:
+            body = body.replace(b"SIBLINGHOSTPORT", self.sibling_hostport.encode())
         if b"HOSTPORT" in body:
             body = body.replace(b"HOSTPORT", self.hostport.encode())
         ctype = {".html": "text/html", ".json": "application/json", ".csv": "text/csv",
@@ -224,31 +255,58 @@ class FixtureServer:
         self.thread = None
         #: Every request this server answered, in order. Read by the test that asserts a
         #: surface's links are HEADed ONCE per cycle (§1.3).
+        #:
+        #: A fixture with a sibling shares ONE list across both servers, and every entry
+        #: carries the `netloc` that answered it. Two lists would let a reader see what each
+        #: server received and not the ORDER ACROSS them, and the order across them is the
+        #: whole property: did the sibling's `robots.txt` arrive before its `sitemap.xml`.
         self.requests: list = []
+        #: The second server, when the fixture declares one, and its base URL.
+        self.sibling = None
+        self.sibling_url: str = ""
+
+    def _serve(self, mode: dict, params: dict) -> tuple:
+        """Bind one server for `mode` and return `(httpd, thread, handler, base_url)`."""
+        served_by = mode.pop("serves_as", self.fixture)
+        overlay = mode.pop("overlay", None)
+        handler = type("H", (_Handler,), {
+            "root": FIXTURES / served_by,
+            "overlay_root": (FIXTURES / overlay) if overlay else None,
+            "requests": self.requests,
+            "invalid_route_suffix": params["a10_soft404"]["invalid_path_suffix"],
+            **mode})
+        socketserver.TCPServer.allow_reuse_address = True
+        httpd = socketserver.TCPServer((BIND_HOST, 0), handler)
+        port = httpd.server_address[1]
+        handler.hostport = f"{BIND_HOST}:{port}"
+        thread = threading.Thread(target=httpd.serve_forever, daemon=True)
+        thread.start()
+        return httpd, thread, handler, f"http://{BIND_HOST}:{port}"
 
     def __enter__(self) -> str:
         from .. import load_params
+        params = load_params()
         mode = dict(MODES[self.fixture])
         # A fixture may SERVE another's tree (`invalid_route_unobserved` serves `passes_all`)
         # so that "a well-formed surface" has exactly one definition on disk.
-        served_by = mode.pop("serves_as", self.fixture)
-        handler = type("H", (_Handler,), {
-            "root": FIXTURES / served_by,
-            "requests": self.requests,
-            "invalid_route_suffix": load_params()["a10_soft404"]["invalid_path_suffix"],
-            **mode})
-        socketserver.TCPServer.allow_reuse_address = True
-        self.httpd = socketserver.TCPServer((BIND_HOST, 0), handler)
-        port = self.httpd.server_address[1]
-        handler.hostport = f"{BIND_HOST}:{port}"
-        self.thread = threading.Thread(target=self.httpd.serve_forever, daemon=True)
-        self.thread.start()
-        #: Also kept on the object, because `__enter__` returns the URL (every existing caller
-        #: binds it that way) and a caller that also wants `requests` needs to hold the server.
-        self.base_url = f"http://{BIND_HOST}:{port}"
+        #
+        # The SIBLING binds first when there is one: the primary's robots.txt names the
+        # sibling's port, and an ephemeral port is not knowable until its server is bound.
+        sibling_fixture = mode.pop("sibling", None)
+        if sibling_fixture:
+            sib_mode = {k: v for k, v in MODES[sibling_fixture].items()}
+            sib_mode.setdefault("serves_as", sibling_fixture)
+            self.sibling, self._sib_thread, _h, self.sibling_url = self._serve(sib_mode, params)
+        self.httpd, self.thread, handler, self.base_url = self._serve(mode, params)
+        if self.sibling_url:
+            handler.sibling_hostport = self.sibling_url.split("//", 1)[1]
         return self.base_url
 
     def __exit__(self, *exc) -> None:
-        if self.httpd:
-            self.httpd.shutdown()
-            self.httpd.server_close()
+        for srv in (self.httpd, self.sibling):
+            if srv:
+                srv.shutdown()
+                srv.server_close()
+
+    def netloc_of(self, url: str) -> str:
+        return url.split("//", 1)[1] if "//" in url else url

@@ -64,6 +64,12 @@ PRIOR_CYCLES = {
     # (`rederive.observations_for`), so a Findings-only payload is re-derivable.
     "scan_2026-09-07_rj1": 352,
     "scan_2026-09-07b_rj1": 404,
+    # Cycle 3, added by `cc_tasks/2026-09-09_closeout_and_manners.md` §3, which asks for all
+    # EIGHT prior payloads. It was in the same position the `_rj1` pair was in one task ago:
+    # measured, committed, cited in a RESULT, and not in the standing set, so nothing would
+    # have noticed a rule change that stopped re-deriving it. 634 cycle Findings plus 97
+    # control Findings.
+    "scan_2026-09-09": 731,
 }
 
 #: The fixture whose existence IS the fix's proof. Named once, here, because three tests need

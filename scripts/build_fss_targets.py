@@ -43,12 +43,13 @@ sys.path.insert(0, str(REPO))
 sys.path.insert(0, str(REPO / "assessment" / "harness"))
 
 from scan import load_params                                        # noqa: E402
+from scan.manners import psl_identity, site_of                      # noqa: E402
 
 TASK = "cc_tasks/2026-09-08_scan_frame_fss.md"
 ADDENDUM = "cc_tasks/2026-09-08_scan_frame_fss_ADDENDUM-05.md"
 #: v2, per `cc_tasks/2026-09-08_scan_run_3b.md` decisions 1 and 3.
 TASK_V2 = "cc_tasks/2026-09-08_scan_run_3b.md"
-VERSION = 2
+VERSION = 3
 ROSTER = REPO / "state" / "fss_roster_2026-09.json"
 CYCLE1 = REPO / "state" / "scan_targets_2026-09.json"
 OUT = REPO / "state" / "scan_targets_fss_2026-09.json"
@@ -88,7 +89,8 @@ def build(params: dict, roster: dict) -> dict:
                 or "UNKNOWN")
         base = {"agency": code, "agency_name": e["unit_name"], "tier": "A", "host": host,
                 "parent_department": e["parent_department"]}
-        hosts.append({"host": host, "tier": "A", "agency": code})
+        hosts.append({"host": host, "tier": "A", "agency": code,
+                      "site": site_of(host)})
         # The home row: every host gets one, and it is where the tier-0 legs land.
         rows.append({**base, "surface_kind": "home", "url": e["home_url"],
                      "doc_id": f"home:{host}",
@@ -112,14 +114,15 @@ def build(params: dict, roster: dict) -> dict:
         host = t["host"].lower()
         base = {"agency": t["name"], "agency_name": t["name"], "tier": "C", "host": host,
                 "parent_department": None}
-        hosts.append({"host": host, "tier": "C", "agency": t["name"]})
+        hosts.append({"host": host, "tier": "C", "agency": t["name"],
+                      "site": site_of(host)})
         machine_netloc = urllib.parse.urlsplit(t["machine_entry_point"]).netloc.lower()
         # The machine entry point sits on its OWN netloc — catalog.data.gov, data.nist.gov,
         # open.gsa.gov — which v1 left out of `hosts[]`, so `manners.on_roster_host` would
         # have refused the very surfaces the operator declared. The frame is still 19 hosts in
         # the agency sense; the roster is 22 netlocs (`..._scan_run_3b.md` decision 1).
         hosts.append({"host": machine_netloc, "tier": "C", "agency": t["name"],
-                      "netloc_of": host})
+                      "netloc_of": host, "site": site_of(machine_netloc)})
         for kind, url, why in (
                 ("home", t["home"], "roster host (Tier C, operator declaration 2026-09-08)"),
                 ("machine", t["machine_entry_point"],
@@ -158,7 +161,7 @@ def build(params: dict, roster: dict) -> dict:
     pending = sorted(a["agency"] for a in agencies if a["pending_operator_declaration"])
     return {
         "task": TASK_V2, "supersedes_task": TASK, "addendum": ADDENDUM,
-        "targets_version": VERSION, "derived_from_version": 1, "epoch": EPOCH,
+        "targets_version": VERSION, "derived_from_version": VERSION - 1, "epoch": EPOCH,
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "derived_from": "fss_roster_2026-09",
         "source_type": "product_surface",
@@ -168,6 +171,13 @@ def build(params: dict, roster: dict) -> dict:
         "tier_a_agencies": sum(1 for h in hosts if h["tier"] == "A"),
         "tier_c_hosts": len({h["agency"] for h in hosts if h["tier"] == "C"}),
         "tier_c_netlocs": sum(1 for h in hosts if h["tier"] == "C"),
+        # v3 (`cc_tasks/2026-09-09_closeout_and_manners.md` decision 2): every host carries
+        # the SITE it belongs to, the registrable domain under the Public Suffix List. The
+        # contact bound is the site; the frame's denominator stays the body (decision 4), so
+        # all three counts are published and none stands in for another.
+        "site_bound": psl_identity(),
+        "sites": sorted({h["site"] for h in hosts}),
+        "site_count": len({h["site"] for h in hosts}),
         "hosts": hosts, "netloc_count": len(hosts),
         "host_count": len({h.get("netloc_of") or h["host"] for h in hosts}),
         "surfaces": len(rows),

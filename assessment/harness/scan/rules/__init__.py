@@ -32,6 +32,7 @@ from . import rule_a2_v3, rule_a3_v3, rule_d1_v3, rule_f4_v3
 from . import rule_a1_v3, rule_a3_v4
 from . import rule_a8_v3, rule_a10_v3
 from . import rule_a1_v4, rule_a3_v5, rule_a8_v4
+from . import rule_a5_v2
 from . import rule_a12
 
 #: Every version ever shipped, keyed by rule id. Never prune it: a pruned entry is a stored
@@ -73,6 +74,12 @@ V5 = [rule_a8_v3, rule_a10_v3]
 #: over the rest with the blind count on the Finding. Predecessors stay in `REGISTRY`.
 V6 = [rule_a1_v4, rule_a3_v5, rule_a8_v4]
 
+#: Generation 7 — `cc_tasks/2026-09-09_closeout_and_manners.md`. One module, one branch: a
+#: sitemap DECLARED on another site is `not_applicable` for discovery, never `fail`. The
+#: scanner's own contact bound stopped it being followed, and a bound of ours is not an
+#: omission of theirs (decision 3).
+V7 = [rule_a5_v2]
+
 #: Rules for CANDIDATE indicators. They judge, they are recorded, and their Findings enter no
 #: numerator and no denominator (DD-054). Kept in their own list so the reporting layer can
 #: exclude them mechanically rather than by remembering a code.
@@ -82,7 +89,7 @@ CANDIDATE_RULES = [rule_a12]
 #: track of: the registry-integrity tests read this, so a fifth generation is one entry here
 #: and nothing else to remember — which is the same reasoning `parse_rule_id` gives for being
 #: a regex instead of a per-rule table.
-GENERATIONS = (V1, V2, V3, V4, V5, V6)
+GENERATIONS = (V1, V2, V3, V4, V5, V6, V7)
 
 MODULES = [m for g in GENERATIONS for m in g] + CANDIDATE_RULES
 

@@ -2,10 +2,10 @@
  "task": "cc_tasks/2026-09-08_scan_run_3b.md",
  "supersedes_task": "cc_tasks/2026-09-08_scan_frame_fss.md",
  "addendum": "cc_tasks/2026-09-08_scan_frame_fss_ADDENDUM-05.md",
- "targets_version": 2,
- "derived_from_version": 1,
+ "targets_version": 3,
+ "derived_from_version": 2,
  "epoch": "scan-fss-2026-09",
- "generated_at": "2026-09-09T03:44:41.406333+00:00",
+ "generated_at": "2026-09-09T14:43:20.029335+00:00",
  "derived_from": "fss_roster_2026-09",
  "source_type": "product_surface",
  "construct_arm": "publication_actionability",
@@ -13,119 +13,168 @@
  "tier_a_agencies": 16,
  "tier_c_hosts": 3,
  "tier_c_netlocs": 6,
+ "site_bound": {
+  "resolver": "tldextract",
+  "version": "3.2.0",
+  "snapshot_sha256": "e86b831f26b65b20a18e78f848db04fe380ac13c2680af12305cda2395b3c71f",
+  "snapshot_date": null,
+  "snapshot_date_note": "the bundled Public Suffix List snapshot carries no date; version and digest identify it"
+ },
+ "sites": [
+  "bea.gov",
+  "bls.gov",
+  "bts.gov",
+  "cdc.gov",
+  "census.gov",
+  "data.gov",
+  "ed.gov",
+  "eia.gov",
+  "federalreserve.gov",
+  "gsa.gov",
+  "irs.gov",
+  "nist.gov",
+  "nsf.gov",
+  "ojp.gov",
+  "samhsa.gov",
+  "ssa.gov",
+  "usda.gov"
+ ],
+ "site_count": 17,
  "hosts": [
   {
    "host": "www.federalreserve.gov",
    "tier": "A",
-   "agency": "DRSMSU"
+   "agency": "DRSMSU",
+   "site": "federalreserve.gov"
   },
   {
    "host": "www.ers.usda.gov",
    "tier": "A",
-   "agency": "ERS"
+   "agency": "ERS",
+   "site": "usda.gov"
   },
   {
    "host": "www.nass.usda.gov",
    "tier": "A",
-   "agency": "NASS"
+   "agency": "NASS",
+   "site": "usda.gov"
   },
   {
    "host": "www.aphis.usda.gov",
    "tier": "A",
-   "agency": "NAHMSAPHIS"
+   "agency": "NAHMSAPHIS",
+   "site": "usda.gov"
   },
   {
    "host": "www.bea.gov",
    "tier": "A",
-   "agency": "BEA"
+   "agency": "BEA",
+   "site": "bea.gov"
   },
   {
    "host": "www.census.gov",
    "tier": "A",
-   "agency": "CENSUS"
+   "agency": "CENSUS",
+   "site": "census.gov"
   },
   {
    "host": "nces.ed.gov",
    "tier": "A",
-   "agency": "NCES"
+   "agency": "NCES",
+   "site": "ed.gov"
   },
   {
    "host": "www.eia.gov",
    "tier": "A",
-   "agency": "EIA"
+   "agency": "EIA",
+   "site": "eia.gov"
   },
   {
    "host": "www.cdc.gov",
    "tier": "A",
-   "agency": "NCHS"
+   "agency": "NCHS",
+   "site": "cdc.gov"
   },
   {
    "host": "www.samhsa.gov",
    "tier": "A",
-   "agency": "SAMHSACBHS"
+   "agency": "SAMHSACBHS",
+   "site": "samhsa.gov"
   },
   {
    "host": "bjs.ojp.gov",
    "tier": "A",
-   "agency": "BJS"
+   "agency": "BJS",
+   "site": "ojp.gov"
   },
   {
    "host": "www.bls.gov",
    "tier": "A",
-   "agency": "BLS"
+   "agency": "BLS",
+   "site": "bls.gov"
   },
   {
    "host": "www.irs.gov",
    "tier": "A",
-   "agency": "SOI"
+   "agency": "SOI",
+   "site": "irs.gov"
   },
   {
    "host": "www.bts.gov",
    "tier": "A",
-   "agency": "BTS"
+   "agency": "BTS",
+   "site": "bts.gov"
   },
   {
    "host": "ncses.nsf.gov",
    "tier": "A",
-   "agency": "NCSES"
+   "agency": "NCSES",
+   "site": "nsf.gov"
   },
   {
    "host": "www.ssa.gov",
    "tier": "A",
-   "agency": "ORES"
+   "agency": "ORES",
+   "site": "ssa.gov"
   },
   {
    "host": "www.data.gov",
    "tier": "C",
-   "agency": "data.gov"
+   "agency": "data.gov",
+   "site": "data.gov"
   },
   {
    "host": "catalog.data.gov",
    "tier": "C",
    "agency": "data.gov",
-   "netloc_of": "www.data.gov"
+   "netloc_of": "www.data.gov",
+   "site": "data.gov"
   },
   {
    "host": "www.nist.gov",
    "tier": "C",
-   "agency": "NIST"
+   "agency": "NIST",
+   "site": "nist.gov"
   },
   {
    "host": "data.nist.gov",
    "tier": "C",
    "agency": "NIST",
-   "netloc_of": "www.nist.gov"
+   "netloc_of": "www.nist.gov",
+   "site": "nist.gov"
   },
   {
    "host": "www.gsa.gov",
    "tier": "C",
-   "agency": "GSA"
+   "agency": "GSA",
+   "site": "gsa.gov"
   },
   {
    "host": "open.gsa.gov",
    "tier": "C",
    "agency": "GSA",
-   "netloc_of": "www.gsa.gov"
+   "netloc_of": "www.gsa.gov",
+   "site": "gsa.gov"
   }
  ],
  "netloc_count": 22,

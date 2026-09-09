@@ -1107,3 +1107,32 @@ It also follows `rules.consumes`, or A1 and A3 — whose own dispatch blocks col
 * **`off_host`** = **scope, not blindness.** The scanner declined to look because the URL is outside the surface being measured. It is excluded from every count, exactly as `errors.CLASSES["off_host"]` is not blind — folding it into blindness would turn a page whose links are all outbound into `error` when the true answer is that this product offers nothing of its own.
 
 `RULE-A8-v4` implements the four-state split (resolved / observed non-resolution / blind / off-host) and reports the blind and off-host counts as **fields** on the Finding rather than in prose. Those fields are absent from the record when unset and are not inputs to `finding_id`, so no stored Finding is re-identified and every prior cycle still re-derives byte-identically.
+
+---
+
+## DD-062
+
+**Robots-first is enforced in the fetcher. The contact bound is the SITE. An off-site declaration is observed, not followed.**
+
+*2026-09-09. `cc_tasks/2026-09-09_closeout_and_manners.md` decisions 1 to 3, from the block in `cc_tasks/2026-09-09_report_draft_RESULT.md` §3.*
+
+Cycle 3 issued `GET https://samhsa.gov/sitemap.xml` and `GET https://data.gov/sitemap.xml` to netlocs whose `robots.txt` this scanner had never fetched. `manners.py`'s own docstring says an instrument that measures robots.txt compliance and then ignores robots.txt is not an instrument, and for those two requests that is what it was.
+
+**Three collectors, not one.** The task premise named the sitemap follower. Deriving the property found that `sitemap.fetch`, `dcat.fetch_catalog` and `lighthouse.fetch` all called `raw_get` with no gate at all; only four of the eight request-issuing collectors ever checked. An obligation every caller must remember is an obligation some caller will forget, and which one forgot is a matter of luck rather than design.
+
+**1. Robots-first, in the fetcher.** `Fetcher.raw_get` and `raw_head` now read and parse a netloc's `robots.txt` before anything else is asked of that netloc, then apply the permission. A collector cannot forget what it does not do. Two consequences worth stating:
+
+* It is **strictly stronger than `allowed()`**. `always_fetch_paths` short-circuits `allowed()` to `True` without consulting robots at all, which is right for the permission question — a `robots.txt` that disallows `/robots.txt` cannot thereby hide it from a measurement *of* robots.txt — and wrong for the manners question. `/sitemap.xml` is a carve-out path, so `allowed()` alone would have waved both offending requests straight through.
+* Fetching `/robots.txt` is the one exemption, and it is structural rather than a policy choice: reading robots.txt cannot require having read robots.txt.
+
+A disallowed URL now raises `errors.RobotsDisallowed` rather than returning, and the exception maps to the existing `robots_disallowed` class. A collector that never checked cannot mistake a refusal for a response, and the three that never checked record the right class through the `except` path they already had.
+
+**2. The contact bound is the site, not the netloc.** A site is the registrable domain under the Public Suffix List: the same test the WHATWG URL and Fetch standards use for "same site", with the **port excluded**. `www.samhsa.gov` and `samhsa.gov` are one site and always were; the netloc bound was measuring the wrong thing. Resolved by `tldextract` configured with **no suffix-list URLs**, because a resolver that fetched the list over the network would falsify this harness's account of what a cycle contacted, in the one module whose whole subject is that. The list has no date in it, so `params.manners.site_bound` registers the resolver, its version and the snapshot's digest, and says why there is no date.
+
+**The consequence is a real widening and is recorded as one.** The frame's 22 netlocs collapse to **17 sites**. `www.ers.usda.gov`, `www.nass.usda.gov` and `www.aphis.usda.gov` are one site, `usda.gov`; BJS's site is `ojp.gov`; NCES's is `ed.gov`. Every netloc under a roster site is in scope, so the bound now admits far more than the agency subdomains it was drawn around. **The frame's unit stays the body** (decision 4): sites are the contact unit, agencies are the denominator, and `scan_targets_fss_2026-09` v3 publishes site, netloc and body counts separately so neither can stand in for another.
+
+**3. An off-site declaration is observed, never followed.** A `robots.txt` may name its sitemap on any host. Following the name off the site is not discovery, it is a second site. The collector records the declaration with its URL under the new `sitemap_off_site` class, in the `not_fetched` family beside `robots_disallowed` and `off_host`, and issues no request.
+
+`RULE-A5-v2` is the consequence and it is the fifth instance of DD-052 §6. Under v1 a host that declares a sitemap we decline to fetch has "no discovery file served" and **fails** — which reports the scanner's own bound as the product's omission. v2 returns `not_applicable` with the declaring site on the Finding. Not `error`: the collector observed exactly what there was to observe, which is a declaration naming somebody else's site. Nothing failed and nothing was blind; the measurement does not apply. The branch decides only when nothing else does, so an off-site declaration alongside a served same-site sitemap that covers the product is still a `pass`.
+
+**What the derivation had to learn.** `fixture_expectations.py` derived blindness and nothing else, so it could not see any of this: a fixture makes a leg blind, and no fact about blindness says whether a request was polite. It now also derives, from source, whether the fetcher gates every request and which collectors issue one without a gate. The invariant needs no pre-registered table and has no threshold — **the set is empty** — because a request no collector gates is a request the fetcher must. `declared_sitemaps` joined `links` and `pointers` as a dereference parameter, which is what made A5's probe visible to the derivation at all.
