@@ -46,6 +46,9 @@ from scan import load_params                                        # noqa: E402
 
 TASK = "cc_tasks/2026-09-08_scan_frame_fss.md"
 ADDENDUM = "cc_tasks/2026-09-08_scan_frame_fss_ADDENDUM-05.md"
+#: v2, per `cc_tasks/2026-09-08_scan_run_3b.md` decisions 1 and 3.
+TASK_V2 = "cc_tasks/2026-09-08_scan_run_3b.md"
+VERSION = 2
 ROSTER = REPO / "state" / "fss_roster_2026-09.json"
 CYCLE1 = REPO / "state" / "scan_targets_2026-09.json"
 OUT = REPO / "state" / "scan_targets_fss_2026-09.json"
@@ -87,7 +90,8 @@ def build(params: dict, roster: dict) -> dict:
                 "parent_department": e["parent_department"]}
         hosts.append({"host": host, "tier": "A", "agency": code})
         # The home row: every host gets one, and it is where the tier-0 legs land.
-        rows.append({**base, "surface_kind": "home", "url": e["home_url"], "doc_id": None,
+        rows.append({**base, "surface_kind": "home", "url": e["home_url"],
+                     "doc_id": f"home:{host}",
                      "selected_as": "agency home",
                      "selection_source": "roster host (fss_roster_2026-09, "
                                          f"{e['home_url_source']})"})
@@ -97,7 +101,7 @@ def build(params: dict, roster: dict) -> dict:
                          "selection_source": "operator declaration, cycle 1 target list",
                          "carried_from_cycle_1": True})
         rows.append({**base, "surface_kind": "well_known",
-                     "url": f"https://{host}/robots.txt", "doc_id": None,
+                     "url": f"https://{host}/robots.txt", "doc_id": f"host:{host}",
                      "selected_as": "agency-level well-known set (synthetic surface)",
                      "selection_source": "roster host: one synthetic host surface per agency"})
         agencies.append({**base, "declared_surfaces": len(mine),
@@ -109,15 +113,26 @@ def build(params: dict, roster: dict) -> dict:
         base = {"agency": t["name"], "agency_name": t["name"], "tier": "C", "host": host,
                 "parent_department": None}
         hosts.append({"host": host, "tier": "C", "agency": t["name"]})
+        machine_netloc = urllib.parse.urlsplit(t["machine_entry_point"]).netloc.lower()
+        # The machine entry point sits on its OWN netloc — catalog.data.gov, data.nist.gov,
+        # open.gsa.gov — which v1 left out of `hosts[]`, so `manners.on_roster_host` would
+        # have refused the very surfaces the operator declared. The frame is still 19 hosts in
+        # the agency sense; the roster is 22 netlocs (`..._scan_run_3b.md` decision 1).
+        hosts.append({"host": machine_netloc, "tier": "C", "agency": t["name"],
+                      "netloc_of": host})
         for kind, url, why in (
                 ("home", t["home"], "roster host (Tier C, operator declaration 2026-09-08)"),
                 ("machine", t["machine_entry_point"],
                  "declared machine entry point (Tier C, operator declaration 2026-09-08)")):
-            rows.append({**base, "surface_kind": kind, "url": url, "doc_id": None,
+            netloc = urllib.parse.urlsplit(url).netloc.lower()
+            rows.append({**base, "surface_kind": kind, "url": url,
+                         "doc_id": (f"home:{netloc}" if kind == "home"
+                                    else f"machine:{netloc}"),
+                         "host": netloc,
                          "selected_as": t["reason"], "selection_source": why,
                          "tier0_legs_only": True, "restriction": t["restriction"]})
         rows.append({**base, "surface_kind": "well_known",
-                     "url": f"https://{host}/robots.txt", "doc_id": None,
+                     "url": f"https://{host}/robots.txt", "doc_id": f"host:{host}",
                      "selected_as": "host-level well-known set (synthetic surface)",
                      "selection_source": "roster host: one synthetic host surface per host",
                      "tier0_legs_only": True, "restriction": t["restriction"]})
@@ -130,7 +145,11 @@ def build(params: dict, roster: dict) -> dict:
     from kg import manifest as _manifest
     admitted = {e["doc_id"] for e in _manifest._load_entries()}
     for r in rows:
-        if r.get("doc_id") and r["doc_id"] not in admitted:
+        # Only a CORPUS doc_id can be unadmitted. `host:`/`home:`/`machine:` are synthetic
+        # surface ids — there is no Document to admit and none is required, exactly as the
+        # well-known row has worked since cycle 1.
+        if (r.get("doc_id") and not str(r["doc_id"]).startswith(("host:", "home:", "machine:"))
+                and r["doc_id"] not in admitted):
             r["not_admitted"] = "robots_disallowed"
             r["not_admitted_note"] = (
                 "the host's robots.txt disallows this path for the scanner's identified UA; "
@@ -138,7 +157,8 @@ def build(params: dict, roster: dict) -> dict:
 
     pending = sorted(a["agency"] for a in agencies if a["pending_operator_declaration"])
     return {
-        "task": TASK, "addendum": ADDENDUM, "epoch": EPOCH,
+        "task": TASK_V2, "supersedes_task": TASK, "addendum": ADDENDUM,
+        "targets_version": VERSION, "derived_from_version": 1, "epoch": EPOCH,
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "derived_from": "fss_roster_2026-09",
         "source_type": "product_surface",
@@ -146,8 +166,10 @@ def build(params: dict, roster: dict) -> dict:
         "frame": "16 OMB-recognized statistical agencies and units (Tier A) + 3 reference "
                  "hosts (Tier C, tier-0 legs only). No Tier B. Nothing outside these hosts.",
         "tier_a_agencies": sum(1 for h in hosts if h["tier"] == "A"),
-        "tier_c_hosts": sum(1 for h in hosts if h["tier"] == "C"),
-        "hosts": hosts, "host_count": len(hosts),
+        "tier_c_hosts": len({h["agency"] for h in hosts if h["tier"] == "C"}),
+        "tier_c_netlocs": sum(1 for h in hosts if h["tier"] == "C"),
+        "hosts": hosts, "netloc_count": len(hosts),
+        "host_count": len({h.get("netloc_of") or h["host"] for h in hosts}),
         "surfaces": len(rows),
         "by_kind": {k: sum(1 for r in rows if r["surface_kind"] == k)
                     for k in sorted({r["surface_kind"] for r in rows})},

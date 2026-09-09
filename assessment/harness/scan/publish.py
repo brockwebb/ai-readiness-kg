@@ -36,7 +36,8 @@ SCAN_BATCH = 29
 #: Findings cite `obs_id`s that live on ANOTHER shard, so "the events of the re-judgement" is
 #: only a file if the judgements are alone in it. `cc_tasks/2026-09-08_scan_harness_v4.md` §1.5.
 CYCLE_BATCH = {"scan_2026-09-07": 31, "scan_2026-09-07b": 38,
-               "scan_2026-09-07_rj1": 40, "scan_2026-09-07b_rj1": 41}
+               "scan_2026-09-07_rj1": 40, "scan_2026-09-07b_rj1": 41,
+               "scan_2026-09-09": 42}
 OBS_EVENT = "observation_recorded"
 FIND_EVENT = "finding_derived"
 #: `cc_tasks/2026-09-07_scan_hygiene.md` §1. A Finding whose `evidence` names `obs_id`s the log
@@ -202,6 +203,19 @@ def promote_evidence(payload: dict, staging: Path | None = None,
             "staging_removed": str(staging) if staging.name else None}
 
 
+#: Surface ids that are SYNTHETIC by construction: there is no `:Document` for them and none
+#: is required, so an Observation carrying one is not an integrity failure. Named once here
+#: because `project()`'s `observed_on_missing_document` check is only meaningful if the set is
+#: complete — and it was not. `cc_tasks/2026-09-08_scan_run_3b.md` decision 3 added `home:` and
+#: `machine:` to the scheme (the well-known row keeps `host:` for continuity with two cycles of
+#: A12 Results), and the classifier still knew only two prefixes, so 957 observations of
+#: perfectly ordinary host-level surfaces were counted as missing Documents.
+#:
+#: The check exists to catch an observation of a surface that SHOULD have been admitted and was
+#: not. A prefix list that lags the id scheme turns it into a counter of its own staleness.
+SYNTHETIC_PREFIXES = ("host:", "home:", "machine:")
+CONTROL_PREFIX = "control:"
+
 SCAN_LABELS = ("Observation", "Finding", "Rule")
 
 
@@ -305,13 +319,13 @@ def project() -> dict:
                               "MATCH (d:Document {doc_id: $d}) MERGE (o)-[:OBSERVED_ON]->(d)",
                               id=ev["obs_id"], d=ev["target_doc_id"])
                         counts["observed_on"] += 1
-                    elif str(ev["target_doc_id"]).startswith("control:"):
+                    elif str(ev["target_doc_id"]).startswith(CONTROL_PREFIX):
                         counts["control_observations"] += 1
                     # A well-known set is a SYNTHETIC host surface: nothing was admitted for
                     # it because there is nothing to admit. Same reasoning as the control
                     # observations above — folding either into the integrity check leaves it
                     # permanently non-zero and therefore meaningless.
-                    elif str(ev["target_doc_id"]).startswith("host:"):
+                    elif str(ev["target_doc_id"]).startswith(SYNTHETIC_PREFIXES):
                         counts["host_observations"] += 1
                     else:
                         counts["observed_on_missing_document"] += 1

@@ -223,45 +223,71 @@ def run_controls(params: dict) -> tuple:
 HOST_LEGS = ("A12",)
 
 
+def tier0_legs(params: dict) -> list:
+    """The headline legs, declared in `params.tier0.legs` before the cycle that uses them."""
+    return list((params.get("tier0") or {}).get("legs") or [])
+
+
 def targets(params: dict) -> list:
-    """The scan targets, read from the target DataFile named in `params.cycle.targets` —
-    never a URL typed here, and never an epoch guessed at.
+    """The scan targets, read from the target DataFile named in `params.cycle.targets`.
 
-    Three surface kinds, and they are judged differently on purpose:
+    **v2 shape** (`cc_tasks/2026-09-08_scan_run_3b.md` decisions 1 and 3). Every row carries its
+    own `doc_id` and the id says what kind of surface it is:
 
-    * `flagship` / `machine` — admitted documents, judged by the fifteen framework legs.
-    * `well_known` — a SYNTHETIC surface, one per host, judged only by the host legs. It has
-      no `:Document` and needs none: nothing was admitted because there is nothing to admit.
+    * `host:<netloc>`    the synthetic well-known surface, UNCHANGED since cycle 1 so A12's
+                         Findings stay comparable across cycles;
+    * `home:<netloc>`    the host's own page;
+    * `machine:<netloc>` a declared machine entry point;
+    * `scan-…`           an admitted corpus Document (the operator's cycle-1 flagships).
 
-    A target whose document was never admitted is skipped with its reason recorded, because
-    `OBSERVED_ON` requires a `:Document` and a Finding with no surface to hang on is a Finding
-    nobody can trace. The one such target — an EIA path `eia.gov/robots.txt` disallows for
-    this UA — is not a gap in the target list; it is the scanner obeying the file it measures.
+    Distinct ids are what make "one leg asked once per host" checkable: two rows of one host
+    that both judged a leg would mint two Findings with different `target_doc_id`, and the
+    re-derivation gate would show it. Cycles 1 and 2 could not express that — the well-known
+    row was the only host-level surface — which is why `home` and `machine` rows are new ids
+    rather than a second use of `host:`.
+
+    **Legs per row, and why they differ.** A `well_known` row is the host's robots/sitemap
+    surface and carries the host legs, as before. A Tier C row is a REFERENCE host and carries
+    `tier0.legs` only (DD-059): above tier 0 a catalog has no product vintage and no bulk
+    download, so the comparison would stop being like-for-like. Everything else is a Tier A
+    product surface and carries the full framework set.
+
+    A row whose corpus `doc_id` was never admitted is SKIPPED with its reason: `OBSERVED_ON`
+    requires a `:Document`, so a Finding on it could not be traced, and an Observation on it
+    would make `observed_on_missing_document` non-zero — the integrity check that exists to
+    catch exactly this. It stays on the target list and is counted as unobservable.
     """
     src = REPO / "state" / f"{params['cycle']['targets']}.json"
     doc = json.loads(src.read_text(encoding="utf-8"))
     entries = json.loads(
         (REPO / "corpus" / "manifest.json").read_text(encoding="utf-8"))["entries"]
+    tier0 = [l for l in tier0_legs(params) if l not in CANDIDATE_LEGS]
     out, skipped = [], []
     for r in doc["rows"]:
-        kind = r["surface_kind"]
+        doc_id, kind, tier = r.get("doc_id"), r["surface_kind"], r.get("tier", "A")
+        synthetic = str(doc_id or "").startswith(("host:", "home:", "machine:"))
+        if not synthetic and doc_id not in entries:
+            skipped.append((doc_id or r["url"], r.get("not_admitted") or "not admitted"))
+            continue
         if kind == "well_known":
-            out.append({"doc_id": f"host:{urllib.parse.urlsplit(r['host']).netloc}",
-                        "url": r["url"], "surface_kind": kind, "agency": r["agency"],
-                        "legs": list(HOST_LEGS), "admitted": False,
-                        # A12 compares the two layers against the SAME path, so the probe is
-                        # the agency's flagship where the list has one and the host otherwise.
-                        "probe_url": next((x["url"] for x in doc["rows"]
-                                           if x["agency"] == r["agency"]
-                                           and x["surface_kind"] == "flagship"), r["host"])})
-            continue
-        if not r.get("doc_id") or r["doc_id"] not in entries:
-            skipped.append((r.get("doc_id") or r["url"],
-                            r.get("not_admitted") or "not admitted"))
-            continue
-        url = ((entries[r["doc_id"]].get("identity") or {}).get("source_url") or r["url"])
-        out.append({"doc_id": r["doc_id"], "url": url, "surface_kind": kind,
-                    "agency": r["agency"], "legs": list(CONTROL_LEGS), "admitted": True})
+            legs = list(HOST_LEGS)
+        elif tier == "C":
+            legs = tier0
+        else:
+            legs = list(CONTROL_LEGS)
+        url = r["url"]
+        if not synthetic:
+            url = ((entries[doc_id].get("identity") or {}).get("source_url") or url)
+        entry = {"doc_id": doc_id, "url": url, "surface_kind": kind, "tier": tier,
+                 "agency": r["agency"], "legs": legs, "admitted": not synthetic,
+                 "host": r["host"]}
+        if kind == "well_known":
+            # A12 compares the declared and enforced layers against the SAME path, so the
+            # probe is the host's home rather than /robots.txt.
+            entry["probe_url"] = next(
+                (x["url"] for x in doc["rows"]
+                 if x["host"] == r["host"] and x["surface_kind"] == "home"), r["url"])
+        out.append(entry)
     for doc_id, why in skipped:
         print(f"  SKIPPED {str(doc_id)[:52]:54s} {why}", file=sys.stderr)
     return out
