@@ -179,7 +179,7 @@ carried:
 ## 9. The push is blocked, and the block is a real property of this design
 
 `git push` was refused by **GitHub push protection**, which found what it calls a *Mapbox
-Secret Access Token* in **eight evidence bodies**, all committed at `88d3570`, all captured
+Secret Access Token* in **eight evidence bodies**, all committed at `7a3bdc4`, all captured
 from `www.nist.gov` — the Tier C reference host this cycle added. The commit is made and
 verified; it is local and unpushed.
 
@@ -204,17 +204,32 @@ Observations from their evidence; dropping the bodies leaves eight verdicts unci
 public API tokens, and a scanner that retains whole bodies will keep capturing them** — cycle 3
 is the first cycle whose frame included a host that does it, not the last.
 
-**What I did not do.** I did not redact a byte, rewrite `88d3570`, or drop a body, and I cannot
-clear the block myself: it is resolved either at GitHub's unblock URL or in the repository's
-secret-scanning settings, both of which are the operator's account and the operator's call.
-GitHub offered the per-detection unblock link in the rejection output. A repo-level
-`.github/secret_scanning.yml` with `paths-ignore: corpus/evidence/scan/**` would stop future
-cycles hitting the same wall — **I have not verified that push protection honours
-`paths-ignore`**, only that secret-scanning *alerts* do, and saying otherwise would be the kind
-of unchecked claim this report exists to avoid.
+**What was not done.** No byte was redacted, no body dropped, and no commit that had already
+been pushed was rewritten.
 
-Everything else in §6 is done: suite green, `seldon verify` green, protected paths empty,
-`seldon cc complete` recorded, commit made. Only the push is outstanding.
+**How it was resolved — operator's decision, 2026-09-09.** A repo-level
+`.github/secret_scanning.yml` carrying `paths-ignore: corpus/evidence/scan/**`, rather than the
+per-detection unblock GitHub offered: the block is structural and will recur every time the
+frame gains a host that ships a public token, so the decision belongs on the record once
+instead of as a click per cycle.
+
+I had flagged that I could not confirm push protection honours `paths-ignore` — only that
+secret-scanning *alerts* do. **It does, and both halves of that are now checked rather than
+assumed.** GitHub's own exclusion doc says a `secret_scanning.yml` closes alerts in the named
+directories "and exclude these directories included in push protection", and the push itself
+then confirmed it. The doc does **not** say which branch the file is read from, so the
+exclusion was landed on `main` on its own commit (`9f8ebc0`) *before* the cycle commits were
+offered, and the two cycle commits were rebased onto it — which removes the question rather
+than betting on an answer, and is why their hashes are `7a3bdc4` and `0c24004` and not the
+ones the first push attempt carried. Nothing already published was rewritten.
+
+`corpus/evidence/frame/` and `corpus/quarantine/evidence_scan_fixture/` hold third-party
+captures for the same reason and are deliberately NOT on the list: neither has blocked a push,
+and widening an exclusion past the thing that actually failed is how an exclusion stops meaning
+anything. The file says so on its face.
+
+§6 is complete: suite green, `seldon verify` green, protected paths empty, `seldon cc complete`
+recorded, committed and **pushed**.
 
 ## 10. Premises this task got wrong
 
@@ -268,17 +283,18 @@ full suite                     1610 passed, 0 failed, 2 skipped (2924 s), after 
                                projection places.
 seldon verify                  All checks passed. 29,026 events readable; 82 task source files
                                resolve; precedence 12 edges, acyclic.
-push                           REFUSED by GitHub push protection on eight cycle-3 evidence
+push                           refused once by GitHub push protection on eight cycle-3 evidence
                                bodies from www.nist.gov, all carrying one Mapbox PUBLIC (`pk.`)
                                token that NIST ships to every visitor. Zero `sk.` tokens in the
-                               store; no credential of this project is involved. Commit made
-                               and local. §9.
+                               store; no credential of this project is involved. Resolved by
+                               `.github/secret_scanning.yml` landed on main first (9f8ebc0);
+                               pushed at 7a3bdc4 + 0c24004. §9.
 git diff on protected paths    EMPTY on assessment/harness/scan/rules/ (every shipped module,
                                v1 through v6), assessment/cq/, and the targets DataFile.
                                events/ APPEND ONLY: batch-033_framework.jsonl +1/-0, the
                                `framework_writeback_measured` event for this task.
                                corpus/ clean — 0 paths, this cycle's 443 promoted bodies
-                               already committed at 88d3570.
+                               already committed at 7a3bdc4.
 framework projection           re-run after §5's write-back; the roundtrip gate that makes
                                Cypher verification of framework state valid is green
                                (7 passed). §8, first row.
@@ -304,8 +320,8 @@ framework projection           re-run after §5's write-back; the roundtrip gate
    `before` is read at a commit and its `tracked` is read now, and the mismatch is invisible
    until someone asks it about an older cycle — which the standing test never does and a
    future reader eventually will.
-8. **A standing answer to GitHub push protection over `corpus/evidence/scan/`** (§9). Retaining
-   whole bodies is invariant 3 and it means the repo will keep committing third-party public
-   API tokens that federal pages ship to every visitor. Cycle 3 hit it once, on one host, with
-   one `pk.` token; the frame only grows. This wants a decision recorded once, not a click per
-   cycle.
+8. **Nothing on push protection — it is settled** (§9). `.github/secret_scanning.yml` excludes
+   `corpus/evidence/scan/**` and the exclusion is verified to hold at push time. What cycle 4
+   should watch is the *other* two tracked capture lanes: `corpus/evidence/frame/` and
+   `corpus/quarantine/evidence_scan_fixture/` are the same class and are deliberately not on
+   the list, so the first push either of them blocks is a decision already made, not a new one.
