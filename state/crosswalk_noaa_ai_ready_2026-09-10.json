@@ -1,0 +1,153 @@
+{
+ "name": "crosswalk_noaa_ai_ready_2026-09-10",
+ "task": "cc_tasks/2026-09-10_corpus_noaa_esip.md",
+ "generated_by": "scripts/build_noaa_crosswalk.py",
+ "generated_at": "2026-09-10T20:07:04.217844+00:00",
+ "source_doc_id": "nao-216-128-artificial-intelligence-in-noaa",
+ "definition_node_id": "nao216-ai-ready-data",
+ "definition_location": "\u00a73.01",
+ "definition_verbatim": "Al-Ready Data: Data that is discoverable, machine-readable and machine-understandable, and has sufficient quality, documentation, and access methods to support the full AI application development and use life cycle.",
+ "definition_term": "AI-Ready Data",
+ "source_path": "corpus/noaa_esip/NAO_216-128.ocr.txt",
+ "source_sha256": "261c4d17388c39832ad80e74005094ca064574d562f479f56f3a2d7cae175e29",
+ "source_is_ocr": true,
+ "ocr_sidecar": "corpus/noaa_esip/NAO_216-128.ocr.json",
+ "framework": "framework/ai_readiness_framework.json",
+ "measured_legs": [
+  "A1",
+  "A2",
+  "A3",
+  "A4",
+  "A5",
+  "A6",
+  "A8",
+  "A9",
+  "A10",
+  "A11",
+  "A12",
+  "B3",
+  "D1",
+  "D4",
+  "F4",
+  "G1-D"
+ ],
+ "scale": {
+  "full": "a measured leg measures exactly this property",
+  "partial": "a measured leg measures a public-surface proxy for it",
+  "none": "no measured leg sees it"
+ },
+ "components": 5,
+ "by_measured": {
+  "full": 3,
+  "partial": 1,
+  "none": 1
+ },
+ "headline": "3 of 5 components measured in full, 1 in part, 1 not at all",
+ "indicators_cited": [
+  "A1",
+  "A11",
+  "A2",
+  "A4",
+  "A5",
+  "A6",
+  "A8",
+  "A9",
+  "B1",
+  "B3",
+  "B4",
+  "C5",
+  "D1",
+  "F4",
+  "G1-D"
+ ],
+ "indicators_cited_not_measured": [
+  "B1",
+  "B4",
+  "C5"
+ ],
+ "rows": [
+  {
+   "component": "discoverable",
+   "span_fragment": "discoverable",
+   "indicators": [
+    "A4",
+    "A5",
+    "A11"
+   ],
+   "indicators_measured_by_the_scan": [
+    "A4",
+    "A5",
+    "A11"
+   ],
+   "measured": "full",
+   "why": "A4 is whether robots.txt and any AI-crawler policy PERMIT retrieval, A5 whether a sitemap or llms.txt makes the products findable, A11 the three-layer declared-vs-enforced comparison. Discoverability by a machine is what these three legs measure and all three run every cycle."
+  },
+  {
+   "component": "machine-readable and machine-understandable",
+   "span_fragment": "machine-readable and machine-understandable",
+   "indicators": [
+    "A1",
+    "A2",
+    "A6",
+    "A8",
+    "D1"
+   ],
+   "indicators_measured_by_the_scan": [
+    "A1",
+    "A2",
+    "A6",
+    "A8",
+    "D1"
+   ],
+   "measured": "full",
+   "why": "READABLE is A1 (structured data served, classified on the response rather than the href) and A2 (a documented API); UNDERSTANDABLE is A6 (schema.org/DCAT/Croissant markup), A8 (machine-readable release date and latest-vintage pointer) and D1 (machine-readable licence). All five run every cycle."
+  },
+  {
+   "component": "sufficient quality",
+   "span_fragment": "sufficient quality",
+   "indicators": [
+    "B4",
+    "C5",
+    "G1-D"
+   ],
+   "indicators_measured_by_the_scan": [
+    "G1-D"
+   ],
+   "measured": "none",
+   "why": "The definition's word is SUFFICIENT \u2014 a judgement about the data against a use. This instrument reads a public surface: G1-D sees whether error measures are DECLARED as structured fields, which is a legibility fact and not a quality one, and B4 and C5 are in the framework and unmeasured. Decision 3 says none, and the reason is that no leg inspects the data at all."
+  },
+  {
+   "component": "documentation",
+   "span_fragment": "documentation",
+   "indicators": [
+    "D1",
+    "A8",
+    "B3",
+    "B1"
+   ],
+   "indicators_measured_by_the_scan": [
+    "D1",
+    "A8",
+    "B3"
+   ],
+   "measured": "partial",
+   "why": "Decision 3's own wording: partial, licence and vintage. D1 and A8 are exactly those two and both are measured; B3 adds whether methodology is linked and legible. What is NOT measured is the documentation the definition is mostly about \u2014 variable-level metadata and a data dictionary (B1), which no cycle runs."
+  },
+  {
+   "component": "access methods",
+   "span_fragment": "access methods",
+   "indicators": [
+    "A9",
+    "B3",
+    "F4"
+   ],
+   "indicators_measured_by_the_scan": [
+    "A9",
+    "B3",
+    "F4"
+   ],
+   "measured": "full",
+   "why": "A9 is the machine-first entry point, B3 the methodology route, F4 the machine-readable changelog. Decision 3's set, all three measured. A3 (bulk download) is arguably an access method too and is NOT in decision 3's mapping; it is left out rather than added, because the mapping is the operator's."
+  }
+ ]
+}

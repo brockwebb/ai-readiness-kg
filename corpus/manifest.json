@@ -1,13 +1,14 @@
 {
  "manifest_version": 2,
  "project": "ai-readiness-kg",
- "generated_at": "2026-09-07T02:11:38.454253+00:00",
+ "generated_at": "2026-09-10T20:04:28.088925+00:00",
  "generator": "dixie.evidence",
  "note": "PROJECTION — rebuilt from the evidence decisions log; do not hand-edit. The log is truth.",
  "counts_by_decision": {
-  "included": 259,
-  "excluded": 70,
-  "pending_refetch": 40
+  "included": 261,
+  "excluded": 72,
+  "pending_refetch": 43,
+  "pending_review": 1
  },
  "entries": {
   "a-benchmark-for-open-domain-numerical-fact-checking-enhanced": {
@@ -3843,10 +3844,17 @@
    },
    "screening": {
     "decision": "included",
-    "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: footnoted HOLDOUT surface: an archived release for a different reference month than row 16 (the archive URL carries the release date; the alternates are the other plausible 2026 release dates — whichever serves is the on",
+    "rationale": "manifest-added by rule (clause R1, construct_arm publication_actionability)",
     "decided_by": "cc",
-    "decided_at": "2026-09-03T17:48:37.035598+00:00",
-    "history": [],
+    "decided_at": "2026-09-03",
+    "history": [
+     {
+      "decision": "included",
+      "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: footnoted HOLDOUT surface: an archived release for a different reference month than row 16 (the archive URL carries the release date; the alternates are the other plausible 2026 release dates — whichever serves is the on",
+      "decided_by": "cc",
+      "decided_at": "2026-09-03T17:48:37.035598+00:00"
+     }
+    ],
     "identity_gate": {
      "passed": true,
      "checked": [],
@@ -3861,7 +3869,8 @@
     "quarantined": []
    },
    "provenance_sources": [
-    "g1sfc_2026-09-03"
+    "g1sfc_2026-09-03",
+    "candidate_register"
    ],
    "extra": {
     "observed_files": {
@@ -3896,7 +3905,10 @@
       "checked_at": "2026-09-03T17:48:37.649719+00:00"
      }
     },
-    "added_in": "g1sfc-2026-09-03"
+    "added_in": "g1sfc-2026-09-03",
+    "notes": [
+     "footnoted HOLDOUT surface: an archived release for a different reference month than row 16 (the archive URL carries the release date; the alternates are the other plausible 2026 release dates — whichever serves is the one recorded on the register; the BLS archive index page is JS-rendered and returned nothing to the browser fetcher)."
+    ]
    }
   },
   "bls-employment-situation-2026-08-news-release": {
@@ -3941,10 +3953,17 @@
    },
    "screening": {
     "decision": "included",
-    "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: footnoted substitute candidate (same surface type as the cut Census/ONS targets): the release states the monthly change in the body and the 90-percent confidence interval for it in the Technical Note at the end. Reconnai",
+    "rationale": "manifest-added by rule (clause R1, construct_arm publication_actionability)",
     "decided_by": "cc",
-    "decided_at": "2026-09-03T17:48:35.432969+00:00",
-    "history": [],
+    "decided_at": "2026-09-03",
+    "history": [
+     {
+      "decision": "included",
+      "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: footnoted substitute candidate (same surface type as the cut Census/ONS targets): the release states the monthly change in the body and the 90-percent confidence interval for it in the Technical Note at the end. Reconnai",
+      "decided_by": "cc",
+      "decided_at": "2026-09-03T17:48:35.432969+00:00"
+     }
+    ],
     "identity_gate": {
      "passed": true,
      "checked": [],
@@ -3959,7 +3978,8 @@
     "quarantined": []
    },
    "provenance_sources": [
-    "g1sfc_2026-09-03"
+    "g1sfc_2026-09-03",
+    "candidate_register"
    ],
    "extra": {
     "observed_files": {
@@ -3994,7 +4014,57 @@
       "checked_at": "2026-09-03T17:48:37.650269+00:00"
      }
     },
-    "added_in": "g1sfc-2026-09-03"
+    "added_in": "g1sfc-2026-09-03",
+    "notes": [
+     "footnoted substitute candidate (same surface type as the cut Census/ONS targets): the release states the monthly change in the body and the 90-percent confidence interval for it in the Technical Note at the end. Reconnaissance: HTTP 403 'Access Denied' for every scripted request; tried here through the browser fetcher so the outcome is on the register."
+    ]
+   }
+  },
+  "bls-local-area-unemployment-statistics-county-data-14-most-r": {
+   "doc_id": "bls-local-area-unemployment-statistics-county-data-14-most-r",
+   "identity": {
+    "sha256": null,
+    "canonical_path": null,
+    "title": "BLS Local Area Unemployment Statistics: county data, 14 most recent months (laucntycur14.txt)",
+    "authors_or_org": [
+     "U.S. Bureau of Labor Statistics"
+    ],
+    "pub_year": "2026",
+    "doc_type": "federal",
+    "source_url": "https://www.bls.gov/lau/laucntycur14.txt",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "unknown",
+    "acquired_at": null,
+    "acquired_by": null
+   },
+   "integrity": {
+    "status": "unchecked",
+    "checks": null,
+    "checked_at": null
+   },
+   "screening": {
+    "decision": "pending_refetch",
+    "rationale": "HTTP 404 [final_url=https://www.bls.gov/lau/laucntycur14.txt]",
+    "decided_by": "cc",
+    "decided_at": "2026-09-03",
+    "history": []
+   },
+   "lifecycle": {
+    "stage": "cataloged"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "candidate_register"
+   ],
+   "extra": {
+    "notes": [
+     "no_declared substitute candidate (model-based county estimates published without error measures). Reconnaissance: HTTP 403 'Access Denied'."
+    ]
    }
   },
   "building-ai-ready-best-practices-the-work-of-the-commerce-da": {
@@ -4917,10 +4987,17 @@
    },
    "screening": {
     "decision": "included",
-    "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: table_coded DEV surface: estimate and MOE as coded fields (B19013_001E, B19013_001M) with no label on the surface; the code->meaning mapping is read from the API's own variables endpoint (/data/2023/acs/acs5/variables/B1",
+    "rationale": "manifest-added by rule (clause R1, construct_arm publication_actionability)",
     "decided_by": "cc",
-    "decided_at": "2026-09-03T17:48:30.541616+00:00",
-    "history": [],
+    "decided_at": "2026-09-03",
+    "history": [
+     {
+      "decision": "included",
+      "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: table_coded DEV surface: estimate and MOE as coded fields (B19013_001E, B19013_001M) with no label on the surface; the code->meaning mapping is read from the API's own variables endpoint (/data/2023/acs/acs5/variables/B1",
+      "decided_by": "cc",
+      "decided_at": "2026-09-03T17:48:30.541616+00:00"
+     }
+    ],
     "identity_gate": {
      "passed": true,
      "checked": [],
@@ -4935,7 +5012,8 @@
     "quarantined": []
    },
    "provenance_sources": [
-    "g1sfc_2026-09-03"
+    "g1sfc_2026-09-03",
+    "candidate_register"
    ],
    "extra": {
     "observed_files": {
@@ -4970,7 +5048,10 @@
       "checked_at": "2026-09-03T17:48:37.665401+00:00"
      }
     },
-    "added_in": "g1sfc-2026-09-03"
+    "added_in": "g1sfc-2026-09-03",
+    "notes": [
+     "table_coded DEV surface: estimate and MOE as coded fields (B19013_001E, B19013_001M) with no label on the surface; the code->meaning mapping is read from the API's own variables endpoint (/data/2023/acs/acs5/variables/B19013_001E.json, …M.json) into the fixture metadata, never shown to the consumer. 64 county rows."
+    ]
    }
   },
   "census-api-acs5-2023-b19013-counties-idaho": {
@@ -5015,10 +5096,17 @@
    },
    "screening": {
     "decision": "included",
-    "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: table_coded HOLDOUT surface: the same query for a different state (Idaho, 44 counties).",
+    "rationale": "manifest-added by rule (clause R1, construct_arm publication_actionability)",
     "decided_by": "cc",
-    "decided_at": "2026-09-03T17:48:31.032567+00:00",
-    "history": [],
+    "decided_at": "2026-09-03",
+    "history": [
+     {
+      "decision": "included",
+      "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: table_coded HOLDOUT surface: the same query for a different state (Idaho, 44 counties).",
+      "decided_by": "cc",
+      "decided_at": "2026-09-03T17:48:31.032567+00:00"
+     }
+    ],
     "identity_gate": {
      "passed": true,
      "checked": [],
@@ -5033,7 +5121,8 @@
     "quarantined": []
    },
    "provenance_sources": [
-    "g1sfc_2026-09-03"
+    "g1sfc_2026-09-03",
+    "candidate_register"
    ],
    "extra": {
     "observed_files": {
@@ -5068,7 +5157,10 @@
       "checked_at": "2026-09-03T17:48:37.665750+00:00"
      }
     },
-    "added_in": "g1sfc-2026-09-03"
+    "added_in": "g1sfc-2026-09-03",
+    "notes": [
+     "table_coded HOLDOUT surface: the same query for a different state (Idaho, 44 counties)."
+    ]
    }
   },
   "census-api-dec2020-dhc-p1-counties-colorado": {
@@ -5113,10 +5205,17 @@
    },
    "screening": {
     "decision": "included",
-    "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: no_declared substitute (declared leg only) if QuickFacts is bot-blocked: 2020 Census counts served with no uncertainty field at all, although every count carries disclosure-avoidance noise (census-2020-disclosure-avoidan",
+    "rationale": "manifest-added by rule (clause R1, construct_arm publication_actionability)",
     "decided_by": "cc",
-    "decided_at": "2026-09-03T17:48:36.637868+00:00",
-    "history": [],
+    "decided_at": "2026-09-03",
+    "history": [
+     {
+      "decision": "included",
+      "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: no_declared substitute (declared leg only) if QuickFacts is bot-blocked: 2020 Census counts served with no uncertainty field at all, although every count carries disclosure-avoidance noise (census-2020-disclosure-avoidan",
+      "decided_by": "cc",
+      "decided_at": "2026-09-03T17:48:36.637868+00:00"
+     }
+    ],
     "identity_gate": {
      "passed": true,
      "checked": [],
@@ -5131,7 +5230,8 @@
     "quarantined": []
    },
    "provenance_sources": [
-    "g1sfc_2026-09-03"
+    "g1sfc_2026-09-03",
+    "candidate_register"
    ],
    "extra": {
     "observed_files": {
@@ -5166,7 +5266,10 @@
       "checked_at": "2026-09-03T17:48:37.666076+00:00"
      }
     },
-    "added_in": "g1sfc-2026-09-03"
+    "added_in": "g1sfc-2026-09-03",
+    "notes": [
+     "no_declared substitute (declared leg only) if QuickFacts is bot-blocked: 2020 Census counts served with no uncertainty field at all, although every count carries disclosure-avoidance noise (census-2020-disclosure-avoidance-handbook-2021) — the pointed no_declared case."
+    ]
    }
   },
   "census-api-user-guide": {
@@ -5885,10 +5988,17 @@
    },
    "screening": {
     "decision": "included",
-    "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: no_declared DEV surface named by the task (declared leg only). Reconnaissance: HTTP 403 Cloudflare 'Attention Required!' for both the page and the /fact/csv/ export; tried here through the browser fetcher.",
+    "rationale": "manifest-added by rule (clause R1, construct_arm publication_actionability)",
     "decided_by": "cc",
-    "decided_at": "2026-09-03T17:48:35.840698+00:00",
-    "history": [],
+    "decided_at": "2026-09-03",
+    "history": [
+     {
+      "decision": "included",
+      "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: no_declared DEV surface named by the task (declared leg only). Reconnaissance: HTTP 403 Cloudflare 'Attention Required!' for both the page and the /fact/csv/ export; tried here through the browser fetcher.",
+      "decided_by": "cc",
+      "decided_at": "2026-09-03T17:48:35.840698+00:00"
+     }
+    ],
     "identity_gate": {
      "passed": true,
      "checked": [],
@@ -5903,7 +6013,8 @@
     "quarantined": []
    },
    "provenance_sources": [
-    "g1sfc_2026-09-03"
+    "g1sfc_2026-09-03",
+    "candidate_register"
    ],
    "extra": {
     "observed_files": {
@@ -5938,7 +6049,10 @@
       "checked_at": "2026-09-03T17:48:37.666754+00:00"
      }
     },
-    "added_in": "g1sfc-2026-09-03"
+    "added_in": "g1sfc-2026-09-03",
+    "notes": [
+     "no_declared DEV surface named by the task (declared leg only). Reconnaissance: HTTP 403 Cloudflare 'Attention Required!' for both the page and the /fact/csv/ export; tried here through the browser fetcher."
+    ]
    }
   },
   "census-quickfacts-denver-county-colorado-csv": {
@@ -5983,10 +6097,17 @@
    },
    "screening": {
     "decision": "included",
-    "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: no_declared DEV surface, CSV form of row 17.",
+    "rationale": "manifest-added by rule (clause R1, construct_arm publication_actionability)",
     "decided_by": "cc",
-    "decided_at": "2026-09-03T17:48:36.241493+00:00",
-    "history": [],
+    "decided_at": "2026-09-03",
+    "history": [
+     {
+      "decision": "included",
+      "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: no_declared DEV surface, CSV form of row 17.",
+      "decided_by": "cc",
+      "decided_at": "2026-09-03T17:48:36.241493+00:00"
+     }
+    ],
     "identity_gate": {
      "passed": true,
      "checked": [],
@@ -6001,7 +6122,8 @@
     "quarantined": []
    },
    "provenance_sources": [
-    "g1sfc_2026-09-03"
+    "g1sfc_2026-09-03",
+    "candidate_register"
    ],
    "extra": {
     "observed_files": {
@@ -6036,7 +6158,10 @@
       "checked_at": "2026-09-03T17:48:37.666419+00:00"
      }
     },
-    "added_in": "g1sfc-2026-09-03"
+    "added_in": "g1sfc-2026-09-03",
+    "notes": [
+     "no_declared DEV surface, CSV form of row 17."
+    ]
    }
   },
   "chen-2025-geo-how-to-dominate-ai-search": {
@@ -8202,6 +8327,53 @@
     "added_in": "triage-2026-08-24",
     "notes": [
      "R5 check ran NEGATIVE: the corpus holds the MLCommons Croissant SPEC (mlcommons-croissant-spec, docs.mlcommons.org), not the Akhtar et al. paper — distinct primary sources. Task-expected dedupe hit did not materialize; recorded as a discrepancy."
+    ]
+   }
+  },
+  "data-census-gov-csv-export-of-acsdt5y2023-b19013-for-colorad": {
+   "doc_id": "data-census-gov-csv-export-of-acsdt5y2023-b19013-for-colorad",
+   "identity": {
+    "sha256": null,
+    "canonical_path": null,
+    "title": "data.census.gov CSV export of ACSDT5Y2023.B19013 for Colorado counties (label row present)",
+    "authors_or_org": [
+     "U.S. Census Bureau"
+    ],
+    "pub_year": "2023",
+    "doc_type": "federal",
+    "source_url": "https://data.census.gov/api/access/table/download?tableId=ACSDT5Y2023.B19013&geoIds=040XX00US08$0500000&format=csv",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "unknown",
+    "acquired_at": null,
+    "acquired_by": null
+   },
+   "integrity": {
+    "status": "unchecked",
+    "checks": null,
+    "checked_at": null
+   },
+   "screening": {
+    "decision": "pending_refetch",
+    "rationale": "HTTP 403 [final_url=https://data.census.gov/api/access/table/download?tableId=ACSDT5Y2023.B19013&geoIds=040XX00US08$0500]",
+    "decided_by": "cc",
+    "decided_at": "2026-09-03",
+    "history": []
+   },
+   "lifecycle": {
+    "stage": "cataloged"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "candidate_register"
+   ],
+   "extra": {
+    "notes": [
+     "table_labeled DEV target named by the task (the same table with its label row). Reconnaissance: HTTP 403 'Request Rejected' (WAF); if it fails again here it is routed needs_source with this exact URL, not hand-constructed."
     ]
    }
   },
@@ -10441,6 +10613,107 @@
     "notes": [
      "A readiness FRAMEWORK for machine consumption of a published surface, with named dimensions (interpretability, actionability, decision reliability) and the explicit claim that SEO and GEO metrics do not assess agent-mediated interaction. Structurally the same object as the AI-readiness instruments already held, applied to the web surface."
     ]
+   }
+  },
+  "esip-ai-ready-data-checklist-v1-0": {
+   "doc_id": "esip-ai-ready-data-checklist-v1-0",
+   "identity": {
+    "sha256": "dc2e4971b95aad17b46ae0f492ed95ab9f89d864a2fc4896ea05e74cd0af444e",
+    "canonical_path": "corpus/noaa_esip/esip-ai-ready-data-checklist-v1.0.md",
+    "title": "Checklist to Examine AI-readiness for Open Environmental Datasets v.1.0",
+    "authors_or_org": [
+     "ESIP Data Readiness Cluster"
+    ],
+    "pub_year": "2023",
+    "doc_type": "practitioner",
+    "source_url": "https://doi.org/10.6084/m9.figshare.19983722.v1",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "scripted_fetch",
+    "acquired_at": null,
+    "acquired_by": "scripts/fetch_noaa_esip_sources.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed markdown, detected text",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "12831 bytes vs floor 256",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "12810 chars",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-09-10T19:22:23.812034+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "cc_tasks/2026-09-10_corpus_noaa_esip.md decision 4. The corpus held the cluster's README (`esip-data-readiness-checklist`, 3,351 B, the repository landing page) and NOT the instrument; this is the published checklist itself, which the crosswalk operationalizes item by item. Cited as found: ESIP Data Readiness Cluster (2023): Checklist to Examine AI-readiness for Open Environmental Datasets v.1.0. ESIP. Online resource. https://doi.org/10.6084/m9.figshare.19983722.v1",
+    "decided_by": "cc",
+    "decided_at": "2026-09-10T19:22:23.512617+00:00",
+    "history": [],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "noaa_esip_2026-09-10"
+   ],
+   "extra": {
+    "notes": [
+     "fetched robots-first under the identified UA from https://raw.githubusercontent.com/ESIPFed/data-readiness/main/checklist-published/ai-ready-data-checklist-v.1.0.md; the DOI above is the citation the document itself asks for"
+    ],
+    "observed_files": {
+     "corpus/noaa_esip/esip-ai-ready-data-checklist-v1.0.md": {
+      "sha256": "dc2e4971b95aad17b46ae0f492ed95ab9f89d864a2fc4896ea05e74cd0af444e",
+      "size": 12831,
+      "claimed_type": "markdown",
+      "detected_type": "text"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/noaa_esip/esip-ai-ready-data-checklist-v1.0.md": {
+      "path": "corpus/noaa_esip/esip-ai-ready-data-checklist-v1.0.md",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed markdown, detected text",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "12831 bytes vs floor 256",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "12810 chars",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-09-10T19:22:23.812034+00:00"
+     }
+    },
+    "added_in": "noaa-esip-2026-09-10"
    }
   },
   "esip-data-readiness-checklist": {
@@ -19767,6 +20040,407 @@
     ]
    }
   },
+  "nao-201-118-software-governance-and-public-release": {
+   "doc_id": "nao-201-118-software-governance-and-public-release",
+   "identity": {
+    "sha256": "d3aeb63bc4944137b4fd3979eded8cd793bbfbe1e71e41c272f96424e3f0845a",
+    "canonical_path": "corpus/noaa_esip/NAO_201-118_Software_Governance_and_Public_Release_Policy.pdf",
+    "title": "NAO 201-118: Software Governance and Public Release Policy",
+    "authors_or_org": [
+     "National Oceanic and Atmospheric Administration"
+    ],
+    "pub_year": "2024",
+    "doc_type": "federal",
+    "source_url": "https://www.noaa.gov/sites/default/files/2024-11/NAO_201-118-Software_Governance_and_Public_Release_Policy.pdf",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "operator_drop",
+    "acquired_at": null,
+    "acquired_by": "operator, per cc_tasks/2026-09-10_corpus_noaa_esip_ADDENDUM_01.md"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed pdf, detected pdf",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "240324 bytes vs floor 7000",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "12 pages, extractable text present",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-09-10T19:31:00.705955+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "NOAA's software governance and public-release policy, the release-engineering counterpart to 216-128's data policy. Admitted for the crosswalk's F-criterion rows. Text PDF, no OCR needed.",
+    "decided_by": "cc",
+    "decided_at": "2026-09-10T19:31:00.302678+00:00",
+    "history": [],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "noaa_esip_2026-09-10"
+   ],
+   "extra": {
+    "notes": [
+     "in_force: §9 EFFECT ON OTHER ISSUANCES carries no supersession text. The document's own form reads 'DATE OF ISSUANCE: TBD / EFFECTIVE DATE: TBD' even though it is signed, so the 2024-11 date is the publication path on noaa.gov, NOT a date the document states. Recorded as found."
+    ],
+    "observed_files": {
+     "corpus/noaa_esip/NAO_201-118_Software_Governance_and_Public_Release_Policy.pdf": {
+      "sha256": "d3aeb63bc4944137b4fd3979eded8cd793bbfbe1e71e41c272f96424e3f0845a",
+      "size": 240324,
+      "claimed_type": "pdf",
+      "detected_type": "pdf"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/noaa_esip/NAO_201-118_Software_Governance_and_Public_Release_Policy.pdf": {
+      "path": "corpus/noaa_esip/NAO_201-118_Software_Governance_and_Public_Release_Policy.pdf",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed pdf, detected pdf",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "240324 bytes vs floor 7000",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "12 pages, extractable text present",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-09-10T19:31:00.705955+00:00"
+     }
+    },
+    "added_in": "noaa-esip-2026-09-10"
+   }
+  },
+  "nao-216-128-artificial-intelligence-in-noaa": {
+   "doc_id": "nao-216-128-artificial-intelligence-in-noaa",
+   "identity": {
+    "sha256": "261c4d17388c39832ad80e74005094ca064574d562f479f56f3a2d7cae175e29",
+    "canonical_path": "corpus/noaa_esip/NAO_216-128.ocr.txt",
+    "title": "NAO 216-128: Artificial Intelligence in NOAA",
+    "authors_or_org": [
+     "National Oceanic and Atmospheric Administration"
+    ],
+    "pub_year": "2026",
+    "doc_type": "federal",
+    "source_url": "https://www.noaa.gov/sites/default/files/2026-04/NAO_216-128.pdf",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "operator_drop",
+    "acquired_at": null,
+    "acquired_by": "operator, per cc_tasks/2026-09-10_corpus_noaa_esip_ADDENDUM_01.md"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed text, detected text",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "7673 bytes vs floor 256",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "7667 chars",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-09-10T19:33:33.743501+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "The NOAA AI policy. §3.01 defines AI-Ready Data in five components and is the definition the crosswalk measures the instrument against; §4.05 and §5.02.d are its operative directives. Signed and effective 2026-04-16 per its own form; §8 EFFECT ON OTHER ISSUANCES reads None, so it is in force and supersedes nothing. SCANNED IMAGE: the admitted artifact is the OCR reading (NAO_216-128.ocr.txt, tesseract 5.5.0, mean word confidence 94.52 over 1,110 words); the image PDF sits beside it as NAO_216-128.pdf with its sha256 in NAO_216-128.ocr.json.",
+    "decided_by": "cc",
+    "decided_at": "2026-09-10T19:33:33.456093+00:00",
+    "history": [
+     {
+      "decision": "included",
+      "rationale": "The NOAA AI policy. §3.01 defines AI-Ready Data in five components and is the definition the crosswalk measures the instrument against; §4.05 and §5.02.d are its operative directives. Signed and effective 2026-04-16 per its own form; §8 EFFECT ON OTHER ISSUANCES reads None, so it is in force and supersedes nothing. Scanned image PDF — the OCR text is stored beside it as NAO_216-128.pdf.ocr.txt with its engine and confidence in NAO_216-128.pdf.ocr.json.",
+      "decided_by": "cc",
+      "decided_at": "2026-09-10T19:31:00.302183+00:00"
+     },
+     {
+      "decision": "pending_refetch",
+      "rationale": "no verified file remains: content_smoke: extractable text 29 chars < 200 in first 4 of 4 pages",
+      "decided_by": "dixie.evidence",
+      "decided_at": "2026-09-10T19:31:00.934428+00:00"
+     }
+    ],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [
+     "corpus/noaa_esip/NAO_216-128.ocr.json"
+    ],
+    "quarantined": [
+     {
+      "path": "corpus/noaa_esip/NAO_216-128.pdf",
+      "dest": "corpus/quarantine/noaa_esip/NAO_216-128.pdf",
+      "reasons": [
+       "content_smoke: extractable text 29 chars < 200 in first 4 of 4 pages"
+      ],
+      "ts": "2026-09-10T19:31:00.732096+00:00"
+     }
+    ]
+   },
+   "provenance_sources": [
+    "noaa_esip_2026-09-10"
+   ],
+   "extra": {
+    "notes": [
+     "in_force. Native text layer is 36 bytes; every span from this document is grounded against a machine reading of an image, and the sidecar says so.",
+     "in_force. The PDF's native text layer is 36 bytes — below the corpus's `pdf_min_chars` floor of 200 and rightly so — which is why the OCR text is the canonical artifact. Every span from this document is grounded against a machine reading of an image, and NAO_216-128.ocr.json says so with the engine, the rasterisation, the per-word confidence and the one known substitution (tesseract reads body-text 'AI' as 'Al')."
+    ],
+    "observed_files": {
+     "corpus/noaa_esip/NAO_216-128.pdf": {
+      "sha256": "e19e0571319689ee8090a21cc6ce3860b0d8dc427dbe07ab249abd9691a2c051",
+      "size": 1650918,
+      "claimed_type": "pdf",
+      "detected_type": "pdf"
+     },
+     "corpus/noaa_esip/NAO_216-128.ocr.json": {
+      "sha256": "c8895da08cff9d721d8f447f479a58f73d96aecd6c6a301ee4a2d4d1f9b5920f",
+      "size": 1850,
+      "claimed_type": "json",
+      "detected_type": "text"
+     },
+     "corpus/noaa_esip/NAO_216-128.ocr.txt": {
+      "sha256": "261c4d17388c39832ad80e74005094ca064574d562f479f56f3a2d7cae175e29",
+      "size": 7673,
+      "claimed_type": "text",
+      "detected_type": "text"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/noaa_esip/NAO_216-128.pdf": {
+      "path": "corpus/noaa_esip/NAO_216-128.pdf",
+      "verdict": "fail",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed pdf, detected pdf",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "1650918 bytes vs floor 7000",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "extractable text 29 chars < 200 in first 4 of 4 pages",
+        "outcome": "fail"
+       }
+      ],
+      "checked_at": "2026-09-10T19:31:00.712601+00:00"
+     },
+     "corpus/noaa_esip/NAO_216-128.ocr.json": {
+      "path": "corpus/noaa_esip/NAO_216-128.ocr.json",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed json, detected text",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "1850 bytes vs floor 64",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "skipped: format mismatch already failed or type unhandled",
+        "outcome": "skip"
+       }
+      ],
+      "checked_at": "2026-09-10T19:33:33.743083+00:00"
+     },
+     "corpus/noaa_esip/NAO_216-128.ocr.txt": {
+      "path": "corpus/noaa_esip/NAO_216-128.ocr.txt",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed text, detected text",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "7673 bytes vs floor 256",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "7667 chars",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-09-10T19:33:33.743501+00:00"
+     }
+    },
+    "added_in": "noaa-esip-2026-09-10"
+   }
+  },
+  "nao-216-128-pdf-ocr": {
+   "doc_id": "nao-216-128-pdf-ocr",
+   "identity": {
+    "sha256": "bc8a29ff90f4b18c4fbd08806600d063248a448229fb9f8be788bad7a256d02c",
+    "canonical_path": "corpus/noaa_esip/NAO_216-128.pdf.ocr.json",
+    "title": null,
+    "authors_or_org": null,
+    "pub_year": null,
+    "doc_type": null,
+    "source_url": null,
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "unknown",
+    "acquired_at": null,
+    "acquired_by": null
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed json, detected text",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "1174 bytes vs floor 64",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "skipped: format mismatch already failed or type unhandled",
+      "outcome": "skip"
+     }
+    ],
+    "checked_at": "2026-09-10T19:31:00.713511+00:00"
+   },
+   "screening": {
+    "decision": "pending_review",
+    "rationale": "file present (verified) but no screening provenance — not in any prior register or manifest",
+    "decided_by": "dixie.evidence",
+    "decided_at": "2026-09-10T19:31:00.934738+00:00",
+    "history": []
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [
+     "corpus/noaa_esip/NAO_216-128.pdf.ocr.txt"
+    ],
+    "quarantined": []
+   },
+   "provenance_sources": [],
+   "extra": {
+    "observed_files": {
+     "corpus/noaa_esip/NAO_216-128.pdf.ocr.json": {
+      "sha256": "bc8a29ff90f4b18c4fbd08806600d063248a448229fb9f8be788bad7a256d02c",
+      "size": 1174,
+      "claimed_type": "json",
+      "detected_type": "text"
+     },
+     "corpus/noaa_esip/NAO_216-128.pdf.ocr.txt": {
+      "sha256": "261c4d17388c39832ad80e74005094ca064574d562f479f56f3a2d7cae175e29",
+      "size": 7673,
+      "claimed_type": "text",
+      "detected_type": "text"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/noaa_esip/NAO_216-128.pdf.ocr.json": {
+      "path": "corpus/noaa_esip/NAO_216-128.pdf.ocr.json",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed json, detected text",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "1174 bytes vs floor 64",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "skipped: format mismatch already failed or type unhandled",
+        "outcome": "skip"
+       }
+      ],
+      "checked_at": "2026-09-10T19:31:00.713511+00:00"
+     },
+     "corpus/noaa_esip/NAO_216-128.pdf.ocr.txt": {
+      "path": "corpus/noaa_esip/NAO_216-128.pdf.ocr.txt",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed text, detected text",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "7673 bytes vs floor 256",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "7667 chars",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-09-10T19:31:00.714170+00:00"
+     }
+    }
+   }
+  },
   "nchs-2017-data-presentation-standards-proportions": {
    "doc_id": "nchs-2017-data-presentation-standards-proportions",
    "identity": {
@@ -20052,10 +20726,17 @@
    },
    "screening": {
     "decision": "included",
-    "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: footnoted DEV surface: the estimates appear in the Key findings and body text with no uncertainty; the 95% confidence interval and standard error for each appear only in the 'Data table for Figure N' appendix pages later",
+    "rationale": "manifest-added by rule (clause R1, construct_arm publication_actionability)",
     "decided_by": "cc",
-    "decided_at": "2026-09-03T17:48:34.673417+00:00",
-    "history": [],
+    "decided_at": "2026-09-03",
+    "history": [
+     {
+      "decision": "included",
+      "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: footnoted DEV surface: the estimates appear in the Key findings and body text with no uncertainty; the 95% confidence interval and standard error for each appear only in the 'Data table for Figure N' appendix pages later",
+      "decided_by": "cc",
+      "decided_at": "2026-09-03T17:48:34.673417+00:00"
+     }
+    ],
     "identity_gate": {
      "passed": true,
      "checked": [],
@@ -20070,7 +20751,8 @@
     "quarantined": []
    },
    "provenance_sources": [
-    "g1sfc_2026-09-03"
+    "g1sfc_2026-09-03",
+    "candidate_register"
    ],
    "extra": {
     "observed_files": {
@@ -20105,7 +20787,10 @@
       "checked_at": "2026-09-03T17:48:37.789308+00:00"
      }
     },
-    "added_in": "g1sfc-2026-09-03"
+    "added_in": "g1sfc-2026-09-03",
+    "notes": [
+     "footnoted DEV surface: the estimates appear in the Key findings and body text with no uncertainty; the 95% confidence interval and standard error for each appear only in the 'Data table for Figure N' appendix pages later in the same document (footnote_distance_chars measured on the extracted text)."
+    ]
    }
   },
   "nchs-data-brief-515-high-total-cholesterol-2021-2023": {
@@ -20150,10 +20835,17 @@
    },
    "screening": {
     "decision": "included",
-    "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: footnoted HOLDOUT surface: a different Data Brief with the same body-text / appendix-table structure (Percent, 95% confidence interval, standard error).",
+    "rationale": "manifest-added by rule (clause R1, construct_arm publication_actionability)",
     "decided_by": "cc",
-    "decided_at": "2026-09-03T17:48:35.072725+00:00",
-    "history": [],
+    "decided_at": "2026-09-03",
+    "history": [
+     {
+      "decision": "included",
+      "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: footnoted HOLDOUT surface: a different Data Brief with the same body-text / appendix-table structure (Percent, 95% confidence interval, standard error).",
+      "decided_by": "cc",
+      "decided_at": "2026-09-03T17:48:35.072725+00:00"
+     }
+    ],
     "identity_gate": {
      "passed": true,
      "checked": [],
@@ -20168,7 +20860,8 @@
     "quarantined": []
    },
    "provenance_sources": [
-    "g1sfc_2026-09-03"
+    "g1sfc_2026-09-03",
+    "candidate_register"
    ],
    "extra": {
     "observed_files": {
@@ -20203,7 +20896,10 @@
       "checked_at": "2026-09-03T17:48:37.817002+00:00"
      }
     },
-    "added_in": "g1sfc-2026-09-03"
+    "added_in": "g1sfc-2026-09-03",
+    "notes": [
+     "footnoted HOLDOUT surface: a different Data Brief with the same body-text / appendix-table structure (Percent, 95% confidence interval, standard error)."
+    ]
    }
   },
   "nchs-data-brief-530-perinatal-mortality-2022-2023": {
@@ -20250,10 +20946,17 @@
    },
    "screening": {
     "decision": "included",
-    "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: flagged_cell DEV surface (NCHS): 'Data table for Figure 4' lists each state's 2022 and 2023 perinatal mortality rates and a percent-change column in which a '†' replaces the value where the change is not significant; the",
+    "rationale": "manifest-added by rule (clause R1, construct_arm publication_actionability)",
     "decided_by": "cc",
-    "decided_at": "2026-09-03T17:48:34.246374+00:00",
-    "history": [],
+    "decided_at": "2026-09-03",
+    "history": [
+     {
+      "decision": "included",
+      "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: flagged_cell DEV surface (NCHS): 'Data table for Figure 4' lists each state's 2022 and 2023 perinatal mortality rates and a percent-change column in which a '†' replaces the value where the change is not significant; the",
+      "decided_by": "cc",
+      "decided_at": "2026-09-03T17:48:34.246374+00:00"
+     }
+    ],
     "identity_gate": {
      "passed": true,
      "checked": [],
@@ -20268,7 +20971,8 @@
     "quarantined": []
    },
    "provenance_sources": [
-    "g1sfc_2026-09-03"
+    "g1sfc_2026-09-03",
+    "candidate_register"
    ],
    "extra": {
     "observed_files": {
@@ -20303,7 +21007,10 @@
       "checked_at": "2026-09-03T17:48:37.839710+00:00"
      }
     },
-    "added_in": "g1sfc-2026-09-03"
+    "added_in": "g1sfc-2026-09-03",
+    "notes": [
+     "flagged_cell DEV surface (NCHS): 'Data table for Figure 4' lists each state's 2022 and 2023 perinatal mortality rates and a percent-change column in which a '†' replaces the value where the change is not significant; the legend '† Change not significant (p = 0.05).' is printed beneath the table — a producer flag with its legend on the surface."
+    ]
    }
   },
   "new-absorb-software-report-ai-ambition-in-l-d-outpacing-read": {
@@ -21517,6 +22224,53 @@
      }
     },
     "added_in": "kernel-v03"
+   }
+  },
+  "ons-statistical-bulletin-employment-in-the-uk-august-2026": {
+   "doc_id": "ons-statistical-bulletin-employment-in-the-uk-august-2026",
+   "identity": {
+    "sha256": null,
+    "canonical_path": null,
+    "title": "ONS statistical bulletin: Employment in the UK (August 2026)",
+    "authors_or_org": [
+     "Office for National Statistics"
+    ],
+    "pub_year": "2026",
+    "doc_type": "government",
+    "source_url": "https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/employmentandemployeetypes/bulletins/employmentintheuk/latest",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "unknown",
+    "acquired_at": null,
+    "acquired_by": null
+   },
+   "integrity": {
+    "status": "unchecked",
+    "checks": null,
+    "checked_at": null
+   },
+   "screening": {
+    "decision": "excluded",
+    "rationale": "The task's footnoted target (an ONS bulletin whose CIs sit in a sampling-variability annex). Reconnaissance 2026-09-03 across eight ONS bulletins: the annex is a separate dataset ('Labour Force Survey sampling variability … Dataset A11'), and no bulletin states a CI value on its own surface. A dataset download is a table, not a footnoted surface — cut.",
+    "decided_by": "cc",
+    "decided_at": "2026-09-03",
+    "history": []
+   },
+   "lifecycle": {
+    "stage": "cataloged"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "candidate_register"
+   ],
+   "extra": {
+    "notes": [
+     "The task's footnoted target (an ONS bulletin whose CIs sit in a sampling-variability annex). Reconnaissance 2026-09-03 across eight ONS bulletins: the annex is a separate dataset ('Labour Force Survey sampling variability … Dataset A11'), and no bulletin states a CI value on its own surface. A dataset download is a table, not a footnoted surface — cut."
+    ]
    }
   },
   "ons-uncertainty-and-how-we-measure-it": {
@@ -23592,9 +24346,25 @@
     "acquired_by": "scripts/admit_scan_targets.py"
    },
    "integrity": {
-    "status": "unchecked",
-    "checks": null,
-    "checked_at": null
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed html, detected html",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "45991 bytes vs floor 64",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "skipped: format mismatch already failed or type unhandled",
+      "outcome": "skip"
+     }
+    ],
+    "checked_at": "2026-09-10T19:22:23.795569+00:00"
    },
    "screening": {
     "decision": "included",
@@ -23609,7 +24379,7 @@
     }
    },
    "lifecycle": {
-    "stage": "acquired"
+    "stage": "verified"
    },
    "files": {
     "alternates": [],
@@ -23621,7 +24391,39 @@
    "extra": {
     "notes": [
      "configured listing_url https://www.bea.gov/data"
-    ]
+    ],
+    "observed_files": {
+     "corpus/scan/scan-bea-flagship-1-interactive-data.html": {
+      "sha256": "8710467ba24110bfb6b890d704109cec833d2e34cdb129449df8aceef88357ab",
+      "size": 45991,
+      "claimed_type": "html",
+      "detected_type": "html"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/scan/scan-bea-flagship-1-interactive-data.html": {
+      "path": "corpus/scan/scan-bea-flagship-1-interactive-data.html",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed html, detected html",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "45991 bytes vs floor 64",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "skipped: format mismatch already failed or type unhandled",
+        "outcome": "skip"
+       }
+      ],
+      "checked_at": "2026-09-10T19:22:23.795569+00:00"
+     }
+    }
    }
   },
   "scan-bea-flagship-2-news-releases": {
@@ -23644,9 +24446,25 @@
     "acquired_by": "scripts/admit_scan_targets.py"
    },
    "integrity": {
-    "status": "unchecked",
-    "checks": null,
-    "checked_at": null
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed html, detected html",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "60085 bytes vs floor 64",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "skipped: format mismatch already failed or type unhandled",
+      "outcome": "skip"
+     }
+    ],
+    "checked_at": "2026-09-10T19:22:23.797027+00:00"
    },
    "screening": {
     "decision": "included",
@@ -23661,7 +24479,7 @@
     }
    },
    "lifecycle": {
-    "stage": "acquired"
+    "stage": "verified"
    },
    "files": {
     "alternates": [],
@@ -23673,7 +24491,39 @@
    "extra": {
     "notes": [
      "configured listing_url https://www.bea.gov/data"
-    ]
+    ],
+    "observed_files": {
+     "corpus/scan/scan-bea-flagship-2-news-releases.html": {
+      "sha256": "dee16b5fcaa8bb6698ec6cb098f3a9548820d57ed8f5cf21c29bab6babca98d9",
+      "size": 60085,
+      "claimed_type": "html",
+      "detected_type": "html"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/scan/scan-bea-flagship-2-news-releases.html": {
+      "path": "corpus/scan/scan-bea-flagship-2-news-releases.html",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed html, detected html",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "60085 bytes vs floor 64",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "skipped: format mismatch already failed or type unhandled",
+        "outcome": "skip"
+       }
+      ],
+      "checked_at": "2026-09-10T19:22:23.797027+00:00"
+     }
+    }
    }
   },
   "scan-bea-machine": {
@@ -23696,9 +24546,25 @@
     "acquired_by": "scripts/admit_scan_targets.py"
    },
    "integrity": {
-    "status": "unchecked",
-    "checks": null,
-    "checked_at": null
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed html, detected html",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "40117 bytes vs floor 64",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "skipped: format mismatch already failed or type unhandled",
+      "outcome": "skip"
+     }
+    ],
+    "checked_at": "2026-09-10T19:22:23.797594+00:00"
    },
    "screening": {
     "decision": "included",
@@ -23713,7 +24579,7 @@
     }
    },
    "lifecycle": {
-    "stage": "acquired"
+    "stage": "verified"
    },
    "files": {
     "alternates": [],
@@ -23725,7 +24591,39 @@
    "extra": {
     "notes": [
      "configured listing_url https://www.bea.gov/data"
-    ]
+    ],
+    "observed_files": {
+     "corpus/scan/scan-bea-machine.html": {
+      "sha256": "de7ec14be6f55ac721f2bd9480da6ecd18bbe6c476b07ab19808abc0e29330bb",
+      "size": 40117,
+      "claimed_type": "html",
+      "detected_type": "html"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/scan/scan-bea-machine.html": {
+      "path": "corpus/scan/scan-bea-machine.html",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed html, detected html",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "40117 bytes vs floor 64",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "skipped: format mismatch already failed or type unhandled",
+        "outcome": "skip"
+       }
+      ],
+      "checked_at": "2026-09-10T19:22:23.797594+00:00"
+     }
+    }
    }
   },
   "scan-bjs-flagship-1-data-by-topic": {
@@ -23748,9 +24646,25 @@
     "acquired_by": "scripts/admit_scan_targets.py"
    },
    "integrity": {
-    "status": "unchecked",
-    "checks": null,
-    "checked_at": null
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed html, detected html",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "61379 bytes vs floor 64",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "skipped: format mismatch already failed or type unhandled",
+      "outcome": "skip"
+     }
+    ],
+    "checked_at": "2026-09-10T19:22:23.798142+00:00"
    },
    "screening": {
     "decision": "included",
@@ -23765,7 +24679,7 @@
     }
    },
    "lifecycle": {
-    "stage": "acquired"
+    "stage": "verified"
    },
    "files": {
     "alternates": [],
@@ -23777,7 +24691,39 @@
    "extra": {
     "notes": [
      "configured listing_url https://bjs.ojp.gov/data"
-    ]
+    ],
+    "observed_files": {
+     "corpus/scan/scan-bjs-flagship-1-data-by-topic.html": {
+      "sha256": "385878e25b489439486c6a8a26c9b2b4e19ba4520fd60807352926b11f2fc9ed",
+      "size": 61379,
+      "claimed_type": "html",
+      "detected_type": "html"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/scan/scan-bjs-flagship-1-data-by-topic.html": {
+      "path": "corpus/scan/scan-bjs-flagship-1-data-by-topic.html",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed html, detected html",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "61379 bytes vs floor 64",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "skipped: format mismatch already failed or type unhandled",
+        "outcome": "skip"
+       }
+      ],
+      "checked_at": "2026-09-10T19:22:23.798142+00:00"
+     }
+    }
    }
   },
   "scan-bjs-flagship-2-death-in-custody-reporting-act": {
@@ -23800,9 +24746,25 @@
     "acquired_by": "scripts/admit_scan_targets.py"
    },
    "integrity": {
-    "status": "unchecked",
-    "checks": null,
-    "checked_at": null
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed html, detected html",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "63293 bytes vs floor 64",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "skipped: format mismatch already failed or type unhandled",
+      "outcome": "skip"
+     }
+    ],
+    "checked_at": "2026-09-10T19:22:23.798707+00:00"
    },
    "screening": {
     "decision": "included",
@@ -23817,7 +24779,7 @@
     }
    },
    "lifecycle": {
-    "stage": "acquired"
+    "stage": "verified"
    },
    "files": {
     "alternates": [],
@@ -23829,7 +24791,39 @@
    "extra": {
     "notes": [
      "configured listing_url https://bjs.ojp.gov/data"
-    ]
+    ],
+    "observed_files": {
+     "corpus/scan/scan-bjs-flagship-2-death-in-custody-reporting-act.html": {
+      "sha256": "70367c1f06c35e8d57b2c234b860257722ea115829d85a7fb4454555968f535a",
+      "size": 63293,
+      "claimed_type": "html",
+      "detected_type": "html"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/scan/scan-bjs-flagship-2-death-in-custody-reporting-act.html": {
+      "path": "corpus/scan/scan-bjs-flagship-2-death-in-custody-reporting-act.html",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed html, detected html",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "63293 bytes vs floor 64",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "skipped: format mismatch already failed or type unhandled",
+        "outcome": "skip"
+       }
+      ],
+      "checked_at": "2026-09-10T19:22:23.798707+00:00"
+     }
+    }
    }
   },
   "scan-census-flagship-1-surveys-programs": {
@@ -23852,9 +24846,25 @@
     "acquired_by": "scripts/admit_scan_targets.py"
    },
    "integrity": {
-    "status": "unchecked",
-    "checks": null,
-    "checked_at": null
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed html, detected html",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "562876 bytes vs floor 64",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "skipped: format mismatch already failed or type unhandled",
+      "outcome": "skip"
+     }
+    ],
+    "checked_at": "2026-09-10T19:22:23.799843+00:00"
    },
    "screening": {
     "decision": "included",
@@ -23869,7 +24879,7 @@
     }
    },
    "lifecycle": {
-    "stage": "acquired"
+    "stage": "verified"
    },
    "files": {
     "alternates": [],
@@ -23881,7 +24891,39 @@
    "extra": {
     "notes": [
      "configured listing_url https://www.census.gov/data.html"
-    ]
+    ],
+    "observed_files": {
+     "corpus/scan/scan-census-flagship-1-surveys-programs.html": {
+      "sha256": "64903455b84078747452745d0a36e534bdae1ad40177cfc0e8c9fc9c0b0bc102",
+      "size": 562876,
+      "claimed_type": "html",
+      "detected_type": "html"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/scan/scan-census-flagship-1-surveys-programs.html": {
+      "path": "corpus/scan/scan-census-flagship-1-surveys-programs.html",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed html, detected html",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "562876 bytes vs floor 64",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "skipped: format mismatch already failed or type unhandled",
+        "outcome": "skip"
+       }
+      ],
+      "checked_at": "2026-09-10T19:22:23.799843+00:00"
+     }
+    }
    }
   },
   "scan-census-flagship-2-american-community-survey-acs": {
@@ -23904,9 +24946,25 @@
     "acquired_by": "scripts/admit_scan_targets.py"
    },
    "integrity": {
-    "status": "unchecked",
-    "checks": null,
-    "checked_at": null
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed html, detected html",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "354809 bytes vs floor 64",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "skipped: format mismatch already failed or type unhandled",
+      "outcome": "skip"
+     }
+    ],
+    "checked_at": "2026-09-10T19:22:23.800759+00:00"
    },
    "screening": {
     "decision": "included",
@@ -23921,7 +24979,7 @@
     }
    },
    "lifecycle": {
-    "stage": "acquired"
+    "stage": "verified"
    },
    "files": {
     "alternates": [],
@@ -23933,7 +24991,39 @@
    "extra": {
     "notes": [
      "configured listing_url https://www.census.gov/data.html"
-    ]
+    ],
+    "observed_files": {
+     "corpus/scan/scan-census-flagship-2-american-community-survey-acs.html": {
+      "sha256": "2414ab1f19e439d36bee6b499c366b126f9fd705a62c78bc46c21cac8d41274a",
+      "size": 354809,
+      "claimed_type": "html",
+      "detected_type": "html"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/scan/scan-census-flagship-2-american-community-survey-acs.html": {
+      "path": "corpus/scan/scan-census-flagship-2-american-community-survey-acs.html",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed html, detected html",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "354809 bytes vs floor 64",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "skipped: format mismatch already failed or type unhandled",
+        "outcome": "skip"
+       }
+      ],
+      "checked_at": "2026-09-10T19:22:23.800759+00:00"
+     }
+    }
    }
   },
   "scan-census-machine": {
@@ -23956,9 +25046,25 @@
     "acquired_by": "scripts/admit_scan_targets.py"
    },
    "integrity": {
-    "status": "unchecked",
-    "checks": null,
-    "checked_at": null
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed html, detected html",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "301580 bytes vs floor 64",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "skipped: format mismatch already failed or type unhandled",
+      "outcome": "skip"
+     }
+    ],
+    "checked_at": "2026-09-10T19:22:23.801591+00:00"
    },
    "screening": {
     "decision": "included",
@@ -23973,7 +25079,7 @@
     }
    },
    "lifecycle": {
-    "stage": "acquired"
+    "stage": "verified"
    },
    "files": {
     "alternates": [],
@@ -23985,14 +25091,46 @@
    "extra": {
     "notes": [
      "configured listing_url https://www.census.gov/data.html"
-    ]
+    ],
+    "observed_files": {
+     "corpus/scan/scan-census-machine.html": {
+      "sha256": "09b731a03e00d9f170eb1b78e0d5062473764663da9605f321403d0ad5a96d66",
+      "size": 301580,
+      "claimed_type": "html",
+      "detected_type": "html"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/scan/scan-census-machine.html": {
+      "path": "corpus/scan/scan-census-machine.html",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed html, detected html",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "301580 bytes vs floor 64",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "skipped: format mismatch already failed or type unhandled",
+        "outcome": "skip"
+       }
+      ],
+      "checked_at": "2026-09-10T19:22:23.801591+00:00"
+     }
+    }
    }
   },
   "scan-eia-flagship-1-open-data": {
    "doc_id": "scan-eia-flagship-1-open-data",
    "identity": {
-    "sha256": "e335b4015146586f151076f3ffe8e42e6adb5491d47ea62f3cb854be80923f11",
-    "canonical_path": "corpus/scan/scan-eia-flagship-1-open-data.html",
+    "sha256": null,
+    "canonical_path": null,
     "title": "Energy Information Administration — Open Data",
     "authors_or_org": [
      "Energy Information Administration"
@@ -24008,16 +25146,23 @@
     "acquired_by": "scripts/admit_scan_targets.py"
    },
    "integrity": {
-    "status": "unchecked",
+    "status": "failed",
     "checks": null,
-    "checked_at": null
+    "checked_at": "2026-09-10T19:22:23.827325+00:00"
    },
    "screening": {
-    "decision": "included",
-    "rationale": "Product surface of kind `flagship` for EIA, selected from https://www.eia.gov/tools/ as 'Open Data'. Epoch scan-2026-09, cc_tasks/2026-09-06_scan_targets.md §3.2.",
-    "decided_by": "cc",
-    "decided_at": "2026-09-07T02:11:38.454253+00:00",
-    "history": [],
+    "decision": "pending_refetch",
+    "rationale": "no verified file remains: magic_bytes: claimed html, detected text",
+    "decided_by": "dixie.evidence",
+    "decided_at": "2026-09-10T19:22:24.033856+00:00",
+    "history": [
+     {
+      "decision": "included",
+      "rationale": "Product surface of kind `flagship` for EIA, selected from https://www.eia.gov/tools/ as 'Open Data'. Epoch scan-2026-09, cc_tasks/2026-09-06_scan_targets.md §3.2.",
+      "decided_by": "cc",
+      "decided_at": "2026-09-07T02:11:38.454253+00:00"
+     }
+    ],
     "identity_gate": {
      "passed": true,
      "checked": [],
@@ -24025,11 +25170,20 @@
     }
    },
    "lifecycle": {
-    "stage": "acquired"
+    "stage": "quarantined"
    },
    "files": {
     "alternates": [],
-    "quarantined": []
+    "quarantined": [
+     {
+      "path": "corpus/scan/scan-eia-flagship-1-open-data.html",
+      "dest": "corpus/quarantine/scan/scan-eia-flagship-1-open-data.html",
+      "reasons": [
+       "magic_bytes: claimed html, detected text"
+      ],
+      "ts": "2026-09-10T19:22:23.827325+00:00"
+     }
+    ]
    },
    "provenance_sources": [
     "scan_2026-09"
@@ -24037,7 +25191,39 @@
    "extra": {
     "notes": [
      "configured listing_url https://www.eia.gov/tools/"
-    ]
+    ],
+    "observed_files": {
+     "corpus/scan/scan-eia-flagship-1-open-data.html": {
+      "sha256": "e335b4015146586f151076f3ffe8e42e6adb5491d47ea62f3cb854be80923f11",
+      "size": 835,
+      "claimed_type": "html",
+      "detected_type": "text"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/scan/scan-eia-flagship-1-open-data.html": {
+      "path": "corpus/scan/scan-eia-flagship-1-open-data.html",
+      "verdict": "fail",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed html, detected text",
+        "outcome": "fail"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "835 bytes vs floor 64",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "skipped: format mismatch already failed or type unhandled",
+        "outcome": "skip"
+       }
+      ],
+      "checked_at": "2026-09-10T19:22:23.802021+00:00"
+     }
+    }
    }
   },
   "scan-eia-machine": {
@@ -24060,9 +25246,25 @@
     "acquired_by": "scripts/admit_scan_targets.py"
    },
    "integrity": {
-    "status": "unchecked",
-    "checks": null,
-    "checked_at": null
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed html, detected html",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "99186 bytes vs floor 64",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "skipped: format mismatch already failed or type unhandled",
+      "outcome": "skip"
+     }
+    ],
+    "checked_at": "2026-09-10T19:22:23.802596+00:00"
    },
    "screening": {
     "decision": "included",
@@ -24077,7 +25279,7 @@
     }
    },
    "lifecycle": {
-    "stage": "acquired"
+    "stage": "verified"
    },
    "files": {
     "alternates": [],
@@ -24089,7 +25291,39 @@
    "extra": {
     "notes": [
      "configured listing_url https://www.eia.gov/tools/"
-    ]
+    ],
+    "observed_files": {
+     "corpus/scan/scan-eia-machine.html": {
+      "sha256": "fb68dcba6be486341b2e3123bdba54015c2a9aee4d16e77ce3d7c230890fb6b8",
+      "size": 99186,
+      "claimed_type": "html",
+      "detected_type": "html"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/scan/scan-eia-machine.html": {
+      "path": "corpus/scan/scan-eia-machine.html",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed html, detected html",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "99186 bytes vs floor 64",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "skipped: format mismatch already failed or type unhandled",
+        "outcome": "skip"
+       }
+      ],
+      "checked_at": "2026-09-10T19:22:23.802596+00:00"
+     }
+    }
    }
   },
   "scan-ers-flagship-1-ag-and-food-statistics-charting-the-essentials": {
@@ -24112,9 +25346,25 @@
     "acquired_by": "scripts/admit_scan_targets.py"
    },
    "integrity": {
-    "status": "unchecked",
-    "checks": null,
-    "checked_at": null
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed html, detected html",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "39893 bytes vs floor 64",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "skipped: format mismatch already failed or type unhandled",
+      "outcome": "skip"
+     }
+    ],
+    "checked_at": "2026-09-10T19:22:23.803107+00:00"
    },
    "screening": {
     "decision": "included",
@@ -24129,7 +25379,7 @@
     }
    },
    "lifecycle": {
-    "stage": "acquired"
+    "stage": "verified"
    },
    "files": {
     "alternates": [],
@@ -24141,7 +25391,39 @@
    "extra": {
     "notes": [
      "configured listing_url https://www.ers.usda.gov/data-products"
-    ]
+    ],
+    "observed_files": {
+     "corpus/scan/scan-ers-flagship-1-ag-and-food-statistics-charting-the-essentials.html": {
+      "sha256": "e8002ef7f006aa08367f5ffa7ec1dfc4704ae9468c94db7faaea7e284523b1f9",
+      "size": 39893,
+      "claimed_type": "html",
+      "detected_type": "html"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/scan/scan-ers-flagship-1-ag-and-food-statistics-charting-the-essentials.html": {
+      "path": "corpus/scan/scan-ers-flagship-1-ag-and-food-statistics-charting-the-essentials.html",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed html, detected html",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "39893 bytes vs floor 64",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "skipped: format mismatch already failed or type unhandled",
+        "outcome": "skip"
+       }
+      ],
+      "checked_at": "2026-09-10T19:22:23.803107+00:00"
+     }
+    }
    }
   },
   "scan-ers-flagship-2-agricultural-baseline-database": {
@@ -24164,9 +25446,25 @@
     "acquired_by": "scripts/admit_scan_targets.py"
    },
    "integrity": {
-    "status": "unchecked",
-    "checks": null,
-    "checked_at": null
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed html, detected html",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "64329 bytes vs floor 64",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "skipped: format mismatch already failed or type unhandled",
+      "outcome": "skip"
+     }
+    ],
+    "checked_at": "2026-09-10T19:22:23.803639+00:00"
    },
    "screening": {
     "decision": "included",
@@ -24181,7 +25479,7 @@
     }
    },
    "lifecycle": {
-    "stage": "acquired"
+    "stage": "verified"
    },
    "files": {
     "alternates": [],
@@ -24193,7 +25491,39 @@
    "extra": {
     "notes": [
      "configured listing_url https://www.ers.usda.gov/data-products"
-    ]
+    ],
+    "observed_files": {
+     "corpus/scan/scan-ers-flagship-2-agricultural-baseline-database.html": {
+      "sha256": "b9ae05d687aec5876710c8c3abc89838af194fe03c2ca6bf7414f865e5fd9a44",
+      "size": 64329,
+      "claimed_type": "html",
+      "detected_type": "html"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/scan/scan-ers-flagship-2-agricultural-baseline-database.html": {
+      "path": "corpus/scan/scan-ers-flagship-2-agricultural-baseline-database.html",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed html, detected html",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "64329 bytes vs floor 64",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "skipped: format mismatch already failed or type unhandled",
+        "outcome": "skip"
+       }
+      ],
+      "checked_at": "2026-09-10T19:22:23.803639+00:00"
+     }
+    }
    }
   },
   "scan-ers-machine": {
@@ -24216,9 +25546,25 @@
     "acquired_by": "scripts/admit_scan_targets.py"
    },
    "integrity": {
-    "status": "unchecked",
-    "checks": null,
-    "checked_at": null
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed html, detected html",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "250412 bytes vs floor 64",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "skipped: format mismatch already failed or type unhandled",
+      "outcome": "skip"
+     }
+    ],
+    "checked_at": "2026-09-10T19:22:23.804436+00:00"
    },
    "screening": {
     "decision": "included",
@@ -24233,7 +25579,7 @@
     }
    },
    "lifecycle": {
-    "stage": "acquired"
+    "stage": "verified"
    },
    "files": {
     "alternates": [],
@@ -24245,7 +25591,39 @@
    "extra": {
     "notes": [
      "configured listing_url https://www.ers.usda.gov/data-products"
-    ]
+    ],
+    "observed_files": {
+     "corpus/scan/scan-ers-machine.html": {
+      "sha256": "a2dec06689f05b8c00d001f3ff1f68e8a1f1b6265f2d036d617d0ca98e3b9b7a",
+      "size": 250412,
+      "claimed_type": "html",
+      "detected_type": "html"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/scan/scan-ers-machine.html": {
+      "path": "corpus/scan/scan-ers-machine.html",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed html, detected html",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "250412 bytes vs floor 64",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "skipped: format mismatch already failed or type unhandled",
+        "outcome": "skip"
+       }
+      ],
+      "checked_at": "2026-09-10T19:22:23.804436+00:00"
+     }
+    }
    }
   },
   "scan-nass-flagship-1-data-statistics": {
@@ -24268,9 +25646,25 @@
     "acquired_by": "scripts/admit_scan_targets.py"
    },
    "integrity": {
-    "status": "unchecked",
-    "checks": null,
-    "checked_at": null
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed html, detected html",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "57524 bytes vs floor 64",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "skipped: format mismatch already failed or type unhandled",
+      "outcome": "skip"
+     }
+    ],
+    "checked_at": "2026-09-10T19:22:23.804935+00:00"
    },
    "screening": {
     "decision": "included",
@@ -24285,7 +25679,7 @@
     }
    },
    "lifecycle": {
-    "stage": "acquired"
+    "stage": "verified"
    },
    "files": {
     "alternates": [],
@@ -24297,7 +25691,39 @@
    "extra": {
     "notes": [
      "configured listing_url https://www.nass.usda.gov/Data_and_Statistics/"
-    ]
+    ],
+    "observed_files": {
+     "corpus/scan/scan-nass-flagship-1-data-statistics.html": {
+      "sha256": "d9972a224d0410090767c0f6a86bc29685e7cc796bad0b9551021a287d969378",
+      "size": 57524,
+      "claimed_type": "html",
+      "detected_type": "html"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/scan/scan-nass-flagship-1-data-statistics.html": {
+      "path": "corpus/scan/scan-nass-flagship-1-data-statistics.html",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed html, detected html",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "57524 bytes vs floor 64",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "skipped: format mismatch already failed or type unhandled",
+        "outcome": "skip"
+       }
+      ],
+      "checked_at": "2026-09-10T19:22:23.804935+00:00"
+     }
+    }
    }
   },
   "scan-nass-flagship-2-livestock-county-estimates": {
@@ -24320,9 +25746,25 @@
     "acquired_by": "scripts/admit_scan_targets.py"
    },
    "integrity": {
-    "status": "unchecked",
-    "checks": null,
-    "checked_at": null
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed html, detected html",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "58489 bytes vs floor 64",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "skipped: format mismatch already failed or type unhandled",
+      "outcome": "skip"
+     }
+    ],
+    "checked_at": "2026-09-10T19:22:23.805459+00:00"
    },
    "screening": {
     "decision": "included",
@@ -24337,7 +25779,7 @@
     }
    },
    "lifecycle": {
-    "stage": "acquired"
+    "stage": "verified"
    },
    "files": {
     "alternates": [],
@@ -24349,7 +25791,39 @@
    "extra": {
     "notes": [
      "configured listing_url https://www.nass.usda.gov/Data_and_Statistics/"
-    ]
+    ],
+    "observed_files": {
+     "corpus/scan/scan-nass-flagship-2-livestock-county-estimates.html": {
+      "sha256": "630ff735acecda1200ed786005f601e62118180cf42ae91b2ed9a8bb6383d090",
+      "size": 58489,
+      "claimed_type": "html",
+      "detected_type": "html"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/scan/scan-nass-flagship-2-livestock-county-estimates.html": {
+      "path": "corpus/scan/scan-nass-flagship-2-livestock-county-estimates.html",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed html, detected html",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "58489 bytes vs floor 64",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "skipped: format mismatch already failed or type unhandled",
+        "outcome": "skip"
+       }
+      ],
+      "checked_at": "2026-09-10T19:22:23.805459+00:00"
+     }
+    }
    }
   },
   "scan-nass-machine": {
@@ -24372,9 +25846,25 @@
     "acquired_by": "scripts/admit_scan_targets.py"
    },
    "integrity": {
-    "status": "unchecked",
-    "checks": null,
-    "checked_at": null
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed html, detected html",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "91947 bytes vs floor 64",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "skipped: format mismatch already failed or type unhandled",
+      "outcome": "skip"
+     }
+    ],
+    "checked_at": "2026-09-10T19:22:23.806022+00:00"
    },
    "screening": {
     "decision": "included",
@@ -24389,7 +25879,7 @@
     }
    },
    "lifecycle": {
-    "stage": "acquired"
+    "stage": "verified"
    },
    "files": {
     "alternates": [],
@@ -24401,7 +25891,39 @@
    "extra": {
     "notes": [
      "configured listing_url https://www.nass.usda.gov/Data_and_Statistics/"
-    ]
+    ],
+    "observed_files": {
+     "corpus/scan/scan-nass-machine.html": {
+      "sha256": "b2ba4ae5601471b3fcefd171bf488d4a822156a75d56bbfb6cebde60202cbdde",
+      "size": 91947,
+      "claimed_type": "html",
+      "detected_type": "html"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/scan/scan-nass-machine.html": {
+      "path": "corpus/scan/scan-nass-machine.html",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed html, detected html",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "91947 bytes vs floor 64",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "skipped: format mismatch already failed or type unhandled",
+        "outcome": "skip"
+       }
+      ],
+      "checked_at": "2026-09-10T19:22:23.806022+00:00"
+     }
+    }
    }
   },
   "scan-nchs-flagship-1-data-briefs": {
@@ -24424,9 +25946,25 @@
     "acquired_by": "scripts/admit_scan_targets.py"
    },
    "integrity": {
-    "status": "unchecked",
-    "checks": null,
-    "checked_at": null
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed html, detected html",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "126928 bytes vs floor 64",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "skipped: format mismatch already failed or type unhandled",
+      "outcome": "skip"
+     }
+    ],
+    "checked_at": "2026-09-10T19:22:23.806627+00:00"
    },
    "screening": {
     "decision": "included",
@@ -24441,7 +25979,7 @@
     }
    },
    "lifecycle": {
-    "stage": "acquired"
+    "stage": "verified"
    },
    "files": {
     "alternates": [],
@@ -24453,7 +25991,39 @@
    "extra": {
     "notes": [
      "configured listing_url https://www.cdc.gov/nchs/products/index.htm"
-    ]
+    ],
+    "observed_files": {
+     "corpus/scan/scan-nchs-flagship-1-data-briefs.html": {
+      "sha256": "43cb3867368a95761e64d209247ff60d3bd14cc29bc4bd8646b16bf9cc0474fd",
+      "size": 126928,
+      "claimed_type": "html",
+      "detected_type": "html"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/scan/scan-nchs-flagship-1-data-briefs.html": {
+      "path": "corpus/scan/scan-nchs-flagship-1-data-briefs.html",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed html, detected html",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "126928 bytes vs floor 64",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "skipped: format mismatch already failed or type unhandled",
+        "outcome": "skip"
+       }
+      ],
+      "checked_at": "2026-09-10T19:22:23.806627+00:00"
+     }
+    }
    }
   },
   "scan-nchs-flagship-2-early-releases-of-selected-estimates-from-the-nhis": {
@@ -24476,9 +26046,25 @@
     "acquired_by": "scripts/admit_scan_targets.py"
    },
    "integrity": {
-    "status": "unchecked",
-    "checks": null,
-    "checked_at": null
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed html, detected html",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "50511 bytes vs floor 64",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "skipped: format mismatch already failed or type unhandled",
+      "outcome": "skip"
+     }
+    ],
+    "checked_at": "2026-09-10T19:22:23.807172+00:00"
    },
    "screening": {
     "decision": "included",
@@ -24493,7 +26079,7 @@
     }
    },
    "lifecycle": {
-    "stage": "acquired"
+    "stage": "verified"
    },
    "files": {
     "alternates": [],
@@ -24505,7 +26091,39 @@
    "extra": {
     "notes": [
      "configured listing_url https://www.cdc.gov/nchs/products/index.htm"
-    ]
+    ],
+    "observed_files": {
+     "corpus/scan/scan-nchs-flagship-2-early-releases-of-selected-estimates-from-the-nhis.html": {
+      "sha256": "3f4442d1ebc57ba7db1a010d07d5916473f4a7c2f4a8d4875ed528895d855cc9",
+      "size": 50511,
+      "claimed_type": "html",
+      "detected_type": "html"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/scan/scan-nchs-flagship-2-early-releases-of-selected-estimates-from-the-nhis.html": {
+      "path": "corpus/scan/scan-nchs-flagship-2-early-releases-of-selected-estimates-from-the-nhis.html",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed html, detected html",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "50511 bytes vs floor 64",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "skipped: format mismatch already failed or type unhandled",
+        "outcome": "skip"
+       }
+      ],
+      "checked_at": "2026-09-10T19:22:23.807172+00:00"
+     }
+    }
    }
   },
   "scan-nchs-machine": {
@@ -24528,9 +26146,25 @@
     "acquired_by": "scripts/admit_scan_targets.py"
    },
    "integrity": {
-    "status": "unchecked",
-    "checks": null,
-    "checked_at": null
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed html, detected html",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "102132 bytes vs floor 64",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "skipped: format mismatch already failed or type unhandled",
+      "outcome": "skip"
+     }
+    ],
+    "checked_at": "2026-09-10T19:22:23.807742+00:00"
    },
    "screening": {
     "decision": "included",
@@ -24545,7 +26179,7 @@
     }
    },
    "lifecycle": {
-    "stage": "acquired"
+    "stage": "verified"
    },
    "files": {
     "alternates": [],
@@ -24557,7 +26191,39 @@
    "extra": {
     "notes": [
      "configured listing_url https://www.cdc.gov/nchs/products/index.htm"
-    ]
+    ],
+    "observed_files": {
+     "corpus/scan/scan-nchs-machine.html": {
+      "sha256": "094866a9da07863bc590c41230f10bc8b55af440879818037ef754a95d4e1159",
+      "size": 102132,
+      "claimed_type": "html",
+      "detected_type": "html"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/scan/scan-nchs-machine.html": {
+      "path": "corpus/scan/scan-nchs-machine.html",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed html, detected html",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "102132 bytes vs floor 64",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "skipped: format mismatch already failed or type unhandled",
+        "outcome": "skip"
+       }
+      ],
+      "checked_at": "2026-09-10T19:22:23.807742+00:00"
+     }
+    }
    }
   },
   "scan-ncses-flagship-1-annual-business-survey-2024-data-year-2023": {
@@ -24580,9 +26246,25 @@
     "acquired_by": "scripts/admit_scan_targets.py"
    },
    "integrity": {
-    "status": "unchecked",
-    "checks": null,
-    "checked_at": null
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed html, detected html",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "260482 bytes vs floor 64",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "skipped: format mismatch already failed or type unhandled",
+      "outcome": "skip"
+     }
+    ],
+    "checked_at": "2026-09-10T19:22:23.808460+00:00"
    },
    "screening": {
     "decision": "included",
@@ -24597,7 +26279,7 @@
     }
    },
    "lifecycle": {
-    "stage": "acquired"
+    "stage": "verified"
    },
    "files": {
     "alternates": [],
@@ -24609,7 +26291,39 @@
    "extra": {
     "notes": [
      "discovered from the https://ncses.nsf.gov home page, anchor text 'Explore Data'"
-    ]
+    ],
+    "observed_files": {
+     "corpus/scan/scan-ncses-flagship-1-annual-business-survey-2024-data-year-2023.html": {
+      "sha256": "aa571113b9b0447f2aabe1c2781ba01df2ea5cbef4cc042fea17751dd403acbe",
+      "size": 260482,
+      "claimed_type": "html",
+      "detected_type": "html"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/scan/scan-ncses-flagship-1-annual-business-survey-2024-data-year-2023.html": {
+      "path": "corpus/scan/scan-ncses-flagship-1-annual-business-survey-2024-data-year-2023.html",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed html, detected html",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "260482 bytes vs floor 64",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "skipped: format mismatch already failed or type unhandled",
+        "outcome": "skip"
+       }
+      ],
+      "checked_at": "2026-09-10T19:22:23.808460+00:00"
+     }
+    }
    }
   },
   "scan-ncses-machine": {
@@ -24632,9 +26346,25 @@
     "acquired_by": "scripts/admit_scan_targets.py"
    },
    "integrity": {
-    "status": "unchecked",
-    "checks": null,
-    "checked_at": null
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed html, detected html",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "30744 bytes vs floor 64",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "skipped: format mismatch already failed or type unhandled",
+      "outcome": "skip"
+     }
+    ],
+    "checked_at": "2026-09-10T19:22:23.808922+00:00"
    },
    "screening": {
     "decision": "included",
@@ -24649,7 +26379,7 @@
     }
    },
    "lifecycle": {
-    "stage": "acquired"
+    "stage": "verified"
    },
    "files": {
     "alternates": [],
@@ -24661,7 +26391,39 @@
    "extra": {
     "notes": [
      "discovered from the https://ncses.nsf.gov home page, anchor text 'Explore Data'"
-    ]
+    ],
+    "observed_files": {
+     "corpus/scan/scan-ncses-machine.html": {
+      "sha256": "b2d8f88317b3760048d9f1a60db0096b049cc3e65b06e225ad9f47f716953bee",
+      "size": 30744,
+      "claimed_type": "html",
+      "detected_type": "html"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/scan/scan-ncses-machine.html": {
+      "path": "corpus/scan/scan-ncses-machine.html",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed html, detected html",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "30744 bytes vs floor 64",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "skipped: format mismatch already failed or type unhandled",
+        "outcome": "skip"
+       }
+      ],
+      "checked_at": "2026-09-10T19:22:23.808922+00:00"
+     }
+    }
    }
   },
   "scan-soi-flagship-1-individual-tax-statistics": {
@@ -24684,9 +26446,25 @@
     "acquired_by": "scripts/admit_scan_targets.py"
    },
    "integrity": {
-    "status": "unchecked",
-    "checks": null,
-    "checked_at": null
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed html, detected html",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "103635 bytes vs floor 64",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "skipped: format mismatch already failed or type unhandled",
+      "outcome": "skip"
+     }
+    ],
+    "checked_at": "2026-09-10T19:22:23.809481+00:00"
    },
    "screening": {
     "decision": "included",
@@ -24701,7 +26479,7 @@
     }
    },
    "lifecycle": {
-    "stage": "acquired"
+    "stage": "verified"
    },
    "files": {
     "alternates": [],
@@ -24713,7 +26491,39 @@
    "extra": {
     "notes": [
      "configured listing_url https://www.irs.gov/statistics"
-    ]
+    ],
+    "observed_files": {
+     "corpus/scan/scan-soi-flagship-1-individual-tax-statistics.html": {
+      "sha256": "484c0cc02ddceab6e379137faeed5477f51bfc2f53deba700f42971f034afd05",
+      "size": 103635,
+      "claimed_type": "html",
+      "detected_type": "html"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/scan/scan-soi-flagship-1-individual-tax-statistics.html": {
+      "path": "corpus/scan/scan-soi-flagship-1-individual-tax-statistics.html",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed html, detected html",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "103635 bytes vs floor 64",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "skipped: format mismatch already failed or type unhandled",
+        "outcome": "skip"
+       }
+      ],
+      "checked_at": "2026-09-10T19:22:23.809481+00:00"
+     }
+    }
    }
   },
   "scan-soi-flagship-2-business-tax-statistics": {
@@ -24736,9 +26546,25 @@
     "acquired_by": "scripts/admit_scan_targets.py"
    },
    "integrity": {
-    "status": "unchecked",
-    "checks": null,
-    "checked_at": null
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed html, detected html",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "108159 bytes vs floor 64",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "skipped: format mismatch already failed or type unhandled",
+      "outcome": "skip"
+     }
+    ],
+    "checked_at": "2026-09-10T19:22:23.810054+00:00"
    },
    "screening": {
     "decision": "included",
@@ -24753,7 +26579,7 @@
     }
    },
    "lifecycle": {
-    "stage": "acquired"
+    "stage": "verified"
    },
    "files": {
     "alternates": [],
@@ -24765,7 +26591,39 @@
    "extra": {
     "notes": [
      "configured listing_url https://www.irs.gov/statistics"
-    ]
+    ],
+    "observed_files": {
+     "corpus/scan/scan-soi-flagship-2-business-tax-statistics.html": {
+      "sha256": "0b10ec9883601a7a871cd6145968a6a42a4fdea6a20e3f4f889b360c1aec12ea",
+      "size": 108159,
+      "claimed_type": "html",
+      "detected_type": "html"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/scan/scan-soi-flagship-2-business-tax-statistics.html": {
+      "path": "corpus/scan/scan-soi-flagship-2-business-tax-statistics.html",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed html, detected html",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "108159 bytes vs floor 64",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "skipped: format mismatch already failed or type unhandled",
+        "outcome": "skip"
+       }
+      ],
+      "checked_at": "2026-09-10T19:22:23.810054+00:00"
+     }
+    }
    }
   },
   "scan-statcan-flagship-1-results-and-documentation-of-surveys-and-statistical-program": {
@@ -24788,9 +26646,25 @@
     "acquired_by": "scripts/admit_scan_targets.py"
    },
    "integrity": {
-    "status": "unchecked",
-    "checks": null,
-    "checked_at": null
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed html, detected html",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "114445 bytes vs floor 64",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "skipped: format mismatch already failed or type unhandled",
+      "outcome": "skip"
+     }
+    ],
+    "checked_at": "2026-09-10T19:22:23.810649+00:00"
    },
    "screening": {
     "decision": "included",
@@ -24805,7 +26679,7 @@
     }
    },
    "lifecycle": {
-    "stage": "acquired"
+    "stage": "verified"
    },
    "files": {
     "alternates": [],
@@ -24817,7 +26691,39 @@
    "extra": {
     "notes": [
      "configured listing_url https://www150.statcan.gc.ca/n1/en/type/data"
-    ]
+    ],
+    "observed_files": {
+     "corpus/scan/scan-statcan-flagship-1-results-and-documentation-of-surveys-and-statistical-program.html": {
+      "sha256": "18e772921f82cddf4c873962805b3579444912d60fc3dbb3025141007d629652",
+      "size": 114445,
+      "claimed_type": "html",
+      "detected_type": "html"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/scan/scan-statcan-flagship-1-results-and-documentation-of-surveys-and-statistical-program.html": {
+      "path": "corpus/scan/scan-statcan-flagship-1-results-and-documentation-of-surveys-and-statistical-program.html",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed html, detected html",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "114445 bytes vs floor 64",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "skipped: format mismatch already failed or type unhandled",
+        "outcome": "skip"
+       }
+      ],
+      "checked_at": "2026-09-10T19:22:23.810649+00:00"
+     }
+    }
    }
   },
   "scan-statcan-flagship-2-labour-force-survey-in-brief-interactive-app": {
@@ -24840,9 +26746,25 @@
     "acquired_by": "scripts/admit_scan_targets.py"
    },
    "integrity": {
-    "status": "unchecked",
-    "checks": null,
-    "checked_at": null
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed html, detected html",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "28435 bytes vs floor 64",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "skipped: format mismatch already failed or type unhandled",
+      "outcome": "skip"
+     }
+    ],
+    "checked_at": "2026-09-10T19:22:23.811081+00:00"
    },
    "screening": {
     "decision": "included",
@@ -24857,7 +26779,7 @@
     }
    },
    "lifecycle": {
-    "stage": "acquired"
+    "stage": "verified"
    },
    "files": {
     "alternates": [],
@@ -24869,7 +26791,39 @@
    "extra": {
     "notes": [
      "configured listing_url https://www150.statcan.gc.ca/n1/en/type/data"
-    ]
+    ],
+    "observed_files": {
+     "corpus/scan/scan-statcan-flagship-2-labour-force-survey-in-brief-interactive-app.html": {
+      "sha256": "27510fafa316b061820fa2998fbeadc975f5b0e5423352e378c10b1a7fd983c4",
+      "size": 28435,
+      "claimed_type": "html",
+      "detected_type": "html"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/scan/scan-statcan-flagship-2-labour-force-survey-in-brief-interactive-app.html": {
+      "path": "corpus/scan/scan-statcan-flagship-2-labour-force-survey-in-brief-interactive-app.html",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed html, detected html",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "28435 bytes vs floor 64",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "skipped: format mismatch already failed or type unhandled",
+        "outcome": "skip"
+       }
+      ],
+      "checked_at": "2026-09-10T19:22:23.811081+00:00"
+     }
+    }
    }
   },
   "scan-statcan-machine": {
@@ -24892,9 +26846,25 @@
     "acquired_by": "scripts/admit_scan_targets.py"
    },
    "integrity": {
-    "status": "unchecked",
-    "checks": null,
-    "checked_at": null
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed html, detected html",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "33297 bytes vs floor 64",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "skipped: format mismatch already failed or type unhandled",
+      "outcome": "skip"
+     }
+    ],
+    "checked_at": "2026-09-10T19:22:23.811551+00:00"
    },
    "screening": {
     "decision": "included",
@@ -24909,7 +26879,7 @@
     }
    },
    "lifecycle": {
-    "stage": "acquired"
+    "stage": "verified"
    },
    "files": {
     "alternates": [],
@@ -24921,7 +26891,39 @@
    "extra": {
     "notes": [
      "configured listing_url https://www150.statcan.gc.ca/n1/en/type/data"
-    ]
+    ],
+    "observed_files": {
+     "corpus/scan/scan-statcan-machine.html": {
+      "sha256": "6162b6729eb9e894c917a4998a498d5ac2b205de45abaee1e182b632e993b411",
+      "size": 33297,
+      "claimed_type": "html",
+      "detected_type": "html"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/scan/scan-statcan-machine.html": {
+      "path": "corpus/scan/scan-statcan-machine.html",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed html, detected html",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "33297 bytes vs floor 64",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "skipped: format mismatch already failed or type unhandled",
+        "outcome": "skip"
+       }
+      ],
+      "checked_at": "2026-09-10T19:22:23.811551+00:00"
+     }
+    }
    }
   },
   "sccompass-an-integrated-multi-species-scrna-seq-database-for": {
@@ -27030,10 +29032,17 @@
    },
    "screening": {
     "decision": "included",
-    "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: flagged_cell DEV surface (StatCan letter quality indicators): STATUS column carries 'E' (use with caution) on 9 cells and '..' on 33 in the 2022 slice; rows also carry Low/High 95% confidence interval as labeled rows, so",
+    "rationale": "manifest-added by rule (clause R1, construct_arm publication_actionability)",
     "decided_by": "cc",
-    "decided_at": "2026-09-03T17:48:32.646783+00:00",
-    "history": [],
+    "decided_at": "2026-09-03",
+    "history": [
+     {
+      "decision": "included",
+      "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: flagged_cell DEV surface (StatCan letter quality indicators): STATUS column carries 'E' (use with caution) on 9 cells and '..' on 33 in the 2022 slice; rows also carry Low/High 95% confidence interval as labeled rows, so",
+      "decided_by": "cc",
+      "decided_at": "2026-09-03T17:48:32.646783+00:00"
+     }
+    ],
     "identity_gate": {
      "passed": true,
      "checked": [],
@@ -27048,7 +29057,8 @@
     "quarantined": []
    },
    "provenance_sources": [
-    "g1sfc_2026-09-03"
+    "g1sfc_2026-09-03",
+    "candidate_register"
    ],
    "extra": {
     "observed_files": {
@@ -27083,7 +29093,10 @@
       "checked_at": "2026-09-03T17:48:37.847966+00:00"
      }
     },
-    "added_in": "g1sfc-2026-09-03"
+    "added_in": "g1sfc-2026-09-03",
+    "notes": [
+     "flagged_cell DEV surface (StatCan letter quality indicators): STATUS column carries 'E' (use with caution) on 9 cells and '..' on 33 in the 2022 slice; rows also carry Low/High 95% confidence interval as labeled rows, so unflagged rows serve table_labeled. Selection: Canada + 10 provinces; total 12+; both sexes; indicators 1-11; Characteristics = Percent, Low 95% CI, High 95% CI."
+    ]
    }
   },
   "statcan-13-10-0096-01-cube-metadata-csv": {
@@ -27128,10 +29141,17 @@
    },
    "screening": {
     "decision": "included",
-    "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: Companion to row 7: symbol legend and notes.",
+    "rationale": "manifest-added by rule (clause R1, construct_arm publication_actionability)",
     "decided_by": "cc",
-    "decided_at": "2026-09-03T17:48:33.046250+00:00",
-    "history": [],
+    "decided_at": "2026-09-03",
+    "history": [
+     {
+      "decision": "included",
+      "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: Companion to row 7: symbol legend and notes.",
+      "decided_by": "cc",
+      "decided_at": "2026-09-03T17:48:33.046250+00:00"
+     }
+    ],
     "identity_gate": {
      "passed": true,
      "checked": [],
@@ -27146,7 +29166,8 @@
     "quarantined": []
    },
    "provenance_sources": [
-    "g1sfc_2026-09-03"
+    "g1sfc_2026-09-03",
+    "candidate_register"
    ],
    "extra": {
     "observed_files": {
@@ -27181,7 +29202,10 @@
       "checked_at": "2026-09-03T17:48:37.848347+00:00"
      }
     },
-    "added_in": "g1sfc-2026-09-03"
+    "added_in": "g1sfc-2026-09-03",
+    "notes": [
+     "Companion to row 7: symbol legend and notes."
+    ]
    }
   },
   "statcan-13-10-0113-01-cchs-2021-2022-quebec-health-regions-percent-ci-csv": {
@@ -27226,10 +29250,17 @@
    },
    "screening": {
     "decision": "included",
-    "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: flagged_cell HOLDOUT surface: a different table (two-year period estimates) and geography (16 Quebec health regions); STATUS carries 30 'E' and 6 'F' cells in the 2021/2022 slice.",
+    "rationale": "manifest-added by rule (clause R1, construct_arm publication_actionability)",
     "decided_by": "cc",
-    "decided_at": "2026-09-03T17:48:33.450180+00:00",
-    "history": [],
+    "decided_at": "2026-09-03",
+    "history": [
+     {
+      "decision": "included",
+      "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: flagged_cell HOLDOUT surface: a different table (two-year period estimates) and geography (16 Quebec health regions); STATUS carries 30 'E' and 6 'F' cells in the 2021/2022 slice.",
+      "decided_by": "cc",
+      "decided_at": "2026-09-03T17:48:33.450180+00:00"
+     }
+    ],
     "identity_gate": {
      "passed": true,
      "checked": [],
@@ -27244,7 +29275,8 @@
     "quarantined": []
    },
    "provenance_sources": [
-    "g1sfc_2026-09-03"
+    "g1sfc_2026-09-03",
+    "candidate_register"
    ],
    "extra": {
     "observed_files": {
@@ -27279,7 +29311,10 @@
       "checked_at": "2026-09-03T17:48:37.848939+00:00"
      }
     },
-    "added_in": "g1sfc-2026-09-03"
+    "added_in": "g1sfc-2026-09-03",
+    "notes": [
+     "flagged_cell HOLDOUT surface: a different table (two-year period estimates) and geography (16 Quebec health regions); STATUS carries 30 'E' and 6 'F' cells in the 2021/2022 slice."
+    ]
    }
   },
   "statcan-13-10-0113-01-cube-metadata-csv": {
@@ -27324,10 +29359,17 @@
    },
    "screening": {
     "decision": "included",
-    "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: Companion to row 9: symbol legend and notes.",
+    "rationale": "manifest-added by rule (clause R1, construct_arm publication_actionability)",
     "decided_by": "cc",
-    "decided_at": "2026-09-03T17:48:33.846822+00:00",
-    "history": [],
+    "decided_at": "2026-09-03",
+    "history": [
+     {
+      "decision": "included",
+      "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: Companion to row 9: symbol legend and notes.",
+      "decided_by": "cc",
+      "decided_at": "2026-09-03T17:48:33.846822+00:00"
+     }
+    ],
     "identity_gate": {
      "passed": true,
      "checked": [],
@@ -27342,7 +29384,8 @@
     "quarantined": []
    },
    "provenance_sources": [
-    "g1sfc_2026-09-03"
+    "g1sfc_2026-09-03",
+    "candidate_register"
    ],
    "extra": {
     "observed_files": {
@@ -27377,7 +29420,10 @@
       "checked_at": "2026-09-03T17:48:37.849319+00:00"
      }
     },
-    "added_in": "g1sfc-2026-09-03"
+    "added_in": "g1sfc-2026-09-03",
+    "notes": [
+     "Companion to row 9: symbol legend and notes."
+    ]
    }
   },
   "statcan-14-10-0287-01-cube-metadata-csv": {
@@ -27422,10 +29468,17 @@
    },
    "screening": {
     "decision": "included",
-    "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: Companion to rows 4-5: the symbol legend (A-F data quality, E use with caution, F too unreliable to be published, x suppressed, ..) and the member notes (standard error definitions) are served in this separate file, not ",
+    "rationale": "manifest-added by rule (clause R1, construct_arm publication_actionability)",
     "decided_by": "cc",
-    "decided_at": "2026-09-03T17:48:32.234909+00:00",
-    "history": [],
+    "decided_at": "2026-09-03",
+    "history": [
+     {
+      "decision": "included",
+      "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: Companion to rows 4-5: the symbol legend (A-F data quality, E use with caution, F too unreliable to be published, x suppressed, ..) and the member notes (standard error definitions) are served in this separate file, not ",
+      "decided_by": "cc",
+      "decided_at": "2026-09-03T17:48:32.234909+00:00"
+     }
+    ],
     "identity_gate": {
      "passed": true,
      "checked": [],
@@ -27440,7 +29493,8 @@
     "quarantined": []
    },
    "provenance_sources": [
-    "g1sfc_2026-09-03"
+    "g1sfc_2026-09-03",
+    "candidate_register"
    ],
    "extra": {
     "observed_files": {
@@ -27475,7 +29529,10 @@
       "checked_at": "2026-09-03T17:48:37.849676+00:00"
      }
     },
-    "added_in": "g1sfc-2026-09-03"
+    "added_in": "g1sfc-2026-09-03",
+    "notes": [
+     "Companion to rows 4-5: the symbol legend (A-F data quality, E use with caution, F too unreliable to be published, x suppressed, ..) and the member notes (standard error definitions) are served in this separate file, not in the data CSV — recorded as legend_on_surface=false on the fixtures."
+    ]
    }
   },
   "statcan-14-10-0287-01-lfs-2025-12-provinces-estimate-se-csv": {
@@ -27520,10 +29577,17 @@
    },
    "screening": {
     "decision": "included",
-    "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: table_labeled HOLDOUT surface: the same selection for a different reference month (December 2025). The endpoint's date window is exclusive-shifted by one period: startDate=endDate=2026-01-01 returns the 2025-12 rows (ver",
+    "rationale": "manifest-added by rule (clause R1, construct_arm publication_actionability)",
     "decided_by": "cc",
-    "decided_at": "2026-09-03T17:48:31.835513+00:00",
-    "history": [],
+    "decided_at": "2026-09-03",
+    "history": [
+     {
+      "decision": "included",
+      "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: table_labeled HOLDOUT surface: the same selection for a different reference month (December 2025). The endpoint's date window is exclusive-shifted by one period: startDate=endDate=2026-01-01 returns the 2025-12 rows (ver",
+      "decided_by": "cc",
+      "decided_at": "2026-09-03T17:48:31.835513+00:00"
+     }
+    ],
     "identity_gate": {
      "passed": true,
      "checked": [],
@@ -27538,7 +29602,8 @@
     "quarantined": []
    },
    "provenance_sources": [
-    "g1sfc_2026-09-03"
+    "g1sfc_2026-09-03",
+    "candidate_register"
    ],
    "extra": {
     "observed_files": {
@@ -27573,7 +29638,10 @@
       "checked_at": "2026-09-03T17:48:37.850106+00:00"
      }
     },
-    "added_in": "g1sfc-2026-09-03"
+    "added_in": "g1sfc-2026-09-03",
+    "notes": [
+     "table_labeled HOLDOUT surface: the same selection for a different reference month (December 2025). The endpoint's date window is exclusive-shifted by one period: startDate=endDate=2026-01-01 returns the 2025-12 rows (verified 2026-09-03: 2025-12-01..2025-12-31 returns no rows; 2025-11-01..2025-12-01 returns 2024-11), so the recorded request is the form that serves December 2025."
+    ]
    }
   },
   "statcan-14-10-0287-01-lfs-2026-07-provinces-estimate-se-csv": {
@@ -27618,10 +29686,17 @@
    },
    "screening": {
     "decision": "included",
-    "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: table_labeled DEV surface: long-format CSV whose 'Statistics' column names each row 'Estimate' or 'Standard error of estimate' and whose STATUS/SYMBOL columns carry the quality indicator (selection: Geography Canada + 10",
+    "rationale": "manifest-added by rule (clause R1, construct_arm publication_actionability)",
     "decided_by": "cc",
-    "decided_at": "2026-09-03T17:48:31.428093+00:00",
-    "history": [],
+    "decided_at": "2026-09-03",
+    "history": [
+     {
+      "decision": "included",
+      "rationale": "triage inclusion rule clause (R1), construct_arm=publication_actionability: table_labeled DEV surface: long-format CSV whose 'Statistics' column names each row 'Estimate' or 'Standard error of estimate' and whose STATUS/SYMBOL columns carry the quality indicator (selection: Geography Canada + 10",
+      "decided_by": "cc",
+      "decided_at": "2026-09-03T17:48:31.428093+00:00"
+     }
+    ],
     "identity_gate": {
      "passed": true,
      "checked": [],
@@ -27636,7 +29711,8 @@
     "quarantined": []
    },
    "provenance_sources": [
-    "g1sfc_2026-09-03"
+    "g1sfc_2026-09-03",
+    "candidate_register"
    ],
    "extra": {
     "observed_files": {
@@ -27671,7 +29747,10 @@
       "checked_at": "2026-09-03T17:48:37.850529+00:00"
      }
     },
-    "added_in": "g1sfc-2026-09-03"
+    "added_in": "g1sfc-2026-09-03",
+    "notes": [
+     "table_labeled DEV surface: long-format CSV whose 'Statistics' column names each row 'Estimate' or 'Standard error of estimate' and whose STATUS/SYMBOL columns carry the quality indicator (selection: Geography Canada + 10 provinces; all 9 labour force characteristics; total gender; 15 years and over; Statistics = Estimate, Standard error of estimate; seasonally adjusted; latest reference month)."
+    ]
    }
   },
   "statcan-71-543-g-guide-labour-force-survey-2025": {
@@ -29491,6 +31570,53 @@
    "extra": {
     "notes": [
      "Domain preprocessing review (microbiome/metabolomics/accelerometry for one research field); no general readiness framework stated as contribution."
+    ]
+   }
+  },
+  "u-s-census-bureau-newsroom-2024-american-community-survey-1": {
+   "doc_id": "u-s-census-bureau-newsroom-2024-american-community-survey-1",
+   "identity": {
+    "sha256": null,
+    "canonical_path": null,
+    "title": "U.S. Census Bureau newsroom: 2024 American Community Survey 1-Year Estimates release (2025)",
+    "authors_or_org": [
+     "U.S. Census Bureau"
+    ],
+    "pub_year": "2025",
+    "doc_type": "federal",
+    "source_url": "https://www.census.gov/newsroom/press-releases/2025/acs-1-year-estimates.html",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "unknown",
+    "acquired_at": null,
+    "acquired_by": null
+   },
+   "integrity": {
+    "status": "unchecked",
+    "checks": null,
+    "checked_at": null
+   },
+   "screening": {
+    "decision": "excluded",
+    "rationale": "The task's footnoted DEV target (a Census ACS newsroom release with a technical note on margins of error). Reconnaissance 2026-09-03: HTTP 200, 6,119 chars of body text; zero occurrences of 'margin of error' or 'technical note'; the only uncertainty language is 'no statistically significant differences'. No MOE or CI is on the surface, so no footnoted proposition can be grounded — cut, not substit",
+    "decided_by": "cc",
+    "decided_at": "2026-09-03",
+    "history": []
+   },
+   "lifecycle": {
+    "stage": "cataloged"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "candidate_register"
+   ],
+   "extra": {
+    "notes": [
+     "The task's footnoted DEV target (a Census ACS newsroom release with a technical note on margins of error). Reconnaissance 2026-09-03: HTTP 200, 6,119 chars of body text; zero occurrences of 'margin of error' or 'technical note'; the only uncertainty language is 'no statistically significant differences'. No MOE or CI is on the surface, so no footnoted proposition can be grounded — cut, not substit"
     ]
    }
   },

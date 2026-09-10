@@ -1,0 +1,68 @@
+{
+ "task": "cc_tasks/2026-09-10_corpus_noaa_esip.md",
+ "generated_at": "2026-09-10T19:19:15.639636+00:00",
+ "user_agent": "ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg)",
+ "identity_note": "one identity, never varied. A host that refuses this client is recorded as refusing it; DD-060.",
+ "requests_per_netloc": {
+  "raw.githubusercontent.com": 2,
+  "www.noaa.gov": 3
+ },
+ "requests_total": 5,
+ "obtained": [
+  "esip-checklist"
+ ],
+ "refused": {
+  "nao-216-128": "refused",
+  "nao-201-118": "refused"
+ },
+ "sources": [
+  {
+   "key": "nao-216-128",
+   "url": "https://www.noaa.gov/sites/default/files/2026-04/NAO_216-128.pdf",
+   "filename": "NAO_216-128.pdf",
+   "note": "NAO 216-128, Artificial Intelligence in NOAA, signed and effective 2026-04-16. Scanned image PDF; OCR required; the definition text is in \u00a73.01.",
+   "netloc": "www.noaa.gov",
+   "robots_permits": true,
+   "status": 403,
+   "final_url": "https://www.noaa.gov/sites/default/files/2026-04/NAO_216-128.pdf",
+   "bytes": 919,
+   "sha256": "5eeb3352b288db7e70fd7c3843ae154b85b694d19fe3aa2fb483a1a7a7def0aa",
+   "content_type": "text/html",
+   "error_class": "refused",
+   "stored_at": null,
+   "obtained": false
+  },
+  {
+   "key": "nao-201-118",
+   "url": "https://www.noaa.gov/sites/default/files/2024-11/NAO_201-118-Software_Governance_and_Public_Release_Policy.pdf",
+   "filename": "NAO_201-118_Software_Governance_and_Public_Release_Policy.pdf",
+   "note": "NAO 201-118, Software Governance and Public Release Policy, 2024-11. Text PDF.",
+   "netloc": "www.noaa.gov",
+   "robots_permits": true,
+   "status": 403,
+   "final_url": "https://www.noaa.gov/sites/default/files/2024-11/NAO_201-118-Software_Governance_and_Public_Release_Policy.pdf",
+   "bytes": 919,
+   "sha256": "cd2132cf4a569e8b83a60e0fed7215687f5aceb8246cb748da5a090d672fcbcf",
+   "content_type": "text/html",
+   "error_class": "refused",
+   "stored_at": null,
+   "obtained": false
+  },
+  {
+   "key": "esip-checklist",
+   "url": "https://raw.githubusercontent.com/ESIPFed/data-readiness/main/checklist-published/ai-ready-data-checklist-v.1.0.md",
+   "filename": "esip-ai-ready-data-checklist-v1.0.md",
+   "note": "The published checklist itself. Located from the corpus record `esip-data-readiness-checklist`, which is the cluster's README and not the checklist; the README names this path and this citation.",
+   "netloc": "raw.githubusercontent.com",
+   "robots_permits": true,
+   "status": 200,
+   "final_url": "https://raw.githubusercontent.com/ESIPFed/data-readiness/main/checklist-published/ai-ready-data-checklist-v.1.0.md",
+   "bytes": 12831,
+   "sha256": "dc2e4971b95aad17b46ae0f492ed95ab9f89d864a2fc4896ea05e74cd0af444e",
+   "content_type": "text/plain; charset=utf-8",
+   "error_class": null,
+   "stored_at": "corpus/noaa_esip/esip-ai-ready-data-checklist-v1.0.md",
+   "obtained": true
+  }
+ ]
+}

@@ -1,0 +1,14 @@
+ROBOTS-DISALLOWED CAPTURE — this file is a record, not the product.
+
+URL: https://www.eia.gov/beta/api/
+Outcome: the scanner did not fetch this URL. www.eia.gov/robots.txt disallows the path
+for the identified user agent `ai-readiness-kg-scanner/0.1`, and the fetcher obeys the
+file it measures (RFC 9309; assessment/harness/scan/manners.py).
+
+Admitted with ZERO BYTES on the first pass of scripts/admit_scan_targets.py, because
+kg.manifest.add gates provenance and duplication and does not check extent. The admitter
+now refuses a capture with no body; this file is the supersession that makes the record
+say what actually happened. A robots disallow is EVIDENCE, not an absence: the surface
+stays on the target list and its Findings will carry error_class robots_disallowed.
+
+Task: cc_tasks/2026-09-06_scan_targets.md §3.2/§3.3.

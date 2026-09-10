@@ -1,0 +1,810 @@
+{
+ "name": "crosswalk_esip_ai_readiness_2026-09-10",
+ "task": "cc_tasks/2026-09-10_corpus_noaa_esip.md",
+ "generated_by": "scripts/build_esip_crosswalk.py",
+ "generated_at": "2026-09-10T19:26:00.264283+00:00",
+ "source_doc_id": "esip-ai-ready-data-checklist-v1-0",
+ "source_path": "corpus/noaa_esip/esip-ai-ready-data-checklist-v1.0.md",
+ "source_sha256": "dc2e4971b95aad17b46ae0f492ed95ab9f89d864a2fc4896ea05e74cd0af444e",
+ "citation": "ESIP Data Readiness Cluster (2023): Checklist to Examine AI-readiness for Open Environmental Datasets v.1.0. ESIP. Online resource. https://doi.org/10.6084/m9.figshare.19983722.v1",
+ "framework": "framework/ai_readiness_framework.json",
+ "measured_legs": [
+  "A1",
+  "A2",
+  "A3",
+  "A4",
+  "A5",
+  "A6",
+  "A8",
+  "A9",
+  "A10",
+  "A11",
+  "A12",
+  "B3",
+  "D1",
+  "D4",
+  "F4",
+  "G1-D"
+ ],
+ "scale": {
+  "full": "a measured leg measures exactly this property",
+  "partial": "a measured leg measures a public-surface proxy for it",
+  "none": "no measured leg sees it"
+ },
+ "items": 58,
+ "by_measured": {
+  "full": 9,
+  "partial": 13,
+  "none": 36
+ },
+ "by_section": {
+  "General Information": {
+   "full": 0,
+   "partial": 3,
+   "none": 4
+  },
+  "Data Quality": {
+   "full": 0,
+   "partial": 3,
+   "none": 15
+  },
+  "Data Documentation": {
+   "full": 3,
+   "partial": 3,
+   "none": 9
+  },
+  "Data Access": {
+   "full": 6,
+   "partial": 4,
+   "none": 4
+  },
+  "Data Preparation": {
+   "full": 0,
+   "partial": 0,
+   "none": 4
+  }
+ },
+ "indicators_cited": [
+  "A1",
+  "A10",
+  "A12",
+  "A2",
+  "A3",
+  "A6",
+  "A7",
+  "A8",
+  "A9",
+  "B1",
+  "B2",
+  "B3",
+  "B4",
+  "B5",
+  "B6",
+  "D1",
+  "D2",
+  "D3",
+  "D4",
+  "F1",
+  "F6",
+  "G2",
+  "G3",
+  "G4",
+  "G5"
+ ],
+ "indicators_cited_not_measured": [
+  "A7",
+  "B1",
+  "B2",
+  "B4",
+  "B5",
+  "B6",
+  "D2",
+  "D3",
+  "F1",
+  "F6",
+  "G2",
+  "G3",
+  "G4",
+  "G5"
+ ],
+ "rows": [
+  {
+   "line": 29,
+   "section": "General Information",
+   "verbatim": "- Link to the dataset landing page (_questions below could be automatically filled from the landing page in the future_)",
+   "indicators": [
+    "A7",
+    "A10"
+   ],
+   "indicators_measured_by_the_scan": [
+    "A10"
+   ],
+   "measured": "partial",
+   "why": "the scan resolves the product landing page and records its final URL, and A10 measures whether a data tool behind it exposes stable, directly-requestable deep links; A7 \u2014 is that URL a DECLARED persistent identifier \u2014 is in the framework and unmeasured"
+  },
+  {
+   "line": 31,
+   "section": "General Information",
+   "verbatim": "- The current version of the dataset",
+   "indicators": [
+    "A8",
+    "G3"
+   ],
+   "indicators_measured_by_the_scan": [
+    "A8"
+   ],
+   "measured": "partial",
+   "why": "A8 reads a machine-readable release date and a latest-vintage pointer off the surface; the dataset's own version string is not read"
+  },
+  {
+   "line": 32,
+   "section": "General Information",
+   "verbatim": "- Point of contact for the dataset",
+   "indicators": [
+    "G4"
+   ],
+   "indicators_measured_by_the_scan": [],
+   "measured": "none",
+   "why": "point of contact is not a leg; G4 (authority metadata) is in the framework and unmeasured"
+  },
+  {
+   "line": 33,
+   "section": "General Information",
+   "verbatim": "- When was the dataset originally published?",
+   "indicators": [
+    "A8"
+   ],
+   "indicators_measured_by_the_scan": [
+    "A8"
+   ],
+   "measured": "partial",
+   "why": "first-publication date is not distinguished from the surface's declared release date"
+  },
+  {
+   "line": 34,
+   "section": "General Information",
+   "verbatim": "- Is this raw data or a derived/processed data product? _Raw/Derived_",
+   "indicators": [
+    "D3"
+   ],
+   "indicators_measured_by_the_scan": [],
+   "measured": "none",
+   "why": "raw-vs-derived is a lineage property; D3 unmeasured"
+  },
+  {
+   "line": 35,
+   "section": "General Information",
+   "verbatim": "- Is this observational data, simulation/model output, or synthetic data? _Observed/Modeled/Synthetic_",
+   "indicators": [
+    "D3"
+   ],
+   "indicators_measured_by_the_scan": [],
+   "measured": "none",
+   "why": "observational/model/synthetic is a lineage property"
+  },
+  {
+   "line": 36,
+   "section": "General Information",
+   "verbatim": "- Is the data single-source or aggregated from several sources? _Single-source/Aggregated_",
+   "indicators": [
+    "D3"
+   ],
+   "indicators_measured_by_the_scan": [],
+   "measured": "none",
+   "why": "single-source vs aggregated is a lineage property"
+  },
+  {
+   "line": 40,
+   "section": "Data Quality",
+   "verbatim": "- Will the dataset be updated? _Yes, it will be updated. / No, it will not be updated_",
+   "indicators": [
+    "A8"
+   ],
+   "indicators_measured_by_the_scan": [
+    "A8"
+   ],
+   "measured": "partial",
+   "why": "whether a dataset WILL be updated is a commitment; A8 sees only whether a release date and a latest pointer are published now"
+  },
+  {
+   "line": 41,
+   "section": "Data Quality",
+   "verbatim": "- If the data will be updated, how often will it be updated? [choose from]",
+   "indicators": [
+    "A8"
+   ],
+   "indicators_measured_by_the_scan": [
+    "A8"
+   ],
+   "measured": "none",
+   "why": "update frequency is not published in a form any leg reads"
+  },
+  {
+   "line": 45,
+   "section": "Data Quality",
+   "verbatim": "- Will there be different stages of the update (e.g., updated with preliminary data first and",
+   "indicators": [
+    "G2"
+   ],
+   "indicators_measured_by_the_scan": [],
+   "measured": "none",
+   "why": "staged/preliminary updates are revision semantics; G2 is in the framework and unmeasured"
+  },
+  {
+   "line": 49,
+   "section": "Data Quality",
+   "verbatim": "- Should the new version of the dataset supersede the current version? _Yes / No / Others_",
+   "indicators": [
+    "G2"
+   ],
+   "indicators_measured_by_the_scan": [],
+   "measured": "none",
+   "why": "supersession between versions is revision semantics"
+  },
+  {
+   "line": 52,
+   "section": "Data Quality",
+   "verbatim": "- Is there any documentation about the completeness of the dataset? _Yes / No_",
+   "indicators": [
+    "B4"
+   ],
+   "indicators_measured_by_the_scan": [],
+   "measured": "none",
+   "why": "completeness documentation is quality metadata; B4 is in the framework and unmeasured"
+  },
+  {
+   "line": 54,
+   "section": "Data Quality",
+   "verbatim": "- How complete is the dataset compared to the expected spatial coverage?",
+   "indicators": [
+    "B4"
+   ],
+   "indicators_measured_by_the_scan": [],
+   "measured": "none",
+   "why": "spatial completeness is a property of the data"
+  },
+  {
+   "line": 56,
+   "section": "Data Quality",
+   "verbatim": "- How complete is the dataset compared to the expected temporal coverage?",
+   "indicators": [
+    "B4"
+   ],
+   "indicators_measured_by_the_scan": [],
+   "measured": "none",
+   "why": "temporal completeness is a property of the data"
+  },
+  {
+   "line": 59,
+   "section": "Data Quality",
+   "verbatim": "- Is this dataset self-consistent in that its units, data types, and parameter names",
+   "indicators": [
+    "B5"
+   ],
+   "indicators_measured_by_the_scan": [],
+   "measured": "none",
+   "why": "self-consistency of units and types; B5 unmeasured"
+  },
+  {
+   "line": 61,
+   "section": "Data Quality",
+   "verbatim": "- Is this dataset\u2019s units, data types, and parameter names consistent with similar data",
+   "indicators": [
+    "B5"
+   ],
+   "indicators_measured_by_the_scan": [],
+   "measured": "none",
+   "why": "cross-collection consistency; B5 unmeasured"
+  },
+  {
+   "line": 63,
+   "section": "Data Quality",
+   "verbatim": "- Are there processes to monitor for units, data types, and parameter consistency?",
+   "indicators": [
+    "B5",
+    "F1"
+   ],
+   "indicators_measured_by_the_scan": [],
+   "measured": "none",
+   "why": "consistency monitoring is a release-process property"
+  },
+  {
+   "line": 67,
+   "section": "Data Quality",
+   "verbatim": "- Is there known bias in the dataset? _Yes / No_",
+   "indicators": [
+    "B4"
+   ],
+   "indicators_measured_by_the_scan": [],
+   "measured": "none",
+   "why": "known bias is a property of the data"
+  },
+  {
+   "line": 69,
+   "section": "Data Quality",
+   "verbatim": "- Have measures been taken to examine bias? _Yes / No_",
+   "indicators": [
+    "B4"
+   ],
+   "indicators_measured_by_the_scan": [],
+   "measured": "none",
+   "why": "bias examination is a property of the data"
+  },
+  {
+   "line": 72,
+   "section": "Data Quality",
+   "verbatim": "- Is there reported bias in the data? _No known bias / Bias found and reported / No information available_",
+   "indicators": [
+    "B4"
+   ],
+   "indicators_measured_by_the_scan": [],
+   "measured": "none",
+   "why": "reported bias is a property of the data"
+  },
+  {
+   "line": 76,
+   "section": "Data Quality",
+   "verbatim": "- Is there quantitative information about data resolution in space and time? _Yes / No / Not applicable_",
+   "indicators": [
+    "B1"
+   ],
+   "indicators_measured_by_the_scan": [],
+   "measured": "none",
+   "why": "spatial/temporal resolution is variable-level metadata; B1 unmeasured"
+  },
+  {
+   "line": 77,
+   "section": "Data Quality",
+   "verbatim": "- Are there published data quality procedures or reports? _Yes / No_",
+   "indicators": [
+    "B3",
+    "B4"
+   ],
+   "indicators_measured_by_the_scan": [
+    "B3"
+   ],
+   "measured": "partial",
+   "why": "B3 measures whether METHODOLOGY is linked and legible from the product surface, which is the published-procedures half of this item; the report's content is not read"
+  },
+  {
+   "line": 79,
+   "section": "Data Quality",
+   "verbatim": "- Is the provenance of the dataset tracked and documented? _Yes / No / Not applicable_",
+   "indicators": [
+    "D3"
+   ],
+   "indicators_measured_by_the_scan": [],
+   "measured": "none",
+   "why": "provenance tracking; D3 unmeasured"
+  },
+  {
+   "line": 80,
+   "section": "Data Quality",
+   "verbatim": "- Are there checksums / other checks for data integrity? Yes / No / Not applicable",
+   "indicators": [
+    "F6"
+   ],
+   "indicators_measured_by_the_scan": [],
+   "measured": "none",
+   "why": "checksums are release authenticity; F6 unmeasured"
+  },
+  {
+   "line": 81,
+   "section": "Data Quality",
+   "verbatim": "- What is the size of the dataset? Depending on the resource, this might be total data volume,",
+   "indicators": [
+    "A3"
+   ],
+   "indicators_measured_by_the_scan": [
+    "A3"
+   ],
+   "measured": "partial",
+   "why": "A3 sees whether a whole-product download is offered, not how large it is"
+  },
+  {
+   "line": 85,
+   "section": "Data Documentation",
+   "verbatim": "- Does the dataset metadata follow a community/domain standard or convention? _Yes / No / Not applicable_",
+   "indicators": [
+    "A6"
+   ],
+   "indicators_measured_by_the_scan": [
+    "A6"
+   ],
+   "measured": "partial",
+   "why": "A6 validates schema.org/DCAT/Croissant markup on the product page \u2014 a metadata standard on the SURFACE. A domain convention (CF, ISO 19115) inside the dataset is not read"
+  },
+  {
+   "line": 87,
+   "section": "Data Documentation",
+   "verbatim": "- Is the dataset metadata machine-readable? _Yes / No / Not applicable_",
+   "indicators": [
+    "A6"
+   ],
+   "indicators_measured_by_the_scan": [
+    "A6"
+   ],
+   "measured": "full",
+   "why": "machine-readable dataset metadata on the surface is precisely what A6 measures"
+  },
+  {
+   "line": 88,
+   "section": "Data Documentation",
+   "verbatim": "- Does it include details on the spatial and temporal extent? _Yes / No / Not applicable_",
+   "indicators": [
+    "A6"
+   ],
+   "indicators_measured_by_the_scan": [
+    "A6"
+   ],
+   "measured": "partial",
+   "why": "spatial/temporal extent is read only if it is in the surface markup"
+  },
+  {
+   "line": 89,
+   "section": "Data Documentation",
+   "verbatim": "- Is there a comprehensive data dictionary/codebook that describes what each element of",
+   "indicators": [
+    "B1"
+   ],
+   "indicators_measured_by_the_scan": [],
+   "measured": "none",
+   "why": "data dictionary/codebook; B1 unmeasured"
+  },
+  {
+   "line": 92,
+   "section": "Data Documentation",
+   "verbatim": "- Is the data dictionary machine-readable? _Yes / No / Not applicable_",
+   "indicators": [
+    "B1"
+   ],
+   "indicators_measured_by_the_scan": [],
+   "measured": "none",
+   "why": "machine-readable data dictionary; B1 unmeasured"
+  },
+  {
+   "line": 93,
+   "section": "Data Documentation",
+   "verbatim": "- Do the parameters follow a defined standard? _Yes / No / Not applicable_",
+   "indicators": [
+    "B2",
+    "B5"
+   ],
+   "indicators_measured_by_the_scan": [],
+   "measured": "none",
+   "why": "parameter standards; unmeasured"
+  },
+  {
+   "line": 95,
+   "section": "Data Documentation",
+   "verbatim": "- Are parameters crosswalked in an ontology or common vocabulary (e.g. NIEM)? _Yes / No / Not applicable_",
+   "indicators": [
+    "B2"
+   ],
+   "indicators_measured_by_the_scan": [],
+   "measured": "none",
+   "why": "ontology crosswalk of parameters; B2 unmeasured"
+  },
+  {
+   "line": 96,
+   "section": "Data Documentation",
+   "verbatim": "- Does the dataset have a unique persistent identifier, e.g. DOI?  _Yes, [supply identifier]  / No / Not applicable_",
+   "indicators": [
+    "A7"
+   ],
+   "indicators_measured_by_the_scan": [],
+   "measured": "none",
+   "why": "a persistent identifier (DOI) is A7, which the scan does not measure"
+  },
+  {
+   "line": 97,
+   "section": "Data Documentation",
+   "verbatim": "- Is there contact information for subject-matter experts? _Yes / No / Not applicable_",
+   "indicators": [
+    "G4"
+   ],
+   "indicators_measured_by_the_scan": [],
+   "measured": "none",
+   "why": "subject-matter contact; G4 unmeasured"
+  },
+  {
+   "line": 98,
+   "section": "Data Documentation",
+   "verbatim": "- Is there a mechanism for user feedback and suggestions? _Yes / No / Not applicable_",
+   "indicators": [
+    "B6"
+   ],
+   "indicators_measured_by_the_scan": [],
+   "measured": "none",
+   "why": "feedback mechanism; no leg reads it"
+  },
+  {
+   "line": 99,
+   "section": "Data Documentation",
+   "verbatim": "- Are there example codes/notebooks/toolkits available showing how the data can be used? _Yes / No / Not applicable_",
+   "indicators": [
+    "A2",
+    "B6"
+   ],
+   "indicators_measured_by_the_scan": [
+    "A2"
+   ],
+   "measured": "partial",
+   "why": "A2 records a documented API, which is where example notebooks usually hang; the examples themselves are not looked for"
+  },
+  {
+   "line": 100,
+   "section": "Data Documentation",
+   "verbatim": "- What is the license for the data?",
+   "indicators": [
+    "D1"
+   ],
+   "indicators_measured_by_the_scan": [
+    "D1"
+   ],
+   "measured": "full",
+   "why": "D1 measures an explicit licence on the product and the API, which is this item"
+  },
+  {
+   "line": 102,
+   "section": "Data Documentation",
+   "verbatim": "- Is the license standardized and machine-readable (e.g. Creative Commons)?  _Yes / No / Not applicable_",
+   "indicators": [
+    "D1"
+   ],
+   "indicators_measured_by_the_scan": [
+    "D1"
+   ],
+   "measured": "full",
+   "why": "D1's subject is a MACHINE-READABLE licence, which is this item exactly"
+  },
+  {
+   "line": 103,
+   "section": "Data Documentation",
+   "verbatim": "- Has this dataset already been used in AI or ML activities? _Link to publications/reports._",
+   "indicators": [
+    "D2"
+   ],
+   "indicators_measured_by_the_scan": [],
+   "measured": "none",
+   "why": "prior AI/ML use; D2 unmeasured"
+  },
+  {
+   "line": 104,
+   "section": "Data Documentation",
+   "verbatim": "- Are there recommendations on the intended use of the data, and uses that are not",
+   "indicators": [
+    "D2"
+   ],
+   "indicators_measured_by_the_scan": [],
+   "measured": "none",
+   "why": "intended-use recommendations; D2 unmeasured"
+  },
+  {
+   "line": 108,
+   "section": "Data Access",
+   "verbatim": "- What is/are the major file formats? _Pick from a list of common data formats/ \u201cother\u201d (choose all that apply)_",
+   "indicators": [
+    "A1"
+   ],
+   "indicators_measured_by_the_scan": [
+    "A1"
+   ],
+   "measured": "full",
+   "why": "A1 classifies the format SERVED, on the response rather than the href, which is this item"
+  },
+  {
+   "line": 109,
+   "section": "Data Access",
+   "verbatim": "- Is this format machine-readable? _Yes / No / Not applicable_",
+   "indicators": [
+    "A1"
+   ],
+   "indicators_measured_by_the_scan": [
+    "A1"
+   ],
+   "measured": "full",
+   "why": "machine-readability of the served format is A1"
+  },
+  {
+   "line": 110,
+   "section": "Data Access",
+   "verbatim": "- Is the data available in at least one open, non-proprietary format? _Yes / No / Not applicable_",
+   "indicators": [
+    "A1"
+   ],
+   "indicators_measured_by_the_scan": [
+    "A1"
+   ],
+   "measured": "full",
+   "why": "A1's structured set is open, non-proprietary formats; PDF-only fails it"
+  },
+  {
+   "line": 111,
+   "section": "Data Access",
+   "verbatim": "- Are there tools/services to support data format conversion? _Yes / No_",
+   "indicators": [
+    "A9"
+   ],
+   "indicators_measured_by_the_scan": [
+    "A9"
+   ],
+   "measured": "partial",
+   "why": "conversion tools are not a leg; A9 sees a machine-first entry point where they usually sit"
+  },
+  {
+   "line": 114,
+   "section": "Data Access",
+   "verbatim": "- Does data access require authentication (e.g., a registered user account)? _Yes / No / Not applicable_",
+   "indicators": [
+    "A2",
+    "A12"
+   ],
+   "indicators_measured_by_the_scan": [
+    "A2",
+    "A12"
+   ],
+   "measured": "partial",
+   "why": "A2 records the auth model where the API declares one; A12 measures whether an identified compliant client is actually SERVED, which is the enforced half of the same question"
+  },
+  {
+   "line": 115,
+   "section": "Data Access",
+   "verbatim": "- Can the file be accessed via direct file downloading or ordering?  _Yes / No / Not applicable_",
+   "indicators": [
+    "A3"
+   ],
+   "indicators_measured_by_the_scan": [
+    "A3"
+   ],
+   "measured": "full",
+   "why": "A3 is whether a full-product download exists and is linked from the product page"
+  },
+  {
+   "line": 116,
+   "section": "Data Access",
+   "verbatim": "- Is there an Application Programming Interface (API) or web service to access the data?",
+   "indicators": [
+    "A2",
+    "A9"
+   ],
+   "indicators_measured_by_the_scan": [
+    "A2",
+    "A9"
+   ],
+   "measured": "full",
+   "why": "A2 is a documented public API; A9 is the machine-first entry point"
+  },
+  {
+   "line": 118,
+   "section": "Data Access",
+   "verbatim": "- If there is an API, does the API follow an open standard protocol (e.g., OGC)? _Yes / No_",
+   "indicators": [
+    "A2"
+   ],
+   "indicators_measured_by_the_scan": [
+    "A2"
+   ],
+   "measured": "partial",
+   "why": "an open standard protocol is recorded where the API declares it; conformance is not tested"
+  },
+  {
+   "line": 119,
+   "section": "Data Access",
+   "verbatim": "- If there is an API, is there documentation for the API? _Yes / No_",
+   "indicators": [
+    "A2"
+   ],
+   "indicators_measured_by_the_scan": [
+    "A2"
+   ],
+   "measured": "full",
+   "why": "A2's subject is a DOCUMENTED API"
+  },
+  {
+   "line": 121,
+   "section": "Data Access",
+   "verbatim": "- Is the data available publicly via cloud services?  _Yes / No / Not applicable_",
+   "indicators": [
+    "A9",
+    "D4"
+   ],
+   "indicators_measured_by_the_scan": [
+    "A9",
+    "D4"
+   ],
+   "measured": "partial",
+   "why": "cloud availability is usually declared in an inventory (D4) or a machine entry point (A9)"
+  },
+  {
+   "line": 122,
+   "section": "Data Access",
+   "verbatim": "- For restricted data, have measures been taken to provide some access while still applying",
+   "indicators": [
+    "D2"
+   ],
+   "indicators_measured_by_the_scan": [],
+   "measured": "none",
+   "why": "restricted-access provisions are a permissions question; D2 unmeasured"
+  },
+  {
+   "line": 124,
+   "section": "Data Access",
+   "verbatim": "- Has the data been aggregated to reduce granularity?  _Yes / No / Not applicable_",
+   "indicators": [
+    "G5"
+   ],
+   "indicators_measured_by_the_scan": [],
+   "measured": "none",
+   "why": "aggregation to reduce granularity is disclosure semantics"
+  },
+  {
+   "line": 125,
+   "section": "Data Access",
+   "verbatim": "- Has the data been anonymized / de-identified? _Yes / No / Not applicable_",
+   "indicators": [
+    "G5"
+   ],
+   "indicators_measured_by_the_scan": [],
+   "measured": "none",
+   "why": "anonymisation is disclosure semantics; G5 unmeasured"
+  },
+  {
+   "line": 126,
+   "section": "Data Access",
+   "verbatim": "- Is there secure access to the full dataset for authorized users?  _Yes / No / Not applicable_",
+   "indicators": [
+    "A2"
+   ],
+   "indicators_measured_by_the_scan": [
+    "A2"
+   ],
+   "measured": "none",
+   "why": "authorised-user access paths are not measured"
+  },
+  {
+   "line": 129,
+   "section": "Data Preparation",
+   "verbatim": "- Have null values/gaps been filled? _Yes / No / Not applicable_",
+   "indicators": [
+    "B4"
+   ],
+   "indicators_measured_by_the_scan": [],
+   "measured": "none",
+   "why": "gap filling is a property of the data"
+  },
+  {
+   "line": 130,
+   "section": "Data Preparation",
+   "verbatim": "- Have outliers been identified? _Yes, tagged / Yes, removed / No / Not applicable_",
+   "indicators": [
+    "B4"
+   ],
+   "indicators_measured_by_the_scan": [],
+   "measured": "none",
+   "why": "outlier handling is a property of the data"
+  },
+  {
+   "line": 131,
+   "section": "Data Preparation",
+   "verbatim": "- Is the data gridded (regularly sampled in time and space)?",
+   "indicators": [
+    "B1"
+   ],
+   "indicators_measured_by_the_scan": [],
+   "measured": "none",
+   "why": "gridding is a property of the data"
+  },
+  {
+   "line": 139,
+   "section": "Data Preparation",
+   "verbatim": "- Are there associated targets or labels for supervised learning techniques (i.e., can this be",
+   "indicators": [
+    "B1"
+   ],
+   "indicators_measured_by_the_scan": [],
+   "measured": "none",
+   "why": "training labels are a property of the data; nothing on the surface declares them"
+  }
+ ]
+}

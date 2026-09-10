@@ -1,0 +1,17 @@
+{
+ "of_file": "corpus/quarantine/noaa_esip/NAO_216-128.pdf",
+ "of_sha256": "e19e0571319689ee8090a21cc6ce3860b0d8dc427dbe07ab249abd9691a2c051",
+ "ocr_file": "NAO_216-128.ocr.txt",
+ "ocr_sha256": "261c4d17388c39832ad80e74005094ca064574d562f479f56f3a2d7cae175e29",
+ "why": "NAO 216-128 is a SCANNED IMAGE pdf: its native text layer is 36 bytes, which is why the task says OCR is required. This text is machine-read, not extracted, and every span grounded against it is grounded against a reading of an image.",
+ "engine": "tesseract 5.5.0 (leptonica-1.85.0), default eng model, --psm 3",
+ "rasterisation": "pdftoppm -r 300 -png (poppler)",
+ "pages": 4,
+ "words": 1110,
+ "mean_confidence": 94.52,
+ "median_confidence": 96.5,
+ "words_below_60": 17,
+ "known_substitution": "tesseract reads the ligature-like 'AI' as 'Al' (capital i as lower-case L) in body text: the OCR says 'Al-Ready Data' and 'Al-ready'. The same page reads 'Artificial Intelligence (AI)' correctly where the letters are spaced. Spans are stored AS OCR'D so grounding validates against the text that exists; the TERM is recorded as 'AI-Ready Data', which is what the document says and what \u00a73.02 and the subject line confirm.",
+ "canonical": "The OCR TEXT is the admitted artifact and the image PDF is its source. The corpus integrity gate requires 200 readable characters in a PDF (`dixie_evidence.yaml` `pdf_min_chars`, an operator threshold that exists to catch HTML stubs and empty captures); this PDF's native text layer is 36 bytes, so it fails \u2014 correctly, because there is nothing in it to read. The readable artifact IS this OCR text, and it is what every grounding span for NAO 216-128 is validated against. The image PDF sits beside it with its hash recorded here, so the chain from bytes to span is complete. Operator overrides by lowering the floor and re-admitting the PDF as canonical.",
+ "image_pdf_disposition": "QUARANTINED, and correctly. The dixie sweep's content_smoke check reads 29 extractable characters in 4 of 4 pages against a floor of 200 and moves the file to corpus/quarantine/noaa_esip/ with corpus/quarantine/noaa_esip/NAO_216-128.pdf.reason.json beside it. Quarantine is not deletion (CLAUDE.md invariant 2): the image is preserved, hashed, and reachable, and the sha256 above is the chain from those bytes to this reading to every span grounded in it. Leaving the file in corpus/noaa_esip/ would only mean the next sweep moved it again, so the record points where the machinery actually keeps it."
+}
