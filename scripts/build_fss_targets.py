@@ -44,6 +44,7 @@ sys.path.insert(0, str(REPO / "assessment" / "harness"))
 
 from scan import load_params                                        # noqa: E402
 from scan.manners import site_key                                    # noqa: E402
+from scan.model import SYNTHETIC_PREFIXES                            # noqa: E402
 
 TASK = "cc_tasks/2026-09-08_scan_frame_fss.md"
 ADDENDUM = "cc_tasks/2026-09-08_scan_frame_fss_ADDENDUM-05.md"
@@ -155,7 +156,7 @@ def build(params: dict, roster: dict) -> dict:
         # Only a CORPUS doc_id can be unadmitted. `host:`/`home:`/`machine:` are synthetic
         # surface ids — there is no Document to admit and none is required, exactly as the
         # well-known row has worked since cycle 1.
-        if (r.get("doc_id") and not str(r["doc_id"]).startswith(("host:", "home:", "machine:"))
+        if (r.get("doc_id") and not str(r["doc_id"]).startswith(SYNTHETIC_PREFIXES)
                 and r["doc_id"] not in admitted):
             r["not_admitted"] = "robots_disallowed"
             r["not_admitted_note"] = (

@@ -23,7 +23,8 @@ sys.path.insert(0, str(REPO))
 
 from scan import errors as _errors                             # noqa: E402
 from scan import load_params                                   # noqa: E402
-from scan.model import Observation, params_hash                # noqa: E402
+from scan.model import (Observation, SYNTHETIC_PREFIXES,       # noqa: E402
+                        params_hash)
 from scan.rules import (CANDIDATE_LEGS, CURRENT, FRAMEWORK_LEGS,   # noqa: E402
                         consumes, judge as judge_rule)
 from scan.runner import collect_leg                            # noqa: E402
@@ -271,7 +272,7 @@ def targets(params: dict) -> list:
     out, skipped = [], []
     for r in doc["rows"]:
         doc_id, kind, tier = r.get("doc_id"), r["surface_kind"], r.get("tier", "A")
-        synthetic = str(doc_id or "").startswith(("host:", "home:", "machine:"))
+        synthetic = str(doc_id or "").startswith(SYNTHETIC_PREFIXES)
         if not synthetic and doc_id not in entries:
             skipped.append((doc_id or r["url"], r.get("not_admitted") or "not admitted"))
             continue

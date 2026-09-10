@@ -36,6 +36,23 @@ EVIDENCE_ROOT = REPO / "corpus" / "evidence" / "scan"
 from .errors import ERROR_CLASSES                                    # noqa: E402
 VERDICTS = ("pass", "fail", "not_applicable", "error")
 
+#: Surface ids that are SYNTHETIC by construction: there is no `:Document` for them and none is
+#: required, so an Observation carrying one is not an integrity failure.
+#:
+#: **Defined once, here, because a second copy is how this broke.** The list lived in
+#: `publish.py`; `cc_tasks/2026-09-08_scan_run_3b.md` decision 3 added `home:` and `machine:` to
+#: the id scheme, one copy learned about them and the other did not, and 957 observations of
+#: perfectly ordinary host-level surfaces were counted as missing Documents. A prefix list that
+#: lags the id scheme turns the integrity check into a counter of its own staleness. There were
+#: three copies when `flagship:` was added; there is one now, and `publish.py`, `run.py` and the
+#: target builders all read it.
+#:
+#: `host:` is the well-known row and keeps its spelling for continuity with three cycles of A12
+#: Results. `flagship:` is `cc_tasks/2026-09-10_scan_frame_v5.md`: an operator-declared product
+#: landing page with no corpus Document behind it, which is the ordinary case for a declaration
+#: made after the corpus was frozen.
+SYNTHETIC_PREFIXES = ("host:", "home:", "machine:", "flagship:")
+
 
 def now_utc() -> str:
     return datetime.now(timezone.utc).isoformat()

@@ -203,17 +203,10 @@ def promote_evidence(payload: dict, staging: Path | None = None,
             "staging_removed": str(staging) if staging.name else None}
 
 
-#: Surface ids that are SYNTHETIC by construction: there is no `:Document` for them and none
-#: is required, so an Observation carrying one is not an integrity failure. Named once here
-#: because `project()`'s `observed_on_missing_document` check is only meaningful if the set is
-#: complete — and it was not. `cc_tasks/2026-09-08_scan_run_3b.md` decision 3 added `home:` and
-#: `machine:` to the scheme (the well-known row keeps `host:` for continuity with two cycles of
-#: A12 Results), and the classifier still knew only two prefixes, so 957 observations of
-#: perfectly ordinary host-level surfaces were counted as missing Documents.
-#:
-#: The check exists to catch an observation of a surface that SHOULD have been admitted and was
-#: not. A prefix list that lags the id scheme turns it into a counter of its own staleness.
-SYNTHETIC_PREFIXES = ("host:", "home:", "machine:")
+#: The synthetic id scheme, defined in `model.py` beside the rest of the id model.
+#: Imported rather than repeated: see the comment there for the 957 observations a
+#: second copy cost.
+from .model import SYNTHETIC_PREFIXES                                # noqa: E402
 CONTROL_PREFIX = "control:"
 
 SCAN_LABELS = ("Observation", "Finding", "Rule")
