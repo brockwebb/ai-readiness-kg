@@ -107,6 +107,7 @@ combined cell would have had to pick one without saying which.
 | ORES | error | error | error | error | fail | error | 32 of 33 |
 | SAMHSACBHS | pass | fail | pass | pass | pass | fail | 0 of 62 |
 | SOI | pass | fail | pass | pass | pass | fail | 0 of 62 |
+| *this report* | \- | \- | \- | \- | \- | \- | planned host: GitHub Pages under this repository; to be measured on publication |
 
 ### Reading it by column
 
@@ -338,8 +339,10 @@ under one identity. A request from elsewhere, or under a common crawler's name, 
 whether the refusals are about this client or about machines in general.
 
 **What the products offer, for the rest of the frame.** The product matrix needs a declared
-flagship for the remaining bodies. That is a list, not a measurement, and until it exists the
-product findings describe a minority of the system.
+flagship for the remaining bodies. That list now exists as
+`docs/design/fss_flagship_declarations.md`; it is dated after the cycle this report describes
+and changes nothing here, because a report measures what was declared when it ran. Until a
+later cycle runs under that list, the product findings describe a minority of the system.
 
 **Whether the contact bound should be closed or open.** Following a sitemap declared on a
 neighbouring host is either correct discovery or scope creep, and this cycle did it without
@@ -349,9 +352,9 @@ whatever the frame's own hosts declare.
 
 ## This report, measured by its own checks
 
-The last row of the matrix should be this report's own host, scored by hand on the six
-host-level checks and marked as self-assessed. It is absent, and the reason is that the report
-has no host yet. It exists as a file in a repository, so it serves no `robots.txt`, declares no
+The last row of the matrix is this report's own host, and it carries no verdicts. The
+planned host is GitHub Pages under this repository, to be measured on publication; it is not
+scored, because the report has no host yet. It exists as a file in a repository, so it serves no `robots.txt`, declares no
 machine layer and answers no deep links. Scoring it now would mean inventing answers for a site
 that does not exist.
 

@@ -15,6 +15,7 @@ answer. This cycle found that disagreement on
 combined cell would have had to pick one without saying which.
 
 <!-- include: matrix_tierA -->
+| *this report* | \- | \- | \- | \- | \- | \- | planned host: GitHub Pages under this repository; to be measured on publication |
 
 ### Reading it by column
 

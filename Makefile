@@ -17,7 +17,7 @@
 PY := /opt/anaconda3/bin/python3
 LOGS := logs
 
-.PHONY: gate-fast gate-task gate-full guards
+.PHONY: gate-fast gate-task gate-full guards report-pdf
 
 gate-fast:
 	$(PY) -m pytest tests/ assessment/ -q -m "not slow"
@@ -36,3 +36,18 @@ gate-full:
 	nohup sh -c '$(PY) -m pytest tests/ assessment/ -q; echo EXIT=$$? >> $(LOGS)/suite.log' \
 		> $(LOGS)/suite.log 2>&1 & \
 	echo "started; poll with: tail -5 $(LOGS)/suite.log"
+
+# ---------------------------------------------------------------- the L0 report as a PDF
+#
+# `cc_tasks/2026-09-10_report_pdf.md` decision 1: the PDF is a BUILD PRODUCT, so the next
+# revision is one command. `scripts/build_report_pdf.py` rebuilds the markdown first, so every
+# {{result:...}} resolves from the graph and no number can be typed into the PDF.
+#
+# Toolchain, pinned to what is already installed (decision 1 forbids installing one):
+#   pandoc 3.8.3   converter
+#   typst  0.14.2  PDF engine. No LaTeX exists here; typst also renders SVG natively, which
+#                  matters because F5 is an SVG the graph page already builds and decision 3
+#                  says not to redraw it.
+report-pdf:
+	$(PY) scripts/build_report_pdf.py
+	$(PY) -m pytest tests/test_report_pdf.py -q

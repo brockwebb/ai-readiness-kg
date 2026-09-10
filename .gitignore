@@ -150,3 +150,11 @@ state/evidence_staging/
 # and committing them would recreate, one directory over, exactly the problem the redirect
 # exists to prevent. The LOG is what carries the finding; the bodies carry nothing.
 corpus/quarantine/evidence_scan_fixture/unlicensed/
+
+# PDF build intermediates (cc_tasks/2026-09-10_report_pdf.md). `make report-pdf` regenerates
+# both from the committed markdown and the committed figure: a copy of the report with the
+# figure path repointed, and a namespaced copy of the SVG that typst will parse. The PDF is
+# the product and IS committed; these two are scaffolding, and committing a second copy of the
+# report is how two copies drift.
+docs/reports/generated/*.build.md
+docs/reports/generated/cycle_over_cycle.svg
