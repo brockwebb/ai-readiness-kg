@@ -135,6 +135,23 @@ def test_the_synthetic_prefix_list_has_one_definition():
     assert not hits, f"a second copy of the prefix list is back, in {hits}"
 
 
+def test_publish_runs_as_a_script_and_not_only_as_a_module():
+    """`publish.py` is both, and only one of them was covered.
+
+    The `flagship:` change gave it `from .model import SYNTHETIC_PREFIXES`. Every test imports
+    this file as `scan.publish`, where a relative import is fine; the cycle runs it as
+    `python assessment/harness/scan/publish.py`, where it raises `ImportError: attempted
+    relative import with no known parent package`. The fast tier was green and the publish step
+    of cycle 4 was not — after the run, with the payload written and 2,718 Observations waiting
+    to reach the log. A dual-entry-point file needs its second entry point tested.
+    """
+    import subprocess
+    r = subprocess.run([sys.executable, str(REPO / "assessment" / "harness" / "scan" /
+                                            "publish.py"), "--help"],
+                       capture_output=True, text=True, cwd=REPO)
+    assert r.returncode == 0, f"publish.py cannot be run as a script:\n{r.stderr[-600:]}"
+
+
 # ------------------------------------------------------------------ 4. the manners of §1
 
 def test_the_verification_contacted_only_the_seven_declared_pages(verification):

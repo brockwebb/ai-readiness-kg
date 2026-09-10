@@ -71,6 +71,11 @@ PRIOR_CYCLES = {
     # have noticed a rule change that stopped re-deriving it. 634 cycle Findings plus 97
     # control Findings.
     "scan_2026-09-09": 731,
+    # Cycle 4, `cc_tasks/2026-09-10_scan_run_4.md` §3, which asks for all NINE payloads. The
+    # first cycle over the complete frame (targets v5, 72 surfaces) and the first under
+    # robots-first in the fetcher, the site-key bound, `RULE-A5-v2` and `RULE-A8-v4`.
+    # 739 cycle Findings plus 113 control Findings.
+    "scan_2026-09-10": 852,
 }
 
 #: The fixture whose existence IS the fix's proof. Named once, here, because three tests need
@@ -595,7 +600,7 @@ def test_the_rejudgement_removes_at_least_the_recorded_false_positive(rederive_m
 #: The two most recent cycles. Their re-derivation stays in the FAST tier, because a rule or
 #: engine change is most likely to break the payloads closest to it and a gate that cannot see
 #: that quickly is not a gate. `cc_tasks/2026-09-09_guards_earn_their_keep.md` decision 4.
-RECENT_CYCLES = ("scan_2026-09-09", "scan_2026-09-07b_rj1")
+RECENT_CYCLES = ("scan_2026-09-10", "scan_2026-09-09")
 
 
 def _tier(cycle: str):

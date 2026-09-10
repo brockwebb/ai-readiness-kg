@@ -206,7 +206,13 @@ def promote_evidence(payload: dict, staging: Path | None = None,
 #: The synthetic id scheme, defined in `model.py` beside the rest of the id model.
 #: Imported rather than repeated: see the comment there for the 957 observations a
 #: second copy cost.
-from .model import SYNTHETIC_PREFIXES                                # noqa: E402
+#:
+#: ABSOLUTE, because this file is BOTH a module the tests import as `scan.publish` and a script
+#: the cycle runs as `python assessment/harness/scan/publish.py`. A relative import works in the
+#: first case and raises `ImportError: attempted relative import with no known parent package`
+#: in the second — which is how cycle 4 found it, after the run and before the publish. The
+#: `sys.path` inserts at the top of this file are what make the absolute form work either way.
+from scan.model import SYNTHETIC_PREFIXES                            # noqa: E402
 CONTROL_PREFIX = "control:"
 
 SCAN_LABELS = ("Observation", "Finding", "Rule")

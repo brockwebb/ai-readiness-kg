@@ -56,8 +56,14 @@ cycle:
   # exactly this suffix (`kg_diag_<metric>_2026-09-04b` against the un-suffixed first run),
   # and DD-056 takes the suffix from here, so this cycle's Results read `..._2026-09-07b`.
   # Cycle 3, the first over the whole frame (16 + 3 agencies, 22 netlocs).
-  name: scan_2026-09-09
-  targets: scan_targets_fss_2026-09
+  # Cycle 4 (`cc_tasks/2026-09-10_scan_run_4.md` decision 1), the first over the COMPLETE
+  # frame: targets v5 adds the seven operator-declared flagships, so no body is measured
+  # without a product surface. New UTC date, so a new name and no suffix; `refuse_clobber`
+  # keys on it and `state/scan_2026-09-10.json` does not exist. The targets key is the one
+  # wiring step `2026-09-10_scan_frame_v5.md` deliberately left: changing it changes what a
+  # cycle measures, and that task ran no cycle.
+  name: scan_2026-09-10
+  targets: scan_targets_fss_2026-09_v5
 
 manners:
   # RFC 9309: the scanner obeys the file it measures.
