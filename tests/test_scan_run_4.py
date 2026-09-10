@@ -55,7 +55,7 @@ def targets():
 def issued_requests(payload: dict) -> dict:
     """`{netloc: [url, …]}` for requests that ACTUALLY WENT OUT.
 
-    `errors.NOT_FETCHED` is the filter and it is read from `errors.py` rather than listed here.
+    `errors.NOT_REQUESTED` is the filter and it is read from `errors.py` rather than listed here.
     An `off_host` link and a `robots_disallowed` path are recorded WITH their URL precisely so
     the log shows the policy was applied; counting those as contacts turned 161 recorded
     exclusions into 44 imaginary hosts the first time this replay was written.
@@ -65,7 +65,7 @@ def issued_requests(payload: dict) -> dict:
         url = (o.get("request") or {}).get("url") or ""
         if not url or url.startswith("fixture://"):
             continue
-        if o.get("error_class") in set(errors.NOT_FETCHED):
+        if o.get("error_class") in set(errors.NOT_REQUESTED):
             continue
         netloc = urllib.parse.urlsplit(url).netloc.lower()
         if netloc.startswith("127.0.0.1"):
@@ -198,16 +198,17 @@ def test_the_seven_declared_flagships_were_measured(payload, targets):
     assert measured == DECLARED, f"a declared flagship was not measured: {DECLARED - measured}"
 
 
-def test_the_refusing_three_are_error_and_never_a_verdict_about_the_product(payload):
-    """Decision 4, and DD-052 §6. A 403 says the collector could not observe. It is never a
-    statement that the product failed, and never that it passed."""
-    for r in payload["matrix"]:
-        if not str(r["doc_id"]).startswith("flagship:") or r["agency"] not in REFUSING:
-            continue
-        verdicts = set(r["verdicts"].values())
-        assert verdicts <= {"error"}, (
-            f"{r['agency']}'s refused flagship carries {sorted(verdicts)}; a host that refused "
-            f"us told us nothing about its product")
+#: Folded into `tests/test_invariants.py` (`cc_tasks/2026-09-10_harness_v5_blind.md` decision 5).
+#: `test_the_refusing_three_are_error_and_never_a_verdict_about_the_product` lived here and
+#: failed on BLS, which is how cycle 4's gate stopped. The finding it reported is not about the
+#: three refused flagships — it is the general invariant that no verdict about a product may
+#: rest on evidence nobody collected, and it holds for every payload, not just this one. A
+#: cycle-shaped test could only ever catch the instance in front of it.
+#:
+#: What replaced it: `test_no_verdict_rests_on_unobserved_evidence` (each payload under its own
+#: harness version), `test_the_v5_reading_of_every_payload` (the same evidence read as
+#: harness-v5 reads it, with the three defective payloads as strict xfails), and
+#: `test_the_v5_counts_are_exactly_what_was_measured` (6, 6, 6 and 11, asserted).
 
 
 def test_the_four_reachable_flagships_produced_real_verdicts(payload):

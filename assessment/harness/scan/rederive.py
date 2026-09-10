@@ -21,6 +21,7 @@ HARNESS = Path(__file__).resolve().parents[1]
 REPO = HARNESS.parents[1]
 sys.path.insert(0, str(HARNESS))
 
+from scan import errors                                        # noqa: E402
 from scan import load_params                                   # noqa: E402
 from scan.model import Observation, params_hash                # noqa: E402
 from scan.rules import (CANDIDATE_LEGS, CURRENT, REGISTRY,      # noqa: E402
@@ -265,7 +266,7 @@ def rejudge(payload: dict, params: dict, cycle: str | None = None,
         "derived_from": src_cycle,
         "derived_from_params_hash": payload.get("params_hash"),
         "targets": payload.get("targets"),
-        "params_version": params["params_version"], "params_hash": params_hash(params),
+        "harness_version": errors.harness_of(params), "params_version": params["params_version"], "params_hash": params_hash(params),
         "rejudged_note": (
             f"Findings only. Every Finding cites the `obs_id`s {src_cycle} recorded; not one "
             f"byte was re-fetched and not one Observation was created. The evidence is that "

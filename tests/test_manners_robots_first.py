@@ -282,7 +282,7 @@ def test_replaying_cycle_3_names_exactly_the_two_apex_sitemap_gets():
     netlocs. An Observation records a URL whether or not a request went out: an `off_host` link
     and a `robots_disallowed` path are recorded with their URL precisely so the log shows the
     policy was applied. Counting those as contacts turns 161 recorded exclusions into 44
-    imaginary hosts. `errors.NOT_FETCHED` is the set that says which, and it is read from
+    imaginary hosts. `errors.NOT_REQUESTED` is the set that says which, and it is read from
     there rather than listed here.
     """
     import json as _json
@@ -299,7 +299,7 @@ def test_replaying_cycle_3_names_exactly_the_two_apex_sitemap_gets():
         url = (o.get("request") or {}).get("url") or ""
         if not url or url.startswith("fixture://"):
             continue
-        if o.get("error_class") in set(errors.NOT_FETCHED):
+        if o.get("error_class") in set(errors.NOT_REQUESTED):
             continue                       # recorded with its URL; no request was made
         netloc = urllib.parse.urlsplit(url).netloc.lower()
         if netloc.startswith("127.0.0.1"):

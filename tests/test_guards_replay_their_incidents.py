@@ -89,8 +89,14 @@ def test_the_blind_probe_lint_catches_the_rule_that_shipped_without_a_guard():
         "caught RULE-A5-v2")
 
     from scan.rules import GENERATIONS
+    # A rule that measures the HOST is not linted: its subject is the refusal, so a blind guard
+    # would return `error` in the case the indicator exists to name
+    # (`cc_tasks/2026-09-10_harness_v5_blind.md` decision 3). The opt-out is read from the
+    # module's own `MEASURES`, the same way the shipped lint reads it — a replay that checked a
+    # different condition would be replaying a lint nobody runs.
     shipped = {Path(m.__file__).stem: Path(m.__file__).read_text(encoding="utf-8")
-               for gen in GENERATIONS[3:] for m in gen}
+               for gen in GENERATIONS[3:] for m in gen
+               if getattr(m, "MEASURES", "product") == "product"}
     # `rule_a3_v4` is the pinned exemption: generation four shipped before the helper existed
     # and a shipped module may not be edited. The shipped lint pins it by content hash; this
     # replay only needs it out of the way.
@@ -405,3 +411,65 @@ def test_the_redirect_hygiene_check_catches_a_planted_line(tmp_path, monkeypatch
     assert check(), "the hygiene check does not see a planted redirect"
     log.write_text("", encoding="utf-8")
     assert not check(), "the hygiene check still fires after the sweep"
+
+
+# ============================================ harness-v5: the incident A10 shipped in cycle 4
+
+def test_a10_returned_pass_from_two_probes_that_were_never_issued():
+    """**RED under harness-v4, GREEN under harness-v5.** `cc_tasks/2026-09-10_harness_v5_blind.md`
+    decision 4, replayed against the Finding that actually shipped.
+
+    Cycle 4 recorded, on `scan-eia-flagship-1-open-data`:
+
+        pass  RULE-A10-v3  "deep link HTTP None; invalid route correctly HTTP None;
+                            None visible characters present before JS"
+
+    Both probes were `robots_disallowed` — eia.gov forbids that path to this UA and the fetcher
+    obeyed, so neither request was issued. "Invalid route correctly HTTP None" is not a correct
+    rejection; it is no rejection at all. Under v4 `robots_disallowed` was SCOPE, so
+    `_common.unobserved` said the probes had been seen and the rule scored them.
+
+    The rule module is untouched. What changed is one entry in `errors.CLASSES`, which is the
+    point: a defect that appeared in seven disguises across A1, A3, A6, A8, A10, B3 and G1-D was
+    one wrong answer to one question, asked in one place.
+    """
+    import json as _json
+    payload = REPO / "state" / "scan_2026-09-10.json"
+    if not payload.is_file():
+        pytest.skip("cycle 4's payload is not on disk")
+    doc = _json.loads(payload.read_text(encoding="utf-8"))
+    obs = {o["obs_id"]: o for o in doc["observations_detail"]}
+    finding = next((f for f in doc["findings_detail"]
+                    if f["rule_id"] == "RULE-A10-v3"
+                    and f["target_doc_id"] == "scan-eia-flagship-1-open-data"), None)
+    assert finding is not None, "the incident Finding is not in the payload"
+    assert finding["verdict"] == "pass", "the incident is that this said pass"
+
+    cited = [obs[e] for e in finding["evidence"] if e in obs]
+    assert cited and all(o.get("error_class") == "robots_disallowed" for o in cited), (
+        "the incident is that every probe was robots-disallowed")
+
+    sys.path.insert(0, str(REPO / "assessment" / "harness"))
+    from scan import errors
+
+    # RED: under v4 the probes read as observed, which is how a pass was reachable.
+    assert not any(errors.is_blind(o["error_class"], 4) for o in cited)
+    # GREEN: under v5 every one of them is blind, so `unobserved_error` fires before any verdict.
+    assert all(errors.is_blind(o["error_class"], 5) for o in cited)
+
+
+def test_a_redirect_loop_has_a_name_now():
+    """Decision 4's other half. Cycle 4 filed `httpx.TooManyRedirects` on Census's A10
+    invalid-route probe as `unknown` — correctly, because the map did not name it, and the rule
+    refused to reach a verdict and said so. `unknown` is the map asking to be extended, and this
+    is the extension: `redirect_loop`, BLIND, because no final response came back."""
+    sys.path.insert(0, str(REPO / "assessment" / "harness"))
+    from scan import errors
+    assert errors.BY_EXCEPTION_TYPE["TooManyRedirects"] == "redirect_loop"
+    assert errors.is_blind("redirect_loop", 5) and errors.is_blind("redirect_loop", 4)
+
+    class _TooManyRedirects(Exception):
+        pass
+    _TooManyRedirects.__name__ = "TooManyRedirects"
+    assert errors.classify_exception(_TooManyRedirects("Exceeded maximum allowed redirects.")) \
+        == "redirect_loop"

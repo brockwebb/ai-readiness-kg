@@ -220,6 +220,14 @@ def test_every_rule_from_generation_four_consults_the_blind_guard():
                 f"{stem} changed; the lint exemption was pinned to its bytes and no longer "
                 f"applies. Add `unobserved_error` to it, or re-pin with the reason.")
             continue
+        # A rule whose SUBJECT is the host opts out, and says so on its own face rather than
+        # in a list here (`cc_tasks/2026-09-10_harness_v5_blind.md` decision 3). `RULE-A12-v2`
+        # measures whether an identified client robots.txt permits is actually served: a 403 is
+        # its evidence, and a blind guard would return `error` in exactly the case the
+        # indicator exists to name. It draws the line it needs — a response arrived, or none
+        # did — and `rules.measures` is where that is declared.
+        if getattr(m, "MEASURES", "product") != "product":
+            continue
         # EITHER guard counts. `unobserved_error` answers "is THIS probe blind" and returns
         # the Finding; `unobserved` is the predicate underneath it, and a rule judging a SET of
         # probes — `RULE-A1-v4` and `RULE-A3-v5` over a page's links — needs the predicate per
@@ -382,7 +390,7 @@ def test_an_off_host_link_is_recorded_and_never_fetched():
     assert (off[0].response or {})["status"] is None
     assert off[0].request["fetched"] is False
     assert not any("creativecommons.org" in h for h in asked), asked
-    assert scan_errors.CLASSES["off_host"]["blind"] is False, (
+    assert scan_errors.kind_of("off_host", 5) == scan_errors.SCOPE, (
         "an off-host exclusion is the measurement's scope boundary, not a failure to see; "
         "marking it blind would turn a page whose links are all off-host into `error`")
 

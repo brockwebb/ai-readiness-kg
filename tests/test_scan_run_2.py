@@ -506,13 +506,13 @@ def test_every_error_class_on_this_cycle_is_grounded_in_recorded_text_or_a_statu
     if not path.is_file():
         pytest.skip(f"{cycle} has not been run yet")
     payload = json.loads(path.read_text(encoding="utf-8"))
-    assert set(scan_errors.NOT_FETCHED) == {"robots_disallowed", "off_host",
+    assert set(scan_errors.NOT_REQUESTED) == {"robots_disallowed", "off_host",
                                             "sitemap_off_site"}, (
         "the classes recorded without a request changed; this test's exemption follows them")
     ungrounded = []
     for o in payload["observations_detail"]:
         cls = o.get("error_class")
-        if cls is None or cls in scan_errors.NOT_FETCHED:
+        if cls is None or cls in scan_errors.NOT_REQUESTED:
             continue          # no request was made; the decision IS the record, not a failure
         r = o.get("response") or {}
         if not r.get("error") and not isinstance(r.get("status"), int):

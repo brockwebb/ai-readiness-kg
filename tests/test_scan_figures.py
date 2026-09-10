@@ -58,7 +58,24 @@ def cfg(cycle: str | None = None) -> dict:
 
 
 def matrix(cycle: str | None = None) -> dict:
-    return json.loads((REPO / cfg(cycle)["matrix_json"]).read_text(encoding="utf-8"))
+    """The cycle's matrix, or a SKIP with the reason (`cc_tasks/2026-09-10_harness_v5_blind.md`
+    decision 6).
+
+    This file is written around `params.cycle.name`, so a task that measures a cycle and then
+    stops before reporting it leaves every figure test erroring on a missing file — 2 failures
+    and 8 collection errors, which is what `2026-09-10_scan_run_4.md`'s deliberate gate stop
+    looked like in the suite. A gate that cannot distinguish "the figures are wrong" from "there
+    are no figures yet" is a gate that trains its reader to ignore it.
+
+    A skip, not a pass: the figures are unverified and the suite says so.
+    """
+    path = REPO / cfg(cycle)["matrix_json"]
+    if not path.is_file():
+        pytest.skip(f"cycle {cycle or 'params.cycle.name'} has not been reported: "
+                    f"{path.relative_to(REPO)} does not exist, so there are no figures to "
+                    f"check. Run §4/§5 of the cycle's task, or point params.cycle.name at a "
+                    f"reported cycle.")
+    return json.loads(path.read_text(encoding="utf-8"))
 
 
 @pytest.fixture(scope="module")
@@ -204,6 +221,13 @@ def _matches(rendered: str, value: float) -> bool:
 
 @pytest.fixture(scope="module")
 def figures(results):
+    """The rendered figures, or the same skip `matrix()` gives — decision 6.
+
+    `build` reads the cycle's matrix, so an unreported cycle errors here at FIXTURE SETUP, which
+    pytest reports as 8 errors rather than 8 skips. Asking for the matrix first turns that into
+    one legible reason.
+    """
+    matrix()
     from scan.figures import build
     return build(cfg(), results)
 

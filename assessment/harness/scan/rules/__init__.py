@@ -32,6 +32,7 @@ from . import rule_a2_v3, rule_a3_v3, rule_d1_v3, rule_f4_v3
 from . import rule_a1_v3, rule_a3_v4
 from . import rule_a8_v3, rule_a10_v3
 from . import rule_a1_v4, rule_a3_v5, rule_a8_v4
+from . import rule_a12_v2
 from . import rule_a5_v2
 from . import rule_a12
 
@@ -80,18 +81,57 @@ V6 = [rule_a1_v4, rule_a3_v5, rule_a8_v4]
 #: omission of theirs (decision 3).
 V7 = [rule_a5_v2]
 
+#: Generation 8 — harness-v5 (`cc_tasks/2026-09-10_harness_v5_blind.md`). One module. The
+#: generation's substance is in `errors.py`, not in a rule: `robots_disallowed` becomes BLIND,
+#: so every rule that already calls `_common.unobserved` starts refusing to score a page it was
+#: forbidden to read, with no rule module edited. A12 is the one leg that must NOT follow,
+#: because its subject is the refusal — v2 says so with `MEASURES = "host"` and reads "a
+#: response arrived" where v1 read "the status is not None".
+V8 = [rule_a12_v2]
+
 #: Rules for CANDIDATE indicators. They judge, they are recorded, and their Findings enter no
 #: numerator and no denominator (DD-054). Kept in their own list so the reporting layer can
 #: exclude them mechanically rather than by remembering a code.
-CANDIDATE_RULES = [rule_a12]
+#: Candidate rules, oldest first. `CURRENT` takes the LAST for each leg, so shipping a new
+#: version of a candidate is one entry here — the same shape as a generation, and the reason
+#: A12-v2 has to appear in both: `CURRENT` is built from the generations and then updated from
+#: this list, so a candidate leg's current rule is whatever this list ends with.
+CANDIDATE_RULES = [rule_a12, rule_a12_v2]
+
+#: What a rule's verdicts are ABOUT. `product` unless the module says otherwise, because that is
+#: what almost every rule measures and a default nobody has to write cannot go stale. The
+#: harness-v5 invariant (`tests/test_invariants.py`) reads this instead of carrying a list of
+#: rules to skip: a rule declares its own subject, and a new host-level rule needs no edit
+#: anywhere else. `cc_tasks/2026-09-10_harness_v5_blind.md` decision 3.
+def measures(rule_id: str) -> str:
+    mod = REGISTRY.get(rule_id)
+    if mod is None:
+        return "product"
+    declared = getattr(mod, "MEASURES", None)
+    if declared:
+        return declared
+    # **The subject belongs to the LEG, not to the rule version.** A12 the indicator measures a
+    # host's own behaviour, and it did so in v1 exactly as in v2 — v1 simply predates the
+    # declaration. Inheriting from the newest module for the same leg is what keeps this a
+    # declaration rather than a list of exempt rule ids that grows by one every time a
+    # host-level rule ships a version.
+    for other in reversed(MODULES):
+        if other.LEG == mod.LEG and getattr(other, "MEASURES", None):
+            return other.MEASURES
+    return "product"
 
 #: Every generation, in order. A LIST of lists rather than four names a reader has to keep
 #: track of: the registry-integrity tests read this, so a fifth generation is one entry here
 #: and nothing else to remember — which is the same reasoning `parse_rule_id` gives for being
 #: a regex instead of a per-rule table.
-GENERATIONS = (V1, V2, V3, V4, V5, V6, V7)
+GENERATIONS = (V1, V2, V3, V4, V5, V6, V7, V8)
 
-MODULES = [m for g in GENERATIONS for m in g] + CANDIDATE_RULES
+_ALL = [m for g in GENERATIONS for m in g] + CANDIDATE_RULES
+#: De-duplicated by rule id, order preserved. A12-v2 is listed in its generation AND in
+#: `CANDIDATE_RULES`, because it is both — a generation-8 module and the current candidate rule
+#: for its leg — and `REGISTRY` keying by `RULE_ID` would hide the double entry rather than
+#: report it.
+MODULES = list({m.RULE_ID: m for m in _ALL}.values())
 
 REGISTRY = {m.RULE_ID: m for m in MODULES}
 

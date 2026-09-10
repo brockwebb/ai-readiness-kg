@@ -45,6 +45,22 @@ tier0:
   # informative one for a reference host; it is not in any denominator.
   candidate_legs_in_set: ["A12"]
 
+#: **The judgement layer's own version** (`cc_tasks/2026-09-10_harness_v5_blind.md` decision 2).
+#: Rules are versioned per leg and a Finding records the rule that made it, but the SUBSTRATE
+#: those rules share — what `errors.py` calls blind, what `_common.unobserved` answers — was
+#: not versioned at all, so changing it would have re-scored every stored payload under a
+#: reading that did not exist when they were measured.
+#:
+#: A params set that binds no version IS a v4 set (`errors.HARNESS_DEFAULT`), and `rederive`
+#: recovers each payload's own params from git by hash. That is the whole mechanism by which
+#: nine stored payloads keep re-deriving byte-identically while the layer underneath them
+#: changes: no payload is edited and no version is inferred.
+#:
+#: v5: `robots_disallowed` is BLIND — forbidden to look at a URL inside the product is not the
+#: same as a URL outside it. Cycle 4 shipped the consequence of the old reading (a `pass` from
+#: two probes that were never issued) and its gate stopped the run.
+harness_version: 5
+
 cycle:
   # Which cycle these parameters belong to, and which target list it measures. Named here so
   # a Finding can be traced to its cycle without a reader having to know which state file was

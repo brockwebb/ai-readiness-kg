@@ -2180,7 +2180,7 @@
     "indicator_code": "A12",
     "leg": "A12",
     "mode": "auto",
-    "rule_id": "RULE-A12-v1",
+    "rule_id": "RULE-A12-v2",
     "collector": "http + robots",
     "collector_pin": "httpx>=0.27 + protego (scripts/scan_preflight.py)",
     "signal": "Per host: GET /robots.txt and parse it; then GET the product path under the identified UA. Coherent iff robots.txt permits the path for this UA AND the host serves it. Incoherent iff robots.txt permits and the host answers a status in `manners.unobservable_statuses` (401/403/407/429). A robots.txt that DISALLOWS the path is not incoherence — it is A4's measurement, and this indicator is `not_applicable` there.",

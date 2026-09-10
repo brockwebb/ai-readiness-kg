@@ -1162,3 +1162,33 @@ The frame now carries **19 site keys for 19 bodies**, and every one of its 22 ne
 * An explicit `root` is **always** honoured. A caller that named a staging directory has already chosen; the guard is about the caller that did not.
 * An unlicensed write is **redirected to quarantine and logged**, not refused. The caller is usually a collector deep inside a driver with no way to choose another root; raising would turn "you wrote litter" into "your script crashed". Logging is what stops the redirect being a silence.
 * The token is set in `main`, **not at import**, so importing the runner to reach `run_surface` or `targets` from a driver licenses nothing. Every occurrence of this defect began with such an import, and an import-time token would have licensed exactly those.
+
+## DD-064
+
+**Forbidden to look is blindness; outside the product is scope. The judgement layer carries its own version, so a fix to it cannot re-score history.**
+
+*2026-09-10. `cc_tasks/2026-09-10_harness_v5_blind.md` decisions 1 to 5, from the gate stop recorded in `cc_tasks/2026-09-10_scan_run_4_RESULT.md` §1.*
+
+**1. Three kinds, named in `errors.py` and nowhere else.** Every `error_class` a collector may record is exactly one of:
+
+* **OBSERVED** — a response was received. `None` and `http_4xx`: a 404 on a probed path IS the measurement, and folding it in would leave the harness unable to report absence at all.
+* **BLIND** — either a request was made and no usable answer came back (`dns`, `timeout`, `connection_reset`, `refused`, `http_5xx`, `parse_error`, `redirect_loop`, `collector_unavailable`, `unknown`), **or** a request to a URL *inside the product* was forbidden by policy and never made (`robots_disallowed`). Both mean the same thing to a rule: nobody read that page.
+* **SCOPE** — the URL is *outside the product* and was not requested by design (`off_host`, `sitemap_off_site`). Not a failure to see; a boundary of what is being measured.
+
+`NOT_FETCHED` is retired as a class name. "Was a request made" survives as a boolean attribute on every class (`NOT_REQUESTED` derives it), because collectors report it and the manners accounting needs it — but it is *independent* of kind, and conflating the two is what went wrong: a robots disallow is unrequested and blind, an off-host link is unrequested and scope.
+
+**The line that moved, and why it was in the wrong place.** Harness-v4 read `robots_disallowed` as scope, on the argument that a declared disallow IS the measurement for A4 and A11-declared. That is true of the *declaration* and false of everything else. The URL is inside the product and we were forbidden to look at it, so any rule asking what the product OFFERS there is asking about a page nobody read. Cycle 4 shipped the consequence: `RULE-A10-v3` returned **pass** from *"deep link HTTP None; invalid route correctly HTTP None"* — two probes that were never issued. Read with the corrected line, four measured cycles carry 6, 6, 6 and 11 product verdicts resting on nothing.
+
+**No rule reads the class table.** `errors` answers questions — `is_blind`, `kind_of`, `note_for` — and `rules/_common.unobserved` asks one. A table with a second reader acquires a second idea of its shape, which is how the prefix list cost 957 observations one task earlier.
+
+**2. The judgement layer is versioned, because rules alone were not enough.** A Finding records the rule that made it, and `rederive` re-judges each one under its own rule version. But every rule version shares one substrate — what `errors.py` calls blind — and that substrate was a module constant. Changing it would have re-scored nine stored payloads under a reading that did not exist when they were measured, and the re-derivation gate would have reported the fix as a defect.
+
+So `params.yaml` binds `harness_version`, a params set that binds none IS a v4 set (`errors.HARNESS_DEFAULT`), and `rederive` recovers each payload's own params from git by hash. **No payload is edited and no version is inferred.** Nine payloads re-derive byte-identically across the change.
+
+This is the general shape of the answer to "how does a judgement-layer fix coexist with a bind-once record": version the layer, bind the version to the parameters, recover the parameters from the payload. The alternative — correcting the stored Findings — is forbidden by invariant 1, and the alternative to *that* is never fixing the layer.
+
+**3. A rule declares its subject; the invariant reads the declaration.** `MEASURES = "host"` on `RULE-A12-v2`, inherited by leg so `RULE-A12-v1` carries it too. A12 asks whether an identified client that robots.txt permits is actually served: a 403 is its evidence, and a blind guard would return `error` in exactly the case the indicator exists to name. Every other rule measures a product and the invariant applies.
+
+The invariant itself — **no verdict about a product rests on evidence nobody collected** — is now a test over every payload rather than a sentence in a RESULT (`tests/test_invariants.py`). Under each payload's own harness version it holds everywhere. Under harness-v5's reading it fails on the four measured cycles, pinned as strict xfails with their counts asserted, so the history is visible and a re-judgement cannot change it silently.
+
+**Prior art for the split**: RFC 9110 §15 separates what a server *chose to send* from a transport failure, which is the OBSERVED/BLIND line; the SCOPE kind has no HTTP analogue because it is the instrument's own boundary and not the network's. The versioned-substrate answer is ordinary schema evolution — the payload names the reader it was written for.

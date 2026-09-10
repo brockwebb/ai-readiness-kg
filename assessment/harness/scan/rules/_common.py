@@ -48,26 +48,24 @@ def target(obs: list) -> str:
     return obs[0].target_doc_id if obs else "unknown"
 
 
-#: Error classes that always mean "we did not observe". Read from `errors.CLASSES`, where each
-#: class declares its own blindness beside the rule that produces it, rather than restated
-#: here: `cc_tasks/2026-09-07_scan_harness_v3.md` §1.2 added `connection_reset`, `refused` and
-#: `unknown` to the closed set, and a hand-kept list here would have silently turned the 92
-#: StatCan non-observations into 92 product failures the moment the classifier improved. That
-#: is the exact shape of the bug the new classifier exists to close, one layer up.
+#: **No rule reads `errors.CLASSES` directly** (`cc_tasks/2026-09-10_harness_v5_blind.md`
+#: decision 1). `errors` owns the three kinds and answers one question — is this observation
+#: BLIND — through `errors.is_blind`, per harness version. This module used to keep a tuple
+#: computed at import, which was right until a class's kind became version-dependent: a
+#: module-level constant cannot be v4 for one payload and v5 for the next, and re-deriving nine
+#: stored payloads under their own harness versions is exactly that.
 #:
-#: `http_4xx` is deliberately NOT blind: a 404 on a probed path IS the measurement, and folding
-#: it in would leave the harness unable to report absence at all. `refused` IS blind — the host
-#: declined to answer about the path, so there is no measurement — which is the same reading
-#: `manners.unobservable_statuses` already gave a 403 below, now carried on the class as well.
-_BLIND = tuple(c for c in _errors.BLIND if c is not None)
+#: `http_4xx` is deliberately not blind: a 404 on a probed path IS the measurement. `refused` is
+#: blind — the host declined to answer about the path — which is the same reading
+#: `manners.unobservable_statuses` gives a 403 below, now carried on the class as well.
 
 
 def unobserved(o, params: dict) -> bool:
-    """True when this one observation is a non-observation. Two ways that happens: the
-    collector never got a response (`_BLIND`), or it got one whose status says the host
-    refused this client rather than answering about the path
-    (`manners.unobservable_statuses`)."""
-    if o.error_class in _BLIND:
+    """True when this one observation is a non-observation, under the harness version `params`
+    binds. Two ways that happens: the class is BLIND (no response, or forbidden to look at a URL
+    inside the product), or a response arrived whose status says the host refused this client
+    rather than answering about the path (`manners.unobservable_statuses`)."""
+    if _errors.is_blind(o.error_class, _errors.harness_of(params)):
         return True
     status = (o.response or {}).get("status")
     return status in (params.get("manners") or {}).get("unobservable_statuses", ())
@@ -167,8 +165,8 @@ def unobserved_error(rule_id: str, leg: str, obs: list, probe, params: dict, wha
         return None
     status = (getattr(probe, "response", None) or {}).get("status")
     named = probe.error_class or f"HTTP {status}"
-    note = (_errors.CLASSES.get(probe.error_class) or {}).get(
-        "note", "the host declined to answer this client about the path")
+    note = _errors.note_for(probe.error_class,
+                            "the host declined to answer this client about the path")
     return make(rule_id, leg, obs, "error",
                 f"{what} was not observed ({named}): {note}. A verdict reached from a probe "
                 f"the collector never saw would be a measurement of the scanner, not of the "

@@ -425,15 +425,20 @@ def results(payload: dict, legs: dict, a12v: dict, mx: dict, cycle: str,
     # stopped appearing is as informative as one that appeared, and `unknown` is the only
     # remainder the map has — a cycle that produced any is a cycle whose map is missing a rule.
     ecc = payload.get("error_class_counts") or {}
+    # The class table is harness-versioned from v5 on, so the note has to say WHICH
+    # reading it is describing: `robots_disallowed` is scope under v4 and blindness
+    # under v5, and a Result note that did not say so would be true of one cycle and
+    # false of the next while reading identically.
+    _harness = scan_errors.harness_of(payload)
     for cls in scan_errors.ERROR_CLASSES:
         if cls is None:
             continue
         out.append((f"scan_error_class_{cls}", ecc.get(cls, 0),
                     f"{tag} Observations recorded with `error_class: {cls}` — "
-                    f"{scan_errors.CLASSES[cls]['note']}. "
-                    f"{'Blind' if scan_errors.CLASSES[cls]['blind'] else 'Not blind'}: a rule "
-                    f"reads this class as "
-                    f"{'`error` (the collector could not observe)' if scan_errors.CLASSES[cls]['blind'] else 'a real observation'}."))
+                    f"{scan_errors.note_for(cls)}. "
+                    f"{scan_errors.kind_of(cls, _harness).upper()} under harness-v{_harness}: "
+                    f"a rule reads this class as "
+                    f"{'`error` (the collector could not observe)' if scan_errors.is_blind(cls, _harness) else 'a real observation'}."))
     out.append(("scan_error_class_observed", sum(
         1 for o in payload.get("observations_detail", []) if o.get("error_class") is None),
         f"{tag} Observations with NO error class — the collector observed the surface."))

@@ -144,21 +144,35 @@ def test_the_closed_set_grew_and_nothing_left_it():
     # a sitemap declared on another site is recorded with its URL and never requested. It is
     # in the `not_fetched` family beside `robots_disallowed` and `off_host`, and it is growth,
     # which this test permits and pins so that growth is always deliberate.
+    # `redirect_loop` joined in `cc_tasks/2026-09-10_harness_v5_blind.md` decision 4. Cycle 4
+    # filed `httpx.TooManyRedirects` under `unknown` — correctly, because the map did not name
+    # it — and `unknown` is the map asking to be extended. Growth, pinned, deliberate.
     assert now - was == {"connection_reset", "refused", "unknown", "off_host",
-                         "sitemap_off_site"}
+                         "sitemap_off_site", "redirect_loop"}
 
 
 def test_the_blind_set_grew_only_by_the_new_classes():
-    """Which classes mean "we did not observe" decides every rule's `error`-vs-`fail`. The new
-    classifier must not move an existing one: `robots_disallowed` in particular is NOT blind
-    (it is A4's measurement and A12's `not_applicable`), and marking it blind would have
-    changed the verdict of every shipped rule."""
+    """Which classes mean "we did not observe" decides every rule's `error`-vs-`fail`.
+
+    **Harness-versioned since v5** (`cc_tasks/2026-09-10_harness_v5_blind.md`). This test used to
+    assert one answer; there are two now, and asserting BOTH is what protects the record. Under
+    v4 — the reading every stored payload was judged under — the set is exactly what harness-v3
+    left, `robots_disallowed` excluded. Under v5 it gains that one class and nothing else. A
+    payload re-derived under its own version therefore cannot move, and the fix cannot leak
+    backwards into history.
+    """
+    from scan import errors as _errors
     was = {"dns", "timeout", "http_5xx", "parse_error", "collector_unavailable"}
-    now = set(_common._BLIND)
-    assert was <= now, f"a class stopped being blind: {sorted(was - now)}"
-    assert now - was == {"connection_reset", "refused", "unknown"}
-    assert "robots_disallowed" not in now
-    assert "http_4xx" not in now
+    v4 = set(_errors.blind_classes(4))
+    assert was <= v4, f"a class stopped being blind under v4: {sorted(was - v4)}"
+    assert v4 - was == {"connection_reset", "refused", "unknown", "redirect_loop"}
+    assert "robots_disallowed" not in v4, "v4's reading is what nine stored payloads were judged under"
+    assert "http_4xx" not in v4
+
+    v5 = set(_errors.blind_classes(5))
+    assert v5 - v4 == {"robots_disallowed"}, (
+        f"harness-v5 moved more than the one class it declares: {sorted(v5 - v4)}")
+    assert "http_4xx" not in v5, "a 404 on a probed path is still the measurement"
 
 
 def test_classification_is_a_map_and_not_a_fallback():
@@ -184,8 +198,10 @@ def test_classification_is_a_map_and_not_a_fallback():
         # ECONNREFUSED is a TCP-layer refusal (nothing listening) and `refused` is an
         # HTTP-layer one. Folding them together would make "hosts that refuse this scanner"
         # include hosts that are simply down.
-        "unknown": [httpx.TooManyRedirects("x"),
-                    wrap(httpx.ConnectError, "x", OSError(errno.ECONNREFUSED, "refused")),
+        # A redirect loop had no name until harness-v5 and resolved to `unknown`, which is
+        # what `unknown` is for. It has one now, and it is BLIND: no final response arrived.
+        "redirect_loop": [httpx.TooManyRedirects("x")],
+        "unknown": [wrap(httpx.ConnectError, "x", OSError(errno.ECONNREFUSED, "refused")),
                     wrap(httpx.ConnectError, "nothing anyone has seen before")],
     }
     for want, excs in cases.items():
@@ -234,9 +250,13 @@ def test_the_misfiled_observations_are_overlaid_and_never_edited():
     mine = [ev for ev in eventlog.replay()
             if ev.get("event_type") == rc.EVENT
             and ev.get("classified_from", "recorded_error") == "recorded_error"]
-    assert len(mine) == 93, (
-        f"{len(mine)} `recorded_error` overlays, not the 93 recorded by the task "
-        f"(total across all passes: {len(overlaid)})")
+    # 93 from the harness-v3 pass, plus the 3 `cc_tasks/2026-09-10_harness_v5_blind.md`
+    # decision 4 added when `redirect_loop` got a name: the same three Census A10 probes that
+    # cycle 4 filed under `unknown`, corrected the only way this repo corrects anything, by
+    # overlay. The number is pinned per pass so growth stays deliberate and visible.
+    assert len(mine) == 96, (
+        f"{len(mine)} `recorded_error` overlays, not the 93 the harness-v3 task recorded plus "
+        f"the 3 harness-v5 added (total across all passes: {len(overlaid)})")
 
 
 # ----------------------------------------------------- §1.3 one probe per object per cycle

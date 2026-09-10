@@ -420,7 +420,7 @@ def main(argv=None) -> int:
         payload = {
             "task": a.task,
             "cycle": params["cycle"]["name"], "cycle_kind": "controls_only",
-            "params_version": params["params_version"], "params_hash": params_hash(params),
+            "harness_version": _errors.harness_of(params), "params_version": params["params_version"], "params_hash": params_hash(params),
             "control_verdict": e5.verdict, "control_reason": e5.reason,
             "control_findings": len(cf) + 1,
             # Where this cycle's bodies are staged, so `publish.promote_evidence` finds them
@@ -483,7 +483,7 @@ def main(argv=None) -> int:
     summary = {
         "task": a.task, "cycle": params["cycle"]["name"],
         "targets": params["cycle"]["targets"],
-        "params_version": params["params_version"], "params_hash": params_hash(params),
+        "harness_version": _errors.harness_of(params), "params_version": params["params_version"], "params_hash": params_hash(params),
         "control_verdict": e5.verdict, "control_reason": e5.reason,
         #: Where this cycle's bodies are staged. See the controls-only payload above.
         "evidence_root": _staging_rel,

@@ -50,11 +50,11 @@ def replay(cycle: str) -> dict:
     went out: an `off_host` link and a `robots_disallowed` path carry their URL precisely so
     the log shows the policy was applied. A first pass at this counted them and reported 68
     contacted netlocs against a true 24, turning 161 recorded exclusions into 44 imaginary
-    hosts. `errors.NOT_FETCHED` names the classes that mean "recorded, never requested".
+    hosts. `errors.NOT_REQUESTED` names the classes that mean "recorded, never requested".
     """
     path = REPO / "state" / f"{cycle}.json"
     doc = json.loads(path.read_text(encoding="utf-8"))
-    not_fetched = set(errors.NOT_FETCHED)
+    not_fetched = set(errors.NOT_REQUESTED)
     first, robots_read, issued = {}, set(), 0
     for o in doc["observations_detail"]:
         url = (o.get("request") or {}).get("url") or ""
