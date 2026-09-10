@@ -247,15 +247,15 @@ machine-readable licence, a declared vintage, a working pointer to the current r
 changelog, a catalogue entry, or an API a client could call. Two checks are not at zero. A bulk
 download in a non-proprietary format is offered by
 3 of
-16 surfaces, and
+15 surfaces, and
 3 serve their substantive content without
 requiring a browser to execute code.
 
 A zero at this denominator is not proof of universal absence, and the report will not let it be
 read as one. With 0 passes in
-16 surfaces, the upper bound of the
+15 surfaces, the upper bound of the
 ninety-five percent score interval is
-0.193608, which is the number a reader should carry
+0.203883, which is the number a reader should carry
 rather than the zero. Hanley and Lippman-Hand give the same magnitude by their rule of thumb
 for zero events. The bound quoted here is the score interval, computed once and registered
 rather than worked out in a sentence. The correct statement is that the true rate is unlikely
@@ -327,6 +327,8 @@ naive reading of a previous cycle would suggest, and why they should be. Each ch
 demonstrated against local fixtures before the cycle ran. Those fixtures' expected verdicts are
 now derived from what each collector actually dispatches, rather than written by hand, because
 a hand-written expectation turned out once to be wrong.
+
+This cycle was **re-judged under harness-v5** after a blind-probe defect surfaced in the cycle that followed it: a URL inside a product that `robots.txt` forbids is a page the scanner was never allowed to read, and the product checks that read such a page had been counting it as a product that failed rather than as a page they could not see. The numbers quoted here are the re-judged ones; the originals remain registered under their first names, unedited.
 
 ## What this cannot answer, and what would
 

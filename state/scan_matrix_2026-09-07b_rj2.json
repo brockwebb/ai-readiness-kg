@@ -1,0 +1,1057 @@
+{
+ "task": "cc_tasks/2026-09-07_scan_run_2.md",
+ "cycle": "scan_2026-09-07b_rj2",
+ "tier": "A",
+ "params_hash": "46d0c0dd015e63f761d6032b36dc901f206fe3c5366facad055b965f68565dce",
+ "agencies_without_surfaces": [
+  "BLS",
+  "BTS",
+  "NCES",
+  "ORES"
+ ],
+ "legs": [
+  "A1",
+  "A2",
+  "A3",
+  "A4",
+  "A5",
+  "A6",
+  "A8",
+  "A9",
+  "A10",
+  "A11-declared",
+  "B3",
+  "D1",
+  "D4",
+  "F4",
+  "G1-D"
+ ],
+ "candidate_legs": [
+  "A12"
+ ],
+ "agencies": [
+  "BEA",
+  "BJS",
+  "BLS",
+  "BTS",
+  "CENSUS",
+  "EIA",
+  "ERS",
+  "NASS",
+  "NCES",
+  "NCHS",
+  "NCSES",
+  "ORES",
+  "SOI",
+  "STATCAN"
+ ],
+ "agencies_wholly_unobservable": [
+  "STATCAN"
+ ],
+ "note": "No composite and no ranking. These legs measure different constructs; a single number over them, weighted by nothing in particular, would be read as a score of the agency, and this instrument has not earned that reading.",
+ "rows": [
+  {
+   "agency": "BEA",
+   "surface_kind": "flagship",
+   "doc_id": "scan-bea-flagship-1-interactive-data",
+   "url": "https://www.bea.gov/itable",
+   "admitted": true,
+   "verdicts": {
+    "A1": "fail",
+    "A2": "fail",
+    "A3": "pass",
+    "A4": "pass",
+    "A5": "fail",
+    "A6": "fail",
+    "A8": "fail",
+    "A9": "fail",
+    "A10": "pass",
+    "A11-declared": "pass",
+    "B3": "pass",
+    "D1": "fail",
+    "D4": "fail",
+    "F4": "fail",
+    "G1-D": "fail"
+   }
+  },
+  {
+   "agency": "BEA",
+   "surface_kind": "flagship",
+   "doc_id": "scan-bea-flagship-2-news-releases",
+   "url": "https://www.bea.gov/news/current-releases",
+   "admitted": true,
+   "verdicts": {
+    "A1": "fail",
+    "A2": "fail",
+    "A3": "pass",
+    "A4": "pass",
+    "A5": "fail",
+    "A6": "fail",
+    "A8": "fail",
+    "A9": "fail",
+    "A10": "pass",
+    "A11-declared": "pass",
+    "B3": "pass",
+    "D1": "fail",
+    "D4": "fail",
+    "F4": "fail",
+    "G1-D": "pass"
+   }
+  },
+  {
+   "agency": "BEA",
+   "surface_kind": "machine",
+   "doc_id": "scan-bea-machine",
+   "url": "https://www.bea.gov/open-data",
+   "admitted": true,
+   "verdicts": {
+    "A1": "fail",
+    "A2": "fail",
+    "A3": "pass",
+    "A4": "pass",
+    "A5": "fail",
+    "A6": "fail",
+    "A8": "fail",
+    "A9": "fail",
+    "A10": "pass",
+    "A11-declared": "pass",
+    "B3": "pass",
+    "D1": "fail",
+    "D4": "fail",
+    "F4": "fail",
+    "G1-D": "fail"
+   }
+  },
+  {
+   "agency": "BEA",
+   "surface_kind": "well_known",
+   "doc_id": "host:www.bea.gov",
+   "url": "https://www.bea.gov/itable",
+   "admitted": false,
+   "verdicts": {
+    "A12": "pass"
+   }
+  },
+  {
+   "agency": "BJS",
+   "surface_kind": "flagship",
+   "doc_id": "scan-bjs-flagship-1-data-by-topic",
+   "url": "https://bjs.ojp.gov/data/topic",
+   "admitted": true,
+   "verdicts": {
+    "A1": "fail",
+    "A2": "fail",
+    "A3": "fail",
+    "A4": "pass",
+    "A5": "fail",
+    "A6": "fail",
+    "A8": "fail",
+    "A9": "fail",
+    "A10": "pass",
+    "A11-declared": "pass",
+    "B3": "fail",
+    "D1": "fail",
+    "D4": "fail",
+    "F4": "fail",
+    "G1-D": "fail"
+   }
+  },
+  {
+   "agency": "BJS",
+   "surface_kind": "flagship",
+   "doc_id": "scan-bjs-flagship-2-death-in-custody-reporting-act",
+   "url": "https://bjs.ojp.gov/programs/dicra",
+   "admitted": true,
+   "verdicts": {
+    "A1": "fail",
+    "A2": "fail",
+    "A3": "fail",
+    "A4": "pass",
+    "A5": "fail",
+    "A6": "fail",
+    "A8": "fail",
+    "A9": "fail",
+    "A10": "pass",
+    "A11-declared": "pass",
+    "B3": "fail",
+    "D1": "fail",
+    "D4": "fail",
+    "F4": "fail",
+    "G1-D": "fail"
+   }
+  },
+  {
+   "agency": "BJS",
+   "surface_kind": "well_known",
+   "doc_id": "host:bjs.ojp.gov",
+   "url": "https://bjs.ojp.gov/data/topic",
+   "admitted": false,
+   "verdicts": {
+    "A12": "pass"
+   }
+  },
+  {
+   "agency": "BLS",
+   "surface_kind": "well_known",
+   "doc_id": "host:www.bls.gov",
+   "url": "https://www.bls.gov",
+   "admitted": false,
+   "verdicts": {
+    "A12": "fail"
+   }
+  },
+  {
+   "agency": "BTS",
+   "surface_kind": "well_known",
+   "doc_id": "host:www.bts.gov",
+   "url": "https://www.bts.gov",
+   "admitted": false,
+   "verdicts": {
+    "A12": "fail"
+   }
+  },
+  {
+   "agency": "CENSUS",
+   "surface_kind": "flagship",
+   "doc_id": "scan-census-flagship-1-surveys-programs",
+   "url": "https://www.census.gov/programs-surveys.html",
+   "admitted": true,
+   "verdicts": {
+    "A1": "fail",
+    "A2": "fail",
+    "A3": "fail",
+    "A4": "pass",
+    "A5": "pass",
+    "A6": "fail",
+    "A8": "fail",
+    "A9": "fail",
+    "A10": "pass",
+    "A11-declared": "pass",
+    "B3": "fail",
+    "D1": "fail",
+    "D4": "fail",
+    "F4": "fail",
+    "G1-D": "fail"
+   }
+  },
+  {
+   "agency": "CENSUS",
+   "surface_kind": "flagship",
+   "doc_id": "scan-census-flagship-2-american-community-survey-acs",
+   "url": "https://www.census.gov/programs-surveys/acs.html",
+   "admitted": true,
+   "verdicts": {
+    "A1": "fail",
+    "A2": "fail",
+    "A3": "fail",
+    "A4": "pass",
+    "A5": "error",
+    "A6": "fail",
+    "A8": "fail",
+    "A9": "fail",
+    "A10": "error",
+    "A11-declared": "pass",
+    "B3": "fail",
+    "D1": "fail",
+    "D4": "fail",
+    "F4": "fail",
+    "G1-D": "pass"
+   }
+  },
+  {
+   "agency": "CENSUS",
+   "surface_kind": "machine",
+   "doc_id": "scan-census-machine",
+   "url": "https://www.census.gov/data/datasets.html",
+   "admitted": true,
+   "verdicts": {
+    "A1": "fail",
+    "A2": "fail",
+    "A3": "fail",
+    "A4": "pass",
+    "A5": "error",
+    "A6": "fail",
+    "A8": "fail",
+    "A9": "fail",
+    "A10": "pass",
+    "A11-declared": "pass",
+    "B3": "fail",
+    "D1": "fail",
+    "D4": "fail",
+    "F4": "fail",
+    "G1-D": "pass"
+   }
+  },
+  {
+   "agency": "CENSUS",
+   "surface_kind": "well_known",
+   "doc_id": "host:www.census.gov",
+   "url": "https://www.census.gov/programs-surveys.html",
+   "admitted": false,
+   "verdicts": {
+    "A12": "pass"
+   }
+  },
+  {
+   "agency": "EIA",
+   "surface_kind": "flagship",
+   "doc_id": "scan-eia-flagship-1-open-data",
+   "url": "https://www.eia.gov/beta/api/",
+   "admitted": true,
+   "verdicts": {
+    "A1": "error",
+    "A2": "fail",
+    "A3": "error",
+    "A4": "fail",
+    "A5": "fail",
+    "A6": "error",
+    "A8": "error",
+    "A9": "fail",
+    "A10": "error",
+    "A11-declared": "fail",
+    "B3": "error",
+    "D1": "fail",
+    "D4": "fail",
+    "F4": "fail",
+    "G1-D": "error"
+   }
+  },
+  {
+   "agency": "EIA",
+   "surface_kind": "machine",
+   "doc_id": "scan-eia-machine",
+   "url": "https://www.eia.gov/opendata/browser/",
+   "admitted": true,
+   "verdicts": {
+    "A1": "error",
+    "A2": "fail",
+    "A3": "error",
+    "A4": "pass",
+    "A5": "fail",
+    "A6": "fail",
+    "A8": "fail",
+    "A9": "fail",
+    "A10": "fail",
+    "A11-declared": "pass",
+    "B3": "fail",
+    "D1": "fail",
+    "D4": "fail",
+    "F4": "fail",
+    "G1-D": "fail"
+   }
+  },
+  {
+   "agency": "EIA",
+   "surface_kind": "well_known",
+   "doc_id": "host:www.eia.gov",
+   "url": "https://www.eia.gov/beta/api/",
+   "admitted": false,
+   "verdicts": {
+    "A12": "not_applicable"
+   }
+  },
+  {
+   "agency": "ERS",
+   "surface_kind": "flagship",
+   "doc_id": "scan-ers-flagship-1-ag-and-food-statistics-charting-the-essentials",
+   "url": "https://www.ers.usda.gov/data-products/ag-and-food-statistics-charting-the-essentials",
+   "admitted": true,
+   "verdicts": {
+    "A1": "fail",
+    "A2": "fail",
+    "A3": "fail",
+    "A4": "pass",
+    "A5": "fail",
+    "A6": "fail",
+    "A8": "fail",
+    "A9": "fail",
+    "A10": "pass",
+    "A11-declared": "pass",
+    "B3": "fail",
+    "D1": "fail",
+    "D4": "fail",
+    "F4": "fail",
+    "G1-D": "fail"
+   }
+  },
+  {
+   "agency": "ERS",
+   "surface_kind": "flagship",
+   "doc_id": "scan-ers-flagship-2-agricultural-baseline-database",
+   "url": "https://www.ers.usda.gov/data-products/agricultural-baseline-database",
+   "admitted": true,
+   "verdicts": {
+    "A1": "fail",
+    "A2": "fail",
+    "A3": "fail",
+    "A4": "pass",
+    "A5": "fail",
+    "A6": "fail",
+    "A8": "fail",
+    "A9": "fail",
+    "A10": "pass",
+    "A11-declared": "pass",
+    "B3": "fail",
+    "D1": "error",
+    "D4": "error",
+    "F4": "error",
+    "G1-D": "error"
+   }
+  },
+  {
+   "agency": "ERS",
+   "surface_kind": "machine",
+   "doc_id": "scan-ers-machine",
+   "url": "https://www.ers.usda.gov/data-products?type=downloadable-data-files",
+   "admitted": true,
+   "verdicts": {
+    "A1": "error",
+    "A2": "error",
+    "A3": "error",
+    "A4": "error",
+    "A5": "error",
+    "A6": "fail",
+    "A8": "fail",
+    "A9": "fail",
+    "A10": "fail",
+    "A11-declared": "pass",
+    "B3": "fail",
+    "D1": "fail",
+    "D4": "fail",
+    "F4": "fail",
+    "G1-D": "fail"
+   }
+  },
+  {
+   "agency": "ERS",
+   "surface_kind": "well_known",
+   "doc_id": "host:www.ers.usda.gov",
+   "url": "https://www.ers.usda.gov/data-products/ag-and-food-statistics-charting-the-essentials",
+   "admitted": false,
+   "verdicts": {
+    "A12": "pass"
+   }
+  },
+  {
+   "agency": "NASS",
+   "surface_kind": "flagship",
+   "doc_id": "scan-nass-flagship-1-data-statistics",
+   "url": "https://www.nass.usda.gov/Data_and_Statistics/index.php",
+   "admitted": true,
+   "verdicts": {
+    "A1": "fail",
+    "A2": "fail",
+    "A3": "fail",
+    "A4": "pass",
+    "A5": "fail",
+    "A6": "fail",
+    "A8": "fail",
+    "A9": "fail",
+    "A10": "error",
+    "A11-declared": "pass",
+    "B3": "fail",
+    "D1": "fail",
+    "D4": "fail",
+    "F4": "fail",
+    "G1-D": "fail"
+   }
+  },
+  {
+   "agency": "NASS",
+   "surface_kind": "flagship",
+   "doc_id": "scan-nass-flagship-2-livestock-county-estimates",
+   "url": "https://www.nass.usda.gov/Data_and_Statistics/County_Data_Files/Livestock_County_Estimates/index.php",
+   "admitted": true,
+   "verdicts": {
+    "A1": "fail",
+    "A2": "fail",
+    "A3": "fail",
+    "A4": "pass",
+    "A5": "fail",
+    "A6": "fail",
+    "A8": "fail",
+    "A9": "fail",
+    "A10": "error",
+    "A11-declared": "pass",
+    "B3": "fail",
+    "D1": "fail",
+    "D4": "fail",
+    "F4": "fail",
+    "G1-D": "pass"
+   }
+  },
+  {
+   "agency": "NASS",
+   "surface_kind": "machine",
+   "doc_id": "scan-nass-machine",
+   "url": "https://www.nass.usda.gov/datasets",
+   "admitted": true,
+   "verdicts": {
+    "A1": "fail",
+    "A2": "fail",
+    "A3": "fail",
+    "A4": "pass",
+    "A5": "fail",
+    "A6": "fail",
+    "A8": "fail",
+    "A9": "fail",
+    "A10": "pass",
+    "A11-declared": "pass",
+    "B3": "fail",
+    "D1": "fail",
+    "D4": "fail",
+    "F4": "fail",
+    "G1-D": "fail"
+   }
+  },
+  {
+   "agency": "NASS",
+   "surface_kind": "well_known",
+   "doc_id": "host:www.nass.usda.gov",
+   "url": "https://www.nass.usda.gov/Data_and_Statistics/index.php",
+   "admitted": false,
+   "verdicts": {
+    "A12": "pass"
+   }
+  },
+  {
+   "agency": "NCES",
+   "surface_kind": "well_known",
+   "doc_id": "host:nces.ed.gov",
+   "url": "https://nces.ed.gov",
+   "admitted": false,
+   "verdicts": {
+    "A12": "pass"
+   }
+  },
+  {
+   "agency": "NCHS",
+   "surface_kind": "flagship",
+   "doc_id": "scan-nchs-flagship-1-data-briefs",
+   "url": "https://www.cdc.gov/nchs/products/databriefs.htm",
+   "admitted": true,
+   "verdicts": {
+    "A1": "fail",
+    "A2": "fail",
+    "A3": "fail",
+    "A4": "pass",
+    "A5": "fail",
+    "A6": "fail",
+    "A8": "fail",
+    "A9": "fail",
+    "A10": "fail",
+    "A11-declared": "pass",
+    "B3": "fail",
+    "D1": "fail",
+    "D4": "fail",
+    "F4": "fail",
+    "G1-D": "fail"
+   }
+  },
+  {
+   "agency": "NCHS",
+   "surface_kind": "flagship",
+   "doc_id": "scan-nchs-flagship-2-early-releases-of-selected-estimates-from-the-nhis",
+   "url": "https://www.cdc.gov/nchs/nhis/early-release/index.html",
+   "admitted": true,
+   "verdicts": {
+    "A1": "fail",
+    "A2": "fail",
+    "A3": "pass",
+    "A4": "pass",
+    "A5": "fail",
+    "A6": "fail",
+    "A8": "fail",
+    "A9": "fail",
+    "A10": "fail",
+    "A11-declared": "pass",
+    "B3": "fail",
+    "D1": "fail",
+    "D4": "fail",
+    "F4": "fail",
+    "G1-D": "fail"
+   }
+  },
+  {
+   "agency": "NCHS",
+   "surface_kind": "machine",
+   "doc_id": "scan-nchs-machine",
+   "url": "https://www.cdc.gov/nchs/nvss/vsrr.htm",
+   "admitted": true,
+   "verdicts": {
+    "A1": "fail",
+    "A2": "fail",
+    "A3": "fail",
+    "A4": "pass",
+    "A5": "fail",
+    "A6": "fail",
+    "A8": "fail",
+    "A9": "fail",
+    "A10": "fail",
+    "A11-declared": "pass",
+    "B3": "fail",
+    "D1": "fail",
+    "D4": "fail",
+    "F4": "fail",
+    "G1-D": "fail"
+   }
+  },
+  {
+   "agency": "NCHS",
+   "surface_kind": "well_known",
+   "doc_id": "host:www.cdc.gov",
+   "url": "https://www.cdc.gov/nchs/products/databriefs.htm",
+   "admitted": false,
+   "verdicts": {
+    "A12": "pass"
+   }
+  },
+  {
+   "agency": "NCSES",
+   "surface_kind": "flagship",
+   "doc_id": "scan-ncses-flagship-1-annual-business-survey-2024-data-year-2023",
+   "url": "https://ncses.nsf.gov/pubs/nsf26321",
+   "admitted": true,
+   "verdicts": {
+    "A1": "fail",
+    "A2": "fail",
+    "A3": "fail",
+    "A4": "pass",
+    "A5": "pass",
+    "A6": "fail",
+    "A8": "fail",
+    "A9": "fail",
+    "A10": "fail",
+    "A11-declared": "pass",
+    "B3": "pass",
+    "D1": "fail",
+    "D4": "fail",
+    "F4": "fail",
+    "G1-D": "pass"
+   }
+  },
+  {
+   "agency": "NCSES",
+   "surface_kind": "machine",
+   "doc_id": "scan-ncses-machine",
+   "url": "https://ncses.nsf.gov/explore-data/microdata",
+   "admitted": true,
+   "verdicts": {
+    "A1": "fail",
+    "A2": "fail",
+    "A3": "fail",
+    "A4": "pass",
+    "A5": "pass",
+    "A6": "fail",
+    "A8": "fail",
+    "A9": "fail",
+    "A10": "pass",
+    "A11-declared": "pass",
+    "B3": "fail",
+    "D1": "fail",
+    "D4": "fail",
+    "F4": "fail",
+    "G1-D": "fail"
+   }
+  },
+  {
+   "agency": "NCSES",
+   "surface_kind": "well_known",
+   "doc_id": "host:ncses.nsf.gov",
+   "url": "https://ncses.nsf.gov/pubs/nsf26321",
+   "admitted": false,
+   "verdicts": {
+    "A12": "pass"
+   }
+  },
+  {
+   "agency": "ORES",
+   "surface_kind": "well_known",
+   "doc_id": "host:www.ssa.gov",
+   "url": "https://www.ssa.gov",
+   "admitted": false,
+   "verdicts": {
+    "A12": "fail"
+   }
+  },
+  {
+   "agency": "SOI",
+   "surface_kind": "flagship",
+   "doc_id": "scan-soi-flagship-1-individual-tax-statistics",
+   "url": "https://www.irs.gov/statistics/soi-tax-stats-individual-tax-statistics",
+   "admitted": true,
+   "verdicts": {
+    "A1": "fail",
+    "A2": "fail",
+    "A3": "fail",
+    "A4": "pass",
+    "A5": "fail",
+    "A6": "fail",
+    "A8": "fail",
+    "A9": "fail",
+    "A10": "pass",
+    "A11-declared": "pass",
+    "B3": "fail",
+    "D1": "fail",
+    "D4": "fail",
+    "F4": "fail",
+    "G1-D": "fail"
+   }
+  },
+  {
+   "agency": "SOI",
+   "surface_kind": "flagship",
+   "doc_id": "scan-soi-flagship-2-business-tax-statistics",
+   "url": "https://www.irs.gov/statistics/soi-tax-stats-business-tax-statistics",
+   "admitted": true,
+   "verdicts": {
+    "A1": "fail",
+    "A2": "fail",
+    "A3": "fail",
+    "A4": "pass",
+    "A5": "fail",
+    "A6": "fail",
+    "A8": "fail",
+    "A9": "fail",
+    "A10": "pass",
+    "A11-declared": "pass",
+    "B3": "fail",
+    "D1": "fail",
+    "D4": "fail",
+    "F4": "fail",
+    "G1-D": "fail"
+   }
+  },
+  {
+   "agency": "SOI",
+   "surface_kind": "well_known",
+   "doc_id": "host:www.irs.gov",
+   "url": "https://www.irs.gov/statistics/soi-tax-stats-individual-tax-statistics",
+   "admitted": false,
+   "verdicts": {
+    "A12": "pass"
+   }
+  },
+  {
+   "agency": "STATCAN",
+   "surface_kind": "flagship",
+   "doc_id": "scan-statcan-flagship-1-results-and-documentation-of-surveys-and-statistical-program",
+   "url": "https://www150.statcan.gc.ca/n1/en/type/surveys?MM=1",
+   "admitted": true,
+   "verdicts": {
+    "A1": "error",
+    "A2": "error",
+    "A3": "error",
+    "A4": "error",
+    "A5": "error",
+    "A6": "error",
+    "A8": "error",
+    "A9": "error",
+    "A10": "error",
+    "A11-declared": "error",
+    "B3": "error",
+    "D1": "error",
+    "D4": "error",
+    "F4": "error",
+    "G1-D": "error"
+   }
+  },
+  {
+   "agency": "STATCAN",
+   "surface_kind": "flagship",
+   "doc_id": "scan-statcan-flagship-2-labour-force-survey-in-brief-interactive-app",
+   "url": "https://www150.statcan.gc.ca/n1/pub/14-20-0001/142000012018001-eng.htm",
+   "admitted": true,
+   "verdicts": {
+    "A1": "error",
+    "A2": "error",
+    "A3": "error",
+    "A4": "error",
+    "A5": "error",
+    "A6": "error",
+    "A8": "error",
+    "A9": "error",
+    "A10": "error",
+    "A11-declared": "error",
+    "B3": "error",
+    "D1": "error",
+    "D4": "error",
+    "F4": "error",
+    "G1-D": "error"
+   }
+  },
+  {
+   "agency": "STATCAN",
+   "surface_kind": "machine",
+   "doc_id": "scan-statcan-machine",
+   "url": "https://www150.statcan.gc.ca/n1/en/type/data?sourcecode=5186",
+   "admitted": true,
+   "verdicts": {
+    "A1": "error",
+    "A2": "error",
+    "A3": "error",
+    "A4": "error",
+    "A5": "error",
+    "A6": "error",
+    "A8": "error",
+    "A9": "error",
+    "A10": "error",
+    "A11-declared": "error",
+    "B3": "error",
+    "D1": "error",
+    "D4": "error",
+    "F4": "error",
+    "G1-D": "error"
+   }
+  },
+  {
+   "agency": "STATCAN",
+   "surface_kind": "well_known",
+   "doc_id": "host:www150.statcan.gc.ca",
+   "url": "https://www150.statcan.gc.ca/n1/en/type/surveys?MM=1",
+   "admitted": false,
+   "verdicts": {
+    "A12": "error"
+   }
+  }
+ ],
+ "per_leg": {
+  "A1": {
+   "pass": 0,
+   "fail": 20,
+   "not_applicable": 0,
+   "error": 6,
+   "applicable_n": 20,
+   "surfaces_targeted": 26,
+   "pass_rate": 0.0,
+   "ci95_low": 0.0,
+   "ci95_high": 0.161125,
+   "control_expected_verdicts_met": 0,
+   "control_fixtures": 0,
+   "denominator": "pass + fail on admitted surfaces that were observable; `error` is excluded because the collector could not observe, which is ours and not the product's"
+  },
+  "A10": {
+   "pass": 13,
+   "fail": 6,
+   "not_applicable": 0,
+   "error": 7,
+   "applicable_n": 19,
+   "surfaces_targeted": 26,
+   "pass_rate": 0.6842,
+   "ci95_low": 0.460104,
+   "ci95_high": 0.846356,
+   "control_expected_verdicts_met": 0,
+   "control_fixtures": 0,
+   "denominator": "pass + fail on admitted surfaces that were observable; `error` is excluded because the collector could not observe, which is ours and not the product's"
+  },
+  "A11-declared": {
+   "pass": 22,
+   "fail": 1,
+   "not_applicable": 0,
+   "error": 3,
+   "applicable_n": 23,
+   "surfaces_targeted": 26,
+   "pass_rate": 0.9565,
+   "ci95_low": 0.790088,
+   "ci95_high": 0.992283,
+   "control_expected_verdicts_met": 0,
+   "control_fixtures": 0,
+   "denominator": "pass + fail on admitted surfaces that were observable; `error` is excluded because the collector could not observe, which is ours and not the product's"
+  },
+  "A2": {
+   "pass": 0,
+   "fail": 22,
+   "not_applicable": 0,
+   "error": 4,
+   "applicable_n": 22,
+   "surfaces_targeted": 26,
+   "pass_rate": 0.0,
+   "ci95_low": 0.0,
+   "ci95_high": 0.148655,
+   "control_expected_verdicts_met": 0,
+   "control_fixtures": 0,
+   "denominator": "pass + fail on admitted surfaces that were observable; `error` is excluded because the collector could not observe, which is ours and not the product's"
+  },
+  "A3": {
+   "pass": 4,
+   "fail": 16,
+   "not_applicable": 0,
+   "error": 6,
+   "applicable_n": 20,
+   "surfaces_targeted": 26,
+   "pass_rate": 0.2,
+   "ci95_low": 0.080658,
+   "ci95_high": 0.416017,
+   "control_expected_verdicts_met": 0,
+   "control_fixtures": 0,
+   "denominator": "pass + fail on admitted surfaces that were observable; `error` is excluded because the collector could not observe, which is ours and not the product's"
+  },
+  "A4": {
+   "pass": 21,
+   "fail": 1,
+   "not_applicable": 0,
+   "error": 4,
+   "applicable_n": 22,
+   "surfaces_targeted": 26,
+   "pass_rate": 0.9545,
+   "ci95_low": 0.78202,
+   "ci95_high": 0.991931,
+   "control_expected_verdicts_met": 0,
+   "control_fixtures": 0,
+   "denominator": "pass + fail on admitted surfaces that were observable; `error` is excluded because the collector could not observe, which is ours and not the product's"
+  },
+  "A5": {
+   "pass": 3,
+   "fail": 17,
+   "not_applicable": 0,
+   "error": 6,
+   "applicable_n": 20,
+   "surfaces_targeted": 26,
+   "pass_rate": 0.15,
+   "ci95_low": 0.052369,
+   "ci95_high": 0.360419,
+   "control_expected_verdicts_met": 0,
+   "control_fixtures": 0,
+   "denominator": "pass + fail on admitted surfaces that were observable; `error` is excluded because the collector could not observe, which is ours and not the product's"
+  },
+  "A6": {
+   "pass": 0,
+   "fail": 22,
+   "not_applicable": 0,
+   "error": 4,
+   "applicable_n": 22,
+   "surfaces_targeted": 26,
+   "pass_rate": 0.0,
+   "ci95_low": 0.0,
+   "ci95_high": 0.148655,
+   "control_expected_verdicts_met": 0,
+   "control_fixtures": 0,
+   "denominator": "pass + fail on admitted surfaces that were observable; `error` is excluded because the collector could not observe, which is ours and not the product's"
+  },
+  "A8": {
+   "pass": 0,
+   "fail": 22,
+   "not_applicable": 0,
+   "error": 4,
+   "applicable_n": 22,
+   "surfaces_targeted": 26,
+   "pass_rate": 0.0,
+   "ci95_low": 0.0,
+   "ci95_high": 0.148655,
+   "control_expected_verdicts_met": 0,
+   "control_fixtures": 0,
+   "denominator": "pass + fail on admitted surfaces that were observable; `error` is excluded because the collector could not observe, which is ours and not the product's"
+  },
+  "A9": {
+   "pass": 0,
+   "fail": 23,
+   "not_applicable": 0,
+   "error": 3,
+   "applicable_n": 23,
+   "surfaces_targeted": 26,
+   "pass_rate": 0.0,
+   "ci95_low": 0.0,
+   "ci95_high": 0.143117,
+   "control_expected_verdicts_met": 0,
+   "control_fixtures": 0,
+   "denominator": "pass + fail on admitted surfaces that were observable; `error` is excluded because the collector could not observe, which is ours and not the product's"
+  },
+  "B3": {
+   "pass": 4,
+   "fail": 18,
+   "not_applicable": 0,
+   "error": 4,
+   "applicable_n": 22,
+   "surfaces_targeted": 26,
+   "pass_rate": 0.1818,
+   "ci95_low": 0.073069,
+   "ci95_high": 0.385166,
+   "control_expected_verdicts_met": 0,
+   "control_fixtures": 0,
+   "denominator": "pass + fail on admitted surfaces that were observable; `error` is excluded because the collector could not observe, which is ours and not the product's"
+  },
+  "D1": {
+   "pass": 0,
+   "fail": 22,
+   "not_applicable": 0,
+   "error": 4,
+   "applicable_n": 22,
+   "surfaces_targeted": 26,
+   "pass_rate": 0.0,
+   "ci95_low": 0.0,
+   "ci95_high": 0.148655,
+   "control_expected_verdicts_met": 0,
+   "control_fixtures": 0,
+   "denominator": "pass + fail on admitted surfaces that were observable; `error` is excluded because the collector could not observe, which is ours and not the product's"
+  },
+  "D4": {
+   "pass": 0,
+   "fail": 22,
+   "not_applicable": 0,
+   "error": 4,
+   "applicable_n": 22,
+   "surfaces_targeted": 26,
+   "pass_rate": 0.0,
+   "ci95_low": 0.0,
+   "ci95_high": 0.148655,
+   "control_expected_verdicts_met": 0,
+   "control_fixtures": 0,
+   "denominator": "pass + fail on admitted surfaces that were observable; `error` is excluded because the collector could not observe, which is ours and not the product's"
+  },
+  "F4": {
+   "pass": 0,
+   "fail": 22,
+   "not_applicable": 0,
+   "error": 4,
+   "applicable_n": 22,
+   "surfaces_targeted": 26,
+   "pass_rate": 0.0,
+   "ci95_low": 0.0,
+   "ci95_high": 0.148655,
+   "control_expected_verdicts_met": 0,
+   "control_fixtures": 0,
+   "denominator": "pass + fail on admitted surfaces that were observable; `error` is excluded because the collector could not observe, which is ours and not the product's"
+  },
+  "G1-D": {
+   "pass": 5,
+   "fail": 16,
+   "not_applicable": 0,
+   "error": 5,
+   "applicable_n": 21,
+   "surfaces_targeted": 26,
+   "pass_rate": 0.2381,
+   "ci95_low": 0.10628,
+   "ci95_high": 0.450912,
+   "control_expected_verdicts_met": 0,
+   "control_fixtures": 0,
+   "denominator": "pass + fail on admitted surfaces that were observable; `error` is excluded because the collector could not observe, which is ours and not the product's"
+  }
+ },
+ "a12": {
+  "by_verdict": {
+   "pass": 9,
+   "fail": 3,
+   "not_applicable": 1,
+   "error": 1
+  },
+  "hosts": 14,
+  "by_host": {
+   "BEA": "pass",
+   "BJS": "pass",
+   "BLS": "fail",
+   "BTS": "fail",
+   "CENSUS": "pass",
+   "EIA": "not_applicable",
+   "ERS": "pass",
+   "NASS": "pass",
+   "NCES": "pass",
+   "NCHS": "pass",
+   "NCSES": "pass",
+   "ORES": "fail",
+   "SOI": "pass",
+   "STATCAN": "error"
+  }
+ },
+ "requests_per_host": {},
+ "error_class_counts": null
+}

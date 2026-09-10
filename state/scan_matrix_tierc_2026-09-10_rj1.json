@@ -1,0 +1,222 @@
+{
+ "task": "cc_tasks/2026-09-07_scan_run_2.md",
+ "cycle": "scan_2026-09-10_rj1",
+ "tier": "C",
+ "params_hash": "46d0c0dd015e63f761d6032b36dc901f206fe3c5366facad055b965f68565dce",
+ "agencies_without_surfaces": [],
+ "legs": [
+  "A1",
+  "A2",
+  "A3",
+  "A4",
+  "A5",
+  "A6",
+  "A8",
+  "A9",
+  "A10",
+  "A11-declared",
+  "B3",
+  "D1",
+  "D4",
+  "F4",
+  "G1-D"
+ ],
+ "candidate_legs": [
+  "A12"
+ ],
+ "agencies": [
+  "GSA",
+  "NIST",
+  "data.gov"
+ ],
+ "agencies_wholly_unobservable": [],
+ "note": "Tier C reference hosts, tier-0 legs only. In no Tier A denominator and on no agencies x legs matrix (DD-059).",
+ "rows": [
+  {
+   "agency": "GSA",
+   "surface_kind": "home",
+   "doc_id": "home:www.gsa.gov",
+   "url": "https://www.gsa.gov",
+   "admitted": false,
+   "verdicts": {
+    "A4": "pass",
+    "A5": "fail",
+    "A10": "pass",
+    "A11-declared": "pass",
+    "G1-D": "fail"
+   }
+  },
+  {
+   "agency": "GSA",
+   "surface_kind": "machine",
+   "doc_id": "machine:open.gsa.gov",
+   "url": "https://open.gsa.gov",
+   "admitted": false,
+   "verdicts": {
+    "A4": "pass",
+    "A5": "fail",
+    "A10": "fail",
+    "A11-declared": "pass",
+    "G1-D": "fail"
+   }
+  },
+  {
+   "agency": "GSA",
+   "surface_kind": "well_known",
+   "doc_id": "host:www.gsa.gov",
+   "url": "https://www.gsa.gov",
+   "admitted": false,
+   "verdicts": {
+    "A12": "pass"
+   }
+  },
+  {
+   "agency": "NIST",
+   "surface_kind": "home",
+   "doc_id": "home:www.nist.gov",
+   "url": "https://www.nist.gov",
+   "admitted": false,
+   "verdicts": {
+    "A4": "pass",
+    "A5": "fail",
+    "A10": "pass",
+    "A11-declared": "pass",
+    "G1-D": "fail"
+   }
+  },
+  {
+   "agency": "NIST",
+   "surface_kind": "machine",
+   "doc_id": "machine:data.nist.gov",
+   "url": "https://data.nist.gov",
+   "admitted": false,
+   "verdicts": {
+    "A4": "pass",
+    "A5": "fail",
+    "A10": "fail",
+    "A11-declared": "pass",
+    "G1-D": "fail"
+   }
+  },
+  {
+   "agency": "NIST",
+   "surface_kind": "well_known",
+   "doc_id": "host:www.nist.gov",
+   "url": "https://www.nist.gov",
+   "admitted": false,
+   "verdicts": {
+    "A12": "pass"
+   }
+  },
+  {
+   "agency": "data.gov",
+   "surface_kind": "home",
+   "doc_id": "home:www.data.gov",
+   "url": "https://www.data.gov",
+   "admitted": false,
+   "verdicts": {
+    "A4": "pass",
+    "A5": "fail",
+    "A10": "pass",
+    "A11-declared": "pass",
+    "G1-D": "fail"
+   }
+  },
+  {
+   "agency": "data.gov",
+   "surface_kind": "machine",
+   "doc_id": "machine:catalog.data.gov",
+   "url": "https://catalog.data.gov",
+   "admitted": false,
+   "verdicts": {
+    "A4": "pass",
+    "A5": "error",
+    "A10": "pass",
+    "A11-declared": "pass",
+    "G1-D": "fail"
+   }
+  },
+  {
+   "agency": "data.gov",
+   "surface_kind": "well_known",
+   "doc_id": "host:www.data.gov",
+   "url": "https://www.data.gov",
+   "admitted": false,
+   "verdicts": {
+    "A12": "pass"
+   }
+  }
+ ],
+ "per_leg": {
+  "A10": {
+   "pass": 4,
+   "fail": 2,
+   "not_applicable": 0,
+   "error": 0,
+   "applicable_n": 6,
+   "surfaces_targeted": 6,
+   "pass_rate": 0.6667,
+   "ci95_low": 0.299993,
+   "ci95_high": 0.903229,
+   "control_expected_verdicts_met": 0,
+   "control_fixtures": 0,
+   "denominator": "pass + fail on admitted surfaces that were observable; `error` is excluded because the collector could not observe, which is ours and not the product's"
+  },
+  "A11-declared": {
+   "pass": 6,
+   "fail": 0,
+   "not_applicable": 0,
+   "error": 0,
+   "applicable_n": 6,
+   "surfaces_targeted": 6,
+   "pass_rate": 1.0,
+   "ci95_low": 0.609666,
+   "ci95_high": 1.0,
+   "control_expected_verdicts_met": 0,
+   "control_fixtures": 0,
+   "denominator": "pass + fail on admitted surfaces that were observable; `error` is excluded because the collector could not observe, which is ours and not the product's"
+  },
+  "A4": {
+   "pass": 6,
+   "fail": 0,
+   "not_applicable": 0,
+   "error": 0,
+   "applicable_n": 6,
+   "surfaces_targeted": 6,
+   "pass_rate": 1.0,
+   "ci95_low": 0.609666,
+   "ci95_high": 1.0,
+   "control_expected_verdicts_met": 0,
+   "control_fixtures": 0,
+   "denominator": "pass + fail on admitted surfaces that were observable; `error` is excluded because the collector could not observe, which is ours and not the product's"
+  },
+  "A5": {
+   "pass": 0,
+   "fail": 5,
+   "not_applicable": 0,
+   "error": 1,
+   "applicable_n": 5,
+   "surfaces_targeted": 6,
+   "pass_rate": 0.0,
+   "ci95_low": 0.0,
+   "ci95_high": 0.434482,
+   "control_expected_verdicts_met": 0,
+   "control_fixtures": 0,
+   "denominator": "pass + fail on admitted surfaces that were observable; `error` is excluded because the collector could not observe, which is ours and not the product's"
+  },
+  "G1-D": {
+   "pass": 0,
+   "fail": 6,
+   "not_applicable": 0,
+   "error": 0,
+   "applicable_n": 6,
+   "surfaces_targeted": 6,
+   "pass_rate": 0.0,
+   "ci95_low": 0.0,
+   "ci95_high": 0.390334,
+   "control_expected_verdicts_met": 0,
+   "control_fixtures": 0,
+   "denominator": "pass + fail on admitted surfaces that were observable; `error` is excluded because the collector could not observe, which is ours and not the product's"
+  }
+ }
+}

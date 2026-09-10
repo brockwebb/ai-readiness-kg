@@ -76,6 +76,14 @@ PRIOR_CYCLES = {
     # robots-first in the fetcher, the site-key bound, `RULE-A5-v2` and `RULE-A8-v4`.
     # 739 cycle Findings plus 113 control Findings.
     "scan_2026-09-10": 852,
+    # The harness-v5 re-judgements (`cc_tasks/2026-09-10_rejudge_2_3_4.md` §3, which asks for
+    # all TWELVE payloads under their own harness versions). Each is Findings-only; its evidence
+    # lives in the cycle it names in `derived_from`, and `_params_for` recovers the params it was
+    # judged under — which for these bind `harness_version: 5`, so they re-derive under the
+    # reading that made them and the four originals keep re-deriving under theirs.
+    "scan_2026-09-07b_rj2": 404,
+    "scan_2026-09-09_rj1": 634,
+    "scan_2026-09-10_rj1": 739,
 }
 
 #: The fixture whose existence IS the fix's proof. Named once, here, because three tests need
@@ -608,7 +616,7 @@ def test_the_rejudgement_removes_at_least_the_recorded_false_positive(rederive_m
 #: The two most recent cycles. Their re-derivation stays in the FAST tier, because a rule or
 #: engine change is most likely to break the payloads closest to it and a gate that cannot see
 #: that quickly is not a gate. `cc_tasks/2026-09-09_guards_earn_their_keep.md` decision 4.
-RECENT_CYCLES = ("scan_2026-09-10", "scan_2026-09-09")
+RECENT_CYCLES = ("scan_2026-09-10_rj1", "scan_2026-09-10")
 
 
 def _tier(cycle: str):

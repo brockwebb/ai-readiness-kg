@@ -55,7 +55,11 @@ PARAMS_REL = "assessment/harness/scan/params.yaml"
 #: dropped and the two ways of counting stay reconcilable.
 CYCLES = ("scan_smoke_2026-09-06", "scan_controls_2026-09-06", "scan_2026-09-07",
           "scan_2026-09-07_controls", "scan_2026-09-07b", "scan_2026-09-07_rj1",
-          "scan_2026-09-07b_rj1", "scan_2026-09-09", "scan_2026-09-10")
+          "scan_2026-09-07b_rj1", "scan_2026-09-09", "scan_2026-09-10",
+          # The harness-v5 re-judgements (`cc_tasks/2026-09-10_rejudge_2_3_4.md` decision 1).
+          # Zero in every column, which is the point of them: the same Observations, judged by
+          # a layer that knows a forbidden page was never read.
+          "scan_2026-09-07b_rj2", "scan_2026-09-09_rj1", "scan_2026-09-10_rj1")
 
 UNDER_OWN_HARNESS = {c: 0 for c in CYCLES}
 

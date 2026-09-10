@@ -20,3 +20,5 @@ naive reading of a previous cycle would suggest, and why they should be. Each ch
 demonstrated against local fixtures before the cycle ran. Those fixtures' expected verdicts are
 now derived from what each collector actually dispatches, rather than written by hand, because
 a hand-written expectation turned out once to be wrong.
+
+This cycle was **re-judged under harness-v5** after a blind-probe defect surfaced in the cycle that followed it: a URL inside a product that `robots.txt` forbids is a page the scanner was never allowed to read, and the product checks that read such a page had been counting it as a product that failed rather than as a page they could not see. The numbers quoted here are the re-judged ones; the originals remain registered under their first names, unedited.

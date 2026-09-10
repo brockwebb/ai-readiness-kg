@@ -19,15 +19,15 @@ machine-readable licence, a declared vintage, a working pointer to the current r
 changelog, a catalogue entry, or an API a client could call. Two checks are not at zero. A bulk
 download in a non-proprietary format is offered by
 {{result:scan_l0_product_a3_pass_2026-09-09:value}} of
-{{result:scan_l0_product_a3_applicable_n_2026-09-09:value}} surfaces, and
+{{result:scan_l0_product_a3_applicable_n_2026-09-09_rj1:value}} surfaces, and
 {{result:scan_l0_product_b3_pass_2026-09-09:value}} serve their substantive content without
 requiring a browser to execute code.
 
 A zero at this denominator is not proof of universal absence, and the report will not let it be
 read as one. With {{result:scan_l0_product_a1_pass_2026-09-09:value}} passes in
-{{result:scan_l0_product_a1_applicable_n_2026-09-09:value}} surfaces, the upper bound of the
+{{result:scan_l0_product_a1_applicable_n_2026-09-09_rj1:value}} surfaces, the upper bound of the
 ninety-five percent score interval is
-{{result:scan_leg_rate_a1_upper95_2026-09-09:value}}, which is the number a reader should carry
+{{result:scan_leg_rate_a1_upper95_2026-09-09_rj1:value}}, which is the number a reader should carry
 rather than the zero. Hanley and Lippman-Hand give the same magnitude by their rule of thumb
 for zero events. The bound quoted here is the score interval, computed once and registered
 rather than worked out in a sentence. The correct statement is that the true rate is unlikely

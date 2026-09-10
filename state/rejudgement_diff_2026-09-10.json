@@ -1,0 +1,2911 @@
+[
+ {
+  "old": "scan_2026-09-07b.json",
+  "new": "scan_2026-09-07b_rj2.json",
+  "harness": {
+   "old": 4,
+   "new": 5
+  },
+  "findings": {
+   "old": 404,
+   "new": 404
+  },
+  "only_in_old": [],
+  "only_in_new": [],
+  "verdict_moves": 14,
+  "rule_version_moves": 144,
+  "by_transition": {
+   "pass -> error": 4,
+   "fail -> error": 10
+  },
+  "by_class": {
+   "robots_disallowed": 8
+  },
+  "by_cause": {
+   "rule_version": 6,
+   "class": 8
+  },
+  "unexplained": [],
+  "moves": [
+   {
+    "target": "host:bjs.ojp.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v1 pass",
+    "to": "RULE-A12-v2 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg) for https://bjs.ojp.gov/data/topic and the host served it (HTTP 2",
+    "cause": null
+   },
+   {
+    "target": "host:nces.ed.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v1 pass",
+    "to": "RULE-A12-v2 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg) for https://nces.ed.gov and the host served it (HTTP 200): the de",
+    "cause": null
+   },
+   {
+    "target": "host:ncses.nsf.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v1 pass",
+    "to": "RULE-A12-v2 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg) for https://ncses.nsf.gov/pubs/nsf26321 and the host served it (H",
+    "cause": null
+   },
+   {
+    "target": "host:www.bea.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v1 pass",
+    "to": "RULE-A12-v2 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg) for https://www.bea.gov/itable and the host served it (HTTP 200):",
+    "cause": null
+   },
+   {
+    "target": "host:www.bls.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v1 fail",
+    "to": "RULE-A12-v2 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "the host answered HTTP 403 to /robots.txt itself for ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg): the declared layer is not obse",
+    "cause": null
+   },
+   {
+    "target": "host:www.bts.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v1 fail",
+    "to": "RULE-A12-v2 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "the host answered HTTP 403 to /robots.txt itself for ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg): the declared layer is not obse",
+    "cause": null
+   },
+   {
+    "target": "host:www.cdc.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v1 pass",
+    "to": "RULE-A12-v2 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg) for https://www.cdc.gov/nchs/products/databriefs.htm and the host",
+    "cause": null
+   },
+   {
+    "target": "host:www.census.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v1 pass",
+    "to": "RULE-A12-v2 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg) for https://www.census.gov/programs-surveys.html and the host ser",
+    "cause": null
+   },
+   {
+    "target": "host:www.eia.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v1 not_applicable",
+    "to": "RULE-A12-v2 not_applicable",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [
+     "robots_disallowed"
+    ],
+    "reason": "robots.txt disallows ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg) for https://www.eia.gov/beta/api/; a host obeyed is not a host ",
+    "cause": null
+   },
+   {
+    "target": "host:www.ers.usda.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v1 pass",
+    "to": "RULE-A12-v2 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg) for https://www.ers.usda.gov/data-products/ag-and-food-statistics",
+    "cause": null
+   },
+   {
+    "target": "host:www.irs.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v1 pass",
+    "to": "RULE-A12-v2 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg) for https://www.irs.gov/statistics/soi-tax-stats-individual-tax-s",
+    "cause": null
+   },
+   {
+    "target": "host:www.nass.usda.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v1 pass",
+    "to": "RULE-A12-v2 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg) for https://www.nass.usda.gov/Data_and_Statistics/index.php and t",
+    "cause": null
+   },
+   {
+    "target": "host:www.ssa.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v1 fail",
+    "to": "RULE-A12-v2 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "the host answered HTTP 403 to /robots.txt itself for ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg): the declared layer is not obse",
+    "cause": null
+   },
+   {
+    "target": "host:www150.statcan.gc.ca",
+    "leg": "A12",
+    "from": "RULE-A12-v1 error",
+    "to": "RULE-A12-v2 error",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "the robots/probe pair for this host was not collected",
+    "cause": null
+   },
+   {
+    "target": "scan-bea-flagship-1-interactive-data",
+    "leg": "A1",
+    "from": "RULE-A1-v3 fail",
+    "to": "RULE-A1-v4 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "no probed link serves a structured content type (25 link(s) observed)",
+    "cause": null
+   },
+   {
+    "target": "scan-bea-flagship-1-interactive-data",
+    "leg": "A10",
+    "from": "RULE-A10-v2 pass",
+    "to": "RULE-A10-v3 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "deep link HTTP 200; invalid route correctly HTTP 404; 5130 visible characters present before JS. The pre/post-JS DOM diff the signal also names was NOT run (ren",
+    "cause": null
+   },
+   {
+    "target": "scan-bea-flagship-1-interactive-data",
+    "leg": "A3",
+    "from": "RULE-A3-v4 pass",
+    "to": "RULE-A3-v5 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "whole-product download linked from the product page: https://www.bea.gov/ (unfiltered file of 58287 bytes)",
+    "cause": null
+   },
+   {
+    "target": "scan-bea-flagship-1-interactive-data",
+    "leg": "A5",
+    "from": "RULE-A5-v1 fail",
+    "to": "RULE-A5-v2 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "discovery files served (https://www.bea.gov/sitemap.xml) but none lists the product URL",
+    "cause": null
+   },
+   {
+    "target": "scan-bea-flagship-1-interactive-data",
+    "leg": "A8",
+    "from": "RULE-A8-v2 fail",
+    "to": "RULE-A8-v4 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "only an HTTP Last-Modified header (Mon, 07 Sep 2026 20:03:37 GMT) \u2014 a fact about the file, not a declared product vintage",
+    "cause": null
+   },
+   {
+    "target": "scan-bea-flagship-2-news-releases",
+    "leg": "A1",
+    "from": "RULE-A1-v3 fail",
+    "to": "RULE-A1-v4 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "no probed link serves a structured content type (25 link(s) observed)",
+    "cause": null
+   },
+   {
+    "target": "scan-bea-flagship-2-news-releases",
+    "leg": "A10",
+    "from": "RULE-A10-v2 pass",
+    "to": "RULE-A10-v3 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "deep link HTTP 200; invalid route correctly HTTP 404; 2920 visible characters present before JS. The pre/post-JS DOM diff the signal also names was NOT run (ren",
+    "cause": null
+   },
+   {
+    "target": "scan-bea-flagship-2-news-releases",
+    "leg": "A3",
+    "from": "RULE-A3-v4 pass",
+    "to": "RULE-A3-v5 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "whole-product download linked from the product page: https://www.bea.gov/news/current-releases (unfiltered file of 59465 bytes)",
+    "cause": null
+   },
+   {
+    "target": "scan-bea-flagship-2-news-releases",
+    "leg": "A5",
+    "from": "RULE-A5-v1 fail",
+    "to": "RULE-A5-v2 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "discovery files served (https://www.bea.gov/sitemap.xml) but none lists the product URL",
+    "cause": null
+   },
+   {
+    "target": "scan-bea-flagship-2-news-releases",
+    "leg": "A8",
+    "from": "RULE-A8-v2 fail",
+    "to": "RULE-A8-v4 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "only an HTTP Last-Modified header (Mon, 07 Sep 2026 20:00:19 GMT) \u2014 a fact about the file, not a declared product vintage",
+    "cause": null
+   },
+   {
+    "target": "scan-bea-machine",
+    "leg": "A1",
+    "from": "RULE-A1-v3 fail",
+    "to": "RULE-A1-v4 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "no probed link serves a structured content type (25 link(s) observed)",
+    "cause": null
+   },
+   {
+    "target": "scan-bea-machine",
+    "leg": "A10",
+    "from": "RULE-A10-v2 pass",
+    "to": "RULE-A10-v3 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "deep link HTTP 200; invalid route correctly HTTP 404; 5100 visible characters present before JS. The pre/post-JS DOM diff the signal also names was NOT run (ren",
+    "cause": null
+   },
+   {
+    "target": "scan-bea-machine",
+    "leg": "A3",
+    "from": "RULE-A3-v4 pass",
+    "to": "RULE-A3-v5 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "whole-product download linked from the product page: https://www.bea.gov/ (unfiltered file of 58287 bytes)",
+    "cause": null
+   },
+   {
+    "target": "scan-bea-machine",
+    "leg": "A5",
+    "from": "RULE-A5-v1 fail",
+    "to": "RULE-A5-v2 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "discovery files served (https://www.bea.gov/sitemap.xml) but none lists the product URL",
+    "cause": null
+   },
+   {
+    "target": "scan-bea-machine",
+    "leg": "A8",
+    "from": "RULE-A8-v2 fail",
+    "to": "RULE-A8-v4 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "only an HTTP Last-Modified header (Mon, 07 Sep 2026 20:02:03 GMT) \u2014 a fact about the file, not a declared product vintage",
+    "cause": null
+   },
+   {
+    "target": "scan-bjs-flagship-1-data-by-topic",
+    "leg": "A1",
+    "from": "RULE-A1-v3 fail",
+    "to": "RULE-A1-v4 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "no probed link serves a structured content type (25 link(s) observed)",
+    "cause": null
+   },
+   {
+    "target": "scan-bjs-flagship-1-data-by-topic",
+    "leg": "A10",
+    "from": "RULE-A10-v2 pass",
+    "to": "RULE-A10-v3 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "deep link HTTP 200; invalid route correctly HTTP 404; 3323 visible characters present before JS. The pre/post-JS DOM diff the signal also names was NOT run (ren",
+    "cause": null
+   },
+   {
+    "target": "scan-bjs-flagship-1-data-by-topic",
+    "leg": "A3",
+    "from": "RULE-A3-v4 fail",
+    "to": "RULE-A3-v5 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "1 download link(s) are filtered queries, not whole-product downloads; first: https://bjs.ojp.gov/library/publications/list?series_filter=Just%20the%20Stats",
+    "cause": null
+   },
+   {
+    "target": "scan-bjs-flagship-1-data-by-topic",
+    "leg": "A5",
+    "from": "RULE-A5-v1 fail",
+    "to": "RULE-A5-v2 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "discovery files served (https://bjs.ojp.gov/sitemap.xml) but none lists the product URL",
+    "cause": null
+   },
+   {
+    "target": "scan-bjs-flagship-1-data-by-topic",
+    "leg": "A8",
+    "from": "RULE-A8-v2 fail",
+    "to": "RULE-A8-v4 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "only an HTTP Last-Modified header (Fri, 04 Sep 2026 18:46:07 GMT) \u2014 a fact about the file, not a declared product vintage",
+    "cause": null
+   },
+   {
+    "target": "scan-bjs-flagship-2-death-in-custody-reporting-act",
+    "leg": "A1",
+    "from": "RULE-A1-v3 fail",
+    "to": "RULE-A1-v4 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "no probed link serves a structured content type (25 link(s) observed)",
+    "cause": null
+   },
+   {
+    "target": "scan-bjs-flagship-2-death-in-custody-reporting-act",
+    "leg": "A10",
+    "from": "RULE-A10-v2 pass",
+    "to": "RULE-A10-v3 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "deep link HTTP 200; invalid route correctly HTTP 404; 6029 visible characters present before JS. The pre/post-JS DOM diff the signal also names was NOT run (ren",
+    "cause": null
+   },
+   {
+    "target": "scan-bjs-flagship-2-death-in-custody-reporting-act",
+    "leg": "A3",
+    "from": "RULE-A3-v4 fail",
+    "to": "RULE-A3-v5 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "1 download link(s) are filtered queries, not whole-product downloads; first: https://bjs.ojp.gov/library/publications/list?series_filter=Just%20the%20Stats",
+    "cause": null
+   },
+   {
+    "target": "scan-bjs-flagship-2-death-in-custody-reporting-act",
+    "leg": "A5",
+    "from": "RULE-A5-v1 fail",
+    "to": "RULE-A5-v2 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "discovery files served (https://bjs.ojp.gov/sitemap.xml) but none lists the product URL",
+    "cause": null
+   },
+   {
+    "target": "scan-bjs-flagship-2-death-in-custody-reporting-act",
+    "leg": "A8",
+    "from": "RULE-A8-v2 fail",
+    "to": "RULE-A8-v4 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "only an HTTP Last-Modified header (Fri, 04 Sep 2026 18:08:10 GMT) \u2014 a fact about the file, not a declared product vintage",
+    "cause": null
+   },
+   {
+    "target": "scan-census-flagship-1-surveys-programs",
+    "leg": "A1",
+    "from": "RULE-A1-v3 fail",
+    "to": "RULE-A1-v4 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "no probed link serves a structured content type (25 link(s) observed)",
+    "cause": null
+   },
+   {
+    "target": "scan-census-flagship-1-surveys-programs",
+    "leg": "A10",
+    "from": "RULE-A10-v2 pass",
+    "to": "RULE-A10-v3 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "deep link HTTP 200; invalid route correctly HTTP 404; 21721 visible characters present before JS. The pre/post-JS DOM diff the signal also names was NOT run (re",
+    "cause": null
+   },
+   {
+    "target": "scan-census-flagship-1-surveys-programs",
+    "leg": "A3",
+    "from": "RULE-A3-v4 fail",
+    "to": "RULE-A3-v5 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "no whole-product download linked from the product page (25 link(s) probed)",
+    "cause": null
+   },
+   {
+    "target": "scan-census-flagship-1-surveys-programs",
+    "leg": "A5",
+    "from": "RULE-A5-v1 pass",
+    "to": "RULE-A5-v2 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "sitemap at https://www.census.gov/sitemap.xml lists the product URL (5408 URLs)",
+    "cause": null
+   },
+   {
+    "target": "scan-census-flagship-1-surveys-programs",
+    "leg": "A8",
+    "from": "RULE-A8-v2 fail",
+    "to": "RULE-A8-v4 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "no declared release or modification date on the surface",
+    "cause": null
+   },
+   {
+    "target": "scan-census-flagship-2-american-community-survey-acs",
+    "leg": "A1",
+    "from": "RULE-A1-v3 fail",
+    "to": "RULE-A1-v4 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "no probed link serves a structured content type (25 link(s) observed)",
+    "cause": null
+   },
+   {
+    "target": "scan-census-flagship-2-american-community-survey-acs",
+    "leg": "A10",
+    "from": "RULE-A10-v2 pass",
+    "to": "RULE-A10-v3 error",
+    "verdict_moved": true,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "the invalid-route probe https://www.census.gov/programs-surveys/acs.html/__ai-readiness-kg-probe-404__ was not observed (unknown): the map does not name this fa",
+    "cause": "rule_version"
+   },
+   {
+    "target": "scan-census-flagship-2-american-community-survey-acs",
+    "leg": "A3",
+    "from": "RULE-A3-v4 fail",
+    "to": "RULE-A3-v5 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "no whole-product download linked from the product page (25 link(s) probed)",
+    "cause": null
+   },
+   {
+    "target": "scan-census-flagship-2-american-community-survey-acs",
+    "leg": "A5",
+    "from": "RULE-A5-v1 fail",
+    "to": "RULE-A5-v2 error",
+    "verdict_moved": true,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "2 of 6 discovery probe(s), including https://www.census.gov/.well-known/ai-plugin.json, was not observed (refused): the host answered 401/403/429 to this identi",
+    "cause": "rule_version"
+   },
+   {
+    "target": "scan-census-flagship-2-american-community-survey-acs",
+    "leg": "A8",
+    "from": "RULE-A8-v2 fail",
+    "to": "RULE-A8-v4 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "no declared release or modification date on the surface",
+    "cause": null
+   },
+   {
+    "target": "scan-census-machine",
+    "leg": "A1",
+    "from": "RULE-A1-v3 fail",
+    "to": "RULE-A1-v4 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "no probed link serves a structured content type (25 link(s) observed)",
+    "cause": null
+   },
+   {
+    "target": "scan-census-machine",
+    "leg": "A10",
+    "from": "RULE-A10-v2 pass",
+    "to": "RULE-A10-v3 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "deep link HTTP 200; invalid route correctly HTTP 404; 8069 visible characters present before JS. The pre/post-JS DOM diff the signal also names was NOT run (ren",
+    "cause": null
+   },
+   {
+    "target": "scan-census-machine",
+    "leg": "A3",
+    "from": "RULE-A3-v4 fail",
+    "to": "RULE-A3-v5 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "no whole-product download linked from the product page (24 link(s) probed)",
+    "cause": null
+   },
+   {
+    "target": "scan-census-machine",
+    "leg": "A5",
+    "from": "RULE-A5-v1 fail",
+    "to": "RULE-A5-v2 error",
+    "verdict_moved": true,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "2 of 6 discovery probe(s), including https://www.census.gov/.well-known/ai-plugin.json, was not observed (refused): the host answered 401/403/429 to this identi",
+    "cause": "rule_version"
+   },
+   {
+    "target": "scan-census-machine",
+    "leg": "A8",
+    "from": "RULE-A8-v2 fail",
+    "to": "RULE-A8-v4 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "no declared release or modification date on the surface",
+    "cause": null
+   },
+   {
+    "target": "scan-eia-flagship-1-open-data",
+    "leg": "A1",
+    "from": "RULE-A1-v3 fail",
+    "to": "RULE-A1-v4 error",
+    "verdict_moved": true,
+    "rule_moved": true,
+    "classes_that_changed_kind": [
+     "robots_disallowed"
+    ],
+    "reason": "every fetch failed: robots_disallowed",
+    "cause": "class"
+   },
+   {
+    "target": "scan-eia-flagship-1-open-data",
+    "leg": "A10",
+    "from": "RULE-A10-v2 pass",
+    "to": "RULE-A10-v3 error",
+    "verdict_moved": true,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "the invalid-route probe https://www.eia.gov/beta/api/__ai-readiness-kg-probe-404__ was not observed (connection_reset): the peer closed the connection (TCP rese",
+    "cause": "rule_version"
+   },
+   {
+    "target": "scan-eia-flagship-1-open-data",
+    "leg": "A3",
+    "from": "RULE-A3-v4 fail",
+    "to": "RULE-A3-v5 error",
+    "verdict_moved": true,
+    "rule_moved": true,
+    "classes_that_changed_kind": [
+     "robots_disallowed"
+    ],
+    "reason": "every fetch failed: robots_disallowed",
+    "cause": "class"
+   },
+   {
+    "target": "scan-eia-flagship-1-open-data",
+    "leg": "A5",
+    "from": "RULE-A5-v1 fail",
+    "to": "RULE-A5-v2 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "discovery files served (https://www.eia.gov/sitemap.xml) but none lists the product URL",
+    "cause": null
+   },
+   {
+    "target": "scan-eia-flagship-1-open-data",
+    "leg": "A6",
+    "from": "RULE-A6-v2 fail",
+    "to": "RULE-A6-v2 error",
+    "verdict_moved": true,
+    "rule_moved": false,
+    "classes_that_changed_kind": [
+     "robots_disallowed"
+    ],
+    "reason": "markup could not be extracted: robots_disallowed",
+    "cause": "class"
+   },
+   {
+    "target": "scan-eia-flagship-1-open-data",
+    "leg": "A8",
+    "from": "RULE-A8-v2 fail",
+    "to": "RULE-A8-v4 error",
+    "verdict_moved": true,
+    "rule_moved": true,
+    "classes_that_changed_kind": [
+     "robots_disallowed"
+    ],
+    "reason": "the surface could not be observed: robots_disallowed",
+    "cause": "class"
+   },
+   {
+    "target": "scan-eia-flagship-1-open-data",
+    "leg": "B3",
+    "from": "RULE-B3-v2 fail",
+    "to": "RULE-B3-v2 error",
+    "verdict_moved": true,
+    "rule_moved": false,
+    "classes_that_changed_kind": [
+     "robots_disallowed"
+    ],
+    "reason": "the methodology surface could not be observed: robots_disallowed",
+    "cause": "class"
+   },
+   {
+    "target": "scan-eia-flagship-1-open-data",
+    "leg": "G1-D",
+    "from": "RULE-G1-D-v1 fail",
+    "to": "RULE-G1-D-v1 error",
+    "verdict_moved": true,
+    "rule_moved": false,
+    "classes_that_changed_kind": [
+     "robots_disallowed"
+    ],
+    "reason": "the surface could not be observed: robots_disallowed",
+    "cause": "class"
+   },
+   {
+    "target": "scan-eia-machine",
+    "leg": "A1",
+    "from": "RULE-A1-v3 fail",
+    "to": "RULE-A1-v4 error",
+    "verdict_moved": true,
+    "rule_moved": true,
+    "classes_that_changed_kind": [
+     "robots_disallowed"
+    ],
+    "reason": "all 25 link(s) on this surface were unobserved (http_5xx); the page was served but nothing it links to could be probed, so what it offers is unmeasured \u2014 not ab",
+    "cause": "class"
+   },
+   {
+    "target": "scan-eia-machine",
+    "leg": "A10",
+    "from": "RULE-A10-v2 fail",
+    "to": "RULE-A10-v3 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "soft-404: https://www.eia.gov/opendata/browser/__ai-readiness-kg-probe-404__ returns HTTP 200 for a route that should not exist, with a body that does not even ",
+    "cause": null
+   },
+   {
+    "target": "scan-eia-machine",
+    "leg": "A3",
+    "from": "RULE-A3-v4 fail",
+    "to": "RULE-A3-v5 error",
+    "verdict_moved": true,
+    "rule_moved": true,
+    "classes_that_changed_kind": [
+     "robots_disallowed"
+    ],
+    "reason": "all 25 link(s) on this surface were unobserved (http_5xx); whether the product offers a whole-product download is unmeasured, not absent",
+    "cause": "class"
+   },
+   {
+    "target": "scan-eia-machine",
+    "leg": "A5",
+    "from": "RULE-A5-v1 fail",
+    "to": "RULE-A5-v2 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "discovery files served (https://www.eia.gov/sitemap.xml) but none lists the product URL",
+    "cause": null
+   },
+   {
+    "target": "scan-eia-machine",
+    "leg": "A8",
+    "from": "RULE-A8-v2 fail",
+    "to": "RULE-A8-v4 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "no declared release or modification date on the surface",
+    "cause": null
+   },
+   {
+    "target": "scan-ers-flagship-1-ag-and-food-statistics-charting-the-essentials",
+    "leg": "A1",
+    "from": "RULE-A1-v3 fail",
+    "to": "RULE-A1-v4 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "no probed link serves a structured content type (24 link(s) observed) (1 of 25 link(s) were unobserved and are excluded)",
+    "cause": null
+   },
+   {
+    "target": "scan-ers-flagship-1-ag-and-food-statistics-charting-the-essentials",
+    "leg": "A10",
+    "from": "RULE-A10-v2 pass",
+    "to": "RULE-A10-v3 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "deep link HTTP 200; invalid route correctly HTTP 404; 3547 visible characters present before JS. The pre/post-JS DOM diff the signal also names was NOT run (ren",
+    "cause": null
+   },
+   {
+    "target": "scan-ers-flagship-1-ag-and-food-statistics-charting-the-essentials",
+    "leg": "A3",
+    "from": "RULE-A3-v4 fail",
+    "to": "RULE-A3-v5 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "17 download link(s) are filtered queries, not whole-product downloads; first: https://www.ers.usda.gov/data-products?type=charts (1 of 25 link(s) were unobserve",
+    "cause": null
+   },
+   {
+    "target": "scan-ers-flagship-1-ag-and-food-statistics-charting-the-essentials",
+    "leg": "A5",
+    "from": "RULE-A5-v1 fail",
+    "to": "RULE-A5-v2 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "discovery files served (https://www.ers.usda.gov/sitemaps/index/sitemap.xml, https://www.ers.usda.gov/sitemap.xml) but none lists the product URL",
+    "cause": null
+   },
+   {
+    "target": "scan-ers-flagship-1-ag-and-food-statistics-charting-the-essentials",
+    "leg": "A8",
+    "from": "RULE-A8-v2 fail",
+    "to": "RULE-A8-v4 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "no declared release or modification date on the surface",
+    "cause": null
+   },
+   {
+    "target": "scan-ers-flagship-2-agricultural-baseline-database",
+    "leg": "A1",
+    "from": "RULE-A1-v3 fail",
+    "to": "RULE-A1-v4 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "no probed link serves a structured content type (25 link(s) observed)",
+    "cause": null
+   },
+   {
+    "target": "scan-ers-flagship-2-agricultural-baseline-database",
+    "leg": "A10",
+    "from": "RULE-A10-v2 pass",
+    "to": "RULE-A10-v3 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "deep link HTTP 200; invalid route correctly HTTP 404; 7545 visible characters present before JS. The pre/post-JS DOM diff the signal also names was NOT run (ren",
+    "cause": null
+   },
+   {
+    "target": "scan-ers-flagship-2-agricultural-baseline-database",
+    "leg": "A3",
+    "from": "RULE-A3-v4 fail",
+    "to": "RULE-A3-v5 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "18 download link(s) are filtered queries, not whole-product downloads; first: https://www.ers.usda.gov/data-products?type=charts",
+    "cause": null
+   },
+   {
+    "target": "scan-ers-flagship-2-agricultural-baseline-database",
+    "leg": "A5",
+    "from": "RULE-A5-v1 fail",
+    "to": "RULE-A5-v2 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "discovery files served (https://www.ers.usda.gov/sitemaps/index/sitemap.xml, https://www.ers.usda.gov/sitemap.xml) but none lists the product URL",
+    "cause": null
+   },
+   {
+    "target": "scan-ers-flagship-2-agricultural-baseline-database",
+    "leg": "A8",
+    "from": "RULE-A8-v2 fail",
+    "to": "RULE-A8-v4 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "no declared release or modification date on the surface",
+    "cause": null
+   },
+   {
+    "target": "scan-ers-machine",
+    "leg": "A1",
+    "from": "RULE-A1-v3 error",
+    "to": "RULE-A1-v4 error",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "every fetch failed: dns",
+    "cause": null
+   },
+   {
+    "target": "scan-ers-machine",
+    "leg": "A10",
+    "from": "RULE-A10-v2 fail",
+    "to": "RULE-A10-v3 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "soft-404: https://www.ers.usda.gov/data-products?type=downloadable-data-files/__ai-readiness-kg-probe-404__ returns HTTP 200 for a route that should not exist, ",
+    "cause": null
+   },
+   {
+    "target": "scan-ers-machine",
+    "leg": "A3",
+    "from": "RULE-A3-v4 error",
+    "to": "RULE-A3-v5 error",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "every fetch failed: dns",
+    "cause": null
+   },
+   {
+    "target": "scan-ers-machine",
+    "leg": "A5",
+    "from": "RULE-A5-v1 error",
+    "to": "RULE-A5-v2 error",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "none of the 5 discovery probe(s) on this host could be observed (dns); whether anything is served is unmeasured, not absent",
+    "cause": null
+   },
+   {
+    "target": "scan-ers-machine",
+    "leg": "A8",
+    "from": "RULE-A8-v2 fail",
+    "to": "RULE-A8-v4 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "no declared release or modification date on the surface",
+    "cause": null
+   },
+   {
+    "target": "scan-nass-flagship-1-data-statistics",
+    "leg": "A1",
+    "from": "RULE-A1-v3 fail",
+    "to": "RULE-A1-v4 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "no probed link serves a structured content type (25 link(s) observed)",
+    "cause": null
+   },
+   {
+    "target": "scan-nass-flagship-1-data-statistics",
+    "leg": "A10",
+    "from": "RULE-A10-v2 pass",
+    "to": "RULE-A10-v3 error",
+    "verdict_moved": true,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "the invalid-route probe https://www.nass.usda.gov/Data_and_Statistics/index.php/__ai-readiness-kg-probe-404__ was not observed (HTTP 403): the collector observe",
+    "cause": "rule_version"
+   },
+   {
+    "target": "scan-nass-flagship-1-data-statistics",
+    "leg": "A3",
+    "from": "RULE-A3-v4 fail",
+    "to": "RULE-A3-v5 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "3 download link(s) are filtered queries, not whole-product downloads; first: https://www.nass.usda.gov/Corrections/?log=QS",
+    "cause": null
+   },
+   {
+    "target": "scan-nass-flagship-1-data-statistics",
+    "leg": "A5",
+    "from": "RULE-A5-v1 fail",
+    "to": "RULE-A5-v2 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "discovery files served (https://www.nass.usda.gov/sitemap.xml) but none lists the product URL",
+    "cause": null
+   },
+   {
+    "target": "scan-nass-flagship-1-data-statistics",
+    "leg": "A8",
+    "from": "RULE-A8-v2 fail",
+    "to": "RULE-A8-v4 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "no declared release or modification date on the surface",
+    "cause": null
+   },
+   {
+    "target": "scan-nass-flagship-2-livestock-county-estimates",
+    "leg": "A1",
+    "from": "RULE-A1-v3 fail",
+    "to": "RULE-A1-v4 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "no probed link serves a structured content type (25 link(s) observed)",
+    "cause": null
+   },
+   {
+    "target": "scan-nass-flagship-2-livestock-county-estimates",
+    "leg": "A10",
+    "from": "RULE-A10-v2 pass",
+    "to": "RULE-A10-v3 error",
+    "verdict_moved": true,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "the invalid-route probe https://www.nass.usda.gov/Data_and_Statistics/County_Data_Files/Livestock_County_Estimates/index.php/__ai-readiness-kg-probe-404__ was n",
+    "cause": "rule_version"
+   },
+   {
+    "target": "scan-nass-flagship-2-livestock-county-estimates",
+    "leg": "A3",
+    "from": "RULE-A3-v4 fail",
+    "to": "RULE-A3-v5 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "3 download link(s) are filtered queries, not whole-product downloads; first: https://www.nass.usda.gov/Corrections/?log=QS",
+    "cause": null
+   },
+   {
+    "target": "scan-nass-flagship-2-livestock-county-estimates",
+    "leg": "A5",
+    "from": "RULE-A5-v1 fail",
+    "to": "RULE-A5-v2 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "discovery files served (https://www.nass.usda.gov/sitemap.xml) but none lists the product URL",
+    "cause": null
+   },
+   {
+    "target": "scan-nass-flagship-2-livestock-county-estimates",
+    "leg": "A8",
+    "from": "RULE-A8-v2 fail",
+    "to": "RULE-A8-v4 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "no declared release or modification date on the surface",
+    "cause": null
+   },
+   {
+    "target": "scan-nass-machine",
+    "leg": "A1",
+    "from": "RULE-A1-v3 fail",
+    "to": "RULE-A1-v4 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "no probed link serves a structured content type (25 link(s) observed)",
+    "cause": null
+   },
+   {
+    "target": "scan-nass-machine",
+    "leg": "A10",
+    "from": "RULE-A10-v2 pass",
+    "to": "RULE-A10-v3 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "deep link HTTP 200; invalid route correctly HTTP 404; 11140 visible characters present before JS. The pre/post-JS DOM diff the signal also names was NOT run (re",
+    "cause": null
+   },
+   {
+    "target": "scan-nass-machine",
+    "leg": "A3",
+    "from": "RULE-A3-v4 fail",
+    "to": "RULE-A3-v5 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "3 download link(s) are filtered queries, not whole-product downloads; first: https://www.nass.usda.gov/Corrections/?log=QS",
+    "cause": null
+   },
+   {
+    "target": "scan-nass-machine",
+    "leg": "A5",
+    "from": "RULE-A5-v1 fail",
+    "to": "RULE-A5-v2 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "discovery files served (https://www.nass.usda.gov/sitemap.xml) but none lists the product URL",
+    "cause": null
+   },
+   {
+    "target": "scan-nass-machine",
+    "leg": "A8",
+    "from": "RULE-A8-v2 fail",
+    "to": "RULE-A8-v4 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "no declared release or modification date on the surface",
+    "cause": null
+   },
+   {
+    "target": "scan-nchs-flagship-1-data-briefs",
+    "leg": "A1",
+    "from": "RULE-A1-v3 fail",
+    "to": "RULE-A1-v4 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "no probed link serves a structured content type (24 link(s) observed) (1 of 25 link(s) were unobserved and are excluded)",
+    "cause": null
+   },
+   {
+    "target": "scan-nchs-flagship-1-data-briefs",
+    "leg": "A10",
+    "from": "RULE-A10-v2 fail",
+    "to": "RULE-A10-v3 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "soft-404: https://www.cdc.gov/nchs/products/databriefs.htm/__ai-readiness-kg-probe-404__ returns HTTP 200 for a route that should not exist, with a body that do",
+    "cause": null
+   },
+   {
+    "target": "scan-nchs-flagship-1-data-briefs",
+    "leg": "A3",
+    "from": "RULE-A3-v4 fail",
+    "to": "RULE-A3-v5 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "the largest linked download is below the 51200-byte whole-product floor; first: https://www.cdc.gov/nchs/products/databriefs.htm (1 of 25 link(s) were unobserve",
+    "cause": null
+   },
+   {
+    "target": "scan-nchs-flagship-1-data-briefs",
+    "leg": "A5",
+    "from": "RULE-A5-v1 fail",
+    "to": "RULE-A5-v2 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "discovery files served (https://www.cdc.gov/wcms-auto-sitemap-index.xml) but none lists the product URL",
+    "cause": null
+   },
+   {
+    "target": "scan-nchs-flagship-1-data-briefs",
+    "leg": "A8",
+    "from": "RULE-A8-v2 fail",
+    "to": "RULE-A8-v4 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "no declared release or modification date on the surface",
+    "cause": null
+   },
+   {
+    "target": "scan-nchs-flagship-2-early-releases-of-selected-estimates-from-the-nhis",
+    "leg": "A1",
+    "from": "RULE-A1-v3 fail",
+    "to": "RULE-A1-v4 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "only PDF served; first: https://www.cdc.gov/nchs/data/nhis/earlyrelease/Early-Release-of-Selected-Estimates-Based-on-Data-from-the-2025.pdf",
+    "cause": null
+   },
+   {
+    "target": "scan-nchs-flagship-2-early-releases-of-selected-estimates-from-the-nhis",
+    "leg": "A10",
+    "from": "RULE-A10-v2 fail",
+    "to": "RULE-A10-v3 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "soft-404: https://www.cdc.gov/nchs/nhis/early-release/index.html/__ai-readiness-kg-probe-404__ returns HTTP 200 for a route that should not exist, with a body t",
+    "cause": null
+   },
+   {
+    "target": "scan-nchs-flagship-2-early-releases-of-selected-estimates-from-the-nhis",
+    "leg": "A3",
+    "from": "RULE-A3-v4 pass",
+    "to": "RULE-A3-v5 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "whole-product download linked from the product page: https://www.cdc.gov/nchs/data/nhis/earlyrelease/Early-Release-of-Selected-Estimates-Based-on-Data-from-the-",
+    "cause": null
+   },
+   {
+    "target": "scan-nchs-flagship-2-early-releases-of-selected-estimates-from-the-nhis",
+    "leg": "A5",
+    "from": "RULE-A5-v1 fail",
+    "to": "RULE-A5-v2 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "discovery files served (https://www.cdc.gov/wcms-auto-sitemap-index.xml) but none lists the product URL",
+    "cause": null
+   },
+   {
+    "target": "scan-nchs-flagship-2-early-releases-of-selected-estimates-from-the-nhis",
+    "leg": "A8",
+    "from": "RULE-A8-v2 fail",
+    "to": "RULE-A8-v4 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "no declared release or modification date on the surface",
+    "cause": null
+   },
+   {
+    "target": "scan-nchs-machine",
+    "leg": "A1",
+    "from": "RULE-A1-v3 fail",
+    "to": "RULE-A1-v4 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "no probed link serves a structured content type (25 link(s) observed)",
+    "cause": null
+   },
+   {
+    "target": "scan-nchs-machine",
+    "leg": "A10",
+    "from": "RULE-A10-v2 fail",
+    "to": "RULE-A10-v3 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "soft-404: https://www.cdc.gov/nchs/nvss/vsrr.htm/__ai-readiness-kg-probe-404__ returns HTTP 200 for a route that should not exist, with a body that does not eve",
+    "cause": null
+   },
+   {
+    "target": "scan-nchs-machine",
+    "leg": "A3",
+    "from": "RULE-A3-v4 fail",
+    "to": "RULE-A3-v5 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "the largest linked download is below the 51200-byte whole-product floor; first: https://www.cdc.gov/nchs/nvss/vsrr.htm",
+    "cause": null
+   },
+   {
+    "target": "scan-nchs-machine",
+    "leg": "A5",
+    "from": "RULE-A5-v1 fail",
+    "to": "RULE-A5-v2 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "discovery files served (https://www.cdc.gov/wcms-auto-sitemap-index.xml) but none lists the product URL",
+    "cause": null
+   },
+   {
+    "target": "scan-nchs-machine",
+    "leg": "A8",
+    "from": "RULE-A8-v2 fail",
+    "to": "RULE-A8-v4 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "no declared release or modification date on the surface",
+    "cause": null
+   },
+   {
+    "target": "scan-ncses-flagship-1-annual-business-survey-2024-data-year-2023",
+    "leg": "A1",
+    "from": "RULE-A1-v3 fail",
+    "to": "RULE-A1-v4 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "no probed link serves a structured content type (25 link(s) observed)",
+    "cause": null
+   },
+   {
+    "target": "scan-ncses-flagship-1-annual-business-survey-2024-data-year-2023",
+    "leg": "A10",
+    "from": "RULE-A10-v2 fail",
+    "to": "RULE-A10-v3 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "soft-404: https://ncses.nsf.gov/pubs/nsf26321/__ai-readiness-kg-probe-404__ returns HTTP 200 for a route that should not exist, with a body that does not even a",
+    "cause": null
+   },
+   {
+    "target": "scan-ncses-flagship-1-annual-business-survey-2024-data-year-2023",
+    "leg": "A3",
+    "from": "RULE-A3-v4 fail",
+    "to": "RULE-A3-v5 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "1 download link(s) are filtered queries, not whole-product downloads; first: https://ncses.nsf.gov/search?query=&excludePubAssets=true&pageSize=40&sort=date",
+    "cause": null
+   },
+   {
+    "target": "scan-ncses-flagship-1-annual-business-survey-2024-data-year-2023",
+    "leg": "A5",
+    "from": "RULE-A5-v1 pass",
+    "to": "RULE-A5-v2 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "sitemap at https://ncses.nsf.gov/sitemap.xml lists the product URL (430 URLs)",
+    "cause": null
+   },
+   {
+    "target": "scan-ncses-flagship-1-annual-business-survey-2024-data-year-2023",
+    "leg": "A8",
+    "from": "RULE-A8-v2 fail",
+    "to": "RULE-A8-v4 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "no declared release or modification date on the surface",
+    "cause": null
+   },
+   {
+    "target": "scan-ncses-machine",
+    "leg": "A1",
+    "from": "RULE-A1-v3 fail",
+    "to": "RULE-A1-v4 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "no probed link serves a structured content type (25 link(s) observed)",
+    "cause": null
+   },
+   {
+    "target": "scan-ncses-machine",
+    "leg": "A10",
+    "from": "RULE-A10-v2 pass",
+    "to": "RULE-A10-v3 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "deep link HTTP 200; invalid route correctly HTTP 404; 4114 visible characters present before JS. The pre/post-JS DOM diff the signal also names was NOT run (ren",
+    "cause": null
+   },
+   {
+    "target": "scan-ncses-machine",
+    "leg": "A3",
+    "from": "RULE-A3-v4 fail",
+    "to": "RULE-A3-v5 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "1 download link(s) are filtered queries, not whole-product downloads; first: https://ncses.nsf.gov/search?query=&excludePubAssets=true&pageSize=40&sort=date",
+    "cause": null
+   },
+   {
+    "target": "scan-ncses-machine",
+    "leg": "A5",
+    "from": "RULE-A5-v1 pass",
+    "to": "RULE-A5-v2 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "sitemap at https://ncses.nsf.gov/sitemap.xml lists the product URL (430 URLs)",
+    "cause": null
+   },
+   {
+    "target": "scan-ncses-machine",
+    "leg": "A8",
+    "from": "RULE-A8-v2 fail",
+    "to": "RULE-A8-v4 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "no declared release or modification date on the surface",
+    "cause": null
+   },
+   {
+    "target": "scan-soi-flagship-1-individual-tax-statistics",
+    "leg": "A1",
+    "from": "RULE-A1-v3 fail",
+    "to": "RULE-A1-v4 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "no probed link serves a structured content type (25 link(s) observed)",
+    "cause": null
+   },
+   {
+    "target": "scan-soi-flagship-1-individual-tax-statistics",
+    "leg": "A10",
+    "from": "RULE-A10-v2 pass",
+    "to": "RULE-A10-v3 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "deep link HTTP 200; invalid route correctly HTTP 404; 7426 visible characters present before JS. The pre/post-JS DOM diff the signal also names was NOT run (ren",
+    "cause": null
+   },
+   {
+    "target": "scan-soi-flagship-1-individual-tax-statistics",
+    "leg": "A3",
+    "from": "RULE-A3-v4 fail",
+    "to": "RULE-A3-v5 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "the largest linked download is below the 51200-byte whole-product floor; first: https://www.irs.gov/statistics/soi-tax-stats-individual-tax-statistics",
+    "cause": null
+   },
+   {
+    "target": "scan-soi-flagship-1-individual-tax-statistics",
+    "leg": "A5",
+    "from": "RULE-A5-v1 fail",
+    "to": "RULE-A5-v2 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "discovery files served (https://www.irs.gov/sitemap.xml) but none lists the product URL",
+    "cause": null
+   },
+   {
+    "target": "scan-soi-flagship-1-individual-tax-statistics",
+    "leg": "A8",
+    "from": "RULE-A8-v2 fail",
+    "to": "RULE-A8-v4 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "only an HTTP Last-Modified header (Mon, 07 Sep 2026 10:40:10 GMT) \u2014 a fact about the file, not a declared product vintage",
+    "cause": null
+   },
+   {
+    "target": "scan-soi-flagship-2-business-tax-statistics",
+    "leg": "A1",
+    "from": "RULE-A1-v3 fail",
+    "to": "RULE-A1-v4 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "no probed link serves a structured content type (25 link(s) observed)",
+    "cause": null
+   },
+   {
+    "target": "scan-soi-flagship-2-business-tax-statistics",
+    "leg": "A10",
+    "from": "RULE-A10-v2 pass",
+    "to": "RULE-A10-v3 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "deep link HTTP 200; invalid route correctly HTTP 404; 9418 visible characters present before JS. The pre/post-JS DOM diff the signal also names was NOT run (ren",
+    "cause": null
+   },
+   {
+    "target": "scan-soi-flagship-2-business-tax-statistics",
+    "leg": "A3",
+    "from": "RULE-A3-v4 fail",
+    "to": "RULE-A3-v5 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "the largest linked download is below the 51200-byte whole-product floor; first: https://www.irs.gov/statistics/soi-tax-stats-business-tax-statistics",
+    "cause": null
+   },
+   {
+    "target": "scan-soi-flagship-2-business-tax-statistics",
+    "leg": "A5",
+    "from": "RULE-A5-v1 fail",
+    "to": "RULE-A5-v2 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "discovery files served (https://www.irs.gov/sitemap.xml) but none lists the product URL",
+    "cause": null
+   },
+   {
+    "target": "scan-soi-flagship-2-business-tax-statistics",
+    "leg": "A8",
+    "from": "RULE-A8-v2 fail",
+    "to": "RULE-A8-v4 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "only an HTTP Last-Modified header (Mon, 07 Sep 2026 10:21:35 GMT) \u2014 a fact about the file, not a declared product vintage",
+    "cause": null
+   },
+   {
+    "target": "scan-statcan-flagship-1-results-and-documentation-of-surveys-and-statistical-program",
+    "leg": "A1",
+    "from": "RULE-A1-v3 error",
+    "to": "RULE-A1-v4 error",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "every fetch failed: connection_reset",
+    "cause": null
+   },
+   {
+    "target": "scan-statcan-flagship-1-results-and-documentation-of-surveys-and-statistical-program",
+    "leg": "A10",
+    "from": "RULE-A10-v2 error",
+    "to": "RULE-A10-v3 error",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "the surface could not be probed: connection_reset",
+    "cause": null
+   },
+   {
+    "target": "scan-statcan-flagship-1-results-and-documentation-of-surveys-and-statistical-program",
+    "leg": "A3",
+    "from": "RULE-A3-v4 error",
+    "to": "RULE-A3-v5 error",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "every fetch failed: connection_reset",
+    "cause": null
+   },
+   {
+    "target": "scan-statcan-flagship-1-results-and-documentation-of-surveys-and-statistical-program",
+    "leg": "A5",
+    "from": "RULE-A5-v1 error",
+    "to": "RULE-A5-v2 error",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "none of the 5 discovery probe(s) on this host could be observed (connection_reset); whether anything is served is unmeasured, not absent",
+    "cause": null
+   },
+   {
+    "target": "scan-statcan-flagship-1-results-and-documentation-of-surveys-and-statistical-program",
+    "leg": "A8",
+    "from": "RULE-A8-v2 error",
+    "to": "RULE-A8-v4 error",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "the surface could not be observed: connection_reset",
+    "cause": null
+   },
+   {
+    "target": "scan-statcan-flagship-2-labour-force-survey-in-brief-interactive-app",
+    "leg": "A1",
+    "from": "RULE-A1-v3 error",
+    "to": "RULE-A1-v4 error",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "every fetch failed: connection_reset",
+    "cause": null
+   },
+   {
+    "target": "scan-statcan-flagship-2-labour-force-survey-in-brief-interactive-app",
+    "leg": "A10",
+    "from": "RULE-A10-v2 error",
+    "to": "RULE-A10-v3 error",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "the surface could not be probed: connection_reset",
+    "cause": null
+   },
+   {
+    "target": "scan-statcan-flagship-2-labour-force-survey-in-brief-interactive-app",
+    "leg": "A3",
+    "from": "RULE-A3-v4 error",
+    "to": "RULE-A3-v5 error",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "every fetch failed: connection_reset",
+    "cause": null
+   },
+   {
+    "target": "scan-statcan-flagship-2-labour-force-survey-in-brief-interactive-app",
+    "leg": "A5",
+    "from": "RULE-A5-v1 error",
+    "to": "RULE-A5-v2 error",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "none of the 5 discovery probe(s) on this host could be observed (connection_reset); whether anything is served is unmeasured, not absent",
+    "cause": null
+   },
+   {
+    "target": "scan-statcan-flagship-2-labour-force-survey-in-brief-interactive-app",
+    "leg": "A8",
+    "from": "RULE-A8-v2 error",
+    "to": "RULE-A8-v4 error",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "the surface could not be observed: connection_reset",
+    "cause": null
+   },
+   {
+    "target": "scan-statcan-machine",
+    "leg": "A1",
+    "from": "RULE-A1-v3 error",
+    "to": "RULE-A1-v4 error",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "every fetch failed: connection_reset",
+    "cause": null
+   },
+   {
+    "target": "scan-statcan-machine",
+    "leg": "A10",
+    "from": "RULE-A10-v2 error",
+    "to": "RULE-A10-v3 error",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "the surface could not be probed: connection_reset",
+    "cause": null
+   },
+   {
+    "target": "scan-statcan-machine",
+    "leg": "A3",
+    "from": "RULE-A3-v4 error",
+    "to": "RULE-A3-v5 error",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "every fetch failed: connection_reset",
+    "cause": null
+   },
+   {
+    "target": "scan-statcan-machine",
+    "leg": "A5",
+    "from": "RULE-A5-v1 error",
+    "to": "RULE-A5-v2 error",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "none of the 5 discovery probe(s) on this host could be observed (connection_reset); whether anything is served is unmeasured, not absent",
+    "cause": null
+   },
+   {
+    "target": "scan-statcan-machine",
+    "leg": "A8",
+    "from": "RULE-A8-v2 error",
+    "to": "RULE-A8-v4 error",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "the surface could not be observed: connection_reset",
+    "cause": null
+   }
+  ]
+ },
+ {
+  "old": "scan_2026-09-09.json",
+  "new": "scan_2026-09-09_rj1.json",
+  "harness": {
+   "old": 4,
+   "new": 5
+  },
+  "findings": {
+   "old": 634,
+   "new": 634
+  },
+  "only_in_old": [],
+  "only_in_new": [],
+  "verdict_moves": 11,
+  "rule_version_moves": 64,
+  "by_transition": {
+   "fail -> error": 11
+  },
+  "by_class": {
+   "robots_disallowed": 8
+  },
+  "by_cause": {
+   "rule_version": 3,
+   "class": 8
+  },
+  "unexplained": [],
+  "moves": [
+   {
+    "target": "home:bjs.ojp.gov",
+    "leg": "A5",
+    "from": "RULE-A5-v1 fail",
+    "to": "RULE-A5-v2 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "discovery files served (https://bjs.ojp.gov/sitemap.xml) but none lists the product URL",
+    "cause": null
+   },
+   {
+    "target": "home:nces.ed.gov",
+    "leg": "A5",
+    "from": "RULE-A5-v1 error",
+    "to": "RULE-A5-v2 error",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "none of the 5 discovery probe(s) on this host could be observed (connection_reset); whether anything is served is unmeasured, not absent",
+    "cause": null
+   },
+   {
+    "target": "home:ncses.nsf.gov",
+    "leg": "A5",
+    "from": "RULE-A5-v1 pass",
+    "to": "RULE-A5-v2 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "sitemap at https://ncses.nsf.gov/sitemap.xml lists the product URL (430 URLs)",
+    "cause": null
+   },
+   {
+    "target": "home:www.aphis.usda.gov",
+    "leg": "A5",
+    "from": "RULE-A5-v1 fail",
+    "to": "RULE-A5-v2 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "discovery files served (https://www.aphis.usda.gov/sitemap.xml) but none lists the product URL",
+    "cause": null
+   },
+   {
+    "target": "home:www.bea.gov",
+    "leg": "A5",
+    "from": "RULE-A5-v1 fail",
+    "to": "RULE-A5-v2 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "discovery files served (https://www.bea.gov/sitemap.xml) but none lists the product URL",
+    "cause": null
+   },
+   {
+    "target": "home:www.bls.gov",
+    "leg": "A5",
+    "from": "RULE-A5-v1 error",
+    "to": "RULE-A5-v2 error",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "none of the 5 discovery probe(s) on this host could be observed (refused); whether anything is served is unmeasured, not absent",
+    "cause": null
+   },
+   {
+    "target": "home:www.bts.gov",
+    "leg": "A5",
+    "from": "RULE-A5-v1 error",
+    "to": "RULE-A5-v2 error",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "none of the 5 discovery probe(s) on this host could be observed (refused); whether anything is served is unmeasured, not absent",
+    "cause": null
+   },
+   {
+    "target": "home:www.cdc.gov",
+    "leg": "A5",
+    "from": "RULE-A5-v1 fail",
+    "to": "RULE-A5-v2 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "discovery files served (https://www.cdc.gov/wcms-auto-sitemap-index.xml) but none lists the product URL",
+    "cause": null
+   },
+   {
+    "target": "home:www.census.gov",
+    "leg": "A5",
+    "from": "RULE-A5-v1 pass",
+    "to": "RULE-A5-v2 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "sitemap at https://www.census.gov/sitemap.xml lists the product URL (5408 URLs)",
+    "cause": null
+   },
+   {
+    "target": "home:www.data.gov",
+    "leg": "A5",
+    "from": "RULE-A5-v1 fail",
+    "to": "RULE-A5-v2 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "discovery files served (https://data.gov/sitemap.xml, https://www.data.gov/sitemap.xml) but none lists the product URL",
+    "cause": null
+   },
+   {
+    "target": "home:www.eia.gov",
+    "leg": "A5",
+    "from": "RULE-A5-v1 pass",
+    "to": "RULE-A5-v2 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "sitemap at https://www.eia.gov/sitemap.xml lists the product URL (133 URLs)",
+    "cause": null
+   },
+   {
+    "target": "home:www.ers.usda.gov",
+    "leg": "A5",
+    "from": "RULE-A5-v1 fail",
+    "to": "RULE-A5-v2 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "discovery files served (https://www.ers.usda.gov/sitemaps/index/sitemap.xml, https://www.ers.usda.gov/sitemap.xml) but none lists the product URL",
+    "cause": null
+   },
+   {
+    "target": "home:www.federalreserve.gov",
+    "leg": "A5",
+    "from": "RULE-A5-v1 fail",
+    "to": "RULE-A5-v2 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "no sitemap, llms.txt or well-known discovery file served",
+    "cause": null
+   },
+   {
+    "target": "home:www.gsa.gov",
+    "leg": "A5",
+    "from": "RULE-A5-v1 fail",
+    "to": "RULE-A5-v2 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "discovery files served (https://www.gsa.gov/sitemap.xml) but none lists the product URL",
+    "cause": null
+   },
+   {
+    "target": "home:www.irs.gov",
+    "leg": "A5",
+    "from": "RULE-A5-v1 fail",
+    "to": "RULE-A5-v2 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "discovery files served (https://www.irs.gov/sitemap.xml) but none lists the product URL",
+    "cause": null
+   },
+   {
+    "target": "home:www.nass.usda.gov",
+    "leg": "A5",
+    "from": "RULE-A5-v1 fail",
+    "to": "RULE-A5-v2 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "discovery files served (https://www.nass.usda.gov/sitemap.xml) but none lists the product URL",
+    "cause": null
+   },
+   {
+    "target": "home:www.nist.gov",
+    "leg": "A5",
+    "from": "RULE-A5-v1 fail",
+    "to": "RULE-A5-v2 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "discovery files served (https://www.nist.gov/sitemap.xml) but none lists the product URL",
+    "cause": null
+   },
+   {
+    "target": "home:www.samhsa.gov",
+    "leg": "A5",
+    "from": "RULE-A5-v1 fail",
+    "to": "RULE-A5-v2 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "discovery files served (https://samhsa.gov/sitemap.xml, https://www.samhsa.gov/sitemap.xml) but none lists the product URL",
+    "cause": null
+   },
+   {
+    "target": "home:www.ssa.gov",
+    "leg": "A5",
+    "from": "RULE-A5-v1 error",
+    "to": "RULE-A5-v2 error",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "none of the 5 discovery probe(s) on this host could be observed (refused); whether anything is served is unmeasured, not absent",
+    "cause": null
+   },
+   {
+    "target": "host:bjs.ojp.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v1 pass",
+    "to": "RULE-A12-v2 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg) for https://bjs.ojp.gov/ and the host served it (HTTP 200): the d",
+    "cause": null
+   },
+   {
+    "target": "host:nces.ed.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v1 error",
+    "to": "RULE-A12-v2 error",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "the robots/probe pair for this host was not collected",
+    "cause": null
+   },
+   {
+    "target": "host:ncses.nsf.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v1 pass",
+    "to": "RULE-A12-v2 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg) for https://ncses.nsf.gov/ and the host served it (HTTP 200): the",
+    "cause": null
+   },
+   {
+    "target": "host:www.aphis.usda.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v1 pass",
+    "to": "RULE-A12-v2 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg) for https://www.aphis.usda.gov/aphis/ourfocus/animalhealth/monito",
+    "cause": null
+   },
+   {
+    "target": "host:www.bea.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v1 pass",
+    "to": "RULE-A12-v2 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg) for https://www.bea.gov/ and the host served it (HTTP 200): the d",
+    "cause": null
+   },
+   {
+    "target": "host:www.bls.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v1 fail",
+    "to": "RULE-A12-v2 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "the host answered HTTP 403 to /robots.txt itself for ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg): the declared layer is not obse",
+    "cause": null
+   },
+   {
+    "target": "host:www.bts.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v1 fail",
+    "to": "RULE-A12-v2 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "the host answered HTTP 403 to /robots.txt itself for ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg): the declared layer is not obse",
+    "cause": null
+   },
+   {
+    "target": "host:www.cdc.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v1 pass",
+    "to": "RULE-A12-v2 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg) for https://www.cdc.gov/nchs/index.htm and the host served it (HT",
+    "cause": null
+   },
+   {
+    "target": "host:www.census.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v1 pass",
+    "to": "RULE-A12-v2 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg) for https://www.census.gov/ and the host served it (HTTP 200): th",
+    "cause": null
+   },
+   {
+    "target": "host:www.data.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v1 pass",
+    "to": "RULE-A12-v2 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg) for https://www.data.gov and the host served it (HTTP 200): the d",
+    "cause": null
+   },
+   {
+    "target": "host:www.eia.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v1 pass",
+    "to": "RULE-A12-v2 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg) for https://www.eia.gov/ and the host served it (HTTP 200): the d",
+    "cause": null
+   },
+   {
+    "target": "host:www.ers.usda.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v1 pass",
+    "to": "RULE-A12-v2 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg) for https://www.ers.usda.gov/ and the host served it (HTTP 200): ",
+    "cause": null
+   },
+   {
+    "target": "host:www.federalreserve.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v1 fail",
+    "to": "RULE-A12-v2 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "robots.txt is served with a content type that cannot be robots.txt, so nothing is DECLARED for this client and there is no declaration for the enforced layer to",
+    "cause": null
+   },
+   {
+    "target": "host:www.gsa.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v1 pass",
+    "to": "RULE-A12-v2 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg) for https://www.gsa.gov and the host served it (HTTP 200): the de",
+    "cause": null
+   },
+   {
+    "target": "host:www.irs.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v1 pass",
+    "to": "RULE-A12-v2 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg) for https://www.irs.gov/statistics/soi-tax-stats-statistics-of-in",
+    "cause": null
+   },
+   {
+    "target": "host:www.nass.usda.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v1 pass",
+    "to": "RULE-A12-v2 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg) for https://www.nass.usda.gov/ and the host served it (HTTP 200):",
+    "cause": null
+   },
+   {
+    "target": "host:www.nist.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v1 pass",
+    "to": "RULE-A12-v2 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg) for https://www.nist.gov and the host served it (HTTP 200): the d",
+    "cause": null
+   },
+   {
+    "target": "host:www.samhsa.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v1 pass",
+    "to": "RULE-A12-v2 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg) for https://www.samhsa.gov/about-us/who-we-are/offices-centers/cb",
+    "cause": null
+   },
+   {
+    "target": "host:www.ssa.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v1 fail",
+    "to": "RULE-A12-v2 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "the host answered HTTP 403 to /robots.txt itself for ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg): the declared layer is not obse",
+    "cause": null
+   },
+   {
+    "target": "machine:catalog.data.gov",
+    "leg": "A5",
+    "from": "RULE-A5-v1 fail",
+    "to": "RULE-A5-v2 error",
+    "verdict_moved": true,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "1 of 5 discovery probe(s), including https://catalog.data.gov/sitemap_index.xml, was not observed (refused): the host answered 401/403/429 to this identified cl",
+    "cause": "rule_version"
+   },
+   {
+    "target": "machine:data.nist.gov",
+    "leg": "A5",
+    "from": "RULE-A5-v1 fail",
+    "to": "RULE-A5-v2 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "no sitemap, llms.txt or well-known discovery file served",
+    "cause": null
+   },
+   {
+    "target": "machine:open.gsa.gov",
+    "leg": "A5",
+    "from": "RULE-A5-v1 fail",
+    "to": "RULE-A5-v2 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "discovery files served (https://open.gsa.gov/sitemap.xml) but none lists the product URL",
+    "cause": null
+   },
+   {
+    "target": "scan-bea-flagship-1-interactive-data",
+    "leg": "A5",
+    "from": "RULE-A5-v1 fail",
+    "to": "RULE-A5-v2 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "discovery files served (https://www.bea.gov/sitemap.xml) but none lists the product URL",
+    "cause": null
+   },
+   {
+    "target": "scan-bea-flagship-2-news-releases",
+    "leg": "A5",
+    "from": "RULE-A5-v1 fail",
+    "to": "RULE-A5-v2 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "discovery files served (https://www.bea.gov/sitemap.xml) but none lists the product URL",
+    "cause": null
+   },
+   {
+    "target": "scan-bea-machine",
+    "leg": "A5",
+    "from": "RULE-A5-v1 fail",
+    "to": "RULE-A5-v2 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "discovery files served (https://www.bea.gov/sitemap.xml) but none lists the product URL",
+    "cause": null
+   },
+   {
+    "target": "scan-bjs-flagship-1-data-by-topic",
+    "leg": "A5",
+    "from": "RULE-A5-v1 fail",
+    "to": "RULE-A5-v2 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "discovery files served (https://bjs.ojp.gov/sitemap.xml) but none lists the product URL",
+    "cause": null
+   },
+   {
+    "target": "scan-bjs-flagship-2-death-in-custody-reporting-act",
+    "leg": "A5",
+    "from": "RULE-A5-v1 fail",
+    "to": "RULE-A5-v2 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "discovery files served (https://bjs.ojp.gov/sitemap.xml) but none lists the product URL",
+    "cause": null
+   },
+   {
+    "target": "scan-census-flagship-1-surveys-programs",
+    "leg": "A5",
+    "from": "RULE-A5-v1 pass",
+    "to": "RULE-A5-v2 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "sitemap at https://www.census.gov/sitemap.xml lists the product URL (5408 URLs)",
+    "cause": null
+   },
+   {
+    "target": "scan-census-flagship-2-american-community-survey-acs",
+    "leg": "A5",
+    "from": "RULE-A5-v1 fail",
+    "to": "RULE-A5-v2 error",
+    "verdict_moved": true,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "2 of 6 discovery probe(s), including https://www.census.gov/.well-known/ai-plugin.json, was not observed (refused): the host answered 401/403/429 to this identi",
+    "cause": "rule_version"
+   },
+   {
+    "target": "scan-census-machine",
+    "leg": "A5",
+    "from": "RULE-A5-v1 fail",
+    "to": "RULE-A5-v2 error",
+    "verdict_moved": true,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "2 of 6 discovery probe(s), including https://www.census.gov/.well-known/ai-plugin.json, was not observed (refused): the host answered 401/403/429 to this identi",
+    "cause": "rule_version"
+   },
+   {
+    "target": "scan-eia-flagship-1-open-data",
+    "leg": "A1",
+    "from": "RULE-A1-v4 fail",
+    "to": "RULE-A1-v4 error",
+    "verdict_moved": true,
+    "rule_moved": false,
+    "classes_that_changed_kind": [
+     "robots_disallowed"
+    ],
+    "reason": "every fetch failed: robots_disallowed",
+    "cause": "class"
+   },
+   {
+    "target": "scan-eia-flagship-1-open-data",
+    "leg": "A3",
+    "from": "RULE-A3-v5 fail",
+    "to": "RULE-A3-v5 error",
+    "verdict_moved": true,
+    "rule_moved": false,
+    "classes_that_changed_kind": [
+     "robots_disallowed"
+    ],
+    "reason": "every fetch failed: robots_disallowed",
+    "cause": "class"
+   },
+   {
+    "target": "scan-eia-flagship-1-open-data",
+    "leg": "A5",
+    "from": "RULE-A5-v1 fail",
+    "to": "RULE-A5-v2 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "discovery files served (https://www.eia.gov/sitemap.xml) but none lists the product URL",
+    "cause": null
+   },
+   {
+    "target": "scan-eia-flagship-1-open-data",
+    "leg": "A6",
+    "from": "RULE-A6-v2 fail",
+    "to": "RULE-A6-v2 error",
+    "verdict_moved": true,
+    "rule_moved": false,
+    "classes_that_changed_kind": [
+     "robots_disallowed"
+    ],
+    "reason": "markup could not be extracted: robots_disallowed",
+    "cause": "class"
+   },
+   {
+    "target": "scan-eia-flagship-1-open-data",
+    "leg": "A8",
+    "from": "RULE-A8-v4 fail",
+    "to": "RULE-A8-v4 error",
+    "verdict_moved": true,
+    "rule_moved": false,
+    "classes_that_changed_kind": [
+     "robots_disallowed"
+    ],
+    "reason": "the surface could not be observed: robots_disallowed",
+    "cause": "class"
+   },
+   {
+    "target": "scan-eia-flagship-1-open-data",
+    "leg": "B3",
+    "from": "RULE-B3-v2 fail",
+    "to": "RULE-B3-v2 error",
+    "verdict_moved": true,
+    "rule_moved": false,
+    "classes_that_changed_kind": [
+     "robots_disallowed"
+    ],
+    "reason": "the methodology surface could not be observed: robots_disallowed",
+    "cause": "class"
+   },
+   {
+    "target": "scan-eia-flagship-1-open-data",
+    "leg": "G1-D",
+    "from": "RULE-G1-D-v1 fail",
+    "to": "RULE-G1-D-v1 error",
+    "verdict_moved": true,
+    "rule_moved": false,
+    "classes_that_changed_kind": [
+     "robots_disallowed"
+    ],
+    "reason": "the surface could not be observed: robots_disallowed",
+    "cause": "class"
+   },
+   {
+    "target": "scan-eia-machine",
+    "leg": "A1",
+    "from": "RULE-A1-v4 fail",
+    "to": "RULE-A1-v4 error",
+    "verdict_moved": true,
+    "rule_moved": false,
+    "classes_that_changed_kind": [
+     "robots_disallowed"
+    ],
+    "reason": "all 25 link(s) on this surface were unobserved (http_5xx); the page was served but nothing it links to could be probed, so what it offers is unmeasured \u2014 not ab",
+    "cause": "class"
+   },
+   {
+    "target": "scan-eia-machine",
+    "leg": "A3",
+    "from": "RULE-A3-v5 fail",
+    "to": "RULE-A3-v5 error",
+    "verdict_moved": true,
+    "rule_moved": false,
+    "classes_that_changed_kind": [
+     "robots_disallowed"
+    ],
+    "reason": "all 25 link(s) on this surface were unobserved (http_5xx); whether the product offers a whole-product download is unmeasured, not absent",
+    "cause": "class"
+   },
+   {
+    "target": "scan-eia-machine",
+    "leg": "A5",
+    "from": "RULE-A5-v1 fail",
+    "to": "RULE-A5-v2 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "discovery files served (https://www.eia.gov/sitemap.xml) but none lists the product URL",
+    "cause": null
+   },
+   {
+    "target": "scan-ers-flagship-1-ag-and-food-statistics-charting-the-essentials",
+    "leg": "A5",
+    "from": "RULE-A5-v1 fail",
+    "to": "RULE-A5-v2 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "discovery files served (https://www.ers.usda.gov/sitemaps/index/sitemap.xml, https://www.ers.usda.gov/sitemap.xml) but none lists the product URL",
+    "cause": null
+   },
+   {
+    "target": "scan-ers-flagship-2-agricultural-baseline-database",
+    "leg": "A5",
+    "from": "RULE-A5-v1 fail",
+    "to": "RULE-A5-v2 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "discovery files served (https://www.ers.usda.gov/sitemaps/index/sitemap.xml, https://www.ers.usda.gov/sitemap.xml) but none lists the product URL",
+    "cause": null
+   },
+   {
+    "target": "scan-ers-machine",
+    "leg": "A5",
+    "from": "RULE-A5-v1 fail",
+    "to": "RULE-A5-v2 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "discovery files served (https://www.ers.usda.gov/sitemaps/index/sitemap.xml, https://www.ers.usda.gov/sitemap.xml) but none lists the product URL",
+    "cause": null
+   },
+   {
+    "target": "scan-nass-flagship-1-data-statistics",
+    "leg": "A5",
+    "from": "RULE-A5-v1 fail",
+    "to": "RULE-A5-v2 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "discovery files served (https://www.nass.usda.gov/sitemap.xml) but none lists the product URL",
+    "cause": null
+   },
+   {
+    "target": "scan-nass-flagship-2-livestock-county-estimates",
+    "leg": "A5",
+    "from": "RULE-A5-v1 fail",
+    "to": "RULE-A5-v2 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "discovery files served (https://www.nass.usda.gov/sitemap.xml) but none lists the product URL",
+    "cause": null
+   },
+   {
+    "target": "scan-nass-machine",
+    "leg": "A5",
+    "from": "RULE-A5-v1 fail",
+    "to": "RULE-A5-v2 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "discovery files served (https://www.nass.usda.gov/sitemap.xml) but none lists the product URL",
+    "cause": null
+   },
+   {
+    "target": "scan-nchs-flagship-1-data-briefs",
+    "leg": "A5",
+    "from": "RULE-A5-v1 fail",
+    "to": "RULE-A5-v2 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "discovery files served (https://www.cdc.gov/wcms-auto-sitemap-index.xml) but none lists the product URL",
+    "cause": null
+   },
+   {
+    "target": "scan-nchs-flagship-2-early-releases-of-selected-estimates-from-the-nhis",
+    "leg": "A5",
+    "from": "RULE-A5-v1 fail",
+    "to": "RULE-A5-v2 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "discovery files served (https://www.cdc.gov/wcms-auto-sitemap-index.xml) but none lists the product URL",
+    "cause": null
+   },
+   {
+    "target": "scan-nchs-machine",
+    "leg": "A5",
+    "from": "RULE-A5-v1 fail",
+    "to": "RULE-A5-v2 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "discovery files served (https://www.cdc.gov/wcms-auto-sitemap-index.xml) but none lists the product URL",
+    "cause": null
+   },
+   {
+    "target": "scan-ncses-flagship-1-annual-business-survey-2024-data-year-2023",
+    "leg": "A5",
+    "from": "RULE-A5-v1 pass",
+    "to": "RULE-A5-v2 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "sitemap at https://ncses.nsf.gov/sitemap.xml lists the product URL (430 URLs)",
+    "cause": null
+   },
+   {
+    "target": "scan-ncses-machine",
+    "leg": "A5",
+    "from": "RULE-A5-v1 pass",
+    "to": "RULE-A5-v2 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "sitemap at https://ncses.nsf.gov/sitemap.xml lists the product URL (430 URLs)",
+    "cause": null
+   },
+   {
+    "target": "scan-soi-flagship-1-individual-tax-statistics",
+    "leg": "A5",
+    "from": "RULE-A5-v1 fail",
+    "to": "RULE-A5-v2 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "discovery files served (https://www.irs.gov/sitemap.xml) but none lists the product URL",
+    "cause": null
+   },
+   {
+    "target": "scan-soi-flagship-2-business-tax-statistics",
+    "leg": "A5",
+    "from": "RULE-A5-v1 fail",
+    "to": "RULE-A5-v2 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "discovery files served (https://www.irs.gov/sitemap.xml) but none lists the product URL",
+    "cause": null
+   }
+  ]
+ },
+ {
+  "old": "scan_2026-09-10.json",
+  "new": "scan_2026-09-10_rj1.json",
+  "harness": {
+   "old": 4,
+   "new": 5
+  },
+  "findings": {
+   "old": 739,
+   "new": 739
+  },
+  "only_in_old": [],
+  "only_in_new": [],
+  "verdict_moves": 13,
+  "rule_version_moves": 19,
+  "by_transition": {
+   "fail -> error": 12,
+   "pass -> error": 1
+  },
+  "by_class": {
+   "robots_disallowed": 13
+  },
+  "by_cause": {
+   "class": 13
+  },
+  "unexplained": [],
+  "moves": [
+   {
+    "target": "flagship:www.bls.gov/cpi/",
+    "leg": "A1",
+    "from": "RULE-A1-v4 fail",
+    "to": "RULE-A1-v4 error",
+    "verdict_moved": true,
+    "rule_moved": false,
+    "classes_that_changed_kind": [
+     "robots_disallowed"
+    ],
+    "reason": "every fetch failed: refused",
+    "cause": "class"
+   },
+   {
+    "target": "flagship:www.bls.gov/cpi/",
+    "leg": "A3",
+    "from": "RULE-A3-v5 fail",
+    "to": "RULE-A3-v5 error",
+    "verdict_moved": true,
+    "rule_moved": false,
+    "classes_that_changed_kind": [
+     "robots_disallowed"
+    ],
+    "reason": "every fetch failed: refused",
+    "cause": "class"
+   },
+   {
+    "target": "home:www.bls.gov",
+    "leg": "A1",
+    "from": "RULE-A1-v4 fail",
+    "to": "RULE-A1-v4 error",
+    "verdict_moved": true,
+    "rule_moved": false,
+    "classes_that_changed_kind": [
+     "robots_disallowed"
+    ],
+    "reason": "every fetch failed: refused",
+    "cause": "class"
+   },
+   {
+    "target": "home:www.bls.gov",
+    "leg": "A3",
+    "from": "RULE-A3-v5 fail",
+    "to": "RULE-A3-v5 error",
+    "verdict_moved": true,
+    "rule_moved": false,
+    "classes_that_changed_kind": [
+     "robots_disallowed"
+    ],
+    "reason": "every fetch failed: refused",
+    "cause": "class"
+   },
+   {
+    "target": "host:bjs.ojp.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v1 pass",
+    "to": "RULE-A12-v2 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg) for https://bjs.ojp.gov/ and the host served it (HTTP 200): the d",
+    "cause": null
+   },
+   {
+    "target": "host:nces.ed.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v1 pass",
+    "to": "RULE-A12-v2 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg) for https://nces.ed.gov/ and the host served it (HTTP 200): the d",
+    "cause": null
+   },
+   {
+    "target": "host:ncses.nsf.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v1 pass",
+    "to": "RULE-A12-v2 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg) for https://ncses.nsf.gov/ and the host served it (HTTP 200): the",
+    "cause": null
+   },
+   {
+    "target": "host:www.aphis.usda.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v1 pass",
+    "to": "RULE-A12-v2 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg) for https://www.aphis.usda.gov/aphis/ourfocus/animalhealth/monito",
+    "cause": null
+   },
+   {
+    "target": "host:www.bea.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v1 pass",
+    "to": "RULE-A12-v2 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg) for https://www.bea.gov/ and the host served it (HTTP 200): the d",
+    "cause": null
+   },
+   {
+    "target": "host:www.bls.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v1 fail",
+    "to": "RULE-A12-v2 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "the host answered HTTP 403 to /robots.txt itself for ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg): the declared layer is not obse",
+    "cause": null
+   },
+   {
+    "target": "host:www.bts.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v1 fail",
+    "to": "RULE-A12-v2 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "the host answered HTTP 403 to /robots.txt itself for ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg): the declared layer is not obse",
+    "cause": null
+   },
+   {
+    "target": "host:www.cdc.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v1 pass",
+    "to": "RULE-A12-v2 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg) for https://www.cdc.gov/nchs/index.htm and the host served it (HT",
+    "cause": null
+   },
+   {
+    "target": "host:www.census.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v1 pass",
+    "to": "RULE-A12-v2 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg) for https://www.census.gov/ and the host served it (HTTP 200): th",
+    "cause": null
+   },
+   {
+    "target": "host:www.data.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v1 pass",
+    "to": "RULE-A12-v2 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg) for https://www.data.gov and the host served it (HTTP 200): the d",
+    "cause": null
+   },
+   {
+    "target": "host:www.eia.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v1 pass",
+    "to": "RULE-A12-v2 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg) for https://www.eia.gov/ and the host served it (HTTP 200): the d",
+    "cause": null
+   },
+   {
+    "target": "host:www.ers.usda.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v1 pass",
+    "to": "RULE-A12-v2 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg) for https://www.ers.usda.gov/ and the host served it (HTTP 200): ",
+    "cause": null
+   },
+   {
+    "target": "host:www.federalreserve.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v1 fail",
+    "to": "RULE-A12-v2 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "robots.txt is served with a content type that cannot be robots.txt, so nothing is DECLARED for this client and there is no declaration for the enforced layer to",
+    "cause": null
+   },
+   {
+    "target": "host:www.gsa.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v1 pass",
+    "to": "RULE-A12-v2 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg) for https://www.gsa.gov and the host served it (HTTP 200): the de",
+    "cause": null
+   },
+   {
+    "target": "host:www.irs.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v1 pass",
+    "to": "RULE-A12-v2 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg) for https://www.irs.gov/statistics/soi-tax-stats-statistics-of-in",
+    "cause": null
+   },
+   {
+    "target": "host:www.nass.usda.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v1 pass",
+    "to": "RULE-A12-v2 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg) for https://www.nass.usda.gov/ and the host served it (HTTP 200):",
+    "cause": null
+   },
+   {
+    "target": "host:www.nist.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v1 pass",
+    "to": "RULE-A12-v2 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg) for https://www.nist.gov and the host served it (HTTP 200): the d",
+    "cause": null
+   },
+   {
+    "target": "host:www.samhsa.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v1 pass",
+    "to": "RULE-A12-v2 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg) for https://www.samhsa.gov/about-us/who-we-are/offices-centers/cb",
+    "cause": null
+   },
+   {
+    "target": "host:www.ssa.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v1 fail",
+    "to": "RULE-A12-v2 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "reason": "the host answered HTTP 403 to /robots.txt itself for ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg): the declared layer is not obse",
+    "cause": null
+   },
+   {
+    "target": "scan-eia-flagship-1-open-data",
+    "leg": "A1",
+    "from": "RULE-A1-v4 fail",
+    "to": "RULE-A1-v4 error",
+    "verdict_moved": true,
+    "rule_moved": false,
+    "classes_that_changed_kind": [
+     "robots_disallowed"
+    ],
+    "reason": "every fetch failed: robots_disallowed",
+    "cause": "class"
+   },
+   {
+    "target": "scan-eia-flagship-1-open-data",
+    "leg": "A10",
+    "from": "RULE-A10-v3 pass",
+    "to": "RULE-A10-v3 error",
+    "verdict_moved": true,
+    "rule_moved": false,
+    "classes_that_changed_kind": [
+     "robots_disallowed"
+    ],
+    "reason": "the surface could not be probed: robots_disallowed",
+    "cause": "class"
+   },
+   {
+    "target": "scan-eia-flagship-1-open-data",
+    "leg": "A3",
+    "from": "RULE-A3-v5 fail",
+    "to": "RULE-A3-v5 error",
+    "verdict_moved": true,
+    "rule_moved": false,
+    "classes_that_changed_kind": [
+     "robots_disallowed"
+    ],
+    "reason": "every fetch failed: robots_disallowed",
+    "cause": "class"
+   },
+   {
+    "target": "scan-eia-flagship-1-open-data",
+    "leg": "A6",
+    "from": "RULE-A6-v2 fail",
+    "to": "RULE-A6-v2 error",
+    "verdict_moved": true,
+    "rule_moved": false,
+    "classes_that_changed_kind": [
+     "robots_disallowed"
+    ],
+    "reason": "markup could not be extracted: robots_disallowed",
+    "cause": "class"
+   },
+   {
+    "target": "scan-eia-flagship-1-open-data",
+    "leg": "A8",
+    "from": "RULE-A8-v4 fail",
+    "to": "RULE-A8-v4 error",
+    "verdict_moved": true,
+    "rule_moved": false,
+    "classes_that_changed_kind": [
+     "robots_disallowed"
+    ],
+    "reason": "the surface could not be observed: robots_disallowed",
+    "cause": "class"
+   },
+   {
+    "target": "scan-eia-flagship-1-open-data",
+    "leg": "B3",
+    "from": "RULE-B3-v2 fail",
+    "to": "RULE-B3-v2 error",
+    "verdict_moved": true,
+    "rule_moved": false,
+    "classes_that_changed_kind": [
+     "robots_disallowed"
+    ],
+    "reason": "the methodology surface could not be observed: robots_disallowed",
+    "cause": "class"
+   },
+   {
+    "target": "scan-eia-flagship-1-open-data",
+    "leg": "G1-D",
+    "from": "RULE-G1-D-v1 fail",
+    "to": "RULE-G1-D-v1 error",
+    "verdict_moved": true,
+    "rule_moved": false,
+    "classes_that_changed_kind": [
+     "robots_disallowed"
+    ],
+    "reason": "the surface could not be observed: robots_disallowed",
+    "cause": "class"
+   },
+   {
+    "target": "scan-eia-machine",
+    "leg": "A1",
+    "from": "RULE-A1-v4 fail",
+    "to": "RULE-A1-v4 error",
+    "verdict_moved": true,
+    "rule_moved": false,
+    "classes_that_changed_kind": [
+     "robots_disallowed"
+    ],
+    "reason": "all 25 link(s) on this surface were unobserved (http_5xx); the page was served but nothing it links to could be probed, so what it offers is unmeasured \u2014 not ab",
+    "cause": "class"
+   },
+   {
+    "target": "scan-eia-machine",
+    "leg": "A3",
+    "from": "RULE-A3-v5 fail",
+    "to": "RULE-A3-v5 error",
+    "verdict_moved": true,
+    "rule_moved": false,
+    "classes_that_changed_kind": [
+     "robots_disallowed"
+    ],
+    "reason": "all 25 link(s) on this surface were unobserved (http_5xx); whether the product offers a whole-product download is unmeasured, not absent",
+    "cause": "class"
+   }
+  ]
+ }
+]
