@@ -99,14 +99,24 @@ def test_no_suffix_list_dependency_remains():
     """Decision 1: "The PSL dependency is removed unless something else uses it." Nothing
     does. Asserted over source, because an unused import is exactly how a dependency survives
     the decision that retired it."""
-    import subprocess
     # The needles are assembled rather than written, so this file does not match its own
-    # search and report itself as the surviving dependency.
+    # search. That was necessary and not sufficient: a COMMENT in another test mentioning "the
+    # tldextract retirement check" matched too, and the check reported a docstring as a
+    # surviving dependency. Fourth time a source scan in this repo has read prose as code —
+    # the AST gate detector did it to `robots.py`'s comment, and the self-licensing lint did it
+    # to its own bait. The question is whether the dependency is REACHED, so comment lines are
+    # not code and are not scanned.
     needles = ["tld" + "extract", "psl_" + "identity"]
-    r = subprocess.run(["git", "grep", "-l", "-e", needles[0], "-e", needles[1],
-                        "--", "assessment", "scripts", "tests"],
-                       capture_output=True, text=True, cwd=str(REPO))
-    left = [f for f in r.stdout.split() if f != "tests/test_manners_robots_first.py"]
+    left = []
+    for tree in ("assessment", "scripts", "tests"):
+        for py in sorted((REPO / tree).rglob("*.py")):
+            if "__pycache__" in py.parts:
+                continue
+            for i, line in enumerate(py.read_text(encoding="utf-8").splitlines(), 1):
+                code = line.split("#", 1)[0]
+                if any(n in code for n in needles):
+                    left.append(f"{py.relative_to(REPO)}:{i}: {line.strip()[:90]}")
+    left = [x for x in left if not x.startswith("tests/test_manners_robots_first.py")]
     assert not left, f"the Public Suffix List is still reached from: {left}"
     assert load_params()["manners"]["site_bound"]["resolver"] is None
 

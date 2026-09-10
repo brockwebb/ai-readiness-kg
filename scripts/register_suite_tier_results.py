@@ -25,7 +25,7 @@ import cycle_results                                                # noqa: E402
 
 TASK = "cc_tasks/2026-09-09_guards_earn_their_keep.md"
 SCRIPT_ARTIFACT = "register_suite_tier_results"
-EPOCH = "2026-09-09"
+EPOCH = "2026-09-10"
 
 
 def read_log(name: str) -> dict:
@@ -59,21 +59,25 @@ def main(argv=None) -> int:
 
     rows = [
         ("suite_fast_seconds", fast["seconds"],
-         f"Wall-clock of the FAST tier (`make gate-fast`, everything not marked `slow`) on "
-         f"{EPOCH}, from logs/gate_fast.log, EXIT=0. This is the per-task gate. It is "
-         f"{share:.0%} of the full suite. Measured after five control-fixture tests were "
-         f"given the `slow` marker they already matched: before that the fast tier was 2762 s "
-         f"and the split saved 18%, because ten tests are 91% of the suite and only one of "
-         f"them was marked. Task {TASK} §3."),
+         f"Wall-clock of the FAST tier (`make gate-fast`) on {EPOCH}, from logs/gate_fast.log, "
+         f"EXIT=0, 1644 passed. {share:.0%} of the full suite. It is LARGER than "
+         f"2026-09-09's 1029 s and that is not a regression: seven control-cycle tests that "
+         f"were deselected as `slow` yesterday now run virtual and are back IN this tier, so "
+         f"the number covers strictly more tests. The comparison that means something is what "
+         f"those tests cost: the seven-fixture control gate went from ~291 s of real sleeping "
+         f"to 6.1 s. Task {TASK} §3."),
         ("suite_full_seconds", full["seconds"],
-         f"Wall-clock of the FULL suite on {EPOCH}, from logs/suite.log, EXIT=0, 1649 passed. "
-         f"The pre-push check, run detached and polled to completion under CLAUDE.md's "
-         f"long-running-command protocol. Unchanged by the tier split, which moves no test and "
-         f"removes none: 3354 s here against 3373 s before the markers moved. Task {TASK} §3."),
+         f"Wall-clock of the FULL suite on {EPOCH}, from logs/suite.log, EXIT=0, 1655 passed. The "
+         f"pre-push check under CLAUDE.md's long-running-command protocol. **3354 s -> "
+         f"{full['seconds']} s, a 46% cut**, from injecting a clock so the loopback control "
+         f"fixtures stop paying a rate limit owed to federal hosts and not to 127.0.0.1. No "
+         f"test was removed, skipped or weakened; the seven-fixture gate returns identical "
+         f"verdicts on both clocks. Task {TASK} §3."),
         ("suite_fast_share_of_full", share,
          f"The fast tier as a fraction of the full suite on {EPOCH}: {fast['seconds']} s of "
-         f"{full['seconds']} s. Registered because decision 4's purpose is a SHORT per-task "
-         f"gate and 'we split the suite' is not evidence that it is short. Task {TASK} §3."),
+         f"{full['seconds']} s. Higher than yesterday's 0.31 because the tier now contains "
+         f"the virtualised control cycles rather than deselecting them, which is the right "
+         f"trade: they run in the per-task gate and cost seconds. Task {TASK} §3."),
     ]
 
     if a.dry_run:

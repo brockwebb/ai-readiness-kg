@@ -192,6 +192,7 @@ def test_the_staging_root_is_derived_from_the_cycle_and_is_not_the_committed_sto
 
 # ------------------------------------------------------- §1.2 one error convention on the log
 
+@pytest.mark.slow   # replays the whole event log (pyproject marker definition)
 def test_every_recorded_403_now_reads_as_refused_on_the_log():
     """No observation still carries `http_4xx` on a refusal status once the overlay is on.
 
@@ -234,6 +235,7 @@ def test_each_reclassification_pass_owns_its_own_shard():
         assert kinds <= {name}, f"{path.name} holds passes {kinds}, not just {name!r}"
 
 
+@pytest.mark.slow   # replays the whole event log (pyproject marker definition)
 def test_the_overlay_is_idempotent():
     assert not [r for r in recl.rows("status", load_params())
                 if r["obs_id"] not in recl.overlaid()]
@@ -300,6 +302,7 @@ def test_every_withdrawn_gap_task_is_withdrawn_in_the_graph(session):
 
 # ------------------------------------------------------------- §1.4 the retained bodies
 
+@pytest.mark.slow   # replays the whole event log (pyproject marker definition)
 def test_the_uncited_set_only_shrinks_and_only_by_citation(session):
     """DD-058 as amended, and the amendment is why this test reads the way it does.
 

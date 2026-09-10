@@ -18,5 +18,5 @@ dev = [
 
 [tool.pytest.ini_options]
 markers = ["live_plan: reads the real frozen burn plan and event log",
-           "slow: runs the loopback control fixtures at the standing 1 req/s rate"]
+           "slow: runs a control fixture at the REAL standing rate, or replays the whole event log"]
 testpaths = ["tests"]

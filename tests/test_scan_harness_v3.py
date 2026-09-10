@@ -33,6 +33,7 @@ sys.path.insert(0, str(REPO / "scripts"))
 sys.path.insert(0, str(REPO))
 
 from scan import errors, load_params                                # noqa: E402
+from scan.clock import VirtualClock                                 # noqa: E402
 from scan.fixtures.server import MODES, FixtureServer               # noqa: E402
 from scan.model import Finding, params_hash                         # noqa: E402
 from scan.rules import (CURRENT, GENERATIONS, REGISTRY, SHARED_LEGS,  # noqa: E402
@@ -245,7 +246,7 @@ def test_a_surfaces_links_are_headed_once_per_cycle():
     server = FixtureServer("passes_all")
     with server as base:
         target = {"doc_id": "control:passes_all", "url": f"{base}/index.html"}
-        f = Fetcher(params)
+        f = Fetcher(params, clock=VirtualClock())
         obs = []
         for leg in list(SHARED_LEGS) + ["A1", "A3"]:
             obs += collect_leg({"leg": leg}, target, params, f)
@@ -305,7 +306,6 @@ def test_every_fixture_has_a_pre_registered_table_and_every_table_a_fixture():
             assert "default" in table, fixture
 
 
-@pytest.mark.slow   # runs the loopback control fixtures at 1 req/s (pyproject marker definition)
 def test_the_control_gate_passes_on_all_four_fixtures():
     """§2's second clause: every rule returns its PRE-REGISTERED verdict, every error class the
     fixtures are built to produce actually appears, and `unknown` is zero.
@@ -320,7 +320,7 @@ def test_the_control_gate_passes_on_all_four_fixtures():
     run_mod = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(run_mod)
     params = load_params()
-    _cf, e5, control_obs, ok = run_mod.run_controls(params)
+    _cf, e5, control_obs, ok = run_mod.run_controls(params, clock=VirtualClock())
     assert ok, e5.reason
     assert e5.verdict == "pass", e5.reason
 

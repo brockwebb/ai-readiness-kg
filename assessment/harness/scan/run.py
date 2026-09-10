@@ -182,8 +182,14 @@ def expected_verdict(table, leg: str) -> str:
     return table.get(leg, table["default"])
 
 
-def run_controls(params: dict) -> tuple:
-    """§4's gate. Returns (control_findings, e5_finding, control_observations, ok)."""
+def run_controls(params: dict, clock=None) -> tuple:
+    """§4's gate. Returns (control_findings, e5_finding, control_observations, ok).
+
+    `clock` is threaded to every `Fetcher` this cycle builds and defaults to the real one
+    (`cc_tasks/2026-09-10_virtual_time.md` decision 1). A caller passing a `VirtualClock` runs
+    the same fixtures, over real loopback sockets, without paying the standing rate limit in
+    wall time. `main()` never passes one.
+    """
     from scan.fixtures.server import FixtureServer
     from scan.manners import Fetcher
     sp = specs()
@@ -192,7 +198,7 @@ def run_controls(params: dict) -> tuple:
         with FixtureServer(fixture) as base:
             target = {"doc_id": f"control:{fixture}", "url": f"{base}/index.html"}
             obs, findings = run_surface(sp, target, params, CONTROL_FIXTURE_LEGS,
-                                        Fetcher(params))
+                                        Fetcher(params, clock=clock))
         # Retained, not discarded. The re-derivation gate can only check a Finding whose
         # evidence it still holds, and the control Findings are the ones whose determinism
         # matters most — they are what licenses the cycle.

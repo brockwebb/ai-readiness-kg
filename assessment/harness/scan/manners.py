@@ -15,7 +15,6 @@ refusal is evidence, not an absence.
 from __future__ import annotations
 
 import collections
-import time
 import urllib.parse
 from pathlib import Path
 
@@ -25,12 +24,22 @@ VERSION = "0.1.0"
 class Fetcher:
     """A rate-limited, robots-respecting HTTP client. One per run."""
 
-    def __init__(self, params: dict, client=None) -> None:
+    def __init__(self, params: dict, client=None, clock=None) -> None:
+        """`clock` defaults to the real one. A caller that wants virtual time passes it here
+        and nowhere else; `run.py::main` does not accept one, so a cycle against real hosts
+        cannot be constructed unthrottled (`cc_tasks/2026-09-10_virtual_time.md` decision 1)."""
         import httpx
+        from .clock import REAL
         self.p = params["manners"]
         self.params = params
+        self.clock = clock or REAL
         self._last: dict = {}
         self._robots: dict = {}
+        #: Per netloc, the times at which a request was issued, on THIS fetcher's clock. The
+        #: limiter's contract is a minimum gap between consecutive requests to one host, and
+        #: under a virtual clock that contract is assertable instead of merely slept through
+        #: (decision 2).
+        self.request_times: dict = {}
         #: Requests actually issued, per host. Counted here rather than derived from
         #: Observations because an Observation is not a request: A1/A3's link probe issues one
         #: HEAD per link and records them inside ONE observation's `parsed`, and a 429 retry or
@@ -53,10 +62,12 @@ class Fetcher:
         gap = 1.0 / float(self.p["requests_per_second_per_host"])
         last = self._last.get(host)
         if last is not None:
-            delta = time.monotonic() - last
+            delta = self.clock.now() - last
             if delta < gap:
-                time.sleep(gap - delta)
-        self._last[host] = time.monotonic()
+                self.clock.sleep(gap - delta)
+        stamp = self.clock.now()
+        self._last[host] = stamp
+        self.request_times.setdefault(host, []).append(stamp)
 
     # ---------------------------------------------------------------- robots
     def _robots_for(self, base: str):
@@ -126,11 +137,11 @@ class Fetcher:
         while True:
             self._wait(host)
             self.requests[host] += 1
-            t0 = time.monotonic()
+            t0 = self.clock.now()
             resp = self.client.get(url)
-            elapsed = int((time.monotonic() - t0) * 1000)
+            elapsed = int((self.clock.now() - t0) * 1000)
             if resp.status_code in self.p["backoff_on_status"] and attempts < self.p["max_retries"]:
-                time.sleep(float(self.p["backoff_base_seconds"]) ** (attempts + 1))
+                self.clock.sleep(float(self.p["backoff_base_seconds"]) ** (attempts + 1))
                 attempts += 1
                 continue
             body = resp.content
@@ -157,9 +168,9 @@ class Fetcher:
         host = urllib.parse.urlsplit(url).netloc
         self._wait(host)
         self.requests[host] += 1
-        t0 = time.monotonic()
+        t0 = self.clock.now()
         resp = self.client.head(url)
-        elapsed = int((time.monotonic() - t0) * 1000)
+        elapsed = int((self.clock.now() - t0) * 1000)
         if resp.status_code in self.params.get("link_probe", {}).get(
                 "fallback_get_on_status", []):
             got = self.raw_get(url)

@@ -21,6 +21,7 @@ sys.path.insert(0, str(REPO / "assessment" / "harness"))
 sys.path.insert(0, str(REPO))
 
 from scan import load_params                                        # noqa: E402
+from scan.clock import VirtualClock                                 # noqa: E402
 from scan.fixtures.server import FixtureServer                      # noqa: E402
 from scan.model import Finding, Observation, store_evidence         # noqa: E402
 from scan.rules import BY_LEG, CURRENT, REGISTRY                   # noqa: E402
@@ -182,7 +183,7 @@ def test_every_rule_returns_its_expected_verdict_on_the_control_fixture(fixture,
     with FixtureServer(fixture) as base:
         _, findings = run_surface(specs(), {"doc_id": f"control:{fixture}",
                                             "url": f"{base}/index.html"},
-                                  params, CONTROL_LEGS, Fetcher(params))
+                                  params, CONTROL_LEGS, Fetcher(params, clock=VirtualClock()))
     bad = {f.leg: f.verdict for f in findings if f.verdict != expected}
     assert not bad, bad
     assert len(findings) == len(CONTROL_LEGS)
@@ -199,7 +200,7 @@ def _fresh_control_cycle(tmp_path):
     """
     run_mod = scan_run()
     params = load_params()
-    cf, e5, control_obs, ok = run_mod.run_controls(params)
+    cf, e5, control_obs, ok = run_mod.run_controls(params, clock=VirtualClock())
     assert ok, e5.reason
     return {"params_hash": __import__("importlib").import_module("scan.model").params_hash(params),
             "findings_detail": [],
@@ -207,7 +208,6 @@ def _fresh_control_cycle(tmp_path):
             "observations_detail": [o.to_dict() for o in control_obs]}, params
 
 
-@pytest.mark.slow   # runs the loopback control fixtures at 1 req/s (pyproject marker definition)
 def test_findings_re_derive_byte_identically_from_stored_observations(tmp_path):
     """§3's re-derivation gate: delete every Finding, re-judge from Observations alone, demand
     identity. Meaningful only because a Finding's id is derived from (rule, version, sorted obs
@@ -237,7 +237,7 @@ def test_the_scanner_obeys_the_file_it_measures():
     params = load_params()
     from scan.manners import Fetcher
     with FixtureServer("passes_all") as base:
-        f = Fetcher(params)
+        f = Fetcher(params, clock=VirtualClock())
         assert f.allowed(f"{base}/robots.txt")
         assert f.allowed(f"{base}/index.html")
     always = params["manners"]["always_fetch_paths"]
@@ -311,7 +311,6 @@ def test_a_mixed_refusal_is_not_an_error():
     assert not _common.only_errors([_obs("A9", 403), _obs("A9", 200)], params)
 
 
-@pytest.mark.slow   # runs the loopback control fixtures at 1 req/s (pyproject marker definition)
 def test_the_cycles_own_validity_verdict_is_on_the_record():
     """E5's Finding is the cycle's validity verdict and it was not being written.
 
@@ -322,7 +321,7 @@ def test_the_cycles_own_validity_verdict_is_on_the_record():
     """
     run_mod = scan_run()
     params = load_params()
-    cf, e5, control_obs, ok = run_mod.run_controls(params)
+    cf, e5, control_obs, ok = run_mod.run_controls(params, clock=VirtualClock())
     from scan.rules import CURRENT
     assert ok and e5.rule_id == CURRENT["E5"]
     e5_obs = [o for o in control_obs if o.leg == "E5"]
@@ -337,7 +336,6 @@ def test_the_cycles_own_validity_verdict_is_on_the_record():
     assert len(control_obs) > len(e5_obs)
 
 
-@pytest.mark.slow   # runs the loopback control fixtures at 1 req/s (pyproject marker definition)
 def test_merging_controls_replaces_them_rather_than_accumulating(tmp_path):
     """The fixture server binds an ephemeral port, which leaks into every control
     `target_url` and so into every derived control id: a second control run yields records
@@ -374,7 +372,6 @@ def test_merging_controls_refuses_across_a_params_change(tmp_path):
     assert run_mod.merge_controls(payload, load_params()) == 2
 
 
-@pytest.mark.slow   # runs the loopback control fixtures at 1 req/s (pyproject marker definition)
 def test_the_re_derivation_gate_covers_the_control_findings_too():
     """The gate started out comparing only the 255 surface Findings. The control Findings are
     the ones whose determinism matters most — they are what licenses the cycle — and their

@@ -37,6 +37,7 @@ sys.path.insert(0, str(REPO / "scripts"))
 sys.path.insert(0, str(REPO))
 
 from scan import errors as scan_errors                               # noqa: E402
+from scan.clock import VirtualClock                                 # noqa: E402
 from scan import load_params, manners                                # noqa: E402
 from scan.collectors import links as links_collector                 # noqa: E402
 from scan.collectors import v2clauses                                # noqa: E402
@@ -282,7 +283,7 @@ def test_the_isolating_fixture_serves_everything_and_kills_only_the_invalid_rout
         obs, findings = run_mod.run_surface(
             run_mod.specs(), {"doc_id": f"control:{ISOLATING_FIXTURE}",
                               "url": f"{base}/index.html"},
-            params, ["A10"], Fetcher(params))
+            params, ["A10"], Fetcher(params, clock=VirtualClock()))
     by_probe = {(o.parsed or {}).get("probe"): o for o in obs}
     assert by_probe["valid"].error_class is None
     assert (by_probe["valid"].response or {})["status"] == 200
@@ -292,7 +293,6 @@ def test_the_isolating_fixture_serves_everything_and_kills_only_the_invalid_rout
     assert findings[0].rule_id == "RULE-A10-v3"
 
 
-@pytest.mark.slow
 def test_the_control_gate_passes_on_all_five_fixtures():
     """§2's first clause, whole. Every rule its pre-registered verdict on five fixtures,
     `unknown` = 0, and the fixture that isolates the defect actually fires.
@@ -304,7 +304,7 @@ def test_the_control_gate_passes_on_all_five_fixtures():
     """
     run_mod = _mod(SCAN / "run.py", "scan_run_v4_gate")
     params = load_params()
-    _cf, e5, control_obs, ok = run_mod.run_controls(params)
+    _cf, e5, control_obs, ok = run_mod.run_controls(params, clock=VirtualClock())
     assert ok, e5.reason
     assert e5.verdict == "pass", e5.reason
 
@@ -364,7 +364,7 @@ def test_an_off_host_link_is_recorded_and_never_fetched():
     from scan.manners import Fetcher
     params = load_params()
     with FixtureServer("passes_all") as base:
-        f = Fetcher(params)
+        f = Fetcher(params, clock=VirtualClock())
         found = [{"href": f"{base}/estimates.csv", "text": "estimates"},
                  {"href": "https://creativecommons.org/publicdomain/zero/1.0/",
                   "text": "CC0"}]
@@ -387,7 +387,7 @@ def test_a_latest_pointer_off_host_is_recorded_and_never_fetched():
     from scan.manners import Fetcher
     params = load_params()
     with FixtureServer("passes_all") as base:
-        f = Fetcher(params)
+        f = Fetcher(params, clock=VirtualClock())
         out = v2clauses.follow_latest_pointer(
             f, [{"how": "anchor text 'subscribe to govdelivery email'",
                  "url": "https://public.govdelivery.com/accounts/USCENSUS/signup/12426"},
@@ -400,7 +400,6 @@ def test_a_latest_pointer_off_host_is_recorded_and_never_fetched():
     assert out["latest_pointer_resolves"] is True, "the same-host pointer still resolves"
 
 
-@pytest.mark.slow
 def test_no_request_in_the_control_cycle_leaves_the_loopback():
     """§2's third clause, asserted at the socket. `manners.Fetcher.requests` is keyed by host
     and counts what was actually ASKED, which is the only number the manners claim is about."""
@@ -411,7 +410,7 @@ def test_no_request_in_the_control_cycle_leaves_the_loopback():
     asked = collections.Counter()
     for fixture in sorted(MODES):
         with FixtureServer(fixture) as base:
-            f = Fetcher(params)
+            f = Fetcher(params, clock=VirtualClock())
             run_mod.run_surface(run_mod.specs(), {"doc_id": f"control:{fixture}",
                                                   "url": f"{base}/index.html"},
                                 params, run_mod.CONTROL_FIXTURE_LEGS, f)
