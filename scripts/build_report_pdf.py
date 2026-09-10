@@ -10,15 +10,15 @@ pandoc 3.8.3 as the converter, typst 0.14.2 as the PDF engine. There is no LaTeX
 machine; typst is what exists, and it renders SVG natively, which matters because F5 is an SVG
 the graph page already builds and decision 3 says not to redraw it.
 
-**Two build-time adaptations, neither of which edits a shipped artifact:**
+**One build-time adaptation, which edits no shipped artifact:** the markdown is copied to a
+build file so pandoc resolves the figure through `--resource-path`, and the shipped
+`2026-09_fss_ai_readiness_L0.md` keeps the path the graph page uses.
 
-1. *The figure gets an XML namespace.* `figures.py` writes SVG for INLINE embedding in an HTML
-   page, so the root element carries no `xmlns`. typst's parser refuses it with "missing root
-   node". A namespaced COPY is written under `docs/reports/generated/`; the registered Figure
-   artifact and the graph page are untouched, and not one path element changes. Adding the
-   namespace that makes the same bytes a standalone document is not redrawing the figure.
-2. *The markdown is copied to a build file with the figure path repointed at that copy.* The
-   shipped `2026-09_fss_ai_readiness_L0.md` keeps the path the graph page uses.
+There used to be a second. `figures.py` wrote SVG for inline embedding only, with no `xmlns`,
+and typst refused every figure with "missing root node", so this script namespaced a copy.
+`cc_tasks/2026-09-10_harness_small.md` decision 3 fixed it at source: the figures are standalone
+documents now, and a build step that repaired them on the way past is a step that hid the
+defect from every other consumer.
 
     /opt/anaconda3/bin/python3 scripts/build_report_pdf.py [--check]
 """
@@ -40,8 +40,6 @@ PDF = REPORTS / f"{STEM}.pdf"
 BUILD_MD = GENERATED / f"{STEM}.build.md"
 
 PANDOC, ENGINE = "pandoc", "typst"
-#: The namespace typst's SVG parser requires on the root element.
-SVG_NS = 'xmlns="http://www.w3.org/2000/svg"'
 
 
 def tool_versions() -> dict:
@@ -57,17 +55,6 @@ def tool_versions() -> dict:
     return out
 
 
-def namespaced_figure(src: Path) -> Path:
-    """A standalone copy of an inline-HTML SVG. The original is not touched."""
-    GENERATED.mkdir(parents=True, exist_ok=True)
-    text = src.read_text(encoding="utf-8")
-    if "xmlns=" not in text.split(">", 1)[0]:
-        text = text.replace("<svg ", f"<svg {SVG_NS} ", 1)
-    dest = GENERATED / src.name
-    dest.write_text(text, encoding="utf-8")
-    return dest
-
-
 def prepare() -> tuple:
     """The build markdown, with every figure repointed at a namespaced copy."""
     md = MD.read_text(encoding="utf-8")
@@ -77,9 +64,13 @@ def prepare() -> tuple:
         src = (REPO / rel)
         if not src.is_file():
             raise SystemExit(f"FATAL: the report references {rel}, which does not exist")
-        dest = namespaced_figure(src)
-        md = md.replace(rel, dest.name)
-        figures.append((rel, dest))
+        head = src.read_text(encoding="utf-8").split(">", 1)[0]
+        if "xmlns=" not in head:
+            raise SystemExit(
+                f"FATAL: {rel} carries no xmlns and is not a standalone SVG document. "
+                f"figures.py emits it since decision 3; re-run the figure build rather than "
+                f"repairing the file here, which is what hid this from every other consumer.")
+        figures.append((rel, src))
     GENERATED.mkdir(parents=True, exist_ok=True)
     BUILD_MD.write_text(md, encoding="utf-8")
     return BUILD_MD, figures

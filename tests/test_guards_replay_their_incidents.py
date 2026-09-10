@@ -31,6 +31,9 @@ import re
 import sys
 from pathlib import Path
 
+#: The shared source scanner (`tests/support/sourcescan.py`): code, not prose.
+from support.sourcescan import scan, strip_prose
+
 import pytest
 
 REPO = Path(__file__).resolve().parent.parent
@@ -302,7 +305,15 @@ _SELF_LICENCE = re.compile(
 
 
 def self_licensing_sites(root: Path) -> list:
-    """`[(path, lineno, line)]` where source grants itself the cycle licence."""
+    """`[(path, lineno, line)]` where source grants itself the cycle licence.
+
+    Through the shared scanner (decision 4), so a comment or a docstring describing the licence
+    is not mistaken for granting it. This lint matched its own bait the day it was written.
+
+    `literals=False`: the offence here is `os.environ["AIRKG_SCAN_CYCLE"] = "1"`, where the token
+    is the subscript KEY. Blanking string literals — right for every other check in the repo —
+    would blind this one to the exact line it exists to catch. Comments and docstrings still go.
+    """
     out = []
     for py in sorted(root.rglob("*.py")):
         if "__pycache__" in py.parts:
@@ -311,9 +322,11 @@ def self_licensing_sites(root: Path) -> list:
             rel = str(py.relative_to(REPO))
         except ValueError:
             rel = str(py)                      # a planted file under tmp_path
-        for i, line in enumerate(py.read_text(encoding="utf-8").splitlines(), 1):
+        src = py.read_text(encoding="utf-8")
+        for i, line in enumerate(strip_prose(src, literals=False).splitlines(), 1):
             if _SELF_LICENCE.search(line):
-                out.append((rel, i, line.strip()))
+                original = src.splitlines()[i - 1] if i - 1 < len(src.splitlines()) else line
+                out.append((rel, i, original.strip()))
     return out
 
 

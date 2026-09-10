@@ -28,6 +28,8 @@ import subprocess
 import sys
 from pathlib import Path
 
+from support.sourcescan import strip_prose
+
 import pytest
 import yaml
 
@@ -455,7 +457,7 @@ def test_a_run_stamps_the_task_that_ordered_it():
     ap.add_argument("--task", default=run_mod.TASK)
     assert ap.parse_args([]).task == run_mod.TASK
     assert ap.parse_args(["--task", "cc_tasks/x.md"]).task == "cc_tasks/x.md"
-    src = (SCAN / "run.py").read_text(encoding="utf-8")
+    src = strip_prose((SCAN / "run.py").read_text(encoding="utf-8"), literals=False)
     assert '"task": a.task' in src, (
         "a payload still stamps the module constant rather than the invocation's --task")
     assert '"task": TASK' not in src

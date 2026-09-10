@@ -22,6 +22,8 @@ import re
 import sys
 from pathlib import Path
 
+from support.sourcescan import strip_prose
+
 import pytest
 
 
@@ -122,7 +124,7 @@ def test_the_scan_harness_has_exactly_one_wilson_implementation():
     same object's value, and the module defines no arithmetic of its own."""
     from harness.rollup import _WILSON_Z
     assert Z == _WILSON_Z
-    src = (SCAN / "stats.py").read_text(encoding="utf-8")
+    src = strip_prose((SCAN / "stats.py").read_text(encoding="utf-8"))
     assert "math.sqrt" not in src, "stats.py grew its own arithmetic; it must delegate"
     assert "wilson_interval" in src
 
@@ -316,11 +318,23 @@ def test_the_figures_print_the_things_the_task_asked_them_to(figures):
         assert forbidden not in f5, f"F5 draws {forbidden}: that reads as a trend"
 
 
+#: The SVG namespace name. A namespace name is an IDENTIFIER, not a location: no conforming
+#: processor dereferences it (Namespaces in XML 1.0 §2.1 — "the attribute's value... is a URI
+#: reference... it is not a goal that it be directly usable for retrieval"). It appears on the
+#: root element because a standalone `.svg` file needs it to be SVG at all, which is why
+#: `figures.py` emits it at source rather than a build step patching it in afterwards.
+SVG_NS_DECL = ' xmlns="http://www.w3.org/2000/svg"'
+
+
 def test_no_figure_reaches_the_network(figures):
     """Static, inline, no CDN — the operator's constraint. A progress page that needed a fetch
     to render its own measurement would be a poor advertisement for machine-readable
     publication."""
     for name, body in figures.items():
+        assert body.count(SVG_NS_DECL) == 1, (
+            f"{name} declares the SVG namespace {body.count(SVG_NS_DECL)} times; exactly one, on "
+            "the root element, is what makes the file SVG standalone")
+        body = body.replace(SVG_NS_DECL, "", 1)
         for forbidden in ("http://", "https://", "<script", "<image", "xlink:href", "@import"):
             assert forbidden not in body, f"{name} contains {forbidden!r}"
 

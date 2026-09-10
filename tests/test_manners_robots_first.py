@@ -16,6 +16,9 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
+#: The shared source scanner (`tests/support/sourcescan.py`): code, not prose.
+from support.sourcescan import scan, strip_prose
+
 import pytest
 
 REPO = Path(__file__).resolve().parent.parent
@@ -99,24 +102,18 @@ def test_no_suffix_list_dependency_remains():
     """Decision 1: "The PSL dependency is removed unless something else uses it." Nothing
     does. Asserted over source, because an unused import is exactly how a dependency survives
     the decision that retired it."""
-    # The needles are assembled rather than written, so this file does not match its own
-    # search. That was necessary and not sufficient: a COMMENT in another test mentioning "the
-    # tldextract retirement check" matched too, and the check reported a docstring as a
-    # surviving dependency. Fourth time a source scan in this repo has read prose as code —
-    # the AST gate detector did it to `robots.py`'s comment, and the self-licensing lint did it
-    # to its own bait. The question is whether the dependency is REACHED, so comment lines are
-    # not code and are not scanned.
+    # Through the SHARED scanner (`cc_tasks/2026-09-10_harness_small.md` decision 4), which
+    # strips comments, docstrings and string literals before matching. This check had already
+    # read prose as code twice: it matched its own bait, and then a comment in another test
+    # mentioning "the tldextract retirement check". The question is whether the dependency is
+    # REACHED, and prose reaches nothing.
+    #
+    # The needles are still assembled from parts. That is a separate defence — against a file
+    # matching the scanner's own definition — and stripping prose does not replace it.
     needles = ["tld" + "extract", "psl_" + "identity"]
-    left = []
-    for tree in ("assessment", "scripts", "tests"):
-        for py in sorted((REPO / tree).rglob("*.py")):
-            if "__pycache__" in py.parts:
-                continue
-            for i, line in enumerate(py.read_text(encoding="utf-8").splitlines(), 1):
-                code = line.split("#", 1)[0]
-                if any(n in code for n in needles):
-                    left.append(f"{py.relative_to(REPO)}:{i}: {line.strip()[:90]}")
-    left = [x for x in left if not x.startswith("tests/test_manners_robots_first.py")]
+    left = [f"{Path(f).relative_to(REPO)}:{n}: {line[:90]}"
+            for f, n, line in scan([REPO / "assessment", REPO / "scripts", REPO / "tests"],
+                                   needles, skip=("test_manners_robots_first.py",))]
     assert not left, f"the Public Suffix List is still reached from: {left}"
     assert load_params()["manners"]["site_bound"]["resolver"] is None
 
@@ -359,7 +356,7 @@ def test_links_and_declarations_are_bounded_by_the_same_test():
         assert same_site(url, surface) is want, url
     # The link gate and the declaration gate are the same function, read from source: a second
     # comparison anywhere is the defect returning.
-    src = Path(manners.__file__).read_text(encoding="utf-8")
+    src = strip_prose(Path(manners.__file__).read_text(encoding="utf-8"))
     assert "return same_site(url, surface_url)" in src, (
         "on_roster_host no longer delegates to the shared site test")
 
@@ -406,7 +403,8 @@ def test_the_cycle_runner_licenses_the_write_and_nothing_else_does(tmp_path, mon
     _digest, path = model.store_evidence(b"<html>a cycle wrote this</html>")
     assert "committed" in path, path
 
-    run_src = (REPO / "assessment" / "harness" / "scan" / "run.py").read_text(encoding="utf-8")
+    run_src = strip_prose(
+        (REPO / "assessment" / "harness" / "scan" / "run.py").read_text(encoding="utf-8"))
     token_line = f'os.environ[CYCLE_TOKEN_ENV]'
     assert token_line in run_src
     before_main = run_src.split("def main(")[0]

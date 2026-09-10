@@ -166,7 +166,13 @@ def svg(width, height, label: str, body: list, reads=(), files=(), cfg=None) -> 
     attr = f' data-reads="{html.escape(" ".join(sorted(reads)))}"' if reads else ""
     attr += (f' data-files="{html.escape(" ".join(data_name(k, cfg) for k in files))}"'
              if files else "")
-    return (f'<svg viewBox="0 0 {width:g} {height:g}" width="100%" role="img" '
+    # `xmlns` makes each figure a STANDALONE SVG document and not only an inline fragment
+    # (`cc_tasks/2026-09-10_harness_small.md` decision 3). Without it typst refused every one
+    # with "missing root node", and the PDF build carried a step that namespaced a copy —
+    # every consumer outside the HTML page had to repair the file before reading it. The
+    # attribute is valid on inline SVG too, so the graph page is unaffected.
+    return (f'<svg xmlns="http://www.w3.org/2000/svg" '
+            f'viewBox="0 0 {width:g} {height:g}" width="100%" role="img" '
             f'aria-label="{html.escape(label)}"{attr}>{"".join(body)}</svg>')
 
 

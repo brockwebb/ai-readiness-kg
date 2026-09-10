@@ -348,9 +348,14 @@ def test_merging_controls_replaces_them_rather_than_accumulating(tmp_path):
     payload.write_text(json.dumps({
         "params_hash": ph(params), "control_findings": 0,
         "control_findings_detail": [], "observations_detail": []}), encoding="utf-8")
-    assert run_mod.merge_controls(payload, params) == 0
+    # Virtual clock on BOTH calls: this test ran two complete seven-fixture control cycles at
+    # the standing rate and cost 594 s, a third of the whole suite
+    # (`cc_tasks/2026-09-10_virtual_time_RESULT.md` §4). What it asserts is that a second merge
+    # REPLACES rather than unions, which is a fact about the merge and not about the rate.
+    clock = VirtualClock()
+    assert run_mod.merge_controls(payload, params, clock=clock) == 0
     first = json.loads(payload.read_text(encoding="utf-8"))
-    assert run_mod.merge_controls(payload, params) == 0
+    assert run_mod.merge_controls(payload, params, clock=clock) == 0
     second = json.loads(payload.read_text(encoding="utf-8"))
     # One Finding per control leg per fixture, plus E5's own — derived, not a literal, for the
     # reason above. `CONTROL_FIXTURE_LEGS` is the fifteen product legs plus the candidate; E5

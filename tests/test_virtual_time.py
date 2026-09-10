@@ -16,10 +16,14 @@ returning immediately. A monkeypatched `time.sleep` would make "the limiter neve
 from __future__ import annotations
 
 import importlib.util
+import json
 import re
 import sys
 import time
 from pathlib import Path
+
+#: The shared source scanner (`tests/support/sourcescan.py`): code, not prose.
+from support.sourcescan import scan, strip_prose
 
 import pytest
 
@@ -32,6 +36,11 @@ from scan import load_params                                        # noqa: E402
 from scan.clock import REAL, RealClock, VirtualClock                # noqa: E402
 from scan.fixtures.server import FixtureServer, MODES               # noqa: E402
 from scan.manners import Fetcher                                    # noqa: E402
+
+#: Requests per second per host for the agreement check's real-clock side only. It is a TEST
+#: interval and it is stated here rather than buried in the test, so a reader can see that the
+#: standing rate is not what this check is about.
+TEST_INTERVAL_RPS = 20
 
 
 def _run_mod():
@@ -59,22 +68,14 @@ def test_no_bare_wall_time_remains_under_the_scan_harness():
     as many words, so this one is built not to.
     """
     needles = ["time" + ".sleep", "time" + ".monotonic", "time" + ".time("]
-    offenders = []
-    for py in sorted(SCAN.rglob("*.py")):
-        if "__pycache__" in py.parts or py.name == _CLOCK_IMPL:
-            continue
-        src = py.read_text(encoding="utf-8")
-        for i, line in enumerate(src.splitlines(), 1):
-            if line.lstrip().startswith("#"):
-                continue
-            if any(n in line for n in needles):
-                offenders.append(f"{py.relative_to(REPO)}:{i}: {line.strip()}")
+    offenders = [f"{Path(f).relative_to(REPO)}:{n}: {line}"
+                 for f, n, line in scan([SCAN], needles, skip=(_CLOCK_IMPL,))]
     assert not offenders, (
         "bare wall-time calls under the scan harness; they must go through the injected "
         f"clock: {offenders}")
 
     # And the real clock IS the standard library, or the injection has no floor.
-    impl = (SCAN / _CLOCK_IMPL).read_text(encoding="utf-8")
+    impl = strip_prose((SCAN / _CLOCK_IMPL).read_text(encoding="utf-8"))
     assert all(n in impl for n in ("time" + ".monotonic", "time" + ".sleep")), (
         "the real clock no longer calls the standard library; every caller would be running "
         "on something that only looks like time")
@@ -178,8 +179,20 @@ def test_the_control_gate_returns_the_same_verdicts_on_both_clocks():
     """
     m, params = _run_mod(), load_params()
 
-    def verdicts(clock):
-        _cf, e5, cobs, ok = m.run_controls(params, clock=clock)
+    # The REAL-clock side runs at a short test interval: 20 requests/second per host instead of
+    # the standing 1 (`cc_tasks/2026-09-10_harness_small.md` decision 2). Verdict agreement is
+    # a property of the RULES — do they read wall time — and not of the rate, so paying the
+    # standing rate here bought 301 s and no additional assurance. The standing rate is
+    # asserted by `test_one_real_clock_cycle_still_pays_the_standing_rate`, which is unchanged,
+    # marked `slow`, and runs against one fixture on the real clock.
+    #
+    # It is a real clock and a real sleep, not a third clock: `RealClock.sleep` is called 291
+    # times here exactly as it would be at the standing rate, and only the interval differs.
+    fast = json.loads(json.dumps(params))
+    fast["manners"]["requests_per_second_per_host"] = TEST_INTERVAL_RPS
+
+    def verdicts(clock, p=None):
+        _cf, e5, cobs, ok = m.run_controls(p if p is not None else params, clock=clock)
         assert ok, e5.reason
         out = {}
         for o in cobs:
@@ -189,7 +202,7 @@ def test_the_control_gate_returns_the_same_verdicts_on_both_clocks():
         return out, e5.verdict
 
     virtual, v_e5 = verdicts(VirtualClock())
-    real, r_e5 = verdicts(RealClock())
+    real, r_e5 = verdicts(RealClock(), fast)
 
     assert set(virtual) == set(real) == set(MODES), (sorted(virtual), sorted(real))
     differences = [f"{fx}:{leg} virtual={virtual[fx][leg]} real={real[fx].get(leg)}"

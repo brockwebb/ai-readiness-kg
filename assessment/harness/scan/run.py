@@ -305,7 +305,7 @@ def surfaces() -> list:
     return targets(load_params())
 
 
-def merge_controls(payload_path: Path, params: dict) -> int:
+def merge_controls(payload_path: Path, params: dict, clock=None) -> int:
     """Re-run the controls and fold them into an existing payload. **No network, no re-scan.**
 
     The control fixtures are local and free; the seventeen surfaces are neither. When a change
@@ -318,6 +318,12 @@ def merge_controls(payload_path: Path, params: dict) -> int:
     Refuses across a `params_hash` mismatch: merging control records derived under one
     parameter set into a cycle measured under another would produce a payload whose parts
     disagree about the constants that shaped them.
+
+    `clock` is threaded to the control cycle it runs and defaults to the real one
+    (`cc_tasks/2026-09-10_harness_small.md` decision 1). Without it this was the single most
+    expensive thing in the suite: its test calls it twice, so it ran two complete seven-fixture
+    cycles at the standing rate — 594 s, a third of the whole suite, and the one place the
+    virtual clock could not reach (`cc_tasks/2026-09-10_virtual_time_RESULT.md` §4).
     """
     payload = json.loads(payload_path.read_text(encoding="utf-8"))
     ph = params_hash(params)
@@ -325,7 +331,7 @@ def merge_controls(payload_path: Path, params: dict) -> int:
         print(f"REFUSING: payload params_hash {payload.get('params_hash')!r} != current "
               f"{ph!r}; re-run the whole cycle", file=sys.stderr)
         return 2
-    cf, e5, control_obs, ok = run_controls(params)
+    cf, e5, control_obs, ok = run_controls(params, clock=clock)
     print(f"CONTROL GATE: {e5.verdict.upper()} — {e5.reason}")
     if not ok:
         print("cycle INVALID", file=sys.stderr)

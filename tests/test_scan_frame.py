@@ -20,6 +20,8 @@ import subprocess
 import sys
 from pathlib import Path
 
+from support.sourcescan import strip_prose
+
 import pytest
 
 REPO = Path(__file__).resolve().parent.parent
@@ -156,7 +158,7 @@ def test_the_target_build_calls_no_selection_rule():
     """`frame.py` still exists and is still tested; **nothing in the build calls it**
     (ADDENDUM-05). Read from the source, because a build that imported it and happened not to
     use it today would use it tomorrow."""
-    src = (REPO / "scripts" / "build_fss_targets.py").read_text(encoding="utf-8")
+    src = strip_prose((REPO / "scripts" / "build_fss_targets.py").read_text(encoding="utf-8"))
     for banned in ("frame.word_match", "frame.api_entry_point", "frame.for_agency",
                    "frame.shortlist", "frame.machine_entry_point", "frame.flagship_products"):
         assert banned not in src, f"the target build calls {banned}"

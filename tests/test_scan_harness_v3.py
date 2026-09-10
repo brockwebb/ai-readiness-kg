@@ -23,6 +23,8 @@ import subprocess
 import sys
 from pathlib import Path
 
+from support.sourcescan import strip_prose
+
 import pytest
 import yaml
 
@@ -202,7 +204,10 @@ def test_classification_is_a_map_and_not_a_fallback():
 def test_no_collector_still_guesses_an_error_class():
     """The fallback is gone from every collector, not just the two the RESULT named."""
     for py in sorted((SCAN / "collectors").glob("*.py")):
-        src = py.read_text(encoding="utf-8")
+        # `literals=False`: two of the three needles ARE literals — the guessed class is the
+        # string "dns" itself. Comments and docstrings still go, so a collector may explain
+        # what it no longer does without being reported as still doing it.
+        src = strip_prose(py.read_text(encoding="utf-8"), literals=False)
         assert 'else "dns"' not in src, py.name
         assert 'error_class="dns"' not in src, py.name
         assert "error_class_for" not in src, py.name
