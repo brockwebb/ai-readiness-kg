@@ -305,6 +305,7 @@ def test_every_fixture_has_a_pre_registered_table_and_every_table_a_fixture():
             assert "default" in table, fixture
 
 
+@pytest.mark.slow   # runs the loopback control fixtures at 1 req/s (pyproject marker definition)
 def test_the_control_gate_passes_on_all_four_fixtures():
     """§2's second clause: every rule returns its PRE-REGISTERED verdict, every error class the
     fixtures are built to produce actually appears, and `unknown` is zero.

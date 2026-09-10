@@ -593,7 +593,24 @@ def test_the_rejudgement_removes_at_least_the_recorded_false_positive(rederive_m
 
 # ============================================================ §2 the gate
 
-@pytest.mark.parametrize("cycle", sorted(PRIOR_CYCLES))
+#: The two most recent cycles. Their re-derivation stays in the FAST tier, because a rule or
+#: engine change is most likely to break the payloads closest to it and a gate that cannot see
+#: that quickly is not a gate. `cc_tasks/2026-09-09_guards_earn_their_keep.md` decision 4.
+RECENT_CYCLES = ("scan_2026-09-09", "scan_2026-09-07b_rj1")
+
+
+def _tier(cycle: str):
+    """`slow` for everything older than the two most recent cycles.
+
+    A marker, never a deletion: the per-task gate runs the fast tier PLUS the re-derivation of
+    every payload a task could have touched, and the full suite is the pre-push check. Nothing
+    here is weakened; what changes is which of them a two-minute gate waits for.
+    """
+    return () if cycle in RECENT_CYCLES else (pytest.mark.slow,)
+
+
+@pytest.mark.parametrize("cycle", [pytest.param(c, marks=_tier(c))
+                                   for c in sorted(PRIOR_CYCLES)])
 def test_every_prior_cycle_re_derives_byte_identically(cycle):
     """§2's second clause. Each payload re-derives under ITS OWN rules and ITS OWN params,
     recovered from git by hash — a cycle measured under `finding_identity: 1` is re-judged

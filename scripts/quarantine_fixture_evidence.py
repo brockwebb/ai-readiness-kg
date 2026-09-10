@@ -173,10 +173,50 @@ def sweep(apply: bool, root: Path | None = None, wrote_by: str | None = None) ->
             "applied": bool(apply)}
 
 
+def clear_redirects(reason_path: Path, wrote_by: str, dry: bool) -> dict:
+    """Summarise the evidence-guard redirect log into `reason.txt`, then empty it.
+
+    `cc_tasks/2026-09-09_guards_earn_their_keep.md` decision 3. A hygiene check fails while the
+    log is non-empty, so the log has to be clearable — but clearing it silently would delete
+    the only record of who wrote litter, which is the finding. The summary goes into the same
+    reason file the quarantined bytes already have, and only then is the log truncated.
+    """
+    import collections
+    import sys as _sys
+    from scan.model import REDIRECT_LOG
+    if not REDIRECT_LOG.is_file():
+        return {"cleared": 0, "log": str(REDIRECT_LOG)}
+    rows = [json.loads(l) for l in REDIRECT_LOG.read_text(encoding="utf-8").splitlines()
+            if l.strip()]
+    if not rows:
+        return {"cleared": 0, "log": str(REDIRECT_LOG)}
+    writers = collections.Counter(r.get("argv", "?")[:120] for r in rows)
+    aimed = sum(1 for r in rows if "corpus/evidence" in str(r.get("requested_root", "")))
+    summary = (
+        f"\n{datetime.now(timezone.utc).isoformat()} — evidence-guard redirect log cleared\n"
+        f"  swept by : {wrote_by}\n"
+        f"  entries  : {len(rows)}\n"
+        f"  aimed at the committed store: {aimed}\n"
+        f"  first    : {rows[0].get('at')}\n"
+        f"  last     : {rows[-1].get('at')}\n"
+        + "".join(f"  writer   : {n} x{c}\n" for n, c in writers.most_common(8)))
+    if dry:
+        return {"cleared": 0, "would_clear": len(rows), "summary": summary}
+    with reason_path.open("a", encoding="utf-8") as fh:
+        fh.write(summary)
+    REDIRECT_LOG.write_text("", encoding="utf-8")
+    return {"cleared": len(rows), "aimed_at_committed_store": aimed,
+            "recorded_in": str(reason_path)}
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--clear-redirects", action="store_true",
+                    help="also clear the evidence-guard redirect log, after recording what it "
+                         "held in reason.txt (DD-063 decision 3: the log is cleared only by an "
+                         "explicit sweep that records what was swept)")
     ap.add_argument("--wrote-by", default=None, metavar="TEXT",
                     help="what produced this litter, recorded verbatim in reason.txt. "
                          "Defaults to the writer every sweep to 2026-09-07 had; a sweep after "
@@ -184,6 +224,8 @@ def main(argv=None) -> int:
                          "to the wrong file.")
     a = ap.parse_args(argv)
     out = sweep(apply=not a.dry_run, wrote_by=a.wrote_by)
+    if a.clear_redirects:
+        out["redirect_log"] = clear_redirects(REASON, a.wrote_by or "(unstated)", a.dry_run)
     print(json.dumps(out, indent=1))
     return 0
 

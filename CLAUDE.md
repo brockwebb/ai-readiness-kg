@@ -104,6 +104,22 @@ Three rules that are the point of it:
 
 `logs/` is gitignored, so the log is a local artifact the session can point at and not something that ships. What ships is the RESULT that quotes it.
 
+### Suite tiers (operator-ordered, 2026-09-09)
+
+The suite is split by MARKER, never by deletion. `@pytest.mark.slow` means "runs the loopback control fixtures at the standing 1 req/s, or re-derives a payload older than the two most recent cycles". Nothing is removed and nothing is weakened; what changes is which of them a short gate waits for.
+
+| target | what it is | when |
+|---|---|---|
+| `make gate-fast` | everything except `slow` | the per-task gate |
+| `make gate-task` | fast tier **plus** re-derivation of every stored payload | when a rule module, the registry or the re-derivation engine changed — which is most scan tasks |
+| `make guards` | every guard against the incident it was built for | any change to a guard |
+| `make gate-full` | the whole suite, detached and logged | **before every push** |
+
+Two rules:
+
+* **A task's gate is `gate-task`, not `gate-fast`,** whenever the task could have touched a stored payload. A rule change that stops an old cycle re-deriving is exactly the failure the re-derivation gate exists for, and deferring it to the pre-push run defeats it.
+* **A green fast tier is never reported as a green suite.** The RESULT says which tier it ran and quotes both wall-clocks when it has them.
+
 ## Desktop session protocol (operator-ordered, 2026-09-07)
 
 **Resume.** A new Desktop thread starts with the exact line from the newest file in `handoffs/` (absolute path, always):

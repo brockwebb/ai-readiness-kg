@@ -207,6 +207,7 @@ def _fresh_control_cycle(tmp_path):
             "observations_detail": [o.to_dict() for o in control_obs]}, params
 
 
+@pytest.mark.slow   # runs the loopback control fixtures at 1 req/s (pyproject marker definition)
 def test_findings_re_derive_byte_identically_from_stored_observations(tmp_path):
     """§3's re-derivation gate: delete every Finding, re-judge from Observations alone, demand
     identity. Meaningful only because a Finding's id is derived from (rule, version, sorted obs
@@ -310,6 +311,7 @@ def test_a_mixed_refusal_is_not_an_error():
     assert not _common.only_errors([_obs("A9", 403), _obs("A9", 200)], params)
 
 
+@pytest.mark.slow   # runs the loopback control fixtures at 1 req/s (pyproject marker definition)
 def test_the_cycles_own_validity_verdict_is_on_the_record():
     """E5's Finding is the cycle's validity verdict and it was not being written.
 
@@ -335,6 +337,7 @@ def test_the_cycles_own_validity_verdict_is_on_the_record():
     assert len(control_obs) > len(e5_obs)
 
 
+@pytest.mark.slow   # runs the loopback control fixtures at 1 req/s (pyproject marker definition)
 def test_merging_controls_replaces_them_rather_than_accumulating(tmp_path):
     """The fixture server binds an ephemeral port, which leaks into every control
     `target_url` and so into every derived control id: a second control run yields records
@@ -371,6 +374,7 @@ def test_merging_controls_refuses_across_a_params_change(tmp_path):
     assert run_mod.merge_controls(payload, load_params()) == 2
 
 
+@pytest.mark.slow   # runs the loopback control fixtures at 1 req/s (pyproject marker definition)
 def test_the_re_derivation_gate_covers_the_control_findings_too():
     """The gate started out comparing only the 255 surface Findings. The control Findings are
     the ones whose determinism matters most — they are what licenses the cycle — and their
