@@ -1,0 +1,36 @@
+{
+ "fixture": "robots_forbids_product",
+ "task": "cc_tasks/2026-09-11_control_fixture_robots_forbids_product.md",
+ "serves_as": "passes_all",
+ "what": "A well-formed product surface whose robots.txt PERMITS the product page and FORBIDS three paths its legs probe. Partial, not uniform: the page is read, some of what it offers cannot be.",
+ "why": "The seven-fixture set had no mode in which a product's own robots.txt forbids a probe a rule needs, so harness-v5's BLIND/SCOPE change moved 0 derived control rows and the class it was built to catch was never exercised by the gate.",
+ "partition": {
+  "forbidden": [
+   {"path": "/bulk/", "probed_by": ["links.probe"], "legs": ["A1", "A3"],
+    "note": "the whole-product download A3 asks for, reached as a link on the page"},
+   {"path": "/estimates-latest.csv", "probed_by": ["links.probe", "v2clauses.follow_latest_pointer"], "legs": ["A1", "A3", "A8"],
+    "note": "the latest-vintage pointer A8 resolves, and a link A1 and A3 probe"},
+   {"path": "/methodology.html", "probed_by": ["links.probe"], "legs": ["A1", "A3"],
+    "note": "a link on the page; B3 reads the PAGE and never fetches this, which is why B3 is not in this list"}
+  ],
+  "allowed": [
+   {"path": "/", "note": "the product page itself: every leg that reads only the surface stays observed"},
+   {"path": "/estimates.csv", "note": "a structured distribution, so A1 still has an observed link that serves one"},
+   {"path": "/estimates.json", "note": "second structured distribution"},
+   {"path": "/openapi.json", "note": "A2 and A9's machine entry point"},
+   {"path": "/changelog.json", "note": "F4's changelog"},
+   {"path": "/llms.txt", "note": "A5; also in manners.always_fetch_paths"},
+   {"path": "/sitemap.xml", "note": "A5; also in manners.always_fetch_paths"},
+   {"path": "/data.json", "note": "D4's inventory; also in manners.always_fetch_paths"}
+  ]
+ },
+ "partition_is_declared_not_inferred": "DD-061. The paths above are chosen from the leg -> collector -> method table `fixture_expectations.leg_probes` derives from collector source, never from reading a rule module. Which legs each forbidden path blinds is a property of what the COLLECTORS dispatch.",
+ "legs_that_cannot_be_forbidden_by_a_partition": {
+  "legs": ["A2", "A6", "A9", "B3", "D1", "F4", "G1-D"],
+  "why": "each reads only the surface page (http.fetch or structured_data.fetch on the surface URL). Forbidding the page blinds every one of them at once, which is `resets_connection`, not a partition. A robots partition can separate legs only where the legs dereference something."
+ },
+ "always_fetch_paths_are_unblockable": {
+  "paths": ["/robots.txt", "/sitemap.xml", "/llms.txt", "/data.json"],
+  "why": "manners.always_fetch_paths short-circuits allowed() to True, so A4, A5, A12 and D4 cannot be blinded by a Disallow even in principle. That carve-out is deliberate: a robots.txt that disallows /robots.txt cannot thereby hide it from a measurement OF robots.txt."
+ }
+}

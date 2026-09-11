@@ -416,6 +416,33 @@ e5_control:
     #   A12  `fail`      robots permits this UA for the probe path and the host answers 403 to
     #                    that same path: `rule_a12.py` branch 5, the declared and enforced
     #                    layers disagree.
+    # A product whose robots.txt PERMITS the page and FORBIDS three of the paths its legs
+    # probe, plus A10's invented invalid route.
+    # `cc_tasks/2026-09-11_control_fixture_robots_forbids_product.md` decisions 1 and 2.
+    #
+    # DERIVED, not transcribed from a run. The rule is decision 2's: a leg whose DECISIVE probe
+    # the partition forbids expects `error`, because harness-v5 (DD-064) says a URL inside the
+    # product that robots forbids is BLIND and no verdict about the product may rest on one.
+    # Every other leg expects what it expects on `passes_all`, because this fixture serves the
+    # same bytes.
+    #
+    #   A10 `error`  its invalid-route probe is forbidden. Under harness-v4 this fixture
+    #                returns `pass` from "invalid route correctly HTTP None" — the cycle-4
+    #                incident, replayed at the control layer where it was missing.
+    #   A8  `error`  the latest-vintage pointer it resolves is forbidden.
+    #   A3  `error`  the link anchored "whole-product archive" is forbidden, and a `fail` means
+    #                "no whole-product download", which that evidence cannot establish.
+    #   B3  `error`  /methodology.html is forbidden, and a `fail` means "no methodology document
+    #                reachable", which that evidence cannot establish either.
+    #   A1  `pass`   NOT error: three of its links are forbidden and four are served, and one of
+    #                the served ones IS structured data. A `pass` rests on something seen. The
+    #                asymmetry is the point — see the RESULT.
+    robots_forbids_product:
+      default: "pass"
+      A10: "error"
+      A8: "error"
+      A3: "error"
+      B3: "error"
     refuses_identified_client:
       default: "error"
       A4: "pass"

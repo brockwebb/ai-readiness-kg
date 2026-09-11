@@ -97,6 +97,18 @@ MODES = {
     # robots.txt can name its port through the `SIBLINGHOSTPORT` substitution.
     "sitemap_on_sibling": {"serves_as": "passes_all", "overlay": "sitemap_on_sibling",
                            "sibling": "passes_all"},
+    # A product whose own robots.txt PERMITS the page and FORBIDS three of the paths its legs
+    # probe. `cc_tasks/2026-09-11_control_fixture_robots_forbids_product.md` decision 1, and the
+    # gap `cc_tasks/2026-09-10_harness_v5_blind_RESULT.md` §9 item 1 names: every other fixture
+    # is UNIFORM — served, refused, or reset for everything — so none of them can produce the
+    # state cycle 4 shipped from a federal host, a page that is readable carrying links the
+    # scanner is forbidden to follow. That is why harness-v5's BLIND/SCOPE change moved zero
+    # derived control rows: the control set could not express the class it was built to catch.
+    #
+    # `overlay` again: this fixture differs from `passes_all` in one file, its robots.txt, and
+    # the partition it declares is in MANIFEST.json beside it rather than inferred from a rule.
+    "robots_forbids_product": {"serves_as": "passes_all",
+                               "overlay": "robots_forbids_product"},
 }
 
 

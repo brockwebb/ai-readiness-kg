@@ -1,0 +1,25 @@
+# A product whose own robots.txt forbids SOME of the paths its legs probe, and permits the rest.
+#
+# `cc_tasks/2026-09-11_control_fixture_robots_forbids_product.md` decision 1. Every other
+# fixture is uniform: served, refused, or reset for everything. None of them can produce the
+# state cycle 4 shipped from a federal host — a product page that IS readable, carrying links
+# the scanner is FORBIDDEN to follow — which is why harness-v5's class change moved zero
+# derived control rows and why the same defect was found four times by reading payloads and
+# zero times by the gate.
+#
+# The robots.txt fetch itself is OBSERVED (200, parseable), so A4, A11-declared and A12 read a
+# real declared layer rather than an absence.
+User-agent: *
+Allow: /
+Disallow: /bulk/
+Disallow: /estimates-latest.csv
+Disallow: /methodology.html
+# A10's invented invalid route, and the reason this fixture exists at all. Cycle 4 recorded
+# `pass` from "deep link HTTP 200; invalid route correctly HTTP None" on a surface whose probes
+# robots forbade: HTTP None is not a correct rejection, it is no rejection at all. Forbidding
+# the invalid route ALONE reproduces that state at the control layer — deep link served, invalid
+# route never issued — which is the shape `invalid_route_unobserved` makes with a TCP reset and
+# no fixture made with a robots rule. The suffix is `params.a10_soft404.invalid_path_suffix`
+# and a test asserts this line still matches it, so the fixture and the collector cannot drift.
+Disallow: /index.html/__ai-readiness-kg-probe-404__
+Sitemap: http://HOSTPORT/sitemap.xml
