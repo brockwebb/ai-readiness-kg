@@ -256,9 +256,47 @@ class Reads(dict):
         # re-judgement even when the drawn one is not.
         self._licensed = unchanged_names()
 
+    def __contains__(self, key) -> bool:
+        """True exactly when `__getitem__` would return a value rather than raise.
+
+        **`in` and `[]` disagreeing is the whole of
+        `cc_tasks/2026-09-11_rejudge_1_2_3_4_gen9_RESULT.md` §8 item 6.** `cycle_over_cycle`
+        asked `if rate_key not in R` and got `dict.__contains__`, which knows nothing about the
+        evidence-bound fallback below it — so under "register only what moved" every leg whose
+        pass rate did not move was absent by name, the membership test said so, and the row was
+        drawn blank carrying the words DD-055 reserves for a leg nobody judged. Eleven such rows
+        on the published graph page.
+
+        Defined on the TYPE rather than fixed at the one call site, because the call site was
+        never the defect: a dict subclass whose `[]` means more than its `in` will be read
+        wrongly again by the next caller, and this is the only place that can stop it.
+
+        **A name that is missing and NOT licensed reads as absent here and raises through `[]`.**
+        That asymmetry is deliberate and is the one thing this method cannot fix on its own: a
+        caller that branches on `in` and draws something else can still silence an unlicensed
+        name. What catches that is `tests/test_f5_membership.py`, which asserts a blank F5 row is
+        licensed only by the PAYLOAD — the leg having no Finding in the cycle — so a blank
+        produced by an unlicensed name fails as the unexplained blankness it is.
+
+        The internals use `super().__contains__` deliberately: this method is the fallback-aware
+        answer, and `__getitem__` must ask the plain dict or the two recurse forever.
+        """
+        if super().__contains__(key):
+            return True
+        older = _source_name(key)
+        return bool(older and key in self._licensed and super().__contains__(older))
+
+    def get(self, key, default=None):
+        """`dict.get` is the same trap `in` was — it answers from the plain dict and never
+        reaches `__getitem__`. Routed through it, so a licensed fallback resolves and an
+        UNLICENSED one still raises rather than quietly becoming the caller's default."""
+        if super().__contains__(key) or _source_name(key) is not None:
+            return self[key]
+        return default
+
     def __getitem__(self, key):
         self.seen.add(key)
-        if key in self:
+        if super().__contains__(key):
             return super().__getitem__(key)
         # Keyed on the NAME, not on the cycle being drawn. `cycle_over_cycle` reads the
         # COMPARISON cycle's names too, and cycle 4's comparison is cycle 3 re-judged — so a
@@ -267,14 +305,14 @@ class Reads(dict):
         # nothing recorded as compared-and-unchanged is a hard error whatever cycle asked for it.
         older = _source_name(key)
         if older is not None:
-            if key in self._licensed and older in self:
+            if key in self._licensed and super().__contains__(older):
                 self.fell_back[key] = older
                 return super().__getitem__(older)
             raise UnlicensedFallback(
                 f"{key!r} is not registered, and "
                 + (f"{older!r} exists but no comparison record lists {key!r} as "
                    f"compared-and-unchanged"
-                   if older in self else f"{older!r} does not exist either")
+                   if super().__contains__(older) else f"{older!r} does not exist either")
                 + ". A figure may not resolve a missing name by convention; see "
                   "`cc_tasks/2026-09-10_l0_figures_and_leg_rate_names.md` decision 1.")
         return super().__getitem__(key)
@@ -596,8 +634,15 @@ def cycle_over_cycle(mx: dict, R: dict, cfg: dict) -> str:
             rate_key = cycle_results.name_for(f"{n}_pass_rate",
                                               f"scan_{suffix}")
             if rate_key not in R:
-                # A leg with no registered rate in that cycle: it had no applicable
-                # denominator, or the cycle did not judge it. Left blank on purpose.
+                # A leg this cycle did not judge: no Finding, so no rate, and no name to fall
+                # back to either. Left blank on purpose, and the sentence is DD-055's.
+                #
+                # `in` is `Reads.__contains__`, which consults the evidence-bound fallback. It
+                # used to be `dict.__contains__`, which does not, so a leg that WAS judged and
+                # whose rate simply did not move — and was therefore not re-registered under
+                # this cycle's name — was blanked with this same sentence. Eleven rows on the
+                # published graph page said "not measured" about legs that were measured
+                # (`cc_tasks/2026-09-11_f5_membership_through_fallback.md`).
                 body.append(text(left, cy + f["text_dy"], "not measured in this cycle",
                                  "sub", "label"))
                 continue

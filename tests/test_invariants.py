@@ -225,6 +225,11 @@ def test_a12_is_the_only_leg_that_declares_a_non_product_subject():
 ABSENCE_UNDER_PARTIAL_BLINDNESS = {
     "scan_smoke_2026-09-06": 0,
     "scan_controls_2026-09-06": 0,
+    # PERMANENT, and nothing will ever clear it. The verdict is on leg A3, and cycle 1 never
+    # collected the `link_probe` leg `RULE-A3-v6` reads — that leg entered with harness-v3 — so
+    # A3 is not re-judged for cycle 1 at all and `scan_2026-09-07_rj2` registers nothing for it.
+    # A re-judgement cannot clear a verdict it is not able to make
+    # (`cc_tasks/2026-09-11_rejudge_1_2_3_4_gen9_RESULT.md` §3).
     "scan_2026-09-07": 1,
     "scan_2026-09-07_controls": 0,
     "scan_2026-09-07b": 5,
