@@ -194,3 +194,105 @@ def test_a12_is_the_only_leg_that_declares_a_non_product_subject():
     assert host_rules == ["RULE-A12-v1", "RULE-A12-v2"], (
         f"a rule declared a non-product subject: {host_rules}. Every such rule opts out of the "
         f"harness-v5 invariant, so each one needs a reason on its face.")
+
+# ===================================================== the second reading (decision 4, 2026-09-11)
+#
+# "No verdict on WHOLLY blind evidence" is the first reading and it is not enough. A rule can
+# cite an observed product page, exclude a blind candidate, and then assert that the object the
+# blind candidate might have been is not there. That is the eighth instance of the family, found
+# by the `robots_forbids_product` control fixture
+# (`cc_tasks/2026-09-11_control_fixture_robots_forbids_product_RESULT.md` §1), and the first
+# reading reports 0 on every payload that carries it.
+#
+# So this counts, per stored payload, the `fail` verdicts from ABSENCE-claim rules that cite at
+# least one blind candidate. The numbers are the finding, and they are what decides whether
+# cycles 2 to 4 need a third re-judgement — a decision for the next task, which is why THIS task
+# re-judges nothing.
+#
+# **The harness-v5 re-judgements did not clear it.** `scan_2026-09-10_rj1` carries 10, one MORE
+# than the 9 in the cycle it re-judged: under v5 `robots_disallowed` became BLIND, so more
+# findings cite a blind candidate, and `RULE-A3-v5` went on excluding them and answering anyway.
+#: payload -> `fail` verdicts from absence-claim rules that excluded at least one blind candidate.
+ABSENCE_UNDER_PARTIAL_BLINDNESS = {
+    "scan_smoke_2026-09-06": 0,
+    "scan_controls_2026-09-06": 0,
+    "scan_2026-09-07": 1,
+    "scan_2026-09-07_controls": 0,
+    "scan_2026-09-07b": 5,
+    "scan_2026-09-07_rj1": 0,
+    "scan_2026-09-07b_rj1": 5,
+    "scan_2026-09-09": 5,
+    "scan_2026-09-10": 9,
+    "scan_2026-09-07b_rj2": 2,
+    "scan_2026-09-09_rj1": 1,
+    "scan_2026-09-10_rj1": 10,
+}
+
+
+def _observations(payload: dict) -> dict:
+    """`{obs_id: observation}`, resolving a Findings-only payload through the cycle it names.
+
+    A re-judgement creates no Observation — its evidence lives in `derived_from`. Reading
+    `observations_detail` alone would report 0 for all three `_rj` payloads, which is not a
+    measurement, it is the absence of one.
+    """
+    import importlib.util
+    rows = payload.get("observations_detail")
+    if not rows:
+        spec = importlib.util.spec_from_file_location(
+            "rederive_inv", REPO / "assessment" / "harness" / "scan" / "rederive.py")
+        rd = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(rd)
+        rows = [o.to_dict() if hasattr(o, "to_dict") else o
+                for o in rd.observations_for(payload)]
+    out = {}
+    for o in rows:
+        o = o if isinstance(o, dict) else o.to_dict()
+        out[o["obs_id"]] = o
+    return out
+
+
+def absence_under_partial_blindness(payload: dict) -> list:
+    """`[(rule_id, leg, target)]` for `fail` verdicts from absence-claim rules whose cited
+    evidence includes a blind candidate."""
+    from scan.rules import claim_of
+    harness = errors.harness_of(params_for(payload))
+    obs = _observations(payload)
+    out = []
+    for f in payload["findings_detail"]:
+        if f["verdict"] != "fail" or measures(f["rule_id"]) != "product":
+            continue
+        if claim_of(f["rule_id"]) != "absence":
+            continue
+        cited = [obs[e] for e in f.get("evidence", []) if e in obs]
+        if any(errors.is_blind(o.get("error_class"), harness) for o in cited):
+            out.append((f["rule_id"], f["leg"], f["target_doc_id"]))
+    return out
+
+
+def _absence_marks(cycle: str):
+    n = ABSENCE_UNDER_PARTIAL_BLINDNESS[cycle]
+    if n:
+        return (pytest.mark.xfail(strict=True, reason=(
+            f"{cycle} carries {n} absence verdict(s) reached over a candidate set with a blind "
+            f"member. `RULE-A3-v6` and `RULE-B3-v3` fix the rules; the payloads are immutable "
+            f"and whether they are re-judged is the next task's decision. Pinned strict so that "
+            f"decision shows up as a change here.")),)
+    return ()
+
+
+@pytest.mark.parametrize("cycle", [pytest.param(c, marks=_absence_marks(c)) for c in CYCLES])
+def test_no_absence_verdict_rests_on_partially_blind_evidence(cycle):
+    """Decision 4's reading. Zero on the payloads that carry none; a strict xfail, with its
+    count asserted below, on the five that do."""
+    bad = absence_under_partial_blindness(_payload(cycle))
+    assert bad == [], (
+        f"{len(bad)} absence verdict(s) in {cycle} were reached over a candidate set with a "
+        f"blind member: {bad[:5]}{'…' if len(bad) > 5 else ''}")
+
+
+@pytest.mark.parametrize("cycle", CYCLES)
+def test_the_absence_counts_are_exactly_what_was_measured(cycle):
+    """The other half of pinning. A drift either way is a re-judgement nobody declared."""
+    assert len(absence_under_partial_blindness(_payload(cycle))) == \
+        ABSENCE_UNDER_PARTIAL_BLINDNESS[cycle]

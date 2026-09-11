@@ -229,6 +229,13 @@ class Finding:
     #: stored Finding is re-identified by their existence.
     blind_links: int | None = None
     blind_pointers: int | None = None
+    #: Candidates an ABSENCE claim ranged over and could not observe
+    #: (`cc_tasks/2026-09-11_absence_claims_under_scope_limitation.md` decision 1).
+    #: The general case of the two above: a link and a pointer are both candidates,
+    #: and a rule that reaches a document by any other route has nowhere to put the
+    #: count. Omitted from the record when unset, like both of them, so every
+    #: Finding that does not report it is byte-identical to what it was before.
+    blind_candidates: int | None = None
 
     def __post_init__(self) -> None:
         if self.verdict not in VERDICTS:
@@ -238,7 +245,8 @@ class Finding:
     def make(rule_id: str, rule_version: str, leg: str, target_doc_id: str, verdict: str,
              evidence: list, reason: str, params: dict, spec_code: str | None = None,
              blind_links: int | None = None,
-             blind_pointers: int | None = None) -> "Finding":
+             blind_pointers: int | None = None,
+             blind_candidates: int | None = None) -> "Finding":
         ph = params_hash(params)
         ev = sorted(evidence)
         # The id inputs are UNCHANGED by the blind counts. They describe how much the rule
@@ -250,7 +258,8 @@ class Finding:
                        spec_code=spec_code or leg.split("-")[0], leg=leg,
                        target_doc_id=target_doc_id, verdict=verdict, evidence=ev,
                        reason=reason, params_hash=ph, blind_links=blind_links,
-                       blind_pointers=blind_pointers)
+                       blind_pointers=blind_pointers,
+                       blind_candidates=blind_candidates)
 
     def to_dict(self) -> dict:
         """The record. A blind count that was never set is ABSENT, not `null`: a Finding made
@@ -258,7 +267,7 @@ class Finding:
         byte-identical re-derivation gate would fail for every prior cycle on a key nobody
         wrote."""
         d = dataclasses.asdict(self)
-        for k in ("blind_links", "blind_pointers"):
+        for k in ("blind_links", "blind_pointers", "blind_candidates"):
             if d.get(k) is None:
                 d.pop(k, None)
         return d

@@ -27,9 +27,13 @@ gate-fast:
 gate-task: gate-fast
 	$(PY) -m pytest tests/test_scan_harness_v4.py -q -k re_derives
 
-## Every guard against the incident it was built for.
+## Every guard against the incident it was built for, and every control fixture that replays
+## one. `cc_tasks/2026-09-11_absence_claims_under_scope_limitation.md` decision 5 adds the
+## eighth fixture: it is the first control to catch a live instance of the blind-probe family
+## rather than a payload being read after the fact, and its replay belongs beside the others.
 guards:
-	$(PY) -m pytest tests/test_guards_replay_their_incidents.py -q
+	$(PY) -m pytest tests/test_guards_replay_their_incidents.py \
+		tests/test_control_fixture_robots_forbids_product.py -q
 
 gate-full:
 	@mkdir -p $(LOGS)

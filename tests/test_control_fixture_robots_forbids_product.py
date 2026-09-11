@@ -32,7 +32,9 @@ DIR = REPO / "assessment" / "harness" / "scan" / "fixtures" / FIXTURE
 #: The legs whose DECISIVE probe the partition forbids, and what each returned. Pinned by value
 #: so the next task's fix is visible as a change here rather than as a silent improvement.
 #: `expected` is `params.e5_control.expected_verdicts[FIXTURE]`, derived under decision 2.
-MEASURED = {"A10": "error", "A8": "error", "A3": "fail", "B3": "fail", "A1": "pass"}
+#: Updated by `cc_tasks/2026-09-11_absence_claims_under_scope_limitation.md`: A3 and B3
+#: were `fail` when this fixture shipped and are `error` now, which is the fix landing.
+MEASURED = {"A10": "error", "A8": "error", "A3": "error", "B3": "error", "A1": "pass"}
 
 #: The two the fixture caught. Each asserts the ABSENCE of exactly the object it was forbidden
 #: to fetch.
@@ -172,9 +174,20 @@ def test_a10_replays_the_cycle_4_incident_red_under_v4_green_under_v5(cycle):
         "GREEN: harness-v5 must refuse a verdict from a probe that was never issued")
 
 
-def test_exactly_one_leg_moves_between_the_harness_versions(cycle):
-    """A10 and no other. If a second leg starts moving, the class has been found somewhere new
-    and the RESULT's accounting is stale."""
+def test_the_legs_that_move_between_harness_versions_are_the_guarded_ones(cycle):
+    """A10, A3 and B3 — the three whose rules ask `errors.is_blind` about a candidate.
+
+    It was A10 alone when this fixture shipped. `RULE-A3-v6` and `RULE-B3-v3`
+    (`cc_tasks/2026-09-11_absence_claims_under_scope_limitation.md` decision 3) route their
+    absence claims through `_common.absence_verdict`, which asks the same question, so they move
+    with the class table too: under harness-v4 a robots disallow is SCOPE and both return `fail`;
+    under v5 it is BLIND and both return `error`. That is decision 1's requirement showing up as
+    behaviour — the helper is harness-versioned, so a stored payload still re-derives under the
+    version it was judged with.
+
+    A fourth leg moving would mean the class had been found somewhere new and this accounting is
+    stale.
+    """
     import copy
     from scan.rules import CURRENT, consumes, judge as judge_rule
     p5 = cycle["params"]
@@ -196,29 +209,25 @@ def test_exactly_one_leg_moves_between_the_harness_versions(cycle):
             continue
         if judge_rule(rid, group, p4).verdict != judge_rule(rid, group, p5).verdict:
             moved.append(leg)
-    assert moved == ["A10"], moved
+    assert sorted(moved) == ["A10", "A3", "B3"], moved
 
 
 # ------------------------------------------------------------------ decision 4: the stop
 
 @pytest.mark.parametrize("leg", sorted(UNSOUND))
-@pytest.mark.xfail(strict=True, reason=(
-    "THE FINDING. RULE-A3-v5 and RULE-B3-v2 return `fail` — an ABSENCE claim — about the exact "
-    "object the partition forbade them to fetch. Harness-v5 did not fix this: the all-blind "
-    "guard does not fire, because each verdict also cites the product page, which WAS observed. "
-    "Pinned strict so the next task's fix shows up as a change here. "
-    "cc_tasks/2026-09-11_control_fixture_robots_forbids_product_RESULT.md §1."))
 def test_no_rule_claims_absence_of_an_object_it_was_forbidden_to_fetch(cycle, leg):
-    """The asymmetry this fixture exposes, stated as the property that should hold.
+    """The asymmetry this fixture exposed, now the property that holds.
 
-    A verdict from PARTIAL evidence is sound when it is positive — A1 finds structured data on a
-    link it fetched, and three forbidden links cannot unfind it. It is unsound when it is an
-    absence claim: A3's "no whole-product download" and B3's "no methodology document" are
-    exactly the propositions the forbidden probes would have settled.
+    **This was a strict xfail when the fixture shipped** — `RULE-A3-v5` said "no whole-product
+    download" with `/bulk/estimates-2026.zip` forbidden, and `RULE-B3-v2` said "no methodology
+    document" with `/methodology.html` forbidden. The pin existed so the fix would show up here
+    as a change, and this is the change: `RULE-A3-v6` and `RULE-B3-v3` route every `fail` through
+    `_common.absence_verdict` and return `error` instead
+    (`cc_tasks/2026-09-11_absence_claims_under_scope_limitation.md` decision 3).
 
-    `RULE-A1-v4`'s docstring chose "some blind → judge over the rest, with the blind count on the
-    Finding", and for an existential-positive leg that is right. This is the case it does not
-    cover.
+    A verdict from PARTIAL evidence is sound when positive — A1 finds structured data on a link
+    it fetched, and three forbidden links cannot unfind it — and unsound when it is an absence
+    claim, because the forbidden candidate is exactly what would have settled it.
     """
     f = cycle["by_leg"][leg]
     blind = [cycle["by_id"][e] for e in f.evidence
@@ -228,6 +237,45 @@ def test_no_rule_claims_absence_of_an_object_it_was_forbidden_to_fetch(cycle, le
         f"{UNSOUND[leg][2]}")
 
 
+@pytest.mark.parametrize("leg,old_rule,new_rule", [
+    ("A3", "RULE-A3-v5", "RULE-A3-v6"),
+    ("B3", "RULE-B3-v2", "RULE-B3-v3"),
+])
+def test_the_absence_incident_replays_red_under_the_old_rule_and_green_under_the_new(
+        cycle, leg, old_rule, new_rule):
+    """**RED then GREEN, same Observations, same class table** — decision 5 of
+    `cc_tasks/2026-09-11_absence_claims_under_scope_limitation.md`, so this incident is
+    reproducible at the control layer exactly as A10's is.
+
+    Nothing about the evidence differs between the two verdicts. What differs is whether the
+    rule asks what its own `fail` is claiming.
+    """
+    from scan.rules import consumes, judge as judge_rule
+    by_leg = {}
+    for o in cycle["obs"]:
+        by_leg.setdefault(o.leg, []).append(o)
+    group = list(by_leg.get(leg, []))
+    for c in consumes(new_rule):
+        group += by_leg.get(c, [])
+    assert group, f"{leg} collected nothing on this fixture"
+    assert judge_rule(old_rule, group, cycle["params"]).verdict == "fail", (
+        f"RED: {old_rule} must still reproduce the incident, or the replay is not the incident")
+    assert judge_rule(new_rule, group, cycle["params"]).verdict == "error", (
+        f"GREEN: {new_rule} must refuse an absence claim over a forbidden candidate")
+
+
+def test_a1_still_passes_the_fixture_with_three_links_forbidden(cycle):
+    """The control on the control. If the fix had been "any blind candidate anywhere means
+    `error`", A1 would have moved too — and it must not: it found `text/csv` on a link it
+    actually fetched. `existence` and `absence` are different claims and the fix distinguishes
+    them rather than blanketing both."""
+    f = cycle["by_leg"]["A1"]
+    assert f.verdict == "pass", f.reason
+    blind = [e for e in f.evidence
+             if e in cycle["by_id"] and cycle["by_id"][e].error_class == "robots_disallowed"]
+    assert len(blind) == 3, "the fixture must still forbid three of A1's links"
+
+
 def test_the_measured_verdicts_are_exactly_what_the_result_reports(cycle):
     """Pinned by value. The RESULT quotes these; a change to any of them is a change to the
     finding and must move this line with it."""
@@ -235,11 +283,13 @@ def test_the_measured_verdicts_are_exactly_what_the_result_reports(cycle):
     assert got == MEASURED, got
 
 
-def test_the_pre_registered_table_was_not_edited_to_match_what_came_out(cycle):
+def test_the_rules_moved_to_meet_the_expectation_and_not_the_other_way_round(cycle):
     """`params.yaml` says it outright: a gate whose expectation is edited to match its output is
-    not a gate. The table expects `error` for A3 and B3; they return `fail`; that mismatch is
-    the finding and it stays."""
+    not a gate. The table was DERIVED before the fixture ever ran and expects `error` for A3 and
+    B3. It is unchanged; the rules moved to meet it."""
     table = cycle["params"]["e5_control"]["expected_verdicts"][FIXTURE]
     assert table["A3"] == "error" and table["B3"] == "error"
-    assert cycle["by_leg"]["A3"].verdict == "fail"
-    assert cycle["by_leg"]["B3"].verdict == "fail"
+    assert cycle["by_leg"]["A3"].verdict == "error"
+    assert cycle["by_leg"]["B3"].verdict == "error"
+    assert cycle["by_leg"]["A3"].rule_id == "RULE-A3-v6"
+    assert cycle["by_leg"]["B3"].rule_id == "RULE-B3-v3"

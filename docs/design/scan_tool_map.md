@@ -10,9 +10,9 @@ Every row is read from the harness itself: `params.yaml`, the `scan.collectors` 
 |---|---|---|---|---|---|
 | `dcat` | 0.1.0 | stdlib only | `classify_exception`, `classify_status`, `fetch_catalog`, `store_evidence` | D4 | `RULE-D4-v2` |
 | `extent` | 0.1.0 | stdlib only | `features`, `looks_like_error_shell` | A10 | `RULE-A10-v3` |
-| `http` | 0.1.0 | `bs4` | `classify_exception`, `classify_status`, `fetch`, `store_evidence` | A11-declared, A12, A2, A9, B3, D1, F4, G1-D | `RULE-A11-declared-v2`, `RULE-A12-v2`, `RULE-A2-v3`, `RULE-A9-v1`, `RULE-B3-v2`, `RULE-D1-v3`, `RULE-F4-v3`, `RULE-G1-D-v1` |
+| `http` | 0.1.0 | `bs4` | `classify_exception`, `classify_status`, `fetch`, `store_evidence` | A11-declared, A12, A2, A9, B3, D1, F4, G1-D | `RULE-A11-declared-v2`, `RULE-A12-v2`, `RULE-A2-v3`, `RULE-A9-v1`, `RULE-B3-v3`, `RULE-D1-v3`, `RULE-F4-v3`, `RULE-G1-D-v1` |
 | `lighthouse` | 0.1.0 | stdlib only | `available`, `classify_exception`, `classify_status`, `fetch` | A10 | `RULE-A10-v3` |
-| `links` | 0.1.0 | stdlib only | `classify_exception`, `classify_status`, `probe` | A1, A3 | `RULE-A1-v4`, `RULE-A3-v5` |
+| `links` | 0.1.0 | stdlib only | `classify_exception`, `classify_status`, `probe` | A1, A3 | `RULE-A1-v4`, `RULE-A3-v6` |
 | `robots` | 0.1.0 | `protego` | `classify_exception`, `classify_status`, `fetch`, `store_evidence` | A11-declared, A12, A4, A5 | `RULE-A11-declared-v2`, `RULE-A12-v2`, `RULE-A4-v1`, `RULE-A5-v2` |
 | `sitemap` | 0.1.0 | `usp`, `xml` | `classify_exception`, `classify_status`, `fetch`, `same_site` | A5 | `RULE-A5-v2` |
 | `structured_data` | 0.1.0 | `extruct` | `classify_exception`, `classify_status`, `fetch`, `store_evidence` | A6, A8, D1 | `RULE-A6-v2`, `RULE-A8-v4`, `RULE-D1-v3` |

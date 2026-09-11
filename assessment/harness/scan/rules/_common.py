@@ -121,7 +121,8 @@ def host_of(url: str) -> str:
 
 
 def make(rule_id: str, leg: str, obs: list, verdict: str, reason: str, params: dict,
-         blind_links: int | None = None, blind_pointers: int | None = None) -> Finding:
+         blind_links: int | None = None, blind_pointers: int | None = None,
+         blind_candidates: int | None = None) -> Finding:
     """A Finding, with the optional blind counts a generation-6 rule reports as FIELDS.
 
     Both default to None and are omitted from the record when unset (`model.Finding.to_dict`),
@@ -131,13 +132,63 @@ def make(rule_id: str, leg: str, obs: list, verdict: str, reason: str, params: d
     return Finding.make(rule_id=rule_id, rule_version=rule_version(rule_id, params), leg=leg,
                         target_doc_id=target(obs), verdict=verdict, evidence=ids(obs),
                         reason=reason, params=params, blind_links=blind_links,
-                        blind_pointers=blind_pointers)
+                        blind_pointers=blind_pointers,
+                        blind_candidates=blind_candidates)
 
 
 def empty(rule_id: str, leg: str, params: dict, doc_id: str = "unknown") -> Finding:
     return Finding.make(rule_id=rule_id, rule_version=rule_version(rule_id, params), leg=leg,
                         target_doc_id=doc_id, verdict="error", evidence=[],
                         reason="no observations were collected for this leg", params=params)
+
+
+def absence_verdict(rule_id: str, leg: str, obs: list, params: dict, *,
+                    candidates: list, blind: list, found=None, what: str,
+                    **counts):
+    """The Finding an ABSENCE claim owes when the candidate set was incomplete — or `None` when
+    the caller may go on and say what it was going to say.
+
+    `cc_tasks/2026-09-11_absence_claims_under_scope_limitation.md` decision 1. Three cases, and
+    the middle one is the whole point:
+
+    * the rule FOUND the object among the candidates it observed (`found` is truthy) — existence
+      is established by what was seen and no blind candidate can unfind it. Returns `None`;
+    * the rule found none AND at least one candidate the predicate ranges over was BLIND —
+      returns `error`, naming the blind candidates. It is not that the object is absent; it is
+      that this instrument was not allowed to look at all of the places it would be;
+    * the rule found none and nothing was blind — returns `None`, and the caller's `fail` is a
+      real measurement over a complete candidate set.
+
+    **Prior art, and it is not ours.** This is the auditor's SCOPE LIMITATION: ISA 705 / AU-C 705
+    say that when sufficient appropriate evidence cannot be obtained on a material item the
+    response is a qualified opinion or a disclaimer, never an adverse opinion on the item nobody
+    examined. In knowledge representation it is the open-world assumption — negation as failure
+    is unsound over a set known to be incomplete. `error` is this harness's disclaimer.
+
+    **The nearest prior art is in this repo**: `rule_a5_v2.py` said it first, in its own comment
+    — *"absence is only provable over probes that answered. One blind candidate is enough to
+    make it unprovable: it might have been the sitemap."* That rule is shipped and is not edited;
+    this helper is that reasoning made available to every rule that needs it, so the next one
+    does not have to rediscover it. `rule_a3_v5` and `rule_b3_v2` did not, and the eighth
+    instance of the family was two `fail`s about objects the scanner was forbidden to fetch
+    (`cc_tasks/2026-09-11_control_fixture_robots_forbids_product_RESULT.md` §1).
+
+    Blindness is asked of `errors.is_blind` through `unobserved`, so harness versioning still
+    governs: a stored payload re-derives under the version it was judged with.
+    """
+    if found:
+        return None
+    if not blind:
+        return None
+    named = ", ".join(str(getattr(o, "target_url", o)) for o in blind[:3])
+    klass = getattr(blind[0], "error_class", None) or "unobserved"
+    return make(rule_id, leg, obs, "error",
+                f"{what} cannot be established: {len(blind)} of {len(candidates)} candidate(s) "
+                f"were not observed ({klass}), including {named}. Absence is only provable over "
+                f"candidates that answered — one of these may have been the thing being looked "
+                f"for, and a rule that could not look at it does not get to say it is not "
+                f"there (scope limitation, ISA 705; DD-052 §6 for why this is `error`)",
+                params, **counts)
 
 
 def unobserved_error(rule_id: str, leg: str, obs: list, probe, params: dict, what: str):

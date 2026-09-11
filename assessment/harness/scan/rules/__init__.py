@@ -32,6 +32,7 @@ from . import rule_a2_v3, rule_a3_v3, rule_d1_v3, rule_f4_v3
 from . import rule_a1_v3, rule_a3_v4
 from . import rule_a8_v3, rule_a10_v3
 from . import rule_a1_v4, rule_a3_v5, rule_a8_v4
+from . import rule_a3_v6, rule_b3_v3
 from . import rule_a12_v2
 from . import rule_a5_v2
 from . import rule_a12
@@ -89,6 +90,13 @@ V7 = [rule_a5_v2]
 #: response arrived" where v1 read "the status is not None".
 V8 = [rule_a12_v2]
 
+#: Generation 9 — `cc_tasks/2026-09-11_absence_claims_under_scope_limitation.md`. Two modules,
+#: one idea: an ABSENCE claim over a candidate set with a blind member is a scope limitation and
+#: owes `error`, not `fail`. Generation 6 drew the line at HOW MUCH of the set was blind; this
+#: draws it at WHAT THE VERDICT CLAIMS, which is the distinction the `robots_forbids_product`
+#: control fixture made visible. Predecessors stay in `REGISTRY`.
+V9 = [rule_a3_v6, rule_b3_v3]
+
 #: Rules for CANDIDATE indicators. They judge, they are recorded, and their Findings enter no
 #: numerator and no denominator (DD-054). Kept in their own list so the reporting layer can
 #: exclude them mechanically rather than by remembering a code.
@@ -103,6 +111,66 @@ CANDIDATE_RULES = [rule_a12, rule_a12_v2]
 #: harness-v5 invariant (`tests/test_invariants.py`) reads this instead of carrying a list of
 #: rules to skip: a rule declares its own subject, and a new host-level rule needs no edit
 #: anywhere else. `cc_tasks/2026-09-10_harness_v5_blind.md` decision 3.
+#: **What a leg's rule CLAIMS when it says `fail`**
+#: (`cc_tasks/2026-09-11_absence_claims_under_scope_limitation.md` decision 2).
+#:
+#: * `existence` — the verdict that carries weight is `pass`, established by something the
+#:   collector actually fetched. A blind candidate cannot unfind what was found, so such a rule
+#:   judges over the observed set and must NOT call `_common.absence_verdict`.
+#: * `absence`  — a `fail` asserts that the object is not among the candidates. That is provable
+#:   only over candidates that answered: one blind member makes it a scope limitation, and the
+#:   rule owes `error`.
+#:
+#: **Declared HERE for the legs whose current module is already shipped, and ON THE MODULE for
+#: new ones.** Decision 2 asks for it on every module; the same task's "Zero edits to … shipped
+#: rule modules" forbids adding a line to fifteen files that have Findings recorded under them.
+#: The module wins where it speaks — `rule_a3_v6` and `rule_b3_v3` declare their own `CLAIM`, as
+#: `rule_a12_v2` declares its own `MEASURES` — and this table answers for the rest. A leg whose
+#: next version declares `CLAIM` on itself needs no entry here, and the resolver prefers the
+#: module, so the table shrinks as the modules turn over rather than going stale.
+#:
+#: The classification is read from what each rule's `fail` branches ASSERT, not from the leg
+#: name. `A5` is the one to read first: it is an absence rule that dereferences, and it said the
+#: principle before there was a helper — *"absence is only provable over probes that answered.
+#: One blind candidate is enough to make it unprovable: it might have been the sitemap."*
+CLAIM_BY_LEG = {
+    # existence: the weight is on `pass`, from something fetched
+    "A1": "existence",             # a link that SERVED structured data; unfetched links cannot unfind it
+    "A4": "existence",             # robots.txt permits; the evidence is the file itself
+    "A6": "existence",             # conforming markup on the surface
+    "A9": "existence",             # a machine-first entry point is served
+    "A10": "existence",            # a valid route against an invented one; both probes guarded per probe
+    "A11-declared": "existence",   # two declared layers, both read from files it fetched
+    "A12": "existence",            # declared against enforced, on the host's own answers
+    "D1": "existence",             # a machine-readable licence on the surface
+    "E5": "existence",             # whether the cycle's own controls fired; not about a product
+    "F4": "existence",             # a machine-readable changelog is served
+    # absence: a `fail` says the object is not among the candidates
+    "A2": "absence",               # no documented API — surface-only, no dereferenced candidate
+    "A3": "absence",               # no whole-product download among the linked candidates
+    "A5": "absence",               # no discovery file served — and it already guards, correctly
+    "A8": "absence",               # no declared vintage, or no resolvable latest-vintage pointer
+    "B3": "absence",               # no legible methodology document among the candidates
+    "D4": "absence",               # not in the inventory — one document, and it cannot be forbidden
+    "G1-D": "absence",             # no error-measure field on the surface — surface-only
+}
+
+
+def claim_of(rule_id: str) -> str:
+    """`existence` or `absence` for one rule. The module's own `CLAIM` wins; `CLAIM_BY_LEG`
+    answers for legs whose current module is shipped and may not be edited."""
+    mod = REGISTRY.get(rule_id)
+    if mod is not None:
+        declared = getattr(mod, "CLAIM", None)
+        if declared:
+            return declared
+        for other in reversed(MODULES):
+            if other.LEG == mod.LEG and getattr(other, "CLAIM", None):
+                return other.CLAIM
+        return CLAIM_BY_LEG.get(mod.LEG, "existence")
+    return "existence"
+
+
 def measures(rule_id: str) -> str:
     mod = REGISTRY.get(rule_id)
     if mod is None:
@@ -124,7 +192,7 @@ def measures(rule_id: str) -> str:
 #: track of: the registry-integrity tests read this, so a fifth generation is one entry here
 #: and nothing else to remember — which is the same reasoning `parse_rule_id` gives for being
 #: a regex instead of a per-rule table.
-GENERATIONS = (V1, V2, V3, V4, V5, V6, V7, V8)
+GENERATIONS = (V1, V2, V3, V4, V5, V6, V7, V8, V9)
 
 _ALL = [m for g in GENERATIONS for m in g] + CANDIDATE_RULES
 #: De-duplicated by rule id, order preserved. A12-v2 is listed in its generation AND in
