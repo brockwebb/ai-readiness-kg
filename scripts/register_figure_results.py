@@ -206,6 +206,14 @@ def main(argv=None) -> int:
         f"cites is in corpus/evidence/scan/ and was promoted on publication. Task {TASK}.")
     # UUIDs, not names: `--script-name` and `--data-name` resolve over superseded artifacts
     # too, so a name that was ever duplicated stays unresolvable (see scripts/seldon_artifacts).
+    return register(data, a.cycle or load_params()["cycle"]["name"])
+
+
+def register(data: list, cycle: str) -> int:
+    """Register `[(name, value, script, data, note)]`. Extracted from `main` so a caller that
+    has already decided WHICH rows to register — `register_rejudged_figure_inputs.py`, under
+    decision 2 of `cc_tasks/2026-09-10_rejudge_2_3_4.md` — reuses the artifact resolution rather
+    than growing a second copy of it."""
     ids = {}
     for _n, _v, sc, dn, _note in data:
         for nm in (sc, dn):

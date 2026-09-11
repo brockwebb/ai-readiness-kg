@@ -46,18 +46,22 @@ def families(cycle: str):
     product = B.product_matrix(p, tiers, B.PRODUCT_LEGS)
     declared = sum(1 for r in product if r["declared"])
     agencies = len({r["agency"] for r in product if r["declared"]})
+    # (counts, name prefix for the per-verdict names, population, FAMILY for the upper bound).
+    # The family is what keeps three populations from competing for one Result name; see
+    # `build_l0_matrices.leg_results`, and `cc_tasks/2026-09-10_rejudge_2_3_4_RESULT.md` §1 for
+    # what it cost when this function asked all three for a stat under one unprefixed name.
     return {
         "host": (B.leg_counts(B.host_matrix(p, tiers, "A", tier0), tier0), "scan_l0_",
                  "the 16 Tier A bodies' HOST-LEVEL surfaces (each body's `home:` page, and its "
-                 "`host:` well-known set for A12)"),
+                 "`host:` well-known set for A12)", "host"),
         "product": (B.leg_counts([r for r in product if r["declared"]], B.PRODUCT_LEGS),
                     "scan_l0_product_",
                     f"the {declared} DECLARED flagship surfaces of {agencies} Tier A agencies "
                     f"— a PARTIAL population, because the other agencies have declared no "
-                    f"product to look at"),
+                    f"product to look at", "product"),
         "tierc": (B.leg_counts(B.host_matrix(p, tiers, "C", tier0), tier0), "scan_l0_tierc_",
                   "the 3 Tier C reference hosts' host-level surfaces, which enter no Tier A "
-                  "denominator"),
+                  "denominator", "tierc"),
     }
 
 
@@ -79,9 +83,9 @@ def main(argv=None) -> int:
     # This registrar did exactly that for six legs before the check existed (RESULT §1), which
     # is why the rule is stated here rather than left to the dict's ordering.
     rows, unchanged, seen = [], [], set()
-    for _fam, (counts, prefix, population) in families(CYCLE).items():
+    for _fam, (counts, prefix, population, family) in families(CYCLE).items():
         for base, value, note in B.leg_results(counts, prefix, CYCLE, population,
-                                               with_upper95=True):
+                                               with_upper95=True, family=family):
             if base in seen:
                 continue
             seen.add(base)

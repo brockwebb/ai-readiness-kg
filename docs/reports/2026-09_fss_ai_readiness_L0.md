@@ -312,7 +312,7 @@ cycles, and the frame went from thirteen bodies plus a foreign statistical offic
 16 plus three reference hosts. A reader who compares a rate
 across the two is comparing two instruments over two populations.
 
-![Pass rate per check, previous cycle beside this one](assessment/harness/scan/figures/scan_2026-09-09/cycle_over_cycle.svg)
+![Pass rate per check, previous cycle beside this one](assessment/harness/scan/figures/scan_2026-09-09_rj1/cycle_over_cycle.svg)
 
 The figure marks every check whose rule changed as not comparable, and it draws no line and no
 arrow between the two points. A difference between two measurements is not a direction of

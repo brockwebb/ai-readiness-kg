@@ -37,6 +37,7 @@ from __future__ import annotations
 import argparse
 import html
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -176,17 +177,102 @@ def svg(width, height, label: str, body: list, reads=(), files=(), cfg=None) -> 
             f'aria-label="{html.escape(label)}"{attr}>{"".join(body)}</svg>')
 
 
+#: The comparison records a re-judgement leaves behind: for each `_rj` cycle, which Result names
+#: were compared against the original and found UNCHANGED. `cc_tasks/2026-09-10_rejudge_2_3_4.md`
+#: decision 2 forbids re-registering those, so they exist only under the source cycle's name —
+#: and a figure of the re-judged cycle still has to draw them.
+UNCHANGED_RECORDS = ("state/rejudgement_registration_2026-09-10.json",
+                     "state/l0_rejudged_registration_2026-09-10.json",
+                     "state/figure_inputs_registration_2026-09-10.json")
+
+
+def unchanged_names() -> set:
+    """Every `_rj` Result name a comparison record lists as compared-and-unchanged.
+
+    Read from the records, never inferred from the naming convention. That is the whole point of
+    `cc_tasks/2026-09-10_l0_figures_and_leg_rate_names.md` decision 1: a fallback licensed by a
+    pattern would resolve ANY missing name to the previous cycle, which is how a figure comes to
+    draw one cycle's number under another cycle's label. A fallback licensed by evidence
+    resolves only what something checked and recorded as equal.
+    """
+    out: set = set()
+    for rel in UNCHANGED_RECORDS:
+        p = REPO / rel
+        if not p.is_file():
+            continue
+        doc = json.loads(p.read_text(encoding="utf-8"))
+        if "unchanged" in doc and isinstance(doc["unchanged"], list):
+            out |= set(doc["unchanged"])
+        for v in doc.values():
+            if isinstance(v, dict) and isinstance(v.get("unchanged_names"), list):
+                out |= set(v["unchanged_names"])
+    return out
+
+
+class UnlicensedFallback(KeyError):
+    """A figure asked for a name that is neither registered nor recorded as unchanged."""
+
+
 class Reads(dict):
     """A `{name: value}` view that remembers which names were asked for. The alternative is a
-    hand-kept list of each figure's inputs, which is a list that goes stale silently."""
+    hand-kept list of each figure's inputs, which is a list that goes stale silently.
 
-    def __init__(self, source: dict):
+    **Evidence-bound fallback** (decision 1). Drawing a re-judged cycle, a name registered only
+    under the source cycle resolves there — but only when a comparison record lists it as
+    compared-and-unchanged. Anything else is `UnlicensedFallback`, raised rather than guessed,
+    and every fallback taken is recorded in `fell_back` so the RESULT can name each one and the
+    line that licensed it.
+    """
+
+    def __init__(self, source: dict, cycle: str | None = None):
         super().__init__(source)
         self.seen = set()
+        self.cycle = cycle
+        self.fell_back: dict = {}
+        # Loaded whatever cycle is drawn: the comparison cycle may be a
+        # re-judgement even when the drawn one is not.
+        self._licensed = unchanged_names()
 
     def __getitem__(self, key):
         self.seen.add(key)
+        if key in self:
+            return super().__getitem__(key)
+        # Keyed on the NAME, not on the cycle being drawn. `cycle_over_cycle` reads the
+        # COMPARISON cycle's names too, and cycle 4's comparison is cycle 3 re-judged — so a
+        # fallback scoped to the drawn cycle answers for half the figure and raises on the
+        # other half. The licence is unchanged and is still the comparison record: a name that
+        # nothing recorded as compared-and-unchanged is a hard error whatever cycle asked for it.
+        older = _source_name(key)
+        if older is not None:
+            if key in self._licensed and older in self:
+                self.fell_back[key] = older
+                return super().__getitem__(older)
+            raise UnlicensedFallback(
+                f"{key!r} is not registered, and "
+                + (f"{older!r} exists but no comparison record lists {key!r} as "
+                   f"compared-and-unchanged"
+                   if older in self else f"{older!r} does not exist either")
+                + ". A figure may not resolve a missing name by convention; see "
+                  "`cc_tasks/2026-09-10_l0_figures_and_leg_rate_names.md` decision 1.")
         return super().__getitem__(key)
+
+
+def _source_name(name: str) -> str | None:
+    """`scan_a3_pass_2026-09-09_rj1` -> `scan_a3_pass_2026-09-09`, or `None` when the name does
+    not carry a re-judgement suffix at all."""
+    m = re.match(r"^(.*)_rj\d+$", name or "")
+    return m.group(1) if m else None
+
+
+def _suffix(cycle: str) -> str:
+    return cycle.removeprefix("scan_") if cycle else ""
+
+
+def _rj_source(cycle: str) -> str | None:
+    """`scan_2026-09-09_rj1` -> `scan_2026-09-09`. `None` for a cycle that is not a
+    re-judgement, which is every cycle that measured something."""
+    m = re.match(r"^(.*)_rj\d+$", cycle or "")
+    return m.group(1) if m else None
 
 
 def criterion_of(leg: str) -> str:
@@ -569,15 +655,57 @@ def build(cfg: dict | None = None, R: dict | None = None, only: tuple | None = N
     R = R if R is not None else load_results()
     mx, fw = matrix(cfg), framework()
     # One recorder per figure, so `data-reads` names that figure's inputs and not the union.
-    draw = {"per_leg_pass_rate": lambda: per_leg_pass_rate(mx, Reads(R), cfg),
-            "agencies_by_legs_matrix": lambda: agencies_by_legs_matrix(mx, Reads(R), cfg),
-            "gap_map_by_criterion": lambda: gap_map_by_criterion(fw, Reads(R), cfg),
-            "progress_over_snapshots": lambda: progress_over_snapshots(Reads(R), cfg),
-            "cycle_over_cycle": lambda: cycle_over_cycle(mx, Reads(R), cfg),
+    draw = {"per_leg_pass_rate": lambda: per_leg_pass_rate(mx, Reads(R, cfg['cycle']), cfg),
+            "agencies_by_legs_matrix": lambda: agencies_by_legs_matrix(mx, Reads(R, cfg['cycle']), cfg),
+            "gap_map_by_criterion": lambda: gap_map_by_criterion(fw, Reads(R, cfg['cycle']), cfg),
+            "progress_over_snapshots": lambda: progress_over_snapshots(Reads(R, cfg['cycle']), cfg),
+            "cycle_over_cycle": lambda: cycle_over_cycle(mx, Reads(R, cfg['cycle']), cfg),
             "tier_c_reference_hosts": lambda: tier_c_reference_hosts(
-                tier_c_matrix(cfg), Reads(R), cfg)}
+                tier_c_matrix(cfg), Reads(R, cfg['cycle']), cfg)}
     assert tuple(draw) == FIGURES
-    return {name: fn() for name, fn in draw.items() if only is None or name in only}
+
+    # **`data-src` names the Result the number CAME FROM.** Where a recorder resolved a name
+    # through the evidence-bound fallback, the attribute is rewritten to the name it actually
+    # read. Leaving the asked-for name there would make the figure cite a Result nobody
+    # registered — which is what the figure gate reports, correctly, and which would make the
+    # provenance attribute a statement about the lookup rather than about the evidence.
+    # `cc_tasks/2026-09-10_l0_figures_and_leg_rate_names.md` decision 1.
+    out = {}
+    for name, fn in draw.items():
+        if only is not None and name not in only:
+            continue
+        rec = Reads(R, cfg["cycle"])
+        _recorders[name] = rec
+        svg = _draw_with(draw, name, mx, fw, cfg, rec)
+        for asked, read in rec.fell_back.items():
+            svg = svg.replace(f"result:{asked}", f"result:{read}")
+        out[name] = svg
+    return out
+
+
+#: The recorder each figure used on the last `build`, so a caller can ask which names fell back
+#: and to what. Read by the RESULT's accounting and by `register_scan_figures.py`.
+_recorders: dict = {}
+
+
+def _draw_with(draw: dict, name: str, mx: dict, fw: dict, cfg: dict, rec) -> str:
+    """One figure, drawn through a recorder the caller keeps. The `draw` table builds its own
+    recorder per lambda, which is right for the general case and useless when the caller needs
+    the fallback record — so the five call shapes are named once here rather than the table
+    being rewritten into something that returns two things."""
+    if name == "per_leg_pass_rate":
+        return per_leg_pass_rate(mx, rec, cfg)
+    if name == "agencies_by_legs_matrix":
+        return agencies_by_legs_matrix(mx, rec, cfg)
+    if name == "gap_map_by_criterion":
+        return gap_map_by_criterion(fw, rec, cfg)
+    if name == "progress_over_snapshots":
+        return progress_over_snapshots(rec, cfg)
+    if name == "cycle_over_cycle":
+        return cycle_over_cycle(mx, rec, cfg)
+    if name == "tier_c_reference_hosts":
+        return tier_c_reference_hosts(tier_c_matrix(cfg), rec, cfg)
+    raise KeyError(name)
 
 
 def main(argv=None) -> int:

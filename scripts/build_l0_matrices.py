@@ -214,7 +214,7 @@ def leg_counts(rows: list, legs: list) -> dict:
 
 
 def leg_results(counts: dict, prefix: str, cycle: str, population: str,
-                with_upper95: bool = False) -> list:
+                with_upper95: bool = False, family: str | None = None) -> list:
     """(base, value, note) per leg. Bases are BARE; `cycle_results.name_for` stamps the cycle.
 
     These exist because the report may not type a number. The cycle already registers per-leg
@@ -222,7 +222,24 @@ def leg_results(counts: dict, prefix: str, cycle: str, population: str,
     quoting one of those in a sentence about the sixteen host-level rows would be a number that
     resolves, from a measurement of something else. A separate denominator needs a separate
     name.
+
+    **`family` is required whenever `with_upper95` is set, and that is the fix this argument
+    exists for** (`cc_tasks/2026-09-10_l0_figures_and_leg_rate_names.md` decision 2). The counts
+    have always been family-distinct, because `prefix` distinguishes them. The upper bound was
+    not: it was emitted as `scan_leg_rate_<leg>_upper95` by all three families, so host, product
+    and Tier C competed for one string. The original run bound whichever reached the registry
+    first and a later re-registration bound a different family's number under the same name —
+    six Tier C values under host-family names, recorded in
+    `cc_tasks/2026-09-10_rejudge_2_3_4_RESULT.md` §1 and unfixable, because a Result name binds
+    once (AD-028).
+
+    So the bound is now `scan_l0_<family>_leg_rate_<leg>_upper95`. The unprefixed name is never
+    emitted again; the ones already registered stand, unedited, as what they are.
     """
+    if with_upper95 and not family:
+        raise ValueError(
+            "leg_results(with_upper95=True) needs a `family`: the upper bound's name carries "
+            "it, and an unnamed family is how three populations came to share one Result name")
     out = []
     for leg, s_ in sorted(counts.items()):
         k = leg_key(leg)
@@ -235,7 +252,7 @@ def leg_results(counts: dict, prefix: str, cycle: str, population: str,
                     f"{base} Denominator: pass + fail, which is {s_['applicable_n']}."))
         if with_upper95:
             out.append((
-                f"scan_leg_rate_{k}_upper95", s_["wilson_hi"],
+                f"scan_l0_{family}_leg_rate_{k}_upper95", s_["wilson_hi"],
                 f"{base} Upper bound of the 95% Wilson score interval on the pass rate, "
                 f"{s_['pass']}/{s_['applicable_n']}, from assessment/harness/rollup.py — the "
                 f"repo's own interval, delegated and never re-derived. At {s_['applicable_n']} "
@@ -441,14 +458,21 @@ def main(argv=None) -> int:
     ] +
         leg_results(host_counts, "scan_l0_", cycle,
                     "the 16 Tier A bodies' HOST-LEVEL surfaces (each body's `home:` page, and "
-                    "its `host:` well-known set for A12)", with_upper95=True)
+                    "its `host:` well-known set for A12)", with_upper95=True, family="host")
         + leg_results(prod_counts, "scan_l0_product_", cycle,
                       f"the {declared} DECLARED flagship surfaces of {declared_agencies} Tier "
                       f"A agencies — a PARTIAL population, because the other agencies have "
-                      f"declared no product to look at", with_upper95=True)
+                      f"declared no product to look at", with_upper95=True, family="product")
+        # Tier C emits its upper bound too, now that a family-prefixed name makes that safe.
+        # It could not before: the unprefixed name was unambiguous in THIS builder only because
+        # the host family's legs (tier 0) and the product family's are disjoint and Tier C was
+        # never asked for the stat. A caller that asked it — `register_l0_rejudged.py` did —
+        # got Tier C values competing for host-family names, which is how six Results came to
+        # say the wrong thing. Naming the family removes the coincidence the old scheme
+        # depended on.
         + leg_results(tierc_counts, "scan_l0_tierc_", cycle,
                       "the 3 Tier C reference hosts' host-level surfaces, which enter no Tier "
-                      "A denominator (DD-059)"))
+                      "A denominator (DD-059)", with_upper95=True, family="tierc"))
 
     out = cycle_results.register(
         [(cycle_results.name_for(b, cycle), v, f"{n} ({TASK})") for b, v, n in per_leg]

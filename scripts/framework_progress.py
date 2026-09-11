@@ -30,6 +30,17 @@ JSON_PATH = REPO / "framework" / "ai_readiness_framework.json"
 OUT_JSON = REPO / "docs" / "progress" / "framework_progress_2026-09-06.json"
 OUT_HTML = REPO / "docs" / "progress" / "index.html"
 
+#: Which cycle the page draws. `None` means `params.cycle.name`, which is what every previous
+#: run wanted. It is settable because cycle 4 was MEASURED and never REPORTED — its gate stopped
+#: before §4 — so `state/scan_matrix_2026-09-10.json` does not exist and never will; the matrix
+#: that exists is the harness-v5 re-judgement's. A page builder that can only draw the cycle
+#: params names cannot draw a cycle whose only reported form is a re-judgement.
+#: `cc_tasks/2026-09-10_l0_figures_and_leg_rate_names.md` decision 5.
+#:
+#: A module-level global read at CALL time, which is this repo's convention for exactly this
+#: (CLAUDE.md "Conventions specific to this repo") — not threaded through six functions.
+DRAW_CYCLE: str | None = None
+
 STATUSES = ("specified", "harness_built", "measured")
 #: Colour-blind-safe, and each hue used once so the legend is the only thing to read.
 COLOURS = {"specified": "#94a3b8", "harness_built": "#3b82f6", "measured": "#059669",
@@ -161,7 +172,7 @@ def figure_svgs() -> dict:
     if not FIGURES_YAML.is_file():
         return {}
     figures = _figures_module()
-    cfg = figures.config()
+    cfg = figures.config(DRAW_CYCLE)
     sys.path.insert(0, str(REPO / "scripts"))
     import importlib.util
     spec = importlib.util.spec_from_file_location(
@@ -213,7 +224,7 @@ def matrix_for_page() -> dict:
     paragraph and anything else that needs the cycle's own numbers."""
     sys.path.insert(0, str(REPO / "assessment" / "harness"))
     from scan import figures as _figs
-    cfg = _figs.config()
+    cfg = _figs.config(DRAW_CYCLE)
     return json.loads((REPO / cfg["matrix_json"]).read_text(encoding="utf-8"))
 
 
@@ -250,7 +261,7 @@ def _rule_changed_clause() -> str:
     """
     sys.path.insert(0, str(REPO / "assessment" / "harness"))
     from scan import figures as _figs
-    changed = (_figs.config()["compare_to"].get("rule_changed") or {})
+    changed = (_figs.config(DRAW_CYCLE)["compare_to"].get("rule_changed") or {})
     if not changed:
         return ("no leg's rule moved between these two, so every difference on F5 is the "
                 "host.")
@@ -274,7 +285,7 @@ def rejudged_note() -> str:
     """
     sys.path.insert(0, str(REPO / "assessment" / "harness"))
     from scan import figures as _figs
-    cfg = _figs.config()
+    cfg = _figs.config(DRAW_CYCLE)
     path = REPO / "state" / f"{cfg['cycle']}_rj1.json"
     if not path.is_file():
         return ""
@@ -387,7 +398,7 @@ def requests_table() -> str:
     import yaml as _yaml
     sys.path.insert(0, str(REPO / "assessment" / "harness"))
     from scan import figures as _figs
-    cfg = _figs.config()
+    cfg = _figs.config(DRAW_CYCLE)
     path = REPO / "state" / f"{cfg['cycle']}.json"
     if not path.is_file():
         return ""
@@ -417,7 +428,7 @@ def requests_table() -> str:
 def footer() -> str:
     sys.path.insert(0, str(REPO / "assessment" / "harness"))
     from scan import figures as _figs
-    cfg = _figs.config()
+    cfg = _figs.config(DRAW_CYCLE)
     return ("<footer><h3>What this does not claim</h3><p>" + non_claims() + "</p>"
             + "<h3>Excluded on purpose</h3><ul>"
             + "".join(f"<li>{t}</li>" for t in EXCLUDED) + "</ul>"
@@ -542,7 +553,7 @@ def cycle_heading() -> str:
     literal `2026-09-07`, which would have headed cycle 2's figures with cycle 1's date."""
     sys.path.insert(0, str(REPO / "assessment" / "harness"))
     from scan import figures as _figs
-    return f"The {_figs.config()['cycle_suffix']} cycle"
+    return f"The {_figs.config(DRAW_CYCLE)['cycle_suffix']} cycle"
 
 
 def g_name(g: dict, code: str) -> str:
@@ -555,7 +566,12 @@ def g_name(g: dict, code: str) -> str:
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--json", default=str(JSON_PATH))
+    ap.add_argument("--cycle", default=None,
+                    help="draw a cycle other than params.cycle.name — a re-judgement, "
+                         "for a cycle whose only reported matrix is one")
     a = ap.parse_args(argv)
+    global DRAW_CYCLE
+    DRAW_CYCLE = a.cycle
     g = json.loads(Path(a.json).read_text(encoding="utf-8"))
     inds = indicators(g)
     s = summarise(inds)

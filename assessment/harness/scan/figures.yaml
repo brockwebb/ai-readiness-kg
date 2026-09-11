@@ -43,6 +43,34 @@ compare_to_by_cycle:
       A3: "v4 → v5"
       A8: "v3 → v4"
       A10: "v2 → v3"
+  # Cycle 3 RE-JUDGED, against the same cycle 2 its source compares against. The comparison the
+  # report's movement section makes is cycle 2 beside cycle 3, and re-judging cycle 3 does not
+  # change which pair that is — it changes what the second dot is worth. Without this entry the
+  # figure fell through to the global default and drew cycle 1, which is the failure the
+  # per-cycle override exists to prevent and which it did not prevent for a name it had never
+  # seen. `cc_tasks/2026-09-10_l0_figures_and_leg_rate_names.md` decision 5.
+  scan_2026-09-09_rj1:
+    cycle: scan_2026-09-07b
+    suffix: "2026-09-07b"
+    label: "cycle 2 · 2026-09-07b, 13 agencies"
+    note: "different frame: cycle 2 measured 13 agencies + StatCan, cycle 3 measures 16 + 3 reference hosts; the right-hand dot is the harness-v5 re-judgement, same evidence"
+    rule_changed:
+      A1: "v3 → v4"
+      A3: "v4 → v5"
+      A8: "v3 → v4"
+      A10: "v2 → v3"
+  # Cycle 4 against cycle 3, both re-judged: like for like, one harness version, so a difference
+  # is the hosts and not the instrument. Comparing a v5 cycle against a v4 one would put the
+  # instrument's own correction into every row.
+  scan_2026-09-10_rj1:
+    cycle: scan_2026-09-09_rj1
+    suffix: "2026-09-09_rj1"
+    label: "cycle 3 · 2026-09-09, re-judged"
+    note: "both cycles judged under harness-v5, so a difference on a row is the host and not the instrument; the frame grew by the seven declared flagships"
+    # EMPTY, and that is the statement: cycle 3 re-judged and cycle 4 re-judged were both
+    # judged under the same `CURRENT` rules and the same harness version, so no row on this
+    # figure carries an instrument change. Every difference is the hosts.
+    rule_changed: {}
 
   scan_2026-09-07b_rj1:
     cycle: scan_2026-09-07b

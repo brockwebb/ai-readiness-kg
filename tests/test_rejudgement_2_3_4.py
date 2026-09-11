@@ -80,13 +80,22 @@ def test_every_verdict_move_landed_on_error(cycle):
 
 
 def test_no_report_tag_quotes_a_misbound_result():
-    """The six of §1 are junk. Nothing may resolve through one, and this is the assertion that
-    keeps that true as the report is edited."""
+    """The six of §1 are junk. Nothing may resolve through one — **in prose or in a figure**
+    (`cc_tasks/2026-09-10_l0_figures_and_leg_rate_names.md` decision 3 extends this to figure
+    inputs). A figure carries its reads in `data-reads`, so the check is the same shape on both
+    sides of the document."""
     quoted = set()
     for f in (REPO / "docs" / "reports" / "sections").glob("*.md"):
         quoted |= set(re.findall(r"\{\{result:([a-z0-9_.:-]+?):", f.read_text(encoding="utf-8")))
+    md = REPO / "docs" / "reports" / "2026-09_fss_ai_readiness_L0.md"
+    if md.is_file():
+        for rel in re.findall(r"!\[[^\]]*\]\(([^)]+\.svg)\)", md.read_text(encoding="utf-8")):
+            svg = REPO / rel
+            if svg.is_file():
+                m = re.search(r'data-reads="([^"]*)"', svg.read_text(encoding="utf-8"))
+                quoted |= set((m.group(1) if m else "").split())
     hit = sorted(quoted & set(MISBOUND))
-    assert hit == [], f"the report quotes a misbound Result: {hit}"
+    assert hit == [], f"the report or one of its figures reads a misbound Result: {hit}"
 
 
 def test_the_registrar_can_no_longer_let_a_later_family_win():
@@ -98,13 +107,15 @@ def test_the_registrar_can_no_longer_let_a_later_family_win():
         "the family order IS the precedence; changing it re-binds names to a different "
         "population")
     seen, first = set(), {}
-    for _fam, (counts, prefix, population) in fams.items():
+    for _fam, (counts, prefix, population, family) in fams.items():
         for base, value, _note in R.B.leg_results(counts, prefix, "scan_2026-09-09_rj1",
-                                                  population, with_upper95=True):
+                                                  population, with_upper95=True,
+                                                  family=family):
             if base in seen:
                 continue
             seen.add(base)
             first[base] = value
     # G1-D is the case that went wrong: host 0.242494, Tier C 0.561497, and host must win.
-    assert first["scan_leg_rate_g1_d_upper95"] == pytest.approx(0.242494)
-    assert first["scan_leg_rate_a5_upper95"] == pytest.approx(0.532305)
+    assert first["scan_l0_host_leg_rate_g1_d_upper95"] == pytest.approx(0.242494)
+    assert first["scan_l0_host_leg_rate_a5_upper95"] == pytest.approx(0.532305)
+    assert first["scan_l0_tierc_leg_rate_g1_d_upper95"] == pytest.approx(0.561497)

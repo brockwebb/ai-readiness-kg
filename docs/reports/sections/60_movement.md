@@ -5,7 +5,7 @@ cycles, and the frame went from thirteen bodies plus a foreign statistical offic
 {{result:fss_agencies_tier_a:value}} plus three reference hosts. A reader who compares a rate
 across the two is comparing two instruments over two populations.
 
-![Pass rate per check, previous cycle beside this one]({{figure:cycle_over_cycle_2026-09-09:path}})
+![Pass rate per check, previous cycle beside this one]({{figure:cycle_over_cycle_2026-09-09_rj1:path}})
 
 The figure marks every check whose rule changed as not comparable, and it draws no line and no
 arrow between the two points. A difference between two measurements is not a direction of

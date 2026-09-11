@@ -103,6 +103,40 @@ class ResultNameError(ValueError):
     """A per-cycle Result name that does not carry its cycle."""
 
 
+#: The name shape that let three populations share one Result. `scan_leg_rate_<leg>_<stat>` was
+#: emitted by `build_l0_matrices.leg_results` without saying WHICH family's rate it was; the
+#: shipped builder was safe only by coincidence (its host legs and its product legs are
+#: disjoint), and the first caller to ask a third family for the stat registered six Tier C
+#: values under host-family names — `cc_tasks/2026-09-10_rejudge_2_3_4_RESULT.md` §1, six
+#: Results that cannot be corrected because a name binds once (AD-028).
+#:
+#: Refused HERE rather than in the emitter, because the emitter is one caller and this is the
+#: choke point every caller passes through. `cc_tasks/2026-09-10_l0_figures_and_leg_rate_names.md`
+#: decision 4. The already-registered unprefixed names are untouched and keep resolving; what is
+#: refused is minting another one.
+_UNPREFIXED_LEG_RATE = re.compile(r"^scan_leg_rate_[a-z0-9_]+$")
+
+
+class UnprefixedLegRateName(ValueError):
+    """A leg-rate Result name that does not say which family's rate it is."""
+
+
+def refuse_unprefixed_leg_rate(name: str, cycle: str) -> None:
+    """Raise on `scan_leg_rate_<leg>_<stat>_<cycle>`, whatever the caller."""
+    stem = name
+    suffix = cycle_suffix(cycle)
+    if stem.endswith(f"_{suffix}"):
+        stem = stem[: -(len(suffix) + 1)]
+    if _UNPREFIXED_LEG_RATE.match(stem):
+        raise UnprefixedLegRateName(
+            f"Result name {name!r} does not say which family's leg rate it is. Three "
+            f"populations compute one — the 16 Tier A host surfaces, the declared flagship "
+            f"surfaces, and the 3 Tier C reference hosts — and an unprefixed name lets whichever "
+            f"caller runs first bind it for all of them. Use "
+            f"`scan_l0_<host|product|tierc>_leg_rate_{stem.removeprefix('scan_leg_rate_')}`. "
+            f"The unprefixed names already in the registry are not affected and are not edited.")
+
+
 def check_name(name: str, cycle: str) -> None:
     """Raise unless `name` carries `cycle`, or is the FIRST cycle re-registering its own name.
 
@@ -135,8 +169,9 @@ def check_names(names, cycle: str) -> None:
     bad = []
     for n in names:
         try:
+            refuse_unprefixed_leg_rate(n, cycle)
             check_name(n, cycle)
-        except ResultNameError as exc:
+        except (ResultNameError, UnprefixedLegRateName) as exc:
             bad.append(str(exc))
     if bad:
         raise ResultNameError("\n".join(bad))

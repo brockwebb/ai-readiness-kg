@@ -146,6 +146,22 @@ def existing(name: str) -> str | None:
     return live_artifact(name)
 
 
+def _resolve_read(name: str) -> str:
+    """The Result name this read resolves to: itself, or the source cycle's where a comparison
+    record licenses the fallback. Same rule as `scan.figures.Reads`, read from the same files."""
+    import sys as _sys
+    _sys.path.insert(0, str(REPO / "assessment" / "harness"))
+    from scan.figures import unchanged_names, _rj_source, _suffix
+    if name not in unchanged_names():
+        return name
+    for cyc in ("scan_2026-09-09_rj1", "scan_2026-09-10_rj1", "scan_2026-09-07b_rj2"):
+        suf = _suffix(cyc)
+        if name.endswith("_" + suf):
+            src = _rj_source(cyc)
+            return f"{name[: -(len(suf) + 1)]}_{_suffix(src)}"
+    return name
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -186,7 +202,13 @@ def main(argv=None) -> int:
         if r is not None:
             made += 1
             fid = existing(node)
-        edges = [("CONTAINS", n) for n in f["reads"]]
+        # **A re-judged cycle's figure links to the Result it actually reads.** Where a value
+        # did not move, `cc_tasks/2026-09-10_rejudge_2_3_4.md` decision 2 forbids registering it
+        # under the `_rj` name, so the renderer resolves it through the source cycle
+        # (`figures.Reads`, evidence-bound). The CONTAINS edge follows the same resolution and
+        # by the same licence — the comparison record — because a provenance edge that pointed
+        # at a name nobody registered would simply fail, and 93 of them did on the first run.
+        edges = [("CONTAINS", _resolve_read(n)) for n in f["reads"]]
         edges += [("GENERATED_BY", "scan_figures")]
         for rel, target in edges:
             lr = run(["seldon", "link", "create", "--from-id", fid,
