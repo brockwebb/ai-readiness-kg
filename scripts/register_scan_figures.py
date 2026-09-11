@@ -146,20 +146,36 @@ def existing(name: str) -> str | None:
     return live_artifact(name)
 
 
-def _resolve_read(name: str) -> str:
-    """The Result name this read resolves to: itself, or the source cycle's where a comparison
-    record licenses the fallback. Same rule as `scan.figures.Reads`, read from the same files."""
-    import sys as _sys
-    _sys.path.insert(0, str(REPO / "assessment" / "harness"))
-    from scan.figures import unchanged_names, _rj_source, _suffix
-    if name not in unchanged_names():
-        return name
-    for cyc in ("scan_2026-09-09_rj1", "scan_2026-09-10_rj1", "scan_2026-09-07b_rj2"):
-        suf = _suffix(cyc)
-        if name.endswith("_" + suf):
-            src = _rj_source(cyc)
-            return f"{name[: -(len(suf) + 1)]}_{_suffix(src)}"
-    return name
+def reads_view():
+    """The one resolver: `figures.Reads` over every registered Result, asked by name.
+
+    **There is one implementation of the fallback rule and it is `figures.Reads`.**
+    `_resolve_read` used to re-derive it here from a HARDCODED list of three cycles —
+    `scan_2026-09-09_rj1`, `scan_2026-09-10_rj1`, `scan_2026-09-07b_rj2` — so a figure of any
+    OTHER re-judged cycle resolved every fallback name to itself, the `CONTAINS` edge pointed at
+    a Result nobody registered, and the link failed. 93 of them did on its first run
+    (`cc_tasks/2026-09-11_f5_membership_through_fallback_RESULT.md` §8 item 5). A list of cycles
+    inside a resolver is a list that goes stale the next time a cycle is re-judged, and this one
+    went stale the same day it was written.
+
+    `cc_tasks/2026-09-11_l0_report_cycle4_revision.md` decision 2. The renderer already resolves
+    every read through this type, and `tests/test_figure_registration.py` asserts no module but
+    `figures.py` strips an `_rjN` suffix for this purpose.
+    """
+    from scan.figures import Reads, load_results
+    return Reads(load_results())
+
+
+def resolve_read(view, name: str) -> str:
+    """The Result name a read resolves to, through `figures.Reads` and nothing else.
+
+    Asking for the VALUE is what makes this the same resolution the figure did: `__getitem__`
+    records the fallback it took in `fell_back`, and raises `UnlicensedFallback` on a name the
+    comparison records do not license — which is the loud failure a provenance edge to a
+    nonexistent Result deserves, rather than a link that fails later for a reason nobody reads.
+    """
+    view[name]
+    return view.fell_back.get(name, name)
 
 
 def main(argv=None) -> int:
@@ -179,6 +195,7 @@ def main(argv=None) -> int:
         print(json.dumps({k: {"path": v["path"], "reads": len(v["reads"]),
                               "files": v["files"]} for k, v in figs.items()}, indent=1))
         return 0
+    view = reads_view()
     made, linked, failed, reused = 0, 0, [], 0
     for name, f in figs.items():
         node = f"{name}_{suffix}"
@@ -208,7 +225,7 @@ def main(argv=None) -> int:
         # (`figures.Reads`, evidence-bound). The CONTAINS edge follows the same resolution and
         # by the same licence — the comparison record — because a provenance edge that pointed
         # at a name nobody registered would simply fail, and 93 of them did on the first run.
-        edges = [("CONTAINS", _resolve_read(n)) for n in f["reads"]]
+        edges = [("CONTAINS", resolve_read(view, n)) for n in f["reads"]]
         edges += [("GENERATED_BY", "scan_figures")]
         for rel, target in edges:
             lr = run(["seldon", "link", "create", "--from-id", fid,

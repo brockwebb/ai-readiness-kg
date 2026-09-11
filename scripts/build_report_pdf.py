@@ -5,6 +5,15 @@ Task `cc_tasks/2026-09-10_report_pdf.md` decision 1: the PDF is a BUILD PRODUCT.
 is rebuilt first by `scripts/build_l0_report.py`, so every `{{result:...}}` resolves from the
 graph, and this script only converts. No number is typed here and none can be.
 
+**That rebuild is a CALL, not a sentence.** This docstring and the `report-pdf` target both said
+the markdown was rebuilt first and nothing did it: `main` checked that
+`2026-09_fss_ai_readiness_L0.md` exists and carries no unresolved token, which a stale file
+passes trivially. `cc_tasks/2026-09-11_l0_report_cycle4_revision.md` found it the way it is
+always found — the cycle-4 revision moved every tag and the figure, and `make report-pdf`
+produced a PDF of the previous cycle, embedding the previous cycle's figure, with no error
+anywhere. A build product whose builder does not run is a committed artifact that drifts from
+its sources in silence.
+
 **Toolchain, pinned to what is already installed** (decision 1 forbids installing one):
 pandoc 3.8.3 as the converter, typst 0.14.2 as the PDF engine. There is no LaTeX on this
 machine; typst is what exists, and it renders SVG natively, which matters because F5 is an SVG
@@ -32,6 +41,7 @@ import sys
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(REPO / "scripts"))
 REPORTS = REPO / "docs" / "reports"
 GENERATED = REPORTS / "generated"
 STEM = "2026-09_fss_ai_readiness_L0"
@@ -83,6 +93,13 @@ def main(argv=None) -> int:
     a = ap.parse_args(argv)
 
     versions = tool_versions()
+    # The markdown FIRST, through its own gate: a fatal reference, an unresolved token, a bare
+    # numeral in prose or a missing fragment writes no markdown (`build_l0_report.build`), and
+    # then this writes no PDF either.
+    import build_l0_report
+    if build_l0_report.build(check=a.check):
+        raise SystemExit("FATAL: the markdown gate BLOCKED; no PDF is built from a report the "
+                         "graph could not fill in")
     if not MD.is_file():
         raise SystemExit(f"FATAL: {MD} does not exist; run scripts/build_l0_report.py first")
     unresolved = re.findall(r"\{\{(?:result|figure|cite):[^}]*\}\}", MD.read_text("utf-8"))

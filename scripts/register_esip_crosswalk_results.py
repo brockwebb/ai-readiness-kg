@@ -65,6 +65,18 @@ def main(argv=None) -> int:
          f"completeness, consistency, bias, resolution, gridding, labels, provenance and the "
          f"data dictionary are properties of the dataset. Data Quality is 0 full of 18 and Data "
          f"Preparation 0 of 4. Task {TASK} §2."),
+        # The DENOMINATOR, added when the L0 report came to quote "3 of 5" in prose
+        # (`cc_tasks/2026-09-11_l0_report_cycle4_revision.md` decision 3c). Every numeral in
+        # that report is a tag or it is not written, and the component count had no name; the
+        # value is read from the crosswalk like every other row here.
+        ("noaa_ai_ready_components", NOAA["components"],
+         f"Components of the AI-Ready Data definition in NAO 216-128 §3.01, counted from the "
+         f"verbatim definition on the crosswalk: {NOAA['components']} — discoverable; "
+         f"machine-readable and machine-understandable; sufficient quality; documentation; "
+         f"access methods. The denominator of "
+         f"`noaa_ai_ready_components_measured_full_{EPOCH}`. Grounded in an OCR reading of a "
+         f"scanned image; the span, the engine and its confidence are on the record. "
+         f"Task {TASK} decision 3."),
         ("noaa_ai_ready_components_measured_full", NOAA["by_measured"]["full"],
          f"Components of NAO 216-128 §3.01's AI-Ready Data definition that this instrument "
          f"measures EXACTLY: {NOAA['by_measured']['full']} of {NOAA['components']} — "

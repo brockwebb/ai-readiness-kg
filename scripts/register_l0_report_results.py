@@ -60,6 +60,14 @@ def payload(cycle: str) -> dict:
     return json.loads((REPO / "state" / f"{cycle}.json").read_text(encoding="utf-8"))
 
 
+def evidence_payload(p: dict) -> dict:
+    """The payload the COLLECTION is on — `build_l0_matrices`', which owns the rule and states
+    why: a re-judgement issues no request and records no Observation, so anything counted off
+    the observations has to be counted off the cycle it derives from."""
+    import build_l0_matrices
+    return build_l0_matrices.evidence_payload(p)
+
+
 def targets(params: dict) -> dict:
     return json.loads(
         (REPO / "state" / f"{params['cycle']['targets']}.json").read_text(encoding="utf-8"))
@@ -98,7 +106,7 @@ def a12_by_tier(p: dict, tiers: dict) -> dict:
     return out
 
 
-def offroster_sitemap_fails(p: dict, params: dict) -> dict:
+def offroster_sitemap_fails(p: dict, params: dict, ev: dict | None = None) -> dict:
     """A5 failures attributable to a declared sitemap the scanner declined to follow.
 
     Read from the cycle's own bytes: every `robots.txt` body it retained is re-parsed for
@@ -106,9 +114,16 @@ def offroster_sitemap_fails(p: dict, params: dict) -> dict:
     is looked up in the set of URLs the cycle actually requested. A host counts only if it
     declares a sitemap OFF the frame AND that URL was never fetched AND its A5 verdict is
     `fail` — all three, because any one of them alone names a different thing.
+
+    **Two payloads, because this asks two questions.** The VERDICT is `p`'s — a re-judgement's
+    verdicts are its own. The DECLARATIONS and the requests are read off the retained bytes,
+    which a re-judgement does not have (`observations_detail: []`); `ev` is the measured cycle it
+    derives from. Read off the re-judged payload alone this returns "no host declared a sitemap
+    anywhere", which is a caveat measured empty for the wrong reason.
     """
+    ev = ev if ev is not None else p
     frame = {h["host"] for h in targets(params)["hosts"]}
-    requested = {(o.get("request") or {}).get("url", "") for o in p["observations_detail"]}
+    requested = {(o.get("request") or {}).get("url", "") for o in ev["observations_detail"]}
     a5_verdict = {f["target_doc_id"]: f["verdict"] for f in p["findings_detail"]
                   if f["leg"] == "A5"}
     doc_of_host = {}
@@ -120,7 +135,7 @@ def offroster_sitemap_fails(p: dict, params: dict) -> dict:
     # declaration lines counts the same declaration a dozen times and reports a frame-wide
     # figure an order of magnitude too large.
     declared, off, unfollowed, fails = set(), [], [], []
-    for o in p["observations_detail"]:
+    for o in ev["observations_detail"]:
         url = (o.get("request") or {}).get("url", "")
         body = (o.get("response") or {}).get("body_path")
         if not url.endswith("/robots.txt") or not body:
@@ -164,6 +179,10 @@ REFUSAL_ARTIFACTS = (
     ("state/scan_2026-09-07b.json", "observations"),
     ("state/fss_preflight_2026-09.json", "refusing_identified_client"),
     ("state/scan_2026-09-09.json", "observations"),
+    # Cycle 4, the sixth. Listed because it is a measurement that could carry the refusal, and
+    # then CHECKED like the other five: the count is how many of these actually record all
+    # three bodies refusing, never how many files are named here.
+    ("state/scan_2026-09-10.json", "observations"),
 )
 
 #: Agency codes, for the pre-flight that records bodies by code rather than by host.
@@ -290,25 +309,40 @@ def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--cycle", default=None,
+                    help="register the CYCLE family for a cycle other than params.cycle.name — "
+                         "a re-judgement included. The two other batches are skipped then; see "
+                         "the module docstring for which registrar owns each.")
     a = ap.parse_args(argv)
     params = load_params()
-    cycle = params["cycle"]["name"]
+    cycle = a.cycle or params["cycle"]["name"]
     p = payload(cycle)
+    ev = evidence_payload(p)
     tiers = tier_of(params)
 
     nl_declared = netlocs_declared(params)
-    nl_contacted = netlocs_contacted(p)
+    nl_contacted = netlocs_contacted(ev)
     a12 = a12_by_tier(p, tiers)
-    a5 = offroster_sitemap_fails(p, params)
+    a5 = offroster_sitemap_fails(p, params, ev)
     refusal = refusal_measurements()
-    ph = p["params_hash"][:12]
+    ph = ev["params_hash"][:12]
+    ev_cycle = ev["cycle"]
+    #: Appended to every description whose value is counted off OBSERVATIONS, when the cycle
+    #: being registered is a re-judgement. A re-judgement issues no request and records no
+    #: Observation, so the number is the measured cycle's and the description has to say so —
+    #: otherwise the Result reads as a claim that a re-judgement contacted 35 netlocs.
+    evidence_note = ("" if ev_cycle == cycle else
+                     f" Registered under {cycle}, which is a RE-JUDGEMENT and issued no "
+                     f"request of its own: this counts {ev_cycle}'s collection, the evidence "
+                     f"the re-judgement rests on, and the verdicts it is compared against are "
+                     f"{cycle}'s.")
 
     ensure_script(a.dry_run)
     targets_v2 = ensure_targets_v2(params, a.dry_run)
 
     batches = [
         # ---- the frame family: facts about the TARGET LIST, on the frame epoch ----
-        (FRAME_EPOCH, f"{params['cycle']['targets']}_v2", [
+        ("frame", FRAME_EPOCH, f"{params['cycle']['targets']}_v2", [
             ("fss_scan_netlocs", nl_declared,
              f"Distinct netlocs on the cycle-3 target list ({params['cycle']['targets']} v2), "
              f"counted from the rows' own URLs. The ROSTER is 19 hosts, one per recognized "
@@ -318,42 +352,43 @@ def main(argv=None) -> int:
              f"report that quotes one for the other overstates the frame. Task {TASK} §0.2."),
         ]),
         # ---- the cycle family: facts about the MEASUREMENT ----
-        (cycle, cycle, [
+        ("cycle", cycle, cycle, [
             ("fss_scan_netlocs_contacted", nl_contacted,
-             f"Netlocs cycle {cycle} (params_hash {ph}...) issued at least one HTTP request "
+             f"Netlocs cycle {ev_cycle} (params_hash {ph}...) issued at least one HTTP request "
              f"to, counted at the socket from the payload's own per-host counter, loopback "
              f"control fixtures excluded. This EXCEEDS the {nl_declared} netlocs the target "
              f"list names, and the excess is the finding: two hosts declare their sitemap on a "
              f"sibling netloc and the scanner followed the declaration "
              f"(cc_tasks/2026-09-08_scan_run_3b_RESULT.md §2). A contact bound stated as a "
              f"closed list cannot hold while a discovery leg reads what the host actually "
-             f"says. Task {TASK} §0.2."),
+             f"says.{evidence_note} Task {TASK} §0.2."),
             ("scan_a5_fail_offroster_sitemap", len(a5["fails"]),
              f"Of cycle {cycle}'s A5 `fail` verdicts, how many belong to a host whose "
              f"robots.txt declares a sitemap on a netloc OUTSIDE the frame that the scanner "
-             f"then did not fetch. MEASURED from the cycle's own retained robots.txt bodies "
+             f"then did not fetch. MEASURED from cycle {ev_cycle}'s retained robots.txt bodies "
              f"re-parsed for Sitemap: lines ({a5['declarations']} distinct declarations "
              f"from {a5['declaring_hosts']} of the frame's hosts, {len(a5['off_frame'])} of "
              f"them naming an off-frame netloc), compared against the set of "
              f"URLs the cycle actually requested. The scanner followed every declaration it "
              f"found, off-frame ones included, so no A5 failure is attributable to an "
-             f"unfollowed declaration and this caveat is empty for cycle 3. It is registered "
+             f"unfollowed declaration and this caveat is empty for this cycle. It is registered "
              f"at its measured value rather than omitted, because a caveat that is absent and "
-             f"a caveat that is zero read the same in prose and are not the same claim. "
-             f"Task {TASK} §0.4."),
+             f"a caveat that is zero read the same in prose and are not the same claim."
+             f"{evidence_note} Task {TASK} §0.4."),
             ("scan_refusal_consecutive_measurements", refusal["measurements"],
              f"Separate measurement artifacts in state/ that record ALL THREE of "
              f"{', '.join(REFUSING)} declining an identified, robots-compliant client: "
              f"{', '.join(refusal['artifacts'])}. Counted by re-reading each artifact rather "
              f"than by trusting a prior report, and the count spans two error conventions: "
              f"cycle 1 filed those refusals under `http_4xx` because the closed error set had "
-             f"no member for a refusal until harness-v3 added one. Two of the five are "
-             f"pre-flights that record bodies rather than observations, and one of those names "
-             f"them by agency code. This is the persistence behind the report's accessibility "
-             f"finding: not a transient, and not a sampling accident. Task {TASK} §2."),
+             f"no member for a refusal until harness-v3 added one. Two of the "
+             f"{refusal['measurements']} are pre-flights that record bodies rather than "
+             f"observations, and one of those names them by agency code. This is the "
+             f"persistence behind the report's accessibility finding: not a transient, and not "
+             f"a sampling accident. Task {TASK} §2."),
         ]),
         # ---- A12 decomposed, from the matrix ----
-        (cycle, f"scan_matrix_{cycle_results.cycle_suffix(cycle)}", [
+        ("a12", cycle, f"scan_matrix_{cycle_results.cycle_suffix(cycle)}", [
             (f"scan_a12_tier{t}_{v}", a12.get(t, {}).get(v, 0),
              f"**CANDIDATE indicator A12** (DD-054, counted in no framework fraction), cycle "
              f"{cycle}, TIER {t} hosts only: verdicts of `{v}` among the "
@@ -368,17 +403,28 @@ def main(argv=None) -> int:
         ]),
     ]
 
+    if a.cycle:
+        # **Only the cycle family.** The other two are not this cycle's to register and both
+        # would be refused rather than wrong: `fss_scan_netlocs_2026-09` is a fact about the
+        # TARGET LIST, bound once on the frame epoch and unchanged at v5 (22 netlocs, same as
+        # v4 — the seven declared flagships added surfaces on hosts already in the frame), and
+        # the A12-by-tier decomposition was superseded by the family-prefixed
+        # `scan_l0_tierc_a12_*` names that `build_l0_matrices` now emits
+        # (`cc_tasks/2026-09-10_l0_figures_and_leg_rate_names.md` decision 4). Minting
+        # `scan_a12_tierA_*_<cycle>` beside them would be the third name for one population.
+        batches = [b for b in batches if b[0] == "cycle"]
+
     if a.dry_run:
         print(json.dumps({"netlocs_declared": nl_declared, "netlocs_contacted": nl_contacted,
                           "a12_by_tier": a12, "a5_offroster": a5, "refusal": refusal,
                           "targets_v2_artifact": targets_v2}, indent=1))
-        for ep, data, rows in batches:
+        for _fam, ep, data, rows in batches:
             for base, v, _note in rows:
                 print(f"  {cycle_results.name_for(base, ep):48s} {v}   <- {data}")
         return 0
 
     total = {"registered": 0, "already_at_this_value": 0, "failed": 0, "of": 0}
-    for epoch, data, rows in batches:
+    for _fam, epoch, data, rows in batches:
         out = cycle_results.register(
             [(cycle_results.name_for(b, epoch), v, f"{n} ({TASK})") for b, v, n in rows],
             cycle=epoch, script=SCRIPT_ARTIFACT, data=data)

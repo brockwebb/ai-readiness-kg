@@ -32,9 +32,12 @@ MD = REPO / "docs" / "reports" / "2026-09_fss_ai_readiness_L0.md"
 SECTIONS = REPO / "docs" / "reports" / "sections"
 
 #: The cycle the report speaks for. Its prose was re-pointed at the harness-v5 re-judgement by
-#: `cc_tasks/2026-09-10_rejudge_2_3_4.md` decision 4; its figures follow here.
-REPORT_CYCLE = "2026-09-09_rj1"
-SOURCE_CYCLE = "2026-09-09"
+#: `cc_tasks/2026-09-10_rejudge_2_3_4.md` decision 4, and moved to the generation-9 judgement of
+#: cycle 4 by `cc_tasks/2026-09-11_l0_report_cycle4_revision.md` decision 1. This pair is the
+#: single place the report's cycle is written down for the tests; moving the report without
+#: moving it here is what makes a stale figure invisible.
+REPORT_CYCLE = "2026-09-10_rj2"
+SOURCE_CYCLE = "2026-09-10"
 
 
 @pytest.fixture(scope="module")
@@ -44,7 +47,11 @@ def results():
         # `fss_` too: `load_results` defaults to the prefixes the FIGURES read, and the report's
         # prose also quotes frame facts (`fss_scan_surfaces_…`, `fss_agencies_tier_a`). A view
         # narrower than the document it checks reports registered Results as missing.
-        return load_results(prefixes=("scan_", "framework_", "fss_"))
+        # `noaa_` and `esip_` joined the list when the report came to quote the two published
+        # definitions of AI-ready data in "what the matrix cannot see"
+        # (`cc_tasks/2026-09-11_l0_report_cycle4_revision.md` decision 3c). A view narrower than
+        # the document it checks reports registered Results as missing.
+        return load_results(prefixes=("scan_", "framework_", "fss_", "noaa_", "esip_"))
     except Exception as exc:                                        # noqa: BLE001
         pytest.skip(f"Neo4j unreachable: {exc}")
 
@@ -90,18 +97,23 @@ def test_report_text_and_figures_agree_per_leg(results):
     shared = sorted(prose_legs & fig_legs)
     assert shared, "no leg is named by both prose and a figure; the check would be vacuous"
 
+    # **A figure may read through the evidence-bound fallback; prose may not.** The figure of a
+    # re-judged cycle also reads its COMPARISON cycle's names, which are another re-judgement's,
+    # so the fallback this has to allow is the general one and not "strip THIS report's cycle".
+    # It is asked of `figures.Reads`, the one implementation of the rule
+    # (`cc_tasks/2026-09-11_l0_report_cycle4_revision.md` decision 2), rather than re-derived
+    # here where it would go stale the next time a cycle is re-judged.
+    from scan.figures import Reads
+    view = Reads(results)
     unresolved, disagreed = [], []
-    for names in list(figs.values()) + [prose]:
+    for names in figs.values():
         for n in names:
             base = n.removeprefix("result:")
-            if base not in results:
-                # A figure may read through the evidence-bound fallback; prose may not.
-                from scan.figures import unchanged_names, _rj_source, _suffix
-                older = (f"{base[: -(len(REPORT_CYCLE) + 1)]}_{SOURCE_CYCLE}"
-                         if base.endswith("_" + REPORT_CYCLE) else None)
-                if base in unchanged_names() and older in results:
-                    continue
+            if base not in view:
                 unresolved.append(base)
+    for n in prose:
+        if n.removeprefix("result:") not in results:
+            unresolved.append(n.removeprefix("result:"))
     assert unresolved == [], f"names that resolve to no registered Result: {sorted(set(unresolved))}"
 
     for rel, names in figs.items():

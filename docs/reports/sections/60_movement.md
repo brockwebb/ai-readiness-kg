@@ -1,24 +1,36 @@
 ## What moved since the previous cycle, and what moved it
 
-The instrument moved, and the frame moved with it. Four checks changed rule between the two
-cycles, and the frame went from thirteen bodies plus a foreign statistical office to
-{{result:fss_agencies_tier_a:value}} plus three reference hosts. A reader who compares a rate
-across the two is comparing two instruments over two populations.
+The frame moved and the instrument held still. The previous cycle is this one's predecessor
+re-judged under the same rules, so no row on the figure below is marked as a rule change and
+every difference on it is the hosts or the frame. What changed between them is the frame: the
+bodies that had declared no product now have one, and the product page of this report is about
+{{result:scan_l0_declared_flagship_surfaces_2026-09-10_rj2:value}} declared surfaces where the
+previous one was about a minority of them.
 
-![Pass rate per check, previous cycle beside this one]({{figure:cycle_over_cycle_2026-09-09_rj1:path}})
+![Pass rate per check, previous cycle beside this one]({{figure:cycle_over_cycle_2026-09-10_rj2:path}})
 
-The figure marks every check whose rule changed as not comparable, and it draws no line and no
-arrow between the two points. A difference between two measurements is not a direction of
-travel, and two cycles taken a day apart on federal publication schedules are not a rate of
-change.
+The figure draws no line and no arrow between the two points. A difference between two
+measurements is not a direction of travel, and two cycles taken a day apart on federal
+publication schedules are not a rate of change. A check with no applicable denominator in a
+cycle is left blank rather than plotted at zero, because not measured is a reason and not a
+zero.
 
-The rule changes were all instances of one defect, found three times and fixed three times: a
-check was reaching a verdict about a probe nobody had observed. A connection closed mid-request
-was being read as a product failing rather than as the scanner failing to see. Each fix turns
-those cases into `error`, which is why the `error` counts in this report are larger than a
-naive reading of a previous cycle would suggest, and why they should be. Each change was
-demonstrated against local fixtures before the cycle ran. Those fixtures' expected verdicts are
-now derived from what each collector actually dispatches, rather than written by hand, because
-a hand-written expectation turned out once to be wrong.
+Both cycles here are re-judgements. The measurements they rest on were taken on their own days
+and are untouched; what has moved twice is the rule that reads them, and each time in the same
+direction. A verdict about a product used to be allowed to rest on a probe the collector never
+made — a connection closed mid-request, a page a `robots.txt` forbade — and three successive
+corrections turned each of those into `error`. That is why the `error` counts in this report are
+larger than a naive reading of an earlier cycle would suggest, and why they should be.
 
-This cycle was **re-judged under harness-v5** after a blind-probe defect surfaced in the cycle that followed it: a URL inside a product that `robots.txt` forbids is a page the scanner was never allowed to read, and the product checks that read such a page had been counting it as a product that failed rather than as a page they could not see. The numbers quoted here are the re-judged ones; the originals remain registered under their first names, unedited.
+**The last of those corrections cost this report its strongest product number, and that is the
+correction working.** Under the previous judgement of this same cycle, the bulk-download check
+was answered over
+{{result:scan_l0_product_a3_applicable_n_2026-09-10_rj1:value}} declared flagship surfaces; it
+is now answered over {{result:scan_l0_product_a3_applicable_n_2026-09-10_rj2:value}}. The
+surfaces that left are ones whose whole-product download the scanner was forbidden to look for,
+and which had been counted as products that offer none. Nothing about those products changed
+and nothing was re-fetched. The upper bound of the ninety-five percent interval on the rate rose
+from {{result:scan_l0_product_leg_rate_a3_upper95_2026-09-10_rj1:value}} to
+{{result:scan_l0_product_leg_rate_a3_upper95_2026-09-10_rj2:value}}: a smaller denominator is a
+weaker claim, and an instrument that stops scoring what it was not allowed to see has to say
+less, not more.

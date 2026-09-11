@@ -100,33 +100,6 @@ def built():
     return md, pdf, len(reader.pages)
 
 
-#: **The committed PDF is behind the figure it embeds, by exactly these numerals and no others.**
-#:
-#: `cc_tasks/2026-09-11_f5_membership_through_fallback.md`. The report embeds
-#: `figures/scan_2026-09-09_rj1/cycle_over_cycle.svg`, and that figure carried eleven rows
-#: reading "not measured in this cycle" about legs that WERE measured — `figures.Reads` answered
-#: `in` from the plain dict and never consulted its own evidence-bound fallback. The figure is
-#: fixed and re-rendered; the PDF is a build product and decision 4 of that task says in terms
-#: that `docs/reports/` is not rebuilt, so the two are one rebuild apart.
-#:
-#: The gate above subtracts the figure's numerals READ FROM DISK, which is what makes it, among
-#: other things, a staleness detector for the PDF against its own figures. It is not wrong here;
-#: it is right, and what it has found is true. So it is pinned rather than weakened: a strict
-#: xfail, with the shortfall asserted exactly below, in the same shape
-#: `tests/test_invariants.py` pins a stored payload's known defect.
-#:
-#: **Rebuilding the PDF clears both.** The xfail turns XPASS (strict, so it fails) and the
-#: shortfall assertion fails with an empty multiset. Both say: delete this pin.
-PDF_BEHIND_ITS_FIGURE = collections.Counter(
-    {"0": 7, "33": 3, "32": 2, "24": 1, "35": 1, "34": 1, "2": 1})
-
-
-@pytest.mark.xfail(strict=True, reason=(
-    "The PDF is one rebuild behind the figure it embeds. `scan_2026-09-09_rj1`'s F5 carried 11 "
-    "rows saying 'not measured in this cycle' about legs that were measured; the figure is fixed "
-    "and re-rendered, and `cc_tasks/2026-09-11_f5_membership_through_fallback.md` decision 4 "
-    "forbids rebuilding docs/reports/. `test_the_pdf_is_behind_by_exactly_the_figure_rows` "
-    "asserts the shortfall is that and nothing else. The cycle-4 report revision clears it."))
 def test_the_pdf_carries_exactly_the_markdowns_numbers(built):
     """§3's gate. Multiset equality, with the two declared exclusions."""
     md, pdf, pages = built
@@ -143,26 +116,6 @@ def test_the_pdf_carries_exactly_the_markdowns_numbers(built):
         f"the PDF and the markdown do not carry the same numbers.\n"
         f"  in the markdown, missing from the PDF: {dict(missing)}\n"
         f"  in the PDF, absent from the markdown:  {dict(extra)}")
-
-
-def test_the_pdf_is_behind_by_exactly_the_figure_rows(built):
-    """The other half of the pin: the xfail says "this still fails", this says "by this much".
-
-    The PDF is short of the markdown by the numerals its figure gained when eleven blank rows
-    became rates, intervals and `k/n` again — and it is short by NOTHING ELSE, and carries no
-    numeral the markdown lacks. That is what makes "the PDF is one rebuild behind" a measurement
-    rather than an explanation: any other drift in either direction fails here.
-    """
-    md, pdf, _pages = built
-    body, _dropped = strip_layout(pdf)
-    want = numerals(IMAGE.sub(" ", md))
-    got = numerals(body) - figure_numerals(md)
-    assert got - want == collections.Counter(), (
-        f"the PDF carries numerals the markdown does not: {dict(got - want)}. That is not "
-        f"staleness in the figure; it is drift, and the pin does not cover it.")
-    assert want - got == PDF_BEHIND_ITS_FIGURE, (
-        f"the shortfall moved: {dict(want - got)}, pinned {dict(PDF_BEHIND_ITS_FIGURE)}. If the "
-        f"PDF was rebuilt, delete this test and the xfail above it.")
 
 
 def test_the_pdf_resolved_every_reference_and_kept_every_matrix_row(built):

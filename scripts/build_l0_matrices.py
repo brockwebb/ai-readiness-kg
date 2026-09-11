@@ -19,12 +19,13 @@ the host-level matrix reads the `home:` surface (the host's own page, present fo
 and A12 from the `host:` well-known surface, and every row names both. Pooling them into one
 "host" cell would have had to pick a winner for the disagreements and would not have said so.
 
-    /opt/anaconda3/bin/python3 scripts/build_l0_matrices.py [--dry-run]
+    /opt/anaconda3/bin/python3 scripts/build_l0_matrices.py [--dry-run] [--cycle CYCLE]
 """
 from __future__ import annotations
 
 import argparse
 import csv
+import functools
 import json
 import sys
 from pathlib import Path
@@ -56,6 +57,34 @@ PRODUCT_SURFACE = "flagship"
 
 def payload(cycle: str) -> dict:
     return json.loads((REPO / "state" / f"{cycle}.json").read_text(encoding="utf-8"))
+
+
+@functools.lru_cache(maxsize=4)
+def _cached_payload(cycle: str) -> dict:
+    """Read-only. `evidence_payload` is asked once per matrix and the measured payloads are
+    12 MB; nothing mutates what it returns."""
+    return payload(cycle)
+
+
+def evidence_payload(p: dict) -> dict:
+    """The payload whose COLLECTION the cycle rests on: itself, or the measured cycle a
+    re-judgement derives from.
+
+    A re-judgement issues no requests and records no Observation — `requests_total: 0`,
+    `requests_per_host: {}`, `observations_detail: []`, asserted per payload — because it
+    re-judges Observations that already exist. Two things in these matrices are counted off the
+    OBSERVATIONS rather than off the verdicts, and both read as an empty measurement when the
+    payload is a re-judgement:
+
+    * the appendix table "requests issued, per netloc", which comes out as a total of zero;
+    * the matrix's last column, how many of a surface's probes the host answered with a refusal,
+      which comes out as `0 of 0` for every body — including the three that refuse everything.
+
+    Neither is what the cycle did; both are what re-judging it did. The evidence is the measured
+    cycle's, and the payload names it.
+    """
+    src = p.get("derived_from") if p.get("cycle_kind") == "rejudged" else None
+    return _cached_payload(src) if src else p
 
 
 def targets(params: dict) -> dict:
@@ -106,8 +135,12 @@ def rows_for(p: dict, tiers: dict, tier: str, kind: str) -> list:
 
 def host_matrix(p: dict, tiers: dict, tier: str, legs: list) -> list:
     """One row per body: the five surface-judged tier-0 legs from its `home:` surface and A12
-    from its `host:` well-known surface, each cell naming the Finding it came from."""
-    idx, ref = findings_index(p), refusals(p)
+    from its `host:` well-known surface, each cell naming the Finding it came from.
+
+    The VERDICTS are this payload's — a re-judgement's whole point is that they are its own. The
+    refusal column is not a verdict: it counts what the host answered, so it is counted off the
+    evidence, which for a re-judgement is the measured cycle it derives from."""
+    idx, ref = findings_index(p), refusals(evidence_payload(p))
     a12_by_agency = {r["agency"]: r for r in rows_for(p, tiers, tier, CANDIDATE_SURFACE)}
     out = []
     for r in rows_for(p, tiers, tier, HOST_SURFACE):
@@ -365,9 +398,13 @@ def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--cycle", default=None,
+                    help="build a cycle other than params.cycle.name — a RE-JUDGEMENT, whose "
+                         "matrices and Results are the judgement of record while the requests "
+                         "it quotes remain the measured cycle's")
     a = ap.parse_args(argv)
     params = load_params()
-    cycle = params["cycle"]["name"]
+    cycle = a.cycle or params["cycle"]["name"]
     suffix = cycle_results.cycle_suffix(cycle)
     p, tiers = payload(cycle), tier_of(params)
     tier0 = list(params["tier0"]["legs"])
@@ -411,7 +448,7 @@ def main(argv=None) -> int:
                  write_fragment("matrix_product", product, PRODUCT_LEGS, "product")]
     GEN_DIR.mkdir(parents=True, exist_ok=True)
     for stem, text in (("rules_by_leg", rules_fragment(p)),
-                       ("requests_per_netloc", requests_fragment(p))):
+                       ("requests_per_netloc", requests_fragment(evidence_payload(p)))):
         path = GEN_DIR / f"{stem}.md"
         path.write_text(text, encoding="utf-8")
         fragments.append(path)

@@ -2,9 +2,11 @@
 
 **Draft. 16 recognized bodies and three reference
 hosts, one cycle, one client identity.**
-Written from `cc_tasks/2026-09-09_report_draft.md` against the graph as it stood on
-2026-09-09. Every number below is a registered Result quoted by name; nothing is typed into
-the prose.
+Written from `cc_tasks/2026-09-09_report_draft.md` and revised to the cycle of 2026-09-10
+under `cc_tasks/2026-09-11_l0_report_cycle4_revision.md`. The snapshot is cycle
+`scan_2026-09-10`, the first over the complete frame, re-judged as `scan_2026-09-10_rj2`:
+the same stored observations under the rules current when this was written. Every number
+below is a registered Result quoted by name; nothing is typed into the prose.
 
 ## What was measured, and over what
 
@@ -25,7 +27,7 @@ judged on the host-level checks only and enter no agency denominator, because pl
 beside a statistical agency above that level compares two different kinds of thing.
 
 Counting surfaces rather than bodies, the target list carries
-65 declared surfaces across
+72 declared surfaces across
 22 netlocs. Netlocs exceed bodies because each reference
 host declares a machine entry point on its own hostname. Every surface is declared, by the
 roster or by the operator, and no rule selects one. Three selection rules were built for this
@@ -38,12 +40,14 @@ logins, no query-string fuzzing. The user agent names the project and links to i
 scanner has never retried a host under another identity, because a refusal is itself a
 measurement and a disguise would destroy it.
 
-The cycle issued 2341 requests across
-24 netlocs, which is more netlocs than the
+The cycle issued 2684 requests across
+35 netlocs, which is more netlocs than the
 target list names. The excess is not an accident and is discussed under what the matrix cannot
-see. It produced 2429 observations and
-634 findings, and every finding re-derives byte for byte
-from its stored observations.
+see. It produced 2718 observations and
+739 findings, and every finding re-derives byte for
+byte from its stored observations. The requests and the observations are the measured cycle's
+and carry its name; the findings are the re-judgement's, over those same observations, because
+a re-judgement opens no socket.
 
 ## The six checks
 
@@ -85,69 +89,69 @@ from its well-known set. Which surface a cell was measured on is recorded on eve
 machine-readable copy beside this one. It matters: a `robots.txt` that permits the front door
 can disallow a particular product, so a flagship page and a home page need not receive the same
 answer. This cycle found that disagreement on
-15 cells across
-6 bodies, and a single
+17 cells across
+8 bodies, and a single
 combined cell would have had to pick one without saying which.
 
 | Agency | A4 | A5 | A10 | A11-declared | A12 | G1-D | Refused of probed |
 |---|---|---|---|---|---|---|---|
-| BEA | pass | fail | pass | pass | pass | fail | 0 of 70 |
+| BEA | pass | fail | pass | pass | pass | fail | 0 of 59 |
 | BJS | pass | fail | pass | pass | pass | fail | 0 of 59 |
 | BLS | error | error | error | error | fail | error | 33 of 35 |
 | BTS | error | error | error | error | fail | error | 32 of 33 |
-| CENSUS | pass | pass | pass | pass | pass | fail | 4 of 60 |
+| CENSUS | pass | pass | pass | pass | pass | fail | 4 of 59 |
 | DRSMSU | fail | fail | pass | fail | fail | fail | 0 of 67 |
-| EIA | pass | pass | pass | pass | pass | fail | 1 of 65 |
+| EIA | pass | pass | pass | pass | pass | fail | 1 of 64 |
 | ERS | pass | fail | pass | pass | pass | fail | 0 of 60 |
 | NAHMSAPHIS | pass | fail | pass | pass | pass | fail | 0 of 58 |
-| NASS | pass | fail | pass | pass | pass | fail | 0 of 67 |
-| NCES | error | error | error | error | error | error | 0 of 60 |
+| NASS | pass | fail | pass | pass | pass | fail | 0 of 66 |
+| NCES | pass | fail | pass | pass | pass | fail | 0 of 63 |
 | NCHS | pass | fail | fail | fail | pass | fail | 0 of 34 |
 | NCSES | pass | pass | pass | pass | pass | fail | 0 of 65 |
 | ORES | error | error | error | error | fail | error | 32 of 33 |
 | SAMHSACBHS | pass | fail | pass | pass | pass | fail | 0 of 62 |
-| SOI | pass | fail | pass | pass | pass | fail | 0 of 62 |
-| *this report* | \- | \- | \- | \- | \- | \- | planned host: GitHub Pages under this repository; to be measured on publication |
+| SOI | pass | fail | pass | pass | pass | fail | 3 of 59 |
+| *this report* | \- | \- | \- | \- | \- | \- | no host yet; the instrument is turned on this report when it is published |
 
 ### Reading it by column
 
-**Serving `robots.txt`.** 11 bodies of
-12 observable ones serve a `robots.txt` that
+**Serving `robots.txt`.** 12 bodies of
+13 observable ones serve a `robots.txt` that
 permits this client to read the page. The single failure serves no such file at all: not a
 refusal, an absence, and a machine meeting it has to assume rather than read.
-4 bodies could not be observed on this check, and
-the same 4 recur in every column below.
+3 bodies could not be observed on this check, and
+the same 3 recur in every column below.
 
 **Discovery.** 3 of
-12 offer a discoverable index of what they
-publish; 9 do not. Discovery is the weakest
+13 offer a discoverable index of what they
+publish; 10 do not. Discovery is the weakest
 host-level result by a wide margin, and the consequence is direct: a machine that cannot
 enumerate what a site publishes cannot tell what it has missed. Every sitemap any host
 declared was followed, including ones declared on a neighbouring hostname, so none of these
 failures is an artefact of the scanner declining to look.
 
-**Deep links.** 11 of
-12 answer a deliberately invalid URL
+**Deep links.** 12 of
+13 answer a deliberately invalid URL
 honestly. This is the best result on the page and it deserves less credit than it looks: it
 measures the absence of a specific pathology rather than the presence of a capability.
 
-**Declared machine layer.** 10 of
-12 declare somewhere in their own
+**Declared machine layer.** 11 of
+13 declare somewhere in their own
 markup that a machine reader is expected. Declaring is not providing, and this check does not
 follow the declaration to see whether anything answers at the other end.
 
 **Declared against enforced.** The candidate check finds
-11 bodies coherent and
+12 bodies coherent and
 4 incoherent, of
-15. An incoherent host publishes a
+16. An incoherent host publishes a
 `robots.txt` granting access and then declines to serve the client that obeys it. Three of them
 are the bodies discussed in the next section, and the fourth publishes no `robots.txt` at
 all.
 
 **Uncertainty fields.** 0 bodies of
-12 expose the fields that make an estimate
+13 expose the fields that make an estimate
 interpretable at the host level. The upper bound of the ninety-five percent interval on that
-rate is 0.242494 at this denominator, which is
+rate is 0.228095 at this denominator, which is
 the honest way to say that a zero here is not proof of universal absence. It is measured on
 the body's own front page and not on a data product, which flatters nobody and is a limit of
 the host-level view rather than a finding about statistical practice.
@@ -168,7 +172,8 @@ uncertainty fields to expose. They appear here for contrast and in no rate above
 
 ## Three bodies will not serve a compliant machine
 
-Three bodies decline to answer a client that identifies itself, says where to complain about
+3 bodies of
+16 decline to answer a client that identifies itself, says where to complain about
 it, asks for no more than one page per second, and obeys the `robots.txt` those same hosts
 publish. They are the Bureau of Labor Statistics, the Bureau of Transportation Statistics and
 the Social Security Administration's research office. Each returns a refusal status on
@@ -176,11 +181,10 @@ effectively every request. Their rows above read `error` throughout, which is th
 reading: this instrument did not find those sites wanting, it was not allowed to look.
 
 The behaviour is neither a transient nor a sampling accident. It has now been recorded in
-5 separate measurements, taken
-on three different days under two different user-agent strings. The count survives a change in
-how this project names errors: the earliest filed the refusal under a general client-error
-class, because the closed set of names had no member for a refusal until later. The number of
-bodies refusing has not moved, standing at
+6 separate measurements,
+taken on four different days under two different user-agent strings. The count survives a change in how this project names errors: the earliest
+filed the refusal under a general client-error class, because the closed set of names had no
+member for a refusal until later. The number of bodies refusing has not moved, standing at
 3 on the first look and the same on
 the most recent.
 
@@ -198,19 +202,30 @@ from outside, and the only honest thing to report is the behaviour and its persi
 Distinguishing them needs either the operator's own logs or a request made from a different
 vantage point, and both are named as future research rather than guessed at here.
 
-A fourth body could not be observed either, for an unrelated reason: its host timed out or
-closed the connection on most probes. That is this scanner's problem or the network's, and it
-is recorded as `error` for the same reason the refusals are.
+In the previous cycle a fourth body could not be observed either, for an unrelated reason: its
+host timed out or closed the connection on most probes. It answered this time, and the three
+refusing bodies are now the whole of the unobserved column — which is why the `error` counts in
+the matrix are lower here than a reader of the last cycle would expect, and why they still are
+not zero.
 
-## What the products offer a machine: partial
+## What the products offer a machine
 
-Everything above measures a host. This section measures products, and it covers less than half
-the frame. Only 9 of
-16 bodies have had a flagship product declared for them, and
-the remaining 7 carry a host
-row and nothing else. Those bodies appear below marked as undeclared. They are not failures.
-A product check cannot be asked of a product nobody has named, and quietly dropping them would
-shrink the frame without saying so.
+Everything above measures a host. This section measures products, and for the first time it
+covers the whole frame. Every one of the 16 bodies now has a
+flagship product declared for it —
+16 agencies across
+23 declared surfaces — and
+0 bodies carry a host row
+and nothing else.
+
+7 of those flagships were declared for this
+cycle, for the bodies that had none when the previous one ran, and each was verified
+robots-first before it entered the frame.
+3 of them were answered with a
+refusal by the same hosts that refuse this client at every other door. They enter marked as
+refused rather than dropped: restricting the instrument to the agencies that permit it would
+make the frame a function of who answers. The rest came live in this cycle and are measured
+below.
 
 | Agency | Surface | A1 | A2 | A3 | A6 | A8 | A9 | B3 | D1 | D4 | F4 |
 |---|---|---|---|---|---|---|---|---|---|---|---|
@@ -218,52 +233,66 @@ shrink the frame without saying so.
 | BEA | bea-flagship-2-news-releases | fail | fail | pass | fail | fail | fail | pass | fail | fail | fail |
 | BJS | bjs-flagship-1-data-by-topic | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail |
 | BJS | bjs-flagship-2-death-in-custody-reporting-act | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail |
+| BLS | flagship:www.bls.gov/cpi/ | error | error | error | error | error | error | error | error | error | error |
+| BTS | flagship:www.bts.gov/topics/national-transportation-statistics | error | error | error | error | error | error | error | error | error | error |
 | CENSUS | census-flagship-1-surveys-programs | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail |
 | CENSUS | census-flagship-2-american-community-survey-acs | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail |
-| EIA | eia-flagship-1-open-data | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail |
+| DRSMSU | flagship:www.federalreserve.gov/econres/scfindex.htm | fail | fail | fail | pass | pass | fail | fail | fail | pass | fail |
+| EIA | eia-flagship-1-open-data | error | fail | error | error | error | fail | error | fail | fail | fail |
 | ERS | ers-flagship-1-ag-and-food-statistics-charting-the-essentials | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail |
 | ERS | ers-flagship-2-agricultural-baseline-database | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail |
-| NASS | nass-flagship-1-data-statistics | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail |
-| NASS | nass-flagship-2-livestock-county-estimates | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail |
-| NCHS | nchs-flagship-1-data-briefs | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail |
+| NAHMSAPHIS | flagship:www.aphis.usda.gov/aphis/ourfocus/animalhealth/monitoring-and-surveillance/nahms | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail |
+| NASS | nass-flagship-1-data-statistics | fail | fail | error | fail | fail | fail | fail | fail | fail | fail |
+| NASS | nass-flagship-2-livestock-county-estimates | fail | fail | error | fail | fail | fail | fail | fail | fail | fail |
+| NCES | flagship:nces.ed.gov/programs/digest/ | fail | fail | pass | fail | fail | fail | fail | fail | fail | fail |
+| NCHS | nchs-flagship-1-data-briefs | fail | fail | error | fail | fail | fail | fail | fail | fail | fail |
 | NCHS | nchs-flagship-2-early-releases-of-selected-estimates-from-the-nhis | fail | fail | pass | fail | fail | fail | fail | fail | fail | fail |
 | NCSES | ncses-flagship-1-annual-business-survey-2024-data-year-2023 | fail | fail | fail | fail | fail | fail | pass | fail | fail | fail |
-| SOI | soi-flagship-1-individual-tax-statistics | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail |
-| SOI | soi-flagship-2-business-tax-statistics | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail |
-| BLS | not declared | not declared | not declared | not declared | not declared | not declared | not declared | not declared | not declared | not declared | not declared |
-| BTS | not declared | not declared | not declared | not declared | not declared | not declared | not declared | not declared | not declared | not declared | not declared |
-| DRSMSU | not declared | not declared | not declared | not declared | not declared | not declared | not declared | not declared | not declared | not declared | not declared |
-| NAHMSAPHIS | not declared | not declared | not declared | not declared | not declared | not declared | not declared | not declared | not declared | not declared | not declared |
-| NCES | not declared | not declared | not declared | not declared | not declared | not declared | not declared | not declared | not declared | not declared | not declared |
-| ORES | not declared | not declared | not declared | not declared | not declared | not declared | not declared | not declared | not declared | not declared | not declared |
-| SAMHSACBHS | not declared | not declared | not declared | not declared | not declared | not declared | not declared | not declared | not declared | not declared | not declared |
+| ORES | flagship:www.ssa.gov/policy/docs/statcomps/supplement/ | error | error | error | error | error | error | error | error | error | error |
+| SAMHSACBHS | flagship:www.samhsa.gov/data/data-we-collect/nsduh-national-survey-drug-use-and-health | fail | fail | fail | fail | fail | fail | fail | fail | error | fail |
+| SOI | soi-flagship-1-individual-tax-statistics | fail | fail | error | fail | fail | fail | fail | fail | fail | fail |
+| SOI | soi-flagship-2-business-tax-statistics | fail | fail | error | fail | fail | fail | fail | fail | fail | fail |
 
-Across the 16 declared surfaces,
-8 of the
-10 product checks return not a single pass. None
-of these is present on any
-declared flagship surface measured in this cycle: structured markup describing the data, a
-machine-readable licence, a declared vintage, a working pointer to the current release, a
-changelog, a catalogue entry, or an API a client could call. Two checks are not at zero. A bulk
-download in a non-proprietary format is offered by
+Across the 23 declared
+surfaces, 5 of the
+10 product checks return not a single pass.
+None of these is present on any declared flagship surface measured in this cycle: the product
+offered as structured data rather than as a document, a documented API with its auth model and
+its rate limits, a machine-first entry point an agent could address, a machine-readable
+licence, or a changelog per release.
+
+The others are not at zero and are close to it. A bulk download of the whole product is linked
+from 4 of
+14 surfaces, the only check on
+this page with a pass rate a reader would notice.
 3 of
-15 surfaces, and
-3 serve their substantive content without
-requiring a browser to execute code.
+19 serve their substantive content
+without requiring a browser to execute code. Structured markup describing the data, a
+resolvable pointer to the current vintage and an entry in a public inventory are present on
+1 of
+19,
+1 of
+19 and
+1 of
+19 surfaces, and the matrix above
+shows all three on the same row.
 
 A zero at this denominator is not proof of universal absence, and the report will not let it be
 read as one. With 0 passes in
-15 surfaces, the upper bound of the
-ninety-five percent score interval is
-0.203883, which is the number a reader should carry
-rather than the zero. Hanley and Lippman-Hand give the same magnitude by their rule of thumb
-for zero events. The bound quoted here is the score interval, computed once and registered
-rather than worked out in a sentence. The correct statement is that the true rate is unlikely
-to exceed that bound, not that it is nothing.
+19 surfaces, the upper bound of
+the ninety-five percent score interval is
+0.168179, which is the number a
+reader should carry rather than the zero. Hanley and Lippman-Hand give the same magnitude by
+their rule of thumb for zero events. The bound quoted here is the score interval, computed once
+and registered rather than worked out in a sentence. The correct statement is that the true
+rate is unlikely to exceed that bound, not that it is nothing.
 
-The interval is wide because the population is small, and the population is small because most
-bodies have not declared a product. That is the single cheapest improvement available to this
-measurement, and it costs a list rather than a cycle.
+The interval is still wide, and the declaration list is no longer what makes it so. It is wide
+because one product is one surface and the frame holds
+19 observable ones on this check,
+4 more having answered with something
+this scanner could not read. A denominator that small is what a report of a system this size
+gets, and saying so is cheaper than pretending the bound is tighter.
 
 ## What the matrix cannot see
 
@@ -279,19 +308,28 @@ are different questions, and only the first is measured.
 way under this method. No rate in this report includes them, and no reader should infer that
 their absence from a numerator means anything about their products.
 
-**Most of the frame, at product level.** The product section covers
-9 bodies of
-16. Every product statement in this report is about those,
-and the wide intervals say so.
+**Most of what "AI-ready" is taken to mean.** The product section now covers every body in
+the frame, so the limit is no longer who is measured but what a check on a public surface can
+reach. Two published definitions say how much. NOAA's own order defines AI-ready data in
+5 components, and this instrument measures
+3 of them exactly —
+discoverable, machine-readable and machine-understandable, and access methods. Documentation it
+measures in part and quality not at all: the definition's word is *sufficient*, a judgement
+about the data against a use, and no check here opens the data. ESIP's AI-ready checklist has
+58 assessable items and
+9 of them are measured exactly here, most of
+those under data access. Neither gap is a hole in the framework, which names indicators
+for both; it is the distance between reading a surface and reading a dataset.
 
 **The scanner's own reach.** The cycle contacted more netlocs than the target list names,
 which bounds what "the frame" means. Two bodies declare their sitemap on a neighbouring
 hostname and the scanner followed the declaration, which is what the discovery check is for. A
 closed contact list and a discovery check that reads what the host actually says cannot both
 hold; this cycle took the second and is reporting the choice rather than having made it in
-advance. One consequence is on the log: those two requests went out without first reading the
+advance. One consequence is on the log: those requests went out without first reading the
 neighbouring host's own `robots.txt`, which this scanner's manners require. That is a defect in
-the collector rather than a finding about anyone, and it is queued.
+the collector rather than a finding about anyone, it is still open in this cycle, and it is
+queued.
 
 The same declarations could have been declined instead, so the count of discovery failures
 attributable to a declaration the scanner refused to follow is registered at
@@ -307,28 +345,40 @@ having if nothing was quietly swept into it.
 
 ## What moved since the previous cycle, and what moved it
 
-The instrument moved, and the frame moved with it. Four checks changed rule between the two
-cycles, and the frame went from thirteen bodies plus a foreign statistical office to
-16 plus three reference hosts. A reader who compares a rate
-across the two is comparing two instruments over two populations.
+The frame moved and the instrument held still. The previous cycle is this one's predecessor
+re-judged under the same rules, so no row on the figure below is marked as a rule change and
+every difference on it is the hosts or the frame. What changed between them is the frame: the
+bodies that had declared no product now have one, and the product page of this report is about
+23 declared surfaces where the
+previous one was about a minority of them.
 
-![Pass rate per check, previous cycle beside this one](assessment/harness/scan/figures/scan_2026-09-09_rj1/cycle_over_cycle.svg)
+![Pass rate per check, previous cycle beside this one](assessment/harness/scan/figures/scan_2026-09-10_rj2/cycle_over_cycle.svg)
 
-The figure marks every check whose rule changed as not comparable, and it draws no line and no
-arrow between the two points. A difference between two measurements is not a direction of
-travel, and two cycles taken a day apart on federal publication schedules are not a rate of
-change.
+The figure draws no line and no arrow between the two points. A difference between two
+measurements is not a direction of travel, and two cycles taken a day apart on federal
+publication schedules are not a rate of change. A check with no applicable denominator in a
+cycle is left blank rather than plotted at zero, because not measured is a reason and not a
+zero.
 
-The rule changes were all instances of one defect, found three times and fixed three times: a
-check was reaching a verdict about a probe nobody had observed. A connection closed mid-request
-was being read as a product failing rather than as the scanner failing to see. Each fix turns
-those cases into `error`, which is why the `error` counts in this report are larger than a
-naive reading of a previous cycle would suggest, and why they should be. Each change was
-demonstrated against local fixtures before the cycle ran. Those fixtures' expected verdicts are
-now derived from what each collector actually dispatches, rather than written by hand, because
-a hand-written expectation turned out once to be wrong.
+Both cycles here are re-judgements. The measurements they rest on were taken on their own days
+and are untouched; what has moved twice is the rule that reads them, and each time in the same
+direction. A verdict about a product used to be allowed to rest on a probe the collector never
+made — a connection closed mid-request, a page a `robots.txt` forbade — and three successive
+corrections turned each of those into `error`. That is why the `error` counts in this report are
+larger than a naive reading of an earlier cycle would suggest, and why they should be.
 
-This cycle was **re-judged under harness-v5** after a blind-probe defect surfaced in the cycle that followed it: a URL inside a product that `robots.txt` forbids is a page the scanner was never allowed to read, and the product checks that read such a page had been counting it as a product that failed rather than as a page they could not see. The numbers quoted here are the re-judged ones; the originals remain registered under their first names, unedited.
+**The last of those corrections cost this report its strongest product number, and that is the
+correction working.** Under the previous judgement of this same cycle, the bulk-download check
+was answered over
+19 declared flagship surfaces; it
+is now answered over 14. The
+surfaces that left are ones whose whole-product download the scanner was forbidden to look for,
+and which had been counted as products that offer none. Nothing about those products changed
+and nothing was re-fetched. The upper bound of the ninety-five percent interval on the rate rose
+from 0.433343 to
+0.546491: a smaller denominator is a
+weaker claim, and an instrument that stops scoring what it was not allowed to see has to say
+less, not more.
 
 ## What this cannot answer, and what would
 
@@ -340,11 +390,11 @@ separates them, and it is the highest-value open question in this report.
 under one identity. A request from elsewhere, or under a common crawler's name, would establish
 whether the refusals are about this client or about machines in general.
 
-**What the products offer, for the rest of the frame.** The product matrix needs a declared
-flagship for the remaining bodies. That list now exists as
-`docs/design/fss_flagship_declarations.md`; it is dated after the cycle this report describes
-and changes nothing here, because a report measures what was declared when it ran. Until a
-later cycle runs under that list, the product findings describe a minority of the system.
+**What the products offer beyond one page each.** The declaration list is complete and this
+cycle ran under it, so the open question is no longer coverage but depth: a flagship landing
+page is one surface, and a body's data lives behind it. Whether these checks answer the same way
+on a product's download, its API and its documentation pages is not known from a landing page,
+and asking it needs a declared surface per product rather than per body.
 
 **Whether the contact bound should be closed or open.** Following a sitemap declared on a
 neighbouring host is either correct discovery or scope creep, and this cycle did it without
@@ -354,11 +404,11 @@ whatever the frame's own hosts declare.
 
 ## This report, measured by its own checks
 
-The last row of the matrix is this report's own host, and it carries no verdicts. The
-planned host is GitHub Pages under this repository, to be measured on publication; it is not
-scored, because the report has no host yet. It exists as a file in a repository, so it serves no `robots.txt`, declares no
-machine layer and answers no deep links. Scoring it now would mean inventing answers for a site
-that does not exist.
+The last row of the matrix is this report's own host, and it carries no verdicts. The report
+has no host: it exists as a file in a repository, so it serves no `robots.txt`, declares no
+machine layer and answers no deep links, and the intended home is GitHub Pages under this
+repository. Scoring it now would mean inventing answers for a site that does not exist, so the
+row stays empty until the instrument can be turned on this report's own output.
 
 What the design calls for once it is published is on the record and is not vague. It wants a
 machine-readable copy of the matrix beside the readable one, and both already exist as the
@@ -396,11 +446,14 @@ registered per check. Wilson (1927) for the interval. Brown, Cai and DasGupta (2
 Newcombe (1998) for why a score interval rather than a normal approximation at proportions near
 zero or one. Hanley and Lippman-Hand (1983) for the rule of three at zero events.
 
-**Controls.** Six local fixture servers are scanned in every cycle alongside the real hosts.
+**Controls.** Seven local fixture servers were scanned in this cycle alongside the real hosts.
 One passes every check and one fails every check. One refuses an identified client and one
 resets the connection. One answers normally but kills the invalid-route probe, and one answers
-every GET while resetting every HEAD. Their expected verdicts are derived from what each
-collector dispatches, not written by hand: a hand-written expectation was wrong once.
+every GET while resetting every HEAD. The seventh declares its sitemap on a second hostname of
+the same site, which is the case the discovery check meets on two real hosts; what it pins is an
+order, that the sibling's own `robots.txt` is read before anything else is asked of it. Their
+expected verdicts are derived from what each collector dispatches, not written by hand: a
+hand-written expectation was wrong once.
 
 **Rules that judged this cycle.**
 
@@ -409,15 +462,15 @@ collector dispatches, not written by hand: a hand-written expectation was wrong 
 | A1 | RULE-A1-v4 |
 | A10 | RULE-A10-v3 |
 | A11-declared | RULE-A11-declared-v2 |
-| A12 | RULE-A12-v1 |
+| A12 | RULE-A12-v2 |
 | A2 | RULE-A2-v3 |
-| A3 | RULE-A3-v5 |
+| A3 | RULE-A3-v6 |
 | A4 | RULE-A4-v1 |
-| A5 | RULE-A5-v1 |
+| A5 | RULE-A5-v2 |
 | A6 | RULE-A6-v2 |
 | A8 | RULE-A8-v4 |
 | A9 | RULE-A9-v1 |
-| B3 | RULE-B3-v2 |
+| B3 | RULE-B3-v3 |
 | D1 | RULE-D1-v3 |
 | D4 | RULE-D4-v2 |
 | F4 | RULE-F4-v3 |
@@ -427,40 +480,55 @@ collector dispatches, not written by hand: a hand-written expectation was wrong 
 
 | Netloc | Requests |
 |---|---|
+| `apps.bea.gov` | 21 |
 | `bjs.ojp.gov` | 183 |
 | `catalog.data.gov` | 13 |
-| `data.gov` | 1 |
+| `data.bls.gov` | 1 |
+| `data.census.gov` | 5 |
+| `data.gov` | 2 |
 | `data.nist.gov` | 13 |
-| `nces.ed.gov` | 62 |
+| `gis.cdc.gov` | 2 |
+| `ir.eia.gov` | 2 |
+| `nces.ed.gov` | 128 |
 | `ncses.nsf.gov` | 184 |
 | `open.gsa.gov` | 13 |
-| `samhsa.gov` | 1 |
-| `www.aphis.usda.gov` | 62 |
-| `www.bea.gov` | 247 |
-| `www.bls.gov` | 38 |
-| `www.bts.gov` | 37 |
-| `www.cdc.gov` | 219 |
-| `www.census.gov` | 246 |
+| `quickstats.nass.usda.gov` | 1 |
+| `sa.www4.irs.gov` | 13 |
+| `samhsa.gov` | 3 |
+| `tools.bea.gov` | 5 |
+| `tools.cdc.gov` | 3 |
+| `wonder.cdc.gov` | 2 |
+| `www.aphis.usda.gov` | 121 |
+| `www.bea.gov` | 207 |
+| `www.bls.gov` | 73 |
+| `www.bts.gov` | 71 |
+| `www.cdc.gov` | 213 |
+| `www.census.gov` | 241 |
 | `www.data.gov` | 15 |
-| `www.eia.gov` | 143 |
+| `www.eia.gov` | 140 |
 | `www.ers.usda.gov` | 243 |
-| `www.federalreserve.gov` | 63 |
+| `www.federalreserve.gov` | 123 |
 | `www.gsa.gov` | 15 |
-| `www.irs.gov` | 181 |
-| `www.nass.usda.gov` | 247 |
+| `www.irs.gov` | 172 |
+| `www.nass.usda.gov` | 243 |
 | `www.nist.gov` | 15 |
-| `www.samhsa.gov` | 63 |
-| `www.ssa.gov` | 37 |
-| **total** | **2341** |
+| `www.samhsa.gov` | 124 |
+| `www.ssa.gov` | 71 |
+| `wwwn.cdc.gov` | 3 |
+| **total** | **2684** |
 
-**Files beside this report.** `scan_matrix_tierA_2026-09-09.csv` and `.json`, the host-level
-matrix; `scan_matrix_tierC_2026-09-09.*`, the reference hosts; `scan_matrix_product_2026-09-09.*`,
-the partial product matrix. Every row carries its Finding identities.
+**Files beside this report.** `scan_matrix_tierA_2026-09-10_rj2.csv` and `.json`, the
+host-level matrix; `scan_matrix_tierC_2026-09-10_rj2.*`, the reference hosts;
+`scan_matrix_product_2026-09-10_rj2.*`, the product matrix. Every row carries its Finding
+identities.
 
-**Provenance.** Cycle `scan_2026-09-09`, parameter hash
-`7ee55f512e8473e6d74ab8c0d089d694078baa8548b60f2b5f22fed66728d6a6`. The event log is the source
-of truth; the graph and the matrices are projections of it and are rebuilt by replay. Design
-decisions DD-059 (the frame and the tier separation), DD-060 (one client identity) and DD-061
-(control tables derived from collector dispatch) govern what this report may say.
+**Provenance.** Cycle `scan_2026-09-10`, parameter hash
+`4e0a92ba19ab769bb98b3a4a0c68640fbe465a04eaaec4aa6f2f0f41dc75c0df`, judged as
+`scan_2026-09-10_rj2`: the same stored observations under the rules current on 2026-09-11, with
+every superseded judgement still registered under its own name. The event log is the source of
+truth; the graph and the matrices are projections of it and are rebuilt by replay. Design
+decisions DD-059 (the frame and the tier separation), DD-060 (one client identity), DD-061
+(control tables derived from collector dispatch) and DD-064 (forbidden to look is blindness,
+outside the product is scope) govern what this report may say.
 
 <!-- lint: numerals-enforced -->
