@@ -7,9 +7,9 @@
   "criteria": 7,
   "constructs": 47,
   "indicators": 48,
-  "evidenced_by": 122,
+  "evidenced_by": 127,
   "evidenced_by_internal": 17,
-  "gaps": 19,
+  "gaps": 18,
   "measurement_specs": 22,
   "collectors_none_known": 4,
   "rules_built": 17,
@@ -235,9 +235,9 @@
     "tier": "public",
     "tier_raw": "`public`",
     "status": "draft",
-    "evidence_raw": "**gap**",
+    "evidence_raw": "`w3c-dwbp-2017` (BP 17, provide bulk download: \"enable consumers to retrieve the full dataset with a single request\"); `wilkinson-2016-fair-guiding-principles` (A1 and A1.1: retrievable by their identifier using a standardized communications protocol that is open, free, and universally implementable); `dcat-us-1-1-schema` (distribution → downloadURL, \"must be the **direct** download URL\", distinguished there from accessURL, which is an indirect means of access; the Project Open Data metadata schema whose implementation guidance is OMB M-13-13)",
     "measurement_status": "measured",
-    "gap": "**gap**",
+    "gap": null,
     "criterion_code": "A",
     "measured_by": {
      "cycle": "scan_2026-09-07",
@@ -536,7 +536,7 @@
     "tier": "public",
     "tier_raw": "`public`",
     "status": "stub",
-    "evidence_raw": "internal draft: FSS Machine Diagnostic spec (SEO SME, 2026-09, operator-held; admission gated)",
+    "evidence_raw": "`w3c-dwbp-2017` (BP 9, persistent URIs as identifiers of datasets: \"developers may build URIs into their code and so it is important that those URIs persist and that they dereference to the same resource over time\"; and BP 27, preserve identifiers: a dereference that leads to \"the infamous 404\" must tell the client whether the absence is permanent or temporary, which is the property a soft-404 destroys); `wilkinson-2016-fair-guiding-principles` (F1: globally unique and persistent identifier; A2: metadata accessible even when the data are no longer available); internal draft: FSS Machine Diagnostic spec (SEO SME, 2026-09, operator-held; admission gated)",
     "measurement_status": "measured",
     "gap": null,
     "criterion_code": "A",
@@ -3936,6 +3936,46 @@
    "to": "internal:state/scan_preflight_2026-09.json",
    "properties": {
     "artifact_path": "state/scan_preflight_2026-09.json"
+   }
+  },
+  {
+   "from": "ind:A3",
+   "type": "EVIDENCED_BY",
+   "to": "doc:w3c-dwbp-2017",
+   "properties": {
+    "doc_id": "w3c-dwbp-2017"
+   }
+  },
+  {
+   "from": "ind:A3",
+   "type": "EVIDENCED_BY",
+   "to": "doc:wilkinson-2016-fair-guiding-principles",
+   "properties": {
+    "doc_id": "wilkinson-2016-fair-guiding-principles"
+   }
+  },
+  {
+   "from": "ind:A3",
+   "type": "EVIDENCED_BY",
+   "to": "doc:dcat-us-1-1-schema",
+   "properties": {
+    "doc_id": "dcat-us-1-1-schema"
+   }
+  },
+  {
+   "from": "ind:A10",
+   "type": "EVIDENCED_BY",
+   "to": "doc:w3c-dwbp-2017",
+   "properties": {
+    "doc_id": "w3c-dwbp-2017"
+   }
+  },
+  {
+   "from": "ind:A10",
+   "type": "EVIDENCED_BY",
+   "to": "doc:wilkinson-2016-fair-guiding-principles",
+   "properties": {
+    "doc_id": "wilkinson-2016-fair-guiding-principles"
    }
   }
  ],

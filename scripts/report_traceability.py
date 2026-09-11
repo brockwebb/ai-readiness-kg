@@ -59,6 +59,26 @@ RETURN i.construct AS construct_property,
 FRAMEWORK_CODE = {"A11-declared": "A11"}
 
 
+def measure(session) -> dict:
+    """`{leg: row}` for every leg the report publishes. **The one measurement, one place.**
+
+    `main` prints it and `tests/test_report_traceability.py` asserts its shape
+    (`cc_tasks/2026-09-11_a3_a10_sources.md` decision 5). A test that re-derived the query
+    would be checking its own copy of it, and the two Cypher directions this file got wrong on
+    the first pass are exactly the kind of thing a second copy preserves.
+    """
+    out = {}
+    for leg in LEGS:
+        code = FRAMEWORK_CODE.get(leg, leg)
+        rows = list(session.run(Q, code=code))
+        row = dict(rows[0]) if rows else {}
+        exists = bool(session.run(
+            "MATCH (i:AssessmentIndicator {code:$c}) RETURN count(i) AS n",
+            c=code).single()["n"])
+        out[leg] = {"framework_code": code, "indicator_node": exists, **row}
+    return out
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -68,16 +88,9 @@ def main(argv=None) -> int:
     from seldon.config import get_neo4j_driver, load_project_config
     cfg = load_project_config(REPO)
     drv = get_neo4j_driver(cfg)
-    out = {}
     try:
         with drv.session(database=cfg["neo4j"]["database"]) as s:
-            for leg in LEGS:
-                code = FRAMEWORK_CODE.get(leg, leg)
-                rows = list(s.run(Q, code=code))
-                row = dict(rows[0]) if rows else {}
-                exists = bool(s.run("MATCH (i:AssessmentIndicator {code:$c}) RETURN count(i) AS n",
-                                    c=code).single()["n"])
-                out[leg] = {"framework_code": code, "indicator_node": exists, **row}
+            out = measure(s)
     finally:
         drv.close()
     if a.json:
