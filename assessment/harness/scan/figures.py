@@ -74,8 +74,14 @@ def config(cycle: str | None = None) -> dict:
                 "matrix_json": f"state/scan_matrix_{suffix}.json"})
     # Which cycle F5 compares AGAINST is a fact about the cycle being drawn, not a global.
     # A re-judged cycle is drawn against the cycle it derives from — same evidence, old rules
-    # against new — and the default `compare_to` would silently draw it against cycle 1.
-    cfg["compare_to"] = (cfg.get("compare_to_by_cycle") or {}).get(cyc, cfg["compare_to"])
+    # against new — and the default `compare_to` DID silently draw one against cycle 1.
+    #
+    # `None` when the cycle has no entry, and `None` is the answer, not a missing one: the
+    # default is gone (`figures.yaml`, and `cc_tasks/2026-09-11_rejudge_1_2_3_4_gen9.md`
+    # decision 5). It is resolved to a refusal in `cycle_over_cycle` rather than here, because
+    # five of the six figures need no predecessor and a cycle that legitimately has none — the
+    # first one — must still be able to draw them.
+    cfg["compare_to"] = (cfg.get("compare_to_by_cycle") or {}).get(cyc)
     return cfg
 
 
@@ -183,7 +189,13 @@ def svg(width, height, label: str, body: list, reads=(), files=(), cfg=None) -> 
 #: and a figure of the re-judged cycle still has to draw them.
 UNCHANGED_RECORDS = ("state/rejudgement_registration_2026-09-10.json",
                      "state/l0_rejudged_registration_2026-09-10.json",
-                     "state/figure_inputs_registration_2026-09-10.json")
+                     "state/figure_inputs_registration_2026-09-10.json",
+                     # Generation 9 (`cc_tasks/2026-09-11_rejudge_1_2_3_4_gen9.md` decision 3),
+                     # one record per family for the same reason the harness-v5 pass wrote three:
+                     # a family nobody compared has no evidence, and no evidence is no fallback.
+                     "state/rejudgement_registration_2026-09-11.json",
+                     "state/l0_rejudged_registration_2026-09-11.json",
+                     "state/figure_inputs_registration_2026-09-11.json")
 
 
 def unchanged_names() -> set:
@@ -211,6 +223,17 @@ def unchanged_names() -> set:
 
 class UnlicensedFallback(KeyError):
     """A figure asked for a name that is neither registered nor recorded as unchanged."""
+
+
+class UnconfiguredComparison(KeyError):
+    """F5 was asked to draw a cycle whose predecessor nobody declared.
+
+    Raised rather than defaulted. Which cycle a comparison is AGAINST is a claim about the past —
+    same frame or not, same rules or not — and `figures.yaml` is where a person makes it. The
+    global default that used to answer here drew `scan_2026-09-09_rj1` against cycle 1, a figure
+    with 22 rows reading "not measured in this cycle" and a heading that said otherwise
+    (`cc_tasks/2026-09-10_l0_figures_and_leg_rate_names_RESULT.md` §4).
+    """
 
 
 class Reads(dict):
@@ -534,6 +557,14 @@ def cycle_over_cycle(mx: dict, R: dict, cfg: dict) -> str:
     """
     f, ax, col = cfg["f5"], cfg["rate_axis"], cfg["colours"]
     cmp_ = cfg["compare_to"]
+    if not cmp_:
+        raise UnconfiguredComparison(
+            f"no predecessor is declared for cycle {cfg['cycle']!r}, so F5 cannot be drawn. Add "
+            f"a `compare_to_by_cycle` entry to figures.yaml naming the cycle this one is "
+            f"compared against, its suffix, its label and the legs whose rule moved between "
+            f"them — or, if it genuinely has no predecessor, draw the other figures with "
+            f"`--only` and leave this one out. There is no default: a default predecessor is an "
+            f"assertion about the past that nobody made.")
     dec = ax["tick_decimals"]
     legs = mx["legs"]
     left, plot = f["label_w"], f["plot_w"]

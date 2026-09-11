@@ -59,7 +59,16 @@ CYCLES = ("scan_smoke_2026-09-06", "scan_controls_2026-09-06", "scan_2026-09-07"
           # The harness-v5 re-judgements (`cc_tasks/2026-09-10_rejudge_2_3_4.md` decision 1).
           # Zero in every column, which is the point of them: the same Observations, judged by
           # a layer that knows a forbidden page was never read.
-          "scan_2026-09-07b_rj2", "scan_2026-09-09_rj1", "scan_2026-09-10_rj1")
+          "scan_2026-09-07b_rj2", "scan_2026-09-09_rj1", "scan_2026-09-10_rj1",
+          # The generation-9 re-judgements (`cc_tasks/2026-09-11_rejudge_1_2_3_4_gen9.md`
+          # decision 4). Zero in every column INCLUDING the second reading below, which is what
+          # the harness-v5 pass could not deliver: `scan_2026-09-10_rj1` cleared the first
+          # reading and carried 10 on the second. These four clear both, and they are asserted
+          # rather than xfailed — the pins above stay as history, nothing pinned is edited, and
+          # a re-judgement that did not clear what it was made for would show up here as a
+          # failure rather than as a sentence in a RESULT.
+          "scan_2026-09-07_rj2", "scan_2026-09-07b_rj3", "scan_2026-09-09_rj2",
+          "scan_2026-09-10_rj2")
 
 UNDER_OWN_HARNESS = {c: 0 for c in CYCLES}
 
@@ -226,6 +235,14 @@ ABSENCE_UNDER_PARTIAL_BLINDNESS = {
     "scan_2026-09-07b_rj2": 2,
     "scan_2026-09-09_rj1": 1,
     "scan_2026-09-10_rj1": 10,
+    # Generation 9, and this row of zeros is the whole point of that task: the 1, 2, 1 and 10
+    # above are the same four cycles, judged by `RULE-A3-v6` and `RULE-B3-v3` instead of their
+    # predecessors. Every one of those verdicts is now `error` — the scope limitation it always
+    # was — and not one of them moved to `pass`.
+    "scan_2026-09-07_rj2": 0,
+    "scan_2026-09-07b_rj3": 0,
+    "scan_2026-09-09_rj2": 0,
+    "scan_2026-09-10_rj2": 0,
 }
 
 

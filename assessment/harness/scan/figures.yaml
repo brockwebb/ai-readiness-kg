@@ -12,19 +12,19 @@
 # under this week's heading. What stays here is layout, colour and the snapshot list.
 framework_json: framework/ai_readiness_framework.json
 
-# The cycle whose figures a `cycle_over_cycle` comparison is drawn AGAINST (F5). A prior
-# cycle, so it is a fact about the past and not derivable from today's params.
-compare_to:
-  cycle: scan_2026-09-07
-  suffix: "2026-09-07"
-  label: "cycle 1 · 2026-09-07"
-  # Legs whose RULE changed between the two cycles. F5 marks these so a reader cannot read a
-  # difference as a change in the host: the instrument moved.
-  rule_changed:
-    A1: "v2 → v3"
-    A3: "v3 → v4"
-
-# Per-cycle overrides of `compare_to`. A RE-JUDGED cycle is drawn against the cycle it derives
+# **There is no global `compare_to` and there must not be one**
+# (`cc_tasks/2026-09-11_rejudge_1_2_3_4_gen9.md` decision 5, ResearchTask 24af5222).
+#
+# It used to name cycle 1, and a default predecessor is not a fact about the cycle being drawn:
+# `scan_2026-09-09_rj1` fell through to it and F5 drew cycle 3 re-judged against cycle 1, 22 rows
+# reading "not measured in this cycle" — a figure that answered instead of refusing
+# (`cc_tasks/2026-09-10_l0_figures_and_leg_rate_names_RESULT.md` §4). WHICH cycle a comparison is
+# against is a claim about the past that only a human can make, so an unconfigured cycle is now a
+# hard error in `figures.cycle_over_cycle` and never a fallback. The other five figures are
+# unaffected: F5 is the only one that needs a predecessor, so a cycle with none simply does not
+# have that figure (`figures.py --only`), which is what cycle 1 re-judged is.
+#
+# The entries below are per cycle. A RE-JUDGED cycle is drawn against the cycle it derives
 # from — the same evidence under the old rules and the new — so its comparison is fixed by what
 # it is, not by which cycle ran last. `note` is printed on the figure: a reader who sees two
 # dots must be told that the second one moved because the RULE moved and nothing was re-fetched.
@@ -88,6 +88,48 @@ compare_to_by_cycle:
     rule_changed:
       A10: "v2 → v3"
       A8: "v2 → v3"
+
+  # Cycle 2 AS MEASURED, against cycle 1 as measured. This entry is not new information: it is
+  # what the removed global default gave this cycle, written down, so that deleting the default
+  # changes no figure that already exists. `figures/scan_2026-09-07b/cycle_over_cycle.svg` was
+  # drawn under it and re-renders byte-identically from here.
+  scan_2026-09-07b:
+    cycle: scan_2026-09-07
+    suffix: "2026-09-07"
+    label: "cycle 1 · 2026-09-07"
+    rule_changed:
+      A1: "v2 → v3"
+      A3: "v3 → v4"
+
+  # ---------------------------------------------------------------- generation 9
+  #
+  # `cc_tasks/2026-09-11_rejudge_1_2_3_4_gen9.md` decision 5. All four cycles re-judged under the
+  # same `CURRENT` and the same harness version, so each pair is like for like and `rule_changed`
+  # is EMPTY on every one of them — which is the statement, not an omission: no row on any of
+  # these figures carries an instrument change, and every difference is the hosts and the frame.
+  #
+  # `scan_2026-09-07_rj2` is absent on purpose. Cycle 1 is the first cycle; it has no
+  # predecessor, so it gets no F5 and the renderer is told so with `--only`. An entry naming
+  # itself is what the global default used to produce, and a figure comparing a cycle to itself
+  # is worse than no figure.
+  scan_2026-09-07b_rj3:
+    cycle: scan_2026-09-07_rj2
+    suffix: "2026-09-07_rj2"
+    label: "cycle 1 · 2026-09-07, re-judged"
+    note: "both cycles judged under generation 9, so no row carries an instrument change; cycle 1 collected no link_probe leg, so A1 and A3 are blank on its side and that is a gap in the evidence, not a rate of zero"
+    rule_changed: {}
+  scan_2026-09-09_rj2:
+    cycle: scan_2026-09-07b_rj3
+    suffix: "2026-09-07b_rj3"
+    label: "cycle 2 · 2026-09-07b, re-judged, 13 agencies"
+    note: "different frame: cycle 2 measured 13 agencies + StatCan over 40 surfaces, cycle 3 measures 16 + 3 reference hosts over 64; both judged under generation 9"
+    rule_changed: {}
+  scan_2026-09-10_rj2:
+    cycle: scan_2026-09-09_rj2
+    suffix: "2026-09-09_rj2"
+    label: "cycle 3 · 2026-09-09, re-judged"
+    note: "both cycles judged under generation 9, so a difference on a row is the host and not the instrument; the frame grew by the seven declared flagships, 64 surfaces to 71"
+    rule_changed: {}
 
 # The rate axis. `ticks` is the ONLY numeric text in a figure that is not a Result or a
 # matrix count, and the gate checks the rendered ticks against exactly this list.

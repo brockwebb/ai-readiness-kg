@@ -84,6 +84,15 @@ PRIOR_CYCLES = {
     "scan_2026-09-07b_rj2": 404,
     "scan_2026-09-09_rj1": 634,
     "scan_2026-09-10_rj1": 739,
+    # The generation-9 re-judgements (`cc_tasks/2026-09-11_rejudge_1_2_3_4_gen9.md` §3, which
+    # asks for all SIXTEEN). Cycle 1 is in the set for the first time under a harness-v5 params
+    # hash: `scan_2026-09-07_rj2` re-derives under `RULE-A5-v2`, `RULE-A8-v4`, `RULE-A12-v2` and
+    # `RULE-B3-v3` where `scan_2026-09-07_rj1` above still re-derives under the v1/v3 rules that
+    # made it, which is the property this set exists to hold: each payload under its own.
+    "scan_2026-09-07_rj2": 352,
+    "scan_2026-09-07b_rj3": 404,
+    "scan_2026-09-09_rj2": 634,
+    "scan_2026-09-10_rj2": 739,
 }
 
 #: The fixture whose existence IS the fix's proof. Named once, here, because three tests need
@@ -616,7 +625,10 @@ def test_the_rejudgement_removes_at_least_the_recorded_false_positive(rederive_m
 #: The two most recent cycles. Their re-derivation stays in the FAST tier, because a rule or
 #: engine change is most likely to break the payloads closest to it and a gate that cannot see
 #: that quickly is not a gate. `cc_tasks/2026-09-09_guards_earn_their_keep.md` decision 4.
-RECENT_CYCLES = ("scan_2026-09-10_rj1", "scan_2026-09-10")
+#: Cycle 4's newest judgement and the measurement it derives from. `_rj1` moves to the slow tier
+#: as `_rj2` supersedes it: "the two most recent" is a rolling window, not a list that grows, and
+#: a window that grew by two every re-judgement would make the fast tier the full tier.
+RECENT_CYCLES = ("scan_2026-09-10_rj2", "scan_2026-09-10")
 
 
 def _tier(cycle: str):

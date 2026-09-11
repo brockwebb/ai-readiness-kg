@@ -261,7 +261,15 @@ def _rule_changed_clause() -> str:
     """
     sys.path.insert(0, str(REPO / "assessment" / "harness"))
     from scan import figures as _figs
-    changed = (_figs.config(DRAW_CYCLE)["compare_to"].get("rule_changed") or {})
+    cmp_ = _figs.config(DRAW_CYCLE)["compare_to"]
+    if not cmp_:
+        # No declared predecessor, so there is no F5 on this page and no rule-change claim to
+        # make about one. `None` rather than a default is deliberate
+        # (`cc_tasks/2026-09-11_rejudge_1_2_3_4_gen9.md` decision 5); the page says what is
+        # true of a first cycle instead of describing a comparison it does not show.
+        return ("no cycle precedes this one, so there is no cycle-over-cycle figure on this "
+                "page and no rule change to mark on it.")
+    changed = (cmp_.get("rule_changed") or {})
     if not changed:
         return ("no leg's rule moved between these two, so every difference on F5 is the "
                 "host.")
