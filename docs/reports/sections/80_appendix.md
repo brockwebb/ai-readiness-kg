@@ -44,6 +44,10 @@ hand-written expectation was wrong once.
 
 <!-- include: requests_per_netloc -->
 
+**Sources per check.**
+
+<!-- include: sources_per_check -->
+
 **Files beside this report.** `scan_matrix_tierA_2026-09-10_rj2.csv` and `.json`, the
 host-level matrix; `scan_matrix_tierC_2026-09-10_rj2.*`, the reference hosts;
 `scan_matrix_product_2026-09-10_rj2.*`, the product matrix. Every row carries its Finding

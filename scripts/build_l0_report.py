@@ -206,6 +206,14 @@ def build(check: bool = False) -> int:
     try:
         artifacts = load_named_artifacts(driver, db)
         fallback = build_units_fallback_index(driver, db)
+        # The "Sources per check" appendix, generated from the graph on every build like the
+        # matrices, so the fragment the include pastes is never older than the graph it cites
+        # (`cc_tasks/2026-09-11_report_sources_appendix.md` decision 1). A doc_id outside the
+        # manifest is fatal inside the writer.
+        sys.path.insert(0, str(REPO / "scripts"))
+        import report_traceability
+        with driver.session(database=db) as session:
+            sources_appendix = report_traceability.write_sources_appendix(session)
     finally:
         driver.close()
 
@@ -248,6 +256,7 @@ def build(check: bool = False) -> int:
         "tier3_findings": len(t3),
         "bare_numerals_in_prose": [f"line {n}: {s}" for n, s in bare],
         "missing_fragments": missing,
+        "sources_appendix": sources_appendix,
     }
     blocked = bool(fatal or unresolved or bare or missing)
     summary["gate"] = "BLOCKED" if blocked else "PASS"

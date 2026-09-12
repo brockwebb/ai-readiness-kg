@@ -34,6 +34,7 @@ defect from every other consumer.
 from __future__ import annotations
 
 import argparse
+import json
 import re
 import shutil
 import subprocess
@@ -113,6 +114,15 @@ def main(argv=None) -> int:
     if a.check:
         return 0
 
+    render(build_md, PDF)
+    print(f"wrote {PDF.relative_to(REPO)} ({PDF.stat().st_size} bytes)")
+    print(f"pages     : {json.dumps(page_counts())}")
+    return 0
+
+
+def render(build_md: Path, pdf: Path) -> None:
+    """The one pandoc/typst invocation, so the prose-only measurement below renders under
+    exactly the settings the published PDF does."""
     cmd = [PANDOC, str(build_md),
            "--from=markdown+pipe_tables+raw_html",
            f"--pdf-engine={ENGINE}",
@@ -125,18 +135,58 @@ def main(argv=None) -> int:
            # came out portrait with the agency names hyphenated mid-word. Decision 2 says
            # landscape before shrinking type below 9 pt, so this is set where typst reads it.
            "--variable", "header-includes=#set text(hyphenate: false)",
+           # A numeral never straddles a line. typst breaks text before a digit after a hyphen
+           # or a period, and breaks anywhere inside a token too long for its column, so a
+           # citation URL in a table cell came out as `jos-2021-` / `0013` and `10.` / `1145`
+           # and failed the numeral-multiset gate (`tests/test_report_pdf.py`), which reads
+           # `2021-` + `0013` as `20210013`. Boxing every COMPOUND numeral (digit runs joined
+           # by hyphens or periods) and every run of four or more digits makes each an
+           # unbreakable unit; the line breaks elsewhere. Short integers are left alone on
+           # purpose: a box is its own text object to pypdf, and boxing `21` in a table cell
+           # put it on a line of its own, where the gate's page-number strip (a line that is
+           # only a 1-3 digit integer) swallowed it. Prose is unaffected either way.
+           # (`cc_tasks/2026-09-11_report_sources_appendix.md` decision 3.)
+           "--variable",
+           'header-includes=#show regex("[0-9]+([.-][0-9]+)+|[0-9]{4,}"): it => box(it)',
            "--variable", "margin-x=1.4cm", "--variable", "margin-y=1.6cm",
            "--variable", "fontsize=10pt",
            # NO TABLE OF CONTENTS, and that is a gate decision rather than a taste one. §3
            # requires the PDF's numerals to match the markdown's exactly; a generated contents
            # page injects page numbers that appear in no source, which would make the check
            # unsatisfiable and invite an exemption instead of a fix.
-           "-o", str(PDF)]
+           "-o", str(pdf)]
     r = subprocess.run(cmd, capture_output=True, text=True, cwd=REPO)
     if r.returncode:
         raise SystemExit(f"FATAL: pandoc/{ENGINE} failed:\n{r.stderr[-1500:]}")
-    print(f"wrote {PDF.relative_to(REPO)} ({PDF.stat().st_size} bytes)")
-    return 0
+
+
+#: Where the appendices begin in the built markdown. Everything from here to the end is
+#: appendix; everything before it that is not a table is prose.
+APPENDIX_HEADING = "## Method appendix"
+
+
+def prose_only(md: str) -> str:
+    """The built markdown with every table block and the appendix removed — "prose meaning
+    everything outside the matrices and appendices" (`cc_tasks/2026-09-11_report_sources_
+    appendix.md` decision 5). Figures stay: they sit in the prose and take its page space."""
+    head = md.split(APPENDIX_HEADING, 1)[0]
+    return "\n".join(l for l in head.splitlines() if not l.lstrip().startswith("|")) + "\n"
+
+
+def page_counts() -> dict:
+    """`{total, prose}`: the published PDF's page count, and the page count of a prose-only
+    rendering under the same settings. Measured, not estimated; the prose PDF is rendered to a
+    temporary directory and not kept."""
+    import tempfile
+    pypdf = __import__("pypdf")
+    total = len(pypdf.PdfReader(str(PDF)).pages)
+    with tempfile.TemporaryDirectory() as tmp:
+        src = Path(tmp) / f"{STEM}.prose.md"
+        dst = Path(tmp) / f"{STEM}.prose.pdf"
+        src.write_text(prose_only(BUILD_MD.read_text(encoding="utf-8")), encoding="utf-8")
+        render(src, dst)
+        prose = len(pypdf.PdfReader(str(dst)).pages)
+    return {"total": total, "prose": prose}
 
 
 if __name__ == "__main__":
