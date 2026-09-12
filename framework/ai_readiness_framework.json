@@ -7,9 +7,9 @@
   "criteria": 7,
   "constructs": 47,
   "indicators": 48,
-  "evidenced_by": 127,
+  "evidenced_by": 139,
   "evidenced_by_internal": 17,
-  "gaps": 18,
+  "gaps": 14,
   "measurement_specs": 22,
   "collectors_none_known": 4,
   "rules_built": 17,
@@ -19,10 +19,6 @@
  },
  "unparsed_rows": [],
  "evidence_doc_ids_not_in_manifest": [
-  {
-   "indicator": "A1",
-   "doc_id": "acquisition_blocked"
-  },
   {
    "indicator": "C2",
    "doc_id": "2026-08-27_chunked_vs_wholedoc_verdict.md"
@@ -145,9 +141,9 @@
     "tier": "public",
     "tier_raw": "`public`",
     "status": "draft",
-    "evidence_raw": "**gap** — named source (Commerce GenAI-Open-Data guidance) is `acquisition_blocked`, batch-017",
+    "evidence_raw": "`w3c-dwbp-2017` (BP 12, use machine-readable standardized data formats: \"make data available in a machine-readable, standardized data format that is well suited to its intended or potential use\", implemented as \"CSV, XML, HDF5, JSON and RDF serialization syntaxes\" and tested by \"check if the data format conforms to a known machine-readable data format specification\"; and BP 14, provide data in multiple formats, the not-PDF-only half); `foundations-for-evidence-based-policymaking-act-of-2018-evid` (Title II, the OPEN Government Data Act, amending 44 U.S.C. 3502: paragraph 18 defines machine-readable as \"data in a format that can be easily processed by a computer without human intervention while ensuring no semantic meaning is lost\", and paragraph 20 requires an open Government data asset to be machine-readable and available in an open format); `m-25-05-phase-2-implementation-of-the-evidence-act-open-gove` (section 5, attributes generally required for public data assets, i. Machine-Readable: \"agencies must make each of their public data assets machine-readable\", with the worked example that tabular data \"should not provide this data as a scanned image or image-based PDF document, but rather should provide that public data asset in an appropriate format e.g. in a character-delimited format such as a CSV file\"); the Commerce GenAI-Open-Data guidance named in this cell's earlier gap is still acquisition_blocked, batch-017, and is not what any of the three above stands in for",
     "measurement_status": "measured",
-    "gap": "**gap** — named source (Commerce GenAI-Open-Data guidance) is `acquisition_blocked`, batch-017",
+    "gap": null,
     "criterion_code": "A",
     "measured_by": {
      "cycle": "scan_2026-09-07",
@@ -444,9 +440,9 @@
     "tier": "public",
     "tier_raw": "`public`",
     "status": "draft",
-    "evidence_raw": "**gap**",
+    "evidence_raw": "`w3c-dwbp-2017` (BP 7, provide a version indicator: \"assign and indicate a version number or date for each dataset\", whose intended outcome is that \"humans and software agents will easily be able to determine which version of a dataset they are working with\" and whose implementation note is that \"the URI used to request the latest version of the data should not change as the versions change\", which is the latest-vintage pointer; and BP 21, provide data up to date: \"make data available in an up-to-date manner, and make the update frequency explicit\"); `dcat-us-1-1-schema` (the modified field, required \"yes, always\": \"most recent date on which the dataset was changed, updated or modified\", as an ISO 8601 date; and the accrualPeriodicity field, the publishing frequency as an ISO 8601 repeating duration); `omb-m-23-22-digital-first-public-experience` (indicate timeliness of content: agencies \"should indicate when content on static, public-facing websites was created or last updated by including temporal information in line with content or by using 'Last Modified' in the HTTP header, in metadata tags, or in XML sitemaps\")",
     "measurement_status": "measured",
-    "gap": "**gap**",
+    "gap": null,
     "criterion_code": "A",
     "measured_by": {
      "cycle": "scan_2026-09-07",
@@ -684,9 +680,9 @@
     "tier": "public",
     "tier_raw": "`public`",
     "status": "draft",
-    "evidence_raw": "**gap**",
+    "evidence_raw": "`omb-m-23-22-digital-first-public-experience` (default to HTML: agencies \"should default to creating and publishing content in an HTML format in lieu of publishing content in other electronic document formats that are designed for printing or preserving and protecting the content and layout of the document e.g. PDF and DOCX formats\", and \"an agency should develop online content in a non-HTML format only if necessitated by a specific user need\", which is the structured-text, not-PDF-only half); `bing-webmaster-guidelines` (section 8, allow efficient crawling and rendering, which lists \"hiding critical content behind client-side rendering\" among the things to avoid and states that \"content that cannot be reliably rendered may not be indexed or selected for grounding results\", which is the served-without-script-execution half); `w3c-dwbp-2017` (BP 5, provide data provenance information, intended outcome \"software agents will be able to automatically process provenance information\"; and BP 6, provide data quality information, intended outcome \"humans and software agents will be able to assess the quality and therefore suitability of a dataset for their application\" - why a methodology statement has to be machine-processable rather than merely published)",
     "measurement_status": "measured",
-    "gap": "**gap**",
+    "gap": null,
     "criterion_code": "B",
     "measured_by": {
      "cycle": "scan_2026-09-07",
@@ -1064,9 +1060,9 @@
     "tier": "public",
     "tier_raw": "`public`",
     "status": "draft",
-    "evidence_raw": "**gap**",
+    "evidence_raw": "`foundations-for-evidence-based-policymaking-act-of-2018-evid` (Title II, the OPEN Government Data Act, enacting 44 U.S.C. 3511: subsection a paragraph 1 requires each agency to \"develop and maintain a comprehensive data inventory that accounts for all data assets created by, collected by, under the control or direction of, or maintained by the agency\"; subsection a paragraph 3 requires that inventory updated \"not later than 90 days\" after a data asset is created or identified; subsection b requires public data assets be submitted \"for inclusion in the Federal data catalogue\"; subsection c paragraph 1 makes that catalogue \"a single public interface online as a point of entry\"); `m-25-05-phase-2-implementation-of-the-evidence-act-open-gove` (section 4a iii, public dissemination: agencies \"must submit their comprehensive data inventory to the Federal Data Catalog as a data asset\" and \"host it publicly on the agency's website at the address: www.agency.gov/data.json\", repeated at section 5b ii with the OMB-approved metadata schema); `dcat-us-1-1-schema` (that metadata schema, which states the listing requirement on its face: \"guidance to support the use of the Project Open Data metadata to list agency datasets and application programming interfaces as hosted at agency.gov/data\", and \"the catalog file for each agency should list all of the agency's datasets that can be made public, regardless of whether they are distributed by a file download or a Web API\"; its Catalog fields section describes \"the entire Public Data Listing catalog file\")",
     "measurement_status": "measured",
-    "gap": "**gap**",
+    "gap": null,
     "criterion_code": "D",
     "measured_by": {
      "cycle": "scan_2026-09-07",
@@ -3976,6 +3972,102 @@
    "to": "doc:wilkinson-2016-fair-guiding-principles",
    "properties": {
     "doc_id": "wilkinson-2016-fair-guiding-principles"
+   }
+  },
+  {
+   "from": "ind:A1",
+   "type": "EVIDENCED_BY",
+   "to": "doc:w3c-dwbp-2017",
+   "properties": {
+    "doc_id": "w3c-dwbp-2017"
+   }
+  },
+  {
+   "from": "ind:A1",
+   "type": "EVIDENCED_BY",
+   "to": "doc:foundations-for-evidence-based-policymaking-act-of-2018-evid",
+   "properties": {
+    "doc_id": "foundations-for-evidence-based-policymaking-act-of-2018-evid"
+   }
+  },
+  {
+   "from": "ind:A1",
+   "type": "EVIDENCED_BY",
+   "to": "doc:m-25-05-phase-2-implementation-of-the-evidence-act-open-gove",
+   "properties": {
+    "doc_id": "m-25-05-phase-2-implementation-of-the-evidence-act-open-gove"
+   }
+  },
+  {
+   "from": "ind:A8",
+   "type": "EVIDENCED_BY",
+   "to": "doc:w3c-dwbp-2017",
+   "properties": {
+    "doc_id": "w3c-dwbp-2017"
+   }
+  },
+  {
+   "from": "ind:A8",
+   "type": "EVIDENCED_BY",
+   "to": "doc:dcat-us-1-1-schema",
+   "properties": {
+    "doc_id": "dcat-us-1-1-schema"
+   }
+  },
+  {
+   "from": "ind:A8",
+   "type": "EVIDENCED_BY",
+   "to": "doc:omb-m-23-22-digital-first-public-experience",
+   "properties": {
+    "doc_id": "omb-m-23-22-digital-first-public-experience"
+   }
+  },
+  {
+   "from": "ind:B3",
+   "type": "EVIDENCED_BY",
+   "to": "doc:omb-m-23-22-digital-first-public-experience",
+   "properties": {
+    "doc_id": "omb-m-23-22-digital-first-public-experience"
+   }
+  },
+  {
+   "from": "ind:B3",
+   "type": "EVIDENCED_BY",
+   "to": "doc:bing-webmaster-guidelines",
+   "properties": {
+    "doc_id": "bing-webmaster-guidelines"
+   }
+  },
+  {
+   "from": "ind:B3",
+   "type": "EVIDENCED_BY",
+   "to": "doc:w3c-dwbp-2017",
+   "properties": {
+    "doc_id": "w3c-dwbp-2017"
+   }
+  },
+  {
+   "from": "ind:D4",
+   "type": "EVIDENCED_BY",
+   "to": "doc:foundations-for-evidence-based-policymaking-act-of-2018-evid",
+   "properties": {
+    "doc_id": "foundations-for-evidence-based-policymaking-act-of-2018-evid"
+   }
+  },
+  {
+   "from": "ind:D4",
+   "type": "EVIDENCED_BY",
+   "to": "doc:m-25-05-phase-2-implementation-of-the-evidence-act-open-gove",
+   "properties": {
+    "doc_id": "m-25-05-phase-2-implementation-of-the-evidence-act-open-gove"
+   }
+  },
+  {
+   "from": "ind:D4",
+   "type": "EVIDENCED_BY",
+   "to": "doc:dcat-us-1-1-schema",
+   "properties": {
+    "doc_id": "dcat-us-1-1-schema"
    }
   }
  ],

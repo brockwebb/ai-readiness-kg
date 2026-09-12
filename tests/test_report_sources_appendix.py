@@ -81,8 +81,34 @@ def test_a3_and_a10_rows_carry_their_locators():
     assert "F1" in by["A10"]["wilkinson-2016-fair-guiding-principles"]
 
 
-def test_the_seven_pinned_legs_each_reach_a_source_in_the_fragment():
-    """The a3a10 invariant, read off the PDF's own table rather than the graph."""
+def test_a1_a8_b3_d4_rows_carry_their_locators():
+    """`cc_tasks/2026-09-12_a1_a8_b3_d4_sources.md` §1. Each locator is a string read out of the
+    cited document in that task, not off its title — the BP 10 discipline
+    (`cc_tasks/2026-09-11_a3_a10_sources_RESULT.md` §4). A row whose Source column is filled and
+    whose Locator column is empty is a citation with no page number, which is what these pin."""
+    by = {}
+    for r in rows(FRAGMENT.read_text(encoding="utf-8")):
+        by.setdefault(r["check"], {})[r["doc"]] = r["locator"]
+    assert "BP 12" in by["A1"]["w3c-dwbp-2017"]
+    assert "3502" in by["A1"]["foundations-for-evidence-based-policymaking-act-of-2018-evid"]
+    assert "Machine-Readable" in by["A1"][
+        "m-25-05-phase-2-implementation-of-the-evidence-act-open-gove"]
+    assert "BP 7" in by["A8"]["w3c-dwbp-2017"] and "BP 21" in by["A8"]["w3c-dwbp-2017"]
+    assert "modified" in by["A8"]["dcat-us-1-1-schema"]
+    assert "timeliness" in by["A8"]["omb-m-23-22-digital-first-public-experience"]
+    assert "client-side rendering" in by["B3"]["bing-webmaster-guidelines"]
+    assert "HTML" in by["B3"]["omb-m-23-22-digital-first-public-experience"]
+    assert "3511" in by["D4"]["foundations-for-evidence-based-policymaking-act-of-2018-evid"]
+    assert "data.json" in by["D4"][
+        "m-25-05-phase-2-implementation-of-the-evidence-act-open-gove"]
+    assert "Public Data Listing" in by["D4"]["dcat-us-1-1-schema"]
+
+
+def test_every_pinned_leg_reaches_a_source_in_the_fragment():
+    """The a3a10 invariant, read off the PDF's own table rather than the graph. Twelve legs
+    since `cc_tasks/2026-09-12_a1_a8_b3_d4_sources.md` widened `RT.LEGS`; a leg that is allowed
+    to reach no source is named in `tests/test_report_traceability.ALLOW_ZERO_SOURCES`, and
+    while that mapping is empty this holds for every check the report carries."""
     got = rows(FRAGMENT.read_text(encoding="utf-8"))
     for leg in RT.LEGS:
         assert any(r["check"] == leg and r["doc"] for r in got), leg
@@ -118,8 +144,11 @@ def test_product_legs_named_by_prose_are_read_from_the_sections(tmp_path):
         "{{result:scan_l0_product_b3_applicable_n_2026:value}} "
         "{{result:scan_l0_product_a3_error_2026:value}}", encoding="utf-8")
     (tmp_path / "b.md").write_text("{{result:scan_l0_product_d4_pass_x:value}}", encoding="utf-8")
-    assert RT.product_legs_named_by_prose(tmp_path) == ["B3", "D4"]        # A3 is in LEGS
-    assert RT.appendix_legs()[:7] == RT.LEGS
+    assert RT.product_legs_named_by_prose(tmp_path) == ["B3", "D4"]   # A3 is named in code
+    # `LEGS` IS the read, since 2026-09-12: the seven named in code followed by whatever the
+    # sections name. The two must not drift, or the appendix prints a row no test pins.
+    assert RT.appendix_legs() == RT.LEGS
+    assert RT.LEGS[:7] == RT._NAMED_IN_CODE
 
 
 def test_locators_are_the_parenthetical_after_the_slug_balanced():

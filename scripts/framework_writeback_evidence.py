@@ -45,6 +45,10 @@ sys.path.insert(0, str(REPO / "scripts"))
 import build_framework_graph as bfg                                 # noqa: E402
 import framework_writeback as fw                                    # noqa: E402
 
+#: The task this script was written for, and the default the event carries. A LATER task that
+#: carries another cell across names itself with `--task`, because the event is the provenance
+#: trail of who changed the record and the answer "the task that created the script" is wrong
+#: for every run after the first (`cc_tasks/2026-09-12_a1_a8_b3_d4_sources.md` §1).
 TASK = "cc_tasks/2026-09-11_a3_a10_sources.md"
 SCRIPT = "scripts/framework_writeback_evidence.py"
 
@@ -64,6 +68,9 @@ def main(argv=None) -> int:
     ap.add_argument("--indicator", action="append", required=True, metavar="CODE",
                     help="indicator code whose evidence cell to carry over (repeatable)")
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--task", default=TASK, metavar="PATH",
+                    help="the cc_task this write-back is part of; lands on the "
+                         "framework_writeback event (default: the task that added this script)")
     fw.add_force_args(ap)
     a = ap.parse_args(argv)
 
@@ -111,6 +118,24 @@ def main(argv=None) -> int:
             "gap_after": gap,
         }
 
+    # **The skeleton-authored diagnostic, refreshed.** `evidence_doc_ids_not_in_manifest` is an
+    # `AUTHORED_TOP` key: `build_framework_graph.generate` derives it from the skeleton's
+    # evidence cells, and `merge` therefore takes it from the generator, not from the record.
+    # A cell edit that adds or removes a backticked slug the manifest does not hold moves it,
+    # so a write-back that carries the cell and leaves this behind puts the record out of step
+    # with its own skeleton — caught by
+    # `tests/test_framework_single_writer.py::test_regenerating_from_the_current_skeleton_over_head_is_a_no_op`,
+    # which is what that test is for. A3 and A10 never exercised it because neither cell named
+    # an unadmitted slug; A1's did (`acquisition_blocked`, from the cell's earlier gap text).
+    # Recomputed by the GENERATOR rather than re-derived here: the dedup is global across rows,
+    # so a per-indicator patch would be right only while no slug is named twice.
+    top_before = g.get("evidence_doc_ids_not_in_manifest", [])
+    top_after = bfg.generate()["evidence_doc_ids_not_in_manifest"]
+    if top_after != top_before:
+        g["evidence_doc_ids_not_in_manifest"] = top_after
+        changes["__top_level__"] = {"evidence_doc_ids_not_in_manifest":
+                                    {"before": top_before, "after": top_after}}
+
     if refused:
         for code, d in refused:
             print(f"REFUSED {code}: `{d}` is not in corpus/manifest.json", file=sys.stderr)
@@ -119,7 +144,8 @@ def main(argv=None) -> int:
                          "Dixie sweep and `rebuild`) or remove it from the cell. Nothing was "
                          "written.")
 
-    out = fw.save(g, script=SCRIPT, task=TASK, changes=changes, dry_run=a.dry_run, **fw.force_kwargs(a))
+    out = fw.save(g, script=SCRIPT, task=a.task, changes=changes, dry_run=a.dry_run,
+                  **fw.force_kwargs(a))
     print(json.dumps({k: v for k, v in out.items() if k != "changes"}, indent=1))
     print(json.dumps(changes, indent=1))
     return 0

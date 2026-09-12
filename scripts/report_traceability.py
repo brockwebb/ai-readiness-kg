@@ -3,15 +3,16 @@
 **Read-only, zero spend, no network beyond Neo4j.**
 
 `cc_tasks/2026-09-11_l0_report_cycle4_revision.md` decision 5: *measured and reported, not
-gated*. For each of the six tier-0 legs and A3, state by Cypher whether the rule's indicator
-node reaches a construct, a definition or a source node — the survey item -> construct ->
-definition -> primary source crosswalk this repo's CLAUDE.md calls the validity layer. Where the
-answer is "no edge", the RESULT says so and the report is not changed for it.
+gated*. For every check the report quotes a pass rate for (`LEGS`: the six tier-0 legs, A3, and
+the five product legs the prose names, read from the sections rather than typed), state by
+Cypher whether the rule's indicator node reaches a construct, a definition or a source node.
+That is the survey item -> construct -> definition -> primary source crosswalk this repo's
+CLAUDE.md calls the validity layer. Where the answer is "no edge", the RESULT says so and the
+report is not changed for it.
 
 **The "Sources per check" appendix is generated here** (`cc_tasks/2026-09-11_report_sources_
-appendix.md` decision 1): one row per (check, admitted source) for every check the report
-carries — the seven legs above plus every product leg the prose names by a
-`{{result:scan_l0_product_<leg>_...}}` tag — the source rendered as a citation from
+appendix.md` decision 1): one row per (check, admitted source) for every check in `LEGS`, the
+source rendered as a citation from
 `corpus/manifest.json` (decision 2) and the locator read from the indicator's evidence cell in
 the framework of record. Nothing in it is authored: a document missing a metadata field renders
 with what it has and the gap is reported; a check that reaches no admitted source gets a row
@@ -38,9 +39,11 @@ MANIFEST = REPO / "corpus" / "manifest.json"
 SECTIONS = REPO / "docs" / "reports" / "sections"
 FRAGMENT = REPO / "docs" / "reports" / "generated" / "sources_per_check.md"
 
-#: The report's six host-level checks, plus the product check decision 4 writes a paragraph
-#: about. The report names these and no others as its own legs.
-LEGS = ["A4", "A5", "A10", "A11-declared", "A12", "G1-D", "A3"]
+#: The report's six host-level checks, plus the product check the movement section writes a
+#: paragraph about. These seven are NAMED IN CODE because each is either a column of the tier-0
+#: matrix or a leg the prose discusses without a `{{result:scan_l0_product_...}}` tag, so no
+#: rule reads them off the sections.
+_NAMED_IN_CODE = ["A4", "A5", "A10", "A11-declared", "A12", "G1-D", "A3"]
 
 Q = """
 MATCH (i:AssessmentIndicator {code: $code})
@@ -85,16 +88,28 @@ _PROSE_PRODUCT_TAG = re.compile(r"\{\{result:scan_l0_product_([a-z]\d{1,2})_")
 
 def product_legs_named_by_prose(sections_dir: Path = SECTIONS) -> list:
     """Product legs the section prose names by a `{{result:scan_l0_product_<leg>_...}}` tag,
-    in code order, excluding any already in `LEGS`."""
+    in code order, excluding any already named in code."""
     found = set()
     for f in sorted(sections_dir.glob("*.md")):
         found |= {m.upper() for m in _PROSE_PRODUCT_TAG.findall(f.read_text(encoding="utf-8"))}
-    return sorted(found - set(LEGS))
+    return sorted(found - set(_NAMED_IN_CODE))
 
 
 def appendix_legs() -> list:
-    """Every check the report carries: the seven pinned legs, then the prose-named product legs."""
-    return LEGS + product_legs_named_by_prose()
+    """Every check the report carries: the seven named in code, then the prose-named product
+    legs."""
+    return _NAMED_IN_CODE + product_legs_named_by_prose()
+
+
+#: **Every check the report quotes a pass rate for, by tag or in words.** Twelve, not seven:
+#: the seven above plus the five product legs the prose names (A1, A6, A8, B3, D4).
+#: `cc_tasks/2026-09-12_a1_a8_b3_d4_sources.md` decision 2, implementing DN-001's first
+#: decision — *the set of checks is read from the report's sections, not typed*. The seven-leg
+#: pin found A3 and A10 uncited; it could not find A1, A8, B3 and D4, because they were outside
+#: it while the prose quoted a rate for each. What closes that hole is not a longer list but
+#: measuring the list the SECTIONS produce, so a leg added to the prose is pinned the moment it
+#: is written rather than the next time somebody remembers this file.
+LEGS = appendix_legs()
 
 
 def measure(session, legs: list | None = None) -> dict:
