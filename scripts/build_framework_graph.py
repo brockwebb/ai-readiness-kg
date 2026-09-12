@@ -12,7 +12,31 @@ outside the parser's `node_types`/`edge_types` whitelist: the assessment layer i
 and an extraction able to mint an `AssessmentIndicator` would let a source document rewrite
 the framework measuring it.
 
-    /opt/anaconda3/bin/python3 scripts/build_framework_graph.py [--out framework/ai_readiness_framework.json]
+**The skeleton is the source of the AUTHORED cells, not of the whole record**
+(`cc_tasks/2026-09-11_framework_single_writer.md`). Since the record was first generated it has
+been written back to: 22 `MeasurementSpec` nodes and their `MEASURED_BY` edges, every
+`measurement_status` promotion and its `measured_by` block, A12's adoption as a *candidate*
+under DD-054 with its own construct and internal refs, the recorded spec decisions, and six
+`counts` keys the skeleton never carried. Regenerating "the obvious way" dropped all of it
+(`2026-09-11_a3_a10_sources_RESULT.md` §7). So this module no longer writes the file:
+
+* `generate()` parses the skeleton and returns ONLY what the skeleton authors;
+* `merge(generated, current)` lays that over the record on disk, keeping everything the
+  skeleton does not author — see `AUTHORED_PROPS`, `AUTHORED_EDGE_TYPES` and the docstring
+  there for the exact rule;
+* `build(current)` is the two together, and `main` hands the result to
+  `framework_writeback.save`, the one writer, which refuses to drop anything without
+  `--force --reason` and puts the delta on the event.
+
+`tests/test_framework_single_writer.py` asserts that regenerating from the current skeleton over
+`HEAD` is a byte-for-byte no-op, and stops being one only when the skeleton changes.
+
+The candidate table (`### Candidate indicators (not part of the framework)`, under §10 of the
+skeleton) is NOT parsed. Its rows are minted by `add_candidate_indicator.py` and rendered by
+`render_framework.render_candidate_table`; reading them here as criterion rows is exactly how
+A12 was re-authored into criterion G with its rationale in the Status cell.
+
+    /opt/anaconda3/bin/python3 scripts/build_framework_graph.py [--dry-run] [--out PATH] [--force --reason TEXT]
 """
 from __future__ import annotations
 
@@ -24,8 +48,12 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO))
+sys.path.insert(0, str(REPO / "scripts"))
+
+import framework_writeback as fw                                    # noqa: E402
 
 TASK = "cc_tasks/2026-09-06_freeze_and_framework_graph.md"
+SCRIPT = "scripts/build_framework_graph.py"
 SKELETON = REPO / "docs" / "crosswalk" / "usafacts_operationalization_skeleton.md"
 MANIFEST = REPO / "corpus" / "manifest.json"
 OUT = REPO / "framework" / "ai_readiness_framework.json"
@@ -57,8 +85,14 @@ def cells(rest: str) -> list:
 
 def parse(text: str) -> tuple:
     """(rows, unparsed) — one dict per indicator row, plus any `| Xn |` line we could not split
-    into the expected six cells."""
-    lines = text.splitlines()
+    into the expected six cells.
+
+    Stops at the candidate heading, the same cut `render_framework.skeleton_rows` makes: the
+    candidate table's rows carry the same leading code cell as a criterion row, and criterion
+    G's section (the last `CRITERIA` marker) otherwise runs to the end of the file and swallows
+    them."""
+    from render_framework import CANDIDATE_HEADING
+    lines = text.split(CANDIDATE_HEADING, 1)[0].splitlines()
     bounds = []
     for letter, name, marker in CRITERIA:
         i = next((k for k, l in enumerate(lines) if l.startswith(marker)), None)
@@ -123,7 +157,9 @@ def evidence_edges(row: dict, manifest_ids: set) -> tuple:
     return real, internal, gap
 
 
-def build() -> dict:
+def generate() -> dict:
+    """The record as the SKELETON alone authors it. Never written as-is over an existing
+    record — see `merge`."""
     text = SKELETON.read_text(encoding="utf-8")
     rows, unparsed = parse(text)
     rows = split_g1(rows)
@@ -189,18 +225,119 @@ def build() -> dict:
             "nodes": nodes, "edges": edges}
 
 
+#: Indicator properties the skeleton's six cells author. Every other property on an indicator
+#: node (`measurement_status`, `measured_by`, `not_measured_reason`, `candidate_*`,
+#: `recorded_by`, ...) is a write-back and is preserved from the record on disk. A key here
+#: that `generate` no longer emits for a row (a `frontier`/`as_of` the Status cell dropped) is
+#: dropped from the record too — the skeleton is authoritative for exactly this list.
+AUTHORED_PROPS = frozenset({
+    "code", "construct", "indicator", "type", "tier", "tier_raw", "status", "evidence_raw",
+    "gap", "criterion_code", "g1_leg_of", "frontier", "as_of",
+})
+#: `generate` sets a starting value for these; the record's value, once written back, wins.
+DEFAULT_ONLY_PROPS = frozenset({"measurement_status"})
+#: Edge types the skeleton authors, from a node the skeleton authors. `MEASURED_BY` is the
+#: spec builder's; an authored type FROM a preserved node (A12's refs) or TO a preserved node
+#: (crit:A -> A12's construct) is a write-back and stays.
+AUTHORED_EDGE_TYPES = frozenset({"DECOMPOSES_INTO", "EVIDENCED_BY", "EVIDENCED_BY_INTERNAL"})
+#: Top-level keys `generate` owns. `counts` is the shared writer's (`recount`); anything else
+#: at the top level (`counts_basis`, a future key) is preserved.
+AUTHORED_TOP = ("generated_from", "generated_by", "task", "schema_epoch", "unparsed_rows",
+                "evidence_doc_ids_not_in_manifest")
+
+
+def _merge_node(cur: dict, gen: dict) -> dict:
+    """Authored properties from `gen`, everything else from `cur`, in `cur`'s key order so an
+    unchanged record serialises to the same bytes."""
+    cp, gp = cur.get("properties") or {}, gen.get("properties") or {}
+    props = {}
+    for k, v in cp.items():
+        if k in AUTHORED_PROPS:
+            if k in gp:
+                props[k] = gp[k]
+            # else: the skeleton stopped authoring it for this row; dropped
+        else:
+            props[k] = v
+    for k, v in gp.items():
+        if k not in props and (k in AUTHORED_PROPS or k in DEFAULT_ONLY_PROPS):
+            props[k] = v
+    return {**cur, "labels": gen["labels"], "properties": props}
+
+
+def merge(generated: dict, current: dict | None) -> dict:
+    """Lay what the skeleton authors over the record on disk; keep everything it does not.
+
+    * a node the skeleton authors (criterion, construct, non-candidate indicator) takes its
+      authored properties from `generated` and keeps its write-backs;
+    * a node the skeleton does not author (`MeasurementSpec`, a candidate indicator and its
+      construct) is kept whole;
+    * an authored edge is one of `AUTHORED_EDGE_TYPES` whose `from` is a generated node and
+      whose `to` is not a preserved node; it is present iff the skeleton emits it. Every
+      other edge is kept whole. An authored edge the skeleton no longer emits is therefore
+      dropped here — and `framework_writeback.save` refuses that drop unless it is forced
+      with a reason, which is the whole point of the arrangement;
+    * order is the record's; new authored nodes and edges are appended.
+    """
+    if current is None:
+        return generated
+    gen_nodes = {n["id"]: n for n in generated["nodes"]}
+    cur_ids = {n["id"] for n in current["nodes"]}
+    preserved_ids = cur_ids - set(gen_nodes)
+    nodes = [_merge_node(n, gen_nodes[n["id"]]) if n["id"] in gen_nodes else n
+             for n in current["nodes"]]
+    nodes += [n for n in generated["nodes"] if n["id"] not in cur_ids]
+
+    def authored(e: dict) -> bool:
+        return (e["type"] in AUTHORED_EDGE_TYPES and e["from"] in gen_nodes
+                and e["to"] not in preserved_ids)
+
+    gen_edges = {fw._edge_key(e): e for e in generated["edges"]}
+    edges = []
+    for e in current["edges"]:
+        k = fw._edge_key(e)
+        if authored(e):
+            if k in gen_edges:
+                edges.append({**e, **gen_edges[k]})
+            # else: the skeleton no longer carries it; `save` refuses the drop unless forced
+        else:
+            edges.append(e)
+    have = {fw._edge_key(e) for e in edges}
+    edges += [e for e in generated["edges"] if fw._edge_key(e) not in have]
+
+    out = dict(current)
+    for k in AUTHORED_TOP:
+        out[k] = generated[k]
+    out["nodes"], out["edges"] = nodes, edges
+    return out
+
+
+def build(current: dict | None = None) -> dict:
+    """`generate()` merged over `current` (the record on disk, or None for a first build)."""
+    return merge(generate(), current)
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--out", default=str(OUT))
+    ap.add_argument("--dry-run", action="store_true")
+    fw.add_force_args(ap)
     a = ap.parse_args(argv)
-    g = build()
-    Path(a.out).parent.mkdir(parents=True, exist_ok=True)
-    Path(a.out).write_text(json.dumps(g, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
+    out = Path(a.out)
+    g = build(fw.load(out))
+    out.parent.mkdir(parents=True, exist_ok=True)
+    # Through the one writer: it recounts, refuses a drop that is not forced with a reason,
+    # writes, and appends the `framework_writeback` event carrying the delta.
+    ev = fw.save(g, script=SCRIPT, task=TASK, changes={"regenerated_from": g["generated_from"]},
+                 dry_run=a.dry_run, path=out, **fw.force_kwargs(a))
     print(json.dumps({"counts": g["counts"],
                       "unparsed_rows": g["unparsed_rows"],
                       "evidence_doc_ids_not_in_manifest": g["evidence_doc_ids_not_in_manifest"][:10],
-                      "unmatched_total": len(g["evidence_doc_ids_not_in_manifest"])}, indent=1))
-    print(f"-> {Path(a.out).resolve().relative_to(REPO)}", file=sys.stderr)
+                      "unmatched_total": len(g["evidence_doc_ids_not_in_manifest"]),
+                      "delta": ev["delta_summary"],
+                      "written": ev["written"], "unchanged": ev.get("unchanged", False),
+                      "event_id": ev.get("event_id")}, indent=1))
+    print(f"-> {out.resolve().relative_to(REPO) if out.resolve().is_relative_to(REPO) else out}",
+          file=sys.stderr)
     return 0
 
 

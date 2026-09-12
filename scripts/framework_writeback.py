@@ -25,6 +25,24 @@ The split between the two groups is not stylistic:
   whether or not its indicator has been adopted, and `tests/test_framework_graph.py` asserts
   `measurement_specs == len(specs)` over all of them.
 
+**This module is the ONLY code that writes `framework/ai_readiness_framework.json`**
+(`cc_tasks/2026-09-11_framework_single_writer.md` decision 1;
+`tests/test_framework_single_writer.py` asserts it statically over every module in the repo).
+A generator (`build_framework_graph.py`, `build_measurement_specs.py`) produces its output in
+memory and hands it to `save`, which does three things no caller may skip:
+
+* **refuses a write that removes anything** — a node, an edge, or a key of `counts` present in
+  the file on disk — unless the caller passes `force=True` with a `reason`, in which case the
+  reason is on the event (decision 2). The refusal names what would be dropped and how many.
+  This is the guard for the incident `2026-09-11_a3_a10_sources_RESULT.md` §7 records:
+  regenerating from the skeleton silently deleted 22 `MEASURED_BY` edges and undid DD-054;
+* **puts the delta on the event** — nodes and edges added, removed and changed, with before
+  and after values, and every `counts` key that moved — so a replay from the ledger is possible
+  rather than only a sha256 to compare against (decision 4);
+* **writes nothing and logs nothing when the bytes would be identical** — a `framework_writeback`
+  event that records no change is noise on the provenance trail, and the sha256 the previous
+  event carries already names the revision.
+
 `rules_built` is in neither group and is deliberately absent from `recount`: it is a fact about
 `assessment/harness/scan/rules`, not about the JSON, and five spec `rule_id`s name rules that
 were never built (`RULE-C4-auto-v0`, `RULE-F2-v0`, `RULE-F3-v0`, `RULE-G1-O-v0`, `RULE-G3-v0`),
@@ -136,21 +154,165 @@ def check(g: dict, built_rule_ids: set | None = None) -> dict:
     return out
 
 
+class RefusedWrite(RuntimeError):
+    """`save` refused: the write would drop something the file on disk holds, and the caller
+    did not say so on purpose (`force=True` with a `reason`)."""
+
+
+#: Keys of a node/edge entry that identify it; everything else is content the delta compares.
+_NODE_KEY = "id"
+
+
+def _edge_key(e: dict) -> tuple:
+    return (e["from"], e["type"], e["to"])
+
+
+def _node_label(n: dict) -> str:
+    return (n.get("labels") or ["?"])[0]
+
+
+def delta(before: dict | None, after: dict) -> dict:
+    """What `after` changes relative to `before`, by identity: nodes by `id`, edges by
+    `(from, type, to)`, `counts` by key.
+
+    Added and removed entries are carried WHOLE (a removed node is recoverable from the event);
+    a changed entry carries only the keys that differ, as `{key: [before, after]}`. A `before`
+    of `None` (no file on disk yet) is an all-added delta.
+    """
+    b_nodes = {n[_NODE_KEY]: n for n in (before or {}).get("nodes", [])}
+    a_nodes = {n[_NODE_KEY]: n for n in after.get("nodes", [])}
+    b_edges = {_edge_key(e): e for e in (before or {}).get("edges", [])}
+    a_edges = {_edge_key(e): e for e in after.get("edges", [])}
+    b_counts = dict((before or {}).get("counts") or {})
+    a_counts = dict(after.get("counts") or {})
+
+    def changed_keys(x: dict, y: dict) -> dict:
+        return {k: [x.get(k), y.get(k)] for k in sorted(set(x) | set(y)) if x.get(k) != y.get(k)}
+
+    nodes_changed = []
+    for nid in a_nodes:
+        if nid in b_nodes and a_nodes[nid] != b_nodes[nid]:
+            bp, ap_ = b_nodes[nid].get("properties") or {}, a_nodes[nid].get("properties") or {}
+            entry = {"id": nid, "properties": changed_keys(bp, ap_)}
+            if b_nodes[nid].get("labels") != a_nodes[nid].get("labels"):
+                entry["labels"] = [b_nodes[nid].get("labels"), a_nodes[nid].get("labels")]
+            nodes_changed.append(entry)
+    edges_changed = []
+    for k in a_edges:
+        if k in b_edges and a_edges[k] != b_edges[k]:
+            edges_changed.append({"from": k[0], "type": k[1], "to": k[2],
+                                  "properties": changed_keys(b_edges[k].get("properties") or {},
+                                                             a_edges[k].get("properties") or {})})
+    return {
+        "nodes_added": [a_nodes[k] for k in a_nodes if k not in b_nodes],
+        "nodes_removed": [b_nodes[k] for k in b_nodes if k not in a_nodes],
+        "nodes_changed": nodes_changed,
+        "edges_added": [a_edges[k] for k in a_edges if k not in b_edges],
+        "edges_removed": [b_edges[k] for k in b_edges if k not in a_edges],
+        "edges_changed": edges_changed,
+        "counts_keys_dropped": sorted(k for k in b_counts if k not in a_counts),
+        "counts_moved": changed_keys(b_counts, a_counts),
+    }
+
+
+def summarize_delta(d: dict) -> dict:
+    """Counts per kind, for a log line and for the refusal message."""
+    from collections import Counter
+    return {
+        "nodes_added": dict(Counter(_node_label(n) for n in d["nodes_added"])),
+        "nodes_removed": dict(Counter(_node_label(n) for n in d["nodes_removed"])),
+        "nodes_changed": len(d["nodes_changed"]),
+        "edges_added": dict(Counter(e["type"] for e in d["edges_added"])),
+        "edges_removed": dict(Counter(e["type"] for e in d["edges_removed"])),
+        "edges_changed": len(d["edges_changed"]),
+        "counts_keys_dropped": list(d["counts_keys_dropped"]),
+        "counts_moved": d["counts_moved"],
+    }
+
+
+def drops(d: dict) -> list:
+    """Human-readable lines for everything the delta REMOVES; empty means nothing is dropped."""
+    out = []
+    if d["nodes_removed"]:
+        by = summarize_delta(d)["nodes_removed"]
+        ids = ", ".join(n["id"] for n in d["nodes_removed"][:8])
+        more = "" if len(d["nodes_removed"]) <= 8 else f", ... (+{len(d['nodes_removed']) - 8})"
+        out.append(f"{len(d['nodes_removed'])} node(s) {by}: {ids}{more}")
+    if d["edges_removed"]:
+        by = summarize_delta(d)["edges_removed"]
+        ids = ", ".join(f"{e['from']}-[{e['type']}]->{e['to']}" for e in d["edges_removed"][:8])
+        more = "" if len(d["edges_removed"]) <= 8 else f", ... (+{len(d['edges_removed']) - 8})"
+        out.append(f"{len(d['edges_removed'])} edge(s) {by}: {ids}{more}")
+    if d["counts_keys_dropped"]:
+        out.append(f"{len(d['counts_keys_dropped'])} counts key(s): "
+                   f"{', '.join(d['counts_keys_dropped'])}")
+    return out
+
+
+def serialize(g: dict) -> str:
+    """The one serialisation of the record. Byte identity between two revisions means
+    `serialize(a) == serialize(b)`, and nothing else writes these bytes."""
+    return json.dumps(g, indent=1, ensure_ascii=False) + "\n"
+
+
+def load(path: Path | None = None) -> dict | None:
+    """The record as it is on disk, or None when there is no file yet."""
+    path = path or FRAMEWORK
+    return json.loads(path.read_text(encoding="utf-8")) if path.exists() else None
+
+
+def add_force_args(ap) -> None:
+    """The two flags every writer's CLI exposes, so a deliberate drop is spelled the same way
+    everywhere: `--force --reason "<why>"`. Pass the parsed namespace to `force_kwargs`."""
+    ap.add_argument("--force", action="store_true",
+                    help="allow this write to REMOVE nodes, edges or counts keys the record "
+                         "holds; requires --reason, which lands on the framework_writeback event")
+    ap.add_argument("--reason", default=None, metavar="TEXT",
+                    help="why the removal is right; recorded on the event (with --force)")
+
+
+def force_kwargs(a) -> dict:
+    return {"force": bool(getattr(a, "force", False)), "reason": getattr(a, "reason", None)}
+
+
 def save(g: dict, script: str, task: str, changes: dict, dry_run: bool = False,
-         path: Path | None = None) -> dict:
+         path: Path | None = None, force: bool = False, reason: str | None = None) -> dict:
     """Write the framework JSON and append the `framework_writeback` event that says who did.
 
-    The event carries the sha256 of the bytes written, so "which revision of the record does
-    this projection correspond to" is answerable from the log rather than from a commit
-    message. A dry run writes neither.
+    The event carries the sha256 of the bytes written AND the delta against the file that was
+    on disk (`delta`), so "which revision of the record does this projection correspond to"
+    and "what did this write-back change" are both answerable from the log. A write that would
+    REMOVE a node, an edge, or a `counts` key is refused (`RefusedWrite`) unless `force=True`
+    and a non-empty `reason` is given; the reason lands on the event under `forced`. A dry run
+    writes neither, but still computes and returns the delta and the refusal. A write whose
+    bytes equal the file's is not written and not logged (`unchanged: True`).
     """
     path = path or FRAMEWORK
+    before = load(path)
     moved = apply_counts(g)
-    body = json.dumps(g, indent=1, ensure_ascii=False) + "\n"
+    body = serialize(g)
     digest = hashlib.sha256(body.encode("utf-8")).hexdigest()
+    d = delta(before, g)
+    dropped = drops(d)
     record = {"event_type": EVENT, "script": script, "task": task,
-              "framework_path": str(path.relative_to(REPO)), "framework_sha256": digest,
-              "changes": changes, "counts_moved": moved, "counts": g["counts"]}
+              "framework_path": str(path.relative_to(REPO)) if path.is_relative_to(REPO)
+              else str(path),
+              "framework_sha256": digest, "changes": changes, "counts_moved": moved,
+              "counts": g["counts"], "delta": d, "delta_summary": summarize_delta(d)}
+    if dropped:
+        if not force:
+            raise RefusedWrite(
+                "REFUSED: this write would drop what the record on disk holds, and nothing "
+                "said so on purpose. Would drop: " + "; ".join(dropped) + ". Nothing was "
+                "written. Pass force=True (CLI: --force --reason \"<why>\") to drop them "
+                "deliberately; the reason is recorded on the framework_writeback event.")
+        if not (reason and reason.strip()):
+            raise RefusedWrite("REFUSED: --force without --reason. A deliberate drop is "
+                               "recorded with why it is right, or it is not deliberate. "
+                               "Would drop: " + "; ".join(dropped) + ". Nothing was written.")
+        record["forced"] = {"reason": reason.strip(), "dropped": dropped}
+    if before is not None and body == path.read_text(encoding="utf-8"):
+        return {**record, "written": False, "unchanged": True}
     if dry_run:
         return {**record, "written": False}
     path.write_text(body, encoding="utf-8")

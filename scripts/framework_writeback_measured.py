@@ -154,6 +154,7 @@ def main(argv=None) -> int:
                     help="the cc_task that ordered this run; recorded on the "
                          "`framework_writeback` event so the record of record names who "
                          "changed it")
+    fw.add_force_args(ap)
     a = ap.parse_args(argv)
     cycle = cycle_name(a.cycle)
     payload = json.loads((REPO / "state" / f"{cycle}.json").read_text(encoding="utf-8"))
@@ -163,7 +164,7 @@ def main(argv=None) -> int:
     # Through the shared writer, so the write and the `framework_writeback` event that records
     # it cannot come apart.
     ev = fw.save(g, script=SCRIPT, task=a.task or TASK, changes={**out, "cycle": cycle},
-                 dry_run=a.dry_run)
+                 dry_run=a.dry_run, **fw.force_kwargs(a))
     print(json.dumps({k: v for k, v in ev.items() if k != "counts"}, indent=1), file=sys.stderr)
     return 0
 

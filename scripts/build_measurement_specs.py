@@ -15,7 +15,13 @@ Rules are NOT written here. Every spec carries a placeholder `rule_id` of the fo
 `RULE-<code>-v0`; the harness task writes the rules, versioned, so a rule change re-derives
 Findings without re-collecting Observations (the Observation/Finding split of §2.1).
 
-    /opt/anaconda3/bin/python3 scripts/build_measurement_specs.py
+**Writes through `framework_writeback.save`, the one writer** (`cc_tasks/2026-09-11_
+framework_single_writer.md`). This is a REGENERATOR of the spec nodes, and a regenerator over a
+record that has been written back to (a spec's `rule_id` from the rule review, its `decision`,
+E5's collector) shows those as `nodes_changed` on the event, and a spec the table no longer
+carries as a refused drop. Read the delta before re-running it for real.
+
+    /opt/anaconda3/bin/python3 scripts/build_measurement_specs.py [--dry-run] [--force --reason TEXT]
 """
 from __future__ import annotations
 
@@ -26,9 +32,13 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO))
+sys.path.insert(0, str(REPO / "scripts"))
+
+import framework_writeback as fw                                    # noqa: E402
 
 TASK = "cc_tasks/2026-09-06_freeze_and_framework_graph.md"
-JSON_PATH = REPO / "framework" / "ai_readiness_framework.json"
+SCRIPT = "scripts/build_measurement_specs.py"
+JSON_PATH = fw.FRAMEWORK
 
 #: Collector pins. A collector without a version is a collector that will drift.
 PINS = {"httpx": "httpx>=0.27", "protego": "protego>=0.3", "extruct": "extruct>=0.17",
@@ -195,16 +205,23 @@ def build(g: dict) -> tuple:
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--json", default=str(JSON_PATH))
+    ap.add_argument("--dry-run", action="store_true")
+    fw.add_force_args(ap)
     a = ap.parse_args(argv)
-    g = json.loads(Path(a.json).read_text(encoding="utf-8"))
+    path = Path(a.json)
+    g = json.loads(path.read_text(encoding="utf-8"))
     g["nodes"] = [n for n in g["nodes"] if "MeasurementSpec" not in n["labels"]]
     g["edges"] = [e for e in g["edges"] if e["type"] != "MEASURED_BY"]
     nodes, edges, rows = build(g)
     g["nodes"] += nodes
     g["edges"] += edges
-    g["counts"]["measurement_specs"] = len(nodes)
-    g["counts"]["collectors_none_known"] = sum(1 for r in rows if r["collector"] == "none_known")
-    Path(a.json).write_text(json.dumps(g, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
+    # `measurement_specs` and `collectors_none_known` are recounted by the writer.
+    ev = fw.save(g, script=SCRIPT, task=TASK,
+                 changes={"specs": len(nodes), "measured_by": len(edges)},
+                 dry_run=a.dry_run, path=path, **fw.force_kwargs(a))
+    print(json.dumps({"delta": ev["delta_summary"], "written": ev["written"],
+                      "unchanged": ev.get("unchanged", False), "event_id": ev.get("event_id")},
+                     indent=1), file=sys.stderr)
     print(f"{'leg':14s} {'collector':32s} {'F-UJI':22s} rule")
     for r in sorted(rows, key=lambda x: x["leg"]):
         print(f"{r['leg']:14s} {r['collector'][:32]:32s} {str(r['fuji_metric'] or ''):22s} {r['rule_id']}")

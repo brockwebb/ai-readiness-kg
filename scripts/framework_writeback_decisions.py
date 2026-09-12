@@ -116,13 +116,14 @@ def writeback(g: dict) -> dict:
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--dry-run", action="store_true")
+    fw.add_force_args(ap)
     a = ap.parse_args(argv)
     g = json.loads(FRAMEWORK.read_text(encoding="utf-8"))
     out = writeback(g)
     print(json.dumps(out, indent=1))
     # Through the shared writer, so the write and the `framework_writeback` event that records
     # it cannot come apart.
-    ev = fw.save(g, script=SCRIPT, task=TASK, changes=out, dry_run=a.dry_run)
+    ev = fw.save(g, script=SCRIPT, task=TASK, changes=out, dry_run=a.dry_run, **fw.force_kwargs(a))
     print(json.dumps({k: v for k, v in ev.items() if k != "counts"}, indent=1), file=sys.stderr)
     return 0
 

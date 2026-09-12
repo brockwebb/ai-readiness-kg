@@ -64,6 +64,7 @@ def main(argv=None) -> int:
     ap.add_argument("--indicator", action="append", required=True, metavar="CODE",
                     help="indicator code whose evidence cell to carry over (repeatable)")
     ap.add_argument("--dry-run", action="store_true")
+    fw.add_force_args(ap)
     a = ap.parse_args(argv)
 
     g = json.loads(fw.FRAMEWORK.read_text(encoding="utf-8"))
@@ -118,7 +119,7 @@ def main(argv=None) -> int:
                          "Dixie sweep and `rebuild`) or remove it from the cell. Nothing was "
                          "written.")
 
-    out = fw.save(g, script=SCRIPT, task=TASK, changes=changes, dry_run=a.dry_run)
+    out = fw.save(g, script=SCRIPT, task=TASK, changes=changes, dry_run=a.dry_run, **fw.force_kwargs(a))
     print(json.dumps({k: v for k, v in out.items() if k != "changes"}, indent=1))
     print(json.dumps(changes, indent=1))
     return 0

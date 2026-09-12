@@ -111,6 +111,7 @@ def main(argv=None) -> int:
                          "`framework_writeback` event. Defaults to the task this script "
                          "implements; a later task that moves a rule id should name itself, "
                          "so the log says who caused the change rather than only what it does.")
+    fw.add_force_args(ap)
     a = ap.parse_args(argv)
     from assessment.harness.scan.rules import BY_LEG
     g = json.loads(FRAMEWORK.read_text(encoding="utf-8"))
@@ -120,7 +121,7 @@ def main(argv=None) -> int:
     print(json.dumps(out, indent=1))
     # Through the shared writer, so the write and the `framework_writeback` event that records
     # it cannot come apart.
-    ev = fw.save(g, script=SCRIPT, task=a.task, changes=out["touched"], dry_run=a.dry_run)
+    ev = fw.save(g, script=SCRIPT, task=a.task, changes=out["touched"], dry_run=a.dry_run, **fw.force_kwargs(a))
     print(json.dumps({k: v for k, v in ev.items() if k != "counts"}, indent=1), file=sys.stderr)
     return 0
 

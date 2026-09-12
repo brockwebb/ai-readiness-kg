@@ -77,6 +77,7 @@ def main(argv=None) -> int:
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--check", action="store_true",
                     help="report self-consistency and write nothing")
+    fw.add_force_args(ap)
     a = ap.parse_args(argv)
     g = json.loads(fw.FRAMEWORK.read_text(encoding="utf-8"))
     if a.check:
@@ -84,7 +85,7 @@ def main(argv=None) -> int:
         print(json.dumps(fw.check(g, set(BY_LEG.values())), indent=1))
         return 0
     touched = normalize(g)
-    out = fw.save(g, script=SCRIPT, task=TASK, changes=touched, dry_run=a.dry_run)
+    out = fw.save(g, script=SCRIPT, task=TASK, changes=touched, dry_run=a.dry_run, **fw.force_kwargs(a))
     print(json.dumps({k: v for k, v in out.items() if k != "counts"}, indent=1))
     return 0
 
