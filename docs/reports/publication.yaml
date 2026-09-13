@@ -1,0 +1,61 @@
+# Publication metadata for the L0 report and the site that serves it.
+#
+# `cc_tasks/2026-09-12_publish_l0.md` decisions 1 and 4, under DN-002. One declaration, read
+# by three consumers, so the title page, the citation files and the site index cannot drift:
+#
+#   scripts/build_l0_report.py   stamps `snapshot_cycle` + the build commit on the title page
+#   scripts/build_l0_site.py     writes CITATION.cff, zenodo.json and the site index from it
+#   tests/test_publication.py    asserts the three agree with each other and with the graph
+#
+# Nothing here is a measurement. Every number the report states is a registered Result quoted
+# by name; what lives in this file is identity — what the document is, who wrote it, which
+# measurement it is a view of.
+
+# The cycle the report is a view of. A RE-JUDGEMENT name: the same stored observations as
+# `scan_2026-09-10`, judged under the rules current when the report was written. Declared here
+# rather than inferred from the Result names, because a name is not a cycle and inferring one
+# from the other is how a report comes to state a cycle it did not measure.
+snapshot_cycle: scan_2026-09-10_rj2
+
+title: "AI readiness of the federal statistical system: host-level findings"
+
+# The version identifier the report carries, per DN-002 decision 5. The snapshot cycle IS the
+# version: two builds of the same cycle are the same findings, and a new cycle is a new
+# document rather than a new edition of this one.
+version: "2026-09-10_rj2"
+
+authors:
+  - family-names: Webb
+    given-names: Brock
+
+# The published tree, as Pages would serve it from `/docs` on the default branch. Recorded so
+# the sitemap and the citation files can name absolute URLs without any of them typing a host.
+# This is where the tree WOULD be served; whether it IS served is a repository setting and is
+# measured, never assumed (`cc_tasks/2026-09-12_publish_l0_RESULT.md` §2).
+site_url: "https://brockwebb.github.io/ai-readiness-kg/"
+
+repository_url: "https://github.com/brockwebb/ai-readiness-kg"
+
+abstract: >-
+  Host-level AI-readiness findings for the sixteen recognized agencies and units of the US
+  federal statistical system, plus three federal reference hosts shown separately. Six
+  host-level checks over one measurement cycle with one declared client identity, every
+  verdict traceable to the Finding, the rule version and the retained response body that
+  produced it. The matrices, the per-check source appendix and every registered Result the
+  report quotes are published as data beside it; the PDF is a view of them.
+
+keywords:
+  - AI readiness
+  - federal statistical system
+  - machine-readable data
+  - robots.txt
+  - data publishing
+
+# DELIBERATELY ABSENT until the operator sets them, and absent rather than guessed:
+#
+#   license  the repository carries no LICENSE file. Which licence a stranger may reuse this
+#            work under is the author's decision, not a default a build script may pick — and
+#            a declared licence is one of the things this instrument measures other publishers
+#            for, so an invented one would be the worst possible entry.
+#   doi      DN-002 decision 5: the mint is the operator's action under his own name. The
+#            Zenodo metadata is prepared here and no Zenodo call is made.

@@ -43,6 +43,12 @@ OUT = REPORT_DIR / "2026-09_fss_ai_readiness_L0.md"
 
 TASK = "cc_tasks/2026-09-09_report_draft.md"
 
+#: Identity, not measurement: what this document is, which cycle it is a view of, and who
+#: wrote it. `cc_tasks/2026-09-12_publish_l0.md` decision 4 asks the title page to carry the
+#: snapshot cycle, the git commit and the build date; the first of those is a declaration and
+#: belongs in a file, not in a string here (CLAUDE.md §2).
+PUBLICATION = REPORT_DIR / "publication.yaml"
+
 #: A token the resolver left behind. If one of these survives into the built body, a number in
 #: the report names a Result the graph does not hold.
 UNRESOLVED = re.compile(r"\{\{(?:result|figure|cite):[^}]*\}\}")
@@ -189,6 +195,79 @@ def render_value(value):
     return f"{MARK_OPEN}{text}{MARK_CLOSE}"
 
 
+def load_publication() -> dict:
+    import yaml
+    if not PUBLICATION.is_file():
+        raise SystemExit(f"FATAL: {PUBLICATION.relative_to(REPO)} does not exist; the report "
+                         f"cannot state which cycle it is a view of")
+    doc = yaml.safe_load(PUBLICATION.read_text(encoding="utf-8"))
+    for key in ("snapshot_cycle", "title", "version"):
+        if not doc.get(key):
+            raise SystemExit(f"FATAL: {PUBLICATION.name} declares no {key!r}")
+    return doc
+
+
+def build_commit() -> str:
+    """The commit the build READ, short.
+
+    Not the commit that publishes the build: no document can name the commit that contains it,
+    so the version block says `built from` and adds that the publishing commit is this one's
+    child. The working tree is necessarily dirty at that moment — it is holding the very files
+    about to be committed — so a `+dirty` marker would be present on every build that ever
+    ships and would read to a stranger as a defect rather than as the ordinary state. It is
+    reported in the builder's summary (`build_commit_dirty`) where a reader is asking about
+    the build, and kept out of the artifact, where it would say nothing true that the sentence
+    does not already say.
+    """
+    import subprocess
+    r = subprocess.run(["git", "rev-parse", "--short=12", "HEAD"],
+                       capture_output=True, text=True, cwd=REPO)
+    if r.returncode:
+        raise SystemExit(f"FATAL: cannot read HEAD: {r.stderr.strip()[-200:]}")
+    return r.stdout.strip()
+
+
+def build_tree_dirty() -> bool:
+    import subprocess
+    return bool(subprocess.run(["git", "status", "--porcelain"], capture_output=True,
+                               text=True, cwd=REPO).stdout.strip())
+
+
+def version_block(pub: dict, today: str | None = None) -> str:
+    """The title page's version paragraph, generated on every build.
+
+    Generated rather than written into `sections/10_frame.md`, because a commit hash and a
+    build date typed into prose are stale the moment they are typed, and because this task
+    edits no section prose. Every identifier is inside backticks: the bare-numeral lint reads
+    inline code as a name rather than a measurement (see EXEMPT), which is what it is — the
+    numbers in this paragraph are addresses, not findings.
+    """
+    from datetime import datetime, timezone
+    day = today or datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    return (f"**Version.** Snapshot cycle `{pub['snapshot_cycle']}` · version "
+            f"`{pub['version']}` · built from commit `{build_commit()}` on `{day}` (UTC); "
+            f"the commit that publishes this build is that one's child. This document is a "
+            f"VIEW of data published beside it: the matrices as JSON and CSV, the per-check "
+            f"source appendix, and every Result quoted below with its value, its state and "
+            f"the artifact that generated it. The site index links all of them.")
+
+
+#: Where the version block goes: straight after the report's H1, ahead of the standfirst.
+_H1 = re.compile(r"^#\s+\S", re.M)
+
+
+def insert_version_block(text: str, block: str) -> str:
+    """After the first heading line. Fatal if there is no heading — a report whose first line
+    is not its title has been restructured, and silently prepending the block would put a
+    version paragraph above the title."""
+    m = _H1.search(text)
+    if not m:
+        raise SystemExit("FATAL: the assembled report has no H1; the version block has no "
+                         "anchor and nothing is written")
+    end = text.index("\n", m.start())
+    return text[:end + 1] + "\n" + block + "\n" + text[end + 1:]
+
+
 def build(check: bool = False) -> int:
     from seldon.config import get_neo4j_driver, load_project_config
     from seldon.paper.build import (build_units_fallback_index, load_named_artifacts,
@@ -233,7 +312,9 @@ def build(check: bool = False) -> int:
         proposed |= {e.artifact_name for e in errs
                      if e.check_id == "SI-03" and e.artifact_name}
         parts.append(resolved)
-    marked = "\n\n".join(p.strip() for p in parts) + "\n"
+    pub = load_publication()
+    marked = insert_version_block("\n\n".join(p.strip() for p in parts) + "\n",
+                                  version_block(pub))
     body = marked.replace(MARK_OPEN, "").replace(MARK_CLOSE, "")
 
     fatal = [e for e in errors if e.fatal]
@@ -257,6 +338,10 @@ def build(check: bool = False) -> int:
         "bare_numerals_in_prose": [f"line {n}: {s}" for n, s in bare],
         "missing_fragments": missing,
         "sources_appendix": sources_appendix,
+        "snapshot_cycle": pub["snapshot_cycle"],
+        "version": pub["version"],
+        "build_commit": build_commit(),
+        "build_commit_dirty": build_tree_dirty(),
     }
     blocked = bool(fatal or unresolved or bare or missing)
     summary["gate"] = "BLOCKED" if blocked else "PASS"

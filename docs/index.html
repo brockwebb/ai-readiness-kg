@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI readiness of the federal statistical system: host-level findings</title>
+<meta name="description" content="Host-level AI-readiness findings for the sixteen recognized agencies and units of the US federal statistical system, plus three federal reference hosts shown separately. Six host-level checks over one measurement cycle with one declared client identity, every verdict traceable to the Finding, the ru">
+<style>
+:root { --fg:#0f172a; --muted:#64748b; --line:#e2e8f0; --bg:#ffffff; --acc:#1d4ed8; }
+@media (prefers-color-scheme: dark) {
+  :root { --fg:#e2e8f0; --muted:#94a3b8; --line:#334155; --bg:#0f172a; --acc:#93c5fd; } }
+* { box-sizing:border-box }
+body { margin:0 auto; max-width:52rem; padding:2rem 1.25rem 4rem; background:var(--bg);
+  color:var(--fg); font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,
+  sans-serif }
+h1 { font-size:1.6rem; line-height:1.25; margin:0 0 .4rem }
+h2 { font-size:1.1rem; margin:2.4rem 0 .6rem; padding-bottom:.3rem;
+  border-bottom:1px solid var(--line) }
+p.sub { color:var(--muted); margin:0 0 1.6rem }
+a { color:var(--acc) }
+code { font-size:.87em; background:rgba(127,127,127,.14); padding:.08em .34em;
+  border-radius:4px }
+ol, ul { padding-left:1.3rem }
+li { margin:.42rem 0 }
+.note { color:var(--muted); font-size:.9em }
+.stop { border-left:3px solid #b45309; padding-left:.9rem }
+table { border-collapse:collapse; width:100%; margin:.6rem 0; font-size:.94em }
+th, td { text-align:left; padding:.38rem .5rem; border-bottom:1px solid var(--line);
+  vertical-align:top }
+td.v { font-weight:600 }
+td.v.pass { color:#15803d } td.v.fail { color:#b91c1c }
+td.v.error, td.v.not_applicable { color:var(--muted) }
+footer { margin-top:3rem; padding-top:1.2rem; border-top:1px solid var(--line);
+  color:var(--muted); font-size:.9em }
+</style>
+
+<h1>AI readiness of the federal statistical system: host-level findings</h1>
+<p class="sub">Snapshot cycle <code>scan_2026-09-10_rj2</code> ·
+version <code>2026-09-10_rj2</code> ·
+built from commit <code>0d3e0d8e6602</code> on <code>2026-09-13</code> (UTC).</p>
+
+<p>Host-level AI-readiness findings for the sixteen recognized agencies and units of the US federal statistical system, plus three federal reference hosts shown separately. Six host-level checks over one measurement cycle with one declared client identity, every verdict traceable to the Finding, the rule version and the retained response body that produced it. The matrices, the per-check source appendix and every registered Result the report quotes are published as data beside it; the PDF is a view of them.</p>
+
+<h2>The data</h2>
+<ol>
+  <li><a href="reports/scan_matrix_tierA_2026-09-10_rj2.json"><code>reports/scan_matrix_tierA_2026-09-10_rj2.json</code></a> — Matrix, tierA, JSON. The 16 Tier A bodies × the six host-level checks.</li>
+  <li><a href="reports/scan_matrix_tierA_2026-09-10_rj2.csv"><code>reports/scan_matrix_tierA_2026-09-10_rj2.csv</code></a> — Matrix, tierA, CSV. The 16 Tier A bodies × the six host-level checks.</li>
+  <li><a href="reports/scan_matrix_tierC_2026-09-10_rj2.json"><code>reports/scan_matrix_tierC_2026-09-10_rj2.json</code></a> — Matrix, tierC, JSON. The three federal reference hosts, in no Tier A denominator (DD-059).</li>
+  <li><a href="reports/scan_matrix_tierC_2026-09-10_rj2.csv"><code>reports/scan_matrix_tierC_2026-09-10_rj2.csv</code></a> — Matrix, tierC, CSV. The three federal reference hosts, in no Tier A denominator (DD-059).</li>
+  <li><a href="reports/scan_matrix_product_2026-09-10_rj2.json"><code>reports/scan_matrix_product_2026-09-10_rj2.json</code></a> — Matrix, product, JSON. PARTIAL: product-level checks over declared flagship surfaces only.</li>
+  <li><a href="reports/scan_matrix_product_2026-09-10_rj2.csv"><code>reports/scan_matrix_product_2026-09-10_rj2.csv</code></a> — Matrix, product, CSV. PARTIAL: product-level checks over declared flagship surfaces only.</li>
+  <li><a href="data/sources_per_check.json"><code>data/sources_per_check.json</code></a> — The per-check source appendix: every check, every admitted source, its doc_id, its URL and its locator.</li>
+  <li><a href="data/results_tagged.json"><code>data/results_tagged.json</code></a> — Every registered Result the report quotes: name, value, state, provenance.</li>
+  <li><a href="data/ai_readiness_framework.json"><code>data/ai_readiness_framework.json</code></a> — The framework record: indicators, constructs, measurement specs and the evidence cells the source appendix reads its locators from.</li>
+  <li><a href="data/corpus_manifest.json"><code>data/corpus_manifest.json</code></a> — The corpus manifest: every admitted document with its identity, its source URL and its content hash. Every doc_id in the source appendix is a key in this file.</li>
+</ol>
+
+<h2>The views</h2>
+<ul>
+  <li><a href="reports/2026-09_fss_ai_readiness_L0.md"><code>reports/2026-09_fss_ai_readiness_L0.md</code></a> — the report as built
+      markdown, every number resolved from the graph by name.</li>
+  <li><a href="reports/2026-09_fss_ai_readiness_L0.pdf"><code>reports/2026-09_fss_ai_readiness_L0.pdf</code></a> — the report as PDF.</li>
+  <li><a href="progress/"><code>progress/</code></a> — the framework progress page.</li>
+</ul>
+<p><strong>The PDF is a projection of the data above it.</strong> Every number in its prose
+is one of the 59 registered Results published above, quoted by name and resolved from
+the graph at build time; every figure it carries is drawn from the same Results. Nothing in it
+is typed.</p>
+
+<h2>This site's own row</h2>
+<p class="stop"><strong>Not measured.</strong> The six host-level checks have not been run against this host, because at the time of this build the host was not serving this tree: GitHub Pages is not enabled for the repository (<code>has_pages: false</code>), and every path under <code>https://brockwebb.github.io/ai-readiness-kg/</code> answered HTTP 404. A verdict cannot be invented for a host that does not answer, and a placeholder row on a page whose whole subject is publishers who claim more than they serve would be the worst possible entry. The row appears here as soon as the scan has been run.</p><p class="note">There is a second limit the row will have to carry when it is measured, and it is structural rather than an omission: RFC 9309 binds <code>robots.txt</code> to an authority, not a path prefix, so a project Pages site cannot serve an effective one. <code>robots.txt</code>, <code>llms.txt</code> and the sitemap are published inside this tree and are declarations; they become enforcement points only when this publication has a host of its own.</p>
+
+<h2>How to cite</h2>
+<p><a href="data/CITATION.cff"><code>data/CITATION.cff</code></a> carries the citation
+metadata; <a href="data/zenodo.json"><code>data/zenodo.json</code></a> is the deposition
+metadata, prepared and not deposited. No DOI is minted and no licence is declared — both are
+the author's to decide.</p>
+
+<footer>
+Built by <code>scripts/build_l0_site.py</code> under <code>cc_tasks/2026-09-12_publish_l0.md</code>.
+Source: <a href="https://github.com/brockwebb/ai-readiness-kg">https://github.com/brockwebb/ai-readiness-kg</a>.
+</footer>
+</html>

@@ -1,5 +1,7 @@
 # AI readiness of the federal statistical system: host-level findings
 
+**Version.** Snapshot cycle `scan_2026-09-10_rj2` · version `2026-09-10_rj2` · built from commit `0d3e0d8e6602` on `2026-09-13` (UTC); the commit that publishes this build is that one's child. This document is a VIEW of data published beside it: the matrices as JSON and CSV, the per-check source appendix, and every Result quoted below with its value, its state and the artifact that generated it. The site index links all of them.
+
 **Draft. 16 recognized bodies and three reference
 hosts, one cycle, one client identity.**
 Written from `cc_tasks/2026-09-09_report_draft.md` and revised to the cycle of 2026-09-10

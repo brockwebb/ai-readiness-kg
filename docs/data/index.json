@@ -1,0 +1,59 @@
+{
+ "task": "cc_tasks/2026-09-12_publish_l0.md",
+ "built_at": "2026-09-13T03:39:29.539625+00:00",
+ "build_commit": "0d3e0d8e6602",
+ "snapshot_cycle": "scan_2026-09-10_rj2",
+ "version": "2026-09-10_rj2",
+ "site_url": "https://brockwebb.github.io/ai-readiness-kg/",
+ "copies": [
+  {
+   "published": "data/ai_readiness_framework.json",
+   "source": "framework/ai_readiness_framework.json",
+   "sha256": "b2d010e5196c856e2191dc75ce07fc7a5287d26334231c82defbfb515575c321",
+   "bytes": 122474,
+   "description": "The framework record: indicators, constructs, measurement specs and the evidence cells the source appendix reads its locators from."
+  },
+  {
+   "published": "data/corpus_manifest.json",
+   "source": "corpus/manifest.json",
+   "sha256": "95a08662285c24ad67b1ace937cb8d6024ffe0038844e19bbf252660f743615f",
+   "bytes": 1063033,
+   "description": "The corpus manifest: every admitted document with its identity, its source URL and its content hash. Every doc_id in the source appendix is a key in this file."
+  }
+ ],
+ "citation_files": [
+  {
+   "published": "data/CITATION.cff",
+   "also_written_to": "CITATION.cff",
+   "sha256": "df16ecc47943a823b7f0db4bb6177d92347c188336b8dac7c13130ca5d791c9a",
+   "bytes": 1385,
+   "description": "Citation metadata in Citation File Format."
+  },
+  {
+   "published": "data/zenodo.json",
+   "also_written_to": ".zenodo.json",
+   "sha256": "e884e9a76685132a18a94f435fad549a7823158d08170c0ffa1638889160cb39",
+   "bytes": 1228,
+   "description": "Zenodo deposition metadata, prepared and not deposited: the mint is the author's."
+  }
+ ],
+ "generated": [
+  {
+   "published": "data/sources_per_check.json",
+   "description": "The per-check source appendix: every check, every admitted source, its doc_id, its URL and its locator."
+  },
+  {
+   "published": "data/results_tagged.json",
+   "description": "Every registered Result the report quotes: name, value, state, provenance."
+  }
+ ],
+ "matrices": [
+  "reports/scan_matrix_tierA_2026-09-10_rj2.json",
+  "reports/scan_matrix_tierA_2026-09-10_rj2.csv",
+  "reports/scan_matrix_tierC_2026-09-10_rj2.json",
+  "reports/scan_matrix_tierC_2026-09-10_rj2.csv",
+  "reports/scan_matrix_product_2026-09-10_rj2.json",
+  "reports/scan_matrix_product_2026-09-10_rj2.csv"
+ ],
+ "note": "`copies` are byte-for-byte copies of records canonical elsewhere in the repository; the sha256 is of the SOURCE, so a drifted copy is detectable. tests/test_publication.py asserts it."
+}
