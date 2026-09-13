@@ -51,11 +51,27 @@ keywords:
   - robots.txt
   - data publishing
 
-# DELIBERATELY ABSENT until the operator sets them, and absent rather than guessed:
+# The licences, on the operator's own declaration of 2026-09-13
+# (`cc_tasks/2026-09-13_ephemeral_provenance_ADDENDUM_1.md`, under DN-002 decision 5). SPDX
+# identifiers, because a licence a machine cannot identify is a licence this instrument would
+# score as absent on somebody else's site.
 #
-#   license  the repository carries no LICENSE file. Which licence a stranger may reuse this
-#            work under is the author's decision, not a default a build script may pick — and
-#            a declared licence is one of the things this instrument measures other publishers
-#            for, so an invented one would be the worst possible entry.
+# Two licences and not one, because this repository publishes two different things: the code
+# that measures, and the measurements. `LICENSE` and `LICENSE-DATA` at the repository root are
+# the texts; these two fields are what every generated consumer reads, so the declaration and
+# the files cannot drift without `tests/test_publication.py` saying so.
+license_code: MIT          # assessment/, kg/, scripts/, tests/ and the rest of the Python
+license_data: CC-BY-4.0    # docs/reports/, docs/data/, the matrices, the framework record,
+                           # the registered Results and the sources appendix
+
+# Said in one sentence wherever the licences are stated, because the corpus is the one part of
+# this tree the author cannot license: `corpus/` holds third-party documents, retained under
+# their own terms as evidence. Declared here so the sentence has one source.
+license_corpus_note: >-
+  Documents under corpus/ are third-party works, retained as evidence under their own terms:
+  neither licence in this repository applies to them.
+
+# DELIBERATELY ABSENT until the operator sets it, and absent rather than guessed:
+#
 #   doi      DN-002 decision 5: the mint is the operator's action under his own name. The
 #            Zenodo metadata is prepared here and no Zenodo call is made.

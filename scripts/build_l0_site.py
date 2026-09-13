@@ -51,12 +51,24 @@ sys.path.insert(0, str(REPO / "assessment" / "harness"))
 
 TASK = "cc_tasks/2026-09-12_publish_l0.md"
 
+#: The task that amended what this builder publishes about provenance and licensing. Named
+#: separately from TASK because the tree is still the publication task's product; what changed
+#: is that an absent provenance path now carries its derivation and the licences are declared.
+EPHEMERAL_TASK = "cc_tasks/2026-09-13_ephemeral_provenance.md"
+
 SITE = REPO / "docs"
 DATA = SITE / "data"
 REPORTS = SITE / "reports"
 PUBLICATION = REPORTS / "publication.yaml"
 
 STEM = "2026-09_fss_ai_readiness_L0"
+
+#: The two licence texts at the repository root, on the operator's declaration of 2026-09-13
+#: (`cc_tasks/2026-09-13_ephemeral_provenance_ADDENDUM_1.md`). Code and data are licensed
+#: differently because this repository publishes both; the SPDX identifiers live in
+#: `publication.yaml` and everything generated here reads them from there.
+LICENSE_CODE_FILE = "LICENSE"
+LICENSE_DATA_FILE = "LICENSE-DATA"
 
 #: Canonical files that live outside the served tree and are copied into it so the index's
 #: links resolve on the host. (published name, source path, what it is)
@@ -93,9 +105,19 @@ def sha256(path: Path) -> str:
 def publication() -> dict:
     import yaml
     doc = yaml.safe_load(PUBLICATION.read_text(encoding="utf-8"))
-    for k in ("snapshot_cycle", "title", "version", "authors", "site_url", "repository_url"):
+    for k in ("snapshot_cycle", "title", "version", "authors", "site_url", "repository_url",
+              # The licences (ADDENDUM_1 decision A4). Required rather than optional: a build
+              # that quietly published with no licence is what the previous one did, and a
+              # declared licence is one of the things this instrument measures other publishers
+              # for. If the declaration loses them, the build stops instead of shipping silence.
+              "license_code", "license_data", "license_corpus_note"):
         if not doc.get(k):
             raise SystemExit(f"FATAL: {PUBLICATION.name} declares no {k!r}")
+    for k, text in (("license_code", LICENSE_CODE_FILE), ("license_data", LICENSE_DATA_FILE)):
+        if not (REPO / text).is_file():
+            raise SystemExit(f"FATAL: {PUBLICATION.name} declares {k}={doc[k]!r} and the "
+                             f"repository holds no {text}; a declared licence with no text is "
+                             f"the claim without the grant")
     return doc
 
 
@@ -115,20 +137,31 @@ def head_commit() -> str:
 # --------------------------------------------------------------- the data the index links
 
 def _with_presence(ref: dict) -> dict:
-    """A provenance reference, plus whether the repository actually holds the path it names.
+    """A provenance reference, plus whether the repository holds it — and if not, how to get it.
 
     Stated rather than assumed, because four of the published Results are `COMPUTED_FROM`
     `scan_matrix_2026-09-10`, whose registered path the repository deliberately does NOT hold:
     that cycle was measured and never reported, and its absence is what
     `tests/test_scan_figures.py` skips the figure suite on
-    (`cc_tasks/2026-09-10_harness_v5_blind.md` decision 6). A reader following the chain will
-    find nothing there, and the honest thing is for the published record to say so on the row
-    rather than let them discover it as a broken link. The registry defect it exposes —
-    a DataFile naming a path nothing writes — is recorded in
-    `cc_tasks/2026-09-12_publish_l0_RESULT.md`, not patched here.
+    (`cc_tasks/2026-09-10_harness_v5_blind.md` decision 6).
+
+    Until 2026-09-13 this function could only say `present_in_repository: false`, which leaves a
+    reader at a dead path with no way forward. **The registry now carries the answer**: that
+    DataFile is marked `materialized: false` and names `derivable_from` and a
+    `derivation_command` (`scripts/mark_ephemeral_datafile.py`), so what is published is the
+    derivation, read off the node. Nothing here is hardcoded — no path, no cycle, no generator
+    name — so the day a second artifact becomes ephemeral this file needs no edit
+    (`cc_tasks/2026-09-13_ephemeral_provenance.md` decision 3).
     """
     path = ref.get("path")
-    return {**ref, "present_in_repository": bool(path) and (REPO / path).exists()}
+    out = {**ref, "present_in_repository": bool(path) and (REPO / path).exists()}
+    # `materialized` is only meaningful as an explicit false: a node that never says anything
+    # about it is an ordinary artifact, not an ephemeral one.
+    out["ephemeral"] = ref.get("materialized") is False
+    if not out["ephemeral"]:
+        for k in ("materialized", "derivable_from", "derivation_command"):
+            out.pop(k, None)
+    return out
 
 
 def tagged_results() -> list:
@@ -152,7 +185,10 @@ def tagged_results() -> list:
                     "OPTIONAL MATCH (r)-[:GENERATED_BY]->(sc:Script) "
                     "RETURN r.artifact_id AS artifact_id, r.state AS state, r.value AS value, "
                     "       r.description AS description, "
-                    "       collect(DISTINCT {name: d.name, path: d.path}) AS computed_from, "
+                    "       collect(DISTINCT {name: d.name, path: d.path, "
+                    "           materialized: d.materialized, "
+                    "           derivable_from: d.derivable_from, "
+                    "           derivation_command: d.derivation_command}) AS computed_from, "
                     "       collect(DISTINCT {name: sc.name, path: sc.path}) AS generated_by",
                     n=n).data()
                 if len(rows) != 1:
@@ -168,6 +204,44 @@ def tagged_results() -> list:
     finally:
         driver.close()
     return out
+
+
+def provenance_buckets(results: list) -> dict:
+    """Split every provenance reference the repository does not hold into explained and not.
+
+    `cc_tasks/2026-09-13_ephemeral_provenance.md` decision 3. The previous build published one
+    bucket, `provenance_paths_absent`, which said a path was missing and stopped there. An
+    absence that is a DECISION and an absence that is a DEFECT are not the same fact and a
+    reader cannot tell them apart from one list, so they are now two:
+
+    * `provenance_paths_ephemeral` — the registry marks the node `materialized: false` and
+      carries the derivation. Each entry publishes it, read off the node.
+    * `provenance_paths_absent` — everything else. **This list being non-empty is a finding**:
+      it means a published Result names provenance nobody can reach and nothing explains.
+    """
+    ephemeral, absent = {}, set()
+    for r in results:
+        for ref in r["computed_from"] + r["generated_by"]:
+            if ref["present_in_repository"]:
+                continue
+            if ref.get("ephemeral"):
+                ephemeral[ref["path"]] = {
+                    "path": ref["path"], "artifact": ref["name"],
+                    "derivable_from": ref.get("derivable_from"),
+                    "derivation_command": ref.get("derivation_command"),
+                    "generated_by": sorted({g["name"] for g in r["generated_by"]}),
+                    "depended_on_by": []}
+            else:
+                absent.add(ref["path"])
+    for r in results:
+        for ref in r["computed_from"] + r["generated_by"]:
+            if ref["present_in_repository"] or not ref.get("ephemeral"):
+                continue
+            ephemeral[ref["path"]]["depended_on_by"].append(r["name"])
+    for e in ephemeral.values():
+        e["depended_on_by"] = sorted(set(e["depended_on_by"]))
+    return {"provenance_paths_ephemeral": [ephemeral[k] for k in sorted(ephemeral)],
+            "provenance_paths_absent": sorted(absent)}
 
 
 def sources_per_check() -> dict:
@@ -240,6 +314,15 @@ def citation_cff(pub: dict) -> str:
         "repository-code": pub["repository_url"],
         "keywords": pub["keywords"],
         "type": "dataset",
+        # CFF's `license` is the licence of the CITED ARTEFACT, which here is the report and the
+        # data it is a view of — so it is the DATA licence, and the code licence goes in `notes`
+        # rather than being silently conflated with it (ADDENDUM_1 decision A4).
+        "license": pub["license_data"],
+        "notes": (f"Code in this repository is licensed {pub['license_code']} (see LICENSE); "
+                  f"the data, the report and the generated artefacts are licensed "
+                  f"{pub['license_data']} (see LICENSE-DATA), which is the licence declared "
+                  f"above because it is the licence of the cited artefact. "
+                  f"{' '.join(pub['license_corpus_note'].split())}"),
     }
     header = (
         "# Citation File Format. GENERATED by scripts/build_l0_site.py from\n"
@@ -264,8 +347,15 @@ def zenodo_json(pub: dict) -> str:
             {"identifier": pub["repository_url"], "relation": "isSupplementTo",
              "scheme": "url"},
         ],
-        "notes": (f"Prepared by {TASK} decision 4 and NOT deposited. No licence is declared: "
-                  f"the repository carries no LICENSE file and the choice is the author's."),
+        # Zenodo carries ONE licence field and the deposit is the data, so it is the data
+        # licence; the code licence is named in the notes rather than dropped
+        # (ADDENDUM_1 decision A4).
+        "license": pub["license_data"],
+        "notes": (f"Prepared by {TASK} decision 4 and amended by {EPHEMERAL_TASK} "
+                  f"(ADDENDUM_1), and NOT deposited. Licences: data, report and generated "
+                  f"artefacts {pub['license_data']} (LICENSE-DATA), which is the `license` "
+                  f"above; code {pub['license_code']} (LICENSE). "
+                  f"{' '.join(pub['license_corpus_note'].split())}"),
     }
     return json.dumps(doc, indent=1, ensure_ascii=False) + "\n"
 
@@ -325,6 +415,13 @@ def llms_txt(pub: dict, files: list) -> str:
             f"- [The report, markdown]({pub['site_url']}reports/{STEM}.md)",
             f"- [The report, PDF]({pub['site_url']}reports/{STEM}.pdf)",
             f"- [Framework progress page]({pub['site_url']}progress/)",
+            # NOT a licence section, deliberately. `llms.txt` is the machine-readable face of
+            # this site and the licence belongs on it — but `docs/llms.txt` is outside the
+            # zero-edits widening of `cc_tasks/2026-09-13_ephemeral_provenance_ADDENDUM_1.md`,
+            # which names `docs/index.html`, `docs/data/index.json` and the two citation copies
+            # and nothing else. A boundary that is widened whenever the next edit looks additive
+            # is not a boundary. Left for a task that may touch this file; recorded in
+            # `cc_tasks/2026-09-13_ephemeral_provenance_RESULT.md`.
             "", "## Citation", "",
             f"- [CITATION.cff]({pub['site_url']}data/CITATION.cff)",
             f"- [Zenodo deposition metadata, prepared and not deposited]"
@@ -466,8 +563,20 @@ is typed.</p>
 <h2>How to cite</h2>
 <p><a href="data/CITATION.cff"><code>data/CITATION.cff</code></a> carries the citation
 metadata; <a href="data/zenodo.json"><code>data/zenodo.json</code></a> is the deposition
-metadata, prepared and not deposited. No DOI is minted and no licence is declared — both are
-the author's to decide.</p>
+metadata, prepared and not deposited. No DOI is minted — that is the author's to decide.</p>
+
+<h2>Licence</h2>
+<p>Two licences, because this repository publishes two different things. The
+<strong>code</strong> that measures — <code>assessment/</code>, <code>kg/</code>,
+<code>scripts/</code>, <code>tests/</code> — is <strong>{e(pub['license_code'])}</strong>
+(<a href="{e(pub['repository_url'])}/blob/main/LICENSE"><code>LICENSE</code></a>). The
+<strong>data, this report and the generated artefacts</strong> — the matrices, the published
+Results, the source appendix, the framework record, the markdown and the PDF — are
+<strong>{e(pub['license_data'])}</strong>
+(<a href="{e(pub['repository_url'])}/blob/main/LICENSE-DATA"><code>LICENSE-DATA</code></a>):
+share and adapt, including commercially, with attribution.</p>
+<p class="note">{e(' '.join(pub['license_corpus_note'].split()))} What is licensed about them
+here is this publication's own measurements, citations and digests, not the works.</p>
 
 <footer>
 Built by <code>scripts/build_l0_site.py</code> under <code>{e(TASK)}</code>.
@@ -507,17 +616,20 @@ def build(check: bool = False) -> int:
                  "The per-check source appendix: every check, every admitted source, its "
                  "doc_id, its URL and its locator."),
                 ("data/results_tagged.json",
-                 {"task": TASK, "snapshot_cycle": pub["snapshot_cycle"],
+                 {"task": TASK, "amended_by": EPHEMERAL_TASK,
+                  "snapshot_cycle": pub["snapshot_cycle"],
                   "count": len(results), "results": results,
-                  "provenance_paths_absent": sorted({
-                      ref["path"] for r in results
-                      for ref in r["computed_from"] + r["generated_by"]
-                      if not ref["present_in_repository"]}),
+                  **provenance_buckets(results),
                   "note": ("Every Result the report quotes by name, with its value, its "
                            "lifecycle state, and the DataFile and Script that produced it. "
                            "`present_in_repository` says whether the repository holds the "
-                           "path each reference names, measured at build time; "
-                           "`provenance_paths_absent` collects the ones it does not.")},
+                           "path each reference names, measured at build time. A reference "
+                           "the repository does not hold is either EPHEMERAL — the registry "
+                           "marks it `materialized: false` and names what it is derivable "
+                           "from and the command that recomputes it, collected in "
+                           "`provenance_paths_ephemeral` — or unexplained, in which case it "
+                           "is in `provenance_paths_absent` and this publication has a dead "
+                           "provenance path.")},
                  "Every registered Result the report quotes: name, value, state, provenance.")]
 
     for rel, doc, label in payloads:
@@ -551,16 +663,35 @@ def build(check: bool = False) -> int:
         dst = DATA / name
         if not check:
             shutil.copyfile(src, dst)
-        copied.append({"published": f"data/{name}", "source": src_rel,
-                       "sha256": sha256(src), "bytes": src.stat().st_size,
-                       "description": label})
+        entry = {"published": f"data/{name}", "source": src_rel,
+                 "sha256": sha256(src), "bytes": src.stat().st_size,
+                 "description": label}
+        # The corpus manifest is a record ABOUT third-party documents, and the one copy on this
+        # site a reader could mistake for a licence grant over them. ADDENDUM_1 decision A3: the
+        # exclusion travels with it, in the same sentence as everywhere else.
+        if src_rel.startswith("corpus/"):
+            entry["license_note"] = " ".join(pub["license_corpus_note"].split())
+        copied.append(entry)
         written.append(f"data/{name}")
         links.append((f"data/{name}", label))
 
     # 6. the data manifest: what is published, from where, at which digest
-    manifest = {"task": TASK, "built_at": datetime.now(timezone.utc).isoformat(),
+    manifest = {"task": TASK, "amended_by": EPHEMERAL_TASK,
+                "built_at": datetime.now(timezone.utc).isoformat(),
                 "build_commit": commit, "snapshot_cycle": pub["snapshot_cycle"],
                 "version": pub["version"], "site_url": pub["site_url"],
+                # The licences as SPDX identifiers, read from the declaration, so a machine
+                # reading only this manifest can tell what it may do with the files it lists
+                # (ADDENDUM_1 decision A4). `corpus_note` is the exclusion in one sentence,
+                # from the same declaration as every other place it appears (A3).
+                "license": {"code": {"spdx": pub["license_code"],
+                                     "text": LICENSE_CODE_FILE,
+                                     "covers": "the Python in this repository"},
+                            "data": {"spdx": pub["license_data"],
+                                     "text": LICENSE_DATA_FILE,
+                                     "covers": "every file listed in this manifest, the "
+                                               "matrices, the report and its PDF"},
+                            "corpus_note": " ".join(pub["license_corpus_note"].split())},
                 "copies": copied, "citation_files": cited,
                 "generated": [{"published": rel, "description": label}
                               for rel, label in links if rel.startswith("data/")

@@ -35,7 +35,7 @@ footer { margin-top:3rem; padding-top:1.2rem; border-top:1px solid var(--line);
 <h1>AI readiness of the federal statistical system: host-level findings</h1>
 <p class="sub">Snapshot cycle <code>scan_2026-09-10_rj2</code> ·
 version <code>2026-09-10_rj2</code> ·
-built from commit <code>9a336eca0912</code> on <code>2026-09-13</code> (UTC).</p>
+built from commit <code>3c8732b8e89f</code> on <code>2026-09-13</code> (UTC).</p>
 
 <p>Host-level AI-readiness findings for the sixteen recognized agencies and units of the US federal statistical system, plus three federal reference hosts shown separately. Six host-level checks over one measurement cycle with one declared client identity, every verdict traceable to the Finding, the rule version and the retained response body that produced it. The matrices, the per-check source appendix and every registered Result the report quotes are published as data beside it; the PDF is a view of them.</p>
 
@@ -71,8 +71,20 @@ is typed.</p>
 <h2>How to cite</h2>
 <p><a href="data/CITATION.cff"><code>data/CITATION.cff</code></a> carries the citation
 metadata; <a href="data/zenodo.json"><code>data/zenodo.json</code></a> is the deposition
-metadata, prepared and not deposited. No DOI is minted and no licence is declared — both are
-the author's to decide.</p>
+metadata, prepared and not deposited. No DOI is minted — that is the author's to decide.</p>
+
+<h2>Licence</h2>
+<p>Two licences, because this repository publishes two different things. The
+<strong>code</strong> that measures — <code>assessment/</code>, <code>kg/</code>,
+<code>scripts/</code>, <code>tests/</code> — is <strong>MIT</strong>
+(<a href="https://github.com/brockwebb/ai-readiness-kg/blob/main/LICENSE"><code>LICENSE</code></a>). The
+<strong>data, this report and the generated artefacts</strong> — the matrices, the published
+Results, the source appendix, the framework record, the markdown and the PDF — are
+<strong>CC-BY-4.0</strong>
+(<a href="https://github.com/brockwebb/ai-readiness-kg/blob/main/LICENSE-DATA"><code>LICENSE-DATA</code></a>):
+share and adapt, including commercially, with attribution.</p>
+<p class="note">Documents under corpus/ are third-party works, retained as evidence under their own terms: neither licence in this repository applies to them. What is licensed about them
+here is this publication's own measurements, citations and digests, not the works.</p>
 
 <footer>
 Built by <code>scripts/build_l0_site.py</code> under <code>cc_tasks/2026-09-12_publish_l0.md</code>.

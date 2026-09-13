@@ -1,10 +1,24 @@
 {
  "task": "cc_tasks/2026-09-12_publish_l0.md",
- "built_at": "2026-09-13T04:10:42.705341+00:00",
- "build_commit": "9a336eca0912",
+ "amended_by": "cc_tasks/2026-09-13_ephemeral_provenance.md",
+ "built_at": "2026-09-13T17:03:34.894001+00:00",
+ "build_commit": "3c8732b8e89f",
  "snapshot_cycle": "scan_2026-09-10_rj2",
  "version": "2026-09-10_rj2",
  "site_url": "https://brockwebb.github.io/ai-readiness-kg/",
+ "license": {
+  "code": {
+   "spdx": "MIT",
+   "text": "LICENSE",
+   "covers": "the Python in this repository"
+  },
+  "data": {
+   "spdx": "CC-BY-4.0",
+   "text": "LICENSE-DATA",
+   "covers": "every file listed in this manifest, the matrices, the report and its PDF"
+  },
+  "corpus_note": "Documents under corpus/ are third-party works, retained as evidence under their own terms: neither licence in this repository applies to them."
+ },
  "copies": [
   {
    "published": "data/ai_readiness_framework.json",
@@ -18,22 +32,23 @@
    "source": "corpus/manifest.json",
    "sha256": "95a08662285c24ad67b1ace937cb8d6024ffe0038844e19bbf252660f743615f",
    "bytes": 1063033,
-   "description": "The corpus manifest: every admitted document with its identity, its source URL and its content hash. Every doc_id in the source appendix is a key in this file."
+   "description": "The corpus manifest: every admitted document with its identity, its source URL and its content hash. Every doc_id in the source appendix is a key in this file.",
+   "license_note": "Documents under corpus/ are third-party works, retained as evidence under their own terms: neither licence in this repository applies to them."
   }
  ],
  "citation_files": [
   {
    "published": "data/CITATION.cff",
    "also_written_to": "CITATION.cff",
-   "sha256": "df16ecc47943a823b7f0db4bb6177d92347c188336b8dac7c13130ca5d791c9a",
-   "bytes": 1385,
+   "sha256": "ce05ac8dea985abf517c86e765a2a9a6461dee329f5eba918d255c22ac98521f",
+   "bytes": 1794,
    "description": "Citation metadata in Citation File Format."
   },
   {
    "published": "data/zenodo.json",
    "also_written_to": ".zenodo.json",
-   "sha256": "e884e9a76685132a18a94f435fad549a7823158d08170c0ffa1638889160cb39",
-   "bytes": 1228,
+   "sha256": "4cc4552e5812890e3f5dff0606f34e901a5890de631b03c013d71dcba3685154",
+   "bytes": 1497,
    "description": "Zenodo deposition metadata, prepared and not deposited: the mint is the author's."
   }
  ],

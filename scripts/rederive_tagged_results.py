@@ -31,6 +31,16 @@ rows and writes nothing to the graph, so a re-derivation can never mint or re-bi
   shipped, so that run is pointed at a temporary directory through the module-path globals
   (`OUT_DIR`, `GEN_DIR`), which this repo reads at call time for exactly this reason.
 
+**Ephemeral DataFiles are re-derived into a temporary tree, and the RULE IS READ FROM THE GRAPH.**
+A DataFile marked `materialized: false` is one whose path the repository deliberately does not
+hold (`scripts/mark_ephemeral_datafile.py`). Its `derivation_command` and `derivable_from` say
+how to recompute it, so `rederive_ephemeral` below drives that command with the generator's
+output root pointed at a temporary tree — for ANY such DataFile, with no generator named here.
+Until 2026-09-13 this was a hand-written special case for `scan_report`, which also had to
+remember to delete the Tier C sibling afterwards; a rule that lives in one `if` branch is a rule
+the next ephemeral artifact will not get. `cc_tasks/2026-09-13_ephemeral_provenance.md`
+decision 4.
+
 **The tagged set is READ, never typed.** It comes from the `{{result:NAME:...}}` tags in
 `docs/reports/sections/*.md`, so a Result the report starts quoting tomorrow is in the gate
 tomorrow without anybody remembering to add it.
@@ -47,6 +57,7 @@ import contextlib
 import io
 import json
 import re
+import shlex
 import sys
 import tempfile
 from pathlib import Path
@@ -70,20 +81,6 @@ TAG = re.compile(r"\{\{result:([^:}]+):[^}]*\}\}")
 CYCLE_RJ2 = "scan_2026-09-10_rj2"
 CYCLE_RJ1 = "scan_2026-09-10_rj1"
 
-#: The measured cycle the two re-judgements rest on. Four tagged Results are facts about the
-#: COLLECTION — observations, requests, netlocs contacted, error classes — and belong to it.
-#:
-#: Passed to `scan_report` EXPLICITLY rather than letting it default to `params.cycle.name`,
-#: which is the same string. The default path additionally calls `rederived_count`, which
-#: re-derives every Finding under the params ON DISK and refuses when they have moved — and
-#: they have: `params.yaml` is at harness-v5 and this cycle was measured at
-#: `4e0a92ba19ab...`. That refusal is correct and is the harness saying *do not compare across
-#: a parameter change*. The Finding-level re-derivation of this payload is not skipped by
-#: naming the cycle; it is done where it can be done properly, by
-#: `tests/test_scan_harness_v4.py::..._re_derives...`, which recovers each payload's own
-#: params from git BY HASH and which `make gate-task` runs. The four values below are counts
-#: off the stored payload and do not depend on Finding identity at all.
-CYCLE_BASE = "scan_2026-09-10"
 
 
 def tagged_names() -> list:
@@ -199,44 +196,142 @@ def rederive_matrices_rj1(captured: Captured) -> None:
             blm.OUT_DIR, blm.GEN_DIR = out_dir, gen_dir
 
 
-def rederive_base_cycle_counts(captured: Captured) -> None:
-    """`scan_report` over the MEASURED cycle, with its matrix written to a temp tree.
-
-    Four tagged Results are facts about the collection rather than about a judgement, and they
-    belong to `scan_2026-09-10`. Driving `scan_report` recomputes them from that cycle's stored
-    payload, which is what a re-derivation is — but `scan_report.main` also WRITES
-    `state/scan_matrix_<suffix>.json`, and for this cycle that file is *deliberately absent*:
-    `scan_2026-09-10` was measured and never reported, the judgement of record is the
-    re-judgement `_rj2`, and `tests/test_scan_figures.py::matrix` skips the whole figure suite
-    on exactly that absence (`cc_tasks/2026-09-10_harness_v5_blind.md` decision 6). Materialising
-    it turns eight documented skips into eight errors, because the base cycle never registered
-    the pooled per-leg rates a figure resolves.
-
-    So the write goes to a temporary directory. The ARITHMETIC is the generator's, unchanged;
-    what is redirected is a side effect whose absence is a recorded decision.
-    """
-    import scan_report
-    real = scan_report.matrix_path
-    scratch = REPO / "tmp"
-    scratch.mkdir(exist_ok=True)
-    with tempfile.TemporaryDirectory(dir=scratch) as tmp:
-        scan_report.matrix_path = lambda cycle: Path(tmp) / f"scan_matrix_{cycle}.json"
-        # The Tier C sibling is built from `REPO / "state"` inside `main` and cannot be
-        # redirected the same way, so it is removed afterwards if the run created it. Checked
-        # BEFORE the run, so a file that already existed is never deleted.
-        tierc = REPO / "state" / f"scan_matrix_tierc_{cycle_suffix(CYCLE_BASE)}.json"
-        pre_existing = tierc.is_file()
-        try:
-            drive("scan_report", ["--cycle", CYCLE_BASE], captured)
-        finally:
-            scan_report.matrix_path = real
-            if tierc.is_file() and not pre_existing:
-                tierc.unlink()
-
-
 def cycle_suffix(cycle: str) -> str:
     import cycle_results
     return cycle_results.cycle_suffix(cycle)
+
+
+# ---------------------------------------------------------------------------
+# Ephemeral DataFiles: the rule is on the node, not in this file
+# ---------------------------------------------------------------------------
+
+def ephemeral_data_files() -> list:
+    """Every DataFile the registry marks `materialized: false`, with how to recompute it.
+
+    READ from the graph, never typed here — which is the whole point. A DataFile whose absence
+    is a decision says so on its own node, and this engine learns of a new one without being
+    edited.
+    """
+    from seldon.config import get_neo4j_driver, load_project_config
+    cfg = load_project_config(REPO)
+    driver = get_neo4j_driver(cfg)
+    try:
+        with driver.session(database=cfg["neo4j"]["database"]) as s:
+            rows = s.run(
+                "MATCH (d:DataFile) WHERE d.materialized = false "
+                "  AND coalesce(d.state, '') <> 'superseded' "
+                "OPTIONAL MATCH (d)-[:GENERATED_BY]->(sc:Script) "
+                "RETURN d.name AS name, d.path AS path, "
+                "       d.derivable_from AS derivable_from, "
+                "       d.derivation_command AS command, "
+                "       collect(DISTINCT {name: sc.name, path: sc.path}) AS generators "
+                "ORDER BY d.name").data()
+    finally:
+        driver.close()
+    return [dict(r) for r in rows]
+
+
+@contextlib.contextmanager
+def temporary_output_root(module_name: str):
+    """Point a generator's output root at a temporary tree for the duration of one run.
+
+    The seam is the module-path output global this repo's convention requires
+    (CLAUDE.md, "Conventions specific to this repo"): `OUT_DIR`, plus `GEN_DIR` when the module
+    has one. A generator that exposes neither cannot be re-derived without writing into the
+    tree, and that is a REFUSAL rather than a quiet fallback — the fallback is exactly how the
+    matrix got materialised the first time.
+
+    The tree lives under `REPO / "tmp"` (gitignored) because these generators report their
+    outputs with `Path.relative_to(REPO)`, which raises for a path outside the repository.
+    """
+    mod = __import__(module_name)
+    if not hasattr(mod, "OUT_DIR"):
+        raise SystemExit(
+            f"FATAL: {module_name} generates an EPHEMERAL DataFile and exposes no `OUT_DIR` "
+            f"module-path global, so its writes cannot be pointed away from the tree. Add one "
+            f"(see `scripts/scan_report.py` and `scripts/build_l0_matrices.py`); this engine "
+            f"will not re-derive by writing a file whose absence is a recorded decision.")
+    saved = {g: getattr(mod, g) for g in ("OUT_DIR", "GEN_DIR") if hasattr(mod, g)}
+    scratch = REPO / "tmp"
+    scratch.mkdir(exist_ok=True)
+    with tempfile.TemporaryDirectory(dir=scratch) as tmp:
+        mod.OUT_DIR = Path(tmp)
+        if hasattr(mod, "GEN_DIR"):
+            mod.GEN_DIR = Path(tmp) / "generated"
+        try:
+            yield Path(tmp)
+        finally:
+            for g, v in saved.items():
+                setattr(mod, g, v)
+
+
+def rederive_ephemeral(captured: Captured) -> list:
+    """Drive every ephemeral DataFile's `derivation_command` into a temporary tree.
+
+    Four tagged Results are facts about a COLLECTION rather than about a judgement and are
+    `COMPUTED_FROM` `scan_matrix_2026-09-10`, the one DataFile in this repository so marked. The
+    ARITHMETIC is the generator's, unchanged; what is redirected is a side effect whose absence
+    is a recorded decision.
+
+    **Why the command on the node passes `--cycle` explicitly.** Left to default,
+    `scan_report` additionally calls `rederived_count`, which re-derives every Finding under the
+    params ON DISK and refuses when they have moved — and they have: `params.yaml` is at
+    harness-v5 and that cycle was measured at `4e0a92ba19ab...`. That refusal is correct and is
+    the harness saying *do not compare across a parameter change*. The Finding-level
+    re-derivation of the payload is not skipped by naming the cycle; it is done where it can be
+    done properly, by `tests/test_scan_harness_v4.py::..._re_derives...`, which recovers each
+    payload's own params from git BY HASH and which `make gate-task` runs. The counts captured
+    here are counts off the stored payload and do not depend on Finding identity at all.
+
+    Three things are asserted per DataFile, because a redirect that silently failed would look
+    exactly like a success:
+
+    1. the repository still does not hold the ephemeral path after the run;
+    2. the temporary tree DOES hold it, so the derivation really ran and really wrote it;
+    3. `derivable_from` exists — the claim is that the value is still reachable.
+    """
+    out = []
+    for df in ephemeral_data_files():
+        for field in ("path", "derivable_from", "command"):
+            if not df.get(field):
+                raise SystemExit(
+                    f"FATAL: ephemeral DataFile {df['name']!r} declares no {field!r}. A node "
+                    f"that says the repository does not hold it owes the reader how to get it "
+                    f"back; see scripts/mark_ephemeral_datafile.py")
+        gens = [g for g in df["generators"] if g.get("name")]
+        if len(gens) != 1:
+            raise SystemExit(f"FATAL: ephemeral DataFile {df['name']!r} has {len(gens)} "
+                             f"GENERATED_BY edges; exactly one names the generator to drive")
+        if not (REPO / df["derivable_from"]).is_file():
+            raise SystemExit(f"FATAL: {df['name']!r} is derivable_from "
+                             f"{df['derivable_from']!r}, which the repository does not hold")
+        argv = shlex.split(df["command"])
+        if argv[0] != gens[0]["path"]:
+            raise SystemExit(
+                f"FATAL: {df['name']!r} names derivation command {argv[0]!r} and its "
+                f"GENERATED_BY edge names {gens[0]['path']!r}; one node, two derivations")
+        module = Path(argv[0]).stem
+        target = REPO / df["path"]
+        if target.exists():
+            raise SystemExit(f"FATAL: {df['path']} is marked `materialized: false` and the "
+                             f"repository holds it; the node and the tree disagree")
+        with temporary_output_root(module) as tmp:
+            drive(module, argv[1:], captured)
+            in_tmp = tmp / Path(df["path"]).name
+            if not in_tmp.is_file():
+                raise SystemExit(
+                    f"FATAL: {module} was driven with its output root at {tmp} and did not "
+                    f"write {Path(df['path']).name} there. Either the redirect missed a write "
+                    f"path or this command does not generate {df['name']!r}; a re-derivation "
+                    f"whose output cannot be found has not been shown to have happened.")
+            wrote = sorted(q.name for q in tmp.rglob("*") if q.is_file())
+        if target.exists():
+            raise SystemExit(f"FATAL: driving {module} MATERIALISED {df['path']}, whose absence "
+                             f"is a recorded decision; the output-root redirect leaked")
+        out.append({"data_file": df["name"], "path": df["path"],
+                    "derivable_from": df["derivable_from"], "command": df["command"],
+                    "generator": gens[0]["name"], "wrote_into_temporary_tree": wrote})
+    return out
 
 
 def rederive_roster(captured: Captured) -> None:
@@ -278,20 +373,20 @@ def rederive_preflight(captured: Captured) -> None:
 
 # ---------------------------------------------------------------------------
 
-def rederive_all() -> Captured:
+def rederive_all() -> tuple:
     captured = Captured()
     # rj1 FIRST and into a temp tree, so the shipped fragments end the run at rj2.
     rederive_matrices_rj1(captured)
     drive("build_l0_matrices", ["--cycle", CYCLE_RJ2], captured)
     drive("scan_report", ["--cycle", CYCLE_RJ2], captured)
-    rederive_base_cycle_counts(captured)
+    ephemeral = rederive_ephemeral(captured)
     drive("register_l0_report_results", ["--cycle", CYCLE_RJ2], captured)
     drive("register_l0_report_results", [], captured)
     drive("register_frame_v5_results", [], captured)
     drive("register_esip_crosswalk_results", [], captured)
     rederive_roster(captured)
     rederive_preflight(captured)
-    return captured
+    return captured, ephemeral
 
 
 def main(argv=None) -> int:
@@ -310,7 +405,7 @@ def main(argv=None) -> int:
                 f"FATAL: this gate drives the {cyc} cycle and the report tags nothing from "
                 f"it; the cycle constants are stale and the gate is checking the wrong run")
 
-    captured = rederive_all()
+    captured, ephemeral = rederive_all()
 
     rows, missing, disagree = [], [], []
     for n in names:
@@ -333,6 +428,10 @@ def main(argv=None) -> int:
               "not_rederived": missing, "disagrees": disagree,
               "states_before": sorted({r["state"] for r in rows}),
               "gate": "PASS" if not missing and not disagree else "BLOCKED",
+              # What the registry said was ephemeral and what driving it actually produced.
+              # On the report because "the value is still reachable" is a claim, and this is
+              # the run that either shows it or does not.
+              "ephemeral_data_files": ephemeral,
               "rows": rows}
     if a.json:
         Path(a.json).write_text(json.dumps(report, indent=1) + "\n", encoding="utf-8")

@@ -62,9 +62,24 @@ def payload_path(cycle: str) -> Path:
     return REPO / "state" / f"{cycle}.json"
 
 
+#: Where this module WRITES its two matrices. A module-path global read at call time, which is
+#: this repo's convention for a redirectable output root (CLAUDE.md, "Conventions specific to
+#: this repo"; `build_l0_matrices.OUT_DIR`/`GEN_DIR` are the same seam). The READ side is
+#: deliberately not routed through it — `payload_path` and the targets file still resolve under
+#: `REPO / "state"` — because a re-derivation needs the real payload and a temporary output.
+#:
+#: The caller that needs it is `scripts/rederive_tagged_results.py`: a DataFile marked
+#: `materialized: false` in the registry is one whose ABSENCE is a decision, so its generator is
+#: driven with this pointed at a temporary tree and the side effect is never produced
+#: (`cc_tasks/2026-09-13_ephemeral_provenance.md` decision 4). Before this existed the
+#: re-derivation monkeypatched `matrix_path` and then deleted the Tier C sibling by hand, which
+#: is a special case per generator; one output root is the general form.
+OUT_DIR = REPO / "state"
+
+
 def matrix_path(cycle: str) -> Path:
     """`scan_matrix_<cycle>` — §4's DataFile name, derived from the same single source."""
-    return REPO / "state" / f"scan_matrix_{cycle_results.cycle_suffix(cycle)}.json"
+    return OUT_DIR / f"scan_matrix_{cycle_results.cycle_suffix(cycle)}.json"
 
 
 def load(cycle: str) -> dict:
@@ -484,12 +499,16 @@ def main(argv=None) -> int:
             for base, v, note in results(payload, legs, a12v, mx, cycle, rederived,
                                          legs_c, blinds)]
     matrix_file = matrix_path(cycle)
+    if not matrix_file.is_relative_to(REPO):
+        raise SystemExit(f"FATAL: OUT_DIR {OUT_DIR} is outside the repository; this module "
+                         f"reports its outputs relative to the repo root and a redirect has "
+                         f"to stay inside it (tmp/ is gitignored and is what callers use)")
     if a.dry_run:
         for n, v, note in data:
             print(f"{n}\t{v}\t{note[:70]}")
         print(len(data), "Results ->", matrix_file.relative_to(REPO))
         return 0
-    tierc_file = REPO / "state" / f"scan_matrix_tierc_{cycle_results.cycle_suffix(cycle)}.json"
+    tierc_file = OUT_DIR / f"scan_matrix_tierc_{cycle_results.cycle_suffix(cycle)}.json"
     tierc_file.write_text(json.dumps({**mx_c, "per_leg": legs_c,
                                       "note": ("Tier C reference hosts, tier-0 legs only. In "
                                                "no Tier A denominator and on no agencies x "
