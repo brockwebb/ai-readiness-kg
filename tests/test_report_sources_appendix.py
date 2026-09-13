@@ -175,6 +175,65 @@ def test_citation_renders_what_the_manifest_has_and_reports_what_it_lacks():
     assert text == "*Only*." and missing == ["authors_or_org", "pub_year", "source_url"]
 
 
+# ------------------------------------------------- every cited document is fully citable
+#: Cited documents that render without a field because the DOCUMENT ITSELF does not state it,
+#: each with what was searched and what was found instead. `scripts/backfill_citation_metadata
+#: .py` carries the same list and the fuller reason; this is the gate's copy, and the two are
+#: held equal below so neither can drift into a silent exemption.
+#:
+#: A doc_id joins this list only after the captured document has been searched end to end for
+#: the field. It is NOT a to-do list: the value is absent from the source, so no future task
+#: can supply it without re-acquiring the document from a publisher that states it.
+CITATION_FIELD_NOT_STATED = {
+    "anthropic-crawler-support-article": "pub_year",
+    "bing-webmaster-guidelines": "pub_year",
+    "openai-crawlers-bots": "pub_year",
+    "perplexity-crawlers": "pub_year",
+}
+
+
+def test_every_cited_document_is_fully_citable_or_named_with_its_reason():
+    """A stranger holding the PDF can follow every citation to a specific document.
+
+    `authors_or_org`, `title`, `pub_year`, `source_url` — a row missing one of these and not
+    named above is a gap, not an exemption.
+    """
+    cited = {r["doc"] for r in rows(FRAGMENT.read_text(encoding="utf-8")) if r["doc"]}
+    assert cited, "no doc_ids in the fragment — the appendix did not generate"
+    gaps = {}
+    for doc_id in sorted(cited):
+        entry = MANIFEST.get(doc_id)
+        assert entry is not None, f"{doc_id} is cited and not in the manifest"
+        missing = RT.citation(entry)[1]
+        allowed = CITATION_FIELD_NOT_STATED.get(doc_id)
+        unexplained = [f for f in missing if f != allowed]
+        if unexplained:
+            gaps[doc_id] = unexplained
+    assert not gaps, (
+        f"{len(gaps)} cited documents are missing a citation field with no recorded reason: "
+        f"{gaps}")
+
+
+def test_the_not_stated_list_matches_the_backfill_script():
+    """The gate's exemption list and the backfill's are one list in two places; a doc_id
+    added to one and not the other would exempt a field nobody recorded a reason for."""
+    sys.path.insert(0, str(REPO / "scripts"))
+    import backfill_citation_metadata as BF
+    assert set(CITATION_FIELD_NOT_STATED) == set(BF.NOT_STATED)
+    for doc_id, field in CITATION_FIELD_NOT_STATED.items():
+        assert BF.NOT_STATED[doc_id].startswith(field), (
+            f"{doc_id}: the backfill's reason does not open with the field it exempts")
+
+
+def test_no_exemption_is_carried_for_a_document_that_now_states_the_field():
+    """An exemption that stopped being true is a stale claim, and it hides a real value."""
+    stale = {d: f for d, f in CITATION_FIELD_NOT_STATED.items()
+             if d in MANIFEST and f not in RT.citation(MANIFEST[d])[1]}
+    assert not stale, (
+        f"these documents now carry the field they are exempted for — drop the exemption: "
+        f"{stale}")
+
+
 # ------------------------------------------------------------------ against the graph
 @pytest.fixture(scope="module")
 def session():

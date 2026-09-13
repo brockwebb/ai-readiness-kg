@@ -8,7 +8,8 @@ same settings with every table block and the appendix removed (`build_report_pdf
 Measured, not estimated, and registered rather than typed into the RESULT, so the next revision
 can say whether the prose grew.
 
-    /opt/anaconda3/bin/python3 scripts/register_report_page_counts.py [--dry-run]
+    /opt/anaconda3/bin/python3 scripts/register_report_page_counts.py \
+        [--dry-run] [--epoch YYYY-MM-DD]
 """
 from __future__ import annotations
 
@@ -26,25 +27,31 @@ import cycle_results                                                # noqa: E402
 
 TASK = "cc_tasks/2026-09-11_report_sources_appendix.md"
 SCRIPT_ARTIFACT = "register_report_page_counts"
-EPOCH = "2026-09-11"
+#: The cycle the counts are registered under. A rebuild that MOVES a count registers it under
+#: its own date rather than overwriting the earlier one, so the series shows whether the prose
+#: grew; `--epoch` names that date. The default is the epoch the series opened at.
+DEFAULT_EPOCH = "2026-09-11"
 
 
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--epoch", default=DEFAULT_EPOCH,
+                    help=f"cycle to register under (default {DEFAULT_EPOCH})")
     a = ap.parse_args(argv)
+    epoch = a.epoch
     if not build_report_pdf.PDF.is_file() or not build_report_pdf.BUILD_MD.is_file():
         raise SystemExit("FATAL: build the report first (make report-pdf); there is no PDF to "
                          "count pages of")
     counts = build_report_pdf.page_counts()
     rows = [
         ("l0_report_pages_total", counts["total"],
-         f"Page count of docs/reports/2026-09_fss_ai_readiness_L0.pdf as built on {EPOCH}, "
+         f"Page count of docs/reports/2026-09_fss_ai_readiness_L0.pdf as built on {epoch}, "
          f"with the generated Sources-per-check appendix. Read from the PDF by pypdf. "
          f"Task {TASK} decision 5."),
         ("l0_report_pages_prose", counts["prose"],
-         f"Page count of the report's PROSE on {EPOCH}: the built markdown with every table "
+         f"Page count of the report's PROSE on {epoch}: the built markdown with every table "
          f"block and everything from the Method appendix on removed, rendered under the "
          f"published PDF's own pandoc/typst settings (`build_report_pdf.prose_only`). The "
          f"~7-page target governs this number, not the total. Task {TASK} decision 5."),
@@ -52,7 +59,7 @@ def main(argv=None) -> int:
     if a.dry_run:
         print(json.dumps(counts, indent=1))
         for b, v, _n in rows:
-            print(f"  {cycle_results.name_for(b, EPOCH):40s} {v}")
+            print(f"  {cycle_results.name_for(b, epoch):40s} {v}")
         return 0
 
     from seldon_artifacts import live_artifact
@@ -69,8 +76,8 @@ def main(argv=None) -> int:
             raise SystemExit(f"FATAL: cannot create Script artifact: {r.stderr[-300:]}")
 
     out = cycle_results.register(
-        [(cycle_results.name_for(b, EPOCH), v, n) for b, v, n in rows],
-        cycle=EPOCH, script=SCRIPT_ARTIFACT, data="scan_targets_fss_2026-09_v4")
+        [(cycle_results.name_for(b, epoch), v, n) for b, v, n in rows],
+        cycle=epoch, script=SCRIPT_ARTIFACT, data="scan_targets_fss_2026-09_v4")
     print(json.dumps({**counts, **out}, indent=1))
     return 1 if out["failed"] else 0
 

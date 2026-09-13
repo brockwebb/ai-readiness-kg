@@ -16,6 +16,8 @@ CLI:
         --pub-date ... --source-type ... --url ... --rationale ... [--discovered-via ...]
     python -m kg.manifest rebuild
     python -m kg.manifest verify
+    python -m kg.manifest metadata-update <doc-id> --provenance "page 1, ..." \\
+        --set identity.pub_year=2022 [--set identity.authors_or_org=A,B]
 """
 from __future__ import annotations
 
@@ -46,6 +48,17 @@ _MANIFEST_BATCH = 1
 
 _MANIFEST_ADD = "manifest_add"
 _CONTENT_UPDATE = "content_update"
+#: A post-admission correction to an entry's `identity.*` / `acquisition.*`. It is the ONLY
+#: sanctioned second write to those fields, and it is appended to the DIXIE EVIDENCE LEDGER,
+#: never to `events/batch-*.jsonl` — the manifest's metadata is projected from the ledger, so
+#: a kg-side event carrying it would be replayed into a different shape and then overwritten
+#: by the very next `rebuild` (root-caused 2026-09-12, `cc_tasks/2026-09-12_cited_documents_
+#: metadata_RESULT.md` §1). dixie owns the event type and its projection handler.
+_METADATA_CORRECTED = "metadata_corrected"
+#: The two entry sections a correction may name. Screening decisions, integrity verdicts and
+#: lifecycle stage each have their own event; routing them through a generic correction would
+#: let one payload silently overturn a gate outcome.
+_CORRECTABLE_SECTIONS = ("identity", "acquisition")
 #: An append-only declaration of what an already-admitted document IS FOR. Applied over the
 #: admission entry by `_load_entries`, exactly as `content_update` is; never an edit to the
 #: admission event (invariant 1). `cc_tasks/2026-09-07_scan_harness_v3.md` §1.5.
@@ -396,6 +409,76 @@ def add(filepath, **fields) -> str:
     return doc_id
 
 
+def _dixie_ledger():
+    """(EventLog, projected entries, config) for the corpus ledger. Loud on a missing
+    package or config instance, exactly as `rebuild` is — never a silent empty projection."""
+    try:
+        from dixie.evidence.config import load_config
+        from dixie.evidence.eventlog import EventLog
+        from dixie.evidence.manifest import build_manifest
+    except ImportError as exc:
+        raise ManifestError(
+            "the corpus ledger is the Dixie evidence log; reading it requires the 'dixie' "
+            "package (pip install -e ~/GitHub/dixie)."
+        ) from exc
+    if not _DIXIE_CONFIG_PATH.is_file():
+        raise ManifestError(f"dixie config instance not found: {_DIXIE_CONFIG_PATH}")
+    cfg = load_config(_DIXIE_CONFIG_PATH)
+    log = EventLog(cfg["evidence_dir_abs"] / "decisions.jsonl")
+    return log, build_manifest(log, gate_cfg=cfg.get("identity_gate")), cfg
+
+
+def metadata_update(doc_id: str, *, provenance: str, **sections) -> str:
+    """Correct an admitted document's citation metadata. Returns the ledger event id.
+
+    Fields are passed by section, because a dotted key is not a Python identifier::
+
+        metadata_update("rfc-9309-robots-exclusion-protocol",
+                        provenance="page 1 line 13: 'September 2022'",
+                        identity={"pub_year": "2022"})
+
+    The event lands on the **Dixie evidence ledger**, which is what `corpus/manifest.json`
+    is projected from. `rebuild()` then replays it; the admission event is never edited
+    (invariant 1).
+
+    Every refusal is checked BEFORE anything is written, because the ledger is append-only
+    and an event the projection will reject cannot be retracted, only shadowed:
+      - `doc_id` is not in the ledger projection
+      - a section outside `identity` / `acquisition`
+      - a field the manifest entry does not have (a typo'd leaf)
+      - an empty correction, or a `provenance` that does not say where the value was read
+    """
+    if not provenance or not provenance.strip():
+        raise ManifestError(
+            "metadata_update: provenance is required — it names the page or line each value "
+            "was read from, which is what makes the corrected citation checkable")
+    log, entries, _ = _dixie_ledger()
+    entry = entries.get(doc_id)
+    if entry is None:
+        raise ManifestError(
+            f"metadata_update: {doc_id!r} is not in the corpus ledger — a correction cannot "
+            f"admit a document")
+    fields: dict[str, object] = {}
+    for section, values in sections.items():
+        if section not in _CORRECTABLE_SECTIONS:
+            raise ManifestError(
+                f"metadata_update: section {section!r} is not correctable; must be one of "
+                f"{', '.join(_CORRECTABLE_SECTIONS)}")
+        if not isinstance(values, dict) or not values:
+            raise ManifestError(
+                f"metadata_update: {section!r} must be a non-empty mapping of field -> value")
+        for field, value in values.items():
+            if field not in entry[section]:
+                raise ManifestError(
+                    f"metadata_update: {doc_id}: {section}.{field!r} is not a field of the "
+                    f"manifest entry — known {section} fields: {sorted(entry[section])}")
+            fields[f"{section}.{field}"] = value
+    if not fields:
+        raise ManifestError("metadata_update: no fields given; nothing to correct")
+    return log.append(_METADATA_CORRECTED, {"doc_id": doc_id, "fields": fields,
+                                            "provenance": provenance.strip()})
+
+
 def rebuild() -> dict:
     """Regenerate corpus/manifest.json (v2) FROM THE DIXIE EVIDENCE DECISIONS LOG.
 
@@ -557,7 +640,43 @@ def _build_parser() -> argparse.ArgumentParser:
 
     sub.add_parser("rebuild", help="Rebuild manifest.json from the event log.")
     sub.add_parser("verify", help="Re-hash all entries; report missing/tampered files.")
+
+    p_meta = sub.add_parser(
+        "metadata-update",
+        help="Correct an admitted document's identity/acquisition metadata on the ledger.")
+    p_meta.add_argument("doc_id")
+    p_meta.add_argument("--provenance", required=True,
+                        help="Where on the document each value was read, e.g. "
+                             "\"page 1, 'Recommended citation'\".")
+    p_meta.add_argument(
+        "--set", dest="sets", action="append", required=True, metavar="SECTION.FIELD=VALUE",
+        help="Repeatable. SECTION is identity or acquisition. A value containing commas is "
+             "split into a list (authors_or_org); use --list/--scalar to force either way.")
+    p_meta.add_argument("--scalar", dest="split", action="store_false", default=None,
+                        help="Never split a value on commas.")
+    p_meta.add_argument("--list", dest="split", action="store_true", default=None,
+                        help="Always parse values as comma-separated lists.")
     return parser
+
+
+def _parse_set(assignment: str, split: bool | None) -> tuple[str, str, object]:
+    """`identity.pub_year=2022` -> ("identity", "pub_year", "2022").
+
+    Values stay STRINGS: `pub_year` is a string on 363 of 377 manifest entries, and a verb
+    that silently retyped a field would make the corrected entry differ in shape from every
+    other one. Commas split into a list by default because `authors_or_org` is a list
+    everywhere it is set; `--scalar` turns that off for a title that contains a comma."""
+    key, sep, value = assignment.partition("=")
+    if not sep:
+        raise ManifestError(f"--set {assignment!r}: expected SECTION.FIELD=VALUE")
+    section, dot, field = key.strip().partition(".")
+    if not dot or not field:
+        raise ManifestError(f"--set {assignment!r}: key must be SECTION.FIELD")
+    if split is True or (split is None and "," in value):
+        parsed: object = [v.strip() for v in value.split(",") if v.strip()]
+    else:
+        parsed = value.strip()
+    return section, field, parsed
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -587,6 +706,21 @@ def main(argv: list[str] | None = None) -> int:
         manifest = rebuild()
         print(f"rebuilt {_MANIFEST_PATH} (v{manifest['manifest_version']} evidence-ledger "
               f"projection) with {manifest['entries']} entrie(s)")
+        return 0
+
+    if args.command == "metadata-update":
+        sections: dict[str, dict] = {}
+        try:
+            for assignment in args.sets:
+                section, field, value = _parse_set(assignment, args.split)
+                sections.setdefault(section, {})[field] = value
+            event_id = metadata_update(args.doc_id, provenance=args.provenance, **sections)
+        except ManifestError as exc:
+            print(f"REJECTED: {exc}", file=sys.stderr)
+            return 1
+        fields = ", ".join(f"{s}.{f}" for s, vs in sections.items() for f in vs)
+        print(f"metadata_corrected {args.doc_id}: {fields} (event {event_id})")
+        print("run `python -m kg.manifest rebuild` to project it into corpus/manifest.json")
         return 0
 
     if args.command == "verify":
