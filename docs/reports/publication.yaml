@@ -71,6 +71,16 @@ license_corpus_note: >-
   Documents under corpus/ are third-party works, retained as evidence under their own terms:
   neither licence in this repository applies to them.
 
+# The self-scan cycle whose six tier-0 verdicts the index prints as this site's own row
+# (`cc_tasks/2026-09-13_self_row.md` decision 1). DECLARED rather than derived from
+# `snapshot_cycle`: the self row is a measurement of the HOST at the moment it was scanned, and
+# the report is a view of a measurement of nineteen federal hosts a week earlier. Inferring one
+# from the other is how a page comes to print a row under a cycle name that never scanned it.
+#
+# The site builder reads `state/self_l0_<this>.json`; when the file is absent the index says in
+# words that the row is not measured, and never invents a verdict.
+self_scan_cycle: self_2026-09-13
+
 # DELIBERATELY ABSENT until the operator sets it, and absent rather than guessed:
 #
 #   doi      DN-002 decision 5: the mint is the operator's action under his own name. The

@@ -1,0 +1,70 @@
+{
+ "task": "cc_tasks/2026-09-13_self_row.md",
+ "cycle": "self_2026-09-13",
+ "targets_version": 1,
+ "derived_from_version": null,
+ "epoch": "2026-09",
+ "derived_from": "docs/reports/publication.yaml",
+ "source_type": "self",
+ "construct_arm": "self_measurement",
+ "frame": "one publication and the authority that serves it. The instrument applied to itself, through the same frame shape every other host is measured in.",
+ "site_url": "https://brockwebb.github.io/ai-readiness-kg/",
+ "authority": "brockwebb.github.io",
+ "authority_root": "https://brockwebb.github.io/",
+ "is_project_site": true,
+ "authority_is_this_publication": false,
+ "rfc_9309_note": "A project Pages site cannot serve an effective robots.txt, llms.txt or /.well-known/ probe: RFC 9309 section 2.3 scopes robots.txt to the authority, and the authority here is the whole of brockwebb.github.io. The legs that read the authority root are therefore measuring brockwebb.github.io; the legs that read https://brockwebb.github.io/ai-readiness-kg/ are measuring this publication. Every Finding records which.",
+ "tier_a_agencies": 0,
+ "tier_c_hosts": 1,
+ "tier_c_netlocs": [
+  "brockwebb.github.io"
+ ],
+ "site_keys": [
+  "brockwebb.github.io"
+ ],
+ "site_count": 1,
+ "hosts": [
+  "brockwebb.github.io"
+ ],
+ "host_count": 1,
+ "netloc_count": 1,
+ "surfaces": 2,
+ "by_kind": {
+  "home": 1,
+  "well_known": 1
+ },
+ "doc_id_rows_not_admitted": [],
+ "generated_at": "2026-09-13T17:39:30.519487+00:00",
+ "generated_by": "scripts/build_self_frame.py",
+ "note": "Both rows are SYNTHETIC surfaces (`home:` / `host:` doc_ids), so neither needs a corpus admission and no Observation lands on a missing Document. The tier is C for the same reason the federal reference hosts are: tier-0 legs, no Tier A denominator, no agencies x legs matrix.",
+ "rows": [
+  {
+   "agency": "self",
+   "agency_name": "AI readiness of the federal statistical system: host-level findings",
+   "tier": "C",
+   "host": "brockwebb.github.io",
+   "parent_department": null,
+   "surface_kind": "home",
+   "url": "https://brockwebb.github.io/ai-readiness-kg/",
+   "doc_id": "home:brockwebb.github.io",
+   "selected_as": "this publication, as the host serves it",
+   "selection_source": "docs/reports/publication.yaml site_url (cc_tasks/2026-09-13_self_row.md decision 1)",
+   "tier0_legs_only": true,
+   "restriction": "the publication under measurement by its own instrument: tier-0 legs only, never in a Tier A or Tier B denominator and never on the agencies x legs matrix (DD-059)"
+  },
+  {
+   "agency": "self",
+   "agency_name": "AI readiness of the federal statistical system: host-level findings",
+   "tier": "C",
+   "host": "brockwebb.github.io",
+   "parent_department": null,
+   "surface_kind": "well_known",
+   "url": "https://brockwebb.github.io/robots.txt",
+   "doc_id": "host:brockwebb.github.io",
+   "selected_as": "the authority's well-known set (synthetic surface)",
+   "selection_source": "RFC 9309 section 2.3: a robots.txt governs the AUTHORITY it is served from, not a path prefix, so the well-known surface of a project site is the authority root",
+   "tier0_legs_only": true,
+   "restriction": "this row is about the AUTHORITY and not about this publication: on a project site the authority root belongs to a user-site repository this publication does not own"
+  }
+ ]
+}

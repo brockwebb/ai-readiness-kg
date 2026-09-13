@@ -105,7 +105,8 @@ def sha256(path: Path) -> str:
 def publication() -> dict:
     import yaml
     doc = yaml.safe_load(PUBLICATION.read_text(encoding="utf-8"))
-    for k in ("snapshot_cycle", "title", "version", "authors", "site_url", "repository_url",
+    for k in ("snapshot_cycle", "self_scan_cycle", "title", "version", "authors", "site_url",
+              "repository_url",
               # The licences (ADDENDUM_1 decision A4). Required rather than optional: a build
               # that quietly published with no licence is what the previous one did, and a
               # declared licence is one of the things this instrument measures other publishers
@@ -444,9 +445,16 @@ def sitemap_xml(pub: dict, paths: list, lastmod: str) -> str:
 
 # --------------------------------------------------------------- the self row
 
-#: Where decision 2's self-scan leaves its verdicts. Absent until the host is served.
+#: Where the self-scan leaves its verdicts, named by the cycle that MEASURED them.
+#:
+#: This used to be derived from `snapshot_cycle`, which was wrong in a way that could only show
+#: once a self-scan existed: the snapshot cycle is the nineteen-host measurement the report is a
+#: view of, and the self row is a measurement of THIS host, at a different moment, through a
+#: different frame. The self cycle is therefore declared in `publication.yaml`
+#: (`cc_tasks/2026-09-13_self_row.md` decision 1, and a premise that task file got wrong — see
+#: its RESULT). An absent file means not measured, and the index then says so in words.
 def self_row_path(pub: dict) -> Path:
-    return REPO / "state" / f"self_l0_{cycle_suffix(pub['snapshot_cycle'])}.json"
+    return REPO / "state" / f"self_l0_{pub['self_scan_cycle']}.json"
 
 
 def self_row(pub: dict) -> dict | None:
@@ -468,19 +476,48 @@ def index_html(pub: dict, data_links: list, results_n: int, self_: dict | None,
     items = "\n".join(li(rel, e(label)) for rel, label in data_links)
 
     if self_:
+        def _urls(v):
+            """Every URL the leg read, on the row. A verdict whose URL the reader cannot see is
+            a verdict they have to take on trust."""
+            return "<br>".join(f"<code>{e(u)}</code>" for u in v.get("urls_read") or []) \
+                or '<span class="note">no URL recorded</span>'
+
         rows = "".join(
-            f"<tr><td><code>{e(leg)}</code></td><td class=\"v {e(v['verdict'])}\">"
-            f"{e(v['verdict'])}</td><td>{e(v.get('reason') or '')}</td></tr>"
+            f"<tr><td><code>{e(leg)}</code></td>"
+            f"<td class=\"v {e(v['verdict'])}\">{e(v['verdict'])}</td>"
+            f"<td>{'this publication' if v.get('authority_is_this_publication') else 'the authority root — <strong>not</strong> this publication'}"
+            f"<br>{_urls(v)}</td>"
+            f"<td>{e(v.get('reason') or '')}</td></tr>"
             for leg, v in self_["legs"].items())
+        mine = self_.get("legs_measuring_this_publication") or []
+        theirs = self_.get("legs_measuring_the_authority") or []
+        counts = self_.get("verdict_counts") or {}
         selfblock = (
-            f"<p>Measured against this host with the same identified client the agency "
-            f"matrix was measured with, cycle <code>{e(self_['cycle'])}</code>. These "
-            f"verdicts sit outside the agency matrix, as the three reference hosts do.</p>"
-            f"<table><thead><tr><th>Check</th><th>Verdict</th><th>Reason</th></tr></thead>"
-            f"<tbody>{rows}</tbody></table>"
-            f"<p class=\"note\">A <code>fail</code> here is reported and left standing. "
-            f"Repairing a site after scanning it is the thing this instrument measures "
-            f"publishers for.</p>")
+            f"<p>Measured against this host with the same identified client "
+            f"(<code>{e(self_.get('user_agent') or '')}</code>), the same manners and the same "
+            f"rules the agency matrix was measured with, cycle "
+            f"<code>{e(self_['cycle'])}</code>: {counts.get('pass', 0)} pass, "
+            f"{counts.get('fail', 0)} fail. These verdicts sit outside the agency matrix, as "
+            f"the three reference hosts do.</p>"
+            f"<table><thead><tr><th>Check</th><th>Verdict</th><th>What answered</th>"
+            f"<th>Reason</th></tr></thead><tbody>{rows}</tbody></table>"
+            f"<p><strong>Read the third column before the second.</strong> RFC 9309 §2.3 binds "
+            f"<code>robots.txt</code> to an AUTHORITY — scheme, host and port — not to a path "
+            f"prefix. This is a project site, so the authority is the whole of "
+            f"<code>{e(self_.get('authority') or '')}</code>, whose root belongs to a user-site "
+            f"repository this publication does not own. "
+            f"{', '.join(e(l) for l in theirs)} therefore measured that authority and "
+            f"<em>not</em> this publication; only {', '.join(e(l) for l in mine)} read "
+            f"<code>{e(self_.get('site_url') or '')}</code>. The fix is a host, not a file — "
+            f"and this row is the instrument reproducing, on itself, the failure mode it "
+            f"exists to detect: declarations sitting somewhere a machine will not read them."
+            f"</p>"
+            f"<p class=\"note\">A <code>fail</code> here is reported and left standing, and "
+            f"nothing in this tree was changed to improve one after it was measured. Repairing "
+            f"a site after scanning it is the thing this instrument measures publishers for. "
+            f"Every verdict is a registered Result "
+            f"(<code>self_l0_&lt;leg&gt;_{e(self_['cycle'])}</code>) over a Finding naming the "
+            f"rule, its version and the URL above.</p>")
     else:
         selfblock = (
             "<p class=\"stop\"><strong>Not measured.</strong> The six host-level checks have "

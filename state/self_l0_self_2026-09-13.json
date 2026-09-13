@@ -1,0 +1,319 @@
+{
+ "task": "cc_tasks/2026-09-13_self_row.md",
+ "cycle": "self_2026-09-13",
+ "measured_cycle": "self_2026-09-13",
+ "generated_at": "2026-09-13T17:49:21.931092+00:00",
+ "generated_by": "scripts/self_row_report.py",
+ "params_hash": "d396bff3fd33a5c274868a134f93934a78d879c808357154c17188eb2368240f",
+ "base_params_hash": "d3499218ef48273597ec67a6a81ae9c966e5801cf66915fbc106403c6da94624",
+ "harness_version": 5,
+ "control_verdict": "pass",
+ "control_reason": "both control fixtures fired, every rule returned its expected verdict, and every control observation precedes the first real host (2026-09-13T17:45:55.994213+00:00)",
+ "site_url": "https://brockwebb.github.io/ai-readiness-kg/",
+ "authority": "brockwebb.github.io",
+ "authority_root": "https://brockwebb.github.io/",
+ "is_project_site": true,
+ "authority_is_this_publication": false,
+ "rfc_9309_note": "A project Pages site cannot serve an effective robots.txt, llms.txt or /.well-known/ probe: RFC 9309 section 2.3 scopes robots.txt to the authority, and the authority here is the whole of brockwebb.github.io. The legs that read the authority root are therefore measuring brockwebb.github.io; the legs that read https://brockwebb.github.io/ai-readiness-kg/ are measuring this publication. Every Finding records which.",
+ "user_agent": "ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg)",
+ "requests_per_host": {
+  "brockwebb.github.io": 15
+ },
+ "requests_total": 15,
+ "tier0_legs": [
+  "A4",
+  "A5",
+  "A10",
+  "A11-declared",
+  "A12",
+  "G1-D"
+ ],
+ "legs": {
+  "A4": {
+   "verdict": "fail",
+   "reason": "no robots.txt served; retrieval is permitted by default but nothing is declared for AI crawlers",
+   "rule_id": "RULE-A4-v1",
+   "rule_version": "v1",
+   "finding_id": "fnd_6df19b7365123a02ce1a6408",
+   "target_doc_id": "home:brockwebb.github.io",
+   "urls_read": [
+    "https://brockwebb.github.io/robots.txt"
+   ],
+   "reads": [
+    {
+     "obs_id": "obs_0f79e4ad10e5329151a47f29",
+     "url": "https://brockwebb.github.io/robots.txt",
+     "status": 404,
+     "collector": "robots",
+     "error_class": "http_4xx",
+     "body_sha256": "70d613e3acfba24fd2876fcbacaf639e1e111ef4d54baf70761c47673f37d6a3",
+     "body_in_committed_store": false
+    }
+   ],
+   "authorities": [
+    "brockwebb.github.io"
+   ],
+   "authority_is_this_publication": false,
+   "read_the_publication": [],
+   "read_the_authority_root_only": [
+    "https://brockwebb.github.io/robots.txt"
+   ]
+  },
+  "A5": {
+   "verdict": "fail",
+   "reason": "no sitemap, llms.txt or well-known discovery file served",
+   "rule_id": "RULE-A5-v2",
+   "rule_version": "v2",
+   "finding_id": "fnd_013f24c5fa7b99c0c8d2abc9",
+   "target_doc_id": "home:brockwebb.github.io",
+   "urls_read": [
+    "https://brockwebb.github.io/sitemap_index.xml",
+    "https://brockwebb.github.io/.well-known/ai-plugin.json",
+    "https://brockwebb.github.io/sitemap.xml",
+    "https://brockwebb.github.io/llms.txt",
+    "https://brockwebb.github.io/.well-known/mcp.json"
+   ],
+   "reads": [
+    {
+     "obs_id": "obs_0007306de259b48be5d975c7",
+     "url": "https://brockwebb.github.io/sitemap_index.xml",
+     "status": 404,
+     "collector": "sitemap",
+     "error_class": "http_4xx",
+     "body_sha256": "70d613e3acfba24fd2876fcbacaf639e1e111ef4d54baf70761c47673f37d6a3",
+     "body_in_committed_store": false
+    },
+    {
+     "obs_id": "obs_071565ef60ad7875894ba75c",
+     "url": "https://brockwebb.github.io/.well-known/ai-plugin.json",
+     "status": 404,
+     "collector": "sitemap",
+     "error_class": "http_4xx",
+     "body_sha256": "70d613e3acfba24fd2876fcbacaf639e1e111ef4d54baf70761c47673f37d6a3",
+     "body_in_committed_store": false
+    },
+    {
+     "obs_id": "obs_850cb230424ba891c05b21ec",
+     "url": "https://brockwebb.github.io/sitemap.xml",
+     "status": 404,
+     "collector": "sitemap",
+     "error_class": "http_4xx",
+     "body_sha256": "70d613e3acfba24fd2876fcbacaf639e1e111ef4d54baf70761c47673f37d6a3",
+     "body_in_committed_store": false
+    },
+    {
+     "obs_id": "obs_db4c37118b3df11a14b81560",
+     "url": "https://brockwebb.github.io/llms.txt",
+     "status": 404,
+     "collector": "sitemap",
+     "error_class": "http_4xx",
+     "body_sha256": "70d613e3acfba24fd2876fcbacaf639e1e111ef4d54baf70761c47673f37d6a3",
+     "body_in_committed_store": false
+    },
+    {
+     "obs_id": "obs_dd2db604074217752ff5def6",
+     "url": "https://brockwebb.github.io/.well-known/mcp.json",
+     "status": 404,
+     "collector": "sitemap",
+     "error_class": "http_4xx",
+     "body_sha256": "70d613e3acfba24fd2876fcbacaf639e1e111ef4d54baf70761c47673f37d6a3",
+     "body_in_committed_store": false
+    }
+   ],
+   "authorities": [
+    "brockwebb.github.io"
+   ],
+   "authority_is_this_publication": false,
+   "read_the_publication": [],
+   "read_the_authority_root_only": [
+    "https://brockwebb.github.io/.well-known/ai-plugin.json",
+    "https://brockwebb.github.io/.well-known/mcp.json",
+    "https://brockwebb.github.io/llms.txt",
+    "https://brockwebb.github.io/sitemap.xml",
+    "https://brockwebb.github.io/sitemap_index.xml"
+   ]
+  },
+  "A10": {
+   "verdict": "pass",
+   "reason": "deep link HTTP 200; invalid route correctly HTTP 404; 4603 visible characters present before JS. The pre/post-JS DOM diff the signal also names was NOT run (renderer: none)",
+   "rule_id": "RULE-A10-v3",
+   "rule_version": "v3",
+   "finding_id": "fnd_cdc0f936b83b1a85e0e945ca",
+   "target_doc_id": "home:brockwebb.github.io",
+   "urls_read": [
+    "https://brockwebb.github.io/ai-readiness-kg/",
+    "https://brockwebb.github.io/ai-readiness-kg/__ai-readiness-kg-probe-404__"
+   ],
+   "reads": [
+    {
+     "obs_id": "obs_0133ea02f138939b3c57cabf",
+     "url": "https://brockwebb.github.io/ai-readiness-kg/",
+     "status": 200,
+     "collector": "lighthouse",
+     "error_class": null,
+     "body_sha256": "dea919d140975d26dab888bfd9b129c4a979485820ee03f6e2982013e0794ee8",
+     "body_in_committed_store": false
+    },
+    {
+     "obs_id": "obs_7b3c0ae61f2ae9ae822301f2",
+     "url": "https://brockwebb.github.io/ai-readiness-kg/__ai-readiness-kg-probe-404__",
+     "status": 404,
+     "collector": "lighthouse",
+     "error_class": null,
+     "body_sha256": "b620507312c5e97566a3c6cfaf99144fefc18a0da7d941401dfa0f5f58fb0368",
+     "body_in_committed_store": false
+    }
+   ],
+   "authorities": [
+    "brockwebb.github.io"
+   ],
+   "authority_is_this_publication": true,
+   "read_the_publication": [
+    "https://brockwebb.github.io/ai-readiness-kg/",
+    "https://brockwebb.github.io/ai-readiness-kg/__ai-readiness-kg-probe-404__"
+   ],
+   "read_the_authority_root_only": []
+  },
+  "A11-declared": {
+   "verdict": "fail",
+   "reason": "nothing is DECLARED: no robots.txt is served, so the declared layer of the A11 triad is empty",
+   "rule_id": "RULE-A11-declared-v2",
+   "rule_version": "v2",
+   "finding_id": "fnd_8dc495d594959057b5d5b834",
+   "target_doc_id": "home:brockwebb.github.io",
+   "urls_read": [
+    "https://brockwebb.github.io/robots.txt",
+    "https://brockwebb.github.io/ai-readiness-kg/"
+   ],
+   "reads": [
+    {
+     "obs_id": "obs_154431e32c1d8cf6b66197e6",
+     "url": "https://brockwebb.github.io/robots.txt",
+     "status": 404,
+     "collector": "robots",
+     "error_class": "http_4xx",
+     "body_sha256": "70d613e3acfba24fd2876fcbacaf639e1e111ef4d54baf70761c47673f37d6a3",
+     "body_in_committed_store": false
+    },
+    {
+     "obs_id": "obs_bf0a7553a06d120bc9c4641b",
+     "url": "https://brockwebb.github.io/ai-readiness-kg/",
+     "status": 200,
+     "collector": "http",
+     "error_class": null,
+     "body_sha256": "dea919d140975d26dab888bfd9b129c4a979485820ee03f6e2982013e0794ee8",
+     "body_in_committed_store": false
+    }
+   ],
+   "authorities": [
+    "brockwebb.github.io"
+   ],
+   "authority_is_this_publication": false,
+   "read_the_publication": [
+    "https://brockwebb.github.io/ai-readiness-kg/"
+   ],
+   "read_the_authority_root_only": [
+    "https://brockwebb.github.io/robots.txt"
+   ]
+  },
+  "A12": {
+   "verdict": "fail",
+   "reason": "robots.txt is served with a content type that cannot be robots.txt, so nothing is DECLARED for this client and there is no declaration for the enforced layer to cohere with",
+   "rule_id": "RULE-A12-v2",
+   "rule_version": "v2",
+   "finding_id": "fnd_081318b5f80f79b9c8a8ee30",
+   "target_doc_id": "host:brockwebb.github.io",
+   "urls_read": [
+    "https://brockwebb.github.io/ai-readiness-kg/",
+    "https://brockwebb.github.io/robots.txt"
+   ],
+   "reads": [
+    {
+     "obs_id": "obs_a79d1a8031a219eae7c9d83e",
+     "url": "https://brockwebb.github.io/ai-readiness-kg/",
+     "status": 200,
+     "collector": "http",
+     "error_class": null,
+     "body_sha256": "dea919d140975d26dab888bfd9b129c4a979485820ee03f6e2982013e0794ee8",
+     "body_in_committed_store": false
+    },
+    {
+     "obs_id": "obs_a9274ee67ca22fdda94a3908",
+     "url": "https://brockwebb.github.io/robots.txt",
+     "status": 404,
+     "collector": "robots",
+     "error_class": "http_4xx",
+     "body_sha256": "70d613e3acfba24fd2876fcbacaf639e1e111ef4d54baf70761c47673f37d6a3",
+     "body_in_committed_store": false
+    }
+   ],
+   "authorities": [
+    "brockwebb.github.io"
+   ],
+   "authority_is_this_publication": false,
+   "read_the_publication": [
+    "https://brockwebb.github.io/ai-readiness-kg/"
+   ],
+   "read_the_authority_root_only": [
+    "https://brockwebb.github.io/robots.txt"
+   ]
+  },
+  "G1-D": {
+   "verdict": "fail",
+   "reason": "none of the 11 error-measure field tokens appears as a structured field on the surface",
+   "rule_id": "RULE-G1-D-v1",
+   "rule_version": "v1",
+   "finding_id": "fnd_c4f05acb721931378c303ac2",
+   "target_doc_id": "home:brockwebb.github.io",
+   "urls_read": [
+    "https://brockwebb.github.io/ai-readiness-kg/"
+   ],
+   "reads": [
+    {
+     "obs_id": "obs_8989fa0cdaed6f7abb593a0e",
+     "url": "https://brockwebb.github.io/ai-readiness-kg/",
+     "status": 200,
+     "collector": "http",
+     "error_class": null,
+     "body_sha256": "dea919d140975d26dab888bfd9b129c4a979485820ee03f6e2982013e0794ee8",
+     "body_in_committed_store": false
+    }
+   ],
+   "authorities": [
+    "brockwebb.github.io"
+   ],
+   "authority_is_this_publication": true,
+   "read_the_publication": [
+    "https://brockwebb.github.io/ai-readiness-kg/"
+   ],
+   "read_the_authority_root_only": []
+  }
+ },
+ "verdict_counts": {
+  "pass": 1,
+  "fail": 5,
+  "not_applicable": 0,
+  "error": 0
+ },
+ "legs_measuring_this_publication": [
+  "A10",
+  "G1-D"
+ ],
+ "legs_measuring_the_authority": [
+  "A4",
+  "A5",
+  "A11-declared",
+  "A12"
+ ],
+ "invariants": {
+  "observed_on_missing_document": 0,
+  "observed_on_missing_document_doc_ids": [],
+  "findings_evidence_unretained": 0,
+  "findings_evidence_unretained_ids": [],
+  "control_observations": 338,
+  "host_observations": 13,
+  "admitted_document_observations": 0,
+  "note": "The two integrity readings scan.publish.project keeps, computed on this payload with that module's own predicates. A control fixture and a synthetic host surface have no :Document by construction and are counted apart, exactly as the projection counts them."
+ },
+ "note": "The instrument's six host-level checks against the host that publishes it. A fail is reported and left standing (decision 3): nothing under docs/ was changed to improve a verdict after it was measured. Every leg carries the URL it actually read, because on a project Pages site four of the six read the AUTHORITY root and not this publication."
+}
