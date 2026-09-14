@@ -197,12 +197,22 @@ def test_the_all_rules_count_matches_the_scan_run_4_result(cycle):
 
 def test_a12_is_the_only_leg_that_declares_a_non_product_subject():
     """`MEASURES` is a declaration, not a list of exemptions — but a declaration nobody audits is
-    a list of exemptions with extra steps. This is the audit."""
+    a list of exemptions with extra steps. This is the audit.
+
+    A LITERAL, and it grows only when a new version of the same leg ships: `RULE-A12-v3`
+    (generation 10, `cc_tasks/2026-09-13_rule_a12_v3.md`) joins for the reason v1 and v2 are
+    here — A12's subject IS the host's refusal, so a 403 is its evidence rather than an absence
+    of it, and it says so on its own face with `MEASURES = "host"`. A rule on a DIFFERENT leg
+    appearing here is the thing this test exists to catch, and it still would.
+    """
     from scan.rules import REGISTRY
     host_rules = sorted(r for r in REGISTRY if measures(r) == "host")
-    assert host_rules == ["RULE-A12-v1", "RULE-A12-v2"], (
+    assert host_rules == ["RULE-A12-v1", "RULE-A12-v2", "RULE-A12-v3"], (
         f"a rule declared a non-product subject: {host_rules}. Every such rule opts out of the "
         f"harness-v5 invariant, so each one needs a reason on its face.")
+    assert {r.rsplit("-", 1)[0] for r in host_rules} == {"RULE-A12"}, (
+        "a leg other than A12 has declared a non-product subject; that is a new exemption from "
+        "the harness-v5 invariant and needs a decision, not an entry in this list")
 
 # ===================================================== the second reading (decision 4, 2026-09-11)
 #

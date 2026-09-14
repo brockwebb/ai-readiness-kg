@@ -23,6 +23,63 @@ def _version_from_rule_id(rule_id: str) -> str:
 _IDENTITY = {1: lambda rule_id: RULE_VERSION, 2: _version_from_rule_id}
 
 
+def _note_scheme_1(probe, params: dict, status) -> tuple:
+    """The `(named, note)` every stored Finding was made with: the error CLASS's note, printed
+    whichever branch of `unobserved` fired.
+
+    Kept exactly as it shipped, and kept forever. It is wrong in one branch (see scheme 2) and
+    a stored Finding's reason is inside the byte-identical re-derivation comparison, so
+    correcting it in place would make every payload carrying it un-re-derivable. Versioned
+    instead — the same move `finding_identity` makes for the id scheme, and the same move the
+    event log makes with `schema_version`.
+    """
+    return (probe.error_class or f"HTTP {status}",
+            _errors.note_for(probe.error_class,
+                             "the host declined to answer this client about the path"))
+
+
+def _note_scheme_2(probe, params: dict, status) -> tuple:
+    """The `(named, note)` for THE BRANCH THAT FIRED.
+
+    `unobserved` returns True for two different reasons and scheme 1 reported only the first
+    one's evidence. When the STATUS is what fired — a response arrived carrying a status in
+    `manners.unobservable_statuses` — scheme 1 printed the note of an error class that has
+    nothing to do with it, and for a probe whose class is `None` that note reads *"the collector
+    observed the surface"* about a probe the same sentence has just called unobserved. Three
+    stored Findings carry that exact contradiction.
+
+    So: blind CLASS -> the class's note; otherwise the status is the only other way `unobserved`
+    can be true, and the note says so and names the status.
+    """
+    if _errors.is_blind(probe.error_class, _errors.harness_of(params)):
+        return (probe.error_class,
+                _errors.note_for(probe.error_class,
+                                 "the host declined to answer this client about the path"))
+    return (f"HTTP {status}",
+            f"the host answered HTTP {status}, which "
+            f"`manners.unobservable_statuses` names as declining to answer this client about "
+            f"the path rather than answering about it")
+
+
+#: `reason_text` -> how `unobserved_error` names the reason a probe was not observed. A dispatch
+#: table for the same reason `_IDENTITY` is one, and versioned in `params.yaml` for the same
+#: reason: a reason string is inside the re-derivation comparison, so the corrected text is
+#: versioned DATA and never an edit to the past. A params set that predates the key gets 1,
+#: which is what every stored payload was measured under; an unknown scheme is a hard error.
+_REASON_TEXT = {1: _note_scheme_1, 2: _note_scheme_2}
+
+
+def reason_text(params: dict):
+    """The `(named, note)` function this params set binds. Defaults to 1."""
+    scheme = (params or {}).get("reason_text", 1)
+    try:
+        return _REASON_TEXT[int(scheme)]
+    except (KeyError, ValueError, TypeError):
+        raise ValueError(
+            f"reason_text {scheme!r} is not a known reason-text scheme "
+            f"{sorted(_REASON_TEXT)}; see params.yaml") from None
+
+
 def rule_version(rule_id: str, params: dict) -> str:
     """The `rule_version` to stamp on a Finding, under the params' identity scheme.
 
@@ -38,6 +95,19 @@ def rule_version(rule_id: str, params: dict) -> str:
         raise ValueError(
             f"finding_identity {scheme!r} is not a known Finding-id scheme "
             f"{sorted(_IDENTITY)}; see params.yaml") from None
+
+
+#: The sentence a rule says when the host served no robots.txt. **One string, two rules.**
+#:
+#: `RULE-A4-v1` has said it since the first generation — *"no robots.txt served; retrieval is
+#: permitted by default but nothing is declared for AI crawlers"* — and `RULE-A12-v3` says it
+#: about the same evidence (`cc_tasks/2026-09-13_rule_a12_v3.md` decision 1). A4-v1 is SHIPPED
+#: and may not be edited: every Finding recorded under it must keep re-deriving from its own
+#: bytes, so it keeps its literal and cannot import this. What stops the two drifting is a test
+#: (`tests/test_rule_a12_v3.py`) that reads A4-v1's source and asserts this exact string is in
+#: it — the same shape as the content-hash pin the generation-4 lint uses for `rule_a3_v4`: the
+#: constraint is enforced against the shipped bytes rather than by editing them.
+NO_ROBOTS_SERVED = "no robots.txt served"
 
 
 def ids(obs: list) -> list:
@@ -215,9 +285,10 @@ def unobserved_error(rule_id: str, leg: str, obs: list, probe, params: dict, wha
     if probe is None or not unobserved(probe, params):
         return None
     status = (getattr(probe, "response", None) or {}).get("status")
-    named = probe.error_class or f"HTTP {status}"
-    note = _errors.note_for(probe.error_class,
-                            "the host declined to answer this client about the path")
+    # WHICH branch of `unobserved` fired decides what is named and what note follows, under the
+    # scheme `params.reason_text` binds. See `_note_scheme_2` for the defect scheme 1 carries
+    # and why it is versioned rather than corrected in place.
+    named, note = reason_text(params)(probe, params, status)
     return make(rule_id, leg, obs, "error",
                 f"{what} was not observed ({named}): {note}. A verdict reached from a probe "
                 f"the collector never saw would be a measurement of the scanner, not of the "

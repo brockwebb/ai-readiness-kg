@@ -1,0 +1,1115 @@
+[
+ {
+  "old": "scan_2026-09-07_rj2",
+  "new": "scan_2026-09-07_rj3",
+  "harness": {
+   "old": 5,
+   "new": 5
+  },
+  "findings": {
+   "old": 352,
+   "new": 352
+  },
+  "only_in_old": [],
+  "only_in_new": [],
+  "verdict_moves": 0,
+  "rule_version_moves": 14,
+  "rules_that_moved": {
+   "A12": "RULE-A12-v2 -> RULE-A12-v3"
+  },
+  "moved_legs": [],
+  "moved_legs_count": {},
+  "permitted_legs": [
+   "A12"
+  ],
+  "strict_subset_holds": true,
+  "within_permitted": true,
+  "by_transition": {},
+  "by_cause": {},
+  "unaccounted": [],
+  "moves": [
+   {
+    "target": "host:bjs.ojp.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v2 pass",
+    "to": "RULE-A12-v3 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "blind": {},
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg) for https://bjs.ojp.gov/data/topic and the host served it (HTTP 200): the declared and enforced layers agree",
+    "cause": null
+   },
+   {
+    "target": "host:nces.ed.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v2 pass",
+    "to": "RULE-A12-v3 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "blind": {},
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg) for https://nces.ed.gov and the host served it (HTTP 200): the declared and enforced layers agree",
+    "cause": null
+   },
+   {
+    "target": "host:ncses.nsf.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v2 pass",
+    "to": "RULE-A12-v3 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "blind": {},
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg) for https://ncses.nsf.gov/pubs/nsf26321 and the host served it (HTTP 200): the declared and enforced layers agree",
+    "cause": null
+   },
+   {
+    "target": "host:www.bea.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v2 pass",
+    "to": "RULE-A12-v3 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "blind": {},
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg) for https://www.bea.gov/itable and the host served it (HTTP 200): the declared and enforced layers agree",
+    "cause": null
+   },
+   {
+    "target": "host:www.bls.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v2 fail",
+    "to": "RULE-A12-v3 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "blind": {},
+    "reason": "the host answered HTTP 403 to /robots.txt itself for ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg): the declared layer is not observable and the enforced layer refuses",
+    "cause": null
+   },
+   {
+    "target": "host:www.bts.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v2 fail",
+    "to": "RULE-A12-v3 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "blind": {},
+    "reason": "the host answered HTTP 403 to /robots.txt itself for ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg): the declared layer is not observable and the enforced layer refuses",
+    "cause": null
+   },
+   {
+    "target": "host:www.cdc.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v2 pass",
+    "to": "RULE-A12-v3 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "blind": {},
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg) for https://www.cdc.gov/nchs/products/databriefs.htm and the host served it (HTTP 200): the declared and enforced layers agree",
+    "cause": null
+   },
+   {
+    "target": "host:www.census.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v2 fail",
+    "to": "RULE-A12-v3 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "blind": {},
+    "reason": "no robots.txt served (HTTP 404), so nothing is DECLARED for this client and there is no declaration for the enforced layer to cohere with",
+    "cause": null
+   },
+   {
+    "target": "host:www.eia.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v2 not_applicable",
+    "to": "RULE-A12-v3 not_applicable",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "blind": {},
+    "reason": "robots.txt disallows ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg) for https://www.eia.gov/beta/api/; a host obeyed is not a host in conflict with itself (that reading is A4's)",
+    "cause": null
+   },
+   {
+    "target": "host:www.ers.usda.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v2 pass",
+    "to": "RULE-A12-v3 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "blind": {},
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg) for https://www.ers.usda.gov/data-products/ag-and-food-statistics-charting-the-essentials and the host served it (HTTP 200): the declared and enforced layers agree",
+    "cause": null
+   },
+   {
+    "target": "host:www.irs.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v2 pass",
+    "to": "RULE-A12-v3 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "blind": {},
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg) for https://www.irs.gov/statistics/soi-tax-stats-individual-tax-statistics and the host served it (HTTP 200): the declared and enforced layers agree",
+    "cause": null
+   },
+   {
+    "target": "host:www.nass.usda.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v2 pass",
+    "to": "RULE-A12-v3 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "blind": {},
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg) for https://www.nass.usda.gov/Data_and_Statistics/index.php and the host served it (HTTP 200): the declared and enforced layers agree",
+    "cause": null
+   },
+   {
+    "target": "host:www.ssa.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v2 fail",
+    "to": "RULE-A12-v3 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "blind": {},
+    "reason": "the host answered HTTP 403 to /robots.txt itself for ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg): the declared layer is not observable and the enforced layer refuses",
+    "cause": null
+   },
+   {
+    "target": "host:www150.statcan.gc.ca",
+    "leg": "A12",
+    "from": "RULE-A12-v2 error",
+    "to": "RULE-A12-v3 error",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "blind": {},
+    "reason": "the robots/probe pair for this host was not collected",
+    "cause": null
+   }
+  ],
+  "reason_only_changes": 6,
+  "reason_only_changes_by_leg": {
+   "A10": 2,
+   "A12": 1,
+   "A5": 3
+  },
+  "reason_changes": [
+   {
+    "target": "host:www.census.gov",
+    "leg": "A12",
+    "verdict": "fail",
+    "rule": "RULE-A12-v2 -> RULE-A12-v3",
+    "from": "robots.txt is served with a content type that cannot be robots.txt, so nothing is DECLARED for this client and there is no declaration for the enforced layer to cohere with",
+    "to": "no robots.txt served (HTTP 404), so nothing is DECLARED for this client and there is no declaration for the enforced layer to cohere with"
+   },
+   {
+    "target": "scan-census-flagship-1-surveys-programs",
+    "leg": "A5",
+    "verdict": "error",
+    "rule": "RULE-A5-v2 -> RULE-A5-v2",
+    "from": "2 of 5 discovery probe(s), including https://www.census.gov/.well-known/ai-plugin.json, was not observed (http_4xx): a client-error status that IS the measurement (a 404 on a probed path means the path is not served). A verdict reached from a probe the collector never saw would be a measurement of the scanner, not of the product",
+    "to": "2 of 5 discovery probe(s), including https://www.census.gov/.well-known/ai-plugin.json, was not observed (HTTP 403): the host answered HTTP 403, which `manners.unobservable_statuses` names as declining to answer this client about the path rather than answering about it. A verdict reached from a probe the collector never saw would be a measurement of the scanner, not of the product"
+   },
+   {
+    "target": "scan-census-flagship-2-american-community-survey-acs",
+    "leg": "A5",
+    "verdict": "error",
+    "rule": "RULE-A5-v2 -> RULE-A5-v2",
+    "from": "2 of 5 discovery probe(s), including https://www.census.gov/.well-known/ai-plugin.json, was not observed (http_4xx): a client-error status that IS the measurement (a 404 on a probed path means the path is not served). A verdict reached from a probe the collector never saw would be a measurement of the scanner, not of the product",
+    "to": "2 of 5 discovery probe(s), including https://www.census.gov/.well-known/ai-plugin.json, was not observed (HTTP 403): the host answered HTTP 403, which `manners.unobservable_statuses` names as declining to answer this client about the path rather than answering about it. A verdict reached from a probe the collector never saw would be a measurement of the scanner, not of the product"
+   },
+   {
+    "target": "scan-census-machine",
+    "leg": "A5",
+    "verdict": "error",
+    "rule": "RULE-A5-v2 -> RULE-A5-v2",
+    "from": "2 of 5 discovery probe(s), including https://www.census.gov/.well-known/ai-plugin.json, was not observed (http_4xx): a client-error status that IS the measurement (a 404 on a probed path means the path is not served). A verdict reached from a probe the collector never saw would be a measurement of the scanner, not of the product",
+    "to": "2 of 5 discovery probe(s), including https://www.census.gov/.well-known/ai-plugin.json, was not observed (HTTP 403): the host answered HTTP 403, which `manners.unobservable_statuses` names as declining to answer this client about the path rather than answering about it. A verdict reached from a probe the collector never saw would be a measurement of the scanner, not of the product"
+   },
+   {
+    "target": "scan-nass-flagship-1-data-statistics",
+    "leg": "A10",
+    "verdict": "error",
+    "rule": "RULE-A10-v3 -> RULE-A10-v3",
+    "from": "the invalid-route probe https://www.nass.usda.gov/Data_and_Statistics/index.php/__ai-readiness-kg-probe-404__ was not observed (HTTP 403): the collector observed the surface. A verdict reached from a probe the collector never saw would be a measurement of the scanner, not of the product",
+    "to": "the invalid-route probe https://www.nass.usda.gov/Data_and_Statistics/index.php/__ai-readiness-kg-probe-404__ was not observed (HTTP 403): the host answered HTTP 403, which `manners.unobservable_statuses` names as declining to answer this client about the path rather than answering about it. A verdict reached from a probe the collector never saw would be a measurement of the scanner, not of the product"
+   },
+   {
+    "target": "scan-nass-flagship-2-livestock-county-estimates",
+    "leg": "A10",
+    "verdict": "error",
+    "rule": "RULE-A10-v3 -> RULE-A10-v3",
+    "from": "the invalid-route probe https://www.nass.usda.gov/Data_and_Statistics/County_Data_Files/Livestock_County_Estimates/index.php/__ai-readiness-kg-probe-404__ was not observed (HTTP 403): the collector observed the surface. A verdict reached from a probe the collector never saw would be a measurement of the scanner, not of the product",
+    "to": "the invalid-route probe https://www.nass.usda.gov/Data_and_Statistics/County_Data_Files/Livestock_County_Estimates/index.php/__ai-readiness-kg-probe-404__ was not observed (HTTP 403): the host answered HTTP 403, which `manners.unobservable_statuses` names as declining to answer this client about the path rather than answering about it. A verdict reached from a probe the collector never saw would be a measurement of the scanner, not of the product"
+   }
+  ]
+ },
+ {
+  "old": "scan_2026-09-07b_rj3",
+  "new": "scan_2026-09-07b_rj4",
+  "harness": {
+   "old": 5,
+   "new": 5
+  },
+  "findings": {
+   "old": 404,
+   "new": 404
+  },
+  "only_in_old": [],
+  "only_in_new": [],
+  "verdict_moves": 0,
+  "rule_version_moves": 14,
+  "rules_that_moved": {
+   "A12": "RULE-A12-v2 -> RULE-A12-v3"
+  },
+  "moved_legs": [],
+  "moved_legs_count": {},
+  "permitted_legs": [
+   "A12"
+  ],
+  "strict_subset_holds": true,
+  "within_permitted": true,
+  "by_transition": {},
+  "by_cause": {},
+  "unaccounted": [],
+  "moves": [
+   {
+    "target": "host:bjs.ojp.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v2 pass",
+    "to": "RULE-A12-v3 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "blind": {},
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg) for https://bjs.ojp.gov/data/topic and the host served it (HTTP 200): the declared and enforced layers agree",
+    "cause": null
+   },
+   {
+    "target": "host:nces.ed.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v2 pass",
+    "to": "RULE-A12-v3 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "blind": {},
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg) for https://nces.ed.gov and the host served it (HTTP 200): the declared and enforced layers agree",
+    "cause": null
+   },
+   {
+    "target": "host:ncses.nsf.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v2 pass",
+    "to": "RULE-A12-v3 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "blind": {},
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg) for https://ncses.nsf.gov/pubs/nsf26321 and the host served it (HTTP 200): the declared and enforced layers agree",
+    "cause": null
+   },
+   {
+    "target": "host:www.bea.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v2 pass",
+    "to": "RULE-A12-v3 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "blind": {},
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg) for https://www.bea.gov/itable and the host served it (HTTP 200): the declared and enforced layers agree",
+    "cause": null
+   },
+   {
+    "target": "host:www.bls.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v2 fail",
+    "to": "RULE-A12-v3 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "blind": {},
+    "reason": "the host answered HTTP 403 to /robots.txt itself for ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg): the declared layer is not observable and the enforced layer refuses",
+    "cause": null
+   },
+   {
+    "target": "host:www.bts.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v2 fail",
+    "to": "RULE-A12-v3 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "blind": {},
+    "reason": "the host answered HTTP 403 to /robots.txt itself for ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg): the declared layer is not observable and the enforced layer refuses",
+    "cause": null
+   },
+   {
+    "target": "host:www.cdc.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v2 pass",
+    "to": "RULE-A12-v3 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "blind": {},
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg) for https://www.cdc.gov/nchs/products/databriefs.htm and the host served it (HTTP 200): the declared and enforced layers agree",
+    "cause": null
+   },
+   {
+    "target": "host:www.census.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v2 pass",
+    "to": "RULE-A12-v3 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "blind": {},
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg) for https://www.census.gov/programs-surveys.html and the host served it (HTTP 200): the declared and enforced layers agree",
+    "cause": null
+   },
+   {
+    "target": "host:www.eia.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v2 not_applicable",
+    "to": "RULE-A12-v3 not_applicable",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "blind": {},
+    "reason": "robots.txt disallows ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg) for https://www.eia.gov/beta/api/; a host obeyed is not a host in conflict with itself (that reading is A4's)",
+    "cause": null
+   },
+   {
+    "target": "host:www.ers.usda.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v2 pass",
+    "to": "RULE-A12-v3 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "blind": {},
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg) for https://www.ers.usda.gov/data-products/ag-and-food-statistics-charting-the-essentials and the host served it (HTTP 200): the declared and enforced layers agree",
+    "cause": null
+   },
+   {
+    "target": "host:www.irs.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v2 pass",
+    "to": "RULE-A12-v3 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "blind": {},
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg) for https://www.irs.gov/statistics/soi-tax-stats-individual-tax-statistics and the host served it (HTTP 200): the declared and enforced layers agree",
+    "cause": null
+   },
+   {
+    "target": "host:www.nass.usda.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v2 pass",
+    "to": "RULE-A12-v3 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "blind": {},
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.1 (+https://github.com/brockwebb/ai-readiness-kg) for https://www.nass.usda.gov/Data_and_Statistics/index.php and the host served it (HTTP 200): the declared and enforced layers agree",
+    "cause": null
+   },
+   {
+    "target": "host:www.ssa.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v2 fail",
+    "to": "RULE-A12-v3 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "blind": {},
+    "reason": "the host answered HTTP 403 to /robots.txt itself for ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg): the declared layer is not observable and the enforced layer refuses",
+    "cause": null
+   },
+   {
+    "target": "host:www150.statcan.gc.ca",
+    "leg": "A12",
+    "from": "RULE-A12-v2 error",
+    "to": "RULE-A12-v3 error",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "blind": {},
+    "reason": "the robots/probe pair for this host was not collected",
+    "cause": null
+   }
+  ],
+  "reason_only_changes": 2,
+  "reason_only_changes_by_leg": {
+   "A10": 2
+  },
+  "reason_changes": [
+   {
+    "target": "scan-nass-flagship-1-data-statistics",
+    "leg": "A10",
+    "verdict": "error",
+    "rule": "RULE-A10-v3 -> RULE-A10-v3",
+    "from": "the invalid-route probe https://www.nass.usda.gov/Data_and_Statistics/index.php/__ai-readiness-kg-probe-404__ was not observed (HTTP 403): the collector observed the surface. A verdict reached from a probe the collector never saw would be a measurement of the scanner, not of the product",
+    "to": "the invalid-route probe https://www.nass.usda.gov/Data_and_Statistics/index.php/__ai-readiness-kg-probe-404__ was not observed (HTTP 403): the host answered HTTP 403, which `manners.unobservable_statuses` names as declining to answer this client about the path rather than answering about it. A verdict reached from a probe the collector never saw would be a measurement of the scanner, not of the product"
+   },
+   {
+    "target": "scan-nass-flagship-2-livestock-county-estimates",
+    "leg": "A10",
+    "verdict": "error",
+    "rule": "RULE-A10-v3 -> RULE-A10-v3",
+    "from": "the invalid-route probe https://www.nass.usda.gov/Data_and_Statistics/County_Data_Files/Livestock_County_Estimates/index.php/__ai-readiness-kg-probe-404__ was not observed (HTTP 403): the collector observed the surface. A verdict reached from a probe the collector never saw would be a measurement of the scanner, not of the product",
+    "to": "the invalid-route probe https://www.nass.usda.gov/Data_and_Statistics/County_Data_Files/Livestock_County_Estimates/index.php/__ai-readiness-kg-probe-404__ was not observed (HTTP 403): the host answered HTTP 403, which `manners.unobservable_statuses` names as declining to answer this client about the path rather than answering about it. A verdict reached from a probe the collector never saw would be a measurement of the scanner, not of the product"
+   }
+  ]
+ },
+ {
+  "old": "scan_2026-09-09_rj2",
+  "new": "scan_2026-09-09_rj3",
+  "harness": {
+   "old": 5,
+   "new": 5
+  },
+  "findings": {
+   "old": 634,
+   "new": 634
+  },
+  "only_in_old": [],
+  "only_in_new": [],
+  "verdict_moves": 0,
+  "rule_version_moves": 19,
+  "rules_that_moved": {
+   "A12": "RULE-A12-v2 -> RULE-A12-v3"
+  },
+  "moved_legs": [],
+  "moved_legs_count": {},
+  "permitted_legs": [
+   "A12"
+  ],
+  "strict_subset_holds": true,
+  "within_permitted": true,
+  "by_transition": {},
+  "by_cause": {},
+  "unaccounted": [],
+  "moves": [
+   {
+    "target": "host:bjs.ojp.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v2 pass",
+    "to": "RULE-A12-v3 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "blind": {},
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg) for https://bjs.ojp.gov/ and the host served it (HTTP 200): the declared and enforced layers agree",
+    "cause": null
+   },
+   {
+    "target": "host:nces.ed.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v2 error",
+    "to": "RULE-A12-v3 error",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "blind": {},
+    "reason": "the robots/probe pair for this host was not collected",
+    "cause": null
+   },
+   {
+    "target": "host:ncses.nsf.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v2 pass",
+    "to": "RULE-A12-v3 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "blind": {},
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg) for https://ncses.nsf.gov/ and the host served it (HTTP 200): the declared and enforced layers agree",
+    "cause": null
+   },
+   {
+    "target": "host:www.aphis.usda.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v2 pass",
+    "to": "RULE-A12-v3 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "blind": {},
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg) for https://www.aphis.usda.gov/aphis/ourfocus/animalhealth/monitoring-and-surveillance/nahms and the host served it (HTTP 200): the declared and enforced layers agree",
+    "cause": null
+   },
+   {
+    "target": "host:www.bea.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v2 pass",
+    "to": "RULE-A12-v3 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "blind": {},
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg) for https://www.bea.gov/ and the host served it (HTTP 200): the declared and enforced layers agree",
+    "cause": null
+   },
+   {
+    "target": "host:www.bls.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v2 fail",
+    "to": "RULE-A12-v3 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "blind": {},
+    "reason": "the host answered HTTP 403 to /robots.txt itself for ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg): the declared layer is not observable and the enforced layer refuses",
+    "cause": null
+   },
+   {
+    "target": "host:www.bts.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v2 fail",
+    "to": "RULE-A12-v3 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "blind": {},
+    "reason": "the host answered HTTP 403 to /robots.txt itself for ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg): the declared layer is not observable and the enforced layer refuses",
+    "cause": null
+   },
+   {
+    "target": "host:www.cdc.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v2 pass",
+    "to": "RULE-A12-v3 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "blind": {},
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg) for https://www.cdc.gov/nchs/index.htm and the host served it (HTTP 200): the declared and enforced layers agree",
+    "cause": null
+   },
+   {
+    "target": "host:www.census.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v2 pass",
+    "to": "RULE-A12-v3 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "blind": {},
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg) for https://www.census.gov/ and the host served it (HTTP 200): the declared and enforced layers agree",
+    "cause": null
+   },
+   {
+    "target": "host:www.data.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v2 pass",
+    "to": "RULE-A12-v3 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "blind": {},
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg) for https://www.data.gov and the host served it (HTTP 200): the declared and enforced layers agree",
+    "cause": null
+   },
+   {
+    "target": "host:www.eia.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v2 pass",
+    "to": "RULE-A12-v3 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "blind": {},
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg) for https://www.eia.gov/ and the host served it (HTTP 200): the declared and enforced layers agree",
+    "cause": null
+   },
+   {
+    "target": "host:www.ers.usda.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v2 pass",
+    "to": "RULE-A12-v3 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "blind": {},
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg) for https://www.ers.usda.gov/ and the host served it (HTTP 200): the declared and enforced layers agree",
+    "cause": null
+   },
+   {
+    "target": "host:www.federalreserve.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v2 fail",
+    "to": "RULE-A12-v3 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "blind": {},
+    "reason": "no robots.txt served (HTTP 404), so nothing is DECLARED for this client and there is no declaration for the enforced layer to cohere with",
+    "cause": null
+   },
+   {
+    "target": "host:www.gsa.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v2 pass",
+    "to": "RULE-A12-v3 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "blind": {},
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg) for https://www.gsa.gov and the host served it (HTTP 200): the declared and enforced layers agree",
+    "cause": null
+   },
+   {
+    "target": "host:www.irs.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v2 pass",
+    "to": "RULE-A12-v3 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "blind": {},
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg) for https://www.irs.gov/statistics/soi-tax-stats-statistics-of-income and the host served it (HTTP 200): the declared and enforced layers agree",
+    "cause": null
+   },
+   {
+    "target": "host:www.nass.usda.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v2 pass",
+    "to": "RULE-A12-v3 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "blind": {},
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg) for https://www.nass.usda.gov/ and the host served it (HTTP 200): the declared and enforced layers agree",
+    "cause": null
+   },
+   {
+    "target": "host:www.nist.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v2 pass",
+    "to": "RULE-A12-v3 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "blind": {},
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg) for https://www.nist.gov and the host served it (HTTP 200): the declared and enforced layers agree",
+    "cause": null
+   },
+   {
+    "target": "host:www.samhsa.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v2 pass",
+    "to": "RULE-A12-v3 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "blind": {},
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg) for https://www.samhsa.gov/about-us/who-we-are/offices-centers/cbhsq and the host served it (HTTP 200): the declared and enforced layers agree",
+    "cause": null
+   },
+   {
+    "target": "host:www.ssa.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v2 fail",
+    "to": "RULE-A12-v3 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "blind": {},
+    "reason": "the host answered HTTP 403 to /robots.txt itself for ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg): the declared layer is not observable and the enforced layer refuses",
+    "cause": null
+   }
+  ],
+  "reason_only_changes": 3,
+  "reason_only_changes_by_leg": {
+   "A10": 2,
+   "A12": 1
+  },
+  "reason_changes": [
+   {
+    "target": "host:www.federalreserve.gov",
+    "leg": "A12",
+    "verdict": "fail",
+    "rule": "RULE-A12-v2 -> RULE-A12-v3",
+    "from": "robots.txt is served with a content type that cannot be robots.txt, so nothing is DECLARED for this client and there is no declaration for the enforced layer to cohere with",
+    "to": "no robots.txt served (HTTP 404), so nothing is DECLARED for this client and there is no declaration for the enforced layer to cohere with"
+   },
+   {
+    "target": "scan-nass-flagship-1-data-statistics",
+    "leg": "A10",
+    "verdict": "error",
+    "rule": "RULE-A10-v3 -> RULE-A10-v3",
+    "from": "the invalid-route probe https://www.nass.usda.gov/Data_and_Statistics/index.php/__ai-readiness-kg-probe-404__ was not observed (HTTP 403): the collector observed the surface. A verdict reached from a probe the collector never saw would be a measurement of the scanner, not of the product",
+    "to": "the invalid-route probe https://www.nass.usda.gov/Data_and_Statistics/index.php/__ai-readiness-kg-probe-404__ was not observed (HTTP 403): the host answered HTTP 403, which `manners.unobservable_statuses` names as declining to answer this client about the path rather than answering about it. A verdict reached from a probe the collector never saw would be a measurement of the scanner, not of the product"
+   },
+   {
+    "target": "scan-nass-flagship-2-livestock-county-estimates",
+    "leg": "A10",
+    "verdict": "error",
+    "rule": "RULE-A10-v3 -> RULE-A10-v3",
+    "from": "the invalid-route probe https://www.nass.usda.gov/Data_and_Statistics/County_Data_Files/Livestock_County_Estimates/index.php/__ai-readiness-kg-probe-404__ was not observed (HTTP 403): the collector observed the surface. A verdict reached from a probe the collector never saw would be a measurement of the scanner, not of the product",
+    "to": "the invalid-route probe https://www.nass.usda.gov/Data_and_Statistics/County_Data_Files/Livestock_County_Estimates/index.php/__ai-readiness-kg-probe-404__ was not observed (HTTP 403): the host answered HTTP 403, which `manners.unobservable_statuses` names as declining to answer this client about the path rather than answering about it. A verdict reached from a probe the collector never saw would be a measurement of the scanner, not of the product"
+   }
+  ]
+ },
+ {
+  "old": "scan_2026-09-10_rj2",
+  "new": "scan_2026-09-10_rj3",
+  "harness": {
+   "old": 5,
+   "new": 5
+  },
+  "findings": {
+   "old": 739,
+   "new": 739
+  },
+  "only_in_old": [],
+  "only_in_new": [],
+  "verdict_moves": 0,
+  "rule_version_moves": 19,
+  "rules_that_moved": {
+   "A12": "RULE-A12-v2 -> RULE-A12-v3"
+  },
+  "moved_legs": [],
+  "moved_legs_count": {},
+  "permitted_legs": [
+   "A12"
+  ],
+  "strict_subset_holds": true,
+  "within_permitted": true,
+  "by_transition": {},
+  "by_cause": {},
+  "unaccounted": [],
+  "moves": [
+   {
+    "target": "host:bjs.ojp.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v2 pass",
+    "to": "RULE-A12-v3 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "blind": {},
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg) for https://bjs.ojp.gov/ and the host served it (HTTP 200): the declared and enforced layers agree",
+    "cause": null
+   },
+   {
+    "target": "host:nces.ed.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v2 pass",
+    "to": "RULE-A12-v3 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "blind": {},
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg) for https://nces.ed.gov/ and the host served it (HTTP 200): the declared and enforced layers agree",
+    "cause": null
+   },
+   {
+    "target": "host:ncses.nsf.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v2 pass",
+    "to": "RULE-A12-v3 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "blind": {},
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg) for https://ncses.nsf.gov/ and the host served it (HTTP 200): the declared and enforced layers agree",
+    "cause": null
+   },
+   {
+    "target": "host:www.aphis.usda.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v2 pass",
+    "to": "RULE-A12-v3 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "blind": {},
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg) for https://www.aphis.usda.gov/aphis/ourfocus/animalhealth/monitoring-and-surveillance/nahms and the host served it (HTTP 200): the declared and enforced layers agree",
+    "cause": null
+   },
+   {
+    "target": "host:www.bea.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v2 pass",
+    "to": "RULE-A12-v3 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "blind": {},
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg) for https://www.bea.gov/ and the host served it (HTTP 200): the declared and enforced layers agree",
+    "cause": null
+   },
+   {
+    "target": "host:www.bls.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v2 fail",
+    "to": "RULE-A12-v3 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "blind": {},
+    "reason": "the host answered HTTP 403 to /robots.txt itself for ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg): the declared layer is not observable and the enforced layer refuses",
+    "cause": null
+   },
+   {
+    "target": "host:www.bts.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v2 fail",
+    "to": "RULE-A12-v3 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "blind": {},
+    "reason": "the host answered HTTP 403 to /robots.txt itself for ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg): the declared layer is not observable and the enforced layer refuses",
+    "cause": null
+   },
+   {
+    "target": "host:www.cdc.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v2 pass",
+    "to": "RULE-A12-v3 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "blind": {},
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg) for https://www.cdc.gov/nchs/index.htm and the host served it (HTTP 200): the declared and enforced layers agree",
+    "cause": null
+   },
+   {
+    "target": "host:www.census.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v2 pass",
+    "to": "RULE-A12-v3 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "blind": {},
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg) for https://www.census.gov/ and the host served it (HTTP 200): the declared and enforced layers agree",
+    "cause": null
+   },
+   {
+    "target": "host:www.data.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v2 pass",
+    "to": "RULE-A12-v3 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "blind": {},
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg) for https://www.data.gov and the host served it (HTTP 200): the declared and enforced layers agree",
+    "cause": null
+   },
+   {
+    "target": "host:www.eia.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v2 pass",
+    "to": "RULE-A12-v3 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "blind": {},
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg) for https://www.eia.gov/ and the host served it (HTTP 200): the declared and enforced layers agree",
+    "cause": null
+   },
+   {
+    "target": "host:www.ers.usda.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v2 pass",
+    "to": "RULE-A12-v3 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "blind": {},
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg) for https://www.ers.usda.gov/ and the host served it (HTTP 200): the declared and enforced layers agree",
+    "cause": null
+   },
+   {
+    "target": "host:www.federalreserve.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v2 fail",
+    "to": "RULE-A12-v3 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "blind": {},
+    "reason": "no robots.txt served (HTTP 404), so nothing is DECLARED for this client and there is no declaration for the enforced layer to cohere with",
+    "cause": null
+   },
+   {
+    "target": "host:www.gsa.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v2 pass",
+    "to": "RULE-A12-v3 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "blind": {},
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg) for https://www.gsa.gov and the host served it (HTTP 200): the declared and enforced layers agree",
+    "cause": null
+   },
+   {
+    "target": "host:www.irs.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v2 pass",
+    "to": "RULE-A12-v3 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "blind": {},
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg) for https://www.irs.gov/statistics/soi-tax-stats-statistics-of-income and the host served it (HTTP 200): the declared and enforced layers agree",
+    "cause": null
+   },
+   {
+    "target": "host:www.nass.usda.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v2 pass",
+    "to": "RULE-A12-v3 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "blind": {},
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg) for https://www.nass.usda.gov/ and the host served it (HTTP 200): the declared and enforced layers agree",
+    "cause": null
+   },
+   {
+    "target": "host:www.nist.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v2 pass",
+    "to": "RULE-A12-v3 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "blind": {},
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg) for https://www.nist.gov and the host served it (HTTP 200): the declared and enforced layers agree",
+    "cause": null
+   },
+   {
+    "target": "host:www.samhsa.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v2 pass",
+    "to": "RULE-A12-v3 pass",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "blind": {},
+    "reason": "robots.txt permits ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg) for https://www.samhsa.gov/about-us/who-we-are/offices-centers/cbhsq and the host served it (HTTP 200): the declared and enforced layers agree",
+    "cause": null
+   },
+   {
+    "target": "host:www.ssa.gov",
+    "leg": "A12",
+    "from": "RULE-A12-v2 fail",
+    "to": "RULE-A12-v3 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "blind": {},
+    "reason": "the host answered HTTP 403 to /robots.txt itself for ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg): the declared layer is not observable and the enforced layer refuses",
+    "cause": null
+   }
+  ],
+  "reason_only_changes": 3,
+  "reason_only_changes_by_leg": {
+   "A10": 2,
+   "A12": 1
+  },
+  "reason_changes": [
+   {
+    "target": "host:www.federalreserve.gov",
+    "leg": "A12",
+    "verdict": "fail",
+    "rule": "RULE-A12-v2 -> RULE-A12-v3",
+    "from": "robots.txt is served with a content type that cannot be robots.txt, so nothing is DECLARED for this client and there is no declaration for the enforced layer to cohere with",
+    "to": "no robots.txt served (HTTP 404), so nothing is DECLARED for this client and there is no declaration for the enforced layer to cohere with"
+   },
+   {
+    "target": "scan-nass-flagship-1-data-statistics",
+    "leg": "A10",
+    "verdict": "error",
+    "rule": "RULE-A10-v3 -> RULE-A10-v3",
+    "from": "the invalid-route probe https://www.nass.usda.gov/Data_and_Statistics/index.php/__ai-readiness-kg-probe-404__ was not observed (HTTP 403): the collector observed the surface. A verdict reached from a probe the collector never saw would be a measurement of the scanner, not of the product",
+    "to": "the invalid-route probe https://www.nass.usda.gov/Data_and_Statistics/index.php/__ai-readiness-kg-probe-404__ was not observed (HTTP 403): the host answered HTTP 403, which `manners.unobservable_statuses` names as declining to answer this client about the path rather than answering about it. A verdict reached from a probe the collector never saw would be a measurement of the scanner, not of the product"
+   },
+   {
+    "target": "scan-nass-flagship-2-livestock-county-estimates",
+    "leg": "A10",
+    "verdict": "error",
+    "rule": "RULE-A10-v3 -> RULE-A10-v3",
+    "from": "the invalid-route probe https://www.nass.usda.gov/Data_and_Statistics/County_Data_Files/Livestock_County_Estimates/index.php/__ai-readiness-kg-probe-404__ was not observed (HTTP 403): the collector observed the surface. A verdict reached from a probe the collector never saw would be a measurement of the scanner, not of the product",
+    "to": "the invalid-route probe https://www.nass.usda.gov/Data_and_Statistics/County_Data_Files/Livestock_County_Estimates/index.php/__ai-readiness-kg-probe-404__ was not observed (HTTP 403): the host answered HTTP 403, which `manners.unobservable_statuses` names as declining to answer this client about the path rather than answering about it. A verdict reached from a probe the collector never saw would be a measurement of the scanner, not of the product"
+   }
+  ]
+ },
+ {
+  "old": "self_2026-09-13",
+  "new": "self_2026-09-13_rj1",
+  "harness": {
+   "old": 5,
+   "new": 5
+  },
+  "findings": {
+   "old": 6,
+   "new": 6
+  },
+  "only_in_old": [],
+  "only_in_new": [],
+  "verdict_moves": 0,
+  "rule_version_moves": 1,
+  "rules_that_moved": {
+   "A12": "RULE-A12-v2 -> RULE-A12-v3"
+  },
+  "moved_legs": [],
+  "moved_legs_count": {},
+  "permitted_legs": [
+   "A12"
+  ],
+  "strict_subset_holds": true,
+  "within_permitted": true,
+  "by_transition": {},
+  "by_cause": {},
+  "unaccounted": [],
+  "moves": [
+   {
+    "target": "host:brockwebb.github.io",
+    "leg": "A12",
+    "from": "RULE-A12-v2 fail",
+    "to": "RULE-A12-v3 fail",
+    "verdict_moved": false,
+    "rule_moved": true,
+    "classes_that_changed_kind": [],
+    "blind": {},
+    "reason": "no robots.txt served (HTTP 404), so nothing is DECLARED for this client and there is no declaration for the enforced layer to cohere with",
+    "cause": null
+   }
+  ],
+  "reason_only_changes": 1,
+  "reason_only_changes_by_leg": {
+   "A12": 1
+  },
+  "reason_changes": [
+   {
+    "target": "host:brockwebb.github.io",
+    "leg": "A12",
+    "verdict": "fail",
+    "rule": "RULE-A12-v2 -> RULE-A12-v3",
+    "from": "robots.txt is served with a content type that cannot be robots.txt, so nothing is DECLARED for this client and there is no declaration for the enforced layer to cohere with",
+    "to": "no robots.txt served (HTTP 404), so nothing is DECLARED for this client and there is no declaration for the enforced layer to cohere with"
+   }
+  ]
+ }
+]

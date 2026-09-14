@@ -19,6 +19,10 @@ was tested by a hand-built observation pair instead, which tests the rule and no
 * `resets_links_only` — everything `passes_all` serves over GET, and every HEAD reset. The
   product page is served and every link on it is unobservable, which is the state
   `RULE-A1-v3`/`RULE-A3-v4` scored as "this product offers nothing".
+* `robots_404_html` — everything `passes_all` serves, except `/robots.txt`, which answers
+  **404 with an HTML error page**: the shape a static host or CDN produces for an unknown path,
+  and the one that makes a rule reading the content type before the status say a file that was
+  never served was served with the wrong type (`RULE-A12-v2`, corrected by `v3`).
 * `invalid_route_unobserved` — everything `passes_all` serves, and the connection reset on
   A10's invented invalid route ALONE. PARTIAL blindness, which is the state no other fixture
   can reach: `resets_connection` blinds every leg at once, so it cannot reproduce the surface
@@ -109,6 +113,28 @@ MODES = {
     # the partition it declares is in MANIFEST.json beside it rather than inferred from a rule.
     "robots_forbids_product": {"serves_as": "passes_all",
                                "overlay": "robots_forbids_product"},
+    # Everything `passes_all` serves, EXCEPT `/robots.txt`, which answers **HTTP 404 with an
+    # HTML body**. `cc_tasks/2026-09-13_rule_a12_v3.md` decision 1.
+    #
+    # The eight fixtures above could not express this, and the survey is in the RESULT: seven
+    # of them SERVE a robots.txt (or reset before any response), and `fails_all` answers 200
+    # with the soft-404 shell — a 200 with the wrong content type, which is exactly the case
+    # `RULE-A12-v2`'s wrong-content-type branch was written for and gets RIGHT. What no control
+    # produced is the case it gets WRONG: a file that was never served, whose 404 error PAGE
+    # carries `text/html`, so `collectors/robots.py` records `wrong_content_type: true`
+    # alongside `robots_status: 404` and v2 — testing the type before the status — reports
+    # "robots.txt is served with a content type that cannot be robots.txt" about a file that
+    # was not.
+    #
+    # Two live hosts produce it: `www.federalreserve.gov`, which carries the one published
+    # Tier A Finding with the false sentence, and `brockwebb.github.io`, which is this
+    # publication's own authority. It is not exotic — it is what a CDN or a static host does
+    # with any unknown path.
+    #
+    # `serves_as` rather than a copied tree, like the four fixtures above it: this differs from
+    # `passes_all` in the ANSWER to one path, not in the content of one file, so it cannot be
+    # an `overlay` (an overlay file would be SERVED, at 200) and needs a mode flag.
+    "robots_404_html": {"serves_as": "passes_all", "not_found_html_paths": ("/robots.txt",)},
 }
 
 
@@ -131,6 +157,11 @@ class _Handler(http.server.SimpleHTTPRequestHandler):
     invalid_route_suffix: str = ""
     #: Reset every HEAD and serve every GET. Blinds the link probe alone.
     reset_on_head: bool = False
+    #: Paths that answer **404 with an HTML error page** rather than being served or 404ing as
+    #: text. Not `soft_404`, which is a 200: this is the ordinary behaviour of a static host or
+    #: a CDN asked for a path it does not have, and it is the one shape that makes a rule
+    #: reading `wrong_content_type` before the status describe an absent file as a served one.
+    not_found_html_paths: tuple = ()
     #: Searched BEFORE `root`. A fixture that differs from another in one file overlays that
     #: file and inherits the rest, so "a well-formed surface" has one definition on disk.
     overlay_root: Path | None = None
@@ -217,6 +248,12 @@ class _Handler(http.server.SimpleHTTPRequestHandler):
                               "netloc": self.hostport})
         if self._resets_this_path(path) or (self.reset_on_head and self._head_only):
             return self._reset()
+        # Answered BEFORE the tree is consulted, because the point of this branch is a path the
+        # tree HAS: `passes_all` holds a real robots.txt, and the fixture is the host refusing
+        # to serve it the way a static host refuses an unknown path.
+        if path in self.not_found_html_paths:
+            return self._serve_bytes(SOFT_404_SHELL, "text/html", status=404,
+                                     head_only=self._head_only)
         if self.refuse_status is not None and path not in self.served_paths:
             return self._serve_bytes(b"", "text/plain", status=self.refuse_status,
                                      head_only=self._head_only)

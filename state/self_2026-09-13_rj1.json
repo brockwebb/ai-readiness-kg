@@ -1,0 +1,415 @@
+{
+ "task": "cc_tasks/2026-09-08_scan_harness_v4.md",
+ "cycle": "self_2026-09-13_rj1",
+ "cycle_kind": "rejudged",
+ "derived_from": "self_2026-09-13",
+ "derived_from_params_hash": "d396bff3fd33a5c274868a134f93934a78d879c808357154c17188eb2368240f",
+ "targets": "scan_targets_self_2026-09-13",
+ "harness_version": 5,
+ "params_version": "0.1.0",
+ "params_hash": "845aa6ab231893eb59ed8d2018af437a1d56f9a6d910553a76ef94dc08b55365",
+ "rejudged_note": "Findings only. Every Finding cites the `obs_id`s self_2026-09-13 recorded; not one byte was re-fetched and not one Observation was created. The evidence is that cycle's, the judgement is this one's.",
+ "rules": [
+  "RULE-A10-v3",
+  "RULE-A11-declared-v2",
+  "RULE-A12-v3",
+  "RULE-A4-v1",
+  "RULE-A5-v2",
+  "RULE-G1-D-v1"
+ ],
+ "rules_changed_since_source": {
+  "A12": {
+   "source": "RULE-A12-v2",
+   "current": "RULE-A12-v3"
+  }
+ },
+ "legs_judged": [
+  "A10",
+  "A11-declared",
+  "A12",
+  "A4",
+  "A5",
+  "G1-D"
+ ],
+ "legs_not_judged": {
+  "A1": "RULE-A1-v4 consumes ['link_probe'], which self_2026-09-13 did not collect; judging it from anything else would be a number that looks like a re-judgement and is not one",
+  "A2": "self_2026-09-13 recorded no observation on leg A2",
+  "A3": "RULE-A3-v6 consumes ['link_probe'], which self_2026-09-13 did not collect; judging it from anything else would be a number that looks like a re-judgement and is not one",
+  "A6": "self_2026-09-13 recorded no observation on leg A6",
+  "A8": "self_2026-09-13 recorded no observation on leg A8",
+  "A9": "self_2026-09-13 recorded no observation on leg A9",
+  "B3": "self_2026-09-13 recorded no observation on leg B3",
+  "D1": "self_2026-09-13 recorded no observation on leg D1",
+  "D4": "self_2026-09-13 recorded no observation on leg D4",
+  "E5": "E5 judges the CYCLE, and the control set changed under v4 (a fifth fixture): re-judging the source cycle's four-fixture record against a five-fixture expectation would report a change in the instrument as a failure of the cycle. This task's own control gate is recorded as `control_gate`.",
+  "F4": "self_2026-09-13 recorded no observation on leg F4"
+ },
+ "verdicts_moved": [],
+ "surfaces": 2,
+ "legs": 6,
+ "findings": 6,
+ "observations": 13,
+ "observations_reused": 13,
+ "verdict_counts": {
+  "pass": 1,
+  "fail": 5,
+  "not_applicable": 0,
+  "error": 0
+ },
+ "requests_per_host": {},
+ "requests_total": 0,
+ "error_class_counts_of_source": {
+  "null": 5,
+  "dns": 0,
+  "timeout": 0,
+  "connection_reset": 0,
+  "refused": 0,
+  "http_4xx": 8,
+  "http_5xx": 0,
+  "robots_disallowed": 0,
+  "off_host": 0,
+  "sitemap_off_site": 0,
+  "parse_error": 0,
+  "redirect_loop": 0,
+  "collector_unavailable": 0,
+  "unknown": 0
+ },
+ "control_verdict": "pass",
+ "control_reason": "both control fixtures fired and every rule returned its expected verdict; ordering not asserted (no surface was scanned in this cycle)",
+ "control_gate": {
+  "verdict": "pass",
+  "reason": "both control fixtures fired and every rule returned its expected verdict; ordering not asserted (no surface was scanned in this cycle)",
+  "ok": true,
+  "fixtures": [
+   "fails_all",
+   "invalid_route_unobserved",
+   "passes_all",
+   "refuses_identified_client",
+   "resets_connection",
+   "resets_links_only",
+   "robots_404_html",
+   "robots_forbids_product",
+   "sitemap_on_sibling"
+  ],
+  "rule": "RULE-E5-v2",
+  "verdicts": {
+   "A1": {
+    "control:passes_all": "pass",
+    "control:fails_all": "fail",
+    "control:robots_forbids_product": "pass",
+    "control:robots_404_html": "pass",
+    "control:refuses_identified_client": "error",
+    "control:resets_connection": "error",
+    "control:invalid_route_unobserved": "pass",
+    "control:resets_links_only": "error",
+    "control:sitemap_on_sibling": "pass"
+   },
+   "A2": {
+    "control:passes_all": "pass",
+    "control:fails_all": "fail",
+    "control:robots_forbids_product": "pass",
+    "control:robots_404_html": "pass",
+    "control:refuses_identified_client": "error",
+    "control:resets_connection": "error",
+    "control:invalid_route_unobserved": "pass",
+    "control:resets_links_only": "pass",
+    "control:sitemap_on_sibling": "pass"
+   },
+   "A3": {
+    "control:passes_all": "pass",
+    "control:fails_all": "fail",
+    "control:robots_forbids_product": "error",
+    "control:robots_404_html": "pass",
+    "control:refuses_identified_client": "error",
+    "control:resets_connection": "error",
+    "control:invalid_route_unobserved": "pass",
+    "control:resets_links_only": "error",
+    "control:sitemap_on_sibling": "pass"
+   },
+   "A4": {
+    "control:passes_all": "pass",
+    "control:fails_all": "fail",
+    "control:robots_forbids_product": "pass",
+    "control:robots_404_html": "fail",
+    "control:refuses_identified_client": "pass",
+    "control:resets_connection": "error",
+    "control:invalid_route_unobserved": "pass",
+    "control:resets_links_only": "pass",
+    "control:sitemap_on_sibling": "pass"
+   },
+   "A5": {
+    "control:passes_all": "pass",
+    "control:fails_all": "fail",
+    "control:robots_forbids_product": "pass",
+    "control:robots_404_html": "pass",
+    "control:refuses_identified_client": "error",
+    "control:resets_connection": "error",
+    "control:invalid_route_unobserved": "pass",
+    "control:resets_links_only": "pass",
+    "control:sitemap_on_sibling": "pass"
+   },
+   "A6": {
+    "control:passes_all": "pass",
+    "control:fails_all": "fail",
+    "control:robots_forbids_product": "pass",
+    "control:robots_404_html": "pass",
+    "control:refuses_identified_client": "error",
+    "control:resets_connection": "error",
+    "control:invalid_route_unobserved": "pass",
+    "control:resets_links_only": "pass",
+    "control:sitemap_on_sibling": "pass"
+   },
+   "A8": {
+    "control:passes_all": "pass",
+    "control:fails_all": "fail",
+    "control:robots_forbids_product": "error",
+    "control:robots_404_html": "pass",
+    "control:refuses_identified_client": "error",
+    "control:resets_connection": "error",
+    "control:invalid_route_unobserved": "pass",
+    "control:resets_links_only": "error",
+    "control:sitemap_on_sibling": "pass"
+   },
+   "A9": {
+    "control:passes_all": "pass",
+    "control:fails_all": "fail",
+    "control:robots_forbids_product": "pass",
+    "control:robots_404_html": "pass",
+    "control:refuses_identified_client": "error",
+    "control:resets_connection": "error",
+    "control:invalid_route_unobserved": "pass",
+    "control:resets_links_only": "pass",
+    "control:sitemap_on_sibling": "pass"
+   },
+   "A10": {
+    "control:passes_all": "pass",
+    "control:fails_all": "fail",
+    "control:robots_forbids_product": "error",
+    "control:robots_404_html": "pass",
+    "control:refuses_identified_client": "error",
+    "control:resets_connection": "error",
+    "control:invalid_route_unobserved": "error",
+    "control:resets_links_only": "pass",
+    "control:sitemap_on_sibling": "pass"
+   },
+   "A11-declared": {
+    "control:passes_all": "pass",
+    "control:fails_all": "fail",
+    "control:robots_forbids_product": "pass",
+    "control:robots_404_html": "fail",
+    "control:refuses_identified_client": "pass",
+    "control:resets_connection": "error",
+    "control:invalid_route_unobserved": "pass",
+    "control:resets_links_only": "pass",
+    "control:sitemap_on_sibling": "pass"
+   },
+   "B3": {
+    "control:passes_all": "pass",
+    "control:fails_all": "fail",
+    "control:robots_forbids_product": "error",
+    "control:robots_404_html": "pass",
+    "control:refuses_identified_client": "error",
+    "control:resets_connection": "error",
+    "control:invalid_route_unobserved": "pass",
+    "control:resets_links_only": "pass",
+    "control:sitemap_on_sibling": "pass"
+   },
+   "D1": {
+    "control:passes_all": "pass",
+    "control:fails_all": "fail",
+    "control:robots_forbids_product": "pass",
+    "control:robots_404_html": "pass",
+    "control:refuses_identified_client": "error",
+    "control:resets_connection": "error",
+    "control:invalid_route_unobserved": "pass",
+    "control:resets_links_only": "pass",
+    "control:sitemap_on_sibling": "pass"
+   },
+   "D4": {
+    "control:passes_all": "pass",
+    "control:fails_all": "fail",
+    "control:robots_forbids_product": "pass",
+    "control:robots_404_html": "pass",
+    "control:refuses_identified_client": "error",
+    "control:resets_connection": "error",
+    "control:invalid_route_unobserved": "pass",
+    "control:resets_links_only": "pass",
+    "control:sitemap_on_sibling": "pass"
+   },
+   "F4": {
+    "control:passes_all": "pass",
+    "control:fails_all": "fail",
+    "control:robots_forbids_product": "pass",
+    "control:robots_404_html": "pass",
+    "control:refuses_identified_client": "error",
+    "control:resets_connection": "error",
+    "control:invalid_route_unobserved": "pass",
+    "control:resets_links_only": "pass",
+    "control:sitemap_on_sibling": "pass"
+   },
+   "G1-D": {
+    "control:passes_all": "pass",
+    "control:fails_all": "fail",
+    "control:robots_forbids_product": "pass",
+    "control:robots_404_html": "pass",
+    "control:refuses_identified_client": "error",
+    "control:resets_connection": "error",
+    "control:invalid_route_unobserved": "pass",
+    "control:resets_links_only": "pass",
+    "control:sitemap_on_sibling": "pass"
+   },
+   "A12": {
+    "control:passes_all": "pass",
+    "control:fails_all": "fail",
+    "control:robots_forbids_product": "pass",
+    "control:robots_404_html": "fail",
+    "control:refuses_identified_client": "fail",
+    "control:resets_connection": "error",
+    "control:invalid_route_unobserved": "pass",
+    "control:resets_links_only": "pass",
+    "control:sitemap_on_sibling": "pass"
+   }
+  },
+  "unexpected": [],
+  "error_classes": [
+   "connection_reset",
+   "http_4xx",
+   "off_host",
+   "refused",
+   "robots_disallowed"
+  ],
+  "note": "The control gate this re-judgement stands on: five fixtures, every rule its pre-registered verdict. Recorded, not published \u2014 publishing these Findings would require publishing the fixture Observations behind them, and a re-judgement creates no Observation."
+ },
+ "control_findings": 0,
+ "control_findings_detail": [],
+ "matrix": [
+  {
+   "doc_id": "home:brockwebb.github.io",
+   "url": "https://brockwebb.github.io/ai-readiness-kg/",
+   "surface_kind": "home",
+   "agency": "self",
+   "admitted": false,
+   "verdicts": {
+    "A4": "fail",
+    "A5": "fail",
+    "A10": "pass",
+    "A11-declared": "fail",
+    "G1-D": "fail"
+   },
+   "verdicts_as_measured": {
+    "A4": "fail",
+    "A5": "fail",
+    "A10": "pass",
+    "A11-declared": "fail",
+    "G1-D": "fail"
+   }
+  },
+  {
+   "doc_id": "host:brockwebb.github.io",
+   "url": "https://brockwebb.github.io/ai-readiness-kg/",
+   "surface_kind": "well_known",
+   "agency": "self",
+   "admitted": false,
+   "verdicts": {
+    "A12": "fail"
+   },
+   "verdicts_as_measured": {
+    "A12": "fail"
+   }
+  }
+ ],
+ "findings_detail": [
+  {
+   "finding_id": "fnd_0430d08131f285f4e94d2a60",
+   "rule_id": "RULE-A4-v1",
+   "rule_version": "v1",
+   "spec_code": "A4",
+   "leg": "A4",
+   "target_doc_id": "home:brockwebb.github.io",
+   "verdict": "fail",
+   "evidence": [
+    "obs_0f79e4ad10e5329151a47f29"
+   ],
+   "reason": "no robots.txt served; retrieval is permitted by default but nothing is declared for AI crawlers",
+   "params_hash": "845aa6ab231893eb59ed8d2018af437a1d56f9a6d910553a76ef94dc08b55365"
+  },
+  {
+   "finding_id": "fnd_afbf71242d6b247edfd883bc",
+   "rule_id": "RULE-A5-v2",
+   "rule_version": "v2",
+   "spec_code": "A5",
+   "leg": "A5",
+   "target_doc_id": "home:brockwebb.github.io",
+   "verdict": "fail",
+   "evidence": [
+    "obs_0007306de259b48be5d975c7",
+    "obs_071565ef60ad7875894ba75c",
+    "obs_850cb230424ba891c05b21ec",
+    "obs_db4c37118b3df11a14b81560",
+    "obs_dd2db604074217752ff5def6"
+   ],
+   "reason": "no sitemap, llms.txt or well-known discovery file served",
+   "params_hash": "845aa6ab231893eb59ed8d2018af437a1d56f9a6d910553a76ef94dc08b55365"
+  },
+  {
+   "finding_id": "fnd_29f5756fa1ce8aea31b77dcf",
+   "rule_id": "RULE-A10-v3",
+   "rule_version": "v3",
+   "spec_code": "A10",
+   "leg": "A10",
+   "target_doc_id": "home:brockwebb.github.io",
+   "verdict": "pass",
+   "evidence": [
+    "obs_0133ea02f138939b3c57cabf",
+    "obs_7b3c0ae61f2ae9ae822301f2"
+   ],
+   "reason": "deep link HTTP 200; invalid route correctly HTTP 404; 4603 visible characters present before JS. The pre/post-JS DOM diff the signal also names was NOT run (renderer: none)",
+   "params_hash": "845aa6ab231893eb59ed8d2018af437a1d56f9a6d910553a76ef94dc08b55365"
+  },
+  {
+   "finding_id": "fnd_cf154c2d67d98701a77d33f5",
+   "rule_id": "RULE-A11-declared-v2",
+   "rule_version": "v2",
+   "spec_code": "A11",
+   "leg": "A11-declared",
+   "target_doc_id": "home:brockwebb.github.io",
+   "verdict": "fail",
+   "evidence": [
+    "obs_154431e32c1d8cf6b66197e6",
+    "obs_bf0a7553a06d120bc9c4641b"
+   ],
+   "reason": "nothing is DECLARED: no robots.txt is served, so the declared layer of the A11 triad is empty",
+   "params_hash": "845aa6ab231893eb59ed8d2018af437a1d56f9a6d910553a76ef94dc08b55365"
+  },
+  {
+   "finding_id": "fnd_1b9f4b4f676c80fa030b82c0",
+   "rule_id": "RULE-G1-D-v1",
+   "rule_version": "v1",
+   "spec_code": "G1",
+   "leg": "G1-D",
+   "target_doc_id": "home:brockwebb.github.io",
+   "verdict": "fail",
+   "evidence": [
+    "obs_8989fa0cdaed6f7abb593a0e"
+   ],
+   "reason": "none of the 11 error-measure field tokens appears as a structured field on the surface",
+   "params_hash": "845aa6ab231893eb59ed8d2018af437a1d56f9a6d910553a76ef94dc08b55365"
+  },
+  {
+   "finding_id": "fnd_7d5d27716ebfef268d8f503b",
+   "rule_id": "RULE-A12-v3",
+   "rule_version": "v3",
+   "spec_code": "A12",
+   "leg": "A12",
+   "target_doc_id": "host:brockwebb.github.io",
+   "verdict": "fail",
+   "evidence": [
+    "obs_a79d1a8031a219eae7c9d83e",
+    "obs_a9274ee67ca22fdda94a3908"
+   ],
+   "reason": "no robots.txt served (HTTP 404), so nothing is DECLARED for this client and there is no declaration for the enforced layer to cohere with",
+   "params_hash": "845aa6ab231893eb59ed8d2018af437a1d56f9a6d910553a76ef94dc08b55365"
+  }
+ ],
+ "observations_detail": []
+}

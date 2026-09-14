@@ -24,6 +24,22 @@ params_version: "0.1.0"
 # that travels with the record, never an edit to the past.
 finding_identity: 2
 
+# How `rules/_common.unobserved_error` names the reason a probe was not observed — a PARAMETER
+# for the same reason `finding_identity` is one: a Finding's reason string is inside the
+# byte-identical re-derivation comparison, so a corrected sentence is versioned data and never
+# an edit to the past (`cc_tasks/2026-09-13_rule_a12_v3.md` decision 2).
+#
+#   1  the error CLASS's note, printed whichever branch of `_common.unobserved` fired. Every
+#      Finding on the log to 2026-09-13 was made this way, and three of them say "the collector
+#      observed the surface" about a probe the same sentence calls unobserved — because the
+#      class was `None` and the REFUSAL STATUS is what fired.
+#   2  the note for the branch that fired: a blind class names the class, a status in
+#      `manners.unobservable_statuses` names the status and says what the list says about it.
+#
+# History re-derives under ITS OWN params (the gate recovers them from git by hash), so raising
+# this moves no stored reason: a cycle measured under scheme 1 is re-judged under scheme 1.
+reason_text: 2
+
 # TIER 0 — the headline legs, and the only legs a Tier C reference host is judged on.
 #
 # `cc_tasks/2026-09-08_scan_frame_fss.md` names this set and `..._RESULT.md` §9.2 records that
@@ -443,6 +459,33 @@ e5_control:
       A8: "error"
       A3: "error"
       B3: "error"
+    # Everything `passes_all` serves, except /robots.txt, which answers 404 with an HTML error
+    # page. `cc_tasks/2026-09-13_rule_a12_v3.md` decision 1.
+    #
+    # DERIVED FROM THE RULE SOURCE and written here BEFORE the fixture was ever run, as every
+    # entry above was. The fixture blinds NOTHING — a 404 is an observation, `http_4xx` is
+    # OBSERVED in `errors.CLASSES`, and the Fetcher's robots gate reads an unparseable body as
+    # permitting everything — so `fixture_expectations` derives no row from dispatch and every
+    # entry here is a rule's judgement over served content:
+    #
+    #   default `pass`  the surface is `passes_all` byte for byte, and only the three legs that
+    #                   READ robots.txt can tell the difference.
+    #   A4   `fail`     `collectors/robots.py` sets `present: false` (status >= 400), so A4-v1
+    #                   takes its "no robots.txt served" branch: absence permits retrieval and
+    #                   declares nothing.
+    #   A11-declared `fail`  its declared layer is robots.txt plus the page's meta-robots; the
+    #                   first is absent and `passes_all`'s index carries no meta-robots, so
+    #                   nothing is declared.
+    #   A12  `fail`     `present` is false and 404 is not in `manners.unobservable_statuses`,
+    #                   so both versions reach the "nothing is DECLARED" branch and both say
+    #                   `fail`. **The verdict is the same under v2 and v3 and the REASON is
+    #                   not**, which is the whole point of this fixture: v2 says the file was
+    #                   served with the wrong content type, v3 says it was not served.
+    robots_404_html:
+      default: "pass"
+      A4: "fail"
+      A11-declared: "fail"
+      A12: "fail"
     refuses_identified_client:
       default: "error"
       A4: "pass"

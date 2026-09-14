@@ -107,6 +107,18 @@ PRIOR_CYCLES = {
     # the reason every other late arrival was: a payload nothing re-derives is a payload a rule
     # change can break silently.
     "self_2026-09-13": 135,
+    # The generation-10 re-judgements (`cc_tasks/2026-09-13_rule_a12_v3.md` §3, which asks for
+    # all TWENTY-TWO payloads under their own versions). Findings-only, like every re-judgement:
+    # each cites the `obs_id`s of the cycle it names in `derived_from`, and `_params_for`
+    # recovers the params it was judged under. The self cycle is re-judged for the first time,
+    # and its `_rj1` is judged under the ORDINARY params rather than the overlay its measurement
+    # ran under — a re-judgement is judged under `CURRENT` and the params on disk, which is what
+    # every other `_rjN` here is too.
+    "scan_2026-09-07_rj3": 352,
+    "scan_2026-09-07b_rj4": 404,
+    "scan_2026-09-09_rj3": 634,
+    "scan_2026-09-10_rj3": 739,
+    "self_2026-09-13_rj1": 6,
 }
 
 #: The fixture whose existence IS the fix's proof. Named once, here, because three tests need
@@ -666,7 +678,7 @@ def test_the_rejudgement_removes_at_least_the_recorded_false_positive(rederive_m
 #: Cycle 4's newest judgement and the measurement it derives from. `_rj1` moves to the slow tier
 #: as `_rj2` supersedes it: "the two most recent" is a rolling window, not a list that grows, and
 #: a window that grew by two every re-judgement would make the fast tier the full tier.
-RECENT_CYCLES = ("scan_2026-09-10_rj2", "scan_2026-09-10")
+RECENT_CYCLES = ("scan_2026-09-10_rj3", "scan_2026-09-10")
 
 
 def _tier(cycle: str):

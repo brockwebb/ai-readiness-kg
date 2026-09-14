@@ -36,6 +36,7 @@ from . import rule_a3_v6, rule_b3_v3
 from . import rule_a12_v2
 from . import rule_a5_v2
 from . import rule_a12
+from . import rule_a12_v3
 
 #: Every version ever shipped, keyed by rule id. Never prune it: a pruned entry is a stored
 #: Finding that can no longer be re-derived.
@@ -97,6 +98,22 @@ V8 = [rule_a12_v2]
 #: control fixture made visible. Predecessors stay in `REGISTRY`.
 V9 = [rule_a3_v6, rule_b3_v3]
 
+#: Generation 10 — `cc_tasks/2026-09-13_rule_a12_v3.md`. One module, and the generation's
+#: substance is a SENTENCE rather than a judgement: `RULE-A12-v2` tests `wrong_content_type`
+#: before `robots_status`, so a host whose `/robots.txt` 404s with an HTML error page is
+#: described as having served a robots.txt with the wrong content type. The verdict is right and
+#: the sentence is false — one published Tier A Finding carries it
+#: (`host:www.federalreserve.gov`) and so did this publication's own row, which is how it was
+#: found (`cc_tasks/2026-09-13_self_row_RESULT.md` §6). v3 examines the status first and says
+#: what `RULE-A4-v1` says on identical evidence, from `_common.NO_ROBOTS_SERVED`.
+#:
+#: The generation's other half is in `_common`, not in a rule: `unobserved_error` now prints the
+#: note for the branch that fired, under `params.reason_text`. No rule module needed a new
+#: version for it — see the RESULT.
+#:
+#: **Zero verdict moves** is this generation's gate. It changes sentences, not judgements.
+V10 = [rule_a12_v3]
+
 #: Rules for CANDIDATE indicators. They judge, they are recorded, and their Findings enter no
 #: numerator and no denominator (DD-054). Kept in their own list so the reporting layer can
 #: exclude them mechanically rather than by remembering a code.
@@ -104,7 +121,7 @@ V9 = [rule_a3_v6, rule_b3_v3]
 #: version of a candidate is one entry here — the same shape as a generation, and the reason
 #: A12-v2 has to appear in both: `CURRENT` is built from the generations and then updated from
 #: this list, so a candidate leg's current rule is whatever this list ends with.
-CANDIDATE_RULES = [rule_a12, rule_a12_v2]
+CANDIDATE_RULES = [rule_a12, rule_a12_v2, rule_a12_v3]
 
 #: What a rule's verdicts are ABOUT. `product` unless the module says otherwise, because that is
 #: what almost every rule measures and a default nobody has to write cannot go stale. The
@@ -192,7 +209,7 @@ def measures(rule_id: str) -> str:
 #: track of: the registry-integrity tests read this, so a fifth generation is one entry here
 #: and nothing else to remember — which is the same reasoning `parse_rule_id` gives for being
 #: a regex instead of a per-rule table.
-GENERATIONS = (V1, V2, V3, V4, V5, V6, V7, V8, V9)
+GENERATIONS = (V1, V2, V3, V4, V5, V6, V7, V8, V9, V10)
 
 _ALL = [m for g in GENERATIONS for m in g] + CANDIDATE_RULES
 #: De-duplicated by rule id, order preserved. A12-v2 is listed in its generation AND in
