@@ -416,13 +416,21 @@ def llms_txt(pub: dict, files: list) -> str:
             f"- [The report, markdown]({pub['site_url']}reports/{STEM}.md)",
             f"- [The report, PDF]({pub['site_url']}reports/{STEM}.pdf)",
             f"- [Framework progress page]({pub['site_url']}progress/)",
-            # NOT a licence section, deliberately. `llms.txt` is the machine-readable face of
-            # this site and the licence belongs on it — but `docs/llms.txt` is outside the
-            # zero-edits widening of `cc_tasks/2026-09-13_ephemeral_provenance_ADDENDUM_1.md`,
-            # which names `docs/index.html`, `docs/data/index.json` and the two citation copies
-            # and nothing else. A boundary that is widened whenever the next edit looks additive
-            # is not a boundary. Left for a task that may touch this file; recorded in
-            # `cc_tasks/2026-09-13_ephemeral_provenance_RESULT.md`.
+            # The licence section, and it is on the MACHINE-READABLE face on purpose
+            # (`cc_tasks/2026-09-13_self_cycle_promote.md` decision 3). It was deferred by three
+            # consecutive tasks because each one's zero-edits widening excluded `docs/llms.txt`
+            # — a two-line change carried forward three times, which is a process defect rather
+            # than a boundary. The SPDX identifiers are read from `publication.yaml`, never
+            # typed here: a licence a machine cannot identify is what this instrument scores as
+            # absent on somebody else's site.
+            "", "## Licence", "",
+            f"- [Code — SPDX `{pub['license_code']}`]"
+            f"({pub['repository_url']}/blob/main/{LICENSE_CODE_FILE}): the software that "
+            f"measures — assessment/, kg/, scripts/, tests/.",
+            f"- [Data, report and generated artefacts — SPDX `{pub['license_data']}`]"
+            f"({pub['repository_url']}/blob/main/{LICENSE_DATA_FILE}): everything linked "
+            f"under Data and Views above.",
+            f"- {' '.join(pub['license_corpus_note'].split())}",
             "", "## Citation", "",
             f"- [CITATION.cff]({pub['site_url']}data/CITATION.cff)",
             f"- [Zenodo deposition metadata, prepared and not deposited]"

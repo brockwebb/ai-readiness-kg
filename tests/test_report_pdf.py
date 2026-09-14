@@ -132,3 +132,23 @@ def test_the_pdf_resolved_every_reference_and_kept_every_matrix_row(built):
     assert "this report" in flat, "the self-assessment row is missing"
     assert "GitHub Pages" in flat, "the self row does not name the planned host"
     assert 1 <= pages <= 20, pages
+
+
+def test_the_pdf_states_both_licences(built):
+    """The face a reader meets first states the licence.
+
+    `cc_tasks/2026-09-13_self_cycle_promote.md` decision 3. `tests/test_publication.py` asserts
+    the SPDX identifiers reach the five generated TEXT consumers; this asserts they survive the
+    pandoc/typst conversion, which is the one step between the declaration and the artifact
+    nobody else checks. Read from `publication.yaml`, never typed — the same declaration every
+    consumer reads.
+    """
+    import yaml
+    md, pdf, _pages = built
+    pub = yaml.safe_load((REPORTS / "publication.yaml").read_text(encoding="utf-8"))
+    flat = pdf.replace("-\n", "").replace("\n", " ")
+    for key in ("license_code", "license_data"):
+        assert pub[key] in md, f"the built markdown does not state {key} ({pub[key]})"
+        assert pub[key] in flat, (
+            f"the PDF does not state {key} ({pub[key]}); the licence reached the markdown and "
+            f"was lost in conversion, which is the one step nothing else watches")

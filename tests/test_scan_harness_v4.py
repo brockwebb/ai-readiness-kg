@@ -93,6 +93,20 @@ PRIOR_CYCLES = {
     "scan_2026-09-07b_rj3": 404,
     "scan_2026-09-09_rj2": 634,
     "scan_2026-09-10_rj2": 739,
+    # The SELF cycle (`cc_tasks/2026-09-13_self_cycle_promote.md` decision 2). Six verdicts
+    # against the host that publishes this report plus 129 control Findings — 135 recorded,
+    # which is the number this gate counts for every other entry too (cycle Findings plus
+    # control Findings), not the six the row prints.
+    #
+    # It is the first entry whose parameters are not a commit of `params.yaml`: it ran under
+    # the committed base with its cycle IDENTITY overlaid in memory, because editing
+    # `params.cycle` would re-point `register_l0_report_results.netlocs_declared` and break the
+    # re-derivation of a published Result. `_params_for` recovers the base by
+    # `base_params_hash` and re-applies the recorded overlay, so the payload is re-derived
+    # under the parameters it was measured under and under nothing else. It is in this set for
+    # the reason every other late arrival was: a payload nothing re-derives is a payload a rule
+    # change can break silently.
+    "self_2026-09-13": 135,
 }
 
 #: The fixture whose existence IS the fix's proof. Named once, here, because three tests need
@@ -112,18 +126,42 @@ def _mod(path: Path, name: str):
 def _params_for(payload: dict) -> dict:
     """The parameter set a cycle was MEASURED under, recovered from git BY HASH. Never
     reconstructed by hand: an approximation of an old parameter set makes the gate pass for the
-    wrong reason."""
+    wrong reason.
+
+    **A cycle may have run under an OVERLAY, and then the base is what git holds.** The self
+    cycle ran `run.main()` under the committed `params.yaml` with its cycle identity replaced
+    in memory (`scripts/run_self_scan.py`), because editing `params.cycle` re-points
+    `register_l0_report_results.netlocs_declared` and breaks the re-derivation of a published
+    Result. Such a payload records both halves — `base_params_hash`, which IS a commit of
+    `params.yaml`, and `params_overlay`, the exact change — so the recovery is the same
+    discipline with one more step: find the base by ITS hash, re-apply the recorded overlay,
+    and REFUSE unless the result hashes to what every Observation and Finding of the cycle
+    carries. A payload whose parameters existed only in a dead process would be the one payload
+    nothing could ever re-judge, which is why the overlay is on the record at all.
+    """
+    want = payload["params_hash"]
+    overlay = payload.get("params_overlay") or {}
+    base_want = payload.get("base_params_hash") or want
+
+    def rebuilt(base: dict) -> dict:
+        out = {**base, **overlay}
+        assert params_hash(out) == want, (
+            f"{payload.get('cycle')}: base_params_hash + params_overlay hashes to "
+            f"{params_hash(out)[:12]}…, not the cycle's own {want[:12]}…; the parameters this "
+            f"cycle ran under are not recoverable from its own record")
+        return out
+
     revs = subprocess.run(["git", "log", "--format=%H", "--", PARAMS_REL],
                           capture_output=True, text=True, cwd=str(REPO)).stdout.split()
     for rev in revs:
         txt = subprocess.run(["git", "show", f"{rev}:{PARAMS_REL}"],
                              capture_output=True, text=True, cwd=str(REPO)).stdout
-        if txt.strip() and params_hash(yaml.safe_load(txt)) == payload["params_hash"]:
-            return yaml.safe_load(txt)
-    if params_hash(load_params()) == payload["params_hash"]:
-        return load_params()
+        if txt.strip() and params_hash(yaml.safe_load(txt)) == base_want:
+            return rebuilt(yaml.safe_load(txt))
+    if params_hash(load_params()) == base_want:
+        return rebuilt(load_params())
     raise AssertionError(
-        f"no commit of {PARAMS_REL} hashes to {payload['params_hash'][:12]}…; the parameters "
+        f"no commit of {PARAMS_REL} hashes to {base_want[:12]}…; the parameters "
         f"this cycle was measured under are not recoverable, so its Findings can never be "
         f"re-derived")
 

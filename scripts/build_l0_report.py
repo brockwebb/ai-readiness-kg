@@ -201,7 +201,12 @@ def load_publication() -> dict:
         raise SystemExit(f"FATAL: {PUBLICATION.relative_to(REPO)} does not exist; the report "
                          f"cannot state which cycle it is a view of")
     doc = yaml.safe_load(PUBLICATION.read_text(encoding="utf-8"))
-    for key in ("snapshot_cycle", "title", "version"):
+    # The licences are REQUIRED here as they are in the site builder: the version block states
+    # them, and a report that shipped with the licence line silently missing would be exactly
+    # the absence this instrument scores other publishers for
+    # (`cc_tasks/2026-09-13_self_cycle_promote.md` decision 3).
+    for key in ("snapshot_cycle", "title", "version",
+                "license_code", "license_data", "license_corpus_note"):
         if not doc.get(key):
             raise SystemExit(f"FATAL: {PUBLICATION.name} declares no {key!r}")
     return doc
@@ -249,7 +254,15 @@ def version_block(pub: dict, today: str | None = None) -> str:
             f"the commit that publishes this build is that one's child. This document is a "
             f"VIEW of data published beside it: the matrices as JSON and CSV, the per-check "
             f"source appendix, and every Result quoted below with its value, its state and "
-            f"the artifact that generated it. The site index links all of them.")
+            f"the artifact that generated it. The site index links all of them. "
+            # The licence, on the face a reader meets FIRST. Three RESULTs in a row recorded
+            # that the report and its PDF state no licence at all while the citation files, the
+            # index and the data manifest all did; decision 3 closes it. SPDX identifiers, in
+            # backticks, read from `publication.yaml` — the same declaration every other
+            # consumer reads, so the faces cannot drift.
+            f"**Licence.** The report and the data it is a view of are `{pub['license_data']}` "
+            f"(`LICENSE-DATA`); the code that produced them is `{pub['license_code']}` "
+            f"(`LICENSE`). {' '.join(pub['license_corpus_note'].split())}")
 
 
 #: Where the version block goes: straight after the report's H1, ahead of the standfirst.

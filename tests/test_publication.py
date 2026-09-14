@@ -487,14 +487,35 @@ def test_both_licence_texts_exist_and_the_declaration_names_them():
         "LICENSE-DATA does not carry the CC BY 4.0 legal code, only a reference to it")
 
 
+#: The report's built markdown. Named once: two tests read it and the PDF is its view.
+REPORT_MD = SITE / "reports" / "2026-09_fss_ai_readiness_L0.md"
+
+
 def test_both_spdx_identifiers_reach_every_generated_consumer():
-    """The declaration is read by three generated consumers and none of them may drop half of
+    """The declaration is read by FIVE generated consumers and none of them may drop half of
     it. CFF and Zenodo each carry ONE licence field, which is the licence of the artefact they
-    cite — the data — so the code licence rides in their notes rather than vanishing."""
+    cite — the data — so the code licence rides in their notes rather than vanishing.
+
+    **Three and then five** (`cc_tasks/2026-09-13_self_cycle_promote.md` decision 3). The two
+    that joined are the two faces a reader and a machine actually meet first and the two that
+    stated no licence at all: `llms.txt`, which is the machine-readable face of this site and
+    the file the A5 discovery probe looks for, and the report itself, whose PDF a human opens
+    without ever seeing the index. A licence declared everywhere except on the document is the
+    shape of absence this instrument scores other publishers for.
+    """
     cff = (REPO / "CITATION.cff").read_text(encoding="utf-8")
     zen = (REPO / ".zenodo.json").read_text(encoding="utf-8")
     index = (SITE / "index.html").read_text(encoding="utf-8")
-    for consumer, text in (("CITATION.cff", cff), (".zenodo.json", zen), ("index.html", index)):
+    llms = (SITE / "llms.txt").read_text(encoding="utf-8")
+    assert REPORT_MD.is_file(), (
+        f"{REPORT_MD.relative_to(REPO)} is not in the tree. It is a build product AND it is "
+        f"published — `make report-pdf` writes it — so its absence is a broken publication, "
+        f"not a reason to skip the licence check on the face a reader meets first.")
+    consumers = [("CITATION.cff", cff), (".zenodo.json", zen), ("index.html", index),
+                 ("llms.txt", llms),
+                 (REPORT_MD.name, REPORT_MD.read_text(encoding="utf-8"))]
+    assert len(consumers) == 5, [n for n, _t in consumers]
+    for consumer, text in consumers:
         for key in LICENSES:
             assert PUB[key] in text, f"{consumer} does not state {key} ({PUB[key]})"
     assert yaml.safe_load(cff)["license"] == PUB["license_data"]
@@ -512,7 +533,12 @@ def test_the_corpus_exclusion_is_stated_wherever_the_licences_are():
                         ("LICENSE-DATA", (REPO / "LICENSE-DATA").read_text(encoding="utf-8")),
                         ("CITATION.cff", (REPO / "CITATION.cff").read_text(encoding="utf-8")),
                         (".zenodo.json", (REPO / ".zenodo.json").read_text(encoding="utf-8")),
-                        ("index.html", (SITE / "index.html").read_text(encoding="utf-8"))):
+                        ("index.html", (SITE / "index.html").read_text(encoding="utf-8")),
+                        # The two faces decision 3 added. The corpus sentence travels with the
+                        # licences wherever they are stated, or a reader of THAT face is told
+                        # what is licensed without being told what is not.
+                        ("llms.txt", (SITE / "llms.txt").read_text(encoding="utf-8")),
+                        (REPORT_MD.name, REPORT_MD.read_text(encoding="utf-8"))):
         assert sentence in _flat(text), f"{where} does not carry the corpus exclusion sentence"
     corpus_copy = [c for c in MANIFEST["copies"] if c["source"].startswith("corpus/")]
     assert corpus_copy, "the corpus manifest is no longer published; this check is stale"

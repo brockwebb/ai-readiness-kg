@@ -1,6 +1,6 @@
 # AI readiness of the federal statistical system: host-level findings
 
-**Version.** Snapshot cycle `scan_2026-09-10_rj2` · version `2026-09-10_rj2` · built from commit `0d3e0d8e6602` on `2026-09-13` (UTC); the commit that publishes this build is that one's child. This document is a VIEW of data published beside it: the matrices as JSON and CSV, the per-check source appendix, and every Result quoted below with its value, its state and the artifact that generated it. The site index links all of them.
+**Version.** Snapshot cycle `scan_2026-09-10_rj2` · version `2026-09-10_rj2` · built from commit `1f1cdd06ea1b` on `2026-09-14` (UTC); the commit that publishes this build is that one's child. This document is a VIEW of data published beside it: the matrices as JSON and CSV, the per-check source appendix, and every Result quoted below with its value, its state and the artifact that generated it. The site index links all of them. **Licence.** The report and the data it is a view of are `CC-BY-4.0` (`LICENSE-DATA`); the code that produced them is `MIT` (`LICENSE`). Documents under corpus/ are third-party works, retained as evidence under their own terms: neither licence in this repository applies to them.
 
 **Draft. 16 recognized bodies and three reference
 hosts, one cycle, one client identity.**

@@ -1,0 +1,188 @@
+{
+ "task": "cc_tasks/2026-09-13_self_cycle_promote.md",
+ "cycle": "self_2026-09-13",
+ "note": "The record of the promotion: what \u00a71 checked before anything was written, what publish.py did, what moved on the row, and the retention census either side of it. `publish.py` prints one merged object and `project()`'s keys overwrite `write_events()`'s where they share a name \u2014 `observations`, `findings` and `findings_evidence_unretained` in the block below are the GRAPH's totals, not this cycle's. This cycle's own counts are `observation_events_written` and `finding_events_written`, and its own unretained count is 0 (verify block).",
+ "stop_checks_before_anything_was_written": {
+  "cited_digests": 34,
+  "staged_files": 34,
+  "already_in_committed_store": 9,
+  "would_be_written": 25,
+  "cited_but_in_neither_store": [],
+  "stop_1_digest_under_a_different_path": [],
+  "stop_1_any_body_off_its_content_address": [],
+  "findings_in_payload": 135,
+  "cycle_findings": 6,
+  "control_findings": 129,
+  "observations_in_payload": 351,
+  "cycle_observations": 13,
+  "control_observations": 338,
+  "stop_2_findings_citing_evidence_not_in_this_payload": []
+ },
+ "publish": {
+  "evidence_promoted": 25,
+  "evidence_already_committed": 9,
+  "evidence_cited_digests": 34,
+  "staging_removed": "/Users/brock/GitHub/ai-readiness-kg/state/evidence_staging/self_2026-09-13",
+  "observation_events_written": 351,
+  "finding_events_written": 135,
+  "findings_evidence_unretained": 120,
+  "shard": "events/batch-029.jsonl",
+  "observations": 11332,
+  "findings": 4296,
+  "rules": 40,
+  "observed_on": 7751,
+  "supports": 17276,
+  "ruled_by": 4296,
+  "observed_on_missing_document": 0,
+  "control_observations": 1181,
+  "host_observations": 2400,
+  "observations_error_reclassified": 362,
+  "measures": 40,
+  "rules_seen": 40,
+  "rules_unparseable": [],
+  "rules_without_indicator": []
+ },
+ "row_diff": {
+  "reads_on_the_row": 13,
+  "body_in_committed_store_false_before": 13,
+  "body_in_committed_store_false_after": 0,
+  "flipped_false_to_true": 13,
+  "generated_at_restamped": [
+   "2026-09-13T17:49:21.931092+00:00 -> 2026-09-14T00:37:58.187772+00:00"
+  ],
+  "every_other_difference": [],
+  "verdicts_before": {
+   "A4": "fail",
+   "A5": "fail",
+   "A10": "pass",
+   "A11-declared": "fail",
+   "A12": "fail",
+   "G1-D": "fail"
+  },
+  "verdicts_after": {
+   "A4": "fail",
+   "A5": "fail",
+   "A10": "pass",
+   "A11-declared": "fail",
+   "A12": "fail",
+   "G1-D": "fail"
+  },
+  "reasons_identical": true,
+  "urls_identical": true,
+  "statuses_identical": true,
+  "finding_ids_identical": true
+ },
+ "verify": {
+  "cited_digests": 34,
+  "cited_not_in_committed_store": [],
+  "body_paths_outside_the_committed_store": [],
+  "reads_not_in_committed_store": [],
+  "staging_root": "state/evidence_staging/self_2026-09-13",
+  "staging_root_still_exists": false,
+  "graph_observations_of_this_cycle": 351,
+  "graph_findings_of_this_cycle": 135,
+  "graph_observations_of_this_cycle_whose_raw_ref_is_in_corpus": 259,
+  "graph_observations_of_this_cycle_with_a_body": 259,
+  "graph_findings_of_this_cycle_without_support": 0,
+  "self_results": [
+   {
+    "name": "self_l0_a10_self_2026-09-13",
+    "value": 1.0,
+    "state": "proposed",
+    "computed_from": [
+     "state/self_l0_self_2026-09-13.json"
+    ]
+   },
+   {
+    "name": "self_l0_a11_declared_self_2026-09-13",
+    "value": 0.0,
+    "state": "proposed",
+    "computed_from": [
+     "state/self_l0_self_2026-09-13.json"
+    ]
+   },
+   {
+    "name": "self_l0_a12_self_2026-09-13",
+    "value": 0.0,
+    "state": "proposed",
+    "computed_from": [
+     "state/self_l0_self_2026-09-13.json"
+    ]
+   },
+   {
+    "name": "self_l0_a4_self_2026-09-13",
+    "value": 0.0,
+    "state": "proposed",
+    "computed_from": [
+     "state/self_l0_self_2026-09-13.json"
+    ]
+   },
+   {
+    "name": "self_l0_a5_self_2026-09-13",
+    "value": 0.0,
+    "state": "proposed",
+    "computed_from": [
+     "state/self_l0_self_2026-09-13.json"
+    ]
+   },
+   {
+    "name": "self_l0_g1_d_self_2026-09-13",
+    "value": 0.0,
+    "state": "proposed",
+    "computed_from": [
+     "state/self_l0_self_2026-09-13.json"
+    ]
+   }
+  ],
+  "graph_findings_total": 4296,
+  "graph_observations_total": 11332,
+  "invariants_on_the_row": {
+   "observed_on_missing_document": 0,
+   "findings_evidence_unretained": 0
+  }
+ },
+ "retention_census": {
+  "before": {
+   "label": "before",
+   "census_for_cycle": "scan_2026-09-10",
+   "census": {
+    "tracked_bodies": 2339,
+    "cited_digests_on_log": 1928,
+    "uncited_tracked_bodies": 411,
+    "published_at_commit": "c388b5c1e10e317f85d3b53c283526f33b994037",
+    "tracked_bodies_before_this_cycle": 1778,
+    "promoted_by_this_cycle": 561,
+    "newly_cited_by_this_cycle": 2,
+    "uncited_before_this_cycle": 413
+   },
+   "identity_uncited_now_plus_newly_cited_equals_uncited_before": true,
+   "identity_tracked_equals_before_plus_promoted": true,
+   "orphan_findings_on_the_log": 120,
+   "orphan_findings_that_are_the_self_cycles": [],
+   "self_cycle_findings": 135,
+   "self_cycle_digests_cited_on_the_log": 9,
+   "self_cycle_digests_tracked_in_the_store": 9
+  },
+  "after": {
+   "label": "after",
+   "census_for_cycle": "scan_2026-09-10",
+   "census": {
+    "tracked_bodies": 2339,
+    "cited_digests_on_log": 1953,
+    "uncited_tracked_bodies": 411,
+    "published_at_commit": "c388b5c1e10e317f85d3b53c283526f33b994037",
+    "tracked_bodies_before_this_cycle": 1778,
+    "promoted_by_this_cycle": 561,
+    "newly_cited_by_this_cycle": 2,
+    "uncited_before_this_cycle": 413
+   },
+   "identity_uncited_now_plus_newly_cited_equals_uncited_before": true,
+   "identity_tracked_equals_before_plus_promoted": true,
+   "orphan_findings_on_the_log": 120,
+   "orphan_findings_that_are_the_self_cycles": [],
+   "self_cycle_findings": 135,
+   "self_cycle_digests_cited_on_the_log": 34,
+   "self_cycle_digests_tracked_in_the_store": 9
+  }
+ }
+}
