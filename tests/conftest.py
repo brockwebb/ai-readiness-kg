@@ -46,14 +46,19 @@ _REAL_EVENTS_DIR = eventlog._EVENTS_DIR
 def no_writes_to_the_real_event_log(monkeypatch):
     real_append = eventlog.append
 
-    def guarded(event, batch, tag=None):
+    # `cycle=` is the named-shard form (DN-003 decision 4, `events/cycle-<name>.jsonl`). It is
+    # passed THROUGH rather than dropped: a guard that silently lost the destination would send
+    # a cycle's events to `batch-None` and the test asserting the shard would fail for a reason
+    # that has nothing to do with what it is testing.
+    def guarded(event, batch=None, tag=None, cycle=None):
         if eventlog._EVENTS_DIR == _REAL_EVENTS_DIR:
             raise AssertionError(
                 "test appended to the REAL event log "
-                f"(event_type={event.get('event_type')!r}, batch={batch}, tag={tag!r}). "
+                f"(event_type={event.get('event_type')!r}, batch={batch}, tag={tag!r}, "
+                f"cycle={cycle!r}). "
                 "Use the ext_iso fixture, or monkeypatch eventlog._EVENTS_DIR onto tmp_path."
             )
-        return real_append(event, batch, tag)
+        return real_append(event, batch, tag, cycle)
 
     monkeypatch.setattr(eventlog, "append", guarded)
 

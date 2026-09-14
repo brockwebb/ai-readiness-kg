@@ -42,9 +42,34 @@ def _events_dir() -> Path:
 # projection, gates and monitors never see them by accident; tevv scripts read them by tag.
 _TAG_RE = re.compile(r"^[a-z][a-z0-9_]{0,31}$")
 
+# Cycle shards (DN-003 decision 4): `cycle-<name>.jsonl` holds the events of ONE assessment
+# cycle, named from the cycle rather than from an ingest batch. A batch number is the right
+# unit for an extraction run, which is a batch; it is the wrong unit for a cycle, which has a
+# name the rest of the repo already uses (`state/<cycle>.json`, the matrices, the figures, the
+# report's `snapshot_cycle`). Allocating one by hand is how `publish.CYCLE_BATCH` came to be a
+# typed table that had to be edited before every publication.
+#
+# They are GRAPH shards, unlike tagged ones: `replay()` yields them by default, after the
+# numbered batches and in name order, so a stranger replaying the log gets every judgement the
+# project has asserted (DN-003 decision 1). Ordering across shards is documented rather than
+# depended upon — `scan.publish.project` buffers Finding events and writes them after the
+# Observations of the same replay, so a Finding can cite evidence from any shard.
+_CYCLE_RE = re.compile(r"^[a-z][a-z0-9_.\-]{0,63}$")
 
-def _shard_path(batch: int, tag: str | None = None) -> Path:
-    """events/batch-{NNN}.jsonl (NNN zero-padded), or batch-{NNN}_{tag}.jsonl when tagged."""
+
+def _shard_path(batch: int | None = None, tag: str | None = None,
+                cycle: str | None = None) -> Path:
+    """events/batch-{NNN}.jsonl (NNN zero-padded), batch-{NNN}_{tag}.jsonl when tagged, or
+    events/cycle-{name}.jsonl for a named cycle shard."""
+    if (batch is None) == (cycle is None):
+        raise ValueError("exactly one of batch= or cycle= must be given, "
+                         f"got batch={batch!r}, cycle={cycle!r}")
+    if cycle is not None:
+        if tag is not None:
+            raise ValueError("a cycle shard is not tagged; it is already named")
+        if not isinstance(cycle, str) or not _CYCLE_RE.match(cycle):
+            raise ValueError(f"cycle must match {_CYCLE_RE.pattern}, got {cycle!r}")
+        return _events_dir() / f"cycle-{cycle}.jsonl"
     if not isinstance(batch, int) or isinstance(batch, bool) or batch < 0:
         raise ValueError(f"batch must be a non-negative int, got {batch!r}")
     if tag is not None and not _TAG_RE.match(tag):
@@ -72,8 +97,10 @@ def schema_version() -> str:
     raise ValueError(f"no top-level 'schema_version' key in {_SCHEMA_PATH}")
 
 
-def append(event: dict, batch: int, tag: str | None = None) -> str:
-    """Append one event as a JSON line to ``events/batch-{batch:03d}.jsonl`` and return its
+def append(event: dict, batch: int | None = None, tag: str | None = None,
+           cycle: str | None = None) -> str:
+    """Append one event as a JSON line to ``events/batch-{batch:03d}.jsonl`` — or, when
+    ``cycle=`` is given instead, to ``events/cycle-{cycle}.jsonl`` — and return its
     ``event_id``.
 
     Injects (and overwrites, so the log's provenance is authoritative, not caller-supplied):
@@ -90,7 +117,7 @@ def append(event: dict, batch: int, tag: str | None = None) -> str:
         "schema_version": schema_version(),
     }
     line = json.dumps(record, ensure_ascii=False)
-    with _shard_path(batch, tag).open("a", encoding="utf-8") as fh:
+    with _shard_path(batch, tag, cycle).open("a", encoding="utf-8") as fh:
         fh.write(line + "\n")
         fh.flush()
     return event_id
@@ -108,22 +135,40 @@ def current_batch() -> int:
     return highest
 
 
-def replay(tag: str | None = None) -> Iterator[dict]:
-    """Yield every event across all shards, in batch order then line order.
+def shards(tag: str | None = None) -> list:
+    """Every shard ``replay(tag)`` reads, in the order it reads them.
 
-    ``tag=None`` (default) replays only the untagged graph shards. ``tag="x"`` replays only
-    the shards named ``batch-NNN_x.jsonl`` — tagged shards never mix into the graph replay.
+    Named separately from ``replay`` because "which files is the log" is a question the gates
+    ask directly — the append-only check reads each shard's bytes, not its events — and a
+    second enumeration of the shard set would be a second thing to be wrong.
 
-    Fail loud on a corrupt line — a silently skipped event is a silently wrong projection
-    (standard 4)."""
+    Numbered batches first, in batch order; then, for the default (untagged) graph replay, the
+    named cycle shards in name order. A tagged replay sees neither the untagged batches nor the
+    cycle shards: tagged shards are off-graph by construction.
+    """
     if not _EVENTS_DIR.is_dir():
-        return
+        return []
     pattern = re.compile(r"batch-(\d+)" + (re.escape("_" + tag) if tag else ""))
-    shards = sorted(
+    out = sorted(
         (p for p in _EVENTS_DIR.glob("batch-*.jsonl") if pattern.fullmatch(p.stem)),
         key=lambda p: int(pattern.fullmatch(p.stem).group(1)),
     )
-    for shard in shards:
+    if tag is None:
+        out += sorted(p for p in _EVENTS_DIR.glob("cycle-*.jsonl")
+                      if _CYCLE_RE.match(p.stem[len("cycle-"):]))
+    return out
+
+
+def replay(tag: str | None = None) -> Iterator[dict]:
+    """Yield every event across all shards, in batch order then line order.
+
+    ``tag=None`` (default) replays the untagged graph shards: the numbered batches, then the
+    named cycle shards (DN-003 decision 4). ``tag="x"`` replays only the shards named
+    ``batch-NNN_x.jsonl`` — tagged shards never mix into the graph replay.
+
+    Fail loud on a corrupt line — a silently skipped event is a silently wrong projection
+    (standard 4)."""
+    for shard in shards(tag):
         with shard.open(encoding="utf-8") as fh:
             for lineno, line in enumerate(fh, 1):
                 line = line.strip()
