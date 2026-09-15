@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  airkg-dispatch — launchd job for the standing dispatcher.
+  Task: cc_tasks/2026-09-15_standing_dispatcher.md §2, decision 7.
+  Design: docs/design/2026-09-15_DN-006_standing_dispatcher.md decision 1.
+
+  launchd IS the loop; `seldon dispatch once` is the pass. There is no daemon to supervise.
+
+  StartInterval is seldon.yaml `dispatch.poll_interval_s` (300 s) and has NO MEASURED BASIS —
+  see the comment on that key. The two must be changed together; the wrapper refuses if they
+  disagree, so the plist cannot drift away from the file that explains it.
+
+  RunAtLoad is false: loading the job should not fire a pass, because a pass can launch a CC
+  session and `launchctl load` is something an operator does while looking at something else.
+
+  Installed with:
+    cp scripts/jobs/com.brock.airkg-dispatch.plist ~/Library/LaunchAgents/
+    launchctl load ~/Library/LaunchAgents/com.brock.airkg-dispatch.plist
+  THIS TASK DOES NOT INSTALL OR LOAD IT, and `dispatch.enabled` is false, so a loaded job is a
+  no-op that says `dispatch is disabled` and writes nothing.
+-->
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.brock.airkg-dispatch</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/bash</string>
+        <string>/Users/brock/GitHub/ai-readiness-kg/scripts/jobs/airkg_dispatch.sh</string>
+    </array>
+    <key>StartInterval</key>
+    <integer>300</integer>
+    <key>RunAtLoad</key>
+    <false/>
+    <key>WorkingDirectory</key>
+    <string>/Users/brock/GitHub/ai-readiness-kg</string>
+</dict>
+</plist>

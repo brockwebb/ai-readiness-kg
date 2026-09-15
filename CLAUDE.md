@@ -79,6 +79,8 @@ When a Desktop session registers a cc_task, it must end that turn by giving the 
 
 Rules for CC when dispatched this way: read every addendum before any step (a task whose addendum says SUPERSEDED is not executed — stop and report); honor the task's own SEQUENCING line; write the RESULT, run `seldon cc complete`, commit and push. Rules for Desktop: never end a registration turn without the dispatch line; sequencing constraints between queued tasks are stated in the dispatch line, not assumed.
 
+**An addendum supersedes its base task by carrying `**Status:** SUPERSEDED` within its first ten lines, and a task file is dispatchable only when it carries all three of `**Spend:**`, `**Network:**` and `**Framework layer served`** — the marker and the three-header rule are machine-read by `seldon dispatch` (DN-006 decision 3, its ADDENDUM_01, and DN-005 §5 rule 1), so a supersession expressed only in prose is a supersession the dispatcher cannot see, and a task file missing a header is not a candidate rather than a failure. **While `dispatch.enabled` is true in `seldon.yaml`, the operator does not hand-dispatch** (DN-006 decision 10): the dispatcher cannot see a session it did not launch except through the clean-tree criterion, so a hand-dispatched session and a dispatched one in the same checkout is the DD-019 batch-identity class in the one place the design cannot guard, and the guard is the rule.
+
 ### The RESULT waits for the suite (operator-ordered, 2026-09-09)
 
 **No RESULT file is created until the full suite, `seldon verify` and the protected-paths diff have run to completion and their output is on disk.** The RESULT is then written from that output.

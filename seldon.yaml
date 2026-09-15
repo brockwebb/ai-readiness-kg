@@ -14,3 +14,70 @@ shared_ontology:
   source: /Users/brock/GitHub/seldon/ontology
   vocabularies:
   - validity/VALIDITY_VOCABULARY.md
+
+# ---------------------------------------------------------------- the standing dispatcher
+#
+# `seldon dispatch once|status|lease reap`, from the Seldon repo
+# (`docs/design/2026-09-15_standing_dispatcher.md` there). Design note:
+# docs/design/2026-09-15_DN-006_standing_dispatcher.md, decisions 1 to 7, 9 and 10.
+#
+# What it does: a registered ResearchTask whose gate is clean is claimed and launched from a
+# schedule instead of waiting for a person to paste a dispatch line. Only tasks whose file
+# carries `**Spend:**`, `**Network:**` and `**Framework layer served` are candidates at all, so
+# installing the job changes the behaviour of nothing already queued.
+dispatch:
+
+  # THE KILL SWITCH, and it ships false. Enabling is the first line of the cadence task
+  # (DN-006 decision 8), after the operator-dispatched queue has drained under decision 10 —
+  # "while dispatch.enabled is true, the operator does not hand-dispatch", because a
+  # hand-dispatched session and a dispatched one in the same checkout is the batch-identity
+  # class (DD-019) in the one place the design cannot guard.
+  #
+  # Read on EVERY pass, never cached. A bool, not a string: a truthy "false" is refused.
+  enabled: false
+
+  # The branch a pass may dispatch on. Any other branch fails c7, together with a dirty tree.
+  branch: main
+
+  # THE STANDING BAND, as a REFERENCE and never a copied number (DN-006 §5). This is the same
+  # value the preemptive spend guard enforces (DD-022, `kg/spend.py`); a second copy here would
+  # drift silently the first time the operator moved the cap and nothing would say so.
+  # `tests/test_dispatch_config.py` asserts the resolved value equals what `kg/spend.py` reads.
+  standing_band_ref: controls.yaml#spend.daily_tokens
+
+  # **NO MEASURED BASIS** (DN-006 §5, stated there and repeated here because this is the file
+  # an operator changes it in). A pass is a local graph read at zero spend, so the cost of
+  # polling often is near nothing and the cost of polling rarely is latency — but which value
+  # is right is not known. After one week of `dispatch_launched` events, dispatch latency
+  # (registration `created_at` to launch) is measurable and this is set from it. Until then it
+  # is a declared starting value and says so.
+  poll_interval_s: 300
+
+  # What a dispatched session may do without being asked. `bypassPermissions` is the CLI's
+  # non-interactive mode (claude 2.1.272: --permission-mode acceptEdits|auto|bypassPermissions|
+  # manual|dontAsk|plan); a headless session in any prompting mode blocks forever on the first
+  # tool call, having consumed a claim and produced nothing.
+  #
+  # DN-006 decision 5 asks for this to be DERIVED from how this repo already runs `claude -p`
+  # unattended. It cannot be: the only unattended invocation here is
+  # `kg/extraction/model_stub.py`, which passes `--allowed-tools ""` from a hermetic empty cwd
+  # — no tools at all, deliberately, so a JSON-only call cannot narrate. That is evidence this
+  # repository has never run a tool-executing headless session, so there was nothing to derive
+  # and the value comes from the CLI's own interface. Recorded in DN-006's ADDENDUM_01.
+  #
+  # It is HERE and not only in the plist, per decision 5: the one setting that decides what an
+  # unattended session may do to this checkout belongs in the file an operator reads to answer
+  # that question.
+  permission_mode: bypassPermissions
+
+  # The kill file, the burn's own idiom (DD-004) rather than a third mechanism. Present =
+  # every pass stops, and the appearance is recorded once on the log, not once per poll.
+  stop_file: .seldon/DISPATCH_STOP
+
+  # One instance, by flock, with an identified holder. Reaped only by the operator and only
+  # when the holder PID is gone — never by age (DD-022's orphan rule).
+  lease_file: .seldon/dispatch.lock
+
+  # `logs/dispatch/<stem>.log`, one per dispatched task, with `EXIT=` appended. Gitignored:
+  # a dispatched session's transcript is a local artifact; what ships is the RESULT it wrote.
+  log_dir: logs/dispatch
