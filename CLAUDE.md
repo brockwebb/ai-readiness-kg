@@ -6,6 +6,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
+**The goal is the framework.** An AI-readiness framework for federal statistical publishers: a way to rate and score, quantitatively and qualitatively, whether the public and the tools the public now uses can reach, understand and use the data they paid for (`docs/design/2026-09-15_DN-005_reorientation_the_framework_is_the_goal.md` §1). Everything in this repository is a level of that framework, a measurement of it, a view of it, or a demonstration of it. The knowledge graph described in the next paragraph is the framework's **validity layer**; **L0** is its most basic level — the host-level checks, and the one step with cold, re-derivable data behind it today. The L0 report, the site and the January ICSP briefing are views of the framework and evidence under it, never the product. DN-005 is the standing map: read it before authoring or executing anything, because naming the most recent artifact as the goal is the error it exists to stop.
+
 A knowledge graph that is the **validity layer** under the FSS AI-readiness survey: which definitions of *AI readiness* / *AI-ready data* exist, which constructs the literature proposes, which instruments operationalize them, and the crosswalk survey item → construct → definition → primary source. Every assertion must be citable by a stranger.
 
 Status (2026-08): corpus epoch **v1 frozen at 71 docs, 70 of 71 contributing edges to the graph** — `itu-ai-ready-analysis-towards-a-standardized-readiness-frame` was later cut `extent_unremediable` (served only through ITU's JavaScript e-publications reader, no downloadable form), so the "71/71 extracted" this line used to claim does not hold against the graph (`cc_tasks/2026-09-04_extraction_gap_diagnostic_RESULT.md` §1). bulk-v1 closed out. Gate results in `docs/research/2026-08-14_bulk_v1_closeout_gate_report.md`; three gates (`quarantine_rate`, `edge_endpoint_validation`, `orphan_rate`) FAIL as *recorded findings* — a failed pre-registered gate triggers investigation, never retuning.
@@ -61,6 +63,7 @@ Transcribed from `docs/schema_v0.1.md` (the doc is authoritative; currently v0.2
 
 ## Where to read first
 
+- `docs/design/2026-09-15_DN-005_reorientation_the_framework_is_the_goal.md` — the standing map every task cites.
 - `docs/design_decisions.md` — DD-001..DD-008 (append-only, dated).
 - `docs/schema_v0.1.md` — node/edge types, provenance (§4), extraction protocol (§5), state machine (§7).
 - `cc_tasks/*_RESULT.md` — execution records; the newest (`2026-08-14_bulk_v1_closeout_RESULT.md`) is the current state of play. `cc_tasks/` is intentionally tracked; `handoffs/` is not.
