@@ -106,7 +106,13 @@ EXEMPT = [
     (re.compile(r"\b\d+ U\.S\.C\.(?:\s*\d+)(?:\s*,\s*\d+)*"), "a statute citation"),
     (re.compile(r"\b(?:19|20)\d{2}\b"), "a year"),
     (re.compile(r"§\s?\d+(?:\.\d+)*"), "a section reference"),
-    (re.compile(r"\b(?:DD|AD|PL|RFC)[- ]?\d+"), "a numbered decision, RFC or item"),
+    # `DN` joins the class it always belonged to. The entry reads "a numbered decision" and
+    # design NOTES are numbered decisions — DN-001 .. DN-005 — they just did not exist when
+    # this list was written (the first is 2026-09-12, this list is 2026-09-09). Widening the
+    # class the entry already names is not the same move as adding a pattern to swallow a
+    # measurement that failed, which is what the note above forbids: `DN-004` is an address a
+    # reader types, and there is no reading of it as a number this report measured.
+    (re.compile(r"\b(?:DD|DN|AD|PL|RFC)[- ]?\d+"), "a numbered decision, RFC or item"),
     (re.compile(r"\bA\d{1,2}(?:-[a-z]+)?\b"), "a leg code"),
     (re.compile(r"\bG1-D\b|\bB3\b|\bD1\b|\bD4\b|\bF4\b|\bE5\b|\bF\d\b"), "a leg or figure code"),
     (re.compile(r"\bv\d+\b"), "a rule version"),
@@ -238,7 +244,7 @@ def build_tree_dirty() -> bool:
                                text=True, cwd=REPO).stdout.strip())
 
 
-def version_block(pub: dict, today: str | None = None) -> str:
+def version_block(pub: dict, today: str | None = None, standing: str | None = None) -> str:
     """The title page's version paragraph, generated on every build.
 
     Generated rather than written into `sections/10_frame.md`, because a commit hash and a
@@ -249,6 +255,14 @@ def version_block(pub: dict, today: str | None = None) -> str:
     """
     from datetime import datetime, timezone
     day = today or datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    # DN-004 decision 2. One generated sentence saying whether a later judgement of this
+    # cycle's evidence exists and what it changed — appended here rather than written into
+    # `sections/10_frame.md`, for the same reason the commit hash is: a sentence about the
+    # graph, typed into prose, is stale the moment the graph moves and nothing reports that it
+    # has. The counts in it arrive already wrapped in the value markers, so the bare-numeral
+    # lint reads them as what they are, numbers that came FROM the graph, and the line needs no
+    # exemption of its own (`snapshot_successor.supersession_line`).
+    standing = f" {standing}" if standing else ""
     return (f"**Version.** Snapshot cycle `{pub['snapshot_cycle']}` · version "
             f"`{pub['version']}` · built from commit `{build_commit()}` on `{day}` (UTC); "
             f"the commit that publishes this build is that one's child. This document is a "
@@ -262,7 +276,8 @@ def version_block(pub: dict, today: str | None = None) -> str:
             # consumer reads, so the faces cannot drift.
             f"**Licence.** The report and the data it is a view of are `{pub['license_data']}` "
             f"(`LICENSE-DATA`); the code that produced them is `{pub['license_code']}` "
-            f"(`LICENSE`). {' '.join(pub['license_corpus_note'].split())}")
+            f"(`LICENSE`). {' '.join(pub['license_corpus_note'].split())}"
+            f"{standing}")
 
 
 #: Where the version block goes: straight after the report's H1, ahead of the standfirst.
@@ -291,6 +306,26 @@ def build(check: bool = False) -> int:
     sections = sorted(SECTIONS_DIR.glob("*.md"))
     if not sections:
         raise SystemExit(f"FATAL: no sections in {SECTIONS_DIR}")
+
+    # ---------------------------------------------------------------- DN-004, before anything
+    #
+    # The standing guard, and it runs BEFORE a line is rendered: if the snapshot's successor on
+    # the event log moves any number this report publishes — a tagged Result's value or a
+    # published matrix cell — the build refuses and names them (DN-004 decision 3), because the
+    # answer to that is a report REVISION under DN-002 and not another build. A successor that
+    # moves nothing is the ordinary case and it is reported in the version block instead
+    # (decision 2), so a reader of the PDF learns it from the document rather than from a
+    # RESULT file.
+    pub = load_publication()
+    sys.path.insert(0, str(REPO / "scripts"))
+    import snapshot_successor as succ
+    succ.set_value_marker(lambda t: f"{MARK_OPEN}{t}{MARK_CLOSE}")
+    standing = succ.check(pub["snapshot_cycle"])
+    cmp_ = standing["comparison"]
+    refusal = succ.refuse_if_moved(standing)
+    if refusal:
+        print(refusal, file=sys.stderr)
+        return 1
 
     cfg = load_project_config(REPO)
     db = cfg["neo4j"]["database"]
@@ -325,9 +360,9 @@ def build(check: bool = False) -> int:
         proposed |= {e.artifact_name for e in errs
                      if e.check_id == "SI-03" and e.artifact_name}
         parts.append(resolved)
-    pub = load_publication()
     marked = insert_version_block("\n\n".join(p.strip() for p in parts) + "\n",
-                                  version_block(pub))
+                                  version_block(pub, standing=succ.supersession_line(
+                                      standing["info"])))
     body = marked.replace(MARK_OPEN, "").replace(MARK_CLOSE, "")
 
     fatal = [e for e in errors if e.fatal]
@@ -355,6 +390,11 @@ def build(check: bool = False) -> int:
         "version": pub["version"],
         "build_commit": build_commit(),
         "build_commit_dirty": build_tree_dirty(),
+        "snapshot_standing": standing["info"] or "no successor on the event log",
+        "successor_comparison": ({k: cmp_[k] for k in
+                                  ("successor", "tagged_results_on_this_cycle",
+                                   "recomputed_and_compared", "matrix_rows_compared", "moved")}
+                                 if cmp_ else None),
     }
     blocked = bool(fatal or unresolved or bare or missing)
     summary["gate"] = "BLOCKED" if blocked else "PASS"

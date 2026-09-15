@@ -394,18 +394,24 @@ def requests_fragment(p: dict) -> str:
     return "\n".join(out) + "\n"
 
 
-def main(argv=None) -> int:
-    ap = argparse.ArgumentParser(description=__doc__,
-                                 formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--dry-run", action="store_true")
-    ap.add_argument("--cycle", default=None,
-                    help="build a cycle other than params.cycle.name — a RE-JUDGEMENT, whose "
-                         "matrices and Results are the judgement of record while the requests "
-                         "it quotes remain the measured cycle's")
-    a = ap.parse_args(argv)
-    params = load_params()
-    cycle = a.cycle or params["cycle"]["name"]
-    suffix = cycle_results.cycle_suffix(cycle)
+def compute(cycle: str, params: dict | None = None) -> dict:
+    """Everything the three matrices and this cycle's registered Results ARE, as data.
+
+    Factored out of `main` so a cycle can be computed **without writing a file and without
+    registering a Result**. `cc_tasks/2026-09-14_standing_guards.md` decision 3 needs exactly
+    that: on every build the report compares what the snapshot's SUCCESSOR would publish
+    against what the snapshot did, and a comparison that had to run the writer to learn the
+    numbers would overwrite the published matrices in order to find out whether they moved.
+    (`--dry-run` was not that function: it printed a summary *after* `write_pair` had already
+    written all six files, and it returned before the Result values were computed at all.)
+
+    The Result rows come back under their BASE names, unstamped. `cycle_results.name_for` is
+    still the single point where a cycle is stamped onto a name; a comparison across two
+    cycles matches on the base and on nothing else, because
+    `scan_l0_a1_pass_2026-09-10_rj2` and `scan_l0_a1_pass_2026-09-10_rj3` are the same metric
+    measured twice, and their full names are the one thing about them guaranteed to differ.
+    """
+    params = params or load_params()
     p, tiers = payload(cycle), tier_of(params)
     tier0 = list(params["tier0"]["legs"])
 
@@ -427,47 +433,14 @@ def main(argv=None) -> int:
                      f"disagree on {dis['cells']} of those cells across {dis['bodies']} "
                      f"bodies, so the surface is named on every row."),
             "surface_disagreements": dis}
-    files = [
-        write_pair(f"scan_matrix_tierA_{suffix}", {**head, "tier": "A"}, tier_a, tier0, "host"),
-        write_pair(f"scan_matrix_tierC_{suffix}",
-                   {**head, "tier": "C",
-                    "note": head["note"] + " Tier C reference hosts enter no Tier A "
-                                           "denominator and appear on no agency matrix "
-                                           "(DD-059)."},
-                   tier_c, tier0, "host"),
-        write_pair(f"scan_matrix_product_{suffix}",
-                   {**head, "tier": "A", "partial": True,
-                    "declared_agencies": declared_agencies, "declared_surfaces": declared,
-                    "note": ("PARTIAL. Product-level legs over DECLARED flagship surfaces "
-                             "only. An agency with no declared flagship carries `not "
-                             "declared`, which is neither a fail nor an omission.")},
-                   product, PRODUCT_LEGS, "product"),
-    ]
-    fragments = [write_fragment("matrix_tierA", tier_a, tier0, "host"),
-                 write_fragment("matrix_tierC", tier_c, tier0, "host"),
-                 write_fragment("matrix_product", product, PRODUCT_LEGS, "product")]
-    GEN_DIR.mkdir(parents=True, exist_ok=True)
-    for stem, text in (("rules_by_leg", rules_fragment(p)),
-                       ("requests_per_netloc", requests_fragment(evidence_payload(p)))):
-        path = GEN_DIR / f"{stem}.md"
-        path.write_text(text, encoding="utf-8")
-        fragments.append(path)
-
-    summary = {"tier_a_rows": len(tier_a), "tier_c_rows": len(tier_c),
-               "fragments": [str(f.relative_to(REPO)) for f in fragments],
-               "product_rows": len(product), "declared_surfaces": declared,
-               "declared_agencies": declared_agencies,
-               "surface_disagreements": dis,
-               "host_counts": {l: {k: v for k, v in c.items() if k != "wilson_lo"}
-                               for l, c in host_counts.items()},
-               "product_counts": {l: {k: v for k, v in c.items() if k != "wilson_lo"}
-                                  for l, c in prod_counts.items()},
-               "files": [str(f.relative_to(REPO)) for pair in files for f in pair]}
-    if a.dry_run:
-        print(json.dumps(summary, indent=1))
-        return 0
 
     zero_legs = sorted(l for l, c in prod_counts.items() if c["applicable_n"] and not c["pass"])
+    # The per-leg family, whose notes `main` used to tag with the task on the way to the
+    # registrar. The tag is applied here instead, so what `compute` returns is what gets
+    # registered and a comparison across cycles is reading the same rows the registrar saw.
+    # The two flagship-count rows below are NOT tagged, because they never were: they were
+    # built already-named in `main` and their registered descriptions end at the section
+    # reference. Re-tagging them would change the description of a Result that is bound.
     per_leg = ([
         ("scan_l0_product_legs", len(PRODUCT_LEGS),
          f"Product-level checks asked of every declared flagship surface in cycle {cycle}: "
@@ -510,32 +483,128 @@ def main(argv=None) -> int:
         + leg_results(tierc_counts, "scan_l0_tierc_", cycle,
                       "the 3 Tier C reference hosts' host-level surfaces, which enter no Tier "
                       "A denominator (DD-059)", with_upper95=True, family="tierc"))
+    results = [(b, v, f"{n} ({TASK})") for b, v, n in per_leg] + [
+        ("scan_l0_declared_flagship_agencies", declared_agencies,
+         f"Tier A agencies with at least one operator-DECLARED flagship surface in cycle "
+         f"{cycle}, of the 16 in the frame. The product-level matrix is denominated by these "
+         f"and is labelled PARTIAL for that reason: the remaining agencies carry a host row "
+         f"and its probes and nothing else, and a product leg cannot be asked of a product "
+         f"nobody has named. `not declared` is not `fail`. "
+         f"docs/design/fss_flagship_shortlist.md is where the declaration gets made. "
+         f"Task {TASK} §1.3."),
+        ("scan_l0_declared_flagship_surfaces", declared,
+         f"Declared flagship SURFACES in cycle {cycle}, across "
+         f"{declared_agencies} agencies: some agencies declare more than one, and the "
+         f"product matrix has one row per surface so two flagships of one agency that "
+         f"disagree are visible as two rows rather than averaged into one. Task {TASK} §1.3."),
+    ]
+
+    return {"cycle": cycle, "suffix": cycle_results.cycle_suffix(cycle), "payload": p,
+            "params_hash": p["params_hash"], "tier0": tier0, "head": head,
+            "tier_a": tier_a, "tier_c": tier_c, "product": product,
+            "declared": declared, "declared_agencies": declared_agencies,
+            "host_counts": host_counts, "product_counts": prod_counts,
+            "tierc_counts": tierc_counts, "surface_disagreements": dis,
+            "zero_legs": zero_legs, "results": results}
+
+
+def write_matrices(c: dict, out_dir: Path | None = None, gen_dir: Path | None = None) -> dict:
+    """The six matrix files and the five markdown fragments, from a `compute` result.
+
+    `out_dir` and `gen_dir` default to the published tree and are parameters rather than
+    globals so decision 3's comparison can build the successor cycle into a TEMPORARY tree.
+    Nothing here registers anything; the caller does that.
+    """
+    global OUT_DIR, GEN_DIR
+    out_dir = out_dir or OUT_DIR
+    gen_dir = gen_dir or (out_dir / "generated")
+    # `write_pair` and `write_fragment` read the module globals at call time (the convention
+    # `tests/conftest.py` depends on everywhere in this repo), so the redirection is done by
+    # swapping them for the duration and restoring them after — including on an exception,
+    # or a failed comparison would leave the writer pointed at a temporary directory that no
+    # longer exists and the NEXT build would write the published matrices into nowhere.
+    prev_out, prev_gen = OUT_DIR, GEN_DIR
+    OUT_DIR, GEN_DIR = out_dir, gen_dir
+    try:
+        suffix, head, tier0, p = c["suffix"], c["head"], c["tier0"], c["payload"]
+        files = [
+            write_pair(f"scan_matrix_tierA_{suffix}", {**head, "tier": "A"},
+                       c["tier_a"], tier0, "host"),
+            write_pair(f"scan_matrix_tierC_{suffix}",
+                       {**head, "tier": "C",
+                        "note": head["note"] + " Tier C reference hosts enter no Tier A "
+                                               "denominator and appear on no agency matrix "
+                                               "(DD-059)."},
+                       c["tier_c"], tier0, "host"),
+            write_pair(f"scan_matrix_product_{suffix}",
+                       {**head, "tier": "A", "partial": True,
+                        "declared_agencies": c["declared_agencies"],
+                        "declared_surfaces": c["declared"],
+                        "note": ("PARTIAL. Product-level legs over DECLARED flagship surfaces "
+                                 "only. An agency with no declared flagship carries `not "
+                                 "declared`, which is neither a fail nor an omission.")},
+                       c["product"], PRODUCT_LEGS, "product"),
+        ]
+        fragments = [write_fragment("matrix_tierA", c["tier_a"], tier0, "host"),
+                     write_fragment("matrix_tierC", c["tier_c"], tier0, "host"),
+                     write_fragment("matrix_product", c["product"], PRODUCT_LEGS, "product")]
+        gen_dir.mkdir(parents=True, exist_ok=True)
+        for stem, text in (("rules_by_leg", rules_fragment(p)),
+                           ("requests_per_netloc", requests_fragment(evidence_payload(p)))):
+            path = gen_dir / f"{stem}.md"
+            path.write_text(text, encoding="utf-8")
+            fragments.append(path)
+    finally:
+        OUT_DIR, GEN_DIR = prev_out, prev_gen
+    return {"files": files, "fragments": fragments}
+
+
+def main(argv=None) -> int:
+    ap = argparse.ArgumentParser(description=__doc__,
+                                 formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("--dry-run", action="store_true",
+                    help="compute and report; write no file and register no Result")
+    ap.add_argument("--cycle", default=None,
+                    help="build a cycle other than params.cycle.name — a RE-JUDGEMENT, whose "
+                         "matrices and Results are the judgement of record while the requests "
+                         "it quotes remain the measured cycle's")
+    a = ap.parse_args(argv)
+    params = load_params()
+    cycle = a.cycle or params["cycle"]["name"]
+    c = compute(cycle, params)
+    dis = c["surface_disagreements"]
+
+    summary = {"tier_a_rows": len(c["tier_a"]), "tier_c_rows": len(c["tier_c"]),
+               "product_rows": len(c["product"]), "declared_surfaces": c["declared"],
+               "declared_agencies": c["declared_agencies"],
+               "surface_disagreements": dis,
+               "host_counts": {l: {k: v for k, v in s_.items() if k != "wilson_lo"}
+                               for l, s_ in c["host_counts"].items()},
+               "product_counts": {l: {k: v for k, v in s_.items() if k != "wilson_lo"}
+                                  for l, s_ in c["product_counts"].items()},
+               "results": len(c["results"])}
+    if a.dry_run:
+        # NOTHING is written. It used to write all six matrices and both fragments before
+        # reaching this line, so `--dry-run` overwrote the published tree and then said it had
+        # not; the writer is a separate call now and a dry run simply does not make it.
+        print(json.dumps(summary, indent=1))
+        return 0
+
+    written = write_matrices(c)
+    summary["fragments"] = [str(f.relative_to(REPO)) for f in written["fragments"]]
+    summary["files"] = [str(f.relative_to(REPO)) for pair in written["files"] for f in pair]
 
     out = cycle_results.register(
-        [(cycle_results.name_for(b, cycle), v, f"{n} ({TASK})") for b, v, n in per_leg]
-        + [(cycle_results.name_for("scan_l0_declared_flagship_agencies", cycle),
-          declared_agencies,
-          f"Tier A agencies with at least one operator-DECLARED flagship surface in cycle "
-          f"{cycle}, of the 16 in the frame. The product-level matrix is denominated by these "
-          f"and is labelled PARTIAL for that reason: the remaining agencies carry a host row "
-          f"and its probes and nothing else, and a product leg cannot be asked of a product "
-          f"nobody has named. `not declared` is not `fail`. "
-          f"docs/design/fss_flagship_shortlist.md is where the declaration gets made. "
-          f"Task {TASK} §1.3."),
-         (cycle_results.name_for("scan_l0_declared_flagship_surfaces", cycle), declared,
-          f"Declared flagship SURFACES in cycle {cycle}, across "
-          f"{declared_agencies} agencies: some agencies declare more than one, and the "
-          f"product matrix has one row per surface so two flagships of one agency that "
-          f"disagree are visible as two rows rather than averaged into one. Task {TASK} §1.3.")],
+        [(cycle_results.name_for(b, cycle), v, n) for b, v, n in c["results"]],
         cycle=cycle, script=SCRIPT_ARTIFACT,
-        data=f"scan_matrix_tierA_{suffix}",
-        data_path=f"docs/reports/scan_matrix_tierA_{suffix}.json",
+        data=f"scan_matrix_tierA_{c['suffix']}",
+        data_path=f"docs/reports/scan_matrix_tierA_{c['suffix']}.json",
         data_description=(
             f"The L0 host-level matrix for cycle {cycle}: one row per Tier A body, one column "
             f"per tier-0 leg, every cell naming the Finding identity it came from, plus the "
             f"count of probes the host refused to the identified client. Written by "
             f"scripts/build_l0_matrices.py from state/{cycle}.json under params_hash "
-            f"{p['params_hash'][:12]}.... Emitted as CSV and JSON beside the report so the "
+            f"{c['params_hash'][:12]}.... Emitted as CSV and JSON beside the report so the "
             f"matrix is machine-readable without parsing prose. Task {TASK}."))
     print(json.dumps({**summary, "registered": out}, indent=1))
     return 1 if out["failed"] else 0

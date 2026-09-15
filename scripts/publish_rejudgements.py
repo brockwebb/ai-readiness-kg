@@ -19,8 +19,19 @@ keeps forever (`cc_tasks/2026-09-07_scan_hygiene.md` §1, and the 120 that taugh
 the one it replaces. Each cycle is written and then projected, so the graph is never a
 generation behind the log.
 
+**`--project-once` is a wall-clock fix and not a different result**
+(`2026-09-14_rejudgements_on_the_log_RESULT.md` §7 item 4). Publishing the fourteen cycles took
+3 h 46 m, almost all of it in fourteen full projections that each produced the same end state
+the last one does. `project()` is RESET-AND-REPLAY: it deletes every scan-schema label and
+rebuilds them from the whole log, so it is a pure function of the log and running it N times
+leaves exactly what running it once leaves. The per-cycle default is kept, because for a LIVE
+cadence — one cycle, published as it is judged — the graph should never be a generation behind
+the log even for the length of a run; `--project-once` is for a BACKLOG, where the intermediate
+states are ones nobody reads and every one of them is discarded by the next reset.
+
     /opt/anaconda3/bin/python3 scripts/publish_rejudgements.py --dry-run
-    /opt/anaconda3/bin/python3 scripts/publish_rejudgements.py --no-project   # write only
+    /opt/anaconda3/bin/python3 scripts/publish_rejudgements.py --no-project    # write only
+    /opt/anaconda3/bin/python3 scripts/publish_rejudgements.py --project-once  # a backlog
     /opt/anaconda3/bin/python3 scripts/publish_rejudgements.py
 """
 from __future__ import annotations
@@ -143,7 +154,10 @@ def main(argv=None) -> int:
     ap.add_argument("--dry-run", action="store_true",
                     help="run §1 and print the plan; write nothing")
     ap.add_argument("--no-project", action="store_true",
-                    help="write the events without projecting after each cycle")
+                    help="write the events without projecting at all")
+    ap.add_argument("--project-once", action="store_true",
+                    help="project ONCE after the last cycle instead of after each one. Same "
+                         "end-state graph; see the module docstring.")
     ap.add_argument("--only", default=None, metavar="CYCLE")
     a = ap.parse_args(argv)
 
@@ -166,31 +180,47 @@ def main(argv=None) -> int:
         print("\nDRY RUN — nothing written", file=sys.stderr)
         return 0
 
-    written = []
+    if a.no_project and a.project_once:
+        raise SystemExit("REFUSING: --no-project and --project-once contradict each other")
+
+    def _project(rec):
+        counts = pub.project()
+        rec["projection"] = {k: counts[k] for k in
+                             ("observations", "findings", "supports", "supersedes",
+                              "supersedes_unresolved", "findings_current",
+                              "findings_superseded")}
+
+    written, projections = [], 0
     for row in pre["cycles"]:
         cycle = row["cycle"]
         src = REPO / "state" / f"{cycle}.json"
         rec = {"cycle": cycle, "generation": row["generation"]}
         rec.update(pub.write_events(docs[cycle], src))
         rec.update(pub.write_supersession(docs[cycle], src))
-        if not a.no_project:
-            counts = pub.project()
-            rec["projection"] = {k: counts[k] for k in
-                                 ("observations", "findings", "supports", "supersedes",
-                                  "supersedes_unresolved", "findings_current",
-                                  "findings_superseded")}
+        if not (a.no_project or a.project_once):
+            _project(rec)
+            projections += 1
         written.append(rec)
         print(json.dumps(rec, indent=1), flush=True)
+    if a.project_once and written:
+        _project(written[-1])
+        projections += 1
+        print(json.dumps({"projected_once_after": written[-1]["cycle"],
+                          "projection": written[-1]["projection"]}, indent=1), flush=True)
 
     after = shard_digests()
     shrank = [n for n, (size, _) in before.items() if after.get(n, [0])[0] < size]
     record = {"task": TASK, "rejudged_payloads": len(docs),
               "publication_order": [r["cycle"] for r in written],
+              "projection_mode": ("none" if a.no_project
+                                  else "once" if a.project_once else "per_cycle"),
+              "projections_run": projections,
               "written": written, "shards_before": before, "shards_after": after,
               "shards_that_shrank": shrank,
               "census": pub.census()}
     OUT.write_text(json.dumps(record, indent=1) + "\n", encoding="utf-8")
-    print(json.dumps({"written_cycles": len(written), "shards_that_shrank": shrank,
+    print(json.dumps({"written_cycles": len(written), "projections_run": projections,
+                      "shards_that_shrank": shrank,
                       "record": str(OUT.relative_to(REPO))}, indent=1))
     return 1 if shrank else 0
 

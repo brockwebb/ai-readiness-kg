@@ -633,7 +633,20 @@ Source: <a href="{e(pub['repository_url'])}">{e(pub['repository_url'])}</a>.
 
 # ---------------------------------------------------------------------------
 
-def build(check: bool = False) -> int:
+#: `--only <name>` -> the published paths that name may write. Declared rather than matched by
+#: prefix, so narrowing the write set is a listed decision and not a string coincidence.
+_ONLY = {"results_tagged": {"data/results_tagged.json"}}
+
+
+def _writes(only: str | None, rel: str) -> bool:
+    """Whether `rel` reaches disk under this `--only`. The CITATION files, the copies, the
+    manifest and the pages are gated at their own call sites, because each is written from its
+    own loop with its own side product (a root-level copy, a sha256 over the source); routing
+    them through one predicate would have meant one of them writing half."""
+    return only is None or rel in _ONLY[only]
+
+
+def build(check: bool = False, only: str | None = None) -> int:
     from scan import load_params
     pub = publication()
     suffix = cycle_suffix(pub["snapshot_cycle"])
@@ -657,12 +670,33 @@ def build(check: bool = False) -> int:
     appendix = sources_per_check()
     # 3. the tagged Results
     results = tagged_results()
+    # DN-004 decision 2's second consumer. The report's version block states the snapshot's
+    # standing in a sentence; the data file beside it states the same facts as fields, from the
+    # SAME query, so a machine reading `results_tagged.json` can tell that these 59 values are a
+    # view of a judgement that has a successor, and by how much. `tests/test_publication.py`
+    # asserts the two agree. Nothing typed: `snapshot_successor.successor_info` is the query.
+    import snapshot_successor as succ
+    standing = succ.check(pub["snapshot_cycle"])
+    cmp_ = standing["comparison"]
+    refusal = succ.refuse_if_moved(standing)
+    if refusal:
+        raise SystemExit(refusal)
     payloads = [("data/sources_per_check.json", appendix,
                  "The per-check source appendix: every check, every admitted source, its "
                  "doc_id, its URL and its locator."),
                 ("data/results_tagged.json",
                  {"task": TASK, "amended_by": EPHEMERAL_TASK,
                   "snapshot_cycle": pub["snapshot_cycle"],
+                  "snapshot_standing": standing["info"] or {
+                      "snapshot": pub["snapshot_cycle"], "successor": None,
+                      "note": "no later judgement of this cycle's evidence is on the "
+                              "event log; the snapshot is the current judgement of record"},
+                  "successor_moves_no_published_number": (
+                      None if cmp_ is None else cmp_["moved"] == 0),
+                  "successor_comparison": None if cmp_ is None else {
+                      k: cmp_[k] for k in ("successor", "tagged_results_on_this_cycle",
+                                           "recomputed_and_compared", "uncovered",
+                                           "matrix_rows_compared", "moved")},
                   "count": len(results), "results": results,
                   **provenance_buckets(results),
                   "note": ("Every Result the report quotes by name, with its value, its "
@@ -674,13 +708,20 @@ def build(check: bool = False) -> int:
                            "from and the command that recomputes it, collected in "
                            "`provenance_paths_ephemeral` — or unexplained, in which case it "
                            "is in `provenance_paths_absent` and this publication has a dead "
-                           "provenance path.")},
+                           "provenance path. `snapshot_standing` is what the event log says "
+                           "about the cycle these values are a view of: whether a later "
+                           "judgement of the same evidence exists, and how it differs. "
+                           "`successor_comparison` is the standing check that licenses "
+                           "publishing under the older snapshot at all (DN-004): every one of "
+                           "these Results and every published matrix cell recomputed under "
+                           "the successor and compared, and `moved` is how many differ. The "
+                           "build refuses while it is not zero.")},
                  "Every registered Result the report quotes: name, value, state, provenance.")]
 
     for rel, doc, label in payloads:
         path = SITE / rel
         path.parent.mkdir(parents=True, exist_ok=True)
-        if not check:
+        if not check and _writes(only, rel):
             path.write_text(json.dumps(doc, indent=1, ensure_ascii=False) + "\n",
                             encoding="utf-8")
         written.append(rel)
@@ -691,7 +732,7 @@ def build(check: bool = False) -> int:
     cited = []
     for published, root_rel, label in CITATION_FILES:
         text = citations[published]
-        if not check:
+        if not check and only is None:
             (REPO / root_rel).write_text(text, encoding="utf-8")
             (DATA / published).write_text(text, encoding="utf-8")
         cited.append({"published": f"data/{published}", "also_written_to": root_rel,
@@ -706,7 +747,7 @@ def build(check: bool = False) -> int:
         if not src.is_file():
             raise SystemExit(f"FATAL: {src_rel} does not exist; it cannot be published")
         dst = DATA / name
-        if not check:
+        if not check and only is None:
             shutil.copyfile(src, dst)
         entry = {"published": f"data/{name}", "source": src_rel,
                  "sha256": sha256(src), "bytes": src.stat().st_size,
@@ -747,7 +788,7 @@ def build(check: bool = False) -> int:
                 "note": ("`copies` are byte-for-byte copies of records canonical elsewhere in "
                          "the repository; the sha256 is of the SOURCE, so a drifted copy is "
                          "detectable. tests/test_publication.py asserts it.")}
-    if not check:
+    if not check and only is None:
         (DATA / "index.json").write_text(json.dumps(manifest, indent=1) + "\n",
                                          encoding="utf-8")
     written.append("data/index.json")
@@ -770,7 +811,7 @@ def build(check: bool = False) -> int:
     self_ = self_row(pub)
     files["index.html"] = index_html(pub, links, len(results), self_, commit, built)
     for name, text in files.items():
-        if not check:
+        if not check and only is None:
             (SITE / name).write_text(text, encoding="utf-8")
         written.append(name)
 
@@ -780,8 +821,18 @@ def build(check: bool = False) -> int:
                "appendix_rows": appendix["rows_per_leg"],
                "legs_without_source": appendix["legs_without_source"],
                "self_row": "measured" if self_ else "not measured (host not served)",
-               "crawlers_admitted": crawlers, "written": sorted(written),
-               "check_only": check}
+               "crawlers_admitted": crawlers,
+               # `written` is what this run COMPUTED and would publish; `wrote` is what reached
+               # disk. They differ under `--only` and under `--check`, and a summary that
+               # printed the first under the second's name would report writes that did not
+               # happen — which is the defect `--dry-run` had in the matrix builder and that
+               # decision 3 had to route around.
+               "written": sorted(written),
+               "wrote": ([] if check else
+                         sorted(r for r in written if _writes(only, r) or only is None)),
+               "snapshot_standing": standing["info"] or "no successor on the event log",
+               "successor_moved": None if cmp_ is None else cmp_["moved"],
+               "only": only, "check_only": check}
     print(json.dumps(summary, indent=1))
     return 0
 
@@ -790,8 +841,15 @@ def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--check", action="store_true", help="compute everything, write nothing")
+    ap.add_argument("--only", choices=("results_tagged",), default=None,
+                    help="write ONLY this payload and leave the rest of the published tree "
+                         "untouched. Everything is still computed and every refusal still "
+                         "fires; what narrows is what reaches disk. It exists because the "
+                         "site carries a build DATE on its index, so a full rebuild moves "
+                         "pages that a task with a narrower blast radius has not changed, and "
+                         "a diff nobody can read is a diff nobody checks.")
     a = ap.parse_args(argv)
-    return build(check=a.check)
+    return build(check=a.check, only=a.only)
 
 
 if __name__ == "__main__":

@@ -31,9 +31,16 @@ gate-task: gate-fast
 ## one. `cc_tasks/2026-09-11_absence_claims_under_scope_limitation.md` decision 5 adds the
 ## eighth fixture: it is the first control to catch a live instance of the blind-probe family
 ## rather than a payload being read after the fact, and its replay belongs beside the others.
+## `cc_tasks/2026-09-14_standing_guards.md` decisions 1 and 3 add the ninth and tenth. They
+## guard two incidents this repository has already had rather than two it can imagine:
+## fourteen judgements of record that lived in `state/` and on no shard of the log for four
+## days with every gate green (DN-003 decision 6), and a published report whose snapshot had a
+## successor on the graph that nothing compared it against (DN-004 decisions 2 and 3).
 guards:
 	$(PY) -m pytest tests/test_guards_replay_their_incidents.py \
-		tests/test_control_fixture_robots_forbids_product.py -q
+		tests/test_control_fixture_robots_forbids_product.py \
+		tests/test_standing_guards.py \
+		tests/test_snapshot_successor.py -q
 
 gate-full:
 	@mkdir -p $(LOGS)

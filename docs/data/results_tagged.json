@@ -2,6 +2,25 @@
  "task": "cc_tasks/2026-09-12_publish_l0.md",
  "amended_by": "cc_tasks/2026-09-13_ephemeral_provenance.md",
  "snapshot_cycle": "scan_2026-09-10_rj2",
+ "snapshot_standing": {
+  "snapshot": "scan_2026-09-10_rj2",
+  "snapshot_findings": 739,
+  "successor": "scan_2026-09-10_rj3",
+  "successor_generation": 3,
+  "successor_kind": "rejudged",
+  "superseded_findings": 739,
+  "verdict_moves": 0,
+  "reason_only_changes": 3
+ },
+ "successor_moves_no_published_number": true,
+ "successor_comparison": {
+  "successor": "scan_2026-09-10_rj3",
+  "tagged_results_on_this_cycle": 41,
+  "recomputed_and_compared": 41,
+  "uncovered": [],
+  "matrix_rows_compared": 42,
+  "moved": 0
+ },
  "count": 59,
  "results": [
   {
@@ -1392,5 +1411,5 @@
   }
  ],
  "provenance_paths_absent": [],
- "note": "Every Result the report quotes by name, with its value, its lifecycle state, and the DataFile and Script that produced it. `present_in_repository` says whether the repository holds the path each reference names, measured at build time. A reference the repository does not hold is either EPHEMERAL — the registry marks it `materialized: false` and names what it is derivable from and the command that recomputes it, collected in `provenance_paths_ephemeral` — or unexplained, in which case it is in `provenance_paths_absent` and this publication has a dead provenance path."
+ "note": "Every Result the report quotes by name, with its value, its lifecycle state, and the DataFile and Script that produced it. `present_in_repository` says whether the repository holds the path each reference names, measured at build time. A reference the repository does not hold is either EPHEMERAL — the registry marks it `materialized: false` and names what it is derivable from and the command that recomputes it, collected in `provenance_paths_ephemeral` — or unexplained, in which case it is in `provenance_paths_absent` and this publication has a dead provenance path. `snapshot_standing` is what the event log says about the cycle these values are a view of: whether a later judgement of the same evidence exists, and how it differs. `successor_comparison` is the standing check that licenses publishing under the older snapshot at all (DN-004): every one of these Results and every published matrix cell recomputed under the successor and compared, and `moved` is how many differ. The build refuses while it is not zero."
 }
