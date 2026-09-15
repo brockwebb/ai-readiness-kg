@@ -250,6 +250,41 @@ def result_values(cycle: str, params: dict | None = None) -> dict:
     return out
 
 
+#: Result states a published report may quote. A `stale` Result is one the project has
+#: WITHDRAWN — its value stands as measured and is no longer the current instrument's answer
+#: (`scripts/withdraw_g1d_results.py`, DD-066) — and a report that went on quoting it would be
+#: publishing a number its own instrument no longer produces. `superseded` and `rejected` are
+#: the older two ways a name stops being quotable.
+LIVE_RESULT_STATES = ("proposed", "verified", "published")
+
+
+def tag_states(session, names) -> dict:
+    """`name -> state` for every tagged Result name, from the graph."""
+    rows = session.run(
+        "MATCH (r:Result) WHERE r.name IN $n "
+        "RETURN r.name AS name, collect(DISTINCT r.state) AS states", n=list(names)).data()
+    return {r["name"]: r["states"] for r in rows}
+
+
+def withdrawn_tags(session, names) -> list:
+    """Tagged names whose Result is not in a state a report may quote.
+
+    Excluded BY STATE and never by name (`2026-09-15_g1d_leaves_l0_ADDENDUM_01.md`): a list of
+    withdrawn names in this module would be a second place to maintain the withdrawal, and it
+    would go stale the first time a Result was withdrawn by a task that did not think to edit
+    this file. The graph already knows.
+    """
+    states = tag_states(session, names)
+    out = []
+    for n in sorted(names):
+        st = states.get(n)
+        if st is None:
+            continue                        # the resolver's own SI check reports a missing one
+        if not any(x in LIVE_RESULT_STATES for x in st):
+            out.append({"name": n, "states": sorted(st)})
+    return out
+
+
 def tagged_of_snapshot(snapshot: str) -> list:
     """The report's tagged Result names that carry the SNAPSHOT's cycle suffix.
 

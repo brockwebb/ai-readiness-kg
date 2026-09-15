@@ -49,7 +49,7 @@ byte from its stored observations. The requests and the observations are the mea
 and carry its name; the findings are the re-judgement's, over those same observations, because
 a re-judgement opens no socket.
 
-## The six checks
+## The five checks
 
 Each asks something a machine would need before it could use a body's statistics without a
 person in the loop.
@@ -72,7 +72,3 @@ API, a bulk endpoint, a data catalogue.
 **A12** asks whether what the host declares and what it enforces agree, comparing the
 permission stated in `robots.txt` against the answer a compliant client actually receives on
 the same path. It is a candidate check, adopted by nobody, and it enters no fraction here.
-
-**G1-D** asks whether published figures carry the fields that make them interpretable: a
-measure of uncertainty, a suppression flag, a reliability marker. An estimate without them can
-be read by a machine and cannot be used responsibly by one.

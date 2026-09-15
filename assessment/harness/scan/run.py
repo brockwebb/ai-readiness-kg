@@ -230,6 +230,23 @@ def run_controls(params: dict, clock=None) -> tuple:
 HOST_LEGS = ("A12",)
 
 
+def withdrawn_on(params: dict, surface_kind: str) -> frozenset:
+    """Legs `params.tier0.legs_withdrawn` withdraws from this surface kind. DD-066.
+
+    Config-first: the withdrawal is a declaration in `params.yaml` with its construct, its
+    reason and its DD beside it, and this reads it. A leg name in this function's source would
+    be the hardcoded threshold CLAUDE.md §2 forbids, and — worse here — it would put the reason
+    a leg stopped being measured somewhere a reader of the parameters cannot find it.
+
+    Read at call time and never cached, like every other parameter: the whole point of the
+    re-derivation gate is that a stored payload is re-judged under the params it was MADE
+    under, recovered from git by hash, so a cached leg set would leak today's instrument into
+    yesterday's judgement.
+    """
+    return frozenset(w["leg"] for w in (params.get("tier0", {}).get("legs_withdrawn") or [])
+                     if surface_kind in (w.get("from_surfaces") or []))
+
+
 def tier0_legs(params: dict) -> list:
     """The headline legs, declared in `params.tier0.legs` before the cycle that uses them."""
     return list((params.get("tier0") or {}).get("legs") or [])
@@ -281,7 +298,17 @@ def targets(params: dict) -> list:
         elif tier == "C":
             legs = tier0
         else:
-            legs = list(CONTROL_LEGS)
+            # A tier-A `home` surface is a HOST-LEVEL surface and gets the framework set minus
+            # whatever `params.tier0.legs_withdrawn` withdraws from it (DD-066). Dropping the
+            # leg from `tier0.legs` alone would not have done it: tier-A home and flagship both
+            # fall to `CONTROL_LEGS`, which is derived from the rule REGISTRY, so a leg removed
+            # only from the tier-0 list would have gone on being judged on every agency's home
+            # page and gone on failing there.
+            #
+            # `flagship` keeps the full set on purpose. G1-D is a product-tier construct and
+            # the same rule passes on product surfaces; what is withdrawn is the LEVEL, not the
+            # leg.
+            legs = [l for l in CONTROL_LEGS if l not in withdrawn_on(params, kind)]
         url = r["url"]
         if not synthetic:
             url = ((entries[doc_id].get("identity") or {}).get("source_url") or url)

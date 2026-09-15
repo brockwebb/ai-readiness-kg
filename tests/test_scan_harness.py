@@ -475,16 +475,59 @@ def test_every_shipped_rule_version_stays_in_the_registry():
         assert CURRENT[leg] == rule_id, f"{leg} is CURRENT on {CURRENT[leg]}, not {rule_id}"
 
 
+def _code_without_docstrings(src: str):
+    """A module's executable code, with every docstring removed, as a comparable dump.
+
+    The unit the guard below is actually about. A v1 rule's JUDGEMENT may not move once
+    Findings are recorded under it; its PROSE is not judgement, and no docstring has ever
+    changed a verdict. Comparing bytes conflated the two, and `cc_tasks/2026-09-15_g1d_leaves_
+    l0.md` is where that cost something: the task orders a docstring line on `rule_g1d.py`
+    saying the leg is no longer dispatched on host-level surfaces and why, and a byte
+    comparison forbids exactly that sentence — leaving the module silent about the one fact a
+    reader of it now needs.
+    """
+    import ast
+    tree = ast.parse(src)
+    for node in ast.walk(tree):
+        if isinstance(node, (ast.Module, ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
+            body = node.body
+            if (body and isinstance(body[0], ast.Expr)
+                    and isinstance(body[0].value, ast.Constant)
+                    and isinstance(body[0].value.value, str)):
+                node.body = body[1:] or [ast.Pass()]
+    return ast.dump(ast.fix_missing_locations(tree))
+
+
 def test_a_v2_rule_is_a_new_module_and_v1_is_untouched():
-    """`deviates` -> write v2, never edit v1 (task §2). A v1 module whose bytes changed after
-    Findings were recorded under it would make the re-derivation gate a tautology."""
+    """`deviates` -> write v2, never edit v1 (task §2). A v1 module whose CODE changed after
+    Findings were recorded under it would make the re-derivation gate a tautology.
+
+    Code, not bytes: see `_code_without_docstrings`. The property that matters is that the
+    judgement a stored Finding was made by is still the judgement the module makes.
+    """
     import subprocess
     from scan.rules import V1
     for m in V1:
         rel = Path(m.__file__).resolve().relative_to(REPO)
-        r = subprocess.run(["git", "diff", "--stat", "HEAD", "--", str(rel)],
-                           capture_output=True, text=True, cwd=str(REPO))
-        assert not r.stdout.strip(), f"{rel} was edited: {r.stdout.strip()}"
+        was = subprocess.run(["git", "show", f"HEAD:{rel}"], capture_output=True, text=True,
+                             cwd=str(REPO))
+        if was.returncode:
+            continue                        # a v1 module added by this working tree
+        now = Path(m.__file__).read_text(encoding="utf-8")
+        assert _code_without_docstrings(was.stdout) == _code_without_docstrings(now), (
+            f"{rel}: the CODE of a v1 rule changed. Findings are recorded under it; write a "
+            f"v2 module instead.")
+
+
+def test_the_v1_guard_still_catches_a_real_code_change():
+    """**Red.** Loosening bytes to code is only safe if the loosened guard still sees the
+    defect it was built for. A planted one-character change to a judgement is caught; the same
+    module with a docstring added is not."""
+    src = 'def judge(o, p):\n    """Old prose."""\n    return "pass" if o else "fail"\n'
+    doc_only = 'def judge(o, p):\n    """New prose, longer, saying why."""\n    return "pass" if o else "fail"\n'
+    code_change = 'def judge(o, p):\n    """Old prose."""\n    return "fail" if o else "pass"\n'
+    assert _code_without_docstrings(src) == _code_without_docstrings(doc_only)
+    assert _code_without_docstrings(src) != _code_without_docstrings(code_change)
 
 
 # ------------------------------------------------------- A12: the candidate host-level rule

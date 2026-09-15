@@ -15,13 +15,13 @@
  "successor_moves_no_published_number": true,
  "successor_comparison": {
   "successor": "scan_2026-09-10_rj3",
-  "tagged_results_on_this_cycle": 41,
-  "recomputed_and_compared": 41,
+  "tagged_results_on_this_cycle": 38,
+  "recomputed_and_compared": 38,
   "uncovered": [],
   "matrix_rows_compared": 42,
   "moved": 0
  },
- "count": 59,
+ "count": 56,
  "results": [
   {
    "name": "esip_checklist_items_2026-09-10",
@@ -743,56 +743,10 @@
    ]
   },
   {
-   "name": "scan_l0_g1_d_applicable_n_2026-09-10_rj2",
-   "value": 13.0,
-   "state": "published",
-   "artifact_id": "66c9d12f-042e-4610-b634-8d0ab13bf637",
-   "description": "Cycle scan_2026-09-10_rj2, leg G1-D, over the 16 Tier A bodies' HOST-LEVEL surfaces (each body's `home:` page, and its `host:` well-known set for A12). `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Denominator: pass + fail, which is 13. Re-judged under generation 9 (`RULE-A3-v6`, `RULE-B3-v3`): an ABSENCE claim reached over a candidate set with a BLIND member is a scope limitation and owes `error`, not `fail` (ISA 705; DD-052 §6). Same Observations, nothing re-fetched, no Observation created — the evidence is the measured cycle's and the judgement is generation 9's. Supersedes `scan_l0_g1_d_applicable_n_2026-09-10_rj1`, which was never registered. a figure of this cycle falls back to `scan_l0_g1_d_applicable_n_2026-09-10` = nothing, so this number is registered under its own name rather than resolved through that one. Every Result it supersedes is unedited and stands as the record of the judgement that made it (AD-028). (cc_tasks/2026-09-11_rejudge_1_2_3_4_gen9.md)",
-   "computed_from": [
-    {
-     "name": "scan_matrix_2026-09-10_rj2",
-     "path": "state/scan_matrix_2026-09-10_rj2.json",
-     "present_in_repository": true,
-     "ephemeral": false
-    }
-   ],
-   "generated_by": [
-    {
-     "name": "build_l0_matrices",
-     "path": "scripts/build_l0_matrices.py",
-     "present_in_repository": true,
-     "ephemeral": false
-    }
-   ]
-  },
-  {
-   "name": "scan_l0_g1_d_pass_2026-09-10_rj2",
-   "value": 0.0,
-   "state": "published",
-   "artifact_id": "1f6c65bc-ecce-4161-b1aa-4206d288d7c4",
-   "description": "Cycle scan_2026-09-10_rj2, leg G1-D, over the 16 Tier A bodies' HOST-LEVEL surfaces (each body's `home:` page, and its `host:` well-known set for A12). `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Verdicts of `pass`: 0. Re-judged under generation 9 (`RULE-A3-v6`, `RULE-B3-v3`): an ABSENCE claim reached over a candidate set with a BLIND member is a scope limitation and owes `error`, not `fail` (ISA 705; DD-052 §6). Same Observations, nothing re-fetched, no Observation created — the evidence is the measured cycle's and the judgement is generation 9's. Supersedes `scan_l0_g1_d_pass_2026-09-10_rj1`, which was never registered. a figure of this cycle falls back to `scan_l0_g1_d_pass_2026-09-10` = nothing, so this number is registered under its own name rather than resolved through that one. Every Result it supersedes is unedited and stands as the record of the judgement that made it (AD-028). (cc_tasks/2026-09-11_rejudge_1_2_3_4_gen9.md)",
-   "computed_from": [
-    {
-     "name": "scan_matrix_2026-09-10_rj2",
-     "path": "state/scan_matrix_2026-09-10_rj2.json",
-     "present_in_repository": true,
-     "ephemeral": false
-    }
-   ],
-   "generated_by": [
-    {
-     "name": "build_l0_matrices",
-     "path": "scripts/build_l0_matrices.py",
-     "present_in_repository": true,
-     "ephemeral": false
-    }
-   ]
-  },
-  {
-   "name": "scan_l0_home_flagship_disagreement_bodies_2026-09-10_rj2",
-   "value": 8.0,
-   "state": "published",
-   "artifact_id": "065e4f75-8457-4d36-a821-87d95c56d494",
+   "name": "scan_l0_home_flagship_disagreement_bodies_over_four_legs_2026-09-10_rj2",
+   "value": 6.0,
+   "state": "proposed",
+   "artifact_id": "7a2f7343-2bf1-4652-8efb-95ada4603f55",
    "description": "Distinct Tier A bodies carrying at least one of those disagreements, of the 16 with both a home and a flagship surface. Task cc_tasks/2026-09-09_report_draft.md §1.1. (cc_tasks/2026-09-09_report_draft.md)",
    "computed_from": [
     {
@@ -812,38 +766,15 @@
    ]
   },
   {
-   "name": "scan_l0_home_flagship_disagreement_cells_2026-09-10_rj2",
-   "value": 17.0,
-   "state": "published",
-   "artifact_id": "46859bf2-f3d2-49cc-a27f-3d4ff7d0486c",
+   "name": "scan_l0_home_flagship_disagreement_cells_over_four_legs_2026-09-10_rj2",
+   "value": 12.0,
+   "state": "proposed",
+   "artifact_id": "a250a208-fba8-43b1-a93c-0a0e9ad319fa",
    "description": "Cells in cycle scan_2026-09-10_rj2 where a Tier A body's HOME surface and one of its FLAGSHIP surfaces answer the SAME host-level check differently, over the 16 bodies that have both. A `robots.txt` permitting the front door can disallow a particular product, so these checks are judged per surface and not per host. This is why the L0 matrix names the surface each cell was measured on: a single combined host cell would have to pick a winner for these and would not say which. Task cc_tasks/2026-09-09_report_draft.md §1.1. (cc_tasks/2026-09-09_report_draft.md)",
    "computed_from": [
     {
      "name": "scan_matrix_tierA_2026-09-10_rj2",
      "path": "docs/reports/scan_matrix_tierA_2026-09-10_rj2.json",
-     "present_in_repository": true,
-     "ephemeral": false
-    }
-   ],
-   "generated_by": [
-    {
-     "name": "build_l0_matrices",
-     "path": "scripts/build_l0_matrices.py",
-     "present_in_repository": true,
-     "ephemeral": false
-    }
-   ]
-  },
-  {
-   "name": "scan_l0_host_leg_rate_g1_d_upper95_2026-09-10_rj2",
-   "value": 0.228095,
-   "state": "published",
-   "artifact_id": "27b68e4b-9606-4345-953a-081c4e40459b",
-   "description": "Cycle scan_2026-09-10_rj2, leg G1-D, over the 16 Tier A bodies' HOST-LEVEL surfaces (each body's `home:` page, and its `host:` well-known set for A12). `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Upper bound of the 95% Wilson score interval on the pass rate, 0/13, from assessment/harness/rollup.py — the repo's own interval, delegated and never re-derived. At 13 and 0 passes this is the number the Hanley and Lippman-Hand rule of three approximates; it is registered rather than computed in prose so a reader can check the bound against the count that produced it. Wilson (1927), and Brown, Cai and DasGupta (2001) for why not Wald at a proportion this close to the end of the scale. Re-judged under generation 9 (`RULE-A3-v6`, `RULE-B3-v3`): an ABSENCE claim reached over a candidate set with a BLIND member is a scope limitation and owes `error`, not `fail` (ISA 705; DD-052 §6). Same Observations, nothing re-fetched, no Observation created — the evidence is the measured cycle's and the judgement is generation 9's. Supersedes `scan_l0_host_leg_rate_g1_d_upper95_2026-09-10_rj1`, which was never registered. a figure of this cycle falls back to `scan_l0_host_leg_rate_g1_d_upper95_2026-09-10` = nothing, so this number is registered under its own name rather than resolved through that one. Every Result it supersedes is unedited and stands as the record of the judgement that made it (AD-028). (cc_tasks/2026-09-11_rejudge_1_2_3_4_gen9.md)",
-   "computed_from": [
-    {
-     "name": "scan_matrix_2026-09-10_rj2",
-     "path": "state/scan_matrix_2026-09-10_rj2.json",
      "present_in_repository": true,
      "ephemeral": false
     }

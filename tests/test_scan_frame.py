@@ -299,6 +299,13 @@ def test_tier_c_is_judged_on_tier0_legs_and_no_others():
     if not p.is_file():
         pytest.skip("cycle 3 has not been reported yet")
     c = _json.loads(p.read_text(encoding="utf-8"))
-    tier0 = set(load_params()["tier0"]["legs"])
+    # The tier-0 set AS OF THIS MATRIX, recovered from git by its own `params_hash` — not
+    # `load_params()`. A stored artifact is compared against the instrument that made it
+    # (DD-052 §3, DD-064 §2); comparing it against today's turns a legitimate instrument
+    # change into a regression, which is precisely what DD-066's withdrawal of G1-D did to
+    # this assertion.
+    from support.prior_params import tier0_legs_of
+    tier0 = set(tier0_legs_of(c))
     judged = {leg for r in c["rows"] for leg in r["verdicts"]}
-    assert judged and judged <= tier0, f"Tier C judged outside tier0.legs: {judged - tier0}"
+    assert judged and judged <= tier0, (
+        f"Tier C judged outside the tier0.legs of its own cycle: {judged - tier0}")

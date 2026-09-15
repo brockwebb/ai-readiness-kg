@@ -5,17 +5,17 @@ measurements. `error` means this scanner could not observe the surface, which is
 the scanner and its reception, never a fact about the product. The last column counts how many
 of the probes issued against the body's own page the host answered with a refusal status.
 
-The five surface-judged checks are read from each body's home page, and the coherence check
+The four surface-judged checks are read from each body's home page, and the coherence check
 from its well-known set. Which surface a cell was measured on is recorded on every row of the
 machine-readable copy beside this one. It matters: a `robots.txt` that permits the front door
 can disallow a particular product, so a flagship page and a home page need not receive the same
 answer. This cycle found that disagreement on
-{{result:scan_l0_home_flagship_disagreement_cells_2026-09-10_rj2:value}} cells across
-{{result:scan_l0_home_flagship_disagreement_bodies_2026-09-10_rj2:value}} bodies, and a single
+{{result:scan_l0_home_flagship_disagreement_cells_over_four_legs_2026-09-10_rj2:value}} cells across
+{{result:scan_l0_home_flagship_disagreement_bodies_over_four_legs_2026-09-10_rj2:value}} bodies, and a single
 combined cell would have had to pick one without saying which.
 
 <!-- include: matrix_tierA -->
-| *this report* | \- | \- | \- | \- | \- | \- | no host yet; the instrument is turned on this report when it is published |
+| *this report* | \- | \- | \- | \- | \- | no host yet; the instrument is turned on this report when it is published |
 
 ### Reading it by column
 
@@ -52,13 +52,7 @@ follow the declaration to see whether anything answers at the other end.
 are the bodies discussed in the next section, and the fourth publishes no `robots.txt` at
 all.
 
-**Uncertainty fields.** {{result:scan_l0_g1_d_pass_2026-09-10_rj2:value}} bodies of
-{{result:scan_l0_g1_d_applicable_n_2026-09-10_rj2:value}} expose the fields that make an estimate
-interpretable at the host level. The upper bound of the ninety-five percent interval on that
-rate is {{result:scan_l0_host_leg_rate_g1_d_upper95_2026-09-10_rj2:value}} at this denominator, which is
-the honest way to say that a zero here is not proof of universal absence. It is measured on
-the body's own front page and not on a data product, which flatters nobody and is a limit of
-the host-level view rather than a finding about statistical practice.
+<!-- include: withdrawn_legs -->
 
 ### The reference hosts
 
@@ -66,6 +60,4 @@ the host-level view rather than a finding about statistical practice.
 
 All {{result:scan_l0_tierc_a12_pass_2026-09-10_rj2:value}} reference hosts serve `robots.txt`, declare
 a machine layer, answer deep links honestly and are coherent between declaration and
-enforcement. All three fail discovery. All three also fail the uncertainty check, which for a
-catalogue is the expected and uninteresting answer: it carries no estimates, so it has no
-uncertainty fields to expose. They appear here for contrast and in no rate above.
+enforcement. All three fail discovery. They appear here for contrast and in no rate above.

@@ -491,13 +491,25 @@ def test_the_registrar_checks_every_name_before_registering_any():
 
 # ------------------------------------------------------------------ registry integrity
 def test_the_new_generation_is_new_modules_and_its_predecessors_are_untouched():
-    """`deviates` -> write a new module, never edit the old one. A module whose bytes changed
-    after Findings were recorded under it would make the re-derivation gate a tautology."""
+    """`deviates` -> write a new module, never edit the old one. A module whose CODE changed
+    after Findings were recorded under it would make the re-derivation gate a tautology.
+
+    Code, not bytes — the same comparator `tests/test_scan_harness.py` uses and for the same
+    reason: a docstring is not judgement, and `cc_tasks/2026-09-15_g1d_leaves_l0.md` orders one
+    on `rule_g1d.py` saying the leg is no longer dispatched on host-level surfaces. A byte
+    comparison forbade exactly the sentence a reader of that module now needs.
+    """
+    from test_scan_harness import _code_without_docstrings
     for m in [x for gen in GENERATIONS[:-1] for x in gen]:
         rel = Path(m.__file__).resolve().relative_to(REPO)
-        r = subprocess.run(["git", "diff", "--stat", "HEAD", "--", str(rel)],
-                           capture_output=True, text=True, cwd=str(REPO))
-        assert not r.stdout.strip(), f"{rel} was edited: {r.stdout.strip()}"
+        was = subprocess.run(["git", "show", f"HEAD:{rel}"], capture_output=True, text=True,
+                             cwd=str(REPO))
+        if was.returncode:
+            continue
+        now = Path(m.__file__).read_text(encoding="utf-8")
+        assert _code_without_docstrings(was.stdout) == _code_without_docstrings(now), (
+            f"{rel}: the CODE of a shipped rule changed. Findings are recorded under it; "
+            f"write a new module instead.")
     # The newest generation's rules OUTRANK their predecessors; the specific version numbers
     # are not the property this test owns. The pin ("v3", "v4") reported generation 6 — which
     # ships RULE-A1-v4, RULE-A3-v5 and RULE-A8-v4 — as a regression.

@@ -169,9 +169,22 @@ def test_the_authority_claim_on_each_leg_is_derived_from_the_urls(row):
 
 
 def test_the_row_carries_every_tier_0_leg_and_no_other(row):
-    tier0 = list((load_params().get("tier0") or {}).get("legs") or [])
+    """The row prints the tier-0 set OF THE CYCLE THAT MEASURED IT, recovered from git by the
+    self payload's own `params_hash`.
+
+    Not `load_params()`. The self row is a stored measurement of this publication at one
+    moment; the instrument has changed since (DD-066 withdrew G1-D from host-level surfaces)
+    and will change again. Asserting a stored row against today's leg list says a measurement
+    must obey an instrument that did not exist when it was taken, and the first legitimate
+    withdrawal turns the assertion red for the one reason that carries no information.
+    """
+    import json as _json
+    from support.prior_params import tier0_legs_of
+    payload = _json.loads((REPO / "state" / f"{row['cycle']}.json").read_text(encoding="utf-8"))
+    tier0 = tier0_legs_of(payload)
     assert list(row["legs"]) == tier0, (
-        f"the row prints {list(row['legs'])} and the instrument declares tier-0 as {tier0}")
+        f"the row prints {list(row['legs'])} and the cycle that measured it declared tier-0 "
+        f"as {tier0}")
     assert sum(row["verdict_counts"].values()) == len(tier0)
 
 

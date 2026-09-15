@@ -331,6 +331,21 @@ def build(check: bool = False) -> int:
     db = cfg["neo4j"]["database"]
     driver = get_neo4j_driver(cfg)
     try:
+        # A tag pointing at a WITHDRAWN Result refuses the build
+        # (`2026-09-15_g1d_leaves_l0_ADDENDUM_01.md`). The resolver would happily substitute a
+        # stale Result's value — it is still the value that was measured — and the report would
+        # go on stating a number its own instrument no longer produces, which is the drift the
+        # withdrawal exists to end. Checked by STATE, so a Result withdrawn by a later task
+        # refuses this build without anyone editing this file.
+        import rederive_tagged_results as _rd
+        with driver.session(database=db) as _s:
+            _dead = succ.withdrawn_tags(_s, _rd.tagged_names())
+        if _dead:
+            print("FATAL: the report tags Result(s) the project has withdrawn:\n  "
+                  + "\n  ".join(f"{d['name']} is {'/'.join(d['states'])}" for d in _dead)
+                  + "\n  Remove the tag and the sentence that quotes it, or restore the "
+                    "Result. No report and no PDF is written.", file=sys.stderr)
+            return 1
         artifacts = load_named_artifacts(driver, db)
         fallback = build_units_fallback_index(driver, db)
         # The "Sources per check" appendix, generated from the graph on every build like the

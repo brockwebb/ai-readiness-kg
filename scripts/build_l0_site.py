@@ -635,18 +635,30 @@ Source: <a href="{e(pub['repository_url'])}">{e(pub['repository_url'])}</a>.
 
 #: `--only <name>` -> the published paths that name may write. Declared rather than matched by
 #: prefix, so narrowing the write set is a listed decision and not a string coincidence.
-_ONLY = {"results_tagged": {"data/results_tagged.json"}}
+_ONLY = {"results_tagged": {"data/results_tagged.json"},
+         # The site's COPY of the framework record. `tests/test_publication.py` asserts every
+         # copy still equals its source by sha256, so a task that edits the record and
+         # publishes a narrow slice of the site leaves a published copy contradicting it
+         # (`cc_tasks/2026-09-15_g1d_leaves_l0.md` tagged G1-D `measurement_tier: product` and
+         # found this the way it is always found — a green build and a red suite).
+         "framework_copy": {"data/ai_readiness_framework.json"},
+         # The data manifest HASHES each copy's source, so refreshing a copy without it leaves
+         # the manifest asserting a digest the source no longer has — which is the same defect
+         # one layer up and the same test catches it. The two travel together.
+         "data_manifest": {"data/index.json"}}
 
 
-def _writes(only: str | None, rel: str) -> bool:
+def _writes(only, rel: str) -> bool:
     """Whether `rel` reaches disk under this `--only`. The CITATION files, the copies, the
     manifest and the pages are gated at their own call sites, because each is written from its
     own loop with its own side product (a root-level copy, a sha256 over the source); routing
     them through one predicate would have meant one of them writing half."""
-    return only is None or rel in _ONLY[only]
+    if not only:
+        return True
+    return any(rel in _ONLY[o] for o in only)
 
 
-def build(check: bool = False, only: str | None = None) -> int:
+def build(check: bool = False, only=None) -> int:
     from scan import load_params
     pub = publication()
     suffix = cycle_suffix(pub["snapshot_cycle"])
@@ -732,7 +744,7 @@ def build(check: bool = False, only: str | None = None) -> int:
     cited = []
     for published, root_rel, label in CITATION_FILES:
         text = citations[published]
-        if not check and only is None:
+        if not check and not only:
             (REPO / root_rel).write_text(text, encoding="utf-8")
             (DATA / published).write_text(text, encoding="utf-8")
         cited.append({"published": f"data/{published}", "also_written_to": root_rel,
@@ -747,7 +759,7 @@ def build(check: bool = False, only: str | None = None) -> int:
         if not src.is_file():
             raise SystemExit(f"FATAL: {src_rel} does not exist; it cannot be published")
         dst = DATA / name
-        if not check and only is None:
+        if not check and _writes(only, f"data/{name}"):
             shutil.copyfile(src, dst)
         entry = {"published": f"data/{name}", "source": src_rel,
                  "sha256": sha256(src), "bytes": src.stat().st_size,
@@ -788,7 +800,7 @@ def build(check: bool = False, only: str | None = None) -> int:
                 "note": ("`copies` are byte-for-byte copies of records canonical elsewhere in "
                          "the repository; the sha256 is of the SOURCE, so a drifted copy is "
                          "detectable. tests/test_publication.py asserts it.")}
-    if not check and only is None:
+    if not check and _writes(only, "data/index.json"):
         (DATA / "index.json").write_text(json.dumps(manifest, indent=1) + "\n",
                                          encoding="utf-8")
     written.append("data/index.json")
@@ -811,7 +823,7 @@ def build(check: bool = False, only: str | None = None) -> int:
     self_ = self_row(pub)
     files["index.html"] = index_html(pub, links, len(results), self_, commit, built)
     for name, text in files.items():
-        if not check and only is None:
+        if not check and not only:
             (SITE / name).write_text(text, encoding="utf-8")
         written.append(name)
 
@@ -828,8 +840,7 @@ def build(check: bool = False, only: str | None = None) -> int:
                # happen — which is the defect `--dry-run` had in the matrix builder and that
                # decision 3 had to route around.
                "written": sorted(written),
-               "wrote": ([] if check else
-                         sorted(r for r in written if _writes(only, r) or only is None)),
+               "wrote": [] if check else sorted(r for r in written if _writes(only, r)),
                "snapshot_standing": standing["info"] or "no successor on the event log",
                "successor_moved": None if cmp_ is None else cmp_["moved"],
                "only": only, "check_only": check}
@@ -841,7 +852,7 @@ def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--check", action="store_true", help="compute everything, write nothing")
-    ap.add_argument("--only", choices=("results_tagged",), default=None,
+    ap.add_argument("--only", action="append", choices=tuple(_ONLY), default=None,
                     help="write ONLY this payload and leave the rest of the published tree "
                          "untouched. Everything is still computed and every refusal still "
                          "fires; what narrows is what reaches disk. It exists because the "

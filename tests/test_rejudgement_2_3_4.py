@@ -116,6 +116,17 @@ def test_the_registrar_can_no_longer_let_a_later_family_win():
             seen.add(base)
             first[base] = value
     # G1-D is the case that went wrong: host 0.242494, Tier C 0.561497, and host must win.
-    assert first["scan_l0_host_leg_rate_g1_d_upper95"] == pytest.approx(0.242494)
+    #
+    # Asserted only while G1-D is still a leg the families EMIT. `register_l0_rejudged.families`
+    # reads today's leg set, and DD-066 withdrew G1-D from the host-level instrument on
+    # 2026-09-15 — so from that params_hash forward the incident's own leg is simply absent
+    # from the emission, and demanding it would assert that an instrument may never change.
+    # A5 carries the property instead, and it is the same property: the FIRST family to emit a
+    # base name binds it, and the order is the precedence.
+    if "scan_l0_host_leg_rate_g1_d_upper95" in first:
+        assert first["scan_l0_host_leg_rate_g1_d_upper95"] == pytest.approx(0.242494)
+        assert first["scan_l0_tierc_leg_rate_g1_d_upper95"] == pytest.approx(0.561497)
     assert first["scan_l0_host_leg_rate_a5_upper95"] == pytest.approx(0.532305)
-    assert first["scan_l0_tierc_leg_rate_g1_d_upper95"] == pytest.approx(0.561497)
+    # The precedence itself, on a base every family emits, asserted whatever the leg set is:
+    # a name is bound by the FIRST family that offers it and never re-bound by a later one.
+    assert len(seen) == len(first), "a base name was recorded twice; precedence is not binding"

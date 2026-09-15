@@ -1,6 +1,6 @@
 # AI readiness of the federal statistical system: host-level findings
 
-**Version.** Snapshot cycle `scan_2026-09-10_rj2` · version `2026-09-10_rj2` · built from commit `b25eb0b4ca09` on `2026-09-15` (UTC); the commit that publishes this build is that one's child. This document is a VIEW of data published beside it: the matrices as JSON and CSV, the per-check source appendix, and every Result quoted below with its value, its state and the artifact that generated it. The site index links all of them. **Licence.** The report and the data it is a view of are `CC-BY-4.0` (`LICENSE-DATA`); the code that produced them is `MIT` (`LICENSE`). Documents under corpus/ are third-party works, retained as evidence under their own terms: neither licence in this repository applies to them. **Standing.** This snapshot has been superseded on the event log by `scan_2026-09-10_rj3`, generation 3 of this cycle, which re-judged the same evidence: 739 of this snapshot's 739 findings have a successor, 0 of them move a verdict and 3 change only the sentence that explains one. No number this report publishes differs under that successor, which is why the report is not re-snapshotted on it (`DN-004 decision 1`); the build refuses if that ever stops being true.
+**Version.** Snapshot cycle `scan_2026-09-10_rj2` · version `2026-09-10_rj2` · built from commit `6932a9ee5daa` on `2026-09-15` (UTC); the commit that publishes this build is that one's child. This document is a VIEW of data published beside it: the matrices as JSON and CSV, the per-check source appendix, and every Result quoted below with its value, its state and the artifact that generated it. The site index links all of them. **Licence.** The report and the data it is a view of are `CC-BY-4.0` (`LICENSE-DATA`); the code that produced them is `MIT` (`LICENSE`). Documents under corpus/ are third-party works, retained as evidence under their own terms: neither licence in this repository applies to them. **Standing.** This snapshot has been superseded on the event log by `scan_2026-09-10_rj3`, generation 3 of this cycle, which re-judged the same evidence: 739 of this snapshot's 739 findings have a successor, 0 of them move a verdict and 3 change only the sentence that explains one. No number this report publishes differs under that successor, which is why the report is not re-snapshotted on it (`DN-004 decision 1`); the build refuses if that ever stops being true.
 
 **Draft. 16 recognized bodies and three reference
 hosts, one cycle, one client identity.**
@@ -51,7 +51,7 @@ byte from its stored observations. The requests and the observations are the mea
 and carry its name; the findings are the re-judgement's, over those same observations, because
 a re-judgement opens no socket.
 
-## The six checks
+## The five checks
 
 Each asks something a machine would need before it could use a body's statistics without a
 person in the loop.
@@ -75,10 +75,6 @@ API, a bulk endpoint, a data catalogue.
 permission stated in `robots.txt` against the answer a compliant client actually receives on
 the same path. It is a candidate check, adopted by nobody, and it enters no fraction here.
 
-**G1-D** asks whether published figures carry the fields that make them interpretable: a
-measure of uncertainty, a suppression flag, a reliability marker. An estimate without them can
-be read by a machine and cannot be used responsibly by one.
-
 ## The matrix
 
 One row per body, one column per check, one cell per verdict. `pass` and `fail` are
@@ -86,34 +82,34 @@ measurements. `error` means this scanner could not observe the surface, which is
 the scanner and its reception, never a fact about the product. The last column counts how many
 of the probes issued against the body's own page the host answered with a refusal status.
 
-The five surface-judged checks are read from each body's home page, and the coherence check
+The four surface-judged checks are read from each body's home page, and the coherence check
 from its well-known set. Which surface a cell was measured on is recorded on every row of the
 machine-readable copy beside this one. It matters: a `robots.txt` that permits the front door
 can disallow a particular product, so a flagship page and a home page need not receive the same
 answer. This cycle found that disagreement on
-17 cells across
-8 bodies, and a single
+12 cells across
+6 bodies, and a single
 combined cell would have had to pick one without saying which.
 
-| Agency | A4 | A5 | A10 | A11-declared | A12 | G1-D | Refused of probed |
-|---|---|---|---|---|---|---|---|
-| BEA | pass | fail | pass | pass | pass | fail | 0 of 59 |
-| BJS | pass | fail | pass | pass | pass | fail | 0 of 59 |
-| BLS | error | error | error | error | fail | error | 33 of 35 |
-| BTS | error | error | error | error | fail | error | 32 of 33 |
-| CENSUS | pass | pass | pass | pass | pass | fail | 4 of 59 |
-| DRSMSU | fail | fail | pass | fail | fail | fail | 0 of 67 |
-| EIA | pass | pass | pass | pass | pass | fail | 1 of 64 |
-| ERS | pass | fail | pass | pass | pass | fail | 0 of 60 |
-| NAHMSAPHIS | pass | fail | pass | pass | pass | fail | 0 of 58 |
-| NASS | pass | fail | pass | pass | pass | fail | 0 of 66 |
-| NCES | pass | fail | pass | pass | pass | fail | 0 of 63 |
-| NCHS | pass | fail | fail | fail | pass | fail | 0 of 34 |
-| NCSES | pass | pass | pass | pass | pass | fail | 0 of 65 |
-| ORES | error | error | error | error | fail | error | 32 of 33 |
-| SAMHSACBHS | pass | fail | pass | pass | pass | fail | 0 of 62 |
-| SOI | pass | fail | pass | pass | pass | fail | 3 of 59 |
-| *this report* | \- | \- | \- | \- | \- | \- | no host yet; the instrument is turned on this report when it is published |
+| Agency | A4 | A5 | A10 | A11-declared | A12 | Refused of probed |
+|---|---|---|---|---|---|---|
+| BEA | pass | fail | pass | pass | pass | 0 of 59 |
+| BJS | pass | fail | pass | pass | pass | 0 of 59 |
+| BLS | error | error | error | error | fail | 33 of 35 |
+| BTS | error | error | error | error | fail | 32 of 33 |
+| CENSUS | pass | pass | pass | pass | pass | 4 of 59 |
+| DRSMSU | fail | fail | pass | fail | fail | 0 of 67 |
+| EIA | pass | pass | pass | pass | pass | 1 of 64 |
+| ERS | pass | fail | pass | pass | pass | 0 of 60 |
+| NAHMSAPHIS | pass | fail | pass | pass | pass | 0 of 58 |
+| NASS | pass | fail | pass | pass | pass | 0 of 66 |
+| NCES | pass | fail | pass | pass | pass | 0 of 63 |
+| NCHS | pass | fail | fail | fail | pass | 0 of 34 |
+| NCSES | pass | pass | pass | pass | pass | 0 of 65 |
+| ORES | error | error | error | error | fail | 32 of 33 |
+| SAMHSACBHS | pass | fail | pass | pass | pass | 0 of 62 |
+| SOI | pass | fail | pass | pass | pass | 3 of 59 |
+| *this report* | \- | \- | \- | \- | \- | no host yet; the instrument is turned on this report when it is published |
 
 ### Reading it by column
 
@@ -150,27 +146,23 @@ follow the declaration to see whether anything answers at the other end.
 are the bodies discussed in the next section, and the fourth publishes no `robots.txt` at
 all.
 
-**Uncertainty fields.** 0 bodies of
-13 expose the fields that make an estimate
-interpretable at the host level. The upper bound of the ninety-five percent interval on that
-rate is 0.228095 at this denominator, which is
-the honest way to say that a zero here is not proof of universal absence. It is measured on
-the body's own front page and not on a data product, which flatters nobody and is a limit of
-the host-level view rather than a finding about statistical practice.
+<!-- lint: numerals-exempt -->
+
+**Uncertainty fields.** This column has been withdrawn. **G1-D** asks whether a published figure carries, beside it and in machine-readable form, the fields that make it interpretable — a measure of uncertainty, a suppression flag, a reliability marker. The construct stands; the level was wrong. A body's home page carries no estimate, so the check could not hold the property it measures there: across every body, every reference host and every cycle it returned 126 `fail` and 28 `error` on host-level surfaces and **not one** `pass`, while the same rule returned 104 `pass` on product surfaces in the same runs. A check that never passes on one kind of surface and passes 104 times on another is measuring which surface it was pointed at, not the publisher. It is withdrawn from the host-level instrument effective cycle 5 (this params_hash forward) (`DD-066`); the cycles that measured it keep every observation and every verdict on the append-only log, unchanged and un-re-judged, because it was not mis-scored — it was asked of the wrong surface. Where the property does live is a data product, and that is the January G1 pilot's instrument, not this one's.
+
+<!-- lint: numerals-enforced -->
 
 ### The reference hosts
 
-| Agency | A4 | A5 | A10 | A11-declared | A12 | G1-D | Refused of probed |
-|---|---|---|---|---|---|---|---|
-| GSA | pass | fail | pass | pass | pass | fail | 0 of 11 |
-| NIST | pass | fail | pass | pass | pass | fail | 0 of 11 |
-| data.gov | pass | fail | pass | pass | pass | fail | 0 of 12 |
+| Agency | A4 | A5 | A10 | A11-declared | A12 | Refused of probed |
+|---|---|---|---|---|---|---|
+| GSA | pass | fail | pass | pass | pass | 0 of 11 |
+| NIST | pass | fail | pass | pass | pass | 0 of 11 |
+| data.gov | pass | fail | pass | pass | pass | 0 of 12 |
 
 All 3 reference hosts serve `robots.txt`, declare
 a machine layer, answer deep links honestly and are coherent between declaration and
-enforcement. All three fail discovery. All three also fail the uncertainty check, which for a
-catalogue is the expected and uninteresting answer: it carries no estimates, so it has no
-uncertainty fields to expose. They appear here for contrast and in no rate above.
+enforcement. All three fail discovery. They appear here for contrast and in no rate above.
 
 ## Three bodies will not serve a compliant machine
 

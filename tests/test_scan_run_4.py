@@ -152,7 +152,11 @@ def test_zero_tier_c_findings_outside_the_tier0_legs(payload, targets):
     """DD-059. Above tier 0 a catalog has no product vintage and no bulk download, so a
     comparison there would stop being like-for-like."""
     tier = {r["doc_id"]: r.get("tier") for r in targets["rows"]}
-    allowed = set(load_params()["tier0"]["legs"])
+    # Cycle 4's OWN tier-0 set, recovered from git by the payload's `params_hash`. Reading
+    # today's would assert that a cycle measured in 2026-09-10 obeys an instrument changed in
+    # 2026-09-15 (DD-066 withdrew G1-D), which is the coupling DD-052 §3 forbids.
+    from support.prior_params import tier0_legs_of
+    allowed = set(tier0_legs_of(payload))
     stray = sorted({(r["doc_id"], leg) for r in payload["matrix"]
                     if tier.get(r["doc_id"]) == "C"
                     for leg in r["verdicts"] if leg not in allowed})

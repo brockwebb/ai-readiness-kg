@@ -215,10 +215,27 @@ def surface_disagreements(p: dict, tiers: dict, legs: list) -> dict:
                 if homes[0]["verdicts"].get(leg) != f["verdicts"].get(leg):
                     cells += 1
                     bodies.add(agency)
-    return {"cells": cells, "bodies": len(bodies), "comparable_bodies": comparable}
+    return {"cells": cells, "bodies": len(bodies), "comparable_bodies": comparable,
+            # WHICH legs were compared. The count is a function of the leg set, and the set
+            # moved when DD-066 withdrew G1-D from host-level surfaces; a disagreement figure
+            # that did not say over how many legs it was taken is a figure two instruments can
+            # both claim. Carried onto the Result NAME below for the same reason
+            # `leg_results` carries its `family`.
+            "compared_legs": list(five)}
 
 
 VERDICTS = ("pass", "fail", "error", "not_applicable")
+
+#: Number words for the Result name below. A NAME may not carry a bare digit that a reader
+#: would mistake for a measurement, and `scan_l0_..._over_four_legs` says which comparison the
+#: figure is of without anyone having to open the matrix.
+_LEGWORD = {1: "one", 2: "two", 3: "three", 4: "four", 5: "five", 6: "six", 7: "seven",
+            8: "eight", 9: "nine", 10: "ten"}
+
+
+def _legword(dis: dict) -> str:
+    n = len(dis.get("compared_legs") or ())
+    return _LEGWORD.get(n, str(n))
 
 
 def leg_key(leg: str) -> str:
@@ -432,7 +449,16 @@ def compute(cycle: str, params: dict | None = None) -> dict:
                      f"`host:` well-known surface; this cycle's home and flagship surfaces "
                      f"disagree on {dis['cells']} of those cells across {dis['bodies']} "
                      f"bodies, so the surface is named on every row."),
-            "surface_disagreements": dis}
+            "surface_disagreements": dis,
+            # A column that LEFT this matrix, named on the matrix itself
+            # (`2026-09-15_g1d_leaves_l0_ADDENDUM_01.md`). A reader of the CSV or the JSON can
+            # see that a leg was removed and why, which a matrix that simply had one fewer
+            # column could not tell them. Read from `params.tier0.legs_withdrawn`, so the
+            # metadata and the instrument are one declaration.
+            "legs_withdrawn": [
+                {k: w[k] for k in ("leg", "effective", "decision", "construct", "why")
+                 if k in w}
+                for w in (params.get("tier0", {}).get("legs_withdrawn") or [])]}
 
     zero_legs = sorted(l for l, c in prod_counts.items() if c["applicable_n"] and not c["pass"])
     # The per-leg family, whose notes `main` used to tag with the task on the way to the
@@ -452,7 +478,7 @@ def compute(cycle: str, params: dict | None = None) -> dict:
          f"{declared} declared surfaces, which is a PARTIAL population; each of these has its "
          f"own registered upper bound (`scan_leg_rate_<check>_upper95_...`), and a zero at "
          f"this denominator is not evidence of universal absence. Task {TASK} §1.3."),
-        ("scan_l0_home_flagship_disagreement_cells",
+        (f"scan_l0_home_flagship_disagreement_cells_over_{_legword(dis)}_legs",
          dis["cells"],
          f"Cells in cycle {cycle} where a Tier A body's HOME surface and one of its FLAGSHIP "
          f"surfaces answer the SAME host-level check differently, over the "
@@ -461,7 +487,7 @@ def compute(cycle: str, params: dict | None = None) -> dict:
          f"surface and not per host. This is why the L0 matrix names the surface each cell "
          f"was measured on: a single combined host cell would have to pick a winner for these "
          f"and would not say which. Task {TASK} §1.1."),
-        ("scan_l0_home_flagship_disagreement_bodies", dis["bodies"],
+        (f"scan_l0_home_flagship_disagreement_bodies_over_{_legword(dis)}_legs", dis["bodies"],
          f"Distinct Tier A bodies carrying at least one of those disagreements, of the "
          f"{dis['comparable_bodies']} with both a home and a flagship surface. Task {TASK} "
          f"§1.1."),

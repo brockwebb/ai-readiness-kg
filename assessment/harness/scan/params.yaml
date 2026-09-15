@@ -55,11 +55,39 @@ reason_text: 2
 # licenses the Tier C comparison (DD-059) — and above it, a catalog has no product vintage and
 # no bulk download, so the comparison would stop being like-for-like.
 tier0:
-  legs: ["A4", "A5", "A10", "A11-declared", "A12", "G1-D"]
+  legs: ["A4", "A5", "A10", "A11-declared", "A12"]
   # A12 is a CANDIDATE indicator (DD-054): reported beside the others, counted in no fraction.
   # It is in the tier-0 set because declare-vs-enforce is a host property and the single most
   # informative one for a reference host; it is not in any denominator.
   candidate_legs_in_set: ["A12"]
+
+  # Legs WITHDRAWN from the host-level instrument (DD-066). Not deleted and not re-judged:
+  # every G1-D Observation and Finding in cycles 1 to 4 and the self cycle stays on the log
+  # under its own params_hash and harness_version (DD-052 §3, DD-064 §2). What stops is the
+  # measuring.
+  #
+  # The construct is right and the LEVEL was wrong. G1-D asks whether an estimate carries,
+  # beside it and machine-readably, the fields that make it interpretable — margin of error,
+  # standard error, CV, suppression flag, reliability marker. A host's home page carries no
+  # estimate, so `fail` there is structural rather than a measurement of the agency: 126 fail
+  # and 28 error across every body and every reference host in every cycle, and not one pass
+  # (`cc_tasks/2026-09-15_g1d_leaves_l0_RESULT.md` §0). On PRODUCT surfaces the same rule
+  # passes 104 times, which is the same evidence read the other way round: the property is
+  # carryable, and the home page is not where it is carried.
+  #
+  # Read by `run.targets` for `home` surfaces and by `build_l0_matrices` for the published
+  # matrices' metadata. The leg keeps its rule module and keeps being dispatched on PRODUCT
+  # surfaces (`flagship`), where the January G1 EVAL pilot is the instrument of record.
+  legs_withdrawn:
+    - leg: "G1-D"
+      from_surfaces: ["home", "well_known"]
+      effective: "cycle 5 (this params_hash forward)"
+      decision: "DD-066"
+      construct: >-
+        uncertainty present for the human reader and absent from the markup
+      why: >-
+        the host-level surface is a home page, which carries no estimate, so the leg cannot
+        hold the property it measures and every verdict on it is structural
 
 #: **The judgement layer's own version** (`cc_tasks/2026-09-10_harness_v5_blind.md` decision 2).
 #: Rules are versioned per leg and a Finding records the rule that made it, but the SUBSTRATE

@@ -4,6 +4,15 @@ The frozen `g1_declared` probe (DD-036) is the instrument of record for this leg
 edited by this task. This rule reads the same signal off a scan Observation so the leg can
 participate in a scan cycle; where the two disagree the frozen probe governs, and that
 comparison is the harness task's, not this one's.
+
+**Not dispatched on host-level surfaces, from cycle 5 forward (DD-066).** The rule is
+unchanged and is still dispatched on PRODUCT surfaces, where it passes. What was withdrawn is
+the LEVEL: a host's `home` page carries no estimate, so this rule's `fail` there says the
+surface has no uncertainty fields beside estimates it does not have — 126 fail and 28 error
+across every body and every reference host in cycles 1 to 4 and the self cycle, and not one
+pass, against 104 passes on product surfaces in the same runs. The construct is "uncertainty
+present for the human reader and absent from the markup", and it is a property of a data
+product. `params.tier0.legs_withdrawn` is the declaration; `run.withdrawn_on` reads it.
 """
 from __future__ import annotations
 from . import _common as c
