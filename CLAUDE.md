@@ -87,6 +87,8 @@ Rules for CC when dispatched this way: read every addendum before any step (a ta
 
 **A placeholder is never written into a RESULT.** Not `<SUITE>`, not `<VERIFY>`, not `<PROTECTED>`, not any other. A RESULT is the execution record; a placeholder in one is a claim nobody has checked, sitting in the place a reader looks for the check. Three consecutive tasks shipped a RESULT with unfilled placeholders and each needed a following task to close it out, which is how `cc_tasks/2026-09-09_manners_closeout.md` came to exist. There is no RESULT template in this repo, so there was no template to fix: the habit was the defect.
 
+**Every gate line quotes passed, skipped, xfailed and deselected; a gate row that omits the skip count is a placeholder** (`cc_tasks/2026-09-16_neo4j_fixture_fails_not_skips.md` decision 3: a Seldon suite reported `1177 passed, 730 skipped, EXIT=0` in an ordinary shell, and "green" without the skip count could not tell that run from a real one).
+
 If the session cannot reach the end of the gate, **the RESULT is still written** and its first section says in words at which line it stopped and why — "suite not run", "stopped at §2 on a blocked dependency" — never a placeholder standing in for a result that does not exist yet.
 
 ### Long-running commands (operator-ordered, 2026-09-09)
