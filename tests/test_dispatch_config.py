@@ -191,27 +191,146 @@ def test_the_credential_parse_strips_one_surrounding_quote_pair_and_no_more(tmp_
     assert r.stdout == "neo4j|pa'ss word", repr(r.stdout)
 
 
-@pytest.mark.skipif(
-    not (REPO / ".." / "seldon").exists(), reason="seldon checkout not beside this repo")
-def test_a_pass_in_a_launchd_shaped_environment_reaches_the_queue_and_writes_no_event():
-    """End to end, in the environment that actually broke: no shell, no exported credentials.
+# ---------------------------------------------------------------------------
+# DN-006 decision 7, as ADDENDUM_03 amends it: the invariant is IDEMPOTENCE
+# ---------------------------------------------------------------------------
+#
+# The test that used to sit here asserted that ONE pass leaves the event log byte-identical,
+# and it could not hold. `cc_tasks/2026-09-16_publication_guards_RESULT.md` §0: the suite ran
+# for the first time inside a dispatched session, the lease was held by the very process that
+# launched that session, and the pass wrote `dispatch_refused{lease_held}` — correctly. Every
+# dispatched task from then on would have reported a red gate for a reason that had nothing to
+# do with the task.
+#
+# Two things changed. The dispatcher now writes ONE `lease_held` refusal per lease ACQUISITION
+# rather than one per pass (DN-006 ADDENDUM_03 §1), and the claim asserted here is the one that
+# is true in every state the dispatcher can be in: a second pass changes nothing.
 
-    The pass must reach the graph, find nothing eligible, exit 0, and leave the event log
-    **byte-identical** — DN-006 decision 7. Skipped rather than failed when Neo4j is down,
-    because that is a fact about the machine and not about this wrapper."""
-    import hashlib
+SELDON_CHECKOUT = REPO / ".." / "seldon"
+
+
+def _neo4j_up() -> bool:
     sys.path.insert(0, str(REPO))
     from scripts import build_projection as proj
-    if not proj.neo4j_reachable():
+    return proj.neo4j_reachable()
+
+
+def _survey() -> dict:
+    """`seldon dispatch status --json`, which writes no event. The pass's own criteria vector,
+    read without running a pass."""
+    import json
+    r = subprocess.run(["/opt/anaconda3/bin/seldon", "dispatch", "status", "--json"],
+                       cwd=REPO, capture_output=True, text=True)
+    assert r.returncode == 0, r.stdout + r.stderr
+    return json.loads(r.stdout)
+
+
+def _wrapper_tail() -> str:
+    log = REPO / "logs" / "airkg_dispatch.log"
+    text = log.read_text(encoding="utf-8") if log.is_file() else ""
+    return text[text.rfind("=== 20"):]
+
+
+@pytest.mark.skipif(
+    not SELDON_CHECKOUT.exists(), reason="seldon checkout not beside this repo")
+def test_two_passes_in_a_launchd_shaped_environment_leave_the_event_log_byte_identical():
+    """DN-006 decision 7 as ADDENDUM_03 §3 restates it, end to end, in the environment that
+    actually broke: no shell, no exported credentials, the real wrapper, the real graph.
+
+    **This test never skips on the state of the queue**, which is the whole point of stating
+    the invariant as idempotence. It holds with a task in flight, with a STOP file present,
+    with a dirty tree, when disabled and when nothing is eligible — and a test that skipped
+    whenever a task was in flight would never run at all, because a dispatched session always
+    has one. Neo4j being down is a fact about the machine, not about this wrapper, and is the
+    one skip.
+
+    The first pass is allowed its one event: a lease acquisition, a STOP-file appearance and a
+    DD-007 refusal are each worth exactly one line. What no state is allowed is a second."""
+    import hashlib
+    if not _neo4j_up():
         pytest.skip("Neo4j is not reachable")
+
+    # A pass that would LAUNCH is not an idempotence experiment, and running one from inside
+    # the suite would start a CC session out of a test. Fail rather than skip: in the only
+    # environment DN-006 decision 10 permits the suite to run in — inside a dispatched session
+    # — the lease is held for the length of that session and nothing is eligible, so an
+    # eligible task here means the checkout is in a state the rule says it cannot be in.
+    eligible = _survey()["eligible"]
+    assert not eligible, (
+        f"a pass would launch {eligible}; the suite must not dispatch a session. Under DN-006 "
+        f"decision 10 the operator does not hand-dispatch while the dispatcher is enabled")
+
+    events = REPO / "seldon_events.jsonl"
+    first = _bare_env_run(Path.home())
+    after_first = hashlib.sha256(events.read_bytes()).hexdigest()
+    tail_first = _wrapper_tail()
+    second = _bare_env_run(Path.home())
+    after_second = hashlib.sha256(events.read_bytes()).hexdigest()
+    tail_second = _wrapper_tail()
+
+    for r, tail in ((first, tail_first), (second, tail_second)):
+        assert r.returncode == 0, tail
+        assert "AuthError" not in tail and "Traceback" not in tail, tail
+        assert "=== rc=0" in tail
+        assert "launching" not in tail, tail
+
+    assert after_second == after_first, (
+        "a second pass with nothing changed between them wrote to the event log; "
+        f"first pass said: {tail_first!r}")
+
+
+@pytest.mark.skipif(
+    not SELDON_CHECKOUT.exists(), reason="seldon checkout not beside this repo")
+def test_a_single_pass_writes_no_event_when_there_is_nothing_to_assert():
+    """Decision 7's original claim, kept and narrowed to the state it is true in.
+
+    That state is the one the cadence task observed: nothing eligible, no claim in flight, a
+    clean tree, and the lease free. It is a real state — it is the state the dispatcher spends
+    almost all of its life in, twelve passes an hour between sessions — and in it a pass must
+    write **nothing at all**, because there is no assertion to record.
+
+    It states its precondition and skips when the checkout is not in it. That is not the skip
+    ADDENDUM_03 §3 forbids: the idempotence test above covers every state including this one,
+    and this adds the stronger claim where the stronger claim holds."""
+    import hashlib
+    if not _neo4j_up():
+        pytest.skip("Neo4j is not reachable")
+    s = _survey()
+    reasons = []
+    if s["eligible"]:
+        reasons.append(f"eligible: {s['eligible']}")
+    if s["claim_in_flight"]:
+        reasons.append("a claim is in flight")
+    if s["tree_dirty"]:
+        reasons.append(f"tree dirty ({s['tree_dirty_count']} path(s))")
+    if (s["lease"] or {}).get("holder"):
+        reasons.append(f"lease held by {s['lease']['holder']}")
+    if s["stop_file_present"]:
+        reasons.append("STOP file present")
+    if not s["enabled"]:
+        reasons.append("dispatch disabled")
+    if reasons:
+        pytest.skip("not the quiet state this asserts: " + "; ".join(reasons))
 
     events = REPO / "seldon_events.jsonl"
     before = hashlib.sha256(events.read_bytes()).hexdigest()
     r = _bare_env_run(Path.home())
-    after = hashlib.sha256(events.read_bytes()).hexdigest()
-    log = (REPO / "logs" / "airkg_dispatch.log").read_text(encoding="utf-8")
-    tail = log[log.rfind("=== 20"):]
+    tail = _wrapper_tail()
     assert r.returncode == 0, tail
-    assert "AuthError" not in tail and "Traceback" not in tail
-    assert "=== rc=0" in tail
-    assert after == before, "a pass wrote to the event log"
+    assert "=== rc=0" in tail and "launching" not in tail
+    assert hashlib.sha256(events.read_bytes()).hexdigest() == before, (
+        "a pass with nothing to assert wrote to the event log")
+
+
+def test_the_repo_carries_the_addendum_that_amended_decision_seven():
+    """The rule §1 of it states — a standing condition earns an event only when its beginning
+    is recorded nowhere else — is the one a reader needs to decide the NEXT refusal reason. A
+    rule that lives only in a commit message is a rule the next author re-invents."""
+    add = REPO / "docs" / "design" / \
+        "2026-09-15_DN-006_standing_dispatcher_ADDENDUM_03.md"
+    text = add.read_text(encoding="utf-8")
+    assert "**Status:** AMENDS" in "\n".join(text.splitlines()[:10])
+    for reason in ("lease_held", "stop_file", "dirty_tree", "disabled", "above_band",
+                   "network_undeclared", "api_key_present", "claim_failed"):
+        assert reason in text, f"{reason} is not accounted for in ADDENDUM_03's table"
+    assert "one per acquisition" in text
