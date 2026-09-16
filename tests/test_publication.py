@@ -224,6 +224,77 @@ def test_the_published_result_values_and_states_match_the_graph(session):
     assert not drift, drift
 
 
+def test_the_published_source_appendix_matches_the_graph_it_was_derived_from(session):
+    """DN-004's guard shape, applied to the appendix: a published artifact is compared to the
+    graph it was derived from, or it drifts.
+
+    `cc_tasks/2026-09-15_derived_counts_and_appendix_guard.md` decision 2. On 2026-09-15
+    `docs/data/sources_per_check.json` carried A12 `rules: 2` while the graph held
+    `RULE-A12-v1`, `-v2` and `-v3` — a published payload a rule version behind the graph for
+    two days with every gate green, because every gate checked the payload's INTERNAL
+    consistency (its doc_ids are in the manifest, its citations carry a URL and a hash) and
+    nothing compared it to the source it came from.
+
+    Two comparisons, deliberately not one:
+
+    * the whole published payload against a fresh `build_l0_site.sources_per_check()` — "what
+      the builder would compute from the graph now", which is the drift class;
+    * `rules` against an INDEPENDENT Cypher count of `(:Rule)-[:MEASURES]->(:AssessmentIndicator)`.
+      Re-running the builder's own function would check the payload against a second call of
+      the code that wrote it; the count that drifted gets a query that does not share it.
+    """
+    import build_l0_site
+    import report_traceability as RT
+    doc = json.loads((DATA / "sources_per_check.json").read_text(encoding="utf-8"))
+
+    # The whole payload, recomputed the way the builder computes it. `sources_per_check` opens
+    # its own driver; `session` is here for the skip when the database is down, and for the
+    # independent rule count below.
+    drift = build_l0_site.appendix_drift_against_published(build_l0_site.sources_per_check())
+    assert not drift, drift
+
+    live = {r["code"]: r["n"] for r in session.run(
+        "MATCH (r:Rule)-[:MEASURES]->(i:AssessmentIndicator) "
+        "RETURN i.code AS code, count(DISTINCT r) AS n")}
+    behind = [f"{leg}: published rules={cell['rules']}, graph "
+              f"{live.get(RT.FRAMEWORK_CODE.get(leg, leg), 0)}"
+              for leg, cell in doc["per_leg_chain"].items()
+              if cell["rules"] != live.get(RT.FRAMEWORK_CODE.get(leg, leg), 0)]
+    assert not behind, behind
+
+
+def test_the_appendix_guard_reports_the_drift_it_was_built_for(session):
+    """The incident, replayed. `05455cd` published A12 at `rules: 2`; the graph holds three.
+
+    A guard nobody has seen fail is a guard nobody knows the shape of. The stale payload is
+    reconstructed from git rather than written here, so what this asserts is the real artifact
+    that really shipped and not a fixture somebody composed to fail.
+    """
+    import subprocess
+    import tempfile
+
+    import build_l0_site
+    r = subprocess.run(["git", "show", "05455cd:docs/data/sources_per_check.json"],
+                       capture_output=True, text=True, cwd=REPO)
+    if r.returncode:
+        pytest.skip(f"the stale payload is not reachable in this checkout: {r.stderr[-200:]}")
+    stale = json.loads(r.stdout)
+    assert stale["per_leg_chain"]["A12"]["rules"] == 2, (
+        "05455cd is not the stale payload this guard replays; find the commit that is")
+
+    # `session` is taken for its skip: the recomputation below needs the database up.
+    computed = build_l0_site.sources_per_check()
+    with tempfile.NamedTemporaryFile("w", suffix=".json", delete=False) as fh:
+        json.dump(stale, fh)
+        tmp = Path(fh.name)
+    try:
+        drift = build_l0_site.appendix_drift_against_published(computed, path=tmp)
+    finally:
+        tmp.unlink()
+    assert any(d.startswith("A12.rules:") for d in drift), (
+        f"the guard does not report the drift it exists for; it reported {drift}")
+
+
 def test_the_source_appendix_data_cites_only_admitted_documents():
     doc = json.loads((DATA / "sources_per_check.json").read_text(encoding="utf-8"))
     entries = json.loads((REPO / "corpus" / "manifest.json")
@@ -259,6 +330,97 @@ def test_the_self_row_is_measured_or_says_it_is_not():
             "the self row prints a verdict and no self-scan payload exists")
     else:
         assert "<td class=\"v " in html
+
+
+# ------------------------------------------------- the counts a published label states
+#
+# `cc_tasks/2026-09-15_derived_counts_and_appendix_guard.md` decision 1. Four published matrix
+# labels said "the six host-level checks" for two days after DD-066 took the matrix to five
+# columns, because the label was a literal in `build_l0_site.MATRICES` and the gate that
+# checks the abstract's count held its own copy of the numeral map. One map, imported by both;
+# the label reads its count out of the file it describes.
+
+
+def test_the_numeral_map_is_one_map_and_refuses_what_it_cannot_spell():
+    import numerals
+    assert numerals.word(5) == "five"
+    assert numerals.word(5).capitalize() == "Five", (
+        "the abstract gate capitalises at the call site; a second map keyed on case is how "
+        "the first drift happened")
+    assert numerals.word(len(["A4", "A5", "A10", "A11-declared", "A12"])) == "five"
+    with pytest.raises(ValueError):
+        numerals.word(21)
+    with pytest.raises(TypeError):
+        numerals.word("5")
+    gate = (REPO / "scripts"
+            / "check_protected_abstract_five_checks.sh").read_text(encoding="utf-8")
+    assert "from numerals import word" in gate, (
+        "the abstract gate has gone back to its own numeral map")
+    assert "WORDS = {" not in gate, "the abstract gate carries a second copy of the map"
+
+
+def test_no_matrix_label_states_a_LEG_count_as_a_literal():
+    """The count of COLUMNS is derived; a count of rows in the prose is a separate question and
+    is not what DD-066 moved. What is forbidden is a spelled numeral standing in front of the
+    word a matrix's columns are called — `six host-level checks`, which is what four published
+    labels said after the instrument had five."""
+    import build_l0_site
+    import numerals
+    spelled = "|".join(numerals.WORDS.values())
+    literal = re.compile(rf"\b({spelled})\s+(host-level\s+)?(checks|legs|columns)\b", re.I)
+    typed = [(stem, m.group(0)) for stem, tmpl in build_l0_site.MATRICES
+             for m in [literal.search(tmpl)] if m]
+    assert not typed, (
+        f"a matrix label spells its own leg count: {typed}; it belongs in the template as "
+        f"a {{legs}} field, rendered from the matrix file the label describes")
+    assert "{legs}" in dict(build_l0_site.MATRICES)["tierA"], (
+        "the tier-A label no longer derives its leg count from the tier-A matrix")
+
+
+def test_the_published_matrix_label_spells_the_matrixs_own_leg_count():
+    """The label on the site is the one the matrix file licenses, in both files that carry it.
+
+    Four renderings: the tier-A label appears twice in `docs/index.html` (JSON and CSV) and
+    twice in `docs/llms.txt`. Those are the four that went stale.
+    """
+    import build_l0_site
+    import numerals
+    suffix = build_l0_site.cycle_suffix(PUB["snapshot_cycle"])
+    legs = build_l0_site.matrix_legs("tierA", suffix)
+    label = build_l0_site.matrix_label(dict(build_l0_site.MATRICES)["tierA"], legs)
+    assert numerals.word(len(legs)) in label
+    html = (SITE / "index.html").read_text(encoding="utf-8")
+    txt = (SITE / "llms.txt").read_text(encoding="utf-8")
+    assert html.count(label) == 2, f"docs/index.html carries {html.count(label)} of {label!r}"
+    assert txt.count(label) == 2, f"docs/llms.txt carries {txt.count(label)} of {label!r}"
+    stale = [f"{w} host-level checks" for w in numerals.WORDS.values()
+             if w != numerals.word(len(legs))]
+    still = [s for s in stale if s in html.lower() or s in txt.lower()]
+    assert not still, f"a published page states a leg count the matrix does not have: {still}"
+
+
+def test_the_appendix_row_labels_are_read_from_the_indicator_node():
+    """Decision 4. G1-D stays in the appendix — its sources exist and its construct stands
+    (DD-066 §1) — and every row of it says which tier it is measured at and which instrument
+    it left, from the framework record's node rather than from anything typed in the builder."""
+    import build_l0_site
+    record = json.loads((REPO / "framework" / "ai_readiness_framework.json")
+                        .read_text(encoding="utf-8"))
+    node = next(n["properties"] for n in record["nodes"]
+                if "AssessmentIndicator" in n["labels"] and n["properties"]["code"] == "G1-D")
+    doc = json.loads((DATA / "sources_per_check.json").read_text(encoding="utf-8"))
+    rows = [r for r in doc["rows"] if r["check"] == "G1-D"]
+    assert rows, "the G1-D rows have left the published appendix; decision 4 keeps them"
+    for r in rows:
+        for k in build_l0_site.INDICATOR_LABELS:
+            assert r.get(k) == node.get(k), (
+                f"the published G1-D row says {k}={r.get(k)!r}; the record's node says "
+                f"{node.get(k)!r}")
+    assert node["measurement_tier"] == "product" and node["withdrawn_from"] == "host-level"
+    # And no OTHER row is labelled, because no other indicator carries the keys.
+    other = [r["check"] for r in doc["rows"] if r["check"] != "G1-D"
+             and any(k in r for k in build_l0_site.INDICATOR_LABELS)]
+    assert not other, f"{sorted(set(other))} are labelled and their indicators are not"
 
 
 # ------------------------------------------------------- the builders behind the tree

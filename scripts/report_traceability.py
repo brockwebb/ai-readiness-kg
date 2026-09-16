@@ -3,8 +3,9 @@
 **Read-only, zero spend, no network beyond Neo4j.**
 
 `cc_tasks/2026-09-11_l0_report_cycle4_revision.md` decision 5: *measured and reported, not
-gated*. For every check the report quotes a pass rate for (`LEGS`: the six tier-0 legs, A3, and
-the five product legs the prose names, read from the sections rather than typed), state by
+gated*. For every check the report quotes a pass rate for (`LEGS`: the checks named in code —
+the tier-0 matrix's columns, the leg DD-066 moved off them, and A3 — plus the product legs the
+prose names, read from the sections rather than typed), state by
 Cypher whether the rule's indicator node reaches a construct, a definition or a source node.
 That is the survey item -> construct -> definition -> primary source crosswalk this repo's
 CLAUDE.md calls the validity layer. Where the answer is "no edge", the RESULT says so and the
@@ -39,10 +40,18 @@ MANIFEST = REPO / "corpus" / "manifest.json"
 SECTIONS = REPO / "docs" / "reports" / "sections"
 FRAGMENT = REPO / "docs" / "reports" / "generated" / "sources_per_check.md"
 
-#: The report's six host-level checks, plus the product check the movement section writes a
-#: paragraph about. These seven are NAMED IN CODE because each is either a column of the tier-0
-#: matrix or a leg the prose discusses without a `{{result:scan_l0_product_...}}` tag, so no
-#: rule reads them off the sections.
+#: The checks NAMED IN CODE: the columns of the published tier-0 matrix, the leg DD-066
+#: withdrew from it and moved to the product tier, and the product check the movement section
+#: writes a paragraph about. Each is here because no rule can read it off the sections — it is
+#: either a matrix column or a leg the prose discusses without a
+#: `{{result:scan_l0_product_...}}` tag.
+#:
+#: **This comment states no count.** It said "six host-level checks" and "these seven" until
+#: 2026-09-15, and the first half was false the moment DD-066 withdrew G1-D from the host-level
+#: instrument — a prose count in a comment beside the list it counts is a second copy that
+#: nothing re-derives. `tests/test_report_traceability.py::
+#: test_the_checks_named_in_code_are_this_set_and_its_length_is_its_own` asserts the list and
+#: its length against the enumerated set.
 _NAMED_IN_CODE = ["A4", "A5", "A10", "A11-declared", "A12", "G1-D", "A3"]
 
 Q = """

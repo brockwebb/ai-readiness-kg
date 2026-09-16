@@ -92,8 +92,18 @@ CITATION_FILES = [
      "Zenodo deposition metadata, prepared and not deposited: the mint is the author's."),
 ]
 
-#: The matrices, in the order the index lists them. `{suffix}` is the snapshot cycle's suffix.
-MATRICES = [("tierA", "The 16 Tier A bodies × the six host-level checks."),
+#: The matrices, in the order the index lists them. The label is a TEMPLATE: `{legs}` is the
+#: number of columns the matrix file itself declares, spelled by `numerals.word`, and `{n_legs}`
+#: is the same count as an integer. Nothing here states a leg count as a literal
+#: (`cc_tasks/2026-09-15_derived_counts_and_appendix_guard.md` decision 1).
+#:
+#: It said "the six host-level checks" until 2026-09-15, and went on saying it after DD-066
+#: withdrew G1-D and the matrix dropped to five columns: the previous task moved the abstract's
+#: count and found these four labels — the tier-A label rendered twice into `docs/index.html`
+#: and twice into `docs/llms.txt` — still carrying the old one. A label that describes a file
+#: reads its count out of that file, or it is a claim about the file rather than a description
+#: of it.
+MATRICES = [("tierA", "The 16 Tier A bodies × the {legs} host-level checks."),
             ("tierC", "The three federal reference hosts, in no Tier A denominator (DD-059)."),
             ("product", "PARTIAL: product-level checks over declared flagship surfaces only.")]
 
@@ -125,6 +135,31 @@ def publication() -> dict:
 def cycle_suffix(cycle: str) -> str:
     import cycle_results
     return cycle_results.cycle_suffix(cycle)
+
+
+def matrix_path(stem: str, suffix: str, ext: str = "json") -> Path:
+    return SITE / "reports" / f"scan_matrix_{stem}_{suffix}.{ext}"
+
+
+def matrix_legs(stem: str, suffix: str) -> list:
+    """The columns the published matrix declares. The one source for every count a label,
+    a page or a gate states about that matrix."""
+    path = matrix_path(stem, suffix)
+    if not path.is_file():
+        raise SystemExit(f"FATAL: {path.relative_to(REPO)} does not exist; run "
+                         f"scripts/build_l0_matrices.py first")
+    legs = json.loads(path.read_text(encoding="utf-8")).get("legs")
+    if not legs:
+        raise SystemExit(f"FATAL: {path.relative_to(REPO)} declares no legs; a matrix with no "
+                         f"columns cannot be labelled")
+    return list(legs)
+
+
+def matrix_label(template: str, legs: list) -> str:
+    """Render a `MATRICES` label against the matrix's own leg list. A template naming a field
+    this does not supply raises rather than rendering a brace onto a published page."""
+    from numerals import word
+    return template.format(legs=word(len(legs)), n_legs=len(legs))
 
 
 def head_commit() -> str:
@@ -245,6 +280,75 @@ def provenance_buckets(results: list) -> dict:
             "provenance_paths_absent": sorted(absent)}
 
 
+#: Properties an appendix row carries OFF ITS INDICATOR NODE when the framework record holds
+#: them. `cc_tasks/2026-09-15_derived_counts_and_appendix_guard.md` decision 4: the G1-D row
+#: stays in the published appendix — the sources exist and the construct stands (DD-066 §1) —
+#: and it says which tier it is measured at and which instrument it was withdrawn from, so a
+#: reader of the appendix alone cannot take a product-tier check for a host-level one. Read
+#: from the node, never typed here; a row whose indicator carries neither key gains neither.
+INDICATOR_LABELS = ("measurement_tier", "withdrawn_from")
+
+
+def indicator_labels(inds: dict, leg: str) -> dict:
+    """`INDICATOR_LABELS` this leg's indicator node actually carries, for the appendix row.
+
+    `report_traceability.FRAMEWORK_CODE` is what maps a leg name to its framework code, and it
+    is read rather than re-derived: `A11-declared` is one half of indicator `A11` and a fuzzy
+    match would pair a leg that has no indicator with a neighbour that does.
+    """
+    import report_traceability
+    props = inds.get(report_traceability.FRAMEWORK_CODE.get(leg, leg)) or {}
+    return {k: props[k] for k in INDICATOR_LABELS if props.get(k)}
+
+
+def appendix_drift_against_published(computed: dict, path: Path | None = None) -> list:
+    """Every field of the published source appendix the freshly computed one disagrees with.
+
+    Compared field by field rather than by whole-file digest: the payload carries no build
+    stamp, but a digest comparison would report "it differs" and leave the reader to find
+    where, and the whole point of this guard is that the drift it catches is one integer in a
+    73-row file (A12's rule count, 2 against the graph's 3).
+
+    The truncated samples `construct_names` and `source_ids` are NOT compared. Each is a
+    `collect(...)[..4]` and which four land in it is a function of collection order, not of the
+    graph's content; comparing them would make this flaky rather than strict. Their COUNTS
+    (`constructs`, `sources`) are compared, and those are what a drift would move.
+    """
+    path = path or (DATA / "sources_per_check.json")
+    if not path.is_file():
+        return [f"{path.relative_to(REPO)} does not exist"]
+    published = json.loads(path.read_text(encoding="utf-8"))
+    out = []
+    for key in ("legs", "rows_per_leg", "legs_without_source"):
+        if published.get(key) != computed.get(key):
+            out.append(f"{key}: published {published.get(key)!r}, graph now "
+                       f"{computed.get(key)!r}")
+    # The rows themselves, reported one row at a time. The whole list is comparable — every
+    # field in it is read from the graph or from the manifest and the order is sorted — but a
+    # message that printed two 73-row lists would be a diff nobody reads.
+    pub_rows, new_rows = published.get("rows") or [], computed.get("rows") or []
+    if len(pub_rows) != len(new_rows):
+        out.append(f"rows: published {len(pub_rows)}, graph now {len(new_rows)}")
+    for i, (a, b) in enumerate(zip(pub_rows, new_rows)):
+        if a != b:
+            moved = sorted(k for k in set(a) | set(b) if a.get(k) != b.get(k))
+            out.append(f"row {i} ({b.get('check')} / {b.get('doc_id')}): {moved} moved")
+    pub_chain = published.get("per_leg_chain") or {}
+    new_chain = computed.get("per_leg_chain") or {}
+    for leg in sorted(set(pub_chain) | set(new_chain)):
+        a, b = pub_chain.get(leg), new_chain.get(leg)
+        if a is None or b is None:
+            out.append(f"{leg}: published {'has' if a else 'has no'} chain, graph now "
+                       f"{'has' if b else 'has no'} chain")
+            continue
+        for k in sorted(set(a) | set(b)):
+            if isinstance(a.get(k), list) or isinstance(b.get(k), list):
+                continue
+            if a.get(k) != b.get(k):
+                out.append(f"{leg}.{k}: published {a.get(k)!r}, graph now {b.get(k)!r}")
+    return out
+
+
 def sources_per_check() -> dict:
     """The per-check source appendix as data: one row per (check, admitted source).
 
@@ -266,6 +370,12 @@ def sources_per_check() -> dict:
     if report["doc_ids_not_in_manifest"]:
         raise SystemExit(f"FATAL: the appendix would cite documents outside the manifest: "
                          f"{report['doc_ids_not_in_manifest']}; nothing written")
+    #: The framework record's indicator properties, by the code the appendix rows carry. The
+    #: same record `report_traceability.sources_appendix` reads its locators from.
+    inds = {n["properties"]["code"]: n["properties"]
+            for n in json.loads((REPO / "framework" / "ai_readiness_framework.json")
+                                .read_text(encoding="utf-8"))["nodes"]
+            if "AssessmentIndicator" in n["labels"]}
     rows = []
     for line in text.splitlines():
         if not line.startswith("| ") or line.startswith("|--") or "| Check |" in line:
@@ -287,7 +397,8 @@ def sources_per_check() -> dict:
                      "content_hash": ((entry.get("identity") or {}).get("sha256")
                                       if entry else None),
                      "acquired_at": ((entry.get("acquisition") or {}).get("acquired_at")
-                                     if entry else None)})
+                                     if entry else None),
+                     **indicator_labels(inds, leg)})
     return {"task": TASK, "legs": report["legs"], "rows": rows,
             "rows_per_leg": report["rows_per_leg"],
             "legs_without_source": report["legs_without_source"],
@@ -475,8 +586,9 @@ def self_row(pub: dict) -> dict | None:
 # --------------------------------------------------------------- the index
 
 def index_html(pub: dict, data_links: list, results_n: int, self_: dict | None,
-               commit: str, built: str) -> str:
+               commit: str, built: str, host_legs: list) -> str:
     e = html.escape
+    from numerals import word
 
     def li(href, label):
         return (f'  <li><a href="{e(href)}"><code>{e(href)}</code></a> \u2014 {label}</li>')
@@ -528,7 +640,12 @@ def index_html(pub: dict, data_links: list, results_n: int, self_: dict | None,
             f"rule, its version and the URL above.</p>")
     else:
         selfblock = (
-            "<p class=\"stop\"><strong>Not measured.</strong> The six host-level checks have "
+            # The count is the tier-A matrix's own leg count, not a literal. This branch is
+            # unreachable while a self-scan payload exists, which is exactly how the label at
+            # `MATRICES` came to sit a withdrawal behind the instrument: an unexercised string
+            # is where a stale number survives a gate.
+            f"<p class=\"stop\"><strong>Not measured.</strong> The {word(len(host_legs))} "
+            "host-level checks have "
             "not been run against this host, because at the time of this build the host was "
             "not serving this tree: GitHub Pages is not enabled for the repository "
             f"(<code>has_pages: false</code>), and every path under "
@@ -668,8 +785,12 @@ def build(check: bool = False, only=None) -> int:
     DATA.mkdir(parents=True, exist_ok=True)
     written, links = [], []
 
-    # 1. the matrices, already beside the report, linked as JSON and CSV
-    for stem, label in MATRICES:
+    # 1. the matrices, already beside the report, linked as JSON and CSV. The label is rendered
+    #    against the matrix's OWN leg list (decision 1), so a withdrawn column changes the
+    #    published label on the next build instead of waiting for somebody to notice.
+    host_legs = matrix_legs("tierA", suffix)
+    for stem, template in MATRICES:
+        label = matrix_label(template, matrix_legs(stem, suffix))
         for ext in ("json", "csv"):
             rel = f"reports/scan_matrix_{stem}_{suffix}.{ext}"
             if not (SITE / rel).is_file():
@@ -680,6 +801,18 @@ def build(check: bool = False, only=None) -> int:
 
     # 2. the per-check source appendix
     appendix = sources_per_check()
+    # Under --check nothing is written, so the computed appendix is compared to the PUBLISHED
+    # one and a difference is fatal (decision 2). `docs/data/sources_per_check.json` sat at
+    # A12 `rules: 2` for two days while the graph carried RULE-A12-v1/v2/v3, with every gate
+    # green: DN-004's shape — a published artifact and the graph it was derived from, drifting
+    # apart — in a payload DN-004's guard did not cover. `tests/test_publication.py` asserts
+    # the same property against the graph; this puts it on the builder, so `--check` answers
+    # the question without a database fixture and a stale payload cannot pass a build.
+    if check:
+        stale = appendix_drift_against_published(appendix)
+        if stale:
+            raise SystemExit("FATAL: data/sources_per_check.json no longer matches what the "
+                             "graph produces; rebuild it. Drift: " + "; ".join(stale[:8]))
     # 3. the tagged Results
     results = tagged_results()
     # DN-004 decision 2's second consumer. The report's version block states the snapshot's
@@ -821,7 +954,8 @@ def build(check: bool = False, only=None) -> int:
                       "# Jekyll drops every path beginning with an underscore or a dot.\n"),
     }
     self_ = self_row(pub)
-    files["index.html"] = index_html(pub, links, len(results), self_, commit, built)
+    files["index.html"] = index_html(pub, links, len(results), self_, commit, built,
+                                 host_legs)
     for name, text in files.items():
         if not check and not only:
             (SITE / name).write_text(text, encoding="utf-8")

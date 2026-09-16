@@ -89,10 +89,30 @@ def session():
     drv.close()
 
 
+def test_the_checks_named_in_code_are_this_set_and_its_length_is_its_own():
+    """`_NAMED_IN_CODE`, pinned as a SET and counted from itself.
+
+    `cc_tasks/2026-09-15_derived_counts_and_appendix_guard.md` decision 1. The comment beside
+    that list used to say "six host-level checks" and "these seven", and DD-066 falsified the
+    first half without touching the list: G1-D is still named in code — it still has an
+    indicator, still has sources and still appears in the appendix — and it is no longer a
+    host-level check. So the comment now states no count and this states the membership; the
+    length is asserted against the enumerated set rather than against a number anybody typed.
+    """
+    assert RT._NAMED_IN_CODE == ["A4", "A5", "A10", "A11-declared", "A12", "G1-D", "A3"]
+    assert len(RT._NAMED_IN_CODE) == len(["A4", "A5", "A10", "A11-declared", "A12",
+                                          "G1-D", "A3"])
+    assert len(set(RT._NAMED_IN_CODE)) == len(RT._NAMED_IN_CODE), (
+        "a leg is named twice in code; it would be measured twice and print two appendix rows")
+    assert not set(RT._NAMED_IN_CODE) & set(RT.product_legs_named_by_prose()), (
+        "a leg named in code is also read off the prose; `product_legs_named_by_prose` excludes "
+        "the named set precisely so the appendix cannot list one check twice")
+
+
 def test_the_report_measures_exactly_these_legs():
-    """The six tier-0 checks the report's matrix has a column for, the product check its
-    movement section devotes a paragraph to, and the five product legs whose pass rate the prose
-    quotes in words.
+    """The tier-0 checks the report's matrix has a column for, the leg DD-066 withdrew from it,
+    the product check its movement section devotes a paragraph to, and the five product legs
+    whose pass rate the prose quotes in words.
 
     **Twelve, not seven.** The seven-leg pin was what let A1, A8, B3 and D4 be published with a
     quoted rate and no cited source: they were outside the list while the prose made a claim

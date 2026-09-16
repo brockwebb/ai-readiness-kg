@@ -114,10 +114,16 @@ say "THE POINT OF THE TASK, asserted rather than assumed"
 /opt/anaconda3/bin/python3 - <<'PY' || fail=1
 import json, re, sys, pathlib, yaml
 REPO = pathlib.Path("/Users/brock/GitHub/ai-readiness-kg")
-WORDS = {1: "One", 2: "Two", 3: "Three", 4: "Four", 5: "Five", 6: "Six", 7: "Seven"}
+# The numeral map is `scripts/numerals.py`, imported rather than copied
+# (`cc_tasks/2026-09-15_derived_counts_and_appendix_guard.md` decision 1). It used to be a dict
+# literal here, and `scripts/build_l0_site.py` held the same fact as a literal numeral in a
+# label; one copy moved under DD-066 and the other did not. A gate holding its own copy of what
+# it gates is not a gate.
+sys.path.insert(0, str(REPO / "scripts"))
+from numerals import word
 legs = json.loads((REPO / "docs/reports/scan_matrix_tierA_2026-09-10_rj2.json")
                   .read_text())["legs"]
-want = WORDS[len(legs)]
+want = word(len(legs)).capitalize()
 pub = yaml.safe_load((REPO / "docs/reports/publication.yaml").read_text())
 abstract = " ".join(pub["abstract"].split())
 print(f"   the tier-A matrix has {len(legs)} legs: {legs}")
