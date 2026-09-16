@@ -334,3 +334,81 @@ def test_the_repo_carries_the_addendum_that_amended_decision_seven():
                    "network_undeclared", "api_key_present", "claim_failed"):
         assert reason in text, f"{reason} is not accounted for in ADDENDUM_03's table"
     assert "one per acquisition" in text
+
+
+# ---------------------------------------------------------------------------
+# The October tick: why this project's cadence would be blocked, as the code says it
+# ---------------------------------------------------------------------------
+#
+# `cc_tasks/2026-09-16_dispatcher_commits_its_record.md` decision 3. Once the dispatcher
+# commits and pushes every line it writes (decisions 1 and 2), a tree that is dirty at a cadence
+# tick is dirty for one of three reasons: a session in flight (correct to wait), a Desktop file
+# not yet committed (committed by the same pass before the cadence runs) or the operator's own
+# uncommitted work (correct to wait, and the paths are on stdout). This asserts that the reasons
+# the installed dispatcher reports for THIS project's cadence entry, at the instant cycle 5 falls
+# due, are exactly those — each with the evidence a reader of the wrapper log needs — so the
+# first October pass can be read from its log alone.
+#
+# Run against a scratch directory, not this checkout, because `evaluate_entry` asks whether the
+# period's instance already exists on disk, and after 2026-10-05 in this checkout it will.
+
+#: 2026-10-05 is the first Monday of October 2026 and `start_period` is `2026-10`; 00:30Z is
+#: inside the due window. Hand-checked, as the Seldon cadence tests do.
+CYCLE5_TICK = "2026-10-05T00:30:00+00:00"
+
+
+def _cadence_at_tick(tmp_path, monkeypatch, capsys, *, tree, claim, dry_run=False):
+    from datetime import datetime
+    from seldon.commands import dispatch as CMD
+    from seldon.core.dispatch import load_dispatch_config
+    cfg = load_dispatch_config(REPO)
+    monkeypatch.setattr(CMD, "_utcnow", lambda: datetime.fromisoformat(CYCLE5_TICK))
+    rows = CMD._cadence(tmp_path, {}, None, None, None, None, cfg, tree, claim, dry_run)
+    return rows, capsys.readouterr().err
+
+
+def _tree(dirty_paths=(), branch="main"):
+    return {"branch": branch, "dirty": bool(dirty_paths), "dirty_paths": list(dirty_paths),
+            "dirty_count": len(dirty_paths)}
+
+
+def test_cycle5_is_due_at_the_tick_and_is_this_projects_only_cadence(tmp_path, monkeypatch,
+                                                                    capsys):
+    rows, _ = _cadence_at_tick(tmp_path, monkeypatch, capsys, tree=_tree(), claim=None,
+                               dry_run=True)
+    assert [(r["cadence"], r["period"], r["due"], r["instance"]) for r in rows] == [
+        ("scan_cycle", "2026-10", True, None)]
+
+
+@pytest.mark.parametrize("tree,claim,reason,evidence", [
+    # A session in flight: the dispatcher's own claim, named.
+    (_tree(), {"artifact_id": "c609b1e1-0000", "claimed_by": "dispatcher:host:1"},
+     "claim_in_flight", "c609b1e1 by dispatcher:host:1"),
+    # The operator's own uncommitted work: the paths, so the log says whose.
+    (_tree(["scripts/operator_wip.py", "controls.yaml"]), None,
+     "dirty_tree", "scripts/operator_wip.py, controls.yaml"),
+    # A checkout left on another branch.
+    (_tree(branch="feat/x"), None, "wrong_branch", "on feat/x, configured main"),
+])
+def test_a_blocked_cycle5_tick_names_its_reason_and_its_evidence(
+        tmp_path, monkeypatch, capsys, tree, claim, reason, evidence):
+    rows, err = _cadence_at_tick(tmp_path, monkeypatch, capsys, tree=tree, claim=claim)
+    assert rows[0]["created"] is False
+    assert rows[0]["blocked_on"] == reason
+    assert rows[0]["blocked_evidence"] == evidence
+    assert f"scan_cycle 2026-10 is due and NOT created ({reason}): {evidence}" in err
+
+
+def test_the_pass_commits_the_dispatchers_lines_and_registered_files_before_the_cadence():
+    """The ordering decision 3 re-reads the gate against: the dispatcher's own leftover lines
+    and any registered-but-uncommitted Desktop file are committed BEFORE `_cadence` looks at
+    the tree, so neither can be the dirt that blocks a tick. Read from the installed source,
+    because the ordering is the claim."""
+    import inspect
+    from seldon.commands import dispatch as CMD
+    src = inspect.getsource(CMD._pass)
+    body = "\n".join(ln for ln in src.splitlines() if not ln.lstrip().startswith("#"))
+    own = body.index("_record_own_lines(")
+    registered = body.index("_commit_registered(")
+    cadence = body.index("_cadence(")
+    assert own < registered < cadence, (own, registered, cadence)

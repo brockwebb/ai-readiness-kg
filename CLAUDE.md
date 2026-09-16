@@ -73,7 +73,7 @@ Transcribed from `docs/schema_v0.1.md` (the doc is authoritative; currently v0.2
 
 ## CC dispatch protocol (operator-ordered, 2026-09-01)
 
-When a Desktop session registers a cc_task, it must end that turn by giving the operator the exact dispatch line to paste into Claude Code, in this form:
+A Desktop session's registration turn ends with the registration: the dispatcher commits the registered task file and launches it, and the exact dispatch line to paste into Claude Code is written only while `dispatch.enabled` is false in `seldon.yaml`, or when the operator is directed to claim the task first for a hand dispatch (DN-006 decision 10; `cc_tasks/2026-09-16_dispatch_idempotence_RESULT.md` §5 premise 5), in this form:
 
 > `Read CLAUDE.md, then execute cc_tasks/<filename>.md. Glob and read all sibling <filename>_ADDENDUM*.md files before starting; an addendum can amend or SUPERSEDE the base task.`
 
