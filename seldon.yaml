@@ -27,14 +27,20 @@ shared_ontology:
 # installing the job changes the behaviour of nothing already queued.
 dispatch:
 
-  # THE KILL SWITCH, and it ships false. Enabling is the first line of the cadence task
-  # (DN-006 decision 8), after the operator-dispatched queue has drained under decision 10 —
-  # "while dispatch.enabled is true, the operator does not hand-dispatch", because a
-  # hand-dispatched session and a dispatched one in the same checkout is the batch-identity
-  # class (DD-019) in the one place the design cannot guard.
+  # THE KILL SWITCH. **True since 2026-09-16**, set by
+  # `cc_tasks/2026-09-16_cadence_and_enable.md` decision 3 after that task's gate passed.
+  #
+  # While it is true, **the operator does not hand-dispatch** (DN-006 decision 10). The
+  # dispatcher cannot see a session it did not launch except through c7's clean-tree check, so
+  # a hand-dispatched session and a dispatched one in the same checkout is the batch-identity
+  # class (DD-019) in the one place the design cannot guard — and the guard is therefore the
+  # rule, not a mechanism.
+  #
+  # To stop the world without editing this file: `touch .seldon/DISPATCH_STOP`. The appearance
+  # is recorded once on the log, and every pass halts until the file is removed.
   #
   # Read on EVERY pass, never cached. A bool, not a string: a truthy "false" is refused.
-  enabled: false
+  enabled: true
 
   # The branch a pass may dispatch on. Any other branch fails c7, together with a dirty tree.
   branch: main
@@ -81,3 +87,65 @@ dispatch:
   # `logs/dispatch/<stem>.log`, one per dispatched task, with `EXIT=` appended. Gitignored:
   # a dispatched session's transcript is a local artifact; what ships is the RESULT it wrote.
   log_dir: logs/dispatch
+
+  # ------------------------------------------------------------------------------ cadence
+  #
+  # DN-006 decision 8: **a schedule produces a task; it does not bypass the queue.** When a
+  # period is due and no instance for it exists on disk, the pass renders the template,
+  # registers it through `seldon cc register`'s own code path, commits it, and the task then
+  # flows through decisions 2 to 5 exactly like a hand-written one. There is no second set of
+  # criteria, no second claim and no second log, because what a schedule produces here is a
+  # task file — and a task file already has an evaluator.
+  #
+  # The rule vocabulary is CLOSED. `monthly_first_weekday` is the only rule DD-060 asks for and
+  # the only one implemented; a second rule type is a code change with a test, not a string
+  # somebody types here. An unreadable rule refuses at config load, because a rule that failed
+  # at 00:00 on the first Monday would fail unattended and at the only moment it mattered.
+  cadence:
+
+    - name: scan_cycle
+
+      # DD-060: "monthly, from cycle 3, first Monday UTC", and only after the full frame
+      # validated — which cycle 3 did and cycle 4 measured. `at_utc` is quoted so YAML does not
+      # read it as a sexagesimal number.
+      rule:
+        monthly_first_weekday: monday
+        at_utc: "00:00"
+
+      # The instance is rendered from this file, which is a real task file with the three
+      # dispatch headers, an immutability line, a gate and a RESULT — not a stub somebody has
+      # to finish. Its body is cycle 4's shape (`cc_tasks/2026-09-10_scan_run_4.md` and its
+      # RESULT), and it says in its own decisions block what it will NOT do: move the report's
+      # snapshot, the site's published Results, or the abstract. That is a DN-004 decision and
+      # it stays with the Desktop OODA.
+      template: cc_tasks/templates/scan_cycle.md
+
+      # Instances land beside every other task file: a cadence instance is an ordinary task and
+      # is read, globbed and superseded like one.
+      instances_dir: cc_tasks
+
+      # The cycle identifier the rendered task runs under — `scan_<UTC date>`, the convention
+      # every payload path, Result suffix and `refuse_clobber` key already follows. Here rather
+      # than compiled into Seldon: the cadence is generic, the naming convention is this
+      # project's (~/GitHub/CLAUDE.md §2).
+      cycle_name_format: "scan_{date}"
+
+      # THE FIRST PERIOD THIS SCHEDULE MAY SERVE, and it is why nothing is due at ship.
+      #
+      # September 2026's first Monday was the 7th; this schedule was installed on the 16th,
+      # and September has already been measured — cycle 4 ran on 2026-09-10 as
+      # `scan_2026-09-10`, hand-dispatched. Without a start boundary the first clean-tree pass
+      # would find September due with no *cadence instance* on disk and create a second
+      # measurement of a month that already has one. `catchup` does not cover this: the
+      # offending period is not an earlier one, it is the current one.
+      #
+      # Prior art: Airflow's `start_date`, which exists for exactly this condition. October is
+      # the first period the standing cadence owns, and cycle 5 is its first instance — due
+      # 2026-10-05T00:00Z, the first Monday of October UTC.
+      start_period: "2026-10"
+
+      # Written back by the dispatcher after it creates an instance, for a reader. **It is not
+      # the guard** — the guard is the instance FILE, globbed by period — so clearing this line
+      # by hand cannot cause a second cycle to be created for a month that already has one.
+      # Empty at ship: nothing is due before October, and this task created nothing.
+      last_instance: ""

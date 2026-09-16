@@ -13,11 +13,17 @@
   RunAtLoad is false: loading the job should not fire a pass, because a pass can launch a CC
   session and `launchctl load` is something an operator does while looking at something else.
 
-  Installed with:
-    cp scripts/jobs/com.brock.airkg-dispatch.plist ~/Library/LaunchAgents/
-    launchctl load ~/Library/LaunchAgents/com.brock.airkg-dispatch.plist
-  THIS TASK DOES NOT INSTALL OR LOAD IT, and `dispatch.enabled` is false, so a loaded job is a
-  no-op that says `dispatch is disabled` and writes nothing.
+  Installed by SYMLINK, never a copy (operator doctrine; and the reason is this file):
+    ln -s /Users/brock/GitHub/ai-readiness-kg/scripts/jobs/com.brock.airkg-dispatch.plist \
+          ~/Library/LaunchAgents/com.brock.airkg-dispatch.plist
+    launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.brock.airkg-dispatch.plist
+  A copy would be a second StartInterval to keep in step with this one and with seldon.yaml's
+  poll_interval_s — three files holding one parameter, and the wrapper's drift check can only
+  see two of them. The symlink makes the installed job and the tracked file the same bytes.
+
+  Installed and loaded by `cc_tasks/2026-09-16_cadence_and_enable.md` §3, which is also the
+  task that set `dispatch.enabled: true`. Before it, a loaded job was a no-op that said
+  `dispatch is disabled` and wrote nothing.
 -->
 <plist version="1.0">
 <dict>

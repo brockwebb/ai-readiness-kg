@@ -24,6 +24,40 @@ LOG="$LOG_DIR/airkg_dispatch.log"
 # every five minutes.
 unset ANTHROPIC_API_KEY ANTHROPIC_AUTH_TOKEN
 
+# NEO4J CREDENTIALS. **A launchd job inherits almost no environment** — not the login shell's,
+# not the terminal's — so the variables a hand-run `seldon dispatch` picks up are simply absent
+# here. The first scheduled pass proved it: it fired on time and died on
+# `neo4j.exceptions.AuthError`, having changed nothing.
+#
+# The fallback is this repo's existing one (CLAUDE.md: "fallback: ~/.wintermute/.env", and the
+# parse is `scripts/build_projection.py::_neo4j_creds`), reused rather than reinvented. Only
+# NEO4J_* names are read and **no value is ever echoed** — the log this writes is a file on
+# disk and a password in it would be a credential at rest in a path nobody thinks of as one.
+WM_ENV="$HOME/.wintermute/.env"
+if [ -z "${NEO4J_USERNAME:-}${NEO4J_USER:-}" ] && [ -f "$WM_ENV" ]; then
+  while IFS= read -r line; do
+    case "$line" in
+      NEO4J_*=*)
+        v="${line#*=}"
+        # Strip ONE surrounding quote pair, which is what `.strip('"').strip("'")` does in
+        # `scripts/build_projection.py`. Deleting every quote character in the value instead
+        # is wrong and silently so: this password contains one, and a pass authenticated with
+        # a password one character short fails with `AuthError` — indistinguishable from a
+        # wrong password and from no password at all.
+        v="${v%\"}"; v="${v#\"}"
+        v="${v%\'}"; v="${v#\'}"
+        export "${line%%=*}"="$v"
+        ;;
+    esac
+  done < "$WM_ENV"
+  unset v
+fi
+if [ -z "${NEO4J_USERNAME:-}${NEO4J_USER:-}" ] || [ -z "${NEO4J_PASSWORD:-}${NEO4J_PASS:-}" ]; then
+  echo "=== $(date -u +%Y-%m-%dT%H:%M:%SZ) | REFUSING: no Neo4j credentials in the launchd" \
+       "environment or $WM_ENV; a pass cannot read the queue" >> "$LOG"
+  exit 3
+fi
+
 # The plist's StartInterval and seldon.yaml's poll_interval_s are one parameter written twice;
 # refuse rather than let them drift, because the file that EXPLAINS the value is seldon.yaml
 # and the file that ACTS on it is the plist.
