@@ -127,6 +127,26 @@ def test_claude_md_carries_the_marker_rule_and_the_no_hand_dispatch_rule():
     assert "DN-006 decision 10" in protocol
 
 
+def test_claude_md_headless_rule_is_the_launch_prompts_clause_byte_for_byte():
+    """`cc_tasks/2026-09-16_headless_session_polls_to_completion.md` decision 2. The launch
+    prompt tells a dispatched session it is headless; CLAUDE.md tells an interactive reader why.
+    One sentence in two places drifts unless a test holds them together, so this reads the
+    rule from the paragraph and compares it to the dispatcher's own constant."""
+    from seldon.commands.dispatch import DISPATCH_LINE, HEADLESS_CLAUSE, HEADLESS_ENV
+    text = (REPO / "CLAUDE.md").read_text(encoding="utf-8")
+    section = text.split("### Long-running commands", 1)[1].split("\n### ", 1)[0]
+    para = [p for p in section.split("\n\n") if p.startswith("**Headless sessions**")]
+    assert len(para) == 1, "CLAUDE.md long-running-commands section lacks the headless paragraph"
+    head = "asserts the two are byte-identical: "
+    tail = " The dispatcher also launches"
+    rule = para[0].split(head, 1)[1].split(tail, 1)[0]
+    assert rule.encode("utf-8") == HEADLESS_CLAUSE.encode("utf-8")
+    assert DISPATCH_LINE.endswith(HEADLESS_CLAUSE)
+    assert "CLAUDE_CODE_DISABLE_BACKGROUND_TASKS=1" in para[0]
+    assert HEADLESS_ENV == {"CLAUDE_CODE_DISABLE_BACKGROUND_TASKS": "1"}
+    assert "2026-09-16T14:44:47Z" in para[0]
+
+
 # ---------------------------------------------------------------------------
 # The launchd environment, and the credentials it does not have
 # ---------------------------------------------------------------------------

@@ -110,6 +110,8 @@ Three rules that are the point of it:
 
 `logs/` is gitignored, so the log is a local artifact the session can point at and not something that ships. What ships is the RESULT that quotes it.
 
+**Headless sessions** (`cc_tasks/2026-09-16_headless_session_polls_to_completion.md`). A dispatched session runs under `claude -p`, where ending the turn early is not a delay but a termination, and every unwaited child dies with it. The dispatcher's launch prompt ends with this rule, and `tests/test_dispatch_config.py` asserts the two are byte-identical: This session is headless: there is no next turn and ending it ends the process. Poll every detached command to its EXIT line inside this turn; never use background-task mode or wait to be notified. The dispatcher also launches the session with `CLAUDE_CODE_DISABLE_BACKGROUND_TASKS=1`, Claude Code's documented switch for background tasks (code.claude.com/docs/en/env-vars). The incident: the first session on `c609b1e1` backgrounded the Seldon suite, wrote `I'll be notified when the Seldon suite finishes.` to `logs/dispatch/2026-09-16_dispatcher_commits_its_record.log`, ended its turn, and the process exited at `2026-09-16T14:44:47Z` with no RESULT.
+
 ### Suite tiers (operator-ordered, 2026-09-09)
 
 The suite is split by MARKER, never by deletion. `@pytest.mark.slow` means "runs the loopback control fixtures at the standing 1 req/s, or re-derives a payload older than the two most recent cycles". Nothing is removed and nothing is weakened; what changes is which of them a short gate waits for.
