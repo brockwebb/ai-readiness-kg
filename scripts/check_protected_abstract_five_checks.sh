@@ -109,45 +109,30 @@ else
 fi
 
 say "THE POINT OF THE TASK, asserted rather than assumed"
-# The abstract's count must equal the number of legs the published tier-A matrix actually has.
-# Typed nowhere: read from the matrix, which is the thing the summary summarizes.
-/opt/anaconda3/bin/python3 - <<'PY' || fail=1
-import json, re, sys, pathlib, yaml
+# The abstract's count must equal the number of legs the published tier-A matrix actually has,
+# and every generated consumer must carry the same count.
+#
+# The comparison is NOT written here. `build_l0_site.abstract_leg_count_drift` is the one
+# implementation of it, and `tests/test_publication.py` calls that same function on every gate
+# (`cc_tasks/2026-09-16_publication_guards.md` decision 1). This gate used to hold its own
+# numeral map and its own list of consumers beside the builder's copies of both, which is how
+# DD-066 moved the abstract and left four published labels still saying six.
+/opt/anaconda3/bin/python3 - <<'PYCHK' || fail=1
+import pathlib, sys
 REPO = pathlib.Path("/Users/brock/GitHub/ai-readiness-kg")
-# The numeral map is `scripts/numerals.py`, imported rather than copied
-# (`cc_tasks/2026-09-15_derived_counts_and_appendix_guard.md` decision 1). It used to be a dict
-# literal here, and `scripts/build_l0_site.py` held the same fact as a literal numeral in a
-# label; one copy moved under DD-066 and the other did not. A gate holding its own copy of what
-# it gates is not a gate.
 sys.path.insert(0, str(REPO / "scripts"))
-from numerals import word
-legs = json.loads((REPO / "docs/reports/scan_matrix_tierA_2026-09-10_rj2.json")
-                  .read_text())["legs"]
-want = word(len(legs)).capitalize()
-pub = yaml.safe_load((REPO / "docs/reports/publication.yaml").read_text())
-abstract = " ".join(pub["abstract"].split())
+import build_l0_site as site
+
+legs = site.matrix_legs("tierA", site.cycle_suffix(site.publication()["snapshot_cycle"]))
 print(f"   the tier-A matrix has {len(legs)} legs: {legs}")
-m = re.search(r"(\w+) host-level checks over one measurement cycle", abstract)
-if not m:
-    print("   VIOLATION: the abstract no longer states a count of host-level checks"); sys.exit(1)
-print(f"   the abstract says {m.group(1)!r}; the matrix requires {want!r}")
-if m.group(1) != want:
-    print("   VIOLATION: the published summary disagrees with the matrix it summarizes")
+print(f"   {len(site.ABSTRACT_CONSUMERS)} generated consumers carry that count")
+drift = site.abstract_leg_count_drift()
+for d in drift:
+    print(f"   VIOLATION: {d}")
+if drift:
     sys.exit(1)
-# and every generated consumer carries the same sentence, whitespace-normalised
-consumers = ["CITATION.cff", ".zenodo.json", "docs/data/CITATION.cff", "docs/data/zenodo.json",
-             "docs/index.html", "docs/llms.txt"]
-missing = [c for c in consumers
-           if f"{want} host-level checks" not in " ".join((REPO / c).read_text().split())]
-if missing:
-    print(f"   VIOLATION: consumers still carry the old count: {missing}"); sys.exit(1)
-print(f"   all {len(consumers)} generated consumers carry {want!r}")
-stale = [c for c in consumers
-         if "Six host-level checks" in " ".join((REPO / c).read_text().split())]
-if stale:
-    print(f"   VIOLATION: consumers still carry 'Six': {stale}"); sys.exit(1)
-print("   no consumer still carries 'Six host-level checks'")
-PY
+print("   the abstract and every consumer state the count the matrix licenses")
+PYCHK
 
 echo
 [ "$fail" = "0" ] && echo "=== protected paths: PASS" || echo "=== protected paths: FAIL"

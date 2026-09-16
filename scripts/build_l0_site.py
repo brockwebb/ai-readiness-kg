@@ -37,6 +37,7 @@ import argparse
 import hashlib
 import html
 import json
+import re
 import shutil
 import subprocess
 import sys
@@ -160,6 +161,68 @@ def matrix_label(template: str, legs: list) -> str:
     this does not supply raises rather than rendering a brace onto a published page."""
     from numerals import word
     return template.format(legs=word(len(legs)), n_legs=len(legs))
+
+
+#: Every generated file that carries the abstract's sentence about host-level checks. Named
+#: here because two things compare them — `tests/test_publication.py` on every gate and
+#: `scripts/check_protected_abstract_five_checks.sh` on the task that touches the declaration —
+#: and a list each would be a second copy of the same fact, which is what
+#: `cc_tasks/2026-09-15_derived_counts_and_appendix_guard.md` decision 1 removed from the gate.
+ABSTRACT_CONSUMERS = ["CITATION.cff", ".zenodo.json", "docs/data/CITATION.cff",
+                      "docs/data/zenodo.json", "docs/index.html", "docs/llms.txt"]
+
+#: The abstract's one derived quantity. The sentence may be reworded; this is the clause that
+#: states a COUNT of the instrument's legs, and a rewording that drops it is reported rather
+#: than passing silently as "no drift".
+ABSTRACT_COUNT = re.compile(r"(\w+) host-level checks over one measurement cycle")
+
+
+def abstract_leg_count_drift(pub: dict | None = None, legs: list | None = None,
+                             texts: dict | None = None) -> list:
+    """Where the published abstract, or a file generated from it, states a leg count the
+    tier-A matrix does not have.
+
+    `cc_tasks/2026-09-16_publication_guards.md` decision 1. The comparison itself is older —
+    `scripts/check_protected_abstract_five_checks.sh` has made it since 2026-09-15 — and what
+    moves here is WHEN it runs: it was a gate somebody invoked on the task that edited the
+    declaration, so between tasks nothing compared the summary to the measurement. That is the
+    shape of the defect DD-066 left: the abstract moved to five and four published labels went
+    on saying six, because the only standing comparison was of the labels to each other.
+
+    Every argument defaults to the tree and is injectable, so the guard can be handed the drift
+    it was built for (`tests/test_publication.py`) without writing a stale abstract to disk.
+    Nothing here is spelled twice: the count comes from the matrix's own `legs`, `numerals.word`
+    spells it, and `ABSTRACT_CONSUMERS` is the one list of files that carry it.
+    """
+    from numerals import WORDS, word
+    pub = publication() if pub is None else pub
+    if legs is None:
+        legs = matrix_legs("tierA", cycle_suffix(pub["snapshot_cycle"]))
+    want = word(len(legs)).capitalize()
+    abstract = " ".join(str(pub.get("abstract", "")).split())
+    m = ABSTRACT_COUNT.search(abstract)
+    if not m:
+        return [f"the abstract states no count of host-level checks over one measurement "
+                f"cycle, so there is nothing to compare to the matrix: {abstract[:160]!r}"]
+    out = []
+    if m.group(1) != want:
+        out.append(f"the abstract says {m.group(1)!r} host-level checks; the tier-A matrix "
+                   f"declares {len(legs)} legs ({', '.join(legs)}), which is {want!r}")
+    if texts is None:
+        texts = {c: (REPO / c).read_text(encoding="utf-8") for c in ABSTRACT_CONSUMERS}
+    #: Every spelling the count could wrongly carry. Checked in both cases, because the
+    #: sentence is capitalised in the abstract and the matrix label renders it lower-case.
+    stale = [w for w in WORDS.values() if w != want.lower()]
+    for name, text in sorted(texts.items()):
+        flat = " ".join(text.split())
+        if f"{want} host-level checks" not in flat:
+            out.append(f"{name} does not carry {want + ' host-level checks'!r}")
+        carried = sorted({w for w in stale
+                          if f"{w} host-level checks" in flat
+                          or f"{w.capitalize()} host-level checks" in flat})
+        if carried:
+            out.append(f"{name} still states a leg count the matrix does not have: {carried}")
+    return out
 
 
 def head_commit() -> str:
