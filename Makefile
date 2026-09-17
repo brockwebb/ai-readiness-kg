@@ -20,12 +20,12 @@ LOGS := logs
 .PHONY: gate-fast gate-task gate-full guards report-pdf
 
 gate-fast:
-	$(PY) -m pytest tests/ assessment/ -q -m "not slow"
+	$(PY) -m pytest tests/ assessment/ -q -rs -m "not slow"
 
 ## Re-derivation of every stored payload, whatever its age. Run this whenever a rule module,
 ## the rule registry, or the re-derivation engine changed.
 gate-task: gate-fast
-	$(PY) -m pytest tests/test_scan_harness_v4.py -q -k re_derives
+	$(PY) -m pytest tests/test_scan_harness_v4.py -q -rs -k re_derives
 
 ## Every guard against the incident it was built for, and every control fixture that replays
 ## one. `cc_tasks/2026-09-11_absence_claims_under_scope_limitation.md` decision 5 adds the
@@ -44,7 +44,7 @@ guards:
 
 gate-full:
 	@mkdir -p $(LOGS)
-	nohup sh -c '$(PY) -m pytest tests/ assessment/ -q; echo EXIT=$$? >> $(LOGS)/suite.log' \
+	nohup sh -c '$(PY) -m pytest tests/ assessment/ -q -rs; echo EXIT=$$? >> $(LOGS)/suite.log' \
 		> $(LOGS)/suite.log 2>&1 & \
 	echo "started; poll with: tail -5 $(LOGS)/suite.log"
 

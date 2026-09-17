@@ -97,12 +97,12 @@ If the session cannot reach the end of the gate, **the RESULT is still written**
 
 ```bash
 mkdir -p logs
-nohup <cmd> > logs/<name>.log 2>&1 &            # record the PID
-# ... then, in repeated tool calls, until the process has exited:
-sleep 240; tail -5 logs/<name>.log
+nohup bash -c '<cmd>; echo EXIT=$?' > logs/<name>.log 2>&1 &     # record the PID
+# ... then, in repeated foreground Bash calls (tool timeout <= 600 s, N*15 s under it), until the log has its EXIT line:
+for i in $(seq 1 N); do grep -q '^EXIT=' logs/<name>.log && break; sleep 15; done; tail -5 logs/<name>.log
 ```
 
-Append `; echo EXIT=$? >> logs/<name>.log` to the command itself, so the log carries the exit code and a reader never has to infer success from the absence of a traceback.
+The `echo EXIT=$?` goes inside the `bash -c` string, as above, so the log carries the exit code and a reader never has to infer success from the absence of a traceback. Written outside it (`nohup <cmd> > log 2>&1; echo EXIT=$? >> log &`), only the `echo` is detached and the tool call blocks on the command; a bare `sleep 240` is refused by the harness.
 
 Three rules that are the point of it:
 
