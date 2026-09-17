@@ -160,7 +160,11 @@
      },
      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
      "recorded_by": "cc_tasks/2026-09-07_scan_run.md"
-    }
+    },
+    "measurement_tier": "M",
+    "measurement_basis": "harness_leg",
+    "tier_source": "rules.CURRENT['A1'] = RULE-A1-v4 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A1`",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1"
    }
   },
   {
@@ -205,7 +209,11 @@
      },
      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
      "recorded_by": "cc_tasks/2026-09-07_scan_run.md"
-    }
+    },
+    "measurement_tier": "M",
+    "measurement_basis": "harness_leg",
+    "tier_source": "rules.CURRENT['A2'] = RULE-A2-v3 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A2`",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1"
    }
   },
   {
@@ -250,7 +258,11 @@
      },
      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
      "recorded_by": "cc_tasks/2026-09-07_scan_run.md"
-    }
+    },
+    "measurement_tier": "M",
+    "measurement_basis": "harness_leg",
+    "tier_source": "rules.CURRENT['A3'] = RULE-A3-v6 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A3`",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1"
    }
   },
   {
@@ -295,7 +307,11 @@
      },
      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
      "recorded_by": "cc_tasks/2026-09-07_scan_run.md"
-    }
+    },
+    "measurement_tier": "M",
+    "measurement_basis": "harness_leg",
+    "tier_source": "rules.CURRENT['A4'] = RULE-A4-v1 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A4`",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1"
    }
   },
   {
@@ -340,7 +356,11 @@
      },
      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
      "recorded_by": "cc_tasks/2026-09-07_scan_run.md"
-    }
+    },
+    "measurement_tier": "M",
+    "measurement_basis": "harness_leg",
+    "tier_source": "rules.CURRENT['A5'] = RULE-A5-v2 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A5`",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1"
    }
   },
   {
@@ -385,7 +405,11 @@
      },
      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
      "recorded_by": "cc_tasks/2026-09-07_scan_run.md"
-    }
+    },
+    "measurement_tier": "M",
+    "measurement_basis": "harness_leg",
+    "tier_source": "rules.CURRENT['A6'] = RULE-A6-v2 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A6`",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1"
    }
   },
   {
@@ -414,7 +438,9 @@
     "evidence_raw": "**gap**",
     "measurement_status": "specified",
     "gap": "**gap**",
-    "criterion_code": "A"
+    "criterion_code": "A",
+    "tier_unassigned_reason": "docs/design/scan_tool_map.md §2 at commit 52af6c7 gave the keyword default (`scan-observable`, \"`http` + `structured_data` would serve it\"), which is not a derivation; no rule in rules.CURRENT serves it and no on-disk source names an open tool for it. Candidates: M through the June harness's assessment/harness/probes/d1_stable_urls.py (resolves a distribution URL; not a rule in rules.CURRENT), or O through the Wayback CDX API that ResearchTask 43108db6 names for robots.txt history, which would reach URL persistence across time.",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2, no rule reaches it"
    }
   },
   {
@@ -459,7 +485,11 @@
      },
      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
      "recorded_by": "cc_tasks/2026-09-07_scan_run.md"
-    }
+    },
+    "measurement_tier": "M",
+    "measurement_basis": "harness_leg",
+    "tier_source": "rules.CURRENT['A8'] = RULE-A8-v4 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A8`",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1"
    }
   },
   {
@@ -506,7 +536,11 @@
      },
      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
      "recorded_by": "cc_tasks/2026-09-07_scan_run.md"
-    }
+    },
+    "measurement_tier": "M",
+    "measurement_basis": "harness_leg",
+    "tier_source": "rules.CURRENT['A9'] = RULE-A9-v1 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A9`",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1"
    }
   },
   {
@@ -551,7 +585,11 @@
      },
      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
      "recorded_by": "cc_tasks/2026-09-07_scan_run.md"
-    }
+    },
+    "measurement_tier": "M",
+    "measurement_basis": "harness_leg",
+    "tier_source": "rules.CURRENT['A10'] = RULE-A10-v3 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A10`",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1"
    }
   },
   {
@@ -596,7 +634,12 @@
      },
      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
      "recorded_by": "cc_tasks/2026-09-07_scan_run.md"
-    }
+    },
+    "measurement_tier": "M",
+    "measurement_basis": "harness_leg",
+    "tier_source": "rules.CURRENT['A11-declared'] = RULE-A11-declared-v2 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A11-declared`",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
+    "tier_note": "The rule measures the DECLARED layer only (leg `A11-declared`). The enforced and observed layers need edge or WAF logs and crawler request logs, which spec `spec:A11-declared` places at `agency_instrumented`."
    }
   },
   {
@@ -625,7 +668,9 @@
     "evidence_raw": "`fcsm-25-03`",
     "measurement_status": "specified",
     "gap": null,
-    "criterion_code": "B"
+    "criterion_code": "B",
+    "tier_unassigned_reason": "docs/design/scan_tool_map.md §2 at commit 52af6c7 gave the keyword default (`scan-observable`, \"`http` + `structured_data` would serve it\"), which is not a derivation; no rule serves it. Candidates: M through assessment/harness/probes/d3_schema.py (a `describedBy` data dictionary), or O through `extruct` reading schema.org `variableMeasured`; the tool map §3 names `extruct` for A6 only.",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2, no rule reaches it"
    }
   },
   {
@@ -654,7 +699,9 @@
     "evidence_raw": "`schema-org-definedterm`; `w3c-dcat-3`; internal: this KG's Definition layer",
     "measurement_status": "specified",
     "gap": null,
-    "criterion_code": "B"
+    "criterion_code": "B",
+    "tier_unassigned_reason": "docs/design/scan_tool_map.md §2 at commit 52af6c7 gave the keyword default (`scan-observable`, \"`http` + `structured_data` would serve it\"), which is not a derivation; no rule serves it. Candidate: O through `extruct` over schema.org `DefinedTerm` (the evidence cell cites `schema-org-definedterm`); the tool map §3 names `extruct` for A6 only, and 'versioned' is not a DefinedTerm property.",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2, no rule reaches it"
    }
   },
   {
@@ -699,7 +746,11 @@
      },
      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
      "recorded_by": "cc_tasks/2026-09-07_scan_run.md"
-    }
+    },
+    "measurement_tier": "M",
+    "measurement_basis": "harness_leg",
+    "tier_source": "rules.CURRENT['B3'] = RULE-B3-v3 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:B3`",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1"
    }
   },
   {
@@ -728,7 +779,9 @@
     "evidence_raw": "`fcsm-23-02-a-framework-for-data-quality-case-studies`; `fcsm-20-04-a-framework-for-data-quality`",
     "measurement_status": "specified",
     "gap": null,
-    "criterion_code": "B"
+    "criterion_code": "B",
+    "tier_unassigned_reason": "docs/design/scan_tool_map.md §2 at commit 52af6c7 said `not web-observable`, and the definition does not confirm it: 'published as metadata, not prose' is a property of a served surface, so rule 2 does not reach it and no other rule does. Candidate: M, the structured-field test G1-D already makes for the error-measure subset.",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2, no rule reaches it"
    }
   },
   {
@@ -757,7 +810,9 @@
     "evidence_raw": "**gap**",
     "measurement_status": "specified",
     "gap": "**gap**",
-    "criterion_code": "B"
+    "criterion_code": "B",
+    "tier_unassigned_reason": "docs/design/scan_tool_map.md §2 at commit 52af6c7 gave the keyword default (`scan-observable`, \"`http` + `structured_data` would serve it\"), which is not a derivation; the definition ('Same concept ⇒ same identifier across products/vintages') needs two products or vintages compared, and no rule, collector or on-disk tool does that. Candidate tier undetermined.",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2, no rule reaches it"
    }
   },
   {
@@ -786,7 +841,9 @@
     "evidence_raw": "**gap**",
     "measurement_status": "specified",
     "gap": "**gap**",
-    "criterion_code": "B"
+    "criterion_code": "B",
+    "tier_unassigned_reason": "docs/design/scan_tool_map.md §2 at commit 52af6c7 gave the keyword default (`scan-observable`, \"`http` + `structured_data` would serve it\"), which is not a derivation; presence is fetchable, but 'plain-language' and 'current' need a judged reading and no rule reaches it. Candidate: M, judged_reading.",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2, no rule reaches it"
    }
   },
   {
@@ -815,7 +872,12 @@
     "evidence_raw": "`from-accuracy-to-readiness-metrics-and-benchmarks-for-human`",
     "measurement_status": "specified",
     "gap": null,
-    "criterion_code": "C"
+    "criterion_code": "C",
+    "measurement_tier": "M",
+    "measurement_basis": "evaluation",
+    "tier_source": "definition of `ind:C1` in framework/ai_readiness_framework.json: \"Benchmark question set per product; answer accuracy of a retrieval-paired model vs published values\"",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 5",
+    "tier_note": "No such instrument exists yet."
    }
   },
   {
@@ -844,7 +906,12 @@
     "evidence_raw": "internal: probe protocol, `2026-08-27_chunked_vs_wholedoc_verdict.md`",
     "measurement_status": "specified",
     "gap": null,
-    "criterion_code": "C"
+    "criterion_code": "C",
+    "measurement_tier": "M",
+    "measurement_basis": "evaluation",
+    "tier_source": "definition of `ind:C2` in framework/ai_readiness_framework.json: \"Entailment-judged: do model statements about the product entail from product text?\"",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 5",
+    "tier_note": "The definition names the probe protocol, 're-aimed', as the instrument; it has not been re-aimed at a data product."
    }
   },
   {
@@ -873,7 +940,12 @@
     "evidence_raw": "**gap**",
     "measurement_status": "specified",
     "gap": "**gap**",
-    "criterion_code": "C"
+    "criterion_code": "C",
+    "measurement_tier": "M",
+    "measurement_basis": "evaluation",
+    "tier_source": "definition of `ind:C3` in framework/ai_readiness_framework.json: \"does retrieval return the vintage asked for?\"",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 5",
+    "tier_note": "No such instrument exists yet."
    }
   },
   {
@@ -902,7 +974,12 @@
     "evidence_raw": "`aggarwal-2024-geo-generative-engine-optimization`; `chen-2025-geo-how-to-dominate-ai-search`",
     "measurement_status": "specified",
     "gap": null,
-    "criterion_code": "C"
+    "criterion_code": "C",
+    "measurement_tier": "M",
+    "measurement_basis": "evaluation",
+    "tier_source": "definition of `ind:C4` in framework/ai_readiness_framework.json: \"Generative engines citing the product cite the authoritative page (not aggregators)\"",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 5",
+    "tier_note": "No such instrument exists yet; spec `spec:C4-auto` records `collector: none_known` for the URL-resolution half."
    }
   },
   {
@@ -931,7 +1008,9 @@
     "evidence_raw": "`aidrin-hiniduma-2024`; `data-readiness-for-ai-a-360-degree-survey`; `aidrin-2-0-a-framework-to-assess-data-readiness-for-ai`",
     "measurement_status": "specified",
     "gap": null,
-    "criterion_code": "C"
+    "criterion_code": "C",
+    "tier_unassigned_reason": "The definition ('Product scored against published AI-data-readiness metrics') names published metrics, not a benchmark, an eval set, entailment or what a generative engine does, so rule 5 does not reach it; the tool map verdict was the keyword default. Candidate: O through AIDRIN (`aidrin-hiniduma-2024`, `aidrin-2-0-a-framework-to-assess-data-readiness-for-ai`), but neither paper's text on disk says where the tool is obtained, so rule 3 cannot cite it.",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2, no rule reaches it"
    }
   },
   {
@@ -976,7 +1055,11 @@
      },
      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
      "recorded_by": "cc_tasks/2026-09-07_scan_run.md"
-    }
+    },
+    "measurement_tier": "M",
+    "measurement_basis": "harness_leg",
+    "tier_source": "rules.CURRENT['D1'] = RULE-D1-v3 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:D1`",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1"
    }
   },
   {
@@ -1005,7 +1088,9 @@
     "evidence_raw": "**gap**",
     "measurement_status": "specified",
     "gap": "**gap**",
-    "criterion_code": "D"
+    "criterion_code": "D",
+    "tier_unassigned_reason": "docs/design/scan_tool_map.md §2 at commit 52af6c7 said `not web-observable`, and the definition does not confirm it: terms of use are published text. The tool map §3 response-header row names D2 as a consumer with 'no library needed', which is a harness path and not an open tool. Candidate: M, a terms or header leg, or a judged reading of the terms.",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2, no rule reaches it"
    }
   },
   {
@@ -1034,7 +1119,9 @@
     "evidence_raw": "**gap** — no PROV-O/W3C-PROV document is admitted; the skeleton's \"PROV-aligned standards nodes\" did not resolve",
     "measurement_status": "specified",
     "gap": "**gap** — no PROV-O/W3C-PROV document is admitted; the skeleton's \"PROV-aligned standards nodes\" did not resolve",
-    "criterion_code": "D"
+    "criterion_code": "D",
+    "tier_unassigned_reason": "docs/design/scan_tool_map.md §2 at commit 52af6c7 said `not web-observable`, and the definition does not confirm it: 'Source lineage published' is a served surface. Candidate: M; assessment/harness/probes/d3_provenance.py reads source and date signals, which is less than lineage.",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2, no rule reaches it"
    }
   },
   {
@@ -1079,7 +1166,11 @@
      },
      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
      "recorded_by": "cc_tasks/2026-09-07_scan_run.md"
-    }
+    },
+    "measurement_tier": "M",
+    "measurement_basis": "harness_leg",
+    "tier_source": "rules.CURRENT['D4'] = RULE-D4-v2 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:D4`",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1"
    }
   },
   {
@@ -1108,7 +1199,9 @@
     "evidence_raw": "`nist-ai-risk-management-framework-ai-rmf`; internal: this instrument's A/B/D vs C split",
     "measurement_status": "specified",
     "gap": null,
-    "criterion_code": "E"
+    "criterion_code": "E",
+    "tier_unassigned_reason": "docs/design/scan_tool_map.md §2 at commit 52af6c7 gave the keyword default (`scan-observable`, \"`http` + `structured_data` would serve it\"), which is not a derivation; the definition names an eval set, but its value is how results are REPORTED, not the output of running an evaluation, so rule 5 does not reach it. Candidate: D, or a judged reading of a published report.",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2, no rule reaches it"
    }
   },
   {
@@ -1137,7 +1230,9 @@
     "evidence_raw": "internal: methodology §3; `nist-ai-rmf-playbook`",
     "measurement_status": "specified",
     "gap": null,
-    "criterion_code": "E"
+    "criterion_code": "E",
+    "tier_unassigned_reason": "docs/design/scan_tool_map.md §2 at commit 52af6c7 gave the keyword default (`scan-observable`, \"`http` + `structured_data` would serve it\"), which is not a derivation; the definition names an eval, but its value is whether thresholds are published and pre-registered, not the output of running one, so rule 5 does not reach it. Candidate: D (pre-registration is verifiable only against the agency's own timestamps).",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2, no rule reaches it"
    }
   },
   {
@@ -1166,7 +1261,9 @@
     "evidence_raw": "internal: methodology §4 and §7.6 (instrument-version citation rule)",
     "measurement_status": "specified",
     "gap": null,
-    "criterion_code": "E"
+    "criterion_code": "E",
+    "tier_unassigned_reason": "docs/design/scan_tool_map.md §2 at commit 52af6c7 gave the keyword default (`scan-observable`, \"`http` + `structured_data` would serve it\"), which is not a derivation; 'Eval sets and rubrics carry versions' is a practice of whoever runs the evaluation, not the output of running one, so rule 5 does not reach it. Candidate: D.",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2, no rule reaches it"
    }
   },
   {
@@ -1195,7 +1292,11 @@
     "evidence_raw": "`sainz-2023-llm-data-contamination`",
     "measurement_status": "specified",
     "gap": null,
-    "criterion_code": "E"
+    "criterion_code": "E",
+    "measurement_tier": "D",
+    "measurement_basis": "declaration",
+    "tier_source": "docs/design/scan_tool_map.md §2 at commit 52af6c7 (verdict `not web-observable`), confirmed against the definition: a held-out set is by construction not published, so whether a rotation exists is a fact only the agency holds; definition of `ind:E4`: \"Public eval sets have a held-out rotation\"",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 2"
    }
   },
   {
@@ -1238,7 +1339,12 @@
       "error": 0
      },
      "recorded_by": "cc_tasks/2026-09-08_scan_run_3b.md"
-    }
+    },
+    "measurement_tier": "M",
+    "measurement_basis": "harness_leg",
+    "tier_source": "rules.CURRENT['E5'] = RULE-E5-v2 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:E5`",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
+    "tier_note": "The rule judges this instrument's own cycle (its control fixtures), not a publisher's; `not_measured_reason` on this node says why that is not `measured`."
    }
   },
   {
@@ -1267,7 +1373,12 @@
     "evidence_raw": "**gap**",
     "measurement_status": "specified",
     "gap": "**gap**",
-    "criterion_code": "E"
+    "criterion_code": "E",
+    "measurement_tier": "M",
+    "measurement_basis": "evaluation",
+    "tier_source": "definition of `ind:E6` in framework/ai_readiness_framework.json: \"Discrepancy taxonomy localizing failures to retrieval / vintage / metadata / model\"",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 5",
+    "tier_note": "The failures it localizes are an evaluation's outputs (retrieval and model stages), so it presupposes the C1 to C3 evaluations. No such instrument exists yet."
    }
   },
   {
@@ -1296,7 +1407,9 @@
     "evidence_raw": "**gap**",
     "measurement_status": "specified",
     "gap": "**gap**",
-    "criterion_code": "E"
+    "criterion_code": "E",
+    "tier_unassigned_reason": "docs/design/scan_tool_map.md §2 at commit 52af6c7 said `content-evaluation` (the keyword was 'document'), and the definition does not confirm it: 'mean-time-to-closure tracked' is an agency process, not a reading of a served surface, and its value is not an evaluation's output. Candidate: D.",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2, no rule reaches it"
    }
   },
   {
@@ -1325,7 +1438,12 @@
     "evidence_raw": "`webb-2026-state-fidelity-validity`",
     "measurement_status": "specified",
     "gap": null,
-    "criterion_code": "E"
+    "criterion_code": "E",
+    "measurement_tier": "M",
+    "measurement_basis": "evaluation",
+    "tier_source": "definition of `ind:E8` in framework/ai_readiness_framework.json: \"Versioned golden question/answer sets re-run on schedule against the product surface\"",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 5",
+    "tier_note": "No such instrument exists yet."
    }
   },
   {
@@ -1354,7 +1472,12 @@
     "evidence_raw": "`nist-generative-ai-profile-ai-600-1`; `nist-ai-risk-management-framework-ai-rmf`",
     "measurement_status": "specified",
     "gap": null,
-    "criterion_code": "E"
+    "criterion_code": "E",
+    "measurement_tier": "M",
+    "measurement_basis": "evaluation",
+    "tier_source": "definition of `ind:E9` in framework/ai_readiness_framework.json: \"Standing adversarial bank: vintage traps, confusable series, unit traps, DP-noise misreads, suppression probes\"",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 5",
+    "tier_note": "No such instrument exists yet."
    }
   },
   {
@@ -1383,7 +1506,9 @@
     "evidence_raw": "`odcs-open-data-contract-standard`",
     "measurement_status": "specified",
     "gap": null,
-    "criterion_code": "F"
+    "criterion_code": "F",
+    "tier_unassigned_reason": "docs/design/scan_tool_map.md §2 at commit 52af6c7 gave the keyword default (`scan-observable`, \"`http` + `structured_data` would serve it\"), which is not a derivation; 'pass a published expectation suite ... before going live' happens before publication, on the agency's side. Candidate: D; the suite's publication alone would be observable.",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2, no rule reaches it"
    }
   },
   {
@@ -1412,7 +1537,9 @@
     "evidence_raw": "`odcs-open-data-contract-standard`",
     "measurement_status": "specified",
     "gap": null,
-    "criterion_code": "F"
+    "criterion_code": "F",
+    "tier_unassigned_reason": "docs/design/scan_tool_map.md §2 at commit 52af6c7 gave the keyword default (`scan-observable`, \"`http` + `structured_data` would serve it\"), which is not a derivation; spec `spec:F2` records `collector: none_known`. Candidate: O through `oasdiff` (an open-source OpenAPI breaking-change detector), which would reach 'compatibility checked mechanically'; no on-disk source names it, so it is the next tool-map row rather than a citation.",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2, no rule reaches it"
    }
   },
   {
@@ -1441,7 +1568,9 @@
     "evidence_raw": "**gap**",
     "measurement_status": "specified",
     "gap": "**gap**",
-    "criterion_code": "F"
+    "criterion_code": "F",
+    "tier_unassigned_reason": "docs/design/scan_tool_map.md §2 at commit 52af6c7 gave the keyword default (`scan-observable`, \"`http` + `structured_data` would serve it\"), which is not a derivation; spec `spec:F3` records `collector: none_known`. Candidate: O through a web archive's CDX index (ResearchTask 43108db6 names the Wayback CDX API), which would supply the prior vintage's endpoints.",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2, no rule reaches it"
    }
   },
   {
@@ -1486,7 +1615,11 @@
      },
      "definition": "at least one pass/fail/not_applicable Finding on an admitted, observable surface in a cycle with fired controls; `error` does not count",
      "recorded_by": "cc_tasks/2026-09-07_scan_run.md"
-    }
+    },
+    "measurement_tier": "M",
+    "measurement_basis": "harness_leg",
+    "tier_source": "rules.CURRENT['F4'] = RULE-F4-v3 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:F4`",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1"
    }
   },
   {
@@ -1515,7 +1648,9 @@
     "evidence_raw": "**gap**",
     "measurement_status": "specified",
     "gap": "**gap**",
-    "criterion_code": "F"
+    "criterion_code": "F",
+    "tier_unassigned_reason": "docs/design/scan_tool_map.md §2 at commit 52af6c7 gave the keyword default (`scan-observable`, \"`http` + `structured_data` would serve it\"), which is not a derivation; 'Canary/staging surface ... AI-consumer regression run before promotion' is on the agency's side of publication. Candidate: D.",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2, no rule reaches it"
    }
   },
   {
@@ -1544,7 +1679,12 @@
     "evidence_raw": "`slsa-specification-v1-0`",
     "measurement_status": "specified",
     "gap": null,
-    "criterion_code": "F"
+    "criterion_code": "F",
+    "measurement_tier": "O",
+    "measurement_basis": "open_tool",
+    "tier_source": "corpus/crosswalk/slsa-specification-v1-0.md (doc_id `slsa-specification-v1-0`), page 'Distributing provenance': \"SLSA requires the distribution and verification of provenance metadata in the form of SLSA attestations\"; FAQ 'How does SLSA relate to in-toto?': the specification recommends in-toto attestations (https://github.com/in-toto/attestation) as the vehicle to express provenance; definition of `ind:F6`: \"Signed releases / provenance attestations\"",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 3",
+    "tier_note": "Verifying a published attestation against the artifact is the open-tool act. The skeleton's `tier: paid` is the PUBLISHER's cost of signing, a different axis. Rule 3 is read with decision 1's source list, which names 'a tool's documentation on disk'; the tool map §3 and the open-tool record name no tool for F6."
    }
   },
   {
@@ -1575,11 +1715,16 @@
     "gap": null,
     "criterion_code": "G",
     "g1_leg_of": "G1",
-    "measurement_tier": "product",
-    "measurement_tier_source": "DD-066 (cc_tasks/2026-09-15_g1d_leaves_l0.md). The host-level leg was withdrawn after the census in that task's RESULT §0: on host-level surfaces (`home`, `well_known`) across every body, every reference host and every cycle the rule returned 126 `fail`, 28 `error` and 0 `pass`; on product surfaces the same rule returned 104 `pass`. The construct is carryable and the home page is not where it is carried. Standards a product-tier rule would bind to: SDMX observation-status and confidence attributes; W3C Data Quality Vocabulary (DQV); schema.org Dataset variable metadata. None has yet been evaluated against a federal data product by this project.",
     "construct_restated": "uncertainty present for the human reader and absent from the markup",
     "withdrawn_from": "host-level",
-    "withdrawn_from_source": "DD-066 (cc_tasks/2026-09-15_derived_counts_and_appendix_guard.md), effective cycle 5 (this params_hash forward). `params.tier0.legs_withdrawn` withdraws G1-D from surfaces ['home', 'well_known'], which is what this instrument calls host-level (`scripts/withdrawn_legs.py`). Why: the host-level surface is a home page, which carries no estimate, so the leg cannot hold the property it measures and every verdict on it is structural"
+    "withdrawn_from_source": "DD-066 (cc_tasks/2026-09-15_derived_counts_and_appendix_guard.md), effective cycle 5 (this params_hash forward). `params.tier0.legs_withdrawn` withdraws G1-D from surfaces ['home', 'well_known'], which is what this instrument calls host-level (`scripts/withdrawn_legs.py`). Why: the host-level surface is a home page, which carries no estimate, so the leg cannot hold the property it measures and every verdict on it is structural",
+    "measurement_level": "product",
+    "measurement_level_source": "DD-066 (cc_tasks/2026-09-15_g1d_leaves_l0.md). The host-level leg was withdrawn after the census in that task's RESULT §0: on host-level surfaces (`home`, `well_known`) across every body, every reference host and every cycle the rule returned 126 `fail`, 28 `error` and 0 `pass`; on product surfaces the same rule returned 104 `pass`. The construct is carryable and the home page is not where it is carried. Standards a product-tier rule would bind to: SDMX observation-status and confidence attributes; W3C Data Quality Vocabulary (DQV); schema.org Dataset variable metadata. None has yet been evaluated against a federal data product by this project.",
+    "measurement_tier": "M",
+    "measurement_basis": "harness_leg",
+    "tier_source": "rules.CURRENT['G1-D'] = RULE-G1-D-v1 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:G1-D`",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
+    "tier_note": "A deterministic structured-field rule (`RULE-G1-D-v1`, the frozen `g1_declared` probe, DD-066 §7), not a judged reading: G1-O is the leg the G1 instrument judges. Measured on product surfaces only (`measurement_level`)."
    }
   },
   {
@@ -1599,7 +1744,12 @@
     "measurement_status": "measured",
     "gap": null,
     "criterion_code": "G",
-    "g1_leg_of": "G1"
+    "g1_leg_of": "G1",
+    "measurement_tier": "M",
+    "measurement_basis": "judged_reading",
+    "tier_source": "DD-036 §2 (docs/design_decisions.md): G1-O is the v2 EVAL; spec `spec:G1-O` names its collector; instrument: the G1 instrument: DD-036 (docs/design_decisions.md), assessment/harness/probes/g1_preservation.py, frozen at v2; definition of `ind:G1-O`: \"when the pinned consumer restates that same captured surface\"",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 5",
+    "tier_note": "Reached by rule 5, and its basis is `judged_reading` rather than `evaluation` because the instrument exists: it is the one rule 4 cites."
    }
   },
   {
@@ -1628,7 +1778,12 @@
     "evidence_raw": "**gap**",
     "measurement_status": "specified",
     "gap": "**gap**",
-    "criterion_code": "G"
+    "criterion_code": "G",
+    "measurement_tier": "M",
+    "measurement_basis": "evaluation",
+    "tier_source": "definition of `ind:G2` in framework/ai_readiness_framework.json: \"EVAL: vintage disambiguation (ties C3)\"",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 5",
+    "tier_note": "docs/design/scan_tool_map.md §2 at commit 52af6c7 said `content-evaluation`; rule 4's confirmation fails because the reading the definition asks for is C3's evaluation, not the G1 instrument, so rule 5 reaches it. The declared half (revision status machine-readable per value) is a structured-field test no rule makes yet. No such instrument exists yet."
    }
   },
   {
@@ -1657,7 +1812,9 @@
     "evidence_raw": "**gap**",
     "measurement_status": "specified",
     "gap": "**gap**",
-    "criterion_code": "G"
+    "criterion_code": "G",
+    "tier_unassigned_reason": "docs/design/scan_tool_map.md §2 at commit 52af6c7 said `content-evaluation`, and the definition does not confirm it: stable series IDs and machine-readable crosswalks are structured properties, not a judged reading. Spec `spec:G3` records `collector: none_known`. Candidate tier undetermined.",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2, no rule reaches it"
    }
   },
   {
@@ -1686,7 +1843,9 @@
     "evidence_raw": "`statistical-policy-working-paper-46-data-quality-assessment`; `fcsm-19-01-transparent-reporting-for-integrated-data-quality`",
     "measurement_status": "specified",
     "gap": null,
-    "criterion_code": "G"
+    "criterion_code": "G",
+    "tier_unassigned_reason": "docs/design/scan_tool_map.md §2 at commit 52af6c7 gave the keyword default (`scan-observable`, \"`http` + `structured_data` would serve it\"), which is not a derivation; 'carried as structured metadata' is observable, but no rule serves it; assessment/harness/probes/d3_provenance.py reads the issuing-authority half (publisher, bureauCode) and nothing reads the statutory mandate. Candidate: M.",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2, no rule reaches it"
    }
   },
   {
@@ -1715,7 +1874,9 @@
     "evidence_raw": "`usafacts-ai-ready-data-guide`",
     "measurement_status": "specified",
     "gap": null,
-    "criterion_code": "G"
+    "criterion_code": "G",
+    "tier_unassigned_reason": "docs/design/scan_tool_map.md §2 at commit 52af6c7 said `content-evaluation` (the keyword was 'document'), and the definition does not confirm it: 'documented machine-readably with unique identifiers' is a structured-field test, not a judged reading. Candidate: M, harness_leg.",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2, no rule reaches it"
    }
   },
   {
@@ -1744,7 +1905,12 @@
     "evidence_raw": "`sdmx-3-0-section-1-framework`; `sdmx-standards-overview`; `odcs-open-data-contract-standard`",
     "measurement_status": "specified",
     "gap": null,
-    "criterion_code": "G"
+    "criterion_code": "G",
+    "measurement_tier": "M",
+    "measurement_basis": "judged_reading",
+    "tier_source": "docs/design/scan_tool_map.md §2 at commit 52af6c7 (verdict `content-evaluation`), confirmed against the definition; instrument: the G1 instrument: DD-036 (docs/design_decisions.md), assessment/harness/probes/g1_preservation.py, frozen at v2; definition of `ind:G6`: \"The consumer-side test: an AI system asked to compare values across a break must surface the break\"",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 4",
+    "tier_note": "The consumer-side half is a G1-style preservation test (does the restatement keep the qualifier); the declared half, the versioned epoch carried as metadata, is a structured-field test no rule makes yet."
    }
   },
   {
@@ -2169,7 +2335,12 @@
     "candidate_rationale": "The public-observable leg of A11's enforced layer. A11 places enforced and observed access at `agency_instrumented` because a WAF is not visible from outside; that holds in general and fails for the one case where robots.txt PERMITS a path and the host REFUSES a compliant client asking for it. The disagreement between the two declared and enforced layers is then observable at the public tier with no edge logs at all.",
     "candidate_provenance": "Found by the harness, not by the literature: 3 of the 13 principal statistical agencies (BLS, BTS, ORES/SSA) answered 401/403 to `ai-readiness-kg-scanner/0.1` on every probe while their own robots.txt permits the paths. No corpus source proposes this as an AI-readiness construct.",
     "candidate_promotion": "Operator decision. The framework goes out under his name and an indicator the instrument invented about itself is exactly the kind that needs a human to accept it.",
-    "recorded_by": "cc_tasks/2026-09-06_scan_targets.md"
+    "recorded_by": "cc_tasks/2026-09-06_scan_targets.md",
+    "measurement_tier": "M",
+    "measurement_basis": "harness_leg",
+    "tier_source": "rules.CURRENT['A12'] = RULE-A12-v3 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A12`",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
+    "tier_note": "A CANDIDATE indicator (DD-054): its rule runs and enters no framework numerator until the operator adopts it."
    }
   },
   {

@@ -349,7 +349,10 @@ def provenance_buckets(results: list) -> dict:
 #: and it says which tier it is measured at and which instrument it was withdrawn from, so a
 #: reader of the appendix alone cannot take a product-tier check for a host-level one. Read
 #: from the node, never typed here; a row whose indicator carries neither key gains neither.
-INDICATOR_LABELS = ("measurement_tier", "withdrawn_from")
+#: The level is `measurement_level` since `cc_tasks/2026-09-17_measurement_tiers.md`, which moved
+#: G1-D's `product` there and gave `measurement_tier` its DN-005 §2.2 meaning on every
+#: indicator; a label every row carries would tell a reader of this appendix nothing.
+INDICATOR_LABELS = ("measurement_level", "withdrawn_from")
 
 
 def indicator_labels(inds: dict, leg: str) -> dict:
@@ -816,6 +819,11 @@ Source: <a href="{e(pub['repository_url'])}">{e(pub['repository_url'])}</a>.
 #: `--only <name>` -> the published paths that name may write. Declared rather than matched by
 #: prefix, so narrowing the write set is a listed decision and not a string coincidence.
 _ONLY = {"results_tagged": {"data/results_tagged.json"},
+         # The per-check source appendix as data. Its rows carry labels read off the
+         # indicator node (`INDICATOR_LABELS`), so a task that renames one of those properties
+         # on the record moves this payload and nothing else on the site
+         # (`cc_tasks/2026-09-17_measurement_tiers.md`, G1-D's `measurement_level`).
+         "sources_per_check": {"data/sources_per_check.json"},
          # The site's COPY of the framework record. `tests/test_publication.py` asserts every
          # copy still equals its source by sha256, so a task that edits the record and
          # publishes a narrow slice of the site leaves a published copy contradicting it
@@ -825,7 +833,14 @@ _ONLY = {"results_tagged": {"data/results_tagged.json"},
          # The data manifest HASHES each copy's source, so refreshing a copy without it leaves
          # the manifest asserting a digest the source no longer has — which is the same defect
          # one layer up and the same test catches it. The two travel together.
-         "data_manifest": {"data/index.json"}}
+         #
+         # The citation files travel with the manifest too. The manifest hashes their TEXT,
+         # which carries the build date, and `tests/test_publication.py` holds that date to the
+         # manifest's `built_at`; a narrow build on a later day that wrote only `index.json`
+         # recorded digests and a date no published citation file had
+         # (`cc_tasks/2026-09-17_measurement_tiers.md`).
+         "data_manifest": {"data/index.json", "data/CITATION.cff", "data/zenodo.json",
+                           "CITATION.cff", ".zenodo.json"}}
 
 
 def _writes(only, rel: str) -> bool:
@@ -940,7 +955,11 @@ def build(check: bool = False, only=None) -> int:
     cited = []
     for published, root_rel, label in CITATION_FILES:
         text = citations[published]
-        if not check and not only:
+        # Written whenever the manifest is (`_ONLY["data_manifest"]`): the manifest records
+        # this text's digest, and the text carries the build date the manifest's `built_at`
+        # must agree with, so the two are one write or the manifest describes a file nobody
+        # published.
+        if not check and _writes(only, f"data/{published}"):
             (REPO / root_rel).write_text(text, encoding="utf-8")
             (DATA / published).write_text(text, encoding="utf-8")
         cited.append({"published": f"data/{published}", "also_written_to": root_rel,

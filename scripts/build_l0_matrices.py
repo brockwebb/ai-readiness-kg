@@ -454,11 +454,21 @@ def compute(cycle: str, params: dict | None = None) -> dict:
             # (`2026-09-15_g1d_leaves_l0_ADDENDUM_01.md`). A reader of the CSV or the JSON can
             # see that a leg was removed and why, which a matrix that simply had one fewer
             # column could not tell them. Read from `params.tier0.legs_withdrawn`, so the
-            # metadata and the instrument are one declaration.
+            # metadata and the instrument are one declaration. HOST-level matrices only: the
+            # withdrawal is from `home` and `well_known` surfaces (DD-066), and the product
+            # matrix is where G1-D is still measured (`product_head` below).
             "legs_withdrawn": [
                 {k: w[k] for k in ("leg", "effective", "decision", "construct", "why")
                  if k in w}
                 for w in (params.get("tier0", {}).get("legs_withdrawn") or [])]}
+
+    # The product matrix's header is the host header without the host-level withdrawal.
+    # `cc_tasks/2026-09-17_measurement_tiers.md` decision 5: every matrix used to carry
+    # `legs_withdrawn: [G1-D]`, and on the product matrix that said the opposite of the record
+    # (G1-D is measured on product surfaces, 104 passes on the log; its framework node says
+    # `measurement_level: product`, `withdrawn_from: host-level`). Built by removing the one
+    # key, so the key order of what remains is the host header's and nothing else moves.
+    product_head = {k: v for k, v in head.items() if k != "legs_withdrawn"}
 
     zero_legs = sorted(l for l, c in prod_counts.items() if c["applicable_n"] and not c["pass"])
     # The per-leg family, whose notes `main` used to tag with the task on the way to the
@@ -527,6 +537,7 @@ def compute(cycle: str, params: dict | None = None) -> dict:
 
     return {"cycle": cycle, "suffix": cycle_results.cycle_suffix(cycle), "payload": p,
             "params_hash": p["params_hash"], "tier0": tier0, "head": head,
+            "product_head": product_head,
             "tier_a": tier_a, "tier_c": tier_c, "product": product,
             "declared": declared, "declared_agencies": declared_agencies,
             "host_counts": host_counts, "product_counts": prod_counts,
@@ -563,7 +574,7 @@ def write_matrices(c: dict, out_dir: Path | None = None, gen_dir: Path | None = 
                                                "(DD-059)."},
                        c["tier_c"], tier0, "host"),
             write_pair(f"scan_matrix_product_{suffix}",
-                       {**head, "tier": "A", "partial": True,
+                       {**c["product_head"], "tier": "A", "partial": True,
                         "declared_agencies": c["declared_agencies"],
                         "declared_surfaces": c["declared"],
                         "note": ("PARTIAL. Product-level legs over DECLARED flagship surfaces "

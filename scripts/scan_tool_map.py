@@ -1,16 +1,24 @@
 #!/usr/bin/env python3
 """Generate `docs/design/scan_tool_map.md` from the harness itself. **Zero spend, no network.**
 
-Task `cc_tasks/2026-09-08_scan_frame_fss.md` §4. Three tables, none of them hand-kept:
+Task `cc_tasks/2026-09-08_scan_frame_fss.md` §4. Four tables, none of them hand-kept:
 
 1. **Collectors** — one row per module in `scan.collectors`, joined to the legs it serves and
    the rules those legs are CURRENTLY judged by. Read from `params.yaml`, the collectors
    package and `rules.CURRENT`, so a collector that stops serving a leg loses the row on the
    next regeneration rather than lingering in prose.
 2. **`specified` indicators** — every indicator the framework has not built a harness for, each
-   with a one-line verdict: `scan-observable` and which collector would serve it,
-   `content-evaluation` (needs the second instrument), or `not web-observable`.
+   with a verdict DERIVED from its `measurement_tier` and `measurement_basis` on the framework
+   record (`cc_tasks/2026-09-17_measurement_tiers.md` decision 3): `scan-observable` names the
+   collector entry point that reaches which clause of the indicator's spec, or says no
+   collector reaches it yet; `content-evaluation` and `not web-observable` cite the tier's
+   source; an indicator with no tier says `unassigned` and why. Until that task the verdict was
+   a keyword match that fell through to `scan-observable` and printed a reason it had not
+   derived, which put C1 to C5 — benchmark, entailment and generative-engine evaluations — in
+   the same row as a page fetch.
 3. **Gaps an open-source collector would fill** — named, **not built**.
+4. **Every indicator's measurement tier** — tier, basis, the rule that reached it and its
+   source, read from the record.
 
 A generated document that anyone can hand-edit is a document that will be hand-edited, so
 `tests/test_scan_frame.py` regenerates this file and diffs it against the checked-in copy.
@@ -35,7 +43,21 @@ sys.path.insert(0, str(REPO / "assessment" / "harness"))
 from scan import load_params                                        # noqa: E402
 from scan.rules import CURRENT, parse_rule_id                       # noqa: E402
 
+#: A leg whose indicator code differs from its own name (`A11-declared` measures half of
+#: `A11`). Read from the traceability module, never re-typed, as the tagger reads it.
+sys.path.insert(0, str(REPO / "scripts"))
+from report_traceability import FRAMEWORK_CODE                      # noqa: E402
+
+#: The verdict each `measurement_basis` implies. The verdict axis is WHAT KIND OF ACT
+#: measures the indicator; the tier axis is WHO can. Neither substitutes for the other,
+#: and the verdict is only ever read off the basis the record carries.
+VERDICT_BY_BASIS = {"harness_leg": "scan-observable", "open_tool": "scan-observable",
+                    "judged_reading": "content-evaluation",
+                    "evaluation": "content-evaluation",
+                    "declaration": "not web-observable"}
+
 TASK = "cc_tasks/2026-09-08_scan_frame_fss.md"
+TIERS_TASK = "cc_tasks/2026-09-17_measurement_tiers.md"
 OUT = REPO / "docs" / "design" / "scan_tool_map.md"
 FRAMEWORK = REPO / "framework" / "ai_readiness_framework.json"
 COLLECTORS = REPO / "assessment" / "harness" / "scan" / "collectors"
@@ -114,6 +136,7 @@ def collector_rows(params: dict) -> list:
             "version": getattr(mod, "VERSION", "-"),
             "libraries": ", ".join(f"`{l}`" for l in libs) or "stdlib only",
             "entry_points": ", ".join(f"`{f}`" for f in fns[:4]),
+            "functions": fns,
             "legs": legs,
             "rules": [CURRENT[l] for l in legs if l in CURRENT],
             "doc": (mod.__doc__ or "").strip().splitlines()[0] if mod.__doc__ else "",
@@ -121,32 +144,75 @@ def collector_rows(params: dict) -> list:
     return rows
 
 
-def specified_rows() -> list:
-    """Every indicator still at `measurement_status: specified`, with a verdict."""
+def _entry_point(c: dict) -> str:
+    """The function a collector is entered through: `fetch` where it has one, else `probe`,
+    else its first public function."""
+    fns = c["functions"]
+    return next((f for f in ("fetch", "probe") if f in fns), fns[0] if fns else "?")
+
+
+def _first_sentence(text: str) -> str:
+    text = " ".join(str(text or "").split())
+    return text.split(". ")[0].rstrip(".")
+
+
+def verdict_for(p: dict, cols: list, specs: dict) -> tuple:
+    """`(verdict, why)` for one indicator, derived from the tier the record carries.
+
+    A `scan-observable` row names which collector entry point reaches which clause of the
+    spec (the `MeasurementSpec.signal` the indicator is `MEASURED_BY`), or says that no
+    collector reaches it yet. Nothing here defaults: an indicator with no tier is
+    `unassigned` and the record's reason is printed.
+    """
+    basis = p.get("measurement_basis")
+    if basis is None:
+        return "unassigned", f"no tier assigned: {p.get('tier_unassigned_reason', '—')}"
+    verdict = VERDICT_BY_BASIS[basis]
+    source = p.get("tier_source", "—")
+    if verdict != "scan-observable":
+        lead = {"judged_reading": "judged reading by this project's instrument",
+                "evaluation": "an evaluation this project would build",
+                "declaration": "only the agency can say"}[basis]
+        return verdict, f"{lead}; source: {source}"
+    legs = sorted({leg for leg in CURRENT if FRAMEWORK_CODE.get(leg, leg) == p["code"]})
+    reach = [f"`{c['collector']}.{_entry_point(c)}`" for c in cols
+             if any(leg in c["legs"] for leg in legs)]
+    if not reach:
+        return verdict, f"no collector reaches this yet; source: {source}"
+    clause = "; ".join(_first_sentence(specs[l]) for l in legs if l in specs)
+    rules = ", ".join(f"`{CURRENT[l]}`" for l in legs)
+    return verdict, (f"{', '.join(reach)} (via {rules}) reaches the spec clause "
+                     f"\"{clause}\"")
+
+
+def indicator_rows(cols: list) -> list:
+    """Every indicator, with its tier fields and the verdict derived from them."""
     g = json.loads(FRAMEWORK.read_text(encoding="utf-8"))
-    inds = [n["properties"] for n in g["nodes"]
-            if "AssessmentIndicator" in n["labels"]
-            and n["properties"].get("measurement_status") == "specified"]
+    specs = {n["properties"]["leg"]: n["properties"].get("signal")
+             for n in g["nodes"] if "MeasurementSpec" in n["labels"]}
+    inds = [n["properties"] for n in g["nodes"] if "AssessmentIndicator" in n["labels"]]
     out = []
     for p in sorted(inds, key=lambda x: x.get("code", "")):
-        text = f"{p.get('indicator', '')} {p.get('construct', '')}".lower()
-        if any(t in text for t in ("document", "narrative", "describ", "explain", "rationale",
-                                   "quality of", "adequa", "sufficien", "readab")):
-            verdict, how = "content-evaluation", "needs the second instrument (G1-style judged reading)"
-        elif any(t in text for t in ("governance", "policy", "staff", "training", "budget",
-                                     "process", "steward", "roles", "organisation",
-                                     "organization")):
-            verdict, how = "not web-observable", "an organisational fact, not a property of a served surface"
-        else:
-            verdict, how = "scan-observable", "`http` + `structured_data` would serve it"
+        verdict, how = verdict_for(p, cols, specs)
+        rule = str(p.get("tier_rule") or "").replace(f"{TIERS_TASK} decision 2", "").strip(", ")
         out.append({"code": p.get("code"), "name": " ".join(str(p.get("indicator") or "").split()),
+                    "status": p.get("measurement_status"),
+                    "tier": p.get("measurement_tier") or "—",
+                    "basis": p.get("measurement_basis") or "—",
+                    "rule": rule or "—", "source": p.get("tier_source") or "—",
                     "verdict": verdict, "how": how})
     return out
 
 
+def specified_rows(cols: list) -> list:
+    """Every indicator still at `measurement_status: specified`, with its derived verdict."""
+    return [r for r in indicator_rows(cols) if r["status"] == "specified"]
+
+
 def render(params: dict) -> str:
     cols = collector_rows(params)
-    spec = specified_rows()
+    spec = specified_rows(cols)
+    every = indicator_rows(cols)
     L = [
         "# Scan tool map",
         "",
@@ -177,13 +243,18 @@ def render(params: dict) -> str:
         "",
         "## 2. Indicators still at `specified`",
         "",
-        f"{len(spec)} indicators have no harness. The verdict says whether one could exist.",
+        f"{len(spec)} indicators have no harness. The verdict is derived from the "
+        f"indicator's `measurement_tier` and `measurement_basis` on the framework record "
+        f"({TIERS_TASK} decision 3): `scan-observable` for a harness leg or an open tool, "
+        f"`content-evaluation` for a judged reading or an evaluation, `not web-observable` for "
+        f"a declaration, and `unassigned` where no rule reached the indicator.",
         "",
-        "| code | indicator | verdict | why |",
-        "|---|---|---|---|",
+        "| code | indicator | tier | verdict | why |",
+        "|---|---|---|---|---|",
     ]
     for s in spec:
-        L.append(f"| {s['code']} | {s['name'][:58]} | **{s['verdict']}** | {s['how']} |")
+        L.append(f"| {s['code']} | {s['name'][:58]} | {s['tier']} | **{s['verdict']}** | "
+                 f"{s['how']} |")
     L += [
         "",
         "## 3. Gaps an open-source collector would fill — named, not built",
@@ -195,6 +266,21 @@ def render(params: dict) -> str:
         L.append(f"| {name} | {lib} | {why} |")
     L += ["", "Nothing in this table is built by this task. Each is a row so that the next "
               "task can pick one up with the reason already written down.", ""]
+    L += [
+        "## 4. Measurement tier of every indicator",
+        "",
+        f"DN-005 §2.2: **M** measured by this project's instruments, **O** measurable with open "
+        f"tools this project runs but does not own, **D** declared, only the agency can say. "
+        f"Read from the framework record, where {TIERS_TASK} wrote them; `—` is an indicator "
+        f"no rule reached, and §2 gives its reason.",
+        "",
+        "| code | status | tier | basis | rule | source |",
+        "|---|---|---|---|---|---|",
+    ]
+    for r in every:
+        L.append(f"| {r['code']} | {r['status']} | {r['tier']} | {r['basis']} | {r['rule']} | "
+                 f"{r['source']} |")
+    L.append("")
     return "\n".join(L)
 
 

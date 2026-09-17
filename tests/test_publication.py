@@ -116,6 +116,21 @@ def test_the_citation_files_are_one_file_written_twice():
             f"from one string and cannot legitimately differ")
 
 
+def test_the_manifest_digest_of_each_citation_file_is_the_file_published():
+    """A narrow build (`--only data_manifest`) writes the manifest and not the citation files.
+    The citation text carries the build DATE, so on any later day the string the builder
+    computes is not the file on disk, and a manifest that hashed the string recorded a digest
+    no published file has (`cc_tasks/2026-09-17_measurement_tiers.md`, found by its narrow
+    build). The manifest describes what is published."""
+    import hashlib
+    for c in MANIFEST["citation_files"]:
+        served = (REPO / "docs" / c["published"]).read_bytes()
+        assert c["sha256"] == hashlib.sha256(served).hexdigest(), (
+            f"index.json records a digest for {c['published']} that the published file does "
+            f"not have")
+        assert c["bytes"] == len(served), c["published"]
+
+
 #: CFF 1.2.0's required keys. Asserted from the specification rather than checked against a
 #: schema validator, because none is installed and fetching the published schema would spend
 #: this task's network budget on a host that is not the published one. `authors` additionally
@@ -424,7 +439,9 @@ def test_the_appendix_row_labels_are_read_from_the_indicator_node():
             assert r.get(k) == node.get(k), (
                 f"the published G1-D row says {k}={r.get(k)!r}; the record's node says "
                 f"{node.get(k)!r}")
-    assert node["measurement_tier"] == "product" and node["withdrawn_from"] == "host-level"
+    # The surface level is `measurement_level` since `cc_tasks/2026-09-17_measurement_tiers.md`,
+    # which gave `measurement_tier` its DN-005 §2.2 meaning (M, O or D) on every indicator.
+    assert node["measurement_level"] == "product" and node["withdrawn_from"] == "host-level"
     # And no OTHER row is labelled, because no other indicator carries the keys.
     other = [r["check"] for r in doc["rows"] if r["check"] != "G1-D"
              and any(k in r for k in build_l0_site.INDICATOR_LABELS)]
@@ -1037,8 +1054,11 @@ def test_every_published_matrix_agrees_with_the_csv_beside_it(stem, key, legs_ke
 def test_every_published_matrix_is_what_its_cycle_computes_now(stem, key, legs_key, computed):
     c, product_legs = computed
     legs = c["tier0"] if legs_key == "tier0" else product_legs
+    # The host-level withdrawal is on the host matrices only; the product matrix's header
+    # carries none (`cc_tasks/2026-09-17_measurement_tiers.md` decision 5).
+    head = c["head"] if legs_key == "tier0" else c["product_head"]
     drift = _matrix_compute_drift(_published_matrix(stem), legs, c[key],
-                                  c["head"]["legs_withdrawn"])
+                                  head.get("legs_withdrawn"))
     assert not drift, drift
 
 

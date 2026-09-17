@@ -22,42 +22,42 @@ Evidence retained by every collector is the same and is not a per-row property: 
 
 ## 2. Indicators still at `specified`
 
-32 indicators have no harness. The verdict says whether one could exist.
+32 indicators have no harness. The verdict is derived from the indicator's `measurement_tier` and `measurement_basis` on the framework record (cc_tasks/2026-09-17_measurement_tiers.md decision 3): `scan-observable` for a harness leg or an open tool, `content-evaluation` for a judged reading or an evaluation, `not web-observable` for a declaration, and `unassigned` where no rule reached the indicator.
 
-| code | indicator | verdict | why |
-|---|---|---|---|
-| A12 | An identified, robots-compliant machine client that robots | **not web-observable** | an organisational fact, not a property of a served surface |
-| A7 | Persistent URLs/DOIs for products and vintages | **scan-observable** | `http` + `structured_data` would serve it |
-| B1 | Comprehensive variable-level metadata (labels, definitions | **scan-observable** | `http` + `structured_data` would serve it |
-| B2 | Concept/term definitions published, versioned, linked from | **scan-observable** | `http` + `structured_data` would serve it |
-| B4 | Data-quality attributes (error measures, suppression rules | **not web-observable** | an organisational fact, not a property of a served surface |
-| B5 | Same concept ⇒ same identifier across products/vintages | **scan-observable** | `http` + `structured_data` would serve it |
-| B6 | Plain-language product summary present and current (the re | **scan-observable** | `http` + `structured_data` would serve it |
-| C1 | Benchmark question set per product; answer accuracy of a r | **scan-observable** | `http` + `structured_data` would serve it |
-| C2 | Entailment-judged: do model statements about the product e | **scan-observable** | `http` + `structured_data` would serve it |
-| C3 | Version/vintage disambiguation: does retrieval return the  | **scan-observable** | `http` + `structured_data` would serve it |
-| C4 | Generative engines citing the product cite the authoritati | **scan-observable** | `http` + `structured_data` would serve it |
-| C5 | Product scored against published AI-data-readiness metrics | **scan-observable** | `http` + `structured_data` would serve it |
-| D2 | Terms address model training/retrieval use explicitly | **not web-observable** | an organisational fact, not a property of a served surface |
-| D3 | Source lineage published (collection → processing → produc | **not web-observable** | an organisational fact, not a property of a served surface |
-| E1 | Product spec conformance (AUTO/DOC set) reported separatel | **scan-observable** | `http` + `structured_data` would serve it |
-| E2 | Published pass/fail thresholds per eval, pre-registered be | **scan-observable** | `http` + `structured_data` would serve it |
-| E3 | Eval sets and rubrics carry versions; results never pooled | **scan-observable** | `http` + `structured_data` would serve it |
-| E4 | Public eval sets have a held-out rotation; publication sch | **not web-observable** | an organisational fact, not a property of a served surface |
-| E6 | Discrepancy taxonomy localizing failures to retrieval / vi | **scan-observable** | `http` + `structured_data` would serve it |
-| E7 | Documented path from failed eval back into the data produc | **content-evaluation** | needs the second instrument (G1-style judged reading) |
-| E8 | Versioned golden question/answer sets re-run on schedule a | **scan-observable** | `http` + `structured_data` would serve it |
-| E9 | Standing adversarial bank: vintage traps, confusable serie | **scan-observable** | `http` + `structured_data` would serve it |
-| F1 | New releases pass a published expectation suite (schema va | **scan-observable** | `http` + `structured_data` would serve it |
-| F2 | API/schema changes are versioned; breaking changes announc | **scan-observable** | `http` + `structured_data` would serve it |
-| F3 | Time-series identifiers, geography codes, and endpoints su | **scan-observable** | `http` + `structured_data` would serve it |
-| F5 | Canary/staging surface for major product changes; AI-consu | **scan-observable** | `http` + `structured_data` would serve it |
-| F6 | Signed releases / provenance attestations so downstream co | **scan-observable** | `http` + `structured_data` would serve it |
-| G2 | Revision status machine-readable per value (preliminary/re | **content-evaluation** | needs the second instrument (G1-style judged reading) |
-| G3 | Stable series IDs; machine-readable crosswalks when classi | **content-evaluation** | needs the second instrument (G1-style judged reading) |
-| G4 | Issuing authority, statutory mandate, and statistical-vs-a | **scan-observable** | `http` + `structured_data` would serve it |
-| G5 | Suppression and disclosure-avoidance documented machine-re | **content-evaluation** | needs the second instrument (G1-style judged reading) |
-| G6 | Collection instrument/protocol carried as a versioned epoc | **content-evaluation** | needs the second instrument (G1-style judged reading) |
+| code | indicator | tier | verdict | why |
+|---|---|---|---|---|
+| A12 | An identified, robots-compliant machine client that robots | M | **scan-observable** | `http.fetch`, `robots.fetch` (via `RULE-A12-v3`) reaches the spec clause "Per host: GET /robots.txt and parse it; then GET the product path under the identified UA" |
+| A7 | Persistent URLs/DOIs for products and vintages | — | **unassigned** | no tier assigned: docs/design/scan_tool_map.md §2 at commit 52af6c7 gave the keyword default (`scan-observable`, "`http` + `structured_data` would serve it"), which is not a derivation; no rule in rules.CURRENT serves it and no on-disk source names an open tool for it. Candidates: M through the June harness's assessment/harness/probes/d1_stable_urls.py (resolves a distribution URL; not a rule in rules.CURRENT), or O through the Wayback CDX API that ResearchTask 43108db6 names for robots.txt history, which would reach URL persistence across time. |
+| B1 | Comprehensive variable-level metadata (labels, definitions | — | **unassigned** | no tier assigned: docs/design/scan_tool_map.md §2 at commit 52af6c7 gave the keyword default (`scan-observable`, "`http` + `structured_data` would serve it"), which is not a derivation; no rule serves it. Candidates: M through assessment/harness/probes/d3_schema.py (a `describedBy` data dictionary), or O through `extruct` reading schema.org `variableMeasured`; the tool map §3 names `extruct` for A6 only. |
+| B2 | Concept/term definitions published, versioned, linked from | — | **unassigned** | no tier assigned: docs/design/scan_tool_map.md §2 at commit 52af6c7 gave the keyword default (`scan-observable`, "`http` + `structured_data` would serve it"), which is not a derivation; no rule serves it. Candidate: O through `extruct` over schema.org `DefinedTerm` (the evidence cell cites `schema-org-definedterm`); the tool map §3 names `extruct` for A6 only, and 'versioned' is not a DefinedTerm property. |
+| B4 | Data-quality attributes (error measures, suppression rules | — | **unassigned** | no tier assigned: docs/design/scan_tool_map.md §2 at commit 52af6c7 said `not web-observable`, and the definition does not confirm it: 'published as metadata, not prose' is a property of a served surface, so rule 2 does not reach it and no other rule does. Candidate: M, the structured-field test G1-D already makes for the error-measure subset. |
+| B5 | Same concept ⇒ same identifier across products/vintages | — | **unassigned** | no tier assigned: docs/design/scan_tool_map.md §2 at commit 52af6c7 gave the keyword default (`scan-observable`, "`http` + `structured_data` would serve it"), which is not a derivation; the definition ('Same concept ⇒ same identifier across products/vintages') needs two products or vintages compared, and no rule, collector or on-disk tool does that. Candidate tier undetermined. |
+| B6 | Plain-language product summary present and current (the re | — | **unassigned** | no tier assigned: docs/design/scan_tool_map.md §2 at commit 52af6c7 gave the keyword default (`scan-observable`, "`http` + `structured_data` would serve it"), which is not a derivation; presence is fetchable, but 'plain-language' and 'current' need a judged reading and no rule reaches it. Candidate: M, judged_reading. |
+| C1 | Benchmark question set per product; answer accuracy of a r | M | **content-evaluation** | an evaluation this project would build; source: definition of `ind:C1` in framework/ai_readiness_framework.json: "Benchmark question set per product; answer accuracy of a retrieval-paired model vs published values" |
+| C2 | Entailment-judged: do model statements about the product e | M | **content-evaluation** | an evaluation this project would build; source: definition of `ind:C2` in framework/ai_readiness_framework.json: "Entailment-judged: do model statements about the product entail from product text?" |
+| C3 | Version/vintage disambiguation: does retrieval return the  | M | **content-evaluation** | an evaluation this project would build; source: definition of `ind:C3` in framework/ai_readiness_framework.json: "does retrieval return the vintage asked for?" |
+| C4 | Generative engines citing the product cite the authoritati | M | **content-evaluation** | an evaluation this project would build; source: definition of `ind:C4` in framework/ai_readiness_framework.json: "Generative engines citing the product cite the authoritative page (not aggregators)" |
+| C5 | Product scored against published AI-data-readiness metrics | — | **unassigned** | no tier assigned: The definition ('Product scored against published AI-data-readiness metrics') names published metrics, not a benchmark, an eval set, entailment or what a generative engine does, so rule 5 does not reach it; the tool map verdict was the keyword default. Candidate: O through AIDRIN (`aidrin-hiniduma-2024`, `aidrin-2-0-a-framework-to-assess-data-readiness-for-ai`), but neither paper's text on disk says where the tool is obtained, so rule 3 cannot cite it. |
+| D2 | Terms address model training/retrieval use explicitly | — | **unassigned** | no tier assigned: docs/design/scan_tool_map.md §2 at commit 52af6c7 said `not web-observable`, and the definition does not confirm it: terms of use are published text. The tool map §3 response-header row names D2 as a consumer with 'no library needed', which is a harness path and not an open tool. Candidate: M, a terms or header leg, or a judged reading of the terms. |
+| D3 | Source lineage published (collection → processing → produc | — | **unassigned** | no tier assigned: docs/design/scan_tool_map.md §2 at commit 52af6c7 said `not web-observable`, and the definition does not confirm it: 'Source lineage published' is a served surface. Candidate: M; assessment/harness/probes/d3_provenance.py reads source and date signals, which is less than lineage. |
+| E1 | Product spec conformance (AUTO/DOC set) reported separatel | — | **unassigned** | no tier assigned: docs/design/scan_tool_map.md §2 at commit 52af6c7 gave the keyword default (`scan-observable`, "`http` + `structured_data` would serve it"), which is not a derivation; the definition names an eval set, but its value is how results are REPORTED, not the output of running an evaluation, so rule 5 does not reach it. Candidate: D, or a judged reading of a published report. |
+| E2 | Published pass/fail thresholds per eval, pre-registered be | — | **unassigned** | no tier assigned: docs/design/scan_tool_map.md §2 at commit 52af6c7 gave the keyword default (`scan-observable`, "`http` + `structured_data` would serve it"), which is not a derivation; the definition names an eval, but its value is whether thresholds are published and pre-registered, not the output of running one, so rule 5 does not reach it. Candidate: D (pre-registration is verifiable only against the agency's own timestamps). |
+| E3 | Eval sets and rubrics carry versions; results never pooled | — | **unassigned** | no tier assigned: docs/design/scan_tool_map.md §2 at commit 52af6c7 gave the keyword default (`scan-observable`, "`http` + `structured_data` would serve it"), which is not a derivation; 'Eval sets and rubrics carry versions' is a practice of whoever runs the evaluation, not the output of running one, so rule 5 does not reach it. Candidate: D. |
+| E4 | Public eval sets have a held-out rotation; publication sch | D | **not web-observable** | only the agency can say; source: docs/design/scan_tool_map.md §2 at commit 52af6c7 (verdict `not web-observable`), confirmed against the definition: a held-out set is by construction not published, so whether a rotation exists is a fact only the agency holds; definition of `ind:E4`: "Public eval sets have a held-out rotation" |
+| E6 | Discrepancy taxonomy localizing failures to retrieval / vi | M | **content-evaluation** | an evaluation this project would build; source: definition of `ind:E6` in framework/ai_readiness_framework.json: "Discrepancy taxonomy localizing failures to retrieval / vintage / metadata / model" |
+| E7 | Documented path from failed eval back into the data produc | — | **unassigned** | no tier assigned: docs/design/scan_tool_map.md §2 at commit 52af6c7 said `content-evaluation` (the keyword was 'document'), and the definition does not confirm it: 'mean-time-to-closure tracked' is an agency process, not a reading of a served surface, and its value is not an evaluation's output. Candidate: D. |
+| E8 | Versioned golden question/answer sets re-run on schedule a | M | **content-evaluation** | an evaluation this project would build; source: definition of `ind:E8` in framework/ai_readiness_framework.json: "Versioned golden question/answer sets re-run on schedule against the product surface" |
+| E9 | Standing adversarial bank: vintage traps, confusable serie | M | **content-evaluation** | an evaluation this project would build; source: definition of `ind:E9` in framework/ai_readiness_framework.json: "Standing adversarial bank: vintage traps, confusable series, unit traps, DP-noise misreads, suppression probes" |
+| F1 | New releases pass a published expectation suite (schema va | — | **unassigned** | no tier assigned: docs/design/scan_tool_map.md §2 at commit 52af6c7 gave the keyword default (`scan-observable`, "`http` + `structured_data` would serve it"), which is not a derivation; 'pass a published expectation suite ... before going live' happens before publication, on the agency's side. Candidate: D; the suite's publication alone would be observable. |
+| F2 | API/schema changes are versioned; breaking changes announc | — | **unassigned** | no tier assigned: docs/design/scan_tool_map.md §2 at commit 52af6c7 gave the keyword default (`scan-observable`, "`http` + `structured_data` would serve it"), which is not a derivation; spec `spec:F2` records `collector: none_known`. Candidate: O through `oasdiff` (an open-source OpenAPI breaking-change detector), which would reach 'compatibility checked mechanically'; no on-disk source names it, so it is the next tool-map row rather than a citation. |
+| F3 | Time-series identifiers, geography codes, and endpoints su | — | **unassigned** | no tier assigned: docs/design/scan_tool_map.md §2 at commit 52af6c7 gave the keyword default (`scan-observable`, "`http` + `structured_data` would serve it"), which is not a derivation; spec `spec:F3` records `collector: none_known`. Candidate: O through a web archive's CDX index (ResearchTask 43108db6 names the Wayback CDX API), which would supply the prior vintage's endpoints. |
+| F5 | Canary/staging surface for major product changes; AI-consu | — | **unassigned** | no tier assigned: docs/design/scan_tool_map.md §2 at commit 52af6c7 gave the keyword default (`scan-observable`, "`http` + `structured_data` would serve it"), which is not a derivation; 'Canary/staging surface ... AI-consumer regression run before promotion' is on the agency's side of publication. Candidate: D. |
+| F6 | Signed releases / provenance attestations so downstream co | O | **scan-observable** | no collector reaches this yet; source: corpus/crosswalk/slsa-specification-v1-0.md (doc_id `slsa-specification-v1-0`), page 'Distributing provenance': "SLSA requires the distribution and verification of provenance metadata in the form of SLSA attestations"; FAQ 'How does SLSA relate to in-toto?': the specification recommends in-toto attestations (https://github.com/in-toto/attestation) as the vehicle to express provenance; definition of `ind:F6`: "Signed releases / provenance attestations" |
+| G2 | Revision status machine-readable per value (preliminary/re | M | **content-evaluation** | an evaluation this project would build; source: definition of `ind:G2` in framework/ai_readiness_framework.json: "EVAL: vintage disambiguation (ties C3)" |
+| G3 | Stable series IDs; machine-readable crosswalks when classi | — | **unassigned** | no tier assigned: docs/design/scan_tool_map.md §2 at commit 52af6c7 said `content-evaluation`, and the definition does not confirm it: stable series IDs and machine-readable crosswalks are structured properties, not a judged reading. Spec `spec:G3` records `collector: none_known`. Candidate tier undetermined. |
+| G4 | Issuing authority, statutory mandate, and statistical-vs-a | — | **unassigned** | no tier assigned: docs/design/scan_tool_map.md §2 at commit 52af6c7 gave the keyword default (`scan-observable`, "`http` + `structured_data` would serve it"), which is not a derivation; 'carried as structured metadata' is observable, but no rule serves it; assessment/harness/probes/d3_provenance.py reads the issuing-authority half (publisher, bureauCode) and nothing reads the statutory mandate. Candidate: M. |
+| G5 | Suppression and disclosure-avoidance documented machine-re | — | **unassigned** | no tier assigned: docs/design/scan_tool_map.md §2 at commit 52af6c7 said `content-evaluation` (the keyword was 'document'), and the definition does not confirm it: 'documented machine-readably with unique identifiers' is a structured-field test, not a judged reading. Candidate: M, harness_leg. |
+| G6 | Collection instrument/protocol carried as a versioned epoc | M | **content-evaluation** | judged reading by this project's instrument; source: docs/design/scan_tool_map.md §2 at commit 52af6c7 (verdict `content-evaluation`), confirmed against the definition; instrument: the G1 instrument: DD-036 (docs/design_decisions.md), assessment/harness/probes/g1_preservation.py, frozen at v2; definition of `ind:G6`: "The consumer-side test: an AI system asked to compare values across a break must surface the break" |
 
 ## 3. Gaps an open-source collector would fill — named, not built
 
@@ -70,3 +70,59 @@ Evidence retained by every collector is the same and is not a per-row property: 
 | Federal DCAT catalog presence | the catalog's own API — **currently unavailable**: `catalog.data.gov`'s CKAN action endpoints answered HTTP 404 on 2026-09-08 (organization_list, harvest_source_list, package_search alike) | Whether a product is registered in the federal catalog is the catalog-registration indicator. It cannot be collected while the catalog's machine interface is down, which is itself the finding Tier C exists to surface. |
 
 Nothing in this table is built by this task. Each is a row so that the next task can pick one up with the reason already written down.
+
+## 4. Measurement tier of every indicator
+
+DN-005 §2.2: **M** measured by this project's instruments, **O** measurable with open tools this project runs but does not own, **D** declared, only the agency can say. Read from the framework record, where cc_tasks/2026-09-17_measurement_tiers.md wrote them; `—` is an indicator no rule reached, and §2 gives its reason.
+
+| code | status | tier | basis | rule | source |
+|---|---|---|---|---|---|
+| A1 | measured | M | harness_leg | rule 1 | rules.CURRENT['A1'] = RULE-A1-v4 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A1` |
+| A10 | measured | M | harness_leg | rule 1 | rules.CURRENT['A10'] = RULE-A10-v3 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A10` |
+| A11 | measured | M | harness_leg | rule 1 | rules.CURRENT['A11-declared'] = RULE-A11-declared-v2 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A11-declared` |
+| A12 | specified | M | harness_leg | rule 1 | rules.CURRENT['A12'] = RULE-A12-v3 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A12` |
+| A2 | measured | M | harness_leg | rule 1 | rules.CURRENT['A2'] = RULE-A2-v3 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A2` |
+| A3 | measured | M | harness_leg | rule 1 | rules.CURRENT['A3'] = RULE-A3-v6 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A3` |
+| A4 | measured | M | harness_leg | rule 1 | rules.CURRENT['A4'] = RULE-A4-v1 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A4` |
+| A5 | measured | M | harness_leg | rule 1 | rules.CURRENT['A5'] = RULE-A5-v2 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A5` |
+| A6 | measured | M | harness_leg | rule 1 | rules.CURRENT['A6'] = RULE-A6-v2 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A6` |
+| A7 | specified | — | — | no rule reaches it | — |
+| A8 | measured | M | harness_leg | rule 1 | rules.CURRENT['A8'] = RULE-A8-v4 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A8` |
+| A9 | measured | M | harness_leg | rule 1 | rules.CURRENT['A9'] = RULE-A9-v1 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:A9` |
+| B1 | specified | — | — | no rule reaches it | — |
+| B2 | specified | — | — | no rule reaches it | — |
+| B3 | measured | M | harness_leg | rule 1 | rules.CURRENT['B3'] = RULE-B3-v3 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:B3` |
+| B4 | specified | — | — | no rule reaches it | — |
+| B5 | specified | — | — | no rule reaches it | — |
+| B6 | specified | — | — | no rule reaches it | — |
+| C1 | specified | M | evaluation | rule 5 | definition of `ind:C1` in framework/ai_readiness_framework.json: "Benchmark question set per product; answer accuracy of a retrieval-paired model vs published values" |
+| C2 | specified | M | evaluation | rule 5 | definition of `ind:C2` in framework/ai_readiness_framework.json: "Entailment-judged: do model statements about the product entail from product text?" |
+| C3 | specified | M | evaluation | rule 5 | definition of `ind:C3` in framework/ai_readiness_framework.json: "does retrieval return the vintage asked for?" |
+| C4 | specified | M | evaluation | rule 5 | definition of `ind:C4` in framework/ai_readiness_framework.json: "Generative engines citing the product cite the authoritative page (not aggregators)" |
+| C5 | specified | — | — | no rule reaches it | — |
+| D1 | measured | M | harness_leg | rule 1 | rules.CURRENT['D1'] = RULE-D1-v3 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:D1` |
+| D2 | specified | — | — | no rule reaches it | — |
+| D3 | specified | — | — | no rule reaches it | — |
+| D4 | measured | M | harness_leg | rule 1 | rules.CURRENT['D4'] = RULE-D4-v2 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:D4` |
+| E1 | specified | — | — | no rule reaches it | — |
+| E2 | specified | — | — | no rule reaches it | — |
+| E3 | specified | — | — | no rule reaches it | — |
+| E4 | specified | D | declaration | rule 2 | docs/design/scan_tool_map.md §2 at commit 52af6c7 (verdict `not web-observable`), confirmed against the definition: a held-out set is by construction not published, so whether a rotation exists is a fact only the agency holds; definition of `ind:E4`: "Public eval sets have a held-out rotation" |
+| E5 | harness_built | M | harness_leg | rule 1 | rules.CURRENT['E5'] = RULE-E5-v2 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:E5` |
+| E6 | specified | M | evaluation | rule 5 | definition of `ind:E6` in framework/ai_readiness_framework.json: "Discrepancy taxonomy localizing failures to retrieval / vintage / metadata / model" |
+| E7 | specified | — | — | no rule reaches it | — |
+| E8 | specified | M | evaluation | rule 5 | definition of `ind:E8` in framework/ai_readiness_framework.json: "Versioned golden question/answer sets re-run on schedule against the product surface" |
+| E9 | specified | M | evaluation | rule 5 | definition of `ind:E9` in framework/ai_readiness_framework.json: "Standing adversarial bank: vintage traps, confusable series, unit traps, DP-noise misreads, suppression probes" |
+| F1 | specified | — | — | no rule reaches it | — |
+| F2 | specified | — | — | no rule reaches it | — |
+| F3 | specified | — | — | no rule reaches it | — |
+| F4 | measured | M | harness_leg | rule 1 | rules.CURRENT['F4'] = RULE-F4-v3 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:F4` |
+| F5 | specified | — | — | no rule reaches it | — |
+| F6 | specified | O | open_tool | rule 3 | corpus/crosswalk/slsa-specification-v1-0.md (doc_id `slsa-specification-v1-0`), page 'Distributing provenance': "SLSA requires the distribution and verification of provenance metadata in the form of SLSA attestations"; FAQ 'How does SLSA relate to in-toto?': the specification recommends in-toto attestations (https://github.com/in-toto/attestation) as the vehicle to express provenance; definition of `ind:F6`: "Signed releases / provenance attestations" |
+| G1-D | measured | M | harness_leg | rule 1 | rules.CURRENT['G1-D'] = RULE-G1-D-v1 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:G1-D` |
+| G1-O | measured | M | judged_reading | rule 5 | DD-036 §2 (docs/design_decisions.md): G1-O is the v2 EVAL; spec `spec:G1-O` names its collector; instrument: the G1 instrument: DD-036 (docs/design_decisions.md), assessment/harness/probes/g1_preservation.py, frozen at v2; definition of `ind:G1-O`: "when the pinned consumer restates that same captured surface" |
+| G2 | specified | M | evaluation | rule 5 | definition of `ind:G2` in framework/ai_readiness_framework.json: "EVAL: vintage disambiguation (ties C3)" |
+| G3 | specified | — | — | no rule reaches it | — |
+| G4 | specified | — | — | no rule reaches it | — |
+| G5 | specified | — | — | no rule reaches it | — |
+| G6 | specified | M | judged_reading | rule 4 | docs/design/scan_tool_map.md §2 at commit 52af6c7 (verdict `content-evaluation`), confirmed against the definition; instrument: the G1 instrument: DD-036 (docs/design_decisions.md), assessment/harness/probes/g1_preservation.py, frozen at v2; definition of `ind:G6`: "The consumer-side test: an AI system asked to compare values across a break must surface the break" |
