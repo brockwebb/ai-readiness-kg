@@ -15,9 +15,13 @@ set -u
 # a dispatched session is launched with.
 export PATH="/opt/anaconda3/bin:$HOME/.bun/bin:/opt/homebrew/bin:/usr/local/bin:$PATH"
 REPO="$(cd "$(dirname "$0")/../.." && pwd)"
-LOG_DIR="$REPO/logs"
+# The log path comes from the environment when one is given, so a test can run this wrapper
+# without writing into the live log beside real passes (cc_tasks/2026-09-17_dispatcher_notifies.md
+# decision 4: a fixture's REFUSING line landed in it at 2026-09-17T02:04:06Z). launchd sets no
+# such variable, so the job writes where it always has.
+LOG="${AIRKG_DISPATCH_LOG:-$REPO/logs/airkg_dispatch.log}"
+LOG_DIR="$(dirname "$LOG")"
 mkdir -p "$LOG_DIR"
-LOG="$LOG_DIR/airkg_dispatch.log"
 
 # DD-007: subscription OAuth only. The dispatcher refuses a pass when either variable is set,
 # and this unsets them so an inherited one from the launchd environment is not that refusal
@@ -84,7 +88,7 @@ read -r MAX_LINE MAX_RUN RETAIN_DAYS <<< "${caps:-2000 2097152 30}"
 if [ -f "$LOG" ] && [ "$(/usr/bin/stat -f%z "$LOG")" -gt "$MAX_RUN" ]; then
   mv "$LOG" "$LOG.$(date -u +%Y%m%dT%H%M%SZ)"
 fi
-/usr/bin/find "$LOG_DIR" -name 'airkg_dispatch.log.*' -mtime "+$RETAIN_DAYS" -delete 2>/dev/null
+/usr/bin/find "$LOG_DIR" -name "$(basename "$LOG").*" -mtime "+$RETAIN_DAYS" -delete 2>/dev/null
 
 {
   echo "=== $(date -u +%Y-%m-%dT%H:%M:%SZ) | airkg-dispatch fire"

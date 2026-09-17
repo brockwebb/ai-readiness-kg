@@ -166,10 +166,19 @@ def test_claude_md_headless_rule_is_the_launch_prompts_clause_byte_for_byte():
 WRAPPER = REPO / "scripts" / "jobs" / "airkg_dispatch.sh"
 
 
-def _bare_env_run(home: Path):
-    """The wrapper under `env -i`, which is as close to launchd's environment as a test gets."""
+#: The wrapper's own log. Only the tests that run a REAL pass write to it, and they read it back.
+LIVE_LOG = REPO / "logs" / "airkg_dispatch.log"
+
+
+def _bare_env_run(home: Path, log: Path):
+    """The wrapper under `env -i`, which is as close to launchd's environment as a test gets.
+
+    `AIRKG_DISPATCH_LOG` points the wrapper at a file under `tmp_path`: a refusal this fixture
+    provokes is not a pass, and it does not belong in the live log beside real ones
+    (cc_tasks/2026-09-17_dispatcher_notifies.md decision 4)."""
     return subprocess.run(
-        ["/usr/bin/env", "-i", f"HOME={home}", "PATH=/usr/bin:/bin", "/bin/bash", str(WRAPPER)],
+        ["/usr/bin/env", "-i", f"HOME={home}", "PATH=/usr/bin:/bin",
+         f"AIRKG_DISPATCH_LOG={log}", "/bin/bash", str(WRAPPER)],
         capture_output=True, text=True, cwd=REPO)
 
 
@@ -178,12 +187,16 @@ def test_the_wrapper_refuses_loudly_when_no_credentials_can_be_found(tmp_path):
     can read. Exit 3 is distinct from the interval refusal's 2, so the log says which."""
     (tmp_path / ".wintermute").mkdir()
     (tmp_path / ".wintermute" / ".env").write_text("OPENALEX_API_KEY=x\n", encoding="utf-8")
-    log = REPO / "logs" / "airkg_dispatch.log"
-    before = log.read_text(encoding="utf-8") if log.is_file() else ""
-    r = _bare_env_run(tmp_path)
+    log = tmp_path / "logs" / "airkg_dispatch.log"
+    live = LIVE_LOG
+    live_before = live.read_text(encoding="utf-8") if live.is_file() else ""
+    r = _bare_env_run(tmp_path, log)
     assert r.returncode == 3, r.stdout + r.stderr
-    added = (log.read_text(encoding="utf-8") if log.is_file() else "")[len(before):]
-    assert "REFUSING" in added and "no Neo4j credentials" in added
+    text = log.read_text(encoding="utf-8")
+    assert "REFUSING" in text and "no Neo4j credentials" in text
+    # The live log may gain a real launchd pass while this runs; it may not gain this refusal.
+    live_added = (live.read_text(encoding="utf-8") if live.is_file() else "")[len(live_before):]
+    assert "no Neo4j credentials" not in live_added
 
 
 def test_the_credential_parse_strips_one_surrounding_quote_pair_and_no_more(tmp_path):
@@ -282,10 +295,10 @@ def test_two_passes_in_a_launchd_shaped_environment_leave_the_event_log_byte_ide
         f"decision 10 the operator does not hand-dispatch while the dispatcher is enabled")
 
     events = REPO / "seldon_events.jsonl"
-    first = _bare_env_run(Path.home())
+    first = _bare_env_run(Path.home(), LIVE_LOG)
     after_first = hashlib.sha256(events.read_bytes()).hexdigest()
     tail_first = _wrapper_tail()
-    second = _bare_env_run(Path.home())
+    second = _bare_env_run(Path.home(), LIVE_LOG)
     after_second = hashlib.sha256(events.read_bytes()).hexdigest()
     tail_second = _wrapper_tail()
 
@@ -361,7 +374,7 @@ def test_a_single_pass_writes_no_event_when_there_is_nothing_to_assert():
 
     events = REPO / "seldon_events.jsonl"
     before = hashlib.sha256(events.read_bytes()).hexdigest()
-    r = _bare_env_run(Path.home())
+    r = _bare_env_run(Path.home(), LIVE_LOG)
     tail = _wrapper_tail()
     assert r.returncode == 0, tail
     assert "=== rc=0" in tail and "launching" not in tail
