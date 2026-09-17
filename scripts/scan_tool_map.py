@@ -52,6 +52,10 @@ from report_traceability import FRAMEWORK_CODE                      # noqa: E402
 #: measures the indicator; the tier axis is WHO can. Neither substitutes for the other,
 #: and the verdict is only ever read off the basis the record carries.
 VERDICT_BY_BASIS = {"harness_leg": "scan-observable", "open_tool": "scan-observable",
+                    # DN-005 ADDENDUM_02: a named field on a surface a collector already
+                    # fetches is scan-observable by the same act as a harness leg; what it
+                    # lacks is a rule, which is the `why` cell's business, not the verdict's.
+                    "structured_field": "scan-observable",
                     "judged_reading": "content-evaluation",
                     "evaluation": "content-evaluation",
                     "declaration": "not web-observable"}
@@ -178,6 +182,14 @@ def verdict_for(p: dict, cols: list, specs: dict) -> tuple:
     reach = [f"`{c['collector']}.{_entry_point(c)}`" for c in cols
              if any(leg in c["legs"] for leg in legs)]
     if not reach:
+        # A tier assigned by `cc_tasks/2026-09-17_unassigned_indicators.md` decision 2 names
+        # the collector entry point and the structured field on the node itself. Printing
+        # "no collector reaches this yet" beside a source that names one put two cells of the
+        # same row in contradiction, so the row says which entry point would read what, and
+        # that no rule wires it yet.
+        if p.get("tier_collector"):
+            return verdict, (f"no rule in rules.CURRENT yet; {p['tier_collector']} would read "
+                             f"{p.get('tier_field', '—')}; source: {source}")
         return verdict, f"no collector reaches this yet; source: {source}"
     clause = "; ".join(_first_sentence(specs[l]) for l in legs if l in specs)
     rules = ", ".join(f"`{CURRENT[l]}`" for l in legs)

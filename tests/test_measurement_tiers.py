@@ -1,6 +1,11 @@
 """Every indicator carries a measurement tier, sourced, or says why it does not.
 
-`cc_tasks/2026-09-17_measurement_tiers.md` decisions 1 to 5, under DN-005 §2.2 and §4 item 2.
+`cc_tasks/2026-09-17_measurement_tiers.md` decisions 1 to 5, under DN-005 §2.2 and §4 item 2,
+extended by `cc_tasks/2026-09-17_unassigned_indicators.md` decisions 1 to 5, which revisit the
+20 rows the first pass left unassigned. What the second pass adds to the checks below: a tier
+assigned by naming a structured field must name a collector that exists, and every corpus
+document a `tier_source` cites must be an `included` document in the manifest at the path the
+source prints.
 
 Three layers, each checked against the one before it:
 
@@ -33,13 +38,14 @@ sys.path.insert(0, str(REPO / "assessment" / "harness"))
 #: The distribution `cc_tasks/2026-09-17_measurement_tiers_RESULT.md` §2 reports. Moving an
 #: indicator between tiers is a task's decision, and this literal is where the suite learns of
 #: it.
-EXPECTED_PER_TIER = {"M": 27, "O": 1, "D": 1}
-EXPECTED_PER_BASIS = {"harness_leg": 17, "judged_reading": 2, "evaluation": 8,
-                      "open_tool": 1, "declaration": 1}
-EXPECTED_UNASSIGNED = {"A7", "B1", "B2", "B4", "B5", "B6", "C5", "D2", "D3", "E1", "E2",
-                       "E3", "E7", "F1", "F2", "F3", "F5", "G3", "G4", "G5"}
-BASIS_TIER = {"harness_leg": "M", "judged_reading": "M", "evaluation": "M",
-              "open_tool": "O", "declaration": "D"}
+EXPECTED_PER_TIER = {"M": 34, "O": 2, "D": 5}
+EXPECTED_PER_BASIS = {"harness_leg": 17, "structured_field": 7, "judged_reading": 2,
+                      "evaluation": 8, "open_tool": 2, "declaration": 5}
+EXPECTED_UNASSIGNED = {"A7", "B6", "E1", "E3", "F2", "F3", "G3", "G5"}
+#: Decision 3's shopping list: named on a row that is still unassigned, never on a tiered one.
+EXPECTED_OPEN_TOOL_CANDIDATES = {"A7", "F2", "F3"}
+BASIS_TIER = {"harness_leg": "M", "structured_field": "M", "judged_reading": "M",
+              "evaluation": "M", "open_tool": "O", "declaration": "D"}
 
 
 def _tagger():
@@ -131,6 +137,108 @@ def test_a_quoted_definition_is_quoted_verbatim(indicators):
             assert t["quote"] in indicators[code]["tier_source"], code
 
 
+# ------------------------- 1b. what `2026-09-17_unassigned_indicators.md` added
+
+def test_the_basis_that_means_a_rule_is_only_ever_a_rule(indicators):
+    """DN-005 ADDENDUM_01 defines `harness_leg` as "a rule in `rules.CURRENT` serves the
+    indicator", and three things outside this file depend on it meaning exactly that:
+    `tag_prescriptions.validate`, `tests/test_prescriptions.py`, and the projection's
+    `harness_leg_indicators_without_an_action` count. ADDENDUM_02's `structured_field` is the
+    basis for a named field no rule reads yet, and this is the boundary between them."""
+    from scan.rules import CURRENT
+    import report_traceability
+    served = {report_traceability.FRAMEWORK_CODE.get(leg, leg) for leg in CURRENT}
+    for code, p in sorted(indicators.items()):
+        basis = p.get("measurement_basis")
+        if basis == "harness_leg":
+            assert code in served, f"{code}: harness_leg and no rule in rules.CURRENT"
+        if basis == "structured_field":
+            assert code not in served, f"{code}: structured_field and a rule serves it"
+
+
+def test_a_tier_that_names_a_field_names_a_collector_that_exists(indicators):
+    """Decision 2 buys M with a structured field and an EXISTING collector entry point. A
+    collector renamed or an entry point dropped must fail here, not read plausibly forever in
+    a sentence nobody re-checks."""
+    from scan.collectors import __name__ as _pkg          # noqa: F401 - import guard only
+    import importlib
+    import re
+    bad = []
+    for code, p in sorted(indicators.items()):
+        named = p.get("tier_collector")
+        if not named:
+            continue
+        if p.get("measurement_basis") != "structured_field" or not p.get("tier_field"):
+            bad.append(f"{code}: a collector without a structured_field basis and a field")
+            continue
+        for mod_name, fn in re.findall(r"`([a-z_0-9]+)\.([a-z_0-9]+)`", named):
+            try:
+                mod = importlib.import_module(f"scan.collectors.{mod_name}")
+            except ModuleNotFoundError:
+                bad.append(f"{code}: no collector module {mod_name!r}")
+                continue
+            if not callable(getattr(mod, fn, None)):
+                bad.append(f"{code}: {mod_name} has no entry point {fn!r}")
+    assert not bad, bad
+
+
+def test_a_field_and_a_collector_travel_together(indicators):
+    for code, p in sorted(indicators.items()):
+        assert bool(p.get("tier_field")) == bool(p.get("tier_collector")), code
+
+
+def test_the_shopping_list_sits_only_on_untiered_rows(indicators):
+    """`open_tool_candidate` is decision 3's note that a tool's documentation is NOT on disk.
+    It is not a tier, and a row that later earns one must lose it."""
+    have = {c for c, p in indicators.items() if p.get("open_tool_candidate")}
+    assert have == EXPECTED_OPEN_TOOL_CANDIDATES
+    for code in have:
+        p = indicators[code]
+        assert not p.get("measurement_tier"), f"{code}: tiered and still on the shopping list"
+        assert "documentation not in corpus" in p["open_tool_candidate"], code
+
+
+def test_every_corpus_document_a_tier_cites_is_admitted_at_the_path_it_prints(indicators):
+    """A `tier_source` that cites `corpus/...` and a `doc_id` is checked against the corpus
+    ledger: the document must be an `included` entry whose canonical path is the path printed.
+    `corpus/` itself is gitignored, so the manifest — not the file — is what a stranger can
+    re-read, and it is what this asserts."""
+    import re
+    manifest = json.loads((REPO / "corpus" / "manifest.json").read_text(encoding="utf-8"))
+    entries = manifest["entries"]
+    bad = []
+    for code, p in sorted(indicators.items()):
+        text = " ".join(str(p.get(k) or "") for k in ("tier_source", "tier_note",
+                                                      "tier_unassigned_reason"))
+        for path, doc_id in re.findall(r"(corpus/[\w/.-]+\.\w+) \(doc_id `([\w.-]+)`\)", text):
+            entry = entries.get(doc_id)
+            if entry is None:
+                bad.append(f"{code}: doc_id {doc_id!r} is not in the corpus manifest")
+                continue
+            if entry["screening"]["decision"] != "included":
+                bad.append(f"{code}: {doc_id} is {entry['screening']['decision']}, not included")
+            have = entry["identity"]["canonical_path"]
+            if have != path:
+                bad.append(f"{code}: {doc_id} is at {have!r}, and the source prints {path!r}")
+    assert bad == [], bad
+
+
+def test_a_bare_doc_id_a_tier_cites_is_admitted(indicators):
+    """The reasons cite some documents by `doc_id` alone. Those are checked too, against the
+    same ledger, so a citation cannot degrade into a plausible-looking slug."""
+    import re
+    entries = json.loads((REPO / "corpus" / "manifest.json").read_text(encoding="utf-8"))["entries"]
+    known_not_documents = {"schema-org-definedterm"}      # cited as a vocabulary AND a doc
+    bad = []
+    for code, p in sorted(indicators.items()):
+        for slug in re.findall(r"`([a-z0-9][a-z0-9-]{8,})`",
+                               str(p.get("tier_unassigned_reason") or "")):
+            if slug in entries or slug in known_not_documents:
+                if slug in entries and entries[slug]["screening"]["decision"] != "included":
+                    bad.append(f"{code}: {slug} is not an included document")
+    assert bad == [], bad
+
+
 # ------------------------------------------------------------------ 2. the graph
 
 @pytest.fixture(scope="module")
@@ -190,13 +298,15 @@ def test_the_tool_map_derives_its_verdicts_from_the_tier(indicators):
         assert "would serve it" not in why.split("\"")[0], (code, why)
         p = indicators[code]
         basis = p.get("measurement_basis")
-        want = {"harness_leg": "scan-observable", "open_tool": "scan-observable",
-                "judged_reading": "content-evaluation", "evaluation": "content-evaluation",
-                "declaration": "not web-observable", None: "unassigned"}[basis]
+        want = {"harness_leg": "scan-observable", "structured_field": "scan-observable",
+                "open_tool": "scan-observable", "judged_reading": "content-evaluation",
+                "evaluation": "content-evaluation", "declaration": "not web-observable",
+                None: "unassigned"}[basis]
         assert verdict == f"**{want}**", f"{code}: {verdict} for basis {basis}"
         assert cells[2] == (p.get("measurement_tier") or "—"), code
         if want == "scan-observable":
-            assert "reaches" in why or "no collector reaches this yet" in why, (code, why)
+            assert ("reaches" in why or "no collector reaches this yet" in why
+                    or "would read" in why), (code, why)
 
 
 def test_the_tool_map_lists_every_indicator_with_its_tier(indicators):
