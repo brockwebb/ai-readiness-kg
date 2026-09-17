@@ -635,13 +635,19 @@ assessment_layer:
             ONE failing outcome of ONE rule. The prescription layer, DN-005 section 2.3. Bound
             to the check that detects its absence — `verifies_by` is the rule id whose verdict
             flips when the action is done, and there is no Action without one. `effort_band`
-            and `cost_band` are EMPTY where no source on disk supports a band, and the
-            corresponding `_source` then reads `estimate:pending` - a band is never guessed.
-            `value` is computed from the cycle of record, never authored.
-      properties: [title, description, technique_source, effort_band, effort_source,
-                   cost_band, cost_source, verifies_by, leg, indicator_code, outcome,
+            and `cost_band` are NOTIONAL RELATIVE estimates fixed by `technique_class` and
+            never authored per action (DN-005 ADDENDUM_03); their `_source` fields carry the
+            marker `notional:technique_class:<class>` rather than a document locator, because
+            no document on disk states an effort or a cost for these techniques. `band_note`
+            carries the adjustment instruction verbatim on every node. `value` is computed
+            from the cycle of record, never authored.
+      properties: [title, description, technique_source, technique_class,
+                   technique_class_reason, effort_band, effort_source, cost_band, cost_source,
+                   band_note, verifies_by, leg, indicator_code, outcome,
                    applies_to_publisher, applies_to_note, value, note, authored_by]
       property_values:
+        technique_class: [edit_existing, publish_new_file, change_server_behaviour,
+                          expose_api, harness_side]
         effort_band: [hours, days, weeks, quarter]
         cost_band: [none, tooling, staff_time, procurement]
 

@@ -8,7 +8,14 @@ output.
 
     scripts/prescriptions.py --body NCHS      one body on the cycle of record
     scripts/prescriptions.py --all            every action, ranked by bodies failing now
-    scripts/prescriptions.py --pending        the bands no source on disk supports, as a table
+    scripts/prescriptions.py --bands          every band with the class it comes from
+
+**The bands are notional and the output says so once, not forty-five times.** Every effort and
+cost band in this layer is a relative estimate assigned by technique class
+(`cc_tasks/2026-09-17_notional_bands.md`, DN-005 ADDENDUM_03), so a `(notional)` marker goes on
+the header line and the adjustment instruction — `band_note`, carried verbatim on every action —
+is printed ONCE per invocation. Repeating either beside every band would train a reader to skim
+the one sentence that says what the number is not.
 
 Two sources and no third: the framework of record (`Action` nodes and `REMEDIATES` edges, as
 `scripts/tag_prescriptions.py` wrote them) and the published matrices of the cycle of record
@@ -34,7 +41,9 @@ sys.path.insert(0, str(REPO))
 
 RECORD = REPO / "framework" / "ai_readiness_framework.json"
 PUBLICATION = REPO / "docs" / "reports" / "publication.yaml"
-PENDING = "estimate:pending"
+
+#: Printed after the header line of every mode, never beside a band.
+NOTIONAL = "(notional)"
 
 
 def load_record() -> dict:
@@ -97,11 +106,27 @@ def bodies(cycle: str) -> list:
 
 
 def band(a: dict, which: str) -> str:
-    """What to print for one band. `pending` is printed as `pending`, never as a blank cell:
-    an empty cell reads as zero effort, and the whole point is that nobody has said."""
-    if a[f"{which}_source"] == PENDING:
-        return "pending"
-    return f"{a[f'{which}_band']} ({a[f'{which}_source']})"
+    """One band, as its word. A band whose source is a document locator rather than the
+    notional marker prints the locator with it, because that is the one a reader may rely on
+    without adjusting it for their own shop."""
+    value, src = a[f"{which}_band"], a[f"{which}_source"]
+    return value if src.startswith("notional:") else f"{value} ({src})"
+
+
+def band_note(acts: list) -> str:
+    """The adjustment instruction, read off the record rather than restated here. Every action
+    carries it verbatim; if two ever disagreed the query would be choosing between them
+    silently, so it refuses instead."""
+    notes = {a["band_note"] for a in acts}
+    if len(notes) != 1:
+        raise SystemExit(f"FATAL: {len(notes)} distinct band_note(s) on the record; "
+                         f"every action carries the same one or the query cannot print it once")
+    return notes.pop()
+
+
+def print_band_note(acts: list, width: int) -> None:
+    print(f"\n{'-' * width}")
+    print(wrap(band_note(acts), width, ""))
 
 
 def wrap(text: str, width: int, indent: str) -> str:
@@ -121,6 +146,7 @@ def print_body(name: str, g: dict, cycle: str, width: int) -> int:
     print(f"# {name} — prescriptions from cycle {cycle}")
     print(f"#   {len(mine)} failing leg(s) of the {sum(len(m['legs']) for m in matrices(cycle))}"
           f" judged; {len(all_bodies)} bodies on this cycle")
+    print(f"#   effort and cost are relative bands {NOTIONAL} — the note is at the end")
     if not mine:
         print("\nNo leg on this cycle carries the verdict `fail` for this body.")
         return 0
@@ -140,6 +166,7 @@ def print_body(name: str, g: dict, cycle: str, width: int) -> int:
             print(f"      verified by: {a['verifies_by']}")
             for s in a["technique_source"]:
                 print(wrap(f"technique: {s}", width, "      "))
+    print_band_note(acts, width)
     return 0
 
 
@@ -147,30 +174,39 @@ def print_all(g: dict, cycle: str, width: int) -> int:
     acts = actions(g)
     total = len(bodies(cycle))
     print(f"# every action, ranked by bodies failing now — cycle {cycle}, {total} bodies")
-    print(f"# {len(acts)} actions over {len({a['leg'] for a in acts})} legs\n")
-    head = f"{'bodies':>6}  {'leg':<13}  {'outcome':<36}  {'effort':<8}  {'cost':<8}  action"
+    print(f"# {len(acts)} actions over {len({a['leg'] for a in acts})} legs")
+    print(f"# effort and cost are relative bands {NOTIONAL} — the note is at the end\n")
+    head = f"{'bodies':>6}  {'leg':<13}  {'outcome':<36}  {'effort':<8}  {'cost':<10}  action"
     print(head)
     print("-" * len(head))
     for a in acts:
         n = a["value"]["bodies_failing_now"]
         pub = "" if a["applies_to_publisher"] else "  [not a publisher action]"
         print(f"{n:>6}  {a['leg']:<13}  {a['outcome']:<36}  "
-              f"{band(a, 'effort'):<8}  {band(a, 'cost'):<8}  {a['title']}{pub}")
+              f"{band(a, 'effort'):<8}  {band(a, 'cost'):<10}  {a['title']}{pub}")
+    print_band_note(acts, width)
     return 0
 
 
-def print_pending(g: dict, width: int) -> int:
+def print_bands(g: dict, width: int) -> int:
+    """Every band with the class it comes from. This is the mode that was `--pending` while the
+    bands were empty; it answers the same question — where does this band come from — now that
+    they are filled, so the flag keeps its old name as an alias."""
+    from collections import Counter
     acts = actions(g)
-    rows = [(a["id"], a["leg"], a["outcome"]) for a in acts
-            if a["effort_source"] == PENDING or a["cost_source"] == PENDING]
-    print(f"# {sum(1 for a in acts for b in ('effort', 'cost') if a[f'{b}_source'] == PENDING)}"
-          f" band(s) on {len(rows)} action(s) have no source on disk.")
-    print("# The band is left EMPTY rather than guessed; the operator is the value input.\n")
-    print(f"{'action':<62}  {'leg':<13}  effort  cost")
-    print("-" * 96)
-    for aid, leg, _ in rows:
-        a = next(x for x in acts if x["id"] == aid)
-        print(f"{aid:<62}  {leg:<13}  {band(a, 'effort'):<6}  {band(a, 'cost')}")
+    n_notional = sum(1 for a in acts for b in ("effort", "cost")
+                     if a[f"{b}_source"].startswith("notional:"))
+    print(f"# {n_notional} of {2 * len(acts)} band(s) on {len(acts)} action(s) are notional "
+          f"{NOTIONAL}: no document on disk states an effort or a cost for these techniques.")
+    print("# The band comes from the action's technique class, not from a per-action estimate.")
+    per_class = Counter(a["technique_class"] for a in acts)
+    print("\n" + ", ".join(f"{c} {n}" for c, n in sorted(per_class.items())) + "\n")
+    print(f"{'action':<62}  {'class':<24}  {'effort':<8}  cost")
+    print("-" * 110)
+    for a in acts:
+        print(f"{a['id']:<62}  {a['technique_class']:<24}  "
+              f"{band(a, 'effort'):<8}  {band(a, 'cost')}")
+    print_band_note(acts, width)
     return 0
 
 
@@ -180,7 +216,11 @@ def main(argv=None) -> int:
     g1 = ap.add_mutually_exclusive_group(required=True)
     g1.add_argument("--body", metavar="NAME", help="one body on the cycle of record")
     g1.add_argument("--all", action="store_true", help="every action, ranked by value")
-    g1.add_argument("--pending", action="store_true", help="the bands with no source on disk")
+    g1.add_argument("--bands", action="store_true",
+                    help="every band with the class it comes from")
+    g1.add_argument("--pending", action="store_true",
+                    help="the former name of --bands, kept because "
+                         "cc_tasks/2026-09-17_prescription_layer_RESULT.md cites it")
     ap.add_argument("--width", type=int, default=96)
     a = ap.parse_args(argv)
     g, cycle = load_record(), snapshot_cycle()
@@ -188,7 +228,10 @@ def main(argv=None) -> int:
         return print_body(a.body, g, cycle, a.width)
     if a.all:
         return print_all(g, cycle, a.width)
-    return print_pending(g, a.width)
+    if a.pending:
+        print("# --pending is the former name of --bands; no band is pending since "
+              "cc_tasks/2026-09-17_notional_bands.md.", file=sys.stderr)
+    return print_bands(g, a.width)
 
 
 if __name__ == "__main__":

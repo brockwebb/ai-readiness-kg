@@ -8,8 +8,10 @@ same check verifies its completion.* These tests hold that binding closed from b
 * no `harness_leg` indicator without an action, and no failing rule outcome without one;
 * no action without a technique source that is verbatim in a document this repository holds,
   and without a `verifies_by` that resolves to a rule a new cycle would judge with;
-* no band that is neither a legal value nor the explicit `estimate:pending`, because a blank
-  band reads as "no effort" and the whole point is that nobody has said;
+* no band that is not a legal value, no band source that is neither a document locator nor a
+  `notional:` marker carrying its class, and no action without the technique class that fixes
+  both of its bands — a blank band reads as "no effort" and a per-action guess reads as a
+  measurement, so the layer does neither (DN-005 ADDENDUM_03);
 * no authored value: `bodies_failing_now` is recomputed here from the published matrices of
   the cycle of record and compared cell for cell against what the record carries.
 
@@ -39,7 +41,27 @@ PY = "/opt/anaconda3/bin/python3" if Path("/opt/anaconda3/bin/python3").exists()
 #: under test can only ever pass; these numbers move only when a task says they should.
 EXPECTED_ACTIONS = 45
 EXPECTED_LEGS = 17
-EXPECTED_PENDING_BANDS = 90
+EXPECTED_NOTIONAL_BANDS = 90
+
+#: The class table of `cc_tasks/2026-09-17_notional_bands.md` decision 1, as a literal. The
+#: RESULT's §0 tables the same 45 rows with a reason for each row that is not obvious, so a
+#: reader who disputes a class disputes a number here rather than a sentence somewhere.
+EXPECTED_PER_CLASS = {
+    "edit_existing": 17,
+    "publish_new_file": 14,
+    "change_server_behaviour": 10,
+    "expose_api": 1,
+    "harness_side": 3,
+}
+#: Decision 2's band table, restated here rather than imported, so that moving a band in the
+#: tagger fails a test instead of silently re-banding 45 actions.
+EXPECTED_BANDS = {
+    "edit_existing": ("hours", "none"),
+    "publish_new_file": ("days", "staff_time"),
+    "change_server_behaviour": ("weeks", "staff_time"),
+    "expose_api": ("quarter", "procurement"),
+    "harness_side": ("hours", "none"),
+}
 
 
 def _module(name: str):
@@ -164,35 +186,83 @@ def test_the_corpus_technique_sources_are_admitted_documents(tp):
 
 
 # ------------------------------------------------------------------ the bands
-def test_every_band_is_a_legal_value_or_an_explicit_pending(tp, acts):
-    """Decision 3's third clause. A pending band is EMPTY and its source says `estimate:pending`
-    in words; a band with a value must carry a source that is not the pending literal."""
+def test_every_band_is_a_legal_value_and_every_source_names_where_it_came_from(tp, acts):
+    """`cc_tasks/2026-09-17_notional_bands.md` decision 3. A band is one of the legal values —
+    never empty, never a free-text guess — and its source is either a document locator or a
+    `notional:` marker. A marker without its class would be an estimate with no method."""
     for a in acts:
         p = a["properties"]
         for which, legal in (("effort", tp.EFFORT_BANDS), ("cost", tp.COST_BANDS)):
-            band, src = p[f"{which}_band"], p[f"{which}_source"]
-            if src == tp.PENDING:
-                assert band is None, f"{a['id']}: a pending band carries a value: {band!r}"
+            value, src = p[f"{which}_band"], p[f"{which}_source"]
+            assert value in legal, f"{a['id']}: {which}_band={value!r}"
+            assert src and src.strip(), a["id"]
+            if src.startswith(tp.NOTIONAL_PREFIX):
+                cls = src[len(tp.NOTIONAL_PREFIX):].split(",")[0]
+                assert cls in tp.TECHNIQUE_CLASSES, f"{a['id']}: {which}_source class {cls!r}"
+                assert cls == p["technique_class"], a["id"]
+                assert tp.NOTIONAL_TASK in src, a["id"]
             else:
-                assert band in legal, f"{a['id']}: {which}_band={band!r}"
-                assert src and src.strip(), a["id"]
+                assert "/" in src, f"{a['id']}: {which}_source is neither a locator nor notional"
 
 
-def test_the_pending_slots_are_counted_and_reported(acts):
-    """The count the RESULT tables for the operator. It is a literal here so that filling a
-    band is a deliberate change to this number rather than a silent one."""
-    pending = [(a["id"], b) for a in acts for b in ("effort", "cost")
-               if a["properties"][f"{b}_source"] == "estimate:pending"]
-    assert len(pending) == EXPECTED_PENDING_BANDS
+def test_the_notional_bands_are_counted(tp, acts):
+    """The count the RESULT reports. A literal here so that sourcing a band from a document is
+    a deliberate change to this number rather than a silent one."""
+    notional = [(a["id"], b) for a in acts for b in ("effort", "cost")
+                if a["properties"][f"{b}_source"].startswith(tp.NOTIONAL_PREFIX)]
+    assert len(notional) == EXPECTED_NOTIONAL_BANDS
+    assert len(notional) == 2 * EXPECTED_ACTIONS, "a band escaped the marker"
 
 
-def test_no_band_was_filled_from_a_source_that_does_not_state_one(tp, acts):
-    """The search this task ran found no document on disk that assigns an effort or a cost band
-    to any of these techniques, so every band is pending. If a later task fills one, it must
-    move this literal and say where the band came from — which is the point."""
-    sourced = [a["id"] for a in acts for b in ("effort", "cost")
-               if a["properties"][f"{b}_source"] != tp.PENDING]
-    assert sourced == []
+def test_the_pending_literal_is_gone_from_the_record_and_the_code(tp):
+    """Decision 3: `estimate:pending` no longer appears anywhere. An empty band that a later
+    reader restores by copying the old literal would be a band with no class and no method."""
+    for rel in ("framework/ai_readiness_framework.json", "scripts/tag_prescriptions.py",
+                "scripts/prescriptions.py", "kg/schema.yaml"):
+        assert "estimate:pending" not in (REPO / rel).read_text(encoding="utf-8"), rel
+
+
+def test_every_action_carries_a_class_and_the_class_fixes_both_bands(tp, acts):
+    """Decision 1 and decision 2. The bands are assigned BY CLASS, so two actions of one class
+    can never carry different bands — which is what makes the estimate relative rather than
+    forty-five separate guesses."""
+    assert set(tp.NOTIONAL_BANDS) == set(tp.TECHNIQUE_CLASSES) == set(EXPECTED_BANDS)
+    for cls, want in EXPECTED_BANDS.items():
+        assert tp.NOTIONAL_BANDS[cls] == want, cls
+    seen = {}
+    for a in acts:
+        p = a["properties"]
+        cls = p["technique_class"]
+        assert cls in tp.TECHNIQUE_CLASSES, a["id"]
+        assert (p["effort_band"], p["cost_band"]) == EXPECTED_BANDS[cls], a["id"]
+        seen[cls] = seen.get(cls, 0) + 1
+    assert seen == EXPECTED_PER_CLASS
+
+
+def test_every_class_carries_its_one_line_definition(tp):
+    """A class with no definition is a label, and a band assigned from a label is a guess."""
+    for cls, what in tp.TECHNIQUE_CLASSES.items():
+        assert what and len(what.split()) >= 5, cls
+
+
+def test_every_action_carries_the_adjustment_instruction_verbatim(tp, acts):
+    """Decision 4: once, verbatim, on every action. The instruction is what the band MEANS, so
+    a consumer that reads one node off the graph reads it without also reading a document."""
+    for a in acts:
+        assert a["properties"]["band_note"] == tp.BAND_NOTE, a["id"]
+    assert "Adjust" in tp.BAND_NOTE and "does not predict" in tp.BAND_NOTE
+
+
+def test_a_class_that_is_not_obvious_says_why_it_was_chosen(tp, acts):
+    """Decision 1's last clause. The reason is a property of the node, not only of the RESULT,
+    so the row a reader disputes carries its own argument."""
+    with_reason = {a["id"] for a in acts
+                   if a["properties"].get("technique_class_reason")}
+    assert with_reason, "no action records why its class was chosen"
+    for a in acts:
+        r = a["properties"].get("technique_class_reason")
+        if r is not None:
+            assert len(r.split()) >= 8, a["id"]
 
 
 # ------------------------------------------------------------------ the value
@@ -297,14 +367,32 @@ def test_the_counts_block_carries_the_layer(doc, remediates):
     assert "actions" in doc["counts_basis"]
 
 
-@pytest.mark.parametrize("args", [["--all"], ["--pending"], ["--body", "NCHS"]])
-def test_the_query_runs_and_prints_every_action_it_should(args):
+@pytest.mark.parametrize("args", [["--all"], ["--bands"], ["--pending"], ["--body", "NCHS"]])
+def test_the_query_runs_and_prints_every_action_it_should(tp, args):
+    """`--pending` is kept as an alias because the predecessor's RESULT cites it as the
+    re-derivation command; it prints the same table under its new name."""
     r = subprocess.run([PY, str(REPO / "scripts" / "prescriptions.py"), *args],
                        capture_output=True, text=True, cwd=REPO)
     assert r.returncode == 0, r.stderr[-2000:]
     assert r.stdout.strip()
-    if args == ["--all"]:
-        assert r.stdout.count("pending   pending") == EXPECTED_ACTIONS
+    if args in (["--bands"], ["--pending"]):
+        assert r.stdout.count("act:") >= EXPECTED_ACTIONS
+        for cls in tp.TECHNIQUE_CLASSES:
+            assert cls in r.stdout
+
+
+def test_the_query_prints_the_notional_marker_once_and_the_note_once(tp):
+    """Decision 4: the note goes once per body output and once in `--all`, not per action. A
+    sentence repeated 45 times is a sentence nobody reads."""
+    for args in (["--all"], ["--body", "NCHS"]):
+        r = subprocess.run([PY, str(REPO / "scripts" / "prescriptions.py"), *args],
+                           capture_output=True, text=True, cwd=REPO)
+        assert r.returncode == 0, r.stderr[-2000:]
+        # `Notional` capitalised opens the note and appears nowhere else; the marker on the
+        # header line is lower-case. Counting a longer fragment would count the wrapping.
+        assert r.stdout.count("Notional") == 1, args
+        assert r.stdout.count("(notional)") == 1, args
+        assert "pending" not in r.stdout, args
 
 
 def test_the_query_refuses_a_body_that_is_not_on_the_cycle_of_record():
@@ -318,6 +406,9 @@ def test_the_schema_catalogue_declares_the_two_new_types():
     import yaml
     a = yaml.safe_load((REPO / "kg" / "schema.yaml").read_text(encoding="utf-8"))["assessment_layer"]
     assert "Action" in a["node_types"]
+    assert a["node_types"]["Action"]["property_values"]["technique_class"] == \
+        ["edit_existing", "publish_new_file", "change_server_behaviour",
+         "expose_api", "harness_side"]
     assert a["node_types"]["Action"]["property_values"]["effort_band"] == \
         ["hours", "days", "weeks", "quarter"]
     assert a["node_types"]["Action"]["property_values"]["cost_band"] == \
@@ -377,16 +468,22 @@ def test_cypher_every_action_is_bound_to_a_current_rule(graph):
         assert r["outcome"], r["id"]
 
 
-def test_cypher_the_bands_are_pending_and_the_value_is_promoted(graph):
+def test_cypher_the_bands_are_notional_and_the_value_is_promoted(graph):
     rows = list(graph.run(
-        "MATCH (a:Action) RETURN a.id AS id, a.effort_band AS e, a.effort_source AS es, "
-        "a.cost_band AS c, a.cost_source AS cs, a.value_bodies_failing_now AS v "
-        "ORDER BY a.id"))
+        "MATCH (a:Action) RETURN a.id AS id, a.technique_class AS k, a.effort_band AS e, "
+        "a.effort_source AS es, a.cost_band AS c, a.cost_source AS cs, a.band_note AS bn, "
+        "a.value_bodies_failing_now AS v ORDER BY a.id"))
     assert len(rows) == EXPECTED_ACTIONS
+    per_class = {}
     for r in rows:
-        assert r["e"] is None and r["es"] == "estimate:pending", r["id"]
-        assert r["c"] is None and r["cs"] == "estimate:pending", r["id"]
+        assert (r["e"], r["c"]) == EXPECTED_BANDS[r["k"]], r["id"]
+        for src in (r["es"], r["cs"]):
+            assert src == f"notional:technique_class:{r['k']}, task 2026-09-17_notional_bands", \
+                r["id"]
+        assert r["bn"] and r["bn"].startswith("Notional relative estimate"), r["id"]
         assert isinstance(r["v"], int), r["id"]
+        per_class[r["k"]] = per_class.get(r["k"], 0) + 1
+    assert per_class == EXPECTED_PER_CLASS
 
 
 def test_cypher_the_prescription_query_the_layer_exists_to_make(graph):
@@ -400,4 +497,4 @@ def test_cypher_the_prescription_query_the_layer_exists_to_make(graph):
         "ORDER BY bodies DESC, code, outcome"))
     assert rows, "the layer answers nothing"
     assert rows[0]["bodies"] >= 13
-    assert all(r["effort"] is None for r in rows)
+    assert all(r["effort"] in ("hours", "days", "weeks", "quarter") for r in rows)

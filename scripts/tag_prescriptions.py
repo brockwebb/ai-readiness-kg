@@ -21,16 +21,25 @@ leaving a prescription pointing at a sentence nobody produces. Each outcome gets
 `Action` and therefore exactly one `REMEDIATES` edge, which is also what keeps edge identity
 (`from`, `type`, `to`) unique for `framework_writeback.delta`.
 
-**Effort and cost are the part that must be sourced, and no source on disk supports a band.**
-The four prior-art shapes carry a remediation and none carries effort, cost or value; that gap
-is what DN-005 §2.3 calls this project's contribution. The search for a band-bearing source is
-recorded in the RESULT: the standards on disk state techniques, not levels of effort, and the
-one sentence that comes closest — W3C DWBP Best Practice 14, *"Data publishers must balance the
-effort required to make the data available in many formats against the cost of doing so"* —
-says the two exist, not how large either is. So every `effort_source` and `cost_source` is the
-literal `estimate:pending` and **the band itself is left empty**. Filling it from this session's
-reasoning would be a guess wearing a band's clothes; the operator is the value input for those
-slots (`~/.claude/CLAUDE.md` §2 item 3).
+**Effort and cost are NOTIONAL relative bands, assigned by technique class.** No document on
+disk states a level of effort or a cost for any of these techniques — the search that failed is
+in `cc_tasks/2026-09-17_prescription_layer_RESULT.md` §0, and the closest sentence in the corpus
+(W3C DWBP Best Practice 14, *"Data publishers must balance the effort required to make the data
+available in many formats against the cost of doing so"*) says the two exist, not how large
+either is. That is right for the SOURCE field and wrong for the band: an empty band reads as
+"no answer", when the honest answer is a notional relative estimate the agency adjusts for its
+own shop (`cc_tasks/2026-09-17_notional_bands.md`, from the operator's ruling of 2026-09-17).
+
+So every action carries a `technique_class`, and the class fixes both bands through
+`NOTIONAL_BANDS` — no band is authored per action, because a per-action figure is exactly the
+absolute estimate the literature says is not worth producing (Kahneman and Tversky 1979 on the
+planning fallacy; Flyvbjerg 2006 on reference-class forecasting as the corrective; Cohn 2005 on
+relative sizing as the practice teams actually use — none of the three is on disk, and they are
+cited by reference in DN-005 ADDENDUM_03). The `_source` fields say what the band IS rather
+than pretending to a locator: `notional:technique_class:<class>, task
+2026-09-17_notional_bands`. Every action also carries `band_note` verbatim, so the adjustment
+instruction travels with the number and not only with the document that ruled on it. These
+bands are refined by evidence from agencies that act on them, never by further estimation.
 
 **Value is computed, never authored.** `value.bodies_failing_now` is the count of bodies on the
 CYCLE OF RECORD (`docs/reports/publication.yaml:snapshot_cycle`) whose verdict on the verifying
@@ -52,15 +61,65 @@ sys.path.insert(0, str(REPO))
 sys.path.insert(0, str(REPO / "scripts"))
 sys.path.insert(0, str(REPO / "assessment" / "harness"))
 
+#: `TASK` is who authored the ACTIONS, and it goes on every node as `authored_by`; the bands
+#: were authored by a later task and say so in their own `_source` markers. `WRITEBACK_TASK` is
+#: the task file whose execution produces the current bytes, and it is what the event carries.
 TASK = "cc_tasks/2026-09-17_prescription_layer.md"
+WRITEBACK_TASK = "cc_tasks/2026-09-17_notional_bands.md"
 SCRIPT = "tag_prescriptions"
 RECORD = "framework/ai_readiness_framework.json"
 PUBLICATION = "docs/reports/publication.yaml"
 
-#: The two bands, and the literal that stands in for a band no source on disk supports.
+#: The two bands. Every legal value is listed whether or not a class reaches it: `tooling` is
+#: reached by no class in this layer, and the RESULT says so rather than dropping the value.
 EFFORT_BANDS = ("hours", "days", "weeks", "quarter")
 COST_BANDS = ("none", "tooling", "staff_time", "procurement")
-PENDING = "estimate:pending"
+
+#: The technique classes (`cc_tasks/2026-09-17_notional_bands.md` decision 1), each with the
+#: one-line definition DN-005 ADDENDUM_03 records. A class is assigned from the action's own
+#: description and the kinds of its technique sources; where the choice is not obvious on the
+#: description's face the action carries `technique_class_reason`, and the RESULT tables it so
+#: a reader can dispute the row.
+TECHNIQUE_CLASSES = {
+    "edit_existing":
+        "a field, a directive or an identifier added to something the host already serves",
+    "publish_new_file":
+        "a file the host does not serve yet — a sitemap, a data.json, an llms.txt, a changelog "
+        "feed, a structured methodology, a bulk download",
+    "change_server_behaviour":
+        "how the server answers rather than what it holds — content negotiation, real 404s, "
+        "server-side rendering, edge or bot-manager alignment",
+    "expose_api":
+        "an HTTP API and its OpenAPI description where none exists",
+    "harness_side":
+        "this instrument's own controls (E5), acted on by the operator of the harness",
+}
+
+#: class -> (effort_band, cost_band). RELATIVE within this layer and not absolute: the bands
+#: order the actions against each other for a typical federal statistical publisher, which is
+#: the whole of what they claim. Decision 2.
+NOTIONAL_BANDS = {
+    "edit_existing": ("hours", "none"),
+    "publish_new_file": ("days", "staff_time"),
+    "change_server_behaviour": ("weeks", "staff_time"),
+    "expose_api": ("quarter", "procurement"),
+    "harness_side": ("hours", "none"),
+}
+
+#: On every action, once, verbatim (decision 4). The adjustment instruction is a property of
+#: the record and not only of a document, so a consumer that reads one action reads it too.
+BAND_NOTE = ("Notional relative estimate for a typical federal statistical publisher. Adjust "
+             "for your platform, staffing, skills and procurement path; the band orders "
+             "actions against each other, it does not predict your calendar or budget.")
+
+#: The marker that stands where a document locator would stand. Decision 3: every band source
+#: is either a document locator or one of these, and none is missing its class.
+NOTIONAL_PREFIX = "notional:technique_class:"
+NOTIONAL_TASK = "task 2026-09-17_notional_bands"
+
+
+def notional_source(cls: str) -> str:
+    return f"{NOTIONAL_PREFIX}{cls}, {NOTIONAL_TASK}"
 
 #: doc_id -> the path on disk. Every technique source is one of these; a source that is not a
 #: file this repository holds cannot be quoted, and an unquotable source is not a locator.
@@ -184,10 +243,15 @@ OUTCOMES = {
 # substring of `SOURCES[doc_id]` before anything is written, so a technique source cannot drift
 # from the document it cites — the same discipline `tag_measurement_tiers.py` applies to the
 # definition quotes it rests a tier on.
-def _a(leg, outcome, slug, title, description, sources, note=None, applies_to_publisher=True,
-       applies_to_note=None):
+#
+# `cls` is the technique class, and it is REQUIRED: a class that could be defaulted would be a
+# band that could be defaulted, which is the thing the empty band was protecting against.
+# `class_reason` is written only where the class is not obvious on the description's face.
+def _a(leg, outcome, slug, title, description, sources, cls, note=None,
+       applies_to_publisher=True, applies_to_note=None, class_reason=None):
     return {"leg": leg, "outcome": outcome, "slug": slug, "title": title,
-            "description": description, "sources": sources, "note": note,
+            "description": description, "sources": sources, "technique_class": cls,
+            "class_reason": class_reason, "note": note,
             "applies_to_publisher": applies_to_publisher, "applies_to_note": applies_to_note}
 
 
@@ -347,14 +411,18 @@ ACTIONS = [
        "machine-readable distribution of the same content (CSV, JSON, Parquet, XLSX or XML) "
        "and link it from the product page. The rule classifies on the RESPONSE content type, "
        "not on the href, so the file must be served as its own media type.",
-       [Q_BP12, Q_BP14, Q_SCHEMA_DIST]),
+       [Q_BP12, Q_BP14, Q_SCHEMA_DIST], cls="publish_new_file"),
     _a("A1", "no_structured_link", "a1-serve-the-data-files-with-their-own-media-type",
        "Link a data file from the product page and serve it with its own media type",
        "No probed link answered with a structured content type. Either no data file is linked "
        "from the product page, or the files are served as `text/html` or "
        "`application/octet-stream`. Link the distribution from the product page and configure "
        "the web server or CDN to return the format's media type for it.",
-       [Q_BP19, Q_SCHEMA_DL, Q_BP12]),
+       [Q_BP19, Q_SCHEMA_DL, Q_BP12], cls="change_server_behaviour",
+       class_reason=(
+           "the rule classifies on the RESPONSE content type, so the act is the web server or "
+           "CDN media-type configuration; linking the file without it does not move the "
+           "verdict")),
     # ---------------------------------------------------------------------------- A2
     _a("A2", "served_but_not_an_api_description",
        "a2-serve-a-parseable-api-description-at-the-documented-path",
@@ -363,14 +431,17 @@ ACTIONS = [
        "JSON content type alone is not a description. Publish an OpenAPI Description document "
        "(YAML or JSON) at that path, so a client can discover the operations without reading "
        "prose.",
-       [Q_OAS, Q_OAS_TOOLS, Q_BP25]),
+       [Q_OAS, Q_OAS_TOOLS, Q_BP25], cls="publish_new_file",
+       class_reason=(
+           "not `expose_api`: a document is already served at the probed API path, so what is "
+           "missing is the description file and not the API")),
     _a("A2", "no_api_description", "a2-expose-an-api-and-publish-its-description",
        "Expose the product through an API and publish the API's description",
        "No OpenAPI or JSON API description was served at any probed path. Expose the product "
        "through a documented HTTP API and publish a machine-readable description of it; where "
        "the product already sits on a data platform, enabling the platform's own API is the "
        "cheaper route than building one.",
-       [Q_BP23, Q_BP25, Q_OAS, Q_SCHEMA_API]),
+       [Q_BP23, Q_BP25, Q_OAS, Q_SCHEMA_API], cls="expose_api"),
     # ---------------------------------------------------------------------------- A3
     _a("A3", "filtered_query_not_whole_product",
        "a3-add-a-whole-product-download-beside-the-query-builder",
@@ -379,19 +450,19 @@ ACTIONS = [
        "parameterised export), so a consumer can obtain slices but never the product. Publish "
        "the complete product as a single retrievable file and link it from the same page, "
        "keeping the query builder for the subset case.",
-       [Q_BP17, Q_SCHEMA_DIST]),
+       [Q_BP17, Q_SCHEMA_DIST], cls="publish_new_file"),
     _a("A3", "below_bulk_floor", "a3-publish-the-complete-file-not-a-sample",
        "Publish the complete product, not a sample extract",
        "The largest linked download is below the whole-product floor, which is the shape of a "
        "sample or a summary rather than the product. Publish the complete file — compressed "
        "if it is large — and link it from the product page.",
-       [Q_BP17, Q_BP12]),
+       [Q_BP17, Q_BP12], cls="publish_new_file"),
     _a("A3", "no_whole_product_download", "a3-link-a-bulk-download-from-the-product-page",
        "Link a bulk download of the product from the product page",
        "No whole-product download is linked from the product page at all. Publish the product "
        "as one retrievable file at a stable URL and link it from the product page; where the "
        "product is served only through an API, add a bulk-download route to it.",
-       [Q_BP17, Q_DCAT_DIST]),
+       [Q_BP17, Q_DCAT_DIST], cls="publish_new_file"),
     # ---------------------------------------------------------------------------- A4
     _a("A4", "no_robots_txt", "a4-serve-a-robots-txt-that-names-ai-crawlers",
        "Serve a robots.txt and state the policy for AI crawlers in it",
@@ -399,7 +470,10 @@ ACTIONS = [
        "so a compliant AI client has no statement to rely on and an operator has no lever "
        "short of the edge. Serve `/robots.txt` and give the AI crawler product tokens their "
        "own groups.",
-       [Q_RFC_UA, Q_GOOG, Q_OPENAI]),
+       [Q_RFC_UA, Q_GOOG, Q_OPENAI], cls="publish_new_file",
+       class_reason=(
+           "no robots.txt is served at all, so the act is publishing a file the host does not "
+           "have, not editing a directive in one it does")),
     _a("A4", "robots_disallows_ai_crawlers", "a4-allow-the-data-paths-for-named-ai-crawlers",
        "Allow the product's data paths for the AI crawlers you intend to serve",
        "robots.txt disallows the product path for one or more AI crawler user agents. Where "
@@ -407,21 +481,21 @@ ACTIONS = [
        "data paths in those user agents' groups: the most specific match wins, and an `allow` "
        "beats an equivalent `disallow`, so a broad `Disallow: /` can stand with the data "
        "paths carved out of it.",
-       [Q_RFC_ALLOW, Q_OPENAI, Q_GOOG]),
+       [Q_RFC_ALLOW, Q_OPENAI, Q_GOOG], cls="edit_existing"),
     # ---------------------------------------------------------------------------- A5
     _a("A5", "discovery_file_omits_product", "a5-list-the-product-url-in-the-sitemap",
        "List the product URL in the discovery file that is already served",
        "A sitemap, llms.txt or well-known discovery file is served and none of them lists the "
        "product URL, so a crawler that obeys the site's own discovery surface never reaches "
        "the product. Add the product's `<loc>` entry to the sitemap that covers its host.",
-       [Q_SITEMAP_FMT, Q_SITEMAP_HOST, Q_LLMS]),
+       [Q_SITEMAP_FMT, Q_SITEMAP_HOST, Q_LLMS], cls="edit_existing"),
     _a("A5", "no_discovery_file", "a5-publish-a-sitemap-and-point-robots-txt-at-it",
        "Publish a sitemap and point robots.txt at it",
        "No sitemap, llms.txt or well-known discovery file is served on the host, so the "
        "product is discoverable only by following links. Publish a sitemap covering the "
        "product URLs and declare its location in robots.txt; an `llms.txt` at the site root "
        "serves the same purpose for agent clients.",
-       [Q_SITEMAP_LOC, Q_SITEMAP_FMT, Q_LLMS]),
+       [Q_SITEMAP_LOC, Q_SITEMAP_FMT, Q_LLMS], cls="publish_new_file"),
     # ---------------------------------------------------------------------------- A6
     _a("A6", "markup_without_dataset_type", "a6-type-the-product-page-as-a-dataset",
        "Type the product page's existing markup as a Dataset",
@@ -429,47 +503,53 @@ ACTIONS = [
        "a consumer reading the graph finds an organisation or a web page where the product "
        "should be. Add a `Dataset` node to the existing JSON-LD and hang the distributions, "
        "licence and dates off it.",
-       [Q_SCHEMA_DIST, Q_BP1, Q_JSONLD]),
+       [Q_SCHEMA_DIST, Q_BP1, Q_JSONLD], cls="edit_existing"),
     _a("A6", "no_structured_markup", "a6-embed-json-ld-on-the-product-page",
        "Embed JSON-LD describing the product on the product page",
        "The product page carries no JSON-LD, microdata or RDFa at all: everything the page "
        "says about the product is prose. Embed a JSON-LD block describing the product as a "
        "`Dataset`, with its title, publisher, dates, licence and distributions.",
-       [Q_BP1, Q_JSONLD, Q_SCHEMA_DIST]),
+       [Q_BP1, Q_JSONLD, Q_SCHEMA_DIST], cls="edit_existing",
+       class_reason=(
+           "a JSON-LD block is markup added to a page the host already serves: no new file, "
+           "and no change to how the server answers")),
     _a("A6", "shapes_violation", "a6-make-the-dataset-markup-conform-to-the-profile",
        "Make the Dataset markup conform to the profile it declares",
        "The markup declares a `Dataset` and violates the profile's shapes — a required "
        "property is missing, or a value is the wrong type. Fix the fields the validator names; "
        "the field set and its casing are defined, not a matter of taste.",
-       [Q_DCAT3, Q_DCAT_CASE, Q_SCHEMA_DIST]),
+       [Q_DCAT3, Q_DCAT_CASE, Q_SCHEMA_DIST], cls="edit_existing"),
     # ---------------------------------------------------------------------------- A8
     _a("A8", "last_modified_header_only", "a8-declare-the-product-vintage-in-the-markup",
        "Declare the product's vintage in the markup, not only in a file header",
        "The only date observable is an HTTP `Last-Modified` header, which is a fact about the "
        "file the server holds and not a declared product vintage: touching the file moves it. "
        "Put `datePublished` and `dateModified` on the product's `Dataset` markup.",
-       [Q_SCHEMA_DATE, Q_BP7]),
+       [Q_SCHEMA_DATE, Q_BP7], cls="edit_existing"),
     _a("A8", "no_declared_date", "a8-publish-a-release-date-for-the-product",
        "Publish a release date for the product",
        "No declared release or modification date appears on the surface, so a consumer cannot "
        "tell which vintage it is holding. Publish the release and revision dates as fields — "
        "`issued` and `modified` in the catalogue record, `datePublished`/`dateModified` in the "
        "page markup.",
-       [Q_BP7, Q_DCAT3, Q_SCHEMA_DATE]),
+       [Q_BP7, Q_DCAT3, Q_SCHEMA_DATE], cls="edit_existing"),
     _a("A8", "no_latest_vintage_pointer", "a8-serve-a-stable-latest-url-on-the-product-host",
        "Serve a stable 'latest' URL for the product on its own host",
        "The markup declares the vintage but the surface offers no latest-vintage pointer on "
        "its own host, so a consumer holding an old vintage has no way to ask for the current "
        "one. Publish a URL that always resolves to the latest release and keep the dated URLs "
        "beside it for the immutable snapshots.",
-       [Q_BP7_LATEST, Q_BP11]),
+       [Q_BP7_LATEST, Q_BP11], cls="change_server_behaviour",
+       class_reason=(
+           "a URL that always resolves to the latest release is a route the server maintains "
+           "across releases, not a file published once")),
     _a("A8", "latest_vintage_pointer_unresolved", "a8-make-the-latest-pointer-resolve",
        "Make the latest-vintage pointer resolve",
        "A latest-vintage pointer is declared and none of the candidates resolves: the URL is "
        "published and answers an error. Repair the redirect or the route so the pointer "
        "resolves, and design it to stay resolvable across releases rather than being "
        "regenerated with each one.",
-       [Q_BP9, Q_BP11, Q_BP7_LATEST]),
+       [Q_BP9, Q_BP11, Q_BP7_LATEST], cls="change_server_behaviour"),
     # ---------------------------------------------------------------------------- A9
     _a("A9", "machine_path_answers_html", "a9-return-a-machine-format-at-the-machine-path",
        "Return a machine format at the paths advertised for machines",
@@ -477,13 +557,13 @@ ACTIONS = [
        "exists and returns the human page. Serve the machine representation at that path, or "
        "honour the request's `Accept` header and return the machine format when it is asked "
        "for.",
-       [Q_BP19, Q_LLMS_MD, Q_LLMS_LINK]),
+       [Q_BP19, Q_LLMS_MD, Q_LLMS_LINK], cls="change_server_behaviour"),
     _a("A9", "no_machine_first_path", "a9-publish-a-machine-first-entry-point",
        "Publish a machine-first entry point for the product",
        "None of the probed machine-first paths is served, so a machine client's only entry is "
        "the human page. Publish an entry point built for machines — an `/llms.txt` at the site "
        "root, an API root, or a data endpoint — and link it from the product page.",
-       [Q_LLMS, Q_LLMS_LINK, Q_BP23]),
+       [Q_LLMS, Q_LLMS_LINK, Q_BP23], cls="publish_new_file"),
     # ---------------------------------------------------------------------------- A10
     _a("A10", "soft_404", "a10-return-a-real-status-for-routes-that-do-not-exist",
        "Return a real HTTP status for routes that do not exist",
@@ -491,13 +571,13 @@ ACTIONS = [
        "human-readable 'not found' page with a success status, so a machine client cannot tell "
        "a real deep link from a typo and will treat the error page as the product. Return 404 "
        "(or 410 for a resource deliberately removed) with the explanation in the body.",
-       [Q_BP22, Q_BP27]),
+       [Q_BP22, Q_BP27], cls="change_server_behaviour"),
     _a("A10", "deep_link_error_status", "a10-make-the-product-deep-link-resolve",
        "Make the product's own deep link resolve",
        "The product deep link itself answers an error status, so the URL the product is "
        "published under does not reach it. Repair the route, and where the URL has moved, "
        "redirect the published one rather than retiring it.",
-       [Q_BP9, Q_BP27]),
+       [Q_BP9, Q_BP27], cls="change_server_behaviour"),
     _a("A10", "client_rendered_shell", "a10-serve-the-product-content-before-javascript-runs",
        "Serve the product's content in the first response, before JavaScript runs",
        "The deep link answers 200 and carries almost no visible text before JavaScript runs: "
@@ -505,7 +585,7 @@ ACTIONS = [
        "— including most crawlers and agents — sees an empty page. Server-render the product's "
        "content, or publish a clean text or markdown version at the same URL and point at it "
        "with a `Link` header.",
-       [Q_LLMS_JS, Q_LLMS_MD, Q_LIGHTHOUSE]),
+       [Q_LLMS_JS, Q_LLMS_MD, Q_LIGHTHOUSE], cls="change_server_behaviour"),
     # ---------------------------------------------------------------- A11 (declared leg)
     _a("A11-declared", "nothing_declared",
        "a11-declare-a-crawler-policy-for-the-product-path",
@@ -513,14 +593,17 @@ ACTIONS = [
        "No robots.txt is served, so the declared layer of the A11 triad is empty and there is "
        "nothing for the enforced and observed layers to be compared against. Serve a "
        "robots.txt that states the policy for the product path, per AI crawler product token.",
-       [Q_GOOG, Q_RFC_UA, Q_OPENAI]),
+       [Q_GOOG, Q_RFC_UA, Q_OPENAI], cls="publish_new_file",
+       class_reason=(
+           "no robots.txt is served, so this is the same act as A4's `no_robots_txt` action on "
+           "the same host: a file published where none exists")),
     _a("A11-declared", "robots_disallows_ai_crawlers",
        "a11-permit-the-ai-crawlers-you-intend-to-serve-on-the-product-path",
        "Permit, in robots.txt, the AI crawlers the product is meant to reach",
        "robots.txt disallows the product path for AI crawler user agents, so the declared "
        "policy is that these consumers are not served. Where that is not the intent, add "
        "`allow` rules for the product paths in those groups.",
-       [Q_RFC_ALLOW, Q_OPENAI]),
+       [Q_RFC_ALLOW, Q_OPENAI], cls="edit_existing"),
     _a("A11-declared", "meta_robots_contradicts_robots_txt",
        "a11-resolve-the-meta-robots-directive-that-contradicts-robots-txt",
        "Resolve the meta-robots directive that contradicts robots.txt",
@@ -529,7 +612,7 @@ ACTIONS = [
        "depends on which one a consumer reads. Decide the policy once and make the page's "
        "directives say it — robots.txt governs crawling, the meta directives govern indexing, "
        "and they are not interchangeable.",
-       [Q_GOOG_NOINDEX, Q_GOOG]),
+       [Q_GOOG_NOINDEX, Q_GOOG], cls="edit_existing"),
     # ---------------------------------------------------------------------------- A12
     _a("A12", "robots_itself_refused", "a12-serve-robots-txt-to-every-client",
        "Serve /robots.txt to every client, including ones the edge does not recognise",
@@ -537,7 +620,10 @@ ACTIONS = [
        "declared layer is not observable and the enforced layer refuses, so no consumer can "
        "learn the policy it is being held to. Exempt `/robots.txt` from bot management — the "
        "protocol treats it as implicitly allowed.",
-       [Q_RFC_SELF, Q_GOOG],
+       [Q_RFC_SELF, Q_GOOG], cls="change_server_behaviour",
+       class_reason=(
+           "the file exists and the EDGE refuses it, so the act is a bot-management exemption "
+           "rather than an edit to the file"),
        note="A12 is a CANDIDATE indicator (DD-054): its rule runs, its Findings are reported, "
             "and they enter no framework numerator until the operator adopts it. The action is "
             "recorded on the same terms.",
@@ -550,7 +636,12 @@ ACTIONS = [
        "its product token matches — so there is no declaration for the enforced layer to "
        "cohere with. Publish a group that a compliant identified client will match, at "
        "minimum a `user-agent: *` group with explicit rules.",
-       [Q_RFC_UA, Q_RFC_SELF],
+       [Q_RFC_UA, Q_RFC_SELF], cls="edit_existing",
+       class_reason=(
+           "the act named is adding a group to robots.txt. Where the file is absent outright, "
+           "the publishing act is already carried by A4's and A11's `publish_new_file` actions "
+           "on the same host, so classing this one `publish_new_file` would count that work "
+           "twice"),
        note="A12 is a CANDIDATE indicator (DD-054): it enters no framework numerator until the "
             "operator adopts it.",
        applies_to_note="The subject is the publisher's host; what is provisional is the "
@@ -563,7 +654,7 @@ ACTIONS = [
        "edge, or change the declaration so it states what is actually enforced. A published "
        "crawler identity with published address ranges is what makes the first option "
        "operable.",
-       [Q_OPENAI_IPS, Q_RFC_ALLOW, Q_GOOG],
+       [Q_OPENAI_IPS, Q_RFC_ALLOW, Q_GOOG], cls="change_server_behaviour",
        note="A12 is a CANDIDATE indicator (DD-054): it enters no framework numerator until the "
             "operator adopts it. This is the outcome the indicator was proposed for — three "
             "principal agencies refused an identified client on paths their own robots.txt "
@@ -576,19 +667,22 @@ ACTIONS = [
        "A methodology document is served and is not retrievable without executing JavaScript, "
        "so a consumer that reads the response body finds nothing. Server-render the "
        "methodology, or publish a plain text or markdown copy at a stable URL and link it.",
-       [Q_LLMS_JS, Q_LLMS_MD]),
+       [Q_LLMS_JS, Q_LLMS_MD], cls="change_server_behaviour",
+       class_reason=(
+           "the document is already served and the failure is that its content needs "
+           "JavaScript to appear; the first route the action names is server-rendering it")),
     _a("B3", "methodology_pdf_only", "b3-publish-the-methodology-in-structured-text",
        "Publish the methodology in structured text beside the PDF",
        "The methodology is served as PDF only. Publish it in a structured text format — HTML "
        "or markdown — beside the PDF, so the definitions, universe and estimation notes can be "
        "read by a machine without a layout-recovery step.",
-       [Q_BP12, Q_BP14]),
+       [Q_BP12, Q_BP14], cls="publish_new_file"),
     _a("B3", "no_methodology_link", "b3-link-the-methodology-from-the-product-page",
        "Link the methodology from the product page",
        "The product surface links no methodology document, so a consumer reading the product "
        "has no path to how it was produced. Link the methodology from the product page, and "
        "name it in the catalogue record's data-dictionary field where one exists.",
-       [Q_BP5, Q_DCAT3]),
+       [Q_BP5, Q_DCAT3], cls="edit_existing"),
     _a("B3", "no_structured_text_methodology",
        "b3-publish-a-methodology-document-reachable-from-the-product",
        "Publish a methodology document reachable from the product surface",
@@ -596,48 +690,51 @@ ACTIONS = [
        "links that exist do not lead to one. Publish the methodology — source, universe, "
        "collection, estimation and known limitations — at a stable URL and reach it from the "
        "product page in one hop.",
-       [Q_BP5, Q_BP1]),
+       [Q_BP5, Q_BP1], cls="publish_new_file"),
     # ---------------------------------------------------------------------------- D1
     _a("D1", "licence_is_free_text", "d1-state-the-licence-as-an-identifier",
        "State the licence as an identifier, not as a sentence",
        "A licence statement is present and its value is free text, so a machine can see that "
        "terms exist but not what they permit. State the licence as a recognised identifier — "
        "an SPDX id or the licence's canonical URL — in the markup's `license` property.",
-       [Q_SCHEMA_LIC, Q_BP4]),
+       [Q_SCHEMA_LIC, Q_BP4], cls="edit_existing"),
     _a("D1", "no_licence", "d1-publish-a-machine-readable-licence",
        "Publish a machine-readable licence for the product",
        "No licence appears in the product page's markup, in an HTTP `Link` header, or at a "
        "probed terms endpoint, so a consumer has to assume the worst or guess. Publish the "
        "licence as a machine-readable value on the product's markup and in its catalogue "
        "record.",
-       [Q_BP4, Q_SCHEMA_LIC]),
+       [Q_BP4, Q_SCHEMA_LIC], cls="edit_existing",
+       class_reason=(
+           "the licence is a value written into markup and a catalogue record the host already "
+           "serves, not a file of its own")),
     # ---------------------------------------------------------------------------- D4
     _a("D4", "catalog_schema_violation", "d4-make-the-catalog-conform-to-dcat-us",
        "Make the public data catalog conform to the DCAT-US schema",
        "The product appears in the host's catalog and the catalog violates the schema, so a "
        "consumer that validates before reading rejects the whole file. Fix the fields the "
        "validator names; field names are case-sensitive and a near-miss is a miss.",
-       [Q_DCAT_CASE, Q_DCAT_DIST, Q_DCAT3]),
+       [Q_DCAT_CASE, Q_DCAT_DIST, Q_DCAT3], cls="edit_existing"),
     _a("D4", "product_absent_from_catalog", "d4-add-the-product-to-the-public-data-inventory",
        "Add the product to the public data inventory already published",
        "A catalog is served on the host and the product is not in it, so the product is "
        "invisible to every consumer that starts from the inventory. Add the product's record "
        "to the catalog file; the inventory is meant to list all of the agency's public data "
        "assets, whether they are downloads or APIs.",
-       [Q_DCAT_CATALOG, Q_SCHEMA_CAT]),
+       [Q_DCAT_CATALOG, Q_SCHEMA_CAT], cls="edit_existing"),
     _a("D4", "no_catalog", "d4-publish-a-data-json-inventory",
        "Publish a data.json inventory on the host",
        "No public `data.json` catalog is served on this host, so there is no machine-readable "
        "inventory of what the agency publishes. Publish one at `/data.json` and let its own "
        "URL be its identifier.",
-       [Q_DCAT_CATALOG, Q_DCAT_ID]),
+       [Q_DCAT_CATALOG, Q_DCAT_ID], cls="publish_new_file"),
     # ---------------------------------------------------------------------------- E5
     _a("E5", "zero_controls_fired", "e5-fire-every-declared-control-before-the-first-host",
        "Fire every declared control fixture before the cycle contacts a host",
        "A cycle with zero fired controls is INVALID: nothing licenses its verdicts, because "
        "nothing demonstrated that the instrument could still tell a pass from a fail. Run the "
        "declared fixtures at the head of the cycle and record their observations with it.",
-       [Q_E5_CONTROL, Q_E5_PREREG], applies_to_publisher=False,
+       [Q_E5_CONTROL, Q_E5_PREREG], cls="harness_side", applies_to_publisher=False,
        applies_to_note="E5's rule judges THIS instrument's own cycle, not a publisher's "
                        "surface (`ind:E5.tier_note`, `not_measured_reason`). The actor is the "
                        "operator of the harness.",
@@ -650,7 +747,7 @@ ACTIONS = [
        "expectations were derived from the rule source and written down before the fixtures "
        "were first run, so a mismatch is a finding about the instrument: investigate the rule "
        "or the fixture. Editing the expectation to match what came out ends the gate.",
-       [Q_E5_PREREG, Q_E5_CONTROL], applies_to_publisher=False,
+       [Q_E5_PREREG, Q_E5_CONTROL], cls="harness_side", applies_to_publisher=False,
        applies_to_note="E5's rule judges this instrument's own cycle. The actor is the "
                        "operator of the harness.",
        note="The one action in this layer whose execution is forbidden to change the check. "
@@ -662,7 +759,7 @@ ACTIONS = [
        "the fixtures first, and keep the earliest surface timestamp on the cycle so the "
        "ordering stays falsifiable from stored evidence rather than asserted by the runner's "
        "control flow.",
-       [Q_E5_ORDER, Q_E5_CONTROL], applies_to_publisher=False,
+       [Q_E5_ORDER, Q_E5_CONTROL], cls="harness_side", applies_to_publisher=False,
        applies_to_note="E5's rule judges this instrument's own cycle. The actor is the "
                        "operator of the harness."),
     # ---------------------------------------------------------------------------- F4
@@ -673,21 +770,21 @@ ACTIONS = [
        "class, so a consumer can see that something changed but not whether it was a "
        "correction, a scheduled revision or a new release. Put a class on every entry — an "
        "Atom `<category term=...>`, or a `type`/`change_type` field in JSON.",
-       [Q_BP8, Q_BP7]),
+       [Q_BP8, Q_BP7], cls="edit_existing"),
     _a("F4", "changelog_not_machine_readable",
        "f4-serve-the-changelog-in-a-machine-readable-format",
        "Serve the changelog in a machine-readable format as well as a page",
        "A changelog page is served and not in a machine-readable content type, so the history "
        "is readable only by a person. Publish the same history as JSON, Atom or RSS at its own "
        "URL and keep the human page beside it.",
-       [Q_BP8_API, Q_BP12]),
+       [Q_BP8_API, Q_BP12], cls="publish_new_file"),
     _a("F4", "no_changelog", "f4-publish-a-version-history-endpoint",
        "Publish a version history for the product",
        "No changelog or release-notes endpoint is served, so a consumer holding an older "
        "vintage cannot learn what changed. Publish a list of released versions with, for each, "
        "what differs from the previous one; a single dedicated URL that returns the complete "
        "history is enough.",
-       [Q_BP8, Q_BP8_API]),
+       [Q_BP8, Q_BP8_API], cls="publish_new_file"),
     # ---------------------------------------------------------------------------- G1-D
     _a("G1-D", "no_error_measure_field", "g1d-publish-the-error-measure-as-a-structured-field",
        "Publish the error measure as a structured field beside the estimate",
@@ -696,7 +793,7 @@ ACTIONS = [
        "estimate gets a point value with no dispersion. Publish the margin of error, standard "
        "error or coefficient of variation as its own field beside each estimate — a column in "
        "the distribution and a `variableMeasured` entry in the markup.",
-       [Q_SCHEMA_VAR, Q_BP6],
+       [Q_SCHEMA_VAR, Q_BP6], cls="edit_existing",
        note="Withdrawn from the HOST level from cycle 5 (DD-066): a home page carries no "
             "estimate, so the leg cannot hold the property it measures there. The action is a "
             "product-surface action, which is the level `ind:G1-D.measurement_level` records."),
@@ -822,7 +919,21 @@ def validate(g: dict) -> dict:
                 raise SystemExit(f"FATAL: {a['slug']}: the quote is not in "
                                  f"{SOURCES[doc_id]}: {quote!r}")
 
-    # 5. the downstream table's quotes are verbatim in the record
+    # 5. every action carries a class the tables know, and every class carries both bands
+    for a in ACTIONS:
+        cls = a["technique_class"]
+        if cls not in TECHNIQUE_CLASSES:
+            raise SystemExit(f"FATAL: {a['slug']}: unknown technique_class {cls!r}; the "
+                             f"classes are {sorted(TECHNIQUE_CLASSES)}")
+        if cls not in NOTIONAL_BANDS:
+            raise SystemExit(f"FATAL: technique_class {cls!r} has no band pair")
+    for cls, (eff, cost) in NOTIONAL_BANDS.items():
+        if cls not in TECHNIQUE_CLASSES:
+            raise SystemExit(f"FATAL: NOTIONAL_BANDS names {cls!r}, which is not a class")
+        if eff not in EFFORT_BANDS or cost not in COST_BANDS:
+            raise SystemExit(f"FATAL: {cls!r} bands ({eff!r}, {cost!r}) are not legal values")
+
+    # 6. the downstream table's quotes are verbatim in the record
     for up, rows in DOWNSTREAM.items():
         for code, nid, field, quote in rows:
             if code not in inds:
@@ -898,15 +1009,20 @@ def build(g: dict) -> tuple:
     for a in ACTIONS:
         leg, code = a["leg"], indicator_code(a["leg"])
         rid = CURRENT[leg]
+        cls = a["technique_class"]
+        effort, cost = NOTIONAL_BANDS[cls]
         props = {
             "title": a["title"],
             "description": a["description"],
             "technique_source": [format_source(s) for s in a["sources"]],
-            # The two bands. Left EMPTY on purpose; see the module docstring.
-            "effort_band": None,
-            "effort_source": PENDING,
-            "cost_band": None,
-            "cost_source": PENDING,
+            # The class, and the two bands it fixes. Neither band is authored per action; see
+            # the module docstring for why a per-action figure would be the wrong instrument.
+            "technique_class": cls,
+            "effort_band": effort,
+            "effort_source": notional_source(cls),
+            "cost_band": cost,
+            "cost_source": notional_source(cls),
+            "band_note": BAND_NOTE,
             "verifies_by": rid,
             "leg": leg,
             "indicator_code": code,
@@ -915,6 +1031,8 @@ def build(g: dict) -> tuple:
             "value": value_of(g, leg, fails),
             "authored_by": TASK,
         }
+        if a["class_reason"]:
+            props["technique_class_reason"] = a["class_reason"]
         if a["applies_to_note"]:
             props["applies_to_note"] = a["applies_to_note"]
         if a["note"]:
@@ -949,8 +1067,8 @@ def merge(g: dict, nodes: list, edges: list) -> dict:
 
 def summary(nodes: list, edges: list) -> dict:
     from collections import Counter
-    pending = [(n["id"], b) for n in nodes for b in ("effort", "cost")
-               if n["properties"][f"{b}_source"] == PENDING]
+    notional = [(n["id"], b) for n in nodes for b in ("effort", "cost")
+                if n["properties"][f"{b}_source"].startswith(NOTIONAL_PREFIX)]
     return {
         "actions": len(nodes),
         "remediates_edges": len(edges),
@@ -960,9 +1078,18 @@ def summary(nodes: list, edges: list) -> dict:
         "distinct_source_documents": len({s.split(" (doc_id ")[0]
                                           for n in nodes
                                           for s in n["properties"]["technique_source"]}),
-        "bands_sourced": sum(1 for n in nodes for b in ("effort", "cost")
-                             if n["properties"][f"{b}_source"] != PENDING),
-        "bands_pending": len(pending),
+        "bands_from_a_document_locator": sum(
+            1 for n in nodes for b in ("effort", "cost")
+            if not n["properties"][f"{b}_source"].startswith(NOTIONAL_PREFIX)),
+        "bands_notional": len(notional),
+        "actions_per_class": dict(sorted(
+            Counter(n["properties"]["technique_class"] for n in nodes).items())),
+        "effort_bands": dict(sorted(
+            Counter(n["properties"]["effort_band"] for n in nodes).items())),
+        "cost_bands": dict(sorted(
+            Counter(n["properties"]["cost_band"] for n in nodes).items())),
+        "actions_with_a_class_reason": sorted(
+            n["id"] for n in nodes if "technique_class_reason" in n["properties"]),
         "actions_not_for_a_publisher": sorted(
             n["id"] for n in nodes if not n["properties"]["applies_to_publisher"]),
         "actions_per_leg": dict(sorted(Counter(n["properties"]["leg"] for n in nodes).items())),
@@ -994,7 +1121,8 @@ def main(argv=None) -> int:
                "remediates_added": [f"{e['from']}->{e['to']} ({e['properties']['outcome']})"
                                     for e in edges],
                "summary": s}
-    out = fw.save(merged, script=SCRIPT, task=TASK, changes=changes, dry_run=a.dry_run)
+    out = fw.save(merged, script=SCRIPT, task=WRITEBACK_TASK, changes=changes,
+                  dry_run=a.dry_run)
     print(json.dumps({"summary": s,
                       "save": {k: v for k, v in out.items()
                                if k not in ("delta", "changes", "counts")}},
