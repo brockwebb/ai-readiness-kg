@@ -16,6 +16,7 @@ and diverge the first time the operator moved the cap, with nothing to say it ha
 """
 from __future__ import annotations
 
+import os
 import subprocess
 import sys
 from pathlib import Path
@@ -299,6 +300,24 @@ def test_two_passes_in_a_launchd_shaped_environment_leave_the_event_log_byte_ide
         f"first pass said: {tail_first!r}")
 
 
+#: **`interactive_only`**: a test whose precondition a dispatched session cannot be in.
+#:
+#: The dispatcher sets `SELDON_SESSION_ID` on every session it launches and on no other
+#: (`seldon/commands/dispatch.py::_run`; `seldon/config.py::SESSION_ENV_VARS`). Such a session
+#: runs holding a claim — its own task is `in_progress` from the moment it starts, and the tree
+#: is dirty with its own edits — so the quiet state below does not exist inside it, and the
+#: dynamic skip that test states would fire on every dispatched run. Declared here, on the
+#: record, so a reader can tell a skip by design from a skip by accident
+#: (`cc_tasks/2026-09-17_figure_gate_reads_cycle_of_record.md` decision 3). A named `skipif`
+#: rather than a custom marker, so it needs no registration and cannot be silently unknown.
+interactive_only = pytest.mark.skipif(
+    bool(os.environ.get("SELDON_SESSION_ID")),
+    reason="interactive_only: SELDON_SESSION_ID is set, so this is a dispatched session, which "
+           "holds its own task's claim and dirties the tree for its whole life; the quiet "
+           "checkout this test asserts cannot exist inside one. Run it from an operator shell.")
+
+
+@interactive_only
 @pytest.mark.skipif(
     not SELDON_CHECKOUT.exists(), reason="seldon checkout not beside this repo")
 def test_a_single_pass_writes_no_event_when_there_is_nothing_to_assert():
@@ -311,7 +330,15 @@ def test_a_single_pass_writes_no_event_when_there_is_nothing_to_assert():
 
     It states its precondition and skips when the checkout is not in it. That is not the skip
     ADDENDUM_03 §3 forbids: the idempotence test above covers every state including this one,
-    and this adds the stronger claim where the stronger claim holds."""
+    and this adds the stronger claim where the stronger claim holds.
+
+    It has no configuration-invariant half to split out: every assertion is about what one
+    pass does in the quiet state. The half that holds in every state, dispatched sessions
+    included, is the idempotence test above, which never skips on queue state.
+
+    Two kinds of skip, and they are different. `interactive_only` is the declared one: inside a
+    dispatched session the state cannot be quiet. The reasons listed below are data conditions
+    in an operator shell: the state could be quiet, and at this moment is not."""
     import hashlib
     if not _neo4j_up():
         pytest.skip("Neo4j is not reachable")

@@ -526,12 +526,22 @@ def test_the_denominator_is_per_leg_and_the_page_says_so():
     """ADDENDUM-01 defect 3. Two ERS surfaces went unobservable on a host-side DNS transient,
     so `applicable_n` is 22 on some legs and 23 on others. The arithmetic was already per leg;
     what was stale was the PAGE, which carried cycle 1's constant "n = 23 per leg" as a
-    non-claim. A non-claim quoting a stale number is a claim."""
-    cycle = load_params()["cycle"]["name"]
+    non-claim. A non-claim quoting a stale number is a claim.
+
+    The cycle is the cycle of RECORD, the page's own (`docs/reports/publication.yaml`
+    `snapshot_cycle`, through `build_l0_site.publication()`), not `params.cycle.name`: the page
+    is built from the re-judged matrix and the measured cycle has none, so reading params made
+    this a skip on every run (`cc_tasks/2026-09-17_figure_gate_reads_cycle_of_record.md`
+    decision 1). Only an unreported project skips; a declared cycle with no matrix fails."""
+    import build_l0_site
+    if not build_l0_site.PUBLICATION.is_file():
+        pytest.skip(f"no cycle has been reported: {build_l0_site.PUBLICATION} "
+                    f"does not exist")
+    cycle = build_l0_site.publication()["snapshot_cycle"]
     suffix = cycle_results.cycle_suffix(cycle)
     mx_path = REPO / "state" / f"scan_matrix_{suffix}.json"
-    if not mx_path.is_file():
-        pytest.skip("this cycle has no matrix yet")
+    assert mx_path.is_file(), (f"{cycle} is the cycle of record and "
+                               f"{mx_path.relative_to(REPO)} does not exist")
     per = json.loads(mx_path.read_text(encoding="utf-8"))["per_leg"]
     for leg, s in per.items():
         assert s["applicable_n"] == s["pass"] + s["fail"], leg

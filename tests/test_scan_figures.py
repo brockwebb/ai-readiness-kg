@@ -31,6 +31,7 @@ REPO = Path(__file__).resolve().parent.parent
 SCAN = REPO / "assessment" / "harness" / "scan"
 sys.path.insert(0, str(REPO / "assessment" / "harness"))
 sys.path.insert(0, str(REPO / "assessment"))
+sys.path.insert(0, str(REPO / "scripts"))
 sys.path.insert(0, str(REPO))
 
 from scan.rules import CURRENT, parse_rule_id                        # noqa: E402
@@ -45,38 +46,71 @@ _TEXT = re.compile(r"<text\b([^>]*)>(.*?)</text>", re.S)
 _ATTR = re.compile(r'(\w[\w-]*)="([^"]*)"')
 
 
-def cfg(cycle: str | None = None) -> dict:
-    """The renderer's OWN config, not a second read of `figures.yaml`.
+def reported_cycle() -> str:
+    """The cycle of record: `snapshot_cycle` in `docs/reports/publication.yaml`, read through
+    `scripts/build_l0_site.py::publication()`, the function the site build reads it through.
 
-    `cycle`, `cycle_suffix`, `out_dir` and `matrix_json` are derived from `params.cycle.name`
-    by `figures.config()` (`cc_tasks/2026-09-07_scan_run_2.md` §5). A test that re-read the
+    Not `params.cycle.name`. That key names the cycle the harness RUNS, and since the
+    re-judgements (`cc_tasks/2026-09-11_rejudge_1_2_3_4_gen9.md`) the cycle a reader is shown is
+    a re-judgement of it — `scan_2026-09-10_rj2` over `scan_2026-09-10` — whose matrix is the
+    only one on disk. Resolving through params pointed this gate at a file that will never
+    exist, and 15 skips stood in for a gate on the figures of record
+    (`cc_tasks/2026-09-17_figure_gate_reads_cycle_of_record.md` decision 1).
+
+    The one remaining skip is the condition the harness-v5 task introduced skip-with-reason for
+    (`cc_tasks/2026-09-10_harness_v5_blind.md` decision 6), restated: no cycle has been
+    reported at all, so there are no figures of record to check.
+    """
+    import build_l0_site
+    if not build_l0_site.PUBLICATION.is_file():
+        pytest.skip(f"no cycle has been reported: {build_l0_site.PUBLICATION} "
+                    f"does not exist, so there is no cycle of record and no figures to check")
+    return build_l0_site.publication()["snapshot_cycle"]
+
+
+def cfg(cycle: str | None = None) -> dict:
+    """The renderer's OWN config, not a second read of `figures.yaml`, for `cycle` or else
+    the cycle of record.
+
+    `cycle`, `cycle_suffix`, `out_dir` and `matrix_json` are derived from the cycle name by
+    `figures.config()` (`cc_tasks/2026-09-07_scan_run_2.md` §5). A test that re-read the
     YAML directly would be checking a file the renderer no longer treats as complete, and
-    would keep passing against the previous cycle's matrix.
+    would keep passing against the previous cycle's matrix. The name is passed explicitly,
+    because `figures.config()`'s own default is `params.cycle.name` (see `reported_cycle`).
     """
     from scan.figures import config
-    return config(cycle)
+    return config(cycle or reported_cycle())
 
 
 def matrix(cycle: str | None = None) -> dict:
-    """The cycle's matrix, or a SKIP with the reason (`cc_tasks/2026-09-10_harness_v5_blind.md`
-    decision 6).
+    """The cycle's matrix. Missing is a FAILURE, not a skip.
 
-    This file is written around `params.cycle.name`, so a task that measures a cycle and then
-    stops before reporting it leaves every figure test erroring on a missing file — 2 failures
-    and 8 collection errors, which is what `2026-09-10_scan_run_4.md`'s deliberate gate stop
-    looked like in the suite. A gate that cannot distinguish "the figures are wrong" from "there
-    are no figures yet" is a gate that trains its reader to ignore it.
-
-    A skip, not a pass: the figures are unverified and the suite says so.
+    `reported_cycle` already skips when nothing has been reported. A cycle that IS declared
+    of record and has no matrix is a report citing a file that does not exist, which is the
+    defect this gate is for; skipping it would be the accident
+    `cc_tasks/2026-09-17_figure_gate_reads_cycle_of_record.md` decision 2 removes.
     """
-    path = REPO / cfg(cycle)["matrix_json"]
-    if not path.is_file():
-        pytest.skip(f"cycle {cycle or 'params.cycle.name'} has not been reported: "
-                    f"{path.relative_to(REPO)} does not exist, so there are no figures to "
-                    f"check. Run §4/§5 of the cycle's task, or point params.cycle.name at a "
-                    f"reported cycle.")
+    c = cfg(cycle)
+    path = REPO / c["matrix_json"]
+    assert path.is_file(), (f"cycle {c['cycle']} is named, and {path.relative_to(REPO)} does "
+                            f"not exist: the figures of record have no matrix behind them")
     return json.loads(path.read_text(encoding="utf-8"))
 
+
+
+def test_the_only_skip_is_a_project_that_has_reported_nothing(monkeypatch, tmp_path):
+    """Decision 1's one remaining skip, watched firing, and nothing else firing it."""
+    import build_l0_site
+    monkeypatch.setattr(build_l0_site, "PUBLICATION", tmp_path / "publication.yaml")
+    with pytest.raises(pytest.skip.Exception, match="no cycle has been reported"):
+        reported_cycle()
+
+
+def test_a_declared_cycle_with_no_matrix_fails_rather_than_skips():
+    """Decision 2: a named cycle whose matrix is absent is a defect in the figures of record,
+    and the gate says so instead of standing aside."""
+    with pytest.raises(AssertionError, match="have no matrix behind them"):
+        matrix("scan_1999-01-01")
 
 @pytest.fixture(scope="module")
 def results():
@@ -221,11 +255,10 @@ def _matches(rendered: str, value: float) -> bool:
 
 @pytest.fixture(scope="module")
 def figures(results):
-    """The rendered figures, or the same skip `matrix()` gives — decision 6.
+    """The rendered figures of the cycle of record, or the skip `reported_cycle()` gives.
 
-    `build` reads the cycle's matrix, so an unreported cycle errors here at FIXTURE SETUP, which
-    pytest reports as 8 errors rather than 8 skips. Asking for the matrix first turns that into
-    one legible reason.
+    `build` reads the cycle's matrix, so a missing one errors here at FIXTURE SETUP with a
+    `FileNotFoundError`. Asking for the matrix first turns that into one legible assertion.
     """
     matrix()
     from scan.figures import build
@@ -367,9 +400,10 @@ def test_no_figure_reaches_the_network(figures):
 
 def _tier_doc_ids(tier: str) -> set:
     """The doc_ids of one tier, from the targets DataFile — the same join
-    `scripts/scan_report.py::tier_of` makes, and the same authority."""
-    from scan import load_params
-    src = REPO / "state" / f"{load_params()['cycle']['targets']}.json"
+    `scripts/scan_report.py::tier_of` makes, and the same authority. The targets the cycle of
+    record NAMES on its payload, not the ones `params.yaml` would run next."""
+    payload = json.loads((REPO / "state" / f"{cfg()['cycle']}.json").read_text(encoding="utf-8"))
+    src = REPO / "state" / f"{payload['targets']}.json"
     rows = json.loads(src.read_text(encoding="utf-8"))["rows"]
     return {r["doc_id"] for r in rows if r.get("doc_id") and r.get("tier", "A") == tier}
 
@@ -388,20 +422,34 @@ def test_each_legs_registered_counts_re_derive_from_the_graph(session, results):
     difference exactly the Tier C rows). Excluding them and leaving it there would have made
     the Tier C Results the one family nothing re-derives, so `scan_tierc_*` is checked here
     too, against the Findings the Tier C rows actually produced.
+
+    **A cycle is `(params_hash, cycle)`, not `params_hash`.** A re-judgement's Findings carry
+    the hash of the rules they were judged under and a `cycle` naming the judgement; every
+    generation-9 re-judgement shares one hash, so the hash alone selected four cycles' Findings
+    and read A2 `fail` as 120 against a registered 40 the first time this ran against the cycle
+    of record (`cc_tasks/2026-09-17_figure_gate_reads_cycle_of_record_RESULT.md` §2). A
+    measured cycle's Findings carry no `cycle` and a hash of their own, so for a measurement the
+    hash is still the whole key. Which kind the cycle is comes from its payload
+    (`publish.is_rejudgement`), not from its name.
     """
+    from scan import publish
     mx = matrix()
     ph = mx["params_hash"]
+    cycle = cfg()["cycle"]
+    payload = json.loads((REPO / "state" / f"{cycle}.json").read_text(encoding="utf-8"))
+    measured = not publish.is_rejudgement(payload)
     tier_c = _tier_doc_ids("C")
     assert tier_c, "no Tier C surfaces; the split this test makes would be vacuous"
     checked_c = 0
     q = ("MATCH (f:Finding)-[:RULED_BY]->(:Rule)-[:MEASURES]->"
          "(:AssessmentIndicator {code: $code}) "
          "WHERE f.params_hash = $ph AND NOT f.target_doc_id STARTS WITH 'control:' "
+         "AND ((f.cycle IS NULL AND $measured) OR f.cycle = $cycle) "
          "RETURN f.verdict AS v, f.target_doc_id AS d, count(*) AS c")
     bad = []
     for leg in mx["legs"]:
         code = parse_rule_id(CURRENT[leg])["indicator_code"]
-        rows = list(session.run(q, code=code, ph=ph))
+        rows = list(session.run(q, code=code, ph=ph, cycle=cycle, measured=measured))
         got: dict = {}
         got_c: dict = {}
         for r in rows:
@@ -444,13 +492,14 @@ L0_MATRICES = ("scan_matrix_tierA", "scan_matrix_tierC", "scan_matrix_product")
 
 
 def _l0_csv(stem: str):
-    """One L0 matrix CSV, or a skip. `cc_tasks/2026-09-09_report_draft.md` §1."""
+    """One L0 matrix CSV of the cycle of record. `cc_tasks/2026-09-09_report_draft.md` §1.
+
+    Missing fails: the report is built from these files, so a declared cycle without them is a
+    report nobody can walk back from."""
     import csv as _csv
-    from scan.figures import config as _config
-    suffix = _config()["cycle_suffix"]
+    suffix = cfg()["cycle_suffix"]
     path = REPO / "docs" / "reports" / f"{stem}_{suffix}.csv"
-    if not path.is_file():
-        pytest.skip(f"{path.relative_to(REPO)} has not been built")
+    assert path.is_file(), f"{path.relative_to(REPO)} has not been built for the cycle of record"
     with path.open(encoding="utf-8") as fh:
         return path, list(_csv.DictReader(fh))
 
@@ -518,18 +567,43 @@ def test_the_l0_matrices_and_the_report_agree_on_the_cycle():
 
     A report assembled from a fresh matrix and a stale one would resolve every reference and
     still be two measurements wearing one date.
+
+    **What identifies a cycle depends on its kind.** For a measurement, the params hash does.
+    A re-judgement's hash is the hash of the rules it was judged under, and every generation-9
+    re-judgement shares one, so it names a rule set rather than a cycle. The report identifies a
+    re-judged snapshot as "cycle `<measured>`, parameter hash `<collection hash>`, judged as
+    `<name>`", which is the pair that does name one. So: every matrix names the cycle of record
+    and carries that cycle's payload hash, and the report carries the cycle's name and the hash
+    of the COLLECTION its evidence came from (`derived_from_params_hash` for a re-judgement,
+    `params_hash` for a measurement). The first run against the cycle of record failed the
+    older form of this check on exactly that difference
+    (`cc_tasks/2026-09-17_figure_gate_reads_cycle_of_record_RESULT.md` §2).
     """
     import json as _json
-    from scan.figures import config as _config
-    suffix = _config()["cycle_suffix"]
+    from scan import publish
+    c = cfg()
+    suffix = c["cycle_suffix"]
+    payload = _json.loads((REPO / "state" / f"{c['cycle']}.json").read_text(encoding="utf-8"))
     report = REPO / "docs" / "reports" / f"2026-09_fss_ai_readiness_L0.md"
-    hashes = set()
+    hashes, cycles = set(), set()
     for stem in L0_MATRICES:
         path = REPO / "docs" / "reports" / f"{stem}_{suffix}.json"
-        if not path.is_file():
-            pytest.skip(f"{path.name} has not been built")
-        hashes.add(_json.loads(path.read_text(encoding="utf-8"))["params_hash"])
+        assert path.is_file(), f"{path.name} has not been built for the cycle of record"
+        doc = _json.loads(path.read_text(encoding="utf-8"))
+        hashes.add(doc["params_hash"])
+        cycles.add(doc["cycle"])
     assert len(hashes) == 1, f"the L0 matrices span {len(hashes)} parameter sets: {hashes}"
+    assert cycles == {c["cycle"]}, (
+        f"the L0 matrices name {cycles}; the cycle of record is {c['cycle']}")
+    assert hashes == {payload["params_hash"]}, (
+        f"the L0 matrices were built under {hashes}, and {c['cycle']}'s payload under "
+        f"{payload['params_hash']}")
     if report.is_file():
-        assert hashes.pop()[:12] in report.read_text(encoding="utf-8"), (
-            "the built report does not carry the parameter hash its matrices were built under")
+        text = report.read_text(encoding="utf-8")
+        collection = (payload["derived_from_params_hash"] if publish.is_rejudgement(payload)
+                      else payload["params_hash"])
+        assert f"`{c['cycle']}`" in text, (
+            f"the built report does not name {c['cycle']}, the cycle its matrices describe")
+        assert collection[:12] in text, (
+            "the built report does not carry the parameter hash of the collection its "
+            "matrices' evidence came from")
