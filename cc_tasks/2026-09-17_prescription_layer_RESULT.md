@@ -499,6 +499,7 @@ D4  (ind:D4)   failing on: scan-eia-flagship-1-open-data
 | **full suite** (`pytest tests/ assessment/ -q -rs`, the whole tier, not `gate-fast`) | **2341 passed, 3 skipped, 12 xfailed, 0 deselected, 0 failed** | 0 | 1388.93 s (`real 23m11.323s`) | `logs/suite_prescriptions.log` |
 | `seldon verify` | All checks passed | 0 | — | `logs/verify_prescriptions.log` |
 | `scripts/check_protected_prescriptions.sh` | PROTECTED PATHS OK | 0 | — | `logs/protected_prescriptions.log` |
+| **fast tier, re-run on the final state** (`-m "not slow"`) | **2316 passed, 3 skipped, 25 deselected, 12 xfailed, 0 failed** | 0 | 480.83 s (`real 8m4.789s`) | `logs/gate_fast_final.log` |
 | framework projection (`scripts/load_framework_graph.py`) | 171 nodes, 325 edges, `actions_in_graph: 45`, `harness_leg_indicators_without_an_action: []` | 0 | — | `logs/prescriptions_project.log` |
 | site payloads (`build_l0_site.py --only framework_copy --only data_manifest`) | 6 paths written | 0 | — | `logs/prescriptions_site.log` |
 
@@ -507,7 +508,9 @@ D4  (ind:D4)   failing on: scan-eia-flagship-1-open-data
 - `tests/test_scan_harness.py:281` — E5 judges the cycle's controls, not a surface.
 - `assessment/tests/test_g1_preservation.py:337` — no dev proposition publishes SE and CI together.
 
-These are the three the task file expected. **The Neo4j-gated tests did not skip**: Neo4j was up, so `tests/test_framework_projection_roundtrip.py` and the four Cypher tests in `tests/test_prescriptions.py` ran and passed, which is what makes the Cypher verification of this layer valid rather than merely unfalsified (DD-057).
+These are the three the task file expected, and the same three in both tiers.
+
+**Why the fast tier appears beside the full one, and why it is not reported as the gate.** The full suite ran before the RESULT was written, as the protocol requires — and three things then moved that it had not seen: this file, `scripts/check_protected_prescriptions.sh`, and the `seldon cc complete` line on `seldon_events.jsonl`. So the fast tier was re-run against the exact committed state. **The gate is the full tier above**; the fast tier is the confirmation that the last three writes broke nothing, and a green fast tier is never reported as a green suite. **The Neo4j-gated tests did not skip**: Neo4j was up, so `tests/test_framework_projection_roundtrip.py` and the four Cypher tests in `tests/test_prescriptions.py` ran and passed, which is what makes the Cypher verification of this layer valid rather than merely unfalsified (DD-057).
 
 **The projection followed the write-back, before the gate ran.** `framework_writeback` event `7eeeecc109e64d49ae6026c9c00480f4` on `events/batch-033_framework.jsonl` (one appended line; the shard is 18 lines), framework sha256 `c6b1d3fd…fe7731`, delta `{nodes_added: {Action: 45}, edges_added: {REMEDIATES: 45}, nodes_changed: 0, edges_changed: 0, nodes_removed: {}, edges_removed: {}, counts_keys_dropped: []}`. A second run of the writer returned `unchanged: true`. `scripts/build_framework_graph.py --dry-run` over the new record is still a byte-for-byte no-op (`nodes_changed: 0`, `unchanged: true`), asserted inside the protected-paths check rather than only reported here.
 
