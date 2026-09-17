@@ -343,13 +343,20 @@ def test_what_the_skeleton_does_not_author_is_exactly_what_merge_preserves():
     preserved_nodes = [n for n in cur["nodes"] if n["id"] not in gen_ids]
     preserved_edges = [e for e in cur["edges"] if fw._edge_key(e) not in gen_edges]
     from collections import Counter
+    # `Action` and `REMEDIATES` joined this list on 2026-09-17 with the prescription layer
+    # (`cc_tasks/2026-09-17_prescription_layer.md`). The skeleton does not author them and must
+    # not: an action is written against a RULE's failing outcomes, and the skeleton predates
+    # every rule. That they are preserved here is what lets the generator stay a no-op.
     assert Counter(n["labels"][0] for n in preserved_nodes) == \
-        {"MeasurementSpec": 22, "AssessmentConstruct": 1, "AssessmentIndicator": 1}
+        {"MeasurementSpec": 22, "AssessmentConstruct": 1, "AssessmentIndicator": 1,
+         "Action": 45}
     assert Counter(e["type"] for e in preserved_edges) == \
-        {"MEASURED_BY": 22, "EVIDENCED_BY_INTERNAL": 3, "DECOMPOSES_INTO": 2, "EVIDENCED_BY": 2}
+        {"MEASURED_BY": 22, "EVIDENCED_BY_INTERNAL": 3, "DECOMPOSES_INTO": 2, "EVIDENCED_BY": 2,
+         "REMEDIATES": 45}
     assert set(cur["counts"]) - set(gen["counts"]) == \
         {"measurement_specs", "collectors_none_known", "rules_built",
-         "specs_with_recorded_decision", "candidate_indicators", "indicators_measured"}
+         "specs_with_recorded_decision", "candidate_indicators", "indicators_measured",
+         "actions", "actions_on_candidate_indicators"}
     # and nothing the skeleton authors is missing from the record
     assert not (gen_ids - {n["id"] for n in cur["nodes"]})
     assert not (gen_edges - {fw._edge_key(e) for e in cur["edges"]})

@@ -41,10 +41,14 @@ JSON_PATH = REPO / "framework" / "ai_readiness_framework.json"
 #: of them must be reconstructible from the JSON alone. `AssessmentInternalRef` is here
 #: because it is minted from the `EVIDENCED_BY_INTERNAL` edges; `Observation` and `Finding`
 #: are NOT, because they come from the event log (see the module docstring).
+#: `Action` joined them on 2026-09-17 with the prescription layer
+#: (`cc_tasks/2026-09-17_prescription_layer.md`, DN-005 §2.3): the nodes are in the JSON and
+#: are reconstructible from it alone, which is the only condition for being owned here.
 ASSESSMENT_LABELS = ("AssessmentCriterion", "AssessmentConstruct", "AssessmentIndicator",
-                     "MeasurementSpec", "AssessmentInternalRef")
+                     "MeasurementSpec", "AssessmentInternalRef", "Action")
 #: Edge types this loader may write. A literal whitelist, never a payload value — invariant 4.
-ASSESSMENT_EDGES = ("DECOMPOSES_INTO", "EVIDENCED_BY", "EVIDENCED_BY_INTERNAL", "MEASURED_BY")
+ASSESSMENT_EDGES = ("DECOMPOSES_INTO", "EVIDENCED_BY", "EVIDENCED_BY_INTERNAL", "MEASURED_BY",
+                    "REMEDIATES")
 
 #: A property whose value is a MAP is flattened onto named scalars rather than dropped or
 #: str()-ed. Neo4j has no map property type, and the write-backs of 2026-09-07 put three maps
@@ -55,6 +59,12 @@ ASSESSMENT_EDGES = ("DECOMPOSES_INTO", "EVIDENCED_BY", "EVIDENCED_BY_INTERNAL", 
 #: gate can compare cell for cell instead of comparing what survived.
 _MEASURED_BY_SCALARS = {"cycle": "measured_cycle", "params_hash": "measured_params_hash",
                         "legs": "measured_legs"}
+
+#: `value` on an `Action` is the same problem one layer along, and its sub-keys are the ones a
+#: prescription query actually ranks on, so EVERY sub-key is promoted to `value_<name>` rather
+#: than a chosen few. The map is flat by construction (`tag_prescriptions.value_of`), so the
+#: promotion is total and the `_json` twin is still the lossless copy.
+_VALUE_PREFIX = "value"
 
 
 def flatten(props: dict) -> dict:
@@ -69,6 +79,14 @@ def flatten(props: dict) -> dict:
                 for src, dest in _MEASURED_BY_SCALARS.items():
                     if v.get(src) is not None:
                         out[dest] = v[src]
+            elif k == _VALUE_PREFIX:
+                for src, val in v.items():
+                    if val is None:
+                        continue
+                    if isinstance(val, (dict, list)) and any(
+                            isinstance(x, (dict, list)) for x in val):
+                        raise SystemExit(f"FATAL: {k}.{src} is nested; `value` must stay flat")
+                    out[f"{_VALUE_PREFIX}_{src}"] = val
             continue
         if isinstance(v, list) and any(isinstance(x, (dict, list)) for x in v):
             raise SystemExit(f"FATAL: property {k!r} is a nested list; extend flatten()")
@@ -105,6 +123,18 @@ def load(session, g: dict) -> dict:
                         f"MATCH (d:Document {{doc_id: $d}}) "
                         f"MERGE (i)-[:EVIDENCED_BY]->(d)", f=e["from"], d=doc_id)
             counts["evidenced_by_resolved"] += 1
+            counts["edges"] += 1
+            continue
+        if t == "REMEDIATES":
+            # The ONE edge type in this layer that carries properties, and the only one where
+            # a plain `MERGE (a)-[:T]->(b)` would be wrong twice over: it would drop `outcome`,
+            # and it would collapse two actions on one indicator into one relationship. Keyed
+            # on `outcome` so the relationship's identity is the same triple the JSON uses.
+            props = e.get("properties") or {}
+            session.run("MATCH (a:Action {id: $f}) "
+                        "MATCH (b:AssessmentIndicator {id: $t}) "
+                        "MERGE (a)-[r:REMEDIATES {outcome: $outcome}]->(b) SET r += $props",
+                        f=e["from"], t=e["to"], outcome=props.get("outcome"), props=props)
             counts["edges"] += 1
             continue
         if t == "EVIDENCED_BY_INTERNAL":
@@ -154,12 +184,17 @@ def main(argv=None) -> int:
                 "MATCH (n:MeasurementSpec) RETURN count(n)").single()[0]
             counts["internal_refs_in_graph"] = s.run(
                 "MATCH (n:AssessmentInternalRef) RETURN count(n)").single()[0]
+            counts["actions_in_graph"] = s.run(
+                "MATCH (n:Action) RETURN count(n)").single()[0]
+            counts["harness_leg_indicators_without_an_action"] = [r["c"] for r in s.run(
+                "MATCH (i:AssessmentIndicator {measurement_basis: 'harness_leg'}) "
+                "WHERE NOT (i)<-[:REMEDIATES]-(:Action) RETURN i.code AS c ORDER BY c")]
             counts["measurement_status"] = {r["s"]: r["c"] for r in s.run(
                 "MATCH (n:AssessmentIndicator) RETURN n.measurement_status AS s, "
                 "count(*) AS c ORDER BY s")}
             counts["edges_by_type"] = {r["t"]: r["c"] for r in s.run(
                 "MATCH (a)-[x]->(b) WHERE a:AssessmentCriterion OR a:AssessmentConstruct "
-                "OR a:AssessmentIndicator OR a:Rule "
+                "OR a:AssessmentIndicator OR a:Rule OR a:Action "
                 "RETURN type(x) AS t, count(*) AS c ORDER BY t")}
     finally:
         driver.close()

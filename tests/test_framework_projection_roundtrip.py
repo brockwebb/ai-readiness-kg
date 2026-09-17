@@ -93,14 +93,33 @@ def test_node_and_edge_counts_match_the_json_exactly(graph, doc):
     got_nodes = {r["l"]: r["c"] for r in graph.run(
         "MATCH (n) WHERE n:AssessmentCriterion OR n:AssessmentConstruct "
         "OR n:AssessmentIndicator OR n:MeasurementSpec OR n:AssessmentInternalRef "
+        "OR n:Action "
         "RETURN labels(n)[0] AS l, count(*) AS c")}
     assert got_nodes == dict(want_nodes)
 
     want_edges = collections.Counter(e["type"] for e in doc["edges"])
     got_edges = {r["t"]: r["c"] for r in graph.run(
         "MATCH (a)-[x]->(b) WHERE a:AssessmentCriterion OR a:AssessmentConstruct "
-        "OR a:AssessmentIndicator RETURN type(x) AS t, count(*) AS c")}
+        "OR a:AssessmentIndicator OR a:Action RETURN type(x) AS t, count(*) AS c")}
     assert got_edges == dict(want_edges)
+
+
+def test_every_remediates_edge_reached_the_graph_with_its_outcome(graph, doc):
+    """`REMEDIATES` is the one edge in this layer that carries properties, and two actions on
+    one indicator would collapse into a single relationship under a plain MERGE. The JSON is
+    the expectation; the graph must hold each triple with the outcome the JSON gives it."""
+    want = {(e["from"], e["to"], (e.get("properties") or {}).get("outcome")):
+            (e.get("properties") or {})
+            for e in doc["edges"] if e["type"] == "REMEDIATES"}
+    assert want, "the record holds no REMEDIATES edges; this proves nothing"
+    assert len(want) == sum(1 for e in doc["edges"] if e["type"] == "REMEDIATES"), \
+        "two REMEDIATES edges share (from, to, outcome) in the JSON"
+    got = {(r["f"], r["t"], r["p"].get("outcome")): dict(r["p"]) for r in graph.run(
+        "MATCH (a:Action)-[x:REMEDIATES]->(b:AssessmentIndicator) "
+        "RETURN a.id AS f, b.id AS t, properties(x) AS p")}
+    assert set(got) == set(want)
+    for k, props in want.items():
+        assert got[k] == props, k
 
 
 def test_every_rule_measures_exactly_one_indicator(graph):

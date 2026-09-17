@@ -593,6 +593,12 @@ assessment_layer:
   version: "0.4.0"
   source_of_truth: framework/ai_readiness_framework.json
   parser_visible: false
+  # Append-only within the epoch. 2026-09-17 (cc_tasks/2026-09-17_prescription_layer.md,
+  # DN-005 section 2.3) adds the node type `Action` and the edge type `REMEDIATES` — the
+  # prescription layer. The epoch string is NOT bumped: `schema_epoch` on the record is the
+  # same literal and is written by scripts/build_framework_graph.py, so moving one without the
+  # other would put two versions of one epoch on the record and its schema, and moving both
+  # would edit an authored top-level field and take that generator out of its no-op.
 
   node_types:
     AssessmentCriterion:
@@ -624,6 +630,20 @@ assessment_layer:
       what: A verdict over Observations under a VERSIONED rule. Separate from Observation so a
             rule change re-derives findings without re-collecting evidence.
       properties: [indicator_code, rule_id, verdict, wilson_lo, wilson_hi, denominator]
+    Action:
+      what: One thing a publisher (or, for E5, the operator of this harness) can do to close
+            ONE failing outcome of ONE rule. The prescription layer, DN-005 section 2.3. Bound
+            to the check that detects its absence — `verifies_by` is the rule id whose verdict
+            flips when the action is done, and there is no Action without one. `effort_band`
+            and `cost_band` are EMPTY where no source on disk supports a band, and the
+            corresponding `_source` then reads `estimate:pending` - a band is never guessed.
+            `value` is computed from the cycle of record, never authored.
+      properties: [title, description, technique_source, effort_band, effort_source,
+                   cost_band, cost_source, verifies_by, leg, indicator_code, outcome,
+                   applies_to_publisher, applies_to_note, value, note, authored_by]
+      property_values:
+        effort_band: [hours, days, weeks, quarter]
+        cost_band: [none, tooling, staff_time, procurement]
 
   edge_types:
     DECOMPOSES_INTO:
@@ -651,3 +671,9 @@ assessment_layer:
     RULED_BY:
       pairs: [[Finding, MeasurementSpec]]
       meaning: The versioned rule that produced the verdict, held on the spec's `rule_id`.
+    REMEDIATES:
+      pairs: [[Action, AssessmentIndicator]]
+      meaning: The action closes one failing outcome of the indicator's current rule. Carries
+               `outcome` (the outcome's name), `rule_id`, `leg` and `reason_fragment` - a
+               verbatim fragment of the rule branch's own reason string, so the outcome cannot
+               drift from the branch it names.
