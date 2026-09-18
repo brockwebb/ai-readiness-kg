@@ -1,0 +1,746 @@
+{
+ "task": "cc_tasks/2026-09-18_rejudge_seven_legs.md",
+ "cycle": "scan_2026-09-10_rj4",
+ "derived_from": "scan_2026-09-10",
+ "findings": 1009,
+ "verdict_counts": {
+  "pass": 160,
+  "fail": 682,
+  "not_applicable": 0,
+  "error": 167
+ },
+ "observations_reread": {
+  "scheme": 1,
+  "blocks": {
+   "D4": [
+    "membership",
+    "dcat_fields"
+   ],
+   "A4": [
+    "content_signal"
+   ]
+  },
+  "observations_reread": {
+   "D4": {
+    "membership": 10,
+    "dcat_fields": 10
+   },
+   "A4": {
+    "content_signal": 44
+   }
+  },
+  "functions": [
+   "scan.collectors.dcat.membership_block",
+   "scan.collectors.v2clauses.dcat_record_fields",
+   "scan.collectors.v2clauses.content_signals"
+  ],
+  "product_url_from": "the payload's matrix row `url` for the Observation's target",
+  "note": "Blocks the collector now computes at collection were computed here, from each Observation's retained, content-addressed body, and the sha256 was checked first. No byte was fetched, no Observation was created, and no obs_id changed. `rederive.observations_for` applies the same re-read, so the re-derivation gate judges exactly what this payload judged."
+ },
+ "rederive": {
+  "recorded": 1009,
+  "rederived": 1009,
+  "missing_after_rederive": [],
+  "unexpected_after_rederive": [],
+  "field_mismatches": [],
+  "identical": true
+ },
+ "distribution_new_legs": {
+  "B1": {
+   "pass": 0,
+   "fail": 37,
+   "not_applicable": 0,
+   "error": 9
+  },
+  "B2": {
+   "pass": 0,
+   "fail": 38,
+   "not_applicable": 0,
+   "error": 8
+  },
+  "B4": {
+   "pass": 0,
+   "fail": 38,
+   "not_applicable": 0,
+   "error": 8
+  },
+  "B5": {
+   "pass": 0,
+   "fail": 12,
+   "not_applicable": 0,
+   "error": 4
+  },
+  "D2": {
+   "pass": 0,
+   "fail": 40,
+   "not_applicable": 0,
+   "error": 6
+  },
+  "D3": {
+   "pass": 0,
+   "fail": 38,
+   "not_applicable": 0,
+   "error": 8
+  },
+  "G4": {
+   "pass": 1,
+   "fail": 37,
+   "not_applicable": 0,
+   "error": 8
+  }
+ },
+ "distribution_d4": {
+  "scan_2026-09-10_rj2": {
+   "pass": 3,
+   "fail": 35,
+   "not_applicable": 0,
+   "error": 8
+  },
+  "scan_2026-09-10_rj3": {
+   "pass": 3,
+   "fail": 35,
+   "not_applicable": 0,
+   "error": 8
+  },
+  "scan_2026-09-10_rj4": {
+   "pass": 1,
+   "fail": 37,
+   "not_applicable": 0,
+   "error": 8
+  }
+ },
+ "vs_predecessor": {
+  "old": "scan_2026-09-10_rj3",
+  "new": "scan_2026-09-10_rj4",
+  "unchanged_legs": {
+   "A1": {
+    "rule": [
+     "RULE-A1-v4"
+    ],
+    "compared": 46,
+    "identical": 46,
+    "only_in_old": 0,
+    "only_in_new": 0
+   },
+   "A10": {
+    "rule": [
+     "RULE-A10-v3"
+    ],
+    "compared": 52,
+    "identical": 52,
+    "only_in_old": 0,
+    "only_in_new": 0
+   },
+   "A11-declared": {
+    "rule": [
+     "RULE-A11-declared-v2"
+    ],
+    "compared": 52,
+    "identical": 52,
+    "only_in_old": 0,
+    "only_in_new": 0
+   },
+   "A12": {
+    "rule": [
+     "RULE-A12-v3"
+    ],
+    "compared": 19,
+    "identical": 19,
+    "only_in_old": 0,
+    "only_in_new": 0
+   },
+   "A2": {
+    "rule": [
+     "RULE-A2-v3"
+    ],
+    "compared": 46,
+    "identical": 46,
+    "only_in_old": 0,
+    "only_in_new": 0
+   },
+   "A3": {
+    "rule": [
+     "RULE-A3-v6"
+    ],
+    "compared": 46,
+    "identical": 46,
+    "only_in_old": 0,
+    "only_in_new": 0
+   },
+   "A4": {
+    "rule": [
+     "RULE-A4-v1"
+    ],
+    "compared": 52,
+    "identical": 52,
+    "only_in_old": 0,
+    "only_in_new": 0
+   },
+   "A5": {
+    "rule": [
+     "RULE-A5-v2"
+    ],
+    "compared": 52,
+    "identical": 52,
+    "only_in_old": 0,
+    "only_in_new": 0
+   },
+   "A6": {
+    "rule": [
+     "RULE-A6-v2"
+    ],
+    "compared": 46,
+    "identical": 46,
+    "only_in_old": 0,
+    "only_in_new": 0
+   },
+   "A8": {
+    "rule": [
+     "RULE-A8-v4"
+    ],
+    "compared": 46,
+    "identical": 46,
+    "only_in_old": 0,
+    "only_in_new": 0
+   },
+   "A9": {
+    "rule": [
+     "RULE-A9-v1"
+    ],
+    "compared": 46,
+    "identical": 46,
+    "only_in_old": 0,
+    "only_in_new": 0
+   },
+   "B3": {
+    "rule": [
+     "RULE-B3-v3"
+    ],
+    "compared": 46,
+    "identical": 46,
+    "only_in_old": 0,
+    "only_in_new": 0
+   },
+   "D1": {
+    "rule": [
+     "RULE-D1-v3"
+    ],
+    "compared": 46,
+    "identical": 46,
+    "only_in_old": 0,
+    "only_in_new": 0
+   },
+   "F4": {
+    "rule": [
+     "RULE-F4-v3"
+    ],
+    "compared": 46,
+    "identical": 46,
+    "only_in_old": 0,
+    "only_in_new": 0
+   },
+   "G1-D": {
+    "rule": [
+     "RULE-G1-D-v1"
+    ],
+    "compared": 30,
+    "identical": 30,
+    "only_in_old": 22,
+    "only_in_new": 0
+   }
+  },
+  "unchanged_findings_compared": 671,
+  "unchanged_findings_identical": 671,
+  "unchanged_findings_differing": [],
+  "cells_only_in_old": [
+   {
+    "target": "home:bjs.ojp.gov",
+    "leg": "G1-D",
+    "why": "the frame does not put this leg on this surface (its legs: ['A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'A8', 'A9', 'A10', 'A11-declared', 'B3', 'D1', 'D4', 'F4', 'B1', 'B4', 'D3', 'G4', 'B2', 'D2'])"
+   },
+   {
+    "target": "home:nces.ed.gov",
+    "leg": "G1-D",
+    "why": "the frame does not put this leg on this surface (its legs: ['A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'A8', 'A9', 'A10', 'A11-declared', 'B3', 'D1', 'D4', 'F4', 'B1', 'B4', 'D3', 'G4', 'B2', 'D2'])"
+   },
+   {
+    "target": "home:ncses.nsf.gov",
+    "leg": "G1-D",
+    "why": "the frame does not put this leg on this surface (its legs: ['A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'A8', 'A9', 'A10', 'A11-declared', 'B3', 'D1', 'D4', 'F4', 'B1', 'B4', 'D3', 'G4', 'B2', 'D2'])"
+   },
+   {
+    "target": "home:www.aphis.usda.gov",
+    "leg": "G1-D",
+    "why": "the frame does not put this leg on this surface (its legs: ['A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'A8', 'A9', 'A10', 'A11-declared', 'B3', 'D1', 'D4', 'F4', 'B1', 'B4', 'D3', 'G4', 'B2', 'D2'])"
+   },
+   {
+    "target": "home:www.bea.gov",
+    "leg": "G1-D",
+    "why": "the frame does not put this leg on this surface (its legs: ['A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'A8', 'A9', 'A10', 'A11-declared', 'B3', 'D1', 'D4', 'F4', 'B1', 'B4', 'D3', 'G4', 'B2', 'D2'])"
+   },
+   {
+    "target": "home:www.bls.gov",
+    "leg": "G1-D",
+    "why": "the frame does not put this leg on this surface (its legs: ['A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'A8', 'A9', 'A10', 'A11-declared', 'B3', 'D1', 'D4', 'F4', 'B1', 'B4', 'D3', 'G4', 'B2', 'D2'])"
+   },
+   {
+    "target": "home:www.bts.gov",
+    "leg": "G1-D",
+    "why": "the frame does not put this leg on this surface (its legs: ['A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'A8', 'A9', 'A10', 'A11-declared', 'B3', 'D1', 'D4', 'F4', 'B1', 'B4', 'D3', 'G4', 'B2', 'D2'])"
+   },
+   {
+    "target": "home:www.cdc.gov",
+    "leg": "G1-D",
+    "why": "the frame does not put this leg on this surface (its legs: ['A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'A8', 'A9', 'A10', 'A11-declared', 'B3', 'D1', 'D4', 'F4', 'B1', 'B4', 'D3', 'G4', 'B2', 'D2'])"
+   },
+   {
+    "target": "home:www.census.gov",
+    "leg": "G1-D",
+    "why": "the frame does not put this leg on this surface (its legs: ['A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'A8', 'A9', 'A10', 'A11-declared', 'B3', 'D1', 'D4', 'F4', 'B1', 'B4', 'D3', 'G4', 'B2', 'D2'])"
+   },
+   {
+    "target": "home:www.data.gov",
+    "leg": "G1-D",
+    "why": "the frame does not put this leg on this surface (its legs: ['A4', 'A5', 'A10', 'A11-declared'])"
+   },
+   {
+    "target": "home:www.eia.gov",
+    "leg": "G1-D",
+    "why": "the frame does not put this leg on this surface (its legs: ['A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'A8', 'A9', 'A10', 'A11-declared', 'B3', 'D1', 'D4', 'F4', 'B1', 'B4', 'D3', 'G4', 'B2', 'D2'])"
+   },
+   {
+    "target": "home:www.ers.usda.gov",
+    "leg": "G1-D",
+    "why": "the frame does not put this leg on this surface (its legs: ['A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'A8', 'A9', 'A10', 'A11-declared', 'B3', 'D1', 'D4', 'F4', 'B1', 'B4', 'D3', 'G4', 'B2', 'D2'])"
+   },
+   {
+    "target": "home:www.federalreserve.gov",
+    "leg": "G1-D",
+    "why": "the frame does not put this leg on this surface (its legs: ['A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'A8', 'A9', 'A10', 'A11-declared', 'B3', 'D1', 'D4', 'F4', 'B1', 'B4', 'D3', 'G4', 'B2', 'D2'])"
+   },
+   {
+    "target": "home:www.gsa.gov",
+    "leg": "G1-D",
+    "why": "the frame does not put this leg on this surface (its legs: ['A4', 'A5', 'A10', 'A11-declared'])"
+   },
+   {
+    "target": "home:www.irs.gov",
+    "leg": "G1-D",
+    "why": "the frame does not put this leg on this surface (its legs: ['A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'A8', 'A9', 'A10', 'A11-declared', 'B3', 'D1', 'D4', 'F4', 'B1', 'B4', 'D3', 'G4', 'B2', 'D2'])"
+   },
+   {
+    "target": "home:www.nass.usda.gov",
+    "leg": "G1-D",
+    "why": "the frame does not put this leg on this surface (its legs: ['A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'A8', 'A9', 'A10', 'A11-declared', 'B3', 'D1', 'D4', 'F4', 'B1', 'B4', 'D3', 'G4', 'B2', 'D2'])"
+   },
+   {
+    "target": "home:www.nist.gov",
+    "leg": "G1-D",
+    "why": "the frame does not put this leg on this surface (its legs: ['A4', 'A5', 'A10', 'A11-declared'])"
+   },
+   {
+    "target": "home:www.samhsa.gov",
+    "leg": "G1-D",
+    "why": "the frame does not put this leg on this surface (its legs: ['A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'A8', 'A9', 'A10', 'A11-declared', 'B3', 'D1', 'D4', 'F4', 'B1', 'B4', 'D3', 'G4', 'B2', 'D2'])"
+   },
+   {
+    "target": "home:www.ssa.gov",
+    "leg": "G1-D",
+    "why": "the frame does not put this leg on this surface (its legs: ['A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'A8', 'A9', 'A10', 'A11-declared', 'B3', 'D1', 'D4', 'F4', 'B1', 'B4', 'D3', 'G4', 'B2', 'D2'])"
+   },
+   {
+    "target": "machine:catalog.data.gov",
+    "leg": "G1-D",
+    "why": "the frame does not put this leg on this surface (its legs: ['A4', 'A5', 'A10', 'A11-declared'])"
+   },
+   {
+    "target": "machine:data.nist.gov",
+    "leg": "G1-D",
+    "why": "the frame does not put this leg on this surface (its legs: ['A4', 'A5', 'A10', 'A11-declared'])"
+   },
+   {
+    "target": "machine:open.gsa.gov",
+    "leg": "G1-D",
+    "why": "the frame does not put this leg on this surface (its legs: ['A4', 'A5', 'A10', 'A11-declared'])"
+   }
+  ],
+  "cells_only_in_new": [],
+  "changed_legs": {
+   "D4": {
+    "old": [
+     "RULE-D4-v2"
+    ],
+    "new": [
+     "RULE-D4-v3"
+    ]
+   }
+  },
+  "changed_leg_verdict_moves": [
+   {
+    "target": "home:www.bea.gov",
+    "leg": "D4",
+    "from": "RULE-D4-v2 pass",
+    "to": "RULE-D4-v3 fail",
+    "reason": "a catalog is served at https://www.bea.gov/data.json but the product is not in it: no record names it in identifier, landingPage, accessURL or downloadURL"
+   },
+   {
+    "target": "home:www.census.gov",
+    "leg": "D4",
+    "from": "RULE-D4-v2 pass",
+    "to": "RULE-D4-v3 fail",
+    "reason": "a catalog is served at https://www.census.gov/data.json but the product is not in it: no record names it in identifier, landingPage, accessURL or downloadURL"
+   }
+  ],
+  "new_legs": {
+   "B1": [
+    "RULE-B1-v2"
+   ],
+   "B2": [
+    "RULE-B2-v1"
+   ],
+   "B4": [
+    "RULE-B4-v1"
+   ],
+   "B5": [
+    "RULE-B5-v1"
+   ],
+   "D2": [
+    "RULE-D2-v1"
+   ],
+   "D3": [
+    "RULE-D3-v1"
+   ],
+   "G4": [
+    "RULE-G4-v1"
+   ]
+  },
+  "params_hash": {
+   "old": "845aa6ab231893eb59ed8d2018af437a1d56f9a6d910553a76ef94dc08b55365",
+   "new": "0ef2e016fea2611f1bd770925cfe7124ae0baf9e14fe42512836bb712027640e"
+  }
+ },
+ "vs_snapshot": {
+  "old": "scan_2026-09-10_rj2",
+  "new": "scan_2026-09-10_rj4",
+  "unchanged_legs": {
+   "A1": {
+    "rule": [
+     "RULE-A1-v4"
+    ],
+    "compared": 46,
+    "identical": 46,
+    "only_in_old": 0,
+    "only_in_new": 0
+   },
+   "A10": {
+    "rule": [
+     "RULE-A10-v3"
+    ],
+    "compared": 52,
+    "identical": 50,
+    "only_in_old": 0,
+    "only_in_new": 0
+   },
+   "A11-declared": {
+    "rule": [
+     "RULE-A11-declared-v2"
+    ],
+    "compared": 52,
+    "identical": 52,
+    "only_in_old": 0,
+    "only_in_new": 0
+   },
+   "A2": {
+    "rule": [
+     "RULE-A2-v3"
+    ],
+    "compared": 46,
+    "identical": 46,
+    "only_in_old": 0,
+    "only_in_new": 0
+   },
+   "A3": {
+    "rule": [
+     "RULE-A3-v6"
+    ],
+    "compared": 46,
+    "identical": 46,
+    "only_in_old": 0,
+    "only_in_new": 0
+   },
+   "A4": {
+    "rule": [
+     "RULE-A4-v1"
+    ],
+    "compared": 52,
+    "identical": 52,
+    "only_in_old": 0,
+    "only_in_new": 0
+   },
+   "A5": {
+    "rule": [
+     "RULE-A5-v2"
+    ],
+    "compared": 52,
+    "identical": 52,
+    "only_in_old": 0,
+    "only_in_new": 0
+   },
+   "A6": {
+    "rule": [
+     "RULE-A6-v2"
+    ],
+    "compared": 46,
+    "identical": 46,
+    "only_in_old": 0,
+    "only_in_new": 0
+   },
+   "A8": {
+    "rule": [
+     "RULE-A8-v4"
+    ],
+    "compared": 46,
+    "identical": 46,
+    "only_in_old": 0,
+    "only_in_new": 0
+   },
+   "A9": {
+    "rule": [
+     "RULE-A9-v1"
+    ],
+    "compared": 46,
+    "identical": 46,
+    "only_in_old": 0,
+    "only_in_new": 0
+   },
+   "B3": {
+    "rule": [
+     "RULE-B3-v3"
+    ],
+    "compared": 46,
+    "identical": 46,
+    "only_in_old": 0,
+    "only_in_new": 0
+   },
+   "D1": {
+    "rule": [
+     "RULE-D1-v3"
+    ],
+    "compared": 46,
+    "identical": 46,
+    "only_in_old": 0,
+    "only_in_new": 0
+   },
+   "F4": {
+    "rule": [
+     "RULE-F4-v3"
+    ],
+    "compared": 46,
+    "identical": 46,
+    "only_in_old": 0,
+    "only_in_new": 0
+   },
+   "G1-D": {
+    "rule": [
+     "RULE-G1-D-v1"
+    ],
+    "compared": 30,
+    "identical": 30,
+    "only_in_old": 22,
+    "only_in_new": 0
+   }
+  },
+  "unchanged_findings_compared": 652,
+  "unchanged_findings_identical": 650,
+  "unchanged_findings_differing": [
+   {
+    "target": "scan-nass-flagship-1-data-statistics",
+    "leg": "A10",
+    "fields": [
+     "reason"
+    ]
+   },
+   {
+    "target": "scan-nass-flagship-2-livestock-county-estimates",
+    "leg": "A10",
+    "fields": [
+     "reason"
+    ]
+   }
+  ],
+  "cells_only_in_old": [
+   {
+    "target": "home:bjs.ojp.gov",
+    "leg": "G1-D",
+    "why": "the frame does not put this leg on this surface (its legs: ['A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'A8', 'A9', 'A10', 'A11-declared', 'B3', 'D1', 'D4', 'F4', 'B1', 'B4', 'D3', 'G4', 'B2', 'D2'])"
+   },
+   {
+    "target": "home:nces.ed.gov",
+    "leg": "G1-D",
+    "why": "the frame does not put this leg on this surface (its legs: ['A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'A8', 'A9', 'A10', 'A11-declared', 'B3', 'D1', 'D4', 'F4', 'B1', 'B4', 'D3', 'G4', 'B2', 'D2'])"
+   },
+   {
+    "target": "home:ncses.nsf.gov",
+    "leg": "G1-D",
+    "why": "the frame does not put this leg on this surface (its legs: ['A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'A8', 'A9', 'A10', 'A11-declared', 'B3', 'D1', 'D4', 'F4', 'B1', 'B4', 'D3', 'G4', 'B2', 'D2'])"
+   },
+   {
+    "target": "home:www.aphis.usda.gov",
+    "leg": "G1-D",
+    "why": "the frame does not put this leg on this surface (its legs: ['A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'A8', 'A9', 'A10', 'A11-declared', 'B3', 'D1', 'D4', 'F4', 'B1', 'B4', 'D3', 'G4', 'B2', 'D2'])"
+   },
+   {
+    "target": "home:www.bea.gov",
+    "leg": "G1-D",
+    "why": "the frame does not put this leg on this surface (its legs: ['A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'A8', 'A9', 'A10', 'A11-declared', 'B3', 'D1', 'D4', 'F4', 'B1', 'B4', 'D3', 'G4', 'B2', 'D2'])"
+   },
+   {
+    "target": "home:www.bls.gov",
+    "leg": "G1-D",
+    "why": "the frame does not put this leg on this surface (its legs: ['A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'A8', 'A9', 'A10', 'A11-declared', 'B3', 'D1', 'D4', 'F4', 'B1', 'B4', 'D3', 'G4', 'B2', 'D2'])"
+   },
+   {
+    "target": "home:www.bts.gov",
+    "leg": "G1-D",
+    "why": "the frame does not put this leg on this surface (its legs: ['A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'A8', 'A9', 'A10', 'A11-declared', 'B3', 'D1', 'D4', 'F4', 'B1', 'B4', 'D3', 'G4', 'B2', 'D2'])"
+   },
+   {
+    "target": "home:www.cdc.gov",
+    "leg": "G1-D",
+    "why": "the frame does not put this leg on this surface (its legs: ['A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'A8', 'A9', 'A10', 'A11-declared', 'B3', 'D1', 'D4', 'F4', 'B1', 'B4', 'D3', 'G4', 'B2', 'D2'])"
+   },
+   {
+    "target": "home:www.census.gov",
+    "leg": "G1-D",
+    "why": "the frame does not put this leg on this surface (its legs: ['A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'A8', 'A9', 'A10', 'A11-declared', 'B3', 'D1', 'D4', 'F4', 'B1', 'B4', 'D3', 'G4', 'B2', 'D2'])"
+   },
+   {
+    "target": "home:www.data.gov",
+    "leg": "G1-D",
+    "why": "the frame does not put this leg on this surface (its legs: ['A4', 'A5', 'A10', 'A11-declared'])"
+   },
+   {
+    "target": "home:www.eia.gov",
+    "leg": "G1-D",
+    "why": "the frame does not put this leg on this surface (its legs: ['A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'A8', 'A9', 'A10', 'A11-declared', 'B3', 'D1', 'D4', 'F4', 'B1', 'B4', 'D3', 'G4', 'B2', 'D2'])"
+   },
+   {
+    "target": "home:www.ers.usda.gov",
+    "leg": "G1-D",
+    "why": "the frame does not put this leg on this surface (its legs: ['A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'A8', 'A9', 'A10', 'A11-declared', 'B3', 'D1', 'D4', 'F4', 'B1', 'B4', 'D3', 'G4', 'B2', 'D2'])"
+   },
+   {
+    "target": "home:www.federalreserve.gov",
+    "leg": "G1-D",
+    "why": "the frame does not put this leg on this surface (its legs: ['A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'A8', 'A9', 'A10', 'A11-declared', 'B3', 'D1', 'D4', 'F4', 'B1', 'B4', 'D3', 'G4', 'B2', 'D2'])"
+   },
+   {
+    "target": "home:www.gsa.gov",
+    "leg": "G1-D",
+    "why": "the frame does not put this leg on this surface (its legs: ['A4', 'A5', 'A10', 'A11-declared'])"
+   },
+   {
+    "target": "home:www.irs.gov",
+    "leg": "G1-D",
+    "why": "the frame does not put this leg on this surface (its legs: ['A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'A8', 'A9', 'A10', 'A11-declared', 'B3', 'D1', 'D4', 'F4', 'B1', 'B4', 'D3', 'G4', 'B2', 'D2'])"
+   },
+   {
+    "target": "home:www.nass.usda.gov",
+    "leg": "G1-D",
+    "why": "the frame does not put this leg on this surface (its legs: ['A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'A8', 'A9', 'A10', 'A11-declared', 'B3', 'D1', 'D4', 'F4', 'B1', 'B4', 'D3', 'G4', 'B2', 'D2'])"
+   },
+   {
+    "target": "home:www.nist.gov",
+    "leg": "G1-D",
+    "why": "the frame does not put this leg on this surface (its legs: ['A4', 'A5', 'A10', 'A11-declared'])"
+   },
+   {
+    "target": "home:www.samhsa.gov",
+    "leg": "G1-D",
+    "why": "the frame does not put this leg on this surface (its legs: ['A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'A8', 'A9', 'A10', 'A11-declared', 'B3', 'D1', 'D4', 'F4', 'B1', 'B4', 'D3', 'G4', 'B2', 'D2'])"
+   },
+   {
+    "target": "home:www.ssa.gov",
+    "leg": "G1-D",
+    "why": "the frame does not put this leg on this surface (its legs: ['A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'A8', 'A9', 'A10', 'A11-declared', 'B3', 'D1', 'D4', 'F4', 'B1', 'B4', 'D3', 'G4', 'B2', 'D2'])"
+   },
+   {
+    "target": "machine:catalog.data.gov",
+    "leg": "G1-D",
+    "why": "the frame does not put this leg on this surface (its legs: ['A4', 'A5', 'A10', 'A11-declared'])"
+   },
+   {
+    "target": "machine:data.nist.gov",
+    "leg": "G1-D",
+    "why": "the frame does not put this leg on this surface (its legs: ['A4', 'A5', 'A10', 'A11-declared'])"
+   },
+   {
+    "target": "machine:open.gsa.gov",
+    "leg": "G1-D",
+    "why": "the frame does not put this leg on this surface (its legs: ['A4', 'A5', 'A10', 'A11-declared'])"
+   }
+  ],
+  "cells_only_in_new": [],
+  "changed_legs": {
+   "A12": {
+    "old": [
+     "RULE-A12-v2"
+    ],
+    "new": [
+     "RULE-A12-v3"
+    ]
+   },
+   "D4": {
+    "old": [
+     "RULE-D4-v2"
+    ],
+    "new": [
+     "RULE-D4-v3"
+    ]
+   }
+  },
+  "changed_leg_verdict_moves": [
+   {
+    "target": "home:www.bea.gov",
+    "leg": "D4",
+    "from": "RULE-D4-v2 pass",
+    "to": "RULE-D4-v3 fail",
+    "reason": "a catalog is served at https://www.bea.gov/data.json but the product is not in it: no record names it in identifier, landingPage, accessURL or downloadURL"
+   },
+   {
+    "target": "home:www.census.gov",
+    "leg": "D4",
+    "from": "RULE-D4-v2 pass",
+    "to": "RULE-D4-v3 fail",
+    "reason": "a catalog is served at https://www.census.gov/data.json but the product is not in it: no record names it in identifier, landingPage, accessURL or downloadURL"
+   }
+  ],
+  "new_legs": {
+   "B1": [
+    "RULE-B1-v2"
+   ],
+   "B2": [
+    "RULE-B2-v1"
+   ],
+   "B4": [
+    "RULE-B4-v1"
+   ],
+   "B5": [
+    "RULE-B5-v1"
+   ],
+   "D2": [
+    "RULE-D2-v1"
+   ],
+   "D3": [
+    "RULE-D3-v1"
+   ],
+   "G4": [
+    "RULE-G4-v1"
+   ]
+  },
+  "params_hash": {
+   "old": "d3499218ef48273597ec67a6a81ae9c966e5801cf66915fbc106403c6da94624",
+   "new": "0ef2e016fea2611f1bd770925cfe7124ae0baf9e14fe42512836bb712027640e"
+  }
+ }
+}

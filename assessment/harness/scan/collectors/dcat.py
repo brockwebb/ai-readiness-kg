@@ -87,6 +87,19 @@ def product_records(datasets, product_url: str, params: dict) -> list:
                     for f in fields for v in _field_values(d, f))]
 
 
+def membership_block(datasets, product_url: str, params: dict) -> dict:
+    """The `membership` block `RULE-D4-v3` reads, from a catalog's `dataset` list. Pure.
+
+    One function because two callers compute it: `fetch_catalog` at collection, and
+    `scan/reread.py` when a re-judgement re-reads a catalog body stored before the block
+    existed (`cc_tasks/2026-09-18_rejudge_seven_legs.md`). Two copies of "which records are
+    the product's" would be two answers to it.
+    """
+    return {"test": MEMBERSHIP_TEST,
+            "fields": list(params["d4_catalog"]["membership_fields"]),
+            "records": len(product_records(datasets, product_url, params))}
+
+
 def fetch_catalog(fetcher, leg: str, doc_id: str, product_url: str, params: dict,
                   spec_code: str | None = None) -> list:
     parts = urllib.parse.urlsplit(product_url)
@@ -126,10 +139,7 @@ def fetch_catalog(fetcher, leg: str, doc_id: str, product_url: str, params: dict
                 # reads (`product_records`).
                 parsed["contains_product"] = any(
                     isinstance(d, dict) and product_url in json.dumps(d) for d in datasets)
-                parsed["membership"] = {
-                    "test": MEMBERSHIP_TEST,
-                    "fields": list(params["d4_catalog"]["membership_fields"]),
-                    "records": len(product_records(datasets, product_url, params))}
+                parsed["membership"] = membership_block(datasets, product_url, params)
             except Exception as exc:
                 err = "parse_error"
                 parsed["error"] = f"{type(exc).__name__}: {exc}"

@@ -169,9 +169,16 @@ def _cell_moves(snap_c: dict, succ_c: dict) -> list:
     """Every published matrix cell that differs, named by matrix, row and column."""
     import build_l0_matrices as M
     moves = []
+    # The product columns are the UNION of the two cycles' own (`build_l0_matrices.product_legs`):
+    # a successor that judged a leg the snapshot did not adds a column, and each of its cells is
+    # a published number that would appear, which is a move. Reading `M.PRODUCT_LEGS` alone
+    # compared only the columns both had and called a seven-column successor unchanged
+    # (`cc_tasks/2026-09-18_rejudge_seven_legs.md`).
+    plegs = list(dict.fromkeys(snap_c.get("product_legs", M.PRODUCT_LEGS)
+                               + succ_c.get("product_legs", M.PRODUCT_LEGS)))
     for matrix, kind, legs in (("tierA", "host", snap_c["tier0"]),
                                ("tierC", "host", snap_c["tier0"]),
-                               ("product", "product", M.PRODUCT_LEGS)):
+                               ("product", "product", plegs)):
         key = {"tierA": "tier_a", "tierC": "tier_c", "product": "product"}[matrix]
         a = _matrix_rows(kind, snap_c[key], legs)
         b = _matrix_rows(kind, succ_c[key], legs)

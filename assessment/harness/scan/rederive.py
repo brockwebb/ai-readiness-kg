@@ -53,7 +53,7 @@ def rejudgeable(rows: list) -> list:
     return [r for r in rows if not str(r.get("target_doc_id", "")).startswith("control:")]
 
 
-def observations_for(payload: dict) -> list:
+def observations_for(payload: dict, params: dict | None = None) -> list:
     """The Observation ROWS a payload's Findings were judged from.
 
     Its own, for a measured cycle. A RE-JUDGED cycle carries none — that is what makes it a
@@ -75,8 +75,24 @@ def observations_for(payload: dict) -> list:
     # source cycle's control observations too would make the gate re-judge 64 fixture Findings
     # the re-judgement never recorded and report them as `unexpected_after_rederive` — the
     # gate looking in a wider place than the run, which reads as non-determinism and is not.
-    return rejudgeable(json.loads(src.read_text(encoding="utf-8")).get("observations_detail")
+    rows = rejudgeable(json.loads(src.read_text(encoding="utf-8")).get("observations_detail")
                        or [])
+    # A payload judged over RE-READ Observations (`scan/reread.py`) is re-derived over the same
+    # re-read, through the same function and the same product URLs, or the gate would compare
+    # a judgement of the blocks against a judgement of their absence. A payload without the
+    # record is untouched, which is what keeps every earlier payload's gate what it was.
+    # `params` is the gate's own (the payload's, recovered by hash); a caller that passes none
+    # is reading ids and error classes, which the re-read never changes.
+    if payload.get("observations_reread"):
+        from scan.reread import reread
+        rows, _ = reread(rows, _surface_urls(payload), params or load_params())
+    return rows
+
+
+def _surface_urls(payload: dict) -> dict:
+    """`{doc_id: url}` from the payload's own matrix: the URL `run.py` collected each row at,
+    which a re-judgement copies from its source cycle row by row."""
+    return {r["doc_id"]: r.get("url") for r in payload.get("matrix") or []}
 
 
 def rederive(payload: dict, params: dict) -> dict:
@@ -97,7 +113,7 @@ def rederive(payload: dict, params: dict) -> dict:
                 "note": ("params.yaml has changed since this cycle ran, so its Findings carry "
                          "different ids by construction. Re-run the cycle; do not compare "
                          "across a parameter change.")}
-    obs = rehydrate(observations_for(payload))
+    obs = rehydrate(observations_for(payload, params))
     # Control Findings are re-derived too. They are the ones whose determinism matters most —
     # they are what licenses the cycle — and the first version of this gate compared only the
     # surface Findings, so retaining the fixture Observations made it report the control
@@ -134,8 +150,18 @@ def rederive(payload: dict, params: dict) -> dict:
         for _body, group in body_groups(rule_id, obs, params).items():
             f = judge_rule(rule_id, group, params)
             rederived[f.finding_id] = f.to_dict()
+    # WHICH legs each surface carries, when the payload recorded it (`surface_legs`, from the
+    # frame: `run.targets`). Without it a rule that reads a SHARED leg is re-derived wherever
+    # that leg's evidence exists, which is wider than where the cycle judged it: `RULE-D2-v1`
+    # reads A4, A4 is collected on the Tier C reference hosts, and DD-059 keeps every leg but
+    # `tier0.legs` off them. The re-derivation would mint D2 Findings the cycle never recorded
+    # and report them as `unexpected_after_rederive`. A payload without the record is re-derived
+    # as before, and a surface the record does not name (a control) is not restricted.
+    surface_legs = payload.get("surface_legs") or {}
     for doc_id in docs:
         for rule_id in surface_rules:
+            if doc_id in surface_legs and REGISTRY[rule_id].LEG not in surface_legs[doc_id]:
+                continue
             group = list(by_key.get((doc_id, REGISTRY[rule_id].LEG), []))
             for c in consumes(rule_id):
                 group += by_key.get((doc_id, c), [])
@@ -181,7 +207,8 @@ def rules_by_leg(payload: dict) -> dict:
 
 
 def rejudge(payload: dict, params: dict, cycle: str | None = None,
-            control_gate: dict | None = None) -> dict:
+            control_gate: dict | None = None, reread_retained: bool = False,
+            frame: list | None = None) -> dict:
     """Judge a stored cycle's Observations under CURRENT and the params on disk.
 
     Findings only. No Observation is created: every Finding cites the `obs_id`s the source
@@ -201,10 +228,32 @@ def rejudge(payload: dict, params: dict, cycle: str | None = None,
     four-fixture record against a five-fixture expectation would report the SOURCE cycle as
     invalid for a difference that is entirely in the instrument. The gate that licenses this
     re-judgement is the one this task ran, and it is recorded on the payload as `control_gate`.
+
+    **`reread_retained`** (`cc_tasks/2026-09-18_rejudge_seven_legs.md`) re-reads each stored
+    Observation's retained body for the parsed blocks its collector now adds (`scan/reread.py`)
+    before judging, and records what it did as `observations_reread`. The default is False, so
+    every earlier re-judgement script produces the payload it always produced.
+
+    **`frame`** is `run.targets(params)`, the rows the instrument would scan today, each with
+    the legs it carries. When given, a surface is judged only on its own legs, exactly as
+    `run.run_surface` would judge it, and the map is recorded as `surface_legs` so the
+    re-derivation gate holds itself to the same map. Without it, a rule that reads a SHARED leg
+    is judged wherever that leg's evidence exists. `RULE-D2-v1` reads A4, so it would land on
+    the Tier C reference hosts, which DD-059 limits to `tier0.legs`. And `RULE-G1-D-v1` would
+    stay on the `home` surfaces DD-066 withdrew it from. The default is None, so every earlier
+    re-judgement script produces what it always produced.
     """
     src_cycle = payload["cycle"]
     cycle = cycle or f"{src_cycle}{REJUDGE_SUFFIX}"
-    obs = rehydrate(rejudgeable(payload["observations_detail"]))
+    rows = rejudgeable(payload["observations_detail"])
+    reread_record = None
+    if reread_retained:
+        from scan.reread import reread
+        rows, reread_record = reread(
+            rows, {r["doc_id"]: r.get("url") for r in payload.get("matrix") or []}, params)
+    obs = rehydrate(rows)
+    surface_legs = ({t["doc_id"]: list(t["legs"]) for t in frame} if frame is not None
+                    else None)
     by_key: dict = {}
     for o in obs:
         by_key.setdefault((o.target_doc_id, o.leg), []).append(o)
@@ -249,6 +298,8 @@ def rejudge(payload: dict, params: dict, cycle: str | None = None,
         verdicts = {}
         for leg in judgeable:
             rule_id = CURRENT[leg]
+            if surface_legs is not None and leg not in surface_legs.get(doc_id, ()):
+                continue          # the frame does not put this leg on this surface
             group = list(by_key.get((doc_id, REGISTRY[rule_id].LEG), []))
             for c in consumes(rule_id):
                 group += by_key.get((doc_id, c), [])
@@ -303,6 +354,10 @@ def rejudge(payload: dict, params: dict, cycle: str | None = None,
         "findings": len(findings),
         "observations": len(obs),
         "observations_reused": len({o.obs_id for o in obs}),
+        # Present only when the re-read ran. Its presence is what `observations_for` keys on.
+        **({"observations_reread": reread_record} if reread_record else {}),
+        # Present only when a frame was given. Its presence is what `rederive` keys on.
+        **({"surface_legs": surface_legs} if surface_legs is not None else {}),
         "verdict_counts": {v: sum(1 for f in findings if f.verdict == v)
                            for v in ("pass", "fail", "not_applicable", "error")},
         # No host was asked for anything. Stated as zero rather than omitted: a re-judged

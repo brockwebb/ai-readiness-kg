@@ -119,6 +119,13 @@ PRIOR_CYCLES = {
     "scan_2026-09-09_rj3": 634,
     "scan_2026-09-10_rj3": 739,
     "self_2026-09-13_rj1": 6,
+    # Cycle 4's fourth judgement (`cc_tasks/2026-09-18_rejudge_seven_legs.md`): every leg of
+    # `rules.CURRENT`, the seven generation-11 to -13 legs included. 1,009 = `_rj3`'s 739, less
+    # the 22 G1-D Findings on surfaces the frame no longer gives G1-D (DD-066), plus 292 on the
+    # seven new legs. It re-derives over the SAME re-read of retained bodies it was judged over
+    # (`observations_reread`, `scan/reread.py`) and on the same per-surface legs
+    # (`surface_legs`).
+    "scan_2026-09-10_rj4": 1009,
 }
 
 #: The fixture whose existence IS the fix's proof. Named once, here, because three tests need
@@ -678,7 +685,7 @@ def test_the_rejudgement_removes_at_least_the_recorded_false_positive(rederive_m
 #: Cycle 4's newest judgement and the measurement it derives from. `_rj1` moves to the slow tier
 #: as `_rj2` supersedes it: "the two most recent" is a rolling window, not a list that grows, and
 #: a window that grew by two every re-judgement would make the fast tier the full tier.
-RECENT_CYCLES = ("scan_2026-09-10_rj3", "scan_2026-09-10")
+RECENT_CYCLES = ("scan_2026-09-10_rj4", "scan_2026-09-10")
 
 
 def _tier(cycle: str):

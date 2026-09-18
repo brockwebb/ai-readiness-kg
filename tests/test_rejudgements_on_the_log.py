@@ -43,6 +43,8 @@ REJUDGED = {
     "scan_2026-09-07b_rj4": 404,
     "scan_2026-09-09_rj1": 634, "scan_2026-09-09_rj2": 634, "scan_2026-09-09_rj3": 634,
     "scan_2026-09-10_rj1": 739, "scan_2026-09-10_rj2": 739, "scan_2026-09-10_rj3": 739,
+    # `cc_tasks/2026-09-18_rejudge_seven_legs.md`: the whole current registry, seven new legs.
+    "scan_2026-09-10_rj4": 1009,
     "self_2026-09-13_rj1": 6,
 }
 
@@ -64,6 +66,11 @@ SCAFFOLD_UNATTRIBUTED = 630
 #: They stay 120 — this task publishes no Finding whose evidence the log does not hold, so a
 #: 121st would mean it did.
 SCAFFOLD_ORPHANS = 120
+
+#: Findings on a leg the predecessor never judged, per re-judgement: they have nothing to
+#: supersede. Only `scan_2026-09-10_rj4` has any — B1, B2, B4, B5, D2, D3 and G4, first judged
+#: there (`cc_tasks/2026-09-18_rejudge_seven_legs.md`): 46 × 6 surface legs + 16 bodies.
+NEW_LEG_FINDINGS = {"scan_2026-09-10_rj4": 292}
 
 #: The published report's snapshot (`docs/reports/publication.yaml`).
 SNAPSHOT_CYCLE = "scan_2026-09-10_rj2"
@@ -212,6 +219,7 @@ def test_every_rejudged_finding_is_paired_with_the_one_it_replaces(cycle, log):
     pred = publish.supersedes_of(cycle)
     by_key = {(f["target_doc_id"], f["leg"]): f["finding_id"]
               for f in payload(pred)["findings_detail"]}
+    pred_legs = {leg for _d, leg in by_key}
     unpaired = []
     for f in payload(cycle)["findings_detail"]:
         old = by_key.get((f["target_doc_id"], f["leg"]))
@@ -221,8 +229,16 @@ def test_every_rejudged_finding_is_paired_with_the_one_it_replaces(cycle, log):
         assert log["pairs"].get(f["finding_id"]) == old, (
             f"{cycle}: {f['finding_id']} should supersede {old} on "
             f"{(f['target_doc_id'], f['leg'])}")
-    assert not unpaired, (f"{cycle} has {len(unpaired)} Finding(s) with no counterpart in "
-                          f"{pred}: {unpaired[:5]}")
+    # The legitimate case the docstring names, and only it: a leg the predecessor did not judge
+    # AT ALL. `scan_2026-09-10_rj4` is the first to have one — the seven generation-11 to -13
+    # legs, 292 Findings (`cc_tasks/2026-09-18_rejudge_seven_legs.md`). An unpaired Finding on
+    # a leg the predecessor DID judge is still a fork, and still fails here.
+    forks = [k for k in unpaired if k[1] in pred_legs]
+    assert not forks, (f"{cycle} has {len(forks)} Finding(s) on a leg {pred} judged, with no "
+                       f"counterpart there: {forks[:5]}")
+    assert len(unpaired) == NEW_LEG_FINDINGS.get(cycle, 0), (
+        f"{cycle}: {len(unpaired)} Finding(s) on legs {pred} never judged: "
+        f"{sorted({k[1] for k in unpaired})}")
 
 
 def test_the_pairing_is_one_to_one(log):
@@ -536,7 +552,8 @@ def test_the_graph_holds_one_supersedes_edge_per_pair_on_the_log(graph, log):
     assert edges == len(log["pairs"]), (
         f"the log holds {len(log['pairs'])} supersession pairs and the graph {edges} edges; "
         f"the projection is stale")
-    assert edges == sum(REJUDGED.values())
+    # Every re-judged Finding pairs, except those on a leg the predecessor never judged.
+    assert edges == sum(REJUDGED.values()) - sum(NEW_LEG_FINDINGS.values())
 
 
 def test_no_finding_supersedes_itself_or_forms_a_cycle(graph):
@@ -548,7 +565,7 @@ def test_no_finding_supersedes_itself_or_forms_a_cycle(graph):
 
 
 @pytest.mark.parametrize("cycle", ["scan_2026-09-07_rj3", "scan_2026-09-07b_rj4",
-                                   "scan_2026-09-09_rj3", "scan_2026-09-10_rj3",
+                                   "scan_2026-09-09_rj3", "scan_2026-09-10_rj4",
                                    "self_2026-09-13_rj1"])
 def test_the_newest_judgement_of_every_cycle_is_current(graph, cycle):
     """A Finding with no successor is current (DN-003 decision 3). The five newest judgements —

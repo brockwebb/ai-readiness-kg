@@ -617,6 +617,12 @@ def main(argv=None) -> int:
                                            if rows and n == len(rows)],
         "body_legs": list(BODY_LEGS),
         "body_findings_without_a_row": body_without_row,
+        # The legs each surface carried (`targets`), so the re-derivation gate judges each
+        # surface on its own legs and nowhere else (`rederive.rederive`). Without it a rule
+        # reading a shared leg — `RULE-D2-v1` reads A4 — is re-derived on every surface that
+        # holds that leg's evidence, the Tier C reference hosts included, and the gate reports
+        # Findings this cycle never recorded (`cc_tasks/2026-09-18_rejudge_seven_legs.md`).
+        "surface_legs": {t["doc_id"]: list(t["legs"]) for t in tgts},
         "matrix": rows,
         "control_findings_detail": [f.to_dict() for f in cf] + [e5.to_dict()],
         "findings_detail": [f.to_dict() for f in all_find],

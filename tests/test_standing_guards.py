@@ -73,6 +73,12 @@ pub = _publish()
 #: a cycle published without its attribution, which is the thing the guard is for.
 PRE_DN003_CYCLES = frozenset({"scan_2026-09-07_rj1", "scan_2026-09-07b_rj1"})
 
+#: Re-judgements published AFTER the guard existed (2026-09-14), so not among the twelve the
+#: red test reconstructs as off the log. Closed and named, like the two sets around it; it grows
+#: by one name per later re-judgement, and each name is the task that published it.
+#: `scan_2026-09-10_rj4`: `cc_tasks/2026-09-18_rejudge_seven_legs.md`.
+PUBLISHED_AFTER_THE_GUARD = frozenset({"scan_2026-09-10_rj4"})
+
 #: The loopback control fixtures. Same rule: closed, named, may only shrink.
 CONTROLS_ONLY = frozenset({"scan_controls_2026-09-06", "scan_2026-09-07_controls",
                            "scan_2026-09-07b_controls"})
@@ -105,6 +111,21 @@ def stored_payloads(state_dir: Path) -> dict:
     return out
 
 
+def legs_judged(doc: dict | None) -> set:
+    return {f["leg"] for f in (doc or {}).get("findings_detail") or []}
+
+
+def owes_a_predecessor(name: str, doc: dict, payloads: dict) -> list:
+    """The Findings of a re-judgement that replace something: those on a leg its predecessor
+    judged. A Finding on a leg the predecessor never judged has nothing to supersede, and
+    `publish.write_supersession` rightly writes no pair for it. `scan_2026-09-10_rj4` is the
+    first with any: the seven generation-11 to -13 legs
+    (`cc_tasks/2026-09-18_rejudge_seven_legs.md`). A Finding on a leg the predecessor DID judge
+    that has no pair is still the fork this guard exists for."""
+    pred_legs = legs_judged(payloads.get(pub.supersedes_of(name)))
+    return [f["finding_id"] for f in doc.get("findings_detail") or [] if f["leg"] in pred_legs]
+
+
 def audit(payloads: dict, on_log_find: set, on_log_obs: set, paired: set) -> dict:
     """Which stored judgements are on the log, and which are not. **The guard itself.**
 
@@ -129,10 +150,12 @@ def audit(payloads: dict, on_log_find: set, on_log_obs: set, paired: set) -> dic
             if row["findings_on_log"] != row["findings"]:
                 unpublished.append(f"{name}: {row['findings'] - row['findings_on_log']} of "
                                    f"{row['findings']} Findings are not on the log")
-            if row["findings_paired"] != row["findings"]:
-                unpaired.append(f"{name}: {row['findings'] - row['findings_paired']} of "
-                                f"{row['findings']} Findings have no supersession event "
-                                f"naming the judgement they replace")
+            owed = owes_a_predecessor(name, doc, payloads)
+            row["findings_on_new_legs"] = row["findings"] - len(owed)
+            missing_pairs = sum(1 for f in owed if f not in paired)
+            if missing_pairs:
+                unpaired.append(f"{name}: {missing_pairs} of {len(owed)} Findings have no "
+                                f"supersession event naming the judgement they replace")
         elif kind == "measured":
             if row["findings_on_log"] != row["findings"]:
                 unpublished.append(f"{name}: {row['findings'] - row['findings_on_log']} of "
@@ -181,7 +204,7 @@ def test_the_guard_reports_the_twelve_payloads_that_were_off_the_log(live):
     payloads, _ = live
     find, obs, paired = _log_sets()
     was_off = [c for c in payloads if kind_of(c, payloads[c]) == "rejudged"
-               and c not in PRE_DN003_CYCLES]
+               and c not in PRE_DN003_CYCLES and c not in PUBLISHED_AFTER_THE_GUARD]
     assert len(was_off) == 12, sorted(was_off)
     missing = {f["finding_id"] for c in was_off for f in payloads[c]["findings_detail"]}
     # The twelve wrote 6,041 `finding_derived` events and 6,797 supersession events; the two
@@ -221,11 +244,16 @@ def test_the_guard_reports_a_rejudgement_published_without_its_supersession(live
 # ================================================================== green: what ships today
 
 def test_every_stored_judgement_is_on_the_log(live):
-    """DN-003 decision 6, standing. Green at 14 re-judged and 6 measured."""
+    """DN-003 decision 6, standing. Green at 15 re-judged and 6 measured (the fifteenth is
+    `scan_2026-09-10_rj4`, `cc_tasks/2026-09-18_rejudge_seven_legs.md`)."""
     _payloads, a = live
     assert a["unpublished"] == [], json.dumps(a["unpublished"], indent=1)
     assert a["unpaired"] == [], json.dumps(a["unpaired"], indent=1)
-    assert a["by_kind"] == {"rejudged": 14, "measured": 6, "controls_only": 3}, a["by_kind"]
+    assert a["by_kind"] == {"rejudged": 15, "measured": 6, "controls_only": 3}, a["by_kind"]
+    # The one cycle with Findings on legs its predecessor never judged, and how many.
+    new_legs = {r["cycle"]: r["findings_on_new_legs"] for r in a["rows"]
+                if r.get("findings_on_new_legs")}
+    assert new_legs == {"scan_2026-09-10_rj4": 292}, new_legs
 
 
 def test_the_controls_only_exemption_is_exactly_three_named_payloads_and_they_judge_nothing(
@@ -288,12 +316,13 @@ def test_every_rejudged_cycle_is_attributed_on_the_graph_by_finding_cycle(live, 
             if n != len(fids):
                 unattributed.append(f"{c}: {len(fids) - n} of {len(fids)} Findings do not "
                                     f"carry f.cycle = {c!r}")
+            owed = owes_a_predecessor(c, payloads[c], payloads)
             e = s.run("MATCH (f:Finding)-[:SUPERSEDES]->(:Finding) "
                       "WHERE f.finding_id IN $ids RETURN count(*) AS n",
-                      ids=fids).single()["n"]
-            if e != len(fids):
-                unlinked.append(f"{c}: {len(fids) - e} of {len(fids)} Findings have no "
-                                f"SUPERSEDES edge")
+                      ids=owed).single()["n"]
+            if e != len(owed):
+                unlinked.append(f"{c}: {len(owed) - e} of {len(owed)} Findings on a leg its "
+                                f"predecessor judged have no SUPERSEDES edge")
     assert unattributed == [], json.dumps(unattributed, indent=1)
     assert unlinked == [], json.dumps(unlinked, indent=1)
 

@@ -81,6 +81,30 @@ def matrices(cycle: str) -> list:
     return out
 
 
+def on_cycle(acts: list, cycle: str) -> list:
+    """`acts` with `value.bodies_failing_now` as it would read on `cycle`, re-ranked.
+
+    The record's value is computed from the SNAPSHOT's matrices when `tag_prescriptions.py`
+    writes it, so printing it under another cycle's name would print the snapshot's ranking
+    with the wrong cycle in the header. For any other cycle it is recomputed here from that
+    cycle's matrices by the record's own definition: per leg, the bodies with at least one row
+    carrying `fail` (`tag_prescriptions.matrix_fail_bodies`). The record is never written.
+    `cc_tasks/2026-09-18_rejudge_seven_legs.md` decision 4.
+    """
+    if cycle == snapshot_cycle():
+        return acts
+    per_leg: dict = {}
+    for body, legs in failing(cycle).items():
+        for leg in legs:
+            per_leg[leg] = per_leg.get(leg, 0) + 1
+    out = []
+    for a in acts:
+        b = dict(a, value=dict(a["value"], bodies_failing_now=per_leg.get(a["leg"], 0)))
+        out.append(b)
+    out.sort(key=lambda a: (-a["value"]["bodies_failing_now"], a["leg"], a["id"]))
+    return out
+
+
 def failing(cycle: str) -> dict:
     """`{body: {leg: [row labels that failed it]}}` over both matrices of the cycle."""
     out: dict = {}
@@ -141,7 +165,7 @@ def print_body(name: str, g: dict, cycle: str, width: int) -> int:
     if name not in all_bodies:
         print(f"'{name}' is not a body on cycle {cycle}. Bodies: {', '.join(all_bodies)}")
         return 2
-    acts = actions(g)
+    acts = on_cycle(actions(g), cycle)
     mine = fails.get(name, {})
     print(f"# {name} — prescriptions from cycle {cycle}")
     print(f"#   {len(mine)} failing leg(s) of the {sum(len(m['legs']) for m in matrices(cycle))}"
@@ -171,9 +195,12 @@ def print_body(name: str, g: dict, cycle: str, width: int) -> int:
 
 
 def print_all(g: dict, cycle: str, width: int) -> int:
-    acts = actions(g)
+    acts = on_cycle(actions(g), cycle)
     total = len(bodies(cycle))
     print(f"# every action, ranked by bodies failing now — cycle {cycle}, {total} bodies")
+    if cycle != snapshot_cycle():
+        print(f"# not the cycle of record ({snapshot_cycle()}): bodies failing recomputed from "
+              f"this cycle's matrices; the record's stored value is the snapshot's")
     print(f"# {len(acts)} actions over {len({a['leg'] for a in acts})} legs")
     print(f"# effort and cost are relative bands {NOTIONAL} — the note is at the end\n")
     head = f"{'bodies':>6}  {'leg':<13}  {'outcome':<36}  {'effort':<8}  {'cost':<10}  action"
@@ -222,8 +249,13 @@ def main(argv=None) -> int:
                     help="the former name of --bands, kept because "
                          "cc_tasks/2026-09-17_prescription_layer_RESULT.md cites it")
     ap.add_argument("--width", type=int, default=96)
+    # `scripts/score.py --cycle`'s twin (`cc_tasks/2026-09-18_rejudge_seven_legs.md` decision
+    # 4): what the prescriptions would say if the report's snapshot moved, read before it does.
+    # The default stays the cycle of record, so every published answer is unchanged.
+    ap.add_argument("--cycle", default=None,
+                    help="a cycle with published matrices other than the cycle of record")
     a = ap.parse_args(argv)
-    g, cycle = load_record(), snapshot_cycle()
+    g, cycle = load_record(), (a.cycle or snapshot_cycle())
     if a.body:
         return print_body(a.body, g, cycle, a.width)
     if a.all:

@@ -48,6 +48,30 @@ OUT_DIR = REPO / "docs" / "reports"
 #: the tier-0 legs: what a PRODUCT offers a machine, as against what a HOST declares.
 PRODUCT_LEGS = ["A1", "A2", "A3", "A6", "A8", "A9", "B3", "D1", "D4", "F4"]
 
+#: The product-level legs generations 11 to 13 added (`cc_tasks/2026-09-18_dcat_field_rules.md`,
+#: `2026-09-18_schema_field_rules.md`). They join a cycle's product matrix only when that cycle
+#: judged them (`product_legs`). Appending them to `PRODUCT_LEGS` would put seven `not measured`
+#: columns on every earlier cycle's matrix, and a rebuild of the published snapshot would no
+#: longer reproduce the published file. `cc_tasks/2026-09-18_rejudge_seven_legs.md` is the first
+#: cycle that judges them.
+FIELD_LEGS = ["B1", "B2", "B4", "B5", "D2", "D3", "G4"]
+
+
+def product_legs(p: dict) -> list:
+    """The product matrix's columns for THIS payload: `PRODUCT_LEGS`, then every `FIELD_LEGS`
+    leg the payload has a Finding on, in that order. Read from the Findings, like
+    `rules_fragment`, because the payload records what was judged."""
+    judged = {f["leg"] for f in p["findings_detail"]}
+    return PRODUCT_LEGS + [l for l in FIELD_LEGS if l in judged]
+
+
+def body_legs() -> frozenset:
+    """Legs judged once per BODY (`rules.scope`), whose Finding sits on the body's well-known
+    `host:` row rather than on a product surface: `RULE-B5-v1`. The rule declares it, so no
+    list of them is kept here."""
+    from scan.rules import BODY_LEGS
+    return frozenset(BODY_LEGS)
+
 #: The surface kind each matrix reads. Named here rather than inline because it is the single
 #: most consequential choice in this file (see the module docstring).
 HOST_SURFACE = "home"
@@ -175,11 +199,19 @@ def product_matrix(p: dict, tiers: dict, legs: list) -> list:
     """
     idx, out = findings_index(p), []
     have = {r["agency"] for r in rows_for(p, tiers, "A", PRODUCT_SURFACE)}
+    # A body leg's one Finding per body sits on the body's well-known row, so every declared
+    # surface of the body shows that one cell, and each names the same Finding. That is what
+    # A12 does on the host matrix.
+    bl = body_legs()
+    wk = {r["agency"]: r for r in rows_for(p, tiers, "A", CANDIDATE_SURFACE)}
     for r in rows_for(p, tiers, "A", PRODUCT_SURFACE):
+        src = {l: (wk.get(r["agency"]) if l in bl else r) for l in legs}
         out.append({"agency": r["agency"], "surface": r["doc_id"], "url": r["url"],
                     "declared": True,
-                    "verdicts": {l: r["verdicts"].get(l, "not measured") for l in legs},
-                    "finding_ids": {l: idx.get((r["doc_id"], l)) for l in legs}})
+                    "verdicts": {l: (src[l]["verdicts"].get(l, "not measured") if src[l]
+                                     else "not measured") for l in legs},
+                    "finding_ids": {l: (idx.get((src[l]["doc_id"], l)) if src[l] else None)
+                                    for l in legs}})
     for r in rows_for(p, tiers, "A", HOST_SURFACE):
         if r["agency"] in have:
             continue
@@ -434,12 +466,21 @@ def compute(cycle: str, params: dict | None = None) -> dict:
 
     tier_a = host_matrix(p, tiers, "A", tier0)
     tier_c = host_matrix(p, tiers, "C", tier0)
-    product = product_matrix(p, tiers, PRODUCT_LEGS)
+    plegs = product_legs(p)
+    product = product_matrix(p, tiers, plegs)
     declared = sum(1 for r in product if r["declared"])
     declared_agencies = len({r["agency"] for r in product if r["declared"]})
 
     host_counts = leg_counts(tier_a, tier0)
-    prod_counts = leg_counts([r for r in product if r["declared"]], PRODUCT_LEGS)
+    # A body leg is counted once per BODY, not once per declared surface: an agency with two
+    # flagships shows the one B5 cell on both rows, and counting both would weight that body
+    # twice in a rate over bodies. The first declared row of each agency stands for it.
+    declared_rows = [r for r in product if r["declared"]]
+    per_body = list({r["agency"]: r for r in reversed(declared_rows)}.values())
+    surface_plegs = [l for l in plegs if l not in body_legs()]
+    body_plegs = [l for l in plegs if l in body_legs()]
+    prod_counts = {**leg_counts(declared_rows, surface_plegs),
+                   **leg_counts(per_body, body_plegs)}
     tierc_counts = leg_counts(tier_c, tier0)
     dis = surface_disagreements(p, tiers, tier0)
 
@@ -478,9 +519,9 @@ def compute(cycle: str, params: dict | None = None) -> dict:
     # built already-named in `main` and their registered descriptions end at the section
     # reference. Re-tagging them would change the description of a Result that is bound.
     per_leg = ([
-        ("scan_l0_product_legs", len(PRODUCT_LEGS),
+        ("scan_l0_product_legs", len(plegs),
          f"Product-level checks asked of every declared flagship surface in cycle {cycle}: "
-         f"{', '.join(PRODUCT_LEGS)}. What a PRODUCT offers a machine, as against what a HOST "
+         f"{', '.join(plegs)}. What a PRODUCT offers a machine, as against what a HOST "
          f"declares. Task {TASK} §1.3."),
         ("scan_l0_product_legs_at_zero", len(zero_legs),
          f"Product-level checks on which NO declared flagship surface passed in cycle "
@@ -505,10 +546,18 @@ def compute(cycle: str, params: dict | None = None) -> dict:
         leg_results(host_counts, "scan_l0_", cycle,
                     "the 16 Tier A bodies' HOST-LEVEL surfaces (each body's `home:` page, and "
                     "its `host:` well-known set for A12)", with_upper95=True, family="host")
-        + leg_results(prod_counts, "scan_l0_product_", cycle,
+        + leg_results({l: prod_counts[l] for l in surface_plegs}, "scan_l0_product_", cycle,
                       f"the {declared} DECLARED flagship surfaces of {declared_agencies} Tier "
                       f"A agencies — a PARTIAL population, because the other agencies have "
                       f"declared no product to look at", with_upper95=True, family="product")
+        # Empty for every cycle before `scan_2026-09-10_rj4`, so no earlier cycle's Result
+        # list changes.
+        + leg_results({l: prod_counts[l] for l in body_plegs}, "scan_l0_product_", cycle,
+                      f"the {len(per_body)} Tier A BODIES with a declared flagship, each "
+                      f"counted once: the leg judges a body across all of its product "
+                      f"surfaces (`rules.scope` = body), so its one Finding per body sits on "
+                      f"the body's `host:` row and is shown on each of the body's declared "
+                      f"surfaces in the product matrix", with_upper95=True, family="product")
         # Tier C emits its upper bound too, now that a family-prefixed name makes that safe.
         # It could not before: the unprefixed name was unambiguous in THIS builder only because
         # the host family's legs (tier 0) and the product family's are disjoint and Tier C was
@@ -537,7 +586,7 @@ def compute(cycle: str, params: dict | None = None) -> dict:
 
     return {"cycle": cycle, "suffix": cycle_results.cycle_suffix(cycle), "payload": p,
             "params_hash": p["params_hash"], "tier0": tier0, "head": head,
-            "product_head": product_head,
+            "product_head": product_head, "product_legs": plegs,
             "tier_a": tier_a, "tier_c": tier_c, "product": product,
             "declared": declared, "declared_agencies": declared_agencies,
             "host_counts": host_counts, "product_counts": prod_counts,
@@ -545,7 +594,8 @@ def compute(cycle: str, params: dict | None = None) -> dict:
             "zero_legs": zero_legs, "results": results}
 
 
-def write_matrices(c: dict, out_dir: Path | None = None, gen_dir: Path | None = None) -> dict:
+def write_matrices(c: dict, out_dir: Path | None = None, gen_dir: Path | None = None,
+                   fragments: bool = True) -> dict:
     """The six matrix files and the five markdown fragments, from a `compute` result.
 
     `out_dir` and `gen_dir` default to the published tree and are parameters rather than
@@ -580,20 +630,31 @@ def write_matrices(c: dict, out_dir: Path | None = None, gen_dir: Path | None = 
                         "note": ("PARTIAL. Product-level legs over DECLARED flagship surfaces "
                                  "only. An agency with no declared flagship carries `not "
                                  "declared`, which is neither a fail nor an omission.")},
-                       c["product"], PRODUCT_LEGS, "product"),
+                       c["product"], c["product_legs"], "product"),
         ]
-        fragments = [write_fragment("matrix_tierA", c["tier_a"], tier0, "host"),
-                     write_fragment("matrix_tierC", c["tier_c"], tier0, "host"),
-                     write_fragment("matrix_product", c["product"], PRODUCT_LEGS, "product")]
+        if not fragments:
+            return {"files": files, "fragments": []}
+        written = [write_fragment("matrix_tierA", c["tier_a"], tier0, "host"),
+                   write_fragment("matrix_tierC", c["tier_c"], tier0, "host"),
+                   write_fragment("matrix_product", c["product"], c["product_legs"],
+                                  "product")]
         gen_dir.mkdir(parents=True, exist_ok=True)
         for stem, text in (("rules_by_leg", rules_fragment(p)),
                            ("requests_per_netloc", requests_fragment(evidence_payload(p)))):
             path = gen_dir / f"{stem}.md"
             path.write_text(text, encoding="utf-8")
-            fragments.append(path)
+            written.append(path)
     finally:
         OUT_DIR, GEN_DIR = prev_out, prev_gen
-    return {"files": files, "fragments": fragments}
+    return {"files": files, "fragments": written}
+
+
+def snapshot_cycle() -> str:
+    """`docs/reports/publication.yaml:snapshot_cycle`, the cycle the published report is a view
+    of."""
+    import yaml
+    return yaml.safe_load((OUT_DIR / "publication.yaml").read_text(
+        encoding="utf-8"))["snapshot_cycle"]
 
 
 def main(argv=None) -> int:
@@ -627,7 +688,18 @@ def main(argv=None) -> int:
         print(json.dumps(summary, indent=1))
         return 0
 
-    written = write_matrices(c)
+    # The markdown fragments are the REPORT's: `docs/reports/generated/` is what the published
+    # report includes, and they carry no cycle name. A cycle that is not the report's snapshot
+    # writes its matrices and registers its Results and leaves the report's fragments alone.
+    # Otherwise building a later cycle's matrices would silently rewrite the published report's
+    # tables, which is the move DN-004 reserves for a re-snapshot
+    # (`cc_tasks/2026-09-18_rejudge_seven_legs.md` decision 3).
+    is_snapshot = cycle == snapshot_cycle()
+    written = write_matrices(c, fragments=is_snapshot)
+    if not is_snapshot:
+        summary["fragments_not_written"] = (
+            f"{cycle} is not the report's snapshot ({snapshot_cycle()}); "
+            f"docs/reports/generated/ is left as it is")
     summary["fragments"] = [str(f.relative_to(REPO)) for f in written["fragments"]]
     summary["files"] = [str(f.relative_to(REPO)) for pair in written["files"] for f in pair]
 

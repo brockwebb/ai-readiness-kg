@@ -955,7 +955,7 @@ One real call each, with the answer the tool gave. Long lists are cut to 2 entri
 {
   "rows": [
     {
-      "current_rules": 16
+      "current_rules": 24
     }
   ],
   "row_count": 1,

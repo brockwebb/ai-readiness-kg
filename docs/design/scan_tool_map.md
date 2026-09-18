@@ -8,7 +8,7 @@ Every row is read from the harness itself: `params.yaml`, the `scan.collectors` 
 
 | collector | v | libraries | entry points | legs served | rules |
 |---|---|---|---|---|---|
-| `dcat` | 0.1.0 | stdlib only | `classify_exception`, `classify_status`, `fetch_catalog`, `normalize_url` | B1, B4, D3, D4, G4 | `RULE-B1-v2`, `RULE-B4-v1`, `RULE-D3-v1`, `RULE-D4-v3`, `RULE-G4-v1` |
+| `dcat` | 0.1.0 | stdlib only | `classify_exception`, `classify_status`, `fetch_catalog`, `membership_block` | B1, B4, D3, D4, G4 | `RULE-B1-v2`, `RULE-B4-v1`, `RULE-D3-v1`, `RULE-D4-v3`, `RULE-G4-v1` |
 | `extent` | 0.1.0 | stdlib only | `features`, `looks_like_error_shell` | A10 | `RULE-A10-v3` |
 | `http` | 0.1.0 | `bs4` | `classify_exception`, `classify_status`, `fetch`, `store_evidence` | A11-declared, A12, A2, A9, B3, D1, F4, G1-D | `RULE-A11-declared-v2`, `RULE-A12-v3`, `RULE-A2-v3`, `RULE-A9-v1`, `RULE-B3-v3`, `RULE-D1-v3`, `RULE-F4-v3`, `RULE-G1-D-v1` |
 | `lighthouse` | 0.1.0 | stdlib only | `available`, `classify_exception`, `classify_status`, `fetch` | A10 | `RULE-A10-v3` |
