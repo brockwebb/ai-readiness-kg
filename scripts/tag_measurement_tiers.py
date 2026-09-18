@@ -46,6 +46,11 @@ three tests, each of which can also FAIL and leave the row unassigned:
   Where it is not, the node keeps its reason and gains `open_tool_candidate`, which is a
   shopping list for a later ingest task and is NOT a tier.
 
+**The shopping list is closed by `cc_tasks/2026-09-18_tool_docs_ingest.md`** (`TABLE3` below).
+It fetched and admitted the two tool documents the list named — `oasdiff`'s README and the
+Wayback CDX Server API's — and decision 2 of that task tiers A7, F2 and F3 O on a cited section
+of each, dropping `open_tool_candidate` from all three.
+
     /opt/anaconda3/bin/python3 scripts/tag_measurement_tiers.py [--dry-run]
 """
 from __future__ import annotations
@@ -62,6 +67,7 @@ sys.path.insert(0, str(REPO / "assessment" / "harness"))
 
 TASK = "cc_tasks/2026-09-17_measurement_tiers.md"
 TASK2 = "cc_tasks/2026-09-17_unassigned_indicators.md"
+TASK3 = "cc_tasks/2026-09-18_tool_docs_ingest.md"
 SCRIPT = "tag_measurement_tiers"
 RECORD = "framework/ai_readiness_framework.json"
 
@@ -547,10 +553,77 @@ OPEN_TOOL_CANDIDATE = {
     "F3": f"Wayback CDX API (ResearchTask 43108db6) — {_NOT_IN_CORPUS}",
 }
 
+
+# ---------------------------------------------------------------------------------------
+# `cc_tasks/2026-09-18_tool_docs_ingest.md`: the shopping list, fetched and admitted.
+# ---------------------------------------------------------------------------------------
+
+_CDX = ("corpus/tools/wayback-cdx-server/README.md (doc_id `wayback-cdx-server-api-readme`)")
+_OASDIFF = "corpus/tools/oasdiff/README.md (doc_id `oasdiff-readme`)"
+_NO_HARNESS = ("No harness path runs it under this project's manners, evidence retention and "
+               "re-derivation discipline, which is what keeps this O rather than M "
+               "(DN-005 §2.2). Nothing was measured when the tier was assigned. ")
+
+#: Decision 2 of the ingest task: tier O on the strength of a cited section of the admitted
+#: document, not on the candidate field. Same shape as `TABLE2`.
+TABLE3 = {
+    "A7": dict(
+        rule_text=f"{TASK3} decision 2", tier="O", basis="open_tool",
+        quote="Persistent URLs/DOIs for products and vintages",
+        source=(f"{_CDX}, 'Basic Usage': \"the only required param for the CDX server is the "
+                "**url** param\", returning one row per capture with the fields "
+                "`[\"urlkey\",\"timestamp\",\"original\",\"mimetype\",\"statuscode\","
+                "\"digest\",\"length\"]`; 'Filtering': \"Results may be filtered by "
+                "timestamp using **from=** and **to=** params\" and \"**filter=**[!]*field*:"
+                "*regex*\", for which \"It is often useful to filter by *mimetype* or "
+                "*statuscode*\" — a product or vintage URL's capture history, with the status "
+                "it answered at each capture, over a declared date range"),
+        note=(_NO_HARNESS + "The index reaches the persistent-URL half of the definition. A "
+              "DOI's persistence is its resolver's, not the archive's: a rule built on this "
+              "document would record the DOI clause as unmeasured unless it also reads the "
+              "resolver. The predecessor's M candidate (assessment/harness/probes/"
+              "d1_stable_urls.py, not a rule in rules.CURRENT) stands beside this and is not "
+              "displaced by it.")),
+    "F2": dict(
+        rule_text=f"{TASK3} decision 2", tier="O", basis="open_tool",
+        quote="compatibility checked mechanically",
+        source=(f"{_OASDIFF}: \"Command-line tool to compare and detect breaking changes in "
+                "OpenAPI specs\"; 'Compare two specs': \"`breaking` — only the changes that "
+                "break existing API clients\"; 'API lifecycle': \"Deprecate APIs and "
+                "parameters\" and \"Version bumps — report a breaking change released "
+                "without a major version bump\""),
+        note=(_NO_HARNESS + "It reaches all three clauses only for an API that publishes an "
+              "OpenAPI description; an API that publishes none is a finding about F2, not a "
+              "comparison oasdiff can make. The deprecation-window and version-bump detail "
+              "is in DEPRECATION.md and VERSIONING.md, which the README links and which were "
+              "not fetched. Spec `spec:F2`'s note holds: two dated releases are needed, so a "
+              "single-point scan cannot run it.")),
+    "F3": dict(
+        rule_text=f"{TASK3} decision 2", tier="O", basis="open_tool",
+        quote="endpoints survive a new vintage",
+        source=(f"{_CDX}, 'Url Match Scope': \"**matchType=prefix** will return results for "
+                "all results under the path\", with the 'Filtering' section's **from=** / "
+                "**to=** date range and the 'Collapsing' section's \"Only show unique urls in "
+                "a prefix query\" "
+                "(`collapse=urlkey&matchType=prefix`) — the set of endpoints captured under a "
+                "product's path in the prior vintage's date range, to join against the "
+                "current vintage's"),
+        note=(_NO_HARNESS + "The index reaches the endpoints clause. Series identifiers and "
+              "geography codes live in response bodies, which the index locates (timestamp, "
+              "original URL, digest) and does not carry, so a rule built on this document "
+              "alone would record those two clauses as unmeasured; the published-crosswalk "
+              "alternative is a separate observation of the current surface. Spec "
+              "`spec:F3`'s note holds: two vintages are needed.")),
+}
+
 TABLE.update(TABLE2)
 for _code in TABLE2:
     UNASSIGNED.pop(_code)
 UNASSIGNED.update(UNASSIGNED2)
+TABLE.update(TABLE3)
+for _code in TABLE3:
+    UNASSIGNED.pop(_code)
+    OPEN_TOOL_CANDIDATE.pop(_code)
 
 def rule1(record_codes: set) -> dict:
     """`{code: (leg, rule_id)}` for every indicator a rule in `rules.CURRENT` serves.
@@ -695,9 +768,9 @@ def main(argv=None) -> int:
             changes["nodes"][n["id"]] = {k: [before[k], after[k]] for k in before
                                          if before[k] != after[k]}
     changes["counts"] = counts(plan)
-    # The event names the task that is WRITING, which since the second pass is TASK2; the
+    # The event names the task that is WRITING, which since the third pass is TASK3; the
     # per-node `tier_rule` still names whichever task's decision reached that node.
-    out = fw.save(g, script=SCRIPT, task=TASK2, changes=changes, dry_run=a.dry_run)
+    out = fw.save(g, script=SCRIPT, task=TASK3, changes=changes, dry_run=a.dry_run)
     print(json.dumps({"counts": changes["counts"], "renamed": changes["renamed"],
                       "nodes_changed": len(changes["nodes"]),
                       "save": {k: v for k, v in out.items()

@@ -441,9 +441,11 @@
     "measurement_status": "specified",
     "gap": "**gap**",
     "criterion_code": "A",
-    "tier_unassigned_reason": "docs/design/scan_tool_map.md §2 at commit 52af6c7 gave the keyword default (`scan-observable`, \"`http` + `structured_data` would serve it\"), which is not a derivation; no rule in rules.CURRENT serves it and no on-disk source names an open tool for it. Candidates: M through the June harness's assessment/harness/probes/d1_stable_urls.py (resolves a distribution URL; not a rule in rules.CURRENT), or O through the Wayback CDX API that ResearchTask 43108db6 names for robots.txt history, which would reach URL persistence across time.",
-    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2, no rule reaches it",
-    "open_tool_candidate": "Wayback CDX API (ResearchTask 43108db6) — documentation not in corpus"
+    "measurement_tier": "O",
+    "measurement_basis": "open_tool",
+    "tier_source": "corpus/tools/wayback-cdx-server/README.md (doc_id `wayback-cdx-server-api-readme`), 'Basic Usage': \"the only required param for the CDX server is the **url** param\", returning one row per capture with the fields `[\"urlkey\",\"timestamp\",\"original\",\"mimetype\",\"statuscode\",\"digest\",\"length\"]`; 'Filtering': \"Results may be filtered by timestamp using **from=** and **to=** params\" and \"**filter=**[!]*field*:*regex*\", for which \"It is often useful to filter by *mimetype* or *statuscode*\" — a product or vintage URL's capture history, with the status it answered at each capture, over a declared date range; definition of `ind:A7`: \"Persistent URLs/DOIs for products and vintages\"",
+    "tier_rule": "cc_tasks/2026-09-18_tool_docs_ingest.md decision 2",
+    "tier_note": "No harness path runs it under this project's manners, evidence retention and re-derivation discipline, which is what keeps this O rather than M (DN-005 §2.2). Nothing was measured when the tier was assigned. The index reaches the persistent-URL half of the definition. A DOI's persistence is its resolver's, not the archive's: a rule built on this document would record the DOI clause as unmeasured unless it also reads the resolver. The predecessor's M candidate (assessment/harness/probes/d1_stable_urls.py, not a rule in rules.CURRENT) stands beside this and is not displaced by it."
    }
   },
   {
@@ -1583,9 +1585,11 @@
     "measurement_status": "specified",
     "gap": null,
     "criterion_code": "F",
-    "tier_unassigned_reason": "docs/design/scan_tool_map.md §2 at commit 52af6c7 gave the keyword default (`scan-observable`, \"`http` + `structured_data` would serve it\"), which is not a derivation; spec `spec:F2` records `collector: none_known`. Candidate: O through `oasdiff` (an open-source OpenAPI breaking-change detector), which would reach 'compatibility checked mechanically'; no on-disk source names it, so it is the next tool-map row rather than a citation.",
-    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2, no rule reaches it",
-    "open_tool_candidate": "oasdiff — documentation not in corpus"
+    "measurement_tier": "O",
+    "measurement_basis": "open_tool",
+    "tier_source": "corpus/tools/oasdiff/README.md (doc_id `oasdiff-readme`): \"Command-line tool to compare and detect breaking changes in OpenAPI specs\"; 'Compare two specs': \"`breaking` — only the changes that break existing API clients\"; 'API lifecycle': \"Deprecate APIs and parameters\" and \"Version bumps — report a breaking change released without a major version bump\"; definition of `ind:F2`: \"compatibility checked mechanically\"",
+    "tier_rule": "cc_tasks/2026-09-18_tool_docs_ingest.md decision 2",
+    "tier_note": "No harness path runs it under this project's manners, evidence retention and re-derivation discipline, which is what keeps this O rather than M (DN-005 §2.2). Nothing was measured when the tier was assigned. It reaches all three clauses only for an API that publishes an OpenAPI description; an API that publishes none is a finding about F2, not a comparison oasdiff can make. The deprecation-window and version-bump detail is in DEPRECATION.md and VERSIONING.md, which the README links and which were not fetched. Spec `spec:F2`'s note holds: two dated releases are needed, so a single-point scan cannot run it."
    }
   },
   {
@@ -1615,9 +1619,11 @@
     "measurement_status": "specified",
     "gap": "**gap**",
     "criterion_code": "F",
-    "tier_unassigned_reason": "docs/design/scan_tool_map.md §2 at commit 52af6c7 gave the keyword default (`scan-observable`, \"`http` + `structured_data` would serve it\"), which is not a derivation; spec `spec:F3` records `collector: none_known`. Candidate: O through a web archive's CDX index (ResearchTask 43108db6 names the Wayback CDX API), which would supply the prior vintage's endpoints.",
-    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2, no rule reaches it",
-    "open_tool_candidate": "Wayback CDX API (ResearchTask 43108db6) — documentation not in corpus"
+    "measurement_tier": "O",
+    "measurement_basis": "open_tool",
+    "tier_source": "corpus/tools/wayback-cdx-server/README.md (doc_id `wayback-cdx-server-api-readme`), 'Url Match Scope': \"**matchType=prefix** will return results for all results under the path\", with the 'Filtering' section's **from=** / **to=** date range and the 'Collapsing' section's \"Only show unique urls in a prefix query\" (`collapse=urlkey&matchType=prefix`) — the set of endpoints captured under a product's path in the prior vintage's date range, to join against the current vintage's; definition of `ind:F3`: \"endpoints survive a new vintage\"",
+    "tier_rule": "cc_tasks/2026-09-18_tool_docs_ingest.md decision 2",
+    "tier_note": "No harness path runs it under this project's manners, evidence retention and re-derivation discipline, which is what keeps this O rather than M (DN-005 §2.2). Nothing was measured when the tier was assigned. The index reaches the endpoints clause. Series identifiers and geography codes live in response bodies, which the index locates (timestamp, original URL, digest) and does not carry, so a rule built on this document alone would record those two clauses as unmeasured; the published-crosswalk alternative is a separate observation of the current surface. Spec `spec:F3`'s note holds: two vintages are needed."
    }
   },
   {

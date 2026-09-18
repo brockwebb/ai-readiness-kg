@@ -195,10 +195,11 @@ def test_overview_counts_indicators_by_tier_and_basis_from_the_record(offline):
     by_tier = fw["indicators_by_measurement_tier"]
     by_basis = fw["indicators_by_measurement_basis"]
     assert sum(by_tier.values()) == sum(by_basis.values()) == fw["indicators_total"]
-    # Settled by `cc_tasks/2026-09-17_unassigned_indicators.md`, whose RESULT states the
-    # distribution this task's SEQUENCING line waited for: 34 M, 2 O, 5 D, 8 unassigned.
-    assert by_tier["M"] == 34 and by_tier["O"] == 2 and by_tier["D"] == 5
-    assert by_tier["unassigned"] == 8
+    # Settled by `cc_tasks/2026-09-17_unassigned_indicators.md` (34 M, 2 O, 5 D, 8 unassigned)
+    # and moved by `cc_tasks/2026-09-18_tool_docs_ingest.md`, which admitted the oasdiff and
+    # Wayback CDX documentation and tiered A7, F2 and F3 O: 34 M, 5 O, 5 D, 5 unassigned.
+    assert by_tier["M"] == 34 and by_tier["O"] == 5 and by_tier["D"] == 5
+    assert by_tier["unassigned"] == 5
     assert fw["counts"]["actions"] + fw["counts"]["actions_on_candidate_indicators"] == 45
 
 

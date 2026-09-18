@@ -68,16 +68,16 @@ One real call each, with the answer the tool gave. Long lists are cut to 2 entri
     "indicators_total": 49,
     "indicators_by_measurement_tier": {
       "M": 34,
-      "unassigned": 8,
-      "O": 2,
+      "O": 5,
+      "unassigned": 5,
       "D": 5
     },
     "indicators_by_measurement_basis": {
       "harness_leg": 17,
-      "unassigned": 8,
+      "open_tool": 5,
       "structured_field": 7,
+      "unassigned": 5,
       "evaluation": 8,
-      "open_tool": 2,
       "declaration": 5,
       "judged_reading": 2
     },

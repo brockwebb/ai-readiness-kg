@@ -35,15 +35,18 @@ TOOL_MAP = REPO / "docs" / "design" / "scan_tool_map.md"
 sys.path.insert(0, str(REPO / "scripts"))
 sys.path.insert(0, str(REPO / "assessment" / "harness"))
 
-#: The distribution `cc_tasks/2026-09-17_measurement_tiers_RESULT.md` §2 reports. Moving an
+#: The distribution `cc_tasks/2026-09-18_tool_docs_ingest_RESULT.md` §3 reports. Moving an
 #: indicator between tiers is a task's decision, and this literal is where the suite learns of
-#: it.
-EXPECTED_PER_TIER = {"M": 34, "O": 2, "D": 5}
+#: it. That task admitted the documentation of `oasdiff` and the Wayback CDX Server API and
+#: moved A7, F2 and F3 from unassigned to O.
+EXPECTED_PER_TIER = {"M": 34, "O": 5, "D": 5}
 EXPECTED_PER_BASIS = {"harness_leg": 17, "structured_field": 7, "judged_reading": 2,
-                      "evaluation": 8, "open_tool": 2, "declaration": 5}
-EXPECTED_UNASSIGNED = {"A7", "B6", "E1", "E3", "F2", "F3", "G3", "G5"}
+                      "evaluation": 8, "open_tool": 5, "declaration": 5}
+EXPECTED_UNASSIGNED = {"B6", "E1", "E3", "G3", "G5"}
 #: Decision 3's shopping list: named on a row that is still unassigned, never on a tiered one.
-EXPECTED_OPEN_TOOL_CANDIDATES = {"A7", "F2", "F3"}
+#: Empty since the ingest task fetched both tools' documents; the test below still holds any
+#: future entry to an untiered row.
+EXPECTED_OPEN_TOOL_CANDIDATES = set()
 BASIS_TIER = {"harness_leg": "M", "structured_field": "M", "judged_reading": "M",
               "evaluation": "M", "open_tool": "O", "declaration": "D"}
 

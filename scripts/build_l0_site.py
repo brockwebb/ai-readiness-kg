@@ -830,6 +830,11 @@ _ONLY = {"results_tagged": {"data/results_tagged.json"},
          # (`cc_tasks/2026-09-15_g1d_leaves_l0.md` tagged G1-D `measurement_tier: product` and
          # found this the way it is always found — a green build and a red suite).
          "framework_copy": {"data/ai_readiness_framework.json"},
+         # The site's COPY of the corpus manifest, for the same reason. Until
+         # `cc_tasks/2026-09-18_tool_docs_ingest.md` no narrow build had followed a corpus
+         # admission, so no flag wrote it: that task's `--only data_manifest` recorded the new
+         # manifest's digest over a copy still holding the old one, and the copy test failed.
+         "corpus_copy": {"data/corpus_manifest.json"},
          # The data manifest HASHES each copy's source, so refreshing a copy without it leaves
          # the manifest asserting a digest the source no longer has — which is the same defect
          # one layer up and the same test catches it. The two travel together.

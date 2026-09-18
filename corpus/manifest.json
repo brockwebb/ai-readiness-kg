@@ -1,11 +1,11 @@
 {
  "manifest_version": 2,
  "project": "ai-readiness-kg",
- "generated_at": "2026-09-13T01:10:48.621649+00:00",
+ "generated_at": "2026-09-18T03:58:06.699828+00:00",
  "generator": "dixie.evidence",
  "note": "PROJECTION — rebuilt from the evidence decisions log; do not hand-edit. The log is truth.",
  "counts_by_decision": {
-  "included": 261,
+  "included": 263,
   "excluded": 72,
   "pending_refetch": 43,
   "pending_review": 1
@@ -20322,8 +20322,8 @@
       "detected_type": "pdf"
      },
      "corpus/noaa_esip/NAO_216-128.ocr.json": {
-      "sha256": "c8895da08cff9d721d8f447f479a58f73d96aecd6c6a301ee4a2d4d1f9b5920f",
-      "size": 1850,
+      "sha256": "acffd55143efbce9d3f0605fc097323d2f161fc89a0d34d510880bbe7e24a35a",
+      "size": 2508,
       "claimed_type": "json",
       "detected_type": "text"
      },
@@ -20368,7 +20368,7 @@
        },
        {
         "check": "size_sanity",
-        "detail": "1850 bytes vs floor 64",
+        "detail": "2508 bytes vs floor 64",
         "outcome": "pass"
        },
        {
@@ -20377,7 +20377,7 @@
         "outcome": "skip"
        }
       ],
-      "checked_at": "2026-09-10T19:33:33.743083+00:00"
+      "checked_at": "2026-09-18T03:58:06.417333+00:00"
      },
      "corpus/noaa_esip/NAO_216-128.ocr.txt": {
       "path": "corpus/noaa_esip/NAO_216-128.ocr.txt",
@@ -21840,6 +21840,107 @@
     "notes": [
      "Post-hoc numeric consistency checker for summaries. Method; IEEE Xplore paywall. Not fetched."
     ]
+   }
+  },
+  "oasdiff-readme": {
+   "doc_id": "oasdiff-readme",
+   "identity": {
+    "sha256": "9ec7fc519ccca54867f545950bf1e2744223ea6a2bdd7b1ff860deeefe59cfbb",
+    "canonical_path": "corpus/tools/oasdiff/README.md",
+    "title": "oasdiff README",
+    "authors_or_org": [
+     "oasdiff (github.com/oasdiff)"
+    ],
+    "pub_year": "n.d.",
+    "doc_type": "industry",
+    "source_url": "https://github.com/oasdiff/oasdiff",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "scripted_fetch",
+    "acquired_at": "2026-09-18T03:58:06.418679+00:00",
+    "acquired_by": "scripts/fetch_allowlisted.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed markdown, detected text",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "7722 bytes vs floor 256",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "7654 chars",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-09-18T03:58:06.418843+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "cc_tasks/2026-09-18_tool_docs_ingest.md decision 1: the documentation of the open tool that F2 names as `open_tool_candidate`, so that decision 2 can cite a section of it for tier O (DN-005 §2.2).",
+    "decided_by": "cc",
+    "decided_at": "2026-09-18T03:58:06.141853+00:00",
+    "history": [],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "tool_docs_2026-09-18"
+   ],
+   "extra": {
+    "notes": [
+     "fetched robots-first under the identified UA from https://raw.githubusercontent.com/oasdiff/oasdiff/main/docs/README.md (logs/2026-09-18_tool_docs_ingest_fetch.jsonl). The repository keeps its README at docs/README.md, not at the root: the root raw URL answered 404 on both `main` and `HEAD`, and the landing page github.com/oasdiff/oasdiff (fetched through the same helper) lists docs/README.md with defaultBranch `main` at currentOid 322d7ae815e5fb80f415bd4e8ef16d4b30cd8bdf, 15 s before this fetch. The raw response itself carries no commit."
+    ],
+    "observed_files": {
+     "corpus/tools/oasdiff/README.md": {
+      "sha256": "9ec7fc519ccca54867f545950bf1e2744223ea6a2bdd7b1ff860deeefe59cfbb",
+      "size": 7722,
+      "claimed_type": "markdown",
+      "detected_type": "text"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/tools/oasdiff/README.md": {
+      "path": "corpus/tools/oasdiff/README.md",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed markdown, detected text",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "7722 bytes vs floor 256",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "7654 chars",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-09-18T03:58:06.418843+00:00"
+     }
+    },
+    "added_in": "tool-docs-2026-09-18"
    }
   },
   "odcs-open-data-contract-standard": {
@@ -34169,6 +34270,107 @@
     "notes": [
      "The only AEO-named measurement study located. Explicitly separates the intervention effect from platform growth, i.e. it treats the confound the cluster's practitioner claims ignore. Closes the AEO half of the operator's named gap; the corpus previously held GEO only."
     ]
+   }
+  },
+  "wayback-cdx-server-api-readme": {
+   "doc_id": "wayback-cdx-server-api-readme",
+   "identity": {
+    "sha256": "e17a0e1f43c4dd887adbb1473a7be452bbc12f823b64ea3fda2105c8d27ee7dd",
+    "canonical_path": "corpus/tools/wayback-cdx-server/README.md",
+    "title": "Wayback CDX Server API - BETA",
+    "authors_or_org": [
+     "Internet Archive"
+    ],
+    "pub_year": "n.d.",
+    "doc_type": "industry",
+    "source_url": "https://github.com/internetarchive/wayback/tree/master/wayback-cdx-server",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "scripted_fetch",
+    "acquired_at": "2026-09-18T03:58:06.419046+00:00",
+    "acquired_by": "scripts/fetch_allowlisted.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed markdown, detected text",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "18292 bytes vs floor 256",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "18288 chars",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-09-18T03:58:06.419199+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "cc_tasks/2026-09-18_tool_docs_ingest.md decision 1: the documentation of the open tool that A7, F3 name as `open_tool_candidate`, so that decision 2 can cite a section of it for tier O (DN-005 §2.2).",
+    "decided_by": "cc",
+    "decided_at": "2026-09-18T03:58:06.142170+00:00",
+    "history": [],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "tool_docs_2026-09-18"
+   ],
+   "extra": {
+    "notes": [
+     "fetched robots-first under the identified UA from https://raw.githubusercontent.com/internetarchive/wayback/master/wayback-cdx-server/README.md (logs/2026-09-18_tool_docs_ingest_fetch.jsonl). Undated; its changelist's latest entry is 2013-08-07. The Internet Archive's own page tried at https://archive.org/developers/wayback-cdx-server.html answered 404 and is not admitted; the failure is in the fetch log."
+    ],
+    "observed_files": {
+     "corpus/tools/wayback-cdx-server/README.md": {
+      "sha256": "e17a0e1f43c4dd887adbb1473a7be452bbc12f823b64ea3fda2105c8d27ee7dd",
+      "size": 18292,
+      "claimed_type": "markdown",
+      "detected_type": "text"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/tools/wayback-cdx-server/README.md": {
+      "path": "corpus/tools/wayback-cdx-server/README.md",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed markdown, detected text",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "18292 bytes vs floor 256",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "18288 chars",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-09-18T03:58:06.419199+00:00"
+     }
+    },
+    "added_in": "tool-docs-2026-09-18"
    }
   },
   "webb-2026-state-fidelity-validity": {
