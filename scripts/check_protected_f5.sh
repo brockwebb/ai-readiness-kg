@@ -1,4 +1,5 @@
 #!/bin/sh
+. "$(dirname "$0")/check_protected_lib.sh"
 # The protected-paths diff for cc_tasks/2026-09-11_f5_membership_through_fallback.md.
 #
 # "Zero edits to: rule modules, harness runtime (collectors, runner.py, run.py, publish.py,

@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+. "$(dirname "$0")/check_protected_lib.sh"
 # The zero-edits list of `cc_tasks/2026-09-12_cited_documents_metadata_2.md`, asserted
 # against HEAD:
 #

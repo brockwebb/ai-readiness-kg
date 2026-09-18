@@ -1,4 +1,5 @@
 #!/bin/sh
+. "$(dirname "$0")/check_protected_lib.sh"
 # The protected-paths diff for cc_tasks/2026-09-16_publication_guards.md.
 #
 # The task writes TESTS and one shared function. It regenerates nothing: no builder is run, no

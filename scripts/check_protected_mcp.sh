@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+. "$(dirname "$0")/check_protected_lib.sh"
 # The write set of `cc_tasks/2026-09-17_mcp_over_the_graph.md`, asserted against HEAD.
 #
 #   "**Write set:** `mcp/` (new: server module, tools, guard, `pyproject` entry or

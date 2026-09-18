@@ -1,4 +1,5 @@
 #!/bin/sh
+. "$(dirname "$0")/check_protected_lib.sh"
 # The protected-paths diff for cc_tasks/2026-09-15_derived_counts_and_appendix_guard.md.
 #
 # The task judges nothing and measures nothing: no rule runs, no host is contacted, no payload

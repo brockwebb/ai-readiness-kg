@@ -1,4 +1,5 @@
 #!/bin/sh
+. "$(dirname "$0")/check_protected_lib.sh"
 # The protected-paths diff for cc_tasks/2026-09-15_abstract_five_checks.md.
 #
 # The task's write set is exactly two things: `docs/reports/publication.yaml` (decision 1, and

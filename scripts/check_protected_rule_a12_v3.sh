@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+. "$(dirname "$0")/check_protected_lib.sh"
 # The zero-edits list of `cc_tasks/2026-09-13_rule_a12_v3.md`, asserted against HEAD:
 #
 #   "Zero edits to: shipped rule modules (new versions are new files), harness runtime, manners,

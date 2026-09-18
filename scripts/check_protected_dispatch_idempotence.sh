@@ -1,4 +1,5 @@
 #!/bin/sh
+. "$(dirname "$0")/check_protected_lib.sh"
 # The protected-paths diff for cc_tasks/2026-09-16_dispatch_idempotence.md.
 #
 # This task's code lands in the SELDON checkout. What lands here is one test file, one design

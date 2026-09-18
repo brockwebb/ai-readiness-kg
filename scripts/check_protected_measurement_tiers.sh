@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+. "$(dirname "$0")/check_protected_lib.sh"
 # The write set of `cc_tasks/2026-09-17_measurement_tiers.md`, asserted against HEAD.
 #
 #   "Nothing is measured, re-judged or rebuilt. No cycle runs. `state/`, `corpus/`,

@@ -1,4 +1,5 @@
 #!/bin/bash
+. "$(dirname "$0")/check_protected_lib.sh"
 # Protected-paths diff for `cc_tasks/2026-09-16_cadence_and_enable.md` §5.
 #
 # The task's "Zero edits to" list, checked against the working tree rather than asserted in

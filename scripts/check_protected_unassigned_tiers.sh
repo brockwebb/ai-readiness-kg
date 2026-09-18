@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+. "$(dirname "$0")/check_protected_lib.sh"
 # The write set of `cc_tasks/2026-09-17_unassigned_indicators.md`, asserted against HEAD.
 #
 #   "No matrix, figure or report is rebuilt; the site's framework copy and manifest move as in

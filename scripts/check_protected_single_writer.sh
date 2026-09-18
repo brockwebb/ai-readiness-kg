@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+. "$(dirname "$0")/check_protected_lib.sh"
 # The zero-edits list of `cc_tasks/2026-09-11_framework_single_writer.md`, asserted against HEAD:
 #
 #   "Zero edits to: the skeleton, the record's content (this task adds no node or edge), the

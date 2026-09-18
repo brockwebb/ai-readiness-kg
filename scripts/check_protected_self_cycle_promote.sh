@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+. "$(dirname "$0")/check_protected_lib.sh"
 # The zero-edits list of `cc_tasks/2026-09-13_self_cycle_promote.md`, asserted against HEAD:
 #
 #   "Zero edits to: rule modules, harness runtime, manners, prior payloads, prior Results'

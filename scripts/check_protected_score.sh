@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+. "$(dirname "$0")/check_protected_lib.sh"
 # The write set of `cc_tasks/2026-09-18_scoring_model.md`, asserted against HEAD.
 #
 #   "**Write set:** `scripts/score.py` (new), `docs/design/scoring_model.md` (new, generated),

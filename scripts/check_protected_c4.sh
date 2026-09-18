@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+. "$(dirname "$0")/check_protected_lib.sh"
 # The zero-edits list of `cc_tasks/2026-09-11_l0_report_cycle4_revision.md`, asserted against
 # HEAD rather than eyeballed in a diff.
 #

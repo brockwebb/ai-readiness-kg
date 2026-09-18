@@ -1,4 +1,5 @@
 #!/bin/sh
+. "$(dirname "$0")/check_protected_lib.sh"
 # The protected-paths diff for cc_tasks/2026-09-15_g1d_leaves_l0.md + ADDENDUM_01.
 #
 # Base "Zero edits to": rule modules other than removing G1-D from leg lists (the module stays,

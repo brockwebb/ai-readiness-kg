@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+. "$(dirname "$0")/check_protected_lib.sh"
 # The write set of `cc_tasks/2026-09-18_dcat_field_rules.md`, asserted against HEAD.
 #
 #   "`state/`, `corpus/`, `docs/reports/` byte-identical", and the write set the task file

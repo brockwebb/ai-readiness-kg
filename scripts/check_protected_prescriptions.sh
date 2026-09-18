@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+. "$(dirname "$0")/check_protected_lib.sh"
 # The write set of `cc_tasks/2026-09-17_prescription_layer.md`, asserted against HEAD.
 #
 #   "Nothing is measured and no report is rebuilt. ... `state/`, `corpus/`, `assessment/`

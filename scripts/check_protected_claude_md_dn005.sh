@@ -1,4 +1,5 @@
 #!/bin/sh
+. "$(dirname "$0")/check_protected_lib.sh"
 # The protected-paths diff for cc_tasks/2026-09-15_claude_md_cites_dn005.md.
 #
 # "Zero edits to: anything other than CLAUDE.md and the graph event for decision 3. No code,

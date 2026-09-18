@@ -1,4 +1,5 @@
 #!/bin/sh
+. "$(dirname "$0")/check_protected_lib.sh"
 # The protected-paths diff for cc_tasks/2026-09-11_rejudge_1_2_3_4_gen9.md.
 # "Zero edits to: rule modules, harness, stored payloads, prior Results, prior RESULTs, cycle
 # evidence, targets, fixtures, docs/reports/, the historical invariant pins."

@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+. "$(dirname "$0")/check_protected_lib.sh"
 # The zero-edits list of `cc_tasks/2026-09-12_a1_a8_b3_d4_sources.md`, asserted against HEAD:
 #
 #   "Zero edits to: rule modules, harness, payloads, prior Results, prior RESULTs, figures,

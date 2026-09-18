@@ -1,4 +1,5 @@
 #!/bin/sh
+. "$(dirname "$0")/check_protected_lib.sh"
 # The protected-paths diff for cc_tasks/2026-09-18_network_allowlist.md.
 #
 # The dispatcher change lands in the SELDON checkout. What lands here: the fetch helper and its

@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+. "$(dirname "$0")/check_protected_lib.sh"
 # The write set of `cc_tasks/2026-09-17_notional_bands.md`, asserted against HEAD.
 #
 #   "Nothing else moves. No new actions, no rule, no matrix, no report" (decision 6), and the

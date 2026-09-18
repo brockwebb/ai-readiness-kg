@@ -1,4 +1,5 @@
 #!/bin/sh
+. "$(dirname "$0")/check_protected_lib.sh"
 # The protected-paths diff for cc_tasks/2026-09-15_standing_dispatcher.md.
 #
 # "Zero edits to: rule modules, manners, stored payloads, the log's existing shards, Results,
