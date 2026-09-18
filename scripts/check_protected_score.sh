@@ -11,6 +11,12 @@
 # nothing either of them holds. So the strongest thing this check can assert is that nothing a
 # score is computed from moved, that no score was published (decision 8), and that the one page
 # it added is what its generator prints.
+#
+# Extended by `cc_tasks/2026-09-18_scoring_levels.md` (flat view, A12 criterion, readiness
+# levels): same write set plus that task's RESULT. Its decision 2 would have let the record move
+# through the single writer if A12's promotion criterion were met on the record's own terms; it
+# is stated as an operator decision, so the record stays protected here. Decision 5: the ladder
+# is published nowhere either, which checks 3 to 5 already hold.
 set -u
 cd "$(dirname "$0")/.." || exit 2
 fail=0
@@ -40,6 +46,7 @@ ALLOWED=(
   'docs/design/scoring_model.md'
   'seldon_events.jsonl'
   'cc_tasks/2026-09-18_scoring_model_RESULT.md'
+  'cc_tasks/2026-09-18_scoring_levels_RESULT.md'
 )
 while read -r f; do
   [ -z "$f" ] && continue
@@ -68,9 +75,9 @@ sys.exit(1 if named else 0)
 EOF
 then fail=1; fi
 
-# 5. Nothing under docs/ (the site) carries a score payload.
-if git ls-files --others --exclude-standard -- docs/ | grep -qiE 'score.*\.(json|csv|html)$'; then
-  echo "FAIL a score payload was added under docs/"; fail=1
+# 5. Nothing under docs/ (the site) carries a score or level payload.
+if git ls-files --others --exclude-standard -- docs/ | grep -qiE '(score|level).*\.(json|csv|html)$'; then
+  echo "FAIL a score or level payload was added under docs/"; fail=1
 fi
 
 # 6. The Seldon log is append-only.

@@ -32,6 +32,15 @@ any other verdict are out of the denominator and counted separately. Indicator =
 legs; construct = mean of its measured indicators; criterion = mean of its measured
 constructs; body = mean of the criteria with at least one measured construct. Every score is
 printed with its coverage — measured of total at its level — or it is not printed.
+
+**The second half** (`cc_tasks/2026-09-18_scoring_levels.md`). Beside the hierarchical score, a
+FLAT one: every judged leg weighs 1/n. Neither scheme has a basis over the other, so both are
+printed with the rank under each. Beside both, the READINESS LEVEL: a cumulative ladder over the
+scored criteria in the framework's own order, TRL's shape (JRC, *AI Watch: Revisiting
+Technology Readiness Levels*, §3 and Appendix A — on disk): a body holds level k when every
+scored leg of every criterion up to the k-th passes outright, and a level is never an average.
+The level names are the record's criterion names and the rubric sentence for each level is
+generated from the record and the prescription layer; nothing in either is hand-written.
 """
 from __future__ import annotations
 
@@ -51,6 +60,7 @@ import prescriptions as P  # noqa: E402  the record, the cycle, the matrices: on
 DOC = REPO / "docs" / "design" / "scoring_model.md"
 REPORTS = REPO / "docs" / "reports"
 TASK = "cc_tasks/2026-09-18_scoring_model.md"
+TASK_LEVELS = "cc_tasks/2026-09-18_scoring_levels.md"
 
 #: Decision 2. Printed on every output of this script, verbatim; a test asserts it.
 COVERAGE_SENTENCE = ("Scores cover only what the harness measures; "
@@ -251,8 +261,12 @@ def score_body(body_cells: dict, struct: list, criteria: list, drop: tuple = (),
                                      if k not in drop),
                      "total": len([k for k in criteria if k not in drop])},
     }
-    return {"score": body, "legs": legs, "indicators": indicators, "constructs": constructs,
-            "criteria": criteria_out, "excluded": dict(excluded), "coverage": coverage}
+    # Levels decision 1: the flat scheme, every judged leg at 1/n. Same legs, same cells, same
+    # exclusions; only the aggregation differs.
+    flat = _mean([v["score"] for v in legs.values()])
+    return {"score": body, "flat": flat, "legs": legs, "indicators": indicators,
+            "constructs": constructs, "criteria": criteria_out, "excluded": dict(excluded),
+            "coverage": coverage}
 
 
 def gating(s: dict, struct: list) -> dict:
@@ -268,6 +282,86 @@ def gating(s: dict, struct: list) -> dict:
     return {"legs_passed_outright": sum(v["score"] == 1 for v in s["legs"].values()),
             "legs_judged": sum(v["score"] is not None for v in s["legs"].values()),
             "zero_constructs": zero, "first_zero_construct": zero[0] if zero else None}
+
+
+# ------------------------------------------------------------------ the ladder (levels decision 3)
+
+#: What a leg is, for one body, on the ladder. `clear`: judged rows and every one passed, or
+#: every row `not_applicable` (WCAG's reading: a requirement with nothing to apply to is
+#: satisfied); `fail`: at least one row failed; `unobservable`: no fail, and an `error` (or any
+#: verdict outside pass / fail / not_applicable) or no row at all. A fail is an observation and
+#: decides; an error is an absence of one and can only cap.
+LEG_STATES = ("clear", "fail", "unobservable")
+
+
+def leg_state(c: dict) -> str:
+    if c.get("fail", 0):
+        return "fail"
+    if not c or any(n and v not in ("pass", "not_applicable") for v, n in c.items()):
+        return "unobservable"
+    return "clear"
+
+
+def ladder_order(struct: list, criteria: list) -> list:
+    """The scored criteria in the framework's own order (the record's criterion codes, which
+    `framework_totals` sorts). The ladder authors no order of its own."""
+    scored = {l["criterion"] for l in struct if l["scored"]}
+    return [k for k in criteria if k in scored]
+
+
+def ladder(body_cells: dict, struct: list, order: list) -> dict:
+    """A body is at level k when every scored leg of the first k criteria in `order` is
+    `clear`. The walk stops at the first criterion that is not: a `fail` there places the body
+    one level below it; no fail but an unobservable leg places it one level below as well, and
+    says the next level could not be observed, so it is never rounded up."""
+    per = {}
+    for k in order:
+        states = [leg_state(body_cells.get(l["leg"], {})) for l in struct
+                  if l["scored"] and l["criterion"] == k]
+        per[k] = {"legs": len(states), **{s: states.count(s) for s in LEG_STATES}}
+    level, unobs = len(order), None
+    for i, k in enumerate(order, start=1):
+        if per[k]["clear"] == per[k]["legs"]:
+            continue
+        level, unobs = i - 1, (None if per[k]["fail"] else i)
+        break
+    return {"level": level, "unobservable_at": unobs, "per_criterion": per,
+            "label": f"{level}" + (f" (unobservable at {unobs})" if unobs else "")}
+
+
+def rubric(struct: list, order: list, names: dict, acts: list, efforts: tuple) -> list:
+    """Levels decision 4. One entry per level, its sentence generated from the record: which
+    legs a body must hold outright, and the cheapest action per leg (prescription layer) that
+    closes the gap for a body one level down."""
+    by_leg: dict = {}
+    for a in sorted(acts, key=lambda a: (efforts.index(a["effort_band"]), a["title"])):
+        by_leg.setdefault(a["leg"], []).append(a)
+    out = [{"level": 0, "criterion": None, "name": "no scored criterion clear", "legs": [],
+            "sentence": (f"Level 0: every body holds it. A body stays here while any scored leg "
+                         f"of criterion {order[0]} fails; one whose criterion {order[0]} "
+                         f"legs show no fail but an error or no row is reported as "
+                         f"'0 (unobservable at 1)'.") if order else "Level 0 only."}]
+    for i, k in enumerate(order, start=1):
+        legs = [l["leg"] for l in struct if l["scored"] and l["criterion"] == k]
+        below = ", ".join(order[:i - 1])
+        n_act = sum(len(by_leg.get(l, [])) for l in legs)
+        cheapest = "; ".join(
+            f"{l}: \u201c{by_leg[l][0]['title']}\u201d ({by_leg[l][0]['effort_band']})"
+            if l in by_leg else f"{l}: no publisher action on record" for l in legs)
+        out.append({
+            "level": i, "criterion": k, "name": names[k], "legs": legs,
+            "sentence": (f"Level {i}, {names[k]} (criterion {k}): a body holds it when "
+                         + (f"it holds level {i - 1} (criteri{'a' if i > 2 else 'on'} "
+                            f"{below}) and " if i > 1 else "")
+                         + (f"all {len(legs)} scored legs of criterion {k} "
+                            f"({', '.join(legs)}) pass" if len(legs) != 1 else
+                            f"the one scored leg of criterion {k} ({legs[0]}) passes")
+                         + f" outright with no error row; a body at level {i - 1} closes the "
+                           f"gap through the "
+                           f"{n_act} publisher action{'s' if n_act != 1 else ''} on "
+                           f"{'those legs' if len(legs) != 1 else 'that leg'}, the cheapest "
+                           f"per leg being {cheapest}.")})
+    return out
 
 
 def flip_delta(body_cells: dict, leg: str, struct: list, criteria: list) -> float:
@@ -294,6 +388,11 @@ def effort_order() -> tuple:
     return EFFORT_BANDS
 
 
+def criterion_names(g: dict) -> dict:
+    return {n["properties"]["code"]: n["properties"]["name"] for n in g["nodes"]
+            if "AssessmentCriterion" in n["labels"]}
+
+
 def compute(cycle: str | None = None, prior: str | None = None) -> dict:
     g = P.load_record()
     cycle = cycle or snapshot_cycle()
@@ -305,6 +404,7 @@ def compute(cycle: str | None = None, prior: str | None = None) -> dict:
     efforts = effort_order()
     scored_legs = {l["leg"] for l in struct if l["scored"]}
     acts = [a for a in P.actions(g) if a["applies_to_publisher"] and a["leg"] in scored_legs]
+    order = ladder_order(struct, crit)
 
     bodies = {}
     for b in names:
@@ -312,6 +412,7 @@ def compute(cycle: str | None = None, prior: str | None = None) -> dict:
         s = score_body(bc, struct, crit, totals=tot)
         s["cells"] = bc
         s["gating"] = gating(s, struct)
+        s["ladder"] = ladder(bc, struct, order)
         pres = []
         for a in acts:
             if bc.get(a["leg"], {}).get("fail", 0):
@@ -323,8 +424,10 @@ def compute(cycle: str | None = None, prior: str | None = None) -> dict:
         s["prescriptions"] = pres
         bodies[b] = s
     base_rank = ranks({b: v["score"] for b, v in bodies.items()})
+    flat_rank = ranks({b: v["flat"] for b, v in bodies.items()})
     for b in bodies:
         bodies[b]["rank"] = base_rank.get(b)
+        bodies[b]["flat_rank"] = flat_rank.get(b)
 
     overall = []
     n_scored = sum(v["score"] is not None for v in bodies.values())
@@ -358,6 +461,12 @@ def compute(cycle: str | None = None, prior: str | None = None) -> dict:
                       "matrices": [m["_path"] for m in matrices(cycle)]},
             "framework": tot, "structure": struct, "coverage": coverage,
             "bodies": bodies, "overall": overall,
+            "candidates": [{"id": n["id"], "promotion": n["properties"].get(
+                "candidate_promotion", "(no promotion field on the record)")}
+                for n in g["nodes"] if n["properties"].get("status") == "candidate"
+                and "AssessmentIndicator" in n["labels"]],
+            "ladder": {"order": order,
+                       "levels": rubric(struct, order, criterion_names(g), acts, efforts)},
             "sensitivity": sensitivity(struct, crit, bodies, prior or prior_cycle(cycle)),
             "coverage_sentence": COVERAGE_SENTENCE}
 
@@ -378,6 +487,8 @@ def sensitivity(struct: list, crit: list, bodies: dict, prior: str | None) -> di
         # Denominator first (decision 2): a rank that moved because the body was measured on
         # fewer legs is not the same finding as one that moved on the same legs.
         prior_legs = {b: v["coverage"]["legs"]["measured"] for b, v in ps.items()}
+    # Levels decision 1: the flat scheme is an alternative weighting of the same cells.
+    variants["flat (equal leg weights)"] = {b: v["flat"] for b, v in bodies.items()}
     measured = sorted({l["criterion"] for l in struct if l["scored"]})
     for k in measured:
         variants[f"drop criterion {k}"] = {
@@ -419,35 +530,48 @@ def header(r: dict) -> list:
             f"{_cov(c['legs_on_cycle'])} adopted harness legs; indicators measured "
             f"{_cov(c['indicators'])} in the framework ({_cov(c['harness_leg_indicators'])} "
             f"harness_leg); criteria measured {_cov(c['criteria'])}",
-            "# equal weights, hierarchical, additive (OECD/JRC 2008 default); "
-            "`scripts/score.py --explain` for every step"]
+            "# two equal-weight schemes, no basis to prefer either: hierarchical (leg to "
+            "criterion, OECD/JRC 2008 default) and flat (1/n per judged leg); readiness level "
+            "is a cumulative ladder, never an average; `scripts/score.py --explain` for every step"]
 
 
 def print_grid(r: dict) -> None:
     print("\n".join(header(r)) + "\n")
     crit = [k for k in r["framework"]["criteria"]
             if any(v["criteria"][k]["score"] is not None for v in r["bodies"].values())]
-    head = (f"{'rank':>4}  {'body':<11} {'score':>6}  " + "  ".join(f"{k:>5}" for k in crit)
+    order_l = r["ladder"]["order"]
+    head = (f"{'rank':>4}  {'body':<11} {'score':>6}  {'flat':>6} {'frank':>5}  "
+            f"{'level':<22}" + "  ".join(f"{k:>5}" for k in crit)
             + f"  {'legs':>6} {'ind':>6} {'con':>6} {'crit':>5} {'err':>4}  "
-              f"{'outright':>8}  first construct with zero passes")
+              f"{'outright':>8}  {'clear/legs by criterion':<24}  first construct with zero "
+              f"passes")
     print(head)
     print("-" * len(head))
     order = sorted(r["bodies"].items(),
                    key=lambda kv: (kv[1]["rank"] is None, kv[1]["rank"] or 0, kv[0]))
     for b, v in order:
         cv, gt = v["coverage"], v["gating"]
-        print(f"{v['rank'] or '-':>4}  {b:<11} {_f(v['score']):>6}  "
+        lad = v["ladder"]
+        per = " ".join(f"{k}{lad['per_criterion'][k]['clear']}/{lad['per_criterion'][k]['legs']}"
+                       for k in order_l)
+        print(f"{v['rank'] or '-':>4}  {b:<11} {_f(v['score']):>6}  {_f(v['flat']):>6} "
+              f"{v['flat_rank'] or '-':>5}  {lad['label']:<22}"
               + "  ".join(f"{_f(v['criteria'][k]['score']):>5}" for k in crit)
               + f"  {_cov(cv['legs']):>6} {_cov(cv['indicators']):>6} "
                 f"{_cov(cv['constructs']):>6} {_cov(cv['criteria']):>5} "
                 f"{sum(v['excluded'].values()):>4}  "
-                f"{gt['legs_passed_outright']:>3}/{gt['legs_judged']:<4}  "
+                f"{gt['legs_passed_outright']:>3}/{gt['legs_judged']:<4}  {per:<24}  "
                 f"{gt['first_zero_construct'] or '(none)'}"
                 + (f"  [+{len(gt['zero_constructs']) - 1} more]"
                    if len(gt['zero_constructs']) > 1 else ""))
-    print("\nlegs/ind/con/crit: measured of total at that level for the body; err: rows "
-          "excluded from every denominator (error, not_applicable); outright: legs whose every "
-          "judged row passed, of legs judged.")
+    print("\nscore/rank: hierarchical; flat/frank: every judged leg at 1/n. level: the "
+          "ladder over criteria " + " < ".join(order_l) + " (`--explain`); 'unobservable at k' "
+          "means no leg of the k-th failed but one errored or had no row, so the body is placed "
+          "below k and never rounded up. legs/ind/con/crit: measured of total at that level for "
+          "the body; err: rows excluded from every denominator (error, not_applicable); "
+          "outright: legs whose every judged row passed, of legs judged; clear/legs: legs that "
+          "passed outright with no error row, per criterion — the counts the level is read "
+          "from.")
 
 
 def print_body(r: dict, name: str) -> int:
@@ -458,7 +582,8 @@ def print_body(r: dict, name: str) -> int:
     v = r["bodies"][name]
     print("\n".join(header(r)))
     cv = v["coverage"]
-    print(f"\n{name}: score {_f(v['score'])}, rank {v['rank']} of "
+    print(f"\n{name}: score {_f(v['score'])} hierarchical, rank {v['rank'] or 'none'}; "
+          f"{_f(v['flat'])} flat, rank {v['flat_rank'] or 'none'}; of "
           f"{r['coverage']['bodies']['measured']}; legs {_cov(cv['legs'])}, indicators "
           f"{_cov(cv['indicators'])}, constructs {_cov(cv['constructs'])}, criteria "
           f"{_cov(cv['criteria'])}; excluded rows {v['excluded'] or 'none'}\n")
@@ -474,6 +599,18 @@ def print_body(r: dict, name: str) -> int:
     gt = v["gating"]
     print(f"gating: {gt['legs_passed_outright']} of {gt['legs_judged']} judged legs passed "
           f"outright; constructs with zero passes: {', '.join(gt['zero_constructs']) or 'none'}")
+    lad, order = v["ladder"], r["ladder"]["order"]
+    print(f"\nreadiness level: {lad['label']} — "
+          + "; ".join(f"{k}: {c['clear']} clear, {c['fail']} fail, {c['unobservable']} "
+                      f"unobservable of {c['legs']}" for k, c in lad["per_criterion"].items()))
+    nxt = lad["level"] + 1
+    if nxt <= len(order):
+        lv = r["ladder"]["levels"][nxt]
+        gap = {l["leg"] for l in r["structure"] if l["scored"] and l["criterion"] == lv["criterion"]
+               and leg_state(v["cells"].get(l["leg"], {})) != "clear"}
+        print(f"to reach level {nxt} ({lv['name']}), these legs must clear: "
+              f"{', '.join(sorted(gap))}" + ("; an unobservable leg clears only when the harness "
+                                             "can see it" if lad["unobservable_at"] else ""))
     print("\nprescription join — actions on this body's failing legs, cheapest effort band "
           "first, then by the score each would add (bands notional):")
     print(f"{'effort':<8} {'cost':<11} {'delta':>6}  {'leg':<13} action")
@@ -503,7 +640,7 @@ def print_sensitivity(r: dict) -> None:
     names = list(s["variants"])
     print("\nrank of each body under each alternative (baseline first); '-' = unscored\n")
     short = ["base"] + [n.replace("drop criterion ", "-").replace("prior cycle ", "prior")
-                        for n in names]
+                        .replace(" (equal leg weights)", "") for n in names]
     print(f"{'body':<11} " + " ".join(f"{h[:24]:>8}" for h in short))
     for b, v in sorted(r["bodies"].items(), key=lambda kv: (kv[1]["rank"] or 99, kv[0])):
         row = [v["rank"]] + [s["variants"][n]["ranks"].get(b) for n in names]
@@ -556,19 +693,23 @@ STEPS = [
      "Every leg's verdict is binary and every share is a proportion, so no rescaling is "
      "needed and none is applied."),
     ("6. Weighting and aggregation",
-     "Equal weights, hierarchical, additive: indicator = mean of its legs; construct = mean "
-     "of its measured indicators; criterion = mean of its measured constructs; body = mean of "
-     "the criteria with at least one measured construct. Beside it, a gating view in WCAG's "
-     "shape: legs passed outright, and the first construct with zero passes.",
-     "The Handbook's default where no theoretical or empirical basis for other weights "
-     "exists, and none does: departing from it would need a documented basis — a stated "
-     "priority from the working group, or an empirical relation between a leg and use of the "
-     "data — recorded before the weight. The gating view exists because an additive mean can "
-     "hide a construct with nothing in it."),
+     "Two equal-weight schemes, both shown, with the rank under each. Hierarchical: indicator "
+     "= mean of its legs; construct = mean of its measured indicators; criterion = mean of its "
+     "measured constructs; body = mean of the criteria with at least one measured construct. "
+     "Flat: body = mean of its judged legs, each at 1/n. Beside both, a gating view in WCAG's "
+     "shape (legs passed outright, and the first construct with zero passes) and the readiness "
+     "level below.",
+     "Equal weights at one level are implicit weights at the level below: hierarchically a "
+     "criterion-A leg weighs 1/40 of a body with full coverage and B3 or F4 1/4; flat, every "
+     "leg weighs the same and criterion A weighs ten legs' worth. There is no basis on disk "
+     "to prefer either, so neither is chosen and both are printed. What would settle it is a "
+     "stated priority from the working group, or an empirical relation between a leg and use "
+     "of the data, recorded before the weight. The gating view and the ladder exist because "
+     "an additive mean can hide a construct with nothing in it."),
     ("7. Uncertainty and sensitivity analysis",
      "Sensitivity, not an interval: every body is re-scored under the prior published cycle "
-     "(with the cycle of record's structure, so only the data moves) and with each measured "
-     "criterion dropped in turn; the rank changes and the mean absolute rank shift are "
+     "(with the cycle of record's structure, so only the data moves), under the flat scheme, "
+     "and with each measured criterion dropped in turn; the rank changes and the mean absolute rank shift are "
      "reported.",
      "The mean absolute shift in rank is the Handbook's own summary statistic for this step. "
      "No distributional claim is made because the bodies are a census of the FSS, not a "
@@ -587,8 +728,10 @@ STEPS = [
      "not divided; the ranking is lexicographic for that reason."),
     ("10. Visualisation of the results",
      "Nothing is published. The query prints a grid, a body page, a ranked join and a "
-     "sensitivity table to a terminal; this page documents the model and names no body.",
-     "A score on the site is a publication and is the operator's (task decision 8)."),
+     "sensitivity table to a terminal; this page documents the model and the ladder and names "
+     "no body.",
+     "A score or a level on the site is a publication and is the operator's (decision 8 of "
+     "the scoring task, decision 5 of the levels task)."),
 ]
 
 
@@ -642,13 +785,52 @@ def explain(r: dict) -> str:
     for l in r["structure"]:
         lines.append(f"| {l['criterion']} | {l['construct']} | `{l['indicator_id']}` | "
                      f"`{l['leg']}` | {'yes' if l['scored'] else 'no'} | {l['reason'] or '—'} |")
+    lad = r["ladder"]
+    lines += ["", "## Readiness levels: a cumulative ladder", "",
+              f"Generated from the record by `{TASK_LEVELS}` decisions 3 and 4; nothing below is "
+              "hand-written. The levels are the scored criteria in the framework's own order, "
+              "named by the record's criterion names.", "",
+              "**Definition.** A body is at level *k* when every scored leg of every criterion "
+              "up to the *k*-th passes outright: at least one judged row, every judged row "
+              "`pass`, and no `error` row (a leg whose every row is `not_applicable` is clear, "
+              "as WCAG reads a requirement with nothing to apply to). The walk stops at the first "
+              "criterion that is not clear. A `fail` there places the body one level below it. "
+              "No fail but an `error` or no row places it one level below as well and reports "
+              "`k-1 (unobservable at k)`: the body demonstrably holds *k*-1 and level *k* was "
+              "not observed, so it is never rounded up. A level is never an average; it re-derives "
+              "from the per-criterion clear / fail / unobservable counts that every output "
+              "prints beside it.", "",
+              "**Prior art.** JRC, *AI Watch: Revisiting Technology Readiness Levels for "
+              "Relevant AI Technologies* (in the corpus, `ai-watch-revisiting-technology-"
+              "readiness-levels-for-relevant`): §3 gives each of nine ordered levels a title and "
+              "a rubric question, Appendix A the rubric per level, §4.3 reads the levels as "
+              "ordinal and progress as cumulative. The five-star open data deployment scheme "
+              "(Berners-Lee, 2010) and WCAG conformance levels have the same shape and are cited "
+              "by reference; W3C DWBP (in the corpus) names the \u201c5 Stars of Linked Data\u201d "
+              "in Best Practice 10 without a reference entry.", "",
+              "| level | name | criterion | legs that must pass outright at this level |",
+              "|---|---|---|---|"]
+    for lv in lad["levels"]:
+        lines.append(f"| {lv['level']} | {lv['name']} | {lv['criterion'] or '—'} | "
+                     f"{', '.join(f'`{x}`' for x in lv['legs']) or '—'} |")
+    lines += ["", "### The rubric", "",
+              "One sentence per level, from the record's legs and the prescription layer's "
+              "actions (cheapest effort band per leg; bands notional).", ""]
+    lines += [f"- {lv['sentence']}" for lv in lad["levels"]]
+    lines += ["", "### Candidate indicators and the ladder", "",
+              "A candidate leg (DD-054) enters no level, as it enters no score. The record's "
+              "promotion field for each candidate, quoted:", ""]
+    for n in r["candidates"]:
+        lines.append(f"- `{n['id']}`: \u201c{n['promotion']}\u201d")
     lines += ["", "## Re-deriving a score", "",
               "`scripts/score.py --json` prints, for every body, the verdict counts per leg "
               "(`cells`) beside every score computed from them. `tests/test_score.py` "
-              "recomputes each body's score from those cells with an implementation written "
-              "independently of this script, scores a synthetic body against a hand "
-              "computation, and asserts that no coverage line claims more measured than its "
-              "total.", ""]
+              "recomputes each body's score, hierarchical and flat, from those cells with an "
+              "implementation written independently of this script, scores a synthetic body "
+              "against a hand computation, re-derives every level from the printed "
+              "per-criterion counts, asserts that no body is placed at or above a criterion "
+              "where it has an `error`, and asserts that no coverage line claims more measured "
+              "than its total.", ""]
     return "\n".join(lines)
 
 

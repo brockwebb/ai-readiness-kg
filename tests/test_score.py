@@ -221,3 +221,109 @@ def test_the_design_page_publishes_no_body_score():
     page = (REPO / "docs" / "design" / "scoring_model.md").read_text()
     for body in S.bodies_on(S.snapshot_cycle()):
         assert f"| {body} |" not in page and f"{body}:" not in page, body
+
+
+# ------------------------------------------------------------------ the flat view and the ladder
+# `cc_tasks/2026-09-18_scoring_levels.md` decisions 1, 3 and 5.
+
+def test_the_flat_score_weights_every_judged_leg_equally():
+    cells = _cells(
+        X1={"pass": 1, "fail": 1},                 # 0.5
+        X2={"pass": 3, "fail": 1, "error": 2},     # 0.75
+        X3={"fail": 2, "not_applicable": 1},       # 0.0
+        Y1={"pass": 1},                            # 1.0
+        Y9={"fail": 5},                            # candidate: never counted
+    )
+    s = S.score_body(cells, SYNTH, CRITERIA)
+    assert s["flat"] == pytest.approx((0.5 + 0.75 + 0.0 + 1.0) / 4)
+    assert S.score_body(_cells(X1={"error": 1}), SYNTH, CRITERIA)["flat"] is None
+
+
+def _lad(**legs):
+    return S.ladder(_cells(**legs), SYNTH, ["X", "Y"])
+
+
+def test_a_fail_below_holds_the_body_at_the_level_under_it():
+    lad = _lad(X1={"pass": 1}, X2={"fail": 1, "error": 1}, X3={"pass": 1}, Y1={"pass": 1})
+    assert (lad["level"], lad["unobservable_at"]) == (0, None)   # the fail decides, not the error
+
+
+def test_an_error_caps_the_level_and_is_never_rounded_up():
+    lad = _lad(X1={"pass": 1}, X2={"pass": 2}, X3={"pass": 1, "not_applicable": 1},
+               Y1={"pass": 3, "error": 1})
+    assert (lad["level"], lad["unobservable_at"]) == (1, 2)
+    assert lad["label"] == "1 (unobservable at 2)"
+    lad = _lad(X1={"error": 1}, X2={"pass": 1}, X3={"pass": 1}, Y1={"pass": 1})
+    assert (lad["level"], lad["unobservable_at"]) == (0, 1)
+
+
+def test_a_leg_with_no_rows_is_unobservable_and_only_not_applicable_is_clear():
+    assert _lad(X1={"pass": 1}, X2={"pass": 1}, Y1={"pass": 1})["unobservable_at"] == 1
+    lad = _lad(X1={"pass": 1}, X2={"not_applicable": 2}, X3={"pass": 1}, Y1={"pass": 1})
+    assert (lad["level"], lad["unobservable_at"]) == (2, None)
+
+
+def test_the_candidate_leg_never_moves_a_level():
+    base = dict(X1={"pass": 1}, X2={"pass": 1}, X3={"pass": 1}, Y1={"pass": 1})
+    assert _lad(**base, Y9={"fail": 3})["level"] == _lad(**base, Y9={"pass": 3})["level"] == 2
+
+
+def _level_from_printed(per: dict, order: list) -> tuple:
+    """The ladder, re-derived from the printed per-criterion counts alone."""
+    for k, crit in enumerate(order, start=1):
+        c = per[crit]
+        if c["clear"] == c["legs"]:
+            continue
+        return (k - 1, None) if c["fail"] else (k - 1, k)
+    return len(order), None
+
+
+def test_every_level_re_derives_from_the_printed_counts(run):
+    order = run["ladder"]["order"]
+    for name, b in run["bodies"].items():
+        lad = b["ladder"]
+        for crit, c in lad["per_criterion"].items():
+            assert c["clear"] + c["fail"] + c["unobservable"] == c["legs"], (name, crit)
+        assert (lad["level"], lad["unobservable_at"]) == \
+            _level_from_printed(lad["per_criterion"], order), name
+
+
+def test_no_body_is_placed_at_or_above_a_criterion_where_it_has_an_error(run):
+    order = run["ladder"]["order"]
+    by_leg = {l["leg"]: l["criterion"] for l in run["structure"] if l["scored"]}
+    for name, b in run["bodies"].items():
+        for leg, c in b["cells"].items():
+            if c.get("error") and leg in by_leg:
+                assert b["ladder"]["level"] < order.index(by_leg[leg]) + 1, (name, leg)
+
+
+def test_every_flat_score_re_derives_from_its_printed_cells(run):
+    for name, b in run["bodies"].items():
+        xs = []
+        for l in run["structure"]:
+            c = b["cells"].get(l["leg"], {})
+            j = c.get("pass", 0) + c.get("fail", 0)
+            if l["scored"] and j:
+                xs.append(c.get("pass", 0) / j)
+        assert b["flat"] == (pytest.approx(sum(xs) / len(xs)) if xs else None), name
+
+
+def test_the_level_names_are_the_record_criterion_names(run):
+    g = json.loads((REPO / "framework" / "ai_readiness_framework.json").read_text())
+    names = {n["properties"]["code"]: n["properties"]["name"] for n in g["nodes"]
+             if "AssessmentCriterion" in n["labels"]}
+    levels = run["ladder"]["levels"]
+    assert [lv["level"] for lv in levels] == list(range(len(run["ladder"]["order"]) + 1))
+    for lv in levels[1:]:
+        assert lv["name"] == names[lv["criterion"]]
+        assert lv["sentence"] and lv["criterion"] in lv["sentence"]
+
+
+def test_the_sensitivity_table_carries_the_flat_scheme(run):
+    assert any(v.startswith("flat") for v in run["sensitivity"]["variants"])
+
+
+def test_the_design_page_carries_the_ladder_and_both_schemes():
+    page = (REPO / "docs" / "design" / "scoring_model.md").read_text()
+    assert "## Readiness levels" in page
+    assert "flat" in page and "hierarchical" in page

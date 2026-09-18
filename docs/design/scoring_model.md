@@ -54,13 +54,13 @@ Cycle `scan_2026-09-10_rj2`, 16 bodies, matrices `docs/reports/scan_matrix_tierA
 
 ### 6. Weighting and aggregation
 
-**Choice.** Equal weights, hierarchical, additive: indicator = mean of its legs; construct = mean of its measured indicators; criterion = mean of its measured constructs; body = mean of the criteria with at least one measured construct. Beside it, a gating view in WCAG's shape: legs passed outright, and the first construct with zero passes.
+**Choice.** Two equal-weight schemes, both shown, with the rank under each. Hierarchical: indicator = mean of its legs; construct = mean of its measured indicators; criterion = mean of its measured constructs; body = mean of the criteria with at least one measured construct. Flat: body = mean of its judged legs, each at 1/n. Beside both, a gating view in WCAG's shape (legs passed outright, and the first construct with zero passes) and the readiness level below.
 
-**Why.** The Handbook's default where no theoretical or empirical basis for other weights exists, and none does: departing from it would need a documented basis — a stated priority from the working group, or an empirical relation between a leg and use of the data — recorded before the weight. The gating view exists because an additive mean can hide a construct with nothing in it.
+**Why.** Equal weights at one level are implicit weights at the level below: hierarchically a criterion-A leg weighs 1/40 of a body with full coverage and B3 or F4 1/4; flat, every leg weighs the same and criterion A weighs ten legs' worth. There is no basis on disk to prefer either, so neither is chosen and both are printed. What would settle it is a stated priority from the working group, or an empirical relation between a leg and use of the data, recorded before the weight. The gating view and the ladder exist because an additive mean can hide a construct with nothing in it.
 
 ### 7. Uncertainty and sensitivity analysis
 
-**Choice.** Sensitivity, not an interval: every body is re-scored under the prior published cycle (with the cycle of record's structure, so only the data moves) and with each measured criterion dropped in turn; the rank changes and the mean absolute rank shift are reported.
+**Choice.** Sensitivity, not an interval: every body is re-scored under the prior published cycle (with the cycle of record's structure, so only the data moves), under the flat scheme, and with each measured criterion dropped in turn; the rank changes and the mean absolute rank shift are reported.
 
 **Why.** The mean absolute shift in rank is the Handbook's own summary statistic for this step. No distributional claim is made because the bodies are a census of the FSS, not a sample.
 
@@ -78,9 +78,9 @@ Cycle `scan_2026-09-10_rj2`, 16 bodies, matrices `docs/reports/scan_matrix_tierA
 
 ### 10. Visualisation of the results
 
-**Choice.** Nothing is published. The query prints a grid, a body page, a ranked join and a sensitivity table to a terminal; this page documents the model and names no body.
+**Choice.** Nothing is published. The query prints a grid, a body page, a ranked join and a sensitivity table to a terminal; this page documents the model and the ladder and names no body.
 
-**Why.** A score on the site is a publication and is the operator's (task decision 8).
+**Why.** A score or a level on the site is a publication and is the operator's (decision 8 of the scoring task, decision 5 of the levels task).
 
 ## The legs, and whether each is scored
 
@@ -111,6 +111,38 @@ Cycle `scan_2026-09-10_rj2`, 16 bodies, matrices `docs/reports/scan_matrix_tierA
 | G | Uncertainty legibility (two legs, scored as a vector) | `ind:G1-D` | `G1-D` | no | withdrawn by DD-066, effective cycle 5 (this params_hash forward); not a leg of the cycle of record |
 | G | Authority metadata | `ind:G4` | `G4` | no | not a leg of any published matrix of the cycle of record |
 
+## Readiness levels: a cumulative ladder
+
+Generated from the record by `cc_tasks/2026-09-18_scoring_levels.md` decisions 3 and 4; nothing below is hand-written. The levels are the scored criteria in the framework's own order, named by the record's criterion names.
+
+**Definition.** A body is at level *k* when every scored leg of every criterion up to the *k*-th passes outright: at least one judged row, every judged row `pass`, and no `error` row (a leg whose every row is `not_applicable` is clear, as WCAG reads a requirement with nothing to apply to). The walk stops at the first criterion that is not clear. A `fail` there places the body one level below it. No fail but an `error` or no row places it one level below as well and reports `k-1 (unobservable at k)`: the body demonstrably holds *k*-1 and level *k* was not observed, so it is never rounded up. A level is never an average; it re-derives from the per-criterion clear / fail / unobservable counts that every output prints beside it.
+
+**Prior art.** JRC, *AI Watch: Revisiting Technology Readiness Levels for Relevant AI Technologies* (in the corpus, `ai-watch-revisiting-technology-readiness-levels-for-relevant`): §3 gives each of nine ordered levels a title and a rubric question, Appendix A the rubric per level, §4.3 reads the levels as ordinal and progress as cumulative. The five-star open data deployment scheme (Berners-Lee, 2010) and WCAG conformance levels have the same shape and are cited by reference; W3C DWBP (in the corpus) names the “5 Stars of Linked Data” in Best Practice 10 without a reference entry.
+
+| level | name | criterion | legs that must pass outright at this level |
+|---|---|---|---|
+| 0 | no scored criterion clear | — | — |
+| 1 | ACCESSIBLE | A | `A1`, `A10`, `A11-declared`, `A2`, `A3`, `A4`, `A5`, `A6`, `A8`, `A9` |
+| 2 | UNDERSTANDABLE | B | `B3` |
+| 3 | OPEN | D | `D1`, `D4` |
+| 4 | release engineering | F | `F4` |
+
+### The rubric
+
+One sentence per level, from the record's legs and the prescription layer's actions (cheapest effort band per leg; bands notional).
+
+- Level 0: every body holds it. A body stays here while any scored leg of criterion A fails; one whose criterion A legs show no fail but an error or no row is reported as '0 (unobservable at 1)'.
+- Level 1, ACCESSIBLE (criterion A): a body holds it when all 10 scored legs of criterion A (A1, A10, A11-declared, A2, A3, A4, A5, A6, A8, A9) pass outright with no error row; a body at level 0 closes the gap through the 26 publisher actions on those legs, the cheapest per leg being A1: “Publish the product as a structured download beside the PDF” (days); A10: “Make the product's own deep link resolve” (weeks); A11-declared: “Permit, in robots.txt, the AI crawlers the product is meant to reach” (hours); A2: “Serve a parseable OpenAPI description where the API is documented” (days); A3: “Add a whole-product download beside the query builder” (days); A4: “Allow the product's data paths for the AI crawlers you intend to serve” (hours); A5: “List the product URL in the discovery file that is already served” (hours); A6: “Embed JSON-LD describing the product on the product page” (hours); A8: “Declare the product's vintage in the markup, not only in a file header” (hours); A9: “Publish a machine-first entry point for the product” (days).
+- Level 2, UNDERSTANDABLE (criterion B): a body holds it when it holds level 1 (criterion A) and the one scored leg of criterion B (B3) passes outright with no error row; a body at level 1 closes the gap through the 4 publisher actions on that leg, the cheapest per leg being B3: “Link the methodology from the product page” (hours).
+- Level 3, OPEN (criterion D): a body holds it when it holds level 2 (criteria A, B) and all 2 scored legs of criterion D (D1, D4) pass outright with no error row; a body at level 2 closes the gap through the 5 publisher actions on those legs, the cheapest per leg being D1: “Publish a machine-readable licence for the product” (hours); D4: “Add the product to the public data inventory already published” (hours).
+- Level 4, release engineering (criterion F): a body holds it when it holds level 3 (criteria A, B, D) and the one scored leg of criterion F (F4) passes outright with no error row; a body at level 3 closes the gap through the 3 publisher actions on that leg, the cheapest per leg being F4: “Carry a revision class on every changelog entry” (hours).
+
+### Candidate indicators and the ladder
+
+A candidate leg (DD-054) enters no level, as it enters no score. The record's promotion field for each candidate, quoted:
+
+- `ind:A12`: “Operator decision. The framework goes out under his name and an indicator the instrument invented about itself is exactly the kind that needs a human to accept it.”
+
 ## Re-deriving a score
 
-`scripts/score.py --json` prints, for every body, the verdict counts per leg (`cells`) beside every score computed from them. `tests/test_score.py` recomputes each body's score from those cells with an implementation written independently of this script, scores a synthetic body against a hand computation, and asserts that no coverage line claims more measured than its total.
+`scripts/score.py --json` prints, for every body, the verdict counts per leg (`cells`) beside every score computed from them. `tests/test_score.py` recomputes each body's score, hierarchical and flat, from those cells with an implementation written independently of this script, scores a synthetic body against a hand computation, re-derives every level from the printed per-criterion counts, asserts that no body is placed at or above a criterion where it has an `error`, and asserts that no coverage line claims more measured than its total.
