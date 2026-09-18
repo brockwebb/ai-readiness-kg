@@ -68,6 +68,8 @@ TASK = "cc_tasks/2026-09-17_prescription_layer.md"
 #: The task that added generation 11's outcomes and actions, named on each of those actions'
 #: `authored_by` and on the write-back event it ran.
 DCAT_TASK = "cc_tasks/2026-09-18_dcat_field_rules.md"
+#: The task that added generation 12's outcomes and actions (B1's schema.org half, B2, B5, D2).
+SD_TASK = "cc_tasks/2026-09-18_schema_field_rules.md"
 _NO_RECORD_CLASS = ("the outcome covers a host serving no catalog, which needs a new file, and "
                     "a catalog without the product's record, which needs an edit; it is classed "
                     "by the larger act, which is the one most hosts on the cycle of record face")
@@ -145,6 +147,8 @@ SOURCES = {
     "dcat-us-3-dataset-schema": "corpus/kernel/dcat-us-3-dataset-schema.md",
     "w3c-json-ld-1-1-core": "corpus/kernel/w3c-json-ld-1-1-core.md",
     "lighthouse-docs-overview": "corpus/kernel/lighthouse-docs-overview.md",
+    "schema-org-definedterm": "corpus/kernel/schema-org-definedterm.md",
+    "cloudflare-content-signals-policy": "corpus/kernel/cloudflare-content-signals-policy.md",
     # Not a corpus document: the instrument's own parameters. E5's rule judges THIS cycle, so
     # its techniques are ours and its locator is the file that declares them.
     "internal:scan-params": "assessment/harness/scan/params.yaml",
@@ -244,6 +248,10 @@ OUTCOMES = {
     "B1": {
         "no_product_record": "no catalog record for the product",
         "no_data_dictionary": "lack a data dictionary (",
+        # Generation 12 (`cc_tasks/2026-09-18_schema_field_rules.md`): `RULE-B1-v2` joins the
+        # schema.org half. A B1-v2 `fail` needs both halves to fail, so its reason carries a
+        # DCAT fragment above AND this one, and both actions apply.
+        "no_variable_measured": "no `variableMeasured`",
     },
     "B4": {
         "no_product_record": "no catalog record for the product",
@@ -257,6 +265,21 @@ OUTCOMES = {
     "G4": {
         "no_product_record": "no catalog record for the product",
         "authority_codes_absent": "lack a valid `bureauCode` and `programCode`",
+    },
+    # Generation 12 (`cc_tasks/2026-09-18_schema_field_rules.md`).
+    "B2": {
+        "no_defined_terms": "no schema.org `DefinedTerm` in the product page's markup",
+        "terms_not_linked": "the terms are not linked from the ",
+        "terms_incomplete": "lack a `termCode`, an `inDefinedTermSet` or a ",
+    },
+    "B5": {
+        "no_term_codes": "no term codes: none of the body's ",
+        "codes_without_set": "codes without a set: ",
+        "codes_not_shared_across_products": "codes not shared across products: ",
+    },
+    "D2": {
+        "no_content_signal": "declares no Content-Signal for ",
+        "unknown_category": "a category or value the Content Signals Policy does not define",
     },
 }
 
@@ -445,6 +468,28 @@ Q_DCAT3_PREV = ("dcat-us-3-dataset-schema", "property `previousVersion`",
 Q_DCAT3_GENERATED = ("dcat-us-3-dataset-schema", "property `wasGeneratedBy`",
                      "List of activities that generated, or provide the business context for "
                      "the creation of the dataset")
+# schema.org and Content Signals, named by the generation-12 rules
+# (`cc_tasks/2026-09-18_schema_field_rules.md`).
+Q_SDO_VARIABLES = ("schema-org-dataset", "property `variableMeasured`",
+                   "The variableMeasured property can indicate (repeated as necessary) the "
+                   "variables that are measured in some dataset, either described as text or as "
+                   "pairs of identifier and description using PropertyValue")
+Q_SDO_TERM = ("schema-org-definedterm", "type `DefinedTerm`, description",
+              "Use the name property for the term being defined, use termCode if the term has "
+              "an alpha-numeric code allocated, use description to provide the definition of "
+              "the term.")
+Q_SDO_TERM_WHAT = ("schema-org-definedterm", "type `DefinedTerm`, description",
+                   "A word, name, acronym, phrase, etc. with a formal definition.")
+Q_SDO_TERMSET = ("schema-org-definedterm", "property `hasDefinedTerm` (on `DefinedTermSet`)",
+                 "A Defined Term contained in this term set.")
+Q_BP15 = ("w3c-dwbp-2017", "Best Practice 15 'Why'",
+          "referring to codes and terms from standards helps to avoid ambiguity and clashes "
+          "between similar elements or values.")
+Q_CS_DIRECTIVE = ("cloudflare-content-signals-policy", "'Categories'",
+                  "The Content-Signal directive works by signaling your preference of either "
+                  "allowing (yes) or disallowing (no) certain categories of AI actions.")
+Q_CS_EXAMPLE = ("cloudflare-content-signals-policy", "'Categories', example",
+                "Content-Signal: ai-train=no, search=yes, ai-input=no")
 Q_JSONLD = ("w3c-json-ld-1-1-core", "section 1 'Introduction', design goals",
             "The JSON-LD syntax is very terse and human readable, requiring as little effort "
             "as possible from the developer.")
@@ -929,6 +974,72 @@ ACTIONS = [
        "Program Inventory code (`015:001`).",
        [Q_DCAT_BUREAU, Q_DCAT_PROGRAM, Q_DCAT_BUREAU_FMT], cls="edit_existing",
        task=DCAT_TASK),
+    # -------------------------------------------------- B1, B2, B5, D2 (generation 12)
+    # `cc_tasks/2026-09-18_schema_field_rules.md`. Techniques from the documents the fields
+    # cite: `schema-org-dataset`, `schema-org-definedterm`, `cloudflare-content-signals-policy`,
+    # and W3C DWBP Best Practice 15 for the one act that is about a body rather than a page.
+    _a("B1", "no_variable_measured", "b1-list-the-variables-measured-in-the-page-markup",
+       "List the product's variables in its page markup",
+       "The product page's schema.org markup carries no `variableMeasured`, so a crawler or "
+       "an AI tool reading the page learns what the dataset is but not what it measures. Add "
+       "`variableMeasured` to the page's `Dataset`, one `PropertyValue` per variable with its "
+       "name and description.",
+       [Q_SDO_VARIABLES, Q_BP1], cls="edit_existing", task=SD_TASK),
+    _a("B2", "no_defined_terms", "b2-publish-concept-definitions-as-defined-terms",
+       "Publish the product's concept definitions as schema.org `DefinedTerm`s",
+       "The product page's markup carries no `DefinedTerm`, so the definitions of the concepts "
+       "the product counts exist, if at all, only as prose. Mark each concept up as a "
+       "`DefinedTerm` with its `name`, a `termCode`, the `inDefinedTermSet` it belongs to, and "
+       "its definition as `description`.",
+       [Q_SDO_TERM, Q_SDO_TERM_WHAT], cls="edit_existing", task=SD_TASK),
+    _a("B2", "terms_not_linked", "b2-link-defined-terms-from-the-variables",
+       "Link the defined terms from the product's variables",
+       "The page publishes `DefinedTerm`s, and no `Dataset` reaches them, so nothing machine-"
+       "readable says which variable a definition belongs to. Reference each term from the "
+       "`Dataset` — as the `measurementTechnique` of the `variableMeasured` entry it defines.",
+       [Q_SDO_VARIABLES, Q_SDO_TERM], cls="edit_existing", task=SD_TASK),
+    _a("B2", "terms_incomplete", "b2-give-each-defined-term-a-code-set-and-definition",
+       "Give each linked defined term a code, a term set and a definition",
+       "A `DefinedTerm` linked from the product's variables lacks a `termCode`, an "
+       "`inDefinedTermSet` or a `description`, so a consumer cannot tell which concept it is or "
+       "what it means. Add all three.",
+       [Q_SDO_TERM, Q_SDO_TERMSET], cls="edit_existing", task=SD_TASK),
+    _a("B5", "no_term_codes", "b5-code-the-bodys-concepts-in-one-term-set",
+       "Code the body's concepts in one published term set",
+       "None of the body's product pages carries a coded `DefinedTerm`, so nothing machine-"
+       "readable says that two products count the same concept. Publish one `DefinedTermSet` "
+       "for the body's concepts, give each a `termCode`, and reference the terms from every "
+       "product that uses them.",
+       [Q_SDO_TERM, Q_SDO_TERMSET, Q_BP15], cls="publish_new_file", task=SD_TASK,
+       class_reason=("the act the outcome needs is a term set the body does not yet publish, "
+                     "which is a new file; the per-page references that follow are edits")),
+    _a("B5", "codes_without_set", "b5-name-the-set-each-term-code-belongs-to",
+       "Name the term set each term code belongs to",
+       "Coded `DefinedTerm`s on the body's product pages carry no `inDefinedTermSet`, and a "
+       "`termCode` identifies a term only within its set, so the codes cannot be compared "
+       "across products. Add `inDefinedTermSet` to every coded term.",
+       [Q_SDO_TERM, Q_SDO_TERMSET], cls="edit_existing", task=SD_TASK),
+    _a("B5", "codes_not_shared_across_products", "b5-use-one-identifier-per-concept",
+       "Use one identifier for each concept across the body's products",
+       "A concept coded on two or more of the body's products carries a different `termCode` "
+       "or term set on each, so a machine joining the products cannot tell that they count the "
+       "same thing. Give each concept one code in one term set and use it on every product.",
+       [Q_BP15, Q_SDO_TERMSET], cls="publish_new_file", task=SD_TASK,
+       class_reason=("reconciling divergent codes means publishing the one term set every "
+                     "product will point at; the per-page edits follow from it")),
+    _a("D2", "no_content_signal", "d2-declare-ai-training-and-input-terms-in-robots-txt",
+       "Declare the terms for AI training and AI input in robots.txt",
+       "The host's robots.txt carries no `Content-Signal` for `ai-train` or `ai-input`, so the "
+       "terms for the two uses the indicator names are not machine-readable where a crawler "
+       "reads its rules. Add a `Content-Signal` line under the `User-agent` group, declaring "
+       "`ai-train` and `ai-input` as `yes` or `no`.",
+       [Q_CS_DIRECTIVE, Q_CS_EXAMPLE], cls="edit_existing", task=SD_TASK),
+    _a("D2", "unknown_category", "d2-use-only-the-defined-content-signal-categories",
+       "Use only the categories and values the Content Signals Policy defines",
+       "A `Content-Signal` in the host's robots.txt names a category or a value the policy "
+       "does not define, so a reader cannot know what it declares. Use `search`, `ai-input` "
+       "and `ai-train`, each `yes` or `no`.",
+       [Q_CS_DIRECTIVE, Q_CS_EXAMPLE], cls="edit_existing", task=SD_TASK),
 ]
 
 

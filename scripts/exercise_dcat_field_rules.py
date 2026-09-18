@@ -90,7 +90,12 @@ def enriched_groups(params: dict) -> tuple:
 def exercise() -> dict:
     import tag_prescriptions as tp
     from scan import load_params
-    from scan.rules import CURRENT, judge as judge_rule
+    from scan.rules import V11, judge as judge_rule
+    # The generation-11 rules by id, not `CURRENT`: B1's CURRENT rule became `RULE-B1-v2` in
+    # generation 12 (`cc_tasks/2026-09-18_schema_field_rules.md`), which also reads A6's markup,
+    # and this script reproduces `cc_tasks/2026-09-18_dcat_field_rules_RESULT.md` §1, which is
+    # about the four DCAT-only rules. `exercise_schema_field_rules.py` exercises v2.
+    CURRENT = {m.LEG: m.RULE_ID for m in V11}
     params = load_params()
     groups, missing, source = enriched_groups(params)
     dist: dict = {leg: Counter() for leg in LEGS}

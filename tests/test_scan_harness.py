@@ -153,8 +153,9 @@ def test_every_rule_covers_a_leg_that_has_a_measurement_spec():
     # leg the 2026-09-06 conformance review found deviating. It may only grow: a pruned entry
     # is a stored Finding that can no longer be re-derived (DD-053 §6).
     from scan.rules import CANDIDATE_LEGS, FRAMEWORK_LEGS, GENERATIONS
-    # 20 since generation 11 (`cc_tasks/2026-09-18_dcat_field_rules.md`) added B1, B4, D3, G4.
-    assert len(FRAMEWORK_LEGS) == 20, "20 framework legs; a candidate is not one of them"
+    # 20 since generation 11 (`cc_tasks/2026-09-18_dcat_field_rules.md`) added B1, B4, D3, G4;
+    # 23 since generation 12 (`cc_tasks/2026-09-18_schema_field_rules.md`) added B2, B5, D2.
+    assert len(FRAMEWORK_LEGS) == 23, "23 framework legs; a candidate is not one of them"
     assert len(BY_LEG) == len(FRAMEWORK_LEGS) + len(CANDIDATE_LEGS)
     # Summed over the GENERATIONS list rather than over four names: a fifth generation used to
     # mean editing this arithmetic, and the version of it that was forgotten would be the one

@@ -349,13 +349,14 @@ def test_what_the_skeleton_does_not_author_is_exactly_what_merge_preserves():
     # every rule. That they are preserved here is what lets the generator stay a no-op.
     # 2026-09-18: four `MeasurementSpec`s, their `MEASURED_BY` edges, nine `Action`s and their
     # `REMEDIATES` edges joined with generation 11 (`cc_tasks/2026-09-18_dcat_field_rules.md`),
-    # all written by writers the skeleton does not own.
+    # all written by writers the skeleton does not own. Then three more specs and nine more
+    # actions with generation 12 (`cc_tasks/2026-09-18_schema_field_rules.md`).
     assert Counter(n["labels"][0] for n in preserved_nodes) == \
-        {"MeasurementSpec": 26, "AssessmentConstruct": 1, "AssessmentIndicator": 1,
-         "Action": 54}
+        {"MeasurementSpec": 29, "AssessmentConstruct": 1, "AssessmentIndicator": 1,
+         "Action": 63}
     assert Counter(e["type"] for e in preserved_edges) == \
-        {"MEASURED_BY": 26, "EVIDENCED_BY_INTERNAL": 3, "DECOMPOSES_INTO": 2, "EVIDENCED_BY": 2,
-         "REMEDIATES": 54}
+        {"MEASURED_BY": 29, "EVIDENCED_BY_INTERNAL": 3, "DECOMPOSES_INTO": 2, "EVIDENCED_BY": 2,
+         "REMEDIATES": 63}
     assert set(cur["counts"]) - set(gen["counts"]) == \
         {"measurement_specs", "collectors_none_known", "rules_built",
          "specs_with_recorded_decision", "candidate_indicators", "indicators_measured",

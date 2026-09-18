@@ -69,6 +69,7 @@ TASK = "cc_tasks/2026-09-17_measurement_tiers.md"
 TASK2 = "cc_tasks/2026-09-17_unassigned_indicators.md"
 TASK3 = "cc_tasks/2026-09-18_tool_docs_ingest.md"
 TASK4 = "cc_tasks/2026-09-18_dcat_field_rules.md"
+TASK5 = "cc_tasks/2026-09-18_schema_field_rules.md"
 SCRIPT = "tag_measurement_tiers"
 RECORD = "framework/ai_readiness_framework.json"
 
@@ -110,10 +111,26 @@ RULE1_NOTES = {
     # Generation 11 (`cc_tasks/2026-09-18_dcat_field_rules.md`): four `structured_field` rows
     # that became rule 1 when their rules entered `rules.CURRENT`. What each rule leaves
     # unmeasured is printed on its every verdict as well as here.
-    "B1": ("The rule is B1's DCAT half: every catalog record for the product links a data "
-           "dictionary (`describedBy`). The schema.org `variableMeasured` half is not read yet "
-           "(cc_tasks/2026-09-18_schema_field_rules.md), and the dictionary's contents and "
-           "whether they are 'comprehensive' are not measured."),
+    # B1's note moved with `RULE-B1-v2` (`cc_tasks/2026-09-18_schema_field_rules.md`): the
+    # schema.org half joined the DCAT half, and either half passes the leg.
+    "B1": ("The rule reads both halves: every catalog record for the product links a data "
+           "dictionary (DCAT-US `describedBy`), or the product page's schema.org `Dataset` lists "
+           "`variableMeasured`; either passes the leg. The contents of the dictionary or of the "
+           "listed variables, and whether they are 'comprehensive', are not measured."),
+    # Generation 12 (`cc_tasks/2026-09-18_schema_field_rules.md`): three `structured_field`
+    # rows that became rule 1 when their rules entered `rules.CURRENT`.
+    "B2": ("The rule measures the published and linked clauses: a schema.org `DefinedTerm` "
+           "reached from the product page's `Dataset`, carrying `termCode`, `inDefinedTermSet` "
+           "and `description`. The 'versioned' clause has no field in any admitted document and "
+           "is recorded as unmeasured on every verdict."),
+    "B5": ("The rule compares the body's product pages on one cycle: a concept (a "
+           "`DefinedTerm`'s name) coded on two or more products must carry one identifier "
+           "(`termCode` within `inDefinedTermSet`). Judged once per body, on its well-known "
+           "row. The cross-vintage half is `unmeasured_until: second cycle with term codes`."),
+    "D2": ("The rule reads the machine-readable half: a `Content-Signal` directive in the "
+           "host's robots.txt that applies to the product path and declares both `ai-train` and "
+           "`ai-input`, yes or no. The prose terms of use stay a judged reading, and whether "
+           "the declaration is enforced is A12's."),
     "B4": ("The rule measures the error-measure clause (`hasQualityMeasurement`) and the "
            "revisions-policy clause (`versionNotes` / `previousVersion` / "
            "`hasCurrentVersion`) on the product's catalog record. The suppression-rules clause "
@@ -681,6 +698,12 @@ for _code in RULE1_FROM_TABLE2:
 TABLE.update(TABLE4)
 for _code in TABLE4:
     UNASSIGNED.pop(_code)
+
+#: `cc_tasks/2026-09-18_schema_field_rules.md`: the last three `structured_field` rows are
+#: served by generation 12 and leave the table, named for the reason `RULE1_FROM_TABLE2` is.
+RULE1_FROM_TABLE2_SD = ("B2", "B5", "D2")
+for _code in RULE1_FROM_TABLE2_SD:
+    TABLE.pop(_code)
 
 def rule1(record_codes: set) -> dict:
     """`{code: (leg, rule_id)}` for every indicator a rule in `rules.CURRENT` serves.

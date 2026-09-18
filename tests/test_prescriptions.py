@@ -41,18 +41,22 @@ PY = "/opt/anaconda3/bin/python3" if Path("/opt/anaconda3/bin/python3").exists()
 #: under test can only ever pass; these numbers move only when a task says they should.
 #: 45 / 17 / 90 until `cc_tasks/2026-09-18_dcat_field_rules.md` added generation 11's four legs
 #: (B1, B4, D3, G4) and one action for each of their nine failing outcomes.
-EXPECTED_ACTIONS = 54
-EXPECTED_LEGS = 21
-EXPECTED_NOTIONAL_BANDS = 108
+#: 54 / 21 / 108 until `cc_tasks/2026-09-18_schema_field_rules.md` added generation 12's three
+#: legs (B2, B5, D2), B1-v2's schema.org outcome, and one action for each of the nine outcomes.
+EXPECTED_ACTIONS = 63
+EXPECTED_LEGS = 24
+EXPECTED_NOTIONAL_BANDS = 126
 
 #: The class table of `cc_tasks/2026-09-17_notional_bands.md` decision 1, as a literal. The
 #: RESULT's §0 tables the same 45 rows with a reason for each row that is not obvious, so a
 #: reader who disputes a class disputes a number here rather than a sentence somewhere.
 #: Generation 11 added five `edit_existing` (one per field outcome) and four `publish_new_file`
 #: (each leg's `no_product_record`, which carries a `technique_class_reason`).
+#: Generation 12 added seven `edit_existing` and two `publish_new_file` (B5's `no_term_codes`
+#: and `codes_not_shared_across_products`, each carrying a `technique_class_reason`).
 EXPECTED_PER_CLASS = {
-    "edit_existing": 22,
-    "publish_new_file": 18,
+    "edit_existing": 29,
+    "publish_new_file": 20,
     "change_server_behaviour": 10,
     "expose_api": 1,
     "harness_side": 3,

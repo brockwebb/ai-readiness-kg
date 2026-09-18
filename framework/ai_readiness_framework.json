@@ -10,13 +10,13 @@
   "evidenced_by": 141,
   "evidenced_by_internal": 17,
   "gaps": 13,
-  "measurement_specs": 26,
+  "measurement_specs": 29,
   "collectors_none_known": 4,
-  "rules_built": 21,
+  "rules_built": 24,
   "specs_with_recorded_decision": 3,
   "candidate_indicators": 1,
   "indicators_measured": 16,
-  "actions": 51,
+  "actions": 60,
   "actions_on_candidate_indicators": 3
  },
  "unparsed_rows": [],
@@ -676,9 +676,9 @@
     "criterion_code": "B",
     "measurement_tier": "M",
     "measurement_basis": "harness_leg",
-    "tier_source": "rules.CURRENT['B1'] = RULE-B1-v1 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:B1`",
+    "tier_source": "rules.CURRENT['B1'] = RULE-B1-v2 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:B1`",
     "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
-    "tier_note": "The rule is B1's DCAT half: every catalog record for the product links a data dictionary (`describedBy`). The schema.org `variableMeasured` half is not read yet (cc_tasks/2026-09-18_schema_field_rules.md), and the dictionary's contents and whether they are 'comprehensive' are not measured."
+    "tier_note": "The rule reads both halves: every catalog record for the product links a data dictionary (DCAT-US `describedBy`), or the product page's schema.org `Dataset` lists `variableMeasured`; either passes the leg. The contents of the dictionary or of the listed variables, and whether they are 'comprehensive', are not measured."
    }
   },
   {
@@ -705,16 +705,14 @@
     "tier_raw": "`agency_instrumented`",
     "status": "draft",
     "evidence_raw": "`schema-org-definedterm`; `w3c-dcat-3`; internal: this KG's Definition layer",
-    "measurement_status": "specified",
+    "measurement_status": "harness_built",
     "gap": null,
     "criterion_code": "B",
     "measurement_tier": "M",
-    "measurement_basis": "structured_field",
-    "tier_source": "corpus/kernel/schema-org-definedterm.md (doc_id `schema-org-definedterm`): \"Use the name property for the term being defined, use termCode if the term has an alpha-numeric code allocated, use description to provide the definition of the term\", with `inDefinedTermSet` \"A DefinedTermSet that contains this term\" and `termCode` \"A code that identifies this DefinedTerm within a DefinedTermSet\"; the link from variables is corpus/kernel/schema-org-dataset.md, whose `measurementTechnique` expects a `DefinedTerm`; corpus/kernel/extruct-readme.md (doc_id `extruct-readme`): \"*extruct* is a library for extracting embedded metadata from HTML markup\", supporting \"embedded JSON-LD\" — the library the `structured_data` collector already runs; definition of `ind:B2`: \"Concept/term definitions published, versioned, linked from variables\"",
-    "tier_rule": "cc_tasks/2026-09-17_unassigned_indicators.md decision 2",
-    "tier_note": "No rule in rules.CURRENT yet. The 'versioned' clause has no field: no admitted document names a version property on `DefinedTerm` or `DefinedTermSet` (searched schema-org-definedterm, schema-org-dataset, w3c-dcat-3, dcat-us-3-dataset-schema). A rule would measure the published and linked clauses and record the versioned clause as unmeasured.",
-    "tier_field": "schema.org `DefinedTerm` with `termCode`, `inDefinedTermSet` and `description`",
-    "tier_collector": "`structured_data.fetch` / `structured_data.store_evidence`"
+    "measurement_basis": "harness_leg",
+    "tier_source": "rules.CURRENT['B2'] = RULE-B2-v1 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:B2`",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
+    "tier_note": "The rule measures the published and linked clauses: a schema.org `DefinedTerm` reached from the product page's `Dataset`, carrying `termCode`, `inDefinedTermSet` and `description`. The 'versioned' clause has no field in any admitted document and is recorded as unmeasured on every verdict."
    }
   },
   {
@@ -824,16 +822,14 @@
     "tier_raw": "`agency_instrumented`",
     "status": "draft",
     "evidence_raw": "**gap**",
-    "measurement_status": "specified",
+    "measurement_status": "harness_built",
     "gap": "**gap**",
     "criterion_code": "B",
     "measurement_tier": "M",
-    "measurement_basis": "structured_field",
-    "tier_source": "corpus/kernel/schema-org-definedterm.md (doc_id `schema-org-definedterm`): `termCode` is \"A code that identifies this DefinedTerm within a DefinedTermSet\" and `inDefinedTermSet` is \"A DefinedTermSet that contains this term\" — the identifier and the concept the definition compares; definition of `ind:B5`: \"Same concept ⇒ same identifier across products/vintages\"",
-    "tier_rule": "cc_tasks/2026-09-17_unassigned_indicators.md decision 2",
-    "tier_note": "No rule in rules.CURRENT yet. It would be the first rule to compare two collected surfaces rather than judge one: the cross-product half is decidable inside a single cycle, which captures many products, and the cross-vintage half across two cycles on the log. cc_tasks/2026-09-17_unassigned_indicators.md decision 5 left this undetermined; the document that names `termCode` settles the field and the collector, and the reading is in the RESULT for the operator to overturn.",
-    "tier_field": "schema.org `DefinedTerm.termCode` within `inDefinedTermSet`",
-    "tier_collector": "`structured_data.fetch` / `structured_data.store_evidence`"
+    "measurement_basis": "harness_leg",
+    "tier_source": "rules.CURRENT['B5'] = RULE-B5-v1 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:B5`",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
+    "tier_note": "The rule compares the body's product pages on one cycle: a concept (a `DefinedTerm`'s name) coded on two or more products must carry one identifier (`termCode` within `inDefinedTermSet`). Judged once per body, on its well-known row. The cross-vintage half is `unmeasured_until: second cycle with term codes`."
    }
   },
   {
@@ -1110,16 +1106,14 @@
     "tier_raw": "`agency_instrumented`",
     "status": "draft",
     "evidence_raw": "**gap**",
-    "measurement_status": "specified",
+    "measurement_status": "harness_built",
     "gap": "**gap**",
     "criterion_code": "D",
     "measurement_tier": "M",
-    "measurement_basis": "structured_field",
-    "tier_source": "corpus/kernel/cloudflare-content-signals-policy.md (doc_id `cloudflare-content-signals-policy`): \"The Content-Signal directive works by signaling your preference of either allowing (yes) or disallowing (no) certain categories of AI actions\", where `ai-train` is \"Training or fine-tuning AI models\" and `ai-input` is \"Inputting content into one or more AI models (e.g., retrieval augmented generation, grounding, or other real-time taking of content for generative AI search answers)\", carried as \"Content-Signal: ai-train=no, search=yes, ai-input=no\"; definition of `ind:D2`: \"Terms address model training/retrieval use explicitly\"",
-    "tier_rule": "cc_tasks/2026-09-17_unassigned_indicators.md decision 2",
-    "tier_note": "No rule in rules.CURRENT yet. `ai-train` and `ai-input` are the two uses the definition names — training and retrieval — and the file that carries them is already fetched and retained whole for A4, A5, A11-declared and A12. The prose terms-of-use half stays a judged reading; this assignment covers the machine-readable half. The Content Signals page's own warning that the directives are preferences and not enforcement is the A11 declared-versus-enforced split, not a bar to reading the declaration.",
-    "tier_field": "the `Content-Signal` directive in robots.txt, categories `ai-train` and `ai-input`",
-    "tier_collector": "`robots.fetch` / `robots.store_evidence`"
+    "measurement_basis": "harness_leg",
+    "tier_source": "rules.CURRENT['D2'] = RULE-D2-v1 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:D2`",
+    "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
+    "tier_note": "The rule reads the machine-readable half: a `Content-Signal` directive in the host's robots.txt that applies to the product path and declares both `ai-train` and `ai-input`, yes or no. The prose terms of use stay a judged reading, and whether the declaration is enforced is A12's."
    }
   },
   {
@@ -4192,13 +4186,12 @@
     "indicator_code": "B1",
     "leg": "B1",
     "mode": "auto",
-    "rule_id": "RULE-B1-v1",
-    "collector_pin": "assessment/harness/scan/collectors/v2clauses.py dcat_record_fields (scheme 1), over dcat.fetch_catalog's D4 observation",
-    "signal": "On D4's /data.json observation, test whether every catalog record for the product links a data dictionary (DCAT-US `describedBy`, on the dataset or a distribution).",
-    "collector": "dcat-record-fields",
-    "evidence_kind": "D4's catalog document + per-record field profile",
-    "prior_art": "`dcat-us-1-1-schema`",
-    "note": "The DCAT half of B1; the schema.org `variableMeasured` half is cc_tasks/2026-09-18_schema_field_rules.md's."
+    "rule_id": "RULE-B1-v2",
+    "collector_pin": "assessment/harness/scan/collectors/v2clauses.py dcat_record_fields (scheme 1) over D4's observation; assessment/harness/scan/rules/_schema_terms.py over A6's (`parsed.raw`, extruct>=0.17)",
+    "signal": "On D4's /data.json observation, test whether every catalog record for the product links a data dictionary (DCAT-US `describedBy`, on the dataset or a distribution); on A6's markup of the product page, test whether a schema.org `Dataset` lists `variableMeasured`. Either half passes the leg.",
+    "collector": "dcat-record-fields and schema-terms",
+    "evidence_kind": "D4's catalog document + per-record field profile; A6's extracted markup",
+    "prior_art": "`dcat-us-1-1-schema`; `schema-org-dataset`"
    }
   },
   {
@@ -4272,7 +4265,7 @@
     "cost_band": "staff_time",
     "cost_source": "notional:technique_class:publish_new_file, task 2026-09-17_notional_bands",
     "band_note": "Notional relative estimate for a typical federal statistical publisher. Adjust for your platform, staffing, skills and procurement path; the band orders actions against each other, it does not predict your calendar or budget.",
-    "verifies_by": "RULE-B1-v1",
+    "verifies_by": "RULE-B1-v2",
     "leg": "B1",
     "indicator_code": "B1",
     "outcome": "no_product_record",
@@ -4287,7 +4280,7 @@
      "constructs_served_source": "`con:B:variable-level-semantics` -[DECOMPOSES_INTO]-> `ind:B1` in framework/ai_readiness_framework.json",
      "downstream_indicators": [],
      "downstream_indicators_source": "no field of any node in framework/ai_readiness_framework.json states that another indicator presupposes this one; scanned every string property of every node for a code other than its own",
-     "bodies_failing_now_caveat": "a per-LEG count. `B1`'s rule has 2 failing outcomes, so this is an upper bound for this action alone: it is the number of bodies failing the leg, not the number failing on this outcome. The matrices of the cycle of record carry verdicts, not reasons, so the per-outcome split is not derivable from them."
+     "bodies_failing_now_caveat": "a per-LEG count. `B1`'s rule has 3 failing outcomes, so this is an upper bound for this action alone: it is the number of bodies failing the leg, not the number failing on this outcome. The matrices of the cycle of record carry verdicts, not reasons, so the per-outcome split is not derivable from them."
     },
     "authored_by": "cc_tasks/2026-09-18_dcat_field_rules.md",
     "technique_class_reason": "the outcome covers a host serving no catalog, which needs a new file, and a catalog without the product's record, which needs an edit; it is classed by the larger act, which is the one most hosts on the cycle of record face"
@@ -4311,7 +4304,7 @@
     "cost_band": "none",
     "cost_source": "notional:technique_class:edit_existing, task 2026-09-17_notional_bands",
     "band_note": "Notional relative estimate for a typical federal statistical publisher. Adjust for your platform, staffing, skills and procurement path; the band orders actions against each other, it does not predict your calendar or budget.",
-    "verifies_by": "RULE-B1-v1",
+    "verifies_by": "RULE-B1-v2",
     "leg": "B1",
     "indicator_code": "B1",
     "outcome": "no_data_dictionary",
@@ -4326,7 +4319,7 @@
      "constructs_served_source": "`con:B:variable-level-semantics` -[DECOMPOSES_INTO]-> `ind:B1` in framework/ai_readiness_framework.json",
      "downstream_indicators": [],
      "downstream_indicators_source": "no field of any node in framework/ai_readiness_framework.json states that another indicator presupposes this one; scanned every string property of every node for a code other than its own",
-     "bodies_failing_now_caveat": "a per-LEG count. `B1`'s rule has 2 failing outcomes, so this is an upper bound for this action alone: it is the number of bodies failing the leg, not the number failing on this outcome. The matrices of the cycle of record carry verdicts, not reasons, so the per-outcome split is not derivable from them."
+     "bodies_failing_now_caveat": "a per-LEG count. `B1`'s rule has 3 failing outcomes, so this is an upper bound for this action alone: it is the number of bodies failing the leg, not the number failing on this outcome. The matrices of the cycle of record carry verdicts, not reasons, so the per-outcome split is not derivable from them."
     },
     "authored_by": "cc_tasks/2026-09-18_dcat_field_rules.md"
    }
@@ -4600,6 +4593,405 @@
      "bodies_failing_now_caveat": "a per-LEG count. `G4`'s rule has 2 failing outcomes, so this is an upper bound for this action alone: it is the number of bodies failing the leg, not the number failing on this outcome. The matrices of the cycle of record carry verdicts, not reasons, so the per-outcome split is not derivable from them."
     },
     "authored_by": "cc_tasks/2026-09-18_dcat_field_rules.md"
+   }
+  },
+  {
+   "id": "spec:B2",
+   "labels": [
+    "MeasurementSpec"
+   ],
+   "properties": {
+    "indicator_code": "B2",
+    "leg": "B2",
+    "mode": "auto",
+    "rule_id": "RULE-B2-v1",
+    "collector_pin": "assessment/harness/scan/rules/_schema_terms.py over structured_data.fetch's A6 observation (`parsed.raw`, extruct>=0.17)",
+    "signal": "On A6's markup of the product page, test whether a schema.org `DefinedTerm` is reached from a `Dataset` and every such term carries `termCode`, `inDefinedTermSet` and `description`.",
+    "collector": "schema-terms",
+    "evidence_kind": "A6's extracted markup",
+    "prior_art": "`schema-org-definedterm`; `schema-org-dataset`",
+    "note": "The 'versioned' clause has no field in any admitted document and is recorded as unmeasured on every verdict."
+   }
+  },
+  {
+   "id": "spec:B5",
+   "labels": [
+    "MeasurementSpec"
+   ],
+   "properties": {
+    "indicator_code": "B5",
+    "leg": "B5",
+    "mode": "auto",
+    "rule_id": "RULE-B5-v1",
+    "collector_pin": "assessment/harness/scan/rules/_schema_terms.py over structured_data.fetch's A6 observation (`parsed.raw`, extruct>=0.17)",
+    "signal": "Once per body, over A6's markup of every product surface of the body on one cycle: test whether each concept (a `DefinedTerm` name) coded on two or more products carries one identifier (`termCode` within `inDefinedTermSet`).",
+    "collector": "schema-terms",
+    "evidence_kind": "A6's extracted markup, every product surface of the body",
+    "prior_art": "`schema-org-definedterm`",
+    "note": "Judged per body (`rules.body_groups`), on the body's well-known row. The cross-vintage half is unmeasured until a second cycle with term codes."
+   }
+  },
+  {
+   "id": "spec:D2",
+   "labels": [
+    "MeasurementSpec"
+   ],
+   "properties": {
+    "indicator_code": "D2",
+    "leg": "D2",
+    "mode": "auto",
+    "rule_id": "RULE-D2-v1",
+    "collector_pin": "assessment/harness/scan/collectors/v2clauses.py content_signals (scheme 1), over robots.fetch's A4 observation",
+    "signal": "On A4's robots.txt observation, test whether a `Content-Signal` directive applying to the product path declares both `ai-train` and `ai-input` (yes or no), and names no category or value the policy does not define.",
+    "collector": "content-signals",
+    "evidence_kind": "robots.txt body + parsed Content-Signal directives",
+    "prior_art": "`cloudflare-content-signals-policy`",
+    "note": "The machine-readable half. The prose terms of use stay a judged reading; enforcement is A12's."
+   }
+  },
+  {
+   "id": "act:b1-list-the-variables-measured-in-the-page-markup",
+   "labels": [
+    "Action"
+   ],
+   "properties": {
+    "title": "List the product's variables in its page markup",
+    "description": "The product page's schema.org markup carries no `variableMeasured`, so a crawler or an AI tool reading the page learns what the dataset is but not what it measures. Add `variableMeasured` to the page's `Dataset`, one `PropertyValue` per variable with its name and description.",
+    "technique_source": [
+     "corpus/kernel/schema-org-dataset.md (doc_id `schema-org-dataset`), property `variableMeasured`: \"The variableMeasured property can indicate (repeated as necessary) the variables that are measured in some dataset, either described as text or as pairs of identifier and description using PropertyValue\"",
+     "corpus/kernel/w3c-dwbp-2017.md (doc_id `w3c-dwbp-2017`), Best Practice 1 'Possible Approach to Implementation': \"machine-readable metadata may be provided in a serialization format such as Turtle and JSON, or it can be embedded in the HTML page using [HTML-RDFA] or [JSON-LD]\""
+    ],
+    "technique_class": "edit_existing",
+    "effort_band": "hours",
+    "effort_source": "notional:technique_class:edit_existing, task 2026-09-17_notional_bands",
+    "cost_band": "none",
+    "cost_source": "notional:technique_class:edit_existing, task 2026-09-17_notional_bands",
+    "band_note": "Notional relative estimate for a typical federal statistical publisher. Adjust for your platform, staffing, skills and procurement path; the band orders actions against each other, it does not predict your calendar or budget.",
+    "verifies_by": "RULE-B1-v2",
+    "leg": "B1",
+    "indicator_code": "B1",
+    "outcome": "no_variable_measured",
+    "applies_to_publisher": true,
+    "value": {
+     "bodies_failing_now": 0,
+     "bodies_on_the_cycle_of_record": 0,
+     "bodies_failing_now_source": "leg `B1` is on neither matrix of cycle `scan_2026-09-10_rj2` (docs/reports/publication.yaml:snapshot_cycle), so no body fails it there",
+     "constructs_served": [
+      "Variable-level semantics"
+     ],
+     "constructs_served_source": "`con:B:variable-level-semantics` -[DECOMPOSES_INTO]-> `ind:B1` in framework/ai_readiness_framework.json",
+     "downstream_indicators": [],
+     "downstream_indicators_source": "no field of any node in framework/ai_readiness_framework.json states that another indicator presupposes this one; scanned every string property of every node for a code other than its own",
+     "bodies_failing_now_caveat": "a per-LEG count. `B1`'s rule has 3 failing outcomes, so this is an upper bound for this action alone: it is the number of bodies failing the leg, not the number failing on this outcome. The matrices of the cycle of record carry verdicts, not reasons, so the per-outcome split is not derivable from them."
+    },
+    "authored_by": "cc_tasks/2026-09-18_schema_field_rules.md"
+   }
+  },
+  {
+   "id": "act:b2-publish-concept-definitions-as-defined-terms",
+   "labels": [
+    "Action"
+   ],
+   "properties": {
+    "title": "Publish the product's concept definitions as schema.org `DefinedTerm`s",
+    "description": "The product page's markup carries no `DefinedTerm`, so the definitions of the concepts the product counts exist, if at all, only as prose. Mark each concept up as a `DefinedTerm` with its `name`, a `termCode`, the `inDefinedTermSet` it belongs to, and its definition as `description`.",
+    "technique_source": [
+     "corpus/kernel/schema-org-definedterm.md (doc_id `schema-org-definedterm`), type `DefinedTerm`, description: \"Use the name property for the term being defined, use termCode if the term has an alpha-numeric code allocated, use description to provide the definition of the term.\"",
+     "corpus/kernel/schema-org-definedterm.md (doc_id `schema-org-definedterm`), type `DefinedTerm`, description: \"A word, name, acronym, phrase, etc. with a formal definition.\""
+    ],
+    "technique_class": "edit_existing",
+    "effort_band": "hours",
+    "effort_source": "notional:technique_class:edit_existing, task 2026-09-17_notional_bands",
+    "cost_band": "none",
+    "cost_source": "notional:technique_class:edit_existing, task 2026-09-17_notional_bands",
+    "band_note": "Notional relative estimate for a typical federal statistical publisher. Adjust for your platform, staffing, skills and procurement path; the band orders actions against each other, it does not predict your calendar or budget.",
+    "verifies_by": "RULE-B2-v1",
+    "leg": "B2",
+    "indicator_code": "B2",
+    "outcome": "no_defined_terms",
+    "applies_to_publisher": true,
+    "value": {
+     "bodies_failing_now": 0,
+     "bodies_on_the_cycle_of_record": 0,
+     "bodies_failing_now_source": "leg `B2` is on neither matrix of cycle `scan_2026-09-10_rj2` (docs/reports/publication.yaml:snapshot_cycle), so no body fails it there",
+     "constructs_served": [
+      "Definitions surface"
+     ],
+     "constructs_served_source": "`con:B:definitions-surface` -[DECOMPOSES_INTO]-> `ind:B2` in framework/ai_readiness_framework.json",
+     "downstream_indicators": [],
+     "downstream_indicators_source": "no field of any node in framework/ai_readiness_framework.json states that another indicator presupposes this one; scanned every string property of every node for a code other than its own",
+     "bodies_failing_now_caveat": "a per-LEG count. `B2`'s rule has 3 failing outcomes, so this is an upper bound for this action alone: it is the number of bodies failing the leg, not the number failing on this outcome. The matrices of the cycle of record carry verdicts, not reasons, so the per-outcome split is not derivable from them."
+    },
+    "authored_by": "cc_tasks/2026-09-18_schema_field_rules.md"
+   }
+  },
+  {
+   "id": "act:b2-link-defined-terms-from-the-variables",
+   "labels": [
+    "Action"
+   ],
+   "properties": {
+    "title": "Link the defined terms from the product's variables",
+    "description": "The page publishes `DefinedTerm`s, and no `Dataset` reaches them, so nothing machine-readable says which variable a definition belongs to. Reference each term from the `Dataset` — as the `measurementTechnique` of the `variableMeasured` entry it defines.",
+    "technique_source": [
+     "corpus/kernel/schema-org-dataset.md (doc_id `schema-org-dataset`), property `variableMeasured`: \"The variableMeasured property can indicate (repeated as necessary) the variables that are measured in some dataset, either described as text or as pairs of identifier and description using PropertyValue\"",
+     "corpus/kernel/schema-org-definedterm.md (doc_id `schema-org-definedterm`), type `DefinedTerm`, description: \"Use the name property for the term being defined, use termCode if the term has an alpha-numeric code allocated, use description to provide the definition of the term.\""
+    ],
+    "technique_class": "edit_existing",
+    "effort_band": "hours",
+    "effort_source": "notional:technique_class:edit_existing, task 2026-09-17_notional_bands",
+    "cost_band": "none",
+    "cost_source": "notional:technique_class:edit_existing, task 2026-09-17_notional_bands",
+    "band_note": "Notional relative estimate for a typical federal statistical publisher. Adjust for your platform, staffing, skills and procurement path; the band orders actions against each other, it does not predict your calendar or budget.",
+    "verifies_by": "RULE-B2-v1",
+    "leg": "B2",
+    "indicator_code": "B2",
+    "outcome": "terms_not_linked",
+    "applies_to_publisher": true,
+    "value": {
+     "bodies_failing_now": 0,
+     "bodies_on_the_cycle_of_record": 0,
+     "bodies_failing_now_source": "leg `B2` is on neither matrix of cycle `scan_2026-09-10_rj2` (docs/reports/publication.yaml:snapshot_cycle), so no body fails it there",
+     "constructs_served": [
+      "Definitions surface"
+     ],
+     "constructs_served_source": "`con:B:definitions-surface` -[DECOMPOSES_INTO]-> `ind:B2` in framework/ai_readiness_framework.json",
+     "downstream_indicators": [],
+     "downstream_indicators_source": "no field of any node in framework/ai_readiness_framework.json states that another indicator presupposes this one; scanned every string property of every node for a code other than its own",
+     "bodies_failing_now_caveat": "a per-LEG count. `B2`'s rule has 3 failing outcomes, so this is an upper bound for this action alone: it is the number of bodies failing the leg, not the number failing on this outcome. The matrices of the cycle of record carry verdicts, not reasons, so the per-outcome split is not derivable from them."
+    },
+    "authored_by": "cc_tasks/2026-09-18_schema_field_rules.md"
+   }
+  },
+  {
+   "id": "act:b2-give-each-defined-term-a-code-set-and-definition",
+   "labels": [
+    "Action"
+   ],
+   "properties": {
+    "title": "Give each linked defined term a code, a term set and a definition",
+    "description": "A `DefinedTerm` linked from the product's variables lacks a `termCode`, an `inDefinedTermSet` or a `description`, so a consumer cannot tell which concept it is or what it means. Add all three.",
+    "technique_source": [
+     "corpus/kernel/schema-org-definedterm.md (doc_id `schema-org-definedterm`), type `DefinedTerm`, description: \"Use the name property for the term being defined, use termCode if the term has an alpha-numeric code allocated, use description to provide the definition of the term.\"",
+     "corpus/kernel/schema-org-definedterm.md (doc_id `schema-org-definedterm`), property `hasDefinedTerm` (on `DefinedTermSet`): \"A Defined Term contained in this term set.\""
+    ],
+    "technique_class": "edit_existing",
+    "effort_band": "hours",
+    "effort_source": "notional:technique_class:edit_existing, task 2026-09-17_notional_bands",
+    "cost_band": "none",
+    "cost_source": "notional:technique_class:edit_existing, task 2026-09-17_notional_bands",
+    "band_note": "Notional relative estimate for a typical federal statistical publisher. Adjust for your platform, staffing, skills and procurement path; the band orders actions against each other, it does not predict your calendar or budget.",
+    "verifies_by": "RULE-B2-v1",
+    "leg": "B2",
+    "indicator_code": "B2",
+    "outcome": "terms_incomplete",
+    "applies_to_publisher": true,
+    "value": {
+     "bodies_failing_now": 0,
+     "bodies_on_the_cycle_of_record": 0,
+     "bodies_failing_now_source": "leg `B2` is on neither matrix of cycle `scan_2026-09-10_rj2` (docs/reports/publication.yaml:snapshot_cycle), so no body fails it there",
+     "constructs_served": [
+      "Definitions surface"
+     ],
+     "constructs_served_source": "`con:B:definitions-surface` -[DECOMPOSES_INTO]-> `ind:B2` in framework/ai_readiness_framework.json",
+     "downstream_indicators": [],
+     "downstream_indicators_source": "no field of any node in framework/ai_readiness_framework.json states that another indicator presupposes this one; scanned every string property of every node for a code other than its own",
+     "bodies_failing_now_caveat": "a per-LEG count. `B2`'s rule has 3 failing outcomes, so this is an upper bound for this action alone: it is the number of bodies failing the leg, not the number failing on this outcome. The matrices of the cycle of record carry verdicts, not reasons, so the per-outcome split is not derivable from them."
+    },
+    "authored_by": "cc_tasks/2026-09-18_schema_field_rules.md"
+   }
+  },
+  {
+   "id": "act:b5-code-the-bodys-concepts-in-one-term-set",
+   "labels": [
+    "Action"
+   ],
+   "properties": {
+    "title": "Code the body's concepts in one published term set",
+    "description": "None of the body's product pages carries a coded `DefinedTerm`, so nothing machine-readable says that two products count the same concept. Publish one `DefinedTermSet` for the body's concepts, give each a `termCode`, and reference the terms from every product that uses them.",
+    "technique_source": [
+     "corpus/kernel/schema-org-definedterm.md (doc_id `schema-org-definedterm`), type `DefinedTerm`, description: \"Use the name property for the term being defined, use termCode if the term has an alpha-numeric code allocated, use description to provide the definition of the term.\"",
+     "corpus/kernel/schema-org-definedterm.md (doc_id `schema-org-definedterm`), property `hasDefinedTerm` (on `DefinedTermSet`): \"A Defined Term contained in this term set.\"",
+     "corpus/kernel/w3c-dwbp-2017.md (doc_id `w3c-dwbp-2017`), Best Practice 15 'Why': \"referring to codes and terms from standards helps to avoid ambiguity and clashes between similar elements or values.\""
+    ],
+    "technique_class": "publish_new_file",
+    "effort_band": "days",
+    "effort_source": "notional:technique_class:publish_new_file, task 2026-09-17_notional_bands",
+    "cost_band": "staff_time",
+    "cost_source": "notional:technique_class:publish_new_file, task 2026-09-17_notional_bands",
+    "band_note": "Notional relative estimate for a typical federal statistical publisher. Adjust for your platform, staffing, skills and procurement path; the band orders actions against each other, it does not predict your calendar or budget.",
+    "verifies_by": "RULE-B5-v1",
+    "leg": "B5",
+    "indicator_code": "B5",
+    "outcome": "no_term_codes",
+    "applies_to_publisher": true,
+    "value": {
+     "bodies_failing_now": 0,
+     "bodies_on_the_cycle_of_record": 0,
+     "bodies_failing_now_source": "leg `B5` is on neither matrix of cycle `scan_2026-09-10_rj2` (docs/reports/publication.yaml:snapshot_cycle), so no body fails it there",
+     "constructs_served": [
+      "Semantic consistency"
+     ],
+     "constructs_served_source": "`con:B:semantic-consistency` -[DECOMPOSES_INTO]-> `ind:B5` in framework/ai_readiness_framework.json",
+     "downstream_indicators": [],
+     "downstream_indicators_source": "no field of any node in framework/ai_readiness_framework.json states that another indicator presupposes this one; scanned every string property of every node for a code other than its own",
+     "bodies_failing_now_caveat": "a per-LEG count. `B5`'s rule has 3 failing outcomes, so this is an upper bound for this action alone: it is the number of bodies failing the leg, not the number failing on this outcome. The matrices of the cycle of record carry verdicts, not reasons, so the per-outcome split is not derivable from them."
+    },
+    "authored_by": "cc_tasks/2026-09-18_schema_field_rules.md",
+    "technique_class_reason": "the act the outcome needs is a term set the body does not yet publish, which is a new file; the per-page references that follow are edits"
+   }
+  },
+  {
+   "id": "act:b5-name-the-set-each-term-code-belongs-to",
+   "labels": [
+    "Action"
+   ],
+   "properties": {
+    "title": "Name the term set each term code belongs to",
+    "description": "Coded `DefinedTerm`s on the body's product pages carry no `inDefinedTermSet`, and a `termCode` identifies a term only within its set, so the codes cannot be compared across products. Add `inDefinedTermSet` to every coded term.",
+    "technique_source": [
+     "corpus/kernel/schema-org-definedterm.md (doc_id `schema-org-definedterm`), type `DefinedTerm`, description: \"Use the name property for the term being defined, use termCode if the term has an alpha-numeric code allocated, use description to provide the definition of the term.\"",
+     "corpus/kernel/schema-org-definedterm.md (doc_id `schema-org-definedterm`), property `hasDefinedTerm` (on `DefinedTermSet`): \"A Defined Term contained in this term set.\""
+    ],
+    "technique_class": "edit_existing",
+    "effort_band": "hours",
+    "effort_source": "notional:technique_class:edit_existing, task 2026-09-17_notional_bands",
+    "cost_band": "none",
+    "cost_source": "notional:technique_class:edit_existing, task 2026-09-17_notional_bands",
+    "band_note": "Notional relative estimate for a typical federal statistical publisher. Adjust for your platform, staffing, skills and procurement path; the band orders actions against each other, it does not predict your calendar or budget.",
+    "verifies_by": "RULE-B5-v1",
+    "leg": "B5",
+    "indicator_code": "B5",
+    "outcome": "codes_without_set",
+    "applies_to_publisher": true,
+    "value": {
+     "bodies_failing_now": 0,
+     "bodies_on_the_cycle_of_record": 0,
+     "bodies_failing_now_source": "leg `B5` is on neither matrix of cycle `scan_2026-09-10_rj2` (docs/reports/publication.yaml:snapshot_cycle), so no body fails it there",
+     "constructs_served": [
+      "Semantic consistency"
+     ],
+     "constructs_served_source": "`con:B:semantic-consistency` -[DECOMPOSES_INTO]-> `ind:B5` in framework/ai_readiness_framework.json",
+     "downstream_indicators": [],
+     "downstream_indicators_source": "no field of any node in framework/ai_readiness_framework.json states that another indicator presupposes this one; scanned every string property of every node for a code other than its own",
+     "bodies_failing_now_caveat": "a per-LEG count. `B5`'s rule has 3 failing outcomes, so this is an upper bound for this action alone: it is the number of bodies failing the leg, not the number failing on this outcome. The matrices of the cycle of record carry verdicts, not reasons, so the per-outcome split is not derivable from them."
+    },
+    "authored_by": "cc_tasks/2026-09-18_schema_field_rules.md"
+   }
+  },
+  {
+   "id": "act:b5-use-one-identifier-per-concept",
+   "labels": [
+    "Action"
+   ],
+   "properties": {
+    "title": "Use one identifier for each concept across the body's products",
+    "description": "A concept coded on two or more of the body's products carries a different `termCode` or term set on each, so a machine joining the products cannot tell that they count the same thing. Give each concept one code in one term set and use it on every product.",
+    "technique_source": [
+     "corpus/kernel/w3c-dwbp-2017.md (doc_id `w3c-dwbp-2017`), Best Practice 15 'Why': \"referring to codes and terms from standards helps to avoid ambiguity and clashes between similar elements or values.\"",
+     "corpus/kernel/schema-org-definedterm.md (doc_id `schema-org-definedterm`), property `hasDefinedTerm` (on `DefinedTermSet`): \"A Defined Term contained in this term set.\""
+    ],
+    "technique_class": "publish_new_file",
+    "effort_band": "days",
+    "effort_source": "notional:technique_class:publish_new_file, task 2026-09-17_notional_bands",
+    "cost_band": "staff_time",
+    "cost_source": "notional:technique_class:publish_new_file, task 2026-09-17_notional_bands",
+    "band_note": "Notional relative estimate for a typical federal statistical publisher. Adjust for your platform, staffing, skills and procurement path; the band orders actions against each other, it does not predict your calendar or budget.",
+    "verifies_by": "RULE-B5-v1",
+    "leg": "B5",
+    "indicator_code": "B5",
+    "outcome": "codes_not_shared_across_products",
+    "applies_to_publisher": true,
+    "value": {
+     "bodies_failing_now": 0,
+     "bodies_on_the_cycle_of_record": 0,
+     "bodies_failing_now_source": "leg `B5` is on neither matrix of cycle `scan_2026-09-10_rj2` (docs/reports/publication.yaml:snapshot_cycle), so no body fails it there",
+     "constructs_served": [
+      "Semantic consistency"
+     ],
+     "constructs_served_source": "`con:B:semantic-consistency` -[DECOMPOSES_INTO]-> `ind:B5` in framework/ai_readiness_framework.json",
+     "downstream_indicators": [],
+     "downstream_indicators_source": "no field of any node in framework/ai_readiness_framework.json states that another indicator presupposes this one; scanned every string property of every node for a code other than its own",
+     "bodies_failing_now_caveat": "a per-LEG count. `B5`'s rule has 3 failing outcomes, so this is an upper bound for this action alone: it is the number of bodies failing the leg, not the number failing on this outcome. The matrices of the cycle of record carry verdicts, not reasons, so the per-outcome split is not derivable from them."
+    },
+    "authored_by": "cc_tasks/2026-09-18_schema_field_rules.md",
+    "technique_class_reason": "reconciling divergent codes means publishing the one term set every product will point at; the per-page edits follow from it"
+   }
+  },
+  {
+   "id": "act:d2-declare-ai-training-and-input-terms-in-robots-txt",
+   "labels": [
+    "Action"
+   ],
+   "properties": {
+    "title": "Declare the terms for AI training and AI input in robots.txt",
+    "description": "The host's robots.txt carries no `Content-Signal` for `ai-train` or `ai-input`, so the terms for the two uses the indicator names are not machine-readable where a crawler reads its rules. Add a `Content-Signal` line under the `User-agent` group, declaring `ai-train` and `ai-input` as `yes` or `no`.",
+    "technique_source": [
+     "corpus/kernel/cloudflare-content-signals-policy.md (doc_id `cloudflare-content-signals-policy`), 'Categories': \"The Content-Signal directive works by signaling your preference of either allowing (yes) or disallowing (no) certain categories of AI actions.\"",
+     "corpus/kernel/cloudflare-content-signals-policy.md (doc_id `cloudflare-content-signals-policy`), 'Categories', example: \"Content-Signal: ai-train=no, search=yes, ai-input=no\""
+    ],
+    "technique_class": "edit_existing",
+    "effort_band": "hours",
+    "effort_source": "notional:technique_class:edit_existing, task 2026-09-17_notional_bands",
+    "cost_band": "none",
+    "cost_source": "notional:technique_class:edit_existing, task 2026-09-17_notional_bands",
+    "band_note": "Notional relative estimate for a typical federal statistical publisher. Adjust for your platform, staffing, skills and procurement path; the band orders actions against each other, it does not predict your calendar or budget.",
+    "verifies_by": "RULE-D2-v1",
+    "leg": "D2",
+    "indicator_code": "D2",
+    "outcome": "no_content_signal",
+    "applies_to_publisher": true,
+    "value": {
+     "bodies_failing_now": 0,
+     "bodies_on_the_cycle_of_record": 0,
+     "bodies_failing_now_source": "leg `D2` is on neither matrix of cycle `scan_2026-09-10_rj2` (docs/reports/publication.yaml:snapshot_cycle), so no body fails it there",
+     "constructs_served": [
+      "Reuse permissions for AI"
+     ],
+     "constructs_served_source": "`con:D:reuse-permissions-for-ai` -[DECOMPOSES_INTO]-> `ind:D2` in framework/ai_readiness_framework.json",
+     "downstream_indicators": [],
+     "downstream_indicators_source": "no field of any node in framework/ai_readiness_framework.json states that another indicator presupposes this one; scanned every string property of every node for a code other than its own",
+     "bodies_failing_now_caveat": "a per-LEG count. `D2`'s rule has 2 failing outcomes, so this is an upper bound for this action alone: it is the number of bodies failing the leg, not the number failing on this outcome. The matrices of the cycle of record carry verdicts, not reasons, so the per-outcome split is not derivable from them."
+    },
+    "authored_by": "cc_tasks/2026-09-18_schema_field_rules.md"
+   }
+  },
+  {
+   "id": "act:d2-use-only-the-defined-content-signal-categories",
+   "labels": [
+    "Action"
+   ],
+   "properties": {
+    "title": "Use only the categories and values the Content Signals Policy defines",
+    "description": "A `Content-Signal` in the host's robots.txt names a category or a value the policy does not define, so a reader cannot know what it declares. Use `search`, `ai-input` and `ai-train`, each `yes` or `no`.",
+    "technique_source": [
+     "corpus/kernel/cloudflare-content-signals-policy.md (doc_id `cloudflare-content-signals-policy`), 'Categories': \"The Content-Signal directive works by signaling your preference of either allowing (yes) or disallowing (no) certain categories of AI actions.\"",
+     "corpus/kernel/cloudflare-content-signals-policy.md (doc_id `cloudflare-content-signals-policy`), 'Categories', example: \"Content-Signal: ai-train=no, search=yes, ai-input=no\""
+    ],
+    "technique_class": "edit_existing",
+    "effort_band": "hours",
+    "effort_source": "notional:technique_class:edit_existing, task 2026-09-17_notional_bands",
+    "cost_band": "none",
+    "cost_source": "notional:technique_class:edit_existing, task 2026-09-17_notional_bands",
+    "band_note": "Notional relative estimate for a typical federal statistical publisher. Adjust for your platform, staffing, skills and procurement path; the band orders actions against each other, it does not predict your calendar or budget.",
+    "verifies_by": "RULE-D2-v1",
+    "leg": "D2",
+    "indicator_code": "D2",
+    "outcome": "unknown_category",
+    "applies_to_publisher": true,
+    "value": {
+     "bodies_failing_now": 0,
+     "bodies_on_the_cycle_of_record": 0,
+     "bodies_failing_now_source": "leg `D2` is on neither matrix of cycle `scan_2026-09-10_rj2` (docs/reports/publication.yaml:snapshot_cycle), so no body fails it there",
+     "constructs_served": [
+      "Reuse permissions for AI"
+     ],
+     "constructs_served_source": "`con:D:reuse-permissions-for-ai` -[DECOMPOSES_INTO]-> `ind:D2` in framework/ai_readiness_framework.json",
+     "downstream_indicators": [],
+     "downstream_indicators_source": "no field of any node in framework/ai_readiness_framework.json states that another indicator presupposes this one; scanned every string property of every node for a code other than its own",
+     "bodies_failing_now_caveat": "a per-LEG count. `D2`'s rule has 2 failing outcomes, so this is an upper bound for this action alone: it is the number of bodies failing the leg, not the number failing on this outcome. The matrices of the cycle of record carry verdicts, not reasons, so the per-outcome split is not derivable from them."
+    },
+    "authored_by": "cc_tasks/2026-09-18_schema_field_rules.md"
    }
   }
  ],
@@ -7024,7 +7416,7 @@
    "to": "ind:B1",
    "properties": {
     "outcome": "no_product_record",
-    "rule_id": "RULE-B1-v1",
+    "rule_id": "RULE-B1-v2",
     "leg": "B1",
     "reason_fragment": "no catalog record for the product"
    }
@@ -7035,7 +7427,7 @@
    "to": "ind:B1",
    "properties": {
     "outcome": "no_data_dictionary",
-    "rule_id": "RULE-B1-v1",
+    "rule_id": "RULE-B1-v2",
     "leg": "B1",
     "reason_fragment": "lack a data dictionary ("
    }
@@ -7115,6 +7507,120 @@
     "rule_id": "RULE-G4-v1",
     "leg": "G4",
     "reason_fragment": "lack a valid `bureauCode` and `programCode`"
+   }
+  },
+  {
+   "from": "ind:B2",
+   "type": "MEASURED_BY",
+   "to": "spec:B2"
+  },
+  {
+   "from": "ind:B5",
+   "type": "MEASURED_BY",
+   "to": "spec:B5"
+  },
+  {
+   "from": "ind:D2",
+   "type": "MEASURED_BY",
+   "to": "spec:D2"
+  },
+  {
+   "from": "act:b1-list-the-variables-measured-in-the-page-markup",
+   "type": "REMEDIATES",
+   "to": "ind:B1",
+   "properties": {
+    "outcome": "no_variable_measured",
+    "rule_id": "RULE-B1-v2",
+    "leg": "B1",
+    "reason_fragment": "no `variableMeasured`"
+   }
+  },
+  {
+   "from": "act:b2-publish-concept-definitions-as-defined-terms",
+   "type": "REMEDIATES",
+   "to": "ind:B2",
+   "properties": {
+    "outcome": "no_defined_terms",
+    "rule_id": "RULE-B2-v1",
+    "leg": "B2",
+    "reason_fragment": "no schema.org `DefinedTerm` in the product page's markup"
+   }
+  },
+  {
+   "from": "act:b2-link-defined-terms-from-the-variables",
+   "type": "REMEDIATES",
+   "to": "ind:B2",
+   "properties": {
+    "outcome": "terms_not_linked",
+    "rule_id": "RULE-B2-v1",
+    "leg": "B2",
+    "reason_fragment": "the terms are not linked from the "
+   }
+  },
+  {
+   "from": "act:b2-give-each-defined-term-a-code-set-and-definition",
+   "type": "REMEDIATES",
+   "to": "ind:B2",
+   "properties": {
+    "outcome": "terms_incomplete",
+    "rule_id": "RULE-B2-v1",
+    "leg": "B2",
+    "reason_fragment": "lack a `termCode`, an `inDefinedTermSet` or a "
+   }
+  },
+  {
+   "from": "act:b5-code-the-bodys-concepts-in-one-term-set",
+   "type": "REMEDIATES",
+   "to": "ind:B5",
+   "properties": {
+    "outcome": "no_term_codes",
+    "rule_id": "RULE-B5-v1",
+    "leg": "B5",
+    "reason_fragment": "no term codes: none of the body's "
+   }
+  },
+  {
+   "from": "act:b5-name-the-set-each-term-code-belongs-to",
+   "type": "REMEDIATES",
+   "to": "ind:B5",
+   "properties": {
+    "outcome": "codes_without_set",
+    "rule_id": "RULE-B5-v1",
+    "leg": "B5",
+    "reason_fragment": "codes without a set: "
+   }
+  },
+  {
+   "from": "act:b5-use-one-identifier-per-concept",
+   "type": "REMEDIATES",
+   "to": "ind:B5",
+   "properties": {
+    "outcome": "codes_not_shared_across_products",
+    "rule_id": "RULE-B5-v1",
+    "leg": "B5",
+    "reason_fragment": "codes not shared across products: "
+   }
+  },
+  {
+   "from": "act:d2-declare-ai-training-and-input-terms-in-robots-txt",
+   "type": "REMEDIATES",
+   "to": "ind:D2",
+   "properties": {
+    "outcome": "no_content_signal",
+    "rule_id": "RULE-D2-v1",
+    "leg": "D2",
+    "reason_fragment": "declares no Content-Signal for "
+   }
+  },
+  {
+   "from": "act:d2-use-only-the-defined-content-signal-categories",
+   "type": "REMEDIATES",
+   "to": "ind:D2",
+   "properties": {
+    "outcome": "unknown_category",
+    "rule_id": "RULE-D2-v1",
+    "leg": "D2",
+    "reason_fragment": "a category or value the Content Signals Policy does not define"
    }
   }
  ],

@@ -363,6 +363,55 @@ def dcat_record_fields(catalog, product_url: str, params: dict) -> dict:
             "catalog_records_carrying": catalog_carrying}
 
 
+# ------------------------------------------------------------------ D2: Content-Signal
+#: The shape of `content_signals`' output. A rule reading an A4 observation checks it before
+#: trusting any key, as the DCAT field rules check `DCAT_FIELDS_SCHEME`.
+CONTENT_SIGNAL_SCHEME = 1
+
+
+def content_signals(body: bytes, product_url: str, params: dict) -> dict:
+    """Every `Content-Signal` directive in a robots.txt body, parsed. A pure parse of the file
+    A4 already fetched and stored; nothing decides here.
+
+    `cc_tasks/2026-09-18_schema_field_rules.md` decision 6. The grammar is the one
+    `corpus/kernel/cloudflare-content-signals-policy.md` (doc_id
+    `cloudflare-content-signals-policy`) shows: `Content-Signal: ai-train=no, search=yes,
+    ai-input=no`, optionally led by a path — `Content-Signal: /blog/ ai-train=no, …` — that
+    scopes it to the pages under that path. `protego` ignores the directive (it is not in RFC
+    9309), which is why it is read here and not by the robots collector's parser.
+
+    Each directive records whether it APPLIES to the product: unscoped, or scoped to a path the
+    product's path starts with. The `User-Agent` group it sits in is not read: the declaration
+    is the host's to whoever reads it, and the policy's own examples put it under `*`.
+    """
+    spec = params["content_signal"]
+    name = spec["directive"].lower()
+    product_path = urllib.parse.urlsplit(product_url).path or "/"
+    out = []
+    for line in body.decode("utf-8", "replace").splitlines():
+        line = line.split("#", 1)[0].strip()
+        key, sep, value = line.partition(":")
+        if not sep or key.strip().lower() != name:
+            continue
+        value = value.strip()
+        path = None
+        if value.startswith("/"):
+            path, _, value = value.partition(" ")
+        signals, malformed = {}, []
+        for pair in (p.strip() for p in value.split(",")):
+            if not pair:
+                continue
+            k, eq, v = pair.partition("=")
+            if not eq or not k.strip():
+                malformed.append(pair)
+                continue
+            signals[k.strip().lower()] = v.strip().lower()
+        out.append({"path": path, "signals": dict(sorted(signals.items())),
+                    "malformed": malformed,
+                    "applies": path is None or product_path.startswith(path)})
+    return {"scheme": CONTENT_SIGNAL_SCHEME, "directives": out}
+
+
 # ------------------------------------------------------------------ F4: revision class
 def changelog_entries(body: bytes, content_type: str, params: dict) -> dict:
     """F4's signal: "test whether it is machine-readable **and carries a revision class per

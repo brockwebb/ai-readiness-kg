@@ -25,8 +25,8 @@ from scan import errors as _errors                             # noqa: E402
 from scan import load_params                                   # noqa: E402
 from scan.model import (Observation, SYNTHETIC_PREFIXES,       # noqa: E402
                         params_hash)
-from scan.rules import (CANDIDATE_LEGS, CURRENT, FRAMEWORK_LEGS,   # noqa: E402
-                        consumes, judge as judge_rule)
+from scan.rules import (BODY_LEGS, CANDIDATE_LEGS, CURRENT,       # noqa: E402
+                        FRAMEWORK_LEGS, body_groups, consumes, judge as judge_rule)
 from scan.runner import collect_leg                            # noqa: E402
 
 FRAMEWORK = REPO / "framework" / "ai_readiness_framework.json"
@@ -111,7 +111,11 @@ CONTROLS_OUT = REPO / "state" / "scan_controls_2026-09-06.json"
 #: Legs the control fixtures are built to exercise. E5 judges the cycle, not a surface.
 #: The product legs. E5 judges the cycle, and A12 judges a HOST — running either against a
 #: product surface would manufacture a verdict about the wrong subject.
-CONTROL_LEGS = [l for l in FRAMEWORK_LEGS if l != "E5"]
+#:
+#: A BODY leg (`rules.BODY_LEGS`, B5 since generation 12) is not a leg of any surface either: it
+#: is judged once per body after every surface is collected (`judge_bodies`), so it is not in
+#: this list and no surface — control or real — is ever judged on it by `run_surface`.
+CONTROL_LEGS = [l for l in FRAMEWORK_LEGS if l != "E5" and l not in BODY_LEGS]
 
 #: What the control fixtures are scanned with. A12 is included even though it is a candidate:
 #: an unexercised rule in a cycle is an unexercised rule, and DD-019's decoy discipline does
@@ -148,7 +152,10 @@ def run_surface(sp: dict, target: dict, params: dict, legs: list, fetcher=None) 
     produce different `finding_id`s from identical evidence.
     """
     obs, findings = [], []
-    wanted = [l for l in legs if sp.get(l) is not None]
+    # A body leg is never judged here, whoever asks: its group spans surfaces
+    # (`rules.scope`), and judging it over one surface's observations would be a verdict about
+    # a body from a fraction of its evidence.
+    wanted = [l for l in legs if sp.get(l) is not None and l not in BODY_LEGS]
     shared_legs = sorted({c for l in wanted for c in consumes(CURRENT[l])})
     shared: dict = {}
     for sl in shared_legs:
@@ -169,6 +176,24 @@ def run_surface(sp: dict, target: dict, params: dict, legs: list, fetcher=None) 
         group = o + [x for c in consumes(CURRENT[leg]) for x in shared.get(c, [])]
         findings.append(judge_rule(CURRENT[leg], group, params))
     return obs, findings
+
+
+def judge_bodies(sp: dict, params: dict, observations: list) -> list:
+    """The Findings of every BODY leg, over a cycle's collected observations.
+
+    `cc_tasks/2026-09-18_schema_field_rules.md` decision 5: B5 compares a body's products, so it
+    can be judged only after all of them are collected. The groups come from
+    `rules.body_groups`, the function `rederive.py` re-derives with; a leg with no
+    `MeasurementSpec` is not judged, the same condition `run_surface` applies.
+    """
+    out = []
+    for leg in BODY_LEGS:
+        if sp.get(leg) is None:
+            continue
+        rule_id = CURRENT[leg]
+        for _body, group in body_groups(rule_id, observations, params).items():
+            out.append(judge_rule(rule_id, group, params))
+    return out
 
 
 def expected_verdict(table, leg: str) -> str:
@@ -499,6 +524,19 @@ def main(argv=None) -> int:
         print(f"  {t['agency']:8s} {t['surface_kind']:10s} {t['doc_id'][:40]:42s} {marks}",
               flush=True)
 
+    # Body legs, judged once every surface is in (`judge_bodies`). Each Finding's target is the
+    # body's well-known row, so its verdict is recorded on that row of the matrix; a Finding
+    # whose body has no row is listed rather than dropped.
+    body_findings = judge_bodies(sp, params, all_obs)
+    all_find += body_findings
+    by_doc = {r["doc_id"]: r for r in rows}
+    body_without_row = []
+    for f in body_findings:
+        if f.target_doc_id in by_doc:
+            by_doc[f.target_doc_id]["verdicts"][f.leg] = f.verdict
+        else:
+            body_without_row.append(f.target_doc_id)
+
     # E5-v2's first clause — "both control fixtures are scanned before any real host" — is
     # only falsifiable against a timestamp. The gate above already ran and already stopped the
     # cycle if a control misfired; this re-judges E5 with the ordering evidence now that there
@@ -550,6 +588,8 @@ def main(argv=None) -> int:
         "requests_total": sum(fetcher.requests.values()),
         "legs_erroring_on_every_surface": [l for l, n in by_leg_err.items()
                                            if rows and n == len(rows)],
+        "body_legs": list(BODY_LEGS),
+        "body_findings_without_a_row": body_without_row,
         "matrix": rows,
         "control_findings_detail": [f.to_dict() for f in cf] + [e5.to_dict()],
         "findings_detail": [f.to_dict() for f in all_find],

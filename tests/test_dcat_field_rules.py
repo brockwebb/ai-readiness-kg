@@ -99,11 +99,13 @@ def _judge(leg, obs, params):
 # ------------------------------------------------------------------ registration
 
 def test_generation_eleven_is_four_first_versions_and_they_are_current():
-    assert GENERATIONS[-1] is V11
+    assert V11 in GENERATIONS
     assert {m.RULE_ID for m in V11} == set(RULES.values())
     for leg, rid in RULES.items():
-        assert CURRENT[leg] == rid
         assert REGISTRY[rid].LEG == leg
+        # B1 moved to `RULE-B1-v2` in generation 12 (`cc_tasks/2026-09-18_schema_field_rules.md`),
+        # which joins the schema.org half; v1 stays in REGISTRY and is what this file tests.
+        assert CURRENT[leg] == ("RULE-B1-v2" if leg == "B1" else rid)
 
 
 def test_each_rule_reads_d4s_catalog_and_declares_its_claim_and_subject():
@@ -187,7 +189,10 @@ def test_every_failing_fixture_fails_with_its_outcomes_fragment(params):
         f = _judge(leg, o, params)
         assert f.verdict == "fail", (leg, outcome, f.reason)
         assert tp.OUTCOMES[leg][outcome] in f.reason, (leg, outcome, f.reason)
-    named = {(leg, o) for leg in LEGS for o in tp.OUTCOMES[leg]}
+    # `no_variable_measured` is B1-v2's schema.org outcome (generation 12), tested in
+    # `tests/test_schema_field_rules.py`; every other B1 outcome is v1's and is here.
+    named = {(leg, o) for leg in LEGS for o in tp.OUTCOMES[leg]
+             if (leg, o) != ("B1", "no_variable_measured")}
     assert named == set(fixtures), "an outcome with no fixture, or a fixture with no outcome"
 
 
@@ -328,13 +333,16 @@ def test_a_cycle_fetches_the_catalog_once_and_judges_d4_and_the_field_legs_from_
     f = _CountingFetcher(_catalog(_record()))
     obs, findings = run_surface(sp, {"doc_id": "scan-fixture", "url": PRODUCT}, params, legs,
                                 fetcher=f)
-    assert f.gets == [CATALOG]
-    assert len(obs) == 1 and obs[0].leg == "D4"
+    # Since generation 12 B1's CURRENT rule (`RULE-B1-v2`) also reads A6's markup of the page,
+    # so the surface is asked for the page once and for the catalog once — still never twice.
+    assert f.gets.count(CATALOG) == 1
+    d4 = [o for o in obs if o.leg == "D4"]
+    assert len(d4) == 1 and {o.leg for o in obs} <= {"D4", "A6"}
     by_leg = {x.leg: x for x in findings}
     assert set(by_leg) == set(legs)
     for leg in LEGS:
         assert by_leg[leg].verdict == "pass", (leg, by_leg[leg].reason)
-        assert by_leg[leg].evidence == [obs[0].obs_id]
+        assert d4[0].obs_id in by_leg[leg].evidence
     # D4 alone, as it was judged before generation 11 existed: the same Finding.
     alone = run_surface({"D4": {"leg": "D4"}}, {"doc_id": "scan-fixture", "url": PRODUCT},
                         params, ["D4"], fetcher=_CountingFetcher(_catalog(_record())))[1][0]

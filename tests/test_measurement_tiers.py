@@ -43,7 +43,9 @@ sys.path.insert(0, str(REPO / "assessment" / "harness"))
 #: -> `harness_leg` when generation 11's rules entered `rules.CURRENT`, and E1 and E3 took M,
 #: `judged_reading` (decision 5).
 EXPECTED_PER_TIER = {"M": 36, "O": 5, "D": 5}
-EXPECTED_PER_BASIS = {"harness_leg": 21, "structured_field": 3, "judged_reading": 4,
+#: `structured_field` is empty since generation 12 (`cc_tasks/2026-09-18_schema_field_rules.md`):
+#: B2, B5 and D2, its last three rows, are `harness_leg`.
+EXPECTED_PER_BASIS = {"harness_leg": 24, "judged_reading": 4,
                       "evaluation": 8, "open_tool": 5, "declaration": 5}
 EXPECTED_UNASSIGNED = {"B6", "G3", "G5"}
 #: Decision 3's shopping list: named on a row that is still unassigned, never on a tiered one.

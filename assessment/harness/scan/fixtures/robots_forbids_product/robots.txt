@@ -10,6 +10,8 @@
 # The robots.txt fetch itself is OBSERVED (200, parseable), so A4, A11-declared and A12 read a
 # real declared layer rather than an absence.
 User-agent: *
+# Content-Signal (contentsignals.org): D2 reads that training and AI input are ADDRESSED.
+Content-Signal: ai-train=yes, search=yes, ai-input=yes
 Allow: /
 Disallow: /bulk/
 Disallow: /estimates-latest.csv

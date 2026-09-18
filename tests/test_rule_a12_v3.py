@@ -257,8 +257,12 @@ def test_every_rule_that_calls_unobserved_error_still_reaches_the_same_verdicts(
     # after `reason_text: 2` existed. Each calls the guard on the catalog observation it scores
     # on, which `_dcat_fields.read` has already found served, so no scheme can reach a verdict of
     # theirs through it; they are listed so a fifth caller still has to be named here.
+    # Generation 12 (`cc_tasks/2026-09-18_schema_field_rules.md`) added four more, for the same
+    # reason and in the same position: each calls the guard on a probe it has already found
+    # observed (A6's page, A4's robots.txt, or a product surface of the body).
     assert callers == ["rule_a10_v3", "rule_a5_v2", "rule_a8_v3", "rule_a8_v4", "rule_b1",
-                       "rule_b4", "rule_d3", "rule_g4"], callers
+                       "rule_b1_v2", "rule_b2", "rule_b4", "rule_b5", "rule_d2", "rule_d3",
+                       "rule_g4"], callers
     base = load_params()
     for scheme in (1, 2):
         params = {**base, "reason_text": scheme}
@@ -306,7 +310,10 @@ def test_the_fixture_is_in_the_pre_registered_control_table():
     from scan.fixtures.server import MODES
     assert sorted(params["e5_control"]["expected_verdicts"]) == sorted(MODES)
     row = params["e5_control"]["expected_verdicts"]["robots_404_html"]
-    assert row == {"default": "pass", "A4": "fail", "A11-declared": "fail", "A12": "fail"}
+    # D2 joined with generation 12 (`cc_tasks/2026-09-18_schema_field_rules.md`): it reads the
+    # declared layer as A4 does, and this fixture serves no robots.txt.
+    assert row == {"default": "pass", "A4": "fail", "A11-declared": "fail", "A12": "fail",
+                   "D2": "fail"}
 
 
 # ------------------------------------------------------------------ the re-judgement

@@ -25,7 +25,7 @@ from scan import errors                                        # noqa: E402
 from scan import load_params                                   # noqa: E402
 from scan.model import Observation, params_hash                # noqa: E402
 from scan.rules import (CANDIDATE_LEGS, CURRENT, REGISTRY,      # noqa: E402
-                        consumes, judge as judge_rule)
+                        body_groups, consumes, judge as judge_rule, scope)
 
 #: The task that ordered the re-judgement mode, recorded on every payload it writes.
 TASK = "cc_tasks/2026-09-08_scan_harness_v4.md"
@@ -124,8 +124,18 @@ def rederive(payload: dict, params: dict) -> dict:
     # from the cycle that recorded the Finding.
     docs = sorted({d for d, _ in by_key})
     rederived, mismatches = {}, []
+    # A BODY rule (`rules.scope`) is judged over `rules.body_groups`, exactly as `run.py`
+    # judged it, and never per surface: per surface it would re-derive a Finding the cycle
+    # never recorded, for every surface of the body.
+    surface_rules = sorted(r for r in wanted
+                           if REGISTRY.get(r) is not None and scope(r) == "surface")
+    for rule_id in sorted(r for r in wanted
+                          if REGISTRY.get(r) is not None and scope(r) == "body"):
+        for _body, group in body_groups(rule_id, obs, params).items():
+            f = judge_rule(rule_id, group, params)
+            rederived[f.finding_id] = f.to_dict()
     for doc_id in docs:
-        for rule_id in sorted(r for r in wanted if REGISTRY.get(r) is not None):
+        for rule_id in surface_rules:
             group = list(by_key.get((doc_id, REGISTRY[rule_id].LEG), []))
             for c in consumes(rule_id):
                 group += by_key.get((doc_id, c), [])
@@ -229,6 +239,9 @@ def rejudge(payload: dict, params: dict, cycle: str | None = None,
             not_judged[leg] = f"{src_cycle} recorded no observation on leg {leg}"
             continue
         judgeable.append(leg)
+    # Body legs are judged once per body below, never per surface (`rules.scope`).
+    body_legs = [l for l in judgeable if scope(CURRENT[l]) == "body"]
+    judgeable = [l for l in judgeable if l not in body_legs]
 
     findings, matrix_rows = [], []
     src_rows = {r["doc_id"]: r for r in payload.get("matrix") or []}
@@ -251,6 +264,15 @@ def rejudge(payload: dict, params: dict, cycle: str | None = None,
                             "admitted": src.get("admitted", True),
                             "verdicts": verdicts,
                             "verdicts_as_measured": src.get("verdicts", {})})
+
+    rows_by_doc = {r["doc_id"]: r for r in matrix_rows}
+    for leg in body_legs:
+        for _body, group in body_groups(CURRENT[leg], obs, params).items():
+            f = judge_rule(CURRENT[leg], group, params)
+            findings.append(f)
+            if f.target_doc_id in rows_by_doc:
+                rows_by_doc[f.target_doc_id]["verdicts"][leg] = f.verdict
+    judgeable = sorted(judgeable + body_legs)
 
     changed = {leg: {"source": source_rules.get(leg), "current": CURRENT[leg]}
                for leg in judgeable

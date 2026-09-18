@@ -450,6 +450,28 @@ e5_control:
   # (`pass`); `fails_all` serves no `/data.json`, a 404 is observed (`fail`, no catalog record);
   # `refuses_identified_client` and `resets_connection` blind the catalog (`error`, via
   # `_common.only_errors`); the other five serve `passes_all`'s `/data.json` unblinded (`pass`).
+  #
+  # **Generation 12 (`cc_tasks/2026-09-18_schema_field_rules.md`): B1 (now `RULE-B1-v2`), B2 and
+  # D2.** Derived from the rule source before the fixtures were run with them. `passes_all`'s
+  # page now carries a `variableMeasured` whose `measurementTechnique` is a complete
+  # `DefinedTerm`, and its robots.txt — and the three fixtures that serve their own robots.txt
+  # with `passes_all`'s content (`refuses_identified_client`, `robots_forbids_product`,
+  # `sitemap_on_sibling`) — a `Content-Signal` declaring `ai-train` and `ai-input`. So:
+  #   B1, B2  take every fixture's default. B1-v2 passes where either half passes and errs where
+  #           an unpassed half is blind: `refuses_identified_client` blinds the page and the
+  #           catalog (`error`), `resets_connection` everything (`error`), `fails_all` serves no
+  #           catalog and a page with no markup (`fail`); the rest serve `passes_all`'s page and
+  #           catalog unblinded (`pass`). B2 reads only the page, which the same fixtures blind or
+  #           strip the same way.
+  #   D2      reads the DECLARED layer, like A4, so it departs from the default exactly where A4
+  #           does: `refuses_identified_client` serves its robots.txt (200) with the signal
+  #           (`pass`), and `robots_404_html` serves none (`fail`, "no robots.txt served").
+  #           `fails_all` answers /robots.txt with an HTML shell, which the collector reads as
+  #           absent (`fail`, the default).
+  #   B5      is judged per BODY after a cycle's surfaces (`run.judge_bodies`), never per
+  #           surface, and each fixture is served on its own port — so no control fixture is a
+  #           body with two products and B5 appears in no row here. Its fixtures are in
+  #           `tests/test_schema_field_rules.py`.
   expected_verdicts:
     passes_all: "pass"
     fails_all: "fail"
@@ -523,11 +545,13 @@ e5_control:
       A4: "fail"
       A11-declared: "fail"
       A12: "fail"
+      D2: "fail"
     refuses_identified_client:
       default: "error"
       A4: "pass"
       A11-declared: "pass"
       A12: "fail"
+      D2: "pass"
     # The socket is reset before any response, robots.txt included. Every collector raises,
     # `errors.classify_exception` returns `connection_reset`, which is blind — so every leg is
     # `error`, with no exceptions. A12 lands on its "the robots/probe pair was not collected"
@@ -810,6 +834,39 @@ dcat_fields:
                          "prov:wasDerivedFrom"]}
     G4:
       authority_codes: {all_of: ["bureauCode", "programCode"]}
+
+schema_terms:
+  # The schema.org structured-field legs (`cc_tasks/2026-09-18_schema_field_rules.md`). Like the
+  # DCAT-US legs they collect NOTHING of their own: each rule declares `CONSUMES = ("A6",)` and
+  # reads the markup A6 already extracts (`parsed.raw`), so a product page is fetched once per
+  # surface. `runner.collect_leg` returns [] for these legs. B1 is served the same way and is
+  # already listed under `dcat_fields.legs_served`; its v2 consumes both D4 and A6.
+  legs_served: ["B2", "B5"]
+
+b5_consistency:
+  # B5 is judged once per BODY (`rules.body_groups`, decision 5), over the A6 observations of
+  # the body's PRODUCT surfaces on one cycle. A surface whose id starts with one of these
+  # prefixes is not a product: the host's home page and its well-known row.
+  exclude_surface_prefixes: ["home:", "host:"]
+
+content_signal:
+  # D2 (`cc_tasks/2026-09-18_schema_field_rules.md` decision 6). Reads the `Content-Signal`
+  # directives `v2clauses.content_signals` parses from the robots.txt A4 fetches; collects
+  # nothing of its own (`CONSUMES = ("A4",)`).
+  legs_served: ["D2"]
+  # All three from corpus/kernel/cloudflare-content-signals-policy.md (doc_id
+  # `cloudflare-content-signals-policy`): the directive, carried as "Content-Signal:
+  # ai-train=no, search=yes, ai-input=no"; the three categories it defines; and the two values,
+  # "either allowing (yes) or disallowing (no)". A category or value outside these is
+  # `unknown_category`.
+  directive: "Content-Signal"
+  categories: ["ai-input", "ai-train", "search"]
+  values: ["no", "yes"]
+  # The two uses the indicator names — "model training/retrieval use" — in the policy's words:
+  # `ai-train` "Training or fine-tuning AI models", `ai-input` "retrieval augmented generation,
+  # grounding, …". Both must be declared: the policy's clause (c) says an undeclared use is
+  # neither granted nor restricted, which is not addressed.
+  required: ["ai-train", "ai-input"]
 
 f4_entries:
   # F4-v2: "and carries a revision class per entry" — v1 stopped at the content type.

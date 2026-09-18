@@ -204,15 +204,22 @@ def test_a12_is_the_only_leg_that_declares_a_non_product_subject():
     here — A12's subject IS the host's refusal, so a 403 is its evidence rather than an absence
     of it, and it says so on its own face with `MEASURES = "host"`. A rule on a DIFFERENT leg
     appearing here is the thing this test exists to catch, and it still would.
+
+    **B5 is the one other leg, and it came with the decision this test asks for**:
+    `cc_tasks/2026-09-18_schema_field_rules.md` decision 5 — "Its subject is the body (host
+    level)". `RULE-B5-v1` compares a body's products, so no one product is its subject; it
+    declares `MEASURES = "host"` and `SCOPE = "body"` on its face, and its blind handling is its
+    own (`error` when every product surface is blind, `_common.absence_verdict` when some are).
     """
     from scan.rules import REGISTRY
     host_rules = sorted(r for r in REGISTRY if measures(r) == "host")
-    assert host_rules == ["RULE-A12-v1", "RULE-A12-v2", "RULE-A12-v3"], (
+    assert host_rules == ["RULE-A12-v1", "RULE-A12-v2", "RULE-A12-v3", "RULE-B5-v1"], (
         f"a rule declared a non-product subject: {host_rules}. Every such rule opts out of the "
         f"harness-v5 invariant, so each one needs a reason on its face.")
-    assert {r.rsplit("-", 1)[0] for r in host_rules} == {"RULE-A12"}, (
-        "a leg other than A12 has declared a non-product subject; that is a new exemption from "
-        "the harness-v5 invariant and needs a decision, not an entry in this list")
+    assert {r.rsplit("-", 1)[0] for r in host_rules} == {"RULE-A12", "RULE-B5"}, (
+        "a leg other than A12 and B5 has declared a non-product subject; that is a new "
+        "exemption from the harness-v5 invariant and needs a decision, not an entry in this "
+        "list")
 
 # ===================================================== the second reading (decision 4, 2026-09-11)
 #

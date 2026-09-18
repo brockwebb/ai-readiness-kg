@@ -49,7 +49,15 @@ PINS = {"httpx": "httpx>=0.27", "protego": "protego>=0.3", "extruct": "extruct>=
         "g1_preservation": "assessment/harness/probes/g1_preservation.py (frozen, DD-036)",
         "dcat-record-fields": "assessment/harness/scan/collectors/v2clauses.py "
                               "dcat_record_fields (scheme 1), over dcat.fetch_catalog's D4 "
-                              "observation"}
+                              "observation",
+        "schema-terms": "assessment/harness/scan/rules/_schema_terms.py over "
+                        "structured_data.fetch's A6 observation (`parsed.raw`, extruct>=0.17)",
+        "dcat-record-fields and schema-terms":
+            "assessment/harness/scan/collectors/v2clauses.py dcat_record_fields (scheme 1) over "
+            "D4's observation; assessment/harness/scan/rules/_schema_terms.py over A6's "
+            "(`parsed.raw`, extruct>=0.17)",
+        "content-signals": "assessment/harness/scan/collectors/v2clauses.py content_signals "
+                           "(scheme 1), over robots.fetch's A4 observation"}
 
 #: One entry per indicator leg. `signal` states what is OBSERVED, not what is concluded.
 SPECS = {
@@ -134,14 +142,45 @@ SPECS = {
     # Generation 11 (`cc_tasks/2026-09-18_dcat_field_rules.md`): four legs that read D4's
     # catalog observation and collect nothing of their own. Added to a record that already
     # holds the other specs by `--add-missing`, never by a regeneration.
+    # B1's row moved with `RULE-B1-v2` (`cc_tasks/2026-09-18_schema_field_rules.md`), which
+    # joins the schema.org half; the record's node is refreshed by `--refresh B1`, which keeps
+    # its written-back `rule_id`.
     "B1": dict(signal="On D4's /data.json observation, test whether every catalog record for "
                       "the product links a data dictionary (DCAT-US `describedBy`, on the "
-                      "dataset or a distribution).",
-               collector="dcat-record-fields",
-               evidence_kind="D4's catalog document + per-record field profile",
-               prior_art="`dcat-us-1-1-schema`",
-               note="The DCAT half of B1; the schema.org `variableMeasured` half is "
-                    "cc_tasks/2026-09-18_schema_field_rules.md's."),
+                      "dataset or a distribution); on A6's markup of the product page, test "
+                      "whether a schema.org `Dataset` lists `variableMeasured`. Either half "
+                      "passes the leg.",
+               collector="dcat-record-fields and schema-terms",
+               evidence_kind="D4's catalog document + per-record field profile; A6's "
+                             "extracted markup",
+               prior_art="`dcat-us-1-1-schema`; `schema-org-dataset`"),
+    # Generation 12 (`cc_tasks/2026-09-18_schema_field_rules.md`): three legs that read A6's or
+    # A4's observation and collect nothing of their own. Added by `--add-missing`.
+    "B2": dict(signal="On A6's markup of the product page, test whether a schema.org "
+                      "`DefinedTerm` is reached from a `Dataset` and every such term carries "
+                      "`termCode`, `inDefinedTermSet` and `description`.",
+               collector="schema-terms", evidence_kind="A6's extracted markup",
+               prior_art="`schema-org-definedterm`; `schema-org-dataset`",
+               note="The 'versioned' clause has no field in any admitted document and is "
+                    "recorded as unmeasured on every verdict."),
+    "B5": dict(signal="Once per body, over A6's markup of every product surface of the body on "
+                      "one cycle: test whether each concept (a `DefinedTerm` name) coded on two "
+                      "or more products carries one identifier (`termCode` within "
+                      "`inDefinedTermSet`).",
+               collector="schema-terms",
+               evidence_kind="A6's extracted markup, every product surface of the body",
+               prior_art="`schema-org-definedterm`",
+               note="Judged per body (`rules.body_groups`), on the body's well-known row. The "
+                    "cross-vintage half is unmeasured until a second cycle with term codes."),
+    "D2": dict(signal="On A4's robots.txt observation, test whether a `Content-Signal` "
+                      "directive applying to the product path declares both `ai-train` and "
+                      "`ai-input` (yes or no), and names no category or value the policy does "
+                      "not define.",
+               collector="content-signals",
+               evidence_kind="robots.txt body + parsed Content-Signal directives",
+               prior_art="`cloudflare-content-signals-policy`",
+               note="The machine-readable half. The prose terms of use stay a judged reading; "
+                    "enforcement is A12's."),
     "B4": dict(signal="On D4's /data.json observation, test whether every catalog record for "
                       "the product carries a quality measurement (`hasQualityMeasurement`) and "
                       "revision metadata (`versionNotes`, `previousVersion` or "
@@ -203,6 +242,13 @@ MODE_ONLY = {"G1-O": ("harness", "assessment/harness/probes/g1_preservation.py "
                                  "(frozen at v2, DD-036)")}
 
 
+#: The fields of a spec this table AUTHORS. Everything else on a spec node is written back by
+#: another script (`rule_id` by `framework_writeback_rules.py`, `decision` by the rule review)
+#: and `--refresh` never touches it.
+AUTHORED = ("signal", "collector", "collector_pin", "evidence_kind", "prior_art", "note",
+            "fuji_metric")
+
+
 def build(g: dict) -> tuple:
     inds = {n["properties"]["code"]: n["properties"] for n in g["nodes"]
             if "AssessmentIndicator" in n["labels"]}
@@ -247,6 +293,11 @@ def main(argv=None) -> int:
                          "leaving every existing spec node and edge byte-for-byte as it is. "
                          "The regeneration path resets written-back `rule_id`s and drops "
                          "recorded `decision`s; this path cannot")
+    ap.add_argument("--refresh", action="append", default=[], metavar="LEG",
+                    help="replace the AUTHORED fields (signal, collector, collector_pin, "
+                         "evidence_kind, prior_art, note) of an existing spec with this table's "
+                         "row, keeping every written-back field (`rule_id`, `decision`). For a "
+                         "spec whose rule gained a version that reads more than the row says")
     ap.add_argument("--task", default=TASK,
                     help="the task that ORDERED this run, recorded on the `framework_writeback` "
                          "event")
@@ -254,6 +305,25 @@ def main(argv=None) -> int:
     a = ap.parse_args(argv)
     path = Path(a.json)
     g = json.loads(path.read_text(encoding="utf-8"))
+    refreshed = []
+    if a.refresh and not a.add_missing:
+        raise SystemExit("FATAL: --refresh edits specs in place and needs --add-missing; the "
+                         "regeneration path would discard the written-back fields it keeps")
+    if a.refresh:
+        built = {n["id"]: n for n in build(g)[0]}
+        for leg in a.refresh:
+            sid = f"spec:{leg}"
+            node = next((n for n in g["nodes"] if n["id"] == sid), None)
+            if node is None or sid not in built:
+                raise SystemExit(f"FATAL: --refresh {leg}: no spec {sid} in the record or the "
+                                 f"table")
+            p = node["properties"]
+            for k in AUTHORED:
+                if k in built[sid]["properties"]:
+                    p[k] = built[sid]["properties"][k]
+                else:
+                    p.pop(k, None)
+            refreshed.append(sid)
     if a.add_missing:
         have = {n["id"] for n in g["nodes"]}
         nodes, edges, rows = build(g)
@@ -269,7 +339,8 @@ def main(argv=None) -> int:
     g["edges"] += edges
     # `measurement_specs` and `collectors_none_known` are recounted by the writer.
     ev = fw.save(g, script=SCRIPT, task=a.task,
-                 changes={"specs": len(nodes), "measured_by": len(edges)},
+                 changes={"specs": len(nodes), "measured_by": len(edges),
+                          **({"refreshed": refreshed} if refreshed else {})},
                  dry_run=a.dry_run, path=path, **fw.force_kwargs(a))
     print(json.dumps({"delta": ev["delta_summary"], "written": ev["written"],
                       "unchanged": ev.get("unchanged", False), "event_id": ev.get("event_id")},

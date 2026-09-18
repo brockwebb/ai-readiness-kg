@@ -38,6 +38,7 @@ from . import rule_a5_v2
 from . import rule_a12
 from . import rule_a12_v3
 from . import rule_b1, rule_b4, rule_d3, rule_g4
+from . import rule_b1_v2, rule_b2, rule_b5, rule_d2
 
 #: Every version ever shipped, keyed by rule id. Never prune it: a pruned entry is a stored
 #: Finding that can no longer be re-derived.
@@ -125,6 +126,19 @@ V10 = [rule_a12_v3]
 #:
 #: Pre-registered, not run: cycle 5 (2026-10-05) is the first cycle that judges them.
 V11 = [rule_b1, rule_b4, rule_d3, rule_g4]
+
+#: Generation 12 — `cc_tasks/2026-09-18_schema_field_rules.md`. Three first versions and one
+#: second. `RULE-B2-v1`, `RULE-B5-v1` and `RULE-B1-v2` read the markup A6 already extracts
+#: (`CONSUMES` A6; B1-v2 also D4, joining B1's schema.org half to its DCAT half — `RULE-B1-v1`
+#: stays in `REGISTRY`, unedited). `RULE-D2-v1` reads the `Content-Signal` directive in the
+#: robots.txt A4 already fetches.
+#:
+#: **B5 is the first rule judged over a BODY rather than a surface** (`SCOPE = "body"`, decision
+#: 5): its group is every A6 observation of the body's product surfaces on one cycle, and
+#: `body_groups` below is the one function `run.py` and `rederive.py` both build it with.
+#:
+#: Pre-registered, not run: cycle 5 (2026-10-05) is the first cycle that judges them.
+V12 = [rule_b1_v2, rule_b2, rule_b5, rule_d2]
 
 #: Rules for CANDIDATE indicators. They judge, they are recorded, and their Findings enter no
 #: numerator and no denominator (DD-054). Kept in their own list so the reporting layer can
@@ -221,7 +235,7 @@ def measures(rule_id: str) -> str:
 #: track of: the registry-integrity tests read this, so a fifth generation is one entry here
 #: and nothing else to remember — which is the same reasoning `parse_rule_id` gives for being
 #: a regex instead of a per-rule table.
-GENERATIONS = (V1, V2, V3, V4, V5, V6, V7, V8, V9, V10, V11)
+GENERATIONS = (V1, V2, V3, V4, V5, V6, V7, V8, V9, V10, V11, V12)
 
 _ALL = [m for g in GENERATIONS for m in g] + CANDIDATE_RULES
 #: De-duplicated by rule id, order preserved. A12-v2 is listed in its generation AND in
@@ -302,6 +316,53 @@ def consumes(rule_id: str) -> tuple:
 #: Legs a NEW cycle collects only because some CURRENT rule consumes them. They have no rule of
 #: their own and produce no Finding — they are evidence, shared.
 SHARED_LEGS = tuple(sorted({l for r in set(CURRENT.values()) for l in consumes(r)}))
+
+
+def scope(rule_id: str) -> str:
+    """`surface` or `body` — what ONE judgement of this rule ranges over.
+
+    `surface` unless the module says otherwise, which is every rule before generation 12. A
+    `body` rule (`RULE-B5-v1`, `cc_tasks/2026-09-18_schema_field_rules.md` decision 5) is never
+    judged inside `run.run_surface`: its group spans surfaces, so it is judged once per body
+    after every surface of the cycle is collected, over `body_groups`.
+    """
+    mod = REGISTRY.get(rule_id)
+    if mod is None:
+        raise KeyError(f"no rule {rule_id!r}; known: {sorted(REGISTRY)}")
+    return getattr(mod, "SCOPE", "surface")
+
+
+#: Legs whose CURRENT rule is judged per body. Excluded from every per-surface leg list.
+BODY_LEGS = tuple(sorted(l for l, r in CURRENT.items() if scope(r) == "body"))
+
+
+def body_groups(rule_id: str, observations: list, params: dict) -> dict:
+    """`{body key: [Observation]}` — the groups a `body` rule is judged over. **Pure.**
+
+    Called by `run.py` after a cycle's surfaces are collected and by `rederive.py` over the
+    stored observations, so a cycle and a re-derivation cannot group differently (the same
+    reason `consumes` is one function with two readers).
+
+    * **Which observations**: those of the legs the rule consumes, on product surfaces — never
+      a control fixture (`control:`; the control cycle judges surfaces, and each fixture is
+      served on its own port, so no two are one body) and never a surface whose id starts with
+      a prefix in `params.b5_consistency.exclude_surface_prefixes` (the host's home page and
+      the well-known row are not products).
+    * **Which body**: the host of the observed surface. On the frame every tier-A body's
+      surfaces share one host and one `host:<netloc>` well-known row
+      (`state/scan_targets_fss_2026-09_v5.json`), so host and body coincide; a body whose
+      products lived on two hosts would be judged per host, and the rule's target says which.
+    """
+    legs = set(consumes(rule_id))
+    skip = tuple(params["b5_consistency"]["exclude_surface_prefixes"])
+    from ._common import host_of
+    out: dict = {}
+    for o in observations:
+        doc = str(o.target_doc_id or "")
+        if o.leg not in legs or doc.startswith("control:") or doc.startswith(skip):
+            continue
+        out.setdefault(host_of(o.target_url), []).append(o)
+    return {k: out[k] for k in sorted(out)}
 
 
 def judge(rule_id: str, observations: list, params: dict):

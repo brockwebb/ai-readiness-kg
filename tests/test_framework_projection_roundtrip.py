@@ -31,7 +31,9 @@ JSON_PATH = REPO / "framework" / "ai_readiness_framework.json"
 #: 2026-09-18: B1, B4, D3 and G4 moved `specified` -> `harness_built` when generation 11's rules
 #: entered `rules.CURRENT` (`cc_tasks/2026-09-18_dcat_field_rules.md`); none is `measured`,
 #: because no cycle has judged them yet.
-EXPECTED_MEASUREMENT_STATUS = {"measured": 16, "harness_built": 5, "specified": 28}
+#: 5 -> 8 `harness_built` with generation 12 (`cc_tasks/2026-09-18_schema_field_rules.md`):
+#: B2, B5 and D2 gained a rule and a spec.
+EXPECTED_MEASUREMENT_STATUS = {"measured": 16, "harness_built": 8, "specified": 25}
 
 
 def _loader():

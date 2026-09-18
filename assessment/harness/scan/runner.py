@@ -80,7 +80,16 @@ def collect_leg(spec: dict, target: dict, params: dict, fetcher=None) -> list:
             o.parsed = dict(o.parsed or {}, probe="a12_target")
         return obs + probe
     if leg == "A4":
-        return robots.fetch(f, leg, doc_id, url, params)
+        obs = robots.fetch(f, leg, doc_id, url, params)
+        # D2 reads THIS observation through `CONSUMES = ("A4",)`
+        # (`cc_tasks/2026-09-18_schema_field_rules.md` decision 6): the `Content-Signal`
+        # directives in the file A4 already fetched, parsed from its stored body, so the host is
+        # asked for `/robots.txt` once per surface for both legs.
+        for o in obs:
+            if (o.parsed or {}).get("present"):
+                o.parsed = dict(o.parsed, content_signal=v2clauses.content_signals(
+                    _body(o), url, params))
+        return obs
     if leg == "A5":
         r = robots.fetch(f, "A4", doc_id, url, params)
         declared = ((r[0].parsed or {}).get("sitemaps") or []) if r else []
@@ -180,6 +189,14 @@ def collect_leg(spec: dict, target: dict, params: dict, fetcher=None) -> list:
     if leg in params["dcat_fields"]["legs_served"]:
         # Nothing of their own, as for `link_probe.legs_served` above: every field these rules
         # read is on the D4 observation, which they declare through `CONSUMES`.
+        return []
+    if leg in params["schema_terms"]["legs_served"]:
+        # Nothing of their own: B2 and B5 read the markup A6 already extracts (`parsed.raw`),
+        # through `CONSUMES = ("A6",)` (`cc_tasks/2026-09-18_schema_field_rules.md`).
+        return []
+    if leg in params["content_signal"]["legs_served"]:
+        # Nothing of its own: D2 reads the `content_signal` block on A4's robots.txt
+        # observation, through `CONSUMES = ("A4",)`.
         return []
     if leg == "F4":
         out = []
