@@ -15,6 +15,18 @@ dev = [
     "pytest>=8",
     "pytest-cov",
 ]
+# The read-only MCP server over the graph (`mcp/`, cc_tasks/2026-09-17_mcp_over_the_graph.md).
+# OPTIONAL, not a runtime dependency: the extraction pipeline, the projection and the whole
+# test suite run without either package, and `mcp/airkg_server.py` is the only code that
+# imports fastmcp. Both are already installed in /opt/anaconda3/bin/python3, which is the
+# interpreter `.mcp.json` names and the one CLAUDE.md names for projection.
+#   fastmcp  the server framework the fss-policy-kg server already uses here (Standard 7:
+#            adopted, not rebuilt). Pinned to 3.x: 4.0 is out and untested against this.
+#   neo4j    the driver. `Graph` is the only place it is imported in this directory.
+mcp = [
+    "fastmcp>=3,<4",
+    "neo4j>=5",
+]
 
 [tool.pytest.ini_options]
 markers = ["live_plan: reads the real frozen burn plan and event log",

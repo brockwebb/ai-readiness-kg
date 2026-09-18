@@ -1,0 +1,21 @@
+{
+  "$comment": [
+    "cc_tasks/2026-09-17_mcp_over_the_graph.md decision 4, under DN-005 §2.4.",
+    "Registers the read-only server over this project's graph for Claude Code in this repo.",
+    "The interpreter is named explicitly and is the anaconda python: it is the one on this",
+    "machine that has fastmcp, the neo4j driver and pyyaml, which is the same reason",
+    "CLAUDE.md names it for extraction and projection. A bare `python3` here would start a",
+    "server that cannot import fastmcp and would surface as a connector that failed to",
+    "connect, with no message saying why.",
+    "The path is absolute for the same reason the Desktop config's paths are: an MCP client",
+    "starts the process with a working directory of its own choosing, not this repository's.",
+    "Claude Desktop: this is the same object in its own config file, quoted in",
+    "cc_tasks/2026-09-17_mcp_over_the_graph_RESULT.md §3."
+  ],
+  "mcpServers": {
+    "ai-readiness-kg": {
+      "command": "/opt/anaconda3/bin/python3",
+      "args": ["/Users/brock/GitHub/ai-readiness-kg/mcp/airkg_server.py"]
+    }
+  }
+}
