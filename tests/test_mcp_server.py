@@ -198,9 +198,11 @@ def test_overview_counts_indicators_by_tier_and_basis_from_the_record(offline):
     # Settled by `cc_tasks/2026-09-17_unassigned_indicators.md` (34 M, 2 O, 5 D, 8 unassigned)
     # and moved by `cc_tasks/2026-09-18_tool_docs_ingest.md`, which admitted the oasdiff and
     # Wayback CDX documentation and tiered A7, F2 and F3 O: 34 M, 5 O, 5 D, 5 unassigned.
-    assert by_tier["M"] == 34 and by_tier["O"] == 5 and by_tier["D"] == 5
-    assert by_tier["unassigned"] == 5
-    assert fw["counts"]["actions"] + fw["counts"]["actions_on_candidate_indicators"] == 45
+    # Then `cc_tasks/2026-09-18_dcat_field_rules.md` tiered E1 and E3 M (`judged_reading`) and
+    # added nine actions for generation 11's four rules: 36 M, 5 O, 5 D, 3 unassigned; 54.
+    assert by_tier["M"] == 36 and by_tier["O"] == 5 and by_tier["D"] == 5
+    assert by_tier["unassigned"] == 3
+    assert fw["counts"]["actions"] + fw["counts"]["actions_on_candidate_indicators"] == 54
 
 
 def test_overview_names_the_cycle_of_record_its_date_and_its_bodies(offline):
@@ -295,7 +297,7 @@ def test_an_unknown_body_says_so_and_lists_the_bodies(offline):
 def test_prescriptions_with_no_argument_rank_by_bodies_failing_now(offline):
     p = offline.get_prescriptions()
     n = [a["value"]["bodies_failing_now"] for a in p["actions"]]
-    assert len(p["actions"]) == 45
+    assert len(p["actions"]) == 54
     assert n == sorted(n, reverse=True)
     assert p["band_note"].startswith("Notional relative estimate")
 
@@ -547,7 +549,7 @@ ONE_QUESTION_EACH = [
     ("search_text", {"q": "sitemap"}, lambda a: a["hits"]),
     ("get_cycle_of_record", {}, lambda a: len(a["judgement_params_hash"]) == 64),
     ("run_cypher", {"query": "MATCH (a:Action) RETURN count(a) AS n"},
-     lambda a: a["rows"] == [{"n": 45}]),
+     lambda a: a["rows"] == [{"n": 54}]),
 ]
 
 

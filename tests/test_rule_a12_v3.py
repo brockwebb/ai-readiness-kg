@@ -253,7 +253,12 @@ def test_every_rule_that_calls_unobserved_error_still_reaches_the_same_verdicts(
     src_dir = REPO / "assessment" / "harness" / "scan" / "rules"
     callers = sorted(p.stem for p in src_dir.glob("rule_*.py")
                      if "unobserved_error" in p.read_text(encoding="utf-8"))
-    assert callers == ["rule_a10_v3", "rule_a5_v2", "rule_a8_v3", "rule_a8_v4"], callers
+    # Generation 11 (`cc_tasks/2026-09-18_dcat_field_rules.md`) added four callers, written
+    # after `reason_text: 2` existed. Each calls the guard on the catalog observation it scores
+    # on, which `_dcat_fields.read` has already found served, so no scheme can reach a verdict of
+    # theirs through it; they are listed so a fifth caller still has to be named here.
+    assert callers == ["rule_a10_v3", "rule_a5_v2", "rule_a8_v3", "rule_a8_v4", "rule_b1",
+                       "rule_b4", "rule_d3", "rule_g4"], callers
     base = load_params()
     for scheme in (1, 2):
         params = {**base, "reason_text": scheme}

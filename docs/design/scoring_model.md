@@ -14,9 +14,9 @@ Cycle `scan_2026-09-10_rj2`, 16 bodies, matrices `docs/reports/scan_matrix_tierA
 
 | level | measured | total |
 |---|---|---|
-| adopted harness legs scored (candidates excluded, DD-054) | 14 | 16 |
+| adopted harness legs scored (candidates excluded, DD-054) | 14 | 20 |
 | indicators measured, of the framework | 14 | 48 |
-| indicators measured, of `harness_leg` | 14 | 16 |
+| indicators measured, of `harness_leg` | 14 | 20 |
 | criteria with a measured construct | 4 | 7 |
 | bodies scored | 13 | 16 |
 
@@ -97,12 +97,16 @@ Cycle `scan_2026-09-10_rj2`, 16 bodies, matrices `docs/reports/scan_matrix_tierA
 | A | Structured markup | `ind:A6` | `A6` | yes | — |
 | A | Timeliness of surface | `ind:A8` | `A8` | yes | — |
 | A | M2M agent surface | `ind:A9` | `A9` | yes | — |
+| B | Variable-level semantics | `ind:B1` | `B1` | no | not a leg of any published matrix of the cycle of record |
 | B | Methodology legibility | `ind:B3` | `B3` | yes | — |
+| B | Quality metadata | `ind:B4` | `B4` | no | not a leg of any published matrix of the cycle of record |
 | D | License clarity | `ind:D1` | `D1` | yes | — |
+| D | Provenance completeness | `ind:D3` | `D3` | no | not a leg of any published matrix of the cycle of record |
 | D | No dark data | `ind:D4` | `D4` | yes | — |
 | E | Positive controls | `ind:E5` | `E5` | no | not a leg of any published matrix: it judges this instrument's own controls, not a publisher (its actions carry applies_to_publisher: false) |
 | F | Change legibility | `ind:F4` | `F4` | yes | — |
 | G | Uncertainty legibility (two legs, scored as a vector) | `ind:G1-D` | `G1-D` | no | withdrawn by DD-066, effective cycle 5 (this params_hash forward); not a leg of the cycle of record |
+| G | Authority metadata | `ind:G4` | `G4` | no | not a leg of any published matrix of the cycle of record |
 
 ## Re-deriving a score
 

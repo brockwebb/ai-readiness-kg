@@ -164,10 +164,23 @@ def collect_leg(spec: dict, target: dict, params: dict, fetcher=None) -> list:
                 continue
             try:
                 cat = _json.loads(_body(o).decode("utf-8", "replace"))
-            except Exception:
+            except Exception as exc:
+                # Recorded rather than skipped for the field legs: a served catalog that does
+                # not parse holds no record a consumer can read a field from, and that is a
+                # measurement, not an absence of one. `pod` stays unset exactly as before.
+                o.parsed = dict(o.parsed, dcat_fields={
+                    "scheme": v2clauses.DCAT_FIELDS_SCHEME, "parsed": False,
+                    "reason": f"{type(exc).__name__}: {exc}"})
                 continue
             o.parsed = dict(o.parsed, pod=v2clauses.pod_validation(cat, params, repo_root()))
+            # The four DCAT-US field legs (B1, B4, D3, G4) read THIS observation through
+            # `CONSUMES = ("D4",)`; the catalog is fetched once and read five ways.
+            o.parsed = dict(o.parsed, dcat_fields=v2clauses.dcat_record_fields(cat, url, params))
         return obs
+    if leg in params["dcat_fields"]["legs_served"]:
+        # Nothing of their own, as for `link_probe.legs_served` above: every field these rules
+        # read is on the D4 observation, which they declare through `CONSUMES`.
+        return []
     if leg == "F4":
         out = []
         for p in params["f4_changelog"]["paths"]:

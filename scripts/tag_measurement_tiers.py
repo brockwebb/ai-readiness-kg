@@ -68,6 +68,7 @@ sys.path.insert(0, str(REPO / "assessment" / "harness"))
 TASK = "cc_tasks/2026-09-17_measurement_tiers.md"
 TASK2 = "cc_tasks/2026-09-17_unassigned_indicators.md"
 TASK3 = "cc_tasks/2026-09-18_tool_docs_ingest.md"
+TASK4 = "cc_tasks/2026-09-18_dcat_field_rules.md"
 SCRIPT = "tag_measurement_tiers"
 RECORD = "framework/ai_readiness_framework.json"
 
@@ -106,6 +107,24 @@ RULE1_NOTES = {
             "until the operator adopts it."),
     "E5": ("The rule judges this instrument's own cycle (its control fixtures), not a "
            "publisher's; `not_measured_reason` on this node says why that is not `measured`."),
+    # Generation 11 (`cc_tasks/2026-09-18_dcat_field_rules.md`): four `structured_field` rows
+    # that became rule 1 when their rules entered `rules.CURRENT`. What each rule leaves
+    # unmeasured is printed on its every verdict as well as here.
+    "B1": ("The rule is B1's DCAT half: every catalog record for the product links a data "
+           "dictionary (`describedBy`). The schema.org `variableMeasured` half is not read yet "
+           "(cc_tasks/2026-09-18_schema_field_rules.md), and the dictionary's contents and "
+           "whether they are 'comprehensive' are not measured."),
+    "B4": ("The rule measures the error-measure clause (`hasQualityMeasurement`) and the "
+           "revisions-policy clause (`versionNotes` / `previousVersion` / "
+           "`hasCurrentVersion`) on the product's catalog record. The suppression-rules clause "
+           "has no field in any admitted document and is recorded as unmeasured."),
+    "D3": ("The rule reads that the product's catalog record names a lineage (`wasGeneratedBy` "
+           "or `wasDerivedFrom`, bare or `prov:`-prefixed); whether that lineage reaches from "
+           "collection through processing to the product is not measured."),
+    "G4": ("The rule measures the issuing-authority clause (`bureauCode` and `programCode`, "
+           "well-formed) on the product's catalog record. The statutory-mandate and "
+           "statistical-versus-administrative clauses have no field in any admitted document "
+           "and are recorded as unmeasured."),
     "G1-D": ("A deterministic structured-field rule (`RULE-G1-D-v1`, the frozen `g1_declared` "
              "probe, DD-066 §7), not a judged reading: G1-O is the leg the G1 instrument "
              "judges. Measured on product surfaces only (`measurement_level`)."),
@@ -625,6 +644,44 @@ for _code in TABLE3:
     UNASSIGNED.pop(_code)
     OPEN_TOOL_CANDIDATE.pop(_code)
 
+
+# ---------------------------------------------------------------------------------------
+# `cc_tasks/2026-09-18_dcat_field_rules.md`: four rows become rule 1, two take a tier.
+# ---------------------------------------------------------------------------------------
+
+#: Decision 2: B1, B4, D3 and G4 are served by a rule in `rules.CURRENT` (generation 11), so
+#: rule 1 — computed from the registry — reaches them, and their `structured_field` entries
+#: leave the table. Named rather than derived, so that a rule leaving `CURRENT` makes
+#: `assignments` refuse (the row would be reached by nothing) instead of silently re-basing.
+RULE1_FROM_TABLE2 = ("B1", "B4", "D3", "G4")
+
+_E_SOURCE = ("cc_tasks/2026-09-17_unassigned_indicators_RESULT.md §0 (the row's decision 1 "
+             "reading: the act is a publication act and the artifact a published report); "
+             f"{TASK4} decision 5")
+_E_NOTE = "no instrument exists; the reading is of a published report, not a served surface"
+
+#: Decision 5: the Desktop's naming decision for the two rows decision 1 of the previous task
+#: could not tier. `judged_reading` on tier M, no fourth tier.
+TABLE4 = {
+    "E1": dict(
+        rule_text=f"{TASK4} decision 5", tier="M", basis="judged_reading",
+        quote="reported separately from",
+        source=_E_SOURCE,
+        note=_E_NOTE),
+    "E3": dict(
+        rule_text=f"{TASK4} decision 5", tier="M", basis="judged_reading",
+        quote="Eval sets and rubrics carry versions",
+        source=_E_SOURCE,
+        note=(_E_NOTE + "; observability is one-sided: a fail is visible, a pass needs the "
+              "agency's records")),
+}
+
+for _code in RULE1_FROM_TABLE2:
+    TABLE.pop(_code)
+TABLE.update(TABLE4)
+for _code in TABLE4:
+    UNASSIGNED.pop(_code)
+
 def rule1(record_codes: set) -> dict:
     """`{code: (leg, rule_id)}` for every indicator a rule in `rules.CURRENT` serves.
 
@@ -743,6 +800,8 @@ def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--task", default=TASK3,
+                    help="the task that is WRITING, recorded on the `framework_writeback` event")
     a = ap.parse_args(argv)
 
     import framework_writeback as fw
@@ -770,7 +829,7 @@ def main(argv=None) -> int:
     changes["counts"] = counts(plan)
     # The event names the task that is WRITING, which since the third pass is TASK3; the
     # per-node `tier_rule` still names whichever task's decision reached that node.
-    out = fw.save(g, script=SCRIPT, task=TASK3, changes=changes, dry_run=a.dry_run)
+    out = fw.save(g, script=SCRIPT, task=a.task, changes=changes, dry_run=a.dry_run)
     print(json.dumps({"counts": changes["counts"], "renamed": changes["renamed"],
                       "nodes_changed": len(changes["nodes"]),
                       "save": {k: v for k, v in out.items()

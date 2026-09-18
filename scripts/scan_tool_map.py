@@ -41,7 +41,7 @@ sys.path.insert(0, str(REPO))
 sys.path.insert(0, str(REPO / "assessment" / "harness"))
 
 from scan import load_params                                        # noqa: E402
-from scan.rules import CURRENT, parse_rule_id                       # noqa: E402
+from scan.rules import CURRENT, consumes, parse_rule_id             # noqa: E402
 
 #: A leg whose indicator code differs from its own name (`A11-declared` measures half of
 #: `A11`). Read from the traceability module, never re-typed, as the tagger reads it.
@@ -129,8 +129,13 @@ def collector_rows(params: dict) -> list:
                       - _STDLIB - {"scan", "__future__", ""})
         libs = [l for l in libs if l and not l.startswith(".")]
         # Which legs reach this collector, read from the runner's own dispatch.
-        legs = sorted({leg for leg, body in blocks.items()
-                       if leg in CURRENT and f"{path.stem}." in body})
+        # A leg whose CURRENT rule consumes another leg's observations (`rules.consumes`)
+        # reaches that leg's collectors too: B1, B4, D3 and G4 collect nothing of their own and
+        # read D4's catalog (`cc_tasks/2026-09-18_dcat_field_rules.md`). Without this their
+        # rows said "no collector reaches this yet" beside a rule that reads `dcat`.
+        legs = sorted({leg for leg in CURRENT
+                       if any(f"{path.stem}." in blocks.get(x, "")
+                              for x in (leg, *consumes(CURRENT[leg])))})
         if path.stem == "links":
             legs = sorted(set(legs) | {"A1", "A3"})      # served through the shared link probe
         fns = sorted(n for n, o in vars(mod).items()

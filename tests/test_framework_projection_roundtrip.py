@@ -28,7 +28,10 @@ JSON_PATH = REPO / "framework" / "ai_readiness_framework.json"
 #: The distribution the framework of record carries as of the 2026-09-07 scan cycle. Written
 #: as a literal because a gate that reads its expectation out of the artifact under test can
 #: only ever pass: this one fails if a write-back moves an indicator without a task saying so.
-EXPECTED_MEASUREMENT_STATUS = {"measured": 16, "harness_built": 1, "specified": 32}
+#: 2026-09-18: B1, B4, D3 and G4 moved `specified` -> `harness_built` when generation 11's rules
+#: entered `rules.CURRENT` (`cc_tasks/2026-09-18_dcat_field_rules.md`); none is `measured`,
+#: because no cycle has judged them yet.
+EXPECTED_MEASUREMENT_STATUS = {"measured": 16, "harness_built": 5, "specified": 28}
 
 
 def _loader():

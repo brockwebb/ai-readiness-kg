@@ -287,7 +287,10 @@ def test_a_surfaces_links_are_headed_once_per_cycle():
 
 
 def test_the_current_a1_and_a3_read_the_shared_leg():
-    assert SHARED_LEGS == ("link_probe",)
+    # D4 joined `SHARED_LEGS` with generation 11: B1, B4, D3 and G4 read its catalog
+    # (`cc_tasks/2026-09-18_dcat_field_rules.md`). Unlike `link_probe` it also has a rule of its
+    # own, and `run.run_surface` collects it once for both (`tests/test_dcat_field_rules.py`).
+    assert SHARED_LEGS == ("D4", "link_probe")
     assert consumes(CURRENT["A1"]) == ("link_probe",)
     assert consumes(CURRENT["A3"]) == ("link_probe",)
     # The superseded modules stay in REGISTRY and are still the rules their Findings re-derive

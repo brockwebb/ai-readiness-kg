@@ -37,6 +37,7 @@ from . import rule_a12_v2
 from . import rule_a5_v2
 from . import rule_a12
 from . import rule_a12_v3
+from . import rule_b1, rule_b4, rule_d3, rule_g4
 
 #: Every version ever shipped, keyed by rule id. Never prune it: a pruned entry is a stored
 #: Finding that can no longer be re-derived.
@@ -113,6 +114,17 @@ V9 = [rule_a3_v6, rule_b3_v3]
 #:
 #: **Zero verdict moves** is this generation's gate. It changes sentences, not judgements.
 V10 = [rule_a12_v3]
+
+#: Generation 11 — `cc_tasks/2026-09-18_dcat_field_rules.md`. Four FIRST versions, for four legs
+#: no rule served before: B1 (its DCAT half), B4, D3 and G4. None supersedes anything, so no
+#: Finding re-derives differently. What they share is where their evidence comes from: each
+#: declares `CONSUMES = ("D4",)` and reads the `dcat_fields` block `v2clauses.dcat_record_fields`
+#: puts on D4's catalog observation, so the host is asked for `/data.json` once per surface.
+#: Each declares its own `CLAIM` (absence) and `MEASURES` (the product's catalog record,
+#: following D4), which is why none needs a line in `CLAIM_BY_LEG`.
+#:
+#: Pre-registered, not run: cycle 5 (2026-10-05) is the first cycle that judges them.
+V11 = [rule_b1, rule_b4, rule_d3, rule_g4]
 
 #: Rules for CANDIDATE indicators. They judge, they are recorded, and their Findings enter no
 #: numerator and no denominator (DD-054). Kept in their own list so the reporting layer can
@@ -209,7 +221,7 @@ def measures(rule_id: str) -> str:
 #: track of: the registry-integrity tests read this, so a fifth generation is one entry here
 #: and nothing else to remember — which is the same reasoning `parse_rule_id` gives for being
 #: a regex instead of a per-rule table.
-GENERATIONS = (V1, V2, V3, V4, V5, V6, V7, V8, V9, V10)
+GENERATIONS = (V1, V2, V3, V4, V5, V6, V7, V8, V9, V10, V11)
 
 _ALL = [m for g in GENERATIONS for m in g] + CANDIDATE_RULES
 #: De-duplicated by rule id, order preserved. A12-v2 is listed in its generation AND in

@@ -39,16 +39,20 @@ PY = "/opt/anaconda3/bin/python3" if Path("/opt/anaconda3/bin/python3").exists()
 
 #: The shape of the layer, as a literal. A test that reads its expectation out of the artifact
 #: under test can only ever pass; these numbers move only when a task says they should.
-EXPECTED_ACTIONS = 45
-EXPECTED_LEGS = 17
-EXPECTED_NOTIONAL_BANDS = 90
+#: 45 / 17 / 90 until `cc_tasks/2026-09-18_dcat_field_rules.md` added generation 11's four legs
+#: (B1, B4, D3, G4) and one action for each of their nine failing outcomes.
+EXPECTED_ACTIONS = 54
+EXPECTED_LEGS = 21
+EXPECTED_NOTIONAL_BANDS = 108
 
 #: The class table of `cc_tasks/2026-09-17_notional_bands.md` decision 1, as a literal. The
 #: RESULT's §0 tables the same 45 rows with a reason for each row that is not obvious, so a
 #: reader who disputes a class disputes a number here rather than a sentence somewhere.
+#: Generation 11 added five `edit_existing` (one per field outcome) and four `publish_new_file`
+#: (each leg's `no_product_record`, which carries a `technique_class_reason`).
 EXPECTED_PER_CLASS = {
-    "edit_existing": 17,
-    "publish_new_file": 14,
+    "edit_existing": 22,
+    "publish_new_file": 18,
     "change_server_behaviour": 10,
     "expose_api": 1,
     "harness_side": 3,

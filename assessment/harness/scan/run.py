@@ -156,8 +156,16 @@ def run_surface(sp: dict, target: dict, params: dict, legs: list, fetcher=None) 
         shared[sl] = o
         obs += o
     for leg in wanted:
-        o = _collect(leg, sp[leg], target, params, fetcher)
-        obs += o
+        # A leg that is BOTH judged in its own right and consumed by another rule — D4, whose
+        # catalog the four DCAT-US field rules read (`cc_tasks/2026-09-18_dcat_field_rules.md`)
+        # — was collected once above and is not collected again. Its own group is the same
+        # observations either way, so its Finding is unchanged; what changes is that the host
+        # is not asked for `/data.json` twice.
+        if leg in shared:
+            o = shared[leg]
+        else:
+            o = _collect(leg, sp[leg], target, params, fetcher)
+            obs += o
         group = o + [x for c in consumes(CURRENT[leg]) for x in shared.get(c, [])]
         findings.append(judge_rule(CURRENT[leg], group, params))
     return obs, findings

@@ -65,6 +65,12 @@ sys.path.insert(0, str(REPO / "assessment" / "harness"))
 #: were authored by a later task and say so in their own `_source` markers. `WRITEBACK_TASK` is
 #: the task file whose execution produces the current bytes, and it is what the event carries.
 TASK = "cc_tasks/2026-09-17_prescription_layer.md"
+#: The task that added generation 11's outcomes and actions, named on each of those actions'
+#: `authored_by` and on the write-back event it ran.
+DCAT_TASK = "cc_tasks/2026-09-18_dcat_field_rules.md"
+_NO_RECORD_CLASS = ("the outcome covers a host serving no catalog, which needs a new file, and "
+                    "a catalog without the product's record, which needs an edit; it is classed "
+                    "by the larger act, which is the one most hosts on the cycle of record face")
 WRITEBACK_TASK = "cc_tasks/2026-09-17_notional_bands.md"
 SCRIPT = "tag_prescriptions"
 RECORD = "framework/ai_readiness_framework.json"
@@ -231,6 +237,27 @@ OUTCOMES = {
     "G1-D": {
         "no_error_measure_field": "error-measure field tokens appears as a ",
     },
+    # Generation 11 (`cc_tasks/2026-09-18_dcat_field_rules.md` decision 4). One shared outcome,
+    # `no_product_record`, covers the three states in which the product has no catalog record
+    # — no catalog, a catalog that does not parse, a catalog without the product — because the
+    # act that closes all three is the same: publish the product's record carrying the field.
+    "B1": {
+        "no_product_record": "no catalog record for the product",
+        "no_data_dictionary": "lack a data dictionary (",
+    },
+    "B4": {
+        "no_product_record": "no catalog record for the product",
+        "quality_measurement_absent": "lack a quality measurement (",
+        "revision_metadata_absent": "lack revision metadata (",
+    },
+    "D3": {
+        "no_product_record": "no catalog record for the product",
+        "no_lineage_field": "lack a lineage field (",
+    },
+    "G4": {
+        "no_product_record": "no catalog record for the product",
+        "authority_codes_absent": "lack a valid `bureauCode` and `programCode`",
+    },
 }
 
 # ------------------------------------------------------------------- the actions (§2)
@@ -248,11 +275,14 @@ OUTCOMES = {
 # band that could be defaulted, which is the thing the empty band was protecting against.
 # `class_reason` is written only where the class is not obvious on the description's face.
 def _a(leg, outcome, slug, title, description, sources, cls, note=None,
-       applies_to_publisher=True, applies_to_note=None, class_reason=None):
+       applies_to_publisher=True, applies_to_note=None, class_reason=None, task=None):
+    # `task` names the task that AUTHORED this action when it is not `TASK`, so an action added
+    # by a later task says so on the node rather than inheriting the layer's founding task.
     return {"leg": leg, "outcome": outcome, "slug": slug, "title": title,
             "description": description, "sources": sources, "technique_class": cls,
             "class_reason": class_reason, "note": note,
-            "applies_to_publisher": applies_to_publisher, "applies_to_note": applies_to_note}
+            "applies_to_publisher": applies_to_publisher, "applies_to_note": applies_to_note,
+            "task": task}
 
 
 # Quotes reused across several actions, named once so a re-quote cannot drift from its twin.
@@ -387,6 +417,34 @@ Q_DCAT_DIST = ("dcat-us-1-1-schema", "'Metadata File Format - JSON'",
 Q_DCAT3 = ("dcat-us-3-dataset-schema", "'DCAT-US 3.0: Dataset'",
            "Information about a dataset, including identifiers, contacts, coverage, "
            "distributions, and related resources.")
+# DCAT-US fields named by the generation-11 rules (`cc_tasks/2026-09-18_dcat_field_rules.md`).
+Q_DCAT_BUREAU = ("dcat-us-1-1-schema", "'Rationale for Metadata Nomenclature', bureauCode",
+                 "to ensure every dataset is connected in a standard way with an agency bureau.")
+Q_DCAT_PROGRAM = ("dcat-us-1-1-schema", "'Rationale for Metadata Nomenclature', programCode",
+                  "to ensure that when applicable, every dataset is connected in a standard way "
+                  "with an agency program office.")
+Q_DCAT_BUREAU_FMT = ("dcat-us-1-1-schema", "'Further Metadata Field Guidance', bureauCode",
+                     "Represent each bureau responsible for the dataset according to the codes "
+                     "found in OMB Circular A-11, Appendix C")
+Q_DCAT_DICT = ("dcat-us-1-1-schema",
+               "'Further Metadata Field Guidance', distribution → describedBy",
+               "This is used to specify a data dictionary or schema that defines fields or "
+               "column headings in the distribution.")
+Q_DCAT_DICT_TYPE = ("dcat-us-1-1-schema",
+                    "'Further Metadata Field Guidance', distribution → describedBy",
+                    "If this is a machine readable file the media type should be specified "
+                    "with `describedByType`")
+Q_DCAT3_QUALITY = ("dcat-us-3-dataset-schema", "property `hasQualityMeasurement`",
+                   "List of quality measurements for the dataset (for example, completeness, "
+                   "accuracy, or timeliness) beyond spatial or temporal resolution")
+Q_DCAT3_VNOTES = ("dcat-us-3-dataset-schema", "property `versionNotes`",
+                  "Notes describing how this version differs from earlier versions of the "
+                  "dataset")
+Q_DCAT3_PREV = ("dcat-us-3-dataset-schema", "property `previousVersion`",
+                "reference to the previous dataset version")
+Q_DCAT3_GENERATED = ("dcat-us-3-dataset-schema", "property `wasGeneratedBy`",
+                     "List of activities that generated, or provide the business context for "
+                     "the creation of the dataset")
 Q_JSONLD = ("w3c-json-ld-1-1-core", "section 1 'Introduction', design goals",
             "The JSON-LD syntax is very terse and human readable, requiring as little effort "
             "as possible from the developer.")
@@ -797,6 +855,80 @@ ACTIONS = [
        note="Withdrawn from the HOST level from cycle 5 (DD-066): a home page carries no "
             "estimate, so the leg cannot hold the property it measures there. The action is a "
             "product-surface action, which is the level `ind:G1-D.measurement_level` records."),
+    # --------------------------------------------------- B1, B4, D3, G4 (generation 11)
+    # `cc_tasks/2026-09-18_dcat_field_rules.md` decision 4. Techniques from the same DCAT-US
+    # documents the fields cite. `no_product_record` is classed `publish_new_file` on every leg:
+    # the outcome covers a host with no catalog as well as a catalog without the product's
+    # record, and the class is the larger of the two acts, the one most hosts on the cycle of
+    # record face (9 of its 16 bodies answer `/data.json` with no catalog, 3 serve one and 4
+    # could not be observed; `cc_tasks/2026-09-18_dcat_field_rules_RESULT.md` §1).
+    _a("B1", "no_product_record", "b1-publish-the-products-record-with-its-data-dictionary",
+       "Publish the product's catalog record with a link to its data dictionary",
+       "The product has no record in a data.json catalog on the host — none is served, or it "
+       "does not parse, or the product is not in it — so no machine-readable record points a "
+       "consumer at the dictionary that defines the product's fields. Publish the product's "
+       "record in the agency's data.json and give its distribution a `describedBy` link to the "
+       "data dictionary, with `describedByType` when the dictionary is machine-readable.",
+       [Q_DCAT_CATALOG, Q_DCAT_DICT], cls="publish_new_file", task=DCAT_TASK,
+       class_reason=_NO_RECORD_CLASS),
+    _a("B1", "no_data_dictionary", "b1-link-the-data-dictionary-from-the-catalog-record",
+       "Link the data dictionary from the product's catalog record",
+       "The product's catalog record carries no `describedBy`, at the dataset level or on any "
+       "distribution, so a consumer reading the record cannot find what the columns mean. Add "
+       "`describedBy` on the distribution, pointing at the data dictionary or schema, and "
+       "`describedByType` naming its media type when it is machine-readable.",
+       [Q_DCAT_DICT, Q_DCAT_DICT_TYPE], cls="edit_existing", task=DCAT_TASK),
+    _a("B4", "no_product_record", "b4-publish-the-products-record-with-quality-metadata",
+       "Publish the product's catalog record with its quality and revision metadata",
+       "The product has no record in a data.json catalog on the host, so its error measures "
+       "and revision history exist, if at all, only in prose. Publish the product's record and "
+       "carry `hasQualityMeasurement` and `versionNotes` (or `previousVersion`) on it.",
+       [Q_DCAT_CATALOG, Q_DCAT3_QUALITY], cls="publish_new_file", task=DCAT_TASK,
+       class_reason=_NO_RECORD_CLASS),
+    _a("B4", "quality_measurement_absent", "b4-publish-quality-measurements-as-metadata",
+       "Publish the product's quality measurements as catalog metadata",
+       "The product's catalog record carries no `hasQualityMeasurement`, so the error measures "
+       "a consumer needs to weigh an estimate are not machine-readable. List the product's "
+       "quality measurements — accuracy, completeness, timeliness — as `hasQualityMeasurement` "
+       "entries on the record.",
+       [Q_DCAT3_QUALITY, Q_BP6], cls="edit_existing", task=DCAT_TASK),
+    _a("B4", "revision_metadata_absent", "b4-state-what-changed-from-the-previous-version",
+       "State what changed from the previous version in the catalog record",
+       "The product's catalog record carries no `versionNotes`, `previousVersion` or "
+       "`hasCurrentVersion`, so a consumer holding one vintage cannot tell from the record "
+       "how it relates to the next. Add `versionNotes` saying how this version differs, and "
+       "`previousVersion` pointing at the one it replaces.",
+       [Q_DCAT3_VNOTES, Q_DCAT3_PREV, Q_BP8], cls="edit_existing", task=DCAT_TASK),
+    _a("D3", "no_product_record", "d3-publish-the-products-record-with-its-lineage",
+       "Publish the product's catalog record naming how it was generated",
+       "The product has no record in a data.json catalog on the host, so no machine-readable "
+       "record says what activity produced it or from what. Publish the product's record and "
+       "name the generating activity on it with `wasGeneratedBy`.",
+       [Q_DCAT_CATALOG, Q_DCAT3_GENERATED], cls="publish_new_file", task=DCAT_TASK,
+       class_reason=_NO_RECORD_CLASS),
+    _a("D3", "no_lineage_field", "d3-name-the-generating-activity-in-the-catalog-record",
+       "Name the activity that generated the product in its catalog record",
+       "The product's catalog record names no lineage — no `wasGeneratedBy` and no "
+       "`wasDerivedFrom` — so the path from collection to product is not machine-readable. "
+       "Add `wasGeneratedBy` naming the collection and estimation activities, and "
+       "`prov:wasDerivedFrom` where the product is derived from another dataset.",
+       [Q_DCAT3_GENERATED, Q_BP5], cls="edit_existing", task=DCAT_TASK),
+    _a("G4", "no_product_record", "g4-publish-the-products-record-with-its-authority-codes",
+       "Publish the product's catalog record carrying its bureau and program codes",
+       "The product has no record in a data.json catalog on the host, so nothing machine-"
+       "readable ties the product to the bureau and program that issue it, and an aggregator's "
+       "copy carries as much authority as the original. Publish the product's record with "
+       "`bureauCode` and `programCode`.",
+       [Q_DCAT_CATALOG, Q_DCAT_BUREAU], cls="publish_new_file", task=DCAT_TASK,
+       class_reason=_NO_RECORD_CLASS),
+    _a("G4", "authority_codes_absent", "g4-carry-bureau-and-program-codes-on-the-record",
+       "Carry `bureauCode` and `programCode` on the product's catalog record",
+       "The product's catalog record lacks a well-formed `bureauCode` or `programCode`, so the "
+       "issuing authority is not carried as structured metadata. Add both, in the formats the "
+       "schema states: the OMB Circular A-11 agency and bureau code (`015:11`) and the Federal "
+       "Program Inventory code (`015:001`).",
+       [Q_DCAT_BUREAU, Q_DCAT_PROGRAM, Q_DCAT_BUREAU_FMT], cls="edit_existing",
+       task=DCAT_TASK),
 ]
 
 
@@ -1029,7 +1161,7 @@ def build(g: dict) -> tuple:
             "outcome": a["outcome"],
             "applies_to_publisher": a["applies_to_publisher"],
             "value": value_of(g, leg, fails),
-            "authored_by": TASK,
+            "authored_by": a["task"] or TASK,
         }
         if a["class_reason"]:
             props["technique_class_reason"] = a["class_reason"]
@@ -1104,6 +1236,9 @@ def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--task", default=WRITEBACK_TASK,
+                    help="the task that ORDERED this run, recorded on the `framework_writeback` "
+                         "event")
     ap.add_argument("--check", action="store_true",
                     help="validate the table against the rules, the sources and the record; "
                          "write nothing and print the summary")
@@ -1121,7 +1256,7 @@ def main(argv=None) -> int:
                "remediates_added": [f"{e['from']}->{e['to']} ({e['properties']['outcome']})"
                                     for e in edges],
                "summary": s}
-    out = fw.save(merged, script=SCRIPT, task=WRITEBACK_TASK, changes=changes,
+    out = fw.save(merged, script=SCRIPT, task=a.task, changes=changes,
                   dry_run=a.dry_run)
     print(json.dumps({"summary": s,
                       "save": {k: v for k, v in out.items()

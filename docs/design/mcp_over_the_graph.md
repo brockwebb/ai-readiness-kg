@@ -49,7 +49,7 @@ The interpreter is named explicitly because `fastmcp`, the Neo4j driver and `pyy
 
 ## The projection gate, at generation time
 
-`green` — every node of the record is in the graph with every property equal (171 nodes compared against `framework/ai_readiness_framework.json`, cell for cell). `get_overview` recomputes this on every call and `run_cypher` returns it beside every result, because DD-057 makes a Cypher answer over the framework labels valid only while it is green.
+`green` — every node of the record is in the graph with every property equal (184 nodes compared against `framework/ai_readiness_framework.json`, cell for cell). `get_overview` recomputes this on every call and `run_cypher` returns it beside every result, because DD-057 makes a Cypher answer over the framework labels valid only while it is green.
 
 ## The tools
 
@@ -67,19 +67,19 @@ One real call each, with the answer the tool gave. Long lists are cut to 2 entri
   "framework": {
     "indicators_total": 49,
     "indicators_by_measurement_tier": {
-      "M": 34,
+      "M": 36,
       "O": 5,
-      "unassigned": 5,
+      "unassigned": 3,
       "D": 5
     },
     "indicators_by_measurement_basis": {
-      "harness_leg": 17,
+      "harness_leg": 21,
       "open_tool": 5,
-      "structured_field": 7,
-      "unassigned": 5,
+      "structured_field": 3,
+      "unassigned": 3,
       "evaluation": 8,
-      "declaration": 5,
-      "judged_reading": 2
+      "judged_reading": 4,
+      "declaration": 5
     },
     "by_tier_and_basis": [
       {
@@ -104,23 +104,23 @@ One real call each, with the answer the tool gave. Long lists are cut to 2 entri
       "criteria": 7,
       "constructs": 47,
       "indicators": 48,
-      "evidenced_by": 139,
+      "evidenced_by": 141,
       "evidenced_by_internal": 17,
-      "gaps": 14,
-      "measurement_specs": 22,
+      "gaps": 13,
+      "measurement_specs": 26,
       "collectors_none_known": 4,
-      "rules_built": 17,
+      "rules_built": 21,
       "specs_with_recorded_decision": 3,
       "candidate_indicators": 1,
       "indicators_measured": 16,
-      "actions": 42,
+      "actions": 51,
       "actions_on_candidate_indicators": 3
     },
     "counts_basis": "Node and edge counts of the framework itself (criteria, constructs, indicators, evidenced_by, evidenced_by_internal, gaps, indicators_measured) EXCLUDE candidate indicators and their constructs (DD-054: the framework does not adopt what the instrument found about itself without the operator); candidate_indicators count… [898 chars]",
-    "nodes": 171,
-    "edges": 325,
-    "actions": 45,
-    "remediates_edges": 45,
+    "nodes": 184,
+    "edges": 340,
+    "actions": 54,
+    "remediates_edges": 54,
     "locators": [
       {
         "kind": "record_key",
@@ -211,7 +211,7 @@ One real call each, with the answer the tool gave. Long lists are cut to 2 entri
       }
     ],
     "status": "green",
-    "nodes_compared": 171,
+    "nodes_compared": 184,
     "mismatches": [],
     "reason": "every node of the record is in the graph with every property equal"
   },

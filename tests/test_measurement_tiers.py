@@ -39,10 +39,13 @@ sys.path.insert(0, str(REPO / "assessment" / "harness"))
 #: indicator between tiers is a task's decision, and this literal is where the suite learns of
 #: it. That task admitted the documentation of `oasdiff` and the Wayback CDX Server API and
 #: moved A7, F2 and F3 from unassigned to O.
-EXPECTED_PER_TIER = {"M": 34, "O": 5, "D": 5}
-EXPECTED_PER_BASIS = {"harness_leg": 17, "structured_field": 7, "judged_reading": 2,
+#: Moved by `cc_tasks/2026-09-18_dcat_field_rules.md`: B1, B4, D3 and G4 went `structured_field`
+#: -> `harness_leg` when generation 11's rules entered `rules.CURRENT`, and E1 and E3 took M,
+#: `judged_reading` (decision 5).
+EXPECTED_PER_TIER = {"M": 36, "O": 5, "D": 5}
+EXPECTED_PER_BASIS = {"harness_leg": 21, "structured_field": 3, "judged_reading": 4,
                       "evaluation": 8, "open_tool": 5, "declaration": 5}
-EXPECTED_UNASSIGNED = {"B6", "E1", "E3", "G3", "G5"}
+EXPECTED_UNASSIGNED = {"B6", "G3", "G5"}
 #: Decision 3's shopping list: named on a row that is still unassigned, never on a tiered one.
 #: Empty since the ingest task fetched both tools' documents; the test below still holds any
 #: future entry to an untiered row.

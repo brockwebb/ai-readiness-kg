@@ -320,6 +320,9 @@ def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--out", default=str(OUT))
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--task", default=TASK,
+                    help="the task that ORDERED this run, recorded on the `framework_writeback` "
+                         "event; a skeleton edit names the task that made it")
     fw.add_force_args(ap)
     a = ap.parse_args(argv)
     out = Path(a.out)
@@ -327,7 +330,7 @@ def main(argv=None) -> int:
     out.parent.mkdir(parents=True, exist_ok=True)
     # Through the one writer: it recounts, refuses a drop that is not forced with a reason,
     # writes, and appends the `framework_writeback` event carrying the delta.
-    ev = fw.save(g, script=SCRIPT, task=TASK, changes={"regenerated_from": g["generated_from"]},
+    ev = fw.save(g, script=SCRIPT, task=a.task, changes={"regenerated_from": g["generated_from"]},
                  dry_run=a.dry_run, path=out, **fw.force_kwargs(a))
     print(json.dumps({"counts": g["counts"],
                       "unparsed_rows": g["unparsed_rows"],

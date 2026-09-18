@@ -441,6 +441,15 @@ e5_control:
   # A value may be a single verdict (every leg expects it) or a table with a `default` and
   # per-leg exceptions. Two fixtures need the table: the interesting branches are exactly the
   # legs that behave DIFFERENTLY from the rest, and a blanket expectation would hide them.
+  #
+  # **The four DCAT-US field legs (B1, B4, D3, G4) take every fixture's DEFAULT, and no table
+  # gains a row** (`cc_tasks/2026-09-18_dcat_field_rules.md`). Derived from the rule source
+  # before the fixtures were run with them, as every entry below was. Each reads D4's catalog
+  # observation and nothing else, so on every fixture it sees exactly what D4 sees and lands
+  # where D4 lands: `passes_all` serves a catalog whose product record carries every field
+  # (`pass`); `fails_all` serves no `/data.json`, a 404 is observed (`fail`, no catalog record);
+  # `refuses_identified_client` and `resets_connection` blind the catalog (`error`, via
+  # `_common.only_errors`); the other five serve `passes_all`'s `/data.json` unblinded (`pass`).
   expected_verdicts:
     passes_all: "pass"
     fails_all: "fail"
@@ -744,6 +753,63 @@ d4_validation:
   # A catalog too large to validate whole is validated on a bounded sample of its datasets;
   # the Finding records how many were checked, so nobody reads a sample as a census.
   max_datasets_validated: 200
+
+dcat_fields:
+  # The four DCAT-US structured-field legs (`cc_tasks/2026-09-18_dcat_field_rules.md`). They
+  # collect NOTHING of their own: each rule declares `CONSUMES = ("D4",)` and reads the catalog
+  # D4 already fetches, so a host is asked for its `/data.json` once per surface, not five
+  # times. `runner.collect_leg` returns [] for these legs, as it does for `link_probe`'s.
+  legs_served: ["B1", "B4", "D3", "G4"]
+  # What the D4 observation is ENRICHED with (`v2clauses.dcat_record_fields`): for the product's
+  # own records — D4's membership test, `product_url` appearing in the dataset entry — which
+  # of these fields each record carries. A field is carried when its value is non-empty and,
+  # where a `pattern` is declared, every element matches it. A dotted name is a field of the
+  # record's `distribution` entries, carried when any distribution carries it.
+  #
+  # Every field is named by a document on disk:
+  #   bureauCode, programCode, publisher, describedBy, distribution.describedBy
+  #       corpus/kernel/dcat-us-1-1-schema.md (doc_id `dcat-us-1-1-schema`); the two patterns
+  #       are the formats it states: "in the format of `015:11`" and "Use the format of
+  #       `015:001`".
+  #   hasQualityMeasurement, versionNotes, previousVersion, hasCurrentVersion,
+  #   wasGeneratedBy, qualifiedAttribution
+  #       corpus/kernel/dcat-us-3-dataset-schema.md (doc_id `dcat-us-3-dataset-schema`).
+  #   prov:wasGeneratedBy, prov:wasDerivedFrom
+  #       corpus/kernel/w3c-dcat-3.md (doc_id `w3c-dcat-3`), over the PROV-O ontology
+  #       (corpus/crosswalk/w3c-prov-o-ontology.html). `wasDerivedFrom` unprefixed is the same
+  #       property in a catalog whose JSON-LD context maps it.
+  fields:
+    bureauCode: {pattern: "^[0-9]{3}:[0-9]{2}$"}
+    programCode: {pattern: "^[0-9]{3}:[0-9]{3}$"}
+    publisher: {}
+    describedBy: {}
+    distribution.describedBy: {}
+    hasQualityMeasurement: {}
+    versionNotes: {}
+    previousVersion: {}
+    hasCurrentVersion: {}
+    wasGeneratedBy: {}
+    "prov:wasGeneratedBy": {}
+    wasDerivedFrom: {}
+    "prov:wasDerivedFrom": {}
+    qualifiedAttribution: {}
+  # Each rule's clauses over those fields. `any_of`: a record satisfies the clause when it
+  # carries at least one of the fields; `all_of`: when it carries every one. A rule passes when
+  # EVERY catalog record for the product satisfies EVERY clause — a consumer that lands on any
+  # one of the product's records must find the field there. The clauses a definition names and
+  # no admitted document gives a field for are declared on the rule module as `UNMEASURED` and
+  # printed on every verdict, never silently dropped.
+  clauses:
+    B1:
+      data_dictionary: {any_of: ["describedBy", "distribution.describedBy"]}
+    B4:
+      quality_measurement: {any_of: ["hasQualityMeasurement"]}
+      revision_metadata: {any_of: ["versionNotes", "previousVersion", "hasCurrentVersion"]}
+    D3:
+      lineage: {any_of: ["wasGeneratedBy", "prov:wasGeneratedBy", "wasDerivedFrom",
+                         "prov:wasDerivedFrom"]}
+    G4:
+      authority_codes: {all_of: ["bureauCode", "programCode"]}
 
 f4_entries:
   # F4-v2: "and carries a revision class per entry" — v1 stopped at the content type.

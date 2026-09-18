@@ -46,7 +46,10 @@ PINS = {"httpx": "httpx>=0.27", "protego": "protego>=0.3", "extruct": "extruct>=
         "pyshacl": "pyshacl>=0.26", "lighthouse": "lighthouse-cli>=12",
         "project-open-data-validator": "json-schema (Project Open Data v1.1 schema)",
         "g1_declared": "assessment/harness/probes/g1_declared.py (frozen, DD-036)",
-        "g1_preservation": "assessment/harness/probes/g1_preservation.py (frozen, DD-036)"}
+        "g1_preservation": "assessment/harness/probes/g1_preservation.py (frozen, DD-036)",
+        "dcat-record-fields": "assessment/harness/scan/collectors/v2clauses.py "
+                              "dcat_record_fields (scheme 1), over dcat.fetch_catalog's D4 "
+                              "observation"}
 
 #: One entry per indicator leg. `signal` states what is OBSERVED, not what is concluded.
 SPECS = {
@@ -128,6 +131,39 @@ SPECS = {
                evidence_kind="catalog document + validation report + membership verdict",
                prior_art="`dcat-us-1-1-schema`; "
                          "`m-25-05-phase-2-implementation-of-the-evidence-act-open-gove`"),
+    # Generation 11 (`cc_tasks/2026-09-18_dcat_field_rules.md`): four legs that read D4's
+    # catalog observation and collect nothing of their own. Added to a record that already
+    # holds the other specs by `--add-missing`, never by a regeneration.
+    "B1": dict(signal="On D4's /data.json observation, test whether every catalog record for "
+                      "the product links a data dictionary (DCAT-US `describedBy`, on the "
+                      "dataset or a distribution).",
+               collector="dcat-record-fields",
+               evidence_kind="D4's catalog document + per-record field profile",
+               prior_art="`dcat-us-1-1-schema`",
+               note="The DCAT half of B1; the schema.org `variableMeasured` half is "
+                    "cc_tasks/2026-09-18_schema_field_rules.md's."),
+    "B4": dict(signal="On D4's /data.json observation, test whether every catalog record for "
+                      "the product carries a quality measurement (`hasQualityMeasurement`) and "
+                      "revision metadata (`versionNotes`, `previousVersion` or "
+                      "`hasCurrentVersion`).",
+               collector="dcat-record-fields",
+               evidence_kind="D4's catalog document + per-record field profile",
+               prior_art="`dcat-us-3-dataset-schema`",
+               note="The suppression-rules clause has no field in any admitted document and is "
+                    "recorded as unmeasured on every verdict."),
+    "D3": dict(signal="On D4's /data.json observation, test whether every catalog record for "
+                      "the product names a lineage (`wasGeneratedBy`, `prov:wasGeneratedBy`, "
+                      "`wasDerivedFrom` or `prov:wasDerivedFrom`).",
+               collector="dcat-record-fields",
+               evidence_kind="D4's catalog document + per-record field profile",
+               prior_art="`dcat-us-3-dataset-schema`; `w3c-dcat-3`; `w3c-prov-o-ontology`"),
+    "G4": dict(signal="On D4's /data.json observation, test whether every catalog record for "
+                      "the product carries a well-formed `bureauCode` and `programCode`.",
+               collector="dcat-record-fields",
+               evidence_kind="D4's catalog document + per-record field profile",
+               prior_art="`dcat-us-1-1-schema`",
+               note="The statutory-mandate and statistical-versus-administrative clauses have "
+                    "no field in any admitted document and are recorded as unmeasured."),
     "E5": dict(signal="Seeded known-bad items fired per continuous-eval cycle.",
                collector="none_known",
                evidence_kind="canary definitions + per-cycle fire log",
@@ -206,17 +242,33 @@ def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--json", default=str(JSON_PATH))
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--add-missing", action="store_true",
+                    help="append only the specs this table carries and the record does not, "
+                         "leaving every existing spec node and edge byte-for-byte as it is. "
+                         "The regeneration path resets written-back `rule_id`s and drops "
+                         "recorded `decision`s; this path cannot")
+    ap.add_argument("--task", default=TASK,
+                    help="the task that ORDERED this run, recorded on the `framework_writeback` "
+                         "event")
     fw.add_force_args(ap)
     a = ap.parse_args(argv)
     path = Path(a.json)
     g = json.loads(path.read_text(encoding="utf-8"))
-    g["nodes"] = [n for n in g["nodes"] if "MeasurementSpec" not in n["labels"]]
-    g["edges"] = [e for e in g["edges"] if e["type"] != "MEASURED_BY"]
-    nodes, edges, rows = build(g)
+    if a.add_missing:
+        have = {n["id"] for n in g["nodes"]}
+        nodes, edges, rows = build(g)
+        keep = {n["id"] for n in nodes if n["id"] not in have}
+        nodes = [n for n in nodes if n["id"] in keep]
+        edges = [e for e in edges if e["to"] in keep]
+        rows = [r for r in rows if f"spec:{r['leg']}" in keep]
+    else:
+        g["nodes"] = [n for n in g["nodes"] if "MeasurementSpec" not in n["labels"]]
+        g["edges"] = [e for e in g["edges"] if e["type"] != "MEASURED_BY"]
+        nodes, edges, rows = build(g)
     g["nodes"] += nodes
     g["edges"] += edges
     # `measurement_specs` and `collectors_none_known` are recounted by the writer.
-    ev = fw.save(g, script=SCRIPT, task=TASK,
+    ev = fw.save(g, script=SCRIPT, task=a.task,
                  changes={"specs": len(nodes), "measured_by": len(edges)},
                  dry_run=a.dry_run, path=path, **fw.force_kwargs(a))
     print(json.dumps({"delta": ev["delta_summary"], "written": ev["written"],

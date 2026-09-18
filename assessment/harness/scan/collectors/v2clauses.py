@@ -295,6 +295,74 @@ def pod_validation(catalog: dict, params: dict, repo_root) -> dict:
                          for e in errors[:_retain(params, "validator_messages_retained")]]}
 
 
+# ------------------------------------------------- B1, B4, D3, G4: DCAT-US record fields
+#: The shape of `dcat_record_fields`' output. A rule reading a D4 observation checks it before
+#: trusting any key, so a later change to the shape is a new scheme and not a silent reread.
+DCAT_FIELDS_SCHEME = 1
+
+
+def _dcat_value(record: dict, name: str):
+    """The value a (possibly dotted) field name reaches in one dataset record. A dotted name is
+    a field of the record's `distribution` entries, returned as the list of their values."""
+    if "." not in name:
+        return record.get(name)
+    parent, child = name.split(".", 1)
+    subs = record.get(parent)
+    subs = subs if isinstance(subs, list) else [subs] if isinstance(subs, dict) else []
+    return [s.get(child) for s in subs if isinstance(s, dict) and s.get(child) not in
+            (None, "", [], {})]
+
+
+def _dcat_carried(value, pattern) -> bool:
+    """Non-empty and, under a declared pattern, every scalar element matches it."""
+    if value in (None, "", [], {}):
+        return False
+    if not pattern:
+        return True
+    items = value if isinstance(value, list) else [value]
+    return bool(items) and all(isinstance(v, str) and re.fullmatch(pattern, v) for v in items)
+
+
+def dcat_record_fields(catalog, product_url: str, params: dict) -> dict:
+    """Which DCAT-US fields the product's own catalog records carry. A pure parse of the
+    catalog D4 already fetched and stored; nothing decides here.
+
+    **The product's records are D4's.** `dcat.fetch_catalog` decides membership with
+    `product_url in json.dumps(d)` over the `dataset` array, and this uses the same test so that
+    "the product is in the catalog" and "the product's record carries X" can never be about two
+    different sets of records. `tests/test_dcat_field_rules.py` holds the two to agreement.
+
+    Records are summarised as PROFILES — each distinct set of carried fields with the number of
+    records carrying exactly that set — because a host-level surface can match every record in
+    a catalog (census.gov's home URL is inside all 1,805 of its entries) and the rule needs
+    per-record co-occurrence, not per-field totals, to test an `any_of` or `all_of` clause.
+    """
+    spec = params["dcat_fields"]["fields"]
+    out = {"scheme": DCAT_FIELDS_SCHEME, "parsed": isinstance(catalog, dict)}
+    if not out["parsed"]:
+        return {**out, "reason": "the catalog is not a JSON object"}
+    datasets = catalog.get("dataset")
+    datasets = [d for d in datasets if isinstance(d, dict)] if isinstance(datasets, list) else []
+
+    def carried(d):
+        return tuple(sorted(n for n, s in spec.items()
+                            if _dcat_carried(_dcat_value(d, n), (s or {}).get("pattern"))))
+
+    mine = [d for d in datasets if product_url in json.dumps(d)]
+    profiles: dict = {}
+    for d in mine:
+        k = carried(d)
+        profiles[k] = profiles.get(k, 0) + 1
+    catalog_carrying = {n: 0 for n in spec}
+    for d in datasets:
+        for n in carried(d):
+            catalog_carrying[n] += 1
+    return {**out, "catalog_records": len(datasets), "product_records": len(mine),
+            "product_record_profiles": [{"carried": list(k), "records": v}
+                                        for k, v in sorted(profiles.items())],
+            "catalog_records_carrying": catalog_carrying}
+
+
 # ------------------------------------------------------------------ F4: revision class
 def changelog_entries(body: bytes, content_type: str, params: dict) -> dict:
     """F4's signal: "test whether it is machine-readable **and carries a revision class per
