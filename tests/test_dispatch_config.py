@@ -397,66 +397,35 @@ def test_the_repo_carries_the_addendum_that_amended_decision_seven():
 
 
 # ---------------------------------------------------------------------------
-# The October tick: why this project's cadence would be blocked, as the code says it
+# The first Monday: nothing renders, because this project has no schedule
 # ---------------------------------------------------------------------------
 #
-# `cc_tasks/2026-09-16_dispatcher_commits_its_record.md` decision 3. Once the dispatcher
-# commits and pushes every line it writes (decisions 1 and 2), a tree that is dirty at a cadence
-# tick is dirty for one of three reasons: a session in flight (correct to wait), a Desktop file
-# not yet committed (committed by the same pass before the cadence runs) or the operator's own
-# uncommitted work (correct to wait, and the paths are on stdout). This asserts that the reasons
-# the installed dispatcher reports for THIS project's cadence entry, at the instant cycle 5 falls
-# due, are exactly those — each with the evidence a reader of the wrapper log needs — so the
-# first October pass can be read from its log alone.
+# `cc_tasks/2026-09-18_cadence_off.md` decision 3. Until 2026-09-18 this section asserted that
+# cycle 5 fell due at the 2026-10-05 tick and named the reasons a tick could be blocked. The
+# operator turned the schedule off that day (DN-006 ADDENDUM_07): a scan cycle is requested, not
+# scheduled. What this asserts now is the absence: at the instant the old rule would have fired,
+# the installed dispatcher's cadence step evaluates nothing, creates nothing and says nothing.
 #
-# Run against a scratch directory, not this checkout, because `evaluate_entry` asks whether the
-# period's instance already exists on disk, and after 2026-10-05 in this checkout it will.
+# Run against a scratch directory, not this checkout, so a render could not land in `cc_tasks/`.
 
-#: 2026-10-05 is the first Monday of October 2026 and `start_period` is `2026-10`; 00:30Z is
-#: inside the due window. Hand-checked, as the Seldon cadence tests do.
-CYCLE5_TICK = "2026-10-05T00:30:00+00:00"
+#: 2026-10-05 is the first Monday of October 2026 and 00:30Z was inside the old rule's due
+#: window: the one instant a leftover entry would have fired.
+FIRST_MONDAY_TICK = "2026-10-05T00:30:00+00:00"
 
 
-def _cadence_at_tick(tmp_path, monkeypatch, capsys, *, tree, claim, dry_run=False):
+def test_nothing_renders_on_the_first_monday(tmp_path, monkeypatch, capsys):
     from datetime import datetime
     from seldon.commands import dispatch as CMD
     from seldon.core.dispatch import load_dispatch_config
     cfg = load_dispatch_config(REPO)
-    monkeypatch.setattr(CMD, "_utcnow", lambda: datetime.fromisoformat(CYCLE5_TICK))
-    rows = CMD._cadence(tmp_path, {}, None, None, None, None, cfg, tree, claim, dry_run)
-    return rows, capsys.readouterr().err
-
-
-def _tree(dirty_paths=(), branch="main"):
-    return {"branch": branch, "dirty": bool(dirty_paths), "dirty_paths": list(dirty_paths),
-            "dirty_count": len(dirty_paths)}
-
-
-def test_cycle5_is_due_at_the_tick_and_is_this_projects_only_cadence(tmp_path, monkeypatch,
-                                                                    capsys):
-    rows, _ = _cadence_at_tick(tmp_path, monkeypatch, capsys, tree=_tree(), claim=None,
-                               dry_run=True)
-    assert [(r["cadence"], r["period"], r["due"], r["instance"]) for r in rows] == [
-        ("scan_cycle", "2026-10", True, None)]
-
-
-@pytest.mark.parametrize("tree,claim,reason,evidence", [
-    # A session in flight: the dispatcher's own claim, named.
-    (_tree(), {"artifact_id": "c609b1e1-0000", "claimed_by": "dispatcher:host:1"},
-     "claim_in_flight", "c609b1e1 by dispatcher:host:1"),
-    # The operator's own uncommitted work: the paths, so the log says whose.
-    (_tree(["scripts/operator_wip.py", "controls.yaml"]), None,
-     "dirty_tree", "scripts/operator_wip.py, controls.yaml"),
-    # A checkout left on another branch.
-    (_tree(branch="feat/x"), None, "wrong_branch", "on feat/x, configured main"),
-])
-def test_a_blocked_cycle5_tick_names_its_reason_and_its_evidence(
-        tmp_path, monkeypatch, capsys, tree, claim, reason, evidence):
-    rows, err = _cadence_at_tick(tmp_path, monkeypatch, capsys, tree=tree, claim=claim)
-    assert rows[0]["created"] is False
-    assert rows[0]["blocked_on"] == reason
-    assert rows[0]["blocked_evidence"] == evidence
-    assert f"scan_cycle 2026-10 is due and NOT created ({reason}): {evidence}" in err
+    assert cfg["cadence"] == []
+    monkeypatch.setattr(CMD, "_utcnow", lambda: datetime.fromisoformat(FIRST_MONDAY_TICK))
+    tree = {"branch": "main", "dirty": False, "dirty_paths": [], "dirty_count": 0}
+    rows = CMD._cadence(tmp_path, {}, None, None, None, None, cfg, tree, None, False)
+    captured = capsys.readouterr()
+    assert rows == []
+    assert "cadence" not in captured.out + captured.err
+    assert list(tmp_path.rglob("*")) == []
 
 
 def test_the_pass_commits_the_dispatchers_lines_and_registered_files_before_the_cadence():

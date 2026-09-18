@@ -3,10 +3,8 @@
 **Date:** {created_at}
 **Project:** ai-readiness-kg
 **Authored by:** the standing dispatcher, rendering `cc_tasks/templates/scan_cycle.md` under
-cadence `{cadence_name}` for period `{period}`. No person wrote this file, and that is the
-point: DD-060 puts the cycle on the first Monday of the month UTC, and a cycle whose date is
-set by when somebody remembered to paste a dispatch line is a cycle dated by human attention
-rather than by the calendar.
+cadence `{cadence_name}` for period `{period}`. A cycle runs when the operator asks for one,
+and its date is the day it was rendered.
 **Implements:** DD-060 (monthly, first Monday UTC), DN-006 decision 8 (a schedule produces a
 task; it does not bypass the queue), DN-003 (a cycle's judgements go on the append-only log),
 DN-004 (what a new cycle does **not** do to the published report), DN-005 §4 item 1.

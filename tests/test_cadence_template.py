@@ -16,6 +16,12 @@ then read as "this period is already served" — a test that suppressed the thin
 
 Zero spend, no network, no Neo4j: `D.evaluate` is the same function `seldon dispatch status`
 prints, so asserting on it asserts on what `status` would say.
+
+**Since 2026-09-18 the template is rendered on request, not on a schedule**
+(`cc_tasks/2026-09-18_cadence_off.md`, DN-006 ADDENDUM_07). `dispatch.cadence` is empty, so the
+render parameters the entry used to carry are stated below as `ON_REQUEST`. They are the values of
+the command in `cc_tasks/2026-09-18_cadence_off_RESULT.md` §1, and this file tests that command's
+output.
 """
 from __future__ import annotations
 
@@ -36,22 +42,28 @@ from seldon.core import cadence as C           # noqa: E402
 from seldon.core import dispatch as D          # noqa: E402
 
 DISPATCH = yaml.safe_load((REPO / "seldon.yaml").read_text(encoding="utf-8"))["dispatch"]
-ENTRY = DISPATCH["cadence"][0]
-TEMPLATE_PATH = REPO / ENTRY["template"]
 
-#: A hand-checked instant. 2026-10-05 is the first Monday of October 2026 — the due instant this
-#: task's decision 6 states — so the rendered instance is exactly cycle 5's.
-CREATED_AT = datetime(2026, 10, 5, 0, 0, tzinfo=timezone.utc)
-PERIOD = "2026-10"
+#: The entry the on-request render command uses: the four fields the scheduled `scan_cycle` entry
+#: carried before 2026-09-18, less its rule. They are stated here because no config carries them
+#: any more. `seldon cadence render` (Seldon issue `2026-09-18_cadence_render_on_request`) is the
+#: fix that puts them back in config.
+ON_REQUEST = {"name": "scan_cycle", "template": "cc_tasks/templates/scan_cycle.md",
+              "instances_dir": "cc_tasks", "cycle_name_format": "scan_{date}"}
+TEMPLATE_PATH = REPO / ON_REQUEST["template"]
+
+#: A requested cycle's period is its UTC date, so two requested in one month cannot collide on
+#: the instance glob. The instant is the day the schedule was turned off.
+CREATED_AT = datetime(2026, 9, 18, 12, 0, tzinfo=timezone.utc)
+PERIOD = "2026-09-18"
 
 
 def _render() -> tuple[str, str]:
     """The template rendered as the cadence would render it. Returns (stem, text)."""
-    stem = C.instance_stem(ENTRY, PERIOD, CREATED_AT)
+    stem = C.instance_stem(ON_REQUEST, PERIOD, CREATED_AT)
     text = C.render(
         TEMPLATE_PATH.read_text(encoding="utf-8"),
-        cycle_name=C.cycle_name_for(ENTRY, CREATED_AT), period=PERIOD,
-        cadence_name=ENTRY["name"],
+        cycle_name=C.cycle_name_for(ON_REQUEST, CREATED_AT), period=PERIOD,
+        cadence_name=ON_REQUEST["name"],
         created_at=CREATED_AT.isoformat().replace("+00:00", "Z"),
         instance_stem=stem)
     return stem, text
@@ -59,47 +71,27 @@ def _render() -> tuple[str, str]:
 
 # ============================================================== the entry and the template
 
-def test_the_configured_template_exists_and_is_the_one_under_cc_tasks_templates():
-    assert TEMPLATE_PATH.is_file(), f"{ENTRY['template']} does not exist"
-    assert ENTRY["template"].startswith("cc_tasks/templates/")
-    assert ENTRY["instances_dir"] == "cc_tasks"
-    assert ENTRY["rule"] == {"monthly_first_weekday": "monday", "at_utc": "00:00"}
+def test_the_template_exists_under_cc_tasks_templates():
+    assert TEMPLATE_PATH.is_file(), f"{ON_REQUEST['template']} does not exist"
+    assert ON_REQUEST["template"].startswith("cc_tasks/templates/")
 
 
-def test_the_cadence_entry_loads_and_the_rule_is_the_one_dd_060_declares():
-    """DD-060: monthly, first Monday UTC. The config is validated by the loader, so a rule this
-    project cannot execute is refused when the file is read and not when it fires."""
+def test_the_cadence_list_is_empty_and_loads():
+    """Decision 1 of `cc_tasks/2026-09-18_cadence_off.md`: the schedule is off. An empty list is
+    a valid config, and the dispatcher stays enabled for hand-written and requested tasks."""
+    assert DISPATCH["cadence"] == []
     cfg = D.load_dispatch_config(REPO)
-    assert len(cfg["cadence"]) == 1
-    assert C.due_instant(cfg["cadence"][0]["rule"], PERIOD).isoformat() == \
-        "2026-10-05T00:00:00+00:00"
+    assert cfg["cadence"] == []
+    assert cfg["enabled"] is True
 
 
-def test_nothing_is_due_at_ship_because_the_schedule_starts_in_october():
-    """Decision 6 says `last_instance` is empty at ship and nothing is created "because nothing
-    is due". **The second half was wrong when the task was written** and this test is why it now
-    holds: September 2026's first Monday was the 7th, the job was installed on the 16th, and
-    September was already measured by cycle 4 (`scan_2026-09-10`, hand-dispatched). The rule
-    alone says September is due; `start_period: 2026-10` is what makes it not, and without it
-    the first clean-tree pass would have created a second September cycle.
-
-    `catchup=False` does not cover this: the offending period is not an earlier one, it is the
-    current one. DN-006 ADDENDUM_02 §2, and Airflow's `start_date` is the prior art."""
-    assert ENTRY["last_instance"] == ""
-    assert ENTRY["start_period"] == "2026-10"
-    september = datetime(2026, 9, 16, 3, 25, tzinfo=timezone.utc)
-    assert C.is_due(ENTRY["rule"], september) is True
-    assert C.is_due(ENTRY["rule"], september, ENTRY["start_period"]) is False
-    row = C.evaluate_entry(REPO, ENTRY, september)
-    assert row["due"] is False and row["before_start"] is True
-    assert row["next_due"][:3] == ["2026-10-05T00:00:00Z", "2026-11-02T00:00:00Z",
-                                   "2026-12-07T00:00:00Z"]
-
-
-def test_no_cadence_instance_exists_for_any_period_yet():
-    """The guard is the file. Nothing in `cc_tasks/` matches the instance glob for any period,
-    which is the state decision 6 describes and the state this task leaves."""
-    assert sorted(Path(REPO / ENTRY["instances_dir"]).glob(f"*_{ENTRY['name']}_*.md")) == []
+def test_the_template_says_a_cycle_runs_on_request():
+    """Decision 2: the sentence calling a human-dated cycle the defect is gone. The sentence that
+    replaces it says a cycle's date is the day it was rendered."""
+    text = TEMPLATE_PATH.read_text(encoding="utf-8")
+    assert "dated by human attention" not in text
+    assert ("A cycle runs when the operator asks for one,\nand its date is the day it was "
+            "rendered.") in text
 
 
 def test_the_template_names_no_placeholder_the_renderer_does_not_define():
@@ -116,8 +108,8 @@ def test_the_rendered_instance_has_no_unsubstituted_placeholder_left():
 
 def test_the_rendered_instance_names_the_cycle_the_period_and_its_own_stem():
     stem, text = _render()
-    assert stem == "2026-10-05_scan_cycle_2026-10"
-    assert "scan_2026-10-05" in text
+    assert stem == "2026-09-18_scan_cycle_2026-09-18"
+    assert "scan_2026-09-18" in text
     assert PERIOD in text
     assert f"cc_tasks/{stem}_RESULT.md" in text
 
@@ -160,7 +152,7 @@ def _evaluate(checkout: Path, stem: str) -> dict:
     cfg = D.load_dispatch_config(checkout)
     band = D.resolve_standing_band(checkout, cfg["standing_band_ref"])
     row = {"artifact_id": "cycle5-task", "name": stem, "state": "proposed",
-           "source_file": f"cc_tasks/{stem}.md", "created_at": "2026-10-05T00:00:00Z",
+           "source_file": f"cc_tasks/{stem}.md", "created_at": "2026-09-18T12:00:00Z",
            "predecessors": []}
     return D.evaluate(checkout, row, cfg, band, D.tree_state(checkout), None, {})
 
