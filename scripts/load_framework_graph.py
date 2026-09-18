@@ -44,11 +44,15 @@ JSON_PATH = REPO / "framework" / "ai_readiness_framework.json"
 #: `Action` joined them on 2026-09-17 with the prescription layer
 #: (`cc_tasks/2026-09-17_prescription_layer.md`, DN-005 §2.3): the nodes are in the JSON and
 #: are reconstructible from it alone, which is the only condition for being owned here.
+#: `AssessmentTool` and `Precondition` joined on 2026-09-18 with the requirements layer
+#: (`cc_tasks/2026-09-18_requirements_layer.md`). NOT `Tool`: that is a KG label, owned by
+#: `build_projection.py`'s reset, and a label in both lists is deleted by whichever ran last.
 ASSESSMENT_LABELS = ("AssessmentCriterion", "AssessmentConstruct", "AssessmentIndicator",
-                     "MeasurementSpec", "AssessmentInternalRef", "Action")
+                     "MeasurementSpec", "AssessmentInternalRef", "Action", "AssessmentTool",
+                     "Precondition")
 #: Edge types this loader may write. A literal whitelist, never a payload value — invariant 4.
 ASSESSMENT_EDGES = ("DECOMPOSES_INTO", "EVIDENCED_BY", "EVIDENCED_BY_INTERNAL", "MEASURED_BY",
-                    "REMEDIATES")
+                    "REMEDIATES", "REQUIRES")
 
 #: A property whose value is a MAP is flattened onto named scalars rather than dropped or
 #: str()-ed. Neo4j has no map property type, and the write-backs of 2026-09-07 put three maps
@@ -137,6 +141,17 @@ def load(session, g: dict) -> dict:
                         f=e["from"], t=e["to"], outcome=props.get("outcome"), props=props)
             counts["edges"] += 1
             continue
+        if t == "REQUIRES":
+            # Carries properties, like REMEDIATES. Its identity is (from, to) — one indicator
+            # needs one requirement once — so a plain MERGE on the pair is the right key; the
+            # target is matched by label from the closed pair the schema declares, never by id
+            # alone, so a KG node sharing an id could not be picked up.
+            session.run("MATCH (i:AssessmentIndicator {id: $f}) "
+                        "MATCH (r) WHERE r.id = $t AND (r:AssessmentTool OR r:Precondition) "
+                        "MERGE (i)-[x:REQUIRES]->(r) SET x += $props",
+                        f=e["from"], t=e["to"], props=e.get("properties") or {})
+            counts["edges"] += 1
+            continue
         if t == "EVIDENCED_BY_INTERNAL":
             # Two writers, two key names: `build_framework_graph.py` writes `artifact_path`,
             # `add_candidate_indicator.py` writes `ref`. Reading only the first left A12's
@@ -186,6 +201,12 @@ def main(argv=None) -> int:
                 "MATCH (n:AssessmentInternalRef) RETURN count(n)").single()[0]
             counts["actions_in_graph"] = s.run(
                 "MATCH (n:Action) RETURN count(n)").single()[0]
+            counts["tools_in_graph"] = s.run(
+                "MATCH (n:AssessmentTool) RETURN count(n)").single()[0]
+            counts["preconditions_in_graph"] = s.run(
+                "MATCH (n:Precondition) RETURN count(n)").single()[0]
+            counts["requires_in_graph"] = s.run(
+                "MATCH (:AssessmentIndicator)-[x:REQUIRES]->() RETURN count(x)").single()[0]
             counts["harness_leg_indicators_without_an_action"] = [r["c"] for r in s.run(
                 "MATCH (i:AssessmentIndicator {measurement_basis: 'harness_leg'}) "
                 "WHERE NOT (i)<-[:REMEDIATES]-(:Action) RETURN i.code AS c ORDER BY c")]

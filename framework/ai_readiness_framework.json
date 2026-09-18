@@ -17,7 +17,11 @@
   "candidate_indicators": 1,
   "indicators_measured": 16,
   "actions": 60,
-  "actions_on_candidate_indicators": 3
+  "actions_on_candidate_indicators": 3,
+  "tools": 13,
+  "preconditions": 19,
+  "requires": 37,
+  "requires_on_candidate_indicators": 0
  },
  "unparsed_rows": [],
  "evidence_doc_ids_not_in_manifest": [
@@ -678,7 +682,8 @@
     "measurement_basis": "harness_leg",
     "tier_source": "rules.CURRENT['B1'] = RULE-B1-v2 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:B1`",
     "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
-    "tier_note": "The rule reads both halves: every catalog record for the product links a data dictionary (DCAT-US `describedBy`), or the product page's schema.org `Dataset` lists `variableMeasured`; either passes the leg. The contents of the dictionary or of the listed variables, and whether they are 'comprehensive', are not measured."
+    "tier_note": "The rule reads both halves: every catalog record for the product links a data dictionary (DCAT-US `describedBy`), or the product page's schema.org `Dataset` lists `variableMeasured`; either passes the leg. The contents of the dictionary or of the listed variables, and whether they are 'comprehensive', are not measured.",
+    "requirement_none_reason": "The unmeasured half is whether the linked dictionary or the listed variables are 'comprehensive', a judgement about their contents. No admitted document defines a test for it, so what stands in the way is an instrument this project has not specified — not a tool, an account or anything the body holds."
    }
   },
   {
@@ -712,7 +717,8 @@
     "measurement_basis": "harness_leg",
     "tier_source": "rules.CURRENT['B2'] = RULE-B2-v1 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:B2`",
     "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
-    "tier_note": "The rule measures the published and linked clauses: a schema.org `DefinedTerm` reached from the product page's `Dataset`, carrying `termCode`, `inDefinedTermSet` and `description`. The 'versioned' clause has no field in any admitted document and is recorded as unmeasured on every verdict."
+    "tier_note": "The rule measures the published and linked clauses: a schema.org `DefinedTerm` reached from the product page's `Dataset`, carrying `termCode`, `inDefinedTermSet` and `description`. The 'versioned' clause has no field in any admitted document and is recorded as unmeasured on every verdict.",
+    "requirement_none_reason": "The 'versioned' clause has no field in any admitted document. What is missing is a standard to test against, not a tool or a grant."
    }
   },
   {
@@ -795,7 +801,8 @@
     "measurement_basis": "harness_leg",
     "tier_source": "rules.CURRENT['B4'] = RULE-B4-v1 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:B4`",
     "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
-    "tier_note": "The rule measures the error-measure clause (`hasQualityMeasurement`) and the revisions-policy clause (`versionNotes` / `previousVersion` / `hasCurrentVersion`) on the product's catalog record. The suppression-rules clause has no field in any admitted document and is recorded as unmeasured."
+    "tier_note": "The rule measures the error-measure clause (`hasQualityMeasurement`) and the revisions-policy clause (`versionNotes` / `previousVersion` / `hasCurrentVersion`) on the product's catalog record. The suppression-rules clause has no field in any admitted document and is recorded as unmeasured.",
+    "requirement_none_reason": "The suppression-rules clause has no field in any admitted document (the failed search is on `ind:G5.tier_unassigned_reason`). What is missing is a standard, not a tool or a grant."
    }
   },
   {
@@ -1147,7 +1154,8 @@
     "measurement_basis": "harness_leg",
     "tier_source": "rules.CURRENT['D3'] = RULE-D3-v1 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:D3`",
     "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
-    "tier_note": "The rule reads that the product's catalog record names a lineage (`wasGeneratedBy` or `wasDerivedFrom`, bare or `prov:`-prefixed); whether that lineage reaches from collection through processing to the product is not measured."
+    "tier_note": "The rule reads that the product's catalog record names a lineage (`wasGeneratedBy` or `wasDerivedFrom`, bare or `prov:`-prefixed); whether that lineage reaches from collection through processing to the product is not measured.",
+    "requirement_none_reason": "Whether the lineage reaches from collection through processing is readable by walking `wasDerivedFrom` on the same catalog records the rule already fetches. That is a rule this project would write, not a requirement of the body's."
    }
   },
   {
@@ -1799,7 +1807,8 @@
     "measurement_basis": "judged_reading",
     "tier_source": "DD-036 §2 (docs/design_decisions.md): G1-O is the v2 EVAL; spec `spec:G1-O` names its collector; instrument: the G1 instrument: DD-036 (docs/design_decisions.md), assessment/harness/probes/g1_preservation.py, frozen at v2; definition of `ind:G1-O`: \"when the pinned consumer restates that same captured surface\"",
     "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 5",
-    "tier_note": "Reached by rule 5, and its basis is `judged_reading` rather than `evaluation` because the instrument exists: it is the one rule 4 cites."
+    "tier_note": "Reached by rule 5, and its basis is `judged_reading` rather than `evaluation` because the instrument exists: it is the one rule 4 cites.",
+    "requirement_none_reason": "Measured: the G1 instrument exists and judged it (DD-036, `measurement_status: measured`). Nothing stands between it and a verdict."
    }
   },
   {
@@ -1898,7 +1907,8 @@
     "measurement_basis": "harness_leg",
     "tier_source": "rules.CURRENT['G4'] = RULE-G4-v1 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:G4`",
     "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1",
-    "tier_note": "The rule measures the issuing-authority clause (`bureauCode` and `programCode`, well-formed) on the product's catalog record. The statutory-mandate and statistical-versus-administrative clauses have no field in any admitted document and are recorded as unmeasured."
+    "tier_note": "The rule measures the issuing-authority clause (`bureauCode` and `programCode`, well-formed) on the product's catalog record. The statutory-mandate and statistical-versus-administrative clauses have no field in any admitted document and are recorded as unmeasured.",
+    "requirement_none_reason": "The statutory-mandate and statistical-versus-administrative clauses have no field in any admitted document. What is missing is a standard, not a tool or a grant."
    }
   },
   {
@@ -4993,6 +5003,501 @@
     },
     "authored_by": "cc_tasks/2026-09-18_schema_field_rules.md"
    }
+  },
+  {
+   "id": "tool:wayback-cdx-server",
+   "labels": [
+    "AssessmentTool"
+   ],
+   "properties": {
+    "name": "Wayback Machine CDX Server API",
+    "kind": "hosted_free",
+    "who_provides": "this_project",
+    "doc_id": "wayback-cdx-server-api-readme",
+    "doc_source": "corpus/tools/wayback-cdx-server/README.md (doc_id `wayback-cdx-server-api-readme`), 'Basic Usage': \"The most simple query and the only required param for the CDX server is the **url** param\"",
+    "cost_band": "none",
+    "cost_source": "notional:tool_kind:hosted_free, task 2026-09-18_requirements_layer",
+    "band_note": "Notional relative cost by tool kind. It orders requirements against each other; it does not price a licence, an account or anyone's time, and an agency adjusts it for its own platform, staffing and procurement path.",
+    "authored_by": "cc_tasks/2026-09-18_requirements_layer.md"
+   }
+  },
+  {
+   "id": "tool:oasdiff",
+   "labels": [
+    "AssessmentTool"
+   ],
+   "properties": {
+    "name": "oasdiff",
+    "kind": "open_source",
+    "who_provides": "this_project",
+    "doc_id": "oasdiff-readme",
+    "doc_source": "corpus/tools/oasdiff/README.md (doc_id `oasdiff-readme`), opening description: \"Command-line tool to compare and detect breaking changes in OpenAPI specs.\"",
+    "cost_band": "tooling",
+    "cost_source": "notional:tool_kind:open_source, task 2026-09-18_requirements_layer",
+    "band_note": "Notional relative cost by tool kind. It orders requirements against each other; it does not price a licence, an account or anyone's time, and an agency adjusts it for its own platform, staffing and procurement path.",
+    "authored_by": "cc_tasks/2026-09-18_requirements_layer.md"
+   }
+  },
+  {
+   "id": "tool:aidrin",
+   "labels": [
+    "AssessmentTool"
+   ],
+   "properties": {
+    "name": "AIDRIN (AI Data Readiness Inspector) PyPI package",
+    "kind": "open_source",
+    "who_provides": "this_project",
+    "doc_id": "aidrin-hiniduma-2024",
+    "doc_source": "corpus/pilot/aidrin-hiniduma-2024.pdf (doc_id `aidrin-hiniduma-2024`), the paper's tool section: \"Users can install the AIDRIN PyPI package via the command line and use it for data readiness assessment\"",
+    "cost_band": "tooling",
+    "cost_source": "notional:tool_kind:open_source, task 2026-09-18_requirements_layer",
+    "band_note": "Notional relative cost by tool kind. It orders requirements against each other; it does not price a licence, an account or anyone's time, and an agency adjusts it for its own platform, staffing and procurement path.",
+    "note": "The paper's reference [1] locates the package on TestPyPI, not the production index; `ind:C5.tier_note` records the same caveat.",
+    "authored_by": "cc_tasks/2026-09-18_requirements_layer.md"
+   }
+  },
+  {
+   "id": "tool:slsa-verifier",
+   "labels": [
+    "AssessmentTool"
+   ],
+   "properties": {
+    "name": "slsa-verifier",
+    "kind": "open_source",
+    "who_provides": "this_project",
+    "doc_id": "slsa-specification-v1-0",
+    "doc_source": "corpus/crosswalk/slsa-specification-v1-0.md (doc_id `slsa-specification-v1-0`), 'Verifying artifacts': \"Tooling for organizations that need to protect first-party software is also available, such as [slsa-verifier](https://github.com/slsa-framework/slsa-verifier).\"",
+    "cost_band": "tooling",
+    "cost_source": "notional:tool_kind:open_source, task 2026-09-18_requirements_layer",
+    "band_note": "Notional relative cost by tool kind. It orders requirements against each other; it does not price a licence, an account or anyone's time, and an agency adjusts it for its own platform, staffing and procurement path.",
+    "note": "`ind:F6.tier_note` says the tool map §3 and the open-tool record name no tool for F6. The SLSA specification on disk names one, in two places; this node is that name.",
+    "authored_by": "cc_tasks/2026-09-18_requirements_layer.md"
+   }
+  },
+  {
+   "id": "tool:bing-webmaster-tools-ai-performance",
+   "labels": [
+    "AssessmentTool"
+   ],
+   "properties": {
+    "name": "Bing Webmaster Tools, AI Performance report",
+    "kind": "platform_account",
+    "who_provides": "publisher",
+    "doc_id": "bing-ai-performance-public-preview-2026",
+    "doc_source": "corpus/kernel/bing-ai-performance-public-preview-2026.md (doc_id `bing-ai-performance-public-preview-2026`), 'Page-level citation activity': \"Shows citation counts for specific URLs from your site, making it easy to see which individual pages are most often referenced across AI-generated answers during the selected date range.\"",
+    "cost_band": "none",
+    "cost_source": "notional:tool_kind:platform_account, task 2026-09-18_requirements_layer",
+    "band_note": "Notional relative cost by tool kind. It orders requirements against each other; it does not price a licence, an account or anyone's time, and an agency adjusts it for its own platform, staffing and procurement path.",
+    "note": "Public preview (February 2026). It counts citations of the owner's OWN pages across Microsoft Copilot and Bing's AI summaries; it cannot say which aggregator was cited instead, which is C4's other half.",
+    "authored_by": "cc_tasks/2026-09-18_requirements_layer.md"
+   }
+  },
+  {
+   "id": "tool:cloudflare-ai-crawl-control",
+   "labels": [
+    "AssessmentTool"
+   ],
+   "properties": {
+    "name": "Cloudflare AI Crawl Control",
+    "kind": "platform_account",
+    "who_provides": "publisher",
+    "doc_id": "cloudflare-ai-crawl-control",
+    "doc_source": "corpus/kernel/cloudflare-ai-crawl-control.md (doc_id `cloudflare-ai-crawl-control`), overview: \"AI Crawl Control (formerly AI Audit) gives you visibility into which AI services are accessing your content, and provides tools to manage access according to your preferences.\"",
+    "cost_band": "none",
+    "cost_source": "notional:tool_kind:platform_account, task 2026-09-18_requirements_layer",
+    "band_note": "Notional relative cost by tool kind. It orders requirements against each other; it does not price a licence, an account or anyone's time, and an agency adjusts it for its own platform, staffing and procurement path.",
+    "note": "Reaches only a host whose edge is a Cloudflare zone.",
+    "authored_by": "cc_tasks/2026-09-18_requirements_layer.md"
+   }
+  },
+  {
+   "id": "tool:perplexity-ai",
+   "labels": [
+    "AssessmentTool"
+   ],
+   "properties": {
+    "name": "Perplexity.ai",
+    "kind": "hosted_paid",
+    "who_provides": "this_project",
+    "kind_reason": "decision 2 of the task: a definition that names a generative engine requires a hosted_paid or platform_account tool; querying one at the scale a product-by-product evaluation needs is a paid API use, and no document on disk states its price.",
+    "doc_id": "aggarwal-2024-geo-generative-engine-optimization",
+    "doc_source": "corpus/kernel/aggarwal-2024-geo-generative-engine-optimization.pdf (doc_id `aggarwal-2024-geo-generative-engine-optimization`), section 3.1 and C.1: \"Perplexity.ai, which is a commercially deployed generative engine\"",
+    "cost_band": "procurement",
+    "cost_source": "notional:tool_kind:hosted_paid, task 2026-09-18_requirements_layer",
+    "band_note": "Notional relative cost by tool kind. It orders requirements against each other; it does not price a licence, an account or anyone's time, and an agency adjusts it for its own platform, staffing and procurement path.",
+    "note": "The one deployed generative engine a corpus document evaluates by name. The GEO paper queried it with uploaded sources because it 'does not allow the user to specify source URLs'; a C4 run asks the opposite question and needs its unconstrained answers.",
+    "authored_by": "cc_tasks/2026-09-18_requirements_layer.md"
+   }
+  },
+  {
+   "id": "tool:extruct",
+   "labels": [
+    "AssessmentTool"
+   ],
+   "properties": {
+    "name": "extruct",
+    "kind": "open_source",
+    "who_provides": "this_project",
+    "doc_id": "extruct-readme",
+    "doc_source": "corpus/kernel/extruct-readme.md (doc_id `extruct-readme`), opening description: \"*extruct* is a library for extracting embedded metadata from HTML markup.\"",
+    "cost_band": "tooling",
+    "cost_source": "notional:tool_kind:open_source, task 2026-09-18_requirements_layer",
+    "band_note": "Notional relative cost by tool kind. It orders requirements against each other; it does not price a licence, an account or anyone's time, and an agency adjusts it for its own platform, staffing and procurement path.",
+    "authored_by": "cc_tasks/2026-09-18_requirements_layer.md"
+   }
+  },
+  {
+   "id": "tool:scrapy",
+   "labels": [
+    "AssessmentTool"
+   ],
+   "properties": {
+    "name": "Scrapy",
+    "kind": "open_source",
+    "who_provides": "this_project",
+    "doc_id": "scrapy-docs-landing",
+    "doc_source": "corpus/kernel/scrapy-docs-landing.md (doc_id `scrapy-docs-landing`), opening description: \"used to crawl websites and extract structured data from their pages\"",
+    "cost_band": "tooling",
+    "cost_source": "notional:tool_kind:open_source, task 2026-09-18_requirements_layer",
+    "band_note": "Notional relative cost by tool kind. It orders requirements against each other; it does not price a licence, an account or anyone's time, and an agency adjusts it for its own platform, staffing and procurement path.",
+    "authored_by": "cc_tasks/2026-09-18_requirements_layer.md"
+   }
+  },
+  {
+   "id": "tool:ultimate-sitemap-parser",
+   "labels": [
+    "AssessmentTool"
+   ],
+   "properties": {
+    "name": "ultimate-sitemap-parser (usp)",
+    "kind": "open_source",
+    "who_provides": "this_project",
+    "doc_source": "none_on_disk",
+    "doc_source_note": "not admitted to the corpus. It is already a dependency of this harness — the `sitemap` collector imports `usp` (docs/design/scan_tool_map.md §1) — and the tool map §3 row its edge cites is the source that names it.",
+    "cost_band": "tooling",
+    "cost_source": "notional:tool_kind:open_source, task 2026-09-18_requirements_layer",
+    "band_note": "Notional relative cost by tool kind. It orders requirements against each other; it does not price a licence, an account or anyone's time, and an agency adjusts it for its own platform, staffing and procurement path.",
+    "authored_by": "cc_tasks/2026-09-18_requirements_layer.md"
+   }
+  },
+  {
+   "id": "tool:openapi-spec-validator",
+   "labels": [
+    "AssessmentTool"
+   ],
+   "properties": {
+    "name": "openapi-spec-validator",
+    "kind": "open_source",
+    "who_provides": "this_project",
+    "doc_source": "none_on_disk",
+    "doc_source_note": "not admitted to the corpus; named by the tool map §3 row its edge cites.",
+    "cost_band": "tooling",
+    "cost_source": "notional:tool_kind:open_source, task 2026-09-18_requirements_layer",
+    "band_note": "Notional relative cost by tool kind. It orders requirements against each other; it does not price a licence, an account or anyone's time, and an agency adjusts it for its own platform, staffing and procurement path.",
+    "authored_by": "cc_tasks/2026-09-18_requirements_layer.md"
+   }
+  },
+  {
+   "id": "tool:prance",
+   "labels": [
+    "AssessmentTool"
+   ],
+   "properties": {
+    "name": "prance",
+    "kind": "open_source",
+    "who_provides": "this_project",
+    "doc_source": "none_on_disk",
+    "doc_source_note": "not admitted to the corpus; named by the tool map §3 row its edge cites.",
+    "cost_band": "tooling",
+    "cost_source": "notional:tool_kind:open_source, task 2026-09-18_requirements_layer",
+    "band_note": "Notional relative cost by tool kind. It orders requirements against each other; it does not price a licence, an account or anyone's time, and an agency adjusts it for its own platform, staffing and procurement path.",
+    "authored_by": "cc_tasks/2026-09-18_requirements_layer.md"
+   }
+  },
+  {
+   "id": "tool:catalog-data-gov-ckan-api",
+   "labels": [
+    "AssessmentTool"
+   ],
+   "properties": {
+    "name": "catalog.data.gov CKAN action API",
+    "kind": "hosted_free",
+    "who_provides": "this_project",
+    "doc_source": "none_on_disk",
+    "doc_source_note": "not admitted to the corpus; named by the tool map §3 row its edge cites, which also records the interface as unavailable.",
+    "cost_band": "none",
+    "cost_source": "notional:tool_kind:hosted_free, task 2026-09-18_requirements_layer",
+    "band_note": "Notional relative cost by tool kind. It orders requirements against each other; it does not price a licence, an account or anyone's time, and an agency adjusts it for its own platform, staffing and procurement path.",
+    "note": "The tool map §3 recorded every CKAN action endpoint answering HTTP 404 on 2026-09-08; this node names the interface a D4 data.gov leg would read, and nothing here re-checked it (the task's network is `none`).",
+    "authored_by": "cc_tasks/2026-09-18_requirements_layer.md"
+   }
+  },
+  {
+   "id": "pre:edge-and-crawler-request-logs",
+   "labels": [
+    "Precondition"
+   ],
+   "properties": {
+    "name": "Edge/WAF and crawler request logs",
+    "kind": "agency_records",
+    "description": "The host's edge, WAF or bot-manager decisions and its request logs for identified AI crawlers, for the product path, shared with the assessor.",
+    "who_provides": "publisher",
+    "authored_by": "cc_tasks/2026-09-18_requirements_layer.md"
+   }
+  },
+  {
+   "id": "pre:cloudflare-zone-account",
+   "labels": [
+    "Precondition"
+   ],
+   "properties": {
+    "name": "The publisher's Cloudflare zone",
+    "kind": "site_owner_account",
+    "description": "Access to the Cloudflare account and zone that fronts the host, from which the AI Crawl Control dashboard is read.",
+    "who_provides": "publisher",
+    "authored_by": "cc_tasks/2026-09-18_requirements_layer.md"
+   }
+  },
+  {
+   "id": "pre:bing-webmaster-tools-verified-site",
+   "labels": [
+    "Precondition"
+   ],
+   "properties": {
+    "name": "A verified site in Bing Webmaster Tools",
+    "kind": "site_owner_account",
+    "description": "The publisher's site verified in Bing Webmaster Tools, with the AI Performance report read by or shared with the assessor.",
+    "who_provides": "publisher",
+    "authored_by": "cc_tasks/2026-09-18_requirements_layer.md"
+   }
+  },
+  {
+   "id": "pre:generative-engine-query-set",
+   "labels": [
+    "Precondition"
+   ],
+   "properties": {
+    "name": "Generative-engine query set",
+    "kind": "benchmark_set",
+    "description": "Per product, the questions a user would put to a generative engine whose answer should cite the product, with the authoritative URL each answer should cite.",
+    "who_provides": "this_project",
+    "authored_by": "cc_tasks/2026-09-18_requirements_layer.md"
+   }
+  },
+  {
+   "id": "pre:product-question-benchmark",
+   "labels": [
+    "Precondition"
+   ],
+   "properties": {
+    "name": "Per-product question benchmark",
+    "kind": "benchmark_set",
+    "description": "Per product, a versioned question set whose answers are published values, scored against what a retrieval-paired model returns.",
+    "who_provides": "this_project",
+    "authored_by": "cc_tasks/2026-09-18_requirements_layer.md"
+   }
+  },
+  {
+   "id": "pre:vintage-disambiguation-set",
+   "labels": [
+    "Precondition"
+   ],
+   "properties": {
+    "name": "Vintage disambiguation set",
+    "kind": "benchmark_set",
+    "description": "Per product, questions that name a vintage, with the vintage and value each should retrieve.",
+    "who_provides": "this_project",
+    "authored_by": "cc_tasks/2026-09-18_requirements_layer.md"
+   }
+  },
+  {
+   "id": "pre:entailment-probe-set",
+   "labels": [
+    "Precondition"
+   ],
+   "properties": {
+    "name": "Entailment probe set, re-aimed at products",
+    "kind": "benchmark_set",
+    "description": "The probe protocol's prompts re-aimed at a data product, with the product text each model statement is judged against for entailment.",
+    "who_provides": "this_project",
+    "authored_by": "cc_tasks/2026-09-18_requirements_layer.md"
+   }
+  },
+  {
+   "id": "pre:adversarial-bank",
+   "labels": [
+    "Precondition"
+   ],
+   "properties": {
+    "name": "Standing adversarial bank",
+    "kind": "benchmark_set",
+    "description": "Vintage traps, confusable series, unit traps, noise misreads and suppression probes, per product, versioned.",
+    "who_provides": "this_project",
+    "authored_by": "cc_tasks/2026-09-18_requirements_layer.md"
+   }
+  },
+  {
+   "id": "pre:series-break-cases",
+   "labels": [
+    "Precondition"
+   ],
+   "properties": {
+    "name": "Series-break cases",
+    "kind": "benchmark_set",
+    "description": "Series with a documented break in collection instrument or protocol, and the comparison across each break an AI consumer must qualify.",
+    "who_provides": "this_project",
+    "authored_by": "cc_tasks/2026-09-18_requirements_layer.md"
+   }
+  },
+  {
+   "id": "pre:second-scan-cycle",
+   "labels": [
+    "Precondition"
+   ],
+   "properties": {
+    "name": "A second scan cycle",
+    "kind": "second_cycle",
+    "description": "A later cycle of this harness over the same bodies: the second measurement a comparison needs, and the re-observation a server-side failure at capture time needs.",
+    "who_provides": "this_project",
+    "unlocks_error_classes": [
+     "dns",
+     "timeout",
+     "connection_reset",
+     "http_5xx"
+    ],
+    "unlocks_source": [
+     "assessment/harness/scan/errors.py: \"a server error is not a product property\"",
+     "assessment/harness/scan/errors.py: \"no response within the configured timeout\"",
+     "assessment/harness/scan/errors.py: \"the host name did not resolve\"",
+     "assessment/harness/scan/errors.py: \"the peer closed the connection (TCP reset)\""
+    ],
+    "authored_by": "cc_tasks/2026-09-18_requirements_layer.md"
+   }
+  },
+  {
+   "id": "pre:second-evaluation-run",
+   "labels": [
+    "Precondition"
+   ],
+   "properties": {
+    "name": "A second evaluation run",
+    "kind": "second_cycle",
+    "description": "A scheduled re-run of the golden question set against the product surface, so a baseline delta exists to alarm on.",
+    "who_provides": "this_project",
+    "authored_by": "cc_tasks/2026-09-18_requirements_layer.md"
+   }
+  },
+  {
+   "id": "pre:threshold-preregistration-records",
+   "labels": [
+    "Precondition"
+   ],
+   "properties": {
+    "name": "Threshold pre-registration records",
+    "kind": "agency_records",
+    "description": "The agency's dated record that each evaluation's pass/fail threshold existed before the results it judged.",
+    "who_provides": "publisher",
+    "authored_by": "cc_tasks/2026-09-18_requirements_layer.md"
+   }
+  },
+  {
+   "id": "pre:held-out-rotation-records",
+   "labels": [
+    "Precondition"
+   ],
+   "properties": {
+    "name": "Held-out evaluation-set rotation records",
+    "kind": "agency_records",
+    "description": "The agency's record of its held-out sets and their rotation schedule.",
+    "who_provides": "publisher",
+    "authored_by": "cc_tasks/2026-09-18_requirements_layer.md"
+   }
+  },
+  {
+   "id": "pre:eval-failure-closure-records",
+   "labels": [
+    "Precondition"
+   ],
+   "properties": {
+    "name": "Evaluation-failure closure records",
+    "kind": "agency_records",
+    "description": "The agency's tracked history from a failed evaluation to its fix in the product, with the re-test and the time to closure.",
+    "who_provides": "publisher",
+    "authored_by": "cc_tasks/2026-09-18_requirements_layer.md"
+   }
+  },
+  {
+   "id": "pre:release-validation-records",
+   "labels": [
+    "Precondition"
+   ],
+   "properties": {
+    "name": "Pre-release validation records",
+    "kind": "agency_records",
+    "description": "The agency's record that each release passed its expectation suite before it went live.",
+    "who_provides": "publisher",
+    "authored_by": "cc_tasks/2026-09-18_requirements_layer.md"
+   }
+  },
+  {
+   "id": "pre:staging-regression-records",
+   "labels": [
+    "Precondition"
+   ],
+   "properties": {
+    "name": "Staging regression records",
+    "kind": "agency_records",
+    "description": "The agency's record that an AI-consumer regression ran on the staging surface before a major change was promoted.",
+    "who_provides": "publisher",
+    "authored_by": "cc_tasks/2026-09-18_requirements_layer.md"
+   }
+  },
+  {
+   "id": "pre:published-conformance-and-evaluation-report",
+   "labels": [
+    "Precondition"
+   ],
+   "properties": {
+    "name": "The published conformance and evaluation report",
+    "kind": "agency_records",
+    "description": "The agency's report of spec conformance and fit-for-use evaluation for the product, located for the assessor.",
+    "who_provides": "publisher",
+    "authored_by": "cc_tasks/2026-09-18_requirements_layer.md"
+   }
+  },
+  {
+   "id": "pre:evaluation-set-version-records",
+   "labels": [
+    "Precondition"
+   ],
+   "properties": {
+    "name": "Evaluation-set version records",
+    "kind": "agency_records",
+    "description": "The agency's versions of its evaluation sets and rubrics, and which version each published result came from.",
+    "who_provides": "publisher",
+    "authored_by": "cc_tasks/2026-09-18_requirements_layer.md"
+   }
+  },
+  {
+   "id": "pre:publisher-admits-the-identified-client",
+   "labels": [
+    "Precondition"
+   ],
+   "properties": {
+    "name": "The publisher admits the identified client",
+    "kind": "publisher_grant",
+    "description": "The host serves this project's identified, robots-compliant client on the product paths: robots.txt permits it and the edge does not refuse it.",
+    "who_provides": "publisher",
+    "unlocks_error_classes": [
+     "refused",
+     "robots_disallowed"
+    ],
+    "unlocks_source": [
+     "assessment/harness/scan/errors.py: \"robots-permitted path: declined, not measured\"",
+     "assessment/harness/scan/errors.py: \"forbidden to look at a URL inside the product\""
+    ],
+    "authored_by": "cc_tasks/2026-09-18_requirements_layer.md"
+   }
   }
  ],
  "edges": [
@@ -7622,7 +8127,495 @@
     "leg": "D2",
     "reason_fragment": "a category or value the Content Signals Policy does not define"
    }
+  },
+  {
+   "from": "ind:A7",
+   "type": "REQUIRES",
+   "to": "tool:wayback-cdx-server",
+   "properties": {
+    "closes": "tier",
+    "route": "wayback_cdx",
+    "test": "a product or vintage URL's capture history and the status it answered at each capture",
+    "for_clause": "Persistent URLs/DOIs for products and vintages",
+    "source": "corpus/tools/wayback-cdx-server/README.md (doc_id `wayback-cdx-server-api-readme`), 'Filtering': \"Results may be filtered by timestamp using **from=** and **to=** params\"",
+    "source_kind": "corpus",
+    "note": "Reaches the persistent-URL half. A DOI's persistence is its resolver's, and no resolver's documentation is on disk, so the DOI clause has no requirement here (`ind:A7.tier_note`)."
+   }
+  },
+  {
+   "from": "ind:F3",
+   "type": "REQUIRES",
+   "to": "tool:wayback-cdx-server",
+   "properties": {
+    "closes": "tier",
+    "route": "wayback_cdx",
+    "test": "the endpoints captured under a product path in the prior vintage, joined to the current vintage's",
+    "for_clause": "endpoints survive a new vintage",
+    "source": "corpus/tools/wayback-cdx-server/README.md (doc_id `wayback-cdx-server-api-readme`), 'Url Match Scope': \"**matchType=prefix** will return results for all results under the path\"",
+    "source_kind": "corpus",
+    "note": "Reaches the endpoints clause only. Series identifiers and geography codes live in response bodies, which the index locates and does not carry (`ind:F3.tier_note`)."
+   }
+  },
+  {
+   "from": "ind:F2",
+   "type": "REQUIRES",
+   "to": "tool:oasdiff",
+   "properties": {
+    "closes": "tier",
+    "route": "oasdiff_two_releases",
+    "test": "breaking changes between two dated OpenAPI descriptions of the product's API",
+    "for_clause": "compatibility checked mechanically",
+    "source": "corpus/tools/oasdiff/README.md (doc_id `oasdiff-readme`), opening description: \"Command-line tool to compare and detect breaking changes in OpenAPI specs.\"",
+    "source_kind": "corpus"
+   }
+  },
+  {
+   "from": "ind:F2",
+   "type": "REQUIRES",
+   "to": "pre:second-scan-cycle",
+   "properties": {
+    "closes": "tier",
+    "route": "oasdiff_two_releases",
+    "test": "breaking changes between two dated OpenAPI descriptions of the product's API",
+    "for_clause": "API/schema changes are versioned",
+    "source": "framework/ai_readiness_framework.json node `spec:F2` field `note`: \"Becomes collectible once the scan runs twice.\"",
+    "source_kind": "record"
+   }
+  },
+  {
+   "from": "ind:C5",
+   "type": "REQUIRES",
+   "to": "tool:aidrin",
+   "properties": {
+    "closes": "tier",
+    "route": "aidrin",
+    "test": "the product scored on AIDRIN's published data-readiness dimensions",
+    "for_clause": "Product scored against published AI-data-readiness metrics",
+    "source": "corpus/pilot/aidrin-hiniduma-2024.pdf (doc_id `aidrin-hiniduma-2024`), the paper's tool section: \"Users can install the AIDRIN PyPI package via the command line and use it for data readiness assessment\"",
+    "source_kind": "corpus"
+   }
+  },
+  {
+   "from": "ind:F6",
+   "type": "REQUIRES",
+   "to": "tool:slsa-verifier",
+   "properties": {
+    "closes": "tier",
+    "route": "slsa_verifier",
+    "test": "a published provenance attestation verified against the released artifact",
+    "for_clause": "Signed releases / provenance attestations",
+    "source": "corpus/crosswalk/slsa-specification-v1-0.md (doc_id `slsa-specification-v1-0`), 'Consumer': \"Client-side verification tooling can be either standalone, such as [slsa-verifier](https://github.com/slsa-framework/slsa-verifier), or built into the package ecosystem client.\"",
+    "source_kind": "corpus"
+   }
+  },
+  {
+   "from": "ind:C1",
+   "type": "REQUIRES",
+   "to": "pre:product-question-benchmark",
+   "properties": {
+    "closes": "tier",
+    "route": "benchmark",
+    "test": "answer accuracy of a retrieval-paired model against published values",
+    "for_clause": "Benchmark question set per product",
+    "source": "framework/ai_readiness_framework.json node `ind:C1` field `indicator`: \"Benchmark question set per product\"",
+    "source_kind": "record"
+   }
+  },
+  {
+   "from": "ind:C2",
+   "type": "REQUIRES",
+   "to": "pre:entailment-probe-set",
+   "properties": {
+    "closes": "tier",
+    "route": "probe_protocol",
+    "test": "entailment of model statements about the product from the product's own text",
+    "for_clause": "Entailment-judged: do model statements about the product entail from product text?",
+    "source": "framework/ai_readiness_framework.json node `ind:C2` field `tier_note`: \"The definition names the probe protocol, 're-aimed', as the instrument; it has not been re-aimed at a data product.\"",
+    "source_kind": "record"
+   }
+  },
+  {
+   "from": "ind:C3",
+   "type": "REQUIRES",
+   "to": "pre:vintage-disambiguation-set",
+   "properties": {
+    "closes": "tier",
+    "route": "benchmark",
+    "test": "whether retrieval returns the vintage a question asks for",
+    "for_clause": "does retrieval return the vintage asked for?",
+    "source": "framework/ai_readiness_framework.json node `ind:C3` field `indicator`: \"Version/vintage disambiguation: does retrieval return the vintage asked for?\"",
+    "source_kind": "record"
+   }
+  },
+  {
+   "from": "ind:C4",
+   "type": "REQUIRES",
+   "to": "tool:bing-webmaster-tools-ai-performance",
+   "properties": {
+    "closes": "tier",
+    "route": "bing_ai_performance",
+    "test": "which of the product's pages AI answers cite, and how often",
+    "for_clause": "Generative engines citing the product cite the authoritative page (not aggregators)",
+    "source": "corpus/kernel/bing-ai-performance-public-preview-2026.md (doc_id `bing-ai-performance-public-preview-2026`), introduction: \"For the first time, you can understand how often your content is cited in generative answers, with clear visibility into which URLs are referenced\"",
+    "source_kind": "corpus",
+    "note": "Covers Microsoft's AI surfaces only, and counts the owner's own citations; whether an aggregator was cited INSTEAD needs the engine route."
+   }
+  },
+  {
+   "from": "ind:C4",
+   "type": "REQUIRES",
+   "to": "pre:bing-webmaster-tools-verified-site",
+   "properties": {
+    "closes": "tier",
+    "route": "bing_ai_performance",
+    "test": "which of the product's pages AI answers cite, and how often",
+    "for_clause": "Generative engines citing the product cite the authoritative page (not aggregators)",
+    "source": "corpus/kernel/bing-ai-performance-public-preview-2026.md (doc_id `bing-ai-performance-public-preview-2026`), 'Extending Search Insights to AI Answers': \"Bing Webmaster Tools has long helped website owners understand indexing, crawl health, and search performance.\"",
+    "source_kind": "corpus"
+   }
+  },
+  {
+   "from": "ind:C4",
+   "type": "REQUIRES",
+   "to": "tool:perplexity-ai",
+   "properties": {
+    "closes": "tier",
+    "route": "engine_queries",
+    "test": "whether a generative engine's answer about the product cites the agency page or an aggregator",
+    "for_clause": "Generative engines citing the product cite the authoritative page (not aggregators)",
+    "source": "corpus/kernel/aggarwal-2024-geo-generative-engine-optimization.pdf (doc_id `aggarwal-2024-geo-generative-engine-optimization`), section 3.1: \"Perplexity.ai, which is a commercially deployed generative engine\"",
+    "source_kind": "corpus"
+   }
+  },
+  {
+   "from": "ind:C4",
+   "type": "REQUIRES",
+   "to": "pre:generative-engine-query-set",
+   "properties": {
+    "closes": "tier",
+    "route": "engine_queries",
+    "test": "whether a generative engine's answer about the product cites the agency page or an aggregator",
+    "for_clause": "Generative engines citing the product cite the authoritative page (not aggregators)",
+    "source": "framework/ai_readiness_framework.json node `spec:C4-auto` field `note`: \"The AUTO leg needs a generative engine's citations as input, which is the EVAL half of the indicator.\"",
+    "source_kind": "record"
+   }
+  },
+  {
+   "from": "ind:E6",
+   "type": "REQUIRES",
+   "to": "pre:product-question-benchmark",
+   "properties": {
+    "closes": "tier",
+    "route": "benchmark",
+    "test": "failures of the C1 to C3 evaluations localized to retrieval, vintage, metadata or model",
+    "for_clause": "Discrepancy taxonomy localizing failures to retrieval / vintage / metadata / model",
+    "source": "framework/ai_readiness_framework.json node `ind:E6` field `tier_note`: \"it presupposes the C1 to C3 evaluations\"",
+    "source_kind": "record"
+   }
+  },
+  {
+   "from": "ind:E6",
+   "type": "REQUIRES",
+   "to": "pre:vintage-disambiguation-set",
+   "properties": {
+    "closes": "tier",
+    "route": "benchmark",
+    "test": "failures of the C1 to C3 evaluations localized to retrieval, vintage, metadata or model",
+    "for_clause": "Discrepancy taxonomy localizing failures to retrieval / vintage / metadata / model",
+    "source": "framework/ai_readiness_framework.json node `ind:E6` field `tier_note`: \"it presupposes the C1 to C3 evaluations\"",
+    "source_kind": "record"
+   }
+  },
+  {
+   "from": "ind:E8",
+   "type": "REQUIRES",
+   "to": "pre:product-question-benchmark",
+   "properties": {
+    "closes": "tier",
+    "route": "benchmark",
+    "test": "a versioned golden question set re-run against the product surface",
+    "for_clause": "Versioned golden question/answer sets re-run on schedule against the product surface",
+    "source": "framework/ai_readiness_framework.json node `ind:E8` field `indicator`: \"Versioned golden question/answer sets re-run on schedule against the product surface\"",
+    "source_kind": "record"
+   }
+  },
+  {
+   "from": "ind:E8",
+   "type": "REQUIRES",
+   "to": "pre:second-evaluation-run",
+   "properties": {
+    "closes": "tier",
+    "route": "benchmark",
+    "test": "a versioned golden question set re-run against the product surface",
+    "for_clause": "baseline deltas alarmed",
+    "source": "framework/ai_readiness_framework.json node `ind:E8` field `indicator`: \"baseline deltas alarmed\"",
+    "source_kind": "record"
+   }
+  },
+  {
+   "from": "ind:E9",
+   "type": "REQUIRES",
+   "to": "pre:adversarial-bank",
+   "properties": {
+    "closes": "tier",
+    "route": "benchmark",
+    "test": "break modes of AI consumers against a standing adversarial bank",
+    "for_clause": "Standing adversarial bank: vintage traps, confusable series, unit traps, DP-noise misreads, suppression probes",
+    "source": "framework/ai_readiness_framework.json node `ind:E9` field `indicator`: \"Reported as break modes, not just pass rates\"",
+    "source_kind": "record"
+   }
+  },
+  {
+   "from": "ind:G2",
+   "type": "REQUIRES",
+   "to": "pre:vintage-disambiguation-set",
+   "properties": {
+    "closes": "tier",
+    "route": "benchmark",
+    "test": "whether retrieval returns the vintage a question asks for",
+    "for_clause": "EVAL: vintage disambiguation (ties C3)",
+    "source": "framework/ai_readiness_framework.json node `ind:G2` field `tier_note`: \"the reading the definition asks for is C3's evaluation\"",
+    "source_kind": "record",
+    "note": "The declared half — revision status machine-readable per value — is a structured-field test no rule makes yet; it needs a rule, not a requirement."
+   }
+  },
+  {
+   "from": "ind:E1",
+   "type": "REQUIRES",
+   "to": "pre:published-conformance-and-evaluation-report",
+   "properties": {
+    "closes": "tier",
+    "route": "agency_report",
+    "test": "a reading of the agency's report for conformance kept apart from evaluation",
+    "for_clause": "reported separately from fit-for-use evals (EVAL set)",
+    "source": "framework/ai_readiness_framework.json node `ind:E1` field `tier_note`: \"the reading is of a published report, not a served surface\"",
+    "source_kind": "record"
+   }
+  },
+  {
+   "from": "ind:E3",
+   "type": "REQUIRES",
+   "to": "pre:evaluation-set-version-records",
+   "properties": {
+    "closes": "tier",
+    "route": "agency_records",
+    "test": "a reading of which evaluation-set version each result came from",
+    "for_clause": "results never pooled across versions",
+    "source": "framework/ai_readiness_framework.json node `ind:E3` field `tier_note`: \"a pass needs the agency's records\"",
+    "source_kind": "record"
+   }
+  },
+  {
+   "from": "ind:G6",
+   "type": "REQUIRES",
+   "to": "pre:series-break-cases",
+   "properties": {
+    "closes": "tier",
+    "route": "break_cases",
+    "test": "whether an AI consumer comparing values across a break surfaces the break",
+    "for_clause": "an AI system asked to compare values across a break must surface the break",
+    "source": "framework/ai_readiness_framework.json node `ind:G6` field `tier_note`: \"The consumer-side half is a G1-style preservation test\"",
+    "source_kind": "record",
+    "note": "The declared half — the versioned epoch carried as metadata — is a structured-field test no rule makes yet; it needs a rule, not a requirement."
+   }
+  },
+  {
+   "from": "ind:E2",
+   "type": "REQUIRES",
+   "to": "pre:threshold-preregistration-records",
+   "properties": {
+    "closes": "tier",
+    "route": "agency_records",
+    "test": "the order of threshold and result, from the agency's records",
+    "for_clause": "pre-registered before results",
+    "source": "framework/ai_readiness_framework.json node `ind:E2` field `tier_source`: \"the agency's own timestamps are the only record of that order\"",
+    "source_kind": "record"
+   }
+  },
+  {
+   "from": "ind:E4",
+   "type": "REQUIRES",
+   "to": "pre:held-out-rotation-records",
+   "properties": {
+    "closes": "tier",
+    "route": "agency_records",
+    "test": "whether a held-out rotation exists, from the agency's records",
+    "for_clause": "Public eval sets have a held-out rotation",
+    "source": "framework/ai_readiness_framework.json node `ind:E4` field `tier_source`: \"whether a rotation exists is a fact only the agency holds\"",
+    "source_kind": "record"
+   }
+  },
+  {
+   "from": "ind:E7",
+   "type": "REQUIRES",
+   "to": "pre:eval-failure-closure-records",
+   "properties": {
+    "closes": "tier",
+    "route": "agency_records",
+    "test": "mean time to closure over the agency's own history",
+    "for_clause": "mean-time-to-closure tracked",
+    "source": "framework/ai_readiness_framework.json node `ind:E7` field `tier_source`: \"mean time to closure is measured over the agency's own ticket history\"",
+    "source_kind": "record"
+   }
+  },
+  {
+   "from": "ind:F1",
+   "type": "REQUIRES",
+   "to": "pre:release-validation-records",
+   "properties": {
+    "closes": "tier",
+    "route": "agency_records",
+    "test": "whether each release passed its suite before going live",
+    "for_clause": "before going live",
+    "source": "framework/ai_readiness_framework.json node `ind:F1` field `tier_source`: \"happened on the agency's side of publication and leaves nothing on the served surface\"",
+    "source_kind": "record"
+   }
+  },
+  {
+   "from": "ind:F5",
+   "type": "REQUIRES",
+   "to": "pre:staging-regression-records",
+   "properties": {
+    "closes": "tier",
+    "route": "agency_records",
+    "test": "whether the regression ran before promotion",
+    "for_clause": "AI-consumer regression run before promotion",
+    "source": "framework/ai_readiness_framework.json node `ind:F5` field `tier_source`: \"only the agency can say that it ran\"",
+    "source_kind": "record"
+   }
+  },
+  {
+   "from": "ind:A11",
+   "type": "REQUIRES",
+   "to": "pre:edge-and-crawler-request-logs",
+   "properties": {
+    "closes": "unmeasured_half",
+    "route": "agency_logs",
+    "test": "declared policy compared with what the edge enforced and which crawlers came",
+    "for_clause": "enforced (edge/WAF/bot-management treatment) vs observed (actual crawler request logs)",
+    "source": "framework/ai_readiness_framework.json node `ind:A11` field `tier_note`: \"The enforced and observed layers need edge or WAF logs and crawler request logs\"",
+    "source_kind": "record"
+   }
+  },
+  {
+   "from": "ind:A11",
+   "type": "REQUIRES",
+   "to": "tool:cloudflare-ai-crawl-control",
+   "properties": {
+    "closes": "unmeasured_half",
+    "route": "cloudflare_zone",
+    "test": "declared policy compared with what the edge enforced and which crawlers came",
+    "for_clause": "enforced (edge/WAF/bot-management treatment) vs observed (actual crawler request logs)",
+    "source": "corpus/kernel/cloudflare-ai-crawl-control.md (doc_id `cloudflare-ai-crawl-control`), overview: \"**Monitor robots.txt compliance** - Track which crawlers follow your directives and create enforcement rules\"",
+    "source_kind": "corpus"
+   }
+  },
+  {
+   "from": "ind:A11",
+   "type": "REQUIRES",
+   "to": "pre:cloudflare-zone-account",
+   "properties": {
+    "closes": "unmeasured_half",
+    "route": "cloudflare_zone",
+    "test": "declared policy compared with what the edge enforced and which crawlers came",
+    "for_clause": "enforced (edge/WAF/bot-management treatment) vs observed (actual crawler request logs)",
+    "source": "corpus/kernel/cloudflare-ai-crawl-control-manage-crawlers.md (doc_id `cloudflare-ai-crawl-control-manage-crawlers`), 'Manage AI crawlers': \"Log in to the [Cloudflare dashboard ↗](https://dash.cloudflare.com/), and select your account and domain.\"",
+    "source_kind": "corpus"
+   }
+  },
+  {
+   "from": "ind:B5",
+   "type": "REQUIRES",
+   "to": "pre:second-scan-cycle",
+   "properties": {
+    "closes": "unmeasured_half",
+    "route": "second_cycle",
+    "test": "one concept carrying one identifier across two vintages",
+    "for_clause": "across products/vintages",
+    "source": "framework/ai_readiness_framework.json node `spec:B5` field `note`: \"The cross-vintage half is unmeasured until a second cycle with term codes.\"",
+    "source_kind": "record"
+   }
+  },
+  {
+   "from": "ind:A5",
+   "type": "REQUIRES",
+   "to": "tool:ultimate-sitemap-parser",
+   "properties": {
+    "closes": "coverage",
+    "route": "sitemap_walk",
+    "test": "the product URLs a declared sitemap actually lists",
+    "for_clause": "sitemap covers data products",
+    "source": "docs/design/scan_tool_map.md §3 at commit 76467ac, row 'Sitemap crawl and URL inventory': \"`ultimate-sitemap-parser`, or `scrapy` for a bounded crawl\"",
+    "source_kind": "tool_map"
+   }
+  },
+  {
+   "from": "ind:A5",
+   "type": "REQUIRES",
+   "to": "tool:scrapy",
+   "properties": {
+    "closes": "coverage",
+    "route": "bounded_crawl",
+    "test": "the product URLs a declared sitemap actually lists",
+    "for_clause": "sitemap covers data products",
+    "source": "docs/design/scan_tool_map.md §3 at commit 76467ac, row 'Sitemap crawl and URL inventory': \"`ultimate-sitemap-parser`, or `scrapy` for a bounded crawl\"",
+    "source_kind": "tool_map"
+   }
+  },
+  {
+   "from": "ind:A6",
+   "type": "REQUIRES",
+   "to": "tool:extruct",
+   "properties": {
+    "closes": "coverage",
+    "route": "extruct_at_scale",
+    "test": "Dataset markup on every page of a URL inventory, not on the one surface fetched",
+    "for_clause": "markup valid on product pages",
+    "source": "docs/design/scan_tool_map.md §3 at commit 76467ac, row 'schema.org `Dataset` extraction at scale': \"`extruct` (already a dependency) driven over a URL inventory rather than one page\"",
+    "source_kind": "tool_map",
+    "note": "Driven over the URL inventory one of A5's two routes produces."
+   }
+  },
+  {
+   "from": "ind:A2",
+   "type": "REQUIRES",
+   "to": "tool:openapi-spec-validator",
+   "properties": {
+    "closes": "coverage",
+    "route": "openapi_spec_validator",
+    "test": "the served API description validated against the OpenAPI schema",
+    "for_clause": "Documented public API",
+    "source": "docs/design/scan_tool_map.md §3 at commit 76467ac, row 'OpenAPI / AsyncAPI detection and validation': \"`openapi-spec-validator`, `prance`\"",
+    "source_kind": "tool_map"
+   }
+  },
+  {
+   "from": "ind:A2",
+   "type": "REQUIRES",
+   "to": "tool:prance",
+   "properties": {
+    "closes": "coverage",
+    "route": "prance",
+    "test": "the served API description validated against the OpenAPI schema",
+    "for_clause": "Documented public API",
+    "source": "docs/design/scan_tool_map.md §3 at commit 76467ac, row 'OpenAPI / AsyncAPI detection and validation': \"`openapi-spec-validator`, `prance`\"",
+    "source_kind": "tool_map"
+   }
+  },
+  {
+   "from": "ind:D4",
+   "type": "REQUIRES",
+   "to": "tool:catalog-data-gov-ckan-api",
+   "properties": {
+    "closes": "coverage",
+    "route": "federal_catalog",
+    "test": "whether the product is registered in the federal catalog",
+    "for_clause": "data.gov/agency inventory current",
+    "source": "docs/design/scan_tool_map.md §3 at commit 76467ac, row 'Federal DCAT catalog presence': \"`catalog.data.gov`'s CKAN action endpoints answered HTTP 404 on 2026-09-08\"",
+    "source_kind": "tool_map",
+    "note": "The interface was unavailable when the tool map recorded it (see the tool's note)."
+   }
   }
  ],
- "counts_basis": "Node and edge counts of the framework itself (criteria, constructs, indicators, evidenced_by, evidenced_by_internal, gaps, indicators_measured) EXCLUDE candidate indicators and their constructs (DD-054: the framework does not adopt what the instrument found about itself without the operator); candidate_indicators counts them. Counts of the instrument (measurement_specs, collectors_none_known, specs_with_recorded_decision) include every spec, adopted or not. rules_built is a fact about assessment/harness/scan/rules, not about this file. actions counts REMEDIATES edges whose indicator is part of the framework and actions_on_candidate_indicators counts the rest, on the same DD-054 split: one Action per failing rule outcome, so the two together are the number of (indicator, outcome) pairs a prescription exists for. Regenerated by scripts/framework_writeback.py::recount on every write-back."
+ "counts_basis": "Node and edge counts of the framework itself (criteria, constructs, indicators, evidenced_by, evidenced_by_internal, gaps, indicators_measured) EXCLUDE candidate indicators and their constructs (DD-054: the framework does not adopt what the instrument found about itself without the operator); candidate_indicators counts them. Counts of the instrument (measurement_specs, collectors_none_known, specs_with_recorded_decision) include every spec, adopted or not. rules_built is a fact about assessment/harness/scan/rules, not about this file. actions counts REMEDIATES edges whose indicator is part of the framework and actions_on_candidate_indicators counts the rest, on the same DD-054 split: one Action per failing rule outcome, so the two together are the number of (indicator, outcome) pairs a prescription exists for. tools and preconditions count the requirements layer's AssessmentTool and Precondition nodes, which belong to no indicator and so have no candidate split; requires counts REQUIRES edges from the framework's indicators and requires_on_candidate_indicators the rest, on the same DD-054 split. Regenerated by scripts/framework_writeback.py::recount on every write-back."
 }

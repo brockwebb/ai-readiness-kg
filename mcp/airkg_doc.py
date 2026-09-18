@@ -39,6 +39,10 @@ TASK = "cc_tasks/2026-09-17_mcp_over_the_graph.md"
 #: are the point.
 MAX_LIST = 2
 
+#: The title's count, spelled, derived from `TOOL_ORDER` so a tenth tool cannot leave the page
+#: saying nine.
+_NUMBER = {9: "nine", 10: "ten", 11: "eleven", 12: "twelve"}
+
 
 def _trim(value, depth: int = 0):
     """Long lists to their first `MAX_LIST` entries plus a marker naming what was dropped.
@@ -69,6 +73,8 @@ def examples(tools: T.Tools) -> list:
         ("get_body", {"name": body_name}, lambda: body),
         ("get_prescriptions", {"body": body_name},
          lambda: tools.get_prescriptions(body=body_name)),
+        ("get_requirements", {"indicator": "C4"},
+         lambda: tools.get_requirements(indicator="C4")),
         ("get_evidence", {"finding_id": finding_id},
          lambda: tools.get_evidence(finding_id)),
         ("get_document", {"doc_id": "rfc-9309-robots-exclusion-protocol"},
@@ -96,7 +102,8 @@ def render(mcp, tools: T.Tools) -> str:
     gate = tools.get_overview()["projection_gate"]
     out = []
     w = out.append
-    w("# The graph through an MCP: nine read-only tools, every answer with its locator")
+    w(f"# The graph through an MCP: {_NUMBER[len(T.TOOL_ORDER)]} read-only tools, every "
+      f"answer with its locator")
     w("")
     w(f"**Generated** by `mcp/airkg_doc.py` from `{TASK}` (decision 4), by RUNNING the tools "
       f"against the live database. Nothing on this page is typed: re-run "

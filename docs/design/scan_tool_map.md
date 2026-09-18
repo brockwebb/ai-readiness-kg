@@ -52,17 +52,49 @@ Evidence retained by every collector is the same and is not a per-row property: 
 | G5 | Suppression and disclosure-avoidance documented machine-re | — | **unassigned** | no tier assigned: cc_tasks/2026-09-17_unassigned_indicators.md decision 2: no admitted document names a machine-readable suppression or disclosure field. The search that failed: `suppress`, `confidential` and `disclosure` across corpus/kernel, corpus/crosswalk and corpus/components — the only hit is bing-webmaster-guidelines, on search-result suppression — and across the SDMX 3.0 §1 and DDI codebook texts. The indicator's own source, `usafacts-ai-ready-data-guide`, asks publishers to "Properly identify and document suppressed data (e.g., in very small counties) in plain language with unique identifiers": plain language is the prose this indicator says it strengthens, and the field that would replace it does not exist in any admitted document. Stays unassigned. |
 | G6 | Collection instrument/protocol carried as a versioned epoc | M | **content-evaluation** | judged reading by this project's instrument; source: docs/design/scan_tool_map.md §2 at commit 52af6c7 (verdict `content-evaluation`), confirmed against the definition; instrument: the G1 instrument: DD-036 (docs/design_decisions.md), assessment/harness/probes/g1_preservation.py, frozen at v2; definition of `ind:G6`: "The consumer-side test: an AI system asked to compare values across a break must surface the break" |
 
-## 3. Gaps an open-source collector would fill — named, not built
+## 3. What each test this harness cannot run would need
 
-| gap | what would serve it | indicator it would serve |
-|---|---|---|
-| Sitemap crawl and URL inventory | `ultimate-sitemap-parser`, or `scrapy` for a bounded crawl | A5 discovery measures whether a sitemap is DECLARED and fetchable; nothing walks it to count what it exposes, so 'the sitemap lists 12 URLs' and 'it lists 120,000' read alike. |
-| schema.org `Dataset` extraction at scale | `extruct` (already a dependency) driven over a URL inventory rather than one page | A6 markup is measured on the surface fetched; an agency that marks up 400 dataset pages and one that marks up its home page score the same. |
-| OpenAPI / AsyncAPI detection and validation | `openapi-spec-validator`, `prance` | A2 records that a description parses and reads its auth and rate-limit declarations; it does not validate the document against the OpenAPI schema, so a malformed spec that happens to carry the right keys passes. |
-| Response-header profile | no library needed; the headers are already captured and discarded | Caching, compression, CORS and content negotiation are all on responses the harness already holds. No indicator consumes them yet; A2 and D2 would. |
-| Federal DCAT catalog presence | the catalog's own API — **currently unavailable**: `catalog.data.gov`'s CKAN action endpoints answered HTTP 404 on 2026-09-08 (organization_list, harvest_source_list, package_search alike) | Whether a product is registered in the federal catalog is the catalog-registration indicator. It cannot be collected while the catalog's machine interface is down, which is itself the finding Tier C exists to surface. |
+37 `REQUIRES` edges from the framework record (cc_tasks/2026-09-18_requirements_layer.md). `closes` is `tier` for an indicator with no harness, `unmeasured_half` for a clause a rule records as unmeasured, and `coverage` for a rule that reads the clause on the surface fetched and a tool that would carry it across the site. Rows sharing an indicator and a route are needed together; two routes are alternatives. A tool's cost is a notional band by tool kind, and a precondition carries none. Each edge's source and the tool's documentation are on the record; `get_requirements` on the MCP prints them with their locators.
 
-Nothing in this table is built by this task. Each is a row so that the next task can pick one up with the reason already written down.
+| code | closes | clause | route | requirement | kind | cost | who provides | source |
+|---|---|---|---|---|---|---|---|---|
+| A11 | unmeasured_half | enforced (edge/WAF/bot-management treatment) vs observed (actual crawler request logs) | agency_logs | `pre:edge-and-crawler-request-logs` Edge/WAF and crawler request logs | agency_records | — | publisher | record |
+| A11 | unmeasured_half | enforced (edge/WAF/bot-management treatment) vs observed (actual crawler request logs) | cloudflare_zone | `pre:cloudflare-zone-account` The publisher's Cloudflare zone | site_owner_account | — | publisher | corpus |
+| A11 | unmeasured_half | enforced (edge/WAF/bot-management treatment) vs observed (actual crawler request logs) | cloudflare_zone | `tool:cloudflare-ai-crawl-control` Cloudflare AI Crawl Control | platform_account | none | publisher | corpus |
+| A2 | coverage | Documented public API | openapi_spec_validator | `tool:openapi-spec-validator` openapi-spec-validator | open_source | tooling | this_project | tool_map |
+| A2 | coverage | Documented public API | prance | `tool:prance` prance | open_source | tooling | this_project | tool_map |
+| A5 | coverage | sitemap covers data products | bounded_crawl | `tool:scrapy` Scrapy | open_source | tooling | this_project | tool_map |
+| A5 | coverage | sitemap covers data products | sitemap_walk | `tool:ultimate-sitemap-parser` ultimate-sitemap-parser (usp) | open_source | tooling | this_project | tool_map |
+| A6 | coverage | markup valid on product pages | extruct_at_scale | `tool:extruct` extruct | open_source | tooling | this_project | tool_map |
+| A7 | tier | Persistent URLs/DOIs for products and vintages | wayback_cdx | `tool:wayback-cdx-server` Wayback Machine CDX Server API | hosted_free | none | this_project | corpus |
+| B5 | unmeasured_half | across products/vintages | second_cycle | `pre:second-scan-cycle` A second scan cycle | second_cycle | — | this_project | record |
+| C1 | tier | Benchmark question set per product | benchmark | `pre:product-question-benchmark` Per-product question benchmark | benchmark_set | — | this_project | record |
+| C2 | tier | Entailment-judged: do model statements about the product entail from product text? | probe_protocol | `pre:entailment-probe-set` Entailment probe set, re-aimed at products | benchmark_set | — | this_project | record |
+| C3 | tier | does retrieval return the vintage asked for? | benchmark | `pre:vintage-disambiguation-set` Vintage disambiguation set | benchmark_set | — | this_project | record |
+| C4 | tier | Generative engines citing the product cite the authoritative page (not aggregators) | bing_ai_performance | `pre:bing-webmaster-tools-verified-site` A verified site in Bing Webmaster Tools | site_owner_account | — | publisher | corpus |
+| C4 | tier | Generative engines citing the product cite the authoritative page (not aggregators) | bing_ai_performance | `tool:bing-webmaster-tools-ai-performance` Bing Webmaster Tools, AI Performance report | platform_account | none | publisher | corpus |
+| C4 | tier | Generative engines citing the product cite the authoritative page (not aggregators) | engine_queries | `pre:generative-engine-query-set` Generative-engine query set | benchmark_set | — | this_project | record |
+| C4 | tier | Generative engines citing the product cite the authoritative page (not aggregators) | engine_queries | `tool:perplexity-ai` Perplexity.ai | hosted_paid | procurement | this_project | corpus |
+| C5 | tier | Product scored against published AI-data-readiness metrics | aidrin | `tool:aidrin` AIDRIN (AI Data Readiness Inspector) PyPI package | open_source | tooling | this_project | corpus |
+| D4 | coverage | data.gov/agency inventory current | federal_catalog | `tool:catalog-data-gov-ckan-api` catalog.data.gov CKAN action API | hosted_free | none | this_project | tool_map |
+| E1 | tier | reported separately from fit-for-use evals (EVAL set) | agency_report | `pre:published-conformance-and-evaluation-report` The published conformance and evaluation report | agency_records | — | publisher | record |
+| E2 | tier | pre-registered before results | agency_records | `pre:threshold-preregistration-records` Threshold pre-registration records | agency_records | — | publisher | record |
+| E3 | tier | results never pooled across versions | agency_records | `pre:evaluation-set-version-records` Evaluation-set version records | agency_records | — | publisher | record |
+| E4 | tier | Public eval sets have a held-out rotation | agency_records | `pre:held-out-rotation-records` Held-out evaluation-set rotation records | agency_records | — | publisher | record |
+| E6 | tier | Discrepancy taxonomy localizing failures to retrieval / vintage / metadata / model | benchmark | `pre:product-question-benchmark` Per-product question benchmark | benchmark_set | — | this_project | record |
+| E6 | tier | Discrepancy taxonomy localizing failures to retrieval / vintage / metadata / model | benchmark | `pre:vintage-disambiguation-set` Vintage disambiguation set | benchmark_set | — | this_project | record |
+| E7 | tier | mean-time-to-closure tracked | agency_records | `pre:eval-failure-closure-records` Evaluation-failure closure records | agency_records | — | publisher | record |
+| E8 | tier | Versioned golden question/answer sets re-run on schedule against the product surface | benchmark | `pre:product-question-benchmark` Per-product question benchmark | benchmark_set | — | this_project | record |
+| E8 | tier | baseline deltas alarmed | benchmark | `pre:second-evaluation-run` A second evaluation run | second_cycle | — | this_project | record |
+| E9 | tier | Standing adversarial bank: vintage traps, confusable series, unit traps, DP-noise misreads, suppression probes | benchmark | `pre:adversarial-bank` Standing adversarial bank | benchmark_set | — | this_project | record |
+| F1 | tier | before going live | agency_records | `pre:release-validation-records` Pre-release validation records | agency_records | — | publisher | record |
+| F2 | tier | API/schema changes are versioned | oasdiff_two_releases | `pre:second-scan-cycle` A second scan cycle | second_cycle | — | this_project | record |
+| F2 | tier | compatibility checked mechanically | oasdiff_two_releases | `tool:oasdiff` oasdiff | open_source | tooling | this_project | corpus |
+| F3 | tier | endpoints survive a new vintage | wayback_cdx | `tool:wayback-cdx-server` Wayback Machine CDX Server API | hosted_free | none | this_project | corpus |
+| F5 | tier | AI-consumer regression run before promotion | agency_records | `pre:staging-regression-records` Staging regression records | agency_records | — | publisher | record |
+| F6 | tier | Signed releases / provenance attestations | slsa_verifier | `tool:slsa-verifier` slsa-verifier | open_source | tooling | this_project | corpus |
+| G2 | tier | EVAL: vintage disambiguation (ties C3) | benchmark | `pre:vintage-disambiguation-set` Vintage disambiguation set | benchmark_set | — | this_project | record |
+| G6 | tier | an AI system asked to compare values across a break must surface the break | break_cases | `pre:series-break-cases` Series-break cases | benchmark_set | — | this_project | record |
 
 ## 4. Measurement tier of every indicator
 

@@ -599,6 +599,10 @@ assessment_layer:
   # same literal and is written by scripts/build_framework_graph.py, so moving one without the
   # other would put two versions of one epoch on the record and its schema, and moving both
   # would edit an authored top-level field and take that generator out of its no-op.
+  # 2026-09-18 (cc_tasks/2026-09-18_requirements_layer.md, DN-005 sections 2.2 and 2.4) adds
+  # the node types `AssessmentTool` and `Precondition` and the edge type `REQUIRES` — the
+  # requirements layer. `AssessmentTool`, not `Tool`: `Tool` is a KG node type above, and the
+  # two projectors each DETACH DELETE the labels they own before rebuilding.
 
   node_types:
     AssessmentCriterion:
@@ -650,6 +654,35 @@ assessment_layer:
                           expose_api, harness_side]
         effort_band: [hours, days, weeks, quarter]
         cost_band: [none, tooling, staff_time, procurement]
+    AssessmentTool:
+      what: A tool a test needs that this harness does not run — an open-source program, a
+            hosted index, a paid engine, or a platform the site owner holds an account on. The
+            requirements layer, DN-005 sections 2.2 and 2.4. `doc_id` and `doc_source` locate
+            its documentation in the corpus, or `doc_source` is `none_on_disk` and
+            `doc_source_note` says which tool-map row names it instead. `cost_band` is a
+            NOTIONAL relative band fixed by `kind` (`cost_source` carries the marker
+            `notional:tool_kind:<kind>`), never authored per tool; `band_note` says so on every
+            node.
+      properties: [name, kind, who_provides, kind_reason, doc_id, doc_source, doc_source_note,
+                   cost_band, cost_source, band_note, note, authored_by]
+      property_values:
+        kind: [open_source, hosted_free, hosted_paid, platform_account, agency_internal]
+        who_provides: [publisher, this_project, third_party]
+        cost_band: [none, tooling, staff_time, procurement]
+    Precondition:
+      what: Something that must exist before a test can run and that no tool supplies — the
+            site owner's account, a script on the page, records only the agency holds, an
+            evaluation set this project would build, a second measurement to compare against,
+            or the publisher admitting this project's identified client. `who_provides` says
+            whose act it is. `unlocks_error_classes` names the BLIND error classes of
+            `assessment/harness/scan/errors.py` it would let the harness observe, each with its
+            citation in `unlocks_source`.
+      properties: [name, kind, description, who_provides, unlocks_error_classes,
+                   unlocks_source, authored_by]
+      property_values:
+        kind: [site_owner_account, page_script, agency_records, benchmark_set, second_cycle,
+               publisher_grant]
+        who_provides: [publisher, this_project, third_party]
 
   edge_types:
     DECOMPOSES_INTO:
@@ -683,3 +716,12 @@ assessment_layer:
                `outcome` (the outcome's name), `rule_id`, `leg` and `reason_fragment` - a
                verbatim fragment of the rule branch's own reason string, so the outcome cannot
                drift from the branch it names.
+    REQUIRES:
+      pairs: [[AssessmentIndicator, AssessmentTool], [AssessmentIndicator, Precondition]]
+      meaning: A test of the indicator cannot run without the tool or precondition. Carries
+               `closes` (tier - the indicator has no harness; unmeasured_half - a clause its
+               rule records as unmeasured; coverage - a tool-map row that would carry the rule
+               across the site), `route` (edges from one indicator sharing a route are needed
+               together; different routes are alternatives), `test`, `for_clause` (verbatim from
+               the indicator's definition), `source` and `source_kind` (corpus, record,
+               tool_map or repo_file; every source is checked to open before a write).

@@ -98,7 +98,7 @@ def test_node_and_edge_counts_match_the_json_exactly(graph, doc):
     got_nodes = {r["l"]: r["c"] for r in graph.run(
         "MATCH (n) WHERE n:AssessmentCriterion OR n:AssessmentConstruct "
         "OR n:AssessmentIndicator OR n:MeasurementSpec OR n:AssessmentInternalRef "
-        "OR n:Action "
+        "OR n:Action OR n:AssessmentTool OR n:Precondition "
         "RETURN labels(n)[0] AS l, count(*) AS c")}
     assert got_nodes == dict(want_nodes)
 
@@ -125,6 +125,19 @@ def test_every_remediates_edge_reached_the_graph_with_its_outcome(graph, doc):
     assert set(got) == set(want)
     for k, props in want.items():
         assert got[k] == props, k
+
+
+def test_every_requires_edge_reached_the_graph_with_its_properties(graph, doc):
+    """`REQUIRES` carries properties too (`cc_tasks/2026-09-18_requirements_layer.md`), and its
+    target is one of two labels. The JSON is the expectation, edge for edge."""
+    want = {(e["from"], e["to"]): (e.get("properties") or {})
+            for e in doc["edges"] if e["type"] == "REQUIRES"}
+    assert want, "the record holds no REQUIRES edges; this proves nothing"
+    got = {(r["f"], r["t"]): dict(r["p"]) for r in graph.run(
+        "MATCH (i:AssessmentIndicator)-[x:REQUIRES]->(r) "
+        "WHERE r:AssessmentTool OR r:Precondition "
+        "RETURN i.id AS f, r.id AS t, properties(x) AS p")}
+    assert got == want
 
 
 def test_every_rule_measures_exactly_one_indicator(graph):

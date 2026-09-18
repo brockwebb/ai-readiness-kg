@@ -447,6 +447,9 @@ def test_every_locator_in_every_tool_answer_resolves(tools):
         "get_body": b,
         "get_prescriptions": tools.get_prescriptions(body="BEA"),
         "get_prescriptions_all": tools.get_prescriptions(),
+        "get_requirements_indicator": tools.get_requirements(indicator="C4"),
+        "get_requirements_body": tools.get_requirements(body="BEA"),
+        "get_requirements_all": tools.get_requirements(),
         "get_evidence": tools.get_evidence(b["legs"][0]["finding_id"]),
         "get_document": tools.get_document("w3c-dwbp-2017"),
         "search_text": tools.search_text("machine-readable"),
@@ -520,7 +523,7 @@ def client_call(server_mod, tools_mod):
     return call
 
 
-def test_the_client_lists_the_nine_tools_in_order(client_call, tools_mod):
+def test_the_client_lists_the_ten_tools_in_order(client_call, tools_mod):
     from fastmcp import Client
 
     async def go():
@@ -528,7 +531,8 @@ def test_the_client_lists_the_nine_tools_in_order(client_call, tools_mod):
             return await c.list_tools()
     listed = asyncio.run(go())
     assert [t.name for t in listed] == list(tools_mod.TOOL_ORDER)
-    assert len(listed) == 9
+    # Ten since `cc_tasks/2026-09-18_requirements_layer.md` added `get_requirements`.
+    assert len(listed) == 10
 
 
 def test_every_tool_carries_a_description_and_is_marked_read_only(client_call):
@@ -547,6 +551,8 @@ ONE_QUESTION_EACH = [
     ("get_indicator", {"code": "A5"}, lambda a: a["code"] == "A5" and a["actions"]),
     ("get_body", {"name": "NCHS"}, lambda a: a["body"] == "NCHS" and a["legs"]),
     ("get_prescriptions", {"body": "NCHS"}, lambda a: a["body"] == "NCHS" and a["actions"]),
+    ("get_requirements", {"indicator": "C4"},
+     lambda a: a["indicator"] == "C4" and len(a["tests"]) >= 2),
     ("get_document", {"doc_id": "rfc-9309-robots-exclusion-protocol"},
      lambda a: a["doc_id"] == "rfc-9309-robots-exclusion-protocol"),
     ("search_text", {"q": "sitemap"}, lambda a: a["hits"]),

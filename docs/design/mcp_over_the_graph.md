@@ -1,4 +1,4 @@
-# The graph through an MCP: nine read-only tools, every answer with its locator
+# The graph through an MCP: ten read-only tools, every answer with its locator
 
 **Generated** by `mcp/airkg_doc.py` from `cc_tasks/2026-09-17_mcp_over_the_graph.md` (decision 4), by RUNNING the tools against the live database. Nothing on this page is typed: re-run `/opt/anaconda3/bin/python3 mcp/airkg_doc.py --check` and it fails if the page and the server have drifted.
 
@@ -22,7 +22,13 @@ from the record even when the graph holds the same nodes.
 
 BANDS ARE NOTIONAL. Effort and cost on a prescription are relative estimates assigned by
 technique class, not predictions of anyone's calendar or budget; `band_note` says so once per
-answer. A band with no estimate behind it reads `pending` and never a number.
+answer. A band with no estimate behind it reads `pending` and never a number. A tool's cost on
+`get_requirements` is notional the same way, by tool kind.
+
+WHAT A TEST NEEDS. `get_requirements` answers what stands between an indicator and a verdict —
+a tool, the site owner's account, the agency's records, an evaluation set, a second
+measurement, the publisher admitting the identified client — and, for one body, groups what the
+harness could not see under the requirement that would unlock it.
 
 READ-ONLY, AND SCOPED TO ONE DATABASE. Any write clause or unlisted procedure in `run_cypher`
 comes back as a refusal message. This server touches no other graph.
@@ -49,7 +55,7 @@ The interpreter is named explicitly because `fastmcp`, the Neo4j driver and `pyy
 
 ## The projection gate, at generation time
 
-`green` — every node of the record is in the graph with every property equal (196 nodes compared against `framework/ai_readiness_framework.json`, cell for cell). `get_overview` recomputes this on every call and `run_cypher` returns it beside every result, because DD-057 makes a Cypher answer over the framework labels valid only while it is green.
+`green` — every node of the record is in the graph with every property equal (228 nodes compared against `framework/ai_readiness_framework.json`, cell for cell). `get_overview` recomputes this on every call and `run_cypher` returns it beside every result, because DD-057 makes a Cypher answer over the framework labels valid only while it is green.
 
 ## The tools
 
@@ -113,13 +119,20 @@ One real call each, with the answer the tool gave. Long lists are cut to 2 entri
       "candidate_indicators": 1,
       "indicators_measured": 16,
       "actions": 60,
-      "actions_on_candidate_indicators": 3
+      "actions_on_candidate_indicators": 3,
+      "tools": 13,
+      "preconditions": 19,
+      "requires": 37,
+      "requires_on_candidate_indicators": 0
     },
-    "counts_basis": "Node and edge counts of the framework itself (criteria, constructs, indicators, evidenced_by, evidenced_by_internal, gaps, indicators_measured) EXCLUDE candidate indicators and their constructs (DD-054: the framework does not adopt what the instrument found about itself without the operator); candidate_indicators count… [898 chars]",
-    "nodes": 196,
-    "edges": 352,
+    "counts_basis": "Node and edge counts of the framework itself (criteria, constructs, indicators, evidenced_by, evidenced_by_internal, gaps, indicators_measured) EXCLUDE candidate indicators and their constructs (DD-054: the framework does not adopt what the instrument found about itself without the operator); candidate_indicators count… [1189 chars]",
+    "nodes": 228,
+    "edges": 389,
     "actions": 63,
     "remediates_edges": 63,
+    "tools": 13,
+    "preconditions": 19,
+    "requires_edges": 37,
     "locators": [
       {
         "kind": "record_key",
@@ -210,14 +223,14 @@ One real call each, with the answer the tool gave. Long lists are cut to 2 entri
       }
     ],
     "status": "green",
-    "nodes_compared": 196,
+    "nodes_compared": 228,
     "mismatches": [],
     "reason": "every node of the record is in the graph with every property equal"
   },
   "tools": [
     "get_overview",
     "get_indicator",
-    "… 7 more (elided by mcp/airkg_doc.py, not by the tool)"
+    "… 8 more (elided by mcp/airkg_doc.py, not by the tool)"
   ]
 }
 ```
@@ -682,6 +695,229 @@ One real call each, with the answer the tool gave. Long lists are cut to 2 entri
       "kind": "config",
       "path": "docs/reports/publication.yaml",
       "key": "snapshot_cycle"
+    }
+  ]
+}
+```
+
+### `get_requirements(indicator='C4')`
+
+
+
+```json
+{
+  "indicator": "C4",
+  "text": "Generative engines citing the product cite the authoritative page (not aggregators)",
+  "measurement_tier": "M",
+  "measurement_basis": "evaluation",
+  "measurement_status": "specified",
+  "tier_note": "No such instrument exists yet; spec `spec:C4-auto` records `collector: none_known` for the URL-resolution half.",
+  "routes_mean": "requirements on one route are needed together; two routes are alternative ways to run the test",
+  "tests": [
+    {
+      "route": "bing_ai_performance",
+      "test": "which of the product's pages AI answers cite, and how often",
+      "closes": "tier",
+      "requires": [
+        {
+          "id": "tool:bing-webmaster-tools-ai-performance",
+          "label": "AssessmentTool",
+          "name": "Bing Webmaster Tools, AI Performance report",
+          "kind": "platform_account",
+          "who_provides": "publisher",
+          "cost": "none",
+          "cost_source": "notional:tool_kind:platform_account, task 2026-09-18_requirements_layer",
+          "doc_source": "corpus/kernel/bing-ai-performance-public-preview-2026.md (doc_id `bing-ai-performance-public-preview-2026`), 'Page-level citation activity': \"Shows citation counts for specific URLs from your site, making it easy to see which individual pages are most often referenced across AI-generated answers during the selected dat… [329 chars]",
+          "doc_source_note": null,
+          "description": null,
+          "unlocks_error_classes": null,
+          "note": "Public preview (February 2026). It counts citations of the owner's OWN pages across Microsoft Copilot and Bing's AI summaries; it cannot say which aggregator was cited instead, which is C4's other half.",
+          "locators": [
+            {
+              "kind": "record",
+              "path": "framework/ai_readiness_framework.json",
+              "node_id": "tool:bing-webmaster-tools-ai-performance"
+            },
+            {
+              "kind": "document",
+              "doc_id": "bing-ai-performance-public-preview-2026",
+              "section": "Page-level citation activity",
+              "path": "corpus/kernel/bing-ai-performance-public-preview-2026.md"
+            },
+            {
+              "kind": "record_edge",
+              "path": "framework/ai_readiness_framework.json",
+              "from": "ind:C4",
+              "type": "REQUIRES",
+              "to": "tool:bing-webmaster-tools-ai-performance"
+            },
+            {
+              "kind": "record",
+              "path": "framework/ai_readiness_framework.json",
+              "node_id": "ind:C4"
+            },
+            {
+              "kind": "document",
+              "doc_id": "bing-ai-performance-public-preview-2026",
+              "section": "introduction",
+              "path": "corpus/kernel/bing-ai-performance-public-preview-2026.md"
+            }
+          ],
+          "for_clause": "Generative engines citing the product cite the authoritative page (not aggregators)",
+          "source": "corpus/kernel/bing-ai-performance-public-preview-2026.md (doc_id `bing-ai-performance-public-preview-2026`), introduction: \"For the first time, you can understand how often your content is cited in generative answers, with clear visibility into which URLs are referenced\"",
+          "source_kind": "corpus",
+          "edge_note": "Covers Microsoft's AI surfaces only, and counts the owner's own citations; whether an aggregator was cited INSTEAD needs the engine route."
+        },
+        {
+          "id": "pre:bing-webmaster-tools-verified-site",
+          "label": "Precondition",
+          "name": "A verified site in Bing Webmaster Tools",
+          "kind": "site_owner_account",
+          "who_provides": "publisher",
+          "cost": null,
+          "cost_source": null,
+          "doc_source": null,
+          "doc_source_note": null,
+          "description": "The publisher's site verified in Bing Webmaster Tools, with the AI Performance report read by or shared with the assessor.",
+          "unlocks_error_classes": null,
+          "note": null,
+          "locators": [
+            {
+              "kind": "record",
+              "path": "framework/ai_readiness_framework.json",
+              "node_id": "pre:bing-webmaster-tools-verified-site"
+            },
+            {
+              "kind": "record_edge",
+              "path": "framework/ai_readiness_framework.json",
+              "from": "ind:C4",
+              "type": "REQUIRES",
+              "to": "pre:bing-webmaster-tools-verified-site"
+            },
+            {
+              "kind": "record",
+              "path": "framework/ai_readiness_framework.json",
+              "node_id": "ind:C4"
+            },
+            {
+              "kind": "document",
+              "doc_id": "bing-ai-performance-public-preview-2026",
+              "section": "Extending Search Insights to AI Answers",
+              "path": "corpus/kernel/bing-ai-performance-public-preview-2026.md"
+            }
+          ],
+          "for_clause": "Generative engines citing the product cite the authoritative page (not aggregators)",
+          "source": "corpus/kernel/bing-ai-performance-public-preview-2026.md (doc_id `bing-ai-performance-public-preview-2026`), 'Extending Search Insights to AI Answers': \"Bing Webmaster Tools has long helped website owners understand indexing, crawl health, and search performance.\"",
+          "source_kind": "corpus",
+          "edge_note": null
+        }
+      ]
+    },
+    {
+      "route": "engine_queries",
+      "test": "whether a generative engine's answer about the product cites the agency page or an aggregator",
+      "closes": "tier",
+      "requires": [
+        {
+          "id": "tool:perplexity-ai",
+          "label": "AssessmentTool",
+          "name": "Perplexity.ai",
+          "kind": "hosted_paid",
+          "who_provides": "this_project",
+          "cost": "procurement",
+          "cost_source": "notional:tool_kind:hosted_paid, task 2026-09-18_requirements_layer",
+          "doc_source": "corpus/kernel/aggarwal-2024-geo-generative-engine-optimization.pdf (doc_id `aggarwal-2024-geo-generative-engine-optimization`), section 3.1 and C.1: \"Perplexity.ai, which is a commercially deployed generative engine\"",
+          "doc_source_note": null,
+          "description": null,
+          "unlocks_error_classes": null,
+          "note": "The one deployed generative engine a corpus document evaluates by name. The GEO paper queried it with uploaded sources because it 'does not allow the user to specify source URLs'; a C4 run asks the opposite question and needs its unconstrained answers.",
+          "locators": [
+            {
+              "kind": "record",
+              "path": "framework/ai_readiness_framework.json",
+              "node_id": "tool:perplexity-ai"
+            },
+            {
+              "kind": "document",
+              "doc_id": "aggarwal-2024-geo-generative-engine-optimization",
+              "section": "section 3.1 and C.1",
+              "path": "corpus/kernel/aggarwal-2024-geo-generative-engine-optimization.pdf"
+            },
+            {
+              "kind": "record_edge",
+              "path": "framework/ai_readiness_framework.json",
+              "from": "ind:C4",
+              "type": "REQUIRES",
+              "to": "tool:perplexity-ai"
+            },
+            {
+              "kind": "record",
+              "path": "framework/ai_readiness_framework.json",
+              "node_id": "ind:C4"
+            },
+            {
+              "kind": "document",
+              "doc_id": "aggarwal-2024-geo-generative-engine-optimization",
+              "section": "section 3.1",
+              "path": "corpus/kernel/aggarwal-2024-geo-generative-engine-optimization.pdf"
+            }
+          ],
+          "for_clause": "Generative engines citing the product cite the authoritative page (not aggregators)",
+          "source": "corpus/kernel/aggarwal-2024-geo-generative-engine-optimization.pdf (doc_id `aggarwal-2024-geo-generative-engine-optimization`), section 3.1: \"Perplexity.ai, which is a commercially deployed generative engine\"",
+          "source_kind": "corpus",
+          "edge_note": null
+        },
+        {
+          "id": "pre:generative-engine-query-set",
+          "label": "Precondition",
+          "name": "Generative-engine query set",
+          "kind": "benchmark_set",
+          "who_provides": "this_project",
+          "cost": null,
+          "cost_source": null,
+          "doc_source": null,
+          "doc_source_note": null,
+          "description": "Per product, the questions a user would put to a generative engine whose answer should cite the product, with the authoritative URL each answer should cite.",
+          "unlocks_error_classes": null,
+          "note": null,
+          "locators": [
+            {
+              "kind": "record",
+              "path": "framework/ai_readiness_framework.json",
+              "node_id": "pre:generative-engine-query-set"
+            },
+            {
+              "kind": "record_edge",
+              "path": "framework/ai_readiness_framework.json",
+              "from": "ind:C4",
+              "type": "REQUIRES",
+              "to": "pre:generative-engine-query-set"
+            },
+            {
+              "kind": "record",
+              "path": "framework/ai_readiness_framework.json",
+              "node_id": "ind:C4"
+            },
+            {
+              "kind": "record",
+              "path": "framework/ai_readiness_framework.json",
+              "node_id": "spec:C4-auto"
+            }
+          ],
+          "for_clause": "Generative engines citing the product cite the authoritative page (not aggregators)",
+          "source": "framework/ai_readiness_framework.json node `spec:C4-auto` field `note`: \"The AUTO leg needs a generative engine's citations as input, which is the EVAL half of the indicator.\"",
+          "source_kind": "record",
+          "edge_note": null
+        }
+      ]
+    }
+  ],
+  "band_note": "Notional relative cost by tool kind. It orders requirements against each other; it does not price a licence, an account or anyone's time, and an agency adjusts it for its own platform, staffing and procurement path.",
+  "locators": [
+    {
+      "kind": "record",
+      "path": "framework/ai_readiness_framework.json",
+      "node_id": "ind:C4"
     }
   ]
 }

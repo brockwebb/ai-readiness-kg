@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
-"""The nine verbs the MCP server exposes over this graph. **Zero spend, no network.**
+"""The ten verbs the MCP server exposes over this graph. **Zero spend, no network.**
 
-`cc_tasks/2026-09-17_mcp_over_the_graph.md` decisions 2 and 3, under DN-005 §2.4.
+`cc_tasks/2026-09-17_mcp_over_the_graph.md` decisions 2 and 3, under DN-005 §2.4. The tenth,
+`get_requirements`, is `cc_tasks/2026-09-18_requirements_layer.md` decision 4: what a test the
+harness cannot run alone would need, and for one body, what would let the harness see what it
+could not.
 
 **The verb bodies live here and not in the server module**, which is the architecture
 `icsp_notebook/kg/mcp_server.py` arrived at for fss-policy-kg (its `kg/verbs.py`): the server
@@ -23,6 +26,7 @@ presence-only check would pass. The kinds:
 
     record      framework/ai_readiness_framework.json + a node id
     record_key  the record + a top-level key
+    record_edge the record + an edge's (from, type, to)
     config      docs/reports/publication.yaml + a key
     matrix      a published matrix file + a `<body>/<leg>` cell
     payload     a cycle payload under state/ + a key
@@ -30,6 +34,8 @@ presence-only check would pass. The kinds:
     graph       a label + an id property + an id, in the one project database
     document    a corpus doc_id (+ section, where the source carries one)
     source      a source file + a symbol in it
+    git         a file AT A COMMIT + a text in it — for a source frozen before a later task
+                regenerated the file (the tool map §3 rows the requirements layer cites)
 """
 from __future__ import annotations
 
@@ -50,6 +56,7 @@ sys.path.insert(0, "/Users/brock/GitHub/seldon")
 import airkg_guard as guard  # noqa: E402
 
 RECORD = REPO / "framework" / "ai_readiness_framework.json"
+MANIFEST = REPO / "corpus" / "manifest.json"
 PUBLICATION = REPO / "docs" / "reports" / "publication.yaml"
 STATE = REPO / "state"
 RULES_SOURCE = REPO / "assessment" / "harness" / "scan" / "rules" / "__init__.py"
@@ -70,7 +77,7 @@ INTERNAL_PREFIX = "internal:"
 #: The labels the framework record owns, in the order `scripts/load_framework_graph.py` lists
 #: them. Used only by the projection-gate comparison.
 FRAMEWORK_LABELS = ("AssessmentCriterion", "AssessmentConstruct", "AssessmentIndicator",
-                    "MeasurementSpec", "Action")
+                    "MeasurementSpec", "Action", "AssessmentTool", "Precondition")
 
 #: Labels a `graph` locator may name. A LITERAL whitelist, never a value off a payload —
 #: invariant 4: this repository never interpolates payload text into Cypher, and a locator is
@@ -226,10 +233,45 @@ def source_loc(path: str, symbol: str) -> dict:
     return {"kind": "source", "path": path, "symbol": symbol}
 
 
+def edge_loc(frm: str, etype: str, to: str) -> dict:
+    return {"kind": "record_edge", "path": "framework/ai_readiness_framework.json",
+            "from": frm, "type": etype, "to": to}
+
+
+def git_loc(commit: str, path: str, text: str) -> dict:
+    return {"kind": "git", "commit": commit, "path": path, "text": text}
+
+
+#: The four shapes `scripts/tag_requirements.py::format_citation` writes a REQUIRES source in.
+#: The corpus shape is the technique-source shape and parses with `_technique_address`.
+_REC_SOURCE = re.compile(r"^\S+ node `(?P<node>[^`]+)` field `(?P<field>[^`]+)`: ")
+_TOOL_MAP_SOURCE = re.compile(r"^(?P<path>\S+) §3 at commit (?P<commit>[0-9a-f]+), row '"
+                              r"(?P<row>.+?)': \"(?P<quote>.*)\"$", re.DOTALL)
+_FILE_SOURCE = re.compile(r"^(?P<path>\S+): \"(?P<quote>.*)\"$", re.DOTALL)
+
+
+def citation_locator(source: str, source_kind: str) -> dict | None:
+    """The locator a REQUIRES `source` string opens at, or None when it does not parse — which
+    the suite treats as a failure, never as a fact without an address."""
+    if source_kind == "corpus":
+        doc_id, section, path = _technique_address(source)
+        return document_loc(doc_id, section, path) if doc_id else None
+    if source_kind == "record":
+        m = _REC_SOURCE.match(source)
+        return rec_loc(m.group("node")) if m else None
+    if source_kind == "tool_map":
+        m = _TOOL_MAP_SOURCE.match(source)
+        return git_loc(m.group("commit"), m.group("path"), m.group("quote")) if m else None
+    if source_kind == "repo_file":
+        m = _FILE_SOURCE.match(source)
+        return source_loc(m.group("path"), m.group("quote")) if m else None
+    return None
+
+
 # ---------------------------------------------------------------------------------- tools
 
 class Tools:
-    """The nine verbs. `graph=None` is a working server over the record alone: every framework
+    """The ten verbs. `graph=None` is a working server over the record alone: every framework
     and prescription answer still answers, and a graph question says in words that it cannot be
     answered rather than returning an empty result that reads like a finding."""
 
@@ -336,6 +378,9 @@ class Tools:
                 "edges": len(g["edges"]),
                 "actions": sum(1 for n in g["nodes"] if "Action" in n["labels"]),
                 "remediates_edges": sum(1 for e in g["edges"] if e["type"] == "REMEDIATES"),
+                "tools": sum(1 for n in g["nodes"] if "AssessmentTool" in n["labels"]),
+                "preconditions": sum(1 for n in g["nodes"] if "Precondition" in n["labels"]),
+                "requires_edges": sum(1 for e in g["edges"] if e["type"] == "REQUIRES"),
                 "locators": [rec_key_loc("counts"), rec_key_loc("counts_basis"),
                              rec_key_loc("nodes"), rec_key_loc("edges")],
             },
@@ -671,7 +716,263 @@ class Tools:
             "locators": [rec_key_loc("nodes"), config_loc("snapshot_cycle")],
         }
 
-    # -- 5. get_evidence ----------------------------------------------------------------
+    # -- 5. get_requirements --------------------------------------------------------------
+
+    def _requires(self) -> list:
+        return [e for e in self.record["edges"] if e["type"] == "REQUIRES"]
+
+    def _requirement_view(self, rid: str) -> dict:
+        """One requirement node as the query prints it: kind, cost (tools only — a
+        precondition carries no band, decision 1), who provides, and where its documentation
+        is."""
+        n = self._node(rid)
+        p = n["properties"]
+        label = n["labels"][0]
+        locs = [rec_loc(rid)]
+        if label == "AssessmentTool" and p.get("doc_id"):
+            d, sec, path = _technique_address(p["doc_source"])
+            if d:
+                locs.append(document_loc(d, sec, path))
+        for src in p.get("unlocks_source") or []:
+            loc = citation_locator(src, "repo_file")
+            if loc:
+                locs.append(loc)
+        return {"id": rid, "label": label, "name": p["name"], "kind": p["kind"],
+                "who_provides": p.get("who_provides"),
+                "cost": p.get("cost_band") if label == "AssessmentTool" else None,
+                "cost_source": p.get("cost_source"),
+                "doc_source": p.get("doc_source"),
+                "doc_source_note": p.get("doc_source_note"),
+                "description": p.get("description"),
+                "unlocks_error_classes": p.get("unlocks_error_classes"),
+                "note": p.get("note"),
+                "locators": locs}
+
+    def _edge_view(self, e: dict) -> dict:
+        p = e.get("properties") or {}
+        cite = citation_locator(p.get("source", ""), p.get("source_kind", ""))
+        return {"indicator": e["from"].removeprefix("ind:"), "closes": p.get("closes"),
+                "route": p.get("route"), "test": p.get("test"),
+                "for_clause": p.get("for_clause"), "source": p.get("source"),
+                "source_kind": p.get("source_kind"), "note": p.get("note"),
+                "locators": [edge_loc(e["from"], "REQUIRES", e["to"]), rec_loc(e["from"])]
+                            + ([cite] if cite else [])}
+
+    def _band_note_tools(self) -> str | None:
+        notes = {n["properties"].get("band_note") for n in self._nodes("AssessmentTool")}
+        return next(iter(notes)) if len(notes) == 1 else None
+
+    def _no_requirement_reason(self, p: dict) -> str:
+        """Why an indicator has no REQUIRES edge, from the record and nothing else."""
+        if p.get("requirement_none_reason"):
+            return p["requirement_none_reason"]
+        if p.get("measurement_basis") is None:
+            return p.get("tier_unassigned_reason") or "no tier and no reason recorded"
+        spec = next((self._node(e["to"]) for e in self.record["edges"]
+                     if e["type"] == "MEASURED_BY" and e["from"] == f"ind:{p['code']}"), None)
+        leg = (spec or {}).get("properties", {}).get("leg")
+        CURRENT, _ = self._rules()
+        if leg and CURRENT.get(leg):
+            return (f"measured by this harness with {CURRENT[leg]} (leg `{leg}`); no tool, "
+                    f"account or record stands between it and a verdict")
+        return "no requirement is recorded for it"
+
+    def get_requirements(self, indicator: str | None = None, body: str | None = None) -> dict:
+        """What a test needs before it can run. See the three shapes below."""
+        if indicator is not None and body is not None:
+            return {"error": "pass `indicator` or `body`, not both",
+                    "locators": [rec_key_loc("edges")]}
+        if indicator is not None:
+            return self._requirements_for_indicator(indicator)
+        if body is not None:
+            return self._requirements_for_body(body)
+        return self._requirements_map()
+
+    def _requirements_for_indicator(self, code: str) -> dict:
+        node = self._indicator(code)
+        if node is None:
+            return {"error": f"'{code}' is not an indicator in the framework of record",
+                    "codes": [n["properties"]["code"] for n in
+                              self._nodes("AssessmentIndicator")],
+                    "locators": [rec_key_loc("nodes")]}
+        p = node["properties"]
+        out_edges = [e for e in self._requires() if e["from"] == node["id"]]
+        tests: dict = {}
+        for e in out_edges:
+            ev = self._edge_view(e)
+            t = tests.setdefault(ev["route"], {"route": ev["route"], "test": ev["test"],
+                                               "closes": ev["closes"], "requires": []})
+            t["requires"].append({**self._requirement_view(e["to"]),
+                                  "for_clause": ev["for_clause"], "source": ev["source"],
+                                  "source_kind": ev["source_kind"], "edge_note": ev["note"],
+                                  "locators": self._requirement_view(e["to"])["locators"]
+                                              + ev["locators"]})
+        out = {
+            "indicator": code, "text": p.get("indicator"),
+            "measurement_tier": p.get("measurement_tier"),
+            "measurement_basis": p.get("measurement_basis"),
+            "measurement_status": p.get("measurement_status"),
+            "tier_note": p.get("tier_note"),
+            "routes_mean": ("requirements on one route are needed together; two routes are "
+                            "alternative ways to run the test"),
+            "tests": sorted(tests.values(), key=lambda t: t["route"]),
+            "band_note": self._band_note_tools(),
+            "locators": [rec_loc(node["id"])],
+        }
+        if not out_edges:
+            out["reason"] = self._no_requirement_reason(p)
+        elif p.get("measurement_basis") == "harness_leg":
+            out["reason"] = (f"{self._no_requirement_reason(p)} — for the clauses its rule "
+                             f"reads; the tests below close what it does not")
+        return out
+
+    def _requirements_map(self) -> dict:
+        rows = []
+        for n in self._nodes("AssessmentTool") + self._nodes("Precondition"):
+            v = self._requirement_view(n["id"])
+            v["unlocks"] = [self._edge_view(e) for e in self._requires() if e["to"] == n["id"]]
+            rows.append(v)
+        rows.sort(key=lambda r: (-len(r["unlocks"]), r["id"]))
+        return {"requirements": rows, "n_requirements": len(rows),
+                "n_requires_edges": len(self._requires()),
+                "ranked_by": "indicators unlocked, then id",
+                "band_note": self._band_note_tools(),
+                "locators": [rec_key_loc("nodes"), rec_key_loc("edges")]}
+
+    def _error_classes(self, finding_ids: list) -> dict:
+        """`{finding_id: sorted BLIND error classes}` from the Observations under each Finding.
+        The corrected class (`error_class`) is read; an overlay's recorded one is not."""
+        if not finding_ids or self.graph is None or not self.graph.available():
+            return {}
+        rows, _ = self.graph.read(
+            "MATCH (f:Finding) WHERE f.finding_id IN $ids "
+            "OPTIONAL MATCH (o:Observation)-[:SUPPORTS]->(f) "
+            "RETURN f.finding_id AS fid, collect(DISTINCT o.error_class) AS ec",
+            limit=10_000, ids=list(finding_ids))
+        from scan.errors import BLIND, CLASSES, HARNESS_CURRENT
+
+        def blind(c):
+            k = (CLASSES.get(c) or {}).get("kind")
+            k = k.get(HARNESS_CURRENT) if isinstance(k, dict) else k
+            return k == BLIND
+        return {r["fid"]: sorted(c for c in r["ec"] if c and blind(c)) for r in rows}
+
+    def _requirements_for_body(self, name: str) -> dict:
+        """Everything the harness could not observe for one body on the cycle of record, and
+        what would let it, grouped by requirement."""
+        cycle = self.cycle
+        presc = self._presc()
+        all_bodies = presc.bodies(cycle)
+        if name not in all_bodies:
+            return {"error": f"'{name}' is not a body on cycle {cycle}",
+                    "bodies": all_bodies, "locators": [config_loc("snapshot_cycle")]}
+        from scan.errors import CLASSES
+        # 1. the cells this body errored on, with the error classes under each
+        cells = []
+        for m in presc.matrices(cycle):
+            for r in m["rows"]:
+                if r["agency"] != name or (m["_kind"] == "product" and not r.get("declared")):
+                    continue
+                surface = r.get("host_surface") or r.get("surface") or r["agency"]
+                for leg in m["legs"]:
+                    if r["verdicts"].get(leg) == "error":
+                        cells.append({"what": "error", "leg": leg, "surface": surface,
+                                      "matrix": m["_path"],
+                                      "finding_id": (r.get("finding_ids") or {}).get(leg)})
+        graph_up = self.graph is not None and self.graph.available()
+        classes = self._error_classes([c["finding_id"] for c in cells if c["finding_id"]])
+        unlock_of = {}
+        for n in self._nodes("Precondition"):
+            for c in n["properties"].get("unlocks_error_classes") or []:
+                unlock_of[c] = n["id"]
+        groups: dict = {}
+        none: list = []
+
+        def place(rid, item):
+            groups.setdefault(rid, []).append(item)
+
+        for c in cells:
+            c["error_classes"] = classes.get(c["finding_id"], [])
+            c["locators"] = [matrix_loc(c["matrix"], f"{name}/{c['leg']}")] + (
+                [graph_loc("Finding", "finding_id", c["finding_id"])]
+                if c["finding_id"] and graph_up else [])
+            if not c["error_classes"]:
+                none.append({**c, "reason": ("the error class is a graph answer and Neo4j is "
+                                             "unreachable" if not graph_up else
+                                             "no BLIND error class is recorded under the "
+                                             "Finding")})
+                continue
+            # One item per (cell, requirement): a cell refused on one probe and disallowed on
+            # another is ONE cell the grant would unlock, and counting it twice would inflate
+            # the line a body reads.
+            per_req: dict = {}
+            for cls in c["error_classes"]:
+                if cls in unlock_of:
+                    per_req.setdefault(unlock_of[cls], []).append(cls)
+            for rid, unlocked in per_req.items():
+                place(rid, {**c, "unlocked_classes": unlocked})
+            for cls in (x for x in c["error_classes"] if x not in unlock_of):
+                none.append({**c, "error_class": cls,
+                             "reason": f"no requirement unlocks `{cls}`: {CLASSES[cls]['note']}",
+                             "locators": c["locators"] + [
+                                 source_loc("assessment/harness/scan/errors.py", f'"{cls}"')]})
+        # 2. what the harness cannot see for ANY body: unmeasured halves, untested indicators,
+        #    coverage the rule does not have
+        halves, untested = [], []
+        for e in self._requires():
+            ev = self._edge_view(e)
+            item = {"what": {"tier": "indicator", "unmeasured_half": "unmeasured_half",
+                             "coverage": "coverage"}[ev["closes"]],
+                    "indicator": ev["indicator"], "clause": ev["for_clause"],
+                    "route": ev["route"], "test": ev["test"],
+                    "needed_with": sorted(x["to"] for x in self._requires()
+                                          if x["from"] == e["from"] and x["to"] != e["to"]
+                                          and (x.get("properties") or {}).get("route")
+                                          == ev["route"]),
+                    "scope": "every body", "locators": ev["locators"]}
+            place(e["to"], item)
+            (halves if ev["closes"] == "unmeasured_half" else untested).append(item)
+        for n in self._nodes("AssessmentIndicator"):
+            p = n["properties"]
+            # A none-reason on a MEASURED indicator (G1-O) says nothing stands in the way; it
+            # is not something the harness failed to see, so it is not listed here.
+            if p.get("requirement_none_reason") and p.get("measurement_status") != "measured":
+                none.append({"what": "unmeasured_half" if p.get("measurement_basis")
+                             == "harness_leg" else "indicator", "indicator": p["code"],
+                             "scope": "every body", "reason": p["requirement_none_reason"],
+                             "locators": [rec_loc(n["id"])]})
+            elif p.get("measurement_basis") is None:
+                none.append({"what": "indicator", "indicator": p["code"], "scope": "every body",
+                             "reason": p.get("tier_unassigned_reason"),
+                             "locators": [rec_loc(n["id"])]})
+        by_req = []
+        for rid, items in groups.items():
+            v = self._requirement_view(rid)
+            labels = sorted({(f"{i['leg']} on {i['surface']}" if i["what"] == "error"
+                              else f"{i['indicator']} ({i['what'].replace('_', ' ')})")
+                             for i in items})
+            who = v["who_provides"] or "—"
+            v["unlocks"] = items
+            v["line"] = (f"{v['name']} ({v['kind']}; provided by {who}) would unlock "
+                         f"{len(items)}: {', '.join(labels)}")
+            by_req.append(v)
+        by_req.sort(key=lambda r: (-sum(1 for i in r["unlocks"] if i["what"] == "error"),
+                                   -len(r["unlocks"]), r["id"]))
+        return {
+            "body": name, "cycle": cycle,
+            "unobserved": {"errors": cells, "unmeasured_halves": halves,
+                           "untested_indicators": untested},
+            "summary": (f"{len(cells)} error cell(s) for {name} on {cycle}; "
+                        f"{len(halves)} unmeasured half/halves and {len(untested)} untested "
+                        f"test(s) that no body is measured on"),
+            "by_requirement": by_req,
+            "no_requirement": none,
+            "band_note": self._band_note_tools(),
+            "ranked_by": "error cells unlocked for this body, then everything unlocked, then id",
+            "locators": [config_loc("snapshot_cycle")],
+        }
+
+    # -- 6. get_evidence ----------------------------------------------------------------
 
     def get_evidence(self, finding_id: str) -> dict:
         """One Finding, down to the bytes: every Observation it cites, the retained response
@@ -700,7 +1001,7 @@ class Tools:
             "locators": [graph_loc("Finding", "finding_id", finding_id)],
         }
 
-    # -- 6. get_document ----------------------------------------------------------------
+    # -- 7. get_document ----------------------------------------------------------------
 
     def get_document(self, doc_id: str) -> dict:
         """A corpus document by doc_id: its provenance, and what the graph hangs off it."""
@@ -729,7 +1030,7 @@ class Tools:
                 "evidences_indicators": [r["code"] for r in ev],
                 "locators": [graph_loc("Document", "doc_id", doc_id), document_loc(doc_id)]}
 
-    # -- 7. search_text -----------------------------------------------------------------
+    # -- 8. search_text -----------------------------------------------------------------
 
     def search_text(self, q: str, limit: int = 20) -> dict:
         """Lexical, case-insensitive search over the definition layer, the indicator text, the
@@ -785,7 +1086,7 @@ class Tools:
                              else "Definition (SKIPPED: Neo4j unreachable)"],
                 "locators": [rec_key_loc("nodes")]}
 
-    # -- 8. get_cycle_of_record ---------------------------------------------------------
+    # -- 9. get_cycle_of_record ---------------------------------------------------------
 
     def get_cycle_of_record(self) -> dict:
         """What cycle every verdict in this graph's published views comes from, and whether a
@@ -843,7 +1144,7 @@ class Tools:
                             + ([graph_loc("Finding", "cycle", info["successor"])]
                                if info else [])}
 
-    # -- 9. run_cypher ------------------------------------------------------------------
+    # -- 10. run_cypher ------------------------------------------------------------------
 
     def run_cypher(self, query: str) -> dict:
         """The escape hatch, read-only. A write is refused with a sentence, not an exception."""
@@ -875,6 +1176,21 @@ class Tools:
                             _no(f"the record has no top-level key `{loc.get('key')}`"))
                 return (_yes(f"node {loc['node_id']}") if self._node(loc.get("node_id"))
                         else _no(f"the record holds no node `{loc.get('node_id')}`"))
+            if kind == "record_edge":
+                hit = any(e["from"] == loc.get("from") and e["type"] == loc.get("type")
+                          and e["to"] == loc.get("to") for e in self.record["edges"])
+                return (_yes(f"edge {loc.get('from')}-[{loc.get('type')}]->{loc.get('to')}")
+                        if hit else _no(f"the record holds no edge {loc.get('from')}-"
+                                        f"[{loc.get('type')}]->{loc.get('to')}"))
+            if kind == "git":
+                import subprocess
+                r = subprocess.run(["git", "show", f"{loc['commit']}:{loc['path']}"],
+                                   capture_output=True, text=True, cwd=REPO)
+                if r.returncode != 0:
+                    return _no(f"{loc['path']} is not readable at {loc['commit']}")
+                return (_yes(f"{loc['path']} at {loc['commit']}")
+                        if loc.get("text") and loc["text"] in r.stdout
+                        else _no(f"{loc['path']} at {loc['commit']} does not contain the text"))
             if kind == "config":
                 return (_yes(f"publication.yaml:{loc['key']}")
                         if loc.get("key") in self.publication
@@ -934,13 +1250,19 @@ class Tools:
                                                               errors="replace"):
                         return _no(f"{loc['path']} does not contain `{section}`")
                     return _yes(f"{loc['path']}" + (f" ({section})" if section else ""))
-                if self.graph is None or not self.graph.available():
-                    return _no("Neo4j unreachable; a document locator cannot be resolved")
-                rows, _ = self.graph.read(
-                    "MATCH (d:Document {doc_id: $id}) RETURN count(d) AS c",
-                    limit=1, id=doc_id)
-                return (_yes(f"Document {doc_id}") if rows and rows[0]["c"]
-                        else _no(f"no Document `{doc_id}`"))
+                if self.graph is not None and self.graph.available():
+                    rows, _ = self.graph.read(
+                        "MATCH (d:Document {doc_id: $id}) RETURN count(d) AS c",
+                        limit=1, id=doc_id)
+                    if rows and rows[0]["c"]:
+                        return _yes(f"Document {doc_id}")
+                # The manifest is the gate into the corpus (DD-003) and Neo4j a projection of
+                # it, so a document the manifest admits resolves against the manifest when the
+                # projection lacks it — by its canonical path AND its sha256, never by name.
+                # `cc_tasks/2026-09-18_requirements_layer_RESULT.md` §3: the two tool READMEs
+                # admitted through the ledger on 2026-09-18 have no `manifest_add` event and so
+                # no Document node; the detail says so rather than hiding the gap.
+                return self._manifest_document(doc_id, loc.get("path"))
             if kind == "source":
                 p = REPO / loc["path"]
                 if not p.exists():
@@ -951,6 +1273,24 @@ class Tools:
         except Exception as exc:                            # noqa: BLE001 — reported, not hidden
             return _no(f"{type(exc).__name__}: {exc}")
         return _no(f"unknown locator kind {kind!r}")
+
+
+    @staticmethod
+    def _manifest_document(doc_id: str, path: str | None) -> dict:
+        entry = (json.loads(MANIFEST.read_text(encoding="utf-8")).get("entries") or {}
+                 ).get(doc_id) if MANIFEST.exists() else None
+        if entry is None:
+            return _no(f"no Document `{doc_id}` in the projection and no manifest entry")
+        ident = entry.get("identity") or {}
+        canon, digest = ident.get("canonical_path"), ident.get("sha256")
+        if path and canon and path != canon:
+            return _no(f"`{doc_id}`: the locator names {path}, the manifest {canon}")
+        if not canon or not (REPO / canon).exists():
+            return _no(f"`{doc_id}` is in the manifest and its file is not on disk")
+        if not digest or hashlib.sha256((REPO / canon).read_bytes()).hexdigest() != digest:
+            return _no(f"`{doc_id}`: {canon} does not hash to the manifest's sha256")
+        return _yes(f"manifest entry {doc_id} ({canon}, sha256 verified; no Document node in "
+                    f"the projection)")
 
 
 def _yes(detail: str) -> dict:
@@ -977,5 +1317,5 @@ def _technique_address(quote: str) -> tuple:
 
 #: The order `get_overview` lists the tools in, and the order the server registers them.
 TOOL_ORDER = ("get_overview", "get_indicator", "get_body", "get_prescriptions",
-              "get_evidence", "get_document", "search_text", "get_cycle_of_record",
-              "run_cypher")
+              "get_requirements", "get_evidence", "get_document", "search_text",
+              "get_cycle_of_record", "run_cypher")

@@ -16,7 +16,13 @@ Task `cc_tasks/2026-09-08_scan_frame_fss.md` §4. Four tables, none of them hand
    a keyword match that fell through to `scan-observable` and printed a reason it had not
    derived, which put C1 to C5 — benchmark, entailment and generative-engine evaluations — in
    the same row as a page fetch.
-3. **Gaps an open-source collector would fill** — named, **not built**.
+3. **What each test this harness cannot run would need** — one row per `REQUIRES` edge of the
+   framework record (`cc_tasks/2026-09-18_requirements_layer.md` decision 5). Until that task
+   this section was a hand-kept `GAPS` list of five rows; four became `AssessmentTool` nodes
+   and edges in the record, the fifth (a response-header profile) names no tool and no
+   indicator and is recorded as not carried in `scripts/tag_requirements.py`
+   (`DROPPED_TOOL_MAP_ROWS`). Every row is read from the record, so a requirement changes here
+   only by a write-back.
 4. **Every indicator's measurement tier** — tier, basis, the rule that reached it and its
    source, read from the record.
 
@@ -71,34 +77,8 @@ RUNNER = REPO / "assessment" / "harness" / "scan" / "runner.py"
 #: hand-kept table of "what this uses" is the first thing to go stale.
 _STDLIB = {"json", "re", "urllib", "shutil", "io", "hashlib", "collections", "datetime"}
 
-#: Gaps §4 asks to be NAMED and not built: an open-source collector exists, the harness has no
-#: row for it, and each names the indicator it would serve.
-GAPS = [
-    ("Sitemap crawl and URL inventory",
-     "`ultimate-sitemap-parser`, or `scrapy` for a bounded crawl",
-     "A5 discovery measures whether a sitemap is DECLARED and fetchable; nothing walks it to "
-     "count what it exposes, so 'the sitemap lists 12 URLs' and 'it lists 120,000' read alike."),
-    ("schema.org `Dataset` extraction at scale",
-     "`extruct` (already a dependency) driven over a URL inventory rather than one page",
-     "A6 markup is measured on the surface fetched; an agency that marks up 400 dataset pages "
-     "and one that marks up its home page score the same."),
-    ("OpenAPI / AsyncAPI detection and validation",
-     "`openapi-spec-validator`, `prance`",
-     "A2 records that a description parses and reads its auth and rate-limit declarations; it "
-     "does not validate the document against the OpenAPI schema, so a malformed spec that "
-     "happens to carry the right keys passes."),
-    ("Response-header profile",
-     "no library needed; the headers are already captured and discarded",
-     "Caching, compression, CORS and content negotiation are all on responses the harness "
-     "already holds. No indicator consumes them yet; A2 and D2 would."),
-    ("Federal DCAT catalog presence",
-     "the catalog's own API — **currently unavailable**: `catalog.data.gov`'s CKAN action "
-     "endpoints answered HTTP 404 on 2026-09-08 (organization_list, harvest_source_list, "
-     "package_search alike)",
-     "Whether a product is registered in the federal catalog is the catalog-registration "
-     "indicator. It cannot be collected while the catalog's machine interface is down, which "
-     "is itself the finding Tier C exists to surface."),
-]
+#: The task that made §3 a view of the record, and the label and edge it reads.
+REQUIREMENTS_TASK = "cc_tasks/2026-09-18_requirements_layer.md"
 
 
 def collector_rows(params: dict) -> list:
@@ -226,6 +206,27 @@ def specified_rows(cols: list) -> list:
     return [r for r in indicator_rows(cols) if r["status"] == "specified"]
 
 
+def requirement_rows() -> list:
+    """One row per `REQUIRES` edge of the record, in indicator-code then route order. Nothing
+    here is authored: every cell is a property of the edge or of the node at either end."""
+    g = json.loads(FRAMEWORK.read_text(encoding="utf-8"))
+    by_id = {n["id"]: n for n in g["nodes"]}
+    rows = []
+    for e in g["edges"]:
+        if e["type"] != "REQUIRES":
+            continue
+        p, r = e.get("properties") or {}, by_id[e["to"]]["properties"]
+        tool = by_id[e["to"]]["labels"][0] == "AssessmentTool"
+        rows.append({"code": e["from"].removeprefix("ind:"), "closes": p["closes"],
+                     "clause": p["for_clause"], "route": p["route"], "id": e["to"],
+                     "name": r["name"], "kind": r["kind"],
+                     "cost": r["cost_band"] if tool else "—",
+                     "who": r.get("who_provides") or "—",
+                     "source_kind": p["source_kind"]})
+    rows.sort(key=lambda x: (x["code"], x["route"], x["id"]))
+    return rows
+
+
 def render(params: dict) -> str:
     cols = collector_rows(params)
     spec = specified_rows(cols)
@@ -272,17 +273,29 @@ def render(params: dict) -> str:
     for s in spec:
         L.append(f"| {s['code']} | {s['name'][:58]} | {s['tier']} | **{s['verdict']}** | "
                  f"{s['how']} |")
+    req = requirement_rows()
     L += [
         "",
-        "## 3. Gaps an open-source collector would fill — named, not built",
+        "## 3. What each test this harness cannot run would need",
         "",
-        "| gap | what would serve it | indicator it would serve |",
-        "|---|---|---|",
+        f"{len(req)} `REQUIRES` edges from the framework record ({REQUIREMENTS_TASK}). "
+        f"`closes` is `tier` for an indicator with no harness, `unmeasured_half` for a clause "
+        f"a rule records as unmeasured, and `coverage` for a rule that reads the clause on the "
+        f"surface fetched and a tool that would carry it across the site. Rows sharing an "
+        f"indicator and a route are needed together; two routes are alternatives. A tool's "
+        f"cost is a notional band by tool kind, and a precondition carries none. Each edge's "
+        f"source and the tool's documentation are on the record; `get_requirements` on the "
+        f"MCP prints them with their locators.",
+        "",
+        "| code | closes | clause | route | requirement | kind | cost | who provides | "
+        "source |",
+        "|---|---|---|---|---|---|---|---|---|",
     ]
-    for name, lib, why in GAPS:
-        L.append(f"| {name} | {lib} | {why} |")
-    L += ["", "Nothing in this table is built by this task. Each is a row so that the next "
-              "task can pick one up with the reason already written down.", ""]
+    for r in req:
+        L.append(f"| {r['code']} | {r['closes']} | {r['clause']} | {r['route']} | "
+                 f"`{r['id']}` {r['name']} | {r['kind']} | {r['cost']} | {r['who']} | "
+                 f"{r['source_kind']} |")
+    L.append("")
     L += [
         "## 4. Measurement tier of every indicator",
         "",

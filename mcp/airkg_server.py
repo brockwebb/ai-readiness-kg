@@ -88,7 +88,13 @@ from the record even when the graph holds the same nodes.
 
 BANDS ARE NOTIONAL. Effort and cost on a prescription are relative estimates assigned by
 technique class, not predictions of anyone's calendar or budget; `band_note` says so once per
-answer. A band with no estimate behind it reads `pending` and never a number.
+answer. A band with no estimate behind it reads `pending` and never a number. A tool's cost on
+`get_requirements` is notional the same way, by tool kind.
+
+WHAT A TEST NEEDS. `get_requirements` answers what stands between an indicator and a verdict —
+a tool, the site owner's account, the agency's records, an evaluation set, a second
+measurement, the publisher admitting the identified client — and, for one body, groups what the
+harness could not see under the requirement that would unlock it.
 
 READ-ONLY, AND SCOPED TO ONE DATABASE. Any write clause or unlisted procedure in `run_cypher`
 comes back as a refusal message. This server touches no other graph.
@@ -118,7 +124,7 @@ def create_server(graph: T.Graph | None = ..., database: str | None = None):
 
 
 def _register(mcp: FastMCP, t: T.Tools) -> None:
-    """The nine verbs as `@mcp.tool` wrappers, in `TOOL_ORDER`.
+    """The ten verbs as `@mcp.tool` wrappers, in `TOOL_ORDER`.
 
     Each wrapper only forwards. The docstrings ARE the LLM's interface — they are what a client
     reads to decide which tool to call — so they say what the tool answers and what its answer
@@ -183,6 +189,23 @@ def _register(mcp: FastMCP, t: T.Tools) -> None:
         """
         return t.get_prescriptions(body=body, leg=leg)
 
+    @mcp.tool(annotations={"readOnlyHint": True, "title": "Get requirements"})
+    def get_requirements(indicator: str | None = None, body: str | None = None) -> dict:
+        """What a test this harness cannot run alone would NEED: the tool, the account, the
+        agency's records, the evaluation set, the second measurement, or the publisher's grant.
+        With `indicator` (`C4`, `A11`, …): the tests that would measure it, and for each what it
+        requires — kind, notional cost for a tool, who provides it, and the document or
+        definition sentence that says so. Requirements on one `route` are needed together; two
+        routes are alternatives. An indicator with none says why.
+        With `body` (`CENSUS`, `NCHS`, …): everything the harness could not observe for that
+        body on the cycle of record — its error cells with their error classes, the unmeasured
+        halves and the untested indicators no body is measured on — grouped by the requirement
+        that would unlock them, one `line` per requirement.
+        With neither: every requirement, ranked by how many indicators it would unlock.
+        Tool costs are NOTIONAL bands by tool kind; `band_note` says what they are not.
+        """
+        return t.get_requirements(indicator=indicator, body=body)
+
     @mcp.tool(annotations={"readOnlyHint": True, "title": "Get evidence"})
     def get_evidence(finding_id: str) -> dict:
         """The evidence under one Finding: every Observation it cites, the retained response
@@ -235,7 +258,7 @@ def _register(mcp: FastMCP, t: T.Tools) -> None:
 
     @mcp.tool(annotations={"readOnlyHint": True, "title": "Run read-only Cypher"})
     def run_cypher(query: str) -> dict:
-        """The escape hatch for questions the eight verbs above do not cover. READ-ONLY.
+        """The escape hatch for questions the nine verbs above do not cover. READ-ONLY.
 
         Any write clause (CREATE/MERGE/SET/DELETE/REMOVE/DROP/FOREACH/LOAD CSV) or any
         procedure outside the read allow-list comes back as a `refused` message rather than an
@@ -249,8 +272,8 @@ def _register(mcp: FastMCP, t: T.Tools) -> None:
     # Registration order is the listing order, and `TOOL_ORDER` is what `get_overview`
     # advertises; a tool registered here and missing there would be a tool no overview names.
     assert tuple(f.__name__ for f in (get_overview, get_indicator, get_body,
-                                      get_prescriptions, get_evidence, get_document,
-                                      search_text, get_cycle_of_record,
+                                      get_prescriptions, get_requirements, get_evidence,
+                                      get_document, search_text, get_cycle_of_record,
                                       run_cypher)) == T.TOOL_ORDER
 
 
