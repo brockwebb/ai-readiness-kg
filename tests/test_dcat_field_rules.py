@@ -271,16 +271,21 @@ def test_two_runs_over_the_same_bytes_give_the_same_finding_ids(params):
 # ------------------------------------------------------------------ the collector block
 
 def test_the_product_records_are_d4s(params):
-    """The field block's membership test is D4's (`product_url in json.dumps(d)`), so "in the
-    catalog" and "the record carries X" are about the same records. Checked against D4's own
-    collector on the control fixture's catalog."""
+    """The field block's membership test is D4's, so "in the catalog" and "the record carries
+    X" are about the same records. Checked against D4's own collector on the control fixture's
+    catalog. D4's test was `product_url in json.dumps(d)` until
+    `cc_tasks/2026-09-18_manners_status_and_b5_control.md` decision 4 made it the DCAT-US
+    URL-field test `dcat.product_records`, which `RULE-D4-v3` reads from the `membership`
+    block; the block and D4 still call ONE function."""
     import json as _j
+    from scan.collectors import dcat
     fixture = (REPO / "assessment/harness/scan/fixtures/passes_all/data.json").read_text()
     product = "http://127.0.0.1:9/index.html"
     cat = _j.loads(fixture.replace("HOSTPORT", "127.0.0.1:9"))
     block = v2clauses.dcat_record_fields(cat, product, params)
-    d4_contains = any(product in _j.dumps(d) for d in cat["dataset"])
-    assert (block["product_records"] > 0) == d4_contains is True
+    d4_members = dcat.product_records(cat["dataset"], product, params)
+    assert block["product_records"] == len(d4_members) == 1
+    assert block["membership"] == dcat.MEMBERSHIP_TEST
     for leg in LEGS:
         o = _obs(params, cat, product=product)
         assert _judge(leg, o, params).verdict == "pass", leg

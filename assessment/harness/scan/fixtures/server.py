@@ -23,6 +23,9 @@ was tested by a hand-built observation pair instead, which tests the rule and no
   **404 with an HTML error page**: the shape a static host or CDN produces for an unknown path,
   and the one that makes a rule reading the content type before the status say a file that was
   never served was served with the wrong type (`RULE-A12-v2`, corrected by `v3`).
+* `body_two_products` / `body_two_products_split` — ONE body with two product pages on one
+  port, the only fixtures that declare `products`. The two pages carry the same `DefinedTerm`
+  with the same code, or (split) with different codes: B5's pass and its central fail.
 * `invalid_route_unobserved` — everything `passes_all` serves, and the connection reset on
   A10's invented invalid route ALONE. PARTIAL blindness, which is the state no other fixture
   can reach: `resets_connection` blinds every leg at once, so it cannot reproduce the surface
@@ -135,6 +138,26 @@ MODES = {
     # `passes_all` in the ANSWER to one path, not in the content of one file, so it cannot be
     # an `overlay` (an overlay file would be SERVED, at 200) and needs a mode flag.
     "robots_404_html": {"serves_as": "passes_all", "not_found_html_paths": ("/robots.txt",)},
+    # ONE BODY WITH TWO PRODUCTS, on one port. `cc_tasks/2026-09-18_manners_status_and_b5_
+    # control.md` decision 3: B5 compares a body's products (`rules.scope` = `body`), and every
+    # fixture above serves one product on its own port, so no control could ever hand B5 two
+    # surfaces of one body and "every declared control fires" held for B5 vacuously.
+    #
+    # `products` is the fixture's declaration that it is a body: the control cycle scans each
+    # path as its own surface (`run.run_controls`) and then judges the body legs over them.
+    # `second.html` is `passes_all`'s page with a second product's name and the SAME
+    # `DefinedTerm` (name, `termCode`, `inDefinedTermSet`); the overlay's `data.json` and
+    # `sitemap.xml` list both products, so every per-surface leg sees on the second page what
+    # it sees on the first. Only `second.html`, `data.json` and `sitemap.xml` are overlaid.
+    "body_two_products": {"serves_as": "passes_all", "overlay": "body_two_products",
+                          "products": ("/index.html", "/second.html")},
+    # The same body, except that the second product codes the shared concept differently
+    # (`termCode` `OCC-2` against `HU-OCC`, same set). Its overlay holds only its own
+    # `second.html`; `data.json` and `sitemap.xml` come from `body_two_products`, searched
+    # second, so the two variants differ in exactly one attribute of one page.
+    "body_two_products_split": {"serves_as": "passes_all",
+                                "overlay": ("body_two_products_split", "body_two_products"),
+                                "products": ("/index.html", "/second.html")},
 }
 
 
@@ -162,9 +185,14 @@ class _Handler(http.server.SimpleHTTPRequestHandler):
     #: a CDN asked for a path it does not have, and it is the one shape that makes a rule
     #: reading `wrong_content_type` before the status describe an absent file as a served one.
     not_found_html_paths: tuple = ()
-    #: Searched BEFORE `root`. A fixture that differs from another in one file overlays that
-    #: file and inherits the rest, so "a well-formed surface" has one definition on disk.
-    overlay_root: Path | None = None
+    #: Searched BEFORE `root`, in order. A fixture that differs from another in one file
+    #: overlays that file and inherits the rest, so "a well-formed surface" has one definition
+    #: on disk. A tuple so a variant can overlay its one differing file over another overlay.
+    overlay_roots: tuple = ()
+    #: The product paths of a fixture that is a BODY (`MODES[...]["products"]`). Read by the
+    #: control cycle, not by the handler; declared here so the mode dict's keys are all
+    #: handler attributes, as every other key is.
+    products: tuple = ()
     #: `netloc` of this fixture's sibling server, substituted for `SIBLINGHOSTPORT`. Empty
     #: when the fixture has no sibling.
     sibling_hostport: str = ""
@@ -259,8 +287,10 @@ class _Handler(http.server.SimpleHTTPRequestHandler):
                                      head_only=self._head_only)
         rel = path.lstrip("/") or "index.html"
         target = self.root / rel
-        if self.overlay_root is not None and (self.overlay_root / rel).is_file():
-            target = self.overlay_root / rel
+        for overlay in self.overlay_roots:
+            if (overlay / rel).is_file():
+                target = overlay / rel
+                break
         if target.is_dir():
             target = target / "index.html"
         if not target.is_file():
@@ -318,9 +348,10 @@ class FixtureServer:
         """Bind one server for `mode` and return `(httpd, thread, handler, base_url)`."""
         served_by = mode.pop("serves_as", self.fixture)
         overlay = mode.pop("overlay", None)
+        overlays = (overlay,) if isinstance(overlay, str) else tuple(overlay or ())
         handler = type("H", (_Handler,), {
             "root": FIXTURES / served_by,
-            "overlay_root": (FIXTURES / overlay) if overlay else None,
+            "overlay_roots": tuple(FIXTURES / o for o in overlays),
             "requests": self.requests,
             "invalid_route_suffix": params["a10_soft404"]["invalid_path_suffix"],
             **mode})

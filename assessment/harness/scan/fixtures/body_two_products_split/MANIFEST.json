@@ -1,0 +1,12 @@
+{
+ "fixture": "body_two_products_split",
+ "task": "cc_tasks/2026-09-18_manners_status_and_b5_control.md",
+ "serves_as": "passes_all",
+ "overlays": ["body_two_products_split", "body_two_products"],
+ "products": ["/index.html", "/second.html"],
+ "what": "body_two_products, except that second.html codes 'Occupied housing unit' as OCC-2 where index.html codes it HU-OCC, in the same inDefinedTermSet.",
+ "overlaid": {
+  "second.html": "body_two_products/second.html with termCode OCC-2; nothing else differs"
+ },
+ "why": "B5's central fail branch: a concept coded on two products of one body carries two identifiers."
+}

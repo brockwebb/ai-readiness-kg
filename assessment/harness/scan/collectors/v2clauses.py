@@ -327,10 +327,14 @@ def dcat_record_fields(catalog, product_url: str, params: dict) -> dict:
     """Which DCAT-US fields the product's own catalog records carry. A pure parse of the
     catalog D4 already fetched and stored; nothing decides here.
 
-    **The product's records are D4's.** `dcat.fetch_catalog` decides membership with
-    `product_url in json.dumps(d)` over the `dataset` array, and this uses the same test so that
-    "the product is in the catalog" and "the product's record carries X" can never be about two
-    different sets of records. `tests/test_dcat_field_rules.py` holds the two to agreement.
+    **The product's records are D4's.** Membership is `dcat.product_records` — the DCAT-US
+    URL-field test `RULE-D4-v3` reads from `dcat.fetch_catalog`'s `membership` block — so "the
+    product is in the catalog" and "the product's record carries X" can never be about two
+    different sets of records. `tests/test_dcat_field_rules.py` holds the two to agreement. It
+    was D4's substring test (`product_url in json.dumps(d)`) until
+    `cc_tasks/2026-09-18_manners_status_and_b5_control.md` decision 4; no stored Observation
+    carries a block built by that test (they predate the block), so nothing re-derives
+    differently.
 
     Records are summarised as PROFILES — each distinct set of carried fields with the number of
     records carrying exactly that set — because a host-level surface can match every record in
@@ -348,7 +352,8 @@ def dcat_record_fields(catalog, product_url: str, params: dict) -> dict:
         return tuple(sorted(n for n, s in spec.items()
                             if _dcat_carried(_dcat_value(d, n), (s or {}).get("pattern"))))
 
-    mine = [d for d in datasets if product_url in json.dumps(d)]
+    from .dcat import MEMBERSHIP_TEST, product_records
+    mine = product_records(datasets, product_url, params)
     profiles: dict = {}
     for d in mine:
         k = carried(d)
@@ -357,7 +362,8 @@ def dcat_record_fields(catalog, product_url: str, params: dict) -> dict:
     for d in datasets:
         for n in carried(d):
             catalog_carrying[n] += 1
-    return {**out, "catalog_records": len(datasets), "product_records": len(mine),
+    return {**out, "membership": MEMBERSHIP_TEST,
+            "catalog_records": len(datasets), "product_records": len(mine),
             "product_record_profiles": [{"carried": list(k), "records": v}
                                         for k, v in sorted(profiles.items())],
             "catalog_records_carrying": catalog_carrying}

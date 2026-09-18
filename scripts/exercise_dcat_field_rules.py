@@ -35,11 +35,18 @@ LEGS = ("B1", "B4", "D3", "G4")
 
 #: The distribution the RESULT §1 reports, pinned so a change to a rule, the collector block or
 #: the retained evidence is seen rather than absorbed. Unpublished: see the module docstring.
+#:
+#: G4 was `{"error": 8, "fail": 35, "pass": 3}` under D4's substring membership test. Two of the
+#: three passes were host-level `home` surfaces "owning" every record containing their URL
+#: (that RESULT §1). `cc_tasks/2026-09-18_manners_status_and_b5_control.md` decision 4 moved the
+#: test to DCAT-US's own URL fields (`dcat.product_records`), and those two surfaces now own no
+#: record: they are `fail`, `no_product_record`. `d4_membership` below reports the move per
+#: surface; still unpublished.
 EXPECTED_DISTRIBUTION = {
     "B1": {"error": 8, "fail": 38},
     "B4": {"error": 8, "fail": 38},
     "D3": {"error": 8, "fail": 38},
-    "G4": {"error": 8, "fail": 35, "pass": 3},
+    "G4": {"error": 8, "fail": 37, "pass": 1},
 }
 
 
@@ -87,6 +94,39 @@ def enriched_groups(params: dict) -> tuple:
     return groups, missing, source
 
 
+def d4_membership(params: dict) -> list:
+    """Per surface with a served, parseable catalog: how many records the SUBSTRING test
+    (`product_url in json.dumps(d)`, what `contains_product` records) and the DCAT-US FIELD test
+    (`dcat.product_records`, what `RULE-D4-v3` reads) each assign to the product.
+
+    `cc_tasks/2026-09-18_manners_status_and_b5_control.md` decision 4. Read from the same
+    retained bodies `enriched_groups` reads; nothing is judged or published."""
+    from scan.collectors.dcat import product_records
+    cor = _payload(cycle_of_record())
+    src = _payload(cor.get("derived_from") or cor["cycle"])
+    urls = {r["doc_id"]: r["url"] for r in cor["matrix"]}
+    out = []
+    for row in src["observations_detail"]:
+        if row["leg"] != "D4" or row["target_doc_id"] not in urls:
+            continue
+        if not (row.get("parsed") or {}).get("present"):
+            continue
+        path = REPO / ((row.get("response") or {}).get("body_path") or "")
+        try:
+            cat = json.loads(path.read_bytes().decode("utf-8", "replace"))
+        except (OSError, ValueError):
+            continue
+        ds = [d for d in (cat.get("dataset") or []) if isinstance(d, dict)] \
+            if isinstance(cat, dict) else []
+        url = urls[row["target_doc_id"]]
+        sub = sum(1 for d in ds if url in json.dumps(d))
+        field = len(product_records(ds, url, params))
+        out.append({"doc_id": row["target_doc_id"], "url": url, "catalog_records": len(ds),
+                    "substring_records": sub, "field_records": field,
+                    "member_substring": sub > 0, "member_field": field > 0})
+    return sorted(out, key=lambda r: r["doc_id"])
+
+
 def exercise() -> dict:
     import tag_prescriptions as tp
     from scan import load_params
@@ -119,6 +159,7 @@ def exercise() -> dict:
             "deterministic": deterministic,
             "distribution": {leg: dict(sorted(c.items())) for leg, c in dist.items()},
             "fail_outcomes": {leg: dict(sorted(c.items())) for leg, c in outcomes.items()},
+            "d4_membership": d4_membership(params),
             "rows": rows}
 
 

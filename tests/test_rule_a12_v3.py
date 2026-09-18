@@ -260,9 +260,11 @@ def test_every_rule_that_calls_unobserved_error_still_reaches_the_same_verdicts(
     # Generation 12 (`cc_tasks/2026-09-18_schema_field_rules.md`) added four more, for the same
     # reason and in the same position: each calls the guard on a probe it has already found
     # observed (A6's page, A4's robots.txt, or a product surface of the body).
+    # Generation 13 (`cc_tasks/2026-09-18_manners_status_and_b5_control.md`) added one,
+    # `RULE-D4-v3`, in the same position: it calls the guard on a catalog it found served.
     assert callers == ["rule_a10_v3", "rule_a5_v2", "rule_a8_v3", "rule_a8_v4", "rule_b1",
                        "rule_b1_v2", "rule_b2", "rule_b4", "rule_b5", "rule_d2", "rule_d3",
-                       "rule_g4"], callers
+                       "rule_d4_v3", "rule_g4"], callers
     base = load_params()
     for scheme in (1, 2):
         params = {**base, "reason_text": scheme}

@@ -8,7 +8,7 @@ Every row is read from the harness itself: `params.yaml`, the `scan.collectors` 
 
 | collector | v | libraries | entry points | legs served | rules |
 |---|---|---|---|---|---|
-| `dcat` | 0.1.0 | stdlib only | `classify_exception`, `classify_status`, `fetch_catalog`, `store_evidence` | B1, B4, D3, D4, G4 | `RULE-B1-v2`, `RULE-B4-v1`, `RULE-D3-v1`, `RULE-D4-v2`, `RULE-G4-v1` |
+| `dcat` | 0.1.0 | stdlib only | `classify_exception`, `classify_status`, `fetch_catalog`, `normalize_url` | B1, B4, D3, D4, G4 | `RULE-B1-v2`, `RULE-B4-v1`, `RULE-D3-v1`, `RULE-D4-v3`, `RULE-G4-v1` |
 | `extent` | 0.1.0 | stdlib only | `features`, `looks_like_error_shell` | A10 | `RULE-A10-v3` |
 | `http` | 0.1.0 | `bs4` | `classify_exception`, `classify_status`, `fetch`, `store_evidence` | A11-declared, A12, A2, A9, B3, D1, F4, G1-D | `RULE-A11-declared-v2`, `RULE-A12-v3`, `RULE-A2-v3`, `RULE-A9-v1`, `RULE-B3-v3`, `RULE-D1-v3`, `RULE-F4-v3`, `RULE-G1-D-v1` |
 | `lighthouse` | 0.1.0 | stdlib only | `available`, `classify_exception`, `classify_status`, `fetch` | A10 | `RULE-A10-v3` |
@@ -16,7 +16,7 @@ Every row is read from the harness itself: `params.yaml`, the `scan.collectors` 
 | `robots` | 0.1.0 | `protego` | `classify_exception`, `classify_status`, `fetch`, `store_evidence` | A11-declared, A12, A4, A5, D2 | `RULE-A11-declared-v2`, `RULE-A12-v3`, `RULE-A4-v1`, `RULE-A5-v2`, `RULE-D2-v1` |
 | `sitemap` | 0.1.0 | `usp`, `xml` | `classify_exception`, `classify_status`, `fetch`, `same_site` | A5 | `RULE-A5-v2` |
 | `structured_data` | 0.1.0 | `extruct` | `classify_exception`, `classify_status`, `fetch`, `store_evidence` | A6, A8, B1, B2, B5, D1 | `RULE-A6-v2`, `RULE-A8-v4`, `RULE-B1-v2`, `RULE-B2-v1`, `RULE-B5-v1`, `RULE-D1-v3` |
-| `v2clauses` | 0.1.0 | `jsonschema`, `pyshacl`, `rdflib` | `api_declarations`, `changelog_entries`, `content_signals`, `dcat_record_fields` | A11-declared, A2, A4, A6, A8, B1, B2, B4, B5, D1, D2, D3, D4, F4, G4 | `RULE-A11-declared-v2`, `RULE-A2-v3`, `RULE-A4-v1`, `RULE-A6-v2`, `RULE-A8-v4`, `RULE-B1-v2`, `RULE-B2-v1`, `RULE-B4-v1`, `RULE-B5-v1`, `RULE-D1-v3`, `RULE-D2-v1`, `RULE-D3-v1`, `RULE-D4-v2`, `RULE-F4-v3`, `RULE-G4-v1` |
+| `v2clauses` | 0.1.0 | `jsonschema`, `pyshacl`, `rdflib` | `api_declarations`, `changelog_entries`, `content_signals`, `dcat_record_fields` | A11-declared, A2, A4, A6, A8, B1, B2, B4, B5, D1, D2, D3, D4, F4, G4 | `RULE-A11-declared-v2`, `RULE-A2-v3`, `RULE-A4-v1`, `RULE-A6-v2`, `RULE-A8-v4`, `RULE-B1-v2`, `RULE-B2-v1`, `RULE-B4-v1`, `RULE-B5-v1`, `RULE-D1-v3`, `RULE-D2-v1`, `RULE-D3-v1`, `RULE-D4-v3`, `RULE-F4-v3`, `RULE-G4-v1` |
 
 Evidence retained by every collector is the same and is not a per-row property: the whole response body, content-addressed under `corpus/evidence/scan/`, cited by the Observation that produced it. `manners.max_body_bytes` is `null`, so nothing is truncated (`cc_tasks/2026-09-06_harness_scaffold.md` §2.1).
 
@@ -96,7 +96,7 @@ DN-005 §2.2: **M** measured by this project's instruments, **O** measurable wit
 | D1 | measured | M | harness_leg | rule 1 | rules.CURRENT['D1'] = RULE-D1-v3 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:D1` |
 | D2 | harness_built | M | harness_leg | rule 1 | rules.CURRENT['D2'] = RULE-D2-v1 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:D2` |
 | D3 | harness_built | M | harness_leg | rule 1 | rules.CURRENT['D3'] = RULE-D3-v1 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:D3` |
-| D4 | measured | M | harness_leg | rule 1 | rules.CURRENT['D4'] = RULE-D4-v2 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:D4` |
+| D4 | measured | M | harness_leg | rule 1 | rules.CURRENT['D4'] = RULE-D4-v3 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:D4` |
 | E1 | specified | M | judged_reading | cc_tasks/2026-09-18_dcat_field_rules.md decision 5 | cc_tasks/2026-09-17_unassigned_indicators_RESULT.md §0 (the row's decision 1 reading: the act is a publication act and the artifact a published report); cc_tasks/2026-09-18_dcat_field_rules.md decision 5; definition of `ind:E1`: "reported separately from" |
 | E2 | specified | D | declaration | cc_tasks/2026-09-17_unassigned_indicators.md decision 1 | the definition places the act before publication: a threshold is pre-registered only if it existed BEFORE the results it judges, and the agency's own timestamps are the only record of that order; definition of `ind:E2`: "pre-registered before results" |
 | E3 | specified | M | judged_reading | cc_tasks/2026-09-18_dcat_field_rules.md decision 5 | cc_tasks/2026-09-17_unassigned_indicators_RESULT.md §0 (the row's decision 1 reading: the act is a publication act and the artifact a published report); cc_tasks/2026-09-18_dcat_field_rules.md decision 5; definition of `ind:E3`: "Eval sets and rubrics carry versions" |

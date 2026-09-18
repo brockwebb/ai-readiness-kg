@@ -11,6 +11,12 @@ they ARE the object of measurement. A robots.txt that disallows `/robots.txt` ca
 hide it from a measurement OF robots.txt. Every other path is fetched only if allowed for this
 UA, and a disallow is recorded as an Observation with `error_class: robots_disallowed` — a
 refusal is evidence, not an absence.
+
+The carve-out yields to one thing: a `robots.txt` that is UNREACHABLE (5xx, or a network
+failure on the read). RFC 9309 §2.3.1.4 says the crawler "MUST assume complete disallow", and
+that is an instruction about the server, not a rule in a file the carve-out could override —
+so every fetch to that netloc but `/robots.txt` itself is refused for the cycle
+(`robots_access`, `cc_tasks/2026-09-18_manners_status_and_b5_control.md` decision 1).
 """
 from __future__ import annotations
 
@@ -19,6 +25,44 @@ import urllib.parse
 from pathlib import Path
 
 VERSION = "0.1.0"
+
+#: The parsed-rules slot for a netloc whose `robots.txt` is UNREACHABLE. A sentinel rather than
+#: a parsed "Disallow: /" so the refusal can say why, and so nobody mistakes it for the host's
+#: own policy: an unreachable file declares nothing.
+DISALLOW_ALL = object()
+
+
+def robots_access(status, error_class: str | None = None) -> tuple:
+    """`(robots_status, decision, rfc9309_clause)` for one read of a `robots.txt`. **Pure.**
+
+    RFC 9309 §2.3.1 (corpus/kernel/rfc-9309-robots-exclusion-protocol.md), clause by clause,
+    and nothing added to it:
+
+    * §2.3.1.1 Successful Access — a 2xx: "the crawler MUST follow the parseable rules".
+    * §2.3.1.2 Redirects — followed by the client under `manners.follow_redirects` /
+      `max_redirects` (five, the RFC's "at least five"), and the table applies to the FINAL
+      response. "If there are more than five consecutive redirects, crawlers MAY assume that
+      the robots.txt file is unavailable": `redirect_loop` is unavailable, and so is a final
+      3xx the client could not follow — no robots.txt was reached either way.
+    * §2.3.1.3 "Unavailable" — "status codes ... in the 400-499 range": "the crawler MAY access
+      any resources on the server". 429 is in that range and is read as the RFC reads it; the
+      fetcher has already retried it under `backoff_on_status` before this table sees it.
+    * §2.3.1.4 "Unreachable" — "server or network errors ... the crawler MUST assume complete
+      disallow ... server errors are identified by status codes in the 500-599 range." A
+      transport failure (timeout, reset, DNS, anything `classify_exception` names) is the
+      network half of the same clause.
+    """
+    if status is None:
+        if error_class == "redirect_loop":
+            return "unavailable", "allow_all", "2.3.1.2"
+        return "unreachable", "disallow_all", "2.3.1.4"
+    if 200 <= status < 300:
+        return "successful", "rules", "2.3.1.1"
+    if 300 <= status < 400:
+        return "unavailable", "allow_all", "2.3.1.2"
+    if 400 <= status < 500:
+        return "unavailable", "allow_all", "2.3.1.3"
+    return "unreachable", "disallow_all", "2.3.1.4"
 
 
 class Fetcher:
@@ -48,6 +92,12 @@ class Fetcher:
         #: server — so it is the number the cycle reports (`cc_tasks/2026-09-07_scan_run_2.md`
         #: §2, which asserts the shared link probe against it).
         self.requests: collections.Counter = collections.Counter()
+        #: One line per netloc whose `robots.txt` this fetcher read: the status, what RFC 9309
+        #: §2.3.1 makes of it, and the decision taken. The manners log line
+        #: (`cc_tasks/2026-09-18_manners_status_and_b5_control.md` decision 1): the cycle
+        #: payload carries it, so the template's manners gate can replay each decision from the
+        #: cycle's own record rather than trusting that the fetcher took it.
+        self.robots_log: list = []
         self.client = client or httpx.Client(
             follow_redirects=self.p["follow_redirects"],
             max_redirects=self.p["max_redirects"],
@@ -71,16 +121,50 @@ class Fetcher:
 
     # ---------------------------------------------------------------- robots
     def _robots_for(self, base: str):
+        """The parsed rules for `base`, `None` for "no rules: allow all", or `DISALLOW_ALL`.
+
+        **Keyed on the STATUS before the body is read** (`cc_tasks/2026-09-18_manners_status_
+        and_b5_control.md` decision 1). This parsed the body whatever the status, so a 5xx with
+        an empty body — and any exception on the read, which was swallowed — meant allow-all:
+        the opposite of RFC 9309 §2.3.1.4, which the fetcher claims to follow. The table is
+        `robots_access`, at the top of this module, with the RFC's clauses beside it.
+
+        One read per netloc per fetcher, cached for the cycle (a cycle is one pass, so the
+        §2.3.1.4 allowance to treat a LONG-standing 5xx as unavailable never applies), and one
+        line on `robots_log` per read, which is what the cycle's manners gate replays.
+        """
         if base in self._robots:
             return self._robots[base]
         from protego import Protego
+        from .errors import classify_exception
+        url = urllib.parse.urljoin(base, "/robots.txt")
+        status, final_url, error_class, r = None, None, None, None
         try:
-            r = self.raw_get(urllib.parse.urljoin(base, "/robots.txt"))
+            r = self.raw_get(url)
+            status, final_url = r["status"], r["final_url"]
+        except Exception as exc:                  # the read failed; classified, never guessed
+            error_class = classify_exception(exc)
+        robots_status, decision, clause = robots_access(status, error_class=error_class)
+        if decision == "rules":
             txt = r["body"].decode("utf-8", "replace") if r["body"] else ""
             self._robots[base] = Protego.parse(txt) if txt.strip() else None
-        except Exception:
+        elif decision == "disallow_all":
+            self._robots[base] = DISALLOW_ALL
+        else:
             self._robots[base] = None
+        self.robots_log.append({
+            "netloc": urllib.parse.urlsplit(base).netloc, "url": url, "status": status,
+            "final_url": final_url, "error_class": error_class,
+            "robots_status": robots_status, "decision": decision, "rfc9309": clause,
+            "read_at": self.clock.now()})
         return self._robots[base]
+
+    def robots_status(self, url: str) -> str | None:
+        """`successful`, `unavailable` or `unreachable` for this URL's netloc, or `None` when
+        its robots.txt has not been read by this fetcher."""
+        netloc = urllib.parse.urlsplit(url).netloc
+        return next((r["robots_status"] for r in reversed(self.robots_log)
+                     if r["netloc"] == netloc), None)
 
     def ensure_robots(self, url: str) -> None:
         """Read and parse this netloc's `robots.txt` BEFORE anything else is asked of it.
@@ -103,18 +187,41 @@ class Fetcher:
 
     def _gate(self, url: str) -> None:
         """Robots-first, then obey. Raises `RobotsDisallowed` rather than returning, so a
-        collector that never checked cannot mistake a refusal for a response."""
+        collector that never checked cannot mistake a refusal for a response.
+
+        The message names an UNREACHABLE robots.txt and its clause when that is the reason,
+        because the class (`robots_disallowed`) is the same either way and a collector that
+        records `f"{type(exc).__name__}: {exc}"` then carries the reason on the Observation.
+        """
         from .errors import RobotsDisallowed
         self.ensure_robots(url)
         if not self.allowed(url):
+            if self._robots_unreachable(url):
+                raise RobotsDisallowed(
+                    f"{url} (robots_status: unreachable; RFC 9309 §2.3.1.4 complete "
+                    f"disallow)")
             raise RobotsDisallowed(url)
+
+    def _robots_unreachable(self, url: str) -> bool:
+        parts = urllib.parse.urlsplit(url)
+        return self._robots.get(f"{parts.scheme}://{parts.netloc}") is DISALLOW_ALL
 
     def allowed(self, url: str) -> bool:
         parts = urllib.parse.urlsplit(url)
         path = parts.path or "/"
-        if any(path.startswith(p) for p in self.p["always_fetch_paths"]):
+        # The bootstrap, and A4's own measurement: fetching `/robots.txt` never needs
+        # permission from `/robots.txt`, reachable or not.
+        if path == "/robots.txt":
             return True
         rp = self._robots_for(f"{parts.scheme}://{parts.netloc}")
+        # RFC 9309 §2.3.1.4: "the crawler MUST assume complete disallow". Checked BEFORE the
+        # measurement carve-out, because the carve-out answers "may a robots.txt RULE hide the
+        # object of measurement" (no), and an unreachable robots.txt has no rules — what it
+        # says is that the server is failing, and the instruction is to stop asking it things.
+        if rp is DISALLOW_ALL:
+            return False
+        if any(path.startswith(p) for p in self.p["always_fetch_paths"]):
+            return True
         if rp is None:
             return True
         return bool(rp.can_fetch(url, self.p["user_agent"]))

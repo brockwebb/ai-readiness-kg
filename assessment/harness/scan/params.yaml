@@ -414,6 +414,31 @@ d1_licence:
 
 d4_catalog:
   paths: ["/data.json"]
+  # WHICH RECORDS ARE THE PRODUCT'S (`collectors/dcat.product_records`, read by `RULE-D4-v3` and
+  # by the four DCAT field legs through `v2clauses.dcat_record_fields`).
+  # `cc_tasks/2026-09-18_manners_status_and_b5_control.md` decision 4. A record is the
+  # product's when one of these fields EQUALS the product URL (RFC 3986 §6.2.2.1 and §6.2.3
+  # normalisation, nothing more). Each is a field DCAT-US v1.1 defines as a URL of the dataset
+  # itself (corpus/kernel/dcat-us-1-1-schema.md, doc_id `dcat-us-1-1-schema`):
+  #   identifier   "A unique identifier for the dataset or API as maintained within an Agency
+  #                catalog or database" — "It is highly recommended that a URI (preferably an
+  #                HTTP URL) be used to provide a globally unique identifier."
+  #   landingPage  "a human-friendly hub or landing page that users can be directed to for all
+  #                resources tied to the dataset" — and "not intended for an agency's homepage
+  #                (e.g. www.agency.gov)", which is the sentence the substring test contradicted.
+  #   distribution.accessURL    "the URL for an indirect means of accessing the data, such as
+  #                API documentation, a 'wizard' or other graphical interface".
+  #   distribution.downloadURL  "the direct download URL" — a product surface that IS the file.
+  # Not `describedBy`, `references`, `conformsTo`, `publisher` or any free text: those are URLs
+  # of documents ABOUT the dataset, and a substring anywhere in the record is how a home page
+  # came to own 1,635 datasets.
+  membership_fields: ["identifier", "landingPage", "distribution.accessURL",
+                      "distribution.downloadURL"]
+  # RFC 3986 §6.2.3: a URL naming its scheme's default port is the same URL without it. The
+  # defaults are RFC 9110's: §4.2.1 "http" (port 80) and §4.2.2 "https" (port 443). Protocol
+  # constants, here because no collector may carry a number params does not
+  # (`tests/test_scan_harness.py::test_no_collector_hides_a_constant`).
+  default_ports: {"http": 80, "https": 443}
   # Project Open Data v1.1 required fields on a dataset entry.
   required_dataset_fields: ["title", "description", "keyword", "modified", "publisher",
                             "contactPoint", "identifier", "accessLevel"]
@@ -469,9 +494,11 @@ e5_control:
   #           `fails_all` answers /robots.txt with an HTML shell, which the collector reads as
   #           absent (`fail`, the default).
   #   B5      is judged per BODY after a cycle's surfaces (`run.judge_bodies`), never per
-  #           surface, and each fixture is served on its own port — so no control fixture is a
-  #           body with two products and B5 appears in no row here. Its fixtures are in
-  #           `tests/test_schema_field_rules.py`.
+  #           surface, and each fixture above is served on its own port — so none of them is a
+  #           body with two products, and B5 is in none of their rows. That left E5's "every
+  #           declared control fires" true for B5 vacuously; the two BODY fixtures at the end of
+  #           this table are the control that closes it
+  #           (`cc_tasks/2026-09-18_manners_status_and_b5_control.md` decision 3).
   expected_verdicts:
     passes_all: "pass"
     fails_all: "fail"
@@ -611,6 +638,40 @@ e5_control:
     # assertion lives in the tests and this table records only that nothing else moved.
     sitemap_on_sibling:
       default: "pass"
+    # ONE BODY, TWO PRODUCTS, one port (`fixtures.server.MODES`: `products`). The control
+    # cycle scans `/index.html` and `/second.html` as two surfaces with the fixture legs and
+    # then judges B5 once over the body (`run.run_controls` -> `run.judge_bodies`).
+    # `cc_tasks/2026-09-18_manners_status_and_b5_control.md` decision 3.
+    #
+    # DERIVED FROM THE RULE SOURCE and written here BEFORE either fixture was first run, as
+    # every entry above was — the D2 rows' method:
+    #
+    #   default `pass`  both surfaces serve `passes_all`'s bytes with nothing blinded
+    #                   (`fixture_expectations` derives no row: no reset, refusal or partition).
+    #                   `second.html` differs from `index.html` only in the product's NAME, the
+    #                   overlay `data.json` carries a record for each product (identifier = the
+    #                   product URL, every field the first record carries) and the overlay
+    #                   `sitemap.xml` lists both, so every per-surface leg on either product
+    #                   reads what it reads on `passes_all`, and A5, D4 and the four DCAT field
+    #                   legs find the second product where they find the first.
+    #   B5 `pass`       `RULE-B5-v1`: both product pages carry a `DefinedTerm` with a
+    #                   `termCode` (so not "no term codes"), each with `inDefinedTermSet` (not
+    #                   "codes without a set"), and the one concept `occupied housing unit` is
+    #                   coded on two products with one identifier (`HU-OCC` in
+    #                   `http://HOSTPORT/glossary.json`) — the last branch, "all 1 concept(s)
+    #                   coded on two or more of the body's products carry one identifier".
+    #
+    # The split variant differs in ONE attribute of one page: `second.html` codes the concept
+    # `OCC-2`. Every per-surface leg is unchanged (B2 reads each term's completeness, and
+    # `OCC-2` is as complete as `HU-OCC`), and B5 reaches its central fail branch: "codes not
+    # shared across products: 1 of 1 concept(s) coded on two or more of the body's products
+    # carry different identifiers".
+    body_two_products:
+      default: "pass"
+      B5: "pass"
+    body_two_products_split:
+      default: "pass"
+      B5: "fail"
 
 fuji:
   # NOT WIRED. The PyPI name `fuji` is a DIFFERENT package (startechsheffield, "a small

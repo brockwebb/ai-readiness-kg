@@ -141,7 +141,9 @@ def _j(leg, obs, params):
 # ------------------------------------------------------------------ registration
 
 def test_generation_twelve_is_registered_and_current():
-    assert GENERATIONS[-1] is V12
+    # Generation 13 (`RULE-D4-v3`, `cc_tasks/2026-09-18_manners_status_and_b5_control.md`
+    # decision 4) followed; twelve is the one before it.
+    assert GENERATIONS[11] is V12
     assert {m.RULE_ID for m in V12} == set(RULES.values())
     for leg, rid in RULES.items():
         assert CURRENT[leg] == rid and REGISTRY[rid].LEG == leg

@@ -1,0 +1,14 @@
+{
+ "fixture": "body_two_products",
+ "task": "cc_tasks/2026-09-18_manners_status_and_b5_control.md",
+ "serves_as": "passes_all",
+ "products": ["/index.html", "/second.html"],
+ "what": "One body with two product pages on one port. Both pages carry the DefinedTerm 'Occupied housing unit' with termCode HU-OCC in inDefinedTermSet http://HOSTPORT/glossary.json.",
+ "overlaid": {
+  "second.html": "passes_all/index.html with the second product's name in <title>, <h1> and the Dataset name; the DefinedTerm is byte-identical",
+  "data.json": "passes_all/data.json plus a second record, identifier http://HOSTPORT/second.html, carrying every field the first carries",
+  "sitemap.xml": "passes_all/sitemap.xml plus a <url> for /second.html"
+ },
+ "why": "B5 is judged per body over the body's product surfaces. Every other fixture is one product on its own port, so no control could hand B5 two surfaces of one body.",
+ "variant": "body_two_products_split overlays only its own second.html (termCode OCC-2) over this directory"
+}

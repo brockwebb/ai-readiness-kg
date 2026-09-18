@@ -39,6 +39,7 @@ from . import rule_a12
 from . import rule_a12_v3
 from . import rule_b1, rule_b4, rule_d3, rule_g4
 from . import rule_b1_v2, rule_b2, rule_b5, rule_d2
+from . import rule_d4_v3
 
 #: Every version ever shipped, keyed by rule id. Never prune it: a pruned entry is a stored
 #: Finding that can no longer be re-derived.
@@ -140,6 +141,21 @@ V11 = [rule_b1, rule_b4, rule_d3, rule_g4]
 #: Pre-registered, not run: cycle 5 (2026-10-05) is the first cycle that judges them.
 V12 = [rule_b1_v2, rule_b2, rule_b5, rule_d2]
 
+#: Generation 13 — `cc_tasks/2026-09-18_manners_status_and_b5_control.md` decision 4. One
+#: module. `RULE-D4-v3` reads membership from the collector's `membership` block — a record
+#: whose DCAT-US URL field (`identifier`, `landingPage`, `distribution.accessURL`,
+#: `distribution.downloadURL`) EQUALS the product URL — where `v2` read `contains_product`, the
+#: product URL as a substring anywhere in the record. DCAT-US v1.1 says `landingPage` "is not
+#: intended for an agency's homepage", and the substring test made census.gov's home page the
+#: product of 1,635 records. Every other branch and every reason fragment is `v2`'s. Stored
+#: catalog Observations carry no `membership` block, so `v3` over them is `error`; `v2` stays
+#: in `REGISTRY` and every Finding recorded under it re-derives under it.
+#:
+#: The four DCAT field legs follow D4's membership through `v2clauses.dcat_record_fields`,
+#: which is collection code: no stored Observation carries a block built by the old test, so
+#: none of their Findings moves and none needs a version.
+V13 = [rule_d4_v3]
+
 #: Rules for CANDIDATE indicators. They judge, they are recorded, and their Findings enter no
 #: numerator and no denominator (DD-054). Kept in their own list so the reporting layer can
 #: exclude them mechanically rather than by remembering a code.
@@ -235,7 +251,7 @@ def measures(rule_id: str) -> str:
 #: track of: the registry-integrity tests read this, so a fifth generation is one entry here
 #: and nothing else to remember — which is the same reasoning `parse_rule_id` gives for being
 #: a regex instead of a per-rule table.
-GENERATIONS = (V1, V2, V3, V4, V5, V6, V7, V8, V9, V10, V11, V12)
+GENERATIONS = (V1, V2, V3, V4, V5, V6, V7, V8, V9, V10, V11, V12, V13)
 
 _ALL = [m for g in GENERATIONS for m in g] + CANDIDATE_RULES
 #: De-duplicated by rule id, order preserved. A12-v2 is listed in its generation AND in
@@ -336,6 +352,22 @@ def scope(rule_id: str) -> str:
 BODY_LEGS = tuple(sorted(l for l, r in CURRENT.items() if scope(r) == "body"))
 
 
+#: The target-id prefix of every control-fixture surface (`run.run_controls`).
+CONTROL_PREFIX = "control:"
+
+
+def control_body_member(doc_id: str) -> bool:
+    """True for a surface of a control fixture that is a BODY: `control:<fixture>/<path>`.
+
+    A one-product fixture's surface is `control:<fixture>` and never groups. The `/` is the
+    whole test because `run.run_controls` is the only minter of control ids and it appends the
+    product path (which begins with `/`) exactly when the fixture declares `products`; a
+    fixture name is a Python identifier in `fixtures.server.MODES` and cannot contain one.
+    """
+    doc = str(doc_id or "")
+    return doc.startswith(CONTROL_PREFIX) and "/" in doc[len(CONTROL_PREFIX):]
+
+
 def body_groups(rule_id: str, observations: list, params: dict) -> dict:
     """`{body key: [Observation]}` — the groups a `body` rule is judged over. **Pure.**
 
@@ -344,10 +376,13 @@ def body_groups(rule_id: str, observations: list, params: dict) -> dict:
     reason `consumes` is one function with two readers).
 
     * **Which observations**: those of the legs the rule consumes, on product surfaces — never
-      a control fixture (`control:`; the control cycle judges surfaces, and each fixture is
-      served on its own port, so no two are one body) and never a surface whose id starts with
-      a prefix in `params.b5_consistency.exclude_surface_prefixes` (the host's home page and
-      the well-known row are not products).
+      a one-product control fixture (`control:<fixture>`; each is served on its own port, so no
+      two are one body) and never a surface whose id starts with a prefix in
+      `params.b5_consistency.exclude_surface_prefixes` (the host's home page and the well-known
+      row are not products). A control fixture that declares `products` IS a body, and its
+      surfaces are `control:<fixture>/<path>` (`control_body_member`); they group by their
+      one port like any body by its host (`cc_tasks/2026-09-18_manners_status_and_b5_
+      control.md` decision 3).
     * **Which body**: the host of the observed surface. On the frame every tier-A body's
       surfaces share one host and one `host:<netloc>` well-known row
       (`state/scan_targets_fss_2026-09_v5.json`), so host and body coincide; a body whose
@@ -359,7 +394,9 @@ def body_groups(rule_id: str, observations: list, params: dict) -> dict:
     out: dict = {}
     for o in observations:
         doc = str(o.target_doc_id or "")
-        if o.leg not in legs or doc.startswith("control:") or doc.startswith(skip):
+        if o.leg not in legs or doc.startswith(skip):
+            continue
+        if doc.startswith(CONTROL_PREFIX) and not control_body_member(doc):
             continue
         out.setdefault(host_of(o.target_url), []).append(o)
     return {k: out[k] for k in sorted(out)}

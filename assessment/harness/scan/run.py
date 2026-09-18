@@ -224,29 +224,51 @@ def run_controls(params: dict, clock=None) -> tuple:
     the same fixtures, over real loopback sockets, without paying the standing rate limit in
     wall time. `main()` never passes one.
     """
-    from scan.fixtures.server import FixtureServer
+    from scan.fixtures.server import MODES, FixtureServer
     from scan.manners import Fetcher
     sp = specs()
     all_findings, control_obs, fixture_obs = [], [], []
     for fixture, table in params["e5_control"]["expected_verdicts"].items():
+        # A fixture that declares `products` is a BODY: each product is scanned as its own
+        # surface, then the body legs are judged over all of them (`judge_bodies`, the same
+        # function a cycle uses). `cc_tasks/2026-09-18_manners_status_and_b5_control.md`
+        # decision 3. `CONTROL_LEGS` itself does not change: a body leg is never a leg of a
+        # surface, and the fixture's declaration — not the leg list — is what admits it.
+        products = tuple((MODES.get(fixture) or {}).get("products") or ())
+        obs, findings = [], []
         with FixtureServer(fixture) as base:
-            target = {"doc_id": f"control:{fixture}", "url": f"{base}/index.html"}
-            obs, findings = run_surface(sp, target, params, CONTROL_FIXTURE_LEGS,
-                                        Fetcher(params, clock=clock))
+            fetcher = Fetcher(params, clock=clock)
+            for path in products or ("/index.html",):
+                target = {"doc_id": f"control:{fixture}{path if products else ''}",
+                          "url": f"{base}{path}"}
+                o, f = run_surface(sp, target, params, CONTROL_FIXTURE_LEGS, fetcher)
+                obs += o
+                findings += f
+        if products:
+            findings += judge_bodies(sp, params, obs)
         # Retained, not discarded. The re-derivation gate can only check a Finding whose
         # evidence it still holds, and the control Findings are the ones whose determinism
         # matters most — they are what licenses the cycle.
         fixture_obs += obs
         all_findings += findings
-        unexpected = [f"{f.leg}={f.verdict} (expected {expected_verdict(table, f.leg)})"
+        # Per SURFACE when the fixture has several, so a leg that misfired on the second
+        # product is named with the product it misfired on.
+        unexpected = [(f"{f.target_doc_id.split(fixture, 1)[-1]}:" if products else "")
+                      + f"{f.leg}={f.verdict} (expected {expected_verdict(table, f.leg)})"
                       for f in findings if f.verdict != expected_verdict(table, f.leg)]
+        verdicts: dict = {}
+        for f in findings:
+            verdicts.setdefault(f.leg, set()).add(f.verdict)
         control_obs.append(Observation.make(
             "E5", "E5", f"control:{fixture}", f"fixture://{fixture}", "control_fixture",
             "0.1.0", params, {"method": "FIXTURE", "url": f"fixture://{fixture}"},
             {"status": 200, "headers": {}, "body_sha256": None, "body_path": None,
              "bytes": 0, "elapsed_ms": 0},
             parsed={"fixture": fixture, "expected": table,
-                    "verdicts": {f.leg: f.verdict for f in findings},
+                    # One verdict per leg; a leg whose products disagreed reads as the sorted
+                    # verdicts joined by `/`, so a collapse cannot hide the disagreement.
+                    "verdicts": {leg: "/".join(sorted(v)) for leg, v in verdicts.items()},
+                    **({"products": list(products)} if products else {}),
                     # Every error class the fixture produced, so the control gate can assert
                     # that a NEW class is actually reachable — a class nothing can produce is
                     # a class nobody can trust a zero from (§1.2, §1.4).
@@ -586,6 +608,11 @@ def main(argv=None) -> int:
         # federal hosts.
         "requests_per_host": {h: n for h, n in sorted(fetcher.requests.items())},
         "requests_total": sum(fetcher.requests.values()),
+        # One line per netloc: its robots.txt status, what RFC 9309 §2.3.1 makes of it, and
+        # the decision the fetcher took (`manners.robots_access`). The manners gate replays
+        # these from the payload (`cc_tasks/2026-09-18_manners_status_and_b5_control.md`
+        # decision 1); an `unreachable` netloc is one every other fetch to was refused.
+        "robots_log": fetcher.robots_log,
         "legs_erroring_on_every_surface": [l for l, n in by_leg_err.items()
                                            if rows and n == len(rows)],
         "body_legs": list(BODY_LEGS),

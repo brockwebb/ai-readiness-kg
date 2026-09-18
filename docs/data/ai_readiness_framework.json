@@ -1195,7 +1195,7 @@
     },
     "measurement_tier": "M",
     "measurement_basis": "harness_leg",
-    "tier_source": "rules.CURRENT['D4'] = RULE-D4-v2 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:D4`",
+    "tier_source": "rules.CURRENT['D4'] = RULE-D4-v3 (assessment/harness/scan/rules/__init__.py); measurement spec `spec:D4`",
     "tier_rule": "cc_tasks/2026-09-17_measurement_tiers.md decision 2 rule 1"
    }
   },
@@ -2227,7 +2227,7 @@
     "indicator_code": "D4",
     "leg": "D4",
     "mode": "auto",
-    "rule_id": "RULE-D4-v2",
+    "rule_id": "RULE-D4-v3",
     "collector_pin": "json-schema (Project Open Data v1.1 schema)",
     "signal": "Fetch /data.json (Project Open Data catalog); validate against the POD v1.1 schema; test whether the product appears in it.",
     "collector": "project-open-data-validator",
@@ -2245,7 +2245,7 @@
     "leg": "E5",
     "mode": "auto",
     "rule_id": "RULE-E5-v2",
-    "collector_pin": "assessment/harness/scan/fixtures (fails_all, invalid_route_unobserved, passes_all, refuses_identified_client, resets_connection, resets_links_only, robots_404_html, robots_forbids_product, sitemap_on_sibling)",
+    "collector_pin": "assessment/harness/scan/fixtures (body_two_products, body_two_products_split, fails_all, invalid_route_unobserved, passes_all, refuses_identified_client, resets_connection, resets_links_only, robots_404_html, robots_forbids_product, sitemap_on_sibling)",
     "signal": "Every control fixture is scanned before any real host. A cycle in which any of them produced an unexpected verdict is INVALID.",
     "collector": "control_fixtures",
     "evidence_kind": "per-fixture verdict map for every rule in the cycle",
@@ -3810,7 +3810,7 @@
     "cost_band": "none",
     "cost_source": "notional:technique_class:edit_existing, task 2026-09-17_notional_bands",
     "band_note": "Notional relative estimate for a typical federal statistical publisher. Adjust for your platform, staffing, skills and procurement path; the band orders actions against each other, it does not predict your calendar or budget.",
-    "verifies_by": "RULE-D4-v2",
+    "verifies_by": "RULE-D4-v3",
     "leg": "D4",
     "indicator_code": "D4",
     "outcome": "catalog_schema_violation",
@@ -3848,7 +3848,7 @@
     "cost_band": "none",
     "cost_source": "notional:technique_class:edit_existing, task 2026-09-17_notional_bands",
     "band_note": "Notional relative estimate for a typical federal statistical publisher. Adjust for your platform, staffing, skills and procurement path; the band orders actions against each other, it does not predict your calendar or budget.",
-    "verifies_by": "RULE-D4-v2",
+    "verifies_by": "RULE-D4-v3",
     "leg": "D4",
     "indicator_code": "D4",
     "outcome": "product_absent_from_catalog",
@@ -3886,7 +3886,7 @@
     "cost_band": "staff_time",
     "cost_source": "notional:technique_class:publish_new_file, task 2026-09-17_notional_bands",
     "band_note": "Notional relative estimate for a typical federal statistical publisher. Adjust for your platform, staffing, skills and procurement path; the band orders actions against each other, it does not predict your calendar or budget.",
-    "verifies_by": "RULE-D4-v2",
+    "verifies_by": "RULE-D4-v3",
     "leg": "D4",
     "indicator_code": "D4",
     "outcome": "no_catalog",
@@ -7270,7 +7270,7 @@
    "to": "ind:D4",
    "properties": {
     "outcome": "catalog_schema_violation",
-    "rule_id": "RULE-D4-v2",
+    "rule_id": "RULE-D4-v3",
     "leg": "D4",
     "reason_fragment": "but the catalog violates "
    }
@@ -7281,7 +7281,7 @@
    "to": "ind:D4",
    "properties": {
     "outcome": "product_absent_from_catalog",
-    "rule_id": "RULE-D4-v2",
+    "rule_id": "RULE-D4-v3",
     "leg": "D4",
     "reason_fragment": "but the product is not in it"
    }
@@ -7292,7 +7292,7 @@
    "to": "ind:D4",
    "properties": {
     "outcome": "no_catalog",
-    "rule_id": "RULE-D4-v2",
+    "rule_id": "RULE-D4-v3",
     "leg": "D4",
     "reason_fragment": "no public data.json catalog served on this host"
    }

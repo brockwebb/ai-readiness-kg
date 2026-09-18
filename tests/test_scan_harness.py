@@ -362,8 +362,17 @@ def test_merging_controls_replaces_them_rather_than_accumulating(tmp_path):
     # One Finding per control leg per fixture, plus E5's own — derived, not a literal, for the
     # reason above. `CONTROL_FIXTURE_LEGS` is the fifteen product legs plus the candidate; E5
     # judges the CYCLE and has no per-fixture Finding.
+    #
+    # A BODY fixture (`fixtures.server.MODES[...]["products"]`,
+    # `cc_tasks/2026-09-18_manners_status_and_b5_control.md` decision 3) is one surface per
+    # product, plus one Finding per body leg judged over them.
+    from scan.fixtures.server import MODES
+    from scan.rules import BODY_LEGS
     n_fixtures = len(params["e5_control"]["expected_verdicts"])
-    expected = len(run_mod.CONTROL_FIXTURE_LEGS) * n_fixtures + 1
+    expected = 1 + sum(
+        len(run_mod.CONTROL_FIXTURE_LEGS) * len(MODES[f].get("products") or ("/",))
+        + (len(BODY_LEGS) if MODES[f].get("products") else 0)
+        for f in params["e5_control"]["expected_verdicts"])
     assert first["control_findings"] == second["control_findings"] == expected
     assert all(f["rule_id"] in REGISTRY for f in second["control_findings_detail"])
     assert len([o for o in second["observations_detail"]

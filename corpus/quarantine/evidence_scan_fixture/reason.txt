@@ -451,3 +451,13 @@ f285e6e69905f97b1481a18e0d3115db19a3bfc524f528090a205965e7730a87	(untracked when
   first    : 2026-09-10T11:32:21.586766+00:00
   last     : 2026-09-10T11:32:26.404171+00:00
   writer   : -c x218
+
+2026-09-18T11:35:50.243570+00:00 — evidence-guard redirect log cleared
+  swept by : cc_tasks/2026-09-18_manners_status_and_b5_control.md: tests/test_b5_control.py's module-scoped control-cycle fixture (set up before conftest's function-scoped evidence redirect; fixed in the same task) and the session's own exploratory run_controls calls from stdin (argv '-')
+  entries  : 2190
+  aimed at the committed store: 2190
+  first    : 2026-09-18T11:21:22.007749+00:00
+  last     : 2026-09-18T11:25:44.909927+00:00
+  writer   : - x876
+  writer   : /opt/anaconda3/lib/python3.12/site-packages/pytest/__main__.py tests/test_b5_control.py tests/test_d4_membership.py test x876
+  writer   : /opt/anaconda3/lib/python3.12/site-packages/pytest/__main__.py tests/ assessment/ -q -rs -m not slow x438
