@@ -88,7 +88,10 @@ def rows(cycle: str) -> list:
     out = []
 
     # ---- the fifteen intervals the scan-run RESULT quoted and never registered ----
-    for leg in mx["legs"]:
+    # Over the legs that HAVE a per-surface rate. A body leg (B5, judged once per body on the
+    # `host:` row) is a matrix column with no rate and so no interval; see `figures.rated_legs`,
+    # which the two rate figures read the same way (`cc_tasks/2026-09-19_resnapshot_rj4.md`).
+    for leg in [l for l in mx["legs"] if l in mx["per_leg"]]:
         pl = mx["per_leg"][leg]
         k, n = pl["pass"], pl["applicable_n"]
         lo, hi = wilson(k, n, Z)

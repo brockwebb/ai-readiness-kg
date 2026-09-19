@@ -63,6 +63,11 @@ EXPECTED_BLANKS = {
     "scan_2026-09-09_rj2": set(),
     "scan_2026-09-10_rj1": set(),
     "scan_2026-09-10_rj2": set(),
+    # The report's snapshot since `cc_tasks/2026-09-19_resnapshot_rj4.md`, drawn against cycle 3
+    # judged under generation 9. Generation 12 added seven legs; the six with a per-surface rate
+    # have no Finding on cycle 3's side and are blank there, never on `_rj4`'s. B5 is a body leg
+    # with no rate and is not a row of F5 at all (`figures.rated_legs`).
+    "scan_2026-09-10_rj4": {"B1", "B2", "B4", "D2", "D3", "G4"},
 }
 
 #: The cycles whose F5 is a figure that can be drawn and therefore checked.
@@ -192,7 +197,9 @@ def _blank_legs(cycle: str, live: dict) -> tuple:
         series = f"scan_{suffix}"
         judged = legs_with_findings(series)
         R = FIG.Reads(live, cfg["cycle"])
-        for leg in mx["legs"]:
+        # The legs F5 draws: those with a per-surface rate (`figures.rated_legs`). A body leg is
+        # not a row of the figure, so it cannot be a blank one.
+        for leg in FIG.rated_legs(mx):
             key = cycle_results.name_for(f"scan_{FIG.slug(leg)}_pass_rate", series)
             if key in R:
                 continue
@@ -242,7 +249,7 @@ def test_the_rendered_figure_carries_exactly_those_blanks(cycle, live):
     pairs = 0
     for suffix in (cfg["compare_to"]["suffix"], cfg["cycle_suffix"]):
         R = FIG.Reads(live, cfg["cycle"])
-        for leg in mx["legs"]:
+        for leg in FIG.rated_legs(mx):
             key = cycle_results.name_for(f"scan_{FIG.slug(leg)}_pass_rate", f"scan_{suffix}")
             pairs += key not in R
     svg = FIG.build(cfg, live, only=("cycle_over_cycle",))["cycle_over_cycle"]

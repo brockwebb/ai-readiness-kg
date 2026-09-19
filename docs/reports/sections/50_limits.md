@@ -37,7 +37,7 @@ queued.
 
 The same declarations could have been declined instead, so the count of discovery failures
 attributable to a declaration the scanner refused to follow is registered at
-{{result:scan_a5_fail_offroster_sitemap_2026-09-10_rj2:value}} for this cycle. That is zero, and it
+{{result:scan_a5_fail_offroster_sitemap_2026-09-10_rj4:value}} for this cycle. That is zero, and it
 is registered rather than omitted: a caveat that is absent and a caveat measured to be empty
 read alike in prose and are not the same claim.
 

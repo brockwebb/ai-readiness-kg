@@ -576,14 +576,38 @@ class Tools:
             c["locators"] = [matrix_loc(c["matrix"], f"{name}/{c['leg']}")] + (
                 [graph_loc("Finding", "finding_id", c["finding_id"])] if c["finding_id"] else [])
         n_fail = sum(1 for c in cells if c["verdict"] == "fail")
+        # `cc_tasks/2026-09-19_resnapshot_rj4.md` decision 4: a view that gives a rank gives the
+        # leg it rests on with it. The score is `scripts/score.py`'s, loaded by path for the
+        # reason `_presc` gives: a second implementation would be a second answer.
+        sc = self._score().compute(cycle)["bodies"][name]
+        standing = {"score": sc["score"], "rank": sc["rank"], "flat": sc["flat"],
+                    "flat_rank": sc["flat_rank"],
+                    "of": (sc["concentration"] or {}).get("of"),
+                    "concentration": sc["concentration"]}
+        rank_line = (f" {sc['concentration']['sentence']}" if sc["concentration"] else
+                     f" {name} is not ranked on {cycle}: no scored leg has a judged row.")
         return {
             "body": name, "cycle": cycle,
             "n_judged": len(cells), "n_failing": n_fail,
             "summary": (f"{n_fail} failing of {len(cells)} judged on {cycle}; "
-                        f"{len(all_bodies)} bodies are on this cycle"),
+                        f"{len(all_bodies)} bodies are on this cycle.{rank_line}"),
+            "score": standing,
             "legs": cells,
-            "locators": [config_loc("snapshot_cycle")],
+            "locators": [config_loc("snapshot_cycle"),
+                         source_loc("scripts/score.py", "def concentration")],
         }
+
+    def _score(self):
+        """`scripts/score.py`, loaded by path once, as `_presc` loads the prescription query."""
+        import importlib.util
+        if getattr(self, "_score_mod", None) is None:
+            spec = importlib.util.spec_from_file_location(
+                "_airkg_score", REPO / "scripts" / "score.py")
+            mod = importlib.util.module_from_spec(spec)
+            sys.modules[spec.name] = mod
+            spec.loader.exec_module(mod)
+            self._score_mod = mod
+        return self._score_mod
 
     def _evidence_for(self, finding_ids: list) -> dict:
         """Finding → its Observations → the retained bytes, for many findings in ONE query."""

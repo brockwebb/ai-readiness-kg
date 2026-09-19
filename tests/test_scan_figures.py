@@ -344,8 +344,14 @@ def test_the_gate_catches_a_number_from_nowhere(figures, results, mutation, expe
 def test_the_figures_print_the_things_the_task_asked_them_to(figures):
     """Cheap structural checks, so a figure cannot pass §4 by printing nothing."""
     mx = matrix()
+    from scan.figures import rated_legs
+    # F1 and F5 draw a per-surface RATE, so they draw the legs that have one. A body leg (B5,
+    # judged once per body on its `host:` row) is a matrix column with no rate and is not drawn
+    # (`cc_tasks/2026-09-19_resnapshot_rj4.md`); every other column is.
+    rated = rated_legs(mx)
+    assert set(mx["legs"]) - set(rated) <= {"B5"}, set(mx["legs"]) - set(rated)
     f1 = figures["per_leg_pass_rate"]
-    for leg in mx["legs"]:
+    for leg in rated:
         assert f">{leg}<" in f1, f"F1 omits {leg}"
     f2 = figures["agencies_by_legs_matrix"]
     for agency in mx["agencies"]:
@@ -362,8 +368,10 @@ def test_the_figures_print_the_things_the_task_asked_them_to(figures):
     # F5. The mark on the legs whose RULE changed is the whole point of the figure: two dots
     # at different heights invite "the host changed", and on those rows that reading is wrong.
     f5 = figures["cycle_over_cycle"]
-    for leg in mx["legs"]:
+    for leg in rated:
         assert f">{leg}<" in f5, f"F5 omits {leg}"
+    for leg in set(mx["legs"]) - set(rated):
+        assert f">{leg}<" not in f1 + f5, f"{leg} has no per-surface rate and is drawn as one"
     for leg, change in cfg()["compare_to"]["rule_changed"].items():
         assert f"rule changed ({change}): not comparable" in f5, (
             f"F5 does not mark {leg} as not comparable across the rule change")
@@ -447,7 +455,11 @@ def test_each_legs_registered_counts_re_derive_from_the_graph(session, results):
          "AND ((f.cycle IS NULL AND $measured) OR f.cycle = $cycle) "
          "RETURN f.verdict AS v, f.target_doc_id AS d, count(*) AS c")
     bad = []
-    for leg in mx["legs"]:
+    # The legs with a per-surface family (`figures.rated_legs`). A body leg (B5) has none: it is
+    # judged on the `host:` rows `scan_report.per_leg` excludes, and its counts are the L0
+    # family's, re-derived row by row by `test_every_l0_matrix_row_re_derives_from_the_graph`.
+    from scan.figures import rated_legs
+    for leg in rated_legs(mx):
         code = parse_rule_id(CURRENT[leg])["indicator_code"]
         rows = list(session.run(q, code=code, ph=ph, cycle=cycle, measured=measured))
         got: dict = {}
@@ -528,6 +540,9 @@ def test_every_l0_matrix_row_re_derives_from_the_graph(session, stem):
     q = ("MATCH (f:Finding {finding_id: $fid}) "
          "RETURN f.verdict AS verdict, f.rule_id AS rule_id, f.target_doc_id AS doc")
     checked, unidentified, bad = 0, 0, []
+    import build_l0_matrices
+    body_legs = build_l0_matrices.body_legs()
+    candidate_of = {h["agency"]: h["candidate_surface"] for h in _l0_csv("scan_matrix_tierA")[1]}
     for r in rows:
         pairs = [p for p in (r.get("finding_ids") or "").split() if "=" in p]
         by_leg = dict(p.split("=", 1) for p in pairs)
@@ -554,6 +569,12 @@ def test_every_l0_matrix_row_re_derives_from_the_graph(session, stem):
                 f"leg")
             want_doc = (r.get("candidate_surface") if col == "A12"
                         else r.get("host_surface") or r.get("surface"))
+            if col in body_legs:
+                # A body leg (B5) is judged once per BODY on its well-known `host:` row and
+                # printed on each of the body's product rows (`build_l0_matrices.body_legs`), so
+                # its Finding is the body's candidate surface, the one A12 cites on the host
+                # matrix (`cc_tasks/2026-09-19_resnapshot_rj4.md`).
+                want_doc = candidate_of[r["agency"]]
             assert rec["doc"] == want_doc, (
                 f"{path.name}: {r['agency']} {col} is printed against {want_doc} and cites a "
                 f"Finding on {rec['doc']}")

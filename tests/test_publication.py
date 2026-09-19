@@ -1021,7 +1021,10 @@ def computed():
     Result is registered — that is what `build_l0_matrices.compute` was factored out for."""
     import build_l0_matrices
     c = build_l0_matrices.compute(PUB["snapshot_cycle"])
-    return c, build_l0_matrices.PRODUCT_LEGS
+    # The cycle's OWN product columns (`build_l0_matrices.product_legs`, per payload since
+    # `cc_tasks/2026-09-18_rejudge_seven_legs.md`), not the fixed ten: a snapshot that judged
+    # the seven B/D/G legs publishes seventeen (`cc_tasks/2026-09-19_resnapshot_rj4.md`).
+    return c, c["product_legs"]
 
 
 def _matrix_csv_path_text(stem: str) -> str:

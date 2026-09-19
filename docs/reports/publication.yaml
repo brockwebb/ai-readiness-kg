@@ -15,14 +15,19 @@
 # `scan_2026-09-10`, judged under the rules current when the report was written. Declared here
 # rather than inferred from the Result names, because a name is not a cycle and inferring one
 # from the other is how a report comes to state a cycle it did not measure.
-snapshot_cycle: scan_2026-09-10_rj2
+#
+# `_rj2` until 2026-09-19. `cc_tasks/2026-09-19_resnapshot_rj4.md` decision 1 moved it to
+# `_rj4`, generation 12, because under DN-004 the snapshot moves when a published number would
+# change, and three tagged Results and 161 product cells would: the guard, once it walked the
+# `SUPERSEDES` chain past `_rj3` to the newest judgement, refused the build.
+snapshot_cycle: scan_2026-09-10_rj4
 
 title: "AI readiness of the federal statistical system: host-level findings"
 
 # The version identifier the report carries, per DN-002 decision 5. The snapshot cycle IS the
 # version: two builds of the same cycle are the same findings, and a new cycle is a new
 # document rather than a new edition of this one.
-version: "2026-09-10_rj2"
+version: "2026-09-10_rj4"
 
 authors:
   - family-names: Webb

@@ -48,14 +48,14 @@ hand-written expectation was wrong once.
 
 <!-- include: sources_per_check -->
 
-**Files beside this report.** `scan_matrix_tierA_2026-09-10_rj2.csv` and `.json`, the
-host-level matrix; `scan_matrix_tierC_2026-09-10_rj2.*`, the reference hosts;
-`scan_matrix_product_2026-09-10_rj2.*`, the product matrix. Every row carries its Finding
+**Files beside this report.** `scan_matrix_tierA_2026-09-10_rj4.csv` and `.json`, the
+host-level matrix; `scan_matrix_tierC_2026-09-10_rj4.*`, the reference hosts;
+`scan_matrix_product_2026-09-10_rj4.*`, the product matrix. Every row carries its Finding
 identities.
 
 **Provenance.** Cycle `scan_2026-09-10`, parameter hash
 `4e0a92ba19ab769bb98b3a4a0c68640fbe465a04eaaec4aa6f2f0f41dc75c0df`, judged as
-`scan_2026-09-10_rj2`: the same stored observations under the rules current on 2026-09-11, with
+`scan_2026-09-10_rj4`: the same stored observations under the rules current on 2026-09-18, with
 every superseded judgement still registered under its own name. The event log is the source of
 truth; the graph and the matrices are projections of it and are rebuilt by replay. Design
 decisions DD-059 (the frame and the tier separation), DD-060 (one client identity), DD-061

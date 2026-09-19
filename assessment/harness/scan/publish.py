@@ -53,6 +53,15 @@ UNRETAINED_EVENT = "finding_evidence_unretained"
 #: re-identify the record and orphan the Findings citing it). The overlay carries the class it
 #: should have had; the projection reads it and keeps the recorded one beside it.
 RECLASSIFIED_EVENT = "observation_error_reclassified"
+#: `cc_tasks/2026-09-19_resnapshot_rj4.md` decision 5. The same append-only shape again: a
+#: Finding that no later judgement supersedes and that is nonetheless NOT the instrument's
+#: answer today, because the frame no longer gives its leg to its surface. DD-066 withdrew G1-D
+#: from the `home` and Tier C surfaces; `scan_2026-09-10_rj4` judges it on the flagships only,
+#: so the 22 `_rj3` G1-D Findings on those surfaces have no successor and DD-065's "no successor
+#: is current" would call them current for ever. The overlay says, on the log, that they are
+#: withdrawn and why. The Finding keeps its id, its line, its node and its verdict; only
+#: `current` changes, and `withdrawn` / `withdrawn_reason` say why.
+WITHDRAWN_EVENT = "finding_withdrawn"
 
 
 _REJUDGE_SUFFIX_RE = re.compile(r"^(?P<base>.+)_rj(?P<gen>\d+)$")
@@ -530,16 +539,19 @@ def project() -> dict:
               "ruled_by": 0, "observed_on_missing_document": 0, "control_observations": 0,
               "host_observations": 0, "findings_evidence_unretained": 0,
               "observations_error_reclassified": 0, "supersedes": 0,
-              "supersedes_unresolved": 0, "findings_current": 0, "findings_superseded": 0}
+              "supersedes_unresolved": 0, "findings_current": 0, "findings_superseded": 0,
+              "findings_withdrawn": 0, "withdrawn_unresolved": 0}
     # Read the annotations BEFORE the replay, because an annotation may be appended to a later
     # shard than the Finding it corrects — that is what an append-only correction is — and a
     # single forward pass would project the Finding before it had seen the event that qualifies
     # it. `edge_endpoint_alias` in batch-005 has the same shape for the same reason.
-    unretained, reclassified, superseding = set(), {}, {}
+    unretained, reclassified, superseding, withdrawn = set(), {}, {}, {}
     for ev in eventlog.replay():
         t = ev.get("event_type")
         if t == UNRETAINED_EVENT:
             unretained.add(ev.get("finding_id"))
+        elif t == WITHDRAWN_EVENT:
+            withdrawn[ev["finding_id"]] = ev["reason"]
         elif t == RECLASSIFIED_EVENT:
             reclassified[ev["obs_id"]] = ev["error_class"]
         elif t == SUPERSEDES_EVENT:
@@ -649,16 +661,26 @@ def project() -> dict:
                           "MERGE (a)-[:SUPERSEDES]->(b) RETURN count(*) AS n",
                           a=new_id, b=old_id).single()["n"]
                 counts["supersedes" if n else "supersedes_unresolved"] += 1
-            # A Finding with no successor is CURRENT (DN-003 decision 3). Stored as a property
-            # as well as answerable by query, because the report's snapshot has to be able to
-            # say "this is the judgement of record, and here is whether anything has replaced
-            # it" without the reader reconstructing the chain.
-            s.run("MATCH (f:Finding) SET f.current = NOT EXISTS { "
+            # A Finding with no successor is CURRENT (DN-003 decision 3) — unless the log
+            # WITHDRAWS it (`finding_withdrawn`, decision 5 of
+            # `cc_tasks/2026-09-19_resnapshot_rj4.md`): no successor and not today's instrument.
+            # Stored as a property as well as answerable by query, because the report's snapshot
+            # has to be able to say "this is the judgement of record, and here is whether
+            # anything has replaced it" without the reader reconstructing the chain. `withdrawn`
+            # is set on EVERY Finding, true or false, for the reason `evidence_unretained` is.
+            s.run("MATCH (f:Finding) SET f.withdrawn = false, f.withdrawn_reason = null")
+            for fid, why in withdrawn.items():
+                n = s.run("MATCH (f:Finding {finding_id: $id}) SET f.withdrawn = true, "
+                          "f.withdrawn_reason = $why RETURN count(f) AS n",
+                          id=fid, why=why).single()["n"]
+                counts["findings_withdrawn" if n else "withdrawn_unresolved"] += 1
+            s.run("MATCH (f:Finding) SET f.current = NOT f.withdrawn AND NOT EXISTS { "
                   "MATCH (:Finding)-[:SUPERSEDES]->(f) }")
             counts["findings_current"] = s.run(
                 "MATCH (f:Finding) WHERE f.current RETURN count(f)").single()[0]
             counts["findings_superseded"] = s.run(
-                "MATCH (f:Finding) WHERE NOT f.current RETURN count(f)").single()[0]
+                "MATCH (f:Finding) WHERE EXISTS { MATCH (:Finding)-[:SUPERSEDES]->(f) } "
+                "RETURN count(f)").single()[0]
             counts["rules"] = s.run("MATCH (r:Rule) RETURN count(r)").single()[0]
             counts.update(link_rules_to_indicators(s))
     finally:

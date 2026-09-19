@@ -10,8 +10,8 @@ from its well-known set. Which surface a cell was measured on is recorded on eve
 machine-readable copy beside this one. It matters: a `robots.txt` that permits the front door
 can disallow a particular product, so a flagship page and a home page need not receive the same
 answer. This cycle found that disagreement on
-{{result:scan_l0_home_flagship_disagreement_cells_over_four_legs_2026-09-10_rj2:value}} cells across
-{{result:scan_l0_home_flagship_disagreement_bodies_over_four_legs_2026-09-10_rj2:value}} bodies, and a single
+{{result:scan_l0_home_flagship_disagreement_cells_over_four_legs_2026-09-10_rj4:value}} cells across
+{{result:scan_l0_home_flagship_disagreement_bodies_over_four_legs_2026-09-10_rj4:value}} bodies, and a single
 combined cell would have had to pick one without saying which.
 
 <!-- include: matrix_tierA -->
@@ -19,35 +19,35 @@ combined cell would have had to pick one without saying which.
 
 ### Reading it by column
 
-**Serving `robots.txt`.** {{result:scan_l0_a4_pass_2026-09-10_rj2:value}} bodies of
-{{result:scan_l0_a4_applicable_n_2026-09-10_rj2:value}} observable ones serve a `robots.txt` that
+**Serving `robots.txt`.** {{result:scan_l0_a4_pass_2026-09-10_rj4:value}} bodies of
+{{result:scan_l0_a4_applicable_n_2026-09-10_rj4:value}} observable ones serve a `robots.txt` that
 permits this client to read the page. The single failure serves no such file at all: not a
 refusal, an absence, and a machine meeting it has to assume rather than read.
-{{result:scan_l0_a4_error_2026-09-10_rj2:value}} bodies could not be observed on this check, and
-the same {{result:scan_l0_a4_error_2026-09-10_rj2:value}} recur in every column below.
+{{result:scan_l0_a4_error_2026-09-10_rj4:value}} bodies could not be observed on this check, and
+the same {{result:scan_l0_a4_error_2026-09-10_rj4:value}} recur in every column below.
 
-**Discovery.** {{result:scan_l0_a5_pass_2026-09-10_rj2:value}} of
-{{result:scan_l0_a5_applicable_n_2026-09-10_rj2:value}} offer a discoverable index of what they
-publish; {{result:scan_l0_a5_fail_2026-09-10_rj2:value}} do not. Discovery is the weakest
+**Discovery.** {{result:scan_l0_a5_pass_2026-09-10_rj4:value}} of
+{{result:scan_l0_a5_applicable_n_2026-09-10_rj4:value}} offer a discoverable index of what they
+publish; {{result:scan_l0_a5_fail_2026-09-10_rj4:value}} do not. Discovery is the weakest
 host-level result by a wide margin, and the consequence is direct: a machine that cannot
 enumerate what a site publishes cannot tell what it has missed. Every sitemap any host
 declared was followed, including ones declared on a neighbouring hostname, so none of these
 failures is an artefact of the scanner declining to look.
 
-**Deep links.** {{result:scan_l0_a10_pass_2026-09-10_rj2:value}} of
-{{result:scan_l0_a10_applicable_n_2026-09-10_rj2:value}} answer a deliberately invalid URL
+**Deep links.** {{result:scan_l0_a10_pass_2026-09-10_rj4:value}} of
+{{result:scan_l0_a10_applicable_n_2026-09-10_rj4:value}} answer a deliberately invalid URL
 honestly. This is the best result on the page and it deserves less credit than it looks: it
 measures the absence of a specific pathology rather than the presence of a capability.
 
-**Declared machine layer.** {{result:scan_l0_a11_declared_pass_2026-09-10_rj2:value}} of
-{{result:scan_l0_a11_declared_applicable_n_2026-09-10_rj2:value}} declare somewhere in their own
+**Declared machine layer.** {{result:scan_l0_a11_declared_pass_2026-09-10_rj4:value}} of
+{{result:scan_l0_a11_declared_applicable_n_2026-09-10_rj4:value}} declare somewhere in their own
 markup that a machine reader is expected. Declaring is not providing, and this check does not
 follow the declaration to see whether anything answers at the other end.
 
 **Declared against enforced.** The candidate check finds
-{{result:scan_l0_a12_pass_2026-09-10_rj2:value}} bodies coherent and
-{{result:scan_l0_a12_fail_2026-09-10_rj2:value}} incoherent, of
-{{result:scan_l0_a12_applicable_n_2026-09-10_rj2:value}}. An incoherent host publishes a
+{{result:scan_l0_a12_pass_2026-09-10_rj4:value}} bodies coherent and
+{{result:scan_l0_a12_fail_2026-09-10_rj4:value}} incoherent, of
+{{result:scan_l0_a12_applicable_n_2026-09-10_rj4:value}}. An incoherent host publishes a
 `robots.txt` granting access and then declines to serve the client that obeys it. Three of them
 are the bodies discussed in the next section, and the fourth publishes no `robots.txt` at
 all.
@@ -58,6 +58,6 @@ all.
 
 <!-- include: matrix_tierC -->
 
-All {{result:scan_l0_tierc_a12_pass_2026-09-10_rj2:value}} reference hosts serve `robots.txt`, declare
+All {{result:scan_l0_tierc_a12_pass_2026-09-10_rj4:value}} reference hosts serve `robots.txt`, declare
 a machine layer, answer deep links honestly and are coherent between declaration and
 enforcement. All three fail discovery. They appear here for contrast and in no rate above.

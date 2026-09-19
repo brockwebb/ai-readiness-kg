@@ -336,6 +336,19 @@ def _rj_source(cycle: str) -> str | None:
     return m.group(1) if m else None
 
 
+def rated_legs(mx: dict) -> list:
+    """The matrix's legs that HAVE a per-surface pass rate, in the matrix's order.
+
+    F1 and F5 draw one rate per leg over the product surfaces (`scan_report.per_leg`). A body
+    leg is judged once per body on its `host:` row, which `per_leg` excludes with every other
+    well-known row, so it is a column of the matrix with no rate: B5 is the first
+    (`cc_tasks/2026-09-19_resnapshot_rj4.md`, where drawing `scan_2026-09-10_rj4` asked for a
+    `scan_b5_pass_rate` nobody could register). Its count is on the product matrix and in the
+    L0 family, once per body. A cycle with no body leg draws exactly the legs it always drew.
+    """
+    return [l for l in mx["legs"] if l in (mx.get("per_leg") or {})]
+
+
 def criterion_of(leg: str) -> str:
     """`A11-declared` -> `A`. The framework's own code shape: a criterion letter then digits."""
     return leg[:1]
@@ -357,7 +370,7 @@ def per_leg_pass_rate(mx: dict, R: dict, cfg: dict) -> str:
     ax = cfg["rate_axis"]
     col = cfg["colours"]
     dec = ax["tick_decimals"]
-    legs = mx["legs"]
+    legs = rated_legs(mx)
     groups = []
     for crit in cfg["criteria"]:
         members = [l for l in legs if criterion_of(l) == crit]
@@ -604,7 +617,7 @@ def cycle_over_cycle(mx: dict, R: dict, cfg: dict) -> str:
             f"`--only` and leave this one out. There is no default: a default predecessor is an "
             f"assertion about the past that nobody made.")
     dec = ax["tick_decimals"]
-    legs = mx["legs"]
+    legs = rated_legs(mx)
     left, plot = f["label_w"], f["plot_w"]
     height = f["top"] + f["bottom"] + len(legs) * f["row_h"]
     body = [f'<rect x="0" y="0" width="{cfg["canvas"]["width"]:g}" height="{height:g}" '

@@ -651,9 +651,16 @@ def write_matrices(c: dict, out_dir: Path | None = None, gen_dir: Path | None = 
 
 def snapshot_cycle() -> str:
     """`docs/reports/publication.yaml:snapshot_cycle`, the cycle the published report is a view
-    of."""
+    of.
+
+    Read from its FIXED home and never from `OUT_DIR`: `OUT_DIR` is an output root that
+    `rederive_tagged_results.py` and `snapshot_successor.py` redirect into a temporary tree, and
+    a declaration read relative to where the outputs happen to be going is not found there. The
+    re-derivation gate crashed on exactly that the first time it ran after this function was
+    written (`cc_tasks/2026-09-19_resnapshot_rj4.md`).
+    """
     import yaml
-    return yaml.safe_load((OUT_DIR / "publication.yaml").read_text(
+    return yaml.safe_load((REPO / "docs" / "reports" / "publication.yaml").read_text(
         encoding="utf-8"))["snapshot_cycle"]
 
 

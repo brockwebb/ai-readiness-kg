@@ -130,6 +130,24 @@ compare_to_by_cycle:
     label: "cycle 3 · 2026-09-09, re-judged"
     note: "both cycles judged under generation 9, so a difference on a row is the host and not the instrument; the frame grew by the seven declared flagships, 64 surfaces to 71"
     rule_changed: {}
+  # Cycle 4 as the report now publishes it (`cc_tasks/2026-09-19_resnapshot_rj4.md` decision 1),
+  # against cycle 3's newest judgement that has registered Results. `scan_2026-09-09_rj3`
+  # (generation 10) exists on the log and registered none, so it cannot be drawn; generation 9
+  # is the like-for-like point that can. Two legs changed rule between the two judgements, read
+  # from the payloads' own `rule_id`s: A12 v2 → v3 (generation 10) and D4 v2 → v3 (generation
+  # 12). Only D4 is declared here, because `rule_changed` is what F5 MARKS and the caption
+  # lists: A12 is a candidate (DD-054) with no rate and no row on F5, and naming it would put a
+  # mark in the caption that the figure does not draw. The six rated legs generation 12 added
+  # (B1, B2, B4, D2, D3, G4) have no point on cycle 3's side, which F5 draws as "not measured in
+  # this cycle", never as zero; B5 is a body leg with no per-surface rate and is not drawn
+  # (`figures.rated_legs`).
+  scan_2026-09-10_rj4:
+    cycle: scan_2026-09-09_rj2
+    suffix: "2026-09-09_rj2"
+    label: "cycle 3 · 2026-09-09, re-judged (generation 9)"
+    note: "cycle 3 judged under generation 9, cycle 4 under generation 12: D4 changed rule between them, and the legs generation 12 added were never judged on cycle 3"
+    rule_changed:
+      D4: "v2 → v3"
 
 # The rate axis. `ticks` is the ONLY numeric text in a figure that is not a Result or a
 # matrix count, and the gate checks the rendered ticks against exactly this list.

@@ -121,9 +121,14 @@ def test_the_report_measures_exactly_these_legs():
     asserts what that read PRODUCES. A leg added to the prose with a
     `{{result:scan_l0_product_<leg>_...}}` tag lands here on the next run and fails this
     assertion until somebody looks at it, which is the alarm the seven-leg list did not have.
+
+    **Thirteen since `cc_tasks/2026-09-19_resnapshot_rj4.md`.** The re-snapshot's product section
+    quotes G4's single pass (the only pass on any check generation 12 added), so G4 is read off
+    the prose and pinned here; its two admitted sources were made citable by
+    `scripts/backfill_g4_source_metadata.py` in the same task.
     """
     assert RT.LEGS == ["A4", "A5", "A10", "A11-declared", "A12", "G1-D", "A3",
-                       "A1", "A6", "A8", "B3", "D4"]
+                       "A1", "A6", "A8", "B3", "D4", "G4"]
     assert RT.LEGS == RT.appendix_legs(), (
         "the measured legs and the appendix's legs have come apart; the appendix would then "
         "print a row for a check no test pins")

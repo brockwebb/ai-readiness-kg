@@ -2,10 +2,12 @@
 
 **Draft. {{result:fss_agencies_tier_a:value}} recognized bodies and three reference
 hosts, one cycle, one client identity.**
-Written from `cc_tasks/2026-09-09_report_draft.md` and revised to the cycle of 2026-09-10
-under `cc_tasks/2026-09-11_l0_report_cycle4_revision.md`. The snapshot is cycle
-`scan_2026-09-10`, the first over the complete frame, re-judged as `scan_2026-09-10_rj2`:
-the same stored observations under the rules current when this was written. Every number
+Written from `cc_tasks/2026-09-09_report_draft.md`, revised to the cycle of 2026-09-10
+under `cc_tasks/2026-09-11_l0_report_cycle4_revision.md` and re-snapshotted under
+`cc_tasks/2026-09-19_resnapshot_rj4.md`. The snapshot is cycle `scan_2026-09-10`, the first
+over the complete frame, re-judged as `scan_2026-09-10_rj4`: the same stored observations
+under the rules current when this was written, which judge seven product checks the earlier
+judgements of this cycle did not. Every number
 below is a registered Result quoted by name; nothing is typed into the prose.
 
 ## What was measured, and over what
@@ -44,7 +46,7 @@ The cycle issued {{result:scan_requests_total_2026-09-10:value}} requests across
 {{result:fss_scan_netlocs_contacted_2026-09-10:value}} netlocs, which is more netlocs than the
 target list names. The excess is not an accident and is discussed under what the matrix cannot
 see. It produced {{result:scan_observations_2026-09-10:value}} observations and
-{{result:scan_findings_2026-09-10_rj2:value}} findings, and every finding re-derives byte for
+{{result:scan_findings_2026-09-10_rj4:value}} findings, and every finding re-derives byte for
 byte from its stored observations. The requests and the observations are the measured cycle's
 and carry its name; the findings are the re-judgement's, over those same observations, because
 a re-judgement opens no socket.

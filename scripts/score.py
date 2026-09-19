@@ -381,6 +381,68 @@ def ranks(scores: dict) -> dict:
     return {k: 1 + sum(1 for w in s.values() if w > v) for k, v in s.items()}
 
 
+def concentration(bodies: dict, struct: list, criteria: list) -> dict:
+    """`cc_tasks/2026-09-19_resnapshot_rj4.md` decision 4: for each ranked body, the ONE leg
+    whose verdicts, reversed, would move its rank furthest, and the sentence that says so.
+
+    The Handbook's step 7 reads robustness by excluding or re-weighting one component at a time
+    (OECD/JRC 2008; `sensitivity` above does it per criterion). This is the same probe one level
+    down and one body at a time, because a rank is quoted about ONE body. On
+    `scan_2026-09-10_rj4` DRSMSU is first on a single G4 pass: G4 is criterion G's only harness
+    leg, so under the hierarchical scheme that one verdict is a fifth of the score. A rank that
+    rests on one verdict is the rank a reader quotes, and the reader should be told.
+
+    **Reversal**, not deletion: the body's `pass` and `fail` rows on the leg swap, every other
+    body stays as it is, and the body is re-ranked against them. That asks the question in both
+    directions at once (a rank resting on a pass drops, a rank held down by a fail rises) and
+    it never changes the denominator, which a deletion would: a move that is only a change of
+    what was measured is not the same finding (decision 2 of the scoring task). Ties go to the
+    leg first in the framework's order, so the choice is deterministic and re-derivable.
+    """
+    scores = {b: v["score"] for b, v in bodies.items()}
+    base = ranks(scores)
+    order = [l["leg"] for l in struct if l["scored"]]
+    out = {}
+    for b, v in bodies.items():
+        if base.get(b) is None:
+            out[b] = None
+            continue
+        best = None
+        for leg in order:
+            x = v["legs"].get(leg) or {}
+            if not x.get("judged"):
+                continue
+            cells = {k: dict(c) for k, c in v["cells"].items()}
+            c = cells.get(leg, {})
+            c["pass"], c["fail"] = c.get("fail", 0), c.get("pass", 0)
+            cells[leg] = c
+            after = ranks({**scores, b: score_body(cells, struct, criteria)["score"]})[b]
+            if best is None or abs(after - base[b]) > abs(best["rank_if_reversed"] - base[b]):
+                best = {"leg": leg, "pass": x["pass"], "judged": x["judged"],
+                        "rank": base[b], "rank_if_reversed": after}
+        best["of"] = len(base)
+        best["sentence"] = concentration_sentence(b, best)
+        out[b] = best
+    return out
+
+
+def concentration_sentence(body: str, c: dict) -> str:
+    """The one sentence every rank is printed with. Every number in it is a field beside it."""
+    head = f"{body} ranks {c['rank']} of {c['of']} (hierarchical)"
+    move = c["rank_if_reversed"] - c["rank"]
+    counts = (f"{c['pass']} pass of {c['judged']} judged row"
+              f"{'' if c['judged'] == 1 else 's'} on {c['leg']}")
+    if move == 0:
+        return (f"{head}; no single leg's verdicts, reversed, would change it (the nearest is "
+                f"{c['leg']}).")
+    if move > 0:
+        what = "on one pass" if c["pass"] == 1 else f"most on {c['leg']}"
+        return (f"{head}, and it rests {what}: {counts}; were that leg's verdicts reversed it "
+                f"would rank {c['rank_if_reversed']}.")
+    return (f"{head}, and the leg that would move it most is {c['leg']}: {counts}; were that "
+            f"leg's verdicts reversed it would rank {c['rank_if_reversed']}.")
+
+
 # ------------------------------------------------------------------ the query
 
 def effort_order() -> tuple:
@@ -428,6 +490,8 @@ def compute(cycle: str | None = None, prior: str | None = None) -> dict:
     for b in bodies:
         bodies[b]["rank"] = base_rank.get(b)
         bodies[b]["flat_rank"] = flat_rank.get(b)
+    for b, c in concentration(bodies, struct, crit).items():
+        bodies[b]["concentration"] = c
 
     overall = []
     n_scored = sum(v["score"] is not None for v in bodies.values())
@@ -572,6 +636,17 @@ def print_grid(r: dict) -> None:
           "outright: legs whose every judged row passed, of legs judged; clear/legs: legs that "
           "passed outright with no error row, per criterion — the counts the level is read "
           "from.")
+    print_concentration(r)
+
+
+def print_concentration(r: dict) -> None:
+    """Decision 4 of `cc_tasks/2026-09-19_resnapshot_rj4.md`: wherever a rank is printed, the
+    leg it rests on is printed with it, in rank order."""
+    print("\nconcentration — the one leg whose verdicts, reversed, would move each rank most:")
+    for b, v in sorted(r["bodies"].items(),
+                       key=lambda kv: (kv[1]["rank"] is None, kv[1]["rank"] or 0, kv[0])):
+        if v["concentration"]:
+            print(f"   {v['concentration']['sentence']}")
 
 
 def print_body(r: dict, name: str) -> int:
@@ -586,7 +661,10 @@ def print_body(r: dict, name: str) -> int:
           f"{_f(v['flat'])} flat, rank {v['flat_rank'] or 'none'}; of "
           f"{r['coverage']['bodies']['measured']}; legs {_cov(cv['legs'])}, indicators "
           f"{_cov(cv['indicators'])}, constructs {_cov(cv['constructs'])}, criteria "
-          f"{_cov(cv['criteria'])}; excluded rows {v['excluded'] or 'none'}\n")
+          f"{_cov(cv['criteria'])}; excluded rows {v['excluded'] or 'none'}")
+    if v["concentration"]:
+        print(v["concentration"]["sentence"])
+    print()
     print(f"{'crit':<4}  {'construct':<58} {'leg':<13} {'pass/judged':>11} {'score':>6}")
     for l in r["structure"]:
         if not l["scored"]:
@@ -653,6 +731,7 @@ def print_sensitivity(r: dict) -> None:
         for b, c in changed.items():
             print(f"   {b:<11} prior {c['prior']}/{c['total']}  cycle of record "
                   f"{c['cycle_of_record']}/{c['total']}")
+    print_concentration(r)
     print()
     for n in names:
         x = s["variants"][n]
@@ -729,9 +808,17 @@ STEPS = [
     ("10. Visualisation of the results",
      "Nothing is published. The query prints a grid, a body page, a ranked join and a "
      "sensitivity table to a terminal; this page documents the model and the ladder and names "
-     "no body.",
+     "no body. Every view that prints a rank prints beside it the rank's concentration: the one "
+     "leg whose verdicts, reversed, would move that body's rank furthest, with the rank it "
+     "would then hold (`concentration` in `--json`; the MCP's `get_body` carries the same "
+     "field).",
      "A score or a level on the site is a publication and is the operator's (decision 8 of "
-     "the scoring task, decision 5 of the levels task)."),
+     "the scoring task, decision 5 of the levels task). The concentration sentence is there "
+     "because a rank can rest on a single verdict: with equal weights at each level, the only "
+     "harness leg of a one-leg criterion carries that criterion's whole weight, and a rank a "
+     "reader quotes should say when it is one pass deep (`cc_tasks/2026-09-19_resnapshot_rj4.md` "
+     "decision 4). Reversal rather than deletion keeps the denominator fixed, so the move it "
+     "reports is the verdict's and not a change of what was measured."),
 ]
 
 

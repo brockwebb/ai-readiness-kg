@@ -3,8 +3,8 @@
 Everything above measures a host. This section measures products, and for the first time it
 covers the whole frame. Every one of the {{result:fss_agencies_tier_a:value}} bodies now has a
 flagship product declared for it —
-{{result:scan_l0_declared_flagship_agencies_2026-09-10_rj2:value}} agencies across
-{{result:scan_l0_declared_flagship_surfaces_2026-09-10_rj2:value}} declared surfaces — and
+{{result:scan_l0_declared_flagship_agencies_2026-09-10_rj4:value}} agencies across
+{{result:scan_l0_declared_flagship_surfaces_2026-09-10_rj4:value}} declared surfaces — and
 {{result:fss_agencies_pending_operator_declaration_2026-09-10:value}} bodies carry a host row
 and nothing else.
 
@@ -19,35 +19,42 @@ below.
 
 <!-- include: matrix_product -->
 
-Across the {{result:scan_l0_declared_flagship_surfaces_2026-09-10_rj2:value}} declared
-surfaces, {{result:scan_l0_product_legs_at_zero_2026-09-10_rj2:value}} of the
-{{result:scan_l0_product_legs_2026-09-10_rj2:value}} product checks return not a single pass.
+Across the {{result:scan_l0_declared_flagship_surfaces_2026-09-10_rj4:value}} declared
+surfaces, {{result:scan_l0_product_legs_at_zero_2026-09-10_rj4:value}} of the
+{{result:scan_l0_product_legs_2026-09-10_rj4:value}} product checks return not a single pass.
 None of these is present on any declared flagship surface measured in this cycle: the product
 offered as structured data rather than as a document, a documented API with its auth model and
 its rate limits, a machine-first entry point an agent could address, a machine-readable
-licence, or a changelog per release.
+licence, a changelog per release, variable-level metadata, concept definitions linked from the
+variables, data-quality attributes published as metadata rather than prose, terms that address
+model training and retrieval, and published source lineage. The last of the checks at zero is
+asked of the body rather than of a surface: whether the same concept carries the same
+identifier across a body's products, and no body answers it yes.
 
 The others are not at zero and are close to it. A bulk download of the whole product is linked
-from {{result:scan_l0_product_a3_pass_2026-09-10_rj2:value}} of
-{{result:scan_l0_product_a3_applicable_n_2026-09-10_rj2:value}} surfaces, the only check on
+from {{result:scan_l0_product_a3_pass_2026-09-10_rj4:value}} of
+{{result:scan_l0_product_a3_applicable_n_2026-09-10_rj4:value}} surfaces, the only check on
 this page with a pass rate a reader would notice.
-{{result:scan_l0_product_b3_pass_2026-09-10_rj2:value}} of
-{{result:scan_l0_product_b3_applicable_n_2026-09-10_rj2:value}} serve their substantive content
+{{result:scan_l0_product_b3_pass_2026-09-10_rj4:value}} of
+{{result:scan_l0_product_b3_applicable_n_2026-09-10_rj4:value}} serve their substantive content
 without requiring a browser to execute code. Structured markup describing the data, a
 resolvable pointer to the current vintage and an entry in a public inventory are present on
-{{result:scan_l0_product_a6_pass_2026-09-10_rj2:value}} of
-{{result:scan_l0_product_a6_applicable_n_2026-09-10_rj2:value}},
-{{result:scan_l0_product_a8_pass_2026-09-10_rj2:value}} of
-{{result:scan_l0_product_a8_applicable_n_2026-09-10_rj2:value}} and
-{{result:scan_l0_product_d4_pass_2026-09-10_rj2:value}} of
-{{result:scan_l0_product_d4_applicable_n_2026-09-10_rj2:value}} surfaces, and the matrix above
-shows all three on the same row.
+{{result:scan_l0_product_a6_pass_2026-09-10_rj4:value}} of
+{{result:scan_l0_product_a6_applicable_n_2026-09-10_rj4:value}},
+{{result:scan_l0_product_a8_pass_2026-09-10_rj4:value}} of
+{{result:scan_l0_product_a8_applicable_n_2026-09-10_rj4:value}} and
+{{result:scan_l0_product_d4_pass_2026-09-10_rj4:value}} of
+{{result:scan_l0_product_d4_applicable_n_2026-09-10_rj4:value}} surfaces, and the matrix above
+shows all three on the same row. That row carries the only pass on any check this judgement
+added: the issuing authority and its programme carried as structured metadata in the product's
+catalogue record, present on {{result:scan_l0_product_g4_pass_2026-09-10_rj4:value}} of
+{{result:scan_l0_product_g4_applicable_n_2026-09-10_rj4:value}} surfaces.
 
 A zero at this denominator is not proof of universal absence, and the report will not let it be
-read as one. With {{result:scan_l0_product_a1_pass_2026-09-10_rj2:value}} passes in
-{{result:scan_l0_product_a1_applicable_n_2026-09-10_rj2:value}} surfaces, the upper bound of
+read as one. With {{result:scan_l0_product_a1_pass_2026-09-10_rj4:value}} passes in
+{{result:scan_l0_product_a1_applicable_n_2026-09-10_rj4:value}} surfaces, the upper bound of
 the ninety-five percent score interval is
-{{result:scan_l0_product_leg_rate_a1_upper95_2026-09-10_rj2:value}}, which is the number a
+{{result:scan_l0_product_leg_rate_a1_upper95_2026-09-10_rj4:value}}, which is the number a
 reader should carry rather than the zero. Hanley and Lippman-Hand give the same magnitude by
 their rule of thumb for zero events. The bound quoted here is the score interval, computed once
 and registered rather than worked out in a sentence. The correct statement is that the true
@@ -55,7 +62,7 @@ rate is unlikely to exceed that bound, not that it is nothing.
 
 The interval is still wide, and the declaration list is no longer what makes it so. It is wide
 because one product is one surface and the frame holds
-{{result:scan_l0_product_a1_applicable_n_2026-09-10_rj2:value}} observable ones on this check,
-{{result:scan_l0_product_a1_error_2026-09-10_rj2:value}} more having answered with something
+{{result:scan_l0_product_a1_applicable_n_2026-09-10_rj4:value}} observable ones on this check,
+{{result:scan_l0_product_a1_error_2026-09-10_rj4:value}} more having answered with something
 this scanner could not read. A denominator that small is what a report of a system this size
 gets, and saying so is cheaper than pretending the bound is tighter.

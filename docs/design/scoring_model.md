@@ -10,14 +10,14 @@ Two sources and no third: `framework/ai_readiness_framework.json` and the publis
 
 ## Coverage on the cycle of record
 
-Cycle `scan_2026-09-10_rj2`, 16 bodies, matrices `docs/reports/scan_matrix_tierA_2026-09-10_rj2.json`, `docs/reports/scan_matrix_product_2026-09-10_rj2.json`.
+Cycle `scan_2026-09-10_rj4`, 16 bodies, matrices `docs/reports/scan_matrix_tierA_2026-09-10_rj4.json`, `docs/reports/scan_matrix_product_2026-09-10_rj4.json`.
 
 | level | measured | total |
 |---|---|---|
-| adopted harness legs scored (candidates excluded, DD-054) | 14 | 23 |
-| indicators measured, of the framework | 14 | 48 |
-| indicators measured, of `harness_leg` | 14 | 23 |
-| criteria with a measured construct | 4 | 7 |
+| adopted harness legs scored (candidates excluded, DD-054) | 21 | 23 |
+| indicators measured, of the framework | 21 | 48 |
+| indicators measured, of `harness_leg` | 21 | 23 |
+| criteria with a measured construct | 5 | 7 |
 | bodies scored | 13 | 16 |
 
 ## The steps, in the Handbook's order
@@ -78,9 +78,9 @@ Cycle `scan_2026-09-10_rj2`, 16 bodies, matrices `docs/reports/scan_matrix_tierA
 
 ### 10. Visualisation of the results
 
-**Choice.** Nothing is published. The query prints a grid, a body page, a ranked join and a sensitivity table to a terminal; this page documents the model and the ladder and names no body.
+**Choice.** Nothing is published. The query prints a grid, a body page, a ranked join and a sensitivity table to a terminal; this page documents the model and the ladder and names no body. Every view that prints a rank prints beside it the rank's concentration: the one leg whose verdicts, reversed, would move that body's rank furthest, with the rank it would then hold (`concentration` in `--json`; the MCP's `get_body` carries the same field).
 
-**Why.** A score or a level on the site is a publication and is the operator's (decision 8 of the scoring task, decision 5 of the levels task).
+**Why.** A score or a level on the site is a publication and is the operator's (decision 8 of the scoring task, decision 5 of the levels task). The concentration sentence is there because a rank can rest on a single verdict: with equal weights at each level, the only harness leg of a one-leg criterion carries that criterion's whole weight, and a rank a reader quotes should say when it is one pass deep (`cc_tasks/2026-09-19_resnapshot_rj4.md` decision 4). Reversal rather than deletion keeps the denominator fixed, so the move it reports is the verdict's and not a change of what was measured.
 
 ## The legs, and whether each is scored
 
@@ -97,19 +97,19 @@ Cycle `scan_2026-09-10_rj2`, 16 bodies, matrices `docs/reports/scan_matrix_tierA
 | A | Structured markup | `ind:A6` | `A6` | yes | — |
 | A | Timeliness of surface | `ind:A8` | `A8` | yes | — |
 | A | M2M agent surface | `ind:A9` | `A9` | yes | — |
-| B | Variable-level semantics | `ind:B1` | `B1` | no | not a leg of any published matrix of the cycle of record |
-| B | Definitions surface | `ind:B2` | `B2` | no | not a leg of any published matrix of the cycle of record |
+| B | Variable-level semantics | `ind:B1` | `B1` | yes | — |
+| B | Definitions surface | `ind:B2` | `B2` | yes | — |
 | B | Methodology legibility | `ind:B3` | `B3` | yes | — |
-| B | Quality metadata | `ind:B4` | `B4` | no | not a leg of any published matrix of the cycle of record |
-| B | Semantic consistency | `ind:B5` | `B5` | no | not a leg of any published matrix of the cycle of record |
+| B | Quality metadata | `ind:B4` | `B4` | yes | — |
+| B | Semantic consistency | `ind:B5` | `B5` | yes | — |
 | D | License clarity | `ind:D1` | `D1` | yes | — |
-| D | Reuse permissions for AI | `ind:D2` | `D2` | no | not a leg of any published matrix of the cycle of record |
-| D | Provenance completeness | `ind:D3` | `D3` | no | not a leg of any published matrix of the cycle of record |
+| D | Reuse permissions for AI | `ind:D2` | `D2` | yes | — |
+| D | Provenance completeness | `ind:D3` | `D3` | yes | — |
 | D | No dark data | `ind:D4` | `D4` | yes | — |
 | E | Positive controls | `ind:E5` | `E5` | no | not a leg of any published matrix: it judges this instrument's own controls, not a publisher (its actions carry applies_to_publisher: false) |
 | F | Change legibility | `ind:F4` | `F4` | yes | — |
 | G | Uncertainty legibility (two legs, scored as a vector) | `ind:G1-D` | `G1-D` | no | withdrawn by DD-066, effective cycle 5 (this params_hash forward); not a leg of the cycle of record |
-| G | Authority metadata | `ind:G4` | `G4` | no | not a leg of any published matrix of the cycle of record |
+| G | Authority metadata | `ind:G4` | `G4` | yes | — |
 
 ## Readiness levels: a cumulative ladder
 
@@ -123,9 +123,10 @@ Generated from the record by `cc_tasks/2026-09-18_scoring_levels.md` decisions 3
 |---|---|---|---|
 | 0 | no scored criterion clear | — | — |
 | 1 | ACCESSIBLE | A | `A1`, `A10`, `A11-declared`, `A2`, `A3`, `A4`, `A5`, `A6`, `A8`, `A9` |
-| 2 | UNDERSTANDABLE | B | `B3` |
-| 3 | OPEN | D | `D1`, `D4` |
+| 2 | UNDERSTANDABLE | B | `B1`, `B2`, `B3`, `B4`, `B5` |
+| 3 | OPEN | D | `D1`, `D2`, `D3`, `D4` |
 | 4 | release engineering | F | `F4` |
+| 5 | FSS-derived constructs | G | `G4` |
 
 ### The rubric
 
@@ -133,9 +134,10 @@ One sentence per level, from the record's legs and the prescription layer's acti
 
 - Level 0: every body holds it. A body stays here while any scored leg of criterion A fails; one whose criterion A legs show no fail but an error or no row is reported as '0 (unobservable at 1)'.
 - Level 1, ACCESSIBLE (criterion A): a body holds it when all 10 scored legs of criterion A (A1, A10, A11-declared, A2, A3, A4, A5, A6, A8, A9) pass outright with no error row; a body at level 0 closes the gap through the 26 publisher actions on those legs, the cheapest per leg being A1: “Publish the product as a structured download beside the PDF” (days); A10: “Make the product's own deep link resolve” (weeks); A11-declared: “Permit, in robots.txt, the AI crawlers the product is meant to reach” (hours); A2: “Serve a parseable OpenAPI description where the API is documented” (days); A3: “Add a whole-product download beside the query builder” (days); A4: “Allow the product's data paths for the AI crawlers you intend to serve” (hours); A5: “List the product URL in the discovery file that is already served” (hours); A6: “Embed JSON-LD describing the product on the product page” (hours); A8: “Declare the product's vintage in the markup, not only in a file header” (hours); A9: “Publish a machine-first entry point for the product” (days).
-- Level 2, UNDERSTANDABLE (criterion B): a body holds it when it holds level 1 (criterion A) and the one scored leg of criterion B (B3) passes outright with no error row; a body at level 1 closes the gap through the 4 publisher actions on that leg, the cheapest per leg being B3: “Link the methodology from the product page” (hours).
-- Level 3, OPEN (criterion D): a body holds it when it holds level 2 (criteria A, B) and all 2 scored legs of criterion D (D1, D4) pass outright with no error row; a body at level 2 closes the gap through the 5 publisher actions on those legs, the cheapest per leg being D1: “Publish a machine-readable licence for the product” (hours); D4: “Add the product to the public data inventory already published” (hours).
+- Level 2, UNDERSTANDABLE (criterion B): a body holds it when it holds level 1 (criterion A) and all 5 scored legs of criterion B (B1, B2, B3, B4, B5) pass outright with no error row; a body at level 1 closes the gap through the 16 publisher actions on those legs, the cheapest per leg being B1: “Link the data dictionary from the product's catalog record” (hours); B2: “Give each linked defined term a code, a term set and a definition” (hours); B3: “Link the methodology from the product page” (hours); B4: “Publish the product's quality measurements as catalog metadata” (hours); B5: “Name the term set each term code belongs to” (hours).
+- Level 3, OPEN (criterion D): a body holds it when it holds level 2 (criteria A, B) and all 4 scored legs of criterion D (D1, D2, D3, D4) pass outright with no error row; a body at level 2 closes the gap through the 9 publisher actions on those legs, the cheapest per leg being D1: “Publish a machine-readable licence for the product” (hours); D2: “Declare the terms for AI training and AI input in robots.txt” (hours); D3: “Name the activity that generated the product in its catalog record” (hours); D4: “Add the product to the public data inventory already published” (hours).
 - Level 4, release engineering (criterion F): a body holds it when it holds level 3 (criteria A, B, D) and the one scored leg of criterion F (F4) passes outright with no error row; a body at level 3 closes the gap through the 3 publisher actions on that leg, the cheapest per leg being F4: “Carry a revision class on every changelog entry” (hours).
+- Level 5, FSS-derived constructs (criterion G): a body holds it when it holds level 4 (criteria A, B, D, F) and the one scored leg of criterion G (G4) passes outright with no error row; a body at level 4 closes the gap through the 2 publisher actions on that leg, the cheapest per leg being G4: “Carry `bureauCode` and `programCode` on the product's catalog record” (hours).
 
 ### Candidate indicators and the ladder
 

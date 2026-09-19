@@ -36,7 +36,7 @@ SECTIONS = REPO / "docs" / "reports" / "sections"
 #: cycle 4 by `cc_tasks/2026-09-11_l0_report_cycle4_revision.md` decision 1. This pair is the
 #: single place the report's cycle is written down for the tests; moving the report without
 #: moving it here is what makes a stale figure invisible.
-REPORT_CYCLE = "2026-09-10_rj2"
+REPORT_CYCLE = "2026-09-10_rj4"
 SOURCE_CYCLE = "2026-09-10"
 
 

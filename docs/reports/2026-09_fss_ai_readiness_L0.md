@@ -1,13 +1,15 @@
 # AI readiness of the federal statistical system: host-level findings
 
-**Version.** Snapshot cycle `scan_2026-09-10_rj2` · version `2026-09-10_rj2` · built from commit `6932a9ee5daa` on `2026-09-15` (UTC); the commit that publishes this build is that one's child. This document is a VIEW of data published beside it: the matrices as JSON and CSV, the per-check source appendix, and every Result quoted below with its value, its state and the artifact that generated it. The site index links all of them. **Licence.** The report and the data it is a view of are `CC-BY-4.0` (`LICENSE-DATA`); the code that produced them is `MIT` (`LICENSE`). Documents under corpus/ are third-party works, retained as evidence under their own terms: neither licence in this repository applies to them. **Standing.** This snapshot has been superseded on the event log by `scan_2026-09-10_rj3`, generation 3 of this cycle, which re-judged the same evidence: 739 of this snapshot's 739 findings have a successor, 0 of them move a verdict and 3 change only the sentence that explains one. No number this report publishes differs under that successor, which is why the report is not re-snapshotted on it (`DN-004 decision 1`); the build refuses if that ever stops being true.
+**Version.** Snapshot cycle `scan_2026-09-10_rj4` · version `2026-09-10_rj4` · built from commit `354108ace416` on `2026-09-19` (UTC); the commit that publishes this build is that one's child. This document is a VIEW of data published beside it: the matrices as JSON and CSV, the per-check source appendix, and every Result quoted below with its value, its state and the artifact that generated it. The site index links all of them. **Licence.** The report and the data it is a view of are `CC-BY-4.0` (`LICENSE-DATA`); the code that produced them is `MIT` (`LICENSE`). Documents under corpus/ are third-party works, retained as evidence under their own terms: neither licence in this repository applies to them. **Standing.** No later judgement of this cycle's evidence is on the event log: the snapshot is the current judgement of record.
 
 **Draft. 16 recognized bodies and three reference
 hosts, one cycle, one client identity.**
-Written from `cc_tasks/2026-09-09_report_draft.md` and revised to the cycle of 2026-09-10
-under `cc_tasks/2026-09-11_l0_report_cycle4_revision.md`. The snapshot is cycle
-`scan_2026-09-10`, the first over the complete frame, re-judged as `scan_2026-09-10_rj2`:
-the same stored observations under the rules current when this was written. Every number
+Written from `cc_tasks/2026-09-09_report_draft.md`, revised to the cycle of 2026-09-10
+under `cc_tasks/2026-09-11_l0_report_cycle4_revision.md` and re-snapshotted under
+`cc_tasks/2026-09-19_resnapshot_rj4.md`. The snapshot is cycle `scan_2026-09-10`, the first
+over the complete frame, re-judged as `scan_2026-09-10_rj4`: the same stored observations
+under the rules current when this was written, which judge seven product checks the earlier
+judgements of this cycle did not. Every number
 below is a registered Result quoted by name; nothing is typed into the prose.
 
 ## What was measured, and over what
@@ -46,7 +48,7 @@ The cycle issued 2684 requests across
 35 netlocs, which is more netlocs than the
 target list names. The excess is not an accident and is discussed under what the matrix cannot
 see. It produced 2718 observations and
-739 findings, and every finding re-derives byte for
+1009 findings, and every finding re-derives byte for
 byte from its stored observations. The requests and the observations are the measured cycle's
 and carry its name; the findings are the re-judgement's, over those same observations, because
 a re-judgement opens no socket.
@@ -221,39 +223,43 @@ refused rather than dropped: restricting the instrument to the agencies that per
 make the frame a function of who answers. The rest came live in this cycle and are measured
 below.
 
-| Agency | Surface | A1 | A2 | A3 | A6 | A8 | A9 | B3 | D1 | D4 | F4 |
-|---|---|---|---|---|---|---|---|---|---|---|---|
-| BEA | bea-flagship-1-interactive-data | fail | fail | pass | fail | fail | fail | pass | fail | fail | fail |
-| BEA | bea-flagship-2-news-releases | fail | fail | pass | fail | fail | fail | pass | fail | fail | fail |
-| BJS | bjs-flagship-1-data-by-topic | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail |
-| BJS | bjs-flagship-2-death-in-custody-reporting-act | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail |
-| BLS | flagship:www.bls.gov/cpi/ | error | error | error | error | error | error | error | error | error | error |
-| BTS | flagship:www.bts.gov/topics/national-transportation-statistics | error | error | error | error | error | error | error | error | error | error |
-| CENSUS | census-flagship-1-surveys-programs | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail |
-| CENSUS | census-flagship-2-american-community-survey-acs | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail |
-| DRSMSU | flagship:www.federalreserve.gov/econres/scfindex.htm | fail | fail | fail | pass | pass | fail | fail | fail | pass | fail |
-| EIA | eia-flagship-1-open-data | error | fail | error | error | error | fail | error | fail | fail | fail |
-| ERS | ers-flagship-1-ag-and-food-statistics-charting-the-essentials | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail |
-| ERS | ers-flagship-2-agricultural-baseline-database | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail |
-| NAHMSAPHIS | flagship:www.aphis.usda.gov/aphis/ourfocus/animalhealth/monitoring-and-surveillance/nahms | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail |
-| NASS | nass-flagship-1-data-statistics | fail | fail | error | fail | fail | fail | fail | fail | fail | fail |
-| NASS | nass-flagship-2-livestock-county-estimates | fail | fail | error | fail | fail | fail | fail | fail | fail | fail |
-| NCES | flagship:nces.ed.gov/programs/digest/ | fail | fail | pass | fail | fail | fail | fail | fail | fail | fail |
-| NCHS | nchs-flagship-1-data-briefs | fail | fail | error | fail | fail | fail | fail | fail | fail | fail |
-| NCHS | nchs-flagship-2-early-releases-of-selected-estimates-from-the-nhis | fail | fail | pass | fail | fail | fail | fail | fail | fail | fail |
-| NCSES | ncses-flagship-1-annual-business-survey-2024-data-year-2023 | fail | fail | fail | fail | fail | fail | pass | fail | fail | fail |
-| ORES | flagship:www.ssa.gov/policy/docs/statcomps/supplement/ | error | error | error | error | error | error | error | error | error | error |
-| SAMHSACBHS | flagship:www.samhsa.gov/data/data-we-collect/nsduh-national-survey-drug-use-and-health | fail | fail | fail | fail | fail | fail | fail | fail | error | fail |
-| SOI | soi-flagship-1-individual-tax-statistics | fail | fail | error | fail | fail | fail | fail | fail | fail | fail |
-| SOI | soi-flagship-2-business-tax-statistics | fail | fail | error | fail | fail | fail | fail | fail | fail | fail |
+| Agency | Surface | A1 | A2 | A3 | A6 | A8 | A9 | B3 | D1 | D4 | F4 | B1 | B2 | B4 | B5 | D2 | D3 | G4 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| BEA | bea-flagship-1-interactive-data | fail | fail | pass | fail | fail | fail | pass | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail |
+| BEA | bea-flagship-2-news-releases | fail | fail | pass | fail | fail | fail | pass | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail |
+| BJS | bjs-flagship-1-data-by-topic | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail |
+| BJS | bjs-flagship-2-death-in-custody-reporting-act | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail |
+| BLS | flagship:www.bls.gov/cpi/ | error | error | error | error | error | error | error | error | error | error | error | error | error | error | error | error | error |
+| BTS | flagship:www.bts.gov/topics/national-transportation-statistics | error | error | error | error | error | error | error | error | error | error | error | error | error | error | error | error | error |
+| CENSUS | census-flagship-1-surveys-programs | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail |
+| CENSUS | census-flagship-2-american-community-survey-acs | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail |
+| DRSMSU | flagship:www.federalreserve.gov/econres/scfindex.htm | fail | fail | fail | pass | pass | fail | fail | fail | pass | fail | fail | fail | fail | fail | fail | fail | pass |
+| EIA | eia-flagship-1-open-data | error | fail | error | error | error | fail | error | fail | fail | fail | error | error | fail | error | fail | fail | fail |
+| ERS | ers-flagship-1-ag-and-food-statistics-charting-the-essentials | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail |
+| ERS | ers-flagship-2-agricultural-baseline-database | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail |
+| NAHMSAPHIS | flagship:www.aphis.usda.gov/aphis/ourfocus/animalhealth/monitoring-and-surveillance/nahms | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail |
+| NASS | nass-flagship-1-data-statistics | fail | fail | error | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail |
+| NASS | nass-flagship-2-livestock-county-estimates | fail | fail | error | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail |
+| NCES | flagship:nces.ed.gov/programs/digest/ | fail | fail | pass | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail |
+| NCHS | nchs-flagship-1-data-briefs | fail | fail | error | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail |
+| NCHS | nchs-flagship-2-early-releases-of-selected-estimates-from-the-nhis | fail | fail | pass | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail |
+| NCSES | ncses-flagship-1-annual-business-survey-2024-data-year-2023 | fail | fail | fail | fail | fail | fail | pass | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail |
+| ORES | flagship:www.ssa.gov/policy/docs/statcomps/supplement/ | error | error | error | error | error | error | error | error | error | error | error | error | error | error | error | error | error |
+| SAMHSACBHS | flagship:www.samhsa.gov/data/data-we-collect/nsduh-national-survey-drug-use-and-health | fail | fail | fail | fail | fail | fail | fail | fail | error | fail | error | fail | error | fail | fail | error | error |
+| SOI | soi-flagship-1-individual-tax-statistics | fail | fail | error | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail |
+| SOI | soi-flagship-2-business-tax-statistics | fail | fail | error | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail | fail |
 
 Across the 23 declared
-surfaces, 5 of the
-10 product checks return not a single pass.
+surfaces, 11 of the
+17 product checks return not a single pass.
 None of these is present on any declared flagship surface measured in this cycle: the product
 offered as structured data rather than as a document, a documented API with its auth model and
 its rate limits, a machine-first entry point an agent could address, a machine-readable
-licence, or a changelog per release.
+licence, a changelog per release, variable-level metadata, concept definitions linked from the
+variables, data-quality attributes published as metadata rather than prose, terms that address
+model training and retrieval, and published source lineage. The last of the checks at zero is
+asked of the body rather than of a surface: whether the same concept carries the same
+identifier across a body's products, and no body answers it yes.
 
 The others are not at zero and are close to it. A bulk download of the whole product is linked
 from 4 of
@@ -269,7 +275,10 @@ resolvable pointer to the current vintage and an entry in a public inventory are
 19 and
 1 of
 19 surfaces, and the matrix above
-shows all three on the same row.
+shows all three on the same row. That row carries the only pass on any check this judgement
+added: the issuing authority and its programme carried as structured metadata in the product's
+catalogue record, present on 1 of
+19 surfaces.
 
 A zero at this denominator is not proof of universal absence, and the report will not let it be
 read as one. With 0 passes in
@@ -339,14 +348,17 @@ having if nothing was quietly swept into it.
 
 ## What moved since the previous cycle, and what moved it
 
-The frame moved and the instrument held still. The previous cycle is this one's predecessor
-re-judged under the same rules, so no row on the figure below is marked as a rule change and
-every difference on it is the hosts or the frame. What changed between them is the frame: the
-bodies that had declared no product now have one, and the product page of this report is about
+The frame moved, and this time the instrument moved too. The previous cycle is drawn as it
+was judged under an earlier generation of the rules, and one check on the figure below changed
+rule between that judgement and this one: the public-inventory check, marked as a rule change,
+so a difference on its row is the instrument and not the host. The checks this judgement added
+were never asked of the previous cycle and have no point on its side. Everywhere else the
+difference is the hosts or the frame, and what changed is the frame: the bodies that had
+declared no product now have one, and the product page of this report is about
 23 declared surfaces where the
 previous one was about a minority of them.
 
-![Pass rate per check, previous cycle beside this one](assessment/harness/scan/figures/scan_2026-09-10_rj2/cycle_over_cycle.svg)
+![Pass rate per check, previous cycle beside this one](assessment/harness/scan/figures/scan_2026-09-10_rj4/cycle_over_cycle.svg)
 
 The figure draws no line and no arrow between the two points. A difference between two
 measurements is not a direction of travel, and two cycles taken a day apart on federal
@@ -362,7 +374,7 @@ corrections turned each of those into `error`. That is why the `error` counts in
 larger than a naive reading of an earlier cycle would suggest, and why they should be.
 
 **The last of those corrections cost this report its strongest product number, and that is the
-correction working.** Under the previous judgement of this same cycle, the bulk-download check
+correction working.** Under the first re-judgement of this same cycle, the bulk-download check
 was answered over
 19 declared flagship surfaces; it
 is now answered over 14. The
@@ -456,7 +468,7 @@ hand-written expectation was wrong once.
 | A1 | RULE-A1-v4 |
 | A10 | RULE-A10-v3 |
 | A11-declared | RULE-A11-declared-v2 |
-| A12 | RULE-A12-v2 |
+| A12 | RULE-A12-v3 |
 | A2 | RULE-A2-v3 |
 | A3 | RULE-A3-v6 |
 | A4 | RULE-A4-v1 |
@@ -464,11 +476,18 @@ hand-written expectation was wrong once.
 | A6 | RULE-A6-v2 |
 | A8 | RULE-A8-v4 |
 | A9 | RULE-A9-v1 |
+| B1 | RULE-B1-v2 |
+| B2 | RULE-B2-v1 |
 | B3 | RULE-B3-v3 |
+| B4 | RULE-B4-v1 |
+| B5 | RULE-B5-v1 |
 | D1 | RULE-D1-v3 |
-| D4 | RULE-D4-v2 |
+| D2 | RULE-D2-v1 |
+| D3 | RULE-D3-v1 |
+| D4 | RULE-D4-v3 |
 | F4 | RULE-F4-v3 |
 | G1-D | RULE-G1-D-v1 |
+| G4 | RULE-G4-v1 |
 
 **Requests issued, per netloc.**
 
@@ -590,15 +609,17 @@ One row per check and admitted source: the check as the report names it, the fra
 | D4 | D4 · No dark data | U.S. General Services Administration / Data.gov. *DCAT-US Schema v1.1 (Project Open Data Metadata Schema) - resources.data.gov*. 2026. <https://resources.data.gov/resources/dcat-us/>. | `dcat-us-1-1-schema` | that metadata schema, which states the listing requirement on its face: "guidance to support the use of the Project Open Data metadata to list agency datasets and application programming interfaces as hosted at agency.gov/data", and "the catalog file for each agency should list all of the agency's datasets that can be made public, regardless of whether they are distributed by a file download or a Web API"; its Catalog fields section describes "the entire Public Data Listing catalog file" |
 | D4 | D4 · No dark data | 115th Congress. *Foundations for Evidence-Based Policymaking Act of 2018 (Evidence Act)*. 2019. <https://www.govinfo.gov/app/details/PLAW-115publ435>. | `foundations-for-evidence-based-policymaking-act-of-2018-evid` | Title II, the OPEN Government Data Act, enacting 44 U.S.C. 3511: subsection a paragraph 1 requires each agency to "develop and maintain a comprehensive data inventory that accounts for all data assets created by, collected by, under the control or direction of, or maintained by the agency"; subsection a paragraph 3 requires that inventory updated "not later than 90 days" after a data asset is created or identified; subsection b requires public data assets be submitted "for inclusion in the Federal data catalogue"; subsection c paragraph 1 makes that catalogue "a single public interface online as a point of entry" |
 | D4 | D4 · No dark data | Office of Management and Budget. *M-25-05: Phase 2 Implementation of the Evidence Act — Open Government Data Access and Management*. 2025. <https://bidenwhitehouse.archives.gov/wp-content/uploads/2025/01/M-25-05-Phase-2-Implementation-of-the-Foundations-for-Evidence-Based-Policymaking-Act-of-2018-Open-Government-Data-Access-and-Management-Guidance.pdf>. | `m-25-05-phase-2-implementation-of-the-evidence-act-open-gove` | section 4a iii, public dissemination: agencies "must submit their comprehensive data inventory to the Federal Data Catalog as a data asset" and "host it publicly on the agency's website at the address: www.agency.gov/data.json", repeated at section 5b ii with the OMB-approved metadata schema |
+| G4 | G4 · Authority metadata | Prell M; Chapman C; Adeshiyan S; Fixler D; Garin T; Mirel L; Phipps P. *FCSM 19-01: Transparent Reporting for Integrated Data Quality*. 2019. <https://statspolicy.gov/assets/fcsm/files/docs/Transparent_Reporting_FCSM_19_01_092719.pdf>. | `fcsm-19-01-transparent-reporting-for-integrated-data-quality` |  |
+| G4 | G4 · Authority metadata | Iwig W; Berning M; Marck P; Prell M. *Statistical Policy Working Paper 46: Data Quality Assessment Tool for Administrative Data*. 2013. <https://statspolicy.gov/assets/fcsm/files/docs/DataQualityAssessmentTool.pdf>. | `statistical-policy-working-paper-46-data-quality-assessment` |  |
 
-**Files beside this report.** `scan_matrix_tierA_2026-09-10_rj2.csv` and `.json`, the
-host-level matrix; `scan_matrix_tierC_2026-09-10_rj2.*`, the reference hosts;
-`scan_matrix_product_2026-09-10_rj2.*`, the product matrix. Every row carries its Finding
+**Files beside this report.** `scan_matrix_tierA_2026-09-10_rj4.csv` and `.json`, the
+host-level matrix; `scan_matrix_tierC_2026-09-10_rj4.*`, the reference hosts;
+`scan_matrix_product_2026-09-10_rj4.*`, the product matrix. Every row carries its Finding
 identities.
 
 **Provenance.** Cycle `scan_2026-09-10`, parameter hash
 `4e0a92ba19ab769bb98b3a4a0c68640fbe465a04eaaec4aa6f2f0f41dc75c0df`, judged as
-`scan_2026-09-10_rj2`: the same stored observations under the rules current on 2026-09-11, with
+`scan_2026-09-10_rj4`: the same stored observations under the rules current on 2026-09-18, with
 every superseded judgement still registered under its own name. The event log is the source of
 truth; the graph and the matrices are projections of it and are rebuilt by replay. Design
 decisions DD-059 (the frame and the tier separation), DD-060 (one client identity), DD-061

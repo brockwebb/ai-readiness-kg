@@ -157,7 +157,7 @@ One real call each, with the answer the tool gave. Long lists are cut to 2 entri
     ]
   },
   "cycle_of_record": {
-    "cycle": "scan_2026-09-10_rj2",
+    "cycle": "scan_2026-09-10_rj4",
     "measured": "2026-09-10",
     "kind": "rejudged",
     "bodies": [
@@ -169,7 +169,7 @@ One real call each, with the answer the tool gave. Long lists are cut to 2 entri
     "matrices": [
       {
         "kind": "tierA",
-        "path": "docs/reports/scan_matrix_tierA_2026-09-10_rj2.json",
+        "path": "docs/reports/scan_matrix_tierA_2026-09-10_rj4.json",
         "legs": [
           "A4",
           "A5",
@@ -179,11 +179,11 @@ One real call each, with the answer the tool gave. Long lists are cut to 2 entri
       },
       {
         "kind": "product",
-        "path": "docs/reports/scan_matrix_product_2026-09-10_rj2.json",
+        "path": "docs/reports/scan_matrix_product_2026-09-10_rj4.json",
         "legs": [
           "A1",
           "A2",
-          "… 8 more (elided by mcp/airkg_doc.py, not by the tool)"
+          "… 15 more (elided by mcp/airkg_doc.py, not by the tool)"
         ],
         "rows": 23
       }
@@ -196,17 +196,17 @@ One real call each, with the answer the tool gave. Long lists are cut to 2 entri
       },
       {
         "kind": "payload",
-        "path": "state/scan_2026-09-10_rj2.json",
+        "path": "state/scan_2026-09-10_rj4.json",
         "key": "derived_from"
       },
       {
         "kind": "matrix",
-        "path": "docs/reports/scan_matrix_tierA_2026-09-10_rj2.json",
+        "path": "docs/reports/scan_matrix_tierA_2026-09-10_rj4.json",
         "cell": "BEA/A4"
       },
       {
         "kind": "matrix",
-        "path": "docs/reports/scan_matrix_product_2026-09-10_rj2.json",
+        "path": "docs/reports/scan_matrix_product_2026-09-10_rj4.json",
         "cell": "BEA/A1"
       }
     ]
@@ -362,7 +362,7 @@ One real call each, with the answer the tool gave. Long lists are cut to 2 entri
     }
   ],
   "cycle_of_record": {
-    "cycle": "scan_2026-09-10_rj2",
+    "cycle": "scan_2026-09-10_rj4",
     "locators": [
       {
         "kind": "config",
@@ -373,7 +373,7 @@ One real call each, with the answer the tool gave. Long lists are cut to 2 entri
         "kind": "graph",
         "label": "Finding",
         "id_property": "cycle",
-        "id": "scan_2026-09-10_rj2"
+        "id": "scan_2026-09-10_rj4"
       }
     ],
     "verdicts": {
@@ -392,18 +392,34 @@ One real call each, with the answer the tool gave. Long lists are cut to 2 entri
 ```json
 {
   "body": "NCHS",
-  "cycle": "scan_2026-09-10_rj2",
-  "n_judged": 25,
-  "n_failing": 21,
-  "summary": "21 failing of 25 judged on scan_2026-09-10_rj2; 16 bodies are on this cycle",
+  "cycle": "scan_2026-09-10_rj4",
+  "n_judged": 39,
+  "n_failing": 35,
+  "summary": "35 failing of 39 judged on scan_2026-09-10_rj4; 16 bodies are on this cycle. NCHS ranks 13 of 13 (hierarchical), and the leg that would move it most is F4: 0 pass of 2 judged rows on F4; were that leg's verdicts reversed it would rank 2.",
+  "score": {
+    "score": 0.04,
+    "rank": 13,
+    "flat": 0.09523809523809523,
+    "flat_rank": 13,
+    "of": 13,
+    "concentration": {
+      "leg": "F4",
+      "pass": 0,
+      "judged": 2,
+      "rank": 13,
+      "rank_if_reversed": 2,
+      "of": 13,
+      "sentence": "NCHS ranks 13 of 13 (hierarchical), and the leg that would move it most is F4: 0 pass of 2 judged rows on F4; were that leg's verdicts reversed it would rank 2."
+    }
+  },
   "legs": [
     {
       "leg": "A4",
       "verdict": "pass",
       "surface": "home:www.cdc.gov",
       "url": "https://www.cdc.gov/nchs/index.htm",
-      "matrix": "docs/reports/scan_matrix_tierA_2026-09-10_rj2.json",
-      "finding_id": "fnd_6bc41a5d60eb49319167f0fb",
+      "matrix": "docs/reports/scan_matrix_tierA_2026-09-10_rj4.json",
+      "finding_id": "fnd_736ed34942f7874a6c712ba5",
       "reason": "robots.txt allows the product path for all 8 AI-crawler user agents",
       "rule_id": "RULE-A4-v1",
       "evidence": [
@@ -433,14 +449,14 @@ One real call each, with the answer the tool gave. Long lists are cut to 2 entri
       "locators": [
         {
           "kind": "matrix",
-          "path": "docs/reports/scan_matrix_tierA_2026-09-10_rj2.json",
+          "path": "docs/reports/scan_matrix_tierA_2026-09-10_rj4.json",
           "cell": "NCHS/A4"
         },
         {
           "kind": "graph",
           "label": "Finding",
           "id_property": "finding_id",
-          "id": "fnd_6bc41a5d60eb49319167f0fb"
+          "id": "fnd_736ed34942f7874a6c712ba5"
         }
       ]
     },
@@ -449,8 +465,8 @@ One real call each, with the answer the tool gave. Long lists are cut to 2 entri
       "verdict": "fail",
       "surface": "home:www.cdc.gov",
       "url": "https://www.cdc.gov/nchs/index.htm",
-      "matrix": "docs/reports/scan_matrix_tierA_2026-09-10_rj2.json",
-      "finding_id": "fnd_38617cefaa483190125df4a4",
+      "matrix": "docs/reports/scan_matrix_tierA_2026-09-10_rj4.json",
+      "finding_id": "fnd_d5d3cba6079d3a8b665e308f",
       "reason": "discovery files served (https://www.cdc.gov/wcms-auto-sitemap-index.xml) but none lists the product URL",
       "rule_id": "RULE-A5-v2",
       "evidence": [
@@ -503,24 +519,29 @@ One real call each, with the answer the tool gave. Long lists are cut to 2 entri
       "locators": [
         {
           "kind": "matrix",
-          "path": "docs/reports/scan_matrix_tierA_2026-09-10_rj2.json",
+          "path": "docs/reports/scan_matrix_tierA_2026-09-10_rj4.json",
           "cell": "NCHS/A5"
         },
         {
           "kind": "graph",
           "label": "Finding",
           "id_property": "finding_id",
-          "id": "fnd_38617cefaa483190125df4a4"
+          "id": "fnd_d5d3cba6079d3a8b665e308f"
         }
       ]
     },
-    "… 23 more (elided by mcp/airkg_doc.py, not by the tool)"
+    "… 37 more (elided by mcp/airkg_doc.py, not by the tool)"
   ],
   "locators": [
     {
       "kind": "config",
       "path": "docs/reports/publication.yaml",
       "key": "snapshot_cycle"
+    },
+    {
+      "kind": "source",
+      "path": "scripts/score.py",
+      "symbol": "def concentration"
     }
   ]
 }
@@ -532,13 +553,13 @@ One real call each, with the answer the tool gave. Long lists are cut to 2 entri
 
 ```json
 {
-  "cycle": "scan_2026-09-10_rj2",
+  "cycle": "scan_2026-09-10_rj4",
   "body": "NCHS",
   "leg": null,
   "failing_legs": [
     "A1",
     "A10",
-    "… 10 more (elided by mcp/airkg_doc.py, not by the tool)"
+    "… 17 more (elided by mcp/airkg_doc.py, not by the tool)"
   ],
   "bodies_on_cycle": 16,
   "notional": "(notional)",
@@ -567,7 +588,7 @@ One real call each, with the answer the tool gave. Long lists are cut to 2 entri
       "value": {
         "bodies_failing_now": 13,
         "bodies_on_the_cycle_of_record": 16,
-        "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj2.json (cycle `scan_2026-09-10_rj2`, declared by docs/reports/publication.yaml:snapshot_cycle): 13 of 16 bodies carry the verdict `fail` on leg `A2`",
+        "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj4.json (cycle `scan_2026-09-10_rj4`, declared by docs/reports/publication.yaml:snapshot_cycle): 13 of 16 bodies carry the verdict `fail` on leg `A2`",
         "constructs_served": [
           "Programmatic access"
         ],
@@ -639,7 +660,7 @@ One real call each, with the answer the tool gave. Long lists are cut to 2 entri
       "value": {
         "bodies_failing_now": 13,
         "bodies_on_the_cycle_of_record": 16,
-        "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj2.json (cycle `scan_2026-09-10_rj2`, declared by docs/reports/publication.yaml:snapshot_cycle): 13 of 16 bodies carry the verdict `fail` on leg `A2`",
+        "bodies_failing_now_source": "docs/reports/scan_matrix_product_2026-09-10_rj4.json (cycle `scan_2026-09-10_rj4`, declared by docs/reports/publication.yaml:snapshot_cycle): 13 of 16 bodies carry the verdict `fail` on leg `A2`",
         "constructs_served": [
           "Programmatic access"
         ],
@@ -683,7 +704,7 @@ One real call each, with the answer the tool gave. Long lists are cut to 2 entri
         }
       ]
     },
-    "… 31 more (elided by mcp/airkg_doc.py, not by the tool)"
+    "… 49 more (elided by mcp/airkg_doc.py, not by the tool)"
   ],
   "locators": [
     {
@@ -923,20 +944,20 @@ One real call each, with the answer the tool gave. Long lists are cut to 2 entri
 }
 ```
 
-### `get_evidence(finding_id='fnd_6bc41a5d60eb49319167f0fb')`
+### `get_evidence(finding_id='fnd_736ed34942f7874a6c712ba5')`
 
 
 
 ```json
 {
-  "finding_id": "fnd_6bc41a5d60eb49319167f0fb",
+  "finding_id": "fnd_736ed34942f7874a6c712ba5",
   "verdict": "pass",
   "reason": "robots.txt allows the product path for all 8 AI-crawler user agents",
   "rule_id": "RULE-A4-v1",
   "rule_version": "v1",
   "indicator_code": "A4",
   "target_doc_id": "home:www.cdc.gov",
-  "current": false,
+  "current": true,
   "evidence_unretained": false,
   "observations": [
     {
@@ -968,7 +989,7 @@ One real call each, with the answer the tool gave. Long lists are cut to 2 entri
       "kind": "graph",
       "label": "Finding",
       "id_property": "finding_id",
-      "id": "fnd_6bc41a5d60eb49319167f0fb"
+      "id": "fnd_736ed34942f7874a6c712ba5"
     }
   ]
 }
@@ -1078,62 +1099,62 @@ One real call each, with the answer the tool gave. Long lists are cut to 2 entri
 
 ```json
 {
-  "cycle": "scan_2026-09-10_rj2",
+  "cycle": "scan_2026-09-10_rj4",
   "kind": "rejudged",
   "derived_from": "scan_2026-09-10",
   "derived_from_params_hash": "4e0a92ba19ab769bb98b3a4a0c68640fbe465a04eaaec4aa6f2f0f41dc75c0df",
-  "judgement_params_hash": "d3499218ef48273597ec67a6a81ae9c966e5801cf66915fbc106403c6da94624",
+  "judgement_params_hash": "0ef2e016fea2611f1bd770925cfe7124ae0baf9e14fe42512836bb712027640e",
   "hash_meaning": "`derived_from_params_hash` identifies the COLLECTION the evidence came from; `judgement_params_hash` identifies this judgement of it. A re-judgement re-reads stored observations and fetches nothing.",
   "rejudged_note": "Findings only. Every Finding cites the `obs_id`s scan_2026-09-10 recorded; not one byte was re-fetched and not one Observation was created. The evidence is that cycle's, the judgement is this one's.",
   "rules": [
     "RULE-A1-v4",
     "RULE-A10-v3",
-    "… 14 more (elided by mcp/airkg_doc.py, not by the tool)"
+    "… 21 more (elided by mcp/airkg_doc.py, not by the tool)"
   ],
   "legs_judged": [
     "A1",
     "A10",
-    "… 14 more (elided by mcp/airkg_doc.py, not by the tool)"
+    "… 21 more (elided by mcp/airkg_doc.py, not by the tool)"
   ],
   "legs_not_judged": {
     "E5": "E5 judges the CYCLE, and the control set changed under v4 (a fifth fixture): re-judging the source cycle's four-fixture record against a five-fixture expectation would report a change in the instrument as a failure of the cycle. This task's own control gate is recorded as `control_gate`."
   },
   "verdict_counts": {
-    "pass": 161,
-    "fail": 459,
+    "pass": 160,
+    "fail": 682,
     "not_applicable": 0,
-    "error": 119
+    "error": 167
   },
   "matrices": [
     {
       "kind": "tierA",
-      "path": "docs/reports/scan_matrix_tierA_2026-09-10_rj2.json",
+      "path": "docs/reports/scan_matrix_tierA_2026-09-10_rj4.json",
       "legs": [
         "A4",
         "A5",
         "… 3 more (elided by mcp/airkg_doc.py, not by the tool)"
       ],
       "rows": 16,
-      "params_hash": "d3499218ef48273597ec67a6a81ae9c966e5801cf66915fbc106403c6da94624",
+      "params_hash": "0ef2e016fea2611f1bd770925cfe7124ae0baf9e14fe42512836bb712027640e",
       "locator": {
         "kind": "matrix",
-        "path": "docs/reports/scan_matrix_tierA_2026-09-10_rj2.json",
+        "path": "docs/reports/scan_matrix_tierA_2026-09-10_rj4.json",
         "cell": "BEA/A4"
       }
     },
     {
       "kind": "product",
-      "path": "docs/reports/scan_matrix_product_2026-09-10_rj2.json",
+      "path": "docs/reports/scan_matrix_product_2026-09-10_rj4.json",
       "legs": [
         "A1",
         "A2",
-        "… 8 more (elided by mcp/airkg_doc.py, not by the tool)"
+        "… 15 more (elided by mcp/airkg_doc.py, not by the tool)"
       ],
       "rows": 23,
-      "params_hash": "d3499218ef48273597ec67a6a81ae9c966e5801cf66915fbc106403c6da94624",
+      "params_hash": "0ef2e016fea2611f1bd770925cfe7124ae0baf9e14fe42512836bb712027640e",
       "locator": {
         "kind": "matrix",
-        "path": "docs/reports/scan_matrix_product_2026-09-10_rj2.json",
+        "path": "docs/reports/scan_matrix_product_2026-09-10_rj4.json",
         "cell": "BEA/A1"
       }
     }
@@ -1146,37 +1167,23 @@ One real call each, with the answer the tool gave. Long lists are cut to 2 entri
     },
     {
       "kind": "payload",
-      "path": "state/scan_2026-09-10_rj2.json",
+      "path": "state/scan_2026-09-10_rj4.json",
       "key": "derived_from_params_hash"
     },
     {
       "kind": "payload",
-      "path": "state/scan_2026-09-10_rj2.json",
+      "path": "state/scan_2026-09-10_rj4.json",
       "key": "params_hash"
     }
   ],
   "supersession": {
-    "snapshot": "scan_2026-09-10_rj2",
-    "snapshot_findings": 739,
-    "successor": "scan_2026-09-10_rj3",
-    "successor_generation": 3,
-    "successor_kind": "rejudged",
-    "superseded_findings": 739,
-    "verdict_moves": 0,
-    "reason_only_changes": 3,
-    "line": "**Standing.** This snapshot has been superseded on the event log by `scan_2026-09-10_rj3`, generation 3 of this cycle, which re-judged the same evidence: 739 of this snapshot's 739 findings have a successor, 0 of them move a verdict and 3 change only the sentence that explains one. No number this report publishes diffe… [468 chars]",
+    "line": "**Standing.** No later judgement of this cycle's evidence is on the event log: the snapshot is the current judgement of record.",
     "decision": "DN-004 decision 1",
     "locators": [
       {
         "kind": "source",
         "path": "scripts/snapshot_successor.py",
         "symbol": "successor_info"
-      },
-      {
-        "kind": "graph",
-        "label": "Finding",
-        "id_property": "cycle",
-        "id": "scan_2026-09-10_rj3"
       }
     ]
   }

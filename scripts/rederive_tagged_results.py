@@ -74,11 +74,20 @@ SECTIONS = REPO / "docs" / "reports" / "sections"
 #: NAME is taken; which field the prose quotes does not change which Result must re-derive.
 TAG = re.compile(r"\{\{result:([^:}]+):[^}]*\}\}")
 
-#: The cycle whose re-judgement is the report's snapshot, and the earlier re-judgement two of
-#: its numbers still quote. Read from the tags themselves would be circular (a name is not a
-#: cycle), so they are named here — and asserted against the tagged set below, which is what
-#: stops this pair going stale silently.
-CYCLE_RJ2 = "scan_2026-09-10_rj2"
+#: The report's snapshot, READ from `docs/reports/publication.yaml:snapshot_cycle` — the one
+#: declaration every other consumer reads — and the earlier re-judgement two of its numbers
+#: still quote. Until `cc_tasks/2026-09-19_resnapshot_rj4.md` the snapshot was typed here as
+#: `scan_2026-09-10_rj2`, a second declaration of the snapshot that a re-snapshot would have
+#: had to remember to edit; the assertion in `main` that the report tags something from each
+#: cycle is what stops the pair going stale silently. Reading from the tags themselves would be
+#: circular (a name is not a cycle).
+def _snapshot() -> str:
+    import yaml
+    return yaml.safe_load((REPO / "docs" / "reports" / "publication.yaml")
+                          .read_text(encoding="utf-8"))["snapshot_cycle"]
+
+
+SNAPSHOT = _snapshot()
 CYCLE_RJ1 = "scan_2026-09-10_rj1"
 
 
@@ -375,12 +384,12 @@ def rederive_preflight(captured: Captured) -> None:
 
 def rederive_all() -> tuple:
     captured = Captured()
-    # rj1 FIRST and into a temp tree, so the shipped fragments end the run at rj2.
+    # rj1 FIRST and into a temp tree, so the shipped fragments end the run at the snapshot.
     rederive_matrices_rj1(captured)
-    drive("build_l0_matrices", ["--cycle", CYCLE_RJ2], captured)
-    drive("scan_report", ["--cycle", CYCLE_RJ2], captured)
+    drive("build_l0_matrices", ["--cycle", SNAPSHOT], captured)
+    drive("scan_report", ["--cycle", SNAPSHOT], captured)
     ephemeral = rederive_ephemeral(captured)
-    drive("register_l0_report_results", ["--cycle", CYCLE_RJ2], captured)
+    drive("register_l0_report_results", ["--cycle", SNAPSHOT], captured)
     drive("register_l0_report_results", [], captured)
     drive("register_frame_v5_results", [], captured)
     drive("register_esip_crosswalk_results", [], captured)
@@ -398,7 +407,7 @@ def main(argv=None) -> int:
 
     names = tagged_names()
     reg = registered(names)
-    for cyc in (CYCLE_RJ1, CYCLE_RJ2):
+    for cyc in (CYCLE_RJ1, SNAPSHOT):
         suffix = cyc[len("scan_"):]
         if not any(n.endswith(suffix) for n in names):
             raise SystemExit(

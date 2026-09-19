@@ -115,7 +115,11 @@ def test_the_report_carries_the_supersession_line_the_query_answers(live, succ, 
 def test_the_line_names_the_successor_the_graph_names(live, snapshot, succ, report_md):
     """The cheap sanity check the line exists to make cheap: a reader of the report can see the
     successor's name without opening the graph, and it is the successor the graph holds."""
-    assert live, f"{snapshot} has no successor on the graph; this file's premise has changed"
+    if not live:
+        # The snapshot IS the newest judgement (`cc_tasks/2026-09-19_resnapshot_rj4.md`): the
+        # report says so, and names no successor because the graph holds none.
+        assert "No later judgement of this cycle's evidence is on the event log" in report_md
+        return
     assert live["successor"] in report_md
     assert live["successor"] != snapshot
 
@@ -127,7 +131,7 @@ def test_the_lines_numerals_all_came_from_the_graph(live, succ):
     into the report's title page."""
     succ.set_value_marker(lambda t: t)
     text = succ.supersession_line(live)
-    from_query = {str(live[k]) for k in ("snapshot_findings", "successor_generation",
+    from_query = {str(live.get(k)) for k in ("snapshot_findings", "successor_generation",
                                          "superseded_findings", "verdict_moves",
                                          "reason_only_changes")}
     # The cycle names and the decision reference are inside backticks, which the lint reads as
@@ -177,6 +181,12 @@ def test_results_tagged_carries_the_same_fields_as_the_line(live, snapshot):
     doc = json.loads((REPO / "docs" / "data" / "results_tagged.json").read_text("utf-8"))
     assert doc["snapshot_cycle"] == snapshot
     standing = doc["snapshot_standing"]
+    if not live:
+        # No successor: the file says so in the same fields, and no comparison was made.
+        assert standing["successor"] is None
+        assert doc["successor_moves_no_published_number"] is None
+        assert doc["successor_comparison"] is None
+        return
     for k in ("successor", "successor_generation", "superseded_findings", "verdict_moves",
               "reason_only_changes", "snapshot_findings"):
         assert standing[k] == live[k], f"{k}: file says {standing[k]}, graph says {live[k]}"
@@ -191,9 +201,13 @@ def test_the_comparison_covers_every_tagged_result_of_the_snapshot_cycle(succ, s
     """The closure that makes "nothing moved" mean anything. Every `{{result:...}}` the report
     quotes that carries this cycle's suffix is recomputed under the successor; one that is not
     is reported as UNCOVERED and refuses the build."""
-    cmp_ = succ.check(snapshot)["comparison"]
+    standing = succ.check(snapshot)
+    cmp_ = standing["comparison"]
     if cmp_ is None:
-        pytest.skip("no successor on the graph")
+        # The snapshot is the head of its chain: there is nothing to compare, the build does
+        # not refuse, and the chain tests below are what still exercise the comparison.
+        assert standing["info"] == {} and succ.refuse_if_moved(standing) is None
+        return
     assert cmp_["uncovered"] == [], cmp_["uncovered"]
     assert cmp_["recomputed_and_compared"] == cmp_["tagged_results_on_this_cycle"]
     assert cmp_["recomputed_and_compared"] == len(succ.tagged_of_snapshot(snapshot))
@@ -204,9 +218,13 @@ def test_today_the_successor_moves_nothing(succ, snapshot):
     """The condition that licenses publishing under `scan_2026-09-10_rj2` while
     `scan_2026-09-10_rj3` exists. It is a measurement, re-taken on every build, not a claim
     this file makes once."""
-    cmp_ = succ.check(snapshot)["comparison"]
+    standing = succ.check(snapshot)
+    cmp_ = standing["comparison"]
     if cmp_ is None:
-        pytest.skip("no successor on the graph")
+        # The snapshot is the head of its chain: there is nothing to compare, the build does
+        # not refuse, and the chain tests below are what still exercise the comparison.
+        assert standing["info"] == {} and succ.refuse_if_moved(standing) is None
+        return
     assert cmp_["moves"] == [], json.dumps(cmp_["moves"][:10], indent=1, default=str)
 
 
@@ -316,3 +334,87 @@ def test_writing_into_a_temporary_tree_restores_the_published_one(tmp_path, snap
                          gen_dir=tmp_path / "b" / "g")
     assert M.OUT_DIR == REPO / "docs" / "reports"
     assert M.GEN_DIR == REPO / "docs" / "reports" / "generated"
+
+
+# ================== `cc_tasks/2026-09-19_resnapshot_rj4.md` decision 3: the guard walks the chain
+
+#: The judgement the guard was built against, and the chain the event log now holds from it.
+#: Named, because the test is about a fact of the log that does not move: `_rj2` was superseded
+#: by `_rj3` on 2026-09-14 and `_rj3` by `_rj4` on 2026-09-18, and a one-hop guard asked about
+#: `_rj2` answered with `_rj3`, two generations short of the judgement of record.
+OLD_SNAPSHOT = "scan_2026-09-10_rj2"
+CHAIN_FROM_OLD = ["scan_2026-09-10_rj2", "scan_2026-09-10_rj3", "scan_2026-09-10_rj4"]
+
+
+@pytest.fixture(scope="module")
+def session():
+    try:
+        from seldon.config import get_neo4j_driver, load_project_config
+        cfg = load_project_config(REPO)
+        driver = get_neo4j_driver(cfg)
+        s = driver.session(database=cfg["neo4j"]["database"])
+        s.run("RETURN 1").single()
+    except Exception as exc:                                        # noqa: BLE001
+        pytest.skip(f"Neo4j unreachable: {exc}")
+    yield s
+    s.close()
+    driver.close()
+
+
+def test_the_guard_walks_supersedes_to_the_newest_judgement(succ, session):
+    """Decision 3. From `_rj2` the guard reaches `_rj4`, and it reports the chain it walked."""
+    info = succ.successor_info(session, OLD_SNAPSHOT)
+    assert info["chain"] == CHAIN_FROM_OLD
+    assert info["successor"] == CHAIN_FROM_OLD[-1]
+    assert [h["cycle"] for h in info["hops"]] == CHAIN_FROM_OLD[1:]
+
+
+def test_the_old_one_hop_answer_would_have_missed_rj4(succ, session):
+    """**The pin.** One hop from `_rj2` lands on `_rj3`, which moves nothing; the newest judgement
+    moves three tagged Results and 161 product cells. A guard that stops at the first hop reports
+    "nothing moved" about a snapshot two generations stale, which is what it did on 2026-09-18
+    (`cc_tasks/2026-09-18_rejudge_seven_legs_RESULT.md` §3)."""
+    one_hop = succ.next_judgement(session, OLD_SNAPSHOT)
+    assert one_hop["cycle"] == "scan_2026-09-10_rj3"
+    assert succ.moved(OLD_SNAPSHOT, one_hop["cycle"])["moved"] == 0
+    walked = succ.moved(OLD_SNAPSHOT, succ.successor_info(session, OLD_SNAPSHOT)["successor"])
+    cells = [m for m in walked["moves"] if m["what"] == "matrix cell"]
+    # 23 product rows x the seven columns generation 12 added, each `None` -> a verdict; the
+    # host matrices do not move (`2026-09-18_rejudge_seven_legs_RESULT.md` §3).
+    assert len(cells) == 161 and {m["matrix"] for m in cells} == {"product"}
+    # The three tagged Results that moved, compared by value. Since the re-snapshot the report
+    # tags `_rj4` names, so `moved` no longer finds them by the old suffix; the values are what
+    # licensed the re-snapshot and they are asserted directly.
+    old_v, new_v = succ.result_values(OLD_SNAPSHOT), succ.result_values(CHAIN_FROM_OLD[-1])
+    assert {b: (old_v[b], new_v[b]) for b in ("scan_findings", "scan_l0_product_legs",
+                                              "scan_l0_product_legs_at_zero")} == {
+        "scan_findings": (739, 1009), "scan_l0_product_legs": (10, 17),
+        "scan_l0_product_legs_at_zero": (5, 11)}
+
+
+def test_the_transitive_counts_are_over_the_whole_chain(succ, session):
+    """The counts on the line are snapshot → head, not the last hop: a Finding the head does not
+    reach (the 22 G1-D Findings DD-066 withdrew from `home` and Tier C surfaces) has no successor
+    at the head and is not counted as superseded there."""
+    info = succ.successor_info(session, OLD_SNAPSHOT)
+    n = session.run(
+        "MATCH (new:Finding {cycle: $h})-[:SUPERSEDES*1..]->(old:Finding {cycle: $s}) "
+        "RETURN count(DISTINCT old) AS n", h=info["successor"], s=OLD_SNAPSHOT).single()["n"]
+    assert info["superseded_findings"] == n
+    assert info["superseded_findings"] < info["snapshot_findings"]
+
+
+def test_a_cycle_in_the_chain_is_fatal(succ):
+    """A supersession chain that returns to a cycle it has passed is a corrupt log, and walking
+    it would never end."""
+    class _S:
+        def run(self, _q, snap=None, **_k):
+            self._snap = snap
+            return self
+
+        def data(self):
+            nxt = {"a": "b", "b": "a"}[self._snap]
+            return [{"cycle": nxt, "generation": 1, "cycle_kind": "rejudged", "pairs": 1,
+                     "verdict_moves": 0, "reason_only": 0}]
+    with pytest.raises(SystemExit, match="returns to"):
+        succ.supersession_chain(_S(), "a")

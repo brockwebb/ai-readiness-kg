@@ -413,6 +413,16 @@ def main(argv=None) -> int:
         # (`cc_tasks/2026-09-10_l0_figures_and_leg_rate_names.md` decision 4). Minting
         # `scan_a12_tierA_*_<cycle>` beside them would be the third name for one population.
         batches = [b for b in batches if b[0] == "cycle"]
+    if ev_cycle != cycle:
+        # **A re-judgement does not register the socket count.** `fss_scan_netlocs_contacted`
+        # is a fact about the MEASUREMENT, and `scripts/register_measured_collection_facts.py`
+        # registers it under the measured cycle's name and records that the `_rj2` name this
+        # registrar minted first is misbound (a name binds once, AD-028, so it stands).
+        # Re-snapshotting onto `_rj4` would have minted the same misbound name a second time
+        # (`cc_tasks/2026-09-19_resnapshot_rj4.md`, found on the dry run); the report quotes the
+        # measured cycle's name, so nothing is lost by not minting it.
+        batches = [(fam, ep, data, [r for r in rows if r[0] != "fss_scan_netlocs_contacted"])
+                   for fam, ep, data, rows in batches]
 
     if a.dry_run:
         print(json.dumps({"netlocs_declared": nl_declared, "netlocs_contacted": nl_contacted,

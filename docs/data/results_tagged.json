@@ -1,27 +1,15 @@
 {
  "task": "cc_tasks/2026-09-12_publish_l0.md",
  "amended_by": "cc_tasks/2026-09-13_ephemeral_provenance.md",
- "snapshot_cycle": "scan_2026-09-10_rj2",
+ "snapshot_cycle": "scan_2026-09-10_rj4",
  "snapshot_standing": {
-  "snapshot": "scan_2026-09-10_rj2",
-  "snapshot_findings": 739,
-  "successor": "scan_2026-09-10_rj3",
-  "successor_generation": 3,
-  "successor_kind": "rejudged",
-  "superseded_findings": 739,
-  "verdict_moves": 0,
-  "reason_only_changes": 3
+  "snapshot": "scan_2026-09-10_rj4",
+  "successor": null,
+  "note": "no later judgement of this cycle's evidence is on the event log; the snapshot is the current judgement of record"
  },
- "successor_moves_no_published_number": true,
- "successor_comparison": {
-  "successor": "scan_2026-09-10_rj3",
-  "tagged_results_on_this_cycle": 38,
-  "recomputed_and_compared": 38,
-  "uncovered": [],
-  "matrix_rows_compared": 42,
-  "moved": 0
- },
- "count": 56,
+ "successor_moves_no_published_number": null,
+ "successor_comparison": null,
+ "count": 58,
  "results": [
   {
    "name": "esip_checklist_items_2026-09-10",
@@ -326,15 +314,15 @@
    ]
   },
   {
-   "name": "scan_a5_fail_offroster_sitemap_2026-09-10_rj2",
+   "name": "scan_a5_fail_offroster_sitemap_2026-09-10_rj4",
    "value": 0.0,
-   "state": "published",
-   "artifact_id": "310ca94c-d053-4865-99f2-c5736091a643",
-   "description": "Of cycle scan_2026-09-10_rj2's A5 `fail` verdicts, how many belong to a host whose robots.txt declares a sitemap on a netloc OUTSIDE the frame that the scanner then did not fetch. MEASURED from cycle scan_2026-09-10's retained robots.txt bodies re-parsed for Sitemap: lines (15 distinct declarations from 13 of the frame's hosts, 2 of them naming an off-frame netloc), compared against the set of URLs the cycle actually requested. The scanner followed every declaration it found, off-frame ones included, so no A5 failure is attributable to an unfollowed declaration and this caveat is empty for this cycle. It is registered at its measured value rather than omitted, because a caveat that is absent and a caveat that is zero read the same in prose and are not the same claim. Registered under scan_2026-09-10_rj2, which is a RE-JUDGEMENT and issued no request of its own: this counts scan_2026-09-10's collection, the evidence the re-judgement rests on, and the verdicts it is compared against are scan_2026-09-10_rj2's. Task cc_tasks/2026-09-09_report_draft.md §0.4. (cc_tasks/2026-09-09_report_draft.md)",
+   "state": "verified",
+   "artifact_id": "2ccf3068-4fcc-4602-b561-a35104fca71c",
+   "description": "Of cycle scan_2026-09-10_rj4's A5 `fail` verdicts, how many belong to a host whose robots.txt declares a sitemap on a netloc OUTSIDE the frame that the scanner then did not fetch. MEASURED from cycle scan_2026-09-10's retained robots.txt bodies re-parsed for Sitemap: lines (15 distinct declarations from 13 of the frame's hosts, 2 of them naming an off-frame netloc), compared against the set of URLs the cycle actually requested. The scanner followed every declaration it found, off-frame ones included, so no A5 failure is attributable to an unfollowed declaration and this caveat is empty for this cycle. It is registered at its measured value rather than omitted, because a caveat that is absent and a caveat that is zero read the same in prose and are not the same claim. Registered under scan_2026-09-10_rj4, which is a RE-JUDGEMENT and issued no request of its own: this counts scan_2026-09-10's collection, the evidence the re-judgement rests on, and the verdicts it is compared against are scan_2026-09-10_rj4's. Task cc_tasks/2026-09-09_report_draft.md §0.4. (cc_tasks/2026-09-09_report_draft.md)",
    "computed_from": [
     {
-     "name": "scan_2026-09-10_rj2",
-     "path": "state/scan_2026-09-10_rj2.json",
+     "name": "scan_2026-09-10_rj4",
+     "path": "state/scan_2026-09-10_rj4.json",
      "present_in_repository": true,
      "ephemeral": false
     }
@@ -375,15 +363,15 @@
    ]
   },
   {
-   "name": "scan_findings_2026-09-10_rj2",
-   "value": 739.0,
-   "state": "published",
-   "artifact_id": "63987f57-a545-48ed-9fbe-f5e8fc6253e0",
-   "description": "Cycle scan_2026-09-10_rj2, params_hash d3499218ef48…. RE-JUDGED from the stored Observations of scan_2026-09-10 under the rules current at cc_tasks/2026-09-08_scan_harness_v4.md; nothing was re-fetched. Findings produced: {'pass': 161, 'fail': 459, 'not_applicable': 0, 'error': 119}. Re-judged under generation 9 (`RULE-A3-v6`, `RULE-B3-v3`): an ABSENCE claim reached over a candidate set with a BLIND member is a scope limitation and owes `error`, not `fail` (ISA 705; DD-052 §6). Same Observations, nothing re-fetched, no Observation created — the evidence is the measured cycle's and the judgement is generation 9's. Supersedes `scan_findings_2026-09-10_rj1` = 739.0. a figure of this cycle falls back to `scan_findings_2026-09-10` = nothing, so this number is registered under its own name rather than resolved through that one. Every Result it supersedes is unedited and stands as the record of the judgement that made it (AD-028). (cc_tasks/2026-09-11_rejudge_1_2_3_4_gen9.md)",
+   "name": "scan_findings_2026-09-10_rj4",
+   "value": 1009.0,
+   "state": "verified",
+   "artifact_id": "ce17f6d1-05f5-468f-80c9-11598d3b15cd",
+   "description": "Cycle scan_2026-09-10_rj4, params_hash 0ef2e016fea2…. RE-JUDGED from the stored Observations of scan_2026-09-10 under the rules current at cc_tasks/2026-09-18_rejudge_seven_legs.md; nothing was re-fetched. Findings produced: {'pass': 160, 'fail': 682, 'not_applicable': 0, 'error': 167}. (cc_tasks/2026-09-07_scan_run_2.md)",
    "computed_from": [
     {
-     "name": "scan_matrix_2026-09-10_rj2",
-     "path": "state/scan_matrix_2026-09-10_rj2.json",
+     "name": "scan_matrix_2026-09-10_rj4",
+     "path": "state/scan_matrix_2026-09-10_rj4.json",
      "present_in_repository": true,
      "ephemeral": false
     }
@@ -398,15 +386,15 @@
    ]
   },
   {
-   "name": "scan_l0_a10_applicable_n_2026-09-10_rj2",
+   "name": "scan_l0_a10_applicable_n_2026-09-10_rj4",
    "value": 13.0,
-   "state": "published",
-   "artifact_id": "e2040491-25ae-41c3-8aa2-3a583ab81b68",
-   "description": "Cycle scan_2026-09-10_rj2, leg A10, over the 16 Tier A bodies' HOST-LEVEL surfaces (each body's `home:` page, and its `host:` well-known set for A12). `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Denominator: pass + fail, which is 13. Re-judged under generation 9 (`RULE-A3-v6`, `RULE-B3-v3`): an ABSENCE claim reached over a candidate set with a BLIND member is a scope limitation and owes `error`, not `fail` (ISA 705; DD-052 §6). Same Observations, nothing re-fetched, no Observation created — the evidence is the measured cycle's and the judgement is generation 9's. Supersedes `scan_l0_a10_applicable_n_2026-09-10_rj1`, which was never registered. a figure of this cycle falls back to `scan_l0_a10_applicable_n_2026-09-10` = nothing, so this number is registered under its own name rather than resolved through that one. Every Result it supersedes is unedited and stands as the record of the judgement that made it (AD-028). (cc_tasks/2026-09-11_rejudge_1_2_3_4_gen9.md)",
+   "state": "verified",
+   "artifact_id": "49077b6b-5719-4e5c-a1a3-ee7c37bfb6e0",
+   "description": "Cycle scan_2026-09-10_rj4, leg A10, over the 16 Tier A bodies' HOST-LEVEL surfaces (each body's `home:` page, and its `host:` well-known set for A12). `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Denominator: pass + fail, which is 13. (cc_tasks/2026-09-09_report_draft.md)",
    "computed_from": [
     {
-     "name": "scan_matrix_2026-09-10_rj2",
-     "path": "state/scan_matrix_2026-09-10_rj2.json",
+     "name": "scan_matrix_tierA_2026-09-10_rj4",
+     "path": "docs/reports/scan_matrix_tierA_2026-09-10_rj4.json",
      "present_in_repository": true,
      "ephemeral": false
     }
@@ -421,15 +409,15 @@
    ]
   },
   {
-   "name": "scan_l0_a10_pass_2026-09-10_rj2",
+   "name": "scan_l0_a10_pass_2026-09-10_rj4",
    "value": 12.0,
-   "state": "published",
-   "artifact_id": "d5165944-a82a-4ce8-b1e2-198e5dbd02c5",
-   "description": "Cycle scan_2026-09-10_rj2, leg A10, over the 16 Tier A bodies' HOST-LEVEL surfaces (each body's `home:` page, and its `host:` well-known set for A12). `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Verdicts of `pass`: 12. Re-judged under generation 9 (`RULE-A3-v6`, `RULE-B3-v3`): an ABSENCE claim reached over a candidate set with a BLIND member is a scope limitation and owes `error`, not `fail` (ISA 705; DD-052 §6). Same Observations, nothing re-fetched, no Observation created — the evidence is the measured cycle's and the judgement is generation 9's. Supersedes `scan_l0_a10_pass_2026-09-10_rj1`, which was never registered. a figure of this cycle falls back to `scan_l0_a10_pass_2026-09-10` = nothing, so this number is registered under its own name rather than resolved through that one. Every Result it supersedes is unedited and stands as the record of the judgement that made it (AD-028). (cc_tasks/2026-09-11_rejudge_1_2_3_4_gen9.md)",
+   "state": "verified",
+   "artifact_id": "57253dc7-718c-466f-ab0e-1563a653f847",
+   "description": "Cycle scan_2026-09-10_rj4, leg A10, over the 16 Tier A bodies' HOST-LEVEL surfaces (each body's `home:` page, and its `host:` well-known set for A12). `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Verdicts of `pass`: 12. (cc_tasks/2026-09-09_report_draft.md)",
    "computed_from": [
     {
-     "name": "scan_matrix_2026-09-10_rj2",
-     "path": "state/scan_matrix_2026-09-10_rj2.json",
+     "name": "scan_matrix_tierA_2026-09-10_rj4",
+     "path": "docs/reports/scan_matrix_tierA_2026-09-10_rj4.json",
      "present_in_repository": true,
      "ephemeral": false
     }
@@ -444,15 +432,15 @@
    ]
   },
   {
-   "name": "scan_l0_a11_declared_applicable_n_2026-09-10_rj2",
+   "name": "scan_l0_a11_declared_applicable_n_2026-09-10_rj4",
    "value": 13.0,
-   "state": "published",
-   "artifact_id": "89a6a3ba-bad2-4c6a-8eee-7f7193840f85",
-   "description": "Cycle scan_2026-09-10_rj2, leg A11-declared, over the 16 Tier A bodies' HOST-LEVEL surfaces (each body's `home:` page, and its `host:` well-known set for A12). `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Denominator: pass + fail, which is 13. Re-judged under generation 9 (`RULE-A3-v6`, `RULE-B3-v3`): an ABSENCE claim reached over a candidate set with a BLIND member is a scope limitation and owes `error`, not `fail` (ISA 705; DD-052 §6). Same Observations, nothing re-fetched, no Observation created — the evidence is the measured cycle's and the judgement is generation 9's. Supersedes `scan_l0_a11_declared_applicable_n_2026-09-10_rj1`, which was never registered. a figure of this cycle falls back to `scan_l0_a11_declared_applicable_n_2026-09-10` = nothing, so this number is registered under its own name rather than resolved through that one. Every Result it supersedes is unedited and stands as the record of the judgement that made it (AD-028). (cc_tasks/2026-09-11_rejudge_1_2_3_4_gen9.md)",
+   "state": "verified",
+   "artifact_id": "39ff08db-80e2-44d4-8990-db188c64282d",
+   "description": "Cycle scan_2026-09-10_rj4, leg A11-declared, over the 16 Tier A bodies' HOST-LEVEL surfaces (each body's `home:` page, and its `host:` well-known set for A12). `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Denominator: pass + fail, which is 13. (cc_tasks/2026-09-09_report_draft.md)",
    "computed_from": [
     {
-     "name": "scan_matrix_2026-09-10_rj2",
-     "path": "state/scan_matrix_2026-09-10_rj2.json",
+     "name": "scan_matrix_tierA_2026-09-10_rj4",
+     "path": "docs/reports/scan_matrix_tierA_2026-09-10_rj4.json",
      "present_in_repository": true,
      "ephemeral": false
     }
@@ -467,15 +455,15 @@
    ]
   },
   {
-   "name": "scan_l0_a11_declared_pass_2026-09-10_rj2",
+   "name": "scan_l0_a11_declared_pass_2026-09-10_rj4",
    "value": 11.0,
-   "state": "published",
-   "artifact_id": "906fcb76-8fc3-408b-81b5-fc4be4ebb4ae",
-   "description": "Cycle scan_2026-09-10_rj2, leg A11-declared, over the 16 Tier A bodies' HOST-LEVEL surfaces (each body's `home:` page, and its `host:` well-known set for A12). `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Verdicts of `pass`: 11. Re-judged under generation 9 (`RULE-A3-v6`, `RULE-B3-v3`): an ABSENCE claim reached over a candidate set with a BLIND member is a scope limitation and owes `error`, not `fail` (ISA 705; DD-052 §6). Same Observations, nothing re-fetched, no Observation created — the evidence is the measured cycle's and the judgement is generation 9's. Supersedes `scan_l0_a11_declared_pass_2026-09-10_rj1`, which was never registered. a figure of this cycle falls back to `scan_l0_a11_declared_pass_2026-09-10` = nothing, so this number is registered under its own name rather than resolved through that one. Every Result it supersedes is unedited and stands as the record of the judgement that made it (AD-028). (cc_tasks/2026-09-11_rejudge_1_2_3_4_gen9.md)",
+   "state": "verified",
+   "artifact_id": "12128491-a545-4cac-b1b7-3ea2116072bd",
+   "description": "Cycle scan_2026-09-10_rj4, leg A11-declared, over the 16 Tier A bodies' HOST-LEVEL surfaces (each body's `home:` page, and its `host:` well-known set for A12). `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Verdicts of `pass`: 11. (cc_tasks/2026-09-09_report_draft.md)",
    "computed_from": [
     {
-     "name": "scan_matrix_2026-09-10_rj2",
-     "path": "state/scan_matrix_2026-09-10_rj2.json",
+     "name": "scan_matrix_tierA_2026-09-10_rj4",
+     "path": "docs/reports/scan_matrix_tierA_2026-09-10_rj4.json",
      "present_in_repository": true,
      "ephemeral": false
     }
@@ -490,15 +478,15 @@
    ]
   },
   {
-   "name": "scan_l0_a12_applicable_n_2026-09-10_rj2",
+   "name": "scan_l0_a12_applicable_n_2026-09-10_rj4",
    "value": 16.0,
-   "state": "published",
-   "artifact_id": "f2d3445b-dbbf-460c-88a3-b7b27bfe9e1a",
-   "description": "Cycle scan_2026-09-10_rj2, leg A12, over the 16 Tier A bodies' HOST-LEVEL surfaces (each body's `home:` page, and its `host:` well-known set for A12). `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Denominator: pass + fail, which is 16. Re-judged under generation 9 (`RULE-A3-v6`, `RULE-B3-v3`): an ABSENCE claim reached over a candidate set with a BLIND member is a scope limitation and owes `error`, not `fail` (ISA 705; DD-052 §6). Same Observations, nothing re-fetched, no Observation created — the evidence is the measured cycle's and the judgement is generation 9's. Supersedes `scan_l0_a12_applicable_n_2026-09-10_rj1`, which was never registered. a figure of this cycle falls back to `scan_l0_a12_applicable_n_2026-09-10` = nothing, so this number is registered under its own name rather than resolved through that one. Every Result it supersedes is unedited and stands as the record of the judgement that made it (AD-028). (cc_tasks/2026-09-11_rejudge_1_2_3_4_gen9.md)",
+   "state": "verified",
+   "artifact_id": "bff84796-06c5-4383-b24a-195c4fd1ba8a",
+   "description": "Cycle scan_2026-09-10_rj4, leg A12, over the 16 Tier A bodies' HOST-LEVEL surfaces (each body's `home:` page, and its `host:` well-known set for A12). `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Denominator: pass + fail, which is 16. (cc_tasks/2026-09-09_report_draft.md)",
    "computed_from": [
     {
-     "name": "scan_matrix_2026-09-10_rj2",
-     "path": "state/scan_matrix_2026-09-10_rj2.json",
+     "name": "scan_matrix_tierA_2026-09-10_rj4",
+     "path": "docs/reports/scan_matrix_tierA_2026-09-10_rj4.json",
      "present_in_repository": true,
      "ephemeral": false
     }
@@ -513,15 +501,15 @@
    ]
   },
   {
-   "name": "scan_l0_a12_fail_2026-09-10_rj2",
+   "name": "scan_l0_a12_fail_2026-09-10_rj4",
    "value": 4.0,
-   "state": "published",
-   "artifact_id": "504c9b60-f779-4943-a66c-b94ad8d4f9bd",
-   "description": "Cycle scan_2026-09-10_rj2, leg A12, over the 16 Tier A bodies' HOST-LEVEL surfaces (each body's `home:` page, and its `host:` well-known set for A12). `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Verdicts of `fail`: 4. Re-judged under generation 9 (`RULE-A3-v6`, `RULE-B3-v3`): an ABSENCE claim reached over a candidate set with a BLIND member is a scope limitation and owes `error`, not `fail` (ISA 705; DD-052 §6). Same Observations, nothing re-fetched, no Observation created — the evidence is the measured cycle's and the judgement is generation 9's. Supersedes `scan_l0_a12_fail_2026-09-10_rj1`, which was never registered. a figure of this cycle falls back to `scan_l0_a12_fail_2026-09-10` = nothing, so this number is registered under its own name rather than resolved through that one. Every Result it supersedes is unedited and stands as the record of the judgement that made it (AD-028). (cc_tasks/2026-09-11_rejudge_1_2_3_4_gen9.md)",
+   "state": "verified",
+   "artifact_id": "6d9c14b3-465d-48a5-9091-c07e974ea460",
+   "description": "Cycle scan_2026-09-10_rj4, leg A12, over the 16 Tier A bodies' HOST-LEVEL surfaces (each body's `home:` page, and its `host:` well-known set for A12). `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Verdicts of `fail`: 4. (cc_tasks/2026-09-09_report_draft.md)",
    "computed_from": [
     {
-     "name": "scan_matrix_2026-09-10_rj2",
-     "path": "state/scan_matrix_2026-09-10_rj2.json",
+     "name": "scan_matrix_tierA_2026-09-10_rj4",
+     "path": "docs/reports/scan_matrix_tierA_2026-09-10_rj4.json",
      "present_in_repository": true,
      "ephemeral": false
     }
@@ -536,15 +524,15 @@
    ]
   },
   {
-   "name": "scan_l0_a12_pass_2026-09-10_rj2",
+   "name": "scan_l0_a12_pass_2026-09-10_rj4",
    "value": 12.0,
-   "state": "published",
-   "artifact_id": "fbba946a-6923-4052-b98b-8147002115fe",
-   "description": "Cycle scan_2026-09-10_rj2, leg A12, over the 16 Tier A bodies' HOST-LEVEL surfaces (each body's `home:` page, and its `host:` well-known set for A12). `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Verdicts of `pass`: 12. Re-judged under generation 9 (`RULE-A3-v6`, `RULE-B3-v3`): an ABSENCE claim reached over a candidate set with a BLIND member is a scope limitation and owes `error`, not `fail` (ISA 705; DD-052 §6). Same Observations, nothing re-fetched, no Observation created — the evidence is the measured cycle's and the judgement is generation 9's. Supersedes `scan_l0_a12_pass_2026-09-10_rj1`, which was never registered. a figure of this cycle falls back to `scan_l0_a12_pass_2026-09-10` = nothing, so this number is registered under its own name rather than resolved through that one. Every Result it supersedes is unedited and stands as the record of the judgement that made it (AD-028). (cc_tasks/2026-09-11_rejudge_1_2_3_4_gen9.md)",
+   "state": "verified",
+   "artifact_id": "61089e49-4ef8-4f43-ae6e-7037d893b708",
+   "description": "Cycle scan_2026-09-10_rj4, leg A12, over the 16 Tier A bodies' HOST-LEVEL surfaces (each body's `home:` page, and its `host:` well-known set for A12). `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Verdicts of `pass`: 12. (cc_tasks/2026-09-09_report_draft.md)",
    "computed_from": [
     {
-     "name": "scan_matrix_2026-09-10_rj2",
-     "path": "state/scan_matrix_2026-09-10_rj2.json",
+     "name": "scan_matrix_tierA_2026-09-10_rj4",
+     "path": "docs/reports/scan_matrix_tierA_2026-09-10_rj4.json",
      "present_in_repository": true,
      "ephemeral": false
     }
@@ -559,15 +547,15 @@
    ]
   },
   {
-   "name": "scan_l0_a4_applicable_n_2026-09-10_rj2",
+   "name": "scan_l0_a4_applicable_n_2026-09-10_rj4",
    "value": 13.0,
-   "state": "published",
-   "artifact_id": "f42f9623-5537-4f4e-8068-04caa3c8e8b2",
-   "description": "Cycle scan_2026-09-10_rj2, leg A4, over the 16 Tier A bodies' HOST-LEVEL surfaces (each body's `home:` page, and its `host:` well-known set for A12). `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Denominator: pass + fail, which is 13. Re-judged under generation 9 (`RULE-A3-v6`, `RULE-B3-v3`): an ABSENCE claim reached over a candidate set with a BLIND member is a scope limitation and owes `error`, not `fail` (ISA 705; DD-052 §6). Same Observations, nothing re-fetched, no Observation created — the evidence is the measured cycle's and the judgement is generation 9's. Supersedes `scan_l0_a4_applicable_n_2026-09-10_rj1`, which was never registered. a figure of this cycle falls back to `scan_l0_a4_applicable_n_2026-09-10` = nothing, so this number is registered under its own name rather than resolved through that one. Every Result it supersedes is unedited and stands as the record of the judgement that made it (AD-028). (cc_tasks/2026-09-11_rejudge_1_2_3_4_gen9.md)",
+   "state": "verified",
+   "artifact_id": "3c97d696-3f8c-4e2a-b7ff-4f77ac4c89eb",
+   "description": "Cycle scan_2026-09-10_rj4, leg A4, over the 16 Tier A bodies' HOST-LEVEL surfaces (each body's `home:` page, and its `host:` well-known set for A12). `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Denominator: pass + fail, which is 13. (cc_tasks/2026-09-09_report_draft.md)",
    "computed_from": [
     {
-     "name": "scan_matrix_2026-09-10_rj2",
-     "path": "state/scan_matrix_2026-09-10_rj2.json",
+     "name": "scan_matrix_tierA_2026-09-10_rj4",
+     "path": "docs/reports/scan_matrix_tierA_2026-09-10_rj4.json",
      "present_in_repository": true,
      "ephemeral": false
     }
@@ -582,15 +570,15 @@
    ]
   },
   {
-   "name": "scan_l0_a4_error_2026-09-10_rj2",
+   "name": "scan_l0_a4_error_2026-09-10_rj4",
    "value": 3.0,
-   "state": "published",
-   "artifact_id": "3ced81dd-5673-4b9a-a605-fd449be66c2c",
-   "description": "Cycle scan_2026-09-10_rj2, leg A4, over the 16 Tier A bodies' HOST-LEVEL surfaces (each body's `home:` page, and its `host:` well-known set for A12). `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Verdicts of `error`: 3. Re-judged under generation 9 (`RULE-A3-v6`, `RULE-B3-v3`): an ABSENCE claim reached over a candidate set with a BLIND member is a scope limitation and owes `error`, not `fail` (ISA 705; DD-052 §6). Same Observations, nothing re-fetched, no Observation created — the evidence is the measured cycle's and the judgement is generation 9's. Supersedes `scan_l0_a4_error_2026-09-10_rj1`, which was never registered. a figure of this cycle falls back to `scan_l0_a4_error_2026-09-10` = nothing, so this number is registered under its own name rather than resolved through that one. Every Result it supersedes is unedited and stands as the record of the judgement that made it (AD-028). (cc_tasks/2026-09-11_rejudge_1_2_3_4_gen9.md)",
+   "state": "verified",
+   "artifact_id": "f32c32fb-f452-4555-9ea5-1843fa1e9f54",
+   "description": "Cycle scan_2026-09-10_rj4, leg A4, over the 16 Tier A bodies' HOST-LEVEL surfaces (each body's `home:` page, and its `host:` well-known set for A12). `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Verdicts of `error`: 3. (cc_tasks/2026-09-09_report_draft.md)",
    "computed_from": [
     {
-     "name": "scan_matrix_2026-09-10_rj2",
-     "path": "state/scan_matrix_2026-09-10_rj2.json",
+     "name": "scan_matrix_tierA_2026-09-10_rj4",
+     "path": "docs/reports/scan_matrix_tierA_2026-09-10_rj4.json",
      "present_in_repository": true,
      "ephemeral": false
     }
@@ -605,15 +593,15 @@
    ]
   },
   {
-   "name": "scan_l0_a4_pass_2026-09-10_rj2",
+   "name": "scan_l0_a4_pass_2026-09-10_rj4",
    "value": 12.0,
-   "state": "published",
-   "artifact_id": "58c86fc6-391c-487f-8e23-8baf5a3ef879",
-   "description": "Cycle scan_2026-09-10_rj2, leg A4, over the 16 Tier A bodies' HOST-LEVEL surfaces (each body's `home:` page, and its `host:` well-known set for A12). `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Verdicts of `pass`: 12. Re-judged under generation 9 (`RULE-A3-v6`, `RULE-B3-v3`): an ABSENCE claim reached over a candidate set with a BLIND member is a scope limitation and owes `error`, not `fail` (ISA 705; DD-052 §6). Same Observations, nothing re-fetched, no Observation created — the evidence is the measured cycle's and the judgement is generation 9's. Supersedes `scan_l0_a4_pass_2026-09-10_rj1`, which was never registered. a figure of this cycle falls back to `scan_l0_a4_pass_2026-09-10` = nothing, so this number is registered under its own name rather than resolved through that one. Every Result it supersedes is unedited and stands as the record of the judgement that made it (AD-028). (cc_tasks/2026-09-11_rejudge_1_2_3_4_gen9.md)",
+   "state": "verified",
+   "artifact_id": "addb4a84-bb8c-4377-af57-474d601abd96",
+   "description": "Cycle scan_2026-09-10_rj4, leg A4, over the 16 Tier A bodies' HOST-LEVEL surfaces (each body's `home:` page, and its `host:` well-known set for A12). `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Verdicts of `pass`: 12. (cc_tasks/2026-09-09_report_draft.md)",
    "computed_from": [
     {
-     "name": "scan_matrix_2026-09-10_rj2",
-     "path": "state/scan_matrix_2026-09-10_rj2.json",
+     "name": "scan_matrix_tierA_2026-09-10_rj4",
+     "path": "docs/reports/scan_matrix_tierA_2026-09-10_rj4.json",
      "present_in_repository": true,
      "ephemeral": false
     }
@@ -628,15 +616,15 @@
    ]
   },
   {
-   "name": "scan_l0_a5_applicable_n_2026-09-10_rj2",
+   "name": "scan_l0_a5_applicable_n_2026-09-10_rj4",
    "value": 13.0,
-   "state": "published",
-   "artifact_id": "e0d32b39-ab2e-4f91-82ed-a6cb35d6f1b7",
-   "description": "Cycle scan_2026-09-10_rj2, leg A5, over the 16 Tier A bodies' HOST-LEVEL surfaces (each body's `home:` page, and its `host:` well-known set for A12). `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Denominator: pass + fail, which is 13. Re-judged under generation 9 (`RULE-A3-v6`, `RULE-B3-v3`): an ABSENCE claim reached over a candidate set with a BLIND member is a scope limitation and owes `error`, not `fail` (ISA 705; DD-052 §6). Same Observations, nothing re-fetched, no Observation created — the evidence is the measured cycle's and the judgement is generation 9's. Supersedes `scan_l0_a5_applicable_n_2026-09-10_rj1`, which was never registered. a figure of this cycle falls back to `scan_l0_a5_applicable_n_2026-09-10` = nothing, so this number is registered under its own name rather than resolved through that one. Every Result it supersedes is unedited and stands as the record of the judgement that made it (AD-028). (cc_tasks/2026-09-11_rejudge_1_2_3_4_gen9.md)",
+   "state": "verified",
+   "artifact_id": "ba85eaad-2a7a-4f01-b683-9e02f39a5d74",
+   "description": "Cycle scan_2026-09-10_rj4, leg A5, over the 16 Tier A bodies' HOST-LEVEL surfaces (each body's `home:` page, and its `host:` well-known set for A12). `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Denominator: pass + fail, which is 13. (cc_tasks/2026-09-09_report_draft.md)",
    "computed_from": [
     {
-     "name": "scan_matrix_2026-09-10_rj2",
-     "path": "state/scan_matrix_2026-09-10_rj2.json",
+     "name": "scan_matrix_tierA_2026-09-10_rj4",
+     "path": "docs/reports/scan_matrix_tierA_2026-09-10_rj4.json",
      "present_in_repository": true,
      "ephemeral": false
     }
@@ -651,15 +639,15 @@
    ]
   },
   {
-   "name": "scan_l0_a5_fail_2026-09-10_rj2",
+   "name": "scan_l0_a5_fail_2026-09-10_rj4",
    "value": 10.0,
-   "state": "published",
-   "artifact_id": "23874c26-9a57-4241-a5a4-5bdb4076b516",
-   "description": "Cycle scan_2026-09-10_rj2, leg A5, over the 16 Tier A bodies' HOST-LEVEL surfaces (each body's `home:` page, and its `host:` well-known set for A12). `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Verdicts of `fail`: 10. Re-judged under generation 9 (`RULE-A3-v6`, `RULE-B3-v3`): an ABSENCE claim reached over a candidate set with a BLIND member is a scope limitation and owes `error`, not `fail` (ISA 705; DD-052 §6). Same Observations, nothing re-fetched, no Observation created — the evidence is the measured cycle's and the judgement is generation 9's. Supersedes `scan_l0_a5_fail_2026-09-10_rj1`, which was never registered. a figure of this cycle falls back to `scan_l0_a5_fail_2026-09-10` = nothing, so this number is registered under its own name rather than resolved through that one. Every Result it supersedes is unedited and stands as the record of the judgement that made it (AD-028). (cc_tasks/2026-09-11_rejudge_1_2_3_4_gen9.md)",
+   "state": "verified",
+   "artifact_id": "8ba10adf-7278-4728-832d-507fe971b51d",
+   "description": "Cycle scan_2026-09-10_rj4, leg A5, over the 16 Tier A bodies' HOST-LEVEL surfaces (each body's `home:` page, and its `host:` well-known set for A12). `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Verdicts of `fail`: 10. (cc_tasks/2026-09-09_report_draft.md)",
    "computed_from": [
     {
-     "name": "scan_matrix_2026-09-10_rj2",
-     "path": "state/scan_matrix_2026-09-10_rj2.json",
+     "name": "scan_matrix_tierA_2026-09-10_rj4",
+     "path": "docs/reports/scan_matrix_tierA_2026-09-10_rj4.json",
      "present_in_repository": true,
      "ephemeral": false
     }
@@ -674,15 +662,15 @@
    ]
   },
   {
-   "name": "scan_l0_a5_pass_2026-09-10_rj2",
+   "name": "scan_l0_a5_pass_2026-09-10_rj4",
    "value": 3.0,
-   "state": "published",
-   "artifact_id": "64473c9c-7a56-47b2-bb3c-fa28397c94fb",
-   "description": "Cycle scan_2026-09-10_rj2, leg A5, over the 16 Tier A bodies' HOST-LEVEL surfaces (each body's `home:` page, and its `host:` well-known set for A12). `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Verdicts of `pass`: 3. Re-judged under generation 9 (`RULE-A3-v6`, `RULE-B3-v3`): an ABSENCE claim reached over a candidate set with a BLIND member is a scope limitation and owes `error`, not `fail` (ISA 705; DD-052 §6). Same Observations, nothing re-fetched, no Observation created — the evidence is the measured cycle's and the judgement is generation 9's. Supersedes `scan_l0_a5_pass_2026-09-10_rj1`, which was never registered. a figure of this cycle falls back to `scan_l0_a5_pass_2026-09-10` = nothing, so this number is registered under its own name rather than resolved through that one. Every Result it supersedes is unedited and stands as the record of the judgement that made it (AD-028). (cc_tasks/2026-09-11_rejudge_1_2_3_4_gen9.md)",
+   "state": "verified",
+   "artifact_id": "b529b9d2-e7e2-4faa-a3e8-5ce7a5bd05ec",
+   "description": "Cycle scan_2026-09-10_rj4, leg A5, over the 16 Tier A bodies' HOST-LEVEL surfaces (each body's `home:` page, and its `host:` well-known set for A12). `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Verdicts of `pass`: 3. (cc_tasks/2026-09-09_report_draft.md)",
    "computed_from": [
     {
-     "name": "scan_matrix_2026-09-10_rj2",
-     "path": "state/scan_matrix_2026-09-10_rj2.json",
+     "name": "scan_matrix_tierA_2026-09-10_rj4",
+     "path": "docs/reports/scan_matrix_tierA_2026-09-10_rj4.json",
      "present_in_repository": true,
      "ephemeral": false
     }
@@ -697,15 +685,15 @@
    ]
   },
   {
-   "name": "scan_l0_declared_flagship_agencies_2026-09-10_rj2",
+   "name": "scan_l0_declared_flagship_agencies_2026-09-10_rj4",
    "value": 16.0,
-   "state": "published",
-   "artifact_id": "15c25145-e272-44df-b08f-a1c2f40f7144",
-   "description": "Tier A agencies with at least one operator-DECLARED flagship surface in cycle scan_2026-09-10_rj2, of the 16 in the frame. The product-level matrix is denominated by these and is labelled PARTIAL for that reason: the remaining agencies carry a host row and its probes and nothing else, and a product leg cannot be asked of a product nobody has named. `not declared` is not `fail`. docs/design/fss_flagship_shortlist.md is where the declaration gets made. Task cc_tasks/2026-09-09_report_draft.md §1.3.",
+   "state": "verified",
+   "artifact_id": "09e51510-cfdd-485a-adbc-d76a8e11e9b2",
+   "description": "Tier A agencies with at least one operator-DECLARED flagship surface in cycle scan_2026-09-10_rj4, of the 16 in the frame. The product-level matrix is denominated by these and is labelled PARTIAL for that reason: the remaining agencies carry a host row and its probes and nothing else, and a product leg cannot be asked of a product nobody has named. `not declared` is not `fail`. docs/design/fss_flagship_shortlist.md is where the declaration gets made. Task cc_tasks/2026-09-09_report_draft.md §1.3.",
    "computed_from": [
     {
-     "name": "scan_matrix_tierA_2026-09-10_rj2",
-     "path": "docs/reports/scan_matrix_tierA_2026-09-10_rj2.json",
+     "name": "scan_matrix_tierA_2026-09-10_rj4",
+     "path": "docs/reports/scan_matrix_tierA_2026-09-10_rj4.json",
      "present_in_repository": true,
      "ephemeral": false
     }
@@ -720,15 +708,15 @@
    ]
   },
   {
-   "name": "scan_l0_declared_flagship_surfaces_2026-09-10_rj2",
+   "name": "scan_l0_declared_flagship_surfaces_2026-09-10_rj4",
    "value": 23.0,
-   "state": "published",
-   "artifact_id": "0ff17f40-ead6-49a3-b37f-e476a113dbd8",
-   "description": "Declared flagship SURFACES in cycle scan_2026-09-10_rj2, across 16 agencies: some agencies declare more than one, and the product matrix has one row per surface so two flagships of one agency that disagree are visible as two rows rather than averaged into one. Task cc_tasks/2026-09-09_report_draft.md §1.3.",
+   "state": "verified",
+   "artifact_id": "f5c73886-7b7e-4fab-a7c4-6c0594944a9f",
+   "description": "Declared flagship SURFACES in cycle scan_2026-09-10_rj4, across 16 agencies: some agencies declare more than one, and the product matrix has one row per surface so two flagships of one agency that disagree are visible as two rows rather than averaged into one. Task cc_tasks/2026-09-09_report_draft.md §1.3.",
    "computed_from": [
     {
-     "name": "scan_matrix_tierA_2026-09-10_rj2",
-     "path": "docs/reports/scan_matrix_tierA_2026-09-10_rj2.json",
+     "name": "scan_matrix_tierA_2026-09-10_rj4",
+     "path": "docs/reports/scan_matrix_tierA_2026-09-10_rj4.json",
      "present_in_repository": true,
      "ephemeral": false
     }
@@ -743,15 +731,15 @@
    ]
   },
   {
-   "name": "scan_l0_home_flagship_disagreement_bodies_over_four_legs_2026-09-10_rj2",
+   "name": "scan_l0_home_flagship_disagreement_bodies_over_four_legs_2026-09-10_rj4",
    "value": 6.0,
-   "state": "proposed",
-   "artifact_id": "7a2f7343-2bf1-4652-8efb-95ada4603f55",
+   "state": "verified",
+   "artifact_id": "a160b669-1704-41b4-b242-ececfa774424",
    "description": "Distinct Tier A bodies carrying at least one of those disagreements, of the 16 with both a home and a flagship surface. Task cc_tasks/2026-09-09_report_draft.md §1.1. (cc_tasks/2026-09-09_report_draft.md)",
    "computed_from": [
     {
-     "name": "scan_matrix_tierA_2026-09-10_rj2",
-     "path": "docs/reports/scan_matrix_tierA_2026-09-10_rj2.json",
+     "name": "scan_matrix_tierA_2026-09-10_rj4",
+     "path": "docs/reports/scan_matrix_tierA_2026-09-10_rj4.json",
      "present_in_repository": true,
      "ephemeral": false
     }
@@ -766,15 +754,15 @@
    ]
   },
   {
-   "name": "scan_l0_home_flagship_disagreement_cells_over_four_legs_2026-09-10_rj2",
+   "name": "scan_l0_home_flagship_disagreement_cells_over_four_legs_2026-09-10_rj4",
    "value": 12.0,
-   "state": "proposed",
-   "artifact_id": "a250a208-fba8-43b1-a93c-0a0e9ad319fa",
-   "description": "Cells in cycle scan_2026-09-10_rj2 where a Tier A body's HOME surface and one of its FLAGSHIP surfaces answer the SAME host-level check differently, over the 16 bodies that have both. A `robots.txt` permitting the front door can disallow a particular product, so these checks are judged per surface and not per host. This is why the L0 matrix names the surface each cell was measured on: a single combined host cell would have to pick a winner for these and would not say which. Task cc_tasks/2026-09-09_report_draft.md §1.1. (cc_tasks/2026-09-09_report_draft.md)",
+   "state": "verified",
+   "artifact_id": "7ff5af88-5b0b-4176-9762-06f0d4df43b3",
+   "description": "Cells in cycle scan_2026-09-10_rj4 where a Tier A body's HOME surface and one of its FLAGSHIP surfaces answer the SAME host-level check differently, over the 16 bodies that have both. A `robots.txt` permitting the front door can disallow a particular product, so these checks are judged per surface and not per host. This is why the L0 matrix names the surface each cell was measured on: a single combined host cell would have to pick a winner for these and would not say which. Task cc_tasks/2026-09-09_report_draft.md §1.1. (cc_tasks/2026-09-09_report_draft.md)",
    "computed_from": [
     {
-     "name": "scan_matrix_tierA_2026-09-10_rj2",
-     "path": "docs/reports/scan_matrix_tierA_2026-09-10_rj2.json",
+     "name": "scan_matrix_tierA_2026-09-10_rj4",
+     "path": "docs/reports/scan_matrix_tierA_2026-09-10_rj4.json",
      "present_in_repository": true,
      "ephemeral": false
     }
@@ -789,15 +777,15 @@
    ]
   },
   {
-   "name": "scan_l0_product_a1_applicable_n_2026-09-10_rj2",
+   "name": "scan_l0_product_a1_applicable_n_2026-09-10_rj4",
    "value": 19.0,
-   "state": "published",
-   "artifact_id": "613fbe05-d425-4a46-95ed-28af7b6b6341",
-   "description": "Cycle scan_2026-09-10_rj2, leg A1, over the 23 DECLARED flagship surfaces of 16 Tier A agencies — a PARTIAL population, because the other agencies have declared no product to look at. `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Denominator: pass + fail, which is 19. Re-judged under generation 9 (`RULE-A3-v6`, `RULE-B3-v3`): an ABSENCE claim reached over a candidate set with a BLIND member is a scope limitation and owes `error`, not `fail` (ISA 705; DD-052 §6). Same Observations, nothing re-fetched, no Observation created — the evidence is the measured cycle's and the judgement is generation 9's. Supersedes `scan_l0_product_a1_applicable_n_2026-09-10_rj1`, which was never registered. a figure of this cycle falls back to `scan_l0_product_a1_applicable_n_2026-09-10` = nothing, so this number is registered under its own name rather than resolved through that one. Every Result it supersedes is unedited and stands as the record of the judgement that made it (AD-028). (cc_tasks/2026-09-11_rejudge_1_2_3_4_gen9.md)",
+   "state": "verified",
+   "artifact_id": "7a27deb7-53b2-4cb9-8e98-9558d04ab7b5",
+   "description": "Cycle scan_2026-09-10_rj4, leg A1, over the 23 DECLARED flagship surfaces of 16 Tier A agencies — a PARTIAL population, because the other agencies have declared no product to look at. `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Denominator: pass + fail, which is 19. (cc_tasks/2026-09-09_report_draft.md)",
    "computed_from": [
     {
-     "name": "scan_matrix_2026-09-10_rj2",
-     "path": "state/scan_matrix_2026-09-10_rj2.json",
+     "name": "scan_matrix_tierA_2026-09-10_rj4",
+     "path": "docs/reports/scan_matrix_tierA_2026-09-10_rj4.json",
      "present_in_repository": true,
      "ephemeral": false
     }
@@ -812,15 +800,15 @@
    ]
   },
   {
-   "name": "scan_l0_product_a1_error_2026-09-10_rj2",
+   "name": "scan_l0_product_a1_error_2026-09-10_rj4",
    "value": 4.0,
-   "state": "published",
-   "artifact_id": "ff5e708a-3b0f-426e-894f-822d9fc1e00a",
-   "description": "Cycle scan_2026-09-10_rj2, leg A1, over the 23 DECLARED flagship surfaces of 16 Tier A agencies — a PARTIAL population, because the other agencies have declared no product to look at. `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Verdicts of `error`: 4. Re-judged under generation 9 (`RULE-A3-v6`, `RULE-B3-v3`): an ABSENCE claim reached over a candidate set with a BLIND member is a scope limitation and owes `error`, not `fail` (ISA 705; DD-052 §6). Same Observations, nothing re-fetched, no Observation created — the evidence is the measured cycle's and the judgement is generation 9's. Supersedes `scan_l0_product_a1_error_2026-09-10_rj1`, which was never registered. a figure of this cycle falls back to `scan_l0_product_a1_error_2026-09-10` = nothing, so this number is registered under its own name rather than resolved through that one. Every Result it supersedes is unedited and stands as the record of the judgement that made it (AD-028). (cc_tasks/2026-09-11_rejudge_1_2_3_4_gen9.md)",
+   "state": "verified",
+   "artifact_id": "e7736cdb-db9e-4ef6-9c32-62aed3deb556",
+   "description": "Cycle scan_2026-09-10_rj4, leg A1, over the 23 DECLARED flagship surfaces of 16 Tier A agencies — a PARTIAL population, because the other agencies have declared no product to look at. `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Verdicts of `error`: 4. (cc_tasks/2026-09-09_report_draft.md)",
    "computed_from": [
     {
-     "name": "scan_matrix_2026-09-10_rj2",
-     "path": "state/scan_matrix_2026-09-10_rj2.json",
+     "name": "scan_matrix_tierA_2026-09-10_rj4",
+     "path": "docs/reports/scan_matrix_tierA_2026-09-10_rj4.json",
      "present_in_repository": true,
      "ephemeral": false
     }
@@ -835,15 +823,15 @@
    ]
   },
   {
-   "name": "scan_l0_product_a1_pass_2026-09-10_rj2",
+   "name": "scan_l0_product_a1_pass_2026-09-10_rj4",
    "value": 0.0,
-   "state": "published",
-   "artifact_id": "96f2d079-67a2-4214-a11f-af0c3f943206",
-   "description": "Cycle scan_2026-09-10_rj2, leg A1, over the 23 DECLARED flagship surfaces of 16 Tier A agencies — a PARTIAL population, because the other agencies have declared no product to look at. `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Verdicts of `pass`: 0. Re-judged under generation 9 (`RULE-A3-v6`, `RULE-B3-v3`): an ABSENCE claim reached over a candidate set with a BLIND member is a scope limitation and owes `error`, not `fail` (ISA 705; DD-052 §6). Same Observations, nothing re-fetched, no Observation created — the evidence is the measured cycle's and the judgement is generation 9's. Supersedes `scan_l0_product_a1_pass_2026-09-10_rj1`, which was never registered. a figure of this cycle falls back to `scan_l0_product_a1_pass_2026-09-10` = nothing, so this number is registered under its own name rather than resolved through that one. Every Result it supersedes is unedited and stands as the record of the judgement that made it (AD-028). (cc_tasks/2026-09-11_rejudge_1_2_3_4_gen9.md)",
+   "state": "verified",
+   "artifact_id": "25c15343-84c2-4ecb-a469-5a863f730faa",
+   "description": "Cycle scan_2026-09-10_rj4, leg A1, over the 23 DECLARED flagship surfaces of 16 Tier A agencies — a PARTIAL population, because the other agencies have declared no product to look at. `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Verdicts of `pass`: 0. (cc_tasks/2026-09-09_report_draft.md)",
    "computed_from": [
     {
-     "name": "scan_matrix_2026-09-10_rj2",
-     "path": "state/scan_matrix_2026-09-10_rj2.json",
+     "name": "scan_matrix_tierA_2026-09-10_rj4",
+     "path": "docs/reports/scan_matrix_tierA_2026-09-10_rj4.json",
      "present_in_repository": true,
      "ephemeral": false
     }
@@ -881,15 +869,15 @@
    ]
   },
   {
-   "name": "scan_l0_product_a3_applicable_n_2026-09-10_rj2",
+   "name": "scan_l0_product_a3_applicable_n_2026-09-10_rj4",
    "value": 14.0,
-   "state": "published",
-   "artifact_id": "26df97c0-669d-4464-a102-c5c1e5bb7ea5",
-   "description": "Cycle scan_2026-09-10_rj2, leg A3, over the 23 DECLARED flagship surfaces of 16 Tier A agencies — a PARTIAL population, because the other agencies have declared no product to look at. `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Denominator: pass + fail, which is 14. Re-judged under generation 9 (`RULE-A3-v6`, `RULE-B3-v3`): an ABSENCE claim reached over a candidate set with a BLIND member is a scope limitation and owes `error`, not `fail` (ISA 705; DD-052 §6). Same Observations, nothing re-fetched, no Observation created — the evidence is the measured cycle's and the judgement is generation 9's. Supersedes `scan_l0_product_a3_applicable_n_2026-09-10_rj1`, which was never registered. a figure of this cycle falls back to `scan_l0_product_a3_applicable_n_2026-09-10` = nothing, so this number is registered under its own name rather than resolved through that one. Every Result it supersedes is unedited and stands as the record of the judgement that made it (AD-028). (cc_tasks/2026-09-11_rejudge_1_2_3_4_gen9.md)",
+   "state": "verified",
+   "artifact_id": "52ba43c2-2906-482b-a8be-9aaeff8cab6a",
+   "description": "Cycle scan_2026-09-10_rj4, leg A3, over the 23 DECLARED flagship surfaces of 16 Tier A agencies — a PARTIAL population, because the other agencies have declared no product to look at. `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Denominator: pass + fail, which is 14. (cc_tasks/2026-09-09_report_draft.md)",
    "computed_from": [
     {
-     "name": "scan_matrix_2026-09-10_rj2",
-     "path": "state/scan_matrix_2026-09-10_rj2.json",
+     "name": "scan_matrix_tierA_2026-09-10_rj4",
+     "path": "docs/reports/scan_matrix_tierA_2026-09-10_rj4.json",
      "present_in_repository": true,
      "ephemeral": false
     }
@@ -904,15 +892,15 @@
    ]
   },
   {
-   "name": "scan_l0_product_a3_pass_2026-09-10_rj2",
+   "name": "scan_l0_product_a3_pass_2026-09-10_rj4",
    "value": 4.0,
-   "state": "published",
-   "artifact_id": "c3927a07-9057-46e6-ab24-48d5282f50de",
-   "description": "Cycle scan_2026-09-10_rj2, leg A3, over the 23 DECLARED flagship surfaces of 16 Tier A agencies — a PARTIAL population, because the other agencies have declared no product to look at. `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Verdicts of `pass`: 4. Re-judged under generation 9 (`RULE-A3-v6`, `RULE-B3-v3`): an ABSENCE claim reached over a candidate set with a BLIND member is a scope limitation and owes `error`, not `fail` (ISA 705; DD-052 §6). Same Observations, nothing re-fetched, no Observation created — the evidence is the measured cycle's and the judgement is generation 9's. Supersedes `scan_l0_product_a3_pass_2026-09-10_rj1`, which was never registered. a figure of this cycle falls back to `scan_l0_product_a3_pass_2026-09-10` = nothing, so this number is registered under its own name rather than resolved through that one. Every Result it supersedes is unedited and stands as the record of the judgement that made it (AD-028). (cc_tasks/2026-09-11_rejudge_1_2_3_4_gen9.md)",
+   "state": "verified",
+   "artifact_id": "87c21d92-790f-4408-a52d-86e0ab21258a",
+   "description": "Cycle scan_2026-09-10_rj4, leg A3, over the 23 DECLARED flagship surfaces of 16 Tier A agencies — a PARTIAL population, because the other agencies have declared no product to look at. `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Verdicts of `pass`: 4. (cc_tasks/2026-09-09_report_draft.md)",
    "computed_from": [
     {
-     "name": "scan_matrix_2026-09-10_rj2",
-     "path": "state/scan_matrix_2026-09-10_rj2.json",
+     "name": "scan_matrix_tierA_2026-09-10_rj4",
+     "path": "docs/reports/scan_matrix_tierA_2026-09-10_rj4.json",
      "present_in_repository": true,
      "ephemeral": false
     }
@@ -927,15 +915,15 @@
    ]
   },
   {
-   "name": "scan_l0_product_a6_applicable_n_2026-09-10_rj2",
+   "name": "scan_l0_product_a6_applicable_n_2026-09-10_rj4",
    "value": 19.0,
-   "state": "published",
-   "artifact_id": "c53bf941-0456-4a32-8289-b1d836fd4e98",
-   "description": "Cycle scan_2026-09-10_rj2, leg A6, over the 23 DECLARED flagship surfaces of 16 Tier A agencies — a PARTIAL population, because the other agencies have declared no product to look at. `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Denominator: pass + fail, which is 19. Re-judged under generation 9 (`RULE-A3-v6`, `RULE-B3-v3`): an ABSENCE claim reached over a candidate set with a BLIND member is a scope limitation and owes `error`, not `fail` (ISA 705; DD-052 §6). Same Observations, nothing re-fetched, no Observation created — the evidence is the measured cycle's and the judgement is generation 9's. Supersedes `scan_l0_product_a6_applicable_n_2026-09-10_rj1`, which was never registered. a figure of this cycle falls back to `scan_l0_product_a6_applicable_n_2026-09-10` = nothing, so this number is registered under its own name rather than resolved through that one. Every Result it supersedes is unedited and stands as the record of the judgement that made it (AD-028). (cc_tasks/2026-09-11_rejudge_1_2_3_4_gen9.md)",
+   "state": "verified",
+   "artifact_id": "2de49de0-e3ca-4b5e-84b7-767b5ede787c",
+   "description": "Cycle scan_2026-09-10_rj4, leg A6, over the 23 DECLARED flagship surfaces of 16 Tier A agencies — a PARTIAL population, because the other agencies have declared no product to look at. `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Denominator: pass + fail, which is 19. (cc_tasks/2026-09-09_report_draft.md)",
    "computed_from": [
     {
-     "name": "scan_matrix_2026-09-10_rj2",
-     "path": "state/scan_matrix_2026-09-10_rj2.json",
+     "name": "scan_matrix_tierA_2026-09-10_rj4",
+     "path": "docs/reports/scan_matrix_tierA_2026-09-10_rj4.json",
      "present_in_repository": true,
      "ephemeral": false
     }
@@ -950,15 +938,15 @@
    ]
   },
   {
-   "name": "scan_l0_product_a6_pass_2026-09-10_rj2",
+   "name": "scan_l0_product_a6_pass_2026-09-10_rj4",
    "value": 1.0,
-   "state": "published",
-   "artifact_id": "db643bae-e9f2-483d-98c7-257e246b723e",
-   "description": "Cycle scan_2026-09-10_rj2, leg A6, over the 23 DECLARED flagship surfaces of 16 Tier A agencies — a PARTIAL population, because the other agencies have declared no product to look at. `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Verdicts of `pass`: 1. Re-judged under generation 9 (`RULE-A3-v6`, `RULE-B3-v3`): an ABSENCE claim reached over a candidate set with a BLIND member is a scope limitation and owes `error`, not `fail` (ISA 705; DD-052 §6). Same Observations, nothing re-fetched, no Observation created — the evidence is the measured cycle's and the judgement is generation 9's. Supersedes `scan_l0_product_a6_pass_2026-09-10_rj1`, which was never registered. a figure of this cycle falls back to `scan_l0_product_a6_pass_2026-09-10` = nothing, so this number is registered under its own name rather than resolved through that one. Every Result it supersedes is unedited and stands as the record of the judgement that made it (AD-028). (cc_tasks/2026-09-11_rejudge_1_2_3_4_gen9.md)",
+   "state": "verified",
+   "artifact_id": "c2d27927-5a82-48c2-85ce-bfdef9527ec6",
+   "description": "Cycle scan_2026-09-10_rj4, leg A6, over the 23 DECLARED flagship surfaces of 16 Tier A agencies — a PARTIAL population, because the other agencies have declared no product to look at. `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Verdicts of `pass`: 1. (cc_tasks/2026-09-09_report_draft.md)",
    "computed_from": [
     {
-     "name": "scan_matrix_2026-09-10_rj2",
-     "path": "state/scan_matrix_2026-09-10_rj2.json",
+     "name": "scan_matrix_tierA_2026-09-10_rj4",
+     "path": "docs/reports/scan_matrix_tierA_2026-09-10_rj4.json",
      "present_in_repository": true,
      "ephemeral": false
     }
@@ -973,15 +961,15 @@
    ]
   },
   {
-   "name": "scan_l0_product_a8_applicable_n_2026-09-10_rj2",
+   "name": "scan_l0_product_a8_applicable_n_2026-09-10_rj4",
    "value": 19.0,
-   "state": "published",
-   "artifact_id": "56253706-e232-45e6-a7e2-d4574fd32a90",
-   "description": "Cycle scan_2026-09-10_rj2, leg A8, over the 23 DECLARED flagship surfaces of 16 Tier A agencies — a PARTIAL population, because the other agencies have declared no product to look at. `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Denominator: pass + fail, which is 19. Re-judged under generation 9 (`RULE-A3-v6`, `RULE-B3-v3`): an ABSENCE claim reached over a candidate set with a BLIND member is a scope limitation and owes `error`, not `fail` (ISA 705; DD-052 §6). Same Observations, nothing re-fetched, no Observation created — the evidence is the measured cycle's and the judgement is generation 9's. Supersedes `scan_l0_product_a8_applicable_n_2026-09-10_rj1`, which was never registered. a figure of this cycle falls back to `scan_l0_product_a8_applicable_n_2026-09-10` = nothing, so this number is registered under its own name rather than resolved through that one. Every Result it supersedes is unedited and stands as the record of the judgement that made it (AD-028). (cc_tasks/2026-09-11_rejudge_1_2_3_4_gen9.md)",
+   "state": "verified",
+   "artifact_id": "273cc231-4ac1-40d8-b7f3-97cb4c5fd6dc",
+   "description": "Cycle scan_2026-09-10_rj4, leg A8, over the 23 DECLARED flagship surfaces of 16 Tier A agencies — a PARTIAL population, because the other agencies have declared no product to look at. `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Denominator: pass + fail, which is 19. (cc_tasks/2026-09-09_report_draft.md)",
    "computed_from": [
     {
-     "name": "scan_matrix_2026-09-10_rj2",
-     "path": "state/scan_matrix_2026-09-10_rj2.json",
+     "name": "scan_matrix_tierA_2026-09-10_rj4",
+     "path": "docs/reports/scan_matrix_tierA_2026-09-10_rj4.json",
      "present_in_repository": true,
      "ephemeral": false
     }
@@ -996,15 +984,15 @@
    ]
   },
   {
-   "name": "scan_l0_product_a8_pass_2026-09-10_rj2",
+   "name": "scan_l0_product_a8_pass_2026-09-10_rj4",
    "value": 1.0,
-   "state": "published",
-   "artifact_id": "74cba31e-84fe-486a-a7f1-b68c0ae632a9",
-   "description": "Cycle scan_2026-09-10_rj2, leg A8, over the 23 DECLARED flagship surfaces of 16 Tier A agencies — a PARTIAL population, because the other agencies have declared no product to look at. `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Verdicts of `pass`: 1. Re-judged under generation 9 (`RULE-A3-v6`, `RULE-B3-v3`): an ABSENCE claim reached over a candidate set with a BLIND member is a scope limitation and owes `error`, not `fail` (ISA 705; DD-052 §6). Same Observations, nothing re-fetched, no Observation created — the evidence is the measured cycle's and the judgement is generation 9's. Supersedes `scan_l0_product_a8_pass_2026-09-10_rj1`, which was never registered. a figure of this cycle falls back to `scan_l0_product_a8_pass_2026-09-10` = nothing, so this number is registered under its own name rather than resolved through that one. Every Result it supersedes is unedited and stands as the record of the judgement that made it (AD-028). (cc_tasks/2026-09-11_rejudge_1_2_3_4_gen9.md)",
+   "state": "verified",
+   "artifact_id": "28841eef-a446-4355-9f65-ec5f99cee6cc",
+   "description": "Cycle scan_2026-09-10_rj4, leg A8, over the 23 DECLARED flagship surfaces of 16 Tier A agencies — a PARTIAL population, because the other agencies have declared no product to look at. `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Verdicts of `pass`: 1. (cc_tasks/2026-09-09_report_draft.md)",
    "computed_from": [
     {
-     "name": "scan_matrix_2026-09-10_rj2",
-     "path": "state/scan_matrix_2026-09-10_rj2.json",
+     "name": "scan_matrix_tierA_2026-09-10_rj4",
+     "path": "docs/reports/scan_matrix_tierA_2026-09-10_rj4.json",
      "present_in_repository": true,
      "ephemeral": false
     }
@@ -1019,15 +1007,15 @@
    ]
   },
   {
-   "name": "scan_l0_product_b3_applicable_n_2026-09-10_rj2",
+   "name": "scan_l0_product_b3_applicable_n_2026-09-10_rj4",
    "value": 19.0,
-   "state": "published",
-   "artifact_id": "8651ef6c-b8ac-40d6-9b86-d535f5abf513",
-   "description": "Cycle scan_2026-09-10_rj2, leg B3, over the 23 DECLARED flagship surfaces of 16 Tier A agencies — a PARTIAL population, because the other agencies have declared no product to look at. `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Denominator: pass + fail, which is 19. Re-judged under generation 9 (`RULE-A3-v6`, `RULE-B3-v3`): an ABSENCE claim reached over a candidate set with a BLIND member is a scope limitation and owes `error`, not `fail` (ISA 705; DD-052 §6). Same Observations, nothing re-fetched, no Observation created — the evidence is the measured cycle's and the judgement is generation 9's. Supersedes `scan_l0_product_b3_applicable_n_2026-09-10_rj1`, which was never registered. a figure of this cycle falls back to `scan_l0_product_b3_applicable_n_2026-09-10` = nothing, so this number is registered under its own name rather than resolved through that one. Every Result it supersedes is unedited and stands as the record of the judgement that made it (AD-028). (cc_tasks/2026-09-11_rejudge_1_2_3_4_gen9.md)",
+   "state": "verified",
+   "artifact_id": "72d3148f-ac6c-4e3a-a32d-ec24359b419a",
+   "description": "Cycle scan_2026-09-10_rj4, leg B3, over the 23 DECLARED flagship surfaces of 16 Tier A agencies — a PARTIAL population, because the other agencies have declared no product to look at. `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Denominator: pass + fail, which is 19. (cc_tasks/2026-09-09_report_draft.md)",
    "computed_from": [
     {
-     "name": "scan_matrix_2026-09-10_rj2",
-     "path": "state/scan_matrix_2026-09-10_rj2.json",
+     "name": "scan_matrix_tierA_2026-09-10_rj4",
+     "path": "docs/reports/scan_matrix_tierA_2026-09-10_rj4.json",
      "present_in_repository": true,
      "ephemeral": false
     }
@@ -1042,15 +1030,15 @@
    ]
   },
   {
-   "name": "scan_l0_product_b3_pass_2026-09-10_rj2",
+   "name": "scan_l0_product_b3_pass_2026-09-10_rj4",
    "value": 3.0,
-   "state": "published",
-   "artifact_id": "f5e46c81-511f-4200-bb43-dca78b4aeae3",
-   "description": "Cycle scan_2026-09-10_rj2, leg B3, over the 23 DECLARED flagship surfaces of 16 Tier A agencies — a PARTIAL population, because the other agencies have declared no product to look at. `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Verdicts of `pass`: 3. Re-judged under generation 9 (`RULE-A3-v6`, `RULE-B3-v3`): an ABSENCE claim reached over a candidate set with a BLIND member is a scope limitation and owes `error`, not `fail` (ISA 705; DD-052 §6). Same Observations, nothing re-fetched, no Observation created — the evidence is the measured cycle's and the judgement is generation 9's. Supersedes `scan_l0_product_b3_pass_2026-09-10_rj1`, which was never registered. a figure of this cycle falls back to `scan_l0_product_b3_pass_2026-09-10` = nothing, so this number is registered under its own name rather than resolved through that one. Every Result it supersedes is unedited and stands as the record of the judgement that made it (AD-028). (cc_tasks/2026-09-11_rejudge_1_2_3_4_gen9.md)",
+   "state": "verified",
+   "artifact_id": "053fe49f-d30e-4488-94d3-296ff44bd0fd",
+   "description": "Cycle scan_2026-09-10_rj4, leg B3, over the 23 DECLARED flagship surfaces of 16 Tier A agencies — a PARTIAL population, because the other agencies have declared no product to look at. `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Verdicts of `pass`: 3. (cc_tasks/2026-09-09_report_draft.md)",
    "computed_from": [
     {
-     "name": "scan_matrix_2026-09-10_rj2",
-     "path": "state/scan_matrix_2026-09-10_rj2.json",
+     "name": "scan_matrix_tierA_2026-09-10_rj4",
+     "path": "docs/reports/scan_matrix_tierA_2026-09-10_rj4.json",
      "present_in_repository": true,
      "ephemeral": false
     }
@@ -1065,15 +1053,15 @@
    ]
   },
   {
-   "name": "scan_l0_product_d4_applicable_n_2026-09-10_rj2",
+   "name": "scan_l0_product_d4_applicable_n_2026-09-10_rj4",
    "value": 19.0,
-   "state": "published",
-   "artifact_id": "33dbacdb-3f13-4ad6-89e6-5ad54d0930c0",
-   "description": "Cycle scan_2026-09-10_rj2, leg D4, over the 23 DECLARED flagship surfaces of 16 Tier A agencies — a PARTIAL population, because the other agencies have declared no product to look at. `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Denominator: pass + fail, which is 19. Re-judged under generation 9 (`RULE-A3-v6`, `RULE-B3-v3`): an ABSENCE claim reached over a candidate set with a BLIND member is a scope limitation and owes `error`, not `fail` (ISA 705; DD-052 §6). Same Observations, nothing re-fetched, no Observation created — the evidence is the measured cycle's and the judgement is generation 9's. Supersedes `scan_l0_product_d4_applicable_n_2026-09-10_rj1`, which was never registered. a figure of this cycle falls back to `scan_l0_product_d4_applicable_n_2026-09-10` = nothing, so this number is registered under its own name rather than resolved through that one. Every Result it supersedes is unedited and stands as the record of the judgement that made it (AD-028). (cc_tasks/2026-09-11_rejudge_1_2_3_4_gen9.md)",
+   "state": "verified",
+   "artifact_id": "35fa2927-3395-4f6b-91f3-8c7a102fecbf",
+   "description": "Cycle scan_2026-09-10_rj4, leg D4, over the 23 DECLARED flagship surfaces of 16 Tier A agencies — a PARTIAL population, because the other agencies have declared no product to look at. `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Denominator: pass + fail, which is 19. (cc_tasks/2026-09-09_report_draft.md)",
    "computed_from": [
     {
-     "name": "scan_matrix_2026-09-10_rj2",
-     "path": "state/scan_matrix_2026-09-10_rj2.json",
+     "name": "scan_matrix_tierA_2026-09-10_rj4",
+     "path": "docs/reports/scan_matrix_tierA_2026-09-10_rj4.json",
      "present_in_repository": true,
      "ephemeral": false
     }
@@ -1088,15 +1076,15 @@
    ]
   },
   {
-   "name": "scan_l0_product_d4_pass_2026-09-10_rj2",
+   "name": "scan_l0_product_d4_pass_2026-09-10_rj4",
    "value": 1.0,
-   "state": "published",
-   "artifact_id": "d6b2151b-2186-44b7-a2cd-910eb0814c43",
-   "description": "Cycle scan_2026-09-10_rj2, leg D4, over the 23 DECLARED flagship surfaces of 16 Tier A agencies — a PARTIAL population, because the other agencies have declared no product to look at. `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Verdicts of `pass`: 1. Re-judged under generation 9 (`RULE-A3-v6`, `RULE-B3-v3`): an ABSENCE claim reached over a candidate set with a BLIND member is a scope limitation and owes `error`, not `fail` (ISA 705; DD-052 §6). Same Observations, nothing re-fetched, no Observation created — the evidence is the measured cycle's and the judgement is generation 9's. Supersedes `scan_l0_product_d4_pass_2026-09-10_rj1`, which was never registered. a figure of this cycle falls back to `scan_l0_product_d4_pass_2026-09-10` = nothing, so this number is registered under its own name rather than resolved through that one. Every Result it supersedes is unedited and stands as the record of the judgement that made it (AD-028). (cc_tasks/2026-09-11_rejudge_1_2_3_4_gen9.md)",
+   "state": "verified",
+   "artifact_id": "c8419278-bda8-4116-bda0-d6ba6339f9a4",
+   "description": "Cycle scan_2026-09-10_rj4, leg D4, over the 23 DECLARED flagship surfaces of 16 Tier A agencies — a PARTIAL population, because the other agencies have declared no product to look at. `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Verdicts of `pass`: 1. (cc_tasks/2026-09-09_report_draft.md)",
    "computed_from": [
     {
-     "name": "scan_matrix_2026-09-10_rj2",
-     "path": "state/scan_matrix_2026-09-10_rj2.json",
+     "name": "scan_matrix_tierA_2026-09-10_rj4",
+     "path": "docs/reports/scan_matrix_tierA_2026-09-10_rj4.json",
      "present_in_repository": true,
      "ephemeral": false
     }
@@ -1111,15 +1099,61 @@
    ]
   },
   {
-   "name": "scan_l0_product_leg_rate_a1_upper95_2026-09-10_rj2",
-   "value": 0.168179,
-   "state": "published",
-   "artifact_id": "12d0a749-4aae-4e8f-b4ba-f5c130f2f3a1",
-   "description": "Cycle scan_2026-09-10_rj2, leg A1, over the 23 DECLARED flagship surfaces of 16 Tier A agencies — a PARTIAL population, because the other agencies have declared no product to look at. `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Upper bound of the 95% Wilson score interval on the pass rate, 0/19, from assessment/harness/rollup.py — the repo's own interval, delegated and never re-derived. At 19 and 0 passes this is the number the Hanley and Lippman-Hand rule of three approximates; it is registered rather than computed in prose so a reader can check the bound against the count that produced it. Wilson (1927), and Brown, Cai and DasGupta (2001) for why not Wald at a proportion this close to the end of the scale. Re-judged under generation 9 (`RULE-A3-v6`, `RULE-B3-v3`): an ABSENCE claim reached over a candidate set with a BLIND member is a scope limitation and owes `error`, not `fail` (ISA 705; DD-052 §6). Same Observations, nothing re-fetched, no Observation created — the evidence is the measured cycle's and the judgement is generation 9's. Supersedes `scan_l0_product_leg_rate_a1_upper95_2026-09-10_rj1`, which was never registered. a figure of this cycle falls back to `scan_l0_product_leg_rate_a1_upper95_2026-09-10` = nothing, so this number is registered under its own name rather than resolved through that one. Every Result it supersedes is unedited and stands as the record of the judgement that made it (AD-028). (cc_tasks/2026-09-11_rejudge_1_2_3_4_gen9.md)",
+   "name": "scan_l0_product_g4_applicable_n_2026-09-10_rj4",
+   "value": 19.0,
+   "state": "verified",
+   "artifact_id": "fa553d39-9fdd-4dff-b6f0-50557738a0b3",
+   "description": "Cycle scan_2026-09-10_rj4, leg G4, over the 23 DECLARED flagship surfaces of 16 Tier A agencies — a PARTIAL population, because the other agencies have declared no product to look at. `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Denominator: pass + fail, which is 19. (cc_tasks/2026-09-09_report_draft.md)",
    "computed_from": [
     {
-     "name": "scan_matrix_2026-09-10_rj2",
-     "path": "state/scan_matrix_2026-09-10_rj2.json",
+     "name": "scan_matrix_tierA_2026-09-10_rj4",
+     "path": "docs/reports/scan_matrix_tierA_2026-09-10_rj4.json",
+     "present_in_repository": true,
+     "ephemeral": false
+    }
+   ],
+   "generated_by": [
+    {
+     "name": "build_l0_matrices",
+     "path": "scripts/build_l0_matrices.py",
+     "present_in_repository": true,
+     "ephemeral": false
+    }
+   ]
+  },
+  {
+   "name": "scan_l0_product_g4_pass_2026-09-10_rj4",
+   "value": 1.0,
+   "state": "verified",
+   "artifact_id": "03ae3a70-1e9a-4eb0-a6a1-b3fa87b0ed20",
+   "description": "Cycle scan_2026-09-10_rj4, leg G4, over the 23 DECLARED flagship surfaces of 16 Tier A agencies — a PARTIAL population, because the other agencies have declared no product to look at. `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Verdicts of `pass`: 1. (cc_tasks/2026-09-09_report_draft.md)",
+   "computed_from": [
+    {
+     "name": "scan_matrix_tierA_2026-09-10_rj4",
+     "path": "docs/reports/scan_matrix_tierA_2026-09-10_rj4.json",
+     "present_in_repository": true,
+     "ephemeral": false
+    }
+   ],
+   "generated_by": [
+    {
+     "name": "build_l0_matrices",
+     "path": "scripts/build_l0_matrices.py",
+     "present_in_repository": true,
+     "ephemeral": false
+    }
+   ]
+  },
+  {
+   "name": "scan_l0_product_leg_rate_a1_upper95_2026-09-10_rj4",
+   "value": 0.168179,
+   "state": "verified",
+   "artifact_id": "5a2ca7bc-a92f-4d3f-96c9-06ab928ef2b7",
+   "description": "Cycle scan_2026-09-10_rj4, leg A1, over the 23 DECLARED flagship surfaces of 16 Tier A agencies — a PARTIAL population, because the other agencies have declared no product to look at. `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Upper bound of the 95% Wilson score interval on the pass rate, 0/19, from assessment/harness/rollup.py — the repo's own interval, delegated and never re-derived. At 19 and 0 passes this is the number the Hanley and Lippman-Hand rule of three approximates; it is registered rather than computed in prose so a reader can check the bound against the count that produced it. Wilson (1927), and Brown, Cai and DasGupta (2001) for why not Wald at a proportion this close to the end of the scale. (cc_tasks/2026-09-09_report_draft.md)",
+   "computed_from": [
+    {
+     "name": "scan_matrix_tierA_2026-09-10_rj4",
+     "path": "docs/reports/scan_matrix_tierA_2026-09-10_rj4.json",
      "present_in_repository": true,
      "ephemeral": false
     }
@@ -1157,15 +1191,15 @@
    ]
   },
   {
-   "name": "scan_l0_product_leg_rate_a3_upper95_2026-09-10_rj2",
+   "name": "scan_l0_product_leg_rate_a3_upper95_2026-09-10_rj4",
    "value": 0.546491,
-   "state": "published",
-   "artifact_id": "b59f9b60-a86b-4a81-8378-c93de0af638a",
-   "description": "Cycle scan_2026-09-10_rj2, leg A3, over the 23 DECLARED flagship surfaces of 16 Tier A agencies — a PARTIAL population, because the other agencies have declared no product to look at. `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Upper bound of the 95% Wilson score interval on the pass rate, 4/14, from assessment/harness/rollup.py — the repo's own interval, delegated and never re-derived. At 14 and 4 passes this is the number the Hanley and Lippman-Hand rule of three approximates; it is registered rather than computed in prose so a reader can check the bound against the count that produced it. Wilson (1927), and Brown, Cai and DasGupta (2001) for why not Wald at a proportion this close to the end of the scale. Re-judged under generation 9 (`RULE-A3-v6`, `RULE-B3-v3`): an ABSENCE claim reached over a candidate set with a BLIND member is a scope limitation and owes `error`, not `fail` (ISA 705; DD-052 §6). Same Observations, nothing re-fetched, no Observation created — the evidence is the measured cycle's and the judgement is generation 9's. Supersedes `scan_l0_product_leg_rate_a3_upper95_2026-09-10_rj1`, which was never registered. a figure of this cycle falls back to `scan_l0_product_leg_rate_a3_upper95_2026-09-10` = nothing, so this number is registered under its own name rather than resolved through that one. Every Result it supersedes is unedited and stands as the record of the judgement that made it (AD-028). (cc_tasks/2026-09-11_rejudge_1_2_3_4_gen9.md)",
+   "state": "verified",
+   "artifact_id": "80073c44-1943-4378-b334-e0281b1c3a63",
+   "description": "Cycle scan_2026-09-10_rj4, leg A3, over the 23 DECLARED flagship surfaces of 16 Tier A agencies — a PARTIAL population, because the other agencies have declared no product to look at. `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Upper bound of the 95% Wilson score interval on the pass rate, 4/14, from assessment/harness/rollup.py — the repo's own interval, delegated and never re-derived. At 14 and 4 passes this is the number the Hanley and Lippman-Hand rule of three approximates; it is registered rather than computed in prose so a reader can check the bound against the count that produced it. Wilson (1927), and Brown, Cai and DasGupta (2001) for why not Wald at a proportion this close to the end of the scale. (cc_tasks/2026-09-09_report_draft.md)",
    "computed_from": [
     {
-     "name": "scan_matrix_2026-09-10_rj2",
-     "path": "state/scan_matrix_2026-09-10_rj2.json",
+     "name": "scan_matrix_tierA_2026-09-10_rj4",
+     "path": "docs/reports/scan_matrix_tierA_2026-09-10_rj4.json",
      "present_in_repository": true,
      "ephemeral": false
     }
@@ -1180,15 +1214,15 @@
    ]
   },
   {
-   "name": "scan_l0_product_legs_2026-09-10_rj2",
-   "value": 10.0,
-   "state": "published",
-   "artifact_id": "7e8e8fef-3e8c-4bf1-901d-c106bc972ace",
-   "description": "Product-level checks asked of every declared flagship surface in cycle scan_2026-09-10_rj2: A1, A2, A3, A6, A8, A9, B3, D1, D4, F4. What a PRODUCT offers a machine, as against what a HOST declares. Task cc_tasks/2026-09-09_report_draft.md §1.3. (cc_tasks/2026-09-09_report_draft.md)",
+   "name": "scan_l0_product_legs_2026-09-10_rj4",
+   "value": 17.0,
+   "state": "verified",
+   "artifact_id": "3b3939c3-308d-4cbd-8d48-7d29589c63fd",
+   "description": "Product-level checks asked of every declared flagship surface in cycle scan_2026-09-10_rj4: A1, A2, A3, A6, A8, A9, B3, D1, D4, F4, B1, B2, B4, B5, D2, D3, G4. What a PRODUCT offers a machine, as against what a HOST declares. Task cc_tasks/2026-09-09_report_draft.md §1.3. (cc_tasks/2026-09-09_report_draft.md)",
    "computed_from": [
     {
-     "name": "scan_matrix_tierA_2026-09-10_rj2",
-     "path": "docs/reports/scan_matrix_tierA_2026-09-10_rj2.json",
+     "name": "scan_matrix_tierA_2026-09-10_rj4",
+     "path": "docs/reports/scan_matrix_tierA_2026-09-10_rj4.json",
      "present_in_repository": true,
      "ephemeral": false
     }
@@ -1203,15 +1237,15 @@
    ]
   },
   {
-   "name": "scan_l0_product_legs_at_zero_2026-09-10_rj2",
-   "value": 5.0,
-   "state": "published",
-   "artifact_id": "7cb26251-959e-471b-84af-2bf31f5b2928",
-   "description": "Product-level checks on which NO declared flagship surface passed in cycle scan_2026-09-10_rj2: A1, A2, A9, D1, F4. Counted over the 23 declared surfaces, which is a PARTIAL population; each of these has its own registered upper bound (`scan_leg_rate_<check>_upper95_...`), and a zero at this denominator is not evidence of universal absence. Task cc_tasks/2026-09-09_report_draft.md §1.3. (cc_tasks/2026-09-09_report_draft.md)",
+   "name": "scan_l0_product_legs_at_zero_2026-09-10_rj4",
+   "value": 11.0,
+   "state": "verified",
+   "artifact_id": "f5daa427-e607-48a1-90e8-64e9a6ddc910",
+   "description": "Product-level checks on which NO declared flagship surface passed in cycle scan_2026-09-10_rj4: A1, A2, A9, B1, B2, B4, B5, D1, D2, D3, F4. Counted over the 23 declared surfaces, which is a PARTIAL population; each of these has its own registered upper bound (`scan_leg_rate_<check>_upper95_...`), and a zero at this denominator is not evidence of universal absence. Task cc_tasks/2026-09-09_report_draft.md §1.3. (cc_tasks/2026-09-09_report_draft.md)",
    "computed_from": [
     {
-     "name": "scan_matrix_tierA_2026-09-10_rj2",
-     "path": "docs/reports/scan_matrix_tierA_2026-09-10_rj2.json",
+     "name": "scan_matrix_tierA_2026-09-10_rj4",
+     "path": "docs/reports/scan_matrix_tierA_2026-09-10_rj4.json",
      "present_in_repository": true,
      "ephemeral": false
     }
@@ -1226,15 +1260,15 @@
    ]
   },
   {
-   "name": "scan_l0_tierc_a12_pass_2026-09-10_rj2",
+   "name": "scan_l0_tierc_a12_pass_2026-09-10_rj4",
    "value": 3.0,
-   "state": "published",
-   "artifact_id": "c580d69f-2208-40c8-8090-2857626c6b88",
-   "description": "Cycle scan_2026-09-10_rj2, leg A12, over the 3 Tier C reference hosts' host-level surfaces, which enter no Tier A denominator. `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Verdicts of `pass`: 3. Re-judged under generation 9 (`RULE-A3-v6`, `RULE-B3-v3`): an ABSENCE claim reached over a candidate set with a BLIND member is a scope limitation and owes `error`, not `fail` (ISA 705; DD-052 §6). Same Observations, nothing re-fetched, no Observation created — the evidence is the measured cycle's and the judgement is generation 9's. Supersedes `scan_l0_tierc_a12_pass_2026-09-10_rj1`, which was never registered. a figure of this cycle falls back to `scan_l0_tierc_a12_pass_2026-09-10` = nothing, so this number is registered under its own name rather than resolved through that one. Every Result it supersedes is unedited and stands as the record of the judgement that made it (AD-028). (cc_tasks/2026-09-11_rejudge_1_2_3_4_gen9.md)",
+   "state": "verified",
+   "artifact_id": "57901b31-fa00-4b0d-8f57-0935cd290ea6",
+   "description": "Cycle scan_2026-09-10_rj4, leg A12, over the 3 Tier C reference hosts' host-level surfaces, which enter no Tier A denominator (DD-059). `error` means the COLLECTOR could not observe and is excluded from the denominator, never counted as a product failure (DD-052 §6). Verdicts of `pass`: 3. (cc_tasks/2026-09-09_report_draft.md)",
    "computed_from": [
     {
-     "name": "scan_matrix_2026-09-10_rj2",
-     "path": "state/scan_matrix_2026-09-10_rj2.json",
+     "name": "scan_matrix_tierA_2026-09-10_rj4",
+     "path": "docs/reports/scan_matrix_tierA_2026-09-10_rj4.json",
      "present_in_repository": true,
      "ephemeral": false
     }
@@ -1275,15 +1309,15 @@
    ]
   },
   {
-   "name": "scan_refusal_consecutive_measurements_2026-09-10_rj2",
+   "name": "scan_refusal_consecutive_measurements_2026-09-10_rj4",
    "value": 6.0,
-   "state": "published",
-   "artifact_id": "a93a9550-9926-41bf-8159-b6f4eb4187b4",
+   "state": "verified",
+   "artifact_id": "7a3fba86-45b1-44d6-8ba5-8d280c0c3836",
    "description": "Separate measurement artifacts in state/ that record ALL THREE of www.bls.gov, www.bts.gov, www.ssa.gov declining an identified, robots-compliant client: state/scan_preflight_2026-09.json, state/scan_2026-09-07.json, state/scan_2026-09-07b.json, state/fss_preflight_2026-09.json, state/scan_2026-09-09.json, state/scan_2026-09-10.json. Counted by re-reading each artifact rather than by trusting a prior report, and the count spans two error conventions: cycle 1 filed those refusals under `http_4xx` because the closed error set had no member for a refusal until harness-v3 added one. Two of the 6 are pre-flights that record bodies rather than observations, and one of those names them by agency code. This is the persistence behind the report's accessibility finding: not a transient, and not a sampling accident. Task cc_tasks/2026-09-09_report_draft.md §2. (cc_tasks/2026-09-09_report_draft.md)",
    "computed_from": [
     {
-     "name": "scan_2026-09-10_rj2",
-     "path": "state/scan_2026-09-10_rj2.json",
+     "name": "scan_2026-09-10_rj4",
+     "path": "state/scan_2026-09-10_rj4.json",
      "present_in_repository": true,
      "ephemeral": false
     }

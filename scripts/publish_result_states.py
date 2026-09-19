@@ -50,6 +50,9 @@ TASK = "cc_tasks/2026-09-12_publish_l0.md"
 #: body so the legal moves are readable in one place and agree with `research.yaml`'s
 #: `state_machines.Result` (proposed -> verified -> published).
 MOVES = {"verify": ("proposed", "verified"), "publish": ("verified", "published")}
+#: States further along the same path than a verb's target: a Result in one of these has
+#: already made the move and is counted, not refused.
+BEYOND = {"verify": ("published",)}
 
 
 def reproducing(report_path: Path) -> list:
@@ -91,7 +94,7 @@ def run(verb: str, names: list, commit: str | None, dry: bool) -> dict:
     domain = _get_domain_config(cfg)
     session_id = get_current_session(REPO)
 
-    moved, already, wrong_state, missing = [], [], [], []
+    moved, already, beyond, wrong_state, missing = [], [], [], [], []
     try:
         for name in names:
             with driver.session(database=db) as s:
@@ -103,6 +106,14 @@ def run(verb: str, names: list, commit: str | None, dry: bool) -> dict:
             aid, state = rows[0]["id"], rows[0]["state"]
             if state == to:
                 already.append(name)
+                continue
+            if state in BEYOND.get(verb, ()):
+                # Already further along the one legal path. A re-snapshot re-verifies a report
+                # whose cycle-independent Results (the frame, the collection facts) were
+                # published by the first snapshot and are quoted unchanged; moving them back is
+                # impossible and reporting them as a wrong state made the verb fail on every
+                # re-snapshot (`cc_tasks/2026-09-19_resnapshot_rj4.md`).
+                beyond.append(name)
                 continue
             if state != frm:
                 wrong_state.append(f"{name}: {state}, expected {frm}")
@@ -126,8 +137,8 @@ def run(verb: str, names: list, commit: str | None, dry: bool) -> dict:
         driver.close()
 
     out = {"verb": verb, "from": frm, "to": to, "of": len(names), "moved": len(moved),
-           "already_at_target": len(already), "wrong_state": wrong_state, "missing": missing,
-           "dry_run": dry}
+           "already_at_target": len(already), "already_beyond_target": len(beyond),
+           "wrong_state": wrong_state, "missing": missing, "dry_run": dry}
     if verb == "publish":
         out["commit"] = commit
     return out

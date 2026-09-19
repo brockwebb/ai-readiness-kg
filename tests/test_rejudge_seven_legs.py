@@ -283,7 +283,10 @@ def test_the_snapshot_guard_sees_the_new_columns(params):
 def test_prescriptions_on_the_snapshot_are_the_records_own_values():
     import prescriptions as P
     acts = P.actions(P.load_record())
-    assert P.on_cycle(acts, SNAPSHOT) is acts
+    # The CURRENT snapshot, read where every view reads it: since
+    # `cc_tasks/2026-09-19_resnapshot_rj4.md` it is no longer `SNAPSHOT` above, which names the
+    # cycle this file's task compared against.
+    assert P.on_cycle(acts, P.snapshot_cycle()) is acts
 
 
 def test_prescriptions_on_another_cycle_count_by_the_records_definition():
@@ -293,7 +296,7 @@ def test_prescriptions_on_another_cycle_count_by_the_records_definition():
     import prescriptions as P
     import tag_prescriptions as TP
     acts = P.actions(P.load_record())
-    fails = TP.matrix_fail_bodies(SNAPSHOT)
+    fails = TP.matrix_fail_bodies(P.snapshot_cycle())
     for a in acts:
         want = fails[a["leg"]][0] if a["leg"] in fails else 0
         assert a["value"]["bodies_failing_now"] == want, a["id"]

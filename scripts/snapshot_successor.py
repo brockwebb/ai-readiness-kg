@@ -71,18 +71,17 @@ _ROW_KEY = {"host": "host_surface", "product": "surface"}
 
 # --------------------------------------------------------------- decision 2: what the graph says
 
-def successor_info(session, snapshot: str) -> dict:
-    """The snapshot's successor generation, and how the two differ, in ONE query.
+def next_judgement(session, cycle: str) -> dict:
+    """The ONE judgement that supersedes `cycle`, and how the two differ — one hop, one query.
 
-    `pairs` is the count of `SUPERSEDES` edges from the successor's Findings into the
-    snapshot's; `verdict_moves` and `reason_only` split them by what actually changed. Both are
-    read off the Finding properties the projection stores, never off a `rejudgement_diff`
-    record in `state/` — a diff lists only what MOVED, so a pairing taken from one leaves every
-    unchanged judgement looking current at two generations at once
+    `pairs` is the count of `SUPERSEDES` edges from the next generation's Findings into this
+    one's; `verdict_moves` and `reason_only` split them by what actually changed. Both are read
+    off the Finding properties the projection stores, never off a `rejudgement_diff` record in
+    `state/` — a diff lists only what MOVED, so a pairing taken from one leaves every unchanged
+    judgement looking current at two generations at once
     (`2026-09-14_rejudgements_on_the_log_RESULT.md` §3b).
 
-    Returns `{}` when the snapshot has no successor, which is the ordinary state of a report
-    published the same day it was measured, and is reported as such rather than as an error.
+    Returns `{}` when nothing supersedes `cycle`.
     """
     row = session.run(
         "MATCH (new:Finding)-[:SUPERSEDES]->(old:Finding {cycle: $snap}) "
@@ -91,23 +90,83 @@ def successor_info(session, snapshot: str) -> dict:
         "       sum(CASE WHEN new.verdict <> old.verdict THEN 1 ELSE 0 END) AS verdict_moves, "
         "       sum(CASE WHEN new.verdict = old.verdict AND new.reason <> old.reason "
         "                THEN 1 ELSE 0 END) AS reason_only "
-        "ORDER BY pairs DESC", snap=snapshot).data()
+        "ORDER BY pairs DESC", snap=cycle).data()
     if not row:
         return {}
     if len(row) > 1:
         # Two cycles claiming to supersede the same judgement is not a thing to average. One of
         # them is a publication defect and the build says so rather than picking the larger.
         raise SystemExit(
-            f"FATAL: {snapshot} has {len(row)} successor cycles on the graph "
+            f"FATAL: {cycle} has {len(row)} successor cycles on the graph "
             f"({', '.join(sorted(r['cycle'] or '<unnamed>' for r in row))}); supersession is "
             f"one to one (DN-003 decision 3) and the report cannot name one of two")
-    r = row[0]
+    return dict(row[0])
+
+
+def supersession_chain(session, snapshot: str) -> list:
+    """Every hop from `snapshot` to the NEWEST judgement of its evidence, in order.
+
+    `cc_tasks/2026-09-19_resnapshot_rj4.md` decision 3. The guard used to stop at the first
+    hop, and on 2026-09-18 that hop (`_rj2` -> `_rj3`) moved nothing while the next one
+    (`_rj3` -> `_rj4`) moved three tagged Results and 161 product cells: a one-hop guard reports
+    "nothing moved" about a snapshot any number of generations stale. "Is the snapshot current"
+    is a question about the head of the chain, so the chain is walked to its head.
+
+    A chain that returns to a cycle it has already passed is a corrupt log and is fatal; walking
+    it would never end.
+    """
+    hops, seen, cur = [], {snapshot}, snapshot
+    while True:
+        hop = next_judgement(session, cur)
+        if not hop:
+            return hops
+        if hop["cycle"] in seen:
+            raise SystemExit(
+                f"FATAL: the SUPERSEDES chain from {snapshot} returns to {hop['cycle']} after "
+                f"{' -> '.join([snapshot] + [h['cycle'] for h in hops])}; a judgement cannot "
+                f"supersede one of its own successors (DN-003 decision 3)")
+        seen.add(hop["cycle"])
+        hops.append(hop)
+        cur = hop["cycle"]
+
+
+def successor_info(session, snapshot: str) -> dict:
+    """The NEWEST judgement of the snapshot's evidence, how it differs from the snapshot, and
+    the chain walked to reach it.
+
+    `successor` is the head of the chain (`supersession_chain`), not the first hop; `chain` is
+    every cycle from the snapshot to the head and `hops` each hop's own counts, so the report
+    and every RESULT can say which way the guard went. The three counts are TRANSITIVE —
+    snapshot to head over `SUPERSEDES*` — because the question the line answers is how the
+    snapshot differs from the judgement of record, and a Finding the head never reaches (the
+    22 G1-D Findings DD-066 withdrew from `home` and Tier C surfaces stop at `_rj3`) has no
+    successor there and is not counted as superseded.
+
+    Returns `{}` when the snapshot has no successor, which is the ordinary state of a report
+    published on the newest judgement, and is reported as such rather than as an error.
+    """
+    hops = supersession_chain(session, snapshot)
+    if not hops:
+        return {}
+    head = hops[-1]
+    r = session.run(
+        "MATCH (new:Finding {cycle: $head})-[:SUPERSEDES*1..]->(old:Finding {cycle: $snap}) "
+        "WITH DISTINCT new, old "
+        "RETURN count(*) AS pairs, "
+        "       sum(CASE WHEN new.verdict <> old.verdict THEN 1 ELSE 0 END) AS verdict_moves, "
+        "       sum(CASE WHEN new.verdict = old.verdict AND new.reason <> old.reason "
+        "                THEN 1 ELSE 0 END) AS reason_only", head=head["cycle"],
+        snap=snapshot).single()
     snap_n = session.run("MATCH (f:Finding {cycle: $c}) RETURN count(f) AS n",
                          c=snapshot).single()["n"]
-    return {"snapshot": snapshot, "snapshot_findings": snap_n, "successor": r["cycle"],
-            "successor_generation": r["generation"], "successor_kind": r["cycle_kind"],
-            "superseded_findings": r["pairs"], "verdict_moves": r["verdict_moves"],
-            "reason_only_changes": r["reason_only"]}
+    return {"snapshot": snapshot, "snapshot_findings": snap_n, "successor": head["cycle"],
+            "successor_generation": head["generation"], "successor_kind": head["cycle_kind"],
+            "superseded_findings": r["pairs"], "verdict_moves": r["verdict_moves"] or 0,
+            "reason_only_changes": r["reason_only"] or 0,
+            "chain": [snapshot] + [h["cycle"] for h in hops],
+            "hops": [{"cycle": h["cycle"], "generation": h["generation"],
+                      "pairs": h["pairs"], "verdict_moves": h["verdict_moves"],
+                      "reason_only": h["reason_only"]} for h in hops]}
 
 
 def supersession_line(info: dict) -> str:
@@ -126,9 +185,16 @@ def supersession_line(info: dict) -> str:
     if not info:
         return ("**Standing.** No later judgement of this cycle's evidence is on the event "
                 "log: the snapshot is the current judgement of record.")
+    via = ""
+    if len(info.get("chain") or []) > 2:
+        # The chain the guard walked, as names (inside backticks, so the lint reads them as
+        # addresses): decision 3 of `cc_tasks/2026-09-19_resnapshot_rj4.md` asks that it be
+        # reported, and a reader told only the head could not see what lay between.
+        via = (" (reached through "
+               + " -> ".join(f"`{c}`" for c in info["chain"][1:-1]) + ")")
     return (f"**Standing.** This snapshot has been superseded on the event log by "
             f"`{info['successor']}`, generation {_n(info['successor_generation'])} of this "
-            f"cycle, which re-judged the same evidence: "
+            f"cycle{via}, which re-judged the same evidence: "
             f"{_n(info['superseded_findings'])} of this snapshot's "
             f"{_n(info['snapshot_findings'])} findings have a successor, "
             f"{_n(info['verdict_moves'])} of them move a verdict and "
