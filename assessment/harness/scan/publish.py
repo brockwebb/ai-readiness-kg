@@ -206,6 +206,12 @@ def cycle_fields(payload: dict, cycle: str) -> dict:
     if is_rejudgement(payload):
         out["source_cycle"] = source_cycle_of(payload)
         out["supersedes"] = supersedes_of(cycle)
+    # A spot cycle says so on every event it writes (`cc_tasks/2026-09-19_spot_scan.md`
+    # decision 2), so a reader of the log alone can tell a measurement of one body from a
+    # measurement of the frame without opening `state/`. A frame cycle's events are unchanged.
+    if spot.is_spot(cycle, payload):
+        out["scope"] = spot.SCOPE
+        out["spot_targets"] = list(payload.get("spot_targets") or [])
     for k in ("base_params_hash", "params_overlay", "harness_version"):
         if payload.get(k) is not None:
             out[k] = payload[k]
@@ -259,6 +265,10 @@ def write_events(payload: dict, src: Path | None = None) -> dict:
     """
     from kg import eventlog
     cycle = cycle_of(payload, src)
+    # Before anything is read or written: a spot named `scan_…`, or a `spot_…` that does not
+    # say `scope: spot`, is refused here, where the name meets the log
+    # (`cc_tasks/2026-09-19_spot_scan.md` decision 1).
+    spot.check_identity(cycle, payload)
     findings = payload["findings_detail"] + payload.get("control_findings_detail", [])
     where = shard_for(cycle, [f["finding_id"] for f in findings])
     seen_obs, seen_fnd, annotated, _ = _log_index()
@@ -342,11 +352,23 @@ def write_supersession(payload: dict, src: Path | None = None) -> dict:
     """
     from kg import eventlog
     cycle = cycle_of(payload, src)
+    spot.check_identity(cycle, payload)
     pred = supersedes_of(cycle)
     if not is_rejudgement(payload) or not pred:
         return {"supersession_events_written": 0, "supersession_pairs": 0,
                 "supersedes": None, "unpaired": 0}
     pred_payload = json.loads((REPO / "state" / f"{pred}.json").read_text(encoding="utf-8"))
+    # A spot cycle and a frame cycle never stand in a SUPERSEDES pair, in either direction
+    # (`cc_tasks/2026-09-19_spot_scan.md` decision 2). A spot is a later measurement BESIDE the
+    # cycle of record, not a judgement that replaces its Findings; and a frame re-judgement
+    # replacing a spot's Findings would make "the current judgement of this surface" a spot's
+    # by accident of naming. `supersedes_of` derives the predecessor from the name, so the two
+    # cannot meet today; this makes that a refusal rather than a coincidence.
+    if spot.is_spot(cycle, payload) != spot.is_spot(pred, pred_payload):
+        raise SystemExit(
+            f"REFUSING: {cycle} ({'spot' if spot.is_spot(cycle, payload) else 'frame'}) would "
+            f"supersede {pred} ({'spot' if spot.is_spot(pred, pred_payload) else 'frame'}). A "
+            f"spot cycle and a frame cycle never supersede one another.")
     by_key: dict = {}
     for f in pred_payload["findings_detail"]:
         key = (f["target_doc_id"], f["leg"])
@@ -476,9 +498,16 @@ def promote_evidence(payload: dict, staging: Path | None = None,
 #: in the second — which is how cycle 4 found it, after the run and before the publish. The
 #: `sys.path` inserts at the top of this file are what make the absolute form work either way.
 from scan.model import SYNTHETIC_PREFIXES                            # noqa: E402
+from scan import spot                                                # noqa: E402
 CONTROL_PREFIX = "control:"
 
 SCAN_LABELS = ("Observation", "Finding", "Rule")
+
+#: What a SCRATCH projection's label prefix must look like: a Cypher identifier that no label
+#: of this database starts with. `cc_tasks/2026-09-19_spot_scan.md` decision 5 projects a
+#: throwaway spot cycle into "a scratch label set", and the prefix is what keeps the reset in
+#: `project` off the real `Observation`/`Finding`/`Rule` nodes.
+_SCRATCH_PREFIX_RE = re.compile(r"^Scratch[A-Za-z0-9]+_$")
 
 
 def link_rules_to_indicators(session) -> dict:
@@ -526,9 +555,23 @@ def link_rules_to_indicators(session) -> dict:
     return counts
 
 
-def project() -> dict:
+def project(label_prefix: str = "") -> dict:
+    """Reset and replay the scan layer from the log.
+
+    `label_prefix` projects into a SCRATCH label set instead — `ScratchSpot_Observation` and so
+    on — for a gate that has to run the projection over a throwaway log without touching the
+    real one (`cc_tasks/2026-09-19_spot_scan.md` decision 5). Only a prefix of the form
+    `Scratch<word>_` is accepted, so no typo can resolve to a real label. Under a prefix the
+    Rule-to-indicator bridge is not built: it MERGEs edges onto the framework's own
+    `AssessmentIndicator` nodes, which a scratch run has no business touching. `Document` is
+    matched, never written, whatever the prefix.
+    """
     from kg import eventlog
     from seldon.config import get_neo4j_driver, load_project_config
+    if label_prefix and not _SCRATCH_PREFIX_RE.match(label_prefix):
+        raise SystemExit(f"REFUSING: scratch label prefix {label_prefix!r} is not "
+                         f"`Scratch<word>_`; a prefix that could name a real label is not one")
+    O, F, R = (f"{label_prefix}{l}" for l in SCAN_LABELS)
     cfg = load_project_config(REPO)
     driver = get_neo4j_driver(cfg)
     #: `observed_on_missing_document` is an INTEGRITY check — an observation of a surface the
@@ -558,7 +601,7 @@ def project() -> dict:
             superseding[ev["finding_id"]] = ev["supersedes_finding_id"]
     try:
         with driver.session(database=cfg["neo4j"]["database"]) as s:
-            pred = " OR ".join(f"n:{l}" for l in SCAN_LABELS)
+            pred = " OR ".join(f"n:{l}" for l in (O, F, R))
             s.run(f"MATCH (n) WHERE {pred} DETACH DELETE n")
             # Finding events are BUFFERED and written after the pass that writes the
             # Observations, so a Finding may cite evidence recorded on any shard. Ordering
@@ -574,7 +617,7 @@ def project() -> dict:
                 if t == FIND_EVENT:
                     find_events.append(ev)
                 elif t == OBS_EVENT:
-                    s.run("MERGE (o:Observation {obs_id: $id}) SET o.leg = $leg, "
+                    s.run(f"MERGE (o:{O} {{obs_id: $id}}) SET o.leg = $leg, "
                           "o.indicator_code = $code, o.surface_doc_id = $doc, "
                           "o.captured_at = $at, o.collector = $col, "
                           "o.evidence_hash = $hash, o.raw_ref = $ref, "
@@ -596,7 +639,7 @@ def project() -> dict:
                     hit = s.run("MATCH (d:Document {doc_id: $d}) RETURN count(d) AS n",
                                 d=ev["target_doc_id"]).single()["n"]
                     if hit:
-                        s.run("MATCH (o:Observation {obs_id: $id}) "
+                        s.run(f"MATCH (o:{O} {{obs_id: $id}}) "
                               "MATCH (d:Document {doc_id: $d}) MERGE (o)-[:OBSERVED_ON]->(d)",
                               id=ev["obs_id"], d=ev["target_doc_id"])
                         counts["observed_on"] += 1
@@ -617,7 +660,7 @@ def project() -> dict:
                 # this exists for ("a Finding with no SUPPORTS edge and no annotation")
                 # deserves an answer that is stored rather than inferred from a missing key.
                 unret = ev["finding_id"] in unretained
-                s.run("MERGE (f:Finding {finding_id: $id}) SET f.rule_id = $rid, "
+                s.run(f"MERGE (f:{F} {{finding_id: $id}}) SET f.rule_id = $rid, "
                       "f.indicator_code = $code, f.verdict = $v, f.reason = $r, "
                       "f.params_hash = $ph, f.target_doc_id = $doc, "
                       "f.evidence_unretained = $unret, f.cycle = $cyc, "
@@ -640,14 +683,14 @@ def project() -> dict:
                       gen=ev.get("generation"))
                 counts["findings"] += 1
                 counts["findings_evidence_unretained"] += int(unret)
-                s.run("MERGE (r:Rule {rule_id: $rid}) SET r.version = $ver",
+                s.run(f"MERGE (r:{R} {{rule_id: $rid}}) SET r.version = $ver",
                       rid=ev["rule_id"], ver=ev["rule_version"])
-                s.run("MATCH (f:Finding {finding_id: $id}) MATCH (r:Rule {rule_id: $rid}) "
+                s.run(f"MATCH (f:{F} {{finding_id: $id}}) MATCH (r:{R} {{rule_id: $rid}}) "
                       "MERGE (f)-[:RULED_BY]->(r)", id=ev["finding_id"], rid=ev["rule_id"])
                 counts["ruled_by"] += 1
                 for oid in ev.get("evidence") or []:
-                    s.run("MATCH (o:Observation {obs_id: $o}) "
-                          "MATCH (f:Finding {finding_id: $f}) MERGE (o)-[:SUPPORTS]->(f)",
+                    s.run(f"MATCH (o:{O} {{obs_id: $o}}) "
+                          f"MATCH (f:{F} {{finding_id: $f}}) MERGE (o)-[:SUPPORTS]->(f)",
                           o=oid, f=ev["finding_id"])
                     counts["supports"] += 1
             # DN-003 decision 3. The pairing is READ from the log, never recomputed: these
@@ -656,8 +699,8 @@ def project() -> dict:
             # skipped — a supersession event naming a Finding the log does not hold is the same
             # class of claim as a Finding naming an Observation it does not hold.
             for new_id, old_id in superseding.items():
-                n = s.run("MATCH (a:Finding {finding_id: $a}) "
-                          "MATCH (b:Finding {finding_id: $b}) "
+                n = s.run(f"MATCH (a:{F} {{finding_id: $a}}) "
+                          f"MATCH (b:{F} {{finding_id: $b}}) "
                           "MERGE (a)-[:SUPERSEDES]->(b) RETURN count(*) AS n",
                           a=new_id, b=old_id).single()["n"]
                 counts["supersedes" if n else "supersedes_unresolved"] += 1
@@ -668,21 +711,22 @@ def project() -> dict:
             # has to be able to say "this is the judgement of record, and here is whether
             # anything has replaced it" without the reader reconstructing the chain. `withdrawn`
             # is set on EVERY Finding, true or false, for the reason `evidence_unretained` is.
-            s.run("MATCH (f:Finding) SET f.withdrawn = false, f.withdrawn_reason = null")
+            s.run(f"MATCH (f:{F}) SET f.withdrawn = false, f.withdrawn_reason = null")
             for fid, why in withdrawn.items():
-                n = s.run("MATCH (f:Finding {finding_id: $id}) SET f.withdrawn = true, "
+                n = s.run(f"MATCH (f:{F} {{finding_id: $id}}) SET f.withdrawn = true, "
                           "f.withdrawn_reason = $why RETURN count(f) AS n",
                           id=fid, why=why).single()["n"]
                 counts["findings_withdrawn" if n else "withdrawn_unresolved"] += 1
-            s.run("MATCH (f:Finding) SET f.current = NOT f.withdrawn AND NOT EXISTS { "
-                  "MATCH (:Finding)-[:SUPERSEDES]->(f) }")
+            s.run(f"MATCH (f:{F}) SET f.current = NOT f.withdrawn AND NOT EXISTS {{ "
+                  f"MATCH (:{F})-[:SUPERSEDES]->(f) }}")
             counts["findings_current"] = s.run(
-                "MATCH (f:Finding) WHERE f.current RETURN count(f)").single()[0]
+                f"MATCH (f:{F}) WHERE f.current RETURN count(f)").single()[0]
             counts["findings_superseded"] = s.run(
-                "MATCH (f:Finding) WHERE EXISTS { MATCH (:Finding)-[:SUPERSEDES]->(f) } "
+                f"MATCH (f:{F}) WHERE EXISTS {{ MATCH (:{F})-[:SUPERSEDES]->(f) }} "
                 "RETURN count(f)").single()[0]
-            counts["rules"] = s.run("MATCH (r:Rule) RETURN count(r)").single()[0]
-            counts.update(link_rules_to_indicators(s))
+            counts["rules"] = s.run(f"MATCH (r:{R}) RETURN count(r)").single()[0]
+            if not label_prefix:
+                counts.update(link_rules_to_indicators(s))
     finally:
         driver.close()
     return counts

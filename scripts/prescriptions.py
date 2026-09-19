@@ -28,6 +28,13 @@ bodies fail which leg; the record says which actions close which outcome of that
 Where a leg's rule has more than one failing outcome, every action on the leg is printed with
 the outcome it closes, because the matrix carries verdicts and not reasons and nothing here
 may guess which branch fired.
+
+**Spot cycles** (`cc_tasks/2026-09-19_spot_scan.md` decision 3). A body may have been measured
+again, alone, after the snapshot — a spot cycle, run when a publisher asks to see its fixes.
+`latest_for(body)` names the newest measurement of a body, whichever cycle that is, and
+`since_snapshot(body)` diffs it against the snapshot leg by leg. `--body` lists a body's
+failures from its LATEST measurement; `bodies_failing_now` is a frame quantity and stays the
+snapshot's, because a spot of one body says nothing about how many others fail a leg.
 """
 from __future__ import annotations
 
@@ -38,9 +45,16 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO))
+sys.path.insert(0, str(REPO / "assessment" / "harness"))
+
+from scan import spot  # noqa: E402  the one definition of what a spot cycle is
 
 RECORD = REPO / "framework" / "ai_readiness_framework.json"
 PUBLICATION = REPO / "docs" / "reports" / "publication.yaml"
+#: Where the published matrices are read. A module global read at call time, so the spot scan's
+#: loopback gate can point every view at a throwaway tree (`cc_tasks/2026-09-19_spot_scan.md`
+#: decision 5). `scripts/score.py` reads matrices through here too.
+REPORTS = REPO / "docs" / "reports"
 
 #: Printed after the header line of every mode, never beside a band.
 NOTIONAL = "(notional)"
@@ -67,18 +81,130 @@ def actions(g: dict) -> list:
 
 def snapshot_cycle() -> str:
     import yaml
-    return yaml.safe_load(PUBLICATION.read_text(encoding="utf-8"))["snapshot_cycle"]
+    cycle = yaml.safe_load(PUBLICATION.read_text(encoding="utf-8"))["snapshot_cycle"]
+    spot.refuse_as_snapshot(cycle)
+    return cycle
+
+
+def _shown(path: Path) -> str:
+    """Repo-relative where it can be; the absolute path for a throwaway tree outside it."""
+    try:
+        return str(path.relative_to(REPO))
+    except ValueError:
+        return str(path)
 
 
 def matrices(cycle: str) -> list:
     suffix = cycle.replace("scan_", "")
     out = []
     for kind in ("tierA", "product"):
-        path = REPO / "docs" / "reports" / f"scan_matrix_{kind}_{suffix}.json"
+        path = REPORTS / f"scan_matrix_{kind}_{suffix}.json"
         m = json.loads(path.read_text(encoding="utf-8"))
-        m["_kind"], m["_path"] = kind, str(path.relative_to(REPO))
+        m["_kind"], m["_path"] = kind, _shown(path)
         out.append(m)
     return out
+
+
+# ------------------------------------------------------------------ spot cycles (decision 3)
+
+def published_cycles() -> dict:
+    """`{"full": [...], "spot": [...]}`: every cycle with a published host-level matrix, split
+    by what it measured. A spot is known by its matrix header (`scope: spot`) or its name, the
+    two `scan.spot` reads; a frame cycle is everything else. Sorted by the day measured, then
+    name."""
+    out: dict = {"full": [], "spot": []}
+    for path in sorted(REPORTS.glob("scan_matrix_tierA_*.json")):
+        suffix = path.name[len("scan_matrix_tierA_"):-len(".json")]
+        head = json.loads(path.read_text(encoding="utf-8"))
+        # The cycle is the FILE's, as `matrices` addresses it; the header is read only for
+        # `scope`, so a header whose `cycle` field disagrees with its file cannot move a view.
+        cycle = suffix if suffix.startswith(spot.SPOT_PREFIX) else f"scan_{suffix}"
+        out["spot" if spot.is_spot(cycle, head) else "full"].append(cycle)
+    for k in out:
+        out[k].sort(key=lambda c: (spot.measured_on(c) or "", c))
+    return out
+
+
+def spot_info(cycle: str) -> dict:
+    """One spot cycle as a view lists it: its bodies, its day, its matrices."""
+    mats = matrices(cycle)
+    head = mats[0]
+    return {"cycle": cycle, "measured_on": spot.measured_on(cycle),
+            "bodies": list(head.get("spot_targets") or bodies(cycle)),
+            "matrices": [m["_path"] for m in mats]}
+
+
+def latest_for(body: str) -> str:
+    """The newest measurement of `body`: the snapshot, or a spot cycle whose matrices hold the
+    body and whose day is not before the snapshot's measurement.
+
+    Ordered by the day the EVIDENCE was collected (`spot.measured_on`), never by a cycle's
+    generation: the snapshot `scan_2026-09-10_rj4` is a 2026-09-19 judgement of 2026-09-10
+    bytes, and a spot of 2026-09-15 saw the body later than it did. A spot on the snapshot's
+    own day wins the tie, because a spot is only ever requested after a snapshot exists.
+    """
+    snap = snapshot_cycle()
+    best = (spot.measured_on(snap) or "", 0, snap)
+    for c in published_cycles()["spot"]:
+        if body in bodies(c):
+            best = max(best, (spot.measured_on(c) or "", 1, c))
+    return best[2]
+
+
+def leg_states(cycle: str, body: str) -> dict:
+    """`{leg: state}` for one body on one cycle, over both matrices: `fail` if any of its rows
+    fails the leg, `pass` if every judged row passes, otherwise the verdicts it does carry,
+    joined (`error`, `not_applicable`, `error/pass`) — so a leg the harness could not see is
+    never reported as fixed or as broken."""
+    seen: dict = {}
+    for m in matrices(cycle):
+        for r in m["rows"]:
+            if r["agency"] != body or (m["_kind"] == "product" and not r.get("declared")):
+                continue
+            for leg in m["legs"]:
+                v = r["verdicts"].get(leg)
+                if v is not None:
+                    seen.setdefault(leg, set()).add(v)
+    out = {}
+    for leg, vs in seen.items():
+        out[leg] = ("fail" if "fail" in vs else "pass" if vs == {"pass"}
+                    else "/".join(sorted(vs)))
+    return out
+
+
+def since_snapshot(body: str) -> dict:
+    """The body on the snapshot and on its latest measurement, leg by leg.
+
+    `passed_since_snapshot`: failed on the snapshot, passes now. `still_failing`: fails on
+    both. `failing_since_snapshot`: fails now and did not then. `other_changes`: a leg whose
+    state moved in any other way, with both states — typically a leg one cycle could not see.
+    A leg judged on only one of the two is listed under `judged_on_one_only`, never as a change.
+    """
+    snap, latest = snapshot_cycle(), latest_for(body)
+    a, b = leg_states(snap, body), leg_states(latest, body)
+    common = sorted(set(a) & set(b))
+    passed = [l for l in common if a[l] == "fail" and b[l] == "pass"]
+    still = [l for l in common if a[l] == "fail" and b[l] == "fail"]
+    newly = [l for l in common if a[l] != "fail" and b[l] == "fail"]
+    other = [{"leg": l, "snapshot": a[l], "latest": b[l]} for l in common
+             if a[l] != b[l] and l not in passed + newly]
+    one = sorted(set(a) ^ set(b))
+    if latest == snap:
+        sentence = (f"{body}'s latest measurement is the snapshot {snap}; no spot cycle has "
+                    f"measured it since.")
+    else:
+        sentence = (f"{body} measured again by spot cycle {latest} on "
+                    f"{spot.measured_on(latest)} (snapshot {snap}, measured "
+                    f"{spot.measured_on(snap)}). passed since the snapshot: "
+                    f"{', '.join(passed) or 'none'}; still failing: {', '.join(still) or 'none'}"
+                    + (f"; failing since the snapshot: {', '.join(newly)}" if newly else "")
+                    + ".")
+    return {"body": body, "snapshot": snap, "snapshot_measured_on": spot.measured_on(snap),
+            "latest": latest, "latest_measured_on": spot.measured_on(latest),
+            "latest_is_spot": latest != snap,
+            "passed_since_snapshot": passed, "still_failing": still,
+            "failing_since_snapshot": newly, "other_changes": other,
+            "judged_on_one_only": one, "latest_verdicts": b, "sentence": sentence}
 
 
 def on_cycle(acts: list, cycle: str) -> list:
@@ -167,7 +293,16 @@ def print_body(name: str, g: dict, cycle: str, width: int) -> int:
         return 2
     acts = on_cycle(actions(g), cycle)
     mine = fails.get(name, {})
+    # Decision 3: on the cycle of record, a body's failures are its LATEST measurement's. The
+    # ranking below still reads `bodies_failing_now` from `acts`, which is the snapshot's.
+    latest = latest_for(name) if cycle == snapshot_cycle() else cycle
+    if latest != cycle:
+        mine = failing(latest).get(name, {})
     print(f"# {name} — prescriptions from cycle {cycle}")
+    if latest != cycle:
+        print(f"#   failing legs from {name}'s latest measurement, spot cycle {latest} "
+              f"({spot.measured_on(latest)}); bodies failing now is the snapshot's")
+        print(wrap(since_snapshot(name)["sentence"], width, "#   "))
     print(f"#   {len(mine)} failing leg(s) of the {sum(len(m['legs']) for m in matrices(cycle))}"
           f" judged; {len(all_bodies)} bodies on this cycle")
     print(f"#   effort and cost are relative bands {NOTIONAL} — the note is at the end")

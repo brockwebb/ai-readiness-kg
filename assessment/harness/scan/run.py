@@ -43,21 +43,43 @@ FRAMEWORK = REPO / "framework" / "ai_readiness_framework.json"
 #: invariant 2 protects what is in it. A staging directory is neither an acquisition nor
 #: evidence; it is a scratch area that is deleted on publish, and it is gitignored.
 EVIDENCE_STAGING = REPO / "state" / "evidence_staging"
+#: Where payloads are written and the target DataFile is read, and the corpus manifest the
+#: admission check reads. Module globals read at CALL time (the repo convention), so the spot
+#: scan's loopback gate can run a whole cycle into a throwaway tree
+#: (`cc_tasks/2026-09-19_spot_scan.md` decision 5).
+STATE_DIR = REPO / "state"
+MANIFEST = REPO / "corpus" / "manifest.json"
 
 
-def staging_root(params: dict) -> Path:
-    """Per CYCLE, so two cycles staged at once cannot promote each other's bytes."""
-    return EVIDENCE_STAGING / params["cycle"]["name"]
+def staging_root(params: dict, cycle: str | None = None) -> Path:
+    """Per CYCLE, so two cycles staged at once cannot promote each other's bytes. `cycle` is a
+    spot cycle's own name; a frame cycle's is `params.cycle.name`."""
+    return EVIDENCE_STAGING / (cycle or params["cycle"]["name"])
 
 
 #: Output paths are derived from `params.cycle.name`, not typed. A cycle that wrote over a
 #: previous cycle's payload would destroy the evidence the re-derivation gate compares
 #: against, and DD-041's rerun convention exists precisely so a rerun never overwrites a
-#: registered measurement.
-def out_paths(params: dict) -> tuple:
-    name = params["cycle"]["name"]
-    return (REPO / "state" / f"{name}.json",
-            REPO / "state" / f"{name}_controls.json")
+#: registered measurement. A spot cycle passes its own derived name (`scan.spot.spot_name`).
+def out_paths(params: dict, cycle: str | None = None) -> tuple:
+    name = cycle or params["cycle"]["name"]
+    return (STATE_DIR / f"{name}.json",
+            STATE_DIR / f"{name}_controls.json")
+
+
+def refuse_spot_rerun(path: Path) -> None:
+    """A spot payload is never written over, whatever its params.
+
+    `refuse_clobber` keys on `params_hash`, and two spots of one body on one day under one
+    `params.yaml` share it — so it would let the second overwrite the first, which may already
+    be on the log. The spot's name is the only thing that tells them apart, so a second one
+    takes DD-041's rerun letter instead (`--rerun b`).
+    """
+    if path.is_file():
+        raise SystemExit(
+            f"REFUSING: {path.name} exists. A spot cycle already measured this scope today; a "
+            f"second measurement is a second cycle and takes DD-041's rerun letter "
+            f"(`--rerun b` names it {path.stem}b).")
 
 
 def refuse_clobber(path: Path, params: dict) -> None:
@@ -307,7 +329,7 @@ def tier0_legs(params: dict) -> list:
     return list((params.get("tier0") or {}).get("legs") or [])
 
 
-def targets(params: dict) -> list:
+def targets(params: dict, bodies=None) -> list:
     """The scan targets, read from the target DataFile named in `params.cycle.targets`.
 
     **v2 shape** (`cc_tasks/2026-09-08_scan_run_3b.md` decisions 1 and 3). Every row carries its
@@ -335,14 +357,21 @@ def targets(params: dict) -> list:
     requires a `:Document`, so a Finding on it could not be traced, and an Observation on it
     would make `observed_on_missing_document` non-zero — the integrity check that exists to
     catch exactly this. It stays on the target list and is counted as unobservable.
+
+    **`bodies`** restricts the frame to those bodies' rows, for a SPOT cycle
+    (`cc_tasks/2026-09-19_spot_scan.md` decision 1). Everything above is unchanged for the rows
+    kept: each carries exactly the legs the frame gives it, so a spot measures a body the way
+    the full cycle does and not a subset of the way. The restriction is applied to the target
+    DataFile's rows BEFORE the admission check, so a spot of one body does not print another
+    body's skipped rows; a body the frame does not hold is a refusal naming the ones it does.
     """
-    src = REPO / "state" / f"{params['cycle']['targets']}.json"
+    src = STATE_DIR / f"{params['cycle']['targets']}.json"
     doc = json.loads(src.read_text(encoding="utf-8"))
-    entries = json.loads(
-        (REPO / "corpus" / "manifest.json").read_text(encoding="utf-8"))["entries"]
+    entries = json.loads(MANIFEST.read_text(encoding="utf-8"))["entries"]
     tier0 = [l for l in tier0_legs(params) if l not in CANDIDATE_LEGS]
     out, skipped = [], []
-    for r in doc["rows"]:
+    rows = doc["rows"] if bodies is None else rows_of_bodies(doc["rows"], bodies)
+    for r in rows:
         doc_id, kind, tier = r.get("doc_id"), r["surface_kind"], r.get("tier", "A")
         synthetic = str(doc_id or "").startswith(SYNTHETIC_PREFIXES)
         if not synthetic and doc_id not in entries:
@@ -380,6 +409,38 @@ def targets(params: dict) -> list:
     for doc_id, why in skipped:
         print(f"  SKIPPED {str(doc_id)[:52]:54s} {why}", file=sys.stderr)
     return out
+
+
+def rows_of_bodies(rows: list, bodies) -> list:
+    """The target rows of `bodies`, matched on the row's `agency` without regard to case.
+
+    Case-insensitive because a request says `bea` as often as `BEA`, and the frame's names are
+    unique under case folding (checked here, not assumed). A name the frame does not hold is a
+    refusal that lists the names it does: silently scanning nothing would be a spot cycle of
+    zero surfaces, which the controls would license and nobody asked for.
+    """
+    known: dict = {}
+    for r in rows:
+        known.setdefault(str(r["agency"]).casefold(), set()).add(r["agency"])
+    clash = sorted(sorted(v) for v in known.values() if len(v) > 1)
+    if clash:
+        raise SystemExit(f"REFUSING: the frame holds agencies equal under case folding: {clash}")
+    bodies = list(bodies)
+    unknown = sorted(str(b) for b in bodies if str(b).casefold() not in known)
+    if unknown or not bodies:
+        raise SystemExit(
+            f"REFUSING: --target {unknown or '(none)'} names no body in the frame. Bodies: "
+            f"{', '.join(sorted(next(iter(v)) for v in known.values()))}")
+    wanted = {str(b).casefold() for b in bodies}
+    return [r for r in rows if str(r["agency"]).casefold() in wanted]
+
+
+def canonical_bodies(params: dict, bodies) -> list:
+    """The frame's own spelling of each requested body, sorted: what the payload records and
+    the spot's name is derived from, so `--target bea` and `--target BEA` are one cycle."""
+    doc = json.loads((STATE_DIR / f"{params['cycle']['targets']}.json").read_text(
+        encoding="utf-8"))
+    return sorted({r["agency"] for r in rows_of_bodies(doc["rows"], bodies)})
 
 
 def surfaces() -> list:
@@ -439,6 +500,144 @@ def merge_controls(payload_path: Path, params: dict, clock=None) -> int:
     return 0
 
 
+def run_cycle(params: dict, tgts: list, controls: tuple, fetcher, *, task: str,
+              evidence_root: str, cycle: str | None = None, spot_targets=None) -> dict:
+    """Measure `tgts` after a control gate that PASSED, and return the cycle's payload.
+
+    Factored out of `main` (`cc_tasks/2026-09-19_spot_scan.md` decision 5) so the spot path can
+    be run end to end over the loopback fixtures with a `VirtualClock` fetcher, which `main`
+    never builds. Nothing here writes a file; `main` does, through `write_payload`.
+
+    `controls` is `run_controls`' first three values, and the caller has already refused a
+    failing gate. `spot_targets` makes this a SPOT cycle: the payload carries `scope: spot`, the
+    bodies, and the frame cycle `params` named, and `cycle` is the spot's own name.
+    """
+    cf, e5, control_obs = controls
+    sp = specs()
+    rows, all_obs, all_find = [], [], []
+    for t in tgts:
+        # A12 compares the declared and enforced layers against the same path, so a host
+        # surface is collected against its agency's flagship URL rather than /robots.txt.
+        tgt = dict(t, url=t.get("probe_url", t["url"]))
+        obs, findings = run_surface(sp, tgt, params, t["legs"], fetcher)
+        all_obs += obs
+        all_find += findings
+        rows.append({"doc_id": t["doc_id"], "url": tgt["url"],
+                     "surface_kind": t["surface_kind"], "agency": t["agency"],
+                     "admitted": t["admitted"],
+                     "verdicts": {f.leg: f.verdict for f in findings}})
+        marks = (" ".join(f"{f.leg}={f.verdict[0].upper()}" for f in findings)
+                 if t["surface_kind"] == "well_known"
+                 else " ".join(f.verdict[0].upper() for f in findings))
+        print(f"  {t['agency']:8s} {t['surface_kind']:10s} {t['doc_id'][:40]:42s} {marks}",
+              flush=True)
+
+    # Body legs, judged once every surface is in (`judge_bodies`). Each Finding's target is the
+    # body's well-known row, so its verdict is recorded on that row of the matrix; a Finding
+    # whose body has no row is listed rather than dropped.
+    body_findings = judge_bodies(sp, params, all_obs)
+    all_find += body_findings
+    by_doc = {r["doc_id"]: r for r in rows}
+    body_without_row = []
+    for f in body_findings:
+        if f.target_doc_id in by_doc:
+            by_doc[f.target_doc_id]["verdicts"][f.leg] = f.verdict
+        else:
+            body_without_row.append(f.target_doc_id)
+
+    # E5-v2's first clause — "both control fixtures are scanned before any real host" — is
+    # only falsifiable against a timestamp. The gate above already ran and already stopped the
+    # cycle if a control misfired; this re-judges E5 with the ordering evidence now that there
+    # IS a first real host, so the cycle's recorded E5 Finding carries the whole signal rather
+    # than the half a pure rule could see beforehand.
+    earliest = min((o.captured_at for o in all_obs), default=None)
+    if earliest:
+        for o in control_obs:
+            if o.leg == "E5":
+                o.parsed = dict(o.parsed or {}, earliest_surface_captured_at=earliest)
+        e5 = judge_rule(CURRENT["E5"], [o for o in control_obs if o.leg == "E5"], params)
+        if e5.verdict != "pass":
+            print(f"CYCLE INVALID after the fact: {e5.reason}", file=sys.stderr)
+
+    by_leg_err = {leg: sum(1 for r in rows if r["verdicts"].get(leg) == "error")
+                  for leg in CONTROL_LEGS}
+    summary = {
+        "task": task, "cycle": cycle or params["cycle"]["name"],
+        # `scope` says what the cycle measured: the frame, or the bodies a spot names. The name
+        # says it too (`scan.spot`), and `publish.py` refuses a payload whose two disagree.
+        "scope": "spot" if spot_targets else "frame",
+        **({"spot_targets": list(spot_targets),
+            # The frame cycle `params.yaml` names on the day the spot ran. Recorded, not
+            # implied: the spot measured under that cycle's parameters and is not that cycle.
+            "params_cycle": params["cycle"]["name"]} if spot_targets else {}),
+        "targets": params["cycle"]["targets"],
+        "harness_version": _errors.harness_of(params), "params_version": params["params_version"], "params_hash": params_hash(params),
+        "control_verdict": e5.verdict, "control_reason": e5.reason,
+        #: Where this cycle's bodies are staged. See the controls-only payload above.
+        "evidence_root": evidence_root,
+        # +1 for E5's own Finding. The cycle's validity verdict is the single most important
+        # record the cycle produces and it was NOT on the event log: `rules_built` said 16 and
+        # the projected graph held 15 `:Rule` nodes, because RULE-E5-v1 never emitted one.
+        # DD-019 says a cycle with zero fired controls is INVALID; the evidence that THIS
+        # cycle was valid has to be as durable as the findings it validates.
+        "control_findings": len(cf) + 1,
+        "surfaces": len(rows), "legs": len(CONTROL_LEGS),
+        "findings": len(all_find), "observations": len(all_obs),
+        "verdict_counts": {v: sum(1 for f in all_find if f.verdict == v)
+                           for v in ("pass", "fail", "not_applicable", "error")},
+        # Every class the cycle produced, and `unknown` broken out on its own line
+        # (`cc_tasks/2026-09-07_scan_harness_v3.md` §1.2). `unknown` is the ONLY remainder the
+        # classifier has, so a cycle that produced any is a cycle whose map is missing a rule —
+        # a number that has to be looked at, not a bucket things quietly land in. Every class
+        # is listed, zeros included, so a class that stopped appearing is visible too.
+        "error_class_counts": {c: sum(1 for o in all_obs if o.error_class == c)
+                               for c in _errors.ERROR_CLASSES},
+        "error_class_unknown": sum(1 for o in all_obs if o.error_class == "unknown"),
+        # What this scanner actually ASKED of each host, counted at the socket
+        # (`manners.Fetcher.requests`) rather than inferred from Observations — a link probe
+        # issues one HEAD per link inside a single Observation, so the two numbers are not the
+        # same and only this one is the manners claim. Controls are excluded: the fixture
+        # server is us, and folding 127.0.0.1 in would put our own loopback in a table about
+        # federal hosts.
+        "requests_per_host": {h: n for h, n in sorted(fetcher.requests.items())},
+        "requests_total": sum(fetcher.requests.values()),
+        # One line per netloc: its robots.txt status, what RFC 9309 §2.3.1 makes of it, and
+        # the decision the fetcher took (`manners.robots_access`). The manners gate replays
+        # these from the payload (`cc_tasks/2026-09-18_manners_status_and_b5_control.md`
+        # decision 1); an `unreachable` netloc is one every other fetch to was refused.
+        "robots_log": fetcher.robots_log,
+        "legs_erroring_on_every_surface": [l for l, n in by_leg_err.items()
+                                           if rows and n == len(rows)],
+        "body_legs": list(BODY_LEGS),
+        "body_findings_without_a_row": body_without_row,
+        # The legs each surface carried (`targets`), so the re-derivation gate judges each
+        # surface on its own legs and nowhere else (`rederive.rederive`). Without it a rule
+        # reading a shared leg — `RULE-D2-v1` reads A4 — is re-derived on every surface that
+        # holds that leg's evidence, the Tier C reference hosts included, and the gate reports
+        # Findings this cycle never recorded (`cc_tasks/2026-09-18_rejudge_seven_legs.md`).
+        "surface_legs": {t["doc_id"]: list(t["legs"]) for t in tgts},
+        "matrix": rows,
+        "control_findings_detail": [f.to_dict() for f in cf] + [e5.to_dict()],
+        "findings_detail": [f.to_dict() for f in all_find],
+        "observations_detail": [o.to_dict() for o in all_obs] + [o.to_dict() for o in control_obs],
+    }
+    return summary
+
+
+def write_payload(path: Path, payload: dict, params: dict) -> None:
+    """The one place a cycle payload is written: the clobber guards, then the file.
+
+    A spot payload passes `scan.spot.check_identity` before it is written, so a spot named
+    `scan_…` (or the reverse) never reaches `state/` to be refused later by `publish.py`.
+    """
+    from scan import spot as _spot
+    _spot.check_identity(path.stem, payload)
+    if _spot.is_spot(path.stem, payload):
+        refuse_spot_rerun(path)
+    refuse_clobber(path, params)
+    path.write_text(json.dumps(payload, indent=1, default=str) + "\n", encoding="utf-8")
+
+
 def main(argv=None) -> int:
     # THE CYCLE LICENCE (`cc_tasks/2026-09-09_manners_closeout.md` decision 3). Only this
     # entry point may add to the committed evidence store, and it says so by setting the
@@ -465,15 +664,41 @@ def main(argv=None) -> int:
                          "state/evidence_staging/<cycle.name>/). They enter the committed "
                          "store only through publish.py, and only if this cycle's published "
                          "Observations cite them.")
+    ap.add_argument("--target", action="append", default=None, metavar="BODY",
+                    help="a SPOT cycle: restrict the frame to this body's surfaces (repeatable; "
+                         "matched on the target list's `agency`, case-insensitive). Every leg "
+                         "the frame gives those surfaces runs, controls first. The payload is "
+                         "state/spot_<body>_<YYYY-MM-DD>.json (spot_multi_… for several) and is "
+                         "never the report's snapshot. cc_tasks/2026-09-19_spot_scan.md")
+    ap.add_argument("--rerun", default="", metavar="LETTER",
+                    help="DD-041's rerun letter for a second spot of the same scope on the "
+                         "same UTC day (b, c, …)")
     a = ap.parse_args(argv)
     params = load_params()
+    # A spot is decided and VALIDATED before anything runs: an unknown body is a refusal that
+    # costs nothing, and discovering it after the control cycle would have cost the controls.
+    cycle, spot_targets = None, None
+    if a.target:
+        if a.controls_only or a.merge_controls:
+            raise SystemExit("REFUSING: --target is a spot cycle over surfaces; --controls-only "
+                             "and --merge-controls measure no surface")
+        from scan import spot as _spot
+        spot_targets = canonical_bodies(params, a.target)
+        cycle = _spot.spot_name(spot_targets, rerun=a.rerun)
+        refuse_spot_rerun(out_paths(params, cycle)[0])
+        print(f"SPOT cycle {cycle}: {', '.join(spot_targets)}", file=sys.stderr)
+    elif a.rerun:
+        raise SystemExit("REFUSING: --rerun names a second SPOT of one day; a frame cycle's "
+                         "name is `params.cycle.name`")
+    tgts = None if (a.controls_only or a.merge_controls) else targets(params, spot_targets)
     # Redirect the module-path global rather than threading a root through seven collectors:
     # `store_evidence` reads `EVIDENCE_ROOT` at CALL time, which is the repo convention
     # (CLAUDE.md "Conventions specific to this repo") and the same seam `tests/conftest.py`
     # uses. Set before ANY collection, controls included — a fixture body is exactly the kind
     # of byte that has been landing in the committed store uninvited.
     from scan import model as _model
-    _model.EVIDENCE_ROOT = Path(a.evidence_root) if a.evidence_root else staging_root(params)
+    _model.EVIDENCE_ROOT = (Path(a.evidence_root) if a.evidence_root
+                            else staging_root(params, cycle))
     _model.EVIDENCE_ROOT.mkdir(parents=True, exist_ok=True)
     print(f"evidence staged in {_model.EVIDENCE_ROOT}", file=sys.stderr)
     # Recorded repo-RELATIVE where it can be, so a payload moved between checkouts still
@@ -523,114 +748,13 @@ def main(argv=None) -> int:
         print(f"-> {controls_out.relative_to(REPO)}", file=sys.stderr)
         return 0
 
-    sp, tgts = specs(), targets(params)
     if a.limit:
         tgts = tgts[:a.limit]
     from scan.manners import Fetcher
-    fetcher = Fetcher(params)
-    rows, all_obs, all_find = [], [], []
-    for t in tgts:
-        # A12 compares the declared and enforced layers against the same path, so a host
-        # surface is collected against its agency's flagship URL rather than /robots.txt.
-        tgt = dict(t, url=t.get("probe_url", t["url"]))
-        obs, findings = run_surface(sp, tgt, params, t["legs"], fetcher)
-        all_obs += obs
-        all_find += findings
-        rows.append({"doc_id": t["doc_id"], "url": tgt["url"],
-                     "surface_kind": t["surface_kind"], "agency": t["agency"],
-                     "admitted": t["admitted"],
-                     "verdicts": {f.leg: f.verdict for f in findings}})
-        marks = (" ".join(f"{f.leg}={f.verdict[0].upper()}" for f in findings)
-                 if t["surface_kind"] == "well_known"
-                 else " ".join(f.verdict[0].upper() for f in findings))
-        print(f"  {t['agency']:8s} {t['surface_kind']:10s} {t['doc_id'][:40]:42s} {marks}",
-              flush=True)
-
-    # Body legs, judged once every surface is in (`judge_bodies`). Each Finding's target is the
-    # body's well-known row, so its verdict is recorded on that row of the matrix; a Finding
-    # whose body has no row is listed rather than dropped.
-    body_findings = judge_bodies(sp, params, all_obs)
-    all_find += body_findings
-    by_doc = {r["doc_id"]: r for r in rows}
-    body_without_row = []
-    for f in body_findings:
-        if f.target_doc_id in by_doc:
-            by_doc[f.target_doc_id]["verdicts"][f.leg] = f.verdict
-        else:
-            body_without_row.append(f.target_doc_id)
-
-    # E5-v2's first clause — "both control fixtures are scanned before any real host" — is
-    # only falsifiable against a timestamp. The gate above already ran and already stopped the
-    # cycle if a control misfired; this re-judges E5 with the ordering evidence now that there
-    # IS a first real host, so the cycle's recorded E5 Finding carries the whole signal rather
-    # than the half a pure rule could see beforehand.
-    earliest = min((o.captured_at for o in all_obs), default=None)
-    if earliest:
-        for o in control_obs:
-            if o.leg == "E5":
-                o.parsed = dict(o.parsed or {}, earliest_surface_captured_at=earliest)
-        e5 = judge_rule(CURRENT["E5"], [o for o in control_obs if o.leg == "E5"], params)
-        if e5.verdict != "pass":
-            print(f"CYCLE INVALID after the fact: {e5.reason}", file=sys.stderr)
-
-    by_leg_err = {leg: sum(1 for r in rows if r["verdicts"].get(leg) == "error")
-                  for leg in CONTROL_LEGS}
-    summary = {
-        "task": a.task, "cycle": params["cycle"]["name"],
-        "targets": params["cycle"]["targets"],
-        "harness_version": _errors.harness_of(params), "params_version": params["params_version"], "params_hash": params_hash(params),
-        "control_verdict": e5.verdict, "control_reason": e5.reason,
-        #: Where this cycle's bodies are staged. See the controls-only payload above.
-        "evidence_root": _staging_rel,
-        # +1 for E5's own Finding. The cycle's validity verdict is the single most important
-        # record the cycle produces and it was NOT on the event log: `rules_built` said 16 and
-        # the projected graph held 15 `:Rule` nodes, because RULE-E5-v1 never emitted one.
-        # DD-019 says a cycle with zero fired controls is INVALID; the evidence that THIS
-        # cycle was valid has to be as durable as the findings it validates.
-        "control_findings": len(cf) + 1,
-        "surfaces": len(rows), "legs": len(CONTROL_LEGS),
-        "findings": len(all_find), "observations": len(all_obs),
-        "verdict_counts": {v: sum(1 for f in all_find if f.verdict == v)
-                           for v in ("pass", "fail", "not_applicable", "error")},
-        # Every class the cycle produced, and `unknown` broken out on its own line
-        # (`cc_tasks/2026-09-07_scan_harness_v3.md` §1.2). `unknown` is the ONLY remainder the
-        # classifier has, so a cycle that produced any is a cycle whose map is missing a rule —
-        # a number that has to be looked at, not a bucket things quietly land in. Every class
-        # is listed, zeros included, so a class that stopped appearing is visible too.
-        "error_class_counts": {c: sum(1 for o in all_obs if o.error_class == c)
-                               for c in _errors.ERROR_CLASSES},
-        "error_class_unknown": sum(1 for o in all_obs if o.error_class == "unknown"),
-        # What this scanner actually ASKED of each host, counted at the socket
-        # (`manners.Fetcher.requests`) rather than inferred from Observations — a link probe
-        # issues one HEAD per link inside a single Observation, so the two numbers are not the
-        # same and only this one is the manners claim. Controls are excluded: the fixture
-        # server is us, and folding 127.0.0.1 in would put our own loopback in a table about
-        # federal hosts.
-        "requests_per_host": {h: n for h, n in sorted(fetcher.requests.items())},
-        "requests_total": sum(fetcher.requests.values()),
-        # One line per netloc: its robots.txt status, what RFC 9309 §2.3.1 makes of it, and
-        # the decision the fetcher took (`manners.robots_access`). The manners gate replays
-        # these from the payload (`cc_tasks/2026-09-18_manners_status_and_b5_control.md`
-        # decision 1); an `unreachable` netloc is one every other fetch to was refused.
-        "robots_log": fetcher.robots_log,
-        "legs_erroring_on_every_surface": [l for l, n in by_leg_err.items()
-                                           if rows and n == len(rows)],
-        "body_legs": list(BODY_LEGS),
-        "body_findings_without_a_row": body_without_row,
-        # The legs each surface carried (`targets`), so the re-derivation gate judges each
-        # surface on its own legs and nowhere else (`rederive.rederive`). Without it a rule
-        # reading a shared leg — `RULE-D2-v1` reads A4 — is re-derived on every surface that
-        # holds that leg's evidence, the Tier C reference hosts included, and the gate reports
-        # Findings this cycle never recorded (`cc_tasks/2026-09-18_rejudge_seven_legs.md`).
-        "surface_legs": {t["doc_id"]: list(t["legs"]) for t in tgts},
-        "matrix": rows,
-        "control_findings_detail": [f.to_dict() for f in cf] + [e5.to_dict()],
-        "findings_detail": [f.to_dict() for f in all_find],
-        "observations_detail": [o.to_dict() for o in all_obs] + [o.to_dict() for o in control_obs],
-    }
-    cycle_out, _ = out_paths(params)
-    refuse_clobber(cycle_out, params)
-    cycle_out.write_text(json.dumps(summary, indent=1, default=str) + "\n", encoding="utf-8")
+    summary = run_cycle(params, tgts, (cf, e5, control_obs), Fetcher(params), task=a.task,
+                        evidence_root=_staging_rel, cycle=cycle, spot_targets=spot_targets)
+    cycle_out, _ = out_paths(params, cycle)
+    write_payload(cycle_out, summary, params)
     print(json.dumps({k: v for k, v in summary.items()
                       if k not in ("matrix", "findings_detail", "observations_detail",
                                    "control_findings_detail")}, indent=1))

@@ -297,7 +297,10 @@ class Tools:
 
     @property
     def cycle(self) -> str:
-        return self.publication["snapshot_cycle"]
+        from scan import spot
+        cycle = self.publication["snapshot_cycle"]
+        spot.refuse_as_snapshot(cycle)
+        return cycle
 
     def _presc(self):
         """`scripts/prescriptions.py`, loaded by path. Decision 2 says `get_prescriptions` is
@@ -396,9 +399,32 @@ class Tools:
                             + [matrix_loc(m["_path"], f"{bodies[0]}/{m['legs'][0]}")
                                for m in mats],
             },
+            # `cc_tasks/2026-09-19_spot_scan.md` decision 3: spot cycles are listed APART from
+            # full cycles. A spot measures the bodies it names; listing it among the frame's
+            # cycles would invite reading it as one.
+            "cycles": self._cycles(presc),
             "projection_gate": self.projection_gate(),
             "tools": [t for t in TOOL_ORDER],
         }
+
+    @staticmethod
+    def _cycles(presc) -> dict:
+        pub = presc.published_cycles()
+        spots = []
+        for c in pub["spot"]:
+            info = presc.spot_info(c)
+            # One cell per matrix, as `cycle_of_record` gives: a locator must resolve, and a
+            # cell is what `resolve_locator` opens.
+            spots.append(dict(info, locators=[
+                matrix_loc(m["_path"], f"{info['bodies'][0]}/{m['legs'][0]}")
+                for m in presc.matrices(c)]))
+        return {"full": pub["full"],
+                "spot": spots,
+                "note": ("A spot cycle measures only the bodies it names, on request, through "
+                         "the same controls and rules as a full cycle. It is never the cycle of "
+                         "record and supersedes nothing; `get_body` shows it beside the "
+                         "snapshot."),
+                "locators": [source_loc("scripts/prescriptions.py", "def published_cycles")]}
 
     def _payload(self, cycle: str) -> dict:
         p = STATE / f"{cycle}.json"
@@ -586,12 +612,20 @@ class Tools:
                     "concentration": sc["concentration"]}
         rank_line = (f" {sc['concentration']['sentence']}" if sc["concentration"] else
                      f" {name} is not ranked on {cycle}: no scored leg has a judged row.")
+        # Decision 3 of `cc_tasks/2026-09-19_spot_scan.md`: the body's verdicts on the snapshot
+        # (above) AND on its latest measurement, whichever cycle that is, with the per-leg diff.
+        lm = presc.since_snapshot(name)
+        latest = {**lm, "locators": [
+            matrix_loc(m["_path"], f"{name}/{leg}") for m in presc.matrices(lm["latest"])
+            for leg in m["legs"][:1] if leg in lm["latest_verdicts"]]
+            + [source_loc("scripts/prescriptions.py", "def since_snapshot")]}
         return {
             "body": name, "cycle": cycle,
             "n_judged": len(cells), "n_failing": n_fail,
             "summary": (f"{n_fail} failing of {len(cells)} judged on {cycle}; "
                         f"{len(all_bodies)} bodies are on this cycle.{rank_line}"),
             "score": standing,
+            "latest_measurement": latest,
             "legs": cells,
             "locators": [config_loc("snapshot_cycle"),
                          source_loc("scripts/score.py", "def concentration")],
@@ -701,12 +735,16 @@ class Tools:
         cycle = self.cycle
         acts = presc.actions(self.record)
         all_bodies = presc.bodies(cycle)
-        failing_legs = None
+        failing_legs, latest, failing = None, None, {}
         if body is not None:
             if body not in all_bodies:
                 return {"error": f"'{body}' is not a body on cycle {cycle}",
                         "bodies": all_bodies, "locators": [config_loc("snapshot_cycle")]}
-            failing = presc.failing(cycle).get(body, {})
+            # Decision 3: ranked by the body's LATEST measurement's failures — a spot cycle if
+            # one has measured it since the snapshot — while `bodies_failing_now` on every
+            # action stays the snapshot's, because it is a quantity of the frame.
+            latest = presc.latest_for(body)
+            failing = presc.failing(latest).get(body, {})
             failing_legs = sorted(failing)
             acts = [a for a in acts if a["leg"] in failing]
         if leg is not None:
@@ -723,8 +761,7 @@ class Tools:
                 "verifies_by": a["verifies_by"],
                 "applies_to_publisher": a["applies_to_publisher"],
                 "value": a["value"],
-                "failing_on": sorted(set(presc.failing(cycle).get(body, {}).get(a["leg"], [])))
-                              if body else None,
+                "failing_on": sorted(set(failing.get(a["leg"], []))) if body else None,
                 "locators": [rec_loc(a["id"]), rec_loc(a["indicator_id"])]
                             + [document_loc(d, sec, path) for d, sec, path in
                                (_technique_address(t) for t in a["technique_source"]) if d],
@@ -732,6 +769,8 @@ class Tools:
         return {
             "cycle": cycle, "body": body, "leg": leg,
             "failing_legs": failing_legs,
+            "failing_legs_from": latest if body is not None else None,
+            "bodies_failing_now_from": cycle,
             "bodies_on_cycle": len(all_bodies),
             "notional": "(notional)",
             "band_note": presc.band_note(presc.actions(self.record)),

@@ -339,6 +339,12 @@ def rejudge(payload: dict, params: dict, cycle: str | None = None,
         "derived_from": src_cycle,
         "derived_from_params_hash": payload.get("params_hash"),
         "targets": payload.get("targets"),
+        # A re-judgement of a SPOT cycle is a spot cycle too (`spot_<body>_<day>_rjN`), and says
+        # so, or `scan.spot.check_identity` refuses it at publication for a name and a payload
+        # that disagree (`cc_tasks/2026-09-19_spot_scan.md`). Carried only when present, so every
+        # frame re-judgement's payload is byte-for-byte what it was.
+        **{k: payload[k] for k in ("scope", "spot_targets", "params_cycle")
+           if payload.get("scope") == "spot" and k in payload},
         "harness_version": errors.harness_of(params), "params_version": params["params_version"], "params_hash": params_hash(params),
         "rejudged_note": (
             f"Findings only. Every Finding cites the `obs_id`s {src_cycle} recorded; not one "

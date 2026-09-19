@@ -43,6 +43,10 @@ from scan import load_params                                        # noqa: E402
 TASK = "cc_tasks/2026-09-09_report_draft.md"
 SCRIPT_ARTIFACT = "build_l0_matrices"
 OUT_DIR = REPO / "docs" / "reports"
+#: Where cycle payloads and the target DataFile are read. A module global read at call time, so
+#: the spot scan's loopback gate can build a throwaway cycle's matrices from a throwaway tree
+#: (`cc_tasks/2026-09-19_spot_scan.md` decision 5).
+STATE = REPO / "state"
 
 #: The product-level legs, declared by the task. They are the framework's reportable set minus
 #: the tier-0 legs: what a PRODUCT offers a machine, as against what a HOST declares.
@@ -80,7 +84,7 @@ PRODUCT_SURFACE = "flagship"
 
 
 def payload(cycle: str) -> dict:
-    return json.loads((REPO / "state" / f"{cycle}.json").read_text(encoding="utf-8"))
+    return json.loads((STATE / f"{cycle}.json").read_text(encoding="utf-8"))
 
 
 @functools.lru_cache(maxsize=4)
@@ -111,13 +115,14 @@ def evidence_payload(p: dict) -> dict:
     return _cached_payload(src) if src else p
 
 
-def targets(params: dict) -> dict:
+def targets(params: dict, name: str | None = None) -> dict:
     return json.loads(
-        (REPO / "state" / f"{params['cycle']['targets']}.json").read_text(encoding="utf-8"))
+        (STATE / f"{name or params['cycle']['targets']}.json").read_text(encoding="utf-8"))
 
 
-def tier_of(params: dict) -> dict:
-    return {r["doc_id"]: r.get("tier", "A") for r in targets(params)["rows"] if r.get("doc_id")}
+def tier_of(params: dict, name: str | None = None) -> dict:
+    return {r["doc_id"]: r.get("tier", "A") for r in targets(params, name)["rows"]
+            if r.get("doc_id")}
 
 
 def findings_index(p: dict) -> dict:
@@ -461,7 +466,14 @@ def compute(cycle: str, params: dict | None = None) -> dict:
     measured twice, and their full names are the one thing about them guaranteed to differ.
     """
     params = params or load_params()
-    p, tiers = payload(cycle), tier_of(params)
+    p = payload(cycle)
+    from scan import spot
+    spot.check_identity(cycle, p)
+    is_spot = spot.is_spot(cycle, p)
+    # A spot's tiers come from the target list IT recorded, not from whichever one `params`
+    # binds today: a spot is read against the frame it was measured under. A frame cycle keeps
+    # reading `params`, so no published matrix is rebuilt differently.
+    tiers = tier_of(params, p.get("targets") if is_spot else None)
     tier0 = list(params["tier0"]["legs"])
 
     tier_a = host_matrix(p, tiers, "A", tier0)
@@ -484,7 +496,28 @@ def compute(cycle: str, params: dict | None = None) -> dict:
     tierc_counts = leg_counts(tier_c, tier0)
     dis = surface_disagreements(p, tiers, tier0)
 
+    # Population words for the Result notes. A frame cycle's are the words its Results were
+    # registered with, character for character (a bound description does not move); a SPOT
+    # cycle's name the bodies it measured, because "the 16 Tier A bodies" over a one-body
+    # matrix would be a note that is false about the number beside it.
+    n_a = len({r["agency"] for r in tier_a})
+    host_pop = ("the 16 Tier A bodies' HOST-LEVEL surfaces (each body's `home:` page, and "
+                "its `host:` well-known set for A12)") if not is_spot else (
+        f"the {n_a} Tier A bod{'y' if n_a == 1 else 'ies'} of spot cycle {cycle} "
+        f"({', '.join(sorted({r['agency'] for r in tier_a}))}), HOST-LEVEL surfaces (each "
+        f"body's `home:` page, and its `host:` well-known set for A12). A spot measures the "
+        f"bodies it names and no other; its rates are those bodies', never the frame's")
+    tierc_pop = ("the 3 Tier C reference hosts' host-level surfaces, which enter no Tier "
+                 "A denominator (DD-059)") if not is_spot else (
+        f"the {len(tier_c)} Tier C reference host(s) of spot cycle {cycle}, host-level "
+        f"surfaces, which enter no Tier A denominator (DD-059)")
+
     head = {"task": TASK, "cycle": cycle, "params_hash": p["params_hash"],
+            # A spot matrix says it is one ON the matrix, so a reader of the file alone — and
+            # every view that lists cycles (`scripts/prescriptions.py`) — can tell it from the
+            # frame's. Absent on a frame cycle's header, so no published matrix changes.
+            **({"scope": "spot", "spot_targets": list(p.get("spot_targets") or []),
+                "measured_on": spot.measured_on(cycle)} if is_spot else {}),
             "note": ("Every cell names the Finding it came from. The five surface-judged "
                      "tier-0 legs are read from the body's `home:` surface and A12 from its "
                      f"`host:` well-known surface; this cycle's home and flagship surfaces "
@@ -543,9 +576,8 @@ def compute(cycle: str, params: dict | None = None) -> dict:
          f"{dis['comparable_bodies']} with both a home and a flagship surface. Task {TASK} "
          f"§1.1."),
     ] +
-        leg_results(host_counts, "scan_l0_", cycle,
-                    "the 16 Tier A bodies' HOST-LEVEL surfaces (each body's `home:` page, and "
-                    "its `host:` well-known set for A12)", with_upper95=True, family="host")
+        leg_results(host_counts, "scan_l0_", cycle, host_pop, with_upper95=True,
+                    family="host")
         + leg_results({l: prod_counts[l] for l in surface_plegs}, "scan_l0_product_", cycle,
                       f"the {declared} DECLARED flagship surfaces of {declared_agencies} Tier "
                       f"A agencies — a PARTIAL population, because the other agencies have "
@@ -565,13 +597,17 @@ def compute(cycle: str, params: dict | None = None) -> dict:
         # got Tier C values competing for host-family names, which is how six Results came to
         # say the wrong thing. Naming the family removes the coincidence the old scheme
         # depended on.
-        + leg_results(tierc_counts, "scan_l0_tierc_", cycle,
-                      "the 3 Tier C reference hosts' host-level surfaces, which enter no Tier "
-                      "A denominator (DD-059)", with_upper95=True, family="tierc"))
+        + (leg_results(tierc_counts, "scan_l0_tierc_", cycle, tierc_pop, with_upper95=True,
+                       family="tierc") if (tier_c or not is_spot) else []))
+    if is_spot and not declared:
+        # A spot of a body that declares no flagship has no product population at all, and a
+        # zero over a zero is not a measurement; the frame-cycle rows are kept as they were.
+        per_leg = [r for r in per_leg if not r[0].startswith(("scan_l0_product_",))]
     results = [(b, v, f"{n} ({TASK})") for b, v, n in per_leg] + [
         ("scan_l0_declared_flagship_agencies", declared_agencies,
          f"Tier A agencies with at least one operator-DECLARED flagship surface in cycle "
-         f"{cycle}, of the 16 in the frame. The product-level matrix is denominated by these "
+         f"{cycle}, of the {'16 in the frame' if not is_spot else f'{n_a} this spot measured'}"
+         f". The product-level matrix is denominated by these "
          f"and is labelled PARTIAL for that reason: the remaining agencies carry a host row "
          f"and its probes and nothing else, and a product leg cannot be asked of a product "
          f"nobody has named. `not declared` is not `fail`. "
@@ -660,8 +696,12 @@ def snapshot_cycle() -> str:
     written (`cc_tasks/2026-09-19_resnapshot_rj4.md`).
     """
     import yaml
-    return yaml.safe_load((REPO / "docs" / "reports" / "publication.yaml").read_text(
+    from scan import spot
+    cycle = yaml.safe_load((REPO / "docs" / "reports" / "publication.yaml").read_text(
         encoding="utf-8"))["snapshot_cycle"]
+    # Decision 2 of `cc_tasks/2026-09-19_spot_scan.md`: a spot cycle is never the snapshot.
+    spot.refuse_as_snapshot(cycle)
+    return cycle
 
 
 def main(argv=None) -> int:

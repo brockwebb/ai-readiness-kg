@@ -215,6 +215,12 @@ def load_publication() -> dict:
                 "license_code", "license_data", "license_corpus_note"):
         if not doc.get(key):
             raise SystemExit(f"FATAL: {PUBLICATION.name} declares no {key!r}")
+    # A spot cycle measures the bodies it names; the report and the site are views of the
+    # frame, so the build refuses one named as the snapshot (`cc_tasks/2026-09-19_spot_scan.md`
+    # decision 2). One definition of "spot", in the harness.
+    sys.path.insert(0, str(REPO / "assessment" / "harness"))
+    from scan import spot
+    spot.refuse_as_snapshot(doc["snapshot_cycle"])
     return doc
 
 

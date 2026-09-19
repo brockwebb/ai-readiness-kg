@@ -58,7 +58,6 @@ sys.path.insert(0, str(REPO / "assessment" / "harness"))
 import prescriptions as P  # noqa: E402  the record, the cycle, the matrices: one reader of each
 
 DOC = REPO / "docs" / "design" / "scoring_model.md"
-REPORTS = REPO / "docs" / "reports"
 TASK = "cc_tasks/2026-09-18_scoring_model.md"
 TASK_LEVELS = "cc_tasks/2026-09-18_scoring_levels.md"
 
@@ -83,9 +82,11 @@ def matrices(cycle: str) -> list:
     """Both published matrices of a cycle, or a stop naming the missing file."""
     suffix = cycle.replace("scan_", "")
     for kind in ("tierA", "product"):
-        path = REPORTS / f"scan_matrix_{kind}_{suffix}.json"
+        # `P.REPORTS`, read at call time: the matrices have one reader and one location, and a
+        # gate that points the views at a throwaway tree points this at it too.
+        path = P.REPORTS / f"scan_matrix_{kind}_{suffix}.json"
         if not path.exists():
-            raise SystemExit(f"FATAL: {path.relative_to(REPO)} does not exist; cycle {cycle!r} "
+            raise SystemExit(f"FATAL: {P._shown(path)} does not exist; cycle {cycle!r} "
                              f"has no published matrix to score")
     return P.matrices(cycle)
 
@@ -125,10 +126,13 @@ def cycle_legs(cycle: str) -> tuple:
 
 def prior_cycle(cycle: str) -> str | None:
     """The newest cycle with a published tier-A matrix that sorts before the cycle of record
-    and is not a re-judgement of the same measurement. `None` if there is none."""
+    and is not a re-judgement of the same measurement. `None` if there is none.
+
+    FRAME cycles only. A spot cycle measures the bodies it names, so ranking the frame under it
+    would rank one body against nothing (`cc_tasks/2026-09-19_spot_scan.md` decision 3); and its
+    name, `spot_…`, would sort after every date and be taken for the newest."""
     base = cycle.replace("scan_", "").split("_rj")[0]
-    names = sorted(p.name[len("scan_matrix_tierA_"):-len(".json")]
-                   for p in REPORTS.glob("scan_matrix_tierA_*.json"))
+    names = sorted(c[len("scan_"):] for c in P.published_cycles()["full"])
     older = [n for n in names if n.split("_rj")[0] < base]
     return f"scan_{older[-1]}" if older else None
 
@@ -698,7 +702,40 @@ def print_body(r: dict, name: str) -> int:
     print("\ndelta: the body's score if every failing row on that leg passed. Actions on the "
           "same leg share it; the matrix carries verdicts, not outcomes, so it is an upper "
           "bound for any one action.")
+    print_latest(r, name)
     return 0
+
+
+def latest_measurement(r: dict, name: str) -> dict | None:
+    """Decision 3 of `cc_tasks/2026-09-19_spot_scan.md`: the body on its LATEST measurement,
+    beside the snapshot's. `None` when the scored cycle is not the cycle of record (a `--cycle`
+    view is already a view of one named cycle). The score on a spot cycle is the same model over
+    that cycle's cells; it has no rank, because a spot measures the bodies it names and a rank
+    among them is not a rank in the frame."""
+    if r["cycle"]["name"] != snapshot_cycle():
+        return None
+    diff = P.since_snapshot(name)
+    out = {**diff, "latest_score": None, "latest_flat": None}
+    if diff["latest_is_spot"]:
+        b = compute(diff["latest"])["bodies"].get(name) or {}
+        out["latest_score"], out["latest_flat"] = b.get("score"), b.get("flat")
+    return out
+
+
+def print_latest(r: dict, name: str) -> None:
+    lm = latest_measurement(r, name)
+    if lm is None:
+        return
+    print(f"\nlatest measurement: {lm['latest']} ({lm['latest_measured_on']})")
+    print(lm["sentence"])
+    if lm["latest_is_spot"]:
+        print(f"score on {lm['latest']}: {_f(lm['latest_score'])} hierarchical, "
+              f"{_f(lm['latest_flat'])} flat; unranked (a spot cycle measures the bodies it "
+              f"names, and ranks nobody)")
+        for o in lm["other_changes"]:
+            print(f"   {o['leg']}: {o['snapshot']} on the snapshot, {o['latest']} now")
+        if lm["judged_on_one_only"]:
+            print(f"   judged on one of the two only: {', '.join(lm['judged_on_one_only'])}")
 
 
 def print_top(r: dict, n: int) -> None:

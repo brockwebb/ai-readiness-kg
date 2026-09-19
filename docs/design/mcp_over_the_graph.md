@@ -211,6 +211,22 @@ One real call each, with the answer the tool gave. Long lists are cut to 2 entri
       }
     ]
   },
+  "cycles": {
+    "full": [
+      "scan_2026-09-09",
+      "scan_2026-09-10_rj2",
+      "… 1 more (elided by mcp/airkg_doc.py, not by the tool)"
+    ],
+    "spot": [],
+    "note": "A spot cycle measures only the bodies it names, on request, through the same controls and rules as a full cycle. It is never the cycle of record and supersedes nothing; `get_body` shows it beside the snapshot.",
+    "locators": [
+      {
+        "kind": "source",
+        "path": "scripts/prescriptions.py",
+        "symbol": "def published_cycles"
+      }
+    ]
+  },
   "projection_gate": {
     "gate": "tests/test_framework_projection_roundtrip.py",
     "decision": "DD-057",
@@ -412,6 +428,65 @@ One real call each, with the answer the tool gave. Long lists are cut to 2 entri
       "sentence": "NCHS ranks 13 of 13 (hierarchical), and the leg that would move it most is F4: 0 pass of 2 judged rows on F4; were that leg's verdicts reversed it would rank 2."
     }
   },
+  "latest_measurement": {
+    "body": "NCHS",
+    "snapshot": "scan_2026-09-10_rj4",
+    "snapshot_measured_on": "2026-09-10",
+    "latest": "scan_2026-09-10_rj4",
+    "latest_measured_on": "2026-09-10",
+    "latest_is_spot": false,
+    "passed_since_snapshot": [],
+    "still_failing": [
+      "A1",
+      "A10",
+      "… 17 more (elided by mcp/airkg_doc.py, not by the tool)"
+    ],
+    "failing_since_snapshot": [],
+    "other_changes": [],
+    "judged_on_one_only": [],
+    "latest_verdicts": {
+      "A4": "pass",
+      "A5": "fail",
+      "A10": "fail",
+      "A11-declared": "fail",
+      "A12": "pass",
+      "A1": "fail",
+      "A2": "fail",
+      "A3": "error/pass",
+      "A6": "fail",
+      "A8": "fail",
+      "A9": "fail",
+      "B3": "fail",
+      "D1": "fail",
+      "D4": "fail",
+      "F4": "fail",
+      "B1": "fail",
+      "B2": "fail",
+      "B4": "fail",
+      "B5": "fail",
+      "D2": "fail",
+      "D3": "fail",
+      "G4": "fail"
+    },
+    "sentence": "NCHS's latest measurement is the snapshot scan_2026-09-10_rj4; no spot cycle has measured it since.",
+    "locators": [
+      {
+        "kind": "matrix",
+        "path": "docs/reports/scan_matrix_tierA_2026-09-10_rj4.json",
+        "cell": "NCHS/A4"
+      },
+      {
+        "kind": "matrix",
+        "path": "docs/reports/scan_matrix_product_2026-09-10_rj4.json",
+        "cell": "NCHS/A1"
+      },
+      {
+        "kind": "source",
+        "path": "scripts/prescriptions.py",
+        "symbol": "def since_snapshot"
+      }
+    ]
+  },
   "legs": [
     {
       "leg": "A4",
@@ -561,6 +636,8 @@ One real call each, with the answer the tool gave. Long lists are cut to 2 entri
     "A10",
     "… 17 more (elided by mcp/airkg_doc.py, not by the tool)"
   ],
+  "failing_legs_from": "scan_2026-09-10_rj4",
+  "bodies_failing_now_from": "scan_2026-09-10_rj4",
   "bodies_on_cycle": 16,
   "notional": "(notional)",
   "band_note": "Notional relative estimate for a typical federal statistical publisher. Adjust for your platform, staffing, skills and procurement path; the band orders actions against each other, it does not predict your calendar or budget.",
