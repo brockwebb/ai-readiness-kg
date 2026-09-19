@@ -460,6 +460,13 @@ def main(argv=None) -> int:
     a = ap.parse_args(argv)
     payload = json.loads(Path(a.src).read_text(encoding="utf-8"))
     params = load_params()
+    # A cycle measured under the committed parameters with its cycle identity overlaid (an
+    # adopter's `run.py --frame` run, `cc_tasks/2026-09-19_adopter_path.md`; the self row) is
+    # re-derived under base + overlay, when the base IS today's `params.yaml`. Otherwise it
+    # falls through and the gate reports the parameter change as itself, as before.
+    if payload.get("params_overlay") and payload.get("base_params_hash") == params_hash(params):
+        from scan import adopt
+        params = adopt.params_of_run(payload, params)
     if a.under_current:
         gate = control_gate_record(params)
         print(f"CONTROL GATE: {str(gate['verdict']).upper()} — {gate['reason']}")

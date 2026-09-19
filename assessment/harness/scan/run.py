@@ -638,6 +638,109 @@ def write_payload(path: Path, payload: dict, params: dict) -> None:
     path.write_text(json.dumps(payload, indent=1, default=str) + "\n", encoding="utf-8")
 
 
+def main_frame(a, params: dict) -> int:
+    """`run.py --frame FILE`: one scan of an adopter's frame, into `--out/<frame>/`.
+
+    `cc_tasks/2026-09-19_adopter_path.md` decisions 1, 3 and 4. The cycle is `run_cycle`, the
+    same function every cycle here runs through, after the same control gate; what differs is
+    where it reads its targets and writes its outputs (`scan.adopt.layout`) and the cycle
+    identity overlaid on the committed parameters (`scan.adopt.overlay`), which the payload
+    records so the run can be re-derived and rendered by anyone holding the same `params.yaml`.
+
+    Refused before anything is fetched: a frame that does not validate, this project's own
+    frame, this project's identity (or none) against a non-loopback host, and a run whose
+    payload already exists.
+    """
+    from scan import adopt, spot as _spot
+    from scan import model as _model
+    from scan.manners import Fetcher
+    global STATE_DIR
+    if a.controls_only or a.merge_controls:
+        raise SystemExit("REFUSING: --frame measures a frame's surfaces; --controls-only and "
+                         "--merge-controls measure none")
+    frame = adopt.load_frame(Path(a.frame))
+    if frame["kind"] == adopt.DATAFILE:
+        adopt.check_project_frame(frame, params)
+        raise SystemExit(
+            f"REFUSING: {a.frame} is this project's frame. It is measured by run.py WITHOUT "
+            f"--frame, by a dispatched cycle task that writes state/ and the event log; --frame "
+            f"is for a frame you declared (docs/adopt/run_on_your_site.md).")
+    compiled = adopt.compile_rows(frame)
+    tname = adopt.targets_name(frame)
+    # Resolved, so every path the run records (`evidence_root`, each Observation's
+    # `body_path`) is repo-relative when `--out` is inside the checkout and absolute otherwise,
+    # the rule `main` applies to `--evidence-root`.
+    where = adopt.layout(Path(a.out).resolve(), frame["frame"])
+    spot_targets = None
+    if a.target:
+        # A spot within the adopter's frame: the bodies it names, every leg the frame gives
+        # them, named and scoped as a spot so it never stands in for the frame's run.
+        spot_targets = sorted({r["agency"] for r in rows_of_bodies(compiled["rows"], a.target)})
+        cycle = _spot.spot_name(spot_targets, rerun=a.rerun)
+    else:
+        cycle = adopt.cycle_name(frame, rerun=a.rerun)
+    run_params = adopt.overlay(params, cycle, tname)
+    rows = (compiled["rows"] if spot_targets is None
+            else rows_of_bodies(compiled["rows"], spot_targets))
+    adopt.check_identity(run_params, rows)
+    payload_path = where["state"] / f"{cycle}.json"
+    if payload_path.exists():
+        raise SystemExit(f"REFUSING: {payload_path} exists. A second run of this frame today "
+                         f"is a second cycle and takes DD-041's rerun letter "
+                         f"(`--rerun b` names it {cycle}b).")
+    # The compiled frame is content-addressed by its name, so a second run of an unchanged
+    # frame finds it already written and identical; a file under that name that differs is a
+    # hash collision or a hand edit, and either is refused.
+    tpath = where["state"] / f"{tname}.json"
+    if tpath.exists():
+        if json.loads(tpath.read_text(encoding="utf-8"))["rows"] != compiled["rows"]:
+            raise SystemExit(f"REFUSING: {tpath} exists and differs from the frame it is "
+                             f"named for; it was edited by hand")
+    else:
+        adopt.write_json(tpath, compiled)
+
+    # The cycle licence is already set: `main` sets it before it parses a single argument.
+    prev_state, prev_root = STATE_DIR, _model.EVIDENCE_ROOT
+    STATE_DIR = where["state"]
+    _model.EVIDENCE_ROOT = where["evidence"] / cycle
+    _model.EVIDENCE_ROOT.mkdir(parents=True, exist_ok=True)
+    try:
+        tgts = targets(run_params, spot_targets)
+        print(f"{'SPOT' if spot_targets else 'FRAME'} run {cycle}: {len(tgts)} surface(s) of "
+              f"{frame['_path']}; evidence in {_model.EVIDENCE_ROOT}", file=sys.stderr)
+        cf, e5, control_obs, ok = run_controls(run_params)
+        print(f"CONTROL GATE: {e5.verdict.upper()} — {e5.reason}")
+        if not ok:
+            print("cycle INVALID; no real host was touched", file=sys.stderr)
+            return 2
+        summary = run_cycle(run_params, tgts, (cf, e5, control_obs), Fetcher(run_params),
+                            task=a.task or f"adopter run: {frame['_path']}",
+                            evidence_root=_shown(_model.EVIDENCE_ROOT), cycle=cycle,
+                            spot_targets=spot_targets)
+        # The overlay's provenance (`scripts/run_self_scan.py`'s three fields), and the frame's.
+        summary["base_params_hash"] = params_hash(params)
+        summary["base_params_path"] = "assessment/harness/scan/params.yaml"
+        summary["params_overlay"] = {"cycle": run_params["cycle"]}
+        summary["frame"] = {"name": frame["frame"], "path": frame["_path"],
+                            "sha256": frame["_sha256"], "targets": tname}
+        write_payload(payload_path, summary, run_params)
+    finally:
+        STATE_DIR, _model.EVIDENCE_ROOT = prev_state, prev_root
+    where["latest"].write_text(cycle + "\n", encoding="utf-8")
+    print(json.dumps({k: v for k, v in summary.items()
+                      if k not in ("matrix", "findings_detail", "observations_detail",
+                                   "control_findings_detail")}, indent=1, default=str))
+    print(f"-> {_shown(payload_path)}", file=sys.stderr)
+    return 0
+
+
+def _shown(path: Path) -> str:
+    try:
+        return str(Path(path).relative_to(REPO))
+    except ValueError:
+        return str(path)
+
+
 def main(argv=None) -> int:
     # THE CYCLE LICENCE (`cc_tasks/2026-09-09_manners_closeout.md` decision 3). Only this
     # entry point may add to the committed evidence store, and it says so by setting the
@@ -655,10 +758,10 @@ def main(argv=None) -> int:
     ap.add_argument("--merge-controls", metavar="PAYLOAD", default=None,
                     help="re-run the control gate ALONE and merge its records into an "
                          "existing cycle payload, without re-measuring a single surface")
-    ap.add_argument("--task", default=TASK, metavar="PATH",
+    ap.add_argument("--task", default=None, metavar="PATH",
                     help="the cc_task that ordered this run. Recorded on the payload so it "
                          "names the order it fulfils rather than the task that wrote the "
-                         "runner.")
+                         f"runner. Default {TASK}; for --frame, the frame file.")
     ap.add_argument("--evidence-root", default=None, metavar="DIR",
                     help="where captured bodies are STAGED (default "
                          "state/evidence_staging/<cycle.name>/). They enter the committed "
@@ -672,9 +775,20 @@ def main(argv=None) -> int:
                          "never the report's snapshot. cc_tasks/2026-09-19_spot_scan.md")
     ap.add_argument("--rerun", default="", metavar="LETTER",
                     help="DD-041's rerun letter for a second spot of the same scope on the "
-                         "same UTC day (b, c, …)")
+                         "same UTC day (b, c, …), or a second --frame run of one day")
+    ap.add_argument("--frame", default=None, metavar="FILE",
+                    help="scan YOUR site: a declared frame file (body, home, flagships; "
+                         "docs/adopt/run_on_your_site.md). Everything the run writes goes under "
+                         "--out/<frame>/, never state/ or the event log. Without it, this "
+                         "project's own frame (frames/fss16.yaml) is measured, as always. "
+                         "cc_tasks/2026-09-19_adopter_path.md")
+    ap.add_argument("--out", default="out", metavar="DIR",
+                    help="where a --frame run writes (default ./out)")
     a = ap.parse_args(argv)
     params = load_params()
+    if a.frame:
+        return main_frame(a, params)
+    a.task = a.task or TASK
     # A spot is decided and VALIDATED before anything runs: an unknown body is a refusal that
     # costs nothing, and discovering it after the control cycle would have cost the controls.
     cycle, spot_targets = None, None

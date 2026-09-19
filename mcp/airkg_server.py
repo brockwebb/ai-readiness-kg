@@ -42,6 +42,7 @@ ADOPT BEFORE CREATE (Standard 7), and the two servers this was copied from:
 RUN
     /opt/anaconda3/bin/python3 mcp/airkg_server.py            # stdio, the project database
     /opt/anaconda3/bin/python3 mcp/airkg_server.py --no-graph # record-only, no Neo4j at all
+    /opt/anaconda3/bin/python3 mcp/airkg_server.py --no-graph --run out/<frame>   # your site
 
 `mcp/` is deliberately NOT a Python package. A `mcp/__init__.py` at this repository's root
 shadows the installed `mcp` distribution that `fastmcp` imports, and `import fastmcp` then
@@ -101,14 +102,14 @@ comes back as a refusal message. This server touches no other graph.
 """
 
 
-def create_server(graph: T.Graph | None = ..., database: str | None = None):
+def create_server(graph: T.Graph | None = ..., database: str | None = None, run=None):
     """Build the tools and register them on a fresh FastMCP instance.
 
     Returns `(mcp, tools)` so a test, a smoke check or the doc generator can reach the verbs
     without a transport — the reason the bodies live in `airkg_tools` and not here.
 
     `graph` defaults to a `Graph` over the project database; pass `None` for a record-only
-    server. The database rail fires HERE, at startup, before a driver exists: a mis-scoped
+    server. `run` points the verbs at an adopter's frame directory (`Tools`). The database rail fires HERE, at startup, before a driver exists: a mis-scoped
     server must never serve.
     """
     if graph is ...:
@@ -116,7 +117,7 @@ def create_server(graph: T.Graph | None = ..., database: str | None = None):
     elif database is not None:
         guard.assert_allowed_db(database)
     mcp = FastMCP(SERVER_NAME, instructions=INSTRUCTIONS)
-    tools = T.Tools(graph=graph)
+    tools = T.Tools(graph=graph, run=run)
     _register(mcp, tools)
     registered = [t for t in mcp._tool_manager._tools] if hasattr(mcp, "_tool_manager") else []
     del registered
@@ -286,9 +287,13 @@ def main(argv: list | None = None) -> int:
     ap.add_argument("--database", default=None,
                     help="refused unless it is seldon.yaml's neo4j.database; present so a "
                          "mis-scoped invocation fails loudly instead of quietly")
+    ap.add_argument("--run", metavar="DIR", default=None,
+                    help="answer over an adopter's frame directory (out/<frame>/): its cycle of "
+                         "record, its matrices and — with --no-graph — the Findings and "
+                         "Observations in its payload. cc_tasks/2026-09-19_adopter_path.md")
     args = ap.parse_args(argv)
     mcp, _tools = create_server(graph=None if args.no_graph else ...,
-                                database=args.database)
+                                database=args.database, run=args.run)
     mcp.run()
     return 0
 

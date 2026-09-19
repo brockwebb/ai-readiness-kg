@@ -1,0 +1,35 @@
+# This project's frame: the 16 statistical agencies and units the L0 report measures, and the 3
+# reference hosts beside them. `cc_tasks/2026-09-19_adopter_path.md` decision 1.
+#
+# A FRAME FILE IS THE UNIT OF ADOPTION. Someone scanning their own site writes a file like
+# `docs/adopt/run_on_your_site.md` shows (`kind: declared`: a body, its home page, its flagship
+# pages) and runs `make scan-now FRAME=<that file>`. This file is the same idea for this project,
+# with one difference, and the difference is why it is `kind: target_datafile`:
+#
+#   This project's frame was not typed; it was BUILT (`cc_tasks/2026-09-10_scan_frame_v5.md`)
+#   into a registered DataFile, `state/scan_targets_fss_2026-09_v5.json`: 72 surfaces, each
+#   with the selection source that justifies it, and corpus doc ids for the flagships admitted
+#   through the manifest. `params.cycle.targets` names it, `params_hash` covers that name, and
+#   every stored payload of the frame records it. So the 72 rows stay where they are and this
+#   file REFERS to them. Copying them here would make two sources of one frame, and moving them
+#   would change the target name every stored cycle re-derives against.
+#
+# `tests/test_adopter_path.py` holds this file to the DataFile and to `params.yaml`: the bodies
+# below are exactly the DataFile's, by tier, and `targets` and `user_agent` are exactly what
+# `params.yaml` says. `run.py` with no `--frame` measures this frame, as it always has; `--frame`
+# takes a declared frame and refuses this one, because this project's cycles are dispatched
+# tasks that write `state/` and the event log, not adopter runs that write `out/`.
+frame: fss16
+kind: target_datafile
+targets: scan_targets_fss_2026-09_v5
+# The identity this frame is measured under (DD-060). Recorded here so that `run.py` can refuse
+# it to anyone else's frame against a non-loopback host (decision 3): a scan of your site that
+# identifies itself as this project would put this project's name and contact in your target's
+# logs for a measurement this project did not make.
+user_agent: "ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg)"
+bodies:
+  # OMB-recognized statistical agencies and units: every leg of the framework set.
+  tier_a: [BEA, BJS, BLS, BTS, CENSUS, DRSMSU, EIA, ERS, NAHMSAPHIS, NASS, NCES, NCHS, NCSES,
+           ORES, SAMHSACBHS, SOI]
+  # Reference hosts: tier-0 legs only, in no Tier A denominator (DD-059).
+  tier_c: [GSA, NIST, data.gov]

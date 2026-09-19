@@ -957,3 +957,18 @@ reporting:
   # a reader; every rule compares against the params floor, never against the rounded value.
   ratio_decimal_places: 4
 
+
+schedule:
+  # WHEN a scan runs, and against which frame. `cc_tasks/2026-09-19_adopter_path.md` decision 2:
+  # the schedule belongs to whoever runs the harness, not to Seldon and not to this project.
+  #
+  #   when   `on_demand` (nothing is installed; `make scan-now FRAME=...` runs one scan), or a
+  #          five-field cron expression (`0 6 * * 1` is 06:00 every Monday, local time), which
+  #          `make install-schedule` turns into a cron line or a launchd agent on your machine.
+  #   frame  the frame file a scheduled scan measures (`docs/adopt/run_on_your_site.md`).
+  #
+  # This project's own cycles are dispatched tasks and its cadence is off, so it says
+  # `on_demand` and names its own frame. Not an input to `params_hash`
+  # (`model.UNHASHED_KEYS`): when a scan was triggered shapes none of its evidence.
+  when: on_demand
+  frame: assessment/harness/scan/frames/fss16.yaml

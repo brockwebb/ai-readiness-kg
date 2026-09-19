@@ -79,6 +79,23 @@ def actions(g: dict) -> list:
     return out
 
 
+def use_run(frame_dir) -> None:
+    """Point this module's readers at an adopter's frame directory (`out/<frame>/`) instead of
+    this project's published tree. `cc_tasks/2026-09-19_adopter_path.md` decision 4.
+
+    The two module globals every reader here goes through are all that move: the matrices
+    are `out/<frame>/reports/`, and the cycle of record is that directory's own
+    `publication.yaml`, which `scripts/render_run_report.py` writes after each run of the
+    frame. The framework record, and so every action and band, stays this repository's. Called
+    by `score.py --run`, `render_run_report.py` and the MCP server's `--run`, each in a process
+    or a module copy of its own.
+    """
+    global REPORTS, PUBLICATION
+    from scan import adopt
+    where = adopt.layout(Path(frame_dir).resolve().parent, Path(frame_dir).resolve().name)
+    REPORTS, PUBLICATION = where["reports"], where["publication"]
+
+
 def snapshot_cycle() -> str:
     import yaml
     cycle = yaml.safe_load(PUBLICATION.read_text(encoding="utf-8"))["snapshot_cycle"]

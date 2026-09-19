@@ -273,12 +273,31 @@ def citation_locator(source: str, source_kind: str) -> dict | None:
 class Tools:
     """The ten verbs. `graph=None` is a working server over the record alone: every framework
     and prescription answer still answers, and a graph question says in words that it cannot be
-    answered rather than returning an empty result that reads like a finding."""
+    answered rather than returning an empty result that reads like a finding.
 
-    def __init__(self, graph: Graph | None = None):
+    `run` points the verbs at an adopter's frame directory (`out/<frame>/`,
+    `scan.adopt.layout`) instead of this project's published tree
+    (`cc_tasks/2026-09-19_adopter_path.md` decision 4): the cycle of record is the frame's own
+    newest run, the matrices are that directory's, and — with no graph — a Finding's reason and
+    the bytes under it are read from the run's payload, which holds every Observation and
+    Finding the run made. The framework record is this repository's either way. The pointing is
+    per instance: this object's own copies of `prescriptions.py` and `score.py` are redirected,
+    and no module another caller shares is touched.
+    """
+
+    def __init__(self, graph: Graph | None = None, run: Path | str | None = None):
         self.graph = graph
         self._record = None
         self._publication = None
+        self.run = Path(run).resolve() if run else None
+        if self.run is not None:
+            from scan import adopt
+            self._run_paths = adopt.layout(self.run.parent, self.run.name)
+            if not self._run_paths["publication"].is_file():
+                raise SystemExit(
+                    f"REFUSING: {self._run_paths['publication']} does not exist; render a run "
+                    f"of this frame first (scripts/render_run_report.py) so there is a cycle "
+                    f"of record to answer from")
 
     # -- sources ------------------------------------------------------------------------
 
@@ -292,7 +311,8 @@ class Tools:
     def publication(self) -> dict:
         if self._publication is None:
             import yaml
-            self._publication = yaml.safe_load(PUBLICATION.read_text(encoding="utf-8"))
+            path = self._run_paths["publication"] if self.run else PUBLICATION
+            self._publication = yaml.safe_load(path.read_text(encoding="utf-8"))
         return self._publication
 
     @property
@@ -313,6 +333,8 @@ class Tools:
             mod = importlib.util.module_from_spec(spec)
             sys.modules[spec.name] = mod
             spec.loader.exec_module(mod)
+            if self.run is not None:
+                mod.use_run(self.run)
             self._presc_mod = mod
         return self._presc_mod
 
@@ -427,7 +449,7 @@ class Tools:
                 "locators": [source_loc("scripts/prescriptions.py", "def published_cycles")]}
 
     def _payload(self, cycle: str) -> dict:
-        p = STATE / f"{cycle}.json"
+        p = (self._run_paths["state"] if self.run else STATE) / f"{cycle}.json"
         return json.loads(p.read_text(encoding="utf-8")) if p.exists() else {}
 
     def projection_gate(self) -> dict:
@@ -640,11 +662,50 @@ class Tools:
             mod = importlib.util.module_from_spec(spec)
             sys.modules[spec.name] = mod
             spec.loader.exec_module(mod)
+            if self.run is not None:
+                # score.py reads matrices through its `P`; this instance's copy of
+                # prescriptions.py is the one pointed at the run, and the shared module is not.
+                mod.P = self._presc()
             self._score_mod = mod
         return self._score_mod
 
+    def _graph_up(self) -> bool:
+        return self.graph is not None and self.graph.available()
+
+    def _run_findings(self, finding_ids: list) -> dict:
+        """`{finding_id: (finding, [observation, ...])}` from an adopter run's PAYLOAD.
+
+        The graph answer's source, read directly: the payload is what `publish.py` would put on
+        the log and the projection would load, so without Neo4j it is the same Findings and the
+        same Observations, one hop closer to the bytes. Used only in run mode; this project's
+        own no-graph server still says the graph is unreachable, because its snapshot is a
+        re-judgement whose Observations live in another cycle's payload and on the log.
+        """
+        p = self._payload(self.cycle)
+        obs = {o["obs_id"]: o for o in p.get("observations_detail") or []}
+        wanted, out = set(finding_ids), {}
+        for f in (p.get("findings_detail") or []) + (p.get("control_findings_detail") or []):
+            if f["finding_id"] in wanted:
+                out[f["finding_id"]] = (f, [obs[i] for i in f.get("evidence") or [] if i in obs])
+        return out
+
     def _evidence_for(self, finding_ids: list) -> dict:
         """Finding → its Observations → the retained bytes, for many findings in ONE query."""
+        if finding_ids and not self._graph_up() and self.run is not None:
+            out = {}
+            for fid, (f, obs) in self._run_findings(finding_ids).items():
+                rows = [self._observation({
+                    "obs_id": o["obs_id"], "sha256": (o.get("response") or {}).get("body_sha256"),
+                    "raw_ref": (o.get("response") or {}).get("body_path"),
+                    "captured_at": o.get("captured_at"), "collector": o.get("collector"),
+                    "leg": o.get("leg"), "error_class": o.get("error_class"),
+                    "error_class_recorded": o.get("error_class"),
+                    "surface_doc_id": o.get("target_doc_id")}) for o in obs]
+                out[fid] = {"reason": f.get("reason"), "rule_id": f.get("rule_id"),
+                            "verdict": f.get("verdict"), "indicator_code": f.get("spec_code"),
+                            "target_doc_id": f.get("target_doc_id"), "current": True,
+                            "evidence_unretained": False, "observations": rows}
+            return out
         if not finding_ids or self.graph is None or not self.graph.available():
             return {}
         rows, _ = self.graph.read(
@@ -904,7 +965,18 @@ class Tools:
 
     def _error_classes(self, finding_ids: list) -> dict:
         """`{finding_id: sorted BLIND error classes}` from the Observations under each Finding.
-        The corrected class (`error_class`) is read; an overlay's recorded one is not."""
+        The corrected class (`error_class`) is read; an overlay's recorded one is not. In run
+        mode with no graph, the classes come from the run's payload (`_run_findings`)."""
+        if finding_ids and not self._graph_up() and self.run is not None:
+            from scan.errors import BLIND, CLASSES, HARNESS_CURRENT
+
+            def is_blind(c):
+                k = (CLASSES.get(c) or {}).get("kind")
+                k = k.get(HARNESS_CURRENT) if isinstance(k, dict) else k
+                return k == BLIND
+            return {fid: sorted({o.get("error_class") for o in obs
+                                 if o.get("error_class") and is_blind(o.get("error_class"))})
+                    for fid, (_f, obs) in self._run_findings(finding_ids).items()}
         if not finding_ids or self.graph is None or not self.graph.available():
             return {}
         rows, _ = self.graph.read(
@@ -961,7 +1033,8 @@ class Tools:
                 if c["finding_id"] and graph_up else [])
             if not c["error_classes"]:
                 none.append({**c, "reason": ("the error class is a graph answer and Neo4j is "
-                                             "unreachable" if not graph_up else
+                                             "unreachable" if not (graph_up or self.run)
+                                             else
                                              "no BLIND error class is recorded under the "
                                              "Finding")})
                 continue
@@ -1040,7 +1113,7 @@ class Tools:
     def get_evidence(self, finding_id: str) -> dict:
         """One Finding, down to the bytes: every Observation it cites, the retained response
         body, its sha256, when it was captured, and the rule version that judged it."""
-        if self.graph is None or not self.graph.available():
+        if (self.graph is None or not self.graph.available()) and self.run is None:
             return {"error": "Neo4j unreachable: evidence lives on the Observations in the "
                              "projection of the event log and this server did not guess it",
                     "locators": []}

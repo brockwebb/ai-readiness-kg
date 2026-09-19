@@ -158,3 +158,8 @@ corpus/quarantine/evidence_scan_fixture/unlicensed/
 # report is how two copies drift.
 docs/reports/generated/*.build.md
 docs/reports/generated/cycle_over_cycle.svg
+
+# ── Adopter runs (cc_tasks/2026-09-19_adopter_path.md decision 4) ─────────
+# `make scan-now FRAME=...` writes a run's payload, evidence, matrices and report under
+# out/<frame>/. They are the adopter's artifacts, never this project's record.
+out/

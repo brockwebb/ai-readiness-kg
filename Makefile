@@ -14,10 +14,11 @@
 # The point of the split is that a two-minute gate exists at all. The full suite still runs
 # before every push, and a green fast tier is never reported as a green suite.
 
-PY := /opt/anaconda3/bin/python3
+# `?=` so an adopter can say `PY=python3` (or export PY); this machine's python is the default.
+PY ?= /opt/anaconda3/bin/python3
 LOGS := logs
 
-.PHONY: gate-fast gate-task gate-full guards report-pdf
+.PHONY: gate-fast gate-task gate-full guards report-pdf scan-now install-schedule project
 
 gate-fast:
 	$(PY) -m pytest tests/ assessment/ -q -rs -m "not slow"
@@ -62,3 +63,36 @@ gate-full:
 report-pdf:
 	$(PY) scripts/build_report_pdf.py
 	$(PY) -m pytest tests/test_report_pdf.py -q
+
+# ---------------------------------------------------------------- your site
+#
+# `cc_tasks/2026-09-19_adopter_path.md`. The walkthrough is docs/adopt/run_on_your_site.md; the
+# test that runs it, command for command, is tests/test_adopter_path.py.
+#
+#   scan-now          one scan of the frame you declared, then its matrices and its report, all
+#                     under $(OUT)/<frame>/. Controls first, robots first, 1 request/s per host,
+#                     and your own User-Agent (params.yaml manners.user_agent) or no scan.
+#   install-schedule  params.yaml `schedule:` onto this machine as a cron line or a launchd
+#                     agent, printing what it wrote. `on_demand` installs nothing.
+#   project           Neo4j, optional: put the run $(RUN) on the event log (its evidence stays
+#                     where the run left it) and project the framework and every cycle on the
+#                     log, so the MCP server's graph answers cover it. Without RUN, the
+#                     projection alone. Needs NEO4J_USER/NEO4J_PASS and seldon.yaml's database.
+FRAME ?=
+OUT ?= out
+RUN ?=
+
+scan-now:
+	@test -n "$(FRAME)" || { echo "REFUSING: say which frame: make scan-now FRAME=<your frame .yaml>"; exit 2; }
+	$(PY) assessment/harness/scan/run.py --frame "$(FRAME)" --out "$(OUT)"
+	$(PY) scripts/render_run_report.py --frame "$(FRAME)" --out "$(OUT)"
+
+install-schedule:
+	$(PY) scripts/install_schedule.py
+
+project:
+	@if [ -n "$(RUN)" ]; then \
+	  $(PY) assessment/harness/scan/publish.py --no-promote \
+	    --from "$(RUN)/state/$$(cat "$(RUN)/LATEST").json" || exit $$?; \
+	fi
+	$(PY) scripts/build_projection.py

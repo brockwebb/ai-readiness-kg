@@ -62,10 +62,20 @@ def sha256_bytes(b: bytes) -> str:
     return hashlib.sha256(b).hexdigest()
 
 
+#: Top-level keys of `params.yaml` that say WHEN the harness runs and nothing about WHAT it
+#: measures, so they are not an input to `params_hash`. `cc_tasks/2026-09-19_adopter_path.md`
+#: decision 2 puts the adopter's `schedule:` in `params.yaml`; hashing it would give a cycle run
+#: from cron and the same cycle run by hand different Finding ids from identical evidence, and
+#: would have moved this project's own hash for a key that shapes no byte. Every parameter set
+#: stored before the key existed lacks it, so excluding it changes no recorded hash.
+UNHASHED_KEYS = ("schedule",)
+
+
 def params_hash(params: dict) -> str:
-    """Stable hash of the whole parameter set. Rides on every Observation and every Finding,
-    so a record always names the constants that shaped it."""
-    return sha256_bytes(json.dumps(params, sort_keys=True, separators=(",", ":")).encode())
+    """Stable hash of the parameter set, less `UNHASHED_KEYS`. Rides on every Observation and
+    every Finding, so a record always names the constants that shaped it."""
+    shaped = {k: v for k, v in params.items() if k not in UNHASHED_KEYS}
+    return sha256_bytes(json.dumps(shaped, sort_keys=True, separators=(",", ":")).encode())
 
 
 #: Set by the cycle runner, and by nothing else, for the duration of a cycle. Its presence is

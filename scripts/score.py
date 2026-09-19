@@ -970,7 +970,14 @@ def main(argv=None) -> int:
     g.add_argument("--check", action="store_true")
     ap.add_argument("--cycle", help="score a cycle other than the cycle of record")
     ap.add_argument("--prior", help="the prior cycle for the sensitivity view")
+    ap.add_argument("--run", metavar="DIR",
+                    help="score an adopter's frame directory (out/<frame>/) instead of this "
+                         "project's published tree: its own cycle of record and matrices, this "
+                         "repository's framework record. Neo4j is never read, with or without "
+                         "it. cc_tasks/2026-09-19_adopter_path.md")
     a = ap.parse_args(argv)
+    if a.run:
+        P.use_run(a.run)
     r = compute(a.cycle, a.prior)
     if a.json:
         print(json.dumps(r, indent=1, sort_keys=True))
