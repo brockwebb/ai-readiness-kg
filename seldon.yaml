@@ -111,6 +111,23 @@ dispatch:
   # value is Seldon's default (NOTIFY_TIMEOUT_S_DEFAULT), written here so an operator sees it.
   notify_timeout_s: 30
 
+  # THE STALENESS ALARM, separate from the failure alarm
+  # (`cc_tasks/2026-09-19_seldon_hygiene_superseded_cadence_after_ADDENDUM_01.md` decision 6b).
+  # A candidate refused on the SAME criterion for this many consecutive passes raises `notify`
+  # once and writes one `dispatch_stuck` event; it re-arms when the criterion changes or clears.
+  # One event per streak, never one per pass — DN-006 decision 7 forbids a poll logging its own
+  # silence, and a queue that has stopped is the opposite fact.
+  #
+  # The incident: 2026-09-20T03:00Z to 09:56Z, 84 consecutive passes printed
+  # `65e5da0e dirty_tree: c7`, exit 0, no event, no notification, while one untracked task file
+  # sat in `cc_tasks/`. Prior art for the instrument: the dead man's switch, Nagios freshness
+  # checks, Prometheus `absent()` with a `for:` duration.
+  #
+  # **NO MEASURED BASIS**, like `poll_interval_s` above and stated for the same reason. At
+  # `poll_interval_s: 300` this is fifteen minutes. It is Seldon's default written out so an
+  # operator sees it.
+  stuck_after_passes: 3
+
   # ------------------------------------------------------------------------------ cadence
   # Schedule turned OFF 2026-09-18 by operator ruling: a scan cycle is requested, not scheduled
   # (`cc_tasks/2026-09-18_cadence_off.md`; DN-006 ADDENDUM_07 supersedes DD-060's monthly cadence).
