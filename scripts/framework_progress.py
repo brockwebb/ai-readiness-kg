@@ -571,6 +571,19 @@ def g_name(g: dict, code: str) -> str:
     return code
 
 
+def _say(p: Path) -> str:
+    """A path for the status line, repo-relative when it is under the repo and absolute when it
+    is not. `relative_to` RAISES on a path outside the tree, so the bare form made a status
+    line able to fail a run that had already written both files — which is what it did the
+    first time the drift guard regenerated the page into a pytest `tmp_path`
+    (`cc_tasks/2026-09-19_g4_locators_and_progress_drift.md` decision 4)."""
+    p = p.resolve()
+    try:
+        return str(p.relative_to(REPO))
+    except ValueError:
+        return str(p)
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--json", default=str(JSON_PATH))
@@ -611,8 +624,7 @@ def main(argv=None) -> int:
                       "measurement_specs": s["measurement_specs"],
                       "by_tier": {k: v["indicators"] for k, v in s["by_tier"].items()}},
                      indent=1))
-    print(f"-> {OUT_JSON.resolve().relative_to(REPO)}  {OUT_HTML.resolve().relative_to(REPO)}",
-          file=sys.stderr)
+    print(f"-> {_say(OUT_JSON)}  {_say(OUT_HTML)}", file=sys.stderr)
     return 0
 
 
