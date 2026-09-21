@@ -18,8 +18,8 @@
   `tests/test_g4_locators_and_progress_drift.py`, whose `G4_DOCS` now names all nine documents
   and whose renderings now include the HTML substrate. What is asserted here is the shape the
   decisions require of the cell: the document the rule's own spec names as prior art is cited
-  on the indicator; the DCAT-AP property is cited by analogy and says so; the AI-ranker clause
-  is marked as the framework's own inference; and every cited document is admitted.
+  on the indicator; G4 is narrowed to the measured claim (`cc_tasks/2026-09-21_g4_narrowed.md`);
+  and every cited document is admitted.
 """
 from __future__ import annotations
 
@@ -274,15 +274,24 @@ def test_the_document_the_rule_measures_against_is_cited_on_the_indicator():
     assert "bureau" in loc.lower() and "program" in loc.lower(), loc[:200]
 
 
-def test_the_dcat_ap_property_is_cited_by_analogy_and_says_so():
-    loc = _g4_locators()["dcat-ap-3-0-0-r5r-vocabulary"]
-    assert "by analogy" in loc.lower(), loc
-    assert "applicab" in loc.lower() and "mandate" in loc.lower(), loc
-
-
-def test_the_ai_ranker_clause_is_marked_as_the_frameworks_own_inference():
-    raw = _node("ind:G4")["evidence_raw"]
-    assert "AI rankers" in raw and "own inference" in raw, raw[-300:]
+def test_g4_is_narrowed_to_the_measured_claim():
+    """`cc_tasks/2026-09-21_g4_narrowed.md`: G4 states only what RULE-G4-v1 measures and its
+    sources define. No statutory-mandate clause, no claim about what AI rankers need, and the
+    three documents that served the removed clauses no longer back it."""
+    node = _node("ind:G4")
+    # tier_note and requirement_none_reason are the rule's own record that those clauses are
+    # UNMEASURED; they stay, and they are not the indicator's claim.
+    text = " ".join(str(v) for k, v in node.items()
+                    if k not in ("tier_note", "requirement_none_reason"))
+    for gone in ("statutory mandate", "AI rankers", "administrative provenance"):
+        assert gone.lower() not in text.lower(), gone
+    g = json.loads(FRAMEWORK.read_text(encoding="utf-8"))
+    edged = {e["to"] for e in g["edges"]
+             if e["from"] == "ind:G4" and e["type"] == "EVIDENCED_BY"}
+    for dropped in ("doc:statistical-policy-working-paper-46-data-quality-assessment",
+                    "doc:fcsm-19-01-transparent-reporting-for-integrated-data-quality",
+                    "doc:dcat-ap-3-0-0-r5r-vocabulary"):
+        assert dropped not in edged, dropped
 
 
 def test_every_g4_source_is_an_admitted_verified_document():

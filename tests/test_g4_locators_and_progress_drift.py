@@ -67,12 +67,10 @@ PUB = yaml.safe_load((REPO / "docs" / "reports" / "publication.yaml").read_text(
 #: "these are the ones the report quotes" — and asserted against the record below, so a source
 #: added to the cell fails here rather than going uncited. Two until 2026-09-21;
 #: `cc_tasks/2026-09-21_g4_resourcing_reissue.md` added the six standards that define G4's
-#: fields and the DCAT-AP vocabulary it admitted for the statutory-mandate clause.
-G4_DOCS = ("statistical-policy-working-paper-46-data-quality-assessment",
-           "fcsm-19-01-transparent-reporting-for-integrated-data-quality",
-           "dcat-us-1-1-schema", "dcat-us-3-dataset-schema", "dcat-us-3-overview",
-           "w3c-dcat-3", "w3c-prov-o-ontology", "schema-org-dataset",
-           "dcat-ap-3-0-0-r5r-vocabulary")
+#: fields and the DCAT-AP vocabulary; `cc_tasks/2026-09-21_g4_narrowed.md` narrowed G4 to the
+#: measured claim and dropped WP-46, both FCSM-19-01 and DCAT-AP from its cell.
+G4_DOCS = ("dcat-us-1-1-schema", "dcat-us-3-dataset-schema", "dcat-us-3-overview",
+           "w3c-dcat-3", "w3c-prov-o-ontology", "schema-org-dataset")
 
 #: Decision 2 outcome (c), in the cell's own words. A clause with no passage behind it says so.
 NO_PINPOINT = "general support; no pinpoint"
