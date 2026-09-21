@@ -1,11 +1,11 @@
 {
  "manifest_version": 2,
  "project": "ai-readiness-kg",
- "generated_at": "2026-09-19T12:11:55.185561+00:00",
+ "generated_at": "2026-09-21T02:46:53.060214+00:00",
  "generator": "dixie.evidence",
  "note": "PROJECTION — rebuilt from the evidence decisions log; do not hand-edit. The log is truth.",
  "counts_by_decision": {
-  "included": 263,
+  "included": 264,
   "excluded": 72,
   "pending_refetch": 43,
   "pending_review": 1
@@ -9132,6 +9132,107 @@
      }
     },
     "added_in": "v1"
+   }
+  },
+  "dcat-ap-3-0-0-r5r-vocabulary": {
+   "doc_id": "dcat-ap-3-0-0-r5r-vocabulary",
+   "identity": {
+    "sha256": "2ebe9f6cd86df1d500d7764d0043fdc44ae5ec82317b9892d8609d7458c39e7e",
+    "canonical_path": "corpus/crosswalk/dcat-ap-3-0-0-r5r-vocabulary.html",
+    "title": "DCAT-AP vocabulary, the r5r namespace (DCAT-AP 3.0.0 release)",
+    "authors_or_org": [
+     "SEMIC, Interoperable Europe (European Commission)"
+    ],
+    "pub_year": "2024",
+    "doc_type": "standard",
+    "source_url": "https://semiceu.github.io/DCAT-AP/r5r/releases/3.0.0/",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "scripted_fetch",
+    "acquired_at": "2026-09-21T02:46:52.636488+00:00",
+    "acquired_by": "scripts/fetch_allowlisted.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed html, detected html",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "27775 bytes vs floor 64",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "skipped: format mismatch already failed or type unhandled",
+      "outcome": "skip"
+     }
+    ],
+    "checked_at": "2026-09-21T02:46:52.636781+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "cc_tasks/2026-09-21_g4_resourcing_reissue.md (decision 2 of the task it re-issues): the US documents G4 could cite define no field for the statutory mandate a dataset is collected under; this vocabulary defines dcatap:applicableLegislation, the nearest standard property, which G4's evidence cell cites by analogy and says so.",
+    "decided_by": "cc",
+    "decided_at": "2026-09-21T02:46:52.396674+00:00",
+    "history": [],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "g4_resourcing_2026-09-21"
+   ],
+   "extra": {
+    "notes": [
+     "fetched robots-first under the identified UA from https://semiceu.github.io/DCAT-AP/r5r/releases/3.0.0/ (logs/2026-09-21_g4_resourcing_reissue_fetch.jsonl; semiceu.github.io/robots.txt answered 404). The r5r namespace vocabulary page of the DCAT-AP 3.0.0 release, defining dcatap:applicableLegislation (range eli:LegalResource, domain rdfs:Resource), dcatap:availability and dcatap:hvdCategory. Not the DCAT-AP profile document, which the page links and which was not fetched."
+    ],
+    "observed_files": {
+     "corpus/crosswalk/dcat-ap-3-0-0-r5r-vocabulary.html": {
+      "sha256": "2ebe9f6cd86df1d500d7764d0043fdc44ae5ec82317b9892d8609d7458c39e7e",
+      "size": 27775,
+      "claimed_type": "html",
+      "detected_type": "html"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/crosswalk/dcat-ap-3-0-0-r5r-vocabulary.html": {
+      "path": "corpus/crosswalk/dcat-ap-3-0-0-r5r-vocabulary.html",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed html, detected html",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "27775 bytes vs floor 64",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "skipped: format mismatch already failed or type unhandled",
+        "outcome": "skip"
+       }
+      ],
+      "checked_at": "2026-09-21T02:46:52.636781+00:00"
+     }
+    },
+    "added_in": "g4-resourcing-2026-09-21"
    }
   },
   "dcat-us-1-1-schema": {
