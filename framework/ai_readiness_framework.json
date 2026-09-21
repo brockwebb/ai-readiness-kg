@@ -7,7 +7,7 @@
   "criteria": 7,
   "constructs": 47,
   "indicators": 48,
-  "evidenced_by": 141,
+  "evidenced_by": 148,
   "evidenced_by_internal": 17,
   "gaps": 13,
   "measurement_specs": 29,
@@ -1899,7 +1899,7 @@
     "tier": "agency_instrumented",
     "tier_raw": "`agency_instrumented`",
     "status": "draft",
-    "evidence_raw": "`statistical-policy-working-paper-46-data-quality-assessment` (Introduction, opening paragraph, which supports the statistical-versus-administrative provenance clause and that clause only: \"Unlike survey data, which are collected for statistical purposes, administrative data are collected as part of a program agency's routine operations.\"; and the INSTITUTIONAL ENVIRONMENT dimension definition, Initial Acquisition phase, which makes the identity of the issuing agency a quality dimension to be assessed rather than a field to be carried: \"Institutional Environment refers to the credibility of the administrative agency for producing high quality and reliable administrative data.\"; issuing authority and statutory mandate: general support; no pinpoint — the Tool asks 43 questions and none of them asks under what authority or mandate the data are held, and its Data Dictionary Template carries File Name, Description, File Date and File Format and no authority field); `fcsm-19-01-transparent-reporting-for-integrated-data-quality` (§3(c), VetPop2016, Table 3.3, dimension 4 Traceability, which is the provenance-carried-as-metadata clause: \"The extent to which data are well documented, verifiable, and easily attributed to a source.\", assessed as \"Clarity of the description of the source of a data element in documentation including metadata information.\"; and §1 Introduction, Types of Data, for the survey-versus-administrative distinction the clause rests on: \"Government program agencies create administrative data as part of their daily operations.\"; statutory mandate: recorded as one agency's practice and nowhere prescribed, §5 SESTAT: \"NSF has a continuing mandate most recently expressed in the America COMPETES Reauthorization Act of 2010\"; issuing authority: general support; no pinpoint — the report's eight quality dimensions do not include one, and the searches are in cc_tasks/2026-09-19_g4_locators_and_progress_drift_RESULT.md §0)",
+    "evidence_raw": "`statistical-policy-working-paper-46-data-quality-assessment` (Introduction, opening paragraph, which supports the statistical-versus-administrative provenance clause and that clause only: \"Unlike survey data, which are collected for statistical purposes, administrative data are collected as part of a program agency's routine operations.\"; and the INSTITUTIONAL ENVIRONMENT dimension definition, Initial Acquisition phase, which makes the identity of the issuing agency a quality dimension to be assessed rather than a field to be carried: \"Institutional Environment refers to the credibility of the administrative agency for producing high quality and reliable administrative data.\"; issuing authority and statutory mandate: general support; no pinpoint — the Tool asks 43 questions and none of them asks under what authority or mandate the data are held, and its Data Dictionary Template carries File Name, Description, File Date and File Format and no authority field); `fcsm-19-01-transparent-reporting-for-integrated-data-quality` (§3(c), VetPop2016, Table 3.3, dimension 4 Traceability, which is the provenance-carried-as-metadata clause: \"The extent to which data are well documented, verifiable, and easily attributed to a source.\", assessed as \"Clarity of the description of the source of a data element in documentation including metadata information.\"; and §1 Introduction, Types of Data, for the survey-versus-administrative distinction the clause rests on: \"Government program agencies create administrative data as part of their daily operations.\"; statutory mandate: recorded as one agency's practice and nowhere prescribed, §5 SESTAT: \"NSF has a continuing mandate most recently expressed in the America COMPETES Reauthorization Act of 2010\"; issuing authority: general support; no pinpoint — the report's eight quality dimensions do not include one, and the searches are in cc_tasks/2026-09-19_g4_locators_and_progress_drift_RESULT.md §0); `dcat-us-1-1-schema` (Dataset Required Fields and the field definitions, which support the issuing-authority clause and define the fields RULE-G4-v1 tests: Publisher, \"The publishing entity and optionally their parent organization(s).\"; bureauCode, required \"Yes, for United States Federal Government agencies\", \"Represent each bureau responsible for the dataset according to the codes found in OMB Circular A-11, Appendix C\"; programCode, \"Provide an array of programs related to this data asset\"; statutory mandate: general support; no pinpoint — no field carries it, and the page glossary's definition of metadata, sourced to NIST, says only that \"Metadata also may provide other relevant information, such as the responsible steward, associated laws and regulations, and access management policy.\"; statistical-versus-administrative provenance: general support; no pinpoint); `dcat-us-3-dataset-schema` (Dataset, publisher, Mandatory, for the issuing-authority clause: \"Organization responsible for publishing and making the dataset available\"; Dataset, provenance, Optional, a free-text field that can carry the statistical-versus-administrative distinction and defines no class for it: \"List of statements about the lineage of a Dataset, including any changes in its ownership or custody since its creation that may be significant for its authenticity, integrity, or interpretation\"; statutory mandate: general support; no pinpoint); `dcat-us-3-overview` (Changes from v1.1, Fields not in the v3.0 core schema, on the bureau and program codes RULE-G4-v1 tests: \"The following fields were introduced in v1.1 specifically for U.S. federal agencies. They are not defined in the v3.0 core schema however the v3.0 schema will not reject records that include them.\"; statutory mandate and statistical-versus-administrative provenance: general support; no pinpoint); `w3c-dcat-3` (§6.4.10 Property: publisher, dcterms:publisher, for the issuing-authority clause: \"The entity responsible for making the resource available.\"; statutory mandate and statistical-versus-administrative provenance: general support; no pinpoint); `w3c-prov-o-ontology` (prov:wasAttributedTo, the issuing-authority clause as a provenance relation: \"Attribution is the ascribing of an entity to an agent.\"; statutory mandate and statistical-versus-administrative provenance: general support; no pinpoint); `schema-org-dataset` (sourceOrganization, for the issuing-authority clause: \"The Organization on whose behalf the creator was working.\"; statutory mandate and statistical-versus-administrative provenance: general support; no pinpoint); `dcat-ap-3-0-0-r5r-vocabulary` (Properties, applicable legislation, dcatap:applicableLegislation, range eli:LegalResource, cited for the statutory-mandate clause by analogy: \"the legislation that is applicable to this resource.\" Its own specification defines applicability, the legislation a resource falls under; G4's clause is a mandate, the legislation the data are collected under, and no US standard in the corpus defines a field for either; issuing authority and statistical-versus-administrative provenance: general support; no pinpoint). The indicator's final clause, the trust signal AI rankers need, is this framework's own inference and no source is cited for it",
     "measurement_status": "harness_built",
     "gap": null,
     "criterion_code": "G",
@@ -8614,6 +8614,62 @@
     "source": "docs/design/scan_tool_map.md §3 at commit 76467ac, row 'Federal DCAT catalog presence': \"`catalog.data.gov`'s CKAN action endpoints answered HTTP 404 on 2026-09-08\"",
     "source_kind": "tool_map",
     "note": "The interface was unavailable when the tool map recorded it (see the tool's note)."
+   }
+  },
+  {
+   "from": "ind:G4",
+   "type": "EVIDENCED_BY",
+   "to": "doc:dcat-us-1-1-schema",
+   "properties": {
+    "doc_id": "dcat-us-1-1-schema"
+   }
+  },
+  {
+   "from": "ind:G4",
+   "type": "EVIDENCED_BY",
+   "to": "doc:dcat-us-3-dataset-schema",
+   "properties": {
+    "doc_id": "dcat-us-3-dataset-schema"
+   }
+  },
+  {
+   "from": "ind:G4",
+   "type": "EVIDENCED_BY",
+   "to": "doc:dcat-us-3-overview",
+   "properties": {
+    "doc_id": "dcat-us-3-overview"
+   }
+  },
+  {
+   "from": "ind:G4",
+   "type": "EVIDENCED_BY",
+   "to": "doc:w3c-dcat-3",
+   "properties": {
+    "doc_id": "w3c-dcat-3"
+   }
+  },
+  {
+   "from": "ind:G4",
+   "type": "EVIDENCED_BY",
+   "to": "doc:w3c-prov-o-ontology",
+   "properties": {
+    "doc_id": "w3c-prov-o-ontology"
+   }
+  },
+  {
+   "from": "ind:G4",
+   "type": "EVIDENCED_BY",
+   "to": "doc:schema-org-dataset",
+   "properties": {
+    "doc_id": "schema-org-dataset"
+   }
+  },
+  {
+   "from": "ind:G4",
+   "type": "EVIDENCED_BY",
+   "to": "doc:dcat-ap-3-0-0-r5r-vocabulary",
+   "properties": {
+    "doc_id": "dcat-ap-3-0-0-r5r-vocabulary"
    }
   }
  ],

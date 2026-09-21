@@ -29,6 +29,28 @@ title: "AI readiness of the federal statistical system: host-level findings"
 # document rather than a new edition of this one.
 version: "2026-09-10_rj4"
 
+# The date each version was RELEASED, keyed by version. Every date a published file carries —
+# CITATION.cff `date-released`, the Zenodo `publication_date`, the sitemap `lastmod`, the index
+# and the report's version block — is read from here and never from the build's clock
+# (`cc_tasks/2026-09-21_g4_resourcing_reissue.md`, decision 5 of the task it re-issues).
+#
+# Why a declaration and not the event log: the log dates the snapshot's JUDGEMENT
+# (`events/cycle-scan_2026-09-10_rj4.jsonl`, `finding_derived`, 2026-09-18T14:05Z), and a release
+# is a later act — CFF 1.2.0 defines `date-released` as the date the work was released, and
+# Zenodo's `publication_date` is the date of publication. Stamping the judgement's date would
+# date the release a day before it happened. The log does bound it: the builder refuses a
+# release date earlier than the snapshot's last event.
+#
+# Keyed by version so the date moves when the version does and not otherwise (reproducible-
+# builds.org, SOURCE_DATE_EPOCH: an embedded date comes from the source, never the clock). A new
+# `version` with no entry here stops the build rather than borrowing the old date.
+#
+# 2026-09-10_rj4: first published by `f763563` (2026-09-19 13:32Z, cc_tasks/2026-09-19_
+# resnapshot_rj4.md), whose build stamped 2026-09-19. A rebuild on 2026-09-20 re-dated it by
+# the clock with the version unchanged; this restores it.
+released:
+  "2026-09-10_rj4": "2026-09-19"
+
 authors:
   - family-names: Webb
     given-names: Brock

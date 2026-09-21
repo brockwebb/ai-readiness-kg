@@ -227,9 +227,11 @@ def load_publication() -> dict:
 def build_commit() -> str:
     """The commit the build READ, short.
 
-    Not the commit that publishes the build: no document can name the commit that contains it,
-    so the version block says `built from` and adds that the publishing commit is this one's
-    child. The working tree is necessarily dirty at that moment — it is holding the very files
+    Not the commit that publishes the build: no document can name the commit that contains it.
+    Since 2026-09-21 the version block does not carry it at all — a page naming its build commit
+    differs from its own regeneration once committed — and points at `data/index.json`, the
+    build manifest that records it (`cc_tasks/2026-09-21_g4_resourcing_reissue.md`). The
+    working tree is necessarily dirty at that moment — it is holding the very files
     about to be committed — so a `+dirty` marker would be present on every build that ever
     ships and would read to a stranger as a defect rather than as the ordinary state. It is
     reported in the builder's summary (`build_commit_dirty`) where a reader is asking about
@@ -250,7 +252,7 @@ def build_tree_dirty() -> bool:
                                text=True, cwd=REPO).stdout.strip())
 
 
-def version_block(pub: dict, today: str | None = None, standing: str | None = None) -> str:
+def version_block(pub: dict, released: str | None = None, standing: str | None = None) -> str:
     """The title page's version paragraph, generated on every build.
 
     Generated rather than written into `sections/10_frame.md`, because a commit hash and a
@@ -258,9 +260,17 @@ def version_block(pub: dict, today: str | None = None, standing: str | None = No
     edits no section prose. Every identifier is inside backticks: the bare-numeral lint reads
     inline code as a name rather than a measurement (see EXEMPT), which is what it is — the
     numbers in this paragraph are addresses, not findings.
+
+    The date is the version's RELEASE date, read from `publication.yaml` by the one function
+    the site builder uses (`build_l0_site.release_date`), and never the build's clock
+    (`cc_tasks/2026-09-21_g4_resourcing_reissue.md`): until 2026-09-21 this line said "built …
+    on <today>", so every rebuild re-dated the document and two builds of one tree on two days
+    differed in their first paragraph. `released` overrides it for tests only.
     """
-    from datetime import datetime, timezone
-    day = today or datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    if released is None:
+        import build_l0_site
+        released = build_l0_site.release_date(pub)
+    day = released
     # DN-004 decision 2. One generated sentence saying whether a later judgement of this
     # cycle's evidence exists and what it changed — appended here rather than written into
     # `sections/10_frame.md`, for the same reason the commit hash is: a sentence about the
@@ -270,8 +280,8 @@ def version_block(pub: dict, today: str | None = None, standing: str | None = No
     # exemption of its own (`snapshot_successor.supersession_line`).
     standing = f" {standing}" if standing else ""
     return (f"**Version.** Snapshot cycle `{pub['snapshot_cycle']}` · version "
-            f"`{pub['version']}` · built from commit `{build_commit()}` on `{day}` (UTC); "
-            f"the commit that publishes this build is that one's child. This document is a "
+            f"`{pub['version']}` · released `{day}`; the commit this build was read from is "
+            f"recorded in `data/index.json` beside it. This document is a "
             f"VIEW of data published beside it: the matrices as JSON and CSV, the per-check "
             f"source appendix, and every Result quoted below with its value, its state and "
             f"the artifact that generated it. The site index links all of them. "

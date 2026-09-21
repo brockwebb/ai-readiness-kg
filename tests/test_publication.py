@@ -459,7 +459,10 @@ def test_the_built_report_carries_the_version_block_the_config_declares():
     block = next(l for l in head if l.startswith("**Version.**"))
     assert f"`{PUB['snapshot_cycle']}`" in block
     assert f"`{PUB['version']}`" in block
-    assert "built from commit `" in block
+    # The block carries the release date and points at the build manifest for the commit; it
+    # no longer names the commit itself (`cc_tasks/2026-09-21_g4_resourcing_reissue.md`).
+    assert f"released `{PUB['released'][PUB['version']]}`" in block
+    assert "`data/index.json`" in block and "built from commit `" not in block
 
 
 def test_the_version_block_refuses_a_body_with_no_heading():
@@ -823,14 +826,19 @@ CONSUMER_KEY = {
 }
 
 
-def _declared(field: str, pub: dict, fmt: str, built_at: str):
+def _released(pub: dict) -> str:
+    """The version's declared release date. `publication.yaml` keys it by version."""
+    return str((pub.get("released") or {}).get(pub["version"]))
+
+
+def _declared(field: str, pub: dict, fmt: str):
     """What `publication.yaml` licenses this consumer to say, in the consumer's own spelling.
 
-    `date-released` is the one field the declaration does not carry: it is a BUILD stamp, and
-    the declaration of when the build happened is `docs/data/index.json`'s `built_at`, written
-    by the same run of `scripts/build_l0_site.py`. Comparing it to nothing was how it got onto
-    the inventory's PARTIAL rows; comparing it to the build's own timestamp is the strongest
-    claim that is actually true of it.
+    `date-released` was a BUILD stamp until 2026-09-21 and was compared to
+    `docs/data/index.json`'s `built_at`, which was the same clock; a rebuild on a later day moved
+    the release date of record with the version unchanged. It is now declared per version under
+    `released` (`cc_tasks/2026-09-21_g4_resourcing_reissue.md`), so it is compared to the
+    declaration like every other field.
     """
     if field == "title":
         return pub["title"]
@@ -843,14 +851,14 @@ def _declared(field: str, pub: dict, fmt: str, built_at: str):
             return [{"name": f"{a['family-names']}, {a['given-names']}"} for a in pub["authors"]]
         return pub["authors"]
     if field == "date-released":
-        return built_at[:10]
+        return _released(pub)
     raise KeyError(f"{field} is in DECLARED_FIELDS and _declared does not know it")
 
 
-def _declaration_drift(field: str, fmt: str, doc: dict, pub: dict, built_at: str):
+def _declaration_drift(field: str, fmt: str, doc: dict, pub: dict):
     """The one line of drift for this (consumer field, declaration field) pair, or None."""
     key = CONSUMER_KEY[fmt][field]
-    want = _declared(field, pub, fmt, built_at)
+    want = _declared(field, pub, fmt)
     got = doc.get(key)
     if field == "abstract" and isinstance(got, str):
         got = _flat(got)
@@ -858,7 +866,7 @@ def _declaration_drift(field: str, fmt: str, doc: dict, pub: dict, built_at: str
         got = str(got)
     if got == want:
         return None
-    source = ("docs/data/index.json's built_at" if field == "date-released"
+    source = ("publication.yaml's released[version]" if field == "date-released"
               else "publication.yaml")
     return f"{key}: carries {got!r}, {source} declares {want!r}"
 
@@ -874,8 +882,7 @@ def _consumer_doc(consumer: str, fmt: str) -> dict:
 def test_the_generated_consumer_restates_the_declaration_field_by_field(consumer, fmt, field):
     """One row per field per consumer. A whole-document comparison would report "it differs"
     and leave a reader to find where; twenty rows say which field of which file moved."""
-    drift = _declaration_drift(field, fmt, _consumer_doc(consumer, fmt), PUB,
-                               MANIFEST["built_at"])
+    drift = _declaration_drift(field, fmt, _consumer_doc(consumer, fmt), PUB)
     assert drift is None, f"{consumer} {drift}"
 
 
@@ -895,26 +902,34 @@ def test_the_declaration_guard_reports_a_moved_field_in_every_consumer():
             key = CONSUMER_KEY[fmt][field]
             stale = {**doc, key: (broken[field] if field != "authors" or fmt == "cff"
                                   else [{"name": "Nobody, Declared"}])}
-            if _declaration_drift(field, fmt, stale, PUB, MANIFEST["built_at"]) is None:
+            if _declaration_drift(field, fmt, stale, PUB) is None:
                 missed.append(f"{consumer}:{key}")
             # and a consumer that simply DROPPED the field is drift too, not silence
             if _declaration_drift(field, fmt, {k: v for k, v in doc.items() if k != key},
-                                  PUB, MANIFEST["built_at"]) is None:
+                                  PUB) is None:
                 missed.append(f"{consumer}:{key} (absent)")
     assert not missed, f"the guard did not report drift in: {missed}"
 
 
-def test_the_build_stamp_is_the_same_day_in_every_file_that_carries_one():
-    """`date-released`, `publication_date` and `built_at` are three writes of one build's clock.
-    A disagreement means the tree was built across a UTC midnight, and the remedy is one
-    rebuild — but it is reported rather than left for a reader to notice that a citation file
-    dates the release a day before the manifest says the build ran."""
-    day = MANIFEST["built_at"][:10]
-    assert re.fullmatch(r"\d{4}-\d{2}-\d{2}", day), MANIFEST["built_at"]
+def test_the_release_date_is_the_same_day_in_every_file_that_carries_one():
+    """`date-released`, `publication_date`, the manifest's `date_released` and every sitemap
+    `lastmod` are the version's declared release date. They were four writes of one build's
+    clock until 2026-09-21; they are now four reads of one declaration, and a disagreement
+    means a file was written by something other than the builder."""
+    day = _released(PUB)
+    assert re.fullmatch(r"\d{4}-\d{2}-\d{2}", day), (
+        f"publication.yaml declares no release date for version {PUB['version']!r}")
     stamps = {consumer: str(_consumer_doc(consumer, fmt)[CONSUMER_KEY[fmt]["date-released"]])
               for consumer, fmt in DECLARED_CONSUMERS}
+    stamps["docs/data/index.json"] = str(MANIFEST.get("date_released"))
+    lastmods = set(re.findall(r"<lastmod>([^<]+)</lastmod>",
+                              (SITE / "sitemap.xml").read_text(encoding="utf-8")))
+    stamps["docs/sitemap.xml"] = ",".join(sorted(lastmods))
     assert set(stamps.values()) == {day}, (
-        f"the build stamps disagree with docs/data/index.json's built_at ({day}): {stamps}")
+        f"the published dates disagree with the declared release date ({day}): {stamps}")
+    assert "built_at" not in MANIFEST, (
+        "docs/data/index.json carries a build timestamp again; it is inside the served tree, "
+        "so a clock there makes every rebuild differ")
 
 
 # ----------------------------------------- decision 3: the published matrices join the guards

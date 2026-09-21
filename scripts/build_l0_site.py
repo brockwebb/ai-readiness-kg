@@ -41,7 +41,6 @@ import re
 import shutil
 import subprocess
 import sys
-from datetime import datetime, timezone
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
@@ -58,6 +57,10 @@ TASK = "cc_tasks/2026-09-12_publish_l0.md"
 EPHEMERAL_TASK = "cc_tasks/2026-09-13_ephemeral_provenance.md"
 
 SITE = REPO / "docs"
+#: Where the ROOT copies of the citation files are written (GitHub and Zenodo read them at the
+#: repository root). A module global read at call time, like `SITE` and `DATA`, so the
+#: two-build determinism test can point a whole build at a scratch tree.
+ROOT_OUT = REPO
 DATA = SITE / "data"
 REPORTS = SITE / "reports"
 PUBLICATION = REPORTS / "publication.yaml"
@@ -137,6 +140,46 @@ def publication() -> dict:
     from scan import spot
     spot.refuse_as_snapshot(doc["snapshot_cycle"])
     return doc
+
+
+#: The shard that carries the snapshot cycle's judgement events. A release cannot precede the
+#: judgement it publishes, so `release_date` reads the last event's date off it as a floor.
+CYCLE_SHARD = "events/cycle-{cycle}.jsonl"
+
+
+def release_date(pub: dict) -> str:
+    """The date this VERSION was released, from the declaration — never the build's clock.
+
+    `cc_tasks/2026-09-21_g4_resourcing_reissue.md`, decision 5 of the task it re-issues. Until
+    2026-09-21 `date-released`, `publication_date`, the sitemap `lastmod` and the index's build
+    date were `datetime.now`, so a rebuild for a locator edit on 2026-09-20 moved the release
+    date of record from 2026-09-19 to 2026-09-20 with the version unchanged. Reproducible builds
+    take every embedded date from the source (reproducible-builds.org, `SOURCE_DATE_EPOCH`), and
+    CFF 1.2.0 and Zenodo both make the release date a property of the version.
+
+    `publication.yaml` keys the date by version, so a version with no entry is refused rather
+    than given the previous version's date. The event log bounds it from below: a release dated
+    before the last event on the snapshot cycle's shard would be a release of a judgement that
+    did not yet exist.
+    """
+    released = pub.get("released") or {}
+    day = released.get(pub["version"])
+    if not day:
+        raise SystemExit(f"FATAL: {PUBLICATION.name} declares no release date for version "
+                         f"{pub['version']!r} under `released`; a new version is released on "
+                         f"a date somebody declares, never on whatever day it was built")
+    day = str(day)
+    if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", day):
+        raise SystemExit(f"FATAL: released[{pub['version']!r}] = {day!r} is not an ISO date")
+    shard = REPO / CYCLE_SHARD.format(cycle=pub["snapshot_cycle"])
+    if shard.is_file():
+        last = max((json.loads(l).get("timestamp") or "")[:10]
+                   for l in shard.read_text(encoding="utf-8").splitlines() if l.strip())
+        if day < last:
+            raise SystemExit(f"FATAL: version {pub['version']!r} is declared released on {day}, "
+                             f"before the last event on {shard.relative_to(REPO)} ({last}); a "
+                             f"release cannot precede the judgement it publishes")
+    return day
 
 
 def cycle_suffix(cycle: str) -> str:
@@ -493,7 +536,7 @@ def citation_cff(pub: dict) -> str:
         "abstract": " ".join(pub["abstract"].split()),
         "authors": pub["authors"],
         "version": pub["version"],
-        "date-released": datetime.now(timezone.utc).strftime("%Y-%m-%d"),
+        "date-released": release_date(pub),
         "url": pub["site_url"],
         "repository-code": pub["repository_url"],
         "keywords": pub["keywords"],
@@ -523,7 +566,7 @@ def zenodo_json(pub: dict) -> str:
         "description": " ".join(pub["abstract"].split()),
         "upload_type": "dataset",
         "version": pub["version"],
-        "publication_date": datetime.now(timezone.utc).strftime("%Y-%m-%d"),
+        "publication_date": release_date(pub),
         "creators": [{"name": f"{a['family-names']}, {a['given-names']}"}
                      for a in pub["authors"]],
         "keywords": pub["keywords"],
@@ -658,7 +701,12 @@ def self_row(pub: dict) -> dict | None:
 # --------------------------------------------------------------- the index
 
 def index_html(pub: dict, data_links: list, results_n: int, self_: dict | None,
-               commit: str, built: str, host_legs: list) -> str:
+               built: str, host_legs: list) -> str:
+    """The index page. It carries the release date and NOT the build commit: a page that names
+    the commit it was built from differs from its own regeneration the moment it is committed
+    (the committing commit is always that one's child), so the commit lives in one place, the
+    build manifest `data/index.json` (`cc_tasks/2026-09-21_g4_resourcing_reissue.md`, decision
+    5 of the task it re-issues)."""
     e = html.escape
     from numerals import word
 
@@ -770,7 +818,8 @@ footer {{ margin-top:3rem; padding-top:1.2rem; border-top:1px solid var(--line);
 <h1>{e(pub['title'])}</h1>
 <p class="sub">Snapshot cycle <code>{e(pub['snapshot_cycle'])}</code> ·
 version <code>{e(pub['version'])}</code> ·
-built from commit <code>{e(commit)}</code> on <code>{e(built)}</code> (UTC).</p>
+released <code>{e(built)}</code>. The commit this tree was built from is recorded in
+<a href="data/index.json"><code>data/index.json</code></a>.</p>
 
 <p>{e(' '.join(pub['abstract'].split()))}</p>
 
@@ -846,10 +895,10 @@ _ONLY = {"results_tagged": {"data/results_tagged.json"},
          # one layer up and the same test catches it. The two travel together.
          #
          # The citation files travel with the manifest too. The manifest hashes their TEXT,
-         # which carries the build date, and `tests/test_publication.py` holds that date to the
-         # manifest's `built_at`; a narrow build on a later day that wrote only `index.json`
-         # recorded digests and a date no published citation file had
-         # (`cc_tasks/2026-09-17_measurement_tiers.md`).
+         # and until 2026-09-21 that text carried the build's clock date, so a narrow build on
+         # a later day that wrote only `index.json` recorded digests no published citation
+         # file had (`cc_tasks/2026-09-17_measurement_tiers.md`). The date is now the declared
+         # release date, and the two still travel together because the text has other fields.
          "data_manifest": {"data/index.json", "data/CITATION.cff", "data/zenodo.json",
                            "CITATION.cff", ".zenodo.json"}}
 
@@ -868,7 +917,10 @@ def build(check: bool = False, only=None) -> int:
     from scan import load_params
     pub = publication()
     suffix = cycle_suffix(pub["snapshot_cycle"])
-    built = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    # Every date this build writes is the version's release date, read from the declaration
+    # (`release_date`); nothing here reads the clock, so two builds of one tree on two days are
+    # byte-identical (`tests/test_g4_resourcing_reissue.py`).
+    built = release_date(pub)
     commit = head_commit()
 
     DATA.mkdir(parents=True, exist_ok=True)
@@ -967,11 +1019,10 @@ def build(check: bool = False, only=None) -> int:
     for published, root_rel, label in CITATION_FILES:
         text = citations[published]
         # Written whenever the manifest is (`_ONLY["data_manifest"]`): the manifest records
-        # this text's digest, and the text carries the build date the manifest's `built_at`
-        # must agree with, so the two are one write or the manifest describes a file nobody
+        # this text's digest, so the two are one write or the manifest describes a file nobody
         # published.
         if not check and _writes(only, f"data/{published}"):
-            (REPO / root_rel).write_text(text, encoding="utf-8")
+            (ROOT_OUT / root_rel).write_text(text, encoding="utf-8")
             (DATA / published).write_text(text, encoding="utf-8")
         cited.append({"published": f"data/{published}", "also_written_to": root_rel,
                       "sha256": hashlib.sha256(text.encode("utf-8")).hexdigest(),
@@ -1001,7 +1052,13 @@ def build(check: bool = False, only=None) -> int:
 
     # 6. the data manifest: what is published, from where, at which digest
     manifest = {"task": TASK, "amended_by": EPHEMERAL_TASK,
-                "built_at": datetime.now(timezone.utc).isoformat(),
+                # The release date, not a build timestamp. `built_at` was the clock until
+                # 2026-09-21, and this file is inside the served tree, so it moved on every
+                # rebuild and no two builds of one tree could be identical
+                # (`cc_tasks/2026-09-21_g4_resourcing_reissue.md`). The commit stays: it is a
+                # function of the tree, not of the day, as a VCS revision is in any
+                # reproducible build.
+                "date_released": built,
                 "build_commit": commit, "snapshot_cycle": pub["snapshot_cycle"],
                 "version": pub["version"], "site_url": pub["site_url"],
                 # The licences as SPDX identifiers, read from the declaration, so a machine
@@ -1047,14 +1104,17 @@ def build(check: bool = False, only=None) -> int:
                       "# Jekyll drops every path beginning with an underscore or a dot.\n"),
     }
     self_ = self_row(pub)
-    files["index.html"] = index_html(pub, links, len(results), self_, commit, built,
-                                 host_legs)
+    files["index.html"] = index_html(pub, links, len(results), self_, built, host_legs)
     for name, text in files.items():
         if not check and not only:
             (SITE / name).write_text(text, encoding="utf-8")
         written.append(name)
 
-    summary = {"site": str(SITE.relative_to(REPO)), "snapshot_cycle": pub["snapshot_cycle"],
+    # `Path.relative_to` RAISES on a path outside the tree, so a build pointed at a scratch
+    # directory crashed here after every file was written (found by the two-build test,
+    # `tests/test_g4_resourcing_reissue.py`); the summary names the absolute path instead.
+    summary = {"site": (str(SITE.relative_to(REPO)) if SITE.is_relative_to(REPO)
+                        else str(SITE)), "snapshot_cycle": pub["snapshot_cycle"],
                "build_commit": commit, "built": built,
                "data_links": len(links), "tagged_results": len(results),
                "appendix_rows": appendix["rows_per_leg"],

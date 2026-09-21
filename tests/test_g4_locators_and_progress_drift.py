@@ -63,11 +63,16 @@ FRAMEWORK = REPO / "framework" / "ai_readiness_framework.json"
 SKELETON = REPO / "docs" / "crosswalk" / "usafacts_operationalization_skeleton.md"
 PUB = yaml.safe_load((REPO / "docs" / "reports" / "publication.yaml").read_text(encoding="utf-8"))
 
-#: The two documents G4's `EVIDENCED_BY` edges name. Typed here as the SUBJECT of the test —
-#: "these two are the ones the report quotes" — and asserted against the record below, so a
-#: third source added to the cell fails here rather than going uncited.
+#: The documents G4's `EVIDENCED_BY` edges name. Typed here as the SUBJECT of the test —
+#: "these are the ones the report quotes" — and asserted against the record below, so a source
+#: added to the cell fails here rather than going uncited. Two until 2026-09-21;
+#: `cc_tasks/2026-09-21_g4_resourcing_reissue.md` added the six standards that define G4's
+#: fields and the DCAT-AP vocabulary it admitted for the statutory-mandate clause.
 G4_DOCS = ("statistical-policy-working-paper-46-data-quality-assessment",
-           "fcsm-19-01-transparent-reporting-for-integrated-data-quality")
+           "fcsm-19-01-transparent-reporting-for-integrated-data-quality",
+           "dcat-us-1-1-schema", "dcat-us-3-dataset-schema", "dcat-us-3-overview",
+           "w3c-dcat-3", "w3c-prov-o-ontology", "schema-org-dataset",
+           "dcat-ap-3-0-0-r5r-vocabulary")
 
 #: Decision 2 outcome (c), in the cell's own words. A clause with no passage behind it says so.
 NO_PINPOINT = "general support; no pinpoint"
@@ -76,8 +81,16 @@ NO_PINPOINT = "general support; no pinpoint"
 #: command that rebuilds it. Both are gitignored projections of the admitted bytes.
 DOCLING = REPO / "state" / "docling_md"
 BULK_PDF = REPO / "corpus" / "bulk"
+#: The admission gate's converted substrate for HTML and markdown documents (DD-030,
+#: `kg.ingest.gate.substrate_path`), and the manifest's canonical path when that is itself
+#: markdown. The six standards added on 2026-09-21 are HTML or markdown, not PDF, so neither
+#: rendering above exists for them.
+SUBSTRATE = REPO / "state" / "substrate_md"
+MANIFEST = REPO / "corpus" / "manifest.json"
 REBUILD = ("/opt/anaconda3/bin/python3 scripts/t1_build_index.py --phase convert "
-           "(Docling substrate), or re-acquire the PDF through scripts/fetch_allowlisted.py")
+           "(Docling substrate), /opt/anaconda3/bin/python3 -m kg.ingest.gate --doc <doc_id> "
+           "--no-task (HTML substrate), or re-acquire the PDF through "
+           "scripts/fetch_allowlisted.py")
 
 
 def indicator(code: str) -> dict:
@@ -94,6 +107,13 @@ def renderings(doc_id: str) -> dict:
     md = DOCLING / f"{doc_id}.md"
     if md.is_file():
         out["docling_md"] = md.read_text(encoding="utf-8")
+    sub = SUBSTRATE / f"{doc_id}.md"
+    if sub.is_file():
+        out["substrate_md"] = sub.read_text(encoding="utf-8")
+    canon = ((json.loads(MANIFEST.read_text(encoding="utf-8"))["entries"].get(doc_id) or {})
+             .get("identity") or {}).get("canonical_path") or ""
+    if canon.endswith(".md") and (REPO / canon).is_file():
+        out["canonical_md"] = (REPO / canon).read_text(encoding="utf-8")
     pdf = BULK_PDF / f"{doc_id}.pdf"
     if pdf.is_file():
         try:
@@ -174,7 +194,8 @@ def test_the_appendix_prints_g4s_locators_for_both_rows():
         pytest.skip("the appendix fragment has not been built; run scripts/build_l0_report.py")
     rows = [ln for ln in fragment.read_text(encoding="utf-8").splitlines()
             if ln.startswith("| G4 |")]
-    assert len(rows) == 2, f"expected two G4 rows in the appendix, found {len(rows)}"
+    assert len(rows) == len(G4_DOCS), (
+        f"expected {len(G4_DOCS)} G4 rows in the appendix, found {len(rows)}")
     locs = RT.locators(indicator("G4")["evidence_raw"])
     for doc_id, locator in locs.items():
         row = next((r for r in rows if doc_id in r), None)

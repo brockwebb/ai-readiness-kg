@@ -148,7 +148,7 @@ def test_the_bare_numeral_lint_passes_over_the_version_block_carrying_the_line(l
     nothing — no `numerals-exempt` region was opened for this paragraph and none is wanted."""
     import build_l0_report as B
     succ.set_value_marker(lambda t: f"{B.MARK_OPEN}{t}{B.MARK_CLOSE}")
-    block = B.version_block(B.load_publication(), today="2026-09-14",
+    block = B.version_block(B.load_publication(), released="2026-09-14",
                             standing=succ.supersession_line(live))
     assert not B.lint_bare_numerals(block), B.lint_bare_numerals(block)
     assert "lint: numerals-exempt" not in block

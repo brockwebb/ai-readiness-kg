@@ -155,9 +155,31 @@ def render(build_md: Path, pdf: Path) -> None:
            # page injects page numbers that appear in no source, which would make the check
            # unsatisfiable and invite an exemption instead of a fix.
            "-o", str(pdf)]
-    r = subprocess.run(cmd, capture_output=True, text=True, cwd=REPO)
+    r = subprocess.run(cmd, capture_output=True, text=True, cwd=REPO, env=render_env())
     if r.returncode:
         raise SystemExit(f"FATAL: pandoc/{ENGINE} failed:\n{r.stderr[-1500:]}")
+
+
+def render_env(pub: dict | None = None) -> dict:
+    """The environment the renderer runs under: the caller's, plus `SOURCE_DATE_EPOCH` set to
+    midnight UTC of the version's release date.
+
+    typst stamps the PDF's `/CreationDate` and `/ModDate` from the clock unless
+    `SOURCE_DATE_EPOCH` is set (`typst compile --help`: `--creation-timestamp`, `[env:
+    SOURCE_DATE_EPOCH=]`; the variable is reproducible-builds.org's), and pandoc passes the
+    environment through. Until 2026-09-21 it was not set, so every rebuild re-dated the PDF
+    (`cc_tasks/2026-09-21_g4_resourcing_reissue.md`). The date is the one
+    `build_l0_site.release_date` reads, so the PDF, the citation files and the index carry one
+    date from one declaration.
+    """
+    import os
+    from datetime import date, datetime, time, timezone
+    import build_l0_report
+    import build_l0_site
+    pub = pub or build_l0_report.load_publication()
+    day = date.fromisoformat(build_l0_site.release_date(pub))
+    epoch = int(datetime.combine(day, time(0, 0), tzinfo=timezone.utc).timestamp())
+    return {**os.environ, "SOURCE_DATE_EPOCH": str(epoch)}
 
 
 #: Where the appendices begin in the built markdown. Everything from here to the end is
