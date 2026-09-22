@@ -101,3 +101,8 @@ projection:
   replay_script: scripts/build_projection.py
   stale_marker: state/projection_stale.json
   python: null
+  # Item half of the projection's progress interval (task 2026-09-21_projection_progress; the
+  # time half is 60 s, fixed by ~/GitHub/CLAUDE.md §15 point 3). The replay loops walk the
+  # whole log, 140,688 events on 2026-09-21, so 5,000 is ~28 lines per loop: enough to read a
+  # rate off, few enough that the 60 s line still carries the signal on a slow phase.
+  progress_every: 5000

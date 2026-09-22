@@ -21,12 +21,27 @@ while the Desktop protocol was verifying framework state against it.
 Rel types come ONLY from the schema.yaml edge_types whitelist — an edge event
 with an unknown type is skipped and counted (never string-interpolated into
 Cypher from payload text).
+
+Progress (task `cc_tasks/2026-09-21_projection_progress.md`, `~/GitHub/CLAUDE.md` §15 point
+3). A full projection took ~65 minutes with an empty log until the end. Every phase boundary
+and, inside every per-item loop, every `projection.progress_every` items (controls.yaml) or
+`PROGRESS_INTERVAL_SECONDS`, whichever comes first, a line goes to stdout AND to
+`logs/projection_<UTC stamp>.log`, flushed on write; a per-phase timing table closes both.
+`--dry-run` prints the phase plan and exits without opening a Neo4j driver.
+
+§15 points 1, 2 and 6 (per-unit persistence, resume by skip, partial results) are NOT
+implemented, deliberately: this is reset-and-replay (`DETACH DELETE` of every KG label, then
+the whole log), so a half-finished projection is a wrong graph, not a partial result, and
+there is nothing to resume INTO. The only honest recovery from a killed projection is to run
+it again from the top.
 """
 from __future__ import annotations
 
 import json
 import os
 import sys
+import time
+from datetime import datetime, timezone
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
@@ -40,6 +55,104 @@ PROTECTED_DBS = ("wintermute-intake", "fss-policy-kg", "neo4j", "system")
 # Read at call time (tests monkeypatch these onto tmp_path; repo convention).
 CONTROLS_PATH = REPO / "controls.yaml"
 DIXIE_DECISIONS = REPO / "corpus" / "evidence" / "decisions.jsonl"
+LOGS_DIR = REPO / "logs"
+
+#: `~/GitHub/CLAUDE.md` §15 point 3 fixes the time half of the progress interval at "at least
+#: every 60 seconds"; the item half is `projection.progress_every` in controls.yaml.
+PROGRESS_INTERVAL_SECONDS = 60
+
+
+def progress_every() -> int:
+    """controls.yaml `projection.progress_every`. Required and a positive int: a projection
+    that cannot say how often it reports is a config defect surfaced before any write."""
+    doc = yaml.safe_load(CONTROLS_PATH.read_text(encoding="utf-8")) or {}
+    n = (doc.get("projection") or {}).get("progress_every")
+    if not isinstance(n, int) or isinstance(n, bool) or n <= 0:
+        raise SystemExit(f"FATAL: controls.yaml projection.progress_every must be a positive "
+                         f"int, got {n!r}")
+    return n
+
+
+class Progress:
+    """Phase-and-item progress to stdout and a log file (task 2026-09-21_projection_progress).
+
+    `phase()` closes the running phase (recording its wall-clock) and opens the next;
+    `tick()` is called once per item inside a loop and emits every `every` items or every
+    `interval_s` seconds, whichever first. `finish()` closes the last phase and writes the
+    timing table. With `log_path=None` it writes to `out` alone; with `out=None` too it is
+    silent, which is what `build()` defaults to so existing callers are unchanged."""
+
+    def __init__(self, log_path: Path | None = None, every: int = 1_000_000_000,
+                 interval_s: float = PROGRESS_INTERVAL_SECONDS, clock=time.monotonic,
+                 out=None):
+        self.every, self.interval_s, self.clock, self.out = every, interval_s, clock, out
+        self._fh = None
+        if log_path is not None:
+            log_path.parent.mkdir(parents=True, exist_ok=True)
+            self._fh = log_path.open("a", encoding="utf-8")
+        self.log_path = log_path
+        self.t0 = clock()
+        self.timings: list[tuple[str, float]] = []
+        self._phase: str | None = None
+        self._phase_t0 = self.t0
+        self._total: int | None = None
+        self._last_emit = self.t0
+
+    def _emit(self, line: str) -> None:
+        line = f"[projection +{self.clock() - self.t0:8.1f}s] {line}"
+        for fh in (self.out, self._fh):
+            if fh is not None:
+                fh.write(line + "\n")
+                fh.flush()
+        if self._fh is not None:
+            os.fsync(self._fh.fileno())
+        self._last_emit = self.clock()
+
+    def _close_phase(self) -> None:
+        if self._phase is not None:
+            self.timings.append((self._phase, self.clock() - self._phase_t0))
+
+    @staticmethod
+    def _counts(counts: dict | None) -> str:
+        if not counts:
+            return ""
+        return f" nodes={counts.get('nodes', 0)} edges={counts.get('edges', 0)}"
+
+    def phase(self, name: str, total: int | None = None, counts: dict | None = None) -> None:
+        self._close_phase()
+        self._phase, self._phase_t0, self._total = name, self.clock(), total
+        of = f" total={total}" if total is not None else ""
+        self._emit(f"phase {name} start{of}{self._counts(counts)}")
+
+    def tick(self, done: int, counts: dict | None = None) -> None:
+        if done % self.every and self.clock() - self._last_emit < self.interval_s:
+            return
+        of = f"/{self._total}" if self._total is not None else ""
+        self._emit(f"phase {self._phase} {done}{of} "
+                   f"phase_elapsed={self.clock() - self._phase_t0:.1f}s{self._counts(counts)}")
+
+    def table(self) -> str:
+        total = sum(s for _, s in self.timings)
+        rows = ["phase timing", f"{'phase':<22} {'seconds':>10} {'share':>7}"]
+        rows += [f"{name:<22} {secs:>10.1f} {secs / total if total else 0:>7.1%}"
+                 for name, secs in self.timings]
+        rows.append(f"{'TOTAL':<22} {total:>10.1f}")
+        return "\n".join(rows)
+
+    def finish(self, counts: dict | None = None) -> str:
+        self._close_phase()
+        self._phase = None
+        self._emit(f"done{self._counts(counts)}")
+        table = self.table()
+        for fh in (self.out, self._fh):
+            if fh is not None:
+                fh.write(table + "\n")
+                fh.flush()
+        if self._fh is not None:
+            os.fsync(self._fh.fileno())
+            self._fh.close()
+            self._fh = None
+        return table
 
 
 class ProjectionStaleError(SystemExit):
@@ -352,7 +465,8 @@ def resolve_endpoint(doc_id: str, endpoint_id: str, document_ids: set[str],
     return node_key(doc_id, eid)
 
 
-def build(session, kg_labels: list[str], edge_whitelist: set[str]) -> dict:
+def build(session, kg_labels: list[str], edge_whitelist: set[str],
+          progress: Progress | None = None) -> dict:
     counts = {"nodes": 0, "edges": 0, "documents": 0, "annotations": 0,
               "overlays_relocated": 0, "overlays_nulled": 0, "overlays_restored": 0,
               "skipped_unknown_edge_type": 0,
@@ -362,6 +476,8 @@ def build(session, kg_labels: list[str], edge_whitelist: set[str]) -> dict:
               # vocabulary layer (task 2026-09-05_vocabulary_and_entity_linking §1.4)
               "terms": 0, "resolved": 0, "unresolved": 0, "grounding_thin": 0,
               "unresolved_ambiguous_across_assertions": 0}
+    prog = progress if progress is not None else Progress()
+    prog.phase("prepass")
     superseded, aliases = read_overlays()
     quarantined = quarantined_batches()
     bulk = bulk_purposes()
@@ -369,8 +485,13 @@ def build(session, kg_labels: list[str], edge_whitelist: set[str]) -> dict:
         print(f"acceptance sampling: {len(quarantined)} batch(es) quarantined out of the "
               f"graph: {sorted(quarantined)}")
     _old_instr: dict[tuple, set] = {}   # (doc_id, sha) -> old Instrument item ids (Lane 2)
-    document_ids = {ev["payload"]["doc_id"] for ev in eventlog.replay()
-                    if ev.get("event_type") == "manifest_add"}
+    document_ids: set[str] = set()
+    n_events = 0                        # the kg_replay/overlays loop total, counted for free
+    for ev in eventlog.replay():
+        n_events += 1
+        if ev.get("event_type") == "manifest_add":
+            document_ids.add(ev["payload"]["doc_id"])
+    prog.phase("reset")
     # reset ONLY KG labels
     label_pred = " OR ".join(f"n:{lbl}" for lbl in kg_labels)
     session.run(f"MATCH (n) WHERE {label_pred} DETACH DELETE n")
@@ -403,8 +524,10 @@ def build(session, kg_labels: list[str], edge_whitelist: set[str]) -> dict:
     # gap diagnostic reading `run_ok_no_edges` after a clean extraction. Creating the
     # skeletons here makes the projection independent of shard order; the `manifest_add`
     # handler below still writes every property onto the same node.
-    for did in sorted(document_ids):
+    prog.phase("document_skeletons", total=len(document_ids))
+    for i, did in enumerate(sorted(document_ids), 1):
         session.run("MERGE (d:Document {id: $id}) SET d.key = $id, d.doc_id = $id", id=did)
+        prog.tick(i)
 
     # ---- the controlled vocabulary (task 2026-09-05_vocabulary_and_entity_linking §1.4).
     # Projected BEFORE the node pass, so `MERGE (t:Term {term_id})` in the resolve branch
@@ -413,6 +536,7 @@ def build(session, kg_labels: list[str], edge_whitelist: set[str]) -> dict:
     from kg import vocab as _vocab
     _terms = _vocab.project()
     _vocab_epoch = _vocab.epoch()
+    prog.phase("vocabulary", total=len(_terms))
     for tid, t in sorted(_terms.items()):
         session.run(
             "MERGE (t:Term {term_id: $id}) SET t.key = $id, t.pref_label = $pl, "
@@ -420,6 +544,7 @@ def build(session, kg_labels: list[str], edge_whitelist: set[str]) -> dict:
             id=tid, pl=t["pref_label"], sn=t["scope_note"], st=t["state"],
             nl=t.get("node_labels") or [], ep=_vocab_epoch)
         counts["terms"] += 1
+        prog.tick(counts["terms"])
     # One index per KG label, hoisted: `resolve` would otherwise replay the vocabulary log
     # once per node, and there are 13,977 nodes.
     _index_by_label = {lbl: _vocab.alias_index(_terms, node_label=lbl) for lbl in kg_labels}
@@ -471,7 +596,9 @@ def build(session, kg_labels: list[str], edge_whitelist: set[str]) -> dict:
 
     def _flag_thin_spans() -> None:
         """Annotate, never delete: the extraction event stands and the node stays queryable."""
-        for (key, label), (name, span) in sorted(_spans.items()):
+        prog.phase("thin_spans", total=len(_spans), counts=counts)
+        for i, ((key, label), (name, span)) in enumerate(sorted(_spans.items()), 1):
+            prog.tick(i, counts)
             if is_thin_span(span, name):
                 session.run(f"MATCH (n:{label} {{key: $key}}) SET n.grounding_thin = true",
                             key=key)
@@ -482,7 +609,9 @@ def build(session, kg_labels: list[str], edge_whitelist: set[str]) -> dict:
         # is `kg/schema.yaml`'s own key list, and the node branch above already validated it
         # (`if label not in kg_labels: continue`). Same rule as every other interpolation here
         # — invariant 4, never interpolate payload text into Cypher.
-        for (key, label), tids in sorted(_resolutions.items()):
+        prog.phase("resolutions", total=len(_resolutions), counts=counts)
+        for i, ((key, label), tids) in enumerate(sorted(_resolutions.items()), 1):
+            prog.tick(i, counts)
             if len(tids) == 1:
                 session.run(
                     f"MATCH (n:{label} {{key: $key}}) MERGE (t:Term {{term_id: $term}}) "
@@ -494,7 +623,9 @@ def build(session, kg_labels: list[str], edge_whitelist: set[str]) -> dict:
                 if tids:
                     counts["unresolved_ambiguous_across_assertions"] += 1
 
-    for ev in eventlog.replay():
+    prog.phase("kg_replay", total=n_events, counts=counts)
+    for i, ev in enumerate(eventlog.replay(), 1):
+        prog.tick(i, counts)
         et = ev.get("event_type")
         if not is_projectable(ev, quarantined, bulk):
             counts["skipped_non_graph_purpose"] += 1
@@ -587,7 +718,9 @@ def build(session, kg_labels: list[str], edge_whitelist: set[str]) -> dict:
             counts["edges"] += 1
     # Repair overlays (task 2026-08-22_faithfulness_probe Phase 7) are applied LAST so they
     # win over the original assertion regardless of shard order. Never mutate the log.
-    for ev in eventlog.replay():
+    prog.phase("overlays", total=n_events, counts=counts)
+    for i, ev in enumerate(eventlog.replay(), 1):
+        prog.tick(i, counts)
         et = ev.get("event_type")
         if et == "grounding_relocated":
             # A relocation event written since 2026-09-06 carries the node's LABEL, so the
@@ -626,10 +759,12 @@ def build(session, kg_labels: list[str], edge_whitelist: set[str]) -> dict:
     # (never replayed into the graph by default). They project ONLY when the untagged log
     # carries a `restoration_class_accepted` event for the class (the ≥0.90 fact-level
     # acceptance gate) — applied after the null overlays so an accepted restoration wins.
+    prog.phase("restorations", counts=counts)
     accepted_classes = {ev.get("restoration_class") for ev in eventlog.replay()
                         if ev.get("event_type") == "restoration_class_accepted"}
     if "restoration_v2" in accepted_classes:
-        for ev in eventlog.replay(tag="restoration_v2"):
+        for i, ev in enumerate(eventlog.replay(tag="restoration_v2"), 1):
+            prog.tick(i, counts)
             if ev.get("event_type") != "attribute_restored":
                 continue
             attr = ev["attribute"]
@@ -701,7 +836,8 @@ def project_extraction_queue(session) -> dict:
     return dict(_c.Counter(r["extraction_state"] for r in rows.values()))
 
 
-def project_assessment(session, scan: bool, framework: bool) -> dict:
+def project_assessment(session, scan: bool, framework: bool,
+                       progress: Progress | None = None) -> dict:
     """The two layers outside the KG whitelist, projected in the only order that works.
 
     The scan layer (`Observation`/`Finding`/`Rule`) replays from the event log; the framework
@@ -717,13 +853,16 @@ def project_assessment(session, scan: bool, framework: bool) -> dict:
     projection entry point that leaves a layer stale is a fabrication with a timestamp.
     """
     out = {}
+    prog = progress if progress is not None else Progress()
     sys.path.insert(0, str(REPO / "assessment" / "harness"))
     if scan:
+        prog.phase("scan_layer")
         from scan.publish import project as _scan_project
         # `project()` opens its own driver: it is also the standalone `publish.py --project`
         # path, and giving it a session here would make the two callers different code.
         out["scan"] = _scan_project()
     if framework:
+        prog.phase("framework_layer")
         import importlib.util
         spec = importlib.util.spec_from_file_location(
             "_load_framework_graph", REPO / "scripts" / "load_framework_graph.py")
@@ -734,7 +873,27 @@ def project_assessment(session, scan: bool, framework: bool) -> dict:
     return out
 
 
-def main() -> int:
+def phase_plan(scan: bool, framework: bool) -> list[tuple[str, int | None]]:
+    """(phase, item total or None) in execution order, computed from the log alone — no
+    Neo4j. The totals are the ones `build()` reports its progress against."""
+    from kg import vocab as _vocab
+    n_events, docs = 0, set()
+    for ev in eventlog.replay():
+        n_events += 1
+        if ev.get("event_type") == "manifest_add":
+            docs.add(ev["payload"]["doc_id"])
+    plan = [("prepass", None), ("reset", None), ("document_skeletons", len(docs)),
+            ("vocabulary", len(_vocab.project())), ("kg_replay", n_events),
+            ("overlays", n_events), ("restorations", None), ("resolutions", None),
+            ("thin_spans", None), ("fingerprint", None)]
+    if scan:
+        plan.append(("scan_layer", None))
+    if framework:
+        plan.append(("framework_layer", None))
+    return plan
+
+
+def main(argv: list[str] | None = None) -> int:
     import argparse
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -742,7 +901,17 @@ def main() -> int:
                     help="skip the Observation/Finding/Rule replay (assessment/harness/scan)")
     ap.add_argument("--no-framework", action="store_true",
                     help="skip projecting framework/ai_readiness_framework.json")
-    args = ap.parse_args()
+    ap.add_argument("--dry-run", action="store_true",
+                    help="print the phase plan and exit without touching Neo4j")
+    args = ap.parse_args(argv)
+    every = progress_every()      # config defect surfaces before any write, dry run included
+
+    if args.dry_run:
+        print(f"dry run: phase plan (progress every {every} items or "
+              f"{PROGRESS_INTERVAL_SECONDS}s; no Neo4j driver opened)")
+        for name, total in phase_plan(scan=not args.no_scan, framework=not args.no_framework):
+            print(f"  {name:<22} {'total=' + str(total) if total is not None else ''}")
+        return 0
 
     schema = _load_schema()
     kg_labels = list(schema["node_types"])
@@ -750,14 +919,19 @@ def main() -> int:
     uri, user, pw = _neo4j_creds()
     db = _database()
 
+    stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+    prog = Progress(LOGS_DIR / f"projection_{stamp}.log", every=every, out=sys.stdout)
+    print(f"projection progress log: {prog.log_path}", flush=True)
     from neo4j import GraphDatabase
     driver = GraphDatabase.driver(uri, auth=(user, pw))
     with driver.session(database=db) as session:
-        counts = build(session, kg_labels, edge_whitelist)
+        counts = build(session, kg_labels, edge_whitelist, progress=prog)
+        prog.phase("fingerprint", counts=counts)
         fp = fingerprint(session, kg_labels)
         assessment = project_assessment(session, scan=not args.no_scan,
-                                        framework=not args.no_framework)
+                                        framework=not args.no_framework, progress=prog)
     driver.close()
+    prog.finish(counts)
     # A successful replay is, by construction, current: retire the stale marker a burn
     # close may have left when the graph was unreachable.
     marker = projection_config()["stale_marker"]
