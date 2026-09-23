@@ -868,8 +868,10 @@ def page_e(s: Sources) -> Page:
            "`get_body` and `get_evidence` against the projection.", "")
     def q(x):
         return str(x).replace('"', "'")
+    # Drawn top to bottom (2026-09-23 packaging task, decision 3): left to right it rendered at
+    # about 10:1 and read small on a 16:9 slide.
     pg.add(*mermaid([
-        "flowchart LR",
+        "flowchart TB",
         f'  u["{q(row["url"])}<br/>surface {q(row["surface"])}"] --> o["{q(ev["obs_id"])}<br/>collector {q(ev["collector"])}"]',
         f'  o --> b["body sha256 {q(ev["sha256"][:16])}…<br/>{q(ev["path"])}"]',
         f'  o --> r["{q(row["rule_id"])}"]',
@@ -895,7 +897,9 @@ def page_e(s: Sources) -> Page:
         "x.verdict AS verdict, x.rule_id AS rule ORDER BY length(p)", id=row["finding_id"])
     from scan import publish as PB
     pg.add("", "## (d) Judgement generations: re-judgement without re-fetch (DN-003)", "")
-    lines = ["flowchart RL"]
+    # Top to bottom, newest generation first (decision 3 of the same task): right to left it
+    # rendered at about 15:1.
+    lines = ["flowchart TB"]
     for i, c in enumerate(chain):
         cy = c["cycle"] or "(no cycle property on the node)"
         lines.append(f'  g{i}["{q(c["id"])}<br/>{q(cy)} gen {c["generation"]}<br/>'

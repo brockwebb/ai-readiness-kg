@@ -86,7 +86,7 @@ flowchart TB
 The leg is `A10`, the one CENSUS's rank rests on (`score.py` concentration, page G). Every value in the diagram is read from `get_body` and `get_evidence` against the projection.
 
 ```mermaid
-flowchart LR
+flowchart TB
   u["https://www.census.gov/<br/>surface home:www.census.gov"] --> o["obs_cc7cdaa9faa61050c7e65428<br/>collector lighthouse"]
   o --> b["body sha256 ec803e0391224579…<br/>corpus/evidence/scan/ec/ec803e0391224579ff516c43cfe3af7ddc1c5056546090445c4a6f210b3b82ae"]
   o --> r["RULE-A10-v3"]
@@ -115,7 +115,7 @@ flowchart LR
 ## (d) Judgement generations: re-judgement without re-fetch (DN-003)
 
 ```mermaid
-flowchart RL
+flowchart TB
   g0["fnd_2b6bb1732e02a90e488b9639<br/>scan_2026-09-10_rj4 gen 4<br/>RULE-A10-v3: pass"]
   g1["fnd_a469c5e20596bccc7ea6f395<br/>scan_2026-09-10_rj3 gen 3<br/>RULE-A10-v3: pass"]
   g0 -- SUPERSEDES --> g1
