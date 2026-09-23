@@ -193,3 +193,37 @@ def test_the_capture_covers_every_step_with_the_command_it_shows():
     cap = json.loads(B.CAPTURE.read_text(encoding="utf-8"))
     got = {x["id"]: x["run"] for x in cap["steps"]}
     assert got == {s["id"]: s["run"] for s in B.DEMO_STEPS}
+
+
+def test_kept_verbatim_column_is_the_grounding_test_over_the_usafacts_documents():
+    """`cc_tasks/2026-09-22_brief_deck_assembly.md` decision 7: the column is measured, not
+    asked. Re-derived here from the CSV and the corpus with `grounding.is_grounded` directly, so
+    a generator that wrote the column by any other rule fails."""
+    import csv
+    from kg.extraction.grounding import is_grounded
+    s = B.Sources(None)
+    rows = list(csv.reader((OUT / "B_usafacts_delta.csv").read_text(encoding="utf-8")
+                           .splitlines()[1:]))
+    head, body = rows[0], rows[1:]
+    col = {h: i for i, h in enumerate(head)}
+    assert len(body) == len(s.inds)
+    for r in body:
+        got = r[col["kept_verbatim_or_restated"]]
+        if r[col["criterion"]] not in B.USAFACTS_CRITERIA:
+            assert got == "n/a (added criterion)", r[col["code"]]
+            continue
+        hits = [d for f in B.VERBATIM_FIELDS for d in B.USAFACTS_DOCS
+                if is_grounded(r[col[f]], s.usafacts[d])]
+        assert got == (f"verbatim ({hits[0]})" if hits else "restated"), r[col["code"]]
+
+
+def test_the_verbatim_test_sees_a_quoted_string():
+    s = B.Sources(None)
+    text = s.usafacts[B.USAFACTS_DOCS[0]]
+    probe = " ".join(text.split()[20:28])
+    assert s.kept({"criterion_code": "A", "construct": probe, "indicator": "x"}) == \
+        f"verbatim ({B.USAFACTS_DOCS[0]})"
+    assert s.kept({"criterion_code": "A", "construct": "zz no such text zz",
+                   "indicator": "qq nor this qq"}) == "restated"
+    assert s.kept({"criterion_code": "E", "construct": probe, "indicator": ""}) == \
+        "n/a (added criterion)"

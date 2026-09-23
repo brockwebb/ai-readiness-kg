@@ -78,6 +78,15 @@ DOGFOOD_BODY = "CENSUS"
 #: the skeleton's tables, not declared here.
 USAFACTS_CRITERIA = ("A", "B", "C", "D")
 
+#: The three admitted USAFacts documents the `kept_verbatim_or_restated` column is measured
+#: against (`cc_tasks/2026-09-22_brief_deck_assembly.md` decision 7). The record cannot say
+#: whether an indicator kept USAFacts' words; the corpus can, by the grounding test the
+#: extractor already uses. Paths come from the manifest, never from here.
+USAFACTS_DOCS = ("usafacts-ai-ready-data-guide", "usafacts-fde-standards-detailed",
+                 "usafacts-fde-standards-quick-reference")
+#: The record fields tested, in order: the construct first, then the indicator text.
+VERBATIM_FIELDS = ("construct", "indicator")
+
 #: Federal policy instruments the brief asks provenance against (task decision 3). Each is a
 #: regex over a manifest entry's doc_id and title, and over an indicator's evidence cell. The
 #: patterns are the instrument's own names; a pattern that matches no admitted document is
@@ -145,6 +154,40 @@ class Sources:
         self.graph = graph
         self._tools = None
         self._score = None
+        self._usafacts = None
+
+    @property
+    def usafacts(self) -> dict:
+        """`{doc_id: text}` of the admitted USAFacts documents, read the way the extractor
+        reads them (`run_bulk_extraction.doc_text`: the DD-030 substrate if one exists, else
+        the PDF's text layer), so "grounds verbatim" here means what it means for an edge."""
+        if self._usafacts is None:
+            from run_bulk_extraction import doc_text
+            out = {}
+            for d in USAFACTS_DOCS:
+                if d not in self.manifest:
+                    raise SystemExit(f"FATAL: {d} is not in {rel(MANIFEST)}; the verbatim "
+                                     "column cannot be measured against a document not admitted")
+                path = REPO / self.manifest[d]["identity"]["canonical_path"]
+                if not path.is_file():
+                    raise SystemExit(f"FATAL: {rel(path)} ({d}) is not on disk; the corpus "
+                                     "binaries are gitignored, re-acquire before rendering")
+                out[d] = doc_text(path, d)
+            self._usafacts = out
+        return self._usafacts
+
+    def kept(self, props: dict) -> str:
+        """Decision 7: `verbatim (<doc_id>)` when the construct, then the indicator, grounds
+        in a USAFacts document under `kg/extraction/grounding.py`; `restated` when neither
+        grounds anywhere; `n/a (added criterion)` outside USAFacts' four criteria."""
+        if props["criterion_code"] not in USAFACTS_CRITERIA:
+            return "n/a (added criterion)"
+        from kg.extraction.grounding import is_grounded
+        for field in VERBATIM_FIELDS:
+            for d in USAFACTS_DOCS:
+                if is_grounded(props.get(field) or "", self.usafacts[d]):
+                    return f"verbatim ({d})"
+        return "restated"
 
     @property
     def tools(self):
@@ -367,7 +410,7 @@ def indicator_marks(s: Sources) -> list:
             "rule_built": "yes" if rules else "no",
             "access_tier": p["tier"], "status": p["status"], "mark": mark,
             "departure": " || ".join(departures),
-            "kept_verbatim_or_restated": "",
+            "kept_verbatim_or_restated": s.kept(p),
         })
     return rows
 
@@ -389,6 +432,7 @@ def page_b(s: Sources) -> tuple:
     total = len(rows)
     built = sum(1 for r in rows if r["rule_built"] == "yes")
     with_dep = sum(1 for r in rows if r["departure"])
+    kept = Counter(r["kept_verbatim_or_restated"].split(" (")[0] for r in rows)
     pg.add("# B. Delta against the USAFacts AI-ready data framework", "",
            "## How the delta is derived",
            "",
@@ -410,8 +454,15 @@ def page_b(s: Sources) -> tuple:
            "An indicator whose record `status` is `candidate` is marked that way instead. No "
            "indicator in the record has a status of withdrawn or dropped. The record cannot "
            "tell an indicator kept verbatim from USAFacts' text apart from one restated, so no "
-           "mark says either. The `kept_verbatim_or_restated` column is left empty for the "
-           "operator to fill.",
+           "mark says either. The `kept_verbatim_or_restated` column is measured against the "
+           f"admitted USAFacts documents ({', '.join(f'`{d}`' for d in USAFACTS_DOCS)}): an "
+           "indicator of criteria A to D is `verbatim (<doc_id>)` when its `construct`, else "
+           "its `indicator`, string grounds verbatim in one of them under "
+           "`kg/extraction/grounding.py` normalization, `restated` when neither grounds in any, "
+           "and an indicator of criteria E, F and G is `n/a (added criterion)`; "
+           f"{pg.n(kept['verbatim'], 'indicators whose construct or indicator grounds verbatim in a USAFacts document')} "
+           f"are verbatim, {pg.n(kept['restated'], 'indicators of criteria A to D grounding in no USAFacts document')} "
+           f"restated and {pg.n(kept['n/a'], 'indicators of criteria E, F and G')} n/a.",
            "",
            f"Of {pg.n(total, 'count of AssessmentIndicator nodes in the record')} indicator "
            f"nodes, {pg.n(built, 'indicators with a current rule in rules.CURRENT')} have a "
