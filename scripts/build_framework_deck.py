@@ -113,6 +113,30 @@ def fits(lines: list[Line], pt: int) -> bool:
     return wrapped_lines(lines, pt) <= capacity(pt)
 
 
+def layout(lines: list[Line]) -> tuple[int, list[list[Line]], bool]:
+    """`(pt, chunks, split)`: the largest font from START_PT down to FLOOR_PT at which the
+    lines fit, and, if they do not fit even at the floor, the lines cut into slide-sized
+    chunks. Factored out of `build` so `scripts/build_brief_deck.py` imports the one layout
+    rule instead of carrying a second copy (`cc_tasks/2026-09-22_brief_deck_assembly.md`)."""
+    pt = START_PT
+    while pt > FLOOR_PT and not fits(lines, pt):
+        pt -= 1
+    if fits(lines, pt):
+        return pt, [lines], False
+    # Still over at the floor: split on a blank-line boundary nearest the midpoint so
+    # a bullet is never cut in half, and mark the continuation in its title.
+    cap = capacity(pt)
+    chunks, cur, used = [], [], 0
+    for ln in lines:
+        cost = wrapped_lines([ln], pt)
+        if used + cost > cap and cur:
+            chunks.append(cur); cur, used = [], 0
+        cur.append(ln); used += cost
+    if cur:
+        chunks.append(cur)
+    return pt, chunks, True
+
+
 def add_runs(para, text: str, bold_all: bool = False):
     """Render inline **emphasis** as real bold runs. The words are never altered; only the
     markers are consumed, so the content file stays authoritative."""
@@ -140,22 +164,8 @@ def build(slides: list[dict], out: pathlib.Path) -> dict:
 
     for spec in slides:
         lines = parse_body(spec["body"])
-        pt = START_PT
-        while pt > FLOOR_PT and not fits(lines, pt):
-            pt -= 1
-        chunks = [lines]
-        if not fits(lines, pt):
-            # Still over at the floor: split on a blank-line boundary nearest the midpoint so
-            # a bullet is never cut in half, and mark the continuation in its title.
-            cap = capacity(pt)
-            chunks, cur, used = [], [], 0
-            for ln in lines:
-                cost = wrapped_lines([ln], pt)
-                if used + cost > cap and cur:
-                    chunks.append(cur); cur, used = [], 0
-                cur.append(ln); used += cost
-            if cur:
-                chunks.append(cur)
+        pt, chunks, split = layout(lines)
+        if split:
             report["splits"].append({"slide": spec["n"], "parts": len(chunks), "pt": pt})
 
         for i, chunk in enumerate(chunks):
