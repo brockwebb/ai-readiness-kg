@@ -17,6 +17,10 @@ What is asserted (decision 6), and why each is the right test:
   every part it splits into but the last is full.
 * **Upright diagrams are drawn larger** (decision 3): (c) and (d) take the placement that draws
   them larger than the stacked box would, and their text fits it.
+* **Chapter 0, the case** (`cc_tasks/2026-09-23_brief_narrative.md` decision 4): one slide per
+  `## ` section plus the title slide, after the cover and before chapter A; every one carries
+  notes equal to its section's paragraphs; the narrative passes the numeral and quotation gates,
+  and the gate REFUSES a narrative number that is on no page its tag names.
 * **The framework deck is unchanged** by the refactor that made its layout importable: rebuilt
   from its content file, every archive member equals the committed
   `docs/crosswalk/framework_deck_2026-09-02.pptx` (the zip header timestamps are the only bytes
@@ -143,7 +147,8 @@ def test_the_content_file_names_the_pack_it_was_built_from():
 
 
 def test_the_appendix_is_one_slide_per_sheet_per_rule_group_plus_the_corpus(specs):
-    gen = [s for s in specs if s["kind"] != "authored"]
+    # Generated from the pack: chapter 0 (kind "case") is rendered from the narrative, not the pack.
+    gen = [s for s in specs if s["kind"] in ("indicator", "rule", "corpus")]
     assert [s["kind"] for s in specs].index("indicator") == len(specs) - len(gen)
     sheets = list((D.PACK / "appendix").glob("indicator_*.md"))
     _, groups = D.rule_groups()
@@ -182,3 +187,69 @@ def test_the_renderer_imports_the_layout_rule_rather_than_copying_it():
     src = (REPO / "scripts" / "build_brief_deck.py").read_text(encoding="utf-8")
     assert "FD.layout(" in src and "FD.parse_body(" in src
     assert not re.search(r"^def (parse_body|layout|fits|capacity|wrapped_lines)\b", src, re.M)
+
+
+def test_chapter_0_is_one_slide_per_section_plus_the_title_after_the_cover(rendered):
+    _, reps = rendered
+    secs = D.parse_narrative(D.NARRATIVE.read_text(encoding="utf-8"))
+    n_sections = len(secs) - 1
+    slides = reps["brief"]["slides"]
+    case = [s for s in slides if s["chapter"] == D.CASE_CHAPTER]
+    assert len(case) == n_sections + 1
+    chapters = [s["chapter"] for s in slides]
+    first = chapters.index(D.CASE_CHAPTER)
+    assert slides[0]["pt"] == "cover" and first == 1
+    assert chapters[first + len(case)] == "A"
+
+
+def test_every_chapter_0_slide_has_notes_equal_to_its_section_paragraphs(rendered):
+    from pptx import Presentation
+    outs, reps = rendered
+    secs = D.parse_narrative(D.NARRATIVE.read_text(encoding="utf-8"))
+    prs = Presentation(str(outs["brief"]))
+    idx = [i for i, s in enumerate(reps["brief"]["slides"]) if s["chapter"] == D.CASE_CHAPTER]
+    assert len(idx) == len(secs)
+    for i, sec in zip(idx, secs):
+        slide = prs.slides[i]
+        assert slide.has_notes_slide, sec["title"]
+        assert slide.notes_slide.notes_text_frame.text == "\n\n".join(sec["paras"]), sec["title"]
+        assert sec["paras"], sec["title"]
+
+
+def test_the_ask_projects_only_the_pending_ruling():
+    ask = [s for s in D.case_specs() if s["title"] == D.ASK_TITLE]
+    assert len(ask) == 1
+    assert ask[0]["body"] == "- " + D.ASK_PENDING
+    assert ask[0]["notes"].startswith("Draft, for the operator's ruling")
+
+
+def test_chapter_tags_leave_the_slide_for_a_footer():
+    for s in D.case_specs():
+        assert not D.TAG_RE.search(s["body"]), s["title"]
+    g = [s for s in D.case_specs() if s["title"] == "Start with our own product"][0]
+    assert g["footer"].startswith("see chapter G")
+
+
+def test_the_narrative_passes_the_numeral_and_quotation_gates():
+    secs = D.parse_narrative(D.NARRATIVE.read_text(encoding="utf-8"))
+    assert D.narrative_gate(secs) == []
+
+
+def test_the_narrative_gate_refuses_a_number_and_a_quote_its_page_does_not_hold():
+    held = json.loads(D.LEDGER.read_text(encoding="utf-8"))["G_census_dogfood.md"][0]["value"]
+    ok = [{"title": "T", "bullets": [f"Score {held} [G]."], "paras": []}]
+    assert D.narrative_gate(ok) == []
+    bad = D.narrative_gate([{"title": "T", "bullets": ["4417 legs judged [G]."],
+                             "paras": ["> 4417 documents were admitted and all are cited. [C]"]}])
+    assert any("numeral '4417'" in b for b in bad), bad
+    assert any("quote not found" in b for b in bad), bad
+    # The number is held by page G but the sentence cites B: the tag decides the page.
+    wrong = D.narrative_gate([{"title": "T", "bullets": [f"Score {held} [B]."], "paras": []}])
+    assert wrong and "chapter(s) ['B']" in wrong[0], wrong
+
+
+def test_the_narrative_names_its_record_cycle_and_task():
+    first = D.NARRATIVE.read_text(encoding="utf-8").splitlines()[0]
+    h = D.pack_header()
+    assert first.startswith("<!--") and h["record_commit"] in first and h["cycle"] in first
+    assert "cc_tasks/2026-09-23_brief_narrative.md at commit " in first

@@ -4,7 +4,8 @@
 `cc_tasks/2026-09-22_brief_deck_assembly.md`, under DN-005 (the brief is a VIEW of the
 framework) and DN-008 ruling 2 (chapter order). **Zero model calls, no network.** Reads only
 `docs/brief/` (the pack), `docs/deck/brief_deck_content.md` (the authored slides),
-`corpus/manifest.json` (one summary slide) and git; writes only under `docs/deck/`.
+`docs/deck/brief_narrative.md` (chapter 0), `corpus/manifest.json` (one summary slide) and git;
+writes only under `docs/deck/`.
 
     scripts/build_brief_deck.py                    render docs/deck/brief_deck.pptx and
                                                    docs/deck/brief_appendix.pptx
@@ -36,6 +37,13 @@ not copied. What this file adds is what the brief needs and the framework deck d
   neither a verified quote nor directive output must be a `value` in `docs/brief/numbers.json`
   under a page the slide's `source:` line names. The numeral scan is the pack's own
   (`tests/test_brief_pack.py::prose_numerals`), imported so the two gates cannot drift.
+* **Chapter 0, the case** (`cc_tasks/2026-09-23_brief_narrative.md`). `docs/deck/brief_narrative.md`
+  is a short paper, the brief's one piece of authored argument. It is projected after the cover
+  and before chapter A: its title section as one slide, each `## ` section as one slide whose
+  bullets are the section's `- ` lines and whose speaker notes are its paragraphs, so the prose
+  travels with the deck. Its `[X]` chapter tags stay in the notes and become a "see chapter X"
+  footer. The narrative passes the same numeral scan and quotation test, checked against the
+  pack page each sentence's tag names; "The ask" projects only "operator ruling pending".
 * **Byte-stable output.** python-pptx stamps each zip member with the wall-clock time, which is
   the only thing that differs between two renders of the same content (measured 2026-09-22 on the
   framework deck: every member identical, header bytes differ). The archive is rewritten with a
@@ -111,6 +119,15 @@ PRE_GUARD = "    \u00a0"
 DIRECTIVE_RE = re.compile(r"^@(\w[\w-]*)\s*(.*)$")
 META_RE = re.compile(r"^(source|chapter|layout):\s*(.*)$")
 QUOTE_RE = re.compile(r"^(\s*)> ?(.*)$")
+#: Chapter 0, the case (`cc_tasks/2026-09-23_brief_narrative.md`): the short paper whose sections
+#: are projected after the cover and before chapter A, bullets on the slide, prose in the notes.
+NARRATIVE = OUT_DIR / "brief_narrative.md"
+CASE_CHAPTER = "0"
+CASE_SUBTITLE = "Chapter 0 · The case"
+TAG_RE = re.compile(r"\s*\[([A-Z])\]")
+#: Decision 3: the ask is not projected until the operator rules; its draft stays in the notes.
+ASK_TITLE = "The ask"
+ASK_PENDING = "operator ruling pending"
 
 
 def _prose_numerals():
@@ -334,6 +351,132 @@ def authored(src: str, appendix_slides: int | None = None) -> list:
                       "sources": sources, "chapter": chapter,
                       "layout": meta.get("layout", "text"), "diagram": diagram,
                       "kind": "authored"})
+    return specs
+
+
+# ------------------------------------------------------------------------------ the case
+
+def parse_narrative(text: str) -> list:
+    """`[{"title", "bullets", "paras"}]`: the `# ` title section first, then one entry per `## `
+    section. `- ` lines are bullets; every other non-blank line is a paragraph (a `> ` line is a
+    quotation paragraph). The generator comment is dropped."""
+    secs = []
+    for line in text.splitlines():
+        if line.startswith("<!--"):
+            continue
+        m = re.match(r"^(#{1,2}) (.*)$", line)
+        if m:
+            if (m.group(1) == "#") != (not secs):
+                raise DeckError(f"FATAL: {NARRATIVE.name}: the `# ` title must open the file and "
+                                f"occur once; found {line!r}")
+            secs.append({"title": m.group(2).strip(), "bullets": [], "paras": []})
+            continue
+        if not line.strip():
+            continue
+        if not secs:
+            raise DeckError(f"FATAL: {NARRATIVE.name}: text before the `# ` title: {line[:60]!r}")
+        if line.startswith("- "):
+            secs[-1]["bullets"].append(line[2:].strip())
+        else:
+            secs[-1]["paras"].append(line.strip())
+    if not secs:
+        raise DeckError(f"FATAL: {NARRATIVE.name} has no `# ` title")
+    return secs
+
+
+def chapter_pages() -> dict:
+    """`{letter: pack page}` for the pack's chapter pages (`B_usafacts_delta.md`, ...)."""
+    out = {}
+    for p in sorted(PACK.glob("[A-Z]_*.md")):
+        if p.name[0] in out:
+            raise DeckError(f"FATAL: two pack pages for chapter {p.name[0]}")
+        out[p.name[0]] = p.name
+    return out
+
+
+def _page_numerals(page: str, ledger: dict) -> set:
+    """What a narrative numeral may be, on one pack page (task decision 2): a `value` on
+    `numbers.json` under the page, a numeral in a table cell on it, or one inside a `> `
+    quotation on it. Cells and quotations are scanned with the pack's own numeral pattern."""
+    pat = r"(?<![\w.])\d+(?:\.\d+)?(?![\w.])"
+    text = (PACK / page).read_text(encoding="utf-8")
+    held = {x["value"] for x in ledger.get(page, [])}
+    for _, rows in md_tables(text):
+        held |= {n for r in rows for c in r for n in re.findall(pat, c)}
+    for line in text.splitlines():
+        if line.lstrip().startswith(">"):
+            held |= set(re.findall(pat, line))
+    return held
+
+
+def narrative_gate(secs: list) -> list:
+    """Every defect in the narrative, as strings; empty when it passes.
+
+    The page a numeral is checked against is the one its sentence's `[X]` tag names. A sentence
+    with no tag takes its bullet's or paragraph's tags (the tag trails the sentences it covers);
+    a unit with none takes its section's; the title section, the paper's abstract, carries no
+    tag and is checked against every chapter page. A `> ` line must ground, under
+    `grounding.normalize`, in a page its section tags."""
+    prose_numerals = _prose_numerals()
+    ledger = json.loads(LEDGER.read_text(encoding="utf-8"))
+    pages = chapter_pages()
+    held = {c: _page_numerals(p, ledger) for c, p in pages.items()}
+    bad = []
+    for sec in secs:
+        units = [sec["title"]] + sec["bullets"] + sec["paras"]
+        sec_tags = list(dict.fromkeys(t for u in units for t in TAG_RE.findall(u)))
+        for t in sec_tags:
+            if t not in pages:
+                bad.append(f"{sec['title']!r}: tag [{t}] names no pack page")
+        sec_tags = [t for t in sec_tags if t in pages] or sorted(pages)
+        for unit in units:
+            unit_tags = [t for t in TAG_RE.findall(unit) if t in pages] or sec_tags
+            qm = QUOTE_RE.match(unit)
+            if qm:
+                probe = normalize(TAG_RE.sub("", qm.group(2)).strip())
+                if not any(probe in normalize((PACK / pages[t]).read_text(encoding="utf-8"))
+                           for t in unit_tags):
+                    bad.append(f"{sec['title']!r}: quote not found in chapter(s) "
+                               f"{unit_tags}: {probe[:80]!r}")
+                continue
+            for sent in re.split(r"(?<=[.\]])\s+(?=[A-Z0-9])", unit):
+                tags = [t for t in TAG_RE.findall(sent) if t in pages] or unit_tags
+                scan = re.sub(r"`([^`A-Za-z]*)`", r"\1", sent).lstrip("#>| ")
+                for num in prose_numerals(scan):
+                    if not any(num in held[t] for t in tags):
+                        bad.append(f"{sec['title']!r}: numeral {num!r} is on no page of "
+                                   f"chapter(s) {tags}: {sent[:80]!r}")
+    return bad
+
+
+def case_specs() -> list:
+    """Chapter 0, "The case" (`cc_tasks/2026-09-23_brief_narrative.md` decision 1): the title
+    section as one slide, then one slide per `## ` section whose bullets are the section's `- `
+    lines, tags removed, and whose speaker notes are its paragraphs in full, tags kept. The tags
+    become a "see chapter X" footer. The ask is held for the operator's ruling (decision 3)."""
+    secs = parse_narrative(NARRATIVE.read_text(encoding="utf-8"))
+    bad = narrative_gate(secs)
+    if bad:
+        raise DeckError("FATAL: the narrative fails its gate:\n  " + "\n  ".join(bad))
+    pages, rel = chapter_pages(), str(NARRATIVE.relative_to(REPO))
+    specs = []
+    for i, sec in enumerate(secs):
+        units = [sec["title"]] + sec["bullets"] + sec["paras"]
+        tags = list(dict.fromkeys(t for u in units for t in TAG_RE.findall(u)))
+        see = ("see chapter " if len(tags) == 1 else "see chapters ") + ", ".join(tags) \
+            if tags else ""
+        spec = {"n": f"0.{i}", "title": sec["title"], "chapter": CASE_CHAPTER,
+                "sources": [rel] + [pages[t] for t in tags], "diagram": None,
+                "kind": "case", "notes": "\n\n".join(sec["paras"]),
+                "footer": " · ".join(x for x in (see, rel) if x)}
+        if i == 0:
+            spec.update(layout="cover", body=f"{sec['title']}\n{CASE_SUBTITLE}")
+        else:
+            bullets = [TAG_RE.sub("", b).rstrip() for b in sec["bullets"]]
+            if sec["title"] == ASK_TITLE:
+                bullets = [ASK_PENDING]
+            spec.update(layout="text", body="\n".join("- " + b for b in bullets))
+        specs.append(spec)
     return specs
 
 
@@ -604,18 +747,26 @@ def build(specs: list, out: Path) -> dict:
                 if ln.pre:
                     r.font.name = "Courier New"
 
-    def title_and_footer(slide, title, sources):
+    def footer(slide, text):
+        fb = slide.shapes.add_textbox(Inches(0.5), Inches(7.0), Inches(FD.BODY_W), Inches(0.35))
+        run = fb.text_frame.paragraphs[0].add_run()
+        run.text = text
+        run.font.size, run.font.color.rgb = Pt(FOOTER_PT), GREY
+
+    def title_and_footer(slide, title, sources, text=None):
         tb = slide.shapes.add_textbox(Inches(0.5), Inches(0.35), Inches(FD.BODY_W), Inches(0.9))
         tb.text_frame.word_wrap = True
         FD.add_runs(tb.text_frame.paragraphs[0], display(title), bold_all=True)
         for r in tb.text_frame.paragraphs[0].runs:
             r.font.size, r.font.color.rgb = Pt(26), BLACK
-        if sources:
-            fb = slide.shapes.add_textbox(Inches(0.5), Inches(7.0), Inches(FD.BODY_W),
-                                          Inches(0.35))
-            run = fb.text_frame.paragraphs[0].add_run()
-            run.text = "source: " + ", ".join(sources)
-            run.font.size, run.font.color.rgb = Pt(FOOTER_PT), GREY
+        if text or sources:
+            footer(slide, text or "source: " + ", ".join(sources))
+
+    def notes(slide, spec):
+        # Chapter 0 carries the paper's prose on the notes slide, so it travels with the deck
+        # and can be read back out as the paper (`cc_tasks/2026-09-23_brief_narrative.md`).
+        if spec.get("notes"):
+            slide.notes_slide.notes_text_frame.text = spec["notes"]
 
     for spec, lines, pt, chunks, split in slide_plan(specs):
         if spec["layout"] == "cover":
@@ -633,6 +784,9 @@ def build(specs: list, out: Path) -> dict:
                 FD.add_runs(p, ln.text)
                 for r in p.runs:
                     r.font.size, r.font.color.rgb = Pt(18), BLACK
+            if spec.get("footer"):
+                footer(slide, spec["footer"])
+            notes(slide, spec)
             report["slides"].append({"n": spec["n"], "title": spec["title"], "pt": "cover",
                                      "chapter": spec["chapter"], "kind": spec["kind"]})
             continue
@@ -661,7 +815,9 @@ def build(specs: list, out: Path) -> dict:
                 report["overflow"].append(spec["n"])
             slide = prs.slides.add_slide(prs.slide_layouts[6])
             title_and_footer(slide, spec["title"] if i == 0 else f"{spec['title']} (cont.)",
-                             spec["sources"])
+                             spec["sources"], spec.get("footer"))
+            if i == 0:
+                notes(slide, spec)
             textbox(slide, 1.45, FD.BODY_H, chunk, pt)
             report["slides"].append({"n": spec["n"], "title": spec["title"], "pt": pt,
                                      "chapter": spec["chapter"], "kind": spec["kind"],
@@ -703,7 +859,11 @@ def split_specs() -> tuple[list, list]:
         if not head or auth[len(brief):] != head:
             raise DeckError(f"FATAL: the {APPENDIX_CHAPTER} chapter must exist and be the "
                             "content file's last")
-        return brief, head + generated(auth[-1]["n"] + 1)
+        if not brief or brief[0]["layout"] != "cover":
+            raise DeckError("FATAL: the content file must open with its cover; chapter 0 "
+                            "follows it")
+        # Chapter 0, the case, after the cover and before chapter A.
+        return [brief[0]] + case_specs() + brief[1:], head + generated(auth[-1]["n"] + 1)
 
     _, appendix = part(authored(src, appendix_slides=0))
     brief, appendix = part(authored(src, appendix_slides=slide_count(appendix)))
