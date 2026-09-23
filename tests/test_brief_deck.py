@@ -9,6 +9,14 @@ What is asserted (decision 6), and why each is the right test:
 * **Every `source:` file exists**, and the content file names the pack commit it was built from.
 * **No slide overflows** the layout budget at the 14pt floor; oversize slides were split.
 * **The appendix** is 49 indicator slides, plus one per rule group, plus one corpus summary.
+* **Two outputs, nothing dropped** (`cc_tasks/2026-09-23_brief_deck_packaging.md` decision 1):
+  the brief and the appendix together hold exactly the slides one file of the same sections
+  would, the only sections the split added are the brief's closing slide and the appendix's
+  cover, and the closing slide states the appendix's real slide count.
+* **Chapter B packs to the floor** (decision 2): the skeleton §8 items are one section, and
+  every part it splits into but the last is full.
+* **Upright diagrams are drawn larger** (decision 3): (c) and (d) take the placement that draws
+  them larger than the stacked box would, and their text fits it.
 * **The framework deck is unchanged** by the refactor that made its layout importable: rebuilt
   from its content file, every archive member equals the committed
   `docs/crosswalk/framework_deck_2026-09-02.pptx` (the zip header timestamps are the only bytes
@@ -34,8 +42,9 @@ import build_framework_deck as FD  # noqa: E402
 
 @pytest.fixture(scope="module")
 def rendered(tmp_path_factory):
-    out = tmp_path_factory.mktemp("deck") / "deck.pptx"
-    return out, D.render(out)
+    d = tmp_path_factory.mktemp("deck")
+    outs = {"brief": d / "brief.pptx", "appendix": d / "appendix.pptx"}
+    return outs, D.render(outs["brief"], outs["appendix"])
 
 
 @pytest.fixture(scope="module")
@@ -43,18 +52,59 @@ def specs():
     return D.all_specs()
 
 
-def test_the_deck_regenerates_byte_for_byte(rendered):
-    out, _ = rendered
-    assert D.DECK.is_file(), "docs/deck/brief_deck.pptx is not on disk"
-    assert D.DECK.read_bytes() == out.read_bytes(), \
-        "docs/deck/brief_deck.pptx drifted; run scripts/build_brief_deck.py"
+def test_both_outputs_regenerate_byte_for_byte(rendered):
+    outs, _ = rendered
+    for key, real in (("brief", D.DECK), ("appendix", D.APPENDIX)):
+        assert real.is_file(), f"{real} is not on disk"
+        assert real.read_bytes() == outs[key].read_bytes(), \
+            f"{real.name} drifted; run scripts/build_brief_deck.py"
 
 
 def test_no_slide_overflows(rendered):
-    _, rep = rendered
-    assert rep["overflow"] == [], f"slides over the layout budget: {rep['overflow']}"
-    for s in rep["slides"]:
-        assert s["pt"] in ("cover",) or s["pt"] >= FD.FLOOR_PT, s
+    _, reps = rendered
+    for rep in reps.values():
+        assert rep["overflow"] == [], f"slides over the layout budget: {rep['overflow']}"
+        for s in rep["slides"]:
+            assert s["pt"] in ("cover",) or s["pt"] >= FD.FLOOR_PT, s
+
+
+def test_the_split_drops_nothing_and_adds_only_the_cover_and_the_closing_slide(rendered):
+    _, reps = rendered
+    brief, appendix = D.split_specs()
+    assert len(reps["brief"]["slides"]) + len(reps["appendix"]["slides"]) \
+        == D.slide_count(brief + appendix)
+    assert [s["chapter"] for s in brief if s["chapter"] == "Close"] == ["Close"]
+    assert brief[-1]["chapter"] == "Close"
+    assert appendix[0]["layout"] == "cover" and appendix[0]["chapter"] == D.APPENDIX_CHAPTER
+    assert all(s["chapter"] == D.APPENDIX_CHAPTER for s in appendix)
+    assert all(s["chapter"] != D.APPENDIX_CHAPTER for s in brief)
+    # The closing slide states the appendix file and the slide count that file really has.
+    n = len(reps["appendix"]["slides"])
+    assert f"{D.APPENDIX.relative_to(D.REPO)}: {n} slides" in brief[-1]["body"]
+
+
+def test_the_skeleton_items_are_one_section_packed_to_the_floor():
+    brief, _ = D.split_specs()
+    items = [s for s in brief if s["chapter"] == "B" and "Decomposition with receipts" in s["body"]]
+    assert len(items) == 1
+    assert "11. **Red teaming" in items[0]["body"]
+    (_, lines, pt, chunks, _), = D.slide_plan(items)
+    assert pt == FD.FLOOR_PT or len(chunks) == 1
+    for chunk, nxt in zip(chunks, chunks[1:]):
+        assert not FD.fits(chunk + nxt[:1], pt), "a part was split before the floor filled it"
+
+
+def test_upright_diagrams_take_the_placement_that_draws_them_larger(rendered):
+    from PIL import Image
+    _, reps = rendered
+    placed = {s["diagram"]: s for s in reps["brief"]["slides"] if s.get("diagram")}
+    for key in ("c", "d"):
+        with Image.open(D.diagram_png(key)) as im:
+            w, h = im.size
+        assert h * 1.0 / w > 0.5, f"diagram ({key}) is not drawn upright: {w}x{h}"
+        stacked = min(FD.BODY_W / w, D.DIAGRAM_IMG_H / h)
+        s = placed[f"E_{key}.png"]
+        assert s["placement"] == "side" and s["scale"] > stacked, s
 
 
 def test_every_source_exists_and_every_number_stating_slide_names_one(specs):
@@ -94,6 +144,7 @@ def test_the_content_file_names_the_pack_it_was_built_from():
 
 def test_the_appendix_is_one_slide_per_sheet_per_rule_group_plus_the_corpus(specs):
     gen = [s for s in specs if s["kind"] != "authored"]
+    assert [s["kind"] for s in specs].index("indicator") == len(specs) - len(gen)
     sheets = list((D.PACK / "appendix").glob("indicator_*.md"))
     _, groups = D.rule_groups()
     per_rule = sum(len(r) for _, r in groups)

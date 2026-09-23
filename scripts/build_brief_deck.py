@@ -6,21 +6,29 @@ framework) and DN-008 ruling 2 (chapter order). **Zero model calls, no network.*
 `docs/brief/` (the pack), `docs/deck/brief_deck_content.md` (the authored slides),
 `corpus/manifest.json` (one summary slide) and git; writes only under `docs/deck/`.
 
-    scripts/build_brief_deck.py                    render docs/deck/brief_deck.pptx
-    scripts/build_brief_deck.py --check            re-render to a temp path; exit 1 on drift
+    scripts/build_brief_deck.py                    render docs/deck/brief_deck.pptx and
+                                                   docs/deck/brief_appendix.pptx
+    scripts/build_brief_deck.py --check            re-render both to a temp path; exit 1 on drift
     scripts/build_brief_deck.py --render-diagrams  re-draw the four Mermaid diagrams with mmdc
 
 **The renderer is `scripts/build_framework_deck.py`.** Its body parser, its layout rule (18pt
 stepped to a 14pt floor, then a split on line boundaries) and its inline-bold runs are imported,
 not copied. What this file adds is what the brief needs and the framework deck did not:
 
+* **Two outputs from one content file** (`cc_tasks/2026-09-23_brief_deck_packaging.md`,
+  decision 1, for DN-008 ruling 2's roughly-100-slide shape). The brief, `brief_deck.pptx`, is
+  every authored section outside the `Appendix` chapter: the cover, chapters A to H and a closing
+  slide whose `@stamp appendix` names the appendix file and its slide count. The appendix,
+  `brief_appendix.pptx`, is its own cover, the `Appendix` chapter's authored sections and the
+  generated slides. No slide is dropped by the split.
 * **Two kinds of slide** (decision 2). *Authored* slides are the `## Slide N — Title` sections of
   the content file. *Generated* slides, the appendix, are rendered here from the pack at build
   time: one per indicator sheet, one per rule group, one corpus summary.
 * **Directives** copy pack content onto a slide by script, so a number on a table, a CSV row or a
   captured command output is never retyped: `@table <page> | <heading> [| cols=..] [| nth=N]`,
   `@csv <file> | cols=.. [| where=col=val]`, `@capture <step id>`, `@diagram <a|b|c|d>`,
-  `@provenance`, `@stamp` (date, pack commit and cycle, read from git and the pack).
+  `@provenance`, `@stamp` (date, pack commit and cycle, read from git and the pack),
+  `@stamp appendix` (the same, prefixed by the appendix file and its rendered slide count).
 * **Quotations are verified.** A body line `> text` must occur in one of the files the slide's
   `source:` line names, under `kg/extraction/grounding.py` normalization (the grounding test
   every edge in this repository passes). A quote that is not found refuses the build.
@@ -67,6 +75,9 @@ PACK = REPO / "docs" / "brief"
 OUT_DIR = REPO / "docs" / "deck"
 CONTENT = OUT_DIR / "brief_deck_content.md"
 DECK = OUT_DIR / "brief_deck.pptx"
+APPENDIX = OUT_DIR / "brief_appendix.pptx"
+#: The chapter whose authored sections open the appendix file rather than the brief.
+APPENDIX_CHAPTER = "Appendix"
 DIAGRAMS = OUT_DIR / "diagrams"
 DIAGRAM_SIDECAR = DIAGRAMS / "diagrams.json"
 MANIFEST = REPO / "corpus" / "manifest.json"
@@ -83,9 +94,16 @@ RULE_SLIDE_LIMIT = 40
 #: = 123 characters at 0.6 em per character; 110 leaves margin). Wrapping moves characters to a
 #: continuation line; none is dropped.
 PRE_WRAP = 110
-#: Diagram slides: the image box, and the text box under it, in inches.
+#: Diagram slides, in inches. *Stacked*: the image across the body width, the text box under
+#: it. *Side*: the image on the left at full body height, the text in a column to its right.
+#: A diagram takes whichever placement draws it larger, provided its text fits there
+#: (2026-09-23 packaging task, decision 3: drawn upright, (c) and (d) are narrower than tall
+#: enough that the stacked box would draw them no larger, or smaller, than left to right did).
 DIAGRAM_IMG_H = 3.7
 DIAGRAM_TEXT_H = 1.65
+DIAGRAM_SIDE_H = 5.55
+DIAGRAM_SIDE_TEXT_W = 5.0
+DIAGRAM_GAP = 0.3
 FOOTER_PT = 10
 #: Four-space indent (preformatted, to `FD.parse_body`) plus a no-break space, which
 #: `str.lstrip(" ")` does not remove and which renders as a space.
@@ -161,8 +179,10 @@ def rows_as_lines(head: list, rows: list, cols: list | None) -> list:
     return out
 
 
-def directive(name: str, arg: str, n: int) -> tuple[list, str | None]:
-    """`(lines, diagram key or None)`. Lines are markdown for `FD.parse_body`."""
+def directive(name: str, arg: str, n: int, appendix_slides: int | None = None
+              ) -> tuple[list, str | None]:
+    """`(lines, diagram key or None)`. Lines are markdown for `FD.parse_body`.
+    `appendix_slides` is the appendix file's rendered slide count, for `@stamp appendix`."""
     pos, kw = _args(arg)
     cols = kw["cols"].split(",") if "cols" in kw else None
     if name == "table":
@@ -207,7 +227,15 @@ def directive(name: str, arg: str, n: int) -> tuple[list, str | None]:
         return provenance_lines(), None
     if name == "stamp":
         (sha_, date), h = pack_commit(), pack_header()
-        return [f"{date} · pack commit {sha_[:12]} · cycle of record {h['cycle']}"], None
+        stamp = f"{date} · pack commit {sha_[:12]} · cycle of record {h['cycle']}"
+        pos = [x for x in pos if x]
+        if pos == ["appendix"]:
+            if appendix_slides is None:
+                raise DeckError(f"slide {n}: @stamp appendix outside a two-output render")
+            return [f"- {APPENDIX.relative_to(REPO)}: {appendix_slides} slides · {stamp}"], None
+        if pos:
+            raise DeckError(f"slide {n}: @stamp takes no argument but `appendix`")
+        return [stamp], None
     raise DeckError(f"slide {n}: unknown directive @{name}")
 
 
@@ -247,7 +275,7 @@ def provenance_lines() -> list:
 
 # ------------------------------------------------------------------------------ authored
 
-def authored(src: str) -> list:
+def authored(src: str, appendix_slides: int | None = None) -> list:
     """Parse the content file into slide specs, expanding directives, verifying quotes and
     running the numeral gate. Refuses on the first defect with the slide number."""
     prose_numerals = _prose_numerals()
@@ -273,7 +301,7 @@ def authored(src: str) -> list:
         for line in keep:
             dm = DIRECTIVE_RE.match(line.strip())
             if dm:
-                lines, dkey = directive(dm.group(1), dm.group(2), n)
+                lines, dkey = directive(dm.group(1), dm.group(2), n, appendix_slides)
                 body += lines
                 diagram = dkey or diagram
                 continue
@@ -517,6 +545,35 @@ def diagram_text_fits(lines: list, pt: int = FD.FLOOR_PT) -> bool:
     return FD.wrapped_lines(lines, pt) <= int(DIAGRAM_TEXT_H / (1.2 * pt / 72))
 
 
+def _column_lines(lines: list, pt: int, width: float) -> int:
+    """`FD.wrapped_lines`' estimate (0.5 em per character) for a column `width` inches wide
+    rather than the full body width, which is the one number the side placement changes."""
+    per = max(20, int(width * 72 / (0.5 * pt)))
+    return sum(1 if ln.blank or ln.pre else max(1, -(-len(ln.text) // max(10, per - 4 * ln.level)))
+               for ln in lines)
+
+
+def diagram_placement(size: tuple, lines: list, pt: int = FD.FLOOR_PT) -> dict:
+    """`{"mode", "scale", "img": (left, top, w, h), "text": (left, top, w, h)}` in inches:
+    the placement that draws the image larger, side only when the text fits its column."""
+    w, h = size
+    stacked = min(FD.BODY_W / w, DIAGRAM_IMG_H / h)
+    side_w = FD.BODY_W - DIAGRAM_SIDE_TEXT_W - DIAGRAM_GAP
+    side = min(side_w / w, DIAGRAM_SIDE_H / h)
+    side_cap = int(DIAGRAM_SIDE_H / (1.2 * pt / 72)) - FD.FIT_SLACK
+    if side > stacked and _column_lines(lines, pt, DIAGRAM_SIDE_TEXT_W) <= side_cap:
+        iw, ih = w * side, h * side
+        return {"mode": "side", "scale": side,
+                "img": (0.5 + (side_w - iw) / 2, 1.3, iw, ih),
+                "text": (0.5 + side_w + DIAGRAM_GAP, 1.3, DIAGRAM_SIDE_TEXT_W, DIAGRAM_SIDE_H),
+                "fits": True}
+    iw, ih = w * stacked, h * stacked
+    return {"mode": "stacked", "scale": stacked,
+            "img": (0.5 + (FD.BODY_W - iw) / 2, 1.3, iw, ih),
+            "text": (0.5, 1.3 + DIAGRAM_IMG_H + 0.1, FD.BODY_W, DIAGRAM_TEXT_H),
+            "fits": diagram_text_fits(lines, pt)}
+
+
 def build(specs: list, out: Path) -> dict:
     from pptx import Presentation
     from pptx.util import Inches, Pt
@@ -528,8 +585,8 @@ def build(specs: list, out: Path) -> dict:
     prs.slide_width, prs.slide_height = Inches(FD.SLIDE_W), Inches(FD.SLIDE_H)
     report = {"slides": [], "splits": [], "overflow": []}
 
-    def textbox(slide, top, height, lines, pt, bold_first=False):
-        bb = slide.shapes.add_textbox(Inches(0.5), Inches(top), Inches(FD.BODY_W), Inches(height))
+    def textbox(slide, top, height, lines, pt, bold_first=False, left=0.5, width=FD.BODY_W):
+        bb = slide.shapes.add_textbox(Inches(left), Inches(top), Inches(width), Inches(height))
         bf = bb.text_frame
         bf.word_wrap = True
         for j, ln in enumerate(lines):
@@ -585,17 +642,17 @@ def build(specs: list, out: Path) -> dict:
             title_and_footer(slide, spec["title"], spec["sources"])
             from PIL import Image
             with Image.open(png) as im:
-                w, h = im.size
-            scale = min(FD.BODY_W / w, DIAGRAM_IMG_H / h)
-            iw, ih = w * scale, h * scale
-            slide.shapes.add_picture(str(png), Inches(0.5 + (FD.BODY_W - iw) / 2),
-                                     Inches(1.3), Inches(iw), Inches(ih))
-            if not diagram_text_fits(lines):
+                place = diagram_placement(im.size, lines)
+            il, it, iw, ih = place["img"]
+            slide.shapes.add_picture(str(png), Inches(il), Inches(it), Inches(iw), Inches(ih))
+            if not place["fits"]:
                 report["overflow"].append(spec["n"])
-            textbox(slide, 1.3 + DIAGRAM_IMG_H + 0.1, DIAGRAM_TEXT_H, lines, FD.FLOOR_PT)
+            tl, tt, tw, th = place["text"]
+            textbox(slide, tt, th, lines, FD.FLOOR_PT, left=tl, width=tw)
             report["slides"].append({"n": spec["n"], "title": spec["title"], "pt": FD.FLOOR_PT,
                                      "chapter": spec["chapter"], "kind": spec["kind"],
-                                     "diagram": png.name})
+                                     "diagram": png.name, "placement": place["mode"],
+                                     "scale": place["scale"]})
             continue
         if split:
             report["splits"].append({"slide": spec["n"], "parts": len(chunks), "pt": pt})
@@ -630,13 +687,38 @@ def reproducible_zip(data: bytes) -> bytes:
     return buf.getvalue()
 
 
+def slide_count(specs: list) -> int:
+    """Rendered slides for these specs, from the layout plan `build` follows."""
+    return sum(len(chunks) for _, _, _, chunks, _ in slide_plan(specs))
+
+
+def split_specs() -> tuple[list, list]:
+    """`(brief, appendix)` specs. The content file is read twice: once to plan the appendix,
+    whose rendered slide count the brief's closing `@stamp appendix` then states."""
+    src = CONTENT.read_text(encoding="utf-8")
+
+    def part(auth):
+        brief = [s for s in auth if s["chapter"] != APPENDIX_CHAPTER]
+        head = [s for s in auth if s["chapter"] == APPENDIX_CHAPTER]
+        if not head or auth[len(brief):] != head:
+            raise DeckError(f"FATAL: the {APPENDIX_CHAPTER} chapter must exist and be the "
+                            "content file's last")
+        return brief, head + generated(auth[-1]["n"] + 1)
+
+    _, appendix = part(authored(src, appendix_slides=0))
+    brief, appendix = part(authored(src, appendix_slides=slide_count(appendix)))
+    return brief, appendix
+
+
 def all_specs() -> list:
-    auth = authored(CONTENT.read_text(encoding="utf-8"))
-    return auth + generated(auth[-1]["n"] + 1 if auth else 1)
+    brief, appendix = split_specs()
+    return brief + appendix
 
 
-def render(out: Path) -> dict:
-    return build(all_specs(), out)
+def render(out: Path, appendix_out: Path) -> dict:
+    """`{"brief": report, "appendix": report}`, one per output file."""
+    brief, appendix = split_specs()
+    return {"brief": build(brief, out), "appendix": build(appendix, appendix_out)}
 
 
 def main(argv=None) -> int:
@@ -647,23 +729,34 @@ def main(argv=None) -> int:
     a = ap.parse_args(argv)
     if a.render_diagrams:
         return render_diagrams()
+    outputs = {"brief": DECK, "appendix": APPENDIX}
     if a.check:
+        ok = True
         with tempfile.TemporaryDirectory() as td:
-            tmp = Path(td) / "deck.pptx"
-            rep = render(tmp)
-            same = DECK.is_file() and DECK.read_bytes() == tmp.read_bytes()
-        print(f"{len(rep['slides'])} slides rendered; "
-              f"{'identical to' if same else 'DRIFT from'} {DECK.relative_to(REPO)}")
-        return 0 if same and not rep["overflow"] else 1
-    rep = render(DECK)
-    per = Counter(s["chapter"] for s in rep["slides"])
+            tmp = {k: Path(td) / v.name for k, v in outputs.items()}
+            rep = render(tmp["brief"], tmp["appendix"])
+            for k, real in outputs.items():
+                same = real.is_file() and real.read_bytes() == tmp[k].read_bytes()
+                ok = ok and same and not rep[k]["overflow"]
+                print(f"{len(rep[k]['slides'])} slides rendered; "
+                      f"{'identical to' if same else 'DRIFT from'} {real.relative_to(REPO)}")
+        return 0 if ok else 1
+    rep = render(DECK, APPENDIX)
     src_per = Counter(s["chapter"] for s in all_specs())
-    print(f"wrote {DECK.relative_to(REPO)}: {len(rep['slides'])} slides")
-    for ch in dict.fromkeys(s["chapter"] for s in rep["slides"]):
-        print(f"  {str(ch):>9}: {src_per[ch]:>3} sections -> {per[ch]:>3} slides")
-    print("splits:", rep["splits"] or "none")
-    if rep["overflow"]:
-        print("OVERFLOW on slides:", sorted(set(rep["overflow"])))
+    overflow = []
+    for k, real in outputs.items():
+        r = rep[k]
+        per = Counter(s["chapter"] for s in r["slides"])
+        print(f"wrote {real.relative_to(REPO)}: {len(r['slides'])} slides")
+        for ch in dict.fromkeys(s["chapter"] for s in r["slides"]):
+            print(f"  {str(ch):>9}: {src_per[ch]:>3} sections -> {per[ch]:>3} slides")
+        print("  splits:", r["splits"] or "none")
+        for s in r["slides"]:
+            if s.get("diagram"):
+                print(f"  diagram {s['diagram']}: {s['placement']}, scale {s['scale']:.5f} in/px")
+        overflow += r["overflow"]
+    if overflow:
+        print("OVERFLOW on slides:", sorted(set(overflow)))
         return 1
     return 0
 

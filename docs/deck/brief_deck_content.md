@@ -1,4 +1,4 @@
-<!-- authored by cc_tasks/2026-09-22_brief_deck_assembly.md from the brief pack at commit f14a3daf3addb1aa6f416490aa022d44c71d13da (docs/brief/, scripts/build_brief_pack.py); framework record at commit 9ffcffddbf8f (framework/ai_readiness_framework.json, generated_from docs/crosswalk/usafacts_operationalization_skeleton.md); cycle of record scan_2026-09-10_rj4. Rendered by scripts/build_brief_deck.py; the appendix is generated from the pack and is not in this file. -->
+<!-- authored by cc_tasks/2026-09-22_brief_deck_assembly.md, packaged by cc_tasks/2026-09-23_brief_deck_packaging.md, from the brief pack at commit ed2b3c20558887cca90f3dbd4a461f035a579d0b (docs/brief/, scripts/build_brief_pack.py); framework record at commit 9ffcffddbf8f (framework/ai_readiness_framework.json, generated_from docs/crosswalk/usafacts_operationalization_skeleton.md); cycle of record scan_2026-09-10_rj4. Rendered by scripts/build_brief_deck.py into two files, docs/deck/brief_deck.pptx (sections outside the Appendix chapter) and docs/deck/brief_appendix.pptx (the Appendix chapter and the appendix generated from the pack, which is not in this file). -->
 # The brief deck: authored slides
 
 Every line starting `> ` is a quotation the renderer finds in the slide's `source:` files or refuses to build. Every `@` line is pack content copied onto the slide by the renderer. Every other numeral must be on `docs/brief/numbers.json` under a `source:` page.
@@ -85,133 +85,83 @@ source: B_usafacts_delta.md
 
 ---
 
-## Slide 9 — Feedback to USAFacts: decomposition with receipts
+## Slide 9 — Feedback to USAFacts, item by item
 
 source: B_usafacts_delta.md
 > 1. **Decomposition with receipts** — four criteria → ~30 indicators, each carrying literature provenance through the KG rather than assertion.
 
----
-
-## Slide 10 — Feedback to USAFacts: "Understandable" needs the FCSM extension
-
-source: B_usafacts_delta.md
 > 2. **"Understandable" needs the FCSM extension** — machine-understandable (semantics, definitions, variable-level metadata), not just parseable; their current text under-specifies this.
 
----
-
-## Slide 11 — Feedback to USAFacts: the accuracy evaluations, instantiated
-
-source: B_usafacts_delta.md
 > 3. **The accuracy evaluations they call for, instantiated** — a runnable harness (retrieval-grounded QA + entailment judging) rather than a principle.
 
----
-
-## Slide 12 — Feedback to USAFacts: a measurable visibility layer
-
-source: B_usafacts_delta.md
 > 4. **A measurable visibility layer** — GEO/llms.txt/Dataset-markup checks make "AI-optimization" auditable instead of vibes.
 
----
-
-## Slide 13 — Feedback to USAFacts: ACCURATE becomes a closed TEVV loop
-
-source: B_usafacts_delta.md
 > 5. **ACCURATE becomes a closed TEVV loop (§5b)** — verification/validation split, pre-registered thresholds, versioned instruments, contamination policy, positive controls, failure attribution, corrective-action closure. This is the operator's delivered feedback, now with an indicator set and NIST AI RMF framing behind it.
 
----
-
-## Slide 14 — Feedback to USAFacts: statistical-standards correction
-
-source: B_usafacts_delta.md
 > 6. **Statistical-standards correction** — SDMX/DDI/DCAT where the guide says NIEM.
 
----
-
-## Slide 15 — Feedback to USAFacts: publication is a deploy
-
-source: B_usafacts_delta.md
 > 7. **Publication is a deploy (§5c)** — the CI/CD feedback operationalized: pre-release gates, contract stability, vintage regression, staged rollout, signed releases.
 
----
-
-## Slide 16 — Feedback to USAFacts: uncertainty legibility
-
-source: B_usafacts_delta.md
 > 8. **Uncertainty legibility (§5d G1)** — in their guide, error and noise appear only as privacy safeguards (DP, suppression); no framework treats uncertainty as something the AI consumer must *preserve*. G1 supplies that: structured error measures (G1-D) plus an eval of whether AI restatements keep them (G1-O).
 
----
-
-## Slide 17 — Feedback to USAFacts: machine as first-class user
-
-source: B_usafacts_delta.md
 > 9. **Machine as first-class user (§1b)** — delivered feedback, grounded in FAIR rather than prediction: machine-actionability as primary design target, human surface derived; A9 makes it auditable.
 
----
-
-## Slide 18 — Feedback to USAFacts: protocol as contract
-
-source: B_usafacts_delta.md
 > 10. **Protocol as contract (§5d G6)** — delivered feedback: measurement-protocol epochs with machine-readable breaks and reasons; SDMX + ODCS give it standards footing.
 
----
-
-## Slide 19 — Feedback to USAFacts: red teaming
-
-source: B_usafacts_delta.md
 > 11. **Red teaming (§5b E9)** — delivered feedback: the framework tests what works; it must also enumerate how products break, with a standing adversarial bank.
 
 ---
 
-## Slide 20 — Indicators: A ACCESSIBLE
+## Slide 10 — Indicators: A ACCESSIBLE
 
 source: B_usafacts_delta.csv
 @csv B_usafacts_delta.csv | cols=code,construct,measurement_tier,rule,mark,kept_verbatim_or_restated | where=criterion=A
 
 ---
 
-## Slide 21 — Indicators: B UNDERSTANDABLE
+## Slide 11 — Indicators: B UNDERSTANDABLE
 
 source: B_usafacts_delta.csv
 @csv B_usafacts_delta.csv | cols=code,construct,measurement_tier,rule,mark,kept_verbatim_or_restated | where=criterion=B
 
 ---
 
-## Slide 22 — Indicators: C ACCURATE
+## Slide 12 — Indicators: C ACCURATE
 
 source: B_usafacts_delta.csv
 @csv B_usafacts_delta.csv | cols=code,construct,measurement_tier,rule,mark,kept_verbatim_or_restated | where=criterion=C
 
 ---
 
-## Slide 23 — Indicators: D OPEN
+## Slide 13 — Indicators: D OPEN
 
 source: B_usafacts_delta.csv
 @csv B_usafacts_delta.csv | cols=code,construct,measurement_tier,rule,mark,kept_verbatim_or_restated | where=criterion=D
 
 ---
 
-## Slide 24 — Indicators: E TEVV loop (added)
+## Slide 14 — Indicators: E TEVV loop (added)
 
 source: B_usafacts_delta.csv
 @csv B_usafacts_delta.csv | cols=code,construct,measurement_tier,rule,mark,kept_verbatim_or_restated | where=criterion=E
 
 ---
 
-## Slide 25 — Indicators: F release engineering (added)
+## Slide 15 — Indicators: F release engineering (added)
 
 source: B_usafacts_delta.csv
 @csv B_usafacts_delta.csv | cols=code,construct,measurement_tier,rule,mark,kept_verbatim_or_restated | where=criterion=F
 
 ---
 
-## Slide 26 — Indicators: G FSS-derived constructs (added)
+## Slide 16 — Indicators: G FSS-derived constructs (added)
 
 source: B_usafacts_delta.csv
 @csv B_usafacts_delta.csv | cols=code,construct,measurement_tier,rule,mark,kept_verbatim_or_restated | where=criterion=G
 
 ---
 
-## Slide 27 — C · Provenance
+## Slide 17 — C · Provenance
 
 chapter: C
 source: C_provenance.md, C_provenance.csv
@@ -219,7 +169,7 @@ source: C_provenance.md, C_provenance.csv
 
 ---
 
-## Slide 28 — Coverage, stated first
+## Slide 18 — Coverage, stated first
 
 source: C_provenance.md
 > **Coverage, stated first.** 9 of 49 indicator evidence cells carry a pinpoint locator for at least one cited document. The test is `scripts/report_traceability.py::locators`, the same one the report's Locator column prints: a backticked doc id followed by a parenthetical. 27 of 147 `EVIDENCED_BY` edges point at a document the cell locates. 16 indicators have no `EVIDENCED_BY` edge at all. The rest cite their sources as general support, with no place inside the source.
@@ -230,7 +180,7 @@ source: C_provenance.md
 
 ---
 
-## Slide 29 — Corpus documents per type: admitted and cited
+## Slide 19 — Corpus documents per type: admitted and cited
 
 source: C_provenance.md
 @table C_provenance.md | Corpus documents per type
@@ -241,7 +191,7 @@ source: C_provenance.md
 
 ---
 
-## Slide 30 — The policy-instrument map
+## Slide 20 — The policy-instrument map
 
 source: C_provenance.md
 @table C_provenance.md | Federal policy instruments | cols=instrument,admitted documents,by edge,by text only
@@ -250,7 +200,7 @@ source: C_provenance.md
 
 ---
 
-## Slide 31 — Per-indicator provenance
+## Slide 21 — Per-indicator provenance
 
 source: C_provenance.md, C_provenance.csv
 > One row per `EVIDENCED_BY` edge, in `C_provenance.csv` as well. Internal references (`EVIDENCED_BY_INTERNAL`) are listed after the table.
@@ -259,7 +209,7 @@ source: C_provenance.md, C_provenance.csv
 
 ---
 
-## Slide 32 — D · Using it: the offline demo
+## Slide 22 — D · Using it: the offline demo
 
 chapter: D
 source: D_demo_runbook.md, D_demo_capture.json
@@ -267,7 +217,7 @@ source: D_demo_runbook.md, D_demo_capture.json
 
 ---
 
-## Slide 33 — How the demo was run
+## Slide 23 — How the demo was run
 
 source: D_demo_runbook.md
 > Each command is copied from a file that already documents it. The source file and the exact source text are named under each step, and so is any substitution. Every command was executed once, by `scripts/build_brief_pack.py --capture-demo` at commit `d330014dbfe8`, and the lines it printed are pasted under it: the first lines, then the last lines when there were more. A command that failed is left in with its failure and a note.
@@ -276,7 +226,7 @@ source: D_demo_runbook.md
 
 ---
 
-## Slide 34 — Neo4j is up and the framework projection is current
+## Slide 24 — Neo4j is up and the framework projection is current
 
 source: D_demo_runbook.md, D_demo_capture.json
 > Source: `CLAUDE.md`, which documents `python -m pytest tests/test_framework_projection_roundtrip.py`.
@@ -284,7 +234,7 @@ source: D_demo_runbook.md, D_demo_capture.json
 
 ---
 
-## Slide 35 — Orient: seldon go
+## Slide 25 — Orient: seldon go
 
 source: D_demo_runbook.md, D_demo_capture.json
 > Source: `CLAUDE.md`, which documents `seldon go --brief`.
@@ -292,7 +242,7 @@ source: D_demo_runbook.md, D_demo_capture.json
 
 ---
 
-## Slide 36 — Open the report
+## Slide 26 — Open the report
 
 source: D_demo_runbook.md, D_demo_capture.json
 > Substitution: the project's published report in place of an adopter run's; the PDF beside it is `docs/reports/2026-09_fss_ai_readiness_L0.pdf`.
@@ -300,7 +250,7 @@ source: D_demo_runbook.md, D_demo_capture.json
 
 ---
 
-## Slide 37 — Score one body
+## Slide 27 — Score one body
 
 source: D_demo_runbook.md, D_demo_capture.json
 > Source: `scripts/score.py`, which documents `scripts/score.py --body NCHS`.
@@ -308,7 +258,7 @@ source: D_demo_runbook.md, D_demo_capture.json
 
 ---
 
-## Slide 38 — MCP verb get_body, in-process
+## Slide 28 — MCP verb get_body, in-process
 
 source: D_demo_runbook.md, D_demo_capture.json
 > Substitution: `run=` dropped (the project's published tree), MYSITE -> CENSUS.
@@ -316,7 +266,7 @@ source: D_demo_runbook.md, D_demo_capture.json
 
 ---
 
-## Slide 39 — MCP verb get_prescriptions, in-process
+## Slide 29 — MCP verb get_prescriptions, in-process
 
 source: D_demo_runbook.md, D_demo_capture.json
 > Substitution: the same template, verb `get_prescriptions(body="CENSUS")`, printing the failing legs and the first five actions.
@@ -324,7 +274,7 @@ source: D_demo_runbook.md, D_demo_capture.json
 
 ---
 
-## Slide 40 — MCP verb get_requirements, in-process
+## Slide 30 — MCP verb get_requirements, in-process
 
 source: D_demo_runbook.md, D_demo_capture.json
 > Substitution: the same template, verb `get_requirements(body="CENSUS")`.
@@ -332,7 +282,7 @@ source: D_demo_runbook.md, D_demo_capture.json
 
 ---
 
-## Slide 41 — Start the MCP server (stdio)
+## Slide 31 — Start the MCP server (stdio)
 
 source: D_demo_runbook.md, D_demo_capture.json
 > Substitution: stdin closed, so the stdio server sees end-of-input at once; in a demo the client (Claude Desktop) holds stdin open.
@@ -340,7 +290,7 @@ source: D_demo_runbook.md, D_demo_capture.json
 
 ---
 
-## Slide 42 — Request a live spot scan of one body (render only)
+## Slide 32 — Request a live spot scan of one body (render only)
 
 source: D_demo_runbook.md, D_demo_capture.json
 > Substitution: BEA -> CENSUS; without `--write`, so no task file is created and no host is contacted.
@@ -348,7 +298,7 @@ source: D_demo_runbook.md, D_demo_capture.json
 
 ---
 
-## Slide 43 — A spot scan end to end against the loopback fixtures
+## Slide 33 — A spot scan end to end against the loopback fixtures
 
 source: D_demo_runbook.md, D_demo_capture.json
 > Substitution: this machine's interpreter; `-q`. Every URL is 127.0.0.1; no federal host.
@@ -356,7 +306,7 @@ source: D_demo_runbook.md, D_demo_capture.json
 
 ---
 
-## Slide 44 — How a second agency runs it: the adopter runbook, executed
+## Slide 34 — How a second agency runs it: the adopter runbook, executed
 
 source: D_demo_runbook.md, D_demo_capture.json
 > Substitution: none; the test runs every bash block of the adopter page in a scratch copy of the tree against a loopback "site".
@@ -364,7 +314,7 @@ source: D_demo_runbook.md, D_demo_capture.json
 
 ---
 
-## Slide 45 — E · Architecture
+## Slide 35 — E · Architecture
 
 chapter: E
 source: E_architecture.md
@@ -372,7 +322,7 @@ source: E_architecture.md
 
 ---
 
-## Slide 46 — Operational view: from an agency site to a published verdict
+## Slide 36 — Operational view: from an agency site to a published verdict
 
 source: E_architecture.md
 @diagram a
@@ -380,7 +330,7 @@ source: E_architecture.md
 
 ---
 
-## Slide 47 — Systems view: processes, stores and the one owner of each layer
+## Slide 37 — Systems view: processes, stores and the one owner of each layer
 
 source: E_architecture.md
 @diagram b
@@ -388,7 +338,7 @@ source: E_architecture.md
 
 ---
 
-## Slide 48 — Data flow for one verdict: CENSUS, worked from the cycle of record
+## Slide 38 — Data flow for one verdict: CENSUS, worked from the cycle of record
 
 source: E_architecture.md
 @diagram c
@@ -396,7 +346,7 @@ source: E_architecture.md
 
 ---
 
-## Slide 49 — Judgement generations: re-judgement without re-fetch
+## Slide 39 — Judgement generations: re-judgement without re-fetch
 
 source: E_architecture.md
 @diagram d
@@ -404,7 +354,7 @@ source: E_architecture.md
 
 ---
 
-## Slide 50 — F · Results
+## Slide 40 — F · Results
 
 chapter: F
 source: F_results_pointer.md
@@ -412,14 +362,14 @@ source: F_results_pointer.md
 
 ---
 
-## Slide 51 — Where the results live
+## Slide 41 — Where the results live
 
 source: F_results_pointer.md
 @table F_results_pointer.md | F. Where the results live
 
 ---
 
-## Slide 52 — Headline Results, by name and id
+## Slide 42 — Headline Results, by name and id
 
 source: F_results_pointer.md
 > The headline Results are the ones the report's opening section quotes (`docs/reports/sections/10_frame.md`, 8 names), each looked up on the Seldon graph by name.
@@ -427,7 +377,7 @@ source: F_results_pointer.md
 
 ---
 
-## Slide 53 — G · Census dogfood
+## Slide 43 — G · Census dogfood
 
 chapter: G
 source: G_census_dogfood.md
@@ -435,7 +385,7 @@ source: G_census_dogfood.md
 
 ---
 
-## Slide 54 — census.gov on the cycle of record
+## Slide 44 — census.gov on the cycle of record
 
 source: G_census_dogfood.md
 > `get_body` summary: 34 failing of 39 judged on scan_2026-09-10_rj4; 16 bodies are on this cycle. CENSUS ranks 5 of 13 (hierarchical), and it rests on one pass: 1 pass of 1 judged row on A10; were that leg's verdicts reversed it would rank 9.
@@ -444,7 +394,7 @@ source: G_census_dogfood.md
 
 ---
 
-## Slide 55 — The one-leg-criterion caveat
+## Slide 45 — The one-leg-criterion caveat
 
 source: G_census_dogfood.md
 > **The one-leg-criterion caveat.** The rank rests on a single leg: `A10` (1 pass of 1 judged). Were that verdict reversed, the body would rank 9.
@@ -455,7 +405,7 @@ source: G_census_dogfood.md
 
 ---
 
-## Slide 56 — Every judged leg
+## Slide 46 — Every judged leg
 
 source: G_census_dogfood.md
 > One row per judged cell: its surface, verdict and reason, and the Finding and rule behind it. From `get_body` against the projection.
@@ -463,7 +413,7 @@ source: G_census_dogfood.md
 
 ---
 
-## Slide 57 — What to do first: prescriptions, ranked
+## Slide 47 — What to do first: prescriptions, ranked
 
 source: G_census_dogfood.md
 > Actions on the body's failing legs are ordered cheapest effort band first, then by how much each would add to the score. The bands are notional (page H). `delta` is an upper bound: it assumes every failing row on that leg passes.
@@ -471,7 +421,7 @@ source: G_census_dogfood.md
 
 ---
 
-## Slide 58 — H · Limits and roadmap
+## Slide 48 — H · Limits and roadmap
 
 chapter: H
 source: H_limits.md
@@ -479,7 +429,7 @@ source: H_limits.md
 
 ---
 
-## Slide 59 — Measurement tiers and status
+## Slide 49 — Measurement tiers and status
 
 source: H_limits.md
 @table H_limits.md | Measurement tiers
@@ -489,7 +439,7 @@ source: H_limits.md
 
 ---
 
-## Slide 60 — Indicators the record does not mark measured, and why
+## Slide 50 — Indicators the record does not mark measured, and why
 
 source: H_limits.md
 > Where it says `yes`, the record's `measurement_status` lags the cycle, which judges the leg anyway. That is a recorded discrepancy, and this page does not correct it.
@@ -497,7 +447,7 @@ source: H_limits.md
 
 ---
 
-## Slide 61 — Evidence locators, and equal weights
+## Slide 51 — Evidence locators, and equal weights
 
 source: H_limits.md
 > 9 of 49 evidence cells carry a pinpoint locator (page C). ResearchTask `93d28c6e` holds the rest, and it is not scheduled.
@@ -506,14 +456,14 @@ source: H_limits.md
 
 ---
 
-## Slide 62 — Every rank rests on one leg
+## Slide 52 — Every rank rests on one leg
 
 source: H_limits.md
 @table H_limits.md | Equal weights | cols=body,leg,sentence (score.py)
 
 ---
 
-## Slide 63 — Roadmap items already on the graph
+## Slide 53 — Roadmap items already on the graph
 
 source: H_limits.md
 - `bb46ddb5` (proposed):
@@ -524,7 +474,24 @@ source: H_limits.md
 
 ---
 
-## Slide 64 — Appendix
+## Slide 54 — The appendix, in its own file
+
+chapter: Close
+- The indicator sheets, the rule groups and the corpus summary are in a second file, generated from the same pack:
+@stamp appendix
+
+---
+
+## Slide 55 — Appendix cover
+
+chapter: Appendix
+layout: cover
+The brief deck: appendix
+@stamp
+
+---
+
+## Slide 56 — Appendix
 
 chapter: Appendix
 source: appendix/rules.md
