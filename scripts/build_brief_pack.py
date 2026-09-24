@@ -87,6 +87,20 @@ USAFACTS_DOCS = ("usafacts-ai-ready-data-guide", "usafacts-fde-standards-detaile
 #: The record fields tested, in order: the construct first, then the indicator text.
 VERBATIM_FIELDS = ("construct", "indicator")
 
+#: What the USAFacts guide says of itself, quoted on page B after "USAFacts names four
+#: criteria" (`cc_tasks/2026-09-24_brief_narrative_v3.md` decision 1). The two sentences are the
+#: ones `cc_tasks/2026-09-23_brief_narrative_v2_RESULT.md` §4 found reading the guide. They are
+#: typed here, so the render refuses any that does not ground in the guide's text under
+#: `grounding.normalize`, and the PDF page each is cited to is measured, never typed.
+GUIDE_SELF_DOC = "usafacts-ai-ready-data-guide"
+GUIDE_SELF_QUOTES = (
+    "As government continues to evolve its role as a data provider to AI systems, these "
+    "criteria should provide a roadmap for allowing AI to not only access, but also understand "
+    "and validate the data they are retrieving and presenting to users.",
+    "USAFacts stands ready to collaborate with federal, state, and local agencies as well as "
+    "industry leaders to establish best practices for AI-ready open data.",
+)
+
 #: Federal policy instruments the brief asks provenance against (task decision 3). Each is a
 #: regex over a manifest entry's doc_id and title, and over an indicator's evidence cell. The
 #: patterns are the instrument's own names; a pattern that matches no admitted document is
@@ -188,6 +202,27 @@ class Sources:
                 if is_grounded(props.get(field) or "", self.usafacts[d]):
                     return f"verbatim ({d})"
         return "restated"
+
+    def guide_self_quotes(self) -> list:
+        """`[(sentence, pdf_page)]` for `GUIDE_SELF_QUOTES`. Each sentence must ground in the
+        guide's text as the extractor reads it, and in exactly one page of the PDF's text
+        layer, which is the page it is cited to; anything else stops the render."""
+        from kg.extraction.grounding import is_grounded
+        from pypdf import PdfReader
+        path = REPO / self.manifest[GUIDE_SELF_DOC]["identity"]["canonical_path"]
+        if path.suffix.lower() != ".pdf":
+            raise SystemExit(f"FATAL: {rel(path)} is not a PDF; a PDF page cannot be cited")
+        pages = [p.extract_text() or "" for p in PdfReader(str(path)).pages]
+        out = []
+        for q in GUIDE_SELF_QUOTES:
+            if not is_grounded(q, self.usafacts[GUIDE_SELF_DOC]):
+                raise SystemExit(f"FATAL: quotation does not ground in {GUIDE_SELF_DOC}: {q!r}")
+            hits = [i + 1 for i, t in enumerate(pages) if is_grounded(q, t)]
+            if len(hits) != 1:
+                raise SystemExit(f"FATAL: quotation grounds on PDF pages {hits} of "
+                                 f"{GUIDE_SELF_DOC}, not exactly one: {q!r}")
+            out.append((q, hits[0]))
+        return out
 
     @property
     def tools(self):
@@ -451,6 +486,16 @@ def page_b(s: Sources) -> tuple:
            "",
            f"> {q1.strip()}",
            "",
+           "### What the guide says of itself",
+           "",
+           "Quoted from the guide's text as the extractor reads it; each sentence grounds "
+           "verbatim under `kg/extraction/grounding.py` normalization, and the page is the PDF "
+           "page whose text layer holds it.",
+           "")
+    for q, page in s.guide_self_quotes():
+        pg.add(f"> {q} (`{GUIDE_SELF_DOC}`, PDF p. {page})", ">")
+    pg.lines.pop()
+    pg.add("",
            "An indicator whose record `status` is `candidate` is marked that way instead. No "
            "indicator in the record has a status of withdrawn or dropped. The record cannot "
            "tell an indicator kept verbatim from USAFacts' text apart from one restated, so no "

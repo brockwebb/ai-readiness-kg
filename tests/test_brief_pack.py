@@ -227,3 +227,23 @@ def test_the_verbatim_test_sees_a_quoted_string():
                    "indicator": "qq nor this qq"}) == "restated"
     assert s.kept({"criterion_code": "E", "construct": probe, "indicator": ""}) == \
         "n/a (added criterion)"
+
+
+def test_the_guides_words_for_itself_ground_on_the_page_they_are_cited_to(monkeypatch):
+    """`cc_tasks/2026-09-24_brief_narrative_v3.md` decision 1: page B quotes the guide's own
+    description of itself. Re-derived here with `grounding.is_grounded` and the PDF's text
+    layer, so a quotation that stopped grounding, or a page number that moved, fails."""
+    from pypdf import PdfReader
+    from kg.extraction.grounding import is_grounded
+    s = B.Sources(None)
+    path = REPO / s.manifest[B.GUIDE_SELF_DOC]["identity"]["canonical_path"]
+    pages = [p.extract_text() or "" for p in PdfReader(str(path)).pages]
+    page_b = (OUT / "B_usafacts_delta.md").read_text(encoding="utf-8")
+    assert len(B.GUIDE_SELF_QUOTES) == 2
+    for q in B.GUIDE_SELF_QUOTES:
+        assert is_grounded(q, s.usafacts[B.GUIDE_SELF_DOC]), q
+        (n,) = [i + 1 for i, t in enumerate(pages) if is_grounded(q, t)]
+        assert f"> {q} (`{B.GUIDE_SELF_DOC}`, PDF p. {n})" in page_b, q
+    monkeypatch.setattr(B, "GUIDE_SELF_QUOTES", ("USAFacts rejects every criterion it names.",))
+    with pytest.raises(SystemExit, match="does not ground"):
+        s.guide_self_quotes()

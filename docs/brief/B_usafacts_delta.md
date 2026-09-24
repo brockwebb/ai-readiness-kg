@@ -11,6 +11,14 @@ The framework record has no `origin` field, so no mark on this page is read off 
 
 > USAFacts names four criteria and argues for pairing LLMs with retrieval and holding results to accuracy evaluations. It does not give an agency a test. This instrument decomposes each criterion into:
 
+### What the guide says of itself
+
+Quoted from the guide's text as the extractor reads it; each sentence grounds verbatim under `kg/extraction/grounding.py` normalization, and the page is the PDF page whose text layer holds it.
+
+> As government continues to evolve its role as a data provider to AI systems, these criteria should provide a roadmap for allowing AI to not only access, but also understand and validate the data they are retrieving and presenting to users. (`usafacts-ai-ready-data-guide`, PDF p. 2)
+>
+> USAFacts stands ready to collaborate with federal, state, and local agencies as well as industry leaders to establish best practices for AI-ready open data. (`usafacts-ai-ready-data-guide`, PDF p. 5)
+
 An indicator whose record `status` is `candidate` is marked that way instead. No indicator in the record has a status of withdrawn or dropped. The record cannot tell an indicator kept verbatim from USAFacts' text apart from one restated, so no mark says either. The `kept_verbatim_or_restated` column is measured against the admitted USAFacts documents (`usafacts-ai-ready-data-guide`, `usafacts-fde-standards-detailed`, `usafacts-fde-standards-quick-reference`): an indicator of criteria A to D is `verbatim (<doc_id>)` when its `construct`, else its `indicator`, string grounds verbatim in one of them under `kg/extraction/grounding.py` normalization, `restated` when neither grounds in any, and an indicator of criteria E, F and G is `n/a (added criterion)`; 0 are verbatim, 27 restated and 22 n/a.
 
 Of 49 indicator nodes, 24 have a current rule in the registry. 5 carry a departure quote, either from skeleton §8 (items that name the indicator's code) or from a record property that records a restatement or a withdrawal.
