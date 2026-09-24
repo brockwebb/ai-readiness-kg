@@ -1,7 +1,7 @@
 <!-- authored by cc_tasks/2026-09-23_brief_narrative.md at commit 80ac5f6a4beef31e28e9c3e135f2a587fab87e4b (§Narrative, verbatim; numeral corrections, if any, listed in cc_tasks/2026-09-23_brief_narrative_RESULT.md); framework record at commit 9ffcffddbf8f (framework/ai_readiness_framework.json, generated_from docs/crosswalk/usafacts_operationalization_skeleton.md); cycle of record scan_2026-09-10_rj4. Projected by scripts/build_brief_deck.py into chapter 0 of docs/deck/brief_deck.pptx: the title section is one slide, every ## section one slide, bullets on the slide, paragraphs in the speaker notes. -->
 # What a machine sees when it reads federal statistics
 
-USAFacts published a framework to help government agencies decide how to make their data ready for AI. This brief describes what it took to run that framework as a measurement: 49 indicators written as tests, 24 of them with a rule that runs today, three criteria the framework needed and did not have, a corpus of 264 admitted documents behind the indicators, and a graph that ties every result to an action an agency can take. The measurement was run against the federal statistical bodies on one scan cycle, 16 on the cycle and 13 ranked, and census.gov is the first body to read its own result. This paper makes the case in the order of the argument; the chapters that follow hold the record in the order of the framework.
+USAFacts published a framework to help government agencies decide how to make their data ready for AI. This brief describes what it took to run that framework as a measurement: 49 indicators written as tests, 24 of them with a current rule in the registry, three criteria the framework needed and did not have, a corpus of 264 admitted documents behind the indicators, and a graph that ties every result to an action an agency can take. The measurement was run against the federal statistical bodies on one scan cycle, 16 on the cycle and 13 ranked, and census.gov is the first body to read its own result. This paper makes the case in the order of the argument; the chapters that follow hold the record in the order of the framework.
 
 ## USAFacts built the framework; running it needed tests
 
@@ -63,9 +63,9 @@ The cohort result is deliberately not a league table. With equal weights and spa
 
 ## What it cannot yet see
 
-- 16 of 48 framework indicators are measured; 8 have a harness built; 24 are specified only [H].
+- Of the 48 indicators in the framework record, 16 are measured, 8 have a harness built and 24 are specified only; the record's 49th indicator node, A12, is a candidate whose promotion is an operator decision [H].
 - 3 indicators are unassigned to a measurement tier, each with the reason the record gives [H].
-- The evaluation criteria, C and E, are largely unmeasured: they need benchmark sets this project has not built [G].
+- Two criteria, C accurate and E the TEVV loop, are largely unmeasured: the requirements table says what would unlock them, and it is benchmark sets this project has not built and agency records the publisher holds [G].
 
 The limits page lists every indicator the record does not mark measured, with the record's own reason where it has one [H]. Several reasons say the same thing: what is missing is a standard to test against, not a tool or a grant. The requirements table on the Census page names what would unlock each unmeasured test and who would provide it, from an open-source parser to a publisher's edge logs [G]. Two roadmap items are already on the graph: session-spend estimation, and a bake-off against the National Secure Data Service's AI-readiness tools when their access is known [H].
 

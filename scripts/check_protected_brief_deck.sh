@@ -1,33 +1,34 @@
 #!/usr/bin/env bash
 . "$(dirname "$0")/check_protected_lib.sh"
-# The write set of `cc_tasks/2026-09-24_brief_narrative_v3.md`, asserted against the commit the
+# The write set of `cc_tasks/2026-09-24_brief_narrative_v4.md`, asserted against the commit the
 # task was launched on. (Earlier tasks' checks, `2026-09-22_brief_deck_assembly` against `a3756e3`,
 # `2026-09-23_brief_deck_packaging` against `5ed4eac`, `2026-09-23_brief_narrative` against
-# `996d8f0` and `2026-09-23_brief_narrative_v2` against `3f0d0e7`, are in git history.)
+# `996d8f0`, `2026-09-23_brief_narrative_v2` against `3f0d0e7` and `2026-09-24_brief_narrative_v3`
+# against `a4fa402`, are in git history.)
 #
-#   "**Write set:** `scripts/build_brief_pack.py` (decision 1 only), `docs/brief/B_usafacts_delta.md`
-#    and `numbers.json` if a count changes (via the generator only), `docs/deck/brief_narrative.md`
-#    (decision 2 only), `docs/deck/brief_deck.pptx`, `tests/test_brief_deck.py`,
-#    `tests/test_brief_pack.py` (a test that the two quotations ground),
-#    `scripts/check_protected_brief_deck.sh` (base moves to this launch commit; narrative diff base
-#    is `73a3c91` plus decision 2), the RESULT. Byte-identical: every other file under `docs/brief/`
-#    and `docs/deck/`, `build_brief_deck.py`, and every directory the earlier deck tasks listed."
+#   "**Write set:** `scripts/build_brief_pack.py` (decisions 1 and 2), `docs/brief/B_usafacts_delta.md`,
+#    `docs/brief/H_limits.md`, `docs/brief/numbers.json` (via the generator only),
+#    `docs/deck/brief_narrative.md` (decision 3 only), `docs/deck/brief_deck.pptx`,
+#    `docs/deck/brief_appendix.pptx` and line 1 of `brief_deck_content.md` (pack-commit stamp only,
+#    as v3 RESULT §5.1 established), `tests/test_brief_pack.py` (the reconciliation sentence's
+#    counts match the record), `scripts/check_protected_brief_deck.sh` (base moves to this launch
+#    commit; narrative diff base is `d2b2d5b` plus decision 3), the RESULT. Byte-identical: every
+#    other file under `docs/brief/` and `docs/deck/`, `build_brief_deck.py`, `tests/test_brief_deck.py`
+#    unless a count assertion must move, and every directory the earlier deck tasks listed."
 #
-# Two files the task lists byte-identical move, and only by the pack commit they stamp (RESULT §5):
-# committing page B moves the last commit that wrote `docs/brief/`, which the appendix's cover
-# prints, and which line 1 of `brief_deck_content.md` must name for
-# `test_the_content_file_names_the_pack_it_was_built_from`. §3 below allows exactly that and no more.
+# The appendix and the content file move only by the pack commit they stamp; §3 below allows
+# exactly that and no more.
 #
-# BASE is the dispatcher's `dispatch_launched` record commit for this task (`087adf78`), the last
+# BASE is the dispatcher's `dispatch_launched` record commit for this task (`d7631a51`), the last
 # commit before the task wrote anything. Override with BASE=<rev> to re-run it later.
 set -u
 cd "$(dirname "$0")/.." || exit 2
 fail=0
 PY=/opt/anaconda3/bin/python3
-TASK_STEM=2026-09-24_brief_narrative_v3
-BASE=${BASE:-a4fa402}
-# The narrative decision 2 edits, sentence by sentence.
-NARRATIVE_BASE=73a3c91
+TASK_STEM=2026-09-24_brief_narrative_v4
+BASE=${BASE:-f26d889}
+# The narrative decision 3 edits, sentence by sentence.
+NARRATIVE_BASE=d2b2d5b
 
 changed_and_new() {
   { git diff --name-only "$BASE" -- "$@"; git ls-files --others --exclude-standard -- "$@"; } \
@@ -35,7 +36,7 @@ changed_and_new() {
 }
 
 # 1. Untouched outright: the task's byte-identical list, plus every other store of record.
-for p in 'docs/deck/diagrams/' 'scripts/build_brief_deck.py' \
+for p in 'docs/deck/diagrams/' 'scripts/build_brief_deck.py' 'tests/test_brief_deck.py' \
          'framework/' 'state/' 'events/' 'docs/reports/' 'docs/data/' 'docs/crosswalk/' \
          'assessment/' 'corpus/' 'mcp/' 'CITATION.cff' '.zenodo.json' 'kg/' 'controls.yaml' \
          'dixie_evidence.yaml' 'seldon.yaml' 'Makefile' 'CLAUDE.md' 'LICENSE' 'LICENSE-DATA'; do
@@ -49,10 +50,10 @@ done
 while read -r f; do
   [ -z "$f" ] && continue
   case "$f" in
-    scripts/build_brief_pack.py|docs/brief/B_usafacts_delta.md|docs/brief/numbers.json|\
-    docs/deck/brief_narrative.md|docs/deck/brief_deck.pptx|\
+    scripts/build_brief_pack.py|docs/brief/B_usafacts_delta.md|docs/brief/H_limits.md|\
+    docs/brief/numbers.json|docs/deck/brief_narrative.md|docs/deck/brief_deck.pptx|\
     docs/deck/brief_appendix.pptx|docs/deck/brief_deck_content.md|\
-    tests/test_brief_deck.py|tests/test_brief_pack.py|scripts/check_protected_brief_deck.sh|\
+    tests/test_brief_pack.py|scripts/check_protected_brief_deck.sh|\
     seldon_events.jsonl|"cc_tasks/${TASK_STEM}_RESULT.md") ;;
     *) echo "FAIL moved outside the write set: $f"; fail=1 ;;
   esac
@@ -86,53 +87,39 @@ if moved:
 PYEOF
 then fail=1; fi
 
-# 4. The narrative is `NARRATIVE_BASE`'s with decision 2's sentence edits applied, each exactly
-#    once. G's label is page B's ("FSS-derived constructs"), not the task's wording, per decision
-#    2's last paragraph. Any line this diff prints is a deviation the RESULT must list.
+# 4. The narrative is `NARRATIVE_BASE`'s with decision 3's sentence edits applied, each exactly
+#    once, in the wording that landed. Two depart from the task's text so the gates pass (RESULT
+#    §3): bullet 1's last clause follows page H's new sentence, and bullet 3 opens "Two criteria,"
+#    (the label gate reads "C accurate and E the TEVV loop are largely unmeasured" as E's label)
+#    and says what page G's requirements table says C and E need. Any line this diff prints is a
+#    deviation the RESULT must list.
 expected=$(mktemp); trap 'rm -f "$expected"' EXIT
 if ! $PY - "$NARRATIVE_BASE" > "$expected" <<'PYEOF'
 import subprocess, sys
 t = subprocess.run(["git", "show", f"{sys.argv[1]}:docs/deck/brief_narrative.md"], check=True,
                    capture_output=True, text=True).stdout
-quote = ("> As government continues to evolve its role as a data provider to AI systems, these "
-         "criteria should provide a roadmap for allowing AI to not only access, but also "
-         "understand and validate the data they are retrieving and presenting to users. [B]")
 edits = [
-    ("a test for each of 49 indicators, three criteria the framework needed and did not have,",
-     "49 indicators written as tests, 24 of them with a rule that runs today, three criteria the "
-     "framework needed and did not have,"),
-    ("USAFacts' guide gives agencies 7 criteria [G] for AI-ready data, written for the people who "
-     "decide what to publish [B].",
-     "USAFacts' guide gives agencies four criteria for AI-ready data, accessible, understandable, "
-     "accurate and open, written for the people who decide what to publish [B]."),
-    ("Four of the criteria, A through D, describe the public surface a publisher controls: "
-     "accessible, documented, licensed and cataloged.",
-     "The guide calls itself a roadmap, and its four criteria, A through D, are accessible, "
-     "understandable, accurate and open [B]."),
-    ("the criteria for evaluation, release and governance that a running measurement turned out "
-     "to need,",
-     "the three criteria a running measurement turned out to need, E the TEVV loop, F release "
-     "engineering and G the FSS-derived constructs,"),
-    ("A to D are USAFacts' criteria, E to G are added [B].",
-     "A to D are USAFacts' four, E to G are added [B]."),
-    ("Three criteria, E evaluation, F release and G governance, have no USAFacts counterpart and "
-     "are marked added.",
-     "Three criteria, E the TEVV loop, F release engineering and G the FSS-derived constructs, "
-     "have no USAFacts counterpart and are marked added [B]."),
-    # The p. 2 quotation, its own paragraph after the paragraph the third edit is in.
-    ("The contribution is the join, and the fact that it runs.\n",
-     "The contribution is the join, and the fact that it runs.\n\n" + quote + "\n"),
+    ("24 of them with a rule that runs today,", "24 of them with a current rule in the registry,"),
+    ("16 of 48 framework indicators are measured; 8 have a harness built; 24 are specified only [H].",
+     "Of the 48 indicators in the framework record, 16 are measured, 8 have a harness built and 24 "
+     "are specified only; the record's 49th indicator node, A12, is a candidate whose promotion is "
+     "an operator decision [H]."),
+    ("The evaluation criteria, C and E, are largely unmeasured: they need benchmark sets this "
+     "project has not built [G].",
+     "Two criteria, C accurate and E the TEVV loop, are largely unmeasured: the requirements table "
+     "says what would unlock them, and it is benchmark sets this project has not built and agency "
+     "records the publisher holds [G]."),
 ]
 for old, new in edits:
     if t.count(old) != 1:
-        sys.exit(f"decision 2 edit does not match exactly once in {sys.argv[1]}: {old[:60]!r}")
+        sys.exit(f"decision 3 edit does not match exactly once in {sys.argv[1]}: {old[:60]!r}")
     t = t.replace(old, new)
 sys.stdout.write(t)
 PYEOF
 then
-  echo "FAIL the expected narrative could not be built from ${NARRATIVE_BASE} and decision 2"; fail=1
+  echo "FAIL the expected narrative could not be built from ${NARRATIVE_BASE} and decision 3"; fail=1
 elif ! diff "$expected" docs/deck/brief_narrative.md; then
-  echo "NOTE the narrative differs from ${NARRATIVE_BASE} + decision 2 by the lines above; each must be in the RESULT"
+  echo "NOTE the narrative differs from ${NARRATIVE_BASE} + decision 3 by the lines above; each must be in the RESULT"
 fi
 
 # 5. A prior task file or RESULT is immutable.
