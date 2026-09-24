@@ -486,16 +486,6 @@ def page_b(s: Sources) -> tuple:
            "",
            f"> {q1.strip()}",
            "",
-           "### What the guide says of itself",
-           "",
-           "Quoted from the guide's text as the extractor reads it; each sentence grounds "
-           "verbatim under `kg/extraction/grounding.py` normalization, and the page is the PDF "
-           "page whose text layer holds it.",
-           "")
-    for q, page in s.guide_self_quotes():
-        pg.add(f"> {q} (`{GUIDE_SELF_DOC}`, PDF p. {page})", ">")
-    pg.lines.pop()
-    pg.add("",
            "An indicator whose record `status` is `candidate` is marked that way instead. No "
            "indicator in the record has a status of withdrawn or dropped. The record cannot "
            "tell an indicator kept verbatim from USAFacts' text apart from one restated, so no "
@@ -515,7 +505,19 @@ def page_b(s: Sources) -> tuple:
            f"{pg.n(with_dep, 'indicators with a departure quote')} carry a departure quote, "
            "either from skeleton §8 (items that name the indicator's code) or from a record "
            "property that records a restatement or a withdrawal.",
-           "", "## Criteria", "")
+           "")
+    # After the section's last paragraph, not inside it (narrative v4 decision 1): placed after
+    # the skeleton quote, the subsection swallowed the two paragraphs above.
+    pg.add("### What the guide says of itself",
+           "",
+           "Quoted from the guide's text as the extractor reads it; each sentence grounds "
+           "verbatim under `kg/extraction/grounding.py` normalization, and the page is the PDF "
+           "page whose text layer holds it.",
+           "")
+    for q, page in s.guide_self_quotes():
+        pg.add(f"> {q} (`{GUIDE_SELF_DOC}`, PDF p. {page})", ">")
+    pg.lines.pop()
+    pg.add("", "## Criteria", "")
     crows = []
     for c in crit:
         p = c["properties"]
@@ -1246,9 +1248,37 @@ def page_h(s: Sources, c_located: int) -> Page:
     fw = [n["properties"] for n in s.inds if n["id"] not in s.candidates]
     tiers_fw = Counter(p.get("measurement_tier") or "unassigned" for p in fw)
     ms = Counter(p["measurement_status"] for p in fw)
+    cand = sorted((n["properties"]["code"] for n in s.inds if n["id"] in s.candidates),
+                  key=code_key)
+    # A status string that says "candidate" without being DD-054's `candidate` (F6's reads
+    # "`paid`-tier candidate"): named so a reader does not take it for the held-out one.
+    near = sorted((n["properties"]["code"] for n in s.inds if n["id"] not in s.candidates
+                   and "candidate" in str(n["properties"].get("status", ""))), key=code_key)
+    counts = s.record["counts"]
+    # DD-054's reason as the record's `counts_basis` states it, quoted, not retyped.
+    m = re.search(r"\((DD-054: [^)]*)\)", s.record["counts_basis"])
+    if not m:
+        sys.exit("page H: the record's counts_basis no longer states DD-054's reason; the "
+                 "48-and-49 sentence has nothing to quote")
+    dd054 = m.group(1)
     pg.add("# H. Limits and roadmap", "",
            "Only the open items the record and the graph already state. Nothing here is a "
            "new finding.", "", "## Measurement tiers", "")
+    # The 48-and-49 reconciliation, in the record's own terms (narrative v4 decision 2).
+    near_s = "".join(
+        f" `{c}`'s status reads "
+        f"\"{next(n['properties']['status'] for n in s.inds if n['properties']['code'] == c)}\", "
+        "but DD-054 does not hold it out, and it is counted in the framework."
+        for c in near)
+    pg.add(f"The record holds {pg.n(len(inds), 'AssessmentIndicator nodes in the record')} "
+           f"indicator nodes, and its `counts.indicators` is "
+           f"{pg.n(counts['indicators'], 'record counts.indicators')}: "
+           f"`counts.candidate_indicators` is "
+           f"{pg.n(counts['candidate_indicators'], 'record counts.candidate_indicators')}, "
+           f"{', '.join(f'`{c}`' for c in cand)}, whose record `status` is `candidate` and whose "
+           f"promotion is an operator decision ({dd054}). The measurement-tier table shows "
+           "both denominators; the status table and the list of indicators not marked measured "
+           "count the framework's." + near_s, "")
     pg.add(*table(["measurement tier", "all indicator nodes", "framework (candidate excluded)"],
                   [[t, tiers.get(t, 0), tiers_fw.get(t, 0)] for t in ("M", "O", "D", "unassigned")] +
                   [["all", sum(tiers.values()), sum(tiers_fw.values())]]))

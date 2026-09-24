@@ -247,3 +247,26 @@ def test_the_guides_words_for_itself_ground_on_the_page_they_are_cited_to(monkey
     monkeypatch.setattr(B, "GUIDE_SELF_QUOTES", ("USAFacts rejects every criterion it names.",))
     with pytest.raises(SystemExit, match="does not ground"):
         s.guide_self_quotes()
+
+
+def test_page_h_reconciles_48_and_49_in_the_records_own_counts():
+    """`cc_tasks/2026-09-24_brief_narrative_v4.md` decision 2: page H's first sentence states why
+    the record holds one more indicator node than `counts.indicators`. Re-derived here from the
+    record, not from the page's ledger, so a write-back that moves either count, or promotes the
+    candidate, fails until the pack is regenerated."""
+    from framework_writeback import _candidate_ids
+    rec = json.loads(B.RECORD.read_text(encoding="utf-8"))
+    inds = [n for n in rec["nodes"] if "AssessmentIndicator" in n["labels"]]
+    cand = _candidate_ids(rec) & {n["id"] for n in inds}
+    assert len(inds) == rec["counts"]["indicators"] + rec["counts"]["candidate_indicators"]
+    assert len(cand) == rec["counts"]["candidate_indicators"]
+    codes = ", ".join(f"`{n['properties']['code']}`" for n in inds if n["id"] in cand)
+    page_h = (OUT / "H_limits.md").read_text(encoding="utf-8")
+    assert (f"The record holds {len(inds)} indicator nodes, and its `counts.indicators` is "
+            f"{rec['counts']['indicators']}: `counts.candidate_indicators` is "
+            f"{rec['counts']['candidate_indicators']}, {codes}, whose record `status` is "
+            "`candidate`") in page_h
+    ledger = {(e["source"], e["value"]) for e in
+              json.loads((OUT / "numbers.json").read_text(encoding="utf-8"))["H_limits.md"]}
+    assert ("record counts.indicators", str(rec["counts"]["indicators"])) in ledger
+    assert ("AssessmentIndicator nodes in the record", str(len(inds))) in ledger

@@ -5,6 +5,8 @@ Only the open items the record and the graph already state. Nothing here is a ne
 
 ## Measurement tiers
 
+The record holds 49 indicator nodes, and its `counts.indicators` is 48: `counts.candidate_indicators` is 1, `A12`, whose record `status` is `candidate` and whose promotion is an operator decision (DD-054: the framework does not adopt what the instrument found about itself without the operator). The measurement-tier table shows both denominators; the status table and the list of indicators not marked measured count the framework's. `F6`'s status reads "`paid`-tier candidate", but DD-054 does not hold it out, and it is counted in the framework.
+
 | measurement tier | all indicator nodes | framework (candidate excluded) |
 |---|---|---|
 | M | 36 | 35 |
