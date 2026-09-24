@@ -253,3 +253,107 @@ def test_the_narrative_names_its_record_cycle_and_task():
     h = D.pack_header()
     assert first.startswith("<!--") and h["record_commit"] in first and h["cycle"] in first
     assert "cc_tasks/2026-09-23_brief_narrative.md at commit " in first
+
+
+# ---------------------------------------------------------------- criterion labels (v3 decision 3)
+# `cc_tasks/2026-09-24_brief_narrative_v3.md` decision 3: the narrative names a criterion by its
+# letter and a label, and the numeral gate cannot see a wrong label or a count written as a
+# criterion count USAFacts never made. Page B's criteria table is the one source of the labels.
+# Three patterns, each designed against the sentences the narrative actually has:
+#   * a range, "A through D" or "E to G", followed in its sentence by a list of exactly as many
+#     items ("w, w, w and w"): the items, in order, are the range's labels;
+#   * a lone letter A to G, not the first word of its sentence (there it is the article "A"), not
+#     inside a range or a tag like "[B]", not an indicator code like "A10", followed by an
+#     optional "the" and a phrase running to the next comma, colon, bracket, stop or "and": the
+#     phrase is the letter's label, unless its first word is a connective or a verb (`_STOP`);
+#   * a sentence naming "USAFacts" or "the guide", where the word before the first "criteria"
+#     after that name is a number or a number word: it is four, and a four-item list after it
+#     is A to D's labels.
+_SENT = re.compile(r"(?<=[.\]])\s+(?=[A-Z0-9])")
+_LETTER = re.compile(r"(?<![\w\[\]'’-])([A-G])(?![\w\]'’-])")
+_RANGE = re.compile(r"(?<![\w\[\]'’-])([A-G]) (?:to|through) ([A-G])(?![\w\]'’-])")
+_PHRASE = re.compile(r"\s+(?:the\s+)?(.+?)(?=\s*(?:[,;.:\[\]()]|\band\b|$))")
+_STOP = {"to", "through", "and", "or", "are", "is", "was", "were", "has", "have", "had", "each",
+         "all", "both", "carry", "carries", "fail", "fails", "pass", "passes", "which", "that"}
+_ITEM = r"[\w'’-]+(?: [\w'’-]+){0,3}"
+_LEAD = re.compile(r"^(?:(?:are|is|namely|the)\s+)+", re.I)
+_NUMWORD = {"one": 1, "two": 2, "three": 3, "four": 4, "five": 5, "six": 6, "seven": 7,
+            "eight": 8, "nine": 9, "ten": 10, "eleven": 11, "twelve": 12}
+_SUBJECT = re.compile(r"USAFacts|\b[Tt]he guide\b")
+
+
+def _page_b_labels() -> dict:
+    text = (D.PACK / "B_usafacts_delta.md").read_text(encoding="utf-8")
+    return {m.group(1): m.group(2).strip()
+            for m in re.finditer(r"(?m)^\| ([A-G]) \| ([^|]+) \|", text)}
+
+
+def _key(s: str) -> str:
+    from kg.extraction.grounding import normalize
+    return normalize(s).casefold()
+
+
+def _a_list(text: str, n: int):
+    m = re.search(rf"({_ITEM})" + rf", ({_ITEM})" * (n - 2) + rf",? and ({_ITEM})", text)
+    return [_LEAD.sub("", x) for x in m.groups()] if m else None
+
+
+def label_defects(narrative: str, labels: dict) -> list:
+    """Every criterion label or USAFacts criterion count in `narrative` that page B contradicts."""
+    bad = []
+    for line in narrative.splitlines():
+        if line.startswith("<!--") or not line.strip():
+            continue
+        for s in _SENT.split(line.lstrip("#>- ")):
+            spans = []
+            for m in _RANGE.finditer(s):
+                spans.append(m.span())
+                letters = [chr(c) for c in range(ord(m.group(1)), ord(m.group(2)) + 1)]
+                got = _a_list(s[m.end():], len(letters)) if len(letters) > 1 else None
+                if got and [_key(x) for x in got] != [_key(labels[c]) for c in letters]:
+                    bad.append(f"{m.group(0)} labelled {got}, page B says "
+                               f"{[labels[c] for c in letters]}: {s[:90]!r}")
+            for m in _LETTER.finditer(s):
+                if m.start() == 0 or any(a <= m.start() < b for a, b in spans):
+                    continue
+                pm = _PHRASE.match(s, m.end())
+                phrase = pm.group(1).strip() if pm else ""
+                if not phrase or phrase.split(" ")[0].casefold() in _STOP:
+                    continue
+                if _key(phrase) != _key(labels[m.group(1)]):
+                    bad.append(f"{m.group(1)} labelled {phrase!r}, page B says "
+                               f"{labels[m.group(1)]!r}: {s[:90]!r}")
+            sm = _SUBJECT.search(s)
+            cm = re.match(r".*?(\S+)\s+criteria\b", s[sm.end():]) if sm else None
+            if cm:
+                w = cm.group(1).casefold()
+                n = int(w) if w.isdigit() else _NUMWORD.get(w)
+                if n is not None and n != 4:
+                    bad.append(f"USAFacts' criteria counted {n}, page B says four: {s[:90]!r}")
+                got = _a_list(s[sm.end() + cm.end():], 4) if n == 4 else None
+                if got and [_key(x) for x in got] != [_key(labels[c]) for c in "ABCD"]:
+                    bad.append(f"USAFacts' four criteria listed {got}: {s[:90]!r}")
+    return bad
+
+
+def test_every_criterion_label_in_the_narrative_is_page_bs():
+    labels = _page_b_labels()
+    assert sorted(labels) == list("ABCDEFG"), labels
+    assert label_defects(D.NARRATIVE.read_text(encoding="utf-8"), labels) == []
+
+
+@pytest.mark.parametrize("current,v2", [
+    ("USAFacts' guide gives agencies four criteria for AI-ready data, accessible, "
+     "understandable, accurate and open, written",
+     "USAFacts' guide gives agencies 7 criteria [G] for AI-ready data, written"),
+    ("The guide calls itself a roadmap, and its four criteria, A through D, are accessible, "
+     "understandable, accurate and open [B].",
+     "Four of the criteria, A through D, describe the public surface a publisher controls: "
+     "accessible, documented, licensed and cataloged."),
+    ("Three criteria, E the TEVV loop, F release engineering and G the FSS-derived constructs, "
+     "have", "Three criteria, E evaluation, F release and G governance, have"),
+], ids=["v2_count_7", "v2_A_to_D_labels", "v2_E_to_G_labels"])
+def test_the_label_gate_refuses_each_v2_error(current, v2):
+    text = D.NARRATIVE.read_text(encoding="utf-8")
+    assert text.count(current) == 1, current
+    assert label_defects(text.replace(current, v2), _page_b_labels()), v2
