@@ -1,0 +1,1966 @@
+schema_version: 1
+generated_by: 'scripts/run_kg_questions.py (cc_tasks/2026-10-02_kg_research_questions.md). Do not edit:
+  re-run the generator.'
+terminology: The graph says AI throughout. Any federal terminology change is applied at presentation,
+  not in the record (DN-009 decision 4).
+citation_standard: 'every row carries doc_id, locator and grounding_span_id; grounding_span_id is the
+  grounded node''s key, and is null when the node carries no extraction event; a row with any of the three
+  null is complete: false'
+projection_gate:
+  status: green
+  nodes_compared: 228
+  mismatches: 0
+epoch:
+  documents: 265
+  documents_sha256: e127f476cbd45e2658a81a0576efadb47f27e61536f0e937cb15131b20c51a0b
+  definitions: 1975
+  instruments: 502
+  framework_record_sha256: c5bb855c173f24030100fa1c84e47974bd05c84d7bee295dede459dbbb37ce54
+questions:
+- id: Q1
+  question: What definitions of AI readiness and of AI-ready data exist in the corpus?
+  grade: partial
+  reason: '16 definitions from 10 documents; 1 row(s) lack a citation field: `nao-216-128-artificial-intelligence-in-noaa::nao216-ai-ready-data`
+    has no extraction event (defines_edge=false)'
+  to_close:
+  - stamp the asserting event's id on the 1 non-extraction Definition node(s) at projection, and write
+    their DEFINES edge, so a curated definition cites like an extracted one
+  route: 'neo4j: scripts/run_kg_questions.py via mcp/airkg_tools.Graph (read transactions)'
+  selection:
+    label: Definition
+    property: term
+    regex_any:
+    - .*\b(ai|artificial intelligence)[- ]read(y|iness)\b.*
+    - .*\bread(y|iness) for (ai|artificial intelligence)\b.*
+    instrument_names_listed_apart: \b(assessment|self-assessment|index|inspector|methodology)\b
+  counts:
+    definitions: 16
+    documents: 10
+    rows_incomplete: 1
+    instrument_names_listed_apart: 2
+    text_net_other_terms: 9
+  rows:
+  - term: AI readiness
+    doc_id: ai-readiness-building-the-bridge-from-higher-education-to-wo
+    locator: Introduction, p.6
+    grounding_span_id: ai-readiness-building-the-bridge-from-higher-education-to-wo::def-ai-readiness
+    extraction_event_id: e5dfd7733ca54928a81e8bd9c485431c
+    complete: true
+    normative_status: industry
+    defines_edge: true
+    quote: 'the human capability to work effectively alongside intelligent systems: an integration of
+      functional AI …'
+    node_key: ai-readiness-building-the-bridge-from-higher-education-to-wo::def-ai-readiness
+  - term: AI-readiness of official data and statistics
+    doc_id: ai-readiness-for-official-data-and-statistics-un-statistical
+    locator: Background and Rationale
+    grounding_span_id: ai-readiness-for-official-data-and-statistics-un-statistical::def_ai_readiness
+    extraction_event_id: 8971a2f604124f11b7666634e5b10fb4
+    complete: true
+    normative_status: policy
+    defines_edge: true
+    quote: The objective of AI -readiness of official data and statistics is to provide users …
+    node_key: ai-readiness-for-official-data-and-statistics-un-statistical::def_ai_readiness
+  - term: Domain AI readiness
+    doc_id: artificial-intelligence-domain-ai-readiness-and-firm-product
+    locator: Section 2.3
+    grounding_span_id: artificial-intelligence-domain-ai-readiness-and-firm-product::d-domain-ai-readiness
+    extraction_event_id: 13939acfc32b417db9feda9c8a613470
+    complete: true
+    normative_status: academic
+    defines_edge: true
+    quote: the degree to which a particular industry domain has integrated AI technologies
+    node_key: artificial-intelligence-domain-ai-readiness-and-firm-product::d-domain-ai-readiness
+  - term: Data readiness for AI
+    doc_id: data-readiness-for-ai-a-360-degree-survey
+    locator: §1
+    grounding_span_id: data-readiness-for-ai-a-360-degree-survey::d_drai
+    extraction_event_id: 818c0987a71343838e00c84f728cd2f2
+    complete: true
+    normative_status: academic
+    defines_edge: true
+    quote: Data readiness for artificial intelligence (AI) refers to the critical process of preparing
+      and …
+    node_key: data-readiness-for-ai-a-360-degree-survey::d_drai
+  - term: AI-ready data
+    doc_id: data-readiness-for-scientific-ai-at-scale
+    locator: §1
+    grounding_span_id: data-readiness-for-scientific-ai-at-scale::d_airready
+    extraction_event_id: f36539f41814426bb3a2ce5b25edf160
+    complete: true
+    normative_status: academic
+    defines_edge: true
+    quote: AI-ready data—cleaned, labeled, normalized, feature-engineered, and formatted for scalable
+      training
+    node_key: data-readiness-for-scientific-ai-at-scale::d_airready
+  - term: AI-ready state
+    doc_id: data-readiness-for-scientific-ai-at-scale
+    locator: §2.1
+    grounding_span_id: data-readiness-for-scientific-ai-at-scale::d_airready_state
+    extraction_event_id: f36539f41814426bb3a2ce5b25edf160
+    complete: true
+    normative_status: academic
+    defines_edge: true
+    quote: an AI-ready state—defined by sharded storage in binary formats such as HDF5, ADIOS [25], …
+    node_key: data-readiness-for-scientific-ai-at-scale::d_airready_state
+  - term: AI-readiness
+    doc_id: datahub-mlmu-25
+    locator: Background footnote 2
+    grounding_span_id: datahub-mlmu-25::d-ai-readiness
+    extraction_event_id: 11e33ef0d4e7407daf080a33636094d1
+    complete: true
+    normative_status: policy
+    defines_edge: true
+    quote: For the purposes of this project, “AI-readiness” refers to the extent to which a …
+    node_key: datahub-mlmu-25::d-ai-readiness
+  - term: Institutional AI readiness
+    doc_id: from-school-ai-readiness-to-student-ai-literacy
+    locator: Section 2.2
+    grounding_span_id: from-school-ai-readiness-to-student-ai-literacy::def_inst_ai_readiness
+    extraction_event_id: a81d4cc26e834d93b6179eff801b28a4
+    complete: true
+    normative_status: academic
+    defines_edge: true
+    quote: Institutional AI readiness can be conceptualised as a collective organisational capacity
+    node_key: from-school-ai-readiness-to-student-ai-literacy::def_inst_ai_readiness
+  - term: AI-Ready Data
+    doc_id: nao-216-128-artificial-intelligence-in-noaa
+    locator: §3.01
+    grounding_span_id: null
+    extraction_event_id: null
+    complete: false
+    normative_status: policy
+    defines_edge: false
+    quote: 'Al-Ready Data: Data that is discoverable, machine-readable and machine-understandable, and
+      has sufficient quality, documentation, …'
+    node_key: nao-216-128-artificial-intelligence-in-noaa::nao216-ai-ready-data
+  - term: AI readiness
+    doc_id: uk-ai-ready-data-action-plan-2026
+    locator: uk-ai-ready-data-action-plan-2026#c0017
+    grounding_span_id: uk-ai-ready-data-action-plan-2026::d_ai_readiness_esynergy
+    extraction_event_id: 1aa9ccacd1eb4a99b2b6b81697d194ac
+    complete: true
+    normative_status: industry
+    defines_edge: true
+    quote: From this vantage point, AI readiness is fundamentally about whether institutions can reliably
+      convert …
+    node_key: uk-ai-ready-data-action-plan-2026::d_ai_readiness_esynergy
+  - term: AI-ready
+    doc_id: uk-ai-ready-data-action-plan-2026
+    locator: uk-ai-ready-data-action-plan-2026#c0005
+    grounding_span_id: uk-ai-ready-data-action-plan-2026::d_ai_ready
+    extraction_event_id: 644f2b3184fe427b987b09b798856bfc
+    complete: true
+    normative_status: policy
+    defines_edge: true
+    quote: As set out in the Open Data Institute (ODI) A framework for AI-ready data …
+    node_key: uk-ai-ready-data-action-plan-2026::d_ai_ready
+  - term: AI-ready datasets
+    doc_id: uk-ai-ready-data-action-plan-2026
+    locator: uk-ai-ready-data-action-plan-2026#c0013
+    grounding_span_id: uk-ai-ready-data-action-plan-2026::d_ai_ready_datasets
+    extraction_event_id: c37783a1785d44338d64c66275768ea3
+    complete: true
+    normative_status: policy
+    defines_edge: true
+    quote: This document has set out practical, UK specific guidance for preparing and releasing datasets
+      …
+    node_key: uk-ai-ready-data-action-plan-2026::d_ai_ready_datasets
+  - term: AI-ready development data
+    doc_id: worldbank-blog-open-data-to-ai-ready-2025
+    locator: worldbank-blog-open-data-to-ai-ready-2025#c0003
+    grounding_span_id: worldbank-blog-open-data-to-ai-ready-2025::d1
+    extraction_event_id: 78d392caf57645e1857d51f100559490
+    complete: true
+    normative_status: policy
+    defines_edge: true
+    quote: Amid rapid advances in artificial intelligence (AI), development data has now reached another
+      pivotal …
+    node_key: worldbank-blog-open-data-to-ai-ready-2025::d1
+  - term: AI-ready data
+    doc_id: worldbank-blog-open-data-to-ai-ready-2025
+    locator: worldbank-blog-open-data-to-ai-ready-2025#c0003
+    grounding_span_id: worldbank-blog-open-data-to-ai-ready-2025::d2
+    extraction_event_id: 78d392caf57645e1857d51f100559490
+    complete: true
+    normative_status: policy
+    defines_edge: true
+    quote: By extending established foundations and standards, AI-ready data means that development data
+      is continuously …
+    node_key: worldbank-blog-open-data-to-ai-ready-2025::d2
+  - term: AI-ready development data
+    doc_id: worldbank-blog-open-data-to-ai-ready-2025
+    locator: worldbank-blog-open-data-to-ai-ready-2025#c0005
+    grounding_span_id: worldbank-blog-open-data-to-ai-ready-2025::def_airdd
+    extraction_event_id: fd191d08d675449e9f3d4afb8fd330a6
+    complete: true
+    normative_status: industry
+    defines_edge: true
+    quote: '**AI-ready development data** is systematically organized and thoroughly documented to ensure
+      its meaning and …'
+    node_key: worldbank-blog-open-data-to-ai-ready-2025::def_airdd
+  - term: AI-Ready Data Systems
+    doc_id: worldbank-blog-open-data-to-ai-ready-2025
+    locator: worldbank-blog-open-data-to-ai-ready-2025#c0005
+    grounding_span_id: worldbank-blog-open-data-to-ai-ready-2025::def_systems
+    extraction_event_id: fd191d08d675449e9f3d4afb8fd330a6
+    complete: true
+    normative_status: industry
+    defines_edge: true
+    quote: 1. **AI-Ready Data Systems:** The foundational infrastructure—encompassing discovery platforms,
+      APIs, and technical standards—ensures that …
+    node_key: worldbank-blog-open-data-to-ai-ready-2025::def_systems
+  instrument_names:
+  - term: organizational AI readiness assessment
+    doc_id: organizational-ai-readiness-prosci-adkar
+    locator: faqs
+    grounding_span_id: organizational-ai-readiness-prosci-adkar::d_readiness_assessment
+    extraction_event_id: 91b49d68c0cd4536881b23cf9246cbaf
+    complete: true
+    normative_status: industry
+    defines_edge: true
+    quote: An organizational AI readiness assessment is a structured way to evaluate your organization's
+      preparedness …
+    node_key: organizational-ai-readiness-prosci-adkar::d_readiness_assessment
+  - term: AI Readiness Self-Assessment
+    doc_id: uk-ai-ready-data-action-plan-2026
+    locator: uk-ai-ready-data-action-plan-2026#c0019
+    grounding_span_id: uk-ai-ready-data-action-plan-2026::def-ai-readiness-self-assessment
+    extraction_event_id: 65164b4c97644322a7aa7c0b4ddb9b27
+    complete: true
+    normative_status: policy
+    defines_edge: true
+    quote: '| AI Readiness Self-Assessment | A structured evaluation of whether a dataset can responsibly
+      …'
+    node_key: uk-ai-ready-data-action-plan-2026::def-ai-readiness-self-assessment
+  text_net_other_terms:
+  - key: ai-real-toolkit-ai-readiness-assessment-guide::def_dimensions
+    term: Dimensions
+  - key: ai-real-toolkit-ai-readiness-assessment-guide::def_indicators
+    term: Indicators
+  - key: ai-real-toolkit-ai-readiness-assessment-guide::def_pillars
+    term: Pillars
+  - key: ai-real-toolkit-ai-readiness-assessment-guide::def_qualitative
+    term: null
+  - key: cisco-ai-readiness-index-2025::def-pacesetters
+    term: Pacesetters
+  - key: odcs-open-data-contract-standard::def-bigquery
+    term: BigQuery
+  - key: organizational-ai-readiness-prosci-adkar::d_measure_readiness
+    term: null
+  - key: rethinking-technological-readiness-in-the-era-of-ai-uncertai::d_gov
+    term: Governance
+  - key: uk-ai-ready-data-action-plan-2026::d_grains
+    term: grains
+- id: Q2
+  question: What do the definitions share, and where do they differ, by construct?
+  grade: partial
+  reason: 'the graph holds no edge from any Definition to any construct: 0 `Construct` nodes, 0 `GROUNDS`
+    edges, 0 Definition–Concept edges. The rows are a lexical match of CQ-08''s ten framework construct
+    names against each definition''s verbatim text, computed by this script, not held by the graph'
+  to_close:
+  - extract `grounds` (Construct -> Definition) edges, or promote Concepts to Constructs per schema §Construct,
+    so a definition's components are graph edges and not a string match
+  route: 'neo4j: scripts/run_kg_questions.py via mcp/airkg_tools.Graph (read transactions)'
+  structure:
+    constructs: 0
+    grounds: 0
+    definition_concept_edges: 0
+  vocabulary:
+    source: assessment/cq/cq_set_v2.yaml CQ-08 (pre-registered at 369d717)
+    stems:
+      uncertainty: \buncertain
+      provenance: \bprovenance
+      license: \blicen[cs]
+      revision: \brevis
+      timeliness: \btimel(y|iness)
+      discoverability: \bdiscoverab
+      machine-readable: \bmachine[- ]readab
+      semantic consistency: \bsemantic(ally)?[- ]consisten
+      authority: \bauthorit(y|ative)
+      disclosure: \bdisclos
+  counts:
+    definitions: 16
+    naming_none: 11
+    constructs_named_by_two_or_more: 1
+  by_construct:
+    uncertainty: []
+    provenance:
+    - ai-readiness-for-official-data-and-statistics-un-statistical::def_ai_readiness
+    license: []
+    revision: []
+    timeliness:
+    - ai-readiness-for-official-data-and-statistics-un-statistical::def_ai_readiness
+    discoverability:
+    - nao-216-128-artificial-intelligence-in-noaa::nao216-ai-ready-data
+    - worldbank-blog-open-data-to-ai-ready-2025::d1
+    - worldbank-blog-open-data-to-ai-ready-2025::d2
+    - worldbank-blog-open-data-to-ai-ready-2025::def_systems
+    machine-readable:
+    - nao-216-128-artificial-intelligence-in-noaa::nao216-ai-ready-data
+    semantic consistency: []
+    authority: []
+    disclosure: []
+  rows:
+  - term: AI readiness
+    doc_id: ai-readiness-building-the-bridge-from-higher-education-to-wo
+    locator: Introduction, p.6
+    grounding_span_id: ai-readiness-building-the-bridge-from-higher-education-to-wo::def-ai-readiness
+    complete: true
+    node_key: ai-readiness-building-the-bridge-from-higher-education-to-wo::def-ai-readiness
+    names: []
+    omits:
+    - uncertainty
+    - provenance
+    - license
+    - revision
+    - timeliness
+    - discoverability
+    - machine-readable
+    - semantic consistency
+    - authority
+    - disclosure
+  - term: AI-readiness of official data and statistics
+    doc_id: ai-readiness-for-official-data-and-statistics-un-statistical
+    locator: Background and Rationale
+    grounding_span_id: ai-readiness-for-official-data-and-statistics-un-statistical::def_ai_readiness
+    complete: true
+    node_key: ai-readiness-for-official-data-and-statistics-un-statistical::def_ai_readiness
+    names:
+    - provenance
+    - timeliness
+    omits:
+    - uncertainty
+    - license
+    - revision
+    - discoverability
+    - machine-readable
+    - semantic consistency
+    - authority
+    - disclosure
+  - term: Domain AI readiness
+    doc_id: artificial-intelligence-domain-ai-readiness-and-firm-product
+    locator: Section 2.3
+    grounding_span_id: artificial-intelligence-domain-ai-readiness-and-firm-product::d-domain-ai-readiness
+    complete: true
+    node_key: artificial-intelligence-domain-ai-readiness-and-firm-product::d-domain-ai-readiness
+    names: []
+    omits:
+    - uncertainty
+    - provenance
+    - license
+    - revision
+    - timeliness
+    - discoverability
+    - machine-readable
+    - semantic consistency
+    - authority
+    - disclosure
+  - term: Data readiness for AI
+    doc_id: data-readiness-for-ai-a-360-degree-survey
+    locator: §1
+    grounding_span_id: data-readiness-for-ai-a-360-degree-survey::d_drai
+    complete: true
+    node_key: data-readiness-for-ai-a-360-degree-survey::d_drai
+    names: []
+    omits:
+    - uncertainty
+    - provenance
+    - license
+    - revision
+    - timeliness
+    - discoverability
+    - machine-readable
+    - semantic consistency
+    - authority
+    - disclosure
+  - term: AI-ready data
+    doc_id: data-readiness-for-scientific-ai-at-scale
+    locator: §1
+    grounding_span_id: data-readiness-for-scientific-ai-at-scale::d_airready
+    complete: true
+    node_key: data-readiness-for-scientific-ai-at-scale::d_airready
+    names: []
+    omits:
+    - uncertainty
+    - provenance
+    - license
+    - revision
+    - timeliness
+    - discoverability
+    - machine-readable
+    - semantic consistency
+    - authority
+    - disclosure
+  - term: AI-ready state
+    doc_id: data-readiness-for-scientific-ai-at-scale
+    locator: §2.1
+    grounding_span_id: data-readiness-for-scientific-ai-at-scale::d_airready_state
+    complete: true
+    node_key: data-readiness-for-scientific-ai-at-scale::d_airready_state
+    names: []
+    omits:
+    - uncertainty
+    - provenance
+    - license
+    - revision
+    - timeliness
+    - discoverability
+    - machine-readable
+    - semantic consistency
+    - authority
+    - disclosure
+  - term: AI-readiness
+    doc_id: datahub-mlmu-25
+    locator: Background footnote 2
+    grounding_span_id: datahub-mlmu-25::d-ai-readiness
+    complete: true
+    node_key: datahub-mlmu-25::d-ai-readiness
+    names: []
+    omits:
+    - uncertainty
+    - provenance
+    - license
+    - revision
+    - timeliness
+    - discoverability
+    - machine-readable
+    - semantic consistency
+    - authority
+    - disclosure
+  - term: Institutional AI readiness
+    doc_id: from-school-ai-readiness-to-student-ai-literacy
+    locator: Section 2.2
+    grounding_span_id: from-school-ai-readiness-to-student-ai-literacy::def_inst_ai_readiness
+    complete: true
+    node_key: from-school-ai-readiness-to-student-ai-literacy::def_inst_ai_readiness
+    names: []
+    omits:
+    - uncertainty
+    - provenance
+    - license
+    - revision
+    - timeliness
+    - discoverability
+    - machine-readable
+    - semantic consistency
+    - authority
+    - disclosure
+  - term: AI-Ready Data
+    doc_id: nao-216-128-artificial-intelligence-in-noaa
+    locator: §3.01
+    grounding_span_id: null
+    complete: false
+    node_key: nao-216-128-artificial-intelligence-in-noaa::nao216-ai-ready-data
+    names:
+    - discoverability
+    - machine-readable
+    omits:
+    - uncertainty
+    - provenance
+    - license
+    - revision
+    - timeliness
+    - semantic consistency
+    - authority
+    - disclosure
+  - term: AI readiness
+    doc_id: uk-ai-ready-data-action-plan-2026
+    locator: uk-ai-ready-data-action-plan-2026#c0017
+    grounding_span_id: uk-ai-ready-data-action-plan-2026::d_ai_readiness_esynergy
+    complete: true
+    node_key: uk-ai-ready-data-action-plan-2026::d_ai_readiness_esynergy
+    names: []
+    omits:
+    - uncertainty
+    - provenance
+    - license
+    - revision
+    - timeliness
+    - discoverability
+    - machine-readable
+    - semantic consistency
+    - authority
+    - disclosure
+  - term: AI-ready
+    doc_id: uk-ai-ready-data-action-plan-2026
+    locator: uk-ai-ready-data-action-plan-2026#c0005
+    grounding_span_id: uk-ai-ready-data-action-plan-2026::d_ai_ready
+    complete: true
+    node_key: uk-ai-ready-data-action-plan-2026::d_ai_ready
+    names: []
+    omits:
+    - uncertainty
+    - provenance
+    - license
+    - revision
+    - timeliness
+    - discoverability
+    - machine-readable
+    - semantic consistency
+    - authority
+    - disclosure
+  - term: AI-ready datasets
+    doc_id: uk-ai-ready-data-action-plan-2026
+    locator: uk-ai-ready-data-action-plan-2026#c0013
+    grounding_span_id: uk-ai-ready-data-action-plan-2026::d_ai_ready_datasets
+    complete: true
+    node_key: uk-ai-ready-data-action-plan-2026::d_ai_ready_datasets
+    names: []
+    omits:
+    - uncertainty
+    - provenance
+    - license
+    - revision
+    - timeliness
+    - discoverability
+    - machine-readable
+    - semantic consistency
+    - authority
+    - disclosure
+  - term: AI-ready development data
+    doc_id: worldbank-blog-open-data-to-ai-ready-2025
+    locator: worldbank-blog-open-data-to-ai-ready-2025#c0003
+    grounding_span_id: worldbank-blog-open-data-to-ai-ready-2025::d1
+    complete: true
+    node_key: worldbank-blog-open-data-to-ai-ready-2025::d1
+    names:
+    - discoverability
+    omits:
+    - uncertainty
+    - provenance
+    - license
+    - revision
+    - timeliness
+    - machine-readable
+    - semantic consistency
+    - authority
+    - disclosure
+  - term: AI-ready data
+    doc_id: worldbank-blog-open-data-to-ai-ready-2025
+    locator: worldbank-blog-open-data-to-ai-ready-2025#c0003
+    grounding_span_id: worldbank-blog-open-data-to-ai-ready-2025::d2
+    complete: true
+    node_key: worldbank-blog-open-data-to-ai-ready-2025::d2
+    names:
+    - discoverability
+    omits:
+    - uncertainty
+    - provenance
+    - license
+    - revision
+    - timeliness
+    - machine-readable
+    - semantic consistency
+    - authority
+    - disclosure
+  - term: AI-ready development data
+    doc_id: worldbank-blog-open-data-to-ai-ready-2025
+    locator: worldbank-blog-open-data-to-ai-ready-2025#c0005
+    grounding_span_id: worldbank-blog-open-data-to-ai-ready-2025::def_airdd
+    complete: true
+    node_key: worldbank-blog-open-data-to-ai-ready-2025::def_airdd
+    names: []
+    omits:
+    - uncertainty
+    - provenance
+    - license
+    - revision
+    - timeliness
+    - discoverability
+    - machine-readable
+    - semantic consistency
+    - authority
+    - disclosure
+  - term: AI-Ready Data Systems
+    doc_id: worldbank-blog-open-data-to-ai-ready-2025
+    locator: worldbank-blog-open-data-to-ai-ready-2025#c0005
+    grounding_span_id: worldbank-blog-open-data-to-ai-ready-2025::def_systems
+    complete: true
+    node_key: worldbank-blog-open-data-to-ai-ready-2025::def_systems
+    names:
+    - discoverability
+    omits:
+    - uncertainty
+    - provenance
+    - license
+    - revision
+    - timeliness
+    - machine-readable
+    - semantic consistency
+    - authority
+    - disclosure
+- id: Q3
+  question: Do any definitions conflict?
+  grade: cannot_answer
+  reason: 'the graph has a conflict representation (`CONFLICTS_WITH`, kg/schema.yaml `conflicts_with`,
+    symmetric, Definition<->Definition and Claim<->Claim) and holds 7 such edges (2 between Definitions);
+    none touches the 16 Q1 definitions and 0 join two documents. Conflicts were extracted one document
+    at a time, so two documents'' definitions of AI readiness cannot meet on an edge: the empty answer
+    is a property of the extraction, never evidence that the definitions agree'
+  to_close:
+  - a cross-document pairwise pass over the Q1 set that writes `CONFLICTS_WITH` between Definitions of
+    different documents, each edge carrying both grounding spans, the conflict kind (scope, necessary
+    condition, or object of readiness) and its adjudicator — the shape fss-policy-kg's adjudicated CONFLICTS_WITH
+    overlay already has
+  route: 'neo4j: scripts/run_kg_questions.py via mcp/airkg_tools.Graph (read transactions)'
+  counts:
+    conflict_edges: 7
+    between_definitions: 2
+    cross_document: 0
+    touching_q1: 0
+  rows:
+  - label: Claim
+    doc_id:
+    - arm-ai-readiness-index
+    - arm-ai-readiness-index
+    locator:
+    - Chapter 2, §2.2.3
+    - Chapter 2, §2.3.3
+    grounding_span_id:
+    - arm-ai-readiness-index::cl-energy-10-15
+    - arm-ai-readiness-index::cl-energy-10-20
+    complete: true
+    same_document: true
+    touches_q1_definition: false
+    about:
+    - AI workloads now account for 10-15% of total electricity usage in data centers, with projections
+      suggesting this could reach 25-30% by 2030
+    - AI workloads account for 10–20 percent of total electricity usage in datacenters
+    prov_method: claude-opus-4-8
+  - label: Claim
+    doc_id:
+    - arm-ai-readiness-index
+    - arm-ai-readiness-index
+    locator:
+    - Foreword
+    - Survey methodology
+    grounding_span_id:
+    - arm-ai-readiness-index::cl-sample-665
+    - arm-ai-readiness-index::cl-sample-655
+    complete: true
+    same_document: true
+    touches_q1_definition: false
+    about:
+    - The report combines extensive survey data from 665 business leaders
+    - The survey sampled n=655 adults who are business leaders across various industries
+    prov_method: claude-opus-4-8
+  - label: Definition
+    doc_id:
+    - census-acs-general-handbook-2020
+    - census-acs-general-handbook-2020
+    locator:
+    - census-acs-general-handbook-2020#c0137
+    - census-acs-general-handbook-2020#c0137
+    grounding_span_id:
+    - census-acs-general-handbook-2020::def-universe-2000
+    - census-acs-general-handbook-2020::def-universe-acs
+    complete: true
+    same_document: true
+    touches_q1_definition: false
+    about:
+    - specified renter-occupied housing units
+    - renter-occupied housing units
+    prov_method: claude-opus-5
+  - label: Definition
+    doc_id:
+    - fcsm-19-01-transparent-reporting-for-integrated-data-quality
+    - fcsm-19-01-transparent-reporting-for-integrated-data-quality
+    locator:
+    - fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0060
+    - fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0060
+    grounding_span_id:
+    - fcsm-19-01-transparent-reporting-for-integrated-data-quality::d-foodaps-household
+    - fcsm-19-01-transparent-reporting-for-integrated-data-quality::d-census-household
+    complete: true
+    same_document: true
+    touches_q1_definition: false
+    about:
+    - FoodAPS household
+    - Census household
+    prov_method: claude-opus-5
+  - label: Claim
+    doc_id:
+    - fcsm-25-03
+    - fcsm-25-03
+    locator:
+    - Approach (p.3)
+    - Approach (p.3)
+    grounding_span_id:
+    - fcsm-25-03::cl-09
+    - fcsm-25-03::cl-08
+    complete: true
+    same_document: true
+    touches_q1_definition: false
+    about:
+    - The machine-consumption interpretation of the Commerce guidance only considers the format of the
+      data and does not consider the meaning of the data.
+    - In practice, the Commerce guidance could be interpreted as ensuring data elements and AI-friendly
+      APIs are optimized for machine consumption.
+    prov_method: claude-fable-5
+  - label: Claim
+    doc_id:
+    - manski-2015-communicating-uncertainty-official-economic-statistics
+    - manski-2015-communicating-uncertainty-official-economic-statistics
+    locator:
+    - manski-2015-communicating-uncertainty-official-economic-statistics#c0006
+    - manski-2015-communicating-uncertainty-official-economic-statistics#c0006
+    grounding_span_id:
+    - manski-2015-communicating-uncertainty-official-economic-statistics::cl_estimates_accurate
+    - manski-2015-communicating-uncertainty-official-economic-statistics::cl_revisions_matter
+    complete: true
+    same_document: true
+    touches_q1_definition: false
+    about:
+    - The estimates of GDP and GDI are accurate
+    - realtime research has shown that this assumption is false
+    prov_method: claude-opus-5
+  - label: Claim
+    doc_id:
+    - van-der-bles-2019-communicating-uncertainty
+    - van-der-bles-2019-communicating-uncertainty
+    locator:
+    - van-der-bles-2019-communicating-uncertainty#c0002
+    - van-der-bles-2019-communicating-uncertainty#c0002
+    grounding_span_id:
+    - van-der-bles-2019-communicating-uncertainty::cl_negative_consequences
+    - van-der-bles-2019-communicating-uncertainty::cl_transparency_builds_trust
+    complete: true
+    same_document: true
+    touches_q1_definition: false
+    about:
+    - communicating uncertainty might have negative c onsequences
+    - such transparencymight build rather than undermine trust in authorities
+    prov_method: claude-opus-5
+- id: Q4
+  question: What standard instruments or tests of AI readiness exist, and what does each operationalise?
+  grade: partial
+  reason: 29 Instrument nodes, 24 distinct names. The graph holds 0 `OPERATIONALIZES` edges (Instrument
+    -> Construct), so what an instrument operationalises is read from `MEASURES` -> Concept, direct or
+    through its Measures, as the stand-in; 9 nodes measure no Concept either way; 0 rows lack a citation
+    field
+  to_close:
+  - entity-resolve the 29 Instrument nodes to 24 or fewer instruments, and write `OPERATIONALIZES` to
+    Constructs once Q2's construct layer exists
+  route: 'neo4j: scripts/run_kg_questions.py via mcp/airkg_tools.Graph (read transactions)'
+  selection:
+    label: Instrument
+    property: name
+    regex: .*(readiness|ai-ready|ai ready).*
+  structure:
+    operationalizes: 0
+    operationalized_by: 0
+  counts:
+    instrument_nodes: 29
+    distinct_names: 24
+    measuring_no_concept: 9
+    rows_incomplete: 0
+  rows:
+  - instrument: AI Data Readiness Checklist
+    doc_id: ai-data-readiness-checklist-digital-government-hub
+    locator: title
+    grounding_span_id: ai-data-readiness-checklist-digital-government-hub::inst_checklist
+    extraction_event_id: 22649df18b89482888cd8c2eeb8f6b3a
+    complete: true
+    node_key: ai-data-readiness-checklist-digital-government-hub::inst_checklist
+    owner: ODGA (odga.virginia.gov)
+    year: null
+    measures: 11
+    concepts_measured:
+    - AI data readiness
+    concepts_via_measures:
+    - critical data assets
+    - data catalog
+    - data governance framework
+    - data governance integration
+    - data issue resolution
+    - data literacy
+    - data ownership
+    - data protection
+    - data quality
+    - data quality monitoring
+    - privacy compliance
+    quote: 'AI Data Readiness Checklist Data Governance Framework and Policies  Data Governance Structure:
+      Does …'
+  - instrument: AI Readiness multi-market study (Pearson/AWS)
+    doc_id: ai-readiness-building-the-bridge-from-higher-education-to-wo
+    locator: Methodology, p.49
+    grounding_span_id: ai-readiness-building-the-bridge-from-higher-education-to-wo::psb-ai-readiness-survey
+    extraction_event_id: e5dfd7733ca54928a81e8bd9c485431c
+    complete: true
+    node_key: ai-readiness-building-the-bridge-from-higher-education-to-wo::psb-ai-readiness-survey
+    owner: PSB Insights
+    year: 2026
+    measures: 11
+    concepts_measured:
+    - AI readiness
+    concepts_via_measures:
+    - AI governance
+    - AI readiness
+    - Faculty capability
+    - Institutional AI investment
+    - Pace Friction
+    - Skills Friction
+    - Trust gap
+    quote: All fieldwork was conducted by PSB Insights.
+  - instrument: AI Readiness Benchmark
+    doc_id: ai-real-toolkit-ai-readiness-assessment-guide
+    locator: Section 3.2.1, p.9
+    grounding_span_id: ai-real-toolkit-ai-readiness-assessment-guide::i_capgemini
+    extraction_event_id: 210aff78b16f4716b053cdfcdbe6353e
+    complete: true
+    node_key: ai-real-toolkit-ai-readiness-assessment-guide::i_capgemini
+    owner: Capgemini
+    year: 0
+    measures: 0
+    concepts_measured: []
+    concepts_via_measures: []
+    quote: AI Readiness Benchmark by Capgemini
+  - instrument: Oxford Insights AI Readiness Index
+    doc_id: ai-real-toolkit-ai-readiness-assessment-guide
+    locator: Section 3.2.1, p.9
+    grounding_span_id: ai-real-toolkit-ai-readiness-assessment-guide::i_oxford
+    extraction_event_id: 210aff78b16f4716b053cdfcdbe6353e
+    complete: true
+    node_key: ai-real-toolkit-ai-readiness-assessment-guide::i_oxford
+    owner: Oxford Insights
+    year: 0
+    measures: 0
+    concepts_measured: []
+    concepts_via_measures: []
+    quote: Oxford Insights
+  - instrument: AI Readiness Assessment Toolkit
+    doc_id: ai-real-toolkit-ai-readiness-assessment-guide
+    locator: Section 2, p.6
+    grounding_span_id: ai-real-toolkit-ai-readiness-assessment-guide::i_toolkit
+    extraction_event_id: 210aff78b16f4716b053cdfcdbe6353e
+    complete: true
+    node_key: ai-real-toolkit-ai-readiness-assessment-guide::i_toolkit
+    owner: Digital Cooperation Organization (DCO)
+    year: 2025
+    measures: 39
+    concepts_measured:
+    - AI readiness
+    concepts_via_measures:
+    - AI Deployment & Integration
+    - AI Education & Training Programs
+    - AI Governance & Ethics
+    - AI patents and academic publications
+    - Continuous Learning & Skill Development
+    - Data Availability
+    - Data Management & Protection
+    - Data Quality
+    - Data security for AI
+    - Entrepreneurship
+    - Incubation centers and accelerators
+    - Infrastructure
+    - Innovation
+    - International Collaborations
+    - Investments in AI
+    - Policies and Regulations
+    - Public-Private Partnerships
+    - Return on investment (ROI) in AI
+    - Strategy
+    - Sustainable & Inclusive AI
+    quote: DCO has developed an AI Readiness Assessment Toolkit
+  - instrument: Data Readiness Report
+    doc_id: aidrin-hiniduma-2024
+    locator: 2 RELATED WORK
+    grounding_span_id: aidrin-hiniduma-2024::i_data_readiness_report
+    extraction_event_id: d43e3527077040f4ab28c85b4b0ad88e
+    complete: true
+    node_key: aidrin-hiniduma-2024::i_data_readiness_report
+    owner: null
+    year: null
+    measures: 0
+    concepts_measured: []
+    concepts_via_measures: []
+    quote: Data Readiness Report [5] focuses on addressing challenges in data preprocessing within machine
+      learning …
+  - instrument: Data Readiness Report
+    doc_id: aidrin-hiniduma-2024
+    locator: §2
+    grounding_span_id: aidrin-hiniduma-2024::inst-data-readiness-report
+    extraction_event_id: 2a246502a54c4bbcaa15c457af12ba93
+    complete: true
+    node_key: aidrin-hiniduma-2024::inst-data-readiness-report
+    owner: Afzal et al.
+    year: 2020
+    measures: 0
+    concepts_measured: []
+    concepts_via_measures: []
+    quote: Data Readiness Report [5] focuses on addressing challenges in data preprocessing within machine
+      learning …
+  - instrument: Data Readiness Report
+    doc_id: aidrin-hiniduma-2024
+    locator: §2
+    grounding_span_id: aidrin-hiniduma-2024::inst-drr
+    extraction_event_id: 1df7e91ffe1c439cac3311452e168bc3
+    complete: true
+    node_key: aidrin-hiniduma-2024::inst-drr
+    owner: Afzal et al.
+    year: 2020
+    measures: 0
+    concepts_measured: []
+    concepts_via_measures: []
+    quote: Data Readiness Report [5] focuses on addressing challenges in data
+  - instrument: Arm AI Readiness Index survey
+    doc_id: arm-ai-readiness-index
+    locator: Survey methodology
+    grounding_span_id: arm-ai-readiness-index::i-ai-readiness-index
+    extraction_event_id: 20018ea8926446818e1d7cdd93ce9eb0
+    complete: true
+    node_key: arm-ai-readiness-index::i-ai-readiness-index
+    owner: Arm / Method Research
+    year: '2025'
+    measures: 6
+    concepts_measured:
+    - AI readiness
+    concepts_via_measures:
+    - AI strategy
+    - bias detection and correction
+    - infrastructure readiness
+    - model extraction
+    - talent gap
+    quote: Arm conducted this research using an online survey prepared by Method Research and distributed
+      …
+  - instrument: Firm Domain AI Readiness measure
+    doc_id: artificial-intelligence-domain-ai-readiness-and-firm-product
+    locator: Section 3.2
+    grounding_span_id: artificial-intelligence-domain-ai-readiness-and-firm-product::i-firm-domain-ai-readiness
+    extraction_event_id: 13939acfc32b417db9feda9c8a613470
+    complete: true
+    node_key: artificial-intelligence-domain-ai-readiness-and-firm-product::i-firm-domain-ai-readiness
+    owner: Zeng, Wang & Sun
+    year: null
+    measures: 1
+    concepts_measured:
+    - Domain AI readiness
+    concepts_via_measures:
+    - Domain AI readiness
+    quote: We then calculate the domain AI readiness for each company each year, based on …
+  - instrument: Oxford Insights Government AI Readiness Index
+    doc_id: bangladesh-s-ai-readiness-perspectives
+    locator: sec-2
+    grounding_span_id: bangladesh-s-ai-readiness-perspectives::i1
+    extraction_event_id: 483b2a10a89c454697a612e3a8de05f8
+    complete: true
+    node_key: bangladesh-s-ai-readiness-perspectives::i1
+    owner: Oxford Insights
+    year: 2023
+    measures: 1
+    concepts_measured:
+    - AI readiness
+    concepts_via_measures:
+    - AI readiness
+    quote: The Oxford Insights Government AI Readiness Index (2023) situates Bangladesh in the lower-middle
+      tier …
+  - instrument: Cisco AI Readiness Assessment
+    doc_id: cisco-ai-readiness-assessment-instrument
+    locator: document
+    grounding_span_id: cisco-ai-readiness-assessment-instrument::instr-cisco-ai-readiness
+    extraction_event_id: d7482d6227a04cc7b1d25c8d8bcdff50
+    complete: true
+    node_key: cisco-ai-readiness-assessment-instrument::instr-cisco-ai-readiness
+    owner: Cisco
+    year: 2026
+    measures: 43
+    concepts_measured:
+    - AI readiness
+    concepts_via_measures:
+    - AI impact measurement
+    - AI policies and protocols
+    - AI strategy
+    - AI strategy leadership and ownership
+    - Access control
+    - Accessibility of AI technologies
+    - Adversarial attacks
+    - Algorithmic transparency
+    - Analytics tools
+    - Bias and fairness
+    - Budget allocation for AI
+    - Change management
+    - Cross-border data transfers
+    - Data accuracy
+    - Data anonymization
+    - Data breach preparedness
+    - Data centralization
+    - Data pre-processing
+    - Data privacy standards
+    - Data protection and encryption
+    - Data sovereignty
+    - External data quality
+    - GPU resources
+    - In-house talent
+    - Network infrastructure
+    - Organizational urgency
+    - Power consumption
+    - Receptiveness to AI change
+    - Training and upskilling
+    quote: Cisco AI Readiness Assessment - Cisco
+  - instrument: Cisco AI Readiness Index
+    doc_id: cisco-ai-readiness-index-2025
+    locator: Methodology (p26)
+    grounding_span_id: cisco-ai-readiness-index-2025::inst_cari
+    extraction_event_id: 54f414bf524a4e18a864cd25b4dd3291
+    complete: true
+    node_key: cisco-ai-readiness-index-2025::inst_cari
+    owner: Cisco
+    year: 2025
+    measures: 22
+    concepts_measured:
+    - AI readiness
+    concepts_via_measures:
+    - AI security
+    - AI use cases
+    - Access controls
+    - Change management
+    - Data center capacity
+    - Data centralization
+    - Data pillar
+    - End-to-end encryption
+    - GPU infrastructure
+    - Governance pillar
+    - Guardrails and live monitoring
+    - Impact measurement
+    - Inference cycle time
+    - Infrastructure pillar
+    - Monetization of AI
+    - Network integration
+    - Product market fit
+    - Strategy pillar
+    - Talent pillar
+    - Threat detection
+    quote: The Cisco AI Readiness Index assesses organizations against six pillars of readiness—Strategy,
+      Infrastructure, Data,
+  - instrument: Cisco AI Readiness Index
+    doc_id: cisco-ai-readiness-index-2025
+    locator: p. 26
+    grounding_span_id: cisco-ai-readiness-index-2025::instr-cisco-ai-readiness-index
+    extraction_event_id: 681adb19ceb34d3e8abf9a2b07268392
+    complete: true
+    node_key: cisco-ai-readiness-index-2025::instr-cisco-ai-readiness-index
+    owner: Cisco
+    year: 2025
+    measures: 0
+    concepts_measured:
+    - AI readiness
+    concepts_via_measures: []
+    quote: The Cisco AI Readiness Index assesses organizations against six pillars of readiness—Strategy,
+      Infrastructure, Data, …
+  - instrument: AI Readiness Index
+    doc_id: cisco-ai-readiness-index-methodology
+    locator: p.1
+    grounding_span_id: cisco-ai-readiness-index-methodology::i_index
+    extraction_event_id: f6af5ec636b74125818c029b4b51b357
+    complete: true
+    node_key: cisco-ai-readiness-index-methodology::i_index
+    owner: Cisco
+    year: null
+    measures: 1
+    concepts_measured:
+    - AI readiness
+    concepts_via_measures:
+    - AI readiness
+    quote: Log in AI Readiness Index Methodology AI Readiness Index Methodology Building the global benchmark
+      …
+  - instrument: Data Readiness Report
+    doc_id: data-readiness-for-ai-a-360-degree-survey
+    locator: data-readiness-for-ai-a-360-degree-survey#c0020
+    grounding_span_id: data-readiness-for-ai-a-360-degree-survey::i_data_readiness_report
+    extraction_event_id: 81e93a23d13c44fa945e82f5403ce4f9
+    complete: true
+    node_key: data-readiness-for-ai-a-360-degree-survey::i_data_readiness_report
+    owner: null
+    year: null
+    measures: 0
+    concepts_measured:
+    - data quality
+    concepts_via_measures: []
+    quote: The Data Readiness Report [ 10] focuses on generating detailed documentation to assist in …
+  - instrument: AI Data Readiness Inspector (AIDRIN)
+    doc_id: data-readiness-for-ai-a-360-degree-survey
+    locator: data-readiness-for-ai-a-360-degree-survey#c0026
+    grounding_span_id: data-readiness-for-ai-a-360-degree-survey::inst-aidrin
+    extraction_event_id: 9d8176f4c02943b1a38fe9ca4117de22
+    complete: true
+    node_key: data-readiness-for-ai-a-360-degree-survey::inst-aidrin
+    owner: Kaveen Hiniduma
+    year: '2024'
+    measures: 0
+    concepts_measured: []
+    concepts_via_measures: []
+    quote: AI Data Readiness Inspector (AIDRIN) for Quantitative Assessment of Data Readiness for AI.
+  - instrument: AI-readiness evaluation
+    doc_id: datahub-mlmu-25
+    locator: Deliverables
+    grounding_span_id: datahub-mlmu-25::i-ai-readiness-eval
+    extraction_event_id: 11e33ef0d4e7407daf080a33636094d1
+    complete: true
+    node_key: datahub-mlmu-25::i-ai-readiness-eval
+    owner: National Secure Data Service (NSDS) / U.S. Department of Commerce
+    year: null
+    measures: 2
+    concepts_measured:
+    - AI-readiness
+    concepts_via_measures:
+    - Performance metrics
+    - Statistical accuracy
+    quote: An AI-readiness evaluation that measures how effectively an LLM interacts with Commerce
+  - instrument: AI-Readiness Evaluation for Statistical Data
+    doc_id: datahub-mlmu-25
+    locator: §3
+    grounding_span_id: datahub-mlmu-25::inst-ai-readiness-eval
+    extraction_event_id: bec8c78ded7043a2a6e2f6ed4faac3e3
+    complete: true
+    node_key: datahub-mlmu-25::inst-ai-readiness-eval
+    owner: null
+    year: null
+    measures: 0
+    concepts_measured: []
+    concepts_via_measures: []
+    quote: develop an evaluation that can be used to assess an LLM’s ability to meet …
+  - instrument: AI-readiness evaluation tool (open-source prototype)
+    doc_id: datahub-mlmu-25
+    locator: §3
+    grounding_span_id: datahub-mlmu-25::inst-eval-tool
+    extraction_event_id: bec8c78ded7043a2a6e2f6ed4faac3e3
+    complete: true
+    node_key: datahub-mlmu-25::inst-eval-tool
+    owner: null
+    year: null
+    measures: 0
+    concepts_measured: []
+    concepts_via_measures: []
+    quote: prototype an open-source and publicly accessible tool that can automate and apply the AI-readiness
+      …
+  - instrument: School questionnaire (AI readiness)
+    doc_id: from-school-ai-readiness-to-student-ai-literacy
+    locator: Section 3.2.1
+    grounding_span_id: from-school-ai-readiness-to-student-ai-literacy::inst_school_q
+    extraction_event_id: a81d4cc26e834d93b6179eff801b28a4
+    complete: true
+    node_key: from-school-ai-readiness-to-student-ai-literacy::inst_school_q
+    owner: Guan et al.
+    year: '2025'
+    measures: 2
+    concepts_measured:
+    - Institutional AI readiness
+    concepts_via_measures:
+    - Ethical governance readiness
+    - Strategic and policy readiness
+    quote: School AI readiness was measured using the school questionnaire.
+  - instrument: Government AI Readiness Index
+    doc_id: government-ai-readiness-index-2025
+    locator: overview paragraphs
+    grounding_span_id: government-ai-readiness-index-2025::i_gairi
+    extraction_event_id: fb841d393a374175ab822e3d90fa6ed3
+    complete: true
+    node_key: government-ai-readiness-index-2025::i_gairi
+    owner: Oxford Insights
+    year: 2025
+    measures: 14
+    concepts_measured:
+    - government AI readiness
+    concepts_via_measures: []
+    quote: the Government AI Readiness Index has helped map the global landscape of AI preparedness
+  - instrument: Health AI Readiness Assessment
+    doc_id: health-ai-readiness-assessment-dime
+    locator: title
+    grounding_span_id: health-ai-readiness-assessment-dime::inst1
+    extraction_event_id: c4c365f7c43b41a09731000ba27a6ad4
+    complete: true
+    node_key: health-ai-readiness-assessment-dime::inst1
+    owner: Digital Medicine Society (DiMe)
+    year: '2025'
+    measures: 28
+    concepts_measured:
+    - Clinical integration & implementation
+    - Data infrastructure & analytics
+    - Financial sustainability & ROI
+    - Leadership, governance & compliance
+    - Stakeholder & community engagement
+    - Technology, infrastructure & integration
+    - Workforce development & change management
+    concepts_via_measures:
+    - AI capital and operational budgeting
+    - AI governance and ethics bodies
+    - AI governance committee
+    - AI literacy and skills training
+    - AI model performance and drift monitoring
+    - AI strategic plan
+    - API management platform
+    - Audits of high-risk AI systems
+    - Automated data quality monitoring
+    - Centralized governed data repository
+    - Change management process
+    - Clinical champions
+    - Clinical needs and workflow analysis
+    - Clinician feedback process
+    - Co-design with clinicians
+    - Data governance program
+    - EHR integration via bidirectional APIs
+    - Enterprise-wide AI policy
+    - Frontline clinician feedback loops
+    - Ongoing AI training / onboarding
+    - Patient / community co-design
+    - Patient advisory council
+    - ROI framework / standardized impact methodology
+    - ROI reporting to leadership
+    - Reinvestment of AI-generated value
+    - Sandbox / testing environment
+    - Scalable infrastructure with AI security policies
+    - Workflow embedding
+    quote: essidiumcdn.com/wp-content/uploads/academy-logo-transparent.png) [Skip to main content](https://dimesociety.org/ai-implementation-in-healthcare-playbook/ai-evaluation-readiness/health-ai-readiness-assessment/#tm-main)
+      [ ](https://dimesociety.org/ai-implementation-in-healthcare-playbook/ai-evaluation-readiness/health-ai-readiness-assessment/#tm-dialog-mobile)
+      [ ![](https://fpdtac9mhctc-u4418.pressi
+  - instrument: Organizational AI readiness assessment
+    doc_id: organizational-ai-readiness-prosci-adkar
+    locator: faqs
+    grounding_span_id: organizational-ai-readiness-prosci-adkar::i_readiness_assessment
+    extraction_event_id: 91b49d68c0cd4536881b23cf9246cbaf
+    complete: true
+    node_key: organizational-ai-readiness-prosci-adkar::i_readiness_assessment
+    owner: Prosci
+    year: 2026
+    measures: 4
+    concepts_measured:
+    - Organizational AI readiness
+    concepts_via_measures:
+    - AI implementation approach
+    - Governance and control
+    - Organizational dynamics
+    - Training and capability-building
+    quote: It typically segments the organization by role or level, then scores each segment across …
+  - instrument: AI Readiness Self-Assessment
+    doc_id: uk-ai-ready-data-action-plan-2026
+    locator: uk-ai-ready-data-action-plan-2026#c0019
+    grounding_span_id: uk-ai-ready-data-action-plan-2026::ins-ai-readiness-self-assessment
+    extraction_event_id: 65164b4c97644322a7aa7c0b4ddb9b27
+    complete: true
+    node_key: uk-ai-ready-data-action-plan-2026::ins-ai-readiness-self-assessment
+    owner: null
+    year: null
+    measures: 0
+    concepts_measured: []
+    concepts_via_measures: []
+    quote: '| AI Readiness Self-Assessment | A structured evaluation of whether a dataset can responsibly
+      …'
+  - instrument: AI Readiness Assessment 2024 (Bhutan)
+    doc_id: undp-artificial-intelligence-readiness-assessment-aira
+    locator: publication summary block
+    grounding_span_id: undp-artificial-intelligence-readiness-assessment-aira::i1
+    extraction_event_id: 4bb26379f393481daeafe8e9f74dbe02
+    complete: true
+    node_key: undp-artificial-intelligence-readiness-assessment-aira::i1
+    owner: UNDP
+    year: 2024
+    measures: 0
+    concepts_measured:
+    - AI readiness
+    - Ethical AI
+    - Government as a User
+    - Government as an Enabler
+    concepts_via_measures: []
+    quote: The AI Readiness Assessment 2024 for Bhutan evaluates the country’s preparedness to integrate
+      AI …
+  - instrument: Readiness Assessment Methodology (RAM)
+    doc_id: unesco-ai-readiness-assessment-methodology-ram
+    locator: RAM section
+    grounding_span_id: unesco-ai-readiness-assessment-methodology-ram::i_ram
+    extraction_event_id: 756d8df331584b678f14488fdf661fff
+    complete: true
+    node_key: unesco-ai-readiness-assessment-methodology-ram::i_ram
+    owner: UNESCO
+    year: null
+    measures: 0
+    concepts_measured:
+    - Economic dimension
+    - Legal dimension
+    - Scientific/Educational dimension
+    - Social/Cultural dimension
+    - Technical and Infrastructural dimension
+    concepts_via_measures: []
+    quote: UNESCO’s Readiness Assessment Methodology (RAM)
+  - instrument: FREE AI Readiness Assessment
+    doc_id: why-ai-projects-fail-the-63-human-factor-problem
+    locator: The Number That Should Reshape Your AI Strategy
+    grounding_span_id: why-ai-projects-fail-the-63-human-factor-problem::i-ai-readiness-assessment
+    extraction_event_id: 4d76160162984a169ce60cdcb6bcd4cb
+    complete: true
+    node_key: why-ai-projects-fail-the-63-human-factor-problem::i-ai-readiness-assessment
+    owner: bosio.digital
+    year: null
+    measures: 0
+    concepts_measured:
+    - Organizational readiness
+    concepts_via_measures: []
+    quote: This isn't a technology problem. It's a human problem. And until organizations treat it …
+  - instrument: Cisco AI Readiness Index
+    doc_id: why-ai-readiness-is-an-organizational-learning-problem-not-a
+    locator: Section 2
+    grounding_span_id: why-ai-readiness-is-an-organizational-learning-problem-not-a::i_cisco
+    extraction_event_id: bbef0b90f2c5418ba56b8100d71c5915
+    complete: true
+    node_key: why-ai-readiness-is-an-organizational-learning-problem-not-a::i_cisco
+    owner: Cisco
+    year: '2024'
+    measures: 0
+    concepts_measured:
+    - AI readiness
+    concepts_via_measures: []
+    quote: Cisco’s AI Readiness Index, surveying 7,985 senior leaders
+- id: Q5
+  question: For the FSS AI-readiness survey, which items map to which constructs and definitions, and
+    which constructs have no item?
+  grade: partial
+  reason: '49 items map to 48 constructs (0 constructs have no item). The crosswalk''s construct -> definition
+    hop does not exist: the record holds 0 edges from a construct or an item to a Definition. Its primary-source
+    hop is `EVIDENCED_BY`, whose edges carry a doc_id and no grounding span, so no row meets the citation
+    standard; 16 items cite no document at all. The items are the framework instrument''s; the ICSP working
+    group''s January self-report survey (DN-005 §2.5) is not in the graph'
+  to_close:
+  - a construct -> Definition edge in the framework record (`grounds`, schema §edge_types), authored per
+    construct from the Q1 set, so the crosswalk reaches a definition
+  - carry each EVIDENCED_BY citation's section and verbatim quote, already prose in the indicator's `evidence_raw`,
+    as edge properties validated by kg/extraction/grounding.py
+  - ingest the ICSP survey's items, when they exist, as items of a second instrument crosswalked onto
+    the same constructs
+  route: 'record: framework/ai_readiness_framework.json (mcp/airkg_tools.py decision 3: framework questions
+    are answered from the record)'
+  counts:
+    items: 49
+    constructs: 48
+    items_candidate: 1
+    constructs_with_no_item: 0
+    constructs_with_no_primary_source: 16
+    constructs_with_no_definition: 48
+    items_with_no_document: 16
+    items_with_project_internal_evidence_only: 1
+  uncovered:
+    constructs_with_no_item: []
+    constructs_with_no_primary_source:
+    - con:A:programmatic-access
+    - con:A:stable-identifiers
+    - con:B:nl-affordances
+    - con:B:semantic-consistency
+    - con:C:faithfulness-of-ai-restatement
+    - con:C:value-drift-resistance
+    - con:D:license-clarity
+    - con:D:reuse-permissions-for-ai
+    - con:E:corrective-action-closure
+    - con:E:failure-attribution
+    - con:E:instrument-versioning
+    - con:E:positive-controls
+    - con:F:regression-on-vintage-transition
+    - con:F:staged-rollout
+    - con:G:classification-vintage-identity
+    - con:G:revision-semantics
+    items_with_no_document:
+    - A2
+    - A7
+    - B5
+    - B6
+    - C2
+    - C3
+    - D1
+    - D2
+    - E3
+    - E5
+    - E6
+    - E7
+    - F3
+    - F5
+    - G2
+    - G3
+    items_with_project_internal_evidence_only:
+    - E5
+  rows:
+  - item: A1
+    status: draft
+    construct:
+    - con:A:machine-readable-formats
+    doc_id:
+    - foundations-for-evidence-based-policymaking-act-of-2018-evid
+    - m-25-05-phase-2-implementation-of-the-evidence-act-open-gove
+    - w3c-dwbp-2017
+    locator: framework/ai_readiness_framework.json#ind:A1
+    grounding_span_id: null
+    complete: false
+    definition: null
+  - item: A10
+    status: stub
+    construct:
+    - con:A:application-data-tool-machine-surface
+    doc_id:
+    - w3c-dwbp-2017
+    - wilkinson-2016-fair-guiding-principles
+    locator: framework/ai_readiness_framework.json#ind:A10
+    grounding_span_id: null
+    complete: false
+    definition: null
+  - item: A11
+    status: stub
+    construct:
+    - con:A:effective-crawler-access-declared-enforced-observed
+    doc_id:
+    - cloudflare-ai-crawl-control-manage-crawlers
+    - rfc-9309-robots-exclusion-protocol
+    locator: framework/ai_readiness_framework.json#ind:A11
+    grounding_span_id: null
+    complete: false
+    definition: null
+  - item: A12
+    status: candidate
+    construct:
+    - con:A12-access-policy-coherence
+    doc_id:
+    - cloudflare-ai-crawl-control-manage-crawlers
+    - rfc-9309-robots-exclusion-protocol
+    locator: framework/ai_readiness_framework.json#ind:A12
+    grounding_span_id: null
+    complete: false
+    definition: null
+  - item: A2
+    status: draft
+    construct:
+    - con:A:programmatic-access
+    doc_id: null
+    locator: framework/ai_readiness_framework.json#ind:A2
+    grounding_span_id: null
+    complete: false
+    definition: null
+  - item: A3
+    status: draft
+    construct:
+    - con:A:bulk-access
+    doc_id:
+    - dcat-us-1-1-schema
+    - w3c-dwbp-2017
+    - wilkinson-2016-fair-guiding-principles
+    locator: framework/ai_readiness_framework.json#ind:A3
+    grounding_span_id: null
+    complete: false
+    definition: null
+  - item: A4
+    status: draft
+    construct:
+    - con:A:crawler-agent-access
+    doc_id:
+    - anthropic-crawler-support-article
+    - cloudflare-ai-crawl-control-manage-crawlers
+    - google-robots-txt-intro
+    - openai-crawlers-bots
+    - perplexity-crawlers
+    - rfc-9309-robots-exclusion-protocol
+    locator: framework/ai_readiness_framework.json#ind:A4
+    grounding_span_id: null
+    complete: false
+    definition: null
+  - item: A5
+    status: draft
+    construct:
+    - con:A:discoverability-surface
+    doc_id:
+    - llmstxt-proposal
+    - sitemaps-protocol
+    locator: framework/ai_readiness_framework.json#ind:A5
+    grounding_span_id: null
+    complete: false
+    definition: null
+  - item: A6
+    status: draft
+    construct:
+    - con:A:structured-markup
+    doc_id:
+    - croissant-akhtar-2024-paper
+    - mlcommons-croissant-spec
+    - schema-org-dataset
+    - w3c-dcat-3
+    locator: framework/ai_readiness_framework.json#ind:A6
+    grounding_span_id: null
+    complete: false
+    definition: null
+  - item: A7
+    status: draft
+    construct:
+    - con:A:stable-identifiers
+    doc_id: null
+    locator: framework/ai_readiness_framework.json#ind:A7
+    grounding_span_id: null
+    complete: false
+    definition: null
+  - item: A8
+    status: draft
+    construct:
+    - con:A:timeliness-of-surface
+    doc_id:
+    - dcat-us-1-1-schema
+    - omb-m-23-22-digital-first-public-experience
+    - w3c-dwbp-2017
+    locator: framework/ai_readiness_framework.json#ind:A8
+    grounding_span_id: null
+    complete: false
+    definition: null
+  - item: A9
+    status: draft; frontier_deep track, as_of 2026-01
+    construct:
+    - con:A:m2m-agent-surface
+    doc_id:
+    - wilkinson-2016-fair-guiding-principles
+    locator: framework/ai_readiness_framework.json#ind:A9
+    grounding_span_id: null
+    complete: false
+    definition: null
+  - item: B1
+    status: draft
+    construct:
+    - con:B:variable-level-semantics
+    doc_id:
+    - fcsm-25-03
+    locator: framework/ai_readiness_framework.json#ind:B1
+    grounding_span_id: null
+    complete: false
+    definition: null
+  - item: B2
+    status: draft
+    construct:
+    - con:B:definitions-surface
+    doc_id:
+    - schema-org-definedterm
+    - w3c-dcat-3
+    locator: framework/ai_readiness_framework.json#ind:B2
+    grounding_span_id: null
+    complete: false
+    definition: null
+  - item: B3
+    status: draft
+    construct:
+    - con:B:methodology-legibility
+    doc_id:
+    - bing-webmaster-guidelines
+    - omb-m-23-22-digital-first-public-experience
+    - w3c-dwbp-2017
+    locator: framework/ai_readiness_framework.json#ind:B3
+    grounding_span_id: null
+    complete: false
+    definition: null
+  - item: B4
+    status: draft
+    construct:
+    - con:B:quality-metadata
+    doc_id:
+    - fcsm-20-04-a-framework-for-data-quality
+    - fcsm-23-02-a-framework-for-data-quality-case-studies
+    locator: framework/ai_readiness_framework.json#ind:B4
+    grounding_span_id: null
+    complete: false
+    definition: null
+  - item: B5
+    status: draft
+    construct:
+    - con:B:semantic-consistency
+    doc_id: null
+    locator: framework/ai_readiness_framework.json#ind:B5
+    grounding_span_id: null
+    complete: false
+    definition: null
+  - item: B6
+    status: draft
+    construct:
+    - con:B:nl-affordances
+    doc_id: null
+    locator: framework/ai_readiness_framework.json#ind:B6
+    grounding_span_id: null
+    complete: false
+    definition: null
+  - item: C1
+    status: draft
+    construct:
+    - con:C:retrieval-grounded-qa-accuracy
+    doc_id:
+    - from-accuracy-to-readiness-metrics-and-benchmarks-for-human
+    locator: framework/ai_readiness_framework.json#ind:C1
+    grounding_span_id: null
+    complete: false
+    definition: null
+  - item: C2
+    status: draft
+    construct:
+    - con:C:faithfulness-of-ai-restatement
+    doc_id: null
+    locator: framework/ai_readiness_framework.json#ind:C2
+    grounding_span_id: null
+    complete: false
+    definition: null
+  - item: C3
+    status: draft
+    construct:
+    - con:C:value-drift-resistance
+    doc_id: null
+    locator: framework/ai_readiness_framework.json#ind:C3
+    grounding_span_id: null
+    complete: false
+    definition: null
+  - item: C4
+    status: draft
+    construct:
+    - con:C:citation-quality
+    doc_id:
+    - aggarwal-2024-geo-generative-engine-optimization
+    - chen-2025-geo-how-to-dominate-ai-search
+    locator: framework/ai_readiness_framework.json#ind:C4
+    grounding_span_id: null
+    complete: false
+    definition: null
+  - item: C5
+    status: draft
+    construct:
+    - con:C:readiness-metrics-baseline
+    doc_id:
+    - aidrin-2-0-a-framework-to-assess-data-readiness-for-ai
+    - aidrin-hiniduma-2024
+    - data-readiness-for-ai-a-360-degree-survey
+    locator: framework/ai_readiness_framework.json#ind:C5
+    grounding_span_id: null
+    complete: false
+    definition: null
+  - item: D1
+    status: draft
+    construct:
+    - con:D:license-clarity
+    doc_id: null
+    locator: framework/ai_readiness_framework.json#ind:D1
+    grounding_span_id: null
+    complete: false
+    definition: null
+  - item: D2
+    status: draft
+    construct:
+    - con:D:reuse-permissions-for-ai
+    doc_id: null
+    locator: framework/ai_readiness_framework.json#ind:D2
+    grounding_span_id: null
+    complete: false
+    definition: null
+  - item: D3
+    status: draft
+    construct:
+    - con:D:provenance-completeness
+    doc_id:
+    - w3c-prov-dm-data-model
+    - w3c-prov-o-ontology
+    locator: framework/ai_readiness_framework.json#ind:D3
+    grounding_span_id: null
+    complete: false
+    definition: null
+  - item: D4
+    status: draft
+    construct:
+    - con:D:no-dark-data
+    doc_id:
+    - dcat-us-1-1-schema
+    - foundations-for-evidence-based-policymaking-act-of-2018-evid
+    - m-25-05-phase-2-implementation-of-the-evidence-act-open-gove
+    locator: framework/ai_readiness_framework.json#ind:D4
+    grounding_span_id: null
+    complete: false
+    definition: null
+  - item: E1
+    status: draft
+    construct:
+    - con:E:verification-vs-validation-split
+    doc_id:
+    - nist-ai-risk-management-framework-ai-rmf
+    locator: framework/ai_readiness_framework.json#ind:E1
+    grounding_span_id: null
+    complete: false
+    definition: null
+  - item: E2
+    status: draft
+    construct:
+    - con:E:acceptance-thresholds
+    doc_id:
+    - nist-ai-rmf-playbook
+    locator: framework/ai_readiness_framework.json#ind:E2
+    grounding_span_id: null
+    complete: false
+    definition: null
+  - item: E3
+    status: draft
+    construct:
+    - con:E:instrument-versioning
+    doc_id: null
+    locator: framework/ai_readiness_framework.json#ind:E3
+    grounding_span_id: null
+    complete: false
+    definition: null
+  - item: E4
+    status: draft
+    construct:
+    - con:E:contamination-policy
+    doc_id:
+    - sainz-2023-llm-data-contamination
+    locator: framework/ai_readiness_framework.json#ind:E4
+    grounding_span_id: null
+    complete: false
+    definition: null
+  - item: E5
+    status: draft
+    construct:
+    - con:E:positive-controls
+    doc_id: null
+    locator: framework/ai_readiness_framework.json#ind:E5
+    grounding_span_id: null
+    complete: false
+    definition: null
+  - item: E6
+    status: draft
+    construct:
+    - con:E:failure-attribution
+    doc_id: null
+    locator: framework/ai_readiness_framework.json#ind:E6
+    grounding_span_id: null
+    complete: false
+    definition: null
+  - item: E7
+    status: draft
+    construct:
+    - con:E:corrective-action-closure
+    doc_id: null
+    locator: framework/ai_readiness_framework.json#ind:E7
+    grounding_span_id: null
+    complete: false
+    definition: null
+  - item: E8
+    status: draft
+    construct:
+    - con:E:drift-sentinels-golden-questions
+    doc_id:
+    - webb-2026-state-fidelity-validity
+    locator: framework/ai_readiness_framework.json#ind:E8
+    grounding_span_id: null
+    complete: false
+    definition: null
+  - item: E9
+    status: draft
+    construct:
+    - con:E:adversarial-evaluation-red-team
+    doc_id:
+    - nist-ai-risk-management-framework-ai-rmf
+    - nist-generative-ai-profile-ai-600-1
+    locator: framework/ai_readiness_framework.json#ind:E9
+    grounding_span_id: null
+    complete: false
+    definition: null
+  - item: F1
+    status: draft
+    construct:
+    - con:F:pre-release-gates
+    doc_id:
+    - odcs-open-data-contract-standard
+    locator: framework/ai_readiness_framework.json#ind:F1
+    grounding_span_id: null
+    complete: false
+    definition: null
+  - item: F2
+    status: draft
+    construct:
+    - con:F:contract-stability
+    doc_id:
+    - odcs-open-data-contract-standard
+    locator: framework/ai_readiness_framework.json#ind:F2
+    grounding_span_id: null
+    complete: false
+    definition: null
+  - item: F3
+    status: draft
+    construct:
+    - con:F:regression-on-vintage-transition
+    doc_id: null
+    locator: framework/ai_readiness_framework.json#ind:F3
+    grounding_span_id: null
+    complete: false
+    definition: null
+  - item: F4
+    status: draft
+    construct:
+    - con:F:change-legibility
+    doc_id:
+    - usafacts-ai-ready-data-guide
+    locator: framework/ai_readiness_framework.json#ind:F4
+    grounding_span_id: null
+    complete: false
+    definition: null
+  - item: F5
+    status: draft
+    construct:
+    - con:F:staged-rollout
+    doc_id: null
+    locator: framework/ai_readiness_framework.json#ind:F5
+    grounding_span_id: null
+    complete: false
+    definition: null
+  - item: F6
+    status: '`paid`-tier candidate'
+    construct:
+    - con:F:release-authenticity
+    doc_id:
+    - slsa-specification-v1-0
+    locator: framework/ai_readiness_framework.json#ind:F6
+    grounding_span_id: null
+    complete: false
+    definition: null
+  - item: G1-D
+    status: v2 harness, frozen for the pilot (DD-036)
+    construct:
+    - con:G:uncertainty-legibility-two-legs-scored-as-a-vector
+    doc_id:
+    - bls-employment-situation-2026-05-news-release-archive
+    - bls-employment-situation-2026-08-news-release
+    - cao-2024-multimodal-long-form-summarization-financial-reports
+    - census-2020-disclosure-avoidance-handbook-2021
+    - census-acs-data-suppression-rules
+    - census-acs-general-handbook-2020
+    - census-api-acs5-2023-b19013-counties-colorado
+    - census-api-acs5-2023-b19013-counties-idaho
+    - census-api-dec2020-dhc-p1-counties-colorado
+    - census-quickfacts-denver-county-colorado
+    - census-quickfacts-denver-county-colorado-csv
+    - du-2026-possible-or-definite
+    - ebu-bbc-2025-news-integrity-ai-assistants
+    - fcsm-23-02-a-framework-for-data-quality-case-studies
+    - lee-2026-when-summaries-distort-decisions
+    - manski-2015-communicating-uncertainty-official-economic-statistics
+    - mazzi-2021-measuring-communicating-uncertainty-official-economic-statistics
+    - min-2023-factscore
+    - nchs-2017-data-presentation-standards-proportions
+    - nchs-2023-data-presentation-standards-rates-counts
+    - nchs-data-brief-500-dental-visits-adults-65-2022
+    - nchs-data-brief-515-high-total-cholesterol-2021-2023
+    - nchs-data-brief-530-perinatal-mortality-2022-2023
+    - ons-uncertainty-and-how-we-measure-it
+    - peters-2025-generalization-bias-llm-summarization
+    - radhakrishnan-2024-knowing-when-to-ask-data-commons
+    - statcan-13-10-0096-01-cchs-2022-provinces-percent-ci-csv
+    - statcan-13-10-0096-01-cube-metadata-csv
+    - statcan-13-10-0113-01-cchs-2021-2022-quebec-health-regions-percent-ci-csv
+    - statcan-13-10-0113-01-cube-metadata-csv
+    - statcan-14-10-0287-01-cube-metadata-csv
+    - statcan-14-10-0287-01-lfs-2025-12-provinces-estimate-se-csv
+    - statcan-14-10-0287-01-lfs-2026-07-provinces-estimate-se-csv
+    - statcan-71-543-g-guide-labour-force-survey-2025
+    - statcan-quality-guidelines-6th-edition
+    - suleymanli-2025-llms-charts-official-statistics
+    - van-der-bles-2019-communicating-uncertainty
+    - venktesh-2024-quantemp-numerical-claims
+    - zhao-2020-reducing-quantity-hallucinations
+    - zhou-2026-loomsum-table-grounded-faithfulness
+    locator: framework/ai_readiness_framework.json#ind:G1-D
+    grounding_span_id: null
+    complete: false
+    definition: null
+  - item: G1-O
+    status: v2 harness, frozen for the pilot (DD-036)
+    construct:
+    - con:G:uncertainty-legibility-two-legs-scored-as-a-vector
+    doc_id:
+    - bls-employment-situation-2026-05-news-release-archive
+    - bls-employment-situation-2026-08-news-release
+    - cao-2024-multimodal-long-form-summarization-financial-reports
+    - census-2020-disclosure-avoidance-handbook-2021
+    - census-acs-data-suppression-rules
+    - census-acs-general-handbook-2020
+    - census-api-acs5-2023-b19013-counties-colorado
+    - census-api-acs5-2023-b19013-counties-idaho
+    - census-api-dec2020-dhc-p1-counties-colorado
+    - census-quickfacts-denver-county-colorado
+    - census-quickfacts-denver-county-colorado-csv
+    - du-2026-possible-or-definite
+    - ebu-bbc-2025-news-integrity-ai-assistants
+    - fcsm-23-02-a-framework-for-data-quality-case-studies
+    - lee-2026-when-summaries-distort-decisions
+    - manski-2015-communicating-uncertainty-official-economic-statistics
+    - mazzi-2021-measuring-communicating-uncertainty-official-economic-statistics
+    - min-2023-factscore
+    - nchs-2017-data-presentation-standards-proportions
+    - nchs-2023-data-presentation-standards-rates-counts
+    - nchs-data-brief-500-dental-visits-adults-65-2022
+    - nchs-data-brief-515-high-total-cholesterol-2021-2023
+    - nchs-data-brief-530-perinatal-mortality-2022-2023
+    - ons-uncertainty-and-how-we-measure-it
+    - peters-2025-generalization-bias-llm-summarization
+    - radhakrishnan-2024-knowing-when-to-ask-data-commons
+    - statcan-13-10-0096-01-cchs-2022-provinces-percent-ci-csv
+    - statcan-13-10-0096-01-cube-metadata-csv
+    - statcan-13-10-0113-01-cchs-2021-2022-quebec-health-regions-percent-ci-csv
+    - statcan-13-10-0113-01-cube-metadata-csv
+    - statcan-14-10-0287-01-cube-metadata-csv
+    - statcan-14-10-0287-01-lfs-2025-12-provinces-estimate-se-csv
+    - statcan-14-10-0287-01-lfs-2026-07-provinces-estimate-se-csv
+    - statcan-71-543-g-guide-labour-force-survey-2025
+    - statcan-quality-guidelines-6th-edition
+    - suleymanli-2025-llms-charts-official-statistics
+    - van-der-bles-2019-communicating-uncertainty
+    - venktesh-2024-quantemp-numerical-claims
+    - zhao-2020-reducing-quantity-hallucinations
+    - zhou-2026-loomsum-table-grounded-faithfulness
+    locator: framework/ai_readiness_framework.json#ind:G1-O
+    grounding_span_id: null
+    complete: false
+    definition: null
+  - item: G2
+    status: draft
+    construct:
+    - con:G:revision-semantics
+    doc_id: null
+    locator: framework/ai_readiness_framework.json#ind:G2
+    grounding_span_id: null
+    complete: false
+    definition: null
+  - item: G3
+    status: draft
+    construct:
+    - con:G:classification-vintage-identity
+    doc_id: null
+    locator: framework/ai_readiness_framework.json#ind:G3
+    grounding_span_id: null
+    complete: false
+    definition: null
+  - item: G4
+    status: draft
+    construct:
+    - con:G:authority-metadata
+    doc_id:
+    - dcat-us-1-1-schema
+    - dcat-us-3-dataset-schema
+    - dcat-us-3-overview
+    - schema-org-dataset
+    - w3c-dcat-3
+    - w3c-prov-o-ontology
+    locator: framework/ai_readiness_framework.json#ind:G4
+    grounding_span_id: null
+    complete: false
+    definition: null
+  - item: G5
+    status: draft
+    construct:
+    - con:G:disclosure-semantics
+    doc_id:
+    - usafacts-ai-ready-data-guide
+    locator: framework/ai_readiness_framework.json#ind:G5
+    grounding_span_id: null
+    complete: false
+    definition: null
+  - item: G6
+    status: draft
+    construct:
+    - con:G:measurement-protocol-provenance
+    doc_id:
+    - odcs-open-data-contract-standard
+    - sdmx-3-0-section-1-framework
+    - sdmx-standards-overview
+    locator: framework/ai_readiness_framework.json#ind:G6
+    grounding_span_id: null
+    complete: false
+    definition: null
