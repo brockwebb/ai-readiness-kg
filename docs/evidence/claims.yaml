@@ -1,0 +1,3612 @@
+schema_version: 1
+generated_by: 'scripts/build_evidence_map.py (cc_tasks/2026-10-02_evidence_map_record.md) for the entries
+  whose source_task is that task; other entries are carried through. Do not edit generated entries: re-run
+  the generator.'
+cycle_of_record: scan_2026-09-10_rj4
+framework_record_commit: 9ffcffddbf8f
+claims:
+- id: CL-001
+  key: q1.partition
+  question: Q1
+  text: 'Of the framework''s indicators the record does not mark measured (32), what blocks each partitions
+    as: 8 `open_tooling`, 0 `funding`, 15 `no_standard`, 7 `agency_cooperation`, 2 `not_blocked`.'
+  status: record
+  evidence:
+  - kind: query
+    id: record.measurement_status
+    locator: scripts/build_evidence_map.py::QUERIES['record.measurement_status']
+  - kind: query
+    id: mcp.get_requirements
+    locator: scripts/build_evidence_map.py::QUERIES['mcp.get_requirements']
+  - kind: indicator
+    id: ind:A7
+    locator: framework/ai_readiness_framework.json#ind:A7
+    note: open_tooling
+  - kind: indicator
+    id: ind:B1
+    locator: framework/ai_readiness_framework.json#ind:B1
+    note: no_standard
+  - kind: indicator
+    id: ind:B2
+    locator: framework/ai_readiness_framework.json#ind:B2
+    note: no_standard
+  - kind: indicator
+    id: ind:B4
+    locator: framework/ai_readiness_framework.json#ind:B4
+    note: no_standard
+  - kind: indicator
+    id: ind:B5
+    locator: framework/ai_readiness_framework.json#ind:B5
+    note: open_tooling
+  - kind: indicator
+    id: ind:B6
+    locator: framework/ai_readiness_framework.json#ind:B6
+    note: no_standard
+  - kind: indicator
+    id: ind:C1
+    locator: framework/ai_readiness_framework.json#ind:C1
+    note: no_standard
+  - kind: indicator
+    id: ind:C2
+    locator: framework/ai_readiness_framework.json#ind:C2
+    note: no_standard
+  - kind: indicator
+    id: ind:C3
+    locator: framework/ai_readiness_framework.json#ind:C3
+    note: no_standard
+  - kind: indicator
+    id: ind:C4
+    locator: framework/ai_readiness_framework.json#ind:C4
+    note: no_standard
+  - kind: indicator
+    id: ind:C5
+    locator: framework/ai_readiness_framework.json#ind:C5
+    note: open_tooling
+  - kind: indicator
+    id: ind:D2
+    locator: framework/ai_readiness_framework.json#ind:D2
+    note: not_blocked
+  - kind: indicator
+    id: ind:D3
+    locator: framework/ai_readiness_framework.json#ind:D3
+    note: open_tooling
+  - kind: indicator
+    id: ind:E1
+    locator: framework/ai_readiness_framework.json#ind:E1
+    note: agency_cooperation
+  - kind: indicator
+    id: ind:E2
+    locator: framework/ai_readiness_framework.json#ind:E2
+    note: agency_cooperation
+  - kind: indicator
+    id: ind:E3
+    locator: framework/ai_readiness_framework.json#ind:E3
+    note: agency_cooperation
+  - kind: indicator
+    id: ind:E4
+    locator: framework/ai_readiness_framework.json#ind:E4
+    note: agency_cooperation
+  - kind: indicator
+    id: ind:E5
+    locator: framework/ai_readiness_framework.json#ind:E5
+    note: not_blocked
+  - kind: indicator
+    id: ind:E6
+    locator: framework/ai_readiness_framework.json#ind:E6
+    note: no_standard
+  - kind: indicator
+    id: ind:E7
+    locator: framework/ai_readiness_framework.json#ind:E7
+    note: agency_cooperation
+  - kind: indicator
+    id: ind:E8
+    locator: framework/ai_readiness_framework.json#ind:E8
+    note: no_standard
+  - kind: indicator
+    id: ind:E9
+    locator: framework/ai_readiness_framework.json#ind:E9
+    note: no_standard
+  - kind: indicator
+    id: ind:F1
+    locator: framework/ai_readiness_framework.json#ind:F1
+    note: agency_cooperation
+  - kind: indicator
+    id: ind:F2
+    locator: framework/ai_readiness_framework.json#ind:F2
+    note: open_tooling
+  - kind: indicator
+    id: ind:F3
+    locator: framework/ai_readiness_framework.json#ind:F3
+    note: open_tooling
+  - kind: indicator
+    id: ind:F5
+    locator: framework/ai_readiness_framework.json#ind:F5
+    note: agency_cooperation
+  - kind: indicator
+    id: ind:F6
+    locator: framework/ai_readiness_framework.json#ind:F6
+    note: open_tooling
+  - kind: indicator
+    id: ind:G2
+    locator: framework/ai_readiness_framework.json#ind:G2
+    note: no_standard
+  - kind: indicator
+    id: ind:G3
+    locator: framework/ai_readiness_framework.json#ind:G3
+    note: open_tooling
+  - kind: indicator
+    id: ind:G4
+    locator: framework/ai_readiness_framework.json#ind:G4
+    note: no_standard
+  - kind: indicator
+    id: ind:G5
+    locator: framework/ai_readiness_framework.json#ind:G5
+    note: no_standard
+  - kind: indicator
+    id: ind:G6
+    locator: framework/ai_readiness_framework.json#ind:G6
+    note: no_standard
+  numbers:
+  - value: '8'
+    source: Q1 rows classed open_tooling
+  - value: '0'
+    source: Q1 rows classed funding
+  - value: '15'
+    source: Q1 rows classed no_standard
+  - value: '7'
+    source: Q1 rows classed agency_cooperation
+  - value: '2'
+    source: Q1 rows classed not_blocked
+  - value: '32'
+    source: framework indicators whose measurement_status is not measured
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-002
+  key: q1.A7
+  question: Q1
+  text: '`A7` has no measured verdict in the record and can be measured from outside with public tooling
+    and no agency action (route `wayback_cdx` needs `tool:wayback-cdx-server`); it is to be measured before
+    the summary is drafted (`DN-009 decision 6`).'
+  status: needs_measurement
+  evidence:
+  - kind: indicator
+    id: ind:A7
+    locator: framework/ai_readiness_framework.json#ind:A7
+    note: routes
+  - kind: query
+    id: mcp.get_requirements
+    locator: scripts/build_evidence_map.py::QUERIES['mcp.get_requirements']
+    note: get_requirements(indicator='A7')
+  - kind: query
+    id: mcp.get_requirements
+    locator: framework/ai_readiness_framework.json#tool:wayback-cdx-server
+    note: 'route wayback_cdx: hosted_free, provided by this_project'
+  numbers: []
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-003
+  key: q1.B1
+  question: Q1
+  text: '`B1` (status `harness_built`) is not measured, and what blocks it is `no_standard`: the record''s
+    reason is quoted in this claim''s evidence.'
+  status: record
+  evidence:
+  - kind: indicator
+    id: ind:B1
+    locator: framework/ai_readiness_framework.json#ind:B1
+    note: 'record reason matches `an instrument this project has not specified`; record: The unmeasured
+      half is whether the linked dictionary or the listed variables are ''comprehensive'', a judgement
+      about their contents. No admitted document defines a test for it, so what stands in the way is an
+      instrument this project has not specified — not a tool, an account or anything the body holds.'
+  - kind: query
+    id: mcp.get_requirements
+    locator: scripts/build_evidence_map.py::QUERIES['mcp.get_requirements']
+    note: get_requirements(indicator='B1')
+  numbers: []
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-004
+  key: q1.B2
+  question: Q1
+  text: '`B2` (status `harness_built`) is not measured, and what blocks it is `no_standard`: the record''s
+    reason is quoted in this claim''s evidence.'
+  status: record
+  evidence:
+  - kind: indicator
+    id: ind:B2
+    locator: framework/ai_readiness_framework.json#ind:B2
+    note: 'record reason matches `What is missing is a standard`; record: The ''versioned'' clause has
+      no field in any admitted document. What is missing is a standard to test against, not a tool or
+      a grant.'
+  - kind: query
+    id: mcp.get_requirements
+    locator: scripts/build_evidence_map.py::QUERIES['mcp.get_requirements']
+    note: get_requirements(indicator='B2')
+  numbers: []
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-005
+  key: q1.B4
+  question: Q1
+  text: '`B4` (status `harness_built`) is not measured, and what blocks it is `no_standard`: the record''s
+    reason is quoted in this claim''s evidence.'
+  status: record
+  evidence:
+  - kind: indicator
+    id: ind:B4
+    locator: framework/ai_readiness_framework.json#ind:B4
+    note: 'record reason matches `What is missing is a standard`; record: The suppression-rules clause
+      has no field in any admitted document (the failed search is on `ind:G5.tier_unassigned_reason`).
+      What is missing is a standard, not a tool or a grant.'
+  - kind: query
+    id: mcp.get_requirements
+    locator: scripts/build_evidence_map.py::QUERIES['mcp.get_requirements']
+    note: get_requirements(indicator='B4')
+  numbers: []
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-006
+  key: q1.B5
+  question: Q1
+  text: '`B5` has no measured verdict in the record and can be measured from outside with public tooling
+    and no agency action (route `second_cycle` needs `pre:second-scan-cycle`); it is to be measured before
+    the summary is drafted (`DN-009 decision 6`).'
+  status: needs_measurement
+  evidence:
+  - kind: indicator
+    id: ind:B5
+    locator: framework/ai_readiness_framework.json#ind:B5
+    note: 'routes; record: measured by this harness with RULE-B5-v1 (leg `B5`); no tool, account or record
+      stands between it and a verdict — for the clauses its rule reads; the tests below close what it
+      does not'
+  - kind: query
+    id: mcp.get_requirements
+    locator: scripts/build_evidence_map.py::QUERIES['mcp.get_requirements']
+    note: get_requirements(indicator='B5')
+  - kind: query
+    id: mcp.get_requirements
+    locator: framework/ai_readiness_framework.json#pre:second-scan-cycle
+    note: 'route second_cycle: second_cycle, provided by this_project'
+  numbers: []
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-007
+  key: q1.B6
+  question: Q1
+  text: '`B6` (status `specified`) is not measured, and what blocks it is `no_standard`: the record''s
+    reason is quoted in this claim''s evidence.'
+  status: record
+  evidence:
+  - kind: indicator
+    id: ind:B6
+    locator: framework/ai_readiness_framework.json#ind:B6
+    note: 'record reason matches `needs a different instrument`; record: cc_tasks/2026-09-17_unassigned_indicators.md
+      decision 4: the G1 precedent does not carry it. G1''s act is a preservation score — a pinned consumer
+      restates a captured surface and the restatement is scored for what it kept (DD-036 §2). B6 asks
+      two different questions about the surface itself: whether the summary is plain language, a readability
+      property of the text and not of a restatement, and whether it is current, a freshness comparison
+      against the product''s own modified date. Neither is a preservation score, so B6 needs a different
+      instrument and stays unassigned. The ''current'' half is the closer of the two to a structured-field
+      test: DCAT-US 3 `modified` on the dataset against the summary page''s own date.'
+  - kind: query
+    id: mcp.get_requirements
+    locator: scripts/build_evidence_map.py::QUERIES['mcp.get_requirements']
+    note: get_requirements(indicator='B6')
+  numbers: []
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-008
+  key: q1.C1
+  question: Q1
+  text: '`C1` (status `specified`) is not measured, and what blocks it is `no_standard`: route `benchmark`
+    is `no_standard` (`pre:product-question-benchmark` from `this_project`).'
+  status: record
+  evidence:
+  - kind: indicator
+    id: ind:C1
+    locator: framework/ai_readiness_framework.json#ind:C1
+    note: routes
+  - kind: query
+    id: mcp.get_requirements
+    locator: scripts/build_evidence_map.py::QUERIES['mcp.get_requirements']
+    note: get_requirements(indicator='C1')
+  - kind: query
+    id: mcp.get_requirements
+    locator: framework/ai_readiness_framework.json#pre:product-question-benchmark
+    note: 'route benchmark: benchmark_set, provided by this_project'
+  numbers: []
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-009
+  key: q1.C2
+  question: Q1
+  text: '`C2` (status `specified`) is not measured, and what blocks it is `no_standard`: route `probe_protocol`
+    is `no_standard` (`pre:entailment-probe-set` from `this_project`).'
+  status: record
+  evidence:
+  - kind: indicator
+    id: ind:C2
+    locator: framework/ai_readiness_framework.json#ind:C2
+    note: routes
+  - kind: query
+    id: mcp.get_requirements
+    locator: scripts/build_evidence_map.py::QUERIES['mcp.get_requirements']
+    note: get_requirements(indicator='C2')
+  - kind: query
+    id: mcp.get_requirements
+    locator: framework/ai_readiness_framework.json#pre:entailment-probe-set
+    note: 'route probe_protocol: benchmark_set, provided by this_project'
+  numbers: []
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-010
+  key: q1.C3
+  question: Q1
+  text: '`C3` (status `specified`) is not measured, and what blocks it is `no_standard`: route `benchmark`
+    is `no_standard` (`pre:vintage-disambiguation-set` from `this_project`).'
+  status: record
+  evidence:
+  - kind: indicator
+    id: ind:C3
+    locator: framework/ai_readiness_framework.json#ind:C3
+    note: routes
+  - kind: query
+    id: mcp.get_requirements
+    locator: scripts/build_evidence_map.py::QUERIES['mcp.get_requirements']
+    note: get_requirements(indicator='C3')
+  - kind: query
+    id: mcp.get_requirements
+    locator: framework/ai_readiness_framework.json#pre:vintage-disambiguation-set
+    note: 'route benchmark: benchmark_set, provided by this_project'
+  numbers: []
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-011
+  key: q1.C4
+  question: Q1
+  text: '`C4` (status `specified`) is not measured, and what blocks it is `no_standard`: route `bing_ai_performance`
+    is `agency_cooperation` (`tool:bing-webmaster-tools-ai-performance` from `publisher`, `pre:bing-webmaster-tools-verified-site`
+    from `publisher`); route `engine_queries` is `no_standard` (`tool:perplexity-ai` from `this_project`,
+    `pre:generative-engine-query-set` from `this_project`).'
+  status: record
+  evidence:
+  - kind: indicator
+    id: ind:C4
+    locator: framework/ai_readiness_framework.json#ind:C4
+    note: routes
+  - kind: query
+    id: mcp.get_requirements
+    locator: scripts/build_evidence_map.py::QUERIES['mcp.get_requirements']
+    note: get_requirements(indicator='C4')
+  - kind: query
+    id: mcp.get_requirements
+    locator: framework/ai_readiness_framework.json#tool:bing-webmaster-tools-ai-performance
+    note: 'route bing_ai_performance: platform_account, provided by publisher'
+  - kind: query
+    id: mcp.get_requirements
+    locator: framework/ai_readiness_framework.json#pre:bing-webmaster-tools-verified-site
+    note: 'route bing_ai_performance: site_owner_account, provided by publisher'
+  - kind: query
+    id: mcp.get_requirements
+    locator: framework/ai_readiness_framework.json#tool:perplexity-ai
+    note: 'route engine_queries: hosted_paid, provided by this_project'
+  - kind: query
+    id: mcp.get_requirements
+    locator: framework/ai_readiness_framework.json#pre:generative-engine-query-set
+    note: 'route engine_queries: benchmark_set, provided by this_project'
+  numbers: []
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-012
+  key: q1.C5
+  question: Q1
+  text: '`C5` has no measured verdict in the record and can be measured from outside with public tooling
+    and no agency action (route `aidrin` needs `tool:aidrin`); it is to be measured before the summary
+    is drafted (`DN-009 decision 6`).'
+  status: needs_measurement
+  evidence:
+  - kind: indicator
+    id: ind:C5
+    locator: framework/ai_readiness_framework.json#ind:C5
+    note: routes
+  - kind: query
+    id: mcp.get_requirements
+    locator: scripts/build_evidence_map.py::QUERIES['mcp.get_requirements']
+    note: get_requirements(indicator='C5')
+  - kind: query
+    id: mcp.get_requirements
+    locator: framework/ai_readiness_framework.json#tool:aidrin
+    note: 'route aidrin: open_source, provided by this_project'
+  numbers: []
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-013
+  key: q1.D2
+  question: Q1
+  text: '`D2` (status `harness_built`) is not measured, and what blocks it is `not_blocked`: the record''s
+    reason is quoted in this claim''s evidence.'
+  status: record
+  evidence:
+  - kind: indicator
+    id: ind:D2
+    locator: framework/ai_readiness_framework.json#ind:D2
+    note: 'record reason matches `no tool, account or record stands between it and a verdict`; record:
+      measured by this harness with RULE-D2-v1 (leg `D2`); no tool, account or record stands between it
+      and a verdict'
+  - kind: query
+    id: mcp.get_requirements
+    locator: scripts/build_evidence_map.py::QUERIES['mcp.get_requirements']
+    note: get_requirements(indicator='D2')
+  numbers: []
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-014
+  key: q1.D3
+  question: Q1
+  text: '`D3` has no measured verdict in the record and can be measured from outside with public tooling
+    and no agency action (the record says the unmeasured half is a rule this project would write over
+    the catalog records the harness already fetches); it is to be measured before the summary is drafted
+    (`DN-009 decision 6`).'
+  status: needs_measurement
+  evidence:
+  - kind: indicator
+    id: ind:D3
+    locator: framework/ai_readiness_framework.json#ind:D3
+    note: 'record reason matches `a rule this project would write`; record: Whether the lineage reaches
+      from collection through processing is readable by walking `wasDerivedFrom` on the same catalog records
+      the rule already fetches. That is a rule this project would write, not a requirement of the body''s.'
+  - kind: query
+    id: mcp.get_requirements
+    locator: scripts/build_evidence_map.py::QUERIES['mcp.get_requirements']
+    note: get_requirements(indicator='D3')
+  numbers: []
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-015
+  key: q1.E1
+  question: Q1
+  text: '`E1` (status `specified`) is not measured, and what blocks it is `agency_cooperation`: route
+    `agency_report` is `agency_cooperation` (`pre:published-conformance-and-evaluation-report` from `publisher`).'
+  status: record
+  evidence:
+  - kind: indicator
+    id: ind:E1
+    locator: framework/ai_readiness_framework.json#ind:E1
+    note: routes
+  - kind: query
+    id: mcp.get_requirements
+    locator: scripts/build_evidence_map.py::QUERIES['mcp.get_requirements']
+    note: get_requirements(indicator='E1')
+  - kind: query
+    id: mcp.get_requirements
+    locator: framework/ai_readiness_framework.json#pre:published-conformance-and-evaluation-report
+    note: 'route agency_report: agency_records, provided by publisher'
+  numbers: []
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-016
+  key: q1.E2
+  question: Q1
+  text: '`E2` (status `specified`) is not measured, and what blocks it is `agency_cooperation`: route
+    `agency_records` is `agency_cooperation` (`pre:threshold-preregistration-records` from `publisher`).'
+  status: record
+  evidence:
+  - kind: indicator
+    id: ind:E2
+    locator: framework/ai_readiness_framework.json#ind:E2
+    note: routes
+  - kind: query
+    id: mcp.get_requirements
+    locator: scripts/build_evidence_map.py::QUERIES['mcp.get_requirements']
+    note: get_requirements(indicator='E2')
+  - kind: query
+    id: mcp.get_requirements
+    locator: framework/ai_readiness_framework.json#pre:threshold-preregistration-records
+    note: 'route agency_records: agency_records, provided by publisher'
+  numbers: []
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-017
+  key: q1.E3
+  question: Q1
+  text: '`E3` (status `specified`) is not measured, and what blocks it is `agency_cooperation`: route
+    `agency_records` is `agency_cooperation` (`pre:evaluation-set-version-records` from `publisher`).'
+  status: record
+  evidence:
+  - kind: indicator
+    id: ind:E3
+    locator: framework/ai_readiness_framework.json#ind:E3
+    note: routes
+  - kind: query
+    id: mcp.get_requirements
+    locator: scripts/build_evidence_map.py::QUERIES['mcp.get_requirements']
+    note: get_requirements(indicator='E3')
+  - kind: query
+    id: mcp.get_requirements
+    locator: framework/ai_readiness_framework.json#pre:evaluation-set-version-records
+    note: 'route agency_records: agency_records, provided by publisher'
+  numbers: []
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-018
+  key: q1.E4
+  question: Q1
+  text: '`E4` (status `specified`) is not measured, and what blocks it is `agency_cooperation`: route
+    `agency_records` is `agency_cooperation` (`pre:held-out-rotation-records` from `publisher`).'
+  status: record
+  evidence:
+  - kind: indicator
+    id: ind:E4
+    locator: framework/ai_readiness_framework.json#ind:E4
+    note: routes
+  - kind: query
+    id: mcp.get_requirements
+    locator: scripts/build_evidence_map.py::QUERIES['mcp.get_requirements']
+    note: get_requirements(indicator='E4')
+  - kind: query
+    id: mcp.get_requirements
+    locator: framework/ai_readiness_framework.json#pre:held-out-rotation-records
+    note: 'route agency_records: agency_records, provided by publisher'
+  numbers: []
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-019
+  key: q1.E5
+  question: Q1
+  text: '`E5` (status `harness_built`) is not measured, and what blocks it is `not_blocked`: the record''s
+    reason is quoted in this claim''s evidence.'
+  status: record
+  evidence:
+  - kind: indicator
+    id: ind:E5
+    locator: framework/ai_readiness_framework.json#ind:E5
+    note: 'record reason matches `definition of `measured``; record: E5 judges the CYCLE, not a surface,
+      so DD-055''s definition of `measured` — a Finding on an admitted, observable surface — cannot apply
+      to it. Its control Finding fired in this cycle and every other; the status is a limitation of the
+      definition, not a gap in the measurement.'
+  - kind: query
+    id: mcp.get_requirements
+    locator: scripts/build_evidence_map.py::QUERIES['mcp.get_requirements']
+    note: get_requirements(indicator='E5')
+  numbers: []
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-020
+  key: q1.E6
+  question: Q1
+  text: '`E6` (status `specified`) is not measured, and what blocks it is `no_standard`: route `benchmark`
+    is `no_standard` (`pre:product-question-benchmark` from `this_project`, `pre:vintage-disambiguation-set`
+    from `this_project`).'
+  status: record
+  evidence:
+  - kind: indicator
+    id: ind:E6
+    locator: framework/ai_readiness_framework.json#ind:E6
+    note: routes
+  - kind: query
+    id: mcp.get_requirements
+    locator: scripts/build_evidence_map.py::QUERIES['mcp.get_requirements']
+    note: get_requirements(indicator='E6')
+  - kind: query
+    id: mcp.get_requirements
+    locator: framework/ai_readiness_framework.json#pre:product-question-benchmark
+    note: 'route benchmark: benchmark_set, provided by this_project'
+  - kind: query
+    id: mcp.get_requirements
+    locator: framework/ai_readiness_framework.json#pre:vintage-disambiguation-set
+    note: 'route benchmark: benchmark_set, provided by this_project'
+  numbers: []
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-021
+  key: q1.E7
+  question: Q1
+  text: '`E7` (status `specified`) is not measured, and what blocks it is `agency_cooperation`: route
+    `agency_records` is `agency_cooperation` (`pre:eval-failure-closure-records` from `publisher`).'
+  status: record
+  evidence:
+  - kind: indicator
+    id: ind:E7
+    locator: framework/ai_readiness_framework.json#ind:E7
+    note: routes
+  - kind: query
+    id: mcp.get_requirements
+    locator: scripts/build_evidence_map.py::QUERIES['mcp.get_requirements']
+    note: get_requirements(indicator='E7')
+  - kind: query
+    id: mcp.get_requirements
+    locator: framework/ai_readiness_framework.json#pre:eval-failure-closure-records
+    note: 'route agency_records: agency_records, provided by publisher'
+  numbers: []
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-022
+  key: q1.E8
+  question: Q1
+  text: '`E8` (status `specified`) is not measured, and what blocks it is `no_standard`: route `benchmark`
+    is `no_standard` (`pre:product-question-benchmark` from `this_project`, `pre:second-evaluation-run`
+    from `this_project`).'
+  status: record
+  evidence:
+  - kind: indicator
+    id: ind:E8
+    locator: framework/ai_readiness_framework.json#ind:E8
+    note: routes
+  - kind: query
+    id: mcp.get_requirements
+    locator: scripts/build_evidence_map.py::QUERIES['mcp.get_requirements']
+    note: get_requirements(indicator='E8')
+  - kind: query
+    id: mcp.get_requirements
+    locator: framework/ai_readiness_framework.json#pre:product-question-benchmark
+    note: 'route benchmark: benchmark_set, provided by this_project'
+  - kind: query
+    id: mcp.get_requirements
+    locator: framework/ai_readiness_framework.json#pre:second-evaluation-run
+    note: 'route benchmark: second_cycle, provided by this_project'
+  numbers: []
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-023
+  key: q1.E9
+  question: Q1
+  text: '`E9` (status `specified`) is not measured, and what blocks it is `no_standard`: route `benchmark`
+    is `no_standard` (`pre:adversarial-bank` from `this_project`).'
+  status: record
+  evidence:
+  - kind: indicator
+    id: ind:E9
+    locator: framework/ai_readiness_framework.json#ind:E9
+    note: routes
+  - kind: query
+    id: mcp.get_requirements
+    locator: scripts/build_evidence_map.py::QUERIES['mcp.get_requirements']
+    note: get_requirements(indicator='E9')
+  - kind: query
+    id: mcp.get_requirements
+    locator: framework/ai_readiness_framework.json#pre:adversarial-bank
+    note: 'route benchmark: benchmark_set, provided by this_project'
+  numbers: []
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-024
+  key: q1.F1
+  question: Q1
+  text: '`F1` (status `specified`) is not measured, and what blocks it is `agency_cooperation`: route
+    `agency_records` is `agency_cooperation` (`pre:release-validation-records` from `publisher`).'
+  status: record
+  evidence:
+  - kind: indicator
+    id: ind:F1
+    locator: framework/ai_readiness_framework.json#ind:F1
+    note: routes
+  - kind: query
+    id: mcp.get_requirements
+    locator: scripts/build_evidence_map.py::QUERIES['mcp.get_requirements']
+    note: get_requirements(indicator='F1')
+  - kind: query
+    id: mcp.get_requirements
+    locator: framework/ai_readiness_framework.json#pre:release-validation-records
+    note: 'route agency_records: agency_records, provided by publisher'
+  numbers: []
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-025
+  key: q1.F2
+  question: Q1
+  text: '`F2` has no measured verdict in the record and can be measured from outside with public tooling
+    and no agency action (route `oasdiff_two_releases` needs `tool:oasdiff`, `pre:second-scan-cycle`);
+    it is to be measured before the summary is drafted (`DN-009 decision 6`).'
+  status: needs_measurement
+  evidence:
+  - kind: indicator
+    id: ind:F2
+    locator: framework/ai_readiness_framework.json#ind:F2
+    note: routes
+  - kind: query
+    id: mcp.get_requirements
+    locator: scripts/build_evidence_map.py::QUERIES['mcp.get_requirements']
+    note: get_requirements(indicator='F2')
+  - kind: query
+    id: mcp.get_requirements
+    locator: framework/ai_readiness_framework.json#tool:oasdiff
+    note: 'route oasdiff_two_releases: open_source, provided by this_project'
+  - kind: query
+    id: mcp.get_requirements
+    locator: framework/ai_readiness_framework.json#pre:second-scan-cycle
+    note: 'route oasdiff_two_releases: second_cycle, provided by this_project'
+  numbers: []
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-026
+  key: q1.F3
+  question: Q1
+  text: '`F3` has no measured verdict in the record and can be measured from outside with public tooling
+    and no agency action (route `wayback_cdx` needs `tool:wayback-cdx-server`); it is to be measured before
+    the summary is drafted (`DN-009 decision 6`).'
+  status: needs_measurement
+  evidence:
+  - kind: indicator
+    id: ind:F3
+    locator: framework/ai_readiness_framework.json#ind:F3
+    note: routes
+  - kind: query
+    id: mcp.get_requirements
+    locator: scripts/build_evidence_map.py::QUERIES['mcp.get_requirements']
+    note: get_requirements(indicator='F3')
+  - kind: query
+    id: mcp.get_requirements
+    locator: framework/ai_readiness_framework.json#tool:wayback-cdx-server
+    note: 'route wayback_cdx: hosted_free, provided by this_project'
+  numbers: []
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-027
+  key: q1.F5
+  question: Q1
+  text: '`F5` (status `specified`) is not measured, and what blocks it is `agency_cooperation`: route
+    `agency_records` is `agency_cooperation` (`pre:staging-regression-records` from `publisher`).'
+  status: record
+  evidence:
+  - kind: indicator
+    id: ind:F5
+    locator: framework/ai_readiness_framework.json#ind:F5
+    note: routes
+  - kind: query
+    id: mcp.get_requirements
+    locator: scripts/build_evidence_map.py::QUERIES['mcp.get_requirements']
+    note: get_requirements(indicator='F5')
+  - kind: query
+    id: mcp.get_requirements
+    locator: framework/ai_readiness_framework.json#pre:staging-regression-records
+    note: 'route agency_records: agency_records, provided by publisher'
+  numbers: []
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-028
+  key: q1.F6
+  question: Q1
+  text: '`F6` has no measured verdict in the record and can be measured from outside with public tooling
+    and no agency action (route `slsa_verifier` needs `tool:slsa-verifier`); it is to be measured before
+    the summary is drafted (`DN-009 decision 6`).'
+  status: needs_measurement
+  evidence:
+  - kind: indicator
+    id: ind:F6
+    locator: framework/ai_readiness_framework.json#ind:F6
+    note: routes
+  - kind: query
+    id: mcp.get_requirements
+    locator: scripts/build_evidence_map.py::QUERIES['mcp.get_requirements']
+    note: get_requirements(indicator='F6')
+  - kind: query
+    id: mcp.get_requirements
+    locator: framework/ai_readiness_framework.json#tool:slsa-verifier
+    note: 'route slsa_verifier: open_source, provided by this_project'
+  numbers: []
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-029
+  key: q1.G2
+  question: Q1
+  text: '`G2` (status `specified`) is not measured, and what blocks it is `no_standard`: route `benchmark`
+    is `no_standard` (`pre:vintage-disambiguation-set` from `this_project`).'
+  status: record
+  evidence:
+  - kind: indicator
+    id: ind:G2
+    locator: framework/ai_readiness_framework.json#ind:G2
+    note: routes
+  - kind: query
+    id: mcp.get_requirements
+    locator: scripts/build_evidence_map.py::QUERIES['mcp.get_requirements']
+    note: get_requirements(indicator='G2')
+  - kind: query
+    id: mcp.get_requirements
+    locator: framework/ai_readiness_framework.json#pre:vintage-disambiguation-set
+    note: 'route benchmark: benchmark_set, provided by this_project'
+  numbers: []
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-030
+  key: q1.G3
+  question: Q1
+  text: '`G3` has no measured verdict in the record and can be measured from outside with public tooling
+    and no agency action (the record says an admitted standard names the artifact and only a collector
+    this project would write is missing); it is to be measured before the summary is drafted (`DN-009
+    decision 6`).'
+  status: needs_measurement
+  evidence:
+  - kind: indicator
+    id: ind:G3
+    locator: framework/ai_readiness_framework.json#ind:G3
+    note: 'record reason matches `no collector reads it`; record: cc_tasks/2026-09-17_unassigned_indicators.md
+      decision 5: a corpus document names the artifact the crosswalk would be, and no collector reads
+      it. corpus/kernel/sdmx-3-0-section-1-framework.pdf (doc_id `sdmx-3-0-section-1-framework`) defines
+      the Structure Map — "Structure maps describes a mapping between data structure definitions or dataflows
+      for the purpose of transforming a data set into a different structure" — and the representation
+      maps that map value and code lists. No collector in docs/design/scan_tool_map.md §1 reads SDMX,
+      so decision 2''s second half fails and the tier stays undetermined. Candidate: M, harness_leg, once
+      an SDMX collector exists; the stable-series-ID half would be DCAT-US 3 `previousVersion` and `hasCurrentVersion`
+      through `dcat.fetch_catalog`.'
+  - kind: query
+    id: mcp.get_requirements
+    locator: scripts/build_evidence_map.py::QUERIES['mcp.get_requirements']
+    note: get_requirements(indicator='G3')
+  numbers: []
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-031
+  key: q1.G4
+  question: Q1
+  text: '`G4` (status `harness_built`) is not measured, and what blocks it is `no_standard`: the record''s
+    reason is quoted in this claim''s evidence.'
+  status: record
+  evidence:
+  - kind: indicator
+    id: ind:G4
+    locator: framework/ai_readiness_framework.json#ind:G4
+    note: 'record reason matches `What is missing is a standard`; record: The statutory-mandate and statistical-versus-administrative
+      clauses have no field in any admitted document. What is missing is a standard, not a tool or a grant.'
+  - kind: query
+    id: mcp.get_requirements
+    locator: scripts/build_evidence_map.py::QUERIES['mcp.get_requirements']
+    note: get_requirements(indicator='G4')
+  numbers: []
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-032
+  key: q1.G5
+  question: Q1
+  text: '`G5` (status `specified`) is not measured, and what blocks it is `no_standard`: the record''s
+    reason is quoted in this claim''s evidence.'
+  status: record
+  evidence:
+  - kind: indicator
+    id: ind:G5
+    locator: framework/ai_readiness_framework.json#ind:G5
+    note: 'record reason matches `no admitted document names a machine-readable`; record: cc_tasks/2026-09-17_unassigned_indicators.md
+      decision 2: no admitted document names a machine-readable suppression or disclosure field. The search
+      that failed: `suppress`, `confidential` and `disclosure` across corpus/kernel, corpus/crosswalk
+      and corpus/components — the only hit is bing-webmaster-guidelines, on search-result suppression
+      — and across the SDMX 3.0 §1 and DDI codebook texts. The indicator''s own source, `usafacts-ai-ready-data-guide`,
+      asks publishers to "Properly identify and document suppressed data (e.g., in very small counties)
+      in plain language with unique identifiers": plain language is the prose this indicator says it strengthens,
+      and the field that would replace it does not exist in any admitted document. Stays unassigned.'
+  - kind: query
+    id: mcp.get_requirements
+    locator: scripts/build_evidence_map.py::QUERIES['mcp.get_requirements']
+    note: get_requirements(indicator='G5')
+  numbers: []
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-033
+  key: q1.G6
+  question: Q1
+  text: '`G6` (status `specified`) is not measured, and what blocks it is `no_standard`: route `break_cases`
+    is `no_standard` (`pre:series-break-cases` from `this_project`).'
+  status: record
+  evidence:
+  - kind: indicator
+    id: ind:G6
+    locator: framework/ai_readiness_framework.json#ind:G6
+    note: routes
+  - kind: query
+    id: mcp.get_requirements
+    locator: scripts/build_evidence_map.py::QUERIES['mcp.get_requirements']
+    note: get_requirements(indicator='G6')
+  - kind: query
+    id: mcp.get_requirements
+    locator: framework/ai_readiness_framework.json#pre:series-break-cases
+    note: 'route break_cases: benchmark_set, provided by this_project'
+  numbers: []
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-034
+  key: q2.client
+  question: Q2
+  text: 'On cycle `scan_2026-09-10_rj4` the harness ran as one unauthenticated public client: it identified
+    itself as `ai-readiness-kg-scanner/0.2 (+https://github.com/brockwebb/ai-readiness-kg)`, sent no credentials,
+    cookies or other identity (the client is built with the `User-Agent` header alone, `assessment/harness/scan/manners.py:108`),
+    and never varied that identity to get a better answer (`DD-060`, `assessment/harness/scan/params.yaml:131`).'
+  status: record
+  evidence:
+  - kind: query
+    id: cycle.client
+    locator: scripts/build_evidence_map.py::QUERIES['cycle.client']
+  - kind: finding
+    id: fnd_43cf49086ef11fa38f0e03d6
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:485
+    note: A12 reason quotes the user agent
+  - kind: finding
+    id: fnd_bae314fe3394d34ecd9012b2
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:486
+    note: A12 reason quotes the user agent
+  - kind: finding
+    id: fnd_c811524ebe1c81049cdebfd4
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:498
+    note: A12 reason quotes the user agent
+  numbers: []
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-035
+  key: q2.totals
+  question: Q2
+  text: Of the 1,009 findings on cycle `scan_2026-09-10_rj4`, 154 are access denials to that client (an
+    HTTP `401`, `403` or `429`, a robots.txt disallow, or a connection reset by the host), 620 are absences
+    (the record, field or file is not served), 57 find something served that fails the rule's test, 18
+    are other errors (server errors, unparseable responses, a redirect loop), and 160 pass.
+  status: record
+  evidence:
+  - kind: query
+    id: cycle.findings
+    locator: scripts/build_evidence_map.py::QUERIES['cycle.findings']
+  - kind: query
+    id: cycle.observation_classes
+    locator: scripts/build_evidence_map.py::QUERIES['cycle.observation_classes']
+  numbers:
+  - value: 1,009
+    source: finding_derived events on the cycle
+  - value: '154'
+    source: Q2 access_denial, all bodies
+  - value: '620'
+    source: Q2 absence, all bodies
+  - value: '57'
+    source: Q2 nonconformant, all bodies
+  - value: '18'
+    source: Q2 error_other, all bodies
+  - value: '160'
+    source: Q2 pass, all bodies
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-036
+  key: q2.denial.BLS
+  question: Q2
+  text: On cycle `scan_2026-09-10_rj4`, the harness's unauthenticated identified client met an access
+    denial (a refusal by the host or a robots.txt disallow) on 43 of the 43 findings for `BLS`; 0 are
+    absences, and 0 pass.
+  status: record
+  evidence:
+  - kind: query
+    id: cycle.observation_classes
+    locator: scripts/build_evidence_map.py::QUERIES['cycle.observation_classes']
+  - kind: finding
+    id: fnd_029f235a44d7502f031f7d1a
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:51
+    note: 'A10 error on flagship:www.bls.gov/cpi/: refused'
+  - kind: finding
+    id: fnd_098eed554a828caec52b652e
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:61
+    note: 'G4 error on flagship:www.bls.gov/cpi/: refused'
+  - kind: finding
+    id: fnd_0a977a389ab12981c9fb47f2
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:56
+    note: 'F4 error on flagship:www.bls.gov/cpi/: refused'
+  - kind: finding
+    id: fnd_0dd036659cb96d36fedf6c2a
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:999
+    note: 'B5 error on host:www.bls.gov: refused'
+  - kind: finding
+    id: fnd_2976d989a7b5cd2135b4613c
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:46
+    note: 'A4 error on flagship:www.bls.gov/cpi/: refused'
+  - kind: finding
+    id: fnd_2f8c01a2ccc417029faaa620
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:266
+    note: 'B2 error on home:www.bls.gov: refused'
+  - kind: finding
+    id: fnd_37a99b9f0f4c73c2c3efbf5c
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:253
+    note: 'A6 error on home:www.bls.gov: refused'
+  - kind: finding
+    id: fnd_3b4e02825d5c7cddaa8e67f6
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:251
+    note: 'A4 error on home:www.bls.gov: refused'
+  - kind: finding
+    id: fnd_3ff433ca81f364e9e0af43ab
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:55
+    note: 'D4 error on flagship:www.bls.gov/cpi/: refused'
+  - kind: finding
+    id: fnd_411f105818bed06333867666
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:250
+    note: 'A3 error on home:www.bls.gov: refused, robots_disallowed'
+  - kind: finding
+    id: fnd_4245547568ac1a36811f0c56
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:258
+    note: 'B3 error on home:www.bls.gov: refused'
+  - kind: finding
+    id: fnd_43cf49086ef11fa38f0e03d6
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:485
+    note: 'A12 fail on host:www.bls.gov: refused'
+  - kind: finding
+    id: fnd_46e14d9fa523aa51f8f5cd32
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:45
+    note: 'A3 error on flagship:www.bls.gov/cpi/: refused, robots_disallowed'
+  - kind: finding
+    id: fnd_46efc794823b2d99c7036c77
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:254
+    note: 'A8 error on home:www.bls.gov: refused'
+  - kind: finding
+    id: fnd_4df526b0bc4c4d087026b952
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:44
+    note: 'A2 error on flagship:www.bls.gov/cpi/: refused'
+  - kind: finding
+    id: fnd_50f355d3c9437070392b249d
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:48
+    note: 'A6 error on flagship:www.bls.gov/cpi/: refused'
+  - kind: finding
+    id: fnd_517e73bf8ff1b978f10f3145
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:259
+    note: 'D1 error on home:www.bls.gov: refused'
+  - kind: finding
+    id: fnd_58b6aff56c0a4d777a9febf5
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:57
+    note: 'G1-D error on flagship:www.bls.gov/cpi/: refused'
+  - kind: finding
+    id: fnd_5d13c800c8c16b5d97314766
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:62
+    note: 'B2 error on flagship:www.bls.gov/cpi/: refused'
+  - kind: finding
+    id: fnd_6188c833b1d5edae40290940
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:252
+    note: 'A5 error on home:www.bls.gov: refused'
+  - kind: finding
+    id: fnd_62e941ca4905394563e51d88
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:47
+    note: 'A5 error on flagship:www.bls.gov/cpi/: refused'
+  - kind: finding
+    id: fnd_6f7e8ebd6687627f72e1116a
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:263
+    note: 'B4 error on home:www.bls.gov: refused'
+  - kind: finding
+    id: fnd_73598c539e51ffbdc3fb7ed6
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:265
+    note: 'G4 error on home:www.bls.gov: refused'
+  - kind: finding
+    id: fnd_7ef15d5efdd550b78ec856d1
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:50
+    note: 'A9 error on flagship:www.bls.gov/cpi/: refused'
+  - kind: finding
+    id: fnd_872a337e2f8d178ad5574ad2
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:248
+    note: 'A1 error on home:www.bls.gov: refused, robots_disallowed'
+  - kind: finding
+    id: fnd_87954bb78d5f099e5c03c865
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:260
+    note: 'D4 error on home:www.bls.gov: refused'
+  - kind: finding
+    id: fnd_88839d278e2dffef369d33ab
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:63
+    note: 'D2 error on flagship:www.bls.gov/cpi/: refused'
+  - kind: finding
+    id: fnd_8d1a77191de5fb39005e5ebc
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:52
+    note: 'A11-declared error on flagship:www.bls.gov/cpi/: refused'
+  - kind: finding
+    id: fnd_8de51e69f230e083936bd8d4
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:53
+    note: 'B3 error on flagship:www.bls.gov/cpi/: refused'
+  - kind: finding
+    id: fnd_8eeb433712f80c156216e8e2
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:264
+    note: 'D3 error on home:www.bls.gov: refused'
+  - kind: finding
+    id: fnd_93293adcb14069c9656c879e
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:257
+    note: 'A11-declared error on home:www.bls.gov: refused'
+  - kind: finding
+    id: fnd_acc32611675e1fd2d09f8faa
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:43
+    note: 'A1 error on flagship:www.bls.gov/cpi/: refused, robots_disallowed'
+  - kind: finding
+    id: fnd_af0d400e1360b26d1270665b
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:262
+    note: 'B1 error on home:www.bls.gov: refused'
+  - kind: finding
+    id: fnd_b0411fbfde551d70df78efe0
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:49
+    note: 'A8 error on flagship:www.bls.gov/cpi/: refused'
+  - kind: finding
+    id: fnd_b20bb1252d7432db99d58106
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:58
+    note: 'B1 error on flagship:www.bls.gov/cpi/: refused'
+  - kind: finding
+    id: fnd_b4057c2e0262446b725782fa
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:60
+    note: 'D3 error on flagship:www.bls.gov/cpi/: refused'
+  - kind: finding
+    id: fnd_c3b2728652104e5982888a66
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:261
+    note: 'F4 error on home:www.bls.gov: refused'
+  - kind: finding
+    id: fnd_cb4c76e14c43e822b6e6920e
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:54
+    note: 'D1 error on flagship:www.bls.gov/cpi/: refused'
+  - kind: finding
+    id: fnd_e515d85eefb5f848afb45c74
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:267
+    note: 'D2 error on home:www.bls.gov: refused'
+  - kind: finding
+    id: fnd_eecfe8503872e872104e1f77
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:59
+    note: 'B4 error on flagship:www.bls.gov/cpi/: refused'
+  - kind: finding
+    id: fnd_f2c514dec31c902a8f035f6b
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:255
+    note: 'A9 error on home:www.bls.gov: refused'
+  - kind: finding
+    id: fnd_f6720315698f0b8879ee55cf
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:249
+    note: 'A2 error on home:www.bls.gov: refused'
+  - kind: finding
+    id: fnd_f6d0ac0031efad90bdce37b4
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:256
+    note: 'A10 error on home:www.bls.gov: refused'
+  numbers:
+  - value: '0'
+    source: Q2 absence for BLS
+  - value: '43'
+    source: Q2 access_denial for BLS
+  - value: '43'
+    source: findings for BLS
+  - value: '0'
+    source: Q2 pass for BLS
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-037
+  key: q2.denial.BTS
+  question: Q2
+  text: On cycle `scan_2026-09-10_rj4`, the harness's unauthenticated identified client met an access
+    denial (a refusal by the host or a robots.txt disallow) on 43 of the 43 findings for `BTS`; 0 are
+    absences, and 0 pass.
+  status: record
+  evidence:
+  - kind: query
+    id: cycle.observation_classes
+    locator: scripts/build_evidence_map.py::QUERIES['cycle.observation_classes']
+  - kind: finding
+    id: fnd_09205c0f01e5b029693612c0
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:64
+    note: 'A1 error on flagship:www.bts.gov/topics/national-transportation-statistics: refused'
+  - kind: finding
+    id: fnd_0a2639351126e147c0a634b2
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:281
+    note: 'F4 error on home:www.bts.gov: refused'
+  - kind: finding
+    id: fnd_0b800f7a5faf785bc258115b
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:272
+    note: 'A5 error on home:www.bts.gov: refused'
+  - kind: finding
+    id: fnd_0ed5f52bbe5a8618d559d205
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:69
+    note: 'A6 error on flagship:www.bts.gov/topics/national-transportation-statistics: refused'
+  - kind: finding
+    id: fnd_110bc97230afb15a3ff9f3ed
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:276
+    note: 'A10 error on home:www.bts.gov: refused'
+  - kind: finding
+    id: fnd_14bb5d9fb30e8cb1877dc8bb
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:274
+    note: 'A8 error on home:www.bts.gov: refused'
+  - kind: finding
+    id: fnd_161ae41714cb2bf000f31014
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:68
+    note: 'A5 error on flagship:www.bts.gov/topics/national-transportation-statistics: refused'
+  - kind: finding
+    id: fnd_1a95aff6489b4946db9d6594
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:268
+    note: 'A1 error on home:www.bts.gov: refused'
+  - kind: finding
+    id: fnd_1f373a920790e777914c6ac0
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:72
+    note: 'A10 error on flagship:www.bts.gov/topics/national-transportation-statistics: refused'
+  - kind: finding
+    id: fnd_208b509982f9eda7944a19a0
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:284
+    note: 'D3 error on home:www.bts.gov: refused'
+  - kind: finding
+    id: fnd_2708c4b648297fc3ae5690f3
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:271
+    note: 'A4 error on home:www.bts.gov: refused'
+  - kind: finding
+    id: fnd_299c2addddacd9c5f5ce3251
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:77
+    note: 'F4 error on flagship:www.bts.gov/topics/national-transportation-statistics: refused'
+  - kind: finding
+    id: fnd_29c18583c04dd6bcf140b10f
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:279
+    note: 'D1 error on home:www.bts.gov: refused'
+  - kind: finding
+    id: fnd_2d815fe93ce169082ca3c47e
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:269
+    note: 'A2 error on home:www.bts.gov: refused'
+  - kind: finding
+    id: fnd_37d7a5fc6730954c8d72449d
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:81
+    note: 'D3 error on flagship:www.bts.gov/topics/national-transportation-statistics: refused'
+  - kind: finding
+    id: fnd_37f966360f454f946c392ecf
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:80
+    note: 'B4 error on flagship:www.bts.gov/topics/national-transportation-statistics: refused'
+  - kind: finding
+    id: fnd_3ae3ba0010c02223d70a599f
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:75
+    note: 'D1 error on flagship:www.bts.gov/topics/national-transportation-statistics: refused'
+  - kind: finding
+    id: fnd_3b0fbcdb6d30121a377d0be1
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:76
+    note: 'D4 error on flagship:www.bts.gov/topics/national-transportation-statistics: refused'
+  - kind: finding
+    id: fnd_420141d9dedbbbb305c9cf06
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:74
+    note: 'B3 error on flagship:www.bts.gov/topics/national-transportation-statistics: refused'
+  - kind: finding
+    id: fnd_46de9fa90afbee71a131b01a
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:70
+    note: 'A8 error on flagship:www.bts.gov/topics/national-transportation-statistics: refused'
+  - kind: finding
+    id: fnd_47babb9ab58c613221c242c6
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:83
+    note: 'B2 error on flagship:www.bts.gov/topics/national-transportation-statistics: refused'
+  - kind: finding
+    id: fnd_4b1cd1152039a7714e40c6bb
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:71
+    note: 'A9 error on flagship:www.bts.gov/topics/national-transportation-statistics: refused'
+  - kind: finding
+    id: fnd_5355a44c20a81f8a643ce342
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:275
+    note: 'A9 error on home:www.bts.gov: refused'
+  - kind: finding
+    id: fnd_6f5c0a8b335a79424398703a
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:280
+    note: 'D4 error on home:www.bts.gov: refused'
+  - kind: finding
+    id: fnd_7020ac09fb24e34ead0ce7fa
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:65
+    note: 'A2 error on flagship:www.bts.gov/topics/national-transportation-statistics: refused'
+  - kind: finding
+    id: fnd_76298e5a5a0f69d6e5aaa566
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:82
+    note: 'G4 error on flagship:www.bts.gov/topics/national-transportation-statistics: refused'
+  - kind: finding
+    id: fnd_7deb8d5fbb3dc764516489cc
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:73
+    note: 'A11-declared error on flagship:www.bts.gov/topics/national-transportation-statistics: refused'
+  - kind: finding
+    id: fnd_8125a68ba2bc4768adefd974
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:278
+    note: 'B3 error on home:www.bts.gov: refused'
+  - kind: finding
+    id: fnd_887e9730c7107496839c0c77
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:66
+    note: 'A3 error on flagship:www.bts.gov/topics/national-transportation-statistics: refused'
+  - kind: finding
+    id: fnd_8a54dd7cd0127819deea3345
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:283
+    note: 'B4 error on home:www.bts.gov: refused'
+  - kind: finding
+    id: fnd_8a7ac58fa97af83dfde3409f
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:285
+    note: 'G4 error on home:www.bts.gov: refused'
+  - kind: finding
+    id: fnd_b6b496efdef948dc1e797a90
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:67
+    note: 'A4 error on flagship:www.bts.gov/topics/national-transportation-statistics: refused'
+  - kind: finding
+    id: fnd_bae314fe3394d34ecd9012b2
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:486
+    note: 'A12 fail on host:www.bts.gov: refused'
+  - kind: finding
+    id: fnd_bd7aeb57086ca099afa871d6
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:1000
+    note: 'B5 error on host:www.bts.gov: refused'
+  - kind: finding
+    id: fnd_c61c855971d8437ca5df7e69
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:286
+    note: 'B2 error on home:www.bts.gov: refused'
+  - kind: finding
+    id: fnd_c732abba0a057b4fc9a94942
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:270
+    note: 'A3 error on home:www.bts.gov: refused'
+  - kind: finding
+    id: fnd_d1dea6cdb23c55a403361bd2
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:84
+    note: 'D2 error on flagship:www.bts.gov/topics/national-transportation-statistics: refused'
+  - kind: finding
+    id: fnd_e1bd7311934dd1e43c8dff8c
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:277
+    note: 'A11-declared error on home:www.bts.gov: refused'
+  - kind: finding
+    id: fnd_e84ecd2697a4badebeb855ec
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:78
+    note: 'G1-D error on flagship:www.bts.gov/topics/national-transportation-statistics: refused'
+  - kind: finding
+    id: fnd_eec475db386c1ea9cffaf44c
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:79
+    note: 'B1 error on flagship:www.bts.gov/topics/national-transportation-statistics: refused'
+  - kind: finding
+    id: fnd_f382b4f9bab9c68477ddb04e
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:282
+    note: 'B1 error on home:www.bts.gov: refused'
+  - kind: finding
+    id: fnd_f3d1c959a014bd43dc2fe73d
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:287
+    note: 'D2 error on home:www.bts.gov: refused'
+  - kind: finding
+    id: fnd_ffb5dc743bb54fc54407ee8e
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:273
+    note: 'A6 error on home:www.bts.gov: refused'
+  numbers:
+  - value: '0'
+    source: Q2 absence for BTS
+  - value: '43'
+    source: Q2 access_denial for BTS
+  - value: '43'
+    source: findings for BTS
+  - value: '0'
+    source: Q2 pass for BTS
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-038
+  key: q2.denial.CENSUS
+  question: Q2
+  text: On cycle `scan_2026-09-10_rj4`, the harness's unauthenticated identified client met an access
+    denial (a refusal by the host or a robots.txt disallow) on 2 of the 85 findings for `CENSUS`; of its
+    67 absences, 8 were judged with some refused or disallowed probes excluded, and 14 pass.
+  status: record
+  evidence:
+  - kind: query
+    id: cycle.observation_classes
+    locator: scripts/build_evidence_map.py::QUERIES['cycle.observation_classes']
+  - kind: finding
+    id: fnd_a298f48b75a2ee67a86610b2
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:641
+    note: 'A5 error on scan-census-flagship-2-american-community-survey-acs: http_4xx, refused'
+  - kind: finding
+    id: fnd_b9274a97b60c865488321f21
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:662
+    note: 'A5 error on scan-census-machine: http_4xx, refused'
+  numbers:
+  - value: '67'
+    source: Q2 absence for CENSUS
+  - value: '8'
+    source: Q2 absences for CENSUS with denied observations excluded
+  - value: '2'
+    source: Q2 access_denial for CENSUS
+  - value: '85'
+    source: findings for CENSUS
+  - value: '14'
+    source: Q2 pass for CENSUS
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-039
+  key: q2.denial.EIA
+  question: Q2
+  text: On cycle `scan_2026-09-10_rj4`, the harness's unauthenticated identified client met an access
+    denial (a refusal by the host or a robots.txt disallow) on 15 of the 64 findings for `EIA`; of its
+    35 absences, 5 were judged with some refused or disallowed probes excluded, and 7 pass.
+  status: record
+  evidence:
+  - kind: query
+    id: cycle.observation_classes
+    locator: scripts/build_evidence_map.py::QUERIES['cycle.observation_classes']
+  - kind: finding
+    id: fnd_09e1586eb422913d356b6485
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:698
+    note: 'B2 error on scan-eia-flagship-1-open-data: robots_disallowed'
+  - kind: finding
+    id: fnd_1cf23b16ffe9a5db33998c94
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:702
+    note: 'A3 error on scan-eia-machine: http_5xx, off_host, robots_disallowed'
+  - kind: finding
+    id: fnd_3072442e4db85a155328546c
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:684
+    note: 'A6 error on scan-eia-flagship-1-open-data: robots_disallowed'
+  - kind: finding
+    id: fnd_3653c1ba81d36b9d4a16b019
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:682
+    note: 'A4 fail on scan-eia-flagship-1-open-data: reason'
+  - kind: finding
+    id: fnd_5e63efc67df63da09ababf85
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:700
+    note: 'A1 error on scan-eia-machine: http_5xx, off_host, robots_disallowed'
+  - kind: finding
+    id: fnd_7efb9aae66e0cda4718ee575
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:689
+    note: 'B3 error on scan-eia-flagship-1-open-data: robots_disallowed'
+  - kind: finding
+    id: fnd_89877b8008ea2b57591661f4
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:685
+    note: 'A8 error on scan-eia-flagship-1-open-data: robots_disallowed'
+  - kind: finding
+    id: fnd_9182cb3fd3afac689b54eaec
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:693
+    note: 'G1-D error on scan-eia-flagship-1-open-data: robots_disallowed'
+  - kind: finding
+    id: fnd_aa8dae784d97c85f4ede63a2
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:334
+    note: 'A3 error on home:www.eia.gov: http_5xx, off_host, robots_disallowed'
+  - kind: finding
+    id: fnd_bf141828df33fa692c563a7e
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:681
+    note: 'A3 error on scan-eia-flagship-1-open-data: robots_disallowed'
+  - kind: finding
+    id: fnd_c3fe1b54c68d0cf64be79048
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:688
+    note: 'A11-declared fail on scan-eia-flagship-1-open-data: robots_disallowed'
+  - kind: finding
+    id: fnd_ccff2de9ac8d9031e020b553
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:679
+    note: 'A1 error on scan-eia-flagship-1-open-data: robots_disallowed'
+  - kind: finding
+    id: fnd_e6f2e0e9602edbd1438ed9be
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:694
+    note: 'B1 error on scan-eia-flagship-1-open-data: http_4xx, robots_disallowed'
+  - kind: finding
+    id: fnd_e83272324569573fb1a0233a
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:1003
+    note: 'B5 error on host:www.eia.gov: robots_disallowed'
+  - kind: finding
+    id: fnd_ec62a9cb844de04f95762ef1
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:687
+    note: 'A10 error on scan-eia-flagship-1-open-data: robots_disallowed'
+  numbers:
+  - value: '35'
+    source: Q2 absence for EIA
+  - value: '5'
+    source: Q2 absences for EIA with denied observations excluded
+  - value: '15'
+    source: Q2 access_denial for EIA
+  - value: '64'
+    source: findings for EIA
+  - value: '7'
+    source: Q2 pass for EIA
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-040
+  key: q2.denial.NASS
+  question: Q2
+  text: On cycle `scan_2026-09-10_rj4`, the harness's unauthenticated identified client met an access
+    denial (a refusal by the host or a robots.txt disallow) on 4 of the 85 findings for `NASS`; of its
+    63 absences, 4 were judged with some refused or disallowed probes excluded, and 12 pass.
+  status: record
+  evidence:
+  - kind: query
+    id: cycle.observation_classes
+    locator: scripts/build_evidence_map.py::QUERIES['cycle.observation_classes']
+  - kind: finding
+    id: fnd_7e4b669b5333673b92b42fef
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:807
+    note: 'A3 error on scan-nass-flagship-2-livestock-county-estimates: http_4xx, off_host, robots_disallowed'
+  - kind: finding
+    id: fnd_91bd2ea8dc0611ad776aa52c
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:828
+    note: 'A3 error on scan-nass-machine: http_4xx, off_host, robots_disallowed'
+  - kind: finding
+    id: fnd_cc70a77ca42d7b441b324837
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:418
+    note: 'A3 error on home:www.nass.usda.gov: http_4xx, off_host, robots_disallowed'
+  - kind: finding
+    id: fnd_f301f97241a94e9a81f24211
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:786
+    note: 'A3 error on scan-nass-flagship-1-data-statistics: http_4xx, off_host, robots_disallowed'
+  numbers:
+  - value: '63'
+    source: Q2 absence for NASS
+  - value: '4'
+    source: Q2 absences for NASS with denied observations excluded
+  - value: '4'
+    source: Q2 access_denial for NASS
+  - value: '85'
+    source: findings for NASS
+  - value: '12'
+    source: Q2 pass for NASS
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-041
+  key: q2.denial.ORES
+  question: Q2
+  text: On cycle `scan_2026-09-10_rj4`, the harness's unauthenticated identified client met an access
+    denial (a refusal by the host or a robots.txt disallow) on 43 of the 43 findings for `ORES`; 0 are
+    absences, and 0 pass.
+  status: record
+  evidence:
+  - kind: query
+    id: cycle.observation_classes
+    locator: scripts/build_evidence_map.py::QUERIES['cycle.observation_classes']
+  - kind: finding
+    id: fnd_0312c43a55d9e67180c60225
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:131
+    note: 'A5 error on flagship:www.ssa.gov/policy/docs/statcomps/supplement/: refused'
+  - kind: finding
+    id: fnd_034cdba6cd16f39c639aacfa
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:141
+    note: 'G1-D error on flagship:www.ssa.gov/policy/docs/statcomps/supplement/: refused'
+  - kind: finding
+    id: fnd_075e41bbb66d9ad292900a18
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:145
+    note: 'G4 error on flagship:www.ssa.gov/policy/docs/statcomps/supplement/: refused'
+  - kind: finding
+    id: fnd_08cc070ebd7a501ed531ca9a
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:147
+    note: 'D2 error on flagship:www.ssa.gov/policy/docs/statcomps/supplement/: refused'
+  - kind: finding
+    id: fnd_1071566150cc7b00426fc938
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:463
+    note: 'A4 error on home:www.ssa.gov: refused'
+  - kind: finding
+    id: fnd_135653e8f5c7b3916af9d479
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:137
+    note: 'B3 error on flagship:www.ssa.gov/policy/docs/statcomps/supplement/: refused'
+  - kind: finding
+    id: fnd_14c8018b0d9f8a81a4534418
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:473
+    note: 'F4 error on home:www.ssa.gov: refused'
+  - kind: finding
+    id: fnd_1fea9b837148f9bac14b135c
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:479
+    note: 'D2 error on home:www.ssa.gov: refused'
+  - kind: finding
+    id: fnd_2393b5176067184118a97f91
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:129
+    note: 'A3 error on flagship:www.ssa.gov/policy/docs/statcomps/supplement/: refused'
+  - kind: finding
+    id: fnd_24217dde1321d8f8c7595337
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:134
+    note: 'A9 error on flagship:www.ssa.gov/policy/docs/statcomps/supplement/: refused'
+  - kind: finding
+    id: fnd_270adee754b8ffceee0a79cc
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:142
+    note: 'B1 error on flagship:www.ssa.gov/policy/docs/statcomps/supplement/: refused'
+  - kind: finding
+    id: fnd_2e736ef88f79edd203161493
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:133
+    note: 'A8 error on flagship:www.ssa.gov/policy/docs/statcomps/supplement/: refused'
+  - kind: finding
+    id: fnd_38e3e16cc2011d44131a8f42
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:462
+    note: 'A3 error on home:www.ssa.gov: refused'
+  - kind: finding
+    id: fnd_4b387d7d6c0599fb531a6e0d
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:465
+    note: 'A6 error on home:www.ssa.gov: refused'
+  - kind: finding
+    id: fnd_4b5b198de3edbcb5a59803c0
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:466
+    note: 'A8 error on home:www.ssa.gov: refused'
+  - kind: finding
+    id: fnd_4fd2c2d0a53b63c89b1885ba
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:478
+    note: 'B2 error on home:www.ssa.gov: refused'
+  - kind: finding
+    id: fnd_5d27e77d0f42325eea54998b
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:474
+    note: 'B1 error on home:www.ssa.gov: refused'
+  - kind: finding
+    id: fnd_601da24be12c2d01394ba81a
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:467
+    note: 'A9 error on home:www.ssa.gov: refused'
+  - kind: finding
+    id: fnd_630765bf5dcd8c5126350796
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:470
+    note: 'B3 error on home:www.ssa.gov: refused'
+  - kind: finding
+    id: fnd_65010951e6f2a959a319c048
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:138
+    note: 'D1 error on flagship:www.ssa.gov/policy/docs/statcomps/supplement/: refused'
+  - kind: finding
+    id: fnd_721856bcfbcf986e05b0d230
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:136
+    note: 'A11-declared error on flagship:www.ssa.gov/policy/docs/statcomps/supplement/: refused'
+  - kind: finding
+    id: fnd_7a0de0304133bffd06b1d149
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:469
+    note: 'A11-declared error on home:www.ssa.gov: refused'
+  - kind: finding
+    id: fnd_7fdd323d79ef2e5fcf0e94c1
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:128
+    note: 'A2 error on flagship:www.ssa.gov/policy/docs/statcomps/supplement/: refused'
+  - kind: finding
+    id: fnd_853fbc7b8794a14f26c70363
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:146
+    note: 'B2 error on flagship:www.ssa.gov/policy/docs/statcomps/supplement/: refused'
+  - kind: finding
+    id: fnd_9cfe1de86c596af185f42794
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:475
+    note: 'B4 error on home:www.ssa.gov: refused'
+  - kind: finding
+    id: fnd_9eb2ed3e67823a61fd276b7c
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:127
+    note: 'A1 error on flagship:www.ssa.gov/policy/docs/statcomps/supplement/: refused'
+  - kind: finding
+    id: fnd_a194759f0a90d993ca5392c9
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:139
+    note: 'D4 error on flagship:www.ssa.gov/policy/docs/statcomps/supplement/: refused'
+  - kind: finding
+    id: fnd_a563382d7f6faef8f4511737
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:471
+    note: 'D1 error on home:www.ssa.gov: refused'
+  - kind: finding
+    id: fnd_b03d7fd6f2164204eb6d57ee
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:140
+    note: 'F4 error on flagship:www.ssa.gov/policy/docs/statcomps/supplement/: refused'
+  - kind: finding
+    id: fnd_bb9de205903bee31037a6808
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:143
+    note: 'B4 error on flagship:www.ssa.gov/policy/docs/statcomps/supplement/: refused'
+  - kind: finding
+    id: fnd_c811524ebe1c81049cdebfd4
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:498
+    note: 'A12 fail on host:www.ssa.gov: refused'
+  - kind: finding
+    id: fnd_cb3b5cd1f2681b532bf5e937
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:1009
+    note: 'B5 error on host:www.ssa.gov: refused'
+  - kind: finding
+    id: fnd_cd50caa4345a57ef8a455f67
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:461
+    note: 'A2 error on home:www.ssa.gov: refused'
+  - kind: finding
+    id: fnd_cf3f01ddda9e6285680303bd
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:144
+    note: 'D3 error on flagship:www.ssa.gov/policy/docs/statcomps/supplement/: refused'
+  - kind: finding
+    id: fnd_dc4018f84ba00b7c0024b88f
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:135
+    note: 'A10 error on flagship:www.ssa.gov/policy/docs/statcomps/supplement/: refused'
+  - kind: finding
+    id: fnd_dead3b605090c67877af46e7
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:477
+    note: 'G4 error on home:www.ssa.gov: refused'
+  - kind: finding
+    id: fnd_e87db73ad5b6f73b8232cf54
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:460
+    note: 'A1 error on home:www.ssa.gov: refused'
+  - kind: finding
+    id: fnd_edf04a7f7ab655ae9e5188e3
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:130
+    note: 'A4 error on flagship:www.ssa.gov/policy/docs/statcomps/supplement/: refused'
+  - kind: finding
+    id: fnd_f8546ff076b90a6686ae1873
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:464
+    note: 'A5 error on home:www.ssa.gov: refused'
+  - kind: finding
+    id: fnd_f95750f8f78ec2e1f7ac2a5a
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:472
+    note: 'D4 error on home:www.ssa.gov: refused'
+  - kind: finding
+    id: fnd_f9f27ccd3132b610a0f5c298
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:468
+    note: 'A10 error on home:www.ssa.gov: refused'
+  - kind: finding
+    id: fnd_fda9cb76cd718b0b2e687a49
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:476
+    note: 'D3 error on home:www.ssa.gov: refused'
+  - kind: finding
+    id: fnd_ff6812f2943ba584b0dfbdf1
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:132
+    note: 'A6 error on flagship:www.ssa.gov/policy/docs/statcomps/supplement/: refused'
+  numbers:
+  - value: '0'
+    source: Q2 absence for ORES
+  - value: '43'
+    source: Q2 access_denial for ORES
+  - value: '43'
+    source: findings for ORES
+  - value: '0'
+    source: Q2 pass for ORES
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-042
+  key: q2.denial.SOI
+  question: Q2
+  text: On cycle `scan_2026-09-10_rj4`, the harness's unauthenticated identified client met an access
+    denial (a refusal by the host or a robots.txt disallow) on 3 of the 64 findings for `SOI`; of its
+    47 absences, 3 were judged with some refused or disallowed probes excluded, and 10 pass.
+  status: record
+  evidence:
+  - kind: query
+    id: cycle.observation_classes
+    locator: scripts/build_evidence_map.py::QUERIES['cycle.observation_classes']
+  - kind: finding
+    id: fnd_255c6129229c4f3fbd0203ef
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:975
+    note: 'A3 error on scan-soi-flagship-2-business-tax-statistics: refused'
+  - kind: finding
+    id: fnd_6a4ce61f06f85803ce3f013f
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:398
+    note: 'A3 error on home:www.irs.gov: refused'
+  - kind: finding
+    id: fnd_723bce879ff35efd6ecb1735
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:954
+    note: 'A3 error on scan-soi-flagship-1-individual-tax-statistics: refused'
+  numbers:
+  - value: '47'
+    source: Q2 absence for SOI
+  - value: '3'
+    source: Q2 absences for SOI with denied observations excluded
+  - value: '3'
+    source: Q2 access_denial for SOI
+  - value: '64'
+    source: findings for SOI
+  - value: '10'
+    source: Q2 pass for SOI
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-043
+  key: q2.denial.data.gov
+  question: Q2
+  text: On cycle `scan_2026-09-10_rj4`, the harness's unauthenticated identified client met an access
+    denial (a refusal by the host or a robots.txt disallow) on 1 of the 9 findings for `data.gov` (a tier
+    C comparator, not a statistical body); 1 is an absence, and 7 pass.
+  status: record
+  evidence:
+  - kind: query
+    id: cycle.observation_classes
+    locator: scripts/build_evidence_map.py::QUERIES['cycle.observation_classes']
+  - kind: finding
+    id: fnd_a1fa8633855ceccbe4ffc0c1
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:500
+    note: 'A5 error on machine:catalog.data.gov: http_4xx, refused'
+  numbers:
+  - value: '1'
+    source: Q2 absence for data.gov
+  - value: '1'
+    source: Q2 access_denial for data.gov
+  - value: '9'
+    source: findings for data.gov
+  - value: '7'
+    source: Q2 pass for data.gov
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-044
+  key: q3.corpus_growth
+  question: Q3
+  text: The corpus began as the v1 epoch of 71 documents (first admitted `2026-07-03` to `2026-07-04`)
+    and holds 264 admitted documents now; 162 were added before the framework record was first committed
+    (`2026-09-06`, `51d2526e1ad2`) and 31 on or after it, of which 25 are captured scan surfaces rather
+    than literature.
+  status: record
+  evidence:
+  - kind: query
+    id: manifest.included
+    locator: scripts/build_evidence_map.py::QUERIES['manifest.included']
+  - kind: query
+    id: manifest.admission_dates
+    locator: scripts/build_evidence_map.py::QUERIES['manifest.admission_dates']
+  - kind: query
+    id: git.framework_start
+    locator: scripts/build_evidence_map.py::QUERIES['git.framework_start']
+    note: 51d2526e1ad2ede2520281e3c3c2a60b256dbd1a
+  - kind: document
+    id: dcat-ap-3-0-0-r5r-vocabulary
+    locator: events/batch-001.jsonl:111
+    note: first manifest_add 2026-09-21; provenance g4_resourcing_2026-09-21
+  - kind: document
+    id: esip-ai-ready-data-checklist-v1-0
+    locator: events/batch-001.jsonl:106
+    note: first manifest_add 2026-09-10; provenance noaa_esip_2026-09-10
+  - kind: document
+    id: nao-201-118-software-governance-and-public-release
+    locator: events/batch-001.jsonl:108
+    note: first manifest_add 2026-09-10; provenance noaa_esip_2026-09-10
+  - kind: document
+    id: nao-216-128-artificial-intelligence-in-noaa
+    locator: events/batch-001.jsonl:107
+    note: first manifest_add 2026-09-10; provenance noaa_esip_2026-09-10
+  - kind: document
+    id: oasdiff-readme
+    locator: events/batch-001.jsonl:109
+    note: first manifest_add 2026-09-19; provenance tool_docs_2026-09-18
+  - kind: document
+    id: scan-bea-flagship-1-interactive-data
+    locator: events/batch-001.jsonl:73
+    note: first manifest_add 2026-09-07; provenance scan_2026-09
+  - kind: document
+    id: scan-bea-flagship-2-news-releases
+    locator: events/batch-001.jsonl:74
+    note: first manifest_add 2026-09-07; provenance scan_2026-09
+  - kind: document
+    id: scan-bea-machine
+    locator: events/batch-001.jsonl:75
+    note: first manifest_add 2026-09-07; provenance scan_2026-09
+  - kind: document
+    id: scan-bjs-flagship-1-data-by-topic
+    locator: events/batch-001.jsonl:76
+    note: first manifest_add 2026-09-07; provenance scan_2026-09
+  - kind: document
+    id: scan-bjs-flagship-2-death-in-custody-reporting-act
+    locator: events/batch-001.jsonl:77
+    note: first manifest_add 2026-09-07; provenance scan_2026-09
+  - kind: document
+    id: scan-census-flagship-1-surveys-programs
+    locator: events/batch-001.jsonl:78
+    note: first manifest_add 2026-09-07; provenance scan_2026-09
+  - kind: document
+    id: scan-census-flagship-2-american-community-survey-acs
+    locator: events/batch-001.jsonl:79
+    note: first manifest_add 2026-09-07; provenance scan_2026-09
+  - kind: document
+    id: scan-census-machine
+    locator: events/batch-001.jsonl:80
+    note: first manifest_add 2026-09-07; provenance scan_2026-09
+  - kind: document
+    id: scan-eia-machine
+    locator: events/batch-001.jsonl:85
+    note: first manifest_add 2026-09-07; provenance scan_2026-09
+  - kind: document
+    id: scan-ers-flagship-1-ag-and-food-statistics-charting-the-essentials
+    locator: events/batch-001.jsonl:81
+    note: first manifest_add 2026-09-07; provenance scan_2026-09
+  - kind: document
+    id: scan-ers-flagship-2-agricultural-baseline-database
+    locator: events/batch-001.jsonl:82
+    note: first manifest_add 2026-09-07; provenance scan_2026-09
+  - kind: document
+    id: scan-ers-machine
+    locator: events/batch-001.jsonl:83
+    note: first manifest_add 2026-09-07; provenance scan_2026-09
+  - kind: document
+    id: scan-nass-flagship-1-data-statistics
+    locator: events/batch-001.jsonl:86
+    note: first manifest_add 2026-09-07; provenance scan_2026-09
+  - kind: document
+    id: scan-nass-flagship-2-livestock-county-estimates
+    locator: events/batch-001.jsonl:87
+    note: first manifest_add 2026-09-07; provenance scan_2026-09
+  - kind: document
+    id: scan-nass-machine
+    locator: events/batch-001.jsonl:88
+    note: first manifest_add 2026-09-07; provenance scan_2026-09
+  - kind: document
+    id: scan-nchs-flagship-1-data-briefs
+    locator: events/batch-001.jsonl:89
+    note: first manifest_add 2026-09-07; provenance scan_2026-09
+  - kind: document
+    id: scan-nchs-flagship-2-early-releases-of-selected-estimates-from-the-nhis
+    locator: events/batch-001.jsonl:90
+    note: first manifest_add 2026-09-07; provenance scan_2026-09
+  - kind: document
+    id: scan-nchs-machine
+    locator: events/batch-001.jsonl:91
+    note: first manifest_add 2026-09-07; provenance scan_2026-09
+  - kind: document
+    id: scan-ncses-flagship-1-annual-business-survey-2024-data-year-2023
+    locator: events/batch-001.jsonl:92
+    note: first manifest_add 2026-09-07; provenance scan_2026-09
+  - kind: document
+    id: scan-ncses-machine
+    locator: events/batch-001.jsonl:93
+    note: first manifest_add 2026-09-07; provenance scan_2026-09
+  - kind: document
+    id: scan-soi-flagship-1-individual-tax-statistics
+    locator: events/batch-001.jsonl:94
+    note: first manifest_add 2026-09-07; provenance scan_2026-09
+  - kind: document
+    id: scan-soi-flagship-2-business-tax-statistics
+    locator: events/batch-001.jsonl:95
+    note: first manifest_add 2026-09-07; provenance scan_2026-09
+  - kind: document
+    id: scan-statcan-flagship-1-results-and-documentation-of-surveys-and-statistical-program
+    locator: events/batch-001.jsonl:96
+    note: first manifest_add 2026-09-07; provenance scan_2026-09
+  - kind: document
+    id: scan-statcan-flagship-2-labour-force-survey-in-brief-interactive-app
+    locator: events/batch-001.jsonl:97
+    note: first manifest_add 2026-09-07; provenance scan_2026-09
+  - kind: document
+    id: scan-statcan-machine
+    locator: events/batch-001.jsonl:98
+    note: first manifest_add 2026-09-07; provenance scan_2026-09
+  - kind: document
+    id: wayback-cdx-server-api-readme
+    locator: events/batch-001.jsonl:110
+    note: first manifest_add 2026-09-19; provenance tool_docs_2026-09-18
+  numbers:
+  - value: '71'
+    source: included entries whose provenance_sources has manifest_v1
+  - value: '264'
+    source: manifest entries with screening.decision included
+  - value: '162'
+    source: included, not v1, first admitted before the framework record
+  - value: '31'
+    source: included, not v1, first admitted on or after the framework record
+  - value: '25'
+    source: of those, entries whose provenance is a scan epoch
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-045
+  key: q4.census_catalog
+  question: Q4
+  text: On cycle `scan_2026-09-10_rj4`, census.gov serves a catalog at `https://www.census.gov/data.json`
+    holding 1,805 records, and 20 Census findings on legs `B1`, `B4`, `D3`, `D4`, `G4` (5 legs) fail because
+    no record in it names the probed product; the surfaces probed were `home:www.census.gov` (`https://www.census.gov/`);
+    `scan-census-flagship-1-surveys-programs` (`https://www.census.gov/programs-surveys.html`); `scan-census-flagship-2-american-community-survey-acs`
+    (`https://www.census.gov/programs-surveys/acs.html`); `scan-census-machine` (`https://www.census.gov/data/datasets.html`).
+  status: record
+  evidence:
+  - kind: query
+    id: cycle.findings
+    locator: scripts/build_evidence_map.py::QUERIES['cycle.findings']
+  - kind: finding
+    id: fnd_071bee3f557c0e4247ddcdc6
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:653
+    note: B4 on scan-census-flagship-2-american-community-survey-acs
+  - kind: finding
+    id: fnd_0ac58d91230025d91d979fae
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:652
+    note: B1 on scan-census-flagship-2-american-community-survey-acs
+  - kind: finding
+    id: fnd_1494d40d1534c863d8f6c27a
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:654
+    note: D3 on scan-census-flagship-2-american-community-survey-acs
+  - kind: finding
+    id: fnd_1ae913ed9e5a2aecd56c1d11
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:670
+    note: D4 on scan-census-machine
+  - kind: finding
+    id: fnd_1db0f31da7b239ad1290a1f6
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:634
+    note: G4 on scan-census-flagship-1-surveys-programs
+  - kind: finding
+    id: fnd_23500b6e4e2ca975ee605ade
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:633
+    note: D3 on scan-census-flagship-1-surveys-programs
+  - kind: finding
+    id: fnd_3190dc363c536b9b097521c7
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:323
+    note: B4 on home:www.census.gov
+  - kind: finding
+    id: fnd_32d04bc7586186718905f0fa
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:675
+    note: D3 on scan-census-machine
+  - kind: finding
+    id: fnd_4774225132acfa30f980ee98
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:673
+    note: B1 on scan-census-machine
+  - kind: finding
+    id: fnd_5113cf576d9198a474c3ff06
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:628
+    note: D4 on scan-census-flagship-1-surveys-programs
+  - kind: finding
+    id: fnd_6e8dc55da3b88f0acda3e58e
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:655
+    note: G4 on scan-census-flagship-2-american-community-survey-acs
+  - kind: finding
+    id: fnd_93a22b7529c40151097fc6cc
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:676
+    note: G4 on scan-census-machine
+  - kind: finding
+    id: fnd_a175c2e3f13e8f989f2fc9fb
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:324
+    note: D3 on home:www.census.gov
+  - kind: finding
+    id: fnd_a9257b99e2dae0f3996bdcbf
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:325
+    note: G4 on home:www.census.gov
+  - kind: finding
+    id: fnd_b64a3301b791af3dc86b97dd
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:322
+    note: B1 on home:www.census.gov
+  - kind: finding
+    id: fnd_be110428837bfd42acd1ca80
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:320
+    note: D4 on home:www.census.gov
+  - kind: finding
+    id: fnd_e6de1ad3b0ca06c9b1c9a22b
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:631
+    note: B1 on scan-census-flagship-1-surveys-programs
+  - kind: finding
+    id: fnd_e730a7a5db935e2724f56bf5
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:632
+    note: B4 on scan-census-flagship-1-surveys-programs
+  - kind: finding
+    id: fnd_e75a6579f70e042334101250
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:674
+    note: B4 on scan-census-machine
+  - kind: finding
+    id: fnd_f661084348b1bd09c554d187
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:649
+    note: D4 on scan-census-flagship-2-american-community-survey-acs
+  numbers:
+  - value: 1,805
+    source: data.json record count quoted by the Census catalog-absence findings
+  - value: '20'
+    source: Census findings whose reason is no data.json record for the product
+  - value: '5'
+    source: distinct legs among them
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-046
+  key: q5.indicators
+  question: Q5
+  text: The framework record holds 49 indicators, 48 in the framework and 1 candidate (`A12`), which enters
+    no framework count until the operator adopts it (`DD-054`).
+  status: record
+  evidence:
+  - kind: query
+    id: record.indicator_nodes
+    locator: scripts/build_evidence_map.py::QUERIES['record.indicator_nodes']
+  - kind: query
+    id: record.counts
+    locator: scripts/build_evidence_map.py::QUERIES['record.counts']
+  - kind: query
+    id: record.candidates
+    locator: scripts/build_evidence_map.py::QUERIES['record.candidates']
+  - kind: indicator
+    id: ind:A12
+    locator: framework/ai_readiness_framework.json#ind:A12
+    note: candidate
+  numbers:
+  - value: '49'
+    source: AssessmentIndicator nodes in the record
+  - value: '48'
+    source: indicators not held out as candidates
+  - value: '1'
+    source: candidate indicators
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-047
+  key: q5.criteria
+  question: Q5
+  text: 'The framework keeps USAFacts'' 4 criteria (`A`, `B`, `C`, `D`: accessible, understandable, accurate,
+    open) and adds 3 (`E`, `F`, `G`), for 7 in all.'
+  status: record
+  evidence:
+  - kind: query
+    id: record.criteria
+    locator: scripts/build_evidence_map.py::QUERIES['record.criteria']
+  numbers:
+  - value: '4'
+    source: USAfacts criteria in the record
+  - value: '3'
+    source: criteria added beyond USAFacts
+  - value: '7'
+    source: AssessmentCriterion nodes in the record
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-048
+  key: q5.current_rules
+  question: Q5
+  text: 23 of the framework's 48 indicators have a current rule, of 24 current rules in all; the others
+    are on `A12`, outside the framework count.
+  status: record
+  evidence:
+  - kind: query
+    id: rules.current
+    locator: scripts/build_evidence_map.py::QUERIES['rules.current']
+  numbers:
+  - value: '23'
+    source: framework indicators with a current rule
+  - value: '48'
+    source: indicators not held out as candidates
+  - value: '24'
+    source: distinct current rules in rules.CURRENT
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-049
+  key: q5.measurement_status
+  question: Q5
+  text: Of the framework's 48 indicators the record marks 16 measured, 8 with a harness built but not
+    marked measured, and 24 specified only.
+  status: record
+  evidence:
+  - kind: query
+    id: record.measurement_status
+    locator: scripts/build_evidence_map.py::QUERIES['record.measurement_status']
+  numbers:
+  - value: '48'
+    source: indicators not held out as candidates
+  - value: '16'
+    source: measurement_status measured
+  - value: '8'
+    source: measurement_status harness_built
+  - value: '24'
+    source: measurement_status specified
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-050
+  key: q5.bodies
+  question: Q5
+  text: 16 statistical bodies are on cycle `scan_2026-09-10_rj4` and 13 are ranked; `BLS`, `BTS`, `ORES`
+    have no scored leg with a judged row.
+  status: record
+  evidence:
+  - kind: query
+    id: cycle.bodies
+    locator: scripts/build_evidence_map.py::QUERIES['cycle.bodies']
+  - kind: query
+    id: score.compute
+    locator: scripts/build_evidence_map.py::QUERIES['score.compute']
+  numbers:
+  - value: '16'
+    source: bodies on the cycle (prescriptions.bodies)
+  - value: '13'
+    source: bodies with a rank (score.py)
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-051
+  key: q5.legs_findings
+  question: Q5
+  text: Cycle `scan_2026-09-10_rj4` judged 23 legs and holds 1,009 findings.
+  status: record
+  evidence:
+  - kind: query
+    id: cycle.legs
+    locator: scripts/build_evidence_map.py::QUERIES['cycle.legs']
+  - kind: query
+    id: cycle.findings
+    locator: scripts/build_evidence_map.py::QUERIES['cycle.findings']
+    note: events/cycle-scan_2026-09-10_rj4.jsonl
+  - kind: result
+    id: ce17f6d1-05f5-468f-80c9-11598d3b15cd
+    locator: 'neo4j:Result{artifact_id: ''ce17f6d1-05f5-468f-80c9-11598d3b15cd''}'
+    note: scan_findings, value 1009, state published
+  numbers:
+  - value: '23'
+    source: distinct legs on the cycle
+  - value: 1,009
+    source: finding_derived events on the cycle
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-052
+  key: q5.census_failing
+  question: Q5
+  text: On the published matrices of cycle `scan_2026-09-10_rj4`, `CENSUS` has 34 failing of 39 judged
+    rows; the matrices publish one row per leg and surface they report, so they carry fewer rows than
+    the 85 findings the cycle holds for the body across all its probed surfaces.
+  status: record
+  evidence:
+  - kind: query
+    id: mcp.get_body
+    locator: scripts/build_evidence_map.py::QUERIES['mcp.get_body']
+  - kind: finding
+    id: fnd_f6783614eecce89155102a95
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:616
+    note: A1 fail on scan-census-flagship-1-surveys-programs
+  - kind: finding
+    id: fnd_106ca09d75b1e037415f3236
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:617
+    note: A2 fail on scan-census-flagship-1-surveys-programs
+  - kind: finding
+    id: fnd_6c411c62a4cbc37dc3f06ec6
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:618
+    note: A3 fail on scan-census-flagship-1-surveys-programs
+  - kind: finding
+    id: fnd_3608173bd7b8307a3e8ae42e
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:621
+    note: A6 fail on scan-census-flagship-1-surveys-programs
+  - kind: finding
+    id: fnd_f6eb3c0c875af937fcee2762
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:622
+    note: A8 fail on scan-census-flagship-1-surveys-programs
+  - kind: finding
+    id: fnd_3cc375db90de449c2f1412a7
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:623
+    note: A9 fail on scan-census-flagship-1-surveys-programs
+  - kind: finding
+    id: fnd_a954b4c6f5b7a24dfff07000
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:626
+    note: B3 fail on scan-census-flagship-1-surveys-programs
+  - kind: finding
+    id: fnd_84bdca02ab72ee5a121d0d32
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:627
+    note: D1 fail on scan-census-flagship-1-surveys-programs
+  - kind: finding
+    id: fnd_5113cf576d9198a474c3ff06
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:628
+    note: D4 fail on scan-census-flagship-1-surveys-programs
+  - kind: finding
+    id: fnd_e2560f8cb4e0d3f618512453
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:629
+    note: F4 fail on scan-census-flagship-1-surveys-programs
+  - kind: finding
+    id: fnd_e6de1ad3b0ca06c9b1c9a22b
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:631
+    note: B1 fail on scan-census-flagship-1-surveys-programs
+  - kind: finding
+    id: fnd_5ec898c698a0b017d46ca669
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:635
+    note: B2 fail on scan-census-flagship-1-surveys-programs
+  - kind: finding
+    id: fnd_e730a7a5db935e2724f56bf5
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:632
+    note: B4 fail on scan-census-flagship-1-surveys-programs
+  - kind: finding
+    id: fnd_0443dfeb74d4b73499629f78
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:1002
+    note: B5 fail on scan-census-flagship-1-surveys-programs
+  - kind: finding
+    id: fnd_a14b9a5c2b34eefc86db688c
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:636
+    note: D2 fail on scan-census-flagship-1-surveys-programs
+  - kind: finding
+    id: fnd_23500b6e4e2ca975ee605ade
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:633
+    note: D3 fail on scan-census-flagship-1-surveys-programs
+  - kind: finding
+    id: fnd_1db0f31da7b239ad1290a1f6
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:634
+    note: G4 fail on scan-census-flagship-1-surveys-programs
+  - kind: finding
+    id: fnd_e5011a474f72fcb754b8c3d9
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:637
+    note: A1 fail on scan-census-flagship-2-american-community-survey-acs
+  - kind: finding
+    id: fnd_b9e93605be55aeffa1b2633f
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:638
+    note: A2 fail on scan-census-flagship-2-american-community-survey-acs
+  - kind: finding
+    id: fnd_ee18880bbf3be39224ea65f7
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:639
+    note: A3 fail on scan-census-flagship-2-american-community-survey-acs
+  - kind: finding
+    id: fnd_423c1847e87e188ef3f3ea32
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:642
+    note: A6 fail on scan-census-flagship-2-american-community-survey-acs
+  - kind: finding
+    id: fnd_716bcb2f7d9847cad54aaf63
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:643
+    note: A8 fail on scan-census-flagship-2-american-community-survey-acs
+  - kind: finding
+    id: fnd_380270527f2ebe8a8bb74612
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:644
+    note: A9 fail on scan-census-flagship-2-american-community-survey-acs
+  - kind: finding
+    id: fnd_5af943a5cd0ba84ab5607cf3
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:647
+    note: B3 fail on scan-census-flagship-2-american-community-survey-acs
+  - kind: finding
+    id: fnd_610ec90b0213db427bb7f068
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:648
+    note: D1 fail on scan-census-flagship-2-american-community-survey-acs
+  - kind: finding
+    id: fnd_f661084348b1bd09c554d187
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:649
+    note: D4 fail on scan-census-flagship-2-american-community-survey-acs
+  - kind: finding
+    id: fnd_31e37f3fe78e668fe5226a7e
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:650
+    note: F4 fail on scan-census-flagship-2-american-community-survey-acs
+  - kind: finding
+    id: fnd_0ac58d91230025d91d979fae
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:652
+    note: B1 fail on scan-census-flagship-2-american-community-survey-acs
+  - kind: finding
+    id: fnd_1273492e21f4ba5aab561619
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:656
+    note: B2 fail on scan-census-flagship-2-american-community-survey-acs
+  - kind: finding
+    id: fnd_071bee3f557c0e4247ddcdc6
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:653
+    note: B4 fail on scan-census-flagship-2-american-community-survey-acs
+  - kind: finding
+    id: fnd_0443dfeb74d4b73499629f78
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:1002
+    note: B5 fail on scan-census-flagship-2-american-community-survey-acs
+  - kind: finding
+    id: fnd_5a0288aa39f8397f1900659c
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:657
+    note: D2 fail on scan-census-flagship-2-american-community-survey-acs
+  - kind: finding
+    id: fnd_1494d40d1534c863d8f6c27a
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:654
+    note: D3 fail on scan-census-flagship-2-american-community-survey-acs
+  - kind: finding
+    id: fnd_6e8dc55da3b88f0acda3e58e
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:655
+    note: G4 fail on scan-census-flagship-2-american-community-survey-acs
+  numbers:
+  - value: '34'
+    source: get_body n_failing
+  - value: '39'
+    source: get_body n_judged
+  - value: '85'
+    source: findings for CENSUS
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-053
+  key: q5.census_rank
+  question: Q5
+  text: '`CENSUS` ranks 5 of 13 under the hierarchical equal-weight score (0.080), and the rank rests
+    on one leg, `A10`: 1 pass of 1 judged row; were that verdict reversed it would rank 9.'
+  status: record
+  evidence:
+  - kind: query
+    id: score.compute
+    locator: scripts/build_evidence_map.py::QUERIES['score.compute']
+  - kind: finding
+    id: fnd_2b6bb1732e02a90e488b9639
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:316
+    note: A10 pass on home:www.census.gov
+  numbers:
+  - value: '5'
+    source: score.py concentration.rank
+  - value: '13'
+    source: score.py concentration.of
+  - value: '0.080'
+    source: score.py bodies.CENSUS.score
+  - value: '1'
+    source: score.py concentration.pass
+  - value: '1'
+    source: score.py concentration.judged
+  - value: '9'
+    source: score.py concentration.rank_if_reversed
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-054
+  key: q5.evidence_coverage
+  question: Q5
+  text: 'Evidence coverage in the record: 9 of 49 indicator evidence cells carry a pinpoint locator; 27
+    of 147 `EVIDENCED_BY` edges point at a located document; 16 indicators have no `EVIDENCED_BY` edge;
+    and 82 of the 264 admitted documents are cited by one.'
+  status: record
+  evidence:
+  - kind: query
+    id: traceability.locators
+    locator: scripts/build_evidence_map.py::QUERIES['traceability.locators']
+  - kind: query
+    id: manifest.included
+    locator: scripts/build_evidence_map.py::QUERIES['manifest.included']
+  - kind: indicator
+    id: ind:A1
+    locator: framework/ai_readiness_framework.json#ind:A1
+    note: evidence cell carries a locator
+  - kind: indicator
+    id: ind:A3
+    locator: framework/ai_readiness_framework.json#ind:A3
+    note: evidence cell carries a locator
+  - kind: indicator
+    id: ind:A8
+    locator: framework/ai_readiness_framework.json#ind:A8
+    note: evidence cell carries a locator
+  - kind: indicator
+    id: ind:A10
+    locator: framework/ai_readiness_framework.json#ind:A10
+    note: evidence cell carries a locator
+  - kind: indicator
+    id: ind:A12
+    locator: framework/ai_readiness_framework.json#ind:A12
+    note: evidence cell carries a locator
+  - kind: indicator
+    id: ind:B3
+    locator: framework/ai_readiness_framework.json#ind:B3
+    note: evidence cell carries a locator
+  - kind: indicator
+    id: ind:D3
+    locator: framework/ai_readiness_framework.json#ind:D3
+    note: evidence cell carries a locator
+  - kind: indicator
+    id: ind:D4
+    locator: framework/ai_readiness_framework.json#ind:D4
+    note: evidence cell carries a locator
+  - kind: indicator
+    id: ind:G4
+    locator: framework/ai_readiness_framework.json#ind:G4
+    note: evidence cell carries a locator
+  numbers:
+  - value: '9'
+    source: indicators whose evidence cell carries a locator
+  - value: '49'
+    source: AssessmentIndicator nodes in the record
+  - value: '27'
+    source: EVIDENCED_BY edges whose document has a locator in the cell
+  - value: '147'
+    source: EVIDENCED_BY edges in the record
+  - value: '16'
+    source: indicators with no EVIDENCED_BY edge
+  - value: '82'
+    source: admitted documents cited by an EVIDENCED_BY edge
+  - value: '264'
+    source: manifest entries with screening.decision included
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-055
+  key: q6.f4-carry-a-revision-class-on-every-changelog-entry
+  question: Q6
+  text: For `CENSUS`, the action "Carry a revision class on every changelog entry" (`act:f4-carry-a-revision-class-on-every-changelog-entry`,
+    leg `F4`) is in the notional `hours` effort band with no cost, and under equal weights it can raise
+    the body's hierarchical score by at most 0.2, the bound if every failing row on `F4` passed; no weighting
+    is asserted, so this is a bound, not a value.
+  status: record
+  evidence:
+  - kind: query
+    id: score.compute
+    locator: scripts/build_evidence_map.py::QUERIES['score.compute']
+    note: bodies.CENSUS.prescriptions
+  - kind: query
+    id: score.compute
+    locator: framework/ai_readiness_framework.json#act:f4-carry-a-revision-class-on-every-changelog-entry
+    note: the Action node on the record
+  - kind: finding
+    id: fnd_e2560f8cb4e0d3f618512453
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:629
+    note: F4 fail on scan-census-flagship-1-surveys-programs
+  - kind: finding
+    id: fnd_31e37f3fe78e668fe5226a7e
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:650
+    note: F4 fail on scan-census-flagship-2-american-community-survey-acs
+  numbers:
+  - value: '0.2'
+    source: score.py prescription delta for act:f4-carry-a-revision-class-on-every-changelog-entry
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-056
+  key: q6.g4-carry-bureau-and-program-codes-on-the-record
+  question: Q6
+  text: For `CENSUS`, the action "Carry `bureauCode` and `programCode` on the product's catalog record"
+    (`act:g4-carry-bureau-and-program-codes-on-the-record`, leg `G4`) is in the notional `hours` effort
+    band with no cost, and under equal weights it can raise the body's hierarchical score by at most 0.2,
+    the bound if every failing row on `G4` passed; no weighting is asserted, so this is a bound, not a
+    value.
+  status: record
+  evidence:
+  - kind: query
+    id: score.compute
+    locator: scripts/build_evidence_map.py::QUERIES['score.compute']
+    note: bodies.CENSUS.prescriptions
+  - kind: query
+    id: score.compute
+    locator: framework/ai_readiness_framework.json#act:g4-carry-bureau-and-program-codes-on-the-record
+    note: the Action node on the record
+  - kind: finding
+    id: fnd_1db0f31da7b239ad1290a1f6
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:634
+    note: G4 fail on scan-census-flagship-1-surveys-programs
+  - kind: finding
+    id: fnd_6e8dc55da3b88f0acda3e58e
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:655
+    note: G4 fail on scan-census-flagship-2-american-community-survey-acs
+  numbers:
+  - value: '0.2'
+    source: score.py prescription delta for act:g4-carry-bureau-and-program-codes-on-the-record
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-057
+  key: q6.d1-publish-a-machine-readable-licence
+  question: Q6
+  text: For `CENSUS`, the action "Publish a machine-readable licence for the product" (`act:d1-publish-a-machine-readable-licence`,
+    leg `D1`) is in the notional `hours` effort band with no cost, and under equal weights it can raise
+    the body's hierarchical score by at most 0.05, the bound if every failing row on `D1` passed; no weighting
+    is asserted, so this is a bound, not a value.
+  status: record
+  evidence:
+  - kind: query
+    id: score.compute
+    locator: scripts/build_evidence_map.py::QUERIES['score.compute']
+    note: bodies.CENSUS.prescriptions
+  - kind: query
+    id: score.compute
+    locator: framework/ai_readiness_framework.json#act:d1-publish-a-machine-readable-licence
+    note: the Action node on the record
+  - kind: finding
+    id: fnd_84bdca02ab72ee5a121d0d32
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:627
+    note: D1 fail on scan-census-flagship-1-surveys-programs
+  - kind: finding
+    id: fnd_610ec90b0213db427bb7f068
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:648
+    note: D1 fail on scan-census-flagship-2-american-community-survey-acs
+  numbers:
+  - value: '0.05'
+    source: score.py prescription delta for act:d1-publish-a-machine-readable-licence
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-058
+  key: q6.d1-state-the-licence-as-an-identifier
+  question: Q6
+  text: For `CENSUS`, the action "State the licence as an identifier, not as a sentence" (`act:d1-state-the-licence-as-an-identifier`,
+    leg `D1`) is in the notional `hours` effort band with no cost, and under equal weights it can raise
+    the body's hierarchical score by at most 0.05, the bound if every failing row on `D1` passed; no weighting
+    is asserted, so this is a bound, not a value.
+  status: record
+  evidence:
+  - kind: query
+    id: score.compute
+    locator: scripts/build_evidence_map.py::QUERIES['score.compute']
+    note: bodies.CENSUS.prescriptions
+  - kind: query
+    id: score.compute
+    locator: framework/ai_readiness_framework.json#act:d1-state-the-licence-as-an-identifier
+    note: the Action node on the record
+  - kind: finding
+    id: fnd_84bdca02ab72ee5a121d0d32
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:627
+    note: D1 fail on scan-census-flagship-1-surveys-programs
+  - kind: finding
+    id: fnd_610ec90b0213db427bb7f068
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:648
+    note: D1 fail on scan-census-flagship-2-american-community-survey-acs
+  numbers:
+  - value: '0.05'
+    source: score.py prescription delta for act:d1-state-the-licence-as-an-identifier
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-059
+  key: q6.d2-declare-ai-training-and-input-terms-in-robots-txt
+  question: Q6
+  text: For `CENSUS`, the action "Declare the terms for AI training and AI input in robots.txt" (`act:d2-declare-ai-training-and-input-terms-in-robots-txt`,
+    leg `D2`) is in the notional `hours` effort band with no cost, and under equal weights it can raise
+    the body's hierarchical score by at most 0.05, the bound if every failing row on `D2` passed; no weighting
+    is asserted, so this is a bound, not a value.
+  status: record
+  evidence:
+  - kind: query
+    id: score.compute
+    locator: scripts/build_evidence_map.py::QUERIES['score.compute']
+    note: bodies.CENSUS.prescriptions
+  - kind: query
+    id: score.compute
+    locator: framework/ai_readiness_framework.json#act:d2-declare-ai-training-and-input-terms-in-robots-txt
+    note: the Action node on the record
+  - kind: finding
+    id: fnd_a14b9a5c2b34eefc86db688c
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:636
+    note: D2 fail on scan-census-flagship-1-surveys-programs
+  - kind: finding
+    id: fnd_5a0288aa39f8397f1900659c
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:657
+    note: D2 fail on scan-census-flagship-2-american-community-survey-acs
+  numbers:
+  - value: '0.05'
+    source: score.py prescription delta for act:d2-declare-ai-training-and-input-terms-in-robots-txt
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-060
+  key: q6.d2-use-only-the-defined-content-signal-categories
+  question: Q6
+  text: For `CENSUS`, the action "Use only the categories and values the Content Signals Policy defines"
+    (`act:d2-use-only-the-defined-content-signal-categories`, leg `D2`) is in the notional `hours` effort
+    band with no cost, and under equal weights it can raise the body's hierarchical score by at most 0.05,
+    the bound if every failing row on `D2` passed; no weighting is asserted, so this is a bound, not a
+    value.
+  status: record
+  evidence:
+  - kind: query
+    id: score.compute
+    locator: scripts/build_evidence_map.py::QUERIES['score.compute']
+    note: bodies.CENSUS.prescriptions
+  - kind: query
+    id: score.compute
+    locator: framework/ai_readiness_framework.json#act:d2-use-only-the-defined-content-signal-categories
+    note: the Action node on the record
+  - kind: finding
+    id: fnd_a14b9a5c2b34eefc86db688c
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:636
+    note: D2 fail on scan-census-flagship-1-surveys-programs
+  - kind: finding
+    id: fnd_5a0288aa39f8397f1900659c
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:657
+    note: D2 fail on scan-census-flagship-2-american-community-survey-acs
+  numbers:
+  - value: '0.05'
+    source: score.py prescription delta for act:d2-use-only-the-defined-content-signal-categories
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-061
+  key: q6.d3-name-the-generating-activity-in-the-catalog-record
+  question: Q6
+  text: For `CENSUS`, the action "Name the activity that generated the product in its catalog record"
+    (`act:d3-name-the-generating-activity-in-the-catalog-record`, leg `D3`) is in the notional `hours`
+    effort band with no cost, and under equal weights it can raise the body's hierarchical score by at
+    most 0.05, the bound if every failing row on `D3` passed; no weighting is asserted, so this is a bound,
+    not a value.
+  status: record
+  evidence:
+  - kind: query
+    id: score.compute
+    locator: scripts/build_evidence_map.py::QUERIES['score.compute']
+    note: bodies.CENSUS.prescriptions
+  - kind: query
+    id: score.compute
+    locator: framework/ai_readiness_framework.json#act:d3-name-the-generating-activity-in-the-catalog-record
+    note: the Action node on the record
+  - kind: finding
+    id: fnd_23500b6e4e2ca975ee605ade
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:633
+    note: D3 fail on scan-census-flagship-1-surveys-programs
+  - kind: finding
+    id: fnd_1494d40d1534c863d8f6c27a
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:654
+    note: D3 fail on scan-census-flagship-2-american-community-survey-acs
+  numbers:
+  - value: '0.05'
+    source: score.py prescription delta for act:d3-name-the-generating-activity-in-the-catalog-record
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-062
+  key: q6.d4-add-the-product-to-the-public-data-inventory
+  question: Q6
+  text: For `CENSUS`, the action "Add the product to the public data inventory already published" (`act:d4-add-the-product-to-the-public-data-inventory`,
+    leg `D4`) is in the notional `hours` effort band with no cost, and under equal weights it can raise
+    the body's hierarchical score by at most 0.05, the bound if every failing row on `D4` passed; no weighting
+    is asserted, so this is a bound, not a value.
+  status: record
+  evidence:
+  - kind: query
+    id: score.compute
+    locator: scripts/build_evidence_map.py::QUERIES['score.compute']
+    note: bodies.CENSUS.prescriptions
+  - kind: query
+    id: score.compute
+    locator: framework/ai_readiness_framework.json#act:d4-add-the-product-to-the-public-data-inventory
+    note: the Action node on the record
+  - kind: finding
+    id: fnd_5113cf576d9198a474c3ff06
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:628
+    note: D4 fail on scan-census-flagship-1-surveys-programs
+  - kind: finding
+    id: fnd_f661084348b1bd09c554d187
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:649
+    note: D4 fail on scan-census-flagship-2-american-community-survey-acs
+  numbers:
+  - value: '0.05'
+    source: score.py prescription delta for act:d4-add-the-product-to-the-public-data-inventory
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-063
+  key: q6.d4-make-the-catalog-conform-to-dcat-us
+  question: Q6
+  text: For `CENSUS`, the action "Make the public data catalog conform to the DCAT-US schema" (`act:d4-make-the-catalog-conform-to-dcat-us`,
+    leg `D4`) is in the notional `hours` effort band with no cost, and under equal weights it can raise
+    the body's hierarchical score by at most 0.05, the bound if every failing row on `D4` passed; no weighting
+    is asserted, so this is a bound, not a value.
+  status: record
+  evidence:
+  - kind: query
+    id: score.compute
+    locator: scripts/build_evidence_map.py::QUERIES['score.compute']
+    note: bodies.CENSUS.prescriptions
+  - kind: query
+    id: score.compute
+    locator: framework/ai_readiness_framework.json#act:d4-make-the-catalog-conform-to-dcat-us
+    note: the Action node on the record
+  - kind: finding
+    id: fnd_5113cf576d9198a474c3ff06
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:628
+    note: D4 fail on scan-census-flagship-1-surveys-programs
+  - kind: finding
+    id: fnd_f661084348b1bd09c554d187
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:649
+    note: D4 fail on scan-census-flagship-2-american-community-survey-acs
+  numbers:
+  - value: '0.05'
+    source: score.py prescription delta for act:d4-make-the-catalog-conform-to-dcat-us
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-064
+  key: q6.b1-link-the-data-dictionary-from-the-catalog-record
+  question: Q6
+  text: For `CENSUS`, the action "Link the data dictionary from the product's catalog record" (`act:b1-link-the-data-dictionary-from-the-catalog-record`,
+    leg `B1`) is in the notional `hours` effort band with no cost, and under equal weights it can raise
+    the body's hierarchical score by at most 0.04, the bound if every failing row on `B1` passed; no weighting
+    is asserted, so this is a bound, not a value.
+  status: record
+  evidence:
+  - kind: query
+    id: score.compute
+    locator: scripts/build_evidence_map.py::QUERIES['score.compute']
+    note: bodies.CENSUS.prescriptions
+  - kind: query
+    id: score.compute
+    locator: framework/ai_readiness_framework.json#act:b1-link-the-data-dictionary-from-the-catalog-record
+    note: the Action node on the record
+  - kind: finding
+    id: fnd_e6de1ad3b0ca06c9b1c9a22b
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:631
+    note: B1 fail on scan-census-flagship-1-surveys-programs
+  - kind: finding
+    id: fnd_0ac58d91230025d91d979fae
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:652
+    note: B1 fail on scan-census-flagship-2-american-community-survey-acs
+  numbers:
+  - value: '0.04'
+    source: score.py prescription delta for act:b1-link-the-data-dictionary-from-the-catalog-record
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-065
+  key: q6.b1-list-the-variables-measured-in-the-page-markup
+  question: Q6
+  text: For `CENSUS`, the action "List the product's variables in its page markup" (`act:b1-list-the-variables-measured-in-the-page-markup`,
+    leg `B1`) is in the notional `hours` effort band with no cost, and under equal weights it can raise
+    the body's hierarchical score by at most 0.04, the bound if every failing row on `B1` passed; no weighting
+    is asserted, so this is a bound, not a value.
+  status: record
+  evidence:
+  - kind: query
+    id: score.compute
+    locator: scripts/build_evidence_map.py::QUERIES['score.compute']
+    note: bodies.CENSUS.prescriptions
+  - kind: query
+    id: score.compute
+    locator: framework/ai_readiness_framework.json#act:b1-list-the-variables-measured-in-the-page-markup
+    note: the Action node on the record
+  - kind: finding
+    id: fnd_e6de1ad3b0ca06c9b1c9a22b
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:631
+    note: B1 fail on scan-census-flagship-1-surveys-programs
+  - kind: finding
+    id: fnd_0ac58d91230025d91d979fae
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:652
+    note: B1 fail on scan-census-flagship-2-american-community-survey-acs
+  numbers:
+  - value: '0.04'
+    source: score.py prescription delta for act:b1-list-the-variables-measured-in-the-page-markup
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-066
+  key: q6.b2-give-each-defined-term-a-code-set-and-definition
+  question: Q6
+  text: For `CENSUS`, the action "Give each linked defined term a code, a term set and a definition" (`act:b2-give-each-defined-term-a-code-set-and-definition`,
+    leg `B2`) is in the notional `hours` effort band with no cost, and under equal weights it can raise
+    the body's hierarchical score by at most 0.04, the bound if every failing row on `B2` passed; no weighting
+    is asserted, so this is a bound, not a value.
+  status: record
+  evidence:
+  - kind: query
+    id: score.compute
+    locator: scripts/build_evidence_map.py::QUERIES['score.compute']
+    note: bodies.CENSUS.prescriptions
+  - kind: query
+    id: score.compute
+    locator: framework/ai_readiness_framework.json#act:b2-give-each-defined-term-a-code-set-and-definition
+    note: the Action node on the record
+  - kind: finding
+    id: fnd_5ec898c698a0b017d46ca669
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:635
+    note: B2 fail on scan-census-flagship-1-surveys-programs
+  - kind: finding
+    id: fnd_1273492e21f4ba5aab561619
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:656
+    note: B2 fail on scan-census-flagship-2-american-community-survey-acs
+  numbers:
+  - value: '0.04'
+    source: score.py prescription delta for act:b2-give-each-defined-term-a-code-set-and-definition
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-067
+  key: q6.b2-link-defined-terms-from-the-variables
+  question: Q6
+  text: For `CENSUS`, the action "Link the defined terms from the product's variables" (`act:b2-link-defined-terms-from-the-variables`,
+    leg `B2`) is in the notional `hours` effort band with no cost, and under equal weights it can raise
+    the body's hierarchical score by at most 0.04, the bound if every failing row on `B2` passed; no weighting
+    is asserted, so this is a bound, not a value.
+  status: record
+  evidence:
+  - kind: query
+    id: score.compute
+    locator: scripts/build_evidence_map.py::QUERIES['score.compute']
+    note: bodies.CENSUS.prescriptions
+  - kind: query
+    id: score.compute
+    locator: framework/ai_readiness_framework.json#act:b2-link-defined-terms-from-the-variables
+    note: the Action node on the record
+  - kind: finding
+    id: fnd_5ec898c698a0b017d46ca669
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:635
+    note: B2 fail on scan-census-flagship-1-surveys-programs
+  - kind: finding
+    id: fnd_1273492e21f4ba5aab561619
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:656
+    note: B2 fail on scan-census-flagship-2-american-community-survey-acs
+  numbers:
+  - value: '0.04'
+    source: score.py prescription delta for act:b2-link-defined-terms-from-the-variables
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-068
+  key: q6.b2-publish-concept-definitions-as-defined-terms
+  question: Q6
+  text: For `CENSUS`, the action "Publish the product's concept definitions as schema.org `DefinedTerm`s"
+    (`act:b2-publish-concept-definitions-as-defined-terms`, leg `B2`) is in the notional `hours` effort
+    band with no cost, and under equal weights it can raise the body's hierarchical score by at most 0.04,
+    the bound if every failing row on `B2` passed; no weighting is asserted, so this is a bound, not a
+    value.
+  status: record
+  evidence:
+  - kind: query
+    id: score.compute
+    locator: scripts/build_evidence_map.py::QUERIES['score.compute']
+    note: bodies.CENSUS.prescriptions
+  - kind: query
+    id: score.compute
+    locator: framework/ai_readiness_framework.json#act:b2-publish-concept-definitions-as-defined-terms
+    note: the Action node on the record
+  - kind: finding
+    id: fnd_5ec898c698a0b017d46ca669
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:635
+    note: B2 fail on scan-census-flagship-1-surveys-programs
+  - kind: finding
+    id: fnd_1273492e21f4ba5aab561619
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:656
+    note: B2 fail on scan-census-flagship-2-american-community-survey-acs
+  numbers:
+  - value: '0.04'
+    source: score.py prescription delta for act:b2-publish-concept-definitions-as-defined-terms
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-069
+  key: q6.b3-link-the-methodology-from-the-product-page
+  question: Q6
+  text: For `CENSUS`, the action "Link the methodology from the product page" (`act:b3-link-the-methodology-from-the-product-page`,
+    leg `B3`) is in the notional `hours` effort band with no cost, and under equal weights it can raise
+    the body's hierarchical score by at most 0.04, the bound if every failing row on `B3` passed; no weighting
+    is asserted, so this is a bound, not a value.
+  status: record
+  evidence:
+  - kind: query
+    id: score.compute
+    locator: scripts/build_evidence_map.py::QUERIES['score.compute']
+    note: bodies.CENSUS.prescriptions
+  - kind: query
+    id: score.compute
+    locator: framework/ai_readiness_framework.json#act:b3-link-the-methodology-from-the-product-page
+    note: the Action node on the record
+  - kind: finding
+    id: fnd_a954b4c6f5b7a24dfff07000
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:626
+    note: B3 fail on scan-census-flagship-1-surveys-programs
+  - kind: finding
+    id: fnd_5af943a5cd0ba84ab5607cf3
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:647
+    note: B3 fail on scan-census-flagship-2-american-community-survey-acs
+  numbers:
+  - value: '0.04'
+    source: score.py prescription delta for act:b3-link-the-methodology-from-the-product-page
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-070
+  key: q6.b4-publish-quality-measurements-as-metadata
+  question: Q6
+  text: For `CENSUS`, the action "Publish the product's quality measurements as catalog metadata" (`act:b4-publish-quality-measurements-as-metadata`,
+    leg `B4`) is in the notional `hours` effort band with no cost, and under equal weights it can raise
+    the body's hierarchical score by at most 0.04, the bound if every failing row on `B4` passed; no weighting
+    is asserted, so this is a bound, not a value.
+  status: record
+  evidence:
+  - kind: query
+    id: score.compute
+    locator: scripts/build_evidence_map.py::QUERIES['score.compute']
+    note: bodies.CENSUS.prescriptions
+  - kind: query
+    id: score.compute
+    locator: framework/ai_readiness_framework.json#act:b4-publish-quality-measurements-as-metadata
+    note: the Action node on the record
+  - kind: finding
+    id: fnd_e730a7a5db935e2724f56bf5
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:632
+    note: B4 fail on scan-census-flagship-1-surveys-programs
+  - kind: finding
+    id: fnd_071bee3f557c0e4247ddcdc6
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:653
+    note: B4 fail on scan-census-flagship-2-american-community-survey-acs
+  numbers:
+  - value: '0.04'
+    source: score.py prescription delta for act:b4-publish-quality-measurements-as-metadata
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-071
+  key: q6.b4-state-what-changed-from-the-previous-version
+  question: Q6
+  text: For `CENSUS`, the action "State what changed from the previous version in the catalog record"
+    (`act:b4-state-what-changed-from-the-previous-version`, leg `B4`) is in the notional `hours` effort
+    band with no cost, and under equal weights it can raise the body's hierarchical score by at most 0.04,
+    the bound if every failing row on `B4` passed; no weighting is asserted, so this is a bound, not a
+    value.
+  status: record
+  evidence:
+  - kind: query
+    id: score.compute
+    locator: scripts/build_evidence_map.py::QUERIES['score.compute']
+    note: bodies.CENSUS.prescriptions
+  - kind: query
+    id: score.compute
+    locator: framework/ai_readiness_framework.json#act:b4-state-what-changed-from-the-previous-version
+    note: the Action node on the record
+  - kind: finding
+    id: fnd_e730a7a5db935e2724f56bf5
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:632
+    note: B4 fail on scan-census-flagship-1-surveys-programs
+  - kind: finding
+    id: fnd_071bee3f557c0e4247ddcdc6
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:653
+    note: B4 fail on scan-census-flagship-2-american-community-survey-acs
+  numbers:
+  - value: '0.04'
+    source: score.py prescription delta for act:b4-state-what-changed-from-the-previous-version
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-072
+  key: q6.b5-name-the-set-each-term-code-belongs-to
+  question: Q6
+  text: For `CENSUS`, the action "Name the term set each term code belongs to" (`act:b5-name-the-set-each-term-code-belongs-to`,
+    leg `B5`) is in the notional `hours` effort band with no cost, and under equal weights it can raise
+    the body's hierarchical score by at most 0.04, the bound if every failing row on `B5` passed; no weighting
+    is asserted, so this is a bound, not a value.
+  status: record
+  evidence:
+  - kind: query
+    id: score.compute
+    locator: scripts/build_evidence_map.py::QUERIES['score.compute']
+    note: bodies.CENSUS.prescriptions
+  - kind: query
+    id: score.compute
+    locator: framework/ai_readiness_framework.json#act:b5-name-the-set-each-term-code-belongs-to
+    note: the Action node on the record
+  - kind: finding
+    id: fnd_0443dfeb74d4b73499629f78
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:1002
+    note: B5 fail on scan-census-flagship-1-surveys-programs
+  - kind: finding
+    id: fnd_0443dfeb74d4b73499629f78
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:1002
+    note: B5 fail on scan-census-flagship-2-american-community-survey-acs
+  numbers:
+  - value: '0.04'
+    source: score.py prescription delta for act:b5-name-the-set-each-term-code-belongs-to
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-073
+  key: q6.a6-embed-json-ld-on-the-product-page
+  question: Q6
+  text: For `CENSUS`, the action "Embed JSON-LD describing the product on the product page" (`act:a6-embed-json-ld-on-the-product-page`,
+    leg `A6`) is in the notional `hours` effort band with no cost, and under equal weights it can raise
+    the body's hierarchical score by at most 0.02, the bound if every failing row on `A6` passed; no weighting
+    is asserted, so this is a bound, not a value.
+  status: record
+  evidence:
+  - kind: query
+    id: score.compute
+    locator: scripts/build_evidence_map.py::QUERIES['score.compute']
+    note: bodies.CENSUS.prescriptions
+  - kind: query
+    id: score.compute
+    locator: framework/ai_readiness_framework.json#act:a6-embed-json-ld-on-the-product-page
+    note: the Action node on the record
+  - kind: finding
+    id: fnd_3608173bd7b8307a3e8ae42e
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:621
+    note: A6 fail on scan-census-flagship-1-surveys-programs
+  - kind: finding
+    id: fnd_423c1847e87e188ef3f3ea32
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:642
+    note: A6 fail on scan-census-flagship-2-american-community-survey-acs
+  numbers:
+  - value: '0.02'
+    source: score.py prescription delta for act:a6-embed-json-ld-on-the-product-page
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-074
+  key: q6.a6-make-the-dataset-markup-conform-to-the-profile
+  question: Q6
+  text: For `CENSUS`, the action "Make the Dataset markup conform to the profile it declares" (`act:a6-make-the-dataset-markup-conform-to-the-profile`,
+    leg `A6`) is in the notional `hours` effort band with no cost, and under equal weights it can raise
+    the body's hierarchical score by at most 0.02, the bound if every failing row on `A6` passed; no weighting
+    is asserted, so this is a bound, not a value.
+  status: record
+  evidence:
+  - kind: query
+    id: score.compute
+    locator: scripts/build_evidence_map.py::QUERIES['score.compute']
+    note: bodies.CENSUS.prescriptions
+  - kind: query
+    id: score.compute
+    locator: framework/ai_readiness_framework.json#act:a6-make-the-dataset-markup-conform-to-the-profile
+    note: the Action node on the record
+  - kind: finding
+    id: fnd_3608173bd7b8307a3e8ae42e
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:621
+    note: A6 fail on scan-census-flagship-1-surveys-programs
+  - kind: finding
+    id: fnd_423c1847e87e188ef3f3ea32
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:642
+    note: A6 fail on scan-census-flagship-2-american-community-survey-acs
+  numbers:
+  - value: '0.02'
+    source: score.py prescription delta for act:a6-make-the-dataset-markup-conform-to-the-profile
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-075
+  key: q6.a6-type-the-product-page-as-a-dataset
+  question: Q6
+  text: For `CENSUS`, the action "Type the product page's existing markup as a Dataset" (`act:a6-type-the-product-page-as-a-dataset`,
+    leg `A6`) is in the notional `hours` effort band with no cost, and under equal weights it can raise
+    the body's hierarchical score by at most 0.02, the bound if every failing row on `A6` passed; no weighting
+    is asserted, so this is a bound, not a value.
+  status: record
+  evidence:
+  - kind: query
+    id: score.compute
+    locator: scripts/build_evidence_map.py::QUERIES['score.compute']
+    note: bodies.CENSUS.prescriptions
+  - kind: query
+    id: score.compute
+    locator: framework/ai_readiness_framework.json#act:a6-type-the-product-page-as-a-dataset
+    note: the Action node on the record
+  - kind: finding
+    id: fnd_3608173bd7b8307a3e8ae42e
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:621
+    note: A6 fail on scan-census-flagship-1-surveys-programs
+  - kind: finding
+    id: fnd_423c1847e87e188ef3f3ea32
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:642
+    note: A6 fail on scan-census-flagship-2-american-community-survey-acs
+  numbers:
+  - value: '0.02'
+    source: score.py prescription delta for act:a6-type-the-product-page-as-a-dataset
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-076
+  key: q6.a8-declare-the-product-vintage-in-the-markup
+  question: Q6
+  text: For `CENSUS`, the action "Declare the product's vintage in the markup, not only in a file header"
+    (`act:a8-declare-the-product-vintage-in-the-markup`, leg `A8`) is in the notional `hours` effort band
+    with no cost, and under equal weights it can raise the body's hierarchical score by at most 0.02,
+    the bound if every failing row on `A8` passed; no weighting is asserted, so this is a bound, not a
+    value.
+  status: record
+  evidence:
+  - kind: query
+    id: score.compute
+    locator: scripts/build_evidence_map.py::QUERIES['score.compute']
+    note: bodies.CENSUS.prescriptions
+  - kind: query
+    id: score.compute
+    locator: framework/ai_readiness_framework.json#act:a8-declare-the-product-vintage-in-the-markup
+    note: the Action node on the record
+  - kind: finding
+    id: fnd_f6eb3c0c875af937fcee2762
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:622
+    note: A8 fail on scan-census-flagship-1-surveys-programs
+  - kind: finding
+    id: fnd_716bcb2f7d9847cad54aaf63
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:643
+    note: A8 fail on scan-census-flagship-2-american-community-survey-acs
+  numbers:
+  - value: '0.02'
+    source: score.py prescription delta for act:a8-declare-the-product-vintage-in-the-markup
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-077
+  key: q6.a8-publish-a-release-date-for-the-product
+  question: Q6
+  text: For `CENSUS`, the action "Publish a release date for the product" (`act:a8-publish-a-release-date-for-the-product`,
+    leg `A8`) is in the notional `hours` effort band with no cost, and under equal weights it can raise
+    the body's hierarchical score by at most 0.02, the bound if every failing row on `A8` passed; no weighting
+    is asserted, so this is a bound, not a value.
+  status: record
+  evidence:
+  - kind: query
+    id: score.compute
+    locator: scripts/build_evidence_map.py::QUERIES['score.compute']
+    note: bodies.CENSUS.prescriptions
+  - kind: query
+    id: score.compute
+    locator: framework/ai_readiness_framework.json#act:a8-publish-a-release-date-for-the-product
+    note: the Action node on the record
+  - kind: finding
+    id: fnd_f6eb3c0c875af937fcee2762
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:622
+    note: A8 fail on scan-census-flagship-1-surveys-programs
+  - kind: finding
+    id: fnd_716bcb2f7d9847cad54aaf63
+    locator: events/cycle-scan_2026-09-10_rj4.jsonl:643
+    note: A8 fail on scan-census-flagship-2-american-community-survey-acs
+  numbers:
+  - value: '0.02'
+    source: score.py prescription delta for act:a8-publish-a-release-date-for-the-product
+  source_task: cc_tasks/2026-10-02_evidence_map_record.md
+tables:
+  q1_measurement_boundary:
+  - indicator: A7
+    status: specified
+    tier: O
+    class: open_tooling
+    basis: routes
+    judged_on_cycle: false
+    record_text: ''
+    routes:
+    - route: wayback_cdx
+      class: open_tooling
+      requires:
+      - tool:wayback-cdx-server (hosted_free, this_project)
+  - indicator: B1
+    status: harness_built
+    tier: M
+    class: no_standard
+    basis: record reason matches `an instrument this project has not specified`
+    judged_on_cycle: true
+    record_text: The unmeasured half is whether the linked dictionary or the listed variables are 'comprehensive',
+      a judgement about their contents. No admitted document defines a test for it, so what stands in
+      the way is an instrument this project has not specified — not a tool, an account or anything the
+      body holds.
+    routes: []
+  - indicator: B2
+    status: harness_built
+    tier: M
+    class: no_standard
+    basis: record reason matches `What is missing is a standard`
+    judged_on_cycle: true
+    record_text: The 'versioned' clause has no field in any admitted document. What is missing is a standard
+      to test against, not a tool or a grant.
+    routes: []
+  - indicator: B4
+    status: harness_built
+    tier: M
+    class: no_standard
+    basis: record reason matches `What is missing is a standard`
+    judged_on_cycle: true
+    record_text: The suppression-rules clause has no field in any admitted document (the failed search
+      is on `ind:G5.tier_unassigned_reason`). What is missing is a standard, not a tool or a grant.
+    routes: []
+  - indicator: B5
+    status: harness_built
+    tier: M
+    class: open_tooling
+    basis: routes
+    judged_on_cycle: true
+    record_text: measured by this harness with RULE-B5-v1 (leg `B5`); no tool, account or record stands
+      between it and a verdict — for the clauses its rule reads; the tests below close what it does not
+    routes:
+    - route: second_cycle
+      class: open_tooling
+      requires:
+      - pre:second-scan-cycle (second_cycle, this_project)
+  - indicator: B6
+    status: specified
+    tier: unassigned
+    class: no_standard
+    basis: record reason matches `needs a different instrument`
+    judged_on_cycle: false
+    record_text: 'cc_tasks/2026-09-17_unassigned_indicators.md decision 4: the G1 precedent does not carry
+      it. G1''s act is a preservation score — a pinned consumer restates a captured surface and the restatement
+      is scored for what it kept (DD-036 §2). B6 asks two different questions about the surface itself:
+      whether the summary is plain language, a readability property of the text and not of a restatement,
+      and whether it is current, a freshness comparison against the product''s own modified date. Neither
+      is a preservation score, so B6 needs a different instrument and stays unassigned. The ''current''
+      half is the closer of the two to a structured-field test: DCAT-US 3 `modified` on the dataset against
+      the summary page''s own date.'
+    routes: []
+  - indicator: C1
+    status: specified
+    tier: M
+    class: no_standard
+    basis: routes
+    judged_on_cycle: false
+    record_text: ''
+    routes:
+    - route: benchmark
+      class: no_standard
+      requires:
+      - pre:product-question-benchmark (benchmark_set, this_project)
+  - indicator: C2
+    status: specified
+    tier: M
+    class: no_standard
+    basis: routes
+    judged_on_cycle: false
+    record_text: ''
+    routes:
+    - route: probe_protocol
+      class: no_standard
+      requires:
+      - pre:entailment-probe-set (benchmark_set, this_project)
+  - indicator: C3
+    status: specified
+    tier: M
+    class: no_standard
+    basis: routes
+    judged_on_cycle: false
+    record_text: ''
+    routes:
+    - route: benchmark
+      class: no_standard
+      requires:
+      - pre:vintage-disambiguation-set (benchmark_set, this_project)
+  - indicator: C4
+    status: specified
+    tier: M
+    class: no_standard
+    basis: routes
+    judged_on_cycle: false
+    record_text: ''
+    routes:
+    - route: bing_ai_performance
+      class: agency_cooperation
+      requires:
+      - tool:bing-webmaster-tools-ai-performance (platform_account, publisher)
+      - pre:bing-webmaster-tools-verified-site (site_owner_account, publisher)
+    - route: engine_queries
+      class: no_standard
+      requires:
+      - tool:perplexity-ai (hosted_paid, this_project)
+      - pre:generative-engine-query-set (benchmark_set, this_project)
+  - indicator: C5
+    status: specified
+    tier: O
+    class: open_tooling
+    basis: routes
+    judged_on_cycle: false
+    record_text: ''
+    routes:
+    - route: aidrin
+      class: open_tooling
+      requires:
+      - tool:aidrin (open_source, this_project)
+  - indicator: D2
+    status: harness_built
+    tier: M
+    class: not_blocked
+    basis: record reason matches `no tool, account or record stands between it and a verdict`
+    judged_on_cycle: true
+    record_text: measured by this harness with RULE-D2-v1 (leg `D2`); no tool, account or record stands
+      between it and a verdict
+    routes: []
+  - indicator: D3
+    status: harness_built
+    tier: M
+    class: open_tooling
+    basis: record reason matches `a rule this project would write`
+    judged_on_cycle: true
+    record_text: Whether the lineage reaches from collection through processing is readable by walking
+      `wasDerivedFrom` on the same catalog records the rule already fetches. That is a rule this project
+      would write, not a requirement of the body's.
+    routes: []
+  - indicator: E1
+    status: specified
+    tier: M
+    class: agency_cooperation
+    basis: routes
+    judged_on_cycle: false
+    record_text: ''
+    routes:
+    - route: agency_report
+      class: agency_cooperation
+      requires:
+      - pre:published-conformance-and-evaluation-report (agency_records, publisher)
+  - indicator: E2
+    status: specified
+    tier: D
+    class: agency_cooperation
+    basis: routes
+    judged_on_cycle: false
+    record_text: ''
+    routes:
+    - route: agency_records
+      class: agency_cooperation
+      requires:
+      - pre:threshold-preregistration-records (agency_records, publisher)
+  - indicator: E3
+    status: specified
+    tier: M
+    class: agency_cooperation
+    basis: routes
+    judged_on_cycle: false
+    record_text: ''
+    routes:
+    - route: agency_records
+      class: agency_cooperation
+      requires:
+      - pre:evaluation-set-version-records (agency_records, publisher)
+  - indicator: E4
+    status: specified
+    tier: D
+    class: agency_cooperation
+    basis: routes
+    judged_on_cycle: false
+    record_text: ''
+    routes:
+    - route: agency_records
+      class: agency_cooperation
+      requires:
+      - pre:held-out-rotation-records (agency_records, publisher)
+  - indicator: E5
+    status: harness_built
+    tier: M
+    class: not_blocked
+    basis: record reason matches `definition of `measured``
+    judged_on_cycle: false
+    record_text: E5 judges the CYCLE, not a surface, so DD-055's definition of `measured` — a Finding
+      on an admitted, observable surface — cannot apply to it. Its control Finding fired in this cycle
+      and every other; the status is a limitation of the definition, not a gap in the measurement.
+    routes: []
+  - indicator: E6
+    status: specified
+    tier: M
+    class: no_standard
+    basis: routes
+    judged_on_cycle: false
+    record_text: ''
+    routes:
+    - route: benchmark
+      class: no_standard
+      requires:
+      - pre:product-question-benchmark (benchmark_set, this_project)
+      - pre:vintage-disambiguation-set (benchmark_set, this_project)
+  - indicator: E7
+    status: specified
+    tier: D
+    class: agency_cooperation
+    basis: routes
+    judged_on_cycle: false
+    record_text: ''
+    routes:
+    - route: agency_records
+      class: agency_cooperation
+      requires:
+      - pre:eval-failure-closure-records (agency_records, publisher)
+  - indicator: E8
+    status: specified
+    tier: M
+    class: no_standard
+    basis: routes
+    judged_on_cycle: false
+    record_text: ''
+    routes:
+    - route: benchmark
+      class: no_standard
+      requires:
+      - pre:product-question-benchmark (benchmark_set, this_project)
+      - pre:second-evaluation-run (second_cycle, this_project)
+  - indicator: E9
+    status: specified
+    tier: M
+    class: no_standard
+    basis: routes
+    judged_on_cycle: false
+    record_text: ''
+    routes:
+    - route: benchmark
+      class: no_standard
+      requires:
+      - pre:adversarial-bank (benchmark_set, this_project)
+  - indicator: F1
+    status: specified
+    tier: D
+    class: agency_cooperation
+    basis: routes
+    judged_on_cycle: false
+    record_text: ''
+    routes:
+    - route: agency_records
+      class: agency_cooperation
+      requires:
+      - pre:release-validation-records (agency_records, publisher)
+  - indicator: F2
+    status: specified
+    tier: O
+    class: open_tooling
+    basis: routes
+    judged_on_cycle: false
+    record_text: ''
+    routes:
+    - route: oasdiff_two_releases
+      class: open_tooling
+      requires:
+      - tool:oasdiff (open_source, this_project)
+      - pre:second-scan-cycle (second_cycle, this_project)
+  - indicator: F3
+    status: specified
+    tier: O
+    class: open_tooling
+    basis: routes
+    judged_on_cycle: false
+    record_text: ''
+    routes:
+    - route: wayback_cdx
+      class: open_tooling
+      requires:
+      - tool:wayback-cdx-server (hosted_free, this_project)
+  - indicator: F5
+    status: specified
+    tier: D
+    class: agency_cooperation
+    basis: routes
+    judged_on_cycle: false
+    record_text: ''
+    routes:
+    - route: agency_records
+      class: agency_cooperation
+      requires:
+      - pre:staging-regression-records (agency_records, publisher)
+  - indicator: F6
+    status: specified
+    tier: O
+    class: open_tooling
+    basis: routes
+    judged_on_cycle: false
+    record_text: ''
+    routes:
+    - route: slsa_verifier
+      class: open_tooling
+      requires:
+      - tool:slsa-verifier (open_source, this_project)
+  - indicator: G2
+    status: specified
+    tier: M
+    class: no_standard
+    basis: routes
+    judged_on_cycle: false
+    record_text: ''
+    routes:
+    - route: benchmark
+      class: no_standard
+      requires:
+      - pre:vintage-disambiguation-set (benchmark_set, this_project)
+  - indicator: G3
+    status: specified
+    tier: unassigned
+    class: open_tooling
+    basis: record reason matches `no collector reads it`
+    judged_on_cycle: false
+    record_text: 'cc_tasks/2026-09-17_unassigned_indicators.md decision 5: a corpus document names the
+      artifact the crosswalk would be, and no collector reads it. corpus/kernel/sdmx-3-0-section-1-framework.pdf
+      (doc_id `sdmx-3-0-section-1-framework`) defines the Structure Map — "Structure maps describes a
+      mapping between data structure definitions or dataflows for the purpose of transforming a data set
+      into a different structure" — and the representation maps that map value and code lists. No collector
+      in docs/design/scan_tool_map.md §1 reads SDMX, so decision 2''s second half fails and the tier stays
+      undetermined. Candidate: M, harness_leg, once an SDMX collector exists; the stable-series-ID half
+      would be DCAT-US 3 `previousVersion` and `hasCurrentVersion` through `dcat.fetch_catalog`.'
+    routes: []
+  - indicator: G4
+    status: harness_built
+    tier: M
+    class: no_standard
+    basis: record reason matches `What is missing is a standard`
+    judged_on_cycle: true
+    record_text: The statutory-mandate and statistical-versus-administrative clauses have no field in
+      any admitted document. What is missing is a standard, not a tool or a grant.
+    routes: []
+  - indicator: G5
+    status: specified
+    tier: unassigned
+    class: no_standard
+    basis: record reason matches `no admitted document names a machine-readable`
+    judged_on_cycle: false
+    record_text: 'cc_tasks/2026-09-17_unassigned_indicators.md decision 2: no admitted document names
+      a machine-readable suppression or disclosure field. The search that failed: `suppress`, `confidential`
+      and `disclosure` across corpus/kernel, corpus/crosswalk and corpus/components — the only hit is
+      bing-webmaster-guidelines, on search-result suppression — and across the SDMX 3.0 §1 and DDI codebook
+      texts. The indicator''s own source, `usafacts-ai-ready-data-guide`, asks publishers to "Properly
+      identify and document suppressed data (e.g., in very small counties) in plain language with unique
+      identifiers": plain language is the prose this indicator says it strengthens, and the field that
+      would replace it does not exist in any admitted document. Stays unassigned.'
+    routes: []
+  - indicator: G6
+    status: specified
+    tier: M
+    class: no_standard
+    basis: routes
+    judged_on_cycle: false
+    record_text: ''
+    routes:
+    - route: break_cases
+      class: no_standard
+      requires:
+      - pre:series-break-cases (benchmark_set, this_project)
+  q2_findings_by_body:
+  - body: BEA
+    tier: A
+    findings: 85
+    access_denial: 0
+    absence: 59
+    nonconformant: 4
+    error_other: 0
+    pass: 22
+    absence_with_denied_obs: 4
+  - body: BJS
+    tier: A
+    findings: 64
+    access_denial: 0
+    absence: 48
+    nonconformant: 6
+    error_other: 0
+    pass: 10
+    absence_with_denied_obs: 0
+  - body: BLS
+    tier: A
+    findings: 43
+    access_denial: 43
+    absence: 0
+    nonconformant: 0
+    error_other: 0
+    pass: 0
+    absence_with_denied_obs: 0
+  - body: BTS
+    tier: A
+    findings: 43
+    access_denial: 43
+    absence: 0
+    nonconformant: 0
+    error_other: 0
+    pass: 0
+    absence_with_denied_obs: 0
+  - body: CENSUS
+    tier: A
+    findings: 85
+    access_denial: 2
+    absence: 67
+    nonconformant: 1
+    error_other: 1
+    pass: 14
+    absence_with_denied_obs: 8
+  - body: DRSMSU
+    tier: A
+    findings: 43
+    access_denial: 0
+    absence: 34
+    nonconformant: 2
+    error_other: 0
+    pass: 7
+    absence_with_denied_obs: 0
+  - body: EIA
+    tier: A
+    findings: 64
+    access_denial: 15
+    absence: 35
+    nonconformant: 7
+    error_other: 0
+    pass: 7
+    absence_with_denied_obs: 5
+  - body: ERS
+    tier: A
+    findings: 85
+    access_denial: 0
+    absence: 68
+    nonconformant: 5
+    error_other: 0
+    pass: 12
+    absence_with_denied_obs: 0
+  - body: GSA
+    tier: C
+    findings: 9
+    access_denial: 0
+    absence: 2
+    nonconformant: 1
+    error_other: 0
+    pass: 6
+    absence_with_denied_obs: 0
+  - body: NAHMSAPHIS
+    tier: A
+    findings: 43
+    access_denial: 0
+    absence: 30
+    nonconformant: 6
+    error_other: 0
+    pass: 7
+    absence_with_denied_obs: 0
+  - body: NASS
+    tier: A
+    findings: 85
+    access_denial: 4
+    absence: 63
+    nonconformant: 4
+    error_other: 2
+    pass: 12
+    absence_with_denied_obs: 4
+  - body: NCES
+    tier: A
+    findings: 43
+    access_denial: 0
+    absence: 32
+    nonconformant: 2
+    error_other: 0
+    pass: 9
+    absence_with_denied_obs: 0
+  - body: NCHS
+    tier: A
+    findings: 85
+    access_denial: 0
+    absence: 67
+    nonconformant: 7
+    error_other: 2
+    pass: 9
+    absence_with_denied_obs: 0
+  - body: NCSES
+    tier: A
+    findings: 64
+    access_denial: 0
+    absence: 46
+    nonconformant: 4
+    error_other: 0
+    pass: 14
+    absence_with_denied_obs: 0
+  - body: NIST
+    tier: C
+    findings: 9
+    access_denial: 0
+    absence: 2
+    nonconformant: 1
+    error_other: 0
+    pass: 6
+    absence_with_denied_obs: 0
+  - body: ORES
+    tier: A
+    findings: 43
+    access_denial: 43
+    absence: 0
+    nonconformant: 0
+    error_other: 0
+    pass: 0
+    absence_with_denied_obs: 0
+  - body: SAMHSACBHS
+    tier: A
+    findings: 43
+    access_denial: 0
+    absence: 19
+    nonconformant: 3
+    error_other: 13
+    pass: 8
+    absence_with_denied_obs: 0
+  - body: SOI
+    tier: A
+    findings: 64
+    access_denial: 3
+    absence: 47
+    nonconformant: 4
+    error_other: 0
+    pass: 10
+    absence_with_denied_obs: 3
+  - body: data.gov
+    tier: C
+    findings: 9
+    access_denial: 1
+    absence: 1
+    nonconformant: 0
+    error_other: 0
+    pass: 7
+    absence_with_denied_obs: 0
+  q3_admissions_by_date:
+  - first_admitted: '2026-07-03'
+    documents: 7
+  - first_admitted: '2026-07-04'
+    documents: 64
+  - first_admitted: '2026-08-21'
+    documents: 63
+  - first_admitted: '2026-08-27'
+    documents: 34
+  - first_admitted: '2026-08-29'
+    documents: 10
+  - first_admitted: '2026-08-30'
+    documents: 16
+  - first_admitted: '2026-09-02'
+    documents: 17
+  - first_admitted: '2026-09-03'
+    documents: 22
+  - first_admitted: '2026-09-07'
+    documents: 25
+  - first_admitted: '2026-09-10'
+    documents: 3
+  - first_admitted: '2026-09-19'
+    documents: 2
+  - first_admitted: '2026-09-21'
+    documents: 1
+  q5_numbers_that_differ_from_the_pack:
+  - number: indicators with a current rule
+    pack: '24'
+    pack_source: 'B_usafacts_delta.md: indicators with a current rule in rules.CURRENT'
+    script: 23
