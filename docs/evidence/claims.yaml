@@ -3020,6 +3020,415 @@ claims:
   - value: '0.02'
     source: score.py prescription delta for act:a8-publish-a-release-date-for-the-product
   source_task: cc_tasks/2026-10-02_evidence_map_record.md
+- id: CL-078
+  key: prior_art.pa1
+  question: PA1
+  text: Structured metadata on a page does not by itself make data usable by machines; discovery, access,
+    interpretation and fitness for use are each required.
+  status: prior_art
+  evidence:
+  - kind: document
+    id: wilkinson-2016-fair-guiding-principles
+    locator: events/batch-006.jsonl:40
+    where: Wilkinson et al., Scientific Data 3:160018, PDF p. 3, the 'machine actionable' paragraph
+    quote: but not capable of parsing it due to it being in an unknown format
+    note: 'The FAIR paper''s machine-actionability continuum: an agent must identify an object, judge
+      it useful, judge it usable (licence, consent, access) and act; a machine can reach one step and
+      fail the next.'
+  - kind: document
+    id: wilkinson-2016-fair-guiding-principles
+    locator: events/batch-006.jsonl:40
+    where: Wilkinson et al., Scientific Data 3:160018, PDF p. 3
+    quote: determine if it is usable, with respect to license, consent
+  - kind: document
+    id: fcsm-19-01-transparent-reporting-for-integrated-data-quality
+    locator: events/batch-001.jsonl:34
+    where: FCSM 19-01, PDF p. 6
+    quote: data quality refers to the data’s “fitness for use” for a user’s own needs
+    note: Federal statistical guidance on fitness for use; the same definition is in statistical-policy-working-paper-46-data-quality-assessment
+      and w3c-dwbp-2017 §9 (MCP search_text 'fitness for use', six hits).
+  numbers: []
+  note: 'Corpus first: manifest title scan and MCP search_text (''fitness for use'', ''machine-actionab'');
+    both points are in admitted documents, so no web search was run. Not in the corpus and not searched
+    on the web because the corpus establishes the point: Juran''s ''fitness for use'' (a book, no fetchable
+    page carries the sentence); OMB''s information quality guidelines (the corpus holds the statute, information-quality-act-data-quality-act-sec-515-of-p-l-106,
+    not the guidelines).'
+  source_task: cc_tasks/2026-10-02_evidence_map_prior_art_v2.md
+- id: CL-079
+  key: prior_art.pa2
+  question: PA2
+  text: A federal agency's flagship data product must be listed in its `data.json`.
+  status: prior_art
+  evidence:
+  - kind: document
+    id: foundations-for-evidence-based-policymaking-act-of-2018-evid
+    locator: events/batch-001.jsonl:52
+    where: Evidence Act Title II, the amended 44 U.S.C. § 3511(a)(1), PDF p. 10
+    quote: develop and maintain a comprehensive data inventory that accounts for all data assets
+    note: 'fss-policy-kg holds the same obligation: Obligation d7b0b83364ef4c66aa6e4718e267ca83 (source_doc
+      evidence_act_2018) and 2346470a44d0415e855ad23ce5814085 (source_doc pra_1995_uslm).'
+  - kind: document
+    id: m-25-05-phase-2-implementation-of-the-evidence-act-open-gove
+    locator: events/batch-001.jsonl:48
+    where: OMB M-25-05, comprehensive data inventories, (iii) Public Dissemination, PDF p. 10
+    quote: 'host it publicly on the agency’s website at the address: www.[agency].gov/data.json'
+    note: 'fss-policy-kg: Obligation 069f7c3081b64954b785c34ca1be3c22 (source_doc m_25_05); the inventory
+      requirement itself is Obligation 7bf4bc7524e34df9bcdccac539f39ed3 (m_25_05, PDF p. 7: data assets
+      held by more than one agency are ''required to be listed independently by each agency'').'
+  numbers: []
+  note: 'The status rests on the obligation covering every data asset, of which a flagship product is
+    one. The statute and the guidance state the obligation for all data assets in the agency''s possession;
+    neither names flagship products. M-13-13 and the Project Open Data schema were not searched on the
+    web: the current obligation (M-25-05, which names DCAT-US 3.0 as the inventory schema) is in the corpus,
+    and the schema documents dcat-us-1-1-schema and dcat-us-3-overview are admitted.'
+  source_task: cc_tasks/2026-10-02_evidence_map_prior_art_v2.md
+- id: CL-080
+  key: prior_art.pa3
+  question: PA3
+  text: Optimizing published content for machine readers has a named discipline, generative engine optimization,
+    which its originators frame as the successor to search engine optimization.
+  status: prior_art
+  evidence:
+  - kind: document
+    id: aggarwal-2024-geo-generative-engine-optimization
+    locator: events/batch-006.jsonl:39
+    where: 'Aggarwal et al., GEO: Generative Engine Optimization (arXiv 2311.09735), abstract, PDF p.
+      1'
+    quote: we introduce Generative Engine Optimization (GEO), the first novel paradigm
+  - kind: document
+    id: aggarwal-2024-geo-generative-engine-optimization
+    locator: events/batch-006.jsonl:39
+    where: same, §2.2 Generative Engine Optimization, PDF p. 3
+    quote: The advent of search engines led to search engine optimization
+    note: The next sentences say traditional SEO methods are not directly applicable to generative engines.
+  - kind: document
+    id: llmstxt-proposal
+    locator: events/batch-006.jsonl:18
+    where: llmstxt.org, 'The /llms.txt file', Proposal section
+    quote: markdown file to websites to provide LLM-friendly content
+    note: The page says the proposal was first written in 2024 and is now at v2.
+  numbers: []
+  note: 'Corpus only; both primary sources are admitted. Further GEO literature in the corpus: martinez-2026-geo-critical-survey,
+    chen-2025-geo-how-to-dominate-ai-search, wu-2025-what-generative-search-engines-like, schulte-2026-dont-measure-once.'
+  source_task: cc_tasks/2026-10-02_evidence_map_prior_art_v2.md
+- id: CL-081
+  key: prior_art.pa4
+  question: PA4
+  text: Publishers increasingly restrict AI crawlers, and the public's access through AI tools depends
+    on those restrictions.
+  status: prior_art
+  evidence:
+  - kind: citation
+    id: longpre2024consent
+    locator: https://arxiv.org/abs/2407.14933 (abstract)
+    author: Longpre, S.; Mahari, R.; Lee, A.; et al.
+    year: '2024'
+    title: 'Consent in Crisis: The Rapid Decline of the AI Data Commons'
+    venue: arXiv:2407.14933
+    url: https://arxiv.org/abs/2407.14933
+    where: abstract
+    quote: in a single year (2023-2024) there has been a rapid crescendo of data restrictions
+    retrieved: 2026-10-02 (WebFetch)
+    note: An audit of 14,000 web domains behind C4, RefinedWeb and Dolma; robots.txt and terms of service,
+      longitudinal.
+  - kind: document
+    id: openai-crawlers-bots
+    locator: events/batch-006.jsonl:36
+    where: OpenAI, Overview of OpenAI crawlers, OAI-SearchBot row
+    quote: opted out of OAI-SearchBot will not be shown in ChatGPT search answers
+  - kind: document
+    id: anthropic-crawler-support-article
+    locator: events/batch-006.jsonl:37
+    where: Anthropic support article on its crawlers, Claude-SearchBot row
+    quote: may reduce your site's visibility and accuracy in user search results
+  - kind: citation
+    id: stox2025aibotblocks
+    locator: https://ahrefs.com/blog/ai-bot-block-rates/ (body text beside the chart 'AI block rate over
+      time by domain category')
+    author: Stox, P.
+    year: '2025'
+    title: The AI Bots That ~140 Million Websites Block the Most
+    venue: Ahrefs blog
+    url: https://ahrefs.com/blog/ai-bot-block-rates/
+    where: body text beside the chart 'AI block rate over time by domain category'
+    quote: law & government (42% blocked) sites blocked them more
+    retrieved: 2026-10-02 (WebFetch)
+    note: 'The nearest thing to a government-specific measure found: a category of about 140 million sites''
+      robots.txt files, with no separation of U.S. federal .gov sites.'
+  numbers: []
+  note: 'Federal-specific: no measurement of U.S. federal sites'' AI-crawler policy was found. Searches:
+    manifest title scan and corpus text grep for ''Longpre'', ''Consent in Crisis'', ''crawler'' (vendor
+    documentation only: cloudflare-ai-crawl-control, rfc-9309, the OpenAI, Anthropic and Perplexity crawler
+    pages); WebSearch ''study robots.txt AI crawlers blocked federal government .gov websites measurement
+    GPTBot''; read Liu et al., ''Somesite I Used To Crawl'' (IMC 2025, cseweb.ucsd.edu), which has no
+    government category; read Ahrefs (above), category-level only.'
+  source_task: cc_tasks/2026-10-02_evidence_map_prior_art_v2.md
+- id: CL-082
+  key: prior_art.pa5
+  question: PA5
+  text: External, outside-in measurement of an organization's published surface, tied to prescribed actions,
+    is an existing pattern; in the documentation read, each result is tied to a remediation step and none
+    carries an effort estimate.
+  status: prior_art
+  evidence:
+  - kind: document
+    id: lighthouse-docs-overview
+    locator: events/batch-006.jsonl:56
+    where: Chrome for Developers, Lighthouse overview, opening section
+    quote: explains why the audit is important, as well as how to fix it
+    note: Outside-in (the page says 'You can audit any URL on the web'); performance, accessibility and
+      SEO audits; each audit names its fix; no effort estimate in the overview.
+  - kind: citation
+    id: ossf2026scorecardchecks
+    locator: https://raw.githubusercontent.com/ossf/scorecard/main/docs/checks.md (opening paragraph)
+    author: OpenSSF Scorecard project
+    year: '2026'
+    title: Check Documentation (docs/checks.md)
+    venue: GitHub, ossf/scorecard
+    url: https://raw.githubusercontent.com/ossf/scorecard/main/docs/checks.md
+    where: opening paragraph
+    quote: remediation steps to improve the score
+    retrieved: 2026-10-02 (WebFetch)
+    note: Each check has scoring criteria, remediation steps and a risk explanation; the fetch reported
+      no occurrence of 'effort' in the document.
+  - kind: document
+    id: gsa-site-scanning-engine-readme
+    locator: events/batch-006.jsonl:52
+    where: GSA Site Scanning Engine README, Description
+    quote: the codebase that actually runs the scans and generates data
+    note: Outside-in scanning of federal websites; the README describes scans and data, not prescribed
+      actions.
+  - kind: document
+    id: usafacts-fde-standards-detailed
+    locator: events/batch-017.jsonl:2
+    where: USAFacts Federal Data Excellence standards, detailed guide, FAQ 'Are the criteria in the standards
+      equally important?', PDF p. 3
+    quote: weighted based on these expert opinions
+    note: A rubric graded on nomination; the guide says the weights do not appear in the standards.
+  - kind: citation
+    id: fds2020actionplan
+    locator: 'https://strategy.data.gov/action-plan/ (Action 3: Assess Data and Related Infrastructure
+      Maturity)'
+    author: Federal Data Strategy (OMB)
+    year: '2020'
+    title: Federal Data Strategy 2020 Action Plan
+    venue: strategy.data.gov
+    url: https://strategy.data.gov/action-plan/
+    where: 'Action 3: Assess Data and Related Infrastructure Maturity'
+    quote: Maturity assessments allow an organization to evaluate itself against documented best practices
+    retrieved: 2026-10-02 (WebFetch)
+    note: A self-assessment by the agency, not an outside-in measurement.
+  - kind: citation
+    id: odbmethod3
+    locator: https://opendatabarometer.org/3rdEdition/methodology/ (Research Method page)
+    author: World Wide Web Foundation
+    year: n.d.
+    title: 'Open Data Barometer, 3rd edition: Research Method'
+    venue: opendatabarometer.org
+    url: https://opendatabarometer.org/3rdEdition/methodology/
+    where: Research Method page
+    quote: A peer reviewed expert survey
+    retrieved: 2026-10-02 (WebFetch)
+    note: An expert-survey index; the method page shows no per-result action or effort.
+  numbers: []
+  note: 'The status covers the first clause: Lighthouse and OpenSSF Scorecard establish outside-in measurement
+    with a fix named for each result. The second clause is an absence recorded over the sources read,
+    not a finding of the literature. Searched, primary not read: SecurityScorecard Score Planner (support.securityscorecard.com)
+    and Bitsight ''Improving Your Bitsight Security Rating'' (help.bitsighttech.com) both returned HTTP
+    403 to WebFetch. WebSearch result summaries say Score Planner computes the minimum issues to remediate
+    to reach a target grade and shows a projected score, which is a score effect rather than an effort
+    estimate; that is a search-index summary and is not cited. The Global Open Data Index methodology
+    was seen only in a search summary and was not fetched. WCAG tooling beyond Lighthouse''s accessibility
+    audits was not fetched.'
+  source_task: cc_tasks/2026-10-02_evidence_map_prior_art_v2.md
+- id: CL-083
+  key: prior_art.pa6
+  question: PA6
+  text: Equal weighting with no asserted weights is the defensible default for a composite indicator when
+    no basis for weights exists.
+  status: unsupported
+  evidence:
+  - kind: citation
+    id: oecd2008handbook
+    locator: https://www.oecd.org/content/dam/oecd/en/publications/reports/2008/08/handbook-on-constructing-composite-indicators-methodology-and-user-guide_g1gh9301/9789264043466-en.pdf
+      (§1.6 Weighting and aggregation, printed p. 31 (PDF p. 33))
+    author: OECD; European Commission Joint Research Centre
+    year: '2008'
+    title: 'Handbook on Constructing Composite Indicators: Methodology and User Guide'
+    venue: OECD Publishing (ISBN 978-92-64-04345-9)
+    url: https://www.oecd.org/content/dam/oecd/en/publications/reports/2008/08/handbook-on-constructing-composite-indicators-methodology-and-user-guide_g1gh9301/9789264043466-en.pdf
+    where: §1.6 Weighting and aggregation, printed p. 31 (PDF p. 33)
+    quote: Most composite indicators rely on equal weighting (EW)
+    retrieved: 2026-10-02 (WebFetch)
+  - kind: citation
+    id: oecd2008handbook
+    locator: https://www.oecd.org/content/dam/oecd/en/publications/reports/2008/08/handbook-on-constructing-composite-indicators-methodology-and-user-guide_g1gh9301/9789264043466-en.pdf
+      (§1.6, printed p. 31)
+    author: OECD; European Commission Joint Research Centre
+    year: '2008'
+    title: 'Handbook on Constructing Composite Indicators: Methodology and User Guide'
+    venue: OECD Publishing (ISBN 978-92-64-04345-9)
+    url: https://www.oecd.org/content/dam/oecd/en/publications/reports/2008/08/handbook-on-constructing-composite-indicators-methodology-and-user-guide_g1gh9301/9789264043466-en.pdf
+    where: §1.6, printed p. 31
+    quote: it could also disguise the absence of a statistical or an empirical basis
+    retrieved: 2026-10-02 (WebFetch)
+    note: 'The sentence goes on: ''e.g. when there is insufficient knowledge of causal relationships or
+      a lack of consensus on the alternative''.'
+  - kind: citation
+    id: oecd2008handbook
+    locator: https://www.oecd.org/content/dam/oecd/en/publications/reports/2008/08/handbook-on-constructing-composite-indicators-methodology-and-user-guide_g1gh9301/9789264043466-en.pdf
+      (§1.6, printed p. 31)
+    author: OECD; European Commission Joint Research Centre
+    year: '2008'
+    title: 'Handbook on Constructing Composite Indicators: Methodology and User Guide'
+    venue: OECD Publishing (ISBN 978-92-64-04345-9)
+    url: https://www.oecd.org/content/dam/oecd/en/publications/reports/2008/08/handbook-on-constructing-composite-indicators-methodology-and-user-guide_g1gh9301/9789264043466-en.pdf
+    where: §1.6, printed p. 31
+    quote: equal weighting does not mean “no weights”
+    retrieved: 2026-10-02 (WebFetch)
+  numbers: []
+  note: 'The Handbook establishes a narrower point: equal weighting is the most common choice in composite
+    indicators, and it is the choice made when there is insufficient knowledge of causal relationships
+    or no consensus on an alternative. It does not call equal weighting defensible or a default, and it
+    says equal weighting is itself a weighting, not the absence of one. The Handbook is not in the corpus:
+    the manifest has no entry for it, and docs/design/scoring_model.md line 7 says it is cited by reference.
+    Searches: manifest title scan (''OECD'', ''Handbook'', ''composite''); corpus text grep (''equal weight'',
+    ''composite indicator''); WebSearch for the Handbook (fetched, above); WebSearch for Dawes (1979),
+    ''The robust beauty of improper linear models in decision making'', American Psychologist, which concerns
+    predicting a criterion and was not fetched or cited.'
+  source_task: cc_tasks/2026-10-02_evidence_map_prior_art_v2.md
+- id: CL-084
+  key: prior_art.pa7
+  question: PA7
+  text: An executive order signed `2026-09-29` directs executive agencies to use 'Super Intelligence'
+    and 'SI' in place of 'Artificial Intelligence' and 'AI' in non-statutory documents.
+  status: prior_art
+  evidence:
+  - kind: citation
+    id: eo14434whitehouse
+    locator: https://www.whitehouse.gov/presidential-actions/2026/09/inaugurating-the-era-of-super-intelligence/
+      (Sec. 2(a))
+    author: The White House
+    year: '2026'
+    title: Inaugurating The Era Of Super Intelligence
+    venue: whitehouse.gov, Presidential Actions
+    url: https://www.whitehouse.gov/presidential-actions/2026/09/inaugurating-the-era-of-super-intelligence/
+    where: Sec. 2(a)
+    quote: shall use 'Super Intelligence' and 'SI' in place of 'Artificial Intelligence' and 'AI'
+    retrieved: 2026-10-02 (WebFetch)
+    note: 'Sec. 2(a) lists official correspondence, public communications, websites, reports, policy documents
+      and other non-statutory documents. Sec. 2(b): nothing in the section requires altering previously
+      issued regulations, Presidential actions, contracts, grants or other historical documents. Sec.
+      3(a) defines the terms by reference to ''artificial intelligence'' in 15 U.S.C. 9401(3).'
+  - kind: citation
+    id: eo14434fr
+    locator: https://www.federalregister.gov/api/v1/documents/2026-20321.json?fields[]=title&fields[]=executive_order_number&fields[]=citation&fields[]=publication_date&fields[]=signing_date&fields[]=html_url&fields[]=document_number
+      (Federal Register API record for document 2026-20321)
+    author: Executive Office of the President
+    year: '2026'
+    title: 'Executive Order 14434: Inaugurating the Era of Super Intelligence'
+    venue: Federal Register, 91 FR 63129
+    url: https://www.federalregister.gov/api/v1/documents/2026-20321.json?fields[]=title&fields[]=executive_order_number&fields[]=citation&fields[]=publication_date&fields[]=signing_date&fields[]=html_url&fields[]=document_number
+    where: Federal Register API record for document 2026-20321
+    quote: Inaugurating the Era of Super Intelligence
+    retrieved: 2026-10-02 (WebFetch)
+    note: EO 14434; 91 FR 63129; signed 2026-09-29; published 2026-10-02. The HTML page (federalregister.gov/documents/2026/10/02/2026-20321/...)
+      redirected this fetcher to unblock.federalregister.gov, so the API record is the locator.
+  numbers: []
+  note: 'DN-009 decision 4 makes the summary''s use of the term depend on this row: if confirmed by citation,
+    the summary and brief use the order''s term once, with this citation. Found on the web; not in the
+    corpus. ''SI'' stands for ''Super Intelligence''. Searches: WebSearch ''executive order September
+    29 2026 artificial intelligence renamed SI''; WebSearch for the Federal Register entry; WebFetch of
+    the whitehouse.gov fact sheet, which links the order.'
+  source_task: cc_tasks/2026-10-02_evidence_map_prior_art_v2.md
+- id: CL-085
+  key: prior_art.pa8
+  question: PA8
+  text: The Department of Commerce's definition of AI-ready data and this project's own statement of what
+    it measures are recorded verbatim, side by side.
+  status: unsupported
+  evidence:
+  - kind: citation
+    id: airkg2026dn005
+    locator: https://github.com/brockwebb/ai-readiness-kg/blob/24315103320dd9bac37f652b7b1ffa854d479d29/docs/design/2026-09-15_DN-005_reorientation_the_framework_is_the_goal.md#L11
+      (DN-005 §1, line 11)
+    author: Webb, B.
+    year: '2026'
+    title: 'DN-005: reorientation. The goal is the framework; L0 is one level of it'
+    venue: ai-readiness-kg design notes (GitHub)
+    url: https://github.com/brockwebb/ai-readiness-kg/blob/24315103320dd9bac37f652b7b1ffa854d479d29/docs/design/2026-09-15_DN-005_reorientation_the_framework_is_the_goal.md#L11
+    where: DN-005 §1, line 11
+    quote: 'An AI-readiness framework for federal statistical publishers: a way to rate and score, quantitatively
+      and qualitatively, whether the public and the tools the public now uses can reach, understand and
+      use the data they paid for.'
+    retrieved: 2026-10-02 (WebFetch)
+    own_text: true
+    note: The project's own text, quoted whole. The framework record (framework/ai_readiness_framework.json)
+      holds no definition node, so this design note, which CLAUDE.md names as the standing map, is the
+      locator.
+  - kind: document
+    id: nao-216-128-artificial-intelligence-in-noaa
+    locator: events/batch-001.jsonl:107
+    where: NAO 216-128, Artificial Intelligence in NOAA, definitions (OCR text corpus/noaa_esip/NAO_216-128.ocr.txt)
+    quote: Data that is discoverable, machine-readable and machine-understandable
+    note: 'The definition of ''AI-Ready Data'' (the OCR reads ''Al-Ready'') continues: ''and has sufficient
+      quality, documentation, and access methods to support the full AI application development and use
+      life cycle''. NOAA is a Commerce bureau; an NAO is a NOAA order, not the Department''s definition.'
+  - kind: document
+    id: fcsm-25-03
+    locator: events/batch-001.jsonl:1
+    where: FCSM 25-03, PDF p. 3
+    quote: improve accuracy of AI responses and increase the prioritization of its authoritative data
+    note: FCSM 25-03 quoting the Commerce guidance's stated aim; this is its purpose, not its definition.
+  numbers: []
+  note: 'Unsupported because the Commerce definition was not read in its primary source. Commerce Data
+    Governance Board, ''Generative Artificial Intelligence and Open Data: Guidelines and Best Practices''
+    (16 January 2025): WebFetch of https://www.commerce.gov/sites/default/files/2025-01/GenerativeAI-Open-Data.pdf
+    and of the commerce.gov blog post returned HTTP 403 on 2026-10-02; web.archive.org is refused by the
+    harness; fedscoop.com, benton.org, ediscoverytoday.com and the Open Data Policy Lab repository carry
+    no verbatim definition. Two WebSearch result summaries attribute to the guidance the phrase ''generative
+    AI-ready open data, or open data that can be responsibly and effectively used by generative AI systems''.
+    That is a search-index summary, not a reading of the guidance, and it is not cited. Corpus: no admitted
+    document quotes the definition (a text scan of every corpus PDF for ''Department of Commerce'', ''Commerce
+    Data Governance'' and ''responsibly and effectively used''); building-ai-ready-best-practices-the-work-of-the-commerce-da
+    is pending_refetch, not admitted. The project half is recorded above.'
+  source_task: cc_tasks/2026-10-02_evidence_map_prior_art_v2.md
+- id: CL-086
+  key: prior_art.pa9
+  question: PA9
+  text: Data buried in aggregated spreadsheets is not machine-usable even when published.
+  status: prior_art
+  evidence:
+  - kind: citation
+    id: wickham2014tidy
+    locator: https://vita.had.co.nz/papers/tidy-data.pdf (§3.1 Column headers are values, not variable
+      names)
+    author: Wickham, H.
+    year: '2014'
+    title: Tidy Data
+    venue: Journal of Statistical Software 59(10), doi:10.18637/jss.v059.i10
+    url: https://vita.had.co.nz/papers/tidy-data.pdf
+    where: §3.1 Column headers are values, not variable names
+    quote: A common type of messy dataset is tabular data designed for presentation
+    retrieved: 2026-10-02 (WebFetch)
+    note: Read in the author's copy at the URL; the JSS abstract was confirmed at https://www.jstatsoft.org/article/view/v059i10.
+      §3 lists presentation layouts first among the five most common problems with messy datasets, each
+      needing tidying before analysis.
+  - kind: document
+    id: w3c-dwbp-2017
+    locator: events/batch-006.jsonl:11
+    where: 'W3C Data on the Web Best Practices, Best Practice 12: Use machine-readable standardized data
+      formats, Why'
+    quote: Posting data in a format that is not machine-readable places severe limitations
+    note: The same paragraph separates formats humans can read and edit on a computer from formats that
+      are machine-readable.
+  numbers: []
+  note: 'Neither source says ''not machine-usable'' in those words: Wickham establishes presentation-layout
+    tables as a common messy form that must be tidied before analysis, and the W3C Recommendation establishes
+    that a format that is not machine-readable limits the data''s usefulness. Corpus: DWBP admitted; Wickham
+    not in the corpus (corpus grep ''Wickham'', ''tidy data''). data.gov and Federal Data Strategy guidance
+    were not searched: the task says one source suffices.'
+  source_task: cc_tasks/2026-10-02_evidence_map_prior_art_v2.md
 tables:
   q1_measurement_boundary:
   - indicator: A7

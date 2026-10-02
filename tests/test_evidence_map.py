@@ -8,7 +8,11 @@ Three things the task asks for, and the controls that show each check can fail:
   record (in the projection and at the line its locator names), a Result on the graph, an
   admitted corpus document, a framework record node, or a named query;
 * every numeral in a claim's prose is on that claim's `numbers` list, and the list equals the
-  script's freshly computed values.
+  script's freshly computed values;
+* the prior-art entries (`cc_tasks/2026-10-02_evidence_map_prior_art_v2.md`, PA1 to PA9): every
+  `citation` has an https URL recorded at search time, the same URL under its key in
+  `docs/evidence/sources.bib`, and a quotation under the task's word limit; every `document`
+  is an admitted corpus document located at its first `manifest_add` event.
 
 The graph is required for a render; when Neo4j is down the graph tests skip, as the brief
 pack's do, and the pure tests (the classifiers and the numeral scan) still run.
@@ -28,6 +32,13 @@ sys.path.insert(0, str(REPO / "scripts"))
 import build_evidence_map as E  # noqa: E402
 
 TASK = E.TASK
+#: The task that appends `prior_art` and `unsupported` entries (DN-009 decision 8).
+PRIOR_ART_TASK = "cc_tasks/2026-10-02_evidence_map_prior_art_v2.md"
+PRIOR_ART_KEYS = [f"prior_art.pa{i}" for i in range(1, 10)]
+CITATION = "citation"
+BIB = REPO / "docs" / "evidence" / "sources.bib"
+#: The task's limit on a quotation from a third-party source ("under 15 words quoted").
+QUOTE_WORD_LIMIT = 15
 
 
 @pytest.fixture(scope="module")
@@ -75,7 +86,8 @@ def test_every_claim_has_the_schema(on_disk):
         assert c["status"] in E.STATUSES, c
         assert c["text"].strip() and c["source_task"], c
         for e in c["evidence"]:
-            assert e["kind"] in E.EVIDENCE_KINDS, e
+            # `citation` is written only by the prior-art task; the generator never emits it.
+            assert e["kind"] in E.EVIDENCE_KINDS + (CITATION,), e
             assert e["id"] and e["locator"], e
     # This task writes only record and needs_measurement entries (task decision 1).
     assert {c["status"] for c in ours(on_disk)} <= {"record", "needs_measurement"}
@@ -214,3 +226,117 @@ def test_q1_partition_covers_every_unmeasured_framework_indicator(on_disk):
                   and n["properties"]["measurement_status"] != "measured")
     assert sorted(r["indicator"] for r in rows) == want
     assert {r["class"] for r in rows} <= set(E.Q1_ORDER) | {E.Q1_NOT_BLOCKED}
+
+
+# ------------------------------------------------------------------------ prior art (PA1 to PA9)
+
+def prior_art(doc):
+    return [c for c in doc["claims"] if c.get("source_task") == PRIOR_ART_TASK]
+
+
+def bib_entries(text: str) -> dict:
+    """`{key: {field: value}}` for a BibTeX file whose field values are brace-delimited on one
+    line, which is how `docs/evidence/sources.bib` is written."""
+    out, key = {}, None
+    for line in text.splitlines():
+        m = re.match(r"\s*@\w+\{([^,\s]+),\s*$", line)
+        if m:
+            key = m.group(1)
+            assert key not in out, f"duplicate bib key {key}"
+            out[key] = {}
+            continue
+        m = re.match(r"\s*(\w+)\s*=\s*\{(.*)\},?\s*$", line)
+        if m and key:
+            out[key][m.group(1)] = m.group(2)
+    return out
+
+
+def citation_problems(e: dict, bib: dict) -> list:
+    """Why a `citation` evidence entry is not a citation a stranger can follow, or []."""
+    bad = []
+    for f in ("author", "year", "title", "venue", "url", "where", "quote", "retrieved"):
+        if not str(e.get(f) or "").strip():
+            bad.append(f"no {f}")
+    url = str(e.get("url") or "")
+    if not re.fullmatch(r"https://[A-Za-z0-9.-]+\.[A-Za-z]{2,}(/\S*)?", url):
+        bad.append(f"url {url!r} is not an absolute https URL")
+    if not re.match(r"\d{4}-\d{2}-\d{2} ", str(e.get("retrieved") or "")):
+        bad.append("retrieved does not open with the search date")
+    if e.get("id") not in bib:
+        bad.append(f"bib key {e.get('id')!r} is not in sources.bib")
+    elif bib[e["id"]].get("url") != url:
+        bad.append(f"sources.bib's url for {e['id']} is not the url the quote was read at")
+    if url and url not in str(e.get("locator") or ""):
+        bad.append("locator does not carry the url")
+    if not e.get("own_text") and len(str(e.get("quote") or "").split()) >= QUOTE_WORD_LIMIT:
+        bad.append(f"quote is {QUOTE_WORD_LIMIT} words or more")
+    return bad
+
+
+def test_the_prior_art_claim_set_is_pa1_to_pa9_once_each(on_disk):
+    mine = prior_art(on_disk)
+    assert sorted(c["key"] for c in mine) == sorted(PRIOR_ART_KEYS)
+    for c in mine:
+        assert c["question"] == c["key"].split(".")[1].upper(), c["id"]
+        assert c["status"] in ("prior_art", "unsupported"), c["id"]
+        assert c["evidence"] or c["status"] == "unsupported", f"{c['id']}: no evidence"
+        assert {e["kind"] for e in c["evidence"]} <= {"document", CITATION}, c["id"]
+        assert c["numbers"] == [], f"{c['id']}: a prior-art claim types no number"
+        if c["status"] == "unsupported":
+            assert len(c.get("note", "")) > 40, f"{c['id']}: unsupported without the searches"
+        for e in c["evidence"]:
+            assert e.get("quote", "").strip(), f"{c['id']}: {e['id']} quotes nothing"
+
+
+def test_every_citation_has_a_url_recorded_at_search_time_and_a_bib_key(on_disk):
+    bib = bib_entries(BIB.read_text(encoding="utf-8"))
+    cited = set()
+    for c in prior_art(on_disk):
+        for e in c["evidence"]:
+            if e["kind"] == CITATION:
+                cited.add(e["id"])
+                assert not citation_problems(e, bib), (c["id"], citation_problems(e, bib))
+    assert cited, "no citation entries at all"
+    assert set(bib) == cited, f"bib entries no claim cites: {sorted(set(bib) - cited)}"
+
+
+def test_the_citation_check_can_fail():
+    """Negative controls: each defect the check exists for is reported."""
+    bib = {"k": {"url": "https://example.org/a"}}
+    good = {"kind": CITATION, "id": "k", "locator": "https://example.org/a (p. 1)",
+            "author": "A", "year": "2020", "title": "T", "venue": "V",
+            "url": "https://example.org/a", "where": "p. 1", "quote": "a short quotation",
+            "retrieved": "2026-10-02 (WebFetch)"}
+    assert citation_problems(good, bib) == []
+    assert "bib key 'x' is not in sources.bib" in citation_problems({**good, "id": "x"}, bib)
+    assert any("absolute https" in p
+               for p in citation_problems({**good, "url": "http://example.org/a"}, bib))
+    assert any("not the url" in p
+               for p in citation_problems({**good, "url": "https://example.org/b",
+                                           "locator": "https://example.org/b"}, bib))
+    long_quote = " ".join(["word"] * QUOTE_WORD_LIMIT)
+    assert any("words or more" in p for p in citation_problems({**good, "quote": long_quote}, bib))
+    assert citation_problems({**good, "quote": long_quote, "own_text": True}, bib) == []
+    assert "no retrieved" in citation_problems({**good, "retrieved": ""}, bib)
+
+
+def test_prior_art_document_evidence_is_an_admitted_document_at_its_manifest_add():
+    import json
+    on_disk = yaml.safe_load(E.CLAIMS.read_text(encoding="utf-8"))
+    manifest = json.loads((REPO / "corpus" / "manifest.json").read_text(encoding="utf-8"))
+    entries = manifest["entries"]
+    if isinstance(entries, list):
+        entries = {d["doc_id"]: d for d in entries}
+    included = {k for k, v in entries.items() if v["screening"]["decision"] == "included"}
+    n = 0
+    for c in prior_art(on_disk):
+        for e in c["evidence"]:
+            if e["kind"] != "document":
+                continue
+            n += 1
+            assert e["id"] in included, f"{c['id']}: {e['id']} is not an admitted document"
+            path, line = e["locator"].rsplit(":", 1)
+            ev = json.loads((REPO / path).read_text(encoding="utf-8").splitlines()[int(line) - 1])
+            assert ev["event_type"] == "manifest_add", f"{c['id']}: {e['locator']}"
+            assert (ev.get("doc_id") or ev["payload"]["doc_id"]) == e["id"], c["id"]
+    assert n, "no document evidence at all"
