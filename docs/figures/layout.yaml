@@ -1,0 +1,76 @@
+# Layout and palette for scripts/build_figures.py (cc_tasks/2026-10-02_summary_figures.md).
+# Every tunable the three figures use lives here; the script holds no size, colour or font
+# constant of its own (~/GitHub/CLAUDE.md §2).
+#
+# Palette: the dataviz skill's validated reference instance (references/palette.md), light mode.
+# The three filled measurement-state colours were run through its validator on 2026-10-04:
+#   node scripts/validate_palette.js "#1c5cab,#6da7ec,#1baf7a" --mode light
+#   -> ALL CHECKS PASS; contrast WARN on #6da7ec and #1baf7a, so every segment carries a visible
+#      count label and a legend (the relief rule).
+# The figure-3 ratio scale is the palette's sequential blue ramp, steps 100 to 650: one hue,
+# light to dark, never a rainbow.
+
+render:
+  dpi: 300                 # PNG resolution the task fixes (decision 1)
+  font_family: DejaVu Sans # bundled with matplotlib, so the SVG glyph paths are machine-independent
+  svg_hashsalt: ai-readiness-kg-figures   # fixes matplotlib's SVG element ids (byte-stable --check)
+
+palette:
+  surface: "#fcfcfb"
+  ink: "#0b0b0b"
+  ink_secondary: "#52514e"
+  ink_muted: "#8a8984"
+  rule_line: "#d6d5d0"
+  neutral_fill: "#f0efec"
+  kept: "#2a78d6"            # categorical slot 1: USAFacts' criteria and the four kept
+  added: "#eb6834"           # categorical slot 2: the three added
+  measured_cycle: "#1c5cab"  # sequential blue 550
+  rule_not_cycle: "#6da7ec"  # sequential blue 300
+  measured_eval: "#1baf7a"   # categorical slot 3 (aqua)
+  specified: "#e4e3df"
+  highlight: "#fff4d6"       # the dogfood body's row
+  highlight_edge: "#eda100"
+  ratio_ramp: ["#cde2fb", "#9ec5f4", "#5598e7", "#256abf", "#104281"]
+  ratio_dark_text_above: 0.55  # ratio at which a cell's text turns white for contrast
+
+fig1:
+  size_in: [15.0, 8.3]
+  legend_col: 3.1          # inches between the legend's two columns
+  legend_y: [0.42, 0.08]   # baselines of the legend's two rows
+  title_pt: 15
+  header_pt: 11
+  box_pt: 11
+  small_pt: 9
+  row_height: 0.78
+  usafacts_x: [0.2, 2.6]
+  criterion_x: [3.7, 7.0]
+  bar_x: [7.6, 12.0]
+  numbers_x: [12.55, 13.55, 14.55]
+
+fig2:
+  size_in: [16.0, 3.5]
+  box_y: 0.8               # bottom of the boxes; the group bars sit under it
+  title_pt: 15
+  box_title_pt: 12
+  box_body_pt: 9.5
+  group_pt: 10
+  box_width: 1.85
+  box_gap: 0.42
+  box_height: 1.55
+
+fig3:
+  height_in: 9.6           # width is computed from the columns below
+  title_pt: 14
+  header_pt: 10
+  cell_pt: 10
+  label_pt: 9.5
+  foot_pt: 8.5
+  label_width: 5.6
+  name_x: 1.75             # where the body's full name starts, right of its code
+  name_wrap: 62            # characters per line before a body name wraps
+  name_pt: 8.5
+  cell_width: 1.3
+  header_wrap: 11          # characters per line in a criterion header (words are not split)
+  score_width: 4.6
+  score_cols: [0.15, 0.95, 2.35]   # offsets of score, rank and the flip column, right of the cells
+  row_height: 0.42
