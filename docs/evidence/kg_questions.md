@@ -10,7 +10,7 @@ Citation standard: every row carries doc_id, locator and grounding_span_id; grou
 |---|---|---|---|
 | Q1 | partial | 19 | neo4j: scripts/run_kg_questions.py via mcp/airkg_tools.Graph (read transactions) |
 | Q2 | partial | 19 | neo4j: scripts/run_kg_questions.py via mcp/airkg_tools.Graph (read transactions) |
-| Q3 | cannot_answer | 7 | neo4j: scripts/run_kg_questions.py via mcp/airkg_tools.Graph (read transactions) |
+| Q3 | answered | 12 | neo4j: scripts/run_kg_questions.py via mcp/airkg_tools.Graph (read transactions) |
 | Q4 | partial | 29 | neo4j: scripts/run_kg_questions.py via mcp/airkg_tools.Graph (read transactions) |
 | Q5 | partial | 49 | record: framework/ai_readiness_framework.json (mcp/airkg_tools.py decision 3: framework questions are answered from the record) |
 
@@ -91,18 +91,20 @@ Counts: definitions 19, naming_none 13, constructs_named_by_two_or_more 2.
 
 ## Q3. Do any definitions conflict?
 
-**Grade: cannot_answer.** the graph has a conflict representation (`CONFLICTS_WITH`, kg/schema.yaml `conflicts_with`, symmetric, Definition<->Definition and Claim<->Claim) and holds 7 such edges (2 between Definitions); none touches the 19 Q1 definitions and 0 join two documents. Conflicts were extracted one document at a time, so two documents' definitions of AI readiness cannot meet on an edge: the empty answer is a property of the extraction, never evidence that the definitions agree.
+**Grade: answered.** 5 conflict edge(s) touch a Q1 definition.
 
-What would close it:
-- a cross-document pairwise pass over the Q1 set that writes `CONFLICTS_WITH` between Definitions of different documents, each edge carrying both grounding spans, the conflict kind (scope, necessary condition, or object of readiness) and its adjudicator — the shape fss-policy-kg's adjudicated CONFLICTS_WITH overlay already has
-
-Counts: conflict_edges 7, between_definitions 2, cross_document 0, touching_q1 0.
+Counts: conflict_edges 12, between_definitions 7, cross_document 5, touching_q1 5.
 
 | label | about | doc_id | locator | same document | touches Q1 |
 |---|---|---|---|---|---|
+| Definition | `AI readiness`, `AI-readiness` | `ai-readiness-building-the-bridge-from-higher-education-to-wo`, `datahub-mlmu-25` | `Introduction, p.6`, `Background footnote 2` | False | True |
+| Definition | `AI readiness`, `AI readiness` | `ai-readiness-building-the-bridge-from-higher-education-to-wo`, `uk-ai-ready-data-action-plan-2026` | `Introduction, p.6`, `uk-ai-ready-data-action-plan-2026#c0017` | False | True |
+| Definition | `AI readiness`, `AI-ready` | `ai-readiness-building-the-bridge-from-higher-education-to-wo`, `uk-ai-ready-data-action-plan-2026` | `Introduction, p.6`, `uk-ai-ready-data-action-plan-2026#c0005` | False | True |
 | Claim | `AI workloads now account for 10-15% of total electricity usage in data centers, with projections suggesting this could reach 25-30% by 2030`, `AI workloads account for 10–20 percent of total electricity usage in datacenters` | `arm-ai-readiness-index`, `arm-ai-readiness-index` | `Chapter 2, §2.2.3`, `Chapter 2, §2.3.3` | True | False |
 | Claim | `The report combines extensive survey data from 665 business leaders`, `The survey sampled n=655 adults who are business leaders across various industries` | `arm-ai-readiness-index`, `arm-ai-readiness-index` | `Foreword`, `Survey methodology` | True | False |
 | Definition | `specified renter-occupied housing units`, `renter-occupied housing units` | `census-acs-general-handbook-2020`, `census-acs-general-handbook-2020` | `census-acs-general-handbook-2020#c0137`, `census-acs-general-handbook-2020#c0137` | True | False |
+| Definition | `AI-ready state`, `AI-ready data` | `data-readiness-for-scientific-ai-at-scale`, `generative-ai-and-open-data-guidelines-and-best-practices-de` | `§2.1`, `generative-ai-and-open-data-guidelines-and-best-practices-de#c0021` | False | True |
+| Definition | `AI-readiness`, `AI readiness` | `datahub-mlmu-25`, `uk-ai-ready-data-action-plan-2026` | `Background footnote 2`, `uk-ai-ready-data-action-plan-2026#c0017` | False | True |
 | Definition | `FoodAPS household`, `Census household` | `fcsm-19-01-transparent-reporting-for-integrated-data-quality`, `fcsm-19-01-transparent-reporting-for-integrated-data-quality` | `fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0060`, `fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0060` | True | False |
 | Claim | `The machine-consumption interpretation of the Commerce guidance only considers the format of the data and does not consider the meaning of the data.`, `In practice, the Commerce guidance could be interpreted as ensuring data elements and AI-friendly APIs are optimized for machine consumption.` | `fcsm-25-03`, `fcsm-25-03` | `Approach (p.3)`, `Approach (p.3)` | True | False |
 | Claim | `The estimates of GDP and GDI are accurate`, `realtime research has shown that this assumption is false` | `manski-2015-communicating-uncertainty-official-economic-statistics`, `manski-2015-communicating-uncertainty-official-economic-statistics` | `manski-2015-communicating-uncertainty-official-economic-statistics#c0006`, `manski-2015-communicating-uncertainty-official-economic-statistics#c0006` | True | False |

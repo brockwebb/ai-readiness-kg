@@ -52,9 +52,14 @@ SemEval-2013 Task 9 scheme (Segura-Bedmar, Martínez and Herrero-Zazo 2013: stri
 partial boundary, type), itself from the MUC scoring tradition; extracting term-definition pairs from
 glossaries and semi-structured text, with gold annotations, is the DEFT corpus and SemEval-2020 Task 6
 (Spala et al. 2019, 2020). The span rule above is a partial-boundary match with a type constraint.
-These are cited from the literature as known, not retrieved in this session: the task's
-`Network: none` excludes a web search, and the corpus (`search_text` over this graph) and Wintermute
-returned nothing on gold-span or definition-extraction evaluation.
+These were first cited from memory, because the task's `Network: none` excluded a web search and
+the corpus (`search_text` over this graph) and Wintermute returned nothing on gold-span or
+definition-extraction evaluation. They were retrieved on 2026-10-04
+(`cc_tasks/2026-10-04_definition_pairs_completion.md` decision 4) and are entries of
+`docs/evidence/method_sources.bib`: `seguraBedmar2013semeval` (the four criteria, quoted from the
+evaluation section of https://aclanthology.org/S13-2056.pdf, which points to Chinchor and Sundheim
+1993 for MUC scoring), `spala2019deft` (https://aclanthology.org/W19-4015/) and `spala2020semeval`
+(https://aclanthology.org/2020.semeval-1.41/).
 
 ## 2. Result
 

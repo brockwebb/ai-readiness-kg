@@ -10,6 +10,8 @@ comparison and records every pair, so an absence of a conflict edge becomes a re
 
     scripts/run_definition_pairs.py --dry-run                  pair list, controls, one prompt
     scripts/run_definition_pairs.py --run --ceiling-tokens N   controls (pilot + gate), then pairs
+        [--run-id ID --recheck-controls]                       a resumed run: the controls judged
+                                                               again under ID gate the pairs
     scripts/run_definition_pairs.py --emit-edges               conflict rows -> grounding gate -> held shard
     scripts/run_definition_pairs.py --render                   docs/evidence/definition_pairs.{csv,md}
     scripts/run_definition_pairs.py --check                    no model call: pair list, controls and
@@ -53,13 +55,15 @@ failed, in which case no pair is judged.
 **Edges** (task decision 4). A `conflict` row's two spans go through `grounding.is_grounded`
 against the text the extractor read (`run_bulk_extraction.doc_text` on the document's
 `manifest_add` path). A miss goes to `edge_quarantine.jsonl` with its reason. A pass is written
-through `eventlog.append` as an `edge_asserted` of type `conflicts_with` — into a TAGGED shard
-(`batch-NNN_xdoc_conflict_held`), which `eventlog.replay()` never yields to the projection.
-Reason: `build_projection.resolve_endpoint` scopes both endpoints of an `edge_asserted` to the
-asserting document (`node_key(doc_id, id)`), so a cross-document edge on an untagged shard
-would MERGE a label-less phantom node `<doc A>::<id B>` instead of reaching document B. The
-held rows carry `quarantined: true` and that reason in the CSV; they are well-formed events a
-projection change can replay without a model call.
+through `eventlog.append` as an `edge_asserted` of type `conflicts_with` — into the TAGGED
+shard `batch-NNN_xdoc_conflict_held`, carrying both endpoints as fully qualified keys
+(`from_key` / `to_key`). The untagged replay never yields a tagged shard;
+`build_projection.py` reads this one by name (`CROSS_DOCUMENT_EDGE_TAGS`) after the untagged
+log, and `resolve_endpoint` places a qualified key on the other document's node when its prefix
+is a manifested doc_id. Until task `cc_tasks/2026-10-04_definition_pairs_completion.md`
+(decision 2) taught it that, the projection scoped both endpoints to the asserting document and
+the shard was HELD off the graph (hence its name, and the `held_reason` on its first five
+events); it now projects, and only a grounding miss is `quarantined: true` in the CSV.
 """
 from __future__ import annotations
 
@@ -98,9 +102,10 @@ PROGRESS_DIR = REPO / "logs"
 #: Tag of the off-graph shard that holds conflict edges the projection cannot place (module
 #: docstring, "Edges"). `eventlog._TAG_RE`: lowercase, at most 32 characters.
 HELD_TAG = "xdoc_conflict_held"
-HELD_REASON = ("held_off_graph: build_projection.resolve_endpoint scopes both endpoints of an "
-               "edge_asserted to the asserting document, so no standing path writes a "
-               "cross-document edge")
+#: How the shard's edges reach the graph (module docstring, "Edges").
+PROJECTION_PATH = ("projected by scripts/build_projection.py: the shard is read by tag "
+                   "(CROSS_DOCUMENT_EDGE_TAGS) and resolve_endpoint places the qualified "
+                   "from_key/to_key on each document's Definition")
 EDGE_SOURCE = "cross_document_pass"
 
 #: Closed vocabularies (task decision 3). `none` is the KIND line's value when the outcome
@@ -483,6 +488,8 @@ def judge_unit(consumer, unit: dict, attempt: int, model: str, run_id: str, raw_
                  "rubric_version": RUBRIC_VERSION, "overlay": OVERLAY, "run_id": run_id,
                  "adjudicator": model, "adjudicated": False,
                  "prompt_sha256": hashlib.sha256(prompt.encode()).hexdigest()})
+    if unit.get("recheck"):
+        base["recheck"] = True
     waits = 0
     while True:
         t0 = time.time()
@@ -534,8 +541,40 @@ def controls_verdict(decided: dict) -> dict:
             "negative": sorted((r["key_a"], r["outcome"], r["status"]) for r in neg)}
 
 
+def recheck_todo(units: list[dict], records: list[dict], run_id: str) -> list[tuple[dict, int]]:
+    """The controls judged AGAIN under `run_id` (`--recheck-controls`; task
+    `cc_tasks/2026-10-04_definition_pairs_completion.md` decision 1: a resumed run confirms the
+    declared criterion still holds before it judges another pair).
+
+    A unit's key carries no run id (§15 item 2: same pair, model and rubric = same unit), so a
+    plain resume skips every control. A re-check row is a further ATTEMPT of the same unit,
+    numbered after the unit's highest attempt so its raw file never overwrites an earlier one,
+    and stamped `recheck: true`. `latest_by_unit` keeps the first `judged` attempt, so the
+    original judgment stays the one the CSV reports; the re-check is evaluated on its own rows.
+    Bounded like any unit: at most `MAX_ATTEMPTS` re-check attempts per unit per run."""
+    top: dict = {}
+    for r in records:
+        top[r["unit_id"]] = max(top.get(r["unit_id"], 0), r["attempt"])
+    mine = [r for r in records if r.get("recheck") and r["run_id"] == run_id]
+    out = []
+    for u in units:
+        if u["unit_kind"] not in ("negative_control", "positive_control"):
+            continue
+        rs = [r for r in mine if r["unit_id"] == u["unit_id"]]
+        if any(r["status"] == "judged" for r in rs) or len(rs) >= MAX_ATTEMPTS:
+            continue
+        out.append(({**u, "recheck": True}, top.get(u["unit_id"], 0) + 1))
+    return out
+
+
+def recheck_records(records: list[dict], run_id: str) -> dict:
+    """unit_id -> the deciding re-check row of `run_id` (same rule as `latest_by_unit`)."""
+    return latest_by_unit([r for r in records if r.get("recheck") and r["run_id"] == run_id])
+
+
 def run(rows: list[dict], defs: dict, consumer, model: str, run_id: str, checkpoint: Path,
-        raw_dir: Path, workers: int, max_wall_s: float, progress_log: Path | None) -> int:
+        raw_dir: Path, workers: int, max_wall_s: float, progress_log: Path | None,
+        recheck_controls: bool = False) -> int:
     units = build_units(rows, defs, model)
     ck = Checkpoint(checkpoint)
     t_start = time.time()
@@ -616,6 +655,16 @@ def run(rows: list[dict], defs: dict, consumer, model: str, run_id: str, checkpo
             return 3
     decided = latest_by_unit(read_checkpoint(checkpoint))
     verdict = controls_verdict(decided)
+    if recheck_controls:
+        for _ in range(MAX_ATTEMPTS):
+            todo = recheck_todo(units, read_checkpoint(checkpoint), run_id)
+            if todo:
+                pass_over(todo, f"controls re-check under {run_id}")
+            if state["stop"]:
+                say(f"STOP: {state['stop']}")
+                return 3
+        verdict = controls_verdict(recheck_records(read_checkpoint(checkpoint), run_id))
+        say(f"controls re-checked under {run_id}")
     say(f"controls: {json.dumps(verdict)}")
     if not (verdict["positive_pass"] and verdict["negative_pass"]):
         say("CONTROL GATE FAILED: the pair pass is not run; the judgments would not be usable")
@@ -730,7 +779,7 @@ def emit_edges() -> dict:
                                  "kind": r["kind"], "source": EDGE_SOURCE,
                                  "reason": r["reason"], "confidence": r["confidence"],
                                  "adjudicator": r["adjudicator"], "adjudicated": False,
-                                 "pair_id": r["pair_id"], "held_reason": HELD_REASON}},
+                                 "pair_id": r["pair_id"]}},
         }, batch=batch_n, tag=HELD_TAG)
         counts["held"] += 1
     return counts
@@ -760,7 +809,7 @@ def csv_rows(rows: list[dict], decided: dict, held: dict, quarantine: dict) -> l
         r = by_pair.get(p["pair_id"])
         a, b = by_key[p["key_a"]], by_key[p["key_b"]]
         judged = bool(r) and r["status"] == "judged"
-        is_q = p["pair_id"] in held or p["pair_id"] in quarantine
+        is_q = p["pair_id"] in quarantine
         out.append({
             "pair_id": p["pair_id"], "key_a": p["key_a"], "key_b": p["key_b"],
             "doc_a": p["doc_a"], "doc_b": p["doc_b"], "term_a": a["term"], "term_b": b["term"],
@@ -777,8 +826,7 @@ def csv_rows(rows: list[dict], decided: dict, held: dict, quarantine: dict) -> l
             "control_source": pos.get((p["key_a"], p["key_b"]), ""),
             "adjudicated": "false",
             "quarantined": "true" if is_q else "false",
-            "quarantine_reason": (HELD_REASON if p["pair_id"] in held
-                                  else quarantine[p["pair_id"]]["reason"] if p["pair_id"] in quarantine else ""),
+            "quarantine_reason": quarantine[p["pair_id"]]["reason"] if is_q else "",
             "edge_event_id": held.get(p["pair_id"], ""),
             "model_id": r["model_id"] if r else "", "criteria_version": r["criteria_version"] if r else "",
             "rubric_version": r["rubric_version"] if r else "",
@@ -822,12 +870,15 @@ unparsed.** {coverage_note}
 - **Decomposition: concept clarification.** Collect the definitions of one construct, then
   compare the entity each says has the property and the attributes each makes necessary
   (Podsakoff, MacKenzie & Podsakoff 2016, *Organizational Research Methods* 19(2), the
-  definition-construction stages; MacKenzie, Podsakoff & Podsakoff 2011, *MIS Quarterly*
-  35(2), step 1, "the entity to which the property applies"; Walker & Avant's concept
-  analysis, defining attributes). The three `kind` values map onto it: `object_of_readiness`
-  is the entity, `necessary_condition` the attributes, `scope` the conceptual domain's bounds.
+  definition-construction stages, `podsakoff2016concept`; MacKenzie, Podsakoff & Podsakoff
+  2011, *MIS Quarterly* 35(2), step 1, the entity, "the object to which the property
+  applies", `mackenzie2011construct`; Walker & Avant 2011, *Strategies for Theory Construction in
+  Nursing*, 5th ed., concept analysis step 4, defining attributes, `walker2011strategies`).
+  The three `kind` values map onto it: `object_of_readiness` is the entity,
+  `necessary_condition` the attributes, `scope` the conceptual domain's bounds.
 - **Outcomes: ontology-matching correspondences** restated for definitions (Euzenat &
-  Shvaiko, *Ontology Matching*: equivalence, subsumption or overlap, disjointness):
+  Shvaiko 2013, *Ontology Matching*, 2nd ed., `euzenat2013ontology`: correspondences "may
+  stand for equivalence as well as other relations", among them subsumption and disjointness):
   `consistent` ≈ equivalence; `differs_no_conflict` ≈ subsumption or overlap, where one object
   can satisfy both; `conflict` ≈ incompatibility stated in the words; `not_comparable` =
   different objects under different terms. Rule 1 of the rubric ("silence is not conflict")
@@ -847,8 +898,11 @@ unparsed.** {coverage_note}
   analysis", "conceptual definition": 0 hits; full-text grep of `corpus/bulk_md` and `docs/`
   for "concept analysis", "Walker and Avant", "Podsakoff", "construct clarity", "conceptual
   analysis", "MacKenzie": 0 method hits) and Wintermute (two queries, 0 results) hold none of
-  it. The task's `Network: none` forbade the web search its decision 2 asked for, so the four
-  citations above are **recalled, not retrieved**; they are named so a reader can check them.
+  it. The four citations were first recalled and then **retrieved on the web** on 2026-10-04
+  (`cc_tasks/2026-10-04_definition_pairs_completion.md` decision 4). Each key above is an entry
+  in `docs/evidence/method_sources.bib` with the page it was read at and one establishing
+  sentence. The Walker & Avant book itself was not read: its step 4 is quoted from an article
+  that applies it.
 - **The reason check.** Every quoted fragment in a reason must be a verbatim substring of one
   of the two spans under `kg/extraction/grounding.py` normalization: `reason_check` is `ok`,
   `no_quote` or `quote_not_in_spans`, computed by script, never by the judge.
@@ -860,18 +914,18 @@ unparsed.** {coverage_note}
   NFKC, markdown emphasis, numeric citations, dashes, serial comma, British spelling,
   whitespace; not CSV rows, not counted):
   {crit_neg}. **Outcome: {neg_res}.**
+{recheck}
 
 | control | definition(s) | outcome | kind | reason_check | source of the characterisation / transforms |
 |---|---|---|---|---|---|
 {control_rows}
 
 ## Edges
-Conflict rows: {n_conflict}. Held (grounding passed on both spans, written through
-`kg.eventlog.append` as `edge_asserted` type `conflicts_with`, `source: {src}`, to the tagged
-shard `{held_shard}`, which the projection never replays): **{n_held}**. Quarantined at the
-grounding gate: **{n_q}**. Why held rather than projected: {held_reason} —
-`scripts/build_projection.py::resolve_endpoint` would MERGE a label-less node
-`<doc A>::<id B>`. Both counts are `quarantined: true` in the CSV.
+Conflict rows: {n_conflict}. Written (grounding passed on both spans, appended through
+`kg.eventlog.append` as `edge_asserted` type `conflicts_with`, `source: {src}`, with qualified
+`from_key` / `to_key`, to the tagged shard `{held_shard}`): **{n_held}**, each with its
+`edge_event_id` in the CSV and {projection_path}. Quarantined at the grounding gate, and
+`quarantined: true` in the CSV: **{n_q}**.
 
 The conflict rows, as judged (spans quoted to {qw} words; the reason is the judge's, unedited):
 
@@ -911,7 +965,35 @@ COVERAGE_NOTE = ("An unjudged pair has no judgment record: the pass stopped befo
                  "changed rubric or model would start a new set of units instead.")
 
 
-def render(rows: list[dict], epoch: dict, decided: dict, held: dict, quarantine: dict) -> tuple[str, str]:
+def recheck_lines(records: list[dict]) -> str:
+    """One bullet per run that re-checked the controls (`--recheck-controls`), with the declared
+    criterion evaluated over that run's re-check rows alone; empty when no run did."""
+    out = []
+    for run_id in sorted({r["run_id"] for r in records if r.get("recheck")}):
+        rr = recheck_records(records, run_id)
+        v = controls_verdict(rr)
+        npos = sum(1 for r in rr.values() if r["unit_kind"] == "positive_control")
+        nneg = sum(1 for r in rr.values() if r["unit_kind"] == "negative_control")
+        pos_o = ", ".join(f"{o} {n}" for o, n in sorted(
+            _count(r["outcome"] for r in rr.values() if r["unit_kind"] == "positive_control").items()))
+        out.append(f"- **Re-checked under `{run_id}`** before that run judged any pair (same "
+                   f"criterion, same `criteria_version`; the table below keeps the first "
+                   f"judgment): positive {'PASS' if v['positive_pass'] else 'FAIL'} "
+                   f"({npos}/{len(POSITIVE_CONTROLS)} judged: {pos_o}), negative "
+                   f"{'PASS' if v['negative_pass'] else 'FAIL'} ({nneg}/{len(NEGATIVE_CONTROLS)} "
+                   f"judged).")
+    return "\n".join(out)
+
+
+def _count(it) -> dict:
+    out: dict = {}
+    for x in it:
+        out[x] = out.get(x, 0) + 1
+    return out
+
+
+def render(rows: list[dict], epoch: dict, decided: dict, held: dict, quarantine: dict,
+           records: list[dict] | None = None) -> tuple[str, str]:
     out_rows = csv_rows(rows, decided, held, quarantine)
     pairs, same_doc = build_pairs(rows)
     docs = sorted({r["doc_id"] for r in rows})
@@ -1005,7 +1087,8 @@ def render(rows: list[dict], epoch: dict, decided: dict, held: dict, quarantine:
         control_rows="\n".join(crow) or "| (none run) | | | | | |",
         n_conflict=sum(1 for r in judged if r["outcome"] == "conflict"),
         src=EDGE_SOURCE, held_shard=(held_shard.relative_to(REPO).as_posix() if held_shard else "none written"),
-        n_held=len(held), n_q=len(quarantine), held_reason=HELD_REASON, conflict_rows=crows,
+        n_held=len(held), n_q=len(quarantine), projection_path=PROJECTION_PATH,
+        conflict_rows=crows, recheck=recheck_lines(read_checkpoint() if records is None else records),
         doc_legend=legend, matrix="\n".join(lines), counts="\n".join(t2), ranked="\n".join(t3))
     return render_csv(out_rows), md
 
@@ -1031,6 +1114,9 @@ def main(argv=None) -> int:
     ap.add_argument("--run-id", default=RUN_ID_DEFAULT)
     ap.add_argument("--workers", type=int, default=WORKERS)
     ap.add_argument("--max-wall-seconds", type=float, default=4 * 3600)
+    ap.add_argument("--recheck-controls", action="store_true",
+                    help="judge the controls again under --run-id and gate the pairs on that "
+                         "re-check (see recheck_todo)")
     ap.add_argument("--defs-json", default=None,
                     help="definitions with spans (key -> {term, span, doc_id, locator}); default: the projection")
     ap.add_argument("--checkpoint", default=None, help="test seam: checkpoint path (default: CHECKPOINT)")
@@ -1112,7 +1198,8 @@ def main(argv=None) -> int:
     rc = run(rows, defs, consumer, model, a.run_id, Path(a.checkpoint or CHECKPOINT),
              Path(a.raw_dir or RAW_DIR), a.workers,
              a.max_wall_seconds,
-             (Path(a.checkpoint).parent if a.checkpoint else PROGRESS_DIR) / f"{a.run_id}.progress.log")
+             (Path(a.checkpoint).parent if a.checkpoint else PROGRESS_DIR) / f"{a.run_id}.progress.log",
+             recheck_controls=a.recheck_controls)
     if not scripted:
         from kg import spend
         st = spend.default_ledger().status().get("runs", {}).get(a.run_id, {})

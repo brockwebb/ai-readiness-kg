@@ -680,24 +680,67 @@ questions:
     - disclosure
 - id: Q3
   question: Do any definitions conflict?
-  grade: cannot_answer
-  reason: 'the graph has a conflict representation (`CONFLICTS_WITH`, kg/schema.yaml `conflicts_with`,
-    symmetric, Definition<->Definition and Claim<->Claim) and holds 7 such edges (2 between Definitions);
-    none touches the 19 Q1 definitions and 0 join two documents. Conflicts were extracted one document
-    at a time, so two documents'' definitions of AI readiness cannot meet on an edge: the empty answer
-    is a property of the extraction, never evidence that the definitions agree'
-  to_close:
-  - a cross-document pairwise pass over the Q1 set that writes `CONFLICTS_WITH` between Definitions of
-    different documents, each edge carrying both grounding spans, the conflict kind (scope, necessary
-    condition, or object of readiness) and its adjudicator — the shape fss-policy-kg's adjudicated CONFLICTS_WITH
-    overlay already has
+  grade: answered
+  reason: 5 conflict edge(s) touch a Q1 definition
+  to_close: []
   route: 'neo4j: scripts/run_kg_questions.py via mcp/airkg_tools.Graph (read transactions)'
   counts:
-    conflict_edges: 7
-    between_definitions: 2
-    cross_document: 0
-    touching_q1: 0
+    conflict_edges: 12
+    between_definitions: 7
+    cross_document: 5
+    touching_q1: 5
   rows:
+  - label: Definition
+    doc_id:
+    - ai-readiness-building-the-bridge-from-higher-education-to-wo
+    - datahub-mlmu-25
+    locator:
+    - Introduction, p.6
+    - Background footnote 2
+    grounding_span_id:
+    - ai-readiness-building-the-bridge-from-higher-education-to-wo::def-ai-readiness
+    - datahub-mlmu-25::d-ai-readiness
+    complete: true
+    same_document: false
+    touches_q1_definition: true
+    about:
+    - AI readiness
+    - AI-readiness
+    prov_method: cross_document_pass
+  - label: Definition
+    doc_id:
+    - ai-readiness-building-the-bridge-from-higher-education-to-wo
+    - uk-ai-ready-data-action-plan-2026
+    locator:
+    - Introduction, p.6
+    - uk-ai-ready-data-action-plan-2026#c0017
+    grounding_span_id:
+    - ai-readiness-building-the-bridge-from-higher-education-to-wo::def-ai-readiness
+    - uk-ai-ready-data-action-plan-2026::d_ai_readiness_esynergy
+    complete: true
+    same_document: false
+    touches_q1_definition: true
+    about:
+    - AI readiness
+    - AI readiness
+    prov_method: cross_document_pass
+  - label: Definition
+    doc_id:
+    - ai-readiness-building-the-bridge-from-higher-education-to-wo
+    - uk-ai-ready-data-action-plan-2026
+    locator:
+    - Introduction, p.6
+    - uk-ai-ready-data-action-plan-2026#c0005
+    grounding_span_id:
+    - ai-readiness-building-the-bridge-from-higher-education-to-wo::def-ai-readiness
+    - uk-ai-ready-data-action-plan-2026::d_ai_ready
+    complete: true
+    same_document: false
+    touches_q1_definition: true
+    about:
+    - AI readiness
+    - AI-ready
+    prov_method: cross_document_pass
   - label: Claim
     doc_id:
     - arm-ai-readiness-index
@@ -750,6 +793,40 @@ questions:
     - specified renter-occupied housing units
     - renter-occupied housing units
     prov_method: claude-opus-5
+  - label: Definition
+    doc_id:
+    - data-readiness-for-scientific-ai-at-scale
+    - generative-ai-and-open-data-guidelines-and-best-practices-de
+    locator:
+    - §2.1
+    - generative-ai-and-open-data-guidelines-and-best-practices-de#c0021
+    grounding_span_id:
+    - data-readiness-for-scientific-ai-at-scale::d_airready_state
+    - generative-ai-and-open-data-guidelines-and-best-practices-de::def_ai_ready_data
+    complete: true
+    same_document: false
+    touches_q1_definition: true
+    about:
+    - AI-ready state
+    - AI-ready data
+    prov_method: cross_document_pass
+  - label: Definition
+    doc_id:
+    - datahub-mlmu-25
+    - uk-ai-ready-data-action-plan-2026
+    locator:
+    - Background footnote 2
+    - uk-ai-ready-data-action-plan-2026#c0017
+    grounding_span_id:
+    - datahub-mlmu-25::d-ai-readiness
+    - uk-ai-ready-data-action-plan-2026::d_ai_readiness_esynergy
+    complete: true
+    same_document: false
+    touches_q1_definition: true
+    about:
+    - AI-readiness
+    - AI readiness
+    prov_method: cross_document_pass
   - label: Definition
     doc_id:
     - fcsm-19-01-transparent-reporting-for-integrated-data-quality

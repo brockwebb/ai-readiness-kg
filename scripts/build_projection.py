@@ -118,6 +118,10 @@ class Progress:
             return ""
         return f" nodes={counts.get('nodes', 0)} edges={counts.get('edges', 0)}"
 
+    def note(self, line: str) -> None:
+        """A line that is not progress — a refused edge — to stdout and the log alike."""
+        self._emit(line)
+
     def phase(self, name: str, total: int | None = None, counts: dict | None = None) -> None:
         self._close_phase()
         self._phase, self._phase_t0, self._total = name, self.clock(), total
@@ -454,15 +458,130 @@ def node_key(doc_id: str, item_id: str) -> str:
     return f"{doc_id}::{item_id}"
 
 
+class EndpointRefused(ValueError):
+    """A fully qualified endpoint key the projection will not place. The message is the
+    logged reason; the edge is skipped and counted, and no node is created for it."""
+
+
 def resolve_endpoint(doc_id: str, endpoint_id: str, document_ids: set[str],
-                     aliases: dict[str, str]) -> str:
+                     aliases: dict[str, str], qualified_key: str | None = None) -> str:
     """Graph key for an edge endpoint asserted by `doc_id`. A manifested document id (or an
     alias onto one) stays document-scoped; everything else — including dangling doc-like ids
-    never manifested — is scoped to the asserting document."""
+    never manifested — is scoped to the asserting document.
+
+    `qualified_key` is the payload's `from_key` / `to_key`, a DD-020 key `<doc_id>::<local
+    id>` naming a node of ANOTHER document (task `cc_tasks/2026-10-04_definition_pairs_
+    completion.md` decision 2: a cross-document edge, which document scoping cannot express).
+    It is honoured when, and only when, its prefix is a manifested doc_id and its local part is
+    the endpoint id the payload asserts; anything else raises `EndpointRefused` — a qualified
+    key is never scoped to the asserting document, because that is the phantom
+    `<doc A>::<id B>` node this parameter exists to avoid. Without one, scoping is as before.
+    """
+    if qualified_key is not None:
+        prefix, sep, local = qualified_key.partition("::")
+        if not sep or not prefix or not local:
+            raise EndpointRefused(f"qualified key {qualified_key!r} is not <doc_id>::<local id>")
+        if prefix not in document_ids:
+            raise EndpointRefused(f"qualified key {qualified_key!r}: prefix {prefix!r} is not "
+                                  f"a manifested doc_id")
+        if local != endpoint_id:
+            raise EndpointRefused(f"qualified key {qualified_key!r} disagrees with the "
+                                  f"asserted endpoint id {endpoint_id!r}")
+        return qualified_key
     eid = aliases.get(endpoint_id, endpoint_id)
     if eid in document_ids:
         return eid
     return node_key(doc_id, eid)
+
+
+#: Tagged shards whose `edge_asserted` events the KG replay reads after the untagged log.
+#: `xdoc_conflict_held` is the cross-document conflict pass's shard
+#: (`scripts/run_definition_pairs.py::HELD_TAG`): its edges carry qualified endpoint keys and
+#: were held off the graph until `resolve_endpoint` could place them (task
+#: `cc_tasks/2026-10-04_definition_pairs_completion.md` decision 2). The tag name is the
+#: shard's identity and outlives the "held" in it; only edge events are read from these shards.
+CROSS_DOCUMENT_EDGE_TAGS = ("xdoc_conflict_held",)
+
+#: Item properties a qualified (cross-document) edge carries onto the relationship, besides
+#: the `grounding_span` every edge gets. Property names come from this tuple, never from the
+#: payload.
+QUALIFIED_EDGE_ITEM_PROPERTIES = ("grounding_span_to", "kind", "source", "adjudicated")
+
+
+def kg_events():
+    """The KG replay's event stream: the untagged log, then the edge events of the
+    `CROSS_DOCUMENT_EDGE_TAGS` shards — after every node, so both endpoints exist."""
+    yield from eventlog.replay()
+    for tag in CROSS_DOCUMENT_EDGE_TAGS:
+        for ev in eventlog.replay(tag=tag):
+            if ev.get("event_type") == "edge_asserted":
+                yield ev
+
+
+def project_edge(session, ev: dict, document_ids: set[str], aliases: dict[str, str],
+                 edge_whitelist: set[str], kg_labels, counts: dict, note=print) -> None:
+    """One `edge_asserted` or `curated_promotion` event onto the graph.
+
+    An edge whose endpoints are document-scoped MERGEs its endpoints on `{key}` (a citation's
+    target document, possibly never manifested, is created bare — the established
+    behaviour). An edge carrying a qualified `from_key` / `to_key` instead MATCHes both
+    endpoints by label and key and writes nothing when either is absent: a cross-document
+    edge joins two nodes that exist or it is refused, with the reason passed to `note`."""
+    et = ev.get("event_type")
+    p = ev["payload"] if et == "edge_asserted" else ev
+    rel = p.get("type") if et == "edge_asserted" else p.get("edge")
+    if rel not in edge_whitelist:
+        counts["skipped_unknown_edge_type"] += 1
+        return
+    prov = (p.get("provenance") or ev.get("provenance") or {})
+    from_id, to_id = p["from_id"], p["to_id"]
+    for _orig, _resolved in (("from_id", aliases.get(from_id)),
+                             ("to_id", aliases.get(to_id))):
+        if _resolved:
+            counts["aliased_endpoints"] += 1
+    item = p.get("item") or {}
+    span = item.get("grounding_span") or p.get("grounding_span")
+    method = prov.get("method") or prov.get("model_id") or "asserted"
+    qualified = p.get("from_key") is not None or p.get("to_key") is not None
+    try:
+        from_key = resolve_endpoint(ev.get("doc_id"), from_id, document_ids, aliases,
+                                    p.get("from_key"))
+        to_key = resolve_endpoint(ev.get("doc_id"), to_id, document_ids, aliases,
+                                  p.get("to_key"))
+    except EndpointRefused as exc:
+        counts["refused_qualified_endpoint"] = counts.get("refused_qualified_endpoint", 0) + 1
+        note(f"edge refused: event {ev.get('event_id')} {rel}: {exc}")
+        return
+    if not qualified:
+        session.run(
+            f"MERGE (a {{key: $from_id}}) MERGE (b {{key: $to_id}}) "
+            f"MERGE (a)-[r:{rel.upper()}]->(b) "
+            "SET r.prov_method = $method, r.prov_doc = $doc, "
+            "r.grounding_span = $span",
+            from_id=from_key, to_id=to_key, method=method, doc=ev.get("doc_id"), span=span)
+        counts["edges"] += 1
+        return
+    ft, tt = p.get("from_type"), p.get("to_type")
+    if ft not in kg_labels or tt not in kg_labels:
+        counts["refused_qualified_endpoint"] = counts.get("refused_qualified_endpoint", 0) + 1
+        note(f"edge refused: event {ev.get('event_id')} {rel}: endpoint types {ft!r}/{tt!r} "
+             f"are not schema node types")
+        return
+    extra = {k: item[k] for k in QUALIFIED_EDGE_ITEM_PROPERTIES if k in item}
+    rec = session.run(
+        f"MATCH (a:{ft} {{key: $from_id}}) MATCH (b:{tt} {{key: $to_id}}) "
+        f"MERGE (a)-[r:{rel.upper()}]->(b) "
+        "SET r.prov_method = $method, r.prov_doc = $doc, r.grounding_span = $span, "
+        "r += $extra RETURN count(r) AS n",
+        from_id=from_key, to_id=to_key, method=method, doc=ev.get("doc_id"), span=span,
+        extra=extra).single()
+    if not rec or not rec["n"]:
+        counts["refused_qualified_endpoint"] = counts.get("refused_qualified_endpoint", 0) + 1
+        note(f"edge refused: event {ev.get('event_id')} {rel}: no {ft} {from_key!r} or no "
+             f"{tt} {to_key!r} in the graph")
+        return
+    counts["edges"] += 1
+    counts["edges_cross_document"] = counts.get("edges_cross_document", 0) + 1
 
 
 def build(session, kg_labels: list[str], edge_whitelist: set[str],
@@ -491,6 +610,9 @@ def build(session, kg_labels: list[str], edge_whitelist: set[str],
         n_events += 1
         if ev.get("event_type") == "manifest_add":
             document_ids.add(ev["payload"]["doc_id"])
+    # the overlays pass reads the untagged log only; the KG pass reads it plus the edges of
+    # the cross-document shards, so its total is larger by exactly those
+    n_kg_events = sum(1 for _ in kg_events())
     prog.phase("reset")
     # reset ONLY KG labels
     label_pred = " OR ".join(f"n:{lbl}" for lbl in kg_labels)
@@ -623,8 +745,8 @@ def build(session, kg_labels: list[str], edge_whitelist: set[str],
                 if tids:
                     counts["unresolved_ambiguous_across_assertions"] += 1
 
-    prog.phase("kg_replay", total=n_events, counts=counts)
-    for i, ev in enumerate(eventlog.replay(), 1):
+    prog.phase("kg_replay", total=n_kg_events, counts=counts)
+    for i, ev in enumerate(kg_events(), 1):
         prog.tick(i, counts)
         et = ev.get("event_type")
         if not is_projectable(ev, quarantined, bulk):
@@ -693,29 +815,8 @@ def build(session, kg_labels: list[str], edge_whitelist: set[str],
             if props.get("name"):
                 _spans[(_key, label)] = (props.get("name"), props.get("grounding_span"))
         elif et in ("edge_asserted", "curated_promotion"):
-            p = ev["payload"] if et == "edge_asserted" else ev
-            rel = p.get("type") if et == "edge_asserted" else p.get("edge")
-            if rel not in edge_whitelist:
-                counts["skipped_unknown_edge_type"] += 1
-                continue
-            prov = (p.get("provenance") or ev.get("provenance") or {})
-            from_id, to_id = p["from_id"], p["to_id"]
-            for _orig, _resolved in (("from_id", aliases.get(from_id)),
-                                     ("to_id", aliases.get(to_id))):
-                if _resolved:
-                    counts["aliased_endpoints"] += 1
-            from_key = resolve_endpoint(ev.get("doc_id"), from_id, document_ids, aliases)
-            to_key = resolve_endpoint(ev.get("doc_id"), to_id, document_ids, aliases)
-            session.run(
-                f"MERGE (a {{key: $from_id}}) MERGE (b {{key: $to_id}}) "
-                f"MERGE (a)-[r:{rel.upper()}]->(b) "
-                "SET r.prov_method = $method, r.prov_doc = $doc, "
-                "r.grounding_span = $span",
-                from_id=from_key, to_id=to_key,
-                method=prov.get("method") or prov.get("model_id") or "asserted",
-                doc=ev.get("doc_id"), span=(p.get("item") or {}).get(
-                    "grounding_span") or p.get("grounding_span"))
-            counts["edges"] += 1
+            project_edge(session, ev, document_ids, aliases, edge_whitelist, kg_labels,
+                         counts, note=prog.note)
     # Repair overlays (task 2026-08-22_faithfulness_probe Phase 7) are applied LAST so they
     # win over the original assertion regardless of shard order. Never mutate the log.
     prog.phase("overlays", total=n_events, counts=counts)
@@ -883,7 +984,7 @@ def phase_plan(scan: bool, framework: bool) -> list[tuple[str, int | None]]:
         if ev.get("event_type") == "manifest_add":
             docs.add(ev["payload"]["doc_id"])
     plan = [("prepass", None), ("reset", None), ("document_skeletons", len(docs)),
-            ("vocabulary", len(_vocab.project())), ("kg_replay", n_events),
+            ("vocabulary", len(_vocab.project())), ("kg_replay", sum(1 for _ in kg_events())),
             ("overlays", n_events), ("restorations", None), ("resolutions", None),
             ("thin_spans", None), ("fingerprint", None)]
     if scan:

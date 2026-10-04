@@ -155,7 +155,37 @@ def test_every_conflict_row_has_kind_two_spans_and_an_edge_disposition(shipped_r
         assert r["quote_a"] and r["quote_b"]
         for q in (r["quote_a"], r["quote_b"]):
             assert len(q.replace(" …", "").split()) < 15
-        assert r["quarantined"] == "true" and r["quarantine_reason"]
+        # written to the cross-document shard (and projected), or quarantined at the
+        # grounding gate with its reason: exactly one disposition
+        written = bool(r["edge_event_id"])
+        quarantined = r["quarantined"] == "true" and bool(r["quarantine_reason"])
+        assert written != quarantined, r["pair_id"]
+
+
+def test_the_edge_shard_is_one_the_projection_reads():
+    """The completion task's decision 2: the shard `--emit-edges` writes is a tag
+    `build_projection.py` replays, so a written edge is a projected edge."""
+    import build_projection as bp
+    assert R.HELD_TAG in bp.CROSS_DOCUMENT_EDGE_TAGS
+
+
+def test_every_method_citation_is_retrieved_and_cited():
+    """Decision 4: every key `definition_pairs.md` cites is an entry of `method_sources.bib`
+    with a url, a retrieval date and an establishing quotation under 15 words."""
+    import re
+    bib = (REPO / "docs" / "evidence" / "method_sources.bib").read_text(encoding="utf-8")
+    entries = dict(re.findall(r"@\w+\{([^,\s]+),(.*?)\n\}", bib, re.S))
+    md = R.OUT_MD.read_text(encoding="utf-8")
+    for key in ("podsakoff2016concept", "mackenzie2011construct", "walker2011strategies",
+                "euzenat2013ontology"):
+        assert f"`{key}`" in md, key
+    for key, body in entries.items():
+        for field in ("author", "title", "year", "url", "urldate", "note"):
+            assert re.search(rf"^\s*{field}\s*=\s*\{{.+\}},?\s*$", body, re.M), (key, field)
+        assert re.search(r"url\s*=\s*\{https://", body), key
+        quotes = re.findall(r'"([^"]+)"', re.search(r"note\s*=\s*\{(.*)\}", body).group(1))
+        assert quotes and len(quotes[0].split()) < 15, key
+    assert "recalled, not retrieved" not in md
 
 
 def test_controls_recorded(shipped_rows):
@@ -236,3 +266,80 @@ def test_sigkill_mid_loop_resumes_without_repeating_a_completed_call(q1, tmp_pat
     assert not repeated, f"completed units called again: {sorted(repeated)}"
     assert _decided(ck) == _decided(ref / "ck.jsonl")
     assert len(_decided(ck)) == len(units)
+
+
+# ----------------------------------------------------------------------------- control re-check
+# Task `cc_tasks/2026-10-04_definition_pairs_completion.md` decision 1: a resumed run under a
+# new run id judges the controls again and is gated on that re-check, not on the old one.
+
+def _defs_file(rows: list, tmp: Path) -> Path:
+    defs = {r["node_key"]: {"key": r["node_key"], "term": r["term"], "span": r["quote"],
+                            "doc_id": r["doc_id"], "locator": r["locator"]} for r in rows}
+    dp = tmp / "defs.json"
+    dp.write_text(json.dumps(defs), encoding="utf-8")
+    return dp
+
+
+def _recheck_cmd(tmp: Path, defs: Path, run_id: str) -> list:
+    return [sys.executable, str(SCRIPT), "--run", "--workers", "1", "--run-id", run_id,
+            "--recheck-controls", "--defs-json", str(defs), "--checkpoint", str(tmp / "ck.jsonl"),
+            "--raw-dir", str(tmp / "raw")]
+
+
+def test_recheck_judges_every_control_again_and_nothing_else(q1, tmp_path):
+    rows, _ = q1
+    dp = _defs_file(rows, tmp_path)
+    units = R.build_units(rows, json.loads(dp.read_text()), "scripted-model")
+    env = {**os.environ, "DEFPAIRS_SCRIPTED_CONSUMER": str(_spec(tmp_path, units, 0))}
+    first = subprocess.run(_cmd(tmp_path, dp), env=env, capture_output=True, text=True, cwd=REPO)
+    assert first.returncode == 0, first.stdout + first.stderr
+    ck = tmp_path / "ck.jsonl"
+    decided_before = _decided(ck)
+    n_calls = len((tmp_path / "calls.log").read_text().splitlines())
+
+    again = subprocess.run(_recheck_cmd(tmp_path, dp, "t-recheck"), env=env, capture_output=True,
+                           text=True, cwd=REPO)
+    assert again.returncode == 0, again.stdout + again.stderr
+    new_calls = (tmp_path / "calls.log").read_text().splitlines()[n_calls:]
+    ctrl = {u["unit_id"] for u in units if u["unit_kind"] != "pair"}
+    assert sorted(c.split(".")[1] for c in new_calls) == sorted(ctrl)
+    rech = [r for r in R.read_checkpoint(ck) if r.get("recheck")]
+    assert len(rech) == len(ctrl) and all(r["run_id"] == "t-recheck" and r["attempt"] == 2
+                                          for r in rech)
+    assert _decided(ck) == decided_before, "a re-check must not replace the reported judgment"
+    for r in rech:
+        assert (tmp_path / "raw" / f"{r['unit_id']}.a1.json").is_file()
+        assert (tmp_path / "raw" / f"{r['unit_id']}.a2.json").is_file()
+
+    # resume of the same re-check is a no-op: no control is called a third time
+    third = subprocess.run(_recheck_cmd(tmp_path, dp, "t-recheck"), env=env, capture_output=True,
+                           text=True, cwd=REPO)
+    assert third.returncode == 0, third.stdout + third.stderr
+    assert len((tmp_path / "calls.log").read_text().splitlines()) == n_calls + len(ctrl)
+
+
+def test_recheck_gate_failure_stops_before_any_pair(q1, tmp_path):
+    """Positive control for the gate: the first run passes; the re-check answers every unit
+    `differs_no_conflict`, so the negative controls fail and no pair may be judged."""
+    rows, _ = q1
+    dp = _defs_file(rows, tmp_path)
+    units = R.build_units(rows, json.loads(dp.read_text()), "scripted-model")
+    pairs = [u for u in units if u["unit_kind"] == "pair"]
+    ok_env = {**os.environ, "DEFPAIRS_SCRIPTED_CONSUMER": str(_spec(tmp_path, units, 0))}
+    # a full first run, with the last pair's row removed so one pair is left to judge; then a
+    # re-check under a judge that gets the negative controls wrong
+    first = subprocess.run(_cmd(tmp_path, dp), env=ok_env, capture_output=True, text=True, cwd=REPO)
+    assert first.returncode == 0, first.stdout + first.stderr
+    ck = tmp_path / "ck.jsonl"
+    keep = [l for l in ck.read_text().splitlines() if json.loads(l)["unit_id"] != pairs[-1]["unit_id"]]
+    ck.write_text("\n".join(keep) + "\n")
+    bad = json.loads((tmp_path / "spec.json").read_text())
+    bad["answers"] = {}
+    (tmp_path / "bad.json").write_text(json.dumps(bad))
+    n_calls = len((tmp_path / "calls.log").read_text().splitlines())
+    env = {**os.environ, "DEFPAIRS_SCRIPTED_CONSUMER": str(tmp_path / "bad.json")}
+    out = subprocess.run(_recheck_cmd(tmp_path, dp, "t-recheck-bad"), env=env, capture_output=True,
+                         text=True, cwd=REPO)
+    assert out.returncode == 4, out.stdout + out.stderr
+    called = {c.split(".")[1] for c in (tmp_path / "calls.log").read_text().splitlines()[n_calls:]}
+    assert pairs[-1]["unit_id"] not in called, "a pair was judged after the re-check failed"
