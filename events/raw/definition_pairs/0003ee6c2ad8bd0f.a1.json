@@ -1,0 +1,22 @@
+{
+ "unit_id": "0003ee6c2ad8bd0f",
+ "attempt": 1,
+ "model_id": "claude-opus-4-8",
+ "criteria_version": "60256b3a937929b5",
+ "prompt": "You are an adversarial reviewer comparing TWO definitions. Each is copied verbatim from a different source document. Your question is exactly this: how do these two definitions relate?\n\nWork through the steps in order and stop at the first step that decides.\n\nStep 1. For each definition, identify the term it defines and its OBJECT OF READINESS: the kind of thing the definition says is ready, or has readiness. Kinds include: a person or a person's capability; an organisation or institution; an industry or domain; data or a dataset; a data system or infrastructure; a process.\n\nStep 2. If the two objects are of different kinds:\n  - if both define the same unqualified term (for example both define \"AI readiness\", ignoring case, hyphenation and \"ready\" versus \"readiness\") and neither term names its object, answer `conflict` with kind `object_of_readiness`: one term is given to incompatible objects;\n  - otherwise answer `not_comparable`, with kind `none`, and name the two objects in the reason.\n\nStep 3. The objects are of the same kind, or one is a part or subset of the other (data and a dataset; data and open data). Look for an incompatibility in the words themselves:\n  - `conflict` with kind `necessary_condition`: words in one definition exclude, contradict or declare insufficient something that words in the other definition state is required or sufficient;\n  - `conflict` with kind `scope`: words in one definition confine readiness to a use, stage, user or setting that words in the other definition explicitly exclude or declare insufficient.\n\nStep 4. No incompatibility. If the definitions differ, answer `differs_no_conflict` with the kind of the most important difference: `necessary_condition` (they require or emphasise different attributes), `scope` (different use, stage, user or setting), or `object_of_readiness` (related but different objects, such as data and a data system). If they say the same thing, or one restates the other with no material difference, answer `consistent` with kind `none`.\n\nRules, and they are the point of the exercise:\n1. Silence is not conflict. An attribute one definition names and the other does not mention is a difference, never a conflict. A conflict needs words in one definition that are incompatible with words in the other.\n2. Judge only from the two texts below. Do not use knowledge of who wrote them, of other definitions, or of the wider literature.\n3. Surface similarity is not sameness, and different wording is not difference: two phrasings of one requirement are one requirement.\n4. `consistent` and `differs_no_conflict` are real answers. Do not manufacture a conflict to look decisive.\n5. The reason is ONE sentence. It quotes, in double quotes, at least one short fragment (at most eight words) from EACH definition, copied character for character. Quote nothing else.\n\nAnswer with exactly four lines and nothing else:\nOUTCOME: <one of conflict, differs_no_conflict, consistent, not_comparable>\nKIND: <one of scope, necessary_condition, object_of_readiness, none>\nCONFIDENCE: <a number between 0 and 1>\nREASON: <one sentence>\n\n---\n\nDEFINITION 1\n  term: AI readiness\n  text: the human capability to work effectively alongside intelligent systems: an integration of functional AI proficiency, strategic intelligence, ethical stewardship, and critical human skills such as adaptability, communication, and judgment\n\nDEFINITION 2\n  term: AI-Ready Data\n  text: Al-Ready Data: Data that is discoverable, machine-readable and machine-understandable, and has sufficient quality, documentation, and access methods to support the full AI application development and use life cycle.\n",
+ "response_text": "OUTCOME: not_comparable\nKIND: none\nCONFIDENCE: 0.97\nREASON: Definition 1's object is \"the human capability to work effectively\" alongside intelligent systems while Definition 2's object is \"Data that is discoverable\", two different kinds of thing under differently-named terms.",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 465,
+  "cacheReadInputTokens": 11629,
+  "cacheCreationInputTokens": 24604,
+  "webSearchRequests": 0,
+  "costUSD": 0.2634895,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 363,
+  "canonicalModel": "claude-opus-4-8",
+  "provider": "firstParty",
+  "costBasis": "list"
+ }
+}

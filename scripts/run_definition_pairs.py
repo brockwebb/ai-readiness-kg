@@ -45,6 +45,11 @@ ceiling is the shared spend ledger's (DD-022, reserve before dispatch); the wall
 is `--max-wall-seconds`. A failed unit is a row and is retried at most `MAX_ATTEMPTS` times in a
 second pass, after every unit has had its first attempt.
 
+`--run` exits 0 when every unit is judged or has exhausted its attempts, 3 when a ceiling
+(spend refusal, wall clock) or a model substitution stopped it — the checkpoint holds every
+completed unit and `--render` reports the rest as `unjudged` — and 4 when the control gate
+failed, in which case no pair is judged.
+
 **Edges** (task decision 4). A `conflict` row's two spans go through `grounding.is_grounded`
 against the text the extractor read (`run_bulk_extraction.doc_text` on the document's
 `manifest_add` path). A miss goes to `edge_quarantine.jsonl` with its reason. A pass is written
@@ -810,6 +815,9 @@ documents**. Unordered pairs {n_all}; same-document pairs skipped **{same_doc}**
 cross-document pairs **{n_pairs}**. Full spans come from the projection; the CSV quotes at most
 {qw} words of each and gives the rest by locator.
 
+**Coverage: {n_judged} of {n_pairs} cross-document pairs judged; {n_unjudged} unjudged, {n_unparsed}
+unparsed.** {coverage_note}
+
 ## Method, and the prior art it adopts
 - **Decomposition: concept clarification.** Collect the definitions of one construct, then
   compare the entity each says has the property and the attributes each makes necessary
@@ -865,6 +873,10 @@ grounding gate: **{n_q}**. Why held rather than projected: {held_reason} —
 `scripts/build_projection.py::resolve_endpoint` would MERGE a label-less node
 `<doc A>::<id B>`. Both counts are `quarantined: true` in the CSV.
 
+The conflict rows, as judged (spans quoted to {qw} words; the reason is the judge's, unedited):
+
+{conflict_rows}
+
 ## Table 1. Pair outcomes by document pair
 Cell: C conflict, D differs_no_conflict, S consistent, N not_comparable, U unjudged or
 unparsed; counts of definition pairs. Diagonal: same-document pairs skipped.
@@ -887,6 +899,16 @@ Order is by that count only, descending; ties in key order. No weighting.
 controls from the checkpoint and compares both files byte for byte (no model call).
 Judgments, prompts and responses: `{ck}` and `events/raw/definition_pairs/<unit_id>.a<n>.json`.
 """
+
+
+#: Said whenever coverage is partial. Pairs run in `pair_id` order (a hash), so which pairs a
+#: stop leaves unjudged is not chosen by their content.
+COVERAGE_NOTE = ("An unjudged pair has no judgment record: the pass stopped before reaching it "
+                 "(the RESULT names the stop). Pairs run in `pair_id` order, a hash, after the "
+                 "positive controls, so which "
+                 "pairs are unjudged was not chosen by their content, and every count below is "
+                 "over the judged pairs only. Re-running `--run` resumes them by skip; a "
+                 "changed rubric or model would start a new set of units instead.")
 
 
 def render(rows: list[dict], epoch: dict, decided: dict, held: dict, quarantine: dict) -> tuple[str, str]:
@@ -940,10 +962,19 @@ def render(rows: list[dict], epoch: dict, decided: dict, held: dict, quarantine:
                 tally[k]["C" if r["outcome"] == "conflict" else "D"] += 1
     ranked = sorted(tally.items(), key=lambda kv: (-(kv[1]["C"] + kv[1]["D"]), kv[0]))
     by_key = {r["node_key"]: r for r in rows}
-    t3 = ["| rank | definition | term | conflict + differs | conflict | differs_no_conflict |",
-          "|---|---|---|---|---|---|"]
+    n_in = {k: sum(1 for r in out_rows if k in (r["key_a"], r["key_b"])) for k in tally}
+    n_jd = {k: sum(1 for r in judged if k in (r["key_a"], r["key_b"])) for k in tally}
+    t3 = ["| rank | definition | term | conflict + differs | conflict | differs_no_conflict "
+          "| pairs judged / in the pair list |",
+          "|---|---|---|---|---|---|---|"]
     for i, (k, v) in enumerate(ranked, 1):
-        t3.append(f"| {i} | `{k}` | {by_key[k]['term']} | {v['C'] + v['D']} | {v['C']} | {v['D']} |")
+        t3.append(f"| {i} | `{k}` | {by_key[k]['term']} | {v['C'] + v['D']} | {v['C']} | {v['D']} "
+                  f"| {n_jd[k]} / {n_in[k]} |")
+    conf = [r for r in judged if r["outcome"] == "conflict"]
+    crows = "\n".join(
+        f"- `{r['key_a']}` ({r['term_a']}: \"{r['quote_a']}\") × `{r['key_b']}` ({r['term_b']}: "
+        f"\"{r['quote_b']}\"). Kind `{r['kind']}`, confidence {r['confidence']}, reason_check "
+        f"`{r['reason_check']}`. Reason: {r['reason']}" for r in conf) or "(none)"
     # controls
     ver = controls_verdict(decided)
     pos_i = positive_control_index()
@@ -963,6 +994,10 @@ def render(rows: list[dict], epoch: dict, decided: dict, held: dict, quarantine:
         n_docs_epoch=epoch["documents"], n_defs_epoch=epoch["definitions"],
         n_defs=len(rows), n_docs=len(docs), n_all=len(rows) * (len(rows) - 1) // 2,
         same_doc=same_doc, n_pairs=len(pairs), qw=QUOTE_MAX_WORDS, cv=CRITERIA_VERSION,
+        n_judged=len(judged), n_unjudged=sum(1 for r in out_rows if r["status"] == "unjudged"),
+        n_unparsed=sum(1 for r in out_rows if r["status"] == "unparsed"),
+        coverage_note=(COVERAGE_NOTE if len(judged) < len(pairs) else
+                       "Every pair has a judgment."),
         rv=RUBRIC_VERSION, n_pos=len(POSITIVE_CONTROLS), n_neg=len(NEGATIVE_CONTROLS),
         crit_pos=CONTROL_CRITERION["positive"], crit_neg=CONTROL_CRITERION["negative"],
         pos_res=res(ver["positive_pass"], n_pos_seen, len(POSITIVE_CONTROLS)),
@@ -970,7 +1005,7 @@ def render(rows: list[dict], epoch: dict, decided: dict, held: dict, quarantine:
         control_rows="\n".join(crow) or "| (none run) | | | | | |",
         n_conflict=sum(1 for r in judged if r["outcome"] == "conflict"),
         src=EDGE_SOURCE, held_shard=(held_shard.relative_to(REPO).as_posix() if held_shard else "none written"),
-        n_held=len(held), n_q=len(quarantine), held_reason=HELD_REASON,
+        n_held=len(held), n_q=len(quarantine), held_reason=HELD_REASON, conflict_rows=crows,
         doc_legend=legend, matrix="\n".join(lines), counts="\n".join(t2), ranked="\n".join(t3))
     return render_csv(out_rows), md
 
