@@ -1,0 +1,380 @@
+# Declared inputs to scripts/build_scan_catalog.py: what the framework record does not carry.
+#
+# Task cc_tasks/2026-10-02_scan_catalog.md + ADDENDUM-01 (ResearchTask aaffd0db). Every entry carries
+# its source. Corpus quotes are verbatim and are checked against the admitted text by
+# tests/test_scan_catalog.py with kg/extraction/grounding.is_grounded wherever the corpus file is on disk
+# (corpus/ is gitignored). Web quotes were read through the harness WebFetch tool on 2026-10-04, one page
+# per claim, and are under 15 words. Nothing here is a measurement; the ratings are judgments under
+# rubric v1 (docs/catalog/README.md "Value rubric v1"), and the README says so once at the top.
+
+schema_version: 1
+read_on: '2026-10-04'
+source_cycle: scan_2026-09-10          # the stored observations behind the cycle of record scan_2026-09-10_rj4
+rated_by: 'rubric v1 (docs/catalog/README.md#value-rubric-v1), applied by the CC session of task aaffd0db (claude-opus-5-5), 2026-10-04'
+
+# ---------------------------------------------------------------------------------------------- bands
+# DN-010 §2.2 and the README's mapping table. Order-preserving; procurement is open above, so TBD.
+bands:
+  staffing_from_effort: {hours: 2, days: 3, weeks: 4, quarter: 5}
+  cost_from_cost: {none: 1, staff_time: 2, tooling: 2, procurement: TBD}
+  built_rule: {staffing: 1, cost: 1, basis: 'DN-010 §2.2: free and no staffing beyond running it is 1; the rule is built and the run is the harness'}
+
+# ---------------------------------------------------------------------------------------------- value
+# One rating per indicator: the value of a FAILING result on it, under rubric v1. `reason` names the level's
+# clause. Actions inherit their indicator's rating unless `action_overrides` gives one.
+value:
+  A1:  {rating: 5, reason: 'PDF-only: no machine-readable form, level 5'}
+  A2:  {rating: 4, reason: 'no documented programmatic path; files may still be reachable by hand, level 4'}
+  A3:  {rating: 4, reason: 'no whole-product file; a machine reader cannot take the product whole, level 4'}
+  A4:  {rating: 5, reason: 'a robots.txt disallow makes the data unreachable to compliant crawlers, level 5'}
+  A5:  {rating: 4, reason: 'the product is absent from the discovery surface a crawler follows, level 4'}
+  A6:  {rating: 4, reason: 'no valid Dataset markup; dataset search engines cannot find it as a dataset, level 4'}
+  A7:  {rating: 4, reason: 'a product or vintage URL that does not persist breaks the path to the data, level 4'}
+  A8:  {rating: 3, reason: 'release date and latest vintage withheld from a machine reader, level 3'}
+  A9:  {rating: 3, reason: 'no machine-first entry point; the human page still reaches the data, level 3'}
+  A10: {rating: 5, reason: 'content invisible before JavaScript or deep links that do not resolve, level 5'}
+  A11: {rating: 5, reason: 'the declared policy refuses AI crawlers or contradicts itself, level 5'}
+  A12: {rating: 5, reason: 'an identified, robots-compliant client is refused, level 5'}
+  B1:  {rating: 3, reason: 'variable labels, definitions, units and universes withheld, level 3'}
+  B2:  {rating: 3, reason: 'concept definitions withheld from the variables, level 3'}
+  B3:  {rating: 3, reason: 'methodology not legible to a machine reader, level 3'}
+  B4:  {rating: 3, reason: 'error measures, suppression rules and revisions policy withheld, level 3'}
+  B5:  {rating: 3, reason: 'one concept carries several identifiers, so joins across products misread, level 3'}
+  B6:  {rating: 3, reason: 'no current plain-language summary for retrieval to land on, level 3'}
+  C1:  {rating: 4, reason: 'a retrieval-paired model measured to misstate published values, level 4'}
+  C2:  {rating: 4, reason: 'model statements about the product measured not to follow from its text, level 4'}
+  C3:  {rating: 4, reason: 'retrieval measured to return the wrong vintage, level 4'}
+  C4:  {rating: 3, reason: 'answers cite an aggregator, not the authority; the data is reached second-hand, level 3'}
+  C5:  {rating: 2, reason: 'a score against published readiness metrics is a trust signal, level 2'}
+  D1:  {rating: 3, reason: 'no machine-readable licence; the terms of use are not interpretable, level 3'}
+  D2:  {rating: 2, reason: 'terms for training and retrieval use undeclared; reach holds, level 2'}
+  D3:  {rating: 2, reason: 'lineage is a provenance signal, level 2'}
+  D4:  {rating: 4, reason: 'absent from the public inventory the federal catalog harvests, level 4'}
+  E1:  {rating: 2, reason: 'the publisher''s own evaluation reporting, level 2'}
+  E2:  {rating: 2, reason: 'the publisher''s own evaluation process, level 2'}
+  E3:  {rating: 2, reason: 'the publisher''s own evaluation process, level 2'}
+  E4:  {rating: 2, reason: 'the publisher''s own evaluation process, level 2'}
+  E5:  {rating: TBD, reason: 'a harness-side control; it changes nothing the publisher serves'}
+  E6:  {rating: 2, reason: 'the publisher''s own evaluation process, level 2'}
+  E7:  {rating: 2, reason: 'the publisher''s own evaluation process, level 2'}
+  E8:  {rating: 2, reason: 'the publisher''s own evaluation process, level 2'}
+  E9:  {rating: 2, reason: 'the publisher''s own evaluation process, level 2'}
+  F1:  {rating: 2, reason: 'release validation is a maintenance signal, level 2'}
+  F2:  {rating: 4, reason: 'an unannounced breaking API change breaks the machine path, level 4'}
+  F3:  {rating: 4, reason: 'identifiers and endpoints that do not survive a vintage break the path, level 4'}
+  F4:  {rating: 2, reason: 'a machine-readable changelog is a maintenance signal, level 2'}
+  F5:  {rating: 2, reason: 'a staging regression run is a maintenance signal, level 2'}
+  F6:  {rating: 2, reason: 'signed provenance is a trust signal, level 2'}
+  G1-D: {rating: 3, reason: 'error measures shown to humans, absent from the markup, level 3'}
+  G1-O: {rating: 3, reason: 'qualifiers lost when a consumer restates the figure, level 3'}
+  G2:  {rating: 3, reason: 'revision status withheld per value, level 3'}
+  G3:  {rating: 3, reason: 'no crosswalk across a classification change; series misjoin, level 3'}
+  G4:  {rating: 2, reason: 'issuing authority is a provenance signal, level 2'}
+  G5:  {rating: 3, reason: 'suppression and disclosure avoidance not machine-readable, level 3'}
+  G6:  {rating: 3, reason: 'a series break not carried, so comparisons across it misread, level 3'}
+
+# Per-action ratings where the failing OUTCOME is milder than the indicator's worst case, or where measured
+# evidence decides. Keyed by Action id (or named-row id).
+action_overrides:
+  act:a4-serve-a-robots-txt-that-names-ai-crawlers:
+    rating: 2
+    basis: evidence
+    reason: 'no robots.txt leaves retrieval permitted (RFC 9309 §2.3.1.3); what is lost is a declared policy, level 2'
+    evidence: [rfc9309_unavailable]
+  act:a11-declare-a-crawler-policy-for-the-product-path:
+    rating: 2
+    basis: evidence
+    reason: 'no robots.txt leaves retrieval permitted (RFC 9309 §2.3.1.3); what is lost is a declared policy, level 2'
+    evidence: [rfc9309_unavailable]
+  named:llms-txt:
+    rating: 1
+    basis: evidence
+    reason: 'measured: 97% of llms.txt files on 137,210 domains got zero requests in May 2026, so its absence withholds nothing a consumer on file reads, level 1'
+    evidence: [ahrefs_llmstxt_2026]
+
+# ---------------------------------------------------------------------------------------------- evidence
+# Sources graded for decision 10's `evidence_grade`. `consumer: true` = the source is a named consumer saying
+# it reads or obeys the artifact (crawler operator, search engine, the federal harvester), or a measurement of
+# consumption. `prescriptive` sources prescribe the artifact for machine use without showing a consumer act.
+sources:
+  rfc9309_unavailable: {kind: corpus, doc_id: rfc-9309-robots-exclusion-protocol, path: corpus/kernel/rfc-9309-robots-exclusion-protocol.md, section: '2.3.1.3', quote: 'the crawler MAY access any resources on the server', consumer: true}
+  openai_bots: {kind: corpus, doc_id: openai-crawlers-bots, path: corpus/kernel/openai-crawlers-bots.md, section: 'Overview of OpenAI crawlers', quote: 'OpenAI uses OAI-SearchBot and GPTBot robots.txt tags', consumer: true, user_agents: [GPTBot]}
+  anthropic_bots: {kind: corpus, doc_id: anthropic-crawler-support-article, path: corpus/kernel/anthropic-crawler-support-article.md, section: 'body', quote: 'signals by honoring industry standard directives in robots.txt', consumer: true, user_agents: [ClaudeBot, Claude-Web], note: 'the article names ClaudeBot; Claude-Web is not named in it'}
+  perplexity_bots: {kind: corpus, doc_id: perplexity-crawlers, path: corpus/kernel/perplexity-crawlers.md, section: 'PerplexityBot', quote: 'we recommend allowing `PerplexityBot` in your site’s `robots.txt` file', consumer: true, user_agents: [PerplexityBot]}
+  google_extended: {kind: corpus, doc_id: google-ai-features-and-your-website, path: corpus/kernel/google-ai-features-and-your-website.md, section: 'Google-Extended', quote: 'To limit AI training and grounding in some of Google''s other systems', consumer: true, user_agents: [Google-Extended]}
+  google_robots: {kind: corpus, doc_id: google-robots-txt-intro, path: corpus/kernel/google-robots-txt-intro.md, section: 'Introduction to robots.txt', quote: 'A robots.txt file tells search engine crawlers', consumer: true}
+  bingbot: {kind: corpus, doc_id: bing-webmaster-guidelines, path: corpus/kernel/bing-webmaster-guidelines.md, section: 'Avoid', quote: 'Blocking Bingbot in your robots.txt file', consumer: true, user_agents: [Bingbot]}
+  ccbot: {kind: web, url: 'https://commoncrawl.org/ccbot', quote: 'To prevent Common Crawl from crawling your website, include the following in your robots.txt', consumer: true, user_agents: [CCBot], note: 'the page gives the robots.txt group that blocks CCBot; it has no sentence saying in words that CCBot complies'}
+  applebot: {kind: web, url: 'https://support.apple.com/en-us/119829', quote: 'Applebot respects standard robots.txt directives in general search crawls', consumer: true, user_agents: [Applebot-Extended], note: 'Applebot-Extended does not crawl; it governs how crawled content is used'}
+  bing_sitemaps: {kind: corpus, doc_id: bing-webmaster-guidelines, path: corpus/kernel/bing-webmaster-guidelines.md, section: '3. Use Sitemaps', quote: 'to indicate which URLs matter and when content changes', consumer: true}
+  gsc_sitemap: {kind: corpus, doc_id: google-search-console-start, path: corpus/kernel/google-search-console-start.md, section: 'step 3', quote: 'submitting a sitemap using Search Console might speed up your site''s discovery', consumer: true}
+  google_dataset: {kind: corpus, doc_id: google-dataset-structured-data, path: corpus/kernel/google-dataset-structured-data.md, section: 'Overview', quote: 'We can understand structured data in web pages about datasets', consumer: true}
+  google_dataset_licence: {kind: corpus, doc_id: google-dataset-structured-data, path: corpus/kernel/google-dataset-structured-data.md, section: 'Structured data type definitions', quote: 'Add `identifier`, `license`, and `sameAs` for datasets that provide provenance and license information', consumer: true}
+  datagov_harvest: {kind: corpus, doc_id: dcat-us-3-overview, path: corpus/kernel/dcat-us-3-overview.md, section: 'For agencies currently implementing v1.1', quote: 'v1.1 continues to be harvested by Data.gov during the transition period', consumer: true}
+  dwbp_bp12: {kind: corpus, doc_id: w3c-dwbp-2017, path: corpus/kernel/w3c-dwbp-2017.md, section: 'Best Practice 12', quote: 'Make data available in a machine-readable standardized data format', consumer: false}
+  llmstxt_proposal: {kind: corpus, doc_id: llmstxt-proposal, path: corpus/kernel/llmstxt-proposal.md, section: 'Proposal', quote: 'We propose adding a `/llms.txt` markdown file to websites', consumer: false}
+  ahrefs_llmstxt_2026: {kind: web, url: 'https://ahrefs.com/blog/llmstxt-study/', quote: '97% of those files received zero traffic in May.', consumer: true, note: 'Linehan, Ahrefs blog, 2026-06-15: 137,210 domains on Ahrefs Web Analytics, requests classified by Ahrefs Bot Analytics. It measured requests, not use. The same page says AI retrieval bots made 1.1% of AI bot requests. Commercial customers skew technical, which the post says.'}
+  kumar_sts: {kind: corpus_pdf, doc_id: kumar-2024-manipulating-llms-product-visibility, path: corpus/round2/kumar-2024-manipulating-llms-product-visibility.pdf, section: 'Abstract', quote: 'adding a strategic text sequence (STS)', consumer: true}
+
+# Which sources grade which legs. A leg absent here is graded from the record: `plausible` when its indicator
+# has an EVIDENCED_BY edge or its actions a technique_source, otherwise `unevidenced`.
+evidence_by_leg:
+  A4: [rfc9309_unavailable, openai_bots, anthropic_bots, perplexity_bots, google_extended, bingbot, ccbot, applebot, google_robots]
+  A11: [openai_bots, anthropic_bots, perplexity_bots, google_extended, bingbot, ccbot, applebot, google_robots]
+  A11-declared: [openai_bots, anthropic_bots, perplexity_bots, google_extended, bingbot, ccbot, applebot, google_robots]
+  A12: [openai_bots, anthropic_bots, perplexity_bots, google_robots]
+  A5: [bing_sitemaps, gsc_sitemap]
+  A6: [google_dataset]
+  D1: [google_dataset_licence]
+  D4: [datagov_harvest]
+
+# ---------------------------------------------------------------------------------------------- cheap pass
+# Decision 8, by described case. Keyed by leg (built rules) or by indicator code (everything else).
+cheap_pass:
+  A1: {value: 'yes', basis: 'spec:A1 signal: structured iff any linked file answers csv/json/parquet/xlsx/xml. A one-row CSV served as text/csv beside the PDF passes'}
+  A2: {value: 'yes', basis: 'RULE-A2-v3 docstring: the verdict requires a description that parses; auth scheme and rate limits are recorded, not gated. A parseable description of an API that answers nothing passes'}
+  A3: {value: 'yes', basis: 'the rule tests a linked download above a size floor (outcome below_bulk_floor, act:a3-publish-the-complete-file-not-a-sample); a file above the floor that is not the whole product passes'}
+  A4: {value: 'yes', basis: 'A4 reads the declaration only. "declared permits, enforced refuses" is a recorded outcome on another leg (act:a12-align-the-edge-with-the-declaration)'}
+  A5: {value: 'yes', basis: 'RULE-A5-v2 reads the discovery file; listing the product URL passes whether or not the URL serves the product'}
+  A6: {value: 'yes', basis: 'RULE-A6-v2 docstring: the shapes are a stated minimal subset and "a pass here can never be read as DCAT-AP conformance"'}
+  A8: {value: 'yes', basis: 'params a8_freshness: the rule reads declared date fields; a declared date is not compared with the actual release'}
+  A9: {value: 'yes', basis: 'RULE-A9-v1 judge(): any probed machine-first path answering non-HTML bytes under HTTP 400 passes; a one-line /llms.txt passes'}
+  A10: {value: 'TBD', basis: 'not decided: the client-rendered-shell test reads visible text before JavaScript, and no case was described'}
+  A11-declared: {value: 'yes', basis: 'the leg reads the declared layer only; ind:A11 names declared, enforced and observed layers'}
+  A12: {value: 'no', basis: 'RULE-A12-v3 passes only on a response actually served to an identified client'}
+  B1: {value: 'yes', basis: 'field presence on the catalog record and markup (collector dcat-record-fields, schema-terms); the record says comprehensiveness is the unmeasured half (ind:B1.requirement_none_reason)'}
+  B2: {value: 'yes', basis: 'field presence (collector schema-terms); a DefinedTerm with a code and a definition passes whatever it defines'}
+  B3: {value: 'TBD', basis: 'not decided: the rule judges legibility of a methodology document, and no case was described'}
+  B4: {value: 'yes', basis: 'field presence on the catalog record (collector dcat-record-fields)'}
+  B5: {value: 'yes', basis: 'field presence (collector schema-terms); a term set named on every code passes whether the codes are shared'}
+  D1: {value: 'yes', basis: 'an identifier for a licence passes; the terms behind it are not read'}
+  D2: {value: 'yes', basis: 'the indicator measures a declaration; declaring is the pass'}
+  D3: {value: 'yes', basis: 'field presence on the catalog record (collector dcat-record-fields)'}
+  D4: {value: 'yes', basis: 'a conforming catalog entry passes; whether its distribution serves data is another leg'}
+  E5: {value: 'no', basis: 'harness-side: the pass is the instrument''s own control outcome, not a publisher artifact'}
+  F4: {value: 'yes', basis: 'a changelog entry carrying a revision-class field passes whatever the change was'}
+  G1-D: {value: 'yes', basis: 'field presence: an error-measure field passes whatever value it holds'}
+  G4: {value: 'yes', basis: 'field presence on the catalog record (collector dcat-record-fields)'}
+  C4: {value: 'yes', basis: 'kumar-2024-manipulating-llms-product-visibility: "adding a strategic text sequence (STS)" to a page raises its chance of being an LLM''s top recommendation; a citation can be engineered'}
+  named:llms-txt: {value: 'yes', basis: 'an empty /llms.txt answers the A5 and A9 presence probes (params a5_discovery.well_known_probes)'}
+
+# ---------------------------------------------------------------------------------------------- tools
+# Licence and URL for each AssessmentTool, which the record does not carry. `TBD` with a reason where no
+# source on file states it; web search was scoped to tool existence (Spend header).
+tools:
+  tool:wayback-cdx-server: {url: 'https://github.com/internetarchive/wayback/tree/master/wayback-cdx-server', url_source: 'record doc_source corpus/tools/wayback-cdx-server/README.md (doc_id wayback-cdx-server-api-readme)', licence: TBD, licence_reason: 'not stated in the admitted README; a hosted free API, used as roll_your_own'}
+  tool:oasdiff: {url: manifest, licence: TBD, licence_reason: 'not stated in the admitted README'}
+  tool:aidrin: {url: manifest, licence: TBD, licence_reason: 'not stated in the admitted paper; the record notes the package is on TestPyPI'}
+  tool:slsa-verifier: {url: 'https://github.com/slsa-framework/slsa-verifier', url_source: 'record doc_source, the SLSA specification''s own link', licence: TBD, licence_reason: 'not stated in the admitted specification'}
+  tool:bing-webmaster-tools-ai-performance: {url: manifest, licence: 'n/a: vendor service', licence_reason: 'hosted vendor console; terms not read'}
+  tool:cloudflare-ai-crawl-control: {url: manifest, licence: 'n/a: vendor service', licence_reason: 'hosted vendor service; terms not read'}
+  tool:perplexity-ai: {url: 'https://www.perplexity.ai', url_source: 'record name "Perplexity.ai"', licence: 'n/a: vendor service', licence_reason: 'hosted vendor service; terms not read'}
+  tool:extruct: {url: manifest, licence: BSD, licence_source: 'importlib.metadata classifier of the installed extruct 0.18.0, read 2026-10-04'}
+  tool:scrapy: {url: manifest, licence: BSD, licence_source: 'importlib.metadata License of the installed scrapy 2.11.1, read 2026-10-04'}
+  tool:ultimate-sitemap-parser: {url: 'https://github.com/GateNLP/ultimate-sitemap-parser', url_source: 'importlib.metadata Project-URL of the installed ultimate-sitemap-parser 1.8.1, read 2026-10-04', licence: GPL-3.0-or-later, licence_source: 'importlib.metadata License-Expression of the installed 1.8.1', locator_quote: 'repository, https://github.com/GateNLP/ultimate-sitemap-parser'}
+  tool:openapi-spec-validator: {url: 'https://pypi.org/project/openapi-spec-validator/', url_source: 'web, read 2026-10-04', licence: Apache-2.0, licence_source: 'the PyPI page', locator_quote: 'OpenAPI 2.0 (aka Swagger) and OpenAPI 3 spec validator'}
+  tool:prance: {url: 'https://pypi.org/project/prance/', url_source: 'web, read 2026-10-04', licence: MIT, licence_source: 'the PyPI page', locator_quote: 'Resolving Swagger/OpenAPI 2.0 and 3.0.0 Parser'}
+  tool:catalog-data-gov-ckan-api: {url: 'https://catalog.data.gov/api/3/action/', url_source: 'docs/design/scan_tool_map.md §3 (the CKAN action API the record names; recorded as answering HTTP 404 on 2026-09-08)', licence: 'n/a: hosted API', licence_reason: 'a hosted public API, used as roll_your_own'}
+
+# ---------------------------------------------------------------------------------------------- searched methods
+# Rows for indicators, or unmeasured halves, the record leaves without a method (decision 3: corpus first,
+# then the web). `row_source: catalog_search` unless the record itself names the method.
+methods:
+  - indicator: B6
+    route: wcag_reading_level
+    method_kind: roll_your_own
+    method: 'reading level of the summary against WCAG 2.1 SC 3.1.5, and the summary page''s date against DCAT-US 3 `modified`'
+    who_can_run: public_outside_in
+    spec_locator: 'https://www.w3.org/WAI/WCAG21/Understanding/reading-level.html'
+    spec_quote: 'more advanced than the lower secondary education level'
+    row_source: catalog_search
+    note: 'the record says B6 needs a different instrument (ind:B6.tier_unassigned_reason) and names the DCAT-US 3 `modified` half; the reading-level half is a W3C success criterion, found on the web. A corpus search for `readability`, `plain language` and `plain writing` found no test (hits: REST "readability", digital.gov page-description guidance).'
+  - indicator: G5
+    route: sdmx_conf_status
+    method_kind: roll_your_own
+    method: 'per-observation confidentiality status read from the SDMX cross-domain code list CL_CONF_STATUS, where the product is published in SDMX'
+    who_can_run: public_outside_in
+    spec_locator: 'https://sdmx.org/news/cl_conf_status-1-4/'
+    spec_quote: 'provides coded information about the sensitivity and confidentiality status of the data'
+    row_source: catalog_search
+    note: 'the record says no admitted document names a machine-readable suppression field (ind:G5.tier_unassigned_reason, searches on corpus/kernel, crosswalk, components and the SDMX 3.0 §1 and DDI texts). The SDMX cross-domain code list does, on the web. It is not admitted, so the record is unchanged; a write-back is a later task.'
+  - indicator: G3
+    route: sdmx_structure_map
+    method_kind: roll_your_own
+    method: 'read SDMX Structure Maps and representation maps for a crosswalk across a classification or geography change'
+    who_can_run: public_outside_in
+    spec_locator: 'corpus/kernel/sdmx-3-0-section-1-framework.pdf (doc_id sdmx-3-0-section-1-framework), as quoted in ind:G3.tier_unassigned_reason'
+    spec_quote: 'Structure maps describes a mapping between data structure definitions or dataflows'
+    row_source: record
+    note: 'the record names the artifact and says no collector reads it'
+  - indicator: D3
+    route: prov_walk
+    method_kind: roll_your_own
+    method: 'walk `wasDerivedFrom` on the catalog records the D3 rule already fetches, from collection through processing'
+    who_can_run: public_outside_in
+    spec_locator: 'framework/ai_readiness_framework.json#ind:D3 (requirement_none_reason); corpus/crosswalk/w3c-prov-o-ontology.html'
+    spec_quote: ''
+    row_source: record
+    note: 'the unmeasured half; the record says it is a rule this project would write'
+  - indicator: B1
+    route: unmeasured_half
+    method_kind: none_known
+    method: 'whether the linked dictionary or listed variables are comprehensive'
+    who_can_run: needs_standard
+    failed_searches: 'record: "No admitted document defines a test for it" (ind:B1.requirement_none_reason)'
+    row_source: record
+  - indicator: B2
+    route: unmeasured_half
+    method_kind: none_known
+    method: 'the versioned clause of the concept definitions'
+    who_can_run: needs_standard
+    failed_searches: 'record: "The ''versioned'' clause has no field in any admitted document" (ind:B2.requirement_none_reason)'
+    row_source: record
+  - indicator: B4
+    route: unmeasured_half
+    method_kind: none_known
+    method: 'the suppression-rules clause'
+    who_can_run: needs_standard
+    failed_searches: 'record: "The suppression-rules clause has no field in any admitted document" (ind:B4.requirement_none_reason; the search is on ind:G5.tier_unassigned_reason). The SDMX CL_CONF_STATUS row on G5 may reach it; not decided here.'
+    row_source: record
+  - indicator: G4
+    route: unmeasured_half
+    method_kind: none_known
+    method: 'the statutory-mandate and statistical-versus-administrative clauses'
+    who_can_run: needs_standard
+    failed_searches: 'record: "The statutory-mandate and statistical-versus-administrative clauses have no field in any admitted document" (ind:G4.requirement_none_reason)'
+    row_source: record
+
+# ---------------------------------------------------------------------------------------------- enablers
+# Decision 4. Each is a lead. `links` join to indicators: existing_node (a requirement node in the record),
+# proposed_link (would need a new node), unsupported (no source establishes the capability for that indicator).
+enablers:
+  - id: enabler:google-search-console
+    name: 'Google Search Console, a verified property'
+    method_kind: tool_commercial
+    who_can_run: agency_enabled
+    url: 'https://developers.google.com/search/docs/monitor-debug/search-console-start'
+    step: {source: gsc_start, quote: 'Verify site ownership'}
+    who_acts: 'the site owner verifies the property; the report is read by or shared with the assessor'
+    capabilities:
+      - {source: gsc_start, quote: 'show what structured data Google could or couldn''t read from your site', indicators: [A6], link: proposed_link}
+      - {source: gsc_start, quote: 'gives you an overview of all the pages Google indexed or tried to index', indicators: [A5], link: proposed_link}
+      - {source: gsc_crawl_stats, quote: 'statistics about Google''s crawling history on your website', indicators: [A11], link: proposed_link}
+      - {source: google_ai_features, quote: 'included in the overall search traffic', indicators: [C4], link: unsupported, note: 'AI Overviews and AI Mode are counted inside overall search traffic, so the report cannot isolate AI citations'}
+    requirements: []
+  - id: enabler:bing-webmaster-tools
+    name: 'Bing Webmaster Tools, a verified site'
+    method_kind: tool_commercial
+    who_can_run: agency_enabled
+    url: 'https://www.bing.com/webmasters'
+    step: {source: bing_import, quote: 'The imported sites will be automatically verified'}
+    who_acts: 'the site owner verifies the site (Domain Connect, XML file, meta tag, DNS, or import from Search Console)'
+    capabilities:
+      - {source: bing_ai_perf, quote: 'understand how often your content is cited in generative answers', indicators: [C4], link: existing_node}
+      - {source: bing_api, quote: 'troubleshoot crawling and indexing issues, submit sitemaps and view statistics for your sites', indicators: [A11], link: proposed_link}
+    requirements: [tool:bing-webmaster-tools-ai-performance, pre:bing-webmaster-tools-verified-site]
+  - id: enabler:web-analytics
+    name: 'Web analytics (the federal DAP, Google Analytics 360)'
+    method_kind: tool_commercial
+    who_can_run: agency_enabled
+    url: 'https://digital.gov/guides/dap/'
+    step: {source: dap_required, quote: 'Agencies are required to participate in GSA’s government-wide Digital Analytics Program (DAP)'}
+    who_acts: 'the agency installs the DAP tag (required of executive agencies by M-23-22) and shares the agency view'
+    capabilities:
+      - {source: dap_guide, quote: 'helps federal agencies understand how the public finds, accesses, and uses government services online', indicators: [], link: unsupported, note: 'a tag in the browser measures human visits; no source on file says DAP reports AI crawlers'}
+      - {source: watanabe_referral, quote: 'Using first-party analytics and server logs', indicators: [C4], link: proposed_link, note: 'referral visits from an answer engine show the page was cited and clicked; whether the DAP agency view exposes that referrer breakdown is not established by the guide'}
+    requirements: []
+  - id: enabler:cloudflare-ai-crawl-control
+    name: 'Cloudflare AI Crawl Control, on the publisher''s zone'
+    method_kind: tool_commercial
+    who_can_run: agency_enabled
+    url: 'https://developers.cloudflare.com/ai-crawl-control/'
+    step: {source: record_pre_cloudflare, quote: ''}
+    who_acts: 'the publisher grants access to the Cloudflare zone that fronts the host (pre:cloudflare-zone-account)'
+    capabilities:
+      - {source: cloudflare_acc, quote: 'See which AI services access your content', indicators: [A11], link: existing_node}
+      - {source: cloudflare_acc, quote: 'See which AI services access your content', indicators: [A12], link: proposed_link, note: 'A12 is a candidate (DD-054); the dashboard would show whether an identified client was refused at the edge'}
+    requirements: [tool:cloudflare-ai-crawl-control, pre:cloudflare-zone-account]
+  - id: enabler:akamai-datastream-2
+    name: 'Akamai DataStream 2 edge logs, with security fields'
+    method_kind: tool_commercial
+    who_can_run: agency_enabled
+    url: 'https://techdocs.akamai.com/datastream2/docs/welcome-datastream2'
+    step: {source: akamai_ds2, quote: 'Choose a destination for each stream you create'}
+    who_acts: 'the publisher configures a stream on its Akamai property and shares the destination'
+    capabilities:
+      - {source: akamai_ds2, quote: 'Traffic data and metrics on individual edge request-response cycles', indicators: [A11], link: proposed_link, note: 'the data-set parameters include the security rules a request triggered, Bot Management among them (akamai-datastream-2-data-set-parameters)'}
+    requirements: []
+  - id: enabler:server-logs
+    name: 'Raw server and edge request logs'
+    method_kind: tool_open_source
+    who_can_run: agency_records
+    url: 'https://github.com/allinurl/goaccess'
+    step: {source: record_pre_logs, quote: ''}
+    who_acts: 'the publisher shares request logs for the product path (pre:edge-and-crawler-request-logs); GoAccess reads them'
+    capabilities:
+      - {source: goaccess, quote: 'scanners, bots, and anomalous requests directly from your logs', indicators: [A11], link: existing_node}
+    requirements: [pre:edge-and-crawler-request-logs]
+  - id: enabler:sitemap-and-robots-submission
+    name: 'robots.txt and sitemap submission to search consoles'
+    method_kind: tool_commercial
+    who_can_run: agency_enabled
+    url: 'https://developers.google.com/search/docs/monitor-debug/search-console-start'
+    step: {source: gsc_start_sitemap, quote: 'submitting a sitemap using Search Console might speed up your site''s discovery'}
+    who_acts: 'the site owner, inside a verified console'
+    capabilities:
+      - {source: gsc_start_sitemap, quote: 'submitting a sitemap using Search Console might speed up your site''s discovery', indicators: [], link: unsupported, note: 'submission is a discovery action, not an instrument. robots.txt and sitemaps are public and already read by the built rules for A4, A5, A11 and A12; the reports a submission feeds belong to the two console enablers above'}
+    requirements: []
+
+# Sources the enablers cite, beyond `sources:` above.
+enabler_sources:
+  gsc_start: {kind: corpus, doc_id: google-search-console-start, path: corpus/kernel/google-search-console-start.md}
+  gsc_start_sitemap: {kind: corpus, doc_id: google-search-console-start, path: corpus/kernel/google-search-console-start.md}
+  gsc_crawl_stats: {kind: web, url: 'https://support.google.com/webmasters/answer/9679690', note: 'the report is available only for root-level properties (same page)'}
+  google_ai_features: {kind: corpus, doc_id: google-ai-features-and-your-website, path: corpus/kernel/google-ai-features-and-your-website.md}
+  bing_import: {kind: web, url: 'https://blogs.bing.com/webmaster/september-2019/Import-sites-from-Search-Console-to-Bing-Webmaster-Tools'}
+  bing_ai_perf: {kind: corpus, doc_id: bing-ai-performance-public-preview-2026, path: corpus/kernel/bing-ai-performance-public-preview-2026.md}
+  bing_api: {kind: corpus, doc_id: bing-webmaster-api-docs, path: corpus/kernel/bing-webmaster-api-docs.md}
+  dap_required: {kind: corpus, doc_id: digital-gov-dap-guide, path: corpus/kernel/digital-gov-dap-guide.md}
+  dap_guide: {kind: corpus, doc_id: digital-gov-dap-guide, path: corpus/kernel/digital-gov-dap-guide.md}
+  watanabe_referral: {kind: corpus_pdf, doc_id: watanabe-2026-aeo-referral-natural-experiment, path: corpus/round2/watanabe-2026-aeo-referral-natural-experiment.pdf}
+  cloudflare_acc: {kind: corpus, doc_id: cloudflare-ai-crawl-control, path: corpus/kernel/cloudflare-ai-crawl-control.md}
+  record_pre_cloudflare: {kind: record, locator: 'framework/ai_readiness_framework.json#pre:cloudflare-zone-account'}
+  akamai_ds2: {kind: corpus, doc_id: akamai-datastream-2-docs, path: corpus/kernel/akamai-datastream-2-docs.md}
+  record_pre_logs: {kind: record, locator: 'framework/ai_readiness_framework.json#pre:edge-and-crawler-request-logs'}
+  goaccess: {kind: corpus, doc_id: goaccess-readme, path: corpus/kernel/goaccess-readme.md}
+
+# Requirement nodes grouped under one enabler, so the set cover counts "verify the site in Bing" once rather
+# than as a tool and a precondition.
+unlocker_groups:
+  tool:bing-webmaster-tools-ai-performance: enabler:bing-webmaster-tools
+  pre:bing-webmaster-tools-verified-site: enabler:bing-webmaster-tools
+  tool:cloudflare-ai-crawl-control: enabler:cloudflare-ai-crawl-control
+  pre:cloudflare-zone-account: enabler:cloudflare-ai-crawl-control
+  pre:edge-and-crawler-request-logs: enabler:server-logs
+
+# ---------------------------------------------------------------------------------------------- named action rows
+# Addendum decision 11. robots.txt has record Actions (A4); they are tagged, not duplicated. llms.txt has none.
+named_rows:
+  robots_txt:
+    tags: [act:a4-serve-a-robots-txt-that-names-ai-crawlers, act:a4-allow-the-data-paths-for-named-ai-crawlers]
+    citations: [rfc9309_unavailable, openai_bots, anthropic_bots, perplexity_bots, google_extended, bingbot, ccbot, applebot]
+  llms_txt:
+    id: named:llms-txt
+    title: 'Publish an /llms.txt at the site root'
+    indicator: A5
+    also_moves: [A9]
+    what_would_have_to_be_done: 'Publish a markdown file at /llms.txt that names the product and links its machine-readable distributions, as the llms.txt proposal describes.'
+    who_does_it: publisher
+    technique_class: publish_new_file
+    citations: [llmstxt_proposal, ahrefs_llmstxt_2026]
+    searches: 'corpus: `llms.txt` across the admitted documents (8 hits, none a measurement of consumption; the Akamai docs and Cloudflare pages SERVE llms.txt indexes, which is publication, not consumption). web: "llms.txt adoption AI crawlers actually request llms.txt measured server logs study"; "Ahrefs llms.txt study 137,000 domains 97% zero requests"; primary read: ahrefs.com/blog/llmstxt-study/.'
+
+# ---------------------------------------------------------------------------------------------- front door
+# Decision 13. A vendor is "named" only by these readings; everything else in a header is ignored.
+front_door:
+  vendors: [cloudflare, akamai, cloudfront, fastly, incapsula, imperva, sucuri, azure]
+  header_values_read: [server, via, x-cache, x-cdn, x-served-by]
+  header_names_read: true          # a header whose NAME carries a vendor token (akamai-grn, x-azure-ref)
+  refusal_statuses: [401, 403, 429]
+  ignored: 'content-security-policy, report-to, reporting-endpoints, set-cookie and every other header value: they name script origins, cookies or report sinks, not the front. `varnish` is cache software, not a vendor.'

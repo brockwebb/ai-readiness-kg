@@ -1,0 +1,30 @@
+list,table,row_id,effort_level,value_rating,evidence_grade,cheap_pass,title
+quick_win,scans,S-A1-rule-A1,1,5,plausible,yes,"Product available as structured data (CSV/JSON/parquet), not PDF-only"
+quick_win,scans,S-A10-rule-A10,1,5,plausible,TBD,"Interactive data tools expose stable, directly-requestable deep links; meaningful states are not fragment-only or session-dependent; invalid routes return true 404/410, not HTTP-200 shell (soft-404); page-specific content present in raw HTML before JS execution"
+quick_win,scans,S-A11-rule-A11-declared,1,5,established,yes,"A4 upgraded from declared-policy check to three-layer comparison: declared (robots.txt/meta directives) vs enforced (edge/WAF/bot-management treatment) vs observed (actual crawler request logs). A mismatch between layers is itself the finding, not an error state"
+quick_win,scans,S-A12-rule-A12,1,5,established,no,"An identified, robots-compliant machine client that robots.txt permits is served (not refused by a WAF or bot manager)"
+quick_win,scans,S-A2-rule-A2,1,4,unevidenced,yes,Documented public API; auth model; rate limits stated
+quick_win,scans,S-A3-rule-A3,1,4,plausible,yes,Full-product bulk download exists and is linked from product page
+quick_win,scans,S-A4-rule-A4,1,5,established,yes,robots.txt + AI-crawler policy permit retrieval; no soft-blocks on data paths
+quick_win,scans,S-A5-rule-A5,1,4,established,yes,llms.txt (or equivalent) present; sitemap covers data products
+quick_win,scans,S-A6-rule-A6,1,4,established,yes,schema.org/Dataset (or DCAT/Croissant) markup valid on product pages
+clear_out,scans,S-D2-rule-D2,1,2,unevidenced,yes,Terms address model training/retrieval use explicitly
+clear_out,scans,S-D3-rule-D3,1,2,plausible,yes,Source lineage published (collection → processing → product)
+quick_win,scans,S-D4-rule-D4,1,4,established,yes,Statutory products enumerable from a public inventory (data.gov/agency inventory current)
+clear_out,scans,S-F4-rule-F4,1,2,plausible,yes,"Machine-readable changelog per release (what changed, why, revision class); webhooks/push for high-frequency products"
+clear_out,scans,S-G4-rule-G4,1,2,plausible,yes,"The issuing authority of a data product is carried as machine-readable metadata on the product, in the fields DCAT-US defines (`publisher`, `bureauCode`, `programCode`)"
+quick_win,actions,act:a11-permit-the-ai-crawlers-you-intend-to-serve-on-the-product-path,2,5,established,yes,"Permit, in robots.txt, the AI crawlers the product is meant to reach"
+quick_win,actions,act:a11-resolve-the-meta-robots-directive-that-contradicts-robots-txt,2,5,established,yes,Resolve the meta-robots directive that contradicts robots.txt
+quick_win,actions,act:a12-publish-a-robots-txt-group-an-identified-client-matches,2,5,established,no,Publish a robots.txt group that an identified machine client matches
+quick_win,actions,act:a4-allow-the-data-paths-for-named-ai-crawlers,2,5,established,yes,Allow the product's data paths for the AI crawlers you intend to serve
+quick_win,actions,act:a5-list-the-product-url-in-the-sitemap,2,4,established,yes,List the product URL in the discovery file that is already served
+quick_win,actions,act:a6-embed-json-ld-on-the-product-page,2,4,established,yes,Embed JSON-LD describing the product on the product page
+quick_win,actions,act:a6-make-the-dataset-markup-conform-to-the-profile,2,4,established,yes,Make the Dataset markup conform to the profile it declares
+quick_win,actions,act:a6-type-the-product-page-as-a-dataset,2,4,established,yes,Type the product page's existing markup as a Dataset
+clear_out,actions,act:d2-declare-ai-training-and-input-terms-in-robots-txt,2,2,plausible,yes,Declare the terms for AI training and AI input in robots.txt
+clear_out,actions,act:d2-use-only-the-defined-content-signal-categories,2,2,plausible,yes,Use only the categories and values the Content Signals Policy defines
+clear_out,actions,act:d3-name-the-generating-activity-in-the-catalog-record,2,2,plausible,yes,Name the activity that generated the product in its catalog record
+quick_win,actions,act:d4-add-the-product-to-the-public-data-inventory,2,4,established,yes,Add the product to the public data inventory already published
+quick_win,actions,act:d4-make-the-catalog-conform-to-dcat-us,2,4,established,yes,Make the public data catalog conform to the DCAT-US schema
+clear_out,actions,act:f4-carry-a-revision-class-on-every-changelog-entry,2,2,plausible,yes,Carry a revision class on every changelog entry
+clear_out,actions,act:g4-carry-bureau-and-program-codes-on-the-record,2,2,plausible,yes,Carry `bureauCode` and `programCode` on the product's catalog record
