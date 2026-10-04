@@ -1,0 +1,26 @@
+{
+ "task": "cc_tasks/2026-10-02_commerce_guidance_admission.md",
+ "run_id": "commerce_guidance_extraction_2026-10-02",
+ "profile": "bulk_v038",
+ "cohort": [
+  "generative-ai-and-open-data-guidelines-and-best-practices-de"
+ ],
+ "plan": {
+  "documents": 1,
+  "chunks_per_document": {
+   "generative-ai-and-open-data-guidelines-and-best-practices-de": 25
+  },
+  "chunks": 25,
+  "chunk_floor": 20000,
+  "tokens_at_floor": 500000,
+  "ceiling": {
+   "chunks": 25,
+   "rate_result": "strand_extraction_tokens_productive",
+   "rate_productive_tokens": 10988869,
+   "rate_chunks": 225,
+   "measured_tokens_per_chunk": 48839.41777777778,
+   "headroom": 1.15,
+   "ceiling_tokens": 1404134
+  }
+ }
+}

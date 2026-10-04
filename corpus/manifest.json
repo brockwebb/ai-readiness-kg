@@ -1,13 +1,13 @@
 {
  "manifest_version": 2,
  "project": "ai-readiness-kg",
- "generated_at": "2026-09-21T02:46:53.060214+00:00",
+ "generated_at": "2026-10-04T11:02:05.552486+00:00",
  "generator": "dixie.evidence",
  "note": "PROJECTION — rebuilt from the evidence decisions log; do not hand-edit. The log is truth.",
  "counts_by_decision": {
-  "included": 264,
+  "included": 265,
   "excluded": 72,
-  "pending_refetch": 43,
+  "pending_refetch": 42,
   "pending_review": 1
  },
  "entries": {
@@ -13323,34 +13323,65 @@
   "generative-ai-and-open-data-guidelines-and-best-practices-de": {
    "doc_id": "generative-ai-and-open-data-guidelines-and-best-practices-de",
    "identity": {
-    "sha256": null,
-    "canonical_path": null,
-    "title": "Generative AI and Open Data: Guidelines and Best Practices (Dept. of Commerce)",
-    "authors_or_org": [],
-    "pub_year": null,
+    "sha256": "87068818f5c4c86f1a211cd2375738646ed586c0ca7211d5bd9604636493bd91",
+    "canonical_path": "corpus/bulk/generative-ai-and-open-data-guidelines-and-best-practices-de.pdf",
+    "title": "Generative Artificial Intelligence and Open Data: Guidelines and Best Practices",
+    "authors_or_org": [
+     "U.S. Department of Commerce Data Governance Board",
+     "AI and Open Government Data Assets Working Group"
+    ],
+    "pub_year": "2025",
     "doc_type": "federal",
     "source_url": "https://www.commerce.gov/news/blog/2025/01/generative-artificial-intelligence-and-open-data-guidelines-and-best-practices",
     "acquisition_channel": null
    },
    "acquisition": {
-    "method": "attested_by_file_observed",
+    "method": "local_copy_from_fss_policy_kg",
     "acquired_at": "2026-07-05T08:05:43.424548+00:00",
-    "acquired_by": null
+    "acquired_by": "cc_tasks/2026-10-02_commerce_guidance_admission.md"
    },
    "integrity": {
-    "status": "failed",
-    "checks": null,
-    "checked_at": "2026-07-05T08:05:44.574772+00:00"
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed pdf, detected pdf",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "2311853 bytes vs floor 7000",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "79 pages, extractable text present",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-10-04T11:01:44.007756+00:00"
    },
    "screening": {
-    "decision": "pending_refetch",
-    "rationale": "crawl4ai returned thin/blank content (514 chars)",
+    "decision": "included",
+    "rationale": "cc_tasks/2026-10-02_commerce_guidance_admission.md decision 2, implementing DN-009 decision 8 (the corpus is searched first; a corpus that lacks the most relevant federal document is a defect in the corpus). Commerce's January 2025 guidance carries a glossary definition of AI-ready data. Refetch fulfillment of the 2026-07-05 pending_refetch entry, whose acquisition stored a Cloudflare interstitial.",
     "decided_by": "cc",
-    "decided_at": "2026-07-04",
-    "history": []
+    "decided_at": "2026-10-04T11:01:42.913045+00:00",
+    "history": [
+     {
+      "decision": "pending_refetch",
+      "rationale": "crawl4ai returned thin/blank content (514 chars)",
+      "decided_by": "cc",
+      "decided_at": "2026-07-04"
+     }
+    ],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
    },
    "lifecycle": {
-    "stage": "quarantined"
+    "stage": "verified"
    },
    "files": {
     "alternates": [],
@@ -13367,41 +13398,71 @@
     ]
    },
    "provenance_sources": [
-    "candidate_register"
+    "candidate_register",
+    "fss_policy_kg_ledger"
    ],
    "extra": {
     "observed_files": {
      "corpus/bulk/generative-ai-and-open-data-guidelines-and-best-practices-de.pdf": {
-      "sha256": "ab636478b99c6ee469418621ddee3df3feac6cdcfc20ec3b23505f6831940acd",
-      "size": 5908,
+      "sha256": "87068818f5c4c86f1a211cd2375738646ed586c0ca7211d5bd9604636493bd91",
+      "size": 2311853,
       "claimed_type": "pdf",
-      "detected_type": "html"
+      "detected_type": "pdf"
      }
     },
     "integrity_by_file": {
      "corpus/bulk/generative-ai-and-open-data-guidelines-and-best-practices-de.pdf": {
       "path": "corpus/bulk/generative-ai-and-open-data-guidelines-and-best-practices-de.pdf",
-      "verdict": "fail",
+      "verdict": "pass",
       "checks": [
        {
         "check": "magic_bytes",
-        "detail": "claimed pdf, detected html",
-        "outcome": "fail"
+        "detail": "claimed pdf, detected pdf",
+        "outcome": "pass"
        },
        {
         "check": "size_sanity",
-        "detail": "5908 bytes vs floor 8000",
-        "outcome": "fail"
+        "detail": "2311853 bytes vs floor 7000",
+        "outcome": "pass"
        },
        {
         "check": "content_smoke",
-        "detail": "skipped: format mismatch already failed or type unhandled",
-        "outcome": "skip"
+        "detail": "79 pages, extractable text present",
+        "outcome": "pass"
        }
       ],
-      "checked_at": "2026-07-05T08:05:43.424683+00:00"
+      "checked_at": "2026-10-04T11:01:44.007756+00:00"
      }
-    }
+    },
+    "notes": [
+     "copied from icsp_notebook/corpus/research/doc_genai_open_data_2025.pdf (FSS doc doc_genai_open_data_2025, sha256 equal to the FSS ledger's); downloaded there from https://www.commerce.gov/sites/default/files/2025-01/GenerativeAI-Open-Data.pdf on 2026-06-18"
+    ],
+    "added_in": "commerce-guidance-2026-10-02",
+    "metadata_corrections": [
+     {
+      "ts": "2026-10-04T11:02:05.398703+00:00",
+      "provenance": "PDF /Title and page 1 ('Generative Artificial Intelligence and Open Data: Guidelines and Best Practices', 'Version: 1 Last Updated: January 16, 2025'); page 2 'About the Commerce Data Governance Board' and 'About the AI and Open Government Data Assets Working Group'. cc_tasks/2026-10-02_commerce_guidance_admission.md",
+      "fields": {
+       "identity.title": {
+        "before": "Generative AI and Open Data: Guidelines and Best Practices (Dept. of Commerce)",
+        "after": "Generative Artificial Intelligence and Open Data: Guidelines and Best Practices"
+       }
+      }
+     },
+     {
+      "ts": "2026-10-04T11:02:05.552486+00:00",
+      "provenance": "page 2 'About the Commerce Data Governance Board' / 'About the AI and Open Government Data Assets Working Group'; page 3 Acknowledgements. cc_tasks/2026-10-02_commerce_guidance_admission.md",
+      "fields": {
+       "identity.authors_or_org": {
+        "before": [],
+        "after": [
+         "U.S. Department of Commerce Data Governance Board",
+         "AI and Open Government Data Assets Working Group"
+        ]
+       }
+      }
+     }
+    ]
    }
   },
   "generative-ai-for-official-statistics-using-implementing-and": {

@@ -11,16 +11,16 @@ projection_gate:
   nodes_compared: 228
   mismatches: 0
 epoch:
-  documents: 265
-  documents_sha256: e127f476cbd45e2658a81a0576efadb47f27e61536f0e937cb15131b20c51a0b
-  definitions: 1975
+  documents: 266
+  documents_sha256: 405a37f65cc014c09ce9c8141150d07ab42f643408aadee3fc6500c8554db793
+  definitions: 2064
   instruments: 502
   framework_record_sha256: c5bb855c173f24030100fa1c84e47974bd05c84d7bee295dede459dbbb37ce54
 questions:
 - id: Q1
   question: What definitions of AI readiness and of AI-ready data exist in the corpus?
   grade: partial
-  reason: '16 definitions from 10 documents; 1 row(s) lack a citation field: `nao-216-128-artificial-intelligence-in-noaa::nao216-ai-ready-data`
+  reason: '19 definitions from 11 documents; 1 row(s) lack a citation field: `nao-216-128-artificial-intelligence-in-noaa::nao216-ai-ready-data`
     has no extraction event (defines_edge=false)'
   to_close:
   - stamp the asserting event's id on the 1 non-extraction Definition node(s) at projection, and write
@@ -34,8 +34,8 @@ questions:
     - .*\bread(y|iness) for (ai|artificial intelligence)\b.*
     instrument_names_listed_apart: \b(assessment|self-assessment|index|inspector|methodology)\b
   counts:
-    definitions: 16
-    documents: 10
+    definitions: 19
+    documents: 11
     rows_incomplete: 1
     instrument_names_listed_apart: 2
     text_net_other_terms: 9
@@ -123,6 +123,39 @@ questions:
     defines_edge: true
     quote: Institutional AI readiness can be conceptualised as a collective organisational capacity
     node_key: from-school-ai-readiness-to-student-ai-literacy::def_inst_ai_readiness
+  - term: generative AI-ready
+    doc_id: generative-ai-and-open-data-guidelines-and-best-practices-de
+    locator: generative-ai-and-open-data-guidelines-and-best-practices-de#c0006
+    grounding_span_id: generative-ai-and-open-data-guidelines-and-best-practices-de::d_genai_ready
+    extraction_event_id: e768a89a594b46d9b4dee451759830fa
+    complete: true
+    normative_status: policy
+    defines_edge: true
+    quote: Generative models are typically trained on billions of public internet resources and other
+      data, …
+    node_key: generative-ai-and-open-data-guidelines-and-best-practices-de::d_genai_ready
+  - term: generative AI-ready open data
+    doc_id: generative-ai-and-open-data-guidelines-and-best-practices-de
+    locator: generative-ai-and-open-data-guidelines-and-best-practices-de#c0004
+    grounding_span_id: generative-ai-and-open-data-guidelines-and-best-practices-de::d_genai_ready_open_data
+    extraction_event_id: b3854dd76b0745e681f268a4727e3fde
+    complete: true
+    normative_status: policy
+    defines_edge: true
+    quote: This document provides guidance for Commerce as it prepares and publishes generative AI-ready
+      open …
+    node_key: generative-ai-and-open-data-guidelines-and-best-practices-de::d_genai_ready_open_data
+  - term: AI-ready data
+    doc_id: generative-ai-and-open-data-guidelines-and-best-practices-de
+    locator: generative-ai-and-open-data-guidelines-and-best-practices-de#c0021
+    grounding_span_id: generative-ai-and-open-data-guidelines-and-best-practices-de::def_ai_ready_data
+    extraction_event_id: 6d3ce77d331a47c6be32f44cad93e3f2
+    complete: true
+    normative_status: policy
+    defines_edge: true
+    quote: 'Glossary and additional background information AI-ready data80: Data that is not just machine-readable,
+      but …'
+    node_key: generative-ai-and-open-data-guidelines-and-best-practices-de::def_ai_ready_data
   - term: AI-Ready Data
     doc_id: nao-216-128-artificial-intelligence-in-noaa
     locator: §3.01
@@ -280,9 +313,9 @@ questions:
       authority: \bauthorit(y|ative)
       disclosure: \bdisclos
   counts:
-    definitions: 16
-    naming_none: 11
-    constructs_named_by_two_or_more: 1
+    definitions: 19
+    naming_none: 13
+    constructs_named_by_two_or_more: 2
   by_construct:
     uncertainty: []
     provenance:
@@ -297,6 +330,7 @@ questions:
     - worldbank-blog-open-data-to-ai-ready-2025::d2
     - worldbank-blog-open-data-to-ai-ready-2025::def_systems
     machine-readable:
+    - generative-ai-and-open-data-guidelines-and-best-practices-de::def_ai_ready_data
     - nao-216-128-artificial-intelligence-in-noaa::nao216-ai-ready-data
     semantic consistency: []
     authority: []
@@ -443,6 +477,60 @@ questions:
     - timeliness
     - discoverability
     - machine-readable
+    - semantic consistency
+    - authority
+    - disclosure
+  - term: generative AI-ready
+    doc_id: generative-ai-and-open-data-guidelines-and-best-practices-de
+    locator: generative-ai-and-open-data-guidelines-and-best-practices-de#c0006
+    grounding_span_id: generative-ai-and-open-data-guidelines-and-best-practices-de::d_genai_ready
+    complete: true
+    node_key: generative-ai-and-open-data-guidelines-and-best-practices-de::d_genai_ready
+    names: []
+    omits:
+    - uncertainty
+    - provenance
+    - license
+    - revision
+    - timeliness
+    - discoverability
+    - machine-readable
+    - semantic consistency
+    - authority
+    - disclosure
+  - term: generative AI-ready open data
+    doc_id: generative-ai-and-open-data-guidelines-and-best-practices-de
+    locator: generative-ai-and-open-data-guidelines-and-best-practices-de#c0004
+    grounding_span_id: generative-ai-and-open-data-guidelines-and-best-practices-de::d_genai_ready_open_data
+    complete: true
+    node_key: generative-ai-and-open-data-guidelines-and-best-practices-de::d_genai_ready_open_data
+    names: []
+    omits:
+    - uncertainty
+    - provenance
+    - license
+    - revision
+    - timeliness
+    - discoverability
+    - machine-readable
+    - semantic consistency
+    - authority
+    - disclosure
+  - term: AI-ready data
+    doc_id: generative-ai-and-open-data-guidelines-and-best-practices-de
+    locator: generative-ai-and-open-data-guidelines-and-best-practices-de#c0021
+    grounding_span_id: generative-ai-and-open-data-guidelines-and-best-practices-de::def_ai_ready_data
+    complete: true
+    node_key: generative-ai-and-open-data-guidelines-and-best-practices-de::def_ai_ready_data
+    names:
+    - machine-readable
+    omits:
+    - uncertainty
+    - provenance
+    - license
+    - revision
+    - timeliness
+    - discoverability
     - semantic consistency
     - authority
     - disclosure
@@ -595,7 +683,7 @@ questions:
   grade: cannot_answer
   reason: 'the graph has a conflict representation (`CONFLICTS_WITH`, kg/schema.yaml `conflicts_with`,
     symmetric, Definition<->Definition and Claim<->Claim) and holds 7 such edges (2 between Definitions);
-    none touches the 16 Q1 definitions and 0 join two documents. Conflicts were extracted one document
+    none touches the 19 Q1 definitions and 0 join two documents. Conflicts were extracted one document
     at a time, so two documents'' definitions of AI readiness cannot meet on an edge: the empty answer
     is a property of the extraction, never evidence that the definitions agree'
   to_close:

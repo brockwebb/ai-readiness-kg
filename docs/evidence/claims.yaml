@@ -1720,8 +1720,8 @@ claims:
   key: q3.corpus_growth
   question: Q3
   text: The corpus began as the v1 epoch of 71 documents (first admitted `2026-07-03` to `2026-07-04`)
-    and holds 264 admitted documents now; 162 were added before the framework record was first committed
-    (`2026-09-06`, `51d2526e1ad2`) and 31 on or after it, of which 25 are captured scan surfaces rather
+    and holds 265 admitted documents now; 162 were added before the framework record was first committed
+    (`2026-09-06`, `51d2526e1ad2`) and 32 on or after it, of which 25 are captured scan surfaces rather
     than literature.
   status: record
   evidence:
@@ -1743,6 +1743,10 @@ claims:
     id: esip-ai-ready-data-checklist-v1-0
     locator: events/batch-001.jsonl:106
     note: first manifest_add 2026-09-10; provenance noaa_esip_2026-09-10
+  - kind: document
+    id: generative-ai-and-open-data-guidelines-and-best-practices-de
+    locator: events/batch-001.jsonl:112
+    note: first manifest_add 2026-10-04; provenance candidate_register, fss_policy_kg_ledger
   - kind: document
     id: nao-201-118-software-governance-and-public-release
     locator: events/batch-001.jsonl:108
@@ -1862,11 +1866,11 @@ claims:
   numbers:
   - value: '71'
     source: included entries whose provenance_sources has manifest_v1
-  - value: '264'
+  - value: '265'
     source: manifest entries with screening.decision included
   - value: '162'
     source: included, not v1, first admitted before the framework record
-  - value: '31'
+  - value: '32'
     source: included, not v1, first admitted on or after the framework record
   - value: '25'
     source: of those, entries whose provenance is a scan epoch
@@ -2286,7 +2290,7 @@ claims:
   question: Q5
   text: 'Evidence coverage in the record: 9 of 49 indicator evidence cells carry a pinpoint locator; 27
     of 147 `EVIDENCED_BY` edges point at a located document; 16 indicators have no `EVIDENCED_BY` edge;
-    and 82 of the 264 admitted documents are cited by one.'
+    and 82 of the 265 admitted documents are cited by one.'
   status: record
   evidence:
   - kind: query
@@ -2344,7 +2348,7 @@ claims:
     source: indicators with no EVIDENCED_BY edge
   - value: '82'
     source: admitted documents cited by an EVIDENCED_BY edge
-  - value: '264'
+  - value: '265'
     source: manifest entries with screening.decision included
   source_task: cc_tasks/2026-10-02_evidence_map_record.md
 - id: CL-055
@@ -3346,8 +3350,20 @@ claims:
   question: PA8
   text: The Department of Commerce's definition of AI-ready data and this project's own statement of what
     it measures are recorded verbatim, side by side.
-  status: unsupported
+  status: prior_art
   evidence:
+  - kind: document
+    id: generative-ai-and-open-data-guidelines-and-best-practices-de
+    locator: events/batch-001.jsonl:112
+    where: 'Commerce Data Governance Board, Generative Artificial Intelligence and Open Data: Guidelines
+      and Best Practices (v1, 2025-01-16), Appendix A1 Glossary, p. 66; Definition node generative-ai-and-open-data-guidelines-and-best-practices-de::def_ai_ready_data,
+      chunk #c0021, node_asserted at events/batch-023.jsonl:58680'
+    quote: 'AI-ready data: Data that is not just machine-readable, but machine-understandable; data that
+      is enriched with contextual metadata and organized in interpretable standard formats for utilization
+      by AI systems.'
+    note: The glossary entry carries footnote marker 80 after the term, omitted from the quotation. This
+      is the Department's guidance glossary, the document of the Commerce Data Governance Board's AI and
+      Open Government Data Assets Working Group, not a Department-wide regulation or order.
   - kind: citation
     id: airkg2026dn005
     locator: https://github.com/brockwebb/ai-readiness-kg/blob/24315103320dd9bac37f652b7b1ffa854d479d29/docs/design/2026-09-15_DN-005_reorientation_the_framework_is_the_goal.md#L11
@@ -3381,17 +3397,16 @@ claims:
     quote: improve accuracy of AI responses and increase the prioritization of its authoritative data
     note: FCSM 25-03 quoting the Commerce guidance's stated aim; this is its purpose, not its definition.
   numbers: []
-  note: 'Unsupported because the Commerce definition was not read in its primary source. Commerce Data
-    Governance Board, ''Generative Artificial Intelligence and Open Data: Guidelines and Best Practices''
-    (16 January 2025): WebFetch of https://www.commerce.gov/sites/default/files/2025-01/GenerativeAI-Open-Data.pdf
-    and of the commerce.gov blog post returned HTTP 403 on 2026-10-02; web.archive.org is refused by the
-    harness; fedscoop.com, benton.org, ediscoverytoday.com and the Open Data Policy Lab repository carry
-    no verbatim definition. Two WebSearch result summaries attribute to the guidance the phrase ''generative
-    AI-ready open data, or open data that can be responsibly and effectively used by generative AI systems''.
-    That is a search-index summary, not a reading of the guidance, and it is not cited. Corpus: no admitted
-    document quotes the definition (a text scan of every corpus PDF for ''Department of Commerce'', ''Commerce
-    Data Governance'' and ''responsibly and effectively used''); building-ai-ready-best-practices-the-work-of-the-commerce-da
-    is pending_refetch, not admitted. The project half is recorded above.'
+  note: 'Prior art since cc_tasks/2026-10-02_commerce_guidance_admission.md: the Commerce definition is
+    now read in its primary source, admitted to the corpus from the FSS policy graph''s stored copy (sha256
+    87068818f5c4c86f1a211cd2375738646ed586c0ca7211d5bd9604636493bd91, equal to the FSS ledger''s) and
+    extracted by the standing pipeline into a grounded Definition node. The Commerce text is the Department''s
+    guidance glossary, written by its Data Governance Board''s Working Group, not a Department-wide regulation.
+    The NOAA order and FCSM 25-03 stay as comparators: NOAA''s NAO 216-128 definition shares ''machine-readable
+    and machine-understandable'' and adds quality, documentation and access methods; FCSM 25-03 quotes
+    the guidance''s aim, not its definition. History: this entry was unsupported on 2026-10-02 because
+    WebFetch of commerce.gov returned HTTP 403 and the prior-art task was not told to check the FSS policy
+    graph, which had held the document since 2026-06-18. The project half is recorded above.'
   source_task: cc_tasks/2026-10-02_evidence_map_prior_art_v2.md
 - id: CL-086
   key: prior_art.pa9
@@ -4013,6 +4028,8 @@ tables:
   - first_admitted: '2026-09-19'
     documents: 2
   - first_admitted: '2026-09-21'
+    documents: 1
+  - first_admitted: '2026-10-04'
     documents: 1
   q5_numbers_that_differ_from_the_pack:
   - number: indicators with a current rule
