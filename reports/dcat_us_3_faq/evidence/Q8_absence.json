@@ -1,0 +1,2441 @@
+{
+ "question_id": 8,
+ "question": "How does 3.0 represent data quality, and how does that map to the FCSM Framework for Data Quality (FCSM 20-04)?",
+ "generated_by": "scripts/dcat_faq_evidence.py",
+ "generated_at": "2026-10-05T13:49:44.697348+00:00",
+ "purpose": "absence check",
+ "statements": [
+  {
+   "statement": "The sources do not state any mapping or crosswalk between DCAT-US 3.0 quality measurements and the FCSM Framework's domains or dimensions.",
+   "terms": [
+    "mapp",
+    "crosswalk",
+    "between",
+    "quality",
+    "measure",
+    "fcsm",
+    "framework",
+    "domain",
+    "dimension"
+   ],
+   "candidates": 825
+  },
+  {
+   "statement": "The sources do not state any required or recommended vocabulary of dimension values for inDimension, including whether FCSM dimension identifiers exist.",
+   "terms": [
+    "requir",
+    "recommend",
+    "vocabulary",
+    "dimension",
+    "valu",
+    "indimension",
+    "includ",
+    "fcsm",
+    "identifier",
+    "exist"
+   ],
+   "candidates": 871
+  },
+  {
+   "statement": "The sources do not state whether DCAT-US 3.0 quality reporting satisfies any FCSM 20-04 data quality documentation or reporting expectation.",
+   "terms": [
+    "quality",
+    "report",
+    "satisf",
+    "fcsm",
+    "20-04",
+    "data",
+    "documentation",
+    "expectation"
+   ],
+   "candidates": 1372
+  }
+ ],
+ "documents_searched": {
+  "ai-readiness-kg": [
+   "dcat-us-3-overview",
+   "dcat-us-3-dataset-schema",
+   "dcat-us-3-dataset-schema-2026-09-15",
+   "dcat-us-3-implementation-guide",
+   "dcat-us-3-m-25-05-crosswalk",
+   "dcat-us-3-quality-governance",
+   "dcat-us-3-temporal-spatial-metrics",
+   "dcat-us-3-dataset-series",
+   "dcat-us-3-candidate-recommendation-snapshot",
+   "fcsm-20-04-a-framework-for-data-quality",
+   "fcsm-25-03",
+   "fcsm-19-01-transparent-reporting-for-integrated-data-quality",
+   "w3c-dcat-3",
+   "w3c-dqv"
+  ],
+  "fss-policy-kg": [
+   "dcat_us_3_schema",
+   "dcat_us_3_implementation_guide",
+   "fcsm_20_04",
+   "fcsm_25_03",
+   "w3c_dcat_3"
+  ]
+ },
+ "matched": 165,
+ "dropped_by_cap": 0,
+ "caps": {
+  "max_items": 60,
+  "max_chars": 80000,
+  "max_per_document": 10,
+  "min_passage_chars": 25,
+  "max_passage_chars": 1800
+ },
+ "documents": {
+  "dcat-us-3-overview": {
+   "title": "DCAT-US 3.0 Overview (resources.data.gov)",
+   "issuer": "U.S. General Services Administration / Data.gov",
+   "date": "2026-08-21",
+   "url": "https://resources.data.gov/resources/dcat-us3/",
+   "graph": "ai-readiness-kg"
+  },
+  "w3c-dqv": {
+   "title": "Data on the Web Best Practices: Data Quality Vocabulary (W3C Working Group Note)",
+   "issuer": "W3C Data on the Web Best Practices Working Group",
+   "date": "2016-12-15",
+   "url": "https://www.w3.org/TR/vocab-dqv/",
+   "graph": "ai-readiness-kg"
+  },
+  "fcsm-20-04-a-framework-for-data-quality": {
+   "title": "FCSM 20-04: A Framework for Data Quality",
+   "issuer": "(unspecified)",
+   "date": "n.d.",
+   "url": "https://statspolicy.gov/assets/fcsm/files/docs/FCSM.20.04_A_Framework_for_Data_Quality.pdf",
+   "graph": "ai-readiness-kg"
+  },
+  "fcsm_20_04": {
+   "title": "FCSM 20-04: A Framework for Data Quality",
+   "issuer": "FCSM",
+   "date": "2020-09",
+   "url": "https://statspolicy.gov/FCSM/resources/statistical-policy-working-papers/",
+   "graph": "fss-policy-kg"
+  },
+  "w3c_dcat_3": {
+   "title": "Data Catalog Vocabulary (DCAT) - Version 3 (W3C Recommendation)",
+   "issuer": "W3C",
+   "date": "2024-08-22",
+   "url": "https://www.w3.org/TR/vocab-dcat-3/",
+   "graph": "fss-policy-kg"
+  },
+  "dcat-us-3-candidate-recommendation-snapshot": {
+   "title": "DCAT-US - Version 3: Data Catalog Application Profile for the United States of America (Candidate Recommendation Snapshot; Internet Archive capture 2025-05-04)",
+   "issuer": "DOI-DO DCAT-US working group (GitHub doi-do/dcat-us)",
+   "date": "2025-05-04",
+   "url": "https://web.archive.org/web/20250504194000id_/https://doi-do.github.io/dcat-us/",
+   "graph": "ai-readiness-kg"
+  },
+  "fcsm-25-03": {
+   "title": "FCSM 25-03: AI-Ready Federal Statistical Data — An Extension of Communicating Data Quality",
+   "issuer": "Federal Committee on Statistical Methodology (FCSM)",
+   "date": "2025",
+   "url": "https://statspolicy.gov/assets/fcsm/files/docs/FCSM.25.03_AI-Ready-Extension-Data-Quality.pdf",
+   "graph": "ai-readiness-kg"
+  },
+  "fcsm_25_03": {
+   "title": "FCSM 25-03: AI-Ready Federal Statistical Data — An Extension of Communicating Data Quality",
+   "issuer": "FCSM",
+   "date": "2025-05",
+   "url": "https://statspolicy.gov/FCSM/resources/statistical-policy-working-papers/",
+   "graph": "fss-policy-kg"
+  },
+  "dcat-us-3-temporal-spatial-metrics": {
+   "title": "DCAT-US 3.0: Temporal, Spatial, and Metrics (resources.data.gov)",
+   "issuer": "U.S. General Services Administration / Data.gov",
+   "date": "2026",
+   "url": "https://resources.data.gov/standards/catalog/dcat-us-3/temporal-spatial-metrics/",
+   "graph": "ai-readiness-kg"
+  },
+  "w3c-dcat-3": {
+   "title": "Data Catalog Vocabulary (DCAT) - Version 3 (W3C Recommendation)",
+   "issuer": "W3C Dataset Exchange Working Group",
+   "date": "2024-08-22",
+   "url": "https://www.w3.org/TR/vocab-dcat-3/",
+   "graph": "ai-readiness-kg"
+  },
+  "dcat-us-3-m-25-05-crosswalk": {
+   "title": "DCAT-US 3 / M-25-05 Crosswalk (resources.data.gov)",
+   "issuer": "U.S. General Services Administration / Data.gov",
+   "date": "2026",
+   "url": "https://resources.data.gov/resources/dcat-us-3-crosswalk/",
+   "graph": "ai-readiness-kg"
+  },
+  "dcat_us_3_schema": {
+   "title": "DCAT-US Schema v3.0 (overview and reference)",
+   "issuer": "GSA",
+   "date": "2026-05",
+   "url": "https://resources.data.gov/resources/dcat-us3/",
+   "graph": "fss-policy-kg"
+  },
+  "fcsm-19-01-transparent-reporting-for-integrated-data-quality": {
+   "title": "FCSM 19-01: Transparent Reporting for Integrated Data Quality",
+   "issuer": "Prell M; Chapman C; Adeshiyan S; Fixler D; Garin T; Mirel L; Phipps P",
+   "date": "n.d.",
+   "url": "https://statspolicy.gov/assets/fcsm/files/docs/Transparent_Reporting_FCSM_19_01_092719.pdf",
+   "graph": "ai-readiness-kg"
+  },
+  "dcat-us-3-dataset-schema": {
+   "title": "DCAT-US 3.0 Schema: Dataset (resources.data.gov)",
+   "issuer": "U.S. General Services Administration / Data.gov",
+   "date": "2026-08-21",
+   "url": "https://resources.data.gov/standards/catalog/dcat-us-3/dataset/",
+   "graph": "ai-readiness-kg"
+  },
+  "dcat_us_3_implementation_guide": {
+   "title": "DCAT-US v3.0 Schema Implementation Guide",
+   "issuer": "Federal CDO Council",
+   "date": "2026-08-21",
+   "url": "https://resources.data.gov/resources/dcat-us-3-implementation/",
+   "graph": "fss-policy-kg"
+  },
+  "dcat-us-3-dataset-schema-2026-09-15": {
+   "title": "DCAT-US 3.0 Schema: Dataset (resources.data.gov; Internet Archive capture 2026-09-15, after the September 2026 rewrite)",
+   "issuer": "U.S. General Services Administration / Data.gov",
+   "date": "2026-09-15",
+   "url": "https://web.archive.org/web/20260915131436id_/https://resources.data.gov/standards/catalog/dcat-us-3/dataset/",
+   "graph": "ai-readiness-kg"
+  },
+  "dcat-us-3-quality-governance": {
+   "title": "DCAT-US 3.0: Quality and Governance (resources.data.gov)",
+   "issuer": "U.S. General Services Administration / Data.gov",
+   "date": "2026",
+   "url": "https://resources.data.gov/standards/catalog/dcat-us-3/quality-governance/",
+   "graph": "ai-readiness-kg"
+  },
+  "dcat-us-3-implementation-guide": {
+   "title": "DCAT-US v3.0 Schema Implementation Guide (version 1.1)",
+   "issuer": "U.S. General Services Administration / Data.gov",
+   "date": "2026-09-09",
+   "url": "https://resources.data.gov/assets/documents/dcat-us-3-implementation-guide.pdf",
+   "graph": "ai-readiness-kg"
+  },
+  "dcat-us-3-dataset-series": {
+   "title": "DCAT-US 3.0: Dataset Series (resources.data.gov)",
+   "issuer": "U.S. General Services Administration / Data.gov",
+   "date": "2026",
+   "url": "https://resources.data.gov/standards/catalog/dcat-us-3/dataset-series/",
+   "graph": "ai-readiness-kg"
+  }
+ },
+ "items": [
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "dcat-us-3-overview",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-overview.md",
+    "line": 169
+   },
+   "section": "Glossary",
+   "text": "This section contains explanations of common terms referenced on resources.data.gov.\nSearch for a term:\n  * accrualPeriodicity\nA DCAT-US metadata field describing how often a dataset is updated. Must use ISO 8601 duration codes in repeating interval format (such as R/P1W for weekly, R/P1M for monthly, R/P1Y for annual) or the literal value 'irregular' for datasets that are no longer updated. Plain English descriptions like 'Weekly' or 'Monthly' are not accepted and cause validation failures.\n[(Source)](https://resources.data.gov/resources/harvester-faq-accrual/)\n  * API\nAn application programming interface, which is a set of definitions of the ways one piece of computer software communicates with another. It is a method of achieving abstraction, usually (but not necessarily) between higher-level and lower-level software.\n[(Source)](https://books.google.com/books?id=On_Hh23IXDUC&pg=PA40&lpg=PA40&dq=An+application+programming+interface,+which+is+a+set+of+definitions+of+the+ways+one+piece+of+computer+software+communicates+with+another.+It+is+a+method+of+achieving+abstraction,+usually+\\(but+not+necessarily\\)+between+higher-level+and+lower-level+software.&source=bl&ots=pTandfj4CY&sig=ACfU3U1MiU_2jKWsY8VH4_hJfTL5WDxpWg&hl=en&sa=X&ved=2ahUKEwihlImFgsTkAhWx2FkKHeoJAPQQ6AEwAHoECAkQAQ)\n  * API Analytics\nRate limiting will be part of any API platform, without some sort of usage log and analytics showing developers where they stand, the rate limits will cause nothing but frustration. Clearly show developers where they are at with daily, weekly or monthly API usage and provide proper relief valves allowing them to scale their usage properly.",
+   "terms_matched": [
+    "mapp",
+    "between",
+    "quality",
+    "framework",
+    "domain",
+    "requir",
+    "recommend",
+    "vocabulary",
+    "valu",
+    "includ",
+    "exist",
+    "report",
+    "data",
+    "documentation"
+   ],
+   "pinned": true,
+   "cut": true,
+   "id": "E1"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "w3c-dqv",
+   "locator": {
+    "file": "state/substrate_md/w3c-dqv.md",
+    "line": 104
+   },
+   "section": "Table of Contents",
+   "text": "1. [1. Introduction](#intro)\n2. [2. Namespaces](#namespaces)\n3. [3. Vocabulary Overview](#model)\n4. [4. Vocabulary specification](#VocabularySpecification)\n    1. [4.1 Class: Quality Measurement](#dqv:QualityMeasurement)\n    2. [4.2 Class: Metric](#dqv:Metric)\n    3. [4.3 Class: Dimension](#dqv:Dimension)\n    4. [4.4 Class: Category](#dqv:Category)\n    5. [4.5 Class: Quality Measurement Dataset](#dqv:QualityMeasurementDataset)\n    6. [4.6 Class: Quality Policy](#dqv:QualityPolicy)\n    7. [4.7 Class: Quality Annotation](#dqv:QualityAnnotation)\n    8. [4.8 Class: Quality Certificate](#dqv:QualityCertificate)\n    9. [4.9 Class: User Quality Feedback](#dqv:UserQualityFeedback)\n    10. [4.10 Class: Quality Metadata](#dqv:QualityMetadata)\n    11. [4.11 Property: In Dimension](#dqv:inDimension)\n    12. [4.12 Property: Conforms To](#dcterms:conformsTo)\n    13. [4.13 Property: Has Quality Measurement](#dqv:hasQualityMeasurement)\n    14. [4.14 Property: Has Quality Metadata](#dqv:hasQualityMetadata)\n    15. [4.15 Property: Has Quality Annotation](#dqv:hasQualityAnnotation)\n    16. [4.16 Property: Was Derived From](#prov:wasDerivedFrom)\n    17. [4.17 Instance: Quality Assessment](#dqv:qualityAssessment)\n    18. [4.18 Instance: Precision](#dqv:precision)\n5. [5. Note on documenting resources expressed with DQV](#documentation)\n6. [6. Example Usage](#examples)\n    1. [6.1 Express a quality assessment with quality metrics](#ExpressAQualityAssessmentWithQualityMetrics)\n    2. [6.2 Document the provenance of the quality metadata](#DocumentProvenanceQualityMetadata)\n    3. [6.3 Document the provenance of single quality measurements](#DocumentProvSingleQM)\n    4. [6.4 Document the provenance of a dataset](#DocumentProvDataset)\n    5.",
+   "terms_matched": [
+    "mapp",
+    "between",
+    "quality",
+    "measure",
+    "dimension",
+    "requir",
+    "vocabulary",
+    "indimension",
+    "data",
+    "documentation"
+   ],
+   "pinned": true,
+   "cut": true,
+   "id": "E2"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted concept span",
+   "doc_id": "fcsm-20-04-a-framework-for-data-quality",
+   "locator": {
+    "node": "fcsm-20-04-a-framework-for-data-quality::c_cumulative_errors",
+    "location": "fcsm-20-04-a-framework-for-data-quality#c0006"
+   },
+   "section": "",
+   "text": "Several topics and questions requiring additional study or research are identifed in this report, including: \n•\t Methods for assessing relevance and accessibility; \n•\t Determinants of response, measurement error and coverage error in nonstatistical data; \n•\t Methods for assessing the interaction between and among diferent types of quality threats; \n•\t Methods for identifying, evaluating, and measuring cumulative errors for integrated data; \n•\t Identifying characteristics of gold standard data for sensitivity analyses and another quality checks, including \n‘truth decks’ for record linkage; \n•\t Methods for assessment and protection of disclosure risk; \nFCSM: A Framework for Data Quality 7",
+   "terms_matched": [
+    "between",
+    "quality",
+    "measure",
+    "fcsm",
+    "framework",
+    "requir",
+    "valu",
+    "includ",
+    "report",
+    "data"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E3"
+  },
+  {
+   "graph": "fss-policy-kg",
+   "kind": "passage",
+   "doc_id": "fcsm_20_04",
+   "locator": {
+    "segment": "fcsm_20_04#s260"
+   },
+   "section": "passage 260",
+   "text": "FCSM acknowledges that there are other useful approaches to organizing a data quality framework. In particular, other sources discuss data quality in the context of cycles by which data are collected, processed, and released. For example, OMB's Circular A-130 documents several stages through which information passes, including 'collection, processing, dissemination, use, storage, and disposition, to include destruction and deletion' (OMB 2016, 29).  In its 2017-18 sequence of workshops to gather insight on the data quality of integrated data products, the FCSM distinguished between three data life cycle stages (inputs, processing, and outputs) (Brown et al. 2018, FCSM 2018). The life cycle and data-quality-framework perspectives for reporting quality to the user are not mutually exclusive. In fact, it can be beneficial for agency documentation to use both perspectives, drawing upon mutually reinforcing terminology and concepts from each. On the one hand, it is possible that data producers and data users find a life cycle perspective more familiar or more natural than a hierarchical framework. If so, an agency can leverage that familiarity by discussing data quality in terms of the life cycle. On the other hand, one or more dimensions of the framework might be neglected in a life-cycle perspective. A benefit to an agency of referring to a unified, comprehensive framework is that it helps ensure that all the dimensions and details that can matter to a user are covered when reporting data quality.",
+   "terms_matched": [
+    "between",
+    "quality",
+    "fcsm",
+    "framework",
+    "dimension",
+    "includ",
+    "report",
+    "data",
+    "documentation"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E4"
+  },
+  {
+   "graph": "fss-policy-kg",
+   "kind": "passage",
+   "doc_id": "w3c_dcat_3",
+   "locator": {
+    "segment": "w3c_dcat_3#s1068"
+   },
+   "section": "passage 1068",
+   "text": "ex:genoaBusStopsDataset\n  dqv:hasQualityMeasurement ex:genoaBusStopsDatasetCompletenessMeasurement .\n\nex:genoaBusStopsDatasetCompletenessMeasurement a dqv:QualityMeasurement ;\n  dqv:computedOn ex:genoaBusStopsDataset ;\n  dqv:isMeasurementOf ex:completenessWRTExpectedNumberOfEntities ;\n  dqv:value \"0.6833333\"^^xsd:decimal  ;\n  prov:wasAttributedTo ex:myQualityChecker ;\n  prov:generatedAtTime \"2018-05-27T02:52:02Z\"^^xsd:dateTime ;\n  prov:wasGeneratedBy ex:myQualityChecking\n  .\n\nex:completenessWRTExpectedNumberOfEntities a dqv:Metric ;\n  skos:definition \"The degree of completeness as ratio between the actual number of entities included in the dataset and the declared expected number of entities.\"@en ;\n  dqv:expectedDataType xsd:decimal ;\n  dqv:inDimension ldqd:completeness .\n\n# ex:myQualityChecker is a service computing some quality metrics\nex:myQualityChecker a prov:SoftwareAgent ;\n  rdfs:label \"A quality assessment service\"@en .\n  # Further details about quality service/software can be provided, for example,\n  # deploying  vocabularies such as Dataset Usage Vocabulary (DUV), Dublin Core or ADMS.SW\n\n# ex:myQualityChecking is the activity that has generated \n# ex:genoaBusStopsDatasetCompletenessMeasurement from ex:genoaBusStopsDataset\nex:myQualityChecking a prov:Activity ;\n  rdfs:label \"The checking of genoaBusStopsDataset's quality\"@en ;\n  prov:wasAssociatedWith ex:myQualityChecker ;\n  prov:used ex:genoaBusStopsDataset ;\n  prov:generated ex:genoaBusStopsDatasetCompletenessMeasurement ;\n  prov:endedAtTime \"2018-05-27T02:52:02Z\"^^xsd:dateTime ;\n  prov:startedAtTime \"2018-05-27T00:52:02Z\"^^xsd:dateTime .",
+   "terms_matched": [
+    "between",
+    "quality",
+    "measure",
+    "dimension",
+    "vocabulary",
+    "valu",
+    "indimension",
+    "includ",
+    "data"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E5"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "dcat-us-3-candidate-recommendation-snapshot",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-candidate-recommendation-snapshot.md",
+    "line": 5813
+   },
+   "section": "Classes",
+   "text": "- [**dcat:Relationship**](#properties-for-relationship) This class is essential for describing detailed relationships, especially when used with [dcat:qualifiedRelationship](#dataset-qualified-relation) . It enables catalogers to comprehensively detail the nature and specifics of a relationship. The [dcat:Relationship](#properties-for-relationship) class is fundamental in this profile for articulating complex relationships between cataloged resources. It enables the detailed expression of the nature, characteristics, and context of these relationships, extending beyond basic linking to provide a rich, nuanced representation of interconnections. This class is particularly valuable in instances where relationships between datasets or between datasets and other entities are multifaceted. Utilizing [dcat:Relationship](#properties-for-relationship) in conjunction with [`dcat:qualifiedRelationship`](#dataset-qualified-relation) allows catalogers to specify the precise nature of relationships. This includes the role of the related resource, the type of relationship (e.g., derived from, part of, requires), and the directionality of the relationship, providing crucial context and understanding for users. The [dcat:Relationship](#properties-for-relationship) class includes several properties that facilitate a comprehensive description of relationships: The combination of these properties with [dcat:Relationship](#properties-for-relationship) ensures a detailed, accurate portrayal of the complex web of interdependencies within a data catalog with precise roles. This enhanced detail is critical for users needing to understand dependencies and the broader context of datasets.",
+   "terms_matched": [
+    "between",
+    "requir",
+    "recommend",
+    "vocabulary",
+    "valu",
+    "includ",
+    "identifier",
+    "report",
+    "data"
+   ],
+   "pinned": true,
+   "cut": true,
+   "id": "E6"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted concept span",
+   "doc_id": "fcsm-25-03",
+   "locator": {
+    "node": "fcsm-25-03::co-dq-domains",
+    "location": "Approach (p.4)"
+   },
+   "section": "Approach (p.4)",
+   "text": "The FCSM framework provides three domains to evaluate these metadata improvements: Utility, Objectivity, and Integrity. Each data element should be assessed for data quality across these three domains and corresponding dimensions including accessibility, timeliness, and accuracy.",
+   "terms_matched": [
+    "quality",
+    "fcsm",
+    "framework",
+    "domain",
+    "dimension",
+    "valu",
+    "includ",
+    "data"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E7"
+  },
+  {
+   "graph": "fss-policy-kg",
+   "kind": "passage",
+   "doc_id": "fcsm_20_04",
+   "locator": {
+    "segment": "fcsm_20_04#s261"
+   },
+   "section": "passage 261",
+   "text": "The report is organized as follows. Chapter 2 describes the framework and defines its domains and dimensions. Chapter 3 describes threats to data quality for each of the dimensions within the framework, including mitigators and alignments and trade-offs among them, when applicable. Chapter 4 provides guidelines for best practices for identifying and reporting data quality and closes with some research questions and future directions. Appendix A provides additional background information on policies and earlier reports related to data quality used in the development of the framework. Appendix B provides more information on the dimension of accuracy and reliability for integrated data. This dimension remains a cornerstone of data quality for data products. Many well-developed and emerging statistical and survey methods have been developed to measure and improve accuracy and reliability.",
+   "terms_matched": [
+    "quality",
+    "measure",
+    "framework",
+    "domain",
+    "dimension",
+    "includ",
+    "report",
+    "data"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E8"
+  },
+  {
+   "graph": "fss-policy-kg",
+   "kind": "passage",
+   "doc_id": "fcsm_20_04",
+   "locator": {
+    "segment": "fcsm_20_04#s396"
+   },
+   "section": "passage 396",
+   "text": "The objectivity domain includes the data characteristics that are most traditionally and intuitively associated with data quality. Are the data based on sound methods of measurement that accurately capture the objects they claim to measure?  Are the indictors/estimates presented  in an accurate way?  These two elements-substance and presentation-are described in OMB's definition of objectivity. The Evidence Act reinforces this definition, referring to objective statistical activities as those that are 'accurate, clear, complete, and unbiased.' Note that some sources include the provision of documentation as part of objectivity (see, e.g ., OMB 2014, 71615) . However, under this framework, documentation is primarily a contributor to accessibility-a dimension of the utility domain-as it relates directly to the users' experience with the data that are produced, rather than the production of the data itself.",
+   "terms_matched": [
+    "quality",
+    "measure",
+    "framework",
+    "domain",
+    "dimension",
+    "includ",
+    "data",
+    "documentation"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E9"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "dcat-us-3-candidate-recommendation-snapshot",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-candidate-recommendation-snapshot.md",
+    "line": 5804
+   },
+   "section": "Properties",
+   "text": "- [**dcterms:isReferencedBy**](#dataset-is-referenced-by) This property refers to a related resource, such as a publication, that references, cites, or otherwise points to the cataloged resource. It links a dataset with external resources that cite or utilize it.In relation to the use case of data citation, when the cataloged resource is a dataset, the [dcterms:isReferencedBy](#dataset-is-referenced-by) property allows to relate the dataset to the resources (such as scholarly publications) that cite or point to the dataset. Multiple [dcterms:isReferencedBy](#dataset-is-referenced-by) properties can be used to indicate the dataset has been referenced by multiple publications, or other resources.\n- [**dcterms:relation**](#dataset-related-resource) This property is a general indicator of a relationship between the cataloged resource and another resource. It SHOULD be used where the nature of the relationship between a cataloged resource and related resources is not known. A more specific sub-property SHOULD be used if the nature of the relationship of the link is known. Many existing and legacy catalogs do not distinguish between dataset components, representations, documentation, schemata and other resources that are lumped together as part of a dataset. [dcterms:relation](#dataset-related-resource) is a super-property of a number of more specific properties which express more precise relationships, so use of [dcterms:relation](#dataset-related-resource) is not inconsistent with a subsequent reclassification with more specific semantics, though the more specialized sub-properties SHOULD be used to link a dataset to component and supplementary resources if possible.",
+   "terms_matched": [
+    "between",
+    "vocabulary",
+    "valu",
+    "includ",
+    "identifier",
+    "exist",
+    "data",
+    "documentation"
+   ],
+   "pinned": true,
+   "cut": true,
+   "id": "E10"
+  },
+  {
+   "graph": "fss-policy-kg",
+   "kind": "passage",
+   "doc_id": "fcsm_20_04",
+   "locator": {
+    "segment": "fcsm_20_04#s252"
+   },
+   "section": "passage 252",
+   "text": "This report puts forth a set of best practices developed by the FCSM for data producers to use in identifying and reporting on data quality.  Data producers, for consistency within this report, are the data stewards, program managers and analysts who collect, acquire, process, manage, analyze, and disseminate data for statistical uses.   These best practices apply to internal documentation needed for program continuity and to the information provided to the various users of data products and outputs.  As there are many types of data products from federal agencies, there is a wide variety of users, from researchers who use complex micro-data files to users of estimates disseminated in tables, reports, and other outputs for decision making, evaluation and research. The best practices in this report build on earlier FCSM reports focusing on the accuracy of survey data (FCSM 1988, 1990a, 1990b, 2001), extending these to all data as called for by the Federal Data Strategy (OMB 2019b, 2019c). The implementation of best practices includes assessment of the primary threats to data quality in each of its dimensions, where threats are factors that reduce the quality of the data.",
+   "terms_matched": [
+    "quality",
+    "fcsm",
+    "dimension",
+    "valu",
+    "includ",
+    "report",
+    "data",
+    "documentation"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E11"
+  },
+  {
+   "graph": "fss-policy-kg",
+   "kind": "passage",
+   "doc_id": "fcsm_20_04",
+   "locator": {
+    "segment": "fcsm_20_04#s702"
+   },
+   "section": "passage 702",
+   "text": "As it is a fundamental concern to the Federal Statistical System (FSS), data quality has been the subject of many previous FCSM technical reports. Such reports have provided insights on data quality and error measurement in employment data from the Current Population Survey (FCSM 1978), establishment surveys (FCSM, 1988), survey coverage (FCSM, 1990a), data editing (FCSM 1990b), and reporting error in analytic publications (Atkinson et al. 1999). In 2001, FCSM issued Working Paper 31, 'Measuring and Reporting Sources of Errors in Surveys,' which provided a general discussion of sources of error in data collection programs (FCSM 2001). The 2001 report drew upon the lessons from previous FCSM reports as well as what was, by then, a well-established understanding of the impact of various types of survey errors on the accuracy of survey-based estimates. Working Paper 31 started with a discussion of the data quality policies and guidelines in place in 2001and then focused on five error types: sampling error, nonresponse error, coverage error, measurement error, and processing error. For each of these error types, it briefly discussed the methods used to measure the error source, reviewed how federal statistical agencies reported on errors, and made recommendations for federal statistical agencies' future reporting in two types of outputs: analytic reports and technical reports. The paper with a discussion of measurement and reporting of T otal Survey Error. Working Paper 31 noted that data quality is a multidimensional concept that includes accuracy, relevance, timeliness and accessibility, but focused on the accuracy dimension (FCSM 2001).",
+   "terms_matched": [
+    "quality",
+    "measure",
+    "fcsm",
+    "dimension",
+    "recommend",
+    "includ",
+    "report",
+    "data"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E12"
+  },
+  {
+   "graph": "fss-policy-kg",
+   "kind": "passage",
+   "doc_id": "fcsm_20_04",
+   "locator": {
+    "segment": "fcsm_20_04#s636"
+   },
+   "section": "passage 636",
+   "text": "Reporting data quality is necessarily nested, from comprehensive internal documentation for current and future data stewards and program managers to the most relevant extracts of that documentation for different external uses and users. Comprehensive and  accessible  documentation  maintained  by  data  producers  is  the  foundation  for  the  data  quality  information  provided  for  users. This chapter briefly summarizes best practices developed by the FCSM for how the framework can be used to identify and report data quality. Best practices were developed following from the factors that affect data quality described earlier in this report, building on earlier FCSM reports focusing on the accuracy of survey data ( e.g. FCSM 2001), and extending these to all data as called for by the Federal Data Strategy (OMB 2019a, 2019b). The implementation of best practices includes assessment and documentation of the primary threats to data quality in each of its dimensions, including effects of mitigations and trade-offs among them.",
+   "terms_matched": [
+    "quality",
+    "fcsm",
+    "framework",
+    "dimension",
+    "includ",
+    "report",
+    "data",
+    "documentation"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E13"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted concept span",
+   "doc_id": "fcsm-25-03",
+   "locator": {
+    "node": "fcsm-25-03::c-data-quality",
+    "location": "fcsm-25-03#c0001"
+   },
+   "section": "",
+   "text": "Consider the domains and dimensions as outlined in the FCSM Framework for Data Quality to inform enhancements. Additionally, consider creating AI-optimized data structures – for example, simplified JSON responses that are easy to parse, or providing summary endpoints that an AI can call for quick context like “describe this dataset” or “give me the latest value”.",
+   "terms_matched": [
+    "quality",
+    "fcsm",
+    "framework",
+    "domain",
+    "dimension",
+    "valu",
+    "data"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E14"
+  },
+  {
+   "graph": "fss-policy-kg",
+   "kind": "passage",
+   "doc_id": "fcsm_25_03",
+   "locator": {
+    "segment": "fcsm_25_03#s39"
+   },
+   "section": "passage 39",
+   "text": "Implement API & Metadata Enhancements: Next, select one or two high-value data products to improve. This might involve adopting or upgrading it to ensure that it returns comprehensive metadata (descriptions of variables, units, update timestamps, etc.). Use common schemas or standards like the DCAT metadata standard used in data.gov catalogs or SDMX so that AI developers have a consistent experience. Consider the domains and dimensions as outlined in the FCSM Framework for Data Quality to inform enhancements. Additionally, consider creating AI-optimized data structures -for example, simplified JSON responses that are easy to parse, or providing summary endpoints that an AI can call for quick context like 'describe this dataset' or 'give me the latest value'. The goal is to develop and document standards that, when incorporated, minimize the effort for any AI or human developer to interpret the data correctly by providing supporting information with each query.",
+   "terms_matched": [
+    "quality",
+    "fcsm",
+    "framework",
+    "domain",
+    "dimension",
+    "valu",
+    "data"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E15"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "dcat-us-3-overview",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-overview.md",
+    "line": 51
+   },
+   "section": "Why v3.0?",
+   "text": "DCAT-US v1.1 was published in 2014 and served federal agencies well for over a decade. But the data landscape changed significantly. Agencies increasingly publish APIs alongside downloadable files, with no standard way to describe them at the catalog level. Geospatial data required a separate metadata standard. Datasets published in recurring series (annual surveys, quarterly reports, versioned reference data) had no standard way to express their relationship to each other. And the international open data community moved forward with W3C DCAT 2 and DCAT 3, leaving v1.1 increasingly out of step with global practice.\nDCAT-US v3.0 addresses these gaps while preserving the core investment agencies’ existing metadata. It aligns the U.S. federal standard with W3C DCAT 3, introduces structured support for APIs, geospatial data, dataset series, and data quality, and brings a consistent requirement level framework — Mandatory, Recommended, or Optional — that tells agencies exactly which fields matter most.",
+   "terms_matched": [
+    "quality",
+    "framework",
+    "requir",
+    "recommend",
+    "exist",
+    "report",
+    "data"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E16"
+  },
+  {
+   "graph": "fss-policy-kg",
+   "kind": "passage",
+   "doc_id": "fcsm_20_04",
+   "locator": {
+    "segment": "fcsm_20_04#s730"
+   },
+   "section": "passage 730",
+   "text": "In response recognition to the Commission's recommendations, in the Fall of 2017 Congress began to consider legislation to increase the effective use of federal data to inform policymaking. On December 21, 2018 the Foundations for Evidence-Based Policymaking Act of 2018 was enrolled and on January 14, 2019, the Evidence Act was signed into law (Pub. L. No. 115-435, 132 Stat. 5529, 2018). The Evidence Act addressed 11 of the Commission's 22 recommendations and called for an Advisory Committee on Data for Evidence Building to continue the conversation on others. It articulated a presumption that data assets held by federal agencies will be made accessible to statistical agencies and units, while requiring those statistical agencies to expand the access they provide to data for evidence building. T o advance data quality, it required federal agencies to designate Statistical Officials to advise the Department on statistical policy, techniques, and procedures. In memorandum M-19-23, OMB elaborated the responsibilities of the Statistical Officials to include serving as the 'agency champion for data quality to ensure data Relevance ( e.g ., by validating that data are appropriate, accurate, objective, accessible, useful, understandable, and timely), harness existing data ( e.g ., by identifying data needs and reusing data if  possible),  anticipate  future  uses  ( e.g .,  by  building  interoperability  of  data  from  its  inception),  and  demonstrate responsiveness ( e.g ., by improving data collection, analysis, and dissemination with ongoing input from users and stakeholders)' (OMB 2019c, 30).",
+   "terms_matched": [
+    "quality",
+    "requir",
+    "recommend",
+    "valu",
+    "includ",
+    "exist",
+    "data"
+   ],
+   "pinned": true,
+   "cut": true,
+   "id": "E17"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted concept span",
+   "doc_id": "fcsm-20-04-a-framework-for-data-quality",
+   "locator": {
+    "node": "fcsm-20-04-a-framework-for-data-quality::c-scientific-integrity",
+    "location": "fcsm-20-04-a-framework-for-data-quality#c0037"
+   },
+   "section": "",
+   "text": "A broader concept of unbiasedness is also found in the dimension scientifc integrity, within the data quality framework’s integrity domain (OMB 2008, OMB 2014, ICSP 2018). FCSM: A Framework for Data Quality 68",
+   "terms_matched": [
+    "quality",
+    "fcsm",
+    "framework",
+    "domain",
+    "dimension",
+    "data"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E18"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (table row)",
+   "doc_id": "dcat-us-3-candidate-recommendation-snapshot",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-candidate-recommendation-snapshot.md",
+    "line": 4361
+   },
+   "section": "Metric",
+   "text": "| Usage note | The concept of a metric is used to define and measure specific aspects or dimensions of data quality within a given context, providing a standardized and quantifiable way to assess the quality of data. It allows for the comparison and evaluation of data quality across different resources and enables the development of consistent quality assessment frameworks and methodologies. |",
+   "terms_matched": [
+    "quality",
+    "measure",
+    "framework",
+    "dimension",
+    "valu",
+    "data"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E19"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "dcat-us-3-candidate-recommendation-snapshot",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-candidate-recommendation-snapshot.md",
+    "line": 7204
+   },
+   "section": "Data Quality",
+   "text": "- **dqv:QualityMeasurement:** This class represents a specific measurement or assessment of quality. It's a quantifiable value that indicates how well a dataset performs against a particular quality metric. A [`dqv:QualityMeasurement`](#properties-for-quality-measurement) instance is associated with a specific dataset and linked to the metric it measures.\n- **dqv:Metric:** The [`dqv:Metric`](#properties-for-metric) class represents the standard or criterion used to assess a particular aspect of quality. Metrics are the yardsticks against which quality is evaluated. Each metric is typically associated with a quality dimension. For example, a metric could measure the accuracy of data, its timeliness, or its completeness.\n- **dqv:Dimension:** This [`dqv:Dimension`](https://www.w3.org/TR/vocab-dqv/#dqv:Dimension) class represents the various dimensions or categories of data quality, such as accuracy, timeliness, or completeness. Quality dimensions help categorize different aspects of data quality, providing a framework for comprehensive assessment.\n- **Property hasQualityMeasurement:** The [`hasQualityMeasurement`](#dataset-hasQualityMeasurement) property is used to link a resource to a [`dqv:QualityMeasurement`](#properties-for-quality-measurement) . It indicates that the dataset has been evaluated in terms of quality and specifies the measurement. This linkage is crucial for conveying the results of quality assessments to data consumers, enabling them to understand the quality aspects that have been measured and the outcomes of those measurements.",
+   "terms_matched": [
+    "quality",
+    "measure",
+    "framework",
+    "dimension",
+    "valu",
+    "data"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E20"
+  },
+  {
+   "graph": "fss-policy-kg",
+   "kind": "passage",
+   "doc_id": "fcsm_25_03",
+   "locator": {
+    "segment": "fcsm_25_03#s30"
+   },
+   "section": "passage 30",
+   "text": "FCSM is working to ensure that federal statistics used in these AI-driven interactions meet the data quality dimensions of the Framework including, but not limited to, accessibility, timeliness, accuracy, and credibility.  We propose a new collaborative federal effort to establish best practices for optimizing APIs, metadata, and data accessibility to support accurate and trusted generative AI results.",
+   "terms_matched": [
+    "quality",
+    "fcsm",
+    "framework",
+    "dimension",
+    "includ",
+    "data"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E21"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "dcat-us-3-temporal-spatial-metrics",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-temporal-spatial-metrics.md",
+    "line": 549
+   },
+   "section": "[Class QualityMeasurement #](#quality-measurement)",
+   "text": "```\n{ \"@type\" : \"QualityMeasurement\" , \"isMeasurementOf\" : { \"expectedDataType\" : \"xsd:decimal\" , \"inDimension\" : \"https://example.gov/dimensions/completeness\" }, \"value\" : \"98.5\" , \"unitMeasure\" : \"percent\"\n}\n```",
+   "terms_matched": [
+    "quality",
+    "measure",
+    "dimension",
+    "valu",
+    "indimension",
+    "data"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E22"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "w3c-dcat-3",
+   "locator": {
+    "file": "state/substrate_md/w3c-dcat-3.md",
+    "line": 140
+   },
+   "section": "2. Motivation for change",
+   "text": "The original Recommendation [VOCAB-DCAT-1] published in January 2014 provided the basic framework for describing datasets. It made an important distinction between a *dataset* as an abstract idea and a *distribution* as a manifestation of the dataset. Although DCAT has been widely adopted, it has become clear that the original specification lacked a number of essential features that were added either through the mechanism of a profile, such as the European Commission's DCAT-AP [DCAT-AP], or the development of larger vocabularies that to a greater or lesser extent built upon the base standard, such as the Healthcare and Life Sciences Community Profile [HCLS-Dataset], the Data Tag Suite [DATS] and more. DCAT 2 [VOCAB-DCAT-2] was developed to address the specific shortcomings that have come to light through the experiences of different communities, the aim being to improve interoperability between the outputs of these larger vocabularies. For example, DCAT 2 provided classes, properties and guidance to address identifiers, dataset quality information, and data citation issues.",
+   "terms_matched": [
+    "between",
+    "quality",
+    "framework",
+    "recommend",
+    "identifier",
+    "data"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E23"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "w3c-dcat-3",
+   "locator": {
+    "file": "state/substrate_md/w3c-dcat-3.md",
+    "line": 3241
+   },
+   "section": "the testing activity",
+   "text": "Example\n52\n```\nex:errors\n  a dqv:QualityAnnotation ;\n  #this annotation is derived by the measurement\n  prov:wasGeneratedBy  ex:testingActivity;\n  oa:hasTarget ex:Dataset ;\n  oa:hasBody [\n    #errors/failed test description\n    a oa:TextualBody ;\n    rdf:value  \"\"\"\n      <test-method duration-ms=\"47\" finished-at=\"2015-09-29T11:50:00Z\"\n        name=\"validate\" signature=\"validate()\" started-at=\"2015-09-29T11:50:00Z\"\n        status=\"FAIL\">\n        <exception class=\"java.lang.AssertionError\">\n          <message>\n            Total validation errors found: 2\n          </message>\n        </exception>\n      </test-method>\"\"\"^^rdf:XMLLiteral ;\n    #it can be in any format supported by dc\n    dc:format  \"application/xml\" ;\n  ] ;\n  oa:motivatedBy dqv:qualityAssessment , oa:assessing ;\n  dqv:inDimension iso:compliance ;\n  .",
+   "terms_matched": [
+    "quality",
+    "measure",
+    "dimension",
+    "valu",
+    "indimension",
+    "data"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E24"
+  },
+  {
+   "graph": "fss-policy-kg",
+   "kind": "passage",
+   "doc_id": "w3c_dcat_3",
+   "locator": {
+    "segment": "w3c_dcat_3#s1107"
+   },
+   "section": "passage 1107",
+   "text": "ex:errors\n  a dqv:QualityAnnotation ;\n  #this annotation is derived by the measurement\n  prov:wasGeneratedBy  ex:testingActivity;\n  oa:hasTarget ex:Dataset ;\n  oa:hasBody [\n    #errors/failed test description\n    a oa:TextualBody ;\n    rdf:value  \"\"\"\n      <test-method duration-ms=\"47\" finished-at=\"2015-09-29T11:50:00Z\"\n        name=\"validate\" signature=\"validate()\" started-at=\"2015-09-29T11:50:00Z\"\n        status=\"FAIL\">\n        <exception class=\"java.lang.AssertionError\">\n          <message>\n            Total validation errors found: 2\n          </message>\n        </exception>\n      </test-method>\"\"\"^^rdf:XMLLiteral ;\n    #it can be in any format supported by dc\n    dc:format  \"application/xml\" ;\n  ] ;\n  oa:motivatedBy dqv:qualityAssessment , oa:assessing ;\n  dqv:inDimension iso:compliance ;\n  .\n\nex:testResult\n  a dqv:QualityMetadata ;\n  #  change the the dcterms:type according to the resulted compliance\n  dcterms:type <http://inspire.ec.europa.eu/metadata-codelist/DegreeOfConformity/conformant> ;\n  prov:wasAttributedTo <http://validator.example.org/> ;\n  prov:generatedAtTime \"2018-05-27T02:52:02Z\"^^xsd:dateTime ;\n  prov:wasGeneratedBy ex:testingActivity .\n\n# The graph contains the rest of the statements presented in the previous examples.\n# The graph is expressed according to TRIG syntax not TTL (see https://www.w3.org/TR/trig/)\nex:testResult {\n  a dcat:Dataset ;\n  dqv:hasQualityMeasurement ex:measurement_complianceToDWBP ;\n  dqv:hasQualityAnnotation ex:errors .\n}\n\n#the testing activity\nex:testingActivity a prov:Activity ;\n  prov:generated  ex:testResult ;\n  prov:use ex:Dataset ;\n  prov:wasAssociatedWith <http://validator.example.org/> ;\n  .",
+   "terms_matched": [
+    "quality",
+    "measure",
+    "dimension",
+    "valu",
+    "indimension",
+    "data"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E25"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "dcat-us-3-m-25-05-crosswalk",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-m-25-05-crosswalk.md",
+    "line": 42
+   },
+   "section": "Details",
+   "text": "The crosswalk should be used as a technical reference when developing or updating agency data inventories, mapping existing metadata to the DCAT-US v3.0 schema, and preparing metadata for submission to the Federal Data Catalog, Data.gov. It is intended to promote consistent implementation, improve interoperability across federal agencies, and support standardized metadata practices while recognizing that agencies may need to implement additional metadata or business rules to satisfy mission-specific, legal, security, privacy, records management, or operational requirements.",
+   "terms_matched": [
+    "mapp",
+    "crosswalk",
+    "requir",
+    "exist",
+    "satisf",
+    "data"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E26"
+  },
+  {
+   "graph": "fss-policy-kg",
+   "kind": "passage",
+   "doc_id": "dcat_us_3_schema",
+   "locator": {
+    "segment": "dcat_us_3_schema#s10"
+   },
+   "section": "passage 10",
+   "text": "DCAT-US v3.0 addresses these gaps while preserving the core investment agencies' existing metadata. It aligns the U.S. federal standard with W3C DCAT 3, introduces structured support for APIs, geospatial data, dataset series, and data quality, and brings a consistent requirement level framework - Mandatory, Recommended, or Optional - that tells agencies exactly which fields matter most.",
+   "terms_matched": [
+    "quality",
+    "framework",
+    "requir",
+    "recommend",
+    "exist",
+    "data"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E27"
+  },
+  {
+   "graph": "fss-policy-kg",
+   "kind": "passage",
+   "doc_id": "w3c_dcat_3",
+   "locator": {
+    "segment": "w3c_dcat_3#s1066"
+   },
+   "section": "passage 1066",
+   "text": "ex:genoaBusStopsDataset a dcat:Dataset ;\n  dqv:hasQualityAnnotation ex:genoaBusStopsDatasetCompletenessNote .\n\nex:genoaBusStopsDatasetCompletenessNote a dqv:UserQualityFeedback ;\n  oa:hasTarget ex:genoaBusStopsDataset ;\n  oa:hasBody ex:textBody ;\n  oa:motivatedBy dqv:qualityAssessment ;\n  prov:wasAttributedTo ex:consumer1 ;\n  prov:generatedAtTime \"2018-05-27T02:52:02Z\"^^xsd:dateTime ;\n  dqv:inDimension ldqd:completeness\n  .\n\nex:textBody a oa:TextualBody ;\n  rdf:value \"Incomplete dataset: it contains only 20500 out of 30000 existing bus stops\" ;\n  dc:language \"en\" ;\n  dc:format \"text/plain\"\n  .",
+   "terms_matched": [
+    "quality",
+    "dimension",
+    "valu",
+    "indimension",
+    "exist",
+    "data"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E28"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "dcat-us-3-overview",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-overview.md",
+    "line": 128
+   },
+   "section": "Fields not in the v3.0 core schema",
+   "text": "The following fields were introduced in v1.1 specifically for U.S. federal agencies. They are not defined in the v3.0 core schema however the v3.0 schema will not reject records that include them.\nField | Notes  \n---|---  \n`bureauCode` | DCAT-US 3.0 will not reject this if it is included.  \n`programCode` | DCAT-US 3.0 will not reject this if it is included.  \n`accessLevel` | DCAT-US 3.0 will not reject this if it is included. Use alongside the new `accessRights` field.  \n`dataQuality` | Not in v3.0 schema. Use `hasQualityMeasurement` for structured quality reporting going forward.  \n`primaryITInvestmentUII` | Not in v3.0 schema. Can be preserved in `otherIdentifier` if needed.  \n`systemOfRecords` | Not in v3.0 schema. Reference the SORN URL in `accessRights` or `rights` until formal guidance is issued.",
+   "terms_matched": [
+    "quality",
+    "measure",
+    "includ",
+    "identifier",
+    "report",
+    "data"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E29"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "w3c-dqv",
+   "locator": {
+    "file": "state/substrate_md/w3c-dqv.md",
+    "line": 1057
+   },
+   "section": "Definition of instances for Metric, Dimension and Category.",
+   "text": "```\n:onLanguage\n    a qb:DimensionProperty, owl:DataProperty ;\n    rdfs:comment   \"Language on which label importing is assessed.\"@en ;\n    rdfs:domain    dqv:QualityMeasurement;\n    rdfs:label     \"Label import assessment language\"@en ;\n    rdfs:range       xsd:string \n    .",
+   "terms_matched": [
+    "quality",
+    "measure",
+    "domain",
+    "dimension",
+    "data"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E30"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "w3c-dcat-3",
+   "locator": {
+    "file": "state/substrate_md/w3c-dcat-3.md",
+    "line": 207
+   },
+   "section": "4. Conformance",
+   "text": "- Cardinality constraints, including a minimum set of required metadata fields\n- Sub-classes and sub-properties of the standard DCAT classes and properties\n- Classes and properties for additional metadata fields not covered in DCAT vocabulary specification\n- Controlled vocabularies or IRI sets as acceptable values for properties\n- Requirements for specific access mechanisms (RDF syntaxes, protocols) to the catalog's RDF description",
+   "terms_matched": [
+    "requir",
+    "vocabulary",
+    "valu",
+    "includ",
+    "data"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E31"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted concept span",
+   "doc_id": "fcsm-19-01-transparent-reporting-for-integrated-data-quality",
+   "locator": {
+    "node": "fcsm-19-01-transparent-reporting-for-integrated-data-quality::c-integrated-data",
+    "location": "fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0016"
+   },
+   "section": "",
+   "text": "• examine current practices (among the agencies participating in the project) for transparent reporting about \nstatistical products based on integrated data; integrated data is also known as blended, hybrid, or mixed \ndata such as a dataset that results from linking survey and administrative data  \n• assemble available estimates, in dollars or staff time, for costs associated with reporting on integrated data \nquality;  \n• solicit user evaluations of the quality of integrated data quality reporting; and  \n• identify possible improvements to existing practices that could result in more transparent reporting to better \ninform users about integrated data quality.",
+   "terms_matched": [
+    "quality",
+    "valu",
+    "exist",
+    "report",
+    "data"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E32"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted concept span",
+   "doc_id": "fcsm-20-04-a-framework-for-data-quality",
+   "locator": {
+    "node": "fcsm-20-04-a-framework-for-data-quality::c-punctuality",
+    "location": "fcsm-20-04-a-framework-for-data-quality#c0014"
+   },
+   "section": "",
+   "text": "In some cases, mitigating threats in one area can exacerbate threats in others. Increasing granularity can increase disclosure risks. Timeliness and punctuality, for instance, can be reduced by steps taken to increase accuracy and reliability or by eforts to increase accessibility through documentation and dissemination. FCSM: A Framework for Data Quality 4",
+   "terms_matched": [
+    "quality",
+    "fcsm",
+    "framework",
+    "data",
+    "documentation"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E33"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "dcat-us-3-candidate-recommendation-snapshot",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-candidate-recommendation-snapshot.md",
+    "line": 5696
+   },
+   "section": "Resource Attributions",
+   "text": "1. **Provenance and Trustworthiness:** Understanding the entities (agents) that have created or interacted with the data can significantly inform assessments of its quality and trustworthiness. Data originating from or managed by reputable and trusted organizations or individuals may be deemed more reliable and credible.\n2. **Credit and Accountability:** Proper attributions ensure that all contributing individuals or organizations are aptly acknowledged for their work or data. This practice not only adheres to ethical guidelines and potentially legal requirements but also fosters a culture of recognition and accountability in data management and sharing.\n3. **Search and Discovery:** Attributions serve as a valuable criterion in data search and discovery processes. Users may seek datasets created, managed, or contributed to by specific researchers, organizations, or other agents, thereby making attributions a vital component in filtering and locating data resources.\n4. **Collaboration and Networking:** Identifying and acknowledging the agents associated with datasets can pave the way for new collaborative opportunities. It enables users and researchers to identify and connect with individuals or organizations possessing relevant expertise or shared research interests.\n5. **Issue Resolution:** When users encounter issues or have queries about a dataset, attributions provide a clear pathway to seek clarifications, report issues, or obtain additional information. This ensures that data reliability and integrity are maintained through active resolution of issues and continuous improvement.",
+   "terms_matched": [
+    "quality",
+    "requir",
+    "valu",
+    "report",
+    "data"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E34"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "w3c-dqv",
+   "locator": {
+    "file": "state/substrate_md/w3c-dqv.md",
+    "line": 171
+   },
+   "section": "1. Introduction",
+   "text": "A list of DQV-related implementations including references to vocabulary extending DQV, tools serializing quality results in DQV, portals exposing data quality in DQV, and papers citing the DQV, is maintained at the [DQV Implementation wiki page](https://www.w3.org/2013/dwbp/wiki/List_of_DQV_implementations) . Please feel free to contact the editors if you have any implementation to report.",
+   "terms_matched": [
+    "quality",
+    "vocabulary",
+    "includ",
+    "report",
+    "data"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E35"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "w3c-dqv",
+   "locator": {
+    "file": "state/substrate_md/w3c-dqv.md",
+    "line": 207
+   },
+   "section": "3. Vocabulary Overview",
+   "text": "DQV defines quality measures as specific instances of Quality Measurements, adapting the daQ quality framework [ [DaQ](#bib-DaQ) ], [ [DaQ-RDFCUBE](#bib-DaQ-RDFCUBE) ]. It relies on quality dimensions and quality metrics.",
+   "terms_matched": [
+    "quality",
+    "measure",
+    "framework",
+    "dimension"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E36"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (table row)",
+   "doc_id": "dcat-us-3-temporal-spatial-metrics",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-temporal-spatial-metrics.md",
+    "line": 459
+   },
+   "section": "[Class Metric #](#metric)",
+   "text": "| [inDimension](#metric--inDimension) | string | Mandatory | Represents the dimensions a quality metric, certificate and annotation allow a measurement of. |",
+   "terms_matched": [
+    "quality",
+    "measure",
+    "dimension",
+    "indimension"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E37"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "w3c-dcat-3",
+   "locator": {
+    "file": "state/substrate_md/w3c-dcat-3.md",
+    "line": 3130
+   },
+   "section": "Conformance test result",
+   "text": "Also, [VOCAB-DQV] can be deployed to measure the compliance to a specific standard. In Example 48, the `ex:levelOfComplianceToDWBP` is a quality metrics which measures the compliance of a dataset to [DWBP] in terms of the percentage of passed compliance tests. Example 48 assumes `iso` as a namespace prefix representing the quality dimensions and categories defined in the ISO/IEC 25012 [ISO-IEC-25012].",
+   "terms_matched": [
+    "quality",
+    "measure",
+    "dimension",
+    "data"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E38"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted concept span",
+   "doc_id": "fcsm-19-01-transparent-reporting-for-integrated-data-quality",
+   "locator": {
+    "node": "fcsm-19-01-transparent-reporting-for-integrated-data-quality::c_eight_dimensions",
+    "location": "fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0005"
+   },
+   "section": "",
+   "text": "The framework consists of eight dimensions of data quality:  relevance, accuracy, \nreliability, timeliness, punctuality, consistency, comparability, and access.",
+   "terms_matched": [
+    "quality",
+    "framework",
+    "dimension",
+    "data"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E39"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted claim span",
+   "doc_id": "fcsm-19-01-transparent-reporting-for-integrated-data-quality",
+   "locator": {
+    "node": "fcsm-19-01-transparent-reporting-for-integrated-data-quality::cl_granularity_strength",
+    "location": "fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0020"
+   },
+   "section": "",
+   "text": "A strength of using non-survey data sources as part of an integrated data strategy \nis the potential improvement in granularity, an aspect of data quality that can be given more prominence by making \nit an additional dimension in a data quality framework.",
+   "terms_matched": [
+    "quality",
+    "framework",
+    "dimension",
+    "data"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E40"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted definition span",
+   "doc_id": "fcsm-19-01-transparent-reporting-for-integrated-data-quality",
+   "locator": {
+    "node": "fcsm-19-01-transparent-reporting-for-integrated-data-quality::d-data-quality-dimension",
+    "location": "fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0046"
+   },
+   "section": "",
+   "text": "At VA, the term “data quality dimension” means \nsomething relating to a data item, record, data set, or database that can either be measured or assessed to understand \nthe quality of data.",
+   "terms_matched": [
+    "quality",
+    "measure",
+    "dimension",
+    "data"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E41"
+  },
+  {
+   "graph": "fss-policy-kg",
+   "kind": "passage",
+   "doc_id": "w3c_dcat_3",
+   "locator": {
+    "segment": "w3c_dcat_3#s1098"
+   },
+   "section": "passage 1098",
+   "text": "Also, [VOCAB-DQV] can be deployed to measure the compliance to a specific standard. In Example 48 , the ex:levelOfComplianceToDWBP is a quality metrics which measures the compliance of a dataset to [DWBP] in terms of the percentage of passed compliance tests. Example 48 assumes iso as a namespace prefix representing the quality dimensions and categories defined in the ISO/IEC 25012 [ISO-IEC-25012].",
+   "terms_matched": [
+    "quality",
+    "measure",
+    "dimension",
+    "data"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E42"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "dcat-us-3-overview",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-overview.md",
+    "line": 78
+   },
+   "section": "What’s new in v3.0",
+   "text": "**Supporting classes** provide structured definitions for information that was unstructured in v1.1, such as geographic location, temporal coverage, contact information, attribution, quality measurements, and access restrictions. These classes are referenced from Dataset, Distribution, and the new classes above. Most agencies will encounter them indirectly, through a field that points to one of these structures.\n**JSON Schema validation.** DCAT-US v3.0 is a valid JSON Schema (2020-12). Agencies can programmatically validate their metadata files against the schema. See [jsonschema/README.md](https://github.com/GSA/dcat-us/tree/main/jsonschema) for tooling.\n**Federal access and use restrictions.** Three new structured classes — AccessRestriction, UseRestriction, and CUIRestriction — replace the v1.1 pattern of expressing restrictions as free text in `rights` or using the three-value `accessLevel` field. These are documented on the [Constraints and Restrictions](https://resources.data.gov/standards/catalog/dcat-us-3/constraints-and-restrictions/) reference page.",
+   "terms_matched": [
+    "quality",
+    "measure",
+    "valu",
+    "data"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E43"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "dcat-us-3-dataset-schema",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-dataset-schema.md",
+    "line": 912
+   },
+   "section": "Dataset > hasQualityMeasurement",
+   "text": "**Title:** quality measurement\n**Requirement:** Optional\nList of quality measurements for the dataset (for example, completeness, accuracy, or timeliness) beyond spatial or temporal resolution",
+   "terms_matched": [
+    "quality",
+    "measure",
+    "requir",
+    "data"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E44"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "dcat-us-3-m-25-05-crosswalk",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-m-25-05-crosswalk.md",
+    "line": 38
+   },
+   "section": "Details",
+   "text": "In accordance with OMB Memorandum M-25-05, *Phase 2 Implementation of the Foundations for Evidence-Based Policymaking Act of 2018: Open Government Data Access and Management Guidance*, Section 4.a.ii, this is a metadata crosswalk between the statutory metadata requirements and the DCAT-US v3.0 schema.",
+   "terms_matched": [
+    "crosswalk",
+    "between",
+    "requir",
+    "data"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E45"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "dcat-us-3-m-25-05-crosswalk",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-m-25-05-crosswalk.md",
+    "line": 44
+   },
+   "section": "Details",
+   "text": "The crosswalk is provided as implementation guidance and does not create new statutory or policy requirements. Where any inconsistency exists between this guidance and applicable law, regulation, or binding OMB policy, the applicable law or policy governs.",
+   "terms_matched": [
+    "crosswalk",
+    "between",
+    "requir",
+    "exist"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E46"
+  },
+  {
+   "graph": "fss-policy-kg",
+   "kind": "passage",
+   "doc_id": "dcat_us_3_implementation_guide",
+   "locator": {
+    "segment": "dcat_us_3_implementation_guide#s1046"
+   },
+   "section": "passage 1046",
+   "text": "Agencies must update their Information Resource Management Strategic Plans to include an open data plan describing how they will meet open data obligations, collect data in open formats, measure data usage, engage data users, and improve data quality and availability. 99",
+   "terms_matched": [
+    "quality",
+    "measure",
+    "includ",
+    "data"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E47"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "dcat-us-3-candidate-recommendation-snapshot",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-candidate-recommendation-snapshot.md",
+    "line": 479
+   },
+   "section": "Notations",
+   "text": "- **Property** : denotes the Property that the class or property is given in DCAT-US .\n- **URI** : denotes the property URI.\n- **Range** : specifies the range of values that is expected for the property.\n- **ReqLevel** (\"Requirement level\"): denotes whether the class / property is mandatory, recommended or optional.\n- **Card** (\"Cardinality\"): specifies the minimum number of values that MUST be provided for that property and the maximum number of values that MAY be provided.\n- **Usage note** : specifies custom usage instructions and provides background information.\n- **CV** (\"Controlled Vocabulary\"): defines which controlled vocabulary SHOULD be used.",
+   "terms_matched": [
+    "requir",
+    "recommend",
+    "vocabulary",
+    "valu"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E48"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "dcat-us-3-overview",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-overview.md",
+    "line": 72
+   },
+   "section": "What’s new in v3.0",
+   "text": "**Requirement levels.** For the first time, every field is explicitly labeled Mandatory, Recommended, or Optional. Mandatory fields must be present for a record to be valid. Recommended fields are not required by the schema validator but should be populated whenever the information exists — they improve discoverability and interoperability. Optional fields are available but not expected in most records.\n**Two new classes** can appear alongside Dataset in the Catalog:\n  * **DataService:** describes an API or other programmatic interface that provides access to data. In v1.1, APIs were documented only as Distributions inside a Dataset. In v3.0, a DataService can be listed at the Catalog level as its own resource, which is useful for services that serve many datasets or are not tied to a single one. See [Catalog fields](https://resources.data.gov/standards/catalog/dcat-us-3/catalog/) for how DataService fits into the catalog structure.\n  * **DatasetSeries:** groups related datasets published over time — annual releases, recurring surveys, versioned reference data — under a single series record. Individual Dataset records point back to the series using the `inSeries` field. See [DatasetSeries fields](https://resources.data.gov/standards/catalog/dcat-us-3/dataset-series/).",
+   "terms_matched": [
+    "requir",
+    "recommend",
+    "exist",
+    "data"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E49"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "dcat-us-3-dataset-schema",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-dataset-schema.md",
+    "line": 682
+   },
+   "section": "Dataset > language",
+   "text": "**Requirement:** Optional\nISO 639-1 language code values used in the dataset text or metadata, such as en or es, full list can be seen at https://id.loc.gov/vocabulary/iso639-1.html\n**Type** | `combining`  \n---|---  \n**Additional properties** | Any type allowed  \n**Example:**\n```\n[\"en\"]\n```",
+   "terms_matched": [
+    "requir",
+    "vocabulary",
+    "valu",
+    "data"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E50"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "dcat-us-3-temporal-spatial-metrics",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-temporal-spatial-metrics.md",
+    "line": 451
+   },
+   "section": "[Class Metric #](#metric)",
+   "text": "```\n{ \"@type\" : \"Metric\" , \"expectedDataType\" : \"xsd:decimal\" , \"inDimension\" : \"https://example.gov/dimensions/completeness\" , \"definition\" : \"Percentage of non-null values in the dataset.\"\n}\n```",
+   "terms_matched": [
+    "dimension",
+    "valu",
+    "indimension",
+    "data"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E51"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "w3c-dcat-3",
+   "locator": {
+    "file": "state/substrate_md/w3c-dcat-3.md",
+    "line": 91
+   },
+   "section": "DCAT history",
+   "text": "A second recommended revision of DCAT, DCAT 2 [VOCAB-DCAT-2], was developed by the Dataset Exchange Working Group in response to a new set of Use Cases and Requirements [DCAT-UCR] gathered from peoples' experience with the DCAT vocabulary from the time of the original version, and new applications that were not considered in the first version.",
+   "terms_matched": [
+    "requir",
+    "recommend",
+    "vocabulary",
+    "data"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E52"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "w3c-dqv",
+   "locator": {
+    "file": "state/substrate_md/w3c-dqv.md",
+    "line": 337
+   },
+   "section": "4.4 Class: Category",
+   "text": "Dimension and category are abstract entities. We represent instances dqv:Dimension and dqv:Category as instances of `skos:Concept` , which we think enable similar features as these for dimensions and categories in daQ. Our representation choice differs significantly for metrics, however. daQ uses RDFS/OWL classes and subclasses so as to represent constraints on measurements (e.g., on the type of values). RDFS/OWL does not allow one to fully capture all constraints. Additionally, other languages are being defined to represent constraints in more appropriate ways. We think it is therefore not appropriate now to recommend to treat specific metrics as subclasses of dqv:Metric, and we refer implementers to future progress on SHACL and related technology. See Appendix [\"Defining and using parameters for metrics\"](#Parameters) for further discussion.",
+   "terms_matched": [
+    "measure",
+    "dimension",
+    "recommend",
+    "valu"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E53"
+  },
+  {
+   "graph": "fss-policy-kg",
+   "kind": "passage",
+   "doc_id": "dcat_us_3_implementation_guide",
+   "locator": {
+    "segment": "dcat_us_3_implementation_guide#s112"
+   },
+   "section": "passage 112",
+   "text": "At the department or agency level, this central body is chaired by the agency Chief Data Officer (CDO), and must include the statistical official and evaluation officer, as required by M-19-23. 18  To provide comprehensive oversight that balances regulatory, functional, and operational needs, this central body should include the following key parties:",
+   "terms_matched": [
+    "requir",
+    "valu",
+    "includ",
+    "data"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E54"
+  },
+  {
+   "graph": "fss-policy-kg",
+   "kind": "passage",
+   "doc_id": "dcat_us_3_implementation_guide",
+   "locator": {
+    "segment": "dcat_us_3_implementation_guide#s158"
+   },
+   "section": "passage 158",
+   "text": "As recommended in the Federal Zero Trust Data Security Guide, agencies may begin by inventorying data associated with high-value assets (HVAs) 35 or systems with stringent security requirements. 36,37",
+   "terms_matched": [
+    "requir",
+    "recommend",
+    "valu",
+    "data"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E55"
+  },
+  {
+   "graph": "fss-policy-kg",
+   "kind": "passage",
+   "doc_id": "dcat_us_3_implementation_guide",
+   "locator": {
+    "segment": "dcat_us_3_implementation_guide#s464"
+   },
+   "section": "passage 464",
+   "text": "The Dataset class describes 'a collection of data published or curated by one provider.' 77 It provides the core metadata for a data asset, including identifiers, points of contact, coverage, access rights, ownership, and related resources. The Dataset class is the vehicle through which agencies implement the majority of the technical requirements for comprehensive data inventories mandated by M-25-05 . 78",
+   "terms_matched": [
+    "requir",
+    "includ",
+    "identifier",
+    "data"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E56"
+  },
+  {
+   "graph": "fss-policy-kg",
+   "kind": "passage",
+   "doc_id": "w3c_dcat_3",
+   "locator": {
+    "segment": "w3c_dcat_3#s1093"
+   },
+   "section": "passage 1093",
+   "text": "Some legal context requires to specify the degree of conformance. For example, INSPIRE metadata adopts a specific controlled vocabulary [INSPIRE-DoC] to express non-conformance and non-evaluation beside the full compliance. Similar controlled vocabularies can be defined in other contexts.",
+   "terms_matched": [
+    "requir",
+    "vocabulary",
+    "valu",
+    "data"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E57"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "dcat-us-3-dataset-schema",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-dataset-schema.md",
+    "line": 18
+   },
+   "section": "DCAT-US 3.0: Dataset",
+   "text": "Information about a dataset, including identifiers, contacts, coverage, distributions, and related resources.\nA collection of data published or curated by one provider\n**Type** | `object`  \n---|---  \n**Additional properties** | Any type allowed  \n**Example:**\n```\n{\"@type\":\"Dataset\",\"title\":\"Daily Climate Observations 2024\",\"description\":\"Daily temperature, precipitation, and wind measurements from monitoring stations across the United States.\",\"identifier\":\"https://example.gov/datasets/climate-observations-2024\",\"contactPoint\":{\"fn\":\"Climate Data Support\",\"hasEmail\":\"mailto:climate@example.gov\"},\"publisher\":{\"name\":\"National Climate Data Center\"},\"keyword\":[\"climate\",\"weather\",\"temperature\",\"precipitation\"],\"issued\":\"2024-01-15\",\"modified\":\"2024-06-01\",\"accrualPeriodicity\":\"daily\",\"accessRights\":\"public\",\"landingPage\":{\"@id\":\"https://example.gov/climate-data\",\"@type\":\"Document\",\"title\":\"Climate Data Landing Page\"},\"describedBy\":{\"@id\":\"https://example.gov/climate-data/data-dictionary\",\"@type\":\"Distribution\",\"title\":\"Data Dictionary\",\"mediaType\":\"application/pdf\"},\"spatial\":{\"@type\":\"Location\",\"bbox\":{\"type\":\"Polygon\",\"coordinates\":[[[-125.0,24.0],[-66.0,24.0],[-66.0,50.0],[-125.0,50.0],[-125.0,24.0]]]}},\"theme\":[\"Climate Science\"],\"distribution\":[{\"title\":\"Climate Data CSV\",\"downloadURL\":\"https://example.gov/downloads/climate-2024.csv\",\"mediaType\":\"text/csv\"}],\"rights\":[\"Data is provided as-is without warranty. Please cite the National Climate Data Center when using this data.\"],\"temporal\":[{\"@type\":\"PeriodOfTime\",\"startDate\":\"2024-01-01\",\"endDate\":\"2024-12-31\"}]}\n```",
+   "terms_matched": [
+    "measure",
+    "includ",
+    "identifier",
+    "data"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E58"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "dcat-us-3-m-25-05-crosswalk",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-m-25-05-crosswalk.md",
+    "line": 40
+   },
+   "section": "Details",
+   "text": "The crosswalk is intended to assist federal agencies in understanding how each metadata element required by OMB Memorandum M-25-05 can be represented using the classes and properties defined within the DCAT-US v3.0 schema. For each statutory metadata requirement, the crosswalk identifies the corresponding DCAT-US v3.0 property or properties and, where appropriate, provides implementation considerations, recommended practices, and explanatory notes to support consistent application across agencies.",
+   "terms_matched": [
+    "crosswalk",
+    "requir",
+    "recommend",
+    "data"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E59"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted claim span",
+   "doc_id": "fcsm-19-01-transparent-reporting-for-integrated-data-quality",
+   "locator": {
+    "node": "fcsm-19-01-transparent-reporting-for-integrated-data-quality::cl4",
+    "location": "fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0184"
+   },
+   "section": "",
+   "text": "For the eight items on data quality, the only dimension for p-value was below 0.05 was timeliness (p \n= 0.045).",
+   "terms_matched": [
+    "quality",
+    "dimension",
+    "valu",
+    "data"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E60"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted concept span",
+   "doc_id": "fcsm-19-01-transparent-reporting-for-integrated-data-quality",
+   "locator": {
+    "node": "fcsm-19-01-transparent-reporting-for-integrated-data-quality::c-agency-contacts",
+    "location": "fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0011"
+   },
+   "section": "",
+   "text": "From a user’s perspective, areas of relative strength in the transparent reporting on data quality were Agency \nContacts (obtaining information from agency staff) and general-level Quality of Documentation, each of which had \nmeans of about 85 percent.",
+   "terms_matched": [
+    "quality",
+    "report",
+    "data",
+    "documentation"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E61"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted concept span",
+   "doc_id": "fcsm-19-01-transparent-reporting-for-integrated-data-quality",
+   "locator": {
+    "node": "fcsm-19-01-transparent-reporting-for-integrated-data-quality::c-fitness-for-use",
+    "location": "fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0016"
+   },
+   "section": "",
+   "text": "Transparent reporting of data quality is achieved when an agency provides clear and \ndetailed documentation so that users can assess data quality— that is, the data’s “fitness for use”—for themselves.",
+   "terms_matched": [
+    "quality",
+    "report",
+    "data",
+    "documentation"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E62"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted concept span",
+   "doc_id": "fcsm-20-04-a-framework-for-data-quality",
+   "locator": {
+    "node": "fcsm-20-04-a-framework-for-data-quality::c-harmonization",
+    "location": "Appendix B.3, p. 76"
+   },
+   "section": "Appendix B.3, p. 76",
+   "text": "Jang, D. 2018. Data Harmonization in Survey Data Integration, presented to the FCSM/W ashington Statistical Society W orkshop on Quality of Integrated Data. Reporting on Quality Issues in Data Processing, January 25, 2018. https://nces. ed.gov/FCSM/pdf/20180125_Jang.pdf. Kish L, Frankel MR. 1970. Balanced Repeated Replications for Standard Errors. Journal of the American Statistical Associ- ation.",
+   "terms_matched": [
+    "quality",
+    "fcsm",
+    "report",
+    "data"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E63"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "w3c-dcat-3",
+   "locator": {
+    "file": "state/substrate_md/w3c-dcat-3.md",
+    "line": 3022
+   },
+   "section": "ex:genoaBusStopsDatasetCompletenessMeasurement from ex:genoaBusStopsDataset",
+   "text": "Other examples of quality documentation are available in [VOCAB-DQV], including examples about how to express dataset accuracy and precision.",
+   "terms_matched": [
+    "quality",
+    "includ",
+    "data",
+    "documentation"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E64"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "w3c-dqv",
+   "locator": {
+    "file": "state/substrate_md/w3c-dqv.md",
+    "line": 1297
+   },
+   "section": "7.1 Statistics",
+   "text": "represents statistics as direct statements that have a dataset as subject and an integer as object. This pattern, which can be expected to be rather common, is different from the pattern that DQV inherits from daQ. Guidance on how DQV can work with other quality statistics vocabulary shall be provided with future versions of the DQV documentation.",
+   "terms_matched": [
+    "quality",
+    "vocabulary",
+    "data",
+    "documentation"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E65"
+  },
+  {
+   "graph": "fss-policy-kg",
+   "kind": "passage",
+   "doc_id": "dcat_us_3_schema",
+   "locator": {
+    "segment": "dcat_us_3_schema#s51"
+   },
+   "section": "passage 51",
+   "text": "Field: dataQuality | Notes: Not in v3.0 schema. Use hasQualityMeasurement for structured quality reporting going forward.",
+   "terms_matched": [
+    "quality",
+    "measure",
+    "report",
+    "data"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E66"
+  },
+  {
+   "graph": "fss-policy-kg",
+   "kind": "passage",
+   "doc_id": "dcat_us_3_implementation_guide",
+   "locator": {
+    "segment": "dcat_us_3_implementation_guide#s1036"
+   },
+   "section": "passage 1036",
+   "text": "geographic data produced using ISO 19115 or CSDGM when using the high-level structure of the DCAT-US v3.0 schema profile. A visualization and definitions of these core elements are included in the FGDC Standards Working Group (SWG) report entitled Streamlining Federal Metadata Requirements in Preparation for DCAT-US v3.0 Implementation (2026).",
+   "terms_matched": [
+    "requir",
+    "includ",
+    "report",
+    "data"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E67"
+  },
+  {
+   "graph": "fss-policy-kg",
+   "kind": "passage",
+   "doc_id": "w3c_dcat_3",
+   "locator": {
+    "segment": "w3c_dcat_3#s1058"
+   },
+   "section": "passage 1058",
+   "text": "The Data Quality Vocabulary (DQV) [VOCAB-DQV] offers common modeling patterns for different aspects of Data Quality. It can relate DCAT datasets and distributions with different types of quality information including:",
+   "terms_matched": [
+    "quality",
+    "vocabulary",
+    "includ",
+    "data"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E68"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (table row)",
+   "doc_id": "dcat-us-3-dataset-schema",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-dataset-schema.md",
+    "line": 80
+   },
+   "section": "DCAT-US 3.0: Dataset",
+   "text": "[hasQualityMeasurement](https://resources.data.gov/standards/catalog/dcat-us-3/dataset/#hasQualityMeasurement) | null or array of [QualityMeasurement](https://resources.data.gov/standards/catalog/dcat-us-3/temporal-spatial-metrics/#quality-measurement) classes | Optional | List of quality measurements for the dataset (for example, completeness, accuracy, or timeliness) beyond spatial or temporal resolution",
+   "terms_matched": [
+    "quality",
+    "measure",
+    "data"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E69"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (table row)",
+   "doc_id": "dcat-us-3-dataset-schema-2026-09-15",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-dataset-schema-2026-09-15.md",
+    "line": 63
+   },
+   "section": "DCAT-US 3.0: Dataset",
+   "text": "| [hasQualityMeasurement](#hasQualityMeasurement) | [QualityMeasurement](/standards/catalog/dcat-us-3/temporal-spatial-metrics/#quality-measurement) null or array of classes | Optional | List of quality measurements for the dataset (for example, completeness, accuracy, or timeliness) beyond spatial or temporal resolution |",
+   "terms_matched": [
+    "quality",
+    "measure",
+    "data"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E70"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "dcat-us-3-quality-governance",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-quality-governance.md",
+    "line": 1
+   },
+   "section": "",
+   "text": "---\ndoc_id: \"dcat-us-3-quality-governance\"\nsource_path: \"corpus/crosswalk/dcat-us-3-quality-governance.html\"\nsource_sha256: \"7cbc49b6691fa3e7eb7b4845837afc3e1a6212bfc5882d676284a0ad154cbad5\"\nsource_url: \"https://resources.data.gov/standards/catalog/dcat-us-3/quality-governance/\"\nsource_format: \"html\"\nversion: \"2026\"\nacquired_at: \"2026-10-05T02:36:05.991237+00:00\"\nconverter: \"docling\"\nconverter_version: \"unknown\"\nconverted_at: \"2026-10-05T02:36:38.206421+00:00\"\nevidence_class: \"structural\"\n---",
+   "terms_matched": [
+    "crosswalk",
+    "quality",
+    "data"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E71"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (table row)",
+   "doc_id": "dcat-us-3-quality-governance",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-quality-governance.md",
+    "line": 877
+   },
+   "section": "[Class DataService #](#data-service)",
+   "text": "| [hasQualityMeasurement](#data-service--hasQualityMeasurement) | [QualityMeasurement](/standards/catalog/dcat-us-3/temporal-spatial-metrics/#quality-measurement) null or array of classes | Optional | Quality measurements for the data service (for example, availability, response time, or reliability) |",
+   "terms_matched": [
+    "quality",
+    "measure",
+    "data"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E72"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted concept span",
+   "doc_id": "dcat-us-3-implementation-guide",
+   "locator": {
+    "node": "dcat-us-3-implementation-guide::concept-original-data",
+    "location": "dcat-us-3-implementation-guide#c0054"
+   },
+   "section": "",
+   "text": "Original  Data  Quality-controlled  observations  or  measurements  in  their  most  basic  usable  form  that  have  not  been  summarized  or  synthesized.",
+   "terms_matched": [
+    "quality",
+    "measure",
+    "data"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E73"
+  },
+  {
+   "graph": "fss-policy-kg",
+   "kind": "passage",
+   "doc_id": "dcat_us_3_implementation_guide",
+   "locator": {
+    "segment": "dcat_us_3_implementation_guide#s83"
+   },
+   "section": "passage 83",
+   "text": "have used DCAT-US v1.1 8 , a US-based profile of the W3C DCAT 1 Standard, 9  to submit their metadata to Data.gov. As the DCAT-US v1.1 schema became increasingly insufficient for the evolving agency data ecosystems, OMB mandated use of the DCAT-US v3.0 schema 10  to ensure datasets are more visible, accessible, and useful across the broader data ecosystem. 11  DCAT-US v3.0 provides a more structured, interoperable, and flexible framework for describing data assets, which will enable improvements in linkage between related datasets, and enhanced representation of data series and live data services, such as APIs. 12  A more detailed comparison of DCAT-US v1.1 and DCAT-US v3.0 is available at resources.data.gov.",
+   "terms_matched": [
+    "between",
+    "framework",
+    "data"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E74"
+  },
+  {
+   "graph": "fss-policy-kg",
+   "kind": "passage",
+   "doc_id": "dcat_us_3_schema",
+   "locator": {
+    "segment": "dcat_us_3_schema#s26"
+   },
+   "section": "passage 26",
+   "text": "Supporting classes provide structured definitions for information that was unstructured in v1.1, such as geographic location, temporal coverage, contact information, attribution, quality measurements, and access restrictions. These classes are referenced from Dataset, Distribution, and the new classes above. Most agencies will encounter them indirectly, through a field that points to one of these structures.",
+   "terms_matched": [
+    "quality",
+    "measure",
+    "data"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E75"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "w3c-dcat-3",
+   "locator": {
+    "file": "state/substrate_md/w3c-dcat-3.md",
+    "line": 97
+   },
+   "section": "External terms",
+   "text": "DCAT incorporates terms from pre-existing vocabularies where stable terms with appropriate meanings could be found, such as `foaf:homepage` and `dcterms:title`. Informal summary definitions of the externally-defined terms are included in the DCAT vocabulary for convenience, while authoritative definitions are available in the normative references. Changes to definitions in the references, if any, supersede the summaries given in this specification. Note that conformance to DCAT (4. Conformance) concerns usage of only the terms in the DCAT vocabulary specification, so possible changes to other external definitions will not affect the conformance of DCAT implementations.",
+   "terms_matched": [
+    "vocabulary",
+    "includ",
+    "exist"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E76"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "w3c-dqv",
+   "locator": {
+    "file": "state/substrate_md/w3c-dqv.md",
+    "line": 403
+   },
+   "section": "4.7.2 Property: Has Body",
+   "text": "The Web Annotation Vocabulary [ [WebAnnotation](#bib-WebAnnotation) ] is intended as a W3C Recommendation, but it is still under development at the time of publishing this Note. We have made our best to consider the latest version available, but changes might take place until it becomes a formal Recommendation. For example, new kinds of annotation body might be included and supersede the types we have considered in DQV. For this reason, we invite readers to check examples in this Note with the latest version of the Web Annotation Vocabulary.",
+   "terms_matched": [
+    "recommend",
+    "vocabulary",
+    "includ"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E77"
+  },
+  {
+   "graph": "fss-policy-kg",
+   "kind": "passage",
+   "doc_id": "dcat_us_3_schema",
+   "locator": {
+    "segment": "dcat_us_3_schema#s22"
+   },
+   "section": "passage 22",
+   "text": "Recommended fields are not required by the schema validator but should be populated whenever the information exists - they improve discoverability and interoperability.",
+   "terms_matched": [
+    "requir",
+    "recommend",
+    "exist"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E78"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (table row)",
+   "doc_id": "dcat-us-3-dataset-schema-2026-09-15",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-dataset-schema-2026-09-15.md",
+    "line": 49
+   },
+   "section": "DCAT-US 3.0: Dataset",
+   "text": "| [theme](#theme) | [Concept](/standards/catalog/dcat-us-3/identifiers-and-relationships/#concept) null or array of classes | Recommended | List of themes or categories for the dataset |",
+   "terms_matched": [
+    "recommend",
+    "identifier",
+    "data"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E79"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (table row)",
+   "doc_id": "dcat-us-3-dataset-schema-2026-09-15",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-dataset-schema-2026-09-15.md",
+    "line": 68
+   },
+   "section": "DCAT-US 3.0: Dataset",
+   "text": "| [language](#language) | More than one type | Optional | ISO 639-1 language code values used in the dataset text or metadata, such as en or es, full list can be seen at https://id.loc.gov/vocabulary/iso639-1.html |",
+   "terms_matched": [
+    "vocabulary",
+    "valu",
+    "data"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E80"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "dcat-us-3-quality-governance",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-quality-governance.md",
+    "line": 29
+   },
+   "section": "[Class Standard #](#standard)",
+   "text": "```\n{ \"@type\" : \"Standard\" , \"title\" : \"DCAT-US 3.0\" , \"description\" : \"Data Catalog Vocabulary - United States Profile version 3.0\" , \"issued\" : \"2024-01-15\" , \"identifier\" : { \"@type\" : \"Identifier\" , \"notation\" : \"DCAT-US-3.0\" , \"schemaAgency\" : \"U.S. General Services Administration\" }, \"inScheme\" : { \"@type\" : \"ConceptScheme\" , \"title\" : \"Federal Data Standards\" , \"description\" : \"A collection of data standards used by federal agencies\" }\n}\n```",
+   "terms_matched": [
+    "vocabulary",
+    "identifier",
+    "data"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E81"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (table row)",
+   "doc_id": "dcat-us-3-dataset-series",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-dataset-series.md",
+    "line": 34
+   },
+   "section": "DCAT-US 3.0: Dataset Series",
+   "text": "| [@id](#@id) | string | Recommended | IRI that uniquely identifies the dataset series. Use @id as the identifier field for DatasetSeries. |",
+   "terms_matched": [
+    "recommend",
+    "identifier",
+    "data"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E82"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted concept span",
+   "doc_id": "dcat-us-3-implementation-guide",
+   "locator": {
+    "node": "dcat-us-3-implementation-guide::c-mandatory-properties",
+    "location": "dcat-us-3-implementation-guide#c0006"
+   },
+   "section": "",
+   "text": "it\n possible  to  meet  these  requirements,  Data.gov veriﬁes  only  that  catalog  submissions  include  the  DCAT-US  v3.0  mandatory  properties  and  that  those  properties  are  correctly  formatted  according  to  the  schema.",
+   "terms_matched": [
+    "requir",
+    "includ",
+    "data"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E83"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted concept span",
+   "doc_id": "fcsm-19-01-transparent-reporting-for-integrated-data-quality",
+   "locator": {
+    "node": "fcsm-19-01-transparent-reporting-for-integrated-data-quality::c-descriptive-stats",
+    "location": "fcsm-19-01-transparent-reporting-for-integrated-data-quality#c0207"
+   },
+   "section": "",
+   "text": "Analysis of numerical variables usually includes the calculation of descriptive statistics that \ndescribe a typical value of a variable and the distance or spread of the data from the typical value.",
+   "terms_matched": [
+    "valu",
+    "includ",
+    "data"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E84"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "dcat-us-3-candidate-recommendation-snapshot",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-candidate-recommendation-snapshot.md",
+    "line": 7162
+   },
+   "section": "Data Quality",
+   "text": "Thorough documentation of data quality significantly streamlines the dataset selection process, enhancing the",
+   "terms_matched": [
+    "quality",
+    "data",
+    "documentation"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E85"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (table row)",
+   "doc_id": "dcat-us-3-dataset-schema-2026-09-15",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-dataset-schema-2026-09-15.md",
+    "line": 42
+   },
+   "section": "DCAT-US 3.0: Dataset",
+   "text": "| [landingPage](#landingPage) | [Document](/standards/catalog/dcat-us-3/quality-governance/#document) null or | Recommended | A web page from the original data provider that gives access to the Dataset, its Distributions, and related information |",
+   "terms_matched": [
+    "quality",
+    "recommend",
+    "data"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E86"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (table row)",
+   "doc_id": "dcat-us-3-quality-governance",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-quality-governance.md",
+    "line": 517
+   },
+   "section": "[Class CatalogRecord #](#catalog-record)",
+   "text": "| [conformsTo](#catalog-record--conformsTo) | [Standard](/standards/catalog/dcat-us-3/quality-governance/#standard) null or | Recommended | An Application Profile that the Catalog Record's metadata conforms to |",
+   "terms_matched": [
+    "quality",
+    "recommend",
+    "data"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E87"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "dcat-us-3-temporal-spatial-metrics",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-temporal-spatial-metrics.md",
+    "line": 444
+   },
+   "section": "[Class Metric #](#metric)",
+   "text": "A standard used to measure one aspect of data quality",
+   "terms_matched": [
+    "quality",
+    "measure",
+    "data"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E88"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "w3c-dcat-3",
+   "locator": {
+    "file": "state/substrate_md/w3c-dcat-3.md",
+    "line": 101
+   },
+   "section": "Please send comments",
+   "text": "The Working Group invited publishers to describe their catalogs and datasets with the revised version of DCAT described in this document and to report their implementations following\nthe instruction to reporting DCAT revised implementations\n. This information and subsequent analysis is published in the\nimplementation report.\nThis document was published by the Dataset Exchange Working Group as a Recommendation using the Recommendation track.",
+   "terms_matched": [
+    "recommend",
+    "report",
+    "data"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E89"
+  },
+  {
+   "graph": "fss-policy-kg",
+   "kind": "passage",
+   "doc_id": "w3c_dcat_3",
+   "locator": {
+    "segment": "w3c_dcat_3#s1057"
+   },
+   "section": "passage 1057",
+   "text": "This section is non-normative as it provides guidance on how to document the quality of DCAT first class entities (e.g., datasets, distributions) and it does not define new DCAT terms. The guidance relies on the Data Quality Vocabulary (DQV) [VOCAB-DQV], which is a W3C Group Note.",
+   "terms_matched": [
+    "quality",
+    "vocabulary",
+    "data"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E90"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "dcat-us-3-dataset-schema-2026-09-15",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-dataset-schema-2026-09-15.md",
+    "line": 671
+   },
+   "section": "[Dataset &gt; hasQualityMeasurement #](#hasQualityMeasurement)",
+   "text": "**Title:** quality measurement",
+   "terms_matched": [
+    "quality",
+    "measure"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E91"
+  },
+  {
+   "graph": "fss-policy-kg",
+   "kind": "passage",
+   "doc_id": "dcat_us_3_schema",
+   "locator": {
+    "segment": "dcat_us_3_schema#s37"
+   },
+   "section": "passage 37",
+   "text": "Group: Temporal, Spatial, and Metrics | Classes covered: Location, PeriodOfTime, QualityMeasurement, Metric | Referenced from: spatial, temporal, hasQualityMeasurement | Schema reference: Temporal, Spatial, and Metrics",
+   "terms_matched": [
+    "quality",
+    "measure"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E92"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (table row)",
+   "doc_id": "dcat-us-3-quality-governance",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-quality-governance.md",
+    "line": 37
+   },
+   "section": "[Class Standard #](#standard)",
+   "text": "| [identifier](#standard--identifier) | [Identifier](/standards/catalog/dcat-us-3/identifiers-and-relationships/#identifier) null or | Recommended | The unique identifier for the Standard, e.g. the URI or other unique identifier in the context of the Catalog |",
+   "terms_matched": [
+    "recommend",
+    "identifier"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E93"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (table row)",
+   "doc_id": "dcat-us-3-quality-governance",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-quality-governance.md",
+    "line": 38
+   },
+   "section": "[Class Standard #](#standard)",
+   "text": "| [inScheme](#standard--inScheme) | [ConceptScheme](/standards/catalog/dcat-us-3/identifiers-and-relationships/#concept-scheme) null or | Recommended | The reference register to which the Standard belongs |",
+   "terms_matched": [
+    "recommend",
+    "identifier"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E94"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "dcat-us-3-dataset-series",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-dataset-series.md",
+    "line": 83
+   },
+   "section": "[DatasetSeries &gt; @id #](#@id)",
+   "text": "**Requirement:** Recommended",
+   "terms_matched": [
+    "requir",
+    "recommend"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E95"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted concept span",
+   "doc_id": "dcat-us-3-implementation-guide",
+   "locator": {
+    "node": "dcat-us-3-implementation-guide::c_cui_designation",
+    "location": "dcat-us-3-implementation-guide#c0028"
+   },
+   "section": "",
+   "text": "●  requiredIndicatorPerAuthority:  Include  a  speciﬁc  law,  regulation,  or  governmentwide  policy  (LRGWP)  that  justiﬁes  the  CUI  designation,  ideally  from  the  U.S. Code,  Code  of  Federal  Regulations or  ISOO  Repository.",
+   "terms_matched": [
+    "requir",
+    "includ"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E96"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted concept span",
+   "doc_id": "dcat-us-3-implementation-guide",
+   "locator": {
+    "node": "dcat-us-3-implementation-guide::c_open_format_publication",
+    "location": "dcat-us-3-implementation-guide#c0019"
+   },
+   "section": "",
+   "text": "Implementation  Considerations:  Evaluating  an  asset’s  eligibility  for  open-format  publication  requires  an  assessment  of  both  \ntechnical",
+   "terms_matched": [
+    "requir",
+    "valu"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E97"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (table row)",
+   "doc_id": "dcat-us-3-dataset-schema",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-dataset-schema.md",
+    "line": 57
+   },
+   "section": "DCAT-US 3.0: Dataset",
+   "text": "null or array of [Standard](https://resources.data.gov/standards/catalog/dcat-us-3/quality-governance/#standard) classes | Optional | List of standards, schemas, or profiles the dataset follows",
+   "terms_matched": [
+    "quality",
+    "data"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E98"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (table row)",
+   "doc_id": "dcat-us-3-dataset-schema-2026-09-15",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-dataset-schema-2026-09-15.md",
+    "line": 56
+   },
+   "section": "DCAT-US 3.0: Dataset",
+   "text": "| [conformsTo](#conformsTo) | [Standard](/standards/catalog/dcat-us-3/quality-governance/#standard) null or array of classes | Optional | List of standards, schemas, or profiles the dataset follows |",
+   "terms_matched": [
+    "quality",
+    "data"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E99"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (table row)",
+   "doc_id": "dcat-us-3-m-25-05-crosswalk",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-m-25-05-crosswalk.md",
+    "line": 53
+   },
+   "section": "Details",
+   "text": "| B | The names and definitions of all variables in the data asset | Dataset | describedBy | For public and restricted assets: Point to a machine-readable feature catalog. It can be a link, file, or webpage with technical documentation and/or points of contact. For nonpublic assets: use null and provide an explanation in the access/use/CUI restrictions. |",
+   "terms_matched": [
+    "data",
+    "documentation"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E100"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (table row)",
+   "doc_id": "dcat-us-3-m-25-05-crosswalk",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-m-25-05-crosswalk.md",
+    "line": 81
+   },
+   "section": "Details",
+   "text": "| I | A description of any determinations made about the data asset under Subchapter III of Chapter 35 of Title 44 | Dataset | rights | Used to document security/privacy determinations under Title 44. A narrative description of security and privacy determinations. (Subject to change based on input from FCSM) |",
+   "terms_matched": [
+    "fcsm",
+    "data"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E101"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "dcat-us-3-quality-governance",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-quality-governance.md",
+    "line": 18
+   },
+   "section": "Quality and Governance",
+   "text": "Supporting classes for standards, documents, catalog records, data services, and attribution used in governance and quality description.",
+   "terms_matched": [
+    "quality",
+    "data"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E102"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "dcat-us-3-temporal-spatial-metrics",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-temporal-spatial-metrics.md",
+    "line": 660
+   },
+   "section": "[Activity &gt; label #](#activity--label)",
+   "text": "```\n\"Data Processing and Quality Assurance\"\n```",
+   "terms_matched": [
+    "quality",
+    "data"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E103"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "dcat-us-3-dataset-series",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-dataset-series.md",
+    "line": 330
+   },
+   "section": "[DatasetSeries &gt; last #](#last)",
+   "text": "- [About OMB](https://www.whitehouse.gov/omb/)\n- [Accessibility statement](https://www.gsa.gov/website-information/accessibility-statement)\n- [FOIA requests](https://www.gsa.gov/reference/freedom-of-information-act-foia)\n- [No FEAR Act data](https://www.gsa.gov/reference/civil-rights-programs/notification-and-federal-employee-antidiscrimination-and-retaliation-act-of-2002)\n- [Office of the Inspector General](https://www.gsaig.gov/)\n- [Performance reports](https://www.gsa.gov/reference/reports/budget-performance)\n- [Privacy policy](https://www.gsa.gov/website-information/website-policies#privacy)",
+   "terms_matched": [
+    "report",
+    "data"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E104"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted concept span",
+   "doc_id": "dcat-us-3-implementation-guide",
+   "locator": {
+    "node": "dcat-us-3-implementation-guide::c-kind",
+    "location": "dcat-us-3-implementation-guide#c0026"
+   },
+   "section": "",
+   "text": "Example:  “Employment  rates  and  average  wages  by  state  for  the  2024  calendar  year.”  \ncontactPoint \nMandatory  per  DCAT-US  v3.0  and  can  be  used  to  satisfy  M-25-05  (P)  \nIdentiﬁes  the  appropriate  point  of  contact  (e.g.,  legal  entity  or  person)  for  the  data  asset,  using  the  Kind class.",
+   "terms_matched": [
+    "satisf",
+    "data"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E105"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted concept span",
+   "doc_id": "dcat-us-3-implementation-guide",
+   "locator": {
+    "node": "dcat-us-3-implementation-guide::c_open_gov_data_assets",
+    "location": "dcat-us-3-implementation-guide#c0019"
+   },
+   "section": "",
+   "text": "Open  Government  Data  Assets  Open  government  data  assets  are  deﬁned  by  M-25-05  as  a  subset  of  public  data  assets  that  \nsatisfy",
+   "terms_matched": [
+    "satisf",
+    "data"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E106"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted claim span",
+   "doc_id": "dcat-us-3-implementation-guide",
+   "locator": {
+    "node": "dcat-us-3-implementation-guide::cl_m2505_satisfaction",
+    "location": "dcat-us-3-implementation-guide#c0028"
+   },
+   "section": "",
+   "text": "Can  be  used  to  satisfy  M-25-05  (O-P)  \nrightsHolder:  Identiﬁes  organizations  that  hold  rights  to  the  dataset.",
+   "terms_matched": [
+    "satisf",
+    "data"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E107"
+  },
+  {
+   "graph": "fss-policy-kg",
+   "kind": "passage",
+   "doc_id": "dcat_us_3_implementation_guide",
+   "locator": {
+    "segment": "dcat_us_3_implementation_guide#s1056"
+   },
+   "section": "passage 1056",
+   "text": "Data that has been cleaned, transformed, aggregated, or otherwise modified from its original state to support analysis, reporting, or modeling.",
+   "terms_matched": [
+    "report",
+    "data"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E108"
+  },
+  {
+   "graph": "fss-policy-kg",
+   "kind": "passage",
+   "doc_id": "dcat_us_3_schema",
+   "locator": {
+    "segment": "dcat_us_3_schema#s0"
+   },
+   "section": "passage 0",
+   "text": "Reference documentation for DCAT-US v3.0, the federal metadata standard for documenting datasets, APIs, and data services. Use this reference to build or validate your agency's data inventory.",
+   "terms_matched": [
+    "data",
+    "documentation"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E109"
+  },
+  {
+   "graph": "fss-policy-kg",
+   "kind": "passage",
+   "doc_id": "fcsm_25_03",
+   "locator": {
+    "segment": "fcsm_25_03#s31"
+   },
+   "section": "passage 31",
+   "text": "By enriching data access points with high-quality metadata and exposing them through standardized, AI-friendly APIs, agencies can significantly improve how LLMs discover, interpret, and relay publicly available federal statistics. The Department of Commerce's recent 'AI -ready data' initiative exemplifies this approach. The guidance is explicitly aimed to 'improve accuracy of AI responses and increase the prioritization of its authoritative data in AI tools over nonauthoritative sources.' In practice, this could be interpreted as ensuring data elements and AI-friendly APIs are optimized for machine consumption. However, this interpretation only considers the format of the data and does not consider the meaning of the data.",
+   "terms_matched": [
+    "quality",
+    "data"
+   ],
+   "pinned": true,
+   "cut": false,
+   "id": "E110"
+  }
+ ],
+ "evidence_sha256": "83de0c9fdf29bba12ed2a6c06b6597f1c3203d791d52736b8342895bcc3fefdf"
+}

@@ -1,0 +1,213 @@
+# DCAT-US 3.0 FAQ: the questions, where each one's evidence is looked for, and the run's dials.
+#
+# Read by scripts/dcat_faq_evidence.py (questions, scopes, terms, caps), scripts/dcat_faq_run.py
+# (models, ceilings, progress) and scripts/dcat_faq_build.py (titles). Nothing here is a
+# threshold on a finding: the caps bound how much text one model call is shown, and every
+# passage left out by a cap is counted in that question's evidence file (`dropped_by_cap`).
+#
+# Scopes name documents in the two graphs:
+#   airkg  - ai-readiness-kg (Neo4j database seldon-ai-readiness-kg; node grounding spans, and
+#            the converted text of each admitted web document under state/substrate_md/)
+#   fss    - fss-policy-kg (Neo4j database fss-policy-kg; Segment text and Obligation spans)
+# Terms are matched case-insensitively as substrings. A passage's rank is the number of
+# distinct terms it contains; ties keep document order.
+
+graphs:
+  airkg_database: seldon-ai-readiness-kg
+  fss_database: fss-policy-kg
+  substrate_dir: state/substrate_md
+  # Node labels whose grounding span is offered as evidence (the extraction's verbatim text).
+  airkg_labels: [Definition, Claim, Practice, Standard, Concept, Framework, Measure, Instrument, Tool]
+
+caps:
+  max_items: 60            # retrieved passages per question, after ranking (pinned items are extra)
+  max_chars: 60000         # characters of evidence text per question (about 15,000 tokens)
+  max_per_document: 10     # per document and source kind, so one long document cannot fill a question
+  min_passage_chars: 25    # shorter passages (table-cell fragments) carry no claim on their own
+  max_passage_chars: 1800  # longer passages are cut at a sentence end and marked as cut
+
+run:
+  answer_model_key: model_id               # kg/extraction/model_config.yaml key for the answer call
+  validator_model_key: primary_judge_model_id   # a different model from the writer, by design
+  call_class: judge
+  timeout_seconds: 900
+  workers: 4
+  max_attempts: 3
+  ceiling_tokens: 3600000                  # stated in the RESULT with its derivation (raised from 2,700,000 when the absence check was added)
+  max_wall_seconds: 7200
+  progress_every_units: 2
+  progress_every_seconds: 60
+  pilot_questions: [1]
+  max_answer_sentences: 3
+
+# The absence check: each "not known" statement the check kept is read again against passages
+# found by the statement's own words across the question's documents, uncapped by the question's
+# ranking. A statement survives only if no passage states the thing it says is not known.
+absence:
+  enabled: true
+  per_document: 3          # passages per statement per document, ranked by content terms matched
+  min_terms: 2             # a passage must contain at least this many of the statement's terms
+  max_chars: 80000
+  stopwords: [sources, source, state, states, stated, does, whether, which, what, that, this, these,
+              those, there, their, they, with, from, into, than, then, them, have, been, being,
+              would, could, should, about, other, specific, specifically, beyond, under, over,
+              each, such, also, only, does, document, documents, answer, question, named, name,
+              names, give, gives, given, describe, describes, dcat-us, dcat-us-3.0, 3.0, v3.0]
+
+# Documents held in both graphs under different ids. The FAQ cites each once, with
+# fss-policy-kg's title, issuer and date (that graph records them by reading the document,
+# DCAT-001 delivery report) and the more specific of the two URLs (`url_from`). The two captures
+# of the DCAT-US 3.0 overview page (fss `dcat_us_3_schema`, 2026-05; ai-readiness-kg
+# `dcat-us-3-overview`, 2026-08-21) are NOT listed: the page was rewritten between them, so they
+# are different texts and are cited separately with their dates.
+same_document:
+  - {fss: dcat_us_3_implementation_guide, airkg: dcat-us-3-implementation-guide, url_from: airkg,
+     ground: "byte-identical PDF, sha256 26e4c3baecb2 (DCAT-001 delivery report; ai-readiness-kg ledger)",
+     # Read off the PDF: cover "August 21, 2026"; version history "1.1 Sept 9, 2026"; the
+     # Acknowledgments are the Federal CDO Council's, which is fss-policy-kg's issuer.
+     title: "DCAT-US v3.0 Schema Implementation Guide, version 1.1",
+     date: "2026-08-21 (version 1.1, 2026-09-09)"}
+  - {fss: m_25_05, airkg: m-25-05-phase-2-implementation-of-the-evidence-act-open-gove, url_from: fss,
+     ground: "same source URL"}
+  - {fss: m_19_23, airkg: m-19-23-phase-1-implementation-of-the-evidence-act, url_from: fss,
+     ground: "same source URL"}
+  - {fss: w3c_dcat_3, airkg: w3c-dcat-3, url_from: fss, ground: "same W3C Recommendation, 22 August 2024"}
+  - {fss: fcsm_20_04, airkg: fcsm-20-04-a-framework-for-data-quality, url_from: airkg,
+     ground: "same report; the fss URL is the series listing page, the ai-readiness-kg URL the PDF"}
+  - {fss: fcsm_25_03, airkg: fcsm-25-03, url_from: airkg,
+     ground: "same report; the fss URL is the series listing page, the ai-readiness-kg URL the PDF"}
+  - {fss: fairness_project_wiki_overview, airkg: fairness-project-wiki-project-overview, url_from: fss,
+     ground: "same wiki page, last edited 2023-09-12 (rendered page and its source markdown)"}
+
+# Document groups, so the questions below can name them briefly.
+groups:
+  dcat3_airkg: [dcat-us-3-overview, dcat-us-3-dataset-schema, dcat-us-3-dataset-schema-2026-09-15,
+                dcat-us-3-implementation-guide, dcat-us-3-m-25-05-crosswalk,
+                dcat-us-3-quality-governance, dcat-us-3-temporal-spatial-metrics,
+                dcat-us-3-dataset-series, dcat-us-3-candidate-recommendation-snapshot]
+  dcat3_fss: [dcat_us_3_schema, dcat_us_3_implementation_guide]
+  fairness_airkg: [fairness-project-wiki-home, fairness-project-wiki-project-overview,
+                   fcsm-2024-b3-3-fairness-project, cdoc-dswg-findings-and-recommendations-2022]
+  fairness_fss: [fairness_project_wiki_overview]
+  fcsm_quality_airkg: [fcsm-20-04-a-framework-for-data-quality, fcsm-25-03,
+                       fcsm-19-01-transparent-reporting-for-integrated-data-quality]
+  fcsm_quality_fss: [fcsm_20_04, fcsm_25_03]
+  w3c_airkg: [w3c-dcat-3, w3c-dqv]
+  w3c_fss: [w3c_dcat_3]
+  policy_airkg: [m-25-05-phase-2-implementation-of-the-evidence-act-open-gove,
+                 m-19-23-phase-1-implementation-of-the-evidence-act]
+  policy_fss: [m_25_05, evidence_act_2018, m_19_23]
+  v11_airkg: [dcat-us-1-1-schema]
+  stat_airkg: [statdcat-ap-1-0-1, sdmx-3-0-section-1-framework, w3c-rdf-data-cube]
+
+questions:
+  - id: 1
+    text: What is DCAT-US 3.0, and how does it relate to W3C DCAT 3?
+    airkg: [dcat3_airkg, fairness_airkg, w3c_airkg]
+    fss: [dcat3_fss, w3c_fss, policy_fss, fairness_fss]
+    terms: [w3c, dcat 3, dcat version 3, data catalog vocabulary, profile, application profile,
+            dcat-us 3, dcat-us v3, dcat-us version 3, dcat-us 3.0, builds on, extends]
+
+  - id: 2
+    text: Who developed it, and what was FCSM's role (the FAIRness Project)?
+    airkg: [dcat3_airkg, fairness_airkg]
+    fss: [dcat3_fss, fairness_fss]
+    terms: [fcsm, federal committee on statistical methodology, fairness project, chief data officer,
+            cdo council, cdoc, core team, advisory group, co-chair, developed, acknowledg,
+            data.gov, general services administration, gsa, census, working group, tiger team,
+            deliverable, governance model]
+
+  - id: 3
+    text: What does policy require of agencies, and by when (M-25-05, the Evidence Act's inventory requirements)?
+    airkg: [policy_airkg, dcat3_airkg]
+    fss: [policy_fss, dcat3_fss]
+    terms: [comprehensive data inventory, data inventory, metadata schema, dcat-us, 3511,
+            metadata element, no later than, within 180 days, within one year, days of, deadline, must conform,
+            federal data catalog, data.json, timeline, schedule, by september, by august]
+
+  - id: 4
+    text: Which elements are Mandatory, Recommended and Optional, and what did v1.1 require that 3.0 does not?
+    airkg: [dcat3_airkg, v11_airkg]
+    fss: [dcat3_fss]
+    terms: [mandatory, recommended, optional, requirement level, required, required-if, if-applicable,
+            dataquality, bureaucode, programcode, accesslevel, no longer, removed, deprecated,
+            v1.1, version 1.1, must be present]
+    computed: [element_levels]
+
+  - id: 5
+    text: What did FCSM and the FAIRness Project recommend for findability and for assessing fitness for use?
+    airkg: [fairness_airkg, fcsm_quality_airkg, dcat3_airkg]
+    fss: [fairness_fss, fcsm_quality_fss, dcat3_fss]
+    terms: [findab, find, discover, fitness for use, fitness-for-use, fit for use, assess,
+            recommend, metadata, catalog, fair principles, reusab, interoperab, quality,
+            sequencing plan, findings]
+    catalog_entries: true
+
+  - id: 6
+    text: Which of those recommendations reached the Mandatory or Recommended tiers, and which did not?
+    airkg: [fairness_airkg, dcat3_airkg]
+    fss: [fairness_fss, dcat3_fss]
+    terms: [mandatory, recommended, optional, requirement level, findab, fitness, quality,
+            describedby, data dictionary, qualitymeasurement, provenance, conformsto]
+    computed: [element_levels]
+    catalog_entries: true
+
+  - id: 7
+    text: What changed between the public working draft and the published schema?
+    airkg: [dcat3_airkg, fairness_airkg]
+    fss: [dcat3_fss, fairness_fss]
+    terms: [draft, candidate recommendation, comment, final, changed, change, rewritten, errors,
+            corrected, release, published, version history, removed, renamed]
+    computed: [element_levels]
+
+  - id: 8
+    text: How does 3.0 represent data quality, and how does that map to the FCSM Framework for Data Quality (FCSM 20-04)?
+    airkg: [dcat3_airkg, fcsm_quality_airkg, w3c_airkg]
+    fss: [dcat3_fss, fcsm_quality_fss, w3c_fss]
+    terms: [quality, qualitymeasurement, hasqualitymeasurement, dqv, quality dimension, metric,
+            accuracy, timeliness, completeness, relevance, accessibility, coherence, credibility,
+            objectivity, integrity, utility, dimension, conformsto, provenance, dataquality]
+
+  - id: 9
+    text: "Can 3.0 carry what statistical users need: series, dimensions, units, uncertainty (margins of error, CVs), methodology and revisions?"
+    airkg: [dcat3_airkg, stat_airkg, w3c_airkg]
+    fss: [dcat3_fss, w3c_fss, fcsm_quality_fss]
+    terms: [dataset series, datasetseries, inseries, dimension, unit of measure, unit, margin of error,
+            coefficient of variation, standard error, uncertainty, confidence interval, methodology,
+            method, wasgeneratedby, describedby, revision, revised, version, versionnotes,
+            previousversion, statistical]
+
+  - id: 10
+    text: "Where do the documents disagree with each other: the schema pages, the Implementation Guide, the M-25-05 crosswalk, M-25-05 itself, and secondary accounts? For example, is the language code ISO 639-1 or BCP 47?"
+    airkg: [dcat3_airkg, policy_airkg]
+    fss: [dcat3_fss, policy_fss]
+    terms: [iso 639, 639-1, bcp 47, bcp47, rfc 5646, language, metadata element, mandatory, required, publisher,
+            rewritten, errors, correct, crosswalk, m-25-05, conflict, differ]
+    computed: [language_statements, level_changes]
+
+  - id: 11
+    text: How does DCAT-US 3.0 relate to AI readiness of statistical data (FCSM 25-03; the AI-readiness framework's indicators)?
+    airkg: [fcsm_quality_airkg, dcat3_airkg, [bandi-2025-metadata-ai-ready]]
+    fss: [fcsm_quality_fss, dcat3_fss]
+    terms: [ai-ready, ai ready, ai readiness, machine-readable, machine readable, metadata,
+            dcat, catalog, data dictionary, schema, artificial intelligence, findab, discover]
+    framework_terms: [dcat, catalog, metadata, data.json, schema, publisher, bureaucode]
+
+  - id: 12
+    text: What did the EU do for statistical data (StatDCAT-AP), and does the US have an equivalent?
+    airkg: [stat_airkg, dcat3_airkg]
+    fss: [dcat3_fss]
+    terms: [statdcat, statistical, application profile, sdmx, dimension, attribute, numseries,
+            unit of measure, dcat-ap, european, extension, data cube]
+
+  - id: 13
+    text: "What options exist for next steps? Examples: a statistical application profile; raising requirement levels through guidance; conformance checking. State what each source supports. Do not recommend beyond the sources."
+    airkg: [dcat3_airkg, stat_airkg, fairness_airkg]
+    fss: [dcat3_fss, policy_fss, fairness_fss]
+    terms: [extension, extend, profile, governance, change request, maintenance, validat, conform,
+            json schema, shacl, harvest, next version, future, guidance, should, update, release plan]
+
+  - id: 14
+    text: What questions can the current sources not answer? List each, with the document that would answer it if one is known.
+    gaps_from_questions: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+    catalog_entries: true

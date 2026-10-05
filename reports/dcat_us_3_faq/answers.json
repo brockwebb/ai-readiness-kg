@@ -1,0 +1,1256 @@
+{
+ "generated_by": "scripts/dcat_faq_run.py",
+ "task": "cc_tasks/2026-10-05_DCAT-003_dcat_us_3_faq_for_omb_meeting.md",
+ "generated_at": "2026-10-05T13:56:49.847143+00:00",
+ "questions": [
+  {
+   "question_id": 1,
+   "question": "What is DCAT-US 3.0, and how does it relate to W3C DCAT 3?",
+   "status": "done",
+   "answer_model": "claude-opus-5",
+   "check_model": "claude-opus-4-8",
+   "rubric_version": "v1.3.0",
+   "overlay": "faq-claim-attribution (project-local, ai-readiness-kg)",
+   "answer_unit": "9f6425c2517b686b",
+   "check_unit": "eaa3c740080dc386",
+   "absence_unit": null,
+   "evidence_sha256": "808510f111bf3081999ab388643c87a7c32d184df201b8bcb6fd97cb91d17d02",
+   "tokens": {
+    "answer": 53345,
+    "check": 53143,
+    "absence": 0
+   },
+   "kept": [
+    {
+     "text": "DCAT-US v3.0 is the federal data catalog metadata standard, updated to improve the Findability, Accessibility, Interoperability, and Reusability (FAIRness) of federal data.",
+     "evidence": [
+      "E1",
+      "E3"
+     ],
+     "verdict": "pass",
+     "defect_class": null,
+     "reason": "E1 and E3 state this claim verbatim.",
+     "support_span": "DCAT-US v3.0 is the federal data catalog metadata standard, updated to improve the Findability, Accessibility, Interoperability, and Reusability (FAIRness) of federal data.",
+     "span_located": true
+    },
+    {
+     "text": "It is a U.S. application profile of W3C DCAT version 3, not a new or separate standard, so most DCAT-US v3.0 metadata is valid W3C DCAT 3 metadata.",
+     "evidence": [
+      "E1",
+      "E3"
+     ],
+     "verdict": "pass",
+     "defect_class": null,
+     "reason": "E3 states the profile relation, the not-new-standard point, and the valid-W3C-metadata consequence.",
+     "support_span": "It is a U.S. application profile of the W3C Data Catalog Vocabulary (DCAT) version 3 - not a new or separate standard. This means most DCAT-US v3.0 metadata is valid W3C DCAT 3 metadata",
+     "span_located": true
+    },
+    {
+     "text": "OMB memorandum M-25-05 states the OMB-approved standard metadata schema will conform to the United States profile of the W3C Data Catalog Vocabulary Version 3, known as DCAT-US 3.0.",
+     "evidence": [
+      "E4"
+     ],
+     "verdict": "pass",
+     "defect_class": null,
+     "reason": "E4 is titled M-25-05 and states this content directly.",
+     "support_span": "The OMB-approved standard metadata schema will conform to the United States profile of the W3C Data Catalog Vocabulary Version 3, known as the DCAT-US 3.0.",
+     "span_located": true
+    }
+   ],
+   "cut": [],
+   "not_known_kept": [],
+   "not_known_cut": []
+  },
+  {
+   "question_id": 2,
+   "question": "Who developed it, and what was FCSM's role (the FAIRness Project)?",
+   "status": "done",
+   "answer_model": "claude-opus-5",
+   "check_model": "claude-opus-4-8",
+   "rubric_version": "v1.3.0",
+   "overlay": "faq-claim-attribution (project-local, ai-readiness-kg)",
+   "answer_unit": "30d4b62bd029b051",
+   "check_unit": "c7a4741a4f3e95c6",
+   "absence_unit": "e75c6ddf51e2d302",
+   "evidence_sha256": "4b282e1c7d337595296719e35cfec9555e165c7c696d6f79556c7424dd117e54",
+   "tokens": {
+    "answer": 55450,
+    "check": 58960,
+    "absence": 45617
+   },
+   "kept": [
+    {
+     "text": "GSA's DCAT-US v3.0 overview pages state it was developed collaboratively by the Federal Chief Data Officers Council, the Federal Committee on Statistical Methodology, and the Data.gov team at GSA.",
+     "evidence": [
+      "E2",
+      "E4"
+     ],
+     "verdict": "pass",
+     "defect_class": null,
+     "reason": "Both E2 and E4 are GSA/Data.gov overview pages and state this collaborative-development claim verbatim.",
+     "support_span": "DCAT-US v3.0 was developed collaboratively by the Federal Chief Data Officers Council, the Federal Committee on Statistical Methodology, and the Data.gov team at GSA",
+     "span_located": true
+    },
+    {
+     "text": "The FAIRness Project wiki says the Federal Chief Data Officer Council, in partnership with FCSM, is leading the project, whose outcome will be an updated federal metadata standard for agency data inventories.",
+     "evidence": [
+      "E5"
+     ],
+     "verdict": "pass",
+     "defect_class": null,
+     "reason": "E5 (the FAIRness Project wiki) states CDOC in partnership with FCSM is leading the project and the outcome is an updated federal metadata standard for agencies' data inventories.",
+     "support_span": "The outcome will be an updated federal metadata standard for agencies’ data inventories.",
+     "span_located": true
+    },
+    {
+     "text": "A 2024 FCSM conference presentation names the project co-chairs as Thomas Dabolt of Interior and Michael Ratcliffe of the Census Bureau, for the CDO Council and FCSM.",
+     "evidence": [
+      "E6"
+     ],
+     "verdict": "pass",
+     "defect_class": null,
+     "reason": "E6 names the two co-chairs for the CDO Council and FCSM, with Dabolt's (DOI) doi.gov email and Ratcliffe's census.gov email supporting the affiliations.",
+     "support_span": "Project Co-Chairs\nThomas Dabolt Michael Ratcliffe",
+     "span_located": true
+    }
+   ],
+   "cut": [],
+   "not_known_kept": [
+    {
+     "text": "The sources do not state what specific tasks FCSM performed within the project beyond partnering with the CDO Council to lead it and co-chairing it.",
+     "verdict": "pass",
+     "reason": "No passage describes a specific FCSM task; passages only state generic collaborative development, partnering to lead, and co-chairing.",
+     "support_span": "",
+     "span_located": false,
+     "absence_verdict": "pass",
+     "absence_reason": "No passage itemizes specific tasks FCSM performed; passages only show partnering/leading (E1), the project's billing under CDOC and FCSM with individual co-chairs from DOI and Census (E5), and a generic shared acknowledgment of contributions (E6).",
+     "absence_span": null,
+     "absence_span_located": false
+    },
+    {
+     "text": "The sources do not state whether FCSM formally approved or adopted the final DCAT-US v3.0 schema.",
+     "verdict": "pass",
+     "reason": "No passage states FCSM formally approved or adopted the final schema; governance is described as a CDO Tiger Team review process.",
+     "support_span": "",
+     "span_located": false,
+     "absence_verdict": "pass",
+     "absence_reason": "No passage states FCSM formally approved or adopted the final schema; the only approval named is OMB's (E22 'approved by OMB'; E21 OMB requires conformance), not FCSM's.",
+     "absence_span": null,
+     "absence_span_located": false
+    }
+   ],
+   "not_known_cut": []
+  },
+  {
+   "question_id": 3,
+   "question": "What does policy require of agencies, and by when (M-25-05, the Evidence Act's inventory requirements)?",
+   "status": "done",
+   "answer_model": "claude-opus-5",
+   "check_model": "claude-opus-4-8",
+   "rubric_version": "v1.3.0",
+   "overlay": "faq-claim-attribution (project-local, ai-readiness-kg)",
+   "answer_unit": "49d01fc992927a7d",
+   "check_unit": "7636ef44cd7e0655",
+   "absence_unit": "7ed196d77887fc80",
+   "evidence_sha256": "833f1cd946f06341218107277ad775eee6227c9ae5740211903b42b0481819fc",
+   "tokens": {
+    "answer": 52896,
+    "check": 108169,
+    "absence": 49686
+   },
+   "kept": [
+    {
+     "text": "The Implementation Guide says Title II of the Evidence Act and M-25-05 direct each agency to develop and maintain a comprehensive data inventory and submit metadata to Data.gov's Federal Data Catalog by September 30, 2026.",
+     "evidence": [
+      "E5"
+     ],
+     "verdict": "pass",
+     "defect_class": null,
+     "reason": "E5 (the Implementation Guide) attributes the inventory directive to Title II and M-25-05 with the September 30, 2026 date.",
+     "support_span": "each federal agency has been directed to 'develop and maintain a comprehensive data inventory' and submit metadata for agency data assets to the public-facing Federal Data Catalog hosted on Data.gov",
+     "span_located": true
+    },
+    {
+     "text": "M-25-05's action table sets September 30, 2026 for inventory data asset listings updated to DCAT-US 3.0, and requires the inventory hosted publicly at www.[agency].gov/data.json.",
+     "evidence": [
+      "E11",
+      "E10"
+     ],
+     "verdict": "pass",
+     "defect_class": null,
+     "reason": "E11/E10 are M-25-05 action-table rows giving the Sept 30 2026 date and the public hosting address www.[agency].gov/data.json.",
+     "support_span": "Comprehensive data inventory data asset listings updated to DCAT-US 3.0 updated schema September 30, 2026",
+     "span_located": true
+    },
+    {
+     "text": "M-25-05 also says agencies must update the inventory no later than 90 days after creating or identifying a data asset, and within one year if the schema changes.",
+     "evidence": [
+      "E24",
+      "E1"
+     ],
+     "verdict": "pass",
+     "defect_class": null,
+     "reason": "E24 gives the 90-day update rule and E1 gives the within-one-year schema-change rule, both from M-25-05.",
+     "support_span": "Agencies must update the comprehensive data inventory no later than 90 days after the date on which the agency creates or identifies a data asset.",
+     "span_located": true
+    }
+   ],
+   "cut": [],
+   "not_known_kept": [
+    {
+     "text": "The sources do not state what consequences apply to an agency that misses the September 30, 2026 date.",
+     "verdict": "pass",
+     "reason": "No passage states any consequence or penalty for missing the September 30, 2026 date.",
+     "support_span": "",
+     "span_located": false,
+     "absence_verdict": "pass",
+     "absence_reason": "No passage states any consequence, penalty, or enforcement action for an agency that misses the September 30, 2026 deadline; passages give only the deadline itself.",
+     "absence_span": null,
+     "absence_span_located": false
+    },
+    {
+     "text": "The sources do not state when Data.gov stops harvesting DCAT-US v1.1 data.json files at the end of the transition period.",
+     "verdict": "pass",
+     "reason": "E29 says v1.1 continues to be harvested during the transition period but no passage states when that harvesting stops.",
+     "support_span": "",
+     "span_located": false,
+     "absence_verdict": "pass",
+     "absence_reason": "E2/E3 say v1.1 continues to be harvested during the transition period but no passage states when that harvesting stops or when the transition period ends.",
+     "absence_span": null,
+     "absence_span_located": false
+    },
+    {
+     "text": "The sources do not state whether any extension or waiver of these deadlines is available to agencies.",
+     "verdict": "pass",
+     "reason": "No passage states that any extension or waiver of these deadlines is available to agencies.",
+     "support_span": "",
+     "span_located": false,
+     "absence_verdict": "pass",
+     "absence_reason": "No passage addresses extension or waiver of these deadlines; E50's 'waiver' concerns restricted-public data access, not deadlines, and E12's one-year update is a separate schema-change rule.",
+     "absence_span": null,
+     "absence_span_located": false
+    }
+   ],
+   "not_known_cut": []
+  },
+  {
+   "question_id": 4,
+   "question": "Which elements are Mandatory, Recommended and Optional, and what did v1.1 require that 3.0 does not?",
+   "status": "done",
+   "answer_model": "claude-opus-5",
+   "check_model": "claude-opus-4-8",
+   "rubric_version": "v1.3.0",
+   "overlay": "faq-claim-attribution (project-local, ai-readiness-kg)",
+   "answer_unit": "b010152505a3fdad",
+   "check_unit": "4615ec54a869fd14",
+   "absence_unit": "6733d6a842458303",
+   "evidence_sha256": "c666567ca9cc3cffd16f30d42195c3e621c647e46715a80a5c4918e2747bf8d5",
+   "tokens": {
+    "answer": 76446,
+    "check": 77653,
+    "absence": 189005
+   },
+   "kept": [
+    {
+     "text": "The DCAT-US 3.0 Dataset page captured on 15 September 2026 lists title, description, identifier and contactPoint as Mandatory.",
+     "evidence": [
+      "E6",
+      "E4",
+      "E5",
+      "E1"
+     ],
+     "verdict": "pass",
+     "defect_class": null,
+     "reason": "E6, E4, E5, E1 each give the 2026-09-15 capture Requirement as Mandatory for title, description, identifier, contactPoint.",
+     "support_span": "DCAT-US 3.0 Dataset page (2026-09-15): ## [Dataset &gt; title #](#title) **Requirement:** Mandatory",
+     "span_located": true
+    },
+    {
+     "text": "On that same capture, publisher, keyword, modified, distribution and rights are Recommended, while accrualPeriodicity, issued, language, accessRights and conformsTo are Optional.",
+     "evidence": [
+      "E2",
+      "E9",
+      "E11",
+      "E8",
+      "E3",
+      "E15",
+      "E17",
+      "E18",
+      "E20",
+      "E16"
+     ],
+     "verdict": "pass",
+     "defect_class": null,
+     "reason": "The five cited Recommended and five cited Optional elements all match their 2026-09-15 capture requirement levels.",
+     "support_span": "DCAT-US 3.0 Dataset page (2026-09-15): ## [Dataset &gt; publisher #](#publisher) **Requirement:** Recommended",
+     "span_located": true
+    },
+    {
+     "text": "The v1.1 schema required accessLevel always, bureauCode and programCode for federal agencies, and publisher, keyword and modified always; the 15 September 2026 page drops the first three and makes the rest Recommended.",
+     "evidence": [
+      "E47",
+      "E48",
+      "E54",
+      "E2",
+      "E9",
+      "E11"
+     ],
+     "verdict": "pass",
+     "defect_class": null,
+     "reason": "v1.1 required accessLevel always, bureauCode/programCode for federal agencies, and publisher/keyword/modified always; the 2026-09-15 page omits the first three and marks the latter three Recommended, all per cited passages.",
+     "support_span": "DCAT-US v1.1 schema: Field accessLevel | Required | Yes, always",
+     "span_located": true
+    }
+   ],
+   "cut": [],
+   "not_known_kept": [
+    {
+     "text": "The sources do not state why publisher is Mandatory on the 21 August 2026 Dataset page but Recommended on the 15 September 2026 capture.",
+     "verdict": "pass",
+     "reason": "Passages show the publisher level changed between captures but no passage states a reason for the change.",
+     "support_span": "",
+     "span_located": false,
+     "absence_verdict": "pass",
+     "absence_reason": "No passage gives a reason for publisher being Mandatory on the Aug 21 page versus Recommended on the Sep 15 capture; the changelogs list other corrections only.",
+     "absence_span": null,
+     "absence_span_located": false
+    },
+    {
+     "text": "The sources do not state the full list of elements at each requirement level in a single summary.",
+     "verdict": "pass",
+     "reason": "No passage provides a single consolidated list of all elements grouped by requirement level; entries are per-element.",
+     "support_span": "",
+     "span_located": false,
+     "absence_verdict": "pass",
+     "absence_reason": "No single passage consolidates all elements grouped by requirement level; levels appear only in scattered per-field entries.",
+     "absence_span": null,
+     "absence_span_located": false
+    }
+   ],
+   "not_known_cut": [
+    {
+     "text": "The sources do not state the requirement levels of individual elements in the Distribution, Catalog, DataService or DatasetSeries classes of DCAT-US 3.0.",
+     "verdict": "pass",
+     "reason": "No passage gives requirement levels for individual elements of the 3.0 Distribution, Catalog, DataService, or DatasetSeries classes; Distribution/Catalog field tables present are v1.1, not 3.0.",
+     "support_span": "",
+     "span_located": false,
+     "absence_verdict": "fail",
+     "absence_reason": "Passages do state requirement levels for individual DataService elements (E34, E53, E63) and a DatasetSeries element (E28), contradicting the blanket absence claim.",
+     "absence_span": "| [category](#data-service--category) | [Concept](/standards/catalog/dcat-us-3/identifiers-and-relationships/#concept) null or array of classes | Optional | List of high-level categories for the data service |",
+     "absence_span_located": true,
+     "cut_reason": "absence check fail: a passage found by the statement's own words states it"
+    }
+   ]
+  },
+  {
+   "question_id": 5,
+   "question": "What did FCSM and the FAIRness Project recommend for findability and for assessing fitness for use?",
+   "status": "done",
+   "answer_model": "claude-opus-5",
+   "check_model": "claude-opus-4-8",
+   "rubric_version": "v1.3.0",
+   "overlay": "faq-claim-attribution (project-local, ai-readiness-kg)",
+   "answer_unit": "27eb3d5a2c5266da",
+   "check_unit": "65ea6c7b660a4214",
+   "absence_unit": "9474b6946d929110",
+   "evidence_sha256": "630120df2677a0c9767f38ab7a6d1e1ffb91e0435ad04e451a0e0dce14dcd714",
+   "tokens": {
+    "answer": 59090,
+    "check": 58680,
+    "absence": 58650
+   },
+   "kept": [
+    {
+     "text": "The FAIRness Project describes a strategic two-year sequencing plan to improve and integrate government-wide metadata cataloging so users can easily find, access, assess for fitness-for-use, and use federal data.",
+     "evidence": [
+      "E4",
+      "E12"
+     ],
+     "verdict": "pass",
+     "defect_class": null,
+     "reason": "E4 and E12 both list this sequencing plan as a FAIRness Project deliverable with the same find/access/assess-for-fitness-for-use/use language.",
+     "support_span": "A strategic two-year sequencing plan to improve and integrate government-wide metadata cataloging to facilitate data users' ability to easily find, access, assess for fitness-for-use, and use federal data.",
+     "span_located": true
+    },
+    {
+     "text": "FCSM 19-01 states that transparent reporting is achieved when an agency provides clear and detailed documentation so users can assess data quality, that is fitness for use, for themselves.",
+     "evidence": [
+      "E37",
+      "E38"
+     ],
+     "verdict": "pass",
+     "defect_class": null,
+     "reason": "E37 states the claim nearly verbatim, including the fitness-for-use gloss.",
+     "support_span": "Transparent reporting of data quality is achieved when an agency provides clear and detailed documentation so that users can assess data quality— that is, the data’s “fitness for use”—for themselves.",
+     "span_located": true
+    },
+    {
+     "text": "FCSM 25-03 says enriching data access points with high-quality metadata and standardized, AI-friendly APIs can significantly improve how large language models discover, interpret, and relay publicly available federal statistics.",
+     "evidence": [
+      "E40",
+      "E56"
+     ],
+     "verdict": "pass",
+     "defect_class": null,
+     "reason": "E56 (and E40) state the claim directly; LLMs equals large language models and the compression preserves meaning.",
+     "support_span": "By enriching data access points with high-quality metadata and exposing them through standardized, AI-friendly APIs, agencies can significantly improve how LLMs discover, interpret, and relay publicly available federal statistics.",
+     "span_located": true
+    }
+   ],
+   "cut": [],
+   "not_known_kept": [
+    {
+     "text": "The sources do not state the key findings and recommendations contained in the FAIRness Project's sequencing plan, which was provided to the Office of Management and Budget with no public copy located.",
+     "verdict": "pass",
+     "reason": "E1 says the plan contains key findings and recommendations and was provided to OMB with no public copy, but no passage discloses what those findings and recommendations are.",
+     "support_span": "",
+     "span_located": false,
+     "absence_verdict": "pass",
+     "absence_reason": "E4 and E11 only name the Sequencing/Transition Plan and its status (provided to OMB); no passage states its key findings or recommendations.",
+     "absence_span": null,
+     "absence_span_located": false
+    },
+    {
+     "text": "The sources do not state which DCAT-US v3.0 fields FCSM or the FAIRness Project recommended for carrying fitness-for-use information, or at what requirement level.",
+     "verdict": "pass",
+     "reason": "No passage ties any specific DCAT-US v3.0 field or requirement level to carrying fitness-for-use information as an FCSM or FAIRness Project recommendation.",
+     "support_span": "",
+     "span_located": false,
+     "absence_verdict": "pass",
+     "absence_reason": "No passage states which DCAT-US v3.0 field FCSM or the FAIRness Project recommended for fitness-for-use information or at what requirement level.",
+     "absence_span": null,
+     "absence_span_located": false
+    }
+   ],
+   "not_known_cut": []
+  },
+  {
+   "question_id": 6,
+   "question": "Which of those recommendations reached the Mandatory or Recommended tiers, and which did not?",
+   "status": "done",
+   "answer_model": "claude-opus-5",
+   "check_model": "claude-opus-4-8",
+   "rubric_version": "v1.3.0",
+   "overlay": "faq-claim-attribution (project-local, ai-readiness-kg)",
+   "answer_unit": "000f2f555c8d80df",
+   "check_unit": "8381cb9c8814471e",
+   "absence_unit": "d52563a7c76c581a",
+   "evidence_sha256": "f3acf458695275aef0fa2ed02ee92ea66602e6ca4fb9804e4e8748cfb24530d9",
+   "tokens": {
+    "answer": 77625,
+    "check": 87042,
+    "absence": 64645
+   },
+   "kept": [
+    {
+     "text": "contactPoint reached Mandatory: the 2025 working draft gave it Recommended, and both DCAT-US 3.0 Dataset pages, August and September 2026, list it as Mandatory.",
+     "evidence": [
+      "E3"
+     ],
+     "verdict": "pass",
+     "defect_class": null,
+     "reason": "E3 gives draft Recommended and both 2026 pages Mandatory, exactly as stated.",
+     "support_span": "**Requirement:** Mandatory || DCAT-US 3.0 Dataset page (2026-08-21): ## `Dataset > contactPoint` [#](https://resources.data.gov/standards/catalog/dcat-us-3/dataset/#contactPoint) **Requirement:** Mandatory || DCAT-US 3 working draft (Candidate Recommendation, 2025): Property: contact point | | Requirement level | Recommended",
+     "span_located": true
+    },
+    {
+     "text": "Quality measurement did not rise: hasQualityMeasurement is Optional in the 2025 working draft and Optional on both the August and September 2026 Dataset pages.",
+     "evidence": [
+      "E2"
+     ],
+     "verdict": "pass",
+     "defect_class": null,
+     "reason": "E2 lists Optional in the draft and Optional on both 2026 pages, matching the sentence.",
+     "support_span": "**Requirement:** Optional || DCAT-US 3.0 Dataset page (2026-08-21): ## `Dataset > hasQualityMeasurement` [#](https://resources.data.gov/standards/catalog/dcat-us-3/dataset/#hasQualityMeasurement) **Requirement:** Optional || DCAT-US 3 working draft (Candidate Recommendation, 2025): Property: quality measurement | | Requirement level | Optional",
+     "span_located": true
+    },
+    {
+     "text": "geographicBoundingBox was Recommended in the 2025 working draft but is not listed on either DCAT-US 3.0 Dataset page.",
+     "evidence": [
+      "E46"
+     ],
+     "verdict": "pass",
+     "defect_class": null,
+     "reason": "E46 gives draft Recommended and not listed on either Dataset page, as stated.",
+     "support_span": "DCAT-US 3 working draft (Candidate Recommendation, 2025): Property: geographic bounding box | | Requirement level | Recommended | | URI dcat-us:geographicBoundingBox || Not listed in: DCAT-US 3.0 Dataset page (2026-09-15); DCAT-US 3.0 Dataset page (2026-08-21)",
+     "span_located": true
+    }
+   ],
+   "cut": [],
+   "not_known_kept": [
+    {
+     "text": "The sources do not state what the FAIRness Project's sequencing plan recommended, as no public copy exists and it was provided only to OMB.",
+     "verdict": "pass",
+     "reason": "E67 says the plan contains recommendations and was provided to OMB with no public copy, but no passage states what it recommended.",
+     "support_span": "",
+     "span_located": false,
+     "absence_verdict": "pass",
+     "absence_reason": "E42 gives only the sequencing plan's status (provided to OMB); no passage states the content of what it recommended.",
+     "absence_span": null,
+     "absence_span_located": false
+    },
+    {
+     "text": "The sources do not state who set these requirement levels, or why an element's tier differs between the working draft and the published Dataset pages.",
+     "verdict": "pass",
+     "reason": "E95 gives only the basis (Data.gov technical implementation requirements), not who set the levels, and no passage explains why tiers differ between versions.",
+     "support_span": "",
+     "span_located": false,
+     "absence_verdict": "pass",
+     "absence_reason": "Passages state the schema was developed collaboratively and name the requirement tiers, but none states who specifically set the tiers or why an element's tier differs between draft and published pages.",
+     "absence_span": null,
+     "absence_span_located": false
+    },
+    {
+     "text": "The sources do not state whether the elements the September 2026 page newly lists as Recommended, such as accessRestriction and license, came from any earlier recommendation.",
+     "verdict": "pass",
+     "reason": "Lineage rows (E50, E53) show only prior presence/absence and tier, not whether the newly-Recommended elements came from any earlier recommendation.",
+     "support_span": "",
+     "span_located": false,
+     "absence_verdict": "pass",
+     "absence_reason": "No passage states whether the newly-Recommended accessRestriction or license tiers derive from any earlier recommendation.",
+     "absence_span": null,
+     "absence_span_located": false
+    }
+   ],
+   "not_known_cut": []
+  },
+  {
+   "question_id": 7,
+   "question": "What changed between the public working draft and the published schema?",
+   "status": "done",
+   "answer_model": "claude-opus-5",
+   "check_model": "claude-opus-4-8",
+   "rubric_version": "v1.3.0",
+   "overlay": "faq-claim-attribution (project-local, ai-readiness-kg)",
+   "answer_unit": "cfd0c7f37e4d6d86",
+   "check_unit": "5caf361b3253265a",
+   "absence_unit": "a4ca62ee090bdcf4",
+   "evidence_sha256": "7becef321b45f0d4b4addb543dcc5cd68f060604b0ae504b1b65d443b258deec",
+   "tokens": {
+    "answer": 56851,
+    "check": 60188,
+    "absence": 49234
+   },
+   "kept": [
+    {
+     "text": "The 2025 working draft listed contactPoint and publisher as Recommended, while the Dataset page as captured on 21 August 2026 lists both as Mandatory.",
+     "evidence": [
+      "E1",
+      "E6"
+     ],
+     "verdict": "pass",
+     "defect_class": null,
+     "reason": "E1 and E6 both show contactPoint/publisher Recommended in the 2025 working draft and Mandatory on the 2026-08-21 page.",
+     "support_span": "DCAT-US 3.0 Dataset page (2026-08-21): ## `Dataset > publisher` [#](https://resources.data.gov/standards/catalog/dcat-us-3/dataset/#publisher) **Requirement:** Mandatory || DCAT-US 3 working draft (Candidate Recommendation, 2025): Property: publisher | | Requirement level | **Recommended**",
+     "span_located": true
+    },
+    {
+     "text": "The published Dataset pages list elements the working draft did not, including created, rightsHolder, supportedSchema, wasAttributedTo and wasUsedBy, all Optional.",
+     "evidence": [
+      "E8",
+      "E15",
+      "E16",
+      "E17",
+      "E18"
+     ],
+     "verdict": "pass",
+     "defect_class": null,
+     "reason": "E8, E15, E16, E17, E18 each show the element on both published pages as Optional and not listed in the working draft.",
+     "support_span": "DCAT-US 3.0 Dataset page (2026-09-15): ## [Dataset &gt; created #](#created) **Requirement:** Optional || DCAT-US 3.0 Dataset page (2026-08-21): ## `Dataset > created` [#](https://resources.data.gov/standards/catalog/dcat-us-3/dataset/#created) **Requirement:** Optional || Not listed in: DCAT-US 3 working draft (Candidate Recommendation, 2025); DCAT-US v1.1 schema",
+     "span_located": true
+    },
+    {
+     "text": "Three properties the working draft listed as Recommended or Optional — geographic bounding box, next and prev — are not listed on either published Dataset page.",
+     "evidence": [
+      "E19",
+      "E21",
+      "E22"
+     ],
+     "verdict": "pass",
+     "defect_class": null,
+     "reason": "E19 (Recommended), E21 and E22 (Optional) each show the working-draft property absent from both published Dataset pages.",
+     "support_span": "DCAT-US 3 working draft (Candidate Recommendation, 2025): Property: geographic bounding box | | Requirement level | Recommended | | URI dcat-us:geographicBoundingBox || Not listed in: DCAT-US 3.0 Dataset page (2026-09-15); DCAT-US 3.0 Dataset page (2026-08-21); DCAT-US v1.1 schema",
+     "span_located": true
+    }
+   ],
+   "cut": [],
+   "not_known_kept": [
+    {
+     "text": "The sources do not state why any of these changes were made between the working draft and the published schema.",
+     "verdict": "pass",
+     "reason": "No passage states a rationale for the requirement-level changes, additions, or removals between the working draft and the published schema.",
+     "support_span": "",
+     "span_located": false,
+     "absence_verdict": "pass",
+     "absence_reason": "No passage gives a reason for any change made between the draft application profile and the final published schema; E9/E11 describe only the general pre-release governance process, and the documented changes (E4, E6, E7, E10) are all v1.1-to-v3.0, not draft-to-published.",
+     "absence_span": null,
+     "absence_span_located": false
+    },
+    {
+     "text": "The sources do not state what changed between the working draft and the published schema for classes other than Dataset.",
+     "verdict": "pass",
+     "reason": "No passage states what changed between the working draft and the published schema for any class other than Dataset.",
+     "support_span": "",
+     "span_located": false,
+     "absence_verdict": "pass",
+     "absence_reason": "No passage states what changed between the working draft and the published schema for any class other than Dataset; the version comparisons present (e.g. E8, E10) contrast v1.1 with v3.0 rather than draft with published, and E9/E11 only note that the profile evolved via community input without specifying class-level changes.",
+     "absence_span": null,
+     "absence_span_located": false
+    }
+   ],
+   "not_known_cut": []
+  },
+  {
+   "question_id": 8,
+   "question": "How does 3.0 represent data quality, and how does that map to the FCSM Framework for Data Quality (FCSM 20-04)?",
+   "status": "done",
+   "answer_model": "claude-opus-5",
+   "check_model": "claude-opus-4-8",
+   "rubric_version": "v1.3.0",
+   "overlay": "faq-claim-attribution (project-local, ai-readiness-kg)",
+   "answer_unit": "da0bf7537e004926",
+   "check_unit": "4b8884898a5f3bee",
+   "absence_unit": "b1a68f2ca7d48212",
+   "evidence_sha256": "e2cbe396e1e025ebe31636112de5016cc97195e90960c65251f48bdf2d6f9633",
+   "tokens": {
+    "answer": 55611,
+    "check": 59721,
+    "absence": 67986
+   },
+   "kept": [
+    {
+     "text": "The DCAT-US 3.0 Dataset page lists hasQualityMeasurement as Optional, holding quality measurements such as completeness, accuracy, or timeliness beyond spatial or temporal resolution.",
+     "evidence": [
+      "E8",
+      "E57"
+     ],
+     "verdict": "pass",
+     "defect_class": null,
+     "reason": "E8 and E57 (DCAT-US 3.0 Dataset page) both state hasQualityMeasurement is Optional with exactly these example measures.",
+     "support_span": "List of quality measurements for the dataset (for example, completeness, accuracy, or timeliness) beyond spatial or temporal resolution",
+     "span_located": true
+    },
+    {
+     "text": "On the Temporal, Spatial, and Metrics page, a QualityMeasurement gives a value, a unitMeasure, and an isMeasurementOf metric whose inDimension names a dimension URI.",
+     "evidence": [
+      "E59"
+     ],
+     "verdict": "pass",
+     "defect_class": null,
+     "reason": "E59's QualityMeasurement JSON shows value, unitMeasure, and isMeasurementOf whose inDimension is a dimension URI, matching the sentence's structural claim.",
+     "support_span": "\"isMeasurementOf\" : { \"expectedDataType\" : \"xsd:decimal\" , \"inDimension\" : \"https://example.gov/dimensions/completeness\" }, \"value\" : \"98.5\" , \"unitMeasure\" : \"percent\"",
+     "span_located": true
+    },
+    {
+     "text": "FCSM 20-04 groups dimensions into utility (relevance, accessibility, timeliness, punctuality, granularity), objectivity (accuracy and reliability, coherence), and integrity (scientific integrity, credibility, computer and physical security, confidentiality).",
+     "evidence": [
+      "E14",
+      "E27",
+      "E45"
+     ],
+     "verdict": "pass",
+     "defect_class": null,
+     "reason": "E14, E27, and E45 give the utility, objectivity, and integrity dimension lists exactly as grouped in the sentence.",
+     "support_span": "the utility domain includes five quality dimensions: relevance, accessibility, timeliness, punctuality, and granularity",
+     "span_located": true
+    }
+   ],
+   "cut": [],
+   "not_known_kept": [
+    {
+     "text": "The sources do not state any mapping or crosswalk between DCAT-US 3.0 quality measurements and the FCSM Framework's domains or dimensions.",
+     "verdict": "pass",
+     "reason": "No passage connects DCAT-US 3.0 quality measurements to FCSM domains or dimensions in any mapping or crosswalk.",
+     "support_span": "",
+     "span_located": false,
+     "absence_verdict": "pass",
+     "absence_reason": "No passage states a mapping or crosswalk tying DCAT-US 3.0 quality measurements to FCSM Framework domains/dimensions; E14/E15 merely advise considering FCSM domains/dimensions alongside using DCAT, and the crosswalks (E26/E45/E59) map DCAT-US to M-25-05, not FCSM.",
+     "absence_span": null,
+     "absence_span_located": false
+    },
+    {
+     "text": "The sources do not state any required or recommended vocabulary of dimension values for inDimension, including whether FCSM dimension identifiers exist.",
+     "verdict": "pass",
+     "reason": "ISO/IEC 25012 inDimension values appear only in examples, never as a required or recommended vocabulary, and no FCSM dimension identifiers are stated.",
+     "support_span": "",
+     "span_located": false,
+     "absence_verdict": "pass",
+     "absence_reason": "Passages describe inDimension as Mandatory (E37) and use example dimension URIs (E22/E51), but none states a required or recommended controlled vocabulary of dimension values or that FCSM dimension identifiers exist.",
+     "absence_span": null,
+     "absence_span_located": false
+    },
+    {
+     "text": "The sources do not state whether DCAT-US 3.0 quality reporting satisfies any FCSM 20-04 data quality documentation or reporting expectation.",
+     "verdict": "pass",
+     "reason": "No passage states that DCAT-US 3.0 quality reporting satisfies any FCSM 20-04 documentation or reporting expectation.",
+     "support_span": "",
+     "span_located": false,
+     "absence_verdict": "pass",
+     "absence_reason": "No passage states that DCAT-US 3.0 quality reporting satisfies any FCSM 20-04 documentation or reporting expectation; E14/E15 only suggest considering FCSM domains/dimensions to inform metadata enhancements.",
+     "absence_span": null,
+     "absence_span_located": false
+    }
+   ],
+   "not_known_cut": []
+  },
+  {
+   "question_id": 9,
+   "question": "Can 3.0 carry what statistical users need: series, dimensions, units, uncertainty (margins of error, CVs), methodology and revisions?",
+   "status": "done",
+   "answer_model": "claude-opus-5",
+   "check_model": "claude-opus-4-8",
+   "rubric_version": "v1.3.0",
+   "overlay": "faq-claim-attribution (project-local, ai-readiness-kg)",
+   "answer_unit": "155d75773049a523",
+   "check_unit": "7f14c1e029ef3eed",
+   "absence_unit": "b8206c7d20c122c6",
+   "evidence_sha256": "d07c5d0a777eac4ef047e34964fa3218c96018da7ac0c8871472bfa8bea3ee17",
+   "tokens": {
+    "answer": 56648,
+    "check": 57312,
+    "absence": 63829
+   },
+   "kept": [
+    {
+     "text": "DatasetSeries groups related datasets published over time, including annual releases, recurring surveys and versioned reference data, and individual Dataset records point back to the series using the inSeries field, listed as Optional.",
+     "evidence": [
+      "E9",
+      "E25",
+      "E45"
+     ],
+     "verdict": "pass",
+     "defect_class": null,
+     "reason": "E9/E25 state the grouping and inSeries back-reference and E45 labels the series field Optional.",
+     "support_span": "Individual Dataset records point back to the series using the `inSeries` field.",
+     "span_located": true
+    },
+    {
+     "text": "For revisions, the Dataset page as captured on 15 September 2026 lists previousVersion, a reference to the previous dataset version, and versionNotes, describing how a version differs from earlier ones, both Optional.",
+     "evidence": [
+      "E49",
+      "E50"
+     ],
+     "verdict": "pass",
+     "defect_class": null,
+     "reason": "E49 and E50 from the 2026-09-15 capture list both previousVersion and versionNotes as Optional with the stated descriptions.",
+     "support_span": "Notes describing how this version differs from earlier versions of the dataset",
+     "span_located": true
+    },
+    {
+     "text": "On dimensions, the DOI-DO Candidate Recommendation snapshot captured 4 May 2025 says DCAT 3 and the RDF Data Cube specification introduce new vocabulary terms describing statistical datasets and their dimensions more effectively.",
+     "evidence": [
+      "E58"
+     ],
+     "verdict": "pass",
+     "defect_class": null,
+     "reason": "E58 is the DOI-DO Candidate Recommendation snapshot dated 2025-05-04 and states this verbatim.",
+     "support_span": "DCAT 3 and RDF Data Cube (QB) specification introduce new vocabulary terms to describe statistical datasets and their dimensions more effectively.",
+     "span_located": true
+    }
+   ],
+   "cut": [],
+   "not_known_kept": [
+    {
+     "text": "The sources do not state any DCAT-US 3.0 field for uncertainty measures such as margins of error or coefficients of variation.",
+     "verdict": "pass",
+     "reason": "No passage names any DCAT-US 3.0 field for margins of error or coefficients of variation; QualityMeasurement carries only generic value/unitMeasure.",
+     "support_span": "",
+     "span_located": false,
+     "absence_verdict": "pass",
+     "absence_reason": "No passage names a DCAT-US 3.0 field for uncertainty measures; QualityMeasurement examples cite completeness/accuracy/timeliness/availability, and margins of error appear only in FCSM text, not as a DCAT-US field.",
+     "absence_span": null,
+     "absence_span_located": false
+    },
+    {
+     "text": "The sources do not state any DCAT-US 3.0 field for recording the methodology behind a dataset.",
+     "verdict": "pass",
+     "reason": "No passage states a DCAT-US 3.0 field for recording dataset methodology; the only methodology reference is to versioning methodology, not a field.",
+     "support_span": "",
+     "span_located": false,
+     "absence_verdict": "pass",
+     "absence_reason": "No passage states a DCAT-US 3.0 field for recording methodology; methodology is discussed only generically in FCSM passages, not as a schema field.",
+     "absence_span": null,
+     "absence_span_located": false
+    },
+    {
+     "text": "The sources do not state a DCAT-US 3.0 field for the unit of measure of the data values themselves, as distinct from the Optional unitMeasure on QualityMeasurement.",
+     "verdict": "pass",
+     "reason": "The only unitMeasure stated is on QualityMeasurement, which the item excludes; RDF Data Cube unit-of-measure terms are qb vocabulary, not DCAT-US 3.0 fields.",
+     "support_span": "",
+     "span_located": false,
+     "absence_verdict": "pass",
+     "absence_reason": "The only unitMeasure in the DCAT-US passages is the Optional one on QualityMeasurement (E15/E8); no passage states a separate DCAT-US 3.0 field for the unit of measure of the data values themselves.",
+     "absence_span": null,
+     "absence_span_located": false
+    }
+   ],
+   "not_known_cut": []
+  },
+  {
+   "question_id": 10,
+   "question": "Where do the documents disagree with each other: the schema pages, the Implementation Guide, the M-25-05 crosswalk, M-25-05 itself, and secondary accounts? For example, is the language code ISO 639-1 or BCP 47?",
+   "status": "done",
+   "answer_model": "claude-opus-5",
+   "check_model": "claude-opus-4-8",
+   "rubric_version": "v1.3.0",
+   "overlay": "faq-claim-attribution (project-local, ai-readiness-kg)",
+   "answer_unit": "07108dd6e48612b5",
+   "check_unit": "ad13a78da9e5a1f1",
+   "absence_unit": "4d03d3add7f7e91e",
+   "evidence_sha256": "ffed43d6801fbd5f8936625d8638959e95a9eeaff74df1ed71b39ad5c3a39f6c",
+   "tokens": {
+    "answer": 63429,
+    "check": 67374,
+    "absence": 53693
+   },
+   "kept": [
+    {
+     "text": "On language the documents agree on ISO 639-1 two-letter codes, and the Overview's changelog says its own earlier BCP 47 description was an error corrected in May 2026.",
+     "evidence": [
+      "E1",
+      "E3",
+      "E16"
+     ],
+     "verdict": "pass",
+     "defect_class": null,
+     "reason": "E1 states the May 2026 rewrite corrected the earlier BCP 47 error to ISO 639-1 two-letter codes, and E3/E16 both state ISO 639-1, so the agreement claim is carried by the cited passages.",
+     "support_span": "corrected `language` breaking change description from BCP 47 to ISO 639-1 two-letter codes",
+     "span_located": true
+    },
+    {
+     "text": "The Overview disagrees with itself on accrualPeriodicity: its structural-changes table accepts three vocabularies and prefers plain-language codes, while its glossary says plain English descriptions cause validation failures.",
+     "evidence": [
+      "E19",
+      "E46"
+     ],
+     "verdict": "pass",
+     "defect_class": null,
+     "reason": "E19 (structural-changes table) accepts three vocabularies and prefers plain-language codes while E46 (glossary), both from the Overview, says plain English descriptions cause validation failures.",
+     "support_span": "Plain English descriptions like 'Weekly' or 'Monthly' are not accepted and cause validation failures.",
+     "span_located": true
+    },
+    {
+     "text": "The Dataset page as captured on 15 September 2026 lists publisher as Recommended, while the 21 August 2026 version lists it Mandatory and the 2025 working draft says Recommended.",
+     "evidence": [
+      "E10"
+     ],
+     "verdict": "pass",
+     "defect_class": null,
+     "reason": "E10 records publisher as Recommended on 2026-09-15, Mandatory on 2026-08-21, and Recommended in the 2025 working draft, matching all three parts of the sentence.",
+     "support_span": "DCAT-US 3.0 Dataset page (2026-09-15): ## [Dataset &gt; publisher #](#publisher) **Requirement:** Recommended",
+     "span_located": true
+    }
+   ],
+   "cut": [],
+   "not_known_kept": [
+    {
+     "text": "The sources do not state which language code standard M-25-05 itself requires.",
+     "verdict": "pass",
+     "reason": "No passage states which language code standard M-25-05 itself requires; ISO 639-1 is stated only of the DCAT-US v3.0 schema and guide, not of M-25-05.",
+     "support_span": "",
+     "span_located": false,
+     "absence_verdict": "pass",
+     "absence_reason": "All M-25-05 passages (E5, E26, E30, E32, E37, E38, E48, E56, E57) address schema elements, open format, and definitions but none attribute any language code standard to M-25-05 itself; the ISO 639-1/BCP 47 attributions belong to DCAT-US schema pages.",
+     "absence_span": null,
+     "absence_span_located": false
+    },
+    {
+     "text": "The sources do not state any element where the M-25-05 crosswalk differs from the schema pages or the Implementation Guide.",
+     "verdict": "pass",
+     "reason": "The crosswalk passages only describe mapping statutory requirements to DCAT-US v3.0 and no passage states any element where the crosswalk differs from the schema pages or the Implementation Guide.",
+     "support_span": "",
+     "span_located": false,
+     "absence_verdict": "pass",
+     "absence_reason": "The crosswalk passages (E3, E5, E6) describe it only as a mapping reference and no passage states any element where the crosswalk diverges from the schema pages or Implementation Guide.",
+     "absence_span": null,
+     "absence_span_located": false
+    },
+    {
+     "text": "The sources do not state what any secondary account says about the language code.",
+     "verdict": "pass",
+     "reason": "No passage that is a secondary account states anything about the language code; language-code statements come only from the schema, Overview, Implementation Guide, and the working-group standard itself.",
+     "support_span": "",
+     "span_located": false,
+     "absence_verdict": "pass",
+     "absence_reason": "No passage is a secondary account, and none reports what any secondary account says about the language code.",
+     "absence_span": null,
+     "absence_span_located": false
+    }
+   ],
+   "not_known_cut": []
+  },
+  {
+   "question_id": 11,
+   "question": "How does DCAT-US 3.0 relate to AI readiness of statistical data (FCSM 25-03; the AI-readiness framework's indicators)?",
+   "status": "done",
+   "answer_model": "claude-opus-5",
+   "check_model": "claude-opus-4-8",
+   "rubric_version": "v1.3.0",
+   "overlay": "faq-claim-attribution (project-local, ai-readiness-kg)",
+   "answer_unit": "40d344956f4d9ae8",
+   "check_unit": "eaa123491123f3c7",
+   "absence_unit": "e9f5bbabc579efdf",
+   "evidence_sha256": "e4f4606f452f0cfc34a209375f24d0b2547bad9d5a6c255f52401f407c0f54c1",
+   "tokens": {
+    "answer": 56882,
+    "check": 58612,
+    "absence": 54234
+   },
+   "kept": [
+    {
+     "text": "FCSM 25-03 tells agencies to use common schemas or standards like the DCAT metadata standard used in data.gov catalogs, or SDMX, so AI developers have a consistent experience.",
+     "evidence": [
+      "E20",
+      "E28"
+     ],
+     "verdict": "pass",
+     "defect_class": null,
+     "reason": "E28/E20 are FCSM 25-03 and state the DCAT/SDMX guidance and the consistent-experience purpose verbatim.",
+     "support_span": "Use common schemas or standards like the DCAT metadata standard used in data.gov catalogs or SDMX so that AI developers have a consistent experience.",
+     "span_located": true
+    },
+    {
+     "text": "The DCAT-US v3.0 Schema Implementation Guide says adopting the schema aligns with the administration's AI priorities, because more descriptive metadata conveys context, structure, and lineage AI models need to interpret data correctly.",
+     "evidence": [
+      "E25"
+     ],
+     "verdict": "pass",
+     "defect_class": null,
+     "reason": "E25 (the Implementation Guide) states the AI-priority alignment and the context/structure/lineage rationale.",
+     "support_span": "Adopting the DCAT-US v3.0 schema also aligns with the administration's priorities related to artificial intelligence (AI).",
+     "span_located": true
+    },
+    {
+     "text": "One framework indicator, G4, treats issuing authority as machine-readable catalog metadata: publisher, which DCAT-US 3.0 defines as Recommended, or DCAT-US 1.1's required bureauCode and programCode.",
+     "evidence": [
+      "E29"
+     ],
+     "verdict": "pass",
+     "defect_class": null,
+     "reason": "E29 is framework indicator G4 and states issuing authority as catalog metadata via publisher (Recommended) or DCAT-US 1.1's required bureauCode/programCode.",
+     "support_span": "in `publisher`, the field DCAT-US 3.0 defines for it (Recommended), or in the agency codes DCAT-US 1.1 requires of federal datasets (`bureauCode`, `programCode`)",
+     "span_located": true
+    }
+   ],
+   "cut": [],
+   "not_known_kept": [
+    {
+     "text": "The sources do not state that FCSM 25-03 names the DCAT-US v3.0 schema specifically, as opposed to the DCAT metadata standard generally.",
+     "verdict": "pass",
+     "reason": "The FCSM 25-03 passages (E20/E28) name only the DCAT metadata standard generally, never DCAT-US v3.0 specifically.",
+     "support_span": "",
+     "span_located": false,
+     "absence_verdict": "pass",
+     "absence_reason": "The only FCSM 25-03 passage mentioning DCAT (E3) names 'the DCAT metadata standard' generally, not the DCAT-US v3.0 schema specifically.",
+     "absence_span": null,
+     "absence_span_located": false
+    },
+    {
+     "text": "The sources do not state how the AI-readiness framework's other indicators map to DCAT-US 3.0 classes or fields.",
+     "verdict": "pass",
+     "reason": "Only indicator G4 (E29) appears; no passage maps any other framework indicator to DCAT-US 3.0 classes or fields.",
+     "support_span": "",
+     "span_located": false,
+     "absence_verdict": "pass",
+     "absence_reason": "The crosswalk passages map M-25-05 statutory requirements to DCAT-US v3.0; no passage maps AI-readiness framework indicators to DCAT-US 3.0 classes or fields.",
+     "absence_span": null,
+     "absence_span_located": false
+    },
+    {
+     "text": "The sources do not state that DCAT-US 3.0 or its implementation guidance cites FCSM 25-03.",
+     "verdict": "pass",
+     "reason": "No passage shows DCAT-US 3.0 or its guidance citing FCSM 25-03; E2 only lists FCSM as a co-developer, not a cited document.",
+     "support_span": "",
+     "span_located": false,
+     "absence_verdict": "pass",
+     "absence_reason": "E5 states DCAT-US v3.0 was co-developed by the FCSM organization but no passage states that DCAT-US 3.0 or its implementation guidance cites the FCSM 25-03 document.",
+     "absence_span": null,
+     "absence_span_located": false
+    }
+   ],
+   "not_known_cut": []
+  },
+  {
+   "question_id": 12,
+   "question": "What did the EU do for statistical data (StatDCAT-AP), and does the US have an equivalent?",
+   "status": "done",
+   "answer_model": "claude-opus-5",
+   "check_model": "claude-opus-4-8",
+   "rubric_version": "v1.3.0",
+   "overlay": "faq-claim-attribution (project-local, ai-readiness-kg)",
+   "answer_unit": "e69d1b7255efbc85",
+   "check_unit": "773a68d636d71c99",
+   "absence_unit": "c0beafde47d71d71",
+   "evidence_sha256": "51c28a7102092d3159c46bc8b4f7a32592cd1e7a71cd67f125a029b6b61dd94b",
+   "tokens": {
+    "answer": 52227,
+    "check": 55495,
+    "absence": 56616
+   },
+   "kept": [
+    {
+     "text": "StatDCAT-AP, dated 2019, extends Europe's DCAT Application Profile to describe statistical datasets, dataset series and services, aiming to integrate statistical data portals with open data portals and improve discoverability.",
+     "evidence": [
+      "E5",
+      "E24"
+     ],
+     "verdict": "pass",
+     "defect_class": null,
+     "reason": "E5 gives the extension and scope; E24 gives the integration/discoverability aim; header carries the 2019 date.",
+     "support_span": "for describing statistical datasets, dataset series and services",
+     "span_located": true
+    },
+    {
+     "text": "Because existing DCAT-AP properties did not meet the requirements, it created new properties in the StatDCAT-AP namespace to expose dimensions, such as time or region, and attributes, such as units of measure.",
+     "evidence": [
+      "E12",
+      "E14"
+     ],
+     "verdict": "pass",
+     "defect_class": null,
+     "reason": "E14 states existing DCAT-AP properties did not meet requirements; E12 states new StatDCAT-AP namespace properties expose dimensions (time, regions) and attributes (units of measure).",
+     "support_span": "The following two properties were created in the",
+     "span_located": true
+    },
+    {
+     "text": "On the US side, the DCAT-US Version 3 Candidate Recommendation snapshot captured 4 May 2025 lists enhanced handling of statistical data, crediting new DCAT 3 and RDF Data Cube vocabulary terms.",
+     "evidence": [
+      "E20"
+     ],
+     "verdict": "pass",
+     "defect_class": null,
+     "reason": "E20 lists enhanced handling of statistical data crediting new DCAT 3 and RDF Data Cube terms; header gives the 2025-05-04 capture.",
+     "support_span": "DCAT 3 and RDF Data Cube (QB) specification introduce new vocabulary terms to describe statistical datasets and their dimensions more effectively",
+     "span_located": true
+    }
+   ],
+   "cut": [],
+   "not_known_kept": [
+    {
+     "text": "The sources do not state whether the United States has a separate statistical application profile equivalent to StatDCAT-AP.",
+     "verdict": "pass",
+     "reason": "No passage states whether the US has a separate statistical application profile equivalent to StatDCAT-AP; DCAT-US is described only as a general DCAT profile.",
+     "support_span": "",
+     "span_located": false,
+     "absence_verdict": "pass",
+     "absence_reason": "No passage states whether the US has or lacks a separate statistical application profile equivalent to StatDCAT-AP; E24 only notes statistical handling is folded into DCAT 3/QB without asserting a US profile exists or not.",
+     "absence_span": null,
+     "absence_span_located": false
+    },
+    {
+     "text": "The sources do not state whether DCAT-US 3.0 adopts the StatDCAT-AP namespace properties for dimensions and attributes.",
+     "verdict": "pass",
+     "reason": "DCAT-US passages reference sdmx-attribute namespace (E21/E30/E31) but no passage states DCAT-US adopts the StatDCAT-AP (stat:) namespace properties.",
+     "support_span": "",
+     "span_located": false,
+     "absence_verdict": "pass",
+     "absence_reason": "E7/E22 describe StatDCAT-AP's own stat: namespace properties and E24 says DCAT-US uses DCAT 3 and QB, but no passage states that DCAT-US 3.0 adopts the StatDCAT-AP namespace properties for dimensions and attributes.",
+     "absence_span": null,
+     "absence_span_located": false
+    },
+    {
+     "text": "The sources do not state any DCAT-US 3.0 requirement level, Mandatory, Recommended or Optional, for describing statistical dimensions of a dataset.",
+     "verdict": "pass",
+     "reason": "E55's Mandatory inDimension concerns quality-measurement dimensions, not statistical dataset dimensions; no passage gives a requirement level for describing a dataset's statistical dimensions.",
+     "support_span": "",
+     "span_located": false,
+     "absence_verdict": "pass",
+     "absence_reason": "The requirement-level passages (e.g. E30, E39, E43, E59) cover other properties; no passage assigns a DCAT-US 3.0 Mandatory/Recommended/Optional level to describing statistical dimensions, and the qb required/optional declarations in E9/E10 are a separate RDF Data Cube framework.",
+     "absence_span": null,
+     "absence_span_located": false
+    }
+   ],
+   "not_known_cut": []
+  },
+  {
+   "question_id": 13,
+   "question": "What options exist for next steps? Examples: a statistical application profile; raising requirement levels through guidance; conformance checking. State what each source supports. Do not recommend beyond the sources.",
+   "status": "done",
+   "answer_model": "claude-opus-5",
+   "check_model": "claude-opus-4-8",
+   "rubric_version": "v1.3.0",
+   "overlay": "faq-claim-attribution (project-local, ai-readiness-kg)",
+   "answer_unit": "b5422d7db40f6115",
+   "check_unit": "89aef04a6f662a33",
+   "absence_unit": "6277dff1b697e20a",
+   "evidence_sha256": "6b3cd65127abcad176f8468b64b14f51dc95c484db2872028150157b7ed36f64",
+   "tokens": {
+    "answer": 53033,
+    "check": 55194,
+    "absence": 71152
+   },
+   "kept": [
+    {
+     "text": "For conformance checking, the Data.gov overview says agencies can programmatically validate metadata against the JSON Schema (2020-12), and the 2025 Candidate Recommendation Snapshot defines the profile using SHACL.",
+     "evidence": [
+      "E21",
+      "E56"
+     ],
+     "verdict": "pass",
+     "defect_class": null,
+     "reason": "E21 (Data.gov overview) supports JSON Schema 2020-12 programmatic validation and E56 (2025 CRS) supports the profile being defined using SHACL.",
+     "support_span": "Agencies can programmatically validate their metadata files against the schema.",
+     "span_located": true
+    },
+    {
+     "text": "The FAIRness project overview describes post-release governance as an open, transparent process to manage the application profile through any subsequent version releases.",
+     "evidence": [
+      "E45"
+     ],
+     "verdict": "pass",
+     "defect_class": null,
+     "reason": "E45 states post-release governance recommends exactly this open, transparent process through subsequent version releases.",
+     "support_span": "an open, transparent process to manage the application profile through any subsequent version releases",
+     "span_located": true
+    },
+    {
+     "text": "On statistical extension, StatDCAT-AP 1.0.1 says the base DCAT Application Profile may in future be extended with additional agent roles that have proven useful across domains.",
+     "evidence": [
+      "E6"
+     ],
+     "verdict": "pass",
+     "defect_class": null,
+     "reason": "E6 states the base DCAT Application Profile may in future be extended with additional (agent) roles that have proven useful across domains.",
+     "support_span": "may in the future be extended with additional roles that",
+     "span_located": true
+    }
+   ],
+   "cut": [],
+   "not_known_kept": [
+    {
+     "text": "The sources do not state that a statistical application profile of DCAT-US 3.0 is planned, proposed, or under development.",
+     "verdict": "pass",
+     "reason": "No passage states that a statistical application profile of DCAT-US 3.0 is planned, proposed, or under development; StatDCAT-AP is a separate European profile.",
+     "support_span": "",
+     "span_located": false,
+     "absence_verdict": "pass",
+     "absence_reason": "StatDCAT-AP (E9, E43-45) is a statistical profile of the European DCAT-AP, not of DCAT-US 3.0; no passage states a statistical application profile of DCAT-US 3.0 is planned, proposed, or under development.",
+     "absence_span": null,
+     "absence_span_located": false
+    }
+   ],
+   "not_known_cut": [
+    {
+     "text": "The sources do not state that any field's requirement level will be raised from Recommended or Optional to Mandatory through future guidance.",
+     "verdict": "pass",
+     "reason": "No passage states any field's requirement level will be raised to Mandatory through future guidance.",
+     "support_span": "",
+     "span_located": false,
+     "absence_verdict": "fail",
+     "absence_reason": "E58 states a currently-not-required metadata field will become required once OMB publishes further guidance, i.e. a field's requirement status is raised to required through future guidance.",
+     "absence_span": "This metadata will not be required until further guidance on the implementation of Title III of the Evidence Act is published by OMB.",
+     "absence_span_located": true,
+     "cut_reason": "absence check fail: a passage found by the statement's own words states it"
+    },
+    {
+     "text": "The sources do not state that any conformance-checking or certification program will be run against agency catalogs.",
+     "verdict": "pass",
+     "reason": "E46 only recommends periodic data assessments 'should be conducted'; no passage states a conformance-checking or certification program will be run against agency catalogs.",
+     "support_span": "",
+     "span_located": false,
+     "absence_verdict": "fail",
+     "absence_reason": "E68 states Data.gov verifies that agency catalog submissions include the mandatory properties and are correctly formatted to the schema, which is a conformance check run against agency catalogs.",
+     "absence_span": "Data.gov veriﬁes  only  that  catalog  submissions  include  the  DCAT-US  v3.0  mandatory  properties  and  that  those  properties  are  correctly  formatted  according  to  the  schema.",
+     "absence_span_located": true,
+     "cut_reason": "absence check fail: a passage found by the statement's own words states it"
+    }
+   ]
+  },
+  {
+   "question_id": 14,
+   "question": "What questions can the current sources not answer? List each, with the document that would answer it if one is known.",
+   "status": "done",
+   "answer_model": "claude-opus-5",
+   "check_model": "claude-opus-4-8",
+   "rubric_version": "v1.3.0",
+   "overlay": "faq-claim-attribution (project-local, ai-readiness-kg)",
+   "answer_unit": "5f633ecae74b3a75",
+   "check_unit": "edc94b0352b57aec",
+   "absence_unit": "f7fa6af8e9b6f92a",
+   "evidence_sha256": "27cc84f8a9c4a17e7cdb49c01dc99e1016535ce4d68e9aea266f50b896324b2b",
+   "tokens": {
+    "answer": 43544,
+    "check": 48059,
+    "absence": 62212
+   },
+   "kept": [
+    {
+     "text": "On the transition, the sources do not state the consequences of missing September 30, 2026, when Data.gov stops harvesting DCAT-US v1.1 data.json files, or whether extensions or waivers exist.",
+     "evidence": [
+      "E3",
+      "E4",
+      "E5"
+     ],
+     "verdict": "pass",
+     "defect_class": null,
+     "reason": "All three parts map cleanly to E3, E4 and E5 respectively.",
+     "support_span": "The sources do not state what consequences apply to an agency that misses the September 30, 2026 date.",
+     "span_located": true
+    }
+   ],
+   "cut": [
+    {
+     "text": "The biggest gap is the FAIRness Project sequencing plan's key findings and recommendations; that plan would answer them, but no public copy exists and it went only to the Office of Management and Budget.",
+     "evidence": [
+      "E8",
+      "E10",
+      "E32"
+     ],
+     "verdict": "flag",
+     "defect_class": "boundary_imprecision",
+     "reason": "The factual core (plan contains the findings/recommendations, no public copy, provided only to OMB) is supported by E8/E10/E32, but 'The biggest gap' is an unsupported superlative ranking no passage establishes.",
+     "support_span": "no public copy exists, as no public copy exists and it was provided only to OMB",
+     "span_located": false,
+     "cut_reason": "flag: boundary_imprecision"
+    },
+    {
+     "text": "On the schema, they do not state who set the requirement levels, why publisher and other elements differ between the working draft and published Dataset pages, or what changed for other classes.",
+     "evidence": [
+      "E6",
+      "E11",
+      "E13",
+      "E14"
+     ],
+     "verdict": "flag",
+     "defect_class": "boundary_imprecision",
+     "reason": "E6 locates the publisher difference between the 21 August 2026 page and the 15 September 2026 capture, not between the working draft and published Dataset pages as the sentence frames it.",
+     "support_span": "The sources do not state why publisher is Mandatory on the 21 August 2026 Dataset page but Recommended on the 15 September 2026 capture.",
+     "span_located": true,
+     "cut_reason": "flag: boundary_imprecision"
+    }
+   ],
+   "not_known_kept": [
+    {
+     "text": "The sources do not state any DCAT-US 3.0 field for uncertainty measures or methodology, any requirement level for statistical dimensions, or that a statistical application profile is planned.",
+     "verdict": "pass",
+     "reason": "No passage affirmatively states a field for uncertainty or methodology, a requirement level for statistical dimensions, or that a statistical application profile is planned; E18/E19/E29/E30 confirm these as not stated.",
+     "support_span": "",
+     "span_located": false,
+     "absence_verdict": "pass",
+     "absence_reason": "No passage states a DCAT-US 3.0 field for uncertainty or methodology, assigns a requirement level to statistical dimensions, or says a separate statistical application profile is planned.",
+     "absence_span": null,
+     "absence_span_located": false
+    }
+   ],
+   "not_known_cut": [
+    {
+     "text": "The sources do not state which document would answer the transition-deadline or requirement-level questions.",
+     "verdict": "pass",
+     "reason": "No passage names a document that would answer the transition-deadline (E3/E4/E5) or requirement-level (E6/E11) questions.",
+     "support_span": "",
+     "span_located": false,
+     "absence_verdict": "fail",
+     "absence_reason": "E34 names the schema reference pages (from the v3.0 schema repository) as the authoritative source for requirement levels, so the sources do state which document answers requirement-level questions.",
+     "absence_span": "The schema reference pages below are generated directly from the DCAT-US v3.0 schema repository and reflect the current authoritative field definitions, types, and requirement levels.",
+     "absence_span_located": true,
+     "cut_reason": "absence check fail: a passage found by the statement's own words states it"
+    }
+   ]
+  }
+ ],
+ "spend": {
+  "calls": 53,
+  "done": 52,
+  "tokens": 3314787
+ }
+}

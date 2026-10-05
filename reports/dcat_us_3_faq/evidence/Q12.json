@@ -1,0 +1,1170 @@
+{
+ "question_id": 12,
+ "question": "What did the EU do for statistical data (StatDCAT-AP), and does the US have an equivalent?",
+ "generated_by": "scripts/dcat_faq_evidence.py",
+ "generated_at": "2026-10-05T13:58:47.390684+00:00",
+ "terms": [
+  "statdcat",
+  "statistical",
+  "application profile",
+  "sdmx",
+  "dimension",
+  "attribute",
+  "numseries",
+  "unit of measure",
+  "dcat-ap",
+  "european",
+  "extension",
+  "data cube"
+ ],
+ "documents_searched": {
+  "ai-readiness-kg": [
+   "statdcat-ap-1-0-1",
+   "sdmx-3-0-section-1-framework",
+   "w3c-rdf-data-cube",
+   "dcat-us-3-overview",
+   "dcat-us-3-dataset-schema",
+   "dcat-us-3-dataset-schema-2026-09-15",
+   "dcat-us-3-implementation-guide",
+   "dcat-us-3-m-25-05-crosswalk",
+   "dcat-us-3-quality-governance",
+   "dcat-us-3-temporal-spatial-metrics",
+   "dcat-us-3-dataset-series",
+   "dcat-us-3-candidate-recommendation-snapshot"
+  ],
+  "fss-policy-kg": [
+   "dcat_us_3_schema",
+   "dcat_us_3_implementation_guide"
+  ]
+ },
+ "matched": 924,
+ "dropped_by_cap": 800,
+ "caps": {
+  "max_items": 60,
+  "max_chars": 60000,
+  "max_per_document": 10,
+  "min_passage_chars": 25,
+  "max_passage_chars": 1800
+ },
+ "documents": {
+  "dcat-us-3-candidate-recommendation-snapshot": {
+   "title": "DCAT-US - Version 3: Data Catalog Application Profile for the United States of America (Candidate Recommendation Snapshot; Internet Archive capture 2025-05-04)",
+   "issuer": "DOI-DO DCAT-US working group (GitHub doi-do/dcat-us)",
+   "date": "2025-05-04",
+   "url": "https://web.archive.org/web/20250504194000id_/https://doi-do.github.io/dcat-us/",
+   "graph": "ai-readiness-kg"
+  },
+  "dcat-us-3-dataset-schema": {
+   "title": "DCAT-US 3.0 Schema: Dataset (resources.data.gov)",
+   "issuer": "U.S. General Services Administration / Data.gov",
+   "date": "2026-08-21",
+   "url": "https://resources.data.gov/standards/catalog/dcat-us-3/dataset/",
+   "graph": "ai-readiness-kg"
+  },
+  "dcat-us-3-dataset-schema-2026-09-15": {
+   "title": "DCAT-US 3.0 Schema: Dataset (resources.data.gov; Internet Archive capture 2026-09-15, after the September 2026 rewrite)",
+   "issuer": "U.S. General Services Administration / Data.gov",
+   "date": "2026-09-15",
+   "url": "https://web.archive.org/web/20260915131436id_/https://resources.data.gov/standards/catalog/dcat-us-3/dataset/",
+   "graph": "ai-readiness-kg"
+  },
+  "dcat-us-3-overview": {
+   "title": "DCAT-US 3.0 Overview (resources.data.gov)",
+   "issuer": "U.S. General Services Administration / Data.gov",
+   "date": "2026-08-21",
+   "url": "https://resources.data.gov/resources/dcat-us3/",
+   "graph": "ai-readiness-kg"
+  },
+  "dcat-us-3-quality-governance": {
+   "title": "DCAT-US 3.0: Quality and Governance (resources.data.gov)",
+   "issuer": "U.S. General Services Administration / Data.gov",
+   "date": "2026",
+   "url": "https://resources.data.gov/standards/catalog/dcat-us-3/quality-governance/",
+   "graph": "ai-readiness-kg"
+  },
+  "dcat-us-3-temporal-spatial-metrics": {
+   "title": "DCAT-US 3.0: Temporal, Spatial, and Metrics (resources.data.gov)",
+   "issuer": "U.S. General Services Administration / Data.gov",
+   "date": "2026",
+   "url": "https://resources.data.gov/standards/catalog/dcat-us-3/temporal-spatial-metrics/",
+   "graph": "ai-readiness-kg"
+  },
+  "sdmx-3-0-section-1-framework": {
+   "title": "SDMX 3.0 Technical Specifications, Section 1: Framework for SDMX Technical Standards",
+   "issuer": "SDMX Technical Working Group",
+   "date": "2021-09-13",
+   "url": "https://sdmx.org/wp-content/uploads/SDMX_3-0-0_SECTION_1_FINAL-1_0.pdf",
+   "graph": "ai-readiness-kg"
+  },
+  "statdcat-ap-1-0-1": {
+   "title": "StatDCAT-AP - DCAT Application Profile for description of statistical datasets, Version 1.0.1",
+   "issuer": "European Commission, ISA2 programme / SEMIC Support Centre",
+   "date": "2019-05-28",
+   "url": "https://interoperable-europe.ec.europa.eu/sites/default/files/distribution/access_url/2019-05/0812e528-c428-4832-b674-d5b9c68d1b42/StatDCAT-AP_1.0.1.pdf",
+   "graph": "ai-readiness-kg"
+  },
+  "w3c-rdf-data-cube": {
+   "title": "The RDF Data Cube Vocabulary (W3C Recommendation, 16 January 2014)",
+   "issuer": "W3C Government Linked Data Working Group",
+   "date": "2014-01-16",
+   "url": "https://www.w3.org/TR/vocab-data-cube/",
+   "graph": "ai-readiness-kg"
+  }
+ },
+ "items": [
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "w3c-rdf-data-cube",
+   "locator": {
+    "file": "state/substrate_md/w3c-rdf-data-cube.md",
+    "line": 44
+   },
+   "section": "Abstract",
+   "text": "There are many situations where it would be useful to be able to publish multi-dimensional data, such as statistics, on the web in such a way that it can be linked to related data sets and concepts. The Data Cube vocabulary provides a means to do this using the W3C RDF (Resource Description Framework) standard. The model underpinning the Data Cube vocabulary is compatible with the cube model that underlies SDMX (Statistical Data and Metadata eXchange), an ISO standard for exchanging and sharing statistical data and metadata among organizations. The Data Cube vocabulary is a core foundation which supports extension vocabularies to enable publication of other aspects of statistical data flows or other multi-dimensional data sets.",
+   "terms_matched": [
+    "statistical",
+    "sdmx",
+    "dimension",
+    "extension",
+    "data cube"
+   ],
+   "cut": false,
+   "id": "E1"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "w3c-rdf-data-cube",
+   "locator": {
+    "file": "state/substrate_md/w3c-rdf-data-cube.md",
+    "line": 88
+   },
+   "section": "2. Introduction",
+   "text": "The Data Cube vocabulary is focused purely on the publication of multi-dimensional data on the web. We envisage a series of modular vocabularies being developed which extend this core foundation. In particular, we see the need for an SDMX extension vocabulary to support the publication of additional context to statistical data (such as the encompassing Data Flows and associated Provision Agreements). Other extensions are possible to support metadata for surveys (so called \"micro-data\", as encompassed by DDI) or publication of statistical reference metadata.",
+   "terms_matched": [
+    "statistical",
+    "sdmx",
+    "dimension",
+    "extension",
+    "data cube"
+   ],
+   "cut": false,
+   "id": "E2"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted concept span",
+   "doc_id": "statdcat-ap-1-0-1",
+   "locator": {
+    "node": "statdcat-ap-1-0-1::c_reported_attributes",
+    "location": "statdcat-ap-1-0-1#c0032"
+   },
+   "section": "",
+   "text": "Followed by the Reported Attributes for the properties of the various DCAT -AP \nclasses \n StatDCAT-AP – DCAT Application Profile for description of \nstatistical datasets Version 1.0.1",
+   "terms_matched": [
+    "statdcat",
+    "statistical",
+    "application profile",
+    "attribute",
+    "dcat-ap"
+   ],
+   "cut": false,
+   "id": "E3"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted claim span",
+   "doc_id": "statdcat-ap-1-0-1",
+   "locator": {
+    "node": "statdcat-ap-1-0-1::cl_dim_attr_map",
+    "location": "Annex IV. Mapping SDMX to StatDCAT-AP — narrative explanation, item 3"
+   },
+   "section": "Annex IV. Mapping SDMX to StatDCAT-AP — narrative explanation, item 3",
+   "text": "3) Dimension and Attribute in the StatDCAT-AP Dataset map to Dimension and \nAttribute in the SDMX Data Structure",
+   "terms_matched": [
+    "statdcat",
+    "sdmx",
+    "dimension",
+    "attribute",
+    "dcat-ap"
+   ],
+   "cut": false,
+   "id": "E4"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted concept span",
+   "doc_id": "statdcat-ap-1-0-1",
+   "locator": {
+    "node": "statdcat-ap-1-0-1::con-statistical-datasets",
+    "location": "statdcat-ap-1-0-1#c0003"
+   },
+   "section": "",
+   "text": "EXECUTIVE SUMMARY \nThis document contains the specification and the work that was carried out for \nStatDCAT-AP, an extension of the DCAT  Application Profile for data portals in \nEurope1 for describing statistical datasets, dataset series and services.",
+   "terms_matched": [
+    "statdcat",
+    "statistical",
+    "application profile",
+    "dcat-ap",
+    "extension"
+   ],
+   "cut": false,
+   "id": "E5"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "w3c-rdf-data-cube",
+   "locator": {
+    "file": "state/substrate_md/w3c-rdf-data-cube.md",
+    "line": 86
+   },
+   "section": "2. Introduction",
+   "text": "At the heart of a statistical dataset is a set of observed values organized along a group of dimensions, together with associated metadata. The Data Cube vocabulary enables such information to be represented using the W3C RDF (Resource Description Framework) standard and published following the principles of linked data. The vocabulary is based upon the approach used by the SDMX ISO standard for statistical data exchange. This *cube* model is very general and so the Data Cube vocabulary can be used for other data sets such as survey data, spreadsheets and OLAP data cubes [OLAP].",
+   "terms_matched": [
+    "statistical",
+    "sdmx",
+    "dimension",
+    "data cube"
+   ],
+   "cut": false,
+   "id": "E6"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "w3c-rdf-data-cube",
+   "locator": {
+    "file": "state/substrate_md/w3c-rdf-data-cube.md",
+    "line": 126
+   },
+   "section": "2.3 Audience and scope",
+   "text": "This document describes the Data Cube vocabulary It is aimed at people wishing to publish statistical or other multi-dimension data in RDF. Mechanics of cross-format translation from other formats such as SDMX-ML are not covered here.",
+   "terms_matched": [
+    "statistical",
+    "sdmx",
+    "dimension",
+    "data cube"
+   ],
+   "cut": false,
+   "id": "E7"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "w3c-rdf-data-cube",
+   "locator": {
+    "file": "state/substrate_md/w3c-rdf-data-cube.md",
+    "line": 184
+   },
+   "section": "5.1 Data Sets",
+   "text": "**Observations**\n: This is the actual data, the measured values. In a statistical table, the observations would be the values in the table cells.\n**Organizational structure**\n: To locate an observation within the hypercube, one has at least to know the value of each dimension at which the observation is located, so these values must be specified for each observation. Datasets can have additional organizational structure in the form of *slices* as described in section 7.2.\n**Structural metadata**\n: Having located an observation, we need certain metadata in order to be able to interpret it. What is the unit of measurement? Is it a normal value or a series break? Is the value measured or estimated? These metadata are provided as *attributes* and can be attached to individual observations, or to higher levels.\n**Reference metadata**\n: This is metadata that describes the dataset as a whole, such as categorization of the dataset, its publisher, and a SPARQL endpoint where it can be accessed. External metadata is described in section 9.",
+   "terms_matched": [
+    "statistical",
+    "dimension",
+    "attribute",
+    "unit of measure"
+   ],
+   "cut": false,
+   "id": "E8"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "w3c-rdf-data-cube",
+   "locator": {
+    "file": "state/substrate_md/w3c-rdf-data-cube.md",
+    "line": 215
+   },
+   "section": "5.3 Introducing Slices",
+   "text": "In statistical applications it is common to work with slices in which a single dimension is left unspecified. In particular, to refer to such slices in which the single free dimension is time as *Time Series* and to refer slices along non-time dimensions as *Sections*. Within the Data Cube vocabulary we allow arbitrary dimensionality slices and do not give different names to particular types of slice. Such sub-classes of slice could be added in extension vocabularies.",
+   "terms_matched": [
+    "statistical",
+    "dimension",
+    "extension",
+    "data cube"
+   ],
+   "cut": false,
+   "id": "E9"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "w3c-rdf-data-cube",
+   "locator": {
+    "file": "state/substrate_md/w3c-rdf-data-cube.md",
+    "line": 267
+   },
+   "section": "6.1 Dimensions, attributes and measures",
+   "text": "Note that in any SDMX extension vocabulary there would be one further item of information to encode about components - the role that they play within the structure definition. In particular, it is sometimes convenient for consumers to be able to easily identify which is the time dimension, which component is the primary measure and so forth. It turns out that such roles are intrinsic to the concepts and so this information can be encoded by providing subclasses of `skos:Concept` for each role. The particular choice of roles here is specific to the SDMX standard and so is not included within the core Data Cube vocabulary.",
+   "terms_matched": [
+    "sdmx",
+    "dimension",
+    "extension",
+    "data cube"
+   ],
+   "cut": false,
+   "id": "E10"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted claim span",
+   "doc_id": "statdcat-ap-1-0-1",
+   "locator": {
+    "node": "statdcat-ap-1-0-1::clm-objective-integration",
+    "location": "statdcat-ap-1-0-1#c0003"
+   },
+   "section": "",
+   "text": "The principal objective of the development of the StatDCAT-AP, which is funded \nunder ISA 2 Action of the European Commission on 'Promoting semantic \ninteroperability amongst the European Union Member States (SEMIC)’, is to \nfacilitate a better integration of the existing statistical data portals within open data \nportals, thus improving the discoverability of statistical datasets ac ross domains, \nsectors and borders.",
+   "terms_matched": [
+    "statdcat",
+    "statistical",
+    "dcat-ap",
+    "european"
+   ],
+   "cut": false,
+   "id": "E11"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted definition span",
+   "doc_id": "statdcat-ap-1-0-1",
+   "locator": {
+    "node": "statdcat-ap-1-0-1::d5",
+    "location": "statdcat-ap-1-0-1#c0010"
+   },
+   "section": "",
+   "text": "Dimensions and attributes \nA requirement has been expressed to expose information about:  \n Attributes: components used to qualify and interpret observed values suc h \nas units of measure, scaling factors \n Dimensions: components that identify observations such as time, sex, age, \nregions \nThe following two properties were created in the StatDCAT-AP namespace: \nP roperty A ttribute \nURI stat:attribute  \nRange qb:A ttributeProperty, expressed as a URI.",
+   "terms_matched": [
+    "statdcat",
+    "dimension",
+    "attribute",
+    "dcat-ap"
+   ],
+   "cut": false,
+   "id": "E12"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted framework span",
+   "doc_id": "statdcat-ap-1-0-1",
+   "locator": {
+    "node": "statdcat-ap-1-0-1::fw-sdmx-im",
+    "location": "statdcat-ap-1-0-1#c0008"
+   },
+   "section": "",
+   "text": "The model underpinning the Data Cube vocabulary builds upon the core of the \nSDMX Information Model with its concepts of dimensions, attributes and measures \ndescribed in a data structure definition.",
+   "terms_matched": [
+    "sdmx",
+    "dimension",
+    "attribute",
+    "data cube"
+   ],
+   "cut": false,
+   "id": "E13"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted standard span",
+   "doc_id": "statdcat-ap-1-0-1",
+   "locator": {
+    "node": "statdcat-ap-1-0-1::st2",
+    "location": "statdcat-ap-1-0-1#c0010"
+   },
+   "section": "",
+   "text": "Extensions and speci fic usage for description of statistical \ndatasets \nDiscussions during the development of the StatDCAT-AP specifications brought out \na number of requirements for the description of statistical datasets  that  were  not  \nmet by existing properties in DCAT-AP.",
+   "terms_matched": [
+    "statdcat",
+    "statistical",
+    "dcat-ap",
+    "extension"
+   ],
+   "cut": false,
+   "id": "E14"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted standard span",
+   "doc_id": "statdcat-ap-1-0-1",
+   "locator": {
+    "node": "statdcat-ap-1-0-1::std-dcat",
+    "location": "statdcat-ap-1-0-1#c0005"
+   },
+   "section": "",
+   "text": "Section 3  presents related work conducted, on the one hand, in the  statistical  \ndomain, including ongoing collaboration between Eurostat and the Publications \nOffice of the EU, SDMX and ESMS, and, on the  other hand, in the Open Data \ndomain, including DCAT, DCAT-AP, GeoDCAT-AP and the Data Cube vocabulary.",
+   "terms_matched": [
+    "statistical",
+    "sdmx",
+    "dcat-ap",
+    "data cube"
+   ],
+   "cut": false,
+   "id": "E15"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "w3c-rdf-data-cube",
+   "locator": {
+    "file": "state/substrate_md/w3c-rdf-data-cube.md",
+    "line": 251
+   },
+   "section": "6.1 Dimensions, attributes and measures",
+   "text": "The Data Cube vocabulary represents the dimensions, attributes and measures as RDF properties. Each is an instance of the abstract `qb:ComponentProperty` class, which in turn has sub-classes `qb:DimensionProperty`, `qb:AttributeProperty` and `qb:MeasureProperty`.",
+   "terms_matched": [
+    "dimension",
+    "attribute",
+    "data cube"
+   ],
+   "cut": false,
+   "id": "E16"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "w3c-rdf-data-cube",
+   "locator": {
+    "file": "state/substrate_md/w3c-rdf-data-cube.md",
+    "line": 259
+   },
+   "section": "6.1 Dimensions, attributes and measures",
+   "text": "The same *concept* can be manifested in different components. For example, the concept of *currency* may be used as a dimension (in a data set dealing with exchange rates) or as an attribute (when describing the currency in which an observed trade took place). The concept of time is typically used only as a dimension but may be encoded as a data value (e.g. an `xsd:dateTime`) or as a symbolic value (e.g. a URI drawn from the reference time URI set developed by data.gov.uk). In statistical agencies it is common to have a standard thesaurus of statistical concepts which underpin the components used in multiple different data sets.",
+   "terms_matched": [
+    "statistical",
+    "dimension",
+    "attribute"
+   ],
+   "cut": false,
+   "id": "E17"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "w3c-rdf-data-cube",
+   "locator": {
+    "file": "state/substrate_md/w3c-rdf-data-cube.md",
+    "line": 345
+   },
+   "section": "6.4 ComponentSpecifications and DataStructureDefinitions",
+   "text": "Example 4\n```\neg:dsd-le a qb:DataStructureDefinition;\n    # The dimensions\n    qb:component [ qb:dimension eg:refArea;         qb:order 1 ];\n    qb:component [ qb:dimension eg:refPeriod;       qb:order 2 ];\n    qb:component [ qb:dimension sdmx-dimension:sex; qb:order 3 ];\n    # The measure(s)\n    qb:component [ qb:measure eg:lifeExpectancy];\n    # The attributes\n    qb:component [ qb:attribute sdmx-attribute:unitMeasure;\n                   qb:componentRequired \"true\"^^xsd:boolean;\n                   qb:componentAttachment qb:DataSet; ] .\n```",
+   "terms_matched": [
+    "sdmx",
+    "dimension",
+    "attribute"
+   ],
+   "cut": false,
+   "id": "E18"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "dcat-us-3-candidate-recommendation-snapshot",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-candidate-recommendation-snapshot.md",
+    "line": 100
+   },
+   "section": "Background",
+   "text": "- DCAT-US 3.0 represents a \"profile\" of the W3C DCAT standard, specifically aligned with [[VOCAB-DCAT-3]], rather than a new standard. It aims to tailor the DCAT specification to meet specific use cases and requirements within the United States.\n- It ensures backward compatibility with DCAT v1.1 metadata, facilitating seamless integration. While DCAT-US 3.0 introduces additional metadata elements to address emerging needs, it preserves the integrity of existing elements (with the exception of addressing errors introduced in DCAT-US 1.1), negating the necessity for metadata translation.\n- The schema extends support for enriched and updated controlled vocabularies, enhancing the precision in naming conventions for federal agencies, file formats, and units of measurement, thereby promoting uniformity across datasets.\n- DCAT-US 3.0 addresses and resolves the constraints encountered with DCAT v1.1 in documenting geospatial data. This advancement obviates the requirement for a distinct federal standard dedicated to geospatial datasets, streamlining documentation processes.\n- Aligning with practices akin to the European Data Catalogue Application Profile (DCAT-AP), DCAT-US 3.0 has garnered vendor support, with ongoing efforts to broaden this support base, indicating a commitment to interoperability and standard adoption.",
+   "terms_matched": [
+    "application profile",
+    "dcat-ap",
+    "european"
+   ],
+   "cut": false,
+   "id": "E19"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "dcat-us-3-candidate-recommendation-snapshot",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-candidate-recommendation-snapshot.md",
+    "line": 187
+   },
+   "section": "Gaps with DCAT-US 1.1",
+   "text": "- **Increased expressiveness** : DCAT 3 offers a richer set of classes and properties, enabling more detailed descriptions of datasets and their relationships.\n- **Improved support for geospatial data** : DCAT 3 provides better support for describing geospatial datasets, including coordinate reference systems and geometry.\n- **Enhanced handling of statistical data** : DCAT 3 and RDF Data Cube (QB) specification introduce new vocabulary terms to describe statistical datasets and their dimensions more effectively.\n- **Refined vocabularies** : DCAT 3 benefits from updated reference controlled vocabularies to ensure better interoperability between agencies and systems.",
+   "terms_matched": [
+    "statistical",
+    "dimension",
+    "data cube"
+   ],
+   "cut": false,
+   "id": "E20"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (table row)",
+   "doc_id": "dcat-us-3-candidate-recommendation-snapshot",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-candidate-recommendation-snapshot.md",
+    "line": 4740
+   },
+   "section": "Quality Measurement",
+   "text": "| [unit of measure](#quality_measurement_unit_measure) | [`sdmx-attribute:unitMeasure`](http://purl.org/linked-data/sdmx/2009/attribute#unitMeasure) | ``` rdfs:Resource ``` | O | 0..1 |",
+   "terms_matched": [
+    "sdmx",
+    "attribute",
+    "unit of measure"
+   ],
+   "cut": false,
+   "id": "E21"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted concept span",
+   "doc_id": "sdmx-3-0-section-1-framework",
+   "locator": {
+    "node": "sdmx-3-0-section-1-framework::c_code_lists",
+    "location": "sdmx-3-0-section-1-framework#c0009"
+   },
+   "section": "",
+   "text": "462 \n• Code list: Code lists enumerate a set of codes to be used in the representation of 463 \ndimensions, attributes, and other structural parts of SDMX.",
+   "terms_matched": [
+    "sdmx",
+    "dimension",
+    "attribute"
+   ],
+   "cut": false,
+   "id": "E22"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted concept span",
+   "doc_id": "sdmx-3-0-section-1-framework",
+   "locator": {
+    "node": "sdmx-3-0-section-1-framework::c_dsd",
+    "location": "sdmx-3-0-section-1-framework#c0009"
+   },
+   "section": "",
+   "text": "These descriptions are referred to in SDMX 452 \nas Data Structure Definitions, which include information about how concepts are 453 \nassociated with the measures, dimensions, and attributes of a data “cube,” along with 454 \ninformation about the representation of data and related identifying and descriptive 455 \n(structural) metadata.",
+   "terms_matched": [
+    "sdmx",
+    "dimension",
+    "attribute"
+   ],
+   "cut": false,
+   "id": "E23"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted concept span",
+   "doc_id": "statdcat-ap-1-0-1",
+   "locator": {
+    "node": "statdcat-ap-1-0-1::c-discoverability",
+    "location": "4.2"
+   },
+   "section": "4.2",
+   "text": "StatDCAT-AP aims to facilitate  a better \nintegration of the existing statistical  data portals with the Open Data Portals, \nimproving the discoverability of statistical datasets.",
+   "terms_matched": [
+    "statdcat",
+    "statistical",
+    "dcat-ap"
+   ],
+   "cut": false,
+   "id": "E24"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted concept span",
+   "doc_id": "statdcat-ap-1-0-1",
+   "locator": {
+    "node": "statdcat-ap-1-0-1::c-interoperability",
+    "location": "statdcat-ap-1-0-1#c0004"
+   },
+   "section": "",
+   "text": "The work on StatDCAT-AP is a first activity  in the context  of a wider roadmap of \nactivities  that aim to deliver specifications  and tools that enhance \ninteroperability between descriptions of statistical data sets within  the  statistical  \ndomain and between statistical data and open data portals.",
+   "terms_matched": [
+    "statdcat",
+    "statistical",
+    "dcat-ap"
+   ],
+   "cut": false,
+   "id": "E25"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "dcat-us-3-overview",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-overview.md",
+    "line": 48
+   },
+   "section": "What is DCAT-US v3.0?",
+   "text": "DCAT-US v3.0 is the federal data catalog metadata standard, updated to improve the Findability, Accessibility, Interoperability, and Reusability (FAIRness) of federal data. It is a U.S. application profile of the [W3C Data Catalog Vocabulary (DCAT) version 3](https://www.w3.org/TR/vocab-dcat-3/) — not a new or separate standard. This means most DCAT-US v3.0 metadata is valid W3C DCAT 3 metadata, making it easier to share federal data with international catalogs and platforms that understand the W3C standard.\nDCAT-US v3.0 was developed collaboratively by the Federal Chief Data Officers Council, the Federal Committee on Statistical Methodology, and the Data.gov team at GSA, drawing on more than a decade of implementation experience with v1.1 and feedback from agencies, data providers, and data users across government. The schema is maintained in a [public GitHub repository](https://github.com/GSA/dcat-us) and governed through a CDO Tiger Team review process to ensure ongoing accuracy and responsiveness to agency needs.",
+   "terms_matched": [
+    "statistical",
+    "application profile"
+   ],
+   "cut": false,
+   "id": "E26"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "dcat-us-3-overview",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-overview.md",
+    "line": 169
+   },
+   "section": "Glossary",
+   "text": "This section contains explanations of common terms referenced on resources.data.gov.\nSearch for a term:\n  * accrualPeriodicity\nA DCAT-US metadata field describing how often a dataset is updated. Must use ISO 8601 duration codes in repeating interval format (such as R/P1W for weekly, R/P1M for monthly, R/P1Y for annual) or the literal value 'irregular' for datasets that are no longer updated. Plain English descriptions like 'Weekly' or 'Monthly' are not accepted and cause validation failures.\n[(Source)](https://resources.data.gov/resources/harvester-faq-accrual/)\n  * API\nAn application programming interface, which is a set of definitions of the ways one piece of computer software communicates with another. It is a method of achieving abstraction, usually (but not necessarily) between higher-level and lower-level software.\n[(Source)](https://books.google.com/books?id=On_Hh23IXDUC&pg=PA40&lpg=PA40&dq=An+application+programming+interface,+which+is+a+set+of+definitions+of+the+ways+one+piece+of+computer+software+communicates+with+another.+It+is+a+method+of+achieving+abstraction,+usually+\\(but+not+necessarily\\)+between+higher-level+and+lower-level+software.&source=bl&ots=pTandfj4CY&sig=ACfU3U1MiU_2jKWsY8VH4_hJfTL5WDxpWg&hl=en&sa=X&ved=2ahUKEwihlImFgsTkAhWx2FkKHeoJAPQQ6AEwAHoECAkQAQ)\n  * API Analytics\nRate limiting will be part of any API platform, without some sort of usage log and analytics showing developers where they stand, the rate limits will cause nothing but frustration. Clearly show developers where they are at with daily, weekly or monthly API usage and provide proper relief valves allowing them to scale their usage properly.",
+   "terms_matched": [
+    "attribute",
+    "extension"
+   ],
+   "cut": true,
+   "id": "E27"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (table row)",
+   "doc_id": "dcat-us-3-candidate-recommendation-snapshot",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-candidate-recommendation-snapshot.md",
+    "line": 2673
+   },
+   "section": "Property: data dictionary",
+   "text": "| Usage note | This is used to specify a data dictionary or schema that defines fields (variables, dimensions, measures, attributes) in the dataset. |",
+   "terms_matched": [
+    "dimension",
+    "attribute"
+   ],
+   "cut": false,
+   "id": "E28"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (table row)",
+   "doc_id": "dcat-us-3-candidate-recommendation-snapshot",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-candidate-recommendation-snapshot.md",
+    "line": 3411
+   },
+   "section": "Property: data dictionary",
+   "text": "| Usage note | This is used to specify a data dictionary or schema that defines fields (variables, dimensions, measures, attributes) in the distribution. |",
+   "terms_matched": [
+    "dimension",
+    "attribute"
+   ],
+   "cut": false,
+   "id": "E29"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (table row)",
+   "doc_id": "dcat-us-3-candidate-recommendation-snapshot",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-candidate-recommendation-snapshot.md",
+    "line": 4772
+   },
+   "section": "Property: unit of measure",
+   "text": "| URI | [`sdmx-attribute:unitMeasure`](http://purl.org/linked-data/sdmx/2009/attribute#unitMeasure) |",
+   "terms_matched": [
+    "sdmx",
+    "attribute"
+   ],
+   "cut": false,
+   "id": "E30"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (table row)",
+   "doc_id": "dcat-us-3-candidate-recommendation-snapshot",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-candidate-recommendation-snapshot.md",
+    "line": 7965
+   },
+   "section": "Namespaces",
+   "text": "| ``` sdmx-attribute ``` | ``` http://purl.org/linked-data/sdmx/2009/attribute# ``` | [[?SDMX-ATTRIBUTE]] |",
+   "terms_matched": [
+    "sdmx",
+    "attribute"
+   ],
+   "cut": false,
+   "id": "E31"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted concept span",
+   "doc_id": "sdmx-3-0-section-1-framework",
+   "locator": {
+    "node": "sdmx-3-0-section-1-framework::c-data-cubes",
+    "location": "sdmx-3-0-section-1-framework#c0012"
+   },
+   "section": "",
+   "text": "Thus, it is possible to reconstruct and 667 \ndescribe data cubes from SDMX-structured data, and to exchange such databases using the 668 \ninterfaces and formats provided for that purpose in the standard.",
+   "terms_matched": [
+    "sdmx",
+    "data cube"
+   ],
+   "cut": false,
+   "id": "E32"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted concept span",
+   "doc_id": "sdmx-3-0-section-1-framework",
+   "locator": {
+    "node": "sdmx-3-0-section-1-framework::c-dsd",
+    "location": "sdmx-3-0-section-1-framework#c0012"
+   },
+   "section": "",
+   "text": "There is some similarity between “cube” structures commonly used to process statistical data, 661 \nand the Data Structure Definition idea in the SDMX Information Model.",
+   "terms_matched": [
+    "statistical",
+    "sdmx"
+   ],
+   "cut": false,
+   "id": "E33"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted concept span",
+   "doc_id": "sdmx-3-0-section-1-framework",
+   "locator": {
+    "node": "sdmx-3-0-section-1-framework::c-interoperability",
+    "location": "sdmx-3-0-section-1-framework#c0016"
+   },
+   "section": "",
+   "text": "The SDMX Information Model works equally well with any statistical 802 \nconcept, but to encourage interoperability, it is also necessary to standardize and harmonize 803 \nthe use of specific concepts and terminology.",
+   "terms_matched": [
+    "statistical",
+    "sdmx"
+   ],
+   "cut": false,
+   "id": "E34"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted concept span",
+   "doc_id": "sdmx-3-0-section-1-framework",
+   "locator": {
+    "node": "sdmx-3-0-section-1-framework::c-reference-metadata",
+    "location": "sdmx-3-0-section-1-framework#c0016"
+   },
+   "section": "",
+   "text": "815 \n  816 \nThe intent of this guideline is two -fold: to provide a core set of concepts which can be used 817 \nto structure statistical data and metadata, to promote interoperability between systems 818 \n(“structural metadata”, as described above); and to promote the exchange of metadata more 819 \nwidely, with a set of harmonized concept names and definitions for other types of metadata 820 \n(“reference metadata”, as defined above.)  821 \n 822 \n6.2 Metadata Common Vocabulary  823 \nThe Metadata Common Vocabulary is an SDMX guideline which provides definition of terms 824 \nto be used for the comparison and mapping of terminology found in data structure definitions 825 \nand in other aspects of statistical metadata management.",
+   "terms_matched": [
+    "statistical",
+    "sdmx"
+   ],
+   "cut": false,
+   "id": "E35"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted concept span",
+   "doc_id": "sdmx-3-0-section-1-framework",
+   "locator": {
+    "node": "sdmx-3-0-section-1-framework::c-statistical-data",
+    "location": "sdmx-3-0-section-1-framework#c0012"
+   },
+   "section": "",
+   "text": "4 The SDMX Information Model  644 \nSDMX provides a way of modelling statistical data, and defines the set of metadata constructs 645 \nused for this purpose.",
+   "terms_matched": [
+    "statistical",
+    "sdmx"
+   ],
+   "cut": false,
+   "id": "E36"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted concept span",
+   "doc_id": "sdmx-3-0-section-1-framework",
+   "locator": {
+    "node": "sdmx-3-0-section-1-framework::c1",
+    "location": "sdmx-3-0-section-1-framework#c0010"
+   },
+   "section": "",
+   "text": "• Metadata Set: A reference metadata set is a set of information pertaining to an object 490 \nwithin the formal SDMX view of statistical exchange: they may describe the 491",
+   "terms_matched": [
+    "statistical",
+    "sdmx"
+   ],
+   "cut": false,
+   "id": "E37"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted concept span",
+   "doc_id": "sdmx-3-0-section-1-framework",
+   "locator": {
+    "node": "sdmx-3-0-section-1-framework::c_bilateral",
+    "location": "§3.1"
+   },
+   "section": "§3.1",
+   "text": "3.4 The SDMX View of Statistical Exchange 386 Version 1.0 of ISO/TS 17369 SDMX covered statistical data sets and the metadata related 387 to the structure of these data sets. This scope was useful in supporting the different models 388 of statistical exchange (bilateral exchange, gateway exchange, and data -sharing) but was 389 not by itself sufficient to support them completely.",
+   "terms_matched": [
+    "statistical",
+    "sdmx"
+   ],
+   "cut": false,
+   "id": "E38"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted concept span",
+   "doc_id": "sdmx-3-0-section-1-framework",
+   "locator": {
+    "node": "sdmx-3-0-section-1-framework::c_code_list_extension",
+    "location": "sdmx-3-0-section-1-framework#c0004"
+   },
+   "section": "",
+   "text": "2.3 Major Changes from 2.1 to 3.0 144 \n 145 \nSDMX version 3.0 introduces new features, improvements and changes to the Standard in the 146 \nfollowing key areas: 147 \n 148 \nInformation Model 149 \n• Simplification and improvement of the reference metadata model  150 \n• Support for microdata 151 \n• Support for geospatial data 152 \n• Support for code list extension and discriminated union of code lists 153",
+   "terms_matched": [
+    "sdmx",
+    "extension"
+   ],
+   "cut": false,
+   "id": "E39"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted concept span",
+   "doc_id": "w3c-rdf-data-cube",
+   "locator": {
+    "node": "w3c-rdf-data-cube::c-component",
+    "location": "5.2"
+   },
+   "section": "5.2",
+   "text": "A cube is organized according to a set of *dimensions*, *attributes* and *measures*. We collectively call these *components*.",
+   "terms_matched": [
+    "dimension",
+    "attribute"
+   ],
+   "cut": false,
+   "id": "E40"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted concept span",
+   "doc_id": "w3c-rdf-data-cube",
+   "locator": {
+    "node": "w3c-rdf-data-cube::c-component-set",
+    "location": "12.7"
+   },
+   "section": "12.7",
+   "text": "***Class:* `qb:ComponentSpecification` *Sub class of: * `qb:ComponentSet`** : Used to define properties of a component (attribute, dimension etc) which are specific to its usage in a DSD. ***Class:* `qb:ComponentSet`** : Abstract class of things which reference one or more ComponentProperties ***Property:* `qb:componentProperty` ( *Domain:* `qb:ComponentSet` -> *Range:* `qb:ComponentProperty` )**",
+   "terms_matched": [
+    "dimension",
+    "attribute"
+   ],
+   "cut": false,
+   "id": "E41"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted concept span",
+   "doc_id": "w3c-rdf-data-cube",
+   "locator": {
+    "node": "w3c-rdf-data-cube::c-measure-dimension",
+    "location": "6.5"
+   },
+   "section": "6.5",
+   "text": "In the first approach each observation records a single observed value for one measure. We introduce an additional dimension whose value indicates the measure being conveyed by each observation. This *measure dimension* approach is the one supported by the SDMX information model.",
+   "terms_matched": [
+    "sdmx",
+    "dimension"
+   ],
+   "cut": false,
+   "id": "E42"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted concept span",
+   "doc_id": "w3c-rdf-data-cube",
+   "locator": {
+    "node": "w3c-rdf-data-cube::c-statistical-data",
+    "location": "2"
+   },
+   "section": "2",
+   "text": "Statistical Data and Metadata Exchange Initiative. URL: http://sdmx.org/wp-content/uploads/2009/02/sdmx-userguide-version2009-1-71.pdf **[SDMX20]** : SDMX Information Model: UML Conceptual Design (Version 2.0), November 2005, Statistical Data and Metadata Exchange Initiative. URL: http://sdmx.org/docs/2_0/SDMX_2_0%20SECTION_02_InformationModel.pdf **[SKOS-PRIMER]** : Antoine Isaac; Ed Summers.",
+   "terms_matched": [
+    "statistical",
+    "sdmx"
+   ],
+   "cut": false,
+   "id": "E43"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted claim span",
+   "doc_id": "w3c-rdf-data-cube",
+   "locator": {
+    "node": "w3c-rdf-data-cube::cl-un-recommended-sdmx",
+    "location": "2.2"
+   },
+   "section": "2.2",
+   "text": "The UN Statistical Commission recommended SDMX as the preferred standard for statistics in 2007.",
+   "terms_matched": [
+    "statistical",
+    "sdmx"
+   ],
+   "cut": false,
+   "id": "E44"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted definition span",
+   "doc_id": "w3c-rdf-data-cube",
+   "locator": {
+    "node": "w3c-rdf-data-cube::d-attachable",
+    "location": "12.4"
+   },
+   "section": "12.4",
+   "text": "Abstract superclass for everything that can have attributes and dimensions.",
+   "terms_matched": [
+    "dimension",
+    "attribute"
+   ],
+   "cut": false,
+   "id": "E45"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted definition span",
+   "doc_id": "w3c-rdf-data-cube",
+   "locator": {
+    "node": "w3c-rdf-data-cube::d-attribute-property",
+    "location": "12.4"
+   },
+   "section": "12.4",
+   "text": "The class of component properties which represent attributes of observations in the cube, e.g. unit of measurement.",
+   "terms_matched": [
+    "attribute",
+    "unit of measure"
+   ],
+   "cut": false,
+   "id": "E46"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted definition span",
+   "doc_id": "w3c-rdf-data-cube",
+   "locator": {
+    "node": "w3c-rdf-data-cube::d-component-property",
+    "location": "12.4"
+   },
+   "section": "12.4",
+   "text": "Abstract super-class of all properties representing dimensions, attributes or measures.",
+   "terms_matched": [
+    "dimension",
+    "attribute"
+   ],
+   "cut": false,
+   "id": "E47"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted framework span",
+   "doc_id": "w3c-rdf-data-cube",
+   "locator": {
+    "node": "w3c-rdf-data-cube::f-sdmx20-im",
+    "location": "2.2"
+   },
+   "section": "2.2",
+   "text": "The RDF Data Cube vocabulary builds upon the core of the the SDMX 2.0 Information Model [SDMX20].",
+   "terms_matched": [
+    "sdmx",
+    "data cube"
+   ],
+   "cut": false,
+   "id": "E48"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (table row)",
+   "doc_id": "dcat-us-3-dataset-schema",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-dataset-schema.md",
+    "line": 83
+   },
+   "section": "DCAT-US 3.0: Dataset",
+   "text": "[wasAttributedTo](https://resources.data.gov/standards/catalog/dcat-us-3/dataset/#wasAttributedTo) | null or array of [Agent](https://resources.data.gov/standards/catalog/dcat-us-3/agents/#agent) classes | Optional | List of agents attributed to this dataset",
+   "terms_matched": [
+    "attribute"
+   ],
+   "cut": false,
+   "id": "E49"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "dcat-us-3-dataset-schema",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-dataset-schema.md",
+    "line": 935
+   },
+   "section": "Dataset > wasAttributedTo",
+   "text": "**Title:** attribution\n**Requirement:** Optional\nList of agents attributed to this dataset",
+   "terms_matched": [
+    "attribute"
+   ],
+   "cut": false,
+   "id": "E50"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (table row)",
+   "doc_id": "dcat-us-3-dataset-schema-2026-09-15",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-dataset-schema-2026-09-15.md",
+    "line": 91
+   },
+   "section": "DCAT-US 3.0: Dataset",
+   "text": "| [wasAttributedTo](#wasAttributedTo) | [Agent](/standards/catalog/dcat-us-3/agents/#agent) null or array of classes | Optional | List of agents attributed to this dataset |",
+   "terms_matched": [
+    "attribute"
+   ],
+   "cut": false,
+   "id": "E51"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (table row)",
+   "doc_id": "dcat-us-3-quality-governance",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-quality-governance.md",
+    "line": 517
+   },
+   "section": "[Class CatalogRecord #](#catalog-record)",
+   "text": "| [conformsTo](#catalog-record--conformsTo) | [Standard](/standards/catalog/dcat-us-3/quality-governance/#standard) null or | Recommended | An Application Profile that the Catalog Record's metadata conforms to |",
+   "terms_matched": [
+    "application profile"
+   ],
+   "cut": false,
+   "id": "E52"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "dcat-us-3-quality-governance",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-quality-governance.md",
+    "line": 615
+   },
+   "section": "[CatalogRecord &gt; conformsTo #](#catalog-record--conformsTo)",
+   "text": "**Title:** application profile",
+   "terms_matched": [
+    "application profile"
+   ],
+   "cut": false,
+   "id": "E53"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "dcat-us-3-temporal-spatial-metrics",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-temporal-spatial-metrics.md",
+    "line": 451
+   },
+   "section": "[Class Metric #](#metric)",
+   "text": "```\n{ \"@type\" : \"Metric\" , \"expectedDataType\" : \"xsd:decimal\" , \"inDimension\" : \"https://example.gov/dimensions/completeness\" , \"definition\" : \"Percentage of non-null values in the dataset.\"\n}\n```",
+   "terms_matched": [
+    "dimension"
+   ],
+   "cut": false,
+   "id": "E54"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (table row)",
+   "doc_id": "dcat-us-3-temporal-spatial-metrics",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-temporal-spatial-metrics.md",
+    "line": 459
+   },
+   "section": "[Class Metric #](#metric)",
+   "text": "| [inDimension](#metric--inDimension) | string | Mandatory | Represents the dimensions a quality metric, certificate and annotation allow a measurement of. |",
+   "terms_matched": [
+    "dimension"
+   ],
+   "cut": false,
+   "id": "E55"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "dcat-us-3-temporal-spatial-metrics",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-temporal-spatial-metrics.md",
+    "line": 494
+   },
+   "section": "[Metric &gt; inDimension #](#metric--inDimension)",
+   "text": "```\n\"https://example.gov/dimensions/completeness\"\n```",
+   "terms_matched": [
+    "dimension"
+   ],
+   "cut": false,
+   "id": "E56"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "dcat-us-3-temporal-spatial-metrics",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-temporal-spatial-metrics.md",
+    "line": 549
+   },
+   "section": "[Class QualityMeasurement #](#quality-measurement)",
+   "text": "```\n{ \"@type\" : \"QualityMeasurement\" , \"isMeasurementOf\" : { \"expectedDataType\" : \"xsd:decimal\" , \"inDimension\" : \"https://example.gov/dimensions/completeness\" }, \"value\" : \"98.5\" , \"unitMeasure\" : \"percent\"\n}\n```",
+   "terms_matched": [
+    "dimension"
+   ],
+   "cut": false,
+   "id": "E57"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text (table row)",
+   "doc_id": "dcat-us-3-temporal-spatial-metrics",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-temporal-spatial-metrics.md",
+    "line": 560
+   },
+   "section": "[Class QualityMeasurement #](#quality-measurement)",
+   "text": "| [unitMeasure](#quality-measurement--unitMeasure) | null or string | Optional | Unit of measure associated with the value |",
+   "terms_matched": [
+    "unit of measure"
+   ],
+   "cut": false,
+   "id": "E58"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "dcat-us-3-temporal-spatial-metrics",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-temporal-spatial-metrics.md",
+    "line": 610
+   },
+   "section": "[QualityMeasurement &gt; unitMeasure #](#quality-measurement--unitMeasure)",
+   "text": "**Title:** unit of measure",
+   "terms_matched": [
+    "unit of measure"
+   ],
+   "cut": false,
+   "id": "E59"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "dcat-us-3-candidate-recommendation-snapshot",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-candidate-recommendation-snapshot.md",
+    "line": 36
+   },
+   "section": "**Data Catalog Application Profile for the United States of America Candidate Recommendation Snapshot**",
+   "text": "exchanging datasets. By harmonizing the most significant attributes of both standards, this profile also addresses",
+   "terms_matched": [
+    "attribute"
+   ],
+   "cut": false,
+   "id": "E60"
+  }
+ ],
+ "evidence_sha256": "51c28a7102092d3159c46bc8b4f7a32592cd1e7a71cd67f125a029b6b61dd94b"
+}
