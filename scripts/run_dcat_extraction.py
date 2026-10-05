@@ -17,7 +17,8 @@ and not copied.**
 Checkpointing is `chunked_pilot`'s (engineering standard §15): each chunk's raw response is
 persisted under `events/raw/bulk_v038/` as it lands, keyed by doc, chunk, source sha and model,
 and a re-run skips every chunk whose raw exists — re-running `--phase extract` IS the resume.
-`--only DOC` restricts a phase to one document, which is how the pilot is run.
+`--only DOC` restricts a phase to one document, which is how the pilot is run. `--cohort a01`
+runs the epoch DCAT-002's ADDENDUM_01 declared, under its own run id.
 
     /opt/anaconda3/bin/python3 scripts/run_dcat_extraction.py --phase plan
     /opt/anaconda3/bin/python3 scripts/run_dcat_extraction.py --phase extract --ceiling-tokens N [--only DOC] [--workers 4]
@@ -47,6 +48,19 @@ PROFILE = rcb.PROFILE                      # bulk_v038, the pinned production pr
 RUN_ID = "dcat_us_3_extraction_2026-10-04"
 EPOCH = "dcat-us-3-2026-10-04"
 STATE = REPO / "state" / "dcat_us_3_extraction_2026-10-04.json"
+
+#: Each epoch this driver has extracted, by the name `--cohort` takes. `base` is DCAT-002's own
+#: and the module defaults above; `a01` is its ADDENDUM_01 (DN-011-R4), admitted by
+#: `scripts/admit_dcat_002_a01.py`. A cohort is its own run on the spend ledger, so its ceiling
+#: and settled total are reported apart from the base run's.
+COHORTS = {
+    "base": dict(TASK=TASK, RUN_ID=RUN_ID, EPOCH=EPOCH, STATE=STATE),
+    "a01": dict(
+        TASK="cc_tasks/2026-10-04_DCAT-002_ADDENDUM_01_base_standard_and_fairness_record.md",
+        RUN_ID="dcat_us_3_a01_extraction_2026-10-05",
+        EPOCH="dcat-us-3-a01-2026-10-05",
+        STATE=REPO / "state" / "dcat_us_3_a01_extraction_2026-10-05.json"),
+}
 
 
 def cohort(only: str | None = None) -> list:
@@ -97,7 +111,10 @@ def main(argv=None) -> int:
     ap.add_argument("--only", default=None, help="restrict the phase to one epoch member")
     ap.add_argument("--workers", type=int, default=2)
     ap.add_argument("--reingest", action="store_true")
+    ap.add_argument("--cohort", choices=sorted(COHORTS), default="base",
+                    help="which declared epoch to run (default: base, DCAT-002's own)")
     a = ap.parse_args(argv)
+    globals().update(COHORTS[a.cohort])     # the module globals every function reads
 
     docs = cohort(a.only)
     bind(docs)

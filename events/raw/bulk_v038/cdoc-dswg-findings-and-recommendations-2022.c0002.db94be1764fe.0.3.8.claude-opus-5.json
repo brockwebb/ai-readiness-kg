@@ -1,0 +1,33 @@
+{
+ "doc_id": "cdoc-dswg-findings-and-recommendations-2022",
+ "chunk_id": "cdoc-dswg-findings-and-recommendations-2022#c0002",
+ "chunk_index": 2,
+ "chunk_start": 29,
+ "chunk_end": 3960,
+ "chunk_tokens": 781,
+ "heading_path": [
+  "RECOMMENDATIONS"
+ ],
+ "oversize": false,
+ "doc_sha256": "db94be1764fe5eca2c67f40bf4ba3349cb4fd535d3a3fe8efbb4286bf1d6a955",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 5341,
+  "cacheReadInputTokens": 10341,
+  "cacheCreationInputTokens": 34816,
+  "webSearchRequests": 0,
+  "costUSD": 0.48686550000000006,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 3536,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.48686550000000006,
+ "duration_ms": 61105,
+ "session_id": "25ab1a4a-eab3-4eeb-a92b-a5c968382804",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Front matter of the CDO Council Data Sharing Working Group report: cover line stating the report's purpose, table of contents, and acknowledgment lists of co-authors, contributors, contributing agencies and Executive Committee leadership; the only assertion is the purpose sentence.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"cn1\",\n      \"name\": \"data-sharing\",\n      \"aliases\": [\"data sharing\", \"federal data sharing\"],\n      \"description\": \"The sharing of data among federal agencies; the subject the report addresses, whose needs and challenges vary across agencies.\",\n      \"anchor\": \"varied data-sharing\",\n      \"location\": \"cdoc-dswg-findings-and-recommendations-2022#c0002\"\n    },\n    {\n      \"id\": \"cn2\",\n      \"name\": \"Chief Data Officer Council\",\n      \"aliases\": [\"CDO Council\"],\n      \"description\": \"The interagency council whose Data Sharing Working Group developed this report and whose understanding of agency data-sharing needs the report is meant to support.\",\n      \"anchor\": \"Chief Data Officer Council\",\n      \"location\": \"cdoc-dswg-findings-and-recommendations-2022#c0002\"\n    },\n    {\n      \"id\": \"cn3\",\n      \"name\": \"needs and challenges\",\n      \"aliases\": [\"data-sharing needs and challenges\"],\n      \"description\": \"The varied data-sharing needs and challenges of all agencies across the Federal Government, which the report was developed to help the council understand.\",\n      \"anchor\": \"needs and challenges\",\n      \"location\": \"cdoc-dswg-findings-and-recommendations-2022#c0002\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"cl1\",\n      \"claim_text\": \"This report was developed by the Chief Data Officer Council\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"This report was developed\",\n      \"location\": \"cdoc-dswg-findings-and-recommendations-2022#c0002\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"cdoc-dswg-findings-and-recommendations-2022\",\n      \"to_id\": \"cl1\",\n      \"anchor\": \"This report was developed\",\n      \"location\": \"cdoc-dswg-findings-and-recommendations-2022#c0002\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl1\",\n      \"to_id\": \"cn2\",\n      \"anchor\": \"Chief Data Officer Council\",\n      \"location\": \"cdoc-dswg-findings-and-recommendations-2022#c0002\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"cdoc-dswg-findings-and-recommendations-2022\",\n      \"to_id\": \"cn1\",\n      \"anchor\": \"varied data-sharing\",\n      \"location\": \"cdoc-dswg-findings-and-recommendations-2022#c0002\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"cdoc-dswg-findings-and-recommendations-2022\",\n      \"to_id\": \"cn3\",\n      \"anchor\": \"needs and challenges\",\n      \"location\": \"cdoc-dswg-findings-and-recommendations-2022#c0002\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"CDO Council Executive Committee\",\n      \"anchor\": \"CDO Council Executive Committee\"\n    },\n    {\n      \"name\": \"Data Inventory\",\n      \"anchor\": \"Tod Dabolt, Data Inventory\"\n    },\n    {\n      \"name\": \"Data Skills and Workforce Development\",\n      \"anchor\": \"Data Skills and Workforce Development\"\n    },\n    {\n      \"name\": \"Federal Government\",\n      \"anchor\": \"across the Federal Government\"\n    },\n    {\n      \"name\": \"U.S. Office of Management and Budget\",\n      \"anchor\": \"U.S. Office of Management and Budget\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"Nikolaos Ipiotis, Data Sharing\",\n      \"suggested_edge\": \"working_group_of\",\n      \"diversion_reason\": \"other:no_organization_node_type\",\n      \"note\": \"Data Sharing Working Group is a working group under the Chief Data Officer Council; the schema has no organization node type and no part-whole edge between organizations.\"\n    },\n    {\n      \"anchor\": \"4. Recommendations\",\n      \"suggested_edge\": \"has_section\",\n      \"diversion_reason\": \"structural_inference\",\n      \"note\": \"Table-of-contents nesting only; document structure, not a semantic relation.\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"Findings\", \"type\": \"Concept\"},\n    {\"name\": \"Recommendations\", \"type\": \"Concept\"},\n    {\"name\": \"Literature Review\", \"type\": \"Concept\"},\n    {\"name\": \"Use Cases\", \"type\": \"Concept\"},\n    {\"name\": \"Jamboard Sessions\", \"type\": \"Instrument\"},\n    {\"name\": \"Mentimeter Discussion\", \"type\": \"Instrument\"}\n  ]\n}"
+}

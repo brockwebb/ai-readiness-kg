@@ -3,7 +3,7 @@ generated_by: 'scripts/build_evidence_map.py (cc_tasks/2026-10-02_evidence_map_r
   whose source_task is that task; other entries are carried through. Do not edit generated entries: re-run
   the generator.'
 cycle_of_record: scan_2026-09-10_rj4
-framework_record_commit: 9ffcffddbf8f
+framework_record_commit: 688451fb0012
 claims:
 - id: CL-001
   key: q1.partition
@@ -1720,8 +1720,8 @@ claims:
   key: q3.corpus_growth
   question: Q3
   text: The corpus began as the v1 epoch of 71 documents (first admitted `2026-07-03` to `2026-07-04`)
-    and holds 274 admitted documents now; 162 were added before the framework record was first committed
-    (`2026-09-06`, `51d2526e1ad2`) and 41 on or after it, of which 25 are captured scan surfaces rather
+    and holds 278 admitted documents now; 162 were added before the framework record was first committed
+    (`2026-09-06`, `51d2526e1ad2`) and 45 on or after it, of which 25 are captured scan surfaces rather
     than literature.
   status: record
   evidence:
@@ -1735,6 +1735,10 @@ claims:
     id: git.framework_start
     locator: scripts/build_evidence_map.py::QUERIES['git.framework_start']
     note: 51d2526e1ad2ede2520281e3c3c2a60b256dbd1a
+  - kind: document
+    id: cdoc-dswg-findings-and-recommendations-2022
+    locator: events/batch-001.jsonl:125
+    note: first manifest_add 2026-10-05; provenance dcat_002_a01_2026-10-05
   - kind: document
     id: dcat-ap-3-0-0-r5r-vocabulary
     locator: events/batch-001.jsonl:111
@@ -1771,6 +1775,18 @@ claims:
     id: esip-ai-ready-data-checklist-v1-0
     locator: events/batch-001.jsonl:106
     note: first manifest_add 2026-09-10; provenance noaa_esip_2026-09-10
+  - kind: document
+    id: fairness-project-wiki-home
+    locator: events/batch-001.jsonl:122
+    note: first manifest_add 2026-10-05; provenance dcat_002_a01_2026-10-05
+  - kind: document
+    id: fairness-project-wiki-project-overview
+    locator: events/batch-001.jsonl:123
+    note: first manifest_add 2026-10-05; provenance dcat_002_a01_2026-10-05
+  - kind: document
+    id: fcsm-2024-b3-3-fairness-project
+    locator: events/batch-001.jsonl:124
+    note: first manifest_add 2026-10-05; provenance dcat_002_a01_2026-10-05
   - kind: document
     id: generative-ai-and-open-data-guidelines-and-best-practices-de
     locator: events/batch-001.jsonl:112
@@ -1902,11 +1918,11 @@ claims:
   numbers:
   - value: '71'
     source: included entries whose provenance_sources has manifest_v1
-  - value: '274'
+  - value: '278'
     source: manifest entries with screening.decision included
   - value: '162'
     source: included, not v1, first admitted before the framework record
-  - value: '41'
+  - value: '45'
     source: included, not v1, first admitted on or after the framework record
   - value: '25'
     source: of those, entries whose provenance is a scan epoch
@@ -2326,7 +2342,7 @@ claims:
   question: Q5
   text: 'Evidence coverage in the record: 9 of 49 indicator evidence cells carry a pinpoint locator; 29
     of 149 `EVIDENCED_BY` edges point at a located document; 16 indicators have no `EVIDENCED_BY` edge;
-    and 84 of the 274 admitted documents are cited by one.'
+    and 84 of the 278 admitted documents are cited by one.'
   status: record
   evidence:
   - kind: query
@@ -2384,7 +2400,7 @@ claims:
     source: indicators with no EVIDENCED_BY edge
   - value: '84'
     source: admitted documents cited by an EVIDENCED_BY edge
-  - value: '274'
+  - value: '278'
     source: manifest entries with screening.decision included
   source_task: cc_tasks/2026-10-02_evidence_map_record.md
 - id: CL-055
@@ -4068,5 +4084,5 @@ tables:
   - first_admitted: '2026-10-04'
     documents: 1
   - first_admitted: '2026-10-05'
-    documents: 9
+    documents: 13
   q5_numbers_that_differ_from_the_pack: []

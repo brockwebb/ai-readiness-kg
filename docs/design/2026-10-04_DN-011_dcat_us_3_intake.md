@@ -30,6 +30,24 @@ Vocabulary section. The EU solved the same gap with StatDCAT-AP, a statistical a
   - This graph gets those three plus the supporting-class pages, Dataset Series, the earlier working draft (kept
     distinct from the final), StatDCAT-AP 1.0.1 and W3C DQV, so that draft-against-final and US-against-EU can be
     queried.
+- **DN-011-R4 (2026-10-05).** The intake widens to the standard DCAT-US implements and to the statistical side's own
+  record of what it asked for, because the colleague's question is what FCSM advised and whether 3.0 meets it. Both
+  graphs get, where each graph's criterion admits them:
+  - W3C DCAT Version 3 (Recommendation, 2024-08-22);
+  - the FAIRness Project record. This was the CDO Council and FCSM project, with Census on the core team, that wrote
+    3.0. Its deliverables were the schema, a two-year sequencing plan "to find, access, assess for fitness-for-use, and
+    use federal data", and a governance model. Its record includes the August 2024 CDOC and FCSM document that the
+    Implementation Guide cites as its footnote 11, the project wiki's findings and recommendations
+    (https://github.com/DOI-DO/dcat-us/wiki), and the 2024 FCSM conference session B3.3;
+  - the CDO Council Data Sharing Working Group report (April 2022), whose first recommendation started the work;
+  - FCSM 20-04, A Framework for Data Quality, in ai-readiness-kg if absent (fss-policy-kg holds it).
+  The Implementation Guide is already admitted in fss-policy-kg (`dcat_us_3_implementation_guide`).
+- **DN-011-R5 (2026-10-05).** After both intakes, an FAQ for the meeting is built by code from graph queries.
+  - Each answer is short and backed by authoritative sources, with the detail in an attachment.
+  - An answer the graphs cannot support says so; nothing is filled from model memory.
+  - Every claim is checked against its cited text by a separate validator call.
+  - The questions are set in DCAT-003 and cover what was recommended and not met, conflicts among the documents, and
+    the fit to the FCSM data-quality framework and AI readiness.
 - **DN-011-R3.** Indicator G4 is brought current to DCAT-US 3.0.
   - It checks issuing authority in `publisher`, `bureauCode` and `programCode`.
   - In 3.0, `publisher` is Recommended and the two codes are tolerated but not defined.

@@ -1,11 +1,11 @@
 {
  "manifest_version": 2,
  "project": "ai-readiness-kg",
- "generated_at": "2026-10-05T02:36:06.446105+00:00",
+ "generated_at": "2026-10-05T10:59:18.187662+00:00",
  "generator": "dixie.evidence",
  "note": "PROJECTION — rebuilt from the evidence decisions log; do not hand-edit. The log is truth.",
  "counts_by_decision": {
-  "included": 274,
+  "included": 278,
   "excluded": 72,
   "pending_refetch": 42,
   "pending_review": 1
@@ -4615,6 +4615,107 @@
     "notes": [
      "R3's own conditional, applied: press page probed 2026-08-26 — no direct report link; the underlying CDO Insights 2026 report sits behind a lead-capture form (not fetchable). 'Exclude if only the press release exists, logged either way.'"
     ]
+   }
+  },
+  "cdoc-dswg-findings-and-recommendations-2022": {
+   "doc_id": "cdoc-dswg-findings-and-recommendations-2022",
+   "identity": {
+    "sha256": "db94be1764fe5eca2c67f40bf4ba3349cb4fd535d3a3fe8efbb4286bf1d6a955",
+    "canonical_path": "corpus/crosswalk/cdoc-dswg-findings-and-recommendations-2022.pdf",
+    "title": "Data Sharing Working Group: Findings & Recommendations (Federal CDO Council)",
+    "authors_or_org": [
+     "Federal Chief Data Officers Council, Data Sharing Working Group"
+    ],
+    "pub_year": "2022",
+    "doc_type": "federal",
+    "source_url": "https://resources.data.gov/assets/documents/2021_DSWG_Recommendations_and_Findings_508.pdf",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "scripted_fetch",
+    "acquired_at": "2026-10-05T10:59:17.719721+00:00",
+    "acquired_by": "scripts/fetch_allowlisted.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed pdf, detected pdf",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "5383697 bytes vs floor 7000",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "26 pages, extractable text present",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-10-05T10:59:17.798805+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "cc_tasks/2026-10-04_DCAT-002_ADDENDUM_01_base_standard_and_fairness_record.md (DN-011-R4): the statistical side's own record of what the FAIRness Project asked of DCAT-US 3.0, so that what FCSM advised can be set against what 3.0 delivers. Criterion R1 (cc_tasks/2026-08-24_source_triage.md): metadata standards and their federal record, err inclusive.",
+    "decided_by": "cc",
+    "decided_at": "2026-10-05T10:59:17.527625+00:00",
+    "history": [],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "dcat_002_a01_2026-10-05"
+   ],
+   "extra": {
+    "notes": [
+     "fetched robots-first under the identified UA (logs/2026-10-05_DCAT-002_A01_fetch.jsonl). 26 pages. PDF created 2022-03-28, modified 2022-03-30; the resources.data.gov landing page says 'Originally published 2022' and GAO-23-105514 dates it April 2022. The file name's '2021' is the working group's year. cdo.gov's copy was not fetched: its robots.txt was unreachable, which RFC 9309 §2.3.1.4 reads as complete disallow."
+    ],
+    "observed_files": {
+     "corpus/crosswalk/cdoc-dswg-findings-and-recommendations-2022.pdf": {
+      "sha256": "db94be1764fe5eca2c67f40bf4ba3349cb4fd535d3a3fe8efbb4286bf1d6a955",
+      "size": 5383697,
+      "claimed_type": "pdf",
+      "detected_type": "pdf"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/crosswalk/cdoc-dswg-findings-and-recommendations-2022.pdf": {
+      "path": "corpus/crosswalk/cdoc-dswg-findings-and-recommendations-2022.pdf",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed pdf, detected pdf",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "5383697 bytes vs floor 7000",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "26 pages, extractable text present",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-10-05T10:59:17.798805+00:00"
+     }
+    },
+    "added_in": "dcat-us-3-a01-2026-10-05"
    }
   },
   "census-2020-disclosure-avoidance-handbook-2021": {
@@ -12383,6 +12484,208 @@
     ]
    }
   },
+  "fairness-project-wiki-home": {
+   "doc_id": "fairness-project-wiki-home",
+   "identity": {
+    "sha256": "ebb0b69bef26274097e5bacf2c4d1d4d47f43580c4f25d2b4f997d2c96c693a7",
+    "canonical_path": "corpus/crosswalk/fairness-project-wiki-home.md",
+    "title": "Welcome to the CDOC/FCSM FAIRness Project (DCAT-US 3 project wiki, Home)",
+    "authors_or_org": [
+     "CDOC/FCSM FAIRness Project (GitHub DOI-DO/dcat-us wiki)"
+    ],
+    "pub_year": "2023",
+    "doc_type": "federal",
+    "source_url": "https://raw.githubusercontent.com/wiki/DOI-DO/dcat-us/Home.md",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "scripted_fetch",
+    "acquired_at": "2026-10-05T10:59:17.806547+00:00",
+    "acquired_by": "scripts/fetch_allowlisted.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed markdown, detected text",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "5281 bytes vs floor 256",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "5256 chars",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-10-05T10:59:17.806745+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "cc_tasks/2026-10-04_DCAT-002_ADDENDUM_01_base_standard_and_fairness_record.md (DN-011-R4): the statistical side's own record of what the FAIRness Project asked of DCAT-US 3.0, so that what FCSM advised can be set against what 3.0 delivers. Criterion R1 (cc_tasks/2026-08-24_source_triage.md): metadata standards and their federal record, err inclusive.",
+    "decided_by": "cc",
+    "decided_at": "2026-10-05T10:59:17.527625+00:00",
+    "history": [],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "dcat_002_a01_2026-10-05"
+   ],
+   "extra": {
+    "notes": [
+     "fetched robots-first under the identified UA (logs/2026-10-05_DCAT-002_A01_fetch.jsonl). The wiki's source markdown; the rendered page is https://github.com/DOI-DO/dcat-us/wiki (last edited 2023-10-26T18:20:25Z, read from that page). States the project's aims and the key features of the draft DCAT-US v3.0 schema, during the 2023 comment period."
+    ],
+    "observed_files": {
+     "corpus/crosswalk/fairness-project-wiki-home.md": {
+      "sha256": "ebb0b69bef26274097e5bacf2c4d1d4d47f43580c4f25d2b4f997d2c96c693a7",
+      "size": 5281,
+      "claimed_type": "markdown",
+      "detected_type": "text"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/crosswalk/fairness-project-wiki-home.md": {
+      "path": "corpus/crosswalk/fairness-project-wiki-home.md",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed markdown, detected text",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "5281 bytes vs floor 256",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "5256 chars",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-10-05T10:59:17.806745+00:00"
+     }
+    },
+    "added_in": "dcat-us-3-a01-2026-10-05"
+   }
+  },
+  "fairness-project-wiki-project-overview": {
+   "doc_id": "fairness-project-wiki-project-overview",
+   "identity": {
+    "sha256": "6a69caf9cc435fede39ee35079b46b701b0d8d79173e5fc3965c6c41877eef18",
+    "canonical_path": "corpus/crosswalk/fairness-project-wiki-project-overview.md",
+    "title": "FAIRness Project: Project Overview (DCAT-US 3 project wiki)",
+    "authors_or_org": [
+     "CDOC/FCSM FAIRness Project (GitHub DOI-DO/dcat-us wiki)"
+    ],
+    "pub_year": "2023",
+    "doc_type": "federal",
+    "source_url": "https://raw.githubusercontent.com/wiki/DOI-DO/dcat-us/Project-Overview.md",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "scripted_fetch",
+    "acquired_at": "2026-10-05T10:59:17.806933+00:00",
+    "acquired_by": "scripts/fetch_allowlisted.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed markdown, detected text",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "3350 bytes vs floor 256",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "3343 chars",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-10-05T10:59:17.807075+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "cc_tasks/2026-10-04_DCAT-002_ADDENDUM_01_base_standard_and_fairness_record.md (DN-011-R4): the statistical side's own record of what the FAIRness Project asked of DCAT-US 3.0, so that what FCSM advised can be set against what 3.0 delivers. Criterion R1 (cc_tasks/2026-08-24_source_triage.md): metadata standards and their federal record, err inclusive.",
+    "decided_by": "cc",
+    "decided_at": "2026-10-05T10:59:17.527625+00:00",
+    "history": [],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "dcat_002_a01_2026-10-05"
+   ],
+   "extra": {
+    "notes": [
+     "fetched robots-first under the identified UA (logs/2026-10-05_DCAT-002_A01_fetch.jsonl). The wiki's source markdown; the rendered page is https://github.com/DOI-DO/dcat-us/wiki/Project-Overview (last edited 2023-09-12T15:16:41Z). States the three deliverables (governance model, DCAT-US 3 profile, two-year sequencing plan), the problem and the three-phase schema governance process."
+    ],
+    "observed_files": {
+     "corpus/crosswalk/fairness-project-wiki-project-overview.md": {
+      "sha256": "6a69caf9cc435fede39ee35079b46b701b0d8d79173e5fc3965c6c41877eef18",
+      "size": 3350,
+      "claimed_type": "markdown",
+      "detected_type": "text"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/crosswalk/fairness-project-wiki-project-overview.md": {
+      "path": "corpus/crosswalk/fairness-project-wiki-project-overview.md",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed markdown, detected text",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "3350 bytes vs floor 256",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "3343 chars",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-10-05T10:59:17.807075+00:00"
+     }
+    },
+    "added_in": "dcat-us-3-a01-2026-10-05"
+   }
+  },
   "faithbench-a-diverse-hallucination-benchmark-for-summarizati": {
    "doc_id": "faithbench-a-diverse-hallucination-benchmark-for-summarizati",
    "identity": {
@@ -12688,6 +12991,108 @@
      }
     },
     "added_in": "v1"
+   }
+  },
+  "fcsm-2024-b3-3-fairness-project": {
+   "doc_id": "fcsm-2024-b3-3-fairness-project",
+   "identity": {
+    "sha256": "a408bb1962324e450c3e3cb586dcdb6e13775ed787d9da39c26c6fbda7f7fdc1",
+    "canonical_path": "corpus/crosswalk/fcsm-2024-b3-3-fairness-project.pdf",
+    "title": "The FAIRness Project: Building Trust and FAIRness into Finding and Using Government Data (FCSM 2024 Research and Policy Conference, session B3.3)",
+    "authors_or_org": [
+     "Thomas Dabolt (DOI)",
+     "Michael Ratcliffe (U.S. Census Bureau)"
+    ],
+    "pub_year": "2024",
+    "doc_type": "federal",
+    "source_url": "https://statspolicy.gov/assets/fcsm/files/docs/2024-conference-docs/B/B3.3_Dabolt.pdf",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "scripted_fetch",
+    "acquired_at": "2026-10-05T10:59:17.807355+00:00",
+    "acquired_by": "scripts/fetch_allowlisted.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed pdf, detected pdf",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "187257 bytes vs floor 7000",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "8 pages, extractable text present",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-10-05T10:59:17.812144+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "cc_tasks/2026-10-04_DCAT-002_ADDENDUM_01_base_standard_and_fairness_record.md (DN-011-R4): the statistical side's own record of what the FAIRness Project asked of DCAT-US 3.0, so that what FCSM advised can be set against what 3.0 delivers. Criterion R1 (cc_tasks/2026-08-24_source_triage.md): metadata standards and their federal record, err inclusive.",
+    "decided_by": "cc",
+    "decided_at": "2026-10-05T10:59:17.527625+00:00",
+    "history": [],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "dcat_002_a01_2026-10-05"
+   ],
+   "extra": {
+    "notes": [
+     "fetched robots-first under the identified UA (logs/2026-10-05_DCAT-002_A01_fetch.jsonl). 8 slides; PDF created 2024-10-30. The project co-chairs' status report: core team and advisory group, the three deliverables, and the status of each (schema finalized for OMB; sequencing plan, with its key findings and recommendations, and governance plan provided to OMB)."
+    ],
+    "observed_files": {
+     "corpus/crosswalk/fcsm-2024-b3-3-fairness-project.pdf": {
+      "sha256": "a408bb1962324e450c3e3cb586dcdb6e13775ed787d9da39c26c6fbda7f7fdc1",
+      "size": 187257,
+      "claimed_type": "pdf",
+      "detected_type": "pdf"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/crosswalk/fcsm-2024-b3-3-fairness-project.pdf": {
+      "path": "corpus/crosswalk/fcsm-2024-b3-3-fairness-project.pdf",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed pdf, detected pdf",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "187257 bytes vs floor 7000",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "8 pages, extractable text present",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-10-05T10:59:17.812144+00:00"
+     }
+    },
+    "added_in": "dcat-us-3-a01-2026-10-05"
    }
   },
   "fcsm-23-02-a-framework-for-data-quality-case-studies": {
