@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-temporal-spatial-metrics",
+ "chunk_id": "dcat-us-3-temporal-spatial-metrics#c0027",
+ "chunk_index": 27,
+ "chunk_start": 19654,
+ "chunk_end": 19976,
+ "chunk_tokens": 83,
+ "heading_path": [
+  "Temporal, Spatial, and Metrics",
+  "[QualityMeasurement &gt; isMeasurementOf #](#quality-measurement--isMeasurementOf)"
+ ],
+ "oversize": false,
+ "doc_sha256": "083cc7877b8438d25498d71ee0e04b3e0ffdbbef334ff3c5a4735cdf2c8339c7",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 5161,
+  "cacheReadInputTokens": 13057,
+  "cacheCreationInputTokens": 29766,
+  "webSearchRequests": 0,
+  "costUSD": 0.43322350000000004,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 3775,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.43322350000000004,
+ "duration_ms": 56199,
+ "session_id": "d1eb6434-3b74-4fe0-82c2-8ea804ab8574",
+ "raw_result": "{\n\"extract_plan\": {\"chunk_summary\": \"DCAT-US 3 schema reference for the QualityMeasurement properties unitMeasure (optional, unit of measure for the value) and isMeasurementOf (mandatory object, the metric being observed, defined in Metric).\"},\n\"concepts\": [\n{\"id\": \"c_unitmeasure\", \"name\": \"unitMeasure\", \"aliases\": [\"QualityMeasurement unitMeasure\", \"unit of measure\"], \"description\": \"Optional property of QualityMeasurement, null or string, giving the unit of measure associated with the value.\", \"anchor\": \"[unitMeasure]\", \"location\": \"dcat-us-3-temporal-spatial-metrics#c0027\"},\n{\"id\": \"c_ismeasurementof\", \"name\": \"isMeasurementOf\", \"aliases\": [\"QualityMeasurement isMeasurementOf\"], \"description\": \"Mandatory object-typed property of QualityMeasurement identifying the metric being observed; additional properties allowed.\", \"anchor\": \"## [QualityMeasurement\", \"location\": \"dcat-us-3-temporal-spatial-metrics#c0027\"}\n],\n\"definitions\": [\n{\"id\": \"d_unitmeasure\", \"term\": \"unitMeasure\", \"verbatim_text\": \"Unit of measure associated with the value\", \"normative_status\": \"standard\", \"as_of_date\": null, \"anchor\": \"[unitMeasure]\", \"location\": \"dcat-us-3-temporal-spatial-metrics#c0027\"},\n{\"id\": \"d_ismeasurementof\", \"term\": \"isMeasurementOf\", \"verbatim_text\": \"The metric being observed\", \"normative_status\": \"standard\", \"as_of_date\": null, \"anchor\": \"The metric being observed\", \"location\": \"dcat-us-3-temporal-spatial-metrics#c0027\"}\n],\n\"claims\": [],\n\"instruments\": [],\n\"measures\": [],\n\"standards\": [],\n\"frameworks\": [],\n\"practices\": [],\n\"tools\": [],\n\"platforms\": [],\n\"edges\": [\n{\"type\": \"defines\", \"from_id\": \"dcat-us-3-temporal-spatial-metrics\", \"to_id\": \"d_unitmeasure\", \"anchor\": \"[unitMeasure]\", \"location\": \"dcat-us-3-temporal-spatial-metrics#c0027\"},\n{\"type\": \"defines\", \"from_id\": \"dcat-us-3-temporal-spatial-metrics\", \"to_id\": \"d_ismeasurementof\", \"anchor\": \"The metric being observed\", \"location\": \"dcat-us-3-temporal-spatial-metrics#c0027\"},\n{\"type\": \"mentions\", \"from_id\": \"dcat-us-3-temporal-spatial-metrics\", \"to_id\": \"c_unitmeasure\", \"anchor\": \"[unitMeasure]\", \"location\": \"dcat-us-3-temporal-spatial-metrics#c0027\"},\n{\"type\": \"mentions\", \"from_id\": \"dcat-us-3-temporal-spatial-metrics\", \"to_id\": \"c_ismeasurementof\", \"anchor\": \"## [QualityMeasurement\", \"location\": \"dcat-us-3-temporal-spatial-metrics#c0027\"}\n],\n\"cites\": [],\n\"mentions\": [\n{\"name\": \"Metric\", \"anchor\": \"[Metric]\"}\n],\n\"proposed_relationships\": [\n{\"anchor\": \"## [QualityMeasurement\", \"suggested_edge\": \"has_component\", \"from_name\": \"QualityMeasurement\", \"to_name\": \"isMeasurementOf\", \"diversion_reason\": \"structural_inference\"},\n{\"anchor\": \"[unitMeasure]\", \"suggested_edge\": \"has_component\", \"from_name\": \"QualityMeasurement\", \"to_name\": \"unitMeasure\", \"diversion_reason\": \"structural_inference\"},\n{\"anchor\": \"[Metric]\", \"suggested_edge\": \"defined_in\", \"from_name\": \"isMeasurementOf\", \"to_name\": \"Metric\", \"diversion_reason\": \"structural_inference\"}\n],\n\"gleaned\": [\n{\"name\": \"QualityMeasurement\", \"type\": \"Concept\"},\n{\"name\": \"Metric\", \"type\": \"Concept\"}\n]\n}"
+}

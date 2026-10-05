@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-quality-governance",
+ "chunk_id": "dcat-us-3-quality-governance#c0046",
+ "chunk_index": 46,
+ "chunk_start": 48510,
+ "chunk_end": 48961,
+ "chunk_tokens": 109,
+ "heading_path": [
+  "Quality and Governance",
+  "[DataService &gt; contactPoint #](#data-service--contactPoint)"
+ ],
+ "oversize": false,
+ "doc_sha256": "7cbc49b6691fa3e7eb7b4845837afc3e1a6212bfc5882d676284a0ad154cbad5",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 9065,
+  "cacheReadInputTokens": 13056,
+  "cacheCreationInputTokens": 29879,
+  "webSearchRequests": 0,
+  "costUSD": 0.531953,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 6878,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.531953,
+ "duration_ms": 96001,
+ "session_id": "198368fc-3956-4520-8f5a-607dc5b4fd72",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"DCAT-US 3 property page: DataService contactPoint is mandatory, must be an array of Kind classes giving contact information, and should include a continuously monitored email address.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_dataservice\",\n      \"name\": \"Data Service\",\n      \"aliases\": [\"DataService\"],\n      \"description\": \"The service whose contact information this section specifies.\",\n      \"anchor\": \"the Data Service\",\n      \"location\": \"dcat-us-3-quality-governance#c0046\"\n    },\n    {\n      \"id\": \"c_contactpoint\",\n      \"name\": \"contactPoint\",\n      \"aliases\": [\"Contact information\", \"DataService contactPoint\"],\n      \"description\": \"Mandatory DataService property carrying contact information for questions about the service.\",\n      \"anchor\": \"## [DataService\",\n      \"location\": \"dcat-us-3-quality-governance#c0046\"\n    },\n    {\n      \"id\": \"c_kind\",\n      \"name\": \"Kind\",\n      \"aliases\": [\"vCard Kind\"],\n      \"description\": \"Class used for each item of the contactPoint array; contact information for an individual or entity.\",\n      \"anchor\": \"for an individual or entity\",\n      \"location\": \"dcat-us-3-quality-governance#c0046\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d_contactpoint\",\n      \"term\": \"Contact information\",\n      \"verbatim_text\": \"Contact information for questions about the Data Service\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"Contact information for questions\",\n      \"location\": \"dcat-us-3-quality-governance#c0046\"\n    },\n    {\n      \"id\": \"d_kind\",\n      \"term\": \"Kind\",\n      \"verbatim_text\": \"Contact information for an individual or entity\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"for an individual or entity\",\n      \"location\": \"dcat-us-3-quality-governance#c0046\"\n    }\n  ],\n  \"claims\": [\n    {\n      \"id\": \"cl_mandatory\",\n      \"claim_text\": \"Mandatory\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"Mandatory\",\n      \"location\": \"dcat-us-3-quality-governance#c0046\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [\n    {\n      \"id\": \"p_monitored_email\",\n      \"text\": \"Include an email address that is continuously monitored\",\n      \"as_of_date\": null,\n      \"scope\": \"api\",\n      \"anchor\": \"continuously monitored\",\n      \"location\": \"dcat-us-3-quality-governance#c0046\"\n    }\n  ],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"d_contactpoint\",\n      \"anchor\": \"Contact information for questions\",\n      \"location\": \"dcat-us-3-quality-governance#c0046\"\n    },\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"d_kind\",\n      \"anchor\": \"for an individual or entity\",\n      \"location\": \"dcat-us-3-quality-governance#c0046\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"c_dataservice\",\n      \"anchor\": \"the Data Service\",\n      \"location\": \"dcat-us-3-quality-governance#c0046\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"c_contactpoint\",\n      \"anchor\": \"## [DataService\",\n      \"location\": \"dcat-us-3-quality-governance#c0046\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"c_kind\",\n      \"anchor\": \"for an individual or entity\",\n      \"location\": \"dcat-us-3-quality-governance#c0046\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"cl_mandatory\",\n      \"anchor\": \"Mandatory\",\n      \"location\": \"dcat-us-3-quality-governance#c0046\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_mandatory\",\n      \"to_id\": \"c_contactpoint\",\n      \"anchor\": \"Mandatory\",\n      \"location\": \"dcat-us-3-quality-governance#c0046\"\n    },\n    {\n      \"type\": \"recommends\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"p_monitored_email\",\n      \"anchor\": \"continuously monitored\",\n      \"location\": \"dcat-us-3-quality-governance#c0046\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"p_monitored_email\",\n      \"to_id\": \"c_dataservice\",\n      \"anchor\": \"continuously monitored\",\n      \"location\": \"dcat-us-3-quality-governance#c0046\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"UseRestriction\",\n      \"anchor\": \"UseRestriction\"\n    },\n    {\n      \"name\": \"wasUsedBy\",\n      \"anchor\": \"wasUsedBy](#data\"\n    },\n    {\n      \"name\": \"Activity\",\n      \"anchor\": \"Activity\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"## [DataService\",\n      \"suggested_edge\": \"has_component\",\n      \"from_id\": \"c_dataservice\",\n      \"to_id\": \"c_contactpoint\",\n      \"diversion_reason\": \"structural_inference\"\n    },\n    {\n      \"anchor\": \"array of [Kind]\",\n      \"suggested_edge\": \"has_component\",\n      \"from_id\": \"c_contactpoint\",\n      \"to_id\": \"c_kind\",\n      \"diversion_reason\": \"structural_inference\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"UseRestriction\", \"type\": \"Concept\"},\n    {\"name\": \"Activity\", \"type\": \"Concept\"},\n    {\"name\": \"wasUsedBy\", \"type\": \"Concept\"},\n    {\"name\": \"Required\", \"type\": \"Concept\"}\n  ]\n}"
+}

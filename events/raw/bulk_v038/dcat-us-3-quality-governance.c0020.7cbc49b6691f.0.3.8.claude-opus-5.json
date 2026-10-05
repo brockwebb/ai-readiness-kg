@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-quality-governance",
+ "chunk_id": "dcat-us-3-quality-governance#c0020",
+ "chunk_index": 20,
+ "chunk_start": 17584,
+ "chunk_end": 18011,
+ "chunk_tokens": 97,
+ "heading_path": [
+  "Quality and Governance",
+  "[Document &gt; publisher #](#document--publisher)"
+ ],
+ "oversize": false,
+ "doc_sha256": "7cbc49b6691fa3e7eb7b4845837afc3e1a6212bfc5882d676284a0ad154cbad5",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 4121,
+  "cacheReadInputTokens": 13056,
+  "cacheCreationInputTokens": 29582,
+  "webSearchRequests": 0,
+  "costUSD": 0.40538300000000005,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 2771,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.40538300000000005,
+ "duration_ms": 50654,
+ "session_id": "99161db6-b570-49ec-a542-73d7ac1551b3",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"DCAT-US 3 property reference for Document > publisher: requirement level Recommended, typed as null or an array of Organization classes, with a verbatim definition of Organization.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_publisher\",\n      \"name\": \"publisher\",\n      \"aliases\": [\"Document > publisher\"],\n      \"description\": \"The organization(s) that published the Document.\",\n      \"anchor\": \"## [Document\",\n      \"location\": \"dcat-us-3-quality-governance#c0020\"\n    },\n    {\n      \"id\": \"c_organization\",\n      \"name\": \"Organization\",\n      \"aliases\": [],\n      \"description\": \"The class each item of the publisher array must be.\",\n      \"anchor\": \"classes\",\n      \"location\": \"dcat-us-3-quality-governance#c0020\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d_organization\",\n      \"term\": \"Organization\",\n      \"verbatim_text\": \"An organization involved with a resource, including parent or child organizations\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"involved with a resource\",\n      \"location\": \"dcat-us-3-quality-governance#c0020\"\n    }\n  ],\n  \"claims\": [\n    {\n      \"id\": \"cl_recommended\",\n      \"claim_text\": \"Recommended\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"Requirement:** Recommended\",\n      \"location\": \"dcat-us-3-quality-governance#c0020\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"d_organization\",\n      \"anchor\": \"involved with a resource\",\n      \"location\": \"dcat-us-3-quality-governance#c0020\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"c_publisher\",\n      \"anchor\": \"## [Document\",\n      \"location\": \"dcat-us-3-quality-governance#c0020\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"c_organization\",\n      \"anchor\": \"classes\",\n      \"location\": \"dcat-us-3-quality-governance#c0020\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"cl_recommended\",\n      \"anchor\": \"Requirement:** Recommended\",\n      \"location\": \"dcat-us-3-quality-governance#c0020\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_recommended\",\n      \"to_id\": \"c_publisher\",\n      \"anchor\": \"Requirement:** Recommended\",\n      \"location\": \"dcat-us-3-quality-governance#c0020\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"Document\",\n      \"anchor\": \"published the Document\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"suggested_edge\": \"has_property\",\n      \"from_id\": \"Document\",\n      \"to_id\": \"c_publisher\",\n      \"anchor\": \"## [Document\",\n      \"diversion_reason\": \"structural_inference\"\n    },\n    {\n      \"suggested_edge\": \"range\",\n      \"from_id\": \"c_publisher\",\n      \"to_id\": \"c_organization\",\n      \"anchor\": \"Each item of this array must be\",\n      \"diversion_reason\": \"other:no_range_edge_type\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"DCAT-US 3\", \"type\": \"Standard\"},\n    {\"name\": \"null or array of Organization classes\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

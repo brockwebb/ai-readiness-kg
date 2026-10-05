@@ -1,0 +1,33 @@
+{
+ "doc_id": "w3c-dqv",
+ "chunk_id": "w3c-dqv#c0015",
+ "chunk_index": 15,
+ "chunk_start": 82814,
+ "chunk_end": 83164,
+ "chunk_tokens": 80,
+ "heading_path": [
+  ":myQualityChecker is a service computing some quality metrics"
+ ],
+ "oversize": false,
+ "doc_sha256": "271d3e820c681127131595d2c8bf8345e925149192f6cab821f101f09d372a63",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 6002,
+  "cacheReadInputTokens": 13057,
+  "cacheCreationInputTokens": 28956,
+  "webSearchRequests": 0,
+  "costUSD": 0.4461485,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 4584,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.4461485,
+ "duration_ms": 69892,
+ "session_id": "bb85b504-891d-4320-8c12-65202adc5332",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"A DQV usage example types an example quality assessment service as a prov:SoftwareAgent and notes that further details about the quality service can be described with DUV, Dublin Core or ADMS.SW.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c-qas\",\n      \"name\": \"quality assessment service\",\n      \"aliases\": [\":myQualityChecker\"],\n      \"description\": \"The example service whose rdfs:label the document gives as \\\"A quality assessment service\\\"; it computes quality metrics.\",\n      \"anchor\": \"A quality assessment service\",\n      \"location\": \"w3c-dqv#c0015\"\n    },\n    {\n      \"id\": \"c-swagent\",\n      \"name\": \"prov:SoftwareAgent\",\n      \"aliases\": [\"PROV SoftwareAgent\"],\n      \"description\": \"The PROV class the document assigns to the example quality assessment service.\",\n      \"anchor\": \"prov:SoftwareAgent\",\n      \"location\": \"w3c-dqv#c0015\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [\n    {\n      \"id\": \"p-further-details\",\n      \"text\": \"Further details about quality service/software can be provided\",\n      \"as_of_date\": null,\n      \"scope\": \"tool\",\n      \"anchor\": \"Further details about quality\",\n      \"location\": \"w3c-dqv#c0015\"\n    }\n  ],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"w3c-dqv\",\n      \"to_id\": \"c-qas\",\n      \"anchor\": \"rdfs:label\",\n      \"location\": \"w3c-dqv#c0015\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"w3c-dqv\",\n      \"to_id\": \"c-swagent\",\n      \"anchor\": \"a prov:SoftwareAgent\",\n      \"location\": \"w3c-dqv#c0015\"\n    },\n    {\n      \"type\": \"recommends\",\n      \"from_id\": \"w3c-dqv\",\n      \"to_id\": \"p-further-details\",\n      \"anchor\": \"can be provided, for example\",\n      \"location\": \"w3c-dqv#c0015\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"p-further-details\",\n      \"to_id\": \"c-qas\",\n      \"anchor\": \"about quality service/software\",\n      \"location\": \"w3c-dqv#c0015\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"Dataset Usage Vocabulary (DUV)\",\n      \"anchor\": \"Dataset Usage Vocabulary (DUV)\"\n    },\n    {\n      \"name\": \"Dublin Core\",\n      \"anchor\": \"Dublin Core\"\n    },\n    {\n      \"name\": \"ADMS.SW\",\n      \"anchor\": \"ADMS.SW\"\n    },\n    {\n      \"name\": \":availability\",\n      \"anchor\": \"dqv:inDimension :availability\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"suggested_edge\": \"subtype_of\",\n      \"from_id\": \"c-qas\",\n      \"to_id\": \"c-swagent\",\n      \"anchor\": \"a prov:SoftwareAgent ;\",\n      \"diversion_reason\": \"structural_inference\"\n    },\n    {\n      \"suggested_edge\": \"described_with_vocabulary\",\n      \"from_id\": \"c-qas\",\n      \"to_id\": \"Dataset Usage Vocabulary (DUV)\",\n      \"anchor\": \"such as Dataset Usage Vocabulary\",\n      \"diversion_reason\": \"endpoint_not_located\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"Dataset Usage Vocabulary\", \"type\": \"Standard\"},\n    {\"name\": \"Dublin Core\", \"type\": \"Standard\"},\n    {\"name\": \"ADMS.SW\", \"type\": \"Standard\"},\n    {\"name\": \"quality metrics\", \"type\": \"Concept\"},\n    {\"name\": \"availability\", \"type\": \"Concept\"},\n    {\"name\": \"dqv:inDimension\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

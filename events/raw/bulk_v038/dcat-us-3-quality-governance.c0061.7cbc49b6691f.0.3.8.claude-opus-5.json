@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-quality-governance",
+ "chunk_id": "dcat-us-3-quality-governance#c0061",
+ "chunk_index": 61,
+ "chunk_start": 54224,
+ "chunk_end": 54512,
+ "chunk_tokens": 72,
+ "heading_path": [
+  "Quality and Governance",
+  "[DataService &gt; cuiRestriction #](#data-service--cuiRestriction)"
+ ],
+ "oversize": false,
+ "doc_sha256": "7cbc49b6691fa3e7eb7b4845837afc3e1a6212bfc5882d676284a0ad154cbad5",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 7154,
+  "cacheReadInputTokens": 13057,
+  "cacheCreationInputTokens": 29640,
+  "webSearchRequests": 0,
+  "costUSD": 0.48178849999999995,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 5165,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.48178849999999995,
+ "duration_ms": 80670,
+ "session_id": "2b6a02d5-e513-4ac5-bd6c-5e7f0a9e3ba7",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Reference-doc fragment: a one-line definition of Agent, then the DataService cuiRestriction property — Optional, described as a Controlled Unclassified Information restriction, typed as null or CUIRestriction.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_cuirestriction_prop\",\n      \"name\": \"cuiRestriction\",\n      \"aliases\": [\"DataService cuiRestriction property\"],\n      \"description\": \"A property of DataService carrying a Controlled Unclassified Information restriction related to the data service; optional, typed as null or CUIRestriction.\",\n      \"anchor\": \"## [DataService &gt; cuiRestriction\",\n      \"location\": \"dcat-us-3-quality-governance#c0061\"\n    },\n    {\n      \"id\": \"c_cui\",\n      \"name\": \"Controlled Unclassified Information\",\n      \"aliases\": [\"CUI\"],\n      \"description\": \"The information-handling category whose restriction this property records for a data service.\",\n      \"anchor\": \"Controlled Unclassified Information restriction\",\n      \"location\": \"dcat-us-3-quality-governance#c0061\"\n    },\n    {\n      \"id\": \"c_cuirestriction_type\",\n      \"name\": \"CUIRestriction\",\n      \"aliases\": [\"CUI Restriction class\"],\n      \"description\": \"The value type permitted for the cuiRestriction property, alongside null.\",\n      \"anchor\": \"[CUIRestriction](/standards/catalog/dcat-us-3/constraints-and-restrictions/#cui-restriction)\",\n      \"location\": \"dcat-us-3-quality-governance#c0061\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d_agent\",\n      \"term\": \"Agent\",\n      \"verbatim_text\": \"A person, organization, software agent, or other entity involved with a resource\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"[Agent](/standards/catalog/dcat-us-3/agents/#agent)\",\n      \"location\": \"dcat-us-3-quality-governance#c0061\"\n    }\n  ],\n  \"claims\": [\n    {\n      \"id\": \"cl_cui_optional\",\n      \"claim_text\": \"**Requirement:** Optional\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"platform_official\",\n      \"anchor\": \"**Requirement:** Optional\",\n      \"location\": \"dcat-us-3-quality-governance#c0061\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"d_agent\",\n      \"anchor\": \"A person, organization, software\",\n      \"location\": \"dcat-us-3-quality-governance#c0061\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"c_cuirestriction_prop\",\n      \"anchor\": \"## [DataService &gt; cuiRestriction\",\n      \"location\": \"dcat-us-3-quality-governance#c0061\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"c_cui\",\n      \"anchor\": \"Controlled Unclassified Information restriction\",\n      \"location\": \"dcat-us-3-quality-governance#c0061\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"c_cuirestriction_type\",\n      \"anchor\": \"**Type** : null or\",\n      \"location\": \"dcat-us-3-quality-governance#c0061\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"cl_cui_optional\",\n      \"anchor\": \"Optional\",\n      \"location\": \"dcat-us-3-quality-governance#c0061\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_cui_optional\",\n      \"to_id\": \"c_cuirestriction_prop\",\n      \"anchor\": \"**Requirement:** Optional\",\n      \"location\": \"dcat-us-3-quality-governance#c0061\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"data service\",\n      \"anchor\": \"related to the data service\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"from_id\": \"c_cuirestriction_prop\",\n      \"to_name\": \"DataService\",\n      \"suggested_edge\": \"property_of\",\n      \"anchor\": \"#](#data-service--cuiRestriction)\",\n      \"diversion_reason\": \"structural_inference\",\n      \"location\": \"dcat-us-3-quality-governance#c0061\"\n    },\n    {\n      \"from_id\": \"c_cuirestriction_prop\",\n      \"to_id\": \"c_cuirestriction_type\",\n      \"suggested_edge\": \"has_value_type\",\n      \"anchor\": \"**Type** : null or\",\n      \"diversion_reason\": \"structural_inference\",\n      \"location\": \"dcat-us-3-quality-governance#c0061\"\n    },\n    {\n      \"from_name\": \"Agent\",\n      \"to_name\": \"resource\",\n      \"suggested_edge\": \"involved_with\",\n      \"anchor\": \"other entity involved with a resource\",\n      \"diversion_reason\": \"endpoint_not_located\",\n      \"location\": \"dcat-us-3-quality-governance#c0061\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"DCAT-US 3\", \"type\": \"Standard\"},\n    {\"name\": \"DataService\", \"type\": \"Concept\"},\n    {\"name\": \"software agent\", \"type\": \"Concept\"},\n    {\"name\": \"resource\", \"type\": \"Concept\"}\n  ]\n}"
+}

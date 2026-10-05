@@ -1,0 +1,31 @@
+{
+ "doc_id": "statdcat-ap-1-0-1",
+ "chunk_id": "statdcat-ap-1-0-1#c0032",
+ "chunk_index": 32,
+ "chunk_start": 190090,
+ "chunk_end": 194351,
+ "chunk_tokens": 1420,
+ "heading_path": [],
+ "oversize": false,
+ "doc_sha256": "b2353d557d84c0f853380723447cd26f0c47a92bc444a6193dad52868eeb1d69",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 4309,
+  "cacheReadInputTokens": 13057,
+  "cacheCreationInputTokens": 34168,
+  "webSearchRequests": 0,
+  "costUSD": 0.4559435,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 2818,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.4559435,
+ "duration_ms": 48537,
+ "session_id": "6106dcfe-5669-4b74-a311-4b75d73ad443",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Raw SDMX-ML listing of a ProvisionAgreement and a StatDCAT Metadata Set example, with only two sentences of prose: that the section describes the Metadata Set content in a synthetic view then its SDMX-ML representation, followed by the Reported Attributes for DCAT-AP class properties.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_metadata_set\",\n      \"name\": \"Metadata Set\",\n      \"aliases\": [\"SDMX Metadata Set\", \"StatDCAT Metadata Set\"],\n      \"description\": \"The set whose content the section describes, first in a synthetic view and then in its SDMX-ML detailed representation.\",\n      \"anchor\": \"content of the Metadata Set\",\n      \"location\": \"statdcat-ap-1-0-1#c0032\"\n    },\n    {\n      \"id\": \"c_reported_attributes\",\n      \"name\": \"Reported Attributes\",\n      \"aliases\": [\"ReportedAttribute\"],\n      \"description\": \"The reported attributes carrying the properties of the various DCAT-AP classes in the metadata set.\",\n      \"anchor\": \"Reported Attributes for the\",\n      \"location\": \"statdcat-ap-1-0-1#c0032\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [\n    {\n      \"id\": \"s_sdmx_ml\",\n      \"name\": \"SDMX-ML\",\n      \"version\": null,\n      \"steward\": null,\n      \"as_of_date\": null,\n      \"anchor\": \"SDMX-ML detailed representation\",\n      \"location\": \"statdcat-ap-1-0-1#c0032\"\n    }\n  ],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"statdcat-ap-1-0-1\",\n      \"to_id\": \"c_metadata_set\",\n      \"anchor\": \"content of the Metadata Set\",\n      \"location\": \"statdcat-ap-1-0-1#c0032\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"statdcat-ap-1-0-1\",\n      \"to_id\": \"c_reported_attributes\",\n      \"anchor\": \"Reported Attributes for the\",\n      \"location\": \"statdcat-ap-1-0-1#c0032\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"Census by education and occupation\",\n      \"anchor\": \"Census by education and occupation</com:Name>\"\n    },\n    {\n      \"name\": \"DCAT Catalogue for Eurostat Data Sets\",\n      \"anchor\": \"id=\\\"TITLE\\\" value=\"\n    },\n    {\n      \"name\": \"ESTAT\",\n      \"anchor\": \"maintainableParentID=\\\"DATA_PROVIDERS\\\"\"\n    },\n    {\n      \"name\": \"DCAT -AP classes\",\n      \"anchor\": \"DCAT -AP classes\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"suggested_edge\": \"has_component\",\n      \"from_id\": \"c_metadata_set\",\n      \"to_id\": \"c_reported_attributes\",\n      \"anchor\": \"Followed by the Reported\",\n      \"diversion_reason\": \"structural_inference\"\n    },\n    {\n      \"suggested_edge\": \"represented_in\",\n      \"from_id\": \"c_metadata_set\",\n      \"to_id\": \"s_sdmx_ml\",\n      \"anchor\": \"followed by its SDMX-ML\",\n      \"diversion_reason\": \"other:no_schema_edge_for_serialization\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"StatDCAT-AP\", \"type\": \"Standard\"},\n    {\"name\": \"DCAT-AP\", \"type\": \"Framework\"},\n    {\"name\": \"SDMX\", \"type\": \"Standard\"},\n    {\"name\": \"ProvisionAgreement\", \"type\": \"Concept\"},\n    {\"name\": \"Dataflow\", \"type\": \"Concept\"},\n    {\"name\": \"DataProvider\", \"type\": \"Concept\"},\n    {\"name\": \"CategoryScheme\", \"type\": \"Concept\"},\n    {\"name\": \"MDR_THEMES\", \"type\": \"Concept\"},\n    {\"name\": \"Catalogue homepage\", \"type\": \"Concept\"},\n    {\"name\": \"Catalogue license\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

@@ -1,0 +1,36 @@
+{
+ "doc_id": "dcat-us-3-candidate-recommendation-snapshot",
+ "chunk_id": "dcat-us-3-candidate-recommendation-snapshot#c0021",
+ "chunk_index": 21,
+ "chunk_start": 155605,
+ "chunk_end": 156772,
+ "chunk_tokens": 145,
+ "heading_path": [
+  "DCAT-US - Version 3",
+  "Catalog Record",
+  "Optional Properties",
+  "Property: source metadata"
+ ],
+ "oversize": false,
+ "doc_sha256": "d758a8fdead227cdca2dfb63f2f79c827db42b5a28f39e1c407ee536a56f14cf",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 8476,
+  "cacheReadInputTokens": 13056,
+  "cacheCreationInputTokens": 29859,
+  "webSearchRequests": 0,
+  "costUSD": 0.517028,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 6320,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.517028,
+ "duration_ms": 96939,
+ "session_id": "0527a107-f53d-4297-8fc5-068a7ec63a0f",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Tail of the DCAT-US v3 Catalog Record 'source metadata' property table (URI dcterms:source, range dcat:Resource, definition) followed by the full 'title' property table (dcterms:title, optional, 0..n, rdfs:Literal, definition, usage note on parallel language versions).\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_dcterms_source\",\n      \"name\": \"dcterms:source\",\n      \"aliases\": [\"source metadata\"],\n      \"description\": \"The URI given for the Catalog Record property carrying the original metadata used in creating the record's metadata.\",\n      \"anchor\": \"dcterms:source\",\n      \"location\": \"dcat-us-3-candidate-recommendation-snapshot#c0021\"\n    },\n    {\n      \"id\": \"c_dcterms_title\",\n      \"name\": \"dcterms:title\",\n      \"aliases\": [\"title\"],\n      \"description\": \"The URI given for the optional Catalog Record title property, range rdfs:Literal, cardinality 0..n.\",\n      \"anchor\": \"dcterms:title\",\n      \"location\": \"dcat-us-3-candidate-recommendation-snapshot#c0021\"\n    },\n    {\n      \"id\": \"c_catalog_record\",\n      \"name\": \"Catalog Record\",\n      \"aliases\": [\"dcat:CatalogRecord\"],\n      \"description\": \"The class whose properties this passage specifies; the title is a name given to it and the source metadata is the metadata used in creating its metadata.\",\n      \"anchor\": \"to the Catalog Record\",\n      \"location\": \"dcat-us-3-candidate-recommendation-snapshot#c0021\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d_title\",\n      \"term\": \"title\",\n      \"verbatim_text\": \"A name given to the Catalog Record.\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"Property: title\",\n      \"location\": \"dcat-us-3-candidate-recommendation-snapshot#c0021\"\n    },\n    {\n      \"id\": \"d_source_metadata\",\n      \"term\": \"original metadata\",\n      \"verbatim_text\": \"The original metadata that was used in creating metadata for the datasets, data services, or                   catalogs in the Catalog Record.\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"original metadata that was used\",\n      \"location\": \"dcat-us-3-candidate-recommendation-snapshot#c0021\"\n    }\n  ],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [\n    {\n      \"id\": \"p_repeat_title_parallel_language\",\n      \"text\": \"This property can be repeated for parallel language versions of the name.\",\n      \"as_of_date\": null,\n      \"scope\": \"any\",\n      \"anchor\": \"repeated for parallel language\",\n      \"location\": \"dcat-us-3-candidate-recommendation-snapshot#c0021\"\n    }\n  ],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-candidate-recommendation-snapshot\",\n      \"to_id\": \"d_title\",\n      \"anchor\": \"Property: title\",\n      \"location\": \"dcat-us-3-candidate-recommendation-snapshot#c0021\"\n    },\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-candidate-recommendation-snapshot\",\n      \"to_id\": \"d_source_metadata\",\n      \"anchor\": \"original metadata that was used\",\n      \"location\": \"dcat-us-3-candidate-recommendation-snapshot#c0021\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-candidate-recommendation-snapshot\",\n      \"to_id\": \"c_dcterms_source\",\n      \"anchor\": \"dcterms:source\",\n      \"location\": \"dcat-us-3-candidate-recommendation-snapshot#c0021\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-candidate-recommendation-snapshot\",\n      \"to_id\": \"c_dcterms_title\",\n      \"anchor\": \"dcterms:title\",\n      \"location\": \"dcat-us-3-candidate-recommendation-snapshot#c0021\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-candidate-recommendation-snapshot\",\n      \"to_id\": \"c_catalog_record\",\n      \"anchor\": \"to the Catalog Record\",\n      \"location\": \"dcat-us-3-candidate-recommendation-snapshot#c0021\"\n    },\n    {\n      \"type\": \"recommends\",\n      \"from_id\": \"dcat-us-3-candidate-recommendation-snapshot\",\n      \"to_id\": \"p_repeat_title_parallel_language\",\n      \"anchor\": \"repeated for parallel language\",\n      \"location\": \"dcat-us-3-candidate-recommendation-snapshot#c0021\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"dcat:Resource\",\n      \"anchor\": \"dcat:Resource\"\n    },\n    {\n      \"name\": \"rdfs:Literal\",\n      \"anchor\": \"rdfs:Literal\"\n    },\n    {\n      \"name\": \"data services\",\n      \"anchor\": \"data services\"\n    },\n    {\n      \"name\": \"datasets\",\n      \"anchor\": \"the datasets,\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"suggested_edge\": \"has_component\",\n      \"from_id\": \"c_catalog_record\",\n      \"to_id\": \"c_dcterms_title\",\n      \"anchor\": \"to the Catalog Record\",\n      \"diversion_reason\": \"endpoint_not_located\"\n    },\n    {\n      \"suggested_edge\": \"has_component\",\n      \"from_id\": \"c_catalog_record\",\n      \"to_id\": \"c_dcterms_source\",\n      \"anchor\": \"dcterms:source\",\n      \"diversion_reason\": \"structural_inference\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"JSON-LD\", \"type\": \"Standard\"},\n    {\"name\": \"TTL\", \"type\": \"Standard\"},\n    {\"name\": \"Cardinality\", \"type\": \"Concept\"},\n    {\"name\": \"Requirement level\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

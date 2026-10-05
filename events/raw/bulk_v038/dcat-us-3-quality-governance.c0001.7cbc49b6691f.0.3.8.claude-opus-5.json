@@ -1,0 +1,33 @@
+{
+ "doc_id": "dcat-us-3-quality-governance",
+ "chunk_id": "dcat-us-3-quality-governance#c0001",
+ "chunk_index": 1,
+ "chunk_start": 0,
+ "chunk_end": 201,
+ "chunk_tokens": 41,
+ "heading_path": [
+  "Quality and Governance"
+ ],
+ "oversize": false,
+ "doc_sha256": "7cbc49b6691fa3e7eb7b4845837afc3e1a6212bfc5882d676284a0ad154cbad5",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 2980,
+  "cacheReadInputTokens": 13056,
+  "cacheCreationInputTokens": 29302,
+  "webSearchRequests": 0,
+  "costUSD": 0.374058,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 1790,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.374058,
+ "duration_ms": 33452,
+ "session_id": "e6114263-91a4-4434-8064-6f2fe1571bea",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Section front-matter for DCAT-US 3.0 'Quality and Governance': one sentence stating that this section covers supporting classes for standards, documents, catalog records, data services, and attribution used in governance and quality description.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_supporting_classes\",\n      \"name\": \"Supporting classes\",\n      \"aliases\": [\"supporting class\", \"DCAT-US supporting classes\"],\n      \"description\": \"Classes for standards, documents, catalog records, data services, and attribution that this section of DCAT-US 3.0 provides in support of governance and quality description.\",\n      \"anchor\": \"Supporting classes\",\n      \"location\": \"dcat-us-3-quality-governance#c0001\"\n    },\n    {\n      \"id\": \"c_governance_quality_description\",\n      \"name\": \"governance and quality description\",\n      \"aliases\": [\"data governance and quality documentation\"],\n      \"description\": \"The purpose the section's supporting classes serve: describing the governance and quality of catalogued data.\",\n      \"anchor\": \"governance and quality description\",\n      \"location\": \"dcat-us-3-quality-governance#c0001\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [\n    {\n      \"id\": \"s_dcat_us_3_0\",\n      \"name\": \"DCAT-US 3.0\",\n      \"version\": null,\n      \"steward\": null,\n      \"as_of_date\": null,\n      \"anchor\": \"DCAT-US 3.0\",\n      \"location\": \"dcat-us-3-quality-governance#c0001\"\n    }\n  ],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"c_supporting_classes\",\n      \"anchor\": \"Supporting classes\",\n      \"location\": \"dcat-us-3-quality-governance#c0001\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"c_governance_quality_description\",\n      \"anchor\": \"governance and quality description\",\n      \"location\": \"dcat-us-3-quality-governance#c0001\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\"name\": \"standards\", \"anchor\": \"for standards\"},\n    {\"name\": \"catalog records\", \"anchor\": \"catalog records\"},\n    {\"name\": \"data services\", \"anchor\": \"data services\"},\n    {\"name\": \"attribution\", \"anchor\": \"attribution\"}\n  ],\n  \"proposed_relationships\": [\n    {\n      \"suggested_edge\": \"implements\",\n      \"from_id\": \"s_dcat_us_3_0\",\n      \"to_id\": \"c_supporting_classes\",\n      \"anchor\": \"DCAT-US 3.0\",\n      \"diversion_reason\": \"structural_inference\"\n    },\n    {\n      \"suggested_edge\": \"has_component\",\n      \"from_id\": \"c_supporting_classes\",\n      \"to_id\": \"c_governance_quality_description\",\n      \"anchor\": \"used in governance\",\n      \"diversion_reason\": \"predicate_not_located\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"documents\", \"type\": \"Concept\"},\n    {\"name\": \"Catalog Record\", \"type\": \"Concept\"},\n    {\"name\": \"Data Service\", \"type\": \"Concept\"},\n    {\"name\": \"data quality\", \"type\": \"Concept\"}\n  ]\n}"
+}

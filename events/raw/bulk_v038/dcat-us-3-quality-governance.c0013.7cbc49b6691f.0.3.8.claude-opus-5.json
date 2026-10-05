@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-quality-governance",
+ "chunk_id": "dcat-us-3-quality-governance#c0013",
+ "chunk_index": 13,
+ "chunk_start": 7868,
+ "chunk_end": 8429,
+ "chunk_tokens": 126,
+ "heading_path": [
+  "Quality and Governance",
+  "[Standard &gt; otherIdentifier #](#standard--otherIdentifier)"
+ ],
+ "oversize": false,
+ "doc_sha256": "7cbc49b6691fa3e7eb7b4845837afc3e1a6212bfc5882d676284a0ad154cbad5",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 5885,
+  "cacheReadInputTokens": 13056,
+  "cacheCreationInputTokens": 29663,
+  "webSearchRequests": 0,
+  "costUSD": 0.450293,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 4077,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.450293,
+ "duration_ms": 63512,
+ "session_id": "65b79591-bc89-44e2-b575-1c9a1ab85208",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"DCAT-US 3 schema reference section specifying the optional `otherIdentifier` property of the Standard class: a null-or-array-of-Identifier list of additional identifiers besides the main one.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c-otheridentifier\",\n      \"name\": \"otherIdentifier\",\n      \"aliases\": [\"Standard otherIdentifier property\"],\n      \"description\": \"Optional property of the DCAT-US 3 Standard class holding additional identifiers besides the main identifier.\",\n      \"anchor\": \"## [Standard\",\n      \"location\": \"dcat-us-3-quality-governance#c0013\"\n    },\n    {\n      \"id\": \"c-identifier\",\n      \"name\": \"Identifier\",\n      \"aliases\": [\"Identifier class\"],\n      \"description\": \"A unique identifier and optionally its scheme and other relevant information; the item type of the otherIdentifier array.\",\n      \"anchor\": \"A unique identifier and\",\n      \"location\": \"dcat-us-3-quality-governance#c0013\"\n    },\n    {\n      \"id\": \"c-standard\",\n      \"name\": \"Standard\",\n      \"aliases\": [\"Standard class\"],\n      \"description\": \"The DCAT-US 3 class whose otherIdentifier property this section specifies.\",\n      \"anchor\": \"identifiers for the Standard\",\n      \"location\": \"dcat-us-3-quality-governance#c0013\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d-identifier\",\n      \"term\": \"Identifier\",\n      \"verbatim_text\": \"A unique identifier and optionally it's scheme and other relevant information\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"other relevant information\",\n      \"location\": \"dcat-us-3-quality-governance#c0013\"\n    }\n  ],\n  \"claims\": [\n    {\n      \"id\": \"cl-array-item-type\",\n      \"claim_text\": \"Each item of this array must be\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"platform_official\",\n      \"anchor\": \"Each item of this array\",\n      \"location\": \"dcat-us-3-quality-governance#c0013\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"c-otheridentifier\",\n      \"anchor\": \"## [Standard\",\n      \"location\": \"dcat-us-3-quality-governance#c0013\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"c-identifier\",\n      \"anchor\": \"A unique identifier and\",\n      \"location\": \"dcat-us-3-quality-governance#c0013\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"c-standard\",\n      \"anchor\": \"identifiers for the Standard\",\n      \"location\": \"dcat-us-3-quality-governance#c0013\"\n    },\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"d-identifier\",\n      \"anchor\": \"other relevant information\",\n      \"location\": \"dcat-us-3-quality-governance#c0013\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"cl-array-item-type\",\n      \"anchor\": \"Each item of this array\",\n      \"location\": \"dcat-us-3-quality-governance#c0013\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl-array-item-type\",\n      \"to_id\": \"c-identifier\",\n      \"anchor\": \"item of this array must be\",\n      \"location\": \"dcat-us-3-quality-governance#c0013\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"Catalog\",\n      \"anchor\": \"the Catalog\"\n    },\n    {\n      \"name\": \"URI\",\n      \"anchor\": \"the URI\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"from_id\": \"c-standard\",\n      \"to_id\": \"c-otheridentifier\",\n      \"suggested_edge\": \"has_property\",\n      \"anchor\": \"## [Standard\",\n      \"diversion_reason\": \"structural_inference\",\n      \"note\": \"Property-of-class relation is carried only by the heading path 'Standard > otherIdentifier', which is page structure, not a stated relation.\"\n    },\n    {\n      \"from_id\": \"c-otheridentifier\",\n      \"to_id\": \"c-identifier\",\n      \"suggested_edge\": \"has_range\",\n      \"anchor\": \"null or array of\",\n      \"diversion_reason\": \"other:range_constraint\",\n      \"note\": \"Type constraint (range of the property) is not expressible in the allowed edge whitelist.\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"Requirement: Optional\", \"type\": \"Concept\"},\n    {\"name\": \"identifier scheme\", \"type\": \"Concept\"},\n    {\"name\": \"main identifier\", \"type\": \"Concept\"},\n    {\"name\": \"identifiers-and-relationships\", \"type\": \"Concept\"}\n  ]\n}"
+}

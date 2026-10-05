@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-dataset-schema-2026-09-15",
+ "chunk_id": "dcat-us-3-dataset-schema-2026-09-15#c0027",
+ "chunk_index": 27,
+ "chunk_start": 42868,
+ "chunk_end": 43283,
+ "chunk_tokens": 104,
+ "heading_path": [
+  "DCAT-US 3.0: Dataset",
+  "[Dataset &gt; conformsTo #](#conformsTo)"
+ ],
+ "oversize": false,
+ "doc_sha256": "0ef64d14a0901d5e7f84fee15bab1474353880ee4b64aec9c185b06149e067de",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 8149,
+  "cacheReadInputTokens": 13056,
+  "cacheCreationInputTokens": 29737,
+  "webSearchRequests": 0,
+  "costUSD": 0.507633,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 6543,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.507633,
+ "duration_ms": 92952,
+ "session_id": "2330603c-4d4c-488b-8755-b6a3c364687c",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Schema reference page for the DCAT-US 3.0 Dataset property conformsTo: it is optional, holds null or an array of Standard classes, and lists the standards, schemas, or profiles the dataset follows; the chunk also carries the Standard class definition.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c-conformsto\",\n      \"name\": \"conformsTo\",\n      \"aliases\": [\"Dataset conformsTo\", \"dcterms:conformsTo\"],\n      \"description\": \"Dataset property listing the standards, schemas, or profiles the dataset follows.\",\n      \"anchor\": \"## [Dataset &gt; conformsTo\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0027\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d-standard\",\n      \"term\": \"Standard\",\n      \"verbatim_text\": \"A standard or specification that another resource conforms to\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"another resource conforms to\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0027\"\n    }\n  ],\n  \"claims\": [\n    {\n      \"id\": \"cl-list\",\n      \"claim_text\": \"List of standards, schemas, or profiles the dataset follows\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"schemas, or profiles the dataset follows\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0027\"\n    },\n    {\n      \"id\": \"cl-optional\",\n      \"claim_text\": \"**Requirement:** Optional\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"**Requirement:** Optional\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0027\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"c-conformsto\",\n      \"anchor\": \"## [Dataset &gt; conformsTo\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0027\"\n    },\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"d-standard\",\n      \"anchor\": \"another resource conforms to\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0027\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"cl-list\",\n      \"anchor\": \"schemas, or profiles the dataset follows\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0027\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"cl-optional\",\n      \"anchor\": \"**Requirement:** Optional\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0027\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl-list\",\n      \"to_id\": \"c-conformsto\",\n      \"anchor\": \"List of standards, schemas, or profiles\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0027\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"dataset\",\n      \"anchor\": \"the dataset follows\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"## [Dataset &gt; conformsTo\",\n      \"suggested_edge\": \"has_property\",\n      \"diversion_reason\": \"structural_inference\"\n    },\n    {\n      \"anchor\": \"null or array of\",\n      \"suggested_edge\": \"range_is\",\n      \"diversion_reason\": \"structural_inference\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"Concept: A controlled term or label, optionally drawn from a concept scheme\", \"type\": \"Definition\"},\n    {\"name\": \"conformsTo type constraint: null or array of Standard classes\", \"type\": \"Claim\"},\n    {\"name\": \"Standard\", \"type\": \"Concept\"},\n    {\"name\": \"Dataset\", \"type\": \"Concept\"}\n  ]\n}"
+}

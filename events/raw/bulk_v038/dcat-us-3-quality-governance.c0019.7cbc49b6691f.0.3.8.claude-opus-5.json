@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-quality-governance",
+ "chunk_id": "dcat-us-3-quality-governance#c0019",
+ "chunk_index": 19,
+ "chunk_start": 17310,
+ "chunk_end": 17582,
+ "chunk_tokens": 92,
+ "heading_path": [
+  "Quality and Governance",
+  "[Document &gt; issued #](#document--issued)"
+ ],
+ "oversize": false,
+ "doc_sha256": "7cbc49b6691fa3e7eb7b4845837afc3e1a6212bfc5882d676284a0ad154cbad5",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 4475,
+  "cacheReadInputTokens": 13056,
+  "cacheCreationInputTokens": 29545,
+  "webSearchRequests": 0,
+  "costUSD": 0.413863,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 3058,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.413863,
+ "duration_ms": 51754,
+ "session_id": "5a70427c-00d1-4048-9757-be66d6776069",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"DCAT-US 3 property reference for `Document > issued`: titled 'publication date', Recommended, defined as the publication date of the Document, typed null-or-object, with date/datetime example values.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_publication_date\",\n      \"name\": \"publication date\",\n      \"aliases\": [\"Document > issued\", \"issued\"],\n      \"description\": \"The property of a Document recording when it was published; titled 'publication date' in DCAT-US 3 and recommended rather than required.\",\n      \"anchor\": \"publication date\",\n      \"location\": \"dcat-us-3-quality-governance#c0019\"\n    },\n    {\n      \"id\": \"c_document\",\n      \"name\": \"Document\",\n      \"aliases\": [],\n      \"description\": \"The resource class whose publication date this property records.\",\n      \"anchor\": \"of the Document\",\n      \"location\": \"dcat-us-3-quality-governance#c0019\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d_publication_date\",\n      \"term\": \"Publication date\",\n      \"verbatim_text\": \"Publication date of the Document\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"Publication date of the Document\",\n      \"location\": \"dcat-us-3-quality-governance#c0019\"\n    }\n  ],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [\n    {\n      \"id\": \"p_issue_date\",\n      \"text\": \"Publication date of the Document\",\n      \"scope\": \"any\",\n      \"as_of_date\": null,\n      \"anchor\": \"Publication date of the Document\",\n      \"location\": \"dcat-us-3-quality-governance#c0019\"\n    }\n  ],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"d_publication_date\",\n      \"anchor\": \"Publication date of the Document\",\n      \"location\": \"dcat-us-3-quality-governance#c0019\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"c_publication_date\",\n      \"anchor\": \"publication date\",\n      \"location\": \"dcat-us-3-quality-governance#c0019\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"c_document\",\n      \"anchor\": \"of the Document\",\n      \"location\": \"dcat-us-3-quality-governance#c0019\"\n    },\n    {\n      \"type\": \"recommends\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"p_issue_date\",\n      \"anchor\": \"Recommended\",\n      \"location\": \"dcat-us-3-quality-governance#c0019\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"p_issue_date\",\n      \"to_id\": \"c_document\",\n      \"anchor\": \"of the Document\",\n      \"location\": \"dcat-us-3-quality-governance#c0019\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"Identifier\",\n      \"anchor\": \"or [Identifier]\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"suggested_edge\": \"has_property\",\n      \"from_name\": \"Document\",\n      \"to_name\": \"publication date\",\n      \"anchor\": \"publication date\",\n      \"diversion_reason\": \"structural_inference\"\n    },\n    {\n      \"suggested_edge\": \"requirement_level\",\n      \"from_name\": \"publication date\",\n      \"to_name\": \"Recommended\",\n      \"anchor\": \"Recommended\",\n      \"diversion_reason\": \"other:requirement_level_not_in_schema\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"issued\", \"type\": \"Concept\"},\n    {\"name\": \"dcat-us-3\", \"type\": \"Standard\"},\n    {\"name\": \"Requirement: Recommended\", \"type\": \"Concept\"},\n    {\"name\": \"ISO 8601 date/datetime example values\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

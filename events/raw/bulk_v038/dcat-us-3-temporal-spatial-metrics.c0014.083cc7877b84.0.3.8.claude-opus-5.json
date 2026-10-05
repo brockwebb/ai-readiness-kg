@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-temporal-spatial-metrics",
+ "chunk_id": "dcat-us-3-temporal-spatial-metrics#c0014",
+ "chunk_index": 14,
+ "chunk_start": 10409,
+ "chunk_end": 10619,
+ "chunk_tokens": 56,
+ "heading_path": [
+  "Temporal, Spatial, and Metrics",
+  "[Location &gt; altLabel #](#location--altLabel)"
+ ],
+ "oversize": false,
+ "doc_sha256": "083cc7877b8438d25498d71ee0e04b3e0ffdbbef334ff3c5a4735cdf2c8339c7",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 5988,
+  "cacheReadInputTokens": 13057,
+  "cacheCreationInputTokens": 29535,
+  "webSearchRequests": 0,
+  "costUSD": 0.4515885,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 4703,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.4515885,
+ "duration_ms": 70593,
+ "session_id": "aad23e03-ac00-47ed-a397-b3bce5e88f9c",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"A DCAT-US 3 property page for the Location altLabel property: title 'alternative name', optional, defined as an alternative label or name for a location, typed null or string, with example \\\"DC\\\".\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"n_altlabel\",\n      \"name\": \"altLabel\",\n      \"aliases\": [\"alternative name\", \"Location > altLabel\"],\n      \"description\": \"The property giving an alternative label or name for a location; optional, typed null or string.\",\n      \"anchor\": \"## [Location\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0014\"\n    },\n    {\n      \"id\": \"n_alt_name\",\n      \"name\": \"alternative name\",\n      \"aliases\": [\"altLabel title\"],\n      \"description\": \"The human-readable title the document gives the altLabel property.\",\n      \"anchor\": \"alternative name\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0014\"\n    },\n    {\n      \"id\": \"n_location\",\n      \"name\": \"Location\",\n      \"aliases\": [],\n      \"description\": \"The class whose altLabel property this passage specifies.\",\n      \"anchor\": \"**Default** : `\\\"Location\\\"`\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0014\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"n_def_altlabel\",\n      \"term\": \"alternative label\",\n      \"verbatim_text\": \"An alternative label or name for a location\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"An alternative label or name\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0014\"\n    }\n  ],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-temporal-spatial-metrics\",\n      \"to_id\": \"n_def_altlabel\",\n      \"anchor\": \"alternative label or name for a\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0014\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-temporal-spatial-metrics\",\n      \"to_id\": \"n_altlabel\",\n      \"anchor\": \"## [Location &gt; altLabel\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0014\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-temporal-spatial-metrics\",\n      \"to_id\": \"n_alt_name\",\n      \"anchor\": \"**Title:** alternative name\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0014\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"DC\",\n      \"anchor\": \"\\\"DC\\\"\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"suggested_edge\": \"has_component\",\n      \"from_id\": \"n_location\",\n      \"to_id\": \"n_altlabel\",\n      \"anchor\": \"## [Location\",\n      \"diversion_reason\": \"structural_inference\"\n    },\n    {\n      \"suggested_edge\": \"applies_to\",\n      \"from_id\": \"n_altlabel\",\n      \"to_id\": \"n_location\",\n      \"anchor\": \"An alternative label or name for a location\",\n      \"diversion_reason\": \"endpoint_not_located\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"altLabel is Optional\", \"type\": \"Claim\"},\n    {\"name\": \"null or string\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

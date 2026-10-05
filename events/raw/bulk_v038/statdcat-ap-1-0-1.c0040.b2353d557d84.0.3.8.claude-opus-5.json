@@ -1,0 +1,33 @@
+{
+ "doc_id": "statdcat-ap-1-0-1",
+ "chunk_id": "statdcat-ap-1-0-1#c0040",
+ "chunk_index": 40,
+ "chunk_start": 201973,
+ "chunk_end": 202206,
+ "chunk_tokens": 66,
+ "heading_path": [
+  "this may require specific mapping tables or owl:sameAs assertions."
+ ],
+ "oversize": false,
+ "doc_sha256": "b2353d557d84c0f853380723447cd26f0c47a92bc444a6193dad52868eeb1d69",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 3210,
+  "cacheReadInputTokens": 13057,
+  "cacheCreationInputTokens": 29514,
+  "webSearchRequests": 0,
+  "costUSD": 0.38192849999999995,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 2272,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.38192849999999995,
+ "duration_ms": 36933,
+ "session_id": "4b4ca384-f57b-415b-bebd-777f83a21a60",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Degenerate chunk: a truncated fragment, a heading stating that mapping tables or owl:sameAs assertions may be required, and four lines of a Turtle example listing stat:dimension/stat:attribute property values; almost nothing is asserted about a typable entity.\"\n  },\n  \"concepts\": [],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"claim-mapping-tables-sameas\",\n      \"claim_text\": \"this may require specific mapping tables or owl:sameAs assertions\",\n      \"claim_type\": \"speculative\",\n      \"evidence_grade\": \"inference\",\n      \"anchor\": \"# this may require specific\",\n      \"location\": \"statdcat-ap-1-0-1#c0040\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"statdcat-ap-1-0-1\",\n      \"to_id\": \"claim-mapping-tables-sameas\",\n      \"anchor\": \"# this may require specific\",\n      \"location\": \"statdcat-ap-1-0-1#c0040\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\"name\": \"eg:refArea\", \"anchor\": \"eg:refArea\"},\n    {\"name\": \"eg:refPeriod\", \"anchor\": \"eg:refPeriod\"},\n    {\"name\": \"sdmx-dimension:sex\", \"anchor\": \"sdmx-dimension:sex\"},\n    {\"name\": \"sdmx-attribute:unitMeasure\", \"anchor\": \"sdmx-attribute:unitMeasure\"},\n    {\"name\": \"stat:attribute\", \"anchor\": \"stat:attribute\"}\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"sdmx-attribute:unitMeasure\",\n      \"suggested_edge\": \"has_component\",\n      \"from_name\": \"StatDCAT-AP dataset example\",\n      \"to_name\": \"stat:dimension / stat:attribute property values\",\n      \"diversion_reason\": \"structural_inference\"\n    },\n    {\n      \"anchor\": \"eg:refArea\",\n      \"suggested_edge\": \"implements\",\n      \"from_name\": \"StatDCAT-AP\",\n      \"to_name\": \"SDMX dimension and attribute vocabularies\",\n      \"diversion_reason\": \"cross_chunk\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"stat:dimension\", \"type\": \"Concept\"},\n    {\"name\": \"owl:sameAs\", \"type\": \"Concept\"},\n    {\"name\": \"mapping tables\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

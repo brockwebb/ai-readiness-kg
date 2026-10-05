@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-temporal-spatial-metrics",
+ "chunk_id": "dcat-us-3-temporal-spatial-metrics#c0031",
+ "chunk_index": 31,
+ "chunk_start": 20550,
+ "chunk_end": 20789,
+ "chunk_tokens": 59,
+ "heading_path": [
+  "Temporal, Spatial, and Metrics",
+  "[QualityMeasurement &gt; unitMeasure #](#quality-measurement--unitMeasure)"
+ ],
+ "oversize": false,
+ "doc_sha256": "083cc7877b8438d25498d71ee0e04b3e0ffdbbef334ff3c5a4735cdf2c8339c7",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 4030,
+  "cacheReadInputTokens": 13057,
+  "cacheCreationInputTokens": 29030,
+  "webSearchRequests": 0,
+  "costUSD": 0.3975885,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 2768,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3975885,
+ "duration_ms": 44775,
+ "session_id": "1e61412f-11fa-4d5d-a2ea-bf6a9fe8a726",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"DCAT-US 3 property reference for QualityMeasurement's optional unitMeasure field: title 'unit of measure', definition 'Unit of measure associated with the value', type null or string, example \\\"percent\\\".\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"concept_unit_of_measure\",\n      \"name\": \"unit of measure\",\n      \"aliases\": [\"unitMeasure\", \"unit measure\"],\n      \"description\": \"Unit of measure associated with the value; optional property typed null or string.\",\n      \"anchor\": \"unit of measure\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0031\"\n    },\n    {\n      \"id\": \"concept_quality_measurement\",\n      \"name\": \"QualityMeasurement\",\n      \"aliases\": [\"Quality Measurement\"],\n      \"description\": \"Class that is the default value of the property documented immediately before this section and the owner of the unitMeasure property.\",\n      \"anchor\": \"\\\"QualityMeasurement\\\"\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0031\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"def_unit_measure\",\n      \"term\": \"Unit of measure\",\n      \"verbatim_text\": \"Unit of measure associated with the value\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"Unit of measure associated\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0031\"\n    }\n  ],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-temporal-spatial-metrics\",\n      \"to_id\": \"def_unit_measure\",\n      \"anchor\": \"Unit of measure associated\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0031\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-temporal-spatial-metrics\",\n      \"to_id\": \"concept_unit_of_measure\",\n      \"anchor\": \"unit of measure\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0031\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-temporal-spatial-metrics\",\n      \"to_id\": \"concept_quality_measurement\",\n      \"anchor\": \"\\\"QualityMeasurement\\\"\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0031\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [],\n  \"proposed_relationships\": [\n    {\n      \"suggested_edge\": \"has_component\",\n      \"from_id\": \"concept_quality_measurement\",\n      \"to_id\": \"concept_unit_of_measure\",\n      \"anchor\": \"unit of measure\",\n      \"diversion_reason\": \"structural_inference\",\n      \"note\": \"ownership of unitMeasure by QualityMeasurement is carried only by the section heading, not by any sentence\"\n    },\n    {\n      \"suggested_edge\": \"has_cardinality\",\n      \"from_id\": \"concept_unit_of_measure\",\n      \"to_id\": \"concept_quality_measurement\",\n      \"anchor\": \"Optional\",\n      \"diversion_reason\": \"other:requirement_level\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"percent\", \"type\": \"Concept\"},\n    {\"name\": \"null or string\", \"type\": \"Concept\"},\n    {\"name\": \"Optional\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

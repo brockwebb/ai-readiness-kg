@@ -1,0 +1,33 @@
+{
+ "doc_id": "statdcat-ap-1-0-1",
+ "chunk_id": "statdcat-ap-1-0-1#c0050",
+ "chunk_index": 50,
+ "chunk_start": 207503,
+ "chunk_end": 207683,
+ "chunk_tokens": 42,
+ "heading_path": [
+  "https://joinup.ec.europa.eu/node/150343/, using vcard properties. The source treats"
+ ],
+ "oversize": false,
+ "doc_sha256": "b2353d557d84c0f853380723447cd26f0c47a92bc444a6193dad52868eeb1d69",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 3309,
+  "cacheReadInputTokens": 13057,
+  "cacheCreationInputTokens": 29511,
+  "webSearchRequests": 0,
+  "costUSD": 0.3843735,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 2209,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3843735,
+ "duration_ms": 36622,
+ "session_id": "e802b699-8b6a-41d1-bc88-cf59208c6238",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Tail of a Turtle example (vcard:hasURL) followed by a comment stating that the contact point information has been adapted to follow DCAT-AP guidelines using vcard properties.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_contact_point\",\n      \"name\": \"contact point\",\n      \"aliases\": [\"Contact Point\", \"dcat:contactPoint\"],\n      \"description\": \"The contact information attached to the described resource, expressed with vcard properties per DCAT-AP.\",\n      \"anchor\": \"contact point\",\n      \"location\": \"statdcat-ap-1-0-1#c0050\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"cl_contact_adapted\",\n      \"claim_text\": \"The information for contact point has been adapted to follow DCAT-AP guidelines\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"has been adapted\",\n      \"location\": \"statdcat-ap-1-0-1#c0050\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [\n    {\n      \"id\": \"s_dcat_ap\",\n      \"name\": \"DCAT-AP\",\n      \"version\": null,\n      \"steward\": null,\n      \"as_of_date\": null,\n      \"anchor\": \"DCAT-AP guidelines\",\n      \"location\": \"statdcat-ap-1-0-1#c0050\"\n    }\n  ],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"statdcat-ap-1-0-1\",\n      \"to_id\": \"cl_contact_adapted\",\n      \"anchor\": \"has been adapted\",\n      \"location\": \"statdcat-ap-1-0-1#c0050\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_contact_adapted\",\n      \"to_id\": \"c_contact_point\",\n      \"anchor\": \"information for contact point\",\n      \"location\": \"statdcat-ap-1-0-1#c0050\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"statdcat-ap-1-0-1\",\n      \"to_id\": \"c_contact_point\",\n      \"anchor\": \"contact point\",\n      \"location\": \"statdcat-ap-1-0-1#c0050\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"vcard:hasURL\",\n      \"anchor\": \"vcard:hasURL\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"suggested_edge\": \"conforms_to\",\n      \"from_id\": \"statdcat-ap-1-0-1\",\n      \"to_id\": \"s_dcat_ap\",\n      \"anchor\": \"to follow DCAT-AP guidelines\",\n      \"location\": \"statdcat-ap-1-0-1#c0050\",\n      \"diversion_reason\": \"other:document_to_standard_not_in_whitelist\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"vcard properties\", \"type\": \"Concept\"},\n    {\"name\": \"Digital Single Market\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

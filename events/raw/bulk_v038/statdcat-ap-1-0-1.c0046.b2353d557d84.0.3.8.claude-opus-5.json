@@ -1,0 +1,33 @@
+{
+ "doc_id": "statdcat-ap-1-0-1",
+ "chunk_id": "statdcat-ap-1-0-1#c0046",
+ "chunk_index": 46,
+ "chunk_start": 203145,
+ "chunk_end": 203360,
+ "chunk_tokens": 55,
+ "heading_path": [
+  "Note that the definitions of eg:organization, eg:refArea and eg:refPeriod have not"
+ ],
+ "oversize": false,
+ "doc_sha256": "b2353d557d84c0f853380723447cd26f0c47a92bc444a6193dad52868eeb1d69",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 2732,
+  "cacheReadInputTokens": 13057,
+  "cacheCreationInputTokens": 29484,
+  "webSearchRequests": 0,
+  "costUSD": 0.3696785,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 1811,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3696785,
+ "duration_ms": 31926,
+ "session_id": "0c23839e-616a-4554-9028-a59d227c8c82",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Page-footer fragment plus two editorial notes on a StatDCAT-AP example: dcat:accessURL is shown with a file link not present in the source metadata, and a second note about eg:organization/eg:refArea/eg:refPeriod definitions is cut off mid-sentence.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_accessurl\",\n      \"name\": \"dcat:accessURL\",\n      \"aliases\": [\"DCAT access URL\"],\n      \"description\": \"Property whose value, in this example, is a link to a file that the source metadata did not specify.\",\n      \"anchor\": \"dcat:accessURL\",\n      \"location\": \"statdcat-ap-1-0-1#c0046\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"cl_accessurl_added\",\n      \"claim_text\": \"a link to a file is shown as value for dcat:accessURL\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"shown as value for dcat:accessURL\",\n      \"location\": \"statdcat-ap-1-0-1#c0046\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"statdcat-ap-1-0-1\",\n      \"to_id\": \"cl_accessurl_added\",\n      \"anchor\": \"shown as value for dcat:accessURL\",\n      \"location\": \"statdcat-ap-1-0-1#c0046\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_accessurl_added\",\n      \"to_id\": \"c_accessurl\",\n      \"anchor\": \"value for dcat:accessURL\",\n      \"location\": \"statdcat-ap-1-0-1#c0046\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"statdcat-ap-1-0-1\",\n      \"to_id\": \"c_accessurl\",\n      \"anchor\": \"dcat:accessURL\",\n      \"location\": \"statdcat-ap-1-0-1#c0046\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"the source metadata\",\n      \"anchor\": \"the source metadata\"\n    }\n  ],\n  \"proposed_relationships\": [],\n  \"gleaned\": [\n    {\"name\": \"eg:organization\", \"type\": \"Concept\"},\n    {\"name\": \"eg:refArea\", \"type\": \"Concept\"},\n    {\"name\": \"eg:refPeriod\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-dataset-schema-2026-09-15",
+ "chunk_id": "dcat-us-3-dataset-schema-2026-09-15#c0012",
+ "chunk_index": 12,
+ "chunk_start": 35225,
+ "chunk_end": 35780,
+ "chunk_tokens": 160,
+ "heading_path": [
+  "DCAT-US 3.0: Dataset",
+  "[Dataset &gt; keyword #](#keyword)"
+ ],
+ "oversize": false,
+ "doc_sha256": "0ef64d14a0901d5e7f84fee15bab1474353880ee4b64aec9c185b06149e067de",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 7792,
+  "cacheReadInputTokens": 13056,
+  "cacheCreationInputTokens": 29767,
+  "webSearchRequests": 0,
+  "costUSD": 0.499008,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 5714,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.499008,
+ "duration_ms": 80986,
+ "session_id": "7e726e5e-6b8f-41be-a1be-67b48d97880b",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Schema entry for the Dataset keyword/tag property: recommended, defined as a list of keywords or tags describing the dataset, typed null or array of string whose items must be non-empty strings of min length 1.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_keyword_tag\",\n      \"name\": \"keyword/tag\",\n      \"aliases\": [\"keyword\", \"tag\", \"keywords\"],\n      \"description\": \"The dataset property holding a list of keywords or tags describing the dataset.\",\n      \"anchor\": \"keyword/tag\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0012\"\n    },\n    {\n      \"id\": \"c_dataset\",\n      \"name\": \"dataset\",\n      \"aliases\": [\"Dataset\"],\n      \"description\": \"The resource the keywords or tags describe.\",\n      \"anchor\": \"the dataset\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0012\"\n    },\n    {\n      \"id\": \"c_nonempty_string\",\n      \"name\": \"Non-empty string\",\n      \"aliases\": [\"non-empty string\"],\n      \"description\": \"The item type each element of the keyword array must conform to; type string with a minimum length of 1.\",\n      \"anchor\": \"Non-empty string #\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0012\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d_keyword\",\n      \"term\": \"keywords or tags\",\n      \"verbatim_text\": \"List of keywords or tags describing the dataset\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"List of keywords\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0012\"\n    }\n  ],\n  \"claims\": [\n    {\n      \"id\": \"cl_recommended\",\n      \"claim_text\": \"Recommended\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"platform_official\",\n      \"anchor\": \"Recommended\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0012\"\n    },\n    {\n      \"id\": \"cl_type\",\n      \"claim_text\": \"null or array of string\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"platform_official\",\n      \"anchor\": \"null or array of string\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0012\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"d_keyword\",\n      \"anchor\": \"List of keywords\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0012\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"c_keyword_tag\",\n      \"anchor\": \"keyword/tag\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0012\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"c_dataset\",\n      \"anchor\": \"the dataset\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0012\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"c_nonempty_string\",\n      \"anchor\": \"Non-empty string #\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0012\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"cl_recommended\",\n      \"anchor\": \"Recommended\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0012\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"cl_type\",\n      \"anchor\": \"null or array of string\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0012\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_recommended\",\n      \"to_id\": \"c_keyword_tag\",\n      \"anchor\": \"Recommended\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0012\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_type\",\n      \"to_id\": \"c_keyword_tag\",\n      \"anchor\": \"null or array of string\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0012\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [],\n  \"proposed_relationships\": [\n    {\n      \"suggested_edge\": \"has_component\",\n      \"from_id\": \"c_dataset\",\n      \"to_id\": \"c_keyword_tag\",\n      \"anchor\": \"## [Dataset\",\n      \"diversion_reason\": \"structural_inference\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0012\"\n    },\n    {\n      \"suggested_edge\": \"has_item_type\",\n      \"from_id\": \"c_keyword_tag\",\n      \"to_id\": \"c_nonempty_string\",\n      \"anchor\": \"Each item of this array\",\n      \"diversion_reason\": \"structural_inference\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0012\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"Min length\", \"type\": \"Concept\"},\n    {\"name\": \"array of string\", \"type\": \"Concept\"},\n    {\"name\": \"string\", \"type\": \"Concept\"}\n  ]\n}"
+}

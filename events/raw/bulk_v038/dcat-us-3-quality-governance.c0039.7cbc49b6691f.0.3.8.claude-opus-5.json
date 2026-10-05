@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-quality-governance",
+ "chunk_id": "dcat-us-3-quality-governance#c0039",
+ "chunk_index": 39,
+ "chunk_start": 29533,
+ "chunk_end": 30114,
+ "chunk_tokens": 134,
+ "heading_path": [
+  "Quality and Governance",
+  "[CatalogRecord &gt; description #](#catalog-record--description)"
+ ],
+ "oversize": false,
+ "doc_sha256": "7cbc49b6691fa3e7eb7b4845837afc3e1a6212bfc5882d676284a0ad154cbad5",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 4447,
+  "cacheReadInputTokens": 13056,
+  "cacheCreationInputTokens": 29659,
+  "webSearchRequests": 0,
+  "costUSD": 0.41430300000000003,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 3236,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.41430300000000003,
+ "duration_ms": 50983,
+ "session_id": "b54be64d-9fc8-42d4-8be6-fe8cd1c8067c",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Schema reference for the CatalogRecord class's optional `description` property: a list of free-text accounts of the catalog record, typed null or array of string, each item a Description string.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"n_catalogrecord\",\n      \"name\": \"CatalogRecord\",\n      \"aliases\": [\"catalog record\", \"DCAT-US CatalogRecord class\"],\n      \"description\": \"The class whose default type value is \\\"CatalogRecord\\\" and whose description property this passage specifies.\",\n      \"anchor\": \"`\\\"CatalogRecord\\\"`\",\n      \"location\": \"dcat-us-3-quality-governance#c0039\"\n    },\n    {\n      \"id\": \"n_description_string\",\n      \"name\": \"Description string\",\n      \"aliases\": [\"description array item\"],\n      \"description\": \"The item type each element of the description array must be; typed string.\",\n      \"anchor\": \"Description string #\",\n      \"location\": \"dcat-us-3-quality-governance#c0039\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"n_def_description\",\n      \"term\": \"description\",\n      \"verbatim_text\": \"A list of free-text accounts of the catalog record\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"free-text accounts\",\n      \"location\": \"dcat-us-3-quality-governance#c0039\"\n    }\n  ],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"n_def_description\",\n      \"anchor\": \"free-text accounts\",\n      \"location\": \"dcat-us-3-quality-governance#c0039\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"n_catalogrecord\",\n      \"anchor\": \"`\\\"CatalogRecord\\\"`\",\n      \"location\": \"dcat-us-3-quality-governance#c0039\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"n_description_string\",\n      \"anchor\": \"Description string #\",\n      \"location\": \"dcat-us-3-quality-governance#c0039\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"Climate Data 2023 dataset\",\n      \"anchor\": \"Climate Data 2023\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"suggested_edge\": \"has_component\",\n      \"from_id\": \"n_catalogrecord\",\n      \"to_id\": \"n_def_description\",\n      \"anchor\": \"## [CatalogRecord\",\n      \"location\": \"dcat-us-3-quality-governance#c0039\",\n      \"diversion_reason\": \"structural_inference\"\n    },\n    {\n      \"suggested_edge\": \"has_component\",\n      \"from_id\": \"n_description_string\",\n      \"to_id\": \"n_def_description\",\n      \"anchor\": \"Each item of this array must be\",\n      \"location\": \"dcat-us-3-quality-governance#c0039\",\n      \"diversion_reason\": \"structural_inference\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"Optional\", \"type\": \"Concept\"},\n    {\"name\": \"null or array of string\", \"type\": \"Concept\"},\n    {\"name\": \"Descriptions\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-quality-governance",
+ "chunk_id": "dcat-us-3-quality-governance#c0004",
+ "chunk_index": 4,
+ "chunk_start": 5461,
+ "chunk_end": 5763,
+ "chunk_tokens": 70,
+ "heading_path": [
+  "Quality and Governance",
+  "[Standard &gt; identifier #](#standard--identifier)"
+ ],
+ "oversize": false,
+ "doc_sha256": "7cbc49b6691fa3e7eb7b4845837afc3e1a6212bfc5882d676284a0ad154cbad5",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 4075,
+  "cacheReadInputTokens": 13056,
+  "cacheCreationInputTokens": 29527,
+  "webSearchRequests": 0,
+  "costUSD": 0.403683,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 2660,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.403683,
+ "duration_ms": 44608,
+ "session_id": "2314b55a-923d-4ad7-8fc9-9f500cd00410",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"A DCAT-US 3 property specification for Standard > identifier: requirement level Recommended, a one-sentence definition of the identifier as the Standard's unique identifier within the Catalog, and a type of null or Identifier.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_identifier\",\n      \"name\": \"identifier\",\n      \"aliases\": [\"Standard identifier\"],\n      \"description\": \"The unique identifier for the Standard within the Catalog.\",\n      \"anchor\": \"unique identifier for the Standard\",\n      \"location\": \"dcat-us-3-quality-governance#c0004\"\n    },\n    {\n      \"id\": \"c_standard\",\n      \"name\": \"Standard\",\n      \"aliases\": [],\n      \"description\": \"The entity the identifier property belongs to; it carries a unique identifier in the Catalog.\",\n      \"anchor\": \"identifier for the Standard\",\n      \"location\": \"dcat-us-3-quality-governance#c0004\"\n    },\n    {\n      \"id\": \"c_catalog\",\n      \"name\": \"Catalog\",\n      \"aliases\": [],\n      \"description\": \"The scope within which the Standard's identifier is unique.\",\n      \"anchor\": \"context of the Catalog\",\n      \"location\": \"dcat-us-3-quality-governance#c0004\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d_identifier\",\n      \"term\": \"identifier\",\n      \"verbatim_text\": \"The unique identifier for the Standard\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"unique identifier for the Standard\",\n      \"location\": \"dcat-us-3-quality-governance#c0004\"\n    }\n  ],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"d_identifier\",\n      \"anchor\": \"unique identifier for the Standard\",\n      \"location\": \"dcat-us-3-quality-governance#c0004\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"c_identifier\",\n      \"anchor\": \"unique identifier for the Standard\",\n      \"location\": \"dcat-us-3-quality-governance#c0004\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"c_standard\",\n      \"anchor\": \"identifier for the Standard\",\n      \"location\": \"dcat-us-3-quality-governance#c0004\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"c_catalog\",\n      \"anchor\": \"context of the Catalog\",\n      \"location\": \"dcat-us-3-quality-governance#c0004\"\n    },\n    {\n      \"type\": \"has_component\",\n      \"from_id\": \"c_standard\",\n      \"to_id\": \"c_identifier\",\n      \"anchor\": \"identifier for the Standard\",\n      \"location\": \"dcat-us-3-quality-governance#c0004\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"Identifier\",\n      \"anchor\": \"null or [Identifier]\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"Recommended\",\n      \"suggested_edge\": \"requirement_level\",\n      \"diversion_reason\": \"structural_inference\",\n      \"note\": \"The requirement level Recommended attaches to the identifier property only through the page's field label, not a sentence.\"\n    },\n    {\n      \"anchor\": \"null or [Identifier]\",\n      \"suggested_edge\": \"has_range\",\n      \"diversion_reason\": \"structural_inference\",\n      \"note\": \"The value type of identifier is given in a Type list row, not an asserted relation.\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"DCAT-US 3\", \"type\": \"Standard\"},\n    {\"name\": \"URI\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

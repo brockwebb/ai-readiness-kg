@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-dataset-schema-2026-09-15",
+ "chunk_id": "dcat-us-3-dataset-schema-2026-09-15#c0028",
+ "chunk_index": 28,
+ "chunk_start": 43285,
+ "chunk_end": 43668,
+ "chunk_tokens": 98,
+ "heading_path": [
+  "DCAT-US 3.0: Dataset",
+  "[Dataset &gt; contributor #](#contributor)"
+ ],
+ "oversize": false,
+ "doc_sha256": "0ef64d14a0901d5e7f84fee15bab1474353880ee4b64aec9c185b06149e067de",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 7164,
+  "cacheReadInputTokens": 13056,
+  "cacheCreationInputTokens": 29754,
+  "webSearchRequests": 0,
+  "costUSD": 0.483178,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 5669,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.483178,
+ "duration_ms": 81470,
+ "session_id": "f569a5d3-078a-4985-897f-2703ed519303",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"DCAT-US 3.0 property page for Dataset > contributor: optional, null or an array of Agent classes, with Agent defined as a person, organization, software agent, or other entity involved with a resource.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_contributor\",\n      \"name\": \"contributor\",\n      \"aliases\": [\"Dataset contributor\"],\n      \"description\": \"Optional Dataset property holding a list of agents contributing to the Dataset; typed as null or an array of Agent classes.\",\n      \"anchor\": \"## [Dataset &gt; contributor\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0028\"\n    },\n    {\n      \"id\": \"c_agent\",\n      \"name\": \"Agent\",\n      \"aliases\": [\"Agent class\"],\n      \"description\": \"Class used as the item type of the Dataset contributor array; a person, organization, software agent, or other entity involved with a resource.\",\n      \"anchor\": \"array of [Agent]\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0028\"\n    },\n    {\n      \"id\": \"c_dataset\",\n      \"name\": \"Dataset\",\n      \"aliases\": [\"dcat:Dataset\"],\n      \"description\": \"The asset class whose contributing agents the contributor property lists.\",\n      \"anchor\": \"contributing to the Dataset\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0028\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d_agent\",\n      \"term\": \"Agent\",\n      \"verbatim_text\": \"A person, organization, software agent, or other entity involved with a resource\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"A person, organization, software agent\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0028\"\n    }\n  ],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"d_agent\",\n      \"anchor\": \"A person, organization, software agent\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0028\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"c_contributor\",\n      \"anchor\": \"## [Dataset &gt; contributor\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0028\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"c_agent\",\n      \"anchor\": \"array of [Agent]\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0028\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"c_dataset\",\n      \"anchor\": \"contributing to the Dataset\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0028\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [],\n  \"proposed_relationships\": [\n    {\n      \"from_id\": \"c_dataset\",\n      \"to_id\": \"c_contributor\",\n      \"suggested_edge\": \"has_component\",\n      \"anchor\": \"## [Dataset &gt; contributor\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0028\",\n      \"diversion_reason\": \"structural_inference\"\n    },\n    {\n      \"from_id\": \"c_contributor\",\n      \"to_id\": \"c_agent\",\n      \"suggested_edge\": \"has_range\",\n      \"anchor\": \"null or array of\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0028\",\n      \"diversion_reason\": \"structural_inference\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"Standard\", \"type\": \"Definition\"},\n    {\"name\": \"Requirement: Optional\", \"type\": \"Claim\"}\n  ]\n}"
+}

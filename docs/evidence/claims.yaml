@@ -1720,8 +1720,8 @@ claims:
   key: q3.corpus_growth
   question: Q3
   text: The corpus began as the v1 epoch of 71 documents (first admitted `2026-07-03` to `2026-07-04`)
-    and holds 265 admitted documents now; 162 were added before the framework record was first committed
-    (`2026-09-06`, `51d2526e1ad2`) and 32 on or after it, of which 25 are captured scan surfaces rather
+    and holds 274 admitted documents now; 162 were added before the framework record was first committed
+    (`2026-09-06`, `51d2526e1ad2`) and 41 on or after it, of which 25 are captured scan surfaces rather
     than literature.
   status: record
   evidence:
@@ -1739,6 +1739,34 @@ claims:
     id: dcat-ap-3-0-0-r5r-vocabulary
     locator: events/batch-001.jsonl:111
     note: first manifest_add 2026-09-21; provenance g4_resourcing_2026-09-21
+  - kind: document
+    id: dcat-us-3-candidate-recommendation-snapshot
+    locator: events/batch-001.jsonl:118
+    note: first manifest_add 2026-10-05; provenance dcat_002_2026-10-04
+  - kind: document
+    id: dcat-us-3-dataset-schema-2026-09-15
+    locator: events/batch-001.jsonl:121
+    note: first manifest_add 2026-10-05; provenance dcat_002_2026-10-04
+  - kind: document
+    id: dcat-us-3-dataset-series
+    locator: events/batch-001.jsonl:117
+    note: first manifest_add 2026-10-05; provenance dcat_002_2026-10-04
+  - kind: document
+    id: dcat-us-3-implementation-guide
+    locator: events/batch-001.jsonl:113
+    note: first manifest_add 2026-10-05; provenance dcat_002_2026-10-04
+  - kind: document
+    id: dcat-us-3-m-25-05-crosswalk
+    locator: events/batch-001.jsonl:114
+    note: first manifest_add 2026-10-05; provenance dcat_002_2026-10-04
+  - kind: document
+    id: dcat-us-3-quality-governance
+    locator: events/batch-001.jsonl:115
+    note: first manifest_add 2026-10-05; provenance dcat_002_2026-10-04
+  - kind: document
+    id: dcat-us-3-temporal-spatial-metrics
+    locator: events/batch-001.jsonl:116
+    note: first manifest_add 2026-10-05; provenance dcat_002_2026-10-04
   - kind: document
     id: esip-ai-ready-data-checklist-v1-0
     locator: events/batch-001.jsonl:106
@@ -1860,17 +1888,25 @@ claims:
     locator: events/batch-001.jsonl:98
     note: first manifest_add 2026-09-07; provenance scan_2026-09
   - kind: document
+    id: statdcat-ap-1-0-1
+    locator: events/batch-001.jsonl:119
+    note: first manifest_add 2026-10-05; provenance dcat_002_2026-10-04
+  - kind: document
+    id: w3c-dqv
+    locator: events/batch-001.jsonl:120
+    note: first manifest_add 2026-10-05; provenance dcat_002_2026-10-04
+  - kind: document
     id: wayback-cdx-server-api-readme
     locator: events/batch-001.jsonl:110
     note: first manifest_add 2026-09-19; provenance tool_docs_2026-09-18
   numbers:
   - value: '71'
     source: included entries whose provenance_sources has manifest_v1
-  - value: '265'
+  - value: '274'
     source: manifest entries with screening.decision included
   - value: '162'
     source: included, not v1, first admitted before the framework record
-  - value: '32'
+  - value: '41'
     source: included, not v1, first admitted on or after the framework record
   - value: '25'
     source: of those, entries whose provenance is a scan epoch
@@ -2288,9 +2324,9 @@ claims:
 - id: CL-054
   key: q5.evidence_coverage
   question: Q5
-  text: 'Evidence coverage in the record: 9 of 49 indicator evidence cells carry a pinpoint locator; 27
-    of 147 `EVIDENCED_BY` edges point at a located document; 16 indicators have no `EVIDENCED_BY` edge;
-    and 82 of the 265 admitted documents are cited by one.'
+  text: 'Evidence coverage in the record: 9 of 49 indicator evidence cells carry a pinpoint locator; 29
+    of 149 `EVIDENCED_BY` edges point at a located document; 16 indicators have no `EVIDENCED_BY` edge;
+    and 84 of the 274 admitted documents are cited by one.'
   status: record
   evidence:
   - kind: query
@@ -2340,15 +2376,15 @@ claims:
     source: indicators whose evidence cell carries a locator
   - value: '49'
     source: AssessmentIndicator nodes in the record
-  - value: '27'
+  - value: '29'
     source: EVIDENCED_BY edges whose document has a locator in the cell
-  - value: '147'
+  - value: '149'
     source: EVIDENCED_BY edges in the record
   - value: '16'
     source: indicators with no EVIDENCED_BY edge
-  - value: '82'
+  - value: '84'
     source: admitted documents cited by an EVIDENCED_BY edge
-  - value: '265'
+  - value: '274'
     source: manifest entries with screening.decision included
   source_task: cc_tasks/2026-10-02_evidence_map_record.md
 - id: CL-055
@@ -4031,4 +4067,6 @@ tables:
     documents: 1
   - first_admitted: '2026-10-04'
     documents: 1
+  - first_admitted: '2026-10-05'
+    documents: 9
   q5_numbers_that_differ_from_the_pack: []

@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-dataset-schema-2026-09-15",
+ "chunk_id": "dcat-us-3-dataset-schema-2026-09-15#c0033",
+ "chunk_index": 33,
+ "chunk_start": 44584,
+ "chunk_end": 44961,
+ "chunk_tokens": 98,
+ "heading_path": [
+  "DCAT-US 3.0: Dataset",
+  "[Dataset &gt; hasPart #](#hasPart)"
+ ],
+ "oversize": false,
+ "doc_sha256": "0ef64d14a0901d5e7f84fee15bab1474353880ee4b64aec9c185b06149e067de",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 4109,
+  "cacheReadInputTokens": 13056,
+  "cacheCreationInputTokens": 29736,
+  "webSearchRequests": 0,
+  "costUSD": 0.40662299999999996,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 2776,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.40662299999999996,
+ "duration_ms": 44979,
+ "session_id": "23cde9d0-3fc5-4a45-8793-3df11805d69c",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Schema section for the Dataset `hasPart` property: optional, holds an array of Dataset classes described as related datasets that are part of the described dataset, with Dataset defined as a collection of data published or curated by one provider.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_haspart\",\n      \"name\": \"hasPart\",\n      \"aliases\": [\"Dataset hasPart\", \"dct:hasPart\"],\n      \"description\": \"Optional Dataset property holding a list of related datasets that are part of the described dataset.\",\n      \"anchor\": \"## [Dataset &gt; hasPart\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0033\"\n    },\n    {\n      \"id\": \"c_dataset\",\n      \"name\": \"Dataset\",\n      \"aliases\": [\"DCAT-US Dataset class\"],\n      \"description\": \"A collection of data published or curated by one provider; the class each item of the hasPart array must be.\",\n      \"anchor\": \"Dataset](/standards/catalog/dcat-us-3/dataset/#root) :\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0033\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d_dataset\",\n      \"term\": \"Dataset\",\n      \"verbatim_text\": \"A collection of data published or curated by one provider\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"A collection of data published\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0033\"\n    }\n  ],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"d_dataset\",\n      \"anchor\": \"curated by one provider\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0033\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"c_haspart\",\n      \"anchor\": \"## [Dataset &gt; hasPart\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0033\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"c_dataset\",\n      \"anchor\": \"Dataset](/standards/catalog/dcat-us-3/dataset/#root) :\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0033\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [],\n  \"proposed_relationships\": [\n    {\n      \"suggested_edge\": \"has_component\",\n      \"from_id\": \"c_dataset\",\n      \"to_id\": \"c_dataset\",\n      \"anchor\": \"that are part of the described dataset\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0033\",\n      \"diversion_reason\": \"other:self_referential_part_whole\"\n    },\n    {\n      \"suggested_edge\": \"has_component\",\n      \"from_id\": \"c_dataset\",\n      \"to_id\": \"c_haspart\",\n      \"anchor\": \"## [Dataset &gt; hasPart\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0033\",\n      \"diversion_reason\": \"structural_inference\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"Optional requirement level for hasPart\", \"type\": \"Claim\"},\n    {\"name\": \"array of Dataset classes (type constraint)\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

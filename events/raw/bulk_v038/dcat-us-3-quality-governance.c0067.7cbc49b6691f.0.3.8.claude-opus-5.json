@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-quality-governance",
+ "chunk_id": "dcat-us-3-quality-governance#c0067",
+ "chunk_index": 67,
+ "chunk_start": 56645,
+ "chunk_end": 57893,
+ "chunk_tokens": 362,
+ "heading_path": [
+  "Quality and Governance",
+  "[DataService &gt; language #](#data-service--language)"
+ ],
+ "oversize": false,
+ "doc_sha256": "7cbc49b6691fa3e7eb7b4845837afc3e1a6212bfc5882d676284a0ad154cbad5",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 3595,
+  "cacheReadInputTokens": 13057,
+  "cacheCreationInputTokens": 30325,
+  "webSearchRequests": 0,
+  "costUSD": 0.3996635,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 2214,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3996635,
+ "duration_ms": 43250,
+ "session_id": "fe1cd263-cc79-4cc5-8102-f954e4c9078d",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"DCAT-US 3 schema reference for the optional DataService 'language' property: ISO 639-1 language code values supported by the data service, single code or array, max length 2, with the LOC vocabulary as the full list.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_data_service\",\n      \"name\": \"data service\",\n      \"aliases\": [\"DataService\"],\n      \"description\": \"The service whose supported language codes this optional property records.\",\n      \"anchor\": \"supported by the data service\",\n      \"location\": \"dcat-us-3-quality-governance#c0067\"\n    },\n    {\n      \"id\": \"c_language_code\",\n      \"name\": \"language code\",\n      \"aliases\": [\"Language code\", \"ISO 639-1 language code\"],\n      \"description\": \"A two-character code value drawn from ISO 639-1, such as en or es, carried singly or as an array.\",\n      \"anchor\": \"language code values\",\n      \"location\": \"dcat-us-3-quality-governance#c0067\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d_language\",\n      \"term\": \"language\",\n      \"verbatim_text\": \"ISO 639-1 language code values supported by the data service, such as en or es, full list can be seen at https://id.loc.gov/vocabulary/iso639-1.html\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"full list can be seen\",\n      \"location\": \"dcat-us-3-quality-governance#c0067\"\n    }\n  ],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [\n    {\n      \"id\": \"s_iso_639_1\",\n      \"name\": \"ISO 639-1\",\n      \"version\": null,\n      \"steward\": null,\n      \"as_of_date\": null,\n      \"anchor\": \"ISO 639-1\",\n      \"location\": \"dcat-us-3-quality-governance#c0067\"\n    }\n  ],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"d_language\",\n      \"anchor\": \"full list can be seen\",\n      \"location\": \"dcat-us-3-quality-governance#c0067\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"c_data_service\",\n      \"anchor\": \"supported by the data service\",\n      \"location\": \"dcat-us-3-quality-governance#c0067\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"c_language_code\",\n      \"anchor\": \"language code values\",\n      \"location\": \"dcat-us-3-quality-governance#c0067\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"https://id.loc.gov/vocabulary/iso639-1.html\",\n      \"anchor\": \"https://id.loc.gov/vocabulary/iso639-1.html\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"from_id\": \"s_iso_639_1\",\n      \"to_id\": \"c_language_code\",\n      \"suggested_edge\": \"constrains_value_range\",\n      \"anchor\": \"ISO 639-1\",\n      \"diversion_reason\": \"other:no_edge_type\",\n      \"location\": \"dcat-us-3-quality-governance#c0067\"\n    },\n    {\n      \"from_id\": \"c_language_code\",\n      \"to_id\": \"c_data_service\",\n      \"suggested_edge\": \"property_of\",\n      \"anchor\": \"such as en or es\",\n      \"diversion_reason\": \"structural_inference\",\n      \"location\": \"dcat-us-3-quality-governance#c0067\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"Library of Congress ISO 639-1 vocabulary\", \"type\": \"Standard\"},\n    {\"name\": \"List of lanuages\", \"type\": \"Concept\"},\n    {\"name\": \"Null allowed when not required\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-dataset-series",
+ "chunk_id": "dcat-us-3-dataset-series#c0004",
+ "chunk_index": 4,
+ "chunk_start": 9542,
+ "chunk_end": 9806,
+ "chunk_tokens": 66,
+ "heading_path": [
+  "DCAT-US 3.0: Dataset Series",
+  "[DatasetSeries &gt; title #](#title)"
+ ],
+ "oversize": false,
+ "doc_sha256": "a28eacd7eb60ddd04b52b4852e0e229fb96ff397056fbeac4dcc75a0e40c03da",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 4030,
+  "cacheReadInputTokens": 10341,
+  "cacheCreationInputTokens": 32166,
+  "webSearchRequests": 0,
+  "costUSD": 0.4275905,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 2544,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.4275905,
+ "duration_ms": 44815,
+ "session_id": "808205a5-af7a-4bd0-93a9-8a04f32d0164",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"A DCAT-US 3.0 property specification: the mandatory, string-typed `title` of a dataset series, glossed as a human-readable title, with two example values.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c-dataset-series\",\n      \"name\": \"dataset series\",\n      \"aliases\": [\"DatasetSeries\", \"Dataset Series\"],\n      \"description\": \"The entity whose human-readable title this property carries.\",\n      \"anchor\": \"of the dataset series\",\n      \"location\": \"dcat-us-3-dataset-series#c0004\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d-title\",\n      \"term\": \"title\",\n      \"verbatim_text\": \"Human-readable title of the dataset series\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"Human-readable title\",\n      \"location\": \"dcat-us-3-dataset-series#c0004\"\n    }\n  ],\n  \"claims\": [\n    {\n      \"id\": \"cl-mandatory\",\n      \"claim_text\": \"**Requirement:** Mandatory\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"Mandatory\",\n      \"location\": \"dcat-us-3-dataset-series#c0004\"\n    },\n    {\n      \"id\": \"cl-type-string\",\n      \"claim_text\": \"**Type** : `string`\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"`string`\",\n      \"location\": \"dcat-us-3-dataset-series#c0004\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-dataset-series\",\n      \"to_id\": \"d-title\",\n      \"anchor\": \"Human-readable title\",\n      \"location\": \"dcat-us-3-dataset-series#c0004\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"dcat-us-3-dataset-series\",\n      \"to_id\": \"cl-mandatory\",\n      \"anchor\": \"Mandatory\",\n      \"location\": \"dcat-us-3-dataset-series#c0004\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"dcat-us-3-dataset-series\",\n      \"to_id\": \"cl-type-string\",\n      \"anchor\": \"`string`\",\n      \"location\": \"dcat-us-3-dataset-series#c0004\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl-mandatory\",\n      \"to_id\": \"c-dataset-series\",\n      \"anchor\": \"Mandatory\",\n      \"location\": \"dcat-us-3-dataset-series#c0004\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-dataset-series\",\n      \"to_id\": \"c-dataset-series\",\n      \"anchor\": \"of the dataset series\",\n      \"location\": \"dcat-us-3-dataset-series#c0004\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"Annual Climate Observations\",\n      \"anchor\": \"\\\"Annual Climate Observations\\\"\"\n    },\n    {\n      \"name\": \"Annual National Climate Observations Series\",\n      \"anchor\": \"Annual National\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"suggested_edge\": \"has_component\",\n      \"anchor\": \"## [DatasetSeries\",\n      \"diversion_reason\": \"structural_inference\",\n      \"note\": \"title is a property of DatasetSeries; evidenced only by heading structure, not by a sentence stating the relation\"\n    },\n    {\n      \"suggested_edge\": \"implements\",\n      \"anchor\": \"Human-readable title\",\n      \"diversion_reason\": \"cross_chunk\",\n      \"note\": \"this property belongs to the DCAT-US 3.0 standard, which is named only outside this chunk\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"DCAT-US 3.0\", \"type\": \"Standard\"},\n    {\"name\": \"title\", \"type\": \"Concept\"},\n    {\"name\": \"string\", \"type\": \"Concept\"},\n    {\"name\": \"Mandatory requirement level\", \"type\": \"Concept\"}\n  ]\n}"
+}

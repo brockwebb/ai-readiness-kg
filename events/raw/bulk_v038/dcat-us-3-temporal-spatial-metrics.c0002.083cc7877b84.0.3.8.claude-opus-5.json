@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-temporal-spatial-metrics",
+ "chunk_id": "dcat-us-3-temporal-spatial-metrics#c0002",
+ "chunk_index": 2,
+ "chunk_start": 188,
+ "chunk_end": 1306,
+ "chunk_tokens": 259,
+ "heading_path": [
+  "Temporal, Spatial, and Metrics",
+  "[Class PeriodOfTime #](#period-of-time)"
+ ],
+ "oversize": false,
+ "doc_sha256": "083cc7877b8438d25498d71ee0e04b3e0ffdbbef334ff3c5a4735cdf2c8339c7",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 9753,
+  "cacheReadInputTokens": 13057,
+  "cacheCreationInputTokens": 29571,
+  "webSearchRequests": 0,
+  "costUSD": 0.5460735000000001,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 7967,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.5460735000000001,
+ "duration_ms": 108945,
+ "session_id": "1429f762-0b3a-4a4a-911d-7bc29ca307a8",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Schema reference for the DCAT-US PeriodOfTime class: its one-line definition, its combining type, a JSON-LD example, and its four properties (endDate and startDate recommended, @id and @type optional).\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c-period-of-time\",\n      \"name\": \"PeriodOfTime\",\n      \"aliases\": [\"Period of Time\", \"Class PeriodOfTime\", \"period-of-time\"],\n      \"description\": \"A supporting class carrying information about a specific time period with a start- and/or end-time; typed as combining and allowing additional properties of any type.\",\n      \"anchor\": \"\\\"@type\\\" : \\\"PeriodOfTime\\\"\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0002\"\n    },\n    {\n      \"id\": \"c-start-date\",\n      \"name\": \"startDate\",\n      \"aliases\": [\"start date\"],\n      \"description\": \"Recommended property of PeriodOfTime, null or object, giving the start date of the period of time.\",\n      \"anchor\": \"\\\"startDate\\\" : \\\"2024-01-01\\\"\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0002\"\n    },\n    {\n      \"id\": \"c-end-date\",\n      \"name\": \"endDate\",\n      \"aliases\": [\"end date\"],\n      \"description\": \"Recommended property of PeriodOfTime, null or object, giving the end date of the period of time.\",\n      \"anchor\": \"\\\"endDate\\\" : \\\"2024-12-31\\\"\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0002\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"def-time-period\",\n      \"term\": \"time period\",\n      \"verbatim_text\": \"Information about a specific time period with a start- and/or end-time\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"Information about a specific time period\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0002\"\n    }\n  ],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-temporal-spatial-metrics\",\n      \"to_id\": \"def-time-period\",\n      \"anchor\": \"Information about a specific time period\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0002\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-temporal-spatial-metrics\",\n      \"to_id\": \"c-period-of-time\",\n      \"anchor\": \"\\\"@type\\\" : \\\"PeriodOfTime\\\"\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0002\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-temporal-spatial-metrics\",\n      \"to_id\": \"c-start-date\",\n      \"anchor\": \"\\\"startDate\\\" : \\\"2024-01-01\\\"\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0002\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-temporal-spatial-metrics\",\n      \"to_id\": \"c-end-date\",\n      \"anchor\": \"\\\"endDate\\\" : \\\"2024-12-31\\\"\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0002\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\"name\": \"locations\", \"anchor\": \"locations\"},\n    {\"name\": \"quality metrics\", \"anchor\": \"quality metrics\"},\n    {\"name\": \"measurements\", \"anchor\": \"measurements\"},\n    {\"name\": \"activities\", \"anchor\": \"activities\"},\n    {\"name\": \"addresses\", \"anchor\": \"and addresses\"},\n    {\"name\": \"@id\", \"anchor\": \"[@id](#period-of-time--@id)\"},\n    {\"name\": \"@type\", \"anchor\": \"[@type](#period-of-time--@type)\"}\n  ],\n  \"proposed_relationships\": [\n    {\n      \"suggested_edge\": \"has_component\",\n      \"from_id\": \"c-period-of-time\",\n      \"to_id\": \"c-start-date\",\n      \"diversion_reason\": \"structural_inference\",\n      \"anchor\": \"\\\"startDate\\\" : \\\"2024-01-01\\\"\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0002\"\n    },\n    {\n      \"suggested_edge\": \"has_component\",\n      \"from_id\": \"c-period-of-time\",\n      \"to_id\": \"c-end-date\",\n      \"diversion_reason\": \"structural_inference\",\n      \"anchor\": \"\\\"endDate\\\" : \\\"2024-12-31\\\"\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0002\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"combining\", \"type\": \"Concept\"},\n    {\"name\": \"Any type allowed\", \"type\": \"Claim\"},\n    {\"name\": \"Recommended\", \"type\": \"Concept\"},\n    {\"name\": \"Any of\", \"type\": \"Concept\"}\n  ]\n}"
+}

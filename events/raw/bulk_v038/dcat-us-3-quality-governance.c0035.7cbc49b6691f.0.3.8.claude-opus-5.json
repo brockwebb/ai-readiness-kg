@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-quality-governance",
+ "chunk_id": "dcat-us-3-quality-governance#c0035",
+ "chunk_index": 35,
+ "chunk_start": 28562,
+ "chunk_end": 28852,
+ "chunk_tokens": 69,
+ "heading_path": [
+  "Quality and Governance",
+  "[CatalogRecord &gt; conformsTo #](#catalog-record--conformsTo)"
+ ],
+ "oversize": false,
+ "doc_sha256": "7cbc49b6691fa3e7eb7b4845837afc3e1a6212bfc5882d676284a0ad154cbad5",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 4344,
+  "cacheReadInputTokens": 13056,
+  "cacheCreationInputTokens": 29480,
+  "webSearchRequests": 0,
+  "costUSD": 0.409938,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 2872,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.409938,
+ "duration_ms": 48891,
+ "session_id": "bbc5538e-f835-4395-9196-8684c3acacd7",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"A DCAT-US 3 property specification for CatalogRecord's conformsTo: title 'application profile', Recommended, glossed as an Application Profile that the Catalog Record's metadata conforms to, typed null or Standard.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_conformsto\",\n      \"name\": \"conformsTo\",\n      \"aliases\": [\"CatalogRecord > conformsTo\", \"application profile property\"],\n      \"description\": \"The CatalogRecord property whose value is an Application Profile that the Catalog Record's metadata conforms to; Recommended, typed null or Standard.\",\n      \"anchor\": \"conformsTo #\",\n      \"location\": \"dcat-us-3-quality-governance#c0035\"\n    },\n    {\n      \"id\": \"c_application_profile\",\n      \"name\": \"Application Profile\",\n      \"aliases\": [\"application profile\"],\n      \"description\": \"The thing a Catalog Record's metadata conforms to, given as the value of the conformsTo property.\",\n      \"anchor\": \"An Application Profile\",\n      \"location\": \"dcat-us-3-quality-governance#c0035\"\n    },\n    {\n      \"id\": \"c_catalog_record\",\n      \"name\": \"Catalog Record\",\n      \"aliases\": [\"CatalogRecord\"],\n      \"description\": \"The catalog entity whose metadata may conform to an Application Profile.\",\n      \"anchor\": \"Catalog Record's metadata\",\n      \"location\": \"dcat-us-3-quality-governance#c0035\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d_conformsto\",\n      \"term\": \"Application Profile\",\n      \"verbatim_text\": \"An Application Profile that the Catalog Record's metadata conforms to\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"metadata conforms to\",\n      \"location\": \"dcat-us-3-quality-governance#c0035\"\n    }\n  ],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"d_conformsto\",\n      \"anchor\": \"metadata conforms to\",\n      \"location\": \"dcat-us-3-quality-governance#c0035\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"c_conformsto\",\n      \"anchor\": \"conformsTo #\",\n      \"location\": \"dcat-us-3-quality-governance#c0035\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"c_application_profile\",\n      \"anchor\": \"An Application Profile\",\n      \"location\": \"dcat-us-3-quality-governance#c0035\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"c_catalog_record\",\n      \"anchor\": \"Catalog Record's metadata\",\n      \"location\": \"dcat-us-3-quality-governance#c0035\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"Standard\",\n      \"anchor\": \"null or [Standard]\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"suggested_edge\": \"conforms_to\",\n      \"from_id\": \"c_catalog_record\",\n      \"to_id\": \"c_application_profile\",\n      \"anchor\": \"metadata conforms to\",\n      \"diversion_reason\": \"other:no_edge_type\",\n      \"location\": \"dcat-us-3-quality-governance#c0035\"\n    },\n    {\n      \"suggested_edge\": \"has_property\",\n      \"from_id\": \"c_catalog_record\",\n      \"to_id\": \"c_conformsto\",\n      \"anchor\": \"conformsTo #\",\n      \"diversion_reason\": \"structural_inference\",\n      \"location\": \"dcat-us-3-quality-governance#c0035\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"Requirement: Recommended for CatalogRecord conformsTo\", \"type\": \"Practice\"},\n    {\"name\": \"application profile\", \"type\": \"Definition\"}\n  ]\n}"
+}

@@ -1,0 +1,33 @@
+{
+ "doc_id": "statdcat-ap-1-0-1",
+ "chunk_id": "statdcat-ap-1-0-1#c0038",
+ "chunk_index": 38,
+ "chunk_start": 201620,
+ "chunk_end": 201835,
+ "chunk_tokens": 56,
+ "heading_path": [
+  "trivial mapping but may require specific mapping tables or owl:sameAs assertions."
+ ],
+ "oversize": false,
+ "doc_sha256": "b2353d557d84c0f853380723447cd26f0c47a92bc444a6193dad52868eeb1d69",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 5674,
+  "cacheReadInputTokens": 13057,
+  "cacheCreationInputTokens": 29474,
+  "webSearchRequests": 0,
+  "costUSD": 0.44312850000000004,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 4349,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.44312850000000004,
+ "duration_ms": 64710,
+ "session_id": "b7236150-e268-4a82-b49c-501af75bce4d",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Turtle-example comment lines stating that the example's subjects were mapped to the MDR Data Theme NAL and that this mapping is not trivial, plus a dct:spatial line pointing at a GeoNames URI for Wales.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_mdr_data_theme_nal\",\n      \"name\": \"MDR Data Theme NAL\",\n      \"aliases\": [\"MDR Data Theme Named Authority List\"],\n      \"description\": \"Controlled vocabulary of data themes to which the example's subjects have been mapped.\",\n      \"anchor\": \"MDR Data Theme NAL\",\n      \"location\": \"statdcat-ap-1-0-1#c0038\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"cl_mapped_to_nal\",\n      \"claim_text\": \"These subjects have been mapped to the MDR Data Theme NAL\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"mapped to the MDR Data Theme NAL\",\n      \"location\": \"statdcat-ap-1-0-1#c0038\"\n    },\n    {\n      \"id\": \"cl_not_trivial_mapping\",\n      \"claim_text\": \"trivial mapping but may require specific mapping tables or owl:sameAs assertions\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"# trivial mapping but\",\n      \"location\": \"statdcat-ap-1-0-1#c0038\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"statdcat-ap-1-0-1\",\n      \"to_id\": \"cl_mapped_to_nal\",\n      \"anchor\": \"mapped to the MDR Data Theme NAL\",\n      \"location\": \"statdcat-ap-1-0-1#c0038\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"statdcat-ap-1-0-1\",\n      \"to_id\": \"cl_not_trivial_mapping\",\n      \"anchor\": \"# trivial mapping but\",\n      \"location\": \"statdcat-ap-1-0-1#c0038\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_mapped_to_nal\",\n      \"to_id\": \"c_mdr_data_theme_nal\",\n      \"anchor\": \"MDR Data Theme NAL\",\n      \"location\": \"statdcat-ap-1-0-1#c0038\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"statdcat-ap-1-0-1\",\n      \"to_id\": \"c_mdr_data_theme_nal\",\n      \"anchor\": \"MDR Data Theme NAL\",\n      \"location\": \"statdcat-ap-1-0-1#c0038\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\"name\": \"dct:spatial\", \"anchor\": \"dct:spatial\"},\n    {\"name\": \"geonames:2634865\", \"anchor\": \"geonames:2634865\"},\n    {\"name\": \"Wales\", \"anchor\": \"#Wales\"}\n  ],\n  \"proposed_relationships\": [\n    {\n      \"suggested_edge\": \"exemplified_by_value\",\n      \"from_name\": \"dct:spatial\",\n      \"to_name\": \"geonames:2634865\",\n      \"anchor\": \"dct:spatial\",\n      \"diversion_reason\": \"structural_inference\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"owl:sameAs\", \"type\": \"Concept\"},\n    {\"name\": \"mapping tables\", \"type\": \"Concept\"},\n    {\"name\": \"GeoNames\", \"type\": \"Standard\"}\n  ]\n}"
+}

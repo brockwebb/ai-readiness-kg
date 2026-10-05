@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-quality-governance",
+ "chunk_id": "dcat-us-3-quality-governance#c0077",
+ "chunk_index": 77,
+ "chunk_start": 61626,
+ "chunk_end": 62089,
+ "chunk_tokens": 113,
+ "heading_path": [
+  "Quality and Governance",
+  "[DataService &gt; theme #](#data-service--theme)"
+ ],
+ "oversize": false,
+ "doc_sha256": "7cbc49b6691fa3e7eb7b4845837afc3e1a6212bfc5882d676284a0ad154cbad5",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 4227,
+  "cacheReadInputTokens": 13057,
+  "cacheCreationInputTokens": 29062,
+  "webSearchRequests": 0,
+  "costUSD": 0.40283349999999996,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 2809,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.40283349999999996,
+ "duration_ms": 46425,
+ "session_id": "002c384a-196c-4a5f-8140-07a4f399f289",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"DCAT-US 3 property page for DataService theme/category: optional, a list of themes or categories for the data service, typed as null or an array of Concept classes, where a Concept is a controlled term or label optionally drawn from a concept scheme.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_theme_category\",\n      \"name\": \"theme/category\",\n      \"aliases\": [\"DataService theme\", \"theme\"],\n      \"description\": \"The optional DataService property listing themes or categories for the data service.\",\n      \"anchor\": \"theme/category\",\n      \"location\": \"dcat-us-3-quality-governance#c0077\"\n    },\n    {\n      \"id\": \"c_concept_class\",\n      \"name\": \"Concept\",\n      \"aliases\": [\"Concept class\", \"SKOS Concept\"],\n      \"description\": \"The class whose instances populate the theme/category array: a controlled term or label, optionally drawn from a concept scheme.\",\n      \"anchor\": \"optionally drawn from\",\n      \"location\": \"dcat-us-3-quality-governance#c0077\"\n    },\n    {\n      \"id\": \"c_data_service\",\n      \"name\": \"data service\",\n      \"aliases\": [\"DataService\"],\n      \"description\": \"The catalog asset class whose themes or categories this property lists.\",\n      \"anchor\": \"for the data service\",\n      \"location\": \"dcat-us-3-quality-governance#c0077\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d_concept\",\n      \"term\": \"Concept\",\n      \"verbatim_text\": \"A controlled term or label, optionally drawn from a concept scheme\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"A controlled term\",\n      \"location\": \"dcat-us-3-quality-governance#c0077\"\n    }\n  ],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"d_concept\",\n      \"anchor\": \"A controlled term\",\n      \"location\": \"dcat-us-3-quality-governance#c0077\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"c_theme_category\",\n      \"anchor\": \"theme/category\",\n      \"location\": \"dcat-us-3-quality-governance#c0077\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"c_concept_class\",\n      \"anchor\": \"optionally drawn from\",\n      \"location\": \"dcat-us-3-quality-governance#c0077\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"c_data_service\",\n      \"anchor\": \"for the data service\",\n      \"location\": \"dcat-us-3-quality-governance#c0077\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"concept scheme\",\n      \"anchor\": \"concept scheme\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"suggested_edge\": \"has_component\",\n      \"from_id\": \"c_data_service\",\n      \"to_id\": \"c_theme_category\",\n      \"anchor\": \"themes or categories\",\n      \"diversion_reason\": \"structural_inference\",\n      \"location\": \"dcat-us-3-quality-governance#c0077\"\n    },\n    {\n      \"suggested_edge\": \"range_is\",\n      \"from_id\": \"c_theme_category\",\n      \"to_id\": \"c_concept_class\",\n      \"anchor\": \"**Each item of this array\",\n      \"diversion_reason\": \"other:property_range\",\n      \"location\": \"dcat-us-3-quality-governance#c0077\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"DCAT-US 3\", \"type\": \"Standard\"},\n    {\"name\": \"Optional requirement level for theme/category\", \"type\": \"Claim\"},\n    {\"name\": \"controlled term\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

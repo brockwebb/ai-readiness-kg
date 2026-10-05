@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-temporal-spatial-metrics",
+ "chunk_id": "dcat-us-3-temporal-spatial-metrics#c0006",
+ "chunk_index": 6,
+ "chunk_start": 2051,
+ "chunk_end": 2314,
+ "chunk_tokens": 93,
+ "heading_path": [
+  "Temporal, Spatial, and Metrics",
+  "[PeriodOfTime &gt; startDate #](#period-of-time--startDate)"
+ ],
+ "oversize": false,
+ "doc_sha256": "083cc7877b8438d25498d71ee0e04b3e0ffdbbef334ff3c5a4735cdf2c8339c7",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 3722,
+  "cacheReadInputTokens": 13057,
+  "cacheCreationInputTokens": 29030,
+  "webSearchRequests": 0,
+  "costUSD": 0.38988849999999997,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 2657,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.38988849999999997,
+ "duration_ms": 618943,
+ "session_id": "6d55da05-062f-4666-8893-2c4667f9c9a6",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Schema reference entry for the DCAT-US PeriodOfTime property startDate: requirement level Recommended, a one-line definition, a type of null or object, and four date/date-time example values.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_startdate\",\n      \"name\": \"startDate\",\n      \"aliases\": [\"start date\", \"PeriodOfTime startDate\"],\n      \"description\": \"Property giving the start date of the period of time; recommended, typed null or object.\",\n      \"anchor\": \"startDate #\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0006\"\n    },\n    {\n      \"id\": \"c_periodoftime\",\n      \"name\": \"PeriodOfTime\",\n      \"aliases\": [\"period of time\"],\n      \"description\": \"The time interval whose start date startDate records.\",\n      \"anchor\": \"PeriodOfTime\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0006\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d_startdate\",\n      \"term\": \"startDate\",\n      \"verbatim_text\": \"The start date of the period of time\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"The start date\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0006\"\n    }\n  ],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-temporal-spatial-metrics\",\n      \"to_id\": \"d_startdate\",\n      \"anchor\": \"start date of the period\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0006\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-temporal-spatial-metrics\",\n      \"to_id\": \"c_startdate\",\n      \"anchor\": \"startDate #\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0006\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-temporal-spatial-metrics\",\n      \"to_id\": \"c_periodoftime\",\n      \"anchor\": \"PeriodOfTime\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0006\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [],\n  \"proposed_relationships\": [\n    {\n      \"suggested_edge\": \"has_component\",\n      \"from_id\": \"c_periodoftime\",\n      \"to_id\": \"c_startdate\",\n      \"anchor\": \"PeriodOfTime\",\n      \"diversion_reason\": \"structural_inference\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0006\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"Recommended\", \"type\": \"Concept\"},\n    {\"name\": \"null or object\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

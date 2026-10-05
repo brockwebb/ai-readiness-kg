@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-quality-governance",
+ "chunk_id": "dcat-us-3-quality-governance#c0012",
+ "chunk_index": 12,
+ "chunk_start": 7562,
+ "chunk_end": 7866,
+ "chunk_tokens": 99,
+ "heading_path": [
+  "Quality and Governance",
+  "[Standard &gt; modified #](#standard--modified)"
+ ],
+ "oversize": false,
+ "doc_sha256": "7cbc49b6691fa3e7eb7b4845837afc3e1a6212bfc5882d676284a0ad154cbad5",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 3082,
+  "cacheReadInputTokens": 13056,
+  "cacheCreationInputTokens": 29548,
+  "webSearchRequests": 0,
+  "costUSD": 0.379068,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 2096,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.379068,
+ "duration_ms": 37438,
+ "session_id": "8d3bdb38-de90-4963-bd07-77e3d074848c",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"DCAT-US 3 property reference entry for Standard > modified: an optional last-modified date for a Standard, with example date/date-time values.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c-standard\",\n      \"name\": \"Standard\",\n      \"aliases\": [],\n      \"description\": \"The class whose most recent change date the modified property records.\",\n      \"anchor\": \"the Standard was changed\",\n      \"location\": \"dcat-us-3-quality-governance#c0012\"\n    },\n    {\n      \"id\": \"c-last-modified\",\n      \"name\": \"last modified\",\n      \"aliases\": [\"modified\"],\n      \"description\": \"Title of the optional Standard property recording the most recent modification date.\",\n      \"anchor\": \"last modified\",\n      \"location\": \"dcat-us-3-quality-governance#c0012\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"def-standard-modified\",\n      \"term\": \"modified\",\n      \"verbatim_text\": \"The most recent date on which the Standard was changed or modified\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"changed or modified\",\n      \"location\": \"dcat-us-3-quality-governance#c0012\"\n    }\n  ],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"def-standard-modified\",\n      \"anchor\": \"changed or modified\",\n      \"location\": \"dcat-us-3-quality-governance#c0012\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"c-standard\",\n      \"anchor\": \"the Standard was changed\",\n      \"location\": \"dcat-us-3-quality-governance#c0012\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"c-last-modified\",\n      \"anchor\": \"last modified\",\n      \"location\": \"dcat-us-3-quality-governance#c0012\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"last modified\",\n      \"suggested_edge\": \"property_of\",\n      \"from_id\": \"c-last-modified\",\n      \"to_id\": \"c-standard\",\n      \"diversion_reason\": \"other:no_property_edge_type\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"Optional requirement status of the modified property\", \"type\": \"Claim\"},\n    {\"name\": \"null or object type for the modified property value\", \"type\": \"Concept\"},\n    {\"name\": \"ISO 8601 date and date-time example values\", \"type\": \"Concept\"}\n  ]\n}"
+}

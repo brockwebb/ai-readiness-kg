@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-temporal-spatial-metrics",
+ "chunk_id": "dcat-us-3-temporal-spatial-metrics#c0039",
+ "chunk_index": 39,
+ "chunk_start": 25816,
+ "chunk_end": 26008,
+ "chunk_tokens": 54,
+ "heading_path": [
+  "Temporal, Spatial, and Metrics",
+  "[Address &gt; locality #](#address--locality)"
+ ],
+ "oversize": false,
+ "doc_sha256": "083cc7877b8438d25498d71ee0e04b3e0ffdbbef334ff3c5a4735cdf2c8339c7",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 5150,
+  "cacheReadInputTokens": 13057,
+  "cacheCreationInputTokens": 28916,
+  "webSearchRequests": 0,
+  "costUSD": 0.4244485,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 3943,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.4244485,
+ "duration_ms": 61563,
+ "session_id": "734c7bcc-be14-4fa8-9f91-2ee786ffc54f",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"DCAT-US 3 property reference entry for the Address `locality` property: requirement level Recommended, defined as the city of the Address, typed null or string, with two example city values.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"n1\",\n      \"name\": \"locality\",\n      \"aliases\": [\"Address > locality\", \"city\"],\n      \"description\": \"Recommended Address property whose value is the city of the Address; typed null or string.\",\n      \"anchor\": \"## [Address &gt; locality\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0039\"\n    },\n    {\n      \"id\": \"n2\",\n      \"name\": \"Address\",\n      \"aliases\": [],\n      \"description\": \"The structure whose city is given by the locality property.\",\n      \"anchor\": \"city of the Address\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0039\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"n3\",\n      \"term\": \"locality\",\n      \"verbatim_text\": \"The city of the Address\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"The city of the Address\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0039\"\n    }\n  ],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-temporal-spatial-metrics\",\n      \"to_id\": \"n3\",\n      \"anchor\": \"The city of the Address\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0039\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-temporal-spatial-metrics\",\n      \"to_id\": \"n1\",\n      \"anchor\": \"## [Address &gt; locality\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0039\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-temporal-spatial-metrics\",\n      \"to_id\": \"n2\",\n      \"anchor\": \"city of the Address\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0039\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\"name\": \"Asheville\", \"anchor\": \"Asheville\"},\n    {\"name\": \"Washington\", \"anchor\": \"Washington\"}\n  ],\n  \"proposed_relationships\": [\n    {\n      \"suggested_edge\": \"has_component\",\n      \"from_id\": \"n2\",\n      \"to_id\": \"n1\",\n      \"anchor\": \"## [Address &gt; locality\",\n      \"diversion_reason\": \"structural_inference\"\n    },\n    {\n      \"suggested_edge\": \"requirement_level\",\n      \"from_id\": \"n1\",\n      \"to_id\": \"Recommended\",\n      \"anchor\": \"Recommended\",\n      \"diversion_reason\": \"other:no_edge_type_for_conformance_level\"\n    },\n    {\n      \"suggested_edge\": \"value_type\",\n      \"from_id\": \"n1\",\n      \"to_id\": \"null or string\",\n      \"anchor\": \"`null or string`\",\n      \"diversion_reason\": \"other:no_edge_type_for_datatype\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"Recommended\", \"type\": \"Concept\"},\n    {\"name\": \"null or string\", \"type\": \"Concept\"}\n  ]\n}"
+}

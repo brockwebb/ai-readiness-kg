@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-dataset-schema-2026-09-15",
+ "chunk_id": "dcat-us-3-dataset-schema-2026-09-15#c0048",
+ "chunk_index": 48,
+ "chunk_start": 51691,
+ "chunk_end": 52208,
+ "chunk_tokens": 110,
+ "heading_path": [
+  "DCAT-US 3.0: Dataset",
+  "[Dataset &gt; qualifiedRelation #](#qualifiedRelation)"
+ ],
+ "oversize": false,
+ "doc_sha256": "0ef64d14a0901d5e7f84fee15bab1474353880ee4b64aec9c185b06149e067de",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 5333,
+  "cacheReadInputTokens": 13056,
+  "cacheCreationInputTokens": 29779,
+  "webSearchRequests": 0,
+  "costUSD": 0.437653,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 3546,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.437653,
+ "duration_ms": 55388,
+ "session_id": "6f947ff2-8192-42a3-b0ee-637643f450c9",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"DCAT-US 3.0 Dataset property page for qualifiedRelation: an optional property giving the detailed relationship between a dataset and another resource, typed as an array of Relationship classes; carries over a definition of Attribution from the preceding property list.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c-qualifiedrelation\",\n      \"name\": \"qualifiedRelation\",\n      \"aliases\": [\"Dataset qualifiedRelation\", \"dcat:qualifiedRelation\"],\n      \"description\": \"Detailed relationship between the dataset and another resource, including the role of that relationship\",\n      \"anchor\": \"## [Dataset &gt; qualifiedRelation\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0048\"\n    },\n    {\n      \"id\": \"c-relationship\",\n      \"name\": \"Relationship\",\n      \"aliases\": [\"Relationship class\"],\n      \"description\": \"Additional information about how one resource is related to another; the class each item of qualifiedRelation must be\",\n      \"anchor\": \") : Additional information\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0048\"\n    },\n    {\n      \"id\": \"c-attribution\",\n      \"name\": \"Attribution\",\n      \"aliases\": [\"prov:Attribution\"],\n      \"description\": \"A responsibility that an agent has for a resource\",\n      \"anchor\": \"[Attribution](/standards\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0048\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d-attribution\",\n      \"term\": \"Attribution\",\n      \"verbatim_text\": \"A responsibility that an agent has for a resource\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"A responsibility that an agent\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0048\"\n    },\n    {\n      \"id\": \"d-relationship\",\n      \"term\": \"Relationship\",\n      \"verbatim_text\": \"Additional information about how one resource is related to another\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"Additional information about how one\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0048\"\n    }\n  ],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"d-attribution\",\n      \"anchor\": \"A responsibility that an agent\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0048\"\n    },\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"d-relationship\",\n      \"anchor\": \"Additional information about how one\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0048\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"c-qualifiedrelation\",\n      \"anchor\": \"## [Dataset &gt; qualifiedRelation\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0048\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"c-relationship\",\n      \"anchor\": \") : Additional information\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0048\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"c-attribution\",\n      \"anchor\": \"[Attribution](/standards\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0048\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"dataset\",\n      \"anchor\": \"between the dataset and another\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"array of [Relationship\",\n      \"suggested_edge\": \"has_range\",\n      \"from_id\": \"c-qualifiedrelation\",\n      \"to_id\": \"c-relationship\",\n      \"diversion_reason\": \"structural_inference\"\n    },\n    {\n      \"anchor\": \"**Requirement:** Optional\",\n      \"suggested_edge\": \"has_requirement_level\",\n      \"from_id\": \"c-qualifiedrelation\",\n      \"to_id\": \"Optional\",\n      \"diversion_reason\": \"structural_inference\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"Dataset\", \"type\": \"Concept\"},\n    {\"name\": \"agent\", \"type\": \"Concept\"},\n    {\"name\": \"resource\", \"type\": \"Concept\"},\n    {\"name\": \"DCAT-US 3.0\", \"type\": \"Standard\"}\n  ]\n}\n```"
+}

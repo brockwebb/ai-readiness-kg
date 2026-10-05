@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-dataset-series",
+ "chunk_id": "dcat-us-3-dataset-series#c0015",
+ "chunk_index": 15,
+ "chunk_start": 14733,
+ "chunk_end": 15085,
+ "chunk_tokens": 108,
+ "heading_path": [
+  "DCAT-US 3.0: Dataset Series",
+  "[DatasetSeries &gt; issued #](#issued)"
+ ],
+ "oversize": false,
+ "doc_sha256": "a28eacd7eb60ddd04b52b4852e0e229fb96ff397056fbeac4dcc75a0e40c03da",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 2298,
+  "cacheReadInputTokens": 13055,
+  "cacheCreationInputTokens": 29602,
+  "webSearchRequests": 0,
+  "costUSD": 0.36000750000000004,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 1434,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.36000750000000004,
+ "duration_ms": 27949,
+ "session_id": "f0c975eb-3f5d-4ced-86e4-f7a5c1d6f675",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"DCAT-US 3.0 property page for DatasetSeries `issued` (title 'release date', Optional): defines it as the date the series was formally established or published, not the oldest dataset's release date, with date/datetime examples.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c-dataset-series\",\n      \"name\": \"Dataset Series\",\n      \"aliases\": [\"DatasetSeries\"],\n      \"description\": \"The series entity whose formal establishment or publication date is recorded by the issued property.\",\n      \"anchor\": \"the Dataset Series was\",\n      \"location\": \"dcat-us-3-dataset-series#c0015\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d-issued-release-date\",\n      \"term\": \"release date\",\n      \"verbatim_text\": \"Date when the Dataset Series was formally established or published, not the release date of the oldest dataset in the series\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"formally established\",\n      \"location\": \"dcat-us-3-dataset-series#c0015\"\n    }\n  ],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-dataset-series\",\n      \"to_id\": \"d-issued-release-date\",\n      \"anchor\": \"not the release date\",\n      \"location\": \"dcat-us-3-dataset-series#c0015\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-dataset-series\",\n      \"to_id\": \"c-dataset-series\",\n      \"anchor\": \"Series was formally established\",\n      \"location\": \"dcat-us-3-dataset-series#c0015\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"Dataset\",\n      \"anchor\": \"or [Dataset]\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"**Requirement:** Optional\",\n      \"suggested_edge\": \"has_property_with_requirement\",\n      \"diversion_reason\": \"structural_inference\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"issued\", \"type\": \"Concept\"},\n    {\"name\": \"Optional requirement level\", \"type\": \"Concept\"},\n    {\"name\": \"ISO 8601 date and date-time literals\", \"type\": \"Standard\"}\n  ]\n}"
+}

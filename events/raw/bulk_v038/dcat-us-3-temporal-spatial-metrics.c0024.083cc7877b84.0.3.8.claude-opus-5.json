@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-temporal-spatial-metrics",
+ "chunk_id": "dcat-us-3-temporal-spatial-metrics#c0024",
+ "chunk_index": 24,
+ "chunk_start": 17927,
+ "chunk_end": 18107,
+ "chunk_tokens": 56,
+ "heading_path": [
+  "Temporal, Spatial, and Metrics",
+  "[Metric &gt; @id #](#metric--@id)"
+ ],
+ "oversize": false,
+ "doc_sha256": "083cc7877b8438d25498d71ee0e04b3e0ffdbbef334ff3c5a4735cdf2c8339c7",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 3376,
+  "cacheReadInputTokens": 13057,
+  "cacheCreationInputTokens": 28928,
+  "webSearchRequests": 0,
+  "costUSD": 0.3802185,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 2717,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3802185,
+ "duration_ms": 41284,
+ "session_id": "a9f14ce6-98d5-49c1-92a4-3fd3f151585f",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Schema-reference stub specifying the Metric class's optional `@id` property: a string in IRI format, with an example metric IRI.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"metric-at-id\",\n      \"name\": \"@id\",\n      \"aliases\": [\"Metric @id\", \"Metric identifier\"],\n      \"description\": \"The identifier property of a Metric in this schema: Optional, typed as a string in `iri` format, exemplified by a metrics IRI under an example.gov namespace.\",\n      \"anchor\": \"## [Metric &gt; @id\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0024\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-temporal-spatial-metrics\",\n      \"to_id\": \"metric-at-id\",\n      \"anchor\": \"## [Metric &gt; @id\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0024\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"Metric\",\n      \"anchor\": \"## [Metric\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"## [Metric &gt; @id\",\n      \"suggested_edge\": \"has_component\",\n      \"from_name\": \"Metric\",\n      \"to_name\": \"@id\",\n      \"diversion_reason\": \"structural_inference\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"string\", \"type\": \"Concept\"},\n    {\"name\": \"iri\", \"type\": \"Concept\"},\n    {\"name\": \"Optional\", \"type\": \"Concept\"}\n  ]\n}"
+}

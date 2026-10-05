@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-dataset-schema-2026-09-15",
+ "chunk_id": "dcat-us-3-dataset-schema-2026-09-15#c0044",
+ "chunk_index": 44,
+ "chunk_start": 50029,
+ "chunk_end": 50228,
+ "chunk_tokens": 50,
+ "heading_path": [
+  "DCAT-US 3.0: Dataset",
+  "[Dataset &gt; previousVersion #](#previousVersion)"
+ ],
+ "oversize": false,
+ "doc_sha256": "0ef64d14a0901d5e7f84fee15bab1474353880ee4b64aec9c185b06149e067de",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 5144,
+  "cacheReadInputTokens": 13056,
+  "cacheCreationInputTokens": 29552,
+  "webSearchRequests": 0,
+  "costUSD": 0.430658,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 3976,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.430658,
+ "duration_ms": 58655,
+ "session_id": "e84ad943-0b60-4b7e-ab67-a77fad9b334e",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Schema entry for the DCAT-US 3.0 Dataset property previousVersion: optional, defined as a reference to the previous dataset version, with type null or Dataset.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_previous_dataset_version\",\n      \"name\": \"previous dataset version\",\n      \"aliases\": [\"previousVersion\", \"Dataset > previousVersion\"],\n      \"description\": \"The optional Dataset property holding a reference to the dataset version that preceded this one.\",\n      \"anchor\": \"reference to the previous dataset version\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0044\"\n    },\n    {\n      \"id\": \"c_dataset\",\n      \"name\": \"Dataset\",\n      \"aliases\": [],\n      \"description\": \"The class given as the permitted type of the previousVersion reference.\",\n      \"anchor\": \"null or [Dataset]\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0044\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d_previous_dataset_version\",\n      \"term\": \"previous dataset version\",\n      \"verbatim_text\": \"reference to the previous dataset version\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"the previous dataset version\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0044\"\n    }\n  ],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"d_previous_dataset_version\",\n      \"anchor\": \"reference to the previous dataset\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0044\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"c_previous_dataset_version\",\n      \"anchor\": \"previous dataset version\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0044\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"c_dataset\",\n      \"anchor\": \"or [Dataset](/standards\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0044\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"Document\",\n      \"anchor\": \"A publication or other document\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"from_id\": \"c_previous_dataset_version\",\n      \"to_id\": \"c_dataset\",\n      \"suggested_edge\": \"has_range\",\n      \"anchor\": \"**Type** : null or\",\n      \"diversion_reason\": \"other:no_edge_type\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0044\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"DCAT-US 3.0\", \"type\": \"Standard\"},\n    {\"name\": \"Optional\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

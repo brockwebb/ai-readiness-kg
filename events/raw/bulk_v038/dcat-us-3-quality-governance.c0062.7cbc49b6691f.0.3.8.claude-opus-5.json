@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-quality-governance",
+ "chunk_id": "dcat-us-3-quality-governance#c0062",
+ "chunk_index": 62,
+ "chunk_start": 54514,
+ "chunk_end": 54842,
+ "chunk_tokens": 67,
+ "heading_path": [
+  "Quality and Governance",
+  "[DataService &gt; description #](#data-service--description)"
+ ],
+ "oversize": false,
+ "doc_sha256": "7cbc49b6691fa3e7eb7b4845837afc3e1a6212bfc5882d676284a0ad154cbad5",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 3550,
+  "cacheReadInputTokens": 13057,
+  "cacheCreationInputTokens": 29601,
+  "webSearchRequests": 0,
+  "costUSD": 0.3912985,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 2644,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3912985,
+ "duration_ms": 43483,
+ "session_id": "a783a928-7dc1-43da-8b73-ea2ae6295935",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Schema reference entry defining the optional DataService 'description' property as a plain-language summary of the data service, typed null or string, with an example; a trailing type line from the preceding property points at CUIRestriction.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_dataservice\",\n      \"name\": \"DataService\",\n      \"aliases\": [\"data service\", \"DataService > description\"],\n      \"description\": \"The catalog class whose optional description property this entry specifies.\",\n      \"anchor\": \"## [DataService\",\n      \"location\": \"dcat-us-3-quality-governance#c0062\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d_dataservice_description\",\n      \"term\": \"description\",\n      \"verbatim_text\": \"Plain-language summary of the data service\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"summary of the data service\",\n      \"location\": \"dcat-us-3-quality-governance#c0062\"\n    }\n  ],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"d_dataservice_description\",\n      \"anchor\": \"summary of the data service\",\n      \"location\": \"dcat-us-3-quality-governance#c0062\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"c_dataservice\",\n      \"anchor\": \"## [DataService\",\n      \"location\": \"dcat-us-3-quality-governance#c0062\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"CUIRestriction\",\n      \"anchor\": \"CUIRestriction\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"**Requirement:** Optional\",\n      \"suggested_edge\": \"has_optional_property\",\n      \"diversion_reason\": \"structural_inference\"\n    },\n    {\n      \"anchor\": \"null or `null or string`\",\n      \"suggested_edge\": \"has_datatype\",\n      \"diversion_reason\": \"other:no_schema_edge_for_property_range\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"dcat-us-3\", \"type\": \"Standard\"},\n    {\"name\": \"CUIRestriction\", \"type\": \"Concept\"},\n    {\"name\": \"RESTful API providing access to historical and real-time climate data\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

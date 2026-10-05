@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-quality-governance",
+ "chunk_id": "dcat-us-3-quality-governance#c0060",
+ "chunk_index": 60,
+ "chunk_start": 53804,
+ "chunk_end": 54222,
+ "chunk_tokens": 103,
+ "heading_path": [
+  "Quality and Governance",
+  "[DataService &gt; creator #](#data-service--creator)"
+ ],
+ "oversize": false,
+ "doc_sha256": "7cbc49b6691fa3e7eb7b4845837afc3e1a6212bfc5882d676284a0ad154cbad5",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 6065,
+  "cacheReadInputTokens": 13057,
+  "cacheCreationInputTokens": 29603,
+  "webSearchRequests": 0,
+  "costUSD": 0.45419350000000003,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 4266,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.45419350000000003,
+ "duration_ms": 65989,
+ "session_id": "9c6e1745-f478-48cd-a3d3-da1ff49be17c",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"DCAT-US 3 property reference for DataService > creator: an optional property holding a list of agents primarily responsible for producing the Data Service, each item being an Agent (defined as a person, organization, software agent, or other entity involved with a resource).\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c-creator\",\n      \"name\": \"creator\",\n      \"aliases\": [\"DataService creator\", \"creator property\", \"dcterms:creator\"],\n      \"description\": \"List of agents primarily responsible for producing the Data Service; optional, typed as null or an array of Agent classes.\",\n      \"anchor\": \"creator #\",\n      \"location\": \"dcat-us-3-quality-governance#c0060\"\n    },\n    {\n      \"id\": \"c-data-service\",\n      \"name\": \"Data Service\",\n      \"aliases\": [\"DataService\", \"dcat:DataService\"],\n      \"description\": \"The resource class whose creator property is being specified; the thing the listed agents are responsible for producing.\",\n      \"anchor\": \"producing the Data Service\",\n      \"location\": \"dcat-us-3-quality-governance#c0060\"\n    },\n    {\n      \"id\": \"c-agent\",\n      \"name\": \"Agent\",\n      \"aliases\": [\"dcat:Agent\", \"Agent class\"],\n      \"description\": \"The class every item of the creator array must be; the document types creator as null or an array of Agent classes.\",\n      \"anchor\": \"null or array of\",\n      \"location\": \"dcat-us-3-quality-governance#c0060\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d-agent\",\n      \"term\": \"Agent\",\n      \"verbatim_text\": \"A person, organization, software agent, or other entity involved with a resource\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"other entity involved\",\n      \"location\": \"dcat-us-3-quality-governance#c0060\"\n    }\n  ],\n  \"claims\": [\n    {\n      \"id\": \"cl-creator-optional\",\n      \"claim_text\": \"**Requirement:** Optional\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"**Requirement:** Optional\",\n      \"location\": \"dcat-us-3-quality-governance#c0060\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"c-creator\",\n      \"anchor\": \"creator #\",\n      \"location\": \"dcat-us-3-quality-governance#c0060\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"c-data-service\",\n      \"anchor\": \"producing the Data Service\",\n      \"location\": \"dcat-us-3-quality-governance#c0060\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"c-agent\",\n      \"anchor\": \"null or array of\",\n      \"location\": \"dcat-us-3-quality-governance#c0060\"\n    },\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"d-agent\",\n      \"anchor\": \"other entity involved\",\n      \"location\": \"dcat-us-3-quality-governance#c0060\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"cl-creator-optional\",\n      \"anchor\": \"**Requirement:** Optional\",\n      \"location\": \"dcat-us-3-quality-governance#c0060\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl-creator-optional\",\n      \"to_id\": \"c-creator\",\n      \"anchor\": \"**Requirement:** Optional\",\n      \"location\": \"dcat-us-3-quality-governance#c0060\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [],\n  \"proposed_relationships\": [\n    {\n      \"suggested_edge\": \"has_property\",\n      \"from_id\": \"c-data-service\",\n      \"to_id\": \"c-creator\",\n      \"anchor\": \"DataService &gt;\",\n      \"diversion_reason\": \"structural_inference\",\n      \"location\": \"dcat-us-3-quality-governance#c0060\"\n    },\n    {\n      \"suggested_edge\": \"has_range\",\n      \"from_id\": \"c-creator\",\n      \"to_id\": \"c-agent\",\n      \"anchor\": \"null or array of\",\n      \"diversion_reason\": \"structural_inference\",\n      \"location\": \"dcat-us-3-quality-governance#c0060\"\n    },\n    {\n      \"suggested_edge\": \"item_constraint\",\n      \"from_id\": \"c-creator\",\n      \"to_id\": \"c-agent\",\n      \"anchor\": \"Each item of this array\",\n      \"diversion_reason\": \"structural_inference\",\n      \"location\": \"dcat-us-3-quality-governance#c0060\"\n    }\n  ],\n  \"gleaned\": [\n    { \"name\": \"DCAT-US 3\", \"type\": \"Standard\" },\n    { \"name\": \"resource\", \"type\": \"Concept\" },\n    { \"name\": \"software agent\", \"type\": \"Concept\" }\n  ]\n}"
+}

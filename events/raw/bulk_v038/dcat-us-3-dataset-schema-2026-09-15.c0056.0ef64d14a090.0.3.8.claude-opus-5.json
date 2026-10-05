@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-dataset-schema-2026-09-15",
+ "chunk_id": "dcat-us-3-dataset-schema-2026-09-15#c0056",
+ "chunk_index": 56,
+ "chunk_start": 54911,
+ "chunk_end": 55200,
+ "chunk_tokens": 69,
+ "heading_path": [
+  "DCAT-US 3.0: Dataset",
+  "[Dataset &gt; status #](#status)"
+ ],
+ "oversize": false,
+ "doc_sha256": "0ef64d14a0901d5e7f84fee15bab1474353880ee4b64aec9c185b06149e067de",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 4098,
+  "cacheReadInputTokens": 13056,
+  "cacheCreationInputTokens": 29589,
+  "webSearchRequests": 0,
+  "costUSD": 0.40487799999999996,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 2569,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.40487799999999996,
+ "duration_ms": 44770,
+ "session_id": "c144a325-229b-47e6-af83-a170c538f272",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"DCAT-US 3.0 Dataset schema entry for the optional `status` property: its title is lifecycle status, and it carries the lifecycle status of the dataset (completed, deprecated, under development, withdrawn) typed as null or Concept.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_lifecycle_status\",\n      \"name\": \"lifecycle status\",\n      \"aliases\": [\"Lifecycle status\", \"Dataset status\"],\n      \"description\": \"The lifecycle status of a dataset, expressed as a Concept value.\",\n      \"anchor\": \"lifecycle status\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0056\"\n    },\n    {\n      \"id\": \"c_dataset\",\n      \"name\": \"dataset\",\n      \"aliases\": [\"Dataset\"],\n      \"description\": \"The resource whose lifecycle status this property records.\",\n      \"anchor\": \"the dataset\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0056\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d_lifecycle_status\",\n      \"term\": \"Lifecycle status\",\n      \"verbatim_text\": \"Lifecycle status of the dataset, such as completed, deprecated, under development, or withdrawn\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"such as completed\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0056\"\n    }\n  ],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"d_lifecycle_status\",\n      \"anchor\": \"Lifecycle status of\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0056\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"c_lifecycle_status\",\n      \"anchor\": \"lifecycle status\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0056\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"c_dataset\",\n      \"anchor\": \"the dataset\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0056\"\n    },\n    {\n      \"type\": \"has_component\",\n      \"from_id\": \"c_dataset\",\n      \"to_id\": \"c_lifecycle_status\",\n      \"anchor\": \"of the dataset\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0056\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\"name\": \"Concept\", \"anchor\": \"Concept\"},\n    {\"name\": \"completed\", \"anchor\": \"completed\"},\n    {\"name\": \"deprecated\", \"anchor\": \"deprecated\"},\n    {\"name\": \"under development\", \"anchor\": \"under development\"},\n    {\"name\": \"withdrawn\", \"anchor\": \"withdrawn\"}\n  ],\n  \"proposed_relationships\": [\n    {\n      \"suggested_edge\": \"range_of_property\",\n      \"from_id\": \"c_lifecycle_status\",\n      \"to_id\": \"Concept\",\n      \"anchor\": \"null or [Concept]\",\n      \"diversion_reason\": \"other:no_schema_edge_for_value_range\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0056\"\n    },\n    {\n      \"suggested_edge\": \"optionality_of_property\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"c_lifecycle_status\",\n      \"anchor\": \"**Requirement:** Optional\",\n      \"diversion_reason\": \"structural_inference\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0056\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"dcat-us-3\", \"type\": \"Standard\"},\n    {\"name\": \"identifiers-and-relationships\", \"type\": \"Concept\"},\n    {\"name\": \"status\", \"type\": \"Concept\"}\n  ]\n}"
+}

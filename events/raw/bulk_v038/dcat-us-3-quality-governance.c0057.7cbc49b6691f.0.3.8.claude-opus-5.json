@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-quality-governance",
+ "chunk_id": "dcat-us-3-quality-governance#c0057",
+ "chunk_index": 57,
+ "chunk_start": 52601,
+ "chunk_end": 53044,
+ "chunk_tokens": 107,
+ "heading_path": [
+  "Quality and Governance",
+  "[DataService &gt; category #](#data-service--category)"
+ ],
+ "oversize": false,
+ "doc_sha256": "7cbc49b6691fa3e7eb7b4845837afc3e1a6212bfc5882d676284a0ad154cbad5",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 6075,
+  "cacheReadInputTokens": 13057,
+  "cacheCreationInputTokens": 29615,
+  "webSearchRequests": 0,
+  "costUSD": 0.45456349999999995,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 4356,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.45456349999999995,
+ "duration_ms": 69909,
+ "session_id": "9b6f4e93-af6e-4b32-aae8-500ee028c00a",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"DCAT-US 3 property spec: DataService's optional `category` holds high-level categories for the data service, typed as an array of Concept classes, where a Concept is a controlled term or label optionally drawn from a concept scheme.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_high_level_categories\",\n      \"name\": \"high-level categories\",\n      \"aliases\": [\"category\", \"DataService category\", \"dcat:theme\"],\n      \"description\": \"The set of high-level categories listed for a data service; an optional property typed as an array of Concept classes.\",\n      \"anchor\": \"high-level categories\",\n      \"location\": \"dcat-us-3-quality-governance#c0057\"\n    },\n    {\n      \"id\": \"c_data_service\",\n      \"name\": \"data service\",\n      \"aliases\": [\"DataService\"],\n      \"description\": \"The asset class whose categories this property lists.\",\n      \"anchor\": \"the data service\",\n      \"location\": \"dcat-us-3-quality-governance#c0057\"\n    },\n    {\n      \"id\": \"c_concept_class\",\n      \"name\": \"Concept\",\n      \"aliases\": [\"Concept class\", \"skos:Concept\"],\n      \"description\": \"The class each item of the category array must be: a controlled term or label, optionally drawn from a concept scheme.\",\n      \"anchor\": \"Concept](/standards/catalog/dcat-us-3/identifiers-and-relationships/#concept) : A\",\n      \"location\": \"dcat-us-3-quality-governance#c0057\"\n    },\n    {\n      \"id\": \"c_concept_scheme\",\n      \"name\": \"concept scheme\",\n      \"aliases\": [\"skos:ConceptScheme\", \"controlled vocabulary\"],\n      \"description\": \"An optional source vocabulary a Concept may be drawn from.\",\n      \"anchor\": \"concept scheme\",\n      \"location\": \"dcat-us-3-quality-governance#c0057\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d_concept_class\",\n      \"term\": \"Concept\",\n      \"verbatim_text\": \"A controlled term or label, optionally drawn from a concept scheme\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"A controlled term or label\",\n      \"location\": \"dcat-us-3-quality-governance#c0057\"\n    }\n  ],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"d_concept_class\",\n      \"anchor\": \"A controlled term or label\",\n      \"location\": \"dcat-us-3-quality-governance#c0057\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"c_high_level_categories\",\n      \"anchor\": \"high-level categories\",\n      \"location\": \"dcat-us-3-quality-governance#c0057\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"c_concept_class\",\n      \"anchor\": \"Concept](/standards/catalog/dcat-us-3/identifiers-and-relationships/#concept) : A\",\n      \"location\": \"dcat-us-3-quality-governance#c0057\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"c_concept_scheme\",\n      \"anchor\": \"concept scheme\",\n      \"location\": \"dcat-us-3-quality-governance#c0057\"\n    },\n    {\n      \"type\": \"has_component\",\n      \"from_id\": \"c_data_service\",\n      \"to_id\": \"c_high_level_categories\",\n      \"anchor\": \"categories for the data service\",\n      \"location\": \"dcat-us-3-quality-governance#c0057\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [],\n  \"proposed_relationships\": [\n    {\n      \"suggested_edge\": \"drawn_from\",\n      \"from_id\": \"c_concept_class\",\n      \"to_id\": \"c_concept_scheme\",\n      \"anchor\": \"optionally drawn from a concept scheme\",\n      \"diversion_reason\": \"other:no_matching_edge_type\",\n      \"location\": \"dcat-us-3-quality-governance#c0057\"\n    },\n    {\n      \"suggested_edge\": \"has_range\",\n      \"from_id\": \"c_high_level_categories\",\n      \"to_id\": \"c_concept_class\",\n      \"anchor\": \"Type** : null or array of\",\n      \"diversion_reason\": \"other:no_matching_edge_type\",\n      \"location\": \"dcat-us-3-quality-governance#c0057\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"DataService\", \"type\": \"Concept\"},\n    {\"name\": \"category\", \"type\": \"Concept\"},\n    {\"name\": \"DCAT-US 3\", \"type\": \"Standard\"},\n    {\"name\": \"Optional requirement level\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

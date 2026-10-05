@@ -1,0 +1,33 @@
+{
+ "doc_id": "dcat-us-3-implementation-guide",
+ "chunk_id": "dcat-us-3-implementation-guide#c0052",
+ "chunk_index": 52,
+ "chunk_start": 173766,
+ "chunk_end": 173818,
+ "chunk_tokens": 14,
+ "heading_path": [
+  "IRM"
+ ],
+ "oversize": false,
+ "doc_sha256": "26e4c3baecb2aa0e2f486ae65a2f0404da32fdbb402baf4f71239ab4c31d268c",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 2774,
+  "cacheReadInputTokens": 13056,
+  "cacheCreationInputTokens": 29244,
+  "webSearchRequests": 0,
+  "costUSD": 0.368328,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 1961,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.368328,
+ "duration_ms": 33429,
+ "session_id": "5b609276-3aad-42d4-992b-6de7fd39466a",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"A single truncated sentence opening a section on the IRM Strategic Plan, stating that it is required under some authority the chunk does not reach.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_irm_strategic_plan\",\n      \"name\": \"IRM Strategic Plan\",\n      \"aliases\": [\"Information Resources Management Strategic Plan\"],\n      \"description\": \"A plan the document states is a requirement imposed by an external authority.\",\n      \"anchor\": \"Strategic\",\n      \"location\": \"dcat-us-3-implementation-guide#c0052\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"cl_irm_plan_required\",\n      \"claim_text\": \"The IRM Strategic Plan is required\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"required\",\n      \"location\": \"dcat-us-3-implementation-guide#c0052\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"dcat-us-3-implementation-guide\",\n      \"to_id\": \"cl_irm_plan_required\",\n      \"anchor\": \"under\",\n      \"location\": \"dcat-us-3-implementation-guide#c0052\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_irm_plan_required\",\n      \"to_id\": \"c_irm_strategic_plan\",\n      \"anchor\": \"is\",\n      \"location\": \"dcat-us-3-implementation-guide#c0052\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-implementation-guide\",\n      \"to_id\": \"c_irm_strategic_plan\",\n      \"anchor\": \"Plan\",\n      \"location\": \"dcat-us-3-implementation-guide#c0052\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"the\",\n      \"suggested_edge\": \"required_under\",\n      \"diversion_reason\": \"cross_chunk\",\n      \"location\": \"dcat-us-3-implementation-guide#c0052\"\n    }\n  ],\n  \"gleaned\": []\n}"
+}

@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-quality-governance",
+ "chunk_id": "dcat-us-3-quality-governance#c0005",
+ "chunk_index": 5,
+ "chunk_start": 5765,
+ "chunk_end": 6013,
+ "chunk_tokens": 61,
+ "heading_path": [
+  "Quality and Governance",
+  "[Standard &gt; inScheme #](#standard--inScheme)"
+ ],
+ "oversize": false,
+ "doc_sha256": "7cbc49b6691fa3e7eb7b4845837afc3e1a6212bfc5882d676284a0ad154cbad5",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 5165,
+  "cacheReadInputTokens": 13056,
+  "cacheCreationInputTokens": 29524,
+  "webSearchRequests": 0,
+  "costUSD": 0.43090300000000004,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 3572,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.43090300000000004,
+ "duration_ms": 57702,
+ "session_id": "5a58d97d-73ad-43c9-a1b2-b50e1c586431",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"DCAT-US 3 property-reference entry for `Standard > inScheme`: requirement level Recommended, defined as the reference register to which the Standard belongs, with range null or ConceptScheme; the chunk opens with the trailing Type line (null or Identifier) of the preceding property.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_inscheme\",\n      \"name\": \"inScheme\",\n      \"aliases\": [\"Standard > inScheme\", \"dcat-us:inScheme\"],\n      \"description\": \"Property of the Standard class whose value is the reference register to which the Standard belongs; requirement level Recommended, range null or ConceptScheme.\",\n      \"anchor\": \"## [Standard\",\n      \"location\": \"dcat-us-3-quality-governance#c0005\"\n    },\n    {\n      \"id\": \"c_conceptscheme\",\n      \"name\": \"ConceptScheme\",\n      \"aliases\": [\"skos:ConceptScheme\", \"concept scheme\"],\n      \"description\": \"Class given as the permitted value type of the inScheme property.\",\n      \"anchor\": \"ConceptScheme\",\n      \"location\": \"dcat-us-3-quality-governance#c0005\"\n    },\n    {\n      \"id\": \"c_standard\",\n      \"name\": \"Standard\",\n      \"aliases\": [\"dcat-us:Standard\", \"Standard class\"],\n      \"description\": \"The class whose inScheme property is being specified; it belongs to a reference register.\",\n      \"anchor\": \"the Standard belongs\",\n      \"location\": \"dcat-us-3-quality-governance#c0005\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d_inscheme\",\n      \"term\": \"inScheme\",\n      \"verbatim_text\": \"The reference register to which the Standard belongs\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"reference register\",\n      \"location\": \"dcat-us-3-quality-governance#c0005\"\n    }\n  ],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"d_inscheme\",\n      \"anchor\": \"reference register\",\n      \"location\": \"dcat-us-3-quality-governance#c0005\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"c_inscheme\",\n      \"anchor\": \"## [Standard\",\n      \"location\": \"dcat-us-3-quality-governance#c0005\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"c_conceptscheme\",\n      \"anchor\": \"ConceptScheme\",\n      \"location\": \"dcat-us-3-quality-governance#c0005\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"c_standard\",\n      \"anchor\": \"the Standard belongs\",\n      \"location\": \"dcat-us-3-quality-governance#c0005\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"Identifier\",\n      \"anchor\": \"[Identifier]\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"from_id\": \"c_inscheme\",\n      \"to_id\": \"c_conceptscheme\",\n      \"suggested_edge\": \"has_range\",\n      \"anchor\": \"ConceptScheme\",\n      \"diversion_reason\": \"other:range_not_in_schema\",\n      \"location\": \"dcat-us-3-quality-governance#c0005\"\n    },\n    {\n      \"from_id\": \"c_standard\",\n      \"to_id\": \"c_inscheme\",\n      \"suggested_edge\": \"has_property\",\n      \"anchor\": \"## [Standard\",\n      \"diversion_reason\": \"structural_inference\",\n      \"location\": \"dcat-us-3-quality-governance#c0005\"\n    },\n    {\n      \"from_id\": \"c_standard\",\n      \"to_id\": \"c_conceptscheme\",\n      \"suggested_edge\": \"belongs_to\",\n      \"anchor\": \"the Standard belongs\",\n      \"diversion_reason\": \"endpoint_not_located\",\n      \"location\": \"dcat-us-3-quality-governance#c0005\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"Recommended (requirement level)\", \"type\": \"Concept\"},\n    {\"name\": \"reference register\", \"type\": \"Concept\"},\n    {\"name\": \"null (permitted value)\", \"type\": \"Concept\"}\n  ]\n}"
+}

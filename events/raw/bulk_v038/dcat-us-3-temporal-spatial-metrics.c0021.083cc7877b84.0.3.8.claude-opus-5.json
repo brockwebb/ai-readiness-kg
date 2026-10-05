@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-temporal-spatial-metrics",
+ "chunk_id": "dcat-us-3-temporal-spatial-metrics#c0021",
+ "chunk_index": 21,
+ "chunk_start": 16937,
+ "chunk_end": 17237,
+ "chunk_tokens": 83,
+ "heading_path": [
+  "Temporal, Spatial, and Metrics",
+  "[Metric &gt; expectedDataType #](#metric--expectedDataType)"
+ ],
+ "oversize": false,
+ "doc_sha256": "083cc7877b8438d25498d71ee0e04b3e0ffdbbef334ff3c5a4735cdf2c8339c7",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 4750,
+  "cacheReadInputTokens": 13057,
+  "cacheCreationInputTokens": 29244,
+  "webSearchRequests": 0,
+  "costUSD": 0.41772849999999995,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 3023,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.41772849999999995,
+ "duration_ms": 51609,
+ "session_id": "672aa85f-bce4-4652-b32b-c489dfd73550",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"DCAT-US schema reference for the Metric class: the tail of a property table (definition, @id, @type) followed by the mandatory `expectedDataType` property, which represents the expected data type of a metric's observed value, with xsd examples.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c-expected-data-type\",\n      \"name\": \"expected data type\",\n      \"aliases\": [\"expectedDataType\", \"Metric > expectedDataType\"],\n      \"description\": \"The data type a metric's observed value is expected to take, expressed as an XSD type name.\",\n      \"anchor\": \"expected data type for the metric's\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0021\"\n    },\n    {\n      \"id\": \"c-observed-value\",\n      \"name\": \"observed value\",\n      \"aliases\": [\"metric observed value\"],\n      \"description\": \"The value recorded for a metric, whose data type is constrained by expectedDataType.\",\n      \"anchor\": \"observed value\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0021\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d-expected-data-type\",\n      \"term\": \"expected data type\",\n      \"verbatim_text\": \"Represents the expected data type for the metric's observed value\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"Represents the expected\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0021\"\n    }\n  ],\n  \"claims\": [\n    {\n      \"id\": \"cl-expected-data-type-mandatory\",\n      \"claim_text\": \"**Requirement:** Mandatory\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"Requirement:\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0021\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-temporal-spatial-metrics\",\n      \"to_id\": \"d-expected-data-type\",\n      \"anchor\": \"Represents the expected\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0021\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-temporal-spatial-metrics\",\n      \"to_id\": \"c-expected-data-type\",\n      \"anchor\": \"expected data type for the metric's\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0021\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-temporal-spatial-metrics\",\n      \"to_id\": \"c-observed-value\",\n      \"anchor\": \"observed value\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0021\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"dcat-us-3-temporal-spatial-metrics\",\n      \"to_id\": \"cl-expected-data-type-mandatory\",\n      \"anchor\": \"Requirement:\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0021\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl-expected-data-type-mandatory\",\n      \"to_id\": \"c-expected-data-type\",\n      \"anchor\": \"Mandatory\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0021\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"definition\",\n      \"anchor\": \"Definition of the metric.\"\n    },\n    {\n      \"name\": \"@id\",\n      \"anchor\": \"#metric--@id\"\n    },\n    {\n      \"name\": \"@type\",\n      \"anchor\": \"#metric--@type\"\n    },\n    {\n      \"name\": \"xsd:decimal\",\n      \"anchor\": \"xsd:decimal\"\n    },\n    {\n      \"name\": \"xsd:boolean\",\n      \"anchor\": \"xsd:boolean\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"data type for the metric's observed value\",\n      \"suggested_edge\": \"constrains\",\n      \"from_name\": \"expected data type\",\n      \"to_name\": \"observed value\",\n      \"diversion_reason\": \"other:no_valid_concept_concept_edge\"\n    },\n    {\n      \"anchor\": \"Metric &gt; expectedDataType\",\n      \"suggested_edge\": \"has_component\",\n      \"from_name\": \"Metric\",\n      \"to_name\": \"expected data type\",\n      \"diversion_reason\": \"structural_inference\"\n    }\n  ],\n  \"gleaned\": [\n    { \"name\": \"Metric\", \"type\": \"Concept\" },\n    { \"name\": \"xsd:double\", \"type\": \"Concept\" },\n    { \"name\": \"string type\", \"type\": \"Concept\" },\n    { \"name\": \"Mandatory requirement level\", \"type\": \"Concept\" }\n  ]\n}"
+}

@@ -1,0 +1,33 @@
+{
+ "doc_id": "w3c-dqv",
+ "chunk_id": "w3c-dqv#c0025",
+ "chunk_index": 25,
+ "chunk_start": 119190,
+ "chunk_end": 119555,
+ "chunk_tokens": 88,
+ "heading_path": [
+  "...  ..."
+ ],
+ "oversize": false,
+ "doc_sha256": "271d3e820c681127131595d2c8bf8345e925149192f6cab821f101f09d372a63",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 4459,
+  "cacheReadInputTokens": 13057,
+  "cacheCreationInputTokens": 28898,
+  "webSearchRequests": 0,
+  "costUSD": 0.4069935,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 3344,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.4069935,
+ "duration_ms": 51969,
+ "session_id": "8c0d8a0a-c56e-4985-b169-21519d9a5d8e",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"A Turtle snippet declaring iso:accessibility as a dqv:Dimension in the inherent-system-dependent data quality category, with a SKOS definition of Accessibility as the degree to which data can be accessed, especially by people needing supporting technology because of a disability.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c-accessibility\",\n      \"name\": \"Accessibility\",\n      \"aliases\": [\"iso:accessibility\", \"accessibility\"],\n      \"description\": \"A data quality dimension concerning the degree to which data can be accessed in a specific context of use, particularly by people who need supporting technology or special configuration because of some disability.\",\n      \"anchor\": \"\\\"Accessibility\\\"@en\",\n      \"location\": \"w3c-dqv#c0025\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d-accessibility\",\n      \"term\": \"Accessibility\",\n      \"verbatim_text\": \"The degree to which data can be accessed in a specific context of use, particularly by people who need supporting technology or special configuration because of some disability.\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"skos:definition\",\n      \"location\": \"w3c-dqv#c0025\"\n    }\n  ],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"w3c-dqv\",\n      \"to_id\": \"d-accessibility\",\n      \"anchor\": \"skos:definition\",\n      \"location\": \"w3c-dqv#c0025\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"w3c-dqv\",\n      \"to_id\": \"c-accessibility\",\n      \"anchor\": \"skos:prefLabel\",\n      \"location\": \"w3c-dqv#c0025\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"dqv:Dimension\",\n      \"anchor\": \"dqv:Dimension\"\n    },\n    {\n      \"name\": \"iso:inherentSystemDependentDataQuality\",\n      \"anchor\": \"iso:inherentSystemDependentDataQuality\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"dqv:inCategory\",\n      \"suggested_edge\": \"has_component\",\n      \"from_name\": \"iso:inherentSystemDependentDataQuality\",\n      \"to_name\": \"Accessibility\",\n      \"diversion_reason\": \"structural_inference\",\n      \"location\": \"w3c-dqv#c0025\"\n    },\n    {\n      \"anchor\": \"dqv:Dimension\",\n      \"suggested_edge\": \"subtype_of\",\n      \"from_name\": \"Accessibility\",\n      \"to_name\": \"dqv:Dimension\",\n      \"diversion_reason\": \"structural_inference\",\n      \"location\": \"w3c-dqv#c0025\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"iso:inherentSystemDependentDataQuality\", \"type\": \"Concept\"},\n    {\"name\": \"dqv:Dimension\", \"type\": \"Concept\"},\n    {\"name\": \"supporting technology\", \"type\": \"Concept\"}\n  ]\n}"
+}

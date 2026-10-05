@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-dataset-schema-2026-09-15",
+ "chunk_id": "dcat-us-3-dataset-schema-2026-09-15#c0061",
+ "chunk_index": 61,
+ "chunk_start": 56281,
+ "chunk_end": 56542,
+ "chunk_tokens": 60,
+ "heading_path": [
+  "DCAT-US 3.0: Dataset",
+  "[Dataset &gt; versionNotes #](#versionNotes)"
+ ],
+ "oversize": false,
+ "doc_sha256": "0ef64d14a0901d5e7f84fee15bab1474353880ee4b64aec9c185b06149e067de",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 4390,
+  "cacheReadInputTokens": 13056,
+  "cacheCreationInputTokens": 29564,
+  "webSearchRequests": 0,
+  "costUSD": 0.411928,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 3455,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.411928,
+ "duration_ms": 51351,
+ "session_id": "894454a1-7659-444c-bb56-d6152342c1e8",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Schema reference entry for the optional Dataset property versionNotes, with its definition, type (null or string), and an example value.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_versionnotes\",\n      \"name\": \"versionNotes\",\n      \"aliases\": [\"Dataset versionNotes\", \"version notes\"],\n      \"description\": \"Notes describing how this version differs from earlier versions of the dataset; optional, typed null or string.\",\n      \"anchor\": \"## [Dataset &gt; versionNotes\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0061\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d_versionnotes\",\n      \"term\": \"versionNotes\",\n      \"verbatim_text\": \"Notes describing how this version differs from earlier versions of the dataset\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"differs from earlier versions\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0061\"\n    }\n  ],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"d_versionnotes\",\n      \"anchor\": \"Notes describing how this version\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0061\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"c_versionnotes\",\n      \"anchor\": \"## [Dataset\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0061\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"dataset\",\n      \"anchor\": \"of the dataset\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"## [Dataset &gt; versionNotes\",\n      \"suggested_edge\": \"has_component\",\n      \"from_name\": \"Dataset\",\n      \"to_name\": \"versionNotes\",\n      \"diversion_reason\": \"structural_inference\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"versionNotes is Optional\", \"type\": \"Claim\"},\n    {\"name\": \"versionNotes type is null or string\", \"type\": \"Claim\"},\n    {\"name\": \"Initial release of 2024 climate observations data.\", \"type\": \"Definition\"}\n  ]\n}\n```"
+}

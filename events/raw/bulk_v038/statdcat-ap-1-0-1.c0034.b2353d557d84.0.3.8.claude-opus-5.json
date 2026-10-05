@@ -1,0 +1,31 @@
+{
+ "doc_id": "statdcat-ap-1-0-1",
+ "chunk_id": "statdcat-ap-1-0-1#c0034",
+ "chunk_index": 34,
+ "chunk_start": 198941,
+ "chunk_end": 200990,
+ "chunk_tokens": 661,
+ "heading_path": [],
+ "oversize": false,
+ "doc_sha256": "b2353d557d84c0f853380723447cd26f0c47a92bc444a6193dad52868eeb1d69",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 4933,
+  "cacheReadInputTokens": 13057,
+  "cacheCreationInputTokens": 31552,
+  "webSearchRequests": 0,
+  "costUSD": 0.44538349999999993,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 3684,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.44538349999999993,
+ "duration_ms": 57214,
+ "session_id": "cbf21d68-657a-40f3-a16b-2ea0db6517df",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Tail of an SDMX metadata-set example (distribution and DCAT_AGENT reported attributes, Eurostat as publisher), then the running title StatDCAT-AP Version 1.0.1 and the opening of Annex VII, which gives StatDCAT-AP descriptions of data cube datasets, beginning with RDF Example 1 derived from the W3C RDF Data Cube full example and its @prefix declarations.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_data_cube\",\n      \"name\": \"DATA CUBE\",\n      \"aliases\": [\"Data Cube\", \"data cube\", \"RDF Data Cube\"],\n      \"description\": \"The cube-shaped statistical dataset form that Annex VII's example StatDCAT-AP descriptions are written for.\",\n      \"anchor\": \"DATA CUBE DATASETS\",\n      \"location\": \"statdcat-ap-1-0-1#c0034\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [\n    {\n      \"id\": \"s_statdcat_ap\",\n      \"name\": \"StatDCAT-AP\",\n      \"version\": \"1.0.1\",\n      \"steward\": null,\n      \"as_of_date\": null,\n      \"anchor\": \"StatDCAT-AP – DCAT\",\n      \"location\": \"statdcat-ap-1-0-1#c0034\"\n    },\n    {\n      \"id\": \"s_dcat\",\n      \"name\": \"DCAT\",\n      \"version\": null,\n      \"steward\": null,\n      \"as_of_date\": null,\n      \"anchor\": \"DCAT Application Profile\",\n      \"location\": \"statdcat-ap-1-0-1#c0034\"\n    }\n  ],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"builds_on\",\n      \"from_id\": \"s_statdcat_ap\",\n      \"to_id\": \"s_dcat\",\n      \"anchor\": \"Application Profile for description\",\n      \"location\": \"statdcat-ap-1-0-1#c0034\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"statdcat-ap-1-0-1\",\n      \"to_id\": \"c_data_cube\",\n      \"anchor\": \"OF DATA CUBE\",\n      \"location\": \"statdcat-ap-1-0-1#c0034\"\n    }\n  ],\n  \"cites\": [\n    {\n      \"id\": \"cite_vocab_data_cube\",\n      \"from_id\": \"statdcat-ap-1-0-1\",\n      \"to_id\": \"w3c-vocab-data-cube\",\n      \"anchor\": \"vocab-data-cube/#full-example\",\n      \"location\": \"statdcat-ap-1-0-1#c0034\"\n    }\n  ],\n  \"mentions\": [\n    {\n      \"name\": \"Eurostat\",\n      \"anchor\": \"value=\\\"Eurostat\\\"\"\n    },\n    {\n      \"name\": \"SDMX Data Structure Specific\",\n      \"anchor\": \"SDMX Data Structure\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"suggested_edge\": \"applies_to\",\n      \"from_id\": \"s_statdcat_ap\",\n      \"to_id\": \"c_data_cube\",\n      \"anchor\": \"Annex VII.\",\n      \"diversion_reason\": \"structural_inference\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"SDMX\", \"type\": \"Standard\"},\n    {\"name\": \"Distribution\", \"type\": \"Concept\"},\n    {\"name\": \"Metadata Set\", \"type\": \"Concept\"},\n    {\"name\": \"GeoNames\", \"type\": \"Standard\"}\n  ]\n}\n```"
+}

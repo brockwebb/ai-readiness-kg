@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-temporal-spatial-metrics",
+ "chunk_id": "dcat-us-3-temporal-spatial-metrics#c0017",
+ "chunk_index": 17,
+ "chunk_start": 14028,
+ "chunk_end": 14350,
+ "chunk_tokens": 74,
+ "heading_path": [
+  "Temporal, Spatial, and Metrics",
+  "[Location &gt; identifier #](#location--identifier)"
+ ],
+ "oversize": false,
+ "doc_sha256": "083cc7877b8438d25498d71ee0e04b3e0ffdbbef334ff3c5a4735cdf2c8339c7",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 5875,
+  "cacheReadInputTokens": 13057,
+  "cacheCreationInputTokens": 29594,
+  "webSearchRequests": 0,
+  "costUSD": 0.44935349999999996,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 4066,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.44935349999999996,
+ "duration_ms": 64993,
+ "session_id": "a806deef-adc1-4d6d-a4e2-6254575e3828",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"DCAT-US 3 property page for Location > identifier: an Optional property defined as the unique geographic identifier for the Location (e.g. a URI in the relevant gazetteer), typed null or Identifier.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_location\",\n      \"name\": \"Location\",\n      \"aliases\": [\"dcat:Location\", \"Location class\"],\n      \"description\": \"The spatial-coverage entity whose properties this section documents; here its optional geographic identifier property.\",\n      \"anchor\": \"for the Location\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0017\"\n    },\n    {\n      \"id\": \"c_identifier_prop\",\n      \"name\": \"identifier\",\n      \"aliases\": [\"Location > identifier\", \"Location identifier\"],\n      \"description\": \"The unique geographic identifier property of a Location, e.g. a URI in the relevant gazetteer.\",\n      \"anchor\": \"geographic identifier for\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0017\"\n    },\n    {\n      \"id\": \"c_identifier_class\",\n      \"name\": \"Identifier\",\n      \"aliases\": [\"Identifier class\"],\n      \"description\": \"The value type permitted for Location > identifier, alongside null.\",\n      \"anchor\": \"null or [Identifier]\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0017\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d_location_identifier\",\n      \"term\": \"identifier\",\n      \"verbatim_text\": \"The unique geographic identifier for the Location\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"unique geographic identifier\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0017\"\n    }\n  ],\n  \"claims\": [\n    {\n      \"id\": \"cl_identifier_optional\",\n      \"claim_text\": \"**Requirement:** Optional\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"**Requirement:** Optional\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0017\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-temporal-spatial-metrics\",\n      \"to_id\": \"d_location_identifier\",\n      \"anchor\": \"unique geographic identifier\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0017\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"dcat-us-3-temporal-spatial-metrics\",\n      \"to_id\": \"cl_identifier_optional\",\n      \"anchor\": \"**Requirement:** Optional\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0017\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_identifier_optional\",\n      \"to_id\": \"c_identifier_prop\",\n      \"anchor\": \"Requirement:** Optional\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0017\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-temporal-spatial-metrics\",\n      \"to_id\": \"c_location\",\n      \"anchor\": \"for the Location\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0017\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-temporal-spatial-metrics\",\n      \"to_id\": \"c_identifier_prop\",\n      \"anchor\": \"geographic identifier for\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0017\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-temporal-spatial-metrics\",\n      \"to_id\": \"c_identifier_class\",\n      \"anchor\": \"null or [Identifier]\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0017\"\n    },\n    {\n      \"type\": \"has_component\",\n      \"from_id\": \"c_location\",\n      \"to_id\": \"c_identifier_prop\",\n      \"anchor\": \"identifier for the Location\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0017\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"gazetteer\",\n      \"anchor\": \"relevant gazetteer\"\n    },\n    {\n      \"name\": \"coordinates\",\n      \"anchor\": \"- coordinates\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"from_id\": \"c_identifier_prop\",\n      \"to_id\": \"c_identifier_class\",\n      \"suggested_edge\": \"has_value_type\",\n      \"anchor\": \"null or [Identifier]\",\n      \"diversion_reason\": \"other:type_constraint\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"DCAT-US 3\", \"type\": \"Standard\"},\n    {\"name\": \"URI\", \"type\": \"Concept\"}\n  ]\n}"
+}

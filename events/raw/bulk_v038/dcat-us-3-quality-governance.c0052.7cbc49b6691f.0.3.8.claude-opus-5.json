@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-quality-governance",
+ "chunk_id": "dcat-us-3-quality-governance#c0052",
+ "chunk_index": 52,
+ "chunk_start": 51096,
+ "chunk_end": 51491,
+ "chunk_tokens": 99,
+ "heading_path": [
+  "Quality and Governance",
+  "[DataService &gt; servesDataset #](#data-service--servesDataset)"
+ ],
+ "oversize": false,
+ "doc_sha256": "7cbc49b6691fa3e7eb7b4845837afc3e1a6212bfc5882d676284a0ad154cbad5",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 6076,
+  "cacheReadInputTokens": 10341,
+  "cacheCreationInputTokens": 32321,
+  "webSearchRequests": 0,
+  "costUSD": 0.4802905,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 4641,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.4802905,
+ "duration_ms": 70779,
+ "session_id": "27a1585c-78c6-4e63-9a54-d3dcaf725b79",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"DCAT-US 3 property reference for DataService > servesDataset: requirement level Recommended, described as the list of datasets the service provides access to, typed as null or an array of Dataset classes, with Dataset defined as a collection of data published or curated by one provider.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_servesdataset\",\n      \"name\": \"servesDataset\",\n      \"aliases\": [\"DataService > servesDataset\", \"serves dataset\"],\n      \"description\": \"Recommended DataService property holding the list of datasets this service provides access to; typed as null or an array of Dataset classes.\",\n      \"anchor\": \"## [DataService &gt; servesDataset\",\n      \"location\": \"dcat-us-3-quality-governance#c0052\"\n    },\n    {\n      \"id\": \"c_dataservice\",\n      \"name\": \"DataService\",\n      \"aliases\": [\"Data Service\"],\n      \"description\": \"The class whose servesDataset property lists the datasets the service provides access to.\",\n      \"anchor\": \"## [DataService &gt; servesDataset\",\n      \"location\": \"dcat-us-3-quality-governance#c0052\"\n    },\n    {\n      \"id\": \"c_dataset\",\n      \"name\": \"Dataset\",\n      \"aliases\": [\"dcat:Dataset\"],\n      \"description\": \"The class each item of the servesDataset array must be; a collection of data published or curated by one provider.\",\n      \"anchor\": \"A collection of data\",\n      \"location\": \"dcat-us-3-quality-governance#c0052\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d_dataset\",\n      \"term\": \"Dataset\",\n      \"verbatim_text\": \"A collection of data published or curated by one provider\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"curated by one provider\",\n      \"location\": \"dcat-us-3-quality-governance#c0052\"\n    }\n  ],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"d_dataset\",\n      \"anchor\": \"curated by one provider\",\n      \"location\": \"dcat-us-3-quality-governance#c0052\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"c_servesdataset\",\n      \"anchor\": \"List of datasets this service provides access to\",\n      \"location\": \"dcat-us-3-quality-governance#c0052\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"c_dataservice\",\n      \"anchor\": \"## [DataService &gt; servesDataset\",\n      \"location\": \"dcat-us-3-quality-governance#c0052\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"c_dataset\",\n      \"anchor\": \"A collection of data\",\n      \"location\": \"dcat-us-3-quality-governance#c0052\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"provider\",\n      \"anchor\": \"one provider\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"from_id\": \"c_dataservice\",\n      \"to_id\": \"c_servesdataset\",\n      \"suggested_edge\": \"has_property\",\n      \"anchor\": \"## [DataService &gt; servesDataset\",\n      \"diversion_reason\": \"structural_inference\"\n    },\n    {\n      \"from_id\": \"c_servesdataset\",\n      \"to_id\": \"c_dataset\",\n      \"suggested_edge\": \"has_range\",\n      \"anchor\": \"null or array of\",\n      \"diversion_reason\": \"other:no_schema_edge\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"DCAT-US 3\", \"type\": \"Standard\"},\n    {\"name\": \"servesDataset is Recommended rather than required\", \"type\": \"Claim\"},\n    {\"name\": \"Requirement level\", \"type\": \"Concept\"}\n  ]\n}"
+}

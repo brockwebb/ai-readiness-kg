@@ -1,11 +1,11 @@
 {
  "manifest_version": 2,
  "project": "ai-readiness-kg",
- "generated_at": "2026-10-04T11:02:05.552486+00:00",
+ "generated_at": "2026-10-05T02:36:06.446105+00:00",
  "generator": "dixie.evidence",
  "note": "PROJECTION — rebuilt from the evidence decisions log; do not hand-edit. The log is truth.",
  "counts_by_decision": {
-  "included": 265,
+  "included": 274,
   "excluded": 72,
   "pending_refetch": 42,
   "pending_review": 1
@@ -9344,6 +9344,107 @@
     "added_in": "kernel-v03"
    }
   },
+  "dcat-us-3-candidate-recommendation-snapshot": {
+   "doc_id": "dcat-us-3-candidate-recommendation-snapshot",
+   "identity": {
+    "sha256": "d758a8fdead227cdca2dfb63f2f79c827db42b5a28f39e1c407ee536a56f14cf",
+    "canonical_path": "corpus/crosswalk/dcat-us-3-candidate-recommendation-snapshot.html",
+    "title": "DCAT-US - Version 3: Data Catalog Application Profile for the United States of America (Candidate Recommendation Snapshot; Internet Archive capture 2025-05-04)",
+    "authors_or_org": [
+     "DOI-DO DCAT-US working group (GitHub doi-do/dcat-us)"
+    ],
+    "pub_year": "2025",
+    "doc_type": "standard",
+    "source_url": "https://web.archive.org/web/20250504194000id_/https://doi-do.github.io/dcat-us/",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "scripted_fetch",
+    "acquired_at": "2026-10-05T02:36:05.855208+00:00",
+    "acquired_by": "scripts/fetch_allowlisted.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed html, detected html",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "909270 bytes vs floor 64",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "skipped: format mismatch already failed or type unhandled",
+      "outcome": "skip"
+     }
+    ],
+    "checked_at": "2026-10-05T02:36:05.855903+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "cc_tasks/2026-10-04_DCAT-002_dcat_us_3_intake_and_g4.md (DN-011-R2): DCAT-US 3.0 and its statistical prior art, so that draft-against-final and US-against-EU can be queried. Criterion R1 (cc_tasks/2026-08-24_source_triage.md): a metadata standard, the graph's target construct.",
+    "decided_by": "cc",
+    "decided_at": "2026-10-05T02:36:05.640160+00:00",
+    "history": [],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "dcat_002_2026-10-04"
+   ],
+   "extra": {
+    "notes": [
+     "fetched robots-first under the identified UA (logs/2026-10-04_DCAT-002_fetch.jsonl). The earlier DCAT-US 3 working draft, kept distinct from the final so the two can be compared. Original URI https://doi-do.github.io/dcat-us/ answers 404 (2026-10-05, every path of the host); this is the Internet Archive memento captured 2025-05-04T19:40:00Z (the archive redirected the 2025-08-19 request to it), fetched with the id_ modifier so the bytes are the original's."
+    ],
+    "observed_files": {
+     "corpus/crosswalk/dcat-us-3-candidate-recommendation-snapshot.html": {
+      "sha256": "d758a8fdead227cdca2dfb63f2f79c827db42b5a28f39e1c407ee536a56f14cf",
+      "size": 909270,
+      "claimed_type": "html",
+      "detected_type": "html"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/crosswalk/dcat-us-3-candidate-recommendation-snapshot.html": {
+      "path": "corpus/crosswalk/dcat-us-3-candidate-recommendation-snapshot.html",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed html, detected html",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "909270 bytes vs floor 64",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "skipped: format mismatch already failed or type unhandled",
+        "outcome": "skip"
+       }
+      ],
+      "checked_at": "2026-10-05T02:36:05.855903+00:00"
+     }
+    },
+    "added_in": "dcat-us-3-2026-10-04"
+   }
+  },
   "dcat-us-3-dataset-schema": {
    "doc_id": "dcat-us-3-dataset-schema",
    "identity": {
@@ -9453,6 +9554,410 @@
     "added_in": "kernel-v03"
    }
   },
+  "dcat-us-3-dataset-schema-2026-09-15": {
+   "doc_id": "dcat-us-3-dataset-schema-2026-09-15",
+   "identity": {
+    "sha256": "0ef64d14a0901d5e7f84fee15bab1474353880ee4b64aec9c185b06149e067de",
+    "canonical_path": "corpus/crosswalk/dcat-us-3-dataset-schema-2026-09-15.html",
+    "title": "DCAT-US 3.0 Schema: Dataset (resources.data.gov; Internet Archive capture 2026-09-15, after the September 2026 rewrite)",
+    "authors_or_org": [
+     "U.S. General Services Administration / Data.gov"
+    ],
+    "pub_year": "2026",
+    "doc_type": "standard",
+    "source_url": "https://web.archive.org/web/20260915131436id_/https://resources.data.gov/standards/catalog/dcat-us-3/dataset/",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "scripted_fetch",
+    "acquired_at": "2026-10-05T02:36:05.856230+00:00",
+    "acquired_by": "scripts/fetch_allowlisted.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed html, detected html",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "106032 bytes vs floor 64",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "skipped: format mismatch already failed or type unhandled",
+      "outcome": "skip"
+     }
+    ],
+    "checked_at": "2026-10-05T02:36:05.856432+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "cc_tasks/2026-10-04_DCAT-002_dcat_us_3_intake_and_g4.md (DN-011-R2): DCAT-US 3.0 and its statistical prior art, so that draft-against-final and US-against-EU can be queried. Criterion R1 (cc_tasks/2026-08-24_source_triage.md): a metadata standard, the graph's target construct.",
+    "decided_by": "cc",
+    "decided_at": "2026-10-05T02:36:05.640160+00:00",
+    "history": [],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "dcat_002_2026-10-04"
+   ],
+   "extra": {
+    "notes": [
+     "fetched robots-first under the identified UA (logs/2026-10-04_DCAT-002_fetch.jsonl). The Dataset page as rewritten in September 2026: Mandatory are contactPoint, description, identifier and title; publisher is Recommended; bureauCode and programCode are absent. The corpus's 2026-08-21 capture (doc dcat-us-3-dataset-schema) marks publisher Mandatory and stays as it is, because pre-registered rules RULE-B4-v1 and RULE-D3-v1 cite it. The live page fetched 2026-10-05 (fetch log, sha256 3b5cbb2d...) carries the same requirement levels and differs from this capture by page chrome only (word-sequence ratio 0.991)."
+    ],
+    "observed_files": {
+     "corpus/crosswalk/dcat-us-3-dataset-schema-2026-09-15.html": {
+      "sha256": "0ef64d14a0901d5e7f84fee15bab1474353880ee4b64aec9c185b06149e067de",
+      "size": 106032,
+      "claimed_type": "html",
+      "detected_type": "html"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/crosswalk/dcat-us-3-dataset-schema-2026-09-15.html": {
+      "path": "corpus/crosswalk/dcat-us-3-dataset-schema-2026-09-15.html",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed html, detected html",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "106032 bytes vs floor 64",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "skipped: format mismatch already failed or type unhandled",
+        "outcome": "skip"
+       }
+      ],
+      "checked_at": "2026-10-05T02:36:05.856432+00:00"
+     }
+    },
+    "added_in": "dcat-us-3-2026-10-04"
+   }
+  },
+  "dcat-us-3-dataset-series": {
+   "doc_id": "dcat-us-3-dataset-series",
+   "identity": {
+    "sha256": "a28eacd7eb60ddd04b52b4852e0e229fb96ff397056fbeac4dcc75a0e40c03da",
+    "canonical_path": "corpus/crosswalk/dcat-us-3-dataset-series.html",
+    "title": "DCAT-US 3.0: Dataset Series (resources.data.gov)",
+    "authors_or_org": [
+     "U.S. General Services Administration / Data.gov"
+    ],
+    "pub_year": "2026",
+    "doc_type": "standard",
+    "source_url": "https://resources.data.gov/standards/catalog/dcat-us-3/dataset-series/",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "scripted_fetch",
+    "acquired_at": "2026-10-05T02:36:05.856797+00:00",
+    "acquired_by": "scripts/fetch_allowlisted.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed html, detected html",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "63223 bytes vs floor 64",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "skipped: format mismatch already failed or type unhandled",
+      "outcome": "skip"
+     }
+    ],
+    "checked_at": "2026-10-05T02:36:05.857046+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "cc_tasks/2026-10-04_DCAT-002_dcat_us_3_intake_and_g4.md (DN-011-R2): DCAT-US 3.0 and its statistical prior art, so that draft-against-final and US-against-EU can be queried. Criterion R1 (cc_tasks/2026-08-24_source_triage.md): a metadata standard, the graph's target construct.",
+    "decided_by": "cc",
+    "decided_at": "2026-10-05T02:36:05.640160+00:00",
+    "history": [],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "dcat_002_2026-10-04"
+   ],
+   "extra": {
+    "notes": [
+     "fetched robots-first under the identified UA (logs/2026-10-04_DCAT-002_fetch.jsonl). DCAT-US 3.0 supporting-class schema page."
+    ],
+    "observed_files": {
+     "corpus/crosswalk/dcat-us-3-dataset-series.html": {
+      "sha256": "a28eacd7eb60ddd04b52b4852e0e229fb96ff397056fbeac4dcc75a0e40c03da",
+      "size": 63223,
+      "claimed_type": "html",
+      "detected_type": "html"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/crosswalk/dcat-us-3-dataset-series.html": {
+      "path": "corpus/crosswalk/dcat-us-3-dataset-series.html",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed html, detected html",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "63223 bytes vs floor 64",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "skipped: format mismatch already failed or type unhandled",
+        "outcome": "skip"
+       }
+      ],
+      "checked_at": "2026-10-05T02:36:05.857046+00:00"
+     }
+    },
+    "added_in": "dcat-us-3-2026-10-04"
+   }
+  },
+  "dcat-us-3-implementation-guide": {
+   "doc_id": "dcat-us-3-implementation-guide",
+   "identity": {
+    "sha256": "26e4c3baecb2aa0e2f486ae65a2f0404da32fdbb402baf4f71239ab4c31d268c",
+    "canonical_path": "corpus/crosswalk/dcat-us-3-implementation-guide.pdf",
+    "title": "DCAT-US v3.0 Schema Implementation Guide (version 1.1)",
+    "authors_or_org": [
+     "U.S. General Services Administration / Data.gov"
+    ],
+    "pub_year": "2026",
+    "doc_type": "federal",
+    "source_url": "https://resources.data.gov/assets/documents/dcat-us-3-implementation-guide.pdf",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "scripted_fetch",
+    "acquired_at": "2026-10-05T02:36:05.860204+00:00",
+    "acquired_by": "scripts/fetch_allowlisted.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed pdf, detected pdf",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "5836688 bytes vs floor 7000",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "78 pages, extractable text present",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-10-05T02:36:05.990181+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "cc_tasks/2026-10-04_DCAT-002_dcat_us_3_intake_and_g4.md (DN-011-R2): DCAT-US 3.0 and its statistical prior art, so that draft-against-final and US-against-EU can be queried. Criterion R1 (cc_tasks/2026-08-24_source_triage.md): a metadata standard, the graph's target construct.",
+    "decided_by": "cc",
+    "decided_at": "2026-10-05T02:36:05.640160+00:00",
+    "history": [],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "dcat_002_2026-10-04"
+   ],
+   "extra": {
+    "notes": [
+     "fetched robots-first under the identified UA (logs/2026-10-04_DCAT-002_fetch.jsonl). 78 pages. Version history: 1.0 2026-08-21 Final; 1.1 2026-09-09 updated reference to ISO 19115-1 and administrative edits."
+    ],
+    "observed_files": {
+     "corpus/crosswalk/dcat-us-3-implementation-guide.pdf": {
+      "sha256": "26e4c3baecb2aa0e2f486ae65a2f0404da32fdbb402baf4f71239ab4c31d268c",
+      "size": 5836688,
+      "claimed_type": "pdf",
+      "detected_type": "pdf"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/crosswalk/dcat-us-3-implementation-guide.pdf": {
+      "path": "corpus/crosswalk/dcat-us-3-implementation-guide.pdf",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed pdf, detected pdf",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "5836688 bytes vs floor 7000",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "78 pages, extractable text present",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-10-05T02:36:05.990181+00:00"
+     }
+    },
+    "added_in": "dcat-us-3-2026-10-04"
+   }
+  },
+  "dcat-us-3-m-25-05-crosswalk": {
+   "doc_id": "dcat-us-3-m-25-05-crosswalk",
+   "identity": {
+    "sha256": "7c6f304d3ecdf52c37821945e61eef9c9c0ca804902522b7725084cb1b6085b1",
+    "canonical_path": "corpus/crosswalk/dcat-us-3-m-25-05-crosswalk.html",
+    "title": "DCAT-US 3 / M-25-05 Crosswalk (resources.data.gov)",
+    "authors_or_org": [
+     "U.S. General Services Administration / Data.gov"
+    ],
+    "pub_year": "2026",
+    "doc_type": "federal",
+    "source_url": "https://resources.data.gov/resources/dcat-us-3-crosswalk/",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "scripted_fetch",
+    "acquired_at": "2026-10-05T02:36:05.990761+00:00",
+    "acquired_by": "scripts/fetch_allowlisted.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed html, detected html",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "44635 bytes vs floor 64",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "skipped: format mismatch already failed or type unhandled",
+      "outcome": "skip"
+     }
+    ],
+    "checked_at": "2026-10-05T02:36:05.990940+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "cc_tasks/2026-10-04_DCAT-002_dcat_us_3_intake_and_g4.md (DN-011-R2): DCAT-US 3.0 and its statistical prior art, so that draft-against-final and US-against-EU can be queried. Criterion R1 (cc_tasks/2026-08-24_source_triage.md): a metadata standard, the graph's target construct.",
+    "decided_by": "cc",
+    "decided_at": "2026-10-05T02:36:05.640160+00:00",
+    "history": [],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "dcat_002_2026-10-04"
+   ],
+   "extra": {
+    "notes": [
+     "fetched robots-first under the identified UA (logs/2026-10-04_DCAT-002_fetch.jsonl). Maps OMB M-25-05 Phase 2 metadata elements to DCAT-US 3.0 properties."
+    ],
+    "observed_files": {
+     "corpus/crosswalk/dcat-us-3-m-25-05-crosswalk.html": {
+      "sha256": "7c6f304d3ecdf52c37821945e61eef9c9c0ca804902522b7725084cb1b6085b1",
+      "size": 44635,
+      "claimed_type": "html",
+      "detected_type": "html"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/crosswalk/dcat-us-3-m-25-05-crosswalk.html": {
+      "path": "corpus/crosswalk/dcat-us-3-m-25-05-crosswalk.html",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed html, detected html",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "44635 bytes vs floor 64",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "skipped: format mismatch already failed or type unhandled",
+        "outcome": "skip"
+       }
+      ],
+      "checked_at": "2026-10-05T02:36:05.990940+00:00"
+     }
+    },
+    "added_in": "dcat-us-3-2026-10-04"
+   }
+  },
   "dcat-us-3-overview": {
    "doc_id": "dcat-us-3-overview",
    "identity": {
@@ -9560,6 +10065,208 @@
      }
     },
     "added_in": "kernel-v03"
+   }
+  },
+  "dcat-us-3-quality-governance": {
+   "doc_id": "dcat-us-3-quality-governance",
+   "identity": {
+    "sha256": "7cbc49b6691fa3e7eb7b4845837afc3e1a6212bfc5882d676284a0ad154cbad5",
+    "canonical_path": "corpus/crosswalk/dcat-us-3-quality-governance.html",
+    "title": "DCAT-US 3.0: Quality and Governance (resources.data.gov)",
+    "authors_or_org": [
+     "U.S. General Services Administration / Data.gov"
+    ],
+    "pub_year": "2026",
+    "doc_type": "standard",
+    "source_url": "https://resources.data.gov/standards/catalog/dcat-us-3/quality-governance/",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "scripted_fetch",
+    "acquired_at": "2026-10-05T02:36:05.991237+00:00",
+    "acquired_by": "scripts/fetch_allowlisted.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed html, detected html",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "133593 bytes vs floor 64",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "skipped: format mismatch already failed or type unhandled",
+      "outcome": "skip"
+     }
+    ],
+    "checked_at": "2026-10-05T02:36:05.991436+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "cc_tasks/2026-10-04_DCAT-002_dcat_us_3_intake_and_g4.md (DN-011-R2): DCAT-US 3.0 and its statistical prior art, so that draft-against-final and US-against-EU can be queried. Criterion R1 (cc_tasks/2026-08-24_source_triage.md): a metadata standard, the graph's target construct.",
+    "decided_by": "cc",
+    "decided_at": "2026-10-05T02:36:05.640160+00:00",
+    "history": [],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "dcat_002_2026-10-04"
+   ],
+   "extra": {
+    "notes": [
+     "fetched robots-first under the identified UA (logs/2026-10-04_DCAT-002_fetch.jsonl). DCAT-US 3.0 supporting-class schema page."
+    ],
+    "observed_files": {
+     "corpus/crosswalk/dcat-us-3-quality-governance.html": {
+      "sha256": "7cbc49b6691fa3e7eb7b4845837afc3e1a6212bfc5882d676284a0ad154cbad5",
+      "size": 133593,
+      "claimed_type": "html",
+      "detected_type": "html"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/crosswalk/dcat-us-3-quality-governance.html": {
+      "path": "corpus/crosswalk/dcat-us-3-quality-governance.html",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed html, detected html",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "133593 bytes vs floor 64",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "skipped: format mismatch already failed or type unhandled",
+        "outcome": "skip"
+       }
+      ],
+      "checked_at": "2026-10-05T02:36:05.991436+00:00"
+     }
+    },
+    "added_in": "dcat-us-3-2026-10-04"
+   }
+  },
+  "dcat-us-3-temporal-spatial-metrics": {
+   "doc_id": "dcat-us-3-temporal-spatial-metrics",
+   "identity": {
+    "sha256": "083cc7877b8438d25498d71ee0e04b3e0ffdbbef334ff3c5a4735cdf2c8339c7",
+    "canonical_path": "corpus/crosswalk/dcat-us-3-temporal-spatial-metrics.html",
+    "title": "DCAT-US 3.0: Temporal, Spatial, and Metrics (resources.data.gov)",
+    "authors_or_org": [
+     "U.S. General Services Administration / Data.gov"
+    ],
+    "pub_year": "2026",
+    "doc_type": "standard",
+    "source_url": "https://resources.data.gov/standards/catalog/dcat-us-3/temporal-spatial-metrics/",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "scripted_fetch",
+    "acquired_at": "2026-10-05T02:36:05.991691+00:00",
+    "acquired_by": "scripts/fetch_allowlisted.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed html, detected html",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "89577 bytes vs floor 64",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "skipped: format mismatch already failed or type unhandled",
+      "outcome": "skip"
+     }
+    ],
+    "checked_at": "2026-10-05T02:36:05.991858+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "cc_tasks/2026-10-04_DCAT-002_dcat_us_3_intake_and_g4.md (DN-011-R2): DCAT-US 3.0 and its statistical prior art, so that draft-against-final and US-against-EU can be queried. Criterion R1 (cc_tasks/2026-08-24_source_triage.md): a metadata standard, the graph's target construct.",
+    "decided_by": "cc",
+    "decided_at": "2026-10-05T02:36:05.640160+00:00",
+    "history": [],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "dcat_002_2026-10-04"
+   ],
+   "extra": {
+    "notes": [
+     "fetched robots-first under the identified UA (logs/2026-10-04_DCAT-002_fetch.jsonl). DCAT-US 3.0 supporting-class schema page, including QualityMeasurement."
+    ],
+    "observed_files": {
+     "corpus/crosswalk/dcat-us-3-temporal-spatial-metrics.html": {
+      "sha256": "083cc7877b8438d25498d71ee0e04b3e0ffdbbef334ff3c5a4735cdf2c8339c7",
+      "size": 89577,
+      "claimed_type": "html",
+      "detected_type": "html"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/crosswalk/dcat-us-3-temporal-spatial-metrics.html": {
+      "path": "corpus/crosswalk/dcat-us-3-temporal-spatial-metrics.html",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed html, detected html",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "89577 bytes vs floor 64",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "skipped: format mismatch already failed or type unhandled",
+        "outcome": "skip"
+       }
+      ],
+      "checked_at": "2026-10-05T02:36:05.991858+00:00"
+     }
+    },
+    "added_in": "dcat-us-3-2026-10-04"
    }
   },
   "ddi-codebook-specification": {
@@ -30373,6 +31080,107 @@
     "added_in": "g1eval-2026-09-02"
    }
   },
+  "statdcat-ap-1-0-1": {
+   "doc_id": "statdcat-ap-1-0-1",
+   "identity": {
+    "sha256": "b2353d557d84c0f853380723447cd26f0c47a92bc444a6193dad52868eeb1d69",
+    "canonical_path": "corpus/crosswalk/statdcat-ap-1-0-1.pdf",
+    "title": "StatDCAT-AP - DCAT Application Profile for description of statistical datasets, Version 1.0.1",
+    "authors_or_org": [
+     "European Commission, ISA2 programme / SEMIC Support Centre"
+    ],
+    "pub_year": "2019",
+    "doc_type": "standard",
+    "source_url": "https://interoperable-europe.ec.europa.eu/sites/default/files/distribution/access_url/2019-05/0812e528-c428-4832-b674-d5b9c68d1b42/StatDCAT-AP_1.0.1.pdf",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "scripted_fetch",
+    "acquired_at": "2026-10-05T02:36:05.998629+00:00",
+    "acquired_by": "scripts/fetch_allowlisted.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed pdf, detected pdf",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "5716480 bytes vs floor 7000",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "100 pages, extractable text present",
+      "outcome": "pass"
+     }
+    ],
+    "checked_at": "2026-10-05T02:36:06.048671+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "cc_tasks/2026-10-04_DCAT-002_dcat_us_3_intake_and_g4.md (DN-011-R2): DCAT-US 3.0 and its statistical prior art, so that draft-against-final and US-against-EU can be queried. Criterion R1 (cc_tasks/2026-08-24_source_triage.md): a metadata standard, the graph's target construct.",
+    "decided_by": "cc",
+    "decided_at": "2026-10-05T02:36:05.640160+00:00",
+    "history": [],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "dcat_002_2026-10-04"
+   ],
+   "extra": {
+    "notes": [
+     "fetched robots-first under the identified UA (logs/2026-10-04_DCAT-002_fetch.jsonl). 100 pages. The PDF distribution of release 1.0.1 on the Interoperable Europe portal (release page .../statdcat-application-profile-data-portals-europe/release/101, which marks it archived in favour of a later release). The task names 1.0.1 for its stat:dimension, stat:attribute, statUnitMeasure, numSeries, dqv:hasQualityAnnotation and SDMX mapping."
+    ],
+    "observed_files": {
+     "corpus/crosswalk/statdcat-ap-1-0-1.pdf": {
+      "sha256": "b2353d557d84c0f853380723447cd26f0c47a92bc444a6193dad52868eeb1d69",
+      "size": 5716480,
+      "claimed_type": "pdf",
+      "detected_type": "pdf"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/crosswalk/statdcat-ap-1-0-1.pdf": {
+      "path": "corpus/crosswalk/statdcat-ap-1-0-1.pdf",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed pdf, detected pdf",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "5716480 bytes vs floor 7000",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "100 pages, extractable text present",
+        "outcome": "pass"
+       }
+      ],
+      "checked_at": "2026-10-05T02:36:06.048671+00:00"
+     }
+    },
+    "added_in": "dcat-us-3-2026-10-04"
+   }
+  },
   "statistical-policy-working-paper-46-data-quality-assessment": {
    "doc_id": "statistical-policy-working-paper-46-data-quality-assessment",
    "identity": {
@@ -33850,6 +34658,107 @@
      }
     },
     "added_in": "kernel-v03"
+   }
+  },
+  "w3c-dqv": {
+   "doc_id": "w3c-dqv",
+   "identity": {
+    "sha256": "271d3e820c681127131595d2c8bf8345e925149192f6cab821f101f09d372a63",
+    "canonical_path": "corpus/crosswalk/w3c-dqv.html",
+    "title": "Data on the Web Best Practices: Data Quality Vocabulary (W3C Working Group Note)",
+    "authors_or_org": [
+     "W3C Data on the Web Best Practices Working Group"
+    ],
+    "pub_year": "2016",
+    "doc_type": "standard",
+    "source_url": "https://www.w3.org/TR/vocab-dqv/",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "scripted_fetch",
+    "acquired_at": "2026-10-05T02:36:06.058530+00:00",
+    "acquired_by": "scripts/fetch_allowlisted.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed html, detected html",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "183523 bytes vs floor 64",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "skipped: format mismatch already failed or type unhandled",
+      "outcome": "skip"
+     }
+    ],
+    "checked_at": "2026-10-05T02:36:06.058887+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "cc_tasks/2026-10-04_DCAT-002_dcat_us_3_intake_and_g4.md (DN-011-R2): DCAT-US 3.0 and its statistical prior art, so that draft-against-final and US-against-EU can be queried. Criterion R1 (cc_tasks/2026-08-24_source_triage.md): a metadata standard, the graph's target construct.",
+    "decided_by": "cc",
+    "decided_at": "2026-10-05T02:36:05.640160+00:00",
+    "history": [],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "dcat_002_2026-10-04"
+   ],
+   "extra": {
+    "notes": [
+     "fetched robots-first under the identified UA (logs/2026-10-04_DCAT-002_fetch.jsonl). W3C Working Group Note 15 December 2016."
+    ],
+    "observed_files": {
+     "corpus/crosswalk/w3c-dqv.html": {
+      "sha256": "271d3e820c681127131595d2c8bf8345e925149192f6cab821f101f09d372a63",
+      "size": 183523,
+      "claimed_type": "html",
+      "detected_type": "html"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/crosswalk/w3c-dqv.html": {
+      "path": "corpus/crosswalk/w3c-dqv.html",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed html, detected html",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "183523 bytes vs floor 64",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "skipped: format mismatch already failed or type unhandled",
+        "outcome": "skip"
+       }
+      ],
+      "checked_at": "2026-10-05T02:36:06.058887+00:00"
+     }
+    },
+    "added_in": "dcat-us-3-2026-10-04"
    }
   },
   "w3c-dwbp-2017": {

@@ -1,0 +1,33 @@
+{
+ "doc_id": "statdcat-ap-1-0-1",
+ "chunk_id": "statdcat-ap-1-0-1#c0056",
+ "chunk_index": 56,
+ "chunk_start": 208486,
+ "chunk_end": 209016,
+ "chunk_tokens": 130,
+ "heading_path": [
+  "---- Distributions ----------------------------------------------"
+ ],
+ "oversize": false,
+ "doc_sha256": "b2353d557d84c0f853380723447cd26f0c47a92bc444a6193dad52868eeb1d69",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 2842,
+  "cacheReadInputTokens": 13057,
+  "cacheCreationInputTokens": 29744,
+  "webSearchRequests": 0,
+  "costUSD": 0.3750285,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 1746,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3750285,
+ "duration_ms": 32765,
+ "session_id": "be55999e-4270-44d1-9f0b-cc9623301a08",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"A Turtle example from the AP specification's Distributions section: two dcat:Distribution instances (a downloadable RDF Turtle file and a visualisation), each given a dct:type, a dcat:accessURL and a dct:license.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_distribution\",\n      \"name\": \"dcat:Distribution\",\n      \"aliases\": [\"Distribution\", \"DCAT Distribution\"],\n      \"description\": \"The asset class the example assigns to both the downloadable file and the visualisation; each instance is given a format, type, access URL and license.\",\n      \"anchor\": \"ns30:download a dcat:Distribution\",\n      \"location\": \"statdcat-ap-1-0-1#c0056\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"statdcat-ap-1-0-1\",\n      \"to_id\": \"c_distribution\",\n      \"anchor\": \"ns30:visualisation a dcat:Distribution\",\n      \"location\": \"statdcat-ap-1-0-1#c0056\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    { \"name\": \"ns30:download\", \"anchor\": \"ns30:download\" },\n    { \"name\": \"ns30:visualisation\", \"anchor\": \"ns30:visualisation\" },\n    { \"name\": \"ns38:RDF_TURTLE\", \"anchor\": \"ns38:RDF_TURTLE\" },\n    { \"name\": \"ns39:DOWNLOADABLE_FILE\", \"anchor\": \"ns39:DOWNLOADABLE_FILE\" },\n    { \"name\": \"ns39:VISUALIZATION\", \"anchor\": \"ns39:VISUALIZATION\" },\n    { \"name\": \"ns41:digital_agenda_scoreboard_key_indicators\", \"anchor\": \"ns41:digital_agenda_scoreboard_key_indicators\" }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"dct:format          ns38:RDF_TURTLE\",\n      \"suggested_edge\": \"has_format\",\n      \"diversion_reason\": \"other:instance_data_no_edge_type\"\n    },\n    {\n      \"anchor\": \"dct:type            ns39:VISUALIZATION\",\n      \"suggested_edge\": \"has_distribution_type\",\n      \"diversion_reason\": \"other:instance_data_no_edge_type\"\n    },\n    {\n      \"anchor\": \"dcat:accessURL          ns40:download\",\n      \"suggested_edge\": \"has_access_url\",\n      \"diversion_reason\": \"other:instance_data_no_edge_type\"\n    }\n  ],\n  \"gleaned\": [\n    { \"name\": \"dct:format\", \"type\": \"Concept\" },\n    { \"name\": \"dct:type\", \"type\": \"Concept\" },\n    { \"name\": \"dcat:accessURL\", \"type\": \"Concept\" },\n    { \"name\": \"dct:license\", \"type\": \"Concept\" },\n    { \"name\": \"ns25:copyright\", \"type\": \"Concept\" }\n  ]\n}\n```"
+}

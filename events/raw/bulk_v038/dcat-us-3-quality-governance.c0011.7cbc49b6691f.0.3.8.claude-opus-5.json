@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-quality-governance",
+ "chunk_id": "dcat-us-3-quality-governance#c0011",
+ "chunk_index": 11,
+ "chunk_start": 7271,
+ "chunk_end": 7560,
+ "chunk_tokens": 97,
+ "heading_path": [
+  "Quality and Governance",
+  "[Standard &gt; created #](#standard--created)"
+ ],
+ "oversize": false,
+ "doc_sha256": "7cbc49b6691fa3e7eb7b4845837afc3e1a6212bfc5882d676284a0ad154cbad5",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 4325,
+  "cacheReadInputTokens": 13056,
+  "cacheCreationInputTokens": 29577,
+  "webSearchRequests": 0,
+  "costUSD": 0.410433,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 2611,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.410433,
+ "duration_ms": 48518,
+ "session_id": "561029cc-9e70-46f4-af7b-74fc38aaf5b1",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"DCAT-US 3 property reference: defines the Concept class as a controlled term or label, then specifies the optional Standard > created property (title 'creation date', the date the Standard was first created, type null or object) with date/datetime examples.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_concept\",\n      \"name\": \"Concept\",\n      \"aliases\": [\"Concept class\", \"controlled term\"],\n      \"description\": \"A controlled term or label, optionally drawn from a concept scheme.\",\n      \"anchor\": \"[Concept]\",\n      \"location\": \"dcat-us-3-quality-governance#c0011\"\n    },\n    {\n      \"id\": \"c_standard\",\n      \"name\": \"Standard\",\n      \"aliases\": [\"Standard class\"],\n      \"description\": \"The class whose creation date the `created` property records.\",\n      \"anchor\": \"the Standard has been\",\n      \"location\": \"dcat-us-3-quality-governance#c0011\"\n    },\n    {\n      \"id\": \"c_creation_date\",\n      \"name\": \"creation date\",\n      \"aliases\": [\"created\", \"Standard > created\"],\n      \"description\": \"The title of the optional `created` property on Standard.\",\n      \"anchor\": \"creation date\",\n      \"location\": \"dcat-us-3-quality-governance#c0011\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d_concept\",\n      \"term\": \"Concept\",\n      \"verbatim_text\": \"A controlled term or label, optionally drawn from a concept scheme\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"A controlled term or label\",\n      \"location\": \"dcat-us-3-quality-governance#c0011\"\n    },\n    {\n      \"id\": \"d_created\",\n      \"term\": \"created\",\n      \"verbatim_text\": \"The date on which the Standard has been first created\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"has been first created\",\n      \"location\": \"dcat-us-3-quality-governance#c0011\"\n    }\n  ],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"d_concept\",\n      \"anchor\": \"A controlled term or label\",\n      \"location\": \"dcat-us-3-quality-governance#c0011\"\n    },\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"d_created\",\n      \"anchor\": \"has been first created\",\n      \"location\": \"dcat-us-3-quality-governance#c0011\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"c_concept\",\n      \"anchor\": \"[Concept]\",\n      \"location\": \"dcat-us-3-quality-governance#c0011\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"c_standard\",\n      \"anchor\": \"the Standard has been\",\n      \"location\": \"dcat-us-3-quality-governance#c0011\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"c_creation_date\",\n      \"anchor\": \"creation date\",\n      \"location\": \"dcat-us-3-quality-governance#c0011\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"concept scheme\",\n      \"anchor\": \"concept scheme\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"suggested_edge\": \"has_component\",\n      \"from_id\": \"c_standard\",\n      \"to_id\": \"c_creation_date\",\n      \"anchor\": \"Standard &gt; created\",\n      \"diversion_reason\": \"structural_inference\",\n      \"location\": \"dcat-us-3-quality-governance#c0011\"\n    },\n    {\n      \"suggested_edge\": \"property_requirement_level\",\n      \"from_id\": \"c_creation_date\",\n      \"to_id\": \"dcat-us-3-quality-governance\",\n      \"anchor\": \"**Requirement:** Optional\",\n      \"diversion_reason\": \"other:no_requirement_edge_type\",\n      \"location\": \"dcat-us-3-quality-governance#c0011\"\n    },\n    {\n      \"suggested_edge\": \"has_range\",\n      \"from_id\": \"c_creation_date\",\n      \"to_id\": \"c_concept\",\n      \"anchor\": \"null or object\",\n      \"diversion_reason\": \"other:no_range_edge_type\",\n      \"location\": \"dcat-us-3-quality-governance#c0011\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"concept scheme\", \"type\": \"Concept\"},\n    {\"name\": \"ISO 8601 date and date-time example values\", \"type\": \"Concept\"},\n    {\"name\": \"identifiers-and-relationships section\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

@@ -1,0 +1,36 @@
+{
+ "doc_id": "dcat-us-3-candidate-recommendation-snapshot",
+ "chunk_id": "dcat-us-3-candidate-recommendation-snapshot#c0046",
+ "chunk_index": 46,
+ "chunk_start": 483409,
+ "chunk_end": 484975,
+ "chunk_tokens": 218,
+ "heading_path": [
+  "DCAT-US - Version 3",
+  "Distribution",
+  "Recommended Properties",
+  "Property: release date"
+ ],
+ "oversize": false,
+ "doc_sha256": "d758a8fdead227cdca2dfb63f2f79c827db42b5a28f39e1c407ee536a56f14cf",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 4953,
+  "cacheReadInputTokens": 13056,
+  "cacheCreationInputTokens": 30141,
+  "webSearchRequests": 0,
+  "costUSD": 0.431773,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 3633,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.431773,
+ "duration_ms": 54911,
+ "session_id": "1b0a2cb2-81d5-4f86-a282-a097eefcb439",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Tail of the DCAT-US Distribution 'release date' property table (URI dcterms:issued, usage note on date of formal issuance) followed by the full 'temporal resolution' property table: optional, 0..1, dcat:temporalResolution, range xsd:duration, usage note defining it as the minimum time period resolvable in the Dataset distribution.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_temporal_resolution\",\n      \"name\": \"temporal resolution\",\n      \"aliases\": [\"dcat:temporalResolution\", \"temporal resolution property\"],\n      \"description\": \"Optional Distribution property (0..1) whose range is xsd:duration; refers to the minimum time period resolvable in the Dataset distribution.\",\n      \"anchor\": \"Property: temporal resolution\",\n      \"location\": \"dcat-us-3-candidate-recommendation-snapshot#c0046\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d_temporal_resolution\",\n      \"term\": \"temporal resolution\",\n      \"verbatim_text\": \"This property refers to the minimum time period resolvable in the Dataset distribution.\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"minimum time period resolvable\",\n      \"location\": \"dcat-us-3-candidate-recommendation-snapshot#c0046\"\n    }\n  ],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-candidate-recommendation-snapshot\",\n      \"to_id\": \"c_temporal_resolution\",\n      \"anchor\": \"Property: temporal resolution\",\n      \"location\": \"dcat-us-3-candidate-recommendation-snapshot#c0046\"\n    },\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-candidate-recommendation-snapshot\",\n      \"to_id\": \"d_temporal_resolution\",\n      \"anchor\": \"minimum time period resolvable\",\n      \"location\": \"dcat-us-3-candidate-recommendation-snapshot#c0046\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"Distribution\",\n      \"anchor\": \"of the Distribution\"\n    },\n    {\n      \"name\": \"dcterms:issued\",\n      \"anchor\": \"dcterms:issued\"\n    },\n    {\n      \"name\": \"xsd:duration\",\n      \"anchor\": \"xsd:duration\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"minimum time period resolvable\",\n      \"suggested_edge\": \"applies_to\",\n      \"from_name\": \"temporal resolution\",\n      \"to_name\": \"Dataset distribution\",\n      \"diversion_reason\": \"endpoint_not_located\"\n    },\n    {\n      \"anchor\": \"xsd:duration\",\n      \"suggested_edge\": \"has_range\",\n      \"from_name\": \"temporal resolution\",\n      \"to_name\": \"xsd:duration\",\n      \"diversion_reason\": \"other:no_schema_edge\"\n    },\n    {\n      \"anchor\": \"dcterms:issued\",\n      \"suggested_edge\": \"has_property\",\n      \"from_name\": \"Distribution\",\n      \"to_name\": \"release date\",\n      \"diversion_reason\": \"structural_inference\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"release date\", \"type\": \"Concept\"},\n    {\"name\": \"date of formal issuance\", \"type\": \"Concept\"},\n    {\"name\": \"Dataset distribution\", \"type\": \"Concept\"},\n    {\"name\": \"Requirement level: Optional\", \"type\": \"Claim\"},\n    {\"name\": \"Cardinality 0..1\", \"type\": \"Claim\"}\n  ]\n}\n```"
+}

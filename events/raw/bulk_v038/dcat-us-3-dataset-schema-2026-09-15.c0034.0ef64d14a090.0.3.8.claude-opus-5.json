@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-dataset-schema-2026-09-15",
+ "chunk_id": "dcat-us-3-dataset-schema-2026-09-15#c0034",
+ "chunk_index": 34,
+ "chunk_start": 44963,
+ "chunk_end": 45562,
+ "chunk_tokens": 133,
+ "heading_path": [
+  "DCAT-US 3.0: Dataset",
+  "[Dataset &gt; hasQualityMeasurement #](#hasQualityMeasurement)"
+ ],
+ "oversize": false,
+ "doc_sha256": "0ef64d14a0901d5e7f84fee15bab1474353880ee4b64aec9c185b06149e067de",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 4739,
+  "cacheReadInputTokens": 13056,
+  "cacheCreationInputTokens": 29371,
+  "webSearchRequests": 0,
+  "costUSD": 0.418723,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 2803,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.418723,
+ "duration_ms": 48620,
+ "session_id": "9fff6133-e969-4b8b-a33a-5ec3bd7b66c7",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"DCAT-US 3.0 schema page for the Dataset property hasQualityMeasurement: it is optional, holds a list of quality measurements (completeness, accuracy, timeliness) beyond spatial/temporal resolution, and each item is a QualityMeasurement — a measurement of a resource against a specific quality metric.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_dataset\",\n      \"name\": \"Dataset\",\n      \"aliases\": [],\n      \"description\": \"A collection of data published or curated by one provider\",\n      \"anchor\": \"A collection of data published\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0034\"\n    },\n    {\n      \"id\": \"c_quality_measurement_class\",\n      \"name\": \"QualityMeasurement\",\n      \"aliases\": [\"Quality Measurement\"],\n      \"description\": \"A measurement of a resource against a specific quality metric\",\n      \"anchor\": \"A measurement of a resource\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0034\"\n    },\n    {\n      \"id\": \"c_quality_measurements\",\n      \"name\": \"quality measurements\",\n      \"aliases\": [\"quality measurement\"],\n      \"description\": \"Measurements of a dataset's quality, such as completeness, accuracy, or timeliness, beyond spatial or temporal resolution\",\n      \"anchor\": \"quality measurements for the dataset\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0034\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d_dataset\",\n      \"term\": \"Dataset\",\n      \"verbatim_text\": \"A collection of data published or curated by one provider\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"curated by one provider\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0034\"\n    },\n    {\n      \"id\": \"d_quality_measurement\",\n      \"term\": \"QualityMeasurement\",\n      \"verbatim_text\": \"A measurement of a resource against a specific quality metric\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"against a specific quality metric\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0034\"\n    }\n  ],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"d_dataset\",\n      \"anchor\": \"curated by one provider\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0034\"\n    },\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"d_quality_measurement\",\n      \"anchor\": \"against a specific quality metric\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0034\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"c_dataset\",\n      \"anchor\": \"A collection of data published\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0034\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"c_quality_measurement_class\",\n      \"anchor\": \"A measurement of a resource\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0034\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"c_quality_measurements\",\n      \"anchor\": \"quality measurements for the dataset\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0034\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\"name\": \"completeness\", \"anchor\": \"completeness,\"},\n    {\"name\": \"accuracy\", \"anchor\": \"accuracy, or\"},\n    {\"name\": \"timeliness\", \"anchor\": \"or timeliness\"},\n    {\"name\": \"spatial or temporal resolution\", \"anchor\": \"beyond spatial or temporal\"},\n    {\"name\": \"quality metric\", \"anchor\": \"specific quality metric\"}\n  ],\n  \"proposed_relationships\": [\n    {\n      \"suggested_edge\": \"has_component\",\n      \"from_id\": \"c_dataset\",\n      \"to_id\": \"c_quality_measurement_class\",\n      \"anchor\": \"null or array of\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0034\",\n      \"diversion_reason\": \"structural_inference\"\n    },\n    {\n      \"suggested_edge\": \"has_property_optional\",\n      \"from_id\": \"c_dataset\",\n      \"to_id\": \"c_quality_measurements\",\n      \"anchor\": \"**Requirement:** Optional\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0034\",\n      \"diversion_reason\": \"structural_inference\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"DCAT-US 3.0\", \"type\": \"Standard\"},\n    {\"name\": \"hasQualityMeasurement\", \"type\": \"Concept\"},\n    {\"name\": \"resource\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

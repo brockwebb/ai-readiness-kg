@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-dataset-schema-2026-09-15",
+ "chunk_id": "dcat-us-3-dataset-schema-2026-09-15#c0040",
+ "chunk_index": 40,
+ "chunk_start": 48119,
+ "chunk_end": 48642,
+ "chunk_tokens": 100,
+ "heading_path": [
+  "DCAT-US 3.0: Dataset",
+  "[Dataset &gt; liabilityStatement #](#liabilityStatement)"
+ ],
+ "oversize": false,
+ "doc_sha256": "0ef64d14a0901d5e7f84fee15bab1474353880ee4b64aec9c185b06149e067de",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 4082,
+  "cacheReadInputTokens": 13056,
+  "cacheCreationInputTokens": 29665,
+  "webSearchRequests": 0,
+  "costUSD": 0.405238,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 2813,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.405238,
+ "duration_ms": 164386,
+ "session_id": "c8b91e49-6fb5-4ce2-98d8-8de7a73e32e2",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Schema entry for the optional Dataset property liabilityStatement: its prose definition (limitations of responsibility, qualifications on accuracy/reliability/completeness, absence of endorsement), its type (null or string), and an example value.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_liability_statement\",\n      \"name\": \"liability statement\",\n      \"aliases\": [\"liabilityStatement\", \"Dataset > liabilityStatement\"],\n      \"description\": \"An optional Dataset-level statement qualifying responsibility for, and the accuracy, reliability and completeness of, the data, including absence of endorsement by the publisher or provider.\",\n      \"anchor\": \"A liability statement about\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0040\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d_liability_statement\",\n      \"term\": \"liability statement\",\n      \"verbatim_text\": \"A liability statement about the dataset that may clarify limitations of responsibility, qualifications on the accuracy, reliability, and completeness of the data, or absence of endorsement by the data publisher or provider, among other considerations\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"limitations of responsibility\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0040\"\n    }\n  ],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"d_liability_statement\",\n      \"anchor\": \"qualifications on the accuracy\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0040\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"c_liability_statement\",\n      \"anchor\": \"among other considerations\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0040\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"dataset\",\n      \"anchor\": \"the dataset that may\"\n    },\n    {\n      \"name\": \"data publisher or provider\",\n      \"anchor\": \"data publisher or provider\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"suggested_edge\": \"applies_to\",\n      \"from_id\": \"c_liability_statement\",\n      \"to_id\": \"dataset\",\n      \"anchor\": \"liability statement about the dataset\",\n      \"diversion_reason\": \"endpoint_not_located\"\n    },\n    {\n      \"suggested_edge\": \"has_property\",\n      \"from_id\": \"dataset\",\n      \"to_id\": \"c_liability_statement\",\n      \"anchor\": \"**Requirement:** Optional\",\n      \"diversion_reason\": \"structural_inference\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"Optional requirement level\", \"type\": \"Concept\"},\n    {\"name\": \"null or string\", \"type\": \"Concept\"},\n    {\"name\": \"accuracy of the data\", \"type\": \"Concept\"},\n    {\"name\": \"reliability of the data\", \"type\": \"Concept\"},\n    {\"name\": \"completeness of the data\", \"type\": \"Concept\"},\n    {\"name\": \"absence of endorsement\", \"type\": \"Concept\"},\n    {\"name\": \"provided as-is without warranty\", \"type\": \"Concept\"},\n    {\"name\": \"fitness for their intended use\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

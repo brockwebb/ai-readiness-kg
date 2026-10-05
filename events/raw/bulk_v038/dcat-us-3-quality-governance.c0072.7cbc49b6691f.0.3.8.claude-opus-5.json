@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-quality-governance",
+ "chunk_id": "dcat-us-3-quality-governance#c0072",
+ "chunk_index": 72,
+ "chunk_start": 59752,
+ "chunk_end": 60209,
+ "chunk_tokens": 105,
+ "heading_path": [
+  "Quality and Governance",
+  "[DataService &gt; rightsHolder #](#data-service--rightsHolder)"
+ ],
+ "oversize": false,
+ "doc_sha256": "7cbc49b6691fa3e7eb7b4845837afc3e1a6212bfc5882d676284a0ad154cbad5",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 6153,
+  "cacheReadInputTokens": 13057,
+  "cacheCreationInputTokens": 29653,
+  "webSearchRequests": 0,
+  "costUSD": 0.45689349999999995,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 4431,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.45689349999999995,
+ "duration_ms": 67951,
+ "session_id": "4476db96-208b-4d6a-9a71-fdc0f3ffc04a",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"DCAT-US 3 spec entry for the optional DataService rightsHolder property: a list of Agents (organizations) holding rights on the Data Service, typed as null or an array of Organization classes, with the Organization class description given.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c-rightsholder\",\n      \"name\": \"rightsHolder\",\n      \"aliases\": [\"DataService rightsHolder\"],\n      \"description\": \"Optional DataService property carrying a list of Agents (organizations) holding rights on the Data Service.\",\n      \"anchor\": \"## [DataService &gt; rightsHolder\",\n      \"location\": \"dcat-us-3-quality-governance#c0072\"\n    },\n    {\n      \"id\": \"c-dataservice\",\n      \"name\": \"Data Service\",\n      \"aliases\": [\"DataService\"],\n      \"description\": \"The resource whose rights holders the rightsHolder property records.\",\n      \"anchor\": \"holding rights on the Data Service\",\n      \"location\": \"dcat-us-3-quality-governance#c0072\"\n    },\n    {\n      \"id\": \"c-organization\",\n      \"name\": \"Organization\",\n      \"aliases\": [],\n      \"description\": \"Class used as the item type of the rightsHolder array; an organization involved with a resource, including parent or child organizations.\",\n      \"anchor\": \"array of [Organization]\",\n      \"location\": \"dcat-us-3-quality-governance#c0072\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d-organization\",\n      \"term\": \"Organization\",\n      \"verbatim_text\": \"An organization involved with a resource, including parent or child organizations\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"involved with a resource\",\n      \"location\": \"dcat-us-3-quality-governance#c0072\"\n    }\n  ],\n  \"claims\": [\n    {\n      \"id\": \"cl-requirement\",\n      \"claim_text\": \"**Requirement:** Optional\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"**Requirement:** Optional\",\n      \"location\": \"dcat-us-3-quality-governance#c0072\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"d-organization\",\n      \"anchor\": \"An organization involved with a resource\",\n      \"location\": \"dcat-us-3-quality-governance#c0072\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"c-rightsholder\",\n      \"anchor\": \"## [DataService &gt; rightsHolder\",\n      \"location\": \"dcat-us-3-quality-governance#c0072\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"c-dataservice\",\n      \"anchor\": \"rights on the Data Service\",\n      \"location\": \"dcat-us-3-quality-governance#c0072\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"c-organization\",\n      \"anchor\": \"null or array of [Organization]\",\n      \"location\": \"dcat-us-3-quality-governance#c0072\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"cl-requirement\",\n      \"anchor\": \"**Requirement:**\",\n      \"location\": \"dcat-us-3-quality-governance#c0072\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl-requirement\",\n      \"to_id\": \"c-rightsholder\",\n      \"anchor\": \"Optional\",\n      \"location\": \"dcat-us-3-quality-governance#c0072\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"Agents\",\n      \"anchor\": \"A list of Agents\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"from_id\": \"c-dataservice\",\n      \"to_id\": \"c-rightsholder\",\n      \"suggested_edge\": \"has_component\",\n      \"diversion_reason\": \"structural_inference\",\n      \"anchor\": \"## [DataService &gt; rightsHolder\",\n      \"location\": \"dcat-us-3-quality-governance#c0072\"\n    },\n    {\n      \"from_id\": \"c-rightsholder\",\n      \"to_id\": \"c-organization\",\n      \"suggested_edge\": \"has_range\",\n      \"diversion_reason\": \"other:no_range_edge_type\",\n      \"anchor\": \"Each item of this array must be\",\n      \"location\": \"dcat-us-3-quality-governance#c0072\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"dcat-us-3\", \"type\": \"Standard\"},\n    {\"name\": \"Agent\", \"type\": \"Concept\"}\n  ]\n}"
+}

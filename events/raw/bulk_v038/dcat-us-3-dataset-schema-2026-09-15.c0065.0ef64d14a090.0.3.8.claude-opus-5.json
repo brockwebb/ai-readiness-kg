@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-dataset-schema-2026-09-15",
+ "chunk_id": "dcat-us-3-dataset-schema-2026-09-15#c0065",
+ "chunk_index": 65,
+ "chunk_start": 58816,
+ "chunk_end": 58933,
+ "chunk_tokens": 22,
+ "heading_path": [
+  "DCAT-US 3.0: Dataset",
+  "Glossary"
+ ],
+ "oversize": false,
+ "doc_sha256": "0ef64d14a0901d5e7f84fee15bab1474353880ee4b64aec9c185b06149e067de",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 2354,
+  "cacheReadInputTokens": 13056,
+  "cacheCreationInputTokens": 29349,
+  "webSearchRequests": 0,
+  "costUSD": 0.35887800000000003,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 1527,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.35887800000000003,
+ "duration_ms": 26980,
+ "session_id": "0ee85708-8c55-4935-bb8a-d1e09257c90b",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Glossary section opener on resources.data.gov: states only that the section contains explanations of common terms, plus a search affordance — navigation/boilerplate, so one Concept, one Claim, and a mention stub.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c1\",\n      \"name\": \"Glossary\",\n      \"aliases\": [\"glossary of terms\"],\n      \"description\": \"The section of the document that collects explanations of common terms referenced on resources.data.gov.\",\n      \"anchor\": \"## Glossary\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0065\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"cl1\",\n      \"claim_text\": \"This section contains explanations of common terms referenced on resources.data.gov.\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"contains explanations of common terms\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0065\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"c1\",\n      \"anchor\": \"## Glossary\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0065\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"cl1\",\n      \"anchor\": \"This section contains\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0065\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl1\",\n      \"to_id\": \"c1\",\n      \"anchor\": \"explanations of common terms\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0065\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"resources.data.gov\",\n      \"anchor\": \"resources.data.gov\"\n    }\n  ],\n  \"proposed_relationships\": [],\n  \"gleaned\": []\n}\n```"
+}

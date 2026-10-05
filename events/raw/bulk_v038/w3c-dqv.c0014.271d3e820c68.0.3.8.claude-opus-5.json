@@ -1,0 +1,33 @@
+{
+ "doc_id": "w3c-dqv",
+ "chunk_id": "w3c-dqv#c0014",
+ "chunk_index": 14,
+ "chunk_start": 82116,
+ "chunk_end": 82808,
+ "chunk_tokens": 186,
+ "heading_path": [
+  ":myQualityChecking activity"
+ ],
+ "oversize": false,
+ "doc_sha256": "271d3e820c681127131595d2c8bf8345e925149192f6cab821f101f09d372a63",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 7061,
+  "cacheReadInputTokens": 13057,
+  "cacheCreationInputTokens": 29346,
+  "webSearchRequests": 0,
+  "costUSD": 0.4765235,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 5688,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.4765235,
+ "duration_ms": 86450,
+ "session_id": "fccebd6a-543d-4de0-965f-f50a43bccf52",
+ "raw_result": "{\"extract_plan\":{\"chunk_summary\":\"Turtle example code: a dqv:QualityMeasurement instance computed on a distribution, and the dqv:Metric it is a measurement of, whose skos:definition checks that dcat:downloadURL is available and dereferenceable in the availability dimension.\"},\"concepts\":[{\"id\":\"c1\",\"name\":\"dqv:QualityMeasurement\",\"aliases\":[\"Quality Measurement\"],\"description\":\"The class of an individual measurement value, stated here as computed on a distribution, as a measurement of a metric, with a value and PROV attribution/generation.\",\"anchor\":\"dqv:QualityMeasurement\",\"location\":\"w3c-dqv#c0014\"},{\"id\":\"c2\",\"name\":\"dqv:Metric\",\"aliases\":[\"Metric\"],\"description\":\"The class of a quality metric; the example metric carries a skos:definition, an expected data type and a quality dimension.\",\"anchor\":\"a dqv:Metric\",\"location\":\"w3c-dqv#c0014\"},{\"id\":\"c3\",\"name\":\":availability\",\"aliases\":[\"availability dimension\"],\"description\":\"The quality dimension the download-URL availability metric is placed in via dqv:inDimension.\",\"anchor\":\":availability\",\"location\":\"w3c-dqv#c0014\"}],\"definitions\":[{\"id\":\"d1\",\"term\":\":downloadURLAvailabilityMetric\",\"verbatim_text\":\"Checks if dcat:downloadURL is available and if its value is\\n    dereferenceable.\",\"normative_status\":\"standard\",\"as_of_date\":null,\"anchor\":\"skos:definition\",\"location\":\"w3c-dqv#c0014\"}],\"claims\":[],\"instruments\":[],\"measures\":[{\"id\":\"m1\",\"text\":\"Checks if dcat:downloadURL is available and if its value is\\n    dereferenceable.\",\"response_type\":\"boolean\",\"anchor\":\"Checks if dcat:downloadURL\",\"location\":\"w3c-dqv#c0014\"}],\"standards\":[],\"frameworks\":[],\"practices\":[],\"tools\":[],\"platforms\":[],\"edges\":[{\"type\":\"defines\",\"from_id\":\"w3c-dqv\",\"to_id\":\"d1\",\"anchor\":\"skos:definition\",\"location\":\"w3c-dqv#c0014\"},{\"type\":\"measures\",\"from_id\":\"m1\",\"to_id\":\"c3\",\"anchor\":\"dqv:inDimension\",\"location\":\"w3c-dqv#c0014\"},{\"type\":\"mentions\",\"from_id\":\"w3c-dqv\",\"to_id\":\"c1\",\"anchor\":\"dqv:QualityMeasurement\",\"location\":\"w3c-dqv#c0014\"},{\"type\":\"mentions\",\"from_id\":\"w3c-dqv\",\"to_id\":\"c2\",\"anchor\":\"a dqv:Metric\",\"location\":\"w3c-dqv#c0014\"},{\"type\":\"mentions\",\"from_id\":\"w3c-dqv\",\"to_id\":\"c3\",\"anchor\":\":availability\",\"location\":\"w3c-dqv#c0014\"}],\"cites\":[],\"mentions\":[{\"name\":\":myMeasurement\",\"anchor\":\"hasQualityMeasurement :myMeasurement\"},{\"name\":\":myDatasetDistribution\",\"anchor\":\":myDatasetDistribution\"},{\"name\":\":myQualityChecker\",\"anchor\":\"wasAttributedTo :myQualityChecker\"},{\"name\":\":myQualityChecking\",\"anchor\":\"wasGeneratedBy :myQualityChecking\"},{\"name\":\"dcat:downloadURL\",\"anchor\":\"dcat:downloadURL\"}],\"proposed_relationships\":[{\"anchor\":\"dqv:isMeasurementOf\",\"suggested_edge\":\"is_measurement_of\",\"diversion_reason\":\"other:instance_level\",\"location\":\"w3c-dqv#c0014\"},{\"anchor\":\"dqv:computedOn\",\"suggested_edge\":\"computed_on\",\"diversion_reason\":\"other:instance_level\",\"location\":\"w3c-dqv#c0014\"}],\"gleaned\":[{\"name\":\"dqv:expectedDataType\",\"type\":\"Concept\"},{\"name\":\"prov:wasAttributedTo\",\"type\":\"Concept\"},{\"name\":\"prov:wasGeneratedBy\",\"type\":\"Concept\"}]}"
+}

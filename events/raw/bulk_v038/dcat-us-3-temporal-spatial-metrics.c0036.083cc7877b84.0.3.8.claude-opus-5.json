@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-temporal-spatial-metrics",
+ "chunk_id": "dcat-us-3-temporal-spatial-metrics#c0036",
+ "chunk_index": 36,
+ "chunk_start": 22910,
+ "chunk_end": 23331,
+ "chunk_tokens": 103,
+ "heading_path": [
+  "Temporal, Spatial, and Metrics",
+  "[Activity &gt; category #](#activity--category)"
+ ],
+ "oversize": false,
+ "doc_sha256": "083cc7877b8438d25498d71ee0e04b3e0ffdbbef334ff3c5a4735cdf2c8339c7",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 4085,
+  "cacheReadInputTokens": 13057,
+  "cacheCreationInputTokens": 29106,
+  "webSearchRequests": 0,
+  "costUSD": 0.3997235,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 2934,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3997235,
+ "duration_ms": 46644,
+ "session_id": "f5b3f836-027e-4289-847e-af3440fc893f",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"DCAT-US 3 schema reference for the optional `Activity > category` property: an array of Concept classes, with Concept defined as a controlled term or label optionally drawn from a concept scheme.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_activity\",\n      \"name\": \"Activity\",\n      \"aliases\": [],\n      \"description\": \"The class whose optional `category` property carries a list of categories.\",\n      \"anchor\": \"categories for the Activity\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0036\"\n    },\n    {\n      \"id\": \"c_concept\",\n      \"name\": \"Concept\",\n      \"aliases\": [\"Concept class\"],\n      \"description\": \"The class used as the value type for each item of the Activity category array.\",\n      \"anchor\": \"null or array of\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0036\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d_concept\",\n      \"term\": \"Concept\",\n      \"verbatim_text\": \"A controlled term or label, optionally drawn from a concept scheme\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"A controlled term or label\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0036\"\n    }\n  ],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-temporal-spatial-metrics\",\n      \"to_id\": \"d_concept\",\n      \"anchor\": \"A controlled term or label\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0036\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-temporal-spatial-metrics\",\n      \"to_id\": \"c_activity\",\n      \"anchor\": \"List of categories\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0036\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-temporal-spatial-metrics\",\n      \"to_id\": \"c_concept\",\n      \"anchor\": \"array of [Concept](\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0036\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"concept scheme\",\n      \"anchor\": \"concept scheme\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"categories for the Activity\",\n      \"suggested_edge\": \"has_property\",\n      \"diversion_reason\": \"endpoint_not_located\",\n      \"from_name\": \"Activity\",\n      \"to_name\": \"category\"\n    },\n    {\n      \"anchor\": \"Each item of this array\",\n      \"suggested_edge\": \"has_value_range\",\n      \"diversion_reason\": \"other:range_constraint\",\n      \"from_name\": \"category\",\n      \"to_name\": \"Concept\"\n    }\n  ],\n  \"gleaned\": [\n    { \"name\": \"category\", \"type\": \"Concept\" },\n    { \"name\": \"dcat-us-3\", \"type\": \"Standard\" },\n    { \"name\": \"Optional requirement level\", \"type\": \"Concept\" }\n  ]\n}"
+}

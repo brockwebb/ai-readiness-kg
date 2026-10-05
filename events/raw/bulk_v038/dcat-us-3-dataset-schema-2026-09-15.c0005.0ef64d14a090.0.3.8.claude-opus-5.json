@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-dataset-schema-2026-09-15",
+ "chunk_id": "dcat-us-3-dataset-schema-2026-09-15#c0005",
+ "chunk_index": 5,
+ "chunk_start": 32808,
+ "chunk_end": 33117,
+ "chunk_tokens": 74,
+ "heading_path": [
+  "DCAT-US 3.0: Dataset",
+  "[Dataset &gt; identifier #](#identifier)"
+ ],
+ "oversize": false,
+ "doc_sha256": "0ef64d14a0901d5e7f84fee15bab1474353880ee4b64aec9c185b06149e067de",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 6552,
+  "cacheReadInputTokens": 13056,
+  "cacheCreationInputTokens": 29549,
+  "webSearchRequests": 0,
+  "costUSD": 0.465828,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 4443,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.465828,
+ "duration_ms": 72266,
+ "session_id": "2fa6a06a-e887-4f68-89a6-766ab58a526e",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Schema spec entry for the DCAT-US 3.0 Dataset `identifier` property: it is mandatory, defined as the unique identifier for the Dataset within the Catalog, typed as null or Identifier.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_identifier\",\n      \"name\": \"identifier\",\n      \"aliases\": [\"Dataset identifier\"],\n      \"description\": \"The property carrying the unique identifier of a Dataset within a Catalog.\",\n      \"anchor\": \"The unique identifier\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0005\"\n    },\n    {\n      \"id\": \"c_dataset\",\n      \"name\": \"Dataset\",\n      \"aliases\": [],\n      \"description\": \"The catalog resource class whose identifier property this entry specifies.\",\n      \"anchor\": \"identifier for the Dataset\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0005\"\n    },\n    {\n      \"id\": \"c_catalog\",\n      \"name\": \"Catalog\",\n      \"aliases\": [],\n      \"description\": \"The containing collection that scopes the uniqueness of a Dataset identifier.\",\n      \"anchor\": \"the context of the Catalog\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0005\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d_identifier\",\n      \"term\": \"identifier\",\n      \"verbatim_text\": \"The unique identifier for the Dataset, e.g. the URI or other unique identifier in the context of the Catalog\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"The unique identifier\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0005\"\n    }\n  ],\n  \"claims\": [\n    {\n      \"id\": \"cl_identifier_mandatory\",\n      \"claim_text\": \"**Requirement:** Mandatory\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"Mandatory\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0005\"\n    },\n    {\n      \"id\": \"cl_identifier_required\",\n      \"claim_text\": \"**Required** : Yes\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"**Required** : Yes\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0005\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"d_identifier\",\n      \"anchor\": \"The unique identifier\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0005\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"cl_identifier_mandatory\",\n      \"anchor\": \"Mandatory\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0005\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"cl_identifier_required\",\n      \"anchor\": \"**Required** : Yes\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0005\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_identifier_mandatory\",\n      \"to_id\": \"c_identifier\",\n      \"anchor\": \"Requirement:** Mandatory\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0005\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_identifier_required\",\n      \"to_id\": \"c_identifier\",\n      \"anchor\": \"- **Required** : Yes\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0005\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"c_dataset\",\n      \"anchor\": \"for the Dataset, e.g.\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0005\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"c_catalog\",\n      \"anchor\": \"the Catalog\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0005\"\n    },\n    {\n      \"type\": \"has_component\",\n      \"from_id\": \"c_dataset\",\n      \"to_id\": \"c_identifier\",\n      \"anchor\": \"identifier for the Dataset\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0005\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"Identifier\",\n      \"anchor\": \"null or [Identifier]\"\n    },\n    {\n      \"name\": \"URI\",\n      \"anchor\": \"the URI or other\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"**Type** : null or\",\n      \"suggested_edge\": \"has_type\",\n      \"diversion_reason\": \"other:type_constraint\",\n      \"from_name\": \"identifier\",\n      \"to_name\": \"Identifier\",\n      \"note\": \"The schema states the identifier property's value type is null or Identifier; no edge type expresses a property-to-datatype constraint.\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"DCAT-US 3.0\", \"type\": \"Standard\"},\n    {\"name\": \"identifiers-and-relationships\", \"type\": \"Concept\"},\n    {\"name\": \"Requirement: Mandatory\", \"type\": \"Concept\"}\n  ]\n}"
+}

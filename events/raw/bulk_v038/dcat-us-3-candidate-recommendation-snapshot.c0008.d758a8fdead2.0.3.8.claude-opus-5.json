@@ -1,0 +1,35 @@
+{
+ "doc_id": "dcat-us-3-candidate-recommendation-snapshot",
+ "chunk_id": "dcat-us-3-candidate-recommendation-snapshot#c0008",
+ "chunk_index": 8,
+ "chunk_start": 46805,
+ "chunk_end": 46884,
+ "chunk_tokens": 22,
+ "heading_path": [
+  "DCAT-US - Version 3",
+  "DCAT-US Classes",
+  "Supporting Classes"
+ ],
+ "oversize": false,
+ "doc_sha256": "d758a8fdead227cdca2dfb63f2f79c827db42b5a28f39e1c407ee536a56f14cf",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 3668,
+  "cacheReadInputTokens": 13056,
+  "cacheCreationInputTokens": 29589,
+  "webSearchRequests": 0,
+  "costUSD": 0.394128,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 2165,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.394128,
+ "duration_ms": 37809,
+ "session_id": "cb88548b-7966-449c-8a54-5d3d820dcbeb",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Tail of the DCAT-US 3.0 supporting-class entry for use restrictions: what use restrictions may limit and why they are imposed, followed by the dcat-us:UseRestriction class link and a UML figure caption.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_use_restrictions\",\n      \"name\": \"Use restrictions\",\n      \"aliases\": [\"use restriction\", \"dcat-us:UseRestriction\"],\n      \"description\": \"Limitations placed on how data may be accessed, distributed, reproduced, modified, or shared.\",\n      \"anchor\": \"Use restrictions\",\n      \"location\": \"dcat-us-3-candidate-recommendation-snapshot#c0008\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d_use_restrictions\",\n      \"term\": \"Use restrictions\",\n      \"verbatim_text\": \"Use restrictions may encompass limitations on  access, distribution, reproduction, modification, or sharing, and they are often put in place to  protect privacy, intellectual property rights, security, or compliance with legal or ethical  standards.\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"may encompass limitations\",\n      \"location\": \"dcat-us-3-candidate-recommendation-snapshot#c0008\"\n    }\n  ],\n  \"claims\": [\n    {\n      \"id\": \"cl_purpose_of_use_restrictions\",\n      \"claim_text\": \"they are often put in place to  protect privacy, intellectual property rights, security, or compliance with legal or ethical  standards\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"often put in place\",\n      \"location\": \"dcat-us-3-candidate-recommendation-snapshot#c0008\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-candidate-recommendation-snapshot\",\n      \"to_id\": \"d_use_restrictions\",\n      \"anchor\": \"may encompass limitations\",\n      \"location\": \"dcat-us-3-candidate-recommendation-snapshot#c0008\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"dcat-us-3-candidate-recommendation-snapshot\",\n      \"to_id\": \"cl_purpose_of_use_restrictions\",\n      \"anchor\": \"often put in place\",\n      \"location\": \"dcat-us-3-candidate-recommendation-snapshot#c0008\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_purpose_of_use_restrictions\",\n      \"to_id\": \"c_use_restrictions\",\n      \"anchor\": \"Use restrictions\",\n      \"location\": \"dcat-us-3-candidate-recommendation-snapshot#c0008\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-candidate-recommendation-snapshot\",\n      \"to_id\": \"c_use_restrictions\",\n      \"anchor\": \"Use restrictions\",\n      \"location\": \"dcat-us-3-candidate-recommendation-snapshot#c0008\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"dcat-us:UseRestriction\",\n      \"anchor\": \"dcat-us:UseRestriction\"\n    },\n    {\n      \"name\": \"DCAT-US 3.0\",\n      \"anchor\": \"DCAT-US 3.0\"\n    },\n    {\n      \"name\": \"Supporting Classes\",\n      \"anchor\": \"Supporting Classes of\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"UML Model for Supporting Classes\",\n      \"suggested_edge\": \"has_component\",\n      \"from_hint\": \"DCAT-US 3.0\",\n      \"to_hint\": \"Use restrictions\",\n      \"diversion_reason\": \"structural_inference\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"privacy\", \"type\": \"Concept\"},\n    {\"name\": \"intellectual property rights\", \"type\": \"Concept\"},\n    {\"name\": \"security\", \"type\": \"Concept\"},\n    {\"name\": \"legal or ethical standards compliance\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-quality-governance",
+ "chunk_id": "dcat-us-3-quality-governance#c0018",
+ "chunk_index": 18,
+ "chunk_start": 17060,
+ "chunk_end": 17308,
+ "chunk_tokens": 61,
+ "heading_path": [
+  "Quality and Governance",
+  "[Document &gt; identifier #](#document--identifier)"
+ ],
+ "oversize": false,
+ "doc_sha256": "7cbc49b6691fa3e7eb7b4845837afc3e1a6212bfc5882d676284a0ad154cbad5",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 4452,
+  "cacheReadInputTokens": 13056,
+  "cacheCreationInputTokens": 29497,
+  "webSearchRequests": 0,
+  "costUSD": 0.412808,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 3266,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.412808,
+ "duration_ms": 48713,
+ "session_id": "96bdcef5-1207-47ff-aed1-33a90a88f838",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"DCAT-US 3 property reference entry for Document > identifier: a Recommended property giving the unique identifier for the Document (e.g. DOI, ISBN), typed as null or Identifier.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c1\",\n      \"name\": \"Document\",\n      \"aliases\": [\"dcat:Document\", \"Document class\"],\n      \"description\": \"The entity for which this property records a unique identifier in the DCAT-US 3 property reference.\",\n      \"anchor\": \"for the Document\",\n      \"location\": \"dcat-us-3-quality-governance#c0018\"\n    },\n    {\n      \"id\": \"c2\",\n      \"name\": \"Identifier\",\n      \"aliases\": [\"identifier\"],\n      \"description\": \"The type permitted for the Document identifier property, alongside null.\",\n      \"anchor\": \"null or [Identifier]\",\n      \"location\": \"dcat-us-3-quality-governance#c0018\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d1\",\n      \"term\": \"identifier\",\n      \"verbatim_text\": \"The unique identifier for the Document (e.g. DOI, ISBN)\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"unique identifier\",\n      \"location\": \"dcat-us-3-quality-governance#c0018\"\n    }\n  ],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"d1\",\n      \"anchor\": \"e.g. DOI, ISBN\",\n      \"location\": \"dcat-us-3-quality-governance#c0018\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"c1\",\n      \"anchor\": \"for the Document\",\n      \"location\": \"dcat-us-3-quality-governance#c0018\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"c2\",\n      \"anchor\": \"null or [Identifier]\",\n      \"location\": \"dcat-us-3-quality-governance#c0018\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"DOI\",\n      \"anchor\": \"DOI\"\n    },\n    {\n      \"name\": \"ISBN\",\n      \"anchor\": \"ISBN\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"from_id\": \"c1\",\n      \"to_id\": \"c2\",\n      \"suggested_edge\": \"has_component\",\n      \"anchor\": \"unique identifier for the Document\",\n      \"diversion_reason\": \"other:endpoint_case_mismatch\",\n      \"location\": \"dcat-us-3-quality-governance#c0018\"\n    },\n    {\n      \"from_id\": \"d1\",\n      \"to_id\": \"dcat-us-3-quality-governance\",\n      \"suggested_edge\": \"requirement_level\",\n      \"anchor\": \"Recommended\",\n      \"diversion_reason\": \"structural_inference\",\n      \"location\": \"dcat-us-3-quality-governance#c0018\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"DCAT-US 3\", \"type\": \"Standard\"},\n    {\"name\": \"Recommended\", \"type\": \"Concept\"}\n  ]\n}"
+}

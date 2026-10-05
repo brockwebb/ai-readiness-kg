@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-quality-governance",
+ "chunk_id": "dcat-us-3-quality-governance#c0069",
+ "chunk_index": 69,
+ "chunk_start": 58223,
+ "chunk_end": 58795,
+ "chunk_tokens": 128,
+ "heading_path": [
+  "Quality and Governance",
+  "[DataService &gt; otherIdentifier #](#data-service--otherIdentifier)"
+ ],
+ "oversize": false,
+ "doc_sha256": "7cbc49b6691fa3e7eb7b4845837afc3e1a6212bfc5882d676284a0ad154cbad5",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 5999,
+  "cacheReadInputTokens": 13057,
+  "cacheCreationInputTokens": 29739,
+  "webSearchRequests": 0,
+  "costUSD": 0.4539035,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 4296,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.4539035,
+ "duration_ms": 65559,
+ "session_id": "6d234dce-3fd6-4d38-a5c7-f567b41f910d",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"DCAT-US 3 property page for DataService > otherIdentifier: optional, a list of identifiers for the Data Service besides the main identifier, typed as null or an array of Identifier classes, each item being a unique identifier with optional scheme.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c-data-service\",\n      \"name\": \"Data Service\",\n      \"aliases\": [\"DataService\", \"dcat:DataService\"],\n      \"description\": \"The catalog resource whose identifiers this property lists; the subject class of the otherIdentifier property.\",\n      \"anchor\": \"for the Data Service\",\n      \"location\": \"dcat-us-3-quality-governance#c0069\"\n    },\n    {\n      \"id\": \"c-identifier\",\n      \"name\": \"Identifier\",\n      \"aliases\": [\"Identifier class\", \"adms:Identifier\"],\n      \"description\": \"The class used as the value type of this property: a unique identifier optionally carrying its scheme and other relevant information.\",\n      \"anchor\": \"array of [Identifier]\",\n      \"location\": \"dcat-us-3-quality-governance#c0069\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d-other-identifier\",\n      \"term\": \"otherIdentifier\",\n      \"verbatim_text\": \"A list of identifiers for the Data Service besides the main identifier, e.g. the URI or other unique identifiers in the context of the Catalog\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"besides the main identifier\",\n      \"location\": \"dcat-us-3-quality-governance#c0069\"\n    },\n    {\n      \"id\": \"d-identifier\",\n      \"term\": \"Identifier\",\n      \"verbatim_text\": \"A unique identifier and optionally it's scheme and other relevant information\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"optionally it's scheme\",\n      \"location\": \"dcat-us-3-quality-governance#c0069\"\n    }\n  ],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"d-other-identifier\",\n      \"anchor\": \"A list of identifiers\",\n      \"location\": \"dcat-us-3-quality-governance#c0069\"\n    },\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"d-identifier\",\n      \"anchor\": \"and other relevant information\",\n      \"location\": \"dcat-us-3-quality-governance#c0069\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"c-data-service\",\n      \"anchor\": \"identifiers for the Data Service\",\n      \"location\": \"dcat-us-3-quality-governance#c0069\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"c-identifier\",\n      \"anchor\": \"Each item of this array\",\n      \"location\": \"dcat-us-3-quality-governance#c0069\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"Catalog\",\n      \"anchor\": \"context of the Catalog\"\n    },\n    {\n      \"name\": \"URI\",\n      \"anchor\": \"the URI or other\"\n    },\n    {\n      \"name\": \"main identifier\",\n      \"anchor\": \"the main identifier\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"suggested_edge\": \"has_property\",\n      \"from_id\": \"c-data-service\",\n      \"to_id\": \"otherIdentifier\",\n      \"anchor\": \"identifiers for the Data Service besides\",\n      \"diversion_reason\": \"structural_inference\",\n      \"location\": \"dcat-us-3-quality-governance#c0069\"\n    },\n    {\n      \"suggested_edge\": \"has_range\",\n      \"from_id\": \"otherIdentifier\",\n      \"to_id\": \"c-identifier\",\n      \"anchor\": \"null or array of\",\n      \"diversion_reason\": \"other:range_constraint\",\n      \"location\": \"dcat-us-3-quality-governance#c0069\"\n    },\n    {\n      \"suggested_edge\": \"has_cardinality\",\n      \"from_id\": \"otherIdentifier\",\n      \"to_id\": \"Optional\",\n      \"anchor\": \"**Requirement:** Optional\",\n      \"diversion_reason\": \"structural_inference\",\n      \"location\": \"dcat-us-3-quality-governance#c0069\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"DCAT-US 3\", \"type\": \"Standard\"},\n    {\"name\": \"otherIdentifier\", \"type\": \"Concept\"},\n    {\"name\": \"identifier scheme\", \"type\": \"Concept\"},\n    {\"name\": \"Identifiers and relationships\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

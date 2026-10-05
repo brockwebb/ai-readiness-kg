@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-quality-governance",
+ "chunk_id": "dcat-us-3-quality-governance#c0041",
+ "chunk_index": 41,
+ "chunk_start": 31839,
+ "chunk_end": 33140,
+ "chunk_tokens": 366,
+ "heading_path": [
+  "Quality and Governance",
+  "[CatalogRecord &gt; language #](#catalog-record--language)"
+ ],
+ "oversize": false,
+ "doc_sha256": "7cbc49b6691fa3e7eb7b4845837afc3e1a6212bfc5882d676284a0ad154cbad5",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 6228,
+  "cacheReadInputTokens": 13056,
+  "cacheCreationInputTokens": 30503,
+  "webSearchRequests": 0,
+  "costUSD": 0.467268,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 4549,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.467268,
+ "duration_ms": 68159,
+ "session_id": "c77343fb-efdc-4b16-9648-ebcb187f692f",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Schema reference for the optional CatalogRecord `language` property: a Language code (or array of them) drawn from ISO 639-1, max length 2, used in catalog record metadata text.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c-language-code\",\n      \"name\": \"Language code\",\n      \"aliases\": [\"language code\", \"ISO 639-1 language code\"],\n      \"description\": \"The value type of the CatalogRecord language property; supplied singly or as an array, each at most two characters.\",\n      \"anchor\": \"single Language code\",\n      \"location\": \"dcat-us-3-quality-governance#c0041\"\n    },\n    {\n      \"id\": \"c-catalog-record-metadata-text\",\n      \"name\": \"catalog record metadata text\",\n      \"aliases\": [\"CatalogRecord metadata text\"],\n      \"description\": \"The metadata text of a catalog record, whose language is declared by the language property.\",\n      \"anchor\": \"catalog record metadata text\",\n      \"location\": \"dcat-us-3-quality-governance#c0041\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d-language-code\",\n      \"term\": \"Language code\",\n      \"verbatim_text\": \"Language code used in catalog record metadata text, using ISO 639-1 values such as en or es, full list can be seen at https://id.loc.gov/vocabulary/iso639-1.html\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"Language code used\",\n      \"location\": \"dcat-us-3-quality-governance#c0041\"\n    }\n  ],\n  \"claims\": [\n    {\n      \"id\": \"cl-language-iso639\",\n      \"claim_text\": \"Language code used in catalog record metadata text, using ISO 639-1 values such as en or es\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"platform_official\",\n      \"anchor\": \"such as en or es\",\n      \"location\": \"dcat-us-3-quality-governance#c0041\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [\n    {\n      \"id\": \"s-iso-639-1\",\n      \"name\": \"ISO 639-1\",\n      \"version\": null,\n      \"steward\": null,\n      \"as_of_date\": null,\n      \"anchor\": \"ISO 639-1 values\",\n      \"location\": \"dcat-us-3-quality-governance#c0041\"\n    }\n  ],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"d-language-code\",\n      \"anchor\": \"Language code used in catalog\",\n      \"location\": \"dcat-us-3-quality-governance#c0041\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"cl-language-iso639\",\n      \"anchor\": \"such as en or es\",\n      \"location\": \"dcat-us-3-quality-governance#c0041\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl-language-iso639\",\n      \"to_id\": \"c-catalog-record-metadata-text\",\n      \"anchor\": \"catalog record metadata text\",\n      \"location\": \"dcat-us-3-quality-governance#c0041\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"c-language-code\",\n      \"anchor\": \"single Language code\",\n      \"location\": \"dcat-us-3-quality-governance#c0041\"\n    }\n  ],\n  \"cites\": [\n    {\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"https://id.loc.gov/vocabulary/iso639-1.html\",\n      \"anchor\": \"full list can be seen\",\n      \"location\": \"dcat-us-3-quality-governance#c0041\"\n    }\n  ],\n  \"mentions\": [],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"**Type** : single Language\",\n      \"suggested_edge\": \"has_component\",\n      \"from_name\": \"CatalogRecord\",\n      \"to_name\": \"language\",\n      \"diversion_reason\": \"structural_inference\",\n      \"location\": \"dcat-us-3-quality-governance#c0041\"\n    },\n    {\n      \"anchor\": \"ISO 639-1 values\",\n      \"suggested_edge\": \"implements\",\n      \"from_name\": \"ISO 639-1\",\n      \"to_name\": \"Language code\",\n      \"diversion_reason\": \"predicate_not_located\",\n      \"location\": \"dcat-us-3-quality-governance#c0041\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"CatalogRecord\", \"type\": \"Concept\"},\n    {\"name\": \"Array of language codes\", \"type\": \"Concept\"},\n    {\"name\": \"Max length : 2\", \"type\": \"Claim\"},\n    {\"name\": \"Requirement: Optional\", \"type\": \"Claim\"}\n  ]\n}\n```"
+}

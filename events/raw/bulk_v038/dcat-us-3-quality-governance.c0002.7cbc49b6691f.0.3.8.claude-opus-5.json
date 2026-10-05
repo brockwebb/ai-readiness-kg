@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-quality-governance",
+ "chunk_id": "dcat-us-3-quality-governance#c0002",
+ "chunk_index": 2,
+ "chunk_start": 203,
+ "chunk_end": 5075,
+ "chunk_tokens": 662,
+ "heading_path": [
+  "Quality and Governance",
+  "[Class Standard #](#standard)"
+ ],
+ "oversize": false,
+ "doc_sha256": "7cbc49b6691fa3e7eb7b4845837afc3e1a6212bfc5882d676284a0ad154cbad5",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 6611,
+  "cacheReadInputTokens": 13056,
+  "cacheCreationInputTokens": 31477,
+  "webSearchRequests": 0,
+  "costUSD": 0.486583,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 4531,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.486583,
+ "duration_ms": 74132,
+ "session_id": "0c0c805b-e50c-40d6-92e5-ebe436a22010",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"DCAT-US 3.0 reference page for the supporting Standard class: its definition ('A standard or specification that another resource conforms to'), a JSON-LD example instantiating DCAT-US 3.0 itself, and a property table (description, identifier, inScheme, issued, title, category, created, modified, otherIdentifier) with requirement levels.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"concept-standard\",\n      \"name\": \"Standard\",\n      \"aliases\": [\"Class Standard\", \"dcat:Standard\", \"Standard class\"],\n      \"description\": \"A standard or specification that another resource conforms to; a supporting class used in governance and quality description, carrying title, description, identifier, inScheme, and issuance/modification dates.\",\n      \"anchor\": \"reference register to which the\",\n      \"location\": \"dcat-us-3-quality-governance#c0002\"\n    },\n    {\n      \"id\": \"concept-supporting-classes\",\n      \"name\": \"Supporting classes\",\n      \"aliases\": [\"supporting classes for governance and quality description\"],\n      \"description\": \"The group of classes for standards, documents, catalog records, data services, and attribution used in governance and quality description.\",\n      \"anchor\": \"Supporting classes for standards\",\n      \"location\": \"dcat-us-3-quality-governance#c0002\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"def-standard\",\n      \"term\": \"standard\",\n      \"verbatim_text\": \"A standard or specification that another resource conforms to\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"specification that another resource conforms\",\n      \"location\": \"dcat-us-3-quality-governance#c0002\"\n    }\n  ],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [\n    {\n      \"id\": \"std-dcat-us-3\",\n      \"name\": \"DCAT-US 3.0\",\n      \"version\": null,\n      \"steward\": \"U.S. General Services Administration\",\n      \"as_of_date\": \"2024-01-15\",\n      \"anchor\": \"\\\"DCAT-US 3.0\\\"\",\n      \"location\": \"dcat-us-3-quality-governance#c0002\"\n    }\n  ],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"def-standard\",\n      \"anchor\": \"specification that another resource conforms\",\n      \"location\": \"dcat-us-3-quality-governance#c0002\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"concept-standard\",\n      \"anchor\": \"List of categories for the Standard\",\n      \"location\": \"dcat-us-3-quality-governance#c0002\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"concept-supporting-classes\",\n      \"anchor\": \"Supporting classes for standards\",\n      \"location\": \"dcat-us-3-quality-governance#c0002\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"Identifier\",\n      \"anchor\": \"\\\"@type\\\" : \\\"Identifier\\\"\"\n    },\n    {\n      \"name\": \"ConceptScheme\",\n      \"anchor\": \"[ConceptScheme](/standards\"\n    },\n    {\n      \"name\": \"Federal Data Standards\",\n      \"anchor\": \"Federal Data Standards\"\n    },\n    {\n      \"name\": \"Catalog\",\n      \"anchor\": \"in the context of the Catalog\"\n    },\n    {\n      \"name\": \"Concept\",\n      \"anchor\": \"[Concept](/standards\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"The reference register to which\",\n      \"suggested_edge\": \"has_property(Standard, inScheme -> ConceptScheme)\",\n      \"diversion_reason\": \"structural_inference\"\n    },\n    {\n      \"anchor\": \"The unique identifier for the Standard\",\n      \"suggested_edge\": \"has_property(Standard, identifier -> Identifier)\",\n      \"diversion_reason\": \"structural_inference\"\n    },\n    {\n      \"anchor\": \"A list of identifiers for the Standard\",\n      \"suggested_edge\": \"has_property(Standard, otherIdentifier -> Identifier)\",\n      \"diversion_reason\": \"structural_inference\"\n    },\n    {\n      \"anchor\": \"Supporting classes for standards\",\n      \"suggested_edge\": \"has_component(Supporting classes -> Standard)\",\n      \"diversion_reason\": \"structural_inference\"\n    },\n    {\n      \"anchor\": \"\\\"DCAT-US 3.0\\\"\",\n      \"suggested_edge\": \"instance_of(DCAT-US 3.0 -> Standard)\",\n      \"diversion_reason\": \"other:example_instance\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"Data Catalog Vocabulary - United States Profile version 3.0\", \"type\": \"Standard\"},\n    {\"name\": \"U.S. General Services Administration\", \"type\": \"Concept\"},\n    {\"name\": \"description\", \"type\": \"Concept\"},\n    {\"name\": \"identifier\", \"type\": \"Concept\"},\n    {\"name\": \"inScheme\", \"type\": \"Concept\"},\n    {\"name\": \"issued\", \"type\": \"Concept\"},\n    {\"name\": \"title\", \"type\": \"Concept\"},\n    {\"name\": \"category\", \"type\": \"Concept\"},\n    {\"name\": \"created\", \"type\": \"Concept\"},\n    {\"name\": \"modified\", \"type\": \"Concept\"},\n    {\"name\": \"otherIdentifier\", \"type\": \"Concept\"},\n    {\"name\": \"notation\", \"type\": \"Concept\"},\n    {\"name\": \"schemaAgency\", \"type\": \"Concept\"},\n    {\"name\": \"Recommended requirement level\", \"type\": \"Concept\"},\n    {\"name\": \"Optional requirement level\", \"type\": \"Concept\"},\n    {\"name\": \"catalog record\", \"type\": \"Concept\"},\n    {\"name\": \"data service\", \"type\": \"Concept\"},\n    {\"name\": \"attribution\", \"type\": \"Concept\"}\n  ]\n}"
+}

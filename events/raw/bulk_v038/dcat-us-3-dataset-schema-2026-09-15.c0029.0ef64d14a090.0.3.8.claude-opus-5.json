@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-dataset-schema-2026-09-15",
+ "chunk_id": "dcat-us-3-dataset-schema-2026-09-15#c0029",
+ "chunk_index": 29,
+ "chunk_start": 43670,
+ "chunk_end": 43942,
+ "chunk_tokens": 94,
+ "heading_path": [
+  "DCAT-US 3.0: Dataset",
+  "[Dataset &gt; created #](#created)"
+ ],
+ "oversize": false,
+ "doc_sha256": "0ef64d14a0901d5e7f84fee15bab1474353880ee4b64aec9c185b06149e067de",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 4570,
+  "cacheReadInputTokens": 13056,
+  "cacheCreationInputTokens": 29625,
+  "webSearchRequests": 0,
+  "costUSD": 0.417038,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 3566,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.417038,
+ "duration_ms": 53484,
+ "session_id": "77808609-6dc9-4b8d-a5ba-027419e4ea39",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Schema reference entry for the DCAT-US Dataset property `created` (title \\\"creation date\\\", optional, type null or object), giving its definition and example date values.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_created\",\n      \"name\": \"created\",\n      \"aliases\": [\"creation date\"],\n      \"description\": \"The date on which the Dataset was first created\",\n      \"anchor\": \"first created\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0029\"\n    },\n    {\n      \"id\": \"c_dataset\",\n      \"name\": \"Dataset\",\n      \"aliases\": [],\n      \"description\": null,\n      \"anchor\": \"Dataset was\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0029\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d_created\",\n      \"term\": \"created\",\n      \"verbatim_text\": \"The date on which the Dataset was first created\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"first created\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0029\"\n    }\n  ],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"d_created\",\n      \"anchor\": \"first created\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0029\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"c_created\",\n      \"anchor\": \"first created\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0029\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"c_dataset\",\n      \"anchor\": \"Dataset was\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0029\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"Agent\",\n      \"anchor\": \"software agent, or other entity\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"from_id\": \"c_dataset\",\n      \"to_id\": \"c_created\",\n      \"suggested_edge\": \"has_component\",\n      \"anchor\": \"first created\",\n      \"diversion_reason\": \"structural_inference\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"Requirement: Optional\", \"type\": \"Claim\"},\n    {\"name\": \"Type: null or object\", \"type\": \"Claim\"}\n  ]\n}\n```"
+}

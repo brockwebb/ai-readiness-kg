@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-dataset-schema-2026-09-15",
+ "chunk_id": "dcat-us-3-dataset-schema-2026-09-15#c0008",
+ "chunk_index": 8,
+ "chunk_start": 33848,
+ "chunk_end": 34116,
+ "chunk_tokens": 68,
+ "heading_path": [
+  "DCAT-US 3.0: Dataset",
+  "[Dataset &gt; cuiRestriction #](#cuiRestriction)"
+ ],
+ "oversize": false,
+ "doc_sha256": "0ef64d14a0901d5e7f84fee15bab1474353880ee4b64aec9c185b06149e067de",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 3398,
+  "cacheReadInputTokens": 13056,
+  "cacheCreationInputTokens": 29658,
+  "webSearchRequests": 0,
+  "costUSD": 0.388068,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 1763,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.388068,
+ "duration_ms": 35775,
+ "session_id": "9fe01910-e730-454c-b9f0-d9ab39e4d29c",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"DCAT-US 3.0 Dataset property page: tail of the AccessRestriction term list, then the cuiRestriction property (Recommended) whose value type is null or CUIRestriction.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_cui_restriction_prop\",\n      \"name\": \"Controlled Unclassified Information restriction\",\n      \"aliases\": [\"cuiRestriction\", \"CUI restriction\"],\n      \"description\": \"A dataset-level restriction expressing Controlled Unclassified Information handling for the dataset; Recommended on Dataset.\",\n      \"anchor\": \"Controlled Unclassified Information restriction\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0008\"\n    },\n    {\n      \"id\": \"c_cui_restriction_class\",\n      \"name\": \"CUIRestriction\",\n      \"aliases\": [\"CUI Restriction class\"],\n      \"description\": \"The value class permitted for the cuiRestriction property, alongside null.\",\n      \"anchor\": \"CUIRestriction\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0008\"\n    },\n    {\n      \"id\": \"c_access_restriction\",\n      \"name\": \"AccessRestriction\",\n      \"aliases\": [\"Access Restriction\"],\n      \"description\": \"Rules or indicators describing who can access a resource.\",\n      \"anchor\": \"AccessRestriction\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0008\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d_access_restriction\",\n      \"term\": \"AccessRestriction\",\n      \"verbatim_text\": \"Rules or indicators that describe who can access a resource\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"Rules or indicators\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0008\"\n    }\n  ],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"d_access_restriction\",\n      \"anchor\": \"Rules or indicators\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0008\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"c_access_restriction\",\n      \"anchor\": \"AccessRestriction\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0008\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"c_cui_restriction_prop\",\n      \"anchor\": \"Controlled Unclassified Information restriction\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0008\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"c_cui_restriction_class\",\n      \"anchor\": \"CUIRestriction\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0008\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"dataset\",\n      \"anchor\": \"related to the dataset\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"null or\",\n      \"from_id\": \"c_cui_restriction_prop\",\n      \"to_id\": \"c_cui_restriction_class\",\n      \"suggested_edge\": \"has_value_type\",\n      \"diversion_reason\": \"structural_inference\"\n    },\n    {\n      \"anchor\": \"**Requirement:** Recommended\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"c_cui_restriction_prop\",\n      \"suggested_edge\": \"has_requirement_level\",\n      \"diversion_reason\": \"structural_inference\"\n    },\n    {\n      \"anchor\": \"#access-restriction\",\n      \"from_id\": \"c_cui_restriction_class\",\n      \"to_id\": \"c_access_restriction\",\n      \"suggested_edge\": \"subtype_of\",\n      \"diversion_reason\": \"structural_inference\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"Recommended\", \"type\": \"Concept\"},\n    {\"name\": \"Constraints and Restrictions\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

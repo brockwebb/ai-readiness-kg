@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-quality-governance",
+ "chunk_id": "dcat-us-3-quality-governance#c0021",
+ "chunk_index": 21,
+ "chunk_start": 18013,
+ "chunk_end": 18202,
+ "chunk_tokens": 56,
+ "heading_path": [
+  "Quality and Governance",
+  "[Document &gt; @id #](#document--@id)"
+ ],
+ "oversize": false,
+ "doc_sha256": "7cbc49b6691fa3e7eb7b4845837afc3e1a6212bfc5882d676284a0ad154cbad5",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 3212,
+  "cacheReadInputTokens": 13056,
+  "cacheCreationInputTokens": 29475,
+  "webSearchRequests": 0,
+  "costUSD": 0.38158800000000004,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 2087,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.38158800000000004,
+ "duration_ms": 37464,
+ "session_id": "e8ed0f9e-c02a-4621-b096-26aa3853df6e",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Reference-schema fragment: a one-line gloss of the Organization agent class, then the property specification for Document > @id (Optional, type string, format iri, with an example IRI).\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_organization\",\n      \"name\": \"Organization\",\n      \"aliases\": [\"Organization class\", \"dcat-us Organization agent\"],\n      \"description\": \"An agent class for an organization involved with a resource, including parent or child organizations.\",\n      \"anchor\": \"[Organization](\",\n      \"location\": \"dcat-us-3-quality-governance#c0021\"\n    },\n    {\n      \"id\": \"c_document\",\n      \"name\": \"Document\",\n      \"aliases\": [\"Document class\"],\n      \"description\": \"The resource class whose @id property this section specifies: optional, a string in IRI format.\",\n      \"anchor\": \"## [Document\",\n      \"location\": \"dcat-us-3-quality-governance#c0021\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d_organization\",\n      \"term\": \"Organization\",\n      \"verbatim_text\": \"An organization involved with a resource, including parent or child organizations\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"An organization involved with a resource\",\n      \"location\": \"dcat-us-3-quality-governance#c0021\"\n    }\n  ],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"d_organization\",\n      \"anchor\": \"An organization involved with a resource\",\n      \"location\": \"dcat-us-3-quality-governance#c0021\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"c_organization\",\n      \"anchor\": \"[Organization](\",\n      \"location\": \"dcat-us-3-quality-governance#c0021\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"c_document\",\n      \"anchor\": \"## [Document\",\n      \"location\": \"dcat-us-3-quality-governance#c0021\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"## [Document\",\n      \"suggested_edge\": \"has_property\",\n      \"from_id\": \"c_document\",\n      \"to_name\": \"@id\",\n      \"diversion_reason\": \"structural_inference\",\n      \"note\": \"property-of relation carried only by the heading path, not by any sentence\"\n    },\n    {\n      \"anchor\": \"**Format** : `iri`\",\n      \"suggested_edge\": \"has_value_constraint\",\n      \"from_name\": \"@id\",\n      \"to_name\": \"iri\",\n      \"diversion_reason\": \"structural_inference\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"@id\", \"type\": \"Concept\"},\n    {\"name\": \"iri\", \"type\": \"Concept\"},\n    {\"name\": \"Optional requirement level\", \"type\": \"Concept\"},\n    {\"name\": \"string\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

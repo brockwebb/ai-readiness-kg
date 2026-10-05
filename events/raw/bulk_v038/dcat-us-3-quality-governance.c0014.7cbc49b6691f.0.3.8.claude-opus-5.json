@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-quality-governance",
+ "chunk_id": "dcat-us-3-quality-governance#c0014",
+ "chunk_index": 14,
+ "chunk_start": 8431,
+ "chunk_end": 16055,
+ "chunk_tokens": 954,
+ "heading_path": [
+  "Quality and Governance",
+  "[Class Document #](#document)"
+ ],
+ "oversize": false,
+ "doc_sha256": "7cbc49b6691fa3e7eb7b4845837afc3e1a6212bfc5882d676284a0ad154cbad5",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 6346,
+  "cacheReadInputTokens": 13056,
+  "cacheCreationInputTokens": 32511,
+  "webSearchRequests": 0,
+  "costUSD": 0.490298,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 5094,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.490298,
+ "duration_ms": 73358,
+ "session_id": "d6cb999c-8918-4ec6-b251-274b02dd0555",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"DCAT-US 3 reference page defining the Document class (a publication or other document related to a resource), with its JSON example and its property table (title, bibliographicCitation, identifier, publisher, conformsTo, mediaType, etc.).\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_document\",\n      \"name\": \"Document\",\n      \"aliases\": [\"dcat-us Document class\"],\n      \"description\": \"The DCAT-US 3 class for a publication or other document related to a resource.\",\n      \"anchor\": \"## [Class Document\",\n      \"location\": \"dcat-us-3-quality-governance#c0014\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d_document\",\n      \"term\": \"document\",\n      \"verbatim_text\": \"A publication or other document related to a resource\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"A publication or other\",\n      \"location\": \"dcat-us-3-quality-governance#c0014\"\n    },\n    {\n      \"id\": \"d_identifier\",\n      \"term\": \"Identifier\",\n      \"verbatim_text\": \"A unique identifier and optionally it's scheme and other relevant information\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"optionally it's scheme\",\n      \"location\": \"dcat-us-3-quality-governance#c0014\"\n    }\n  ],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"d_document\",\n      \"anchor\": \"A publication or other\",\n      \"location\": \"dcat-us-3-quality-governance#c0014\"\n    },\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"d_identifier\",\n      \"anchor\": \"optionally it's scheme\",\n      \"location\": \"dcat-us-3-quality-governance#c0014\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"c_document\",\n      \"anchor\": \"## [Class Document\",\n      \"location\": \"dcat-us-3-quality-governance#c0014\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    { \"name\": \"Organization\", \"anchor\": \"corporateCreator\" },\n    { \"name\": \"Kind\", \"anchor\": \"Kind](/standards\" },\n    { \"name\": \"Standard\", \"anchor\": \"conformsTo\" },\n    { \"name\": \"IANA\", \"anchor\": \"managed by IANA\" }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"suggested_edge\": \"has_component\",\n      \"from_id\": \"c_document\",\n      \"to_id\": \"d_identifier\",\n      \"anchor\": \"The unique identifier for the Document\",\n      \"diversion_reason\": \"structural_inference\",\n      \"location\": \"dcat-us-3-quality-governance#c0014\"\n    }\n  ],\n  \"gleaned\": [\n    { \"name\": \"title\", \"type\": \"Concept\" },\n    { \"name\": \"bibliographicCitation\", \"type\": \"Concept\" },\n    { \"name\": \"accessURL\", \"type\": \"Concept\" },\n    { \"name\": \"downloadURL\", \"type\": \"Concept\" },\n    { \"name\": \"mediaType\", \"type\": \"Concept\" },\n    { \"name\": \"publisher\", \"type\": \"Concept\" },\n    { \"name\": \"otherIdentifier\", \"type\": \"Concept\" },\n    { \"name\": \"media types register\", \"type\": \"Standard\" }\n  ]\n}"
+}

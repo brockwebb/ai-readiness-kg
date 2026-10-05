@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-dataset-schema-2026-09-15",
+ "chunk_id": "dcat-us-3-dataset-schema-2026-09-15#c0046",
+ "chunk_index": 46,
+ "chunk_start": 50966,
+ "chunk_end": 51250,
+ "chunk_tokens": 62,
+ "heading_path": [
+  "DCAT-US 3.0: Dataset",
+  "[Dataset &gt; purpose #](#purpose)"
+ ],
+ "oversize": false,
+ "doc_sha256": "0ef64d14a0901d5e7f84fee15bab1474353880ee4b64aec9c185b06149e067de",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 3098,
+  "cacheReadInputTokens": 13056,
+  "cacheCreationInputTokens": 29513,
+  "webSearchRequests": 0,
+  "costUSD": 0.379118,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 2054,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.379118,
+ "duration_ms": 36389,
+ "session_id": "59274151-6899-4d2d-b444-f58089c54ae2",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Schema reference entry for the optional DCAT-US 3.0 Dataset `purpose` property: it is a nullable string giving the purpose of the dataset, with one example value.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_purpose\",\n      \"name\": \"purpose\",\n      \"aliases\": [\"Dataset purpose\", \"dcat:purpose\"],\n      \"description\": \"Optional nullable string property stating the purpose of a dataset.\",\n      \"anchor\": \"purpose of the dataset\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0046\"\n    },\n    {\n      \"id\": \"c_dataset\",\n      \"name\": \"dataset\",\n      \"aliases\": [\"Dataset\"],\n      \"description\": \"The resource whose purpose this property describes.\",\n      \"anchor\": \"of the dataset\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0046\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d_purpose\",\n      \"term\": \"purpose\",\n      \"verbatim_text\": \"The purpose of the dataset\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"The purpose of the dataset\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0046\"\n    }\n  ],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"d_purpose\",\n      \"anchor\": \"The purpose of the dataset\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0046\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"c_purpose\",\n      \"anchor\": \"purpose of the dataset\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0046\"\n    },\n    {\n      \"type\": \"has_component\",\n      \"from_id\": \"c_dataset\",\n      \"to_id\": \"c_purpose\",\n      \"anchor\": \"The purpose of the dataset\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0046\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"**Requirement:** Optional\",\n      \"suggested_edge\": \"has_requirement_level\",\n      \"diversion_reason\": \"other:schema_cardinality\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"null or string\", \"type\": \"Concept\"},\n    {\"name\": \"Optional requirement level\", \"type\": \"Concept\"},\n    {\"name\": \"climate observations\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

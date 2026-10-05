@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-quality-governance",
+ "chunk_id": "dcat-us-3-quality-governance#c0065",
+ "chunk_index": 65,
+ "chunk_start": 55740,
+ "chunk_end": 56101,
+ "chunk_tokens": 113,
+ "heading_path": [
+  "Quality and Governance",
+  "[DataService &gt; inventoried #](#data-service--inventoried)"
+ ],
+ "oversize": false,
+ "doc_sha256": "7cbc49b6691fa3e7eb7b4845837afc3e1a6212bfc5882d676284a0ad154cbad5",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 5381,
+  "cacheReadInputTokens": 13057,
+  "cacheCreationInputTokens": 29683,
+  "webSearchRequests": 0,
+  "costUSD": 0.43789350000000005,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 3927,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.43789350000000005,
+ "duration_ms": 62216,
+ "session_id": "894f3120-f326-43a7-8c41-ead7266bb0a2",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Schema reference entry defining the optional DataService 'inventoried date' property as the date the data service was added to the catalog, which may differ from the publication/release date.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_inventoried_date\",\n      \"name\": \"inventoried date\",\n      \"aliases\": [\"DataService inventoried\", \"inventoried\"],\n      \"description\": \"Optional DataService property recording the date the data service was added to the catalog.\",\n      \"anchor\": \"inventoried date\",\n      \"location\": \"dcat-us-3-quality-governance#c0065\"\n    },\n    {\n      \"id\": \"c_data_service\",\n      \"name\": \"data service\",\n      \"aliases\": [\"DataService\"],\n      \"description\": \"Catalog asset class whose catalog-addition date is recorded by the inventoried date property.\",\n      \"anchor\": \"the data service was added\",\n      \"location\": \"dcat-us-3-quality-governance#c0065\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d_inventoried_date\",\n      \"term\": \"inventoried date\",\n      \"verbatim_text\": \"Date on which the data service was added to the catalog.\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"Date on which the data service\",\n      \"location\": \"dcat-us-3-quality-governance#c0065\"\n    }\n  ],\n  \"claims\": [\n    {\n      \"id\": \"cl_differs_from_publication\",\n      \"claim_text\": \"This may differ from the publication/release date.\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"This may differ from\",\n      \"location\": \"dcat-us-3-quality-governance#c0065\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"d_inventoried_date\",\n      \"anchor\": \"added to the catalog\",\n      \"location\": \"dcat-us-3-quality-governance#c0065\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"c_inventoried_date\",\n      \"anchor\": \"**Title:** inventoried\",\n      \"location\": \"dcat-us-3-quality-governance#c0065\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"c_data_service\",\n      \"anchor\": \"which the data service\",\n      \"location\": \"dcat-us-3-quality-governance#c0065\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"cl_differs_from_publication\",\n      \"anchor\": \"publication/release date\",\n      \"location\": \"dcat-us-3-quality-governance#c0065\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_differs_from_publication\",\n      \"to_id\": \"c_inventoried_date\",\n      \"anchor\": \"may differ from the publication/release\",\n      \"location\": \"dcat-us-3-quality-governance#c0065\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"Identifier\",\n      \"anchor\": \"[Identifier]\"\n    },\n    {\n      \"name\": \"catalog\",\n      \"anchor\": \"to the catalog\"\n    },\n    {\n      \"name\": \"Optional\",\n      \"anchor\": \"**Requirement:** Optional\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"from_id\": \"c_data_service\",\n      \"to_id\": \"c_inventoried_date\",\n      \"suggested_edge\": \"has_component\",\n      \"diversion_reason\": \"structural_inference\",\n      \"anchor\": \"## [DataService\",\n      \"location\": \"dcat-us-3-quality-governance#c0065\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"DCAT-US 3\", \"type\": \"Standard\"},\n    {\"name\": \"publication/release date\", \"type\": \"Concept\"},\n    {\"name\": \"Identifier\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

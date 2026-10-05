@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-dataset-schema-2026-09-15",
+ "chunk_id": "dcat-us-3-dataset-schema-2026-09-15#c0050",
+ "chunk_index": 50,
+ "chunk_start": 52711,
+ "chunk_end": 53068,
+ "chunk_tokens": 94,
+ "heading_path": [
+  "DCAT-US 3.0: Dataset",
+  "[Dataset &gt; replaces #](#replaces)"
+ ],
+ "oversize": false,
+ "doc_sha256": "0ef64d14a0901d5e7f84fee15bab1474353880ee4b64aec9c185b06149e067de",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 3431,
+  "cacheReadInputTokens": 13056,
+  "cacheCreationInputTokens": 29605,
+  "webSearchRequests": 0,
+  "costUSD": 0.388363,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 2122,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.388363,
+ "duration_ms": 37942,
+ "session_id": "f37e8f2f-9af6-4906-a2ee-49407e85e159",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Schema reference page for the DCAT-US 3.0 Dataset class property `replaces`: optional, an array of Dataset classes listing Datasets replaced by this Dataset, with the inline definition of Dataset as a collection of data published or curated by one provider.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_dataset\",\n      \"name\": \"Dataset\",\n      \"aliases\": [\"dcat:Dataset\", \"DCAT-US Dataset class\"],\n      \"description\": \"A collection of data published or curated by one provider; the class this schema page specifies.\",\n      \"anchor\": \"A collection of data published\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0050\"\n    },\n    {\n      \"id\": \"c_replaces\",\n      \"name\": \"Datasets replaced by this Dataset\",\n      \"aliases\": [\"replaces\", \"dcat-us replaces property\"],\n      \"description\": \"Optional Dataset property whose value is an array of Dataset classes that this Dataset replaces.\",\n      \"anchor\": \"Datasets replaced by this\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0050\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d_dataset\",\n      \"term\": \"Dataset\",\n      \"verbatim_text\": \"A collection of data published or curated by one provider\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"A collection of data published\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0050\"\n    }\n  ],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"d_dataset\",\n      \"anchor\": \"A collection of data published\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0050\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"c_dataset\",\n      \"anchor\": \"curated by one provider\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0050\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"c_replaces\",\n      \"anchor\": \"List of Datasets replaced\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0050\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [],\n  \"proposed_relationships\": [\n    {\n      \"from_id\": \"c_dataset\",\n      \"to_id\": \"c_replaces\",\n      \"suggested_edge\": \"has_property\",\n      \"anchor\": \"**Requirement:** Optional\",\n      \"diversion_reason\": \"structural_inference\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0050\"\n    },\n    {\n      \"from_id\": \"c_replaces\",\n      \"to_id\": \"c_dataset\",\n      \"suggested_edge\": \"range_is\",\n      \"anchor\": \"array of [Dataset](/standards/catalog\",\n      \"diversion_reason\": \"structural_inference\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0050\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"DCAT-US 3.0\", \"type\": \"Standard\"},\n    {\"name\": \"iri\", \"type\": \"Concept\"},\n    {\"name\": \"Optional requirement level\", \"type\": \"Concept\"}\n  ]\n}"
+}

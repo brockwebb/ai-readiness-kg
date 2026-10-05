@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-m-25-05-crosswalk",
+ "chunk_id": "dcat-us-3-m-25-05-crosswalk#c0004",
+ "chunk_index": 4,
+ "chunk_start": 52042,
+ "chunk_end": 52946,
+ "chunk_tokens": 215,
+ "heading_path": [
+  "DCAT-US 3 / M-25-05 Crosswalk",
+  "Details"
+ ],
+ "oversize": false,
+ "doc_sha256": "7c6f304d3ecdf52c37821945e61eef9c9c0ca804902522b7725084cb1b6085b1",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 6485,
+  "cacheReadInputTokens": 10341,
+  "cacheCreationInputTokens": 33118,
+  "webSearchRequests": 0,
+  "costUSD": 0.4984855,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 4121,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.4984855,
+ "duration_ms": 69599,
+ "session_id": "04523f02-7faa-4451-b31e-796b080c59eb",
+ "raw_result": "{\"extract_plan\":{\"chunk_summary\":\"Tail of the DCAT-US 3 / M-25-05 crosswalk table: the end of a row stating which property satisfies a rights/contact requirement depending on data-asset ownership, then row Q (\\\"Other metadata elements as determined by OMB\\\") recommending tags/subject plus contactPoint and keyword; the rest of the chunk is site footer boilerplate and navigation.\"},\"concepts\":[{\"id\":\"c_rightsholder\",\"name\":\"rightsholder\",\"aliases\":[\"dcat:rightsHolder\"],\"description\":\"Metadata property naming the holder of rights in a data asset; per this row it satisfies the requirement when the agency does not own the asset.\",\"anchor\":\"rightsholder=&gt;\",\"location\":\"dcat-us-3-m-25-05-crosswalk#c0004\"},{\"id\":\"c_contactpoint\",\"name\":\"contactPoint\",\"aliases\":[\"dcat:contactPoint\"],\"description\":\"Metadata property giving a contact for the data asset; accepted as satisfying the requirement when the agency owns the asset, and suggested for row Q.\",\"anchor\":\"contactPoint or publisher\",\"location\":\"dcat-us-3-m-25-05-crosswalk#c0004\"},{\"id\":\"c_publisher\",\"name\":\"publisher\",\"aliases\":[\"dcterms:publisher\"],\"description\":\"Metadata property naming the publishing entity; accepted as satisfying the requirement when the agency owns the data asset.\",\"anchor\":\"publisher=&gt;\",\"location\":\"dcat-us-3-m-25-05-crosswalk#c0004\"},{\"id\":\"c_other_metadata_elements\",\"name\":\"Other metadata elements as determined by OMB\",\"aliases\":[\"M-25-05 requirement Q\"],\"description\":\"Open-ended requirement row of the crosswalk, mapped to additional topical categorization properties.\",\"anchor\":\"Other metadata elements as determined\",\"location\":\"dcat-us-3-m-25-05-crosswalk#c0004\"}],\"definitions\":[],\"claims\":[{\"id\":\"cl_rightsholder\",\"claim_text\":\"rightsholder=&gt; meets the requirement if the agency does not own the data asset\",\"claim_type\":\"normative\",\"evidence_grade\":\"practitioner_assertion\",\"anchor\":\"rightsholder=&gt;\",\"location\":\"dcat-us-3-m-25-05-crosswalk#c0004\"},{\"id\":\"cl_contactpoint_publisher\",\"claim_text\":\"contactPoint or publisher=&gt; either one meets the requirement if the agency owns the data asset\",\"claim_type\":\"normative\",\"evidence_grade\":\"practitioner_assertion\",\"anchor\":\"publisher=&gt;\",\"location\":\"dcat-us-3-m-25-05-crosswalk#c0004\"}],\"instruments\":[],\"measures\":[],\"standards\":[],\"frameworks\":[],\"practices\":[{\"id\":\"p_tags_subject\",\"text\":\"Use tags or the subject property for additional topical categorization\",\"scope\":\"dataset\",\"as_of_date\":null,\"anchor\":\"Use tags or the subject property\",\"location\":\"dcat-us-3-m-25-05-crosswalk#c0004\"}],\"tools\":[],\"platforms\":[],\"edges\":[{\"type\":\"asserts\",\"from_id\":\"dcat-us-3-m-25-05-crosswalk\",\"to_id\":\"cl_rightsholder\",\"anchor\":\"rightsholder=&gt;\",\"location\":\"dcat-us-3-m-25-05-crosswalk#c0004\"},{\"type\":\"asserts\",\"from_id\":\"dcat-us-3-m-25-05-crosswalk\",\"to_id\":\"cl_contactpoint_publisher\",\"anchor\":\"publisher=&gt;\",\"location\":\"dcat-us-3-m-25-05-crosswalk#c0004\"},{\"type\":\"about\",\"from_id\":\"cl_rightsholder\",\"to_id\":\"c_rightsholder\",\"anchor\":\"does not own the data asset\",\"location\":\"dcat-us-3-m-25-05-crosswalk#c0004\"},{\"type\":\"about\",\"from_id\":\"cl_contactpoint_publisher\",\"to_id\":\"c_contactpoint\",\"anchor\":\"either one meets the requirement\",\"location\":\"dcat-us-3-m-25-05-crosswalk#c0004\"},{\"type\":\"about\",\"from_id\":\"cl_contactpoint_publisher\",\"to_id\":\"c_publisher\",\"anchor\":\"contactPoint or publisher\",\"location\":\"dcat-us-3-m-25-05-crosswalk#c0004\"},{\"type\":\"mentions\",\"from_id\":\"dcat-us-3-m-25-05-crosswalk\",\"to_id\":\"c_rightsholder\",\"anchor\":\"rightsholder=&gt;\",\"location\":\"dcat-us-3-m-25-05-crosswalk#c0004\"},{\"type\":\"mentions\",\"from_id\":\"dcat-us-3-m-25-05-crosswalk\",\"to_id\":\"c_publisher\",\"anchor\":\"publisher=&gt;\",\"location\":\"dcat-us-3-m-25-05-crosswalk#c0004\"},{\"type\":\"mentions\",\"from_id\":\"dcat-us-3-m-25-05-crosswalk\",\"to_id\":\"c_contactpoint\",\"anchor\":\"contactPoint or publisher\",\"location\":\"dcat-us-3-m-25-05-crosswalk#c0004\"},{\"type\":\"mentions\",\"from_id\":\"dcat-us-3-m-25-05-crosswalk\",\"to_id\":\"c_other_metadata_elements\",\"anchor\":\"Other metadata elements as determined\",\"location\":\"dcat-us-3-m-25-05-crosswalk#c0004\"},{\"type\":\"recommends\",\"from_id\":\"dcat-us-3-m-25-05-crosswalk\",\"to_id\":\"p_tags_subject\",\"anchor\":\"Use tags or the subject property\",\"location\":\"dcat-us-3-m-25-05-crosswalk#c0004\"}],\"cites\":[],\"mentions\":[{\"name\":\"Dataset\",\"anchor\":\"| Dataset\"},{\"name\":\"keyword\",\"anchor\":\"- keyword\"},{\"name\":\"Office of Management and Budget\",\"anchor\":\"Office of Management and Budget, the\"}],\"proposed_relationships\":[{\"anchor\":\"Other metadata elements as determined\",\"suggested_edge\":\"applies_to\",\"diversion_reason\":\"structural_inference\",\"note\":\"Table row Q places the Dataset class in the class column for this requirement; the row is layout, not a sentence stating the relation.\"},{\"anchor\":\"contactPoint  keyword\",\"diversion_reason\":\"structural_inference\",\"suggested_edge\":\"implements\",\"note\":\"Row Q's property column lists contactPoint and keyword as the properties satisfying the requirement; evidence is the table cell adjacency, not an assertion.\"}],\"gleaned\":[{\"name\":\"tags\",\"type\":\"Concept\"},{\"name\":\"subject\",\"type\":\"Concept\"},{\"name\":\"topical categorization\",\"type\":\"Concept\"},{\"name\":\"data asset\",\"type\":\"Concept\"},{\"name\":\"resources.data.gov\",\"type\":\"Platform\"},{\"name\":\"General Services Administration\",\"type\":\"Concept\"},{\"name\":\"Office of Government Information Services\",\"type\":\"Concept\"}]}"
+}

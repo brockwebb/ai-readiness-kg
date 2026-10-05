@@ -1,0 +1,33 @@
+{
+ "doc_id": "w3c-dqv",
+ "chunk_id": "w3c-dqv#c0012",
+ "chunk_index": 12,
+ "chunk_start": 80782,
+ "chunk_end": 81132,
+ "chunk_tokens": 80,
+ "heading_path": [
+  ":myQualityChecker is a service computing some quality metrics"
+ ],
+ "oversize": false,
+ "doc_sha256": "271d3e820c681127131595d2c8bf8345e925149192f6cab821f101f09d372a63",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 6980,
+  "cacheReadInputTokens": 13057,
+  "cacheCreationInputTokens": 28974,
+  "webSearchRequests": 0,
+  "costUSD": 0.4707785,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 5701,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.4707785,
+ "duration_ms": 80356,
+ "session_id": "30a8d458-d2b8-4e74-a60c-8083017a1fd5",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Turtle example declaring :myQualityChecker as a prov:SoftwareAgent labelled a quality assessment service, with a note that further details about quality service/software can be provided by deploying vocabularies such as DUV, Dublin Core or ADMS.SW.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c1\",\n      \"name\": \"quality service/software\",\n      \"aliases\": [\"quality assessment service\"],\n      \"description\": \"The service or software that performs quality assessment, about which the document says further details can be provided.\",\n      \"anchor\": \"about quality service/software\",\n      \"location\": \"w3c-dqv#c0012\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [\n    {\n      \"id\": \"p1\",\n      \"text\": \"Further details about quality service/software can be provided\",\n      \"scope\": \"tool\",\n      \"as_of_date\": null,\n      \"anchor\": \"Further details about quality\",\n      \"location\": \"w3c-dqv#c0012\"\n    }\n  ],\n  \"tools\": [\n    {\n      \"id\": \"t1\",\n      \"name\": \":myQualityChecker\",\n      \"steward\": null,\n      \"license\": null,\n      \"url\": null,\n      \"as_of_date\": null,\n      \"anchor\": \"# :myQualityChecker is a service\",\n      \"location\": \"w3c-dqv#c0012\"\n    }\n  ],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"w3c-dqv\",\n      \"to_id\": \"c1\",\n      \"anchor\": \"about quality service/software\",\n      \"location\": \"w3c-dqv#c0012\"\n    },\n    {\n      \"type\": \"recommends\",\n      \"from_id\": \"w3c-dqv\",\n      \"to_id\": \"p1\",\n      \"anchor\": \"Further details about quality\",\n      \"location\": \"w3c-dqv#c0012\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"p1\",\n      \"to_id\": \"c1\",\n      \"anchor\": \"about quality service/software\",\n      \"location\": \"w3c-dqv#c0012\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\"name\": \":myQualityChecking\", \"anchor\": \":myQualityChecking\"},\n    {\"name\": \"Dataset Usage Vocabulary (DUV)\", \"anchor\": \"Dataset Usage Vocabulary (DUV)\"},\n    {\"name\": \"Dublin Core\", \"anchor\": \"Dublin Core\"},\n    {\"name\": \"ADMS.SW\", \"anchor\": \"ADMS.SW\"}\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"a prov:SoftwareAgent\",\n      \"suggested_edge\": \"typed_as_software_agent\",\n      \"from_id\": \"t1\",\n      \"to_id\": \"prov:SoftwareAgent\",\n      \"diversion_reason\": \"other:rdf_type_statement\"\n    },\n    {\n      \"anchor\": \"deploying  vocabularies such as\",\n      \"suggested_edge\": \"deploys_vocabulary\",\n      \"from_id\": \"p1\",\n      \"to_id\": \"Dataset Usage Vocabulary (DUV)\",\n      \"diversion_reason\": \"other:endpoint_is_stub\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"prov:SoftwareAgent\", \"type\": \"Concept\"},\n    {\"name\": \"Dataset Usage Vocabulary (DUV)\", \"type\": \"Standard\"},\n    {\"name\": \"Dublin Core\", \"type\": \"Standard\"},\n    {\"name\": \"ADMS.SW\", \"type\": \"Standard\"},\n    {\"name\": \"A quality assessment service\", \"type\": \"Definition\"}\n  ]\n}"
+}

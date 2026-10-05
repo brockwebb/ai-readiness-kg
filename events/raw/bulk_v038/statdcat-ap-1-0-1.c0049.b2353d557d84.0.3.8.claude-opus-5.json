@@ -1,0 +1,33 @@
+{
+ "doc_id": "statdcat-ap-1-0-1",
+ "chunk_id": "statdcat-ap-1-0-1#c0049",
+ "chunk_index": 49,
+ "chunk_start": 206832,
+ "chunk_end": 207500,
+ "chunk_tokens": 176,
+ "heading_path": [
+  "rdfs:comment have not been included here."
+ ],
+ "oversize": false,
+ "doc_sha256": "b2353d557d84c0f853380723447cd26f0c47a92bc444a6193dad52868eeb1d69",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 5802,
+  "cacheReadInputTokens": 13057,
+  "cacheCreationInputTokens": 29910,
+  "webSearchRequests": 0,
+  "costUSD": 0.45068849999999994,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 3809,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.45068849999999994,
+ "duration_ms": 62731,
+ "session_id": "0b2036e1-decc-4847-853a-30b47d7a50fb",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Tail of a StatDCAT-AP example RDF listing (dcat:landingPage, dcat:contactPoint with vcard properties) plus an inline comment stating the properties are copies of the source metadata and that duplicated dct:title/dct:description values were omitted, with the page header naming StatDCAT-AP Version 1.0.1.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"concept-dct-title\",\n      \"name\": \"dct:title\",\n      \"aliases\": [\"Dublin Core title property\"],\n      \"description\": \"Metadata property whose value the example copies from the source metadata and whose duplicate in rdfs:label was omitted.\",\n      \"anchor\": \"values of dct:title\",\n      \"location\": \"statdcat-ap-1-0-1#c0049\"\n    },\n    {\n      \"id\": \"concept-dct-description\",\n      \"name\": \"dct:description\",\n      \"aliases\": [\"Dublin Core description property\"],\n      \"description\": \"Metadata property whose value the example copies from the source metadata and whose duplicate in rdfs:comment was omitted.\",\n      \"anchor\": \"dct:description\",\n      \"location\": \"statdcat-ap-1-0-1#c0049\"\n    },\n    {\n      \"id\": \"concept-dcat-contactpoint\",\n      \"name\": \"dcat:contactPoint\",\n      \"aliases\": [\"contact point\"],\n      \"description\": \"Property used in the example to attach a vcard-described contact (fn, hasEmail, hasURL) to the dataset description.\",\n      \"anchor\": \"dcat:contactPoint\",\n      \"location\": \"statdcat-ap-1-0-1#c0049\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"claim-copies-source-metadata\",\n      \"claim_text\": \"all properties above are copies of the source metadata.\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"all properties above are copies\",\n      \"location\": \"statdcat-ap-1-0-1#c0049\"\n    },\n    {\n      \"id\": \"claim-duplicates-omitted\",\n      \"claim_text\": \"the duplicated values of dct:title and dct:description in rdfs:label\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"However, the duplicated values\",\n      \"location\": \"statdcat-ap-1-0-1#c0049\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [\n    {\n      \"id\": \"standard-statdcat-ap\",\n      \"name\": \"StatDCAT-AP\",\n      \"version\": \"1.0.1\",\n      \"steward\": null,\n      \"as_of_date\": \"2019-05-28\",\n      \"anchor\": \"DCAT Application Profile for description\",\n      \"location\": \"statdcat-ap-1-0-1#c0049\"\n    }\n  ],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"statdcat-ap-1-0-1\",\n      \"to_id\": \"claim-copies-source-metadata\",\n      \"anchor\": \"all properties above are copies\",\n      \"location\": \"statdcat-ap-1-0-1#c0049\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"statdcat-ap-1-0-1\",\n      \"to_id\": \"claim-duplicates-omitted\",\n      \"anchor\": \"However, the duplicated values\",\n      \"location\": \"statdcat-ap-1-0-1#c0049\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"claim-duplicates-omitted\",\n      \"to_id\": \"concept-dct-title\",\n      \"anchor\": \"values of dct:title\",\n      \"location\": \"statdcat-ap-1-0-1#c0049\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"claim-duplicates-omitted\",\n      \"to_id\": \"concept-dct-description\",\n      \"anchor\": \"dct:description\",\n      \"location\": \"statdcat-ap-1-0-1#c0049\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"statdcat-ap-1-0-1\",\n      \"to_id\": \"concept-dcat-contactpoint\",\n      \"anchor\": \"dcat:contactPoint\",\n      \"location\": \"statdcat-ap-1-0-1#c0049\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"dcat:landingPage\",\n      \"anchor\": \"dcat:landingPage\"\n    },\n    {\n      \"name\": \"DG CONNECT - Digital Economy and Skills (Unit F.4)\",\n      \"anchor\": \"DG CONNECT - Digital Economy\"\n    },\n    {\n      \"name\": \"digital_agenda_scoreboard_key_indicators\",\n      \"anchor\": \"digital_agenda_scoreboard_key_indicators\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"digital_agenda_scoreboard_key_indicators\",\n      \"suggested_edge\": \"exemplified_by_dataset\",\n      \"diversion_reason\": \"other:no_edge_type\",\n      \"note\": \"StatDCAT-AP example reuses the Digital Agenda Scoreboard key indicators dataset metadata as its worked example; no Document->Dataset edge type exists.\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"vcard:fn\", \"type\": \"Concept\"},\n    {\"name\": \"vcard:hasEmail\", \"type\": \"Concept\"},\n    {\"name\": \"vcard:hasURL\", \"type\": \"Concept\"},\n    {\"name\": \"rdfs:label\", \"type\": \"Concept\"},\n    {\"name\": \"rdfs:comment\", \"type\": \"Concept\"},\n    {\"name\": \"DCAT\", \"type\": \"Standard\"}\n  ]\n}\n```"
+}

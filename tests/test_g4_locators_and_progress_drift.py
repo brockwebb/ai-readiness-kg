@@ -69,7 +69,12 @@ PUB = yaml.safe_load((REPO / "docs" / "reports" / "publication.yaml").read_text(
 #: `cc_tasks/2026-09-21_g4_resourcing_reissue.md` added the six standards that define G4's
 #: fields and the DCAT-AP vocabulary; `cc_tasks/2026-09-21_g4_narrowed.md` narrowed G4 to the
 #: measured claim and dropped WP-46, both FCSM-19-01 and DCAT-AP from its cell.
-G4_DOCS = ("dcat-us-1-1-schema", "dcat-us-3-dataset-schema", "dcat-us-3-overview",
+#: `cc_tasks/2026-10-04_DCAT-002_dcat_us_3_intake_and_g4.md` brought G4 current to DCAT-US 3.0
+#: (DN-011-R3) and added the Dataset page as rewritten in September 2026 (`publisher`
+#: Recommended) and the M-25-05 crosswalk; the 2026-08-21 capture stays, because RULE-B4-v1 and
+#: RULE-D3-v1 cite it.
+G4_DOCS = ("dcat-us-1-1-schema", "dcat-us-3-dataset-schema-2026-09-15",
+           "dcat-us-3-dataset-schema", "dcat-us-3-m-25-05-crosswalk", "dcat-us-3-overview",
            "w3c-dcat-3", "w3c-prov-o-ontology", "schema-org-dataset")
 
 #: Decision 2 outcome (c), in the cell's own words. A clause with no passage behind it says so.

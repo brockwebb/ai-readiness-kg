@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-dataset-schema-2026-09-15",
+ "chunk_id": "dcat-us-3-dataset-schema-2026-09-15#c0015",
+ "chunk_index": 15,
+ "chunk_start": 36306,
+ "chunk_end": 36610,
+ "chunk_tokens": 99,
+ "heading_path": [
+  "DCAT-US 3.0: Dataset",
+  "[Dataset &gt; modified #](#modified)"
+ ],
+ "oversize": false,
+ "doc_sha256": "0ef64d14a0901d5e7f84fee15bab1474353880ee4b64aec9c185b06149e067de",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 4328,
+  "cacheReadInputTokens": 13056,
+  "cacheCreationInputTokens": 29557,
+  "webSearchRequests": 0,
+  "costUSD": 0.410308,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 3230,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.410308,
+ "duration_ms": 49268,
+ "session_id": "057fbb74-4003-4e6e-bae7-c50fd3576c7f",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Schema reference entry for the Dataset `modified` property: title 'last modified', Recommended requirement level, gloss that it is the most recent date the dataset's actual data changed, type null-or-object, and four date-format examples.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_last_modified\",\n      \"name\": \"last modified\",\n      \"aliases\": [\"modified\", \"Dataset modified property\"],\n      \"description\": \"The dataset property recording the most recent date on which the dataset's actual data changed.\",\n      \"anchor\": \"last modified\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0015\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"cl_modified_semantics\",\n      \"claim_text\": \"Most recent date when the dataset's actual data changed, not just metadata\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"Most recent date\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0015\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"c_last_modified\",\n      \"anchor\": \"last modified\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0015\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"cl_modified_semantics\",\n      \"anchor\": \"Most recent date\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0015\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_modified_semantics\",\n      \"to_id\": \"c_last_modified\",\n      \"anchor\": \"actual data changed\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0015\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"Dataset\",\n      \"anchor\": \"## [Dataset\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"**Requirement:** Recommended\",\n      \"suggested_edge\": \"requirement_level\",\n      \"diversion_reason\": \"other:conformance_level\",\n      \"note\": \"The property's conformance level (Recommended) has no edge type in the schema.\"\n    },\n    {\n      \"anchor\": \"## [Dataset\",\n      \"suggested_edge\": \"has_component\",\n      \"diversion_reason\": \"structural_inference\",\n      \"note\": \"Dataset has the `modified` property — evidenced only by heading structure, not a stated relation.\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"Recommended\", \"type\": \"Practice\"},\n    {\"name\": \"null or object\", \"type\": \"Claim\"},\n    {\"name\": \"metadata\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

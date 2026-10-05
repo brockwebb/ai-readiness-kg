@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-quality-governance",
+ "chunk_id": "dcat-us-3-quality-governance#c0042",
+ "chunk_index": 42,
+ "chunk_start": 33142,
+ "chunk_end": 33542,
+ "chunk_tokens": 86,
+ "heading_path": [
+  "Quality and Governance",
+  "[CatalogRecord &gt; source #](#catalog-record--source)"
+ ],
+ "oversize": false,
+ "doc_sha256": "7cbc49b6691fa3e7eb7b4845837afc3e1a6212bfc5882d676284a0ad154cbad5",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 4197,
+  "cacheReadInputTokens": 13056,
+  "cacheCreationInputTokens": 29586,
+  "webSearchRequests": 0,
+  "costUSD": 0.407323,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 3097,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.407323,
+ "duration_ms": 45813,
+ "session_id": "fb787003-f55e-41ee-a5dc-cd8690c1b42b",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"DCAT-US property specification for CatalogRecord > source: titled 'source metadata', optional, defined as the original metadata used in creating metadata for items in the catalog record, typed null or string, with a NOAA data portal example.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c1\",\n      \"name\": \"source metadata\",\n      \"aliases\": [\"CatalogRecord source property\", \"dct:source\"],\n      \"description\": \"The property carrying the original metadata from which a catalog record's metadata was created, either as a URL or as a string.\",\n      \"anchor\": \"**Title:** source metadata\",\n      \"location\": \"dcat-us-3-quality-governance#c0042\"\n    },\n    {\n      \"id\": \"c2\",\n      \"name\": \"catalog record\",\n      \"aliases\": [\"CatalogRecord\"],\n      \"description\": \"The record whose items' metadata was created from the source metadata.\",\n      \"anchor\": \"items in the catalog record\",\n      \"location\": \"dcat-us-3-quality-governance#c0042\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d1\",\n      \"term\": \"source metadata\",\n      \"verbatim_text\": \"The original metadata that was used in creating metadata for the items in the catalog record, either a URL referencing the source metadata or a string of the source metadata itself\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"either a URL referencing\",\n      \"location\": \"dcat-us-3-quality-governance#c0042\"\n    }\n  ],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"d1\",\n      \"anchor\": \"metadata for the items\",\n      \"location\": \"dcat-us-3-quality-governance#c0042\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"c1\",\n      \"anchor\": \"**Title:** source metadata\",\n      \"location\": \"dcat-us-3-quality-governance#c0042\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"c2\",\n      \"anchor\": \"items in the catalog record\",\n      \"location\": \"dcat-us-3-quality-governance#c0042\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"NOAA data portal\",\n      \"anchor\": \"NOAA data portal\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"suggested_edge\": \"has_component\",\n      \"from_id\": \"c2\",\n      \"to_id\": \"c1\",\n      \"anchor\": \"## [CatalogRecord\",\n      \"diversion_reason\": \"structural_inference\",\n      \"location\": \"dcat-us-3-quality-governance#c0042\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"null or string\", \"type\": \"Concept\"},\n    {\"name\": \"Optional requirement level\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

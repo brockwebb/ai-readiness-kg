@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-dataset-schema-2026-09-15",
+ "chunk_id": "dcat-us-3-dataset-schema-2026-09-15#c0043",
+ "chunk_index": 43,
+ "chunk_start": 49620,
+ "chunk_end": 50027,
+ "chunk_tokens": 103,
+ "heading_path": [
+  "DCAT-US 3.0: Dataset",
+  "[Dataset &gt; page #](#page)"
+ ],
+ "oversize": false,
+ "doc_sha256": "0ef64d14a0901d5e7f84fee15bab1474353880ee4b64aec9c185b06149e067de",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 4948,
+  "cacheReadInputTokens": 13056,
+  "cacheCreationInputTokens": 29699,
+  "webSearchRequests": 0,
+  "costUSD": 0.42722799999999994,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 2848,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.42722799999999994,
+ "duration_ms": 60177,
+ "session_id": "1ee80a26-d8d0-4426-9bd9-e2161fdbfd10",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"DCAT-US 3.0 Dataset property page: the optional `documentation` property, typed as null or an array of Document classes, plus inline one-line definitions for Identifier and Document.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"concept-documentation\",\n      \"name\": \"documentation\",\n      \"aliases\": [\"Dataset > page #\", \"dcat:page\"],\n      \"description\": \"Optional Dataset property holding a list of pages or documents about the dataset; typed as null or an array of Document classes.\",\n      \"anchor\": \"documentation\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0043\"\n    },\n    {\n      \"id\": \"concept-dataset\",\n      \"name\": \"dataset\",\n      \"aliases\": [\"Dataset\"],\n      \"description\": \"The resource the documentation property describes: pages or documents are listed about this dataset.\",\n      \"anchor\": \"about this dataset\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0043\"\n    },\n    {\n      \"id\": \"concept-document-class\",\n      \"name\": \"Document\",\n      \"aliases\": [\"Document class\"],\n      \"description\": \"Class used as the item type of the documentation array: a publication or other document related to a resource.\",\n      \"anchor\": \"A publication or other document\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0043\"\n    },\n    {\n      \"id\": \"concept-identifier\",\n      \"name\": \"Identifier\",\n      \"aliases\": [\"Identifier class\"],\n      \"description\": \"Class carrying a unique identifier and optionally its scheme and other relevant information.\",\n      \"anchor\": \"[Identifier](\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0043\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"def-identifier\",\n      \"term\": \"Identifier\",\n      \"verbatim_text\": \"A unique identifier and optionally it's scheme and other relevant information\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"A unique identifier and optionally\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0043\"\n    },\n    {\n      \"id\": \"def-document\",\n      \"term\": \"Document\",\n      \"verbatim_text\": \"A publication or other document related to a resource\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"other document related to a resource\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0043\"\n    }\n  ],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"def-identifier\",\n      \"anchor\": \"A unique identifier and optionally\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0043\"\n    },\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"def-document\",\n      \"anchor\": \"other document related to a resource\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0043\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"concept-documentation\",\n      \"anchor\": \"documentation\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0043\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"concept-dataset\",\n      \"anchor\": \"about this dataset\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0043\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"concept-document-class\",\n      \"anchor\": \"A publication or other document\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0043\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"concept-identifier\",\n      \"anchor\": \"[Identifier](\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0043\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [],\n  \"proposed_relationships\": [\n    {\n      \"suggested_edge\": \"has_component\",\n      \"from_id\": \"concept-dataset\",\n      \"to_id\": \"concept-documentation\",\n      \"anchor\": \"**Title:** documentation\",\n      \"diversion_reason\": \"structural_inference\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0043\"\n    },\n    {\n      \"suggested_edge\": \"has_component\",\n      \"from_id\": \"concept-documentation\",\n      \"to_id\": \"concept-document-class\",\n      \"anchor\": \"null or array of\",\n      \"diversion_reason\": \"structural_inference\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0043\"\n    },\n    {\n      \"suggested_edge\": \"has_component\",\n      \"from_id\": \"concept-dataset\",\n      \"to_id\": \"concept-identifier\",\n      \"anchor\": \"/#identifier)\",\n      \"diversion_reason\": \"cross_chunk\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0043\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"Requirement: Optional\", \"type\": \"Claim\"},\n    {\"name\": \"DCAT-US 3.0\", \"type\": \"Standard\"},\n    {\"name\": \"identifiers-and-relationships\", \"type\": \"Concept\"},\n    {\"name\": \"quality-governance\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

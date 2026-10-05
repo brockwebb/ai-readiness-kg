@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-temporal-spatial-metrics",
+ "chunk_id": "dcat-us-3-temporal-spatial-metrics#c0010",
+ "chunk_index": 10,
+ "chunk_start": 7883,
+ "chunk_end": 9836,
+ "chunk_tokens": 582,
+ "heading_path": [
+  "Temporal, Spatial, and Metrics",
+  "[Location &gt; bbox #](#location--bbox)"
+ ],
+ "oversize": false,
+ "doc_sha256": "083cc7877b8438d25498d71ee0e04b3e0ffdbbef334ff3c5a4735cdf2c8339c7",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 7851,
+  "cacheReadInputTokens": 13057,
+  "cacheCreationInputTokens": 30594,
+  "webSearchRequests": 0,
+  "costUSD": 0.5087535,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 5731,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.5087535,
+ "duration_ms": 84447,
+ "session_id": "8fd0f526-521a-4ebd-9ecd-9588549c3baf",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"DCAT-US 3 schema reference for the Location bbox property: a recommended bounding box for a location, expressed in WKT, GeoJSON (string or Polygon/bbox-array object), or GML.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c-bounding-box\",\n      \"name\": \"bounding box\",\n      \"aliases\": [\"bbox\", \"Bounding box\"],\n      \"description\": \"The bounding box of a location, serialized in a geospatial text format.\",\n      \"anchor\": \"bounding box\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0010\"\n    },\n    {\n      \"id\": \"c-location\",\n      \"name\": \"location\",\n      \"aliases\": [\"Location\"],\n      \"description\": \"The spatial place whose extent the bounding box describes.\",\n      \"anchor\": \"the location\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0010\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"def-bounding-box\",\n      \"term\": \"Bounding box\",\n      \"verbatim_text\": \"Bounding box for the location, described in WKT, GeoJSON, or GML format\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"Bounding box for the location\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0010\"\n    }\n  ],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [\n    {\n      \"id\": \"std-wkt\",\n      \"name\": \"WKT\",\n      \"version\": null,\n      \"steward\": null,\n      \"as_of_date\": null,\n      \"anchor\": \"described in WKT\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0010\"\n    },\n    {\n      \"id\": \"std-geojson\",\n      \"name\": \"GeoJSON\",\n      \"version\": null,\n      \"steward\": null,\n      \"as_of_date\": null,\n      \"anchor\": \"GeoJSON, or GML\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0010\"\n    },\n    {\n      \"id\": \"std-gml\",\n      \"name\": \"GML\",\n      \"version\": null,\n      \"steward\": null,\n      \"as_of_date\": null,\n      \"anchor\": \"GeoJSON, or GML format\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0010\"\n    }\n  ],\n  \"frameworks\": [],\n  \"practices\": [\n    {\n      \"id\": \"p-bbox\",\n      \"text\": \"Bounding box for the location, described in WKT, GeoJSON, or GML format\",\n      \"as_of_date\": null,\n      \"scope\": \"dataset\",\n      \"anchor\": \"for the location, described\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0010\"\n    }\n  ],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-temporal-spatial-metrics\",\n      \"to_id\": \"def-bounding-box\",\n      \"anchor\": \"bounding box\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0010\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-temporal-spatial-metrics\",\n      \"to_id\": \"c-bounding-box\",\n      \"anchor\": \"Title:** bounding box\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0010\"\n    },\n    {\n      \"type\": \"recommends\",\n      \"from_id\": \"dcat-us-3-temporal-spatial-metrics\",\n      \"to_id\": \"p-bbox\",\n      \"anchor\": \"Requirement:** Recommended\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0010\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"p-bbox\",\n      \"to_id\": \"c-location\",\n      \"anchor\": \"Bounding box for the location\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0010\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\"name\": \"Polygon\", \"anchor\": \"as a Polygon\"},\n    {\"name\": \"bbox array format\", \"anchor\": \"bbox array format\"},\n    {\"name\": \"gazetteer\", \"anchor\": \"relevant gazetteer\"}\n  ],\n  \"proposed_relationships\": [\n    {\n      \"suggested_edge\": \"serialized_as\",\n      \"from_id\": \"c-bounding-box\",\n      \"to_id\": \"std-wkt\",\n      \"anchor\": \"described in WKT\",\n      \"diversion_reason\": \"other:no_edge_type\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0010\"\n    },\n    {\n      \"suggested_edge\": \"serialized_as\",\n      \"from_id\": \"c-bounding-box\",\n      \"to_id\": \"std-geojson\",\n      \"anchor\": \"GeoJSON, or GML\",\n      \"diversion_reason\": \"other:no_edge_type\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0010\"\n    },\n    {\n      \"suggested_edge\": \"serialized_as\",\n      \"from_id\": \"c-bounding-box\",\n      \"to_id\": \"std-gml\",\n      \"anchor\": \"GeoJSON, or GML format\",\n      \"diversion_reason\": \"other:no_edge_type\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0010\"\n    },\n    {\n      \"suggested_edge\": \"has_component\",\n      \"from_id\": \"c-location\",\n      \"to_id\": \"c-bounding-box\",\n      \"anchor\": \"## [Location &gt; bbox #](#location--bbox)\",\n      \"diversion_reason\": \"structural_inference\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0010\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"Polygon\", \"type\": \"Concept\"},\n    {\"name\": \"bbox array format\", \"type\": \"Concept\"},\n    {\"name\": \"coordinates\", \"type\": \"Concept\"},\n    {\"name\": \"gazetteer\", \"type\": \"Concept\"},\n    {\"name\": \"URI\", \"type\": \"Concept\"}\n  ]\n}"
+}

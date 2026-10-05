@@ -1,0 +1,33 @@
+{
+ "doc_id": "statdcat-ap-1-0-1",
+ "chunk_id": "statdcat-ap-1-0-1#c0043",
+ "chunk_index": 43,
+ "chunk_start": 202395,
+ "chunk_end": 202754,
+ "chunk_tokens": 88,
+ "heading_path": [
+  "-- Distribution -----------------------------------------"
+ ],
+ "oversize": false,
+ "doc_sha256": "b2353d557d84c0f853380723447cd26f0c47a92bc444a6193dad52868eeb1d69",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 4130,
+  "cacheReadInputTokens": 13057,
+  "cacheCreationInputTokens": 29630,
+  "webSearchRequests": 0,
+  "costUSD": 0.40608849999999996,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 2385,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.40608849999999996,
+ "duration_ms": 44535,
+ "session_id": "76ec9b2b-9dc9-4d24-9f51-2cb1d64a60b3",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Turtle example code: the tail of a statUnitMeasure assertion with a comment noting its value was copied from sdmx-attribute:unitMeasure in the source metadata, followed by an example dcat:Distribution node with accessURL and format.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_statunitmeasure\",\n      \"name\": \"stat:statUnitMeasure\",\n      \"aliases\": [\"statUnitMeasure\"],\n      \"description\": \"Property used in the example to state the unit of measure of a statistical observation; its value is taken from the source metadata's unit-of-measure attribute.\",\n      \"anchor\": \"stat:statUnitMeasure\",\n      \"location\": \"statdcat-ap-1-0-1#c0043\"\n    },\n    {\n      \"id\": \"c_sdmx_unitmeasure\",\n      \"name\": \"sdmx-attribute:unitMeasure\",\n      \"aliases\": [\"sdmx unitMeasure attribute\"],\n      \"description\": \"The SDMX attribute in the source metadata from which the example's unit-of-measure value is copied.\",\n      \"anchor\": \"sdmx-attribute:unitMeasure\",\n      \"location\": \"statdcat-ap-1-0-1#c0043\"\n    },\n    {\n      \"id\": \"c_dcat_distribution\",\n      \"name\": \"dcat:Distribution\",\n      \"aliases\": [\"Distribution\"],\n      \"description\": \"Class of the example resource eg:distribution-le3, given an access URL and a file format.\",\n      \"anchor\": \"dcat:Distribution\",\n      \"location\": \"statdcat-ap-1-0-1#c0043\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"cl_unitmeasure_copied\",\n      \"claim_text\": \"The value of this property copied from the sdmx-attribute:unitMeasure property\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"value of this property copied\",\n      \"location\": \"statdcat-ap-1-0-1#c0043\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"statdcat-ap-1-0-1\",\n      \"to_id\": \"cl_unitmeasure_copied\",\n      \"anchor\": \"value of this property copied\",\n      \"location\": \"statdcat-ap-1-0-1#c0043\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_unitmeasure_copied\",\n      \"to_id\": \"c_sdmx_unitmeasure\",\n      \"anchor\": \"sdmx-attribute:unitMeasure\",\n      \"location\": \"statdcat-ap-1-0-1#c0043\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"statdcat-ap-1-0-1\",\n      \"to_id\": \"c_statunitmeasure\",\n      \"anchor\": \"stat:statUnitMeasure\",\n      \"location\": \"statdcat-ap-1-0-1#c0043\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"statdcat-ap-1-0-1\",\n      \"to_id\": \"c_dcat_distribution\",\n      \"anchor\": \"dcat:Distribution\",\n      \"location\": \"statdcat-ap-1-0-1#c0043\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\"name\": \"eg:distribution-le3\", \"anchor\": \"eg:distribution-le3\"},\n    {\"name\": \"dcat:accessURL\", \"anchor\": \"dcat:accessURL\"},\n    {\"name\": \"dct:format\", \"anchor\": \"dct:format\"},\n    {\"name\": \"RDF_TURTLE\", \"anchor\": \"RDF_TURTLE\"},\n    {\"name\": \"Year\", \"anchor\": \"dbpedia.org/resource/Year\"}\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"dcat:accessURL\",\n      \"suggested_edge\": \"has_component\",\n      \"from_name\": \"dcat:Distribution\",\n      \"to_name\": \"dcat:accessURL\",\n      \"diversion_reason\": \"structural_inference\"\n    },\n    {\n      \"anchor\": \"dct:format\",\n      \"suggested_edge\": \"has_component\",\n      \"from_name\": \"dcat:Distribution\",\n      \"to_name\": \"dct:format\",\n      \"diversion_reason\": \"structural_inference\"\n    },\n    {\n      \"anchor\": \"stat:statUnitMeasure\",\n      \"suggested_edge\": \"implements\",\n      \"from_name\": \"statDCAT-AP\",\n      \"to_name\": \"stat:statUnitMeasure\",\n      \"diversion_reason\": \"cross_chunk\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"source metadata\", \"type\": \"Concept\"},\n    {\"name\": \"SDMX\", \"type\": \"Standard\"},\n    {\"name\": \"DCAT\", \"type\": \"Standard\"},\n    {\"name\": \"EU file-type authority list\", \"type\": \"Standard\"}\n  ]\n}\n```"
+}

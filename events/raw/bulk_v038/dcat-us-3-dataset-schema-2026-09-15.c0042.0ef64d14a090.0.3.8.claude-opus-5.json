@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-dataset-schema-2026-09-15",
+ "chunk_id": "dcat-us-3-dataset-schema-2026-09-15#c0042",
+ "chunk_index": 42,
+ "chunk_start": 49102,
+ "chunk_end": 49618,
+ "chunk_tokens": 115,
+ "heading_path": [
+  "DCAT-US 3.0: Dataset",
+  "[Dataset &gt; otherIdentifier #](#otherIdentifier)"
+ ],
+ "oversize": false,
+ "doc_sha256": "0ef64d14a0901d5e7f84fee15bab1474353880ee4b64aec9c185b06149e067de",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 6911,
+  "cacheReadInputTokens": 13056,
+  "cacheCreationInputTokens": 29811,
+  "webSearchRequests": 0,
+  "costUSD": 0.477423,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 4918,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.477423,
+ "duration_ms": 70318,
+ "session_id": "8170cced-c3fd-4c0c-ba75-270cfefa7825",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"DCAT-US 3.0 Dataset schema reference for the optional `otherIdentifier` property: it holds additional identifiers (DOI or other persistent ID) besides the main identifier, typed as null or an array of Identifier classes; the chunk also carries a one-line gloss of Distribution and of Identifier.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_other_identifier\",\n      \"name\": \"otherIdentifier\",\n      \"aliases\": [\"Dataset otherIdentifier\", \"other identifier\"],\n      \"description\": \"Additional identifiers for the dataset besides the main identifier, such as a DOI or other persistent ID; optional, and typed as null or an array of Identifier classes.\",\n      \"anchor\": \"## [Dataset &gt; otherIdentifier\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0042\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d_distribution\",\n      \"term\": \"Distribution\",\n      \"verbatim_text\": \"A specific representation of a dataset, such as a file, feed, or API response\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"A specific representation of a dataset\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0042\"\n    },\n    {\n      \"id\": \"d_identifier\",\n      \"term\": \"Identifier\",\n      \"verbatim_text\": \"A unique identifier and optionally it's scheme and other relevant information\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"A unique identifier and optionally\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0042\"\n    }\n  ],\n  \"claims\": [\n    {\n      \"id\": \"cl_other_identifier_purpose\",\n      \"claim_text\": \"Additional identifiers for the dataset besides the main identifier, such as a DOI or other persistent ID\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"platform_official\",\n      \"anchor\": \"Additional identifiers for the dataset\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0042\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"d_distribution\",\n      \"anchor\": \"A specific representation of a dataset\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0042\"\n    },\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"d_identifier\",\n      \"anchor\": \"A unique identifier and optionally\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0042\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"c_other_identifier\",\n      \"anchor\": \"## [Dataset &gt; otherIdentifier\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0042\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"cl_other_identifier_purpose\",\n      \"anchor\": \"Additional identifiers for the dataset\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0042\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_other_identifier_purpose\",\n      \"to_id\": \"c_other_identifier\",\n      \"anchor\": \"for the dataset besides\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0042\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"dataset\",\n      \"anchor\": \"for the dataset besides\"\n    },\n    {\n      \"name\": \"DOI\",\n      \"anchor\": \"such as a DOI\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"from_name\": \"Dataset\",\n      \"to_name\": \"otherIdentifier\",\n      \"suggested_edge\": \"has_component\",\n      \"anchor\": \"## [Dataset &gt; otherIdentifier\",\n      \"diversion_reason\": \"structural_inference\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0042\"\n    },\n    {\n      \"from_name\": \"otherIdentifier\",\n      \"to_name\": \"Identifier\",\n      \"suggested_edge\": \"has_range\",\n      \"anchor\": \"null or array of\",\n      \"diversion_reason\": \"other:range_constraint\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0042\"\n    },\n    {\n      \"from_name\": \"Distribution\",\n      \"to_name\": \"Dataset\",\n      \"suggested_edge\": \"represents\",\n      \"anchor\": \"A specific representation of a dataset\",\n      \"diversion_reason\": \"other:not_expressible\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0042\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"Dataset\", \"type\": \"Concept\"},\n    {\"name\": \"Distribution\", \"type\": \"Concept\"},\n    {\"name\": \"Identifier\", \"type\": \"Concept\"},\n    {\"name\": \"persistent ID\", \"type\": \"Concept\"},\n    {\"name\": \"main identifier\", \"type\": \"Concept\"},\n    {\"name\": \"scheme\", \"type\": \"Concept\"}\n  ]\n}"
+}

@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-quality-governance",
+ "chunk_id": "dcat-us-3-quality-governance#c0073",
+ "chunk_index": 73,
+ "chunk_start": 60211,
+ "chunk_end": 60657,
+ "chunk_tokens": 111,
+ "heading_path": [
+  "Quality and Governance",
+  "[DataService &gt; spatial #](#data-service--spatial)"
+ ],
+ "oversize": false,
+ "doc_sha256": "7cbc49b6691fa3e7eb7b4845837afc3e1a6212bfc5882d676284a0ad154cbad5",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 4434,
+  "cacheReadInputTokens": 13057,
+  "cacheCreationInputTokens": 29735,
+  "webSearchRequests": 0,
+  "costUSD": 0.4147385,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 2789,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.4147385,
+ "duration_ms": 50889,
+ "session_id": "e47e9f99-ecef-428c-b50a-43401bd14618",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"DCAT-US 3 property reference for DataService > spatial: an optional spatial/geographic coverage property whose value is null or an array of Location classes, Location being a named place or geographic area.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"n_spatial_coverage\",\n      \"name\": \"spatial/geographic coverage\",\n      \"aliases\": [\"spatial coverage\", \"DataService spatial property\"],\n      \"description\": \"The DataService property giving a geographic region that is covered by the Data Service; optional, typed as null or an array of Location classes.\",\n      \"anchor\": \"spatial/geographic coverage\",\n      \"location\": \"dcat-us-3-quality-governance#c0073\"\n    },\n    {\n      \"id\": \"n_data_service\",\n      \"name\": \"Data Service\",\n      \"aliases\": [\"DataService\"],\n      \"description\": \"The resource class whose spatial coverage this property describes.\",\n      \"anchor\": \"covered by the Data Service\",\n      \"location\": \"dcat-us-3-quality-governance#c0073\"\n    },\n    {\n      \"id\": \"n_location\",\n      \"name\": \"Location\",\n      \"aliases\": [\"Location class\"],\n      \"description\": \"The class used as the item type of the spatial coverage array.\",\n      \"anchor\": \"named place or geographic area\",\n      \"location\": \"dcat-us-3-quality-governance#c0073\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d_location\",\n      \"term\": \"Location\",\n      \"verbatim_text\": \"A named place or geographic area\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"A named place or geographic area\",\n      \"location\": \"dcat-us-3-quality-governance#c0073\"\n    }\n  ],\n  \"claims\": [\n    {\n      \"id\": \"cl_spatial_scope\",\n      \"claim_text\": \"A geographic region that is covered by the Data Service\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"A geographic region\",\n      \"location\": \"dcat-us-3-quality-governance#c0073\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"d_location\",\n      \"anchor\": \"A named place or geographic area\",\n      \"location\": \"dcat-us-3-quality-governance#c0073\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"cl_spatial_scope\",\n      \"anchor\": \"A geographic region\",\n      \"location\": \"dcat-us-3-quality-governance#c0073\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_spatial_scope\",\n      \"to_id\": \"n_data_service\",\n      \"anchor\": \"covered by the Data Service\",\n      \"location\": \"dcat-us-3-quality-governance#c0073\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"n_spatial_coverage\",\n      \"anchor\": \"spatial/geographic coverage\",\n      \"location\": \"dcat-us-3-quality-governance#c0073\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"n_location\",\n      \"anchor\": \"named place or geographic area\",\n      \"location\": \"dcat-us-3-quality-governance#c0073\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"Organization\",\n      \"anchor\": \"involved with a resource\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"**Title:** spatial/geographic coverage\",\n      \"suggested_edge\": \"has_component\",\n      \"from_id\": \"n_data_service\",\n      \"to_id\": \"n_spatial_coverage\",\n      \"diversion_reason\": \"structural_inference\"\n    },\n    {\n      \"anchor\": \"null or array of\",\n      \"suggested_edge\": \"has_range\",\n      \"from_id\": \"n_spatial_coverage\",\n      \"to_id\": \"n_location\",\n      \"diversion_reason\": \"other:value_type\"\n    },\n    {\n      \"anchor\": \"**Requirement:** Optional\",\n      \"suggested_edge\": \"has_requirement_level\",\n      \"from_id\": \"n_spatial_coverage\",\n      \"to_id\": null,\n      \"diversion_reason\": \"other:cardinality_metadata\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"DCAT-US 3\", \"type\": \"Standard\"},\n    {\"name\": \"Optional\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

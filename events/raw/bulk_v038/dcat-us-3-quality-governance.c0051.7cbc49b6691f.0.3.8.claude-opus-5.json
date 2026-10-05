@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-quality-governance",
+ "chunk_id": "dcat-us-3-quality-governance#c0051",
+ "chunk_index": 51,
+ "chunk_start": 50839,
+ "chunk_end": 51094,
+ "chunk_tokens": 63,
+ "heading_path": [
+  "Quality and Governance",
+  "[DataService &gt; license #](#data-service--license)"
+ ],
+ "oversize": false,
+ "doc_sha256": "7cbc49b6691fa3e7eb7b4845837afc3e1a6212bfc5882d676284a0ad154cbad5",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 3535,
+  "cacheReadInputTokens": 13057,
+  "cacheCreationInputTokens": 29489,
+  "webSearchRequests": 0,
+  "costUSD": 0.38980349999999997,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 2383,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.38980349999999997,
+ "duration_ms": 42746,
+ "session_id": "e740b5bd-f8fd-4961-8f26-dd5a38b4c56d",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"DCAT-US 3 property stub for DataService > license: a Recommended string property defined as the license governing how the data service can be used or reused, with a CC0 URL example.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_license\",\n      \"name\": \"License\",\n      \"aliases\": [\"license\", \"data service license\"],\n      \"description\": \"The license that governs how a data service can be used or reused, recorded as a string-valued DataService property.\",\n      \"anchor\": \"License that governs\",\n      \"location\": \"dcat-us-3-quality-governance#c0051\"\n    },\n    {\n      \"id\": \"c_data_service\",\n      \"name\": \"data service\",\n      \"aliases\": [\"DataService\"],\n      \"description\": \"The asset whose use and reuse the license property governs.\",\n      \"anchor\": \"the data service\",\n      \"location\": \"dcat-us-3-quality-governance#c0051\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d_license\",\n      \"term\": \"License\",\n      \"verbatim_text\": \"License that governs how the data service can be used or reused\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"License that governs\",\n      \"location\": \"dcat-us-3-quality-governance#c0051\"\n    }\n  ],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"d_license\",\n      \"anchor\": \"License that governs\",\n      \"location\": \"dcat-us-3-quality-governance#c0051\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"c_license\",\n      \"anchor\": \"License that governs\",\n      \"location\": \"dcat-us-3-quality-governance#c0051\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"c_data_service\",\n      \"anchor\": \"the data service\",\n      \"location\": \"dcat-us-3-quality-governance#c0051\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"DataService\",\n      \"anchor\": \"## [DataService\"\n    },\n    {\n      \"name\": \"https://creativecommons.org/publicdomain/zero/1.0/\",\n      \"anchor\": \"creativecommons.org/publicdomain\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"**Requirement:** Recommended\",\n      \"suggested_edge\": \"requirement_level\",\n      \"diversion_reason\": \"structural_inference\",\n      \"note\": \"The property's Recommended conformance level is carried by a label line, not by a sentence stating a relation between two typed nodes.\"\n    },\n    {\n      \"anchor\": \"null or string\",\n      \"suggested_edge\": \"has_datatype\",\n      \"diversion_reason\": \"structural_inference\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"Recommended requirement level\", \"type\": \"Concept\"},\n    {\"name\": \"CC0 1.0 Universal Public Domain Dedication\", \"type\": \"Standard\"},\n    {\"name\": \"reuse\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

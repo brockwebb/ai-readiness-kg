@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-temporal-spatial-metrics",
+ "chunk_id": "dcat-us-3-temporal-spatial-metrics#c0003",
+ "chunk_index": 3,
+ "chunk_start": 1308,
+ "chunk_end": 1549,
+ "chunk_tokens": 68,
+ "heading_path": [
+  "Temporal, Spatial, and Metrics",
+  "[PeriodOfTime &gt; anyOf &gt; item 0 #](#period-of-time--anyOf_i0)"
+ ],
+ "oversize": false,
+ "doc_sha256": "083cc7877b8438d25498d71ee0e04b3e0ffdbbef334ff3c5a4735cdf2c8339c7",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 2109,
+  "cacheReadInputTokens": 13057,
+  "cacheCreationInputTokens": 29058,
+  "webSearchRequests": 0,
+  "costUSD": 0.34984350000000003,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 1326,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.34984350000000003,
+ "duration_ms": 25407,
+ "session_id": "3d90b6a5-e43f-4c95-9cab-659d7bd99bc1",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"A JSON-schema reference page fragment for the PeriodOfTime class: its anyOf item 0 is an object permitting additional properties and requiring startDate; the chunk is page structure with almost no asserted prose.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_period_of_time\",\n      \"name\": \"PeriodOfTime\",\n      \"aliases\": [\"dct:PeriodOfTime\", \"Period of Time\"],\n      \"description\": \"Schema class documented in this fragment; its anyOf item 0 is typed as an object that allows any additional properties and requires startDate.\",\n      \"anchor\": \"## [PeriodOfTime\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0003\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-temporal-spatial-metrics\",\n      \"to_id\": \"c_period_of_time\",\n      \"anchor\": \"## [PeriodOfTime\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0003\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"startDate\",\n      \"anchor\": \"startDate\"\n    },\n    {\n      \"name\": \"Additional properties\",\n      \"anchor\": \"**Additional properties**\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"startDate\",\n      \"suggested_edge\": \"has_required_property\",\n      \"from_name\": \"PeriodOfTime\",\n      \"to_name\": \"startDate\",\n      \"diversion_reason\": \"structural_inference\"\n    },\n    {\n      \"anchor\": \"`object`\",\n      \"suggested_edge\": \"has_schema_type\",\n      \"from_name\": \"PeriodOfTime\",\n      \"to_name\": \"object\",\n      \"diversion_reason\": \"structural_inference\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"startDate\", \"type\": \"Concept\"},\n    {\"name\": \"anyOf\", \"type\": \"Concept\"}\n  ]\n}"
+}

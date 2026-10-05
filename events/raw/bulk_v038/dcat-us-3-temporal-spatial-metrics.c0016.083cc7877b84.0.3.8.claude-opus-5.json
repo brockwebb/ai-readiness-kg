@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-temporal-spatial-metrics",
+ "chunk_id": "dcat-us-3-temporal-spatial-metrics#c0016",
+ "chunk_index": 16,
+ "chunk_start": 12712,
+ "chunk_end": 14026,
+ "chunk_tokens": 450,
+ "heading_path": [
+  "Temporal, Spatial, and Metrics",
+  "[Location &gt; geometry #](#location--geometry)"
+ ],
+ "oversize": false,
+ "doc_sha256": "083cc7877b8438d25498d71ee0e04b3e0ffdbbef334ff3c5a4735cdf2c8339c7",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 6255,
+  "cacheReadInputTokens": 13057,
+  "cacheCreationInputTokens": 30086,
+  "webSearchRequests": 0,
+  "costUSD": 0.46377350000000006,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 4154,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.46377350000000006,
+ "duration_ms": 68296,
+ "session_id": "fe51c058-dab5-4f1b-b3b8-e587bae3bf2f",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"DCAT-US 3 schema reference for the optional Location `geometry` property: it associates a location with a geometry described in WKT, GeoJSON, or GML, with anyOf variants (null, string, GeoJSON object requiring type and coordinates).\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_geometry\",\n      \"name\": \"geometry\",\n      \"aliases\": [\"Location geometry\", \"spatial geometry\"],\n      \"description\": \"The property that associates a location with a corresponding geometry serialization.\",\n      \"anchor\": \"corresponding geometry\",\n      \"location\": \"Temporal, Spatial, and Metrics > Location > geometry\"\n    },\n    {\n      \"id\": \"c_location\",\n      \"name\": \"location\",\n      \"aliases\": [\"Location\"],\n      \"description\": \"The spatial entity to which a geometry is attached in the DCAT-US 3 schema.\",\n      \"anchor\": \"Associates a location\",\n      \"location\": \"Temporal, Spatial, and Metrics > Location > geometry\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d_geometry\",\n      \"term\": \"geometry\",\n      \"verbatim_text\": \"Associates a location with a corresponding geometry described in WKT, GeoJSON, or GML format\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"Associates a location with a corresponding\",\n      \"location\": \"Temporal, Spatial, and Metrics > Location > geometry\"\n    }\n  ],\n  \"claims\": [\n    {\n      \"id\": \"cl_required_props\",\n      \"claim_text\": \"The following properties are required\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"platform_official\",\n      \"anchor\": \"following properties are required\",\n      \"location\": \"Temporal, Spatial, and Metrics > Location > geometry > anyOf > item 2\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [\n    {\n      \"id\": \"s_geojson\",\n      \"name\": \"GeoJSON\",\n      \"version\": null,\n      \"steward\": null,\n      \"as_of_date\": null,\n      \"anchor\": \"Geometry represented in GeoJSON\",\n      \"location\": \"Temporal, Spatial, and Metrics > Location > geometry > anyOf > item 2\"\n    },\n    {\n      \"id\": \"s_wkt\",\n      \"name\": \"WKT\",\n      \"version\": null,\n      \"steward\": null,\n      \"as_of_date\": null,\n      \"anchor\": \"described in WKT\",\n      \"location\": \"Temporal, Spatial, and Metrics > Location > geometry\"\n    },\n    {\n      \"id\": \"s_gml\",\n      \"name\": \"GML\",\n      \"version\": null,\n      \"steward\": null,\n      \"as_of_date\": null,\n      \"anchor\": \"the location in WKT, GeoJSON, or GML\",\n      \"location\": \"Temporal, Spatial, and Metrics > Location > geometry > anyOf > item 1\"\n    }\n  ],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-temporal-spatial-metrics\",\n      \"to_id\": \"d_geometry\",\n      \"anchor\": \"Associates a location with a corresponding\",\n      \"location\": \"Temporal, Spatial, and Metrics > Location > geometry\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-temporal-spatial-metrics\",\n      \"to_id\": \"c_geometry\",\n      \"anchor\": \"corresponding geometry\",\n      \"location\": \"Temporal, Spatial, and Metrics > Location > geometry\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-temporal-spatial-metrics\",\n      \"to_id\": \"c_location\",\n      \"anchor\": \"Associates a location\",\n      \"location\": \"Temporal, Spatial, and Metrics > Location > geometry\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"dcat-us-3-temporal-spatial-metrics\",\n      \"to_id\": \"cl_required_props\",\n      \"anchor\": \"following properties are required\",\n      \"location\": \"Temporal, Spatial, and Metrics > Location > geometry > anyOf > item 2\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_required_props\",\n      \"to_id\": \"c_geometry\",\n      \"anchor\": \"Geometry represented in GeoJSON\",\n      \"location\": \"Temporal, Spatial, and Metrics > Location > geometry > anyOf > item 2\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\"name\": \"Point\", \"anchor\": \"Point\"},\n    {\"name\": \"Polygon\", \"anchor\": \"Polygon\"},\n    {\"name\": \"coordinates\", \"anchor\": \"- coordinates\"}\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"corresponding geometry described\",\n      \"suggested_edge\": \"serialized_as\",\n      \"from_id\": \"c_geometry\",\n      \"to_id\": \"s_geojson\",\n      \"diversion_reason\": \"other:no_edge_type\"\n    },\n    {\n      \"anchor\": \"Associates a location with a corresponding geometry\",\n      \"suggested_edge\": \"has_component\",\n      \"from_id\": \"c_location\",\n      \"to_id\": \"c_geometry\",\n      \"diversion_reason\": \"structural_inference\"\n    },\n    {\n      \"anchor\": \"**Requirement:** Optional\",\n      \"suggested_edge\": \"has_requirement_level\",\n      \"from_id\": \"c_geometry\",\n      \"to_id\": null,\n      \"diversion_reason\": \"endpoint_not_located\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"geometry is Optional\", \"type\": \"Claim\"},\n    {\"name\": \"geometry anyOf null variant\", \"type\": \"Concept\"},\n    {\"name\": \"geometry as string serialization\", \"type\": \"Concept\"},\n    {\"name\": \"geometry as GeoJSON object\", \"type\": \"Concept\"},\n    {\"name\": \"coordinates\", \"type\": \"Concept\"},\n    {\"name\": \"combining type\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

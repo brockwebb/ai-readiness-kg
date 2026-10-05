@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-quality-governance",
+ "chunk_id": "dcat-us-3-quality-governance#c0070",
+ "chunk_index": 70,
+ "chunk_start": 58797,
+ "chunk_end": 59257,
+ "chunk_tokens": 111,
+ "heading_path": [
+  "Quality and Governance",
+  "[DataService &gt; qualifiedAttribution #](#data-service--qualifiedAttribution)"
+ ],
+ "oversize": false,
+ "doc_sha256": "7cbc49b6691fa3e7eb7b4845837afc3e1a6212bfc5882d676284a0ad154cbad5",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 3630,
+  "cacheReadInputTokens": 13057,
+  "cacheCreationInputTokens": 29783,
+  "webSearchRequests": 0,
+  "costUSD": 0.3951185,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 2555,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3951185,
+ "duration_ms": 41295,
+ "session_id": "dd714661-2ffa-4409-8508-bbe31818b338",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"DCAT-US 3 property reference for DataService > qualifiedAttribution: an optional list of agents with specific responsibilities for the data service, typed as an array of Attribution classes, with Attribution defined as a responsibility that an agent has for a resource.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_data_service\",\n      \"name\": \"data service\",\n      \"aliases\": [\"DataService\"],\n      \"description\": \"The resource to which a list of agents with specific responsibilities may be attached via qualifiedAttribution.\",\n      \"anchor\": \"for the data service\",\n      \"location\": \"dcat-us-3-quality-governance#c0070\"\n    },\n    {\n      \"id\": \"c_attribution\",\n      \"name\": \"Attribution\",\n      \"aliases\": [\"qualified attribution\"],\n      \"description\": \"Class used as the item type of the qualifiedAttribution array; a responsibility that an agent has for a resource.\",\n      \"anchor\": \"array of [Attribution]\",\n      \"location\": \"dcat-us-3-quality-governance#c0070\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d_attribution\",\n      \"term\": \"Attribution\",\n      \"verbatim_text\": \"A responsibility that an agent has for a resource\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"A responsibility that an agent\",\n      \"location\": \"dcat-us-3-quality-governance#c0070\"\n    }\n  ],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"d_attribution\",\n      \"anchor\": \"A responsibility that an agent\",\n      \"location\": \"dcat-us-3-quality-governance#c0070\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"c_data_service\",\n      \"anchor\": \"specific responsibilities\",\n      \"location\": \"dcat-us-3-quality-governance#c0070\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"Identifier\",\n      \"anchor\": \"[Identifier]\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"suggested_edge\": \"has_component\",\n      \"from_id\": \"c_data_service\",\n      \"to_id\": \"c_attribution\",\n      \"anchor\": \"null or array of\",\n      \"location\": \"dcat-us-3-quality-governance#c0070\",\n      \"diversion_reason\": \"structural_inference\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"qualifiedAttribution\", \"type\": \"Concept\"},\n    {\"name\": \"agent\", \"type\": \"Concept\"},\n    {\"name\": \"resource\", \"type\": \"Concept\"},\n    {\"name\": \"qualifiedAttribution is Optional\", \"type\": \"Claim\"},\n    {\"name\": \"DCAT-US 3\", \"type\": \"Standard\"}\n  ]\n}\n```"
+}

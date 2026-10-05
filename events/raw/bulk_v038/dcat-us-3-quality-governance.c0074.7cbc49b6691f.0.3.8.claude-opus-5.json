@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-quality-governance",
+ "chunk_id": "dcat-us-3-quality-governance#c0074",
+ "chunk_index": 74,
+ "chunk_start": 60659,
+ "chunk_end": 60919,
+ "chunk_tokens": 65,
+ "heading_path": [
+  "Quality and Governance",
+  "[DataService &gt; spatialResolutionInMeters #](#data-service--spatialResolutionInMeters)"
+ ],
+ "oversize": false,
+ "doc_sha256": "7cbc49b6691fa3e7eb7b4845837afc3e1a6212bfc5882d676284a0ad154cbad5",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 6116,
+  "cacheReadInputTokens": 13057,
+  "cacheCreationInputTokens": 29623,
+  "webSearchRequests": 0,
+  "costUSD": 0.45566850000000003,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 4286,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.45566850000000003,
+ "duration_ms": 64866,
+ "session_id": "77c0029a-048b-4173-8ddd-cd460e718540",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"DCAT-US 3 property reference for DataService > spatialResolutionInMeters: optional, defined as the minimum spatial separation resolvable in a Data Service measured in meters, type null or string, example \\\"1000\\\"; preceded by a one-line definition of Location.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_spatialresolutioninmeters\",\n      \"name\": \"spatialResolutionInMeters\",\n      \"aliases\": [\"spatial resolution in meters\", \"DataService spatial resolution\"],\n      \"description\": \"A DataService metadata property expressing the minimum spatial separation resolvable by the service, in meters.\",\n      \"anchor\": \"## [DataService\",\n      \"location\": \"dcat-us-3-quality-governance#c0074\"\n    },\n    {\n      \"id\": \"c_dataservice\",\n      \"name\": \"DataService\",\n      \"aliases\": [\"Data Service\"],\n      \"description\": \"The DCAT-US asset class whose spatial resolution property this section specifies.\",\n      \"anchor\": \"## [DataService\",\n      \"location\": \"dcat-us-3-quality-governance#c0074\"\n    },\n    {\n      \"id\": \"c_location\",\n      \"name\": \"Location\",\n      \"aliases\": [\"geographic area\"],\n      \"description\": \"A named place or geographic area, used in the spatial metadata vocabulary.\",\n      \"anchor\": \"- [Location](\",\n      \"location\": \"dcat-us-3-quality-governance#c0074\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d_spatialresolutioninmeters\",\n      \"term\": \"spatialResolutionInMeters\",\n      \"verbatim_text\": \"The minimum spatial separation resolvable in a Data Service, measured in meters\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"minimum spatial separation resolvable\",\n      \"location\": \"dcat-us-3-quality-governance#c0074\"\n    },\n    {\n      \"id\": \"d_location\",\n      \"term\": \"Location\",\n      \"verbatim_text\": \"A named place or geographic area\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"A named place or geographic area\",\n      \"location\": \"dcat-us-3-quality-governance#c0074\"\n    }\n  ],\n  \"claims\": [\n    {\n      \"id\": \"cl_optional\",\n      \"claim_text\": \"**Requirement:** Optional\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"platform_official\",\n      \"anchor\": \"**Requirement:** Optional\",\n      \"location\": \"dcat-us-3-quality-governance#c0074\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"d_spatialresolutioninmeters\",\n      \"anchor\": \"minimum spatial separation resolvable\",\n      \"location\": \"dcat-us-3-quality-governance#c0074\"\n    },\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"d_location\",\n      \"anchor\": \"A named place or geographic area\",\n      \"location\": \"dcat-us-3-quality-governance#c0074\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"cl_optional\",\n      \"anchor\": \"**Requirement:** Optional\",\n      \"location\": \"dcat-us-3-quality-governance#c0074\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_optional\",\n      \"to_id\": \"c_spatialresolutioninmeters\",\n      \"anchor\": \"**Requirement:** Optional\",\n      \"location\": \"dcat-us-3-quality-governance#c0074\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"c_spatialresolutioninmeters\",\n      \"anchor\": \"## [DataService\",\n      \"location\": \"dcat-us-3-quality-governance#c0074\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"c_dataservice\",\n      \"anchor\": \"## [DataService\",\n      \"location\": \"dcat-us-3-quality-governance#c0074\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"c_location\",\n      \"anchor\": \"- [Location](\",\n      \"location\": \"dcat-us-3-quality-governance#c0074\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [],\n  \"proposed_relationships\": [\n    {\n      \"from_id\": \"c_dataservice\",\n      \"to_id\": \"c_spatialresolutioninmeters\",\n      \"suggested_edge\": \"has_component\",\n      \"diversion_reason\": \"structural_inference\",\n      \"anchor\": \"## [DataService\",\n      \"location\": \"dcat-us-3-quality-governance#c0074\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"null or string\", \"type\": \"Concept\"},\n    {\"name\": \"temporal-spatial-metrics\", \"type\": \"Concept\"}\n  ]\n}"
+}

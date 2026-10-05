@@ -1,0 +1,33 @@
+{
+ "doc_id": "w3c-dqv",
+ "chunk_id": "w3c-dqv#c0013",
+ "chunk_index": 13,
+ "chunk_start": 81134,
+ "chunk_end": 82114,
+ "chunk_tokens": 243,
+ "heading_path": [
+  ":myDatasetDistribution"
+ ],
+ "oversize": false,
+ "doc_sha256": "271d3e820c681127131595d2c8bf8345e925149192f6cab821f101f09d372a63",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 9476,
+  "cacheReadInputTokens": 13057,
+  "cacheCreationInputTokens": 29516,
+  "webSearchRequests": 0,
+  "costUSD": 0.5385985,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 7335,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.5385985,
+ "duration_ms": 100046,
+ "session_id": "867d88a7-d72f-411b-b181-a28ee005e8e9",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"A PROV-based Turtle example showing :myQualityChecking as the activity that generated :myQualityMetadata from :myDatasetDistribution, followed by section 6.3 introducing provenance documentation at the finer granularity of a single quality measurement (dqv:QualityMeasurement vs dqv:QualityMetadata).\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"n_provenance\",\n      \"name\": \"provenance\",\n      \"aliases\": [\"quality provenance\", \"provenance of quality metadata\"],\n      \"description\": \"The record of the activity, agent and inputs that generated quality information, documentable at different levels of granularity.\",\n      \"anchor\": \"discussed provenance\",\n      \"location\": \"w3c-dqv#c0013\"\n    },\n    {\n      \"id\": \"n_quality_measurement_class\",\n      \"name\": \"dqv:QualityMeasurement\",\n      \"aliases\": [\"single quality measurement\"],\n      \"description\": \"The finer granularity level at which provenance can be documented: an individual quality measurement.\",\n      \"anchor\": \"dqv:QualityMeasurement\",\n      \"location\": \"w3c-dqv#c0013\"\n    },\n    {\n      \"id\": \"n_quality_metadata_class\",\n      \"name\": \"dqv:QualityMetadata\",\n      \"aliases\": [\"quality metadata as a whole\"],\n      \"description\": \"The coarser granularity level at which provenance can be documented: quality metadata taken as a whole.\",\n      \"anchor\": \"dqv:QualityMetadata\",\n      \"location\": \"w3c-dqv#c0013\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [\n    {\n      \"id\": \"cl_granularity\",\n      \"claim_text\": \"The group has discussed provenance at different levels of granularity\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"different levels of granularity\",\n      \"location\": \"w3c-dqv#c0013\"\n    },\n    {\n      \"id\": \"cl_checking_generated\",\n      \"claim_text\": \":myQualityChecking is the activity that has generated :myQualityMetadata\",\n      \"claim_type\": \"empirical\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"is the activity that has generated\",\n      \"location\": \"w3c-dqv#c0013\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"w3c-dqv\",\n      \"to_id\": \"n_provenance\",\n      \"anchor\": \"discussed provenance\",\n      \"location\": \"w3c-dqv#c0013\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"w3c-dqv\",\n      \"to_id\": \"n_quality_measurement_class\",\n      \"anchor\": \"dqv:QualityMeasurement\",\n      \"location\": \"w3c-dqv#c0013\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"w3c-dqv\",\n      \"to_id\": \"n_quality_metadata_class\",\n      \"anchor\": \"dqv:QualityMetadata\",\n      \"location\": \"w3c-dqv#c0013\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"w3c-dqv\",\n      \"to_id\": \"cl_granularity\",\n      \"anchor\": \"different levels of granularity\",\n      \"location\": \"w3c-dqv#c0013\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"w3c-dqv\",\n      \"to_id\": \"cl_checking_generated\",\n      \"anchor\": \"is the activity that has generated\",\n      \"location\": \"w3c-dqv#c0013\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_granularity\",\n      \"to_id\": \"n_provenance\",\n      \"anchor\": \"discussed provenance\",\n      \"location\": \"w3c-dqv#c0013\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_checking_generated\",\n      \"to_id\": \"n_provenance\",\n      \"anchor\": \"is the activity that has generated\",\n      \"location\": \"w3c-dqv#c0013\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\"name\": \"Dataset Usage Vocabulary\", \"anchor\": \"Dataset Usage Vocabulary\"},\n    {\"name\": \"Dublin Core\", \"anchor\": \"Dublin Core\"},\n    {\"name\": \"ADMS.SW\", \"anchor\": \"ADMS.SW\"},\n    {\"name\": \"prov:Activity\", \"anchor\": \"prov:Activity\"},\n    {\"name\": \":myQualityChecker\", \"anchor\": \":myQualityChecker\"},\n    {\"name\": \":myMeasurement\", \"anchor\": \"`:myMeasurement`\"}\n  ],\n  \"proposed_relationships\": [\n    {\n      \"suggested_edge\": \"has_quality_measurement\",\n      \"anchor\": \"dqv:hasQualityMeasurement :myMeasurement .\",\n      \"diversion_reason\": \"endpoint_not_located\",\n      \"note\": \"Example instance :myDatasetDistribution is not a typed node in this chunk.\"\n    },\n    {\n      \"suggested_edge\": \"generated\",\n      \"anchor\": \"prov:generated\",\n      \"diversion_reason\": \"endpoint_not_located\",\n      \"note\": \"Example instances :myQualityChecking and :myQualityMetadata are not typed nodes.\"\n    },\n    {\n      \"suggested_edge\": \"was_associated_with\",\n      \"anchor\": \"prov:wasAssociatedWith\",\n      \"diversion_reason\": \"endpoint_not_located\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"dqv:hasQualityMeasurement\", \"type\": \"Concept\"},\n    {\"name\": \"quality checking activity\", \"type\": \"Concept\"},\n    {\"name\": \"levels of granularity\", \"type\": \"Concept\"},\n    {\"name\": \"Dataset Usage Vocabulary (DUV)\", \"type\": \"Standard\"},\n    {\"name\": \"Dublin Core\", \"type\": \"Standard\"},\n    {\"name\": \"ADMS.SW\", \"type\": \"Standard\"},\n    {\"name\": \"PROV\", \"type\": \"Standard\"}\n  ]\n}\n```"
+}

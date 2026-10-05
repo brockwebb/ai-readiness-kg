@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-dataset-schema-2026-09-15",
+ "chunk_id": "dcat-us-3-dataset-schema-2026-09-15#c0007",
+ "chunk_index": 7,
+ "chunk_start": 33367,
+ "chunk_end": 33846,
+ "chunk_tokens": 113,
+ "heading_path": [
+  "DCAT-US 3.0: Dataset",
+  "[Dataset &gt; accessRestriction #](#accessRestriction)"
+ ],
+ "oversize": false,
+ "doc_sha256": "0ef64d14a0901d5e7f84fee15bab1474353880ee4b64aec9c185b06149e067de",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 4019,
+  "cacheReadInputTokens": 13056,
+  "cacheCreationInputTokens": 29671,
+  "webSearchRequests": 0,
+  "costUSD": 0.40372299999999994,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 2321,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.40372299999999994,
+ "duration_ms": 42355,
+ "session_id": "abcf9a4f-9dcb-43af-976a-b0d963c67af3",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Schema reference entry for the Dataset property `accessRestriction`: requirement level Recommended, typed as null or an array of AccessRestriction classes, with a one-line definition of AccessRestriction as rules or indicators describing who can access a resource.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_access_restrictions\",\n      \"name\": \"access restrictions\",\n      \"aliases\": [\"accessRestriction\", \"Dataset > accessRestriction\"],\n      \"description\": \"The Dataset property holding a list of access restrictions related to the dataset.\",\n      \"anchor\": \"access restrictions related to\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0007\"\n    },\n    {\n      \"id\": \"c_access_restriction_class\",\n      \"name\": \"AccessRestriction\",\n      \"aliases\": [\"AccessRestriction class\"],\n      \"description\": \"The class used for each item of the accessRestriction array; rules or indicators describing who can access a resource.\",\n      \"anchor\": \"who can access a resource\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0007\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d_access_restriction\",\n      \"term\": \"AccessRestriction\",\n      \"verbatim_text\": \"Rules or indicators that describe who can access a resource\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"Rules or indicators\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0007\"\n    }\n  ],\n  \"claims\": [\n    {\n      \"id\": \"cl_recommended\",\n      \"claim_text\": \"Recommended\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"platform_official\",\n      \"anchor\": \"Requirement:** Recommended\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0007\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"d_access_restriction\",\n      \"anchor\": \"Rules or indicators\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0007\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"c_access_restrictions\",\n      \"anchor\": \"List of access restrictions\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0007\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"c_access_restriction_class\",\n      \"anchor\": \"array of\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0007\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"cl_recommended\",\n      \"anchor\": \"**Requirement:**\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0007\"\n    },\n    {\n      \"type\": \"grounds\",\n      \"from_id\": \"c_access_restriction_class\",\n      \"to_id\": \"d_access_restriction\",\n      \"anchor\": \"describe who can access\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0007\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"dataset\",\n      \"anchor\": \"the dataset\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"suggested_edge\": \"has_property\",\n      \"from_id\": \"dataset\",\n      \"to_id\": \"c_access_restrictions\",\n      \"anchor\": \"accessRestriction #](#accessRestriction)\",\n      \"diversion_reason\": \"structural_inference\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0007\"\n    },\n    {\n      \"suggested_edge\": \"has_item_type\",\n      \"from_id\": \"c_access_restrictions\",\n      \"to_id\": \"c_access_restriction_class\",\n      \"anchor\": \"null or array of\",\n      \"diversion_reason\": \"other:type_constraint\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0007\"\n    }\n  ],\n  \"gleaned\": [\n    { \"name\": \"DCAT-US 3.0\", \"type\": \"Standard\" },\n    { \"name\": \"Constraints and Restrictions\", \"type\": \"Concept\" },\n    { \"name\": \"resource\", \"type\": \"Concept\" },\n    { \"name\": \"Requirement level\", \"type\": \"Concept\" }\n  ]\n}\n```"
+}

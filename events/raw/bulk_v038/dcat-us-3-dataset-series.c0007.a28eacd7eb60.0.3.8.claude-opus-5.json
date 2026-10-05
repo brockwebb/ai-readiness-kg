@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-dataset-series",
+ "chunk_id": "dcat-us-3-dataset-series#c0007",
+ "chunk_index": 7,
+ "chunk_start": 10507,
+ "chunk_end": 10883,
+ "chunk_tokens": 120,
+ "heading_path": [
+  "DCAT-US 3.0: Dataset Series",
+  "[DatasetSeries &gt; modified #](#modified)"
+ ],
+ "oversize": false,
+ "doc_sha256": "a28eacd7eb60ddd04b52b4852e0e229fb96ff397056fbeac4dcc75a0e40c03da",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 6413,
+  "cacheReadInputTokens": 13055,
+  "cacheCreationInputTokens": 29642,
+  "webSearchRequests": 0,
+  "costUSD": 0.46328250000000004,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 4798,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.46328250000000004,
+ "duration_ms": 72037,
+ "session_id": "263937f3-bf13-4174-8abb-098fe929102e",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Spec entry for the DatasetSeries `modified` property — its title (update/modification date), Recommended requirement level, the rule that it is the date the Dataset Series itself changed rather than the newest member dataset's modified date, its null-or-object type, and date-format examples; plus a trailing definition of Kind carried from the preceding agents section.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"n_dataset_series\",\n      \"name\": \"Dataset Series\",\n      \"aliases\": [\"DatasetSeries\", \"dcat:DatasetSeries\"],\n      \"description\": \"The series-level resource whose own most-recent change date is what the modified property records.\",\n      \"anchor\": \"Dataset Series changed\",\n      \"location\": \"dcat-us-3-dataset-series#c0007\"\n    },\n    {\n      \"id\": \"n_mod_date\",\n      \"name\": \"update/modification date\",\n      \"aliases\": [\"modified\", \"modification date\"],\n      \"description\": \"Title given to the modified property of a Dataset Series.\",\n      \"anchor\": \"update/modification date\",\n      \"location\": \"dcat-us-3-dataset-series#c0007\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"n_def_modified\",\n      \"term\": \"modified\",\n      \"verbatim_text\": \"Most recent date when the Dataset Series changed, not the modified date of the newest dataset in the series\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"Most recent date\",\n      \"location\": \"dcat-us-3-dataset-series#c0007\"\n    },\n    {\n      \"id\": \"n_def_kind\",\n      \"term\": \"Kind\",\n      \"verbatim_text\": \"Contact information for an individual or entity\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"Contact information\",\n      \"location\": \"dcat-us-3-dataset-series#c0007\"\n    }\n  ],\n  \"claims\": [\n    {\n      \"id\": \"n_claim_modified_scope\",\n      \"claim_text\": \"Most recent date when the Dataset Series changed, not the modified date of the newest dataset in the series\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"not the modified date\",\n      \"location\": \"dcat-us-3-dataset-series#c0007\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-dataset-series\",\n      \"to_id\": \"n_def_modified\",\n      \"anchor\": \"Most recent date when the Dataset Series changed\",\n      \"location\": \"dcat-us-3-dataset-series#c0007\"\n    },\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-dataset-series\",\n      \"to_id\": \"n_def_kind\",\n      \"anchor\": \"individual or entity\",\n      \"location\": \"dcat-us-3-dataset-series#c0007\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"dcat-us-3-dataset-series\",\n      \"to_id\": \"n_claim_modified_scope\",\n      \"anchor\": \"newest dataset in the series\",\n      \"location\": \"dcat-us-3-dataset-series#c0007\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"n_claim_modified_scope\",\n      \"to_id\": \"n_dataset_series\",\n      \"anchor\": \"when the Dataset Series\",\n      \"location\": \"dcat-us-3-dataset-series#c0007\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-dataset-series\",\n      \"to_id\": \"n_mod_date\",\n      \"anchor\": \"update/modification\",\n      \"location\": \"dcat-us-3-dataset-series#c0007\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"dataset\",\n      \"anchor\": \"newest dataset\"\n    },\n    {\n      \"name\": \"Recommended\",\n      \"anchor\": \"Requirement:\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"suggested_edge\": \"has_component\",\n      \"from_name\": \"Dataset Series\",\n      \"to_name\": \"update/modification date\",\n      \"anchor\": \"Most recent date when the Dataset Series changed\",\n      \"diversion_reason\": \"structural_inference\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"DCAT-US 3.0\", \"type\": \"Standard\"},\n    {\"name\": \"DatasetSeries\", \"type\": \"Concept\"},\n    {\"name\": \"ISO 8601 date value\", \"type\": \"Concept\"}\n  ]\n}"
+}

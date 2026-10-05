@@ -1,0 +1,33 @@
+{
+ "doc_id": "dcat-us-3-implementation-guide",
+ "chunk_id": "dcat-us-3-implementation-guide#c0040",
+ "chunk_index": 40,
+ "chunk_start": 136798,
+ "chunk_end": 138997,
+ "chunk_tokens": 560,
+ "heading_path": [
+  "DCAT."
+ ],
+ "oversize": false,
+ "doc_sha256": "26e4c3baecb2aa0e2f486ae65a2f0404da32fdbb402baf4f71239ab4c31d268c",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 7015,
+  "cacheReadInputTokens": 13056,
+  "cacheCreationInputTokens": 30828,
+  "webSearchRequests": 0,
+  "costUSD": 0.490193,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 4830,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.490193,
+ "duration_ms": 77658,
+ "session_id": "67df286e-5c7e-4d03-b9b7-aba24a392afa",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Page 49-50 of the DCAT-US v3.0 Implementation Guide: a note that agencies submitting completed JSON to harvest.data.gov can use this page to troubleshoot submission errors, followed by Example 8 (All Core Classes) showing a Catalog conforming to DCAT-US v3.0 with a nested Dataset.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"concept-catalog\",\n      \"name\": \"Catalog\",\n      \"aliases\": [\"dcat:Catalog\", \"Data Catalog\"],\n      \"description\": \"The core class serialized at the top level of the example, carrying conformsTo, title, homepage, issued, modified, rights, spatial, themeTaxonomy, language, publisher and dataset properties.\",\n      \"anchor\": \"\\\"@type\\\":  \\\"Catalog\\\"\",\n      \"location\": \"dcat-us-3-implementation-guide#c0040\"\n    },\n    {\n      \"id\": \"concept-dataset\",\n      \"name\": \"Dataset\",\n      \"aliases\": [\"dcat:Dataset\"],\n      \"description\": \"The core class nested under the Catalog's dataset property in Example 8, carrying @id, title and description.\",\n      \"anchor\": \"\\\"@type\\\":  \\\"Dataset\\\"\",\n      \"location\": \"dcat-us-3-implementation-guide#c0040\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [\n    {\n      \"id\": \"standard-dcat-us-v3\",\n      \"name\": \"DCAT-US  v3.0\",\n      \"version\": \"3.0\",\n      \"steward\": null,\n      \"as_of_date\": null,\n      \"anchor\": \"\\\"DCAT-US  v3.0\\\"\",\n      \"location\": \"dcat-us-3-implementation-guide#c0040\"\n    }\n  ],\n  \"frameworks\": [],\n  \"practices\": [\n    {\n      \"id\": \"practice-troubleshoot-submission\",\n      \"text\": \"When  submitting  a  completed  JSON  to  harvest.data.gov,  agencies  can  also  reference  the  information  on  this  page to  troubleshoot  any  errors  encountered  during  the  submission  process.\",\n      \"as_of_date\": null,\n      \"scope\": \"advisory\",\n      \"anchor\": \"troubleshoot  any  errors\",\n      \"location\": \"dcat-us-3-implementation-guide#c0040\"\n    }\n  ],\n  \"tools\": [],\n  \"platforms\": [\n    {\n      \"id\": \"platform-harvest-data-gov\",\n      \"name\": \"harvest.data.gov\",\n      \"operator\": null,\n      \"as_of_date\": null,\n      \"anchor\": \"harvest.data.gov\",\n      \"location\": \"dcat-us-3-implementation-guide#c0040\"\n    }\n  ],\n  \"edges\": [\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-implementation-guide\",\n      \"to_id\": \"concept-catalog\",\n      \"anchor\": \"\\\"@type\\\":  \\\"Catalog\\\"\",\n      \"location\": \"dcat-us-3-implementation-guide#c0040\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-implementation-guide\",\n      \"to_id\": \"concept-dataset\",\n      \"anchor\": \"\\\"@type\\\":  \\\"Dataset\\\"\",\n      \"location\": \"dcat-us-3-implementation-guide#c0040\"\n    },\n    {\n      \"type\": \"recommends\",\n      \"from_id\": \"dcat-us-3-implementation-guide\",\n      \"to_id\": \"practice-troubleshoot-submission\",\n      \"anchor\": \"reference  the  information  on  this  page\",\n      \"location\": \"dcat-us-3-implementation-guide#c0040\"\n    },\n    {\n      \"type\": \"targets\",\n      \"from_id\": \"practice-troubleshoot-submission\",\n      \"to_id\": \"platform-harvest-data-gov\",\n      \"anchor\": \"submitting  a  completed  JSON\",\n      \"location\": \"dcat-us-3-implementation-guide#c0040\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"U.S.  General  Services  Administration\",\n      \"anchor\": \"\\\"U.S.  General  Services  Administration\\\"\"\n    },\n    {\n      \"name\": \"GSA  Public  Buildings  Service  Data  Catalog\",\n      \"anchor\": \"GSA  Public  Buildings  Service  Data  Catalog\"\n    },\n    {\n      \"name\": \"Data.gov  Theme  Taxonomy\",\n      \"anchor\": \"Data.gov  Theme  Taxonomy\"\n    },\n    {\n      \"name\": \"GSA  Public  Buildings  Service  Data  Themes\",\n      \"anchor\": \"Service  Data  Themes\"\n    },\n    {\n      \"name\": \"GSA  Federal  Building  Energy  Usage  Data  2026\",\n      \"anchor\": \"Federal  Building  Energy  Usage  Data  2026\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"\\\"conformsTo\\\"\",\n      \"suggested_edge\": \"implements\",\n      \"from_id\": \"concept-catalog\",\n      \"to_id\": \"standard-dcat-us-v3\",\n      \"diversion_reason\": \"structural_inference\"\n    },\n    {\n      \"anchor\": \"\\\"dataset\\\":  [\",\n      \"suggested_edge\": \"has_component\",\n      \"from_id\": \"concept-catalog\",\n      \"to_id\": \"concept-dataset\",\n      \"diversion_reason\": \"structural_inference\"\n    },\n    {\n      \"anchor\": \"a  completed  JSON  to  harvest.data.gov\",\n      \"suggested_edge\": \"consumes\",\n      \"from_id\": \"platform-harvest-data-gov\",\n      \"to_id\": \"standard-dcat-us-v3\",\n      \"diversion_reason\": \"predicate_not_located\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"ConceptScheme\", \"type\": \"Concept\"},\n    {\"name\": \"Organization\", \"type\": \"Concept\"},\n    {\"name\": \"Location\", \"type\": \"Concept\"},\n    {\"name\": \"Document\", \"type\": \"Concept\"},\n    {\"name\": \"Standard\", \"type\": \"Concept\"},\n    {\"name\": \"themeTaxonomy\", \"type\": \"Concept\"},\n    {\"name\": \"Example 8: All Core Classes\", \"type\": \"Concept\"},\n    {\"name\": \"Data.gov Theme Taxonomy\", \"type\": \"Framework\"}\n  ]\n}\n```"
+}

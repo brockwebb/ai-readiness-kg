@@ -1,0 +1,33 @@
+{
+ "doc_id": "dcat-us-3-dataset-schema-2026-09-15",
+ "chunk_id": "dcat-us-3-dataset-schema-2026-09-15#c0001",
+ "chunk_index": 1,
+ "chunk_start": 0,
+ "chunk_end": 1799,
+ "chunk_tokens": 555,
+ "heading_path": [
+  "DCAT-US 3.0: Dataset"
+ ],
+ "oversize": false,
+ "doc_sha256": "0ef64d14a0901d5e7f84fee15bab1474353880ee4b64aec9c185b06149e067de",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 5994,
+  "cacheReadInputTokens": 13056,
+  "cacheCreationInputTokens": 30918,
+  "webSearchRequests": 0,
+  "costUSD": 0.46556800000000004,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 4247,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.46556800000000004,
+ "duration_ms": 69144,
+ "session_id": "940b2ac4-bb0f-4b35-bc17-fc870b83d742",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Schema reference page for the DCAT-US 3.0 Dataset object: a one-line gloss, the class definition ('A collection of data published or curated by one provider'), the object type/additional-properties rules, and a worked JSON example naming Distribution, Location, PeriodOfTime and Document types.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_dataset\",\n      \"name\": \"Dataset\",\n      \"aliases\": [\"DCAT-US Dataset\", \"dcat:Dataset\"],\n      \"description\": \"The schema object describing a dataset, including identifiers, contacts, coverage, distributions, and related resources.\",\n      \"anchor\": \"\\\"@type\\\" : \\\"Dataset\\\"\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0001\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d_dataset\",\n      \"term\": \"Dataset\",\n      \"verbatim_text\": \"A collection of data published or curated by one provider\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"curated by one provider\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0001\"\n    }\n  ],\n  \"claims\": [\n    {\n      \"id\": \"cl_addl_props\",\n      \"claim_text\": \"Any type allowed\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"platform_official\",\n      \"anchor\": \"Any type allowed\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0001\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [\n    {\n      \"id\": \"s_dcat_us_3\",\n      \"name\": \"DCAT-US 3.0\",\n      \"version\": \"3.0\",\n      \"steward\": null,\n      \"as_of_date\": null,\n      \"anchor\": \"# DCAT-US\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0001\"\n    }\n  ],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"c_dataset\",\n      \"anchor\": \"\\\"@type\\\" : \\\"Dataset\\\"\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0001\"\n    },\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"d_dataset\",\n      \"anchor\": \"curated by one provider\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0001\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"cl_addl_props\",\n      \"anchor\": \"Any type allowed\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0001\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_addl_props\",\n      \"to_id\": \"c_dataset\",\n      \"anchor\": \"**Additional properties**\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0001\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"Distribution\",\n      \"anchor\": \"\\\"@type\\\" : \\\"Distribution\\\"\"\n    },\n    {\n      \"name\": \"Location\",\n      \"anchor\": \"\\\"@type\\\" : \\\"Location\\\"\"\n    },\n    {\n      \"name\": \"PeriodOfTime\",\n      \"anchor\": \"\\\"@type\\\" : \\\"PeriodOfTime\\\"\"\n    },\n    {\n      \"name\": \"Document\",\n      \"anchor\": \"\\\"@type\\\" : \\\"Document\\\"\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"suggested_edge\": \"has_component\",\n      \"from_id\": \"c_dataset\",\n      \"to_name\": \"Distribution\",\n      \"anchor\": \"including identifiers, contacts, coverage, distributions\",\n      \"diversion_reason\": \"structural_inference\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0001\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"identifier\", \"type\": \"Concept\"},\n    {\"name\": \"contactPoint\", \"type\": \"Concept\"},\n    {\"name\": \"publisher\", \"type\": \"Concept\"},\n    {\"name\": \"accrualPeriodicity\", \"type\": \"Concept\"},\n    {\"name\": \"accessRights\", \"type\": \"Concept\"},\n    {\"name\": \"spatial\", \"type\": \"Concept\"},\n    {\"name\": \"temporal\", \"type\": \"Concept\"},\n    {\"name\": \"theme\", \"type\": \"Concept\"},\n    {\"name\": \"landingPage\", \"type\": \"Concept\"},\n    {\"name\": \"describedBy\", \"type\": \"Concept\"},\n    {\"name\": \"rights\", \"type\": \"Concept\"},\n    {\"name\": \"keyword\", \"type\": \"Concept\"}\n  ]\n}"
+}

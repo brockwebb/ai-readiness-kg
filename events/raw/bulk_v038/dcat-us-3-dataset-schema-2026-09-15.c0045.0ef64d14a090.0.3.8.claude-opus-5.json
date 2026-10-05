@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-dataset-schema-2026-09-15",
+ "chunk_id": "dcat-us-3-dataset-schema-2026-09-15#c0045",
+ "chunk_index": 45,
+ "chunk_start": 50230,
+ "chunk_end": 50964,
+ "chunk_tokens": 167,
+ "heading_path": [
+  "DCAT-US 3.0: Dataset",
+  "[Dataset &gt; provenance #](#provenance)"
+ ],
+ "oversize": false,
+ "doc_sha256": "0ef64d14a0901d5e7f84fee15bab1474353880ee4b64aec9c185b06149e067de",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 9102,
+  "cacheReadInputTokens": 13056,
+  "cacheCreationInputTokens": 29843,
+  "webSearchRequests": 0,
+  "costUSD": 0.532518,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 7504,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.532518,
+ "duration_ms": 101572,
+ "session_id": "ca4fb38a-e8ce-40f4-8cf3-95aaeef1297e",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Schema entry for the optional Dataset `provenance` property: an array of statements about a Dataset's lineage, ownership, and custody changes, with each item defined as the full text of a provenance statement.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c1\",\n      \"name\": \"provenance\",\n      \"aliases\": [\"provenance statement\", \"Dataset provenance\"],\n      \"description\": \"A Dataset property holding statements about the lineage of a Dataset, including changes in ownership or custody since creation that bear on authenticity, integrity, or interpretation.\",\n      \"anchor\": \"provenance items\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0045\"\n    },\n    {\n      \"id\": \"c2\",\n      \"name\": \"Dataset\",\n      \"aliases\": [\"dcat:Dataset\"],\n      \"description\": \"The resource class whose lineage, ownership, and custody changes the provenance statements describe.\",\n      \"anchor\": \"lineage of a Dataset\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0045\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d1\",\n      \"term\": \"provenance statement\",\n      \"verbatim_text\": \"Full text of the provenance statement\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"provenance items\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0045\"\n    }\n  ],\n  \"claims\": [\n    {\n      \"id\": \"cl1\",\n      \"claim_text\": \"List of statements about the lineage of a Dataset, including any changes in its ownership or custody since its creation that may be significant for its authenticity, integrity, or interpretation\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"ownership or custody since its creation\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0045\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"d1\",\n      \"anchor\": \"provenance items\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0045\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"c1\",\n      \"anchor\": \"provenance items\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0045\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"c2\",\n      \"anchor\": \"lineage of a Dataset\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0045\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"cl1\",\n      \"anchor\": \"ownership or custody since its creation\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0045\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl1\",\n      \"to_id\": \"c1\",\n      \"anchor\": \"lineage of a Dataset\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0045\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"WMO guidelines\",\n      \"anchor\": \"WMO guidelines\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"suggested_edge\": \"has_component\",\n      \"from_id\": \"c2\",\n      \"to_id\": \"c1\",\n      \"anchor\": \"provenance items\",\n      \"diversion_reason\": \"structural_inference\"\n    },\n    {\n      \"suggested_edge\": \"has_component\",\n      \"from_id\": \"c1\",\n      \"to_id\": \"d1\",\n      \"anchor\": \"Array Item #\",\n      \"diversion_reason\": \"structural_inference\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"Requirement: Optional\", \"type\": \"Claim\"},\n    {\"name\": \"null or array of string\", \"type\": \"Claim\"},\n    {\"name\": \"DCAT-US 3.0\", \"type\": \"Standard\"},\n    {\"name\": \"quality control procedures\", \"type\": \"Concept\"}\n  ]\n}"
+}

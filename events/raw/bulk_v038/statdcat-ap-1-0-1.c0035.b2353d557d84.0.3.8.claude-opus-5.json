@@ -1,0 +1,33 @@
+{
+ "doc_id": "statdcat-ap-1-0-1",
+ "chunk_id": "statdcat-ap-1-0-1#c0035",
+ "chunk_index": 35,
+ "chunk_start": 200993,
+ "chunk_end": 201322,
+ "chunk_tokens": 78,
+ "heading_path": [
+  "-- Dataset --------------------------------------------"
+ ],
+ "oversize": false,
+ "doc_sha256": "b2353d557d84c0f853380723447cd26f0c47a92bc444a6193dad52868eeb1d69",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 2513,
+  "cacheReadInputTokens": 13057,
+  "cacheCreationInputTokens": 29698,
+  "webSearchRequests": 0,
+  "costUSD": 0.36634349999999993,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 1634,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.36634349999999993,
+ "duration_ms": 30854,
+ "session_id": "6db2ccbe-546a-4c2f-9530-d7d0ea32a32d",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"A Turtle example fragment from the StatDCAT-AP spec: two @prefix declarations and an example dcat:Dataset (eg:dataset-le3) carrying dct:title, dct:description, dct:publisher and dct:issued — example code, not prose assertions.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c-dataset\",\n      \"name\": \"dcat:Dataset\",\n      \"aliases\": [\"Dataset\", \"DCAT Dataset\"],\n      \"description\": \"The asset class instantiated by the example resource, which the chunk describes by giving it a title, description, publisher and issue date.\",\n      \"anchor\": \"a dcat:Dataset\",\n      \"location\": \"statdcat-ap-1-0-1#c0035\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"statdcat-ap-1-0-1\",\n      \"to_id\": \"c-dataset\",\n      \"anchor\": \"a dcat:Dataset\",\n      \"location\": \"statdcat-ap-1-0-1#c0035\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"Life expectancy\",\n      \"anchor\": \"\\\"Life expectancy\\\"@en\"\n    },\n    {\n      \"name\": \"Stats Wales\",\n      \"anchor\": \"Stats Wales\"\n    },\n    {\n      \"name\": \"Welsh Unitary authorities\",\n      \"anchor\": \"Welsh Unitary authorities\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"eg:dataset-le3\",\n      \"suggested_edge\": \"exemplifies\",\n      \"diversion_reason\": \"structural_inference\"\n    },\n    {\n      \"anchor\": \"dct:publisher   eg:organization\",\n      \"suggested_edge\": \"published_by\",\n      \"diversion_reason\": \"cross_chunk\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"dct:title\", \"type\": \"Concept\"},\n    {\"name\": \"dct:description\", \"type\": \"Concept\"},\n    {\"name\": \"dct:publisher\", \"type\": \"Concept\"},\n    {\"name\": \"dct:issued\", \"type\": \"Concept\"},\n    {\"name\": \"xsd:date\", \"type\": \"Standard\"},\n    {\"name\": \"data-theme authority\", \"type\": \"Standard\"}\n  ]\n}\n```"
+}

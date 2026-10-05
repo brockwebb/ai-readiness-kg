@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-quality-governance",
+ "chunk_id": "dcat-us-3-quality-governance#c0079",
+ "chunk_index": 79,
+ "chunk_start": 62563,
+ "chunk_end": 63003,
+ "chunk_tokens": 112,
+ "heading_path": [
+  "Quality and Governance",
+  "[DataService &gt; wasUsedBy #](#data-service--wasUsedBy)"
+ ],
+ "oversize": false,
+ "doc_sha256": "7cbc49b6691fa3e7eb7b4845837afc3e1a6212bfc5882d676284a0ad154cbad5",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 6389,
+  "cacheReadInputTokens": 13057,
+  "cacheCreationInputTokens": 29196,
+  "webSearchRequests": 0,
+  "costUSD": 0.4582235,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 4218,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.4582235,
+ "duration_ms": 65639,
+ "session_id": "e9314243-8f65-4b18-8363-a90f96a1612f",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"DCAT-US 3 property reference for DataService wasUsedBy: an optional list of Activity instances that used or tested the data service, plus inline glosses for UseRestriction and Activity.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_was_used_by\",\n      \"name\": \"wasUsedBy\",\n      \"aliases\": [\"DataService > wasUsedBy\"],\n      \"description\": \"Optional DataService property listing activities that used or tested the data service.\",\n      \"anchor\": \"## [DataService\",\n      \"location\": \"dcat-us-3-quality-governance#c0079\"\n    },\n    {\n      \"id\": \"c_data_service\",\n      \"name\": \"data service\",\n      \"aliases\": [\"DataService\"],\n      \"description\": \"The resource whose use or testing activities wasUsedBy enumerates.\",\n      \"anchor\": \"the data service\",\n      \"location\": \"dcat-us-3-quality-governance#c0079\"\n    },\n    {\n      \"id\": \"c_activity\",\n      \"name\": \"Activity\",\n      \"aliases\": [],\n      \"description\": \"Class used as the item type of the wasUsedBy array; an activity related to creating, changing, or using a resource.\",\n      \"anchor\": \"array of [Activity]\",\n      \"location\": \"dcat-us-3-quality-governance#c0079\"\n    },\n    {\n      \"id\": \"c_use_restriction\",\n      \"name\": \"UseRestriction\",\n      \"aliases\": [\"use restriction\"],\n      \"description\": \"Rules or legal limits on how a resource may be used.\",\n      \"anchor\": \"[UseRestriction]\",\n      \"location\": \"dcat-us-3-quality-governance#c0079\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d_use_restriction\",\n      \"term\": \"UseRestriction\",\n      \"verbatim_text\": \"Rules or legal limits on how a resource may be used\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"legal limits\",\n      \"location\": \"dcat-us-3-quality-governance#c0079\"\n    },\n    {\n      \"id\": \"d_activity\",\n      \"term\": \"Activity\",\n      \"verbatim_text\": \"An activity related to creating, changing, or using a resource\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"An activity related\",\n      \"location\": \"dcat-us-3-quality-governance#c0079\"\n    }\n  ],\n  \"claims\": [\n    {\n      \"id\": \"cl_was_used_by_scope\",\n      \"claim_text\": \"List of activities that used or tested the data service\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"used or tested\",\n      \"location\": \"dcat-us-3-quality-governance#c0079\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"d_use_restriction\",\n      \"anchor\": \"legal limits\",\n      \"location\": \"dcat-us-3-quality-governance#c0079\"\n    },\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"d_activity\",\n      \"anchor\": \"An activity related\",\n      \"location\": \"dcat-us-3-quality-governance#c0079\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"c_was_used_by\",\n      \"anchor\": \"## [DataService\",\n      \"location\": \"dcat-us-3-quality-governance#c0079\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"c_data_service\",\n      \"anchor\": \"the data service\",\n      \"location\": \"dcat-us-3-quality-governance#c0079\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"c_activity\",\n      \"anchor\": \"array of [Activity]\",\n      \"location\": \"dcat-us-3-quality-governance#c0079\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"c_use_restriction\",\n      \"anchor\": \"[UseRestriction]\",\n      \"location\": \"dcat-us-3-quality-governance#c0079\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"cl_was_used_by_scope\",\n      \"anchor\": \"used or tested\",\n      \"location\": \"dcat-us-3-quality-governance#c0079\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_was_used_by_scope\",\n      \"to_id\": \"c_was_used_by\",\n      \"anchor\": \"used or tested\",\n      \"location\": \"dcat-us-3-quality-governance#c0079\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [],\n  \"proposed_relationships\": [\n    {\n      \"suggested_edge\": \"property_of\",\n      \"from_id\": \"c_was_used_by\",\n      \"to_id\": \"c_data_service\",\n      \"anchor\": \"## [DataService\",\n      \"diversion_reason\": \"structural_inference\",\n      \"location\": \"dcat-us-3-quality-governance#c0079\"\n    },\n    {\n      \"suggested_edge\": \"has_range\",\n      \"from_id\": \"c_was_used_by\",\n      \"to_id\": \"c_activity\",\n      \"anchor\": \"array of [Activity]\",\n      \"diversion_reason\": \"other:no_schema_edge\",\n      \"location\": \"dcat-us-3-quality-governance#c0079\"\n    },\n    {\n      \"suggested_edge\": \"requirement_level\",\n      \"from_id\": \"c_was_used_by\",\n      \"to_id\": \"optional\",\n      \"anchor\": \"Optional\",\n      \"diversion_reason\": \"other:no_schema_edge\",\n      \"location\": \"dcat-us-3-quality-governance#c0079\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"DCAT-US 3\", \"type\": \"Standard\"},\n    {\"name\": \"resource\", \"type\": \"Concept\"},\n    {\"name\": \"constraints and restrictions\", \"type\": \"Concept\"}\n  ]\n}"
+}

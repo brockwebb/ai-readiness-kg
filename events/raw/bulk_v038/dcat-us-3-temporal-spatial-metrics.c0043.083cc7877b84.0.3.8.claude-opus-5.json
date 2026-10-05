@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-temporal-spatial-metrics",
+ "chunk_id": "dcat-us-3-temporal-spatial-metrics#c0043",
+ "chunk_index": 43,
+ "chunk_start": 26771,
+ "chunk_end": 26942,
+ "chunk_tokens": 55,
+ "heading_path": [
+  "Temporal, Spatial, and Metrics",
+  "[Address &gt; @id #](#address--@id)"
+ ],
+ "oversize": false,
+ "doc_sha256": "083cc7877b8438d25498d71ee0e04b3e0ffdbbef334ff3c5a4735cdf2c8339c7",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 2628,
+  "cacheReadInputTokens": 13057,
+  "cacheCreationInputTokens": 28918,
+  "webSearchRequests": 0,
+  "costUSD": 0.3614185,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 1987,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.3614185,
+ "duration_ms": 31914,
+ "session_id": "e8baf624-74ae-4077-bb8c-b2417e05d23d",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Schema reference entry for the Address `@id` property: optional, type string, format iri, with an example IRI value — structural property metadata, almost no asserted content.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c-address-at-id\",\n      \"name\": \"@id\",\n      \"aliases\": [\"Address @id\", \"Address identifier\"],\n      \"description\": \"The optional identifier property of the Address class, typed as a string in IRI format.\",\n      \"anchor\": \"## [Address &gt; @id\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0043\"\n    }\n  ],\n  \"definitions\": [],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-temporal-spatial-metrics\",\n      \"to_id\": \"c-address-at-id\",\n      \"anchor\": \"## [Address &gt; @id\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0043\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"Address\",\n      \"anchor\": \"## [Address\"\n    },\n    {\n      \"name\": \"iri\",\n      \"anchor\": \"`iri`\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"suggested_edge\": \"has_component\",\n      \"from_name\": \"Address\",\n      \"to_name\": \"@id\",\n      \"anchor\": \"## [Address &gt; @id\",\n      \"diversion_reason\": \"structural_inference\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"string\", \"type\": \"Concept\"},\n    {\"name\": \"Optional\", \"type\": \"Concept\"}\n  ]\n}"
+}

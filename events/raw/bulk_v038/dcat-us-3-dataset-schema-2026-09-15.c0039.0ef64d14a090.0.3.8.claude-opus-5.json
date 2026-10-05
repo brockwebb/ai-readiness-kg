@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-dataset-schema-2026-09-15",
+ "chunk_id": "dcat-us-3-dataset-schema-2026-09-15#c0039",
+ "chunk_index": 39,
+ "chunk_start": 47060,
+ "chunk_end": 48117,
+ "chunk_tokens": 317,
+ "heading_path": [
+  "DCAT-US 3.0: Dataset",
+  "[Dataset &gt; language #](#language)"
+ ],
+ "oversize": false,
+ "doc_sha256": "0ef64d14a0901d5e7f84fee15bab1474353880ee4b64aec9c185b06149e067de",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 5007,
+  "cacheReadInputTokens": 13056,
+  "cacheCreationInputTokens": 30205,
+  "webSearchRequests": 0,
+  "costUSD": 0.433763,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 3874,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.433763,
+ "duration_ms": 56892,
+ "session_id": "b35afc6f-008f-445a-a14c-fcf5d5b07258",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"DCAT-US 3.0 schema entry for the optional Dataset `language` property, whose values are ISO 639-1 language codes (single code or array) used in the dataset text or metadata.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_language\",\n      \"name\": \"language\",\n      \"aliases\": [\"Dataset > language\", \"dcat:language\"],\n      \"description\": \"Optional DCAT-US 3.0 Dataset property carrying ISO 639-1 language code values for the dataset text or metadata; accepts null, a single 2-character code, or an array of codes.\",\n      \"anchor\": \"language code values used\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0039\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d_language\",\n      \"term\": \"language\",\n      \"verbatim_text\": \"ISO 639-1 language code values used in the dataset text or metadata\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"values used in the dataset text\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0039\"\n    }\n  ],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [\n    {\n      \"id\": \"s_iso639_1\",\n      \"name\": \"ISO 639-1\",\n      \"version\": null,\n      \"steward\": null,\n      \"as_of_date\": null,\n      \"anchor\": \"ISO 639-1 language code\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0039\"\n    }\n  ],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"d_language\",\n      \"anchor\": \"such as en or es\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0039\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"c_language\",\n      \"anchor\": \"metadata, such as en\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0039\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"dataset\",\n      \"anchor\": \"dataset text or metadata\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"from_id\": \"c_language\",\n      \"to_id\": \"s_iso639_1\",\n      \"suggested_edge\": \"uses_vocabulary\",\n      \"anchor\": \"full list can be seen at\",\n      \"diversion_reason\": \"other:no_edge_type\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0039\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"language is Optional\", \"type\": \"Claim\"},\n    {\"name\": \"Language code\", \"type\": \"Concept\"},\n    {\"name\": \"List of languages\", \"type\": \"Concept\"},\n    {\"name\": \"Dataset\", \"type\": \"Concept\"},\n    {\"name\": \"ISO 639-1 code list at id.loc.gov\", \"type\": \"Standard\"}\n  ]\n}"
+}

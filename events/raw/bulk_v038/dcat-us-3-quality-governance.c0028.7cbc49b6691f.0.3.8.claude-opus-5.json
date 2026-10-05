@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-quality-governance",
+ "chunk_id": "dcat-us-3-quality-governance#c0028",
+ "chunk_index": 28,
+ "chunk_start": 20209,
+ "chunk_end": 20590,
+ "chunk_tokens": 98,
+ "heading_path": [
+  "Quality and Governance",
+  "[Document &gt; creator #](#document--creator)"
+ ],
+ "oversize": false,
+ "doc_sha256": "7cbc49b6691fa3e7eb7b4845837afc3e1a6212bfc5882d676284a0ad154cbad5",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 4195,
+  "cacheReadInputTokens": 13056,
+  "cacheCreationInputTokens": 29605,
+  "webSearchRequests": 0,
+  "costUSD": 0.40746299999999996,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 3077,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.40746299999999996,
+ "duration_ms": 50165,
+ "session_id": "53eee353-28e9-4113-8873-21bf4b27c4b6",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"DCAT-US 3 reference entry for the Document `creator` property (title 'author', optional, typed as an array of Kind), preceded by the tail bullet defining Organization and followed by the Kind definition.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"concept_creator\",\n      \"name\": \"creator\",\n      \"aliases\": [\"author\", \"Document > creator\"],\n      \"description\": \"Optional Document property naming the individual(s) responsible for creating the Document; typed as null or an array of Kind classes.\",\n      \"anchor\": \"## [Document &gt; creator\",\n      \"location\": \"dcat-us-3-quality-governance#c0028\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"def_organization\",\n      \"term\": \"Organization\",\n      \"verbatim_text\": \"An organization involved with a resource, including parent or child organizations\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"An organization involved with a resource\",\n      \"location\": \"dcat-us-3-quality-governance#c0028\"\n    },\n    {\n      \"id\": \"def_kind\",\n      \"term\": \"Kind\",\n      \"verbatim_text\": \"Contact information for an individual or entity\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"Contact information for an individual\",\n      \"location\": \"dcat-us-3-quality-governance#c0028\"\n    }\n  ],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"def_organization\",\n      \"anchor\": \"An organization involved with a resource\",\n      \"location\": \"dcat-us-3-quality-governance#c0028\"\n    },\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"def_kind\",\n      \"anchor\": \"Contact information for an individual\",\n      \"location\": \"dcat-us-3-quality-governance#c0028\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"concept_creator\",\n      \"anchor\": \"**Title:** author\",\n      \"location\": \"dcat-us-3-quality-governance#c0028\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"Document\",\n      \"anchor\": \"creating the Document\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"null or array of\",\n      \"suggested_edge\": \"has_value_type (creator -> Kind)\",\n      \"diversion_reason\": \"other:type_constraint\"\n    },\n    {\n      \"anchor\": \"## [Document &gt; creator\",\n      \"suggested_edge\": \"has_component (Document -> creator)\",\n      \"diversion_reason\": \"structural_inference\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"Kind\", \"type\": \"Concept\"},\n    {\"name\": \"Organization\", \"type\": \"Concept\"},\n    {\"name\": \"creator is Optional\", \"type\": \"Claim\"}\n  ]\n}\n```"
+}

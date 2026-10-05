@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-quality-governance",
+ "chunk_id": "dcat-us-3-quality-governance#c0078",
+ "chunk_index": 78,
+ "chunk_start": 62091,
+ "chunk_end": 62561,
+ "chunk_tokens": 118,
+ "heading_path": [
+  "Quality and Governance",
+  "[DataService &gt; useRestriction #](#data-service--useRestriction)"
+ ],
+ "oversize": false,
+ "doc_sha256": "7cbc49b6691fa3e7eb7b4845837afc3e1a6212bfc5882d676284a0ad154cbad5",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 6187,
+  "cacheReadInputTokens": 13057,
+  "cacheCreationInputTokens": 29198,
+  "webSearchRequests": 0,
+  "costUSD": 0.4531935,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 4580,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.4531935,
+ "duration_ms": 70911,
+ "session_id": "cfa6d7f2-b1ea-42bd-a649-26ea6de7f785",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"DCAT-US 3 schema entry for the optional DataService property `useRestriction`, typed as null or an array of UseRestriction classes, with UseRestriction defined as rules or legal limits on how a resource may be used.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_dataservice\",\n      \"name\": \"DataService\",\n      \"aliases\": [\"data service\"],\n      \"description\": \"The DCAT-US 3 class whose optional useRestriction property is specified in this section.\",\n      \"anchor\": \"## [DataService\",\n      \"location\": \"dcat-us-3-quality-governance#c0078\"\n    },\n    {\n      \"id\": \"c_userestriction_prop\",\n      \"name\": \"useRestriction\",\n      \"aliases\": [\"DataService > useRestriction\", \"use restrictions\"],\n      \"description\": \"Optional DataService property carrying the list of use restrictions related to the data service.\",\n      \"anchor\": \"## [DataService\",\n      \"location\": \"dcat-us-3-quality-governance#c0078\"\n    },\n    {\n      \"id\": \"c_userestriction_class\",\n      \"name\": \"UseRestriction\",\n      \"aliases\": [\"UseRestriction class\"],\n      \"description\": \"The class each item of the useRestriction array must be; rules or legal limits on how a resource may be used.\",\n      \"anchor\": \"array of [UseRestriction]\",\n      \"location\": \"dcat-us-3-quality-governance#c0078\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d_userestriction\",\n      \"term\": \"UseRestriction\",\n      \"verbatim_text\": \"Rules or legal limits on how a resource may be used\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"Rules or legal limits\",\n      \"location\": \"dcat-us-3-quality-governance#c0078\"\n    }\n  ],\n  \"claims\": [\n    {\n      \"id\": \"cl_userestriction_scope\",\n      \"claim_text\": \"List of use restrictions related to the data service\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"List of use restrictions\",\n      \"location\": \"dcat-us-3-quality-governance#c0078\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"d_userestriction\",\n      \"anchor\": \"Rules or legal limits\",\n      \"location\": \"dcat-us-3-quality-governance#c0078\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"c_dataservice\",\n      \"anchor\": \"## [DataService\",\n      \"location\": \"dcat-us-3-quality-governance#c0078\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"c_userestriction_class\",\n      \"anchor\": \"array of [UseRestriction]\",\n      \"location\": \"dcat-us-3-quality-governance#c0078\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"cl_userestriction_scope\",\n      \"anchor\": \"List of use restrictions\",\n      \"location\": \"dcat-us-3-quality-governance#c0078\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl_userestriction_scope\",\n      \"to_id\": \"c_userestriction_prop\",\n      \"anchor\": \"use restrictions related\",\n      \"location\": \"dcat-us-3-quality-governance#c0078\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [],\n  \"proposed_relationships\": [\n    {\n      \"from_id\": \"c_dataservice\",\n      \"to_id\": \"c_userestriction_prop\",\n      \"suggested_edge\": \"has_property\",\n      \"diversion_reason\": \"structural_inference\",\n      \"anchor\": \"## [DataService\",\n      \"location\": \"dcat-us-3-quality-governance#c0078\"\n    },\n    {\n      \"from_id\": \"c_userestriction_prop\",\n      \"to_id\": \"c_userestriction_class\",\n      \"suggested_edge\": \"has_range\",\n      \"diversion_reason\": \"other:range_constraint\",\n      \"anchor\": \"null or array of\",\n      \"location\": \"dcat-us-3-quality-governance#c0078\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"Optional\", \"type\": \"Concept\"},\n    {\"name\": \"Each item of this array must be\", \"type\": \"Claim\"}\n  ]\n}"
+}

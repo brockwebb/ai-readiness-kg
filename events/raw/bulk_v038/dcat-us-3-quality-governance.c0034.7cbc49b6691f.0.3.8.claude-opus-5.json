@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-quality-governance",
+ "chunk_id": "dcat-us-3-quality-governance#c0034",
+ "chunk_index": 34,
+ "chunk_start": 28208,
+ "chunk_end": 28560,
+ "chunk_tokens": 91,
+ "heading_path": [
+  "Quality and Governance",
+  "[CatalogRecord &gt; primaryTopic #](#catalog-record--primaryTopic)"
+ ],
+ "oversize": false,
+ "doc_sha256": "7cbc49b6691fa3e7eb7b4845837afc3e1a6212bfc5882d676284a0ad154cbad5",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 7173,
+  "cacheReadInputTokens": 13056,
+  "cacheCreationInputTokens": 29727,
+  "webSearchRequests": 0,
+  "costUSD": 0.483133,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 5055,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.483133,
+ "duration_ms": 79168,
+ "session_id": "bec671c8-70f8-45bf-9a3f-0a23bd971280",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"DCAT-US 3 property specification for CatalogRecord's mandatory primaryTopic field, which links a Catalog Record to the Dataset, Data service or Catalog it describes.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c1\",\n      \"name\": \"primaryTopic\",\n      \"aliases\": [\"CatalogRecord primaryTopic\", \"dcterms:primaryTopic\"],\n      \"description\": \"The CatalogRecord property holding a link to the resource described by the record.\",\n      \"anchor\": \"## [CatalogRecord &gt; primaryTopic\",\n      \"location\": \"dcat-us-3-quality-governance#c0034\"\n    },\n    {\n      \"id\": \"c2\",\n      \"name\": \"Catalog Record\",\n      \"aliases\": [\"CatalogRecord\"],\n      \"description\": \"The catalog entry whose described resource primaryTopic points at.\",\n      \"anchor\": \"described in the Catalog Record\",\n      \"location\": \"dcat-us-3-quality-governance#c0034\"\n    },\n    {\n      \"id\": \"c3\",\n      \"name\": \"Dataset\",\n      \"aliases\": [],\n      \"description\": \"One of the resource classes a Catalog Record's primaryTopic may link to.\",\n      \"anchor\": \"the Dataset, Data service\",\n      \"location\": \"dcat-us-3-quality-governance#c0034\"\n    },\n    {\n      \"id\": \"c4\",\n      \"name\": \"Data service\",\n      \"aliases\": [\"DataService\"],\n      \"description\": \"One of the resource classes a Catalog Record's primaryTopic may link to.\",\n      \"anchor\": \"Data service or Catalog\",\n      \"location\": \"dcat-us-3-quality-governance#c0034\"\n    },\n    {\n      \"id\": \"c5\",\n      \"name\": \"Catalog\",\n      \"aliases\": [\"DataCatalog\"],\n      \"description\": \"One of the resource classes a Catalog Record's primaryTopic may link to.\",\n      \"anchor\": \"or Catalog described\",\n      \"location\": \"dcat-us-3-quality-governance#c0034\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d1\",\n      \"term\": \"primaryTopic\",\n      \"verbatim_text\": \"A link to the Dataset, Data service or Catalog described in the Catalog Record\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"A link to the Dataset\",\n      \"location\": \"dcat-us-3-quality-governance#c0034\"\n    }\n  ],\n  \"claims\": [\n    {\n      \"id\": \"cl1\",\n      \"claim_text\": \"**Requirement:** Mandatory\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"platform_official\",\n      \"anchor\": \"**Requirement:** Mandatory\",\n      \"location\": \"dcat-us-3-quality-governance#c0034\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"d1\",\n      \"anchor\": \"A link to the Dataset\",\n      \"location\": \"dcat-us-3-quality-governance#c0034\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"c1\",\n      \"anchor\": \"## [CatalogRecord &gt; primaryTopic\",\n      \"location\": \"dcat-us-3-quality-governance#c0034\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"c2\",\n      \"anchor\": \"described in the Catalog Record\",\n      \"location\": \"dcat-us-3-quality-governance#c0034\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"c3\",\n      \"anchor\": \"the Dataset, Data service\",\n      \"location\": \"dcat-us-3-quality-governance#c0034\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"c4\",\n      \"anchor\": \"Data service or Catalog\",\n      \"location\": \"dcat-us-3-quality-governance#c0034\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"c5\",\n      \"anchor\": \"or Catalog described\",\n      \"location\": \"dcat-us-3-quality-governance#c0034\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"cl1\",\n      \"anchor\": \"**Requirement:** Mandatory\",\n      \"location\": \"dcat-us-3-quality-governance#c0034\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"cl1\",\n      \"to_id\": \"c1\",\n      \"anchor\": \"**Requirement:** Mandatory\",\n      \"location\": \"dcat-us-3-quality-governance#c0034\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [],\n  \"proposed_relationships\": [\n    {\n      \"suggested_edge\": \"has_component\",\n      \"from_id\": \"c2\",\n      \"to_id\": \"c1\",\n      \"anchor\": \"## [CatalogRecord &gt; primaryTopic\",\n      \"diversion_reason\": \"structural_inference\"\n    },\n    {\n      \"suggested_edge\": \"links_to\",\n      \"from_id\": \"c1\",\n      \"to_id\": \"c3\",\n      \"anchor\": \"A link to the Dataset\",\n      \"diversion_reason\": \"other:no_edge_type_for_property_range\"\n    },\n    {\n      \"suggested_edge\": \"has_datatype\",\n      \"from_id\": \"c1\",\n      \"to_id\": \"string\",\n      \"anchor\": \"- **Type** : `string`\",\n      \"diversion_reason\": \"structural_inference\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"Mandatory\", \"type\": \"Concept\"},\n    {\"name\": \"Required\", \"type\": \"Concept\"},\n    {\"name\": \"string\", \"type\": \"Concept\"}\n  ]\n}"
+}

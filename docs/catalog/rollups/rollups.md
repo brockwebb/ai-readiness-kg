@@ -233,7 +233,7 @@ Quick win: effort at most 2 and value at least 4. Clear it out: effort at most 2
 | clear_out | scans | S-D3-rule-D3 | 1 | 2 | plausible | yes | Source lineage published (collection → processing → product) |
 | quick_win | scans | S-D4-rule-D4 | 1 | 4 | established | yes | Statutory products enumerable from a public inventory (data.gov/agency inventory current) |
 | clear_out | scans | S-F4-rule-F4 | 1 | 2 | plausible | yes | Machine-readable changelog per release (what changed, why, revision class); webhooks/push for high-frequency products |
-| clear_out | scans | S-G4-rule-G4 | 1 | 2 | plausible | yes | The issuing authority of a data product is carried as machine-readable metadata on the product, in the fields DCAT-US defines (`publisher`, `bureauCode`, `programCode`) |
+| clear_out | scans | S-G4-rule-G4 | 1 | 2 | plausible | yes | The issuing authority of a data product is carried as machine-readable metadata on the product's catalog record: in `publisher`, the field DCAT-US 3.0 defines for it (Recommended), or in the agency codes DCAT-US 1.1 requires of federal datasets (`bureauCode`, `programCode`), which DCAT-US 3.0 does not define and does not reject |
 | quick_win | actions | act:a11-permit-the-ai-crawlers-you-intend-to-serve-on-the-product-path | 2 | 5 | established | yes | Permit, in robots.txt, the AI crawlers the product is meant to reach |
 | quick_win | actions | act:a11-resolve-the-meta-robots-directive-that-contradicts-robots-txt | 2 | 5 | established | yes | Resolve the meta-robots directive that contradicts robots.txt |
 | quick_win | actions | act:a12-publish-a-robots-txt-group-an-identified-client-matches | 2 | 5 | established | no | Publish a robots.txt group that an identified machine client matches |

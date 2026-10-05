@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-dataset-schema-2026-09-15",
+ "chunk_id": "dcat-us-3-dataset-schema-2026-09-15#c0038",
+ "chunk_index": 38,
+ "chunk_start": 46699,
+ "chunk_end": 47058,
+ "chunk_tokens": 111,
+ "heading_path": [
+  "DCAT-US 3.0: Dataset",
+  "[Dataset &gt; issued #](#issued)"
+ ],
+ "oversize": false,
+ "doc_sha256": "0ef64d14a0901d5e7f84fee15bab1474353880ee4b64aec9c185b06149e067de",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 6826,
+  "cacheReadInputTokens": 13056,
+  "cacheCreationInputTokens": 29603,
+  "webSearchRequests": 0,
+  "costUSD": 0.473218,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 5537,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.473218,
+ "duration_ms": 87313,
+ "session_id": "98817026-9150-4c4c-ac9b-84c7fb0d237f",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"DCAT-US 3.0 Dataset schema entry for the optional `issued` property (title 'release date'), its definition as the date the dataset was first published, the fallback rule when the exact publication date is unknown, and example date values.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c1\",\n      \"name\": \"release date\",\n      \"aliases\": [\"issued\", \"Dataset issued property\", \"dataset release date\"],\n      \"description\": \"Optional Dataset property recording the date the dataset was first published.\",\n      \"anchor\": \"release date\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0038\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d1\",\n      \"term\": \"release date\",\n      \"verbatim_text\": \"Date when the dataset was first published.\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"release date\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0038\"\n    }\n  ],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [\n    {\n      \"id\": \"p1\",\n      \"text\": \"If the exact publication date is unknown, use the date it was first referenced in the catalog.\",\n      \"as_of_date\": null,\n      \"scope\": \"dataset\",\n      \"anchor\": \"first referenced in the catalog\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0038\"\n    }\n  ],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"d1\",\n      \"anchor\": \"release date\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0038\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"c1\",\n      \"anchor\": \"release date\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0038\"\n    },\n    {\n      \"type\": \"recommends\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"p1\",\n      \"anchor\": \"first referenced in the catalog\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0038\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"p1\",\n      \"to_id\": \"c1\",\n      \"anchor\": \"exact publication date is unknown\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0038\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"dataset\",\n      \"anchor\": \"dataset was first published\"\n    },\n    {\n      \"name\": \"catalog\",\n      \"anchor\": \"the catalog\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"release date\",\n      \"suggested_edge\": \"has_component\",\n      \"from_id\": \"Dataset\",\n      \"to_id\": \"c1\",\n      \"diversion_reason\": \"structural_inference\"\n    },\n    {\n      \"anchor\": \"Optional\",\n      \"suggested_edge\": \"requirement_level\",\n      \"from_id\": \"c1\",\n      \"to_id\": \"Optional\",\n      \"diversion_reason\": \"other:no schema edge for requirement level\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"Dataset\", \"type\": \"Concept\"},\n    {\"name\": \"publication date\", \"type\": \"Concept\"},\n    {\"name\": \"iri\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

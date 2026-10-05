@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-quality-governance",
+ "chunk_id": "dcat-us-3-quality-governance#c0075",
+ "chunk_index": 75,
+ "chunk_start": 60921,
+ "chunk_end": 61402,
+ "chunk_tokens": 122,
+ "heading_path": [
+  "Quality and Governance",
+  "[DataService &gt; temporal #](#data-service--temporal)"
+ ],
+ "oversize": false,
+ "doc_sha256": "7cbc49b6691fa3e7eb7b4845837afc3e1a6212bfc5882d676284a0ad154cbad5",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 6043,
+  "cacheReadInputTokens": 13057,
+  "cacheCreationInputTokens": 29683,
+  "webSearchRequests": 0,
+  "costUSD": 0.4544435,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 4629,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.4544435,
+ "duration_ms": 68030,
+ "session_id": "e203c43c-25b4-4a0d-8464-57771173bbdd",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"DCAT-US 3 schema reference entry for the optional DataService `temporal` property (temporal coverage), typed as null or an array of PeriodOfTime classes, with PeriodOfTime defined inline.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_temporal_coverage\",\n      \"name\": \"temporal coverage\",\n      \"aliases\": [\"DataService temporal\", \"temporal\", \"DataService > temporal\"],\n      \"description\": \"Time periods covered by the data service; an optional DataService property typed as null or an array of PeriodOfTime classes.\",\n      \"anchor\": \"temporal coverage\",\n      \"location\": \"dcat-us-3-quality-governance#c0075\"\n    },\n    {\n      \"id\": \"c_data_service\",\n      \"name\": \"data service\",\n      \"aliases\": [\"DataService\"],\n      \"description\": \"The asset class whose covered time periods the temporal property records.\",\n      \"anchor\": \"covered by the data service\",\n      \"location\": \"dcat-us-3-quality-governance#c0075\"\n    },\n    {\n      \"id\": \"c_period_of_time\",\n      \"name\": \"PeriodOfTime\",\n      \"aliases\": [\"Period of Time\", \"dct:PeriodOfTime\"],\n      \"description\": \"Information about a specific time period with a start- and/or end-time; the permitted item type of the temporal array.\",\n      \"anchor\": \"a specific time period\",\n      \"location\": \"dcat-us-3-quality-governance#c0075\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d_period_of_time\",\n      \"term\": \"PeriodOfTime\",\n      \"verbatim_text\": \"Information about a specific time period with a start- and/or end-time\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"Information about a specific\",\n      \"location\": \"dcat-us-3-quality-governance#c0075\"\n    }\n  ],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"d_period_of_time\",\n      \"anchor\": \"start- and/or end-time\",\n      \"location\": \"dcat-us-3-quality-governance#c0075\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"c_temporal_coverage\",\n      \"anchor\": \"temporal coverage\",\n      \"location\": \"dcat-us-3-quality-governance#c0075\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"c_data_service\",\n      \"anchor\": \"Time periods covered\",\n      \"location\": \"dcat-us-3-quality-governance#c0075\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-quality-governance\",\n      \"to_id\": \"c_period_of_time\",\n      \"anchor\": \"null or array of\",\n      \"location\": \"dcat-us-3-quality-governance#c0075\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [],\n  \"proposed_relationships\": [\n    {\n      \"from_id\": \"c_data_service\",\n      \"to_id\": \"c_temporal_coverage\",\n      \"suggested_edge\": \"has_component\",\n      \"diversion_reason\": \"structural_inference\",\n      \"anchor\": \"## [DataService\",\n      \"location\": \"dcat-us-3-quality-governance#c0075\"\n    },\n    {\n      \"from_id\": \"c_temporal_coverage\",\n      \"to_id\": \"c_period_of_time\",\n      \"suggested_edge\": \"has_value_range\",\n      \"diversion_reason\": \"structural_inference\",\n      \"anchor\": \"Each item of this array\",\n      \"location\": \"dcat-us-3-quality-governance#c0075\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"temporal is Optional on DataService\", \"type\": \"Claim\"},\n    {\"name\": \"DCAT-US 3\", \"type\": \"Standard\"}\n  ]\n}"
+}

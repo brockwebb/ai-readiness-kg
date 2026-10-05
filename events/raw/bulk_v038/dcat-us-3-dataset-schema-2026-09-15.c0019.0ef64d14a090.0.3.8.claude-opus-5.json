@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-dataset-schema-2026-09-15",
+ "chunk_id": "dcat-us-3-dataset-schema-2026-09-15#c0019",
+ "chunk_index": 19,
+ "chunk_start": 38629,
+ "chunk_end": 39090,
+ "chunk_tokens": 118,
+ "heading_path": [
+  "DCAT-US 3.0: Dataset",
+  "[Dataset &gt; temporal #](#temporal)"
+ ],
+ "oversize": false,
+ "doc_sha256": "0ef64d14a0901d5e7f84fee15bab1474353880ee4b64aec9c185b06149e067de",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 5369,
+  "cacheReadInputTokens": 13056,
+  "cacheCreationInputTokens": 29767,
+  "webSearchRequests": 0,
+  "costUSD": 0.43843299999999996,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 3865,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.43843299999999996,
+ "duration_ms": 136873,
+ "session_id": "5d46e6d6-70a5-484c-aed7-5d055861a89b",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"DCAT-US 3.0 Dataset property `temporal` (title 'temporal coverage', Recommended): time periods covered by the dataset, typed as null or an array of PeriodOfTime, which the page defines as information about a specific time period with a start- and/or end-time.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"n_temporal_coverage\",\n      \"name\": \"temporal coverage\",\n      \"aliases\": [\"Dataset temporal\", \"dcat:temporal\"],\n      \"description\": \"Time periods covered by the dataset\",\n      \"anchor\": \"temporal coverage\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0019\"\n    },\n    {\n      \"id\": \"n_period_of_time\",\n      \"name\": \"PeriodOfTime\",\n      \"aliases\": [\"dcterms:PeriodOfTime\", \"period of time\"],\n      \"description\": \"Information about a specific time period with a start- and/or end-time\",\n      \"anchor\": \"Information about a specific\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0019\"\n    },\n    {\n      \"id\": \"n_dataset\",\n      \"name\": \"dataset\",\n      \"aliases\": [\"Dataset\"],\n      \"description\": \"The asset class whose covered time periods the temporal property records\",\n      \"anchor\": \"by the dataset\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0019\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"n_def_period_of_time\",\n      \"term\": \"PeriodOfTime\",\n      \"verbatim_text\": \"Information about a specific time period with a start- and/or end-time\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"specific time period with\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0019\"\n    }\n  ],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [\n    {\n      \"id\": \"n_practice_temporal\",\n      \"text\": \"Time periods covered by the dataset\",\n      \"as_of_date\": null,\n      \"scope\": \"dataset\",\n      \"anchor\": \"Time periods covered\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0019\"\n    }\n  ],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"n_temporal_coverage\",\n      \"anchor\": \"temporal coverage\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0019\"\n    },\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"n_def_period_of_time\",\n      \"anchor\": \"and/or end-time\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0019\"\n    },\n    {\n      \"type\": \"recommends\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"n_practice_temporal\",\n      \"anchor\": \"Recommended\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0019\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"n_practice_temporal\",\n      \"to_id\": \"n_dataset\",\n      \"anchor\": \"by the dataset\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0019\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"Location\",\n      \"anchor\": \"Location\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"from_id\": \"n_temporal_coverage\",\n      \"to_id\": \"n_period_of_time\",\n      \"suggested_edge\": \"has_component\",\n      \"anchor\": \"null or array of\",\n      \"diversion_reason\": \"structural_inference\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0019\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"Location\", \"type\": \"Concept\"},\n    {\"name\": \"Recommended\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

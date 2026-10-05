@@ -1,0 +1,33 @@
+{
+ "doc_id": "statdcat-ap-1-0-1",
+ "chunk_id": "statdcat-ap-1-0-1#c0053",
+ "chunk_index": 53,
+ "chunk_start": 207845,
+ "chunk_end": 208296,
+ "chunk_tokens": 113,
+ "heading_path": [
+  "dcat:accrualPeriodicity ns35:ANNUAL_2 ; which is incorrect"
+ ],
+ "oversize": false,
+ "doc_sha256": "b2353d557d84c0f853380723447cd26f0c47a92bc444a6193dad52868eeb1d69",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 6529,
+  "cacheReadInputTokens": 13057,
+  "cacheCreationInputTokens": 29760,
+  "webSearchRequests": 0,
+  "costUSD": 0.46736350000000004,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 5200,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.46736350000000004,
+ "duration_ms": 76091,
+ "session_id": "1ab3290b-b922-48a3-99d0-6473b3e4707c",
+ "raw_result": "{\n\"extract_plan\": {\n\"chunk_summary\": \"Turtle example fragment declaring dct:accrualPeriodicity, stat:attribute and stat:dimension properties for a statistical dataset, with an inline comment asserting that the source metadata's dcat:accrualPeriodicity statement is incorrect.\"\n},\n\"concepts\": [\n{\n\"id\": \"c_accrual_periodicity\",\n\"name\": \"dct:accrualPeriodicity\",\n\"aliases\": [\"accrual periodicity\", \"dcat:accrualPeriodicity\"],\n\"description\": \"The periodicity property as stated in this example fragment, using the dct: namespace form rather than the dcat: form the comment flags as incorrect.\",\n\"anchor\": \"dct:accrualPeriodicity ns35:ANNUAL_2\",\n\"location\": \"statdcat-ap-1-0-1#c0053\"\n}\n],\n\"definitions\": [],\n\"claims\": [\n{\n\"id\": \"cl_dcat_accrual_incorrect\",\n\"claim_text\": \"dcat:accrualPeriodicity ns35:ANNUAL_2 ; which is incorrect\",\n\"claim_type\": \"normative\",\n\"evidence_grade\": \"practitioner_assertion\",\n\"anchor\": \"The source metadata has the statement\",\n\"location\": \"statdcat-ap-1-0-1#c0053\"\n}\n],\n\"instruments\": [],\n\"measures\": [],\n\"standards\": [],\n\"frameworks\": [],\n\"practices\": [],\n\"tools\": [],\n\"platforms\": [],\n\"edges\": [\n{\n\"type\": \"asserts\",\n\"from_id\": \"statdcat-ap-1-0-1\",\n\"to_id\": \"cl_dcat_accrual_incorrect\",\n\"anchor\": \"The source metadata has the statement\",\n\"location\": \"statdcat-ap-1-0-1#c0053\"\n},\n{\n\"type\": \"about\",\n\"from_id\": \"cl_dcat_accrual_incorrect\",\n\"to_id\": \"c_accrual_periodicity\",\n\"anchor\": \"source metadata has the statement\",\n\"location\": \"statdcat-ap-1-0-1#c0053\"\n},\n{\n\"type\": \"mentions\",\n\"from_id\": \"statdcat-ap-1-0-1\",\n\"to_id\": \"c_accrual_periodicity\",\n\"anchor\": \"dct:accrualPeriodicity ns35:ANNUAL_2\",\n\"location\": \"statdcat-ap-1-0-1#c0053\"\n}\n],\n\"cites\": [],\n\"mentions\": [\n{\"name\": \"ns35:ANNUAL_2\", \"anchor\": \"dct:accrualPeriodicity ns35:ANNUAL_2\"},\n{\"name\": \"dad-prop:flag\", \"anchor\": \"dad-prop:flag\"},\n{\"name\": \"dad-prop:note\", \"anchor\": \"dad-prop:note\"},\n{\"name\": \"dad-prop:breakdown\", \"anchor\": \"dad-prop:breakdown\"},\n{\"name\": \"dad-prop:indicator\", \"anchor\": \"dad-prop:indicator\"},\n{\"name\": \"dad-prop:ref-area\", \"anchor\": \"dad-prop:ref-area\"},\n{\"name\": \"dad-prop:time-period\", \"anchor\": \"dad-prop:time-period\"},\n{\"name\": \"dad-prop:unit-measure\", \"anchor\": \"dad-prop:unit-measure\"}\n],\n\"proposed_relationships\": [\n{\n\"anchor\": \"stat:dimension          dad-prop:breakdown\",\n\"suggested_edge\": \"has_dimension\",\n\"diversion_reason\": \"cross_chunk\"\n},\n{\n\"anchor\": \"stat:attribute          dad-prop:flag\",\n\"suggested_edge\": \"has_attribute\",\n\"diversion_reason\": \"cross_chunk\"\n}\n],\n\"gleaned\": [\n{\"name\": \"stat:attribute\", \"type\": \"Concept\"},\n{\"name\": \"stat:dimension\", \"type\": \"Concept\"},\n{\"name\": \"dct namespace vs dcat namespace for periodicity\", \"type\": \"Concept\"}\n]\n}"
+}

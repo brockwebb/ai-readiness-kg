@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-temporal-spatial-metrics",
+ "chunk_id": "dcat-us-3-temporal-spatial-metrics#c0005",
+ "chunk_index": 5,
+ "chunk_start": 1792,
+ "chunk_end": 2049,
+ "chunk_tokens": 93,
+ "heading_path": [
+  "Temporal, Spatial, and Metrics",
+  "[PeriodOfTime &gt; endDate #](#period-of-time--endDate)"
+ ],
+ "oversize": false,
+ "doc_sha256": "083cc7877b8438d25498d71ee0e04b3e0ffdbbef334ff3c5a4735cdf2c8339c7",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 5214,
+  "cacheReadInputTokens": 13057,
+  "cacheCreationInputTokens": 29036,
+  "webSearchRequests": 0,
+  "costUSD": 0.42724850000000003,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 3996,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.42724850000000003,
+ "duration_ms": 60928,
+ "session_id": "f4882978-50f9-48e1-b8e4-93776086a63f",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Property-reference entry specifying `endDate` of PeriodOfTime in DCAT-US 3: requirement level Recommended, type null or object, definition sentence, and four date-format examples.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c-enddate\",\n      \"name\": \"endDate\",\n      \"aliases\": [\"end date\", \"PeriodOfTime endDate\"],\n      \"description\": \"Recommended property carrying the end date of a period of time; typed as null or object with date/date-time/year/year-month examples.\",\n      \"anchor\": \"- endDate\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0005\"\n    },\n    {\n      \"id\": \"c-periodoftime\",\n      \"name\": \"PeriodOfTime\",\n      \"aliases\": [\"period of time\"],\n      \"description\": \"The temporal class whose endDate property this entry specifies.\",\n      \"anchor\": \"## [PeriodOfTime\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0005\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d-enddate\",\n      \"term\": \"end date\",\n      \"verbatim_text\": \"The end date of the period of time\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"The end date of the period\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0005\"\n    }\n  ],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-temporal-spatial-metrics\",\n      \"to_id\": \"d-enddate\",\n      \"anchor\": \"The end date of the period\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0005\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-temporal-spatial-metrics\",\n      \"to_id\": \"c-enddate\",\n      \"anchor\": \"- endDate\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0005\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-temporal-spatial-metrics\",\n      \"to_id\": \"c-periodoftime\",\n      \"anchor\": \"## [PeriodOfTime\",\n      \"location\": \"dcat-us-3-temporal-spatial-metrics#c0005\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [],\n  \"proposed_relationships\": [\n    {\n      \"suggested_edge\": \"has_component\",\n      \"from_id\": \"c-periodoftime\",\n      \"to_id\": \"c-enddate\",\n      \"anchor\": \"## [PeriodOfTime\",\n      \"diversion_reason\": \"structural_inference\"\n    },\n    {\n      \"suggested_edge\": \"requirement_level\",\n      \"from_id\": \"c-enddate\",\n      \"to_id\": \"Recommended\",\n      \"anchor\": \"**Requirement:** Recommended\",\n      \"diversion_reason\": \"other:requirement_level_not_in_schema\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"Recommended requirement level for endDate\", \"type\": \"Practice\"},\n    {\"name\": \"null or object\", \"type\": \"Concept\"},\n    {\"name\": \"2024-12-31\", \"type\": \"Concept\"},\n    {\"name\": \"2024-01-15T10:30:00Z\", \"type\": \"Concept\"}\n  ]\n}"
+}

@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-dataset-schema-2026-09-15",
+ "chunk_id": "dcat-us-3-dataset-schema-2026-09-15#c0021",
+ "chunk_index": 21,
+ "chunk_start": 39537,
+ "chunk_end": 39987,
+ "chunk_tokens": 114,
+ "heading_path": [
+  "DCAT-US 3.0: Dataset",
+  "[Dataset &gt; useRestriction #](#useRestriction)"
+ ],
+ "oversize": false,
+ "doc_sha256": "0ef64d14a0901d5e7f84fee15bab1474353880ee4b64aec9c185b06149e067de",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 6563,
+  "cacheReadInputTokens": 13056,
+  "cacheCreationInputTokens": 29775,
+  "webSearchRequests": 0,
+  "costUSD": 0.46836300000000003,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 4906,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.46836300000000003,
+ "duration_ms": 71691,
+ "session_id": "2888d49a-c27e-4041-9a22-ae6470085488",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"DCAT-US 3.0 schema section for the Dataset property `useRestriction` (Recommended): a list of use restrictions related to the dataset, typed as null or an array of UseRestriction classes, where UseRestriction is defined as rules or legal limits on how a resource may be used.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"n_use_restriction_prop\",\n      \"name\": \"useRestriction\",\n      \"aliases\": [\"Dataset > useRestriction\", \"use restrictions\"],\n      \"description\": \"Dataset property holding a list of use restrictions related to the dataset; Recommended.\",\n      \"anchor\": \"## [Dataset &gt; useRestriction\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0021\"\n    },\n    {\n      \"id\": \"n_use_restriction_class\",\n      \"name\": \"UseRestriction\",\n      \"aliases\": [\"use-restriction\"],\n      \"description\": \"Class used as the item type of the useRestriction array.\",\n      \"anchor\": \"array of [UseRestriction\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0021\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"n_def_use_restriction\",\n      \"term\": \"UseRestriction\",\n      \"verbatim_text\": \"Rules or legal limits on how a resource may be used\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"Rules or legal limits\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0021\"\n    }\n  ],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [\n    {\n      \"id\": \"n_practice_use_restriction\",\n      \"text\": \"List of use restrictions related to the dataset\",\n      \"as_of_date\": null,\n      \"scope\": \"dataset\",\n      \"anchor\": \"List of use restrictions\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0021\"\n    }\n  ],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"n_def_use_restriction\",\n      \"anchor\": \"Rules or legal limits\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0021\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"n_use_restriction_prop\",\n      \"anchor\": \"## [Dataset &gt; useRestriction\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0021\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"n_use_restriction_class\",\n      \"anchor\": \"array of [UseRestriction\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0021\"\n    },\n    {\n      \"type\": \"recommends\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"n_practice_use_restriction\",\n      \"anchor\": \"Recommended\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0021\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"n_practice_use_restriction\",\n      \"to_id\": \"n_use_restriction_prop\",\n      \"anchor\": \"List of use restrictions\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0021\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"Concept\",\n      \"anchor\": \"[Concept](\"\n    },\n    {\n      \"name\": \"concept scheme\",\n      \"anchor\": \"concept scheme\"\n    },\n    {\n      \"name\": \"dataset\",\n      \"anchor\": \"related to the dataset\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"suggested_edge\": \"has_range\",\n      \"from_id\": \"n_use_restriction_prop\",\n      \"to_id\": \"n_use_restriction_class\",\n      \"anchor\": \"null or array of\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0021\",\n      \"diversion_reason\": \"other:range_constraint\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"DCAT-US 3.0\", \"type\": \"Standard\"},\n    {\"name\": \"Dataset\", \"type\": \"Concept\"},\n    {\"name\": \"Requirement level: Recommended\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

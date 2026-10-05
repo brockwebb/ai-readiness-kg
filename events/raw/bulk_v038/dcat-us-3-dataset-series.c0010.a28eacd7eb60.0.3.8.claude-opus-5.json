@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-dataset-series",
+ "chunk_id": "dcat-us-3-dataset-series#c0010",
+ "chunk_index": 10,
+ "chunk_start": 11548,
+ "chunk_end": 11987,
+ "chunk_tokens": 109,
+ "heading_path": [
+  "DCAT-US 3.0: Dataset Series",
+  "[DatasetSeries &gt; spatial #](#spatial)"
+ ],
+ "oversize": false,
+ "doc_sha256": "a28eacd7eb60ddd04b52b4852e0e229fb96ff397056fbeac4dcc75a0e40c03da",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 7070,
+  "cacheReadInputTokens": 13055,
+  "cacheCreationInputTokens": 29682,
+  "webSearchRequests": 0,
+  "costUSD": 0.48010749999999996,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 4843,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.48010749999999996,
+ "duration_ms": 74049,
+ "session_id": "169be848-fb5f-4fee-81c4-b4014f712fbd",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"DCAT-US 3.0 spec page for the DatasetSeries spatial property: it is Recommended, titled spatial/geographic coverage, describes a geographic region covered by the Dataset Series, and is typed as null or an array of Location classes; the page also carries one-line definitions of Dataset and Location.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c-spatial-coverage\",\n      \"name\": \"spatial/geographic coverage\",\n      \"aliases\": [\"spatial coverage\", \"geographic coverage\", \"DatasetSeries spatial\"],\n      \"description\": \"The property title for the geographic region covered by a Dataset Series.\",\n      \"anchor\": \"spatial/geographic coverage\",\n      \"location\": \"dcat-us-3-dataset-series#c0010\"\n    },\n    {\n      \"id\": \"c-dataset-series\",\n      \"name\": \"Dataset Series\",\n      \"aliases\": [\"DatasetSeries\"],\n      \"description\": \"The entity whose geographic coverage the spatial property records.\",\n      \"anchor\": \"the Dataset Series\",\n      \"location\": \"dcat-us-3-dataset-series#c0010\"\n    },\n    {\n      \"id\": \"c-location\",\n      \"name\": \"Location\",\n      \"aliases\": [\"Location class\"],\n      \"description\": \"The class used as the value type of the spatial property; the property takes null or an array of these.\",\n      \"anchor\": \"null or array of\",\n      \"location\": \"dcat-us-3-dataset-series#c0010\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"def-dataset\",\n      \"term\": \"Dataset\",\n      \"verbatim_text\": \"A collection of data published or curated by one provider\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"curated by one provider\",\n      \"location\": \"dcat-us-3-dataset-series#c0010\"\n    },\n    {\n      \"id\": \"def-location\",\n      \"term\": \"Location\",\n      \"verbatim_text\": \"A named place or geographic area\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"A named place or geographic area\",\n      \"location\": \"dcat-us-3-dataset-series#c0010\"\n    }\n  ],\n  \"claims\": [\n    {\n      \"id\": \"claim-spatial-scope\",\n      \"claim_text\": \"A geographic region that is covered by the Dataset Series\",\n      \"claim_type\": \"normative\",\n      \"evidence_grade\": \"practitioner_assertion\",\n      \"anchor\": \"geographic region that is covered\",\n      \"location\": \"dcat-us-3-dataset-series#c0010\"\n    }\n  ],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [\n    {\n      \"id\": \"p-spatial-recommended\",\n      \"text\": \"Recommended\",\n      \"as_of_date\": null,\n      \"scope\": \"dataset\",\n      \"anchor\": \"Recommended\",\n      \"location\": \"dcat-us-3-dataset-series#c0010\"\n    }\n  ],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-dataset-series\",\n      \"to_id\": \"def-dataset\",\n      \"anchor\": \"curated by one provider\",\n      \"location\": \"dcat-us-3-dataset-series#c0010\"\n    },\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-dataset-series\",\n      \"to_id\": \"def-location\",\n      \"anchor\": \"A named place or geographic area\",\n      \"location\": \"dcat-us-3-dataset-series#c0010\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-dataset-series\",\n      \"to_id\": \"c-spatial-coverage\",\n      \"anchor\": \"spatial/geographic coverage\",\n      \"location\": \"dcat-us-3-dataset-series#c0010\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-dataset-series\",\n      \"to_id\": \"c-dataset-series\",\n      \"anchor\": \"the Dataset Series\",\n      \"location\": \"dcat-us-3-dataset-series#c0010\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-dataset-series\",\n      \"to_id\": \"c-location\",\n      \"anchor\": \"null or array of\",\n      \"location\": \"dcat-us-3-dataset-series#c0010\"\n    },\n    {\n      \"type\": \"asserts\",\n      \"from_id\": \"dcat-us-3-dataset-series\",\n      \"to_id\": \"claim-spatial-scope\",\n      \"anchor\": \"geographic region that is covered\",\n      \"location\": \"dcat-us-3-dataset-series#c0010\"\n    },\n    {\n      \"type\": \"about\",\n      \"from_id\": \"claim-spatial-scope\",\n      \"to_id\": \"c-dataset-series\",\n      \"anchor\": \"covered by the Dataset Series\",\n      \"location\": \"dcat-us-3-dataset-series#c0010\"\n    },\n    {\n      \"type\": \"recommends\",\n      \"from_id\": \"dcat-us-3-dataset-series\",\n      \"to_id\": \"p-spatial-recommended\",\n      \"anchor\": \"Recommended\",\n      \"location\": \"dcat-us-3-dataset-series#c0010\"\n    },\n    {\n      \"type\": \"applies_to\",\n      \"from_id\": \"p-spatial-recommended\",\n      \"to_id\": \"c-dataset-series\",\n      \"anchor\": \"**Requirement:**\",\n      \"location\": \"dcat-us-3-dataset-series#c0010\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [],\n  \"proposed_relationships\": [\n    {\n      \"suggested_edge\": \"has_component\",\n      \"from_id\": \"c-dataset-series\",\n      \"to_id\": \"c-spatial-coverage\",\n      \"anchor\": \"## [DatasetSeries\",\n      \"location\": \"dcat-us-3-dataset-series#c0010\",\n      \"diversion_reason\": \"structural_inference\"\n    },\n    {\n      \"suggested_edge\": \"has_value_type\",\n      \"from_id\": \"c-spatial-coverage\",\n      \"to_id\": \"c-location\",\n      \"anchor\": \"classes\",\n      \"location\": \"dcat-us-3-dataset-series#c0010\",\n      \"diversion_reason\": \"other:type_constraint\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"DCAT-US 3.0\", \"type\": \"Standard\"},\n    {\"name\": \"Dataset\", \"type\": \"Concept\"},\n    {\"name\": \"temporal and spatial metrics\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}

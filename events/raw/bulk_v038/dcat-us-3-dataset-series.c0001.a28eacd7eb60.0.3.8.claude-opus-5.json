@@ -1,0 +1,33 @@
+{
+ "doc_id": "dcat-us-3-dataset-series",
+ "chunk_id": "dcat-us-3-dataset-series#c0001",
+ "chunk_index": 1,
+ "chunk_start": 0,
+ "chunk_end": 4008,
+ "chunk_tokens": 1207,
+ "heading_path": [
+  "DCAT-US 3.0: Dataset Series"
+ ],
+ "oversize": false,
+ "doc_sha256": "a28eacd7eb60ddd04b52b4852e0e229fb96ff397056fbeac4dcc75a0e40c03da",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 6147,
+  "cacheReadInputTokens": 10341,
+  "cacheCreationInputTokens": 35370,
+  "webSearchRequests": 0,
+  "costUSD": 0.5125555,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 4689,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.5125555,
+ "duration_ms": 69238,
+ "session_id": "71ddcf25-ed9c-4c0b-8a9e-de595c590e3b",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"Schema reference page for DCAT-US 3.0 Dataset Series: defines a dataset series as a group of related datasets published separately and identified by @id, notes its members/ordering/coverage/publishing details, and gives a JSON example.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_dataset_series\",\n      \"name\": \"dataset series\",\n      \"aliases\": [\"Dataset Series\", \"DatasetSeries\"],\n      \"description\": \"A group of related datasets published separately and identified by a series identifier, with members, ordering, coverage, and publishing details.\",\n      \"anchor\": \"about a dataset series\",\n      \"location\": \"dcat-us-3-dataset-series#c0001\"\n    },\n    {\n      \"id\": \"c_series_identifier\",\n      \"name\": \"series identifier\",\n      \"aliases\": [\"@id\"],\n      \"description\": \"The @id that identifies a dataset series.\",\n      \"anchor\": \"as the series identifier\",\n      \"location\": \"dcat-us-3-dataset-series#c0001\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d_dataset_series\",\n      \"term\": \"dataset series\",\n      \"verbatim_text\": \"A group of related datasets that are published separately and identified by @id as the series identifier\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"A group of related datasets\",\n      \"location\": \"dcat-us-3-dataset-series#c0001\"\n    }\n  ],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [\n    {\n      \"id\": \"s_dcat_us_3\",\n      \"name\": \"DCAT-US 3.0\",\n      \"version\": \"3.0\",\n      \"steward\": null,\n      \"as_of_date\": null,\n      \"anchor\": \"# DCAT-US 3.0\",\n      \"location\": \"dcat-us-3-dataset-series#c0001\"\n    }\n  ],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-dataset-series\",\n      \"to_id\": \"d_dataset_series\",\n      \"anchor\": \"A group of related datasets\",\n      \"location\": \"dcat-us-3-dataset-series#c0001\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-dataset-series\",\n      \"to_id\": \"c_dataset_series\",\n      \"anchor\": \"about a dataset series\",\n      \"location\": \"dcat-us-3-dataset-series#c0001\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-dataset-series\",\n      \"to_id\": \"c_series_identifier\",\n      \"anchor\": \"as the series identifier\",\n      \"location\": \"dcat-us-3-dataset-series#c0001\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"DatasetSeries\",\n      \"anchor\": \"\\\"DatasetSeries\\\"\"\n    },\n    {\n      \"name\": \"seriesMember\",\n      \"anchor\": \"\\\"seriesMember\\\"\"\n    },\n    {\n      \"name\": \"accrualPeriodicity\",\n      \"anchor\": \"\\\"accrualPeriodicity\\\"\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"anchor\": \"\\\"seriesMember\\\"\",\n      \"suggested_edge\": \"has_component (dataset series → Dataset)\",\n      \"diversion_reason\": \"structural_inference\"\n    },\n    {\n      \"anchor\": \"# DCAT-US 3.0\",\n      \"suggested_edge\": \"implements (DCAT-US 3.0 → dataset series)\",\n      \"diversion_reason\": \"structural_inference\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"Dataset\", \"type\": \"Concept\"},\n    {\"name\": \"Distribution\", \"type\": \"Concept\"},\n    {\"name\": \"publisher\", \"type\": \"Concept\"},\n    {\"name\": \"contactPoint\", \"type\": \"Concept\"},\n    {\"name\": \"spatial coverage\", \"type\": \"Concept\"},\n    {\"name\": \"temporal coverage\", \"type\": \"Concept\"},\n    {\"name\": \"PeriodOfTime\", \"type\": \"Concept\"},\n    {\"name\": \"Location\", \"type\": \"Concept\"}\n  ]\n}"
+}

@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-temporal-spatial-metrics",
+ "chunk_id": "dcat-us-3-temporal-spatial-metrics#c0018",
+ "chunk_index": 18,
+ "chunk_start": 14352,
+ "chunk_end": 14610,
+ "chunk_tokens": 69,
+ "heading_path": [
+  "Temporal, Spatial, and Metrics",
+  "[Location &gt; inScheme #](#location--inScheme)"
+ ],
+ "oversize": false,
+ "doc_sha256": "083cc7877b8438d25498d71ee0e04b3e0ffdbbef334ff3c5a4735cdf2c8339c7",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 4447,
+  "cacheReadInputTokens": 13057,
+  "cacheCreationInputTokens": 29081,
+  "webSearchRequests": 0,
+  "costUSD": 0.40852350000000004,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 3130,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.40852350000000004,
+ "duration_ms": 50597,
+ "session_id": "6022ef69-fd2f-40a9-8bb8-7dd41f69fed2",
+ "raw_result": "{\n  \"extract_plan\": {\n    \"chunk_summary\": \"DCAT-US 3 property reference for Location's `inScheme` field, titled 'gazetteer', optional, typed as null or ConceptScheme, described as the gazetteer to which the location belongs.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_gazetteer\",\n      \"name\": \"gazetteer\",\n      \"aliases\": [\"Gazetteer\", \"geographic name authority\"],\n      \"description\": \"The scheme to which a location belongs, named as the title of the Location inScheme property.\",\n      \"anchor\": \"Title:** gazetteer\",\n      \"location\": \"Temporal, Spatial, and Metrics > Location > inScheme\"\n    },\n    {\n      \"id\": \"c_location\",\n      \"name\": \"location\",\n      \"aliases\": [\"Location\"],\n      \"description\": \"The spatial entity whose membership in a gazetteer is recorded by inScheme.\",\n      \"anchor\": \"the location belongs\",\n      \"location\": \"Temporal, Spatial, and Metrics > Location > inScheme\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d_gazetteer_inscheme\",\n      \"term\": \"gazetteer\",\n      \"verbatim_text\": \"The gazetteer to which the location belongs\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"The gazetteer to which\",\n      \"location\": \"Temporal, Spatial, and Metrics > Location > inScheme\"\n    }\n  ],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-temporal-spatial-metrics\",\n      \"to_id\": \"d_gazetteer_inscheme\",\n      \"anchor\": \"The gazetteer to which\",\n      \"location\": \"Temporal, Spatial, and Metrics > Location > inScheme\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-temporal-spatial-metrics\",\n      \"to_id\": \"c_gazetteer\",\n      \"anchor\": \"Title:** gazetteer\",\n      \"location\": \"Temporal, Spatial, and Metrics > Location > inScheme\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-temporal-spatial-metrics\",\n      \"to_id\": \"c_location\",\n      \"anchor\": \"the location belongs\",\n      \"location\": \"Temporal, Spatial, and Metrics > Location > inScheme\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"Location &gt; inScheme\",\n      \"anchor\": \"## [Location\"\n    },\n    {\n      \"name\": \"ConceptScheme\",\n      \"anchor\": \"ConceptScheme\"\n    },\n    {\n      \"name\": \"Identifier\",\n      \"anchor\": \"Identifier\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"suggested_edge\": \"belongs_to_scheme\",\n      \"from_name\": \"location\",\n      \"to_name\": \"gazetteer\",\n      \"anchor\": \"to which the location belongs\",\n      \"diversion_reason\": \"other:predicate_unmapped\",\n      \"location\": \"Temporal, Spatial, and Metrics > Location > inScheme\"\n    },\n    {\n      \"suggested_edge\": \"has_value_range\",\n      \"from_name\": \"Location &gt; inScheme\",\n      \"to_name\": \"ConceptScheme\",\n      \"anchor\": \"null or [ConceptScheme]\",\n      \"diversion_reason\": \"structural_inference\",\n      \"location\": \"Temporal, Spatial, and Metrics > Location > inScheme\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"Optional\", \"type\": \"Concept\"}\n  ]\n}"
+}

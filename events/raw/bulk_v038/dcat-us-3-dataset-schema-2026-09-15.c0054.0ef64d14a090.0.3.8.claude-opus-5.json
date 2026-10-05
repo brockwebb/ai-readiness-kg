@@ -1,0 +1,34 @@
+{
+ "doc_id": "dcat-us-3-dataset-schema-2026-09-15",
+ "chunk_id": "dcat-us-3-dataset-schema-2026-09-15#c0054",
+ "chunk_index": 54,
+ "chunk_start": 54213,
+ "chunk_end": 54617,
+ "chunk_tokens": 103,
+ "heading_path": [
+  "DCAT-US 3.0: Dataset",
+  "[Dataset &gt; source #](#source)"
+ ],
+ "oversize": false,
+ "doc_sha256": "0ef64d14a0901d5e7f84fee15bab1474353880ee4b64aec9c185b06149e067de",
+ "prompt_version": "0.3.8",
+ "model_id": "claude-opus-5",
+ "usage": {
+  "inputTokens": 2,
+  "outputTokens": 2778,
+  "cacheReadInputTokens": 13056,
+  "cacheCreationInputTokens": 29593,
+  "webSearchRequests": 0,
+  "costUSD": 0.371918,
+  "contextWindow": 1000000,
+  "maxOutputTokens": 64000,
+  "thinkingTokens": 1618,
+  "canonicalModel": "claude-opus-5",
+  "provider": "firstParty",
+  "costBasis": "list"
+ },
+ "cost_usd": 0.371918,
+ "duration_ms": 31313,
+ "session_id": "4a60f53f-f6d0-4f0a-9d4b-1d08c533ea9c",
+ "raw_result": "```json\n{\n  \"extract_plan\": {\n    \"chunk_summary\": \"DCAT-US 3.0 Dataset property page for the optional `source` property (title 'data source'), typed as a null-or-array of Dataset classes, with Dataset defined as a collection of data published or curated by one provider.\"\n  },\n  \"concepts\": [\n    {\n      \"id\": \"c_data_source\",\n      \"name\": \"data source\",\n      \"aliases\": [\"Dataset > source\", \"source property\"],\n      \"description\": \"Optional Dataset property holding a list of related Datasets from which the described Dataset is derived.\",\n      \"anchor\": \"data source\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0054\"\n    },\n    {\n      \"id\": \"c_dataset\",\n      \"name\": \"Dataset\",\n      \"aliases\": [\"DCAT-US 3.0 Dataset class\"],\n      \"description\": \"The DCAT-US 3.0 class used both as the described resource and as the type of each item of the source array.\",\n      \"anchor\": \"A collection of data\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0054\"\n    }\n  ],\n  \"definitions\": [\n    {\n      \"id\": \"d_dataset\",\n      \"term\": \"Dataset\",\n      \"verbatim_text\": \"A collection of data published or curated by one provider\",\n      \"normative_status\": \"standard\",\n      \"as_of_date\": null,\n      \"anchor\": \"curated by one provider\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0054\"\n    }\n  ],\n  \"claims\": [],\n  \"instruments\": [],\n  \"measures\": [],\n  \"standards\": [],\n  \"frameworks\": [],\n  \"practices\": [],\n  \"tools\": [],\n  \"platforms\": [],\n  \"edges\": [\n    {\n      \"type\": \"defines\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"d_dataset\",\n      \"anchor\": \"curated by one provider\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0054\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"c_data_source\",\n      \"anchor\": \"data source\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0054\"\n    },\n    {\n      \"type\": \"mentions\",\n      \"from_id\": \"dcat-us-3-dataset-schema-2026-09-15\",\n      \"to_id\": \"c_dataset\",\n      \"anchor\": \"A collection of data\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0054\"\n    }\n  ],\n  \"cites\": [],\n  \"mentions\": [\n    {\n      \"name\": \"provider\",\n      \"anchor\": \"one provider\"\n    }\n  ],\n  \"proposed_relationships\": [\n    {\n      \"from_id\": \"c_data_source\",\n      \"to_id\": \"c_dataset\",\n      \"suggested_edge\": \"derived_from\",\n      \"anchor\": \"the described Dataset is derived\",\n      \"diversion_reason\": \"other:no_edge_type\",\n      \"location\": \"dcat-us-3-dataset-schema-2026-09-15#c0054\"\n    }\n  ],\n  \"gleaned\": [\n    {\"name\": \"Optional\", \"type\": \"Concept\"},\n    {\"name\": \"null or array of Dataset classes\", \"type\": \"Concept\"}\n  ]\n}\n```"
+}
