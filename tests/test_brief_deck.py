@@ -43,6 +43,8 @@ sys.path.insert(0, str(REPO / "scripts"))
 import build_brief_deck as D  # noqa: E402
 import build_framework_deck as FD  # noqa: E402
 
+pytestmark = pytest.mark.xfail(run=False, strict=True, reason="DN-009: deck rejected 2026-10-02; pinned at the 264-document corpus until removed")
+
 
 @pytest.fixture(scope="module")
 def rendered(tmp_path_factory):

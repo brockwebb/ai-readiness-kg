@@ -101,6 +101,17 @@ GUIDE_SELF_QUOTES = (
     "industry leaders to establish best practices for AI-ready open data.",
 )
 
+#: The OECD/JRC Handbook's words quoted on page H beside `CL-083`
+#: (`cc_tasks/2026-10-04_views_regenerate_v3.md` decision 3). The quotation and its page are not
+#: typed as evidence here: the render takes the `where` of the `CL-083` evidence entry whose
+#: `quote` holds this string, and stops when none does or when the quotation reaches
+#: `HANDBOOK_QUOTE_MAX_WORDS`. The cap is the task's ("under 15 words"); the Handbook is cited
+#: by reference and is not in the corpus (`CL-083`'s note), so it is quoted, not reproduced.
+CLAIMS = REPO / "docs" / "evidence" / "claims.yaml"
+HANDBOOK_CLAIM = "CL-083"
+HANDBOOK_QUOTE = "could also disguise the absence of a statistical or an empirical basis"
+HANDBOOK_QUOTE_MAX_WORDS = 15
+
 #: Federal policy instruments the brief asks provenance against (task decision 3). Each is a
 #: regex over a manifest entry's doc_id and title, and over an indicator's evidence cell. The
 #: patterns are the instrument's own names; a pattern that matches no admitted document is
@@ -223,6 +234,25 @@ class Sources:
                                  f"{GUIDE_SELF_DOC}, not exactly one: {q!r}")
             out.append((q, hits[0]))
         return out
+
+    def handbook_quote(self) -> tuple:
+        """`(quotation, where)` for `HANDBOOK_QUOTE`, from `CLAIMS`' `HANDBOOK_CLAIM` evidence
+        entry whose `quote` holds it. A missing claim, no holding entry, an entry with no
+        `where`, or a quotation at or over `HANDBOOK_QUOTE_MAX_WORDS` stops the render."""
+        claims = yaml.safe_load(CLAIMS.read_text(encoding="utf-8"))["claims"]
+        (claim,) = [c for c in claims if c["id"] == HANDBOOK_CLAIM] or [None]
+        if claim is None:
+            raise SystemExit(f"FATAL: {HANDBOOK_CLAIM} is not in {rel(CLAIMS)}")
+        hits = [e for e in claim.get("evidence", []) if HANDBOOK_QUOTE in (e.get("quote") or "")]
+        if not hits:
+            raise SystemExit(f"FATAL: no {HANDBOOK_CLAIM} evidence quote holds {HANDBOOK_QUOTE!r}")
+        if not hits[0].get("where"):
+            raise SystemExit(f"FATAL: the {HANDBOOK_CLAIM} entry quoting {HANDBOOK_QUOTE!r} "
+                             "carries no `where`")
+        if len(HANDBOOK_QUOTE.split()) >= HANDBOOK_QUOTE_MAX_WORDS:
+            raise SystemExit(f"FATAL: the Handbook quotation is not under "
+                             f"{HANDBOOK_QUOTE_MAX_WORDS} words")
+        return HANDBOOK_QUOTE, hits[0]["where"]
 
     @property
     def tools(self):
@@ -465,9 +495,25 @@ def page_b(s: Sources) -> tuple:
     l1, q1 = skeleton_quote(s, "It does not give an agency a test.")
     lf, qf = skeleton_quote(s, "USAFacts' four criteria")
     total = len(rows)
-    built = sum(1 for r in rows if r["rule_built"] == "yes")
-    with_dep = sum(1 for r in rows if r["departure"])
-    kept = Counter(r["kept_verbatim_or_restated"].split(" (")[0] for r in rows)
+    # The framework's count excludes the DD-054 candidates, as the evidence map's `CL-048` does
+    # (`cc_tasks/2026-10-04_views_regenerate.md` decision 3): counted over every node, the
+    # candidate's current rule made 24 of what is 23 framework indicators with a current rule.
+    cand = [n["properties"]["code"] for n in s.inds if n["id"] in s.candidates]
+    fw_rows = [r for r in rows if r["code"] not in cand]
+    built = sum(1 for r in fw_rows if r["rule_built"] == "yes")
+    # The tally and the departure count are framework counts too (`DD-054`: a candidate is "not
+    # counted in any criterion"), so both run over `fw_rows` and the candidate's own value is
+    # reported beside them (`cc_tasks/2026-10-04_views_regenerate_v3.md` decision 2): counted
+    # over every node, the tally summed to 49 two sentences before the page said the candidate
+    # was held out of every framework count.
+    with_dep = sum(1 for r in fw_rows if r["departure"])
+    kept = Counter(r["kept_verbatim_or_restated"].split(" (")[0] for r in fw_rows)
+    cand_kept = "".join(f"; the candidate `{r['code']}` is `{r['kept_verbatim_or_restated']}`"
+                        for r in rows if r["code"] in cand)
+    n_fw = pg.n(len(fw_rows), "indicators not held out as candidates")
+    held_out = (f"; {', '.join(f'`{c}`' for c in cand)} "
+                f"{'is a candidate' if len(cand) == 1 else 'are candidates'}, reported and held "
+                "out of every framework count on this page (`DD-054`). " if cand else ". ")
     pg.add("# B. Delta against the USAFacts AI-ready data framework", "",
            "## How the delta is derived",
            "",
@@ -494,15 +540,19 @@ def page_b(s: Sources) -> tuple:
            "indicator of criteria A to D is `verbatim (<doc_id>)` when its `construct`, else "
            "its `indicator`, string grounds verbatim in one of them under "
            "`kg/extraction/grounding.py` normalization, `restated` when neither grounds in any, "
-           "and an indicator of criteria E, F and G is `n/a (added criterion)`; "
-           f"{pg.n(kept['verbatim'], 'indicators whose construct or indicator grounds verbatim in a USAFacts document')} "
-           f"are verbatim, {pg.n(kept['restated'], 'indicators of criteria A to D grounding in no USAFacts document')} "
-           f"restated and {pg.n(kept['n/a'], 'indicators of criteria E, F and G')} n/a.",
+           "and an indicator of criteria E, F and G is `n/a (added criterion)`. Of the "
+           f"framework's {n_fw} indicators, "
+           f"{pg.n(kept['verbatim'], 'framework indicators whose construct or indicator grounds verbatim in a USAFacts document')} "
+           f"are verbatim, {pg.n(kept['restated'], 'framework indicators of criteria A to D grounding in no USAFacts document')} "
+           f"restated and {pg.n(kept['n/a'], 'framework indicators of criteria E, F and G')} "
+           f"n/a{cand_kept}.",
            "",
            f"Of {pg.n(total, 'count of AssessmentIndicator nodes in the record')} indicator "
-           f"nodes, {pg.n(built, 'indicators with a current rule in rules.CURRENT')} have a "
-           "current rule in the registry. "
-           f"{pg.n(with_dep, 'indicators with a departure quote')} carry a departure quote, "
+           f"nodes, {n_fw} are the framework's" + held_out +
+           f"{pg.n(built, 'indicators with a current rule in rules.CURRENT')} of the {n_fw} "
+           "have a current rule in the registry. "
+           f"{pg.n(with_dep, 'framework indicators with a departure quote')} of the {n_fw} "
+           "carry a departure quote, "
            "either from skeleton §8 (items that name the indicator's code) or from a record "
            "property that records a restatement or a withdrawal.",
            "")
@@ -1305,11 +1355,29 @@ def page_h(s: Sources, c_located: int) -> Page:
            f"{pg.n(len(inds), 'AssessmentIndicator nodes')} evidence cells carry a pinpoint "
            "locator (page C). ResearchTask `93d28c6e` holds the rest, and it is not scheduled.", "")
     sc = s.score
-    pg.add("## Equal weights, and every rank rests on one leg", "",
-           "Both scoring schemes weight equally, following the OECD/JRC Handbook default for "
-           "when no basis exists for other weights (`docs/design/scoring_model.md`). With "
-           "equal weights and sparse passes, each body's rank rests on a single leg. The "
-           "concentration sentence for every scored body:", "")
+    hq, hwhere = s.handbook_quote()
+    # `cc_tasks/2026-10-04_views_regenerate_v3.md` decision 4: "each body's rank rests on a
+    # single leg" was false on this page's own table. The count is score.py's own rule for the
+    # words "rests on one pass" (`concentration_sentence`: the rank drops when the leg is
+    # reversed, and the leg holds exactly one pass), applied to the same fields.
+    conc = {b: v["concentration"] for b, v in sorted(sc["bodies"].items())
+            if v.get("concentration")}
+    one_pass = [b for b, c in conc.items()
+                if c["rank_if_reversed"] > c["rank"] and c["pass"] == 1]
+    pg.add("## Equal weights, and the ranks that rest on one pass", "",
+           # `cc_tasks/2026-10-04_views_regenerate.md` decision 4: the Handbook never calls equal
+           # weighting a default (`CL-083`, status unsupported); it says the choice is common,
+           # is itself a weighting, and can disguise the absence of a basis. v3 decision 3: the
+           # cause is this project's, and the Handbook is quoted with its page beside the claim.
+           "Both scoring schemes weight equally because this project has no basis for other "
+           "weights (`docs/design/scoring_model.md`). The OECD/JRC Handbook notes that equal "
+           f"weighting is itself a weighting, not the absence of one, and that it \"{hq}\" "
+           f"(`{hwhere}`; `docs/evidence/claims.yaml`, `{HANDBOOK_CLAIM}`). With equal weights "
+           f"and sparse passes, {pg.n(len(one_pass), 'ranked bodies whose rank rests on one pass (score.py concentration)')} "
+           f"of the {pg.n(len(conc), 'ranked bodies (score.py concentration)')} ranked bodies "
+           f"rest on one pass ({', '.join(f'`{b}`' for b in one_pass)}): reversing that one "
+           "verdict would drop the body's rank. The concentration sentence for every scored "
+           "body:", "")
     pg.add(*table(["body", "leg", "sentence (score.py)"],
                   [[b, v["concentration"]["leg"], v["concentration"]["sentence"]]
                    for b, v in sorted(sc["bodies"].items()) if v.get("concentration")]))

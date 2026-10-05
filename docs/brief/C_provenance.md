@@ -14,13 +14,13 @@ Admitted means `screening.decision: included`. Cited means cited by at least one
 | doc_type | admitted | cited by the framework |
 |---|---|---|
 | academic | 60 | 23 |
-| federal | 94 | 35 |
+| federal | 95 | 35 |
 | industry | 49 | 6 |
 | intergovernmental | 16 | 0 |
 | platform | 1 | 0 |
 | practitioner | 10 | 2 |
 | standard | 34 | 16 |
-| all | 264 | 82 |
+| all | 265 | 82 |
 
 ## Federal policy instruments
 

@@ -66,9 +66,9 @@ Every framework indicator whose record `measurement_status` is not `measured`, w
 
 9 of 49 evidence cells carry a pinpoint locator (page C). ResearchTask `93d28c6e` holds the rest, and it is not scheduled.
 
-## Equal weights, and every rank rests on one leg
+## Equal weights, and the ranks that rest on one pass
 
-Both scoring schemes weight equally, following the OECD/JRC Handbook default for when no basis exists for other weights (`docs/design/scoring_model.md`). With equal weights and sparse passes, each body's rank rests on a single leg. The concentration sentence for every scored body:
+Both scoring schemes weight equally because this project has no basis for other weights (`docs/design/scoring_model.md`). The OECD/JRC Handbook notes that equal weighting is itself a weighting, not the absence of one, and that it "could also disguise the absence of a statistical or an empirical basis" (`§1.6, printed p. 31`; `docs/evidence/claims.yaml`, `CL-083`). With equal weights and sparse passes, 4 of the 13 ranked bodies rest on one pass (`CENSUS`, `DRSMSU`, `EIA`, `NCES`): reversing that one verdict would drop the body's rank. The concentration sentence for every scored body:
 
 | body | leg | sentence (score.py) |
 |---|---|---|

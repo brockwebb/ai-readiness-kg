@@ -1,0 +1,31 @@
+# RESULT: 2026-10-04_views_regenerate_v3 — completed; pack, site and evidence map regenerated, three wording defects fixed at the generator, deck guards retired
+
+**Ran to the end.** The generator part of `logs/views_regenerate_v2_regenerated.patch` was applied to `scripts/build_brief_pack.py` (it applied cleanly at `f532f24a`), then the three edits below, then `build_brief_pack.py`, `build_l0_site.py` and `build_evidence_map.py` (`logs/views_regenerate_v3_generators.log`, EXIT=0). No generated file was edited by hand.
+
+## Diff by file (all inside decision 6)
+- `B_usafacts_delta.md`: `:14` (decision 2 moves the tally) and `:16`. `C_provenance.md`: `:17` (federal 94 → 95) and `:23` (all 264 → 265). `E_architecture.md:74` (the locator, `:468` → `:587`). `H_limits.md`: `:69` (the heading, which made the same single-leg claim; I read it as decision 6's "single-leg line") and `:71`.
+- `numbers.json`: 24 → 23; the new 48; restated 27 → 26; four page-B labels gain "framework"; two new H entries (4 and 13). `docs/data/corpus_manifest.json` is identical to v2's diff apart from `generated_at`. `docs/data/index.json` (build_commit, sha256, bytes). `claims.yaml`: `q5_numbers_that_differ_from_the_pack` becomes `[]`. `tests/test_brief_deck.py`: the module mark only. Nothing else moved in the L0 site.
+
+## The three wording changes
+1. **Page B (decision 2): computed over the 48.** DD-054 says a candidate is "not counted in any criterion", so the kept-verbatim tally and the departure count are framework counts too. That makes the patch's "held out of every framework count" true on the page, where restating the scope would have kept a 49 under it. Before: "; 0 are verbatim, 27 restated and 22 n/a." / "Of 49 indicator nodes, 24 have a current rule … 5 carry a departure quote". After: "Of the framework's 48 indicators, 0 are verbatim, 26 restated and 22 n/a; the candidate `A12` is `restated`." / "Of 49 indicator nodes, 48 are the framework's; `A12` is a candidate, reported and held out of every framework count on this page (`DD-054`). 23 of the 48 have a current rule … 5 of the 48 carry a departure quote". A12 has no departure, so the count stays 5.
+2. **Page H, weights (decision 3).** Before (v2): "because no basis for other weights exists … can disguise the absence of a statistical or empirical basis (`docs/evidence/claims.yaml`, `CL-083`)". After: "because this project has no basis for other weights … and that it "could also disguise the absence of a statistical or an empirical basis" (`§1.6, printed p. 31`; `docs/evidence/claims.yaml`, `CL-083`)". That is 12 words. The generator takes the quotation's `where` from the `CL-083` evidence entry whose `quote` holds it, and stops the render if the claim is missing, no entry holds the quotation, the entry has no `where`, or the quotation reaches 15 words (`Sources.handbook_quote`).
+3. **Page H, single leg (decision 4).** Before: "each body's rank rests on a single leg" (heading: "every rank rests on one leg"). After: "4 of the 13 ranked bodies rest on one pass (`CENSUS`, `DRSMSU`, `EIA`, `NCES`): reversing that one verdict would drop the body's rank" (heading: "the ranks that rest on one pass"). The count uses `score.py`'s own rule for the words "rests on one pass" (`concentration_sentence`: `rank_if_reversed > rank` and `pass == 1`), applied to the same fields.
+
+## Design-note lines still saying "single leg" (out of this write set, for a wording task)
+- `docs/design/2026-10-02_DN-009_deck_rejected_evidence_map_first.md:21`: "every rank rests on one leg".
+- `docs/design/2026-10-02_DN-010_value_effort_matrix_decision_support.md:13`: "every rank resting on one leg".
+
+## Gate
+- **Full suite** (`logs/views_regenerate_v3_suite.log`): **2910 passed, 0 failed, 3 skipped, 0 deselected, 37 xfailed (12 baseline + 25 deck, marked `run=False`, not run), EXIT=0**, 2420 s. These are v2's measured counts exactly.
+- Targeted pre-check (`logs/views_regenerate_v3_targeted.log`; brief pack, evidence map, protected lib, deck): 57 passed, 25 xfailed, EXIT=0.
+- `seldon verify` (`logs/views_regenerate_v3_verify.log`): All checks passed, EXIT=0. Protected paths (`scripts/check_protected_views_regenerate_v3.sh`, `logs/views_regenerate_v3_protected.log`): PASS, EXIT=0.
+
+## Reader gate (fresh subagent; read only regenerated B and H)
+"On B, I counted the 49 indicator rows myself (48 framework rows plus the candidate A12) and checked them against the prose tallies for `kept_verbatim_or_restated`, rule coverage and departure quotes […]; on H, I checked both tier denominators, the status table against the 32-row not-measured list, the "4 of the 13 ranked bodies rest on one pass" sentence and its heading against the 13-row concentration table, whether each counterfactual rank really drops, and how the ranks are ordered. No sentence or heading on either page is contradicted by its own page or tables, with two near-misses: B's "An indicator whose record `status` is `candidate` is marked that way instead" sits next to F6, whose status reads "`paid`-tier candidate" but is marked `added` […]; and B's Criteria table gives criterion A no §8 item although skeleton line 168 names A9 and cites §1b […]. VERDICT: no contradiction — every prose count matches the rows I counted on its own page." (Trimmed. The two near-misses are on lines this task did not move; they are left for a wording task.)
+
+## Premises wrong, and things left open
+1. Decision 6 named "H:71 and the single-leg line". The single-leg sentence is on H:71 itself. The only other line making that claim is the heading, H:69, and I treated that as the line meant.
+2. Page H now reads `docs/evidence/claims.yaml`. `INDEX.md:15`, the page's sources column, does not list it, because adding it would move a line outside decision 6. The page names `claims.yaml` and `CL-083` inline. A follow-up should add it to `page_h`'s sources list.
+3. The pack reads `claims.yaml` (`CL-083`, a prior-art entry the evidence map carries through byte-for-byte), and the evidence map reads the pack's `numbers.json`. Neither reads anything the other writes for that entry, so the run order (pack, then map) is stable.
+
+**Tokens and model:** claude-opus-5-5 under Max OAuth. One subagent call (reader gate, 65k tokens). No other model call. Well under the 2M estimate.
