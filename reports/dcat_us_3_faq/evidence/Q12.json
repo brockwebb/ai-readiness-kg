@@ -2,7 +2,7 @@
  "question_id": 12,
  "question": "What did the EU do for statistical data (StatDCAT-AP), and does the US have an equivalent?",
  "generated_by": "scripts/dcat_faq_evidence.py",
- "generated_at": "2026-10-05T13:58:47.390684+00:00",
+ "generated_at": "2026-10-05T20:59:34.402096+00:00",
  "terms": [
   "statdcat",
   "statistical",
@@ -15,13 +15,17 @@
   "dcat-ap",
   "european",
   "extension",
-  "data cube"
+  "data cube",
+  "rdf data cube",
+  "{'qb': none}"
  ],
  "documents_searched": {
   "ai-readiness-kg": [
    "statdcat-ap-1-0-1",
    "sdmx-3-0-section-1-framework",
    "w3c-rdf-data-cube",
+   "dcat-us-3-dataset-schema-2026-10-05",
+   "dcat-us-3-overview-2026-10-05",
    "dcat-us-3-overview",
    "dcat-us-3-dataset-schema",
    "dcat-us-3-dataset-schema-2026-09-15",
@@ -37,8 +41,8 @@
    "dcat_us_3_implementation_guide"
   ]
  },
- "matched": 924,
- "dropped_by_cap": 800,
+ "matched": 928,
+ "dropped_by_cap": 799,
  "caps": {
   "max_items": 60,
   "max_chars": 60000,
@@ -61,17 +65,24 @@
    "url": "https://resources.data.gov/standards/catalog/dcat-us-3/dataset/",
    "graph": "ai-readiness-kg"
   },
-  "dcat-us-3-dataset-schema-2026-09-15": {
-   "title": "DCAT-US 3.0 Schema: Dataset (resources.data.gov; Internet Archive capture 2026-09-15, after the September 2026 rewrite)",
+  "dcat-us-3-dataset-schema-2026-10-05": {
+   "title": "DCAT-US 3.0 Schema: Dataset (resources.data.gov; as served 2026-10-05)",
    "issuer": "U.S. General Services Administration / Data.gov",
-   "date": "2026-09-15",
-   "url": "https://web.archive.org/web/20260915131436id_/https://resources.data.gov/standards/catalog/dcat-us-3/dataset/",
+   "date": "2026-10-05",
+   "url": "https://resources.data.gov/standards/catalog/dcat-us-3/dataset/",
    "graph": "ai-readiness-kg"
   },
   "dcat-us-3-overview": {
    "title": "DCAT-US 3.0 Overview (resources.data.gov)",
    "issuer": "U.S. General Services Administration / Data.gov",
    "date": "2026-08-21",
+   "url": "https://resources.data.gov/resources/dcat-us3/",
+   "graph": "ai-readiness-kg"
+  },
+  "dcat-us-3-overview-2026-10-05": {
+   "title": "DCAT-US 3.0 Overview (resources.data.gov; as served 2026-10-05)",
+   "issuer": "U.S. General Services Administration / Data.gov",
+   "date": "2026-10-05",
    "url": "https://resources.data.gov/resources/dcat-us3/",
    "graph": "ai-readiness-kg"
   },
@@ -309,6 +320,25 @@
   },
   {
    "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "dcat-us-3-candidate-recommendation-snapshot",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-candidate-recommendation-snapshot.md",
+    "line": 187
+   },
+   "section": "Gaps with DCAT-US 1.1",
+   "text": "- **Increased expressiveness** : DCAT 3 offers a richer set of classes and properties, enabling more detailed descriptions of datasets and their relationships.\n- **Improved support for geospatial data** : DCAT 3 provides better support for describing geospatial datasets, including coordinate reference systems and geometry.\n- **Enhanced handling of statistical data** : DCAT 3 and RDF Data Cube (QB) specification introduce new vocabulary terms to describe statistical datasets and their dimensions more effectively.\n- **Refined vocabularies** : DCAT 3 benefits from updated reference controlled vocabularies to ensure better interoperability between agencies and systems.",
+   "terms_matched": [
+    "statistical",
+    "dimension",
+    "data cube",
+    "rdf data cube"
+   ],
+   "cut": false,
+   "id": "E11"
+  },
+  {
+   "graph": "ai-readiness-kg",
    "kind": "extracted claim span",
    "doc_id": "statdcat-ap-1-0-1",
    "locator": {
@@ -324,7 +354,7 @@
     "european"
    ],
    "cut": false,
-   "id": "E11"
+   "id": "E12"
   },
   {
    "graph": "ai-readiness-kg",
@@ -343,7 +373,7 @@
     "dcat-ap"
    ],
    "cut": false,
-   "id": "E12"
+   "id": "E13"
   },
   {
    "graph": "ai-readiness-kg",
@@ -362,7 +392,7 @@
     "data cube"
    ],
    "cut": false,
-   "id": "E13"
+   "id": "E14"
   },
   {
    "graph": "ai-readiness-kg",
@@ -381,7 +411,7 @@
     "extension"
    ],
    "cut": false,
-   "id": "E14"
+   "id": "E15"
   },
   {
    "graph": "ai-readiness-kg",
@@ -400,7 +430,25 @@
     "data cube"
    ],
    "cut": false,
-   "id": "E15"
+   "id": "E16"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "w3c-rdf-data-cube",
+   "locator": {
+    "file": "state/substrate_md/w3c-rdf-data-cube.md",
+    "line": 118
+   },
+   "section": "2.2 SDMX and related standards",
+   "text": "The RDF Data Cube vocabulary builds upon the core of the the SDMX 2.0 Information Model [SDMX20].",
+   "terms_matched": [
+    "sdmx",
+    "data cube",
+    "rdf data cube"
+   ],
+   "cut": false,
+   "id": "E17"
   },
   {
    "graph": "ai-readiness-kg",
@@ -418,7 +466,7 @@
     "data cube"
    ],
    "cut": false,
-   "id": "E16"
+   "id": "E18"
   },
   {
    "graph": "ai-readiness-kg",
@@ -436,25 +484,7 @@
     "attribute"
    ],
    "cut": false,
-   "id": "E17"
-  },
-  {
-   "graph": "ai-readiness-kg",
-   "kind": "document text",
-   "doc_id": "w3c-rdf-data-cube",
-   "locator": {
-    "file": "state/substrate_md/w3c-rdf-data-cube.md",
-    "line": 345
-   },
-   "section": "6.4 ComponentSpecifications and DataStructureDefinitions",
-   "text": "Example 4\n```\neg:dsd-le a qb:DataStructureDefinition;\n    # The dimensions\n    qb:component [ qb:dimension eg:refArea;         qb:order 1 ];\n    qb:component [ qb:dimension eg:refPeriod;       qb:order 2 ];\n    qb:component [ qb:dimension sdmx-dimension:sex; qb:order 3 ];\n    # The measure(s)\n    qb:component [ qb:measure eg:lifeExpectancy];\n    # The attributes\n    qb:component [ qb:attribute sdmx-attribute:unitMeasure;\n                   qb:componentRequired \"true\"^^xsd:boolean;\n                   qb:componentAttachment qb:DataSet; ] .\n```",
-   "terms_matched": [
-    "sdmx",
-    "dimension",
-    "attribute"
-   ],
-   "cut": false,
-   "id": "E18"
+   "id": "E19"
   },
   {
    "graph": "ai-readiness-kg",
@@ -470,24 +500,6 @@
     "application profile",
     "dcat-ap",
     "european"
-   ],
-   "cut": false,
-   "id": "E19"
-  },
-  {
-   "graph": "ai-readiness-kg",
-   "kind": "document text",
-   "doc_id": "dcat-us-3-candidate-recommendation-snapshot",
-   "locator": {
-    "file": "state/substrate_md/dcat-us-3-candidate-recommendation-snapshot.md",
-    "line": 187
-   },
-   "section": "Gaps with DCAT-US 1.1",
-   "text": "- **Increased expressiveness** : DCAT 3 offers a richer set of classes and properties, enabling more detailed descriptions of datasets and their relationships.\n- **Improved support for geospatial data** : DCAT 3 provides better support for describing geospatial datasets, including coordinate reference systems and geometry.\n- **Enhanced handling of statistical data** : DCAT 3 and RDF Data Cube (QB) specification introduce new vocabulary terms to describe statistical datasets and their dimensions more effectively.\n- **Refined vocabularies** : DCAT 3 benefits from updated reference controlled vocabularies to ensure better interoperability between agencies and systems.",
-   "terms_matched": [
-    "statistical",
-    "dimension",
-    "data cube"
    ],
    "cut": false,
    "id": "E20"
@@ -859,6 +871,40 @@
    "kind": "extracted concept span",
    "doc_id": "w3c-rdf-data-cube",
    "locator": {
+    "node": "w3c-rdf-data-cube::c-data-cube-vocabulary",
+    "location": "Abstract"
+   },
+   "section": "Abstract",
+   "text": "<!-- kernel harvest: cc_tasks/2026-08-21_v03_visibility_kernel.md Phase 2; primary_url=https://www.w3.org/TR/vocab-data-cube/; final_url=https://www.w3.org/TR/vocab-data-cube/; fetch_method=httpx-dom; page_title='The RDF Data Cube Vocabulary'; extent_dropped_sections=['Table of Contents'] -->",
+   "terms_matched": [
+    "data cube",
+    "rdf data cube"
+   ],
+   "cut": false,
+   "id": "E42"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted concept span",
+   "doc_id": "w3c-rdf-data-cube",
+   "locator": {
+    "node": "w3c-rdf-data-cube::c-integrity-constraint",
+    "location": "11"
+   },
+   "section": "11",
+   "text": "An instance of an RDF Data Cube should conform to a set of integrity constraints which we define in this section.",
+   "terms_matched": [
+    "data cube",
+    "rdf data cube"
+   ],
+   "cut": false,
+   "id": "E43"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted concept span",
+   "doc_id": "w3c-rdf-data-cube",
+   "locator": {
     "node": "w3c-rdf-data-cube::c-measure-dimension",
     "location": "6.5"
    },
@@ -869,7 +915,7 @@
     "dimension"
    ],
    "cut": false,
-   "id": "E42"
+   "id": "E44"
   },
   {
    "graph": "ai-readiness-kg",
@@ -886,7 +932,24 @@
     "sdmx"
    ],
    "cut": false,
-   "id": "E43"
+   "id": "E45"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted concept span",
+   "doc_id": "w3c-rdf-data-cube",
+   "locator": {
+    "node": "w3c-rdf-data-cube::c-well-formed-cube",
+    "location": "11"
+   },
+   "section": "11",
+   "text": "Well-formed cubes — An instance of an RDF Data Cube should conform to a set of integrity constraints which we define in this section.",
+   "terms_matched": [
+    "data cube",
+    "rdf data cube"
+   ],
+   "cut": false,
+   "id": "E46"
   },
   {
    "graph": "ai-readiness-kg",
@@ -903,7 +966,7 @@
     "sdmx"
    ],
    "cut": false,
-   "id": "E44"
+   "id": "E47"
   },
   {
    "graph": "ai-readiness-kg",
@@ -920,7 +983,7 @@
     "attribute"
    ],
    "cut": false,
-   "id": "E45"
+   "id": "E48"
   },
   {
    "graph": "ai-readiness-kg",
@@ -937,41 +1000,39 @@
     "unit of measure"
    ],
    "cut": false,
-   "id": "E46"
+   "id": "E49"
   },
   {
    "graph": "ai-readiness-kg",
-   "kind": "extracted definition span",
-   "doc_id": "w3c-rdf-data-cube",
+   "kind": "document text (table row)",
+   "doc_id": "dcat-us-3-dataset-schema-2026-10-05",
    "locator": {
-    "node": "w3c-rdf-data-cube::d-component-property",
-    "location": "12.4"
+    "file": "state/substrate_md/dcat-us-3-dataset-schema-2026-10-05.md",
+    "line": 91
    },
-   "section": "12.4",
-   "text": "Abstract super-class of all properties representing dimensions, attributes or measures.",
+   "section": "DCAT-US 3.0: Dataset",
+   "text": "| [wasAttributedTo](#wasAttributedTo) | [Agent](/standards/catalog/dcat-us-3/agents/#agent) null or array of classes | Optional | List of agents attributed to this dataset |",
    "terms_matched": [
-    "dimension",
     "attribute"
    ],
    "cut": false,
-   "id": "E47"
+   "id": "E50"
   },
   {
    "graph": "ai-readiness-kg",
-   "kind": "extracted framework span",
-   "doc_id": "w3c-rdf-data-cube",
+   "kind": "document text",
+   "doc_id": "dcat-us-3-overview-2026-10-05",
    "locator": {
-    "node": "w3c-rdf-data-cube::f-sdmx20-im",
-    "location": "2.2"
+    "file": "state/substrate_md/dcat-us-3-overview-2026-10-05.md",
+    "line": 57
    },
-   "section": "2.2",
-   "text": "The RDF Data Cube vocabulary builds upon the core of the the SDMX 2.0 Information Model [SDMX20].",
+   "section": "What is DCAT-US v3.0?",
+   "text": "DCAT-US v3.0 is the federal data catalog metadata standard, updated to improve the Findability, Accessibility, Interoperability, and Reusability (FAIRness) of federal data. It is a U.S. application profile of the [W3C Data Catalog Vocabulary (DCAT) version 3](https://www.w3.org/TR/vocab-dcat-3/) - not a new or separate standard. This means most DCAT-US v3.0 metadata is valid W3C DCAT 3 metadata, making it easier to share federal data with international catalogs and platforms that understand the W3C standard.",
    "terms_matched": [
-    "sdmx",
-    "data cube"
+    "application profile"
    ],
    "cut": false,
-   "id": "E48"
+   "id": "E51"
   },
   {
    "graph": "ai-readiness-kg",
@@ -987,7 +1048,7 @@
     "attribute"
    ],
    "cut": false,
-   "id": "E49"
+   "id": "E52"
   },
   {
    "graph": "ai-readiness-kg",
@@ -1003,23 +1064,7 @@
     "attribute"
    ],
    "cut": false,
-   "id": "E50"
-  },
-  {
-   "graph": "ai-readiness-kg",
-   "kind": "document text (table row)",
-   "doc_id": "dcat-us-3-dataset-schema-2026-09-15",
-   "locator": {
-    "file": "state/substrate_md/dcat-us-3-dataset-schema-2026-09-15.md",
-    "line": 91
-   },
-   "section": "DCAT-US 3.0: Dataset",
-   "text": "| [wasAttributedTo](#wasAttributedTo) | [Agent](/standards/catalog/dcat-us-3/agents/#agent) null or array of classes | Optional | List of agents attributed to this dataset |",
-   "terms_matched": [
-    "attribute"
-   ],
-   "cut": false,
-   "id": "E51"
+   "id": "E53"
   },
   {
    "graph": "ai-readiness-kg",
@@ -1035,7 +1080,7 @@
     "application profile"
    ],
    "cut": false,
-   "id": "E52"
+   "id": "E54"
   },
   {
    "graph": "ai-readiness-kg",
@@ -1051,7 +1096,7 @@
     "application profile"
    ],
    "cut": false,
-   "id": "E53"
+   "id": "E55"
   },
   {
    "graph": "ai-readiness-kg",
@@ -1067,7 +1112,7 @@
     "dimension"
    ],
    "cut": false,
-   "id": "E54"
+   "id": "E56"
   },
   {
    "graph": "ai-readiness-kg",
@@ -1083,7 +1128,7 @@
     "dimension"
    ],
    "cut": false,
-   "id": "E55"
+   "id": "E57"
   },
   {
    "graph": "ai-readiness-kg",
@@ -1099,7 +1144,7 @@
     "dimension"
    ],
    "cut": false,
-   "id": "E56"
+   "id": "E58"
   },
   {
    "graph": "ai-readiness-kg",
@@ -1115,7 +1160,7 @@
     "dimension"
    ],
    "cut": false,
-   "id": "E57"
+   "id": "E59"
   },
   {
    "graph": "ai-readiness-kg",
@@ -1131,40 +1176,8 @@
     "unit of measure"
    ],
    "cut": false,
-   "id": "E58"
-  },
-  {
-   "graph": "ai-readiness-kg",
-   "kind": "document text",
-   "doc_id": "dcat-us-3-temporal-spatial-metrics",
-   "locator": {
-    "file": "state/substrate_md/dcat-us-3-temporal-spatial-metrics.md",
-    "line": 610
-   },
-   "section": "[QualityMeasurement &gt; unitMeasure #](#quality-measurement--unitMeasure)",
-   "text": "**Title:** unit of measure",
-   "terms_matched": [
-    "unit of measure"
-   ],
-   "cut": false,
-   "id": "E59"
-  },
-  {
-   "graph": "ai-readiness-kg",
-   "kind": "document text",
-   "doc_id": "dcat-us-3-candidate-recommendation-snapshot",
-   "locator": {
-    "file": "state/substrate_md/dcat-us-3-candidate-recommendation-snapshot.md",
-    "line": 36
-   },
-   "section": "**Data Catalog Application Profile for the United States of America Candidate Recommendation Snapshot**",
-   "text": "exchanging datasets. By harmonizing the most significant attributes of both standards, this profile also addresses",
-   "terms_matched": [
-    "attribute"
-   ],
-   "cut": false,
    "id": "E60"
   }
  ],
- "evidence_sha256": "51c28a7102092d3159c46bc8b4f7a32592cd1e7a71cd67f125a029b6b61dd94b"
+ "evidence_sha256": "fbdeb8fea9ff69177d1840980c3b6f1a4cbf1f543c57630b16e012202d09396b"
 }

@@ -67,6 +67,14 @@ FINAL = "dcat-us-3-dataset-schema-2026-09-15"
 EARLIER = "dcat-us-3-dataset-schema"
 DRAFT = "dcat-us-3-candidate-recommendation-snapshot"
 V11 = "dcat-us-1-1-schema"
+#: The Dataset page as served on 2026-10-05, a dated version of EARLIER (DD-068), admitted by
+#: `scripts/admit_dcat_us_3_live_2026_10_05.py` (DCAT-003 ADDENDUM 01 step 4). It is the fifth
+#: column of the attachment's table. It is NOT part of a table row's evidence text
+#: (`row_text`): the answers already written were checked against four-version rows, and a
+#: row that changed under them would orphan their checked units.
+LIVE = "dcat-us-3-dataset-schema-2026-10-05"
+#: The four versions a row's evidence text quotes, in this order.
+ROW_TEXT_DOCS = (FINAL, EARLIER, DRAFT, V11)
 
 #: The working draft names a property by its RDF term; the published schema by a JSON key.
 #: Most keys are the term's local name. These are the exceptions, each read off the two texts:
@@ -241,7 +249,8 @@ def catalog_entries(drv, db: str, meta: dict) -> list:
     rows = q(drv, db,
              "MATCH (c:CatalogEntry) WHERE c.id =~ '(dcat|fairness|cdoc|fcsm_2024).*' "
              "RETURN c.id AS id, c.title AS title, c.disposition AS disp, c.source_url AS url, "
-             "c.notes AS notes ORDER BY c.id")
+             "c.notes AS notes, c.agency_or_govwide AS issuer, c.effective_date AS date "
+             "ORDER BY c.id")
     urls = {m.get("url") for m in meta.values() if m.get("url")}
     titles = [norm(m.get("title") or "").lower() for m in meta.values()]
     out = []
@@ -252,7 +261,11 @@ def catalog_entries(drv, db: str, meta: dict) -> list:
             continue
         out.append({"graph": "fss-policy-kg", "kind": "catalog record (not admitted)", "doc_id": r["id"],
                     "locator": {"catalog_entry": r["id"]}, "section": r["disp"] or "",
-                    "text": f"{r['title']}. {r['notes'] or ''}".strip()})
+                    "text": f"{r['title']}. {r['notes'] or ''}".strip(),
+                    # The record's own fields, for the FAQ's list of documents not used
+                    # (ADDENDUM 01 step 1, Part B). Not part of the evidence hash.
+                    "record": {"title": r["title"], "issuer": r["issuer"], "date": r["date"],
+                               "url": r["url"]}})
     return out
 
 
@@ -374,11 +387,12 @@ def v11_levels(doc: str, substrate_dir: Path) -> dict:
 
 
 def element_table(substrate_dir: Path) -> list:
+    live = final_levels(LIVE, substrate_dir)
     fin = final_levels(FINAL, substrate_dir)
     ear = final_levels(EARLIER, substrate_dir)
     dra = draft_levels(DRAFT, substrate_dir)
     v11 = v11_levels(V11, substrate_dir)
-    keys = list(dict.fromkeys([*fin, *ear, *dra, *v11]))
+    keys = list(dict.fromkeys([*fin, *ear, *dra, *v11, *live]))
     rows = []
     for k in keys:
         if k.startswith("@"):
@@ -388,8 +402,9 @@ def element_table(substrate_dir: Path) -> list:
                  "level_2026_08_21": (ear.get(k) or {}).get("level"),
                  "draft_level": (dra.get(k) or {}).get("level"),
                  "v11_required": (v11.get(k) or {}).get("status"),
+                 "level_2026_10_05": (live.get(k) or {}).get("level"),
                  "sources": {}}
-        for doc, src in ((FINAL, fin), (EARLIER, ear), (DRAFT, dra), (V11, v11)):
+        for doc, src in ((FINAL, fin), (EARLIER, ear), (DRAFT, dra), (V11, v11), (LIVE, live)):
             if k in src:
                 cells["sources"][doc] = {"line": src[k]["line"], "text": src[k]["text"],
                                          "file": f"state/substrate_md/{doc}.md"}
@@ -406,8 +421,8 @@ def row_text(r: dict) -> str:
              EARLIER: "DCAT-US 3.0 Dataset page (2026-08-21)",
              DRAFT: "DCAT-US 3 working draft (Candidate Recommendation, 2025)",
              V11: "DCAT-US v1.1 schema"}
-    parts = [f"{names[d]}: {s['text']}" for d, s in r["sources"].items()]
-    absent = [names[d] for d in (FINAL, EARLIER, DRAFT, V11) if d not in r["sources"]]
+    parts = [f"{names[d]}: {s['text']}" for d, s in r["sources"].items() if d in ROW_TEXT_DOCS]
+    absent = [names[d] for d in ROW_TEXT_DOCS if d not in r["sources"]]
     if absent:
         parts.append("Not listed in: " + "; ".join(absent))
     return f"Element {r['element']}. " + " || ".join(parts)
@@ -421,7 +436,8 @@ def table_items(rows: list, only_changed: bool = False) -> list:
             continue
         out.append({"graph": "computed from ai-readiness-kg documents", "kind": "element table row",
                     "doc_id": FINAL, "locator": {"element": r["element"],
-                                                 "lines": {d: s["line"] for d, s in r["sources"].items()}},
+                                                 "lines": {d: s["line"] for d, s in r["sources"].items()
+                                                           if d in ROW_TEXT_DOCS}},
                     "section": f"element {r['element']}", "text": row_text(r),
                     "pinned": True})
     return out

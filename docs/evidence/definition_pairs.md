@@ -8,7 +8,7 @@ false`), and nothing here says what a conflict means for the framework.
 
 ## The set
 Q1 as `scripts/run_kg_questions.py` wrote it to `docs/evidence/kg_questions.yaml` (epoch:
-279 documents, 2550 Definitions): **19 definitions from 11
+281 documents, 2550 Definitions): **19 definitions from 11
 documents**. Unordered pairs 171; same-document pairs skipped **13**;
 cross-document pairs **158**. Full spans come from the projection; the CSV quotes at most
 14 words of each and gives the rest by locator.

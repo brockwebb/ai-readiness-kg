@@ -1720,8 +1720,8 @@ claims:
   key: q3.corpus_growth
   question: Q3
   text: The corpus began as the v1 epoch of 71 documents (first admitted `2026-07-03` to `2026-07-04`)
-    and holds 278 admitted documents now; 162 were added before the framework record was first committed
-    (`2026-09-06`, `51d2526e1ad2`) and 45 on or after it, of which 25 are captured scan surfaces rather
+    and holds 280 admitted documents now; 162 were added before the framework record was first committed
+    (`2026-09-06`, `51d2526e1ad2`) and 47 on or after it, of which 25 are captured scan surfaces rather
     than literature.
   status: record
   evidence:
@@ -1752,6 +1752,10 @@ claims:
     locator: events/batch-001.jsonl:121
     note: first manifest_add 2026-10-05; provenance dcat_002_2026-10-04
   - kind: document
+    id: dcat-us-3-dataset-schema-2026-10-05
+    locator: events/batch-001.jsonl:126
+    note: first manifest_add 2026-10-05; provenance dcat_003a_2026-10-05
+  - kind: document
     id: dcat-us-3-dataset-series
     locator: events/batch-001.jsonl:117
     note: first manifest_add 2026-10-05; provenance dcat_002_2026-10-04
@@ -1763,6 +1767,10 @@ claims:
     id: dcat-us-3-m-25-05-crosswalk
     locator: events/batch-001.jsonl:114
     note: first manifest_add 2026-10-05; provenance dcat_002_2026-10-04
+  - kind: document
+    id: dcat-us-3-overview-2026-10-05
+    locator: events/batch-001.jsonl:127
+    note: first manifest_add 2026-10-05; provenance dcat_003a_2026-10-05
   - kind: document
     id: dcat-us-3-quality-governance
     locator: events/batch-001.jsonl:115
@@ -1918,11 +1926,11 @@ claims:
   numbers:
   - value: '71'
     source: included entries whose provenance_sources has manifest_v1
-  - value: '278'
+  - value: '280'
     source: manifest entries with screening.decision included
   - value: '162'
     source: included, not v1, first admitted before the framework record
-  - value: '45'
+  - value: '47'
     source: included, not v1, first admitted on or after the framework record
   - value: '25'
     source: of those, entries whose provenance is a scan epoch
@@ -2342,7 +2350,7 @@ claims:
   question: Q5
   text: 'Evidence coverage in the record: 9 of 49 indicator evidence cells carry a pinpoint locator; 29
     of 149 `EVIDENCED_BY` edges point at a located document; 16 indicators have no `EVIDENCED_BY` edge;
-    and 84 of the 278 admitted documents are cited by one.'
+    and 84 of the 280 admitted documents are cited by one.'
   status: record
   evidence:
   - kind: query
@@ -2400,7 +2408,7 @@ claims:
     source: indicators with no EVIDENCED_BY edge
   - value: '84'
     source: admitted documents cited by an EVIDENCED_BY edge
-  - value: '278'
+  - value: '280'
     source: manifest entries with screening.decision included
   source_task: cc_tasks/2026-10-02_evidence_map_record.md
 - id: CL-055
@@ -4084,5 +4092,5 @@ tables:
   - first_admitted: '2026-10-04'
     documents: 1
   - first_admitted: '2026-10-05'
-    documents: 13
+    documents: 15
   q5_numbers_that_differ_from_the_pack: []

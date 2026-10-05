@@ -19,8 +19,8 @@ Admitted means `screening.decision: included`. Cited means cited by at least one
 | intergovernmental | 16 | 0 |
 | platform | 1 | 0 |
 | practitioner | 10 | 2 |
-| standard | 41 | 17 |
-| all | 278 | 84 |
+| standard | 43 | 17 |
+| all | 280 | 84 |
 
 ## Federal policy instruments
 
@@ -36,7 +36,7 @@ No admitted document matches `Title 13`, `CIPSEA`, `SPD (Statistical Policy Dire
 | Title 13 | `title[ -]13\b` | none admitted | none | none |
 | CIPSEA | `cipsea\|confidential information protection and statistical efficiency` | none admitted | none | none |
 | SPD (Statistical Policy Directive) | `statistical policy directive\|\bspd[ -]?\d` | none admitted | none | none |
-| DCAT-US | `dcat-us\|dcat.us` | dcat-us-1-1-schema; dcat-us-3-candidate-recommendation-snapshot; dcat-us-3-dataset-schema; dcat-us-3-dataset-schema-2026-09-15; dcat-us-3-dataset-series; dcat-us-3-implementation-guide; dcat-us-3-m-25-05-crosswalk; dcat-us-3-overview; dcat-us-3-quality-governance; dcat-us-3-temporal-spatial-metrics; fairness-project-wiki-home; fairness-project-wiki-project-overview | A3; A8; D4; G4 | none |
+| DCAT-US | `dcat-us\|dcat.us` | dcat-us-1-1-schema; dcat-us-3-candidate-recommendation-snapshot; dcat-us-3-dataset-schema; dcat-us-3-dataset-schema-2026-09-15; dcat-us-3-dataset-schema-2026-10-05; dcat-us-3-dataset-series; dcat-us-3-implementation-guide; dcat-us-3-m-25-05-crosswalk; dcat-us-3-overview; dcat-us-3-overview-2026-10-05; dcat-us-3-quality-governance; dcat-us-3-temporal-spatial-metrics; fairness-project-wiki-home; fairness-project-wiki-project-overview | A3; A8; D4; G4 | none |
 
 ## Per indicator
 

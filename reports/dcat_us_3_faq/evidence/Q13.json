@@ -2,7 +2,7 @@
  "question_id": 13,
  "question": "What options exist for next steps? Examples: a statistical application profile; raising requirement levels through guidance; conformance checking. State what each source supports. Do not recommend beyond the sources.",
  "generated_by": "scripts/dcat_faq_evidence.py",
- "generated_at": "2026-10-05T13:58:47.610985+00:00",
+ "generated_at": "2026-10-05T20:59:35.322660+00:00",
  "terms": [
   "extension",
   "extend",
@@ -20,10 +20,25 @@
   "guidance",
   "should",
   "update",
-  "release plan"
+  "release plan",
+  "within one year",
+  "schema change",
+  "changes to the schema",
+  "update the inventory",
+  "inventory update",
+  "no later than",
+  "versioning",
+  "version history",
+  "tiger team",
+  "post-release",
+  "subsequent version",
+  "requirement level",
+  "statistical"
  ],
  "documents_searched": {
   "ai-readiness-kg": [
+   "dcat-us-3-dataset-schema-2026-10-05",
+   "dcat-us-3-overview-2026-10-05",
    "dcat-us-3-overview",
    "dcat-us-3-dataset-schema",
    "dcat-us-3-dataset-schema-2026-09-15",
@@ -33,6 +48,8 @@
    "dcat-us-3-temporal-spatial-metrics",
    "dcat-us-3-dataset-series",
    "dcat-us-3-candidate-recommendation-snapshot",
+   "m-25-05-phase-2-implementation-of-the-evidence-act-open-gove",
+   "m-19-23-phase-1-implementation-of-the-evidence-act",
    "statdcat-ap-1-0-1",
    "sdmx-3-0-section-1-framework",
    "w3c-rdf-data-cube",
@@ -50,8 +67,8 @@
    "fairness_project_wiki_overview"
   ]
  },
- "matched": 1894,
- "dropped_by_cap": 1685,
+ "matched": 2707,
+ "dropped_by_cap": 2469,
  "caps": {
   "max_items": 60,
   "max_chars": 60000,
@@ -60,13 +77,6 @@
   "max_passage_chars": 1800
  },
  "documents": {
-  "cdoc-dswg-findings-and-recommendations-2022": {
-   "title": "Data Sharing Working Group: Findings & Recommendations (Federal CDO Council)",
-   "issuer": "Federal Chief Data Officers Council, Data Sharing Working Group",
-   "date": "2022-03-30",
-   "url": "https://resources.data.gov/assets/documents/2021_DSWG_Recommendations_and_Findings_508.pdf",
-   "graph": "ai-readiness-kg"
-  },
   "dcat-us-3-candidate-recommendation-snapshot": {
    "title": "DCAT-US - Version 3: Data Catalog Application Profile for the United States of America (Candidate Recommendation Snapshot; Internet Archive capture 2025-05-04)",
    "issuer": "DOI-DO DCAT-US working group (GitHub doi-do/dcat-us)",
@@ -81,18 +91,11 @@
    "url": "https://resources.data.gov/standards/catalog/dcat-us-3/dataset/",
    "graph": "ai-readiness-kg"
   },
-  "dcat-us-3-dataset-schema-2026-09-15": {
-   "title": "DCAT-US 3.0 Schema: Dataset (resources.data.gov; Internet Archive capture 2026-09-15, after the September 2026 rewrite)",
+  "dcat-us-3-dataset-schema-2026-10-05": {
+   "title": "DCAT-US 3.0 Schema: Dataset (resources.data.gov; as served 2026-10-05)",
    "issuer": "U.S. General Services Administration / Data.gov",
-   "date": "2026-09-15",
-   "url": "https://web.archive.org/web/20260915131436id_/https://resources.data.gov/standards/catalog/dcat-us-3/dataset/",
-   "graph": "ai-readiness-kg"
-  },
-  "dcat-us-3-implementation-guide": {
-   "title": "DCAT-US v3.0 Schema Implementation Guide (version 1.1)",
-   "issuer": "U.S. General Services Administration / Data.gov",
-   "date": "2026-09-09",
-   "url": "https://resources.data.gov/assets/documents/dcat-us-3-implementation-guide.pdf",
+   "date": "2026-10-05",
+   "url": "https://resources.data.gov/standards/catalog/dcat-us-3/dataset/",
    "graph": "ai-readiness-kg"
   },
   "dcat-us-3-m-25-05-crosswalk": {
@@ -106,6 +109,13 @@
    "title": "DCAT-US 3.0 Overview (resources.data.gov)",
    "issuer": "U.S. General Services Administration / Data.gov",
    "date": "2026-08-21",
+   "url": "https://resources.data.gov/resources/dcat-us3/",
+   "graph": "ai-readiness-kg"
+  },
+  "dcat-us-3-overview-2026-10-05": {
+   "title": "DCAT-US 3.0 Overview (resources.data.gov; as served 2026-10-05)",
+   "issuer": "U.S. General Services Administration / Data.gov",
+   "date": "2026-10-05",
    "url": "https://resources.data.gov/resources/dcat-us3/",
    "graph": "ai-readiness-kg"
   },
@@ -130,18 +140,46 @@
    "url": "https://resources.data.gov/resources/dcat-us3/",
    "graph": "fss-policy-kg"
   },
-  "fairness-project-wiki-home": {
-   "title": "Welcome to the CDOC/FCSM FAIRness Project (DCAT-US 3 project wiki, Home)",
-   "issuer": "CDOC/FCSM FAIRness Project (GitHub DOI-DO/dcat-us wiki)",
-   "date": "2023-10-26",
-   "url": "https://raw.githubusercontent.com/wiki/DOI-DO/dcat-us/Home.md",
-   "graph": "ai-readiness-kg"
+  "evidence_act_2018": {
+   "title": "Foundations for Evidence-Based Policymaking Act of 2018 (Evidence Act)",
+   "issuer": "govwide",
+   "date": "2019-01-14",
+   "url": "https://www.govinfo.gov/app/details/PLAW-115publ435",
+   "graph": "fss-policy-kg"
   },
   "fairness-project-wiki-project-overview": {
    "title": "FAIRness Project: Project Overview (DCAT-US 3 project wiki)",
    "issuer": "CDOC/FCSM FAIRness Project (GitHub DOI-DO/dcat-us wiki)",
    "date": "2023-09-12",
    "url": "https://raw.githubusercontent.com/wiki/DOI-DO/dcat-us/Project-Overview.md",
+   "graph": "ai-readiness-kg"
+  },
+  "fairness_project_wiki_overview": {
+   "title": "FAIRness Project: Project Overview (DCAT-US GitHub wiki)",
+   "issuer": "Federal CDO Council and FCSM",
+   "date": "2023-09-12",
+   "url": "https://github.com/DOI-DO/dcat-us/wiki/Project-Overview",
+   "graph": "fss-policy-kg"
+  },
+  "fcsm-2024-b3-3-fairness-project": {
+   "title": "The FAIRness Project: Building Trust and FAIRness into Finding and Using Government Data (FCSM 2024 Research and Policy Conference, session B3.3)",
+   "issuer": "Thomas Dabolt (DOI); Michael Ratcliffe (U.S. Census Bureau)",
+   "date": "2024-10-30",
+   "url": "https://statspolicy.gov/assets/fcsm/files/docs/2024-conference-docs/B/B3.3_Dabolt.pdf",
+   "graph": "ai-readiness-kg"
+  },
+  "m-19-23-phase-1-implementation-of-the-evidence-act": {
+   "title": "M-19-23: Phase 1 Implementation of the Evidence Act",
+   "issuer": "(unspecified)",
+   "date": "n.d.",
+   "url": "https://www.whitehouse.gov/wp-content/uploads/2019/07/M-19-23.pdf",
+   "graph": "ai-readiness-kg"
+  },
+  "m-25-05-phase-2-implementation-of-the-evidence-act-open-gove": {
+   "title": "M-25-05: Phase 2 Implementation of the Evidence Act — Open Government Data Access and Management",
+   "issuer": "Office of Management and Budget",
+   "date": "n.d.",
+   "url": "https://bidenwhitehouse.archives.gov/wp-content/uploads/2025/01/M-25-05-Phase-2-Implementation-of-the-Foundations-for-Evidence-Based-Policymaking-Act-of-2018-Open-Government-Data-Access-and-Management-Guidance.pdf",
    "graph": "ai-readiness-kg"
   },
   "m_19_23": {
@@ -227,6 +265,25 @@
   {
    "graph": "ai-readiness-kg",
    "kind": "document text",
+   "doc_id": "dcat-us-3-overview",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-overview.md",
+    "line": 48
+   },
+   "section": "What is DCAT-US v3.0?",
+   "text": "DCAT-US v3.0 is the federal data catalog metadata standard, updated to improve the Findability, Accessibility, Interoperability, and Reusability (FAIRness) of federal data. It is a U.S. application profile of the [W3C Data Catalog Vocabulary (DCAT) version 3](https://www.w3.org/TR/vocab-dcat-3/) — not a new or separate standard. This means most DCAT-US v3.0 metadata is valid W3C DCAT 3 metadata, making it easier to share federal data with international catalogs and platforms that understand the W3C standard.\nDCAT-US v3.0 was developed collaboratively by the Federal Chief Data Officers Council, the Federal Committee on Statistical Methodology, and the Data.gov team at GSA, drawing on more than a decade of implementation experience with v1.1 and feedback from agencies, data providers, and data users across government. The schema is maintained in a [public GitHub repository](https://github.com/GSA/dcat-us) and governed through a CDO Tiger Team review process to ensure ongoing accuracy and responsiveness to agency needs.",
+   "terms_matched": [
+    "profile",
+    "update",
+    "tiger team",
+    "statistical"
+   ],
+   "cut": false,
+   "id": "E3"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
    "doc_id": "dcat-us-3-candidate-recommendation-snapshot",
    "locator": {
     "file": "state/substrate_md/dcat-us-3-candidate-recommendation-snapshot.md",
@@ -241,7 +298,7 @@
     "update"
    ],
    "cut": false,
-   "id": "E3"
+   "id": "E4"
   },
   {
    "graph": "ai-readiness-kg",
@@ -260,7 +317,7 @@
     "shacl"
    ],
    "cut": false,
-   "id": "E4"
+   "id": "E5"
   },
   {
    "graph": "ai-readiness-kg",
@@ -279,7 +336,26 @@
     "update"
    ],
    "cut": false,
-   "id": "E5"
+   "id": "E6"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "fairness-project-wiki-project-overview",
+   "locator": {
+    "file": "state/substrate_md/fairness-project-wiki-project-overview.md",
+    "line": 43
+   },
+   "section": "The Process",
+   "text": "3. **Post-release governance** — The period following the publication of the final application profile. During this period, experience recommends an open, transparent process to manage the application profile through any subsequent version releases.",
+   "terms_matched": [
+    "profile",
+    "governance",
+    "post-release",
+    "subsequent version"
+   ],
+   "cut": false,
+   "id": "E7"
   },
   {
    "graph": "ai-readiness-kg",
@@ -298,7 +374,7 @@
     "future"
    ],
    "cut": false,
-   "id": "E6"
+   "id": "E8"
   },
   {
    "graph": "fss-policy-kg",
@@ -316,14 +392,50 @@
     "update"
    ],
    "cut": false,
-   "id": "E7"
+   "id": "E9"
+  },
+  {
+   "graph": "fss-policy-kg",
+   "kind": "passage",
+   "doc_id": "fairness_project_wiki_overview",
+   "locator": {
+    "segment": "fairness_project_wiki_overview#s12"
+   },
+   "section": "passage 12",
+   "text": "Post-release governance - The period following the publication of the final application profile. During this period, experience recommends an open, transparent process to manage the application profile through any subsequent version releases.",
+   "terms_matched": [
+    "profile",
+    "governance",
+    "post-release",
+    "subsequent version"
+   ],
+   "cut": false,
+   "id": "E10"
+  },
+  {
+   "graph": "fss-policy-kg",
+   "kind": "passage",
+   "doc_id": "m_25_05",
+   "locator": {
+    "segment": "m_25_05#s103"
+   },
+   "section": "passage 103",
+   "text": "Each agency's comprehensive data inventory must conform to the standard metadata schema approved by OMB and available on resources.data.gov. 39 If that schema changes, agencies must update their inventories appropriately within one year.",
+   "terms_matched": [
+    "conform",
+    "update",
+    "within one year",
+    "schema change"
+   ],
+   "cut": false,
+   "id": "E11"
   },
   {
    "graph": "ai-readiness-kg",
    "kind": "document text (table row)",
-   "doc_id": "dcat-us-3-dataset-schema-2026-09-15",
+   "doc_id": "dcat-us-3-dataset-schema-2026-10-05",
    "locator": {
-    "file": "state/substrate_md/dcat-us-3-dataset-schema-2026-09-15.md",
+    "file": "state/substrate_md/dcat-us-3-dataset-schema-2026-10-05.md",
     "line": 56
    },
    "section": "DCAT-US 3.0: Dataset",
@@ -334,7 +446,61 @@
     "conform"
    ],
    "cut": false,
-   "id": "E8"
+   "id": "E12"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "dcat-us-3-overview-2026-10-05",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-overview-2026-10-05.md",
+    "line": 98
+   },
+   "section": "What's new in v3.0",
+   "text": "**Requirement levels.** For the first time, every field is explicitly labeled Mandatory, Recommended, or Optional. Mandatory fields must be present for a record to be valid. Recommended fields are not required by the schema validator but should be populated whenever the information exists - they improve discoverability and interoperability. Optional fields are available but not expected in most records.",
+   "terms_matched": [
+    "validat",
+    "should",
+    "requirement level"
+   ],
+   "cut": false,
+   "id": "E13"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "dcat-us-3-overview",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-overview.md",
+    "line": 72
+   },
+   "section": "What’s new in v3.0",
+   "text": "**Requirement levels.** For the first time, every field is explicitly labeled Mandatory, Recommended, or Optional. Mandatory fields must be present for a record to be valid. Recommended fields are not required by the schema validator but should be populated whenever the information exists — they improve discoverability and interoperability. Optional fields are available but not expected in most records.\n**Two new classes** can appear alongside Dataset in the Catalog:\n  * **DataService:** describes an API or other programmatic interface that provides access to data. In v1.1, APIs were documented only as Distributions inside a Dataset. In v3.0, a DataService can be listed at the Catalog level as its own resource, which is useful for services that serve many datasets or are not tied to a single one. See [Catalog fields](https://resources.data.gov/standards/catalog/dcat-us-3/catalog/) for how DataService fits into the catalog structure.\n  * **DatasetSeries:** groups related datasets published over time — annual releases, recurring surveys, versioned reference data — under a single series record. Individual Dataset records point back to the series using the `inSeries` field. See [DatasetSeries fields](https://resources.data.gov/standards/catalog/dcat-us-3/dataset-series/).",
+   "terms_matched": [
+    "validat",
+    "should",
+    "requirement level"
+   ],
+   "cut": false,
+   "id": "E14"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "dcat-us-3-overview",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-overview.md",
+    "line": 151
+   },
+   "section": "Validation",
+   "text": "Note: the generated reference documentation in `jsonschema/docs/` currently shows all fields as Optional regardless of their actual requirement level. This is a known issue. Trust the requirement levels documented on the schema reference pages and in the JSON schema files directly.\nValidate your metadata against the v3.0 schema:\n  * JSON Schema file: [jsonschema/definitions/Catalog.json](https://github.com/GSA/dcat-us/blob/main/jsonschema/definitions/Catalog.json)\n  * Validation script: [jsonschema/test_json_schema.py](https://github.com/GSA/dcat-us/blob/main/jsonschema/test_json_schema.py)\n  * ## Instructions: [jsonschema/README.md](https://github.com/GSA/dcat-us/tree/main/jsonschema)",
+   "terms_matched": [
+    "validat",
+    "json schema",
+    "requirement level"
+   ],
+   "cut": false,
+   "id": "E15"
   },
   {
    "graph": "ai-readiness-kg",
@@ -352,7 +518,7 @@
     "conform"
    ],
    "cut": false,
-   "id": "E9"
+   "id": "E16"
   },
   {
    "graph": "ai-readiness-kg",
@@ -370,7 +536,7 @@
     "update"
    ],
    "cut": false,
-   "id": "E10"
+   "id": "E17"
   },
   {
    "graph": "ai-readiness-kg",
@@ -388,7 +554,7 @@
     "should"
    ],
    "cut": false,
-   "id": "E11"
+   "id": "E18"
   },
   {
    "graph": "ai-readiness-kg",
@@ -406,7 +572,7 @@
     "should"
    ],
    "cut": false,
-   "id": "E12"
+   "id": "E19"
   },
   {
    "graph": "ai-readiness-kg",
@@ -424,7 +590,115 @@
     "should"
    ],
    "cut": false,
-   "id": "E13"
+   "id": "E20"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "w3c-rdf-data-cube",
+   "locator": {
+    "file": "state/substrate_md/w3c-rdf-data-cube.md",
+    "line": 88
+   },
+   "section": "2. Introduction",
+   "text": "The Data Cube vocabulary is focused purely on the publication of multi-dimensional data on the web. We envisage a series of modular vocabularies being developed which extend this core foundation. In particular, we see the need for an SDMX extension vocabulary to support the publication of additional context to statistical data (such as the encompassing Data Flows and associated Provision Agreements). Other extensions are possible to support metadata for surveys (so called \"micro-data\", as encompassed by DDI) or publication of statistical reference metadata.",
+   "terms_matched": [
+    "extension",
+    "extend",
+    "statistical"
+   ],
+   "cut": false,
+   "id": "E21"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "fairness-project-wiki-project-overview",
+   "locator": {
+    "file": "state/substrate_md/fairness-project-wiki-project-overview.md",
+    "line": 20
+   },
+   "section": "Introduction",
+   "text": "2. An updated DCAT-US Schema v1.1 (Project Open Data Metadata Schema) to a United States profile of the [W3C DCAT version 3 standard](https://www.w3.org/TR/vocab-dcat-3/), aligning the schema with international standards, metadata for geospatial data and statistical data catalogs, and improving adoption by software vendors and open-source technologies.",
+   "terms_matched": [
+    "profile",
+    "update",
+    "statistical"
+   ],
+   "cut": false,
+   "id": "E22"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted concept span",
+   "doc_id": "fcsm-2024-b3-3-fairness-project",
+   "locator": {
+    "node": "fcsm-2024-b3-3-fairness-project::c-interoperability",
+    "location": "fcsm-2024-b3-3-fairness-project#c0001"
+   },
+   "section": "",
+   "text": "• Decreases burden and increases interoperability across:\n• Data.gov\n• GeoPlatform.gov\n• The Standard Application Process portal \n• Agencies Enterprise Data Inventories \n• Supports the Zero Trust Data Pillar and Open Science\n• Builds on FAIR principles (Findable, Accessible, Interoperable, and Reusable)\nFAIRness Project\n2\nFAIRness Project Purpose and Basic Information\nFAIRness Project Core Team and Advisory Group\nCore Team Members from:\n• U.S. Census Bureau\n• Department of Homeland Security\n• Department of Interior\n• Environmental Protection Agency\n• General Services Administration\n• Office of Management and Budget\n• National Center for Education Statistics\n• National Center for Health Statistics\n• National Institute of Standards and \nTechnology\nAdvisory Group Representatives from:\n• Chief Data Officers Council\n• Chief Information Officers Council\n• Chief Information Security Officers Council\n• Federal Geographic Data Committee\n• Interagency Council on Statistical Policy\n• National Institute of Standards and \nTechnology\n• Office of Management and Budget\nFAIRness Project 3\n• Three deliverables:\n• Updated DCAT-US Schema to a US profile of DCAT version 3, aligning the \nschema with international standards and geospatial metadata in the \nGeoPlatform, and improving adoption by software vendors and open-source \ntechnologies.",
+   "terms_matched": [
+    "profile",
+    "update",
+    "statistical"
+   ],
+   "cut": false,
+   "id": "E23"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted definition span",
+   "doc_id": "m-19-23-phase-1-implementation-of-the-evidence-act",
+   "locator": {
+    "node": "m-19-23-phase-1-implementation-of-the-evidence-act::d-cdo-basis",
+    "location": "fn34 p.22"
+   },
+   "section": "fn34 p.22",
+   "text": "The Chief Data Officer of an agency shall be designated on the basis of demonstrated training and experience in data management, governance (including creation, application, and maintenance of data standards), collection, analysis, protection, use, and dissemination, including with respect to any statistical and related techniques to protect and de-identify confidential data.",
+   "terms_matched": [
+    "governance",
+    "maintenance",
+    "statistical"
+   ],
+   "cut": false,
+   "id": "E24"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted concept span",
+   "doc_id": "m-25-05-phase-2-implementation-of-the-evidence-act-open-gove",
+   "locator": {
+    "node": "m-25-05-phase-2-implementation-of-the-evidence-act-open-gove::c_metadata_schema",
+    "location": "Section 4(a)(ii)"
+   },
+   "section": "Section 4(a)(ii)",
+   "text": "The OMB-approved standard metadata schema will conform to the United States profile of the W3C Data Catalog Vocabulary Version 3, known as the DCAT-US 3.0. Guidance on updating comprehensive data inventories to conform with DCAT-US 3.0 will be available on resources.data.gov within 180 days of issuance of this Memorandum.",
+   "terms_matched": [
+    "profile",
+    "conform",
+    "guidance"
+   ],
+   "cut": false,
+   "id": "E25"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted concept span",
+   "doc_id": "sdmx-3-0-section-1-framework",
+   "locator": {
+    "node": "sdmx-3-0-section-1-framework::c_semver",
+    "location": "§2.3"
+   },
+   "section": "§2.3",
+   "text": "VTL 49 In July 2020 the SDMX 2.1 specifications were revised to add support for the Validation and 50 Transformation Language (VTL). For 3.0, the VTL specification has been updated to align with 51 changes to the information model and other modifications to the Standard such as the 52 introduction of Semantic Versioning for the versioning of structural metadata artefacts.",
+   "terms_matched": [
+    "validat",
+    "update",
+    "versioning"
+   ],
+   "cut": false,
+   "id": "E26"
   },
   {
    "graph": "ai-readiness-kg",
@@ -442,7 +716,60 @@
     "update"
    ],
    "cut": false,
-   "id": "E14"
+   "id": "E27"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted claim span",
+   "doc_id": "statdcat-ap-1-0-1",
+   "locator": {
+    "node": "statdcat-ap-1-0-1::cl-profile-impact",
+    "location": "statdcat-ap-1-0-1#c0008"
+   },
+   "section": "",
+   "text": "So, improving the metadata quality by establishing a dedicated extended profile of \nDCAT-AP, StatDCAT-AP, for statistical data has an important impact on the already \npublished dataset records.",
+   "terms_matched": [
+    "extend",
+    "profile",
+    "statistical"
+   ],
+   "cut": false,
+   "id": "E28"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "extracted concept span",
+   "doc_id": "statdcat-ap-1-0-1",
+   "locator": {
+    "node": "statdcat-ap-1-0-1::con-statistical-datasets",
+    "location": "statdcat-ap-1-0-1#c0003"
+   },
+   "section": "",
+   "text": "EXECUTIVE SUMMARY \nThis document contains the specification and the work that was carried out for \nStatDCAT-AP, an extension of the DCAT  Application Profile for data portals in \nEurope1 for describing statistical datasets, dataset series and services.",
+   "terms_matched": [
+    "extension",
+    "profile",
+    "statistical"
+   ],
+   "cut": false,
+   "id": "E29"
+  },
+  {
+   "graph": "fss-policy-kg",
+   "kind": "passage",
+   "doc_id": "dcat_us_3_implementation_guide",
+   "locator": {
+    "segment": "dcat_us_3_implementation_guide#s161"
+   },
+   "section": "passage 161",
+   "text": "32  As the schema changes in the future, agencies are expected to keep their inventory conformant to the most up-to-date version of the schema hosted on Data.gov.",
+   "terms_matched": [
+    "conform",
+    "future",
+    "schema change"
+   ],
+   "cut": false,
+   "id": "E30"
   },
   {
    "graph": "fss-policy-kg",
@@ -459,7 +786,109 @@
     "should"
    ],
    "cut": false,
-   "id": "E15"
+   "id": "E31"
+  },
+  {
+   "graph": "fss-policy-kg",
+   "kind": "passage",
+   "doc_id": "dcat_us_3_implementation_guide",
+   "locator": {
+    "segment": "dcat_us_3_implementation_guide#s59"
+   },
+   "section": "passage 59",
+   "text": "This guide reflects the recommendations that reached sufficient consensus and were feasible to incorporate during the current development cycle. Several additional recommendations proposed by the tiger team were not included in this version due to considerations such as implementation timing, the need for additional policy or technical clarification, or current system and platform constraints. To ensure these recommendations remain available for future consideration, the tiger team consolidated all outstanding recommendations and formally elevated them to OMB and the Federal Chief Data Officers Council (CDOC) for review and potential incorporation into future updates of this guide.",
+   "terms_matched": [
+    "future",
+    "update",
+    "tiger team"
+   ],
+   "cut": false,
+   "id": "E32"
+  },
+  {
+   "graph": "fss-policy-kg",
+   "kind": "passage",
+   "doc_id": "dcat_us_3_implementation_guide",
+   "locator": {
+    "segment": "dcat_us_3_implementation_guide#s82"
+   },
+   "section": "passage 82",
+   "text": "If that schema changes, agencies must update their inventories appropriately within one year.' https://www.whitehouse.gov/wp-content/uploads/2025/01/M-25-05",
+   "terms_matched": [
+    "update",
+    "within one year",
+    "schema change"
+   ],
+   "cut": false,
+   "id": "E33"
+  },
+  {
+   "graph": "fss-policy-kg",
+   "kind": "passage",
+   "doc_id": "evidence_act_2018",
+   "locator": {
+    "segment": "evidence_act_2018#s323"
+   },
+   "section": "passage 323",
+   "text": "''(b) QUALIFICATIONS.—The Chief Data Officer of an agency shall be designated on the basis of demonstrated training and experience in data management, governance (including creation, application, and maintenance of data standards), collection, analysis, protection, use, and dissemination, including with respect to any statistical and related techniques to protect and de-identify confidential data.",
+   "terms_matched": [
+    "governance",
+    "maintenance",
+    "statistical"
+   ],
+   "cut": false,
+   "id": "E34"
+  },
+  {
+   "graph": "fss-policy-kg",
+   "kind": "passage",
+   "doc_id": "fairness_project_wiki_overview",
+   "locator": {
+    "segment": "fairness_project_wiki_overview#s4"
+   },
+   "section": "passage 4",
+   "text": "An updated DCAT-US Schema v1.1 (Project Open Data Metadata Schema) to a United States profile of the W3C DCAT version 3 standard, aligning the schema with international standards, metadata for geospatial data and statistical data catalogs, and improving adoption by software vendors and open-source technologies.",
+   "terms_matched": [
+    "profile",
+    "update",
+    "statistical"
+   ],
+   "cut": false,
+   "id": "E35"
+  },
+  {
+   "graph": "fss-policy-kg",
+   "kind": "passage",
+   "doc_id": "m_19_23",
+   "locator": {
+    "segment": "m_19_23#s279"
+   },
+   "section": "passage 279",
+   "text": "All agencies must include their Data Governance Body in their Strategic Information Resources Management Plan's Governance sections as required by 0MB guidance. 16  All agencies must report their Data Governance Body members to 0MB via email at EvidenceAct@omb.eop.gov no later than September 30, 2019.",
+   "terms_matched": [
+    "governance",
+    "guidance",
+    "no later than"
+   ],
+   "cut": false,
+   "id": "E36"
+  },
+  {
+   "graph": "fss-policy-kg",
+   "kind": "passage",
+   "doc_id": "m_19_23",
+   "locator": {
+    "segment": "m_19_23#s453"
+   },
+   "section": "passage 453",
+   "text": "All agencies must include their Data Governance Body in their Strategic Information Resources Management Plans' Governance sections as required by 0MB guidance. 30  Additionally all agencies must report their Data Governance Body members to 0MB via email at EvidenceAct@omb.eop.gov no later than September 30, 2019.",
+   "terms_matched": [
+    "governance",
+    "guidance",
+    "no later than"
+   ],
+   "cut": false,
+   "id": "E37"
   },
   {
    "graph": "fss-policy-kg",
@@ -476,24 +905,160 @@
     "should"
    ],
    "cut": false,
-   "id": "E16"
+   "id": "E38"
+  },
+  {
+   "graph": "fss-policy-kg",
+   "kind": "passage",
+   "doc_id": "m_19_23",
+   "locator": {
+    "segment": "m_19_23#s471"
+   },
+   "section": "passage 471",
+   "text": "34  According to section 202(e) of  the Evidence Act, \"The Chief  Data Officer of  an agency shall be designated on the basis of demonstrated training and experience in data management, governance (including creation, application, and maintenance of  data standards), collection, analysis, protection, use, and dissemination, including with respect to any statistical and related techniques to protect and de-identify confidential data.\" 44 U.S.C. § 3520.",
+   "terms_matched": [
+    "governance",
+    "maintenance",
+    "statistical"
+   ],
+   "cut": false,
+   "id": "E39"
   },
   {
    "graph": "fss-policy-kg",
    "kind": "passage",
    "doc_id": "m_25_05",
    "locator": {
-    "segment": "m_25_05#s104"
+    "segment": "m_25_05#s46"
    },
-   "section": "passage 104",
-   "text": "The OMB-approved standard metadata schema will conform to the United States profile of the W3C Data Catalog Vocabulary Version 3, known as the DCAT-US 3.0. Guidance on updating comprehensive data inventories to conform with DCAT-US 3.0 will be available on resources.data.gov within 180 days of issuance of this Memorandum.",
+   "section": "passage 46",
+   "text": "Per the Phase I Guidance, agency Data Governance Bodies must include appropriate senior-level staff and technical experts needed to discuss and set policy on a range of data and data-related topics. 22 As provided in the Phase I Guidance, the agency CDO is required to delegate CDO responsibilities to the head of a recognized statistical agency or unit as necessary to comply with statistical laws, as determined by the head of the recognized statistical agency or unit. 23 Therefore, throughout this guidance, references to the agency CDO shall include the heads of statistical agencies and units where responsibilities have been so delegated.",
    "terms_matched": [
-    "profile",
-    "conform",
-    "guidance"
+    "governance",
+    "guidance",
+    "statistical"
    ],
    "cut": false,
-   "id": "E17"
+   "id": "E40"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "dcat-us-3-dataset-schema-2026-10-05",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-dataset-schema-2026-10-05.md",
+    "line": 591
+   },
+   "section": "[Dataset &gt; conformsTo #](#conformsTo)",
+   "text": "- [Standard](/standards/catalog/dcat-us-3/quality-governance/#standard) : A standard or specification that another resource conforms to",
+   "terms_matched": [
+    "governance",
+    "conform"
+   ],
+   "cut": false,
+   "id": "E41"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "dcat-us-3-overview-2026-10-05",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-overview-2026-10-05.md",
+    "line": 57
+   },
+   "section": "What is DCAT-US v3.0?",
+   "text": "DCAT-US v3.0 is the federal data catalog metadata standard, updated to improve the Findability, Accessibility, Interoperability, and Reusability (FAIRness) of federal data. It is a U.S. application profile of the [W3C Data Catalog Vocabulary (DCAT) version 3](https://www.w3.org/TR/vocab-dcat-3/) - not a new or separate standard. This means most DCAT-US v3.0 metadata is valid W3C DCAT 3 metadata, making it easier to share federal data with international catalogs and platforms that understand the W3C standard.",
+   "terms_matched": [
+    "profile",
+    "update"
+   ],
+   "cut": false,
+   "id": "E42"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "dcat-us-3-overview-2026-10-05",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-overview-2026-10-05.md",
+    "line": 77
+   },
+   "section": "Who needs to act and when",
+   "text": "**For agencies currently implementing v1.1:** Continue operating your existing data.json files as-is until you are ready to migrate. v1.1 continues to be harvested by Data.gov during the transition period. When you are ready to migrate, start with the breaking changes listed in the Changes from v1.1 section - particularly `modified` , `temporal` , `spatial` , and `language` - since these are the fields most likely to fail validation in v3.0.",
+   "terms_matched": [
+    "validat",
+    "harvest"
+   ],
+   "cut": false,
+   "id": "E43"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "dcat-us-3-overview-2026-10-05",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-overview-2026-10-05.md",
+    "line": 107
+   },
+   "section": "What's new in v3.0",
+   "text": "**JSON Schema validation.** DCAT-US v3.0 is a valid JSON Schema (2020-12). Agencies can programmatically validate their metadata files against the schema. See [jsonschema/README.md](https://github.com/GSA/dcat-us/tree/main/jsonschema) for tooling.",
+   "terms_matched": [
+    "validat",
+    "json schema"
+   ],
+   "cut": false,
+   "id": "E44"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "dcat-us-3-overview-2026-10-05",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-overview-2026-10-05.md",
+    "line": 113
+   },
+   "section": "Schema reference pages",
+   "text": "The schema reference pages below are generated directly from the [DCAT-US v3.0 schema repository](https://github.com/GSA/dcat-us) and reflect the current authoritative field definitions, types, and requirement levels. For human-readable implementation guidance, migration help, and examples, see the [Implementation guidance](#implementation-guidance) section below.",
+   "terms_matched": [
+    "guidance",
+    "requirement level"
+   ],
+   "cut": false,
+   "id": "E45"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "dcat-us-3-overview-2026-10-05",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-overview-2026-10-05.md",
+    "line": 169
+   },
+   "section": "Validation",
+   "text": "Validate your metadata against the v3.0 schema in data.gov's [online validator](https://harvest.data.gov/validate/) , or build your own using the following resources:",
+   "terms_matched": [
+    "validat",
+    "harvest"
+   ],
+   "cut": false,
+   "id": "E46"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "dcat-us-3-overview-2026-10-05",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-overview-2026-10-05.md",
+    "line": 171
+   },
+   "section": "Validation",
+   "text": "- JSON Schema file: [jsonschema/definitions/Catalog.json](https://github.com/GSA/dcat-us/blob/main/jsonschema/definitions/Catalog.json)\n- Validation script: [jsonschema/test\\_json\\_schema.py](https://github.com/GSA/dcat-us/blob/main/jsonschema/test_json_schema.py)\n- Instructions: [jsonschema/README.md](https://github.com/GSA/dcat-us/tree/main/jsonschema)",
+   "terms_matched": [
+    "validat",
+    "json schema"
+   ],
+   "cut": false,
+   "id": "E47"
   },
   {
    "graph": "ai-readiness-kg",
@@ -510,41 +1075,7 @@
     "guidance"
    ],
    "cut": false,
-   "id": "E18"
-  },
-  {
-   "graph": "ai-readiness-kg",
-   "kind": "document text",
-   "doc_id": "dcat-us-3-overview",
-   "locator": {
-    "file": "state/substrate_md/dcat-us-3-overview.md",
-    "line": 48
-   },
-   "section": "What is DCAT-US v3.0?",
-   "text": "DCAT-US v3.0 is the federal data catalog metadata standard, updated to improve the Findability, Accessibility, Interoperability, and Reusability (FAIRness) of federal data. It is a U.S. application profile of the [W3C Data Catalog Vocabulary (DCAT) version 3](https://www.w3.org/TR/vocab-dcat-3/) — not a new or separate standard. This means most DCAT-US v3.0 metadata is valid W3C DCAT 3 metadata, making it easier to share federal data with international catalogs and platforms that understand the W3C standard.\nDCAT-US v3.0 was developed collaboratively by the Federal Chief Data Officers Council, the Federal Committee on Statistical Methodology, and the Data.gov team at GSA, drawing on more than a decade of implementation experience with v1.1 and feedback from agencies, data providers, and data users across government. The schema is maintained in a [public GitHub repository](https://github.com/GSA/dcat-us) and governed through a CDO Tiger Team review process to ensure ongoing accuracy and responsiveness to agency needs.",
-   "terms_matched": [
-    "profile",
-    "update"
-   ],
-   "cut": false,
-   "id": "E19"
-  },
-  {
-   "graph": "ai-readiness-kg",
-   "kind": "document text",
-   "doc_id": "dcat-us-3-overview",
-   "locator": {
-    "file": "state/substrate_md/dcat-us-3-overview.md",
-    "line": 72
-   },
-   "section": "What’s new in v3.0",
-   "text": "**Requirement levels.** For the first time, every field is explicitly labeled Mandatory, Recommended, or Optional. Mandatory fields must be present for a record to be valid. Recommended fields are not required by the schema validator but should be populated whenever the information exists — they improve discoverability and interoperability. Optional fields are available but not expected in most records.\n**Two new classes** can appear alongside Dataset in the Catalog:\n  * **DataService:** describes an API or other programmatic interface that provides access to data. In v1.1, APIs were documented only as Distributions inside a Dataset. In v3.0, a DataService can be listed at the Catalog level as its own resource, which is useful for services that serve many datasets or are not tied to a single one. See [Catalog fields](https://resources.data.gov/standards/catalog/dcat-us-3/catalog/) for how DataService fits into the catalog structure.\n  * **DatasetSeries:** groups related datasets published over time — annual releases, recurring surveys, versioned reference data — under a single series record. Individual Dataset records point back to the series using the `inSeries` field. See [DatasetSeries fields](https://resources.data.gov/standards/catalog/dcat-us-3/dataset-series/).",
-   "terms_matched": [
-    "validat",
-    "should"
-   ],
-   "cut": false,
-   "id": "E20"
+   "id": "E48"
   },
   {
    "graph": "ai-readiness-kg",
@@ -561,7 +1092,24 @@
     "json schema"
    ],
    "cut": false,
-   "id": "E21"
+   "id": "E49"
+  },
+  {
+   "graph": "ai-readiness-kg",
+   "kind": "document text",
+   "doc_id": "dcat-us-3-overview",
+   "locator": {
+    "file": "state/substrate_md/dcat-us-3-overview.md",
+    "line": 82
+   },
+   "section": "Schema reference pages",
+   "text": "The schema reference pages below are generated directly from the [DCAT-US v3.0 schema repository](https://github.com/GSA/dcat-us) and reflect the current authoritative field definitions, types, and requirement levels. For human-readable implementation guidance, migration help, and examples, see the [Implementation guidance](https://resources.data.gov/resources/dcat-us3/#implementation-guidance) section below.",
+   "terms_matched": [
+    "guidance",
+    "requirement level"
+   ],
+   "cut": false,
+   "id": "E50"
   },
   {
    "graph": "ai-readiness-kg",
@@ -578,7 +1126,7 @@
     "update"
    ],
    "cut": false,
-   "id": "E22"
+   "id": "E51"
   },
   {
    "graph": "ai-readiness-kg",
@@ -595,24 +1143,7 @@
     "should"
    ],
    "cut": false,
-   "id": "E23"
-  },
-  {
-   "graph": "ai-readiness-kg",
-   "kind": "document text",
-   "doc_id": "dcat-us-3-overview",
-   "locator": {
-    "file": "state/substrate_md/dcat-us-3-overview.md",
-    "line": 151
-   },
-   "section": "Validation",
-   "text": "Note: the generated reference documentation in `jsonschema/docs/` currently shows all fields as Optional regardless of their actual requirement level. This is a known issue. Trust the requirement levels documented on the schema reference pages and in the JSON schema files directly.\nValidate your metadata against the v3.0 schema:\n  * JSON Schema file: [jsonschema/definitions/Catalog.json](https://github.com/GSA/dcat-us/blob/main/jsonschema/definitions/Catalog.json)\n  * Validation script: [jsonschema/test_json_schema.py](https://github.com/GSA/dcat-us/blob/main/jsonschema/test_json_schema.py)\n  * ## Instructions: [jsonschema/README.md](https://github.com/GSA/dcat-us/tree/main/jsonschema)",
-   "terms_matched": [
-    "validat",
-    "json schema"
-   ],
-   "cut": false,
-   "id": "E24"
+   "id": "E52"
   },
   {
    "graph": "ai-readiness-kg",
@@ -629,24 +1160,7 @@
     "governance"
    ],
    "cut": false,
-   "id": "E25"
-  },
-  {
-   "graph": "ai-readiness-kg",
-   "kind": "document text",
-   "doc_id": "dcat-us-3-dataset-schema-2026-09-15",
-   "locator": {
-    "file": "state/substrate_md/dcat-us-3-dataset-schema-2026-09-15.md",
-    "line": 589
-   },
-   "section": "[Dataset &gt; conformsTo #](#conformsTo)",
-   "text": "- [Standard](/standards/catalog/dcat-us-3/quality-governance/#standard) : A standard or specification that another resource conforms to",
-   "terms_matched": [
-    "governance",
-    "conform"
-   ],
-   "cut": false,
-   "id": "E26"
+   "id": "E53"
   },
   {
    "graph": "ai-readiness-kg",
@@ -663,7 +1177,7 @@
     "update"
    ],
    "cut": false,
-   "id": "E27"
+   "id": "E54"
   },
   {
    "graph": "ai-readiness-kg",
@@ -680,7 +1194,7 @@
     "conform"
    ],
    "cut": false,
-   "id": "E28"
+   "id": "E55"
   },
   {
    "graph": "ai-readiness-kg",
@@ -697,7 +1211,7 @@
     "conform"
    ],
    "cut": false,
-   "id": "E29"
+   "id": "E56"
   },
   {
    "graph": "ai-readiness-kg",
@@ -714,7 +1228,7 @@
     "update"
    ],
    "cut": false,
-   "id": "E30"
+   "id": "E57"
   },
   {
    "graph": "ai-readiness-kg",
@@ -731,7 +1245,7 @@
     "future"
    ],
    "cut": false,
-   "id": "E31"
+   "id": "E58"
   },
   {
    "graph": "ai-readiness-kg",
@@ -748,484 +1262,25 @@
     "update"
    ],
    "cut": false,
-   "id": "E32"
-  },
-  {
-   "graph": "ai-readiness-kg",
-   "kind": "document text",
-   "doc_id": "w3c-rdf-data-cube",
-   "locator": {
-    "file": "state/substrate_md/w3c-rdf-data-cube.md",
-    "line": 88
-   },
-   "section": "2. Introduction",
-   "text": "The Data Cube vocabulary is focused purely on the publication of multi-dimensional data on the web. We envisage a series of modular vocabularies being developed which extend this core foundation. In particular, we see the need for an SDMX extension vocabulary to support the publication of additional context to statistical data (such as the encompassing Data Flows and associated Provision Agreements). Other extensions are possible to support metadata for surveys (so called \"micro-data\", as encompassed by DDI) or publication of statistical reference metadata.",
-   "terms_matched": [
-    "extension",
-    "extend"
-   ],
-   "cut": false,
-   "id": "E33"
-  },
-  {
-   "graph": "ai-readiness-kg",
-   "kind": "document text",
-   "doc_id": "w3c-rdf-data-cube",
-   "locator": {
-    "file": "state/substrate_md/w3c-rdf-data-cube.md",
-    "line": 452
-   },
-   "section": "Measure dimension",
-   "text": "Those familiar with SDMX should also note that in the RDF representation there is no need for a separate \"primary measure\" which subsumes each of the individual measures, those individual measures are used directly. Extension vocabularies could address the round-tripping of the SDMX primary measure by use of a separate annotation on the data structure definition.",
-   "terms_matched": [
-    "extension",
-    "should"
-   ],
-   "cut": false,
-   "id": "E34"
-  },
-  {
-   "graph": "ai-readiness-kg",
-   "kind": "document text",
-   "doc_id": "w3c-rdf-data-cube",
-   "locator": {
-    "file": "state/substrate_md/w3c-rdf-data-cube.md",
-    "line": 732
-   },
-   "section": "8.2 Hierarchical code lists",
-   "text": "In some cases code lists have a hierarchical structure. In particular, this is used in SDMX when the data cube includes aggregations of data values (e.g. aggregating a measure across geographic regions). Hierarchical code lists *SHOULD* be represented using the `skos:narrower` relationship, or a sub-property of it, to link from the `skos:hasTopConcept` codes down through the tree or lattice of child codes. In some publishing tool chains the corresponding transitive closure `skos:narrowerTransitive` will be automatically inferred. The use of `skos:narrower` makes it possible to declare new concept schemes which extend an existing scheme by adding additional aggregation layers on top. All items are linked to the scheme via `skos:inScheme`.",
-   "terms_matched": [
-    "extend",
-    "should"
-   ],
-   "cut": false,
-   "id": "E35"
-  },
-  {
-   "graph": "ai-readiness-kg",
-   "kind": "document text",
-   "doc_id": "w3c-rdf-data-cube",
-   "locator": {
-    "file": "state/substrate_md/w3c-rdf-data-cube.md",
-    "line": 782
-   },
-   "section": "8.3 Non-SKOS hierarchies",
-   "text": "Future extensions of Data Cube may support additional sub classes of `qb:HierarchicalCodeList`, for example to declare hierarchies in which each parent is a disjoint union of its children.",
-   "terms_matched": [
-    "extension",
-    "future"
-   ],
-   "cut": false,
-   "id": "E36"
-  },
-  {
-   "graph": "ai-readiness-kg",
-   "kind": "document text",
-   "doc_id": "w3c-rdf-data-cube",
-   "locator": {
-    "file": "state/substrate_md/w3c-rdf-data-cube.md",
-    "line": 788
-   },
-   "section": "8.4 Aggregation",
-   "text": "Vocabulary terms to represent the aggregation operations employed within a given dataset, and how one dataset might be derived from another, are not supported in this version of the Data Cube specification. This area may be addressed by future extensions to Data Cube.",
-   "terms_matched": [
-    "extension",
-    "future"
-   ],
-   "cut": false,
-   "id": "E37"
-  },
-  {
-   "graph": "ai-readiness-kg",
-   "kind": "document text",
-   "doc_id": "w3c-rdf-data-cube",
-   "locator": {
-    "file": "state/substrate_md/w3c-rdf-data-cube.md",
-    "line": 864
-   },
-   "section": "10.1 Normalization algorithm",
-   "text": "The normalization algorithm comprises two sets of SPARQL Update operations which should be applied in turn to a SPARQL Dataset in which the default graph contains the Data Cube RDF graph to be normalized.",
-   "terms_matched": [
-    "should",
-    "update"
-   ],
-   "cut": false,
-   "id": "E38"
-  },
-  {
-   "graph": "ai-readiness-kg",
-   "kind": "document text",
-   "doc_id": "w3c-rdf-data-cube",
-   "locator": {
-    "file": "state/substrate_md/w3c-rdf-data-cube.md",
-    "line": 884
-   },
-   "section": "11. Well-formed cubes",
-   "text": "An instance of an RDF Data Cube should conform to a set of integrity constraints which we define in this section.",
-   "terms_matched": [
-    "conform",
-    "should"
-   ],
-   "cut": false,
-   "id": "E39"
-  },
-  {
-   "graph": "ai-readiness-kg",
-   "kind": "document text",
-   "doc_id": "fairness-project-wiki-home",
-   "locator": {
-    "file": "state/substrate_md/fairness-project-wiki-home.md",
-    "line": 26
-   },
-   "section": "Welcome to the CDOC/FCSM _FAIRness_ Project",
-   "text": "1. DCAT-US v3 is not a “new” standard; it is a “profile” of or implementation of the [World Wide Web Consortium’s (W3C) DCAT standard](  https://www.w3.org/TR/vocab-dcat-3/).   \n1. DCAT-US v3 is compatible with existing DCAT v1.1 metadata.  No translation is required to implement the new schema.  New metadata elements are added, but there are no major changes to existing elements. \n1. DCAT-US v3 supports new and updated controlled vocabularies, allowing for consistently naming items like federal agencies, file formats, and units of measure. \n1. DCAT-US v3 will overcome the limitations of DCAT v1.1 when documenting geospatial data, eliminating the need for a separate federal standard for this subset of data. \n1. DCAT-US v3 follows a similar approach to European metadata DCAT-AP; vendor support is already in place, with additional support underway.",
-   "terms_matched": [
-    "profile",
-    "update"
-   ],
-   "cut": false,
-   "id": "E40"
-  },
-  {
-   "graph": "ai-readiness-kg",
-   "kind": "document text",
-   "doc_id": "fairness-project-wiki-home",
-   "locator": {
-    "file": "state/substrate_md/fairness-project-wiki-home.md",
-    "line": 64
-   },
-   "section": "Submitting your Comments and Issues",
-   "text": "For more information about the FAIRness project, the schema development process, and the governance of the application profile, please visit the project site on [GitHub here](https://github.com/DOI-DO/dcat-us/wiki/).",
-   "terms_matched": [
-    "profile",
-    "governance"
-   ],
-   "cut": false,
-   "id": "E41"
-  },
-  {
-   "graph": "ai-readiness-kg",
-   "kind": "document text",
-   "doc_id": "fairness-project-wiki-project-overview",
-   "locator": {
-    "file": "state/substrate_md/fairness-project-wiki-project-overview.md",
-    "line": 18
-   },
-   "section": "Introduction",
-   "text": "1. A proposed governance model for updating and maintaining the federal metadata schema profiles in accordance with data inventory and data cataloging standards.",
-   "terms_matched": [
-    "profile",
-    "governance"
-   ],
-   "cut": false,
-   "id": "E42"
-  },
-  {
-   "graph": "ai-readiness-kg",
-   "kind": "document text",
-   "doc_id": "fairness-project-wiki-project-overview",
-   "locator": {
-    "file": "state/substrate_md/fairness-project-wiki-project-overview.md",
-    "line": 20
-   },
-   "section": "Introduction",
-   "text": "2. An updated DCAT-US Schema v1.1 (Project Open Data Metadata Schema) to a United States profile of the [W3C DCAT version 3 standard](https://www.w3.org/TR/vocab-dcat-3/), aligning the schema with international standards, metadata for geospatial data and statistical data catalogs, and improving adoption by software vendors and open-source technologies.",
-   "terms_matched": [
-    "profile",
-    "update"
-   ],
-   "cut": false,
-   "id": "E43"
-  },
-  {
-   "graph": "ai-readiness-kg",
-   "kind": "document text",
-   "doc_id": "fairness-project-wiki-project-overview",
-   "locator": {
-    "file": "state/substrate_md/fairness-project-wiki-project-overview.md",
-    "line": 41
-   },
-   "section": "The Process",
-   "text": "2. **Pre-release governance** — The period from the first release of a draft application profile for comment and the publication of the final schema. During this phase, the community of potential users and providers will provide input as issues containing possible changes for adjudication and resolution in an open, transparent process. As a result, the application profile will continually evolve, reflecting the adopted changes.",
-   "terms_matched": [
-    "profile",
-    "governance"
-   ],
-   "cut": false,
-   "id": "E44"
-  },
-  {
-   "graph": "ai-readiness-kg",
-   "kind": "document text",
-   "doc_id": "fairness-project-wiki-project-overview",
-   "locator": {
-    "file": "state/substrate_md/fairness-project-wiki-project-overview.md",
-    "line": 43
-   },
-   "section": "The Process",
-   "text": "3. **Post-release governance** — The period following the publication of the final application profile. During this period, experience recommends an open, transparent process to manage the application profile through any subsequent version releases.",
-   "terms_matched": [
-    "profile",
-    "governance"
-   ],
-   "cut": false,
-   "id": "E45"
-  },
-  {
-   "graph": "ai-readiness-kg",
-   "kind": "extracted concept span",
-   "doc_id": "cdoc-dswg-findings-and-recommendations-2022",
-   "locator": {
-    "node": "cdoc-dswg-findings-and-recommendations-2022::c-periodic-assessments",
-    "location": "cdoc-dswg-findings-and-recommendations-2022#c0007"
-   },
-   "section": "",
-   "text": "Periodic data assessments that would validate syntax and actual \ncorrectness should be conducted.",
-   "terms_matched": [
-    "validat",
-    "should"
-   ],
-   "cut": false,
-   "id": "E46"
-  },
-  {
-   "graph": "ai-readiness-kg",
-   "kind": "extracted concept span",
-   "doc_id": "dcat-us-3-candidate-recommendation-snapshot",
-   "locator": {
-    "node": "dcat-us-3-candidate-recommendation-snapshot::c_data_governance",
-    "location": "dcat-us-3-candidate-recommendation-snapshot#c0050"
-   },
-   "section": "",
-   "text": "| Rationale    | [`adms:Identifier`](http://www.w3.org/ns/adms#Identifier)  Incorporating in the  DCAT-US  profile fosters a culture of data governance and trust by transparently documenting the authority behind  each identifier. This enhances data reliability and credibility, boosting confidence for DCAT-US users.  Additionally, it enables versatile data access using multiple identifiers, enhancing overall data  accessibility and usability for diverse stakeholders. |",
-   "terms_matched": [
-    "profile",
-    "governance"
-   ],
-   "cut": false,
-   "id": "E47"
-  },
-  {
-   "graph": "ai-readiness-kg",
-   "kind": "extracted concept span",
-   "doc_id": "dcat-us-3-candidate-recommendation-snapshot",
-   "locator": {
-    "node": "dcat-us-3-candidate-recommendation-snapshot::c_qualrel",
-    "location": "dcat-us-3-candidate-recommendation-snapshot#c0073"
-   },
-   "section": "",
-   "text": "- [**dcat:Relationship**](#properties-for-relationship) This class is essential for describing detailed relationships, especially when used with [dcat:qualifiedRelationship](#dataset-qualified-relation) . It enables catalogers to comprehensively detail the nature and specifics of a relationship. The [dcat:Relationship](#properties-for-relationship) class is fundamental in this profile for articulating complex relationships between cataloged resources. It enables the detailed expression of the nature, characteristics, and context of these relationships, extending beyond basic linking to provide a rich, nuanced representation of interconnections. This class is particularly valuable in instances where relationships between datasets or between datasets and other entities are multifaceted. Utilizing [dcat:Relationship](#properties-for-relationship) in conjunction with [`dcat:qualifiedRelationship`](#dataset-qualified-relation) allows catalogers to specify the precise nature of relationships. This includes the role of the related resource, the type of relationship (e.g., derived from, part of, requires), and the directionality of the relationship, providing crucial context and understanding for users. The [dcat:Relationship](#properties-for-relationship) class includes several properties that facilitate a comprehensive description of relationships: The combination of these properties with [dcat:Relationship](#properties-for-relationship) ensures a detailed, accurate portrayal of the complex web of interdependencies within a data catalog with precise roles. This enhanced detail is critical for users needing to understand dependencies and the broader context of datasets.",
-   "terms_matched": [
-    "extend",
-    "profile"
-   ],
-   "cut": false,
-   "id": "E48"
-  },
-  {
-   "graph": "ai-readiness-kg",
-   "kind": "extracted claim span",
-   "doc_id": "dcat-us-3-candidate-recommendation-snapshot",
-   "locator": {
-    "node": "dcat-us-3-candidate-recommendation-snapshot::cl-rights-card",
-    "location": "dcat-us-3-candidate-recommendation-snapshot#c0036"
-   },
-   "section": "",
-   "text": "DCAT-US 3.0 Profile, the cardinality of this property has been extended to 0..n",
-   "terms_matched": [
-    "extend",
-    "profile"
-   ],
-   "cut": false,
-   "id": "E49"
-  },
-  {
-   "graph": "ai-readiness-kg",
-   "kind": "extracted claim span",
-   "doc_id": "dcat-us-3-candidate-recommendation-snapshot",
-   "locator": {
-    "node": "dcat-us-3-candidate-recommendation-snapshot::cl_alignment",
-    "location": "dcat-us-3-candidate-recommendation-snapshot#c0031"
-   },
-   "section": "",
-   "text": "| Rationale:   | ``` dcat:Dataset ```  The update of is crucial as it  aligns the DCAT profile with international standards,  offering a standardized and widely recognized way to describe datasets. This alignment enhances data  interoperability and discoverability, enabling data publishers to provide structured metadata, improving  data sharing, and facilitating seamless integration for users and applications.                                                                                                                                                                                                                                                                                                                                                                               |",
-   "terms_matched": [
-    "profile",
-    "update"
-   ],
-   "cut": false,
-   "id": "E50"
-  },
-  {
-   "graph": "ai-readiness-kg",
-   "kind": "extracted claim span",
-   "doc_id": "dcat-us-3-candidate-recommendation-snapshot",
-   "locator": {
-    "node": "dcat-us-3-candidate-recommendation-snapshot::cl_separate_files",
-    "location": "dcat-us-3-candidate-recommendation-snapshot#c0091"
-   },
-   "section": "",
-   "text": "To facilitate this, the SHACL expressions are organized into separate files, aligning with common validation",
-   "terms_matched": [
-    "validat",
-    "shacl"
-   ],
-   "cut": false,
-   "id": "E51"
-  },
-  {
-   "graph": "ai-readiness-kg",
-   "kind": "extracted concept span",
-   "doc_id": "dcat-us-3-candidate-recommendation-snapshot",
-   "locator": {
-    "node": "dcat-us-3-candidate-recommendation-snapshot::cn5",
-    "location": "dcat-us-3-candidate-recommendation-snapshot#c0020"
-   },
-   "section": "",
-   "text": "| Rationale    | ``` dcat:CatalogRecord ```  While its use is not mandatory, the incorporation of into DCAT-US 3.0 holds  significant value. It enables catalogs to distinguish between metadata describing datasets or services and  the actual catalog entries. This differentiation proves especially advantageous for ensuring adherence to  application profiles that demand specific metadata for catalog records. Furthermore, it streamlines  resource  lifecycle management, empowering catalogs to monitor alterations and revisions to their entries,  ultimately  bolstering data governance and quality assurance protocols.                                                                                                                                                                                                                                                                              |",
-   "terms_matched": [
-    "profile",
-    "governance"
-   ],
-   "cut": false,
-   "id": "E52"
-  },
-  {
-   "graph": "ai-readiness-kg",
-   "kind": "extracted concept span",
-   "doc_id": "dcat-us-3-candidate-recommendation-snapshot",
-   "locator": {
-    "node": "dcat-us-3-candidate-recommendation-snapshot::cn6",
-    "location": "dcat-us-3-candidate-recommendation-snapshot#c0020"
-   },
-   "section": "",
-   "text": "| Definition        | An Application Profile that the Catalog Record's metadata conforms to. |",
-   "terms_matched": [
-    "profile",
-    "conform"
-   ],
-   "cut": false,
-   "id": "E53"
-  },
-  {
-   "graph": "ai-readiness-kg",
-   "kind": "extracted definition span",
-   "doc_id": "dcat-us-3-candidate-recommendation-snapshot",
-   "locator": {
-    "node": "dcat-us-3-candidate-recommendation-snapshot::d_json_schema",
-    "location": "dcat-us-3-candidate-recommendation-snapshot#c0090"
-   },
-   "section": "",
-   "text": "JSON Schema offers a compact way to describe and validate the structure and content of JSON data, ensuring",
-   "terms_matched": [
-    "validat",
-    "json schema"
-   ],
-   "cut": false,
-   "id": "E54"
-  },
-  {
-   "graph": "ai-readiness-kg",
-   "kind": "extracted standard span",
-   "doc_id": "dcat-us-3-candidate-recommendation-snapshot",
-   "locator": {
-    "node": "dcat-us-3-candidate-recommendation-snapshot::s_dcat_us_shacl_profile",
-    "location": "dcat-us-3-candidate-recommendation-snapshot#c0092"
-   },
-   "section": "",
-   "text": "The SHACL application profile for DCAT-US can be found [here](https://raw.githubusercontent.com/DOI-DO/dcat-us/main/shacl/dcat-us_3.0_shacl_shapes.ttl)",
-   "terms_matched": [
-    "profile",
-    "shacl"
-   ],
-   "cut": false,
-   "id": "E55"
-  },
-  {
-   "graph": "ai-readiness-kg",
-   "kind": "extracted standard span",
-   "doc_id": "dcat-us-3-candidate-recommendation-snapshot",
-   "locator": {
-    "node": "dcat-us-3-candidate-recommendation-snapshot::s_shacl",
-    "location": "dcat-us-3-candidate-recommendation-snapshot#c0004"
-   },
-   "section": "",
-   "text": "The DCAT-US 3.0 Profile is defined using the Shapes Constraint Language (SHACL), which offers several",
-   "terms_matched": [
-    "profile",
-    "shacl"
-   ],
-   "cut": false,
-   "id": "E56"
-  },
-  {
-   "graph": "ai-readiness-kg",
-   "kind": "extracted concept span",
-   "doc_id": "dcat-us-3-dataset-schema",
-   "locator": {
-    "node": "dcat-us-3-dataset-schema::c_conformance",
-    "location": "Dataset > conformsTo"
-   },
-   "section": "Dataset > conformsTo",
-   "text": "## `Dataset > conformsTo` [#](https://resources.data.gov/standards/catalog/dcat-us-3/dataset/#conformsTo) **Requirement:** Optional List of standards, schemas, or profiles the dataset follows",
-   "terms_matched": [
-    "profile",
-    "conform"
-   ],
-   "cut": false,
-   "id": "E57"
-  },
-  {
-   "graph": "ai-readiness-kg",
-   "kind": "extracted concept span",
-   "doc_id": "dcat-us-3-implementation-guide",
-   "locator": {
-    "node": "dcat-us-3-implementation-guide::c-data-governance-body",
-    "location": "dcat-us-3-implementation-guide#c0008"
-   },
-   "section": "",
-   "text": "To  operationalize  this  oversight,  the  data  governance  body  should  establish  agencywide  \npolicies,",
-   "terms_matched": [
-    "governance",
-    "should"
-   ],
-   "cut": false,
-   "id": "E58"
-  },
-  {
-   "graph": "ai-readiness-kg",
-   "kind": "extracted concept span",
-   "doc_id": "dcat-us-3-implementation-guide",
-   "locator": {
-    "node": "dcat-us-3-implementation-guide::c-servesdataset",
-    "location": "dcat-us-3-implementation-guide#c0037"
-   },
-   "section": "",
-   "text": "●  Keep  servesDataset Relationships  Current :  Agencies  should  update  this  property  whenever  the  datasets  accessible  through  the  data  service  change.",
-   "terms_matched": [
-    "should",
-    "update"
-   ],
-   "cut": false,
    "id": "E59"
   },
   {
    "graph": "ai-readiness-kg",
-   "kind": "extracted concept span",
-   "doc_id": "dcat-us-3-implementation-guide",
+   "kind": "document text",
+   "doc_id": "w3c-rdf-data-cube",
    "locator": {
-    "node": "dcat-us-3-implementation-guide::c_data_governance_bodies",
-    "location": "dcat-us-3-implementation-guide#c0017"
+    "file": "state/substrate_md/w3c-rdf-data-cube.md",
+    "line": 44
    },
-   "section": "",
-   "text": "●  Governance:  Agencies  should  leverage  existing  data  governance  bodies  to  \nstreamline",
+   "section": "Abstract",
+   "text": "There are many situations where it would be useful to be able to publish multi-dimensional data, such as statistics, on the web in such a way that it can be linked to related data sets and concepts. The Data Cube vocabulary provides a means to do this using the W3C RDF (Resource Description Framework) standard. The model underpinning the Data Cube vocabulary is compatible with the cube model that underlies SDMX (Statistical Data and Metadata eXchange), an ISO standard for exchanging and sharing statistical data and metadata among organizations. The Data Cube vocabulary is a core foundation which supports extension vocabularies to enable publication of other aspects of statistical data flows or other multi-dimensional data sets.",
    "terms_matched": [
-    "governance",
-    "should"
+    "extension",
+    "statistical"
    ],
    "cut": false,
    "id": "E60"
   }
  ],
- "evidence_sha256": "6b3cd65127abcad176f8468b64b14f51dc95c484db2872028150157b7ed36f64"
+ "evidence_sha256": "66b877099c713915537c9a53137e18addb5722d7d40c7a12b48d588568d17860"
 }

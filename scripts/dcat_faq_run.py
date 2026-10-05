@@ -24,7 +24,21 @@ checking as AIS defines it (Rashkin et al. 2021) and FActScore measures it (Min 
 the cut-not-repair rule is the task's.
 
 Question 14 is answered last, from the "not known" statements kept on questions 1-13 and the
-catalog records of documents that were looked for and are not public.
+catalog records of documents that were looked for and are not public. Since DCAT-003 ADDENDUM 01
+it is built by code (`built_by_code` in the config, `scripts/dcat_faq_build.py`) and makes no call.
+
+**Template versions (ADDENDUM 01 step 5).** The questions named under `rerun` in the config are
+answered and checked under the v2 templates; every other question keeps its v1 units, found by
+the v1 template hashes, so nothing already checked is re-asked. v2 adds four answer rules (a
+draft's statement says it is a draft and whether the published schema carries it; a stated
+requirement level names its version; no em dash; each sentence answers the question, and a
+question's named options each get a sentence or a "not known" item). The v2 check asks a second
+question per sentence, "does this sentence answer the question asked?", and a "no" is cut as an
+unsupported claim is cut. It also folds the absence check into the one validator call: the "not
+known" items are read against the question's passages and against the passages found by their
+own words (ids `A1`...), in the same call. Before any v2 verdict is used, a positive control
+(`rerun.control`, methodology 7.6) plants one entailed but non-responsive sentence and one
+responsive sentence; the validator must cut the first as non-responsive and keep the second.
 
 **Checkpoint** (`~/GitHub/CLAUDE.md` §15, the shape of `scripts/run_definition_pairs.py`). Unit
 = one call. Key = sha1(kind | question | input hash | model | prompt-template hash): an answer's
@@ -39,6 +53,7 @@ row and is retried up to `run.max_attempts`.
 
     /opt/anaconda3/bin/python3 scripts/dcat_faq_run.py --dry-run          # prompts and plan, no call
     /opt/anaconda3/bin/python3 scripts/dcat_faq_run.py --run              # pilot, then the rest
+    /opt/anaconda3/bin/python3 scripts/dcat_faq_run.py --rerun            # control, then the v2 questions
     /opt/anaconda3/bin/python3 scripts/dcat_faq_run.py --assemble         # answers.json from the checkpoint
 
 Exit 0 when every question is answered and checked (or exhausted its attempts), 3 when a
@@ -72,6 +87,10 @@ RUN_DIR = OUT / "run"
 ANSWERS = OUT / "answers.json"
 PROGRESS_LOG = REPO / "logs" / "2026-10-05_DCAT-003_faq_progress.log"
 RUN_ID = "dcat_us_3_faq_2026-10-05"
+ADDENDUM_TASK = "cc_tasks/2026-10-05_DCAT-003_ADDENDUM_01_faq_shippability.md"
+CONTROL_OUT = OUT / "control" / "control_result.json"
+#: The control's units are keyed under this question id, so they never collide with a question's.
+CONTROL_QID = 0
 RUBRIC_VERSION = "v1.3.0"
 OVERLAY = "faq-claim-attribution (project-local, ai-readiness-kg)"
 PROVIDER, CLI = "claude_max_oauth", "claude"
@@ -134,6 +153,44 @@ ITEMS
 """
 
 
+#: v2 (ADDENDUM 01 step 5). The v1 rules stand; 5 is widened to five "not known" items so a
+#: question with named options can give each one; 10 to 13 are new, 14 is filled in only for a
+#: question with named options.
+ANSWER_TEMPLATE_V2 = ANSWER_TEMPLATE.replace(
+    "one per missing part, at most three.", "one per missing part, at most five.").replace(
+    """9. Do not mention passage ids, graphs, tables or this collection in the sentence text; the ids go in the evidence list only.
+""", """9. Do not mention passage ids, graphs, tables or this collection in the sentence text; the ids go in the evidence list only.
+10. A statement taken from a draft (a passage whose document is a working draft or a Candidate Recommendation) says so in the sentence, for example "the 2025 Candidate Recommendation says ...". Then say whether the published schema carries it: cite a passage from a published DCAT-US 3.0 page that states it, or, if no passage does, add a "not_known" statement of the form "The sources do not state that the published DCAT-US 3.0 schema carries ...".
+11. A sentence that states a requirement level (Mandatory, Recommended, Optional) names the version of the page it reads, for example "the Dataset page as served on 5 October 2026" or "the 2025 Candidate Recommendation".
+12. Do not use the em dash character anywhere. Use a comma, a colon or two sentences instead.
+13. Each sentence must answer the question asked, or one part of it. A sentence that is true of its passages but does not bear on what the question asks is not an answer; leave it out.
+{options_rule}""")
+OPTIONS_RULE = ("14. The question names these options: {options}. For each option, either write a "
+                "sentence that a passage supports about that option, naming the option, or add a "
+                "not_known statement about that option. Report what the passages say; do not "
+                "recommend.\n")
+
+CHECK_TEMPLATE_V2 = CHECK_TEMPLATE.replace(
+    """- "fail": the cited passages do not contain the claim, or contradict it.
+
+NOT_KNOWN items""", """- "fail": the cited passages do not contain the claim, or contradict it.
+Then answer a second question for every SENTENCE: does this sentence answer the question asked, or a part of it? First name to yourself the subject the QUESTION asks about and what it asks of that subject. The sentence is responsive ("yes") only if it states, about that subject, something the question asks for, or something about one of the options the question names as applied to that subject. It is "no" when its subject is something else, even when it shares words or a field with the question, and "no" when it is a true background fact about the subject that the question does not ask for. Put "yes" or "no" in "responsive". Judge responsiveness against the QUESTION text only, never against what the passages happen to contain. For NOT_KNOWN items put null.
+
+NOT_KNOWN items""").replace(
+    """NOT_KNOWN items claim that the passages do not state something. Judge a NOT_KNOWN item against ALL the passages.""",
+    """NOT_KNOWN items claim that the passages do not state something. Judge a NOT_KNOWN item against ALL the passages: those with ids E... were gathered for the question, and those with ids A... were found by searching the same documents with the NOT_KNOWN items' own words.""").replace(
+    """[{{"item_id": "S1", "verdict": "pass", "defect_class": null, "support_span": "...", "reason": "one sentence", "confidence": 0.9}}]""",
+    """[{{"item_id": "S1", "verdict": "pass", "defect_class": null, "support_span": "...", "responsive": "yes", "reason": "one sentence", "confidence": 0.9}}]""")
+RESPONSIVE = ("yes", "no")
+#: Revision history of the v2 check's responsiveness question. r1 (template sha 8efb45bc...)
+#: FAILED its positive control on 2026-10-05: it kept the planted StatDCAT-AP agent-roles
+#: sentence as responsive to Q13 (control unit 0973f64820b65388, 53,890 tokens). r2 asks for
+#: relevance to the subject the question asks about, as SAFE's relevance step does (Wei et al.
+#: 2024, "Long-form factuality in large language models") and as RAGAS answer relevance
+#: penalises an on-topic-sounding answer that does not address the question (Es et al. 2023);
+#: its control adds a held-out off-subject plant, so a pass is not fitted to one sentence.
+
+
 def _now() -> str:
     return datetime.now(timezone.utc).isoformat()
 
@@ -144,6 +201,19 @@ def sha(s: str) -> str:
 
 ANSWER_TEMPLATE_SHA = sha(ANSWER_TEMPLATE)
 CHECK_TEMPLATE_SHA = sha(CHECK_TEMPLATE)
+ANSWER_TEMPLATE_V2_SHA = sha(ANSWER_TEMPLATE_V2)
+CHECK_TEMPLATE_V2_SHA = sha(CHECK_TEMPLATE_V2)
+for _t in (ANSWER_TEMPLATE_V2, CHECK_TEMPLATE_V2):
+    assert _t not in (ANSWER_TEMPLATE, CHECK_TEMPLATE), "a v2 template failed to patch its v1 base"
+
+
+def template_version(cfg: dict, qid: int) -> str:
+    rr = cfg.get("rerun") or {}
+    return rr.get("template", "v1") if qid in (rr.get("questions") or []) else "v1"
+
+
+def is_code_built(cfg: dict, qid: int) -> bool:
+    return any(q["id"] == qid and q.get("built_by_code") for q in cfg["questions"])
 
 
 def nws(s: str) -> str:
@@ -163,7 +233,12 @@ def passage_block(ev: dict) -> str:
     return "\n\n".join(out)
 
 
-def answer_prompt(ev: dict, max_sentences: int) -> str:
+def answer_prompt(ev: dict, max_sentences: int, version: str = "v1", options: list | None = None) -> str:
+    if version == "v2":
+        rule = OPTIONS_RULE.format(options="; ".join(options)) if options else ""
+        return ANSWER_TEMPLATE_V2.format(max_sentences=max_sentences, max_words=MAX_WORDS,
+                                         qid=ev["question_id"], question=ev["question"],
+                                         passages=passage_block(ev), options_rule=rule)
     return ANSWER_TEMPLATE.format(max_sentences=max_sentences, max_words=MAX_WORDS, qid=ev["question_id"],
                                   question=ev["question"], passages=passage_block(ev))
 
@@ -178,14 +253,25 @@ def check_items(answer: dict) -> list:
     return items
 
 
-def check_prompt(ev: dict, items: list) -> str:
+def check_prompt(ev: dict, items: list, version: str = "v1") -> str:
     lines = []
     for it in items:
         cites = f" (cites {', '.join(it['evidence'])})" if it["kind"] == "SENTENCE" else ""
         lines.append(f"{it['item_id']} [{it['kind']}]{cites}: {it['text']}")
-    return CHECK_TEMPLATE.format(rubric_version=RUBRIC_VERSION, overlay=OVERLAY,
-                                 qid=ev["question_id"], question=ev["question"],
-                                 passages=passage_block(ev), items="\n".join(lines))
+    t = CHECK_TEMPLATE_V2 if version == "v2" else CHECK_TEMPLATE
+    return t.format(rubric_version=RUBRIC_VERSION, overlay=OVERLAY,
+                    qid=ev["question_id"], question=ev["question"],
+                    passages=passage_block(ev), items="\n".join(lines))
+
+
+def combined_evidence(ev: dict, ab: dict | None) -> dict:
+    """The v2 check's passages: the question's (ids E...) and those the absence search found by
+    the "not known" items' own words, renumbered A1... so a sentence can cite only the former."""
+    if not ab:
+        return ev
+    extra = [{**it, "id": f"A{i}"} for i, it in enumerate(ab["items"], 1)]
+    return {**ev, "documents": {**ab.get("documents", {}), **ev.get("documents", {})},
+            "items": ev["items"] + extra}
 
 
 # --------------------------------------------------------------------------------- parsing
@@ -233,7 +319,7 @@ def parse_answer(text: str, ev: dict, max_sentences: int) -> dict:
     return {"sentences": sentences, "not_known": nk, "precut": precut}
 
 
-def parse_check(text: str, items: list) -> list:
+def parse_check(text: str, items: list, version: str = "v1") -> list:
     arr = _json_payload(text)
     if not isinstance(arr, list):
         raise ValueError("check is not a JSON array")
@@ -246,6 +332,10 @@ def parse_check(text: str, items: list) -> list:
                         "malformed_reason": "missing or off-vocabulary verdict"})
             continue
         dc = r.get("defect_class")
+        if version == "v2" and it["kind"] == "SENTENCE" and r.get("responsive") not in RESPONSIVE:
+            out.append({"item_id": it["item_id"], "malformed": True,
+                        "malformed_reason": "no yes/no answer to \"does this sentence answer the question?\""})
+            continue
         if r["verdict"] != "pass" and dc not in DEFECT_CLASSES:
             out.append({"item_id": it["item_id"], "malformed": True,
                         "malformed_reason": f"{r['verdict']} without a defect class from the closed set"})
@@ -253,7 +343,8 @@ def parse_check(text: str, items: list) -> list:
         out.append({"item_id": it["item_id"], "verdict": r["verdict"],
                     "defect_class": dc if r["verdict"] != "pass" else None,
                     "support_span": r.get("support_span"), "reason": r.get("reason"),
-                    "confidence": r.get("confidence")})
+                    "confidence": r.get("confidence"),
+                    **({"responsive": r.get("responsive")} if version == "v2" else {})})
     return out
 
 
@@ -270,9 +361,14 @@ def decide(ev: dict, answer: dict, items: list, verdicts: list) -> dict:
             located = any(is_grounded(span, texts[c]) for c in it["evidence"])
             row = {"text": it["text"], "evidence": it["evidence"], "verdict": v.get("verdict"),
                    "defect_class": v.get("defect_class"), "reason": v.get("reason"),
-                   "support_span": v.get("support_span"), "span_located": located}
+                   "support_span": v.get("support_span"), "span_located": located,
+                   **({"responsive": v["responsive"]} if "responsive" in v else {})}
             if v.get("malformed"):
                 cut.append({**row, "cut_reason": f"check malformed: {v['malformed_reason']}"})
+            elif v["verdict"] == "pass" and located and v.get("responsive") == "no":
+                # v2: entailed but not an answer (ADDENDUM 01 step 5), cut as an unsupported
+                # claim is cut. A v1 verdict has no `responsive` key and never reaches here.
+                cut.append({**row, "cut_reason": "non-responsive: supported, but does not answer the question"})
             elif v["verdict"] == "pass" and located:
                 kept.append(row)
             elif v["verdict"] == "pass":
@@ -450,6 +546,11 @@ class Runner:
         return ev
 
     # -- one unit, with attempts
+    def max_attempts(self, qid: int) -> int:
+        if template_version(self.cfg, qid) == "v2" or qid == CONTROL_QID:
+            return int((self.cfg.get("rerun") or {}).get("max_attempts", self.rc["max_attempts"]))
+        return self.rc["max_attempts"]
+
     def _unit(self, kind: str, qid: int, input_sha: str, prompt: str, consumer, model: str,
               parse, tsha: str) -> dict:
         uid = unit_id(kind, qid, input_sha, model, tsha)
@@ -458,7 +559,11 @@ class Runner:
         if done:
             return done
         attempt = max((r["attempt"] for r in prior), default=0)
-        while attempt < self.rc["max_attempts"]:
+        cap = self.max_attempts(qid)
+        if attempt >= cap:
+            # Every allowed attempt is spent and none parsed: report, never call again.
+            return max(prior, key=lambda r: r["attempt"])
+        while attempt < cap:
             attempt += 1
             if time.time() - self.t0 > self.rc["max_wall_seconds"]:
                 raise StopRun(f"wall_clock: {self.rc['max_wall_seconds']} s")
@@ -493,18 +598,83 @@ class Runner:
         return rec
 
     def answer(self, ev: dict) -> dict:
-        prompt = answer_prompt(ev, self.rc["max_answer_sentences"])
-        return self._unit("answer", ev["question_id"], ev["evidence_sha256"], prompt, self.ac, self.am,
+        qid = ev["question_id"]
+        v = template_version(self.cfg, qid)
+        opts = ((self.cfg.get("rerun") or {}).get("options") or {}).get(qid)
+        prompt = answer_prompt(ev, self.rc["max_answer_sentences"], v, opts)
+        return self._unit("answer", qid, ev["evidence_sha256"], prompt, self.ac, self.am,
                           lambda t: parse_answer(t, ev, self.rc["max_answer_sentences"]),
-                          ANSWER_TEMPLATE_SHA)
+                          ANSWER_TEMPLATE_V2_SHA if v == "v2" else ANSWER_TEMPLATE_SHA)
+
+    def absence_v2_file(self, qid: int) -> Path:
+        return self.evidence_dir / f"Q{qid}_absence_v2.json"
+
+    def absence_v2(self, qid: int, statements: list) -> dict | None:
+        """The absence passages for a v2 check, for the answer's "not known" statements as
+        written (the check has not run yet). Read from disk when it is for these statements,
+        else built from the graphs and written beside the v1 absence file, never over it."""
+        if not statements:
+            return None
+        p = self.absence_v2_file(qid)
+        ab = json.loads(p.read_text(encoding="utf-8")) if p.is_file() else None
+        if ab is None or [x["statement"] for x in ab["statements"]] != statements:
+            if self.absence_builder is None:
+                raise SystemExit(f"FATAL: {p} missing or stale and no graph access to rebuild it")
+            qcfg = next(q for q in self.cfg["questions"] if q["id"] == qid)
+            ab = self.absence_builder(qcfg, statements)
+            ab["evidence_sha256"] = EV.evidence_sha(ab)
+            p.write_text(json.dumps(ab, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
+        return ab
 
     def check(self, ev: dict, ans_rec: dict) -> dict:
         items = check_items(ans_rec["parsed"])
         if not items:
             return {"status": "done", "parsed": [], "tokens": 0, "unit_id": None, "attempt": 0}
+        qid = ev["question_id"]
+        if template_version(self.cfg, qid) == "v2":
+            ab = self.absence_v2(qid, ans_rec["parsed"]["not_known"])
+            cev = combined_evidence(ev, ab)
+            prompt = check_prompt(cev, items, "v2")
+            return self._unit("check", qid, check_input_sha_v2(ans_rec["parsed"], ab), prompt, self.cc,
+                              self.cm, lambda t: parse_check(t, items, "v2"), CHECK_TEMPLATE_V2_SHA)
         prompt = check_prompt(ev, items)
-        return self._unit("check", ev["question_id"], sha(json.dumps(ans_rec["parsed"], sort_keys=True)),
+        return self._unit("check", qid, sha(json.dumps(ans_rec["parsed"], sort_keys=True)),
                           prompt, self.cc, self.cm, lambda t: parse_check(t, items), CHECK_TEMPLATE_SHA)
+
+    def control(self) -> dict:
+        """The positive control (methodology 7.6) for the v2 check: planted sentences on frozen
+        evidence, one v2 check call, and the verdict compared with what each plant expects.
+        Returns the comparison; `passed` False means no v2 verdict may be used."""
+        cc = (self.cfg.get("rerun") or {})["control"]
+        path = REPO / cc["evidence"]
+        ev = json.loads(path.read_text(encoding="utf-8"))
+        if EV.evidence_sha(ev) != ev.get("evidence_sha256"):
+            raise SystemExit(f"FATAL: {path} does not hash to its recorded evidence_sha256")
+        answer = parse_answer(json.dumps({"sentences": [{"text": x["text"], "evidence": x["evidence"]}
+                                                        for x in cc["sentences"]], "not_known": []}),
+                              ev, len(cc["sentences"]))
+        if answer["precut"]:
+            raise SystemExit(f"FATAL: a control sentence cites an id not in {path}: {answer['precut']}")
+        items = check_items(answer)
+        rec = self._unit("control", CONTROL_QID, sha(ev["evidence_sha256"] + json.dumps(cc, sort_keys=True)),
+                         check_prompt(ev, items, "v2"), self.cc, self.cm,
+                         lambda t: parse_check(t, items, "v2"), CHECK_TEMPLATE_V2_SHA)
+        if rec["status"] != "done":
+            return {"passed": False, "unit_id": rec["unit_id"], "reason": f"control call {rec['status']}"}
+        d = decide(ev, answer, items, rec["parsed"])
+        rows = []
+        for i, x in enumerate(cc["sentences"]):
+            kept = next((r for r in d["kept"] if r["text"] == x["text"]), None)
+            cut = next((r for r in d["cut"] if r["text"] == x["text"]), None)
+            got = ("kept" if kept else "cut_non_responsive"
+                   if cut and cut["cut_reason"].startswith("non-responsive") else "cut_unsupported")
+            rows.append({"item_id": f"S{i + 1}", "expect": x["expect"], "got": got,
+                         "verdict": (kept or cut or {}).get("verdict"),
+                         "responsive": (kept or cut or {}).get("responsive"),
+                         "reason": (kept or cut or {}).get("reason")})
+        return {"passed": all(r["expect"] == r["got"] for r in rows), "unit_id": rec["unit_id"],
+                "tokens": rec["tokens"], "check_template_sha256": CHECK_TEMPLATE_V2_SHA,
+                "model_id": self.cm, "evidence": cc["evidence"], "rows": rows}
 
     def absence_file(self, qid: int) -> Path:
         return self.evidence_dir / f"Q{qid}_absence.json"
@@ -536,7 +706,7 @@ class Runner:
         if c["status"] != "done":
             return {"question_id": qid, "status": "unchecked", "answer_unit": a["unit_id"],
                     "check_unit": c["unit_id"]}
-        if self.absence_on:
+        if self.absence_on and template_version(self.cfg, qid) == "v1":
             items = check_items(a["parsed"])
             nk = [r["text"] for r in decide(ev, a["parsed"], items, c["parsed"])["not_known_kept"]]
             if nk:
@@ -557,7 +727,10 @@ class Runner:
         self.last_progress = now
         tok = sum(r.get("tokens", 0) for r in recs)
         fails = sum(1 for r in recs if r["status"] != "done")
-        total = (3 if self.absence_on else 2) * len(self.cfg["questions"])
+        total = sum(0 if is_code_built(self.cfg, q["id"]) else
+                    2 if template_version(self.cfg, q["id"]) == "v2" else
+                    (3 if self.absence_on else 2) for q in self.cfg["questions"]) \
+            + (1 if (self.cfg.get("rerun") or {}).get("control") else 0)
         el = now - self.t0
         rate = done / el if el > 0 and done else 0
         eta = (total - done) / rate if rate else None
@@ -581,9 +754,43 @@ class Runner:
                 g.append({"question_id": q, "n": n, "text": row["text"]})
         return g
 
+    def rerun(self, control_out: Path) -> int:
+        """ADDENDUM 01 step 5: the positive control first (it is also the pilot: its measured
+        tokens project the rest against the ceiling), then the v2 questions. A failed control
+        stops the run before any v2 question is asked."""
+        rr = self.cfg["rerun"]
+        try:
+            res = self.control()
+            control_out.parent.mkdir(parents=True, exist_ok=True)
+            control_out.write_text(json.dumps({"generated_by": GENERATOR, "generated_at": _now(), **res},
+                                              indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
+            self.log(f"CONTROL: {'PASS' if res['passed'] else 'FAIL'} "
+                     + json.dumps(res.get("rows") or res.get("reason")))
+            if not res["passed"]:
+                self.log("STOP: the positive control failed; no v2 verdict is used and no v2 question runs")
+                return 3
+            per = res.get("tokens") or 0
+            calls = 2 * len(rr["questions"])
+            self.log(f"PILOT: the control call measured {per:,} tokens; projected for {calls} more calls "
+                     f"at that rate: {per * calls:,}, ceiling {rr['ceiling_tokens']:,}")
+            if per * (calls + 1) > rr["ceiling_tokens"]:
+                self.log("STOP: the pilot projects past the declared ceiling; nothing else runs")
+                return 3
+            out = self.run_pool(rr["questions"])
+            bad = [o for o in out if o["status"] != "done"]
+            if bad:
+                self.log(f"STOP: not answered and checked within the allowed attempts: {bad}")
+                return 3
+        except StopRun as exc:
+            self.progress(force=True)
+            self.log(f"STOP: {exc}")
+            return 3
+        self.progress(force=True)
+        return 0
+
     def run(self) -> int:
         qs = [q["id"] for q in self.cfg["questions"] if not q.get("gaps_from_questions")]
-        gq = [q for q in self.cfg["questions"] if q.get("gaps_from_questions")]
+        gq = [q for q in self.cfg["questions"] if q.get("gaps_from_questions") and not q.get("built_by_code")]
         pilot = [q for q in self.rc["pilot_questions"] if q in qs]
         try:
             for q in pilot:
@@ -617,7 +824,17 @@ class Runner:
 
 # -------------------------------------------------------------------------------- assemble
 
+def check_input_sha_v2(parsed: dict, ab: dict | None) -> str:
+    return sha(json.dumps(parsed, sort_keys=True) + ((ab or {}).get("evidence_sha256") or ""))
+
+
 def assemble_one(runner: Runner, qid: int) -> dict:
+    if is_code_built(runner.cfg, qid):
+        q = next(x for x in runner.cfg["questions"] if x["id"] == qid)
+        return {"question_id": qid, "question": q["text"], "status": "done", "built_by_code": True,
+                "kept": [], "cut": [], "not_known_kept": [], "not_known_cut": []}
+    if template_version(runner.cfg, qid) == "v2":
+        return assemble_one_v2(runner, qid)
     ev = runner.evidence(qid)
     recs = runner.ck.read()
     a_id = unit_id("answer", qid, ev["evidence_sha256"], runner.am, ANSWER_TEMPLATE_SHA)
@@ -658,6 +875,36 @@ def assemble_one(runner: Runner, qid: int) -> dict:
             "tokens": {"answer": a["tokens"], "check": c_tokens, "absence": b_tokens}, **d}
 
 
+def assemble_one_v2(runner: Runner, qid: int) -> dict:
+    ev = runner.evidence(qid)
+    recs = decided(runner.ck.read())
+    empty = {"question_id": qid, "question": ev["question"], "kept": [], "cut": [],
+             "not_known_kept": [], "not_known_cut": [], "template": "v2"}
+    a_id = unit_id("answer", qid, ev["evidence_sha256"], runner.am, ANSWER_TEMPLATE_V2_SHA)
+    a = recs.get(a_id)
+    if not a or a["status"] != "done":
+        return {**empty, "status": "unanswered"}
+    items = check_items(a["parsed"])
+    p = runner.absence_v2_file(qid)
+    ab = json.loads(p.read_text(encoding="utf-8")) if a["parsed"]["not_known"] and p.is_file() else None
+    if ab and [x["statement"] for x in ab["statements"]] != a["parsed"]["not_known"]:
+        ab = None
+    if a["parsed"]["not_known"] and ab is None:
+        return {**empty, "status": "unchecked"}
+    c_id = unit_id("check", qid, check_input_sha_v2(a["parsed"], ab), runner.cm, CHECK_TEMPLATE_V2_SHA) \
+        if items else None
+    c = recs.get(c_id) if c_id else {"parsed": [], "tokens": 0}
+    if not c or (c_id and c["status"] != "done"):
+        return {**empty, "status": "unchecked"}
+    d = decide(combined_evidence(ev, ab), a["parsed"], items, c["parsed"])
+    return {**empty, "status": "done", "answer_model": runner.am, "check_model": runner.cm,
+            "rubric_version": RUBRIC_VERSION, "overlay": OVERLAY, "answer_unit": a_id,
+            "check_unit": c_id, "absence_unit": None,
+            "absence": "folded into the check (v2)", "absence_evidence_sha256": (ab or {}).get("evidence_sha256"),
+            "evidence_sha256": ev["evidence_sha256"],
+            "tokens": {"answer": a["tokens"], "check": c["tokens"], "absence": 0}, **d}
+
+
 def assemble(runner: Runner) -> dict:
     out = {"generated_by": GENERATOR, "task": TASK, "generated_at": _now(), "questions": []}
     for q in runner.cfg["questions"]:
@@ -675,12 +922,14 @@ def main(argv=None) -> int:
     g = ap.add_mutually_exclusive_group(required=True)
     g.add_argument("--dry-run", action="store_true")
     g.add_argument("--run", action="store_true")
+    g.add_argument("--rerun", action="store_true", help="ADDENDUM 01: the control, then the v2 questions")
     g.add_argument("--assemble", action="store_true")
     ap.add_argument("--evidence-dir", default=None, help="test seam (default: reports/dcat_us_3_faq/evidence)")
     ap.add_argument("--run-dir", default=None, help="test seam (default: reports/dcat_us_3_faq/run)")
     ap.add_argument("--answers", default=None, help="test seam (default: reports/dcat_us_3_faq/answers.json)")
     ap.add_argument("--config", default=None, help="test seam (default: faq_config.yaml)")
     ap.add_argument("--progress-log", default=None, help="test seam (default: logs/2026-10-05_DCAT-003_faq_progress.log)")
+    ap.add_argument("--control-out", default=None, help="test seam (default: reports/dcat_us_3_faq/control/control_result.json)")
     a = ap.parse_args(argv)
 
     cfg = EV.load_config(Path(a.config) if a.config else EV.CONFIG)
@@ -720,24 +969,26 @@ def main(argv=None) -> int:
                           "ceiling_tokens": rc["ceiling_tokens"]}, indent=1))
         return 0
 
-    if not scripted and a.run:
+    if not scripted and (a.run or a.rerun):
         from kg import spend
         from kg.extraction import model_stub
         from harness.consumers import ClaudeCLIConsumer, ConsumerConfig
         model_stub.guard_no_api_key()
         led = spend.default_ledger()
-        st = led.status().get("runs", {}).get(RUN_ID)
-        if st is None or int(st.get("ceiling_tokens") or 0) != rc["ceiling_tokens"]:
-            led.declare(RUN_ID, rc["ceiling_tokens"], declared_by=f"{GENERATOR} ({TASK})",
+        run_id, ceiling, task = ((cfg["rerun"]["run_id"], cfg["rerun"]["ceiling_tokens"], ADDENDUM_TASK)
+                                 if a.rerun else (RUN_ID, rc["ceiling_tokens"], TASK))
+        st = led.status().get("runs", {}).get(run_id)
+        if st is None or int(st.get("ceiling_tokens") or 0) != ceiling:
+            led.declare(run_id, ceiling, declared_by=f"{GENERATOR} ({task})",
                         call_class=rc["call_class"], **({"supersede": True} if st else {}))
-        spend.set_current_run(RUN_ID)
+        spend.set_current_run(run_id)
         ac = ClaudeCLIConsumer(ConsumerConfig(model_id=am, provider=PROVIDER, cli=CLI,
                                               timeout_seconds=rc["timeout_seconds"], call_class=rc["call_class"]))
         cc = ClaudeCLIConsumer(ConsumerConfig(model_id=cm, provider=PROVIDER, cli=CLI,
                                               timeout_seconds=rc["timeout_seconds"], call_class=rc["call_class"]))
 
     runner = Runner(cfg, evidence_dir, run_dir, ac, cc, am, cm, rc["workers"], log)
-    if a.run and runner.absence_on:
+    if (a.run or a.rerun) and runner.absence_on and not scripted:
         drv = EV.driver()
         meta = EV.doc_meta(drv, cfg)
         substrate_dir = REPO / cfg["graphs"]["substrate_dir"]
@@ -745,6 +996,8 @@ def main(argv=None) -> int:
     rc_code = 0
     if a.run:
         rc_code = runner.run()
+    elif a.rerun:
+        rc_code = runner.rerun(Path(a.control_out) if a.control_out else CONTROL_OUT)
     out = assemble(runner)
     answers.write_text(json.dumps(out, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
     log(f"wrote {answers}: " + json.dumps({q["question_id"]: (q["status"], len(q["kept"]), len(q["cut"]))

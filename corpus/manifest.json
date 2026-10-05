@@ -1,11 +1,11 @@
 {
  "manifest_version": 2,
  "project": "ai-readiness-kg",
- "generated_at": "2026-10-05T10:59:18.187662+00:00",
+ "generated_at": "2026-10-05T18:49:06.904305+00:00",
  "generator": "dixie.evidence",
  "note": "PROJECTION — rebuilt from the evidence decisions log; do not hand-edit. The log is truth.",
  "counts_by_decision": {
-  "included": 278,
+  "included": 280,
   "excluded": 72,
   "pending_refetch": 42,
   "pending_review": 1
@@ -9756,6 +9756,107 @@
     "added_in": "dcat-us-3-2026-10-04"
    }
   },
+  "dcat-us-3-dataset-schema-2026-10-05": {
+   "doc_id": "dcat-us-3-dataset-schema-2026-10-05",
+   "identity": {
+    "sha256": "3b5cbb2dc8af4f034896ffba9b582044a270678534ca79529caa108456f123a7",
+    "canonical_path": "corpus/crosswalk/dcat-us-3-dataset-schema-2026-10-05.html",
+    "title": "DCAT-US 3.0 Schema: Dataset (resources.data.gov; as served 2026-10-05)",
+    "authors_or_org": [
+     "U.S. General Services Administration / Data.gov"
+    ],
+    "pub_year": "2026",
+    "doc_type": "standard",
+    "source_url": "https://resources.data.gov/standards/catalog/dcat-us-3/dataset/",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "scripted_fetch",
+    "acquired_at": "2026-10-05T18:49:06.517815+00:00",
+    "acquired_by": "scripts/fetch_allowlisted.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed html, detected html",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "106817 bytes vs floor 64",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "skipped: format mismatch already failed or type unhandled",
+      "outcome": "skip"
+     }
+    ],
+    "checked_at": "2026-10-05T18:49:06.518093+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "cc_tasks/2026-10-05_DCAT-003_ADDENDUM_01_faq_shippability.md step 4: the DCAT-US 3.0 page as served on 2026-10-05, a dated version of the corpus's 2026-08-21 capture (DD-068), so every requirement level the briefing FAQ states can name the version it reads. Criterion R1 (cc_tasks/2026-08-24_source_triage.md): a metadata standard.",
+    "decided_by": "cc",
+    "decided_at": "2026-10-05T18:49:06.321291+00:00",
+    "history": [],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "dcat_003a_2026-10-05"
+   ],
+   "extra": {
+    "notes": [
+     "fetched robots-first under the identified UA (logs/2026-10-05_DCAT-003a_fetch.jsonl). Dated version of dcat-us-3-dataset-schema (DD-068). The Dataset page as served on 2026-10-05, byte-identical to the live fetch DCAT-002 logged at 02:14Z that day (sha256 3b5cbb2d...). Its per-property Requirement lines give the same level as the 2026-09-15 capture (dcat-us-3-dataset-schema-2026-09-15) for all 62 properties: Mandatory are contactPoint, description, identifier and title; publisher is Recommended."
+    ],
+    "observed_files": {
+     "corpus/crosswalk/dcat-us-3-dataset-schema-2026-10-05.html": {
+      "sha256": "3b5cbb2dc8af4f034896ffba9b582044a270678534ca79529caa108456f123a7",
+      "size": 106817,
+      "claimed_type": "html",
+      "detected_type": "html"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/crosswalk/dcat-us-3-dataset-schema-2026-10-05.html": {
+      "path": "corpus/crosswalk/dcat-us-3-dataset-schema-2026-10-05.html",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed html, detected html",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "106817 bytes vs floor 64",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "skipped: format mismatch already failed or type unhandled",
+        "outcome": "skip"
+       }
+      ],
+      "checked_at": "2026-10-05T18:49:06.518093+00:00"
+     }
+    },
+    "added_in": "dcat-us-3-live-2026-10-05"
+   }
+  },
   "dcat-us-3-dataset-series": {
    "doc_id": "dcat-us-3-dataset-series",
    "identity": {
@@ -10166,6 +10267,107 @@
      }
     },
     "added_in": "kernel-v03"
+   }
+  },
+  "dcat-us-3-overview-2026-10-05": {
+   "doc_id": "dcat-us-3-overview-2026-10-05",
+   "identity": {
+    "sha256": "f95692f885a41593006ab9b948a93da48ca2c6d6bdefe6fb3101080762afd084",
+    "canonical_path": "corpus/crosswalk/dcat-us-3-overview-2026-10-05.html",
+    "title": "DCAT-US 3.0 Overview (resources.data.gov; as served 2026-10-05)",
+    "authors_or_org": [
+     "U.S. General Services Administration / Data.gov"
+    ],
+    "pub_year": "2026",
+    "doc_type": "standard",
+    "source_url": "https://resources.data.gov/resources/dcat-us3/",
+    "acquisition_channel": null
+   },
+   "acquisition": {
+    "method": "scripted_fetch",
+    "acquired_at": "2026-10-05T18:49:06.522950+00:00",
+    "acquired_by": "scripts/fetch_allowlisted.py"
+   },
+   "integrity": {
+    "status": "verified",
+    "checks": [
+     {
+      "check": "magic_bytes",
+      "detail": "claimed html, detected html",
+      "outcome": "pass"
+     },
+     {
+      "check": "size_sanity",
+      "detail": "47227 bytes vs floor 64",
+      "outcome": "pass"
+     },
+     {
+      "check": "content_smoke",
+      "detail": "skipped: format mismatch already failed or type unhandled",
+      "outcome": "skip"
+     }
+    ],
+    "checked_at": "2026-10-05T18:49:06.523205+00:00"
+   },
+   "screening": {
+    "decision": "included",
+    "rationale": "cc_tasks/2026-10-05_DCAT-003_ADDENDUM_01_faq_shippability.md step 4: the DCAT-US 3.0 page as served on 2026-10-05, a dated version of the corpus's 2026-08-21 capture (DD-068), so every requirement level the briefing FAQ states can name the version it reads. Criterion R1 (cc_tasks/2026-08-24_source_triage.md): a metadata standard.",
+    "decided_by": "cc",
+    "decided_at": "2026-10-05T18:49:06.321291+00:00",
+    "history": [],
+    "identity_gate": {
+     "passed": true,
+     "checked": [],
+     "failures": []
+    }
+   },
+   "lifecycle": {
+    "stage": "verified"
+   },
+   "files": {
+    "alternates": [],
+    "quarantined": []
+   },
+   "provenance_sources": [
+    "dcat_003a_2026-10-05"
+   ],
+   "extra": {
+    "notes": [
+     "fetched robots-first under the identified UA (logs/2026-10-05_DCAT-003a_fetch.jsonl). Dated version of dcat-us-3-overview (DD-068). The Overview as served on 2026-10-05, after the rewrite its changelog dates September 2026. Against the corpus's 2026-08-21 capture, the 'Breaking changes', 'Fields replaced or removed' and 'Structural changes' tables are gone from 'Changes from v1.1'. The site's glossary is loaded by glossary.js from a separate resource and is not in this HTML; the 2026-08-21 capture was browser-rendered and carries it."
+    ],
+    "observed_files": {
+     "corpus/crosswalk/dcat-us-3-overview-2026-10-05.html": {
+      "sha256": "f95692f885a41593006ab9b948a93da48ca2c6d6bdefe6fb3101080762afd084",
+      "size": 47227,
+      "claimed_type": "html",
+      "detected_type": "html"
+     }
+    },
+    "integrity_by_file": {
+     "corpus/crosswalk/dcat-us-3-overview-2026-10-05.html": {
+      "path": "corpus/crosswalk/dcat-us-3-overview-2026-10-05.html",
+      "verdict": "pass",
+      "checks": [
+       {
+        "check": "magic_bytes",
+        "detail": "claimed html, detected html",
+        "outcome": "pass"
+       },
+       {
+        "check": "size_sanity",
+        "detail": "47227 bytes vs floor 64",
+        "outcome": "pass"
+       },
+       {
+        "check": "content_smoke",
+        "detail": "skipped: format mismatch already failed or type unhandled",
+        "outcome": "skip"
+       }
+      ],
+      "checked_at": "2026-10-05T18:49:06.523205+00:00"
+     }
+    },
+    "added_in": "dcat-us-3-live-2026-10-05"
    }
   },
   "dcat-us-3-quality-governance": {

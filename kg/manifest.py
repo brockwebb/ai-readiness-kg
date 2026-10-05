@@ -26,6 +26,7 @@ import hashlib
 import json
 import re
 import sys
+from datetime import datetime
 from pathlib import Path
 
 from kg import eventlog
@@ -287,6 +288,33 @@ def duplicate_adds() -> dict[str, dict]:
     return out
 
 
+def _version_lineage(existing: list[dict], version_of, retrieved_at, norm_url: str) -> set:
+    """The doc_ids a dated version may share its URL with (DD-068), or a ManifestError.
+
+    Both keywords or neither: a version with no retrieval time is an undated copy, and a
+    retrieval time with no ``version_of`` waives nothing."""
+    if not version_of or not retrieved_at:
+        raise ManifestError("a dated version needs both version_of and retrieved_at")
+    try:
+        datetime.fromisoformat(str(retrieved_at).replace("Z", "+00:00"))
+    except ValueError:
+        raise ManifestError(f"retrieved_at {retrieved_at!r} is not an ISO 8601 datetime")
+    by_id = {e["doc_id"]: e for e in existing}
+    base = by_id.get(version_of)
+    if base is None:
+        raise ManifestError(f"version_of {version_of!r} is not admitted")
+    if _normalize_url(base["primary_url"]) != norm_url:
+        raise ManifestError(
+            f"version_of {version_of!r} has primary_url {base['primary_url']}, not this URL")
+    lineage = {version_of} | {e["doc_id"] for e in existing if e.get("version_of") == version_of}
+    strays = sorted(e["doc_id"] for e in existing
+                    if _normalize_url(e["primary_url"]) == norm_url and e["doc_id"] not in lineage)
+    if strays:
+        raise ManifestError(
+            f"duplicate primary_url: held by {strays}, which are not versions of {version_of!r}")
+    return lineage
+
+
 def add(filepath, **fields) -> str:
     """Validate, hash, dedup, and admit a document to the corpus. Returns its doc_id.
 
@@ -295,12 +323,25 @@ def add(filepath, **fields) -> str:
       - file not found, or not under corpus/
       - invalid source_type or malformed doc_id slug
       - duplicate doc_id, content_hash, or normalized primary_url
+      - a dated version (``version_of``) that is malformed: see below
 
     On pass: emits a ``manifest_add`` event (event_type + full entry as payload) via
     eventlog.append, then rebuilds manifest.json from replay.
 
     Optional keyword ``acquisition`` (a dict of TEVV/acquisition evidence) is stored
     verbatim under the entry's ``acquisition`` key when supplied.
+
+    **Dated versions of one URL (DD-068).** A page that is revised in place is several
+    documents under one URL. Optional ``version_of=<held doc_id>`` with
+    ``retrieved_at=<ISO 8601 UTC datetime>`` admits a new dated version of a URL the corpus
+    already holds: the primary-URL dedupe is waived for the entries that share this URL, on
+    four conditions checked before anything is written — ``version_of`` is admitted, it has
+    this normalized URL, every held entry with this URL is ``version_of`` or one of its own
+    dated versions (one lineage per URL), and ``retrieved_at`` parses as a datetime. The
+    content-hash dedupe is never waived: identical bytes are the version already held. This
+    is RFC 7089's model (one original resource, many dated mementos) and the WARC record's
+    (ISO 28500: target URI plus capture date); without ``version_of`` the dedupe is exactly
+    as before.
     """
     # 1. Required fields present and non-empty.
     missing = []
@@ -360,6 +401,9 @@ def add(filepath, **fields) -> str:
 
     # 3. Duplicate checks against the current (replayed) manifest state.
     existing = _load_entries()
+    version_of, retrieved_at = fields.get("version_of"), fields.get("retrieved_at")
+    lineage = _version_lineage(existing, version_of, retrieved_at, norm_url) \
+        if version_of is not None or retrieved_at is not None else set()
     for e in existing:
         if e["doc_id"] == doc_id:
             raise ManifestError(f"duplicate doc_id: {doc_id}")
@@ -367,7 +411,7 @@ def add(filepath, **fields) -> str:
             raise ManifestError(
                 f"duplicate content_hash: {content_hash} already held by {e['doc_id']}"
             )
-        if _normalize_url(e["primary_url"]) == norm_url:
+        if _normalize_url(e["primary_url"]) == norm_url and e["doc_id"] not in lineage:
             raise ManifestError(
                 f"duplicate primary_url: {primary_url} already held by {e['doc_id']}"
             )
@@ -399,6 +443,11 @@ def add(filepath, **fields) -> str:
     # omitted entirely when not supplied so pre-existing entries stay unchanged.
     if fields.get("acquisition") is not None:
         entry["acquisition"] = fields["acquisition"]
+    # DD-068: a dated version names what it is a version of and when it was retrieved;
+    # omitted entirely otherwise, so every other entry stays byte-identical.
+    if version_of is not None:
+        entry["version_of"] = version_of
+        entry["retrieved_at"] = retrieved_at
     eventlog.append({"event_type": _MANIFEST_ADD, "payload": entry}, batch=_MANIFEST_BATCH)
     _convertibility_gate(doc_id, path, entry)
     # Stage-0 rewire: add() no longer auto-rebuilds manifest.json. The file is the
@@ -637,6 +686,10 @@ def _build_parser() -> argparse.ArgumentParser:
     p_add.add_argument("--url", required=True, help="Citable primary source URL.")
     p_add.add_argument("--rationale", required=True, help="Inclusion rationale (1-2 sentences).")
     p_add.add_argument("--discovered-via", default=None, help="Capture provenance, e.g. manual.")
+    p_add.add_argument("--version-of", default=None,
+                       help="DD-068: the held doc_id this is a dated version of (same URL).")
+    p_add.add_argument("--retrieved-at", default=None,
+                       help="DD-068: ISO 8601 UTC datetime the version was retrieved.")
 
     sub.add_parser("rebuild", help="Rebuild manifest.json from the event log.")
     sub.add_parser("verify", help="Re-hash all entries; report missing/tampered files.")
@@ -695,6 +748,8 @@ def main(argv: list[str] | None = None) -> int:
                 primary_url=args.url,
                 inclusion_rationale=args.rationale,
                 discovered_via=args.discovered_via,
+                **({"version_of": args.version_of} if args.version_of else {}),
+                **({"retrieved_at": args.retrieved_at} if args.retrieved_at else {}),
             )
         except ManifestError as exc:
             print(f"REJECTED: {exc}", file=sys.stderr)

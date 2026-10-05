@@ -233,7 +233,10 @@ def test_sigkill_mid_loop_resumes_without_repeating_a_completed_call(tmp_path):
 # ---------------------------------------------------------------------- the shipped files
 
 BANNED = [r"\bgraphs?\b", r"\bnodes?\b", r"ai-readiness-kg", r"fss-policy-kg", r"cc_tasks", r"\bDN-0\d\d",
-          r"\bDCAT-00\d", r"checkpoint", r"\bvalidator\b", r"\bmodel call", r"\bpipeline\b",
+          r"\bDCAT-00\d", r"checkpoint",
+          # "data.gov's online validator" is the source's tool (Q13, the Overview as served
+          # 2026-10-05), not this pipeline's check.
+          r"(?<!online )\bvalidator\b", r"\bmodel call", r"\bpipeline\b",
           r"\bextract(ed|ion)\b", r"\bsubstrate\b", r"\bepoch\b"]
 
 
@@ -296,13 +299,22 @@ def test_the_faq_prints_every_kept_sentence_verbatim_and_no_cut_one():
     """Cut, never reworded: what the check kept is printed as written, and what it cut is not
     printed at all, not even reworded into something that contains it."""
     answers, faq, _ = _shipped()
+    cfg = EV.load_config()
+    report = json.loads((OUT / "build_report.json").read_text(encoding="utf-8"))
+    cut_by_build = {(c["question"], c["text"]) for c in report["cut_by_build"]}
     for q in answers["questions"]:
+        qid = q["question_id"]
         for s in q["kept"]:
-            assert s["text"] in faq, (q["question_id"], s["text"])
+            if (qid, s["text"]) in cut_by_build:
+                assert B.shown(s["text"], qid, cfg) not in faq
+                continue
+            # ADDENDUM 01 step 3: the one configured dash substitution is the only change.
+            assert B.shown(s["text"], qid, cfg) in faq, (qid, s["text"])
         for n in q["not_known_kept"]:
-            assert n["text"] in faq, (q["question_id"], n["text"])
+            # Step 2: printed under "Not found in the sources:" without the lead-in.
+            assert B.bare(n["text"]) in faq, (qid, n["text"])
         for s in q["cut"] + q["not_known_cut"]:
-            assert s["text"] not in faq, (q["question_id"], s["text"])
+            assert s["text"] not in faq and B.bare(s["text"]) not in faq, (qid, s["text"])
 
 
 def test_the_attachment_quotes_every_passage_a_kept_sentence_cites():
@@ -312,5 +324,140 @@ def test_the_attachment_quotes_every_passage_a_kept_sentence_cites():
         by_id = {it["id"]: it for it in ev["items"]}
         for s in q["kept"]:
             for eid in s["evidence"]:
-                head = B.anchor_links_as_text(by_id[eid]["text"]).replace("\n", " ").strip()[:60]
+                head = B.quote_text(by_id[eid]["text"]).replace("\n", " ").strip()[:60]
                 assert head in att, (q["question_id"], eid)
+
+
+# ------------------------------------------------- ADDENDUM 01: v2 check, control, templates
+
+def test_the_v1_templates_still_hash_to_the_units_dcat_003_checked():
+    """A v1 template edit would orphan every checked v1 unit: assembly finds a unit by the
+    template hash, so the questions not re-run would print as unanswered."""
+    ck = OUT / "run" / "checkpoint.jsonl"
+    if not ck.is_file():
+        pytest.skip("no checkpoint")
+    recs = R.Checkpoint(ck).read()
+    assert R.ANSWER_TEMPLATE_SHA in {r["template_sha256"] for r in recs if r["kind"] == "answer"}
+    assert R.CHECK_TEMPLATE_SHA in {r["template_sha256"] for r in recs if r["kind"] == "check"}
+
+
+def test_v2_templates_carry_the_new_rules_and_v1_does_not():
+    for rule in ("Candidate Recommendation", "names the version of the page it reads", "em dash", "must answer the question"):
+        assert rule in R.ANSWER_TEMPLATE_V2 and rule not in R.ANSWER_TEMPLATE
+    assert '"responsive"' in R.CHECK_TEMPLATE_V2 and '"responsive"' not in R.CHECK_TEMPLATE
+
+
+def test_a_v2_sentence_without_a_responsiveness_answer_is_malformed():
+    items = [{"item_id": "S1", "kind": "SENTENCE", "text": "a", "evidence": ["E1"]}]
+    v = R.parse_check(json.dumps([{"item_id": "S1", "verdict": "pass", "defect_class": None,
+                                   "support_span": "x"}]), items, "v2")
+    assert v[0]["malformed"]
+
+
+def test_an_entailed_but_non_responsive_sentence_is_cut_and_a_responsive_one_kept():
+    ans = R.parse_answer(json.dumps({"sentences": [{"text": "Three are Mandatory.", "evidence": ["E1"]},
+                                                   {"text": "Publisher is Recommended.", "evidence": ["E2"]}],
+                                     "not_known": []}), EVD, 3)
+    items = R.check_items(ans)
+    v = R.parse_check(json.dumps([
+        {"item_id": "S1", "verdict": "pass", "defect_class": None, "responsive": "no",
+         "support_span": "Only title, description and identifier are Mandatory."},
+        {"item_id": "S2", "verdict": "pass", "defect_class": None, "responsive": "yes",
+         "support_span": "Publisher is Recommended."}]), items, "v2")
+    d = R.decide(EVD, ans, items, v)
+    assert [k["text"] for k in d["kept"]] == ["Publisher is Recommended."]
+    assert d["cut"][0]["cut_reason"].startswith("non-responsive")
+
+
+def test_the_v2_check_reads_absence_passages_under_their_own_ids():
+    ab = {"items": [{"id": "E1", "doc_id": "d", "kind": "passage", "text": "found by its own words"}],
+          "documents": {}}
+    c = R.combined_evidence(EVD, ab)
+    assert [i["id"] for i in c["items"]] == ["E1", "E2", "A1"]
+    assert R.combined_evidence(EVD, None) is EVD
+
+
+def test_only_the_configured_questions_take_the_v2_templates():
+    cfg = EV.load_config()
+    assert [q for q in range(1, 15) if R.template_version(cfg, q) == "v2"] == [9, 12, 13]
+    assert R.is_code_built(cfg, 14) and not R.is_code_built(cfg, 13)
+
+
+# --------------------------------------------------- ADDENDUM 01: lint, question 14, versions
+
+import dcat_faq_lint as LINT  # noqa: E402
+
+
+def _at(rev: str, path: str) -> str:
+    r = subprocess.run(["git", "show", f"{rev}:{path}"], capture_output=True, text=True, cwd=REPO)
+    if r.returncode:
+        pytest.skip(f"{rev}:{path} not in this clone's history")
+    return r.stdout
+
+
+def test_lint_positive_control_fails_on_the_faq_at_1a5e6cc():
+    """Step 7's control: the defect report's file fails, on each rule the report names."""
+    rules = {f["rule"] for f in LINT.lint(_at("1a5e6cc", "reports/dcat_us_3_faq/FAQ.md"))}
+    assert {"em_dash", "repository_path", "file_extension", "pipeline_word"} <= rules
+
+
+@pytest.mark.parametrize("name", ["FAQ.md", "ATTACHMENT_evidence.md"])
+def test_lint_passes_on_the_shipped_files(name):
+    p = OUT / name
+    if not p.is_file():
+        pytest.skip(f"{name} not built yet")
+    assert LINT.lint(p.read_text(encoding="utf-8")) == []
+
+
+@pytest.mark.parametrize("text,rule", [
+    ("an em \u2014 dash", "em_dash"), ("see kg/assess.py", "repository_path"),
+    ("in layers.yaml", "file_extension"), ("PRIOR NOTE, PRESERVED", "pipeline_word"),
+    ("so basis (a) holds", "pipeline_word"), ("the DCAT-003 task", "task_code")])
+def test_each_lint_rule_fires(text, rule):
+    assert rule in {f["rule"] for f in LINT.lint(text)}
+
+
+@pytest.mark.parametrize("text", [
+    "M-25-05 and FCSM 20-04 stay legal.", "<https://raw.githubusercontent.com/wiki/DOI-DO/dcat-us/Home.md>",
+    "See [jsonschema/README.md](https://github.com/GSA/dcat-us/tree/main/jsonschema) for tooling.",
+    "1. DCAT-003 Report Title. Issuer. 2026."])
+def test_lint_leaves_legal_text_alone(text):
+    assert LINT.lint(text) == []
+
+
+def test_bare_drops_only_the_lead_in():
+    assert B.bare("The sources do not state why any of these changes were made.") == \
+        "Why any of these changes were made."
+    assert B.bare("Something else.") == "Something else."
+
+
+def test_question_14_is_a_table_with_no_model_text_and_both_documents_listed():
+    answers, faq, _ = _shipped()
+    q14 = faq.split("## 14.", 1)[1]
+    assert "| Gap | Questions | Document that would answer it |" in q14
+    assert "Not found" not in q14 and "Every unanswered part" not in q14
+    assert "issue #214" in q14 and "Public; not reviewed for this briefing." in q14
+    rows = B.gap_rows(answers, EV.load_config(), B.catalog_records())
+    gaps = [r["gap"].lower() for r in rows]
+    assert len(gaps) == len(set(gaps))
+    assert any(r["questions"] == [5, 6] and "Sequencing Plan" in r["document"] for r in rows)
+
+
+def test_every_tier_sentence_in_the_faq_names_a_version_or_carries_a_note():
+    _, faq, _ = _shipped()
+    body = faq.split("## 1.", 1)[1]
+    for para in [l for l in body.splitlines() if l and not l.startswith(("#", "-", "|", "Sources", "Not found"))
+                 and not re.match(r"^\d+\. ", l)]:
+        for sent in re.split(r"(?<=\])\s(?=[A-Z])", para):
+            if B.TIER_RE.search(sent.split(" [")[0]):
+                assert B.VERSION_RE.search(sent) or "(" in sent.split("]")[-1], sent
+
+
+def test_the_live_column_is_read_from_the_2026_10_05_page():
+    _need(EV.LIVE, EV.FINAL)
+    rows = EV.element_table(SUBSTRATE)
+    assert all("level_2026_10_05" in r for r in rows)
+    assert sorted(r["element"] for r in rows if r["level_2026_10_05"] == "Mandatory") == \
+        ["contactPoint", "description", "identifier", "title"]
+    # The row's evidence text quotes four versions, as the checked answers saw it.
+    assert "2026-10-05" not in EV.row_text(rows[0])

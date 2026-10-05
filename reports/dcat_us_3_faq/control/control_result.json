@@ -1,0 +1,36 @@
+{
+ "generated_by": "scripts/dcat_faq_run.py",
+ "generated_at": "2026-10-05T21:04:04.736141+00:00",
+ "passed": true,
+ "unit_id": "dcfdd8601dc80360",
+ "tokens": 55239,
+ "check_template_sha256": "3d13e21422f8f15d327e22e3facac7e35f9064d96dd270afa9959197bc5acb52",
+ "model_id": "claude-opus-4-8",
+ "evidence": "reports/dcat_us_3_faq/control/Q13_evidence_1a5e6cc.json",
+ "rows": [
+  {
+   "item_id": "S1",
+   "expect": "cut_non_responsive",
+   "got": "cut_non_responsive",
+   "verdict": "pass",
+   "responsive": "no",
+   "reason": "The passage supports a future extension of the DCAT AP with additional agent roles, but that is a background fact about StatDCAT-AP's roadmap, not one of the next-step options (statistical profile, raising requirement levels, conformance checking) the question asks about."
+  },
+  {
+   "item_id": "S2",
+   "expect": "kept",
+   "got": "kept",
+   "verdict": "pass",
+   "responsive": "yes",
+   "reason": "The question names conformance checking as an option and this sentence states what the Data.gov overview (E21) and the CR Snapshot (E56) support for it—programmatic JSON Schema validation and a SHACL-defined profile."
+  },
+  {
+   "item_id": "S3",
+   "expect": "cut_non_responsive",
+   "got": "cut_non_responsive",
+   "verdict": "pass",
+   "responsive": "no",
+   "reason": "This is a general definition of what DCAT-US v3.0 is, a background fact, not an option for next steps, which is what the question asks about."
+  }
+ ]
+}

@@ -40,6 +40,43 @@ run:
   pilot_questions: [1]
   max_answer_sentences: 3
 
+# DCAT-003 ADDENDUM 01 step 5: Q9, Q12 and Q13 are answered again under the v2 templates; every
+# other question keeps the v1 answer and check it already has, by unit key. The task's spend is
+# "at most three answer calls and three validator calls, plus the controls", so the v2 check
+# folds the absence check into the one validator call (the "not known" items are read against
+# the question's passages AND the passages found by their own words, in the same call), and a
+# failed or unparseable call is not retried: it stops the run and is reported.
+rerun:
+  questions: [9, 12, 13]
+  template: v2
+  run_id: dcat_us_3_faq_addendum01_2026-10-05
+  # Estimate before any call: 3 answers at 65,000 (DCAT-003's measured 63,542 per call), 3 v2
+  # checks at 90,000 (the absence passages add up to 80,000 characters, about 20,000 tokens),
+  # 1 control at 65,000: 530,000. Ceiling = 1.5 x estimate, rounded up.
+  ceiling_tokens: 800000
+  max_attempts: 1
+  # Positive control (methodology 7.6): run on the Q13 evidence DCAT-003 shipped, which holds
+  # both passages the planted sentences cite. The validator must cut the first as
+  # non-responsive (entailed, does not answer the question) and keep the second, or no v2
+  # verdict is used.
+  control:
+    question: 13
+    evidence: reports/dcat_us_3_faq/control/Q13_evidence_1a5e6cc.json
+    sentences:
+      - {text: "On statistical extension, StatDCAT-AP 1.0.1 says the base DCAT Application Profile may in future be extended with additional agent roles that have proven useful across domains.",
+         evidence: [E6], expect: cut_non_responsive}
+      - {text: "For conformance checking, the Data.gov overview says agencies can programmatically validate metadata against the JSON Schema (2020-12), and the 2025 Candidate Recommendation Snapshot defines the profile using SHACL.",
+         evidence: [E21, E56], expect: kept}
+      # Held out (added for r2, after r1 failed): a true background sentence about DCAT-US 3.0
+      # that does not answer "what options exist for next steps". It guards against an r2 fitted
+      # to the planted sentence alone.
+      - {text: "DCAT-US v3.0 is the federal data catalog metadata standard, updated to improve the Findability, Accessibility, Interoperability, and Reusability of federal data.",
+         evidence: [E19], expect: cut_non_responsive}
+  # Q13's named options (step 5, rule 2): each gets a sourced sentence or a "not known" item.
+  options:
+    13: [a statistical application profile, raising requirement levels through guidance,
+         conformance checking]
+
 # The absence check: each "not known" statement the check kept is read again against passages
 # found by the statement's own words across the question's documents, uncapped by the question's
 # ranking. A statement survives only if no passage states the thing it says is not known.
@@ -68,14 +105,18 @@ same_document:
      title: "DCAT-US v3.0 Schema Implementation Guide, version 1.1",
      date: "2026-08-21 (version 1.1, 2026-09-09)"}
   - {fss: m_25_05, airkg: m-25-05-phase-2-implementation-of-the-evidence-act-open-gove, url_from: fss,
-     ground: "same source URL"}
+     ground: "same source URL",
+     # The memo's SUBJECT line (m_25_05#s3, #s4), the issuer's own punctuation (ADDENDUM 01 step 3).
+     title: "M-25-05: Phase 2 Implementation of the Foundations for Evidence-Based Policymaking Act of 2018: Open Government Data Access and Management Guidance"}
   - {fss: m_19_23, airkg: m-19-23-phase-1-implementation-of-the-evidence-act, url_from: fss,
      ground: "same source URL"}
   - {fss: w3c_dcat_3, airkg: w3c-dcat-3, url_from: fss, ground: "same W3C Recommendation, 22 August 2024"}
   - {fss: fcsm_20_04, airkg: fcsm-20-04-a-framework-for-data-quality, url_from: airkg,
      ground: "same report; the fss URL is the series listing page, the ai-readiness-kg URL the PDF"}
   - {fss: fcsm_25_03, airkg: fcsm-25-03, url_from: airkg,
-     ground: "same report; the fss URL is the series listing page, the ai-readiness-kg URL the PDF"}
+     ground: "same report; the fss URL is the series listing page, the ai-readiness-kg URL the PDF",
+     # The report's title page and its recommended citation (corpus/pilot/fcsm-25-03.pdf, p. 1).
+     title: "FCSM 25-03: AI-Ready Federal Statistical Data: An Extension of Communicating Data Quality"}
   - {fss: fairness_project_wiki_overview, airkg: fairness-project-wiki-project-overview, url_from: fss,
      ground: "same wiki page, last edited 2023-09-12 (rendered page and its source markdown)"}
 
@@ -99,6 +140,18 @@ groups:
   policy_fss: [m_25_05, evidence_act_2018, m_19_23]
   v11_airkg: [dcat-us-1-1-schema]
   stat_airkg: [statdcat-ap-1-0-1, sdmx-3-0-section-1-framework, w3c-rdf-data-cube]
+  # The Dataset page and Overview as served on 2026-10-05 (DD-068; ADDENDUM 01 step 4). Added to
+  # the re-run questions only: the others keep the evidence their checked answers cite.
+  dcat3_live_airkg: [dcat-us-3-dataset-schema-2026-10-05, dcat-us-3-overview-2026-10-05]
+
+# Later versions of a document the answers cite, for the version notes the FAQ prints
+# (ADDENDUM 01 step 4: every tier names its version; a cited passage from a superseded
+# version says whether the 2026-10-05 page still carries it). `label` names the cited version.
+superseded_by:
+  dcat-us-3-overview: {by: dcat-us-3-overview-2026-10-05, label: "the Overview as captured 21 August 2026"}
+  dcat_us_3_schema: {by: dcat-us-3-overview-2026-10-05, label: "the Overview as captured in May 2026"}
+  dcat-us-3-dataset-schema: {by: dcat-us-3-dataset-schema-2026-10-05, label: "the Dataset page as captured 21 August 2026"}
+  dcat-us-3-dataset-schema-2026-09-15: {by: dcat-us-3-dataset-schema-2026-10-05, label: "the Dataset page as captured 15 September 2026"}
 
 questions:
   - id: 1
@@ -170,12 +223,12 @@ questions:
 
   - id: 9
     text: "Can 3.0 carry what statistical users need: series, dimensions, units, uncertainty (margins of error, CVs), methodology and revisions?"
-    airkg: [dcat3_airkg, stat_airkg, w3c_airkg]
+    airkg: [dcat3_live_airkg, dcat3_airkg, stat_airkg, w3c_airkg]
     fss: [dcat3_fss, w3c_fss, fcsm_quality_fss]
     terms: [dataset series, datasetseries, inseries, dimension, unit of measure, unit, margin of error,
             coefficient of variation, standard error, uncertainty, confidence interval, methodology,
             method, wasgeneratedby, describedby, revision, revised, version, versionnotes,
-            previousversion, statistical]
+            previousversion, statistical, data cube, rdf data cube, qb:]
 
   - id: 10
     text: "Where do the documents disagree with each other: the schema pages, the Implementation Guide, the M-25-05 crosswalk, M-25-05 itself, and secondary accounts? For example, is the language code ISO 639-1 or BCP 47?"
@@ -195,19 +248,65 @@ questions:
 
   - id: 12
     text: What did the EU do for statistical data (StatDCAT-AP), and does the US have an equivalent?
-    airkg: [stat_airkg, dcat3_airkg]
+    airkg: [stat_airkg, dcat3_live_airkg, dcat3_airkg]
     fss: [dcat3_fss]
     terms: [statdcat, statistical, application profile, sdmx, dimension, attribute, numseries,
-            unit of measure, dcat-ap, european, extension, data cube]
+            unit of measure, dcat-ap, european, extension, data cube, rdf data cube, qb:]
 
   - id: 13
     text: "What options exist for next steps? Examples: a statistical application profile; raising requirement levels through guidance; conformance checking. State what each source supports. Do not recommend beyond the sources."
-    airkg: [dcat3_airkg, stat_airkg, fairness_airkg]
+    airkg: [dcat3_live_airkg, dcat3_airkg, policy_airkg, stat_airkg, fairness_airkg]
     fss: [dcat3_fss, policy_fss, fairness_fss]
+    # ADDENDUM 01 step 5: widened for M-25-05's schema-update and inventory-update language, the
+    # Implementation Guide's governance and versioning passages, and the FAIRness Project's
+    # post-release governance.
     terms: [extension, extend, profile, governance, change request, maintenance, validat, conform,
-            json schema, shacl, harvest, next version, future, guidance, should, update, release plan]
+            json schema, shacl, harvest, next version, future, guidance, should, update, release plan,
+            within one year, schema change, changes to the schema, update the inventory,
+            inventory update, no later than, versioning, version history, tiger team,
+            post-release, subsequent version, requirement level, statistical]
 
   - id: 14
     text: What questions can the current sources not answer? List each, with the document that would answer it if one is known.
     gaps_from_questions: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
     catalog_entries: true
+    # ADDENDUM 01 step 1: built by code from the "not found" items the earlier questions kept
+    # and the catalog records; no model call.
+    built_by_code: true
+
+# Question 14's gap table (ADDENDUM 01 step 1, Part A). Each item matches a kept "not found"
+# item by question and the start of its words after "The sources do not state". A group is
+# one row (its first item's words); an item in no group is its own row.
+gap_groups:
+  # Both ask what the FAIRness Project's sequencing plan recommended.
+  - [[5, "the key findings and recommendations"], [6, "what the FAIRness Project's sequencing plan"]]
+  # Both ask why the working draft's levels are not the published ones.
+  - [[6, "who set these requirement levels"], [7, "why any of these changes"]]
+  # All three ask whether the published schema carries vocabulary for statistical dimensions
+  # (the Candidate Recommendation's "enhanced handling of statistical data" is that vocabulary).
+  - [[9, "that the published DCAT-US 3.0 schema carries vocabulary"],
+     [12, "that the published DCAT-US 3.0 schema carries the enhanced"],
+     [12, "that DCAT-US 3.0 defines dedicated properties"]]
+  # Both ask whether a US statistical application profile exists or is planned.
+  - [[12, "that the United States has a separate statistical"],
+     [13, "that a statistical application profile of DCAT-US 3.0"]]
+# The document that would answer a gap, where one is known. The sequencing plan is the
+# addendum's known mapping: "answers the Q5 and Q6 gaps on what FCSM and the project
+# recommended". Its catalog record says it holds the project's "key findings and
+# recommendations". No other catalog record names a document for any gap.
+gap_documents:
+  - catalog_entry: fairness_project_sequencing_plan
+    items: [[5, "the key findings and recommendations"], [5, "which DCAT-US v3.0 fields"],
+            [6, "what the FAIRness Project's sequencing plan"], [6, "whether the elements"]]
+# Part B: documents known to exist and not used, one plain sentence each. Title, issuer and
+# date are read from each catalog record. Why it was not used is the addendum's own sentence.
+documents_not_used:
+  fairness_project_sequencing_plan: "Provided to OMB and not published; a public request for it (DOI-DO/dcat-us issue #214, 2024-07-15) is open and unanswered."
+  fairness_project_ngac_2024: "Public; not reviewed for this briefing."
+
+# ADDENDUM 01 step 3: the one kept sentence whose dashes are replaced by code, because the
+# replacement changes no claim (U+2014 pair to commas). Every other dash is fixed by a re-run,
+# and the lint fails the build on any that remains.
+dash_substitution:
+  question: 7
+  pair: ", "

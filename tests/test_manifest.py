@@ -175,6 +175,80 @@ def test_reject_duplicate_primary_url(repo):
             doc_id="doc-two", primary_url="https://EXAMPLE.gov/shared/"))
 
 
+# --- dated versions of one URL (DD-068) --------------------------------------------------
+
+_T = "2026-10-05T18:41:28+00:00"
+
+
+def _base_version(repo):
+    manifest.add(str(_write_corpus_file(repo, "v0.txt", "version zero")), **_good_fields(
+        doc_id="page", primary_url="https://example.gov/page/"))
+
+
+def test_a_dated_version_of_a_held_url_is_admitted_and_says_so(repo):
+    _base_version(repo)
+    manifest.add(str(_write_corpus_file(repo, "v1.txt", "version one")), **_good_fields(
+        doc_id="page-2026-10-05", primary_url="https://example.gov/page",
+        version_of="page", retrieved_at=_T))
+    e = {x["doc_id"]: x for x in manifest._load_entries()}["page-2026-10-05"]
+    assert e["version_of"] == "page" and e["retrieved_at"] == _T
+    assert "version_of" not in {x["doc_id"]: x for x in manifest._load_entries()}["page"]
+
+
+def test_a_second_dated_version_joins_the_same_lineage(repo):
+    _base_version(repo)
+    manifest.add(str(_write_corpus_file(repo, "v1.txt", "version one")), **_good_fields(
+        doc_id="page-v1", primary_url="https://example.gov/page", version_of="page", retrieved_at=_T))
+    manifest.add(str(_write_corpus_file(repo, "v2.txt", "version two")), **_good_fields(
+        doc_id="page-v2", primary_url="https://example.gov/page", version_of="page", retrieved_at=_T))
+    assert {"page", "page-v1", "page-v2"} <= {x["doc_id"] for x in manifest._load_entries()}
+
+
+def test_a_dated_version_never_waives_the_content_hash_dedupe(repo):
+    _base_version(repo)
+    with pytest.raises(manifest.ManifestError, match="duplicate content_hash"):
+        manifest.add(str(_write_corpus_file(repo, "same.txt", "version zero")), **_good_fields(
+            doc_id="page-v1", primary_url="https://example.gov/page", version_of="page",
+            retrieved_at=_T))
+
+
+@pytest.mark.parametrize("extra,match", [
+    ({"version_of": "page"}, "both version_of and retrieved_at"),
+    ({"retrieved_at": _T}, "both version_of and retrieved_at"),
+    ({"version_of": "page", "retrieved_at": "last tuesday"}, "not an ISO 8601 datetime"),
+    ({"version_of": "nope", "retrieved_at": _T}, "is not admitted"),
+])
+def test_a_malformed_dated_version_is_refused_before_any_event(repo, extra, match):
+    _base_version(repo)
+    before = len(list(eventlog.replay()))
+    with pytest.raises(manifest.ManifestError, match=match):
+        manifest.add(str(_write_corpus_file(repo, "v1.txt", "version one")), **_good_fields(
+            doc_id="page-v1", primary_url="https://example.gov/page", **extra))
+    assert len(list(eventlog.replay())) == before
+
+
+def test_version_of_must_hold_the_same_url(repo):
+    _base_version(repo)
+    manifest.add(str(_write_corpus_file(repo, "o.txt", "other")), **_good_fields(
+        doc_id="other", primary_url="https://example.gov/other"))
+    with pytest.raises(manifest.ManifestError, match="not this URL"):
+        manifest.add(str(_write_corpus_file(repo, "v1.txt", "version one")), **_good_fields(
+            doc_id="page-v1", primary_url="https://example.gov/page", version_of="other",
+            retrieved_at=_T))
+
+
+def test_a_url_held_by_two_unrelated_entries_is_still_refused(repo):
+    """One lineage per URL: an entry with this URL that is not a version of `version_of`
+    keeps the dedupe in force."""
+    _base_version(repo)
+    manifest.add(str(_write_corpus_file(repo, "v1.txt", "version one")), **_good_fields(
+        doc_id="page-v1", primary_url="https://example.gov/page", version_of="page", retrieved_at=_T))
+    with pytest.raises(manifest.ManifestError, match="not versions of 'page-v1'"):
+        manifest.add(str(_write_corpus_file(repo, "v2.txt", "version two")), **_good_fields(
+            doc_id="page-v2", primary_url="https://example.gov/page", version_of="page-v1",
+            retrieved_at=_T))
+
+
 # --- rebuild + verify -----------------------------------------------------------------
 # Stage-0 rewire (2026-07-05): rebuild() projects from the Dixie evidence decisions
 # log, not from manifest_add events. Tests seed a real dixie ledger in tmp_path.

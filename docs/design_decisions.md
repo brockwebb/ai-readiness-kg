@@ -1260,3 +1260,25 @@ Cycle shards are **graph** shards: `eventlog.replay()` yields them by default, a
 A consequence, stated rather than left to be found: on cycle 4, `RULE-G1-D-v1` is no longer judged on the 16 `home` surfaces and the 6 Tier C surfaces that DD-066 withdrew it from. The 22 G1-D Findings `scan_2026-09-10_rj3` recorded there have no successor. Under DD-065's rule, "no successor is current", the graph therefore still calls them current. That agrees with DD-066 §3, where the history stays as measured and nothing re-judges it to `not_applicable`. But "current" there means "not superseded", not "the instrument's answer today", and a reader of `Finding.current` should know that. A `finding_withdrawn` overlay would state it on the log; this DD does not add one.
 
 **4. A Finding's id is not stable across a parameter change, and no re-judgement can promise it.** `finding_id` hashes `params_hash`, and `params_hash` hashes the whole `params.yaml`. Any edit to the file, a block added for an unrelated leg included, re-identifies every Finding. So "a leg whose rule did not change keeps its Finding ids" is a property no re-judgement since generation 5 has had. The invariant that can hold, and that `scripts/rejudge_seven_legs.py` stops on, is this: every Finding of an unchanged leg is identical to its predecessor's in every field except `finding_id` and `params_hash`. On `scan_2026-09-10_rj4` against `_rj3` that is 671 of 671.
+
+---
+
+## DD-068
+
+**A page revised in place is admitted as dated versions of one URL. `manifest.add(version_of=…, retrieved_at=…)` waives the primary-URL dedupe for one lineage and never waives the content-hash dedupe.**
+
+*Date:* 2026-10-05. *Task:* `cc_tasks/2026-10-05_DCAT-003_ADDENDUM_01_faq_shippability.md` step 4. *Under:* DD-003 (the manifest is the only gate), DN-011.
+
+**1. The situation.** The DCAT-US 3.0 Dataset page and Overview on resources.data.gov were each rewritten in September 2026, after the corpus captured them on 2026-08-21. `manifest.add` refuses a second document whose normalized primary URL is already held (R5), so a later text of the same URL had no way in. DCAT-002 admitted the 2026-09-15 Dataset text through an Internet Archive memento URI, which is a distinct resource and passes the dedupe, and recorded in its RESULT (§7 item 4) that "the corpus has no policy for holding several versions of one URL. The mementos here are a per-case answer, not a policy." The briefing FAQ needs the page as served on 2026-10-05, and no memento of that text exists.
+
+**2. Prior art.** This is a solved problem with two standard forms. RFC 7089 (Memento) models one original resource (URI-R) with many dated states (Mementos), each identified by the URI-R plus its datetime. The WARC format (ISO 28500) records each capture as target URI plus `WARC-Date`, and holds any number of captures of one URI. Both identify a version by (URI, retrieval time), and neither treats the URI alone as identity. This decision adopts that identity and does not invent another.
+
+**3. The rule.** `version_of=<held doc_id>` with `retrieved_at=<ISO 8601 datetime>` admits a new dated version. Four conditions are checked before any event is written:
+- `version_of` is admitted and has the same normalized URL;
+- every held entry with that URL is `version_of` itself or a declared version of it, so there is one lineage per URL;
+- `retrieved_at` parses as a datetime;
+- both keywords are given, or neither.
+
+The content-hash dedupe is never waived: identical bytes are the version already held. Both fields go on the `manifest_add` payload, and only when supplied, so every existing entry replays byte-identically. Without them the gate is exactly as before. `tests/test_manifest.py` covers each refusal and the two admissions.
+
+**4. What it does not do.** It does not supersede or edit the earlier version: the 2026-08-21 captures stay as they are, because RULE-B4-v1 and RULE-D3-v1 cite `dcat-us-3-dataset-schema`. It does not mark any version "current". A reader picks a version by its `retrieved_at`. The dixie ledger needs no change, because these admissions use `doc_id_exact` and so are never merged by URL. One side effect: the ledger's URL index then points at the newest version, and only an import without an exact doc id would ever consult it.
