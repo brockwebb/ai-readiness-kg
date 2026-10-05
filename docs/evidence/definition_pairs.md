@@ -13,8 +13,8 @@ documents**. Unordered pairs 171; same-document pairs skipped **13**;
 cross-document pairs **158**. Full spans come from the projection; the CSV quotes at most
 14 words of each and gives the rest by locator.
 
-**Coverage: 151 of 158 cross-document pairs judged; 7 unjudged, 0
-unparsed.** An unjudged pair has no judgment record: the pass stopped before reaching it (the RESULT names the stop). Pairs run in `pair_id` order, a hash, after the positive controls, so which pairs are unjudged was not chosen by their content, and every count below is over the judged pairs only. Re-running `--run` resumes them by skip; a changed rubric or model would start a new set of units instead.
+**Coverage: 158 of 158 cross-document pairs judged; 0 unjudged, 0
+unparsed.** Every pair has a judgment.
 
 ## Method, and the prior art it adopts
 - **Decomposition: concept clarification.** Collect the definitions of one construct, then
@@ -113,16 +113,16 @@ unparsed; counts of definition pairs. Diagonal: same-document pairs skipped.
 
 | | D01 | D02 | D03 | D04 | D05 | D06 | D07 | D08 | D09 | D10 | D11 |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| D01 | — | N1 | N1 | N1 | N2 | C1 | N1 | N3 | N1 | C2 U1 | N4 |
+| D01 | — | N1 | N1 | N1 | N2 | C1 | N1 | N3 | N1 | C2 N1 | N4 |
 | D02 |  | — | N1 | D1 | D1 N1 | D1 | N1 | D3 | D1 | D2 N1 | D4 |
 | D03 |  |  | — | N1 | N2 | N1 | N1 | N3 | N1 | N3 | N4 |
-| D04 |  |  |  | — | D2 | D1 | N1 | D3 | U1 | D2 N1 | D4 |
+| D04 |  |  |  | — | D2 | D1 | N1 | D3 | D1 | D2 N1 | D4 |
 | D05 |  |  |  |  | (1 skipped) | D2 | N2 | C1 D5 | D2 | D4 N2 | D8 |
-| D06 |  |  |  |  |  | — | N1 | D3 | D1 | C1 D1 U1 | D2 U2 |
+| D06 |  |  |  |  |  | — | N1 | D3 | D1 | C1 D2 | D3 N1 |
 | D07 |  |  |  |  |  |  | — | N3 | N1 | D1 N2 | N4 |
-| D08 |  |  |  |  |  |  |  | (3 skipped) | D3 | D5 N3 U1 | D11 N1 |
+| D08 |  |  |  |  |  |  |  | (3 skipped) | D3 | D6 N3 | D11 N1 |
 | D09 |  |  |  |  |  |  |  |  | — | D2 N1 | D4 |
-| D10 |  |  |  |  |  |  |  |  |  | (3 skipped) | D7 N4 U1 |
+| D10 |  |  |  |  |  |  |  |  |  | (3 skipped) | D7 N5 |
 | D11 |  |  |  |  |  |  |  |  |  |  | (6 skipped) |
 
 ## Table 2. Counts by outcome and by kind
@@ -130,16 +130,16 @@ unparsed; counts of definition pairs. Diagonal: same-document pairs skipped.
 | outcome | rows | scope | necessary_condition | object_of_readiness | no kind |
 |---|---|---|---|---|---|
 | conflict | 5 | 0 | 1 | 4 | 0 |
-| differs_no_conflict | 86 | 33 | 42 | 11 | 0 |
+| differs_no_conflict | 90 | 35 | 43 | 12 | 0 |
 | consistent | 0 | 0 | 0 | 0 | 0 |
-| not_comparable | 60 | 0 | 0 | 0 | 60 |
-| **all judged** | 151 | 33 | 43 | 15 | 60 |
+| not_comparable | 63 | 0 | 0 | 0 | 63 |
+| **all judged** | 158 | 35 | 44 | 16 | 63 |
 | unparsed | 0 | | | | |
-| unjudged | 7 | | | | |
+| unjudged | 0 | | | | |
 
 | reason_check | rows |
 |---|---|
-| ok | 147 |
+| ok | 154 |
 | no_quote | 0 |
 | quote_not_in_spans | 4 |
 
@@ -148,23 +148,23 @@ Order is by that count only, descending; ties in key order. No weighting.
 
 | rank | definition | term | conflict + differs | conflict | differs_no_conflict | pairs judged / in the pair list |
 |---|---|---|---|---|---|---|
-| 1 | `ai-readiness-for-official-data-and-statistics-un-statistical::def_ai_readiness` | AI-readiness of official data and statistics | 13 | 0 | 13 | 18 / 18 |
-| 2 | `data-readiness-for-ai-a-360-degree-survey::d_drai` | Data readiness for AI | 13 | 0 | 13 | 17 / 18 |
-| 3 | `data-readiness-for-scientific-ai-at-scale::d_airready` | AI-ready data | 13 | 0 | 13 | 17 / 17 |
-| 4 | `datahub-mlmu-25::d-ai-readiness` | AI-readiness | 13 | 2 | 11 | 15 / 18 |
-| 5 | `nao-216-128-artificial-intelligence-in-noaa::nao216-ai-ready-data` | AI-Ready Data | 13 | 0 | 13 | 17 / 18 |
-| 6 | `uk-ai-ready-data-action-plan-2026::d_ai_ready` | AI-ready | 13 | 1 | 12 | 15 / 16 |
+| 1 | `datahub-mlmu-25::d-ai-readiness` | AI-readiness | 15 | 2 | 13 | 18 / 18 |
+| 2 | `data-readiness-for-ai-a-360-degree-survey::d_drai` | Data readiness for AI | 14 | 0 | 14 | 18 / 18 |
+| 3 | `nao-216-128-artificial-intelligence-in-noaa::nao216-ai-ready-data` | AI-Ready Data | 14 | 0 | 14 | 18 / 18 |
+| 4 | `uk-ai-ready-data-action-plan-2026::d_ai_ready` | AI-ready | 14 | 1 | 13 | 16 / 16 |
+| 5 | `ai-readiness-for-official-data-and-statistics-un-statistical::def_ai_readiness` | AI-readiness of official data and statistics | 13 | 0 | 13 | 18 / 18 |
+| 6 | `data-readiness-for-scientific-ai-at-scale::d_airready` | AI-ready data | 13 | 0 | 13 | 17 / 17 |
 | 7 | `data-readiness-for-scientific-ai-at-scale::d_airready_state` | AI-ready state | 12 | 1 | 11 | 17 / 17 |
-| 8 | `generative-ai-and-open-data-guidelines-and-best-practices-de::d_genai_ready_open_data` | generative AI-ready open data | 12 | 0 | 12 | 16 / 16 |
-| 9 | `generative-ai-and-open-data-guidelines-and-best-practices-de::d_genai_ready` | generative AI-ready | 11 | 0 | 11 | 15 / 16 |
-| 10 | `generative-ai-and-open-data-guidelines-and-best-practices-de::def_ai_ready_data` | AI-ready data | 11 | 1 | 10 | 16 / 16 |
-| 11 | `uk-ai-ready-data-action-plan-2026::d_ai_ready_datasets` | AI-ready datasets | 11 | 0 | 11 | 14 / 16 |
-| 12 | `worldbank-blog-open-data-to-ai-ready-2025::d2` | AI-ready data | 11 | 0 | 11 | 15 / 15 |
-| 13 | `worldbank-blog-open-data-to-ai-ready-2025::def_airdd` | AI-ready development data | 11 | 0 | 11 | 15 / 15 |
-| 14 | `worldbank-blog-open-data-to-ai-ready-2025::d1` | AI-ready development data | 10 | 0 | 10 | 13 / 15 |
-| 15 | `worldbank-blog-open-data-to-ai-ready-2025::def_systems` | AI-Ready Data Systems | 8 | 0 | 8 | 14 / 15 |
-| 16 | `ai-readiness-building-the-bridge-from-higher-education-to-wo::def-ai-readiness` | AI readiness | 3 | 3 | 0 | 17 / 18 |
-| 17 | `uk-ai-ready-data-action-plan-2026::d_ai_readiness_esynergy` | AI readiness | 3 | 2 | 1 | 15 / 16 |
+| 8 | `generative-ai-and-open-data-guidelines-and-best-practices-de::d_genai_ready` | generative AI-ready | 12 | 0 | 12 | 16 / 16 |
+| 9 | `generative-ai-and-open-data-guidelines-and-best-practices-de::d_genai_ready_open_data` | generative AI-ready open data | 12 | 0 | 12 | 16 / 16 |
+| 10 | `uk-ai-ready-data-action-plan-2026::d_ai_ready_datasets` | AI-ready datasets | 12 | 0 | 12 | 16 / 16 |
+| 11 | `generative-ai-and-open-data-guidelines-and-best-practices-de::def_ai_ready_data` | AI-ready data | 11 | 1 | 10 | 16 / 16 |
+| 12 | `worldbank-blog-open-data-to-ai-ready-2025::d1` | AI-ready development data | 11 | 0 | 11 | 15 / 15 |
+| 13 | `worldbank-blog-open-data-to-ai-ready-2025::d2` | AI-ready data | 11 | 0 | 11 | 15 / 15 |
+| 14 | `worldbank-blog-open-data-to-ai-ready-2025::def_airdd` | AI-ready development data | 11 | 0 | 11 | 15 / 15 |
+| 15 | `worldbank-blog-open-data-to-ai-ready-2025::def_systems` | AI-Ready Data Systems | 8 | 0 | 8 | 15 / 15 |
+| 16 | `ai-readiness-building-the-bridge-from-higher-education-to-wo::def-ai-readiness` | AI readiness | 3 | 3 | 0 | 18 / 18 |
+| 17 | `uk-ai-ready-data-action-plan-2026::d_ai_readiness_esynergy` | AI readiness | 3 | 2 | 1 | 16 / 16 |
 | 18 | `from-school-ai-readiness-to-student-ai-literacy::def_inst_ai_readiness` | Institutional AI readiness | 1 | 0 | 1 | 18 / 18 |
 | 19 | `artificial-intelligence-domain-ai-readiness-and-firm-product::d-domain-ai-readiness` | Domain AI readiness | 0 | 0 | 0 | 18 / 18 |
 
