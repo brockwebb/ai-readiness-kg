@@ -239,6 +239,15 @@ machine_entry_tokens:
 # rule that needs it says `error` naming it (DN-012 d1). The recollection task resolves those
 # with network. A body with no entry here has declared nothing, which is also `error`, never
 # `fail`.
+#
+# Resolved with network on 2026-10-06 (`cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md`
+# decision 1 and ADDENDUM_01 amendment 1) by `scripts/resolve_declared_locations.py`, through the
+# manners layer: each new entry's `read_from` names the page, its retained digest
+# (`corpus/evidence/frame/`) and the anchor, and every request is on
+# `state/declaration_fetches_2026-10-06.jsonl`. A location not found is no longer "not
+# attempted": its `unresolved` entry says `not_declared` (the body's own pages were searched and
+# do not publish it) or `unreadable` (the page that would carry it refused this client), with
+# the pages searched (`declarations.UNRESOLVED_STATUSES`). Both stay `error` under DN-012 d1.
 declared_locations:
   scheme: 1
   bodies:
@@ -258,14 +267,45 @@ declared_locations:
             obs_id: obs_188973f1c62371643104a0dd
             body_sha256: b430ee2459cfa9e4c69d4ec3badccea83f61c3e090ba7f3ca2f53fe28372af02
             link: https://www.commerce.gov/
-            anchor: "U.S. Department of Commerce"
+            anchor: U.S. Department of Commerce
             how: the body's own page links the home page of its parent department (Department of Commerce); data.gov reads each department's data.json (params.yaml dept_domains)
+        - url: https://catalog.data.gov/organization/commerce
+          kind: catalog_organization
+          role: catalog_organization
+          read_from:
+            page: https://catalog.data.gov/organization?page=2&per_page=24
+            body_sha256: 6450246d2641414a6bb39bf0fe5d87255624696ba1c9d0ad44da6f823caa55cb
+            retained_at: corpus/evidence/frame/64/6450246d2641414a6bb39bf0fe5d87255624696ba1c9d0ad44da6f823caa55cb
+            fetched_at: '2026-10-06T22:23:13Z'
+            link: https://catalog.data.gov/organization/commerce
+            anchor: Department of Commerce
+            how: 'catalog.data.gov''s organization list (page 2 of 5); the body''s parent department (roster `department`: Commerce) is a catalog.data.gov organization; the body has none of its own on the list'
+            task: cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md
       unresolved:
         - role: api_base
-          why: no documented API base for this body is cited in this repository
-        - role: catalog_organization
-          why: the body's catalog.data.gov organization slug is written nowhere in this repository (`git grep 'catalog.data.gov/organization/'` found no slug on 2026-10-06)
+          status: unreadable
+          why: the body's developer page links its API only at https://apps.bea.gov/API/signup/ (anchor "Application Programming Interface (API)"), and apps.bea.gov's robots.txt disallows that path to this client, so the documented base cannot be read from a page this client may fetch
+          pages_searched:
+            - https://www.bea.gov/
+            - https://www.bea.gov/resources/for-developers
+            - https://apps.bea.gov/API/signup/index.cfm
+        - role: changelog
+          status: not_declared
+          why: 'no page labelled a changelog, release notes, updates, what''s new or corrections is linked from the home page or the developer page; the "News Release Feed (RSS)" announces publications and is not a revision log (spec:F4: "a revision class per entry")'
+          pages_searched:
+            - https://www.bea.gov/
+            - https://www.bea.gov/resources/for-developers
     BJS:
+      api_base:
+        url: https://api.ojp.gov/bjsdataset/v1/
+        read_from:
+          page: https://bjs.ojp.gov/national-crime-victimization-survey-ncvs-api
+          body_sha256: 9bbcf8ebc0cf578d359e4333bce6c2359c63c666e6d39d0ffb98d20e4f03028e
+          retained_at: corpus/evidence/frame/9b/9bbcf8ebc0cf578d359e4333bce6c2359c63c666e6d39d0ffb98d20e4f03028e
+          fetched_at: '2026-10-06T22:27:12Z'
+          quote: Path = https://api.ojp.gov/bjsdataset/v1/
+          how: the body's NCVS API page states the API's path; the NIBRS National Estimates API page states the same path (https://bjs.ojp.gov/national-incident-based-reporting-system-nibrs-national-estimates-api); both are linked from https://bjs.ojp.gov/data/data-analysis-tools
+          task: cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md
       inventory_urls:
         - url: https://bjs.ojp.gov/data.json
           kind: data_json
@@ -281,13 +321,38 @@ declared_locations:
             obs_id: obs_9e134bd545a8f8d9faa51696
             body_sha256: 48f65d8b9c246cdf7142d129a6da066d7f880736081476986471bd4205e71516
             link: https://www.justice.gov/
-            anchor: "Justice.gov"
+            anchor: Justice.gov
             how: the body's own page links the home page of its parent department (Department of Justice); data.gov reads each department's data.json (params.yaml dept_domains)
+        - url: https://catalog.data.gov/organization/doj
+          kind: catalog_organization
+          role: catalog_organization
+          read_from:
+            page: https://catalog.data.gov/organization?page=2&per_page=24
+            body_sha256: 6450246d2641414a6bb39bf0fe5d87255624696ba1c9d0ad44da6f823caa55cb
+            retained_at: corpus/evidence/frame/64/6450246d2641414a6bb39bf0fe5d87255624696ba1c9d0ad44da6f823caa55cb
+            fetched_at: '2026-10-06T22:23:13Z'
+            link: https://catalog.data.gov/organization/doj
+            anchor: Department of Justice
+            how: catalog.data.gov's organization list (page 2 of 5); the body's parent department (Justice); the body has no organization of its own on the list
+            task: cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md
+      changelog_urls:
+        - url: https://bjs.ojp.gov/library/publications/data-corrections
+          read_from:
+            page: https://bjs.ojp.gov/
+            body_sha256: 6e21f96f4b27c94d18ef017064145150d6f8b9953ae9812715bf3b3c1e0e3bdf
+            retained_at: corpus/evidence/frame/6e/6e21f96f4b27c94d18ef017064145150d6f8b9953ae9812715bf3b3c1e0e3bdf
+            fetched_at: '2026-10-06T22:24:26Z'
+            link: https://bjs.ojp.gov/library/publications/data-corrections
+            anchor: Errata | Corrections
+            how: 'the body''s home page links its errata and corrections list: a log of revisions to published products'
+            task: cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md
       unresolved:
-        - role: api_base
-          why: no documented API base for this body is cited in this repository
-        - role: catalog_organization
-          why: the body's catalog.data.gov organization slug is written nowhere in this repository (`git grep 'catalog.data.gov/organization/'` found no slug on 2026-10-06)
+        - role: api_terms
+          status: not_declared
+          why: neither API page links a terms-of-service or terms-of-use page for the API
+          pages_searched:
+            - https://bjs.ojp.gov/national-crime-victimization-survey-ncvs-api
+            - https://bjs.ojp.gov/national-incident-based-reporting-system-nibrs-national-estimates-api
     BLS:
       inventory_urls:
         - url: https://www.bls.gov/data.json
@@ -296,13 +361,42 @@ declared_locations:
           read_from:
             page: https://www.bls.gov
             how: the roster host (state/scan_targets_fss_2026-09_v5.json) at the Project Open Data path (params.d4_catalog.paths)
+        - url: https://www.dol.gov/data.json
+          kind: data_json
+          role: department
+          read_from:
+            page: https://www.dol.gov/
+            body_sha256: 1feea0524d97ae81d35f6dc252bb55f418c1d18e04eeb004ffd6fb5a28ef14c1
+            retained_at: corpus/evidence/frame/1f/1feea0524d97ae81d35f6dc252bb55f418c1d18e04eeb004ffd6fb5a28ef14c1
+            fetched_at: '2026-10-06T22:25:24Z'
+            link: https://www.bls.gov/
+            anchor: Bureau of Labor Statistics (BLS)
+            how: the department's own home page (Department of Labor) links the body; the host was read from catalog.data.gov's Department of Labor organization page (https://catalog.data.gov/organization/dol), whose records point at www.dol.gov; data.gov reads each department's data.json (params.yaml dept_domains)
+            task: cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md
+        - url: https://catalog.data.gov/organization/dol-bls
+          kind: catalog_organization
+          role: catalog_organization
+          read_from:
+            page: https://catalog.data.gov/organization?page=5&per_page=24
+            body_sha256: f56db027e9451bcaa037bb103023fabbb3b64b5d56b4f59f795dda2535bef8c0
+            retained_at: corpus/evidence/frame/f5/f56db027e9451bcaa037bb103023fabbb3b64b5d56b4f59f795dda2535bef8c0
+            fetched_at: '2026-10-06T22:23:16Z'
+            link: https://catalog.data.gov/organization/dol-bls
+            anchor: U.S. Department of Labor Bureau of Labor Statistics
+            how: catalog.data.gov's organization list (page 5 of 5); the list carries an organization named for the body itself
+            task: cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md
       unresolved:
-        - role: department
-          why: the home page of the body's parent department (Department of Labor) is written nowhere in this repository; the body's own pages answered 403 on every cycle, so none is retained to read it from
         - role: api_base
-          why: no documented API base for this body is cited in this repository
-        - role: catalog_organization
-          why: the body's catalog.data.gov organization slug is written nowhere in this repository (`git grep 'catalog.data.gov/organization/'` found no slug on 2026-10-06)
+          status: unreadable
+          why: 'every page of the body''s own host answered HTTP 403 to this client''s declared identity on 2026-10-06, as on every prior cycle (DD-060: no retry under another identity), so whether it publishes this cannot be read'
+          pages_searched:
+            - https://www.bls.gov/
+            - https://catalog.data.gov/organization/dol-bls
+        - role: changelog
+          status: unreadable
+          why: 'every page of the body''s own host answered HTTP 403 to this client''s declared identity on 2026-10-06, as on every prior cycle (DD-060: no retry under another identity), so whether it publishes this cannot be read'
+          pages_searched:
+            - https://www.bls.gov/
     BTS:
       inventory_urls:
         - url: https://www.bts.gov/data.json
@@ -311,21 +405,54 @@ declared_locations:
           read_from:
             page: https://www.bts.gov
             how: the roster host (state/scan_targets_fss_2026-09_v5.json) at the Project Open Data path (params.d4_catalog.paths)
+        - url: https://catalog.data.gov/organization/dot
+          kind: catalog_organization
+          role: catalog_organization
+          read_from:
+            page: https://catalog.data.gov/organization?page=2&per_page=24
+            body_sha256: 6450246d2641414a6bb39bf0fe5d87255624696ba1c9d0ad44da6f823caa55cb
+            retained_at: corpus/evidence/frame/64/6450246d2641414a6bb39bf0fe5d87255624696ba1c9d0ad44da6f823caa55cb
+            fetched_at: '2026-10-06T22:23:13Z'
+            link: https://catalog.data.gov/organization/dot
+            anchor: Department of Transportation
+            how: catalog.data.gov's organization list (page 2 of 5); the body's parent department (Transportation); the body has no organization of its own on the list
+            task: cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md
       unresolved:
         - role: department
-          why: the home page of the body's parent department (Department of Transportation) is written nowhere in this repository; the body's own pages answered 403 on every cycle, so none is retained to read it from
+          status: unreadable
+          why: 'the department''s host could not be read from a page: catalog.data.gov''s Department of Transportation organization page links only DOIs (doi.org), and the body''s own pages answer 403; https://www.transportation.gov/ was requested without having been read from any page, answered 403, and is not declared'
+          pages_searched:
+            - https://www.bts.gov/
+            - https://catalog.data.gov/organization/dot
+            - https://www.transportation.gov/
         - role: api_base
-          why: no documented API base for this body is cited in this repository
-        - role: catalog_organization
-          why: the body's catalog.data.gov organization slug is written nowhere in this repository (`git grep 'catalog.data.gov/organization/'` found no slug on 2026-10-06)
+          status: unreadable
+          why: 'every page of the body''s own host answered HTTP 403 to this client''s declared identity on 2026-10-06, as on every prior cycle (DD-060: no retry under another identity), so whether it publishes this cannot be read'
+          pages_searched:
+            - https://www.bts.gov/
+        - role: changelog
+          status: unreadable
+          why: 'every page of the body''s own host answered HTTP 403 to this client''s declared identity on 2026-10-06, as on every prior cycle (DD-060: no retry under another identity), so whether it publishes this cannot be read'
+          pages_searched:
+            - https://www.bts.gov/
     CENSUS:
       api_base:
         url: https://api.census.gov/data
         read_from:
-          page: "https://api.census.gov/data/2023/acs/acs5?get=NAME,B19013_001E,B19013_001M&for=county:*&in=state:08&key={CENSUS_API_KEY}"
+          page: https://api.census.gov/data/2023/acs/acs5?get=NAME,B19013_001E,B19013_001M&for=county:*&in=state:08&key={CENSUS_API_KEY}
           cited_at: docs/data/sources_per_check.json:237
           doc_id: census-api-acs5-2023-b19013-counties-colorado
           how: the Census Data API endpoint this project cites for ACS 5-year; the base is its path up to the dataset
+        terms_url: https://www.census.gov/data/developers/about/terms-of-service.html
+        terms_read_from:
+          page: https://www.census.gov/data/developers.html
+          body_sha256: 65f284ccdca19474c0660eddd5973ade34cc994fb8e4b88ba08361fa62a50310
+          retained_at: corpus/evidence/frame/65/65f284ccdca19474c0660eddd5973ade34cc994fb8e4b88ba08361fa62a50310
+          fetched_at: '2026-10-06T22:25:43Z'
+          link: https://www.census.gov/data/developers/about/terms-of-service.html
+          anchor: Terms of Service
+          how: the body's developers page links the API's terms of service
+          task: cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md
       inventory_urls:
         - url: https://www.census.gov/data.json
           kind: data_json
@@ -341,11 +468,31 @@ declared_locations:
             obs_id: obs_5c5d0a97c73c0d9b4f71ad56
             body_sha256: 9a3e102a3d45ab3eadf587f53e93d2046be9d6937b49b68898f79f4de7437a28
             link: https://www.commerce.gov/
-            anchor: "U.S. Department of Commerce"
+            anchor: U.S. Department of Commerce
             how: the body's own page links the home page of its parent department (Department of Commerce); data.gov reads each department's data.json (params.yaml dept_domains)
-      unresolved:
-        - role: catalog_organization
-          why: the body's catalog.data.gov organization slug is written nowhere in this repository (`git grep 'catalog.data.gov/organization/'` found no slug on 2026-10-06)
+        - url: https://catalog.data.gov/organization/census
+          kind: catalog_organization
+          role: catalog_organization
+          read_from:
+            page: https://catalog.data.gov/organization?page=5&per_page=24
+            body_sha256: f56db027e9451bcaa037bb103023fabbb3b64b5d56b4f59f795dda2535bef8c0
+            retained_at: corpus/evidence/frame/f5/f56db027e9451bcaa037bb103023fabbb3b64b5d56b4f59f795dda2535bef8c0
+            fetched_at: '2026-10-06T22:23:16Z'
+            link: https://catalog.data.gov/organization/census
+            anchor: U.S. Census Bureau, Department of Commerce
+            how: catalog.data.gov's organization list (page 5 of 5); the list carries an organization named for the body itself
+            task: cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md
+      changelog_urls:
+        - url: https://www.census.gov/data/developers/updates.html
+          read_from:
+            page: https://www.census.gov/data/developers.html
+            body_sha256: 65f284ccdca19474c0660eddd5973ade34cc994fb8e4b88ba08361fa62a50310
+            retained_at: corpus/evidence/frame/65/65f284ccdca19474c0660eddd5973ade34cc994fb8e4b88ba08361fa62a50310
+            fetched_at: '2026-10-06T22:25:43Z'
+            link: https://www.census.gov/data/developers/updates.html
+            anchor: Developer Updates
+            how: the body's developers page links its API updates page
+            task: cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md
     DRSMSU:
       # The parent (Board of Governors of the Federal Reserve System) publishes on the roster host itself, so the own-host
       # inventory IS the department's: there is no second data.json to declare.
@@ -357,12 +504,52 @@ declared_locations:
           read_from:
             page: https://www.federalreserve.gov
             how: the roster host (state/scan_targets_fss_2026-09_v5.json) at the Project Open Data path (params.d4_catalog.paths)
+        - url: https://catalog.data.gov/organization/fed-reserve
+          kind: catalog_organization
+          role: catalog_organization
+          read_from:
+            page: https://catalog.data.gov/organization/
+            body_sha256: f8f262e4c3bc11c7fb20a7462e27d86b5e55afc29a4d3fdccff8390b88a8598c
+            retained_at: corpus/evidence/frame/f8/f8f262e4c3bc11c7fb20a7462e27d86b5e55afc29a4d3fdccff8390b88a8598c
+            fetched_at: '2026-10-06T22:23:04Z'
+            link: https://catalog.data.gov/organization/fed-reserve
+            anchor: Board of Governors of the Federal Reserve System
+            how: catalog.data.gov's organization list (page 1 of 5); the body's parent (the Board, which publishes on the roster host) is a catalog.data.gov organization
+            task: cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md
       unresolved:
         - role: api_base
-          why: no documented API base for this body is cited in this repository
-        - role: catalog_organization
-          why: the body's catalog.data.gov organization slug is written nowhere in this repository (`git grep 'catalog.data.gov/organization/'` found no slug on 2026-10-06)
+          status: not_declared
+          why: no API is linked from the unit's page or the Board's data page; the "Data Download Program" is a download tool, not a documented API base
+          pages_searched:
+            - https://www.federalreserve.gov/econres/rsmecs-staff.htm
+            - https://www.federalreserve.gov/data.htm
+        - role: changelog
+          status: not_declared
+          why: no page labelled a changelog, release notes, updates, what's new or corrections for the unit's products is linked; "Recent Reporting Form Updates" concerns the Board's regulatory reporting forms
+          pages_searched:
+            - https://www.federalreserve.gov/econres/rsmecs-staff.htm
+            - https://www.federalreserve.gov/data.htm
     EIA:
+      api_base:
+        url: https://api.eia.gov/v2/
+        terms_url: https://www.eia.gov/opendata/terms-of-service.php
+        read_from:
+          page: https://www.eia.gov/opendata/documentation.php
+          body_sha256: 825c855222ffaebd24e206effb6686eae2ee4c6259b702327532d8bae362352b
+          retained_at: corpus/evidence/frame/82/825c855222ffaebd24e206effb6686eae2ee4c6259b702327532d8bae362352b
+          fetched_at: '2026-10-06T22:26:03Z'
+          quote: This document invokes our version 2 of the API, so /v2/ appears in all requests. https://api.eia.gov /v2 /API_route?api_key=xxxxxx
+          how: the body's API documentation states the base and the version node; linked from https://www.eia.gov/opendata/ (anchor "Documentation"), itself linked from the home page (anchor "Open Data")
+          task: cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md
+        terms_read_from:
+          page: https://www.eia.gov/opendata/
+          body_sha256: 28b304906e9121e68dd2f1a9cfe7395347341ae7105dd394f65b54f2e092a568
+          retained_at: corpus/evidence/frame/28/28b304906e9121e68dd2f1a9cfe7395347341ae7105dd394f65b54f2e092a568
+          fetched_at: '2026-10-06T22:25:45Z'
+          link: https://www.eia.gov/opendata/terms-of-service.php
+          anchor: API Terms of Service Agreement
+          how: the body's open-data page links the API's terms of service
+          task: cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md
       inventory_urls:
         - url: https://www.eia.gov/data.json
           kind: data_json
@@ -378,13 +565,41 @@ declared_locations:
             obs_id: obs_cf388e1d6c76caac46fd6d87
             body_sha256: 8ecb87bb73ddda52a03b1f614ad97c30ed74892dbf0d107a5e5be83e53511f8c
             link: https://www.energy.gov/
-            anchor: "U.S. Department of Energy"
+            anchor: U.S. Department of Energy
             how: the body's own page links the home page of its parent department (Department of Energy); data.gov reads each department's data.json (params.yaml dept_domains)
-      unresolved:
-        - role: api_base
-          why: no documented API base for this body is cited in this repository
-        - role: catalog_organization
-          why: the body's catalog.data.gov organization slug is written nowhere in this repository (`git grep 'catalog.data.gov/organization/'` found no slug on 2026-10-06)
+        - url: https://catalog.data.gov/organization/energy
+          kind: catalog_organization
+          role: catalog_organization
+          read_from:
+            page: https://catalog.data.gov/organization?page=2&per_page=24
+            body_sha256: 6450246d2641414a6bb39bf0fe5d87255624696ba1c9d0ad44da6f823caa55cb
+            retained_at: corpus/evidence/frame/64/6450246d2641414a6bb39bf0fe5d87255624696ba1c9d0ad44da6f823caa55cb
+            fetched_at: '2026-10-06T22:23:13Z'
+            link: https://catalog.data.gov/organization/energy
+            anchor: Department of Energy
+            how: catalog.data.gov's organization list (page 2 of 5); the body's parent department (Energy); the body has no organization of its own on the list
+            task: cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md
+      changelog_urls:
+        - url: https://www.eia.gov/opendata/documentation.php
+          read_from:
+            page: https://www.eia.gov/opendata/documentation.php
+            body_sha256: 825c855222ffaebd24e206effb6686eae2ee4c6259b702327532d8bae362352b
+            retained_at: corpus/evidence/frame/82/825c855222ffaebd24e206effb6686eae2ee4c6259b702327532d8bae362352b
+            fetched_at: '2026-10-06T22:26:03Z'
+            link: https://www.eia.gov/opendata/documentation.php#Changelog
+            anchor: Changelog
+            how: the API documentation carries a section the body labels "Changelog"; the fragment is not sent, so the page is the endpoint
+            task: cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md
+        - url: https://www.eia.gov/about/new/
+          read_from:
+            page: https://www.eia.gov/
+            body_sha256: c42bae645255b416f5a87eea2113ae9966f3f737b55ec5574fab1c910e34cc0e
+            retained_at: corpus/evidence/frame/c4/c42bae645255b416f5a87eea2113ae9966f3f737b55ec5574fab1c910e34cc0e
+            fetched_at: '2026-10-06T22:24:28Z'
+            link: https://www.eia.gov/about/new/
+            anchor: What's New?
+            how: the body's home page links its what's-new page
+            task: cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md
     ERS:
       inventory_urls:
         - url: https://www.ers.usda.gov/data.json
@@ -401,13 +616,33 @@ declared_locations:
             obs_id: obs_a2f2985ed97be6a7df2283e5
             body_sha256: 381c01a65f8f4c3d8fd1ffef1355bc9825f5f37fad279e804cc45987fd15c291
             link: https://www.usda.gov/
-            anchor: "U.S. DEPARTMENT OF AGRICULTURE"
+            anchor: U.S. DEPARTMENT OF AGRICULTURE
             how: the body's own page links the home page of its parent department (Department of Agriculture); data.gov reads each department's data.json (params.yaml dept_domains)
+        - url: https://catalog.data.gov/organization/usda
+          kind: catalog_organization
+          role: catalog_organization
+          read_from:
+            page: https://catalog.data.gov/organization?page=2&per_page=24
+            body_sha256: 6450246d2641414a6bb39bf0fe5d87255624696ba1c9d0ad44da6f823caa55cb
+            retained_at: corpus/evidence/frame/64/6450246d2641414a6bb39bf0fe5d87255624696ba1c9d0ad44da6f823caa55cb
+            fetched_at: '2026-10-06T22:23:13Z'
+            link: https://catalog.data.gov/organization/usda
+            anchor: Department of Agriculture
+            how: catalog.data.gov's organization list (page 2 of 5); the body's parent department (Agriculture); the body has no organization of its own on the list
+            task: cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md
       unresolved:
         - role: api_base
-          why: no documented API base for this body is cited in this repository
-        - role: catalog_organization
-          why: the body's catalog.data.gov organization slug is written nowhere in this repository (`git grep 'catalog.data.gov/organization/'` found no slug on 2026-10-06)
+          status: not_declared
+          why: no API or developer page is linked from the home page or the data-products index
+          pages_searched:
+            - https://www.ers.usda.gov/
+            - https://www.ers.usda.gov/data-products
+        - role: changelog
+          status: not_declared
+          why: no page labelled a changelog, release notes, updates, what's new or corrections is linked from the home page or the data-products index
+          pages_searched:
+            - https://www.ers.usda.gov/
+            - https://www.ers.usda.gov/data-products
     NAHMSAPHIS:
       inventory_urls:
         - url: https://www.aphis.usda.gov/data.json
@@ -424,13 +659,31 @@ declared_locations:
             obs_id: obs_7186c4dc5485becc8d940b75
             body_sha256: 8ebee66ad30d5860d89f28762e00e96d3d6a667b29716e9c3e4609af56fdbf8b
             link: https://www.usda.gov/
-            anchor: "U.S. Department of Agriculture"
+            anchor: U.S. Department of Agriculture
             how: the body's own page links the home page of its parent department (Department of Agriculture); data.gov reads each department's data.json (params.yaml dept_domains)
+        - url: https://catalog.data.gov/organization/usda
+          kind: catalog_organization
+          role: catalog_organization
+          read_from:
+            page: https://catalog.data.gov/organization?page=2&per_page=24
+            body_sha256: 6450246d2641414a6bb39bf0fe5d87255624696ba1c9d0ad44da6f823caa55cb
+            retained_at: corpus/evidence/frame/64/6450246d2641414a6bb39bf0fe5d87255624696ba1c9d0ad44da6f823caa55cb
+            fetched_at: '2026-10-06T22:23:13Z'
+            link: https://catalog.data.gov/organization/usda
+            anchor: Department of Agriculture
+            how: catalog.data.gov's organization list (page 2 of 5); the body's parent department (Agriculture); neither APHIS nor NAHMS has an organization of its own on the list
+            task: cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md
       unresolved:
         - role: api_base
-          why: no documented API base for this body is cited in this repository
-        - role: catalog_organization
-          why: the body's catalog.data.gov organization slug is written nowhere in this repository (`git grep 'catalog.data.gov/organization/'` found no slug on 2026-10-06)
+          status: not_declared
+          why: no API or developer page is linked from the unit's page
+          pages_searched:
+            - https://www.aphis.usda.gov/aphis/ourfocus/animalhealth/monitoring-and-surveillance/nahms
+        - role: changelog
+          status: not_declared
+          why: no page labelled a changelog, release notes, updates, what's new or corrections for the unit's products is linked; "News and Updates" is APHIS's agency news
+          pages_searched:
+            - https://www.aphis.usda.gov/aphis/ourfocus/animalhealth/monitoring-and-surveillance/nahms
     NASS:
       api_base:
         url: https://quickstats.nass.usda.gov/api
@@ -454,11 +707,38 @@ declared_locations:
             obs_id: obs_d5cc5336fba2e11f89ac1b66
             body_sha256: fdabe3d8152c3ea3e036cea9665b27b5afbfb40b41ff4dda7ce08caf6106ada3
             link: http://www.usda.gov
-            anchor: "United States Department of Agriculture"
+            anchor: United States Department of Agriculture
             how: the body's own page links the home page of its parent department (Department of Agriculture); data.gov reads each department's data.json (params.yaml dept_domains)
+        - url: https://catalog.data.gov/organization/usda
+          kind: catalog_organization
+          role: catalog_organization
+          read_from:
+            page: https://catalog.data.gov/organization?page=2&per_page=24
+            body_sha256: 6450246d2641414a6bb39bf0fe5d87255624696ba1c9d0ad44da6f823caa55cb
+            retained_at: corpus/evidence/frame/64/6450246d2641414a6bb39bf0fe5d87255624696ba1c9d0ad44da6f823caa55cb
+            fetched_at: '2026-10-06T22:23:13Z'
+            link: https://catalog.data.gov/organization/usda
+            anchor: Department of Agriculture
+            how: catalog.data.gov's organization list (page 2 of 5); the body's parent department (Agriculture); the body has no organization of its own on the list
+            task: cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md
+      changelog_urls:
+        - url: https://www.nass.usda.gov/Corrections/?log=QS
+          read_from:
+            page: https://www.nass.usda.gov/developer/index.php
+            body_sha256: bfc2b4db93e98230014a21fd8e14afd1622683c67df06c1b29595d484e76ab97
+            retained_at: corpus/evidence/frame/bf/bfc2b4db93e98230014a21fd8e14afd1622683c67df06c1b29595d484e76ab97
+            fetched_at: '2026-10-06T22:25:46Z'
+            link: https://www.nass.usda.gov/Corrections/?log=QS
+            anchor: Quick Stats System Updates
+            how: the body's API page links the Quick Stats system update log
+            task: cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md
       unresolved:
-        - role: catalog_organization
-          why: the body's catalog.data.gov organization slug is written nowhere in this repository (`git grep 'catalog.data.gov/organization/'` found no slug on 2026-10-06)
+        - role: api_terms
+          status: unreadable
+          why: the body's API page (https://www.nass.usda.gov/developer/index.php) links no terms page, and the Quick Stats API page that would carry them is disallowed to this client by quickstats.nass.usda.gov's robots.txt
+          pages_searched:
+            - https://www.nass.usda.gov/developer/index.php
+            - https://quickstats.nass.usda.gov/api
     NCES:
       inventory_urls:
         - url: https://nces.ed.gov/data.json
@@ -474,13 +754,37 @@ declared_locations:
             page: https://nces.ed.gov/national-center-education-statistics-nces/about
             retained_at: corpus/evidence/frame/5d/5de6d5e4e78b46afd50d3ccbf467571814b37edc1ff6c4fe17c0bdf2a6b5a42b
             link: https://www.ed.gov/
-            anchor: "U.S. Department of Education"
+            anchor: U.S. Department of Education
             how: the body's own About page names its parent department (Department of Education) and links its home page; data.gov reads each department's data.json (params.yaml dept_domains)
+        - url: https://catalog.data.gov/organization/ed
+          kind: catalog_organization
+          role: catalog_organization
+          read_from:
+            page: https://catalog.data.gov/organization?page=2&per_page=24
+            body_sha256: 6450246d2641414a6bb39bf0fe5d87255624696ba1c9d0ad44da6f823caa55cb
+            retained_at: corpus/evidence/frame/64/6450246d2641414a6bb39bf0fe5d87255624696ba1c9d0ad44da6f823caa55cb
+            fetched_at: '2026-10-06T22:23:13Z'
+            link: https://catalog.data.gov/organization/ed
+            anchor: Department of Education
+            how: catalog.data.gov's organization list (page 2 of 5); the body's parent department (Education); the body has no organization of its own on the list
+            task: cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md
+      changelog_urls:
+        - url: https://nces.ed.gov/national-center-education-statistics-nces/product-publication-release
+          read_from:
+            page: https://nces.ed.gov/
+            body_sha256: a7420ab3a1890f8483fb62a7a19c5600f6ca708665147a373e55d5db623ef236
+            retained_at: corpus/evidence/frame/a7/a7420ab3a1890f8483fb62a7a19c5600f6ca708665147a373e55d5db623ef236
+            fetched_at: '2026-10-06T22:24:31Z'
+            link: https://nces.ed.gov/national-center-education-statistics-nces/product-publication-release
+            anchor: View new product/publication releases
+            how: the body's home page links its list of new product releases
+            task: cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md
       unresolved:
         - role: api_base
-          why: no documented API base for this body is cited in this repository
-        - role: catalog_organization
-          why: the body's catalog.data.gov organization slug is written nowhere in this repository (`git grep 'catalog.data.gov/organization/'` found no slug on 2026-10-06)
+          status: not_declared
+          why: no API or developer page is linked from the home page
+          pages_searched:
+            - https://nces.ed.gov/
     NCHS:
       inventory_urls:
         - url: https://www.cdc.gov/data.json
@@ -497,13 +801,32 @@ declared_locations:
             obs_id: obs_c48e9ca25ff13cde06f8d6c3
             body_sha256: 2b56d9806fea7ef4b73220427c7f68b6cafabfc6e2d37710c92c311437680e16
             link: https://hhs.gov
-            anchor: "HHS.gov"
+            anchor: HHS.gov
             how: the body's own page links the home page of its parent department (Department of Health and Human Services); data.gov reads each department's data.json (params.yaml dept_domains)
+        - url: https://catalog.data.gov/organization/hhs
+          kind: catalog_organization
+          role: catalog_organization
+          read_from:
+            page: https://catalog.data.gov/organization?page=5&per_page=24
+            body_sha256: f56db027e9451bcaa037bb103023fabbb3b64b5d56b4f59f795dda2535bef8c0
+            retained_at: corpus/evidence/frame/f5/f56db027e9451bcaa037bb103023fabbb3b64b5d56b4f59f795dda2535bef8c0
+            fetched_at: '2026-10-06T22:23:16Z'
+            link: https://catalog.data.gov/organization/hhs
+            anchor: U.S. Department of Health & Human Services
+            how: catalog.data.gov's organization list (page 5 of 5); the body's parent department (HHS); neither CDC nor NCHS has an organization of its own on the list
+            task: cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md
       unresolved:
         - role: api_base
-          why: no documented API base for this body is cited in this repository
-        - role: catalog_organization
-          why: the body's catalog.data.gov organization slug is written nowhere in this repository (`git grep 'catalog.data.gov/organization/'` found no slug on 2026-10-06)
+          status: not_declared
+          why: no API or developer page is linked from the body's home page
+          pages_searched:
+            - https://www.cdc.gov/nchs/index.htm
+            - https://www.cdc.gov/nchs/index.html
+        - role: changelog
+          status: not_declared
+          why: no page labelled a changelog, release notes, what's new or corrections is linked from the home page; the "updates" pages it links are e-mail subscription and feature pages
+          pages_searched:
+            - https://www.cdc.gov/nchs/index.html
     NCSES:
       inventory_urls:
         - url: https://ncses.nsf.gov/data.json
@@ -520,13 +843,48 @@ declared_locations:
             obs_id: obs_2f9b3b0127dabf0c15c66b9d
             body_sha256: 7d0cac89aebb5977121750c1d6ad4458e82a969e12e7664b1a4b3d0829998e2c
             link: https://www.nsf.gov/
-            anchor: ""
+            anchor: ''
             how: the body's own page links the home page of its parent department (National Science Foundation); data.gov reads each department's data.json (params.yaml dept_domains)
+        - url: https://catalog.data.gov/organization/nsf
+          kind: catalog_organization
+          role: catalog_organization
+          read_from:
+            page: https://catalog.data.gov/organization?page=3&per_page=24
+            body_sha256: 256896c8136379e34ed45b77508c40f212f2eee7c5142772a1d8f62bc666f925
+            retained_at: corpus/evidence/frame/25/256896c8136379e34ed45b77508c40f212f2eee7c5142772a1d8f62bc666f925
+            fetched_at: '2026-10-06T22:23:15Z'
+            link: https://catalog.data.gov/organization/nsf
+            anchor: National Science Foundation
+            how: catalog.data.gov's organization list (page 3 of 5); the body's parent agency (NSF); the body has no organization of its own on the list
+            task: cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md
+      changelog_urls:
+        - url: https://ncses.nsf.gov/about/whats-new
+          read_from:
+            page: https://ncses.nsf.gov/
+            body_sha256: db986b69ef94c3cd0b95a7fda5c8c7fdd5aefe7c249c56bc52b0b2d4b4a4bae5
+            retained_at: corpus/evidence/frame/db/db986b69ef94c3cd0b95a7fda5c8c7fdd5aefe7c249c56bc52b0b2d4b4a4bae5
+            fetched_at: '2026-10-06T22:24:34Z'
+            link: https://ncses.nsf.gov/about/whats-new
+            anchor: What's New from NCSES
+            how: the body's home page links its what's-new page
+            task: cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md
+        - url: https://ncses.nsf.gov/corrections
+          read_from:
+            page: https://ncses.nsf.gov/explore-data
+            body_sha256: 600f5e12d65ff74102d56a2817d1f29be43747841d9cbd2f2cd1dbe10713da54
+            retained_at: corpus/evidence/frame/60/600f5e12d65ff74102d56a2817d1f29be43747841d9cbd2f2cd1dbe10713da54
+            fetched_at: '2026-10-06T22:26:38Z'
+            link: https://ncses.nsf.gov/corrections
+            anchor: Corrections
+            how: 'the body''s explore-data page links its corrections list: a log of revisions to published products'
+            task: cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md
       unresolved:
         - role: api_base
-          why: no documented API base for this body is cited in this repository
-        - role: catalog_organization
-          why: the body's catalog.data.gov organization slug is written nowhere in this repository (`git grep 'catalog.data.gov/organization/'` found no slug on 2026-10-06)
+          status: not_declared
+          why: no API or developer page is linked from the home page or the explore-data page
+          pages_searched:
+            - https://ncses.nsf.gov/
+            - https://ncses.nsf.gov/explore-data
     ORES:
       # The parent (Social Security Administration) publishes on the roster host itself, so the own-host
       # inventory IS the department's: there is no second data.json to declare.
@@ -538,11 +896,29 @@ declared_locations:
           read_from:
             page: https://www.ssa.gov
             how: the roster host (state/scan_targets_fss_2026-09_v5.json) at the Project Open Data path (params.d4_catalog.paths)
+        - url: https://catalog.data.gov/organization/ssa
+          kind: catalog_organization
+          role: catalog_organization
+          read_from:
+            page: https://catalog.data.gov/organization?page=4&per_page=24
+            body_sha256: e446133c7bfeb7cb8a6f3b35c91c48359e993a9a31511065c621d223cfd53b31
+            retained_at: corpus/evidence/frame/e4/e446133c7bfeb7cb8a6f3b35c91c48359e993a9a31511065c621d223cfd53b31
+            fetched_at: '2026-10-06T22:23:16Z'
+            link: https://catalog.data.gov/organization/ssa
+            anchor: Social Security Administration
+            how: catalog.data.gov's organization list (page 4 of 5); the body's parent agency (SSA, which publishes on the roster host)
+            task: cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md
       unresolved:
         - role: api_base
-          why: no documented API base for this body is cited in this repository
-        - role: catalog_organization
-          why: the body's catalog.data.gov organization slug is written nowhere in this repository (`git grep 'catalog.data.gov/organization/'` found no slug on 2026-10-06)
+          status: unreadable
+          why: 'every page of the body''s own host answered HTTP 403 to this client''s declared identity on 2026-10-06, as on every prior cycle (DD-060: no retry under another identity), so whether it publishes this cannot be read'
+          pages_searched:
+            - https://www.ssa.gov
+        - role: changelog
+          status: unreadable
+          why: 'every page of the body''s own host answered HTTP 403 to this client''s declared identity on 2026-10-06, as on every prior cycle (DD-060: no retry under another identity), so whether it publishes this cannot be read'
+          pages_searched:
+            - https://www.ssa.gov
     SAMHSACBHS:
       inventory_urls:
         - url: https://www.samhsa.gov/data.json
@@ -559,13 +935,33 @@ declared_locations:
             obs_id: obs_2b51f27e8b43387ec26bdb5a
             body_sha256: 1919c75a295a086e2fb9cc0b08cd568f2f431944bbdf8e339e531d9d6663fa6b
             link: https://www.hhs.gov
-            anchor: "HHS.gov"
+            anchor: HHS.gov
             how: the body's own page links the home page of its parent department (Department of Health and Human Services); data.gov reads each department's data.json (params.yaml dept_domains)
+        - url: https://catalog.data.gov/organization/hhs
+          kind: catalog_organization
+          role: catalog_organization
+          read_from:
+            page: https://catalog.data.gov/organization?page=5&per_page=24
+            body_sha256: f56db027e9451bcaa037bb103023fabbb3b64b5d56b4f59f795dda2535bef8c0
+            retained_at: corpus/evidence/frame/f5/f56db027e9451bcaa037bb103023fabbb3b64b5d56b4f59f795dda2535bef8c0
+            fetched_at: '2026-10-06T22:23:16Z'
+            link: https://catalog.data.gov/organization/hhs
+            anchor: U.S. Department of Health & Human Services
+            how: catalog.data.gov's organization list (page 5 of 5); the body's parent department (HHS); neither SAMHSA nor CBHSQ has an organization of its own on the list
+            task: cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md
       unresolved:
         - role: api_base
-          why: no documented API base for this body is cited in this repository
-        - role: catalog_organization
-          why: the body's catalog.data.gov organization slug is written nowhere in this repository (`git grep 'catalog.data.gov/organization/'` found no slug on 2026-10-06)
+          status: not_declared
+          why: no API or developer page is linked from the center's page or the SAMHSA data page
+          pages_searched:
+            - https://www.samhsa.gov/about-us/who-we-are/offices-centers/cbhsq
+            - https://www.samhsa.gov/data/
+        - role: changelog
+          status: not_declared
+          why: no page labelled a changelog, release notes, updates or corrections for the center's products is linked; the "What's New" link on the center's page belongs to a prevention campaign
+          pages_searched:
+            - https://www.samhsa.gov/about-us/who-we-are/offices-centers/cbhsq
+            - https://www.samhsa.gov/data/
     SOI:
       inventory_urls:
         - url: https://www.irs.gov/data.json
@@ -582,11 +978,34 @@ declared_locations:
             obs_id: obs_59324d211b83678dea83bb1f
             body_sha256: e5d61cbb510bc44323040dee6bcb0b4d48929122cdffdb65bec49e626d6e8419
             link: https://www.treasury.gov/
-            anchor: "U.S. Treasury"
+            anchor: U.S. Treasury
             how: the body's own page links the home page of its parent department (Department of the Treasury); data.gov reads each department's data.json (params.yaml dept_domains)
+        - url: https://catalog.data.gov/organization/treasury
+          kind: catalog_organization
+          role: catalog_organization
+          read_from:
+            page: https://catalog.data.gov/organization?page=2&per_page=24
+            body_sha256: 6450246d2641414a6bb39bf0fe5d87255624696ba1c9d0ad44da6f823caa55cb
+            retained_at: corpus/evidence/frame/64/6450246d2641414a6bb39bf0fe5d87255624696ba1c9d0ad44da6f823caa55cb
+            fetched_at: '2026-10-06T22:23:13Z'
+            link: https://catalog.data.gov/organization/treasury
+            anchor: Department of the Treasury
+            how: catalog.data.gov's organization list (page 2 of 5); the body's parent department (Treasury); neither the IRS nor SOI has an organization of its own on the list
+            task: cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md
+      changelog_urls:
+        - url: https://www.irs.gov/statistics/soi-tax-stats-whats-new
+          read_from:
+            page: https://www.irs.gov/statistics/soi-tax-stats-statistics-of-income
+            body_sha256: 5526543b90d80b9646d1647ce23d88a1c13b31b04ddf81b7eb1df7292ec1745d
+            retained_at: corpus/evidence/frame/55/5526543b90d80b9646d1647ce23d88a1c13b31b04ddf81b7eb1df7292ec1745d
+            fetched_at: '2026-10-06T22:24:36Z'
+            link: https://www.irs.gov/statistics/soi-tax-stats-whats-new
+            anchor: What's new
+            how: the body's home page links its what's-new page
+            task: cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md
       unresolved:
         - role: api_base
-          why: no documented API base for this body is cited in this repository
-        - role: catalog_organization
-          why: the body's catalog.data.gov organization slug is written nowhere in this repository (`git grep 'catalog.data.gov/organization/'` found no slug on 2026-10-06)
-
+          status: not_declared
+          why: no API or developer page is linked from the body's home page
+          pages_searched:
+            - https://www.irs.gov/statistics/soi-tax-stats-statistics-of-income

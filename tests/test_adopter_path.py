@@ -43,7 +43,10 @@ ADOPTER_UA = "example-readiness-scan/1.0 (+mailto:webmaster@example.org)"
 #: this task: `0ef2e016fea2…`). Adding `schedule:` must not move it. The snapshot moved to `_rj5`
 #: with generation 14's parameters (`cc_tasks/2026-10-06_absence_verdicts_rules.md`), and the
 #: property is the same one: today's params are the snapshot's.
-SNAPSHOT_PAYLOAD = REPO / "state" / "scan_2026-09-10_rj5.json"
+#: The recollection (`cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md`) moved the
+#: parameters again (`cycle.name`, `b3_methodology.max_followed`) and measured under them, so the
+#: payload today's params reproduce is its cycle's; the composite of record names it as a part.
+SNAPSHOT_PAYLOAD = REPO / "state" / "scan_2026-10-06_recollect.json"
 
 
 def _frame_file(tmp: Path, text: str, name: str = "my_site.yaml") -> Path:

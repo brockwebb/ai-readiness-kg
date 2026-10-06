@@ -122,7 +122,13 @@ cycle:
   # keys on it and `state/scan_2026-09-10.json` does not exist. The targets key is the one
   # wiring step `2026-09-10_scan_frame_v5.md` deliberately left: changing it changes what a
   # cycle measures, and that task ran no cycle.
-  name: scan_2026-09-10
+  # The recollection (`cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md` decision 2): a
+  # TARGETED cycle over the twelve legs generation 14 re-scoped (`run.py --legs`), on the same
+  # target list. Its own name, so `refuse_clobber` and every derived path keep it apart from
+  # cycle 4, whose payload stays the cycle of record for every leg it does not collect. The
+  # name is the task's: a dated suffix that is not `_rjN`, because this is a measurement and not
+  # a re-judgement (`publish.supersedes_of`).
+  name: scan_2026-10-06_recollect
   targets: scan_targets_fss_2026-09_v5
 
 manners:
@@ -995,6 +1001,14 @@ b3_methodology:
   # (`cc_tasks/2026-10-06_absence_verdicts_rules.md` decision 5), because `RULE-B3-v4` needs
   # the same candidate set the collector chose from to say how many it did not follow.
   link_tokens: ["methodolog"]
+  # How many distinct candidates the collector follows per surface
+  # (`cc_tasks/2026-10-06_absence_verdicts_recollection_v2_ADDENDUM_01.md` amendment 2: "B3
+  # follows every methodology link on the page, not the first"). A request bound, not a scope:
+  # DN-012 d2 keeps caps because manners bound requests, and `RULE-B3-v4` names every candidate
+  # past it as the remainder, so a page over the bound is `error`, never `fail`. 25 is the
+  # standing per-surface bound `link_probe.max_links_probed` already sets for one surface's
+  # links, reused rather than invented.
+  max_followed: 25
 
 declarations:
   # DN-012 d3 (`cc_tasks/2026-10-06_absence_verdicts_rules.md` decision 4). Where each body's

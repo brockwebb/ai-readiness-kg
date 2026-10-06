@@ -181,12 +181,25 @@ def collect_leg(spec: dict, target: dict, params: dict, fetcher=None) -> list:
         # The token was a literal here; it is `params.b3_methodology.link_tokens` now, unchanged,
         # because `RULE-B3-v4` counts the same candidates to say how many were not followed.
         toks = params["b3_methodology"]["link_tokens"]
+        # EVERY distinct candidate, in page order, up to the request bound
+        # (`cc_tasks/2026-10-06_absence_verdicts_recollection_v2_ADDENDUM_01.md` amendment 2).
+        # This collector used to follow the first and return, so a page linking several
+        # methodology documents was judged on one, and `RULE-B3-v4` can only call that `error`.
+        # The bound stays because manners bound requests (DN-012 d2); a candidate past it is not
+        # followed, and the rule names it as the remainder, so the cap hides nothing. The set is
+        # the rule's own (`rule_b3_v4._candidates`): distinct hrefs, first occurrence.
+        cap = int(params["b3_methodology"]["max_followed"])
+        seen: list = []
         for link in ((obs[0].parsed or {}).get("links") or []):
-            if any(t in (link.get("href", "") + link.get("text", "")).lower() for t in toks):
-                doc = http.fetch(f, leg, doc_id, link["href"], params)
-                for o in doc:
-                    _enrich_extent(o, params)
-                return obs + doc
+            href = link.get("href", "")
+            if any(t in (href + link.get("text", "")).lower() for t in toks) \
+                    and href not in seen:
+                seen.append(href)
+        for href in seen[:cap]:
+            doc = http.fetch(f, leg, doc_id, href, params)
+            for o in doc:
+                _enrich_extent(o, params)
+            obs += doc
         return obs
     if leg == "D1":
         obs = structured_data.fetch(f, leg, doc_id, url, params)

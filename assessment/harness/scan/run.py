@@ -201,17 +201,48 @@ def run_surface(sp: dict, target: dict, params: dict, legs: list, fetcher=None) 
     return obs, findings
 
 
-def judge_bodies(sp: dict, params: dict, observations: list) -> list:
+def restrict_legs(tgts: list, legs) -> tuple:
+    """`(targets, dropped_doc_ids)`: each target keeps only the legs named, and a target left
+    with none is dropped and listed.
+
+    `cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md` decision 2: a TARGETED cycle,
+    "exactly" the legs generation 14 re-scoped, and "the six L0 host checks and every other
+    product leg are not collected". A surface keeps the legs the frame gives it intersected
+    with these, so a leg is never added to a surface the frame does not give it, and each
+    surface's recorded `surface_legs` is the set it was actually judged on (which is what
+    `rederive.rederive` re-judges). A leg name the instrument does not know is a refusal that
+    costs nothing, before the controls.
+    """
+    wanted = list(dict.fromkeys(legs))
+    known = set(FRAMEWORK_LEGS) | set(CANDIDATE_LEGS)
+    unknown = [l for l in wanted if l not in known]
+    if unknown or not wanted:
+        raise SystemExit(f"REFUSING: --legs {unknown or '(none)'} names no leg of the "
+                         f"instrument. Legs: {', '.join(sorted(known))}")
+    out, dropped = [], []
+    for t in tgts:
+        keep = [l for l in t["legs"] if l in wanted]
+        if keep:
+            out.append(dict(t, legs=keep))
+        else:
+            dropped.append(t["doc_id"])
+    return out, dropped
+
+
+def judge_bodies(sp: dict, params: dict, observations: list, legs=None) -> list:
     """The Findings of every BODY leg, over a cycle's collected observations.
 
     `cc_tasks/2026-09-18_schema_field_rules.md` decision 5: B5 compares a body's products, so it
     can be judged only after all of them are collected. The groups come from
     `rules.body_groups`, the function `rederive.py` re-derives with; a leg with no
     `MeasurementSpec` is not judged, the same condition `run_surface` applies.
+
+    `legs` is a targeted cycle's leg set (`restrict_legs`): a body leg outside it is not judged,
+    even though the shared leg it reads (A6, which B1 consumes) was collected.
     """
     out = []
     for leg in BODY_LEGS:
-        if sp.get(leg) is None:
+        if sp.get(leg) is None or (legs is not None and leg not in legs):
             continue
         rule_id = CURRENT[leg]
         for _body, group in body_groups(rule_id, observations, params).items():
@@ -510,7 +541,8 @@ def merge_controls(payload_path: Path, params: dict, clock=None) -> int:
 
 
 def run_cycle(params: dict, tgts: list, controls: tuple, fetcher, *, task: str,
-              evidence_root: str, cycle: str | None = None, spot_targets=None) -> dict:
+              evidence_root: str, cycle: str | None = None, spot_targets=None,
+              legs_collected=None, surfaces_dropped=None) -> dict:
     """Measure `tgts` after a control gate that PASSED, and return the cycle's payload.
 
     Factored out of `main` (`cc_tasks/2026-09-19_spot_scan.md` decision 5) so the spot path can
@@ -520,6 +552,10 @@ def run_cycle(params: dict, tgts: list, controls: tuple, fetcher, *, task: str,
     `controls` is `run_controls`' first three values, and the caller has already refused a
     failing gate. `spot_targets` makes this a SPOT cycle: the payload carries `scope: spot`, the
     bodies, and the frame cycle `params` named, and `cycle` is the spot's own name.
+
+    `legs_collected` makes this a TARGETED cycle (`restrict_legs`): the payload carries
+    `scope: legs`, the legs, and the surfaces the restriction left with none, and its leg counts
+    are over those legs rather than the whole instrument.
     """
     cf, e5, control_obs = controls
     sp = specs()
@@ -544,7 +580,7 @@ def run_cycle(params: dict, tgts: list, controls: tuple, fetcher, *, task: str,
     # Body legs, judged once every surface is in (`judge_bodies`). Each Finding's target is the
     # body's well-known row, so its verdict is recorded on that row of the matrix; a Finding
     # whose body has no row is listed rather than dropped.
-    body_findings = judge_bodies(sp, params, all_obs)
+    body_findings = judge_bodies(sp, params, all_obs, legs=legs_collected)
     all_find += body_findings
     by_doc = {r["doc_id"]: r for r in rows}
     body_without_row = []
@@ -568,13 +604,18 @@ def run_cycle(params: dict, tgts: list, controls: tuple, fetcher, *, task: str,
         if e5.verdict != "pass":
             print(f"CYCLE INVALID after the fact: {e5.reason}", file=sys.stderr)
 
+    judged_legs = (list(legs_collected) if legs_collected is not None else CONTROL_LEGS)
     by_leg_err = {leg: sum(1 for r in rows if r["verdicts"].get(leg) == "error")
-                  for leg in CONTROL_LEGS}
+                  for leg in judged_legs}
     summary = {
         "task": task, "cycle": cycle or params["cycle"]["name"],
         # `scope` says what the cycle measured: the frame, or the bodies a spot names. The name
         # says it too (`scan.spot`), and `publish.py` refuses a payload whose two disagree.
-        "scope": "spot" if spot_targets else "frame",
+        "scope": "spot" if spot_targets else ("legs" if legs_collected is not None
+                                               else "frame"),
+        **({"legs_collected": list(legs_collected),
+            "surfaces_dropped": list(surfaces_dropped or [])}
+           if legs_collected is not None else {}),
         **({"spot_targets": list(spot_targets),
             # The frame cycle `params.yaml` names on the day the spot ran. Recorded, not
             # implied: the spot measured under that cycle's parameters and is not that cycle.
@@ -590,7 +631,7 @@ def run_cycle(params: dict, tgts: list, controls: tuple, fetcher, *, task: str,
         # DD-019 says a cycle with zero fired controls is INVALID; the evidence that THIS
         # cycle was valid has to be as durable as the findings it validates.
         "control_findings": len(cf) + 1,
-        "surfaces": len(rows), "legs": len(CONTROL_LEGS),
+        "surfaces": len(rows), "legs": len(judged_legs),
         "findings": len(all_find), "observations": len(all_obs),
         "verdict_counts": {v: sum(1 for f in all_find if f.verdict == v)
                            for v in ("pass", "fail", "not_applicable", "error")},
@@ -793,6 +834,11 @@ def main(argv=None) -> int:
                          "cc_tasks/2026-09-19_adopter_path.md")
     ap.add_argument("--out", default="out", metavar="DIR",
                     help="where a --frame run writes (default ./out)")
+    ap.add_argument("--legs", default=None, metavar="LEG,LEG,...",
+                    help="a TARGETED cycle: collect and judge only these legs, on the surfaces "
+                         "the frame gives them; a surface left with none is not contacted. The "
+                         "payload records `scope: legs`. "
+                         "cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md decision 2")
     a = ap.parse_args(argv)
     params = load_params()
     if a.frame:
@@ -814,6 +860,16 @@ def main(argv=None) -> int:
         raise SystemExit("REFUSING: --rerun names a second SPOT of one day; a frame cycle's "
                          "name is `params.cycle.name`")
     tgts = None if (a.controls_only or a.merge_controls) else targets(params, spot_targets)
+    legs_collected, surfaces_dropped = None, None
+    if a.legs:
+        if tgts is None or spot_targets or a.frame:
+            raise SystemExit("REFUSING: --legs restricts a frame cycle's surfaces; it does not "
+                             "combine with --controls-only, --merge-controls or --target")
+        legs_collected = [l.strip() for l in a.legs.split(",") if l.strip()]
+        tgts, surfaces_dropped = restrict_legs(tgts, legs_collected)
+        print(f"TARGETED cycle: {len(tgts)} surface(s) on {', '.join(legs_collected)}; "
+              f"{len(surfaces_dropped)} surface(s) carry none of them and are not contacted",
+              file=sys.stderr)
     # Redirect the module-path global rather than threading a root through seven collectors:
     # `store_evidence` reads `EVIDENCE_ROOT` at CALL time, which is the repo convention
     # (CLAUDE.md "Conventions specific to this repo") and the same seam `tests/conftest.py`
@@ -875,7 +931,8 @@ def main(argv=None) -> int:
         tgts = tgts[:a.limit]
     from scan.manners import Fetcher
     summary = run_cycle(params, tgts, (cf, e5, control_obs), Fetcher(params), task=a.task,
-                        evidence_root=_staging_rel, cycle=cycle, spot_targets=spot_targets)
+                        evidence_root=_staging_rel, cycle=cycle, spot_targets=spot_targets,
+                        legs_collected=legs_collected, surfaces_dropped=surfaces_dropped)
     cycle_out, _ = out_paths(params, cycle)
     write_payload(cycle_out, summary, params)
     print(json.dumps({k: v for k, v in summary.items()

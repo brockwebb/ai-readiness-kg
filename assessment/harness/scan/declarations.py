@@ -37,6 +37,14 @@ INVENTORY_KINDS = ("data_json", "catalog_organization")
 #: The roles a declaration or an `unresolved` entry may name.
 ROLES = ("api_base", "own_host", "department", "catalog_organization", "api_terms", "changelog")
 
+#: What an `unresolved` entry records (`cc_tasks/2026-10-06_absence_verdicts_recollection_v2.md`
+#: ADDENDUM_01 amendment 1). `unresolved`, the default, is a location nobody has looked for yet;
+#: `not_declared` is one the body's own pages were searched for and do not publish; `unreadable`
+#: is one the pages that would publish it refused to this client (HTTP 403, or robots.txt). The
+#: last two name the pages searched, so the remainder a rule writes is a search a stranger can
+#: repeat. All three keep the leg at `error` (DN-012 d1): what was not found is not absent.
+UNRESOLVED_STATUSES = ("unresolved", "not_declared", "unreadable")
+
 #: Which `unresolved` roles belong to which field, so a leg's block carries only its own.
 _ROLE_FIELD = {"api_base": "api_base", "api_terms": "api_terms", "changelog": "changelog_urls",
                "own_host": "inventory_urls", "department": "inventory_urls",
@@ -105,6 +113,17 @@ def validate(block: dict) -> dict:
             w = f"{where}.unresolved[{i}]"
             if not isinstance(u, dict) or u.get("role") not in ROLES or not u.get("why"):
                 raise DeclarationError(f"{w} must carry a role in {ROLES} and a why")
+            status = u.get("status", "unresolved")
+            if status not in UNRESOLVED_STATUSES:
+                raise DeclarationError(f"{w}.status {status!r} is not one of "
+                                       f"{UNRESOLVED_STATUSES}")
+            if status != "unresolved":
+                pages = u.get("pages_searched")
+                if not isinstance(pages, list) or not pages:
+                    raise DeclarationError(f"{w} is {status} and names no pages_searched; a "
+                                           f"search that names no page cannot be repeated")
+                for j, pg in enumerate(pages):
+                    _url(pg, f"{w}.pages_searched[{j}]")
     return block
 
 
