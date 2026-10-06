@@ -144,11 +144,13 @@ def test_the_design_page_says_why_at_step_ten(score):
     assert "concentration" in step and "reversed" in step
 
 
-def test_get_body_carries_the_same_field(scored):
+def test_get_body_carries_the_same_field(score):
+    """Over the cycle of record, whichever it is. It skipped once the snapshot left `_rj4`
+    (`cc_tasks/2026-10-06_absence_verdicts_rules.md` moved it to `_rj5`), and a skip is not a
+    check: the property is that the MCP's `get_body` carries `score.py`'s field, on any cycle."""
     import airkg_tools as T
     t = T.Tools(graph=None)
-    if t.cycle != RJ4:
-        pytest.skip(f"the cycle of record is {t.cycle}; decision 1 has not run")
+    scored = score.compute(t.cycle)
     out = t.get_body("DRSMSU")
     assert out["score"]["rank"] == scored["bodies"]["DRSMSU"]["rank"]
     assert out["score"]["concentration"] == scored["bodies"]["DRSMSU"]["concentration"]
