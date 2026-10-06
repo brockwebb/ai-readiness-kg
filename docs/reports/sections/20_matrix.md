@@ -47,10 +47,14 @@ follow the declaration to see whether anything answers at the other end.
 **Declared against enforced.** The candidate check finds
 {{result:scan_l0_a12_pass_2026-09-10_rj4:value}} bodies coherent and
 {{result:scan_l0_a12_fail_2026-09-10_rj4:value}} incoherent, of
-{{result:scan_l0_a12_applicable_n_2026-09-10_rj4:value}}. An incoherent host publishes a
-`robots.txt` granting access and then declines to serve the client that obeys it. Three of them
-are the bodies discussed in the next section, and the fourth publishes no `robots.txt` at
-all.
+{{result:scan_l0_a12_applicable_n_2026-09-10_rj4:value}}. None of the incoherent verdicts is
+the case the check is named for. That case is a declared layer that admits this client over an
+enforced layer that refuses it, and no body was observed in it. Three of the four are the Bureau
+of Labor Statistics, the Bureau of Transportation Statistics and the Social Security
+Administration's research office. Their hosts refused the request for `/robots.txt` itself, so
+their declared layer could not be observed at all. The next section takes them up. The fourth,
+the Federal Reserve Board's Microeconomic Surveys Unit, serves no `robots.txt` and so declares
+nothing for the enforced layer to agree or disagree with.
 
 <!-- include: withdrawn_legs -->
 

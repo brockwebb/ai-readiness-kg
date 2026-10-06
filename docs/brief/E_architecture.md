@@ -33,7 +33,7 @@ flowchart LR
 | Finding: verdict + reason + rule_id | `assessment/harness/scan/model.py:217` |
 | events/cycle-&lt;cycle&gt;.jsonl (append-only) | `assessment/harness/scan/publish.py:238` |
 | matrices + L0 Results | `scripts/build_l0_matrices.py:303` |
-| L0 report and PDF | `scripts/build_l0_report.py:315` |
+| L0 report and PDF | `scripts/build_l0_report.py:354` |
 | site, CITATION.cff, zenodo | `scripts/build_l0_site.py:530` |
 | MCP server (10 read-only verbs, TOOL_ORDER) | `mcp/airkg_server.py:105` |
 

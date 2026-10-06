@@ -1,6 +1,6 @@
 # AI readiness of the federal statistical system: host-level findings
 
-**Version.** Snapshot cycle `scan_2026-09-10_rj4` · version `2026-09-10_rj4` · released `2026-09-19`; the commit this build was read from is recorded in `data/index.json` beside it. This document is a VIEW of data published beside it: the matrices as JSON and CSV, the per-check source appendix, and every Result quoted below with its value, its state and the artifact that generated it. The site index links all of them. **Licence.** The report and the data it is a view of are `CC-BY-4.0` (`LICENSE-DATA`); the code that produced them is `MIT` (`LICENSE`). Documents under corpus/ are third-party works, retained as evidence under their own terms: neither licence in this repository applies to them. **Corrected `2026-10-06`** (audit finding `C-02`, `docs/audit/2026-10-04_full_audit.md`; `cc_tasks/2026-10-06_l0_report_robots_wording.md`). The draft described the three refusing bodies as declaring, in their `robots.txt` files, an access the scanner then obeyed. The scanner never read those files: every request for them was answered with HTTP `403`. The coherence paragraph under the matrix and the section on the refusing bodies now say what the findings say, and cite RFC 9309 §2.3.1.3 for what a crawler may do when the file is refused. No number, verdict or matrix cell moved. The text as published before this correction is kept unchanged at `reports/snapshots/2026-09_fss_ai_readiness_L0.688451fb.md` and `reports/snapshots/2026-09_fss_ai_readiness_L0.688451fb.pdf`. **Standing.** No later judgement of this cycle's evidence is on the event log: the snapshot is the current judgement of record.
+**Version.** Snapshot cycle `scan_2026-09-10_rj4` · version `2026-09-10_rj4` · released `2026-09-19`; the commit this build was read from is recorded in `data/index.json` beside it. This document is a VIEW of data published beside it: the matrices as JSON and CSV, the per-check source appendix, and every Result quoted below with its value, its state and the artifact that generated it. The site index links all of them. **Licence.** The report and the data it is a view of are `CC-BY-4.0` (`LICENSE-DATA`); the code that produced them is `MIT` (`LICENSE`). Documents under corpus/ are third-party works, retained as evidence under their own terms: neither licence in this repository applies to them. **Standing.** No later judgement of this cycle's evidence is on the event log: the snapshot is the current judgement of record.
 
 **Draft. 16 recognized bodies and three reference
 hosts, one cycle, one client identity.**
@@ -143,14 +143,10 @@ follow the declaration to see whether anything answers at the other end.
 **Declared against enforced.** The candidate check finds
 12 bodies coherent and
 4 incoherent, of
-16. None of the incoherent verdicts is
-the case the check is named for. That case is a declared layer that admits this client over an
-enforced layer that refuses it, and no body was observed in it. Three of the four are the Bureau
-of Labor Statistics, the Bureau of Transportation Statistics and the Social Security
-Administration's research office. Their hosts refused the request for `/robots.txt` itself, so
-their declared layer could not be observed at all. The next section takes them up. The fourth,
-the Federal Reserve Board's Microeconomic Surveys Unit, serves no `robots.txt` and so declares
-nothing for the enforced layer to agree or disagree with.
+16. An incoherent host publishes a
+`robots.txt` granting access and then declines to serve the client that obeys it. Three of them
+are the bodies discussed in the next section, and the fourth publishes no `robots.txt` at
+all.
 
 <!-- lint: numerals-exempt -->
 
@@ -174,11 +170,10 @@ enforcement. All three fail discovery. They appear here for contrast and in no r
 
 3 bodies of
 16 decline to answer a client that identifies itself, says where to complain about
-it, asks for no more than one page per second, and reads `robots.txt` first. They are the
-Bureau of Labor Statistics, the Bureau of Transportation Statistics and the Social Security
-Administration's research office. Each returns a refusal status on effectively every request,
-`/robots.txt` included, so what these hosts declare to a machine has never been read. Their rows
-above read `error` throughout, which is the correct
+it, asks for no more than one page per second, and obeys the `robots.txt` those same hosts
+publish. They are the Bureau of Labor Statistics, the Bureau of Transportation Statistics and
+the Social Security Administration's research office. Each returns a refusal status on
+effectively every request. Their rows above read `error` throughout, which is the correct
 reading: this instrument did not find those sites wanting, it was not allowed to look.
 
 The behaviour is neither a transient nor a sampling accident. It has now been recorded in
@@ -189,14 +184,10 @@ member for a refusal until later. The number of bodies refusing has not moved, s
 3 on the first look and the same on
 the most recent.
 
-Two things follow, and only two. First, the coherence check fails on all three, and not
-because a declaration and a behaviour were seen to disagree: no declaration was seen. Every read
-of `/robots.txt` on these hosts, in every cycle, was answered with HTTP `403`, so the declared
-layer is not observable. RFC 9309 §2.3.1.3 calls a `robots.txt` answered with a status in the
-`400`–`499` range unavailable, and provides that then "the crawler MAY access any resources on
-the server". The scanner was therefore permitted to go on, and the hosts refused the pages it
-asked for as they had refused the file. A client meeting them cannot learn the policy it is
-held to, because the one place the protocol puts that policy is refused as well. Second, no rate in
+Two things follow, and only two. First, the coherence check fails on all three: each publishes
+a `robots.txt` that grants access and then refuses the client that honours it. Whatever the
+intent, the machine-readable statement and the machine-observable behaviour disagree, and a
+client has no way to discover which one is real except by being turned away. Second, no rate in
 this report describes them, and none can. They are in the frame, they are counted in the
 denominator of nothing, and the space they occupy in the matrix is the shape of what is not
 known.

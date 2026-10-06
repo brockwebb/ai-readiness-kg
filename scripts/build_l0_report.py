@@ -252,6 +252,43 @@ def build_tree_dirty() -> bool:
                                text=True, cwd=REPO).stdout.strip())
 
 
+def correction_lines(pub: dict, released: str) -> str:
+    """The version's corrections, one sentence each, from `publication.yaml` `corrections`.
+
+    `cc_tasks/2026-10-06_l0_report_robots_wording.md` decision 3: a wording correction keeps
+    the version and the release date (no number moved, so DN-004 decision 1 does not re-
+    snapshot) and is stated on the face, with the text as it stood kept unchanged beside it.
+    Declared rather than generated from git, because what was corrected and why is a statement
+    somebody makes, and the kept files are checked here so the line cannot point at nothing.
+    Every date, path and identifier is in backticks, which the bare-numeral lint reads as a name.
+    """
+    entries = (pub.get("corrections") or {}).get(pub["version"]) or []
+    out = []
+    for i, c in enumerate(entries):
+        where = f"publication.yaml corrections[{pub['version']!r}][{i}]"
+        for key in ("date", "task", "finding", "audit", "summary", "prior_md", "prior_pdf"):
+            if not c.get(key):
+                raise SystemExit(f"FATAL: {where} declares no {key!r}")
+        if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", str(c["date"])):
+            raise SystemExit(f"FATAL: {where} date {c['date']!r} is not an ISO date")
+        if str(c["date"]) < str(released):
+            raise SystemExit(f"FATAL: {where} is dated {c['date']}, before the version's "
+                             f"release on {released}; a correction cannot precede what it "
+                             f"corrects")
+        for key in ("prior_md", "prior_pdf", "task", "audit"):
+            if not (REPO / c[key]).is_file():
+                raise SystemExit(f"FATAL: {where} {key} = {c[key]} does not exist; the "
+                                 f"correction would point a reader at nothing")
+        # Site-relative, as a reader of the published tree would type them.
+        kept_md, kept_pdf = (Path(c[k]).relative_to("docs").as_posix()
+                             for k in ("prior_md", "prior_pdf"))
+        out.append(f"**Corrected `{c['date']}`** (audit finding `{c['finding']}`, "
+                   f"`{c['audit']}`; `{c['task']}`). {' '.join(c['summary'].split())} No "
+                   f"number, verdict or matrix cell moved. The text as published before this "
+                   f"correction is kept unchanged at `{kept_md}` and `{kept_pdf}`.")
+    return " ".join(out)
+
+
 def version_block(pub: dict, released: str | None = None, standing: str | None = None) -> str:
     """The title page's version paragraph, generated on every build.
 
@@ -279,6 +316,8 @@ def version_block(pub: dict, released: str | None = None, standing: str | None =
     # lint reads them as what they are, numbers that came FROM the graph, and the line needs no
     # exemption of its own (`snapshot_successor.supersession_line`).
     standing = f" {standing}" if standing else ""
+    corrected = correction_lines(pub, day)
+    corrected = f" {corrected}" if corrected else ""
     return (f"**Version.** Snapshot cycle `{pub['snapshot_cycle']}` · version "
             f"`{pub['version']}` · released `{day}`; the commit this build was read from is "
             f"recorded in `data/index.json` beside it. This document is a "
@@ -293,7 +332,7 @@ def version_block(pub: dict, released: str | None = None, standing: str | None =
             f"**Licence.** The report and the data it is a view of are `{pub['license_data']}` "
             f"(`LICENSE-DATA`); the code that produced them is `{pub['license_code']}` "
             f"(`LICENSE`). {' '.join(pub['license_corpus_note'].split())}"
-            f"{standing}")
+            f"{corrected}{standing}")
 
 
 #: Where the version block goes: straight after the report's H1, ahead of the standfirst.

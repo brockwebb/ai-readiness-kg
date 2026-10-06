@@ -2,10 +2,11 @@
 
 {{result:fss_hosts_refusing_identified_client_2026-09:value}} bodies of
 {{result:fss_agencies_tier_a:value}} decline to answer a client that identifies itself, says where to complain about
-it, asks for no more than one page per second, and obeys the `robots.txt` those same hosts
-publish. They are the Bureau of Labor Statistics, the Bureau of Transportation Statistics and
-the Social Security Administration's research office. Each returns a refusal status on
-effectively every request. Their rows above read `error` throughout, which is the correct
+it, asks for no more than one page per second, and reads `robots.txt` first. They are the
+Bureau of Labor Statistics, the Bureau of Transportation Statistics and the Social Security
+Administration's research office. Each returns a refusal status on effectively every request,
+`/robots.txt` included, so what these hosts declare to a machine has never been read. Their rows
+above read `error` throughout, which is the correct
 reading: this instrument did not find those sites wanting, it was not allowed to look.
 
 The behaviour is neither a transient nor a sampling accident. It has now been recorded in
@@ -16,10 +17,14 @@ member for a refusal until later. The number of bodies refusing has not moved, s
 {{result:fss_hosts_refusing_identified_client_2026-09:value}} on the first look and the same on
 the most recent.
 
-Two things follow, and only two. First, the coherence check fails on all three: each publishes
-a `robots.txt` that grants access and then refuses the client that honours it. Whatever the
-intent, the machine-readable statement and the machine-observable behaviour disagree, and a
-client has no way to discover which one is real except by being turned away. Second, no rate in
+Two things follow, and only two. First, the coherence check fails on all three, and not
+because a declaration and a behaviour were seen to disagree: no declaration was seen. Every read
+of `/robots.txt` on these hosts, in every cycle, was answered with HTTP `403`, so the declared
+layer is not observable. RFC 9309 §2.3.1.3 calls a `robots.txt` answered with a status in the
+`400`–`499` range unavailable, and provides that then "the crawler MAY access any resources on
+the server". The scanner was therefore permitted to go on, and the hosts refused the pages it
+asked for as they had refused the file. A client meeting them cannot learn the policy it is
+held to, because the one place the protocol puts that policy is refused as well. Second, no rate in
 this report describes them, and none can. They are in the frame, they are counted in the
 denominator of nothing, and the space they occupy in the matrix is the shape of what is not
 known.

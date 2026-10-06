@@ -51,6 +51,30 @@ version: "2026-09-10_rj4"
 released:
   "2026-09-10_rj4": "2026-09-19"
 
+# Corrections to a released version's WORDS, keyed by version. A correction moves no number, no
+# verdict and no matrix cell — a change that would is a new snapshot under DN-004 decision 1,
+# with a new version — so it keeps the version and the release date and is stated on the
+# document's face instead. It is an erratum: the corrected document says what was corrected and
+# when, and the text as it stood is kept, unchanged, where a reader can compare
+# (`cc_tasks/2026-10-06_l0_report_robots_wording.md` decision 3: "the prior snapshot kept; do
+# not rewrite history"). `scripts/build_l0_report.py::correction_lines` renders each entry into
+# the version block and refuses one whose kept files are missing or whose date precedes the
+# release.
+corrections:
+  "2026-09-10_rj4":
+    - date: "2026-10-06"
+      task: cc_tasks/2026-10-06_l0_report_robots_wording.md
+      finding: C-02
+      audit: docs/audit/2026-10-04_full_audit.md
+      summary: >-
+        The draft described the three refusing bodies as declaring, in their `robots.txt`
+        files, an access the scanner then obeyed. The scanner never read those files: every
+        request for them was answered with HTTP `403`. The coherence paragraph under the
+        matrix and the section on the refusing bodies now say what the findings say, and cite
+        RFC 9309 §2.3.1.3 for what a crawler may do when the file is refused.
+      prior_md: docs/reports/snapshots/2026-09_fss_ai_readiness_L0.688451fb.md
+      prior_pdf: docs/reports/snapshots/2026-09_fss_ai_readiness_L0.688451fb.pdf
+
 authors:
   - family-names: Webb
     given-names: Brock
