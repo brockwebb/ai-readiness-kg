@@ -35,14 +35,13 @@ they should be.
 **These corrections cost this report its strongest product number, and that is the correction
 working.** Under the first re-judgement of this same cycle, the bulk-download check was answered
 over {{result:scan_l0_product_a3_applicable_n_2026-09-10_rj1:value}} declared flagship surfaces.
-It was then answered over {{result:scan_l0_product_a3_applicable_n_2026-09-10_rj4:value}}, and
-is now answered over {{result:scan_l0_product_a3_applicable_n_2026-09-10_rj5:value}}. The surfaces
-that left first are those whose whole-product download the scanner was forbidden to look for.
-The ones that left last are those whose links ran past the request bound before the download
-could be reached. Both groups had been counted as products that offer none. Nothing about those
-products changed and nothing was re-fetched. The upper bound of the ninety-five percent interval
-on the rate went from {{result:scan_l0_product_leg_rate_a3_upper95_2026-09-10_rj1:value}} to
-{{result:scan_l0_product_leg_rate_a3_upper95_2026-09-10_rj4:value}} to
+It is now answered over {{result:scan_l0_product_a3_applicable_n_2026-09-10_rj5:value}}. The
+surfaces that left are of two kinds. On some, the scanner was forbidden to look for the
+whole-product download. On the others, the page's links ran past the request bound before the
+download could be reached. Both kinds had been counted as products that offer none. Nothing
+about those products changed and nothing was re-fetched. The upper bound of the ninety-five
+percent interval on the rate went from
+{{result:scan_l0_product_leg_rate_a3_upper95_2026-09-10_rj1:value}} to
 {{result:scan_l0_product_leg_rate_a3_upper95_2026-09-10_rj5:value}}. A smaller denominator is a
 weaker claim, and an instrument that stops scoring what it did not look at has to say less, not
 more.

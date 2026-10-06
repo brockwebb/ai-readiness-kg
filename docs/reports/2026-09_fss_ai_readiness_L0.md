@@ -411,14 +411,13 @@ they should be.
 **These corrections cost this report its strongest product number, and that is the correction
 working.** Under the first re-judgement of this same cycle, the bulk-download check was answered
 over 19 declared flagship surfaces.
-It was then answered over 14, and
-is now answered over 4. The surfaces
-that left first are those whose whole-product download the scanner was forbidden to look for.
-The ones that left last are those whose links ran past the request bound before the download
-could be reached. Both groups had been counted as products that offer none. Nothing about those
-products changed and nothing was re-fetched. The upper bound of the ninety-five percent interval
-on the rate went from 0.433343 to
-0.546491 to
+It is now answered over 4. The
+surfaces that left are of two kinds. On some, the scanner was forbidden to look for the
+whole-product download. On the others, the page's links ran past the request bound before the
+download could be reached. Both kinds had been counted as products that offer none. Nothing
+about those products changed and nothing was re-fetched. The upper bound of the ninety-five
+percent interval on the rate went from
+0.433343 to
 1. A smaller denominator is a
 weaker claim, and an instrument that stops scoring what it did not look at has to say less, not
 more.
